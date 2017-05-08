@@ -44,104 +44,99 @@
        aria-hidden="true"
        data-link-name="nav2 : overlay"></label>
 
-<div class="main-menu-container">
-    <div class="main-menu-container__menu js-main-menu"
-         id="main-menu"
-         aria-hidden="true">
-        <ul class="main-navigation">
-            @NewNavigation.topLevelSections.map { section =>
-                @sectionList(section)
-            }
-        </ul>
-
-        @if(SearchSwitch.isSwitchedOn) {
-            <ul class="navigation-group">
-                <li class="navigation-group__item navigation-group__item--search">
-                    <form class="navigation-group__search-container"
-                          action="https://www.google.co.uk/search">
-                        <input type="text"
-                               name="q"
-                               class="navigation-group__search-box"
-                               placeholder="search for..."
-                               data-link-name="nav2 : search">
-
-                        <input type="hidden"
-                               name="as_sitesearch"
-                               value="www.theguardian.com">
-
-                        @* label surrounding the input and icon so that if you
-                        click the search icon it will trigger the submit *@
-                        <label for="submit-google-search">
-                            <input class="u-h"
-                                   type="submit"
-                                   id="submit-google-search"
-                                   data-link-name="nav2 : search : submit">
-                            @fragments.inlineSvg("search-36", "icon", List("main-menu__icon", "main-menu__icon--search"))
-                        </label>
-
-                        <label for="q"
-                               class="u-h">
-                            What term do you want to search?
-                        </label>
-                    </form>
-                </li>
-            </ul>
+<div class="main-menu-container js-main-menu"
+     id="main-menu"
+     aria-hidden="true">
+    <ul class="main-navigation">
+        @NewNavigation.topLevelSections.map { section =>
+            @sectionList(section)
         }
+    </ul>
 
-        <ul class="navigation-group navigation-group--contrast secondary-navigation">
+    @if(SearchSwitch.isSwitchedOn) {
+        <ul class="navigation-group">
+            <li class="navigation-group__item navigation-group__item--search">
+                <form class="navigation-group__search-container"
+                      action="https://www.google.co.uk/search">
+                    <input type="text"
+                           name="q"
+                           class="navigation-group__search-box"
+                           placeholder="search for..."
+                           data-link-name="nav2 : search">
 
-            @defining(Edition(request)) { edition =>
+                    <input type="hidden"
+                           name="as_sitesearch"
+                           value="www.theguardian.com">
 
-                @NewNavigation.getMembershipLinks(edition).mostPopular.map { item =>
-                    <li class="navigation-group__item js-editionalise-secondary-nav"
-                        data-edition=@{edition.id.toLowerCase}>
+                    @* label surrounding the input and icon so that if you
+                    click the search icon it will trigger the submit *@
+                    <label for="submit-google-search">
+                        <input class="u-h"
+                               type="submit"
+                               id="submit-google-search"
+                               data-link-name="nav2 : search : submit">
+                        @fragments.inlineSvg("search-36", "icon", List("main-menu__icon", "main-menu__icon--search"))
+                    </label>
 
-                        <a href="@item.url"
-                           data-link-name="nav2 : @item.title">
-                            @item.title
-                        </a>
-                    </li>
-                }
-            }
-
-            @fragments.nav.userAccountLinks()
-
-            @fragments.nav.editionPicker()
+                    <label for="q"
+                           class="u-h">
+                        What term do you want to search?
+                    </label>
+                </form>
+            </li>
         </ul>
+    }
 
+    <ul class="navigation-group navigation-group--contrast secondary-navigation">
         @defining(Edition(request)) { edition =>
-            <ul class="navigation-group
-                js-editionalise-secondary-nav
-                secondary-navigation"
-                data-edition=@{edition.id.toLowerCase}>
+            @NewNavigation.getMembershipLinks(edition).mostPopular.map { item =>
+                <li class="navigation-group__item js-editionalise-secondary-nav"
+                    data-edition=@{edition.id.toLowerCase}>
 
-                @NewNavigation.NavFooterLinks.getAllEditionalisedNavLinks(edition).map { item =>
-                    <li class="navigation-group__item">
-                        <a href="@LinkTo { @item.url }"
-                           data-link-name="nav2 : @item.title">
-                            @item.title
-                        </a>
-                    </li>
-                }
-            </ul>
+                    <a href="@item.url"
+                       data-link-name="nav2 : @item.title">
+                        @item.title
+                    </a>
+                </li>
+            }
         }
 
-        <ul class="navigation-group navigation-border secondary-navigation">
-            <li class="navigation-group__item">
-                <a href="https://www.facebook.com/theguardian"
-                   data-link-name="nav2 : facebook">
-                    @fragments.inlineSvg("share-facebook", "icon", List("main-menu__icon", "main-menu__icon--social"))
-                    Facebook
-                </a>
-            </li>
+        @fragments.nav.userAccountLinks()
+        @fragments.nav.editionPicker()
+    </ul>
 
-            <li class="navigation-group__item">
-                <a href="https://twitter.com/guardian"
-                   data-link-name="nav2 : twitter">
-                    @fragments.inlineSvg("share-twitter", "icon", List("main-menu__icon", "main-menu__icon--social"))
-                    Twitter
-                </a>
-            </li>
+    @defining(Edition(request)) { edition =>
+        <ul class="navigation-group
+            js-editionalise-secondary-nav
+            secondary-navigation"
+            data-edition=@{edition.id.toLowerCase}>
+
+            @NewNavigation.NavFooterLinks.getAllEditionalisedNavLinks(edition).map { item =>
+                <li class="navigation-group__item">
+                    <a href="@LinkTo { @item.url }"
+                       data-link-name="nav2 : @item.title">
+                        @item.title
+                    </a>
+                </li>
+            }
         </ul>
-    </div>
+    }
+
+    <ul class="navigation-group navigation-border secondary-navigation">
+        <li class="navigation-group__item">
+            <a href="https://www.facebook.com/theguardian"
+               data-link-name="nav2 : facebook">
+                @fragments.inlineSvg("share-facebook", "icon", List("main-menu__icon", "main-menu__icon--social"))
+                Facebook
+            </a>
+        </li>
+
+        <li class="navigation-group__item">
+            <a href="https://twitter.com/guardian"
+               data-link-name="nav2 : twitter">
+                @fragments.inlineSvg("share-twitter", "icon", List("main-menu__icon", "main-menu__icon--social"))
+                Twitter
+            </a>
+        </li>
+    </ul>
 </div>

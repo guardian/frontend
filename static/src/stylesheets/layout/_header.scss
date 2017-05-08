@@ -301,17 +301,39 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter / 2;
  ****************/
 
 .main-menu-container {
+    -webkit-overflow-scrolling: touch;
+    background-color: $guardian-brand-dark;
+    color: #ffffff;
+    height: 100%;
     position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
     left: 0;
-    line-height: 1;
     z-index: $zindex-main-menu;
     box-shadow: 3px 0 16px rgba(0, 0, 0, .4);
+    font-family: $f-sans-serif-text;
+    font-size: 20px;
+    overflow: auto;
+    line-height: 1;
+    text-transform: lowercase;
+    top: 0;
+    transition: transform .2s cubic-bezier(.23, 1, .32, 1);
+    will-change: transform;
 
     .new-header--open & {
         @include sidebar-animation(0%);
+    }
+
+    @include mq($until: mobileMedium) {
+        padding-top: $gs-baseline / 3;
+    }
+
+    @include mq(mobileMedium) {
+        //Larger font/icon size for larger devices
+        font-size: 22px;
+        padding-top: $gs-baseline;
+    }
+
+    .main-menu-container.off-screen & {
+        @include sidebar-animation(-110%);
     }
 }
 
@@ -329,33 +351,6 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter / 2;
 
     .new-header--open & {
         opacity: 1;
-    }
-}
-
-.main-menu-container__menu {
-    height: 100%;
-    background-color: $guardian-brand-dark;
-    color: #ffffff;
-    font-family: $f-sans-serif-text;
-    text-transform: lowercase;
-    overflow: auto;
-    -webkit-overflow-scrolling: touch;
-    font-size: 20px;
-    will-change: transform;
-    transition: transform .2s cubic-bezier(.23, 1, .32, 1);
-
-    @include mq($until: mobileMedium) {
-        padding-top: $gs-baseline / 3;
-    }
-
-    @include mq(mobileMedium) {
-        //Larger font/icon size for larger devices
-        font-size: 22px;
-        padding-top: $gs-baseline;
-    }
-
-    .main-menu-container.off-screen & {
-        @include sidebar-animation(-110%);
     }
 }
 
