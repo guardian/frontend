@@ -1,9 +1,6 @@
-define([
-    'commercial/modules/dfp/dfp-env'
-], function (dfpEnv) {
-    return getCreativeIDs;
+import dfpEnv from 'commercial/modules/dfp/dfp-env';
+export default getCreativeIDs;
 
-    function getCreativeIDs() {
-        return dfpEnv.creativeIDs;
-    }
-});
+function getCreativeIDs() {
+    return dfpEnv.creativeIDs;
+}
