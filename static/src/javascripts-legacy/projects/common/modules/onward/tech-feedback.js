@@ -81,19 +81,19 @@ define([
 
         // mandatory checks (realtime)
 
-        document.querySelectorAll(".feedback__form input,.feedback__form textarea").forEach((elem) => {
+        document.querySelectorAll(".feedback__form input,.feedback__form textarea").forEach(function(elem){
             elem.onblur = function(){ mandatoryCheck(elem); }
             elem.oninput = function(){ mandatoryCheck(elem); }
         });
 
         // mandatory checks (on submit)
 
-        document.querySelectorAll(".feedback__form form").forEach((elem) => {
+        document.querySelectorAll(".feedback__form form").forEach(function(elem){
             elem.onsubmit = function() {
 
                 var hasFailed = false;
 
-                document.querySelectorAll(".feedback__form--selected input,.feedback__form--selected textarea").forEach((elem) => {
+                document.querySelectorAll(".feedback__form--selected input,.feedback__form--selected textarea").forEach(function(elem){
                     if(!mandatoryCheck(elem)){
                         hasFailed = true;
                     }
