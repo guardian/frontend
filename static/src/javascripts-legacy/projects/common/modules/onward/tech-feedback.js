@@ -1,17 +1,25 @@
 define([
-    'common/utils/config',
-    'common/utils/detect',
+    'bean',
+    'lib/$',
+    'lib/config',
+    'lib/detect',
     'commercial/modules/dfp/get-creative-ids',
     'common/modules/experiments/ab',
     'lodash/collections/map',
+    'lodash/collections/reduce',
+    'lodash/objects/assign',
     'lodash/objects/keys',
-    'common/utils/cookies'
+    'lib/cookies'
 ], function (
+    bean,
+    $,
     config,
     detect,
     getCreativeIDs,
     ab,
     map,
+    reduce,
+    assign,
     keys,
     cookies
 ) {
@@ -26,7 +34,6 @@ define([
             width: window.innerWidth,
             adBlock: adblockBeingUsed,
             devicePixelRatio: window.devicePixelRatio,
-            ophanId: config.ophan.pageViewId,
             gu_u: cookies.get('GU_U'),
             payingMember: cookies.get('gu_paying_member'),
             abTests : summariseAbTests(ab.getParticipations())
