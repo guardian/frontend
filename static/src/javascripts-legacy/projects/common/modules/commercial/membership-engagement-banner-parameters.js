@@ -1,69 +1,119 @@
 define([
         'lib/config',
         'lib/storage',
-        'lodash/objects/assign'
-    ], function(config,
-                storage,
-                assign) {
+        'lodash/objects/assign',
+        'lib/geolocation'
+    ], function(
+        config,
+        storage,
+        assign,
+        geolocation
+    ) {
 
-    function selectSequentiallyFrom(array) {
-        return array[storage.local.get('gu.alreadyVisited') % array.length];
+    var offerings = {
+        membership: 'membership',
+        contributions: 'contributions'
+    };
+
+    function defaultColourStrategy() {
+        return 'membership-prominent yellow'
     }
 
-    var MEMBERSHIP = 'membership';
-    var CONTRIBUTIONS = 'contributions';
+    // TODO: campaign code by location and/or reader product?
 
     var baseParams = {
         minArticles: 3,
-        colourStrategy: function() {
-            return 'membership-prominent ' + selectSequentiallyFrom(['yellow', 'purple', 'bright-blue', 'dark-blue']);
+        colourStrategy: defaultColourStrategy,
+        paypalClass: 'site-message__message--show-paypal',
+        campaignCode: 'gdnwb_copts_memco_banner' // Agreed with Jess and Jesse
+    };
+
+    function engagementBannerCopy(cta) {
+        return 'Unlike many others, we haven\'t put up a paywall - we want to keep our journalism as open as we can.' + ' ' + cta
+    }
+
+    // Prices taken from https://membership.theguardian.com/<region>/supporter
+    function monthlySupporterCost(location) {
+
+        var region = geolocation.getSupporterPaymentRegion(location);
+
+        if (region === 'EU') {
+
+            // Format either 4.99 € or €4.99 depending on country
+            // See https://en.wikipedia.org/wiki/Linguistic_issues_concerning_the_euro
+            var euro = '€';
+            var amount = '4.99';
+            var euroAfterCountryCodes = [
+                'BG',
+                'HR',
+                'CZ',
+                'EE',
+                'FI',
+                'FR',
+                'DE',
+                'GR',
+                'HU',
+                'IS',
+                'IT',
+                'LV',
+                'LT',
+                'PL',
+                'PT',
+                'RO',
+                'SK',
+                'SI',
+                'ES',
+                'SE'
+            ];
+
+            return euroAfterCountryCodes.includes(location) ? amount + ' ' + euro : euro + amount;
+
+        } else {
+
+            var payment = {
+                GB:  '£5',
+                US:  '$6.99',
+                AU:  '$10',
+                CA:  '$6.99',
+                INT: '$6.99'
+            }[region];
+
+            return payment ? payment : '£5'
         }
-    };
+    }
 
-    var membershipParams = assign({}, baseParams, {
-        buttonCaption: 'Become a Supporter',
-        linkUrl: 'https://membership.theguardian.com/supporter',
-        offering: MEMBERSHIP
-    });
+    function supporterEngagementBannerCopy(location) {
+        return engagementBannerCopy('Support us for ' + monthlySupporterCost(location) + ' per month.')
+    }
 
-    var contributionParams = assign({}, baseParams, {
-        buttonCaption: 'Make a Contribution',
-        linkUrl: 'https://contribute.theguardian.com/',
-        offering: CONTRIBUTIONS
-    });
+    function contributionEngagementBannerCopy() {
+        return engagementBannerCopy('Support us with a one-off contribution')
+    }
 
-    var defaultParamsLookup = {
-
-        UK: assign({}, membershipParams, {
-            messageText: 'For less than the price of a coffee a week, you could help secure the Guardian’s future. Support our journalism for £5 a month.',
-            campaignCode: "mem_uk_banner"
-        }),
-
-        US: assign({}, contributionParams, {
-            messageText: 'If you use it, if you like it, then why not pay for it? It’s only fair.',
-            campaignCode: "cont_us_banner"
-        }),
-
-        AU: assign({}, membershipParams, {
-            messageText: 'We need you to help support our fearless independent journalism. Become a Guardian Australia member for just $10 a month.',
-            campaignCode: "mem_au_banner"
-        }),
-
-        INT: assign({}, membershipParams, {
-            messageText: 'For less than the price of a coffee a week, you could help secure the Guardian\'s future. Support our journalism for $7 / €5 a month.',
-            campaignCode: "mem_int_banner"
+    function supporterParams(location) {
+        return assign({}, baseParams, {
+            buttonCaption: 'Become a Supporter',
+            linkUrl: 'https://membership.theguardian.com/supporter',
+            offering: offerings.membership,
+            messageText: supporterEngagementBannerCopy(location)
         })
-    };
+    }
 
-    var defaultParams = defaultParamsLookup[config.page.edition];
+    function contributionParams() {
+        return assign({}, baseParams, {
+            buttonCaption: 'Make a Contribution',
+            linkUrl: 'https://contribute.theguardian.com/',
+            offering: offerings.contributions,
+            messageText: contributionEngagementBannerCopy()
+        });
+    }
 
-    var offerings = {
-        membership: MEMBERSHIP,
-        contributions: CONTRIBUTIONS
-    };
+    function engagementBannerParams(location) {
+        return location === 'US' ? contributionParams() : supporterParams(location);
+    }
 
     return {
-        defaultParams: defaultParams,
+        defaultParams: engagementBannerParams(geolocation.getSync()),
         offerings: offerings
     }
 });

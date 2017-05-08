@@ -19,7 +19,8 @@ define([
         'common/modules/experiments/segment-util',
         'common/modules/experiments/acquisition-test-selector',
         'common/modules/commercial/membership-engagement-banner-parameters',
-        'ophan/ng'
+        'ophan/ng',
+        'lib/geolocation'
     ], function (bean,
                  $,
                  config,
@@ -40,7 +41,8 @@ define([
                  segmentUtil,
                  acquisitionTestSelector,
                  membershipEngagementBannerUtils,
-                 ophan) {
+                 ophan,
+                 geolocation) {
 
 
         // change messageCode to force redisplay of the message to users who already closed it.
@@ -196,24 +198,28 @@ define([
         }
 
         function init() {
-            var bannerParams = deriveBannerParams();
 
-            if (bannerParams && (storage.local.get('gu.alreadyVisited') || 0) >= bannerParams.minArticles) {
-                return commercialFeatures.async.canDisplayMembershipEngagementBanner.then(function (canShow) {
+            mediator.once(geolocation.geoLocationEstablishedEvent, function() {
 
-                    if (canShow) {
-                        mediator.on('modules:onwards:breaking-news:ready', function (breakingShown) {
-                            if (!breakingShown) {
-                                showBanner(bannerParams);
-                            } else {
-                                mediator.emit('banner-message:complete');
-                            }
-                        });
-                    } else {
-                        mediator.emit('banner-message:complete');
-                    }
-                });
-            }
+                var bannerParams = deriveBannerParams();
+
+                if (bannerParams && (storage.local.get('gu.alreadyVisited') || 0) >= bannerParams.minArticles) {
+                    return commercialFeatures.async.canDisplayMembershipEngagementBanner.then(function (canShow) {
+
+                        if (canShow) {
+                            mediator.on('modules:onwards:breaking-news:ready', function (breakingShown) {
+                                if (!breakingShown) {
+                                    showBanner(bannerParams);
+                                } else {
+                                    mediator.emit('banner-message:complete');
+                                }
+                            });
+                        } else {
+                            mediator.emit('banner-message:complete');
+                        }
+                    });
+                }
+            });
 
             return Promise.resolve();
         }

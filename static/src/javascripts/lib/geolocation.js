@@ -14,6 +14,11 @@ const daysBeforeGeolocationRefresh = 10;
 
 const getFromStorage = (): string => storage.get(storageKey);
 
+const geoLocationEstablishedEvent = 'geolocation:established';
+
+const fireGeoLocationEstablishedEvent = () =>
+    mediator.emit(geoLocationEstablishedEvent);
+
 const get = (): Promise<string> =>
     new Promise((resolve, reject) => {
         const geolocationFromStorage = getFromStorage();
@@ -38,8 +43,6 @@ const get = (): Promise<string> =>
             .catch(reject);
     });
 
-const geoLocationSetEvent = 'geolocation:set';
-
 const init = (): void => {
     get().then(geolocation => {
         const currentDate = new Date();
@@ -49,7 +52,7 @@ const init = (): void => {
             ),
         });
         // Allows application logic to wait until geolocation is set.
-        mediator.emit(geoLocationSetEvent);
+        fireGeoLocationEstablishedEvent();
     });
 };
 
@@ -145,5 +148,5 @@ export {
     getSync,
     isInEurope,
     init,
-    geoLocationSetEvent,
+    geoLocationEstablishedEvent,
 };
