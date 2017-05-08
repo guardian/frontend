@@ -1,9 +1,6 @@
-define([
-    'commercial/modules/dfp/dfp-env'
-], function (dfpEnv) {
-    return getAdvertById;
+import dfpEnv from 'commercial/modules/dfp/dfp-env';
+export default getAdvertById;
 
-    function getAdvertById(id) {
-        return id in dfpEnv.advertIds ? dfpEnv.adverts[dfpEnv.advertIds[id]] : null;
-    }
-});
+function getAdvertById(id) {
+    return id in dfpEnv.advertIds ? dfpEnv.adverts[dfpEnv.advertIds[id]] : null;
+}
