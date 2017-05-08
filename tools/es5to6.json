@@ -24,7 +24,6 @@
     "projects/commercial/modules/creatives/scrollable-mpu-v2.js"
   ],
   "Regis Kuckaertz": [
-    "projects/commercial/modules/dfp/empty-advert.js",
     "projects/commercial/modules/dfp/enable-lazy-load.js",
     "projects/commercial/modules/dfp/fill-advert-slots.js",
     "projects/commercial/modules/dfp/get-advert-by-id.js",
