@@ -194,17 +194,12 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter / 2;
 }
 
 .new-header__logo__svg {
-    // Removes extra spacing
-    display: block;
-    height: auto;
-    padding-right: $gs-gutter / 2;
-
     // Aspect ratio: 16:3
-    @include mq($until: mobileMedium) {
-        width: 170px;
-        // height: auto doesn't work in Safari
-        height: calc(3 / 16 * 170px);
-    }
+    display: block;
+    // height: auto doesn't work in Safari
+    height: calc(3 / 16 * 170px);
+    padding-right: $gs-gutter / 2;
+    width: 170px;
 
     @include mq($from: mobileMedium, $until: mobileLandscape) {
         width: 225px;
