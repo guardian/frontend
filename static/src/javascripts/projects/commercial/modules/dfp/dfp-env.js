@@ -2,7 +2,7 @@
 import { getUrlVars } from 'lib/url';
 import config from 'lib/config';
 
-type Map<A, B> = { [A]: B };
+type Map<K, V> = { [K]: V };
 
 export type DfpEnv = {
     renderStartTime: number,
