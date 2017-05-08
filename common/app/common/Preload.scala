@@ -4,10 +4,10 @@ import model.ApplicationIdentity
 
 object Preload {
 
-  val articleDefaultPreloads = Seq("content.css", "javascripts/graun.standard.js", "javascripts/graun.commercial.js")
-  val faciaDefaultPreloads = Seq("content.css", "javascripts/graun.standard.js", "javascripts/graun.commercial.js")
+  val articleDefaultPreloads: Seq[PreloadAsset] = Seq(CssPreloadAsset("content.css"), JsPreloadAsset("javascripts/graun.standard.js"), JsPreloadAsset("javascripts/graun.commercial.js"))
+  val faciaDefaultPreloads: Seq[PreloadAsset] = Seq(CssPreloadAsset("content.css"), JsPreloadAsset("javascripts/graun.standard.js"), JsPreloadAsset("javascripts/graun.commercial.js"))
 
-  val config: Map[ApplicationIdentity, Seq[String]] = Map(
+  val config: Map[ApplicationIdentity, Seq[PreloadAsset]] = Map(
     ApplicationIdentity("article") -> articleDefaultPreloads,
     ApplicationIdentity("facia") -> faciaDefaultPreloads
   )
