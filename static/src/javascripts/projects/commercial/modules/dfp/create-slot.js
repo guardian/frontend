@@ -132,9 +132,9 @@ const createSlot = (type: string, options: Object = {}) => {
 
     return createAdSlotElement(
         slotName,
-        Object.entries(attributes).reduce(
-            (result, [key, value]) =>
-                Object.assign({}, result, { [`data-${key}`]: value }),
+        Object.keys(attributes).reduce(
+            (result, key) =>
+                Object.assign({}, result, { [`data-${key}`]: attributes[key] }),
             {}
         ),
         classes
