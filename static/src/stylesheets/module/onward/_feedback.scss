@@ -6,25 +6,22 @@
 }
 
 .feedback__form--selected {
-    display: block !important;
+    display: block;
 }
 
 .feedback__element {
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
+    margin-top: 1.5rem;
 }
 
 .feedback__entry {
-    font-family: 'Guardian Text Sans Web', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
-    font-size: inherit;
-    line-height: inherit;
-    color: inherit;
     border: 1px solid #dcdcdc;
-    padding: .5rem;
+    padding: .75rem;
     outline: none;
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-    border-radius: 10px;
+    border-radius: .5rem;
     display: block;
     width: 80%;
 }
@@ -34,12 +31,9 @@
 }
 
 .feedback__select {
-    font-family: 'Guardian Text Sans Web', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
-    font-size: inherit;
-    line-height: inherit;
-    color: inherit;
     border: 1px solid #dcdcdc;
     padding: .5rem;
+    margin-top: 1.5em;
     outline: none;
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -47,7 +41,7 @@
     border-radius: 1.2rem;
     display: block;
     cursor: pointer;
-    background: #ffffff url(//jobs.theguardian.com/assets/dist/images/down-arrow.png;v=1ff1bfbdf418acc91a0169a5deec05df) no-repeat 93% 50%;
+    background: #ffffff url(//jobs.theguardian.com/assets/dist/images/down-arrow.png) no-repeat 93% 50%;
     background-size: 16px auto;
     width: 80%;
 }
