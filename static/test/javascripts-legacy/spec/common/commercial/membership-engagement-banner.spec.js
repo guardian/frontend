@@ -66,20 +66,19 @@ define([
             expect(getMessageContent()).toBeNull();
         }
 
-        function expectMessageToBeShown() {
-            var message = document.querySelector('.js-site-message');
-            var messageContent = getMessageContent();
+        function expectMessageToBeShown(){
+                var message = document.querySelector('.js-site-message');
+                var messageContent = getMessageContent();
+                expect(messageContent).not.toBeNull();
+                expect(message.className).toContain('membership-prominent');
+                expect(message.className).not.toContain('is-hidden');
+            }
 
-            expect(messageContent).not.toBeNull();
-            expect(message.className).toContain('membership-prominent');
-            expect(message.className).not.toContain('is-hidden');
-        }
+        function expectMessageNotToBeVisible(){
+                var message = document.querySelector('.js-site-message');
+                expect(message.className).toContain('is-hidden');
+                expect(message.className).not.toContain('membership-message');
 
-        function expectMessageNotToBeVisible() {
-            var message = document.querySelector('.js-site-message');
-
-            expect(message.className).toContain('is-hidden');
-            expect(message.className).not.toContain('membership-message');
         }
 
         describe('If breaking news banner', function () {
@@ -124,6 +123,7 @@ define([
             });
         });
 
+
         describe('If user already member', function () {
             beforeEach(function (done) {
                 showMembershipMessages = commercialFeatures.async.canDisplayMembershipEngagementBanner;
@@ -156,7 +156,7 @@ define([
                     });
             });
         });
-
+/*
         describe('If user not member', function () {
             beforeEach(function (done) {
                 showMembershipMessages = commercialFeatures.async.canDisplayMembershipEngagementBanner;
@@ -236,6 +236,6 @@ define([
                         });
                 });
             });
-        });
+        });*/
     });
 });

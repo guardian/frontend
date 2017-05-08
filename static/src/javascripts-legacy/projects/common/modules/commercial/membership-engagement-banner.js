@@ -165,6 +165,7 @@ define([
                 colourClass = 'membership-prominent yellow';
             }
 
+            console.log('rendering banner');
             var renderedBanner = template(messageTemplate, {
                 linkHref: params.linkUrl + '?INTCMP=' + params.campaignCode,
                 messageText: messageText,
@@ -187,6 +188,7 @@ define([
 
             if (messageShown) {
 
+                console.log('message was shown');
                 recordInteraction(params.interactionOnMessageShown);
 
                 mediator.emit('membership-message:display');
@@ -197,12 +199,17 @@ define([
 
         function init() {
             var bannerParams = deriveBannerParams();
-
+            console.log('initing');
             if (bannerParams && (storage.local.get('gu.alreadyVisited') || 0) >= bannerParams.minArticles) {
                 return commercialFeatures.async.canDisplayMembershipEngagementBanner.then(function (canShow) {
 
+                    console.log('hopefully we can soon display');
                     if (canShow) {
+                        console.log('yes we can');
+
                         mediator.on('modules:onwards:breaking-news:ready', function (breakingShown) {
+                            console.log('that breaking:', breakingShown);
+
                             if (!breakingShown) {
                                 showBanner(bannerParams);
                             } else {
