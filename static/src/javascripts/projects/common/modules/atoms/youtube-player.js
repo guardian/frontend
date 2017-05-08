@@ -13,7 +13,7 @@ const promise = new Promise(resolve => {
 });
 
 const loadYoutubeJs = () => {
-    loadScript(scriptSrc);
+    loadScript(scriptSrc, {});
 };
 
 const addVideoStartedClass = el => {
@@ -58,7 +58,7 @@ const setupPlayer = (id, onPlayerReady, onPlayerStateChange) =>
 
 const hasPlayerStarted = event => event.target.getCurrentTime() > 0;
 
-const init = (el, handlers, videoId) => {
+const init = (el: HTMLElement, handlers: {}, videoId: string) => {
     loadYoutubeJs();
 
     return promise.then(() => {
