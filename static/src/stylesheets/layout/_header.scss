@@ -220,22 +220,6 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter / 2;
     }
 }
 
-.new-header__nav {
-    font-size: 0;
-    width: 100%;
-    overflow: hidden;
-
-    @include mq($until: mobile) {
-        // Menu squishes gracefully
-        height: $gs-baseline * 2.5;
-        margin-right: $gutter-small + $veggie-burger-small + $gs-gutter / 3;
-    }
-
-    @include mq(mobileLandscape) {
-        margin-left: $gs-gutter / 2;
-    }
-}
-
 .new-header__nav__menu-button {
     // Override button from user agent stylesheet
     position: absolute;
@@ -339,22 +323,38 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter / 2;
     }
 }
 
-.new-header__nav-primary-links {
+/* PRIMARY */
+.new-header__pillars {
+    list-style: none;
     margin: 0;
+    padding: 0 $gs-gutter / 2;
 }
 
-.new-header__nav-link-item {
-    @include trailing-slash-item;
+.new-header__pillar {
+    display: inline-block;
+
+    > *:after {
+        content: '/';
+        color: $news-main-2;
+        display: inline-block;
+        line-height: 1;
+        margin-left: -2px;
+        margin-right: -2px;
+        pointer-events: none;
+    }
+
+    &:last-child > *:after {
+        content: '';
+    }
 }
 
-.new-header__nav-link {
+.new-header__pillar-link {
     @include fs-textSans(5);
-    @include trailing-slash-link;
-    line-height: $gs-baseline * 2.5;
-
-    // Override a from _lists.scss
     color: $news-support-1;
     cursor: pointer;
+    display: block;
+    line-height: $gs-baseline * 2.5;
+    position: relative;
 
     @include mq($from: mobile, $until: mobileLandscape) {
         font-size: 16px;
@@ -372,16 +372,24 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter / 2;
 
     &:focus,
     &:hover {
+        cursor: pointer;
         text-decoration: none;
     }
+}
 
-    .new-header__nav-link-item:first-child & {
-        padding-left: $gs-gutter / 2;
-    }
+.new-header__pillar-link--current-section {
+    color: #ffffff;
 
-    &:after {
-        @include trailing-slash;
-        color: $news-main-2;
+    // triangle
+    &:before {
+        content: '';
+        position: absolute;
+        left: 50%;
+        bottom: 0;
+        transform: translateX(-100%);
+        border-bottom: $gs-baseline / 2 solid $subnav-grey;
+        border-left: $gs-baseline / 2 solid transparent;
+        border-right: $gs-baseline / 2 solid transparent;
     }
 }
 
@@ -768,21 +776,6 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter / 2;
 
     .content__labels {
         padding: ($gs-baseline / 2 + $gs-baseline / 4) 0;
-    }
-}
-
-.section-indicator {
-    color: #ffffff;
-
-    &:before {
-        content: '';
-        position: absolute;
-        left: 49%;
-        bottom: 0;
-        transform: translateX(-50%);
-        border-bottom: $gs-baseline / 2 solid $subnav-grey;
-        border-left: $gs-baseline / 2 solid transparent;
-        border-right: $gs-baseline / 2 solid transparent;
     }
 }
 
