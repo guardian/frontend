@@ -28,7 +28,10 @@ const selectors = {
     },
 };
 
-const build = function(codes, breakpoint) {
+const build = function(
+    codes: { code?: string, image?: string, text?: string },
+    breakpoint: string
+): string {
     let html = outbrainTpl({
         widgetCode: codes.code || codes.image,
     });
@@ -40,14 +43,17 @@ const build = function(codes, breakpoint) {
     return html;
 };
 
-const tracking = function(trackingObj) {
+const tracking = function(trackingObj: {
+    widgetId?: string,
+    state?: string,
+}): void {
     ophan.record({
         outbrain: trackingObj,
     });
 };
 
-const load = function(target) {
-    const slot = target in selectors ? target : 'defaults';
+const load = function(target?: string): void {
+    const slot = target && target in selectors ? target : 'defaults';
     const $outbrain = $(selectors.outbrain.widget);
     const $container = $(selectors.outbrain.container, $outbrain[0]);
     const breakpoint = detect.getBreakpoint();

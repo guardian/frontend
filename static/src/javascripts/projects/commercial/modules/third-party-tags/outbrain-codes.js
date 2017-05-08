@@ -69,7 +69,7 @@ const getCode = function(data: {
     slot: string,
     breakpoint: string,
     section: string,
-}): { code: string } {
+}): { code?: string, image?: string, text?: string } {
     if (!(data.slot in outbrainCodes) || data.slot === 'defaults') {
         return outbrainCodes.defaults[getSection(data.section)][
             data.breakpoint === 'wide' ? 'desktop' : data.breakpoint
