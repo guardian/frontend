@@ -134,10 +134,12 @@ define([
             });
 
             it('inserts up to ten adverts when DFP returns empty merchandising components', function (done) {
-                spaceFillerStub.onCall(0).returns(Promise.resolve(false));
-                spaceFillerStub.onCall(1).returns(Promise.resolve(0));
-                spaceFillerStub.onCall(2).returns(Promise.resolve(2));
-                spaceFillerStub.onCall(3).returns(Promise.resolve(8));
+                // The 0 is for addInlineMerchAd, failing to add a merchandising component.
+                spaceFillerStub.onCall(0).returns(Promise.resolve(0));
+                // The 2 is for addInlineAds, adding adverts using standard getRules().
+                spaceFillerStub.onCall(1).returns(Promise.resolve(2));
+                // The 8 is for addInlineAds again, adding adverts using getLongArticleRules().
+                spaceFillerStub.onCall(2).returns(Promise.resolve(8));
 
                 detect.getBreakpoint = function () {return 'tablet';};
                 ads['dfp-ad--im'] = false;
