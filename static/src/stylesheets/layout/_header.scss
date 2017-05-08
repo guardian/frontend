@@ -201,7 +201,7 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter / 2;
     padding-right: $gs-gutter / 2;
     width: 170px;
 
-    @include mq($from: mobileMedium, $until: mobileLandscape) {
+    @include mq(mobileMedium) {
         width: 225px;
         height: calc(3 / 16 * 225px);
     }
