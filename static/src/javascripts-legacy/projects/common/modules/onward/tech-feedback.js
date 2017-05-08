@@ -27,7 +27,7 @@ define([
 ) {
 
     var select = document.getElementById("feedback-category");
-    var warning = document.getElementById("feedback-warning");
+    var warning = document.getElementById("feedback__explainer");
 
     var adblockBeingUsed = false;
 
@@ -60,19 +60,19 @@ define([
     function toggleFormVisibility() {
         document.querySelectorAll("#feedback-category>option").forEach(function(elem){
             if(elem.selected && elem.value != "nothing"){
-                document.getElementById(elem.value).classList.add("feedback__form-selected");
+                document.getElementById(elem.value).classList.add("feedback__form--selected");
             } else if(elem.value != "nothing") {
-                document.getElementById(elem.value).classList.remove("feedback__form-selected");
+                document.getElementById(elem.value).classList.remove("feedback__form--selected");
             }
         });
     }
 
     function mandatoryCheck(elem) {
         if(elem.value == ""){
-            elem.classList.add("mandatory-failed");
+            elem.classList.add("feedback__entry--mandatory-failed");
             return false;
         } else {
-            elem.classList.remove("mandatory-failed");
+            elem.classList.remove("feedback__entry--mandatory-failed");
             return true;
         }
     }
@@ -93,7 +93,7 @@ define([
 
                 var hasFailed = false;
 
-                document.querySelectorAll(".feedback__form-selected input,.feedback__form-selected textarea").forEach((elem) => {
+                document.querySelectorAll(".feedback__form--selected input,.feedback__form--selected textarea").forEach((elem) => {
                     if(!mandatoryCheck(elem)){
                         hasFailed = true;
                     }
