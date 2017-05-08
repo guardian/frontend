@@ -17,7 +17,9 @@ const catchPolyfillErrors = () => {
 
     const nativeGetOwnPropertyNames: (obj: any) => Array<string> =
         Object.getOwnPropertyNames;
-    Object.getOwnPropertyNames = (obj: any): Array<string> => {
+    // Cast to any to workaround Flow warning:
+    // covariant property incompatible with contravariant use in assignment of property.
+    (Object: any).getOwnPropertyNames = (obj: any): Array<string> => {
         try {
             return nativeGetOwnPropertyNames(obj);
         } catch (e) {
