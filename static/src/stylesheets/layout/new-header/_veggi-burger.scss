@@ -1,0 +1,93 @@
+.veggi-burger {
+    background-color: $news-main-2;
+    bottom: -$gs-baseline / 2;
+    cursor: pointer;
+    height: $veggie-burger-small;
+    min-width: $veggie-burger-small;
+    position: absolute;
+    border: 0;
+    border-radius: 50%;
+    outline: none;
+    right: $gutter-small;
+    z-index: 2;
+
+    @include mq(mobileMedium) {
+        height: $veggie-burger-medium;
+        width: $veggie-burger-medium;
+        //Align with the 'i' in 'theguardian'
+        right: $gutter-medium;
+    }
+
+    @include mq(mobileLandscape) {
+        //Align with the 'i' in 'theguardian'
+        right: $gutter-large;
+    }
+
+    // menu is open
+    .new-header--open & {
+        box-shadow: 0 0 0 1px rgba(0, 0, 0, .08);
+        z-index: 1071;
+
+        &:before {
+            border-radius: ($veggie-burger-small * 2) 0 0 ($veggie-burger-small * 2);
+            // Extended hit area for veggie burger close state, for fat fingers
+            content: '';
+            height: $veggie-burger-small * 2;
+            position: absolute;
+            right: $veggie-burger-small / 2;
+            top: -$veggie-burger-small / 2;
+            width: $veggie-burger-small;
+
+            @include mq(mobileMedium) {
+                height: $veggie-burger-medium * 2;
+                width: $veggie-burger-medium;
+                top: -$veggie-burger-medium / 2;
+                right: $veggie-burger-medium / 2;
+                border-radius: ($veggie-burger-medium * 2) 0 0 ($veggie-burger-medium * 2);
+            }
+        }
+
+        // transform burger into cross
+        .veggie-burger-icon {
+            background-color: transparent;
+
+            &:before {
+                top: 0;
+                transform: rotate(-45deg);
+            }
+
+            &:after {
+                bottom: 0;
+                transform: rotate(45deg);
+            }
+        }
+    }
+}
+
+.veggie-burger-icon {
+    top: 50%;
+    display: block;
+    margin-top: -($gs-baseline / 6) / 2;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+
+    &,
+    &:before,
+    &:after {
+        content: '';
+        position: absolute;
+        width: $gs-gutter;
+        height: $gs-baseline / 6;
+        background-color: #ffffff;
+    }
+
+    &:before {
+        top: -$gs-gutter / 4;
+    }
+
+    &:after {
+        bottom: -$gs-gutter / 4;
+    }
+}

@@ -180,6 +180,10 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter / 2;
     }
 }
 
+.new-header--open {
+
+}
+
 .new-header__inner {
     display: flex;
     justify-content: space-between;
@@ -212,109 +216,6 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter / 2;
         height: calc(3 / 16 * 260px);
         padding: ($gs-baseline / 2) ($gs-gutter / 2) 0;
         margin-right: $gs-gutter / 2;
-    }
-}
-
-.new-header__nav__menu-button {
-    // Override button from user agent stylesheet
-    position: absolute;
-    // Unset button from user agent stylesheet
-    border: 0;
-    outline: none;
-    // Override button from user agent stylesheet
-    border-radius: 50%;
-    z-index: 1049;
-    background-color: $news-main-2;
-    cursor: pointer;
-    bottom: -$gs-baseline / 2;
-
-    @include mq($until: mobileMedium) {
-        //Smaller menu button
-        height: $veggie-burger-small;
-        min-width: $veggie-burger-small;
-        //Align with the 'i' in 'theguardian'
-        right: $gutter-small;
-    }
-
-    @include mq(mobileMedium) {
-        height: $veggie-burger-medium;
-        width: $veggie-burger-medium;
-        //Align with the 'i' in 'theguardian'
-        right: $gutter-medium;
-    }
-
-    @include mq(mobileLandscape) {
-        //Align with the 'i' in 'theguardian'
-        right: $gutter-large;
-    }
-}
-
-.new-header__nav__menu-button--open {
-    z-index: 1071;
-    box-shadow: 0 0 0 1px rgba(0, 0, 0, .08);
-
-    &:before {
-        // Extended hit area for veggie burger close state, for fat fingers
-        content: '';
-        position: absolute;
-
-        @include mq($until: mobileMedium) {
-            height: $veggie-burger-small * 2;
-            width: $veggie-burger-small;
-            top: -$veggie-burger-small / 2;
-            right: $veggie-burger-small / 2;
-            border-radius: ($veggie-burger-small * 2) 0 0 ($veggie-burger-small * 2);
-        }
-
-        @include mq(mobileMedium) {
-            height: $veggie-burger-medium * 2;
-            width: $veggie-burger-medium;
-            top: -$veggie-burger-medium / 2;
-            right: $veggie-burger-medium / 2;
-            border-radius: ($veggie-burger-medium * 2) 0 0 ($veggie-burger-medium * 2);
-        }
-    }
-}
-
-.new-header__veggie-burger-icon {
-    top: 50%;
-    display: block;
-    margin-top: -($gs-baseline / 6) / 2;
-    left: 0;
-    right: 0;
-    margin-left: auto;
-    margin-right: auto;
-
-    &,
-    &:before,
-    &:after {
-        content: '';
-        position: absolute;
-        width: $gs-gutter;
-        height: $gs-baseline / 6;
-        background-color: #ffffff;
-    }
-
-    &:before {
-        top: -$gs-gutter / 4;
-    }
-
-    &:after {
-        bottom: -$gs-gutter / 4;
-    }
-
-    .new-header__nav__menu-button--open & {
-        background-color: transparent;
-
-        &:before {
-            top: 0;
-            transform: rotate(-45deg);
-        }
-
-        &:after {
-            bottom: 0;
-            transform: rotate(45deg);
-        }
     }
 }
 
@@ -464,13 +365,14 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter / 2;
     display: none;
 }
 
-.new-header__nav-trigger {
+.veggi-burger {
     &:checked,
     &[aria-expanded='true']  {
         & ~ .main-menu-container {
             @include sidebar-animation(0%);
         }
     }
+
     &:checked,
     &[aria-expanded='true'] {
         & ~ .main-menu-container__overlay {
@@ -777,6 +679,6 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter / 2;
 
 // Don't show menu on opera mini: https://wp-mix.com/css-target-opera/
 x:-o-prefocus, .main-menu-container,
-x:-o-prefocus, .new-header__nav__menu-button {
+x:-o-prefocus, .veggi-burger {
     display: none;
 }

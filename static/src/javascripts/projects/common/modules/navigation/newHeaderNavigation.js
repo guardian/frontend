@@ -37,9 +37,10 @@ const openSidebarSection = (
 const toggleSidebar = (): void => {
     const documentElement = document.documentElement;
     const sidebarToggle = document.querySelector('.js-change-link');
-    const openClass = 'new-header__nav__menu-button--open';
+    const openClass = 'new-header--open';
     const globalOpenClass = 'nav-is-open';
-    const trigger = document.querySelector('.new-header__nav-trigger');
+    const trigger = document.querySelector('.veggi-burger');
+    const newHeader = document.querySelector('.new-header');
     const isOpen = trigger && trigger.getAttribute('aria-expanded') === 'true';
     const sidebar = getSidebarElement();
 
@@ -78,7 +79,7 @@ const toggleSidebar = (): void => {
         }
 
         sidebar.setAttribute('aria-hidden', hiddenAttr);
-        sidebarToggle.classList.toggle(openClass, !isOpen);
+        newHeader.classList.toggle(openClass, !isOpen);
 
         if (documentElement) {
             documentElement.classList.toggle(globalOpenClass, !isOpen);
