@@ -1,10 +1,8 @@
 define([
     'lib/storage',
-    'lib/time',
     'common/modules/identity/api'
 ], function (
     storage,
-    time,
     id
 ) {
     var userSegmentsKey = 'gu.ads.userSegmentsData';
@@ -44,7 +42,7 @@ define([
                             userHash: user.id % 9999
                         },
                         {
-                            expires: time.currentDate().getTime() + (24 * 60 * 60 * 1000)
+                            expires: new Date().getTime() + (24 * 60 * 60 * 1000)
                         }
                     );
                 }

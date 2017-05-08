@@ -107,9 +107,8 @@
 @caption(picture: model.ImageMedia, imageOption: Option[ImageAsset], isMain: Boolean) = {
     @imageOption.map { img =>
         @if(img.showCaption) {
-            @if(isMain && mvt.ABNewNavVariantSeven.isParticipating) {
-
-                <input type="checkbox" id="show-caption" class="mobile-only u-h">
+            @if(isMain) {
+                <input type="checkbox" id="show-caption" class="mobile-only u-h reveal-caption__checkbox">
 
                 <label class="mobile-only reveal-caption reveal-caption--img" for="show-caption">
                     @fragments.inlineSvg("information", "icon", List("reveal-caption-icon", "centered-icon"))

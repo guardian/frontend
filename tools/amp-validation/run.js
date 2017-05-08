@@ -6,22 +6,22 @@ const fetchPage = require('./fetch-page');
 
 const isDev = process.env.NODE_ENV === 'dev' || false;
 
-function onError(error) {
+const onError = error => {
     console.error(error.message);
     validatorJs.cleanUp();
     process.exit(1);
-}
+};
 
-function buildErrorMessage(error) {
+const buildErrorMessage = error => {
     let msg = `line ${error.line}, col ${error.col}: ${error.message}`;
     if (error.specUrl !== null) {
         msg += ` (see ${error.specUrl})`;
     }
     return msg;
-}
+};
 
-function runValidator(validator, options) {
-    return endpoint => fetchPage
+const runValidator = (validator, options) => endpoint =>
+    fetchPage
         .get({
             endpoint,
             host: isDev ? fetchPage.hosts.dev : fetchPage.hosts.amp,
@@ -43,45 +43,38 @@ function runValidator(validator, options) {
             return pass;
         })
         .catch(onError);
-}
 
-function maybeRunValidator(validator, options) {
-    return endpoint => {
-        const validate = runValidator(validator, options);
-        if (!options.checkIfAmp) return validate(endpoint);
+const maybeRunValidator = (validator, options) => endpoint => {
+    const validate = runValidator(validator, options);
+    if (!options.checkIfAmp) return validate(endpoint);
 
-        return fetchPage
-            .get({
-                endpoint,
-                host: fetchPage.hosts.prod,
-            })
-            .then(body => {
-                if (body.includes('<link rel="amphtml" href="')) {
-                    return validate(endpoint);
-                }
-                return Promise.resolve(true);
-            })
-            .catch(onError);
-    };
-}
+    return fetchPage
+        .get({
+            endpoint,
+            host: fetchPage.hosts.prod,
+        })
+        .then(body => {
+            if (body.includes('<link rel="amphtml" href="')) {
+                return validate(endpoint);
+            }
+            return Promise.resolve(true);
+        })
+        .catch(onError);
+};
 
-function checkEndpoints(endpoints, options) {
-    return validatorFilePath =>
-        amphtmlValidator.getInstance(validatorFilePath).then(validator => {
-            const tests = endpoints.map(maybeRunValidator(validator, options));
+const checkEndpoints = (endpoints, options) => validatorFilePath =>
+    amphtmlValidator.getInstance(validatorFilePath).then(validator => {
+        const tests = endpoints.map(maybeRunValidator(validator, options));
 
-            Promise.all(tests).then(values => {
-                const results = partition(values, Boolean);
-                const exitValue = results[1].length ? 1 : 0; // every promise returns true <=> exit value is zero
+        Promise.all(tests).then(values => {
+            const results = partition(values, Boolean);
+            const exitValue = results[1].length ? 1 : 0; // every promise returns true <=> exit value is zero
 
-                console.log(
-                    `Validator finished, there were ${results[0].length} passes and ${results[1].length} failures.`
-                );
-                validatorJs.cleanUp();
-                process.exit(exitValue);
-            });
+            console.log(`Validator finished, there were ${results[0].length} passes and ${results[1].length} failures.`);
+            validatorJs.cleanUp();
+            process.exit(exitValue);
         });
-}
+    });
 
 module.exports = opts => endpoints => {
     const options = Object.assign(

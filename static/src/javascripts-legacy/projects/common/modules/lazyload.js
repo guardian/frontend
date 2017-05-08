@@ -1,10 +1,10 @@
 define([
-    'lib/ajax',
+    'lib/fetch-json',
     'lib/steady-page',
     'bonzo',
     'lodash/objects/merge'
 ], function (
-    ajax,
+    fetchJSON,
     steadyPage,
     bonzo,
     merge
@@ -13,8 +13,7 @@ define([
         return x;
     }
 
-    function lazyload(options) {
-
+    function lazyload(url, options) {
         /*
             Accepts these options:
 
@@ -23,35 +22,34 @@ define([
             beforeInsert      - function applied to response html before inserting it into container, optional
             success           - callback function, optional
             error             - callback function, optional
-            always            - callback function, optional
             force             - boolean, default false. Reload an already-populated container
         */
+
         options = merge({
-            success: identity,
-            error:   identity,
-            always:  identity,
             beforeInsert: identity,
-            force: false
+            force: false,
+            finally: identity,
+            catch: identity,
         }, options);
 
-        if (options.url && options.container) {
+        if (url && options.container) {
             var $container = bonzo(options.container);
+
             if (options.force || !$container.hasClass('lazyloaded')) {
-                return ajax({
-                    url: options.url,
-                    type: 'json',
-                    crossOrigin: true
+                return fetchJSON(url, {
+                    mode: 'cors',
                 })
                 .then(function (resp) {
-                    return steadyPage.insert($container[0], function(){
-                        $container.html(options.beforeInsert(resp.html))
+                    return steadyPage.insert($container[0], function() {
+                        $container
+                            .html(options.beforeInsert(resp.html))
                             .addClass('lazyloaded');
-                    }).then(function(){
-                        options.success(resp);
+
+                        return resp;
                     });
                 })
-                .catch(options.error)
-                .always(options.always);
+                .then(options.finally)
+                .catch(options.catch);
             }
         }
     }

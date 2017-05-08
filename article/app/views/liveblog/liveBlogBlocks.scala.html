@@ -11,10 +11,7 @@
     <div
         id="block-@block.id"
         data-sort-time="@block.publishedCreatedTimestamp()"
-        class="block block--content@block.eventClass"
-        itemprop="liveBlogUpdate"
-        itemscope=""
-        itemtype="http://schema.org/BlogPosting"
+        class="block block--content@block.eventClass@block.attributes.membershipPlaceholder.map { _ => js-insert-epic-after}"
     >
         <p class="block-time published-time">
             @if(amp){

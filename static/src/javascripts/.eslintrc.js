@@ -1,10 +1,15 @@
+// @flow
 module.exports = {
     parser: 'babel-eslint',
     settings: {
         'import/resolver': 'webpack',
     },
-    extends: ['plugin:flowtype/recommended'],
-    plugins: ['guardian-frontend', 'flowtype'],
+    extends: [
+        'plugin:flowtype/recommended',
+        'prettier/flowtype',
+        'prettier/react',
+    ],
+    plugins: ['guardian-frontend', 'flowtype', 'flow-header'],
     rules: {
         // require-specific overrides
         'import/no-extraneous-dependencies': 'off', // necessary while we use aliases
@@ -39,24 +44,33 @@ module.exports = {
                     'lodash/collections/forEach',
                     'lodash/collections/map',
                     'lodash/collections/reduce',
+                    'lodash/collections/reduceRight',
                     'lodash/collections/some',
                     'lodash/collections/filter',
+                    'lodash/collections/every',
+                    'lodash/collections/contains',
                     'lodash/objects/assign',
                     'lodash/objects/values',
                     'lodash/objects/merge',
                     'lodash/objects/keys',
-                    'lodash/collections/every',
-                    'lodash/collections/contains',
                     'lodash/objects/isArray',
                     'lodash/arrays/indexOf',
+                    'lodash/arrays/compact',
                     'Promise',
                 ],
                 patterns: ['!lodash/*'],
             },
         ],
 
+        'flow-header/flow-header': 'error',
+
         // our own rules for frontend
         // live in tools/eslint-plugin-guardian-frontend
-        'guardian-frontend/global-config': 2,
+        'guardian-frontend/global-config': 'error',
+        'guardian-frontend/no-default-export': 'warn',
+        'import/prefer-default-export': 'off',
+
+        // flow should take care of our return values
+        'consistent-return': 'off',
     },
 };

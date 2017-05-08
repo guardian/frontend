@@ -1,11 +1,10 @@
 define([
     'lodash/objects/assign',
-    'lib/closest',
     'lib/fastdom-promise',
     'commercial/modules/messenger'
-], function (assign, closest, fastdom, messenger) {
+], function (assign, fastdom, messenger) {
     messenger.register('resize', function(specs, ret, iframe) {
-        return resize(specs, iframe, closest(iframe, '.js-ad-slot'));
+        return resize(specs, iframe, iframe.closest('.js-ad-slot'));
     });
 
     return resize;

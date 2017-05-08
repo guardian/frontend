@@ -87,8 +87,9 @@
             <div class="gs-container">
                 @if(!isTheMinuteArticle) {
                     <div class="content__main-column">
-                    @fragments.meta.metaInline(page.item)
+                      @fragments.meta.metaInline(page.item)
                 }
+
 
                 <h1 class="@RenderClasses(Map(
                         "content__headline--minute" -> isTheMinuteArticle,

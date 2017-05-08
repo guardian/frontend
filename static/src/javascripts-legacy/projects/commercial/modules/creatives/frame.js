@@ -1,21 +1,25 @@
 define([
     'lib/fastdom-promise',
     'lodash/utilities/template',
-    'common/views/svgs',
     'common/modules/ui/toggles',
+    'common/views/svg',
     'commercial/modules/creatives/add-tracking-pixel',
     'commercial/modules/creatives/add-viewability-tracker',
     'raw-loader!commercial/views/creatives/frame.html',
-    'raw-loader!commercial/views/creatives/gustyle-label.html'
+    'raw-loader!commercial/views/creatives/gustyle-label.html',
+    'svg-loader!svgs/icon/external-link.svg',
+    'svg-loader!svgs/icon/arrow.svg'
 ], function (
     fastdom,
     template,
-    svgs,
     Toggles,
+    svg,
     addTrackingPixel,
     addViewabilityTracker,
     frameStr,
-    labelStr
+    labelStr,
+    externalLink,
+    arrow
 ) {
 
     var Frame = function (adSlot, params) {
@@ -24,7 +28,7 @@ define([
     };
 
     Frame.prototype.create = function () {
-        this.params.externalLinkIcon = svgs('externalLink', ['gu-external-icon']);
+        this.params.externalLinkIcon = svg.addClassesAndTitle(externalLink.markup, ['frame__external-link-icon']);
         this.params.target = this.params.newWindow === 'yes' ? '_blank' : '_self';
         this.params.id = 'frame-' + (Math.random() * 10000 | 0).toString(16);
 
@@ -35,7 +39,7 @@ define([
             infoText: 'is created and paid for by third parties.',
             infoLinkText: 'Learn more about how advertising supports the Guardian.',
             infoLinkUrl: 'https://www.theguardian.com/advertising-on-the-guardian',
-            icon: svgs('arrowicon', ['gu-comlabel__icon']),
+            icon: svg.addClassesAndTitle(arrow.markup, ['gu-comlabel__icon']),
             dataAttr: this.adSlot.id
         }});
         return fastdom.write(function () {

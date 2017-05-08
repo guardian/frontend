@@ -1,0 +1,193 @@
+$max-width: 500px;
+$small-width: 100%;
+$gutter: 10px;
+
+$body-color: #ffffff;
+$container-color: #ffffff;
+
+@import '../_vars';
+@import '_normalise';
+@import '_util';
+@import '_footer';
+@import '_tones';
+
+@font-face {
+    font-family: 'Guardian Egyptian Web Header';
+    src: url('https://interactive.guim.co.uk/fonts/guss-webfonts/GuardianEgyptianWeb/GuardianEgyptianWeb-Bold.eot');
+    src: url('https://interactive.guim.co.uk/fonts/guss-webfonts/GuardianEgyptianWeb/GuardianEgyptianWeb-Bold.eot?#iefix') format('embedded-opentype'), url('https://interactive.guim.co.uk/fonts/guss-webfonts/GuardianEgyptianWeb/GuardianEgyptianWeb-Bold.woff2') format('woff2'), url('https://interactive.guim.co.uk/fonts/guss-webfonts/GuardianEgyptianWeb/GuardianEgyptianWeb-Bold.woff') format('woff'), url('https://interactive.guim.co.uk/fonts/guss-webfonts/GuardianEgyptianWeb/GuardianEgyptianWeb-Bold.ttf') format('truetype'), url('https://interactive.guim.co.uk/fonts/guss-webfonts/GuardianEgyptianWeb/GuardianEgyptianWeb-Bold.svg#GuardianEgyptianWeb-Bold') format('svg');
+    font-weight: 900;
+    font-style: normal;
+    font-stretch: normal;
+}
+
+@font-face {
+    font-family: 'Guardian Egyptian Web Headline';
+    src: url('https://interactive.guim.co.uk/fonts/guss-webfonts/GuardianEgyptianWeb/GuardianEgyptianWeb-Medium.eot');
+    src: url('https://interactive.guim.co.uk/fonts/guss-webfonts/GuardianEgyptianWeb/GuardianEgyptianWeb-Medium.eot?#iefix') format('embedded-opentype'), url('https://interactive.guim.co.uk/fonts/guss-webfonts/GuardianEgyptianWeb/GuardianEgyptianWeb-Medium.woff2') format('woff2'), url('https://interactive.guim.co.uk/fonts/guss-webfonts/GuardianEgyptianWeb/GuardianEgyptianWeb-Medium.woff') format('woff'), url('https://interactive.guim.co.uk/fonts/guss-webfonts/GuardianEgyptianWeb/GuardianEgyptianWeb-Medium.ttf') format('truetype'), url('https://interactive.guim.co.uk/fonts/guss-webfonts/GuardianEgyptianWeb/GuardianEgyptianWeb-Medium.svg#GuardianEgyptianWeb-Medium') format('svg');
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+}
+
+// table
+.fc,
+.row,
+.ct,
+.ct__inner {
+    width: 100%;
+}
+
+// External margins between cards
+// The only reliable mechanism for margins in Outlook is padding applied to table cells.
+// td
+.fc__margin {
+    width: 100%;
+    padding-bottom: $gutter;
+}
+
+// table
+.fc__inner {
+    padding: 0;
+    width: 100%;
+    position: relative;
+    min-height: 56px;
+}
+
+.free-text {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    line-height: 18px;
+    padding: 6px 0;
+
+    a {
+        color: $guardian-brand;
+
+        &:hover {
+            color: lighten($guardian-brand, 10%) !important;
+        }
+    }
+}
+
+// td
+.ct__margin {
+    padding: 13px 0 12px;
+
+    .ct--not-top & {
+        padding: 26px 0 12px;
+    }
+}
+
+// td
+.ct__padding {
+    font-family: 'Guardian Egyptian Web Header', 'Guardian Egyptian Web Headline', Georgia, serif;
+    font-size: 26px;
+    color: #333333;
+    padding: 4px 0 0;
+}
+
+// a
+.fc-link {
+    text-decoration: none;
+}
+
+// td
+.left-col {
+    width: 60%;
+}
+
+// td
+.right-col {
+    width: 40%;
+}
+
+// td
+.fc__pad {
+    padding-bottom: 26px;
+}
+
+// td
+.headline,
+.byline,
+.trail-text,
+.review-stars {
+    font-weight: normal;
+    padding: 6px $gutter 0;
+}
+
+// td
+.headline,
+.byline {
+    font-family: 'Guardian Egyptian Web Headline', Georgia, serif;
+    font-size: 16px;
+    line-height: 20px;
+    color: inherit;
+}
+
+// td
+.byline,
+.review-stars {
+    padding: 0 $gutter $gutter;
+}
+
+// td
+.trail-text {
+    font-family: Georgia, serif;
+    font-size: 14px;
+    line-height: 18px;
+    padding: $gutter $gutter 26px;
+}
+
+.fc--large {
+    // td
+    .headline,
+    .byline {
+        font-size: 22px;
+        line-height: 26px;
+    }
+}
+
+// span
+.kicker-separator {
+    font-weight: normal;
+}
+
+// img
+.headline .icon {
+    height: .7em;
+}
+
+$email-tones: (
+    the-flyer: #ffbdc6,
+    opinion: #e6711b,
+    sleeve-notes: #ffbb00
+);
+
+// Defaults
+.ct--not-top {
+    // table
+    .ct__inner {
+        border-top: 3px solid #46bcdf;
+    }
+}
+
+// table
+.tone-external {
+    border-top: 1px solid #46bcdf;
+}
+
+@each $email, $tone-color in $email-tones {
+    .#{$email} {
+        .ct--not-top {
+            // table
+            .ct__inner {
+                border-top: 3px solid $tone-color;
+            }
+        }
+        // table
+        .tone-external {
+            border-top: 1px solid $tone-color;
+        }
+    }
+}
+
+@import '_media-query';

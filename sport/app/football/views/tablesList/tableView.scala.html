@@ -1,6 +1,7 @@
 @import model.{Competition, Group, TeamUrl}
 @import views.support.RenderClasses
 @import views.support.`package`.Seq2zipWithRowInfo
+@import conf.Configuration
 
 @(competition: Competition, group: Group,
     heading: Option[String] = None,
@@ -70,6 +71,14 @@
                 <a href="@headingLink.getOrElse(competition.url)" class="football-matches__heading">@h</a>
             </caption>
         }
-        @if(linkToCompetition){<caption class="table__caption table__caption--bottom"><a href="@{competition.url + "/table"}" data-link-name="full table" class="full-table-link">View full <span class="competition-name">@competition.fullName</span> table</a></caption>}
+        @if(linkToCompetition){
+            <tfoot class="table__caption table__caption--bottom" >
+                <tr>
+                    <td colspan="11">
+                        <a href="@{competition.url + "/table"}" data-link-name="full table" class="full-table-link">View full <span class="competition-name">@competition.fullName</span> table</a>
+                    </td>
+                </tr>
+            </tfoot>
+        }
     </table>
 </div>

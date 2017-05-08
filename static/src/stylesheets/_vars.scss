@@ -30,6 +30,8 @@ $right-column:     gs-span(4);
 $left-column:      gs-span(2); // Grows to 3 columns on wide viewports
 $left-column-wide: gs-span(3);
 
+$veggie-burger-small: 42px;
+$veggie-burger-medium: 52px;
 
 // Breakpoints
 // =============================================================================
@@ -116,6 +118,9 @@ $story-package:          $news-support-7;
 $paidfor-background:     $news-support-3;
 //temporary change from #fce800 whilst new arrivals series is running
 $special-report-accent:  #ffbb00;
+
+// This is only for use of the subnav in the header
+$subnav-grey: #5c6268;
 
 // Football
 // =============================================================================

@@ -2,9 +2,7 @@ package layout
 
 import cards.{MediaList, Standard}
 import com.gu.commercial.branding.Branding
-import com.gu.contentapi.client.model.v1.{ContentType, TagType}
 import com.gu.contentapi.client.model.{v1 => contentapi}
-import com.gu.facia.api.{utils => fapiutils}
 import common.Edition.defaultEdition
 import common.{Edition, LinkTo}
 import implicits.FaciaContentFrontendHelpers.FaciaContentFrontendHelper
@@ -211,51 +209,46 @@ object FaciaCard {
     showSeriesAndBlogKickers: Boolean
   ): FaciaCard = {
 
-    val isTestContainer = config.displayName.contains("Paid content in unbranded container")
-    if (isTestContainer && faciaContent.branding(defaultEdition).exists(_.isPaid)) {
-      PaidCard.fromPressedContent(faciaContent)
-    } else {
 
-      val maybeKicker = faciaContent.header.kicker orElse {
-        if (showSeriesAndBlogKickers) {
-          faciaContent.header.seriesOrBlogKicker
-        } else {
-          None
-        }
+    val maybeKicker = faciaContent.header.kicker orElse {
+      if (showSeriesAndBlogKickers) {
+        faciaContent.header.seriesOrBlogKicker
+      } else {
+        None
       }
-
-      /** If the kicker contains the byline, don't display it */
-      val suppressByline = (
-                             for {
-                               kicker <- maybeKicker
-                               kickerText <- kicker.properties.kickerText
-                               byline <- faciaContent.properties.byline
-                             } yield kickerText contains byline
-                             ) getOrElse false
-
-      ContentCard(
-        faciaContent.properties.maybeContentId.orElse(Option(faciaContent.card.id)),
-        FaciaCardHeader.fromTrailAndKicker(faciaContent, maybeKicker, Some(config)),
-        getByline(faciaContent).filterNot(Function.const(suppressByline)),
-        FaciaDisplayElement.fromFaciaContentAndCardType(faciaContent, cardTypes),
-        CutOut.fromTrail(faciaContent),
-        faciaContent.card.cardStyle,
-        cardTypes,
-        Sublinks.takeSublinks(faciaContent.supporting, cardTypes).map(Sublink.fromFaciaContent),
-        faciaContent.card.starRating,
-        DiscussionSettings.fromTrail(faciaContent),
-        SnapStuff.fromTrail(faciaContent),
-        faciaContent.card.webPublicationDateOption.filterNot(const(faciaContent.shouldHidePublicationDate)),
-        faciaContent.card.trailText,
-        faciaContent.card.mediaType,
-        DisplaySettings.fromTrail(faciaContent),
-        faciaContent.card.isLive,
-        if (config.showTimestamps) Option(DateTimestamp) else None,
-        faciaContent.card.shortUrlPath,
-        useShortByline = false,
-        faciaContent.card.group
-      )
     }
+
+    /** If the kicker contains the byline, don't display it */
+    val suppressByline = (
+                           for {
+                             kicker <- maybeKicker
+                             kickerText <- kicker.properties.kickerText
+                             byline <- faciaContent.properties.byline
+                           } yield kickerText contains byline
+                           ) getOrElse false
+
+    ContentCard(
+      faciaContent.properties.maybeContentId.orElse(Option(faciaContent.card.id)),
+      FaciaCardHeader.fromTrailAndKicker(faciaContent, maybeKicker, Some(config)),
+      getByline(faciaContent).filterNot(Function.const(suppressByline)),
+      FaciaDisplayElement.fromFaciaContentAndCardType(faciaContent, cardTypes),
+      CutOut.fromTrail(faciaContent),
+      faciaContent.card.cardStyle,
+      cardTypes,
+      Sublinks.takeSublinks(faciaContent.supporting, cardTypes).map(Sublink.fromFaciaContent),
+      faciaContent.card.starRating,
+      DiscussionSettings.fromTrail(faciaContent),
+      SnapStuff.fromTrail(faciaContent),
+      faciaContent.card.webPublicationDateOption.filterNot(const(faciaContent.shouldHidePublicationDate)),
+      faciaContent.card.trailText,
+      faciaContent.card.mediaType,
+      DisplaySettings.fromTrail(faciaContent),
+      faciaContent.card.isLive,
+      if (config.showTimestamps) Option(DateTimestamp) else None,
+      faciaContent.card.shortUrlPath,
+      useShortByline = false,
+      faciaContent.card.group
+    )
   }
 }
 
@@ -312,8 +305,6 @@ case class ContentCard(
 
   def showTimestamp = timeStampDisplay.isDefined && webPublicationDate.isDefined
 
-  def isSavedForLater = cardTypes.allTypes.exists(_.savedForLater)
-
   val analyticsPrefix = s"${cardStyle.toneString} | group-$group${if(displaySettings.isBoosted) "+" else ""}"
 
   val hasInlineSnapHtml = snapStuff.exists(_.embedHtml.isDefined)
@@ -354,12 +345,13 @@ case class PaidCard(
   image: Option[ImageMedia],
   fallbackImageUrl: Option[String],
   targetUrl: String,
+  cardTypes: Option[ItemClasses] = None,
   branding: Option[Branding]
 ) extends FaciaCard
 
 object PaidCard {
 
-  def fromPressedContent(content: PressedContent): PaidCard = {
+  def fromPressedContent(content: PressedContent, cardTypes: Option[ItemClasses] = None): PaidCard = {
 
     val header = content.header
 
@@ -387,6 +379,7 @@ object PaidCard {
       image,
       fallbackImageUrl,
       targetUrl = header.url,
+      cardTypes = cardTypes,
       branding = content.branding(defaultEdition)
     )
   }

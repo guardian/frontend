@@ -16,29 +16,6 @@ import conf.switches.Switches.ServerSideTests
 //    val tests = List(ExampleTest)
 // }
 
-
-object ABNewNavVariantSeven extends TestDefinition(
-  name = "ab-new-nav-variant-seven",
-  description = "users in this test will see the new header seventh variant",
-  owners = Seq(Owner.withGithub("natalialkb")),
-  sellByDate = new LocalDate(2017, 3, 23)
-) {
-  def canRun(implicit request: RequestHeader): Boolean = {
-    request.headers.get("X-GU-ab-new-header").contains("variantseven")
-  }
-}
-
-object ABNewNavControl extends TestDefinition(
-  name = "ab-new-nav-control",
-  description = "control for the new header test",
-  owners = Seq(Owner.withGithub("natalialkb")),
-  sellByDate = new LocalDate(2017, 3, 23)
-) {
-  def canRun(implicit request: RequestHeader): Boolean = {
-    request.headers.get("X-GU-ab-new-header").contains("control")
-  }
-}
-
 object CommercialClientLoggingVariant extends TestDefinition(
   name = "commercial-client-logging",
   description = "A slice of the audience who will post their commercial js performance data",
@@ -50,36 +27,37 @@ object CommercialClientLoggingVariant extends TestDefinition(
   }
 }
 
-object YouTubePosterOverride extends TestDefinition(
-  name = "youtube-poster-override",
-  description = "Users in the test will always see the trail image on YouTube atom content cards instead of the poster image",
-  owners = Seq(Owner.withGithub("gidsg")),
-  sellByDate = new LocalDate(2017, 4, 3)
-  ) {
-  def canRun(implicit request: RequestHeader): Boolean = {
-    request.headers.get("X-GU-youtube-poster-override").contains("true")
-  }
-}
-
+/** Watch out for "TODO: #new-recipe:" when removing the test */
 object ABNewRecipeDesign extends TestDefinition(
   name = "ab-new-recipe-design",
   description = "Users in the test will see the new design on articles with structured recipes",
   owners = Seq(Owner.withGithub("tsop14")),
-  sellByDate = new LocalDate(2017, 4, 3)
+  sellByDate = new LocalDate(2017, 5, 30)
 ) {
   def canRun(implicit request: RequestHeader): Boolean = {
     request.headers.get("X-GU-ab-new-recipe-design").contains("variant")
   }
 }
 
-object PolyfillIO extends TestDefinition(
-  name = "polyfill-io",
-  description = "Users in the test will use polyfill.io to polyfill their browser capabilities",
-  owners = Seq(Owner.withGithub("gustavpursche"), Owner.withGithub("gtrufitt")),
-  sellByDate = new LocalDate(2017, 3, 29)
-  ) {
+object ABNavigationMoreToggleControl extends TestDefinition(
+  name = "ab-navigation-more-toggle-control",
+  description = "Users in the test will see a more link in the navigation subnav",
+  owners = Seq(Owner.withGithub("gustavpursche")),
+  sellByDate = new LocalDate(2017, 5, 8)
+) {
   def canRun(implicit request: RequestHeader): Boolean = {
-    request.headers.get("X-GU-polyfill-io").contains("true")
+    request.headers.get("X-GU-ab-navigation-more-toggle").contains("control")
+  }
+}
+
+object ABNavigationMoreToggleVariant extends TestDefinition(
+  name = "ab-navigation-more-toggle-variant",
+  description = "Users in the test will see a more link in the navigation subnav",
+  owners = Seq(Owner.withGithub("gustavpursche")),
+  sellByDate = new LocalDate(2017, 5, 8)
+) {
+  def canRun(implicit request: RequestHeader): Boolean = {
+    request.headers.get("X-GU-ab-navigation-more-toggle").contains("variant")
   }
 }
 
@@ -96,12 +74,10 @@ trait ServerSideABTests {
 
 object ActiveTests extends ServerSideABTests {
   val tests: Seq[TestDefinition] = List(
-    ABNewNavVariantSeven,
-    ABNewNavControl,
     CommercialClientLoggingVariant,
-    YouTubePosterOverride,
     ABNewRecipeDesign,
-    PolyfillIO
+    ABNavigationMoreToggleControl,
+    ABNavigationMoreToggleVariant
   )
 }
 

@@ -72,8 +72,10 @@ class HighMerchandisingLineItemTest extends FlatSpec with Matchers {
         Seq.empty,
         None,
         None
-      ),None,None,None
-    ))
+      ),
+      None,
+      None)
+    )
     TestAgent.isTargetedByHighMerch("sport", testTagsSeq, editions.Us,"/commentisfree/2016/may/25/greek-bailout-eu-on-best-behaviour-until-referendum-over-brexit") should be(true)
   }
 

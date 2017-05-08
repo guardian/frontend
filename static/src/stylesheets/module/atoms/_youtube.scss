@@ -20,216 +20,255 @@
     transition: opacity 1s linear, visibility 1s;
 }
 
+.video-playlist__item .youtube-media-atom {
+    @include mq(desktop) {
+        opacity: .3;
+        transition: opacity .4s ease-out;
+    }
+}
+
+.video-playlist__item .youtube-media-atom .vjs-big-play-button {
+    @include mq(desktop) {
+        display: block;
+    }
+}
+
+.video-playlist__item .youtube-media-atom iframe,
+.video-playlist__item .youtube-media-atom .vjs-big-play-button {
+    @include mq($until: desktop) {
+        top: gs-height(3) - (get-line-height(textSans, 3) + 4px);
+        bottom: 0;
+        height: auto;
+    }
+}
+
+.video-playlist__item--active .youtube-media-atom {
+    opacity: 1;
+}
+
+.video-playlist__item--active .youtube-media-atom .vjs-big-play-button {
+    display: block;
+}
+
 .youtube-media-atom {
     position: relative;
+}
 
-    .youtube-media-atom__iframe,
-    .youtube-media-atom__overlay {
+.youtube-media-atom__iframe,
+.youtube-media-atom__overlay {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    max-height: 100vh;
+}
+
+.youtube-media-atom__iframe {
+    z-index: 0;
+
+    &:hover ~ .youtube-media-atom__overlay .youtube-media-atom__play-button {
+        transition: transform 300ms cubic-bezier(.25, .46, .45, .94);
+        transform: translate(-50%, -50%) scale(1.12);
+        transform-origin: center;
+    }
+
+    &:hover ~ .youtube-media-atom__overlay .youtube-media-atom__immersive-interface .youtube-media-atom__play-button {
+        transition: transform 300ms cubic-bezier(.25, .46, .45, .94);
+        transform: scale(1.08);
+        transform-origin: center;
+    }
+}
+
+.youtube-media-atom__iframe:not(.youtube__video-ready) ~ .youtube-media-atom__overlay,
+.youtube-media-atom__iframe.youtube__video-ended ~ .youtube-media-atom__overlay {
+    @include hide;
+}
+
+.youtube-media-atom__iframe.youtube__video-started:not(.youtube__video-ended) ~ .video-overlay {
+    @include hide;
+}
+
+.youtube-media-atom__iframe.youtube__video-started:not(.youtube__video-ended) ~ .youtube-media-atom__overlay {
+    @include fade-out;
+    transition-delay: 500ms;
+    transition-duration: 500ms;
+}
+
+.youtube-media-atom__iframe.youtube__video-ended.youtube__video-started ~ .youtube-media-atom__overlay {
+    @include fade-in;
+}
+
+.youtube-media-atom__iframe.youtube__video-ended.youtube__video-started ~ .end-slate-container {
+    @include mq($from: tablet) {
+        display: block;
+    }
+}
+
+.youtube-media-atom__overlay.vjs-big-play-button {
+    pointer-events: none;
+}
+
+.youtube-media-atom__overlay {
+    background-size: cover;
+    /**
+     * Fixed 1px line appearing above overlay occasionally.
+     * http://stackoverflow.com/questions/38695492/1px-glitch-appearing-below-image-when-browser-re-sizes-background-image
+     * http://stackoverflow.com/questions/14376328/background-sizecover-1px-whitespace-to-the-left
+    **/
+    background-position: 49% 49%;
+    background-repeat: no-repeat;
+    z-index: 1;
+    text-align: center;
+}
+
+.youtube-media-atom__overlay .video-overlay {
+    text-align: initial;
+}
+
+.youtube-media-atom__play-button.vjs-control-text {
+    overflow: hidden !important;
+    display: inline-block;
+    z-index: 2;
+}
+
+.youtube-media-atom__bottom-bar {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 34px;
+    z-index: 2;
+
+    &:before,
+    &:after {
+        position: absolute;
         height: 100%;
         width: 100%;
-        position: absolute;
-        max-height: 100vh;
-    }
-
-    .youtube-media-atom__iframe {
-        z-index: 0;
-
-        &:hover {
-            ~ .youtube-media-atom__overlay .youtube-media-atom__play-button {
-                transition: transform 300ms cubic-bezier(.25, .46, .45, .94);
-                transform: translate(-50%, -50%) scale(1.12);
-                transform-origin: center;
-            }
-            ~ .youtube-media-atom__overlay .youtube-media-atom__immersive-interface .youtube-media-atom__play-button {
-                transition: transform 300ms cubic-bezier(.25, .46, .45, .94);
-                transform: scale(1.08);
-                transform-origin: center;
-            }
-        }
-
-        &:not(.youtube__video-ready),
-        &.youtube__video-ended {
-            ~ .youtube-media-atom__overlay {
-                @include hide;
-            }
-        }
-
-        &.youtube__video-started:not(.youtube__video-ended) {
-            ~ .youtube-media-atom__overlay {
-                @include fade-out;
-                transition-delay: 500ms;
-                transition-duration: 500ms;
-            }
-        }
-
-        &.youtube__video-ended.youtube__video-started {
-            ~ .youtube-media-atom__overlay {
-                @include fade-in;
-            }
-
-            @include mq($from: tablet) {
-                ~ .end-slate-container {
-                    display: block;
-                }
-            }
-        }
-	}
-
-    .youtube-media-atom__overlay.vjs-big-play-button {
-        pointer-events: none;
-    }
-
-    .youtube-media-atom__overlay {
-        background-size: cover;
-        /**
-         * Fixed 1px line appearing above overlay occasionally.
-         * http://stackoverflow.com/questions/38695492/1px-glitch-appearing-below-image-when-browser-re-sizes-background-image
-         * http://stackoverflow.com/questions/14376328/background-sizecover-1px-whitespace-to-the-left
-        **/
-        background-position: 49% 49%;
-        background-repeat: no-repeat;
-        z-index: 1;
-        text-align: center;
-    }
-
-    .youtube-media-atom__play-button.vjs-control-text {
-        overflow: hidden !important;
-        display: inline-block;
-        z-index: 2;
-    }
-
-    .youtube-media-atom__bottom-bar {
-        position: absolute;
         left: 0;
-        bottom: 0;
+        z-index: -1;
+    }
+
+    &:before {
+        content: '';
+        opacity: .1;
+        background: $neutral-1;
+    }
+
+    &:after {
+        @include simple-gradient(rgba(51, 51, 51, 0), rgba(51, 51, 51, .5));
+        content: '';
+        opacity: .7;
+    }
+}
+
+.youtube-media-atom__bottom-bar__icon {
+    float: left;
+    height: 100%;
+    width: 36px;
+}
+
+.youtube-media-atom__bottom-bar__icon .inline-video-icon__svg {
+    fill: $media-default;
+    width: 19px;
+    height: 12px;
+    top: auto;
+    bottom: 10px;
+    left: 10px;
+}
+
+.youtube-media-atom__bottom-bar__duration {
+    @include font($f-sans-serif-text, bold, 16, 30);
+    color: $media-default;
+    float: left;
+    -webkit-font-smoothing: subpixel-antialiased;
+    padding-top: 4px;
+    padding-left: 8px;
+    text-shadow: 0 0 16px rgba(51, 51, 51, .25);
+
+    &:before {
+        content: '';
+        width: 1px;
+        height: 16px;
+        opacity: .5;
+        position: absolute;
+        left: 36px;
+        background-color: $multimedia-main-2;
+        top: auto;
+        bottom: 8px;
+    }
+}
+
+.immersive-main-media__media .youtube-media-atom {
+    padding-bottom: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 100%;
+    z-index: 0;
+}
+
+.immersive-main-media__media  .youtube-media-atom__immersive-interface {
+    position: absolute;
+    top: 50vh;
+    transform: translateY(-100%);
+    padding-bottom: $gs-baseline * 2;
+}
+
+.immersive-main-media__media  .youtube-media-atom__play-button,
+.immersive-main-media__media  .youtube-media-atom__bottom-bar__duration {
+    display: inline-block;
+    vertical-align: middle;
+    float: none;
+    top: auto;
+    left: auto;
+    right: auto;
+    bottom: auto;
+}
+
+.immersive-main-media__media .youtube-media-atom__play-button {
+    position: relative;
+    width: 92px;
+    height: 92px;
+    transform: none;
+
+    &:hover {
+        transform: none;
+    }
+
+    &:before {
         width: 100%;
-        height: 34px;
-        z-index: 2;
-
-        &::before,
-        &::after {
-            position: absolute;
-            height: 100%;
-            width: 100%;
-            left: 0;
-            z-index: -1;
-        }
-
-        &::before {
-            content: '';
-            opacity: .1;
-            background: $neutral-1;
-        }
-
-        &::after {
-            @include simple-gradient(rgba(51, 51, 51, 0), rgba(51, 51, 51, .5));
-            content: '';
-            opacity: .7;
-        }
-    }
-
-    .youtube-media-atom__bottom-bar__icon {
-        float: left;
         height: 100%;
-        width: 36px;
-
-        svg {
-            fill: $media-default;
-            width: 19px;
-            height: 12px;
-            top: auto;
-            bottom: 10px;
-            left: 10px;
-        }
+        border-radius: 100%;
     }
 
-    .youtube-media-atom__bottom-bar__duration {
-        @include font($f-sans-serif-text, bold, 16, 30);
-        color: $media-default;
-        float: left;
-        -webkit-font-smoothing: subpixel-antialiased;
-        padding-top: 4px;
-        padding-left: 8px;
-        text-shadow: 0 0 16px rgba(51, 51, 51, .25);
-
-        &::before {
-            content: '';
-            width: 1px;
-            height: 16px;
-            opacity: .5;
-            position: absolute;
-            left: 36px;
-            background-color: $multimedia-main-2;
-            top: auto;
-            bottom: 8px;
-        }
+    &:after {
+        display: none;
     }
+}
 
-    .immersive-main-media__media & {
-        padding-bottom: 0;
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        height: 100%;
-        z-index: 0;
-        &__immersive-interface {
-            position: absolute;
-            top: 50vh;
-            transform: translateY(-100%);
-            padding-bottom: $gs-baseline * 2;
-        }
-        &__play-button,
-        &__bottom-bar__duration {
-            display: inline-block;
-            vertical-align: middle;
-            float: none;
-            top: auto;
-            left: auto;
-            right: auto;
-            bottom: auto;
-        }
-        &__play-button {
-            position: relative;
-            width: 92px;
-            height: 92px;
-            transform: none;
-            &:hover {
-                transform: none;
-            }
-            &:before {
-                width: 100%;
-                height: 100%;
-                border-radius: 100%;
-            }
-            &:after {
-                display: none;
-            }
-            svg {
-                width: 46px;
-                height: 39px;
-                fill: $multimedia-main-1;
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translateX(-42%) translateY(-50%);
-            }
-        }
-        &__bottom-bar__duration {
-            position: relative;
-            -webkit-font-smoothing: antialiased;
-            font-size: 18px;
-            line-height: 34px;
-            left: 6px;
-            height: 32px;
-            padding: 0 12px;
-            background-color: rgba(51, 51, 51, .7);
-            border-radius: 32px;
-            &:before {
-                display: none;
-            }
-        }
+.immersive-main-media__media .youtube-media-atom__play-button .inline-play__svg {
+    width: 46px;
+    height: 39px;
+    fill: $multimedia-main-1;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-42%) translateY(-50%);
+}
+
+.immersive-main-media__media .youtube-media-atom__bottom-bar__duration {
+    position: relative;
+    -webkit-font-smoothing: antialiased;
+    font-size: 18px;
+    line-height: 34px;
+    left: 6px;
+    height: 32px;
+    padding: 0 12px;
+    background-color: rgba(51, 51, 51, .7);
+    border-radius: 32px;
+
+    &:before {
+        display: none;
     }
-
 }

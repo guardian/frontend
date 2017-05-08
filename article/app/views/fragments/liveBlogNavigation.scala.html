@@ -1,7 +1,8 @@
-@import _root_.liveblog.LiveBlogCurrentPage
-@(id: String, currentPage: LiveBlogCurrentPage, amp: Boolean = false)
 
+@import model.liveblog.LiveBlogCurrentPage
 @import conf.Configuration
+
+@(id: String, currentPage: LiveBlogCurrentPage, amp: Boolean = false)
 
 @currentPage.pagination.map { pagination =>
     <div id="liveblog-navigation" class="liveblog-navigation">

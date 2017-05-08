@@ -2,7 +2,7 @@
     page: model.Page,
     idRequest: services.IdentityRequest,
     idUrlBuilder: services.IdentityUrlBuilder,
-    accountDeletionForm: Form[(String)],
+    accountDeletionForm: Form[(String, Option[String])],
     errors: List[client.Error]
 )(implicit
     request: RequestHeader,
@@ -11,9 +11,8 @@
 
 @import form.IdFormHelpers._
 @import views.html.fragments.form.inputField
+@import views.html.fragments.form.radioField
 @import views.html.fragments.registrationFooter
-@import client.Error
-@import form.Input
 
 @main(page, projectName = Option("identity")){
 }{
@@ -23,18 +22,26 @@
         <div class="identity-section">
             <p class="identity-section__text">
                 Please read the following paragraphs carefully to understand how account
-                deletion affects any Guardian products you may have. If at any point require further clarification please
+                deletion affects any Guardian products you may have. If at any point you require further clarification please
                 email our <a href="mailto:userhelp@@theguardian.com" data-link-name="Email Userhelp">Userhelp</a> who will
                 be happy to help.
             </p>
         </div>
 
         <div class="identity-section">
+            <h4><a href="https://www.theguardian.com/help/identity-faq">Account</a></h4>
+            <p class="identity-section__text">
+                Deleting your account removes personal information from our database. Your email address becomes
+                permanently reserved and the same email address cannot be re-used to register a new account.
+            </p>
+
             <h4><a href="https://www.theguardian.com/community-faqs">Comments</a></h4>
             <p class="identity-section__text">
-                Deleting your account will anonymise the username under which you posted your coments, however it will not
-                automatically delete all your comments. If you wish for your comments to be deleted please contact the
-                <a href="mailto:moderation@@theguardian.com">Moderation Team</a>.
+                If you have posted comments your comment profile will be removed, however the posted comments will
+                remain underneath the articles. Comments are part of the historical record, but if want your comments to
+                be removed please contact the <a href="mailto:moderation@@theguardian.com">Moderation Team</a>.
+                Please note that requests are considered on a case-by-case basis and your comments will not be
+                automatically deleted.
             </p>
 
             <h4><a href="https://membership.theguardian.com/help">Membership</a></h4>
@@ -80,6 +87,23 @@
 
         <form class="form" novalidate action="@idUrlBuilder.buildUrl("/delete", idRequest)" role="main" method="post">
             @views.html.helper.CSRF.formField
+
+            <div class="identity-section">
+                <p class="identity-section__text">
+                    <p><b>Please take a moment to tell us why you wish to delete your account:</b></p>
+
+                    @radioField(accountDeletionForm("reason"), List(
+                        "accident"      -> "I have created an account by accident",
+                        "password"      -> "I accidentally entered my password as the username",
+                        "emails"        -> "I want to stop receiving emails",
+                        "comments"      -> "I no longer want to comment",
+                        "privacy"       -> "I am concerned about my privacy online",
+                        "membership"    -> "I was asked to create an account in order to become member/subscriber",
+                        "other"         -> "Other")
+                    )(nonInputFields, messages)
+                </p>
+            </div>
+
             <fieldset class="fieldset">
 
                 <div class="fieldset__heading">
@@ -90,7 +114,7 @@
                 <div class="fieldset__fields">
                     <ul class="u-unstyled">
 
-                        @inputField(Password(accountDeletionForm("password"), '_label -> "Password", 'autofocus -> true, 'class -> "js-register-password js-password-strength",
+                        @inputField(Password(accountDeletionForm("password"), '_label -> "Password", 'class -> "js-register-password js-password-strength",
                             (Symbol("data-test-id"), "account-deletion-password"), 'required -> true))
 
                         <li>

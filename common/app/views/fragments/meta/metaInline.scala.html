@@ -6,7 +6,8 @@
 @import views.support.RenderClasses
 
 <div class="@RenderClasses(Map(
-        "content__labels--gallery" -> item.content.isImmersiveGallery,
+        "content__labels--gallery" -> item.content.isGallery,
+        "content__labels--paidgallery" -> (item.content.isGallery && item.content.isPaidContent),
         "content__labels--not-immersive" -> !item.content.isImmersive
     ), "content__labels")
 ">
@@ -20,24 +21,36 @@
         }
     }
 
-    @if(!(item.content.isImmersive && item.content.tags.isArticle)) {
-        <div class="content__section-label @if(item.content.tags.isGallery) { content__section-label--gallery }">
-            <a class="content__section-label__link"
-                data-link-name="article section"
-                href="@LinkTo {/@item.content.sectionLabelLink}">
-                    @Html(Localisation(item.content.sectionLabelName))
-            </a>
-        </div>
+    @if(item.content.isPaidContent && item.content.isImmersive) {
+      <div class="content__section-label--advertisement">
+          <a class="content__section-label__link content__section-label__link--advertisement" href="@LinkTo {/@item.content.sectionLabelLink}">
+              @Html(Localisation(item.content.sectionLabelName))
+          </a>
+      </div>
+    } else {
+        @if(!(item.content.isImmersive && item.content.tags.isArticle)) {
+          <div class="content__section-label @if(item.content.tags.isGallery) { content__section-label--gallery }">
+              <a class="content__section-label__link"
+                  data-link-name="article section"
+                  href="@LinkTo {/@item.content.sectionLabelLink}">
+                      @Html(Localisation(item.content.sectionLabelName))
+              </a>
+          </div>
+      }
     }
 
     @item.content.blogOrSeriesTag.map { series =>
-    <div class="content__series-label @if(item.content.isImmersive && item.content.tags.isArticle) { content__series-label--immersive-article }">
+    <div class="@RenderClasses(Map(
+            "content__series-label--immersive-article" -> (item.content.isImmersive && item.content.tags.isArticle),
+            "content__series-label--photo-essay" -> item.content.isPhotoEssay
+        ), "content__series-label")
+      ">
         <a class="content__series-label__link" href="@LinkTo {/@series.id}">@series.name</a>
     </div>
     }.getOrElse {
         @if(item.content.isFromTheObserver) {
             <div class="content__series-label">
-                <a class="content__series-label__link" href="http://observer.theguardian.com">The Observer</a>
+                <a class="content__series-label__link" href="https://www.theguardian.com/observer">The Observer</a>
             </div>
         }
     }

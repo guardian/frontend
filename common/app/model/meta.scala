@@ -9,10 +9,9 @@ import common.dfp._
 import common.{Edition, ManifestData, NavItem, Pagination}
 import conf.Configuration
 import cricketPa.CricketTeams
-import model.content.MediaAtom
+import model.content.{MediaAtom, StoryQuestionsAtom}
 import model.liveblog.Blocks
 import model.meta.{Guardian, LinkedData, PotentialAction, WebPage}
-import ophan.SurgingContentAgent
 import org.apache.commons.lang3.StringUtils
 import org.joda.time.DateTime
 import org.scala_tools.time.Imports._
@@ -197,7 +196,8 @@ final case class MetaData (
   isHosted: Boolean = false,
   twitterPropertiesOverrides: Map[String, String] = Map(),
   contentWithSlimHeader: Boolean = false,
-  commercial: Option[CommercialProperties]
+  commercial: Option[CommercialProperties],
+  isNewRecipeDesign: Boolean = false
 ){
   val sectionId = section map (_.id) getOrElse ""
 
@@ -213,8 +213,6 @@ final case class MetaData (
   def omitMPUsFromContainers(edition: Edition) = if (isPressedPage) {
     DfpAgent.omitMPUsFromContainers(id, edition)
   } else false
-
-  val isSurging: Seq[Int] = SurgingContentAgent.getSurgingLevelsFor(id)
 
   val requiresMembershipAccess: Boolean = membershipAccess.nonEmpty
 
@@ -238,7 +236,6 @@ final case class MetaData (
     ("buildNumber", JsString(buildNumber)),
     ("revisionNumber", JsString(revision)),
     ("isFront", JsBoolean(isFront)),
-    ("isSurging", JsString(isSurging.mkString(","))),
     ("contentType", JsString(contentType))
   )
 
@@ -377,6 +374,12 @@ case class EmbedPage(item: Video, title: String, isExpired: Boolean = false) ext
 case class MediaAtomEmbedPage(atom: MediaAtom) extends Page {
   override val metadata = MetaData.make(id = atom.id,
     webTitle = atom.title,
+    section = None)
+}
+
+case class StoryQuestionsAtomEmbedPage(atom: StoryQuestionsAtom) extends Page {
+  override val metadata = MetaData.make(id = atom.id,
+    webTitle = atom.atom.title.getOrElse("Story questions"),
     section = None)
 }
 
@@ -532,7 +535,6 @@ final case class Tags(
   lazy val paidContent: List[Tag] = tagsOfType("PaidContent")
 
   lazy val richLink: Option[String] = tags.flatMap(_.richLinkId).headOption
-  lazy val openModule: Option[String] = tags.flatMap(_.openModuleId).headOption
 
   // Tones are all considered to be 'News' it is the default so we do not list news tones explicitly
   def isNews = !(isLiveBlog || isComment || isFeature)
@@ -592,7 +594,6 @@ final case class Tags(
     ("hasSuperStickyBanner", JsBoolean(hasSuperStickyBanner)),
     ("nonKeywordTagIds", JsString(nonKeywordTags.map { _.id }.mkString(","))),
     ("richLink", JsString(richLink.getOrElse(""))),
-    ("openModule", JsString(openModule.getOrElse(""))),
     ("author", JsString(contributors.map(_.name).mkString(","))),
     ("authorIds", JsString(contributors.map(_.id).mkString(","))),
     ("tones", JsString(tones.map(_.name).mkString(","))),

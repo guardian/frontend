@@ -3,8 +3,7 @@
 @import implicits.Football._
 @import views.FootballHelpers._
 
-
-@(page: MatchPage, competition: Option[model.Competition])(implicit request: RequestHeader, context: model.ApplicationContext)
+@(page: football.controllers.MatchPage, competition: Option[model.Competition])(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @team(players: Seq[LineUpPlayer]) = {
     <ul class="team-list u-unstyled">
@@ -24,7 +23,7 @@
     </ul>
 }
 
-@main(page, "football"){
+@main(page, Some("football")){
 } {
 
 <article class="content">

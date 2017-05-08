@@ -72,12 +72,14 @@ define([
             id: 'emailCanRun'
         }]
     }, {
-        id: 'isUserInNonCompliantAbTest',
+        id: 'isOutbrainNonCompliant',
         passCondition: SOMECHECKSPASSED,
         dependentChecks: [{
             id: 'isUserInContributionsAbTest'
         }, {
             id: 'isUserInEmailAbTestAndEmailCanRun'
+        }, {
+            id: 'isStoryQuestionsOnPage'
         }]
     }, {
         id: 'emailCanRunPostCheck',
@@ -87,7 +89,9 @@ define([
         }, {
             id: 'isOutbrainMerchandiseCompliantOrBlockedByAds'
         }, {
-            id: 'thirdPartyTagsDisabled'
+            id: 'isOutbrainDisabled'
+        }, {
+            id: 'isStoryQuestionsOnPage'
         }]
     }];
 
@@ -99,7 +103,6 @@ define([
 
         if (dependentCheckPromises) {
             Promise.all(dependentCheckPromises).then(function(results) {
-
                 var hasPassed = function(result) {
                     return result;
                 };

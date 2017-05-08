@@ -1,13 +1,11 @@
 define([
     'lib/$',
-    'lib/mediator',
     'helpers/fixtures',
     'fastdom',
     'raw-loader!fixtures/commercial/hosted/gallery.html',
     'helpers/injector'
 ], function (
     $,
-    mediator,
     fixtures,
     fastdom,
     galleryHtml,
@@ -28,18 +26,21 @@ define([
 
         beforeEach(function (done) {
             injector.mock('common/modules/analytics/interaction-tracking', interactionTracking);
-            injector.mock('lib/load-css-promise', Promise.resolve());
+            injector.mock('lib/load-css-promise', {
+                loadCssPromise : Promise.resolve()
+            });
             injector.mock('commercial/modules/dfp/performance-logging', {moduleStart: noop, moduleEnd: noop});
 
             injector.require([
                 'commercial/modules/hosted/gallery'
             ], function (galleryModule) {
                 $fixturesContainer = fixtures.render(fixturesConfig);
-                galleryModule.init(noop, noop);
-                mediator.on('page:hosted:gallery', function(instance) {
-                    gallery = instance;
-                    done();
-                });
+                galleryModule
+                    .init(noop, noop)
+                    .then(function (galleryInstance) {
+                        gallery = galleryInstance;
+                        done();
+                    });
             });
         });
 

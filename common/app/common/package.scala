@@ -6,6 +6,7 @@ import akka.pattern.CircuitBreakerOpenException
 import com.gu.contentapi.client.GuardianContentApiError
 import com.gu.contentapi.client.model.v1.ErrorResponse
 import conf.switches.Switch
+import conf.switches.Switches.InlineEmailStyles
 import model.Cached.RevalidatableResult
 import model.{ApplicationContext, Cached, NoCache}
 import org.apache.commons.lang.exception.ExceptionUtils
@@ -66,7 +67,7 @@ object `package` extends implicits.Strings with implicits.Requests with play.api
       if (request.isJson)
         JsonComponent(jsonResponse())
       else if (request.isEmail)
-        RevalidatableResult.Ok(InlineStyles(htmlResponse()))
+        RevalidatableResult.Ok(if (InlineEmailStyles.isSwitchedOn) InlineStyles(htmlResponse()) else htmlResponse())
       else
         RevalidatableResult.Ok(htmlResponse())
     }
@@ -76,7 +77,7 @@ object `package` extends implicits.Strings with implicits.Requests with play.api
       if (request.isJson)
         JsonComponent(page, jsonResponse())
       else if (request.isEmail)
-        RevalidatableResult.Ok(InlineStyles(htmlResponse()))
+        RevalidatableResult.Ok(if (InlineEmailStyles.isSwitchedOn) InlineStyles(htmlResponse()) else htmlResponse())
       else
         RevalidatableResult.Ok(htmlResponse())
     }
@@ -86,7 +87,7 @@ object `package` extends implicits.Strings with implicits.Requests with play.api
       if (request.isJson)
         JsonComponent(jsonResponse())
       else if (request.isEmail)
-        RevalidatableResult.Ok(InlineStyles(htmlResponse()))
+        RevalidatableResult.Ok(if (InlineEmailStyles.isSwitchedOn) InlineStyles(htmlResponse()) else htmlResponse())
       else
         RevalidatableResult.Ok(htmlResponse())
     }

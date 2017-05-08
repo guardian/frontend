@@ -9,9 +9,8 @@ bonzo.aug({
     },
 });
 
-function $(selector: string, context: ?Element | ?string): bonzo {
-    return bonzo(qwery(selector, context));
-}
+const $ = (selector: string, context: ?Element | ?string): bonzo =>
+    bonzo(qwery(selector, context));
 
 $.create = (s: string): bonzo => bonzo(bonzo.create(s));
 
@@ -33,4 +32,6 @@ $.forEachElement = (selector: string, fn: Function): Array<Element> => {
     return els;
 };
 
+// #es6 can be named exports once we're es6-only
+// eslint-disable-next-line guardian-frontend/no-default-export
 export default $;

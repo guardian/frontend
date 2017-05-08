@@ -1,6 +1,7 @@
 .paidfor-meta {
     @include f-textSans;
     background: $paidfor-background;
+    color: $neutral-1;
     font-size: get-font-size(textSans, 2);
 }
 

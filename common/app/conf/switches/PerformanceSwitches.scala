@@ -1,19 +1,8 @@
 package conf.switches
 
 import conf.switches.Expiry.never
-import org.joda.time.LocalDate
 
 trait PerformanceSwitches {
-
-  val PanicSheddingSwitch = Switch(
-    SwitchGroup.Performance,
-    "panic-shedding",
-    "When this switch is on, the Panic Shedding system is enabled which can filter requests under high latency",
-    owners = Seq(Owner.withGithub("rich-nguyen")),
-    safeState = On,
-    sellByDate = never,
-    exposeClientSide = false
-  )
 
   val InlineJSStandardOptimisation = Switch(
     SwitchGroup.Performance,
@@ -127,6 +116,16 @@ trait PerformanceSwitches {
     exposeClientSide = false
   )
 
+  val PolyfillIO = Switch(
+    SwitchGroup.Performance,
+    "polyfill-io",
+    "If this switch is on we will attempt to load polyfills from polyfill.io. If it is off, only our (full, larger) fullback will be loaded.",
+    owners = Seq(Owner.withGithub("sndrs")),
+    safeState = On,
+    sellByDate = never,
+    exposeClientSide = false
+  )
+
   val ShowAllArticleEmbedsSwitch = Switch(
     SwitchGroup.Performance,
     "show-all-embeds",
@@ -187,15 +186,4 @@ trait PerformanceSwitches {
     sellByDate = never,
     exposeClientSide = false
   )
-
-  val SaveForLaterSwitch = Switch(
-    SwitchGroup.Performance,
-    "save-for-later",
-    "It this switch is turned on, user are able to save articles. Turn off if this causes overload on then identity api",
-    owners = Seq(Owner.withGithub("johnduffell")),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
 }

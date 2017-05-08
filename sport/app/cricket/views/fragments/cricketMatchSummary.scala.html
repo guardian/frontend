@@ -54,9 +54,13 @@
             <caption class="table__caption table__caption--top" itemprop="name">
                 @theMatch.competitionName, @theMatch.venueName
             </caption>
-            <caption class="table__caption table__caption--bottom" >
-                <a class="table__caption--bottom-link" href=@LinkTo(matchUrl)>View full scorecard</a>
-            </caption>
+            <tfoot class="table__caption table__caption--bottom" >
+                <tr>
+                    <td colspan="2">
+                        <a class="table__caption--bottom-link" href="@LinkTo(matchUrl)">View full scorecard</a>
+                    </td>
+                </tr>
+            </tfoot>
         </table>
     </div>
 

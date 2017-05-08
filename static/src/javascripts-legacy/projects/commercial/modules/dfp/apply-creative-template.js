@@ -1,5 +1,4 @@
 define([
-    'bean',
     'lib/fastdom-promise',
     'lib/report-error',
 
@@ -8,13 +7,10 @@ define([
     'commercial/modules/creatives/revealer',
     'commercial/modules/creatives/fabric-v1',
     'commercial/modules/creatives/fabric-expanding-v1',
-    'commercial/modules/creatives/fabric-expandable-video-v1',
     'commercial/modules/creatives/fabric-expandable-video-v2',
     'commercial/modules/creatives/fabric-video',
-    'commercial/modules/creatives/scrollable-mpu-v2',
-    'commercial/modules/creatives/template'
+    'commercial/modules/creatives/scrollable-mpu-v2'
 ], function (
-    bean,
     fastdom,
     reportError
 ) {
@@ -39,7 +35,7 @@ define([
             }
             // On IE, wait for the frame to load before interacting with it
             else if (contentFrame.readyState && contentFrame.readyState !== 'complete') {
-                bean.on(contentFrame, 'readystatechange', function (e) {
+                contentFrame.addEventListener('readystatechange', function onRSC(e) {
                     var updatedIFrame = e.srcElement;
 
                     if (
@@ -49,7 +45,7 @@ define([
                     updatedIFrame.readyState === 'complete'
                     /*eslint-enable valid-typeof*/
                     ) {
-                        bean.off(updatedIFrame, 'readystatechange');
+                        updatedIFrame.removeEventListener('readystatechange', onRSC);
                         resolve(contentFrame);
                     }
                 });
@@ -68,8 +64,8 @@ define([
                 .then(mergeViewabilityTracker)
                 .then(renderCreative)
                 .catch(function (err) {
-                reportError('Failed to get creative JSON ' + err);
-            });
+                  reportError('Failed to get creative JSON ' + err, {feature: 'commercial'}, false);
+                });
         } else {
             return Promise.resolve(true);
         }

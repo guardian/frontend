@@ -7,7 +7,6 @@ sealed trait EmailMetadata[T] extends Product with Serializable {
   def name: String
   def banner: Option[String] = None
   def address: Option[String] = None
-  def toneColour: Option[String] = None
   def test(c: T): Boolean
 }
 
@@ -151,16 +150,26 @@ case object TheResistanceNow extends ArticleEmailMetadata {
   def test(c: ContentPage) = c.item.tags.series.exists(_.id == "us-news/series/the-resistance-now-newsletter")
 }
 
+case object BeyondTheBlade extends ArticleEmailMetadata {
+  val name = "Beyond The Blade"
+  override val banner = Some("beyond-the-blade.jpg")
+  def test(c: ContentPage) = c.item.tags.series.exists(_.id == "membership/series/beyond-the-blade")
+}
+
+case object TheSnap extends ArticleEmailMetadata {
+  val name = "The Snap"
+  override val banner = Some("the-snap.png")
+  def test(c: ContentPage) = c.item.tags.series.exists(_.id == "politics/series/the-snap")
+}
+
 case object TheFlyer extends FrontEmailMetadata {
   val name = "The Flyer"
   override val banner = Some("the-flyer.png")
-  override val toneColour = Some("#ffbdc6")
 }
 
 case object Opinion extends FrontEmailMetadata {
   val name = "Opinion"
   override val banner = Some("opinion.png")
-  override val toneColour = Some("#e6711b")
 }
 
 case object TheGuardianTodayUS extends FrontEmailMetadata {
@@ -171,13 +180,11 @@ case object TheGuardianTodayUS extends FrontEmailMetadata {
 case object SleeveNotes extends FrontEmailMetadata {
   val name = "Sleeve Notes"
   override val banner = Some("sleeve-notes.png")
-  override val toneColour = Some("#ffbb00")
 }
 
 object EmailAddons {
   private val defaultAddress = "Kings Place, 90 York Way, London, N1 9GU. Registered in England No. 908396"
   private val defaultBanner = "generic.png"
-  private val defaultToneColour = "#46bcdf"
   private val articleEmails     = Seq(
     ArtWeekly,
     DocumentariesUpdate,
@@ -199,7 +206,9 @@ object EmailAddons {
     KeepItInTheGround,
     TheWeekInPatriarchy,
     OutsideInAmerica,
-    TheResistanceNow)
+    TheResistanceNow,
+    BeyondTheBlade,
+    TheSnap)
   private val frontEmails = Seq(
     TheFlyer,
     CuratedMediaBriefing,
@@ -223,8 +232,8 @@ object EmailAddons {
       Static(s"images/email/banners/$banner")
     }
 
-    lazy val toneColour = email flatMap (_.toneColour) getOrElse defaultToneColour
-
     lazy val address = email flatMap (_.address) getOrElse defaultAddress
+
+    lazy val bodyClass = email map (_.name.toLowerCase().replace(' ', '-'))
   }
 }

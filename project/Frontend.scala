@@ -3,7 +3,6 @@ package com.gu
 import com.gu.riffraff.artifact.RiffRaffArtifact.autoImport._
 import play.sbt.Play.autoImport._
 import play.sbt.routes.RoutesKeys
-import play.twirl.sbt.Import._
 import com.typesafe.sbt.web.SbtWeb.autoImport._
 import com.typesafe.sbt.SbtNativePackager._
 import Dependencies._
@@ -88,17 +87,10 @@ object Frontend extends Build with Prototypes {
     libraryDependencies ++= Seq(
       paClient,
       akkaContrib
-    ),
-    TwirlKeys.templateImports ++= Seq(
-      "pa._",
-      "feed._",
-      "football.controllers._"
     )
   )
 
-  val discussion = application("discussion").dependsOn(commonWithTests).aggregate(common).settings(
-    TwirlKeys.templateImports ++= Seq("discussion._", "discussion.model._")
-  )
+  val discussion = application("discussion").dependsOn(commonWithTests).aggregate(common)
 
   val diagnostics = application("diagnostics").dependsOn(commonWithTests).aggregate(common).settings(
     libraryDependencies ++= Seq(

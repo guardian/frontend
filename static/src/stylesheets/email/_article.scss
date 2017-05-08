@@ -1,0 +1,144 @@
+$max-width: 580px;
+$small-width: 100%;
+
+$body-color: #eaeaea;
+$container-color: #ffffff;
+
+@import '_normalise';
+@import '_util';
+@import '_footer';
+
+@font-face {
+    font-family: 'Guardian Egyptian Text';
+    src: url('https://pasteup.guim.co.uk/fonts/latin1/Guardian-Text-Egyp-Web-Reg.eot');
+    src: url('https://pasteup.guim.co.uk/fonts/latin1/Guardian-Text-Egyp-Web-Reg.eot?#iefix') format('embedded-opentype'), url('https://pasteup.guim.co.uk/fonts/latin1/Guardian-Text-Egyp-Web-Reg.woff') format('woff'), url('https://pasteup.guim.co.uk/fonts/latin1/Guardian-Text-Egyp-Web-Reg.ttf') format('truetype'), url('https://pasteup.guim.co.uk/fonts/latin1/Guardian-Text-Egyp-Web-Reg.svg#Guardian-Text-Egyp-Web-Reg') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+}
+
+@font-face {
+    font-family: 'Guardian Egyptian Text';
+    src: url('https://pasteup.guim.co.uk/fonts/latin1/Guardian-Text-Egyp-Web-Reg-It.eot');
+    src: url('https://pasteup.guim.co.uk/fonts/latin1/Guardian-Text-Egyp-Web-Reg-It.eot?#iefix') format('embedded-opentype'), url('https://pasteup.guim.co.uk/fonts/latin1/Guardian-Text-Egyp-Web-Reg-It.woff') format('woff'), url('http://pasteup.guim.co.uk/fonts/latin1/Guardian-Text-Egyp-Web-Reg-It.ttf') format('truetype'), url('https://pasteup.guim.co.uk/fonts/latin1/Guardian-Text-Egyp-Web-Reg-It.svg#Guardian-Text-Egyp-Web-Reg-It') format('svg');
+    font-weight: normal;
+    font-style: italic;
+    font-stretch: normal;
+}
+
+.article-body {
+    padding: 0;
+}
+
+.padded {
+    padding: 5px 10px;
+}
+
+h1, h2, h3, h4, h5, h6, p, blockquote {
+    font-family: 'Guardian Egyptian Text', Georgia, serif;
+    font-weight: normal;
+    color: #333333;
+}
+
+h1 {
+    font-size: 32px;
+    line-height: 36px;
+    margin: 0 0 20px;
+}
+
+h2 {
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 28px;
+    margin: 20px 0 5px;
+}
+
+h3 {
+    font-size: 18px;
+    line-height: 28px;
+    margin: 0 0 10px;
+}
+
+p {
+    font-size: 16px;
+    line-height: 24px;
+    margin: 0 0 10px;
+}
+
+a {
+    text-decoration: underline;
+
+    &,
+    h2 & {
+        color: #005689;
+    }
+
+    &:visited,
+    &:active {
+        &,
+        h2 & {
+            color: #005689 !important;
+        }
+    }
+
+    &:hover {
+        &,
+        h2 & {
+            color: #94b1ca !important;
+        }
+    }
+}
+
+hr {
+    background: #ffffff;
+    height: 0px;
+    border: 1px dashed #dcdcdc;
+    margin: 8px 0 0;
+}
+
+hr.rule--compact {
+    margin-top: 5px;
+}
+
+.author a {
+    text-decoration: none;
+    color: #005689;
+
+    &:hover {
+        .contact,
+        svg {
+            fill: #94b1ca !important;
+            color: #94b1ca !important;
+        }
+    }
+}
+
+blockquote {
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-position: top left;
+    font-size: 16px;
+    padding-top: 24px;
+    margin: 10px 40px;
+}
+
+.panel.author {
+    padding-top: 0;
+}
+
+.byline {
+    color: #005689
+}
+
+.caption {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 12px;
+    line-height: 14px;
+    color: #767676;
+}
+
+.text--brand {
+    color: #005689;
+}
+
+@import '_media-query';

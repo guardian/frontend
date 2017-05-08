@@ -225,43 +225,6 @@ define([
                 expect(ab.getTestVariantId('DummyTest')).toEqual('control');
             });
 
-            it('should generate a string for Omniture to tag the test(s) the user is in', function () {
-                mvtCookie.overwriteMvtCookie(2);
-
-                test.two.audience = 1;
-                ab.addTest(test.one);
-                ab.addTest(test.two);
-                ab.segment();
-                ab.run();
-
-                expect(ab.makeOmnitureTag()).toBe('AB | DummyTest | control,AB | DummyTest2 | control');
-
-            });
-
-            it('should generate Omniture tags when there is two tests, but one cannot run', function () {
-                mvtCookie.overwriteMvtCookie(2);
-                test.one.canRun = function () { return false; };
-                ab.addTest(test.one);
-                test.two.audience = 1;
-                ab.addTest(test.two);
-                ab.segment();
-                ab.run();
-
-                expect(ab.makeOmnitureTag()).toBe('AB | DummyTest2 | control');
-            });
-
-            it('should not generate Omniture tags when a test can not be run', function () {
-                mvtCookie.overwriteMvtCookie(2);
-
-                ab.addTest(test.one);
-                test.two.canRun = function () { return false; };
-                ab.addTest(test.two);
-                ab.segment();
-                ab.run();
-
-                expect(ab.makeOmnitureTag()).toBe('AB | DummyTest | control');
-            });
-
             it('should generate the correct structure for Ophan', function() {
                 ab.addTest(test.one);
                 ab.segment();

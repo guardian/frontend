@@ -1,6 +1,5 @@
 define([
     'qwery',
-    'bonzo',
     'lib/raven',
     'lib/config',
     'lib/load-script',
@@ -23,7 +22,6 @@ define([
     'commercial/modules/messenger/background'
 ], function (
     qwery,
-    bonzo,
     raven,
     config,
     loadScript,
@@ -55,7 +53,7 @@ define([
             );
 
             // Just load googletag. Sonobi's wrapper will already be loaded, and googletag is already added to the window by sonobi.
-            return loadScript(config.libs.googletag, { async: false });
+            return loadScript.loadScript(config.libs.googletag, { async: false });
         }
 
         if (commercialFeatures.dfpAdvertising) {

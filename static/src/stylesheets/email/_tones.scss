@@ -1,0 +1,311 @@
+.tone-news {
+    border-top: 1px solid #4bc6df;
+
+    &,
+    & th {
+        background-color: #f6f6f6;
+    }
+
+    .headline,
+    .fc-link {
+        color: #333333;
+    }
+
+    .fc__kicker,
+    .byline {
+        color: #005689;
+    }
+
+    .kicker-separator {
+        color: #d6d6d6;
+    }
+
+    .trail-text {
+        color: #767676;
+    }
+
+}
+
+
+.tone-feature {
+    border-top: 1px solid #ffc0cb;
+
+    &,
+    & th {
+        background-color: #951c55;
+    }
+
+    .headline,
+    .fc-link {
+        color: #ffffff;
+    }
+
+    .fc__kicker,
+    .byline {
+        color: #fdadba;
+    }
+
+    .kicker-separator {
+        color: #aa4977;
+    }
+
+    .trail-text {
+        color: #ead2dd;
+    }
+}
+
+
+.tone-media {
+    border-top: 1px solid #ffbb00;
+
+    &,
+    & th {
+        background-color: #333333;
+    }
+
+    .headline,
+    .fc-link {
+        color: #ffffff;
+    }
+
+    .fc__kicker,
+    .byline {
+        color: #ffbb00;
+    }
+
+    .kicker-separator {
+        color: #737373;
+    }
+
+    .trail-text {
+        color: #bdbdbd;
+    }
+}
+
+
+.tone-review {
+    border-top: 1px solid #ffc0cb;
+
+    &,
+    & th {
+        background-color: #7d7569;
+    }
+
+    .headline,
+    .fc-link {
+        color: #ffffff;
+    }
+
+    .fc__kicker,
+    .byline {
+        color: #ffce4b;
+    }
+
+    .kicker-separator {
+        color: #979187;
+    }
+
+    .trail-text {
+        color: #cbc8c3;
+    }
+}
+
+
+.tone-editorial {
+    border-top: 1px solid #aad8f1;
+
+    &,
+    & th {
+        background-color: #005689;
+    }
+
+    .headline,
+    .fc-link {
+        color: #ffffff;
+    }
+
+    .fc__kicker,
+    .byline {
+        color: #aad8f1;
+    }
+
+    .kicker-separator {
+        color: #d6d6d6;
+    }
+
+    .trail-text {
+        color: #aad8f1;
+    }
+}
+
+
+.tone-external {
+    padding-bottom: 0 !important;
+
+    &,
+    & th {
+        background-color: #f6f6f6;
+    }
+
+    .headline,
+    .fc-link {
+        color: #333333;
+        font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+        font-weight: normal;
+        font-size: 16px;
+    }
+
+    .fc__kicker,
+    .byline {
+        color: #333333;
+        font-weight: bold;
+    }
+
+    .kicker-separator {
+        color: #d6d6d6;
+    }
+
+    .trail-text {
+        color: #767676;
+    }
+}
+
+
+.tone-live {
+    border-top: 1px solid #fdadba;
+
+    &,
+    & th {
+        background-color: #b51800;
+    }
+
+    .headline,
+    .fc-link {
+        color: #ffffff;
+    }
+
+    .fc__kicker,
+    .byline {
+        color: #fdadba;
+    }
+
+    .kicker-separator {
+        color: #c44633;
+    }
+
+    .trail-text {
+        color: #f0d1cc;
+    }
+}
+
+
+.tone-analysis {
+    border-top: 1px solid #4bc6df;
+
+    &,
+    & th {
+        background-color: #f6f6f6;
+    }
+
+    .headline,
+    .fc-link {
+        color: #005689;
+    }
+
+    .fc__kicker,
+    .byline {
+        color: #767676;
+    }
+
+    .kicker-separator {
+        color: #d6d6d6;
+    }
+
+    .trail-text {
+        color: #767676;
+    }
+}
+
+
+.tone-special-report {
+    border-top: 1px solid #fce800;
+
+    &,
+    & th {
+        background-color: #63717a;
+    }
+
+    .headline,
+    .fc-link {
+        color: #ffffff;
+    }
+
+    .fc__kicker,
+    .byline {
+        color: #fce800;
+    }
+
+    .kicker-separator {
+        color: #828d95;
+    }
+
+    .trail-text {
+        color: #e0e3e4;
+    }
+}
+
+
+.tone-comment {
+    border-top: 1px solid #e6711b;
+
+    &,
+    & th {
+        background-color: #e3e3de;
+    }
+
+    .headline,
+    .fc-link {
+        color: #333333;
+    }
+
+    .fc__kicker,
+    .byline {
+        color: #e6711b;
+    }
+
+    .kicker-separator {
+        color: #d6d6d6;
+    }
+
+    .trail-text {
+        color: #767676;
+    }
+}
+
+
+.tone-dead {
+    border-top: 1px solid #ffc0cb;
+
+    &,
+    & th {
+        background-color: #f6f6f6;
+    }
+
+    .headline,
+    .fc-link {
+        color: #333333;
+    }
+
+    .fc__kicker,
+    .byline {
+        color: #cc2b12;
+    }
+
+    .kicker-separator {
+        color: #d6d6d6;
+    }
+
+    .trail-text {
+        color: #767676;
+    }
+}

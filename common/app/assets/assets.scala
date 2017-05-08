@@ -5,7 +5,7 @@ import conf.Configuration
 import model.ApplicationContext
 import org.apache.commons.io.IOUtils
 import play.api.libs.json._
-import play.api.{Mode, Play}
+import play.api.Mode
 
 import scala.collection.concurrent.{Map => ConcurrentMap, TrieMap}
 import scala.util.{Failure, Success, Try}
@@ -60,6 +60,8 @@ object css {
   def amp(implicit context: ApplicationContext) = inline("head.amp")
   def hostedAmp(implicit context: ApplicationContext) = inline("head.hosted-amp")
   def liveblogAmp(implicit context: ApplicationContext) = inline("head.amp-liveblog")
+  def emailArticle(implicit context: ApplicationContext) = inline("head.email-article")
+  def emailFront(implicit context: ApplicationContext) = inline("head.email-front")
 
   def projectCss(projectOverride: Option[String])(implicit context: ApplicationContext) = project(projectOverride.getOrElse(context.applicationIdentity.name))
   def headOldIE(projectOverride: Option[String])(implicit context: ApplicationContext) = cssOldIE(projectOverride.getOrElse(context.applicationIdentity.name))
@@ -90,7 +92,7 @@ object css {
       case "football" => "head.football"
       case "index" => "head.index"
       case "rich-links" => "head.rich-links"
-      case "email" => "head.email"
+      case "email-signup" => "head.email-signup"
       case "commercial" => "head.commercial"
       case "survey" => "head.survey"
       case "signup" => "head.signup"
@@ -119,6 +121,7 @@ object css {
 
 object js {
   val curl: String = Get(LoadFromClasspath("assets/curl.js").map(RelativePathEscaper.escapeLeadingDotPaths))
+  val polyfillioUrl: String = Get(LoadFromClasspath("assets/polyfill.io").map(RelativePathEscaper.escapeLeadingDotPaths)).trim
 }
 
 object Get {

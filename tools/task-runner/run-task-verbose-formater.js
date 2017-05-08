@@ -2,11 +2,9 @@ const figures = require('figures');
 const chalk = require('chalk');
 
 const log = (title, parents, message = '') => {
-    console.log(
-        `${chalk.dim(`${parents
-                .concat([''])
-                .join(` ${figures.arrowRight} `)}${title}`)} ${message}`
-    );
+    console.log(`${chalk.dim(`${parents.concat([
+        '',
+    ]).join(` ${figures.arrowRight} `)}${title}`)} ${message}`);
 };
 
 const render = (tasks, parents = []) => {
@@ -32,7 +30,9 @@ const render = (tasks, parents = []) => {
                     );
                 }
                 if (
-                    task.isCompleted() && !task.hasFailed() && !task.isSkipped()
+                    task.isCompleted() &&
+                    !task.hasFailed() &&
+                    !task.isSkipped()
                 ) {
                     log(task.title, parents, chalk.dim.green(figures.tick));
                 }

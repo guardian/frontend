@@ -12,16 +12,17 @@ object NavLinks {
   val money = NavLink("money", "/money", "money")
   val science = NavLink("science", "/science", "science")
   var tech = NavLink("tech", "/technology", "technology")
-  var politics = NavLink("politics", "/politics", "politics")
+  var politics = NavLink("UK politics", "/politics", "politics")
   var media = NavLink("media", "/media", "media")
   var cities = NavLink("cities", "/cities", "cities")
   var globalDevelopment = NavLink("global development", "/global-development", "global-development")
   var australiaNews = NavLink("australia", "/australia-news", "australia-news", longTitle = "australia news")
-  var auPolitics = NavLink("politics", "/australia-news/australian-politics", "australia-news/australian-politics", longTitle = "australian politics")
+  var auPolitics = NavLink("AU politics", "/australia-news/australian-politics", "australia-news/australian-politics", longTitle = "australian politics")
   var auImmigration = NavLink("immigration", "/australia-news/australian-immigration-and-asylum", "australia-news/australian-immigration-and-asylum")
   var indigenousAustralia = NavLink("indigenous australia", "/australia-news/indigenous-australians", "australia-news/indigenous-australians")
+  var indigenousAustraliaOpinion = NavLink("Indigenous", "/commentisfree/series/indigenousx", "commentisfree/series/indigenousx")
   var usNews = NavLink("US", "/us-news", "us-news", longTitle = "US news")
-  var usPolitics = NavLink("politics", "/us-news/us-politics", "us-news/us-politics", longTitle = "US politics")
+  var usPolitics = NavLink("US politics", "/us-news/us-politics", "us-news/us-politics", longTitle = "US politics")
   val education = NavLink("education", "/education", "education")
   val society = NavLink("society", "/society", "society")
   val law = NavLink("law", "/law", "law")
@@ -55,6 +56,7 @@ object NavLinks {
   /* OPINION */
   val opinion = NavLink("opinion", "/commentisfree", longTitle = "opinion home", iconName = "home", uniqueSection = "commentisfree")
   var columnists = NavLink("columnists", "/index/contributors", "index/contributors")
+  var auColumnists = NavLink("columnists", "/au/index/contributors", "au/index/contributors")
   val theGuardianView = NavLink("the guardian view", "/profile/editorial", "profile/editorial")
   val cartoons = NavLink("cartoons", "/cartoons/archive", "cartoons/archive")
   val inMyOpinion = NavLink("opinion videos", "/commentisfree/series/comment-is-free-weekly", "commentisfree/series/comment-is-free-weekly")
@@ -96,12 +98,16 @@ object NavLinks {
   /* LIFE */
   val lifestyle = NavLink("life", "/lifeandstyle", "lifeandstyle", longTitle = "lifestyle home", iconName = "home")
   val fashion = NavLink("fashion", "/fashion", "fashion")
+  val fashionAu = NavLink("fashion", "/au/lifeandstyle/fashion", "au/lifeandstyle/fashion")
   val food = NavLink("food", "/lifeandstyle/food-and-drink", "lifeandstyle/food-and-drink")
+  val foodAu = NavLink("food", "/au/lifeandstyle/food-and-drink", "au/lifeandstyle/food-and-drink")
   val travel = NavLink("travel", "/travel", "travel")
+  val relationshipsAu = NavLink("relationships", "/au/lifeandstyle/relationships", "au/lifeandstyle/relationships")
   val loveAndSex = NavLink("love & sex", "/lifeandstyle/love-and-sex", "lifeandstyle/love-and-sex")
   var family = NavLink("family", "/lifeandstyle/family", "lifeandstyle/family")
   var home = NavLink("home & garden", "/lifeandstyle/home-and-garden", "lifeandstyle/home-and-garden")
   var health = NavLink("health & fitness", "/lifeandstyle/health-and-wellbeing", "lifeandstyle/health-and-wellbeing")
+  var healthAu = NavLink("health & fitness", "/au/lifeandstyle/health-and-wellbeing", "au/lifeandstyle/health-and-wellbeing")
   var women = NavLink("women", "/lifeandstyle/women", "lifeandstyle/women")
   var recipes = NavLink("recipes", "/tone/recipes", "tone/recipes")
   val travelUk = NavLink("UK", "/travel/uk", "travel/uk")
@@ -116,6 +122,7 @@ object NavLinks {
   val crosswords = NavLink("crosswords", "/crosswords", "crosswords")
   val video =  NavLink("video", "/video")
   val podcasts =  NavLink("podcasts", "/podcasts")
+  val pictures =  NavLink("pictures", "/inpictures")
   val jobs = NavLink("jobs", "https://jobs.theguardian.com")
   val dating = NavLink("dating", "https://soulmates.theguardian.com")
   val apps = NavLink("the guardian app", "https://app.adjust.com/f8qm1x_8q69t7?campaign=NewHeader&adgroup=Mobile&creative=generic")
@@ -156,6 +163,7 @@ object NavLinks {
     "cartoons/archive",
     "type/cartoon",
     "profile/editorial",
+    "au/index/contributors",
     "index/contributors",
     "commentisfree/series/comment-is-free-weekly",
     "sport/rugby-union",
@@ -185,6 +193,10 @@ object NavLinks {
     "lifeandstyle/family",
     "lifeandstyle/home-and-garden",
     "lifeandstyle/love-and-sex",
+    "au/lifeandstyle/fashion",
+    "au/lifeandstyle/food-and-drink",
+    "au/lifeandstyle/relationships",
+    "au/lifeandstyle/health-and-wellbeing",
     "travel/uk",
     "travel/europe",
     "travel/usa",

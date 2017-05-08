@@ -1,29 +1,10 @@
 <div id="site-message__message">
-    <div class="site-message__message site-message__message--membership">
-        <span id="membership__engagement-message-text">
-            <%=messageText%>
+    <div class="site-message__message site-message__message--membership <%=paypalClass%>">
+        <span class = "membership__message-text"><%=messageText%></span>
+        <span class="membership__paypal-container">
+            <img class="membership__paypal-logo" src="<%=paypalLogoSrc%>" alt="Paypal and credit card">
+            <span class="membership__support-button"><a class="message-button-rounded__cta <%=colourClass%>" href="<%=linkHref%>"><%=buttonCaption%><%=arrowWhiteRight%></a></span>
         </span>
-        <span id="membership__engagement-message-button" class="message-button-rounded__cta primary <%=colourClass%>">
-            <span id="membership__engagement-message-button-caption"><%=buttonCaption%></span><%=arrowWhiteRight%>
-        </span>
-
-        <% if(showRemindMe) { %>
-            <span id="membership__engagement-message-button" class="message-button-rounded__cta secondary  <%=colourClass%>">
-                <span id="membership__engagement-message-button-caption">Remind me</span>
-            </span>
-        <% } %>
     </div>
-    <a id="membership__engagement-message-link" class="u-faux-block-link__overlay" target="_blank" href="<%=linkHref%>" data-link-name="Read more link">
-    </a>
-
-    <div id="membership__remind-me-form" class="membership__remind-me-form is-hidden">
-        <div class="membership__remind-me-form__fields">
-            <input type="text" id="membership__engagement-text-field" class="membership__engagement-text-field" />
-            <span id="membership__remind-me-form__error" class="membership__remind-me-form__error <%=colourClass%> is-hidden">Invalid email address; please try again<br></span>
-        </div>
-        <span id="membership__remind-me-form__cta" class="message-button-rounded__cta membership__remind-me-form__cta">
-            <span id="membership__engagement-message-button-caption">Send email reminder</span>
-        </span>
-        <span id="membership__remind-me-form__thanks-message" class="membership__remind-me-form__thanks-message is-hidden">Thanks, we will send you a reminder about becoming a Supporter</span>
-    </div>
+    <a class="u-faux-block-link__overlay js-engagement-message-link" target="_blank" href="<%=linkHref%>" data-link-name="Read more link"></a>
 </div>

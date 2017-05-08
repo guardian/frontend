@@ -8,9 +8,13 @@
 
 @(page: GalleryPage)(implicit request: RequestHeader, context: model.ApplicationContext)
 
-<div class="l-side-margins l-side-margins--media l-side-margins--gallery">
+<div class="@RenderClasses(
+            Map("l-side-margins--paidgallery" -> isPaidContent(page)),
+            "l-side-margins", "l-side-margins--media", "l-side-margins--gallery"
+        )">
 
     <article id="article" class="@RenderClasses(
+            Map("content--paidgallery" -> isPaidContent(page)),
             "content", "content--media", "content--gallery", "tonal", "content--immersive", s"tonal--${toneClass(page.item)}"
         )"
         itemscope itemtype="@page.item.metadata.schemaType" role="main">
@@ -33,7 +37,7 @@
         </div>
     </article>
 
-    @if(page.item.content.showInRelated) {
+    @if(page.item.content.showInRelated && !isPaidContent(page)) {
         <div class="gallery__most-popular facia-container fc-container fc-container--media hide-on-childrens-books-site js-gallery-most-popular tonal--@toneClass(page.item)">
             <div class="fc-container__inner">
                 <div class="fc-container__header">

@@ -1,8 +1,10 @@
 define([
-    'lib/ajax',
+    'lib/fetch',
+    'lib/fetch-json',
     'lib/config'
 ], function (
-    ajax,
+    fetch,
+    fetchJSON,
     config
 ) {
     function isGeoBlocked(el) {
@@ -12,15 +14,14 @@ define([
         // these files are placed in a special location
         if (source.indexOf('/ukonly/') !== -1) {
             return new Promise(function(resolve) {
-                ajax({
-                    url: source,
-                    crossOrigin: true,
+                fetch(source, {
+                    mode: 'cors',
                     method: 'head'
                 }).then(function() {
                     resolve(false);
-                }, function (response) {
+                }).catch(function (res) {
                     // videos are blocked at the CDN level
-                    resolve(response.status === 403);
+                    resolve(res.status === 403);
                 });
             });
         } else {
@@ -48,18 +49,16 @@ define([
             if (!canonicalUrl) {
                 resolve(defaultVideoInfo);
             } else {
-                var ajaxInfoUrl = config.page.ajaxUrl + '/' + canonicalUrl;
+                var url = config.page.ajaxUrl + '/' + canonicalUrl + '/info.json';
 
-                ajax({
-                    url: ajaxInfoUrl + '/info.json',
-                    type: 'json',
-                    crossOrigin: true
-                }).then(function(videoInfo) {
-                    resolve(videoInfo);
-                }, function() {
-                    // if this fails, don't stop, keep going.
-                    resolve(defaultVideoInfo);
-                });
+                fetchJSON(url, {
+                    mode: 'cors',
+                })
+                    .then(resolve)
+                    .catch(function() {
+                        // if this fails, don't stop, keep going.
+                        resolve(defaultVideoInfo);
+                    });
             }
         });
     }

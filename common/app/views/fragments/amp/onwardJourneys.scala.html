@@ -1,14 +1,15 @@
 @(page: model.Page, related: model.RelatedContent, content: model.Content)(implicit context: model.ApplicationContext)
 
 @if(content.metadata.sectionId != "childrens-books-site") {
+
     @if(related.hasStoryPackage) {
         @fragments.amp.storyPackageAmp(related)
     }
-    @if(content.tags.series.nonEmpty) {
-        @content.tags.series.map { tag =>
-            @fragments.amp.onwardTemplateAmp("series-mf2/" + tag.id + ".json")
-        }
+
+    @content.tags.series.map { tag =>
+        @fragments.amp.onwardTemplateAmp("series-mf2/" + tag.id + ".json")
     }
+
     @if(content.showInRelated
         && !related.hasStoryPackage
         && content.tags.series.isEmpty) {
@@ -16,7 +17,7 @@
     }
 
     @if(!content.shouldHideAdverts) {
-        @fragments.amp.outbrain(page)
+        @fragments.amp.outbrain(page, nonCompliant = content.nonCompliantOutbrainAmp)
     }
 
     @defining({

@@ -57,15 +57,11 @@ object Tag {
     val richLinkId = tag.references.find(_.`type` == "rich-link")
       .map(_.id.stripPrefix("rich-link/"))
       .filter(_.matches( """https?://www\.theguardian\.com/.*"""))
-    val openModuleId = tag.references.find(_.`type` == "open-module")
-      .map(_.id.stripPrefix("open-module/"))
-      .filter(_.matches( """https?://open-module\.appspot\.com/view\?id=\d+"""))
 
     Tag(
       properties = TagProperties.make(tag),
       pagination = pagination,
-      richLinkId = richLinkId,
-      openModuleId = openModuleId
+      richLinkId = richLinkId
     )
   }
 }
@@ -167,8 +163,7 @@ case class TagProperties(
 case class Tag (
   properties: TagProperties,
   pagination: Option[Pagination],
-  richLinkId: Option[String],
-  openModuleId: Option[String]
+  richLinkId: Option[String]
 
 ) extends StandalonePage {
 

@@ -4,12 +4,6 @@ define([
 ], function (fixtures, Injector) {
     describe('Performance Logging', function () {
         var injector = new Injector();
-        var pubads = {
-            addEventListener: jasmine.createSpy('addEventListener')
-        };
-        var googletag = {
-            pubads: function () { return pubads; }
-        };
         var performanceLogging;
 
         beforeEach(function (done) {
@@ -19,11 +13,6 @@ define([
                 performanceLogging = $1;
                 done();
             });
-        });
-
-        it('should register onSlotRender event listener', function () {
-            performanceLogging.setListeners(googletag);
-            expect(pubads.addEventListener).toHaveBeenCalledWith('slotRenderEnded', performanceLogging.reportTrackingData)
         });
 
         describe('wrap', function () {

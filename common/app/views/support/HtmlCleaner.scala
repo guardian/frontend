@@ -8,7 +8,7 @@ import conf.switches.Switches._
 import layout.ContentWidths
 import layout.ContentWidths._
 import model._
-import model.content.{Atom, Atoms, MediaWrapper}
+import model.content.{Atom, Atoms, MediaAtom, MediaWrapper}
 import org.jsoup.Jsoup
 import org.jsoup.nodes.{Document, Element, TextNode}
 import play.api.mvc.RequestHeader
@@ -91,6 +91,17 @@ case object R2VideoCleaner extends HtmlCleaner {
     document
   }
 
+}
+
+case class RecipeBodyImage(isRecipeArticle: Boolean) extends HtmlCleaner {
+  override def clean(document: Document): Document = {
+    if(isRecipeArticle) {
+      document.getElementsByClass("element-image") foreach(_.remove())
+      document.getElementsByTag("aside").filter(_.hasClass("element-pullquote")) foreach( _.remove())
+      document.getElementsByClass("element-rich-link").foreach( _.remove())
+    }
+    document
+  }
 }
 
 case class PictureCleaner(article: Article, amp: Boolean)(implicit request: RequestHeader) extends HtmlCleaner with implicits.Numbers {
@@ -467,6 +478,17 @@ case class PhotoEssayQuotes(isPhotoEssay: Boolean) extends HtmlCleaner {
   }
 }
 
+case class PhotoEssayCaptions(isPhotoEssay: Boolean) extends HtmlCleaner {
+  override def clean(document: Document): Document = {
+    if(isPhotoEssay) {
+      document.getElementsByClass("caption--img").foreach{ captions =>
+        captions.remove()
+      }
+    }
+    document
+  }
+}
+
 case class PhotoEssayHalfWidth(isPhotoEssay: Boolean) extends HtmlCleaner {
   override def clean(document: Document): Document = {
     if(isPhotoEssay) {
@@ -522,7 +544,7 @@ case class ImmersiveHeaders(isImmersive: Boolean) extends HtmlCleaner {
   }
 }
 
-case class DropCaps(isFeature: Boolean, isImmersive: Boolean) extends HtmlCleaner {
+case class DropCaps(isFeature: Boolean, isImmersive: Boolean, isRecipeArticle: Boolean = false) extends HtmlCleaner {
   private def setDropCap(p: Element): String = {
     p.html.replaceFirst(
       "^([\"'“‘]*[a-zA-Z])(.{199,})",
@@ -531,7 +553,7 @@ case class DropCaps(isFeature: Boolean, isImmersive: Boolean) extends HtmlCleane
   }
 
   override def clean(document: Document): Document = {
-    if(isFeature) {
+    if(isFeature && !isRecipeArticle) {
       val children = document.body().children().toList
       children.headOption match {
         case Some(p) =>
@@ -666,6 +688,12 @@ case class AtomsCleaner(atoms: Option[Atoms], shouldFence: Boolean = true, amp: 
         atomId <- Some(bodyElement.attr("data-atom-id"))
         atomData <- findAtom(atomId)
       } {
+        if(mediaWrapper.contains(MediaWrapper.MainMedia)){
+          atomContainer.addClass("element-atom--main-media")
+        }
+        if(atomData.isInstanceOf[MediaAtom]){
+          atomContainer.addClass("element-atom--media")
+        }
         val html = views.html.fragments.atoms.atom(atomData, shouldFence, amp, mediaWrapper).toString()
         bodyElement.remove()
         atomContainer.append(html)

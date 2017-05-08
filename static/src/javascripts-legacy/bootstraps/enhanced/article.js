@@ -1,7 +1,6 @@
 /*eslint-disable no-new*/
 define([
     'qwery',
-    'bean',
     'lib/$',
     'lib/config',
     'lib/detect',
@@ -9,16 +8,15 @@ define([
     'lib/url',
     'common/modules/article/rich-links',
     'common/modules/article/membership-events',
-    'common/modules/article/open-module',
     'common/modules/experiments/ab',
     'common/modules/onward/geo-most-popular',
     'common/modules/atoms/quiz',
+    'common/modules/atoms/story-questions',
     'bootstraps/enhanced/article-liveblog-common',
     'bootstraps/enhanced/trail',
     'ophan/ng'
 ], function (
     qwery,
-    bean,
     $,
     config,
     detect,
@@ -26,10 +24,10 @@ define([
     urlutils,
     richLinks,
     membershipEvents,
-    openModule,
     ab,
     geoMostPopular,
     quiz,
+    storyQuestions,
     articleLiveblogCommon,
     trail,
     ophan
@@ -70,9 +68,9 @@ define([
         richLinks.upgradeRichLinks();
         richLinks.insertTagRichLink();
         membershipEvents.upgradeEvents();
-        openModule.init();
         mediator.emit('page:article:ready');
         quiz.handleCompletion();
+        storyQuestions.init();
     };
 
     return {

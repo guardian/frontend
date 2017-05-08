@@ -17,12 +17,15 @@
 @import 'layout/_footer';
 @import 'module/content/_media-player';
 @import 'module/atoms/_youtube';
+@import 'module/atoms/_media';
+@import 'module/atoms/_storyquestions';
 @import 'module/commercial/_commercial';
 @import 'module/crosswords/_main';
-@import 'module/email/_main';
+@import 'module/email-signup/_main';
 @import 'module/_accessibility';
 @import 'module/experiments/contributions';
 @import 'module/experiments/embed';
 @import 'module/experiments/svg';
 @import 'module/experiments/_ab-acquisitions-love-boat';
-@import 'module/experiments/_acquisitions-epic-design-variations';
+@import 'module/experiments/_acquisitions-epic-testimonials';
+

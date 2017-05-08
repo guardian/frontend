@@ -1,5 +1,4 @@
 define([
-    'bean',
     'bonzo',
     'qwery',
     'videojs',
@@ -17,7 +16,6 @@ define([
     'lodash/functions/debounce',
     'common/modules/video/videojs-options'
 ], function (
-    bean,
     bonzo,
     qwery,
     videojs,
@@ -50,7 +48,7 @@ define([
         var data = {
             webTitle: config.page.webTitle,
             pageId: config.page.pageId,
-            icon: svgs('marque36icon')
+            icon: svgs.inlineSvg('marque36icon')
         };
         $('.vjs-control-bar').after(template(titlebarTmpl, data));
     }

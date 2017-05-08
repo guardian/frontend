@@ -1,10 +1,12 @@
 @(page: model.Page)
+@import model.Page.getContent
 @import conf.switches.Switches.ComscoreSwitch
+@import java.net.URLEncoder
 
 @if(ComscoreSwitch.isSwitchedOn) {
     <script id='comscore'>
         var _comscore = _comscore || [];
-        _comscore.push({ c1: "2", c2: "6035250" });
+        _comscore.push({ c1: "2", c2: "6035250", comscorekw: guardian.config.page.keywords });
         (function() {
             var s = document.createElement("script"), el = document.getElementsByTagName("script")[0];
             s.async = true;
@@ -13,9 +15,8 @@
         })();
     </script>
     <noscript>
-        <img src="https://sb.scorecardresearch.com/p?c1=2&c2=6035250&cv=2.0&cj=1" />
+        @defining(getContent(page).map(_.tags.keywords.map(_.name)).map(_.mkString(","))) { keywords =>
+            <img src="https://sb.scorecardresearch.com/p?c1=2&c2=6035250&cv=2.0&cj=1&comscorekw=@keywords.map({kw => URLEncoder.encode(kw, "UTF-8")})" />
+        }
     </noscript>
 }
-
-
-

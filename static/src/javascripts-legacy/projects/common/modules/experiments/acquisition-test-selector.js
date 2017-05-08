@@ -1,48 +1,50 @@
 define([
+    'lodash/collections/reduce',
     'common/modules/experiments/segment-util',
     'common/modules/experiments/test-can-run-checks',
     'common/modules/commercial/acquisitions-view-log',
-    'common/modules/experiments/tests/contributions-epic-brexit',
-    'common/modules/experiments/tests/acquisitions-epic-content-tailoring-environment',
-    'common/modules/experiments/tests/acquisitions-epic-content-tailoring-cif',
-    'common/modules/experiments/tests/acquisitions-epic-content-tailoring-football',
     'common/modules/experiments/tests/contributions-epic-always-ask-strategy',
     'common/modules/experiments/tests/contributions-epic-ask-four-earning',
-    'common/modules/experiments/tests/contributions-epic-regulars-v2',
-    'common/modules/experiments/tests/acquisitions-epic-article-50-trigger',
-    'common/modules/experiments/tests/acquisitions-epic-design-variations-v2',
-    'common/modules/experiments/tests/contributions-epic-laundromat'
+    'common/modules/experiments/tests/acquisitions-epic-liveblog',
+    'common/modules/experiments/tests/acquisitions-epic-testimonials'
 ], function (
+    reduce,
     segmentUtil,
     testCanRunChecks,
     viewLog,
-    brexit,
-    contentTailoringEnvironment,
-    contentTailoringCif,
-    contentTailoringFootball,
     alwaysAsk,
     askFourEarning,
-    regularsV2,
-    acquisitionsEpicArticle50Trigger,
-    acquisitionsEpicDesignVariationsV2,
-    laundromat
+    acquisitionsEpicLiveBlog,
+    acquisitionsEpicTestimonials
 ) {
     /**
      * acquisition tests in priority order (highest to lowest)
      */
     var tests = [
+        acquisitionsEpicTestimonials,
         alwaysAsk,
-        laundromat,
-		regularsV2,
-        contentTailoringEnvironment,
-        contentTailoringCif,
-        contentTailoringFootball,
-        acquisitionsEpicDesignVariationsV2,
         askFourEarning,
-        acquisitionsEpicArticle50Trigger,
-        brexit];
+        acquisitionsEpicLiveBlog
+    ];
+
+    var epicEngagementBannerTests = reduce(tests, function(out, test) {
+        var testInstance = new test();
+        if (testInstance.isEngagementBannerTest) {
+            out.push(testInstance)
+        }
+        return out;
+    }, []);
+
+    var abTestClashData = tests.map(function(test) {
+        return new test();
+    });
 
     return {
+
+        epicEngagementBannerTests: epicEngagementBannerTests,
+
+        abTestClashData: abTestClashData,
+
         getTest: function() {
             var eligibleTests = tests.filter(function (test) {
                 var t = new test();

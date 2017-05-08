@@ -14,11 +14,11 @@ type ReportedError = Error & {
     reported?: boolean,
 };
 
-function reportError(
+const reportError = (
     err: ReportedError,
     tags: Object,
     shouldThrow?: boolean = true
-): void {
+): void => {
     raven.captureException(err, { tags });
 
     if (shouldThrow) {
@@ -27,6 +27,6 @@ function reportError(
         error.reported = true;
         throw error;
     }
-}
+};
 
 export default reportError;

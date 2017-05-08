@@ -1,12 +1,25 @@
 package liveblog
 
-import model.liveblog.{Blocks, BlockAttributes, BodyBlock}
+import model.liveblog._
 import org.joda.time.DateTime
 import org.scalatest.{FlatSpec, Matchers}
 
 class LiveBlogCurrentPageTest extends FlatSpec with Matchers {
 
-  def fakeBlock(publicationOrder: Int) = BodyBlock(s"$publicationOrder", "","",None,BlockAttributes(false, false), false, None, firstPublishedDate = Some(new DateTime(publicationOrder)), None,None,Nil,Nil)
+  def fakeBlock(publicationOrder: Int) = BodyBlock(
+    s"$publicationOrder",
+    "",
+    "",
+    None,
+    BlockAttributes(false, false, None),
+    false,
+    None,
+    firstPublishedDate = Some(new DateTime(publicationOrder)),
+    None,
+    None,
+    Nil,
+    Nil
+  )
 
   def fakeBlocks(number: Int): List[BodyBlock] = Range(number, 0, -1).map(fakeBlock).toList
 

@@ -147,9 +147,11 @@ define([
         return $('.js-timestamp, .js-item__timestamp');
     }
 
-    function replaceLocaleTimestamps() {
+    function replaceLocaleTimestamps(html) {
         var cls = 'js-locale-timestamp';
-        $('.' + cls).each(function (el) {
+        var context = html || document;
+
+        $('.' + cls, context).each(function (el) {
             var datetime,
                 $el = bonzo(el),
                 timestamp = parseInt($el.attr('data-timestamp'), 10);
@@ -198,10 +200,11 @@ define([
 
     function init(opts) {
         replaceValidTimestamps(opts);
-        replaceLocaleTimestamps(opts);
+        replaceLocaleTimestamps();
     }
 
     return {
+        replaceLocaleTimestamps: replaceLocaleTimestamps,
         makeRelativeDate: makeRelativeDate,
         isWithinSeconds: isWithinSeconds,
         init: init

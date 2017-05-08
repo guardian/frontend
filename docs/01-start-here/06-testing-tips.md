@@ -1,9 +1,9 @@
 # Testing tips
 
-1. [Running localhost] (#running-localhost)
-2. [Testing AMP] (#testing-amp)
+1. [Running localhost](#running-localhost)
+2. [Testing AMP](#testing-amp)
 3. [Device Testing](#device-testing)
-4. [Testing local on CODE] (#testing-your-local-on-code)
+4. [Testing local on CODE](#testing-your-local-on-code)
 
 
 # Running localhost

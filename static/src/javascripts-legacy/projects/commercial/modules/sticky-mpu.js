@@ -1,13 +1,11 @@
 define([
     'lib/config',
-    'lib/closest',
     'lib/mediator',
     'lib/fastdom-promise',
     'common/modules/ui/sticky',
     'commercial/modules/messenger'
 ], function (
     config,
-    closest,
     mediator,
     fastdom,
     Sticky,
@@ -17,12 +15,12 @@ define([
     var stickyElement;
     var rightSlot;
 
-    function stickyMpu($adSlot) {
-        if ($adSlot.data('name') !== 'right') {
+    function stickyMpu(adSlot) {
+        if (adSlot.getAttribute('data-name') !== 'right') {
             return;
         }
 
-        rightSlot = $adSlot[0];
+        rightSlot = adSlot;
 
         var referenceElement = document.querySelector(config.page.hasShowcaseMainElement ? '.media-primary' : '.content__article-body,.js-liveblog-body-content');
         if (!referenceElement) {
@@ -30,16 +28,16 @@ define([
         }
 
         fastdom.read(function () {
-            return (referenceElement[config.page.hasShowcaseMainElement ? 'offsetHeight' : 'offsetTop']) + $adSlot[0].offsetHeight;
+            return (referenceElement[config.page.hasShowcaseMainElement ? 'offsetHeight' : 'offsetTop']) + adSlot.offsetHeight;
         }).then(function (newHeight) {
             return fastdom.write(function () {
-                $adSlot.parent().css('height', newHeight + 'px');
+                adSlot.parentNode.style.height = newHeight + 'px';
             });
         }).then(function () {
             if (noSticky) {
                 //if there is a sticky 'paid by' band move the sticky mpu down so it will be always visible
                 var options = config.page.isPaidContent ? {top: 43} : {};
-                stickyElement = new Sticky($adSlot[0], options);
+                stickyElement = new Sticky(adSlot, options);
                 stickyElement.init();
                 messenger.register('resize', onResize);
             }

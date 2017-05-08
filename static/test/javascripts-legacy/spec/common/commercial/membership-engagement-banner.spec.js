@@ -1,16 +1,10 @@
 define([
-    'bonzo',
-    'fastdom',
-    'qwery',
     'lib/$',
     'common/modules/user-prefs',
     'helpers/fixtures',
     'helpers/injector',
     'common/modules/ui/message'
 ], function (
-    bonzo,
-    fastdom,
-    qwery,
     $,
     userPrefs,
     fixtures,

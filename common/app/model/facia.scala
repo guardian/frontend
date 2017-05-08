@@ -1,7 +1,6 @@
 package model
 
 import com.gu.commercial.branding.Branding
-import common.Edition._
 import common.commercial.{CommercialProperties, EditionBranding}
 import common.{Edition, ExecutionContexts, Logging}
 import play.api.libs.json.Json

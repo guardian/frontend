@@ -77,7 +77,6 @@
     .meta__extras,
     .submeta,
     .submeta__keywords,
-    .meta__save-for-later,
     .meta__number:not(u-h) + .meta__number {
         border-color: $media-mute;
     }
@@ -113,5 +112,44 @@
 
     .submeta__link:after {
         color: $neutral-2;
+    }
+
+    &.content--paidgallery {
+        background: darken($paid-article-bg, 60%);
+
+        .tonal__standfirst,
+        .ad-slot--gallery-inline {
+            background: none;
+        }
+
+        .l-side-margins--gallery .meta__extras {
+            border: 0;
+        }
+
+        .gallery__divider,
+        .ad-slot--dark .ad-slot__label {
+            border-top-color: $neutral-6;
+        }
+
+        .gallery__meta-container::before,
+        .gallery::before {
+            content: none;
+        }
+
+        .gallery__img-container {
+            padding-bottom: 0;
+        }
+
+        .gallery__item + .gallery__item:not(.gallery__item--advert) .gallery__img-container {
+            padding-top: 1.25rem;
+            margin-top: 1.25rem;
+            border-top: 1px solid $neutral-6;
+        }
+    }
+
+    .content__headline--paidgallery {
+        .inline-tone-fill {
+            fill: $paid-article-brand;
+        }
     }
 }

@@ -17,7 +17,7 @@ define([
     });
 
     function loadYoutubeJs() {
-        loadScript(scriptSrc);
+        loadScript.loadScript(scriptSrc);
     }
 
     function _onPlayerStateChange(event, handlers, el) {

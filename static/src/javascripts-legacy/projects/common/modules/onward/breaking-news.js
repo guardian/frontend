@@ -188,8 +188,8 @@ define([
     }
 
     function renderAlert(alert) {
-        alert.marque36icon = svgs('marque36icon');
-        alert.closeIcon = svgs('closeCentralIcon');
+        alert.marque36icon = svgs.inlineSvg('marque36icon');
+        alert.closeIcon = svgs.inlineSvg('closeCentralIcon');
 
         var $alert = bonzo.create(template(alertHtml, alert));
 

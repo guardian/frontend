@@ -1,74 +1,15 @@
 define([
     'lodash/collections/some',
-    'common/modules/experiments/ab'
+    'common/modules/experiments/ab',
+    'common/modules/experiments/acquisition-test-selector'
 ], function (
     some,
-    ab
+    ab,
+    acquisitionTestSelector
 ) {
-    var ContributionsEpicAlwaysAskStrategy = {
-        name: 'ContributionsEpicAlwaysAskStrategy',
-        variants: ['alwaysAsk']
-    };
-    var ContributionsEpicBrexit = {
-        name: 'ContributionsEpicBrexit',
-        variants: ['control']
-    };
-    var ContributionsEpicAskFourEarning = {
-        name: 'ContributionsEpicAskFourEarning',
-        variants: ['control']
-    };
-
-    var ContributionsEpicRegularsV2 = {
-        name: 'ContributionsEpicRegularsV2',
-        variants: ['control', 'fairness_strong', 'fairness_strong_alternate_hook']
-	};
-
-    var AcquisitionsEpicDesignVariationsV2 = {
-        name: 'AcquisitionsEpicDesignVariationsV2',
-        variants: ['control', 'highlight_subtle', 'highlight_perspective', 'highlight_secure', 'highlight_hard', 'paypal']
-    };
-
-    var AcquisitionsEpicArticle50Trigger = {
-        name: 'AcquisitionsEpicArticle50Trigger',
-        variants: ['control']
-    };
-
-    var ContributionsEpicLaundromat = {
-        name: 'ContributionsEpicLaundromat',
-        variants: ['control']
-    };
-
-
-    var AcquisitionsContentTailoringEnvironment = {
-        name: 'AcquisitionsEpicContentTailoringEnvironment',
-        variants: ['control', 'impact', 'reference']
-    };
-
-    var AcquisitionsContentTailoringCif = {
-        name: 'AcquisitionsEpicContentTailoringCif',
-        variants: ['control', 'impact', 'reference']
-    };
-
-    var AcquisitionsContentTailoringFootball = {
-        name: 'AcquisitionsEpicContentTailoringFootball',
-        variants: ['control', 'impact', 'reference']
-    };
-
-    var contributionsTests = [
-        ContributionsEpicAlwaysAskStrategy,
-        ContributionsEpicBrexit,
-        ContributionsEpicAskFourEarning,
-        ContributionsEpicRegularsV2,
-        AcquisitionsEpicDesignVariationsV2,
-        AcquisitionsEpicArticle50Trigger,
-        AcquisitionsContentTailoringEnvironment,
-        AcquisitionsContentTailoringCif,
-        AcquisitionsContentTailoringFootball,
-        ContributionsEpicLaundromat
-    ];
 
     var emailTests = [];
-
+    var contributionsTests = acquisitionTestSelector.abTestClashData;
     var clashingTests = contributionsTests.concat(emailTests);
 
     function userIsInAClashingAbTest(tests) {
@@ -80,8 +21,10 @@ define([
     function _testABClash(f, clashingTests) {
         if (clashingTests.length > 0) {
             return some(clashingTests, function (test) {
-                return some(test.variants, function (variant) {
-                    return f(test.name, variant);
+                return test.variants.filter(function (variant) {
+                    return !variant.isOutbrainCompliant;
+                }).some(function (variant) {
+                    return f(test, variant);
                 });
             });
         }

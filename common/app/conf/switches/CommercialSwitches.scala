@@ -85,6 +85,16 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
+  val SimpleReachSwitch = Switch(
+    SwitchGroup.Commercial,
+    "simple-reach",
+    "Enable Simple Reach tracking and reporting.",
+    owners = Seq(Owner.withName("commercial team")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
   val TravelFeedFetchSwitch = Switch(
     SwitchGroup.CommercialFeeds,
     "gu-travel-feed-fetch",
@@ -201,7 +211,7 @@ trait CommercialSwitches {
     description = "Turn on Sonobi header bidding",
     owners = Seq(Owner.withGithub("rich-nguyen"), Owner.withGithub("janua")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 3, 31), //Friday
+    sellByDate = never,
     exposeClientSide = true
   )
 
@@ -211,7 +221,7 @@ trait CommercialSwitches {
     description = "Solicit feedback for ad impressions",
     owners = Owner.group(SwitchGroup.Commercial),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 4, 4),
+    sellByDate = new LocalDate(2017, 7, 12),
     exposeClientSide = true
   )
 
@@ -221,7 +231,17 @@ trait CommercialSwitches {
     description = "A test feature to evaluate Switch Concepts' server-to-server preflight ad call",
     owners = Owner.group(SwitchGroup.Commercial),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 3, 31),
+    sellByDate = new LocalDate(2017, 7, 3),
     exposeClientSide = true
+  )
+
+  val sponsoredFootballFeedPages = Switch(
+    group = SwitchGroup.Commercial,
+    name = "sponsored-football-pages",
+    description = "Show a hardcoded sponsor's logo on football pages.",
+    owners = Owner.group(SwitchGroup.Commercial),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 9, 6),
+    exposeClientSide = false
   )
 }

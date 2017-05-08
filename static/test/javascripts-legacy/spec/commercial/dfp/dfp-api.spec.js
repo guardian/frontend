@@ -1,12 +1,10 @@
 define([
-    'bean',
     'bonzo',
     'qwery',
     'lib/$',
     'helpers/fixtures',
     'helpers/injector'
 ], function (
-    bean,
     bonzo,
     qwery,
     $,
@@ -44,8 +42,6 @@ define([
             dfp, dfpEnv, config, detect, commercialFeatures, closeDisabledSlots;
 
         function reset() {
-            dfpEnv.firstAdDisplayed = false;
-            dfpEnv.firstAdRendered = false;
             dfpEnv.advertIds = {};
             dfpEnv.adverts = [];
             dfpEnv.advertsToRefresh = [];
@@ -61,8 +57,10 @@ define([
                 return Promise.resolve();
             });
 
-            injector.mock('lib/load-script', function () {
-                return Promise.resolve();
+            injector.mock('lib/load-script', {
+                loadScript: function () {
+                    return Promise.resolve();
+                }
             });
 
             injector.require([
@@ -102,7 +100,13 @@ define([
                     keywordIds:  'world/korea,world/ukraine',
                     pageId:      'world/uk',
                     section:     'news',
-                    seriesId:    'learning/series/happy-times'
+                    seriesId:    'learning/series/happy-times',
+                    sharedAdTargeting: {
+                        ct:      'Article',
+                        edition: 'us',
+                        k:       ['korea', 'ukraine'],
+                        se:      ['happy-times']
+                    }
                 };
                 config.images = {
                     commercial: {}
@@ -195,7 +199,7 @@ define([
         it('should get the slots', function (done) {
             dfp.prepareGoogletag.init(noop, noop)
             .then(function() {
-                return dfp.fillAdvertSlots.init(noop, noop);
+                return dfp.fillAdvertSlots.fillAdvertSlots(noop, noop);
             })
             .then(function () {
                 expect(Object.keys(dfp.getAdverts()).length).toBe(4);
@@ -210,7 +214,7 @@ define([
                     return dfp.prepareGoogletag.init(noop, noop);
                 })
                 .then(function() {
-                    return dfp.fillAdvertSlots.init(noop, noop);
+                    return dfp.fillAdvertSlots.fillAdvertSlots(noop, noop);
                 })
                 .then(function () {
                     var slots = dfp.getAdverts();
@@ -232,7 +236,7 @@ define([
         it('should define slots', function (done) {
             dfp.prepareGoogletag.init(noop, noop)
             .then(function() {
-                return dfp.fillAdvertSlots.init(noop, noop);
+                return dfp.fillAdvertSlots.fillAdvertSlots(noop, noop);
             })
             .then(function () {
                 [
@@ -261,7 +265,7 @@ define([
             };
             dfp.prepareGoogletag.init(noop, noop)
             .then(function() {
-                return dfp.fillAdvertSlots.init(noop, noop);
+                return dfp.fillAdvertSlots.fillAdvertSlots(noop, noop);
             })
             .then(function () {
                 expect(window.googletag.pubads().enableSingleRequest).toHaveBeenCalled();
@@ -276,7 +280,7 @@ define([
             $('.js-ad-slot').first().attr('data-out-of-page', true);
             dfp.prepareGoogletag.init(noop, noop)
             .then(function() {
-                return dfp.fillAdvertSlots.init(noop, noop);
+                return dfp.fillAdvertSlots.fillAdvertSlots(noop, noop);
             })
             .then(function () {
                 expect(window.googletag.defineOutOfPageSlot).toHaveBeenCalled();
@@ -292,7 +296,7 @@ define([
 
             dfp.prepareGoogletag.init(noop, noop)
             .then(function() {
-                return dfp.fillAdvertSlots.init(noop, noop);
+                return dfp.fillAdvertSlots.fillAdvertSlots(noop, noop);
             })
             .then(function () {
                 window.googletag.pubads().listeners.slotRenderEnded(fakeEventOne);

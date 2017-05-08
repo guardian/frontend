@@ -1,4 +1,4 @@
-@(page: model.PressedPage)(implicit request: RequestHeader)
+@(page: model.PressedPage)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @mainEmail(page) {
     @fragments.emailFrontBody(page)

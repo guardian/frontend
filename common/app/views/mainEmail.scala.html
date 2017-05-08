@@ -1,11 +1,15 @@
-@(page: model.Page)(body: Html)(implicit request: RequestHeader)
+@(page: model.Page)(body: Html)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @import common.{LinkTo, CanonicalLink}
+@import model.EmailAddons.EmailContentType
+@import views.support.EmailHelpers.Images.quote
+@import views.support.EmailHelpers.Images.footerG
+@import play.api.Mode.Dev
 @import implicits.Requests.RichRequestHeader
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="viewport" content="width=device-width"/>
@@ -27,38 +31,45 @@
         </style>
         <![endif]-->
 
-        @fragments.email.stylesheets.ink()
+        <style>
+            @if(page.metadata.isFront) {
+                @Html(common.Assets.css.emailFront)
+            } else {
+                @Html(common.Assets.css.emailArticle)
 
-        @fragments.email.stylesheets.main()
-        @fragments.email.stylesheets.footer()
+                @* This uses Scala code to get the path to the asset, so can't be done in Sass *@
+                blockquote {
+                   background-image: url(@quote);
+                }
+            }
 
-        @if(page.metadata.isFront) {
-            @fragments.email.stylesheets.frontFonts()
-            @fragments.email.stylesheets.front(page)
-            @fragments.email.stylesheets.tones(page)
-        } else {
-            @fragments.email.stylesheets.articleFonts()
-        }
+            .ft__inner {
+                background-image:url(@footerG);
+            }
+        </style>
     </head>
 
     <body>
         @fragments.email.ampScript(page)
 
-        <table class="body">
+        <table class="body @page.bodyClass">
             <tr>
-                <td class="center" align="center" valign="top">
-                    <center>
-                        <table class="container">
-                            <tr>
-                                <td>@body</td>
-                            </tr>
-                            <tr>
-                                <td class="footer">@fragments.email.footer(page)</td>
-                            </tr>
-                        </table>
+                <td class="center no-pad" align="center" valign="top">
+                    <center class="center-element">
+                        <table align="center" class="container float-center">
+                            <tbody>
+                                <tr>
+                                    <td class="no-pad">
+                                        @body
+                                        @fragments.email.footer(page)
+                                    </td>
+                                </tr>
+                            </tbody>
                     </center>
                 </td>
             </tr>
         </table>
+        <!-- prevent Gmail on iOS font size manipulation -->
+        <div style="display:none; white-space:nowrap; font:15px courier; line-height:0;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </div>
     </body>
 </html>

@@ -1,31 +1,31 @@
 define([
     'bean',
-    'bonzo',
     'lib/fastdom-promise',
     'lib/$',
     'lib/detect',
     'lib/mediator',
     'lib/storage',
     'lodash/utilities/template',
-    'common/views/svgs',
     'raw-loader!commercial/views/creatives/fabric-expanding-v1.html',
     'raw-loader!commercial/views/creatives/fabric-expanding-video.html',
+    'svg-loader!svgs/icon/arrow-down.svg',
+    'svg-loader!svgs/icon/close-central.svg',
     'lodash/functions/bindAll',
     'lodash/objects/merge',
     'commercial/modules/creatives/add-tracking-pixel',
     'commercial/modules/creatives/add-viewability-tracker'
 ], function (
     bean,
-    bonzo,
     fastdom,
     $,
     detect,
     mediator,
     storage,
     template,
-    svgs,
     fabricExpandingV1Html,
     fabricExpandingVideoHtml,
+    arrowDown,
+    closeCentral,
     bindAll,
     merge,
     addTrackingPixel,
@@ -50,7 +50,7 @@ define([
     FabricExpandingV1.prototype.updateBgPosition = function () {
         var that = this;
 
-        var viewportHeight = bonzo.viewport().height;
+        var viewportHeight = detect.getViewport().height;
         var adSlotTop = this.adSlot.getBoundingClientRect().top;
 
         var adHeight = (this.isClosed) ? this.closedHeight : this.openedHeight;
@@ -102,7 +102,7 @@ define([
 
     FabricExpandingV1.prototype.listener = function () {
         var that = this;
-        if (!this.initialExpandCounter && bonzo.viewport().height > that.adSlot.getBoundingClientRect().top + this.openedHeight) {
+        if (!this.initialExpandCounter && detect.getViewport().height > that.adSlot.getBoundingClientRect().top + this.openedHeight) {
             var itemId = $('.ad-slot__content', that.adSlot).attr('id'),
                 itemIdArray = itemId.split('/');
 
@@ -179,11 +179,11 @@ define([
         };
         var showmoreArrow = {
             showArrow: (this.params.showMoreType === 'arrow-only' || this.params.showMoreType === 'plus-and-arrow') ?
-            '<button class="ad-exp__open-chevron ad-exp__open">' + svgs('arrowdownicon') + '</button>' : ''
+            '<button class="ad-exp__open-chevron ad-exp__open">' + arrowDown.markup + '</button>' : ''
         };
         var showmorePlus = {
             showPlus: (this.params.showMoreType === 'plus-only' || this.params.showMoreType === 'plus-and-arrow') ?
-            '<button class="ad-exp__close-button ad-exp__open">' + svgs('closeCentralIcon') + '</button>' : ''
+            '<button class="ad-exp__close-button ad-exp__open">' + closeCentral.markup + '</button>' : ''
         };
         var scrollbgDefaultY = '0%'; // used if no parallax / fixed background scroll support
         var scrollingbg = {

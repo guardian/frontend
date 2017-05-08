@@ -1,10 +1,3 @@
-$grey: #dbdbdb;
-$grey-two: #f6f6f6;
-$grey-three: #767676;
-$purple: #b72166;
-
-$padding-wide: 100px;
-
 .content--recipes {
     padding-bottom: 0;
 }
@@ -13,52 +6,66 @@ $padding-wide: 100px;
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
+    border-bottom: 1px solid $neutral-3;
+    margin-bottom: $gs-gutter * 2;
 
-    @include mq($from: tablet) {
+    @include mq($from: desktop) {
         flex-wrap: nowrap;
     }
 
 }
-.recipe__article .recipe__article--headline h1,
-.recipe__article .recipe__article--structured-headline h1 {
-    font-family: $f-serif-headline;
+.recipe__article .recipe__article--headline h1 {
+    @include f-headline;
     font-weight: 200;
-    font-size: 38px;
-    line-height: 38px;
+    font-size: 28px;
+    line-height: 32px;
 
-
-    @include mq($from: tablet) {
-        font-size: 48px;
-        line-height: 48px;
+    @include mq($from: desktop) {
+        font-size: 36px;
+        line-height: 40px;
     }
 }
 
-.recipe__article h2 {
-    font-family: $f-serif-headline;
+.recipe__article .recipe__article--structured-headline h1 {
+    @include f-headline;
+    font-size: 24px;
+    line-height: 28px;
+    font-weight: 900;
+
+    @include mq($from: tablet) {
+        font-size: 28px;
+        line-height: 32px;
+    }
+}
+
+
+.recipe__article h2:not(.recipe__article--structured-byline) {
+    @include f-headline;
     font-weight: 900;
     line-height: 28px;
 }
 
 .circle-button {
-    font-family: $f-serif-headline;
+    @include f-headline;
     font-weight: 900;
     line-height: 30px;
+    border: 1px solid $neutral-3;
+    border-radius: 50%;
+    width: calc(#{$gs-gutter / 2} * 3);
+    height: calc(#{$gs-gutter / 2} * 3);
+    margin-right: $gs-baseline / 2;
 
-    .inline-icon {
-        fill: $grey;
-        width: 30px;
-        height: 30px;
-        border: 1px solid $grey;
-        margin-right: 10px;
+    &:hover {
+        border: 1px solid $neutral-2;
     }
+}
 
-    .inline-icon__svg {
-        margin-left: auto;
-        margin-right: auto;
-        margin-top: 5px;
-        fill: #000000;
-        display: block;
-    }
+.circle-button__svg {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: $gs-gutter / 4;
+    fill: $neutral-2;
+    display: block;
 }
 
 .recipe__images-wrapper {
@@ -67,12 +74,28 @@ $padding-wide: 100px;
     height: 50vh;
     top: 0;
     width: 100%;
+    overflow: hidden;
 
-    @include mq($from: tablet) {
+    @include mq($until: desktop) {
+        position: relative;
+    }
+
+    @include mq($from: desktop) {
         flex-basis: 40%;
-        position: sticky;
         height: 100vh;
         min-height: 600px;
+        @supports (position: sticky) {
+            position: sticky;
+        }
+        &.is-sticky {
+            width: 40%
+        }
+    }
+    @include mq($from: leftCol) {
+        flex-basis: 42%;
+        &.is-sticky {
+            width: 45%
+        }
     }
 }
 
@@ -84,7 +107,7 @@ $padding-wide: 100px;
 .recipe__image__wrapper.recipe {
     display: none;
 
-    @include mq($from: tablet) {
+    @include mq($from: desktop) {
         display: block;
     }
 }
@@ -94,147 +117,438 @@ $padding-wide: 100px;
 }
 
 .recipe__image {
-    object-fit: cover;
     position: absolute;
     top: 0;
-    width: 100%;
     height: 100%;
 
 }
 
+@supports (object-fit: cover) {
+    .recipe__image {
+        object-fit: cover;
+        width: 100%;
+    }
+}
+
 .recipe__label {
+    @include f-headline;
     position: absolute;
     z-index: 300;
-    background-color: $purple;
-    height: 90px;
-    width: 160px;
+    background-color: $features-main-2;
+    height: $gs-baseline*5.5;
+    width: 110px;
     border-radius: 50%;
     text-align: center;
-    padding-top: 70px;
+    padding-top: $gs-gutter*2.5;
     color: #ffffff;
-    left: 1px;
-    top: 0;
+    left: -$gs-gutter / 6;
+    bottom: -$gs-gutter * 1.6;
     line-height: initial;
+    font-weight: 900;
 
     @include mq($from: tablet) {
-        top: 5px;
-        left: 20px;
+        left: 15%;
+    }
+
+    @include mq($from: desktop) {
+        top: -$gs-gutter * 2;
+        left: 11%;
+        bottom: auto;
+    }
+
+    @include mq($from: leftCol) {
+        height: $gs-baseline * 6.3;
+        width: $gs-gutter * 7;
+        padding-top: calc((#{$gs-gutter} / 2) * 7);
+        top: -$gs-gutter * 3;
+    }
+
+    h2 {
+        @include mq($from: leftCol) {
+            font-size: 28px;
+        };
     }
 }
 
 .recipe__article {
-    padding: 0 12px;
-    padding-bottom: 44px;
+    padding: 0 $gs-gutter / 2;
+}
 
+.flex-filler {
+    flex-shrink: 0;
+    flex-grow: 4;
+}
+.recipe__gutter-wrapper {
+    display: none;
+
+    @include mq($from: desktop) {
+        display: flex;
+        flex-basis: 5%;
+        position: relative;
+        top: 0;
+        height: 100vh;
+        min-height: 600px;
+        @supports (position: sticky) {
+            position: sticky;
+        }
+    }
+}
+
+.recipe__article--byline-image {
+    position: absolute;
+    border-radius: 50%;
+    width: calc(#{$gs-gutter / 2} * 4);
+    height: calc(#{$gs-gutter / 2} * 4);
+    background-color: $neutral-3;
+    overflow: hidden;
+    top: $gs-baseline;
+    margin: auto;
+    left: 0;
+    right: 0;
+
+    @include mq($from: leftCol) {
+        width: calc(#{$gs-gutter / 2} * 5);
+        height: calc(#{$gs-gutter / 2} * 5);
+    }
+}
+
+.recipe__article--byline-image .byline-img .byline-img__img {
+    //closer crop to make image visible
+    width: 150%;
+    height: auto;
+    margin-left: -25%;
+    filter: grayscale(100%);
+}
+
+.recipe__article--byline {
+    @include fs-textSans(5);
+    font-weight: 600;
+    color: $neutral-2;
+}
+
+.recipe__article--byline a {
+    color: $features-main-2;
+}
+
+.recipe__article--next-button {
+    opacity: 0;
+    position: absolute;
+    bottom: $gs-gutter / 4;
+    width: calc(#{$gs-gutter / 2} * 3);
+    height: calc(#{$gs-gutter / 2} * 3);
+    border-radius: 50%;
+    border: 1px solid lighten($neutral-1, 50%);
+    z-index: 200;
+    transition: transform .5s ease-in-out;
+    transform: rotate(90deg);
+    margin: auto;
+    left: $gs-gutter / 2;
+    cursor: pointer;
+
+    @include mq($from: desktop) {
+        border: 1px solid $neutral-3;
+        left: 0;
+        right: 0;
+    }
+
+    @include mq($from: leftCol) {
+        width: calc(#{$gs-gutter / 2 - 1} * 5);
+        height: calc(#{$gs-gutter / 2 - 1} * 5);
+    }
+
+    .inline-icon {
+        fill: #000000;
+    }
+
+    svg {
+        margin-left: auto;
+        margin-right: auto;
+        @include mq($from: desktop) {
+            width: 100%;
+            height: auto;
+        }
+    }
+
+    &.top {
+        transform: rotate(270deg);
+    }
+
+    &.hide-on-desktop {
+        opacity: 0;
+    }
+    &.hide-on-desktop.visible {
+        opacity: 1;
+    }
+    @supports (position: sticky) {
+        &.visible {
+            opacity: 1;
+        }
+    }
 }
 
 .recipe__article-wrapper {
-    @include mq($from: tablet) {
-        flex-basis: 60%;
-        float: right;
+    @include mq($until: desktop) {
+        margin-left: auto;
+        margin-right: auto;
     }
 
-    @include mq($from: wide) {
+    @include mq($from: desktop) {
         flex-basis: 55%;
+        float: right;
+        border-left: 1px solid $neutral-6;
+    }
+
+    @include mq($from: leftCol) {
+        flex-basis: 53%;
     }
 }
 
 .recipe__article--headline, .recipe__article--content {
-    @include mq($from: tablet) {
+    @include mq($from: desktop) {
         margin-left: auto;
         margin-right: auto;
     }
 }
 
-.recipe__article--contributor {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    float: left;
-    margin-right: 12px;
-
-    @include mq($from: tablet) {
-        margin-left: -90px;
-        position: fixed;
-    }
-}
-
 .recipe__article--headline {
-    margin-top: 6px;
-    margin-bottom: 24px;
-    color: $purple;
+    margin: 0;
+    margin-bottom: $gs-baseline * 2;
+    color: $neutral-1;
+    max-width: 550px;
+    
+    @include mq($from: desktop) {
+        max-width: 460px;
+    }
 
-    @include mq($from: tablet) {
-        margin-top: 20px;
+    @include mq($from: leftCol) {
+        max-width: 500px;
     }
 
     @include mq($from: wide) {
-        h1 {
-            padding-right: $padding-wide;
+        max-width: 550px;
+    }
+}
+
+.recipe__article--buttons {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: $gs-baseline;
+    max-width: 550px;
+    height: 36px;
+
+    @include mq($from: tablet) {
+        max-width: 550px;
+    }
+
+    @include mq($until: tablet) {
+        border-bottom: 1px solid $neutral-6;
+        border-top: 1px solid $neutral-6;
+        margin-top: $gs-baseline;
+        padding-top: $gs-baseline / 2;
+    }
+
+    //removes the line height of all elements within the artcile button wrapper
+    & > * {
+        line-height: 0;
+    }
+}
+
+.recipe__article--social {
+    position: relative;
+    width: 148px;
+
+    .social {
+        &.social--expanded-top {
+            width: 250px;
         }
+    }
+
+    .social-icon {
+        background-color: transparent;
+        border: 1px solid $neutral-3;
+        box-sizing: border-box;
+
+        svg {
+            path {
+                fill: $neutral-2;
+            }
+        }
+
+        &:hover {
+            background-color: transparent;
+            border: 1px solid $neutral-2;
+        }
+    }
+}
+
+.recipe__content--feedback-text {
+    @include fs-textSans(3);
+    color: $neutral-2;
+    border-top: 1px solid $neutral-3;
+    font-weight: 900;
+    padding-top: $gs-baseline / 2;
+    max-width: 550px;
+
+    @include mq($from: desktop) {
+        max-width: 460px;
+    }
+
+    @include mq($from: leftCol) {
+        max-width: 500px;
+    }
+
+    @include mq($from: wide) {
+        max-width: 550px;
+    }
+}
+
+.recipe__content--feedback-link {
+    color: $features-main-2;
+}
+
+.recipe__content, .recipe__standfirst {
+    padding-top: $gs-baseline / 2;
+    border-top: 1px solid $neutral-6;
+}
+
+.recipe__content {
+    padding-top: $gs-baseline / 2;
+    border-top: 1px solid $neutral-6;
+
+    p,
+    ul {
+        font-size: 16px;
+        line-height: 24px;
+        max-width: 550px;
+
+        @include mq($from: desktop) {
+            max-width: 460px;
+        }
+
+        @include mq($from: leftCol) {
+            max-width: 500px;
+        }
+
+        @include mq($from: wide) {
+            max-width: 550px;
+        }
+    }
+    h2 {
+        font-size: 18px;
+    }
+}
+
+.recipe__standfirst {
+    @include fs-headline(2);
+    margin-bottom: $gs-gutter;
+
+    p {
+        max-width: 550px;
+
+        @include mq($from: desktop) {
+            max-width: 460px;
+        }
+
+        @include mq($from: leftCol) {
+            max-width: 500px;
+        }
+
+        @include mq($from: wide) {
+            max-width: 550px;
+        }
+    }
+}
+
+.recipe__content a, .recipe__standfirst a {
+    color: $features-main-2;
+
+    &:hover {
+        border-bottom: 1px solid $features-main-2;
     }
 }
 
 .recipe__content {
-    padding-top: 6px;
-    border-top: 1px solid $grey;
+    ul {
+        margin-left: 0px;
+        list-style: none;
+    }
 
-    p {
-        font-size: 18px;
-
-        @include mq($from: tablet) {
-            padding-right: 50px;
-        }
-
-        @include mq($from: wide) {
-            padding-right: $padding-wide;
-        }
+    li:before {
+        width: $gs-baseline;
+        height: $gs-baseline;
+        border-radius: 50%;
+        margin-right: $gs-gutter / 2;
+        background-color: $neutral-3;
+        display: inline-block;
+        content: '';
     }
 }
 
-.recipe__content > *:nth-child(n+3) {
-    display: none;
+.recipe__content.js-visible, .recipe__content.recipe__content--no-js {
+    & > * {
+        display: block;
+    }
 }
 
-.recipe__content.js-visible > *:nth-child(n+3) {
-    display: block;
+.recipe__article--read-more {
+    display: inline-flex;
+    cursor: pointer;
+
+    &:after {
+        @include fs-headline(2);
+        content: 'Read more';
+        display: block;
+        color: $neutral-2;
+        font-weight: 900;
+        margin-top: $gs-baseline / 2;
+    }
 }
+
 
 .recipe__article--read-more.js-x-sign {
     svg {
         transform: rotate(45deg);
     }
+
+    &:after {
+        content: 'Hide';
+    }
 }
 
 .recipe__article--meta {
-    padding-top: 10px;
+    padding-top: $gs-baseline / 4;
 }
 
 .recipe__article--meta .content__series-label {
     float: none;
+    line-height: 20px;
+    margin-bottom: $gs-gutter / 10;
+}
+
+.recipe__article--meta .content__series-label .content__series-label__link {
+    color: $features-main-2;
+    font-weight: 900;
+    font-size: 18px;
 }
 
 .recipe__content figure.element,
 .recipe__content aside.element {
     margin-left: 0;
-
-    h1 {
-        font-size: 14px;
-    }
 }
 
 .recipe__article--next-recipe {
     opacity: 0;
     position: fixed;
-    bottom: 0px;
+    bottom: 0;
     transition: opacity .5s ease-in-out;
-    z-index: 1050;
+    z-index: 1010;
 
-    @include mq($from: tablet) {
-        color: $grey-three;
+    @include mq($until: desktop) {
+        left: 0;
     }
+
     .kicker {
-        color: $purple;
+        color: $features-main-2;
 
         &:after {
             content: '/';
@@ -245,150 +559,142 @@ $padding-wide: 100px;
         opacity: 1;
     }
 }
-.recipe__article--next-button {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    float: left;
-    border: 1px solid lighten($neutral-1, 50%);
-    margin-left: 12px;
-    margin-right: 12px;
-    z-index: 200;
-    position: relative;
-    margin-bottom: 6px;
-    transition: transform .5s ease-in-out;
-    transform: rotate(90deg);
-
-    @include mq($from: tablet) {
-        width: 60px;
-        height: 60px;
-        float: left;
-        border: 1px solid $grey;
-        margin-left: -72px;
-    }
-
-    .inline-icon {
-        fill: #000000;
-    }
-
-    svg {
-        margin-left: auto;
-        margin-right: auto;
-        @include mq($from: tablet) {
-            width: 60px;
-            height: 60px;
-        }
-    }
-
-    &.top {
-        transform: rotate(270deg);
-    }
-}
 
 .recipe__article--next-text {
     position: inherit;
-    bottom: 0px;
-    padding-left: 15%;
+    bottom: 0;
+    padding-left: $gs-gutter * 2.5;
     padding-right: 4%;
-    background-color: $grey;
-    padding-bottom: 6px;
-    padding-top: 6px;
+    background-color: $neutral-6;
+    padding-bottom: $gs-gutter / 4;
+    padding-top: $gs-baseline / 2;
     transform: translateY(100%);
     transition: transform .5s ease-in-out;
     box-sizing: border-box;
+    min-height: calc(#{$gs-gutter / 2} * 4);
+    cursor: pointer;
     width: 100%;
-    min-height: 40px;
 
     &.visible {
         transform: translateY(0%);
     }
 
     h2 {
-        font-size: 18px;
+        @include fs-headline(2);
+        font-weight: 900;
         line-height: 18px;
     }
 
-    @include mq($from: tablet) {
-        background-color: #ffffff;
-        padding-left: 1%;
-        padding-bottom: 14px;
+    @include mq($from: desktop) {
+        padding-left: $gs-gutter / 2;
+        padding-bottom: $gs-baseline;
 
         h2 {
-            font-size: 22px;
-            line-height: 24px;
+            @include fs-headline(3);
+            font-weight: 900;
         }
+    }
+
+    @include mq($from: desktop) {
+        width: 55%;
+
+    }
+    @include mq($from: wide) {
+        width: 53%;
     }
 }
 
 .recipe__article--structured {
-    margin-top: 36px;
-    border-top: 4px solid $grey;
-    padding-top: 8px;
+    margin-top: $gs-baseline;
+    border-top: 1px solid $neutral-6;
+    padding-top: $gs-baseline / 2;
 
-    @include mq($from: tablet) {
-        margin-top: 50px;
-    }
     .structured-meta {
-        font-family: $f-serif-headline;
+        @include f-headline;
         font-size: 16px;
         font-weight: 900;
     }
 
     .structured-meta__circle {
-        border: 1px solid $purple;
-        width: 30px;
+        border: 1px solid $features-main-2;
+        width: calc(#{$gs-gutter / 2} * 3);
         height: 27px;
-        margin-right: 6px;
         text-align: center;
+        margin-right: $gs-gutter / 5;
         padding-top: 3px;
-        color: $purple;
+        color: $features-main-2;
 
         &:nth-child(2) {
-            margin-left: 12px;
+            margin-left: calc(#{$gs-gutter / 5} * 2);
         }
     }
 }
 
+
+
 .recipe__article--structured-image {
+
+    @supports (object-fit: cover) {
+        img {
+            object-fit: cover;
+            height: 100%;
+        }
+    }
+
     img {
         width: 100%;
-        margin-top: -8px;
     }
-    margin-bottom: 12px;
+
+    margin-top: -$gs-baseline / 1.5;
+    height: 220px;
+    overflow: hidden;
 }
 
 .recipe__article--structured-headline {
-    margin-bottom: 24px;
+    margin-bottom: $gs-baseline * 2;
+    max-width: 550px;
+
+    @include mq($from: desktop) {
+        max-width: 460px;
+    }
+
+    @include mq($from: leftCol) {
+        max-width: 500px;
+    }
 
     @include mq($from: wide) {
-        h1 {
-            padding-right: $padding-wide;
-        }
+        max-width: 550px;
     }
 }
 
 .recipe__article--structured-meta {
-    margin-bottom: 8px;
+    margin-bottom: $gs-baseline / 2;
 }
 
 .recipe__article--structured-ingredients {
-    margin-bottom: 24px;
-    margin-top: 18px;
+    margin-bottom: $gs-baseline * 2;
+    margin-top: $gs-baseline;
 
-    @include mq($from: tablet) {
-        columns: 2;
-        padding-right: 50px;
+    @include mq($from: desktop) {
+        max-width: 460px;
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    @include mq($from: leftCol) {
+        max-width: 500px;
     }
 
     @include mq($from: wide) {
-        padding-right: $padding-wide;
+        max-width: 550px;
     }
+}
 
-    ul {
-        page-break-inside: avoid;
-        break-inside: avoid;
-        margin-top: -6px !important;
+.ingredients-list {
+    &:nth-child(odd) {
+        padding-right: 1%;
     }
+    flex: 0 49%;
 }
 
 .ingredients-list, .method-list {
@@ -398,59 +704,98 @@ $padding-wide: 100px;
 }
 
 .ingredients-list {
-    li:not(.ingredients-title) {
+    margin-bottom: $gs-baseline;
+    li:not(.recipe__article--list-title) {
         font-family: $f-sans-serif-text;
         font-size: 14px;
-        border-top: 1px solid $grey;
-        margin-bottom: 6px;
+        border-top: 1px solid $neutral-6;
+        margin-bottom: $gs-baseline / 2;
     }
 }
 
-.ingredients-title {
-    border-top: 4px solid $purple;
-    font-family: $f-serif-headline;
+.recipe__article--structured-byline, .recipe__article--list-title {
+    @include fs-headline(3)
+    font-size: 18px;
+    line-height: 18px;
     font-weight: 900;
-    color: $purple;
-    margin-bottom: 12px;
+    color: $features-main-2;
+    margin-bottom: 0;
+}
+
+.recipe__article--list-title {
+    margin-bottom: $gs-baseline * 1.5;
+}
+
+.recipe__article--structured-byline {
+    margin-bottom: 0;
+    line-height: 18px;
+    margin-top: $gs-baseline / 2;
+
+    @include mq($from: desktop) {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+}
+
+.recipe__article--list-title {
+    .ingredients-list & {
+        &:before {
+            width: 100%;
+        }
+    }
+
+    &:before {
+        display: block;
+        content: '';
+        height: 4px;
+        background-color: $features-main-2;
+        margin-bottom: $gs-baseline / 2;
+        @include mq($from: desktop) {
+            width: 50%;
+        }
+    }
 }
 
 .method-list {
-    margin-bottom: 24px;
+    margin-bottom: $gs-baseline * 2;
+    max-width: 550px;
+    @include mq($from: desktop) {
+        max-width: 460px;
+    }
 
-    @include mq($from: tablet) {
-        padding-right: 50px;
+    @include mq($from: leftCol) {
+        max-width: 500px;
     }
 
     @include mq($from: wide) {
-        padding-right: $padding-wide;
+        max-width: 550px;
     }
 
-    li {
-        border-top: 1px solid $grey;
-        margin-bottom: 24px;
+    li:not(.recipe__article--list-title) {
+        font-family: $f-sans-serif-text;
+        border-top: 1px solid $neutral-6;
+        margin-bottom: $gs-baseline * 2;
     }
     .number {
+        @include f-headline;
         font-size: 48px;
-        font-family: $f-serif-headline;
         font-weight: 200;
         float: left;
-        line-height: 0px;
-        margin-top: 26px;
-        margin-right: 12px;
-        color: $purple;
+        line-height: 0;
+        margin-top: $gs-baseline * 2.2;
+        margin-right: $gs-baseline;
+        color: $features-main-2;
     }
 }
 
 .ad-wrapper {
-    background-color: $grey-two;
-    margin-left: -20px;
-    margin-top: 20px;
-    padding-top: 6px;
-    padding-bottom: 6px;
+    background-color: $neutral-8;
+    margin-top: $gs-gutter * 2;
+    padding-top: 0;
+    padding-bottom: 0;
 
-    .ad-container {
+    .ad-slot {
         margin-left: auto;
         margin-right: auto;
-        width: max-content;
     }
 }

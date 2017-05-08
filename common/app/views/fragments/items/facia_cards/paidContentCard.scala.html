@@ -4,16 +4,8 @@
 @import views.html.fragments.items.elements.facia_cards._
 @import views.html.fragments.commercial.cardLogo
 
-@badgeNoImage(branding: Branding) = {
-    <div class="badge badge--branded badge--no-image">
-        <div class="badge__label">
-            Paid for by @branding.sponsorName
-        </div>
-    </div>
 
-}
-
-<div class="fc-item fc-item--has-image js-fc-item fc-item--list-media-mobile fc-item--standard-tablet adverts--within-unbranded">
+<div class="fc-item fc-item--has-image js-fc-item fc-item--list-media-mobile fc-item--standard-tablet adverts--within-unbranded @item.cardTypes.map(_.classes)">
     <div class="fc-item__container">
         @item.image.map(image => itemImage(
             image,
@@ -26,15 +18,20 @@
                     @item.headline
                 </div>
             </div>
+
+            <div class="badge badge--no-image">
+                <div class="badge__label">
+                    Paid for by @item.branding.map(_.sponsorName)
+                </div>
+            </div>
+
         </div>
 
-        @item.branding.map(badgeNoImage)
-
-        @item.branding.map(branding =>
-            cardLogo(branding, isStandardSizeCard = true)
-        )
-
-        <a href="@item.targetUrl" class="u-faux-block-link__overlay js-headline-text" data-link-name="@omnitureId" tabindex="-1"></a>
+        <a href="@item.targetUrl"
+        class="u-faux-block-link__overlay js-headline-text"
+        data-link-name="Labs paid card | @omnitureId"
+        data-component="Labs paid card | @omnitureId"
+        tabindex="-1"></a>
     </div>
 </div>
 

@@ -10,7 +10,6 @@ import common.commercial.hosted.HostedUtils.getAndLog
 import common.commercial.hosted.HostedVideoPage.log
 import conf.Configuration.site
 import model.StandalonePage
-import play.api.libs.json.Json
 
 trait HostedPage extends StandalonePage {
   def id: String

@@ -4,8 +4,7 @@ import akka.actor.ActorSystem
 import akka.pattern.CircuitBreaker
 import com.gu.contentapi.client.ContentApiClientLogic
 import com.gu.contentapi.client.model._
-import com.gu.contentapi.client.model.v1.{AtomsResponse, ItemResponse}
-import com.gu.contentapi.client.thrift.ThriftDeserializer
+import com.gu.contentapi.client.model.v1.ItemResponse
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichCapiDateTime
 import common._
 import conf.Configuration
@@ -189,7 +188,6 @@ class ContentApiClient(httpClient: HttpClient) extends ApiQueryDefaults {
   def search = getClient.search
   def sections = getClient.sections
   def editions = getClient.editions
-  def recipes = getClient.recipes
 
   def getResponse(itemQuery: ItemQuery)(implicit context: ExecutionContext) = getClient.getResponse(itemQuery)
 
@@ -200,8 +198,6 @@ class ContentApiClient(httpClient: HttpClient) extends ApiQueryDefaults {
   def getResponse(sectionsQuery: SectionsQuery)(implicit context: ExecutionContext) = getClient.getResponse(sectionsQuery)
 
   def getResponse(editionsQuery: EditionsQuery)(implicit context: ExecutionContext) = getClient.getResponse(editionsQuery)
-
-  def getResponse(recipesQuery: RecipesQuery)(implicit context: ExecutionContext): Future[AtomsResponse] = getClient.getResponse(recipesQuery)
 }
 
 // The Admin server uses this PreviewContentApi to check the preview environment.

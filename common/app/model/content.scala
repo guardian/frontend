@@ -76,16 +76,14 @@ final case class Content(
   lazy val shortUrlId = fields.shortUrlId
   lazy val shortUrlPath = shortUrlId
   lazy val discussionId = Some(shortUrlId)
-  lazy val isImmersiveGallery = {
-    metadata.contentType.toLowerCase == "gallery" && !metadata.commercial.exists(_.isPaidContent)
-  }
+  lazy val isGallery = metadata.contentType.toLowerCase == "gallery"
   lazy val isExplore = ExploreTemplateSwitch.isSwitchedOn && tags.isExploreSeries
   lazy val isPhotoEssay = fields.displayHint.contains("photoEssay")
-  lazy val isImmersive = fields.displayHint.contains("immersive") || isImmersiveGallery || tags.isTheMinuteArticle || isExplore || isPhotoEssay
+  lazy val isImmersive = fields.displayHint.contains("immersive") || isGallery || tags.isTheMinuteArticle || isExplore || isPhotoEssay
   lazy val isPaidContent: Boolean = tags.tags.exists{ tag => tag.id == "tone/advertisement-features" }
   lazy val campaigns: List[Campaign] = targeting.CampaignAgent.getCampaignsForTags(tags.tags.map(_.id))
   lazy val hasRecipeAtom: Boolean = atoms.fold(false)(a => a.recipes.nonEmpty)
-  lazy val showNewRecipeDesign: Boolean =  hasRecipeAtom && ABNewRecipeDesign.switch.isSwitchedOn
+  lazy val showNewRecipeDesign: Boolean = hasRecipeAtom && ABNewRecipeDesign.switch.isSwitchedOn
 
   lazy val hasSingleContributor: Boolean = {
     (tags.contributors.headOption, trail.byline) match {
@@ -107,10 +105,6 @@ final case class Content(
 
   lazy val showCircularBylinePicAtSide: Boolean =
     cardStyle == Feature && tags.hasLargeContributorImage && tags.contributors.length == 1 && !tags.isInteractive
-
-  lazy val signedArticleImage: String = {
-    ImgSrc(rawOpenGraphImage, EmailImage)
-  }
 
   // read this before modifying: https://developers.facebook.com/docs/opengraph/howtos/maximizing-distribution-media-content#images
   lazy val openGraphImage: String = {
@@ -307,6 +301,8 @@ final case class Content(
 
   val quizzes: Seq[Quiz] = atoms.map(_.quizzes).getOrElse(Nil)
   val media: Seq[MediaAtom] = atoms.map(_.media).getOrElse(Nil)
+
+  val nonCompliantOutbrainAmp = (hasStoryPackage && tags.series.nonEmpty) || (tags.series.length > 1)
 }
 
 object Content {
@@ -367,8 +363,8 @@ object Content {
       paFootballTeams = apiContent.references.filter(ref => ref.id.contains("pa-football-team")).map(ref => ref.id.split("/").last).distinct,
       javascriptReferences = apiContent.references.map(ref => Reference.toJavaScript(ref.id)),
       wordCount = Jsoup.clean(fields.body, Whitelist.none()).split("\\s+").length,
-      hasStoryPackage = apifields.flatMap(_.hasStoryPackage).getOrElse(false),
       showByline = fapiutils.ResolvedMetaData.fromContentAndTrailMetaData(apiContent, TrailMetaData.empty, cardStyle).showByline,
+      hasStoryPackage = apifields.flatMap(_.hasStoryPackage).getOrElse(false),
       rawOpenGraphImage = {
         val bestOpenGraphImage = if (FacebookShareUseTrailPicFirstSwitch.isSwitchedOn) {
           trail.trailPicture.flatMap(_.largestImageUrl)
@@ -451,7 +447,8 @@ object Article {
       javascriptConfigOverrides = javascriptConfig,
       opengraphPropertiesOverrides = opengraphProperties,
       shouldHideHeaderAndTopAds = (content.tags.isTheMinuteArticle || (content.isImmersive && (content.elements.hasMainMedia || content.fields.main.nonEmpty))) && content.tags.isArticle,
-      contentWithSlimHeader = (content.isImmersive && content.tags.isArticle) || content.showNewRecipeDesign
+      contentWithSlimHeader = (content.isImmersive && content.tags.isArticle),
+      isNewRecipeDesign = content.showNewRecipeDesign
     )
   }
 
@@ -635,7 +632,12 @@ final case class Video (
         " - video interviews"," – video interviews" )
     suffixVariations.fold(trail.headline.trim) { (str, suffix) => str.stripSuffix(suffix) }
   }
-  def endSlatePath = EndSlateComponents.fromContent(content).toUriPath
+  def endSlatePath: String = EndSlateComponents.fromContent(content).toUriPath
+
+  def sixteenByNineMetaImage: Option[String] = for {
+    imageMedia <- mediaAtom.flatMap(_.posterImage) orElse content.elements.thumbnail.map(_.images)
+    videoProfile <- Video1280.bestFor(imageMedia)
+  } yield videoProfile
 }
 
 object Gallery {

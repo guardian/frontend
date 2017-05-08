@@ -16,28 +16,6 @@
     min-height: gs-height(6);
 }
 
-.caption--main {
-    min-height: ($gs-baseline / 3) * 7;
-    max-width: gs-span(7);
-
-    @include mq(tablet) {
-        max-width: gs-span(8);
-    }
-    @include mq(desktop) {
-        max-width: none;
-    }
-    .content__main-column--image & {
-        padding-bottom: 0;
-    }
-}
-
-@include mq(tablet) {
-    .caption--main {
-        padding-left: 0 !important;
-        padding-right: 0 !important;
-    }
-}
-
 .article-elongator {
     position: relative;
 

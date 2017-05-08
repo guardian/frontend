@@ -24,6 +24,10 @@
 .tonal--tone-media .content__headline--gallery {
     font-weight: 200;
     padding-top: 0;
+
+    @include mq($until: tablet) {
+        padding-top: $gs-baseline / 2;
+    }
 }
 
 .content__labels--gallery {
@@ -43,6 +47,12 @@
     .content__section-label {
         @include fs-header(1, $size-only: true);
         float: left;
+    }
+}
+
+.content__labels--paidgallery {
+    .content__section-label__link {
+        color: $paid-article-brand;
     }
 }
 

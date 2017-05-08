@@ -6,7 +6,6 @@ define([
     'lib/$',
     'lib/config',
     'lib/detect',
-    'lib/closest',
     'lodash/functions/debounce'
 ], function (
     fastdom,
@@ -16,7 +15,6 @@ define([
     $,
     config,
     detect,
-    closest,
     debounce
 ) {
 
@@ -27,6 +25,13 @@ define([
         'PLAYING': onPlayerPlaying,
         'PAUSED': onPlayerPaused
     };
+
+    function onVideoContainerNavigation(atomId) {
+        var player = players[atomId];
+        if(player){
+            player.player.pauseVideo();
+        }
+    }
 
     function checkState(atomId, state, status) {
         if (state === window.YT.PlayerState[status] && STATES[status]) {
@@ -41,7 +46,7 @@ define([
         setProgressTracker(atomId);
         tracking.track('play', getTrackingId(atomId));
 
-        var mainMedia = closest(player.iframe, '.immersive-main-media');
+        var mainMedia = player.iframe && player.iframe.closest('.immersive-main-media') || null;
         if (mainMedia) {
             mainMedia.classList.add('atom-playing');
         }
@@ -63,7 +68,7 @@ define([
         tracking.track('end', getTrackingId(atomId));
         player.pendingTrackingCalls = [25, 50, 75];
 
-        var mainMedia = closest(player.iframe, '.immersive-main-media');
+        var mainMedia = player.iframe && player.iframe.closest('.immersive-main-media') || null;
         if (mainMedia) {
             mainMedia.classList.remove('atom-playing');
         }
@@ -117,7 +122,7 @@ define([
         }
 
         function isMainVideo() {
-            return closest(players[atomId].iframe, 'figure[data-component="main video"]');
+            return players[atomId].iframe && players[atomId].iframe.closest('figure[data-component="main video"]') || false;
         }
 
         return config.page.contentType === 'Video' &&
@@ -138,8 +143,6 @@ define([
         }
 
         if (overlay) {
-            showDuration(atomId, overlay);
-
             players[atomId].overlay = overlay;
 
             if (!!config.page.section && detect.isBreakpoint({ min: 'desktop' })) {
@@ -147,38 +150,9 @@ define([
             }
         }
 
-        if (closest(iframe, '.immersive-main-media__media')) {
+        if (iframe && iframe.closest('.immersive-main-media__media')) {
             updateImmersiveButtonPos();
             window.addEventListener('resize', debounce(updateImmersiveButtonPos.bind(null), 200));
-        }
-    }
-
-    function getFormattedDuration(durationInSeconds) {
-        var times = [];
-        var hours = Math.floor(durationInSeconds / 3600);
-        var minutes = Math.floor((durationInSeconds - hours * 3600) / 60);
-        var seconds = (durationInSeconds - hours * 3600) - (minutes * 60);
-
-        if (hours) {
-            times.push(hours);
-            times.push(formatTime(minutes));
-        } else {
-            times.push(minutes);
-        }
-        times.push(formatTime(seconds));
-
-        return times.join(':');
-    }
-
-    function formatTime(time) {
-        return ('0' + time).slice(-2);
-    }
-
-    function showDuration(atomId, overlay) {
-        var durationElem = overlay.querySelector('.youtube-media-atom__bottom-bar__duration');
-
-        if (durationElem) {
-            durationElem.innerText = getFormattedDuration(players[atomId].player.getDuration());
         }
     }
 
@@ -217,6 +191,8 @@ define([
 
                 // append index of atom as atomId must be unique
                 var atomId = el.getAttribute('data-media-atom-id') + '/' + index;
+                //need data attribute with index for unique lookup
+                el.setAttribute('data-unique-atom-id', atomId);
                 var overlay = el.querySelector('.youtube-media-atom__overlay');
 
                 tracking.init(getTrackingId(atomId));
@@ -244,6 +220,7 @@ define([
     }
 
     return {
-        checkElemsForVideos: checkElemsForVideos
+        checkElemsForVideos: checkElemsForVideos,
+        onVideoContainerNavigation: onVideoContainerNavigation
     };
 });

@@ -15,6 +15,7 @@ class HostedTrailsTest extends FlatSpec with Matchers {
     val interactives = None
     val recipes = None
     val reviews = None
+    val storyquestions = None
     val cta = Some(
       Seq(
         new Atom {
@@ -22,6 +23,7 @@ class HostedTrailsTest extends FlatSpec with Matchers {
           val atomType = AtomType.Cta
           val labels = Nil
           val defaultHtml = ""
+          val title = None
           val data: AtomData = AtomData.Cta(
             new CTAAtom {
               val url = ""
@@ -35,6 +37,7 @@ class HostedTrailsTest extends FlatSpec with Matchers {
             val lastModified = None
             val created = None
             val published = None
+            val takenDown = None
             val revision = 0L
           }
           val flags = None
@@ -82,6 +85,8 @@ class HostedTrailsTest extends FlatSpec with Matchers {
     val paidContentCampaignColour = Some("#000000")
     val rcsId = None
     val r2ContributorId = None
+    val tagCategories = None
+    val entityIds = None
   }
 
   private def mkHostedTag(): Tag = mkTag(

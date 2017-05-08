@@ -1,19 +1,12 @@
 @(page: model.Page, projectName: Option[String] = None, head: Html)(implicit request: RequestHeader, context: model.ApplicationContext)
+
 @import model.Page.getContent
-@import play.api.Mode.Dev
-@import conf.switches.Switches.preflightServerSideAdCallSwitch
+@import conf.switches.Switches.{preflightServerSideAdCallSwitch, PolyfillIO}
+@import conf.Static
+@import implicits.Strings.String2Uri
+@import views.support.JavaScriptPage.getMap
 
 <meta charset="utf-8" />
-<!--
- __        __                      _     _      _
- \ \      / /__    __ _ _ __ ___  | |__ (_)_ __(_)_ __   __ _
-  \ \ /\ / / _ \  / _` | '__/ _ \ | '_ \| | '__| | '_ \ / _` |
-   \ V  V /  __/ | (_| | | |  __/ | | | | | |  | | | | | (_| |
-    \_/\_/ \___|  \__,_|_|  \___| |_| |_|_|_|  |_|_| |_|\__, |
-                                                        |___/
-Ever thought about joining us?
-http://developers.theguardian.com/join-the-team.html
--->
 <title>@views.support.Title(page)</title>
 
 @fragments.metaData(page)
@@ -22,12 +15,13 @@ http://developers.theguardian.com/join-the-team.html
 @* stylesheet <link>s - get the stylesheets downloading ASAP *@
 @fragments.stylesheets(projectName, getContent(page).exists(_.tags.isCrossword))
 
-<link rel="prefetch" href="@Static("javascripts/graun.standard.js")">
-
-@if(mvt.PolyfillIO.isParticipating) {
-    <link rel="prefetch"
-          href="https://assets.guim.co.uk/polyfill.io/v2/polyfill.min.js?features=es6,Element.prototype.closest,Element.prototype.matches">
+<link rel="preload" as="script" href="@Static("javascripts/graun.standard.js")">
+@if(PolyfillIO.isSwitchedOn) {
+    <link rel="preload" as="script" href="@common.Assets.js.polyfillioUrl">
+} else {
+    <link rel="preload" as="script" href="@Static("javascripts/vendor/polyfillio.fallback.js")">
 }
+<link rel="preload" as="script" href="@Static("javascripts/graun.commercial.js")">
 
 @*
 Protect against ReferenceErrors in IE:
@@ -41,7 +35,11 @@ Example: http://output.jsbin.com/jodureg/1
 </script>
 
 @if(preflightServerSideAdCallSwitch.isSwitchedOn) {
-    <!--esi <esi:include src="/esi/ad-call" /> -->
+    @defining(getMap(page)
+        .filter( { case (key: String, _) => key == "sharedAdTargeting"} )
+        .map( { case (key, value) => (key, value.toString)}) ) { (params: Map[String, String]) =>
+        <!--esi <esi:include src="@{"/esi/ad-call".appendQueryParams(params)}" /> -->
+    }
 }
 
 @* inline JS - blocking *@

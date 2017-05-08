@@ -19,34 +19,37 @@ const mimeTypes = {
 
 const typeFaces = require('./index.config');
 
-const toDataURI = (srcPath, data) =>
-    `url(data:${mimeTypes[path
-            .extname(srcPath)
-            .substr(1)]};base64,${data.toString()})`;
+const toDataURI = (
+    srcPath,
+    data
+) => `url(data:${mimeTypes[path
+        .extname(srcPath)
+        .substr(1)]};base64,${data.toString()})`;
 
-const generateCSS = (fontFamily, font) => readFile(
-    path.resolve(src, 'fonts', `${font.src}`),
-    'base64'
-)
-    .then(data => postcss([perfectionist({ format: 'compressed' })]).process(
-        `
+const generateCSS = (fontFamily, font) =>
+    readFile(path.resolve(src, 'fonts', `${font.src}`), 'base64')
+        .then(data =>
+            postcss([perfectionist({ format: 'compressed' })]).process(`
                 @font-face {
                     font-family: ${fontFamily};
                     src: ${toDataURI(font.src, data)};
                     ${[
-            'font-weight',
-            'font-style',
-            'font-stretch',
-            'font-variant',
-            'font-feature-settings',
-            'unicode-range',
-        ]
-            .map(prop => font[prop] ? `${prop}: ${font[prop]};` : '')
-            .join('')}
+                        'font-weight',
+                        'font-style',
+                        'font-stretch',
+                        'font-variant',
+                        'font-feature-settings',
+                        'unicode-range',
+                    ]
+                        .map(
+                            prop =>
+                                font[prop] ? `${prop}: ${font[prop]};` : ''
+                        )
+                        .join('')}
                 }
-            `
-    ))
-    .then(result => result.css);
+            `)
+        )
+        .then(result => result.css);
 
 module.exports = {
     description: 'Compile fonts',
@@ -79,7 +82,8 @@ module.exports = {
                                 writeFile(
                                     dest,
                                     `guFont(${JSON.stringify({ css: CSS })});`
-                                ));
+                                )
+                            );
                     })
                 );
             },

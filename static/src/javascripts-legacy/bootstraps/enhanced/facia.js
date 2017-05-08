@@ -20,7 +20,6 @@ define([
     'facia/modules/ui/sponsorship',
     'facia/modules/onwards/weather',
     'lodash/functions/partial',
-    'lodash/collections/forEach'
 ], function (
     bonzo,
     qwery,
@@ -42,8 +41,7 @@ define([
     snaps,
     sponsorship,
     weather,
-    partial,
-    forEach
+    partial
 ) {
 
     var modules = {
@@ -100,7 +98,7 @@ define([
         },
 
         ready = function () {
-            forEach(robust.makeBlocks([
+            robust.catchErrorsWithContext([
                 ['f-accessibility', accessibility.shouldHideFlashingElements],
                 ['f-snaps', modules.showSnaps],
                 ['f-show-more', modules.showContainerShowMore],
@@ -112,9 +110,7 @@ define([
                 ['f-weather', modules.showWeather],
                 ['f-live-blog-updates', modules.showLiveblogUpdates],
                 ['f-finished', modules.finished]
-            ]), function (fn) {
-                fn();
-            });
+            ]);
         };
 
     return {

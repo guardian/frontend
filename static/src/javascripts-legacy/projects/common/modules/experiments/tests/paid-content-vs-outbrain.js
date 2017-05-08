@@ -2,10 +2,10 @@ define([
     'lib/config'
 ], function (config) {
     return function () {
-        this.id = 'PaidContentVsOutbrain';
-        this.start = '2017-02-22';
-        this.expiry = '2017-03-22';
-        this.author = 'Regis Kuckaertz';
+        this.id = 'PaidContentVsOutbrain2';
+        this.start = '2017-04-24';
+        this.expiry = '2018-01-08';
+        this.author = 'Regis Kuckaertz / Lydia Shepherd';
         this.description = 'Measure the revenue generated (or lost) by replacing the Outbrain widget with a paid content widget';
         this.audience = .05;
         this.audienceOffset = 0;
@@ -16,17 +16,19 @@ define([
         this.showForSensitive = true;
 
         this.canRun = function () {
-          return config.page.edition === 'UK';
+            return config.page.edition === 'UK';
         };
 
         this.variants = [
             {
                 id: 'paid-content',
-                test: function () {}
+                test: function () {
+                }
             },
             {
                 id: 'outbrain',
-                test: function () {}
+                test: function () {
+                }
             }
         ];
     };

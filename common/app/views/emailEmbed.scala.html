@@ -4,14 +4,15 @@
 @import common.InlineJs
 @import templates.inlineJS.blocking.js._
 @import play.api.Mode.Dev
+@import conf.Static
 
 <!doctype html>
 <head>
     @if(context.environment.mode == Dev || !InlineCriticalCss.isSwitchedOn) {
-        <link rel="stylesheet" type="text/css" href="@Static("stylesheets/head.email.css")" />
+        <link rel="stylesheet" type="text/css" href="@Static("stylesheets/head.email-signup.css")" />
     } else {
         <style class="js-loggable">
-        @Html(common.Assets.css.head(Some("email")))
+        @Html(common.Assets.css.head(Some("email-signup")))
         </style>
     }
 

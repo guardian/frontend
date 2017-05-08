@@ -39,9 +39,6 @@ GET         /form/:formReference                    controllers.FormstackControl
 GET         /form/embed/:formReference              controllers.FormstackController.formstackForm(formReference: String, composer: Boolean = true)
 
 GET         /et/subscribe/:subDefId                 controllers.ExactTargetController.subscribe(subDefId: String, returnUrl: String)
-GET         /save-content                           controllers.SaveContentController.saveContentItem
-GET         /saved-for-later                        controllers.SaveContentController.listSavedContentPage
-POST        /saved-for-later                        controllers.SaveContentController.deleteSavedContentItemFromPage
 
 
 #Email Footer signup routes

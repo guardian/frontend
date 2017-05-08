@@ -11,9 +11,13 @@ const joinPath = require('path').join;
  *  - Screenshot 'components' by classname (captureSelector)
  */
 
-const { paths, breakpoints, host, screenshotsDir, environment } = require(
-    './config'
-);
+const {
+    paths,
+    breakpoints,
+    host,
+    screenshotsDir,
+    environment,
+} = require('./config');
 
 const screenshotDefaults = {
     shotSize: {
@@ -31,17 +35,18 @@ module.exports = {
         description: `Screenshotting ${path}`,
         task: Object.keys(breakpoints).map(breakpointName => ({
             description: `on ${breakpointName}`,
-            task: () => pify(webshot)(
-                host + path,
-                joinPath(
-                    screenshotsDir,
-                    encodeURIComponent(path),
-                    `${breakpointName}.png`
+            task: () =>
+                pify(webshot)(
+                    host + path,
+                    joinPath(
+                        screenshotsDir,
+                        encodeURIComponent(path),
+                        `${breakpointName}.png`
+                    ),
+                    merge({}, screenshotDefaults, {
+                        windowSize: { width: breakpoints[breakpointName] },
+                    })
                 ),
-                merge({}, screenshotDefaults, {
-                    windowSize: { width: breakpoints[breakpointName] },
-                })
-            ),
         })),
         concurrent: true,
     })),

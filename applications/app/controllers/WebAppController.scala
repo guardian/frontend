@@ -8,10 +8,10 @@ import play.api.mvc.{Action, Controller}
 class WebAppController(implicit context: ApplicationContext) extends Controller with ExecutionContexts with Logging {
 
   def serviceWorker() = Action { implicit request =>
-    Cached(60) { RevalidatableResult.Ok(templates.js.serviceWorker()) }
+    Cached(CacheTime.ServiceWorker) { RevalidatableResult.Ok(templates.js.serviceWorker()) }
   }
 
   def manifest() = Action { implicit request =>
-    Cached(3600) { RevalidatableResult.Ok(templates.js.webAppManifest()) }
+    Cached(CacheTime.WebAppManifest) { RevalidatableResult.Ok(templates.js.webAppManifest()) }
   }
 }

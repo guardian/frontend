@@ -119,8 +119,8 @@ case class FeedRequest(feedName: String,
                        switch: conf.switches.Switch,
                        url: String,
                        parameters: Map[String, String] = Map.empty,
-                       timeout: Duration = 2.seconds,
-                       responseEncoding: String)
+                       responseEncoding: String,
+                       timeout: Duration)
 
 
 case class FeedSwitchOffException(feedName: String) extends Exception {

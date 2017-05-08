@@ -1,9 +1,7 @@
 define([
-    'bonzo',
     'qwery',
     'lib/raven',
     'lib/fastdom-promise',
-    'lib/closest',
     'lib/mediator',
     'commercial/modules/ad-sizes',
     'commercial/modules/sticky-mpu',
@@ -14,11 +12,9 @@ define([
     'commercial/modules/user-ad-feedback',
     'lib/config'
 ], function (
-    bonzo,
     qwery,
     raven,
     fastdom,
-    closest,
     mediator,
     adSizes,
     stickyMpu,
@@ -42,10 +38,13 @@ define([
     function addClassIfHasClass(newClassNames) {
         return function hasClass(classNames) {
             return function onAdvertRendered(_, advert) {
-                var $node = bonzo(advert.node);
-                if (classNames.some($node.hasClass.bind($node))) {
+                if (classNames.some(function (className) {
+                    return advert.node.classList.contains(className);
+                })) {
                     return fastdom.write(function () {
-                        newClassNames.forEach($node.addClass.bind($node));
+                        newClassNames.forEach(function (className) {
+                            advert.node.classList.add(className);
+                        });
                     });
                 }
             };
@@ -66,9 +65,8 @@ define([
      * Trigger sticky scrolling for MPUs in the right-hand article column
      */
     sizeCallbacks[adSizes.mpu] = function (_, advert) {
-        var $node = bonzo(advert.node);
-        if ($node.hasClass('js-sticky-mpu')) {
-            stickyMpu($node);
+        if (advert.node.classList.contains('js-sticky-mpu')) {
+            stickyMpu(advert.node);
         } else {
             return addFluid(['ad-slot--revealer'])(_, advert);
         }
@@ -100,12 +98,12 @@ define([
     sizeCallbacks[adSizes.outOfPage] =
     sizeCallbacks[adSizes.empty] = function (event, advert) {
         if (!event.slot.getOutOfPage()) {
-            var $parent = bonzo(advert.node.parentNode);
+            var parent = advert.node.parentNode;
             return fastdom.write(function () {
-                bonzo(advert.node).addClass('u-h');
+                advert.node.classList.add('u-h');
                 // if in a slice, add the 'no mpu' class
-                if ($parent.hasClass('js-fc-slice-mpu-candidate')) {
-                    $parent.addClass('fc-slice__item--no-mpu');
+                if (parent.classList.contains('fc-slice__item--mpu-candidate')) {
+                    parent.classList.add('fc-slice__item--no-mpu');
                 }
             });
         }
@@ -118,7 +116,8 @@ define([
         // remove geo most popular
         geoMostPopular.whenRendered.then(function (geoMostPopular) {
             return fastdom.write(function () {
-                bonzo(geoMostPopular.elem).remove();
+                geoMostPopular.elem.remove();
+                geoMostPopular.elem = null;
             });
         });
     };
@@ -159,13 +158,13 @@ define([
 
             function addRenderedClass() {
                 return isRendered ? fastdom.write(function () {
-                    bonzo(advert.node).addClass('ad-slot--rendered');
+                    advert.node.classList.add('ad-slot--rendered');
                 }) : Promise.resolve();
             }
 
             function addFeedbackDropdownToggle() {
                 return (config.switches.adFeedback && isRendered) ? fastdom.write(function () {
-                    if (!bonzo(advert.node).hasClass('js-toggle-ready')){
+                    if (!advert.node.classList.contains('js-toggle-ready')){
                         new Toggles(advert.node).init();
                     }
                 }) : Promise.resolve();
@@ -175,16 +174,14 @@ define([
                 var readyClass = 'js-onclick-ready';
                 return (config.switches.adFeedback && isRendered) ? fastdom.write(function () {
                     qwery('.js-ad-feedback-option:not(.js-onclick-ready)').forEach(function(el) {
-                        var option = bonzo(el);
                         var slotId = el.getAttribute('data-slot');
                         var problem = el.getAttribute('data-problem');
                         el.addEventListener('click', function() {
                             recordUserAdFeedback(window.location.pathname, slotId, slotRenderEvent, problem);
                         });
-                        option.addClass(readyClass);
+                        el.classList.add(readyClass);
                     });
                     qwery('.js-ad-feedback-option-other:not(.js-onclick-ready)').forEach(function(el) {
-                        var option = bonzo(el);
                         var form = qwery('form', el)[0];
                         var commentBox = qwery('input', el)[0];
                         var slotId = el.getAttribute('data-slot');
@@ -197,7 +194,7 @@ define([
                             e.preventDefault();
                             recordUserAdFeedback(window.location.pathname, slotId, slotRenderEvent, 'other', commentBox.value);
                         });
-                        option.addClass(readyClass);
+                        el.classList.add(readyClass);
                     });
                 }) : Promise.resolve();
             }
@@ -209,7 +206,7 @@ define([
 
         if (adSlotContent.length) {
             fastdom.write(function () {
-                bonzo(adSlotContent).addClass('ad-slot__content');
+                adSlotContent[0].classList.add('ad-slot__content');
             });
         }
     }

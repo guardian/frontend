@@ -87,21 +87,22 @@ module.exports = (
 
             mkdirp.sync(path.parse(dest).dir);
             return sassRenderP(sassOptions)
-                .then(result => postcss(
-                    postcssPlugins
-                ).process(result.css.toString(), {
-                    from: filePath,
-                    to: dest,
-                    map: {
-                        inline: false,
-                        prev: result.map.toString(),
-                    },
-                }))
+                .then(result =>
+                    postcss(postcssPlugins).process(result.css.toString(), {
+                        from: filePath,
+                        to: dest,
+                        map: {
+                            inline: false,
+                            prev: result.map.toString(),
+                        },
+                    })
+                )
                 .then(result =>
                     Promise.all([
                         writeFileP(dest, result.css),
                         writeFileP(`${dest}.map`, result.map),
-                    ]));
+                    ])
+                );
         })
     );
 };

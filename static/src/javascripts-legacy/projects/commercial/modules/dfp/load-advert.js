@@ -12,7 +12,6 @@ define([
             .then(function() {
                 Advert.startLoading(advert);
                 window.googletag.display(advert.id);
-                dfpEnv.firstAdDisplayed = true;
             });
     }
 });

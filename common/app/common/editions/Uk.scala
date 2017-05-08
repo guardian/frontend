@@ -3,6 +3,7 @@ package common.editions
 import java.util.Locale
 
 import common._
+import common.editions.International.weekendSectionLink
 import org.joda.time.DateTimeZone
 
 object Uk extends Edition(
@@ -87,7 +88,8 @@ object Uk extends Edition(
     genius,
     speedy,
     everyman,
-    azed
+    azed,
+    weekendSectionLink
   )
 
   override val navigation: Seq[NavItem] = {
@@ -105,7 +107,7 @@ object Uk extends Edition(
       NavItem(fashion),
       NavItem(environment, environmentLocalNav),
       NavItem(technology),
-      NavItem(travel, Seq(uktravel, europetravel, usTravel, skiingTravel)),
+      NavItem(travel, Seq(uktravel, europetravel, usTravel)),
       NavItem(money, Seq(property, savings, pensions, borrowing, workAndCareers)),
       NavItem(science),
       NavItem(guardianProfessional),

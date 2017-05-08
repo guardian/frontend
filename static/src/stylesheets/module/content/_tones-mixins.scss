@@ -111,7 +111,7 @@
         }
 
         .tonal__main {
-            @include mq(phablet) {
+            @include mq(tablet) {
                 padding-top: $gs-baseline * 2;
             }
 

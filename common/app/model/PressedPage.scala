@@ -102,12 +102,18 @@ case class PressedPage (
     ).headOption
   }
 
+  private def branding(edition: Edition): Option[Branding] = metadata.commercial.flatMap(_.branding(edition))
+
   val navSection: String = metadata.sectionId
 
   val keywordIds: Seq[String] = frontKeywordIds(id)
 
   def allItems = collections.flatMap(_.curatedPlusBackfillDeduplicated).distinct
 
-  def isSponsored(edition: Edition): Boolean = metadata.commercial.exists(_.isSponsored(edition))
-  val isPaid: Boolean = metadata.commercial.exists(_.isPaidContent)
+  def isBranded(edition: Edition): Boolean = branding(edition).isDefined
+
+  def isSponsored(edition: Edition): Boolean = branding(edition).exists(_.isSponsored)
+
+  def isPaid(edition: Edition): Boolean = branding(edition).exists(_.isPaid)
+
 }

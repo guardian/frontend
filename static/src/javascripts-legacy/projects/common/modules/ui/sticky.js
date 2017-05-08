@@ -1,11 +1,9 @@
 define([
-    'bonzo',
     'lib/config',
     'lib/mediator',
     'fastdom',
     'lodash/objects/defaults'
 ], function (
-    bonzo,
     config,
     mediator,
     fastdom,
@@ -49,7 +47,7 @@ define([
             var top = this.opts.containInParent && parentRect.bottom <= elementRect.height ?
                 Math.floor(parentRect.bottom - elementHeight - this.opts.top) :
                 this.opts.top;
-            css = { top: top };
+            css = { top: top + 'px' };
             message = 'fixed';
         }
 
@@ -61,9 +59,11 @@ define([
         if (css) {
             fastdom.write(function () {
                 if (stick) {
-                    bonzo(this.element).addClass('is-sticky').css(css);
+                    this.element.classList.add('is-sticky');
+                    Object.assign(this.element.style, css);
                 } else {
-                    bonzo(this.element).removeClass('is-sticky').css(css);
+                    this.element.classList.remove('is-sticky');
+                    Object.assign(this.element.style, css);
                 }
             }, this);
         }

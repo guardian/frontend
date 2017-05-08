@@ -147,6 +147,13 @@ $mobile-max-container-width: gs-span(8);
 
 .frame__cta {
     color: #ffffff;
+    line-height: $gs-baseline * 2.5;
+}
+
+.frame__external-link-icon svg {
+    width: 14px;
+    height: 10px;
+    padding-left: 4px;
 }
 
 .has-no-flex {

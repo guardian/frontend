@@ -24,7 +24,7 @@ const wpNotification = ora({
 wpNotification.start();
 
 const webpack = require('webpack');
-const webpackBundler = webpack(require('../webpack.config.js')());
+const webpackBundler = webpack(require('../webpack.config.dev.js'));
 
 webpackBundler.watch(
     {

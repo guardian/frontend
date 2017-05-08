@@ -1,18 +1,16 @@
 define([
-    'lib/add-event-listener',
+    'lib/events',
     'lib/config',
     'lib/detect',
-    'lib/closest',
     'lib/fastdom-promise',
     'commercial/modules/dfp/track-ad-render',
     'commercial/modules/commercial-features',
     'commercial/modules/dfp/get-advert-by-id',
     'commercial/modules/messenger'
 ], function (
-    addEventListener,
+    events,
     config,
     detect,
-    closest,
     fastdom,
     trackAdRender,
     commercialFeatures,
@@ -73,7 +71,7 @@ define([
     function setupListeners() {
         messenger.register('resize', onResize);
         if (!config.page.hasSuperStickyBanner) {
-            addEventListener(win, 'scroll', onScroll, { passive: true });
+            events.addEventListener(win, 'scroll', onScroll, { passive: true });
         }
     }
 
@@ -81,8 +79,9 @@ define([
         trackAdRender(topSlotId)
         .then(function (isRendered) {
             if (isRendered) {
-                var advert = getAdvertById(topSlotId);
-                if (advert.size &&
+                var advert = getAdvertById.getAdvertById(topSlotId);
+                if (advert &&
+                    advert.size &&
                     // skip for Fabric creatives
                     advert.size[0] !== 88 &&
                     // skip for native ads

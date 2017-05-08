@@ -227,33 +227,6 @@ $control-offset: 36 + $gs-gutter/2;
     }
 }
 
-.brand-bar__item--profile .save-for-later__icon {
-    position: absolute;
-    top: 20px;
-    left: 30px;
-    display: none;
-    fill: $news-main-2;
-}
-
-.has-saved-articles .save-for-later__icon {
-    display: inline;
-}
-
-.js-on.is-modern .brand-bar__item--saved-for-later:after {
-    display: inline-block;
-    content: attr(data-saved-content-count);
-    position: relative;
-    top: -1px;
-    line-height: $gs-baseline;
-    font-size: 11px;
-    margin-left: $gs-gutter / 2;
-    padding: 0 $gs-gutter / 3;
-    border-radius: 30px;
-    text-align: center;
-    background: $news-main-2;
-    color: #ffffff;
-}
-
 /* Search Menu
    ========================================================================== */
 

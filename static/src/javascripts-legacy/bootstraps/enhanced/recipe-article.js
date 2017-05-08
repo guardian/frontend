@@ -2,36 +2,57 @@ define([
     'lib/$',
     'lib/scroller',
     'bean',
-    'lodash/functions/debounce'
+    'lodash/functions/debounce',
+    'common/modules/ui/sticky',
+    'lib/detect'
 ], function (
     $,
     scroller,
     bean,
-    debounce
+    debounce,
+    Sticky,
+    detect
 ) {
 
 function init() {
     var recipe = $('.recipe__article--structured');
-    var firstRecipe = $('.js-recipe__article--structured .js-recipe__article--structured-headline h1');
+    var firstRecipe = $('.js-recipe__article--structured');
+    var firstRecipeHeadline = $('.js-recipe__article--structured .js-recipe__article--structured-headline h1');
     var nextWrapper = $('.js-recipe__article--next-recipe');
     var nextRecipeTitle = $('.js-recipe__article--next-title');
     var nextRecipeText = $('.js-recipe__article--next-text');
     var nextRecipeKicker = $('.js-kicker');
     var nextButton = $('.js-recipe__article--next-button');
-    var readMoreButton = $('.js-recipe__article--read-more');
-    var readMoreButtonText = $('.read-more__text');
+    var stickyImages = $('.js-recipes__images-wrapper');
+    var contentFooter = $('.content-footer');
     var displayClass = 'recipe__image__wrapper--is-displayed';
+    var contentFooterTop;
+    var windowHeight = window.innerHeight;
+
+
+    function hideNextArticle() {
+        nextRecipeText[0].classList.add('visible');
+        nextButton[1].classList.add('visible');
+        if(contentFooterTop <= windowHeight) {
+            nextRecipeText[0].classList.add('is-hidden');
+            nextButton[1].classList.add('is-hidden');
+        }else {
+            nextRecipeText[0].classList.remove('is-hidden');
+            nextButton[1].classList.remove('is-hidden');
+        }
+    }
 
     function setKicker() {
         var nextRecipe = getNextRecipe();
+        var nextRecipeHeadline = getNextRecipeHeadline();
 
         if (nextRecipe && nextRecipe.length > 0) {
             nextButton.removeClass('top');
-            nextRecipeTitle.html(nextRecipe.html());
+            nextRecipeTitle.html(nextRecipeHeadline.html());
             nextRecipeKicker.html('Next recipe ');
         } else {
             nextButton.addClass('top');
-            nextRecipeTitle.html(firstRecipe.html());
+            nextRecipeTitle.html(firstRecipeHeadline.html());
             nextRecipeKicker.html('First recipe ');
         }
     }
@@ -46,8 +67,12 @@ function init() {
         }
     }
 
-    function getNextRecipe() {
+    function getNextRecipeHeadline() {
         return $('.js-recipe__article--structured.inview + .js-recipe__article--structured .js-recipe__article--structured-headline h1');
+    }
+
+    function getNextRecipe() {
+        return $('.js-recipe__article--structured.inview + .js-recipe__article--structured');
     }
 
     function getIntOfFocalRecipe() {
@@ -60,7 +85,7 @@ function init() {
 
     function isFocalRecipe(i) {
         var position = recipe[i].getBoundingClientRect();
-        var middleOfView = window.innerHeight / 2;
+        var middleOfView = window.innerHeight / 3;
 
         return position.top <= middleOfView && position.bottom > middleOfView;
     }
@@ -73,42 +98,36 @@ function init() {
         setKicker();
     }
 
-    bean.on(readMoreButton[0], 'click', function() {
-
-        $('.recipe__content').toggleClass('js-visible');
-
-        if (readMoreButtonText.text() === 'Read more') {
-            readMoreButtonText.text('Hide')
-            setKicker();
-            nextButton.removeClass('top');
-        } else {
-            readMoreButtonText.text('Read more')
-            scroller.scrollToElement(firstRecipe[0]);
-        }
-
-        readMoreButton.toggleClass('js-x-sign');
-    });
-
-    bean.on(nextButton[0], 'click', function() {
+    function scrollToNextRecipe(){
         var nextRecipe = getNextRecipe();
         var destination = nextRecipe.length > 0 ? nextRecipe : firstRecipe;
         scroller.scrollToElement(destination[0]);
+    }
+
+    nextWrapper.each(function(elem) {
+      bean.on(elem, 'click', function() {
+          scrollToNextRecipe();
+      });
     });
 
     window.addEventListener('scroll', debounce(function() {
+        contentFooterTop = contentFooter[0].getBoundingClientRect().top;
         var focalRecipeInt = getIntOfFocalRecipe();
         if (focalRecipeInt > -1 && !$(recipe[focalRecipeInt]).hasClass('inview')) {
             resetAssets(focalRecipeInt);
-
         }
+        hideNextArticle()
     }), 100);
 
     function initalise() {
         var focalRecipeInt = getIntOfFocalRecipe();
         nextWrapper.addClass('visible');
-        nextRecipeText.addClass('visible');
         resetAssets(focalRecipeInt);
         if (focalRecipeInt < 0) { nextButton.removeClass('top'); }
+
+        if (detect.isBreakpoint({ min: 'desktop' })) {
+          new Sticky(stickyImages[0], {}).init();
+        }
     }
 
     initalise();

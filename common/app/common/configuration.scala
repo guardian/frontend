@@ -2,7 +2,6 @@ package common
 
 import java.io.{File, FileInputStream}
 import java.util.Map.Entry
-import java.util.{Properties => JavaProperties}
 
 import com.amazonaws.AmazonClientException
 import com.amazonaws.auth._
@@ -12,7 +11,6 @@ import com.typesafe.config.ConfigException
 import conf.switches.Switches
 import conf.{Configuration, Static}
 import org.apache.commons.io.IOUtils
-import play.api.Play
 import scala.collection.JavaConversions._
 import scala.concurrent.duration._
 import scala.util.{Failure, Success, Try}
@@ -67,7 +65,7 @@ object GuardianConfiguration extends Logging {
   lazy val configuration = {
     // This is version number of the config file we read from s3,
     // increment this if you publish a new version of config
-    val s3ConfigVersion = 27
+    val s3ConfigVersion = 31
 
     lazy val userPrivate = FileConfigurationSource(s"${System.getProperty("user.home")}/.gu/frontend.conf")
     lazy val runtimeOnly = FileConfigurationSource("/etc/gu/frontend.conf")
@@ -226,7 +224,7 @@ class GuardianConfiguration extends Logging {
   }
 
   object sonobi {
-    lazy val jsLocation = configuration.getStringProperty("sonobi.js.location").getOrElse("//api.nextgen.guardianapps.co.uk/morpheus.theguardian.12911.js")
+    lazy val jsLocation = configuration.getStringProperty("sonobi.js.location").getOrElse("//api.nextgen.guardianapps.co.uk/morpheus.theguardian.12913.js")
   }
 
   object switch {
@@ -301,6 +299,7 @@ class GuardianConfiguration extends Logging {
     lazy val apiClientToken = configuration.getStringProperty("id.apiClientToken").getOrElse("")
     lazy val oauthUrl = configuration.getStringProperty("id.oauth.url").getOrElse("")
     lazy val membershipUrl = configuration.getStringProperty("id.membership.url").getOrElse("https://membership.theguardian.com")
+    lazy val supportUrl = configuration.getStringProperty("id.support.url").getOrElse("https://support.theguardian.com")
     lazy val digitalPackUrl = configuration.getStringProperty("id.digitalpack.url").getOrElse("https://subscribe.theguardian.com")
     lazy val membersDataApiUrl = configuration.getStringProperty("id.members-data-api.url").getOrElse("https://members-data-api.theguardian.com")
     lazy val stripePublicToken =  configuration.getStringProperty("id.membership.stripePublicToken").getOrElse("")
@@ -461,6 +460,7 @@ class GuardianConfiguration extends Logging {
       ("ophanEmbedJsUrl", ophan.embedJsLocation),
       ("googletagJsUrl", googletag.jsLocation),
       ("membershipUrl", id.membershipUrl),
+      ("supportUrl", id.supportUrl),
       ("stripePublicToken", id.stripePublicToken),
       ("sonobiHeaderBiddingJsUrl", sonobi.jsLocation),
       ("switchPreFlightJsUrl", switch.jsLocation)

@@ -31,6 +31,7 @@ window.guardian = {
         switches: { },
         page: { },
         images: {
+            acquisitions: {},
             commercial: {}
         },
         libs: { }

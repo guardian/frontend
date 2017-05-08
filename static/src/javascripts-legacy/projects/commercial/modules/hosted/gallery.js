@@ -1,5 +1,4 @@
 define([
-    'bean',
     'bonzo',
     'fastdom',
     'lib/$',
@@ -12,9 +11,7 @@ define([
     'lodash/functions/throttle',
     'common/modules/analytics/interaction-tracking',
     'lib/load-css-promise'
-], function (
-             bean,
-             bonzo,
+], function (bonzo,
              fastdom,
              $,
              qwery,
@@ -68,9 +65,9 @@ define([
                 states: this.states
             });
 
-            bean.on(this.infoBtn, 'click', this.trigger.bind(this, 'toggle-info'));
-            bean.on(this.ojClose, 'click', this.toggleOj.bind(this));
-            bean.on(document.body, 'keydown', this.handleKeyEvents.bind(this));
+            this.infoBtn.addEventListener('click', this.trigger.bind(this, 'toggle-info'));
+            this.ojClose.addEventListener('click', this.toggleOj.bind(this));
+            document.body.addEventListener('keydown', this.handleKeyEvents.bind(this));
             this.loadSurroundingImages(1, this.$images.length);
             this.setPageWidth();
 
@@ -89,7 +86,7 @@ define([
     };
 
     HostedGallery.prototype.initScroll = function () {
-        bean.on(this.nextBtn, 'click', function(){
+        this.nextBtn.addEventListener('click', function(){
             this.scrollTo(this.index + 1);
             if (this.index < this.$images.length) {
                 this.trigger('next', {nav: 'Click'});
@@ -97,7 +94,7 @@ define([
                 this.trigger('reload');
             }
         }.bind(this));
-        bean.on(this.prevBtn, 'click', function(){
+        this.prevBtn.addEventListener('click', function(){
             this.scrollTo(this.index - 1);
             if (this.index > 1) {
                 this.trigger('prev', {nav: 'Click'});
@@ -106,7 +103,7 @@ define([
             }
         }.bind(this));
 
-        bean.on(this.$scrollEl[0], 'scroll', throttle(this.fadeContent.bind(this), 20));
+        this.$scrollEl[0].addEventListener('scroll', throttle(this.fadeContent.bind(this), 20));
     };
 
     HostedGallery.prototype.initSwipe = function () {
@@ -114,7 +111,7 @@ define([
             updateTime = 20; // time in ms
         this.$imagesContainer.css('width', this.$images.length + '00%');
 
-        bean.on(this.$galleryEl[0], 'touchstart', function (e) {
+        this.$galleryEl[0].addEventListener('touchstart', function (e) {
             threshold = this.swipeContainerWidth * this.swipeThreshold;
             ox = e.touches[0].pageX;
             dx = 0;
@@ -129,9 +126,9 @@ define([
             this.translateContent(this.index, dx, updateTime);
         }.bind(this);
 
-        bean.on(this.$galleryEl[0], 'touchmove', throttle(touchMove, updateTime, {trailing: false}));
+        this.$galleryEl[0].addEventListener('touchmove', throttle(touchMove, updateTime, {trailing: false}));
 
-        bean.on(this.$galleryEl[0], 'touchend', function () {
+        this.$galleryEl[0].addEventListener('touchend', function () {
             var direction;
             if (Math.abs(dx) > threshold) {
                 direction = dx > threshold ? 1 : -1;
@@ -178,7 +175,7 @@ define([
         .forEach(function (i) {
             $img = $('img', this.$images[i]);
             if (!$img[0].complete) {
-                bean.one($img[0], 'load', setSize.bind(this, $img, i));
+                $img[0].addEventListener('load', setSize.bind(this, $img, i));
             } else {
                 setSize($img, i);
             }
@@ -447,35 +444,28 @@ define([
         }
     };
 
-    function init(start, stop) {
-        start();
-
+    function init() {
         if (qwery('.js-hosted-gallery-container').length) {
-            loadCssPromise
-            .then(function () {
-                var gallery,
-                    match,
-                    galleryHash = window.location.hash,
-                    res;
+            return loadCssPromise.loadCssPromise
+                .then(function () {
+                    var gallery,
+                        match,
+                        galleryHash = window.location.hash,
+                        res;
 
-                gallery = new HostedGallery();
-                match = /\?index=(\d+)/.exec(document.location.href);
-                if (match) { // index specified so launch gallery at that index
-                    gallery.loadAtIndex(parseInt(match[1], 10));
-                } else {
-                    res = /^#(?:img-)?(\d+)$/.exec(galleryHash);
-                    if (res) {
-                        gallery.loadAtIndex(parseInt(res[1], 10));
+                    gallery = new HostedGallery();
+                    match = /\?index=(\d+)/.exec(document.location.href);
+                    if (match) { // index specified so launch gallery at that index
+                        gallery.loadAtIndex(parseInt(match[1], 10));
+                    } else {
+                        res = /^#(?:img-)?(\d+)$/.exec(galleryHash);
+                        if (res) {
+                            gallery.loadAtIndex(parseInt(res[1], 10));
+                        }
                     }
-                }
-                return gallery;
-            })
-            .then(function (gallery) {
-                stop();
-                mediator.emit('page:hosted:gallery', gallery);
-            });
-        } else {
-            stop();
+
+                    return gallery;
+                });
         }
 
         return Promise.resolve();

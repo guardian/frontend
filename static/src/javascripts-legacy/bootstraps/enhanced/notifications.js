@@ -6,7 +6,7 @@ define([
     'lib/$',
     'lib/config',
     'lib/storage',
-    'lib/ajax',
+    'lib/fetch',
     'lodash/utilities/template',
     'lib/robust',
     'common/views/svgs',
@@ -28,7 +28,7 @@ define([
     $,
     config,
     storage,
-    ajax,
+    fetch,
     template,
     robust,
     svgs,
@@ -82,7 +82,7 @@ define([
                 handler = isSubscribed ? modules.unSubscribeHandler: modules.subscribeHandler,
                 src = template(followLink, {
                     isSubscribed: isSubscribed,
-                    icon: svgs(isSubscribed ? 'notificationsOff' : 'notificationsOn')
+                    icon: svgs.inlineSvg(isSubscribed ? 'notificationsOff' : 'notificationsOn')
                 });
 
             if (!isEmpty($follow)) {
@@ -156,7 +156,7 @@ define([
             if (modules.subscriptionsEmpty()) {
                 modules.getSub().then(function (sub) {
                     sub.unsubscribe().catch(function (error) {
-                        robust.log('07cm-frontendNotificatons', error);
+                        robust.logError('07cm-frontendNotificatons', error);
                     });
                 });
             }
@@ -178,11 +178,15 @@ define([
             return modules.getSub().then(function (sub) {
                 var endpoint = sub && sub.endpoint;
                 if (endpoint) {
-                    return ajax({
-                        url: notificationsEndpoint,
+                    return fetch(notificationsEndpoint, {
                         method: 'POST',
-                        contentType: 'application/x-www-form-urlencoded',
-                        data: {browserEndpoint: endpoint, notificationTopicId: config.page.pageId}
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        body: {
+                            browserEndpoint: endpoint,
+                            notificationTopicId: config.page.pageId,
+                        },
                     });
                 }
             });

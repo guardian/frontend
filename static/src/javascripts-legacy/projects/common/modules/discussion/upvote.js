@@ -75,9 +75,7 @@ define([
         for (var i = 0, len = links.length; i < len; i += 1) {
             var url = links[i].getAttribute('href');
             var baseUrl = url.split('?')[0];
-            var query = urlUtil.getUrlVars({
-                query: url.split('?')[1] || '&'
-            });
+            var query = urlUtil.getUrlVars(url.split('?')[1] || '&');
             links[i].setAttribute('href', baseUrl + '?' + urlUtil.constructQuery(assign(query, {
                 returnUrl: returnLink
             })));

@@ -47,9 +47,9 @@ define([
                 change: deltaString(stockValue.change),
                 closed: stockValue.closed ? '<div class="stocks__closed">closed</div>' : '',
                 closedInline: stockValue.closed ? '<div class="stocks__closed--inline">closed</div>' : '',
-                marketDownIcon: svgs('marketDownIcon', ['stocks__icon', 'stocks__icon--down']),
-                marketUpIcon: svgs('marketUpIcon', ['stocks__icon', 'stocks__icon--up']),
-                marketSameIcon: svgs('marketSameIcon', ['stocks__icon', 'stocks__icon--same'])
+                marketDownIcon: svgs.inlineSvg('marketDownIcon', ['stocks__icon', 'stocks__icon--down']),
+                marketUpIcon: svgs.inlineSvg('marketUpIcon', ['stocks__icon', 'stocks__icon--up']),
+                marketSameIcon: svgs.inlineSvg('marketSameIcon', ['stocks__icon', 'stocks__icon--same'])
             });
         }).join('');
 

@@ -1,12 +1,10 @@
 define([
-    'bean',
     'fastdom',
     'qwery',
     'lib/$',
     'lib/config',
     'lib/fastdom-promise'
 ], function (
-    bean,
     fastdom,
     qwery,
     $,

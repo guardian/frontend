@@ -1,42 +1,45 @@
+@import model.liveblog.PageWithStoryPackage
 @(page: PageWithStoryPackage)(implicit request: RequestHeader)
 
 @import views.support.{EmailImage, EmailVideoImage}
-@import views.support.EmailHelpers._
+@import views.support.EmailHelpers.{imgForArticle, icon}
+@import fragments.email._
 @import model.liveblog._
 @import model.EmailAddons.EmailContentType
 
+<table class="article-body">
 @defining(page.article) { article =>
-    @fullRow {
+    @row(Seq("no-pad")) {
         <a href="@article.metadata.webUrl" @page.email.map { email => title="View @email.name online"}>
             @imgForArticle(page.banner, page.email.map(_.name))
         </a>
     }
 
     @page.fallbackSeriesText.map { seriesName =>
-        @paddedRow {
+        @row(Seq("padded")) {
             <h3 class="text--brand">@seriesName</h3>
             <hr class="rule--compact" />
         }
     }
 
-    @paddedRow {
+    @row(Seq("padded")) {
         <h1>@article.trail.headline</h1>
     }
 
     @article.fields.standfirst.map { standfirst =>
-        @paddedRow(Html(standfirst))
+        @row(Seq("padded"))(Html(standfirst))
     }
 
     @fragments.emailMainMedia(article)
 
-    @paddedRow(Seq("author")) {
+    @row(Seq("padded", "author")) {
         @article.trail.byline.map { byline =>
             <h3 class="byline">@byline</h3>
 
         @article.tags.contributors.headOption.map { profile =>
             @profile.properties.twitterHandle.map { twitter =>
                 <div class="meta__twitter">
-                    <a href="http://twitter.com/@twitter" data-link-name="twitter-handle" data-component="meta-twitter-handle" class="button button--small button--secondary tone-colour">
+                    <a href="https://twitter.com/@twitter" data-link-name="twitter-handle" data-component="meta-twitter-handle" class="button button--small button--secondary tone-colour">
                         @icon("twitter-bird")
                         <span class="contact">@@@twitter</span>
                     </a>
@@ -59,7 +62,7 @@
     @page.article.fields.blocks.toSeq.map { blocks =>
         @blocks.body.map { block =>
             @block.title.map { title =>
-                @paddedRow {
+                @row(Seq("padded")) {
                     <h2 class="block__title">@title</h2>
                 }
             }
@@ -67,22 +70,22 @@
             @block.elements.map { element =>
                 @element match {
                     case TextBlockElement(Some(html)) => {
-                        @paddedRow(Html(html))
+                        @row(Seq("padded"))(Html(html))
                     }
 
                     case RichLinkBlockElement(Some(url), Some(text), _) => {
-                        @paddedRow(Seq("rich-link")) {
+                        @row(Seq("padded", "rich-link")) {
                             <span class="rich-link__prefix">More:</span> <a href="@url">@text</a>
                         }
                     }
 
                     case EmbedBlockElement(Some(html), _, _) => {
-                        @*fullRow(Html(html))*@
+                        @*row(Html(html))*@
                     }
 
                     case ImageBlockElement(media, data, showCredit) => {
                         @EmailImage.bestFor(media).map { imageUrl =>
-                            @fullRow {
+                            @row(Seq("no-pad")) {
                                 @if(article.isTheMinute && block.url.isDefined) {
                                     <a href="@block.url.getOrElse("#")">
                                         @imgForArticle(imageUrl, data.get("alt"))
@@ -92,7 +95,7 @@
                                 }
                             }
 
-                            @paddedRow {
+                            @row(Seq("padded")) {
                                 @data.get("caption").map { caption =>
                                     <div class="caption">
                                         @icon("camera")
@@ -112,7 +115,7 @@
 
                     case GuVideoBlockElement(video, media, data) => {
                         @EmailVideoImage.bestFor(media).map { imageUrl =>
-                            @fullRow {
+                            @row(Seq("no-pad")) {
                                 @data.get("url").fold {
                                     @imgForArticle(imageUrl, data.get("alt"))
                                 }{ linkUrl =>
@@ -130,3 +133,4 @@
         }
     }
 }
+</table>

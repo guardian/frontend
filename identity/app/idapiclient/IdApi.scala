@@ -1,6 +1,6 @@
 package idapiclient
 
-import com.gu.identity.model.{EmailList, LiftJsonConfig, SavedArticles, Subscriber, User}
+import com.gu.identity.model.{EmailList, LiftJsonConfig, Subscriber, User}
 import client.{Anonymous, Auth, Parameters, Response}
 import client.connection.{Http, HttpResponse}
 
@@ -8,18 +8,18 @@ import scala.concurrent.{ExecutionContext, Future}
 import client.parser.{JodaJsonSerializer, JsonBodyParser}
 import idapiclient.responses.{AccountDeletionResult, CookiesResponse}
 import client.connection.util.{ApiHelpers, ExecutionContexts}
-import conf.IdentityConfiguration
+import conf.IdConfig
 import net.liftweb.json.JsonAST.JValue
 import net.liftweb.json.Serialization.write
 import utils.SafeLogging
 import idapiclient.requests.{PasswordUpdate, TokenPassword}
 
 
-abstract class IdApi(http: Http, jsonBodyParser: JsonBodyParser, conf: IdentityConfiguration)
+abstract class IdApi(http: Http, jsonBodyParser: JsonBodyParser, conf: IdConfig)
   extends IdApiUtils with SafeLogging with ApiHelpers {
 
-  override val apiRootUrl: String = conf.id.apiRoot
-  override val clientAuth: Auth = new ClientAuth(conf.id.apiClientToken)
+  override val apiRootUrl: String = conf.apiRoot
+  override val clientAuth: Auth = ClientAuth(conf.apiClientToken)
 
   import jsonBodyParser.{extractUnit, extract}
 
@@ -29,10 +29,6 @@ abstract class IdApi(http: Http, jsonBodyParser: JsonBodyParser, conf: IdentityC
   def jsonField(field: String)(json: JValue): JValue = json \ field
 
   def extractUser: (client.Response[HttpResponse]) => client.Response[User] = extract(jsonField("user"))
-
-  def extractSavedArticles: (client.Response[HttpResponse]) => client.Response[SavedArticles] = {
-    extract(jsonField("savedArticles"))
-  }
 
   // AUTH
   def authBrowser(userAuth: Auth, trackingData: TrackingData, persistent: Option[Boolean] = None): Future[Response[CookiesResponse]] = {
@@ -45,24 +41,6 @@ abstract class IdApi(http: Http, jsonBodyParser: JsonBodyParser, conf: IdentityC
 
   def unauth(auth: Auth, trackingData: TrackingData): Future[Response[CookiesResponse]] =
     post("unauth", Some(auth), Some(trackingData)) map extract[CookiesResponse](jsonField("cookies"))
-
-  def savedArticles(auth: Auth): Future[Response[SavedArticles]] = {
-    val apiPath = urlJoin("syncedPrefs", "me", "savedArticles")
-    val params = buildParams(Some(auth))
-    val headers = buildHeaders(Some(auth))
-
-    val response = http.GET(apiUrl(apiPath), params, headers)
-    response map extractSavedArticles
-  }
-
-  def updateSavedArticles(auth: Auth, savedArticles: SavedArticles): Future[Response[SavedArticles]] = {
-    val apiPath = urlJoin("syncedPrefs", "me", "savedArticles")
-    val updatedSavedArticles = write(savedArticles)
-    val params = buildParams(Some(auth))
-    val headers = buildHeaders(Some(auth))
-
-    val response = http.POST(apiUrl(apiPath), Some(updatedSavedArticles), params, headers)
-    response map extractSavedArticles }
 
   // USERS
 
@@ -182,12 +160,12 @@ abstract class IdApi(http: Http, jsonBodyParser: JsonBodyParser, conf: IdentityC
     post(urlJoin("user", "me", "group", groupCode), Some(auth)) map extractUnit
   }
 
-  def executeAccountDeletionStepFunction(userId: String, email: String, auth: Auth) = {
-    case class DeletionBody(identityId: String, email: String)
+  def executeAccountDeletionStepFunction(userId: String, email: String, reason: Option[String], auth: Auth) = {
+    case class DeletionBody(identityId: String, email: String, reason: Option[String])
     http.POST(
-        s"${conf.id.accountDeletionApiRoot}/delete",
-        Some(write(DeletionBody(userId, email))),
-        headers = buildHeaders(Some(auth), extra = Seq(("x-api-key", conf.id.accountDeletionApiKey)))
+        s"${conf.accountDeletionApiRoot}/delete",
+        Some(write(DeletionBody(userId, email, reason))),
+        headers = buildHeaders(Some(auth), extra = Seq(("x-api-key", conf.accountDeletionApiKey)))
     ) map extract[AccountDeletionResult](identity)
   }
 
@@ -204,7 +182,7 @@ abstract class IdApi(http: Http, jsonBodyParser: JsonBodyParser, conf: IdentityC
     http.DELETE(apiUrl(apiPath), body, buildParams(auth, trackingParameters), buildHeaders(auth))
 }
 
-class SynchronousIdApi(http: Http, jsonBodyParser: JsonBodyParser, conf: IdentityConfiguration)
+class SynchronousIdApi(http: Http, jsonBodyParser: JsonBodyParser, conf: IdConfig)
     extends IdApi(http, jsonBodyParser, conf) {
   implicit def executionContext: ExecutionContext = ExecutionContexts.currentThreadContext
 }

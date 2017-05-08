@@ -1,13 +1,13 @@
 @import model.content.MediaAssetPlatform
 @import model.content.MediaWrapper
-@(media: _root_.model.content.MediaAtom, amp: Boolean = false, displayCaption: Boolean, displayEndSlate: Boolean = false, mediaWrapper: Option[MediaWrapper])(implicit request: RequestHeader, context: model.ApplicationContext)
+@(media: _root_.model.content.MediaAtom, amp: Boolean = false, displayCaption: Boolean, displayEndSlate: Boolean = false, mediaWrapper: Option[MediaWrapper])(implicit request: RequestHeader)
 
 @{
     media match {
             case posterOnly if media.assets.isEmpty && media.posterImage.isDefined  => views.html.fragments.atoms.posterImage(mediaWrapper, amp, media.posterImage.get, media.title)
             case youtube if media.assets.headOption.filter(_.platform == MediaAssetPlatform.Youtube) =>
                 if(amp) views.html.fragments.atoms.ampYoutube(media, displayCaption, mediaWrapper)
-                else views.html.fragments.atoms.youtube(media, displayCaption, displayEndSlate, mediaWrapper = mediaWrapper)
+                else views.html.fragments.atoms.youtube(media, displayCaption, displayDuration = true, displayEndSlate, mediaWrapper = mediaWrapper)
             case genericAsset if media.assets.nonEmpty => views.html.fragments.atoms.genericMedia(media, displayCaption, amp)
             case _ =>
         }

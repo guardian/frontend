@@ -1,19 +1,37 @@
 @(page: model.Page)(implicit request: RequestHeader)
 
-@import views.support.EmailHelpers._
+@import fragments.email._
 @import model.EmailAddons.EmailContentType
 @import common.{CanonicalLink, LinkTo}
 
-@fullRow(Seq("email__links")) {
-    <a class="email__link" href="https://profile.theguardian.com/email-prefs">Manage your emails</a> | <a class="email__link" href="%%unsub_center_url%%">Unsubscribe</a> | <a class="email__link" href="@LinkTo(page.metadata.canonicalUrl.map(LinkTo(_)).getOrElse(CanonicalLink(request, page.metadata.webUrl)))">Trouble viewing?</a>
-}
 
-@fullRow(Seq("disclaimer")) {
-    <p>
-    @page.email.map { email =>
-        You are receiving this email because you are a subscriber to @{email.name}.
-    }
+<table class="ft">
+    <tr>
+        <td class="ft__margin">
+            <table class="ft__inner">
+                <tr>
+                    <td class="ft__padding">
+                        <table>
+                            <tr>
+                                <td class="ft__links">
+                                    <a href="https://profile.theguardian.com/email-prefs">Manage your emails</a> |
+                                    <a href="%%unsub_center_url%%">Unsubscribe</a> |
+                                    <a href="@LinkTo(page.metadata.canonicalUrl.map(LinkTo(_)).getOrElse(CanonicalLink(request, page.metadata.webUrl)))">Trouble viewing?</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="ft__disclaimer">
+                                    @page.email.map { email =>
+                                        You are receiving this email because you are a subscriber to @{email.name}.
+                                    }
 
-    Guardian News & Media Limited - a member of Guardian Media Group PLC. Registered Office: @page.address
-    </p>
-}
+                                    Guardian News & Media Limited - a member of Guardian Media Group PLC. Registered Office: @page.address
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

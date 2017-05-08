@@ -1,0 +1,50 @@
+// td
+.ft__margin {
+    padding-top: 36px;
+}
+
+// table
+.ft__inner {
+    background-color: #484848;
+    background-repeat: no-repeat;
+    background-position: bottom right;
+}
+
+// td
+.ft__padding {
+    padding: 35px 0;
+}
+
+.ft__links {
+    font-family: Helvetica, Arial, sans-serif;
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: lighter;
+    line-height: 14px;
+    text-decoration: none;
+    text-align: center;
+    a {
+        &,
+        &:visited,
+        &:hover,
+        &:active {
+            // Pseudo-selectors can't be inlined so we need important here
+            // so override those styles which have been inlined
+            font-family: Helvetica, Arial, sans-serif !important;
+            color: #ffffff !important;
+            font-size: 12px !important;
+            font-weight: lighter !important;
+            line-height: 14px !important;
+            text-decoration: none !important;
+        }
+    }
+}
+
+.ft__disclaimer {
+    font-family: Helvetica, Arial, sans-serif;
+    color: #dfdfdf;
+    font-size: 10px;
+    line-height: 14px;
+    padding: 20px 12px 0;
+    text-align: center;
+}

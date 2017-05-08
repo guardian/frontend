@@ -1,8 +1,13 @@
 @import model.{InlineImage, VideoPlayer}
 @import views.html.fragments.media.video
 @import views.html.fragments.nav.treats
+@import views.html.fragments.atoms.youtube
 @import views.support.{RenderClasses, Video640, Video700}
 
+@import model.content.MediaAssetPlatform
+@import model.content.MediaWrapper.VideoContainer
+@import model.VideoFaciaProperties
+@import layout.FaciaCardHeader
 @(containerDefinition: layout.FaciaContainer, frontProperties: model.FrontProperties)(implicit requestHeader: RequestHeader)
 
 <div class="fc-container__inner">
@@ -37,9 +42,16 @@
             @treats(containerDefinition, frontProperties)
         </li>
 
-        @containerDefinition.collectionEssentials.items.filter(i => i.header.isVideo && i.header.hasMainVideoElement.exists(identity)).zipWithIndex.map { case (item, index) =>
+        @containerDefinition.collectionEssentials.items.filter(i => i.header.isVideo).zipWithIndex.map { case (item, index) =>
            <li class="video-playlist__item js-video-playlist-item-@index @if(index == 0){video-playlist__item--active video-playlist__item--first}">
                 @item.properties.maybeContent.map { content =>
+                    @defining(content.atoms.flatMap(_.media.find(_.assets.exists(_.platform == MediaAssetPlatform.Youtube)))) { youTubeAtom =>
+                        @youTubeAtom.map { youTubeAtom =>
+                            @youtube(media = youTubeAtom, displayCaption = false, mediaWrapper = Some(VideoContainer), displayEndSlate = false, displayDuration = false, faciaHeaderProperties = Some(VideoFaciaProperties(header = FaciaCardHeader.fromTrail(item, None), showByline = item.properties.showByline, item.properties.byline)))
+                        }
+                    }
+
+
                     @content.elements.mainVideo.map { mainVideo =>
                         @defining(VideoPlayer(
                             mainVideo,

@@ -1,24 +1,28 @@
 package football.controllers
 
-import feed.Competitions
-import model.Cached.RevalidatableResult
-import org.joda.time.format.DateTimeFormat
-import org.joda.time.LocalDate
-import model.{ApplicationContext, Cached, Competition, Page, TeamMap}
-import football.model.MatchesList
-import play.api.mvc.{Controller, RequestHeader}
 import common.{Edition, JsonComponent}
-import play.twirl.api.Html
+import feed.Competitions
+import football.model.MatchesList
 import implicits.Requests
+import model.Cached.RevalidatableResult
+import model.{ApplicationContext, Cached, Competition, TeamMap}
+import org.joda.time.LocalDate
+import org.joda.time.format.DateTimeFormat
 import pa.FootballTeam
+import play.api.mvc.{Controller, RequestHeader}
+import play.twirl.api.Html
 
 trait MatchListController extends Controller with Requests {
-  val competitionsService: Competitions
+  def competitionsService: Competitions
   protected val datePattern = DateTimeFormat.forPattern("yyyyMMMdd").withZone(Edition.defaultEdition.timezone)
   protected def createDate(year: String, month: String, day: String): LocalDate =
     datePattern.parseDateTime(s"$year$month$day").toLocalDate
 
-  protected def renderMatchList(page: Page, matchesList: MatchesList, filters: Map[String, Seq[CompetitionFilter]])(implicit request: RequestHeader, context: ApplicationContext) = {
+  protected def renderMatchList(
+    page: FootballPage,
+    matchesList: MatchesList,
+    filters: Map[String, Seq[CompetitionFilter]]
+  )(implicit request: RequestHeader, context: ApplicationContext) = {
     Cached(10) {
       if (request.isJson)
         JsonComponent(
@@ -31,7 +35,11 @@ trait MatchListController extends Controller with Requests {
     }
   }
 
-  protected def renderMoreMatches(page: Page, matchesList: MatchesList, filters: Map[String, Seq[CompetitionFilter]])(implicit request: RequestHeader, context: ApplicationContext) = {
+  protected def renderMoreMatches(
+    page: FootballPage,
+    matchesList: MatchesList,
+    filters: Map[String, Seq[CompetitionFilter]]
+  )(implicit request: RequestHeader, context: ApplicationContext) = {
     Cached(10) {
       if(request.isJson)
         JsonComponent(

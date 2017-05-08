@@ -2,10 +2,7 @@
 const path = require('path');
 const webpack = require('webpack');
 
-const bundlePrefix = 'graun.';
-
-module.exports = ({ env = 'dev', plugins = [] } = {}) => ({
-    devtool: env === 'dev' ? 'inline-source-map' : 'source-map',
+module.exports = {
     entry: {
         standard: path.join(
             __dirname,
@@ -18,7 +15,7 @@ module.exports = ({ env = 'dev', plugins = [] } = {}) => ({
             __dirname,
             'static',
             'src',
-            'javascripts-legacy',
+            'javascripts',
             'bootstraps',
             'admin.js'
         ),
@@ -41,8 +38,6 @@ module.exports = ({ env = 'dev', plugins = [] } = {}) => ({
     },
     output: {
         path: path.join(__dirname, 'static', 'target', 'javascripts'),
-        filename: `${env === 'dev' ? '' : '[chunkhash]/'}${bundlePrefix}[name].js`,
-        chunkFilename: `${env === 'dev' ? '' : '[chunkhash]/'}${bundlePrefix}[name].js`,
     },
     resolve: {
         modules: [
@@ -93,10 +88,8 @@ module.exports = ({ env = 'dev', plugins = [] } = {}) => ({
         new webpack.ProvidePlugin({
             videojs: 'videojs',
         }),
-        // optional plugins passed in in production
-        ...plugins,
     ],
     externals: {
         xhr2: {},
     },
-});
+};

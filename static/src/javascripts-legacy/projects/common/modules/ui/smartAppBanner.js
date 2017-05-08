@@ -43,7 +43,7 @@ define([
                 STORE: 'in Google Play'
             }
         },
-        cookieVal = cookies.get(COOKIE_IMPRESSION_KEY),
+        cookieVal = cookies.getCookie(COOKIE_IMPRESSION_KEY),
         impressions = cookieVal && !isNaN(cookieVal) ? parseInt(cookieVal, 10) : 0,
         tmp = '<img src="<%=LOGO%>" class="app__logo" alt="Guardian App logo" /><div class="app__cta"><h4 class="app__heading">The Guardian app</h4>' +
             '<p class="app__copy">Instant alerts. Offline reading.<br/>Tailored to you.</p>' +
@@ -63,14 +63,14 @@ define([
     }
 
     function showMessage() {
-        loadCssPromise.then(function () {
+        loadCssPromise.loadCssPromise.then(function () {
             var platform = (detect.isIOS()) ? 'ios' : 'android',
                 msg = new Message(platform),
                 fullTemplate = tmp + (detect.getBreakpoint() === 'mobile' ? '' : tablet);
 
             msg.show(template(fullTemplate, DATA[platform.toUpperCase()]));
 
-            cookies.add(COOKIE_IMPRESSION_KEY, impressions + 1);
+            cookies.addCookie(COOKIE_IMPRESSION_KEY, impressions + 1);
 
             fastdom.read(function () {
                 var $banner = $('.site-message--ios, .site-message--android');

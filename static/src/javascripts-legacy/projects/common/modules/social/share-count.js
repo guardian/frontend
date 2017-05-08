@@ -2,7 +2,7 @@ define([
     'fastdom',
     'lib/report-error',
     'lib/$',
-    'lib/ajax',
+    'lib/fetch-json',
     'lib/detect',
     'lib/config',
     'lib/formatters',
@@ -14,7 +14,7 @@ define([
     fastdom,
     reportError,
     $,
-    ajax,
+    fetchJSON,
     detect,
     config,
     formatters,
@@ -50,7 +50,7 @@ define([
     }
 
     function addToShareCount(val) {
-        var shareSvg = svgs('share');
+        var shareSvg = svgs.inlineSvg('share');
         var shareTemplate = $shareCountEls.hasClass('js-sharecount-immersive') ? shareCountImmersiveTemplate : shareCountTemplate;
 
         var html = template(shareTemplate, {
@@ -69,13 +69,12 @@ define([
     }
 
     function fetch() {
-        ajax({
-            url: config.page.ajaxUrl + '/sharecount/' + config.page.pageId + '.json',
-            type: 'json',
-            method: 'get',
-            crossOrigin: true
-        }).then(function (resp) {
-            var count = resp.share_count || 0;
+        var url = config.page.ajaxUrl + '/sharecount/' + config.page.pageId + '.json';
+
+        fetchJSON(url, {
+            mode: 'cors',
+        }).then(function (res) {
+            var count = res.share_count || 0;
             counts.facebook = count;
             addToShareCount(count);
             updateTooltip();

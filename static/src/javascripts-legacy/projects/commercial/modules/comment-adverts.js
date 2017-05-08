@@ -48,7 +48,7 @@ define([
                     $adSlotContainer.append(adSlot);
                     return adSlot;
                 })
-                .then(addSlot);
+                .then(addSlot.addSlot);
             });
         });
     };

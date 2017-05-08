@@ -11,7 +11,7 @@
 }
 
 @iconModifier() = @{
-    if (item.content.isImmersiveGallery) List("social-icon-media") else Nil
+    if (item.content.isGallery) List("social-icon-media") else Nil
 }
 
 @ageNotice() = @{
@@ -27,7 +27,7 @@
             @if(item.content.tags.tags.exists(_.id == "tone/news")) {
                 @fragments.contentAgeNotice(ageNotice)
             }
-            @if(!item.content.isExplore & !amp) {
+            @if(!amp) {
                 <div class="meta__numbers">
                     <div class="u-h meta__number js-sharecount">
                     </div>
@@ -46,7 +46,7 @@
         </div>
     }
 
-    @if(!item.content.isImmersiveGallery && !item.content.isExplore) {
+    @if(!item.content.isGallery) {
         @if(!item.content.hasTonalHeaderByline) {
             @byline()
         }
@@ -72,7 +72,6 @@
     @if(item.elements.hasShowcaseMainElement){ content__meta-container--showcase}
     @if(item.content.hasTonalHeaderByline){ content__meta-container--tonal-header}
     @item.content.contributorBio.map { bio => content__meta-container--bio}
-    @if(item.content.isExplore) {content__meta-container--explore}
     @if(item.tags.contributors.length == 1 && item.tags.contributors.headOption.exists(_.properties.twitterHandle.nonEmpty)) { content__meta-container--twitter}
     @if(item.tags.contributors.length == 1 && item.tags.contributors.headOption.exists(_.properties.emailAddress.nonEmpty)) { content__meta-container--email}">
 

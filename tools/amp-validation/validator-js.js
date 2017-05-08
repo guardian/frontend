@@ -16,8 +16,8 @@ const tempFilenames = {
     preRelease: '/pre-release.js',
 };
 
-function fetchValidator(devChannel) {
-    function validatorRequest(resolve, reject) {
+const fetchValidator = devChannel => {
+    const validatorRequest = (resolve, reject) => {
         const options = Object.assign(
             {},
             defaultOptions,
@@ -41,10 +41,11 @@ function fetchValidator(devChannel) {
             reject(new Error(`${errorMessage} ${error.message}`));
         });
         req.end();
-    }
+    };
 
-    function saveToFile(res) {
-        const filename = os.tmpdir() +
+    const saveToFile = res => {
+        const filename =
+            os.tmpdir() +
             (devChannel ? tempFilenames.preRelease : tempFilenames.release);
         const writeStream = fs.createWriteStream(filename);
 
@@ -57,17 +58,17 @@ function fetchValidator(devChannel) {
                     writeStream.close();
                 });
         });
-    }
+    };
     return new Promise(validatorRequest).then(saveToFile);
-}
+};
 
-function cleanUp() {
+const cleanUp = () => {
     // Just try and remove both files as the cost is low anyway
     // TODO: re-add tempFilenames.prerelease when/if google provide us with one
     [tempFilenames.release].forEach(filename => {
         fs.unlinkSync(os.tmpdir() + filename);
     });
-}
+};
 
 exports.fetchRelease = fetchValidator.bind(this, false);
 exports.fetchPreRelease = fetchValidator.bind(this, true);

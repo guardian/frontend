@@ -10,7 +10,7 @@
 @import common.LinkTo
 @import views.support.RenderClasses
 @import views.MatchStatus
-@import conf.switches.Switches
+@import conf.Configuration
 
 <table class="table table--football football-matches@if(responsiveFont){ table--responsive-font}">
     <thead hidden>
@@ -36,8 +36,8 @@
                 ))">
                 <td class="football-match__status football-match__status--@MatchStatus(theMatch.matchStatus).toString.toLowerCase table-column--sub">
                     @if(theMatch.isFixture){
-                        <time datetime="@theMatch.date.toString("yyyy-MM-dd'T'HH:mm:ssZ")" data-timestamp="@theMatch.date.getMillis"
-                            class="js-locale-timestamp">
+                        <time datetime="@theMatch.date.toString("yyyy-MM-dd'T'HH:mm:ssZ")" data-timestamp="@theMatch.date.getMillis" 
+                        class="js-locale-timestamp">
                             @theMatch.date.toString("HH:mm")</time>
                     }else{
                         @MatchStatus(theMatch.matchStatus)
@@ -85,8 +85,25 @@
         }
         <span class="football-matches__date">@date.toString("E d MMMM")</span>
     </caption>
-    @if(linkToCompetition && link == None){<caption class="table__caption table__caption--bottom"><a href="@competition.url@if(matchType!=""){/@matchType}" data-link-name="view @competition.fullName matches" class="full-table-link">Show more <span class="competition-name">@competition.fullName</span> @matchType</a></caption>}
+    @if(linkToCompetition && link == None){
+        <tfoot class="table__caption table__caption--bottom" >
+            <tr>
+                <td colspan="4">
+                    <a href="@competition.url@if(matchType!=""){/@matchType}" data-link-name="view @competition.fullName matches" class="full-table-link">
+                        Show more <span class="competition-name">@competition.fullName</span> @matchType
+                    </a>
+                </td>
+            </tr>
+        </tfoot>
+    }
+
     @link.map{ case (text, href) =>
-            <caption class="table__caption table__caption--bottom"><a href="@href" data-link-name="view matches" class="full-table-link">@text</a></caption>
+        <tfoot class="table__caption table__caption--bottom" >
+            <tr>
+                <td colspan="4">
+                    <a href="@href" data-link-name="view matches" class="full-table-link">@text</a>
+                </td>
+            </tr>
+        </tfoot>
     }
 </table>

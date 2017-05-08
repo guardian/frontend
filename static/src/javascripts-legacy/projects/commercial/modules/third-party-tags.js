@@ -4,8 +4,6 @@
 define([
     'lib/$',
     'lib/config',
-    'lib/detect',
-    'lib/mediator',
     'lib/fastdom-promise',
     'lodash/utilities/template',
     'common/modules/experiments/ab',
@@ -15,17 +13,15 @@ define([
     'commercial/modules/third-party-tags/imr-worldwide',
     'commercial/modules/third-party-tags/imr-worldwide-legacy',
     'commercial/modules/third-party-tags/remarketing',
+    'commercial/modules/third-party-tags/simple-reach',
     'commercial/modules/third-party-tags/tourism-australia',
     'commercial/modules/third-party-tags/krux',
-    'common/modules/identity/api',
     'commercial/modules/third-party-tags/outbrain',
     'commercial/modules/third-party-tags/plista',
     'raw-loader!common/views/commercial/external-content.html'
 ], function (
     $,
     config,
-    detect,
-    mediator,
     fastdom,
     template,
     ab,
@@ -35,9 +31,9 @@ define([
     imrWorldwide,
     imrWorldwideLegacy,
     remarketing,
+    simpleReach,
     tourismAustralia,
     krux,
-    identity,
     outbrain,
     plista,
     externalContentContainerStr
@@ -90,7 +86,7 @@ define([
     }
 
     function isLuckyBastard() {
-        var testName = 'PaidContentVsOutbrain';
+        var testName = 'PaidContentVsOutbrain2';
         return ab.testCanBeRun(testName) && ab.getTestVariantId(testName) === 'paid-content';
     }
 
@@ -101,6 +97,7 @@ define([
             imrWorldwide,
             imrWorldwideLegacy,
             remarketing,
+            simpleReach,
             tourismAustralia,
             krux
         ].filter(function (_) { return _.shouldRun; });

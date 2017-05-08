@@ -8,8 +8,9 @@ define([
     'commercial/modules/third-party-tags/krux',
     'common/modules/identity/api',
     'commercial/modules/user-ad-targeting',
-    'common/modules/experiments/ab',
+    'common/modules/experiments/utils',
     'lodash/arrays/compact',
+    'lodash/arrays/flatten',
     'lodash/arrays/uniq',
     'lodash/functions/once',
     'lodash/objects/pick'
@@ -23,8 +24,9 @@ define([
     krux,
     identity,
     userAdTargeting,
-    ab,
+    abUtils,
     compact,
+    flatten,
     uniq,
     once,
     pick
@@ -38,49 +40,9 @@ define([
         return target ? format(target).replace(/&/g, 'and').replace(/'/g, '') : null;
     }
 
-    function parseId(id) {
-        if (!id) {
-            return null;
-        }
-        if (id === 'uk/uk') {
-            return id;
-        } else {
-            return format(id.split('/').pop());
-        }
-    }
-
-    function getSeries(page) {
-        if (page.seriesId) {
-            return parseId(page.seriesId);
-        }
-
-        var seriesIdFromUrl = /\/series\/(.+)$/.exec(page.pageId);
-        if (seriesIdFromUrl) {
-            return seriesIdFromUrl[1];
-        }
-
-        if (page.keywordIds) {
-            return page.keywordIds
-            .split(',')
-            .filter(function (keyword) {
-                return keyword.indexOf('series/') === 0;
-            })
-            .slice(0, 1)
-            .map(function (seriesId) {
-                return seriesId.split('/')[1];
-            });
-        }
-
-        return null;
-    }
-
-    function parseIds(ids) {
-        return ids ? compact(ids.split(',').map(parseId)) : null;
-    }
-
     function abParam() {
         var cmRegex = /^(cm|commercial)/;
-        var abParticipations = ab.getParticipations();
+        var abParticipations = abUtils.getParticipations();
         var abParams = [];
 
         Object.keys(abParticipations).forEach(function (testKey) {
@@ -105,10 +67,10 @@ define([
     }
 
     function adtestParams() {
-        var cookieAdtest = cookies.get('adtest');
+        var cookieAdtest = cookies.getCookie('adtest');
         if (cookieAdtest) {
             if (cookieAdtest.substring(0, 4) === 'demo') {
-                cookies.remove('adtest');
+                cookies.removeCookie('adtest');
             }
             return cookieAdtest;
         }
@@ -152,32 +114,24 @@ define([
         return pick(url.getUrlVars(), whiteList);
     }
 
-    function getBrandingType() {
-        switch(config.page.sponsorshipType) {
-            case 'sponsored':
-                return 's';
-            case 'foundation':
-                return 'f';
-            case 'paid-content':
-                return 'p';
-            default:
-                return '';
-        }
+    function formatAppNexusTargeting(obj) {
+        return flatten(Object.keys(obj)
+            .filter(function(key) {
+                return obj[key] !== '' && obj[key] !== null;
+            })
+            .map(function(key) {
+                var value = obj[key];
+                return Array.isArray(value) ?
+                    value.map(function(nestedValue){ return key + '=' + nestedValue })
+                    : key + '=' + value;
+            }))
+            .join(',');
     }
 
     return once(function () {
-        var win         = window;
         var page        = config.page;
-        var contentType = formatTarget(page.contentType);
         var pageTargets = assign({
-            url:     win.location.pathname,
-            edition: page.edition && page.edition.toLowerCase(),
-            se:      getSeries(page),
-            ct:      contentType,
-            p:       'ng',
-            k:       page.keywordIds ? parseIds(page.keywordIds) : parseId(page.pageId),
             x:       krux.getSegments(),
-            su:      page.isSurging,
             pv:      config.ophan.pageViewId,
             bp:      detect.getBreakpoint(),
             at:      adtestParams(),
@@ -185,16 +139,11 @@ define([
             gdncrm:  userAdTargeting.getUserSegments(),
             ab:      abParam(),
             ref:     getReferrer(),
-            co:      parseIds(page.authorIds),
-            bl:      parseIds(page.blogIds),
-            ob:      page.publication === 'The Observer' ? 't' : '',
             ms:      formatTarget(page.source),
             fr:      getVisitedValue(),
-            tn:      parseIds(page.tones),
-            br:      getBrandingType(),
             // round video duration up to nearest 30 multiple
             vl:      page.videoDuration ? (Math.ceil(page.videoDuration / 30.0) * 30).toString() : undefined
-        }, getWhitelistedQueryParams());
+        }, page.sharedAdTargeting, getWhitelistedQueryParams());
 
         // filter out empty values
         var pageTargeting = pick(pageTargets, function (target) {
@@ -206,6 +155,19 @@ define([
         });
 
         // third-parties wish to access our page targeting, before the googletag script is loaded.
+        page.appNexusPageTargeting = formatAppNexusTargeting({
+            pt1: pageTargeting.url,
+            pt2: pageTargeting.edition,
+            pt3: pageTargeting.ct,
+            pt4: pageTargeting.p,
+            pt5: pageTargeting.k,
+            pt6: pageTargeting.su,
+            pt7: pageTargeting.bp,
+            pt8: pageTargeting.x,
+            pt9: [pageTargeting.gdncrm, pageTargeting.pv, pageTargeting.co, pageTargeting.tn, pageTargeting.slot].join("|")
+        });
+
+        // This can be removed once we get sign-off from third parties who prefer to use appNexusPageTargeting.
         page.pageAdTargeting = pageTargeting;
 
         return pageTargeting;

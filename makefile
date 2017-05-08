@@ -87,6 +87,10 @@ pasteup: install # PRIVATE
 test: install
 	@./tools/task-runner/runner test/javascript --verbose
 
+# Run the modern JS test suite in watch mode.
+test-watch: install
+	@yarn test -- --watch --coverage
+
 # Check the JS test suite coverage.
 coverage: install
 	@./tools/task-runner/runner test/javascript/coverage --stdout
@@ -109,6 +113,9 @@ fix: install
 
 validate-amp: install # PRIVATE
 	@cd tools/amp-validation && npm install && NODE_ENV=dev node index.js
+
+validate-a11y: install # PRIVATE
+	@./tools/task-runner/runner validate/a11y
 
 # Take screenshots for a visual check.
 screenshots: install

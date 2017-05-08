@@ -1,14 +1,13 @@
 define([
     'qwery',
-    'bonzo',
-    'lib/add-event-listener',
+    'lib/events',
     'lib/fastdom-promise',
     'lib/detect',
     'lodash/utilities/template',
     'commercial/modules/creatives/add-tracking-pixel',
     'commercial/modules/creatives/add-viewability-tracker',
     'raw-loader!commercial/views/creatives/fabric-video.html'
-], function (qwery, bonzo, addEventListener, fastdom, detect, template, addTrackingPixel, addViewabilityTracker, fabricVideoStr) {
+], function (qwery, events, fastdom, detect, template, addTrackingPixel, addViewabilityTracker, fabricVideoStr) {
     var fabricVideoTpl;
 
     return FabricVideo;
@@ -57,8 +56,8 @@ define([
             }).then(function () {
                 layer2 = qwery('.creative__layer2', adSlot);
 
-                addEventListener(window, 'scroll', onScroll, { passive: true });
-                addEventListener(adSlot, 'animationend', function () {
+                events.addEventListener(window, 'scroll', onScroll, { passive: true });
+                events.addEventListener(adSlot, 'animationend', function () {
                     window.removeEventListener('scroll', onScroll);
                 });
 

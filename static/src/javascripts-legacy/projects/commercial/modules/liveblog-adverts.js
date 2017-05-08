@@ -1,5 +1,4 @@
 define([
-    'bonzo',
     'lib/fastdom-promise',
     'lib/detect',
     'lib/config',
@@ -9,7 +8,6 @@ define([
     'commercial/modules/dfp/create-slot',
     'common/modules/article/space-filler'
 ], function (
-    bonzo,
     fastdom,
     detect,
     config,
@@ -68,9 +66,9 @@ define([
                 'top-above-nav' : isMobile ?
                 'inline' + slotCounter :
                 'inline' + (slotCounter + 1);
-            var $adSlot = bonzo(createSlot('inline', { name: slotName, classes: 'liveblog-inline' }));
-            $adSlot.insertAfter(slots[i]);
-            addSlot($adSlot);
+            var adSlot = createSlot('inline', { name: slotName, classes: 'liveblog-inline' });
+            slots[i].parentNode.insertBefore(adSlot, slots[i].nextSibling);
+            addSlot.addSlot(adSlot);
             slotCounter += 1;
         }
     }

@@ -1,14 +1,14 @@
 define([
     'lib/fastdom-promise',
     'lodash/utilities/template',
-    'common/views/svgs',
     'raw-loader!commercial/views/ad-feedback-popup.html',
+    'svg-loader!svgs/icon/tick.svg',
     'lib/config'
 ], function (
     fastdom,
     template,
-    svgs,
     popupTemplate,
+    tick,
     config
 ) {
     function renderAdvertLabel(adSlotNode) {
@@ -23,7 +23,7 @@ define([
                         'repetitive': 'Repetitive',
                         'irrelevant': 'Irrelevant'
                     },
-                    icon: svgs('tick'),
+                    icon: tick.markup,
                     slot: adSlotNode.id
                 });
                 feedbackThanksMessage = '<i class="ad-feedback__thanks-message"> Thanks for your feedback </i>';

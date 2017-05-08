@@ -34,7 +34,8 @@
 .media-primary--showcase,
 .content__standfirst a,
 .content__standfirst br,
-figure {
+figure,
+.new-header {
     display: none !important;
 }
 
@@ -82,10 +83,8 @@ figcaption {
     margin-top: 4px !important;
 }
 
-.gallery2__img-container,
 .element-image,
-.media-primary,
-.gallery2__item {
+.media-primary {
     page-break-before: auto;
     page-break-after: auto;
     page-break-inside: avoid;

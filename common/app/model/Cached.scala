@@ -26,6 +26,8 @@ object CacheTime {
   object NotFound extends CacheTime(10) // This will be overwritten by fastly
   object DiscussionDefault extends CacheTime(60)
   object DiscussionClosed extends CacheTime(3800)
+  object ServiceWorker extends CacheTime(600)
+  object WebAppManifest extends CacheTime(3800)
 
   def LastDayUpdated = CacheTime(extended(60))
   def NotRecentlyUpdated = CacheTime(extended(300))

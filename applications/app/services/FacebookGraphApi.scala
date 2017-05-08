@@ -44,7 +44,8 @@ class FacebookGraphApi(facebookGraphApiClient: FacebookGraphApiClient) extends E
     facebookGraphApiClient.GET(
       endpoint = None,
       timeout = 1.second,
-      queryString = ("id", s"https://www.theguardian.com/$path")
+      // This has to be http so long as the og:url is (or the API changes again)
+      queryString = ("id", s"http://www.theguardian.com/$path")
     ) map { response =>
       response.json.asOpt[URLResponse]
         .map(_.share.share_count)

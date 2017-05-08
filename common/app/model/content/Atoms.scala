@@ -4,12 +4,12 @@ import com.gu.contentapi.client.model.v1.TagType
 import com.gu.contentapi.client.model.{v1 => contentapi}
 import com.gu.contentatom.thrift.atom.media.{Asset => AtomApiMediaAsset, MediaAtom => AtomApiMediaAtom}
 import com.gu.contentatom.thrift.{AtomData, Atom => AtomApiAtom, Image => AtomApiImage, ImageAsset => AtomApiImageAsset, atom => atomapi}
+import enumeratum._
 import model.{EndSlateComponents, ImageAsset, ImageMedia}
+import org.apache.commons.lang3.time.DurationFormatUtils
 import org.joda.time.{DateTime, DateTimeZone, Duration}
 import play.api.libs.json.{JsError, JsSuccess, Json}
 import quiz._
-import enumeratum._
-import model.content.MediaAssetPlatform.findValues
 import views.support.{GoogleStructuredData, ImgSrc}
 
 final case class Atoms(
@@ -17,9 +17,10 @@ final case class Atoms(
   media: Seq[MediaAtom],
   interactives: Seq[InteractiveAtom],
   recipes: Seq[RecipeAtom],
-  reviews: Seq[ReviewAtom]
+  reviews: Seq[ReviewAtom],
+  storyquestions: Seq[StoryQuestionsAtom]
 ) {
-  val all: Seq[Atom] = quizzes ++ media ++ interactives ++ recipes ++ reviews
+  val all: Seq[Atom] = quizzes ++ media ++ interactives ++ recipes ++ reviews ++ storyquestions
 }
 
 sealed trait Atom {
@@ -37,10 +38,22 @@ final case class MediaAtom(
   endSlatePath: Option[String],
   expired: Option[Boolean]
 ) extends Atom {
+
   def isoDuration: Option[String] = {
     duration.map(d => new Duration(Duration.standardSeconds(d)).toString)
   }
+
+  def formattedDuration: Option[String] = {
+    duration.map { d =>
+      val jodaDuration = new Duration(Duration.standardSeconds(d))
+      val oneHour = new Duration(Duration.standardHours(1))
+      val durationPattern = if(jodaDuration.isShorterThan(oneHour)) "mm:ss" else "HH:mm:ss"
+      val formattedDuration = DurationFormatUtils.formatDuration(jodaDuration.getMillis, durationPattern, true)
+      "^0".r.replaceFirstIn(formattedDuration, "") //strip leading zero
+    }
+  }
 }
+
 
 sealed trait MediaAssetPlatform extends EnumEntry
 
@@ -63,6 +76,7 @@ object MediaWrapper extends Enum[MediaWrapper] with PlayJsonEnum[MediaWrapper] {
   case object MainMedia extends MediaWrapper
   case object ImmersiveMainMedia extends MediaWrapper
   case object EmbedPage extends MediaWrapper
+  case object VideoContainer extends MediaWrapper
 }
 
 final case class MediaAsset(
@@ -103,6 +117,12 @@ final case class ReviewAtom(
   data: atomapi.review.ReviewAtom
 ) extends Atom
 
+final case class StoryQuestionsAtom(
+  override val id: String,
+  atom: AtomApiAtom,
+  data: atomapi.storyquestions.StoryQuestionsAtom
+) extends Atom
+
 
 object Atoms extends common.Logging {
   def extract[T](atoms: Option[Seq[AtomApiAtom]], extractFn: AtomApiAtom => T): Seq[T] = {
@@ -134,7 +154,9 @@ object Atoms extends common.Logging {
 
       val reviews = extract(atoms.reviews, atom => { ReviewAtom.make(atom) })
 
-      Atoms(quizzes = quizzes, media = media, interactives = interactives, recipes = recipes, reviews = reviews)
+      val storyquestions = extract(atoms.storyquestions, atom => { StoryQuestionsAtom.make(atom) })
+
+      Atoms(quizzes = quizzes, media = media, interactives = interactives, recipes = recipes, reviews = reviews, storyquestions = storyquestions)
     }
   }
 }
@@ -331,7 +353,8 @@ object RecipeAtom {
       .map(formatQuantity)
       .orElse(ingredient.quantityRange.map(range => s"${formatQuantity(range.from)}-${formatQuantity(range.to)}" ))
       .getOrElse("")
-    s"""${q} ${formatUnit(ingredient.unit.getOrElse(""))} ${ingredient.item}"""
+    val comment = ingredient.comment.fold("")(c => s", $c")
+    s"""${q} ${formatUnit(ingredient.unit.getOrElse(""))} ${ingredient.item}${comment}"""
   }
 
   private def formatUnit(unit: String): String = {
@@ -365,4 +388,8 @@ object ReviewAtom {
       url <- ImgSrc.findLargestSrc(media, GoogleStructuredData)
     } yield url
   }
+}
+
+object StoryQuestionsAtom {
+  def make(atom: AtomApiAtom): StoryQuestionsAtom = StoryQuestionsAtom(atom.id, atom, atom.data.asInstanceOf[AtomData.Storyquestions].storyquestions)
 }

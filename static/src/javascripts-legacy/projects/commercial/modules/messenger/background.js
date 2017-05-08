@@ -1,12 +1,11 @@
 define([
-    'lib/add-event-listener',
+    'lib/events',
     'lodash/objects/assign',
-    'lib/closest',
     'lib/fastdom-promise',
     'commercial/modules/messenger'
-], function (addEventListener, assign, closest, fastdom, messenger) {
+], function (events, assign, fastdom, messenger) {
     messenger.register('background', function(specs, ret, iframe) {
-        return setBackground(specs, closest(iframe, '.js-ad-slot'));
+        return setBackground(specs, iframe.closest('.js-ad-slot'));
     });
 
     return setBackground;
@@ -48,7 +47,7 @@ define([
                 adSlot.insertBefore(backgroundParent, adSlot.firstChild);
             })
             .then(function () {
-                addEventListener(window, 'scroll', onScroll, { passive: true });
+                events.addEventListener(window, 'scroll', onScroll, { passive: true });
                 onScroll();
 
                 function onScroll() {

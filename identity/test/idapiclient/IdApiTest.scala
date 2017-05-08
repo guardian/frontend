@@ -5,26 +5,25 @@ import org.scalatest.mock.MockitoSugar
 import org.scalatest.{Matchers => ShouldMatchers}
 import org.mockito.Mockito._
 import org.mockito.Matchers.argThat
-import org.mockito.Matchers
-import client.connection.{HttpResponse, Http}
+import org.mockito.{ArgumentMatcher, Matchers}
+import client.connection.{Http, HttpResponse}
 import client.parser.{JodaJsonSerializer, JsonBodyParser}
-import scala.concurrent.{Await, Future, Promise, ExecutionContext}
-import client.{Error, Anonymous, Auth, Parameters, Response}
-import org.hamcrest.Description
-import org.mockito.ArgumentMatcher
-import org.joda.time.DateTime
-import client.connection.util.ExecutionContexts
 
+import scala.concurrent.{Await, ExecutionContext, Promise}
+import client.{Anonymous, Auth, Error, Parameters, Response}
+import org.hamcrest.Description
+import client.connection.util.ExecutionContexts
 import org.joda.time.format.ISODateTimeFormat
 import com.gu.identity.model._
-import conf.IdentityConfiguration
 import net.liftweb.json.Serialization.write
+
 import scala.concurrent.duration._
 import scala.language.postfixOps
 import net.liftweb.json.JsonAST.JValue
 import net.liftweb.json.Formats
+import test.WithTestIdConfig
 
-class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
+class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar with WithTestIdConfig {
   implicit def executionContext: ExecutionContext = ExecutionContexts.currentThreadContext
 
   implicit val formats = LiftJsonConfig.formats + new JodaJsonSerializer
@@ -32,8 +31,7 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
   val fmt = ISODateTimeFormat.dateTimeNoMillis()
 
   val http = mock[Http]
-  val idConfig = new IdentityConfiguration
-  val apiRoot = idConfig.id.apiRoot
+  val apiRoot = testIdConfig.apiRoot
   val jsonParser = new JsonBodyParser {
     implicit val formats: Formats = LiftJsonConfig.formats + new JodaJsonSerializer
 
@@ -41,7 +39,7 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
   }
   val clientAuth = ClientAuth("frontend-dev-client-token")
   val clientAuthHeaders = List("X-GU-ID-Client-Access-Token" -> "Bearer frontend-dev-client-token")
-  val api = new SynchronousIdApi(http, jsonParser, idConfig)
+  val api = new SynchronousIdApi(http, jsonParser, testIdConfig)
   val errors = List(Error("Test error", "Error description", 500))
   val trackingParameters = mock[TrackingData]
   when(trackingParameters.parameters).thenReturn(List("tracking" -> "param"))
@@ -223,65 +221,6 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
     }
   }
 
-
-  "the prefs method" - {
-      val userPrefsJSON = """{"status":ok","savedArticles":{"version":"1418141910657","articles":[{"id":"world/2014/oct/11/thailand-murders-hannah-witheridge-david-miller-police-say-concrete-evidence-links-burmese-suspects","shortUrl":"http://gu.com/p/42c5t","date":"2014-10-11T12:09:07Z","read":false},{"id":"technology/2014/oct/12/teenagers-snapchat-images-leaked-internet","shortUrl":"http://gu.com/p/42cg4","date":"2014-10-14T06:39:36Z","read":false}]}}"""
-      val validUserPrefsResponse = HttpResponse(userPrefsJSON, 200, "OK")
-      when(http.GET(Matchers.any[String], Matchers.any[Parameters], Matchers.any[Parameters]))
-      .thenReturn(toFuture(Right(validUserPrefsResponse)))
-
-    "when recieving a valid response" - {
-      "accesses the synced prefs endpoint with the users id" in {
-          api.savedArticles(Anonymous)
-          verify(http).GET(s"$apiRoot/syncedPrefs/me/savedArticles", Iterable.empty, clientAuthHeaders)
-        }
-
-       "returns the synced Prefs Ofbject " in {
-         api.savedArticles(Anonymous) map {
-            case Left(result) => fail("Got Right (%s), instead of expect Right".format(result.toString) )
-            case Right(prefs) => {
-              prefs.version should be ("10010871")
-              prefs.articles map {
-                savedArticle =>
-                  savedArticle should have ('id("world/2014/oct/11/thailand-murders-hannah-witheridge-david-miller-police-say-concrete-evidence-links-burmese-suspects"))
-                  savedArticle should have ('shortUrl("http://gu.com/p/42c5t"))
-                  savedArticle should have ('date("2014-10-14T06:39:36Z"))
-              } orElse(fail("did not get expected articles"))
-
-            }
-         }
-       }
-    }
-
-    "when provididinmg authentication to the request" - {
-      "adds the url paremeters" in  {
-        api.savedArticles(ParamAuth)
-        verify(http).GET(Matchers.any[String], argThat(new ParamsMatcher(Iterable("testParam" -> "value"))), Matchers.argThat(new ParamsMatcher(clientAuthHeaders)))
-      }
-
-      "adds the headers" in {
-        api.savedArticles(HeaderAuth)
-        verify(http).GET(Matchers.any[String], Matchers.eq(Nil), argThat(new ParamsMatcher(Iterable("testHeader" -> "value") ++ clientAuthHeaders)))
-      }
-    }
-
-    "when recieving an error response" - {
-      when(http.GET(Matchers.any[String], Matchers.any[Parameters], Matchers.any[Parameters]))
-        .thenReturn(toFuture(Left(errors)))
-
-      "returns the errors" in {
-        api.savedArticles(Anonymous).map {
-          case Right(result) => fail("Got Right(%s), instead of expected Left".format(result.toString))
-          case Left(responseErrors) => {
-            responseErrors should equal(errors)
-          }
-        }
-      }
-
-    }
-  }
-
-
   "the userForToken method " - {
     val token = "atoken"
     "when recieving a valid response" - {
@@ -359,56 +298,6 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
     }
 
   }
-
-  "the add article to save list" - {
-    val id = "world/2014/oct/11/thailand-murders-hannah-witheridge-david-miller-police-say-concrete-evidence-links-burmese-suspects"
-    val shortUrl = "http://gu.com/p/42c5t"
-    val date  = new DateTime(2014,10,11,12,0,0)//"2014-10-11T12:00:007Z"
-    val version = "1418141910657"
-
-    val requestJson = """{"version":"1418141910657","articles":[{"id":"%s","shortUrl":"%s","date":"%s","read":false}]}""".format(id, shortUrl, fmt.print(date))
-    val articles = List(SavedArticle(id, shortUrl, date, false, None))
-    val savedArticles = SavedArticles(version, articles)
-
-    "when recieving a valid response" - {
-      val validResponse = HttpResponse( """{"status" : "ok" }""", 200, "OK")
-      when(http.POST(Matchers.any[String], Matchers.any[Option[String]], Matchers.any[Parameters], Matchers.any[Parameters])).thenReturn(toFuture(Right(validResponse)))
-
-      "accesses the savedArticles endpoing" in {
-        api.updateSavedArticles(Anonymous, savedArticles)
-        verify(http).POST(Matchers.eq(s"$apiRoot/syncedPrefs/me/savedArticles"), Matchers.any[Option[String]], Matchers.any[Parameters], Matchers.any[Parameters])
-      }
-
-      "passes the updated articles list as json to the endpoint" in  {
-        api.updateSavedArticles(Anonymous, savedArticles)
-        verify(http).POST(Matchers.any[String], Matchers.eq(Option(requestJson)), Matchers.any[Parameters], Matchers.any[Parameters])
-      }
-
-      "adds the client access token parameter to the request" in {
-        api.updateSavedArticles(Anonymous, savedArticles)
-        verify(http).POST(Matchers.any[String], Matchers.eq(Option(requestJson)), Matchers.any[Parameters], argThat(new ParamsIncludes(clientAuthHeaders)))
-      }
-
-      "adds the headers to the request" in {
-        api.updateSavedArticles(HeaderAuth, savedArticles)
-        verify(http).POST(Matchers.any[String], Matchers.eq(Option(requestJson)), Matchers.any[Parameters], argThat(new ParamsMatcher(Iterable("testHeader" -> "value") ++ clientAuthHeaders)))
-      }
-    }
-
-    "when recieving an error response" - {
-      when(http.POST(Matchers.any[String], Matchers.any[Option[String]], Matchers.any[Parameters], Matchers.any[Parameters])).thenReturn(toFuture(Left(errors)))
-      "returns the errors" in {
-        api.updateSavedArticles(Anonymous, savedArticles) map {
-          case Right(ok) => fail("Got right(%s) instead of expected left".format(ok.toString))
-          case Left(responseErrors) => {
-            responseErrors should equal(errors)
-          }
-        }
-      }
-    }
-  }
-
-
 
   "the password exists endpoint" - {
     def validResponse(result: Boolean) = HttpResponse( s"""{"passwordExists": ${result}}""", 200, "OK")
@@ -592,7 +481,7 @@ class IdApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar {
   }
 
   "synchronous version" - {
-    val syncApi = new SynchronousIdApi(http, jsonParser, idConfig)
+    val syncApi = new SynchronousIdApi(http, jsonParser, testIdConfig)
 
     "should use current thread testContext" in {
       syncApi.executionContext should equal(ExecutionContexts.currentThreadContext)

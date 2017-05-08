@@ -1,19 +1,15 @@
 @import common.InlineJs
 @import conf.switches.Switches.{AsyncCss, FontSwitch}
 @import model.Page.getContent
-@import templates.inlineJS.blocking.js.{applyRenderConditions, config, enableStylesheets, loadFonts, shouldEnhance}
-@import templates.inlineJS.blocking.polyfills.js.{classlist, details, matches, raf, setTimeout}
+@import templates.inlineJS.blocking.js.{applyRenderConditions, config, enableStylesheets, loadFonts, shouldEnhance, loadApp}
+@import templates.inlineJS.blocking.polyfills.js.{details, raf, setTimeout}
 
 @(page: model.Page)(implicit request: RequestHeader, context: model.ApplicationContext)
-
-<!--[if lt IE 9]>
-    <script src="@Static("javascripts/es5-html5.js")"></script>
-<![endif]-->
 
 @* NOTE the order of these includes is important  *@
 <script id="gu">
     // ************* POLYFILLS *************
-    // Mostly handled by es5 shim above. Those which aren't are polyfilled ASAP.
+    // Mostly handled by polyfill.io below. These are needed for inline JS though, so cannot rely on pf.io
 
     // It's faster to pass arguments in setTimeout than to use an anon function, but IE <10 can't do that.
     // Used by RAF polyfill.
@@ -21,14 +17,6 @@
 
     // Pollyfill requestAnimationFrame
     @InlineJs(raf().body, "raf.js")
-
-    @if(!mvt.PolyfillIO.isParticipating) {
-        // Polyfill Element.matches
-        @InlineJs(matches().body, "matches.js")
-    }
-
-    // Polyfill classList
-    @InlineJs(classlist().body, "classlist.js")
 
     // Polyfill details
     @InlineJs(details().body, "details.js")
@@ -59,18 +47,6 @@
 
     // ************* LOAD THE MAIN APP ASYNC *************
 
-    // Polyfill for async script
-    (function (document) {
-        @if(mvt.PolyfillIO.isParticipating) {
-            var polyfillScript = document.createElement('script');
-            var polyfillRef = document.getElementsByTagName('script')[0];
-            polyfillScript.src = 'https://assets.guim.co.uk/polyfill.io/v2/polyfill.min.js?features=es6,Element.prototype.closest,Element.prototype.matches';
-            polyfillRef.parentNode.insertBefore(polyfillScript, polyfillRef);
-        }
+    @InlineJs(loadApp().body, "loadApp.js")
 
-        var script = document.createElement('script');
-        var ref = document.getElementsByTagName('script')[0];
-        script.src = '@Static("javascripts/graun.standard.js")';
-        ref.parentNode.insertBefore(script, ref);
-    })(document);
 </script>

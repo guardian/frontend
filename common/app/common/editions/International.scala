@@ -87,7 +87,8 @@ object International extends Edition(
     genius,
     speedy,
     everyman,
-    azed
+    azed,
+    weekendSectionLink
   )
 
   override val navigation: Seq[NavItem] = {
@@ -104,7 +105,7 @@ object International extends Edition(
       NavItem(fashion),
       NavItem(environment, environmentLocalNav),
       NavItem(technology),
-      NavItem(travel, Seq(uktravel, europetravel, usTravel, skiingTravel)),
+      NavItem(travel, Seq(uktravel, europetravel, usTravel)),
       NavItem(money, Seq(property, savings, pensions, borrowing, workAndCareers)),
       NavItem(science),
       NavItem(guardianProfessional),

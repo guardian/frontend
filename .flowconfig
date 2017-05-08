@@ -14,7 +14,7 @@ module.name_mapper='^common' -> 'projects/common'
 module.name_mapper='^facia' -> 'projects/facia'
 module.name_mapper='^membership' -> 'projects/membership'
 module.name_mapper='^commercial' -> 'projects/commercial'
-module.name_mapper='^lodash(.*)$' -> 'lodash-amd/compat$1'
+module.name_mapper='^lodash\(.*\)$' -> 'lodash-amd/compat\1'
 module.name_mapper='^picturefill' -> 'projects/common/utils/picturefill'
 module.name_mapper='^raven' -> 'raven-js'
 module.name_mapper='^EventEmitter' -> 'wolfy87-eventemitter'
@@ -23,6 +23,9 @@ module.name_mapper='^stripe' -> 'stripe/stripe.min'
 module.name_mapper='^svgs' -> '<PROJECT_ROOT>/static/src/inline-svgs'
 module.name_mapper='^ophan/ng' -> 'ophan-tracker-js'
 module.name_mapper='^ophan/embed' -> 'ophan-tracker-js/build/ophan.embed'
+module.name_mapper='^raw-loader!.*$' -> '<PROJECT_ROOT>/dev/flow-asset-stub'
+module.name_mapper='^svg-loader!.*$' -> '<PROJECT_ROOT>/dev/flow-asset-stub'
+module.name_mapper='^inlineSvg!.*$' -> '<PROJECT_ROOT>/dev/flow-asset-stub'
 
 module.file_ext=.js
 

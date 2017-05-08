@@ -20,6 +20,8 @@ define([
     }
 
     return function () {
-        robust.catchErrorsAndLog('i-css-class', setCssClass);
+        robust.catchErrorsWithContext([
+            ['i-css-class', setCssClass],
+        ]);
     };
 });

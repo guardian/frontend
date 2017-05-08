@@ -2,6 +2,7 @@ package views.support
 
 import common.Edition
 import common.Maps.RichMap
+import common.commercial.EditionAdTargeting._
 import conf.Configuration.environment
 import conf.{Configuration, DiscussionAsset}
 import model._
@@ -33,9 +34,6 @@ object JavaScriptPage {
     val cardStyle = content.map(_.cardStyle.toneString).getOrElse("")
 
     val commercialMetaData = Map(
-      "oasHost" -> JsString("oas.theguardian.com"),
-      "oasUrl" -> JsString(Configuration.oas.url),
-      "oasSiteIdHost" -> JsString("www.theguardian-alpha.com"),
       "dfpHost" -> JsString("pubads.g.doubleclick.net"),
       "hasPageSkin" -> JsBoolean(metaData.hasPageSkin(edition)),
       "shouldHideAdverts" -> JsBoolean(page match {

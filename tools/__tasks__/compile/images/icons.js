@@ -11,25 +11,26 @@ const mkdirp = require('mkdirp');
 
 const svgo = new SVGO();
 
-function getSVG(iconPath) {
-    return new Promise((resolve, reject) => {
+const getSVG = iconPath =>
+    new Promise((resolve, reject) => {
         // eslint-disable-next-line consistent-return
         fs.readFile(iconPath, { encoding: 'utf-8' }, (err, data) => {
             if (err) return reject(err);
             try {
-                svgo.optimize(data, result => resolve({
-                    name: path.parse(iconPath).name,
-                    data: result,
-                }));
+                svgo.optimize(data, result =>
+                    resolve({
+                        name: path.parse(iconPath).name,
+                        data: result,
+                    })
+                );
             } catch (e) {
                 return reject(e);
             }
         });
     });
-}
 
-function sortSVGs(svgs) {
-    return svgs.sort((a, b) => {
+const sortSVGs = svgs =>
+    svgs.sort((a, b) => {
         const aInfo = a.data.info;
         const bInfo = b.data.info;
         if (aInfo.height !== bInfo.height) {
@@ -39,9 +40,8 @@ function sortSVGs(svgs) {
         }
         return a.name.localeCompare(b.name);
     });
-}
 
-function generateSassForSVG(svg) {
+const generateSassForSVG = svg => {
     const {
         name,
         data: fileData,
@@ -59,10 +59,10 @@ function generateSassForSVG(svg) {
                 @extend %svg-i-${name} !optional;
             }
     `.replace(/ {8}/g, '');
-}
+};
 
-function saveSass(sass, dest, fileName) {
-    return new Promise((resolve, reject) => {
+const saveSass = (sass, dest, fileName) =>
+    new Promise((resolve, reject) => {
         fs.writeFile(
             path.join(dest, fileName),
             `
@@ -82,7 +82,6 @@ function saveSass(sass, dest, fileName) {
             }
         );
     });
-}
 
 module.exports = {
     description: 'Create sprites',
