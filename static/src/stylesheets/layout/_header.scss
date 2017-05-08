@@ -6,6 +6,7 @@ $c-guardian-services-active-background: #ffffff;
 $c-guardian-services-action: #ffffff;
 
 .l-header {
+    display: none;
     position: relative;
     z-index: $zindex-ui;
 
@@ -13,6 +14,10 @@ $c-guardian-services-action: #ffffff;
         .has-page-skin & .gs-container {
             width: gs-span(12) + ($gs-gutter*2);
         }
+    }
+
+    @include mq(desktop) {
+        display: block;
     }
 }
 
@@ -175,13 +180,9 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter / 2;
 .new-header {
     background-color: $guardian-brand;
 
-    @include mq(tablet) {
+    @include mq(desktop) {
         display: none;
     }
-}
-
-.new-header--open {
-
 }
 
 .new-header__inner {
@@ -225,6 +226,11 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter / 2;
     margin: 0;
     padding: 0 $gs-gutter / 2;
     width: 100%;
+
+    @include mq(mobileLandscape) {
+        padding-left: $gs-gutter;
+        padding-right: $gs-gutter;
+    }
 }
 
 .new-header__pillar {

@@ -12,6 +12,11 @@
         max-height: 13vw;
     }
 
+    @include mq(mobileLandscape) {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
     // Spacer to prevent text from sitting directly beneath the veggie burger
     &:before {
         content: '';
@@ -34,6 +39,11 @@
     list-style: none;
     margin: 0;
     padding: 0;
+
+    @include mq(mobileLandscape) {
+        padding-left: $gs-gutter;
+        padding-right: $gs-gutter;
+    }
 }
 
 .subnav__item {
