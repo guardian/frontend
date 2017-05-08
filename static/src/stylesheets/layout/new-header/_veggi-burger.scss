@@ -25,7 +25,6 @@
 
     // menu is open
     .new-header--open & {
-        box-shadow: 0 0 0 1px rgba(0, 0, 0, .08);
         z-index: 1071;
 
         &:before {
