@@ -41,25 +41,24 @@ const setPublisherProvidedId = (): void => {
     }
 };
 
-const fillAdvertSlots = (start: () => void, stop: () => void) => {
-    window.googletag.cmd.push(
-        start,
-        createAdverts,
-        queueAdverts,
-        setPublisherProvidedId,
-        prepareSwitchTag.callSwitch,
-        dfpEnv.shouldLazyLoad() ? displayLazyAds : displayAds,
-        // anything we want to happen after displaying ads
-        refreshOnResize,
-        stop
-    );
-};
-
-const init = (start: () => void, stop: () => void): Promise<void> => {
+const fillAdvertSlots = (
+    start: () => void,
+    stop: () => void
+): Promise<void> => {
     if (commercialFeatures.dfpAdvertising) {
-        fillAdvertSlots(start, stop);
+        window.googletag.cmd.push(
+            start,
+            createAdverts,
+            queueAdverts,
+            setPublisherProvidedId,
+            prepareSwitchTag.callSwitch,
+            dfpEnv.shouldLazyLoad() ? displayLazyAds : displayAds,
+            // anything we want to happen after displaying ads
+            refreshOnResize,
+            stop
+        );
     }
     return Promise.resolve();
 };
 
-export { init };
+export { fillAdvertSlots };

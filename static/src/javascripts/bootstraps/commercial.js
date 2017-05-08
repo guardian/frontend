@@ -10,9 +10,7 @@ import closeDisabledSlots from 'commercial/modules/close-disabled-slots';
 import prepareGoogletag from 'commercial/modules/dfp/prepare-googletag';
 import prepareSonobiTag from 'commercial/modules/dfp/prepare-sonobi-tag';
 import prepareSwitchTag from 'commercial/modules/dfp/prepare-switch-tag';
-import {
-    init as fillAdvertSlots,
-} from 'commercial/modules/dfp/fill-advert-slots';
+import { fillAdvertSlots } from 'commercial/modules/dfp/fill-advert-slots';
 import hostedAbout from 'commercial/modules/hosted/about';
 import hostedVideo from 'commercial/modules/hosted/video';
 import hostedGallery from 'commercial/modules/hosted/gallery';
