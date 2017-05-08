@@ -26,4 +26,4 @@ const enableLazyLoad = (advert?: Object): void => {
     }
 };
 
-export default enableLazyLoad;
+export { enableLazyLoad };
