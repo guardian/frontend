@@ -1,9 +1,10 @@
+// @flow
 import fastdom from 'fastdom';
-import Promise from 'Promise';
-import $ from 'lib/$';
-import loadScript from 'lib/load-script';
-var scriptSrc = 'https://www.youtube.com/iframe_api';
-var promise = new Promise(function(resolve) {
+
+import { loadScript } from 'lib/load-script';
+
+const scriptSrc = 'https://www.youtube.com/iframe_api';
+const promise = new Promise(resolve => {
     if (window.YT && window.YT.Player) {
         resolve();
     } else {
@@ -11,74 +12,70 @@ var promise = new Promise(function(resolve) {
     }
 });
 
-function loadYoutubeJs() {
-    loadScript.loadScript(scriptSrc);
-}
+const loadYoutubeJs = () => {
+    loadScript(scriptSrc);
+};
 
-function _onPlayerStateChange(event, handlers, el) {
-    //change class according to the current state
-    //TODO: Fix this so we can add poster image.
-    fastdom.write(function() {
-        ['ENDED', 'PLAYING', 'PAUSED', 'BUFFERING', 'CUED'].forEach(function(status) {
-            el.classList.toggle('youtube__video-' + status.toLocaleLowerCase(), event.data === window.YT.PlayerState[status]);
+const addVideoStartedClass = el => {
+    el.classList.add('youtube__video-started');
+};
+
+const onPlayerStateChangeEvent = (event, handlers, el) => {
+    // change class according to the current state
+    // TODO: Fix this so we can add poster image.
+    fastdom.write(() => {
+        ['ENDED', 'PLAYING', 'PAUSED', 'BUFFERING', 'CUED'].forEach(status => {
+            el.classList.toggle(
+                `youtube__video-${status.toLocaleLowerCase()}`,
+                event.data === window.YT.PlayerState[status]
+            );
         });
         addVideoStartedClass(el);
     });
 
-
-
     if (handlers && typeof handlers.onPlayerStateChange === 'function') {
         handlers.onPlayerStateChange(event);
     }
-}
+};
 
-function _onPlayerReady(event, handlers, el) {
-    fastdom.write(function() {
+const onPlayerReadyEvent = (event, handlers, el) => {
+    fastdom.write(() => {
         el.classList.add('youtube__video-ready');
     });
 
     if (handlers && typeof handlers.onPlayerReady === 'function') {
         handlers.onPlayerReady(event);
     }
-}
+};
 
-function hasPlayerStarted(event) {
-    return event.target.getCurrentTime() > 0;
-}
+const setupPlayer = (id, onPlayerReady, onPlayerStateChange) =>
+    new window.YT.Player(id, {
+        events: {
+            onReady: onPlayerReady,
+            onStateChange: onPlayerStateChange,
+        },
+    });
 
-function addVideoStartedClass(el) {
-    el.classList.add('youtube__video-started');
-}
+const hasPlayerStarted = event => event.target.getCurrentTime() > 0;
 
-function init(el, handlers, videoId) {
+const init = (el, handlers, videoId) => {
     loadYoutubeJs();
 
-    return promise.then(function() {
-        function onPlayerStateChange(event) {
-            _onPlayerStateChange(event, handlers, el);
-        }
+    return promise.then(() => {
+        const onPlayerStateChange = event => {
+            onPlayerStateChangeEvent(event, handlers, el);
+        };
 
-        function onPlayerReady(event) {
+        const onPlayerReady = event => {
             if (hasPlayerStarted(event)) {
                 addVideoStartedClass(el);
             }
 
-            _onPlayerReady(event, handlers, el);
-        }
+            onPlayerReadyEvent(event, handlers, el);
+        };
 
         return setupPlayer(videoId, onPlayerReady, onPlayerStateChange);
     });
-}
-
-function setupPlayer(id, onPlayerReady, onPlayerStateChange) {
-    return new window.YT.Player(id, {
-        events: {
-            'onReady': onPlayerReady,
-            'onStateChange': onPlayerStateChange
-        }
-    });
-}
-
-export default {
-    init: init
 };
+
+export { init };
