@@ -34,8 +34,8 @@ define([
             width: window.innerWidth,
             adBlock: adblockBeingUsed,
             devicePixelRatio: window.devicePixelRatio,
-            gu_u: cookies.get('GU_U'),
-            payingMember: cookies.get('gu_paying_member'),
+            gu_u: cookies.getCookie('GU_U'),
+            payingMember: cookies.getCookie('gu_paying_member'),
             abTests : summariseAbTests(ab.getParticipations())
         };
     }
