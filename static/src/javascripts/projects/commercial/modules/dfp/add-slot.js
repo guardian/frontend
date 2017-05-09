@@ -6,7 +6,7 @@ import loadAdvert from 'commercial/modules/dfp/load-advert';
 import { enableLazyLoad } from 'commercial/modules/dfp/enable-lazy-load';
 import performanceLogging from 'commercial/modules/dfp/performance-logging';
 
-const displayAd = (adSlot: HTMLElement, forceDisplay: Boolean) => {
+const displayAd = (adSlot: HTMLElement, forceDisplay: boolean) => {
     const advert: Advert = Advert(adSlot);
 
     dfpEnv.advertIds[advert.id] = dfpEnv.adverts.push(advert) - 1;
@@ -29,7 +29,7 @@ const displayAd = (adSlot: HTMLElement, forceDisplay: Boolean) => {
     }
 };
 
-const addSlot = (adSlot: HTMLElement, forceDisplay: Boolean) => {
+const addSlot = (adSlot: HTMLElement, forceDisplay: boolean) => {
     window.googletag.cmd.push(() => {
         if (!(adSlot.id in dfpEnv.advertIds)) {
             // dynamically add ad slot
