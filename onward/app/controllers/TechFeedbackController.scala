@@ -11,6 +11,7 @@ import play.api.libs.json.Json
 import play.api.mvc.{Action, Controller}
 import play.api.libs.ws._
 import play.api.data.Forms._
+import scala.concurrent.duration._
 
 class TechFeedbackController @Inject() (ws: WSClient) (implicit context: ApplicationContext) extends Controller with Logging {
 
@@ -29,6 +30,7 @@ class TechFeedbackController @Inject() (ws: WSClient) (implicit context: Applica
     val (category, body, user, extra, name) = feedbackForm.bindFromRequest.get
 
     ws.url(Configuration.feedback.feedpipeEndpoint)
+      .withRequestTimeout(6000.millis)
       .post(Json.obj(
         "category" -> category,
         "body" -> java.net.URLEncoder.encode(body, "UTF-8"),
