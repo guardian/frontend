@@ -29,7 +29,9 @@ const insertAlternativeSlot = isHiResLoaded => {
 
     fastdom
         .write(() => {
-            container.parentNode.insertBefore(slot, container.nextSibling);
+            if (container && container.parentNode) {
+                container.parentNode.insertBefore(slot, container.nextSibling);
+            }
         })
         .then(() => {
             addSlot(slot, true);
