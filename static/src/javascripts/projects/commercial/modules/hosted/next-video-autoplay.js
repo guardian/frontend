@@ -3,31 +3,31 @@ import fastdom from 'fastdom';
 import NextVideo from 'commercial/modules/hosted/next-video';
 import $ from 'lib/$';
 import googleAnalytics from 'common/modules/analytics/google';
-var nextVideoInterval;
-var $hostedNext;
-var $timer;
-var nextVideoPage;
+let nextVideoInterval;
+let $hostedNext;
+let $timer;
+let nextVideoPage;
 
 function cancelAutoplay() {
-    fastdom.write(function() {
+    fastdom.write(() => {
         $hostedNext.addClass('hosted-slide-out');
     });
     clearInterval(nextVideoInterval);
 }
 
 function cancelAutoplayMobile($hostedNext) {
-    fastdom.write(function() {
+    fastdom.write(() => {
         $hostedNext.addClass('u-h');
     });
 }
 
 function triggerAutoplay(getCurrentTimeFn, duration) {
-    nextVideoInterval = setInterval(function() {
-        var timeLeft = duration - Math.ceil(getCurrentTimeFn());
-        var countdownLength = 10; //seconds before the end when to show the timer
+    nextVideoInterval = setInterval(() => {
+        const timeLeft = duration - Math.ceil(getCurrentTimeFn());
+        const countdownLength = 10; //seconds before the end when to show the timer
 
         if (timeLeft <= countdownLength) {
-            fastdom.write(function() {
+            fastdom.write(() => {
                 $hostedNext.addClass('js-autoplay-start');
                 $timer.text(timeLeft + 's');
             });
@@ -40,16 +40,16 @@ function triggerAutoplay(getCurrentTimeFn, duration) {
 }
 
 function triggerEndSlate() {
-    fastdom.write(function() {
+    fastdom.write(() => {
         $hostedNext.addClass('js-autoplay-start');
     });
-    bean.on(document, 'click', $('.js-autoplay-cancel'), function() {
+    bean.on(document, 'click', $('.js-autoplay-cancel'), () => {
         cancelAutoplayMobile($hostedNext);
     });
 }
 
 function addCancelListener() {
-    bean.on(document, 'click', $('.js-autoplay-cancel'), function() {
+    bean.on(document, 'click', $('.js-autoplay-cancel'), () => {
         cancelAutoplay();
     });
 }
@@ -59,7 +59,7 @@ function canAutoplay() {
 }
 
 function init() {
-    return NextVideo.load().then(function() {
+    return NextVideo.load().then(() => {
         $hostedNext = $('.js-hosted-next-autoplay');
         $timer = $('.js-autoplay-timer');
         nextVideoPage = $timer.length && $timer.data('next-page');
@@ -67,9 +67,9 @@ function init() {
 }
 
 export default {
-    init: init,
-    canAutoplay: canAutoplay,
-    triggerEndSlate: triggerEndSlate,
-    triggerAutoplay: triggerAutoplay,
-    addCancelListener: addCancelListener
+    init,
+    canAutoplay,
+    triggerEndSlate,
+    triggerAutoplay,
+    addCancelListener
 };
