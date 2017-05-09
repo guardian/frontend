@@ -1,6 +1,7 @@
+// @flow
 import waitForAdvert from 'commercial/modules/dfp/wait-for-advert';
-export default trackAdRender;
 
-function trackAdRender(id) {
-    return waitForAdvert(id).then(_ => _.whenRendered);
-}
+const trackAdRender = (id: string) =>
+    waitForAdvert(id).then(_ => _.whenRendered);
+
+export default trackAdRender;
