@@ -183,6 +183,7 @@
     "projects/commercial/modules/paid-containers.js"
   ],
   "Sam Desborough": [
+    "projects/common/modules/experiments/ab.js",
     "projects/common/modules/crosswords/anagram-helper/main.js",
     "projects/common/modules/crosswords/anagram-helper/ring.js",
     "projects/common/modules/crosswords/cell.js",
@@ -194,8 +195,7 @@
     "projects/common/modules/crosswords/controls.js",
     "projects/common/modules/crosswords/crossword.js",
     "projects/common/modules/crosswords/grid.js",
-    "projects/common/modules/crosswords/helpers.js",
-    "projects/commercial/modules/paidfor-band.js"
+    "projects/common/modules/crosswords/helpers.js"
   ],
   "Akash A": [
     "projects/common/modules/crosswords/hidden-input.js",
@@ -296,12 +296,12 @@
     "projects/common/modules/experiments/tests/membership-engagement-banner-tests.js",
     "projects/common/modules/experiments/acquisition-test-selector.js",
     "projects/common/modules/commercial/acquisitions-view-log.js",
-    "projects/common/modules/experiments/ab.js",
     "projects/common/modules/experiments/ab-test-clash.js",
     "projects/common/modules/ui/message.js",
     "projects/common/modules/ui/notification-counter.js",
     "projects/common/modules/ui/relativedates.js",
-    "projects/commercial/modules/third-party-tags/imr-worldwide-legacy.js"
+    "projects/commercial/modules/third-party-tags/imr-worldwide-legacy.js",
+    "projects/commercial/modules/paidfor-band.js"
   ],
   "Philip Wills": [
     "projects/facia/modules/onwards/search-tool.js",
