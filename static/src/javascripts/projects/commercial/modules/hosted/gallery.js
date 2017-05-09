@@ -250,7 +250,7 @@ class HostedGallery {
         const $sizer = $('.js-hosted-gallery-image-sizer', $imageDiv);
         const imgRatio = this.imageRatios[imgIndex];
         const ctaSize = getFrame(0);
-        const ctaIndex = this.ctaIndex();
+        const ctaIndex = HostedGallery.ctaIndex();
         const tabletSize = 740;
         const imageSize = getFrame(imgRatio);
 
@@ -307,7 +307,7 @@ class HostedGallery {
         const fractionProgress = progress % 1;
         const deg = Math.ceil(fractionProgress * 360);
         const newIndex = Math.round(progress + 0.75);
-        const ctaIndex = this.ctaIndex();
+        const ctaIndex = HostedGallery.ctaIndex();
         fastdom.write(() => {
             this.$images.each((image, index) => {
                 const opacity = (progress - index + 1) * 16 / 11 - 0.0625;
@@ -462,7 +462,7 @@ HostedGallery.prototype.states = {
                 );
                 bonzo(this.$galleryEl).toggleClass(
                     'show-cta',
-                    this.index === this.ctaIndex() + 1
+                    this.index === HostedGallery.ctaIndex() + 1
                 );
             }
 
