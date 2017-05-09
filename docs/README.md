@@ -36,6 +36,7 @@
 - [Updating the test database](03-dev-howtos/15-updating-test-database.md)
 - [Working with Google AMP](03-dev-howtos/16-working-with-amp.md)
 - [Working with emails](03-dev-howtos/17-working-with-emails.md)
+- [Apply the special report tone](03-dev-howtos/18-apply-the-special-report-tone.md)
 
 ## [Quality](04-quality/)
 - [Browsers support](04-quality/01-browser-support.md)
