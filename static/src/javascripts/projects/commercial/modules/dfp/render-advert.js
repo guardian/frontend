@@ -1,3 +1,4 @@
+// @flow
 import qwery from 'qwery';
 import raven from 'lib/raven';
 import fastdom from 'lib/fastdom-promise';

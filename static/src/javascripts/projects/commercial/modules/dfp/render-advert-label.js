@@ -1,5 +1,4 @@
 // @flow
-
 import fastdom from 'lib/fastdom-promise';
 import template from 'lodash/utilities/template';
 import popupTemplate from 'raw-loader!commercial/views/ad-feedback-popup.html';
