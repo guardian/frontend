@@ -18,7 +18,7 @@ const depthOfScreen = 1.5;
 
 const stopListening = (): void => {
     dfpEnv.lazyLoadEnabled = false;
-    mediator.off('window:throttledScroll', lazyLoad);
+    mediator.off('window:throttledScroll', onScroll);
 };
 
 const stopObserving = (observer: IntersectionObserver): void => {
@@ -87,6 +87,4 @@ const onIntersect = (
     }
 };
 
-const lazyLoad = dfpEnv.lazyLoadObserve ? onIntersect : onScroll;
-
-export default lazyLoad;
+export { onIntersect, onScroll };
