@@ -1,7 +1,7 @@
 import SurveySimple from 'commercial/modules/survey/survey-simple';
 
 function init() {
-    var survey = new SurveySimple({
+    const survey = new SurveySimple({
         id: 'hosted-about',
         header: 'Advertiser content',
         paragraph1: 'Advertiser content is used to describe advertisement features that are paid for, produced and controlled by the advertiser rather than the publisher​.',
@@ -11,11 +11,11 @@ function init() {
     });
 
     return survey.attach()
-        .then(function() {
-            var aboutBtn = document.querySelector('.js-hosted-about');
-            var overlay = document.querySelector('.js-survey-overlay');
+        .then(() => {
+            const aboutBtn = document.querySelector('.js-hosted-about');
+            const overlay = document.querySelector('.js-survey-overlay');
 
-            aboutBtn.addEventListener('click', function(e) {
+            aboutBtn.addEventListener('click', e => {
                 e.preventDefault();
                 overlay.classList.remove('u-h');
             });
@@ -23,5 +23,5 @@ function init() {
 }
 
 export default {
-    init: init
+    init
 };
