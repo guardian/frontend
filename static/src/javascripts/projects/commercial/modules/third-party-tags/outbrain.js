@@ -9,11 +9,11 @@ import ophan from 'ophan/ng';
 import getCode from './outbrain-codes';
 
 const outbrainUrl = '//widgets.outbrain.com/outbrain.js';
-const outbrainTpl = ({ widgetCode }) => `
+const outbrainTpl = ({ widgetCode }: { widgetCode: string }): string => `
     <div class="OUTBRAIN" data-widget-id="${widgetCode}" data-ob-template="guardian"></div>
     `;
 
-const exports = {};
+const module = {};
 
 const selectors = {
     outbrain: {
@@ -35,7 +35,7 @@ const build = function(
     breakpoint: string
 ): string {
     let html = outbrainTpl({
-        widgetCode: codes.code || codes.image,
+        widgetCode: codes.code || codes.image || '',
     });
     if (breakpoint !== 'mobile' && codes.text) {
         html += outbrainTpl({
@@ -45,7 +45,7 @@ const build = function(
     return html;
 };
 
-exports.tracking = function(trackingObj: {
+module.tracking = function(trackingObj: {
     widgetId?: string,
     state?: string,
 }): void {
@@ -54,7 +54,7 @@ exports.tracking = function(trackingObj: {
     });
 };
 
-exports.load = function(target?: string): void {
+module.load = function(target?: string): any {
     const slot = target && target in selectors ? target : 'defaults';
     const $outbrain = $(selectors.outbrain.widget);
     const $container = $(selectors.outbrain.container, $outbrain[0]);
@@ -78,7 +78,7 @@ exports.load = function(target?: string): void {
                 $outbrain.css('display', 'block');
             })
             .then(() => {
-                exports.tracking({
+                module.tracking({
                     widgetId: widgetCodes.code || widgetCodes.image,
                 });
                 loadScript(outbrainUrl);
@@ -101,9 +101,9 @@ const canLoadInstantly = function() {
 };
 
 const onIsOutbrainNonCompliant = function(outbrainNonCompliant) {
-    if (outbrainNonCompliant) exports.load('nonCompliant');
-    else exports.load();
-    exports.tracking({
+    if (outbrainNonCompliant) module.load('nonCompliant');
+    else module.load();
+    module.tracking({
         state: outbrainNonCompliant ? 'nonCompliant' : 'compliant',
     });
     return Promise.resolve();
@@ -113,8 +113,8 @@ const onIsOutbrainMerchandiseCompliant = function(
     outbrainMerchandiseCompliant
 ) {
     if (outbrainMerchandiseCompliant) {
-        exports.load('merchandising');
-        exports.tracking({
+        module.load('merchandising');
+        module.tracking({
             state: 'outbrainMerchandiseCompliant',
         });
         return Promise.resolve();
@@ -126,7 +126,7 @@ const onIsOutbrainMerchandiseCompliant = function(
 
 const onIsOutbrainBlockedByAds = function(outbrainBlockedByAds) {
     if (outbrainBlockedByAds) {
-        exports.tracking({
+        module.tracking({
             state: 'outbrainBlockedByAds',
         });
         return Promise.resolve();
@@ -149,7 +149,7 @@ const onCanLoadInstantly = function(loadInstantly) {
 
 const onIsOutbrainDisabled = function(outbrainDisabled) {
     if (outbrainDisabled) {
-        exports.tracking({
+        module.tracking({
             state: 'outbrainDisabled',
         });
         return Promise.resolve();
@@ -157,10 +157,10 @@ const onIsOutbrainDisabled = function(outbrainDisabled) {
     return canLoadInstantly().then(onCanLoadInstantly);
 };
 
-exports.init = function() {
+module.init = function() {
     return checkMediator
         .waitForCheck('isOutbrainDisabled')
         .then(onIsOutbrainDisabled);
 };
 
-export default exports;
+export default module;

@@ -22,8 +22,8 @@ const steadyPage = require('lib/steady-page');
 const loadScript = require('lib/load-script').loadScript;
 
 describe('Outbrain', () => {
-    let loadSpy;
-    let trackingSpy;
+    let loadSpy: any;
+    let trackingSpy: any;
 
     beforeEach(done => {
         steadyPage.insert.mockImplementation((container, cb) => {
