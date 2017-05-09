@@ -1,13 +1,11 @@
 define([
     'lib/fetch',
     'lib/fetch-json',
-    'lib/config',
-    'Promise'
+    'lib/config'
 ], function (
     fetch,
     fetchJSON,
-    config,
-    Promise
+    config
 ) {
     function isGeoBlocked(el) {
         var source = el.currentSrc;

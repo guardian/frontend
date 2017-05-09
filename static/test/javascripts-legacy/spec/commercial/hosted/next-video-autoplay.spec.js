@@ -1,13 +1,11 @@
 define([
     'lib/$',
     'helpers/fixtures',
-    'Promise',
     'fastdom',
     'helpers/injector'
 ], function (
     $,
     fixtures,
-    Promise,
     fastdom,
     Injector
 ) {
@@ -40,7 +38,8 @@ define([
         beforeEach(function (done) {
             injector.mock('common/modules/analytics/google', function noop() {});
             injector.mock('commercial/modules/hosted/next-video',  {
-                load: Promise.resolve
+                load: function() { return Promise.resolve() },
+                init: function() { return Promise.resolve() }
             });
             injector.require([
                 'commercial/modules/hosted/next-video-autoplay'

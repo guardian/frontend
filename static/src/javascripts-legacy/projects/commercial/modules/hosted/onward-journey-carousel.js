@@ -1,12 +1,10 @@
 define([
     'qwery',
     'fastdom',
-    'Promise',
     'lib/$'
 ], function (
     qwery,
     fastdom,
-    Promise,
     $
 ) {
 

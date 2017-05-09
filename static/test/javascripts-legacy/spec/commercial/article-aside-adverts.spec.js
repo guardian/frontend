@@ -104,7 +104,7 @@ define([
         });
 
         it('should have the correct size mappings and classes', function (done) {
-            articleAsideAdverts.init(noop, noop).then(done);
+            articleAsideAdverts.articleAsideAdvertsInit(noop, noop).then(done);
             mediator.once('page:commercial:right', function (adSlot) {
                 expect(adSlot.classList).toContain('js-sticky-mpu');
                 expect(adSlot.getAttribute('data-mobile')).toBe('1,1|2,2|300,250|300,600|fluid');
@@ -115,7 +115,7 @@ define([
 
             document.querySelector('.js-content-main-column').setAttribute("style", "height:10px; min-height:10px; max-height:10px; overflow:hidden;");
 
-            articleAsideAdverts.init(noop, noop).then(done);
+            articleAsideAdverts.articleAsideAdvertsInit(noop, noop).then(done);
             mediator.once('page:commercial:right', function (adSlot) {
                 expect(adSlot.classList).not.toContain('js-sticky-mpu');
                 expect(adSlot.getAttribute('data-mobile')).toBe('1,1|2,2|300,250|fluid');
@@ -125,7 +125,7 @@ define([
         it('should not do anything if disabled in commercial-feature-switches', function (done) {
             commercialFeatures.articleAsideAdverts = false;
 
-            articleAsideAdverts.init(noop, noop).then(function (returned) {
+            articleAsideAdverts.articleAsideAdvertsInit(noop, noop).then(function (returned) {
                 expect(returned).toBe(false);
                 done();
             });

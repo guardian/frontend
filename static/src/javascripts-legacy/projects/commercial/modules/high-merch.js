@@ -1,5 +1,4 @@
 define([
-    'Promise',
     'lib/config',
     'lib/fastdom-promise',
     'common/modules/experiments/ab',
@@ -7,7 +6,7 @@ define([
     'commercial/modules/dfp/create-slot',
     'commercial/modules/dfp/track-ad-render',
     'commercial/modules/commercial-features'
-], function (Promise, config, fastdom, ab, addSlot, createSlot, trackAdRender, commercialFeatures) {
+], function (config, fastdom, ab, addSlot, createSlot, trackAdRender, commercialFeatures) {
     return {
         init: init
     };
@@ -25,12 +24,12 @@ define([
 
             container.className = 'fc-container fc-container--commercial';
             container.appendChild(createSlot(config.page.isPaidContent ? 'high-merch-paid' : 'high-merch'));
-            
+
             if (commercialFeatures.outbrain && isLuckyBastard()) {
                 trackAdRender('dfp-ad--merchandising-high')
                     .then(insertAlternativeSlot);
             }
-            
+
             return fastdom.write(function () {
                 if (anchor && anchor.parentNode) {
                     anchor.parentNode.insertBefore(container, anchor);
@@ -59,7 +58,7 @@ define([
             container.parentNode.insertBefore(slot, container.nextSibling);
         })
         .then(function () {
-            addSlot(slot, true);
+            addSlot.addSlot(slot, true);
         });
     }
 });

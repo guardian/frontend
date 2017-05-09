@@ -1,6 +1,5 @@
 define([
     'qwery',
-    'Promise',
     'lib/raven',
     'lib/fastdom-promise',
     'lib/mediator',
@@ -14,7 +13,6 @@ define([
     'lib/config'
 ], function (
     qwery,
-    Promise,
     raven,
     fastdom,
     mediator,
