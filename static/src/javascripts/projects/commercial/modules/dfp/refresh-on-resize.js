@@ -3,12 +3,10 @@ import mediator from 'lib/mediator';
 import dfpEnv from 'commercial/modules/dfp/dfp-env';
 import breakpointNameToAttribute from 'commercial/modules/dfp/breakpoint-name-to-attribute';
 /* hasBreakpointChanged: ((string, string) -> undefined) -> undefined. Invokes the callback if a breakpoint has been crossed since last invocation */
-var hasBreakpointChanged = detect.hasCrossedBreakpoint(true);
+const hasBreakpointChanged = detect.hasCrossedBreakpoint(true);
 
 /* breakpointNames: array<string>. List of breakpoint names */
-var breakpointNames = detect.breakpoints.map(function(_) {
-    return _.name;
-});
+const breakpointNames = detect.breakpoints.map(_ => _.name);
 
 export default refreshOnResize;
 
@@ -24,29 +22,25 @@ function windowResize() {
 // TODO: reset advert flags
 function refresh(currentBreakpoint, previousBreakpoint) {
     // only refresh if the slot needs to
-    var advertsToRefresh = dfpEnv.advertsToRefresh.filter(shouldRefresh);
+    const advertsToRefresh = dfpEnv.advertsToRefresh.filter(shouldRefresh);
     if (advertsToRefresh.length) {
-        window.googletag.pubads().refresh(advertsToRefresh.map(function(_) {
-            return _.slot;
-        }));
+        window.googletag.pubads().refresh(advertsToRefresh.map(_ => _.slot));
     }
 
     function shouldRefresh(advert) {
         // get the slot breakpoints
-        var slotBreakpoints = Object.keys(advert.sizes);
+        const slotBreakpoints = Object.keys(advert.sizes);
         // find the currently matching breakpoint
-        var currentSlotBreakpoint = getBreakpointIndex(currentBreakpoint, slotBreakpoints);
+        const currentSlotBreakpoint = getBreakpointIndex(currentBreakpoint, slotBreakpoints);
         // find the previously matching breakpoint
-        var previousSlotBreakpoint = getBreakpointIndex(previousBreakpoint, slotBreakpoints);
+        const previousSlotBreakpoint = getBreakpointIndex(previousBreakpoint, slotBreakpoints);
         return currentSlotBreakpoint !== -1 && currentSlotBreakpoint !== previousSlotBreakpoint;
     }
 
     function getBreakpointIndex(breakpoint, slotBreakpoints) {
-        var validBreakpointNames = breakpointNames
+        const validBreakpointNames = breakpointNames
             .slice(0, breakpointNames.indexOf(breakpoint) + 1)
             .map(breakpointNameToAttribute);
-        return Math.max.apply(Math, slotBreakpoints.map(function(_) {
-            return validBreakpointNames.lastIndexOf(_);
-        }));
+        return Math.max(...slotBreakpoints.map(_ => validBreakpointNames.lastIndexOf(_)));
     }
 }
