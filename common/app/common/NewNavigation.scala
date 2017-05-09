@@ -246,7 +246,7 @@ object NewNavigation {
 
     val au = NavLinkLists(List(
       jobs.copy(url = jobs.url + "/landingpage/2868291/jobs-australia-html/?INTCMP=jobs_au_web_newheader"),
-      auMasterClasses,
+      auEvents,
       apps.copy(url = apps.url + "?INTCMP=apps_au_web_newheader"),
       podcasts,
       video,
