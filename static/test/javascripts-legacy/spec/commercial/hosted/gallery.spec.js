@@ -1,14 +1,12 @@
 define([
     'lib/$',
     'helpers/fixtures',
-    'Promise',
     'fastdom',
     'raw-loader!fixtures/commercial/hosted/gallery.html',
     'helpers/injector'
 ], function (
     $,
     fixtures,
-    Promise,
     fastdom,
     galleryHtml,
     Injector

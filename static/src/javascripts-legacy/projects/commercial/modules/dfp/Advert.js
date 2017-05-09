@@ -1,11 +1,10 @@
 define([
-    'Promise',
     'lib/detect',
     'lib/user-timing',
     'commercial/modules/dfp/define-slot',
     'commercial/modules/dfp/performance-logging',
     'commercial/modules/dfp/breakpoint-name-to-attribute'
-], function (Promise, detect, userTiming, defineSlot, performanceLogging, breakpointNameToAttribute) {
+], function (detect, userTiming, defineSlot, performanceLogging, breakpointNameToAttribute) {
     Advert.startLoading = startLoading;
     Advert.stopLoading = stopLoading;
     Advert.startRendering = startRendering;

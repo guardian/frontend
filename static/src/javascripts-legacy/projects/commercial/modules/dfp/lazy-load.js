@@ -76,7 +76,7 @@ define([
     }
 
     function displayAd(advertId) {
-        var advert = getAdvertById(advertId);
+        var advert = getAdvertById.getAdvertById(advertId);
         performanceLogging.updateAdvertMetric(advert, 'lazyWaitComplete', userTiming.getCurrentTime());
         loadAdvert(advert);
     }

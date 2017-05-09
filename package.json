@@ -26,7 +26,6 @@
     "videojs-persistvolume": "guardian/videojs-persistvolume#0.1.4",
     "videojs-playlist": "guardian/videojs-playlist#v0.1.4",
     "webshot": "^0.18.0",
-    "when": "3.7.3",
     "wolfy87-eventemitter": "~4.2.6"
   },
   "devDependencies": {
@@ -159,7 +158,6 @@
       "commercial": "projects/commercial",
       "^lodash(.*)$": "lodash-amd/compat$1",
       "picturefill": "projects/common/utils/picturefill",
-      "Promise": "when/es6-shim/Promise",
       "raven": "raven-js",
       "EventEmitter": "wolfy87-eventemitter",
       "videojs": "video.js",

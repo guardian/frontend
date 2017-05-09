@@ -1,5 +1,4 @@
 define([
-    'Promise',
     'lib/fastdom-promise',
     'lib/$',
     'lib/config',
@@ -12,7 +11,6 @@ define([
     'common/modules/check-mediator',
     'ophan/ng'
 ], function (
-    Promise,
     fastdom,
     $,
     config,
