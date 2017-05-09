@@ -37,8 +37,7 @@
     "projects/commercial/modules/hosted/about.js",
     "projects/commercial/modules/hosted/gallery.js",
     "projects/commercial/modules/hosted/next-video-autoplay.js",
-    "projects/commercial/modules/hosted/next-video.js",
-    "projects/common/modules/business/stocks.js"
+    "projects/commercial/modules/hosted/next-video.js"
   ],
   "Kate Whalen": [
     "projects/commercial/modules/hosted/onward-journey-carousel.js",
