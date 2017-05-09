@@ -52,6 +52,7 @@ const onPlayerReadyEvent = (event, handlers: Handlers, el: HTMLElement) => {
         el.classList.add('youtube__video-ready');
     });
 
+    // we should be able to remove this check once everything is using flow/ES^
     if (handlers && typeof handlers.onPlayerReady === 'function') {
         handlers.onPlayerReady(event);
     }
