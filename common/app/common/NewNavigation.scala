@@ -238,6 +238,7 @@ object NewNavigation {
       podcasts,
       video,
       pictures,
+      newsletters,
       todaysPaper,
       observer,
       crosswords
@@ -250,6 +251,7 @@ object NewNavigation {
       podcasts,
       video,
       pictures,
+      newsletters,
       crosswords
     ))
 
@@ -259,6 +261,7 @@ object NewNavigation {
       podcasts,
       video,
       pictures,
+      newsletters,
       crosswords
     ))
 
@@ -269,6 +272,7 @@ object NewNavigation {
       podcasts,
       video,
       pictures,
+      newsletters,
       todaysPaper,
       observer,
       crosswords

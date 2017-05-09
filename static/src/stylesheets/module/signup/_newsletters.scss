@@ -59,6 +59,8 @@
     background-color: $guardian-brand;
     height: 0;
     padding-bottom: 60%;
+    // Temporarily hiding until there are numerous images, to prevent repetition of icon
+    display: none;
 
     svg {
         display: block;
