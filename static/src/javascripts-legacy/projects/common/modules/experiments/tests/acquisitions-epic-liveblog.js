@@ -37,11 +37,8 @@ define([
         variants: [
             {
                 id: 'control',
-                maxViews: {
-                    days: 30,
-                    count: 4,
-                    minDaysBetweenViews: 0
-                },
+                isUnlimited: true,
+
                 insertAtSelector: '.js-insert-epic-after',
                 insertAfter: true,
                 insertMultiple: true,
