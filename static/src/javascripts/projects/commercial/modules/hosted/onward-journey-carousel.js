@@ -16,24 +16,23 @@ class HostedCarousel {
     }
 
     moveCarouselTo(index: number) {
-        const that = this;
         const pageNo = Math.min(Math.max(index, 0), this.pageCount - 1);
         this.index = pageNo;
 
         fastdom.write(() => {
             const translate = `translate(-${pageNo}00%, 0)`;
-            that.$carousel.css({
+            this.$carousel.css({
                 '-webkit-transform': translate,
                 transform: translate,
             });
-            that.$dots.each((el, i) => {
-                $(el).toggleClass('highlighted', i % that.pageCount === pageNo);
+            this.$dots.each((el, i) => {
+                $(el).toggleClass('highlighted', i % this.pageCount === pageNo);
             });
-            that.$prevItem.css({
+            this.$prevItem.css({
                 opacity: pageNo === 0 ? 0.5 : 1,
             });
-            that.$nextItem.css({
-                opacity: pageNo === that.pageCount - 1 ? 0.5 : 1,
+            this.$nextItem.css({
+                opacity: pageNo === this.pageCount - 1 ? 0.5 : 1,
             });
         });
     }
@@ -47,27 +46,26 @@ class HostedCarousel {
         this.index = 0;
 
         if (this.$carousel.length) {
-            const that = this;
             this.$nextItem.each(el => {
-                el.addEventListener('click', that.moveCarouselBy.bind(that, 1));
+                el.addEventListener('click', this.moveCarouselBy.bind(this, 1));
             });
             this.$prevItem.each(el => {
                 el.addEventListener(
                     'click',
-                    that.moveCarouselBy.bind(that, -1)
+                    this.moveCarouselBy.bind(this, -1)
                 );
             });
             this.$dots.each((el, i) => {
                 el.addEventListener(
                     'click',
-                    that.moveCarouselTo.bind(that, i % that.pageCount)
+                    this.moveCarouselTo.bind(this, i % this.pageCount)
                 );
             });
         }
     }
 }
 
-const init = () => {
+const init = (): Promise<any> => {
     if (qwery('.js-carousel-pages').length) {
         new HostedCarousel().bindButtons();
     }
