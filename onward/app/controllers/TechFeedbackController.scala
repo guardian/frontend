@@ -28,9 +28,6 @@ class TechFeedbackController @Inject() (ws: WSClient) (implicit context: Applica
 
     val (category, body, user, extra, name) = feedbackForm.bindFromRequest.get
 
-    println("Sending for category: " + category)
-    println("User wasy: " + name)
-
     ws.url(Configuration.feedback.feedpipeEndpoint)
       .post(Json.obj(
         "category" -> category,
