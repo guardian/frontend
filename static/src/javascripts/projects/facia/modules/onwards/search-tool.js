@@ -16,6 +16,7 @@ const keyCodeMap = {
     '13': 'enter',
     '38': 'up',
     '40': 'down',
+    '27': 'escape',
 };
 
 export class SearchTool {
@@ -179,6 +180,8 @@ export class SearchTool {
         } else if (key === 'enter') {
             // enter
             this.pushData();
+        } else if (key === 'escape') {
+            this.toggleControls();
         } else {
             this.getListOfResults(e);
         }
