@@ -2,7 +2,7 @@
 
 ![Fronts architecture](images/fronts-archirecture.png)
 
-Rendering a front requires fetching a lot of information from multiple sources (CAPI, Fronts config, Fronts collections). In order to avoid doing this gruelling work inline when a user request is received, all data necessary to render a front is prefetched and aggregated in a single location (S3). 
+Rendering a front requires fetching a lot of information from multiple sources (CAPI, Fronts config, Fronts collections). In order to avoid doing this gruelling work inline when a user request is received, all data necessary to render a front is prefetched and aggregated in a single location (S3).
 
 In a nutshell:
 - [Facia press](#facia-press): for each front, fetch all necessary data, aggregate it and store it in S3
@@ -18,8 +18,8 @@ The cron job is very important since content for a front can be coming from CAPI
 
 The level of priority of a front will impact how often the cron job would request its update:
 - Edition and sport fronts: High update frequency
-- Other Editorial fronts: Strandard update frequency
-- Email fronts: Strandard update frequency
+- Other Editorial fronts: Standard update frequency
+- Email fronts: Standard update frequency
 - Commercial fronts: Low update frequency
 - Training fronts: Low update frequency
 
@@ -55,7 +55,7 @@ In the same file, here is an example of one collection config
     "type": "fixed/small/slow-I"
 }
 ```
-Note: 
+Note:
 - A collection type corresponds to its layout.
 - Facia-press is using the [Facia scala client](https://github.com/guardian/facia-scala-client) to interact with the data store in the CMS Fronts bucket. (No direct call to S3)
 
@@ -107,7 +107,7 @@ A card displays the information of one story/content.
 Here are the definitions of a few words and expressions related to fronts:
 
 _Snap_:
-A way to include arbitrary content into a collection (rather than a story). 
+A way to include arbitrary content into a collection (rather than a story).
 A snap can be a link (often used to show an interactive on the front) or dynamic content (latest story for given tag).
 
 _Thrasher_:
