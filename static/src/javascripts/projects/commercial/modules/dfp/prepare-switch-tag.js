@@ -100,11 +100,12 @@ const pushAdUnit = (dfpDivId: string, sizeMapping: any) => {
                 );
             }
         });
-    }
 
-    return timeout(REQUEST_TIMEOUT, Promise.all(promises)).catch(() => {
-        // The display needs to be called, even in the event of an error.
-    });
+        return timeout(REQUEST_TIMEOUT, Promise.all(promises)).catch(() => {
+            // The display needs to be called, even in the event of an error.
+        });
+    }
+    return Promise.resolve();
 };
 
 const init = (start: () => void, stop: () => void) => {

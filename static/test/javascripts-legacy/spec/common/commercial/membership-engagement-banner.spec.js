@@ -3,7 +3,6 @@ define([
     'common/modules/user-prefs',
     'helpers/fixtures',
     'helpers/injector',
-    'Promise',
     'common/modules/ui/message',
     'lib/config'
 ], function (
@@ -11,7 +10,6 @@ define([
     userPrefs,
     fixtures,
     Injector,
-    Promise,
     Message,
     config
 ) {

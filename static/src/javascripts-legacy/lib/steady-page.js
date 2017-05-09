@@ -9,13 +9,11 @@
 
 define([
     'lib/fastdom-promise',
-    'Promise',
     'lodash/objects/assign',
     'lib/queue',
     'lib/config'
 ], function (
     fastdom,
-    Promise,
     assign,
     Queue,
     config
