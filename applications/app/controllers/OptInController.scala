@@ -29,12 +29,11 @@ class OptInController extends Controller {
 
   def handle(feature: String, choice: String) = Action { implicit request =>
     Cached(60)(WithoutRevalidationResult(feature match {
-      case "navigationmoretoggle" => navigationMoreToggle.opt(choice)
       case "newrecipedesign" => newRecipeDesignOverride.opt(choice)
       case _ => NotFound
     }))
   }
-//cookies should correspond with those checked by fastly-edge-cache
-  val navigationMoreToggle = OptInFeature("ab_navigation_more_toggle")
+
+  //cookies should correspond with those checked by fastly-edge-cache
   val newRecipeDesignOverride = OptInFeature("new_recipe_design_opt_in")
 }

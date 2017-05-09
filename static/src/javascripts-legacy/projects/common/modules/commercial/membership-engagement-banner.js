@@ -205,8 +205,12 @@ define([
                         mediator.on('modules:onwards:breaking-news:ready', function (breakingShown) {
                             if (!breakingShown) {
                                 showBanner(bannerParams);
+                            } else {
+                                mediator.emit('banner-message:complete');
                             }
                         });
+                    } else {
+                        mediator.emit('banner-message:complete');
                     }
                 });
             }

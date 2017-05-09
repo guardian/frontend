@@ -97,7 +97,10 @@ define([
                 this.scrollingBg.style.backgroundAttachment = 'fixed';
             }
 
-            this.adSlot.classList.add('ad-slot--fabric-v1', 'ad-slot--fabric', 'content__mobile-full-width');
+            this.adSlot.classList.add('ad-slot--fabric-v1');
+            this.adSlot.classList.add('ad-slot--fabric');
+            this.adSlot.classList.add('content__mobile-full-width');
+
             if( this.adSlot.parentNode.classList.contains('top-banner-ad-container') ) {
                 this.adSlot.parentNode.classList.add('top-banner-ad-container--fabric');
             }
