@@ -38,7 +38,7 @@ case class EditionalisedLink(
 }
 
 object Sublink {
-  def fromFaciaContent(faciaContent: PressedContent) = {
+  def fromFaciaContent(faciaContent: PressedContent): Sublink =
     Sublink(
       faciaContent.header.kicker,
       faciaContent.header.headline,
@@ -46,9 +46,6 @@ object Sublink {
       faciaContent.card.cardStyle,
       faciaContent.card.mediaType
     )
-  }
-
-
 }
 
 case class Sublink(
