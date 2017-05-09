@@ -1,5 +1,5 @@
 // @flow
-import getSection from 'commercial/modules/third-party-tags/outbrain-sections';
+import getSection from './outbrain-sections';
 /* These codes are given to us directly by Outbrain. They will eventually
    be sent back to them via a data- attribute, in order for them to return
    contextually-relevant links. The codes differ whether on a smartphone,
