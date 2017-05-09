@@ -9,6 +9,7 @@ define(function () {
       */
       var range = document.createRange();
       range.setStart(adSlot, 0);
+      range.setEnd(adSlot, 0);
       adSlot.appendChild(range.createContextualFragment(viewabilityTracker.replace('INSERT_UNIQUE_ID', creativeId)));
     }
 })
