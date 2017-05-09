@@ -6,8 +6,7 @@ import config from 'lib/config';
 
 function renderAdvertLabel(adSlotNode) {
     if (shouldRenderLabel(adSlotNode)) {
-        var feedbackPopup = '',
-            feedbackThanksMessage = '';
+        let feedbackPopup = '', feedbackThanksMessage = '';
         if (config.switches.adFeedback) {
             feedbackPopup = template(popupTemplate, {
                 feedbackOptions: {
@@ -22,10 +21,10 @@ function renderAdvertLabel(adSlotNode) {
             });
             feedbackThanksMessage = '<i class="ad-feedback__thanks-message"> Thanks for your feedback </i>';
         }
-        var labelDiv = '<div class="ad-slot__label">Advertisement' +
+        const labelDiv = '<div class="ad-slot__label">Advertisement' +
             feedbackPopup + feedbackThanksMessage +
             '</div>';
-        return fastdom.write(function() {
+        return fastdom.write(() => {
             adSlotNode.insertAdjacentHTML('afterbegin', labelDiv);
         });
     } else {
