@@ -34,7 +34,6 @@
     "projects/common/modules/avatar/api.js"
   ],
   "Richard Nguyen": [
-    "projects/commercial/modules/hosted/about.js",
     "projects/commercial/modules/hosted/gallery.js",
     "projects/commercial/modules/hosted/next-video-autoplay.js",
     "projects/commercial/modules/hosted/next-video.js"
