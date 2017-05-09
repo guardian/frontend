@@ -2,6 +2,7 @@ package controllers
 
 import javax.inject.Inject
 
+import conf.Configuration
 import common._
 import model.Cached.RevalidatableResult
 import model.{ApplicationContext, Cached, MetaData, SectionSummary}
@@ -30,7 +31,7 @@ class TechFeedbackController @Inject() (ws: WSClient) (implicit context: Applica
     println("Sending for category: " + category)
     println("User wasy: " + name)
 
-    ws.url("https://ubk59f9zj3.execute-api.eu-west-1.amazonaws.com/prod/FeedpipeLambda")
+    ws.url(Configuration.feedback.feedpipeEndpoint)
       .post(Json.obj(
         "category" -> category,
         "body" -> java.net.URLEncoder.encode(body, "UTF-8"),
