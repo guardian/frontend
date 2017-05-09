@@ -15,10 +15,12 @@ const init = () => {
         const aboutBtn = document.querySelector('.js-hosted-about');
         const overlay = document.querySelector('.js-survey-overlay');
 
-        aboutBtn.addEventListener('click', e => {
-            e.preventDefault();
-            overlay.classList.remove('u-h');
-        });
+        if (aboutBtn && overlay) {
+            aboutBtn.addEventListener('click', (e: Event): mixed => {
+                e.preventDefault();
+                overlay.classList.remove('u-h');
+            });
+        }
     });
 };
 
