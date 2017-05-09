@@ -1,5 +1,6 @@
 import app.{FrontendApplicationLoader, FrontendComponents, LifecycleComponent}
 import assets.DiscussionExternalAssetsLifecycle
+import business.StocksDataLifecycle
 import com.softwaremill.macwire._
 import common.DiagnosticsLifecycle
 import common.Logback.LogstashLifecycle
@@ -94,7 +95,8 @@ trait AppComponents
     wire[CricketLifecycle],
     wire[RugbyLifecycle],
     wire[TargetingLifecycle],
-    wire[DiscussionExternalAssetsLifecycle]
+    wire[DiscussionExternalAssetsLifecycle],
+    wire[StocksDataLifecycle]
   )
 
   override lazy val httpFilters = wire[DevFilters].filters
