@@ -16,10 +16,16 @@ process.on('uncaughtException', handleError);
 
 const remainingModules = require('./es5to6.json');
 
-const userModules = remainingModules[gitUser()];
-if (!userModules || !userModules.length) {
-    console.log(chalk.green('⭐️  You have no more modules to convert! ⭐️'));
-    process.exit();
+let moduleId = process.argv[2];
+
+if (!moduleId) {
+    const userModules = remainingModules[gitUser()];
+    if (!userModules || !userModules.length) {
+        console.log(chalk.green('⭐️  You have no more modules to convert! ⭐️'));
+        process.exit();
+    }
+
+    moduleId = userModules.shift();
 }
 
 git
@@ -39,7 +45,6 @@ git
         }
     })
     .then(() => {
-        const moduleId = userModules.shift();
         const unique = `${Date.now()}`.slice(-4);
         const es5Module = path.join(
             'static',

@@ -126,4 +126,4 @@ screenshots: install
 # *********************** MISC ***********************
 
 es6: install
-	@node ./tools/es5to6.js
+	@node ./tools/es5to6.js ${file}
