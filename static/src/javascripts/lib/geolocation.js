@@ -2,8 +2,8 @@
 import fetchJSON from 'lib/fetch-json';
 import config from 'lib/config';
 import { local as storage } from 'lib/storage';
+import mediator from 'lib/mediator';
 
-let location;
 const storageKey = 'gu.geolocation';
 const editionToGeolocationMap = {
     UK: 'GB',
@@ -12,9 +12,15 @@ const editionToGeolocationMap = {
 };
 const daysBeforeGeolocationRefresh = 10;
 
+const getFromStorage = (): string => storage.get(storageKey);
+
 const get = (): Promise<string> =>
     new Promise((resolve, reject) => {
-        if (location) return resolve(location);
+        const geolocationFromStorage = getFromStorage();
+
+        if (geolocationFromStorage) {
+            return resolve(geolocationFromStorage);
+        }
 
         fetchJSON('/geolocation', {
             headers: {
@@ -24,7 +30,6 @@ const get = (): Promise<string> =>
         })
             .then(response => {
                 if (response.country) {
-                    location = response.country;
                     resolve(response.country);
                 } else {
                     reject('No country in geolocation response', response);
@@ -32,6 +37,8 @@ const get = (): Promise<string> =>
             })
             .catch(reject);
     });
+
+const geoLocationSetEvent = 'geolocation:set';
 
 const init = (): void => {
     get().then(geolocation => {
@@ -41,6 +48,8 @@ const init = (): void => {
                 currentDate.getDate() + daysBeforeGeolocationRefresh
             ),
         });
+        // Allows application logic to wait until geolocation is set.
+        mediator.emit(geoLocationSetEvent);
     });
 };
 
@@ -48,7 +57,7 @@ const editionToGeolocation = (editionKey: string = 'UK'): string =>
     editionToGeolocationMap[editionKey];
 
 const getSync = (): string => {
-    const geolocationFromStorage = storage.get(storageKey);
+    const geolocationFromStorage = getFromStorage();
     return geolocationFromStorage || editionToGeolocation(config.page.edition);
 };
 
@@ -115,7 +124,7 @@ const europeCountryCodes = [
 // Returns one of { GB, US, AU, CA, EU, INT }
 // These are the different 'regions' we accept when taking payment.
 // See https://membership.theguardian.com/uk/supporter# for more context.
-const getSupporterPaymentRegion = (): string => {
+const getSupporterPaymentRegion = (location: string): string => {
     if (regionCountryCodes.includes(location)) {
         return getSync();
     }
@@ -130,4 +139,11 @@ const isInEurope = (): boolean => {
     return europeCountryCodes.includes(countryCode) || countryCode === 'GB';
 };
 
-export { get, getSupporterPaymentRegion, getSync, isInEurope, init };
+export {
+    get,
+    getSupporterPaymentRegion,
+    getSync,
+    isInEurope,
+    init,
+    geoLocationSetEvent,
+};
