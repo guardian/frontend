@@ -39,7 +39,6 @@ case class EditionalisedLink(
 
 object Sublink {
   def fromFaciaContent(faciaContent: PressedContent) = {
-    println(faciaContent.properties.linkText)
     Sublink(
       faciaContent.header.kicker,
       faciaContent.header.headline,
@@ -198,7 +197,7 @@ case object DateTimestamp extends FaciaCardTimestamp {
 }
 
 case object TimeTimestamp extends FaciaCardTimestamp {
-    override val javaScriptUpdate: Boolean = false
+  override val javaScriptUpdate: Boolean = false
   override val formatString: String = "h:mm aa"
 }
 
@@ -212,13 +211,10 @@ object FaciaCard {
     config: CollectionConfig,
     cardTypes: ItemClasses,
     showSeriesAndBlogKickers: Boolean
+
   ): FaciaCard = {
 
     val containerName: Option[String] = config.displayName
-    if (faciaContent.branding(defaultEdition).exists(_.isPaid)) {
-      PaidCard.fromPressedContent(faciaContent, Some(cardTypes))
-    } else {
-
       val maybeKicker = faciaContent.header.kicker orElse {
         if (showSeriesAndBlogKickers) {
           faciaContent.header.seriesOrBlogKicker
@@ -236,7 +232,7 @@ object FaciaCard {
                              } yield kickerText contains byline
                              ) getOrElse false
 
-      ContentCard(
+     val contentCard = ContentCard(
         faciaContent.properties.maybeContentId.orElse(Option(faciaContent.card.id)),
         FaciaCardHeader.fromTrailAndKicker(faciaContent, maybeKicker, Some(config)),
         getByline(faciaContent).filterNot(Function.const(suppressByline)),
@@ -258,6 +254,11 @@ object FaciaCard {
         useShortByline = false,
         faciaContent.card.group
       )
+      if (faciaContent.branding(defaultEdition).exists(_.isPaid)) {
+        PaidCard.fromPressedContent(faciaContent, Some(cardTypes), contentCard = Some(contentCard))
+      }
+      else {
+        contentCard
     }
   }
 }
@@ -356,12 +357,13 @@ case class PaidCard(
   fallbackImageUrl: Option[String],
   targetUrl: String,
   cardTypes: Option[ItemClasses] = None,
-  branding: Option[Branding]
+  branding: Option[Branding],
+  originalCard: Option[ContentCard]
 ) extends FaciaCard
 
 object PaidCard {
 
-  def fromPressedContent(content: PressedContent, cardTypes: Option[ItemClasses] = None): PaidCard = {
+  def fromPressedContent(content: PressedContent, cardTypes: Option[ItemClasses] = None, contentCard: Option[ContentCard] = None): PaidCard = {
 
     val header = content.header
 
@@ -390,7 +392,8 @@ object PaidCard {
       fallbackImageUrl,
       targetUrl = header.url,
       cardTypes = cardTypes,
-      branding = content.branding(defaultEdition)
+      branding = content.branding(defaultEdition),
+      originalCard = contentCard
     )
   }
 
@@ -420,7 +423,8 @@ object PaidCard {
         val url = item.metadata.webUrl
         clickMacro map { cm => s"$cm$url" } getOrElse url
       },
-      branding = item.metadata.commercial.flatMap(_.branding(edition))
+      branding = item.metadata.commercial.flatMap(_.branding(edition)),
+      originalCard = None
     )
   }
 }
