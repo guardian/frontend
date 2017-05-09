@@ -1,5 +1,5 @@
 @import com.gu.commercial.branding.Branding
-@(item: layout.PaidCard, omnitureId :String, containerIndex: Int, index: Int, showPaidLabel: Boolean = true)(implicit request: RequestHeader)
+@(item: layout.PaidCard, omnitureId :String, containerIndex: Int, index: Int)(implicit request: RequestHeader)
 
 @import views.html.fragments.items.elements.facia_cards._
 @import views.html.fragments.commercial.cardLogo
@@ -21,7 +21,7 @@
 
             <div class="badge badge--no-image">
                 <div class="badge__label">
-                   @if(showPaidLabel){Paid for by @item.branding.map(_.sponsorName)}
+                    Paid for by @item.branding.map(_.sponsorName)
                 </div>
             </div>
 
