@@ -1,14 +1,12 @@
 define([
     'bonzo',
     'qwery',
-    'Promise',
     'lib/$',
     'helpers/fixtures',
     'helpers/injector'
 ], function (
     bonzo,
     qwery,
-    Promise,
     $,
     fixtures,
     Injector
@@ -163,6 +161,7 @@ define([
                     enableServices: sinon.spy(),
                     display: sinon.spy()
                 };
+                window.__switch_zero = false;
                 performanceLogging.setListeners = function () {
                     // noop
                 };

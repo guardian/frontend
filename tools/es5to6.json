@@ -13,7 +13,6 @@
     "projects/commercial/modules/third-party-tags/krux.js"
   ],
   "Jon Norman": [
-    "projects/commercial/modules/dfp/create-slot.js",
     "projects/commercial/modules/dfp/define-slot.js",
     "projects/commercial/modules/dfp/apply-creative-template.js",
     "projects/commercial/modules/dfp/breakpoint-name-to-attribute.js",
@@ -36,7 +35,6 @@
     "projects/common/modules/avatar/api.js"
   ],
   "Richard Nguyen": [
-    "projects/commercial/modules/dfp/prepare-switch-tag.js",
     "projects/commercial/modules/dfp/queue-advert.js",
     "projects/commercial/modules/dfp/refresh-on-resize.js",
     "projects/commercial/modules/dfp/render-advert-label.js",
@@ -306,7 +304,6 @@
     "projects/commercial/modules/third-party-tags/imr-worldwide-legacy.js"
   ],
   "Philip Wills": [
-    "projects/facia/modules/onwards/geo-most-popular-front.js",
     "projects/facia/modules/onwards/search-tool.js",
     "projects/facia/modules/onwards/weather.js",
     "projects/facia/modules/ui/container-show-more.js",

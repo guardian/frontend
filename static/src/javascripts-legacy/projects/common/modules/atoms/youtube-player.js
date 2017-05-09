@@ -1,11 +1,9 @@
 define([
     'fastdom',
-    'Promise',
     'lib/$',
     'lib/load-script'
 ], function (
     fastdom,
-    Promise,
     $,
     loadScript
 ) {
