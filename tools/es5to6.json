@@ -36,7 +36,6 @@
     "projects/common/modules/avatar/api.js"
   ],
   "Richard Nguyen": [
-    "projects/commercial/modules/dfp/render-advert-label.js",
     "projects/commercial/modules/dfp/render-advert.js",
     "projects/commercial/modules/dfp/track-ad-render.js",
     "projects/commercial/modules/dfp/wait-for-advert.js",
