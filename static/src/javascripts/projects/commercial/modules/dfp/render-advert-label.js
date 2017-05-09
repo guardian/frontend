@@ -12,7 +12,7 @@ const shouldRenderLabel = adSlotNode =>
         adSlotNode.getAttribute('data-label') === 'false' ||
         adSlotNode.getElementsByClassName('ad-slot__label').length);
 
-const renderAdvertLabel = adSlotNode => {
+const renderAdvertLabel = (adSlotNode: any) => {
     if (shouldRenderLabel(adSlotNode)) {
         let feedbackPopup = '';
         let feedbackThanksMessage = '';
