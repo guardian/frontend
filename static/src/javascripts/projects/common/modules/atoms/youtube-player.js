@@ -16,7 +16,7 @@ const loadYoutubeJs = () => {
     loadScript(scriptSrc, {});
 };
 
-const addVideoStartedClass = el => {
+const addVideoStartedClass = (el: HTMLElement) => {
     el.classList.add('youtube__video-started');
 };
 
@@ -57,11 +57,11 @@ const onPlayerReadyEvent = (event, handlers: Handlers, el: HTMLElement) => {
     }
 };
 
-const setupPlayer = (id, onPlayerReady, onPlayerStateChange) =>
-    new window.YT.Player(id, {
+const setupPlayer = (videoId: string, onReady, onStateChange) =>
+    new window.YT.Player(videoId, {
         events: {
-            onReady: onPlayerReady,
-            onStateChange: onPlayerStateChange,
+            onReady,
+            onStateChange,
         },
     });
 
