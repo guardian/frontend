@@ -28,7 +28,7 @@ define([
     };
 
     Frame.prototype.create = function () {
-        this.params.externalLinkIcon = svg(externalLink.markup, ['frame__external-link-icon']);
+        this.params.externalLinkIcon = svg.addClassesAndTitle(externalLink.markup, ['frame__external-link-icon']);
         this.params.target = this.params.newWindow === 'yes' ? '_blank' : '_self';
         this.params.id = 'frame-' + (Math.random() * 10000 | 0).toString(16);
 
@@ -39,7 +39,7 @@ define([
             infoText: 'is created and paid for by third parties.',
             infoLinkText: 'Learn more about how advertising supports the Guardian.',
             infoLinkUrl: 'https://www.theguardian.com/advertising-on-the-guardian',
-            icon: svg(arrow.markup, ['gu-comlabel__icon']),
+            icon: svg.addClassesAndTitle(arrow.markup, ['gu-comlabel__icon']),
             dataAttr: this.adSlot.id
         }});
         return fastdom.write(function () {

@@ -1,9 +1,8 @@
 define([
     'lib/config',
     'lib/fetch-json',
-    'lib/fastdom-promise',
-    'Promise'
-], function (config, fetchJson, fastdom, Promise) {
+    'lib/fastdom-promise'
+], function (config, fetchJson, fastdom) {
 
     return {
         init: loadNextVideo,

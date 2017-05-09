@@ -5,14 +5,14 @@ define([
 ], function (config, merge, svgs) {
 
     //this is used in all banners
-    var cursor = svgs('cursor');
+    var cursor = svgs.inlineSvg('cursor');
 
     var banners = [
         {
             template: 'adblock-sticky-message',
 
             defaults: {
-                marque54icon: svgs('marque54icon'),
+                marque54icon: svgs.inlineSvg('marque54icon'),
                 linkText: 'Find out more',
                 cursor: cursor
             },
@@ -66,8 +66,8 @@ define([
             defaults: {
                 cursor: cursor,
                 customCssClass: '',
-                rectangleLogo: svgs('logomembership'),
-                marque36icon: svgs('marque36icon')
+                rectangleLogo: svgs.inlineSvg('logomembership'),
+                marque36icon: svgs.inlineSvg('marque36icon')
             },
 
             variants: [
@@ -81,12 +81,12 @@ define([
                 UK: {
                     monthlyCost: '£5',
                     dailyCost: '16p',
-                    adblockCoins: svgs('adblockCoinsUk').replace('%%URL%%', config.images.membership['adblock-coins'])
+                    adblockCoins: svgs.inlineSvg('adblockCoinsUk').replace('%%URL%%', config.images.membership['adblock-coins'])
                 },
                 INT: {
                     monthlyCost: '$6.99',
                     dailyCost: '22¢',
-                    adblockCoins: svgs('adblockCoinsUs').replace('%%URL%%', config.images.membership['adblock-coins-us'])
+                    adblockCoins: svgs.inlineSvg('adblockCoinsUs').replace('%%URL%%', config.images.membership['adblock-coins-us'])
                 }
             }
         }

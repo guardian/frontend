@@ -1,7 +1,6 @@
 define([
     'qwery',
     'bean',
-    'Promise',
     'lib/fastdom-promise',
     'lib/config',
     'lib/mediator',
@@ -10,7 +9,6 @@ define([
 ], function (
     qwery,
     bean,
-    Promise,
     fastdom,
     config,
     mediator,

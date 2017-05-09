@@ -135,17 +135,17 @@ define([
             shareItems = [{
                 'text': 'Facebook',
                 'css': 'facebook',
-                'icon': svgs('shareFacebook', ['icon']),
+                'icon': svgs.inlineSvg('shareFacebook', ['icon']),
                 'url': 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(blockShortUrl + '/sfb#img-' + i)
             }, {
                 'text': 'Twitter',
                 'css': 'twitter',
-                'icon': svgs('shareTwitter', ['icon']),
+                'icon': svgs.inlineSvg('shareTwitter', ['icon']),
                 'url': 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(config.page.webTitle) + '&url=' + encodeURIComponent(blockShortUrl + '/stw#img-' + i)
             }, {
                 'text': 'Pinterest',
                 'css': 'pinterest',
-                'icon': svgs('sharePinterest', ['icon']),
+                'icon': svgs.inlineSvg('sharePinterest', ['icon']),
                 'url': encodeURI('http://www.pinterest.com/pin/create/button/?description=' + config.page.webTitle + '&url=' + blockShortUrl + '&media=' + urlPrefix + img.src)
             }];
 
