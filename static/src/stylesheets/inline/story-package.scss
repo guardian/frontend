@@ -150,6 +150,8 @@
     }
 
     // Slice Level
+    // #election2017 Container for election 2017 (derived from qqqtall-q2)
+    .fc-slice--qqqtall-q1,
     .fc-slice--qqqtall-q2 {
         .l-row__item--span-1 .l-list {
             .fc-slice__item {
@@ -171,6 +173,17 @@
                     display: none;
                 }
             }
+        }
+    }
+
+    // #election2017 Container for election 2017 (derived from qqqtall-q2)
+    .fc-slice--qqqtall-q1--election {
+        .l-row__item--span-3 .fc-item__content .fc-item__header {
+            display: none;
+        }
+
+        .l-row__item--span-3 .fc-item__header--election-title {
+            display: block;
         }
     }
 
