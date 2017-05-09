@@ -1,228 +1,114 @@
+// @flow
+import { ABTest } from 'common/modules/experiments/ab-types';
 import reportError from 'lib/report-error';
 import config from 'lib/config';
-import cookies from 'lib/cookies';
-import mediator from 'lib/mediator';
-import store from 'lib/storage';
-import compact from 'lodash/arrays/compact';
+import { local } from 'lib/storage';
 import noop from 'lodash/utilities/noop';
 import abUtils from 'common/modules/experiments/utils';
 import segmentUtil from 'common/modules/experiments/segment-util';
 import testCanRunChecks from 'common/modules/experiments/test-can-run-checks';
-import acquisitionTestSelector from 'common/modules/experiments/acquisition-test-selector';
-import OpinionEmailVariants from 'common/modules/experiments/tests/opinion-email-variants';
-import MembershipEngagementBannerTests from 'common/modules/experiments/tests/membership-engagement-banner-tests';
-import PaidContentVsOutbrain2 from 'common/modules/experiments/tests/paid-content-vs-outbrain';
-import tailorSurvey from 'common/modules/experiments/tests/tailor-survey';
-import TheLongReadEmailVariants from 'common/modules/experiments/tests/the-long-read-email-variants';
-import FashionStatementEmailVariants from 'common/modules/experiments/tests/fashion-statement-email-variants';
-import BookmarksEmailVariants2 from 'common/modules/experiments/tests/bookmarks-email-variants-2';
-import FilmTodayEmailVariants from 'common/modules/experiments/tests/film-today-email-variants';
-import SleevenotesNewEmailVariant from 'common/modules/experiments/tests/sleeve-notes-new-email-variant';
-import SleevenotesLegacyEmailVariant from 'common/modules/experiments/tests/sleeve-notes-legacy-email-variant';
-import increaseInlineAdsRedux from 'common/modules/experiments/tests/increase-inline-ads';
+import acquisitionTestSelector
+    from 'common/modules/experiments/acquisition-test-selector';
+import OpinionEmailVariants
+    from 'common/modules/experiments/tests/opinion-email-variants';
+import MembershipEngagementBannerTests
+    from 'common/modules/experiments/tests/membership-engagement-banner-tests';
+import PaidContentVsOutbrain2
+    from 'common/modules/experiments/tests/paid-content-vs-outbrain';
+import { tailorSurvey } from 'common/modules/experiments/tests/tailor-survey';
+import TheLongReadEmailVariants
+    from 'common/modules/experiments/tests/the-long-read-email-variants';
+import FashionStatementEmailVariants
+    from 'common/modules/experiments/tests/fashion-statement-email-variants';
+import BookmarksEmailVariants2
+    from 'common/modules/experiments/tests/bookmarks-email-variants-2';
+import FilmTodayEmailVariants
+    from 'common/modules/experiments/tests/film-today-email-variants';
+import SleevenotesNewEmailVariant
+    from 'common/modules/experiments/tests/sleeve-notes-new-email-variant';
+import SleevenotesLegacyEmailVariant
+    from 'common/modules/experiments/tests/sleeve-notes-legacy-email-variant';
+import IncreaseInlineAdsRedux
+    from 'common/modules/experiments/tests/increase-inline-ads';
 import ophan from 'ophan/ng';
 import PaidCommenting from 'common/modules/experiments/tests/paid-commenting';
-import BundleDigitalSubPriceTest1 from 'common/modules/experiments/tests/bundle-digital-sub-price-test-1';
+import BundleDigitalSubPriceTest1
+    from 'common/modules/experiments/tests/bundle-digital-sub-price-test-1';
 
-var TESTS = compact([
+let TESTS = [
     new OpinionEmailVariants(),
-    new PaidContentVsOutbrain2,
+    new PaidContentVsOutbrain2(),
     acquisitionTestSelector.getTest(),
-    new tailorSurvey.TailorSurvey(),
+    tailorSurvey,
     TheLongReadEmailVariants,
     FashionStatementEmailVariants,
     BookmarksEmailVariants2,
     FilmTodayEmailVariants,
     SleevenotesNewEmailVariant,
     SleevenotesLegacyEmailVariant,
-    new increaseInlineAdsRedux(),
+    new IncreaseInlineAdsRedux(),
     new PaidCommenting(),
-    new BundleDigitalSubPriceTest1()
-].concat(MembershipEngagementBannerTests));
+    new BundleDigitalSubPriceTest1(),
+]
+    .concat(MembershipEngagementBannerTests)
+    .filter(t => t !== undefined && t !== null);
 
-function cleanParticipations() {
-    // Removes any tests from localstorage that have been
-    // renamed/deleted from the backend
-    Object.keys(abUtils.getParticipations()).forEach(function(k) {
-        if (typeof config.switches['ab' + k] === 'undefined') {
+const not = f => (...args) => !f.apply(this, args);
+
+// Removes any tests from localstorage that have been
+// renamed/deleted from the backend
+const cleanParticipations = () =>
+    Object.keys(abUtils.getParticipations()).forEach(k => {
+        if (typeof config.switches[`ab${k}`] === 'undefined') {
             abUtils.removeParticipation({
-                id: k
+                id: k,
             });
         } else {
-            var testExists = TESTS.some(function(element) {
-                return element.id === k;
-            });
+            const testExists = TESTS.some(element => element.id === k);
 
             if (!testExists) {
                 abUtils.removeParticipation({
-                    id: k
+                    id: k,
                 });
             }
         }
     });
-}
 
-function getActiveTests() {
-    return TESTS.filter(function(test) {
+export const getActiveTests = () =>
+    TESTS.filter(test => {
         if (testCanRunChecks.isExpired(test.expiry)) {
             abUtils.removeParticipation(test);
             return false;
         }
         return true;
     });
-}
 
-function getExpiredTests() {
-    return TESTS.filter(function(test) {
-        return testCanRunChecks.isExpired(test.expiry);
-    });
-}
+export const getExpiredTests = () =>
+    TESTS.filter(test => testCanRunChecks.isExpired(test.expiry));
 
-function getTest(id) {
-    var testIds = TESTS.map(function(test) {
-        return test.id;
-    });
-    var index = testIds.indexOf(id);
+export const getTest = (id: string): ?ABTest => {
+    const testIds = TESTS.map(test => test.id);
+    const index = testIds.indexOf(id);
     return index > -1 ? TESTS[index] : null;
-}
+};
 
-function abData(variantName, complete, campaignCodes) {
-    var data = {
-        'variantName': variantName,
-        'complete': complete
+const abData = (
+    variantName: string,
+    complete: string,
+    campaignCodes?: Array<string>
+) => {
+    const data = {
+        variantName,
+        complete,
+        campaignCodes,
     };
-
-    if (campaignCodes) {
-        data.campaignCodes = campaignCodes;
-    }
 
     return data;
-}
+};
 
-    function getAbLoggableObject() {
-        try {
-            var log = {};
-
-            getActiveTests()
-                .filter(not(defersImpression))
-                .filter(abUtils.isParticipating)
-                .filter(testCanRunChecks.testCanBeRun)
-                .forEach(function (test) {
-                    var variantId = abUtils.getTestVariantId(test.id);
-                    var variant = abUtils.getVariant(test, variantId);
-                    var campaignCodes = variant && variant.options && variant.options.campaignCodes;
-
-                    if (variantId && segmentUtil.isInTest(test)) {
-                        log[test.id] = abData(variantId, 'false', campaignCodes);
-                    }
-                });
-
-            getServerSideTests().forEach(function (test) {
-                log['ab' + test] = abData('inTest', 'false');
-            });
-
-            return log;
-        } catch (error) {
-            // Encountering an error should invalidate the logging process.
-            reportError(error, false);
-            return {};
-        }
-    }
-
-    /**
-     * Register a test and variant's complete state with Ophan
-     *
-     * @param test
-     * @param {string} variantId
-     * @param {boolean} complete
-     * @returns {Function} to fire the event
-     */
-    function recordTestComplete(test, variantId, complete) {
-        var data = {};
-        var variant = abUtils.getVariant(test, variantId);
-        var campaignCodes = variant && variant.options && variant.options.campaignCodes;
-
-        data[test.id] = abData(variantId, String(complete), campaignCodes);
-
-        return function () {
-        recordOphanAbEvent(data);
-    };
-
-function trackEvent() {
-    recordOphanAbEvent(getAbLoggableObject());
-}
-
-function recordOphanAbEvent(data) {
-    ophan.record({
-        abTestRegister: data
-    });
-}
-
-/**
- * Register a test and variant's complete state with Ophan
- *
- * @param test
- * @param {string} variantId
- * @param {boolean} complete
- * @returns {Function} to fire the event
- */
-function recordTestComplete(test, variantId, complete) {
-    var data = {};
-    var variant = abUtils.getVariant(test, variantId);
-
-    data[test.id] = abData(variantId, String(complete), variant.campaignCodes);
-
-    return function() {
-        recordOphanAbEvent(data);
-    };
-}
-
-// Finds variant in specific tests and runs it
-function run(test) {
-    if (abUtils.isParticipating(test) && testCanRunChecks.testCanBeRun(test)) {
-        var participations = abUtils.getParticipations(),
-            variantId = participations[test.id].variant;
-        var variant = abUtils.getVariant(test, variantId);
-        if (variant) {
-            variant.test();
-        } else if (!segmentUtil.isInTest(test) && test.notInTest) {
-            test.notInTest();
-        }
-    }
-}
-
-function allocateUserToTest(test) {
-    // Only allocate the user if the test is valid and they're not already participating.
-    if (testCanRunChecks.testCanBeRun(test) && !abUtils.isParticipating(test)) {
-        abUtils.addParticipation(test, segmentUtil.variantIdFor(test));
-    }
-}
-
-/**
- * Create a function that sets up listener to fire an Ophan `complete` event. This is used in the `success` and
- * `impression` properties of test variants to allow test authors to control when these events are sent out.
- *
- * @see {@link defersImpression}
- * @param {Boolean} complete
- * @returns {Function}
- */
-function registerCompleteEvent(complete) {
-    return function initListener(test) {
-
-        var variantId = abUtils.getTestVariantId(test.id);
-
-        if (variantId && variantId !== 'notintest') {
-            var variant = abUtils.getVariant(test, variantId);
-            var listener = (complete ? variant.success : variant.impression) || noop;
-
-            try {
-                listener(recordTestComplete(test, variantId, complete));
-            } catch (err) {
-                reportError(err, false, false);
-            }
-        }
-    };
-}
+// These kinds of tests are both server and client side.
+const getServerSideTests = () =>
+    Object.keys(config.tests).filter(test => !!config.tests[test]);
 
 /**
  * Checks if this test will defer its impression by providing its own impression function.
@@ -233,153 +119,220 @@ function registerCompleteEvent(complete) {
  * @param test
  * @returns {boolean}
  */
-function defersImpression(test) {
-    return test.variants.every(function(variant) {
-        return typeof variant.impression === 'function';
-    });
-}
+const defersImpression = test =>
+    test.variants.every(variant => typeof variant.impression === 'function');
 
-function shouldRunTest(id, variant) {
-    var test = getTest(id);
-    return test &&
+export const getAbLoggableObject = () => {
+    try {
+        const log = {};
+
+        getActiveTests()
+            .filter(not(defersImpression))
+            .filter(abUtils.isParticipating)
+            .filter(testCanRunChecks.testCanBeRun)
+            .forEach(test => {
+                const variantId = abUtils.getTestVariantId(test.id);
+                const variant = abUtils.getVariant(test, variantId);
+                const campaingCodes = variant && variant.campaignCodes
+                    ? variant.campaignCodes
+                    : undefined;
+
+                if (variantId && segmentUtil.isInTest(test)) {
+                    log[test.id] = abData(variantId, 'false', campaingCodes);
+                }
+            });
+
+        getServerSideTests().forEach(test => {
+            log[`ab${test}`] = abData('inTest', 'false');
+        });
+
+        return log;
+    } catch (error) {
+        // Encountering an error should invalidate the logging process.
+        reportError(error, {}, false);
+        return {};
+    }
+};
+
+const recordOphanAbEvent = data =>
+    ophan.record({
+        abTestRegister: data,
+    });
+
+export const trackEvent = () => recordOphanAbEvent(getAbLoggableObject());
+
+/**
+ * Register a test and variant's complete state with Ophan
+ *
+ * @param test
+ * @param {string} variantId
+ * @param {boolean} complete
+ * @returns {Function} to fire the event
+ */
+const recordTestComplete = (
+    test: ABTest,
+    variantId: string,
+    complete: boolean
+) => {
+    const data = {};
+    const variant = abUtils.getVariant(test, variantId);
+
+    data[test.id] = abData(variantId, String(complete), variant.campaignCodes);
+
+    return () => recordOphanAbEvent(data);
+};
+
+// Finds variant in specific tests and runs it
+const runTest = test => {
+    if (abUtils.isParticipating(test) && testCanRunChecks.testCanBeRun(test)) {
+        const participations = abUtils.getParticipations();
+        const variantId = participations[test.id].variant;
+        const variant = abUtils.getVariant(test, variantId);
+
+        if (variant) {
+            variant.test();
+        } else if (!segmentUtil.isInTest(test) && test.notInTest) {
+            test.notInTest();
+        }
+    }
+};
+
+const allocateUserToTest = test => {
+    // Only allocate the user if the test is valid and they're not already participating.
+    if (testCanRunChecks.testCanBeRun(test) && !abUtils.isParticipating(test)) {
+        abUtils.addParticipation(test, segmentUtil.variantIdFor(test));
+    }
+};
+
+/**
+ * Create a function that sets up listener to fire an Ophan `complete` event. This is used in the `success` and
+ * `impression` properties of test variants to allow test authors to control when these events are sent out.
+ *
+ * @see {@link defersImpression}
+ * @param {Boolean} complete
+ * @returns {Function}
+ */
+const registerCompleteEvent = complete => test => {
+    const variantId = abUtils.getTestVariantId(test.id);
+
+    if (variantId && variantId !== 'notintest') {
+        const variant = abUtils.getVariant(test, variantId);
+        const listener =
+            (complete ? variant.success : variant.impression) || noop;
+
+        try {
+            listener(recordTestComplete(test, variantId, complete));
+        } catch (err) {
+            reportError(err, {}, false);
+        }
+    }
+};
+
+export const shouldRunTest = (id: string, variant: string) => {
+    const test = getTest(id);
+
+    return (
+        test &&
         abUtils.isParticipating(test) &&
         abUtils.getTestVariantId(id) === variant &&
-        testCanRunChecks.testCanBeRun(test);
-}
+        testCanRunChecks.testCanBeRun(test)
+    );
+};
 
-// These kinds of tests are both server and client side.
-function getServerSideTests() {
-    return Object.keys(config.tests).filter(function(test) {
-        return !!config.tests[test];
-    });
-}
-
-function not(f) {
-    return function() {
-        return !f.apply(this, arguments);
-    };
-}
-
-function getForcedIntoTests() {
-    var devtoolsAbTests = JSON.parse(store.local.get('gu.devtools.ab')) || [];
-    var tokens;
-
+const getForcedIntoTests = () => {
     if (/^#ab/.test(window.location.hash)) {
-        tokens = window.location.hash.replace('#ab-', '').split(',');
+        const tokens = window.location.hash.replace('#ab-', '').split(',');
 
-        return tokens.map(function(token) {
-            var abParam = token.split('=');
+        return tokens.map(token => {
+            const abParam = token.split('=');
 
             return {
                 id: abParam[0],
-                variant: abParam[1]
+                variant: abParam[1],
             };
         });
     }
 
-    return devtoolsAbTests;
-}
-var ab = {
+    return JSON.parse(local.get('gu.devtools.ab')) || [];
+};
 
-    addTest: function(test) {
-        TESTS.push(test);
-    },
+export const getTests = () => TESTS;
+export const addTest = (test: ABTest) => TESTS.push(test);
+export const clearTests = () => {
+    TESTS = [];
+};
 
-    clearTests: function() {
-        TESTS = [];
-    },
+export const segment = () =>
+    getActiveTests().forEach(test => {
+        allocateUserToTest(test);
+    });
 
-    segment: function() {
-        getActiveTests().forEach(function(test) {
-            allocateUserToTest(test);
-        });
-    },
+export const forceSegment = (testId: string, variant: string) => {
+    getActiveTests().filter(test => test.id === testId).forEach(test => {
+        abUtils.addParticipation(test, variant);
+    });
+};
 
-    forceSegment: function(testId, variant) {
-        getActiveTests().filter(function(test) {
-            return test.id === testId;
-        }).forEach(function(test) {
-            abUtils.addParticipation(test, variant);
-        });
-    },
+export const forceVariantCompleteFunctions = (
+    testId: string,
+    variantId: string
+) => {
+    const test = getTest(testId);
 
-    forceVariantCompleteFunctions: function(testId, variantId) {
-        var test = getTest(testId);
-
-        var variant = test && test.variants.filter(function(v) {
-            return v.id.toLowerCase() === variantId.toLowerCase();
-        })[0];
-
-        var impression = variant && variant.impression || noop;
-        var complete = variant && variant.success || noop;
+    if (test) {
+        const variant =
+            test &&
+            test.variants.filter(
+                v => v.id.toLowerCase() === variantId.toLowerCase()
+            )[0];
+        const impression = (variant && variant.impression) || noop;
+        const complete = (variant && variant.success) || noop;
 
         impression(recordTestComplete(test, variantId, false));
         complete(recordTestComplete(test, variantId, true));
-    },
-
-    segmentUser: function() {
-        var forcedIntoTests = getForcedIntoTests();
-
-        if (forcedIntoTests.length) {
-            forcedIntoTests.forEach(function(test) {
-                ab.forceSegment(test.id, test.variant);
-                ab.forceVariantCompleteFunctions(test.id, test.variant);
-            });
-        } else {
-            ab.segment();
-        }
-
-        cleanParticipations();
-    },
-
-    run: function() {
-        getActiveTests().forEach(run);
-    },
-
-    registerCompleteEvents: function() {
-        getActiveTests().forEach(registerCompleteEvent(true));
-    },
-
-    registerImpressionEvents: function() {
-        getActiveTests().filter(defersImpression).forEach(registerCompleteEvent(false));
-    },
-
-    getAbLoggableObject: getAbLoggableObject,
-    getParticipations: abUtils.getParticipations,
-    isParticipating: abUtils.isParticipating,
-    getTest: getTest,
-    trackEvent: trackEvent,
-    getExpiredTests: getExpiredTests,
-    getActiveTests: getActiveTests,
-    getTestVariantId: abUtils.getTestVariantId,
-    setTestVariant: abUtils.setTestVariant,
-    getVariant: abUtils.getVariant,
-    TESTS: TESTS,
-
-    /**
-     * check if a test can be run (i.e. is not expired and switched on)
-     *
-     * @param  {string|Object} test   id or test object
-     * @return {Boolean}
-     */
-    testCanBeRun: function(test) {
-        if (typeof test === 'string') {
-            test = getTest(test);
-            return test && testCanRunChecks.testCanBeRun(test);
-        }
-
-        return test.id && test.expiry && testCanRunChecks.testCanBeRun(test);
-    },
-
-    isInVariant: abUtils.isInVariant,
-
-    shouldRunTest: shouldRunTest,
-
-    // testing
-    reset: function() {
-        TESTS = [];
-        segmentUtil.variantIdFor.cache = {};
     }
 };
 
-export default ab;
+export const segmentUser = () => {
+    const forcedIntoTests = getForcedIntoTests();
+
+    if (forcedIntoTests.length) {
+        forcedIntoTests.forEach(test => {
+            forceSegment(test.id, test.variant);
+            forceVariantCompleteFunctions(test.id, test.variant);
+        });
+    } else {
+        segment();
+    }
+
+    cleanParticipations();
+};
+
+export const run = () => getActiveTests().forEach(runTest);
+
+export const registerCompleteEvents = () =>
+    getActiveTests().forEach(registerCompleteEvent(true));
+
+export const registerImpressionEvents = () =>
+    getActiveTests()
+        .filter(defersImpression)
+        .forEach(registerCompleteEvent(false));
+
+/**
+ * check if a test can be run (i.e. is not expired and switched on)
+ */
+export const testCanBeRun = (test: string | ABTest) => {
+    if (typeof test === 'string') {
+        const testObj = getTest(test);
+        return testObj && testCanRunChecks.testCanBeRun(testObj);
+    }
+
+    return test.id && test.expiry && testCanRunChecks.testCanBeRun(test);
+};
+
+export const _ = {
+    reset: () => {
+        TESTS = [];
+        segmentUtil.variantIdFor.cache = {};
+    },
+};

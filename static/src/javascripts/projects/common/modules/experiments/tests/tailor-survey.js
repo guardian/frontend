@@ -1,5 +1,6 @@
 // @flow
 
+import { ABTest } from 'common/modules/experiments/ab-types';
 import bean from 'bean';
 import bonzo from 'bonzo';
 import fastdom from 'fastdom';
@@ -210,61 +211,42 @@ const handleSurveyResponse = surveyId => {
     });
 };
 
-class TailorSurvey {
-    id: string;
-    start: string;
-    expiry: string;
-    author: string;
-    description: string;
-    audience: number;
-    audienceOffset: number;
-    successMeasure: string;
-    audienceCriteria: string;
-    dataLinkNames: string;
-    idealOutcome: string;
-    variants: Array<Object>;
-    canRun: () => boolean;
+export const tailorSurvey = new ABTest({
+    id: 'TailorSurvey',
+    start: '2017-03-07',
+    expiry: '2017-05-31',
+    author: 'Manlio & Mahana',
+    description: 'Testing Tailor',
+    audience: 1,
+    audienceOffset: 0,
+    successMeasure: 'We can show a survey on Frontend as decided by Tailor',
+    audienceCriteria: 'All users',
+    dataLinkNames: 'Tailor survey',
+    canRun: () =>
+        !config.page.isAdvertisementFeature &&
+        config.page.contentType === 'Article',
+    variants: [
+        {
+            id: 'control',
+            test: () => {},
+        },
 
-    constructor() {
-        this.id = 'TailorSurvey';
-        this.start = '2017-03-07';
-        this.expiry = '2017-05-31';
-        this.author = 'Manlio & Mahana';
-        this.description = 'Testing Tailor surveys';
-        this.audience = 1;
-        this.audienceOffset = 0;
-        this.successMeasure =
-            'We can show a survey on Frontend as decided by Tailor';
-        this.audienceCriteria = 'All users';
-        this.dataLinkNames = 'Tailor survey';
-        this.idealOutcome = '';
-        this.canRun = () =>
-            !config.page.isAdvertisementFeature &&
-            config.page.contentType === 'Article';
-        this.variants = [
-            {
-                id: 'control',
-                test: () => {},
+        {
+            id: 'variant',
+            test: () => {
+                renderQuickSurvey().then(surveyId => {
+                    if (surveyId) {
+                        mediator.emit('survey-added');
+                        handleSurveyResponse(surveyId);
+                    }
+                });
             },
-            {
-                id: 'variant',
-                test: () => {
-                    renderQuickSurvey().then(surveyId => {
-                        if (surveyId) {
-                            mediator.emit('survey-added');
-                            handleSurveyResponse(surveyId);
-                        }
-                    });
-                },
-                impression: track => {
-                    mediator.on('survey-added', track);
-                },
-                success: complete => {
-                    mediator.on('tailor:survey:clicked', complete);
-                },
+            impression: track => {
+                mediator.on('survey-added', track);
             },
-        ];
-    }
-}
-
-export { TailorSurvey };
+            success: complete => {
+                mediator.on('tailor:survey:clicked', complete);
+            },
+        },
+    ],
+});
