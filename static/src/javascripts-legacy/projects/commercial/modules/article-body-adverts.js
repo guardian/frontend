@@ -1,5 +1,4 @@
 define([
-    'Promise',
     'qwery',
     'lib/config',
     'lib/detect',
@@ -13,7 +12,6 @@ define([
     'commercial/modules/commercial-features',
     'common/modules/experiments/tests/increase-inline-ads'
 ], function (
-    Promise,
     qwery,
     config,
     detect,

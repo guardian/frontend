@@ -1,5 +1,4 @@
 define([
-    'Promise',
     'bonzo',
     'fastdom',
     'lib/$',
@@ -12,8 +11,7 @@ define([
     'lodash/functions/throttle',
     'common/modules/analytics/interaction-tracking',
     'lib/load-css-promise'
-], function (Promise,
-             bonzo,
+], function (bonzo,
              fastdom,
              $,
              qwery,
