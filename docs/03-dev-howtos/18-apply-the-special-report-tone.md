@@ -4,7 +4,7 @@ Sometimes CP or someone from Editorial will ask us to apply the special report t
 The following doc explains how to make that happen.
 
 1. Find out the id of the tag where we need the special report tone. For example "news/series/panama-papers".
-2. Replace <NEW-SPECIAL-TAG> with the string of the special tag and run this code on a python REPL:
+2. Replace <NEW-SPECIAL-TAG> with the id of the special tag and run this code on a python REPL:
 ```
 import hashlib
 tag = "<NEW-SPECIAL-TAG>"
