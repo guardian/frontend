@@ -1,22 +1,24 @@
+// @flow
 import bonzo from 'bonzo';
 import fastdom from 'fastdom';
 import $ from 'lib/$';
 import qwery from 'qwery';
 import config from 'lib/config';
-import url from 'lib/url';
+import { pushUrl } from 'lib/url';
 import detect from 'lib/detect';
 import FiniteStateMachine from 'lib/fsm';
 import mediator from 'lib/mediator';
 import throttle from 'lodash/functions/throttle';
 import interactionTracking from 'common/modules/analytics/interaction-tracking';
-import loadCssPromise from 'lib/load-css-promise';
-
+import { loadCssPromise } from 'lib/load-css-promise';
 
 class HostedGallery {
     constructor() {
         // CONFIG
         const breakpoint = detect.getBreakpoint();
-        this.useSwipe = detect.hasTouchScreen() && (breakpoint === 'mobile' || breakpoint === 'tablet');
+        this.useSwipe =
+            detect.hasTouchScreen() &&
+            (breakpoint === 'mobile' || breakpoint === 'tablet');
         this.swipeThreshold = 0.05;
         this.index = this.index || 1;
         this.imageRatios = [];
@@ -27,14 +29,23 @@ class HostedGallery {
         this.$header = $('.js-hosted-headerwrap');
         this.$imagesContainer = $('.js-hosted-gallery-images', this.$galleryEl);
         this.$captionContainer = $('.js-gallery-caption-bar');
-        this.$captions = $('.js-hosted-gallery-caption', this.$captionContainer);
-        this.$scrollEl = $('.js-hosted-gallery-scroll-container', this.$galleryEl);
+        this.$captions = $(
+            '.js-hosted-gallery-caption',
+            this.$captionContainer
+        );
+        this.$scrollEl = $(
+            '.js-hosted-gallery-scroll-container',
+            this.$galleryEl
+        );
         this.$images = $('.js-hosted-gallery-image', this.$imagesContainer);
         this.$progress = $('.js-hosted-gallery-progress', this.$galleryEl);
         this.$border = $('.js-hosted-gallery-rotating-border', this.$progress);
         this.prevBtn = qwery('.inline-arrow-up', this.$progress)[0];
         this.nextBtn = qwery('.inline-arrow-down', this.$progress)[0];
-        this.infoBtn = qwery('.js-gallery-caption-button', this.$captionContainer)[0];
+        this.infoBtn = qwery(
+            '.js-gallery-caption-button',
+            this.$captionContainer
+        )[0];
         this.$counter = $('.js-hosted-gallery-image-count', this.$progress);
         this.$ctaFloat = $('.js-hosted-gallery-cta', this.$galleryEl)[0];
         this.$ojFloat = $('.js-hosted-gallery-oj', this.$galleryEl)[0];
@@ -50,12 +61,18 @@ class HostedGallery {
                 initial: 'image',
                 onChangeState() {},
                 context: this,
-                states: this.states
+                states: this.states,
             });
 
-            this.infoBtn.addEventListener('click', this.trigger.bind(this, 'toggle-info'));
+            this.infoBtn.addEventListener(
+                'click',
+                this.trigger.bind(this, 'toggle-info')
+            );
             this.ojClose.addEventListener('click', this.toggleOj.bind(this));
-            document.body.addEventListener('keydown', this.handleKeyEvents.bind(this));
+            document.body.addEventListener(
+                'keydown',
+                this.handleKeyEvents.bind(this)
+            );
             this.loadSurroundingImages(1, this.$images.length);
             this.setPageWidth();
 
@@ -78,7 +95,7 @@ class HostedGallery {
             this.scrollTo(this.index + 1);
             if (this.index < this.$images.length) {
                 this.trigger('next', {
-                    nav: 'Click'
+                    nav: 'Click',
                 });
             } else {
                 this.trigger('reload');
@@ -88,23 +105,25 @@ class HostedGallery {
             this.scrollTo(this.index - 1);
             if (this.index > 1) {
                 this.trigger('prev', {
-                    nav: 'Click'
+                    nav: 'Click',
                 });
             } else {
                 this.trigger('reload');
             }
         });
 
-        this.$scrollEl[0].addEventListener('scroll', throttle(this.fadeContent.bind(this), 20));
+        this.$scrollEl[0].addEventListener(
+            'scroll',
+            throttle(this.fadeContent.bind(this), 20)
+        );
     }
 
     initSwipe() {
         let threshold; // time in ms
         let ox;
         let dx;
-        let touchMove;
         const updateTime = 20;
-        this.$imagesContainer.css('width', this.$images.length + '00%');
+        this.$imagesContainer.css('width', `${this.$images.length}00%`);
 
         this.$galleryEl[0].addEventListener('touchstart', e => {
             threshold = this.swipeContainerWidth * this.swipeThreshold;
@@ -112,18 +131,21 @@ class HostedGallery {
             dx = 0;
         });
 
-        touchMove = e => {
+        const touchMove = e => {
             e.preventDefault();
-            if (e.touches.length > 1 || e.scale && e.scale !== 1) {
+            if (e.touches.length > 1 || (e.scale && e.scale !== 1)) {
                 return;
             }
             dx = e.touches[0].pageX - ox;
             this.translateContent(this.index, dx, updateTime);
         };
 
-        this.$galleryEl[0].addEventListener('touchmove', throttle(touchMove, updateTime, {
-            trailing: false
-        }));
+        this.$galleryEl[0].addEventListener(
+            'touchmove',
+            throttle(touchMove, updateTime, {
+                trailing: false,
+            })
+        );
 
         this.$galleryEl[0].addEventListener('touchend', () => {
             let direction;
@@ -137,7 +159,7 @@ class HostedGallery {
             if (direction === 1) {
                 if (this.index > 1) {
                     this.trigger('prev', {
-                        nav: 'Swipe'
+                        nav: 'Swipe',
                     });
                 } else {
                     this.trigger('reload');
@@ -145,7 +167,7 @@ class HostedGallery {
             } else if (direction === -1) {
                 if (this.index < this.$images.length) {
                     this.trigger('next', {
-                        nav: 'Swipe'
+                        nav: 'Swipe',
                     });
                 } else {
                     this.trigger('reload');
@@ -153,14 +175,15 @@ class HostedGallery {
             } else {
                 this.trigger('reload');
             }
-
         });
     }
 
-    ctaIndex() {
+    static ctaIndex() {
         const ctaIndex = config.page.ctaIndex;
         const images = config.page.images;
-        return (ctaIndex > 0 && ctaIndex < images.length - 1) ? ctaIndex : undefined;
+        return ctaIndex > 0 && ctaIndex < images.length - 1
+            ? ctaIndex
+            : undefined;
     }
 
     trigger(event, data) {
@@ -170,52 +193,41 @@ class HostedGallery {
     loadSurroundingImages(index, count) {
         let $img;
         const that = this;
+
+        const setSize = ($image, imageIndex) => {
+            if (!that.imageRatios[imageIndex]) {
+                that.imageRatios[imageIndex] =
+                    $image[0].naturalWidth / $image[0].naturalHeight;
+            }
+            that.resizeImage.call(that, imageIndex);
+        };
+
         [0, 1, 2]
-        .map(i => index + i === 0 ? count - 1 : (index - 1 + i) % count)
+            .map(i => (index + i === 0 ? count - 1 : (index - 1 + i) % count))
             .forEach(function(i) {
                 $img = $('img', this.$images[i]);
                 if (!$img[0].complete) {
-                    $img[0].addEventListener('load', setSize.bind(this, $img, i));
+                    $img[0].addEventListener(
+                        'load',
+                        setSize.bind(this, $img, i)
+                    );
                 } else {
                     setSize($img, i);
                 }
             }, this);
-
-        function setSize($image, index) {
-            if (!that.imageRatios[index]) {
-                that.imageRatios[index] = $image[0].naturalWidth / $image[0].naturalHeight;
-            }
-            that.resizeImage.call(that, index);
-        }
     }
 
     resizeImage(imgIndex) {
-        const $imageDiv = this.$images[imgIndex], $galleryFrame = this.$galleryFrame[0], $ctaFloat = this.$ctaFloat, $ojFloat = this.$ojFloat, $meta = this.$meta, $images = this.$images, width = $galleryFrame.clientWidth, height = $galleryFrame.clientHeight, $sizer = $('.js-hosted-gallery-image-sizer', $imageDiv), imgRatio = this.imageRatios[imgIndex], ctaSize = getFrame(0), ctaIndex = this.ctaIndex(), tabletSize = 740, imageSize = getFrame(imgRatio);
-        fastdom.write(() => {
-            $sizer.css('width', imageSize.width);
-            $sizer.css('height', imageSize.height);
-            $sizer.css('top', imageSize.topBottom);
-            $sizer.css('left', imageSize.leftRight);
-            if (imgIndex === ctaIndex) {
-                bonzo($ctaFloat).css('bottom', ctaSize.topBottom);
-            }
-            if (imgIndex === $images.length - 1) {
-                bonzo($ojFloat).css('bottom', ctaSize.topBottom);
-            }
-            if (imgIndex === $images.length - 1) {
-                bonzo($ojFloat).css('padding-bottom', (ctaSize.topBottom > 40 || width > tabletSize) ? 0 : 40);
-            }
-            if (imgIndex === 0) {
-                bonzo($meta).css('padding-bottom', (imageSize.topBottom > 40 || width > tabletSize) ? 20 : 40);
-            }
-        });
+        const $galleryFrame = this.$galleryFrame[0];
+        const width = $galleryFrame.clientWidth;
+        const height = $galleryFrame.clientHeight;
 
-        function getFrame(desiredRatio, w = width, h = height) {
+        const getFrame = (desiredRatio, w = width, h = height) => {
             const frame = {
                 height: h,
                 width: w,
                 topBottom: 0,
-                leftRight: 0
+                leftRight: 0,
             };
             if (!desiredRatio) return frame;
             if (desiredRatio > w / h) {
@@ -228,21 +240,61 @@ class HostedGallery {
                 frame.leftRight = (w - frame.width) / 2;
             }
             return frame;
-        }
+        };
+
+        const $imageDiv = this.$images[imgIndex];
+        const $ctaFloat = this.$ctaFloat;
+        const $ojFloat = this.$ojFloat;
+        const $meta = this.$meta;
+        const $images = this.$images;
+        const $sizer = $('.js-hosted-gallery-image-sizer', $imageDiv);
+        const imgRatio = this.imageRatios[imgIndex];
+        const ctaSize = getFrame(0);
+        const ctaIndex = this.ctaIndex();
+        const tabletSize = 740;
+        const imageSize = getFrame(imgRatio);
+
+        fastdom.write(() => {
+            $sizer.css('width', imageSize.width);
+            $sizer.css('height', imageSize.height);
+            $sizer.css('top', imageSize.topBottom);
+            $sizer.css('left', imageSize.leftRight);
+            if (imgIndex === ctaIndex) {
+                bonzo($ctaFloat).css('bottom', ctaSize.topBottom);
+            }
+            if (imgIndex === $images.length - 1) {
+                bonzo($ojFloat).css('bottom', ctaSize.topBottom);
+            }
+            if (imgIndex === $images.length - 1) {
+                bonzo($ojFloat).css(
+                    'padding-bottom',
+                    ctaSize.topBottom > 40 || width > tabletSize ? 0 : 40
+                );
+            }
+            if (imgIndex === 0) {
+                bonzo($meta).css(
+                    'padding-bottom',
+                    imageSize.topBottom > 40 || width > tabletSize ? 20 : 40
+                );
+            }
+        });
     }
 
     translateContent(imgIndex, offset, duration) {
-        const px = -1 * (imgIndex - 1) * this.swipeContainerWidth, galleryEl = this.$imagesContainer[0], $meta = this.$meta;
-        galleryEl.style.webkitTransitionDuration = duration + 'ms';
-        galleryEl.style.mozTransitionDuration = duration + 'ms';
-        galleryEl.style.msTransitionDuration = duration + 'ms';
-        galleryEl.style.transitionDuration = duration + 'ms';
-        galleryEl.style.webkitTransform = 'translate(' + (px + offset) + 'px,0)' + 'translateZ(0)';
-        galleryEl.style.mozTransform = 'translate(' + (px + offset) + 'px,0)';
-        galleryEl.style.msTransform = 'translate(' + (px + offset) + 'px,0)';
-        galleryEl.style.transform = 'translate(' + (px + offset) + 'px,0)' + 'translateZ(0)';
+        const px = -1 * (imgIndex - 1) * this.swipeContainerWidth;
+        const galleryEl = this.$imagesContainer[0];
+        const $meta = this.$meta;
+
+        galleryEl.style.webkitTransitionDuration = `${duration}ms`;
+        galleryEl.style.mozTransitionDuration = `${duration}ms`;
+        galleryEl.style.msTransitionDuration = `${duration}ms`;
+        galleryEl.style.transitionDuration = `${duration}ms`;
+        galleryEl.style.webkitTransform = `translate(${px + offset}px,0) translateZ(0)`;
+        galleryEl.style.mozTransform = `translate(${px + offset}px,0)`;
+        galleryEl.style.msTransform = `translate(${px + offset}px,0)`;
+        galleryEl.style.transform = `translate(${px + offset}px,0) translateZ(0)`;
         fastdom.write(() => {
-            bonzo($meta).css('opacity', offset != 0 ? 0 : 1);
+            bonzo($meta).css('opacity', offset !== 0 ? 0 : 1);
         });
     }
 
@@ -250,32 +302,42 @@ class HostedGallery {
         const length = this.$images.length;
         const scrollTop = e.target.scrollTop;
         const scrollHeight = e.target.scrollHeight;
-        const progress = Math.round(length * (scrollTop / scrollHeight) * 100) / 100;
+        const progress =
+            Math.round(length * (scrollTop / scrollHeight) * 100) / 100;
         const fractionProgress = progress % 1;
         const deg = Math.ceil(fractionProgress * 360);
         const newIndex = Math.round(progress + 0.75);
         const ctaIndex = this.ctaIndex();
         fastdom.write(() => {
             this.$images.each((image, index) => {
-                const opacity = ((progress - index + 1) * 16 / 11) - 0.0625;
+                const opacity = (progress - index + 1) * 16 / 11 - 0.0625;
                 bonzo(image).css('opacity', Math.min(Math.max(opacity, 0), 1));
             });
 
-            bonzo(this.$border).css('transform', 'rotate(' + deg + 'deg)');
-            bonzo(this.$border).css('-webkit-transform', 'rotate(' + deg + 'deg)');
+            bonzo(this.$border).css('transform', `rotate(${deg}deg)`);
+            bonzo(this.$border).css('-webkit-transform', `rotate(${deg}deg)`);
 
-            bonzo(this.$galleryEl).toggleClass('show-cta', progress <= ctaIndex && progress >= ctaIndex - 0.25);
-            bonzo(this.$galleryEl).toggleClass('show-oj', progress >= length - 1.25);
+            bonzo(this.$galleryEl).toggleClass(
+                'show-cta',
+                progress <= ctaIndex && progress >= ctaIndex - 0.25
+            );
+            bonzo(this.$galleryEl).toggleClass(
+                'show-oj',
+                progress >= length - 1.25
+            );
 
-            bonzo(this.$progress).toggleClass('first-half', fractionProgress && fractionProgress < 0.5);
+            bonzo(this.$progress).toggleClass(
+                'first-half',
+                fractionProgress && fractionProgress < 0.5
+            );
 
-            bonzo(this.$meta).css('opacity', progress != 0 ? 0 : 1);
+            bonzo(this.$meta).css('opacity', progress !== 0 ? 0 : 1);
         });
 
         if (newIndex && newIndex !== this.index) {
             this.index = newIndex;
             this.trigger('reload', {
-                nav: 'Scroll'
+                nav: 'Scroll',
             });
         }
     }
@@ -292,19 +354,21 @@ class HostedGallery {
     trackNavBetweenImages(data) {
         if (data && data.nav) {
             const trackingPrefix = config.page.trackingPrefix || '';
-            interactionTracking.trackNonClickInteraction(trackingPrefix + data.nav + ' - image ' + this.index);
+            interactionTracking.trackNonClickInteraction(`${trackingPrefix + data.nav} - image ${this.index}`);
         }
     }
 
     onResize() {
-        this.resizer = this.resizer || (() => {
-            this.loadSurroundingImages(this.index, this.$images.length);
-            if (this.useSwipe) {
-                this.swipeContainerWidth = this.$galleryFrame.dim().width;
-                this.translateContent(this.index, 0, 0);
-            }
-            this.setPageWidth();
-        });
+        this.resizer =
+            this.resizer ||
+            (() => {
+                this.loadSurroundingImages(this.index, this.$images.length);
+                if (this.useSwipe) {
+                    this.swipeContainerWidth = this.$galleryFrame.dim().width;
+                    this.translateContent(this.index, 0, 0);
+                }
+                this.setPageWidth();
+            });
         throttle(this.resizer, 200)();
     }
 
@@ -322,12 +386,12 @@ class HostedGallery {
         const that = this;
         if (imgRatio < width / height) {
             imageWidth = height * imgRatio;
-            leftRight = (width - imageWidth) / 2 + 'px';
+            leftRight = `${(width - imageWidth) / 2}px`;
         }
         this.swipeContainerWidth = imageWidth;
         fastdom.write(() => {
             $header.css('width', imageWidth);
-            $footer.css('margin', '0 ' + leftRight);
+            $footer.css('margin', `0 ${leftRight}`);
             $footer.css('width', 'auto');
             $galleryFrame.css('left', leftRight);
             $galleryFrame.css('right', leftRight);
@@ -340,23 +404,26 @@ class HostedGallery {
             '37': 'left',
             '38': 'up',
             '39': 'right',
-            '40': 'down'
+            '40': 'down',
         };
-        if (e.keyCode === 37 || e.keyCode === 38) { // up/left
+        if (e.keyCode === 37 || e.keyCode === 38) {
+            // up/left
             e.preventDefault();
             this.scrollTo(this.index - 1);
             this.trigger('prev', {
-                nav: 'KeyPress:' + keyNames[e.keyCode]
+                nav: `KeyPress:${keyNames[e.keyCode]}`,
             });
             return false;
-        } else if (e.keyCode === 39 || e.keyCode === 40) { // down/right
+        } else if (e.keyCode === 39 || e.keyCode === 40) {
+            // down/right
             e.preventDefault();
             this.scrollTo(this.index + 1);
             this.trigger('next', {
-                nav: 'KeyPress:' + keyNames[e.keyCode]
+                nav: `KeyPress:${keyNames[e.keyCode]}`,
             });
             return false;
-        } else if (e.keyCode === 73) { // 'i'
+        } else if (e.keyCode === 73) {
+            // 'i'
             this.trigger('toggle-info');
         }
     }
@@ -372,27 +439,39 @@ class HostedGallery {
     }
 }
 
-
 HostedGallery.prototype.states = {
-    'image': {
+    image: {
         enter() {
             const that = this;
 
             // load prev/current/next
             this.loadSurroundingImages(this.index, this.$images.length);
             this.$captions.each((caption, index) => {
-                bonzo(caption).toggleClass('current-caption', that.index === index + 1);
+                bonzo(caption).toggleClass(
+                    'current-caption',
+                    that.index === index + 1
+                );
             });
-            bonzo(this.$counter).html(this.index + '/' + this.$images.length);
+            bonzo(this.$counter).html(`${this.index}/${this.$images.length}`);
 
             if (this.useSwipe) {
                 this.translateContent(this.index, 0, 100);
-                bonzo(this.$galleryEl).toggleClass('show-oj', this.index === this.$images.length);
-                bonzo(this.$galleryEl).toggleClass('show-cta', this.index === this.ctaIndex() + 1);
+                bonzo(this.$galleryEl).toggleClass(
+                    'show-oj',
+                    this.index === this.$images.length
+                );
+                bonzo(this.$galleryEl).toggleClass(
+                    'show-cta',
+                    this.index === this.ctaIndex() + 1
+                );
             }
 
-            const pageName = config.page.pageName || window.location.pathname.substr(window.location.pathname.lastIndexOf('/') + 1);
-            url.pushUrl({}, document.title, pageName + '#img-' + this.index, true);
+            const pageName =
+                config.page.pageName ||
+                window.location.pathname.substr(
+                    window.location.pathname.lastIndexOf('/') + 1
+                );
+            pushUrl({}, document.title, `${pageName}#img-${this.index}`, true);
             // event bindings
             mediator.on('window:throttledResize', this.resize);
         },
@@ -401,52 +480,55 @@ HostedGallery.prototype.states = {
             mediator.off('window:throttledResize', this.resize);
         },
         events: {
-            'next': function(e) {
-                if (this.index < this.$images.length) { // last img
+            next(e) {
+                if (this.index < this.$images.length) {
+                    // last img
                     this.index += 1;
                     this.trackNavBetweenImages(e);
                 }
                 this.reloadState = true;
             },
-            'prev': function(e) {
-                if (this.index > 1) { // first img
+            prev(e) {
+                if (this.index > 1) {
+                    // first img
                     this.index -= 1;
                     this.trackNavBetweenImages(e);
                 }
                 this.reloadState = true;
             },
-            'reload': function(e) {
+            reload(e) {
                 this.trackNavBetweenImages(e);
                 this.reloadState = true;
             },
             'toggle-info': function() {
-                this.$captionContainer.toggleClass('hosted-gallery--show-caption');
+                this.$captionContainer.toggleClass(
+                    'hosted-gallery--show-caption'
+                );
             },
             'hide-info': function() {
-                this.$captionContainer.removeClass('hosted-gallery--show-caption');
+                this.$captionContainer.removeClass(
+                    'hosted-gallery--show-caption'
+                );
             },
             'show-info': function() {
                 this.$captionContainer.addClass('hosted-gallery--show-caption');
             },
-            'resize': function() {
+            resize() {
                 this.onResize();
-            }
-        }
-    }
+            },
+        },
+    },
 };
 
-function init() {
+const init = () => {
     if (qwery('.js-hosted-gallery-container').length) {
-        return loadCssPromise.loadCssPromise
-            .then(() => {
-            let gallery;
-            let match;
-            const galleryHash = window.location.hash;
+        return loadCssPromise.then(() => {
             let res;
-
-            gallery = new HostedGallery();
-            match = /\?index=(\d+)/.exec(document.location.href);
-            if (match) { // index specified so launch gallery at that index
+            const galleryHash = window.location.hash;
+            const gallery = new HostedGallery();
+            const match = /\?index=(\d+)/.exec(document.location.href);
+            if (match) {
+                // index specified so launch gallery at that index
                 gallery.loadAtIndex(parseInt(match[1], 10));
             } else {
                 res = /^#(?:img-)?(\d+)$/.exec(galleryHash);
@@ -460,9 +542,9 @@ function init() {
     }
 
     return Promise.resolve();
-}
+};
 
 export default {
     init,
-    HostedGallery
+    HostedGallery,
 };
