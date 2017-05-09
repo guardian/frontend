@@ -23,11 +23,9 @@ import config from 'lib/config';
 function addClassIfHasClass(newClassNames) {
     return function hasClass(classNames) {
         return function onAdvertRendered(_, advert) {
-            if (classNames.some(function(className) {
-                    return advert.node.classList.contains(className);
-                })) {
-                return fastdom.write(function() {
-                    newClassNames.forEach(function(className) {
+            if (classNames.some(className => advert.node.classList.contains(className))) {
+                return fastdom.write(() => {
+                    newClassNames.forEach(className => {
                         advert.node.classList.add(className);
                     });
                 });
@@ -36,10 +34,10 @@ function addClassIfHasClass(newClassNames) {
     };
 }
 
-var addFluid250 = addClassIfHasClass(['ad-slot--fluid250']);
-var addFluid = addClassIfHasClass(['ad-slot--fluid']);
+const addFluid250 = addClassIfHasClass(['ad-slot--fluid250']);
+const addFluid = addClassIfHasClass(['ad-slot--fluid']);
 
-var sizeCallbacks = {};
+const sizeCallbacks = {};
 
 /**
  * DFP fluid ads should use existing fluid-250 styles in the top banner position
@@ -49,7 +47,7 @@ sizeCallbacks[adSizes.fluid] = addFluid(['ad-slot']);
 /**
  * Trigger sticky scrolling for MPUs in the right-hand article column
  */
-sizeCallbacks[adSizes.mpu] = function(_, advert) {
+sizeCallbacks[adSizes.mpu] = (_, advert) => {
     if (advert.node.classList.contains('js-sticky-mpu')) {
         stickyMpu(advert.node);
     } else {
@@ -60,18 +58,18 @@ sizeCallbacks[adSizes.mpu] = function(_, advert) {
 /**
  * Resolve the stickyMpu.whenRendered promise
  */
-sizeCallbacks[adSizes.halfPage] = function() {
+sizeCallbacks[adSizes.halfPage] = () => {
     mediator.emit('page:commercial:sticky-mpu');
 };
 
-sizeCallbacks[adSizes.video] = function(_, advert) {
-    fastdom.write(function() {
+sizeCallbacks[adSizes.video] = (_, advert) => {
+    fastdom.write(() => {
         advert.node.classList.add('u-h');
     });
 };
 
-sizeCallbacks[adSizes.video2] = function(_, advert) {
-    fastdom.write(function() {
+sizeCallbacks[adSizes.video2] = (_, advert) => {
+    fastdom.write(() => {
         advert.node.classList.add('ad-slot--outstream');
     });
 };
@@ -81,10 +79,10 @@ sizeCallbacks[adSizes.video2] = function(_, advert) {
  * and their containers closed up.
  */
 sizeCallbacks[adSizes.outOfPage] =
-    sizeCallbacks[adSizes.empty] = function(event, advert) {
+    sizeCallbacks[adSizes.empty] = (event, advert) => {
         if (!event.slot.getOutOfPage()) {
-            var parent = advert.node.parentNode;
-            return fastdom.write(function() {
+            const parent = advert.node.parentNode;
+            return fastdom.write(() => {
                 advert.node.classList.add('u-h');
                 // if in a slice, add the 'no mpu' class
                 if (parent.classList.contains('fc-slice__item--mpu-candidate')) {
@@ -97,14 +95,12 @@ sizeCallbacks[adSizes.outOfPage] =
 /**
  * Portrait adverts exclude the locally-most-popular widget
  */
-sizeCallbacks[adSizes.portrait] = function() {
+sizeCallbacks[adSizes.portrait] = () => {
     // remove geo most popular
-    geoMostPopular.whenRendered.then(function(geoMostPopular) {
-        return fastdom.write(function() {
-            geoMostPopular.elem.remove();
-            geoMostPopular.elem = null;
-        });
-    });
+    geoMostPopular.whenRendered.then(geoMostPopular => fastdom.write(() => {
+        geoMostPopular.elem.remove();
+        geoMostPopular.elem = null;
+    }));
 };
 
 /**
@@ -120,22 +116,16 @@ sizeCallbacks[adSizes.merchandising] = addFluid250(['ad-slot--commercial-compone
 function renderAdvert(advert, slotRenderEvent) {
     addContentClass(advert.node);
 
-    return applyCreativeTemplate(advert.node).then(function(isRendered) {
+    return applyCreativeTemplate(advert.node).then(isRendered => {
         return callSizeCallback()
-            .then(function() {
-                return renderAdvertLabel(advert.node);
-            })
+            .then(() => renderAdvertLabel(advert.node))
             .then(addFeedbackDropdownToggle)
-            .then(function() {
-                return applyFeedbackOnClickListeners(slotRenderEvent);
-            })
+            .then(() => applyFeedbackOnClickListeners(slotRenderEvent))
             .then(addRenderedClass)
-            .then(function() {
-                return isRendered;
-            });
+            .then(() => isRendered);
 
         function callSizeCallback() {
-            var size = advert.size.toString();
+            let size = advert.size.toString();
             if (size === '0,0') {
                 size = 'fluid';
             }
@@ -146,13 +136,13 @@ function renderAdvert(advert, slotRenderEvent) {
         }
 
         function addRenderedClass() {
-            return isRendered ? fastdom.write(function() {
+            return isRendered ? fastdom.write(() => {
                 advert.node.classList.add('ad-slot--rendered');
             }) : Promise.resolve();
         }
 
         function addFeedbackDropdownToggle() {
-            return (config.switches.adFeedback && isRendered) ? fastdom.write(function() {
+            return (config.switches.adFeedback && isRendered) ? fastdom.write(() => {
                 if (!advert.node.classList.contains('js-toggle-ready')) {
                     new Toggles(advert.node).init();
                 }
@@ -160,26 +150,26 @@ function renderAdvert(advert, slotRenderEvent) {
         }
 
         function applyFeedbackOnClickListeners(slotRenderEvent) {
-            var readyClass = 'js-onclick-ready';
-            return (config.switches.adFeedback && isRendered) ? fastdom.write(function() {
-                qwery('.js-ad-feedback-option:not(.js-onclick-ready)').forEach(function(el) {
-                    var slotId = el.getAttribute('data-slot');
-                    var problem = el.getAttribute('data-problem');
-                    el.addEventListener('click', function() {
+            const readyClass = 'js-onclick-ready';
+            return (config.switches.adFeedback && isRendered) ? fastdom.write(() => {
+                qwery('.js-ad-feedback-option:not(.js-onclick-ready)').forEach(el => {
+                    const slotId = el.getAttribute('data-slot');
+                    const problem = el.getAttribute('data-problem');
+                    el.addEventListener('click', () => {
                         recordUserAdFeedback(window.location.pathname, slotId, slotRenderEvent, problem);
                     });
                     el.classList.add(readyClass);
                 });
-                qwery('.js-ad-feedback-option-other:not(.js-onclick-ready)').forEach(function(el) {
-                    var form = qwery('form', el)[0];
-                    var commentBox = qwery('input', el)[0];
-                    var slotId = el.getAttribute('data-slot');
-                    el.addEventListener('click', function(e) {
+                qwery('.js-ad-feedback-option-other:not(.js-onclick-ready)').forEach(el => {
+                    const form = qwery('form', el)[0];
+                    const commentBox = qwery('input', el)[0];
+                    const slotId = el.getAttribute('data-slot');
+                    el.addEventListener('click', e => {
                         if (e.target.tagName !== 'BUTTON' || !commentBox.value) {
                             e.stopImmediatePropagation();
                         }
                     });
-                    form.addEventListener('submit', function(e) {
+                    form.addEventListener('submit', e => {
                         e.preventDefault();
                         recordUserAdFeedback(window.location.pathname, slotId, slotRenderEvent, 'other', commentBox.value);
                     });
@@ -191,10 +181,10 @@ function renderAdvert(advert, slotRenderEvent) {
 }
 
 function addContentClass(adSlotNode) {
-    var adSlotContent = qwery('> div:not(.ad-slot__label)', adSlotNode);
+    const adSlotContent = qwery('> div:not(.ad-slot__label)', adSlotNode);
 
     if (adSlotContent.length) {
-        fastdom.write(function() {
+        fastdom.write(() => {
             adSlotContent[0].classList.add('ad-slot__content');
         });
     }
