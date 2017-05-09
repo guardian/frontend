@@ -1,12 +1,10 @@
 define('ophan/ng', [], function () { return { record: function () {} }; });
 
 define([
-    'Promise',
     'fastdom',
     'helpers/injector',
     'helpers/fixtures'
 ], function (
-    Promise,
     fastdom,
     Injector,
     fixtures

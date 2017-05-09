@@ -1,5 +1,4 @@
 define([
-    'Promise',
     'lib/url',
     'lib/config',
     'lib/detect',
@@ -7,7 +6,7 @@ define([
     'lodash/arrays/flatten',
     'lodash/functions/once',
     'commercial/modules/dfp/prepare-switch-tag'
-], function (Promise, urlUtils, config, detect, uniq, flatten, once, prepareSwitchTag) {
+], function (urlUtils, config, detect, uniq, flatten, once, prepareSwitchTag) {
     var adUnit = once(function () {
         var urlVars = urlUtils.getUrlVars();
         return urlVars['ad-unit'] ?
