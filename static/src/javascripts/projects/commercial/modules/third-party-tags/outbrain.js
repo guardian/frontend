@@ -6,7 +6,7 @@ import steadyPage from 'lib/steady-page';
 import { loadScript } from 'lib/load-script';
 import checkMediator from 'projects/common/modules/check-mediator';
 import ophan from 'ophan/ng';
-import getCode from './outbrain-codes';
+import { getCode } from './outbrain-codes';
 
 const outbrainUrl = '//widgets.outbrain.com/outbrain.js';
 const outbrainTpl = ({ widgetCode }: { widgetCode: string }): string => `

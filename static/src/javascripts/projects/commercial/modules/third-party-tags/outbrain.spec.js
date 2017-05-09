@@ -3,7 +3,7 @@ import config from 'lib/config';
 import $ from 'lib/$';
 import checkMediator from 'projects/common/modules/check-mediator';
 import outbrain from './outbrain';
-import getSection from './outbrain-sections';
+import { getSection } from './outbrain-sections';
 
 const sut = outbrain; // System under test
 
