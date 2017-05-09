@@ -156,7 +156,7 @@ define([
                     });
             });
         });
-/*
+
         describe('If user not member', function () {
             beforeEach(function (done) {
                 showMembershipMessages = commercialFeatures.async.canDisplayMembershipEngagementBanner;
@@ -236,6 +236,6 @@ define([
                         });
                 });
             });
-        });*/
+        });
     });
 });
