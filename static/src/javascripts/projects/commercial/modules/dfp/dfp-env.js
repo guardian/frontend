@@ -2,6 +2,8 @@
 import { getUrlVars } from 'lib/url';
 import config from 'lib/config';
 
+type Map<K, V> = { [indexer: K]: V };
+
 export type DfpEnv = {
     renderStartTime: number,
     adSlotSelector: string,
@@ -10,7 +12,7 @@ export type DfpEnv = {
     lazyLoadEnabled: boolean,
     lazyLoadObserve: boolean,
     creativeIDs: Array<string>,
-    advertIds: Object,
+    advertIds: Map<string, number>,
     advertsToLoad: Array<Object>,
     advertsToRefresh: Array<Object>,
     adverts: Array<Object>,
