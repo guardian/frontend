@@ -13,6 +13,33 @@ import interactionTracking from 'common/modules/analytics/interaction-tracking';
 import { loadCssPromise } from 'lib/load-css-promise';
 
 class HostedGallery {
+    useSwipe: boolean;
+    swipeThreshold: number;
+    swipeContainerWidth: number;
+    index: number;
+    imageRatios: number[];
+    $galleryEl: bonzo;
+    $galleryFrame: bonzo;
+    $header: bonzo;
+    $imagesContainer: bonzo;
+    $captionContainer: bonzo;
+    $captions: bonzo;
+    $scrollEl: bonzo;
+    $images: bonzo;
+    $progress: bonzo;
+    $border: bonzo;
+    prevBtn: HTMLElement;
+    nextBtn: HTMLElement;
+    infoBtn: HTMLElement;
+    $counter: bonzo;
+    $ctaFloat: bonzo;
+    $ojFloat: bonzo;
+    $meta: bonzo;
+    ojClose: HTMLElement;
+    resize: (data?: Object) => void;
+    resizer: () => void;
+    fsm: FiniteStateMachine;
+    states: Object;
     constructor() {
         // CONFIG
         const breakpoint = detect.getBreakpoint();
@@ -69,10 +96,13 @@ class HostedGallery {
                 this.trigger.bind(this, 'toggle-info')
             );
             this.ojClose.addEventListener('click', this.toggleOj.bind(this));
-            document.body.addEventListener(
-                'keydown',
-                this.handleKeyEvents.bind(this)
-            );
+
+            if (document.body) {
+                document.body.addEventListener(
+                    'keydown',
+                    this.handleKeyEvents.bind(this)
+                );
+            }
             this.loadSurroundingImages(1, this.$images.length);
             this.setPageWidth();
 
@@ -178,7 +208,7 @@ class HostedGallery {
         });
     }
 
-    static ctaIndex() {
+    static ctaIndex(): ?number {
         const ctaIndex = config.page.ctaIndex;
         const images = config.page.images;
         return ctaIndex > 0 && ctaIndex < images.length - 1
@@ -186,11 +216,11 @@ class HostedGallery {
             : undefined;
     }
 
-    trigger(event, data) {
+    trigger(event: string, data?: Object) {
         this.fsm.trigger(event, data);
     }
 
-    loadSurroundingImages(index, count) {
+    loadSurroundingImages(index: number, count: number) {
         let $img;
         const that = this;
 
@@ -217,7 +247,7 @@ class HostedGallery {
             }, this);
     }
 
-    resizeImage(imgIndex) {
+    resizeImage(imgIndex: number) {
         const $galleryFrame = this.$galleryFrame[0];
         const width = $galleryFrame.clientWidth;
         const height = $galleryFrame.clientHeight;
@@ -280,7 +310,7 @@ class HostedGallery {
         });
     }
 
-    translateContent(imgIndex, offset, duration) {
+    translateContent(imgIndex: number, offset: number, duration: number) {
         const px = -1 * (imgIndex - 1) * this.swipeContainerWidth;
         const galleryEl = this.$imagesContainer[0];
         const $meta = this.$meta;
@@ -298,16 +328,20 @@ class HostedGallery {
         });
     }
 
-    fadeContent(e) {
+    fadeContent(e: Event) {
         const length = this.$images.length;
-        const scrollTop = e.target.scrollTop;
-        const scrollHeight = e.target.scrollHeight;
+        const scrollTop = e.target instanceof HTMLElement
+            ? e.target.scrollTop
+            : 0;
+        const scrollHeight = e.target instanceof HTMLElement
+            ? e.target.scrollHeight
+            : 0;
         const progress =
             Math.round(length * (scrollTop / scrollHeight) * 100) / 100;
         const fractionProgress = progress % 1;
         const deg = Math.ceil(fractionProgress * 360);
         const newIndex = Math.round(progress + 0.75);
-        const ctaIndex = HostedGallery.ctaIndex();
+        const ctaIndex: number = HostedGallery.ctaIndex() || 0;
         fastdom.write(() => {
             this.$images.each((image, index) => {
                 const opacity = (progress - index + 1) * 16 / 11 - 0.0625;
@@ -342,7 +376,7 @@ class HostedGallery {
         }
     }
 
-    scrollTo(index) {
+    scrollTo(index: number) {
         const scrollEl = this.$scrollEl;
         const length = this.$images.length;
         const scrollHeight = scrollEl[0].scrollHeight;
@@ -351,7 +385,7 @@ class HostedGallery {
         });
     }
 
-    trackNavBetweenImages(data) {
+    trackNavBetweenImages(data: Object) {
         if (data && data.nav) {
             const trackingPrefix = config.page.trackingPrefix || '';
             interactionTracking.trackNonClickInteraction(`${trackingPrefix + data.nav} - image ${this.index}`);
@@ -399,7 +433,7 @@ class HostedGallery {
         });
     }
 
-    handleKeyEvents(e) {
+    handleKeyEvents(e: KeyboardEvent) {
         const keyNames = {
             '37': 'left',
             '38': 'up',
@@ -428,7 +462,7 @@ class HostedGallery {
         }
     }
 
-    loadAtIndex(i) {
+    loadAtIndex(i: number) {
         this.index = i;
         this.trigger('reload');
         if (this.useSwipe) {
@@ -480,7 +514,7 @@ HostedGallery.prototype.states = {
             mediator.off('window:throttledResize', this.resize);
         },
         events: {
-            next(e) {
+            next(e: Object) {
                 if (this.index < this.$images.length) {
                     // last img
                     this.index += 1;
@@ -488,7 +522,7 @@ HostedGallery.prototype.states = {
                 }
                 this.reloadState = true;
             },
-            prev(e) {
+            prev(e: Object) {
                 if (this.index > 1) {
                     // first img
                     this.index -= 1;
@@ -496,7 +530,7 @@ HostedGallery.prototype.states = {
                 }
                 this.reloadState = true;
             },
-            reload(e) {
+            reload(e: Object) {
                 this.trackNavBetweenImages(e);
                 this.reloadState = true;
             },
