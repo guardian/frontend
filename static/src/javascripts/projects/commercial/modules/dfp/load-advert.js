@@ -1,14 +1,15 @@
-import dfpEnv from 'commercial/modules/dfp/dfp-env';
+// @flow
 import Advert from 'commercial/modules/dfp/Advert';
-export default loadAdvert;
 
-function loadAdvert(advert) {
+const loadAdvert = (advert: Advert): void => {
     advert.whenSlotReady
-        .catch(function() {
+        .catch(() => {
             // The display needs to be called, even in the event of an error.
         })
-        .then(function() {
+        .then(() => {
             Advert.startLoading(advert);
             window.googletag.display(advert.id);
         });
-}
+};
+
+export default loadAdvert;
