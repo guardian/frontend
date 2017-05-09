@@ -23,7 +23,7 @@ const cancelAutoplayMobile = () => {
     });
 };
 
-const triggerAutoplay = (getCurrentTimeFn, duration) => {
+const triggerAutoplay = (getCurrentTimeFn: () => number, duration: number) => {
     nextVideoInterval = setInterval(() => {
         const timeLeft = duration - Math.ceil(getCurrentTimeFn());
         const countdownLength = 10; // seconds before the end when to show the timer
