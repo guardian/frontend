@@ -14,6 +14,8 @@ const adUnit = once(() => {
         : config.page.adUnit;
 });
 
+type SizeMappingArray = Array<Object>;
+
 /**
  * Builds and assigns the correct size map for a slot based on the breakpoints
  * attached to the element via data attributes.
@@ -24,7 +26,7 @@ const adUnit = once(() => {
  * If it has been defined, then we add that size to the size mapping.
  *
  */
-const buildSizeMapping = (sizes: Object) => {
+const buildSizeMapping = (sizes: Object): SizeMappingArray => {
     const mapping = window.googletag.sizeMapping();
 
     detect.breakpoints.filter(_ => _.name in sizes).forEach(_ => {
@@ -34,7 +36,7 @@ const buildSizeMapping = (sizes: Object) => {
     return mapping.build();
 };
 
-const getSizeOpts = (sizesByBreakpoint: Object) => {
+const getSizeOpts = (sizesByBreakpoint: Object): Object => {
     const sizeMapping = buildSizeMapping(sizesByBreakpoint);
     // as we're using sizeMapping, pull out all the ad sizes, as an array of arrays
     const sizes = uniq(
@@ -48,7 +50,7 @@ const getSizeOpts = (sizesByBreakpoint: Object) => {
     };
 };
 
-const defineSlot: Object = (adSlotNode: Element, sizes: Object) => {
+const defineSlot = (adSlotNode: Element, sizes: Object): Object => {
     const slotTarget = adSlotNode.getAttribute('data-name');
     const sizeOpts = getSizeOpts(sizes);
     const id = adSlotNode.id;
@@ -79,4 +81,4 @@ const defineSlot: Object = (adSlotNode: Element, sizes: Object) => {
     };
 };
 
-export default defineSlot;
+export { defineSlot };
