@@ -11,7 +11,7 @@ Frontend is built in two parts, using `make` for the client side asset build and
 
 **[All documentation notes and useful items can be found in the `docs` folder](docs).**
 
-# Core Development Principles (squiggles on the water)
+# Core Development Principles (fire on the water)
 These principles apply to all requests on `www.theguardian.com` and `api.nextgen.guardianapps.co.uk` (our Ajax URL)
 
 ## On the server
