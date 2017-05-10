@@ -2,6 +2,7 @@
     @include sidebar-animation(-110%);
     -webkit-overflow-scrolling: touch;
     background-color: $guardian-brand-dark;
+    bottom: 0;
     color: #ffffff;
     height: 100%;
     position: fixed;
@@ -12,6 +13,7 @@
     font-size: 20px;
     overflow: auto;
     line-height: 1;
+    right: 0;
     text-transform: lowercase;
     top: 0;
     transition: transform .2s cubic-bezier(.23, 1, .32, 1);
@@ -25,6 +27,10 @@
 
     @include mq(mobileLandscape) {
         margin-right: $gutter-large + ($veggie-burger-medium / 2);
+    }
+
+    @include mq(tablet) {
+        margin-right: $gutter-xlarge + ($veggie-burger-medium / 2);
     }
 
     .new-header--open & {

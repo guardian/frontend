@@ -158,10 +158,11 @@ $c-guardian-services-action: #ffffff;
  * Mobile Header Styling below - TODO: Integrate when coming up with the desktop design
  ****************/
 
-// Specific values for menu button breakpoints
+// Specific values for veggie-burger and fly-in
 $gutter-small: 29px;
 $gutter-medium: 37px;
 $gutter-large: 55px;
+$gutter-xlarge: 85px;
 
 //This variable is only used in open menu styling
 $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter / 2;
@@ -171,7 +172,8 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter / 2;
     transition: transform .4s cubic-bezier(.23, 1, .32, 1);
 }
 
-// When the menu is open this class is added to the html to prevent users from scrolling
+/* When the menu is open this class is added to the html to prevent users
+from scrolling */
 .nav-is-open {
     overflow: hidden;
     width: 100%;
@@ -192,35 +194,7 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter / 2;
     align-items: flex-start;
 }
 
-.new-header__logo-wrapper {
-    padding-top: $gs-baseline / 2;
-    padding-bottom: $gs-baseline / 2;
-    margin-left: auto;
-}
-
-.new-header__logo__svg {
-    // Aspect ratio: 16:3
-    display: block;
-    // height: auto doesn't work in Safari
-    height: calc(3 / 16 * 170px);
-    padding-right: $gs-gutter / 2;
-    width: 170px;
-
-    @include mq(mobileMedium) {
-        width: 225px;
-        height: calc(3 / 16 * 225px);
-    }
-
-    @include mq(mobileLandscape) {
-        width: 260px;
-        // height: auto doesn't work in Safari
-        height: calc(3 / 16 * 260px);
-        padding: ($gs-baseline / 2) ($gs-gutter / 2) 0;
-        margin-right: $gs-gutter / 2;
-    }
-}
-
-/* PRIMARY */
+/* Pillars */
 .new-header__pillars {
     list-style: none;
     margin: 0;

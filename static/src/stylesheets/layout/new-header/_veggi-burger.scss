@@ -23,6 +23,10 @@
         right: $gutter-large;
     }
 
+    @include mq(tablet) {
+        right: $gutter-xlarge;
+    }
+
     // menu is open
     .new-header--open & {
         z-index: 1071;
