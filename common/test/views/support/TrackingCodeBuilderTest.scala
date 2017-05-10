@@ -32,7 +32,8 @@ class TrackingCodeBuilderTest extends FlatSpec with Matchers with BeforeAndAfter
     fallbackImageUrl = None,
     targetUrl = "",
     None,
-    branding
+    branding,
+    None
   )
 
   private def mkContainerModel(branding: Option[Branding] = None) = {
