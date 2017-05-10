@@ -11,7 +11,7 @@ type WeatherSearchOptions = {
     apiUrl: string,
 };
 
-// Eugh: https://github.com/facebook/flow/issues/380#issuecomment-224380551
+// Keys must be strings for Flow: https://github.com/facebook/flow/issues/380
 const keyCodeMap = {
     '13': 'enter',
     '38': 'up',
