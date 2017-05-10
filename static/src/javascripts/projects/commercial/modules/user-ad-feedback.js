@@ -21,8 +21,7 @@ const recordUserAdFeedback = function(
         sourceAgnosticCreativeId: string,
         sourceAgnosticLineItemId: string,
     },
-    feedbackType: string,
-    comment?: string
+    feedbackType: string
 ): Promise<void> {
     const feedbackUrl =
         'https://j2cy9stt59.execute-api.eu-west-1.amazonaws.com/prod/adFeedback';
@@ -37,7 +36,6 @@ const recordUserAdFeedback = function(
         creativeId: slotRenderEvent.sourceAgnosticCreativeId.toString(),
         lineId: slotRenderEvent.sourceAgnosticLineItemId.toString(),
         feedback: feedbackType,
-        comment,
         browser: ua.browser.toString() + ua.version.toString(),
         breakPoint,
     };

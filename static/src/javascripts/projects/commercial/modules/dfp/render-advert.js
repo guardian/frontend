@@ -190,32 +190,6 @@ const renderAdvert = (advert: any, slotRenderEvent: any) => {
                               });
                               el.classList.add(readyClass);
                           });
-                          qwery(
-                              '.js-ad-feedback-option-other:not(.js-onclick-ready)'
-                          ).forEach(el => {
-                              const form = qwery('form', el)[0];
-                              const commentBox = qwery('input', el)[0];
-                              const slotId = el.getAttribute('data-slot');
-                              el.addEventListener('click', e => {
-                                  if (
-                                      e.target.tagName !== 'BUTTON' ||
-                                      !commentBox.value
-                                  ) {
-                                      e.stopImmediatePropagation();
-                                  }
-                              });
-                              form.addEventListener('submit', e => {
-                                  e.preventDefault();
-                                  recordUserAdFeedback(
-                                      window.location.pathname,
-                                      slotId,
-                                      slotRender,
-                                      'other',
-                                      commentBox.value
-                                  );
-                              });
-                              el.classList.add(readyClass);
-                          });
                       })
                     : Promise.resolve();
             };
