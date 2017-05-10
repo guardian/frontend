@@ -2,7 +2,7 @@ package common.commercial.hosted
 
 import com.gu.contentapi.client.model.v1.Content
 import common.Logging
-import common.commercial.hosted.ContentUtils.{findLargestAsset, imageElements, findSmallestThumbnailAsset}
+import common.commercial.hosted.ContentUtils._
 import common.commercial.hosted.LoggingUtils.getAndLog
 import model.MetaData
 
@@ -43,8 +43,6 @@ object HostedGalleryPage extends Logging {
       ctaAtom <- getAndLog(content, ctaAtoms.headOption, "the CTA atom is missing")
     } yield {
 
-      val thumbnailAsset = findSmallestThumbnailAsset(content)
-
       val galleryImages = {
         imageElements(content, "gallery") map { element =>
           val asset = findLargestAsset(element)
@@ -69,8 +67,10 @@ object HostedGalleryPage extends Logging {
         cta = HostedCallToAction.fromAtom(ctaAtom),
         socialShareText = content.fields.flatMap(_.socialShareText),
         shortSocialShareText = content.fields.flatMap(_.shortSocialShareText),
-        thumbnailUrl = thumbnailAsset.flatMap(_.file) getOrElse "",
-        metadata = HostedMetadata.fromContent(content).copy(openGraphImages = thumbnailAsset.flatMap(_.file).toList)
+        thumbnailUrl = thumbnailUrl(content),
+        metadata = HostedMetadata
+          .fromContent(content)
+          .copy(openGraphImages = findLargestMainImageAsset(content).flatMap(_.file).toList)
       )
     }
 

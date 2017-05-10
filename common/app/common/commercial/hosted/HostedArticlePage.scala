@@ -2,7 +2,7 @@ package common.commercial.hosted
 
 import com.gu.contentapi.client.model.v1.Content
 import common.Logging
-import common.commercial.hosted.ContentUtils.{findLargestMainImageAsset, findSmallestThumbnailAsset}
+import common.commercial.hosted.ContentUtils.{findLargestMainImageAsset, thumbnailUrl}
 import common.commercial.hosted.LoggingUtils.getAndLog
 import model.MetaData
 
@@ -47,7 +47,7 @@ object HostedArticlePage extends Logging {
         cta = HostedCallToAction.fromAtom(ctaAtom),
         mainPicture = mainImageAsset.flatMap(_.file) getOrElse "",
         mainPictureCaption = mainImageAsset.flatMap(_.typeData.flatMap(_.caption)) getOrElse "",
-        thumbnailUrl = findSmallestThumbnailAsset(content).flatMap(_.file) getOrElse "",
+        thumbnailUrl = thumbnailUrl(content),
         socialShareText = content.fields.flatMap(_.socialShareText),
         shortSocialShareText = content.fields.flatMap(_.shortSocialShareText),
         metadata = HostedMetadata.fromContent(content).copy(openGraphImages = mainImageAsset.flatMap(_.file).toList)

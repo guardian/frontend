@@ -2,6 +2,8 @@ package common.commercial.hosted
 
 import com.gu.contentapi.client.model.v1.ElementType.Image
 import com.gu.contentapi.client.model.v1.{Asset, Content, Element}
+import model.{ImageMedia, Element => ModelElement}
+import views.support.{ImgSrc, Item300}
 
 object ContentUtils {
 
@@ -14,15 +16,22 @@ object ContentUtils {
   private def findImageElement(item: Content, relation: String): Option[Element] =
     item.elements flatMap (_ find isRelatedImageElement(relation))
 
-  private def width(asset: Asset): Int = asset.typeData.flatMap(_.width).getOrElse(0)
-
-  private def findSmallestAsset(element: Element): Asset = element.assets.minBy(width)
-
-  def findLargestAsset(element: Element): Asset = element.assets.maxBy(width)
+  def findLargestAsset(element: Element): Asset = {
+    def width(asset: Asset): Int = asset.typeData.flatMap(_.width).getOrElse(0)
+    element.assets.maxBy(width)
+  }
 
   def findLargestMainImageAsset(item: Content): Option[Asset] =
     findImageElement(item, "main") map findLargestAsset
 
-  def findSmallestThumbnailAsset(item: Content): Option[Asset] =
-    findImageElement(item, "thumbnail") map findSmallestAsset
+  private def imageMedia(item: Content): ImageMedia =
+    item.elements map { elements =>
+      val assets = elements.zipWithIndex flatMap {
+        case (element, i) => ModelElement(element, i).images.allImages
+      }
+      ImageMedia(assets)
+    } getOrElse ImageMedia(Nil)
+
+  def thumbnailUrl(item: Content): String =
+    ImgSrc.findNearestSrc(imageMedia(item), Item300) getOrElse ""
 }

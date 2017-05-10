@@ -3,6 +3,7 @@ package common.commercial.hosted
 import com.gu.contentapi.client.model.v1.Content
 import com.gu.contentatom.thrift.AtomData
 import common.Logging
+import common.commercial.hosted.ContentUtils.thumbnailUrl
 import common.commercial.hosted.LoggingUtils.getAndLog
 import model.MetaData
 
@@ -56,7 +57,7 @@ object HostedVideoPage extends Logging {
         cta = HostedCallToAction.fromAtom(ctaAtom),
         socialShareText = content.fields.flatMap(_.socialShareText),
         shortSocialShareText = content.fields.flatMap(_.shortSocialShareText),
-        thumbnailUrl = video.posterUrl getOrElse "",
+        thumbnailUrl = thumbnailUrl(content),
         metadata = HostedMetadata.fromContent(content).copy(openGraphImages = video.posterUrl.toList)
       )
     }
