@@ -2,11 +2,15 @@
 
 const isExportStatement = (node, context) => {
     if (
-        (node.type === 'ExportDefaultDeclaration' ||
-            node.type === 'ExportNamedDeclaration' ||
-            node.type === 'ExportAllDeclaration') &&
+        [
+            'ExportAllDeclaration',
+            'ExportNamedDeclaration',
+            'ExportDefaultDeclaration',
+        ].includes(node.type) &&
         // ignore flowtype exports
-        context.getSourceCode().getTokens(node)[1].value !== 'type'
+        !['type', 'interface'].includes(
+            context.getSourceCode().getTokens(node)[1].value
+        )
     ) {
         return true;
     }
