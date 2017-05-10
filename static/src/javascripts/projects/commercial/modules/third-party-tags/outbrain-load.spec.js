@@ -1,6 +1,10 @@
 // @flow
 import config from 'lib/config';
 import $ from 'lib/$';
+import detect from 'lib/detect';
+import steadyPage from 'lib/steady-page';
+import { loadScript } from 'lib/load-script';
+import { tracking } from './outbrain-tracking';
 import { load } from './outbrain-load';
 
 jest.mock('ophan/ng', () => ({ record: () => undefined }));
@@ -11,11 +15,6 @@ jest.mock('lib/detect', () => ({
 jest.mock('lib/steady-page', () => ({ insert: jest.fn() }));
 jest.mock('lib/load-script', () => ({ loadScript: jest.fn() }));
 jest.mock('./outbrain-tracking', () => ({ tracking: jest.fn() }));
-
-const detect = require('lib/detect');
-const steadyPage = require('lib/steady-page');
-const loadScript = require('lib/load-script').loadScript;
-const tracking = require('./outbrain-tracking').tracking;
 
 detect.getBreakpoint.mockReturnValue('desktop');
 

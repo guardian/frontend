@@ -1,6 +1,9 @@
 // @flow
 import config from 'lib/config';
 import checkMediator from 'projects/common/modules/check-mediator';
+import detect from 'lib/detect';
+import { load } from './outbrain-load';
+import { tracking } from './outbrain-tracking';
 import { init } from './outbrain';
 import { getSection } from './outbrain-sections';
 
@@ -12,10 +15,6 @@ jest.mock('lib/detect', () => ({
 jest.mock('lib/load-script', () => ({ loadScript: jest.fn() }));
 jest.mock('./outbrain-load', () => ({ load: jest.fn() }));
 jest.mock('./outbrain-tracking', () => ({ tracking: jest.fn() }));
-
-const detect = require('lib/detect');
-const load: any = require('./outbrain-load').load;
-const tracking: any = require('./outbrain-tracking').tracking;
 
 describe('Outbrain', () => {
     beforeEach(done => {

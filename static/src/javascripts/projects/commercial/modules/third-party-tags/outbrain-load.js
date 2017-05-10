@@ -43,7 +43,7 @@ const build = function(
     return html;
 };
 
-const load = function(target?: string): any {
+const load = function(target?: string): Promise<void> {
     const slot = target && target in selectors ? target : 'defaults';
     const $outbrain = $(selectors.outbrain.widget);
     const $container = $(selectors.outbrain.container, $outbrain[0]);
@@ -73,6 +73,7 @@ const load = function(target?: string): any {
                 loadScript(outbrainUrl);
             });
     }
+    return Promise.resolve();
 };
 
 export { load };
