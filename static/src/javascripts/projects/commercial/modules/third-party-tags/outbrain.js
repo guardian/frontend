@@ -1,90 +1,8 @@
 // @flow
-import $ from 'lib/$';
-import config from 'lib/config';
 import detect from 'lib/detect';
-import steadyPage from 'lib/steady-page';
-import { loadScript } from 'lib/load-script';
 import checkMediator from 'projects/common/modules/check-mediator';
-import ophan from 'ophan/ng';
-import { getCode } from './outbrain-codes';
-
-const outbrainUrl = '//widgets.outbrain.com/outbrain.js';
-const outbrainTpl = ({ widgetCode }: { widgetCode: string }): string => `
-    <div class="OUTBRAIN" data-widget-id="${widgetCode}" data-ob-template="guardian"></div>
-    `;
-
-const module = {};
-
-const selectors = {
-    outbrain: {
-        widget: '.js-outbrain',
-        container: '.js-outbrain-container',
-    },
-    merchandising: {
-        widget: '.js-container--commercial',
-        container: '.js-outbrain-container',
-    },
-    nonCompliant: {
-        widget: '.js-outbrain',
-        container: '.js-outbrain-container',
-    },
-};
-
-const build = function(
-    codes: { code?: string, image?: string, text?: string },
-    breakpoint: string
-): string {
-    let html = outbrainTpl({
-        widgetCode: codes.code || codes.image || '',
-    });
-    if (breakpoint !== 'mobile' && codes.text) {
-        html += outbrainTpl({
-            widgetCode: codes.text,
-        });
-    }
-    return html;
-};
-
-module.tracking = function(trackingObj: {
-    widgetId?: string,
-    state?: string,
-}): void {
-    ophan.record({
-        outbrain: trackingObj,
-    });
-};
-
-module.load = function(target?: string): any {
-    const slot = target && target in selectors ? target : 'defaults';
-    const $outbrain = $(selectors.outbrain.widget);
-    const $container = $(selectors.outbrain.container, $outbrain[0]);
-    const breakpoint = detect.getBreakpoint();
-
-    const widgetCodes = getCode({
-        slot,
-        section: config.page.section,
-        breakpoint,
-    });
-
-    const widgetHtml = build(widgetCodes, breakpoint);
-
-    if ($container.length) {
-        return steadyPage
-            .insert($container[0], () => {
-                if (slot === 'merchandising') {
-                    $(selectors[slot].widget).replaceWith($outbrain[0]);
-                }
-                $container.append(widgetHtml);
-                $outbrain.css('display', 'block');
-            })
-            .then(() => {
-                module.tracking({
-                    widgetId: widgetCodes.code || widgetCodes.image,
-                });
-                loadScript(outbrainUrl);
-            });
-    }
-};
+import { load } from './outbrain-load';
+import { tracking } from './outbrain-tracking';
 
 /*
  Loading Outbrain is dependent on successful return of high relevance component
@@ -101,9 +19,9 @@ const canLoadInstantly = function() {
 };
 
 const onIsOutbrainNonCompliant = function(outbrainNonCompliant) {
-    if (outbrainNonCompliant) module.load('nonCompliant');
-    else module.load();
-    module.tracking({
+    if (outbrainNonCompliant) load('nonCompliant');
+    else load();
+    tracking({
         state: outbrainNonCompliant ? 'nonCompliant' : 'compliant',
     });
     return Promise.resolve();
@@ -113,8 +31,8 @@ const onIsOutbrainMerchandiseCompliant = function(
     outbrainMerchandiseCompliant
 ) {
     if (outbrainMerchandiseCompliant) {
-        module.load('merchandising');
-        module.tracking({
+        load('merchandising');
+        tracking({
             state: 'outbrainMerchandiseCompliant',
         });
         return Promise.resolve();
@@ -126,7 +44,7 @@ const onIsOutbrainMerchandiseCompliant = function(
 
 const onIsOutbrainBlockedByAds = function(outbrainBlockedByAds) {
     if (outbrainBlockedByAds) {
-        module.tracking({
+        tracking({
             state: 'outbrainBlockedByAds',
         });
         return Promise.resolve();
@@ -149,7 +67,7 @@ const onCanLoadInstantly = function(loadInstantly) {
 
 const onIsOutbrainDisabled = function(outbrainDisabled) {
     if (outbrainDisabled) {
-        module.tracking({
+        tracking({
             state: 'outbrainDisabled',
         });
         return Promise.resolve();
@@ -157,10 +75,10 @@ const onIsOutbrainDisabled = function(outbrainDisabled) {
     return canLoadInstantly().then(onCanLoadInstantly);
 };
 
-module.init = function() {
+const init = function() {
     return checkMediator
         .waitForCheck('isOutbrainDisabled')
         .then(onIsOutbrainDisabled);
 };
 
-export default module;
+export { init };

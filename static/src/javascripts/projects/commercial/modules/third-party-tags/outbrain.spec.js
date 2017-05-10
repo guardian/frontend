@@ -1,35 +1,24 @@
 // @flow
 import config from 'lib/config';
-import $ from 'lib/$';
 import checkMediator from 'projects/common/modules/check-mediator';
-import outbrain from './outbrain';
+import { init } from './outbrain';
 import { getSection } from './outbrain-sections';
-
-const sut = outbrain; // System under test
 
 jest.mock('ophan/ng', () => ({ record: () => undefined }));
 jest.mock('lib/detect', () => ({
     adblockInUse: Promise.resolve(false),
     getBreakpoint: jest.fn(),
 }));
-jest.mock('lib/steady-page', () => ({ insert: jest.fn() }));
 jest.mock('lib/load-script', () => ({ loadScript: jest.fn() }));
+jest.mock('./outbrain-load', () => ({ load: jest.fn() }));
+jest.mock('./outbrain-tracking', () => ({ tracking: jest.fn() }));
 
 const detect = require('lib/detect');
-
-const steadyPage = require('lib/steady-page');
-
-const loadScript = require('lib/load-script').loadScript;
+const load: any = require('./outbrain-load').load;
+const tracking: any = require('./outbrain-tracking').tracking;
 
 describe('Outbrain', () => {
-    let loadSpy: any;
-    let trackingSpy: any;
-
     beforeEach(done => {
-        steadyPage.insert.mockImplementation((container, cb) => {
-            cb();
-            return Promise.resolve();
-        });
         if (document.body) {
             document.body.innerHTML = `
                 <div id="dfp-ad--merchandising-high"></div>
@@ -58,25 +47,16 @@ describe('Outbrain', () => {
     });
 
     it('should exist', () => {
-        expect(sut).toBeDefined();
+        expect(init).toBeDefined();
     });
 
     describe('Init', () => {
-        beforeAll(done => {
-            loadSpy = jest.spyOn(sut, 'load');
-            trackingSpy = jest.spyOn(sut, 'tracking');
-            done();
-        });
-
         afterEach(() => {
-            loadSpy.mockReset();
-            trackingSpy.mockReset();
+            load.mockReset();
+            tracking.mockReset();
         });
 
         afterAll(() => {
-            loadSpy.mockRestore();
-            trackingSpy.mockRestore();
-            jest.resetAllMocks();
             jest.resetModules();
         });
 
@@ -92,10 +72,10 @@ describe('Outbrain', () => {
             checkMediator.resolveCheck('emailInArticleOutbrainEnabled', false);
             checkMediator.resolveCheck('isStoryQuestionsOnPage', false);
 
-            sut.init().then(() => {
-                expect(loadSpy).not.toHaveBeenCalled();
-                expect(trackingSpy).toHaveBeenCalled();
-                expect(trackingSpy).toHaveBeenCalledWith({
+            init().then(() => {
+                expect(load).not.toHaveBeenCalled();
+                expect(tracking).toHaveBeenCalled();
+                expect(tracking).toHaveBeenCalledWith({
                     state: 'outbrainDisabled',
                 });
                 done();
@@ -115,11 +95,11 @@ describe('Outbrain', () => {
             checkMediator.resolveCheck('isUserNotInContributionsAbTest', false);
             checkMediator.resolveCheck('isStoryQuestionsOnPage', false);
 
-            sut.init().then(() => {
-                expect(loadSpy).toHaveBeenCalled();
-                expect(loadSpy).toHaveBeenCalledWith('nonCompliant');
-                expect(trackingSpy).toHaveBeenCalled();
-                expect(trackingSpy).toHaveBeenCalledWith({
+            init().then(() => {
+                expect(load).toHaveBeenCalled();
+                expect(load).toHaveBeenCalledWith('nonCompliant');
+                expect(tracking).toHaveBeenCalled();
+                expect(tracking).toHaveBeenCalledWith({
                     state: 'nonCompliant',
                 });
                 detect.adblockInUse = Promise.resolve(false);
@@ -135,11 +115,11 @@ describe('Outbrain', () => {
             checkMediator.resolveCheck('hasLowPriorityAdLoaded', false);
             checkMediator.resolveCheck('hasLowPriorityAdNotLoaded', true);
 
-            sut.init().then(() => {
-                expect(loadSpy).toHaveBeenCalled();
-                expect(loadSpy).toHaveBeenCalledWith('merchandising');
-                expect(trackingSpy).toHaveBeenCalled();
-                expect(trackingSpy).toHaveBeenCalledWith({
+            init().then(() => {
+                expect(load).toHaveBeenCalled();
+                expect(load).toHaveBeenCalledWith('merchandising');
+                expect(tracking).toHaveBeenCalled();
+                expect(tracking).toHaveBeenCalledWith({
                     state: 'outbrainMerchandiseCompliant',
                 });
                 done();
@@ -153,10 +133,10 @@ describe('Outbrain', () => {
             checkMediator.resolveCheck('hasHighPriorityAdLoaded', true);
             checkMediator.resolveCheck('hasLowPriorityAdLoaded', true);
 
-            sut.init().then(() => {
-                expect(loadSpy).not.toHaveBeenCalled();
-                expect(trackingSpy).toHaveBeenCalled();
-                expect(trackingSpy).toHaveBeenCalledWith({
+            init().then(() => {
+                expect(load).not.toHaveBeenCalled();
+                expect(tracking).toHaveBeenCalled();
+                expect(tracking).toHaveBeenCalledWith({
                     state: 'outbrainBlockedByAds',
                 });
                 done();
@@ -179,12 +159,12 @@ describe('Outbrain', () => {
             checkMediator.resolveCheck('emailInArticleOutbrainEnabled', false);
             checkMediator.resolveCheck('isStoryQuestionsOnPage', false);
 
-            sut.init().then(() => {
-                expect(loadSpy).toHaveBeenCalled();
-                expect(loadSpy).not.toHaveBeenCalledWith('nonCompliant');
-                expect(loadSpy).not.toHaveBeenCalledWith('merchandising');
-                expect(trackingSpy).toHaveBeenCalled();
-                expect(trackingSpy).toHaveBeenCalledWith({
+            init().then(() => {
+                expect(load).toHaveBeenCalled();
+                expect(load).not.toHaveBeenCalledWith('nonCompliant');
+                expect(load).not.toHaveBeenCalledWith('merchandising');
+                expect(tracking).toHaveBeenCalled();
+                expect(tracking).toHaveBeenCalledWith({
                     state: 'compliant',
                 });
                 done();
@@ -207,11 +187,11 @@ describe('Outbrain', () => {
             checkMediator.resolveCheck('emailInArticleOutbrainEnabled', false);
             checkMediator.resolveCheck('isStoryQuestionsOnPage', true);
 
-            sut.init().then(() => {
-                expect(loadSpy).toHaveBeenCalled();
-                expect(loadSpy).toHaveBeenCalledWith('nonCompliant');
-                expect(trackingSpy).toHaveBeenCalled();
-                expect(trackingSpy).toHaveBeenCalledWith({
+            init().then(() => {
+                expect(load).toHaveBeenCalled();
+                expect(load).toHaveBeenCalledWith('nonCompliant');
+                expect(tracking).toHaveBeenCalled();
+                expect(tracking).toHaveBeenCalledWith({
                     state: 'nonCompliant',
                 });
                 done();
@@ -236,145 +216,6 @@ describe('Outbrain', () => {
         it('should return "defaults" for all other sections', () => {
             expect(getSection('culture')).toEqual('defaults');
             expect(getSection('football')).toEqual('defaults');
-        });
-    });
-
-    describe('Load', () => {
-        beforeAll(() => {
-            detect.getBreakpoint.mockReturnValue('desktop');
-        });
-
-        it('should create two containers for desktop with correct IDs for slot 1', done => {
-            config.page.section = 'uk-news';
-
-            sut.load().then(() => {
-                expect($('.OUTBRAIN').first().data('widgetId')).toEqual(
-                    'AR_12'
-                );
-                expect($('.OUTBRAIN').last().data('widgetId')).toEqual('AR_14');
-                done();
-            });
-        });
-
-        it('should create two containers for desktop with correct IDs for slot 2', done => {
-            config.page.section = 'football';
-
-            sut.load().then(() => {
-                expect($('.OUTBRAIN').first().data('widgetId')).toEqual(
-                    'AR_13'
-                );
-                expect($('.OUTBRAIN').last().data('widgetId')).toEqual('AR_15');
-                done();
-            });
-        });
-
-        it('should detect wide breakpoint as desktop', done => {
-            detect.getBreakpoint.mockReturnValueOnce('wide');
-            config.page.section = 'football';
-
-            sut.load().then(() => {
-                expect($('.OUTBRAIN').first().data('widgetId')).toEqual(
-                    'AR_13'
-                );
-                expect($('.OUTBRAIN').last().data('widgetId')).toEqual('AR_15');
-                done();
-            });
-        });
-
-        it('should create two containers for tablet with correct IDs for slot 1', done => {
-            detect.getBreakpoint.mockReturnValueOnce('tablet');
-            config.page.section = 'uk-news';
-
-            sut.load().then(() => {
-                expect($('.OUTBRAIN').first().data('widgetId')).toEqual('MB_6');
-                expect($('.OUTBRAIN').last().data('widgetId')).toEqual('MB_8');
-                done();
-            });
-        });
-
-        it('should create two containers for tablet with correct IDs for slot 2', done => {
-            detect.getBreakpoint.mockReturnValueOnce('tablet');
-            config.page.section = 'football';
-
-            sut.load().then(() => {
-                expect($('.OUTBRAIN').first().data('widgetId')).toEqual('MB_7');
-                expect($('.OUTBRAIN').last().data('widgetId')).toEqual('MB_9');
-                done();
-            });
-        });
-
-        it('should create only one container for mobile with correct IDs for slot 1', done => {
-            detect.getBreakpoint.mockReturnValueOnce('mobile');
-            config.page.section = 'uk-news';
-
-            sut.load().then(() => {
-                expect($('.OUTBRAIN').first().data('widgetId')).toEqual('MB_4');
-                done();
-            });
-        });
-
-        it('should create only one container for mobile with correct IDs for slot 2', done => {
-            detect.getBreakpoint.mockReturnValueOnce('mobile');
-            config.page.section = 'football';
-
-            sut.load().then(() => {
-                expect($('.OUTBRAIN').first().data('widgetId')).toEqual('MB_5');
-                done();
-            });
-        });
-
-        it('should create two containers for destkop with correct IDs for slot merch', done => {
-            config.page.edition = 'AU';
-
-            sut.load('merchandising').then(() => {
-                expect($('.OUTBRAIN').first().data('widgetId')).toEqual(
-                    'AR_28'
-                );
-                done();
-            });
-        });
-
-        it('should create two containers for tablet with correct IDs for slot merch', done => {
-            detect.getBreakpoint.mockReturnValueOnce('tablet');
-
-            sut.load('merchandising').then(() => {
-                expect($('.OUTBRAIN').first().data('widgetId')).toEqual(
-                    'MB_11'
-                );
-                done();
-            });
-        });
-
-        it('should create only one container for mobile with correct IDs for slot merch', done => {
-            detect.getBreakpoint.mockReturnValueOnce('mobile');
-
-            sut.load('merchandising').then(() => {
-                expect($('.OUTBRAIN').first().data('widgetId')).toEqual(
-                    'MB_10'
-                );
-                done();
-            });
-        });
-
-        it('should require outbrain javascript', done => {
-            sut.load().then(() => {
-                expect(loadScript).toHaveBeenCalledWith(
-                    '//widgets.outbrain.com/outbrain.js'
-                );
-                done();
-            });
-        });
-
-        it('should call tracking method', done => {
-            trackingSpy = jest.spyOn(sut, 'tracking');
-            config.page.section = 'football';
-
-            sut.load().then(() => {
-                expect(trackingSpy).toHaveBeenCalledWith({
-                    widgetId: 'AR_13',
-                });
-                done();
-            });
         });
     });
 });
