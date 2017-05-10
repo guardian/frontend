@@ -51,8 +51,7 @@ describe('Outbrain', () => {
 
     describe('Init', () => {
         afterEach(() => {
-            load.mockReset();
-            tracking.mockReset();
+            jest.resetAllMocks();
         });
 
         afterAll(() => {
