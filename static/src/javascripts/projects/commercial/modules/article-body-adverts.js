@@ -5,7 +5,7 @@ import fastdom from 'lib/fastdom-promise';
 import abUtils from 'common/modules/experiments/utils';
 import spaceFiller from 'common/modules/article/space-filler';
 import adSizes from 'commercial/modules/ad-sizes';
-import addSlot from 'commercial/modules/dfp/add-slot';
+import { addSlot } from 'commercial/modules/dfp/add-slot';
 import trackAdRender from 'commercial/modules/dfp/track-ad-render';
 import createSlot from 'commercial/modules/dfp/create-slot';
 import commercialFeatures from 'commercial/modules/commercial-features';
@@ -171,7 +171,7 @@ const addInlineMerchAd = () =>
 const waitForMerch = (countAdded: number) =>
     countAdded === 1 ? trackAdRender('dfp-ad--im') : Promise.resolve();
 
-const init = () => {
+const articleBodyAdvertsInit = () => {
     if (!commercialFeatures.articleBodyAdverts) {
         return Promise.resolve(false);
     }
@@ -198,7 +198,7 @@ const init = () => {
     return Promise.resolve(true);
 };
 
-export { init };
+export { articleBodyAdvertsInit };
 
 export const _ = {
     waitForMerch,
