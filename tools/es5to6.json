@@ -72,7 +72,6 @@
     "projects/common/modules/check-dispatcher.js"
   ],
   "Simon Adcock": [
-    "lib/ajax.js",
     "projects/common/modules/ui/rhc.js",
     "bootstraps/enhanced/identity-common.js",
     "bootstraps/enhanced/image-content.js",
@@ -95,7 +94,6 @@
     "bootstraps/enhanced/youtube.js",
     "bootstraps/video-embed.js",
     "bootstraps/youtube-embed.js",
-    "lib/ajax.js",
     "lib/atob.js",
     "projects/common/modules/component.js"
   ],
