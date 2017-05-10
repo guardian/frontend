@@ -647,7 +647,7 @@ define([
                 });
 
                 renderedComponent = ReactTestUtils.renderIntoDocument(component);
-                // renderedComponent.save = function(){};
+                renderedComponent.save = function(){};
 
                 done();
             });

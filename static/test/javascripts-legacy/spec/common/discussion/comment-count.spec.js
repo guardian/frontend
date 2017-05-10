@@ -1,10 +1,8 @@
 define([
-    'qwery',
     'lib/$',
     'helpers/injector',
     'fixtures/commentcounts'
 ], function (
-    qwery,
     $,
     Injector,
     testData
@@ -72,7 +70,7 @@ define([
 
         it('should append comment counts to DOM', function (done) {
             mediator.once('modules:commentcount:loaded', function () {
-                expect(qwery('.fc-trail__count--commentcount').length).toBe(3);
+                expect($('.fc-trail__count--commentcount').length).toBe(3);
                 done();
             });
 

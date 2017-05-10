@@ -197,6 +197,7 @@ define([
 
         function init() {
             var bannerParams = deriveBannerParams();
+
             if (bannerParams && (storage.local.get('gu.alreadyVisited') || 0) >= bannerParams.minArticles) {
                 return commercialFeatures.async.canDisplayMembershipEngagementBanner.then(function (canShow) {
 

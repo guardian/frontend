@@ -66,19 +66,20 @@ define([
             expect(getMessageContent()).toBeNull();
         }
 
-        function expectMessageToBeShown(){
-                var message = document.querySelector('.js-site-message');
-                var messageContent = getMessageContent();
-                expect(messageContent).not.toBeNull();
-                expect(message.className).toContain('membership-prominent');
-                expect(message.className).not.toContain('is-hidden');
-            }
+        function expectMessageToBeShown() {
+            var message = document.querySelector('.js-site-message');
+            var messageContent = getMessageContent();
 
-        function expectMessageNotToBeVisible(){
-                var message = document.querySelector('.js-site-message');
-                expect(message.className).toContain('is-hidden');
-                expect(message.className).not.toContain('membership-message');
+            expect(messageContent).not.toBeNull();
+            expect(message.className).toContain('membership-prominent');
+            expect(message.className).not.toContain('is-hidden');
+        }
 
+        function expectMessageNotToBeVisible() {
+            var message = document.querySelector('.js-site-message');
+
+            expect(message.className).toContain('is-hidden');
+            expect(message.className).not.toContain('membership-message');
         }
 
         describe('If breaking news banner', function () {
@@ -122,7 +123,6 @@ define([
                     });
             });
         });
-
 
         describe('If user already member', function () {
             beforeEach(function (done) {
