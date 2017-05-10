@@ -30,6 +30,8 @@ define([
         audience: 1,
         audienceOffset: 0,
 
+        showForSensitive: true,
+
         pageCheck: function(page) {
             return page.contentType === 'LiveBlog';
         },

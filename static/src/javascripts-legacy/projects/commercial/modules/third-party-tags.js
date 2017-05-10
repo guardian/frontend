@@ -2,7 +2,6 @@
  * A regionalised container for all the commercial tags.
  */
 define([
-    'Promise',
     'lib/$',
     'lib/config',
     'lib/fastdom-promise',
@@ -21,7 +20,6 @@ define([
     'commercial/modules/third-party-tags/plista',
     'raw-loader!common/views/commercial/external-content.html'
 ], function (
-    Promise,
     $,
     config,
     fastdom,

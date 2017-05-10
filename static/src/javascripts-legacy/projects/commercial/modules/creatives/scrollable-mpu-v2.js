@@ -1,5 +1,4 @@
 define([
-    'Promise',
     'fastdom',
     'lib/$',
     'lib/detect',
@@ -9,7 +8,6 @@ define([
     'commercial/modules/creatives/add-tracking-pixel',
     'commercial/modules/creatives/add-viewability-tracker'
 ], function (
-    Promise,
     fastdom,
     $,
     detect,
