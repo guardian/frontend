@@ -21,7 +21,7 @@ define([
             withCredentials: true
         };
 
-        return ajax(params);
+        return ajax.ajax(params);
     };
 
     // A user's 'active' avatar is only available to signed-in users as it
