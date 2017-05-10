@@ -1,9 +1,12 @@
 // cribbed from https://github.com/k15a/eslint-plugin-import/commit/84fd4f27eb537c9230196d6403aafd406e46e6e9
 
-const isExportStatement = ({ type }) => {
+const isExportStatement = (node, context) => {
     if (
-        type === 'ExportDefaultDeclaration' ||
-        type === 'ExportNamedDeclaration'
+        (node.type === 'ExportDefaultDeclaration' ||
+            node.type === 'ExportNamedDeclaration' ||
+            node.type === 'ExportAllDeclaration') &&
+        // ignore flowtype exports
+        context.getSourceCode().getTokens(node)[1].value !== 'type'
     ) {
         return true;
     }
@@ -17,13 +20,13 @@ module.exports = {
             Program({ body }) {
                 const lastNonExportStatement = body.reduce(
                     (acc, node, index) =>
-                        isExportStatement(node) ? acc : index,
+                        isExportStatement(node, context) ? acc : index,
                     0
                 );
 
                 body.forEach((node, index) => {
                     if (
-                        isExportStatement(node) &&
+                        isExportStatement(node, context) &&
                         index < lastNonExportStatement
                     ) {
                         context.report({
