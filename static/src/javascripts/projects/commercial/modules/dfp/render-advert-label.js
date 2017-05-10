@@ -19,11 +19,10 @@ const renderAdvertLabel = (adSlotNode: any) => {
         if (config.switches.adFeedback) {
             feedbackPopup = template(popupTemplate, {
                 feedbackOptions: {
-                    distracting: 'Distracting',
-                    obscures: 'Obscures content',
-                    inappropriate: 'Inappropriate',
-                    repetitive: 'Repetitive',
-                    irrelevant: 'Irrelevant',
+                    inappropriate: "It's offensive or inappropriate",
+                    repetitive: 'I keep seeing this',
+                    irrelevant: "It's not relevant to me",
+                    useful: 'This advert was useful',
                 },
                 icon: tick.markup,
                 slot: adSlotNode.id,
