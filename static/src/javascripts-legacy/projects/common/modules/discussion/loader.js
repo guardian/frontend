@@ -58,6 +58,7 @@ Loader.prototype.classes = { };
 Loader.prototype.componentClass = 'discussion';
 Loader.prototype.comments = null;
 Loader.prototype.user = null;
+Loader.prototype.username = null;
 
 Loader.prototype.initTopComments = function() {
 
@@ -291,11 +292,17 @@ Loader.prototype.ready = function() {
 };
 
 Loader.prototype.getUser = function() {
+    var self = this;
     if (Id.getUserFromCookie()) {
         DiscussionApi.getUser().then(function(resp) {
-            this.user = resp.userProfile;
-            this.emit('user:loaded');
-        }.bind(this));
+            self.user = resp.userProfile;
+            Id.getUserFromApiWithRefreshedCookie().then(function (response) {
+                if (response.user.publicFields.username) {
+                    self.username = response.user.publicFields.username;
+                }
+                self.emit('user:loaded');
+            });
+        }.bind(self));
     } else {
         this.emit('user:loaded');
     }
@@ -343,6 +350,7 @@ Loader.prototype.renderCommentBox = function(elem) {
         discussionId: this.getDiscussionId(),
         premod: this.user.privateFields.isPremoderated,
         newCommenter: !this.user.privateFields.hasCommented,
+        hasUsername: this.username !== null,
         shouldRenderMainAvatar: false,
         paymentRequired: isPaidCommenting,
         testVariant: testVariant
