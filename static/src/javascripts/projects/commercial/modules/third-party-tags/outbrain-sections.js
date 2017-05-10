@@ -8,4 +8,4 @@ const getSection = function(section: string): string {
         : 'defaults';
 };
 
-export default getSection;
+export { getSection };
