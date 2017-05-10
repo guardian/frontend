@@ -35,7 +35,7 @@ define([
     var defaultParamsLookup = {
 
         UK: assign({}, membershipParams, {
-            messageText: 'For less than the price of a coffee a week, you could help secure the Guardian’s future. Support our journalism for £5 a month.',
+            messageText: 'For less than the price of a coffee a week, you could help secure the Guardian’s future. Support our journalism for 95p a week.',
             campaignCode: "mem_uk_banner"
         }),
 
@@ -45,12 +45,12 @@ define([
         }),
 
         AU: assign({}, membershipParams, {
-            messageText: 'We need you to help support our fearless independent journalism. Become a Guardian Australia member for just $10 a month.',
+            messageText: 'We need you to help support our fearless independent journalism. Become a Guardian Australia member for just $1.92 a week.',
             campaignCode: "mem_au_banner"
         }),
 
         INT: assign({}, membershipParams, {
-            messageText: 'For less than the price of a coffee a week, you could help secure the Guardian\'s future. Support our journalism for $7 / €5 a month.',
+            messageText: 'For less than the price of a coffee a week, you could help secure the Guardian\'s future. Support our journalism for $1.33 / €0.95 a week.',
             campaignCode: "mem_int_banner"
         })
     };
