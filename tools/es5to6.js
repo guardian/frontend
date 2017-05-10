@@ -1,4 +1,5 @@
 const path = require('path');
+const fs = require('fs');
 
 const git = require('simple-git')();
 const gitUser = require('git-user-name');
@@ -16,10 +17,22 @@ process.on('uncaughtException', handleError);
 
 const remainingModules = require('./es5to6.json');
 
-const userModules = remainingModules[gitUser()];
-if (!userModules || !userModules.length) {
-    console.log(chalk.green('⭐️  You have no more modules to convert! ⭐️'));
+const legacyPath = path.join('static', 'src', 'javascripts-legacy');
+let moduleId = process.argv[2];
+
+if (moduleId && !fs.existsSync(path.resolve(legacyPath, moduleId))) {
+    console.log(`\n${chalk.red(`${moduleId} does not exist`)}\n${chalk.dim(`The file path should be relative to ${legacyPath}`)}`);
     process.exit();
+}
+
+if (!moduleId) {
+    const userModules = remainingModules[gitUser()];
+    if (!userModules || !userModules.length) {
+        console.log(chalk.green('⭐️  You have no more modules to convert! ⭐️'));
+        process.exit();
+    }
+
+    moduleId = userModules.shift();
 }
 
 git
@@ -39,14 +52,8 @@ git
         }
     })
     .then(() => {
-        const moduleId = userModules.shift();
         const unique = `${Date.now()}`.slice(-4);
-        const es5Module = path.join(
-            'static',
-            'src',
-            'javascripts-legacy',
-            moduleId
-        );
+        const es5Module = path.join(legacyPath, moduleId);
         const es6Module = path.join('static', 'src', 'javascripts', moduleId);
         const es6Name = moduleId.split(path.sep).join('_').replace('.js', '');
         const branchName = `es6-${es6Name}`;

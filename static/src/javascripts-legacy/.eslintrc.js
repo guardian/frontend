@@ -55,5 +55,8 @@ module.exports = {
         // live in tools/eslint-plugin-guardian-frontend
         'guardian-frontend/global-config': 2,
     },
+    globals: {
+        Promise: true
+    },
     root: true,
 }

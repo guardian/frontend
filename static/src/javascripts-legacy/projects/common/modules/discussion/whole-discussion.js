@@ -1,7 +1,6 @@
 define([
     'bonzo',
     'qwery',
-    'Promise',
     'lib/$',
     'lib/fetch-json',
     'lib/url',
@@ -9,7 +8,6 @@ define([
 ], function (
     bonzo,
     qwery,
-    Promise,
     $,
     fetchJson,
     urlUtil,

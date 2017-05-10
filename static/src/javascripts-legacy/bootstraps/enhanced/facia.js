@@ -33,7 +33,7 @@ define([
     accessibility,
     ab,
     stocks,
-    GeoMostPopularFront,
+    geoMostPopularFront,
     ContainerToggle,
     containerShowMore,
     lazyLoadContainers,
@@ -71,7 +71,7 @@ define([
 
             upgradeMostPopularToGeo: function () {
                 if (config.switches.geoMostPopular) {
-                    new GeoMostPopularFront().go();
+                    new geoMostPopularFront.GeoMostPopularFront().go();
                 }
             },
 

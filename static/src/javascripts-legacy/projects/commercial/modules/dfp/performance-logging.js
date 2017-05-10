@@ -1,12 +1,10 @@
 define([
-    'Promise',
     'lib/raven',
     'lib/config',
     'lib/user-timing',
     'common/modules/analytics/beacon',
     'ophan/ng'
 ], function (
-    Promise,
     raven,
     config,
     userTiming,

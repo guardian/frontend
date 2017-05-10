@@ -1,8 +1,6 @@
 define([
-    'Promise',
     'squire'
 ], function (
-    Promise,
     Squire
 ) {
 

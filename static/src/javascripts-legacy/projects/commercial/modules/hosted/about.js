@@ -1,8 +1,6 @@
 define([
-    'Promise',
     'commercial/modules/survey/survey-simple'
 ], function (
-    Promise,
     SurveySimple
 ) {
     function init() {
