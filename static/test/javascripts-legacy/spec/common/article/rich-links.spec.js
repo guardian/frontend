@@ -1,5 +1,4 @@
 define([
-    'Promise',
     'helpers/injector',
     'helpers/fixtures',
 
@@ -8,7 +7,6 @@ define([
 
     'raw-loader!common/views/content/richLinkTag.html'
 ], function (
-    Promise,
     Injector,
     fixtures,
 

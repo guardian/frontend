@@ -4,7 +4,6 @@ define([
     'lib/$',
     'fastdom',
     'qwery',
-    'Promise',
     'lib/config',
     'lib/fetch-json',
     'lib/report-error',
@@ -24,7 +23,6 @@ define([
     $,
     fastdom,
     qwery,
-    Promise,
     config,
     fetchJson,
     reportError,
@@ -190,8 +188,8 @@ define([
     }
 
     function renderAlert(alert) {
-        alert.marque36icon = svgs('marque36icon');
-        alert.closeIcon = svgs('closeCentralIcon');
+        alert.marque36icon = svgs.inlineSvg('marque36icon');
+        alert.closeIcon = svgs.inlineSvg('closeCentralIcon');
 
         var $alert = bonzo.create(template(alertHtml, alert));
 

@@ -25,7 +25,7 @@ define([
                 template(btnTmpl, {
                     text: 'Hide',
                     dataLink: 'Show',
-                    icon: svgs('arrowicon')
+                    icon: svgs.inlineSvg('arrowicon')
                 })
             )),
             buttonText = $('.fc-container__toggle__text', _$button[0]),

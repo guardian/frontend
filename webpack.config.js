@@ -56,7 +56,6 @@ module.exports = {
             // #wp-rjs weird old aliasing from requirejs
             lodash: 'lodash-amd/compat',
             picturefill: 'lib/picturefill',
-            Promise: 'when/es6-shim/Promise',
             raven: 'raven-js',
             EventEmitter: 'wolfy87-eventemitter',
             videojs: 'video.js',

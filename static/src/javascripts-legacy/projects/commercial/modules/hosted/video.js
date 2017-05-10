@@ -3,7 +3,6 @@
  */
 
 define([
-    'Promise',
     'commercial/modules/hosted/youtube',
     'commercial/modules/hosted/next-video-autoplay',
     'lib/$',
@@ -15,7 +14,6 @@ define([
     'common/modules/media/videojs-plugins/fullscreener',
     'raw-loader!common/views/ui/loading.html'
 ], function (
-    Promise,
     hostedYoutube,
     nextVideoAutoplay,
     $,

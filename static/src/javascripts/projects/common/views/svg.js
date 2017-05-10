@@ -1,8 +1,8 @@
 // @flow
 export const addClassesAndTitle = (
     markup: string,
-    classes?: ?Array<string>,
-    title?: ?string
+    classes?: Array<string>,
+    title?: string
 ): string => {
     // Only mess with classes if we actually need to.
     let markupWithClasses = markup;

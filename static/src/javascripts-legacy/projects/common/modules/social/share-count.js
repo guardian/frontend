@@ -50,7 +50,7 @@ define([
     }
 
     function addToShareCount(val) {
-        var shareSvg = svgs('share');
+        var shareSvg = svgs.inlineSvg('share');
         var shareTemplate = $shareCountEls.hasClass('js-sharecount-immersive') ? shareCountImmersiveTemplate : shareCountTemplate;
 
         var html = template(shareTemplate, {
