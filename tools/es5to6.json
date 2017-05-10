@@ -13,7 +13,6 @@
     "projects/commercial/modules/third-party-tags/krux.js"
   ],
   "Jon Norman": [
-    "projects/commercial/modules/dfp/define-slot.js",
     "projects/commercial/modules/dfp/apply-creative-template.js",
     "projects/commercial/modules/dfp/breakpoint-name-to-attribute.js",
     "projects/commercial/modules/dfp/Advert.js",
@@ -26,7 +25,6 @@
     "projects/common/modules/atoms/youtube.js"
   ],
   "Regis Kuckaertz": [
-    "projects/commercial/modules/dfp/load-advert.js",
     "projects/commercial/modules/dfp/on-slot-load.js",
     "projects/commercial/modules/dfp/on-slot-render.js",
     "projects/commercial/modules/dfp/performance-logging.js",
@@ -34,12 +32,6 @@
     "projects/common/modules/avatar/api.js"
   ],
   "Richard Nguyen": [
-    "projects/commercial/modules/dfp/queue-advert.js",
-    "projects/commercial/modules/dfp/refresh-on-resize.js",
-    "projects/commercial/modules/dfp/render-advert-label.js",
-    "projects/commercial/modules/dfp/render-advert.js",
-    "projects/commercial/modules/dfp/track-ad-render.js",
-    "projects/commercial/modules/dfp/wait-for-advert.js",
     "projects/commercial/modules/high-merch.js",
     "projects/commercial/modules/hosted/about.js",
     "projects/commercial/modules/hosted/gallery.js",
@@ -64,17 +56,17 @@
     "projects/common/modules/charts/doughnut.js"
   ],
   "Lydia Shepherd": [
-    "projects/commercial/modules/third-party-tags/plista.js",
-    "projects/commercial/modules/third-party-tags/remarketing.js",
-    "projects/commercial/modules/third-party-tags/simple-reach.js",
-    "projects/commercial/modules/third-party-tags/tourism-australia.js",
-    "projects/commercial/modules/user-ad-feedback.js",
-    "projects/commercial/modules/user-ad-targeting.js",
-    "projects/commercial/modules/user-features.js",
-    "projects/common/modules/commercial/adblock-banner-config.js",
-    "projects/common/modules/commercial/adblock-messages.js",
-    "projects/common/modules/ui/images.js",
-    "projects/common/modules/charts/table-doughnut.js"
+      "projects/commercial/modules/user-ad-feedback.js",
+      "projects/commercial/modules/third-party-tags/plista.js",
+      "projects/commercial/modules/third-party-tags/remarketing.js",
+      "projects/commercial/modules/third-party-tags/simple-reach.js",
+      "projects/commercial/modules/third-party-tags/tourism-australia.js",
+      "projects/commercial/modules/user-ad-targeting.js",
+      "projects/commercial/modules/user-features.js",
+      "projects/common/modules/commercial/adblock-banner-config.js",
+      "projects/common/modules/commercial/adblock-messages.js",
+      "projects/common/modules/ui/images.js",
+      "projects/common/modules/charts/table-doughnut.js"
   ],
   "sndrs": [
     "lib/detect.js",
