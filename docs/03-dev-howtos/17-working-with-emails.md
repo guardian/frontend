@@ -48,7 +48,6 @@ When adding a new `EmailSubscription`:
 - frequency >> Text that appears next to the clock icon
 - subheading >> Currently used for the region specific emails (UK, AUS, US)
 - tone >> Determines the tone colours of the card on the newsletters page
-- imageFilename >> Placeholder for when we add an image to each card (WIP)
 
 
 ## Adding colour and tones to the email sign up forms
@@ -93,10 +92,10 @@ function validate(form) {
 ## Email rendering
 
 Fronts and articles can be rendered in email-friendly HTML by appending the URL parameter `format=email`. The response from these endpoints can be put into an email body and will render well in a wide variety of email clients.
- 
+
 For curating emails, you'll normally want to set up a custom front rather than co-opting an existing front. For
 this purpose, we have a notion of "Email fronts" (in addition to Commercial, Editorial, and Training). Content can
-be placed into email fronts in the same way as for web fronts, via the [fronts tool](https://fronts.gutools.co.uk/email). 
+be placed into email fronts in the same way as for web fronts, via the [fronts tool](https://fronts.gutools.co.uk/email).
 
 As for web fronts, other properties of email fronts can be configured via the [fronts config tool](https://fronts.gutools.co.uk/email/config).
 This includes creating containers and choosing their layout types.
@@ -139,5 +138,3 @@ medium | 1st    | big      | yes         | big
 fast   | 1st    | small    | no          | small
        | others | none     | no          | small
 ```
-
-
