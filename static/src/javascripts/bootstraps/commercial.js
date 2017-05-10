@@ -25,7 +25,7 @@ import liveblogAdverts from 'commercial/modules/liveblog-adverts';
 import stickyTopBanner from 'commercial/modules/sticky-top-banner';
 import thirdPartyTags from 'commercial/modules/third-party-tags';
 import paidforBand from 'commercial/modules/paidfor-band';
-import paidContainers from 'commercial/modules/paid-containers';
+import { paidContainers } from 'commercial/modules/paid-containers';
 import performanceLogging from 'commercial/modules/dfp/performance-logging';
 import { trackPerformance } from 'common/modules/analytics/google';
 import userFeatures from 'commercial/modules/user-features';
@@ -42,7 +42,7 @@ const commercialModules: Array<Array<any>> = [
     ['cm-closeDisabledSlots', closeDisabledSlots.init],
     ['cm-stickyTopBanner', stickyTopBanner.init],
     ['cm-fill-advert-slots', fillAdvertSlots, true],
-    ['cm-paidContainers', paidContainers.init],
+    ['cm-paidContainers', paidContainers()],
     ['cm-paidforBand', paidforBand.init],
 ];
 
