@@ -209,8 +209,6 @@ object FaciaCard {
     showSeriesAndBlogKickers: Boolean
 
   ): FaciaCard = {
-
-    val containerName: Option[String] = config.displayName
       val maybeKicker = faciaContent.header.kicker orElse {
         if (showSeriesAndBlogKickers) {
           faciaContent.header.seriesOrBlogKicker
