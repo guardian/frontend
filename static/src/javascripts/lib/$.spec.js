@@ -37,7 +37,7 @@ describe('$', () => {
                 document.querySelector('.child'),
                 'no-element-has-this-class'
             )
-        ).toBe(false);
+        ).toBe(null);
         expect(
             $.ancestor(document.querySelector('.child'), 'grandparent')
         ).toEqual(expect.objectContaining({ id: 'ancestorTarget' }));

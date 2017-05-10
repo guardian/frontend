@@ -32,12 +32,6 @@
     "projects/common/modules/avatar/api.js"
   ],
   "Richard Nguyen": [
-    "projects/commercial/modules/high-merch.js",
-    "projects/commercial/modules/hosted/about.js",
-    "projects/commercial/modules/hosted/gallery.js",
-    "projects/commercial/modules/hosted/next-video-autoplay.js",
-    "projects/commercial/modules/hosted/next-video.js",
-    "projects/common/modules/business/stocks.js"
   ],
   "Kate Whalen": [
     "projects/commercial/modules/hosted/onward-journey-carousel.js",
@@ -56,17 +50,16 @@
     "projects/common/modules/charts/doughnut.js"
   ],
   "Lydia Shepherd": [
-      "projects/commercial/modules/user-ad-feedback.js",
-      "projects/commercial/modules/third-party-tags/plista.js",
-      "projects/commercial/modules/third-party-tags/remarketing.js",
-      "projects/commercial/modules/third-party-tags/simple-reach.js",
-      "projects/commercial/modules/third-party-tags/tourism-australia.js",
-      "projects/commercial/modules/user-ad-targeting.js",
-      "projects/commercial/modules/user-features.js",
-      "projects/common/modules/commercial/adblock-banner-config.js",
-      "projects/common/modules/commercial/adblock-messages.js",
-      "projects/common/modules/ui/images.js",
-      "projects/common/modules/charts/table-doughnut.js"
+    "projects/commercial/modules/third-party-tags/plista.js",
+    "projects/commercial/modules/third-party-tags/remarketing.js",
+    "projects/commercial/modules/third-party-tags/simple-reach.js",
+    "projects/commercial/modules/third-party-tags/tourism-australia.js",
+    "projects/commercial/modules/user-ad-targeting.js",
+    "projects/commercial/modules/user-features.js",
+    "projects/common/modules/commercial/adblock-banner-config.js",
+    "projects/common/modules/commercial/adblock-messages.js",
+    "projects/common/modules/ui/images.js",
+    "projects/common/modules/charts/table-doughnut.js"
   ],
   "sndrs": [
     "lib/detect.js",
@@ -293,7 +286,6 @@
     "projects/commercial/modules/paidfor-band.js"
   ],
   "Philip Wills": [
-    "projects/facia/modules/onwards/search-tool.js",
     "projects/facia/modules/onwards/weather.js",
     "projects/facia/modules/ui/container-show-more.js",
     "projects/facia/modules/ui/container-toggle.js",
