@@ -161,7 +161,7 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-bundle-digital-sub-price-test-1",
+    "ab-bundle-digital-sub-price-test-1-m",
     "Test pricing options for digital subs",
     owners = Seq(Owner.withGithub("justinpinner")),
     safeState = Off,
