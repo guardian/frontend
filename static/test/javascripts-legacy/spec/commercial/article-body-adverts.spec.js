@@ -143,9 +143,9 @@ define([
 
                 detect.getBreakpoint = function () {return 'tablet';};
                 ads['dfp-ad--im'] = false;
-                articleBodyAdverts['@@tests'].addInlineMerchAd()
-                .then(articleBodyAdverts['@@tests'].waitForMerch)
-                .then(articleBodyAdverts['@@tests'].addInlineAds)
+                articleBodyAdverts._.addInlineMerchAd()
+                .then(articleBodyAdverts._.waitForMerch)
+                .then(articleBodyAdverts._.addInlineAds)
                 .then(function (countAdded) {
                     expect(countAdded).toEqual(10);
                 })
@@ -163,7 +163,7 @@ define([
                 it('inserts up to ten adverts', function (done) {
                     spaceFillerStub.onCall(0).returns(Promise.resolve(2));
                     spaceFillerStub.onCall(1).returns(Promise.resolve(8));
-                    articleBodyAdverts['@@tests'].addInlineAds()
+                    articleBodyAdverts._.addInlineAds()
                     .then(function (countAdded) {
                         expect(countAdded).toEqual(10);
                     })

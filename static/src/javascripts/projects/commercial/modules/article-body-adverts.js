@@ -198,12 +198,10 @@ const init = () => {
     return Promise.resolve(true);
 };
 
-export default {
-    init,
+export { init };
 
-    '@@tests': {
-        waitForMerch,
-        addInlineMerchAd,
-        addInlineAds,
-    },
+export const _ = {
+    waitForMerch,
+    addInlineMerchAd,
+    addInlineAds,
 };
