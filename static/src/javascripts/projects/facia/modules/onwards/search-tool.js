@@ -6,10 +6,10 @@ import mediator from 'lib/mediator';
 import reportError from 'lib/report-error';
 import bonzo from 'bonzo';
 
-interface WeatherSearchOptions {
+type WeatherSearchOptions = {
     container: bonzo,
     apiUrl: string,
-}
+};
 
 // Eugh: https://github.com/facebook/flow/issues/380#issuecomment-224380551
 const keyCodeMap = {
