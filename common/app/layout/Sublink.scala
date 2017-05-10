@@ -343,16 +343,16 @@ object ContentCard {
 case class HtmlBlob(html: Html, customCssClasses: Seq[String], cardTypes: ItemClasses) extends FaciaCard
 
 case class PaidCard(
-                     icon: Option[String],
-                     headline: String,
-                     kicker: Option[String],
-                     description: Option[String],
-                     image: Option[ImageMedia],
-                     fallbackImageUrl: Option[String],
-                     targetUrl: String,
-                     cardTypes: Option[ItemClasses] = None,
-                     branding: Option[Branding],
-                     contentCard: Option[ContentCard]
+  icon: Option[String],
+  headline: String,
+  kicker: Option[String],
+  description: Option[String],
+  image: Option[ImageMedia],
+  fallbackImageUrl: Option[String],
+  targetUrl: String,
+  cardTypes: Option[ItemClasses] = None,
+  branding: Option[Branding],
+  contentCard: Option[ContentCard]
 ) extends FaciaCard
 
 object PaidCard {
