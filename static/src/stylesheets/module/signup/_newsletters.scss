@@ -51,36 +51,6 @@
     }
 }
 
-.newsletter-card__header {
-
-}
-
-.newsletter-card__imagewrapper {
-    background-color: $guardian-brand;
-    height: 0;
-    padding-bottom: 60%;
-
-    svg {
-        display: block;
-        margin: auto;
-        padding-top: 15%;
-        height: 80%;
-        width: 80px;
-
-        @include mq(desktop) {
-            width: 60px;
-        }
-    }
-
-
-}
-
-.newsletter-image {
-    position: relative;
-    width: 100%;
-
-}
-
 .newsletter-card__name {
     @include fs-header(5);
     font-weight: 900;
@@ -267,19 +237,6 @@
 .newsletter-card--tone-feature {
     border-top-color: $features-support-3;
 
-    .newsletter-card__imagewrapper {
-        background-color: $features-support-1;
-    }
-
-    .newsletter-image {
-        circle {
-            fill: $features-support-3;
-        }
-        path {
-            fill:  $features-support-1;
-        }
-    }
-
     .newsletter-card__signup {
         .newsletter-card__lozenge {
             border-color: $features-support-1;
@@ -313,20 +270,6 @@
 .newsletter-card--tone-comment {
     border-top-color: $comment-support-4;
 
-    .newsletter-card__imagewrapper {
-        background-color: $comment-support-4;
-    }
-
-    .newsletter-image {
-        circle {
-            fill: $comment-support-2;
-        }
-
-        path {
-            fill: $comment-support-4;
-        }
-    }
-
     .newsletter-card__signup {
         .newsletter-card__lozenge {
             border-color: $comment-support-4;
@@ -359,20 +302,6 @@
 // TONE SPECIFIC MODS - MEDIA
 .newsletter-card--tone-media {
     border-top-color: $multimedia-main-2;
-
-    .newsletter-card__imagewrapper {
-        background-color: $multimedia-main-1;
-    }
-
-    .newsletter-image {
-        circle {
-            fill: $multimedia-main-2;
-        }
-
-        path {
-            fill: $multimedia-main-1;
-        }
-    }
 
     .newsletter-card__signup {
         .newsletter-card__lozenge {
@@ -409,20 +338,6 @@
     $brexit-main-2: #ff0ff0;
 
     border-top-color: $brexit-main-2;
-
-    .newsletter-card__imagewrapper {
-        background-color: $brexit-main-1;
-    }
-
-    .newsletter-image {
-        circle {
-            fill: $brexit-main-2;
-        }
-
-        path {
-            fill: $brexit-main-1;
-        }
-    }
 
     .newsletter-card__signup {
         .newsletter-card__lozenge {
