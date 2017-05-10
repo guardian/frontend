@@ -201,7 +201,7 @@ const addInlineMerchAd = (): Promise<any> =>
 const waitForMerch = (countAdded: number): Promise<void> =>
     countAdded === 1 ? trackAdRender('dfp-ad--im') : Promise.resolve();
 
-const init = (): Promise<boolean> => {
+const articleBodyAdvertsInit = (): Promise<boolean> => {
     if (!commercialFeatures.articleBodyAdverts) {
         return Promise.resolve(false);
     }
@@ -228,12 +228,10 @@ const init = (): Promise<boolean> => {
     return Promise.resolve(true);
 };
 
-export default {
-    init,
+export { articleBodyAdvertsInit };
 
-    '@@tests': {
-        waitForMerch,
-        addInlineMerchAd,
-        addInlineAds,
-    },
+export const _ = {
+    waitForMerch,
+    addInlineMerchAd,
+    addInlineAds,
 };
