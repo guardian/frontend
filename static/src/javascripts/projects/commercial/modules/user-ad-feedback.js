@@ -4,7 +4,7 @@ import fetch from 'lib/fetch';
 import config from 'lib/config';
 import detect from 'lib/detect';
 
-const onComplete = function(adSlotId) {
+const onComplete = adSlotId => {
     // we're complete - update the UI
     fastdom.write(() => {
         const label = document.querySelector(`#${adSlotId}>.ad-slot__label`);
@@ -46,7 +46,7 @@ const recordUserAdFeedback = function(
         method: 'post',
         body: JSON.stringify(data),
         mode: 'cors',
-    }).then(onComplete.bind(this, adSlotId), onComplete.bind(this, adSlotId));
+    }).then(() => onComplete(adSlotId), () => onComplete(adSlotId));
 };
 
 export { recordUserAdFeedback };
