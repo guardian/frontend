@@ -1,6 +1,5 @@
 {
   "Francis Carr": [
-    "projects/commercial/modules/build-page-targeting.js",
     "projects/commercial/modules/close-disabled-slots.js",
     "projects/commercial/modules/comment-adverts.js",
     "projects/commercial/modules/commercial-features.js",
@@ -30,8 +29,7 @@
     "projects/commercial/modules/dfp/prepare-googletag.js",
     "projects/common/modules/avatar/api.js"
   ],
-  "Richard Nguyen": [
-  ],
+  "Richard Nguyen": [],
   "Kate Whalen": [
     "projects/commercial/modules/hosted/onward.js",
     "projects/commercial/modules/hosted/video.js",
