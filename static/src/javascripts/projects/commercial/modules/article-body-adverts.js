@@ -5,33 +5,51 @@ import fastdom from 'lib/fastdom-promise';
 import abUtils from 'common/modules/experiments/utils';
 import spaceFiller from 'common/modules/article/space-filler';
 import adSizes from 'commercial/modules/ad-sizes';
-import addSlot from 'commercial/modules/dfp/add-slot';
+import { addSlot } from 'commercial/modules/dfp/add-slot';
 import trackAdRender from 'commercial/modules/dfp/track-ad-render';
 import createSlot from 'commercial/modules/dfp/create-slot';
 import commercialFeatures from 'commercial/modules/commercial-features';
+import IncreaseInlineAds
+    from 'common/modules/experiments/tests/increase-inline-ads';
+
+type AdSize = {
+    width: number,
+    height: number,
+    switchUnitId: ?number,
+    toString: (_: void) => string,
+};
 
 /* bodyAds is a counter that keeps track of the number of inline MPUs
  * inserted dynamically. */
-let bodyAds;
-let replaceTopSlot;
-let getSlotName;
-let getSlotType;
+let bodyAds: number;
+let replaceTopSlot: boolean;
+let getSlotName: () => string;
+let getSlotType: () => string;
 
-const isOffsetingAds =
-    abUtils.testCanBeRun('IncreaseInlineAdsRedux') &&
-    abUtils.getTestVariantId('IncreaseInlineAdsRedux') === 'yes';
+const isOffsetingAds: boolean =
+    abUtils.testCanBeRun(new IncreaseInlineAds()) &&
+    abUtils.getTestVariantId('IncreaseInlineAdsReduxRedux') === 'yes';
 
-const getSlotNameForMobile = () =>
+const getSlotNameForMobile = (): string =>
     bodyAds === 1 ? 'top-above-nav' : `inline${bodyAds - 1}`;
 
-const getSlotNameForDesktop = () => `inline${bodyAds}`;
+const getSlotNameForDesktop = (): string => `inline${bodyAds}`;
 
-const getSlotTypeForMobile = () => (bodyAds === 1 ? 'top-above-nav' : 'inline');
+const getSlotTypeForMobile = (): string =>
+    bodyAds === 1 ? 'top-above-nav' : 'inline';
 
-const getSlotTypeForDesktop = () => 'inline';
+const getSlotTypeForDesktop = (): string => 'inline';
 
-const insertAdAtPara = (para, name, type, classes, sizes) => {
-    const ad = createSlot(type, {
+type Sizes = { desktop: Array<AdSize> };
+
+const insertAdAtPara = (
+    para: Node,
+    name: string,
+    type: string,
+    classes: ?string,
+    sizes: ?Sizes
+): Promise<void> => {
+    const ad: HTMLElement = createSlot(type, {
         name,
         classes,
         sizes,
@@ -39,7 +57,9 @@ const insertAdAtPara = (para, name, type, classes, sizes) => {
 
     return fastdom
         .write(() => {
-            para.parentNode.insertBefore(ad, para);
+            if (para.parentNode) {
+                para.parentNode.insertBefore(ad, para);
+            }
         })
         .then(() => {
             addSlot(ad, name === 'im');
@@ -47,11 +67,11 @@ const insertAdAtPara = (para, name, type, classes, sizes) => {
 };
 
 // Add new ads while there is still space
-const addArticleAds = (count, rules) => {
-    const insertInlineAds = paras => {
-        const slots = paras
+const addArticleAds = (count: number, rules: Object): Promise<number> => {
+    const insertInlineAds = (paras: Array<Node>): Promise<number> => {
+        const slots: Array<Promise<void>> = paras
             .slice(0, Math.min(paras.length, count))
-            .map(para => {
+            .map((para: Node) => {
                 bodyAds += 1;
                 return insertAdAtPara(
                     para,
@@ -69,6 +89,7 @@ const addArticleAds = (count, rules) => {
         return Promise.all(slots).then(() => slots.length);
     };
 
+    // This just returns whatever is passed in the second argument
     return spaceFiller.fillSpace(rules, insertInlineAds, {
         waitForImages: true,
         waitForLinks: true,
@@ -77,7 +98,17 @@ const addArticleAds = (count, rules) => {
 };
 
 const getRules = (): Object => {
-    let prevSlot;
+    let prevSlot: ?{
+        top: number,
+        bottom: number,
+        element: Node,
+    };
+
+    const adSlotClassSelectorSizes = {
+        minAbove: 500,
+        minBelow: 500,
+    };
+
     return {
         bodySelector: '.js-article__body',
         slotSelector: ' > p',
@@ -92,20 +123,17 @@ const getRules = (): Object => {
                 minAbove: detect.getBreakpoint() === 'mobile' ? 100 : 0,
                 minBelow: 250,
             },
-            ' .ad-slot': {
-                minAbove: 500,
-                minBelow: 500,
-            },
+            ' .ad-slot': adSlotClassSelectorSizes,
             ' > :not(p):not(h2):not(.ad-slot)': {
                 minAbove: 35,
                 minBelow: 400,
             },
         },
-        filter(slot) {
+        filter: (slot: Object) => {
             if (
                 !prevSlot ||
                 Math.abs(slot.top - prevSlot.top) - adSizes.mpu.height >=
-                    this.selectors[' .ad-slot'].minBelow
+                    adSlotClassSelectorSizes.minBelow
             ) {
                 prevSlot = slot;
                 return true;
@@ -115,8 +143,8 @@ const getRules = (): Object => {
     };
 };
 
-const getAltRules = () => {
-    const altRules = getRules();
+const getAltRules = (): Object => {
+    const altRules: Object = getRules();
     altRules.selectors = {
         ' .ad-slot': {
             minAbove: 500,
@@ -126,19 +154,21 @@ const getAltRules = () => {
     return altRules;
 };
 
-const getLongArticleRules = () => {
-    const longArticleRules = isOffsetingAds ? getAltRules() : getRules();
-    const viewportHeight = detect.getViewport().height;
+const getLongArticleRules = (): Object => {
+    const longArticleRules: Object = isOffsetingAds
+        ? getAltRules()
+        : getRules();
+    const viewportHeight: number = detect.getViewport().height;
     longArticleRules.selectors[' .ad-slot'].minAbove = viewportHeight;
     longArticleRules.selectors[' .ad-slot'].minBelow = viewportHeight;
     return longArticleRules;
 };
 
-const addInlineAds = () =>
+const addInlineAds = (): Promise<number> =>
     addArticleAds(
         2,
         isOffsetingAds ? getAltRules() : getRules()
-    ).then(countAdded => {
+    ).then((countAdded: number) => {
         if (countAdded === 2) {
             return addArticleAds(8, getLongArticleRules()).then(
                 innerCountAdded => 2 + innerCountAdded
@@ -147,8 +177,8 @@ const addInlineAds = () =>
         return countAdded;
     });
 
-const getInlineMerchRules = () => {
-    const inlineMerchRules = getRules();
+const getInlineMerchRules = (): Object => {
+    const inlineMerchRules: Object = getRules();
     inlineMerchRules.minAbove = 300;
     inlineMerchRules.selectors[' > h2'].minAbove = 100;
     inlineMerchRules.selectors[
@@ -157,7 +187,7 @@ const getInlineMerchRules = () => {
     return inlineMerchRules;
 };
 
-const addInlineMerchAd = () =>
+const addInlineMerchAd = (): Promise<any> =>
     spaceFiller.fillSpace(
         getInlineMerchRules(),
         paras => insertAdAtPara(paras[0], 'im', 'im').then(() => 1),
@@ -168,10 +198,10 @@ const addInlineMerchAd = () =>
         }
     );
 
-const waitForMerch = (countAdded: number) =>
+const waitForMerch = (countAdded: number): Promise<void> =>
     countAdded === 1 ? trackAdRender('dfp-ad--im') : Promise.resolve();
 
-const init = () => {
+const init = (): Promise<boolean> => {
     if (!commercialFeatures.articleBodyAdverts) {
         return Promise.resolve(false);
     }
