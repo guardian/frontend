@@ -85,7 +85,7 @@ const pushAdUnit = (dfpDivId: string, sizeMapping: any) => {
     const promises = [];
 
     if (__switch_zero) {
-        const adUnitIds = findAdUnitIds(sizeMapping.size);
+        const adUnitIds = findAdUnitIds(sizeMapping.sizes);
 
         adUnitIds.forEach(adUnitId => {
             if (adUnitId) {
