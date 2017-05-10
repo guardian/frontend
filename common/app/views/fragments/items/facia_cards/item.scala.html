@@ -19,7 +19,9 @@
 @defining(containerIndex == 0) { case (isFirstContainer) =>
     @item match {
         case paidContentOnPaidPage: PaidCard if frontProperties.exists(_.isPaidContent) && paidContentOnPaidPage.contentCard.isDefined =>{
-            @contentCard(paidContentOnPaidPage.contentCard.get, containerIndex, index, card.visibilityDataAttribute, isFirstContainer, isList )
+            @paidContentOnPaidPage.contentCard.map { c =>
+                @contentCard(c, containerIndex, index, card.visibilityDataAttribute, isFirstContainer, isList)
+            }
         }
 
         case content: ContentCard => {
