@@ -1,44 +1,39 @@
+// @flow
 import config from 'lib/config';
-import cookies from 'lib/cookies';
+import { getCookie, removeCookie } from 'lib/cookies';
 import detect from 'lib/detect';
-import storage from 'lib/storage';
-import assign from 'lodash/objects/assign';
-import url from 'lib/url';
+import { local } from 'lib/storage';
+import { getUrlVars } from 'lib/url';
 import krux from 'commercial/modules/third-party-tags/krux';
 import identity from 'common/modules/identity/api';
 import userAdTargeting from 'commercial/modules/user-ad-targeting';
 import abUtils from 'common/modules/experiments/utils';
-import compact from 'lodash/arrays/compact';
 import flatten from 'lodash/arrays/flatten';
-import uniq from 'lodash/arrays/uniq';
 import once from 'lodash/functions/once';
 import pick from 'lodash/objects/pick';
 
-function format(keyword) {
-    return keyword.replace(/[+\s]+/g, '-').toLowerCase();
-}
+const format = keyword => keyword.replace(/[+\s]+/g, '-').toLowerCase();
 
-function formatTarget(target) {
-    return target ? format(target).replace(/&/g, 'and').replace(/'/g, '') : null;
-}
+const formatTarget = target =>
+    target ? format(target).replace(/&/g, 'and').replace(/'/g, '') : null;
 
-function abParam() {
-    var cmRegex = /^(cm|commercial)/;
-    var abParticipations = abUtils.getParticipations();
-    var abParams = [];
+const abParam = () => {
+    const cmRegex = /^(cm|commercial)/;
+    const abParticipations = abUtils.getParticipations();
+    const abParams = [];
 
-    Object.keys(abParticipations).forEach(function(testKey) {
-        var testValue = abParticipations[testKey];
+    Object.keys(abParticipations).forEach(testKey => {
+        const testValue = abParticipations[testKey];
         if (testValue.variant && testValue.variant !== 'notintest') {
-            var testData = testKey + '-' + testValue.variant;
+            const testData = `${testKey}-${testValue.variant}`;
             // DFP key-value pairs accept value strings up to 40 characters long
             abParams.push(testData.substring(0, 40));
         }
     });
 
     if (config.tests) {
-        Object.keys(config.tests).forEach(function(testKey) {
-            var testValue = config.tests[testKey];
+        Object.keys(config.tests).forEach(testKey => {
+            const testValue = config.tests[testKey];
             if (typeof testValue === 'string' && cmRegex.test(testValue)) {
                 abParams.push(testValue);
             }
@@ -46,20 +41,20 @@ function abParam() {
     }
 
     return abParams;
-}
+};
 
-function adtestParams() {
-    var cookieAdtest = cookies.getCookie('adtest');
+const adtestParams = () => {
+    const cookieAdtest = getCookie('adtest');
     if (cookieAdtest) {
         if (cookieAdtest.substring(0, 4) === 'demo') {
-            cookies.removeCookie('adtest');
+            removeCookie('adtest');
         }
         return cookieAdtest;
     }
-}
+};
 
-function getVisitedValue() {
-    var visitCount = storage.local.get('gu.alreadyVisited') || 0;
+const getVisitedValue = () => {
+    const visitCount = local.get('gu.alreadyVisited') || 0;
 
     if (visitCount <= 5) {
         return visitCount.toString();
@@ -74,78 +69,85 @@ function getVisitedValue() {
     } else if (visitCount >= 30) {
         return '30plus';
     }
-}
+};
 
-function getReferrer() {
-    var referrerTypes = [{
-                id: 'facebook',
-                match: 'facebook.com'
-            }, {
-                id: 'twitter',
-                match: 't.co/'
-            }, // added (/) because without slash it is picking up reddit.com too
-            {
-                id: 'googleplus',
-                match: 'plus.url.google'
-            }, {
-                id: 'reddit',
-                match: 'reddit.com'
-            }, {
-                id: 'google',
-                match: 'www.google'
-            }
-        ],
-        matchedRef = referrerTypes.filter(function(referrerType) {
-            return detect.getReferrer().indexOf(referrerType.match) > -1;
-        })[0] || {};
+const getReferrer = () => {
+    const referrerTypes = [
+        {
+            id: 'facebook',
+            match: 'facebook.com',
+        },
+        {
+            id: 'twitter',
+            match: 't.co/',
+        }, // added (/) because without slash it is picking up reddit.com too
+        {
+            id: 'googleplus',
+            match: 'plus.url.google',
+        },
+        {
+            id: 'reddit',
+            match: 'reddit.com',
+        },
+        {
+            id: 'google',
+            match: 'www.google',
+        },
+    ];
+
+    const matchedRef = referrerTypes.filter(
+        referrerType => detect.getReferrer().indexOf(referrerType.match) > -1
+    )[0] || {};
 
     return matchedRef.id;
-}
+};
 
-function getWhitelistedQueryParams() {
-    var whiteList = ['0p19G'];
-    return pick(url.getUrlVars(), whiteList);
-}
+const getWhitelistedQueryParams = () => {
+    const whiteList = ['0p19G'];
+    return pick(getUrlVars(), whiteList);
+};
 
-function formatAppNexusTargeting(obj) {
-    return flatten(Object.keys(obj)
-            .filter(function(key) {
-                return obj[key] !== '' && obj[key] !== null;
+const formatAppNexusTargeting = obj =>
+    flatten(
+        Object.keys(obj)
+            .filter(key => obj[key] !== '' && obj[key] !== null)
+            .map(key => {
+                const value = obj[key];
+                return Array.isArray(value)
+                    ? value.map(nestedValue => `${key}=${nestedValue}`)
+                    : `${key}=${value}`;
             })
-            .map(function(key) {
-                var value = obj[key];
-                return Array.isArray(value) ?
-                    value.map(function(nestedValue) {
-                        return key + '=' + nestedValue
-                    }) : key + '=' + value;
-            }))
-        .join(',');
-}
+    ).join(',');
 
-export default once(function() {
-    var page = config.page;
-    var pageTargets = assign({
-        x: krux.getSegments(),
-        pv: config.ophan.pageViewId,
-        bp: detect.getBreakpoint(),
-        at: adtestParams(),
-        si: identity.isUserLoggedIn() ? 't' : 'f',
-        gdncrm: userAdTargeting.getUserSegments(),
-        ab: abParam(),
-        ref: getReferrer(),
-        ms: formatTarget(page.source),
-        fr: getVisitedValue(),
-        // round video duration up to nearest 30 multiple
-        vl: page.videoDuration ? (Math.ceil(page.videoDuration / 30.0) * 30).toString() : undefined
-    }, page.sharedAdTargeting, getWhitelistedQueryParams());
+export default once(() => {
+    const page = config.page;
+    const pageTargets = Object.assign(
+        {
+            x: krux.getSegments(),
+            pv: config.ophan.pageViewId,
+            bp: detect.getBreakpoint(),
+            at: adtestParams(),
+            si: identity.isUserLoggedIn() ? 't' : 'f',
+            gdncrm: userAdTargeting.getUserSegments(),
+            ab: abParam(),
+            ref: getReferrer(),
+            ms: formatTarget(page.source),
+            fr: getVisitedValue(),
+            // round video duration up to nearest 30 multiple
+            vl: page.videoDuration
+                ? (Math.ceil(page.videoDuration / 30.0) * 30).toString()
+                : undefined,
+        },
+        page.sharedAdTargeting,
+        getWhitelistedQueryParams()
+    );
 
     // filter out empty values
-    var pageTargeting = pick(pageTargets, function(target) {
+    const pageTargeting = pick(pageTargets, target => {
         if (Array.isArray(target)) {
             return target.length > 0;
-        } else {
-            return target;
         }
+        return target;
     });
 
     // third-parties wish to access our page targeting, before the googletag script is loaded.
@@ -158,7 +160,13 @@ export default once(function() {
         pt6: pageTargeting.su,
         pt7: pageTargeting.bp,
         pt8: pageTargeting.x,
-        pt9: [pageTargeting.gdncrm, pageTargeting.pv, pageTargeting.co, pageTargeting.tn, pageTargeting.slot].join("|")
+        pt9: [
+            pageTargeting.gdncrm,
+            pageTargeting.pv,
+            pageTargeting.co,
+            pageTargeting.tn,
+            pageTargeting.slot,
+        ].join('|'),
     });
 
     // This can be removed once we get sign-off from third parties who prefer to use appNexusPageTargeting.
