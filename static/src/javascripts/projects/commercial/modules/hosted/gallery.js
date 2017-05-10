@@ -341,7 +341,7 @@ class HostedGallery {
         const fractionProgress = progress % 1;
         const deg = Math.ceil(fractionProgress * 360);
         const newIndex = Math.round(progress + 0.75);
-        const ctaIndex: number = HostedGallery.ctaIndex() || 0;
+        const ctaIndex: number = HostedGallery.ctaIndex() || -1;
         fastdom.write(() => {
             this.$images.each((image, index) => {
                 const opacity = (progress - index + 1) * 16 / 11 - 0.0625;
