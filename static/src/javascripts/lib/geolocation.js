@@ -14,10 +14,7 @@ const daysBeforeGeolocationRefresh = 10;
 
 const getFromStorage = (): string => storage.get(storageKey);
 
-const geoLocationEstablishedEvent = 'geolocation:established';
-
-const fireGeoLocationEstablishedEvent = () =>
-    mediator.emit(geoLocationEstablishedEvent);
+const geolocationEstablishedEvent = 'geolocation:established';
 
 const get = (): Promise<string> =>
     new Promise((resolve, reject) => {
@@ -52,7 +49,7 @@ const init = (): void => {
             ),
         });
         // Allows application logic to wait until geolocation is set.
-        fireGeoLocationEstablishedEvent();
+        mediator.emit(geolocationEstablishedEvent);
     });
 };
 
@@ -148,5 +145,5 @@ export {
     getSync,
     isInEurope,
     init,
-    geoLocationEstablishedEvent,
+    geolocationEstablishedEvent,
 };

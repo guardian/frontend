@@ -160,21 +160,13 @@ define([
 
             var messageText = Array.isArray(params.messageText)?selectSequentiallyFrom(params.messageText):params.messageText;
 
-            var paypalClass = params.paypalClass || '';
-
-            //the paypall variant only works with the yellow banner
-            if(paypalClass) {
-                colourClass = 'membership-prominent yellow';
-            }
-
             var renderedBanner = template(messageTemplate, {
                 linkHref: params.linkUrl + '?INTCMP=' + params.campaignCode,
                 messageText: messageText,
                 buttonCaption: params.buttonCaption,
                 colourClass: colourClass,
                 arrowWhiteRight: svgs.inlineSvg('arrowWhiteRight'),
-                paypalLogoSrc: paypalAndCreditCardImage,
-                paypalClass : paypalClass
+                paypalLogoSrc: paypalAndCreditCardImage
             });
 
             var messageShown = new Message(
@@ -199,7 +191,7 @@ define([
 
         function init() {
 
-            mediator.once(geolocation.geoLocationEstablishedEvent, function() {
+            mediator.once(geolocation.geolocationEstablishedEvent, function() {
 
                 var bannerParams = deriveBannerParams();
 

@@ -15,16 +15,11 @@ define([
         contributions: 'contributions'
     };
 
-    function defaultColourStrategy() {
-        return 'membership-prominent yellow'
-    }
-
-    // TODO: campaign code by location and/or reader product?
-
     var baseParams = {
         minArticles: 3,
-        colourStrategy: defaultColourStrategy,
-        paypalClass: 'site-message__message--show-paypal',
+        colourStrategy: function() {
+            return 'membership-prominent yellow'
+        },
         campaignCode: 'gdnwb_copts_memco_banner' // Agreed with Jess and Jesse
     };
 
@@ -66,7 +61,7 @@ define([
                 'SE'
             ];
 
-            return euroAfterCountryCodes.includes(location) ? amount + ' ' + euro : euro + amount;
+            return euroAfterCountryCodes.indexOf(location) > -1 ? amount + ' ' + euro : euro + amount;
 
         } else {
 
@@ -78,7 +73,7 @@ define([
                 INT: '$6.99'
             }[region];
 
-            return payment ? payment : '£5'
+            return payment || '£5'
         }
     }
 
@@ -102,7 +97,7 @@ define([
     function contributionParams() {
         return assign({}, baseParams, {
             buttonCaption: 'Make a Contribution',
-            linkUrl: 'https://contribute.theguardian.com/',
+            linkUrl: 'https://contribute.theguardian.com',
             offering: offerings.contributions,
             messageText: contributionEngagementBannerCopy()
         });
