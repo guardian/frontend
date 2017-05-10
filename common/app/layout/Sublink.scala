@@ -346,16 +346,16 @@ object ContentCard {
 case class HtmlBlob(html: Html, customCssClasses: Seq[String], cardTypes: ItemClasses) extends FaciaCard
 
 case class PaidCard(
-  icon: Option[String],
-  headline: String,
-  kicker: Option[String],
-  description: Option[String],
-  image: Option[ImageMedia],
-  fallbackImageUrl: Option[String],
-  targetUrl: String,
-  cardTypes: Option[ItemClasses] = None,
-  branding: Option[Branding],
-  originalCard: Option[ContentCard]
+                     icon: Option[String],
+                     headline: String,
+                     kicker: Option[String],
+                     description: Option[String],
+                     image: Option[ImageMedia],
+                     fallbackImageUrl: Option[String],
+                     targetUrl: String,
+                     cardTypes: Option[ItemClasses] = None,
+                     branding: Option[Branding],
+                     contentCard: Option[ContentCard]
 ) extends FaciaCard
 
 object PaidCard {
@@ -390,7 +390,7 @@ object PaidCard {
       targetUrl = header.url,
       cardTypes = cardTypes,
       branding = content.branding(defaultEdition),
-      originalCard = contentCard
+      contentCard = contentCard
     )
   }
 
@@ -421,7 +421,7 @@ object PaidCard {
         clickMacro map { cm => s"$cm$url" } getOrElse url
       },
       branding = item.metadata.commercial.flatMap(_.branding(edition)),
-      originalCard = None
+      contentCard = None
     )
   }
 }
