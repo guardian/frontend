@@ -15,12 +15,15 @@ const onComplete = function(adSlotId) {
 };
 
 const recordUserAdFeedback = function(
-    pagePath,
-    adSlotId,
-    slotRenderEvent,
-    feedbackType,
-    comment
-) {
+    pagePath: string,
+    adSlotId: string,
+    slotRenderEvent: {
+        sourceAgnosticCreativeId: string,
+        sourceAgnosticLineItemId: string,
+    },
+    feedbackType: string,
+    comment?: string
+): Promise<void> {
     const feedbackUrl =
         'https://j2cy9stt59.execute-api.eu-west-1.amazonaws.com/prod/adFeedback';
     const stage = config.page.isProd ? 'PROD' : 'CODE';
