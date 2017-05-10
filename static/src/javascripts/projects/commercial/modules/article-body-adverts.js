@@ -21,7 +21,7 @@ let getSlotType;
 
 const isOffsetingAds =
     abUtils.testCanBeRun(new IncreaseInlineAds()) &&
-    abUtils.getTestVariantId('IncreaseInlineAdsRedux') === 'yes';
+    abUtils.getTestVariantId('IncreaseInlineAdsReduxRedux') === 'yes';
 
 const getSlotNameForMobile = () =>
     bodyAds === 1 ? 'top-above-nav' : `inline${bodyAds - 1}`;
