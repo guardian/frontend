@@ -119,8 +119,8 @@ define([
          *  }
          *
          */
-        function deriveBannerParams() {
-            var defaultParams = membershipEngagementBannerUtils.defaultParams;
+        function deriveBannerParams(location) {
+            var defaultParams = membershipEngagementBannerUtils.defaultParams(location);
             var userTest = getUserTest();
             var campaignId = userTest ? userTest.campaignId : undefined;
             var userVariant = getUserVariant(userTest);
@@ -191,9 +191,9 @@ define([
 
         function init() {
 
-            mediator.once(geolocation.geolocationEstablishedEvent, function() {
+            return geolocation.get().then(function(location) {
 
-                var bannerParams = deriveBannerParams();
+                var bannerParams = deriveBannerParams(location);
 
                 if (bannerParams && (storage.local.get('gu.alreadyVisited') || 0) >= bannerParams.minArticles) {
                     return commercialFeatures.async.canDisplayMembershipEngagementBanner.then(function (canShow) {
@@ -212,8 +212,6 @@ define([
                     });
                 }
             });
-
-            return Promise.resolve();
         }
 
         function selectSequentiallyFrom(array) {

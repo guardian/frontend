@@ -2,7 +2,6 @@
 import fetchJSON from 'lib/fetch-json';
 import config from 'lib/config';
 import { local as storage } from 'lib/storage';
-import mediator from 'lib/mediator';
 
 const storageKey = 'gu.geolocation';
 const editionToGeolocationMap = {
@@ -13,8 +12,6 @@ const editionToGeolocationMap = {
 const daysBeforeGeolocationRefresh = 10;
 
 const getFromStorage = (): string => storage.get(storageKey);
-
-const geolocationEstablishedEvent = 'geolocation:established';
 
 const get = (): Promise<string> =>
     new Promise((resolve, reject) => {
@@ -40,17 +37,17 @@ const get = (): Promise<string> =>
             .catch(reject);
     });
 
-const init = (): void => {
-    get().then(geolocation => {
-        const currentDate = new Date();
-        storage.set(storageKey, geolocation, {
-            expires: currentDate.setDate(
-                currentDate.getDate() + daysBeforeGeolocationRefresh
-            ),
-        });
-        // Allows application logic to wait until geolocation is set.
-        mediator.emit(geolocationEstablishedEvent);
+const setGeolocation = (geolocation: string): void => {
+    const currentDate = new Date();
+    storage.set(storageKey, geolocation, {
+        expires: currentDate.setDate(
+            currentDate.getDate() + daysBeforeGeolocationRefresh
+        ),
     });
+};
+
+const init = (): void => {
+    get().then(setGeolocation);
 };
 
 const editionToGeolocation = (editionKey: string = 'UK'): string =>
@@ -139,11 +136,12 @@ const isInEurope = (): boolean => {
     return europeCountryCodes.includes(countryCode) || countryCode === 'GB';
 };
 
+// Exposed for unit testing
 export {
     get,
     getSupporterPaymentRegion,
     getSync,
     isInEurope,
     init,
-    geolocationEstablishedEvent,
+    setGeolocation,
 };

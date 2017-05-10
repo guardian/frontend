@@ -20,7 +20,13 @@ define([
         colourStrategy: function() {
             return 'membership-prominent yellow'
         },
-        campaignCode: 'gdnwb_copts_memco_banner' // Agreed with Jess and Jesse
+        // Agreed with Jess and Jesse
+        campaignCode: 'gdnwb_copts_memco_banner',
+        // Used for tracking the new implementation
+        interactionOnMessageShow: {
+            component: 'engagement_banner',
+            value: 'default_paypal_and_paywall'
+        }
     };
 
     function engagementBannerCopy(cta) {
@@ -61,7 +67,7 @@ define([
                 'SE'
             ];
 
-            return euroAfterCountryCodes.indexOf(location) > -1 ? amount + ' ' + euro : euro + amount;
+            return euroAfterCountryCodes.includes(location) ? amount + ' ' + euro : euro + amount;
 
         } else {
 
@@ -108,7 +114,7 @@ define([
     }
 
     return {
-        defaultParams: engagementBannerParams(geolocation.getSync()),
+        defaultParams: engagementBannerParams,
         offerings: offerings
     }
 });
