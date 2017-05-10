@@ -1,42 +1,49 @@
-import qwery from 'qwery';
+// @flow
 import fastdom from 'fastdom';
 import fetch from 'lib/fetch';
 import config from 'lib/config';
 import detect from 'lib/detect';
 
-export default function recordUserAdFeedback(pagePath, adSlotId, slotRenderEvent, feedbackType, comment) {
-    var feedbackUrl = 'https://j2cy9stt59.execute-api.eu-west-1.amazonaws.com/prod/adFeedback';
-    var stage = config.page.isProd ? 'PROD' : 'CODE';
-    var ua = detect.getUserAgent;
-    var breakPoint = detect.getBreakpoint();
+const onComplete = function(adSlotId) {
+    // we're complete - update the UI
+    fastdom.write(() => {
+        const label = document.querySelector(`#${adSlotId}>.ad-slot__label`);
+        if (label) {
+            label.classList.add('feedback-submitted');
+        }
+    });
+};
 
-    var data = {
-        stage: stage,
+const recordUserAdFeedback = function(
+    pagePath,
+    adSlotId,
+    slotRenderEvent,
+    feedbackType,
+    comment
+) {
+    const feedbackUrl =
+        'https://j2cy9stt59.execute-api.eu-west-1.amazonaws.com/prod/adFeedback';
+    const stage = config.page.isProd ? 'PROD' : 'CODE';
+    const ua = detect.getUserAgent;
+    const breakPoint = detect.getBreakpoint();
+
+    const data = {
+        stage,
         page: pagePath,
-        adSlotId: adSlotId,
+        adSlotId,
         creativeId: slotRenderEvent.sourceAgnosticCreativeId.toString(),
         lineId: slotRenderEvent.sourceAgnosticLineItemId.toString(),
         feedback: feedbackType,
-        comment: comment,
+        comment,
         browser: ua.browser.toString() + ua.version.toString(),
-        breakPoint: breakPoint
+        breakPoint,
     };
 
     return fetch(feedbackUrl, {
         method: 'post',
         body: JSON.stringify(data),
-        mode: 'cors'
-    }).then(
-        onComplete.bind(this, adSlotId),
-        onComplete.bind(this, adSlotId)
-    );
+        mode: 'cors',
+    }).then(onComplete.bind(this, adSlotId), onComplete.bind(this, adSlotId));
 };
 
-function onComplete(adSlotId) { // we're complete - update the UI
-    fastdom.write(function() {
-        var label = document.querySelector('#' + adSlotId + '>.ad-slot__label');
-        if (label) {
-            label.classList.add('feedback-submitted');
-        }
-    });
-}
+export { recordUserAdFeedback };
