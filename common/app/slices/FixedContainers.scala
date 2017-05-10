@@ -91,6 +91,7 @@ object FixedContainers {
     ("fixed/medium/slow-XII-mpu", fixedMediumSlowXIIMpu),
     ("fixed/medium/fast-XI", fixedMediumFastXI),
     ("fixed/medium/fast-XII", fixedMediumFastXII),
+    ("dynamo/election", fixedLargeElections),
     ("fixed/large/slow-XIV", slices(ThreeQuarterQuarter, QuarterQuarterQuarterQuarter, Ql2Ql2Ql2Ql2)),
     ("fixed/thrasher", thrasher)
   ) ++ (if (Configuration.faciatool.showTestContainers) Map(
