@@ -45,10 +45,11 @@
     top: 0;
     transition: opacity .2s cubic-bezier(.23, 1, .32, 1);
     // Without this, in Safari/IOS this element appears above the menu
-    width: 100%;
+    width: 0;
     z-index: $zindex-overlay;
 
     .new-header--open & {
         opacity: 1;
+        width: 100%;
     }
 }
