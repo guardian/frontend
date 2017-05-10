@@ -15,7 +15,6 @@ import services.FaciaContentConvert
 import views.support._
 
 import scala.Function.const
-import play.api.mvc.RequestHeader
 
 object EditionalisedLink {
   def fromFaciaContent(faciaContent: PressedContent) =

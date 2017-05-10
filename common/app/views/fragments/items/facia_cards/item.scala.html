@@ -18,14 +18,15 @@
 
 @defining(containerIndex == 0) { case (isFirstContainer) =>
     @item match {
+
+        case content: ContentCard => {
+            @contentCard(content, containerIndex, index, card.visibilityDataAttribute, isFirstContainer, isList)
+        }
+
         case paidContentOnPaidPage: PaidCard if frontProperties.exists(_.isPaidContent) && paidContentOnPaidPage.contentCard.isDefined =>{
             @paidContentOnPaidPage.contentCard.map { c =>
                 @contentCard(c, containerIndex, index, card.visibilityDataAttribute, isFirstContainer, isList)
             }
-        }
-
-        case content: ContentCard => {
-            @contentCard(content, containerIndex, index, card.visibilityDataAttribute, isFirstContainer, isList)
         }
 
         case paidCard: PaidCard  => {
