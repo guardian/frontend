@@ -2,7 +2,6 @@
 import config from 'lib/config';
 import $ from 'lib/$';
 import detect from 'lib/detect';
-import fastdom from 'lib/fastdom-promise';
 import { loadScript } from 'lib/load-script';
 import { tracking } from './outbrain-tracking';
 import { load } from './outbrain-load';
@@ -12,7 +11,6 @@ jest.mock('lib/detect', () => ({
     adblockInUse: Promise.resolve(false),
     getBreakpoint: jest.fn(),
 }));
-jest.mock('lib/fastdom-promise', () => ({ write: jest.fn() }));
 jest.mock('lib/load-script', () => ({ loadScript: jest.fn() }));
 jest.mock('./outbrain-tracking', () => ({ tracking: jest.fn() }));
 
@@ -20,10 +18,6 @@ detect.getBreakpoint.mockReturnValue('desktop');
 
 describe('Outbrain Load', () => {
     beforeEach(done => {
-        fastdom.write.mockImplementation(cb => {
-            cb();
-            return Promise.resolve();
-        });
         if (document.body) {
             document.body.innerHTML = `
                 <div id="dfp-ad--merchandising-high"></div>
