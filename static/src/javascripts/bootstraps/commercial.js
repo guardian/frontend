@@ -7,7 +7,9 @@ import highMerch from 'commercial/modules/high-merch';
 import {
     articleAsideAdvertsInit,
 } from 'commercial/modules/article-aside-adverts';
-import articleBodyAdverts from 'commercial/modules/article-body-adverts';
+import {
+    articleBodyAdvertsInit,
+} from 'commercial/modules/article-body-adverts';
 import closeDisabledSlots from 'commercial/modules/close-disabled-slots';
 import prepareGoogletag from 'commercial/modules/dfp/prepare-googletag';
 import prepareSonobiTag from 'commercial/modules/dfp/prepare-sonobi-tag';
@@ -35,7 +37,7 @@ const commercialModules: Array<Array<any>> = [
     ['cm-prepare-switch-tag', prepareSwitchTag.init, true],
     ['cm-articleAsideAdverts', articleAsideAdvertsInit, true],
     ['cm-prepare-googletag', prepareGoogletag.init, true],
-    ['cm-articleBodyAdverts', articleBodyAdverts.init],
+    ['cm-articleBodyAdverts', articleBodyAdvertsInit],
     ['cm-liveblogAdverts', liveblogAdverts.init, true],
     ['cm-closeDisabledSlots', closeDisabledSlots.init],
     ['cm-stickyTopBanner', stickyTopBanner.init],
