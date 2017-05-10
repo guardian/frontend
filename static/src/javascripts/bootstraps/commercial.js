@@ -4,13 +4,15 @@ import { catchErrorsWithContext } from 'lib/robust';
 import { markTime } from 'lib/user-timing';
 import reportError from 'lib/report-error';
 import highMerch from 'commercial/modules/high-merch';
-import articleAsideAdverts from 'commercial/modules/article-aside-adverts';
+import {
+    articleAsideAdvertsInit,
+} from 'commercial/modules/article-aside-adverts';
 import articleBodyAdverts from 'commercial/modules/article-body-adverts';
 import closeDisabledSlots from 'commercial/modules/close-disabled-slots';
 import prepareGoogletag from 'commercial/modules/dfp/prepare-googletag';
 import prepareSonobiTag from 'commercial/modules/dfp/prepare-sonobi-tag';
 import prepareSwitchTag from 'commercial/modules/dfp/prepare-switch-tag';
-import fillAdvertSlots from 'commercial/modules/dfp/fill-advert-slots';
+import { fillAdvertSlots } from 'commercial/modules/dfp/fill-advert-slots';
 import hostedAbout from 'commercial/modules/hosted/about';
 import hostedVideo from 'commercial/modules/hosted/video';
 import hostedGallery from 'commercial/modules/hosted/gallery';
@@ -31,13 +33,13 @@ const commercialModules: Array<Array<any>> = [
     ['cm-thirdPartyTags', thirdPartyTags.init],
     ['cm-prepare-sonobi-tag', prepareSonobiTag.init, true],
     ['cm-prepare-switch-tag', prepareSwitchTag.init, true],
-    ['cm-articleAsideAdverts', articleAsideAdverts.init, true],
+    ['cm-articleAsideAdverts', articleAsideAdvertsInit, true],
     ['cm-prepare-googletag', prepareGoogletag.init, true],
     ['cm-articleBodyAdverts', articleBodyAdverts.init],
     ['cm-liveblogAdverts', liveblogAdverts.init, true],
     ['cm-closeDisabledSlots', closeDisabledSlots.init],
     ['cm-stickyTopBanner', stickyTopBanner.init],
-    ['cm-fill-advert-slots', fillAdvertSlots.init, true],
+    ['cm-fill-advert-slots', fillAdvertSlots, true],
     ['cm-paidContainers', paidContainers.init],
     ['cm-paidforBand', paidforBand.init],
 ];

@@ -9,7 +9,6 @@ define([
         'commercial/modules/commercial-features',
         'commercial/modules/user-features',
         'lib/mediator',
-        'Promise',
         'lib/fastdom-promise',
         'common/modules/experiments/ab',
         'common/modules/experiments/tests/membership-engagement-banner-tests',
@@ -31,7 +30,6 @@ define([
                  commercialFeatures,
                  userFeatures,
                  mediator,
-                 Promise,
                  fastdom,
                  ab,
                  MembershipEngagementBannerTests,
@@ -207,8 +205,12 @@ define([
                         mediator.on('modules:onwards:breaking-news:ready', function (breakingShown) {
                             if (!breakingShown) {
                                 showBanner(bannerParams);
+                            } else {
+                                mediator.emit('banner-message:complete');
                             }
                         });
+                    } else {
+                        mediator.emit('banner-message:complete');
                     }
                 });
             }

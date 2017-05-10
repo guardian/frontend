@@ -171,17 +171,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-membership-engagement-banner-paywall-and-paypal-test-round-two",
-    "Test variant with paywall message and paypal logo on the engagement banner",
-    owners = Seq(Owner.withGithub("jranks123")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 5, 25),
-    exposeClientSide = true
-  )
-
-
-  Switch(
-    ABTests,
     "ab-acquisitions-epic-testimonials",
     "Test placing reader testimonials in the Epic",
     owners = Seq(Owner.withGithub("Mullefa")),
