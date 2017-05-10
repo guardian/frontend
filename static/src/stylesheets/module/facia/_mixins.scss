@@ -22,15 +22,15 @@ $breakpoints: (
             margin-left: $gs-gutter;
             margin-right: $gs-gutter;
         }
-        @include mq(containerWidestMobile) {
+
+        @include mq(tablet) {
             margin-left: auto;
             margin-right: auto;
-            width: $mobile-max-container-width;
-        }
-        @include mq(tablet) {
             padding-left: $gs-gutter;
             padding-right: $gs-gutter;
+            width: $mobile-max-container-width;
         }
+
         @each $breakpoint, $container-width in $breakpoints {
             @include mq($breakpoint) {
                 width: $container-width;
