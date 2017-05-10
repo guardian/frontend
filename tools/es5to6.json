@@ -50,7 +50,6 @@
     "projects/common/modules/charts/doughnut.js"
   ],
   "Lydia Shepherd": [
-    "projects/commercial/modules/user-ad-feedback.js",
     "projects/commercial/modules/third-party-tags/outbrain.js",
     "projects/commercial/modules/third-party-tags/plista.js",
     "projects/commercial/modules/third-party-tags/remarketing.js",

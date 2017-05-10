@@ -13,7 +13,7 @@ import applyCreativeTemplate
 import renderAdvertLabel from 'commercial/modules/dfp/render-advert-label';
 import geoMostPopular from 'common/modules/onward/geo-most-popular';
 import Toggles from 'common/modules/ui/toggles';
-import recordUserAdFeedback from 'commercial/modules/user-ad-feedback';
+import { recordUserAdFeedback } from 'commercial/modules/user-ad-feedback';
 import config from 'lib/config';
 /**
  * ADVERT RENDERING
