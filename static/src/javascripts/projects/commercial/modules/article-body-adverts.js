@@ -9,6 +9,8 @@ import { addSlot } from 'commercial/modules/dfp/add-slot';
 import trackAdRender from 'commercial/modules/dfp/track-ad-render';
 import createSlot from 'commercial/modules/dfp/create-slot';
 import commercialFeatures from 'commercial/modules/commercial-features';
+import IncreaseInlineAds
+    from 'common/modules/experiments/tests/increase-inline-ads';
 
 /* bodyAds is a counter that keeps track of the number of inline MPUs
  * inserted dynamically. */
@@ -18,7 +20,7 @@ let getSlotName;
 let getSlotType;
 
 const isOffsetingAds =
-    abUtils.testCanBeRun('IncreaseInlineAdsRedux') &&
+    abUtils.testCanBeRun(new IncreaseInlineAds()) &&
     abUtils.getTestVariantId('IncreaseInlineAdsRedux') === 'yes';
 
 const getSlotNameForMobile = () =>
