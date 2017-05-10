@@ -96,10 +96,10 @@ class EditProfileController(idUrlBuilder: IdentityUrlBuilder,
 }
 
 case class ProfileForms(
-                         publicForm: Form[ProfileFormData],
-                         accountForm: Form[AccountFormData],
-                         privacyForm: Form[PrivacyFormData],
-                         activePage: EditProfilePage)(implicit profileFormsMapping: ProfileFormsMapping) {
+    publicForm: Form[ProfileFormData],
+    accountForm: Form[AccountFormData],
+    privacyForm: Form[PrivacyFormData],
+    activePage: EditProfilePage)(implicit profileFormsMapping: ProfileFormsMapping) {
 
   lazy val activeForm = activePage match {
     case PublicEditProfilePage => publicForm
