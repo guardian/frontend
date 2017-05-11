@@ -1,7 +1,7 @@
 // @flow
 import { banners } from './adblock-banners';
 
-const getBanners = function(edition: string): Array<{}> {
+const getBanners = function(edition: string): Array<any> {
     const editionFilter = banner =>
         typeof banner.editions[edition] !== 'undefined';
 
