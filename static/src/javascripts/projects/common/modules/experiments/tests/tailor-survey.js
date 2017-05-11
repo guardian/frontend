@@ -1,6 +1,6 @@
 // @flow
 
-import { ABTest } from 'common/modules/experiments/ab-types';
+import type { ABTest } from 'common/modules/experiments/ab-types';
 import bean from 'bean';
 import bonzo from 'bonzo';
 import fastdom from 'fastdom';
@@ -211,7 +211,7 @@ const handleSurveyResponse = surveyId => {
     });
 };
 
-export const tailorSurvey = new ABTest({
+export const tailorSurvey: ABTest = {
     id: 'TailorSurvey',
     start: '2017-03-07',
     expiry: '2017-05-31',
@@ -249,4 +249,4 @@ export const tailorSurvey = new ABTest({
             },
         },
     ],
-});
+};
