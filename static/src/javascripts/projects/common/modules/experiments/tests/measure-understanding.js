@@ -21,7 +21,12 @@ const MeasureUnderstanding = () => {
 
     // List of pages the test will run in
     const paths = [
+        '/us-news/2017/may/11/justice-department-fbi-documents-trump-russia-hack-clinton-email',
+        '/us-news/2017/may/09/james-comey-fbi-fired-donald-trump',
         '/us-news/2017/may/10/theres-nothing-there-white-house-staff-deny-comey-sacking-is-linked-to-russia',
+        '/us-news/2017/may/10/terrifying-astonishing-nixonian-james-comeys-termination-by-trump',
+        '/us-news/2017/may/11/james-comey-farewell-letter-fbi-independence--sacking-fallout',
+        '/us-news/2017/may/09/james-comey-fbi-fired-donald-trump-hillary-clinton-emails',
     ];
 
     // A heuristic to detect explainers in the article via their dataset.canonicalUrl
