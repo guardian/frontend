@@ -1,87 +1,82 @@
-define([
-    'fastdom',
-    'lib/$',
-    'lib/config',
-    'lib/detect',
-    'lodash/utilities/template',
-    'commercial/modules/dfp/track-ad-render',
-    'commercial/modules/commercial-features',
-    'raw-loader!commercial/views/plista.html',
-    'lib/load-script'
-], function (
-    fastdom,
-    $,
-    config,
-    detect,
-    template,
-    trackAdRender,
-    commercialFeatures,
-    plistaStr,
-    loadScript
-) {
+import fastdom from 'fastdom';
+import $ from 'lib/$';
+import config from 'lib/config';
+import detect from 'lib/detect';
+import template from 'lodash/utilities/template';
+import trackAdRender from 'commercial/modules/dfp/track-ad-render';
+import commercialFeatures from 'commercial/modules/commercial-features';
+import plistaStr from 'raw-loader!commercial/views/plista.html';
+import loadScript from 'lib/load-script';
 
-    var plistaTpl = template(plistaStr);
-    var selectors = {
-        container: '.js-plista-container'
-    };
+var plistaTpl = template(plistaStr);
+var selectors = {
+    container: '.js-plista-container'
+};
 
-    function loadInstantly() {
-        return detect.adblockInUse.then(function(adblockInUse){
-            return !document.getElementById('dfp-ad--merchandising-high') || adblockInUse;
+function loadInstantly() {
+    return detect.adblockInUse.then(function(adblockInUse) {
+        return !document.getElementById('dfp-ad--merchandising-high') || adblockInUse;
+    });
+}
+
+// a modification of the code provided by Plista; altered to be a lazy load rather than during DOM construction
+function embed(publickey, widgetName, geo, u, categories) {
+    var name = 'PLISTA_' + publickey;
+    var lib = window[name];
+    var $container = $(selectors.container);
+
+    $container.append(plistaTpl({
+        widgetName: widgetName
+    }));
+    $container.css('display', 'block');
+
+    if (!lib || !lib.publickey) {
+        window[name] = {
+            publickey: publickey,
+            widgets: [{
+                name: widgetName,
+                pre: u
+            }],
+            geo: geo,
+            categories: categories,
+            dataMode: 'data-display'
+        };
+        loadScript.loadScript('//static-au.plista.com/async/' + name + '.js');
+    } else {
+        lib.widgets.push({
+            name: widgetName,
+            pre: u
         });
     }
+}
 
-    // a modification of the code provided by Plista; altered to be a lazy load rather than during DOM construction
-    function embed(publickey, widgetName, geo, u, categories) {
-        var name = 'PLISTA_' + publickey;
-        var lib = window[name];
-        var $container = $(selectors.container);
+function load() {
+    fastdom.write(function() {
+        embed(config.page.plistaPublicApiKey, 'innerArticle', 'au');
+    });
+}
 
-        $container.append(plistaTpl({widgetName: widgetName}));
-        $container.css('display', 'block');
+var module = {
+    load: load,
+    init: init
+};
 
-        if (!lib || !lib.publickey) {
-            window[name] = {
-                publickey: publickey,
-                widgets: [{name: widgetName, pre: u}],
-                geo: geo,
-                categories: categories,
-                dataMode: 'data-display'
-            };
-            loadScript.loadScript('//static-au.plista.com/async/' + name + '.js');
-        } else {
-            lib.widgets.push({name: widgetName, pre: u});
-        }
-    }
-
-    function load() {
-        fastdom.write(function () {
-            embed(config.page.plistaPublicApiKey, 'innerArticle', 'au');
+function init() {
+    if (commercialFeatures.outbrain) {
+        return loadInstantly().then(function(adBlockInUse) {
+            if (adBlockInUse) {
+                module.load();
+            } else {
+                return trackAdRender('dfp-ad--merchandising-high').then(function(isLoaded) {
+                    if (!isLoaded) {
+                        module.load();
+                    }
+                });
+            }
         });
+    } else {
+        return Promise.resolve(false);
     }
+}
 
-    var module = {
-        load: load,
-        init: init
-    };
-
-    function init() {
-        if (commercialFeatures.outbrain) {
-            return loadInstantly().then(function(adBlockInUse){
-                if (adBlockInUse) {
-                    module.load();
-                } else {
-                    return trackAdRender('dfp-ad--merchandising-high').then(function (isLoaded){
-                        if (!isLoaded) {
-                            module.load();
-                        }
-                    });
-                }
-            });
-        }else {
-            return Promise.resolve(false);
-        }
-    }
-
-    return module;
-});
+export default module;
