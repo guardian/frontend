@@ -5,7 +5,7 @@ import $ from 'lib/$';
 import bean from 'bean';
 import overlay from 'raw-loader!common/views/devtools/overlay.html';
 import styles from 'raw-loader!common/views/devtools/styles.css';
-import { getTests } from 'common/modules/experiments/ab';
+import { TESTS } from 'common/modules/experiments/ab-tests';
 
 const getSelectedAbTests = () =>
     JSON.parse(storage.get('gu.devtools.ab')) || [];
@@ -71,7 +71,7 @@ const applyCss = () => {
 
 const appendOverlay = () => {
     const data = {
-        tests: getTests().map(test => ({
+        tests: TESTS.map(test => ({
             id: test.id,
             variants: test.variants,
         })),
