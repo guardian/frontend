@@ -13,6 +13,8 @@ if (shouldRun) {
     const channels = config.page.sectionName.split(',');
     const keywords = config.page.keywords.split(',');
 
+    // We can't ditch the dangling underscores as SimpleReach needs this parameter, see:
+    // http://docs.simplereach.com/implementation-1/standard-implementation
     // eslint-disable-next-line no-underscore-dangle
     window.__reach_config = {
         pid: '58ff7f3a736b795c10004930',
