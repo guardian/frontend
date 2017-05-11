@@ -1,9 +1,10 @@
 define([
-    'common/modules/crosswords/anagram-helper/main',
-    'lodash/collections/sortBy'
+    'lodash/collections/sortBy',
+    'helpers/injector'
 ], function (
-    AnagramHelper,
-    sortBy) {
+    sortBy,
+    Injector
+) {
     var cases = [{
         entries: ['', '', '', '', 'l', '', 'e'],
         word: 'liberal',
@@ -18,6 +19,20 @@ define([
     }];
 
     describe('Anagram Helper', function () {
+        var injector = new Injector();
+        var AnagramHelper;
+
+        beforeEach(function(done) {
+            injector.mock('common/views/svgs', {
+                inlineSvg: function() {
+                    return '';
+                }
+            });
+            injector.require(['common/modules/crosswords/anagram-helper/main'], function(AnagramHelperModule) {
+                AnagramHelper = AnagramHelperModule;
+                done();
+            });
+        });
         it('marks the correct letters as entered', function () {
             var sort = function sort(x) {
                 return x.value + x.entered.toString();
