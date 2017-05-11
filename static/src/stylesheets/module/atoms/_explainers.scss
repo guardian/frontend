@@ -16,8 +16,8 @@
 
 .explainer {
     position: relative;
-    padding: $gs-baseline / 2 $gs-gutter / 4;
-    margin: $gs-baseline * 4 / 3 0 $gs-baseline * 2;
+    padding: $gs-baseline / 3 $gs-gutter / 4 $gs-baseline / 2;
+    margin: $gs-baseline * 4 / 3 0 $gs-baseline * 3;
 
     font-family: $f-sans-serif-text;
 
@@ -34,6 +34,7 @@
 
 .explainer__label {
     @include font-size(14, 18);
+    display: block;
 }
 
 .explainer__headline {
@@ -63,6 +64,10 @@
 .explainer__body {
     > p {
         @include faux-bullet-point;
+
+        &::before {
+            margin-right: $gs-gutter / 4;
+        }
     }
 }
 
@@ -112,7 +117,7 @@
     background: #f1f1f1;
     color: $neutral-1;
 
-    .exlainer__label {
+    .explainer__label {
         color: $news-support-2;
     }
 
@@ -152,17 +157,17 @@
     background: $news-main-1;
     color: #ffffff;
 
-    .exlainer__label {
+    .explainer__label {
         color: $news-support-1;
     }
 
     .explainer__handle {
-        background: $news-main-2;
+        background: darken($news-main-2, 10%);
         color: #ffffff;
 
         &:hover,
         &:focus {
-            background-color: darken($news-main-2, 10%);
+            background-color: darken($news-main-2, 12%);
         }
     }
 
