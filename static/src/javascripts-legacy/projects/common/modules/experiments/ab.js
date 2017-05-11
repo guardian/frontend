@@ -21,6 +21,7 @@ define([
     'common/modules/experiments/tests/sleeve-notes-new-email-variant',
     'common/modules/experiments/tests/sleeve-notes-legacy-email-variant',
     'common/modules/experiments/tests/increase-inline-ads',
+    'common/modules/experiments/tests/explainer-snippet',
     'ophan/ng',
     'common/modules/experiments/tests/paid-commenting',
     'common/modules/experiments/tests/bundle-digital-sub-price-test-1'
@@ -46,6 +47,7 @@ define([
              SleevenotesNewEmailVariant,
              SleevenotesLegacyEmailVariant,
              increaseInlineAdsRedux,
+             ExplainerSnippet,
              ophan,
              PaidCommenting,
              BundleDigitalSubPriceTest1
@@ -63,7 +65,8 @@ define([
         SleevenotesLegacyEmailVariant,
         new increaseInlineAdsRedux(),
         new PaidCommenting(),
-        new BundleDigitalSubPriceTest1()
+        new BundleDigitalSubPriceTest1(),
+        ExplainerSnippet.ExplainerSnippet()
     ].concat(MembershipEngagementBannerTests));
 
     function cleanParticipations() {

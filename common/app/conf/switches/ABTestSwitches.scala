@@ -21,6 +21,16 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-explainer-snippet",
+    "Displays an explainer in the form of a disclosure widget",
+    owners = Seq(Owner.withGithub("regiskuckaertz")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 5, 29),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
     "ab-increase-inline-ads-redux-redux",
     "Displays more inline ads in articles on desktop",
     owners = Seq(Owner.withGithub("gidsg")),

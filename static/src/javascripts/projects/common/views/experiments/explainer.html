@@ -1,0 +1,24 @@
+<details class="clean explainer explainer--<%= style %>">
+  <summary class="explainer__header">
+    <span class="explainer__label">Label</span>
+    <h4 class="explainer__headline">Headline</h4>
+    <button class="button button--large explainer__handle" aria-hidden="true">
+      <span><%= plusIcon %> Show</span>
+      <span><%= minusIcon %> Hide</span>
+    </button>
+  </summary>
+  <div class="explainer__body">
+    <p>Explainer body body body ouhhhhhh</p>
+    <p>Explainer body body body ouhhhhhh</p>
+  </div>
+  <footer class="explainer__footer">
+    <div class="explainer__feedback">
+      <div>Was this explainer helpful?</div>
+      <button class="button" value="like" aria-label="Yes"><%= thumbIcon %></button>
+      <button class="button" value="dislike" aria-label="No"><%= thumbIcon %></button>
+    </div>
+    <div class="explainer__ack" hidden aria-role="alert" aria-live="polite">
+      Thank you for your feedback.
+    </div>
+  </footer>
+</details>
