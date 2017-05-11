@@ -30,8 +30,7 @@
     "projects/commercial/modules/dfp/prepare-googletag.js",
     "projects/common/modules/avatar/api.js"
   ],
-  "Richard Nguyen": [
-  ],
+  "Richard Nguyen": [],
   "Kate Whalen": [
     "projects/commercial/modules/hosted/onward.js",
     "projects/commercial/modules/hosted/video.js",
@@ -54,7 +53,6 @@
     "projects/commercial/modules/third-party-tags/tourism-australia.js",
     "projects/commercial/modules/user-ad-targeting.js",
     "projects/commercial/modules/user-features.js",
-    "projects/common/modules/commercial/adblock-banner-config.js",
     "projects/common/modules/commercial/adblock-messages.js",
     "projects/common/modules/ui/images.js",
     "projects/common/modules/charts/table-doughnut.js"
