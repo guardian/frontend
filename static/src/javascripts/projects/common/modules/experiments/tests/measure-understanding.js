@@ -105,6 +105,7 @@ const MeasureUnderstanding = () => {
                 const url = i.getAttribute('data-canonical-url');
                 if (url && url.includes(prefix)) {
                     i.hidden = true;
+                    i.style.display = 'none';
                 }
             });
         });
