@@ -29,8 +29,8 @@ const MeasureUnderstanding = () => {
         'https://interactive.guim.co.uk/2016/08/explainer-interactive';
 
     // Test duration
-    const start = '2017-04-27';
-    const expiry = '2017-05-27';
+    const start = '2017-05-11';
+    const expiry = '2017-05-18';
 
     // will run in articles only if no story questions atom is already there
     // *and* the user hasn't already answered the question

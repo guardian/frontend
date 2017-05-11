@@ -25,7 +25,7 @@ trait ABTestSwitches {
     "Asks users if they feel better informed after reading an article",
     owners = Seq(Owner.withGithub("regiskuckaertz")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 5, 17),
+    sellByDate = new LocalDate(2017, 5, 19),
     exposeClientSide = true
   )
 
