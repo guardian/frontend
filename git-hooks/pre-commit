@@ -12,7 +12,7 @@ execa
     // lint and commit any lint fixes
     .then(staged => {
         const jsFiles = staged
-            .filter(file => file.endsWith('.js'))
+            .filter(file => file.startsWith('static') && file.endsWith('.js'))
             .filter(file => fs.existsSync(file));
         if (jsFiles.length) {
             return execa('eslint', ['--fix', ...jsFiles], {
