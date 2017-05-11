@@ -13,9 +13,8 @@ if (shouldRun) {
     const channels = config.page.sectionName.split(',');
     const keywords = config.page.keywords.split(',');
 
-    /*eslint-disable */
+    // eslint-disable-next-line no-underscore-dangle
     window.__reach_config = {
-    /*eslint-enable */
         pid: '58ff7f3a736b795c10004930',
         title: config.page.headline,
         date: new Date(config.page.webPublicationDate),
