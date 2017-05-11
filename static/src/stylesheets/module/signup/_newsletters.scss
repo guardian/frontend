@@ -198,7 +198,6 @@
 
 .newsletters-category {
     border-top: 2px solid $news-accent;
-    display: inline-block;
     margin-top: $gs-baseline * 2;
 
     @include mq(tablet) {
