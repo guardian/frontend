@@ -59,7 +59,6 @@
   "sndrs": [
     "lib/detect.js",
     "bootstraps/enhanced/accessibility.js",
-    "projects/common/modules/user-prefs.js",
     "bootstraps/enhanced/article-liveblog-common.js",
     "bootstraps/enhanced/article-minute.js",
     "bootstraps/enhanced/article.js",
