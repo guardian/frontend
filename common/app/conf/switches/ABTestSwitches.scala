@@ -21,6 +21,16 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-measure-understanding",
+    "Asks users if they feel better informed after reading an article",
+    owners = Seq(Owner.withGithub("regiskuckaertz")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 5, 19),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
     "ab-increase-inline-ads-redux-redux",
     "Displays more inline ads in articles on desktop",
     owners = Seq(Owner.withGithub("gidsg")),
