@@ -1,8 +1,10 @@
 // @flow
 import type { ABTest } from 'common/modules/experiments/ab-types';
 
-import testCanRunChecks from 'common/modules/experiments/test-can-run-checks';
+import * as testCanRunChecks
+    from 'common/modules/experiments/test-can-run-checks';
 import abUtils from 'common/modules/experiments/utils';
+
 import acquisitionTestSelector
     from 'common/modules/experiments/acquisition-test-selector';
 import OpinionEmailVariants

@@ -8,7 +8,8 @@ import {
 } from 'common/modules/experiments/ab-tests';
 import { buildOphanSubmitter } from 'common/modules/experiments/ab-ophan';
 import segmentUtil from 'common/modules/experiments/segment-util';
-import testCanRunChecks from 'common/modules/experiments/test-can-run-checks';
+import * as testCanRunChecks
+    from 'common/modules/experiments/test-can-run-checks';
 import abUtils from 'common/modules/experiments/utils';
 import config from 'lib/config';
 import { local } from 'lib/storage';

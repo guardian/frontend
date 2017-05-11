@@ -7,7 +7,8 @@ import type {
 } from 'common/modules/experiments/ab-types';
 
 import { getActiveTests } from 'common/modules/experiments/ab-tests';
-import testCanRunChecks from 'common/modules/experiments/test-can-run-checks';
+import * as testCanRunChecks
+    from 'common/modules/experiments/test-can-run-checks';
 import segmentUtil from 'common/modules/experiments/segment-util';
 import abUtils from 'common/modules/experiments/utils';
 import config from 'lib/config';
