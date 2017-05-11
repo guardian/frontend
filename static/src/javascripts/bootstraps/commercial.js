@@ -42,7 +42,7 @@ const commercialModules: Array<Array<any>> = [
     ['cm-closeDisabledSlots', closeDisabledSlots.init],
     ['cm-stickyTopBanner', stickyTopBanner.init],
     ['cm-fill-advert-slots', fillAdvertSlots, true],
-    ['cm-paidContainers', paidContainers()],
+    ['cm-paidContainers', paidContainers],
     ['cm-paidforBand', paidforBand.init],
 ];
 
