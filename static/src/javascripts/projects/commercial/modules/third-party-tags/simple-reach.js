@@ -1,30 +1,34 @@
+// @flow
 import config from 'lib/config';
 
-var shouldRun = !config.page.isFront && config.switches.simpleReach &&
+const shouldRun =
+    !config.page.isFront &&
+    config.switches.simpleReach &&
     config.page.isPaidContent;
 
-var simpleReachUrl = '';
+let simpleReachUrl = '';
 
 if (shouldRun) {
-    var authors = config.page.author.split(',');
-    var channels = config.page.sectionName.split(',');
-    var keywords = config.page.keywords.split(',');
+    const authors = config.page.author.split(',');
+    const channels = config.page.sectionName.split(',');
+    const keywords = config.page.keywords.split(',');
 
+    /*eslint-disable */
     window.__reach_config = {
+    /*eslint-enable */
         pid: '58ff7f3a736b795c10004930',
         title: config.page.headline,
         date: new Date(config.page.webPublicationDate),
-        authors: authors,
-        channels: channels,
+        authors,
+        channels,
         tags: keywords,
         article_id: config.page.pageId,
-        ignore_errors: false
+        ignore_errors: false,
     };
 
     simpleReachUrl = '//d8rk54i4mohrb.cloudfront.net/js/reach.js';
 }
 
-export default {
-    shouldRun: shouldRun,
-    url: simpleReachUrl
-};
+const url = simpleReachUrl;
+
+export { shouldRun, url };
