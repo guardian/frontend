@@ -11,18 +11,23 @@ import acquisitionsEpicLiveBlog
     from 'common/modules/experiments/tests/acquisitions-epic-liveblog';
 import acquisitionsEpicTestimonialsRoundTwo
     from 'common/modules/experiments/tests/acquisitions-epic-testimonials-round-two';
+import acquisitionsEpicSingleCta
+    from 'common/modules/experiments/tests/acquisitions-epic-single-cta';
+
 /**
  * acquisition tests in priority order (highest to lowest)
  */
 const tests = [
-    acquisitionsEpicTestimonialsRoundTwo,
     alwaysAsk,
+    acquisitionsEpicSingleCta,
+    acquisitionsEpicTestimonialsRoundTwo,
     askFourEarning,
     acquisitionsEpicLiveBlog,
 ];
 
 export const epicEngagementBannerTests = tests.reduce((out, Test) => {
     const testInstance = new Test();
+
     if (testInstance.isEngagementBannerTest) {
         out.push(testInstance);
     }
@@ -37,7 +42,7 @@ export const getTest = () => {
         const forced = window.location.hash.indexOf(`ab-${t.id}`) > -1;
         const variant = segmentUtil.variantFor(t);
 
-        if (!variant.maxViews) return false;
+        if (!variant || !variant.maxViews) return false;
 
         const maxViewCount = variant.maxViews.count;
         const withinViewLimit =
