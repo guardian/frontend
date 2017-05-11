@@ -1,7 +1,9 @@
-import getAdvertById from 'commercial/modules/dfp/get-advert-by-id';
+// @flow
+import { getAdvertById } from 'commercial/modules/dfp/get-advert-by-id';
 import postMessage from 'commercial/modules/messenger/post-message';
-var host = location.protocol + '//' + location.host;
-export default onLoad;
+import type { SlotOnloadEvent } from 'commercial/types';
+
+const host = `${location.protocol}//${location.host}`;
 
 /* This is for native ads. We send two pieces of information:
    - the ID of the iframe into which this ad is embedded. This is currently
@@ -11,15 +13,22 @@ export default onLoad;
      But, this information is necessary in the window.postMessage call, and so
      we resort to sending it as a token of welcome :)
 */
-function onLoad(event) {
-    var advert = getAdvertById.getAdvertById(event.slot.getSlotElementId());
-    if ((typeof advert.size === 'string' && advert.size === 'fluid') ||
-        (advert.size[0] === 0 && advert.size[1] === 0)
+const onLoad = (event: SlotOnloadEvent) => {
+    const advert = getAdvertById(event.slot.getSlotElementId());
+    if (
+        advert &&
+        ((typeof advert.size === 'string' && advert.size === 'fluid') ||
+            (advert.size[0] === 0 && advert.size[1] === 0))
     ) {
-        var iframe = advert.node.getElementsByTagName('iframe')[0];
-        postMessage({
-            id: iframe.id,
-            host: host
-        }, iframe.contentWindow);
+        const iframe = advert.node.getElementsByTagName('iframe')[0];
+        postMessage(
+            {
+                id: iframe.id,
+                host,
+            },
+            iframe.contentWindow
+        );
     }
-}
+};
+
+export default onLoad;
