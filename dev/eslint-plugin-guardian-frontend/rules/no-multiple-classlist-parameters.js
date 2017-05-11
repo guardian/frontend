@@ -11,27 +11,27 @@ module.exports = {
             Identifier: node => {
                 if (node.name === 'add') {
                     const [
-                        dot1,
+                        dot,
                         parent,
                     ] = context
                         .getSourceCode()
                         .getTokensBefore(node, 2)
                         .reverse();
-
                     const [
                         ,
                         ,
-                        nextToken,
+                        maybeComma,
                     ] = context.getSourceCode().getTokensAfter(node, 3);
 
                     if (
-                        isDot(dot1) &&
+                        isDot(dot) &&
                         isIdentifierOf('classList', parent) &&
-                        isComma(nextToken)
+                        isComma(maybeComma)
                     ) {
                         context.report({
                             node,
-                            message: 'You are using a classList.add',
+                            message: `Only one class name can be passed to classList.add
+                                See: https://github.com/Financial-Times/polyfill-service/issues/268`,
                         });
                     }
                 }
