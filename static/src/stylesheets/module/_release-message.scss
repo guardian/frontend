@@ -110,6 +110,16 @@
 
 .site-message__message--membership {
     max-width: none;
+
+    .membership__paypal-logo {
+        display: inline-block;
+    }
+
+    .membership__message-text {
+        @include mq(desktop) {
+            font-size: 25px;
+        }
+    }
 }
 
 .site-message__message--tall {
@@ -520,18 +530,6 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
     @include mq(tablet) {
         margin-top: 0;
         order: 1;
-    }
-}
-
-.site-message__message--show-paypal {
-    .membership__paypal-logo {
-        display: inline-block;
-    }
-
-    .membership__message-text {
-        @include mq(desktop) {
-            font-size: 25px;
-        }
     }
 }
 
