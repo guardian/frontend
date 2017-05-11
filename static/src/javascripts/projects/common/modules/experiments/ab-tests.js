@@ -3,7 +3,7 @@ import type { ABTest } from 'common/modules/experiments/ab-types';
 
 import * as testCanRunChecks
     from 'common/modules/experiments/test-can-run-checks';
-import abUtils from 'common/modules/experiments/utils';
+import * as abUtils from 'common/modules/experiments/utils';
 
 import acquisitionTestSelector
     from 'common/modules/experiments/acquisition-test-selector';

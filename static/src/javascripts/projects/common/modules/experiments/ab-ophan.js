@@ -2,6 +2,7 @@
 
 import type {
     ABTest,
+    Variant,
     OphanABEvent,
     OphanABPayload,
 } from 'common/modules/experiments/ab-types';
@@ -10,7 +11,7 @@ import { getActiveTests } from 'common/modules/experiments/ab-tests';
 import * as testCanRunChecks
     from 'common/modules/experiments/test-can-run-checks';
 import segmentUtil from 'common/modules/experiments/segment-util';
-import abUtils from 'common/modules/experiments/utils';
+import * as abUtils from 'common/modules/experiments/utils';
 import config from 'lib/config';
 import reportError from 'lib/report-error';
 import ophan from 'ophan/ng';
@@ -26,15 +27,19 @@ const submit = (payload: OphanABPayload): void =>
 /**
  * generate an A/B event for ophan
  */
-export const makeABEvent = (
-    variantName: string,
-    complete: string | boolean,
-    campaignCodes?: Array<string>
-): OphanABEvent => ({
-    variantName,
-    complete,
-    campaignCodes,
-});
+const makeABEvent = (
+    variant: Variant,
+    complete: string | boolean
+): OphanABEvent => {
+    const event: OphanABEvent = {
+        variantName: variant.id,
+        complete,
+    };
+
+    if (variant.campaignCodes) event.campaignCodes = variant.campaignCodes;
+
+    return event;
+};
 
 /**
  * Create a function that will fire an A/B test to Ophan
@@ -52,11 +57,7 @@ export const buildOphanSubmitter = (
     const data = {};
     const variant = abUtils.getVariant(test, variantId);
 
-    data[test.id] = makeABEvent(
-        variantId,
-        String(complete),
-        variant.campaignCodes
-    );
+    if (variant) data[test.id] = makeABEvent(variant, String(complete));
 
     return () => submit(data);
 };
@@ -74,13 +75,16 @@ const registerCompleteEvent = complete => test => {
 
     if (variantId && variantId !== 'notintest') {
         const variant = abUtils.getVariant(test, variantId);
-        const listener =
-            (complete ? variant.success : variant.impression) || noop;
 
-        try {
-            listener(buildOphanSubmitter(test, variantId, complete));
-        } catch (err) {
-            reportError(err, {}, false);
+        if (variant != null) {
+            const listener =
+                (complete ? variant.success : variant.impression) || noop;
+
+            try {
+                listener(buildOphanSubmitter(test, variantId, complete));
+            } catch (err) {
+                reportError(err, {}, false);
+            }
         }
     }
 };
@@ -117,23 +121,20 @@ export const buildOphanPayload = (): OphanABPayload => {
             .filter(abUtils.isParticipating)
             .filter(testCanRunChecks.testCanBeRun)
             .forEach(test => {
-                const variantId = abUtils.getTestVariantId(test.id);
-                const variant = abUtils.getVariant(test, variantId);
-                const campaingCodes = variant && variant.campaignCodes
-                    ? variant.campaignCodes
-                    : undefined;
+                const variant = abUtils.getAssignedVariant(test);
 
-                if (variantId && segmentUtil.isInTest(test)) {
-                    log[test.id] = makeABEvent(
-                        variantId,
-                        'false',
-                        campaingCodes
-                    );
+                if (variant && segmentUtil.isInTest(test)) {
+                    log[test.id] = makeABEvent(variant, 'false');
                 }
             });
 
         serverSideTests.forEach(test => {
-            log[`ab${test}`] = makeABEvent('inTest', 'false');
+            const serverSideVariant: Variant = {
+                id: 'inTest',
+                test: () => undefined,
+            };
+
+            log[`ab${test}`] = makeABEvent(serverSideVariant, 'false');
         });
 
         return log;

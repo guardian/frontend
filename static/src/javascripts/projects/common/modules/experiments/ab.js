@@ -10,7 +10,7 @@ import { buildOphanSubmitter } from 'common/modules/experiments/ab-ophan';
 import segmentUtil from 'common/modules/experiments/segment-util';
 import * as testCanRunChecks
     from 'common/modules/experiments/test-can-run-checks';
-import abUtils from 'common/modules/experiments/utils';
+import * as abUtils from 'common/modules/experiments/utils';
 import config from 'lib/config';
 import { local } from 'lib/storage';
 
