@@ -1,5 +1,5 @@
 // @flow
-import getSection from 'commercial/modules/third-party-tags/outbrain-sections';
+import { getSection } from './outbrain-sections';
 /* These codes are given to us directly by Outbrain. They will eventually
    be sent back to them via a data- attribute, in order for them to return
    contextually-relevant links. The codes differ whether on a smartphone,
@@ -69,7 +69,7 @@ const getCode = function(data: {
     slot: string,
     breakpoint: string,
     section: string,
-}): { code: string } {
+}): { code?: string, image?: string, text?: string } {
     if (!(data.slot in outbrainCodes) || data.slot === 'defaults') {
         return outbrainCodes.defaults[getSection(data.section)][
             data.breakpoint === 'wide' ? 'desktop' : data.breakpoint
@@ -84,4 +84,4 @@ const getCode = function(data: {
     ];
 };
 
-export default getCode;
+export { getCode };

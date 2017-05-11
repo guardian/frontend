@@ -9,7 +9,7 @@ module.exports = {
         'prettier/flowtype',
         'prettier/react',
     ],
-    plugins: ['guardian-frontend', 'flowtype', 'flow-header'],
+    plugins: ['flowtype', 'flow-header'],
     rules: {
         // require-specific overrides
         'import/no-extraneous-dependencies': 'off', // necessary while we use aliases

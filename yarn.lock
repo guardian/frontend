@@ -2527,7 +2527,7 @@ eslint-plugin-flowtype@^2.30.0:
     lodash "^4.15.0"
 
 "eslint-plugin-guardian-frontend@file:dev/eslint-plugin-guardian-frontend":
-  version "2.0.0"
+  version "3.0.0"
 
 eslint-plugin-import@^2.2.0:
   version "2.2.0"
@@ -7764,10 +7764,6 @@ whatwg-url@^4.3.0:
   dependencies:
     tr46 "~0.0.3"
     webidl-conversions "^3.0.0"
-
-when@3.7.3:
-  version "3.7.3"
-  resolved "https://registry.yarnpkg.com/when/-/when-3.7.3.tgz#a2189a408128a9962afb0ee2c271631d0a76f44b"
 
 when@^3.7.5:
   version "3.7.7"

@@ -36,7 +36,7 @@ define([
     mediator,
     template,
     userPrefs,
-    SearchTool,
+    searchtool,
     contains
 ) {
 
@@ -153,11 +153,10 @@ define([
         },
 
         addSearch: function () {
-            searchTool = new SearchTool({
+            searchTool = new searchtool.SearchTool({
                 container: $('.js-search-tool'),
                 apiUrl: config.page.locationapiurl
             });
-            searchTool.init();
         },
 
         render: function (weatherData, city) {

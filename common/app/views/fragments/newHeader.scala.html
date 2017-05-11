@@ -1,6 +1,7 @@
 @(page: model.Page)(implicit request: RequestHeader)
 
 @import conf.Configuration
+@import conf.switches.Switches.TricolourVeggieBurger
 @import common.{LinkTo, NewNavigation, Edition}
 @import views.support.RenderClasses
 
@@ -50,7 +51,7 @@
                     </ul>
 
                     <label for="main-menu-toggle"
-                           class="new-header__nav__menu-button js-change-link"
+                           class="new-header__nav__menu-button js-change-link @if(TricolourVeggieBurger.isSwitchedOn) {new-header__nav__menu-button--tricolour}"
                            tabindex="0"
                            data-link-name="nav2 : veggie-burger : show">
                         <span class="new-header__veggie-burger-icon"></span>

@@ -10,7 +10,7 @@ module.exports = {
     extends: ['airbnb', 'prettier'],
 
     // eslint-plugin-prettier switches prettier on
-    plugins: ['prettier'],
+    plugins: ['guardian-frontend', 'prettier'],
     parserOptions: {
         sourceType: 'module',
         ecmaVersion: 6,
@@ -32,6 +32,10 @@ module.exports = {
         ],
         'no-extend-native': 'error',
         'func-style': ['error', 'expression', { allowArrowFunctions: true }],
+
+        // our own rules for frontend
+        // live in tools/eslint-plugin-guardian-frontend
+        'guardian-frontend/exports-last': 'error',
     },
     // don't look for eslintrcs above here
     root: true,

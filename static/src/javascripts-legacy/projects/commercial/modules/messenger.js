@@ -1,9 +1,8 @@
 define([
-    'Promise',
     'lib/report-error',
     'commercial/modules/messenger/dfp-origin',
     'commercial/modules/messenger/post-message'
-], function (Promise, reportError, dfpOrigin, postMessage) {
+], function (reportError, dfpOrigin, postMessage) {
     var allowedHosts = [
         dfpOrigin,
         location.protocol + '//' + location.host

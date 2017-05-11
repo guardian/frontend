@@ -1,8 +1,6 @@
 define([
-    'Promise',
     'lodash/collections/map'
     ], function (
-    Promise,
     map
 ) {
 

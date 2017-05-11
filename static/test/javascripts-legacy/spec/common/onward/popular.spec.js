@@ -22,7 +22,11 @@ define([
                 'commercial/modules/dfp/create-slot': function () {
                     return '<div class="ad-slot"></div>';
                 },
-                'commercial/modules/dfp/add-slot': function () {}
+                'commercial/modules/dfp/add-slot': {
+                    addSlot: function () {
+                        /* noop */
+                    }
+                }
             });
             injector.require([
                 'common/modules/onward/popular',

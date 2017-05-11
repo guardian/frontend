@@ -21,11 +21,11 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-increase-inline-ads-redux",
+    "ab-increase-inline-ads-redux-redux",
     "Displays more inline ads in articles on desktop",
     owners = Seq(Owner.withGithub("gidsg")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 5, 17),
+    sellByDate = new LocalDate(2017, 5, 29),
     exposeClientSide = true
   )
 
@@ -166,27 +166,6 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("justinpinner")),
     safeState = Off,
     sellByDate = new LocalDate(2017, 5, 25),  // Thursday
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-membership-engagement-banner-paywall-and-paypal-test-round-two",
-    "Test variant with paywall message and paypal logo on the engagement banner",
-    owners = Seq(Owner.withGithub("jranks123")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 5, 25),
-    exposeClientSide = true
-  )
-
-
-  Switch(
-    ABTests,
-    "ab-acquisitions-epic-testimonials",
-    "Test placing reader testimonials in the Epic",
-    owners = Seq(Owner.withGithub("Mullefa")),
-    safeState = On,
-    sellByDate = new LocalDate(2017, 5, 10),
     exposeClientSide = true
   )
 }

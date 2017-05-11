@@ -3,9 +3,8 @@ define([
     'lib/mediator',
     'lib/fetch-json',
     'lib/fastdom-promise',
-    'commercial/modules/hosted/onward-journey-carousel',
-    'Promise'
-], function (config, mediator, fetchJson, fastdom, HostedCarousel, Promise) {
+    'commercial/modules/hosted/onward-journey-carousel'
+], function (config, mediator, fetchJson, fastdom, HostedCarousel) {
 
     return {
         init: loadOnwardComponent,
