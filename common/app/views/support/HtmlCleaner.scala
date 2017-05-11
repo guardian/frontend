@@ -785,3 +785,25 @@ case class CommercialComponentHigh(isPaidContent: Boolean, isNetworkFront: Boole
   }
 
 }
+
+object ExplainerCleaner extends HtmlCleaner {
+  val prefixLength = "https://interactive.guim.co.uk/2016/08/explainer-interactive/embed/embed.html?id=".length
+  val eids = Seq(
+    "bc61d5bb-6d1d-4395-bb9a-aa731f2fb66f"
+  )
+
+  override def clean(document: Document): Document = {
+    document
+      .getElementsByClass("element-interactive")
+      .foreach { i =>
+        val eid = i.attr("data-canonical-url").drop(prefixLength)
+        if (eids.contains(eid)) {
+          val hook = document.createElement("div")
+            .addClass("js-explainer")
+            .attr("data-explainer-id", eid)
+          i.replaceWith(hook)
+        }
+      }
+    document
+  }
+}
