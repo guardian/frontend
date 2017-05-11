@@ -1,3 +1,4 @@
+// @flow
 /**
     "WEATHER"
 
@@ -13,33 +14,44 @@
  */
 
 import bean from 'bean';
-import qwery from 'qwery';
 import reportError from 'lib/report-error';
 import $ from 'lib/$';
 import config from 'lib/config';
 import detect from 'lib/detect';
 import fetchJson from 'lib/fetch-json';
 import mediator from 'lib/mediator';
-import template from 'lodash/utilities/template';
 import userPrefs from 'common/modules/user-prefs';
-import searchtool from 'facia/modules/onwards/search-tool';
-import contains from 'lodash/collections/contains';
+import { SearchTool } from 'facia/modules/onwards/search-tool';
+import type { CityPreference } from 'facia/modules/onwards/search-tool';
 
-var $holder = null,
-    searchTool = null,
-    prefName = 'weather-location';
+let $holder = null;
+let searchTool = null;
+let eventsBound = false;
+const prefName = 'weather-location';
 
-export default {
-    init: function() {
-        if (!config.switches || !config.switches.weather || !this.isNetworkFront()) {
+type Location = {
+    id: string,
+    city: string,
+};
+
+type WeatherResponse = {
+    html: string,
+};
+
+const isNetworkFront = () =>
+    ['uk', 'us', 'au', 'international'].includes(config.page.pageId);
+
+export const Weather = {
+    init() {
+        if (!config.switches || !config.switches.weather || !isNetworkFront()) {
             return false;
         }
 
         this.getDefaultLocation();
     },
 
-    isNetworkFront: function() {
-        return contains(['uk', 'us', 'au', 'international'], config.page.pageId);
+    isNetworkFront() {
+        return ['uk', 'us', 'au', 'international'].includes(config.page.pageId);
     },
 
     /**
@@ -48,76 +60,85 @@ export default {
      *
      * @returns {object} geolocation - lat and long
      */
-    getUserLocation: function() {
-        var prefs = userPrefs.get(prefName);
+    getUserLocation() {
+        const prefs = userPrefs.get(prefName);
 
         if (prefs && prefs.id) {
             return prefs;
         }
     },
 
-    getWeatherData: function(url) {
+    getWeatherData(url: string) {
         return fetchJson(url, {
-            mode: 'cors'
+            mode: 'cors',
         });
     },
 
     /**
      * Save user location into localStorage
      */
-    saveUserLocation: function(location) {
+    saveUserLocation(location: Location) {
         userPrefs.set(prefName, {
-            'id': location.id,
-            'city': location.city
+            id: location.id,
+            city: location.city,
         });
     },
 
-    getDefaultLocation: function() {
-        var location = this.getUserLocation();
+    getDefaultLocation() {
+        const location = this.getUserLocation();
 
         if (location) {
             this.fetchWeatherData(location);
         } else {
-            return this.getWeatherData(config.page.weatherapiurl + '.json')
-                .then(function(response) {
+            return this.getWeatherData(`${config.page.weatherapiurl}.json`)
+                .then(response => {
                     this.fetchWeatherData(response);
-                }.bind(this)).catch(function(err) {
+                })
+                .catch(err => {
                     reportError(err, {
-                        feature: 'weather'
+                        feature: 'weather',
                     });
                 });
         }
     },
 
-    fetchWeatherData: function(location) {
-        return this.getWeatherData(config.page.weatherapiurl + '/' + location.id + '.json?_edition=' + config.page.edition.toLowerCase())
-            .then(function(response) {
+    fetchWeatherData(location: Location) {
+        return this.getWeatherData(
+            `${config.page.weatherapiurl}/${location.id}.json?_edition=${config.page.edition.toLowerCase()}`
+        )
+            .then(response => {
                 this.render(response, location.city);
                 this.fetchForecastData(location);
-            }.bind(this)).catch(function(err) {
+            })
+            .catch(err => {
                 reportError(err, {
-                    feature: 'weather'
+                    feature: 'weather',
                 });
             });
     },
 
-    clearLocation: function() {
+    clearLocation() {
         userPrefs.remove(prefName);
-        searchTool.setInputValue();
+        if (searchTool !== null) {
+            searchTool.setInputValue();
+        }
     },
 
-    fetchForecastData: function(location) {
-        return this.getWeatherData(config.page.forecastsapiurl + '/' + location.id + '.json?_edition=' + config.page.edition.toLowerCase())
-            .then(function(response) {
+    fetchForecastData(location: Location) {
+        return this.getWeatherData(
+            `${config.page.forecastsapiurl}/${location.id}.json?_edition=${config.page.edition.toLowerCase()}`
+        )
+            .then(response => {
                 this.renderForecast(response);
-            }.bind(this)).catch(function(err) {
+            })
+            .catch(err => {
                 reportError(err, {
-                    feature: 'weather'
+                    feature: 'weather',
                 });
             });
     },
 
-    saveDeleteLocalStorage: function(response) {
+    saveDeleteLocalStorage(response: CityPreference) {
         // After user interaction we want to store the location in localStorage
         if (response.store === 'set') {
             this.saveUserLocation(response);
@@ -130,54 +151,62 @@ export default {
         }
     },
 
-    bindEvents: function() {
-        bean.on(document.body, 'click', '.js-toggle-forecast', function(e) {
+    bindEvents() {
+        bean.on(document.body, 'click', '.js-toggle-forecast', e => {
             e.preventDefault();
             this.toggleForecast();
-        }.bind(this));
+        });
 
-        mediator.on('autocomplete:fetch', this.saveDeleteLocalStorage.bind(this));
+        mediator.on(
+            'autocomplete:fetch',
+            this.saveDeleteLocalStorage.bind(this)
+        );
     },
 
-    toggleForecast: function() {
+    toggleForecast() {
         $('.weather').toggleClass('is-expanded');
     },
 
-    addSearch: function() {
-        searchTool = new searchtool.SearchTool({
+    addSearch() {
+        searchTool = new SearchTool({
             container: $('.js-search-tool'),
-            apiUrl: config.page.locationapiurl
+            apiUrl: config.page.locationapiurl,
         });
     },
 
-    render: function(weatherData, city) {
+    render(weatherData: WeatherResponse, city: string) {
         this.attachToDOM(weatherData.html, city);
 
-        this.bindEvents();
-        this.addSearch();
+        if (!eventsBound) {
+            this.bindEvents();
+            eventsBound = true;
+        }
 
-        this.render = function(weatherData, city) {
-            this.attachToDOM(weatherData.html, city);
+        if (searchTool === null) {
+            this.addSearch();
+        } else {
             searchTool.bindElements($('.js-search-tool'));
+        }
 
-            if (detect.isBreakpoint({
-                    max: 'phablet'
-                })) {
-                window.scrollTo(0, 0);
-            }
-        };
+        if (
+            detect.isBreakpoint({
+                max: 'phablet',
+            })
+        ) {
+            window.scrollTo(0, 0);
+        }
     },
 
-    attachToDOM: function(tmpl, city) {
+    attachToDOM(tmpl: string, city: string) {
         $holder = $('#headlines .js-container__header');
         $('.js-weather', $holder).remove();
         $holder.append(tmpl.replace(new RegExp('<%=city%>', 'g'), city));
     },
 
-    renderForecast: function(forecastData) {
-        var $forecastHolder = $('.js-weather-forecast'),
-            tmpl = forecastData.html;
+    renderForecast(forecastData: WeatherResponse) {
+        const $forecastHolder = $('.js-weather-forecast');
+        const tmpl = forecastData.html;
 
         $forecastHolder.empty().html(tmpl);
-    }
+    },
 };

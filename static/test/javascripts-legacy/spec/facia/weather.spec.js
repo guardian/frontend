@@ -16,7 +16,7 @@ define([
         beforeEach(function (done) {
 
             injector.require(['facia/modules/onwards/weather', 'lib/config'], function () {
-                sut = arguments[0];
+                sut = arguments[0].Weather;
                 config = arguments[1];
 
                 container = bonzo.create(
