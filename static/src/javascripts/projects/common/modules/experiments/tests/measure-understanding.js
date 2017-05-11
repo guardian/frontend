@@ -21,7 +21,7 @@ const MeasureUnderstanding = () => {
 
     // List of pages the test will run in
     const paths = [
-        '/sport/2017/may/11/alternative-national-anthem-planned-during-nrls-indigenous-round',
+        '/us-news/2017/may/10/theres-nothing-there-white-house-staff-deny-comey-sacking-is-linked-to-russia',
     ];
 
     // A heuristic to detect explainers in the article via their dataset.canonicalUrl
