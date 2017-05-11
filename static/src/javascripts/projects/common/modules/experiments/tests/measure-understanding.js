@@ -1,7 +1,8 @@
 // @flow
 
+/* eslint no-param-reassign: "off" */
+
 import { addEventListener } from 'lib/events';
-import config from 'lib/config';
 import fastdom from 'lib/fastdom-promise';
 import mediator from 'lib/mediator';
 import { local as localStorage } from 'lib/storage';
@@ -18,6 +19,15 @@ const MeasureUnderstanding = () => {
     // Ophan survey id
     const component = 'measure_understanding';
 
+    // List of pages the test will run in
+    const paths = [
+        '/sport/2017/may/11/alternative-national-anthem-planned-during-nrls-indigenous-round',
+    ];
+
+    // A heuristic to detect explainers in the article via their dataset.canonicalUrl
+    const prefix =
+        'https://interactive.guim.co.uk/2016/08/explainer-interactive';
+
     // Test duration
     const start = '2017-04-27';
     const expiry = '2017-05-27';
@@ -25,10 +35,7 @@ const MeasureUnderstanding = () => {
     // will run in articles only if no story questions atom is already there
     // *and* the user hasn't already answered the question
     const canRun = () =>
-        config.page.contentType === 'Article' &&
-        !config.page.isAdvertisementFeature &&
-        !localStorage.get(id) &&
-        !document.getElementsByClassName('js-view-tracking-component').length;
+        paths.includes(location.pathname) && !localStorage.get(id);
 
     // at the click of a button, we send a notification to ophan and clean up
     // registered listeners to prevent duplicate calls
@@ -71,9 +78,9 @@ const MeasureUnderstanding = () => {
             thumbsUp: thumb,
             thumbsDown: thumb,
         });
-        const articleBody = document.getElementsByClassName('js-article__body')[
-            0
-        ];
+        const articleBody = document.getElementsByClassName(
+            'js-article__body'
+        )[0];
         fastdom
             .write(() => {
                 articleBody.insertAdjacentHTML('beforeend', html);
@@ -83,6 +90,20 @@ const MeasureUnderstanding = () => {
                 addEventListener(clicktrap, 'click', onClick);
                 mediator.emit('ab:understanding:displayed');
             });
+    };
+
+    const testWithout = () => {
+        fastdom.write(() => {
+            [
+                ...document.getElementsByClassName('element-interactive'),
+            ].forEach(i => {
+                const url = i.getAttribute('data-canonical-url');
+                if (url && url.includes(prefix)) {
+                    i.hidden = true;
+                }
+            });
+        });
+        test();
     };
 
     // registers an impression (in our case, when the form is added to the dom)
@@ -97,19 +118,21 @@ const MeasureUnderstanding = () => {
 
     return Object.freeze({
         id,
-        // TODO get test settings
         start,
         expiry,
         audience: 0.5,
         audienceOffset: 0,
-        author: 'Ela',
+        author: 'Nathan',
         description: 'Measure Understanding survey',
         successMeasure: '',
         audienceCriteria: '',
         idealOutcome: "We improve users' understanding of a topic by showing them Explainers",
         canRun,
         showForSensitive: true,
-        variants: [{ id: 'survey', test, impression, success }],
+        variants: [
+            { id: 'with-explainer', test, impression, success },
+            { id: 'without-explainer', test: testWithout, impression, success },
+        ],
     });
 };
 
