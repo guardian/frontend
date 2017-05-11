@@ -84,7 +84,7 @@
         width: 28px;
         height: 28px;
 
-        &[value="dislike"] {
+        &[value='dislike'] {
             transform: rotate(180deg);
         }
     }
@@ -113,7 +113,7 @@
     color: $neutral-1;
 
     .exlainer__label {
-        color: #news-support-2;
+        color: $news-support-2;
     }
 
     .explainer__handle {
