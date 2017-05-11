@@ -19,7 +19,7 @@ class ReaderTest extends FlatSpec with Matchers {
     val result = read[Int](stmtBuilder) { _ =>
       ((1 to 10).toArray, 30)
     }
-    result shouldBe Seq.fill[Seq[Int]](3)((1 to 10)).flatten
+    result shouldBe Seq.fill[Seq[Int]](3)(1 to 10).flatten
   }
 
   it should "cope with a null result" in {

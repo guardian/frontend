@@ -405,7 +405,7 @@ object ContentTypeFormat {
   val crosswordContentFormat = Json.format[CrosswordContent]
 
   object format extends Format[ContentType] {
-    def reads(json: JsValue): JsResult[ContentType with Product with Serializable] = {
+    def reads(json: JsValue): JsResult[ContentType] = {
       (json \ "type").transform[JsString](Reads.JsStringReads) match {
         case JsSuccess(JsString("Article"), _) => (json \ "item").validate[Article](articleFormat)
         case JsSuccess(JsString("Gallery"), _) => (json \ "item").validate[Gallery](galleryFormat)
@@ -576,7 +576,7 @@ object ItemKickerFormat {
   private val freeHtmlKickerWithLinkFormat = Json.format[FreeHtmlKickerWithLink]
 
   object format extends Format[ItemKicker] {
-    def reads(json: JsValue): JsResult[ItemKicker with Product with Serializable] = {
+    def reads(json: JsValue): JsResult[ItemKicker] = {
       (json \ "type").transform[JsString](Reads.JsStringReads) match {
         case JsSuccess(JsString("BreakingNewsKicker"), _) => JsSuccess(BreakingNewsKicker)
         case JsSuccess(JsString("LiveKicker"), _) => JsSuccess(LiveKicker)
@@ -613,7 +613,7 @@ object FaciaImageFormat {
   implicit val slideshowFormat = Json.format[ImageSlideshow]
 
   object format extends Format[Image] {
-    def reads(json: JsValue): JsResult[Image with Product with Serializable] = {
+    def reads(json: JsValue): JsResult[Image] = {
       (json \ "type").transform[JsString](Reads.JsStringReads) match {
         case JsSuccess(JsString("Cutout"), _) => (json \ "item").validate[Cutout](cutoutFormat)
         case JsSuccess(JsString("Replace"), _) => (json \ "item").validate[Replace](replaceFormat)

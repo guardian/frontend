@@ -23,7 +23,7 @@ class Api(wsClient: WSClient) extends Controller with Logging with ExecutionCont
     }
   }
 
-  def tag(q: String, callback: String): Action[AnyContent] = Action.async { _ =>
+  def tag(q: String, callback: String): Action[AnyContent] = Action.async {
     val url = "%s/tags?format=json&page-size=50%s&callback=%s&q=%s".format(
       Configuration.contentApi.contentApiHost,
       Configuration.contentApi.key.map(key => s"&api-key=$key").getOrElse(""),
@@ -38,7 +38,7 @@ class Api(wsClient: WSClient) extends Controller with Logging with ExecutionCont
     }
   }
 
-  def item(path: String, callback: String): Action[AnyContent] = Action.async { _ =>
+  def item(path: String, callback: String): Action[AnyContent] = Action.async {
     val url = "%s/%s?format=json&page-size=1%s&callback=%s".format(
       Configuration.contentApi.contentApiHost,
       path.javascriptEscaped.urlEncoded,
@@ -53,7 +53,7 @@ class Api(wsClient: WSClient) extends Controller with Logging with ExecutionCont
     }
   }
 
-  def json(url: String): Action[AnyContent] = Action.async { _ =>
+  def json(url: String): Action[AnyContent] = Action.async {
     log.info("Proxying json request to: %s" format url)
 
     wsClient.url(url).get().map { response =>

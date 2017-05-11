@@ -7,7 +7,6 @@ import model.Trail
 import org.jsoup.Jsoup
 import play.api.mvc.{AnyContent, Request, RequestHeader, Result}
 import play.twirl.api.Html
-
 import scala.collection.JavaConversions._
 
 /*
@@ -139,7 +138,7 @@ trait AmpLinkTo extends LinkTo {
 
 object AmpLinkTo extends AmpLinkTo {
 
-  override def processUrl(url: String, edition: Edition): _root_.common.AmpLinkTo.ProcessedUrl = {
+  override def processUrl(url: String, edition: Edition): ProcessedUrl = {
     val ampUrl = if (host.isEmpty) s"$url?amp=1" else url
     super.processUrl(ampUrl, edition)
   }

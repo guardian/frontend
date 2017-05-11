@@ -17,11 +17,11 @@ object ItemKickerImplicits {
       case AnalysisKicker => Set(fcSublinkKicker)
       case ReviewKicker => Set(fcSublinkKicker)
       case CartoonKicker => Set(fcSublinkKicker)
-      case PodcastKicker(_, _) => Set(fcSublinkKicker)
-      case TagKicker(_, _, _, _) => Set(fcSublinkKicker)
-      case SectionKicker(_, _, _) => Set(fcSublinkKicker)
-      case FreeHtmlKicker(_, _) => Set(fcSublinkKicker)
-      case FreeHtmlKickerWithLink(_, _, _) => Set(fcSublinkKicker)
+      case _: PodcastKicker => Set(fcSublinkKicker)
+      case _: TagKicker => Set(fcSublinkKicker)
+      case _: SectionKicker => Set(fcSublinkKicker)
+      case _: FreeHtmlKicker => Set(fcSublinkKicker)
+      case _: FreeHtmlKickerWithLink => Set(fcSublinkKicker)
     }
 
     def linkClasses: Set[String] = itemKicker match {
@@ -30,11 +30,11 @@ object ItemKickerImplicits {
       case AnalysisKicker => Set(fcItemKicker)
       case ReviewKicker => Set(fcItemKicker)
       case CartoonKicker => Set(fcItemKicker)
-      case PodcastKicker(_, _) => Set(fcItemKicker)
-      case TagKicker(_, _, _, _) => Set(fcItemKicker)
-      case SectionKicker(_, _, _) => Set(fcItemKicker)
-      case FreeHtmlKicker(_, _) => Set(fcItemKicker)
-      case FreeHtmlKickerWithLink(_, _, _) => Set(fcItemKicker)
+      case _: PodcastKicker => Set(fcItemKicker)
+      case _: TagKicker => Set(fcItemKicker)
+      case _: SectionKicker => Set(fcItemKicker)
+      case _: FreeHtmlKicker => Set(fcItemKicker)
+      case _: FreeHtmlKickerWithLink => Set(fcItemKicker)
     }
 
     def kickerHtml: String = itemKicker match {
@@ -56,11 +56,11 @@ object ItemKickerImplicits {
       case AnalysisKicker => kickerHtml
       case ReviewKicker => kickerHtml
       case CartoonKicker => kickerHtml
-      case PodcastKicker(_, _) => kickerHtml
-      case TagKicker(_, _, _, _) => kickerHtml
-      case SectionKicker(_, _, _) => kickerHtml
-      case FreeHtmlKicker(_, _) => kickerHtml
-      case FreeHtmlKickerWithLink(_, _, _) => kickerHtml
+      case _: PodcastKicker => kickerHtml
+      case _: TagKicker => kickerHtml
+      case _: SectionKicker => kickerHtml
+      case _: FreeHtmlKicker => kickerHtml
+      case _: FreeHtmlKickerWithLink => kickerHtml
     }
 
     def link: Option[String] = itemKicker match {
@@ -72,7 +72,7 @@ object ItemKickerImplicits {
       case PodcastKicker(_, series) => series.map(_.url)
       case TagKicker(_, _, url, _) => Option(url)
       case SectionKicker(_, _, url) => Option(url)
-      case FreeHtmlKicker(_, _) => None
+      case _: FreeHtmlKicker => None
       case FreeHtmlKickerWithLink(_, _, url) => Option(url)
     }
   }

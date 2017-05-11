@@ -43,7 +43,7 @@ object LiveBlogHelpers {
 
   }
 
-  def createLiveBlogModel(liveBlog: Article, response: ItemResponse, range: BlockRange): Either[LiveBlogPage, _root_.common.`package`.Status] = {
+  def createLiveBlogModel(liveBlog: Article, response: ItemResponse, range: BlockRange): Either[LiveBlogPage, Status] = {
 
     val pageSize = if (liveBlog.content.tags.tags.map(_.id).contains("sport/sport")) 30 else 10
 
