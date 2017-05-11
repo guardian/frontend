@@ -72,7 +72,7 @@ define([
                     });
                 },
 
-                insertBeforeSelector: '.submeta',
+                insertAtSelector: '.submeta',
 
                 test: function (render) {
                     if (canBeDisplayed()) render();

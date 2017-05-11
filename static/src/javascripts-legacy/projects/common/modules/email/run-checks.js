@@ -10,8 +10,7 @@ define([
     'lodash/collections/map',
     'lodash/collections/contains',
     'common/modules/user-prefs',
-    'common/modules/identity/api',
-    'Promise'
+    'common/modules/identity/api'
 ], function (
     $,
     page,
@@ -24,8 +23,7 @@ define([
     map,
     contains,
     userPrefs,
-    Id,
-    Promise
+    Id
 ) {
 
     var emailShown;

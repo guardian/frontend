@@ -2,7 +2,7 @@
 /* eslint-disable no-console */
 
 const path = require('path');
-
+const fs = require('fs');
 const execa = require('execa');
 const chalk = require('chalk');
 
@@ -11,7 +11,9 @@ execa
     .then(staged => staged.split('\n'))
     // lint and commit any lint fixes
     .then(staged => {
-        const jsFiles = staged.filter(file => file.endsWith('.js'));
+        const jsFiles = staged
+            .filter(file => file.endsWith('.js'))
+            .filter(file => fs.existsSync(file));
         if (jsFiles.length) {
             return execa('eslint', ['--fix', ...jsFiles], {
                 stdio: 'inherit',

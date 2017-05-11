@@ -9,7 +9,7 @@ import common.dfp._
 import common.{Edition, ManifestData, NavItem, Pagination}
 import conf.Configuration
 import cricketPa.CricketTeams
-import model.content.MediaAtom
+import model.content.{MediaAtom, StoryQuestionsAtom}
 import model.liveblog.Blocks
 import model.meta.{Guardian, LinkedData, PotentialAction, WebPage}
 import org.apache.commons.lang3.StringUtils
@@ -374,6 +374,12 @@ case class EmbedPage(item: Video, title: String, isExpired: Boolean = false) ext
 case class MediaAtomEmbedPage(atom: MediaAtom) extends Page {
   override val metadata = MetaData.make(id = atom.id,
     webTitle = atom.title,
+    section = None)
+}
+
+case class StoryQuestionsAtomEmbedPage(atom: StoryQuestionsAtom) extends Page {
+  override val metadata = MetaData.make(id = atom.id,
+    webTitle = atom.atom.title.getOrElse("Story questions"),
     section = None)
 }
 

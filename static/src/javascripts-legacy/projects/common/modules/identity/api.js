@@ -1,24 +1,20 @@
 /*global escape:true */
 define([
     'lib/ajax',
-    'lib/fetch-json',
     'lib/atob',
     'lib/config',
     'lib/cookies',
     'lib/mediator',
     'lib/storage',
-    'common/modules/asyncCallMerger',
-    'Promise'
+    'common/modules/asyncCallMerger'
 ], function (
     ajax,
-    fetchJSON,
     utilAtob,
     config,
     cookies,
     mediator,
     storage,
-    asyncCallMerger,
-    Promise
+    asyncCallMerger
 ) {
 
     /**
@@ -67,7 +63,7 @@ define([
     Id.getUserFromCookie = function () {
         if (userFromCookieCache === null) {
             var cookieData = cookies.getCookie(Id.cookieName),
-            userData = cookieData ? JSON.parse(Id.decodeBase64(cookieData.split('.')[0])) : null;
+                userData = cookieData ? JSON.parse(Id.decodeBase64(cookieData.split('.')[0])) : null;
             if (userData) {
                 var displayName = decodeURIComponent(userData[2]);
                 userFromCookieCache = {
@@ -248,24 +244,22 @@ define([
     };
 
     Id.updateUsername = function (username) {
-        var endpoint = Id.idApiRoot + '/user/me',
-            data = {
-                publicFields: {
-                    username: username,
-                    displayName: username
+        var endpoint = '/user/me',
+            data = {'publicFields': {'username': username, 'displayName': username}},
+            request = ajax({
+                url: Id.idApiRoot + endpoint,
+                type: 'json',
+                crossOrigin: true,
+                method: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(data),
+                withCredentials: true,
+                headers: {
+                    'X-GU-ID-Client-Access-Token':  'Bearer ' + config.page.idApiJsClientToken
                 }
-            };
+            });
 
-        return fetchJSON(endpoint, {
-            mode: 'cors',
-            method: 'POST',
-            body: JSON.stringify(data),
-            credentials: 'include',
-            headers: {
-                'Content-Type': 'application/json; charset=utf-8',
-                'X-GU-ID-Client-Access-Token':  'Bearer ' + config.page.idApiJsClientToken
-            },
-        });
+        return request;
     };
 
     return Id;

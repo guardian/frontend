@@ -141,7 +141,7 @@ const addErrorHandler = (): void => {
     });
 };
 
-const init = (): void => {
+const bootStandard = (): void => {
     markTime('standard start');
 
     catchErrorsWithContext([
@@ -232,4 +232,4 @@ const init = (): void => {
     ]);
 };
 
-export default init;
+export { bootStandard };

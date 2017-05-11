@@ -3,15 +3,13 @@ define([
     'lib/mediator',
     'lib/fastdom-promise',
     'common/modules/ui/sticky',
-    'commercial/modules/messenger',
-    'Promise'
+    'commercial/modules/messenger'
 ], function (
     config,
     mediator,
     fastdom,
     Sticky,
-    messenger,
-    Promise
+    messenger
 ) {
     var noSticky = document.documentElement.classList.contains('has-no-sticky');
     var stickyElement;

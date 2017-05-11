@@ -72,7 +72,7 @@ Then in the file that will use the template, require `svgs.js`:
 define([
     'common/views/svgs',
 ], function (
-    svgs
+    svgs.inlineSvg
 ) { ... })
 ```
 This returns a look-up method to pull icons out of the `svgs` object in `svgs.js`, which can then be passed into templates. The method takes an optional array of classes, like the Scala helper:
@@ -87,7 +87,7 @@ define([
     svgs
 ) {
 	var htmlWithInlineSVG = template("Here is my inline image: {{myImage}}", {
-		myImage: svgs('myImage'[, Classes[, Title]])
+		myImage: svgs.inlineSvg('myImage'[, Classes[, Title]])
 	})
 })
 ```
@@ -124,7 +124,7 @@ define([
 ], function (
     svgs
 ) {
-	svgs('profile36icon', ["rounded-icon", "control__icon-wrapper"], "Profile icon");
+	svgs.inlineSvg('profile36icon', ["rounded-icon", "control__icon-wrapper"], "Profile icon");
 });
 ```
 

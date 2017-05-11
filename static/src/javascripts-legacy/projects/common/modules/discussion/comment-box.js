@@ -98,7 +98,7 @@ CommentBox.prototype.defaultOptions = {
     maxLength: 5000,
     premod: false,
     newCommenter: false,
-    newUsername: true,
+    hasUsername: true,
     focus: false,
     state: 'top-level',
     replyTo: null,
@@ -171,7 +171,7 @@ CommentBox.prototype.showOnboarding = function(e) {
 
     // Check if new commenter as they may have already commented on this article
     if (this.hasState('onboarding-visible') || !this.options.newCommenter) {
-        if (!this.options.newUsername) {
+        if (this.options.hasUsername) {
             this.removeState('onboarding-visible');
         }
         this.postComment();
@@ -179,6 +179,9 @@ CommentBox.prototype.showOnboarding = function(e) {
         this.getElem('onboarding-author').innerHTML = this.getUserData().displayName;
         this.setState('onboarding-visible');
         this.previewComment(this.onboardingPreviewSuccess);
+        if (this.options.hasUsername) {
+            this.getElem('onboarding-username').classList.add('is-hidden');
+        }
     }
 };
 
@@ -265,7 +268,6 @@ CommentBox.prototype.postComment = function() {
 
     var postCommentToDAPI = function () {
         self.removeState('onboarding-visible');
-        self.options.newUsername = false;
         comment.body = self.urlify(comment.body);
         self.setFormState(true);
         DiscussionApi
@@ -275,14 +277,13 @@ CommentBox.prototype.postComment = function() {
 
     var updateUsernameSuccess = function (resp) {
         mediator.emit('user:username:updated', resp.user.publicFields.username);
-        self.options.newUsername = false;
+        self.options.hasUsername = true;
         self.getElem('onboarding-username').classList.add('is-hidden');
         postCommentToDAPI();
     };
 
     var updateUsernameFailure = function (errorResponse) {
         var usernameField = self.getElem('onboarding-username-input');
-        self.options.newUsername = true;
         self.setState('onboarding-visible');
         usernameField.classList.add('d-comment-box__onboarding-username-error-border');
         var errorMessage = self.getElem('onboarding-username-error-message');
@@ -305,12 +306,8 @@ CommentBox.prototype.postComment = function() {
         }
 
         if (self.errors.length === 0) {
-            if (self.options.newCommenter && self.options.newUsername) {
-                var username = self.getElem('onboarding-username-input').value;
-
-                IdentityApi.updateUsername(username)
-                    .then(updateUsernameSuccess)
-                    .catch(updateUsernameFailure);
+            if (self.options.newCommenter && !self.options.hasUsername) {
+                IdentityApi.updateUsername(self.getElem('onboarding-username-input').value).then(updateUsernameSuccess, updateUsernameFailure);
             } else {
                 postCommentToDAPI();
             }

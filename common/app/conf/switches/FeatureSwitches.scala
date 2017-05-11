@@ -21,7 +21,7 @@ trait FeatureSwitches {
     "If this switch is on, Explore template will be applied to explore articles. This template is part of a Membership Explore test",
     owners = Seq(Owner.withGithub("siadcock")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 5, 3),
+    sellByDate = new LocalDate(2017, 7, 3),
     exposeClientSide = true
   )
 
@@ -443,17 +443,6 @@ trait FeatureSwitches {
     exposeClientSide = true
   )
 
-  // Owner: Gareth Trufitt
-  val SteadyPageUtil = Switch(
-    SwitchGroup.Feature,
-    "steady-page-util",
-    "When ON, will prevent page jumping when inserting elements using steady-page utility. If OFF will call callback immediately.",
-    owners = Seq(Owner.withGithub("gtrufitt")),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
   // Owner: Sam Cutler / Editorial Tools
   val Targeting = Switch(
     SwitchGroup.Feature,
@@ -513,6 +502,16 @@ trait FeatureSwitches {
     "youtube-poster-override",
     "When ON show trail image on YouTube atom playable content cards instead of the poster image",
     owners = Seq(Owner.withGithub("gidsg")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = false
+  )
+
+  val TricolourVeggieBurger = Switch(
+    SwitchGroup.Feature,
+    "tricolour-veggie-burger",
+    "If this switch is turned on the menu button on the new header will be a tricolour flag",
+    owners = Seq(Owner.withGithub("zeftilldeath")),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false

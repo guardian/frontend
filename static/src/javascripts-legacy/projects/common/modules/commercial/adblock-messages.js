@@ -2,14 +2,12 @@ define([
     'lib/config',
     'lib/detect',
     'lib/storage',
-    'commercial/modules/user-features',
-    'Promise'
+    'commercial/modules/user-features'
 ], function (
     config,
     detect,
     storage,
-    userFeatures,
-    Promise
+    userFeatures
 ) {
     function adblockInUse() {
         return detect.adblockInUse;

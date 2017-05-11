@@ -22,7 +22,7 @@ define([
         this.description = 'Test digital subs price points via thrasher';
         this.showForSensitive = true;
         this.audience = 0.25;
-        this.audienceOffset = 0;
+        this.audienceOffset = 0.5;
         this.successMeasure = '';
         this.audienceCriteria = 'Non-paying UK network front users - tablet resolution and above';
         this.dataLinkNames = '';
@@ -51,7 +51,7 @@ define([
             if (this.thrasher()) {
                 var subTitleEl = document.querySelector('.membership-ab-thrasher_header .sub_title');
                 if (subTitleEl) {
-                    subTitleEl.innerHTML = '<p>We\'re introducing <strong>new ways</strong> to support' + (detect.isBreakpoint({min: 'desktop'}) ? '<br>' : ' ') + 'the Guardian\'s quality journalism and independent voice. Choose your new digital or print subscription today.</p>';
+                    subTitleEl.innerHTML = '<p>We\'re introducing <strong>new ways</strong> to support' + (detect.isBreakpoint({min: 'desktop'}) ? '<br>' : ' ') + 'the Guardian\'s quality journalism and independent voice. Choose to subscribe or contribute today.</p>';
                 }
             }
         };

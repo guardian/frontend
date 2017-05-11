@@ -31,11 +31,11 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-increase-inline-ads-redux",
+    "ab-increase-inline-ads-redux-redux",
     "Displays more inline ads in articles on desktop",
     owners = Seq(Owner.withGithub("gidsg")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 5, 17),
+    sellByDate = new LocalDate(2017, 5, 29),
     exposeClientSide = true
   )
 
@@ -178,5 +178,4 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2017, 5, 25),  // Thursday
     exposeClientSide = true
   )
-
 }
