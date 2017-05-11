@@ -3,7 +3,8 @@ package common.commercial.hosted
 import com.gu.contentapi.client.model.v1.Content
 import com.gu.contentatom.thrift.AtomData
 import common.Logging
-import common.commercial.hosted.HostedUtils.getAndLog
+import common.commercial.hosted.ContentUtils.thumbnailUrl
+import common.commercial.hosted.LoggingUtils.getAndLog
 import model.MetaData
 
 case class HostedVideoPage(
@@ -14,10 +15,11 @@ case class HostedVideoPage(
   override val cta: HostedCallToAction,
   override val socialShareText: Option[String],
   override val shortSocialShareText: Option[String],
+  override val thumbnailUrl: String,
   override val metadata: MetaData
 ) extends HostedPage {
   override val title = video.title
-  override val imageUrl = video.posterUrl
+  override val mainImageUrl = video.posterUrl
 }
 
 object HostedVideoPage extends Logging {
@@ -55,6 +57,7 @@ object HostedVideoPage extends Logging {
         cta = HostedCallToAction.fromAtom(ctaAtom),
         socialShareText = content.fields.flatMap(_.socialShareText),
         shortSocialShareText = content.fields.flatMap(_.shortSocialShareText),
+        thumbnailUrl = thumbnailUrl(content),
         metadata = HostedMetadata.fromContent(content).copy(openGraphImages = video.posterUrl.toList)
       )
     }

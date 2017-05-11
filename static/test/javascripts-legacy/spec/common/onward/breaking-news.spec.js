@@ -4,15 +4,13 @@ define([
     'lib/$',
     'lib/config',
     'lib/storage',
-    'lodash/objects/defaults',
-    'Promise'
+    'lodash/objects/defaults'
 ], function (
     Injector,
     $,
     config,
     storage,
-    defaults,
-    Promise
+    defaults
 ) {
     describe('Breaking news', function () {
         var injector = new Injector(),

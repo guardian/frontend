@@ -1,9 +1,9 @@
 <div class="ad-feedback popup__toggle" data-toggle="<%=slot%>__popup--feedback"
-   aria-haspopup="true" aria-controls="ad-feedback-menu__<%=slot%>">Report this ad</div>
+   aria-haspopup="true" aria-controls="ad-feedback-menu__<%=slot%>"></div>
 
 <div class="ad-feedback popup popup--default popup__group <%=slot%>__popup--feedback is-off" id="ad-feedback-menu__<%=slot%>">
     <h3 class="ad-feedback popup__group-header">
-        To help improve the ad experience on the Guardian, please tell us why you're reporting this:
+        To help improve the ad experience on the Guardian, please select from the following:
     </h3>
     <ul>
         <% for(option in feedbackOptions) { %>
@@ -13,16 +13,5 @@
                 </button>
             </li>
         <% } %>
-        <li class="popup__item popup__item--other js-ad-feedback-option-other" data-slot="<%=slot%>">
-            <form id="<%=slot%>-ad-feedback">
-                <label for="<%=slot%>-feedback-comment-field">
-                    Other:
-                </label>
-                <input id="<%=slot%>-feedback-comment-field" name="comment" class="ad-feedback__comment-field" type="text" required>
-                <button name="feedback" type="submit" value="other" class="ad-feedback__submit-button">
-                    <%= icon %>
-                </button>
-            </form>
-        </li>
     </ul>
 </div>

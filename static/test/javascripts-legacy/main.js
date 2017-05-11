@@ -24,7 +24,6 @@ requirejs.config({
         fastdom:      '/base/node_modules/fastdom/index',
         fence:        '/base/node_modules/fence/fence',
         lodash:       '/base/node_modules/lodash-amd/compat',
-        Promise:      '/base/node_modules/when/es6-shim/Promise',
         qwery:        '/base/node_modules/qwery/qwery',
         reqwest:      '/base/node_modules/reqwest/reqwest',
         videojs:      '/base/node_modules/video.js',
@@ -47,7 +46,7 @@ requirejs.config({
     }
 });
 
-require(['Promise', 'lodash/collections/toArray'], function (Promise, toArray) {
+require(['lodash/collections/toArray'], function (toArray) {
     require(tests, function () {
         Promise.all(toArray(arguments)).then(window.__karma__.start);
     });

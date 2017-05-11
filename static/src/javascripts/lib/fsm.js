@@ -53,7 +53,7 @@ class FiniteStateMachine {
         }
     }
 
-    trigger(event: string, data: Object): void {
+    trigger(event: string, data?: Object): void {
         this.log('fsm: (event)', event);
 
         const state = this.context.state;

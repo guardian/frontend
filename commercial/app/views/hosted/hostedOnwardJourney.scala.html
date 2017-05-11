@@ -1,5 +1,5 @@
 @import common.commercial.hosted.HostedPage
-@(trails: Seq[HostedPage], defaultRows: Int, maxRows: Int)(implicit request: RequestHeader)
+@(trails: Seq[HostedPage], maxRows: Int)(implicit request: RequestHeader)
 
 @if(trails.isEmpty) {
     <div></div>
@@ -23,7 +23,7 @@
                         @for(trail <- trails.slice(i, i + maxRows)) {
                             <a href="@{trail.url}" class="hosted__next-page--tile  js-hosted-onward-journey-link hosted-tone-bg" data-link-name="Next Hosted Page: @{trail.title}">
                                 <div class="hosted-next-page__wrapper">
-                                    <img class="hosted__next-page-thumb" src="@{trail.imageUrl}" alt="Next Page: @{trail.title}">
+                                    <img class="hosted__next-page-thumb" src="@{trail.thumbnailUrl}" alt="Next Page: @{trail.title}">
                                     <p class="hosted__next-page-title">@{trail.title}</p>
                                 </div>
                             </a>

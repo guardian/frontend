@@ -97,7 +97,14 @@ define([
                 this.scrollingBg.style.backgroundAttachment = 'fixed';
             }
 
-            this.adSlot.classList.add('ad-slot--fabric-v1', 'ad-slot--fabric', 'content__mobile-full-width');
+            // #? `classList.add` takes multiple arguments, but we are using it
+            // here with arity 1 because polyfill.io has incorrect support with IE 10 and 11.
+            // One may revert to this.adSlot.classList.add('ad-slot--fabric-v1', 'ad-slot--fabric', 'content__mobile-full-width');
+            // When support is correct or when we stop supporting IE <= 11
+            this.adSlot.classList.add('ad-slot--fabric-v1');
+            this.adSlot.classList.add('ad-slot--fabric');
+            this.adSlot.classList.add('content__mobile-full-width');
+
             if( this.adSlot.parentNode.classList.contains('top-banner-ad-container') ) {
                 this.adSlot.parentNode.classList.add('top-banner-ad-container--fabric');
             }
