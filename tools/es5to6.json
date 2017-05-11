@@ -156,9 +156,7 @@
     "projects/common/modules/atoms/youtube-tracking.js",
     "projects/commercial/modules/messenger/viewport.js"
   ],
-  "Gideon Goldberg": [
-    "projects/commercial/modules/paid-containers.js"
-  ],
+  "Gideon Goldberg": [],
   "Sam Desborough": [
     "projects/common/modules/experiments/ab.js",
     "projects/common/modules/crosswords/anagram-helper/main.js",
@@ -234,7 +232,7 @@
     "bootstraps/enhanced/notifications.js",
     "projects/commercial/modules/third-party-tags.js"
   ],
-  "ShaunYearStrong": [
+  "shaundillon": [
     "projects/common/modules/identity/forms.js",
     "projects/common/modules/identity/formstack-iframe-embed.js",
     "projects/common/modules/identity/formstack-iframe.js",

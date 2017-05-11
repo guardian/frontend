@@ -43,9 +43,16 @@ define([
                 });
 
             return new Promise(function (resolve, reject) {
+                var fakeSvgs = {
+                    inlineSvg: function() {
+                        return '';
+                    }
+                };
+
                 injector.mock({
                     'lib/storage': storage,
-                    'lib/fetch-json': fetchJson
+                    'lib/fetch-json': fetchJson,
+                    'common/views/svgs': fakeSvgs
                 }).require(['common/modules/onward/breaking-news'], function (breakingNews) {
                     breakingNews.DEFAULT_DELAY = 100;
                     Promise.resolve().then(function () {
