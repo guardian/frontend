@@ -171,7 +171,7 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-acquisitions-epic-testimonials",
+    "ab-acquisitions-epic-testimonials-round-two",
     "Test placing reader testimonials in the Epic",
     owners = Seq(Owner.withGithub("Mullefa")),
     safeState = On,

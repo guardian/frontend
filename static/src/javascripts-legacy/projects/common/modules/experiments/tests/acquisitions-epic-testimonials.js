@@ -1,61 +1,71 @@
 define([
     'lodash/utilities/template',
     'common/modules/commercial/contributions-utilities',
-    'raw-loader!common/views/acquisitions-epic-testimonials-prominent.html',
-    'raw-loader!common/views/acquisitions-epic-testimonials-subtle.html',
-    'raw-loader!common/views/acquisitions-epic-testimonials-testimonial-only.html',
+    'raw-loader!common/views/acquisitions-epic-testimonials.html',
     'svg-loader!svgs/icon/quote.svg'
 ], function (
     template,
     contributionsUtilities,
-    acquisitionsEpicTestimonialsProminent,
-    acquisitionsEpicTestimonialsSubtle,
-    acquisitionsEpicTestimonialsOnly,
+    acquisitionsEpicTestimonials,
     quoteSvg
 ) {
 
-    function createVariantTemplate(epicTemplate) {
+    function createTestimonialTemplate(epicTemplate, testimonialInfo) {
         return function(variant) {
             return template(epicTemplate, {
                 membershipUrl: variant.membershipURL,
                 contributionUrl: variant.contributeURL,
                 componentName: variant.componentName,
-                quoteSvg: quoteSvg.markup
+                quoteSvg: quoteSvg.markup,
+                testimonialMessage: testimonialInfo.message,
+                testimonialName: testimonialInfo.name
             })
         }
     }
 
+    var testimonialsInfo = {
+        control: {
+            message: 'I read it fairly often and enjoy the variety of news and entertainment content. It never occurred to me that you wanted contributions, but I\'d like you to stick around. Sometimes you actually have to pay for stuff you like. Go figure.',
+            name: 'Mike L'
+        },
+        paywall: {
+            message: 'Because I appreciate there not being a paywall: it is more democratic for the media to be available for all and not a commodity to be purchased by a few. I’m happy to make a contribution so others with less means still have access to information.',
+            name: 'Thomasine F-R'
+        },
+        vanilla: {
+            message: 'I respect and appreciate the quality of your reportage: the in-depth research it represents, its absence of ideology, and its broad view. It is excellent journalism. We need truth in our news today.',
+            name: 'TBC'
+        }
+    };
+
     return contributionsUtilities.makeABTest({
-        id: 'AcquisitionsEpicTestimonials',
-        campaignId: 'kr1_epic_testimonials',
+        id: 'AcquisitionsEpicTestimonialsRoundTwo',
+        campaignId: 'kr1_epic_testimonials_round_two',
 
-        start: '2017-05-03',
-        expiry: '2017-05-10', // Wednesday
+        start: '2017-05-11',
+        expiry: '2017-05-25',
 
-        author: 'Guy Dawson',
-        description: 'Test placing reader testimonials in the Epic',
+        author: 'Jonathan Rankin',
+        description: 'Test placing reader testimonials in the Epic (round 2)',
         successMeasure: 'Conversion rate',
         idealOutcome: 'We are able to determine which testimonial design is the best',
 
         audienceCriteria: 'All',
-        audience: 0.9,
+        audience: 0.5,
         audienceOffset: 0,
 
         variants: [
             {
-                id: 'control'
+                id: 'control',
+                template: createTestimonialTemplate(acquisitionsEpicTestimonials, testimonialsInfo.control)
             },
             {
-                id: 'prominent',
-                template: createVariantTemplate(acquisitionsEpicTestimonialsProminent)
+                id: 'paywall',
+                template: createTestimonialTemplate(acquisitionsEpicTestimonials, testimonialsInfo.paywall)
             },
             {
-                id: 'subtle',
-                template: createVariantTemplate(acquisitionsEpicTestimonialsSubtle)
-            },
-            {
-                id: 'testimonial_only',
-                template: createVariantTemplate(acquisitionsEpicTestimonialsOnly)
+                id: 'vanilla',
+                template: createTestimonialTemplate(acquisitionsEpicTestimonials, testimonialsInfo.vanilla)
             }
         ]
     });
