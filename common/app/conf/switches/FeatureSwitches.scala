@@ -443,17 +443,6 @@ trait FeatureSwitches {
     exposeClientSide = true
   )
 
-  // Owner: Gareth Trufitt
-  val SteadyPageUtil = Switch(
-    SwitchGroup.Feature,
-    "steady-page-util",
-    "When ON, will prevent page jumping when inserting elements using steady-page utility. If OFF will call callback immediately.",
-    owners = Seq(Owner.withGithub("gtrufitt")),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
   // Owner: Sam Cutler / Editorial Tools
   val Targeting = Switch(
     SwitchGroup.Feature,
