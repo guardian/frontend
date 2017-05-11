@@ -1,9 +1,9 @@
 package common.commercial.hosted
 
-import com.gu.contentapi.client.model.v1.ElementType.Image
-import com.gu.contentapi.client.model.v1.{Asset, Content}
+import com.gu.contentapi.client.model.v1.Content
 import common.Logging
-import common.commercial.hosted.HostedUtils.getAndLog
+import common.commercial.hosted.ContentUtils.{findLargestMainImageAsset, thumbnailUrl}
+import common.commercial.hosted.LoggingUtils.getAndLog
 import model.MetaData
 
 case class HostedArticlePage(
@@ -15,13 +15,12 @@ case class HostedArticlePage(
   override val cta: HostedCallToAction,
   mainPicture: String,
   mainPictureCaption: String,
+  override val thumbnailUrl: String,
   override val socialShareText: Option[String],
   override val shortSocialShareText: Option[String],
   override val metadata: MetaData
 ) extends HostedPage {
-
-  override val imageUrl = mainPicture
-
+  override val mainImageUrl = mainPicture
 }
 
 object HostedArticlePage extends Logging {
@@ -30,23 +29,13 @@ object HostedArticlePage extends Logging {
     log.info(s"Building hosted article ${content.id} ...")
 
     val page = for {
-      campaignId <- content.sectionId map (_.stripPrefix("advertiser-content/"))
       campaign <- HostedCampaign.fromContent(content)
       atoms <- getAndLog(content, content.atoms, "the atoms are missing")
       ctaAtoms <- getAndLog(content, atoms.cta, "the CTA atoms are missing")
       ctaAtom <- getAndLog(content, ctaAtoms.headOption, "the CTA atom is missing")
     } yield {
 
-      val mainImageAsset: Option[Asset] = {
-        val optElement = content.elements.flatMap(
-          _.find { element =>
-            element.`type` == Image && element.relation == "main"
-          }
-        )
-        optElement.map { element =>
-          element.assets.maxBy(_.typeData.flatMap(_.width).getOrElse(0))
-        }
-      }
+      val mainImageAsset = findLargestMainImageAsset(content)
 
       HostedArticlePage(
         id = content.id,
@@ -57,7 +46,8 @@ object HostedArticlePage extends Logging {
         body = content.fields.flatMap(_.body).getOrElse(""),
         cta = HostedCallToAction.fromAtom(ctaAtom),
         mainPicture = mainImageAsset.flatMap(_.file) getOrElse "",
-        mainPictureCaption = mainImageAsset.flatMap(_.typeData.flatMap(_.caption)).getOrElse(""),
+        mainPictureCaption = mainImageAsset.flatMap(_.typeData.flatMap(_.caption)) getOrElse "",
+        thumbnailUrl = thumbnailUrl(content),
         socialShareText = content.fields.flatMap(_.socialShareText),
         shortSocialShareText = content.fields.flatMap(_.shortSocialShareText),
         metadata = HostedMetadata.fromContent(content).copy(openGraphImages = mainImageAsset.flatMap(_.file).toList)

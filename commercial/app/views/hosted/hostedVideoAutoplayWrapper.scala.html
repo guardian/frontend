@@ -1,9 +1,9 @@
-@import common.commercial.hosted._
-@(trails: Seq[HostedPage])(implicit request: RequestHeader)
+@(trails: Seq[common.commercial.hosted.HostedPage])(implicit request: RequestHeader)
+@import views.html.hosted.hostedVideoAutoplay
 
 @if(trails.isEmpty) {
     <div></div>
 }
 @for(page <- trails.headOption) {
-    @hostedVideoAutoplay(page.title, page.imageUrl, page.url, page.cta, page.campaign)
+    @hostedVideoAutoplay(page)
 }

@@ -24,6 +24,7 @@ module.exports = {
     },
     globals: {
         sinon: true,
+        Promise: true
     },
     root: true
 };

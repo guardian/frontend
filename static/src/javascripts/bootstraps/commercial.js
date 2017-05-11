@@ -4,8 +4,12 @@ import { catchErrorsWithContext } from 'lib/robust';
 import { markTime } from 'lib/user-timing';
 import reportError from 'lib/report-error';
 import highMerch from 'commercial/modules/high-merch';
-import articleAsideAdverts from 'commercial/modules/article-aside-adverts';
-import articleBodyAdverts from 'commercial/modules/article-body-adverts';
+import {
+    articleAsideAdvertsInit,
+} from 'commercial/modules/article-aside-adverts';
+import {
+    articleBodyAdvertsInit,
+} from 'commercial/modules/article-body-adverts';
 import closeDisabledSlots from 'commercial/modules/close-disabled-slots';
 import prepareGoogletag from 'commercial/modules/dfp/prepare-googletag';
 import prepareSonobiTag from 'commercial/modules/dfp/prepare-sonobi-tag';
@@ -31,9 +35,9 @@ const commercialModules: Array<Array<any>> = [
     ['cm-thirdPartyTags', thirdPartyTags.init],
     ['cm-prepare-sonobi-tag', prepareSonobiTag.init, true],
     ['cm-prepare-switch-tag', prepareSwitchTag.init, true],
-    ['cm-articleAsideAdverts', articleAsideAdverts.init, true],
+    ['cm-articleAsideAdverts', articleAsideAdvertsInit, true],
     ['cm-prepare-googletag', prepareGoogletag.init, true],
-    ['cm-articleBodyAdverts', articleBodyAdverts.init],
+    ['cm-articleBodyAdverts', articleBodyAdvertsInit],
     ['cm-liveblogAdverts', liveblogAdverts.init, true],
     ['cm-closeDisabledSlots', closeDisabledSlots.init],
     ['cm-stickyTopBanner', stickyTopBanner.init],

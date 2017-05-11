@@ -14,7 +14,7 @@ define([
          we resort to sending it as a token of welcome :)
     */
     function onLoad(event) {
-        var advert = getAdvertById(event.slot.getSlotElementId());
+        var advert = getAdvertById.getAdvertById(event.slot.getSlotElementId());
         if ((typeof advert.size === 'string' && advert.size === 'fluid') ||
             (advert.size[0] === 0 && advert.size[1] === 0)
         ) {
