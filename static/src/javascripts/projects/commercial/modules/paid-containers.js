@@ -1,17 +1,16 @@
 // @flow
+
 import qwery from 'qwery';
-
 import bean from 'bean';
-
 import fastdom from 'fastdom';
 
-const onKeyPress = handler => event => {
+const onKeyPress = handler => (event: EventHandler) => {
     if (event.keyCode === 0x20 || event.keyCode === 0x0d) {
         handler(event);
     }
 };
 
-const onOpenClick = event => {
+const onOpenClick = (event: EventHandler) => {
     const summary = event.currentTarget;
     const details = summary.parentNode;
     const label = summary.querySelector('.js-button__label');
@@ -26,7 +25,7 @@ const onOpenClick = event => {
     }
 };
 
-const paidContainers = () => {
+const paidContainers = (): Promise<void> => {
     const showMores = qwery('.adverts__more > summary');
     bean.on(document, 'click', showMores, onOpenClick);
     bean.on(document, 'click', showMores, onKeyPress(onOpenClick));
