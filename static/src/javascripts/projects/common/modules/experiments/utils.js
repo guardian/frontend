@@ -1,6 +1,6 @@
 import store from 'lib/storage';
 import testCanRunChecks from 'common/modules/experiments/test-can-run-checks';
-var participationsKey = 'gu.ab.participations';
+const participationsKey = 'gu.ab.participations';
 
 function getParticipations() {
     return store.local.get(participationsKey) || {};
@@ -15,7 +15,7 @@ function isParticipating(test) {
 }
 
 function addParticipation(test, variantId) {
-    var participations = getParticipations();
+    const participations = getParticipations();
     participations[test.id] = {
         variant: variantId
     };
@@ -23,12 +23,10 @@ function addParticipation(test, variantId) {
 }
 
 function removeParticipation(test) {
-    var participations = getParticipations();
-    var filteredParticipations = Object.keys(participations)
-        .filter(function(participation) {
-            return participation !== test.id;
-        })
-        .reduce(function(result, input) {
+    const participations = getParticipations();
+    const filteredParticipations = Object.keys(participations)
+        .filter(participation => participation !== test.id)
+        .reduce((result, input) => {
             result[input] = participations[input];
             return result;
         }, {});
@@ -36,20 +34,18 @@ function removeParticipation(test) {
 }
 
 function getTestVariantId(testId) {
-    var participation = getParticipations()[testId];
+    const participation = getParticipations()[testId];
     return participation && participation.variant;
 }
 
 function getVariant(test, variantId) {
-    var variantIds = test.variants.map(function(variant) {
-        return variant.id;
-    });
-    var index = variantIds.indexOf(variantId);
+    const variantIds = test.variants.map(variant => variant.id);
+    const index = variantIds.indexOf(variantId);
     return index > -1 ? test.variants[index] : null;
 }
 
 function setTestVariant(testId, variant) {
-    var participations = getParticipations();
+    const participations = getParticipations();
 
     if (testId in participations) {
         participations[testId].variant = variant;
@@ -71,14 +67,14 @@ function isInVariant(test, variant) {
 }
 
 export default {
-    getParticipations: getParticipations,
-    setParticipations: setParticipations,
-    isParticipating: isParticipating,
-    addParticipation: addParticipation,
-    removeParticipation: removeParticipation,
-    getTestVariantId: getTestVariantId,
-    getVariant: getVariant,
-    setTestVariant: setTestVariant,
-    isInVariant: isInVariant,
+    getParticipations,
+    setParticipations,
+    isParticipating,
+    addParticipation,
+    removeParticipation,
+    getTestVariantId,
+    getVariant,
+    setTestVariant,
+    isInVariant,
     testCanBeRun: testCanRunChecks.testCanBeRun
 };
