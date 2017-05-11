@@ -126,7 +126,7 @@ const MeasureUnderstanding = () => {
         id,
         start,
         expiry,
-        audience: 0.5,
+        audience: 1,
         audienceOffset: 0,
         author: 'Nathan',
         description: 'Measure Understanding survey',
