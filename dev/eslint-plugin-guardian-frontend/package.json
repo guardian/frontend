@@ -4,8 +4,5 @@
   "version": "3.1.0",
   "scripts": {
     "test": "jest"
-  },
-  "devDependencies": {
-    "jest": "^20.0.0"
   }
 }
