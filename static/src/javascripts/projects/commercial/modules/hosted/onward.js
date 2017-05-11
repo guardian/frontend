@@ -1,35 +1,37 @@
+// @flow
 import config from 'lib/config';
 import mediator from 'lib/mediator';
 import fetchJson from 'lib/fetch-json';
 import fastdom from 'lib/fastdom-promise';
 import HostedCarousel from 'commercial/modules/hosted/onward-journey-carousel';
 
-export default {
-    init: loadOnwardComponent,
-    whenRendered: new Promise(function(resolve) {
-        mediator.on('hosted:onward:done', resolve);
-    })
-};
-
-function loadOnwardComponent(start, stop) {
+const loadOnwardComponent = (start: () => void, stop: () => void) => {
     start();
 
-    var placeholders = document.getElementsByClassName('js-onward-placeholder');
+    const placeholders = document.getElementsByClassName(
+        'js-onward-placeholder'
+    );
 
     if (placeholders.length) {
-
-        fetchJson(config.page.ajaxUrl + '/' + config.page.pageId + '/' + config.page.contentType.toLowerCase() + '/' + 'onward.json', {
-                mode: 'cors'
-            })
-            .then(function(json) {
-                return fastdom.write(function() {
-                    var i;
-                    for (i = 0; i < placeholders.length; i++) {
-                        placeholders[i].insertAdjacentHTML('beforeend', json.html);
+        fetchJson(
+            `${config.page.ajaxUrl}/${config.page.pageId}/${config.page.contentType.toLowerCase()}/` +
+                `onward.json`,
+            {
+                mode: 'cors',
+            }
+        )
+            .then(json =>
+                fastdom.write(() => {
+                    let i;
+                    for (i = 0; i < placeholders.length; i += 1) {
+                        placeholders[i].insertAdjacentHTML(
+                            'beforeend',
+                            json.html
+                        );
                     }
-                });
-            })
-            .then(function() {
+                })
+            )
+            .then(() => {
                 HostedCarousel.init();
                 mediator.emit('hosted:onward:done');
             })
@@ -39,4 +41,11 @@ function loadOnwardComponent(start, stop) {
     }
 
     return Promise.resolve();
-}
+};
+
+export default {
+    init: loadOnwardComponent,
+    whenRendered: new Promise(resolve => {
+        mediator.on('hosted:onward:done', resolve);
+    }),
+};
