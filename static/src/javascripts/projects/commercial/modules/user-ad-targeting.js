@@ -1,49 +1,55 @@
-import storage from 'lib/storage';
+// @flow
+import { local } from 'lib/storage';
 import id from 'common/modules/identity/api';
-var userSegmentsKey = 'gu.ads.userSegmentsData';
 
-function getUserSegments() {
-    if (storage.local.isAvailable()) {
-        var userCookieData,
-            userSegmentsData = storage.local.get(userSegmentsKey);
+const userSegmentsKey = 'gu.ads.userSegmentsData';
+
+const getUserSegments = function() {
+    if (local.isAvailable()) {
+        let userCookieData;
+        const userSegmentsData = local.get(userSegmentsKey);
 
         if (userSegmentsData) {
             userCookieData = id.getUserFromCookie();
 
-            if (userCookieData && (userSegmentsData.userHash === (userCookieData.id % 9999))) {
+            if (
+                userCookieData &&
+                userSegmentsData.userHash === userCookieData.id % 9999
+            ) {
                 return userSegmentsData.segments;
-            } else {
-                storage.local.remove(userSegmentsKey);
             }
+            local.remove(userSegmentsKey);
         }
     }
 
     return [];
-}
+};
 
-function requestUserSegmentsFromId() {
-    if (storage.local.isAvailable() && (storage.local.get(userSegmentsKey) === null) && id.getUserFromCookie()) {
-        id.getUserFromApi(function(user) {
+const requestUserSegmentsFromId = function() {
+    if (
+        local.isAvailable() &&
+        local.get(userSegmentsKey) === null &&
+        id.getUserFromCookie()
+    ) {
+        id.getUserFromApi(user => {
             if (user && user.adData) {
-                var key,
-                    userSegments = [];
-                for (key in user.adData) {
+                const userSegments = [];
+                Object.keys(user.adData).forEach(key => {
                     userSegments.push(key + user.adData[key]);
-                }
-                storage.local.set(
-                    userSegmentsKey, {
+                });
+                local.set(
+                    userSegmentsKey,
+                    {
                         segments: userSegments,
-                        userHash: user.id % 9999
-                    }, {
-                        expires: new Date().getTime() + (24 * 60 * 60 * 1000)
+                        userHash: user.id % 9999,
+                    },
+                    {
+                        expires: new Date().getTime() + 24 * 60 * 60 * 1000,
                     }
                 );
             }
         });
     }
-}
-
-export default {
-    getUserSegments: getUserSegments,
-    requestUserSegmentsFromId: requestUserSegmentsFromId
 };
+
+export { getUserSegments, requestUserSegmentsFromId };
