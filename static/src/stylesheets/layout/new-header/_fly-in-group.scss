@@ -1,0 +1,54 @@
+.fly-in-group {
+    color: #ffffff;
+    display: flex;
+    font-size: 18px;
+    flex-wrap: wrap;
+    list-style: none;
+    margin: $gs-baseline / 2 0 0 0;
+    padding: $gs-baseline / 2 0 $gs-baseline $gs-gutter * 2 + $gs-gutter / 2;
+    text-transform: lowercase;
+
+    @include mq(tablet) {
+        padding-left: $gs-gutter * 2 + $gs-gutter;
+    }
+}
+
+.fly-in-group--primary {
+    color: $news-support-1;
+}
+
+.fly-in-group--secondary {
+    background-color: darken($guardian-brand-dark, 4%);
+    margin-top: 0;
+    padding-top: 0;
+}
+
+.fly-in-group--highlight {
+    color: $guardian-brand-dark;
+    background-color: $news-main-2;
+}
+
+.fly-in-group--downlight {
+    background-color: darken($news-main-2, 10%);
+    color: $guardian-brand-dark;
+}
+
+// unify font-size between primary and secondary level
+.fly-in-group--primary,
+.fly-in-group--secondary {
+    font-size: 20px;
+
+    @include mq(mobileMedium) {
+        font-size: 22px;
+    }
+}
+
+// unify alignment of lists starting on the left side
+.fly-in-group--secondary,
+.fly-in-group--downlight {
+    margin-left: -1 * ($gs-gutter * 2 + $gs-gutter / 2);
+
+    @include mq(tablet) {
+        margin-left: -1 * ($gs-gutter * 2 + $gs-gutter);
+    }
+}

@@ -3,24 +3,21 @@
 @import common.{Edition, LinkTo}
 @import views.support.RenderClasses
 
-<li class="navigation-group__item navigation-group__item--edition-picker">
+<li class="fly-in-item">
     <details>
-        <summary class="main-navigation__item__button"
-        data-link-name="nav2 : edition picker">
-
-            <i class="main-menu__icon main-menu__icon--chevron personalisation__icon"></i>
+        <summary data-link-name="nav2 : edition picker">
+            <i class="fly-in-item__toggle"></i>
             @Edition(request).displayName
         </summary>
 
-        <ul class="personalisation__links">
+        <ul class="fly-in-group fly-in-group--starts-left fly-in-group--downlight">
             @Edition.all.map { edition =>
                  @if((edition != Edition(request))) {
-                    <li class="personalisation__link">
+                    <li class="fly-in-item">
                         <a data-link-name="nav2 : edition-picker: @edition.id"
                             href="@LinkTo(s"/preference/edition/${edition.id.toLowerCase}")">
-
-                            <span class="u-h"> switch to the </span>
-                            <span> @edition.displayName </span>
+                            <span class="u-h">switch to the </span>
+                            <span>@edition.displayName</span>
                         </a>
                     </li>
                 }
