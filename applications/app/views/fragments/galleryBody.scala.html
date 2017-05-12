@@ -10,6 +10,7 @@
 
 <div class="gallery__main-content">
 
+    @* Manually placing tonal--tone-media as temporary fix to ensute special report tones have it *@
     <article id="article" class="@RenderClasses(
             Map("content--paidgallery" -> isPaidContent(page)),
             "content", "content--media", "content--gallery", "tonal", "content--immersive", "tonal--tone-media", s"tonal--${toneClass(page.item)}"
