@@ -1,140 +1,180 @@
+// @flow
+
+/* eslint no-param-reassign: "off" */
+
 import raven from 'lib/raven';
 import config from 'lib/config';
-import userTiming from 'lib/user-timing';
+import { getCurrentTime } from 'lib/user-timing';
 import beacon from 'common/modules/analytics/beacon';
 import ophan from 'ophan/ng';
 
-var performanceLog = {
-    viewId: 'unknown',
-    tags: [],
-    modules: [],
-    adverts: [],
-    baselines: []
+type Module = {
+    name: string,
+    start: number,
+    duration?: number,
 };
-var primaryBaseline = 'primary';
-var reportData = raven.wrap(reportTrackingData);
 
-function setListeners(googletag) {
-    googletag.pubads().addEventListener('slotRenderEnded', reportData);
-}
+type Baseline = {
+    name: string,
+    startTime: number,
+    endTime?: number,
+};
+
+type AdvertMetrics = {
+    id: string,
+    isEmpty: boolean,
+    createTime: number,
+    startLoading: number,
+    stopLoading: number,
+    startRendering: number,
+    stopRendering: number,
+    loadingMethod: number,
+    lazyWaitComplete: number,
+};
+
+const performanceLog = {
+    viewId: 'unknown',
+    tags: ([]: Array<string>),
+    modules: ([]: Array<Module>),
+    adverts: ([]: Array<AdvertMetrics>),
+    baselines: ([]: Array<Baseline>),
+};
+const primaryBaseline = 'primary';
 
 // moduleStart() and moduleEnd() can be used for measuring modules ad-hoc,
 // when they don't align to a baseline.
-function moduleStart(moduleName) {
-    var timerStart = userTiming.getCurrentTime();
+const moduleStart = (moduleName: string): void => {
+    const timerStart = getCurrentTime();
     performanceLog.modules.push({
         name: moduleName,
-        start: timerStart
+        start: timerStart,
     });
-}
+};
 
-function moduleEnd(moduleName) {
-    var timerEnd = userTiming.getCurrentTime();
+const moduleEnd = (moduleName: string): void => {
+    const timerEnd = getCurrentTime();
 
-    var moduleIndex = performanceLog.modules.map(function(module) {
-        return module.name;
-    }).indexOf(moduleName);
+    const moduleIndex = performanceLog.modules.findIndex(
+        module => module.name === moduleName
+    );
 
-    if (moduleIndex != -1) {
-        var module = performanceLog.modules[moduleIndex];
+    if (moduleIndex !== -1) {
+        const module: Module = performanceLog.modules[moduleIndex];
         module.duration = timerEnd - module.start;
     }
-}
+};
 
 // updateAdvertMetric() is called whenever the advert timings need to be updated.
 // It may be called multiple times for the same advert, so that we effectively update
 // the object with additional timings.
-function updateAdvertMetric(advert, metricName, metricValue) {
-    performanceLog.adverts = performanceLog.adverts.filter(function(element) {
-        return advert.id !== element.id;
-    });
+const updateAdvertMetric = (
+    advert: Object,
+    metricName: string,
+    metricValue: string | number
+): void => {
+    performanceLog.adverts = performanceLog.adverts.filter(
+        element => advert.id !== element.id
+    );
     advert.timings[metricName] = metricValue;
-    performanceLog.adverts.push(Object.freeze({
-        id: advert.id,
-        isEmpty: advert.isEmpty,
-        createTime: advert.timings.createTime,
-        startLoading: advert.timings.startLoading,
-        stopLoading: advert.timings.stopLoading,
-        startRendering: advert.timings.startRendering,
-        stopRendering: advert.timings.stopRendering,
-        loadingMethod: advert.timings.loadingMethod,
-        lazyWaitComplete: advert.timings.lazyWaitComplete
-    }));
-}
+    performanceLog.adverts.push(
+        Object.freeze(
+            Object.assign(
+                {
+                    id: advert.id,
+                    isEmpty: advert.isEmpty,
+                },
+                advert.timings
+            )
+        )
+    );
+};
 
-function addStartTimeBaseline(baselineName) {
+const addStartTimeBaseline = (baselineName: string): void => {
     performanceLog.baselines.push({
         name: baselineName,
-        startTime: userTiming.getCurrentTime()
+        startTime: getCurrentTime(),
     });
-}
+};
 
-function addEndTimeBaseline(baselineName) {
-    performanceLog.baselines.forEach(function(baseline) {
+const addEndTimeBaseline = (baselineName: string): void => {
+    performanceLog.baselines.forEach((baseline: Baseline) => {
         if (baseline.name === baselineName) {
-            baseline.endTime = userTiming.getCurrentTime();
+            baseline.endTime = getCurrentTime();
         }
     });
-}
+};
 
 // This posts the performance log to the beacon endpoint. It is expected that this be called
 // multiple times in a page view, so that partial data is captured, and then topped up as adverts load in.
-function reportTrackingData() {
+const reportTrackingData = (): void => {
     if (config.tests.commercialClientLogging) {
-        var performanceReport = {
+        const performanceReport = {
             viewId: ophan.viewId,
             tags: performanceLog.tags,
             adverts: performanceLog.adverts,
             baselines: performanceLog.baselines,
-            modules: (performanceLog.modules || []).filter(function(module) {
-                return !!module.duration;
-            })
+            modules: (performanceLog.modules || [])
+                .filter((module: Object) => !!module.duration),
         };
-        beacon.postJson('/commercial-report', JSON.stringify(performanceReport));
+        beacon.postJson(
+            '/commercial-report',
+            JSON.stringify(performanceReport)
+        );
     }
-}
+};
 
-function addTag(tag) {
+const reportData = raven.wrap(reportTrackingData);
+
+const setListeners = (googletag: Object): void => {
+    googletag.pubads().addEventListener('slotRenderEnded', reportData);
+};
+
+const addTag = (tag: string): void => {
     performanceLog.tags.push(tag);
-}
+};
 
-function wrap(name, fn) {
-    var start = moduleStart.bind(null, name);
-    var stop = moduleEnd.bind(null, name);
-    return function() {
+const wrap = (name: string, fn: Function): Function => {
+    const [start, stop] = [
+        moduleStart.bind(null, name),
+        moduleEnd.bind(null, name),
+    ];
+    return (...args) => {
         start();
         try {
-            var ret = fn.apply(null, arguments);
+            const ret = fn(...args);
             if (ret instanceof Promise) {
-                return ret.then(function(value) {
-                    stop();
-                    return value;
-                }, function(reason) {
-                    stop();
-                    throw reason;
-                });
-            } else {
-                stop();
-                return ret;
+                return ret.then(
+                    value => {
+                        stop();
+                        return value;
+                    },
+                    reason => {
+                        stop();
+                        throw reason;
+                    }
+                );
             }
+            stop();
+            return ret;
         } catch (e) {
             stop();
             throw e;
         }
     };
-}
+};
 
-function defer(name, fn) {
-    var start = moduleStart.bind(null, name);
-    var stop = moduleEnd.bind(null, name);
-    var startStop = [start, stop];
-    return function() {
+const defer = (name: string, fn: Function): Function => {
+    const [start, stop] = [
+        moduleStart.bind(null, name),
+        moduleEnd.bind(null, name),
+    ];
+    return (...args) => {
         try {
-            var ret = fn.apply(null, startStop.concat(startStop.slice.call(arguments)));
+            const ret = fn(start, stop, ...args);
             // Module-initialiser functions using defer are expected to call stop(),
             // but a failed promise could be uncaught, so catch them here and call stop().
             if (ret instanceof Promise) {
-                return ret.catch(function(reason) {
+                return ret.catch(reason => {
                     stop();
                     throw reason;
                 });
@@ -144,16 +184,16 @@ function defer(name, fn) {
             stop();
             throw e;
         }
-    }
-}
+    };
+};
 
 export default {
-    setListeners: setListeners,
-    updateAdvertMetric: updateAdvertMetric,
-    addStartTimeBaseline: addStartTimeBaseline,
-    addEndTimeBaseline: addEndTimeBaseline,
-    primaryBaseline: primaryBaseline,
-    addTag: addTag,
-    wrap: wrap,
-    defer: defer
+    setListeners,
+    updateAdvertMetric,
+    addStartTimeBaseline,
+    addEndTimeBaseline,
+    primaryBaseline,
+    addTag,
+    wrap,
+    defer,
 };
