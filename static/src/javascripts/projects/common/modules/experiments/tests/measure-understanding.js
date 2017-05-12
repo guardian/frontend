@@ -1,7 +1,5 @@
 // @flow
 
-/* eslint no-param-reassign: "off" */
-
 import { addEventListener } from 'lib/events';
 import fastdom from 'lib/fastdom-promise';
 import mediator from 'lib/mediator';
