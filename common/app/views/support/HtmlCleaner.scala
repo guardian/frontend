@@ -799,7 +799,7 @@ object ExplainerCleaner extends HtmlCleaner {
         val eid = i.attr("data-canonical-url").drop(prefixLength)
         if (eids.contains(eid)) {
           val hook = document.createElement("div")
-            .addClass("js-explainer")
+            .addClass("js-explainer-snippet")
             .attr("data-explainer-id", eid)
           i.replaceWith(hook)
         }

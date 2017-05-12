@@ -5,7 +5,6 @@
 import { addEventListener } from 'lib/events';
 import fastdom from 'lib/fastdom-promise';
 import mediator from 'lib/mediator';
-import { local as localStorage } from 'lib/storage';
 import template from 'lodash/utilities/template';
 import ophan from 'ophan/ng';
 import ExplainerSnippetStr
@@ -18,7 +17,7 @@ const ExplainerSnippet = () => {
     // Test id
     const id = 'ExplainerSnippet';
 
-    // Ophan survey id
+    // Ophan prefix id
     const componentPrefix = 'explainer_feedback__';
 
     // List of pages the test will run in
@@ -30,18 +29,23 @@ const ExplainerSnippet = () => {
     const start = '2017-05-11';
     const expiry = '2017-05-18';
 
-    // will run in articles only if no story questions atom is already there
-    // *and* the user hasn't already answered the question
-    const canRun = () =>
-        paths.includes(location.pathname) && !localStorage.get(id);
+    // will run in specific articles
+    const canRun = () => paths.includes(location.pathname);
 
-    // at the click of a button, we send a notification to ophan and clean up
-    // registered listeners to prevent duplicate calls
+    // opening the disclosure widget is our success criterion for this test
     const onShow = () => {
         mediator.emit('ab:explainer:complete');
     };
 
-    const onFeedback = (ack: HTMLElement, eid: string, e: Event) => {
+    // we'll bind a partial function to listen for thumbs up/down events
+    let feedback;
+
+    const onFeedback = (
+        ack: HTMLElement,
+        style: string,
+        eid: string,
+        e: Event
+    ) => {
         const question = e.currentTarget;
         if (!(question instanceof HTMLElement)) {
             throw new Error('Flow phantom exception');
@@ -53,31 +57,33 @@ const ExplainerSnippet = () => {
         if (value) {
             ophan.record({
                 component: componentPrefix + eid,
+                style,
                 value,
             });
             fastdom.write(() => {
                 ack.hidden = false;
                 question.hidden = true;
             });
+            e.currentTarget.removeEventListener('click', feedback);
         }
     };
 
     // test bootstrap: runs when the user is in the corresponding variant
-    const test = () => {
-        const hook = document.querySelector('.js-explainer');
+    const test = (options: Object) => {
+        const hook = document.querySelector('.js-explainer-snippet');
         if (hook) {
             const html = template(ExplainerSnippetStr, {
                 thumbIcon,
                 plusIcon,
                 minusIcon,
-                style: Math.random() < 0.5 ? 'light' : 'dark',
+                style: options.style,
             });
             fastdom
                 .write(() => {
                     hook.insertAdjacentHTML('beforeend', html);
                     return [
                         ...hook.querySelectorAll(
-                            '.explainer__header, .explainer__feedback, .explainer__ack'
+                            '.explainer-snippet__header, .explainer-snippet__feedback, .explainer-snippet__ack'
                         ),
                     ];
                 })
@@ -87,7 +93,12 @@ const ExplainerSnippet = () => {
                     addEventListener(
                         question,
                         'click',
-                        onFeedback.bind(null, ack, eid)
+                        (feedback = onFeedback.bind(
+                            null,
+                            ack,
+                            options.style,
+                            eid
+                        ))
                     );
                     mediator.emit('ab:explainer:displayed');
                 });
@@ -117,7 +128,22 @@ const ExplainerSnippet = () => {
         idealOutcome: "We improve users' understanding of a topic by showing them Explainers",
         canRun,
         showForSensitive: true,
-        variants: [{ id: 'snippet', test, impression, success }],
+        variants: [
+            {
+                id: 'snippet',
+                test,
+                impression,
+                success,
+                options: { style: 'light' },
+            },
+            {
+                id: 'snippet',
+                test,
+                impression,
+                success,
+                options: { style: 'dark' },
+            },
+        ],
     });
 };
 

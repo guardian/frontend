@@ -14,34 +14,34 @@
     }
 }
 
-.explainer {
+.explainer-snippet {
     position: relative;
     padding: $gs-baseline / 3 $gs-gutter / 4 $gs-baseline / 2;
     margin: $gs-baseline * 4 / 3 0 $gs-baseline * 3;
 
     font-family: $f-sans-serif-text;
 
-    &[open] .explainer__handle > :nth-child(1),
-    &:not([open]) .explainer__handle > :nth-child(2) {
+    &[open] .explainer-snippet__handle > :nth-child(1),
+    &:not([open]) .explainer-snippet__handle > :nth-child(2) {
         display: none;
     }
 }
 
-.explainer__header {
+.explainer-snippet__header {
     margin: 0 0 $gs-baseline * 4 / 3;
     font-weight: bold;
 }
 
-.explainer__label {
+.explainer-snippet__label {
     @include font-size(14, 18);
     display: block;
 }
 
-.explainer__headline {
+.explainer-snippet__headline {
     @include font-size(20, 22);
 }
 
-.explainer__handle {
+.explainer-snippet__handle {
     position: absolute;
     bottom: 0;
     transform: translate(0, 50%);
@@ -61,7 +61,7 @@
     }
 }
 
-.explainer__body {
+.explainer-snippet__body {
     > p {
         @include faux-bullet-point;
 
@@ -71,14 +71,14 @@
     }
 }
 
-.explainer__footer {
+.explainer-snippet__footer {
     @include font-size(13, 16);
 
     display: flex;
     justify-content: flex-end;
 }
 
-.explainer__feedback {
+.explainer-snippet__feedback {
     display: flex;
     align-items: center;
 
@@ -113,15 +113,15 @@
 
 /** THEMING */
 
-.explainer--light {
+.explainer-snippet--light {
     background: #f1f1f1;
     color: $neutral-1;
 
-    .explainer__label {
+    .explainer-snippet__label {
         color: $news-support-2;
     }
 
-    .explainer__handle {
+    .explainer-snippet__handle {
         background: $news-support-2;
         color: #ffffff;
 
@@ -131,13 +131,13 @@
         }
     }
 
-    .explainer__body > p {
+    .explainer-snippet__body > p {
         &::before {
             background-color: $news-support-2;
         }
     }
 
-    .explainer__feedback .button {
+    .explainer-snippet__feedback .button {
         background: $news-main-1;
         color: #ffffff;
 
@@ -153,15 +153,15 @@
     }
 }
 
-.explainer--dark {
+.explainer-snippet--dark {
     background: $news-main-1;
     color: #ffffff;
 
-    .explainer__label {
+    .explainer-snippet__label {
         color: $news-support-1;
     }
 
-    .explainer__handle {
+    .explainer-snippet__handle {
         background: darken($news-main-2, 10%);
         color: #ffffff;
 
@@ -171,13 +171,13 @@
         }
     }
 
-    .explainer__body > p {
+    .explainer-snippet__body > p {
         &::before {
             background-color: $news-main-2;
         }
     }
 
-    .explainer__feedback .button {
+    .explainer-snippet__feedback .button {
         background: $news-support-1;
         color: $news-main-1;
 
