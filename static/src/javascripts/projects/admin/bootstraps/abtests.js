@@ -3,7 +3,11 @@ import abTests from 'common/modules/experiments/ab';
 import ReportItem from 'admin/modules/abtests/abtest-report-item';
 import Audience from 'admin/modules/abtests/audience';
 
-const renderTests = (tests, active, elem) => {
+const renderTests = (
+    tests: Array<any>,
+    active: boolean,
+    elem: ?Element
+): Array<any> => {
     const items = tests.map(
         test =>
             new ReportItem({
@@ -17,7 +21,7 @@ const renderTests = (tests, active, elem) => {
     return items;
 };
 
-const initABTests = () => {
+const initABTests = (): void => {
     renderTests(
         abTests.getActiveTests(),
         true,
