@@ -25,7 +25,7 @@ define([
 
     var testimonialsInfo = {
         control: {
-            message: 'I read it fairly often and enjoy the variety of news and entertainment content. It never occurred to me that you wanted contributions, but I\'d like you to stick around. Sometimes you actually have to pay for stuff you like. Go figure.',
+            message: 'I read it fairly often and enjoy the variety of news and entertainment content. It never occurred to me that you wanted contributions, but I’d like you to stick around. Sometimes you actually have to pay for stuff you like. Go figure.',
             name: 'Mike L'
         },
         paywall: {
@@ -34,7 +34,7 @@ define([
         },
         vanilla: {
             message: 'I respect and appreciate the quality of your reportage: the in-depth research it represents, its absence of ideology, and its broad view. It is excellent journalism. We need truth in our news today.',
-            name: 'TBC'
+            name: 'Winifred L'
         }
     };
 
@@ -42,8 +42,8 @@ define([
         id: 'AcquisitionsEpicTestimonialsRoundTwo',
         campaignId: 'kr1_epic_testimonials_round_two',
 
-        start: '2017-05-11',
-        expiry: '2017-05-25',
+        start: '2017-05-12',
+        expiry: '2017-06-13',
 
         author: 'Jonathan Rankin',
         description: 'Test placing reader testimonials in the Epic (round 2)',
