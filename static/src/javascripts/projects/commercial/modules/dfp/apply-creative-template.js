@@ -12,7 +12,7 @@ import fabricExpandVideo
 import fabricVideo from 'commercial/modules/creatives/fabric-video';
 import scrollable from 'commercial/modules/creatives/scrollable-mpu-v2';
 
-const creativeLookup = {
+const creativeLookup: Object = {
     frame,
     revealer,
     'fabric-v1': fabric,
@@ -25,19 +25,21 @@ const creativeLookup = {
 const renderCreativeTemplate = (
     adSlot: HTMLElement,
     iFrame: HTMLIFrameElement
-) => {
-    const fetchCreativeConfig = () => {
+): Promise<boolean> => {
+    const fetchCreativeConfig = (): ?string => {
         try {
-            const breakoutScript = iFrame.contentDocument.body.querySelector(
-                '.breakout__script[type="application/json"]'
-            );
+            const breakoutScript = iFrame.contentDocument.body
+                ? iFrame.contentDocument.body.querySelector(
+                      '.breakout__script[type="application/json"]'
+                  )
+                : null;
             return breakoutScript ? breakoutScript.innerHTML : null;
         } catch (err) {
             return null;
         }
     };
 
-    const mergeViewabilityTracker = json => {
+    const mergeViewabilityTracker = (json: Object): Object => {
         const viewabilityTrackerDiv = iFrame.contentDocument.getElementById(
             'viewabilityTracker'
         );
@@ -45,29 +47,29 @@ const renderCreativeTemplate = (
             ? viewabilityTrackerDiv.childNodes[0].nodeValue.trim()
             : null;
 
-        const updatedJson = Object.assign({}, json);
-
-        if (viewabilityTracker) {
-            updatedJson.params.viewabilityTracker = viewabilityTracker;
+        /* eslint-disable no-param-reassign */
+        if (viewabilityTracker && json.params) {
+            json.params.viewabilityTracker = viewabilityTracker;
         }
+        /* eslint-enable no-param-reassign */
 
-        return updatedJson;
+        return json;
     };
 
-    const renderCreative = config =>
+    const renderCreative = (config: Object): Promise<boolean> =>
         new Promise(resolve => {
             const Creative = creativeLookup[config.name];
             resolve(new Creative(adSlot, config.params, config.opts).create());
         });
 
-    const hideIframe = () =>
+    const hideIframe = (): Promise<any> =>
         fastdom.write(() => {
             /* eslint-disable no-param-reassign */
             iFrame.style.display = 'none';
             /* eslint-enable no-param-reassign */
         });
 
-    const creativeConfig = fetchCreativeConfig();
+    const creativeConfig: ?string = fetchCreativeConfig();
 
     if (creativeConfig) {
         return hideIframe()
@@ -85,13 +87,13 @@ const renderCreativeTemplate = (
     return Promise.resolve(true);
 };
 
-const getAdvertIframe = adSlot =>
+const getAdvertIframe = (adSlot: HTMLElement): Promise<HTMLIFrameElement> =>
     new Promise((resolve, reject) => {
         // DFP will sometimes return empty iframes, denoted with a '__hidden__' parameter embedded in its ID.
         // We need to be sure only to select the ad content frame.
-        const contentFrame = adSlot.querySelector(
+        const contentFrame = ((adSlot.querySelector(
             'iframe:not([id*="__hidden__"])'
-        );
+        ): any): ?HTMLIFrameElement);
 
         if (!contentFrame) {
             reject();
@@ -123,7 +125,7 @@ const getAdvertIframe = adSlot =>
  * This looks for any such data and, if we find it, renders the appropriate component.
  */
 const applyCreativeTemplate = (adSlot: HTMLElement) =>
-    getAdvertIframe(adSlot).then(iframe =>
+    getAdvertIframe(adSlot).then((iframe: HTMLIFrameElement) =>
         renderCreativeTemplate(adSlot, iframe)
     );
 
