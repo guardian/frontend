@@ -270,6 +270,28 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter / 2;
 .new-header__nav__menu-button--open {
     z-index: 1071;
     box-shadow: 0 0 0 1px rgba(0, 0, 0, .08);
+
+    &:before {
+        // Extended hit area for veggie burger close state, for fat fingers
+        content: '';
+        position: absolute;
+
+        @include mq($until: mobileMedium) {
+            height: $veggie-burger-small * 2;
+            width: $veggie-burger-small;
+            top: -$veggie-burger-small / 2;
+            right: $veggie-burger-small / 2;
+            border-radius: ($veggie-burger-small * 2) 0 0 ($veggie-burger-small * 2);
+        }
+
+        @include mq(mobileMedium) {
+            height: $veggie-burger-medium * 2;
+            width: $veggie-burger-medium;
+            top: -$veggie-burger-medium / 2;
+            right: $veggie-burger-medium / 2;
+            border-radius: ($veggie-burger-medium * 2) 0 0 ($veggie-burger-medium * 2);
+        }
+    }
 }
 
 .new-header__veggie-burger-icon {
@@ -764,61 +786,4 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter / 2;
 x:-o-prefocus, .main-menu-container,
 x:-o-prefocus, .new-header__nav__menu-button {
     display: none;
-}
-
-// Temporary french tricolour veggie burger
-.new-header__nav__menu-button--tricolour {
-    overflow: hidden;
-    background-color: #ffffff;
-
-    &:before,
-    &:after {
-        content: '';
-        position: absolute;
-        width: 33.5%;
-        top: 0;
-        bottom: 0;
-        transition: width .2s ease-in;
-    }
-
-    &:before {
-        left: 0;
-        background: #1573ca;
-    }
-
-    &:after {
-        right: 0;
-        background: #ef4135;
-        z-index: -1;
-    }
-
-    .new-header__veggie-burger-icon {
-        &,
-        &:before,
-        &:after {
-            background-color: $neutral-3;
-            width: 12px;
-
-            @include mq(mobileMedium) {
-                width: 14px;
-            }
-        }
-    }
-
-    &.new-header__nav__menu-button--open {
-        &:before,
-        &:after {
-            width: 0;
-        }
-
-        .new-header__veggie-burger-icon {
-            background-color: transparent;
-
-            &,
-            &:before,
-            &:after {
-                width: 20px;
-            }
-        }
-    }
 }
