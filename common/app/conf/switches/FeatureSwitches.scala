@@ -497,14 +497,4 @@ trait FeatureSwitches {
     exposeClientSide = false
   )
 
-  val TricolourVeggieBurger = Switch(
-    SwitchGroup.Feature,
-    "tricolour-veggie-burger",
-    "If this switch is turned on the menu button on the new header will be a tricolour flag",
-    owners = Seq(Owner.withGithub("zeftilldeath")),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = false
-  )
-
 }
