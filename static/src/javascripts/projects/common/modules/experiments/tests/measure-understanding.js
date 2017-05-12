@@ -10,7 +10,7 @@ import template from 'lodash/utilities/template';
 import ophan from 'ophan/ng';
 import measureUnderstandingStr
     from 'raw-loader!common/views/experiments/measure-understanding.html';
-import { markup as thumb } from 'svg-loader!svgs/icon/thumb.svg';
+import { markup as thumb } from 'svgs/icon/thumb.svg';
 
 const MeasureUnderstanding = () => {
     // Test id
