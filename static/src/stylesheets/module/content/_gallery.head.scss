@@ -56,6 +56,12 @@
     }
 }
 
+.content__headline--paidgallery {
+    .inline-tone-fill {
+        fill: $paid-article-brand;
+    }
+}
+
 .gallery__fullscreen,
 .article__fullscreen {
     position: absolute;
