@@ -74,7 +74,7 @@ object NewNavigation {
     val name = "news"
 
     val uk = NavLinkLists(
-      List(headlines, ukNews, world, business, ukElection2017, tech, politics),
+      List(headlines, ukNews, ukElection2017, world, tech, business, politics),
       List(science, globalDevelopment, cities, obituaries)
     )
     val au = NavLinkLists(
