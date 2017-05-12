@@ -9,6 +9,9 @@ define([
             tagsContainer, commercialFeatures;
 
         beforeEach(function (done) {
+            injector.mock('svgs/icon/thumb.svg', {
+                markup: ''
+            });
             injector.require([
                 'commercial/modules/third-party-tags',
                 'commercial/modules/commercial-features'

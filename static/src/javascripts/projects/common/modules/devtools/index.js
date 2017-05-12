@@ -3,7 +3,6 @@ import template from 'lodash/utilities/template';
 import { local as storage } from 'lib/storage';
 import $ from 'lib/$';
 import bean from 'bean';
-import find from 'lodash/collections/find';
 import overlay from 'raw-loader!common/views/devtools/overlay.html';
 import styles from 'raw-loader!common/views/devtools/styles.css';
 import { TESTS as tests } from 'common/modules/experiments/ab';
@@ -29,7 +28,9 @@ const bindEvents = () => {
             const testId = label.getAttribute('data-ab-test');
             const variantId = label.getAttribute('data-ab-variant');
             const abTests = getSelectedAbTests();
-            const existingVariantForThisTest = find(abTests, { id: testId });
+            const existingVariantForThisTest = abTests.find(
+                test => test.id === testId
+            );
 
             if (existingVariantForThisTest) {
                 existingVariantForThisTest.variant = variantId;
