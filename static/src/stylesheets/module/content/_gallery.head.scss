@@ -1,5 +1,5 @@
 .content__labels--gallery,
-.l-side-margins--gallery .content__meta-container,
+.gallery__main-content .content__meta-container,
 .content__headline--gallery,
 .content__standfirst--gallery {
     @include mq(desktop) {
@@ -8,7 +8,7 @@
     }
 }
 
-.l-side-margins--gallery {
+.gallery__main-content {
     .content__meta-container {
         position: relative;
         width: auto;
