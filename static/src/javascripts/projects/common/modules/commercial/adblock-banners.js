@@ -1,6 +1,6 @@
 // @flow
 import config from 'lib/config';
-import { inlineSvg } from 'projects/common/views/svgs';
+import { inlineSvg } from 'common/views/svgs';
 
 // this is used in all banners
 const cursor = inlineSvg('cursor');
