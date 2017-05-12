@@ -1,23 +1,17 @@
-define([
-    'lib/config'
-], function (
-    config
-) {
+import config from 'lib/config';
 
-    var remarketingUrl = '//www.googleadservices.com/pagead/conversion_async.js';
+var remarketingUrl = '//www.googleadservices.com/pagead/conversion_async.js';
 
-    function onLoad() {
-        window.google_trackConversion({
-            google_conversion_id: 971225648,
-            google_custom_params: window.google_tag_params,
-            google_remarketing_only: true
-        });
-    }
+function onLoad() {
+    window.google_trackConversion({
+        google_conversion_id: 971225648,
+        google_custom_params: window.google_tag_params,
+        google_remarketing_only: true
+    });
+}
 
-    return {
-        shouldRun: config.switches.remarketing,
-        url: remarketingUrl,
-        onLoad: onLoad
-    };
-
-});
+export default {
+    shouldRun: config.switches.remarketing,
+    url: remarketingUrl,
+    onLoad: onLoad
+};
