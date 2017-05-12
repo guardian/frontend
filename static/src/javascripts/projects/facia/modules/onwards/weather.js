@@ -195,3 +195,5 @@ export const Weather = {
         $forecastHolder.empty().html(tmpl);
     },
 };
+
+export const _ = { isNetworkFront };
