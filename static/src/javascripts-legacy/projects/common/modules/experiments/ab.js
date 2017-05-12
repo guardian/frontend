@@ -190,7 +190,7 @@ define([
                 variantId = participations[test.id].variant;
             var variant = abUtils.getVariant(test, variantId);
             if (variant) {
-                variant.test();
+                variant.test(variant.options || {});
             } else if (!segmentUtil.isInTest(test) && test.notInTest) {
                 test.notInTest();
             }
