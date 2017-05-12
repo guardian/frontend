@@ -2,7 +2,7 @@
 import fastdom from 'lib/fastdom-promise';
 import template from 'lodash/utilities/template';
 import popupTemplate from 'raw-loader!commercial/views/ad-feedback-popup.html';
-import tick from 'svg-loader!svgs/icon/tick.svg';
+import tick from 'svgs/icon/tick.svg';
 import config from 'lib/config';
 
 const shouldRenderLabel = adSlotNode =>
