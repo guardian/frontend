@@ -14,12 +14,12 @@ define([
     var pageId = config.page.pageId || '';
 
     return contributionsUtilities.makeABTest({
-        id: 'AcquisitionsEpicLiveblog',
+        id: 'AcquisitionsEpicSplitCTA',
         campaignId: 'epic_liveblog',
         campaignSuffix: pageId.replace(/-/g, '_').replace(/\//g, '__'),
 
-        start: '2017-04-01',
-        expiry: '2018-04-01',
+        start: '2017-05-12',
+        expiry: '2017-05-24',
 
         author: 'Joseph Smith',
         description: 'This places the epic underneath liveblog blocks which the author has specified in Composer should have an epic against them',
