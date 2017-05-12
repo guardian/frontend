@@ -10,7 +10,7 @@ define([
     scroller,
     bean,
     debounce,
-    Sticky,
+    sticky,
     detect
 ) {
 
@@ -126,7 +126,7 @@ function init() {
         if (focalRecipeInt < 0) { nextButton.removeClass('top'); }
 
         if (detect.isBreakpoint({ min: 'desktop' })) {
-          new Sticky(stickyImages[0], {}).init();
+          new sticky.Sticky(stickyImages[0], {}).init();
         }
     }
 
