@@ -8,7 +8,7 @@ object Dependencies {
   val seleniumVersion = "2.44.0"
   val slf4jVersion = "1.7.5"
   val awsVersion = "1.11.7"
-  val faciaVersion = "2.0.16"
+  val faciaVersion = "2.0.17"
   val capiVersion = "11.12"
   val dispatchVersion = "0.11.3"
   val configurationMagicVersion = "1.2.2"
