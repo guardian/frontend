@@ -11,10 +11,10 @@ class Sticky {
     offsetFromParent: number;
     lastMessage: string;
 
-    constructor(element: HTMLElement, options: Object): void {
+    constructor(element: HTMLElement, options: Object = {}): void {
         this.element = element;
 
-        this.opts = Object.assign(options || {}, {
+        this.opts = Object.assign(options, {
             top: 0,
             containInParent: true,
             emitMessage: false,
