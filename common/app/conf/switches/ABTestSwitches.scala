@@ -188,4 +188,14 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2017, 6, 13),
     exposeClientSide = true
   )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-epic-single-cta",
+    "Test an epic with a single CTA: contribute in the US and support everywhere else",
+    owners = Seq(Owner.withGithub("joelochlann")),
+    safeState = On,
+    sellByDate = new LocalDate(2017, 5, 25),
+    exposeClientSide = true
+  )
 }

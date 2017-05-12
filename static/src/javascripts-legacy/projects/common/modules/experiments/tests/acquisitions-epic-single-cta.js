@@ -14,14 +14,14 @@ define([
     acquisitionsEpicSupportTemplate
 ) {
     return contributionsUtilities.makeABTest({
-        id: 'AcquisitionsEpicLiveblog',
-        campaignId: 'epic_split_cta',
+        id: 'AcquisitionsEpicSingleCta',
+        campaignId: 'epic_single_cta',
 
         start: '2017-05-12',
         expiry: '2017-05-25',
 
         author: 'Joseph Smith',
-        description: 'Show a single CTA which is "Make a contribution" for US users and "Become a supporter" for everyone else',
+        description: 'Test an epic with a single CTA: contribute in the US and support everywhere else',
         successMeasure: 'Member acquisition and contributions',
         idealOutcome: 'Overall number of conversions combining supporter and contributions will be greater for the variant that shows just a single CTA',
 
@@ -35,7 +35,7 @@ define([
                 successOnView: true, // check
             },
             {
-                id: 'single-cta',
+                id: 'single_cta',
                 template: function(variant) {
                     var epicTemplate;
 
