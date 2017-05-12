@@ -10,8 +10,8 @@
 }
 
 .feedback__element {
-    margin-bottom: 1.5rem;
-    margin-top: 1.5rem;
+    margin-top: $gs-baseline * 2;
+    margin-bottom: $gs-baseline * 2;
 }
 
 .feedback__entry {
@@ -33,7 +33,7 @@
 .feedback__select {
     border: 1px solid #dcdcdc;
     padding: .5rem;
-    margin-top: 1.5em;
+    margin-top: $gs-baseline * 2;
     outline: none;
     -webkit-appearance: none;
     -moz-appearance: none;
