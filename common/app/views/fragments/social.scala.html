@@ -22,7 +22,7 @@
         href="@item.href"
         target="_blank"
         title="@item.text">
-            <span class='@if(item.css.matches("facebook|twitter|email")) {button share-modal__item share-modal__item--@item.css} else { u-h }'>@item.userMessage</span>
+            <span class="u-h">@item.userMessage</span>
             @fragments.inlineSvg("share-" + item.css, "icon", List("rounded-icon", "centered-icon", "social-icon", "social-icon--" + item.css) ++ iconModifier)
         </a>
     </li>
