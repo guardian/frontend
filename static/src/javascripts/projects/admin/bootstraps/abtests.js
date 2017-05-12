@@ -1,54 +1,80 @@
+// @flow
 import abTests from 'common/modules/experiments/ab';
-import Report from 'admin/modules/abtests/abtest-report';
 import ReportItem from 'admin/modules/abtests/abtest-report-item';
 import Audience from 'admin/modules/abtests/audience';
 
-function renderTests(tests, active, elem) {
-    var items = tests.map(function(test) {
-        return new ReportItem({
-            test: test,
-            active: active
-        });
-    });
-    items.forEach(function(i) {
+const renderTests = (tests, active, elem) => {
+    const items = tests.map(
+        test =>
+            new ReportItem({
+                test,
+                active,
+            })
+    );
+    items.forEach(i => {
         i.render(elem);
     });
     return items;
-}
+};
 
-function initialise() {
-
-    renderTests(abTests.getActiveTests(), true, document.querySelector('.abtests-report__data'));
-    var expiredTestItems = renderTests(abTests.getExpiredTests(), false, document.querySelector('.abtests-expired'));
+const init = () => {
+    renderTests(
+        abTests.getActiveTests(),
+        true,
+        document.querySelector('.abtests-report__data')
+    );
+    const expiredTestItems = renderTests(
+        abTests.getExpiredTests(),
+        false,
+        document.querySelector('.abtests-expired')
+    );
 
     // Display audience breakdown.
-    var audience = new Audience({
-        tests: abTests.getActiveTests()
+    const audience = new Audience({
+        tests: abTests.getActiveTests(),
     });
     audience.render(document.querySelector('.abtests-audience'));
 
-    var expired = document.querySelector('.abtests-expired');
+    const expired = document.querySelector('.abtests-expired');
 
-    document.querySelectory('.abtests-expired-title a').addEventListener('click', function(e) {
-        e.preventDefault();
-        if (e.target.textContent === 'show') {
-            e.target.textContent = 'hide';
-            expired.style.display = 'block';
-            expiredTestItems.forEach(function(t) {
-                t.renderChart();
-            });
-        } else {
-            e.target.textContent = 'show';
+    const expiredTitle = document.querySelector('.abtests-expired-title a');
+
+    if (expiredTitle) {
+        expiredTitle.addEventListener('click', (e: Event) => {
+            e.preventDefault();
+
+            /**
+                 #? textContent is a property of Node
+                 flow won't allow typecasting of EventTarget
+                 so typecasting as any
+            **/
+            const target = (e.target: any);
+
+            if (target.textContent === 'show') {
+                target.textContent = 'hide';
+                if (expired) {
+                    expired.style.display = 'block';
+                }
+                expiredTestItems.forEach(t => {
+                    t.renderChart();
+                });
+            } else {
+                target.textContent = 'show';
+                if (expired) {
+                    expired.style.display = 'none';
+                }
+            }
+        });
+    }
+
+    if (expired) {
+        // timeout on this to allow google charts to render before hiding the container
+        setTimeout(() => {
             expired.style.display = 'none';
-        }
-    });
-
-    // timeout on this to allow google charts to render before hiding the container
-    setTimeout(function() {
-        expired.style.display = 'none';
-    }, 0);
-}
+        }, 0);
+    }
+};
 
 export default {
-    init: initialise
+    init,
 };
