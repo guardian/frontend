@@ -28,6 +28,16 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2017, 5, 29),
     exposeClientSide = true
   )
+  
+  Switch(
+    ABTests,
+    "ab-measure-understanding",
+    "Asks users if they feel better informed after reading an article",
+    owners = Seq(Owner.withGithub("regiskuckaertz")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 5, 19),
+    exposeClientSide = true
+  )
 
   Switch(
     ABTests,
@@ -171,7 +181,7 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-bundle-digital-sub-price-test-1",
+    "ab-bundle-digital-sub-price-test-1-m",
     "Test pricing options for digital subs",
     owners = Seq(Owner.withGithub("justinpinner")),
     safeState = Off,

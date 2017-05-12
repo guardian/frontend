@@ -22,6 +22,7 @@ define([
     'common/modules/experiments/tests/sleeve-notes-legacy-email-variant',
     'common/modules/experiments/tests/increase-inline-ads',
     'common/modules/experiments/tests/explainer-snippet',
+    'common/modules/experiments/tests/measure-understanding',
     'ophan/ng',
     'common/modules/experiments/tests/paid-commenting',
     'common/modules/experiments/tests/bundle-digital-sub-price-test-1'
@@ -48,6 +49,7 @@ define([
              SleevenotesLegacyEmailVariant,
              increaseInlineAdsRedux,
              ExplainerSnippet,
+             measureUnderstanding,
              ophan,
              PaidCommenting,
              BundleDigitalSubPriceTest1
@@ -64,6 +66,7 @@ define([
         SleevenotesNewEmailVariant,
         SleevenotesLegacyEmailVariant,
         new increaseInlineAdsRedux(),
+        measureUnderstanding.MeasureUnderstanding(),
         new PaidCommenting(),
         new BundleDigitalSubPriceTest1(),
         ExplainerSnippet.ExplainerSnippet()

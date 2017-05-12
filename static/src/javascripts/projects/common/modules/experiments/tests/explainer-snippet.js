@@ -9,9 +9,9 @@ import template from 'lodash/utilities/template';
 import ophan from 'ophan/ng';
 import ExplainerSnippetStr
     from 'raw-loader!common/views/experiments/explainer.html';
-import { markup as thumbIcon } from 'svg-loader!svgs/icon/thumb.svg';
-import { markup as plusIcon } from 'svg-loader!svgs/icon/plus.svg';
-import { markup as minusIcon } from 'svg-loader!svgs/icon/minus.svg';
+import thumbIcon from 'svgs/icon/thumb.svg';
+import plusIcon from 'svgs/icon/plus.svg';
+import minusIcon from 'svgs/icon/minus.svg';
 
 const ExplainerSnippet = () => {
     // Test id

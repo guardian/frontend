@@ -43,6 +43,11 @@ define([
                     }
                 }
             });
+            injector.mock('common/views/svgs', {
+                inlineSvg: function() {
+                    return '';
+                }
+            });
 
             injector.require([
                 'common/modules/commercial/adblock-banner-config'

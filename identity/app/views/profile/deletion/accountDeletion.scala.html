@@ -15,7 +15,7 @@
 @import views.html.fragments.form.radioField
 @import views.html.fragments.registrationFooter
 
-@emailIsValidated = @{ user.statusFields.userEmailValidated.fold(false)(_ => true) }
+@emailIsValidated = @{ user.statusFields.userEmailValidated.fold(false)(identity) }
 
 @main(page, projectName = Option("identity")){
 }{
