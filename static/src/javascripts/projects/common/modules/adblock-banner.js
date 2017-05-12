@@ -13,9 +13,7 @@ import adblockStickyMessageCoin
  */
 class AdblockBanner {
     template: string;
-
     config: {};
-
     templates: {};
 
     constructor(templateToUse: string, config: {}) {
