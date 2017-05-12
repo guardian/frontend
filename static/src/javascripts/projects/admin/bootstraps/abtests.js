@@ -27,6 +27,7 @@ const initABTests = (): void => {
         true,
         document.querySelector('.abtests-report__data')
     );
+
     const expiredTestItems = renderTests(
         abTests.getExpiredTests(),
         false,
