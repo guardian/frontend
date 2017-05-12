@@ -48,21 +48,22 @@ define([
         }
 
         beforeEach(function (done) {
-
-            injector.mock('common/modules/analytics/google', function noop() {
-                // No implementation
-            });
-
-            injector.mock('commercial/modules/dfp/apply-creative-template', function () {
-                return Promise.resolve();
-            });
-
-            injector.mock('lib/load-script', {
-                loadScript: function () {
+            injector.mock({
+                'common/modules/analytics/google': function noop() {
+                    // No implementation
+                },
+                'commercial/modules/dfp/apply-creative-template': function () {
                     return Promise.resolve();
+                },
+                'lib/load-script': {
+                    loadScript: function () {
+                        return Promise.resolve();
+                    }
+                },
+                'svgs/icon/tick.svg': {
+                    markup: ''
                 }
             });
-
             injector.require([
                 'commercial/modules/dfp/prepare-googletag',
                 'commercial/modules/dfp/fill-advert-slots',
