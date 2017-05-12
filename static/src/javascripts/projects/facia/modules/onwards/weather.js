@@ -17,7 +17,6 @@ import bean from 'bean';
 import reportError from 'lib/report-error';
 import $ from 'lib/$';
 import config from 'lib/config';
-import detect from 'lib/detect';
 import fetchJson from 'lib/fetch-json';
 import mediator from 'lib/mediator';
 import userPrefs from 'common/modules/user-prefs';
@@ -50,17 +49,11 @@ export const Weather = {
         this.getDefaultLocation();
     },
 
-    isNetworkFront() {
-        return ['uk', 'us', 'au', 'international'].includes(config.page.pageId);
-    },
-
     /**
      * Check if user has data in local storage.
      * If yes return data from local storage else return default location data.
-     *
-     * @returns {object} geolocation - lat and long
      */
-    getUserLocation() {
+    getUserLocation(): ?Location {
         const prefs = userPrefs.get(prefName);
 
         if (prefs && prefs.id) {
@@ -68,7 +61,7 @@ export const Weather = {
         }
     },
 
-    getWeatherData(url: string) {
+    getWeatherData(url: string): Promise<WeatherResponse> {
         return fetchJson(url, {
             mode: 'cors',
         });
@@ -77,34 +70,35 @@ export const Weather = {
     /**
      * Save user location into localStorage
      */
-    saveUserLocation(location: Location) {
+    saveUserLocation(location: Location): void {
         userPrefs.set(prefName, {
             id: location.id,
             city: location.city,
         });
     },
 
-    getDefaultLocation() {
+    getDefaultLocation(): Promise<void> {
         const location = this.getUserLocation();
 
         if (location) {
-            this.fetchWeatherData(location);
-        } else {
-            return this.getWeatherData(`${config.page.weatherapiurl}.json`)
-                .then(response => {
-                    this.fetchWeatherData(response);
-                })
-                .catch(err => {
-                    reportError(err, {
-                        feature: 'weather',
-                    });
-                });
+            return this.fetchWeatherData(location);
         }
+        return this.getWeatherData(`${config.page.weatherapiurl}.json`)
+            .then(response => {
+                this.fetchWeatherData(response);
+            })
+            .catch(err => {
+                reportError(err, {
+                    feature: 'weather',
+                });
+            });
     },
 
-    fetchWeatherData(location: Location) {
+    fetchWeatherData(location: Location): Promise<void> {
+        const weatherApiBase = config.page.weatherapiurl;
+        const edition = config.page.edition;
         return this.getWeatherData(
-            `${config.page.weatherapiurl}/${location.id}.json?_edition=${config.page.edition.toLowerCase()}`
+            `${weatherApiBase}/${location.id}.json?_edition=${edition.toLowerCase()}`
         )
             .then(response => {
                 this.render(response, location.city);
@@ -117,14 +111,14 @@ export const Weather = {
             });
     },
 
-    clearLocation() {
+    clearLocation(): void {
         userPrefs.remove(prefName);
         if (searchTool !== null) {
             searchTool.setInputValue();
         }
     },
 
-    fetchForecastData(location: Location) {
+    fetchForecastData(location: Location): Promise<void> {
         return this.getWeatherData(
             `${config.page.forecastsapiurl}/${location.id}.json?_edition=${config.page.edition.toLowerCase()}`
         )
@@ -138,20 +132,19 @@ export const Weather = {
             });
     },
 
-    saveDeleteLocalStorage(response: CityPreference) {
-        // After user interaction we want to store the location in localStorage
+    saveDeleteLocalStorage(response: CityPreference): void {
         if (response.store === 'set') {
+            // After user interaction we want to store the location in localStorage
             this.saveUserLocation(response);
-            this.fetchWeatherData(response);
-
-            // After user sent empty data we want to remove location and get the default location
+            this.fetchWeatherData(response).then(() => this.toggleForecast());
         } else if (response.store === 'remove') {
+            // After user sent empty data we want to remove location and get the default location
             this.clearLocation();
             this.getDefaultLocation();
         }
     },
 
-    bindEvents() {
+    bindEvents(): void {
         bean.on(document.body, 'click', '.js-toggle-forecast', e => {
             e.preventDefault();
             this.toggleForecast();
@@ -163,18 +156,18 @@ export const Weather = {
         );
     },
 
-    toggleForecast() {
+    toggleForecast(): void {
         $('.weather').toggleClass('is-expanded');
     },
 
-    addSearch() {
+    addSearch(): void {
         searchTool = new SearchTool({
             container: $('.js-search-tool'),
             apiUrl: config.page.locationapiurl,
         });
     },
 
-    render(weatherData: WeatherResponse, city: string) {
+    render(weatherData: WeatherResponse, city: string): void {
         this.attachToDOM(weatherData.html, city);
 
         if (!eventsBound) {
@@ -187,23 +180,15 @@ export const Weather = {
         } else {
             searchTool.bindElements($('.js-search-tool'));
         }
-
-        if (
-            detect.isBreakpoint({
-                max: 'phablet',
-            })
-        ) {
-            window.scrollTo(0, 0);
-        }
     },
 
-    attachToDOM(tmpl: string, city: string) {
+    attachToDOM(tmpl: string, city: string): void {
         $holder = $('#headlines .js-container__header');
         $('.js-weather', $holder).remove();
         $holder.append(tmpl.replace(new RegExp('<%=city%>', 'g'), city));
     },
 
-    renderForecast(forecastData: WeatherResponse) {
+    renderForecast(forecastData: WeatherResponse): void {
         const $forecastHolder = $('.js-weather-forecast');
         const tmpl = forecastData.html;
 
