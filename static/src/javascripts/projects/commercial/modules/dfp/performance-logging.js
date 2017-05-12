@@ -187,7 +187,7 @@ const defer = (name: string, fn: Function): Function => {
     };
 };
 
-export default {
+export {
     setListeners,
     updateAdvertMetric,
     addStartTimeBaseline,
