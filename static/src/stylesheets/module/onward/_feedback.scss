@@ -15,7 +15,7 @@
 }
 
 .feedback__entry {
-    border: 1px solid #dcdcdc;
+    border: 1px solid $neutral-4;
     padding: .75rem;
     outline: none;
     appearance: none;
@@ -29,7 +29,7 @@
 }
 
 .feedback__select {
-    border: 1px solid #dcdcdc;
+    border: 1px solid $neutral-4;
     padding: .5rem;
     margin-top: $gs-baseline * 2;
     outline: none;
@@ -43,9 +43,9 @@
 }
 
 .feedback__entry--mandatory-failed {
-    border-color: $form-mandatory-warning;
+    border-color: $error;
 }
 
 #feedback__explainer {
-    color: $form-mandatory-warning;
+    color: $error;
 }
