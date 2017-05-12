@@ -105,16 +105,6 @@ trait FeatureSwitches {
     exposeClientSide = true
   )
 
-  val FontKerningSwitch = Switch(
-    SwitchGroup.Feature,
-    "font-kerning",
-    "If this is switched on then fonts will be kerned/optimised for legibility.",
-    owners = Seq(Owner.withGithub("johnduffell")),
-    safeState = On,
-    sellByDate = never,
-    exposeClientSide = false
-  )
-
   val SearchSwitch = Switch(
     SwitchGroup.Feature,
     "google-search",
