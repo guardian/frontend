@@ -194,7 +194,7 @@ trait ABTestSwitches {
     "ab-acquisitions-epic-single-cta",
     "Test an epic with a single CTA: contribute in the US and support everywhere else",
     owners = Seq(Owner.withGithub("joelochlann")),
-    safeState = On,
+    safeState = Off,
     sellByDate = new LocalDate(2017, 5, 25),
     exposeClientSide = true
   )
