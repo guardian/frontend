@@ -53,7 +53,7 @@ const adtestParams = () => {
     }
 };
 
-const getVisitedValue = () => {
+const getVisitedValue = (): ?string => {
     const visitCount = local.get('gu.alreadyVisited') || 0;
 
     if (visitCount <= 5) {
@@ -71,7 +71,7 @@ const getVisitedValue = () => {
     }
 };
 
-const getReferrer = () => {
+const getReferrer = (): ?string => {
     const referrerTypes = [
         {
             id: 'facebook',
@@ -102,12 +102,12 @@ const getReferrer = () => {
     return matchedRef.id;
 };
 
-const getWhitelistedQueryParams = () => {
+const getWhitelistedQueryParams = (): Object => {
     const whiteList = ['0p19G'];
     return pick(getUrlVars(), whiteList);
 };
 
-const formatAppNexusTargeting = obj =>
+const formatAppNexusTargeting = (obj: Object): string =>
     flatten(
         Object.keys(obj)
             .filter(key => obj[key] !== '' && obj[key] !== null)
@@ -119,7 +119,7 @@ const formatAppNexusTargeting = obj =>
             })
     ).join(',');
 
-export default once(() => {
+export default once((): Object => {
     const page = config.page;
     const pageTargets = Object.assign(
         {
