@@ -1,7 +1,6 @@
 // @flow
 import mediator from 'lib/mediator';
 import fastdom from 'fastdom';
-import defaults from 'lodash/objects/defaults';
 
 /**
  * @todo: check if browser natively supports "position: sticky"
@@ -15,7 +14,7 @@ class Sticky {
     constructor(element: HTMLElement, options: Object): void {
         this.element = element;
 
-        this.opts = defaults(options || {}, {
+        this.opts = Object.assign(options || {}, {
             top: 0,
             containInParent: true,
             emitMessage: false,
@@ -81,11 +80,10 @@ class Sticky {
             fastdom.write(() => {
                 if (stick) {
                     this.element.classList.add('is-sticky');
-                    Object.assign(this.element.style, css);
                 } else {
                     this.element.classList.remove('is-sticky');
-                    Object.assign(this.element.style, css);
                 }
+                Object.assign(this.element.style, css);
             }, this);
         }
     }
