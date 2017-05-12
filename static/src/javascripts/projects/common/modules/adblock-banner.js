@@ -1,33 +1,44 @@
+// @flow
 import fastdom from 'fastdom';
 import $ from 'lib/$';
 import template from 'lodash/utilities/template';
-import adblockStickyMessage from 'raw-loader!common/views/commercial/adblock-sticky-message.html';
-import adblockStickyMessageCoin from 'raw-loader!common/views/commercial/adblock-sticky-message-coin.html';
+import adblockStickyMessage
+    from 'raw-loader!common/views/commercial/adblock-sticky-message.html';
+import adblockStickyMessageCoin
+    from 'raw-loader!common/views/commercial/adblock-sticky-message-coin.html';
 
 /**
  * Message which is shown at the top of the page to the adblock users.
  * @constructor
  */
-var AdblockBanner = function(template, config) {
-    this.template = template;
-    this.config = config;
+class AdblockBanner {
+    template: string;
 
-    this.templates = {
-        'adblock-sticky-message': adblockStickyMessage,
-        'adblock-sticky-message-coin': adblockStickyMessageCoin
-    };
-};
+    config: {};
 
-AdblockBanner.prototype.renderTemplate = function() {
-    return template(this.templates[this.template], this.config);
-};
+    templates: {};
 
-AdblockBanner.prototype.show = function() {
-    var bannerTmpl = this.renderTemplate();
+    constructor(templateToUse: string, config: {}) {
+        this.template = templateToUse;
+        this.config = config;
 
-    fastdom.write(function() {
-        $('.js-top-banner').after(bannerTmpl);
-    });
-};
+        this.templates = {
+            'adblock-sticky-message': adblockStickyMessage,
+            'adblock-sticky-message-coin': adblockStickyMessageCoin,
+        };
+    }
 
-export default AdblockBanner;
+    renderTemplate() {
+        return template(this.templates[this.template], this.config);
+    }
+
+    show() {
+        const bannerTmpl = this.renderTemplate();
+
+        fastdom.write(() => {
+            $('.js-top-banner').after(bannerTmpl);
+        });
+    }
+}
+
+export { AdblockBanner };
