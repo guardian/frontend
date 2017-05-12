@@ -17,7 +17,7 @@ const renderTests = (tests, active, elem) => {
     return items;
 };
 
-const init = () => {
+const initABTests = () => {
     renderTests(
         abTests.getActiveTests(),
         true,
@@ -75,6 +75,4 @@ const init = () => {
     }
 };
 
-export default {
-    init,
-};
+export { initABTests };
