@@ -12,12 +12,13 @@ import flatten from 'lodash/arrays/flatten';
 import once from 'lodash/functions/once';
 import pick from 'lodash/objects/pick';
 
-const format = keyword => keyword.replace(/[+\s]+/g, '-').toLowerCase();
+const format = (keyword: string): string =>
+    keyword.replace(/[+\s]+/g, '-').toLowerCase();
 
-const formatTarget = target =>
+const formatTarget = (target: ?string): ?string =>
     target ? format(target).replace(/&/g, 'and').replace(/'/g, '') : null;
 
-const abParam = () => {
+const abParam = (): Array<string> => {
     const cmRegex = /^(cm|commercial)/;
     const abParticipations = abUtils.getParticipations();
     const abParams = [];
@@ -43,7 +44,7 @@ const abParam = () => {
     return abParams;
 };
 
-const adtestParams = () => {
+const adtestParams = (): ?string => {
     const cookieAdtest = getCookie('adtest');
     if (cookieAdtest) {
         if (cookieAdtest.substring(0, 4) === 'demo') {
