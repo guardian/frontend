@@ -78,7 +78,7 @@ define([
 
     function setPageTargeting() {
         var pubads = window.googletag.pubads();
-        var targeting = buildPageTargeting();
+        var targeting = buildPageTargeting.buildPageTargeting();
         Object.keys(targeting).forEach(function (key) {
             pubads.setTargeting(key, targeting[key]);
         });
