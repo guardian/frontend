@@ -29,7 +29,7 @@ define([
     };
 
     function engagementBannerCopy(cta) {
-        return 'Unlike many others, we haven\'t put up a paywall - we want to keep our journalism as open as we can. ' + cta
+        return 'Unlike many others, we haven\'t put up a paywall &ndash; we want to keep our journalism as open as we can. ' + cta
     }
 
     // Prices taken from https://membership.theguardian.com/<region>/supporter
