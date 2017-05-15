@@ -19,9 +19,9 @@ const formatTarget = (target: ?string): ?string =>
     target ? format(target).replace(/&/g, 'and').replace(/'/g, '') : null;
 
 const abParam = (): Array<string> => {
-    const cmRegex = /^(cm|commercial)/;
-    const abParticipations = getParticipations();
-    const abParams = [];
+    const cmRegex: RegExp = /^(cm|commercial)/;
+    const abParticipations: Object = getParticipations();
+    const abParams: Array<string> = [];
 
     Object.keys(abParticipations).forEach((testKey: string): void => {
         const testValue: { variant: string } = abParticipations[testKey];
