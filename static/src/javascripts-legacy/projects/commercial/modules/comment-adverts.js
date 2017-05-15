@@ -1,5 +1,4 @@
 define([
-    'Promise',
     'lib/$',
     'lib/config',
     'lib/detect',
@@ -9,7 +8,6 @@ define([
     'commercial/modules/commercial-features',
     'commercial/modules/dfp/create-slot'
 ], function (
-    Promise,
     $,
     config,
     detect,
@@ -50,7 +48,7 @@ define([
                     $adSlotContainer.append(adSlot);
                     return adSlot;
                 })
-                .then(addSlot);
+                .then(addSlot.addSlot);
             });
         });
     };

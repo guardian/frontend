@@ -14,12 +14,8 @@ const render = tasks => {
                     console.log(`##teamcity[blockOpened name='${task.title}']`);
                 }
                 if (task.hasFailed()) {
-                    console.log(
-                        `##teamcity[message text='|'${task.title}|' failed' status='ERROR']`
-                    );
-                    console.log(
-                        `##teamcity[buildProblem description='|'${task.title}|' failed']`
-                    );
+                    console.log(`##teamcity[message text='|'${task.title}|' failed' status='ERROR']`);
+                    console.log(`##teamcity[buildProblem description='|'${task.title}|' failed']`);
                 }
                 if (task.isSkipped()) {
                     console.log(task.output);
@@ -29,9 +25,7 @@ const render = tasks => {
                     !task.hasFailed() &&
                     !task.isSkipped()
                 ) {
-                    console.log(
-                        `##teamcity[message text='${chalk.green(figures.tick)} ${task.title}']`
-                    );
+                    console.log(`##teamcity[message text='${chalk.green(figures.tick)} ${task.title}']`);
                     console.log(`##teamcity[blockClosed name='${task.title}']`);
                 }
             }

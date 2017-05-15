@@ -33,7 +33,7 @@ define([
     accessibility,
     ab,
     stocks,
-    GeoMostPopularFront,
+    geoMostPopularFront,
     ContainerToggle,
     containerShowMore,
     lazyLoadContainers,
@@ -71,14 +71,14 @@ define([
 
             upgradeMostPopularToGeo: function () {
                 if (config.switches.geoMostPopular) {
-                    new GeoMostPopularFront().go();
+                    new geoMostPopularFront.GeoMostPopularFront().go();
                 }
             },
 
             showWeather: function () {
                 if (config.switches.weather) {
                     mediator.on('page:front:ready', function () {
-                        weather.init();
+                        weather.Weather.init();
                     });
                 }
             },

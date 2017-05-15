@@ -32,7 +32,7 @@ define([
     mediator,
     twitter,
     assign,
-    Sticky,
+    sticky,
     scroller,
     toArray,
     RelativeDates,
@@ -220,7 +220,7 @@ define([
         //
 
         new NotificationCounter().init();
-        new Sticky(toastContainer, { top: options.toastOffsetTop, emitMessage: true, containInParent: false }).init();
+        new sticky.Sticky(toastContainer, { top: options.toastOffsetTop, emitMessage: true, containInParent: false }).init();
 
         checkForUpdates();
         detect.initPageVisibility();

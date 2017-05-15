@@ -15,8 +15,7 @@ define([
     template,
     commercialFeatures,
     userFeatures,
-    mediator
-) {
+    mediator) {
     var EditionTest = function (edition, id, start, expiry, campaignPrefix) {
 
         this.edition = edition;
@@ -27,7 +26,7 @@ define([
         this.author = 'Roberto Tyley';
         this.description = 'Show contributions/membership messages for the ' + edition + ' edition.';
         this.showForSensitive = false;
-        this.audience = 1.0;
+        this.audience = 0;
         this.audienceOffset = 0;
         this.successMeasure = 'Conversion';
         this.audienceCriteria = 'All users in the ' + edition + ' edition.';

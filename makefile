@@ -114,6 +114,9 @@ fix: install
 validate-amp: install # PRIVATE
 	@cd tools/amp-validation && npm install && NODE_ENV=dev node index.js
 
+validate-a11y: install # PRIVATE
+	@./tools/task-runner/runner validate/a11y
+
 # Take screenshots for a visual check.
 screenshots: install
 	@./tools/task-runner/runner screenshot
@@ -123,4 +126,4 @@ screenshots: install
 # *********************** MISC ***********************
 
 es6: install
-	@node ./tools/es5to6.js
+	@node ./tools/es5to6.js ${file}

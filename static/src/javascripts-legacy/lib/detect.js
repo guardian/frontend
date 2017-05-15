@@ -8,12 +8,10 @@
 define([
     'lib/mediator',
     'lodash/functions/memoize',
-    'Promise',
     'lib/window-performance',
 ], function (
     mediator,
     memoize,
-    Promise,
     performanceAPI
 ) {
 

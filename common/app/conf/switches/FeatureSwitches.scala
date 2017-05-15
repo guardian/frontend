@@ -21,7 +21,7 @@ trait FeatureSwitches {
     "If this switch is on, Explore template will be applied to explore articles. This template is part of a Membership Explore test",
     owners = Seq(Owner.withGithub("siadcock")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 5, 3),
+    sellByDate = new LocalDate(2017, 7, 3),
     exposeClientSide = true
   )
 
@@ -438,17 +438,6 @@ trait FeatureSwitches {
     "sharing-comments",
     "When ON, the user will be able to share comments",
     owners = Seq(Owner.withGithub("marialivia16")),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
-  // Owner: Gareth Trufitt
-  val SteadyPageUtil = Switch(
-    SwitchGroup.Feature,
-    "steady-page-util",
-    "When ON, will prevent page jumping when inserting elements using steady-page utility. If OFF will call callback immediately.",
-    owners = Seq(Owner.withGithub("gtrufitt")),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true

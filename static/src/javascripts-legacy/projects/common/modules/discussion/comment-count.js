@@ -12,11 +12,7 @@ define([
     'raw-loader!common/views/discussion/comment-count--content.html',
     'raw-loader!common/views/discussion/comment-count--content-immersive.html',
     'lodash/collections/groupBy',
-    'lodash/collections/forEach',
-    'lodash/collections/sortBy',
-    'lodash/arrays/uniq',
-    'lodash/objects/keys',
-    'lib/chain'
+    'lodash/collections/forEach'
 ], function (
     bonzo,
     fastdom,
@@ -31,11 +27,7 @@ define([
     commentCountContentTemplate,
     commentCountContentImmersiveTemplate,
     groupBy,
-    forEach,
-    sortBy,
-    uniq,
-    keys,
-    chain
+    forEach
 ) {
     var attributeName = 'data-discussion-id',
         countUrl = '/discussion/comment-counts.json?shortUrls=',
@@ -54,7 +46,7 @@ define([
     }
 
     function getContentIds(indexedElements) {
-        return chain(indexedElements).and(keys).and(uniq).and(sortBy).join(',').value();
+        return Object.keys(indexedElements).sort().join(',');
     }
 
     function getContentUrl(node) {
@@ -79,7 +71,7 @@ define([
                 format = $node.data('commentcount-format');
                 html = template(templates[format] || defaultTemplate, {
                     url: url,
-                    icon: svgs('commentCount16icon', ['inline-tone-fill']),
+                    icon: svgs.inlineSvg('commentCount16icon', ['inline-tone-fill']),
                     count: formatters.integerCommas(c.count)
                 });
 

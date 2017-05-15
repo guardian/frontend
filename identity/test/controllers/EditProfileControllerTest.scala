@@ -68,6 +68,7 @@ import scala.concurrent.Future
       val location = "Test location"
       val aboutMe = "Interesting"
       val interests = "Other interesting things"
+      val username = "usernametest1"
 
       "save the user through the ID API" in new EditProfileFixture {
 
@@ -75,14 +76,17 @@ import scala.concurrent.Future
           .withFormUrlEncodedBody(
             "location" -> location,
             "aboutMe" -> aboutMe,
-            "interests" -> interests
+            "interests" -> interests,
+            "username" -> username
           )
 
         val updatedUser = user.copy(
           publicFields = PublicFields(
             location = Some(location),
             aboutMe = Some(aboutMe),
-            interests = Some(interests)
+            interests = Some(interests),
+            username = Some(username),
+            displayName = Some(username)
           )
         )
         when(api.saveUser(Matchers.any[String], Matchers.any[UserUpdate], Matchers.any[Auth]))

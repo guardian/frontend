@@ -12,7 +12,7 @@
 
 ## [Architecture](02-architecture/)
 - [The different applications composing the Guardian website](02-architecture/01-applications-architecture.md)
-- [Fronts Architecture](02-architecture/02-fronts-architecture.md)
+- [Fronts architecture](02-architecture/02-fronts-architecture.md)
 - [Libraries we use](02-architecture/03-libraries-we-use.md)
 - [Archiving](02-architecture/04-archiving.md)
 - [Architecture principles for CSS](02-architecture/05-architecture-principles-for-css.md)
@@ -36,6 +36,7 @@
 - [Updating the test database](03-dev-howtos/15-updating-test-database.md)
 - [Working with Google AMP](03-dev-howtos/16-working-with-amp.md)
 - [Working with emails](03-dev-howtos/17-working-with-emails.md)
+- [Apply the special report tone](03-dev-howtos/18-apply-the-special-report-tone.md)
 
 ## [Quality](04-quality/)
 - [Browsers support](04-quality/01-browser-support.md)

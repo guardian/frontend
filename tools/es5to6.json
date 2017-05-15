@@ -1,9 +1,5 @@
 {
   "Francis Carr": [
-    "projects/admin/bootstraps/commercial-browser-performance.js",
-    "projects/commercial/modules/ad-sizes.js",
-    "projects/commercial/modules/article-aside-adverts.js",
-    "projects/commercial/modules/article-body-adverts.js",
     "projects/commercial/modules/build-page-targeting.js",
     "projects/commercial/modules/close-disabled-slots.js",
     "projects/commercial/modules/comment-adverts.js",
@@ -11,55 +7,31 @@
     "projects/commercial/modules/creatives/add-tracking-pixel.js",
     "projects/commercial/modules/creatives/add-viewability-tracker.js",
     "projects/commercial/modules/creatives/fabric-expandable-video-v2.js",
-    "projects/commercial/modules/creatives/fabric-expanding-v1.js"
+    "projects/commercial/modules/creatives/fabric-expanding-v1.js",
+    "projects/common/modules/video/events.js",
+    "projects/commercial/modules/third-party-tags/krux.js"
   ],
   "Jon Norman": [
+    "projects/commercial/modules/dfp/apply-creative-template.js",
+    "projects/commercial/modules/dfp/breakpoint-name-to-attribute.js",
+    "projects/commercial/modules/dfp/Advert.js",
+    "projects/commercial/modules/dfp/display-ads.js",
     "projects/commercial/modules/creatives/fabric-v1.js",
     "projects/commercial/modules/creatives/fabric-video.js",
     "projects/commercial/modules/creatives/frame.js",
     "projects/commercial/modules/creatives/revealer.js",
     "projects/commercial/modules/creatives/scrollable-mpu-v2.js",
-    "projects/commercial/modules/dfp/add-slot.js",
-    "projects/commercial/modules/dfp/Advert.js",
-    "projects/commercial/modules/dfp/apply-creative-template.js",
-    "projects/commercial/modules/dfp/breakpoint-name-to-attribute.js",
-    "projects/commercial/modules/dfp/create-slot.js",
-    "projects/commercial/modules/dfp/define-slot.js",
-    "projects/commercial/modules/dfp/dfp-env.js",
-    "projects/commercial/modules/dfp/display-ads.js"
+    "projects/common/modules/atoms/youtube.js"
   ],
   "Regis Kuckaertz": [
-    "projects/commercial/modules/dfp/display-lazy-ads.js",
-    "projects/commercial/modules/dfp/empty-advert.js",
-    "projects/commercial/modules/dfp/enable-lazy-load.js",
-    "projects/commercial/modules/dfp/fill-advert-slots.js",
-    "projects/commercial/modules/dfp/get-advert-by-id.js",
-    "projects/commercial/modules/dfp/get-adverts.js",
-    "projects/commercial/modules/dfp/get-creative-ids.js",
-    "projects/commercial/modules/dfp/lazy-load.js",
-    "projects/commercial/modules/dfp/load-advert.js",
     "projects/commercial/modules/dfp/on-slot-load.js",
     "projects/commercial/modules/dfp/on-slot-render.js",
     "projects/commercial/modules/dfp/performance-logging.js",
-    "projects/commercial/modules/dfp/prepare-googletag.js"
+    "projects/commercial/modules/dfp/prepare-googletag.js",
+    "projects/common/modules/avatar/api.js"
   ],
-  "rich-nguyen": [
-    "projects/commercial/modules/dfp/prepare-sonobi-tag.js",
-    "projects/commercial/modules/dfp/prepare-switch-tag.js",
-    "projects/commercial/modules/dfp/queue-advert.js",
-    "projects/commercial/modules/dfp/refresh-on-resize.js",
-    "projects/commercial/modules/dfp/render-advert-label.js",
-    "projects/commercial/modules/dfp/render-advert.js",
-    "projects/commercial/modules/dfp/track-ad-render.js",
-    "projects/commercial/modules/dfp/wait-for-advert.js",
-    "projects/commercial/modules/high-merch.js",
-    "projects/commercial/modules/hosted/about.js",
-    "projects/commercial/modules/hosted/gallery.js",
-    "projects/commercial/modules/hosted/next-video-autoplay.js",
-    "projects/commercial/modules/hosted/next-video.js"
-  ],
+  "Richard Nguyen": [],
   "Kate Whalen": [
-    "projects/commercial/modules/hosted/onward-journey-carousel.js",
     "projects/commercial/modules/hosted/onward.js",
     "projects/commercial/modules/hosted/video.js",
     "projects/commercial/modules/hosted/youtube.js",
@@ -71,40 +43,18 @@
     "projects/commercial/modules/messenger/get-stylesheet.js",
     "projects/commercial/modules/messenger/post-message.js",
     "projects/commercial/modules/messenger/resize.js",
-    "projects/commercial/modules/messenger/scroll.js"
-  ],
-  "ScottPainterGNM": [
-    "projects/commercial/modules/messenger/type.js",
-    "projects/commercial/modules/messenger/viewport.js",
-    "projects/commercial/modules/paid-containers.js",
-    "projects/commercial/modules/paidfor-band.js",
-    "projects/commercial/modules/sticky-mpu.js",
-    "projects/commercial/modules/sticky-top-banner.js",
-    "projects/commercial/modules/survey/survey-simple.js",
-    "projects/commercial/modules/third-party-tags.js",
-    "projects/commercial/modules/third-party-tags/audience-science-gateway.js",
-    "projects/commercial/modules/third-party-tags/audience-science-pql.js",
-    "projects/commercial/modules/third-party-tags/imr-worldwide-legacy.js",
-    "projects/commercial/modules/third-party-tags/imr-worldwide.js",
-    "projects/commercial/modules/third-party-tags/krux.js"
+    "projects/commercial/modules/messenger/scroll.js",
+    "projects/common/modules/charts/doughnut.js"
   ],
   "Lydia Shepherd": [
-    "projects/commercial/modules/third-party-tags/outbrain-codes.js",
-    "projects/commercial/modules/third-party-tags/outbrain-sections.js",
-    "projects/commercial/modules/third-party-tags/outbrain.js",
-    "projects/commercial/modules/third-party-tags/plista.js",
-    "projects/commercial/modules/third-party-tags/remarketing.js",
-    "projects/commercial/modules/third-party-tags/simple-reach.js",
-    "projects/commercial/modules/third-party-tags/tourism-australia.js",
-    "projects/commercial/modules/user-ad-feedback.js",
-    "projects/commercial/modules/user-ad-targeting.js",
     "projects/commercial/modules/user-features.js",
-    "projects/common/modules/commercial/adblock-banner-config.js",
     "projects/common/modules/commercial/adblock-messages.js",
-    "projects/common/modules/ui/images.js"
+    "projects/common/modules/charts/table-doughnut.js"
   ],
   "sndrs": [
+    "lib/detect.js",
     "bootstraps/enhanced/accessibility.js",
+    "projects/common/modules/user-prefs.js",
     "bootstraps/enhanced/article-liveblog-common.js",
     "bootstraps/enhanced/article-minute.js",
     "bootstraps/enhanced/article.js",
@@ -112,11 +62,12 @@
     "bootstraps/enhanced/crosswords.js",
     "bootstraps/enhanced/facia.js",
     "bootstraps/enhanced/football.js",
-    "bootstraps/enhanced/gallery.js"
+    "projects/common/modules/video/onward-container.js",
+    "bootstraps/enhanced/gallery.js",
+    "projects/common/modules/check-dispatcher.js"
   ],
   "Simon Adcock": [
-    "projects/common/modules/tailor/tailor.js",
-    "lib/ajax.js",
+    "projects/common/modules/ui/rhc.js",
     "bootstraps/enhanced/identity-common.js",
     "bootstraps/enhanced/image-content.js",
     "bootstraps/enhanced/liveblog.js",
@@ -124,10 +75,13 @@
     "bootstraps/enhanced/media/main.js",
     "bootstraps/enhanced/media/video-player.js",
     "bootstraps/enhanced/membership.js",
-    "bootstraps/enhanced/newsletters.js"
+    "projects/common/modules/video/more-in-series-container.js",
+    "bootstraps/enhanced/newsletters.js",
+    "projects/common/modules/check-mediator.js"
   ],
   "Nicolas Long": [
     "lib/atob.js",
+    "projects/common/modules/ui/selection-sharing.js",
     "bootstraps/enhanced/profile.js",
     "bootstraps/enhanced/recipe-article.js",
     "bootstraps/enhanced/sport.js",
@@ -135,11 +89,10 @@
     "bootstraps/enhanced/youtube.js",
     "bootstraps/video-embed.js",
     "bootstraps/youtube-embed.js",
-    "lib/ajax.js",
-    "lib/atob.js"
+    "lib/atob.js",
+    "projects/common/modules/component.js"
   ],
   "Calum Campbell": [
-    "lib/chain.js",
     "lib/clamp.js",
     "lib/client-rects.js",
     "lib/detect.js",
@@ -147,11 +100,11 @@
     "lib/page.js",
     "lib/picturefill.js",
     "lib/proximity-loader.js",
-    "lib/queue.js"
+    "projects/common/modules/video/metadata.js",
+    "projects/common/modules/ui/smartAppBanner.js",
+    "projects/common/modules/crosswords/anagram-helper/clue-input.js"
   ],
   "GHaberis": [
-    "lib/chain.js",
-    "lib/steady-page.js",
     "projects/admin/bootstraps/abtests.js",
     "projects/admin/bootstraps/radiator.js",
     "projects/admin/modules/abtests/abtest-report-item.js",
@@ -160,9 +113,11 @@
     "projects/admin/modules/abtests/audience.js",
     "projects/admin/modules/abtests/participation-item.js",
     "projects/admin/modules/abtests/participation.js",
-    "projects/common/modules/accessibility/helpers.js"
+    "projects/common/modules/accessibility/helpers.js",
+    "projects/common/modules/crosswords/anagram-helper/clue-preview.js"
   ],
   "Gustav Pursche": [
+    "projects/common/modules/ui/tabs.js",
     "projects/common/modules/social/hidden-share-toggle.js",
     "projects/common/modules/social/pinterest.js",
     "projects/common/modules/social/share-count.js",
@@ -174,10 +129,12 @@
     "projects/common/modules/tailor/fetch-data.js",
     "projects/common/modules/ui/accessibility-prefs.js",
     "projects/common/modules/ui/autoupdate.js",
-    "bootstraps/enhanced/preferences.js"
+    "bootstraps/enhanced/preferences.js",
+    "projects/commercial/modules/messenger/type.js"
   ],
   "NataliaLKB": [
     "lib/client-rects.js",
+    "projects/common/modules/ui/toggles.js",
     "projects/common/modules/article/membership-events.js",
     "projects/common/modules/article/rich-links.js",
     "projects/common/modules/article/space-filler.js",
@@ -186,23 +143,12 @@
     "projects/common/modules/asyncCallMerger.js",
     "projects/common/modules/atoms/quiz.js",
     "projects/common/modules/atoms/story-questions.js",
-    "projects/common/modules/atoms/youtube-player.js",
-    "projects/common/modules/atoms/youtube-tracking.js"
+    "projects/common/modules/atoms/youtube-tracking.js",
+    "projects/commercial/modules/messenger/viewport.js"
   ],
-  "stephanfowler": [
-    "lib/detect.js",
-    "projects/common/modules/atoms/youtube.js",
-    "projects/common/modules/avatar/api.js",
-    "projects/common/modules/business/stocks.js",
-    "projects/common/modules/charts/doughnut.js",
-    "projects/common/modules/charts/table-doughnut.js",
-    "projects/common/modules/check-dispatcher.js",
-    "projects/common/modules/check-mediator.js",
-    "projects/common/modules/component.js",
-    "projects/common/modules/crosswords/anagram-helper/clue-input.js",
-    "projects/common/modules/crosswords/anagram-helper/clue-preview.js"
-  ],
+  "Gideon Goldberg": [],
   "Sam Desborough": [
+    "projects/common/modules/experiments/ab.js",
     "projects/common/modules/crosswords/anagram-helper/main.js",
     "projects/common/modules/crosswords/anagram-helper/ring.js",
     "projects/common/modules/crosswords/cell.js",
@@ -228,7 +174,8 @@
     "projects/common/modules/discussion/comment-count.js",
     "projects/common/modules/discussion/comments.js",
     "projects/common/modules/discussion/discussion-frontend.js",
-    "projects/common/modules/discussion/loader.js"
+    "projects/common/modules/discussion/loader.js",
+    "projects/commercial/modules/sticky-mpu.js"
   ],
   "dominickendrick": [
     "projects/common/modules/discussion/upvote.js",
@@ -242,7 +189,8 @@
     "projects/common/modules/ui/full-height.js",
     "projects/common/modules/experiments/affix.js",
     "projects/common/modules/experiments/segment-util.js",
-    "projects/common/modules/experiments/test-can-run-checks.js"
+    "projects/common/modules/experiments/test-can-run-checks.js",
+    "projects/commercial/modules/sticky-top-banner.js"
   ],
   "davidfurey": [
     "projects/common/modules/experiments/tests/bookmarks-email-variants-2.js",
@@ -256,7 +204,8 @@
     "projects/common/modules/experiments/tests/generic-email-variants.js",
     "projects/common/modules/experiments/tests/increase-inline-ads.js",
     "projects/common/modules/experiments/tests/opinion-email-variants.js",
-    "projects/common/modules/experiments/tests/paid-card-logo.js"
+    "projects/common/modules/experiments/tests/paid-card-logo.js",
+    "projects/commercial/modules/survey/survey-simple.js"
   ],
   "jranks123": [
     "projects/common/modules/experiments/tests/paid-commenting.js",
@@ -270,9 +219,10 @@
     "projects/common/modules/identity/api.js",
     "projects/common/modules/identity/cookierefresh.js",
     "projects/common/modules/identity/email-preferences.js",
-    "bootstraps/enhanced/notifications.js"
+    "bootstraps/enhanced/notifications.js",
+    "projects/commercial/modules/third-party-tags.js"
   ],
-  "ShaunYearStrong": [
+  "shaundillon": [
     "projects/common/modules/identity/forms.js",
     "projects/common/modules/identity/formstack-iframe-embed.js",
     "projects/common/modules/identity/formstack-iframe.js",
@@ -284,7 +234,8 @@
     "projects/common/modules/media/videojs-plugins/skip-ad.js",
     "projects/common/modules/navigation/membership.js",
     "projects/common/modules/navigation/navigation.js",
-    "projects/common/modules/navigation/profile.js"
+    "projects/common/modules/navigation/profile.js",
+    "projects/commercial/modules/third-party-tags/audience-science-gateway.js"
   ],
   "jfsoul": [
     "projects/common/modules/navigation/search.js",
@@ -298,7 +249,8 @@
     "projects/common/modules/onward/tech-feedback.js",
     "projects/common/modules/onward/tonal.js",
     "projects/common/modules/open/cta.js",
-    "projects/common/modules/preferences/main.js"
+    "projects/common/modules/preferences/main.js",
+    "projects/commercial/modules/third-party-tags/audience-science-pql.js"
   ],
   "Joseph Smith": [
     "projects/common/modules/commercial/contributions-utilities.js",
@@ -309,38 +261,20 @@
     "projects/common/modules/experiments/tests/membership-engagement-banner-tests.js",
     "projects/common/modules/experiments/acquisition-test-selector.js",
     "projects/common/modules/commercial/acquisitions-view-log.js",
-    "projects/common/modules/experiments/ab.js",
     "projects/common/modules/experiments/ab-test-clash.js",
     "projects/common/modules/ui/message.js",
     "projects/common/modules/ui/notification-counter.js",
-    "projects/common/modules/ui/relativedates.js"
-  ],
-  "Gareth Trufitt": [
-    "projects/common/modules/ui/rhc.js",
-    "projects/common/modules/ui/selection-sharing.js",
-    "projects/common/modules/ui/smartAppBanner.js",
-    "projects/common/modules/ui/sticky.js",
-    "projects/common/modules/ui/tabs.js",
-    "projects/common/modules/ui/toggles.js",
-    "projects/common/modules/user-prefs.js",
-    "projects/common/modules/video/events.js",
-    "projects/common/modules/video/ga-helper.js",
-    "projects/common/modules/video/metadata.js",
-    "projects/common/modules/video/more-in-series-container.js",
-    "projects/common/modules/video/onward-container.js"
+    "projects/common/modules/ui/relativedates.js",
+    "projects/commercial/modules/third-party-tags/imr-worldwide-legacy.js",
+    "projects/commercial/modules/paidfor-band.js"
   ],
   "Philip Wills": [
-    "projects/common/modules/video/video-container.js",
-    "projects/common/modules/video/videojs-options.js",
-    "projects/common/views/svg.js",
-    "projects/common/views/svgs.js",
-    "projects/facia/modules/onwards/geo-most-popular-front.js",
-    "projects/facia/modules/onwards/search-tool.js",
-    "projects/facia/modules/onwards/weather.js",
     "projects/facia/modules/ui/container-show-more.js",
     "projects/facia/modules/ui/container-toggle.js",
     "projects/facia/modules/ui/football-snaps.js",
     "projects/facia/modules/ui/lazy-load-containers.js",
-    "projects/facia/modules/ui/live-blog-updates.js"
+    "projects/common/modules/video/ga-helper.js",
+    "projects/facia/modules/ui/live-blog-updates.js",
+    "projects/commercial/modules/third-party-tags/imr-worldwide.js"
   ]
 }

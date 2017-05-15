@@ -417,7 +417,6 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter / 2;
     font-family: $f-sans-serif-text;
     text-transform: lowercase;
     overflow: auto;
-    -webkit-overflow-scrolling: touch;
     font-size: 20px;
     will-change: transform;
     transition: transform .2s cubic-bezier(.23, 1, .32, 1);

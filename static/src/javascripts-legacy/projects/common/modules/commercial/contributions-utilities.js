@@ -40,12 +40,12 @@ define([
     var lastContributionDate = cookies.getCookie('gu.contributions.contrib-timestamp');
 
     /**
-     * How many times the user can see the Epic, e.g. 6 times within 7 days.
-     * @type {{days: number, count: number}}
+     * How many times the user can see the Epic, e.g. 6 times within 7 days with minimum of 1 day in between views.
+     * @type {{days: number, count: number, minDaysBetweenViews: number}}
      */
     var maxViews = {
-        days: 7,
-        count: 6,
+        days: 30,
+        count: 4,
         minDaysBetweenViews: 0
     };
 
@@ -75,11 +75,11 @@ define([
     }
 
     // Returns an array containing:
-    // - the first element matching insertBeforeSelector, if isMultiple is false or not supplied
-    // - all elements matching insertBeforeSelector, if isMultiple is true
+    // - the first element matching insertAtSelector, if isMultiple is false or not supplied
+    // - all elements matching insertAtSelector, if isMultiple is true
     // - or an empty array if the selector doesn't match anything on the page
-    function getTargets(insertBeforeSelector, isMultiple) {
-        var els = document.querySelectorAll(insertBeforeSelector);
+    function getTargets(insertAtSelector, isMultiple) {
+        var els = document.querySelectorAll(insertAtSelector);
 
         if (isMultiple) {
             return toArray(els);
@@ -211,14 +211,18 @@ define([
                 return fastdom.write(function () {
                     var targets = [];
 
-                    if (!options.insertBeforeSelector) {
+                    if (!options.insertAtSelector) {
                         targets = getTargets('.submeta', false);
                     } else {
-                        targets = getTargets(options.insertBeforeSelector, options.insertMultiple);
+                        targets = getTargets(options.insertAtSelector, options.insertMultiple);
                     }
 
                     if (targets.length > 0) {
-                        component.insertBefore(targets);
+                        if (options.insertAfter) {
+                            component.insertAfter(targets);
+                        } else {
+                            component.insertBefore(targets);
+                        }
 
                         mediator.emit(test.insertEvent, component);
                         onInsert(component);

@@ -1,20 +1,14 @@
 define([
-    'Promise',
     'helpers/injector',
     'helpers/fixtures',
-
     'lib/$',
     'lodash/utilities/template',
-
     'raw-loader!common/views/content/richLinkTag.html'
 ], function (
-    Promise,
     Injector,
     fixtures,
-
     $,
     template,
-
     richLinkTagTmpl
 ) {
     describe('richLinks', function () {
@@ -37,6 +31,9 @@ define([
         beforeEach(function (done) {
             articleBodyFixtureElement = fixtures.render(articleBodyConf);
 
+            injector.mock('svgs/icon/thumb.svg', {
+                markup: ''
+            });
             injector.require(['common/modules/article/rich-links', 'lib/config', 'common/modules/article/space-filler'], function () {
                 richLinks = arguments[0];
                 config = arguments[1];
