@@ -1,10 +1,12 @@
-import memoize from 'lodash/functions/memoize';
-import mvtCookie from 'common/modules/analytics/mvt-cookie';
-var NOT_IN_TEST = 'notintest';
+// @flow
+import type { ABTest, Variant } from 'common/modules/experiments/ab-types';
 
-function getId(test) {
-    return test.id; // use test ids as memo cache keys
-}
+import memoize from 'lodash/functions/memoize';
+import * as mvtCookie from 'common/modules/analytics/mvt-cookie';
+
+const NOT_IN_TEST = 'notintest';
+
+const getId = test => test.id; // use test ids as memo cache keys
 
 /**
  * Determine whether the user is in the test or not and return the associated
@@ -15,36 +17,32 @@ function getId(test) {
  *
  * @return {String} variant ID
  */
-function variantIdFor(test) {
-    var smallestTestId = mvtCookie.getMvtNumValues() * test.audienceOffset;
-    var largestTestId = smallestTestId + mvtCookie.getMvtNumValues() * test.audience;
-    var mvtCookieId = mvtCookie.getMvtValue();
+const computeVariantIdFor = (test: ABTest): string => {
+    const smallestTestId = mvtCookie.getMvtNumValues() * test.audienceOffset;
+    const largestTestId =
+        smallestTestId + mvtCookie.getMvtNumValues() * test.audience;
+    const mvtCookieId = Number(mvtCookie.getMvtValue());
 
-    if (mvtCookieId && mvtCookieId > smallestTestId && mvtCookieId <= largestTestId) {
+    if (
+        mvtCookieId &&
+        mvtCookieId > smallestTestId &&
+        mvtCookieId <= largestTestId
+    ) {
         // This mvt test id is in the test range, so allocate it to a test variant.
-        var variantIds = test.variants.map(getId);
+        const variantIds = test.variants.map(getId);
 
         return variantIds[mvtCookieId % variantIds.length];
-    } else {
-        return NOT_IN_TEST;
     }
-}
 
-function variantFor(test) {
-    var variantId = variantIdFor(test);
+    return NOT_IN_TEST;
+};
 
-    return test.variants.filter(function(variant) {
-        return variant.id === variantId;
-    })[0];
-}
+export const variantIdFor = memoize(computeVariantIdFor, getId);
 
+export const isInTest = (test: ABTest): boolean =>
+    variantIdFor(test) !== NOT_IN_TEST;
 
-export default {
-    variantIdFor: memoize(variantIdFor, getId),
-
-    variantFor: variantFor,
-
-    isInTest: function(test) {
-        return variantIdFor(test) !== NOT_IN_TEST;
-    }
-}
+export const variantFor = (test: ABTest): Variant => {
+    const variantId = variantIdFor(test);
+    return test.variants.filter(variant => variant.id === variantId)[0];
+};
