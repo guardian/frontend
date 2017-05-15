@@ -48,7 +48,6 @@
     "projects/common/modules/check-dispatcher.js"
   ],
   "Simon Adcock": [
-    "projects/common/modules/ui/rhc.js",
     "bootstraps/enhanced/identity-common.js",
     "bootstraps/enhanced/image-content.js",
     "bootstraps/enhanced/liveblog.js",
