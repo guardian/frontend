@@ -53,7 +53,6 @@
     "projects/commercial/modules/user-features.js",
     "projects/common/modules/commercial/adblock-banner-config.js",
     "projects/common/modules/commercial/adblock-messages.js",
-    "projects/common/modules/ui/images.js",
     "projects/common/modules/charts/table-doughnut.js"
   ],
   "sndrs": [
