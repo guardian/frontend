@@ -1,3 +1,4 @@
+// #? move to Jest once user-prefs has been ported to ES6
 define([
     'bonzo',
     'lib/$',
