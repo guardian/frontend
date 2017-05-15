@@ -5,12 +5,14 @@ import { inlineSvg } from 'common/views/svgs';
 // this is used in all banners
 const cursor = inlineSvg('cursor');
 
-const banners: Array<{
+type BannersConfig = Array<{
     template: string,
     defaults: {},
     variants: Array<{}>,
     editions: {},
-}> = [
+}>;
+
+const banners: BannersConfig = [
     {
         template: 'adblock-sticky-message',
 
