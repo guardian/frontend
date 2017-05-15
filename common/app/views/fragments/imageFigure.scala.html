@@ -115,6 +115,7 @@
                 </label>
 
                 <figcaption class="caption caption--main caption--img" itemprop="description">
+                    @fragments.inlineSvg("information", "icon", List("rounded-icon", "centered-icon"))
                     @img.caption.map(Html(_))
                     @if(img.displayCredit && !img.creditEndsWithCaption) {
                         @img.credit.map(Html(_))

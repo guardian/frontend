@@ -41,7 +41,7 @@
         }
     }
 
-    &.content--media {
+    &.content--media:not(.content--gallery) {
         .content__main,
         .tonal__standfirst,
         .content__standfirst {
@@ -90,5 +90,80 @@
                 darken($neutral-2, 10%)
             );
         }
+    }
+
+    .immersive-main-media__headline-container--dark {
+        background-color: rgba($news-support-6, .6);
+        background: linear-gradient(rgba($news-support-6, .6), $news-support-6) !important;
+    }
+}
+
+// Gallery styles
+.gallery__main-content {
+    .tonal--tone-special-report {
+        &.content {
+            background-color: $multimedia-support-5;
+
+            .tonal__head,
+            .tonal__standfirst {
+                background-color: $news-support-6;
+            }
+
+            .meta__extras,
+            .gallery__meta-container:before,
+            .meta__number:not(.u-h)+.meta__number {
+                border-color: rgba(255, 255, 255, .4);
+            }
+
+            .content__meta-container,
+            .byline,
+            .byline .tone-colour,
+            .byline .tone-colour:hover,
+            .content__dateline,
+            .meta__numbers .commentcount2__heading {
+                color: #ffffff;
+            }
+
+            .meta__numbers .sharecount__heading,
+            .meta__numbers .sharecount__value {
+                color: rgba(255, 255, 255, .6);
+            }
+
+            .meta__numbers .inline-share {
+                fill: rgba(255, 255, 255, .6);
+            }
+
+            .meta__numbers .inline-comment-16 {
+                fill: #ffffff;
+            }
+
+            .social-icon {
+                border-color: rgba(255, 255, 255, .6);
+
+                svg {
+                    fill: rgba(255, 255, 255, .8);
+                }
+            }
+        }
+
+        .meta__twitter .button,
+        .meta__email .button {
+            background-color: rgba(0, 0, 0, .1);
+            color: #ffffff;
+
+            svg {
+                fill: rgba(255, 255, 255, .8);
+            }
+
+            &:hover,
+            &:focus {
+                background-color: rgba(0, 0, 0, .3);
+                color: #ffffff;
+            }
+        }
+    }
+
+    .gallery__most-popular {
+        background-color: $multimedia-support-5;
     }
 }

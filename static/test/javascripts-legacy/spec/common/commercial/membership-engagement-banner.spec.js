@@ -36,9 +36,14 @@ define([
 
         beforeEach(function (done) {
             config.page.edition = 'UK';
-            injector.mock('common/views/svgs', {
-                inlineSvg: function() {
-                    return '';
+            injector.mock({
+                'common/views/svgs': {
+                    inlineSvg: function() {
+                        return '';
+                    }
+                },
+                'svgs/icon/thumb.svg': {
+                    markup: ''
                 }
             });
             injector.require([
