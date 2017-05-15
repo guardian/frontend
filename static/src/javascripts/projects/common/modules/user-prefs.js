@@ -6,44 +6,48 @@ const defaultOptions = {
     type: 'local',
 };
 
-const set = (name, value, options = {}) => {
+type Options = {
+    type?: string,
+};
+
+const set = (name: string, value: any, options: Options = {}) => {
     storage[options.type || defaultOptions.type].set(
         storagePrefix + name,
         value
     );
 };
 
-const get = (name, options = {}) =>
+const get = (name: string, options: Options = {}) =>
     storage[options.type || defaultOptions.type].get(storagePrefix + name);
 
-const remove = (name, options = {}) => {
+const remove = (name: string, options: Options = {}) => {
     storage[options.type || defaultOptions.type].remove(storagePrefix + name);
 };
 
-const switchOn = (name, options = {}) => {
+const switchOn = (name: string, options: Options = {}) => {
     storage[options.type || defaultOptions.type].set(
         `${storagePrefix}switch.${name}`,
         true
     );
 };
 
-const switchOff = (name, options = {}) => {
+const switchOff = (name: string, options: Options = {}) => {
     storage[options.type || defaultOptions.type].set(
         `${storagePrefix}switch.${name}`,
         false
     );
 };
 
-const removeSwitch = (name, options = {}) => {
+const removeSwitch = (name: string, options: Options = {}) => {
     storage[options.type || defaultOptions.type]
         .remove(`${storagePrefix}switch.${name}`);
 };
 
-const isOn = (name, options = {}) =>
+const isOn = (name: string, options: Options = {}) =>
     storage[options.type || defaultOptions.type]
         .get(`${storagePrefix}switch.${name}`) === true;
 
-const isOff = (name, options = {}) =>
+const isOff = (name: string, options: Options = {}) =>
     storage[options.type || defaultOptions.type]
         .get(`${storagePrefix}switch.${name}`) === false;
 
@@ -51,7 +55,7 @@ const isNumeric = str => !isNaN(str);
 
 const isBoolean = str => str === 'true' || str === 'false';
 
-const setPrefs = loc => {
+const setPrefs = (loc: Object) => {
     const qs = loc.hash.substr(1).split('&');
     let m;
     let key;
