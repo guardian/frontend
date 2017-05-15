@@ -24,7 +24,6 @@ define([
     cookies
 ) {
 
-    var warning = document.getElementById("feedback__explainer");
     var adblockBeingUsed = false;
 
     function getExtraDataInformation() {
@@ -53,7 +52,7 @@ define([
     }
 
     function toggleFormVisibility() {
-        document.querySelectorAll("#feedback-category>option").forEach(function(elem){
+        $.forEachElement("#feedback-category>option", function(elem){
             if(elem.selected && elem.value != "nothing"){
                 document.getElementById(elem.value).classList.add("feedback__form--selected");
             } else if(elem.value != "nothing") {
@@ -74,21 +73,23 @@ define([
 
     function initForms() {
 
+        var warning = document.getElementById("feedback__explainer");
+
         // mandatory checks (realtime)
 
-        document.querySelectorAll(".feedback__form input,.feedback__form textarea").forEach(function(elem){
+        $.forEachElement(".feedback__form input,.feedback__form textarea", function(elem){
             elem.addEventListener("blur", function(){ mandatoryCheck(elem); });
             elem.addEventListener("input", function(){ mandatoryCheck(elem); });
         });
 
         // mandatory checks (on submit)
 
-        document.querySelectorAll(".feedback__form form").forEach(function(elem){
+        $.forEachElement(".feedback__form form", function(elem){
             elem.addEventListener("submit", function() {
 
                 var hasFailed = false;
 
-                document.querySelectorAll(".feedback__form--selected input,.feedback__form--selected textarea").forEach(function(elem){
+                $.forEachElement(".feedback__form--selected input,.feedback__form--selected textarea", function(elem){
                     if(!mandatoryCheck(elem)){
                         hasFailed = true;
                     }
@@ -109,7 +110,7 @@ define([
 
         // insert hidden extra data into forms
 
-        document.querySelectorAll(".feedback__form input[name=extra]").forEach(function(elem){
+        $.forEachElement(".feedback__form input[name=extra]", function(elem){
             elem.value = JSON.stringify(getExtraDataInformation());
         })
 
@@ -127,6 +128,11 @@ define([
 
         initForms();
         hideUnenhancedFallback();
+
+        // exposed for testing
+
+        this.getExtraDataInformation = getExtraDataInformation;
+        this.summariseAbTests = summariseAbTests;
 
     };
 

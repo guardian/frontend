@@ -1,81 +1,59 @@
 define([
-    'helpers/injector'
+    'helpers/injector',
+    'helpers/fixtures',
 ], function (
-    Injector
+    Injector,
+    fixtures
 ) {
     describe('Tech-feedback', function () {
+
         var injector = new Injector();
         var TechFeedback;
+
+        var fixturesConfig = {
+            id: 'related',
+            fixtures: [
+                '<p id="feedback-warning"></p>',
+                '<select id="feedback-category"></select>',
+                '<div id="feedback-form-default"></div>'
+            ]
+        };
 
         beforeEach(function(done) {
            injector.require(['common/modules/onward/tech-feedback'], function(TechFeedbackModule) {
                TechFeedback = TechFeedbackModule;
+               fixtures.render(fixturesConfig);
                done();
            })
         });
 
-        it('should exist', function () {
+        afterEach(function () {
+            fixtures.clean(fixturesConfig.id);
+        });
+
+        it('Should exist', function () {
             expect(TechFeedback).toBeDefined();
         });
 
-        // it('should be able to get no params from the empty hash', function () {
-        //
-        //     var t = new TechFeedback();
-        //     var values = t.getValuesFromHash('');
-        //     expect(values).toEqual({});
-        // });
-        //
-        // it('should be able to get one param from the hash', function () {
-        //
-        //     var t = new TechFeedback();
-        //     var values = t.getValuesFromHash('#page=cheese');
-        //     expect(values).toEqual({'page': 'cheese'});
-        // });
-        //
-        // it('should be able to get more than one param from the hash', function () {
-        //
-        //     var t = new TechFeedback();
-        //     var values = t.getValuesFromHash('#page=cheese&url=milk');
-        //     expect(values).toEqual({'page': 'cheese', 'url': 'milk'});
-        // });
-        //
-        // it('should decide uri components', function () {
-        //
-        //     var t = new TechFeedback();
-        //     var values = t.getValuesFromHash('#http%3A%2F%2Fwww.theguardian.com=http%3A%2F%2Fwww.theguardian.com');
-        //     expect(values).toEqual({'http://www.theguardian.com': 'http://www.theguardian.com'});
-        // });
-        //
-        // it('should be able to get ads creative IDs', function () {
-        //
-        //     var t = new TechFeedback();
-        //     var values = t.getValuesFromHash('#ads=67729052367%2C71293284447');
-        //     expect(values).toEqual({'ads': '67729052367,71293284447'});
-        // });
-        //
-        // it('should be able to get Ophan viewId', function () {
-        //
-        //     var t = new TechFeedback();
-        //     var values = t.getValuesFromHash('#ophanId=igdn1xckorpgh5z5ucdv');
-        //     expect(values).toEqual({'ophanId': 'igdn1xckorpgh5z5ucdv'});
-        // });
-        //
-        // describe('A/B test summary', function () {
-        //     it('summarizes a map of tests and variants', function () {
-        //         var t = new TechFeedback();
-        //         var tests = {
-        //             Foo : {variant : 'foo'},
-        //             Bar : {variant : 'bar'}
-        //         };
-        //         expect(t.summariseAbTests(tests)).toBe('Foo=foo, Bar=bar');
-        //     });
-        //
-        //     it('works when no tests are in place', function () {
-        //         var t = new TechFeedback();
-        //         var tests = {};
-        //         expect(t.summariseAbTests(tests)).toBe('No tests running');
-        //     });
-        // });
+        it("Should return a browser in extra information", function(){
+            var feedback = new TechFeedback();
+            expect(feedback.getExtraDataInformation().browser).toBeDefined();
+        });
+
+        it("Should recognise a lack of AB tests", function(){
+            var feedback = new TechFeedback();
+            expect(feedback.getExtraDataInformation().abTests).toBe("No tests running");
+        });
+
+        it("Should be able to summarise AB tests if the exist", function(){
+            var feedback = new TechFeedback();
+            expect(feedback.summariseAbTests({Foo : {variant : 'foo'}, Bar : {variant : 'bar'}})).toBe('Foo=foo, Bar=bar');
+        });
+
+        it("Should hide the unenhanced form", function(){
+            new TechFeedback();
+            expect(document.getElementById("feedback-form-default")).toBeNull();
+        });
 
     });
 });
