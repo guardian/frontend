@@ -47,11 +47,9 @@ const renderCreativeTemplate = (
             ? viewabilityTrackerDiv.childNodes[0].nodeValue.trim()
             : null;
 
-        /* eslint-disable no-param-reassign */
         if (viewabilityTracker && json.params) {
             json.params.viewabilityTracker = viewabilityTracker;
         }
-        /* eslint-enable no-param-reassign */
 
         return json;
     };
@@ -64,9 +62,7 @@ const renderCreativeTemplate = (
 
     const hideIframe = (): Promise<any> =>
         fastdom.write(() => {
-            /* eslint-disable no-param-reassign */
             iFrame.style.display = 'none';
-            /* eslint-enable no-param-reassign */
         });
 
     const creativeConfig: ?string = fetchCreativeConfig();
