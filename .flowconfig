@@ -24,7 +24,7 @@ module.name_mapper='^svgs' -> '<PROJECT_ROOT>/static/src/inline-svgs'
 module.name_mapper='^ophan/ng' -> 'ophan-tracker-js'
 module.name_mapper='^ophan/embed' -> 'ophan-tracker-js/build/ophan.embed'
 module.name_mapper='^raw-loader!.*$' -> '<PROJECT_ROOT>/dev/flow-asset-stub'
-module.name_mapper='^inlineSvg!.*$' -> '<PROJECT_ROOT>/dev/flow-asset-stub'
+module.name_mapper.extension='svg' -> '<PROJECT_ROOT>/dev/flow-svg-stub'
 
 module.file_ext=.js
 

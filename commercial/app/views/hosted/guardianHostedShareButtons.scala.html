@@ -9,7 +9,7 @@
            href="https://www.facebook.com/dialog/share?app_id=180444840287&href=@{page.encodedUrl}&redirect_uri=@{page.encodedUrl}&quote=@{page.facebookText}"
            target="_blank"
            title="facebook">
-            <span class='inline-icon__fallback button share-modal__item share-modal__item--facebook'>Share on Facebook</span>
+            <span class='button share-modal__item share-modal__item--facebook'>Share on Facebook</span>
             @fragments.inlineSvg("share-facebook", "icon", List("rounded-icon centered-icon social-icon social-icon--facebook"))
         </a>
     </li>
@@ -19,7 +19,7 @@
            href="https://twitter.com/intent/tweet?text=@{URLEncoder.encode(page.twitterText, "utf-8")}&url=@{page.encodedUrl}"
            target="_blank"
            title="twitter">
-            <span class='inline-icon__fallback button share-modal__item share-modal__item--twitter'>Share on Twitter</span>
+            <span class='button share-modal__item share-modal__item--twitter'>Share on Twitter</span>
             @fragments.inlineSvg("share-twitter", "icon", List("rounded-icon centered-icon social-icon social-icon--twitter"))
         </a>
     </li>
@@ -29,7 +29,7 @@
            href="mailto:?subject=@{page.emailSubjectText}&body=@{page.emailBodyText}"
            target="_blank"
            title="email">
-            <span class='inline-icon__fallback button share-modal__item share-modal__item--email'>Share via email</span>
+            <span class='button share-modal__item share-modal__item--email'>Share via email</span>
             @fragments.inlineSvg("share-email", "icon", List("rounded-icon centered-icon social-icon social-icon--email"))
         </a>
     </li>
@@ -39,7 +39,7 @@
            href="https://www.pinterest.com/pin/find/?url=@{page.encodedUrl}"
            target="_blank"
            title="pinterest">
-            <span class='inline-icon__fallback button share-modal__item share-modal__item--pinterest'>Share on Pinterest</span>
+            <span class='button share-modal__item share-modal__item--pinterest'>Share on Pinterest</span>
             @fragments.inlineSvg("share-pinterest", "icon", List("rounded-icon centered-icon social-icon social-icon--pinterest"))
         </a>
     </li>

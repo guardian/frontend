@@ -64,13 +64,6 @@
         }).join(' ');
     }
 
-    // http://modernizr.com/download/#-svg
-    if (!!document.createElementNS && !!document.createElementNS('http://www.w3.org/2000/svg', 'svg').createSVGRect) {
-        docClass += ' svg';
-    } else {
-        docClass += ' no-svg';
-    }
-
     testAndAddClass([
         { feature: 'flex', props: ['flex', '-ms-flex', '-webkit-flex', '-moz-box-flex', '-webkit-box-flex'], values: ['inherit'] },
         { feature: 'flex-wrap', props: ['flex-wrap', '-ms-flex-wrap', '-webkit-flex-wrap'], values: ['inherit'] },
@@ -82,24 +75,5 @@
         docClass = docClass.replace(/\bis-not-modern\b/g, 'is-modern');
     }
 
-    @if(FontKerningSwitch.isSwitchedOn) {
-        if (window.location.hash !== '#no-kern') {docClass += ' should-kern'}
-    } else {
-        if (window.location.hash === '#kern') {docClass += ' should-kern'}
-    }
-
-    // MINIMISE DOM THRASHING…
-
-    // READs
-    // rems are calculated in the CSS assuming a 16px baseline. if the user has changed theirs, account for it.
-    var baseFontSize = null;
-    if ('getComputedStyle' in window) {
-        baseFontSize = window.getComputedStyle(documentElement).getPropertyValue("font-size")
-    }
-
-    // WRITEs
-    if (baseFontSize && parseInt(baseFontSize, 10) !== 16) {
-        documentElement.style.fontSize = baseFontSize
-    }
     documentElement.className = docClass.replace(/\bjs-off\b/g, 'js-on');
 })(document.documentElement, window, navigator);

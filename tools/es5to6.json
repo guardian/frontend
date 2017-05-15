@@ -47,9 +47,7 @@
     "projects/common/modules/charts/doughnut.js"
   ],
   "Lydia Shepherd": [
-    "projects/commercial/modules/third-party-tags/plista.js",
     "projects/commercial/modules/third-party-tags/remarketing.js",
-    "projects/commercial/modules/third-party-tags/simple-reach.js",
     "projects/commercial/modules/third-party-tags/tourism-australia.js",
     "projects/commercial/modules/user-ad-targeting.js",
     "projects/commercial/modules/user-features.js",
@@ -114,8 +112,6 @@
     "projects/common/modules/crosswords/anagram-helper/clue-input.js"
   ],
   "GHaberis": [
-    "lib/steady-page.js",
-    "projects/common/modules/ui/sticky.js",
     "projects/admin/bootstraps/abtests.js",
     "projects/admin/bootstraps/radiator.js",
     "projects/admin/modules/abtests/abtest-report-item.js",
