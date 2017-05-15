@@ -6,7 +6,7 @@ import { local } from 'lib/storage';
 import { getUrlVars } from 'lib/url';
 import krux from 'commercial/modules/third-party-tags/krux';
 import identity from 'common/modules/identity/api';
-import userAdTargeting from 'commercial/modules/user-ad-targeting';
+import { getUserSegments } from 'commercial/modules/user-ad-targeting';
 import abUtils from 'common/modules/experiments/utils';
 import flatten from 'lodash/arrays/flatten';
 import once from 'lodash/functions/once';
@@ -128,7 +128,7 @@ export default once((): Object => {
             bp: detect.getBreakpoint(),
             at: adtestParams(),
             si: identity.isUserLoggedIn() ? 't' : 'f',
-            gdncrm: userAdTargeting.getUserSegments(),
+            gdncrm: getUserSegments(),
             ab: abParam(),
             ref: getReferrer(),
             ms: formatTarget(page.source),
