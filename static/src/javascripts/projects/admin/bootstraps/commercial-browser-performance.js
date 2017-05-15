@@ -4,7 +4,6 @@ import config from 'lib/config';
 import fetchJson from 'lib/fetch-json';
 import template from 'lodash/utilities/template';
 import countBy from 'lodash/collections/countBy';
-import find from 'lodash/collections/find';
 
 // Globals that aren't imported
 declare var $: any;
@@ -66,8 +65,7 @@ const fetchData = (): void => {
         };
         const reports: Array<Report> = logs.reports || [];
         const appStartTimes: Array<number> = reports.map(report => {
-            const primaryBaseline: StartTime | void = find(
-                report.baselines,
+            const primaryBaseline: StartTime | void = report.baselines.find(
                 baseline => baseline.name === 'primary'
             );
             return primaryBaseline ? primaryBaseline.startTime : 0;

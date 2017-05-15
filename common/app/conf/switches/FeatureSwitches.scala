@@ -105,16 +105,6 @@ trait FeatureSwitches {
     exposeClientSide = true
   )
 
-  val FontKerningSwitch = Switch(
-    SwitchGroup.Feature,
-    "font-kerning",
-    "If this is switched on then fonts will be kerned/optimised for legibility.",
-    owners = Seq(Owner.withGithub("johnduffell")),
-    safeState = On,
-    sellByDate = never,
-    exposeClientSide = false
-  )
-
   val SearchSwitch = Switch(
     SwitchGroup.Feature,
     "google-search",
@@ -502,16 +492,6 @@ trait FeatureSwitches {
     "youtube-poster-override",
     "When ON show trail image on YouTube atom playable content cards instead of the poster image",
     owners = Seq(Owner.withGithub("gidsg")),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = false
-  )
-
-  val TricolourVeggieBurger = Switch(
-    SwitchGroup.Feature,
-    "tricolour-veggie-burger",
-    "If this switch is turned on the menu button on the new header will be a tricolour flag",
-    owners = Seq(Owner.withGithub("zeftilldeath")),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false

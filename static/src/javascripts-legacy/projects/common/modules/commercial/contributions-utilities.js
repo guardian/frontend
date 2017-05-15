@@ -40,12 +40,12 @@ define([
     var lastContributionDate = cookies.getCookie('gu.contributions.contrib-timestamp');
 
     /**
-     * How many times the user can see the Epic, e.g. 6 times within 7 days.
-     * @type {{days: number, count: number}}
+     * How many times the user can see the Epic, e.g. 6 times within 7 days with minimum of 1 day in between views.
+     * @type {{days: number, count: number, minDaysBetweenViews: number}}
      */
     var maxViews = {
-        days: 7,
-        count: 6,
+        days: 30,
+        count: 4,
         minDaysBetweenViews: 0
     };
 
