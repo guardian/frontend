@@ -85,8 +85,8 @@ const getForcedIntoTests = () => {
     return JSON.parse(local.get('gu.devtools.ab')) || [];
 };
 
-export const segment = () =>
-    getActiveTests().forEach(test => {
+export const segment = (tests: Array<ABTest>) =>
+    tests.forEach(test => {
         allocateUserToTest(test);
     });
 
@@ -125,7 +125,7 @@ export const segmentUser = () => {
             forceVariantCompleteFunctions(test.id, test.variant);
         });
     } else {
-        segment();
+        segment(getActiveTests());
     }
 
     cleanParticipations();
