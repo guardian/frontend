@@ -1,16 +1,20 @@
 // @flow
-import storage from 'lib/storage';
+import { local, session } from 'lib/storage';
 
+const storage = {
+    local,
+    session,
+};
 const storagePrefix = 'gu.prefs.';
 const defaultOptions = {
     type: 'local',
 };
 
 type Options = {
-    type?: string,
+    type?: 'local' | 'session',
 };
 
-const set = (name: string, value: any, options: Options = {}) => {
+const set = (name: string, value: any, options?: Options = {}) => {
     storage[options.type || defaultOptions.type].set(
         storagePrefix + name,
         value
@@ -55,19 +59,16 @@ const isNumeric = str => !isNaN(str);
 
 const isBoolean = str => str === 'true' || str === 'false';
 
-const setPrefs = (loc: Object) => {
+const setPrefs = (loc: { hash: string }) => {
     const qs = loc.hash.substr(1).split('&');
-    let m;
-    let key;
-    let val;
-    let v;
     let i;
     let j;
     for ((i = 0), (j = qs.length); i < j; i += 1) {
-        m = qs[i].match(/^gu\.prefs\.(.*)=(.*)$/);
+        const m = qs[i].match(/^gu\.prefs\.(.*)=(.*)$/);
         if (m) {
-            key = m[1];
-            val = m[2];
+            const key = m[1];
+            const val = m[2];
+            let v;
             switch (key) {
                 case 'switchOn':
                     switchOn(val);
@@ -76,13 +77,15 @@ const setPrefs = (loc: Object) => {
                     switchOff(val);
                     break;
                 default:
-                    // 1. +val casts any number (int, float) from a string
-                    // 2. String(val) === "true" converts a string to bool
-                    v = isNumeric(val)
-                        ? +val
-                        : isBoolean(val)
-                              ? String(val).toLowerCase() === 'true'
-                              : val;
+                    if (isNumeric(val)) {
+                        // +val casts any number (int, float) from a string
+                        v = +val;
+                    } else if (isBoolean(val)) {
+                        // String(val) === "true" converts a string to bool
+                        v = String(val).toLowerCase() === 'true';
+                    } else {
+                        v = val;
+                    }
                     set(key, v);
             }
         }
