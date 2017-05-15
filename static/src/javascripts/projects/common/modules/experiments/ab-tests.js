@@ -4,8 +4,7 @@ import type { ABTest } from 'common/modules/experiments/ab-types';
 import * as testCanRunChecks
     from 'common/modules/experiments/test-can-run-checks';
 import * as abUtils from 'common/modules/experiments/utils';
-
-import acquisitionTestSelector
+import * as acquisitionTestSelector
     from 'common/modules/experiments/acquisition-test-selector';
 import OpinionEmailVariants
     from 'common/modules/experiments/tests/opinion-email-variants';

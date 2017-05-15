@@ -10,13 +10,13 @@ import type {
 import { getActiveTests } from 'common/modules/experiments/ab-tests';
 import * as testCanRunChecks
     from 'common/modules/experiments/test-can-run-checks';
-import segmentUtil from 'common/modules/experiments/segment-util';
+import * as segmentUtil from 'common/modules/experiments/segment-util';
 import * as abUtils from 'common/modules/experiments/utils';
 import config from 'lib/config';
 import reportError from 'lib/report-error';
 import ophan from 'ophan/ng';
 
-const not = (f: any => boolean) => (...args) => !f.apply(this, args);
+const not = (f: any => boolean) => (...args): boolean => !f.apply(this, args);
 const noop = (): null => null;
 
 const submit = (payload: OphanABPayload): void =>

@@ -7,7 +7,7 @@ import {
     TESTS,
 } from 'common/modules/experiments/ab-tests';
 import { buildOphanSubmitter } from 'common/modules/experiments/ab-ophan';
-import segmentUtil from 'common/modules/experiments/segment-util';
+import * as segmentUtil from 'common/modules/experiments/segment-util';
 import * as testCanRunChecks
     from 'common/modules/experiments/test-can-run-checks';
 import * as abUtils from 'common/modules/experiments/utils';
