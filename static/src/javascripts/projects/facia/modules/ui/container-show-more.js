@@ -88,7 +88,7 @@ class Button {
     $placeholder: bonzo;
     $textEl: bonzo;
     $errorMessage: ?bonzo;
-    messages: Map<ButtonState,string>;
+    messages: Map<ButtonState, string>;
 
     constructor(el: bonzo, container: bonzo) {
         this.id = container.attr('data-id');
@@ -108,7 +108,7 @@ class Button {
             [STATE_HIDDEN, $('.js-button-text', this.$el).text()],
             [STATE_DISPLAYED, 'Less'],
             [STATE_LOADING, 'Loading&hellip;'],
-        ])
+        ]);
     }
 
     setState(state: ButtonState): void {
@@ -223,7 +223,7 @@ const renderToDom = (button: Button) => {
     });
 };
 
-export const init = () => {
+export const init = (): void => {
     fastdom.read(() => {
         const containers = qwery('.js-container--fc-show-more').map(bonzo);
         const buttons = containers
