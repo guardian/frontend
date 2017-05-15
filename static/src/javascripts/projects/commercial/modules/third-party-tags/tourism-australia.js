@@ -14,10 +14,10 @@ const getUrl = location => {
     return `//tourismaustralia.sc.omtrdc.net/b/ss/${taAccount}/1/H.26.2/s${taCachebreak}?AQB=1&ndh=0&ns=tourismaustralia&pageName=${encodeURIComponent(taPageName)}&g= ${encodeURIComponent(taUrl)}&server=${encodeURIComponent(taServer)}&v11=${encodeURIComponent(taPartner)}&AQE=1`;
 };
 
-const shouldRun =
+const shouldRun: boolean =
     config.page.section === 'ashes-australia-travel' &&
     config.switches.tourismAustralia;
-const url = getUrl(window.location);
-const useImage = true;
+const url: string = getUrl(window.location);
+const useImage: boolean = true;
 
 export { shouldRun, url, useImage };
