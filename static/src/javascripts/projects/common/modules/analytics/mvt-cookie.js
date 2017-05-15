@@ -1,47 +1,25 @@
-import cookies from 'lib/cookies';
-var MULTIVARIATE_ID_COOKIE = 'GU_mvt_id',
-    VISITOR_ID_COOKIE = 's_vi',
-    BROWSER_ID_COOKIE = 'bwid',
-    // The full mvt ID interval is [1, 1000000]
-    MAX_CLIENT_MVT_ID = 1000000;
+// @flow
+import { addCookie, getCookie } from 'lib/cookies';
 
-function overwriteMvtCookie(testId) {
-    // For test purposes only.
-    cookies.addCookie(MULTIVARIATE_ID_COOKIE, testId, 365);
-}
+const MULTIVARIATE_ID_COOKIE = 'GU_mvt_id';
+const VISITOR_ID_COOKIE = 's_vi';
+const BROWSER_ID_COOKIE = 'bwid';
+// The full mvt ID interval is [1, 1000000]
+const MAX_CLIENT_MVT_ID = 1000000;
 
-function getMvtFullId() {
-    var bwidCookie = cookies.getCookie(BROWSER_ID_COOKIE),
-        mvtidCookie = getMvtValue(),
-        visitoridCookie = cookies.getCookie(VISITOR_ID_COOKIE);
+// For test purposes only.
+export const overwriteMvtCookie = (testId: string) =>
+    addCookie(MULTIVARIATE_ID_COOKIE, testId, 365);
 
-    if (!visitoridCookie) {
-        visitoridCookie = 'unknown-visitor-id';
-    }
+export const getMvtValue = () => getCookie(MULTIVARIATE_ID_COOKIE);
 
-    if (!bwidCookie) {
-        bwidCookie = 'unknown-browser-id';
-    }
+export const getMvtNumValues = () => MAX_CLIENT_MVT_ID;
 
-    if (!mvtidCookie) {
-        mvtidCookie = 'unknown-mvt-id';
-    }
+export const getMvtFullId = () => {
+    const bwidCookie = getCookie(BROWSER_ID_COOKIE) || 'unknown-browser-id';
+    const mvtidCookie = getMvtValue() || 'unknown-mvt-id';
+    const visitoridCookie =
+        getCookie(VISITOR_ID_COOKIE) || 'unknown-visitor-id';
 
-    return visitoridCookie + ' ' + bwidCookie + ' ' + mvtidCookie;
-}
-
-function getMvtValue() {
-    return cookies.getCookie(MULTIVARIATE_ID_COOKIE);
-}
-
-function getMvtNumValues() {
-    return MAX_CLIENT_MVT_ID;
-}
-
-export default {
-    getMvtFullId: getMvtFullId,
-    getMvtValue: getMvtValue,
-    getMvtNumValues: getMvtNumValues,
-    overwriteMvtCookie: overwriteMvtCookie,
-    MAX_CLIENT_MVT_ID: MAX_CLIENT_MVT_ID
+    return `${visitoridCookie} ${bwidCookie} ${mvtidCookie}`;
 };
