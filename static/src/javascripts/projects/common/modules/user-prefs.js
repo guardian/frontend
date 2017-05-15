@@ -14,52 +14,52 @@ type Options = {
     type?: 'local' | 'session',
 };
 
-const set = (name: string, value: any, options?: Options = {}) => {
+const set = (name: string, value: any, options?: Options = {}): void => {
     storage[options.type || defaultOptions.type].set(
         storagePrefix + name,
         value
     );
 };
 
-const get = (name: string, options: Options = {}) =>
+const get = (name: string, options: Options = {}): any =>
     storage[options.type || defaultOptions.type].get(storagePrefix + name);
 
-const remove = (name: string, options: Options = {}) => {
+const remove = (name: string, options: Options = {}): void => {
     storage[options.type || defaultOptions.type].remove(storagePrefix + name);
 };
 
-const switchOn = (name: string, options: Options = {}) => {
+const switchOn = (name: string, options: Options = {}): void => {
     storage[options.type || defaultOptions.type].set(
         `${storagePrefix}switch.${name}`,
         true
     );
 };
 
-const switchOff = (name: string, options: Options = {}) => {
+const switchOff = (name: string, options: Options = {}): void => {
     storage[options.type || defaultOptions.type].set(
         `${storagePrefix}switch.${name}`,
         false
     );
 };
 
-const removeSwitch = (name: string, options: Options = {}) => {
+const removeSwitch = (name: string, options: Options = {}): void => {
     storage[options.type || defaultOptions.type]
         .remove(`${storagePrefix}switch.${name}`);
 };
 
-const isOn = (name: string, options: Options = {}) =>
+const isOn = (name: string, options: Options = {}): boolean =>
     storage[options.type || defaultOptions.type]
         .get(`${storagePrefix}switch.${name}`) === true;
 
-const isOff = (name: string, options: Options = {}) =>
+const isOff = (name: string, options: Options = {}): boolean =>
     storage[options.type || defaultOptions.type]
         .get(`${storagePrefix}switch.${name}`) === false;
 
-const isNumeric = str => !isNaN(str);
+const isNumeric = (str: string): boolean => !isNaN(str);
 
-const isBoolean = str => str === 'true' || str === 'false';
+const isBoolean = (str: string): boolean => str === 'true' || str === 'false';
 
-const setPrefs = (loc: { hash: string }) => {
+const setPrefs = (loc: { hash: string }): void => {
     const qs = loc.hash.substr(1).split('&');
     let i;
     let j;
