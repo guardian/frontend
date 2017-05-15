@@ -2,7 +2,7 @@
 
 import $ from 'lib/$';
 import config from 'lib/config';
-import steadyPage from 'lib/steady-page';
+import fastdom from 'lib/fastdom-promise';
 import detect from 'lib/detect';
 import { loadScript } from 'lib/load-script';
 import { getCode } from './outbrain-codes';
@@ -28,10 +28,10 @@ const selectors = {
     },
 };
 
-const build = function(
+const build = (
     codes: { code?: string, image?: string, text?: string },
     breakpoint: string
-): string {
+): string => {
     let html = outbrainTpl({
         widgetCode: codes.code || codes.image || '',
     });
@@ -43,7 +43,7 @@ const build = function(
     return html;
 };
 
-const load = function(target?: string): Promise<void> {
+const load = (target?: string): Promise<void> => {
     const slot = target && target in selectors ? target : 'defaults';
     const $outbrain = $(selectors.outbrain.widget);
     const $container = $(selectors.outbrain.container, $outbrain[0]);
@@ -58,8 +58,8 @@ const load = function(target?: string): Promise<void> {
     const widgetHtml = build(widgetCodes, breakpoint);
 
     if ($container.length) {
-        return steadyPage
-            .insert($container[0], () => {
+        return fastdom
+            .write(() => {
                 if (slot === 'merchandising') {
                     $(selectors[slot].widget).replaceWith($outbrain[0]);
                 }

@@ -49,6 +49,7 @@ module.exports = {
                     'lodash/collections/filter',
                     'lodash/collections/every',
                     'lodash/collections/contains',
+                    'lodash/collections/find',
                     'lodash/objects/assign',
                     'lodash/objects/values',
                     'lodash/objects/merge',
@@ -63,6 +64,7 @@ module.exports = {
         ],
 
         'flow-header/flow-header': 'error',
+        'no-param-reassign': ['error', { props: false }],
 
         // our own rules for frontend
         // live in tools/eslint-plugin-guardian-frontend

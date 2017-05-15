@@ -14,7 +14,7 @@ define([
     config
 ) {
     var commercialFeatures, membershipMessages, mediator,
-        showMembershipMessages, alreadyVisited, storage, participations;
+        showMembershipMessages, alreadyVisited, storage, participations, geolocation;
 
     var injector = new Injector();
 
@@ -36,21 +36,28 @@ define([
 
         beforeEach(function (done) {
             config.page.edition = 'UK';
-            injector.mock('common/views/svgs', {
-                inlineSvg: function() {
-                    return '';
+            injector.mock({
+                'common/views/svgs': {
+                    inlineSvg: function() {
+                        return '';
+                    }
+                },
+                'svgs/icon/thumb.svg': {
+                    markup: ''
                 }
             });
             injector.require([
                 'commercial/modules/commercial-features',
                 'common/modules/commercial/membership-engagement-banner',
                 'lib/storage',
-                'lib/mediator'
+                'lib/mediator',
+                'lib/geolocation'
             ], function () {
                 commercialFeatures = arguments[0];
                 membershipMessages = arguments[1];
                 storage = arguments[2];
                 mediator = arguments[3];
+                geolocation = arguments[4];
                 done();
             }, function () {
                 // woohoo
@@ -89,6 +96,7 @@ define([
                 commercialFeatures.async.canDisplayMembershipEngagementBanner = Promise.resolve(true);
                 fixtures.render(conf);
                 storage.local.set('gu.alreadyVisited', 10);
+                geolocation.setGeolocation('GB');
                 done();
             });
 
@@ -133,6 +141,7 @@ define([
                 fixtures.render(conf);
                 participations = storage.local.get('gu.ab.participations');
                 storage.local.remove('gu.ab.participations');
+                geolocation.setGeolocation('GB');
                 done();
             });
 
@@ -164,6 +173,7 @@ define([
                 commercialFeatures.async.canDisplayMembershipEngagementBanner = Promise.resolve(true);
                 fixtures.render(conf);
                 storage.local.set('gu.alreadyVisited', 10);
+                geolocation.setGeolocation('GB');
                 done();
             });
 

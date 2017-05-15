@@ -9,9 +9,11 @@ define([
 
             beforeEach(function (done) {
                 var injector = new Injector();
-                
-                sandbox = sinon.sandbox.create();
 
+                sandbox = sinon.sandbox.create();
+                injector.mock('svgs/icon/thumb.svg', {
+                    markup: ''
+                });
                 injector.require([
                     'common/modules/experiments/ab-test-clash'
                 ], function (sut) {

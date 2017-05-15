@@ -11,12 +11,24 @@ type WeatherSearchOptions = {
     apiUrl: string,
 };
 
+type City = {
+    id: string,
+    city: string,
+    country: string,
+};
+
 // Keys must be strings for Flow: https://github.com/facebook/flow/issues/380
 const keyCodeMap = {
     '13': 'enter',
     '38': 'up',
     '40': 'down',
     '27': 'escape',
+};
+
+export type CityPreference = {
+    id: string,
+    city: string,
+    store: 'set' | 'remove',
 };
 
 export class SearchTool {
@@ -112,7 +124,7 @@ export class SearchTool {
             }
         }
 
-        const data = {
+        const data: CityPreference = {
             id: $active.attr('data-weather-id'),
             city: $active.attr('data-weather-city'),
             store,
@@ -231,7 +243,7 @@ export class SearchTool {
         this.$input.val(inputValue);
     }
 
-    renderList(results: Array<Object>, numOfResults: number): void {
+    renderList(results: Array<City>, numOfResults: number): void {
         const docFragment = document.createDocumentFragment();
         const resultsToShow = results.length - numOfResults;
 

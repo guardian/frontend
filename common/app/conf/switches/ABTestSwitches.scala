@@ -21,6 +21,16 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-measure-understanding",
+    "Asks users if they feel better informed after reading an article",
+    owners = Seq(Owner.withGithub("regiskuckaertz")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 5, 19),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
     "ab-increase-inline-ads-redux-redux",
     "Displays more inline ads in articles on desktop",
     owners = Seq(Owner.withGithub("gidsg")),
@@ -161,11 +171,31 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-bundle-digital-sub-price-test-1",
+    "ab-bundle-digital-sub-price-test-1-m",
     "Test pricing options for digital subs",
     owners = Seq(Owner.withGithub("justinpinner")),
     safeState = Off,
     sellByDate = new LocalDate(2017, 5, 25),  // Thursday
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-epic-testimonials-round-two",
+    "Test placing reader testimonials in the Epic",
+    owners = Seq(Owner.withGithub("Mullefa")),
+    safeState = On,
+    sellByDate = new LocalDate(2017, 6, 13),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-epic-single-cta",
+    "Test an epic with a single CTA: contribute in the US and support everywhere else",
+    owners = Seq(Owner.withGithub("joelochlann")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 5, 25),
     exposeClientSide = true
   )
 }

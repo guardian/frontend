@@ -46,15 +46,8 @@
     "projects/common/modules/charts/doughnut.js"
   ],
   "Lydia Shepherd": [
-    "projects/commercial/modules/third-party-tags/plista.js",
-    "projects/commercial/modules/third-party-tags/remarketing.js",
-    "projects/commercial/modules/third-party-tags/simple-reach.js",
-    "projects/commercial/modules/third-party-tags/tourism-australia.js",
-    "projects/commercial/modules/user-ad-targeting.js",
     "projects/commercial/modules/user-features.js",
-    "projects/common/modules/commercial/adblock-banner-config.js",
     "projects/common/modules/commercial/adblock-messages.js",
-    "projects/common/modules/ui/images.js",
     "projects/common/modules/charts/table-doughnut.js"
   ],
   "sndrs": [
@@ -73,7 +66,6 @@
     "projects/common/modules/check-dispatcher.js"
   ],
   "Simon Adcock": [
-    "lib/ajax.js",
     "projects/common/modules/ui/rhc.js",
     "bootstraps/enhanced/identity-common.js",
     "bootstraps/enhanced/image-content.js",
@@ -96,7 +88,6 @@
     "bootstraps/enhanced/youtube.js",
     "bootstraps/video-embed.js",
     "bootstraps/youtube-embed.js",
-    "lib/ajax.js",
     "lib/atob.js",
     "projects/common/modules/component.js"
   ],
@@ -108,18 +99,13 @@
     "lib/page.js",
     "lib/picturefill.js",
     "lib/proximity-loader.js",
-    "lib/queue.js",
     "projects/common/modules/video/metadata.js",
     "projects/common/modules/ui/smartAppBanner.js",
     "projects/common/modules/crosswords/anagram-helper/clue-input.js"
   ],
   "GHaberis": [
-    "lib/steady-page.js",
-    "projects/common/modules/ui/sticky.js",
-    "projects/admin/bootstraps/abtests.js",
     "projects/admin/bootstraps/radiator.js",
     "projects/admin/modules/abtests/abtest-report-item.js",
-    "projects/admin/modules/abtests/abtest-report.js",
     "projects/admin/modules/abtests/audience-item.js",
     "projects/admin/modules/abtests/audience.js",
     "projects/admin/modules/abtests/participation-item.js",
@@ -157,9 +143,7 @@
     "projects/common/modules/atoms/youtube-tracking.js",
     "projects/commercial/modules/messenger/viewport.js"
   ],
-  "Gideon Goldberg": [
-    "projects/commercial/modules/paid-containers.js"
-  ],
+  "Gideon Goldberg": [],
   "Sam Desborough": [
     "projects/common/modules/experiments/ab.js",
     "projects/common/modules/crosswords/anagram-helper/main.js",
@@ -235,7 +219,7 @@
     "bootstraps/enhanced/notifications.js",
     "projects/commercial/modules/third-party-tags.js"
   ],
-  "ShaunYearStrong": [
+  "shaundillon": [
     "projects/common/modules/identity/forms.js",
     "projects/common/modules/identity/formstack-iframe-embed.js",
     "projects/common/modules/identity/formstack-iframe.js",
@@ -282,7 +266,6 @@
     "projects/commercial/modules/paidfor-band.js"
   ],
   "Philip Wills": [
-    "projects/facia/modules/onwards/weather.js",
     "projects/facia/modules/ui/container-show-more.js",
     "projects/facia/modules/ui/container-toggle.js",
     "projects/facia/modules/ui/football-snaps.js",
