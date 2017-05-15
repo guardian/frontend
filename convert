@@ -1,0 +1,32 @@
+#!/bin/bash
+
+if [ $# -lt 2 ]; then
+    echo "usage: convert directory filename"
+    exit 1;
+fi
+
+# Remove the file entry from es5to6.json, update this script with directory and filename, then execute this script.
+pushd frontend
+
+directory="$1"
+filename="$2"
+
+file="$directory/$filename"
+
+echo "working with ${file}"
+
+echo 'moving file'
+mkdir -p "static/src/javascripts/$directory/"
+mv "static/src/javascripts-legacy/$file" "static/src/javascripts/$directory/"
+git add .
+git commit -m "move $file from legacy to standard JS" --no-verify
+
+echo 'amd to es6 module conversion'
+npm run amdtoes6 -- -d "static/src/javascripts/$directory" -o "static/src/javascripts/$directory" -g "**/$filename"
+git add .
+git commit -m "transform $file to ES6 module" --no-verify
+
+echo 'lebab es6 content conversion'
+npm run -s lebab -- "static/src/javascripts/$file"
+git add .
+git commit -m "transform $file content to ES6" --no-verify
