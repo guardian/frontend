@@ -11,6 +11,10 @@
     padding-bottom: $gs-baseline / 2;
 }
 
+.inline-icon__fallback {
+    display: none;
+}
+
 .social__item {
     float: left;
     padding: 0 3px $gs-baseline/2 0;
