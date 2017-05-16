@@ -5,7 +5,10 @@ import fetchJson from 'lib/fetch-json';
 import fastdom from 'lib/fastdom-promise';
 import HostedCarousel from 'commercial/modules/hosted/onward-journey-carousel';
 
-const loadOnwardComponent = (start: () => void, stop: () => void) => {
+const loadOnwardComponent = (
+    start: () => void,
+    stop: () => void
+): Promise<any> => {
     start();
 
     const placeholders = document.getElementsByClassName(
