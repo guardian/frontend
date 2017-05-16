@@ -1,0 +1,80 @@
+/*****************************************************
+ * #election2017 temp styling for election container *
+ * Remove this file when the UK election is done     *
+*****************************************************/
+
+.fc-item__content-election {
+    display: none;
+}
+
+// Results stage - headline above
+.qqqtall-q1--election {
+    .fc-item .fc-item__content {
+        background-color: rgba($news-support-7, .7);
+        position: absolute;
+        bottom: 0;
+        padding-bottom: 0;
+    }
+
+    .fc-sublink__title {
+        &:before {
+            content: none;
+        }
+    }
+
+    .fc-sublink {
+        margin-top: 0;
+
+        &:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            height: 100%;
+            display: block;
+            // TODO: Ask ben: what colour should this be?
+            border-right: 1px solid rgba($neutral-3, .7);;
+            margin: 0 -$gs-baseline * .75;
+        }
+
+        &:last-child:after {
+            content: none;
+        }
+    }
+
+    .fc-item__content-election {
+        display: block;
+        padding-left: $fc-item-gutter;
+        padding-right: $fc-item-gutter;
+
+        @include mq(leftCol) {
+            padding-bottom: $gs-baseline * 2;
+        }
+    }
+
+    .l-row__item--span-3 .fc-item__content {
+        .fc-item__header,
+        .fc-item__standfirst {
+            display: none !important;
+        }
+    }
+}
+
+// winner announced - showcase image
+.qqqtall-q1--election {
+    .fc-item__content-election {
+        display: none;
+    }
+
+    .fc-item--has-boosted-title {
+        .fc-item__media-wrapper {
+            @include mq(leftCol) {
+                margin-left: -1 * ($left-column + $gs-gutter);
+            }
+
+            @include mq(wide) {
+                margin-left: -1 * ($left-column-wide + $gs-gutter);
+            }
+        }
+    }
+}
