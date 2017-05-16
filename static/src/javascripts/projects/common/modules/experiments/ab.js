@@ -57,17 +57,6 @@ const allocateUserToTest = test => {
     }
 };
 
-export const shouldRunTest = (id: string, variant: string) => {
-    const test = getTest(id);
-
-    return (
-        test &&
-        abUtils.isParticipating(test) &&
-        abUtils.getTestVariantId(id) === variant &&
-        testCanRunChecks.testCanBeRun(test)
-    );
-};
-
 const getForcedIntoTests = () => {
     if (/^#ab/.test(window.location.hash)) {
         const tokens = window.location.hash.replace('#ab-', '').split(',');
@@ -83,6 +72,17 @@ const getForcedIntoTests = () => {
     }
 
     return JSON.parse(local.get('gu.devtools.ab')) || [];
+};
+
+export const shouldRunTest = (id: string, variant: string) => {
+    const test = getTest(id);
+
+    return (
+        test &&
+        abUtils.isParticipating(test) &&
+        abUtils.getTestVariantId(id) === variant &&
+        testCanRunChecks.testCanBeRun(test)
+    );
 };
 
 export const segment = (tests: Array<ABTest>) =>
@@ -144,10 +144,3 @@ export const testCanBeRun = (test: string | ABTest) => {
 
     return test.id && test.expiry && testCanRunChecks.testCanBeRun(test);
 };
-
-// export const _ = {
-//     reset: () => {
-//         TESTS = [];
-//         segmentUtil.variantIdFor.cache = {};
-//     },
-// };

@@ -42,6 +42,18 @@ const makeABEvent = (
 };
 
 /**
+ * Checks if this test will defer its impression by providing its own impression function.
+ *
+ * If it does, the test won't be included in the Ophan call that happens at pageload, and must fire the impression
+ * itself via the callback passed to the `impression` property in the variant.
+ *
+ * @param test
+ * @returns {boolean}
+ */
+const defersImpression = (test: ABTest): boolean =>
+    test.variants.every(variant => typeof variant.impression === 'function');
+
+/**
  * Create a function that will fire an A/B test to Ophan
  *
  * @param test
@@ -49,7 +61,7 @@ const makeABEvent = (
  * @param {boolean} complete
  * @returns {Function} to fire the event
  */
-export const buildOphanSubmitter = (
+const buildOphanSubmitter = (
     test: ABTest,
     variantId: string,
     complete: boolean
@@ -89,17 +101,7 @@ const registerCompleteEvent = complete => test => {
     }
 };
 
-/**
- * Checks if this test will defer its impression by providing its own impression function.
- *
- * If it does, the test won't be included in the Ophan call that happens at pageload, and must fire the impression
- * itself via the callback passed to the `impression` property in the variant.
- *
- * @param test
- * @returns {boolean}
- */
-const defersImpression = (test: ABTest): boolean =>
-    test.variants.every(variant => typeof variant.impression === 'function');
+export { buildOphanSubmitter };
 
 export const registerCompleteEvents = (): void =>
     getActiveTests().forEach(registerCompleteEvent(true));
