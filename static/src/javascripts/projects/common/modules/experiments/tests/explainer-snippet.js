@@ -130,14 +130,14 @@ const ExplainerSnippet = () => {
         showForSensitive: true,
         variants: [
             {
-                id: 'snippet',
+                id: 'snippet-light',
                 test,
                 impression,
                 success,
                 options: { style: 'light' },
             },
             {
-                id: 'snippet',
+                id: 'snippet-dark',
                 test,
                 impression,
                 success,
