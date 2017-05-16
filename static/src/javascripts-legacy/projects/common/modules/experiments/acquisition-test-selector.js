@@ -6,7 +6,9 @@ define([
     'common/modules/experiments/tests/contributions-epic-always-ask-strategy',
     'common/modules/experiments/tests/contributions-epic-ask-four-earning',
     'common/modules/experiments/tests/acquisitions-epic-liveblog',
-    'common/modules/experiments/tests/acquisitions-epic-testimonials'
+    'common/modules/experiments/tests/acquisitions-epic-testimonials-round-two',
+    'common/modules/experiments/tests/acquisitions-epic-single-cta'
+
 ], function (
     reduce,
     segmentUtil,
@@ -15,14 +17,16 @@ define([
     alwaysAsk,
     askFourEarning,
     acquisitionsEpicLiveBlog,
-    acquisitionsEpicTestimonials
+    acquisitionsEpicTestimonialsRoundTwo,
+    acquisitionsEpicSingleCta
 ) {
     /**
      * acquisition tests in priority order (highest to lowest)
      */
     var tests = [
-        acquisitionsEpicTestimonials,
         alwaysAsk,
+        acquisitionsEpicSingleCta,
+        acquisitionsEpicTestimonialsRoundTwo,
         askFourEarning,
         acquisitionsEpicLiveBlog
     ];

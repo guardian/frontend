@@ -2,7 +2,24 @@
 import { getUrlVars } from 'lib/url';
 import config from 'lib/config';
 
-const dfpEnv = {
+type Map<K, V> = { [indexer: K]: V };
+
+export type DfpEnv = {
+    renderStartTime: number,
+    adSlotSelector: string,
+    sonobiEnabled: boolean,
+    preFlightAdCallEnabled: boolean,
+    lazyLoadEnabled: boolean,
+    lazyLoadObserve: boolean,
+    creativeIDs: Array<string>,
+    advertIds: Map<string, number>,
+    advertsToLoad: Array<Object>,
+    advertsToRefresh: Array<Object>,
+    adverts: Array<Object>,
+    shouldLazyLoad: () => boolean,
+};
+
+const dfpEnv: DfpEnv = {
     /* renderStartTime: integer. Point in time when DFP kicks in */
     renderStartTime: -1,
 
@@ -45,4 +62,5 @@ const dfpEnv = {
         return !config.page.hasPageSkin && getUrlVars().dll !== '1';
     },
 };
+
 export default dfpEnv;

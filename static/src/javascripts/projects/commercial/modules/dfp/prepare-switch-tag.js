@@ -85,7 +85,7 @@ const pushAdUnit = (dfpDivId: string, sizeMapping: any) => {
     const promises = [];
 
     if (__switch_zero) {
-        const adUnitIds = findAdUnitIds(sizeMapping.size);
+        const adUnitIds = findAdUnitIds(sizeMapping.sizes);
 
         adUnitIds.forEach(adUnitId => {
             if (adUnitId) {
@@ -100,11 +100,12 @@ const pushAdUnit = (dfpDivId: string, sizeMapping: any) => {
                 );
             }
         });
-    }
 
-    return timeout(REQUEST_TIMEOUT, Promise.all(promises)).catch(() => {
-        // The display needs to be called, even in the event of an error.
-    });
+        return timeout(REQUEST_TIMEOUT, Promise.all(promises)).catch(() => {
+            // The display needs to be called, even in the event of an error.
+        });
+    }
+    return Promise.resolve();
 };
 
 const init = (start: () => void, stop: () => void) => {

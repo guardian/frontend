@@ -6,8 +6,8 @@ import com.gu.commercial.branding.Dimensions
 import com.gu.contentapi.client.model.v1.ContentType.{Article, Gallery, Video}
 import com.gu.contentapi.client.model.v1.{Content, SponsorshipLogoDimensions}
 import common.Logging
-import common.commercial.hosted.HostedUtils.getAndLog
 import common.commercial.hosted.HostedVideoPage.log
+import common.commercial.hosted.LoggingUtils.getAndLog
 import conf.Configuration.site
 import model.StandalonePage
 
@@ -18,7 +18,8 @@ trait HostedPage extends StandalonePage {
 
   def campaign: HostedCampaign
   def title: String
-  def imageUrl: String
+  def mainImageUrl: String
+  def thumbnailUrl: String
   def standfirst: String
 
   def socialShareText: Option[String]
@@ -77,8 +78,7 @@ object HostedCampaign {
         logo = HostedLogo.make(
           src = sponsorship.sponsorLogo,
           dimensions = sponsorship.sponsorLogoDimensions,
-          link = sponsorship.sponsorLink,
-          campaignId = id
+          link = sponsorship.sponsorLink
         ),
         fontColour = Colour(hostedTag.paidContentCampaignColour getOrElse "")
       )
@@ -95,8 +95,7 @@ object HostedLogo {
   def make(
     src: String,
     dimensions: Option[SponsorshipLogoDimensions],
-    link: String,
-    campaignId: String
+    link: String
   ) = HostedLogo(
     src,
     dimensions map (d => Dimensions(d.width, d.height)),

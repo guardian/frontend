@@ -31,6 +31,11 @@ define([
                 'lib/detect':  {
                     hasTouchScreen:      function () { return false; },
                     hasPushStateSupport: function () { return true; }
+                },
+                'common/views/svgs': {
+                    inlineSvg: function() {
+                        return '';
+                    }
                 }
             });
             injector.require(['common/modules/ui/selection-sharing'], function () {

@@ -1,8 +1,7 @@
 define([
-    'Promise',
     'helpers/fixtures',
     'helpers/injector'
-], function (Promise, fixtures, Injector) {
+], function (fixtures, Injector) {
     describe('Performance Logging', function () {
         var injector = new Injector();
         var performanceLogging;

@@ -96,7 +96,7 @@ object Uk extends Edition(
     Seq(
       NavItem(home),
       NavItem(uk, ukLocalNav),
-      NavItem(politics),
+      NavItem(politics, Seq(ukElection2017)),
       NavItem(world, worldLocalNav),
       NavItem(sport, sportLocalNav),
       NavItem(football, footballNav),
@@ -124,7 +124,7 @@ object Uk extends Edition(
     NavItem(home),
     NavItem(uk, ukLocalNav),
     NavItem(world, worldLocalNav),
-    NavItem(politics),
+    NavItem(ukElection2017),
     NavItem(sport, sportLocalNav),
     NavItem(football, footballNav),
     NavItem(opinion, Seq(columnists)),

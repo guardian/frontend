@@ -1,5 +1,4 @@
 define([
-    'Promise',
     'lib/fastdom-promise',
     'lib/report-error',
 
@@ -12,7 +11,6 @@ define([
     'commercial/modules/creatives/fabric-video',
     'commercial/modules/creatives/scrollable-mpu-v2'
 ], function (
-    Promise,
     fastdom,
     reportError
 ) {

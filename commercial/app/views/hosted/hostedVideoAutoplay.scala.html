@@ -1,6 +1,4 @@
-@import common.commercial.hosted.HostedCallToAction
-@import common.commercial.hosted.HostedCampaign
-@(title: String, imageUrl: String, url: String, cta: HostedCallToAction, campaign: HostedCampaign)
+@(trail: common.commercial.hosted.HostedPage)
 
 <div class="hosted-next-autoplay js-hosted-next-autoplay" data-link-name="Next video autoplay">
     <div class="hosted-next-autoplay__cancel">
@@ -9,21 +7,21 @@
         </button>
     </div>
     <div class="hosted-next-autoplay__next-in-series">
-        <div class="hosted-next-autoplay__subheader">@{cta.label}</div>
-        <a href="@{cta.url}" rel="nofollow" class="hosted-next-autoplay__tile hosted-tone-btn" data-link-name="@{campaign.name}" target="_blank">
-            @{if(cta.btnText.isDefined) cta.btnText else s"Visit ${campaign.owner} now"}@fragments.inlineSvg("arrow-right", "icon", List(""))
+        <div class="hosted-next-autoplay__subheader">@{trail.cta.label}</div>
+        <a href="@{trail.cta.url}" rel="nofollow" class="hosted-next-autoplay__tile hosted-tone-btn" data-link-name="@{trail.campaign.name}" target="_blank">
+            @{if(trail.cta.btnText.isDefined) trail.cta.btnText else s"Visit ${trail.campaign.owner} now"}@fragments.inlineSvg("arrow-right", "icon", List(""))
         </a>
     </div>
     <div class="hosted-next-autoplay__video">
         <div class="hosted-next-autoplay__header">
             <div class="hosted-next-autoplay__continue hosted-tone">Continue watching</div>
-            <h2 class="hosted-next-autoplay__subheader">@{title}</h2>
+            <h2 class="hosted-next-autoplay__subheader">@{trail.title}</h2>
         </div>
-        <a href="@{url}" class="hosted-next-autoplay__poster" data-link-name="Next Hosted Video Autoplay: @{title}">
-            <img class="hosted-next-autoplay__poster-img" src="@{imageUrl}">
-            <div class="hosted-next-autoplay__poster-timer hosted-tone-btn js-autoplay-timer" data-next-page="@{url}">10s</div>
+        <a href="@{trail.url}" class="hosted-next-autoplay__poster" data-link-name="Next Hosted Video Autoplay: @{trail.title}">
+            <img class="hosted-next-autoplay__poster-img" src="@{trail.thumbnailUrl}">
+            <div class="hosted-next-autoplay__poster-timer hosted-tone-btn js-autoplay-timer" data-next-page="@{trail.url}">10s</div>
         </a>
-        <a href="@{url}" class="hosted__next-video--mobile" data-link-name="Next Hosted Video @{title}" target="_blank">
+        <a href="@{trail.url}" class="hosted__next-video--mobile" data-link-name="Next Hosted Video @{trail.title}" target="_blank">
                             Watch now
         </a>
     </div>

@@ -64,7 +64,7 @@ define([
                         linkUrl2: variant.contributeURL,
                         componentName: variant.componentName,
                         title: 'Since you’re here…',
-                        p1: '… we have a small favour to ask. More people are reading the Guardian than ever but far fewer are paying for it. And advertising revenues across the media are falling fast. So you can see why we need to ask for your help. The Guardian\'s independent, investigative journalism takes a lot of time, money and hard work to produce. But we do it because we believe our perspective matters – because it might well be your perspective, too.',
+                        p1: '… we have a small favour to ask. More people are reading the Guardian than ever but far fewer are paying for it. And advertising revenues across the media are falling fast. So you can see why we need to ask for your help. The Guardian\'s independent, investigative journalism takes a lot of time, money and hard work to produce. But we do it because we believe our perspective matters &ndash; because it might well be your perspective, too.',
                         p2: 'If everyone who reads our reporting, who likes it, helps to pay for it, our future would be much more secure.',
                         p3: '',
                         cta1: 'Become a Supporter',

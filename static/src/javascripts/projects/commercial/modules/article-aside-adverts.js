@@ -5,16 +5,21 @@ import mediator from 'lib/mediator';
 import fastdom from 'lib/fastdom-promise';
 import commercialFeatures from 'commercial/modules/commercial-features';
 
-const minArticleHeight = 1300;
-const minImmersiveArticleHeight = 600;
+import type { bonzo } from 'bonzo';
 
-const minContentHeight = () =>
+const minArticleHeight: number = 1300;
+const minImmersiveArticleHeight: number = 600;
+
+const minContentHeight = (): number =>
     config.page.isImmersive ? minImmersiveArticleHeight : minArticleHeight;
 
-const init = (start: () => void, stop: () => void) => {
+const articleAsideAdvertsInit = (
+    start: () => void,
+    stop: () => void
+): Promise<boolean> => {
     start();
 
-    const $col = $('.js-secondary-column');
+    const $col: bonzo = $('.js-secondary-column');
 
     // are article aside ads disabled, or secondary column hidden?
     if (
@@ -26,8 +31,8 @@ const init = (start: () => void, stop: () => void) => {
         return Promise.resolve(false);
     }
 
-    const $mainCol = $('.js-content-main-column');
-    const $adSlot = $('.js-ad-slot', $col);
+    const $mainCol: bonzo = $('.js-content-main-column');
+    const $adSlot: bonzo = $('.js-ad-slot', $col);
 
     if (!$adSlot.length || !$mainCol.length) {
         stop();
@@ -35,8 +40,8 @@ const init = (start: () => void, stop: () => void) => {
     }
 
     return fastdom
-        .read(() => $mainCol.dim().height)
-        .then(mainColHeight => {
+        .read((): number => $mainCol.dim().height)
+        .then((mainColHeight: number) => {
             // Should switch to 'right-small' MPU for short articles
             if (mainColHeight < minContentHeight()) {
                 return fastdom.write(() => {
@@ -50,12 +55,11 @@ const init = (start: () => void, stop: () => void) => {
             }
             return $adSlot[0];
         })
-        .then(adSlot => {
+        .then((adSlot: Element) => {
             stop();
-            mediator.emit('page:commercial:right', adSlot);
+            mediator.emit('page:defaultcommercial:right', adSlot);
+            return true;
         });
 };
 
-export default {
-    init,
-};
+export { articleAsideAdvertsInit };

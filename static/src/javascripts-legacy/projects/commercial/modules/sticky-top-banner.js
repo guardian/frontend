@@ -1,5 +1,4 @@
 define([
-    'Promise',
     'lib/events',
     'lib/config',
     'lib/detect',
@@ -9,7 +8,6 @@ define([
     'commercial/modules/dfp/get-advert-by-id',
     'commercial/modules/messenger'
 ], function (
-    Promise,
     events,
     config,
     detect,
