@@ -1,6 +1,5 @@
 {
   "Francis Carr": [
-    "projects/commercial/modules/build-page-targeting.js",
     "projects/commercial/modules/close-disabled-slots.js",
     "projects/commercial/modules/comment-adverts.js",
     "projects/commercial/modules/commercial-features.js",
@@ -46,13 +45,8 @@
     "projects/common/modules/charts/doughnut.js"
   ],
   "Lydia Shepherd": [
-    "projects/commercial/modules/third-party-tags/remarketing.js",
-    "projects/commercial/modules/third-party-tags/tourism-australia.js",
-    "projects/commercial/modules/user-ad-targeting.js",
     "projects/commercial/modules/user-features.js",
-    "projects/common/modules/commercial/adblock-banner-config.js",
     "projects/common/modules/commercial/adblock-messages.js",
-    "projects/common/modules/ui/images.js",
     "projects/common/modules/charts/table-doughnut.js"
   ],
   "sndrs": [
@@ -71,7 +65,6 @@
     "projects/common/modules/check-dispatcher.js"
   ],
   "Simon Adcock": [
-    "lib/ajax.js",
     "projects/common/modules/ui/rhc.js",
     "bootstraps/enhanced/identity-common.js",
     "bootstraps/enhanced/image-content.js",
@@ -94,7 +87,6 @@
     "bootstraps/enhanced/youtube.js",
     "bootstraps/video-embed.js",
     "bootstraps/youtube-embed.js",
-    "lib/ajax.js",
     "lib/atob.js",
     "projects/common/modules/component.js"
   ],
@@ -111,10 +103,8 @@
     "projects/common/modules/crosswords/anagram-helper/clue-input.js"
   ],
   "GHaberis": [
-    "projects/admin/bootstraps/abtests.js",
     "projects/admin/bootstraps/radiator.js",
     "projects/admin/modules/abtests/abtest-report-item.js",
-    "projects/admin/modules/abtests/abtest-report.js",
     "projects/admin/modules/abtests/audience-item.js",
     "projects/admin/modules/abtests/audience.js",
     "projects/admin/modules/abtests/participation-item.js",
@@ -275,7 +265,6 @@
     "projects/commercial/modules/paidfor-band.js"
   ],
   "Philip Wills": [
-    "projects/facia/modules/onwards/weather.js",
     "projects/facia/modules/ui/container-show-more.js",
     "projects/facia/modules/ui/container-toggle.js",
     "projects/facia/modules/ui/football-snaps.js",

@@ -81,7 +81,6 @@ object CardStyle {
     case fapiutils.Review => Review
     case fapiutils.Letters => Letters
     case fapiutils.ExternalLink => ExternalLink
-    case fapiutils.Paid => DefaultCardstyle // Default style for now until a tone is added for paid
     case fapiutils.DefaultCardstyle  => DefaultCardstyle
   }
 }
