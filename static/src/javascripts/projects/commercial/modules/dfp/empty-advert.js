@@ -1,6 +1,6 @@
 // @flow
 
-/* eslint no-param-reassign: ["error", { "props": false }], no-multi-assign: "off"*/
+/* eslint no-multi-assign: "off"*/
 
 import fastdom from 'fastdom';
 
