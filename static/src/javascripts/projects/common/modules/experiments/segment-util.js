@@ -2,7 +2,10 @@
 import type { ABTest, Variant } from 'common/modules/experiments/ab-types';
 
 import memoize from 'lodash/functions/memoize';
-import * as mvtCookie from 'common/modules/analytics/mvt-cookie';
+import {
+    getMvtNumValues,
+    getMvtValue,
+} from 'common/modules/analytics/mvt-cookie';
 
 const NOT_IN_TEST = 'notintest';
 
@@ -18,10 +21,9 @@ const getId = test => test.id; // use test ids as memo cache keys
  * @return {String} variant ID
  */
 const computeVariantIdFor = (test: ABTest): string => {
-    const smallestTestId = mvtCookie.getMvtNumValues() * test.audienceOffset;
-    const largestTestId =
-        smallestTestId + mvtCookie.getMvtNumValues() * test.audience;
-    const mvtCookieId = Number(mvtCookie.getMvtValue());
+    const smallestTestId = getMvtNumValues() * test.audienceOffset;
+    const largestTestId = smallestTestId + getMvtNumValues() * test.audience;
+    const mvtCookieId = Number(getMvtValue());
 
     if (
         mvtCookieId &&
