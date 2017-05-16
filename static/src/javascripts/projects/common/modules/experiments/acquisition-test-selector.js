@@ -1,7 +1,6 @@
 // @flow
-import * as segmentUtil from 'common/modules/experiments/segment-util';
-import * as testCanRunChecks
-    from 'common/modules/experiments/test-can-run-checks';
+import { variantFor, isInTest } from 'common/modules/experiments/segment-util';
+import { testCanBeRun } from 'common/modules/experiments/test-can-run-checks';
 import * as viewLog from 'common/modules/commercial/acquisitions-view-log';
 import alwaysAsk
     from 'common/modules/experiments/tests/contributions-epic-always-ask-strategy';
@@ -36,11 +35,12 @@ export const epicEngagementBannerTests = tests.reduce((out, Test) => {
 
 export const abTestClashData = tests.map(Test => new Test());
 
+// This can be annotated with a return type of ABTest when all of the imported tests are converted
 export const getTest = () => {
     const eligibleTests = tests.filter(Test => {
         const t = new Test();
         const forced = window.location.hash.indexOf(`ab-${t.id}`) > -1;
-        const variant = segmentUtil.variantFor(t);
+        const variant = variantFor(t);
 
         if (!variant || !variant.maxViews) return false;
 
@@ -57,10 +57,7 @@ export const getTest = () => {
             (withinViewLimit && enoughDaysBetweenViews) || variant.isUnlimited;
 
         return (
-            forced ||
-            (testCanRunChecks.testCanBeRun(t) &&
-                segmentUtil.isInTest(t) &&
-                hasNotReachedRateLimit)
+            forced || (testCanBeRun(t) && isInTest(t) && hasNotReachedRateLimit)
         );
     });
 
