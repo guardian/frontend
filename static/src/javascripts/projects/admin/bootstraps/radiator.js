@@ -1,10 +1,6 @@
 // @flow
 import fetchJson from 'lib/fetch-json';
-import groupBy from 'lodash/collections/groupBy';
 import flatten from 'lodash/arrays/flatten';
-import pluck from 'lodash/collections/pluck';
-import first from 'lodash/arrays/first';
-import last from 'lodash/arrays/last';
 
 const initRadiator = (): void => {
     // riff raff - requires you to be on the guardian network
@@ -115,15 +111,25 @@ const initRadiator = (): void => {
 
     // Page views
     fetchJson(`//${location.host}/ophan/pageviews`).then(data => {
-        const todayData = groupBy(
-            flatten(pluck(data.seriesData, 'data')),
-            entry => entry.dateTime
-        );
+        const pluckedData = data.seriesData.map(dataObj => dataObj.data);
+
+        const todayData = flatten(pluckedData).reduce((days, day) => {
+            const dateTime = day.dateTime;
+
+            if (!days[dateTime]) {
+                days[dateTime] = [];
+            }
+
+            days[dateTime].push(day);
+
+            return days;
+        }, {});
 
         // Remove first & last Ophan entries, as they always seem slightly off
         const keys = Object.keys(todayData);
-        delete todayData[first(keys)];
-        delete todayData[last(keys)];
+
+        delete todayData[keys.shift()];
+        delete todayData[keys.pop()];
 
         // Build Graph
         const builtGraphData = Object.keys(todayData).reduce(
@@ -174,10 +180,10 @@ const initRadiator = (): void => {
         });
 
         // Average pageviews now
-        const lastOphanEntry = last(
-            Object.keys(todayData).map(key => todayData[key])
-        ).reduce((memo, entry) => entry.count + memo, 0);
-
+        const lastOphanEntry = Object.keys(todayData)
+            .map(key => todayData[key])
+            .pop()
+            .reduce((memo, entry) => entry.count + memo, 0);
         const viewsPerSecond = Math.round(lastOphanEntry / 60);
         const viewsPerSecondElem = document.querySelector(
             '.pageviews-per-second'
