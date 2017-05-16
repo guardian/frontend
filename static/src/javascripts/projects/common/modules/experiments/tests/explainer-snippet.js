@@ -1,7 +1,5 @@
 // @flow
 
-/* eslint no-param-reassign: "off" */
-
 import { addEventListener } from 'lib/events';
 import fastdom from 'lib/fastdom-promise';
 import mediator from 'lib/mediator';
@@ -32,9 +30,9 @@ const ExplainerSnippet = () => {
     // will run in specific articles
     const canRun = () => paths.includes(location.pathname);
 
-    // opening the disclosure widget is our success criterion for this test
+    // opening the disclosure widget is our impression criterion for this test
     const onShow = () => {
-        mediator.emit('ab:explainer:complete');
+        mediator.emit('ab:explainer:displayed');
     };
 
     // we'll bind a partial function to listen for thumbs up/down events
@@ -65,6 +63,9 @@ const ExplainerSnippet = () => {
                 question.hidden = true;
             });
             e.currentTarget.removeEventListener('click', feedback);
+            if (value === 'like') {
+                mediator.emit('ab:explainer:complete');
+            }
         }
     };
 
@@ -100,7 +101,6 @@ const ExplainerSnippet = () => {
                             eid
                         ))
                     );
-                    mediator.emit('ab:explainer:displayed');
                 });
         }
     };
