@@ -11,11 +11,12 @@ const MAX_CLIENT_MVT_ID = 1000000;
 export const overwriteMvtCookie = (testId: string) =>
     addCookie(MULTIVARIATE_ID_COOKIE, testId, 365);
 
-export const getMvtValue = () => getCookie(MULTIVARIATE_ID_COOKIE);
+export const getMvtValue = (): number =>
+    Number(getCookie(MULTIVARIATE_ID_COOKIE));
 
-export const getMvtNumValues = () => MAX_CLIENT_MVT_ID;
+export const getMvtNumValues = (): number => Number(MAX_CLIENT_MVT_ID);
 
-export const getMvtFullId = () => {
+export const getMvtFullId = (): string => {
     const bwidCookie = getCookie(BROWSER_ID_COOKIE) || 'unknown-browser-id';
     const mvtidCookie = getMvtValue() || 'unknown-mvt-id';
     const visitoridCookie =
