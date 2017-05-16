@@ -31,10 +31,6 @@ define([
             fixtures.clean(fixturesConfig.id);
         });
 
-        it('Should exist', function () {
-            expect(TechFeedback).toBeDefined();
-        });
-
         it("Should return a browser in extra information", function(){
             var feedback = new TechFeedback();
             expect(feedback.getExtraDataInformation().browser).toBeDefined();
@@ -45,7 +41,7 @@ define([
             expect(feedback.getExtraDataInformation().abTests).toBe("No tests running");
         });
 
-        it("Should be able to summarise AB tests if the exist", function(){
+        it("Should be able to summarise AB tests if they exist", function(){
             var feedback = new TechFeedback();
             expect(feedback.summariseAbTests({Foo : {variant : 'foo'}, Bar : {variant : 'bar'}})).toBe('Foo=foo, Bar=bar');
         });
