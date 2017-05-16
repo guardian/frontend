@@ -6,7 +6,7 @@ import pluck from 'lodash/collections/pluck';
 import first from 'lodash/arrays/first';
 import last from 'lodash/arrays/last';
 
-const init = (): void => {
+const initRadiator = (): void => {
     // riff raff - requires you to be on the guardian network
     const apiKeyElem = document.getElementById('riffraff-api-key');
     if (!apiKeyElem || !(apiKeyElem instanceof HTMLInputElement)) {
@@ -189,4 +189,4 @@ const init = (): void => {
     });
 };
 
-export { init };
+export { initRadiator };
