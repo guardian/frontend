@@ -32,11 +32,11 @@ class TechFeedbackController @Inject() (ws: WSClient) (implicit context: Applica
     ws.url(Configuration.feedback.feedpipeEndpoint)
       .withRequestTimeout(6000.millis)
       .post(Json.obj(
-        "category" -> category,
+        "category" -> java.net.URLEncoder.encode(category, "UTF-8"),
         "body" -> java.net.URLEncoder.encode(body, "UTF-8"),
-        "user" -> user,
+        "user" -> java.net.URLEncoder.encode(user, "UTF-8"),
         "extra" -> java.net.URLEncoder.encode(extra, "UTF-8"),
-        "name" -> name
+        "name" -> java.net.URLEncoder.encode(name, "UTF-8")
       ))
 
     val page = model.SimplePage(MetaData.make(
