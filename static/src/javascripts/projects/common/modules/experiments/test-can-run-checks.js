@@ -3,7 +3,8 @@ import type { ABTest } from 'common/modules/experiments/ab-types';
 
 import config from 'lib/config';
 
-const isTestSwitchedOn = test => config.switches[`ab${test.id}`];
+const isTestSwitchedOn = (test: ABTest): boolean =>
+    config.switches[`ab${test.id}`];
 
 export const isExpired = (testExpiry: string): boolean => {
     // new Date(test.expiry) sets the expiry time to 00:00:00
