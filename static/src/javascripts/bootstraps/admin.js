@@ -1,5 +1,5 @@
 // @flow
-import abTests from 'admin/bootstraps/abtests';
+import { initABTests } from 'admin/bootstraps/abtests';
 import radiator from 'admin/bootstraps/radiator';
 import commercialBrowserPerformance
     from 'admin/bootstraps/commercial-browser-performance';
@@ -8,7 +8,7 @@ import domReady from 'domready';
 domReady(() => {
     switch (window.location.pathname) {
         case '/analytics/abtests':
-            abTests.init();
+            initABTests();
             break;
 
         case '/radiator':

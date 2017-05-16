@@ -46,6 +46,15 @@ define([
             return document.querySelector('.membership-ab-thrasher--wrapper');
         };
 
+        this.setTitle = function() {
+            if (this.thrasher()) {
+                var titleEl = document.querySelector('.membership-ab-thrasher_header .main_title');
+                if (titleEl) {
+                    titleEl.innerHTML = '<p>Support' + (detect.isBreakpoint({min: 'mobileMedium', max: 'tablet'}) ? ' ' : '<br>')  + 'the Guardian</p>';
+                }
+            }
+        };
+
         this.setCopy = function() {
             if (this.thrasher()) {
                 var subTitleEl = document.querySelector('.membership-ab-thrasher_header .sub_title');
@@ -83,6 +92,7 @@ define([
         };
 
         this.setup = function(variant) {
+            this.setTitle();
             this.setCopy();
             this.setLink(variant);
             this.setCaption();

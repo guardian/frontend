@@ -36,10 +36,6 @@
             <div class="popup popup--default is-off top-bar__popup--more" id="guardian-services-top-menu">
                 <h3 class="popup__group-header">from the guardian:</h3>
                 <ul class="popup__group">
-                    <li class="popup__item brand-bar__popup--jobs mobile-only show-on-slim-header">
-                        <a class="brand-bar__item--action" data-link-name="uk : topNav : jobs"
-                           href="https://jobs.theguardian.com/?INTCMP=NGW_TOPNAV_UK_GU_JOBS">jobs</a>
-                    </li>
                     <li class="popup__item brand-bar__popup--soulmates hide-on-desktop show-on-slim-header">
                         <a class="brand-bar__item--action" data-link-name="uk : topNav : soulmates"
                            href="https://soulmates.theguardian.com/?INTCMP=NGW_TOPNAV_UK_GU_SOULMATES">dating</a>
@@ -79,41 +75,11 @@
             <a class="brand-bar__item--action" data-link-name="us : topNav : jobs"
                href="https://jobs.theguardian.com/?INTCMP=NGW_TOPNAV_US_GU_JOBS">jobs</a>
         </div>
-        <div class="brand-bar__item has-popup brand-bar__item--has-control brand-bar__item--more mobile-only show-on-slim-header">
-            @ellipsis()
-            <div class="popup popup--default is-off top-bar__popup--more" id="guardian-services-top-menu">
-                <h3 class="popup__group-header">from the guardian:</h3>
-                <ul class="popup__group">
-                    <li class="popup__item brand-bar__popup--jobs mobile-only show-on-slim-header">
-                        <a class="brand-bar__item--action" data-link-name="us: topNav : jobs"
-                           href="https://jobs.theguardian.com/?INTCMP=NGW_TOPNAV_US_GU_JOBS">jobs</a>
-                    </li>
-                </ul>
-                @editionMenu()
-            </div>
-        </div>
     }
     @if(Edition(request) == Au){
         <div class="brand-bar__item brand-bar__item--masterclasses hide-until-tablet hide-on-slim-header">
-            <a class="brand-bar__item--action" data-link-name="au : topNav : masterclasses"
-                href="https://www.theguardian.com/guardian-masterclasses/guardian-masterclasses-australia">masterclasses</a>
-        </div>
-        <div class="brand-bar__item has-popup brand-bar__item--has-control brand-bar__item--more mobile-only show-on-slim-header">
-            @ellipsis()
-            <div class="popup popup--default is-off top-bar__popup--more" id="guardian-services-top-menu">
-                <h3 class="popup__group-header">from the guardian:</h3>
-                <ul class="popup__group">
-                    <li class="popup__item mobile-only">
-                        <a class="brand-bar__item--action" data-link-name="au : topNav : jobs"
-                           href="https://jobs.theguardian.com/?INTCMP=NGW_TOPNAV_AU_GU_JOBS">jobs</a>
-                    </li>
-                    <li class="popup__item">
-                        <a class="brand-bar__item--action" data-link-name="au : topNav : masterclasses"
-                           href="https://www.theguardian.com/guardian-masterclasses/guardian-masterclasses-australia">masterclasses</a>
-                    </li>
-                </ul>
-                @editionMenu()
-            </div>
+            <a class="brand-bar__item--action" data-link-name="au : topNav : events"
+                href="https://www.theguardian.com/guardian-live-australia">events</a>
         </div>
     }
     @if(Edition(request) == International){
