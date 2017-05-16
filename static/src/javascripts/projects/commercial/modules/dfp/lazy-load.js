@@ -33,7 +33,9 @@ const displayAd = (advertId: string): void => {
         'lazyWaitComplete',
         getCurrentTime()
     );
-    loadAdvert(advert);
+    if (advert) {
+        loadAdvert(advert);
+    }
 };
 
 const onScroll = (): void => {

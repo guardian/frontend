@@ -7,7 +7,7 @@ import { enableLazyLoad } from 'commercial/modules/dfp/enable-lazy-load';
 import performanceLogging from 'commercial/modules/dfp/performance-logging';
 
 const displayAd = (adSlot: HTMLElement, forceDisplay: boolean) => {
-    const advert: Advert = Advert(adSlot);
+    const advert: Advert = new Advert(adSlot);
 
     dfpEnv.advertIds[advert.id] = dfpEnv.adverts.push(advert) - 1;
     if (dfpEnv.shouldLazyLoad() && !forceDisplay) {
