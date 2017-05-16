@@ -28,6 +28,15 @@ export type ABTest = {
 };
 
 /**
+ * the structure stored in localStorage
+ */
+export type Participations = {
+    [testId: string]: {
+        variant: string,
+    },
+};
+
+/**
  * an individual A/B test, structured for Ophan
  */
 export type OphanABEvent = {

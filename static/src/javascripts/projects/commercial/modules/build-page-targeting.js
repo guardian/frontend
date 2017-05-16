@@ -7,7 +7,7 @@ import { getUrlVars } from 'lib/url';
 import krux from 'commercial/modules/third-party-tags/krux';
 import identity from 'common/modules/identity/api';
 import { getUserSegments } from 'commercial/modules/user-ad-targeting';
-import abUtils from 'common/modules/experiments/utils';
+import { getParticipations } from 'common/modules/experiments/utils';
 import flatten from 'lodash/arrays/flatten';
 import once from 'lodash/functions/once';
 import pick from 'lodash/objects/pick';
@@ -20,7 +20,7 @@ const formatTarget = (target: ?string): ?string =>
 
 const abParam = (): Array<string> => {
     const cmRegex = /^(cm|commercial)/;
-    const abParticipations = abUtils.getParticipations();
+    const abParticipations = getParticipations();
     const abParams = [];
 
     Object.keys(abParticipations).forEach(testKey => {

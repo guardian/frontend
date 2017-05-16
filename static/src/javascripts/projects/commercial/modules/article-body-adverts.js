@@ -2,7 +2,8 @@
 import config from 'lib/config';
 import detect from 'lib/detect';
 import fastdom from 'lib/fastdom-promise';
-import abUtils from 'common/modules/experiments/utils';
+import { getTestVariantId } from 'common/modules/experiments/utils';
+import { testCanBeRun } from 'common/modules/experiments/test-can-run-checks';
 import spaceFiller from 'common/modules/article/space-filler';
 import adSizes from 'commercial/modules/ad-sizes';
 import { addSlot } from 'commercial/modules/dfp/add-slot';
@@ -27,8 +28,8 @@ let getSlotName: () => string;
 let getSlotType: () => string;
 
 const isOffsetingAds: boolean =
-    abUtils.testCanBeRun(new IncreaseInlineAds()) &&
-    abUtils.getTestVariantId('IncreaseInlineAdsReduxRedux') === 'yes';
+    testCanBeRun(new IncreaseInlineAds()) &&
+    getTestVariantId('IncreaseInlineAdsReduxRedux') === 'yes';
 
 const getSlotNameForMobile = (): string =>
     bodyAds === 1 ? 'top-above-nav' : `inline${bodyAds - 1}`;
