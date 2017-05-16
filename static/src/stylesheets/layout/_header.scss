@@ -245,6 +245,7 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter / 2;
     background-color: $news-main-2;
     cursor: pointer;
     bottom: -$gs-baseline / 2;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, .08);
 
     @include mq($until: mobileMedium) {
         //Smaller menu button
@@ -269,7 +270,6 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter / 2;
 
 .new-header__nav__menu-button--open {
     z-index: 1071;
-    box-shadow: 0 0 0 1px rgba(0, 0, 0, .08);
 
     &:before {
         // Extended hit area for veggie burger close state, for fat fingers
