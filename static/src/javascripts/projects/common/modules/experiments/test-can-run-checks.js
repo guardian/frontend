@@ -16,7 +16,7 @@ export const testCanBeRun = (test: ABTest): boolean => {
     const expired = isExpired(test.expiry);
     const isSensitive = config.page.isSensitive;
     return (
-        (isSensitive ? test.showForSensitive : true) &&
+        (isSensitive ? !!test.showForSensitive : true) &&
         isTestSwitchedOn(test) &&
         !expired &&
         (!test.canRun || test.canRun())
