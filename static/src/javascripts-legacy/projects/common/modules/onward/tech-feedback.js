@@ -53,16 +53,16 @@ define([
 
     function toggleFormVisibility() {
         $.forEachElement("#feedback-category>option", function(elem){
-            if(elem.selected && elem.value != "nothing"){
+            if(elem.selected && elem.value !== "nothing"){
                 document.getElementById(elem.value).classList.add("feedback__form--selected");
-            } else if(elem.value != "nothing") {
+            } else if(elem.value !== "nothing") {
                 document.getElementById(elem.value).classList.remove("feedback__form--selected");
             }
         });
     }
 
     function mandatoryCheck(elem) {
-        if(elem.value == ""){
+        if(elem.value === ""){
             elem.classList.add("feedback__entry--mandatory-failed");
             return false;
         } else {
