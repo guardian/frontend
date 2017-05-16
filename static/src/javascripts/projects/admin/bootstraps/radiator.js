@@ -189,4 +189,4 @@ const init = (): void => {
     });
 };
 
-export default { init };
+export { init };
