@@ -28,7 +28,9 @@ trait Requests {
 
     lazy val isModified = isJson || isRss || isEmail
 
-    lazy val isHtml = !(isJson || isRss || isEmail || isXmlHttpRequest || isAmp || isHealthcheck)
+    lazy val isAsset = r.path.contains("/assets/")
+
+    lazy val isHtml = !(isAsset || isJson || isRss || isEmail || isXmlHttpRequest || isAmp || isHealthcheck)
 
     lazy val pathWithoutModifiers: String =
       if (isEmail) r.path.stripSuffix(EMAIL_SUFFIX)
