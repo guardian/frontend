@@ -1,15 +1,18 @@
-import qwery from 'qwery';
+// @flow
+
 import raven from 'lib/raven';
 import config from 'lib/config';
-import loadScript from 'lib/load-script';
-import fastdom from 'lib/fastdom-promise';
+import { loadScript } from 'lib/load-script';
 import commercialFeatures from 'commercial/modules/commercial-features';
 import buildPageTargeting from 'commercial/modules/build-page-targeting';
 import closeSlots from 'commercial/modules/close-disabled-slots';
 import dfpEnv from 'commercial/modules/dfp/dfp-env';
 import onSlotRender from 'commercial/modules/dfp/on-slot-render';
 import onSlotLoad from 'commercial/modules/dfp/on-slot-load';
-import performanceLogging from 'commercial/modules/dfp/performance-logging';
+import {
+    addTag,
+    setListeners,
+} from 'commercial/modules/dfp/performance-logging';
 import 'commercial/modules/messenger/type';
 import 'commercial/modules/messenger/get-stylesheet';
 import 'commercial/modules/messenger/resize';
@@ -18,28 +21,38 @@ import 'commercial/modules/messenger/viewport';
 import 'commercial/modules/messenger/click';
 import 'commercial/modules/messenger/background';
 
-export default {
-    init: init
+const setDfpListeners = (): void => {
+    setListeners(window.googletag);
+
+    const pubads = window.googletag.pubads();
+    pubads.addEventListener('slotRenderEnded', raven.wrap(onSlotRender));
+    pubads.addEventListener('slotOnload', raven.wrap(onSlotLoad));
 };
 
-function init(start, stop) {
+const setPageTargeting = (): void => {
+    const pubads = window.googletag.pubads();
+    const targeting = buildPageTargeting();
+    Object.keys(targeting).forEach(key => {
+        pubads.setTargeting(key, targeting[key]);
+    });
+};
 
-    function setupAdvertising() {
+const removeAdSlots = (): Promise<void> => closeSlots.init(true);
 
-        performanceLogging.addTag(dfpEnv.sonobiEnabled ? 'sonobi' : 'waterfall');
+const init = (start: () => void, stop: () => void): Promise<void> => {
+    const setupAdvertising = (): Promise<void> => {
+        addTag(dfpEnv.sonobiEnabled ? 'sonobi' : 'waterfall');
 
         window.googletag.cmd.push(
             start,
-            setListeners,
+            setDfpListeners,
             setPageTargeting,
             stop
         );
 
         // Just load googletag. Sonobi's wrapper will already be loaded, and googletag is already added to the window by sonobi.
-        return loadScript.loadScript(config.libs.googletag, {
-            async: false
-        });
-    }
+        return loadScript(config.libs.googletag, { async: false });
+    };
 
     if (commercialFeatures.dfpAdvertising) {
         setupAdvertising()
@@ -51,24 +64,8 @@ function init(start, stop) {
     }
 
     return removeAdSlots();
-}
+};
 
-function setListeners() {
-    performanceLogging.setListeners(window.googletag);
-
-    var pubads = window.googletag.pubads();
-    pubads.addEventListener('slotRenderEnded', raven.wrap(onSlotRender));
-    pubads.addEventListener('slotOnload', raven.wrap(onSlotLoad));
-}
-
-function setPageTargeting() {
-    var pubads = window.googletag.pubads();
-    var targeting = buildPageTargeting();
-    Object.keys(targeting).forEach(function(key) {
-        pubads.setTargeting(key, targeting[key]);
-    });
-}
-
-function removeAdSlots() {
-    return closeSlots.init(true);
-}
+export default {
+    init,
+};
