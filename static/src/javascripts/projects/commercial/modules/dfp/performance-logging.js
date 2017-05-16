@@ -1,7 +1,5 @@
 // @flow
 
-/* eslint no-param-reassign: "off" */
-
 import raven from 'lib/raven';
 import config from 'lib/config';
 import { getCurrentTime } from 'lib/user-timing';
