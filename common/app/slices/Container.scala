@@ -10,6 +10,7 @@ object Container extends Logging {
     ("dynamic/fast", Dynamic(DynamicFast)),
     ("dynamic/slow", Dynamic(DynamicSlow)),
     ("dynamic/package", Dynamic(DynamicPackage)),
+    ("dynamo/election", Dynamic(DynamicElection)),
     ("dynamic/slow-mpu", Dynamic(DynamicSlowMPU(omitMPU = false))),
     ("fixed/video", Video),
     ("nav/list", NavList),

@@ -58,7 +58,6 @@ object FixedContainers {
   val fixedMediumSlowXIIMpu = slices(Seq(TTT, TlTlMpu), slicesWithoutMpu = Seq(TTT, TlTlTl))
   val fixedMediumFastXI = slices(HalfQQ, Ql2Ql2Ql2Ql2)
   val fixedMediumFastXII = slices(QuarterQuarterQuarterQuarter, Ql2Ql2Ql2Ql2)
-  val fixedLargeElections = slices(ThreeQuarterTallQuarter1, QuarterQuarterQuarterQuarter)
 
   val fastIndexPageMpuII = slices(TTMpu)
   val fastIndexPageMpuIV = slices(TTlMpu)
@@ -91,7 +90,6 @@ object FixedContainers {
     ("fixed/medium/slow-XII-mpu", fixedMediumSlowXIIMpu),
     ("fixed/medium/fast-XI", fixedMediumFastXI),
     ("fixed/medium/fast-XII", fixedMediumFastXII),
-    ("dynamo/election", fixedLargeElections),
     ("fixed/large/slow-XIV", slices(ThreeQuarterQuarter, QuarterQuarterQuarterQuarter, Ql2Ql2Ql2Ql2)),
     ("fixed/thrasher", thrasher)
   ) ++ (if (Configuration.faciatool.showTestContainers) Map(
