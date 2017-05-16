@@ -72,37 +72,48 @@ const ExplainerSnippet = () => {
     // test bootstrap: runs when the user is in the corresponding variant
     const test = (options: Object) => {
         const hook = document.querySelector('.js-explainer-snippet');
-        if (hook) {
-            const html = template(ExplainerSnippetStr, {
-                thumbIcon,
-                plusIcon,
-                minusIcon,
-                style: options.style,
-            });
-            fastdom
-                .write(() => {
-                    hook.insertAdjacentHTML('beforeend', html);
-                    return [
-                        ...hook.querySelectorAll(
-                            '.explainer-snippet__header, .explainer-snippet__feedback, .explainer-snippet__ack'
-                        ),
-                    ];
-                })
-                .then(([handle, question, ack]) => {
-                    const eid = hook.getAttribute('data-explainer-id') || '';
-                    addEventListener(handle, 'click', onShow, { once: true });
-                    addEventListener(
-                        question,
-                        'click',
-                        (feedback = onFeedback.bind(
-                            null,
-                            ack,
-                            options.style,
-                            eid
-                        ))
-                    );
-                });
+        if (!hook) {
+            return;
         }
+
+        const html = template(ExplainerSnippetStr, {
+            thumbIcon,
+            plusIcon,
+            minusIcon,
+            style: options.style,
+        });
+        fastdom
+            .write(() => {
+                hook.insertAdjacentHTML('beforeend', html);
+                return [
+                    ...hook.querySelectorAll(
+                        '.explainer-snippet__header, .explainer-snippet__feedback, .explainer-snippet__ack'
+                    ),
+                ];
+            })
+            .then(([handle, question, ack]) => {
+                const eid = hook.getAttribute('data-explainer-id') || '';
+                addEventListener(handle, 'click', onShow, { once: true });
+                addEventListener(
+                    question,
+                    'click',
+                    (feedback = onFeedback.bind(null, ack, options.style, eid))
+                );
+            });
+    };
+
+    // the "no-snippet" variant piggybacks on the existing interactive
+    // and so we don't track impression or success events for this one
+    // it is supposed to be done already elsewhere
+    const testNoSnippet = () => {
+        const hook = document.querySelector('.js-explainer-snippet');
+        const explainer = hook && hook.previousElementSibling;
+        if (!explainer) {
+            return;
+        }
+        fastdom.write(() => {
+            explainer.removeAttribute('hidden');
+        });
     };
 
     // registers an impression (in our case, when the form is added to the dom)
@@ -129,6 +140,10 @@ const ExplainerSnippet = () => {
         canRun,
         showForSensitive: true,
         variants: [
+            {
+                id: 'no-snippet',
+                test: testNoSnippet,
+            },
             {
                 id: 'snippet-light',
                 test,

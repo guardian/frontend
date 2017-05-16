@@ -801,7 +801,8 @@ object ExplainerCleaner extends HtmlCleaner {
           val hook = document.createElement("div")
             .addClass("js-explainer-snippet")
             .attr("data-explainer-id", eid)
-          i.replaceWith(hook)
+          i.attr("hidden", "hidden")
+          i.after(hook)
         }
       }
     document
