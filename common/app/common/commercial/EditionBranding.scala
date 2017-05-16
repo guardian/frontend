@@ -45,14 +45,14 @@ object EditionBranding {
   implicit val editionBrandingFormat = Json.format[EditionBranding]
 
   def fromContent(item: Content): Seq[EditionBranding] = Edition.all.map { edition =>
-    EditionBranding(edition, BrandingFinder.findBranding(item, edition.id))
+    EditionBranding(edition, BrandingFinder.findBranding(edition.id)(item))
   }
 
   def fromSection(section: Section): Seq[EditionBranding] = Edition.all.map { edition =>
-    EditionBranding(edition, BrandingFinder.findBranding(section, edition.id))
+    EditionBranding(edition, BrandingFinder.findBranding(edition.id)(section))
   }
 
   def fromTag(tag: Tag): Seq[EditionBranding] = Edition.all.map { edition =>
-    EditionBranding(edition, BrandingFinder.findBranding(tag, edition.id))
+    EditionBranding(edition, BrandingFinder.findBranding(edition.id)(tag))
   }
 }

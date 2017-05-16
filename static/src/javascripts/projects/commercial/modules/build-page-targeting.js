@@ -7,7 +7,7 @@ import { getUrlVars } from 'lib/url';
 import krux from 'commercial/modules/third-party-tags/krux';
 import identity from 'common/modules/identity/api';
 import { getUserSegments } from 'commercial/modules/user-ad-targeting';
-import abUtils from 'common/modules/experiments/utils';
+import { getParticipations } from 'common/modules/experiments/utils';
 import flatten from 'lodash/arrays/flatten';
 import once from 'lodash/functions/once';
 import pick from 'lodash/objects/pick';
@@ -19,9 +19,9 @@ const formatTarget = (target: ?string): ?string =>
     target ? format(target).replace(/&/g, 'and').replace(/'/g, '') : null;
 
 const abParam = (): Array<string> => {
-    const cmRegex: RegExp = /^(cm|commercial)/;
-    const abParticipations: Object = abUtils.getParticipations();
-    const abParams: Array<string> = [];
+    const cmRegex = /^(cm|commercial)/;
+    const abParticipations = getParticipations();
+    const abParams = [];
 
     Object.keys(abParticipations).forEach((testKey: string): void => {
         const testValue: { variant: string } = abParticipations[testKey];
