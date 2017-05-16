@@ -25,7 +25,6 @@
   "Regis Kuckaertz": [
     "projects/commercial/modules/dfp/on-slot-load.js",
     "projects/commercial/modules/dfp/on-slot-render.js",
-    "projects/commercial/modules/dfp/performance-logging.js",
     "projects/commercial/modules/dfp/prepare-googletag.js",
     "projects/common/modules/avatar/api.js"
   ],
