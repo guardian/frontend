@@ -10,50 +10,58 @@ const defaultOptions = {
     type: 'local',
 };
 
-type Options = {
-    type?: 'local' | 'session',
+type StorageOptions = {
+    type: 'local' | 'session',
 };
 
-const set = (name: string, value: any, options?: Options = {}): void => {
-    storage[options.type || defaultOptions.type].set(
-        storagePrefix + name,
-        value
-    );
+const set = (
+    name: string,
+    value: any,
+    { type }: StorageOptions = defaultOptions
+): void => {
+    storage[type].set(storagePrefix + name, value);
 };
 
-const get = (name: string, options: Options = {}): any =>
-    storage[options.type || defaultOptions.type].get(storagePrefix + name);
+const get = (name: string, { type }: StorageOptions = defaultOptions): any =>
+    storage[type].get(storagePrefix + name);
 
-const remove = (name: string, options: Options = {}): void => {
-    storage[options.type || defaultOptions.type].remove(storagePrefix + name);
+const remove = (
+    name: string,
+    { type }: StorageOptions = defaultOptions
+): void => {
+    storage[type].remove(storagePrefix + name);
 };
 
-const switchOn = (name: string, options: Options = {}): void => {
-    storage[options.type || defaultOptions.type].set(
-        `${storagePrefix}switch.${name}`,
-        true
-    );
+const switchOn = (
+    name: string,
+    { type }: StorageOptions = defaultOptions
+): void => {
+    storage[type].set(`${storagePrefix}switch.${name}`, true);
 };
 
-const switchOff = (name: string, options: Options = {}): void => {
-    storage[options.type || defaultOptions.type].set(
-        `${storagePrefix}switch.${name}`,
-        false
-    );
+const switchOff = (
+    name: string,
+    { type }: StorageOptions = defaultOptions
+): void => {
+    storage[type].set(`${storagePrefix}switch.${name}`, false);
 };
 
-const removeSwitch = (name: string, options: Options = {}): void => {
-    storage[options.type || defaultOptions.type]
-        .remove(`${storagePrefix}switch.${name}`);
+const removeSwitch = (
+    name: string,
+    { type }: StorageOptions = defaultOptions
+): void => {
+    storage[type].remove(`${storagePrefix}switch.${name}`);
 };
 
-const isOn = (name: string, options: Options = {}): boolean =>
-    storage[options.type || defaultOptions.type]
-        .get(`${storagePrefix}switch.${name}`) === true;
+const isOn = (
+    name: string,
+    { type }: StorageOptions = defaultOptions
+): boolean => storage[type].get(`${storagePrefix}switch.${name}`) === true;
 
-const isOff = (name: string, options: Options = {}): boolean =>
-    storage[options.type || defaultOptions.type]
-        .get(`${storagePrefix}switch.${name}`) === false;
+const isOff = (
+    name: string,
+    { type }: StorageOptions = defaultOptions
+): boolean => storage[type].get(`${storagePrefix}switch.${name}`) === false;
 
 const isNumeric = (str: string): boolean => !isNaN(str);
 
