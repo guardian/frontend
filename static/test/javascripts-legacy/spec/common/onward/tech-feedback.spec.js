@@ -10,12 +10,15 @@ define([
         var injector = new Injector();
         var TechFeedback;
 
+        //.feedback__form input[name=extra]
+
         var fixturesConfig = {
             id: 'related',
             fixtures: [
                 '<p id="feedback-warning"></p>',
                 '<select id="feedback-category"></select>',
-                '<div id="feedback-form-default"></div>'
+                '<div id="feedback-form-default"></div>',
+                '<div class="feedback__form"><input name="extra"/></div>'
             ]
         };
 
@@ -34,6 +37,11 @@ define([
         it("Should return a browser in extra information", function(){
             var feedback = new TechFeedback();
             expect(feedback.getExtraDataInformation().browser).toBeDefined();
+        });
+
+        it("Should place the extra information into the forms", function(){
+            new TechFeedback();
+            expect(document.querySelectorAll(".feedback__form input[name=extra]")[0].value).toContain("browser");
         });
 
         it("Should recognise a lack of AB tests", function(){
