@@ -61,14 +61,8 @@ define([
         });
     }
 
-    function mandatoryCheck(elem) {
-        if(elem.value === ""){
-            elem.classList.add("feedback__entry--mandatory-failed");
-            return false;
-        } else {
-            elem.classList.remove("feedback__entry--mandatory-failed");
-            return true;
-        }
+    function isInputFilled(elem) {
+        return elem.value === "";
     }
 
     function initForms() {
@@ -77,9 +71,17 @@ define([
 
         // mandatory checks (realtime)
 
+        function toggleMandatoryOutline(elem) {
+            if(isInputFilled(elem)){
+                elem.classList.add("feedback__entry--mandatory-failed");
+            } else {
+                elem.classList.remove("feedback__entry--mandatory-failed");
+            }
+        }
+
         $.forEachElement(".feedback__form input,.feedback__form textarea", function(elem){
-            elem.addEventListener("blur", function(){ mandatoryCheck(elem); });
-            elem.addEventListener("input", function(){ mandatoryCheck(elem); });
+            elem.addEventListener("blur", function(){ toggleMandatoryOutline(elem); });
+            elem.addEventListener("input", function(){ toggleMandatoryOutline(elem); });
         });
 
         // mandatory checks (on submit)
@@ -90,7 +92,7 @@ define([
                 var hasFailed = false;
 
                 $.forEachElement(".feedback__form--selected input,.feedback__form--selected textarea", function(elem){
-                    if(!mandatoryCheck(elem)){
+                    if(!isInputFilled(elem)){
                         hasFailed = true;
                     }
                 });
