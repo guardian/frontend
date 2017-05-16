@@ -1,80 +1,76 @@
-import store from 'lib/storage';
-import testCanRunChecks from 'common/modules/experiments/test-can-run-checks';
+// @flow
+import type {
+    ABTest,
+    Variant,
+    Participations,
+} from 'common/modules/experiments/ab-types';
+
+import { local } from 'lib/storage';
+import * as testCanRunChecks
+    from 'common/modules/experiments/test-can-run-checks';
+
 const participationsKey = 'gu.ab.participations';
 
-function getParticipations() {
-    return store.local.get(participationsKey) || {};
-}
+export const getParticipations = (): Participations =>
+    local.get(participationsKey) || {};
 
-function setParticipations(participations) {
-    store.local.set(participationsKey, participations);
-}
+export const setParticipations = (participations: Participations): void => {
+    local.set(participationsKey, participations);
+};
 
-function isParticipating(test) {
-    return test.id in getParticipations();
-}
+export const isParticipating = (test: ABTest): boolean =>
+    test.id in getParticipations();
 
-function addParticipation(test, variantId) {
+export const addParticipation = (test: ABTest, variantId: string): void => {
     const participations = getParticipations();
-    participations[test.id] = {
-        variant: variantId
-    };
-    setParticipations(participations);
-}
 
-function removeParticipation(test) {
+    participations[test.id] = {
+        variant: variantId,
+    };
+
+    setParticipations(participations);
+};
+
+export const removeParticipation = (toRemove: { id: string }): void => {
     const participations = getParticipations();
     const filteredParticipations = Object.keys(participations)
-        .filter(participation => participation !== test.id)
+        .filter(participation => participation !== toRemove.id)
         .reduce((result, input) => {
-            result[input] = participations[input];
+            Object.assign(result, { [input]: participations[input] });
             return result;
         }, {});
     setParticipations(filteredParticipations);
-}
+};
 
-function getTestVariantId(testId) {
+export const getTestVariantId = (testId: string): ?string => {
     const participation = getParticipations()[testId];
     return participation && participation.variant;
-}
+};
 
-function getVariant(test, variantId) {
+export const getVariant = (test: ABTest, variantId: string): ?Variant => {
     const variantIds = test.variants.map(variant => variant.id);
     const index = variantIds.indexOf(variantId);
     return index > -1 ? test.variants[index] : null;
-}
+};
 
-function setTestVariant(testId, variant) {
+export const getAssignedVariant = (test: ABTest): ?Variant => {
+    const variantId = getTestVariantId(test.id);
+    return variantId ? getVariant(test, variantId) : null;
+};
+
+export const setTestVariant = (testId: string, variant: string): void => {
     const participations = getParticipations();
 
     if (testId in participations) {
         participations[testId].variant = variant;
         setParticipations(participations);
     }
-}
+};
 
 /**
  * returns whether the caller should treat the user as being in that variant.
- *
- * @param testName
- * @param variant
- * @returns {*|boolean|Boolean}
  */
-function isInVariant(test, variant) {
-    return getParticipations()[test.id] &&
-        getParticipations()[test.id].variant === variant.id &&
-        testCanRunChecks.testCanBeRun(test);
-}
-
-export default {
-    getParticipations,
-    setParticipations,
-    isParticipating,
-    addParticipation,
-    removeParticipation,
-    getTestVariantId,
-    getVariant,
-    setTestVariant,
-    isInVariant,
-    testCanBeRun: testCanRunChecks.testCanBeRun
-};
+export const isInVariant = (test: ABTest, variant: Variant): boolean =>
+    getParticipations()[test.id] &&
+    getParticipations()[test.id].variant === variant.id &&
+    testCanRunChecks.testCanBeRun(test);
