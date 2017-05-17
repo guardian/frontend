@@ -181,7 +181,6 @@
     "projects/common/modules/ui/faux-block-link.js",
     "projects/common/modules/ui/full-height.js",
     "projects/common/modules/experiments/affix.js",
-    "projects/common/modules/experiments/segment-util.js",
     "projects/commercial/modules/sticky-top-banner.js"
   ],
   "davidfurey": [
@@ -250,7 +249,6 @@
     "projects/common/modules/experiments/tests/contributions-epic-ask-four-earning.js",
     "projects/common/modules/experiments/tests/epic-to-support-landing-page.js",
     "projects/common/modules/experiments/tests/membership-engagement-banner-tests.js",
-    "projects/common/modules/experiments/acquisition-test-selector.js",
     "projects/common/modules/commercial/acquisitions-view-log.js",
     "projects/common/modules/experiments/ab-test-clash.js",
     "projects/common/modules/ui/message.js",
