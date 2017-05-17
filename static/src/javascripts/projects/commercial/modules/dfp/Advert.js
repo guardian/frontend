@@ -28,6 +28,8 @@ const getAdBreakpointSizes = (advertNode: Element): {} =>
         return sizes;
     }, {});
 
+type Resolver = (x: boolean) => void;
+
 class Advert {
     startLoading: any;
     stopLoading: any;
@@ -44,9 +46,9 @@ class Advert {
     isLoaded: boolean;
     isRendered: boolean;
     whenLoaded: Promise<boolean>;
-    whenLoadedResolver: ?(boolean) => void;
+    whenLoadedResolver: Resolver;
     whenRendered: Promise<boolean>;
-    whenRenderedResolver: ?(boolean) => void;
+    whenRenderedResolver: Resolver;
     whenSlotReady: Promise<void>;
     timings: {
         createTime: ?number,
@@ -72,8 +74,6 @@ class Advert {
         this.isRendering = false;
         this.isLoaded = false;
         this.isRendered = false;
-        this.whenLoadedResolver = null;
-        this.whenRenderedResolver = null;
         this.whenSlotReady = slotDefinition.slotReady;
         this.timings = {
             createTime: null,

@@ -12,7 +12,7 @@ export type DfpEnv = {
     lazyLoadEnabled: boolean,
     lazyLoadObserve: boolean,
     creativeIDs: Array<string>,
-    advertIds: { [string]: number },
+    advertIds: { [k: string]: number },
     advertsToLoad: Array<Advert>,
     advertsToRefresh: Array<Advert>,
     adverts: Array<Advert>,
