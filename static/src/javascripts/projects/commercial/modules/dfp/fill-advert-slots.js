@@ -45,7 +45,7 @@ const fillAdvertSlots = (
     start: () => void,
     stop: () => void
 ): Promise<void> => {
-    if (commercialFeatures.dfpAdvertising) {
+    if (commercialFeatures.dfpAdvertising || commercialFeatures.adFree) {
         window.googletag.cmd.push(
             start,
             createAdverts,
