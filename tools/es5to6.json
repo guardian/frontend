@@ -1,6 +1,5 @@
 {
   "Francis Carr": [
-    "projects/commercial/modules/build-page-targeting.js",
     "projects/commercial/modules/close-disabled-slots.js",
     "projects/commercial/modules/comment-adverts.js",
     "projects/commercial/modules/commercial-features.js",
@@ -25,13 +24,10 @@
   "Regis Kuckaertz": [
     "projects/commercial/modules/dfp/on-slot-load.js",
     "projects/commercial/modules/dfp/on-slot-render.js",
-    "projects/commercial/modules/dfp/performance-logging.js",
-    "projects/commercial/modules/dfp/prepare-googletag.js",
     "projects/common/modules/avatar/api.js"
   ],
   "Richard Nguyen": [],
   "Kate Whalen": [
-    "projects/commercial/modules/hosted/onward.js",
     "projects/commercial/modules/hosted/video.js",
     "projects/commercial/modules/hosted/youtube.js",
     "projects/commercial/modules/liveblog-adverts.js",
@@ -186,7 +182,6 @@
     "projects/common/modules/ui/full-height.js",
     "projects/common/modules/experiments/affix.js",
     "projects/common/modules/experiments/segment-util.js",
-    "projects/common/modules/experiments/test-can-run-checks.js",
     "projects/commercial/modules/sticky-top-banner.js"
   ],
   "davidfurey": [
@@ -210,7 +205,6 @@
     "projects/common/modules/experiments/tests/sleeve-notes-legacy-email-variant.js",
     "projects/common/modules/experiments/tests/sleeve-notes-new-email-variant.js",
     "projects/common/modules/experiments/tests/the-long-read-email-variants.js",
-    "projects/common/modules/experiments/utils.js",
     "projects/common/modules/gallery/lightbox.js",
     "projects/common/modules/identity/account-profile.js",
     "projects/common/modules/identity/api.js",

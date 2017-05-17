@@ -26,7 +26,8 @@ import stickyTopBanner from 'commercial/modules/sticky-top-banner';
 import thirdPartyTags from 'commercial/modules/third-party-tags';
 import paidforBand from 'commercial/modules/paidfor-band';
 import { paidContainers } from 'commercial/modules/paid-containers';
-import performanceLogging from 'commercial/modules/dfp/performance-logging';
+import * as performanceLogging
+    from 'commercial/modules/dfp/performance-logging';
 import { trackPerformance } from 'common/modules/analytics/google';
 import userFeatures from 'commercial/modules/user-features';
 

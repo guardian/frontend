@@ -19,8 +19,10 @@ define([
         'common/modules/experiments/segment-util',
         'common/modules/experiments/acquisition-test-selector',
         'common/modules/commercial/membership-engagement-banner-parameters',
+        'common/modules/commercial/contributions-utilities',
         'ophan/ng',
-        'lib/geolocation'
+        'lib/geolocation',
+        'lib/url'
     ], function (bean,
                  $,
                  config,
@@ -41,8 +43,10 @@ define([
                  segmentUtil,
                  acquisitionTestSelector,
                  membershipEngagementBannerUtils,
+                 contributionsUtilities,
                  ophan,
-                 geolocation) {
+                 geolocation,
+                 url) {
 
 
         // change messageCode to force redisplay of the message to users who already closed it.
@@ -160,8 +164,14 @@ define([
 
             var messageText = Array.isArray(params.messageText)?selectSequentiallyFrom(params.messageText):params.messageText;
 
+            var urlParameters = {
+                REFPVID : params.pageviewId,
+                INTCMP:  params.campaignCode
+            };
+            var linkUrl = params.linkUrl + '?' + url.constructQuery(urlParameters);
+
             var renderedBanner = template(messageTemplate, {
-                linkHref: params.linkUrl + '?INTCMP=' + params.campaignCode,
+                linkHref: linkUrl,
                 messageText: messageText,
                 buttonCaption: params.buttonCaption,
                 colourClass: colourClass,

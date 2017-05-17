@@ -2,7 +2,7 @@
 import detect from 'lib/detect';
 import { getCurrentTime } from 'lib/user-timing';
 import { defineSlot } from 'commercial/modules/dfp/define-slot';
-import performanceLogging from 'commercial/modules/dfp/performance-logging';
+import { updateAdvertMetric } from 'commercial/modules/dfp/performance-logging';
 import breakpointNameToAttribute
     from 'commercial/modules/dfp/breakpoint-name-to-attribute';
 
@@ -116,18 +116,10 @@ class Advert {
             if (this.whenRenderedResolver) {
                 this.whenRenderedResolver(isRendered);
             }
-            performanceLogging.updateAdvertMetric(
-                this,
-                'stopRendering',
-                getCurrentTime()
-            );
+            updateAdvertMetric(this, 'stopRendering', getCurrentTime());
         };
 
-        performanceLogging.updateAdvertMetric(
-            this,
-            'createTime',
-            getCurrentTime()
-        );
+        updateAdvertMetric(this, 'createTime', getCurrentTime());
     }
 }
 
