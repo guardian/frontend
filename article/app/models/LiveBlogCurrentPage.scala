@@ -1,6 +1,5 @@
-package liveblog
+package models
 
-import model.Blocks
 import model.liveblog.{Blocks, BodyBlock}
 
 case class LiveBlogCurrentPage(

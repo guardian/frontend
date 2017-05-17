@@ -1,6 +1,5 @@
-@import model.liveblog.KeyEventData
-@@import model.liveblog.KeyEventData
-(id: String, keyEvents: Seq[KeyEventData])
+@import models.KeyEventData
+@(id: String, keyEvents: Seq[KeyEventData])
 
 @keyEvents.map { keyEvent =>
     <li class="timeline__item">

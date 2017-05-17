@@ -1,10 +1,10 @@
-package liveblog
+package models
 
 import com.gu.contentapi.client.model.v1.ItemResponse
 import common.`package`._
 import model.{Article, CacheTime, StoryPackages}
-import liveblog.LiveBlogCurrentPage
 import model.liveblog.BodyBlock
+import models.ParseBlockId.ParsedBlockId
 
 object LiveBlogHelpers {
 

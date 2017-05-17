@@ -1,6 +1,5 @@
-@import views.html.liveblog.LiveBlogPage
-@@import views.html.liveblog.LiveBlogPage
-(model: LiveBlogPage)(implicit request: RequestHeader, context: _root_.model.ApplicationContext)
+
+@(model: LiveBlogPage)(implicit request: RequestHeader, context: _root_.model.ApplicationContext)
 
 @import common.LinkTo
 
@@ -11,6 +10,21 @@
     @model.currentPage.pagination.flatMap(_.newer).map(_.suffix).map { suffix =>
         <link rel="prev" href="@LinkTo{ /@{model.article.content.metadata.id}@suffix }">
     }
+    <script type="application/ld+json">
+        @Html(views.structuredData.Organisation().toString())
+    </script>
+
+    <script>console.log('The page was @request.getQueryString("page")')</script>
+
+    <script type="application/ld+json">
+        @Html(views.structuredData.LiveBlogPosting(
+            model.article,
+            LiveBlogHelpers.blocksForLiveBlogRequest(model.article, request.getQueryString("page"))
+        ).toString())
+    </script>
+
+
+
 }{
     @views.html.liveblog.liveBlogBody(model)
 }

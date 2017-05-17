@@ -1,6 +1,5 @@
-@import views.html.liveblog.PageWithStoryPackage
-@@import views.html.liveblog.PageWithStoryPackage
-(page: PageWithStoryPackage)(implicit request: RequestHeader, context: model.ApplicationContext)
+
+@(page: PageWithStoryPackage)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @mainEmail(page) {
     @fragments.emailArticleBody(page)

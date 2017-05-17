@@ -1,4 +1,4 @@
-package liveblog
+package models
 
 import scala.util.parsing.combinator.RegexParsers
 

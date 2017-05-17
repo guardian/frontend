@@ -1,4 +1,4 @@
-package liveblog
+package models
 
 import model.{Article, RelatedContent}
 
