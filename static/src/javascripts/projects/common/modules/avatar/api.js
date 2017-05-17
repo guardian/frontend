@@ -1,38 +1,40 @@
-import ajax from 'lib/ajax';
+// @flow
+import { ajax } from 'lib/ajax';
 import config from 'lib/config';
 
-var apiUrl = config.page.avatarApiUrl + '/v1';
-var staticUrl = config.page.avatarImagesUrl + '/user';
-var Api = {};
+const apiUrl = `${config.page.avatarApiUrl}/v1`;
+const staticUrl = `${config.page.avatarImagesUrl}/user`;
 
-Api.request = function(method, path, data) {
-    var params = {
+type HttpVerb = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
+
+const request = (method: HttpVerb, path: string, data?: Object): Object => {
+    const params = {
         url: apiUrl + path,
         type: 'json',
         data: data || {},
         processData: false,
-        method: method,
+        method,
         crossOrigin: true,
-        withCredentials: true
+        withCredentials: true,
     };
 
-    return ajax.ajax(params);
+    return ajax(params);
 };
 
 // A user's 'active' avatar is only available to signed-in users as it
 // includes avatars in a pre-mod state.
-Api.getActive = function() {
-    return Api.request('GET', '/avatars/user/me/active');
-};
+const getActive = (): Object => request('GET', '/avatars/user/me/active');
 
-Api.updateAvatar = function(data) {
-    return Api.request('POST', '/avatars', data);
-};
+const updateAvatar = (data?: Object): Object =>
+    request('POST', '/avatars', data);
 
 // The deterministic URL always returns an image. If the user has no avatar,
 // a default image is returned.
-Api.deterministicUrl = function(userId) {
-    return staticUrl + '/' + userId;
-};
+const deterministicUrl = (userId: string): string => `${staticUrl}/${userId}`;
 
-export default Api;
+export default {
+    request,
+    getActive,
+    updateAvatar,
+    deterministicUrl,
+};
