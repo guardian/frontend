@@ -1,4 +1,6 @@
 // @flow
+import type { Variant } from 'common/modules/experiments/ab-types';
+
 import { variantFor, isInTest } from 'common/modules/experiments/segment-util';
 import { testCanBeRun } from 'common/modules/experiments/test-can-run-checks';
 import * as viewLog from 'common/modules/commercial/acquisitions-view-log';
@@ -40,21 +42,26 @@ export const getTest = () => {
     const eligibleTests = tests.filter(Test => {
         const t = new Test();
         const forced = window.location.hash.indexOf(`ab-${t.id}`) > -1;
-        const variant = variantFor(t);
+        const variant: Variant = variantFor(t);
 
-        if (!variant || !variant.maxViews) return false;
+        if (!variant || !variant.options || !variant.options.maxViews)
+            return false;
 
-        const maxViewCount = variant.maxViews.count;
+        const {
+            count: maxViewCount,
+            days: maxViewDays,
+            minDaysBetweenViews: minViewDays,
+        } = variant.options.maxViews;
+
+        const isUnlimited = variant.options.isUnlimited;
+
         const withinViewLimit =
-            viewLog.viewsInPreviousDays(variant.maxViews.days) < maxViewCount;
+            viewLog.viewsInPreviousDays(maxViewDays) < maxViewCount;
         const enoughDaysBetweenViews =
-            variant.maxViews &&
-            viewLog.viewsInPreviousDays(
-                variant.maxViews.minDaysBetweenViews
-            ) === 0;
+            viewLog.viewsInPreviousDays(minViewDays) === 0;
 
         const hasNotReachedRateLimit =
-            (withinViewLimit && enoughDaysBetweenViews) || variant.isUnlimited;
+            (withinViewLimit && enoughDaysBetweenViews) || isUnlimited;
 
         return (
             forced || (testCanBeRun(t) && isInTest(t) && hasNotReachedRateLimit)

@@ -24,8 +24,7 @@
   ],
   "Regis Kuckaertz": [
     "projects/commercial/modules/dfp/on-slot-load.js",
-    "projects/commercial/modules/dfp/on-slot-render.js",
-    "projects/common/modules/avatar/api.js"
+    "projects/commercial/modules/dfp/on-slot-render.js"
   ],
   "Richard Nguyen": [],
   "Kate Whalen": [
@@ -50,7 +49,6 @@
   "sndrs": [
     "lib/detect.js",
     "bootstraps/enhanced/accessibility.js",
-    "projects/common/modules/user-prefs.js",
     "bootstraps/enhanced/article-liveblog-common.js",
     "bootstraps/enhanced/article-minute.js",
     "bootstraps/enhanced/article.js",
@@ -67,12 +65,8 @@
     "bootstraps/enhanced/identity-common.js",
     "bootstraps/enhanced/image-content.js",
     "bootstraps/enhanced/liveblog.js",
-    "bootstraps/enhanced/main.js",
     "bootstraps/enhanced/media/main.js",
     "bootstraps/enhanced/media/video-player.js",
-    "bootstraps/enhanced/membership.js",
-    "projects/common/modules/video/more-in-series-container.js",
-    "bootstraps/enhanced/newsletters.js",
     "projects/common/modules/check-mediator.js"
   ],
   "Nicolas Long": [
@@ -266,5 +260,13 @@
     "projects/common/modules/video/ga-helper.js",
     "projects/facia/modules/ui/live-blog-updates.js",
     "projects/commercial/modules/third-party-tags/imr-worldwide.js"
+  ],
+  "Santiago Villa Fernandez": [
+    "bootstraps/enhanced/membership.js",
+    "projects/common/modules/video/more-in-series-container.js"
+  ],
+  "Jamie Byers": [
+    "bootstraps/enhanced/main.js",
+    "bootstraps/enhanced/newsletters.js"
   ]
 }
