@@ -4,7 +4,7 @@ $gutter-medium: 37px;
 $gutter-large: 55px;
 $gutter-xlarge: 85px;
 
-@mixin sidebar-animation($percentage) {
+@mixin fly-in-animation($percentage) {
     transform: translateX($percentage);
     transition: transform .4s cubic-bezier(.23, 1, .32, 1);
 }

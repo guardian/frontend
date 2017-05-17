@@ -3,7 +3,7 @@
 
     &:checked {
         & ~ .main-menu-container {
-            @include sidebar-animation(0%);
+            @include fly-in-animation(0%);
         }
 
         & ~ .main-menu-container__overlay {
