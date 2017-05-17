@@ -33,7 +33,9 @@ define([
                     id: 'outbrainCompliantTest',
                     variants: [{
                         id: 'control',
-                        isOutbrainCompliant: true
+                        options: {
+                            isOutbrainCompliant: true
+                        }
                     }]
                 };
                 var clashingTests = [test];
@@ -48,10 +50,14 @@ define([
                     id: 'outbrainCompliantTest',
                     variants: [{
                         id: 'control',
-                        isOutbrainCompliant: true
+                        options: {
+                            isOutbrainCompliant: true
+                        }
                     }, {
                         id: 'variant',
-                        isOutbrainCompliant: false
+                        options: {
+                            isOutbrainCompliant: false
+                        }
                     }]
                 };
                 var clashingTests = [test];
@@ -68,10 +74,14 @@ define([
                     id: 'outbrainCompliantTest',
                     variants: [{
                         id: 'control',
-                        isOutbrainCompliant: true
+                        options: {
+                            isOutbrainCompliant: true
+                        }
                     }, {
                         id: 'variant',
-                        isOutbrainCompliant: false
+                        options: {
+                            isOutbrainCompliant: false
+                        }
                     }]
                 };
                 var clashingTests = [test];

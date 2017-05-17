@@ -1,6 +1,5 @@
 {
   "Francis Carr": [
-    "projects/commercial/modules/build-page-targeting.js",
     "projects/commercial/modules/close-disabled-slots.js",
     "projects/commercial/modules/comment-adverts.js",
     "projects/commercial/modules/commercial-features.js",
@@ -25,14 +24,10 @@
   ],
   "Regis Kuckaertz": [
     "projects/commercial/modules/dfp/on-slot-load.js",
-    "projects/commercial/modules/dfp/on-slot-render.js",
-    "projects/commercial/modules/dfp/performance-logging.js",
-    "projects/commercial/modules/dfp/prepare-googletag.js",
-    "projects/common/modules/avatar/api.js"
+    "projects/commercial/modules/dfp/on-slot-render.js"
   ],
   "Richard Nguyen": [],
   "Kate Whalen": [
-    "projects/commercial/modules/hosted/onward.js",
     "projects/commercial/modules/hosted/video.js",
     "projects/commercial/modules/hosted/youtube.js",
     "projects/commercial/modules/liveblog-adverts.js",
@@ -54,7 +49,6 @@
   "sndrs": [
     "lib/detect.js",
     "bootstraps/enhanced/accessibility.js",
-    "projects/common/modules/user-prefs.js",
     "bootstraps/enhanced/article-liveblog-common.js",
     "bootstraps/enhanced/article-minute.js",
     "bootstraps/enhanced/article.js",
@@ -71,12 +65,8 @@
     "bootstraps/enhanced/identity-common.js",
     "bootstraps/enhanced/image-content.js",
     "bootstraps/enhanced/liveblog.js",
-    "bootstraps/enhanced/main.js",
     "bootstraps/enhanced/media/main.js",
     "bootstraps/enhanced/media/video-player.js",
-    "bootstraps/enhanced/membership.js",
-    "projects/common/modules/video/more-in-series-container.js",
-    "bootstraps/enhanced/newsletters.js",
     "projects/common/modules/check-mediator.js"
   ],
   "Nicolas Long": [
@@ -105,10 +95,8 @@
     "projects/common/modules/crosswords/anagram-helper/clue-input.js"
   ],
   "GHaberis": [
-    "projects/admin/bootstraps/abtests.js",
     "projects/admin/bootstraps/radiator.js",
     "projects/admin/modules/abtests/abtest-report-item.js",
-    "projects/admin/modules/abtests/abtest-report.js",
     "projects/admin/modules/abtests/audience-item.js",
     "projects/admin/modules/abtests/audience.js",
     "projects/admin/modules/abtests/participation-item.js",
@@ -188,8 +176,6 @@
     "projects/common/modules/ui/faux-block-link.js",
     "projects/common/modules/ui/full-height.js",
     "projects/common/modules/experiments/affix.js",
-    "projects/common/modules/experiments/segment-util.js",
-    "projects/common/modules/experiments/test-can-run-checks.js",
     "projects/commercial/modules/sticky-top-banner.js"
   ],
   "davidfurey": [
@@ -213,7 +199,6 @@
     "projects/common/modules/experiments/tests/sleeve-notes-legacy-email-variant.js",
     "projects/common/modules/experiments/tests/sleeve-notes-new-email-variant.js",
     "projects/common/modules/experiments/tests/the-long-read-email-variants.js",
-    "projects/common/modules/experiments/utils.js",
     "projects/common/modules/gallery/lightbox.js",
     "projects/common/modules/identity/account-profile.js",
     "projects/common/modules/identity/api.js",
@@ -259,7 +244,6 @@
     "projects/common/modules/experiments/tests/contributions-epic-ask-four-earning.js",
     "projects/common/modules/experiments/tests/epic-to-support-landing-page.js",
     "projects/common/modules/experiments/tests/membership-engagement-banner-tests.js",
-    "projects/common/modules/experiments/acquisition-test-selector.js",
     "projects/common/modules/commercial/acquisitions-view-log.js",
     "projects/common/modules/experiments/ab-test-clash.js",
     "projects/common/modules/ui/message.js",
@@ -276,5 +260,13 @@
     "projects/common/modules/video/ga-helper.js",
     "projects/facia/modules/ui/live-blog-updates.js",
     "projects/commercial/modules/third-party-tags/imr-worldwide.js"
+  ],
+  "Santiago Villa Fernandez": [
+    "bootstraps/enhanced/membership.js",
+    "projects/common/modules/video/more-in-series-container.js"
+  ],
+  "Jamie Byers": [
+    "bootstraps/enhanced/main.js",
+    "bootstraps/enhanced/newsletters.js"
   ]
 }
