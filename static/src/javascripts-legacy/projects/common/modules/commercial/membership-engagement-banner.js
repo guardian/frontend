@@ -19,8 +19,10 @@ define([
         'common/modules/experiments/segment-util',
         'common/modules/experiments/acquisition-test-selector',
         'common/modules/commercial/membership-engagement-banner-parameters',
+        'common/modules/commercial/contributions-utilities',
         'ophan/ng',
-        'lib/geolocation'
+        'lib/geolocation',
+        'lib/url'
     ], function (bean,
                  $,
                  config,
@@ -41,8 +43,10 @@ define([
                  segmentUtil,
                  acquisitionTestSelector,
                  membershipEngagementBannerUtils,
+                 contributionsUtilities,
                  ophan,
-                 geolocation) {
+                 geolocation,
+                 url) {
 
 
         // change messageCode to force redisplay of the message to users who already closed it.
@@ -81,8 +85,8 @@ define([
 
         function getUserVariantParams(userVariant, campaignId, defaultOffering) {
 
-            if (userVariant && userVariant.engagementBannerParams) {
-                var userVariantParams = userVariant.engagementBannerParams;
+            if (userVariant && userVariant.options && userVariant.options.engagementBannerParams) {
+                var userVariantParams = userVariant.options.engagementBannerParams;
 
                 if (!userVariantParams.campaignCode) {
                     var offering = userVariantParams.offering || defaultOffering;
@@ -125,7 +129,7 @@ define([
             var campaignId = userTest ? userTest.campaignId : undefined;
             var userVariant = getUserVariant(userTest);
 
-            if (userVariant && userVariant.blockEngagementBanner) {
+            if (userVariant && userVariant.options && userVariant.options.blockEngagementBanner) {
                 return DO_NOT_RENDER_ENGAGEMENT_BANNER;
             }
 
@@ -160,8 +164,14 @@ define([
 
             var messageText = Array.isArray(params.messageText)?selectSequentiallyFrom(params.messageText):params.messageText;
 
+            var urlParameters = {
+                REFPVID : params.pageviewId,
+                INTCMP:  params.campaignCode
+            };
+            var linkUrl = params.linkUrl + '?' + url.constructQuery(urlParameters);
+
             var renderedBanner = template(messageTemplate, {
-                linkHref: params.linkUrl + '?INTCMP=' + params.campaignCode,
+                linkHref: linkUrl,
                 messageText: messageText,
                 buttonCaption: params.buttonCaption,
                 colourClass: colourClass,

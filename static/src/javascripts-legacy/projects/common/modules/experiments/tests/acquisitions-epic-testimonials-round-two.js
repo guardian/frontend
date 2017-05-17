@@ -2,7 +2,7 @@ define([
     'lodash/utilities/template',
     'common/modules/commercial/contributions-utilities',
     'raw-loader!common/views/acquisitions-epic-testimonials.html',
-    'svg-loader!svgs/icon/quote.svg'
+    'svgs/icon/quote.svg'
 ], function (
     template,
     contributionsUtilities,
@@ -13,9 +13,9 @@ define([
     function createTestimonialTemplate(epicTemplate, testimonialInfo) {
         return function(variant) {
             return template(epicTemplate, {
-                membershipUrl: variant.membershipURL,
-                contributionUrl: variant.contributeURL,
-                componentName: variant.componentName,
+                membershipUrl: variant.options.membershipURL,
+                contributionUrl: variant.options.contributeURL,
+                componentName: variant.options.componentName,
                 quoteSvg: quoteSvg.markup,
                 testimonialMessage: testimonialInfo.message,
                 testimonialName: testimonialInfo.name

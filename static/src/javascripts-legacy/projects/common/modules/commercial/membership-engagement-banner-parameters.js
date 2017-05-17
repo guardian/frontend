@@ -95,7 +95,8 @@ define([
             buttonCaption: 'Become a Supporter',
             linkUrl: 'https://membership.theguardian.com/supporter',
             offering: offerings.membership,
-            messageText: supporterEngagementBannerCopy(location)
+            messageText: supporterEngagementBannerCopy(location),
+            pageviewId: (config.ophan && config.ophan.pageViewId) || 'not_found'
         })
     }
 
@@ -104,7 +105,8 @@ define([
             buttonCaption: 'Make a Contribution',
             linkUrl: 'https://contribute.theguardian.com',
             offering: offerings.contributions,
-            messageText: contributionEngagementBannerCopy()
+            messageText: contributionEngagementBannerCopy(),
+            pageviewId: (config.ophan && config.ophan.pageViewId) || 'not_found'
         });
     }
 
