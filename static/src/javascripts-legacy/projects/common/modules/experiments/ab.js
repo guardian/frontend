@@ -175,8 +175,9 @@ define([
     function recordTestComplete(test, variantId, complete) {
         var data = {};
         var variant = abUtils.getVariant(test, variantId);
+        var campaignCodes = variant && variant.options && variant.options.campaignCodes;
 
-        data[test.id] = abData(variantId, String(complete), variant.options.campaignCodes);
+        data[test.id] = abData(variantId, String(complete), campaignCodes);
 
         return function () {
             recordOphanAbEvent(data);
