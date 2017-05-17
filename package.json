@@ -146,6 +146,7 @@
     ],
     "moduleDirectories": [
       "<rootDir>/static/src/javascripts",
+      "<rootDir>/static/src/javascripts/projects",
       "<rootDir>/static/src/javascripts-legacy",
       "<rootDir>/static/vendor/javascripts",
       "node_modules"
