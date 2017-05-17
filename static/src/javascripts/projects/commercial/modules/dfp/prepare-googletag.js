@@ -39,6 +39,8 @@ const setPageTargeting = (): void => {
 
 const removeAdSlots = (): Promise<void> => closeSlots.init(true);
 
+const removeAdSlotsForAdFree = (): Promise<void> => closeSlots.initForAdFree();
+
 const init = (start: () => void, stop: () => void): Promise<void> => {
     const setupAdvertising = (): Promise<void> => {
         addTag(dfpEnv.sonobiEnabled ? 'sonobi' : 'waterfall');
@@ -60,6 +62,11 @@ const init = (start: () => void, stop: () => void): Promise<void> => {
             // could be a network problem or an intercepted request.
             // Abandon the init sequence.
             .catch(removeAdSlots);
+        return Promise.resolve();
+    }
+
+    if (commercialFeatures.adFree) {
+        setupAdvertising().then(removeAdSlotsForAdFree).catch(removeAdSlots);
         return Promise.resolve();
     }
 
