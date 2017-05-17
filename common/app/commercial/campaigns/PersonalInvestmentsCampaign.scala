@@ -1,4 +1,4 @@
-package campaigns
+package commercial.campaigns
 
 import org.joda.time.DateTime
 

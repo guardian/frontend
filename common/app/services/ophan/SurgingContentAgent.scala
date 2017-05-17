@@ -1,4 +1,4 @@
-package ophan
+package services.ophan
 
 import app.LifecycleComponent
 import com.gu.commercial.display.SurgeLookupService
