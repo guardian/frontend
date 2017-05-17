@@ -26,6 +26,10 @@
 .fly-in-group--highlight {
     color: $guardian-brand-dark;
     background-color: $news-main-2;
+
+    .fly-in-item:last-child .fly-in-group {
+        margin-bottom: -$gs-baseline;
+    }
 }
 
 .fly-in-group--downlight {
