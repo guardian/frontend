@@ -250,7 +250,7 @@ Comments.prototype.addMoreRepliesButtons = function (comments) {
 
                 $btn = $.create(
                     '<button class="u-button-reset button button--show-more button--small button--tone-news d-show-more-replies__button">' +
-                        svgs('plus', ['icon']) +
+                        svgs.inlineSvg('plus', ['icon']) +
                         'Show ' + numHiddenReplies + ' more ' + (numHiddenReplies === 1 ? 'reply' : 'replies') +
                     '</button>').attr({
                         'data-link-name': 'Show more replies',

@@ -1,14 +1,12 @@
 define([
     'lib/$',
     'helpers/fixtures',
-    'Promise',
     'fastdom',
     'raw-loader!fixtures/commercial/hosted/gallery.html',
     'helpers/injector'
 ], function (
     $,
     fixtures,
-    Promise,
     fastdom,
     galleryHtml,
     Injector
@@ -104,12 +102,18 @@ define([
         });
 
         it('should log navigation in GA when scrolling through images', function (done) {
-            gallery.fadeContent({target: {
-                scrollTop: 20,
-                scrollHeight: 30
-            }});
+            var nativeHTMLElement = window.HTMLElement;
+            window.HTMLElement = function () {
+                this.scrollTop = 20;
+                this.scrollHeight = 30;
+            };
+            
+            gallery.fadeContent({
+                target: new window.HTMLElement()
+            });
             expect(interactionTracking.trackNonClickInteraction).toHaveBeenCalledWith("Scroll - image 3");
             done();
+            window.HTMLElement = nativeHTMLElement;
         });
 
     });

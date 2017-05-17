@@ -3,9 +3,9 @@ define([
     'lib/detect'
 ], function (config, detect) {
     return function () {
-        this.id = 'IncreaseInlineAdsRedux';
-        this.start = '2017-04-12';
-        this.expiry = '2017-05-17';
+        this.id = 'IncreaseInlineAdsReduxRedux';
+        this.start = '2017-05-05';
+        this.expiry = '2017-05-29';
         this.author = 'Gideon Goldberg';
         this.description = 'Displays more inline ads in articles on desktop';
         this.audience = .05;

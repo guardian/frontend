@@ -71,7 +71,7 @@ define([
                 linkHref: adblockLink + '?INTCMP=' + message.campaign,
                 messageText: message.messageText,
                 linkText: message.linkText,
-                arrowWhiteRight: svgs('arrowWhiteRight')
+                arrowWhiteRight: svgs.inlineSvg('arrowWhiteRight')
             }));
         }
     }
@@ -87,7 +87,7 @@ define([
         var bannerToUse = sample(flatBanners);
 
         if (bannerToUse) {
-            new AdblockBanner(bannerToUse.template, bannerToUse).show();
+            new AdblockBanner.AdblockBanner(bannerToUse.template, bannerToUse).show();
         }
     }
 

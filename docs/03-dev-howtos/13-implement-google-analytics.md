@@ -112,7 +112,7 @@ This also has a GA tracking event
 
 ### 404 pages
 
-Check [chris's PR](https://github.com/guardian/frontend/pull/14114) for implimentation details
+Check [chris's PR](https://github.com/guardian/frontend/pull/14114) for implementation details
 
 ### AMP
 

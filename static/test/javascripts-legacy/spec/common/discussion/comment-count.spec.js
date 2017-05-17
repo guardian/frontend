@@ -1,19 +1,18 @@
 define([
-    'qwery',
     'lib/$',
-    'lib/mediator',
-    'common/modules/discussion/comment-count',
-    'fixtures/commentcounts'],
-function (
-    qwery,
+    'helpers/injector',
+    'fixtures/commentcounts'
+], function (
     $,
-    mediator,
-    commentCount,
+    Injector,
     testData
 ) {
     describe('Comment counts', function () {
 
+        var injector = new Injector();
+        var commentCount;
         var server;
+        var mediator;
 
         var fixtureTrails = '<div class="comment-trails">'
                     + '<div class="trail" data-discussion-id="/p/3ghv5"><a href="/article/1">1</a></div>'
@@ -21,20 +20,33 @@ function (
                     + '<div class="trail" data-discussion-id="/p/3gh4n"><a href="/article/3">1</a></div>'
                     + '</div>';
 
-        beforeEach(function () {
+        beforeEach(function (done) {
+            injector.mock('common/views/svgs', {
+                inlineSvg: function() {
+                    return '';
+                }
+            });
+            injector.require([
+                'common/modules/discussion/comment-count',
+                'lib/mediator'
+            ], function(commentCountModule, mediatorModule) {
+                commentCount = commentCountModule;
+                mediator = mediatorModule;
 
-            $('body').append(fixtureTrails);
+                $('body').append(fixtureTrails);
 
-            sinon.spy(commentCount, 'getCommentCounts');
+                sinon.spy(commentCount, 'getCommentCounts');
 
-            server = sinon.fakeServer.create();
-            server.respondWith([
-                200,
-                { 'Content-Type': 'application/json' },
-                testData
-            ]);
-            server.autoRespond = true;
-            server.autoRespondAfter = 20;
+                server = sinon.fakeServer.create();
+                server.respondWith([
+                    200,
+                    { 'Content-Type': 'application/json' },
+                    testData
+                ]);
+                server.autoRespond = true;
+                server.autoRespondAfter = 20;
+                done();
+            });
         });
 
         afterEach(function () {
@@ -58,7 +70,7 @@ function (
 
         it('should append comment counts to DOM', function (done) {
             mediator.once('modules:commentcount:loaded', function () {
-                expect(qwery('.fc-trail__count--commentcount').length).toBe(3);
+                expect($('.fc-trail__count--commentcount').length).toBe(3);
                 done();
             });
 

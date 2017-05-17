@@ -31,45 +31,31 @@
             } else { newsletter-card--tone-news }"
                 data-component="newsletter-card @emailListing.name">
 
-                <div class="newsletter-card__imagewrapper">
-                    @if(emailListing.imageFilename.isDefined) {
-                        @defining(emailListing.imageFilename.get) { imageFilename =>
-                            <img class="newsletter-image"
-                                src="@{ Static("images/email" + imageFilename) }"
-                                alt="cover image for @emailListing.name"
-                            />
-                        }
-                    } else {
-                        <div class="newsletter-image">
-                            @fragments.inlineSvg("email_placeholder", "illustration")
-                        </div>
-                    }
-                </div>
-
                 <div class="newsletter-card__content js-newsletter-content">
 
                     <div class="newsletter-card__name">@emailListing.name
                         @if(emailListing.subheading.isDefined){ @emailListing.subheading }
                     </div>
 
-                    <div class="">
+                    <div>
                         @emailListing.teaser
-
-                        <div class="newsletter-card__frequency">
-                            @fragments.inlineSvg("clock", "icon", List("old-article-message--clock"))
-                            @emailListing.frequency
-                        </div>
                     </div>
                 </div>
 
                 <div class="newsletter-card__meta js-newsletter-meta">
 
-                  <div class="signup-confirmation is-hidden js-signup-confirmation">
-                    @fragments.inlineSvg("tick", "icon")
-                    <div class="signup-confirmation__message">
-                        <h3 class="signup-confirmation--success">You've subscribed!</h3>
+                    <div class="newsletter-card__frequency">
+                        @fragments.inlineSvg("clock", "icon", List("old-article-message--clock"))
+                        @emailListing.frequency
                     </div>
-                  </div>
+
+
+                    <div class="signup-confirmation is-hidden js-signup-confirmation">
+                        @fragments.inlineSvg("tick", "icon")
+                        <div class="signup-confirmation__message">
+                            <h3 class="signup-confirmation--success">You've subscribed!</h3>
+                        </div>
+                    </div>
 
                     <form action="@LinkTo("/email")" method="post" target="magicframe" class="newsletter-card__signup">
                         <input class="newsletter-card__text-input js-newsletter-card__text-input"
@@ -84,6 +70,9 @@
                           <span>Sign up</span>
                         </button>
                     </form>
+
+                    @* This iframe is used for submitting the form without reloading the page *@
+                    <iframe class="u-h" width="0" height="0" border="0" name="magicframe" id="magicframe"></iframe>
 
                     <div class="newsletter-card__example js-newsletter-preview is-hidden">
                         @if(emailListing.exampleUrl.isDefined){
@@ -134,7 +123,5 @@
         </div>
     </div>
   </div>
-
-  <iframe width="0" height="0" border="0" name="magicframe" id="magicframe"></iframe>
 
 }

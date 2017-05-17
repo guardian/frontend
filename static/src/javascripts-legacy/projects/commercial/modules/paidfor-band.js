@@ -1,9 +1,8 @@
 define([
-    'Promise',
     'lib/config',
     'common/modules/ui/sticky',
     'commercial/modules/commercial-features'
-], function (Promise, config, Sticky, commercialFeatures) {
+], function (config, sticky, commercialFeatures) {
     function init() {
         if (!commercialFeatures.paidforBand) {
             return Promise.resolve(false);
@@ -11,7 +10,7 @@ define([
 
         var elem = document.querySelector('.paidfor-band');
         if (elem) {
-            new Sticky(elem).init();
+            new sticky.Sticky(elem).init();
         }
 
         return Promise.resolve();

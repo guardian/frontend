@@ -3,14 +3,12 @@
  Description: Shows popular trails for a given country.
  */
 define([
-    'Promise',
     'qwery',
     'common/modules/component',
     'lib/config',
     'lib/mediator',
     'lodash/functions/once'
 ], function (
-    Promise,
     qwery,
     Component,
     config,
