@@ -11,7 +11,8 @@ const removeFromDfpEnv = advert => {
     dfpEnv.adverts = removeAdvert(dfpEnv.adverts);
     dfpEnv.advertsToRefresh = removeAdvert(dfpEnv.advertsToRefresh);
     dfpEnv.advertsToLoad = removeAdvert(dfpEnv.advertsToLoad);
-    delete dfpEnv.advertIds[advert.id];
+    dfpEnv.advertIds = {};
+    dfpEnv.adverts.forEach((ad, i) => (dfpEnv.advertIds[ad.id] = i));
 };
 
 const emptyAdvert = (advert: Advert): void => {
