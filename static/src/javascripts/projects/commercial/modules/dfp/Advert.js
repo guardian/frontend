@@ -62,7 +62,7 @@ class Advert {
 
     constructor(adSlotNode: Element) {
         const sizes = getAdBreakpointSizes(adSlotNode);
-        const slotDefinition = defineSlot(adSlotNode, this.sizes);
+        const slotDefinition = defineSlot(adSlotNode, sizes);
 
         this.id = adSlotNode.id;
         this.node = adSlotNode;
