@@ -24,8 +24,7 @@
   ],
   "Regis Kuckaertz": [
     "projects/commercial/modules/dfp/on-slot-load.js",
-    "projects/commercial/modules/dfp/on-slot-render.js",
-    "projects/common/modules/avatar/api.js"
+    "projects/commercial/modules/dfp/on-slot-render.js"
   ],
   "Richard Nguyen": [],
   "Kate Whalen": [
