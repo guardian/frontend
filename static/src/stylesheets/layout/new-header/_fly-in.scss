@@ -39,6 +39,11 @@
     .main-menu-container.off-screen & {
         @include sidebar-animation(-110%);
     }
+
+    // Don't show menu on opera mini: https://wp-mix.com/css-target-opera/
+    x:-o-prefocus & {
+        display: none;
+    }
 }
 
 .fly-in__overlay {

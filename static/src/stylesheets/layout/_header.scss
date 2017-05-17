@@ -164,9 +164,6 @@ $gutter-medium: 37px;
 $gutter-large: 55px;
 $gutter-xlarge: 85px;
 
-//This variable is only used in open menu styling
-$navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter / 2;
-
 @mixin sidebar-animation($percentage) {
     transform: translateX($percentage);
     transition: transform .4s cubic-bezier(.23, 1, .32, 1);
@@ -188,10 +185,11 @@ from scrolling */
 }
 
 .new-header__inner {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
     align-items: flex-start;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
 }
 
 /* Pillars */
@@ -266,24 +264,6 @@ from scrolling */
     }
 }
 
-/****************
- * Menu Styling
- ****************/
-
-
-// Search bar
-.navigation-group__search-container {
-    font-size: .8em;
-    margin: $gs-baseline / 2 $gs-gutter * 2 $gs-baseline $gs-gutter / 2;
-    overflow: hidden;
-}
-
-.main-menu__icon--search__svg {
-    margin-top: 0;
-    width: 18px;
-    height: 18px;
-}
-
 // Breathing space between header and content
 @include mq($until: tablet) {
     .weather {
@@ -298,10 +278,4 @@ from scrolling */
     .content__labels {
         padding: ($gs-baseline / 2 + $gs-baseline / 4) 0;
     }
-}
-
-// Don't show menu on opera mini: https://wp-mix.com/css-target-opera/
-x:-o-prefocus, .main-menu-container,
-x:-o-prefocus, .veggi-burger {
-    display: none;
 }
