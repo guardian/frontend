@@ -1,13 +1,12 @@
+@@import liveblog.{LatestBlock, LiveBlogPage}
 @import model.Article
-
-@import model.liveblog.LiveBlogPage
-@import model.liveblog.LatestBlock
+@import views.html.liveblog.LiveBlogPage
 @(model: LiveBlogPage)(implicit request: RequestHeader, context: _root_.model.ApplicationContext)
 
 @import common.Edition
 @import views.support.{AmpAd, AmpAdDataSlot}
 @import org.joda.time.DateTimeZone
-@import views.support.structuredData.LiveBlogPosting
+@import views.structuredData.LiveBlogPosting
 
 @liveBlogBlocksAMP(article: Article, timezone: DateTimeZone) = {
     @model.currentPage.currentPage.blocks.sliding(5, 5).zipWithIndex.map { case (blockGroup, index) =>

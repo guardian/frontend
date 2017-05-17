@@ -1,4 +1,4 @@
-package model.liveblog
+package liveblog
 
 sealed trait BlockRange { def query: Option[Seq[String]] }
 

@@ -5,11 +5,11 @@ import com.gu.contentapi.client.model.v1.{ItemResponse, Content => ApiContent}
 import common._
 import conf.switches.Switches
 import contentapi.ContentApiClient
-import model.liveblog.ParseBlockId.{InvalidFormat, ParsedBlockId}
+import ParseBlockId.{InvalidFormat, ParsedBlockId}
 import model.Cached.WithoutRevalidationResult
-import model._
+import model.{liveblog, _}
 import model.content.RecipeAtom
-import model.liveblog.LiveBlogHelpers._
+import LiveBlogHelpers._
 import model.liveblog._
 import org.joda.time.DateTime
 import play.api.libs.functional.syntax._
@@ -38,7 +38,7 @@ class ArticleController(contentApiClient: ContentApiClient)(implicit context: Ap
       block.id != lastUpdateBlockId.lastUpdate
     }
     val blocksHtml = views.html.liveblog.liveBlogBlocks(newBlocks, page.article, Edition(request).timezone)
-    val timelineHtml = views.html.liveblog.keyEvents("", _root_.liveblog.KeyEventData(newBlocks, Edition(request).timezone))
+    val timelineHtml = views.html.liveblog.keyEvents("", liveblog.KeyEventData(newBlocks, Edition(request).timezone))
     val allPagesJson = Seq(
       "timeline" -> timelineHtml,
       "numNewBlocks" -> newBlocks.size

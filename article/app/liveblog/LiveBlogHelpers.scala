@@ -1,9 +1,10 @@
-package model.liveblog
+package liveblog
 
 import com.gu.contentapi.client.model.v1.ItemResponse
 import common.`package`._
-import model.liveblog.ParseBlockId.ParsedBlockId
 import model.{Article, CacheTime, StoryPackages}
+import liveblog.LiveBlogCurrentPage
+import model.liveblog.BodyBlock
 
 object LiveBlogHelpers {
 
@@ -12,7 +13,7 @@ object LiveBlogHelpers {
   def blocksForLiveBlogRequest(article: Article, param: Option[String]): Seq[BodyBlock] = {
 
     def modelWithRange(range: BlockRange) =
-      model.liveblog.LiveBlogHelpers.createLiveBlogModel(article, range)
+      LiveBlogHelpers.createLiveBlogModel(article, range)
 
     val lbcp = param.map(ParseBlockId.fromPageParam) match {
       case Some(ParsedBlockId(id)) => modelWithRange(PageWithBlock(id))

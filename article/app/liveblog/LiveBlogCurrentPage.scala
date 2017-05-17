@@ -1,4 +1,7 @@
-package model.liveblog
+package liveblog
+
+import model.Blocks
+import model.liveblog.{Blocks, BodyBlock}
 
 case class LiveBlogCurrentPage(
   currentPage: PageReference,

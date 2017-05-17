@@ -1,7 +1,7 @@
-
-@import model.liveblog.LiveBlogCurrentPage
 @import conf.Configuration
+@import liveblog.LiveBlogCurrentPage
 
+@import views.html.liveblog.LiveBlogCurrentPage
 @(id: String, currentPage: LiveBlogCurrentPage, amp: Boolean = false)
 
 @currentPage.pagination.map { pagination =>

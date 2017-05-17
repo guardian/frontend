@@ -1,5 +1,6 @@
-@import model.liveblog.LiveBlogPage
-@(model: LiveBlogPage)(implicit request: RequestHeader, context: _root_.model.ApplicationContext)
+@import views.html.liveblog.LiveBlogPage
+@@import views.html.liveblog.LiveBlogPage
+(model: LiveBlogPage)(implicit request: RequestHeader, context: _root_.model.ApplicationContext)
 
 @mainAMP(model, model.related, model.article.content){
     @views.html.liveblog.liveBlogBody(model, amp = true)

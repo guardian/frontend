@@ -1,4 +1,4 @@
-package views.support.structuredData
+package views.structuredData
 
 import common.LinkTo
 import model.Cached.WithoutRevalidationResult

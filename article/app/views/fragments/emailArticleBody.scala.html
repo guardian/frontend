@@ -1,5 +1,6 @@
-@import model.liveblog.PageWithStoryPackage
-@(page: PageWithStoryPackage)(implicit request: RequestHeader)
+@import views.html.liveblog.PageWithStoryPackage
+@@import views.html.liveblog.PageWithStoryPackage
+(page: PageWithStoryPackage)(implicit request: RequestHeader)
 
 @import views.support.{EmailImage, EmailVideoImage}
 @import views.support.EmailHelpers.{imgForArticle, icon}

@@ -1,4 +1,4 @@
-package views.support.structuredData
+package views.structuredData
 
 import model.Article
 import play.api.libs.json.{JsObject, Json}

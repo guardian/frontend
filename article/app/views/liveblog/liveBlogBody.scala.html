@@ -1,9 +1,7 @@
-@import _root_.liveblog.KeyEventData
+@import liveblog.LiveBlogPage
 @import model.Badges.badgeFor
-@import model.liveblog.Canonical
-@import model.liveblog.SinceBlockId
-
-@import model.liveblog.LiveBlogPage
+@import model.liveblog.{Canonical, KeyEventData, SinceBlockId}
+@import views.html.liveblog.LiveBlogPage
 @(model: LiveBlogPage, amp: Boolean = false)(implicit request: RequestHeader, context: _root_.model.ApplicationContext)
 
 @import common.{Edition, LinkTo}
