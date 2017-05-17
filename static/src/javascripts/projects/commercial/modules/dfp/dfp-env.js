@@ -11,7 +11,7 @@ export type DfpEnv = {
     preFlightAdCallEnabled: boolean,
     lazyLoadEnabled: boolean,
     lazyLoadObserve: boolean,
-    creativeIDs: Array<string>,
+    creativeIDs: Array<number>,
     advertIds: Map<string, number>,
     advertsToLoad: Array<Object>,
     advertsToRefresh: Array<Object>,
