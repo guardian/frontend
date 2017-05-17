@@ -51,8 +51,9 @@ export const getTest = () => {
             count: maxViewCount,
             days: maxViewDays,
             minDaysBetweenViews: minViewDays,
-            isUnlimited,
         } = variant.options.maxViews;
+
+        const isUnlimited = variant.options.isUnlimited;
 
         const withinViewLimit =
             viewLog.viewsInPreviousDays(maxViewDays) < maxViewCount;

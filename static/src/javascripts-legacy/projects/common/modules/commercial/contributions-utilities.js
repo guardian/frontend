@@ -187,7 +187,6 @@ define([
             blockEngagementBanner: options.blockEngagementBanner || false,
             engagementBannerParams: options.engagementBannerParams || {},
             isOutbrainCompliant: options.isOutbrainCompliant || false,
-            campaignId: test.campaignId,
         };
 
         this.test = function () {
@@ -203,7 +202,7 @@ define([
             var onView = options.onView || noop;
 
             function render(templateFn) {
-                var template = templateFn || this.template;
+                var template = templateFn || this.options.template;
                 var component = $.create(template(this));
 
                 mediator.emit('register:begin', trackingCampaignId);
@@ -255,7 +254,7 @@ define([
 
     ContributionsABTestVariant.prototype.getURL = function(base, campaignCode) {
         var params = {
-            REFPVID: this.pageviewId,
+            REFPVID: this.options.pageviewId,
             INTCMP: campaignCode
         };
         return base + '?' + url.constructQuery(params);
