@@ -172,26 +172,22 @@ define([
     function ContributionsABTestVariant(options, test) {
         var trackingCampaignId = test.epic ? 'epic_' + test.campaignId : test.campaignId;
 
-        this.campaignId = test.campaignId;
         this.id = options.id;
-        this.maxViews = options.maxViews || maxViews;
-        this.isUnlimited = options.isUnlimited || false;
-
-        this.pageviewId = (config.ophan && config.ophan.pageViewId) || 'not_found';
-        this.campaignCode = getCampaignCode(test.campaignPrefix, this.campaignId, this.id, test.campaignSuffix);
-        this.campaignCodes = [this.campaignCode];
-
-        this.contributeURL = options.contributeURL || this.getURL(contributionsBaseURL, this.campaignCode);
-        this.membershipURL = options.membershipURL || this.getURL(membershipBaseURL, this.campaignCode);
-
-        this.componentName = 'mem_acquisition_' + trackingCampaignId + '_' + this.id;
-
-        this.template = options.template || controlTemplate;
-
-        this.blockEngagementBanner = options.blockEngagementBanner || false;
-        this.engagementBannerParams = options.engagementBannerParams || {};
-
-        this.isOutbrainCompliant = options.isOutbrainCompliant || false;
+        this.options = {
+            maxViews: options.maxViews || maxViews,
+            isUnlimited: options.isUnlimited || false,
+            pageviewId: (config.ophan && config.ophan.pageViewId) || 'not_found',
+            campaignCode: getCampaignCode(test.campaignPrefix, this.campaignId, this.id, test.campaignSuffix),
+            campaignCodes: [this.campaignCode],
+            contributeURL: options.contributeURL || this.getURL(contributionsBaseURL, this.campaignCode),
+            membershipURL: options.membershipURL || this.getURL(membershipBaseURL, this.campaignCode),
+            componentName: 'mem_acquisition_' + trackingCampaignId + '_' + this.id,
+            template: options.template || controlTemplate,
+            blockEngagementBanner: options.blockEngagementBanner || false,
+            engagementBannerParams: options.engagementBannerParams || {},
+            isOutbrainCompliant: options.isOutbrainCompliant || false,
+            campaignId: test.campaignId,
+        };
 
         this.test = function () {
 
