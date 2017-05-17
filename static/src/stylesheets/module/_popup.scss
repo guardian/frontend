@@ -301,27 +301,10 @@ $control-offset: 36 + $gs-gutter/2;
     }
     .popup__group-header {
         padding-bottom: $gs-baseline/2;
-        border-bottom: 1px solid $neutral-4;
-    }
-    .popup__item--other {
-        padding: 0 $gs-gutter/2;
-    }
-    .ad-feedback__submit-button {
-        position: absolute;
-        width: 36px;
-        height: 36px;
-        bottom: 0;
-        right: 0;
-        border: 0;
-        padding: 0;
-        background: transparent;
-        &:focus, &:hover {
-            background: $neutral-5;
-        }
     }
     .popup__item--option {
         position: relative;
-        border-bottom: 1px solid $neutral-4;
+        border-top: 1px solid $neutral-4;
         > button {
             cursor: pointer;
             padding: 0 $gs-gutter/2;
@@ -334,13 +317,6 @@ $control-offset: 36 + $gs-gutter/2;
             }
         }
     }
-    .ad-feedback__comment-field {
-        padding: 2px;
-        width: 145px;
-    }
-    .inline-icon {
-        fill: $neutral-1;
-    }
 
     .ad-slot--dark & {
         background: $multimedia-support-5;
@@ -348,19 +324,12 @@ $control-offset: 36 + $gs-gutter/2;
         color: $neutral-3;
         .popup__group-header {
             color: $neutral-3;
-            border-bottom-color: $neutral-1;
         }
         .popup__item--option {
-            border-bottom-color: $neutral-1;
-            &:hover {
+            border-top-color: $neutral-1;
+            > button:hover {
                 background: $neutral-1;
             }
-        }
-        .inline-icon {
-            fill: $neutral-3;
-        }
-        input {
-            color: $neutral-1;
         }
     }
 

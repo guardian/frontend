@@ -20,109 +20,70 @@
 
 .newsletter-card__wrapper {
     position: relative;
+    display: flex;
+    flex-wrap: wrap;
+
+    @include mq(tablet) {
+        margin-right: -$gs-gutter;
+    }
 
     @include mq(leftCol) {
+        margin-left: gs-span(2) + $gs-gutter;
+    }
+
+    @include mq(wide) {
         margin-left: gs-span(3) + $gs-gutter;
     }
 }
 
 .newsletter-card {
-    display: inline-block;
-    float: left;
     margin-bottom: $gs-baseline;
     border-top: 2px solid $news-accent;
+    border-bottom: 1px solid $neutral-3;
+    background-color: $comment-support-2;
+    padding: $gs-baseline / 2 $gs-gutter / 2 $gs-baseline;
+    box-sizing: border-box;
     width: 100%;
+    display: flex;
+    flex-wrap: wrap;
 
     @include mq(tablet) {
-        width: gs-span(4);
+        width: (gs-span(4)) + ($gs-gutter * 2);
         margin-right: $gs-gutter;
     }
 
     @include mq(desktop) {
-        width: 30%;
+        width: gs-span(3);
     }
 
     @include mq(leftCol) {
         margin-top: $gs-baseline;
     }
-
-    @include mq(wide) {
-        width: gs-span(3);
-    }
-}
-
-.newsletter-card__header {
-
-}
-
-.newsletter-card__imagewrapper {
-    background-color: $guardian-brand;
-    height: 0;
-    padding-bottom: 60%;
-
-    svg {
-        display: block;
-        margin: auto;
-        padding-top: 15%;
-        height: 80%;
-        width: 80px;
-
-        @include mq(desktop) {
-            width: 60px;
-        }
-    }
-
-
-}
-
-.newsletter-image {
-    position: relative;
-    width: 100%;
-
 }
 
 .newsletter-card__name {
     @include fs-header(5);
     font-weight: 900;
     line-height: 24px;
-    padding-top: $gs-baseline / 2;
     padding-bottom: $gs-baseline / 2;
 }
 
 .newsletter-card__content {
     @include fs-textSans(3);
     line-height: 18px;
-    background-color: $comment-support-2;
-    height: 9em;
-    padding: 0 $gs-gutter / 2 0 $gs-gutter / 2;
-
-
-    @include mq(tablet) {
-        height: 12em;
-    }
-
-    @include mq(desktop) {
-        height: 12em;
-    }
 }
 
 .newsletter-card__meta {
-    background-color: $comment-support-2;
-    border-bottom: 1px solid $neutral-3;
-    padding: $gs-gutter / 2;
-    padding-bottom: $gs-baseline;
-    height: gs-height(1);
+    padding-top: $gs-baseline;
+    margin-top: auto;
+    width: 100%;
 
     * {
-        -webkit-box-sizing: border-box;
-        -moz-box-sizing: border-box;
         box-sizing: border-box;
     }
 
-
     .newsletter-card__text-input {
         @include fs-textSans(2);
-        -webkit-border-radius: 1000px 0 0 1000px;
         border-radius: 1000px 0 0 1000px;
         border: 1px solid $neutral-3;
         border-right: 0;
@@ -137,7 +98,6 @@
         color: #ffffff;
         border: 1px solid $news-main-1;
         background-color: $news-main-1;
-        -webkit-border-radius: 1000px;
         border-radius: 1000px;
         border-width: 1px;
         height: 3em;
@@ -153,7 +113,6 @@
     }
 
     .newsletter-card__lozenge--submit {
-        -webkit-border-radius: 0 1000px 1000px 0;
         border-radius: 0 1000px 1000px 0;
         border-left: 0;
         margin-right: 0;
@@ -191,7 +150,7 @@
 .newsletter-card__frequency {
     @include fs-textSans(1);
     color: $neutral-2;
-    padding: $gs-baseline 0 0;
+    padding-bottom: $gs-baseline / 2;
 
     .inline-icon {
         fill: $neutral-3;
@@ -216,7 +175,6 @@
 
     .inline-icon {
         background-color: $neutral-3;
-        -webkit-border-radius: 1000px;
         border-radius: 1000px;
         fill: $neutral-1;
         height: $gs-baseline * 3;
@@ -240,45 +198,34 @@
 
 .newsletters-category {
     border-top: 2px solid $news-accent;
-    display: inline-block;
-    clear: both;
-    width: 100%;
     margin-top: $gs-baseline * 2;
+
+    @include mq(tablet) {
+        margin-left: -$gs-gutter;
+        margin-right: -$gs-gutter;
+        padding: 0 $gs-gutter;
+    }
 }
 
 .newsletters-category__heading {
     @include fs-header(5);
     color: $neutral-1;
     position: relative;
-    margin: 0;
-    margin-top: $gs-baseline / 2;
-    margin-bottom: $gs-baseline;
-
-    @include mq(desktop) {
-        width: gs-span(4);
-  }
+    margin: ($gs-baseline / 2) 0 $gs-baseline;
 
     @include mq(leftCol) {
         position: absolute;
-  }
+        width: gs-span(2);
+    }
+
+    @include mq(wide) {
+        width: gs-span(3);
+    }
 }
 
 // TONE SPECIFIC MODS - FEATURE
 .newsletter-card--tone-feature {
     border-top-color: $features-support-3;
-
-    .newsletter-card__imagewrapper {
-        background-color: $features-support-1;
-    }
-
-    .newsletter-image {
-        circle {
-            fill: $features-support-3;
-        }
-        path {
-            fill:  $features-support-1;
-        }
-    }
 
     .newsletter-card__signup {
         .newsletter-card__lozenge {
@@ -313,20 +260,6 @@
 .newsletter-card--tone-comment {
     border-top-color: $comment-support-4;
 
-    .newsletter-card__imagewrapper {
-        background-color: $comment-support-4;
-    }
-
-    .newsletter-image {
-        circle {
-            fill: $comment-support-2;
-        }
-
-        path {
-            fill: $comment-support-4;
-        }
-    }
-
     .newsletter-card__signup {
         .newsletter-card__lozenge {
             border-color: $comment-support-4;
@@ -359,20 +292,6 @@
 // TONE SPECIFIC MODS - MEDIA
 .newsletter-card--tone-media {
     border-top-color: $multimedia-main-2;
-
-    .newsletter-card__imagewrapper {
-        background-color: $multimedia-main-1;
-    }
-
-    .newsletter-image {
-        circle {
-            fill: $multimedia-main-2;
-        }
-
-        path {
-            fill: $multimedia-main-1;
-        }
-    }
 
     .newsletter-card__signup {
         .newsletter-card__lozenge {
@@ -409,20 +328,6 @@
     $brexit-main-2: #ff0ff0;
 
     border-top-color: $brexit-main-2;
-
-    .newsletter-card__imagewrapper {
-        background-color: $brexit-main-1;
-    }
-
-    .newsletter-image {
-        circle {
-            fill: $brexit-main-2;
-        }
-
-        path {
-            fill: $brexit-main-1;
-        }
-    }
 
     .newsletter-card__signup {
         .newsletter-card__lozenge {

@@ -48,7 +48,7 @@ define([
                     accentedText: 'today'
                 },
                 headline: 'Film Today: now booking',
-                description: 'Sign up to the Guardian Film Today email and we’ll make sure you don’t miss a thing - the day’s insider news and our latest reviews, plus big name interviews and film festival coverage.',
+                description: 'Sign up to the Guardian Film Today email and we’ll make sure you don’t miss a thing &ndash; the day’s insider news and our latest reviews, plus big name interviews and film festival coverage.',
                 successHeadline: 'Thank you for signing up to Film Today',
                 successDescription: 'You’ll receive an email every afternoon.',
                 insertMethod: insertBottomOfArticle
@@ -62,7 +62,7 @@ define([
                     accentedText: 'fiver'
                 },
                 headline: 'Kick off your evenings with our football roundup',
-                description: 'Sign up to the Fiver, our daily email on the world of football. We’ll deliver the day’s news and gossip in our own belligerent, sometimes intelligent and — very occasionally — funny way.',
+                description: 'Sign up to the Fiver, our daily email on the world of football. We’ll deliver the day’s news and gossip in our own belligerent, sometimes intelligent and &ndash; very occasionally &ndash; funny way.',
                 successHeadline: 'Thank you for signing up',
                 successDescription: 'You’ll receive the Fiver daily, around 5pm.',
                 insertMethod: insertBottomOfArticle
@@ -76,7 +76,7 @@ define([
                     accentedText: 'notes'
                 },
                 headline: 'Science news you’ll want to read. Fact.',
-                description: 'Sign up to Lab Notes and we’ll email you the top stories in science, from medical breakthroughs to dinosaur discoveries - plus brainteasers, podcasts and more.',
+                description: 'Sign up to Lab Notes and we’ll email you the top stories in science, from medical breakthroughs to dinosaur discoveries &ndash; plus brainteasers, podcasts and more.',
                 successHeadline: 'Thank you for signing up for Lab notes',
                 successDescription: 'You’ll receive an email every week.',
                 insertMethod: insertBottomOfArticle
@@ -185,7 +185,7 @@ define([
                     accentedText: 'today'
                 },
                 headline: 'The headlines, the analysis, the debate',
-                description: 'Get the whole picture from a source you trust, emailed to you every morning. The biggest stories examined, and diverse, independent views - the Guardian Today delivers the best of our journalism.',
+                description: 'Get the whole picture from a source you trust, emailed to you every morning. The biggest stories examined, and diverse, independent views &ndash; the Guardian Today delivers the best of our journalism.',
                 successHeadline: 'Thank you for signing up to the Guardian Today',
                 successDescription: 'We will send you our picks of the most important headlines tomorrow morning.',
                 insertMethod: insertBottomOfArticle

@@ -13,7 +13,7 @@ define([
 
     function Advert(adSlotNode) {
         var sizes = getAdBreakpointSizes(adSlotNode);
-        var slotDefinition = defineSlot(adSlotNode, sizes);
+        var slotDefinition = defineSlot.defineSlot(adSlotNode, sizes);
         var advert = {
             id: adSlotNode.id,
             node: adSlotNode,

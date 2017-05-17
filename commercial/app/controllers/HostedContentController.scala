@@ -84,7 +84,7 @@ class HostedContentController(contentApiClient: ContentApiClient)(implicit conte
           def toJson(trail: HostedPage) = Json.obj(
             "title" -> trail.title,
             "url" -> trail.url,
-            "imageUrl" -> trail.imageUrl
+            "imageUrl" -> trail.thumbnailUrl
           )
           JsonComponent {
             "items" -> JsArray(Seq(Json.obj(
@@ -93,7 +93,7 @@ class HostedContentController(contentApiClient: ContentApiClient)(implicit conte
             )))
           }
         } else {
-          JsonComponent(hostedOnwardJourney(trails, defaultRowCount, maxRowCount))
+          JsonComponent(hostedOnwardJourney(trails, maxRowCount))
         }
       }
 
@@ -101,7 +101,7 @@ class HostedContentController(contentApiClient: ContentApiClient)(implicit conte
         if (request.isAmp) {
           def toJson(trail: HostedPage) = Json.obj(
             "url" -> trail.url,
-            "imageUrl" -> trail.imageUrl
+            "imageUrl" -> trail.thumbnailUrl
           )
           JsonComponent {
             val cta = trails.headOption.map(_.cta)

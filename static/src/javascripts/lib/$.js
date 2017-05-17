@@ -9,15 +9,19 @@ bonzo.aug({
     },
 });
 
-const $ = (selector: string, context: ?Element | ?string): bonzo =>
+const $ = (selector: ?string | ?Node, context: ?Element | ?string): bonzo =>
     bonzo(qwery(selector, context));
 
 $.create = (s: string): bonzo => bonzo(bonzo.create(s));
 
 // #? duplicated in lib/closest.js?
-$.ancestor = (el: Node | null, className: string) => {
-    if (el === null || el.nodeName.toLowerCase() === 'html') {
-        return false;
+$.ancestor = (el: ?Node, className: string): ?Node => {
+    if (
+        el === null ||
+        el === undefined ||
+        el.nodeName.toLowerCase() === 'html'
+    ) {
+        return null;
     }
     if (!el.parentNode || bonzo(el.parentNode).hasClass(className)) {
         return el.parentNode;

@@ -44,26 +44,7 @@
     fill: $neutral-3;
 }
 
-// Variant 4 - testimonial only
 
-.epic__testimonial-container--testimonial-only {
-    margin-top: $gs-gutter;
-    margin-bottom: $gs-gutter / 2;
-}
-
-.epic__testimonial-name--testimonial-only {
-    margin-top: $gs-baseline;
-}
-
-.epic__testimonial-info-container {
-    margin-top: $gs-gutter / 2;
-    margin-bottom: $gs-gutter / 2;
-}
-
-.epic__testimonial-info {
-    font-family: $f-sans-serif-text;
-    font-size: 14px;
-}
 
 // Remaining classes taken from previous pull request
 

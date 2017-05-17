@@ -1,7 +1,5 @@
 {
   "Francis Carr": [
-    "projects/commercial/modules/article-body-adverts.js",
-    "projects/commercial/modules/build-page-targeting.js",
     "projects/commercial/modules/close-disabled-slots.js",
     "projects/commercial/modules/comment-adverts.js",
     "projects/commercial/modules/commercial-features.js",
@@ -13,7 +11,6 @@
     "projects/commercial/modules/third-party-tags/krux.js"
   ],
   "Jon Norman": [
-    "projects/commercial/modules/dfp/define-slot.js",
     "projects/commercial/modules/dfp/apply-creative-template.js",
     "projects/commercial/modules/dfp/breakpoint-name-to-attribute.js",
     "projects/commercial/modules/dfp/Advert.js",
@@ -26,30 +23,11 @@
     "projects/common/modules/atoms/youtube.js"
   ],
   "Regis Kuckaertz": [
-    "projects/commercial/modules/dfp/load-advert.js",
     "projects/commercial/modules/dfp/on-slot-load.js",
-    "projects/commercial/modules/dfp/on-slot-render.js",
-    "projects/commercial/modules/dfp/performance-logging.js",
-    "projects/commercial/modules/dfp/prepare-googletag.js",
-    "projects/common/modules/avatar/api.js"
+    "projects/commercial/modules/dfp/on-slot-render.js"
   ],
-  "Richard Nguyen": [
-    "projects/commercial/modules/dfp/queue-advert.js",
-    "projects/commercial/modules/dfp/refresh-on-resize.js",
-    "projects/commercial/modules/dfp/render-advert-label.js",
-    "projects/commercial/modules/dfp/render-advert.js",
-    "projects/commercial/modules/dfp/track-ad-render.js",
-    "projects/commercial/modules/dfp/wait-for-advert.js",
-    "projects/commercial/modules/high-merch.js",
-    "projects/commercial/modules/hosted/about.js",
-    "projects/commercial/modules/hosted/gallery.js",
-    "projects/commercial/modules/hosted/next-video-autoplay.js",
-    "projects/commercial/modules/hosted/next-video.js",
-    "projects/common/modules/business/stocks.js"
-  ],
+  "Richard Nguyen": [],
   "Kate Whalen": [
-    "projects/commercial/modules/hosted/onward-journey-carousel.js",
-    "projects/commercial/modules/hosted/onward.js",
     "projects/commercial/modules/hosted/video.js",
     "projects/commercial/modules/hosted/youtube.js",
     "projects/commercial/modules/liveblog-adverts.js",
@@ -64,23 +42,13 @@
     "projects/common/modules/charts/doughnut.js"
   ],
   "Lydia Shepherd": [
-    "projects/commercial/modules/third-party-tags/outbrain.js",
-    "projects/commercial/modules/third-party-tags/plista.js",
-    "projects/commercial/modules/third-party-tags/remarketing.js",
-    "projects/commercial/modules/third-party-tags/simple-reach.js",
-    "projects/commercial/modules/third-party-tags/tourism-australia.js",
-    "projects/commercial/modules/user-ad-feedback.js",
-    "projects/commercial/modules/user-ad-targeting.js",
     "projects/commercial/modules/user-features.js",
-    "projects/common/modules/commercial/adblock-banner-config.js",
     "projects/common/modules/commercial/adblock-messages.js",
-    "projects/common/modules/ui/images.js",
     "projects/common/modules/charts/table-doughnut.js"
   ],
   "sndrs": [
     "lib/detect.js",
     "bootstraps/enhanced/accessibility.js",
-    "projects/common/modules/user-prefs.js",
     "bootstraps/enhanced/article-liveblog-common.js",
     "bootstraps/enhanced/article-minute.js",
     "bootstraps/enhanced/article.js",
@@ -93,17 +61,12 @@
     "projects/common/modules/check-dispatcher.js"
   ],
   "Simon Adcock": [
-    "lib/ajax.js",
     "projects/common/modules/ui/rhc.js",
     "bootstraps/enhanced/identity-common.js",
     "bootstraps/enhanced/image-content.js",
     "bootstraps/enhanced/liveblog.js",
-    "bootstraps/enhanced/main.js",
     "bootstraps/enhanced/media/main.js",
     "bootstraps/enhanced/media/video-player.js",
-    "bootstraps/enhanced/membership.js",
-    "projects/common/modules/video/more-in-series-container.js",
-    "bootstraps/enhanced/newsletters.js",
     "projects/common/modules/check-mediator.js"
   ],
   "Nicolas Long": [
@@ -116,7 +79,6 @@
     "bootstraps/enhanced/youtube.js",
     "bootstraps/video-embed.js",
     "bootstraps/youtube-embed.js",
-    "lib/ajax.js",
     "lib/atob.js",
     "projects/common/modules/component.js"
   ],
@@ -128,18 +90,13 @@
     "lib/page.js",
     "lib/picturefill.js",
     "lib/proximity-loader.js",
-    "lib/queue.js",
     "projects/common/modules/video/metadata.js",
     "projects/common/modules/ui/smartAppBanner.js",
     "projects/common/modules/crosswords/anagram-helper/clue-input.js"
   ],
   "GHaberis": [
-    "lib/steady-page.js",
-    "projects/common/modules/ui/sticky.js",
-    "projects/admin/bootstraps/abtests.js",
     "projects/admin/bootstraps/radiator.js",
     "projects/admin/modules/abtests/abtest-report-item.js",
-    "projects/admin/modules/abtests/abtest-report.js",
     "projects/admin/modules/abtests/audience-item.js",
     "projects/admin/modules/abtests/audience.js",
     "projects/admin/modules/abtests/participation-item.js",
@@ -177,9 +134,7 @@
     "projects/common/modules/atoms/youtube-tracking.js",
     "projects/commercial/modules/messenger/viewport.js"
   ],
-  "Gideon Goldberg": [
-    "projects/commercial/modules/paid-containers.js"
-  ],
+  "Gideon Goldberg": [],
   "Sam Desborough": [
     "projects/common/modules/experiments/ab.js",
     "projects/common/modules/crosswords/anagram-helper/main.js",
@@ -221,8 +176,6 @@
     "projects/common/modules/ui/faux-block-link.js",
     "projects/common/modules/ui/full-height.js",
     "projects/common/modules/experiments/affix.js",
-    "projects/common/modules/experiments/segment-util.js",
-    "projects/common/modules/experiments/test-can-run-checks.js",
     "projects/commercial/modules/sticky-top-banner.js"
   ],
   "davidfurey": [
@@ -246,7 +199,6 @@
     "projects/common/modules/experiments/tests/sleeve-notes-legacy-email-variant.js",
     "projects/common/modules/experiments/tests/sleeve-notes-new-email-variant.js",
     "projects/common/modules/experiments/tests/the-long-read-email-variants.js",
-    "projects/common/modules/experiments/utils.js",
     "projects/common/modules/gallery/lightbox.js",
     "projects/common/modules/identity/account-profile.js",
     "projects/common/modules/identity/api.js",
@@ -255,7 +207,7 @@
     "bootstraps/enhanced/notifications.js",
     "projects/commercial/modules/third-party-tags.js"
   ],
-  "ShaunYearStrong": [
+  "shaundillon": [
     "projects/common/modules/identity/forms.js",
     "projects/common/modules/identity/formstack-iframe-embed.js",
     "projects/common/modules/identity/formstack-iframe.js",
@@ -292,7 +244,6 @@
     "projects/common/modules/experiments/tests/contributions-epic-ask-four-earning.js",
     "projects/common/modules/experiments/tests/epic-to-support-landing-page.js",
     "projects/common/modules/experiments/tests/membership-engagement-banner-tests.js",
-    "projects/common/modules/experiments/acquisition-test-selector.js",
     "projects/common/modules/commercial/acquisitions-view-log.js",
     "projects/common/modules/experiments/ab-test-clash.js",
     "projects/common/modules/ui/message.js",
@@ -302,8 +253,6 @@
     "projects/commercial/modules/paidfor-band.js"
   ],
   "Philip Wills": [
-    "projects/facia/modules/onwards/search-tool.js",
-    "projects/facia/modules/onwards/weather.js",
     "projects/facia/modules/ui/container-show-more.js",
     "projects/facia/modules/ui/container-toggle.js",
     "projects/facia/modules/ui/football-snaps.js",
@@ -311,5 +260,13 @@
     "projects/common/modules/video/ga-helper.js",
     "projects/facia/modules/ui/live-blog-updates.js",
     "projects/commercial/modules/third-party-tags/imr-worldwide.js"
+  ],
+  "Santiago Villa Fernandez": [
+    "bootstraps/enhanced/membership.js",
+    "projects/common/modules/video/more-in-series-container.js"
+  ],
+  "Jamie Byers": [
+    "bootstraps/enhanced/main.js",
+    "bootstraps/enhanced/newsletters.js"
   ]
 }

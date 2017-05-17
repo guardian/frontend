@@ -7,7 +7,9 @@ import highMerch from 'commercial/modules/high-merch';
 import {
     articleAsideAdvertsInit,
 } from 'commercial/modules/article-aside-adverts';
-import articleBodyAdverts from 'commercial/modules/article-body-adverts';
+import {
+    articleBodyAdvertsInit,
+} from 'commercial/modules/article-body-adverts';
 import closeDisabledSlots from 'commercial/modules/close-disabled-slots';
 import prepareGoogletag from 'commercial/modules/dfp/prepare-googletag';
 import prepareSonobiTag from 'commercial/modules/dfp/prepare-sonobi-tag';
@@ -23,8 +25,9 @@ import liveblogAdverts from 'commercial/modules/liveblog-adverts';
 import stickyTopBanner from 'commercial/modules/sticky-top-banner';
 import thirdPartyTags from 'commercial/modules/third-party-tags';
 import paidforBand from 'commercial/modules/paidfor-band';
-import paidContainers from 'commercial/modules/paid-containers';
-import performanceLogging from 'commercial/modules/dfp/performance-logging';
+import { paidContainers } from 'commercial/modules/paid-containers';
+import * as performanceLogging
+    from 'commercial/modules/dfp/performance-logging';
 import { trackPerformance } from 'common/modules/analytics/google';
 import userFeatures from 'commercial/modules/user-features';
 
@@ -35,12 +38,12 @@ const commercialModules: Array<Array<any>> = [
     ['cm-prepare-switch-tag', prepareSwitchTag.init, true],
     ['cm-articleAsideAdverts', articleAsideAdvertsInit, true],
     ['cm-prepare-googletag', prepareGoogletag.init, true],
-    ['cm-articleBodyAdverts', articleBodyAdverts.init],
+    ['cm-articleBodyAdverts', articleBodyAdvertsInit],
     ['cm-liveblogAdverts', liveblogAdverts.init, true],
     ['cm-closeDisabledSlots', closeDisabledSlots.init],
     ['cm-stickyTopBanner', stickyTopBanner.init],
     ['cm-fill-advert-slots', fillAdvertSlots, true],
-    ['cm-paidContainers', paidContainers.init],
+    ['cm-paidContainers', paidContainers],
     ['cm-paidforBand', paidforBand.init],
 ];
 
