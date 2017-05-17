@@ -1,5 +1,26 @@
-define(['common/modules/onward/tech-feedback'], function (TechFeedback) {
+define([
+    'helpers/injector'
+], function (
+    Injector
+) {
     describe('Tech-feedback', function () {
+        var injector = new Injector();
+        var TechFeedback;
+
+        beforeEach(function(done) {
+            var fakeSvg = {
+                markup: ''
+            };
+
+            injector.mock({
+                'svgs/icon/thumb.svg': fakeSvg,
+                'svgs/icon/quote.svg': fakeSvg
+            });
+           injector.require(['common/modules/onward/tech-feedback'], function(TechFeedbackModule) {
+               TechFeedback = TechFeedbackModule;
+               done();
+           })
+        });
 
         it('should exist', function () {
             expect(TechFeedback).toBeDefined();

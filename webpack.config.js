@@ -79,6 +79,11 @@ module.exports = {
                 exclude: /(node_modules|vendor|javascripts-legacy)/,
                 loader: 'babel-loader',
             },
+            {
+                test: /\.svg$/,
+                exclude: /(node_modules)/,
+                loader: 'svg-loader',
+            },
         ],
     },
     plugins: [

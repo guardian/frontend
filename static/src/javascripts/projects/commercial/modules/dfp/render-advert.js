@@ -1,7 +1,5 @@
 // @flow
 
-/* eslint no-param-reassign: "off"*/
-
 import qwery from 'qwery';
 import raven from 'lib/raven';
 import fastdom from 'lib/fastdom-promise';

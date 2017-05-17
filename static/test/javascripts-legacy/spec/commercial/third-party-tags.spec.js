@@ -9,6 +9,14 @@ define([
             tagsContainer, commercialFeatures;
 
         beforeEach(function (done) {
+            var fakeSvg = {
+                markup: ''
+            };
+
+            injector.mock({
+                'svgs/icon/thumb.svg': fakeSvg,
+                'svgs/icon/quote.svg': fakeSvg,
+            });
             injector.require([
                 'commercial/modules/third-party-tags',
                 'commercial/modules/commercial-features'

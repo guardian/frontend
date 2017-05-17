@@ -17,6 +17,13 @@ define([
             ab, config, mvtCookie;
 
         beforeEach(function (done) {
+            var fakeSvg = {
+                markup: ''
+            };
+            injector.mock({
+                'svgs/icon/thumb.svg': fakeSvg,
+                'svgs/icon/quote.svg': fakeSvg
+            });
             injector.require(['common/modules/experiments/ab', 'lib/config', 'common/modules/analytics/mvt-cookie'], function () {
                 ab = arguments[0];
                 config = arguments[1];

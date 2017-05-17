@@ -21,6 +21,7 @@ define([
     'common/modules/experiments/tests/sleeve-notes-new-email-variant',
     'common/modules/experiments/tests/sleeve-notes-legacy-email-variant',
     'common/modules/experiments/tests/increase-inline-ads',
+    'common/modules/experiments/tests/measure-understanding',
     'ophan/ng',
     'common/modules/experiments/tests/paid-commenting',
     'common/modules/experiments/tests/bundle-digital-sub-price-test-1'
@@ -46,6 +47,7 @@ define([
              SleevenotesNewEmailVariant,
              SleevenotesLegacyEmailVariant,
              increaseInlineAdsRedux,
+             measureUnderstanding,
              ophan,
              PaidCommenting,
              BundleDigitalSubPriceTest1
@@ -62,6 +64,7 @@ define([
         SleevenotesNewEmailVariant,
         SleevenotesLegacyEmailVariant,
         new increaseInlineAdsRedux(),
+        measureUnderstanding.MeasureUnderstanding(),
         new PaidCommenting(),
         new BundleDigitalSubPriceTest1()
     ].concat(MembershipEngagementBannerTests));
@@ -132,10 +135,10 @@ define([
                 .forEach(function (test) {
                     var variantId = abUtils.getTestVariantId(test.id);
                     var variant = abUtils.getVariant(test, variantId);
-                    var campaingCodes = (variant && variant.campaignCodes) ? variant.campaignCodes : undefined;
+                    var campaignCodes = variant && variant.options && variant.options.campaignCodes;
 
                     if (variantId && segmentUtil.isInTest(test)) {
-                        log[test.id] = abData(variantId, 'false', campaingCodes);
+                        log[test.id] = abData(variantId, 'false', campaignCodes);
                     }
                 });
 
@@ -172,8 +175,9 @@ define([
     function recordTestComplete(test, variantId, complete) {
         var data = {};
         var variant = abUtils.getVariant(test, variantId);
+        var campaignCodes = variant && variant.options && variant.options.campaignCodes;
 
-        data[test.id] = abData(variantId, String(complete), variant.campaignCodes);
+        data[test.id] = abData(variantId, String(complete), campaignCodes);
 
         return function () {
             recordOphanAbEvent(data);
