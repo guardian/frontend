@@ -16,7 +16,7 @@ const createAdverts = (): void => {
     // Get all ad slots
     const adverts = qwery(dfpEnv.adSlotSelector)
         .filter(adSlot => !(adSlot.id in dfpEnv.advertIds))
-        .map(Advert);
+        .map(adSlot => new Advert(adSlot));
     const currentLength = dfpEnv.adverts.length;
     dfpEnv.adverts = dfpEnv.adverts.concat(adverts);
     adverts.forEach((advert, index) => {
