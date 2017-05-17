@@ -1,5 +1,5 @@
 // @flow
-import Advert from 'commercial/modules/dfp/Advert';
+import { Advert } from 'commercial/modules/dfp/Advert';
 
 const loadAdvert = (advert: Advert): void => {
     advert.whenSlotReady

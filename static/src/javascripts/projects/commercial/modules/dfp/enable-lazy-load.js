@@ -1,6 +1,6 @@
 // @flow
 
-import Advert from 'commercial/modules/dfp/Advert';
+import { Advert } from 'commercial/modules/dfp/Advert';
 import mediator from 'lib/mediator';
 import dfpEnv from 'commercial/modules/dfp/dfp-env';
 import { onIntersect, onScroll } from 'commercial/modules/dfp/lazy-load';

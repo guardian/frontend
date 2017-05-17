@@ -1,6 +1,6 @@
 // @flow
 import dfpEnv from 'commercial/modules/dfp/dfp-env';
-import Advert from 'commercial/modules/dfp/Advert';
+import { Advert } from 'commercial/modules/dfp/Advert';
 import queueAdvert from 'commercial/modules/dfp/queue-advert';
 import loadAdvert from 'commercial/modules/dfp/load-advert';
 import { enableLazyLoad } from 'commercial/modules/dfp/enable-lazy-load';

@@ -1,7 +1,7 @@
 // @flow
 
 import dfpEnv from 'commercial/modules/dfp/dfp-env';
-import Advert from 'commercial/modules/dfp/Advert';
+import { Advert } from 'commercial/modules/dfp/Advert';
 
 const queueAdvert = (advert: Advert) => {
     dfpEnv.advertsToLoad.push(advert);

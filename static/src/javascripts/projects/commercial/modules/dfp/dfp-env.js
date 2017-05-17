@@ -1,6 +1,6 @@
 // @flow
 
-import Advert from 'commercial/modules/dfp/Advert';
+import { Advert } from 'commercial/modules/dfp/Advert';
 import { getUrlVars } from 'lib/url';
 import config from 'lib/config';
 

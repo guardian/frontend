@@ -131,4 +131,4 @@ class Advert {
     }
 }
 
-export default Advert;
+export { Advert };
