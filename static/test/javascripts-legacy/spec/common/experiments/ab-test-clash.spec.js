@@ -9,10 +9,14 @@ define([
 
             beforeEach(function (done) {
                 var injector = new Injector();
+                var fakeSvg = {
+                    markup: ''
+                };
 
                 sandbox = sinon.sandbox.create();
-                injector.mock('svgs/icon/thumb.svg', {
-                    markup: ''
+                injector.mock({
+                    'svgs/icon/thumb.svg': fakeSvg,
+                    'svgs/icon/quote.svg': fakeSvg
                 });
                 injector.require([
                     'common/modules/experiments/ab-test-clash'
