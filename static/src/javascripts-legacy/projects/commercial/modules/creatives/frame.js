@@ -7,8 +7,8 @@ define([
     'commercial/modules/creatives/add-viewability-tracker',
     'raw-loader!commercial/views/creatives/frame.html',
     'raw-loader!commercial/views/creatives/gustyle-label.html',
-    'svg-loader!svgs/icon/external-link.svg',
-    'svg-loader!svgs/icon/arrow.svg'
+    'svgs/icon/external-link.svg',
+    'svgs/icon/arrow.svg'
 ], function (
     fastdom,
     template,

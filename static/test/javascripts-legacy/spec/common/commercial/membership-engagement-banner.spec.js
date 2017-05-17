@@ -35,6 +35,10 @@ define([
     describe('Membership engagement banner', function () {
 
         beforeEach(function (done) {
+            var fakeSvg = {
+                markup: ''
+            };
+
             config.page.edition = 'UK';
             injector.mock({
                 'common/views/svgs': {
@@ -42,9 +46,8 @@ define([
                         return '';
                     }
                 },
-                'svgs/icon/thumb.svg': {
-                    markup: ''
-                }
+                'svgs/icon/thumb.svg': fakeSvg,
+                'svgs/icon/quote.svg': fakeSvg
             });
             injector.require([
                 'commercial/modules/commercial-features',
