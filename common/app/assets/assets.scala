@@ -1,5 +1,7 @@
 package common.Assets
 
+import java.net.URL
+
 import common.{Logging, RelativePathEscaper}
 import conf.Configuration
 import model.ApplicationContext
@@ -7,13 +9,16 @@ import org.apache.commons.io.IOUtils
 import play.api.libs.json._
 import play.api.Mode
 
-import scala.collection.concurrent.{Map => ConcurrentMap, TrieMap}
+import scala.collection.concurrent.{TrieMap, Map => ConcurrentMap}
 import scala.util.{Failure, Success, Try}
 
 // turns an unhashed name into a name that's hashed if it needs to be
 class Assets(base: String, mapResource: String, useHashedBundles: Boolean = Configuration.assets.useHashedBundles) extends Logging {
 
-  lazy val lookup: Map[String, String] = Get(assetMap(mapResource))
+  lazy val lookup: Map[String, String] = assetMap(mapResource) match {
+    case Success(s) => s
+    case Failure(e) => throw e
+  }
 
   def apply(path: String): String = {
     val target =
@@ -31,27 +36,15 @@ class Assets(base: String, mapResource: String, useHashedBundles: Boolean = Conf
       case JsError(errors) => Failure(new Exception(s"$errors"))
     }
 
-  def assetMap(resourceName: String): Try[Map[String, String]] = {
-    for {
-      rawResource <- LoadFromClasspath(resourceName)
-      mappings <- jsonToAssetMap(rawResource)
-    } yield mappings
-  }
+  def assetMap(resourceName: String): Try[Map[String, String]] = jsonToAssetMap(AssetLoader.loadFromClasspath(resourceName))
 
 }
 
 object inlineSvg {
-
-  private val memoizedSvg: ConcurrentMap[String, Try[String]] = TrieMap()
-
-  def apply(path: String): String =
-    Get(memoizedSvg.getOrElseUpdate(path, LoadFromClasspath(s"assets/inline-svgs/$path")))
-
+  def apply(path: String): String = AssetLoader.loadMemoized(s"assets/inline-svgs/$path")
 }
 
 object css {
-
-  private val memoizedCss: ConcurrentMap[String, Try[String]] = TrieMap()
 
   def head(projectOverride: Option[String])(implicit context: ApplicationContext) = inline(cssHead(projectOverride.getOrElse(context.applicationIdentity.name)))
   def inlineStoryPackage(implicit context: ApplicationContext) = inline("story-package")
@@ -68,14 +61,7 @@ object css {
   def headIE9(projectOverride: Option[String])(implicit context: ApplicationContext) = cssIE9(projectOverride.getOrElse(context.applicationIdentity.name))
 
 
-  private def inline(module: String)(implicit context: ApplicationContext): String = {
-    val resourceName = s"assets/inline-stylesheets/$module.css"
-    Get(if (context.environment.mode == Mode.Dev) {
-      LoadFromClasspath(resourceName)
-    } else {
-      memoizedCss.getOrElseUpdate(resourceName, LoadFromClasspath(resourceName))
-    })
-  }
+  def inline(module: String)(implicit context: ApplicationContext): String = AssetLoader.load(s"assets/inline-stylesheets/$module.css")
 
   private def project(project: String): String = {
     project match {
@@ -120,27 +106,33 @@ object css {
 }
 
 object js {
-  val curl: String = Get(LoadFromClasspath("assets/curl.js").map(RelativePathEscaper.escapeLeadingDotPaths))
-  val polyfillioUrl: String = Get(LoadFromClasspath("assets/polyfill.io").map(RelativePathEscaper.escapeLeadingDotPaths)).trim
+  val curl: String = RelativePathEscaper.escapeLeadingDotPaths(AssetLoader.loadFromClasspath("assets/curl.js"))
+  val polyfillioUrl: String = RelativePathEscaper.escapeLeadingDotPaths(AssetLoader.loadFromClasspath("assets/polyfill.io")).trim
 }
 
-object Get {
-  def apply[T](`try`: Try[T]) = `try` match {
-    case Success(s) => s
-    case Failure(e) => throw e
+case class AssetNotFoundException(assetPath: String) extends Exception(s"Cannot find asset $assetPath. You should run `make compile`.")
+
+object AssetLoader {
+
+  private val memoizedAssets: ConcurrentMap[String, String] = TrieMap()
+
+  def load(assetPath: String)(implicit context: ApplicationContext): String = {
+    if (context.environment.mode == Mode.Dev) {
+      loadFromClasspath(assetPath)
+    } else {
+      loadMemoized(assetPath)
+    }
   }
-}
 
-// gets the asset url from the classpath
-object LoadFromClasspath {
-  def apply(assetPath: String): Try[String] = {
-    (Option(this.getClass.getClassLoader.getResource(assetPath)) match {
-      case Some(s) => Success(s)
-      case None => Failure(AssetNotFoundException(assetPath))
-    }).flatMap { url =>
-      Try(IOUtils.toString(url))
+  def loadMemoized(assetPath: String): String = memoizedAssets.getOrElseUpdate(assetPath, loadFromClasspath(assetPath))
+
+  def loadFromClasspath(assetPath: String): String = {
+    val assetUrl: Option[URL]  = Option(this.getClass.getClassLoader.getResource(assetPath))
+    assetUrl.map(url => Try(IOUtils.toString(url))) match {
+      case Some(Success(s)) => s
+      case Some(Failure(e)) => throw e
+      case None => throw AssetNotFoundException(assetPath)
     }
   }
 }
 
-case class AssetNotFoundException(assetPath: String) extends Exception(s"Cannot find asset $assetPath. You should run `make compile`.")

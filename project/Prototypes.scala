@@ -10,6 +10,7 @@ import Dependencies._
 import play.sbt.PlayScala
 import com.typesafe.sbt.SbtNativePackager.Universal
 import com.typesafe.sbt.packager.Keys.packageName
+import play.twirl.sbt.Import.TwirlKeys
 
 trait Prototypes {
   val version = "1-SNAPSHOT"
@@ -117,6 +118,10 @@ trait Prototypes {
     }).value
   )
 
+  val TwirlSettings = Seq(
+    TwirlKeys.templateFormats += ("css" -> "play.twirl.api.TxtFormat")
+  )
+
   def root() = Project("root", base = file(".")).enablePlugins(PlayScala, RiffRaffArtifact)
     .settings(frontendCompilationSettings)
     .settings(frontendRootSettings)
@@ -129,6 +134,7 @@ trait Prototypes {
     .settings(VersionInfo.settings)
     .settings(libraryDependencies ++= Seq(macwire, commonsIo))
     .settings(packageName in Universal := applicationName)
+    .settings(TwirlSettings)
     .settingSets(settingSetsOrder)
   }
 
