@@ -8,7 +8,7 @@ import breakpointNameToAttribute
 
 type Resolver = (x: boolean) => void;
 type AdSize = 'fluid' | Array<number>;
-type AdSizes = { [k: string]: AdSize };
+type AdSizes = { [k: string]: Array<AdSize> };
 
 /** A breakpoint can have various sizes assigned to it. You can assign either on
  * set of sizes or multiple.
@@ -16,7 +16,7 @@ type AdSizes = { [k: string]: AdSize };
  * One size       - `data-mobile="300,50"`
  * Multiple sizes - `data-mobile="300,50|320,50"`
  */
-const createSizeMapping = (attr: string) =>
+const createSizeMapping = (attr: string): Array<AdSize> =>
     attr
         .split('|')
         .map(
