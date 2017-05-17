@@ -22,7 +22,8 @@ define([
         if (clashingTests.length > 0) {
             return some(clashingTests, function (test) {
                 return test.variants.filter(function (variant) {
-                    return !variant.options.isOutbrainCompliant;
+                    var compliant = variant && variant.options && variant.options.isOutbrainCompliant;
+                    return !compliant;
                 }).some(function (variant) {
                     return f(test, variant);
                 });
