@@ -7,6 +7,7 @@ export type Variant = {
     test: () => void,
     impression?: ListenerFunction,
     success?: ListenerFunction,
+    options?: Object,
 };
 
 export type ABTest = {
