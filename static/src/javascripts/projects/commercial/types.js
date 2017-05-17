@@ -1,4 +1,7 @@
 // @flow
+
+/* eslint no-use-before-define: "off" */
+
 export type SingleSizeArray = Array<number>;
 export type NamedSize = string;
 export type SingleSize = SingleSizeArray | NamedSize;
@@ -20,26 +23,42 @@ export type SafeFrameConfig = {
     sandbox: boolean,
 };
 
+type AddService = string => Slot;
+type ClearCategoryExclusions = () => Slot;
+type ClearTargeting = (?string) => Slot;
+type DefineSizeMapping = Array<SizeMapping> => Slot;
+type Get = string => ?string;
+type GetString = () => string;
+type GetStrings = () => Array<string>;
+type GetResponseInformation = () => ?ResponseInformation;
+type GetTargeting = string => Array<string>;
+type Set = (string, string) => Slot;
+type SetString = string => Slot;
+type SetCollapseEmptyDiv = (boolean, boolean) => Slot;
+type SetForceSafeFrame = boolean => Slot;
+type SetSafeFrameConfig = SafeFrameConfig => Slot;
+type SetTargeting = (string, string | Array<string>) => Slot;
+
 export type Slot = {
-    addService: string => Slot,
-    clearCategoryExclusions: () => Slot,
-    clearTargeting: (?string) => Slot,
-    defineSizeMapping: Array<SizeMapping> => Slot,
-    get: string => ?string,
-    getAdUnitPath: () => string,
-    getAttributeKeys: () => Array<string>,
-    getCategoryExclusions: () => Array<string>,
-    getResponseInformation: () => ?ResponseInformation,
-    getSlotElementId: () => string,
-    getTargeting: string => Array<string>,
-    getTargetingKeys: () => Array<string>,
-    set: (string, string) => Slot,
-    setCategoryExclusion: string => Slot,
-    setClickUrl: string => Slot,
-    setCollapseEmptyDiv: (boolean, boolean) => Slot,
-    setForceSafeFrame: boolean => Slot,
-    setSafeFrameConfig: SafeFrameConfig => Slot,
-    setTargeting: (string, string | Array<string>) => Slot,
+    addService: AddService,
+    clearCategoryExclusions: ClearCategoryExclusions,
+    clearTargeting: ClearTargeting,
+    defineSizeMapping: DefineSizeMapping,
+    get: Get,
+    getAdUnitPath: GetString,
+    getAttributeKeys: GetStrings,
+    getCategoryExclusions: GetStrings,
+    getResponseInformation: GetResponseInformation,
+    getSlotElementId: GetString,
+    getTargeting: GetTargeting,
+    getTargetingKeys: GetStrings,
+    set: Set,
+    setCategoryExclusion: SetString,
+    setClickUrl: SetString,
+    setCollapseEmptyDiv: SetCollapseEmptyDiv,
+    setForceSafeFrame: SetForceSafeFrame,
+    setSafeFrameConfig: SetSafeFrameConfig,
+    setTargeting: SetTargeting,
 };
 
 export type SlotOnloadEvent = {
