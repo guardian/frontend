@@ -11,6 +11,7 @@ define([
     'lib/mediator',
     'lib/storage',
     'lib/geolocation',
+    'lib/url',
     'lodash/objects/assign',
     'lodash/utilities/template',
     'lodash/collections/toArray',
@@ -28,6 +29,7 @@ define([
     mediator,
     storage,
     geolocation,
+    url,
     assign,
     template,
     toArray,
@@ -169,27 +171,23 @@ define([
 
     function ContributionsABTestVariant(options, test) {
         var trackingCampaignId = test.epic ? 'epic_' + test.campaignId : test.campaignId;
+        var campaignCode = getCampaignCode(test.campaignPrefix, test.campaignId, this.id, test.campaignSuffix);
 
-        this.campaignId = test.campaignId;
         this.id = options.id;
-        this.maxViews = options.maxViews || maxViews;
-        this.isUnlimited = options.isUnlimited || false;
 
-        this.pageviewId = (config.ophan && config.ophan.pageViewId) || 'not_found';
-        this.campaignCode = getCampaignCode(test.campaignPrefix, this.campaignId, this.id, test.campaignSuffix);
-        this.campaignCodes = [this.campaignCode];
-
-        this.contributeURL = options.contributeURL || this.makeURL(contributionsBaseURL, this.campaignCode);
-        this.membershipURL = options.membershipURL || this.makeURL(membershipBaseURL, this.campaignCode);
-
-        this.componentName = 'mem_acquisition_' + trackingCampaignId + '_' + this.id;
-
-        this.template = options.template || controlTemplate;
-
-        this.blockEngagementBanner = options.blockEngagementBanner || false;
-        this.engagementBannerParams = options.engagementBannerParams || {};
-
-        this.isOutbrainCompliant = options.isOutbrainCompliant || false;
+        this.options = {
+            maxViews: options.maxViews || maxViews,
+            isUnlimited: options.isUnlimited || false,
+            campaignCode: campaignCode,
+            campaignCodes: [campaignCode],
+            contributeURL: options.contributeURL || this.getURL(contributionsBaseURL, campaignCode),
+            membershipURL: options.membershipURL || this.getURL(membershipBaseURL, campaignCode),
+            componentName: 'mem_acquisition_' + trackingCampaignId + '_' + this.id,
+            template: options.template || controlTemplate,
+            blockEngagementBanner: options.blockEngagementBanner || false,
+            engagementBannerParams: options.engagementBannerParams || {},
+            isOutbrainCompliant: options.isOutbrainCompliant || false,
+        };
 
         this.test = function () {
 
@@ -204,7 +202,7 @@ define([
             var onView = options.onView || noop;
 
             function render(templateFn) {
-                var template = templateFn || this.template;
+                var template = templateFn || this.options.template;
                 var component = $.create(template(this));
 
                 mediator.emit('register:begin', trackingCampaignId);
@@ -254,21 +252,22 @@ define([
         return campaignCodePrefix + '_' + campaignID + '_' + id + suffix;
     }
 
-    ContributionsABTestVariant.prototype.makeURL = function(base, campaignCode) {
-        var params = [
-            'REFPVID=' + this.pageviewId,
-            'INTCMP=' + campaignCode
-        ];
+    ContributionsABTestVariant.prototype.getURL = function(base, campaignCode) {
+        var params = {
+            REFPVID: (config.ophan && config.ophan.pageViewId) || 'not_found',
+            INTCMP: campaignCode
+        };
 
-        return base + '?' + params.filter(Boolean).join('&');
+        return base + '?' + url.constructQuery(params);
     };
 
+
     ContributionsABTestVariant.prototype.contributionsURLBuilder = function(codeModifier) {
-        return this.makeURL(contributionsBaseURL, codeModifier(this.campaignCode));
+        return this.getURL(contributionsBaseURL, codeModifier(this.campaignCode));
     };
 
     ContributionsABTestVariant.prototype.membershipURLBuilder = function(codeModifier) {
-        return this.makeURL(membershipBaseURL, codeModifier(this.campaignCode));
+        return this.getURL(membershipBaseURL, codeModifier(this.campaignCode));
     };
 
     ContributionsABTestVariant.prototype.registerListener = function (type, defaultFlag, event, options) {
@@ -291,7 +290,6 @@ define([
 
     return {
         defaultCanEpicBeDisplayed: defaultCanEpicBeDisplayed,
-
         makeABTest: function (test) {
             // this is so it can be instantiated with `new` later
             return function () {

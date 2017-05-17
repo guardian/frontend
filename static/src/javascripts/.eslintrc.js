@@ -69,6 +69,7 @@ module.exports = {
         // our own rules for frontend
         // live in tools/eslint-plugin-guardian-frontend
         'guardian-frontend/global-config': 'error',
+        'guardian-frontend/no-multiple-classlist-parameters': 'error',
         'guardian-frontend/no-default-export': 'warn',
         'import/prefer-default-export': 'off',
 

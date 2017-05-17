@@ -7,6 +7,7 @@ export type Variant = {
     test: () => void,
     impression?: ListenerFunction,
     success?: ListenerFunction,
+    options?: Object,
 };
 
 export type ABTest = {
@@ -25,6 +26,15 @@ export type ABTest = {
     variants: Array<Variant>,
     canRun: () => boolean,
     notInTest?: () => void,
+};
+
+/**
+ * the structure stored in localStorage
+ */
+export type Participations = {
+    [testId: string]: {
+        variant: string,
+    },
 };
 
 /**
