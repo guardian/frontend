@@ -174,10 +174,10 @@ define([
         var campaignCode = getCampaignCode(test.campaignPrefix, test.campaignId, this.id, test.campaignSuffix);
 
         this.id = options.id;
+
         this.options = {
             maxViews: options.maxViews || maxViews,
             isUnlimited: options.isUnlimited || false,
-            pageviewId: (config.ophan && config.ophan.pageViewId) || 'not_found',
             campaignCode: campaignCode,
             campaignCodes: [campaignCode],
             contributeURL: options.contributeURL || this.getURL(contributionsBaseURL, campaignCode),
@@ -254,9 +254,10 @@ define([
 
     ContributionsABTestVariant.prototype.getURL = function(base, campaignCode) {
         var params = {
-            REFPVID: this.options.pageviewId,
+            REFPVID: (config.ophan && config.ophan.pageViewId) || 'not_found',
             INTCMP: campaignCode
         };
+
         return base + '?' + url.constructQuery(params);
     };
 
