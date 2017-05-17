@@ -66,12 +66,8 @@
     "bootstraps/enhanced/identity-common.js",
     "bootstraps/enhanced/image-content.js",
     "bootstraps/enhanced/liveblog.js",
-    "bootstraps/enhanced/main.js",
     "bootstraps/enhanced/media/main.js",
     "bootstraps/enhanced/media/video-player.js",
-    "bootstraps/enhanced/membership.js",
-    "projects/common/modules/video/more-in-series-container.js",
-    "bootstraps/enhanced/newsletters.js",
     "projects/common/modules/check-mediator.js"
   ],
   "Nicolas Long": [
@@ -265,5 +261,13 @@
     "projects/common/modules/video/ga-helper.js",
     "projects/facia/modules/ui/live-blog-updates.js",
     "projects/commercial/modules/third-party-tags/imr-worldwide.js"
+  ],
+  "Santiago Villa Fernandez": [
+    "bootstraps/enhanced/membership.js",
+    "projects/common/modules/video/more-in-series-container.js"
+  ],
+  "Jamie Byers": [
+    "bootstraps/enhanced/main.js",
+    "bootstraps/enhanced/newsletters.js"
   ]
 }
