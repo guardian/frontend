@@ -6,6 +6,10 @@ import { updateAdvertMetric } from 'commercial/modules/dfp/performance-logging';
 import breakpointNameToAttribute
     from 'commercial/modules/dfp/breakpoint-name-to-attribute';
 
+type Resolver = (x: boolean) => void;
+type AdSize = 'fluid' | Array<number>;
+type AdSizes = { [k: string]: AdSize };
+
 /** A breakpoint can have various sizes assigned to it. You can assign either on
  * set of sizes or multiple.
  *
@@ -19,7 +23,7 @@ const createSizeMapping = (attr: string) =>
             size => (size === 'fluid' ? 'fluid' : size.split(',').map(Number))
         );
 
-const getAdBreakpointSizes = (advertNode: Element): {} =>
+const getAdBreakpointSizes = (advertNode: Element): AdSizes =>
     detect.breakpoints.reduce((sizes, breakpoint) => {
         const data = advertNode.getAttribute(`data-${breakpointNameToAttribute(breakpoint.name)}`);
         if (data) {
@@ -28,17 +32,11 @@ const getAdBreakpointSizes = (advertNode: Element): {} =>
         return sizes;
     }, {});
 
-type Resolver = (x: boolean) => void;
-
 class Advert {
-    startLoading: any;
-    stopLoading: any;
-    startRendering: any;
-    stopRendering: any;
     id: string;
     node: Element;
-    sizes: {};
-    size: ?any;
+    sizes: AdSizes;
+    size: ?AdSize;
     slot: any;
     isEmpty: ?boolean;
     isLoading: boolean;
@@ -61,7 +59,7 @@ class Advert {
     };
 
     constructor(adSlotNode: Element) {
-        const sizes = getAdBreakpointSizes(adSlotNode);
+        const sizes: AdSizes = getAdBreakpointSizes(adSlotNode);
         const slotDefinition = defineSlot(adSlotNode, sizes);
 
         this.id = adSlotNode.id;
@@ -93,33 +91,33 @@ class Advert {
             this.whenRenderedResolver = resolve;
         }).then((isRendered: boolean) => (this.isRendered = isRendered));
 
-        this.startLoading = () => {
-            this.isLoading = true;
-            this.timings.startLoading = getCurrentTime();
-        };
-
-        this.stopLoading = (isLoaded: boolean) => {
-            this.isLoading = false;
-            if (this.whenLoadedResolver) {
-                this.whenLoadedResolver(isLoaded);
-            }
-            this.timings.stopLoading = getCurrentTime();
-        };
-
-        this.startRendering = () => {
-            this.isRendering = true;
-            this.timings.startRendering = getCurrentTime();
-        };
-
-        this.stopRendering = (isRendered: boolean) => {
-            this.isRendering = false;
-            if (this.whenRenderedResolver) {
-                this.whenRenderedResolver(isRendered);
-            }
-            updateAdvertMetric(this, 'stopRendering', getCurrentTime());
-        };
-
         updateAdvertMetric(this, 'createTime', getCurrentTime());
+    }
+
+    startLoading() {
+        this.isLoading = true;
+        this.timings.startLoading = getCurrentTime();
+    }
+
+    stopLoading(isLoaded: boolean) {
+        this.isLoading = false;
+        if (this.whenLoadedResolver) {
+            this.whenLoadedResolver(isLoaded);
+        }
+        this.timings.stopLoading = getCurrentTime();
+    }
+
+    startRendering() {
+        this.isRendering = true;
+        this.timings.startRendering = getCurrentTime();
+    }
+
+    stopRendering(isRendered: boolean) {
+        this.isRendering = false;
+        if (this.whenRenderedResolver) {
+            this.whenRenderedResolver(isRendered);
+        }
+        updateAdvertMetric(this, 'stopRendering', getCurrentTime());
     }
 }
 
