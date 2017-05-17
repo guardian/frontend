@@ -23,29 +23,21 @@ export type SafeFrameConfig = {
     sandbox: boolean,
 };
 
-// prettier-ignore
-type AddService = (string) => Slot;
+type AddService = (s: string) => Slot;
 type ClearCategoryExclusions = () => Slot;
-// prettier-ignore
-type ClearTargeting = (?string) => Slot;
-// prettier-ignore
-type DefineSizeMapping = (Array<SizeMapping>) => Slot;
-// prettier-ignore
-type Get = (string) => ?string;
+type ClearTargeting = (s?: string) => Slot;
+type DefineSizeMapping = (asm: Array<SizeMapping>) => Slot;
+type Get = (s: string) => ?string;
 type GetString = () => string;
 type GetStrings = () => Array<string>;
 type GetResponseInformation = () => ?ResponseInformation;
-// prettier-ignore
-type GetTargeting = (string) => Array<string>;
-type Set = (string, string) => Slot;
-// prettier-ignore
-type SetString = (string) => Slot;
-type SetCollapseEmptyDiv = (boolean, boolean) => Slot;
-// prettier-ignore
-type SetForceSafeFrame = (boolean) => Slot;
-// prettier-ignore
-type SetSafeFrameConfig = (SafeFrameConfig) => Slot;
-type SetTargeting = (string, string | Array<string>) => Slot;
+type GetTargeting = (s: string) => Array<string>;
+type Set = (s1: string, s2: string) => Slot;
+type SetString = (s: string) => Slot;
+type SetCollapseEmptyDiv = (b1: boolean, b2: boolean) => Slot;
+type SetForceSafeFrame = (b1: boolean) => Slot;
+type SetSafeFrameConfig = (sfc: SafeFrameConfig) => Slot;
+type SetTargeting = (s: string, a: string | Array<string>) => Slot;
 
 export type Slot = {
     addService: AddService,
