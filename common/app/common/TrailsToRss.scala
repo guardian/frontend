@@ -20,6 +20,14 @@ import scala.collection.JavaConverters._
 
 object TrailsToRss extends implicits.Collections {
 
+  /* 
+    This regex pattern matches all invalid XML characters (see https://www.w3.org/TR/xml/#charsets)
+    by specifying individual and ranges of valid ones in a negated set.  The final range \\u10000-\\u10FFFF
+    is intended to match the supplementary character set, but I believe it is invalid java regex.
+    It ought to be changed to \\x{10000}-\\x{10FFFF} but that produces unexpected behaviour which I suspect
+    is a bug (http://bugs.java.com/bugdatabase/view_bug.do?bug_id=JDK-8179668).  For now, leaving this 
+    unchanged as the end result gives valid XML, although it may exclude supplementary characters.
+  */
   val pattern = Pattern.compile("[^\\x09\\x0A\\x0D\\x20-\\uD7FF\\uE000-\\uFFFD\\u10000-\\u10FFFF]")
   private def stripInvalidXMLCharacters(s: String) = {
     pattern.matcher(s).replaceAll("")
@@ -86,7 +94,7 @@ object TrailsToRss extends implicits.Collections {
         val imageMetadata = new Metadata()
         trailAsset.caption.foreach({ d => imageMetadata.setDescription(stripInvalidXMLCharacters(d)) })
         trailAsset.credit.foreach { creditName =>
-          val credit = new Credit(null, null, creditName)
+          val credit = new Credit(null, null, stripInvalidXMLCharacters(creditName))
           imageMetadata.setCredits(Seq(credit).toArray)
         }
         media.setMetadata(imageMetadata)
@@ -107,7 +115,7 @@ object TrailsToRss extends implicits.Collections {
       entry.setLink(trail.metadata.webUrl)
       /* set http intentionally to not break existing guid */
       entry.setUri("http://www.theguardian.com/" + trail.metadata.id)
-      
+
       entry.setDescription(description)
       entry.setCategories(categories)
       entry.setModules(new java.util.ArrayList(mediaModules ++ Seq(dc)))

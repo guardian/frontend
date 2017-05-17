@@ -22,18 +22,20 @@
                     </li>
                 }
 
-                @if(mvt.ABNavigationMoreToggleVariant.isParticipating) {
-                    <li class="subnav__item">
-                        <button class="
-                            subnav-link
-                            subnav-link--toggle-more
-                            js-toggle-nav-section"
-                            data-link-name="nav2 : subnav-toggle">
-                            more
-                        </button>
-                    </li>
-                }
-            </ul>
+            @* Hiding the 'more' link on the homepage *@
+            @if(!(id == "uk" ||  id == "us" ||  id == "au" ||  id == "international")) {
+                <li class="subnav__item js-visible">
+                    <button class="
+                        subnav-link
+                        subnav-link--toggle-more
+                        js-toggle-nav-section"
+                        data-link-name="nav2 : subnav-toggle">
+                        more
+                    </button>
+                </li>
+            }
+    	    </ul>
         }
     </div>
 </div>
+

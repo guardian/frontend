@@ -2,7 +2,6 @@ define([
     'bean',
     'bonzo',
     'fastdom',
-    'Promise',
     'qwery',
     'lodash/collections/map',
     'lodash/objects/isEqual'
@@ -10,7 +9,6 @@ define([
     bean,
     bonzo,
     fastdom,
-    Promise,
     qwery,
     map,
     isEqual

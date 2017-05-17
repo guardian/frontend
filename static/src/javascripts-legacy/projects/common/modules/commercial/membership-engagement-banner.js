@@ -9,7 +9,6 @@ define([
         'commercial/modules/commercial-features',
         'commercial/modules/user-features',
         'lib/mediator',
-        'Promise',
         'lib/fastdom-promise',
         'common/modules/experiments/ab',
         'common/modules/experiments/tests/membership-engagement-banner-tests',
@@ -20,7 +19,10 @@ define([
         'common/modules/experiments/segment-util',
         'common/modules/experiments/acquisition-test-selector',
         'common/modules/commercial/membership-engagement-banner-parameters',
-        'ophan/ng'
+        'common/modules/commercial/contributions-utilities',
+        'ophan/ng',
+        'lib/geolocation',
+        'lib/url'
     ], function (bean,
                  $,
                  config,
@@ -31,7 +33,6 @@ define([
                  commercialFeatures,
                  userFeatures,
                  mediator,
-                 Promise,
                  fastdom,
                  ab,
                  MembershipEngagementBannerTests,
@@ -42,12 +43,15 @@ define([
                  segmentUtil,
                  acquisitionTestSelector,
                  membershipEngagementBannerUtils,
-                 ophan) {
+                 contributionsUtilities,
+                 ophan,
+                 geolocation,
+                 url) {
 
 
         // change messageCode to force redisplay of the message to users who already closed it.
         // messageCode is also consumed by .../test/javascripts/spec/common/commercial/membership-engagement-banner.spec.js
-        var messageCode = 'engagement-banner-2017-03-30';
+        var messageCode = 'engagement-banner-2017-05-11';
 
         var DO_NOT_RENDER_ENGAGEMENT_BANNER = 'do no render engagement banner';
 
@@ -119,8 +123,8 @@ define([
          *  }
          *
          */
-        function deriveBannerParams() {
-            var defaultParams = membershipEngagementBannerUtils.defaultParams;
+        function deriveBannerParams(location) {
+            var defaultParams = membershipEngagementBannerUtils.defaultParams(location);
             var userTest = getUserTest();
             var campaignId = userTest ? userTest.campaignId : undefined;
             var userVariant = getUserVariant(userTest);
@@ -160,21 +164,19 @@ define([
 
             var messageText = Array.isArray(params.messageText)?selectSequentiallyFrom(params.messageText):params.messageText;
 
-            var paypalClass = params.paypalClass || '';
-
-            //the paypall variant only works with the yellow banner
-            if(paypalClass) {
-                colourClass = 'membership-prominent yellow';
-            }
+            var urlParameters = {
+                REFPVID : params.pageviewId,
+                INTCMP:  params.campaignCode
+            };
+            var linkUrl = params.linkUrl + '?' + url.constructQuery(urlParameters);
 
             var renderedBanner = template(messageTemplate, {
-                linkHref: params.linkUrl + '?INTCMP=' + params.campaignCode,
+                linkHref: linkUrl,
                 messageText: messageText,
                 buttonCaption: params.buttonCaption,
                 colourClass: colourClass,
-                arrowWhiteRight: svgs('arrowWhiteRight'),
-                paypalLogoSrc: paypalAndCreditCardImage,
-                paypalClass : paypalClass
+                arrowWhiteRight: svgs.inlineSvg('arrowWhiteRight'),
+                paypalLogoSrc: paypalAndCreditCardImage
             });
 
             var messageShown = new Message(
@@ -198,22 +200,28 @@ define([
         }
 
         function init() {
-            var bannerParams = deriveBannerParams();
 
-            if (bannerParams && (storage.local.get('gu.alreadyVisited') || 0) >= bannerParams.minArticles) {
-                return commercialFeatures.async.canDisplayMembershipEngagementBanner.then(function (canShow) {
+            return geolocation.get().then(function(location) {
 
-                    if (canShow) {
-                        mediator.on('modules:onwards:breaking-news:ready', function (breakingShown) {
-                            if (!breakingShown) {
-                                showBanner(bannerParams);
-                            }
-                        });
-                    }
-                });
-            }
+                var bannerParams = deriveBannerParams(location);
 
-            return Promise.resolve();
+                if (bannerParams && (storage.local.get('gu.alreadyVisited') || 0) >= bannerParams.minArticles) {
+                    return commercialFeatures.async.canDisplayMembershipEngagementBanner.then(function (canShow) {
+
+                        if (canShow) {
+                            mediator.on('modules:onwards:breaking-news:ready', function (breakingShown) {
+                                if (!breakingShown) {
+                                    showBanner(bannerParams);
+                                } else {
+                                    mediator.emit('banner-message:complete');
+                                }
+                            });
+                        } else {
+                            mediator.emit('banner-message:complete');
+                        }
+                    });
+                }
+            });
         }
 
         function selectSequentiallyFrom(array) {

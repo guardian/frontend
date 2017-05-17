@@ -7,7 +7,7 @@ define([
         {
             id: 'SleeveNotesLegacyEmailVariant',
             start: '2017-03-02',
-            end: '2017-05-19',
+            end: '2017-05-30',
             author: 'Leigh-Anne Mathieson',
             audience: 0.3,
             audienceOffset: 0.7,

@@ -8,7 +8,7 @@ import 'core-js/modules/es7.string.pad-end';
 
 import domready from 'domready';
 import raven from 'lib/raven';
-import bootStandard from 'bootstraps/standard/main';
+import { bootStandard } from 'bootstraps/standard/main';
 import config from 'lib/config';
 import { markTime } from 'lib/user-timing';
 import { capturePerfTimings } from 'lib/capture-perf-timings';

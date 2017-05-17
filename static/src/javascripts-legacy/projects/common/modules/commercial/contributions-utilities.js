@@ -11,6 +11,7 @@ define([
     'lib/mediator',
     'lib/storage',
     'lib/geolocation',
+    'lib/url',
     'lodash/objects/assign',
     'lodash/utilities/template',
     'lodash/collections/toArray',
@@ -28,6 +29,7 @@ define([
     mediator,
     storage,
     geolocation,
+    url,
     assign,
     template,
     toArray,
@@ -40,12 +42,12 @@ define([
     var lastContributionDate = cookies.getCookie('gu.contributions.contrib-timestamp');
 
     /**
-     * How many times the user can see the Epic, e.g. 6 times within 7 days.
-     * @type {{days: number, count: number}}
+     * How many times the user can see the Epic, e.g. 6 times within 7 days with minimum of 1 day in between views.
+     * @type {{days: number, count: number, minDaysBetweenViews: number}}
      */
     var maxViews = {
-        days: 7,
-        count: 6,
+        days: 30,
+        count: 4,
         minDaysBetweenViews: 0
     };
 
@@ -75,11 +77,11 @@ define([
     }
 
     // Returns an array containing:
-    // - the first element matching insertBeforeSelector, if isMultiple is false or not supplied
-    // - all elements matching insertBeforeSelector, if isMultiple is true
+    // - the first element matching insertAtSelector, if isMultiple is false or not supplied
+    // - all elements matching insertAtSelector, if isMultiple is true
     // - or an empty array if the selector doesn't match anything on the page
-    function getTargets(insertBeforeSelector, isMultiple) {
-        var els = document.querySelectorAll(insertBeforeSelector);
+    function getTargets(insertAtSelector, isMultiple) {
+        var els = document.querySelectorAll(insertAtSelector);
 
         if (isMultiple) {
             return toArray(els);
@@ -179,8 +181,8 @@ define([
         this.campaignCode = getCampaignCode(test.campaignPrefix, this.campaignId, this.id, test.campaignSuffix);
         this.campaignCodes = [this.campaignCode];
 
-        this.contributeURL = options.contributeURL || this.makeURL(contributionsBaseURL, this.campaignCode);
-        this.membershipURL = options.membershipURL || this.makeURL(membershipBaseURL, this.campaignCode);
+        this.contributeURL = options.contributeURL || this.getURL(contributionsBaseURL, this.campaignCode);
+        this.membershipURL = options.membershipURL || this.getURL(membershipBaseURL, this.campaignCode);
 
         this.componentName = 'mem_acquisition_' + trackingCampaignId + '_' + this.id;
 
@@ -211,14 +213,18 @@ define([
                 return fastdom.write(function () {
                     var targets = [];
 
-                    if (!options.insertBeforeSelector) {
+                    if (!options.insertAtSelector) {
                         targets = getTargets('.submeta', false);
                     } else {
-                        targets = getTargets(options.insertBeforeSelector, options.insertMultiple);
+                        targets = getTargets(options.insertAtSelector, options.insertMultiple);
                     }
 
                     if (targets.length > 0) {
-                        component.insertBefore(targets);
+                        if (options.insertAfter) {
+                            component.insertAfter(targets);
+                        } else {
+                            component.insertBefore(targets);
+                        }
 
                         mediator.emit(test.insertEvent, component);
                         onInsert(component);
@@ -250,21 +256,21 @@ define([
         return campaignCodePrefix + '_' + campaignID + '_' + id + suffix;
     }
 
-    ContributionsABTestVariant.prototype.makeURL = function(base, campaignCode) {
-        var params = [
-            'REFPVID=' + this.pageviewId,
-            'INTCMP=' + campaignCode
-        ];
-
-        return base + '?' + params.filter(Boolean).join('&');
+    ContributionsABTestVariant.prototype.getURL = function(base, campaignCode) {
+        var params = {
+            REFPVID: this.pageviewId,
+            INTCMP: campaignCode
+        };
+        return base + '?' + url.constructQuery(params);
     };
 
+
     ContributionsABTestVariant.prototype.contributionsURLBuilder = function(codeModifier) {
-        return this.makeURL(contributionsBaseURL, codeModifier(this.campaignCode));
+        return this.getURL(contributionsBaseURL, codeModifier(this.campaignCode));
     };
 
     ContributionsABTestVariant.prototype.membershipURLBuilder = function(codeModifier) {
-        return this.makeURL(membershipBaseURL, codeModifier(this.campaignCode));
+        return this.getURL(membershipBaseURL, codeModifier(this.campaignCode));
     };
 
     ContributionsABTestVariant.prototype.registerListener = function (type, defaultFlag, event, options) {
@@ -287,7 +293,6 @@ define([
 
     return {
         defaultCanEpicBeDisplayed: defaultCanEpicBeDisplayed,
-
         makeABTest: function (test) {
             // this is so it can be instantiated with `new` later
             return function () {

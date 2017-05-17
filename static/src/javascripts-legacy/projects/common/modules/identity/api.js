@@ -6,8 +6,7 @@ define([
     'lib/cookies',
     'lib/mediator',
     'lib/storage',
-    'common/modules/asyncCallMerger',
-    'Promise'
+    'common/modules/asyncCallMerger'
 ], function (
     ajax,
     utilAtob,
@@ -15,8 +14,7 @@ define([
     cookies,
     mediator,
     storage,
-    asyncCallMerger,
-    Promise
+    asyncCallMerger
 ) {
 
     /**
@@ -110,7 +108,7 @@ define([
     Id.getUserFromApi = asyncCallMerger.mergeCalls(
         function (mergingCallback) {
             if (Id.isUserLoggedIn()) {
-                ajax({
+                ajax.ajax({
                     url: Id.idApiRoot + '/user/me',
                     type: 'jsonp',
                     crossOrigin: true
@@ -135,7 +133,7 @@ define([
      */
     Id.getUserFromApiWithRefreshedCookie = function () {
         var endpoint = '/user/me',
-            request = ajax({
+            request = ajax.ajax({
                 url: Id.idApiRoot + endpoint,
                 type: 'jsonp',
                 data: {
@@ -203,7 +201,7 @@ define([
     Id.emailSignup = function (listId) {
         var endpoint = '/useremails/' + Id.getUserFromCookie().id + '/subscriptions',
             data = { 'listId': listId },
-            request = ajax({
+            request = ajax.ajax({
                 url: Id.idApiRoot + endpoint,
                 type: 'jsonp',
                 crossOrigin: true,
@@ -219,7 +217,7 @@ define([
     Id.getUserEmailSignUps = function () {
         if (Id.getUserFromCookie()) {
             var endpoint = '/useremails/' + Id.getUserFromCookie().id,
-                request = ajax({
+                request = ajax.ajax({
                     url: Id.idApiRoot + endpoint,
                     type: 'jsonp',
                     crossOrigin: true
@@ -233,7 +231,7 @@ define([
 
     Id.sendValidationEmail = function () {
         var endpoint = '/user/send-validation-email',
-            request = ajax({
+            request = ajax.ajax({
                 url: Id.idApiRoot + endpoint,
                 type: 'jsonp',
                 crossOrigin: true,
@@ -248,7 +246,7 @@ define([
     Id.updateUsername = function (username) {
         var endpoint = '/user/me',
             data = {'publicFields': {'username': username, 'displayName': username}},
-            request = ajax({
+            request = ajax.ajax({
                 url: Id.idApiRoot + endpoint,
                 type: 'json',
                 crossOrigin: true,

@@ -1,6 +1,7 @@
 .veggi-burger {
     background-color: $news-main-2;
     bottom: -$gs-baseline / 2;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, .08);
     cursor: pointer;
     height: $veggie-burger-small;
     min-width: $veggie-burger-small;
