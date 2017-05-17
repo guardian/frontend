@@ -34,6 +34,14 @@
     > *[data-link-name='nav2 : the guardian app'] {
         margin-top: $gs-baseline * 2;
     }
+
+    .fly-in-item__toggle {
+        margin-top: -3px;
+    }
+
+    details[open] .fly-in-item__toggle {
+        margin-top: 2px;
+    }
 }
 
 .fly-in-item__icon,
@@ -42,6 +50,23 @@
     left: -($gs-gutter * 1.3);
     text-align: center;
     width: $gs-gutter / 2;
+}
+
+.fly-in-item__toggle {
+    &:before {
+        content: '';
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        transform: rotate(45deg);
+        border: 2px solid $news-support-2;
+        border-top: 0;
+        border-left: 0;
+    }
+
+    details[open] &:before {
+        transform: rotate(-135deg);
+    }
 }
 
 .fly-in-item__icon {
@@ -78,26 +103,11 @@
     }
 
     .fly-in-item__toggle {
-        margin-top: -.2em;
+        margin-top: -5px;
+    }
 
-        &:before {
-            content: '';
-            display: inline-block;
-            width: 8px;
-            height: 8px;
-            transform: rotate(45deg);
-            border: 2px solid $news-support-2;
-            border-top: 0;
-            border-left: 0;
-        }
-
-        section[expanded] & {
-            margin-top: .2em;
-
-            &:before {
-                transform: rotate(-135deg);
-            }
-        }
+    details[open] .fly-in-item__toggle {
+        margin-top: 2px;
     }
 }
 
