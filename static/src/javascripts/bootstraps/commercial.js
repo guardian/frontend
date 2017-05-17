@@ -29,23 +29,33 @@ import { paidContainers } from 'commercial/modules/paid-containers';
 import * as performanceLogging
     from 'commercial/modules/dfp/performance-logging';
 import { trackPerformance } from 'common/modules/analytics/google';
-import userFeatures from 'commercial/modules/user-features';
+import commercialFeatures from 'commercial/modules/commercial-features';
 
-const commercialModules: Array<Array<any>> = [
-    ['cm-highMerch', highMerch.init],
-    ['cm-thirdPartyTags', thirdPartyTags.init],
-    ['cm-prepare-sonobi-tag', prepareSonobiTag.init, true],
-    ['cm-prepare-switch-tag', prepareSwitchTag.init, true],
-    ['cm-articleAsideAdverts', articleAsideAdvertsInit, true],
-    ['cm-prepare-googletag', prepareGoogletag.init, true],
-    ['cm-articleBodyAdverts', articleBodyAdvertsInit],
-    ['cm-liveblogAdverts', liveblogAdverts.init, true],
-    ['cm-closeDisabledSlots', closeDisabledSlots.init],
-    ['cm-stickyTopBanner', stickyTopBanner.init],
-    ['cm-fill-advert-slots', fillAdvertSlots, true],
-    ['cm-paidContainers', paidContainers],
-    ['cm-paidforBand', paidforBand.init],
-];
+const commercialModules: Array<Array<any>> = commercialFeatures.adFree
+    ? [
+          ['cm-highMerch', highMerch.init],
+          ['cm-thirdPartyTags', thirdPartyTags.init],
+          ['cm-prepare-googletag', prepareGoogletag.init, true],
+          ['cm-closeDisabledSlots', closeDisabledSlots.init],
+          ['cm-fill-advert-slots', fillAdvertSlots, true],
+          ['cm-paidContainers', paidContainers],
+          ['cm-paidforBand', paidforBand.init],
+      ]
+    : [
+          ['cm-highMerch', highMerch.init],
+          ['cm-thirdPartyTags', thirdPartyTags.init],
+          ['cm-prepare-sonobi-tag', prepareSonobiTag.init, true],
+          ['cm-prepare-switch-tag', prepareSwitchTag.init, true],
+          ['cm-articleAsideAdverts', articleAsideAdvertsInit, true],
+          ['cm-prepare-googletag', prepareGoogletag.init, true],
+          ['cm-articleBodyAdverts', articleBodyAdvertsInit],
+          ['cm-liveblogAdverts', liveblogAdverts.init, true],
+          ['cm-closeDisabledSlots', closeDisabledSlots.init],
+          ['cm-stickyTopBanner', stickyTopBanner.init],
+          ['cm-fill-advert-slots', fillAdvertSlots, true],
+          ['cm-paidContainers', paidContainers],
+          ['cm-paidforBand', paidforBand.init],
+      ];
 
 if (config.page.isHosted) {
     commercialModules.push(
@@ -90,11 +100,6 @@ const loadModules = (modules, baseline): Promise<void> => {
 };
 
 export default (): Promise<void> => {
-    if (config.switches.adFreeMembershipTrial && userFeatures.isAdFreeUser()) {
-        closeDisabledSlots.init(true);
-        return Promise.resolve();
-    }
-
     markTime('commercial start');
     catchErrorsWithContext([
         [

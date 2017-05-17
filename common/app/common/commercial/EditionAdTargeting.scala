@@ -21,7 +21,6 @@ object EditionAdTargeting {
       case KeywordKey.name => KeywordKey
       case ObserverKey.name => ObserverKey
       case PathKey.name => PathKey
-      case PlatformKey.name => PlatformKey
       case SeriesKey.name => SeriesKey
       case SurgeLevelKey.name => SurgeLevelKey
       case ToneKey.name => ToneKey

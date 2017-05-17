@@ -65,6 +65,13 @@ define([
             return Promise.resolve();
         }
 
+        if (commercialFeatures.adFree) {
+            setupAdvertising()
+            .then(removeAdSlotsForAdFree)
+            .catch(removeAdSlots);
+            return Promise.resolve();
+        }
+
         return removeAdSlots();
     }
 
@@ -87,4 +94,9 @@ define([
     function removeAdSlots() {
         return closeSlots.init(true);
     }
+
+    function removeAdSlotsForAdFree() {
+        return closeSlots.initForAdFree();
+    }
+
 });

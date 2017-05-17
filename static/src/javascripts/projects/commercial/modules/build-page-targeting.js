@@ -11,6 +11,7 @@ import abUtils from 'common/modules/experiments/utils';
 import flatten from 'lodash/arrays/flatten';
 import once from 'lodash/functions/once';
 import pick from 'lodash/objects/pick';
+import commercialFeatures from 'commercial/modules/commercial-features';
 
 const format = (keyword: string): string =>
     keyword.replace(/[+\s]+/g, '-').toLowerCase();
@@ -122,8 +123,10 @@ const formatAppNexusTargeting = (obj: Object): string =>
 
 export default once((): Object => {
     const page = config.page;
+    const platform = commercialFeatures.adFree ? 'ngaf' : 'ng';
     const pageTargets = Object.assign(
         {
+            p: platform,
             x: krux.getSegments(),
             pv: config.ophan.pageViewId,
             bp: detect.getBreakpoint(),

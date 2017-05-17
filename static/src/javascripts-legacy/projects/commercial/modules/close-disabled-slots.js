@@ -1,11 +1,14 @@
 define([
     'qwery',
-    'lib/fastdom-promise'
+    'lib/fastdom-promise',
+    'commercial/modules/commercial-features'
 ], function (
     qwery,
-    fastdom
+    fastdom,
+    commercialFeatures
 ) {
     var adSlotSelector = '.js-ad-slot';
+    var mpuCandidateSelector = '.fc-slice__item--mpu-candidate';
 
     function init(force) {
         // Get all ad slots
@@ -25,11 +28,26 @@ define([
         });
     }
 
+    function initForAdFree() {
+        var mpuCandidates = qwery(mpuCandidateSelector).filter(shouldDisableAdSlotWhenAdFree);
+        return fastdom.write(function () {
+            mpuCandidates.forEach(function (candidate) {
+                candidate.classList.add('fc-slice__item--no-mpu');
+            });
+        });
+    }
+
     function shouldDisableAdSlot(adSlot) {
-        return window.getComputedStyle(adSlot).display === 'none';
+        return window.getComputedStyle(adSlot).display === 'none' || shouldDisableAdSlotWhenAdFree(adSlot);
+    }
+
+    function shouldDisableAdSlotWhenAdFree(adSlot) {
+        return commercialFeatures.adFree &&
+            !adSlot.className.toLowerCase().contains('merchandising');
     }
 
     return {
-        init: init
+        init: init,
+        initForAdFree: initForAdFree
     };
 });

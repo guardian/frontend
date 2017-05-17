@@ -54,12 +54,18 @@ define([
 
         // Feature switches
 
+        this.adFree =
+            switches.adFreeMembershipTrial &&
+            userFeatures.isAdFreeUser();
+
         this.dfpAdvertising =
+            !this.adFree &&
             switches.commercial &&
             externalAdvertising &&
             !sensitiveContent;
 
         this.stickyTopBannerAd =
+            !this.adFree &&
             !config.page.disableStickyTopBanner &&
             !supportsSticky;
 
@@ -82,7 +88,7 @@ define([
             this.dfpAdvertising;
 
         this.highMerch =
-            this.dfpAdvertising &&
+            (this.dfpAdvertising || this.adFree) &&
             !isMinuteArticle &&
             !isHosted &&
             !isInteractive &&
@@ -90,12 +96,14 @@ define([
             !newRecipeDesign;
 
         this.thirdPartyTags =
-            externalAdvertising &&
+            (externalAdvertising || this.adFree) &&
             !isIdentityPage;
 
         this.outbrain =
-            this.dfpAdvertising &&
+            (this.dfpAdvertising || this.adFree) &&
             switches.outbrain &&
+            !noadsUrl &&
+            !sensitiveContent &&
             isArticle &&
             !config.page.isPreview &&
             config.page.showRelatedContent &&
