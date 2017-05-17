@@ -18,17 +18,13 @@ const ExplainerSnippet = () => {
     // Ophan prefix id
     const componentPrefix = 'explainer_feedback__';
 
-    // List of pages the test will run in
-    const paths = [
-        '/sport/2017/may/11/alternative-national-anthem-planned-during-nrls-indigenous-round',
-    ];
-
     // Test duration
     const start = '2017-05-11';
     const expiry = '2017-05-18';
 
     // will run in specific articles
-    const canRun = () => paths.includes(location.pathname);
+    const canRun = (): boolean =>
+        !!document.querySelector('.js-explainer-snippet');
 
     // opening the disclosure widget is our impression criterion for this test
     const onShow = () => {
