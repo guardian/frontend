@@ -1,0 +1,66 @@
+/* When the menu is open this class is added to the html to prevent users
+from scrolling */
+.nav-is-open {
+    overflow: hidden;
+    width: 100%;
+}
+
+.new-header {
+    background-color: $guardian-brand;
+    position: relative;
+
+    @include mq(desktop) {
+        display: none;
+    }
+}
+
+.new-header__inner {
+    align-items: flex-start;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.new-header__support {
+    left: ($gs-gutter / 4) - 1px;
+    position: absolute;
+
+    @include mq(mobileLandscape) {
+        left: $gs-gutter / 2;
+    }
+}
+
+.new-header__logo {
+    padding-top: $gs-baseline / 2;
+    padding-bottom: $gs-baseline / 2;
+    margin-left: auto;
+}
+
+.new-header__logo .inline-logo__svg {
+    display: block;
+    height: calc(3 / 16 * 170px);
+    padding-right: $gs-gutter / 2;
+    width: 170px;
+
+    @include mq(mobileMedium) {
+        height: calc(3 / 16 * 225px);
+        width: 225px;
+    }
+
+    @include mq(mobileLandscape) {
+        height: calc(3 / 16 * 260px);
+        margin-right: $gs-gutter / 2;
+        padding-top: ($gs-baseline / 2);
+        width: 260px;
+    }
+
+    @include mq(tablet) {
+        height: calc(3 / 16 * 400px);
+        width: 400px;
+    }
+}
+
+// Don't show trapezoid on opera mini: https://wp-mix.com/css-target-opera/
+x:-o-prefocus, .new-header__support {
+    display: none;
+}

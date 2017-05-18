@@ -269,3 +269,8 @@
     top: 0;
     right: -.19em;
 }
+
+@mixin fly-in-animation($percentage) {
+    transform: translateX($percentage);
+    transition: transform .4s cubic-bezier(.23, 1, .32, 1);
+}

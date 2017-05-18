@@ -1,15 +1,16 @@
-@import '../layout/_new-header';
+@import '../layout/new-header/_variables';
+
+@import '../layout/new-header/_fly-in';
+@import '../layout/new-header/_fly-in-group';
+@import '../layout/new-header/_fly-in-item';
+@import '../layout/new-header/_new-header';
+@import '../layout/new-header/_pillars';
+@import '../layout/new-header/_pillar-link';
+@import '../layout/new-header/_support-item';
+@import '../layout/new-header/_veggi-burger';
 
 /* Overwrites */
-
 @import 'new-header/_fly-in-item';
+@import 'new-header/_new-header';
 @import 'new-header/_pillars';
 @import 'new-header/_pillar-link';
-
-.new-header__inner {
-    max-width: 600px;
-}
-
-.new-header__logo .inline-logo__svg {
-    padding-right: 0;
-}
