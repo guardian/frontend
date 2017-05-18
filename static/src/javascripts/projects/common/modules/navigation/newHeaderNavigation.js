@@ -44,7 +44,7 @@ const toggleSidebar = (): void => {
     const isOpen = trigger && trigger.getAttribute('aria-expanded') === 'true';
     const sidebar = getSidebarElement();
 
-    if (!sidebar || !sidebarToggle) {
+    if (!sidebar || !sidebarToggle || !newHeader) {
         return;
     }
 

@@ -99,7 +99,7 @@
     }
 
     &:first-child > * {
-        border-top: none;
+        border-top: 0;
     }
 
     .fly-in-item__toggle {
