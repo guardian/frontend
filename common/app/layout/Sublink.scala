@@ -284,14 +284,14 @@ case class ContentCard(
 
 
 
-  def paidImage = {
+  def paidImage: Option[ImageMedia] = {
     lazy val videoImageMedia = capiContent flatMap (_.elements.mainVideo.map(_.images))
     lazy val imageOverride: Option[ImageMedia] = properties.flatMap(_.image flatMap ImageOverride.createImageMedia)
     lazy val defaultTrailPicture = capiContent flatMap (_.trail.trailPicture)
     imageOverride.orElse(videoImageMedia).orElse(defaultTrailPicture)
   }
 
-  def paidIcon = {
+  def paidIcon: Option[String] = {
     if (header.isVideo) Some("video-icon")
     else if (header.isGallery) Some("camera")
     else if (header.isAudio) Some("volume-high")
