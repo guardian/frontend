@@ -7,9 +7,9 @@ import template from 'lodash/utilities/template';
 import ophan from 'ophan/ng';
 import ExplainerSnippetStr
     from 'raw-loader!common/views/experiments/explainer.html';
-import { markup as thumbIcon } from 'svg-loader!svgs/icon/thumb.svg';
-import { markup as plusIcon } from 'svg-loader!svgs/icon/plus.svg';
-import { markup as minusIcon } from 'svg-loader!svgs/icon/minus.svg';
+import { markup as thumbIcon } from 'svgs/icon/thumb.svg';
+import { markup as plusIcon } from 'svgs/icon/plus.svg';
+import { markup as minusIcon } from 'svgs/icon/minus.svg';
 
 const ExplainerSnippet = () => {
     // Test id
@@ -19,8 +19,8 @@ const ExplainerSnippet = () => {
     const componentPrefix = 'explainer_feedback__';
 
     // Test duration
-    const start = '2017-05-11';
-    const expiry = '2017-05-18';
+    const start = '2017-05-18';
+    const expiry = '2017-05-25';
 
     // will run in specific articles
     const canRun = (): boolean =>
@@ -68,7 +68,8 @@ const ExplainerSnippet = () => {
     // test bootstrap: runs when the user is in the corresponding variant
     const test = (options: Object) => {
         const hook = document.querySelector('.js-explainer-snippet');
-        if (!hook) {
+        const explainer = hook && hook.previousElementSibling;
+        if (!hook || !explainer) {
             return;
         }
 
@@ -80,6 +81,7 @@ const ExplainerSnippet = () => {
         });
         fastdom
             .write(() => {
+                explainer.setAttribute('hidden', 'hidden');
                 hook.insertAdjacentHTML('beforeend', html);
                 return [
                     ...hook.querySelectorAll(
@@ -102,18 +104,7 @@ const ExplainerSnippet = () => {
     // and so we don't track impression or success events for this one
     // it is supposed to be done already elsewhere
     const testNoSnippet = () => {
-        const hook = document.querySelector('.js-explainer-snippet');
-        const explainer = hook && hook.previousElementSibling;
-        if (!explainer) {
-            return;
-        }
-        fastdom
-            .write(() => {
-                explainer.removeAttribute('hidden');
-            })
-            .then(() => {
-                mediator.emit('ab:explainer:notdisplayed');
-            });
+        mediator.emit('ab:explainer:notdisplayed');
     };
 
     // registers an impression (in our case, when the form is added to the dom)
@@ -146,12 +137,12 @@ const ExplainerSnippet = () => {
         showForSensitive: true,
         variants: [
             {
-                id: 'control',
+                id: 'no-snippet',
                 test: testNoSnippet,
                 impression: impressionNoSnippet,
             },
             {
-                id: 'snippet-light',
+                id: 'control',
                 test,
                 impression,
                 success,

@@ -789,7 +789,7 @@ case class CommercialComponentHigh(isPaidContent: Boolean, isNetworkFront: Boole
 object ExplainerCleaner extends HtmlCleaner {
   val prefixLength = "https://interactive.guim.co.uk/2016/08/explainer-interactive/embed/embed.html?id=".length
   val eids = Seq(
-    "bc61d5bb-6d1d-4395-bb9a-aa731f2fb66f"
+    "77b1f6d5-e4df-4650-89b2-e8c1c9653b23"
   )
 
   override def clean(document: Document): Document = {
@@ -801,7 +801,6 @@ object ExplainerCleaner extends HtmlCleaner {
           val hook = document.createElement("div")
             .addClass("js-explainer-snippet")
             .attr("data-explainer-id", eid)
-          i.attr("hidden", "hidden")
           i.after(hook)
         }
       }

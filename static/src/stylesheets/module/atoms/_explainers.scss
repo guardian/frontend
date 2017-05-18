@@ -62,13 +62,13 @@
 }
 
 .explainer-snippet__body {
-    > p {
-        @include faux-bullet-point;
-
-        &::before {
-            margin-right: $gs-gutter / 4;
-        }
-    }
+    // > p {
+    //     @include faux-bullet-point;
+    //
+    //     &::before {
+    //         margin-right: $gs-gutter / 4;
+    //     }
+    // }
 }
 
 .explainer-snippet__footer {
