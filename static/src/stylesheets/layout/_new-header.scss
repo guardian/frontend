@@ -17,6 +17,7 @@ $gutter-xlarge: 85px;
 @import 'new-header/_pillar-link';
 @import 'new-header/_subnav';
 @import 'new-header/_subnav-link';
+@import 'new-header/_support-item';
 @import 'new-header/_veggi-burger';
 @import 'new-header/_veggi-burger-fallback';
 
@@ -29,6 +30,7 @@ from scrolling */
 
 .new-header {
     background-color: $guardian-brand;
+    position: relative;
 
     @include mq(desktop) {
         display: none;
@@ -40,7 +42,15 @@ from scrolling */
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+}
 
+.new-header__support {
+    left: ($gs-gutter / 4) - 1px;
+    position: absolute;
+
+    @include mq(mobileLandscape) {
+        left: $gs-gutter / 2;
+    }
 }
 
 .new-header__logo {
@@ -71,4 +81,9 @@ from scrolling */
         height: calc(3 / 16 * 400px);
         width: 400px;
     }
+}
+
+// Don't show trapezoid on opera mini: https://wp-mix.com/css-target-opera/
+x:-o-prefocus, .new-header__support {
+    display: none;
 }

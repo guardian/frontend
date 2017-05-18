@@ -20,16 +20,20 @@
                     @fragments.inlineSvg("guardian-logo-160", "logo")
                 </a>
 
-                @defining(
-                    Edition(request).id.toLowerCase()
-                ) { editionId =>
-                    <a class="header__supporter-cta"
-                        data-link-name="nav2 : supporter-cta"
-                        data-edition="@{editionId}"
-                        href="@{Configuration.id.membershipUrl}/@{editionId}/supporter?INTCMP=mem_@{editionId}_web_newheader_trapezoid">
-                        Become a <span>Supporter</span>
-                    </a>
-                }
+                <div class="new-header__support">
+                    @defining(
+                        Edition(request).id.toLowerCase()
+                    ) { editionId =>
+                        <a class="support-item"
+                            data-link-name="nav2 : supporter-cta"
+                            data-edition="@{editionId}"
+                            href="@{Configuration.id.membershipUrl}/@{editionId}/supporter?INTCMP=mem_@{editionId}_web_newheader_trapezoid">
+                            <span class="support-item__label">
+                                Become a <span class="support-item__new-line">Supporter</span>
+                            </span>
+                        </a>
+                    }
+                </div>
 
                 <ul class="pillars">
                     @NewNavigation.PrimaryLinks.map { link =>

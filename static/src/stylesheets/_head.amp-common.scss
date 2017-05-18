@@ -1,6 +1,5 @@
 @charset 'UTF-8';
 
-
 @import '_vars';
 @import '_mixins';
 
@@ -14,9 +13,9 @@
 
 @include grid-system;
 @import 'amp/_header';
+@import 'layout/_new-header';
 @import 'amp/_footer';
 @import 'amp/_submeta';
-@import 'module/nav/_supporter-trapezoid';
 
 @import 'amp/_rich-link';
 @import 'amp/_content';
