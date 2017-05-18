@@ -371,7 +371,7 @@ case class PaidCard(
 
 object PaidCard {
 
-  def fromPressedContent(content: PressedContent, cardTypes: Option[ItemClasses] = None, contentCard: Option[ContentCard] = None): PaidCard = {
+  def fromPressedContent(content: PressedContent, cardTypes: Option[ItemClasses] = None): PaidCard = {
 
     val header = content.header
 
