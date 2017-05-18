@@ -16,6 +16,8 @@ define([
             injector.mock({
                 'svgs/icon/thumb.svg': fakeSvg,
                 'svgs/icon/quote.svg': fakeSvg,
+                'svgs/icon/plus.svg': fakeSvg,
+                'svgs/icon/minus.svg': fakeSvg,
             });
             injector.require([
                 'commercial/modules/third-party-tags',
