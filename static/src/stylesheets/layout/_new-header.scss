@@ -59,7 +59,7 @@ from scrolling */
     margin-left: auto;
 }
 
-.new-header__logo > svg {
+.new-header__logo .inline-logo__svg {
     display: block;
     height: calc(3 / 16 * 170px);
     padding-right: $gs-gutter / 2;
