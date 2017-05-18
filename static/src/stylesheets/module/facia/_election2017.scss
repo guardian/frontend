@@ -10,6 +10,8 @@
 // Results stage - headline above
 .qqqtall-q1--election {
     .fc-item .fc-item__content {
+        background-color: $news-support-7;
+
         @include mq(tablet) {
             background-color: rgba($news-support-7, .8);
             position: absolute;
@@ -69,7 +71,11 @@
         }
 
         .fc-item__header {
-            @include fs-headline(7, true);
+            @include fs-headline(4, true);
+
+            @include mq($from: tablet) {
+                @include fs-headline(7, true);
+            }
         }
     }
 
@@ -103,7 +109,7 @@
 
         .fc-item__content {
             @include mq($from: tablet, $until: desktop) {
-                background-color: rgba($news-support-7, .8);
+                background-color: $news-support-7;
                 position: relative;
                 padding-bottom: 0;
             }

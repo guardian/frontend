@@ -37,16 +37,11 @@ data-test-id="facia-card"
 
 
 @container(item: layout.ContentCard) = {
-    @* #election2017 - class name added for election styling *@
-    @* TODO: Can we make this more specific? *@
-    <div class="@RenderClasses(Map(
-        "fc-item__container--election" -> isFirstContainer
-    ), "fc-item__container")">
+    <div class="fc-item__container">
 
         @*****************************************************
         * #election2017 Duplicate headline for election 2017 *
         *****************************************************@
-        @* TODO: can we only add this html if its the correct container, now just add them on everything? *@
         <div class="fc-item__content-election">
             <div class="fc-item__header fc-item__header--election-title">
                 @title(item.header, index, containerIndex, snapType = item.snapStuff.map(_.snapType))
