@@ -82,5 +82,3 @@ GET        /editionalised-nav.json                    controllers.NavigationCont
 ## Breaking-news
 GET     /news-alert/alerts                            controllers.NewsAlertController.alerts()
 POST    /news-alert/alert                             controllers.NewsAlertController.create()
-
-# If you are creating a new endpoint and you want to exclude preload then you need to add a filter on line 36 of Requests.scala.

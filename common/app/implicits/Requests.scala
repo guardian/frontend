@@ -1,6 +1,5 @@
 package implicits
 
-import common.Edition
 import conf.Configuration
 import play.api.mvc.RequestHeader
 
@@ -27,13 +26,6 @@ trait Requests {
     lazy val isEmail: Boolean = r.getQueryString("format").exists(_.contains("email")) || r.path.endsWith(EMAIL_SUFFIX)
 
     lazy val isModified = isJson || isRss || isEmail
-
-    lazy val isAsset = r.path.contains("/assets/")
-
-    lazy val isAlert = r.path.contains("/news-alert/")
-
-    // Create a predicate to identify your endpoint and add it to this line.
-    lazy val isHtml = !(isAlert || isAsset || isJson || isRss || isEmail || isXmlHttpRequest || isAmp || isHealthcheck)
 
     lazy val pathWithoutModifiers: String =
       if (isEmail) r.path.stripSuffix(EMAIL_SUFFIX)

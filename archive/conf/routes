@@ -7,5 +7,3 @@ GET        /_healthcheck                            controllers.HealthCheck.heal
 
 # 404
 GET        /404$path</.*>                           controllers.ArchiveController.lookup(path)
-
-# If you are creating a new endpoint and you want to exclude preload then you need to add a filter on line 36 of Requests.scala.

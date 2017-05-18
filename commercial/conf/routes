@@ -44,5 +44,3 @@ GET         /rockabox/rockabox_buster.html                                  cont
 # Off-platform ads
 GET         /amp/remote.html                                                controllers.Assets.at(path="/public", file="amp_remote.html")
 GET         /facebook-ia/remote.html                                        controllers.Assets.at(path="/public", file="facebook_ia_remote.html")
-
-# If you are creating a new endpoint and you want to exclude preload then you need to add a filter on line 36 of Requests.scala.

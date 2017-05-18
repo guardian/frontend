@@ -13,12 +13,12 @@ class H2PreloadFilter (implicit val mat: Materializer, context: ApplicationConte
   with ResultWithPreload {
 
   def apply(nextFilter: RequestHeader => Future[Result])(request: RequestHeader): Future[Result] = {
-    if (request.isHtml) {
-      nextFilter(request).map { result =>
+    nextFilter(request).map { result =>
+      if (result.body.contentType.contains("text/html")) {
         val preloadFiles = Preload.config.getOrElse(context.applicationIdentity, Seq.empty)
         result.withPreload(preloadFiles)
-      }
-    } else nextFilter(request)
+      } else result
+    }
   }
 
 }
