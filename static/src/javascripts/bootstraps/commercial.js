@@ -10,7 +10,7 @@ import {
 import {
     articleBodyAdvertsInit,
 } from 'commercial/modules/article-body-adverts';
-import closeDisabledSlots from 'commercial/modules/close-disabled-slots';
+import { closeDisabledSlots } from 'commercial/modules/close-disabled-slots';
 import prepareGoogletag from 'commercial/modules/dfp/prepare-googletag';
 import prepareSonobiTag from 'commercial/modules/dfp/prepare-sonobi-tag';
 import prepareSwitchTag from 'commercial/modules/dfp/prepare-switch-tag';
@@ -40,7 +40,7 @@ const commercialModules: Array<Array<any>> = [
     ['cm-prepare-googletag', prepareGoogletag.init, true],
     ['cm-articleBodyAdverts', articleBodyAdvertsInit],
     ['cm-liveblogAdverts', liveblogAdverts.init, true],
-    ['cm-closeDisabledSlots', closeDisabledSlots.init],
+    ['cm-closeDisabledSlots', closeDisabledSlots],
     ['cm-stickyTopBanner', stickyTopBanner.init],
     ['cm-fill-advert-slots', fillAdvertSlots, true],
     ['cm-paidContainers', paidContainers],
@@ -91,7 +91,7 @@ const loadModules = (modules, baseline): Promise<void> => {
 
 export default (): Promise<void> => {
     if (config.switches.adFreeMembershipTrial && userFeatures.isAdFreeUser()) {
-        closeDisabledSlots.init(true);
+        closeDisabledSlots(true);
         return Promise.resolve();
     }
 

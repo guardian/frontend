@@ -2,14 +2,14 @@
 import qwery from 'qwery';
 import fastdom from 'lib/fastdom-promise';
 
-const adSlotSelector = '.js-ad-slot';
+const adSlotSelector: string = '.js-ad-slot';
 
 const shouldDisableAdSlot = adSlot =>
     window.getComputedStyle(adSlot).display === 'none';
 
-const init = (force: boolean) => {
+const closeDisabledSlots = (force: boolean): Promise<void> => {
     // Get all ad slots
-    let adSlots = qwery(adSlotSelector);
+    let adSlots: qwery = qwery(adSlotSelector);
 
     if (!force) {
         // remove the ones which should not be there
@@ -17,7 +17,7 @@ const init = (force: boolean) => {
     }
 
     return fastdom.write(() => {
-        adSlots.forEach(adSlot => {
+        adSlots.forEach((adSlot: Node) => {
             if (adSlot.parentNode) {
                 adSlot.parentNode.removeChild(adSlot);
             }
@@ -25,6 +25,4 @@ const init = (force: boolean) => {
     });
 };
 
-export default {
-    init,
-};
+export { closeDisabledSlots };

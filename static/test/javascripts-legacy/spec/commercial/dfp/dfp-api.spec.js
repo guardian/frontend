@@ -86,7 +86,7 @@ define([
                 var performanceLogging = arguments[5];
                 commercialFeatures = arguments[6];
                 detect = arguments[7];
-                closeDisabledSlots = arguments[8];
+                closeDisabledSlots = arguments[8].closeDisabledSlots;
                 dfpEnv = arguments[9];
 
                 config.switches = {
@@ -211,7 +211,7 @@ define([
 
         it('should not get hidden ad slots', function (done) {
             $('.js-ad-slot').first().css('display', 'none');
-            closeDisabledSlots.init()
+            closeDisabledSlots()
                 .then(function() {
                     return dfp.prepareGoogletag.init(noop, noop);
                 })
