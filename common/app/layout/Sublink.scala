@@ -277,7 +277,7 @@ case class ContentCard(
   shortUrl: Option[String],
   useShortByline: Boolean,
   group: String,
-  branding: Option[Branding] = None,
+  branding: Option[Branding],
   capiContent: Option[ContentType] = None,
   properties: Option[PressedProperties] = None
 ) extends FaciaCard {
