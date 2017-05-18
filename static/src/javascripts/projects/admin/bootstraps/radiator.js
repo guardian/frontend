@@ -17,12 +17,9 @@ const initRadiator = (): void => {
             PROD: {},
         };
         deployments.response.results
-            .filter(
-                deployment => deployment.projectName.indexOf('dotcom:') === 0
-            )
+            .filter(deployment => deployment.projectName.startsWith('dotcom:'))
             .forEach(deploy => {
-                const project = deploy.projectName;
-                const stage = deploy.stage;
+                const { project, stage } = deploy;
                 if (
                     stage &&
                     latestDeployments[stage] &&
