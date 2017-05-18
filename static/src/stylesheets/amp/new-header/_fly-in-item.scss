@@ -1,7 +1,7 @@
 .fly-in-item {
     > * > section > .i-amphtml-accordion-header {
         background-color: transparent;
-        border: none;
+        border: 0;
         font-weight: normal;
         margin-left: -35px;
         padding-left: 30px;
@@ -11,7 +11,7 @@
 .fly-in-item__toggle {
     left: 5px;
 
-    [aria-expanded="true"] &:before {
+    [aria-expanded='true'] &:before {
         transform: rotate(-135deg);
     }
 }
