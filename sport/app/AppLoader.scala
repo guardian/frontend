@@ -9,7 +9,7 @@ import conf.{CachedHealthCheckLifeCycle, FootballClient, FootballLifecycle}
 import contentapi.{CapiHttpClient, ContentApiClient, HttpClient}
 import cricket.conf.CricketLifecycle
 import cricket.controllers.CricketControllers
-import cricketPa.PaFeed
+import conf.cricketPa.PaFeed
 import dev.{DevAssetsController, DevParametersHttpRequestHandler}
 import feed.{CompetitionsProvider, CompetitionsService}
 import football.controllers.{FootballControllers, HealthCheck}
