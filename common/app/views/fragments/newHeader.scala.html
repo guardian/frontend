@@ -14,10 +14,10 @@
                  data-component="nav2"
                  aria-label="Guardian sections">
                 <a href="@LinkTo{/}"
-                   class="logo"
+                   class="new-header__logo"
                    data-link-name="nav2 : logo">
                     <span class="u-h">The Guardian - Back to home</span>
-                    @fragments.inlineSvg("guardian-logo-160", "logo", List("logo"))
+                    @fragments.inlineSvg("guardian-logo-160", "logo")
                 </a>
 
                 @defining(
@@ -31,12 +31,12 @@
                     </a>
                 }
 
-                <ul class="new-header__pillars">
+                <ul class="pillars">
                     @NewNavigation.PrimaryLinks.map { link =>
-                        <li class="new-header__pillar">
+                        <li class="pillars__item">
                             <a class="@RenderClasses(Map(
-                                "new-header__pillar-link" -> true,
-                                "new-header__pillar-link--current-section" -> ((link.title == currentTopLevelSection) && !page.metadata.hasSlimHeader)))"
+                                "pillar-link" -> true,
+                                "pillar-link--current-section" -> ((link.title == currentTopLevelSection) && !page.metadata.hasSlimHeader)))"
                                 href="@LinkTo(link.url)"
                                 data-link-name="nav2 : primary : @link.title">
                                     @link.title

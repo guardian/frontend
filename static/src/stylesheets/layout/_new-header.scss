@@ -13,7 +13,8 @@ $gutter-xlarge: 85px;
 @import 'new-header/_fly-in-group';
 @import 'new-header/_fly-in-item';
 @import 'new-header/_fly-in-search';
-@import 'new-header/_logo';
+@import 'new-header/_pillars';
+@import 'new-header/_pillar-link';
 @import 'new-header/_subnav';
 @import 'new-header/_subnav-link';
 @import 'new-header/_veggi-burger';
@@ -42,78 +43,32 @@ from scrolling */
 
 }
 
-/* Pillars */
-.new-header__pillars {
-    list-style: none;
-    margin: 0;
-    padding: 0 $gs-gutter / 2;
-    width: 100%;
-
-    @include mq(mobileLandscape) {
-        padding-left: $gs-gutter;
-        padding-right: $gs-gutter;
-    }
+.new-header__logo {
+    padding-top: $gs-baseline / 2;
+    padding-bottom: $gs-baseline / 2;
+    margin-left: auto;
 }
 
-.new-header__pillar {
-    display: inline-block;
-
-    > *:after {
-        content: '/';
-        color: $news-main-2;
-        display: inline-block;
-        line-height: 1;
-        margin-left: -2px;
-        margin-right: -2px;
-        pointer-events: none;
-    }
-}
-
-.new-header__pillar-link {
-    @include fs-textSans(5);
-    color: $news-support-1;
-    cursor: pointer;
+.new-header__logo > svg {
     display: block;
-    line-height: $gs-baseline * 2.5;
-    position: relative;
+    height: calc(3 / 16 * 170px);
+    padding-right: $gs-gutter / 2;
+    width: 170px;
 
-    @include mq($from: mobile, $until: mobileLandscape) {
-        font-size: 16px;
-        font-size: 5.1vw;
-    }
-
-    @include mq($from: mobileMedium, $until: mobileLandscape) {
-        line-height: $gs-baseline * 3;
+    @include mq(mobileMedium) {
+        height: calc(3 / 16 * 225px);
+        width: 225px;
     }
 
     @include mq(mobileLandscape) {
-        font-size: 24px;
-        line-height: $gs-baseline * 3.5;
+        height: calc(3 / 16 * 260px);
+        margin-right: $gs-gutter / 2;
+        padding-top: ($gs-baseline / 2);
+        width: 260px;
     }
 
-//    @include mq(tablet) {
-//        font-size: 32px;
-//    }
-
-    &:focus,
-    &:hover {
-        cursor: pointer;
-        text-decoration: none;
-    }
-}
-
-.new-header__pillar-link--current-section {
-    color: #ffffff;
-
-    // triangle
-    &:before {
-        content: '';
-        position: absolute;
-        left: 50%;
-        bottom: 0;
-        transform: translateX(-100%);
-        border-bottom: $gs-baseline / 2 solid $subnav-grey;
-        border-left: $gs-baseline / 2 solid transparent;
-        border-right: $gs-baseline / 2 solid transparent;
+    @include mq(tablet) {
+        height: calc(3 / 16 * 400px);
+        width: 400px;
     }
 }
