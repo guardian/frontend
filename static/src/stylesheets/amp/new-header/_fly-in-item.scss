@@ -10,8 +10,4 @@
 
 .fly-in-item__toggle {
     left: 5px;
-
-    [aria-expanded='true'] &:before {
-        transform: rotate(-135deg);
-    }
 }

@@ -86,6 +86,7 @@
         width: 8px;
     }
 
+    [aria-expanded='true'] &:before,
     details[open] &:before {
         transform: rotate(-135deg);
     }

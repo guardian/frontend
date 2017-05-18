@@ -3,15 +3,12 @@
     color: $news-support-1;
     cursor: pointer;
     display: block;
+    font-size: 16px;
+    font-size: 5.1vw;
     line-height: $gs-baseline * 2.5;
     position: relative;
 
-    @include mq($from: mobile, $until: mobileLandscape) {
-        font-size: 16px;
-        font-size: 5.1vw;
-    }
-
-    @include mq($from: mobileMedium, $until: mobileLandscape) {
+    @include mq($from: mobileMedium) {
         line-height: $gs-baseline * 3;
     }
 
