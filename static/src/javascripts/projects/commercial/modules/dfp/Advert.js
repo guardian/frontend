@@ -1,4 +1,6 @@
 // @flow
+import type { AdSize, AdSizes } from 'commercial/types';
+
 import detect from 'lib/detect';
 import { getCurrentTime } from 'lib/user-timing';
 import { defineSlot } from 'commercial/modules/dfp/define-slot';
@@ -7,8 +9,6 @@ import breakpointNameToAttribute
     from 'commercial/modules/dfp/breakpoint-name-to-attribute';
 
 type Resolver = (x: boolean) => void;
-type AdSize = 'fluid' | Array<number>;
-type AdSizes = { [k: string]: Array<AdSize> };
 
 /** A breakpoint can have various sizes assigned to it. You can assign either on
  * set of sizes or multiple.
