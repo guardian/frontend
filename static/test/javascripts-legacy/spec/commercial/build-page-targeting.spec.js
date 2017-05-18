@@ -63,6 +63,7 @@ define([
                             edition: 'us',
                             k:       ['prince-charles-letters','uk/uk','prince-charles'],
                             ob:      't',
+                            p:       'ng',
                             se:      ['filmweekly'],
                             su:      ['5'],
                             tn:      ['news'],
@@ -167,7 +168,6 @@ define([
             };
 
             expect(buildPageTargeting()).toEqual({
-                p: 'ng',
                 bp: 'mobile',
                 at: 'ng101',
                 si: 't',

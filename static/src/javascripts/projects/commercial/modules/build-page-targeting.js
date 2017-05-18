@@ -126,10 +126,11 @@ const formatAppNexusTargeting = (obj: Object): string =>
 
 const buildPageTargeting = once((): Object => {
     const page: Object = config.page;
-    const platform = commercialFeatures.adFree ? 'ngaf' : 'ng';
+    if (commercialFeatures.adFree) {
+        page.sharedAdTargeting.p = 'ngaf';
+    }
     const pageTargets: Object = Object.assign(
         {
-            p: platform,
             x: krux.getSegments(),
             pv: config.ophan.pageViewId,
             bp: detect.getBreakpoint(),
