@@ -1,7 +1,11 @@
 // @flow
 import type { ABTest } from 'common/modules/experiments/ab-types';
 
-import { getActiveTests, getTest } from 'common/modules/experiments/ab-tests';
+import {
+    getActiveTests,
+    getTest,
+    TESTS,
+} from 'common/modules/experiments/ab-tests';
 import { buildOphanSubmitter } from 'common/modules/experiments/ab-ophan';
 import * as segmentUtil from 'common/modules/experiments/segment-util';
 import * as testCanRunChecks
@@ -102,7 +106,7 @@ export const segmentUser = () => {
         segment(getActiveTests());
     }
 
-    abUtils.cleanParticipations();
+    abUtils.cleanParticipations(TESTS);
 };
 
 export const run = (tests: Array<ABTest>) => tests.forEach(runTest);

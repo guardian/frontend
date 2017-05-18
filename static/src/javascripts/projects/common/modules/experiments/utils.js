@@ -17,6 +17,30 @@ export const setParticipations = (participations: Participations): void => {
     local.set(participationsKey, participations);
 };
 
+export const removeParticipation = (toRemove: { id: string }): void => {
+    const participations = getParticipations();
+    const filteredParticipations = Object.keys(participations)
+        .filter(participation => participation !== toRemove.id)
+        .reduce((result, input) => {
+            Object.assign(result, { [input]: participations[input] });
+            return result;
+        }, {});
+    setParticipations(filteredParticipations);
+};
+
+// Removes any tests from localstorage that have been
+// renamed/deleted from the backend
+export const cleanParticipations = (tests: Array<ABTest>): void =>
+    Object.keys(getParticipations()).forEach(k => {
+        if (typeof config.switches[`ab${k}`] === 'undefined') {
+            removeParticipation({ id: k });
+        } else {
+            const testExists = tests.some(element => element.id === k);
+
+            if (!testExists) removeParticipation({ id: k });
+        }
+    });
+
 export const isParticipating = (test: ABTest): boolean =>
     test.id in getParticipations();
 
@@ -28,17 +52,6 @@ export const addParticipation = (test: ABTest, variantId: string): void => {
     };
 
     setParticipations(participations);
-};
-
-export const removeParticipation = (toRemove: { id: string }): void => {
-    const participations = getParticipations();
-    const filteredParticipations = Object.keys(participations)
-        .filter(participation => participation !== toRemove.id)
-        .reduce((result, input) => {
-            Object.assign(result, { [input]: participations[input] });
-            return result;
-        }, {});
-    setParticipations(filteredParticipations);
 };
 
 export const getTestVariantId = (testId: string): ?string => {
