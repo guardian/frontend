@@ -1,7 +1,9 @@
 // @flow
+import type { SlotOnloadEvent } from 'commercial/types';
+
+import { Advert } from 'commercial/modules/dfp/Advert';
 import { getAdvertById } from 'commercial/modules/dfp/get-advert-by-id';
 import postMessage from 'commercial/modules/messenger/post-message';
-import type { SlotOnloadEvent } from 'commercial/types';
 
 const host = `${location.protocol}//${location.host}`;
 
@@ -14,9 +16,12 @@ const host = `${location.protocol}//${location.host}`;
      we resort to sending it as a token of welcome :)
 */
 const onLoad = (event: SlotOnloadEvent) => {
-    const advert = getAdvertById(event.slot.getSlotElementId());
+    const advert: ?Advert = getAdvertById(event.slot.getSlotElementId());
+    if (!advert) {
+        return;
+    }
     if (
-        advert &&
+        advert.size &&
         ((typeof advert.size === 'string' && advert.size === 'fluid') ||
             (advert.size[0] === 0 && advert.size[1] === 0))
     ) {

@@ -2,6 +2,9 @@
 
 /* eslint no-use-before-define: "off" */
 
+export type AdSize = 'fluid' | Array<number>;
+export type AdSizes = { [k: string]: Array<AdSize> };
+
 export type SingleSizeArray = Array<number>;
 export type NamedSize = string;
 export type SingleSize = SingleSizeArray | NamedSize;
