@@ -1,4 +1,4 @@
-package slices
+package layout.slices
 
 import cards._
 import layout._

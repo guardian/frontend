@@ -1,4 +1,4 @@
-package slices
+package layout.slices
 
 import cards.Standard
 import layout.SingleItem
