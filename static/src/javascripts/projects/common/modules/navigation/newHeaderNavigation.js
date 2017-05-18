@@ -6,8 +6,7 @@ import userAccount from 'common/modules/navigation/user-account';
 
 const enhanced = {};
 
-const getSidebarElement = (): ?HTMLElement =>
-    document.getElementById('main-menu');
+const getFlyIn = (): ?HTMLElement => document.getElementById('main-menu');
 
 const closeSidebarSection = (section: HTMLElement): void => {
     section.removeAttribute('open');
@@ -30,21 +29,21 @@ const openSidebarSection = (
     section.setAttribute('open', '');
 
     if (options.scrollIntoView === true) {
-        scrollToElement(section, 0, 'easeInQuad', getSidebarElement());
+        scrollToElement(section, 0, 'easeInQuad', getFlyIn());
     }
 };
 
 const toggleSidebar = (): void => {
     const documentElement = document.documentElement;
-    const sidebarToggle = document.querySelector('.js-change-link');
     const openClass = 'new-header--open';
     const globalOpenClass = 'nav-is-open';
     const trigger = document.querySelector('.veggi-burger');
     const newHeader = document.querySelector('.new-header');
+    const flyInToggle = newHeader && newHeader.querySelector('.js-change-link');
     const isOpen = trigger && trigger.getAttribute('aria-expanded') === 'true';
-    const sidebar = getSidebarElement();
+    const flyIn = getFlyIn();
 
-    if (!sidebar || !sidebarToggle || !newHeader) {
+    if (!newHeader || !flyIn || !flyInToggle) {
         return;
     }
 
@@ -69,7 +68,7 @@ const toggleSidebar = (): void => {
         const expandedAttr = isOpen ? 'false' : 'true';
         const hiddenAttr = isOpen ? 'true' : 'false';
 
-        sidebarToggle.setAttribute(
+        flyInToggle.setAttribute(
             'data-link-name',
             `nav2 : veggie-burger : ${isOpen ? 'show' : 'hide'}`
         );
@@ -78,7 +77,7 @@ const toggleSidebar = (): void => {
             trigger.setAttribute('aria-expanded', expandedAttr);
         }
 
-        sidebar.setAttribute('aria-hidden', hiddenAttr);
+        flyIn.setAttribute('aria-hidden', hiddenAttr);
         newHeader.classList.toggle(openClass, !isOpen);
 
         if (documentElement) {
@@ -143,11 +142,11 @@ const enhanceSidebarToggle = (): void => {
 };
 
 const toggleSidebarWithOpenSection = () => {
-    const sidebar = getSidebarElement();
+    const flyIn = getFlyIn();
     const subnav = document.querySelector('.subnav');
     const pillarTitle = (subnav && subnav.dataset.pillarTitle) || '';
     const targetSelector = `.js-navigation-item[data-section-name="${pillarTitle}"]`;
-    const target = sidebar && sidebar.querySelector(targetSelector);
+    const target = flyIn && flyIn.querySelector(targetSelector);
 
     if (target) {
         openSidebarSection(target.children[0], { scrollIntoView: true });
@@ -159,13 +158,13 @@ const toggleSidebarWithOpenSection = () => {
 const addEventHandler = (): void => {
     const subnav = document.querySelector('.subnav');
     const toggle = document.querySelector('.js-toggle-nav-section');
-    const sidebar = getSidebarElement();
+    const flyIn = getFlyIn();
 
-    if (!sidebar) {
+    if (!flyIn) {
         return;
     }
 
-    sidebar.addEventListener('click', (event: Event) => {
+    flyIn.addEventListener('click', (event: Event) => {
         const target: HTMLElement = (event.target: any);
 
         if (target.matches('.js-close-nav-list')) {
@@ -181,11 +180,9 @@ const addEventHandler = (): void => {
     }
 };
 
-const init = (): void => {
+export const newHeaderNavigationInit = (): void => {
     enhanceSidebarToggle();
     addEventHandler();
     userAccount();
     closeAllSidebarSections();
 };
-
-export default init;
