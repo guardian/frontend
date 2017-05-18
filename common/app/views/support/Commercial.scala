@@ -230,10 +230,10 @@ object Commercial {
       ) mkString " | "
     }
 
-    def mkInteractionTrackingCode(containerIndex: Int, cardIndex: Int, card: PaidCard): String = Seq(
+    def mkInteractionTrackingCode(containerIndex: Int, cardIndex: Int, card: ContentCard): String = Seq(
       card.branding.map(_.sponsorName) getOrElse "unknown",
       s"card-${ cardIndex + 1 }",
-      card.headline
+      card.header.headline
     ).mkString(" | ")
 
     def mkCapiCardTrackingCode(

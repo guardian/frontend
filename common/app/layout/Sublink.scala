@@ -226,7 +226,7 @@ object FaciaCard {
                              } yield kickerText contains byline
                              ) getOrElse false
 
-     val contentCard = ContentCard(
+        ContentCard(
         faciaContent.properties.maybeContentId.orElse(Option(faciaContent.card.id)),
         FaciaCardHeader.fromTrailAndKicker(faciaContent, maybeKicker, Some(config)),
         getByline(faciaContent).filterNot(Function.const(suppressByline)),
@@ -246,14 +246,11 @@ object FaciaCard {
         if (config.showTimestamps) Option(DateTimestamp) else None,
         faciaContent.card.shortUrlPath,
         useShortByline = false,
-        faciaContent.card.group
+        faciaContent.card.group,
+        branding = faciaContent.branding(defaultEdition),
+        properties = Some(faciaContent.properties),
+        capiContent = faciaContent.properties.maybeContent
       )
-      if (faciaContent.branding(defaultEdition).exists(_.isPaid)) {
-        PaidCard.fromPressedContent(faciaContent, Some(cardTypes), contentCard = Some(contentCard))
-      }
-      else {
-        contentCard
-    }
   }
 }
 
@@ -279,8 +276,28 @@ case class ContentCard(
   timeStampDisplay: Option[FaciaCardTimestamp],
   shortUrl: Option[String],
   useShortByline: Boolean,
-  group: String
+  group: String,
+  branding: Option[Branding] = None,
+  capiContent: Option[ContentType] = None,
+  properties: Option[PressedProperties] = None
 ) extends FaciaCard {
+
+
+
+  def paidImage = {
+    lazy val videoImageMedia = capiContent flatMap (_.elements.mainVideo.map(_.images))
+    lazy val imageOverride: Option[ImageMedia] = properties.flatMap(_.image flatMap ImageOverride.createImageMedia)
+    lazy val defaultTrailPicture = capiContent flatMap (_.trail.trailPicture)
+    imageOverride.orElse(videoImageMedia).orElse(defaultTrailPicture)
+  }
+
+  def paidIcon = {
+    if (header.isVideo) Some("video-icon")
+    else if (header.isGallery) Some("camera")
+    else if (header.isAudio) Some("volume-high")
+    else None
+  }
+
   def bylineText: Option[String] = if (useShortByline) byline.map(_.shortByline) else byline.map(_.get)
 
   def setKicker(kicker: Option[ItemKicker]) = copy(header = header.copy(kicker = kicker))
@@ -388,37 +405,6 @@ object PaidCard {
       cardTypes = cardTypes,
       branding = content.branding(defaultEdition),
       contentCard = contentCard
-    )
-  }
-
-  def fromContentItem(
-    item: model.ContentType,
-    edition: Edition,
-    clickMacro: Option[String],
-    withDescription: Boolean
-  ): PaidCard = {
-    val tags = item.tags
-    PaidCard(
-      icon = {
-        if (tags.isVideo) Some("video-icon")
-        else if (tags.isGallery) Some("camera")
-        else if (tags.isAudio) Some("volume-high")
-        else None
-      },
-      headline = item.trail.headline,
-      kicker = None,
-      description = {
-        if (withDescription) item.fields.trailText
-        else None
-      },
-      image = item.trail.trailPicture,
-      fallbackImageUrl = item.trail.trailPicture flatMap ImgSrc.getFallbackUrl,
-      targetUrl = {
-        val url = item.metadata.webUrl
-        clickMacro map { cm => s"$cm$url" } getOrElse url
-      },
-      branding = item.metadata.commercial.flatMap(_.branding(edition)),
-      contentCard = None
     )
   }
 }
