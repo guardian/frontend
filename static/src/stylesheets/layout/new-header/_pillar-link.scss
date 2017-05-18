@@ -20,9 +20,9 @@
         line-height: $gs-baseline * 3.5;
     }
 
-    //    @include mq(tablet) {
-    //        font-size: 32px;
-    //    }
+    @include mq(tablet) {
+        font-size: 32px;
+    }
 
     &:focus,
     &:hover {
