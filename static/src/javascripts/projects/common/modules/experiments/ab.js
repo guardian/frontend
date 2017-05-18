@@ -1,39 +1,15 @@
 // @flow
 import type { ABTest } from 'common/modules/experiments/ab-types';
 
-import {
-    getActiveTests,
-    getTest,
-    TESTS,
-} from 'common/modules/experiments/ab-tests';
+import { getActiveTests, getTest } from 'common/modules/experiments/ab-tests';
 import { buildOphanSubmitter } from 'common/modules/experiments/ab-ophan';
 import * as segmentUtil from 'common/modules/experiments/segment-util';
 import * as testCanRunChecks
     from 'common/modules/experiments/test-can-run-checks';
 import * as abUtils from 'common/modules/experiments/utils';
-import config from 'lib/config';
 import { local } from 'lib/storage';
 
 const noop = (): null => null;
-
-// Removes any tests from localstorage that have been
-// renamed/deleted from the backend
-const cleanParticipations = (): void =>
-    Object.keys(abUtils.getParticipations()).forEach(k => {
-        if (typeof config.switches[`ab${k}`] === 'undefined') {
-            abUtils.removeParticipation({
-                id: k,
-            });
-        } else {
-            const testExists = TESTS.some(element => element.id === k);
-
-            if (!testExists) {
-                abUtils.removeParticipation({
-                    id: k,
-                });
-            }
-        }
-    });
 
 // Finds variant in specific tests and runs it
 const runTest = test => {
@@ -86,9 +62,7 @@ export const shouldRunTest = (id: string, variant: string) => {
 };
 
 export const segment = (tests: Array<ABTest>) =>
-    tests.forEach(test => {
-        allocateUserToTest(test);
-    });
+    tests.forEach(allocateUserToTest);
 
 export const forceSegment = (testId: string, variant: string) => {
     getActiveTests().filter(test => test.id === testId).forEach(test => {
@@ -128,10 +102,10 @@ export const segmentUser = () => {
         segment(getActiveTests());
     }
 
-    cleanParticipations();
+    abUtils.cleanParticipations();
 };
 
-export const run = () => getActiveTests().forEach(runTest);
+export const run = (tests: Array<ABTest>) => tests.forEach(runTest);
 
 /**
  * check if a test can be run (i.e. is not expired and switched on)

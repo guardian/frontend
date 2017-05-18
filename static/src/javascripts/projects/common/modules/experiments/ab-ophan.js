@@ -16,7 +16,7 @@ import config from 'lib/config';
 import reportError from 'lib/report-error';
 import ophan from 'ophan/ng';
 
-const not = (f: any => boolean) => (...args): boolean => !f.apply(this, args);
+const not = f => (...args): boolean => !f.apply(this, args);
 const noop = (): null => null;
 
 const submit = (payload: OphanABPayload): void =>
@@ -105,13 +105,11 @@ const registerCompleteEvent = complete => test => {
 
 export { buildOphanSubmitter };
 
-export const registerCompleteEvents = (): void =>
-    getActiveTests().forEach(registerCompleteEvent(true));
+export const registerCompleteEvents = (tests: Array<ABTest>): void =>
+    tests.forEach(registerCompleteEvent(true));
 
-export const registerImpressionEvents = (): void =>
-    getActiveTests()
-        .filter(defersImpression)
-        .forEach(registerCompleteEvent(false));
+export const registerImpressionEvents = (tests: Array<ABTest>): void =>
+    tests.filter(defersImpression).forEach(registerCompleteEvent(false));
 
 export const buildOphanPayload = (): OphanABPayload => {
     try {
@@ -143,6 +141,7 @@ export const buildOphanPayload = (): OphanABPayload => {
 
         return log;
     } catch (error) {
+        console.log(error);
         // Encountering an error should invalidate the logging process.
         reportError(error, {}, false);
         return {};
