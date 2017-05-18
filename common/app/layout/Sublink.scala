@@ -282,8 +282,6 @@ case class ContentCard(
   properties: Option[PressedProperties] = None
 ) extends FaciaCard {
 
-
-
   def paidImage: Option[ImageMedia] = {
     lazy val videoImageMedia = capiContent flatMap (_.elements.mainVideo.map(_.images))
     lazy val imageOverride: Option[ImageMedia] = properties.flatMap(_.image flatMap ImageOverride.createImageMedia)
@@ -368,8 +366,7 @@ case class PaidCard(
   fallbackImageUrl: Option[String],
   targetUrl: String,
   cardTypes: Option[ItemClasses] = None,
-  branding: Option[Branding],
-  contentCard: Option[ContentCard]
+  branding: Option[Branding]
 ) extends FaciaCard
 
 object PaidCard {
@@ -403,8 +400,7 @@ object PaidCard {
       fallbackImageUrl,
       targetUrl = header.url,
       cardTypes = cardTypes,
-      branding = content.branding(defaultEdition),
-      contentCard = contentCard
+      branding = content.branding(defaultEdition)
     )
   }
 }
