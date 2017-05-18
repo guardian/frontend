@@ -107,14 +107,23 @@ const ExplainerSnippet = () => {
         if (!explainer) {
             return;
         }
-        fastdom.write(() => {
-            explainer.removeAttribute('hidden');
-        });
+        fastdom
+            .write(() => {
+                explainer.removeAttribute('hidden');
+            })
+            .then(() => {
+                mediator.emit('ab:explainer:notdisplayed');
+            });
     };
 
     // registers an impression (in our case, when the form is added to the dom)
     const impression = track => {
         mediator.on('ab:explainer:displayed', track);
+    };
+
+    // registers an impression (in our case, when the form is added to the dom)
+    const impressionNoSnippet = track => {
+        mediator.on('ab:explainer:notdisplayed', track);
     };
 
     // registers a successful test (in our case, when the user answers the question)
@@ -137,8 +146,9 @@ const ExplainerSnippet = () => {
         showForSensitive: true,
         variants: [
             {
-                id: 'no-snippet',
+                id: 'control',
                 test: testNoSnippet,
+                impression: impressionNoSnippet,
             },
             {
                 id: 'snippet-light',
