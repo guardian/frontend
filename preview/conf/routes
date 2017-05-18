@@ -201,3 +201,5 @@ GET        /favicon.ico                                                         
 
 # Any "item" from the Content API
 GET        /*path                                                                              controllers.ItemController.render(path)
+
+# If you are creating a new endpoint and you want to exclude preload then you need to add a filter on line 36 of Requests.scala.

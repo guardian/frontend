@@ -34,3 +34,5 @@ GET        /*path/deduped.json                                                  
 GET        /*path.json                                                              controllers.FaciaController.renderFrontJson(path)
 GET        /                                                                        controllers.FaciaController.rootEditionRedirect()
 GET        /*path                                                                   controllers.FaciaController.renderFront(path)
+
+# If you are creating a new endpoint and you want to exclude preload then you need to add a filter on line 36 of Requests.scala.

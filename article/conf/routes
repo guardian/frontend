@@ -26,3 +26,5 @@ GET     /*path/email                controllers.ArticleController.renderArticle(
 # temp route for live blogs so we can paginate without getting the blocks for all articles
 GET     /$path<[^/]+/([^/]+/)?live/.*> controllers.ArticleController.renderLiveBlog(path, page: Option[String], format: Option[String])
 GET     /*path                      controllers.ArticleController.renderArticle(path)
+
+# If you are creating a new endpoint and you want to exclude preload then you need to add a filter on line 36 of Requests.scala.

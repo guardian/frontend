@@ -34,3 +34,5 @@ GET         /discussion/report-abuse/*commentId                                 
 POST        /discussion/report-abuse/*commentId                                 controllers.CommentsController.reportAbuseSubmission(commentId: Int)
 
 GET         /open/cta/article/*discussionKey.json                               controllers.CtaController.cta(discussionKey: discussion.model.DiscussionKey)
+
+# If you are creating a new endpoint and you want to exclude preload then you need to add a filter on line 36 of Requests.scala.

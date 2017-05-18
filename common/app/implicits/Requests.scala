@@ -32,6 +32,7 @@ trait Requests {
 
     lazy val isAlert = r.path.contains("/news-alert/")
 
+    // Create a predicate to identify your endpoint and add it to this line.
     lazy val isHtml = !(isAlert || isAsset || isJson || isRss || isEmail || isXmlHttpRequest || isAmp || isHealthcheck)
 
     lazy val pathWithoutModifiers: String =
