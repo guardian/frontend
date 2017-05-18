@@ -43,10 +43,25 @@
 
     .fly-in-item__toggle {
         margin-top: -3px;
+
+        .fly-in-group--primary & {
+            margin-top: -5px;
+        }
     }
 
     details[open] .fly-in-item__toggle {
         margin-top: 2px;
+    }
+
+    // First level overwrites
+    .fly-in-group--primary & {
+        > * {
+            border-top: 1px solid darken($guardian-brand-dark, 4%);
+        }
+
+        &:first-child > * {
+            border-top: 0;
+        }
     }
 }
 
@@ -60,14 +75,15 @@
 
 .fly-in-item__toggle {
     &:before {
-        content: '';
-        display: inline-block;
-        width: 8px;
-        height: 8px;
-        transform: rotate(45deg);
         border: 2px solid $news-support-2;
         border-top: 0;
         border-left: 0;
+        content: '';
+        display: inline-block;
+        height: 8px;
+        margin-top: -3px;
+        transform: rotate(45deg);
+        width: 8px;
     }
 
     details[open] &:before {
@@ -95,36 +111,5 @@
         height: 1.8em;
         margin-top: -.4em;
         width: 1.8em;
-    }
-}
-
-// First level overwrites
-.fly-in-group--primary .fly-in-item {
-    > * {
-        border-top: 1px solid darken($guardian-brand-dark, 4%);
-    }
-
-    &:first-child > * {
-        border-top: 0;
-    }
-
-    .fly-in-item__toggle {
-        margin-top: -5px;
-    }
-
-    details[open] .fly-in-item__toggle {
-        margin-top: 2px;
-    }
-}
-
-// Second level overwrites
-.fly-in-group--secondary .fly-in-item {
-    > a {
-        padding-bottom: $gs-baseline / 1.5;
-        padding-top: $gs-baseline / 1.5;
-    }
-
-    &:last-child > a {
-        padding-bottom: 0;
     }
 }
