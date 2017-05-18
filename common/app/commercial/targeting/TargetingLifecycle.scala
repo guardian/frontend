@@ -1,4 +1,4 @@
-package targeting
+package commercial.targeting
 
 import app.LifecycleComponent
 import common.{JobScheduler, AkkaAsync}

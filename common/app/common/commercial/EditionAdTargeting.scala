@@ -3,7 +3,7 @@ package common.commercial
 import com.gu.commercial.display._
 import com.gu.contentapi.client.model.v1.{Content, Section, Tag}
 import common.Edition
-import ophan.SurgingContentAgent
+import services.ophan.SurgingContentAgent
 import play.api.libs.json._
 
 case class EditionAdTargeting(edition: Edition, params: Map[AdCallParamKey, AdCallParamValue])
