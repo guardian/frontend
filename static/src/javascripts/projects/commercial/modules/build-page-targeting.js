@@ -7,7 +7,7 @@ import { getUrlVars } from 'lib/url';
 import krux from 'commercial/modules/third-party-tags/krux';
 import identity from 'common/modules/identity/api';
 import { getUserSegments } from 'commercial/modules/user-ad-targeting';
-import abUtils from 'common/modules/experiments/utils';
+import { getParticipations } from 'common/modules/experiments/utils';
 import flatten from 'lodash/arrays/flatten';
 import once from 'lodash/functions/once';
 import pick from 'lodash/objects/pick';
@@ -20,21 +20,21 @@ const formatTarget = (target: ?string): ?string =>
 
 const abParam = (): Array<string> => {
     const cmRegex = /^(cm|commercial)/;
-    const abParticipations = abUtils.getParticipations();
+    const abParticipations = getParticipations();
     const abParams = [];
 
-    Object.keys(abParticipations).forEach(testKey => {
-        const testValue = abParticipations[testKey];
+    Object.keys(abParticipations).forEach((testKey: string): void => {
+        const testValue: { variant: string } = abParticipations[testKey];
         if (testValue.variant && testValue.variant !== 'notintest') {
-            const testData = `${testKey}-${testValue.variant}`;
+            const testData: string = `${testKey}-${testValue.variant}`;
             // DFP key-value pairs accept value strings up to 40 characters long
             abParams.push(testData.substring(0, 40));
         }
     });
 
     if (config.tests) {
-        Object.keys(config.tests).forEach(testKey => {
-            const testValue = config.tests[testKey];
+        Object.keys(config.tests).forEach((testKey: string) => {
+            const testValue: string = config.tests[testKey];
             if (typeof testValue === 'string' && cmRegex.test(testValue)) {
                 abParams.push(testValue);
             }
@@ -45,7 +45,7 @@ const abParam = (): Array<string> => {
 };
 
 const adtestParams = (): ?string => {
-    const cookieAdtest = getCookie('adtest');
+    const cookieAdtest: ?string = getCookie('adtest');
     if (cookieAdtest) {
         if (cookieAdtest.substring(0, 4) === 'demo') {
             removeCookie('adtest');
@@ -54,8 +54,8 @@ const adtestParams = (): ?string => {
     }
 };
 
-const getVisitedValue = (): ?string => {
-    const visitCount = local.get('gu.alreadyVisited') || 0;
+const getVisitedValue = (): string => {
+    const visitCount: number = local.get('gu.alreadyVisited') || 0;
 
     if (visitCount <= 5) {
         return visitCount.toString();
@@ -70,10 +70,13 @@ const getVisitedValue = (): ?string => {
     } else if (visitCount >= 30) {
         return '30plus';
     }
+
+    return visitCount.toString();
 };
 
 const getReferrer = (): ?string => {
-    const referrerTypes = [
+    type MatchType = { id: string, match: string };
+    const referrerTypes: Array<MatchType> = [
         {
             id: 'facebook',
             match: 'facebook.com',
@@ -96,7 +99,7 @@ const getReferrer = (): ?string => {
         },
     ];
 
-    const matchedRef = referrerTypes.filter(
+    const matchedRef: MatchType = referrerTypes.filter(
         referrerType => detect.getReferrer().indexOf(referrerType.match) > -1
     )[0] || {};
 
@@ -104,25 +107,25 @@ const getReferrer = (): ?string => {
 };
 
 const getWhitelistedQueryParams = (): Object => {
-    const whiteList = ['0p19G'];
+    const whiteList: Array<string> = ['0p19G'];
     return pick(getUrlVars(), whiteList);
 };
 
 const formatAppNexusTargeting = (obj: Object): string =>
     flatten(
         Object.keys(obj)
-            .filter(key => obj[key] !== '' && obj[key] !== null)
-            .map(key => {
-                const value = obj[key];
+            .filter((key: string) => obj[key] !== '' && obj[key] !== null)
+            .map((key: string) => {
+                const value: any = obj[key];
                 return Array.isArray(value)
                     ? value.map(nestedValue => `${key}=${nestedValue}`)
                     : `${key}=${value}`;
             })
     ).join(',');
 
-export default once((): Object => {
-    const page = config.page;
-    const pageTargets = Object.assign(
+const buildPageTargeting = once((): Object => {
+    const page: Object = config.page;
+    const pageTargets: Object = Object.assign(
         {
             x: krux.getSegments(),
             pv: config.ophan.pageViewId,
@@ -144,7 +147,7 @@ export default once((): Object => {
     );
 
     // filter out empty values
-    const pageTargeting = pick(pageTargets, target => {
+    const pageTargeting: Object = pick(pageTargets, target => {
         if (Array.isArray(target)) {
             return target.length > 0;
         }
@@ -175,3 +178,5 @@ export default once((): Object => {
 
     return pageTargeting;
 });
+
+export { buildPageTargeting };
