@@ -16,7 +16,8 @@
                         <li class="fly-in-item">
                             <amp-accordion>
                                 <section>
-                                    <h2 data-link-name="amp : nav : secondary : {{ title }}">
+                                    <h2 class="fly-in-item__title"
+                                        data-link-name="amp : nav : secondary : {{ title }}">
                                         <i class="fly-in-item__toggle"></i>
                                         {{ title }}
                                     </h2>
@@ -24,7 +25,8 @@
                                     <ul class="fly-in-group fly-in-group--secondary">
                                         {{ #subSections }}
                                             <li class="fly-in-item">
-                                                <a href="{{ url }}"
+                                                <a class="fly-in-item__title"
+                                                   href="{{ url }}"
                                                    data-link-name="amp : nav : secondary : {{ title }}">
                                                     {{ title }}
                                                 </a>
@@ -40,8 +42,9 @@
                 <ul class="fly-in-group">
                     {{ #secondarySections }}
                         <li class="fly-in-item">
-                            <a href="{{ url }}"
-                            data-link-name="amp : nav : {{ title }}">
+                            <a class="fly-in-item__title"
+                               href="{{ url }}"
+                               data-link-name="amp : nav : {{ title }}">
                                 {{ title }}
                             </a>
                         </li>

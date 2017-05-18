@@ -7,14 +7,16 @@
 
     <li class="fly-in-item js-show-user-account-links">
         <a href="@Configuration.id.url/signin?INTCMP=DOTCOM_HEADER_SIGNIN"
-           data-link-name="nav2 : sign in">
+           data-link-name="nav2 : sign in"
+           class="fly-in-item__title">
             Sign in/up
         </a>
     </li>
 
     <li class="fly-in-item">
         <details>
-            <summary data-link-name="nav2 : my account">
+            <summary class="fly-in-item__title"
+                     data-link-name="nav2 : my account">
                 <i class="fly-in-item__toggle"></i>
                 my account
             </summary>
@@ -22,31 +24,35 @@
             <ul class="fly-in-group fly-in-group--downlight">
                 <li class="fly-in-item">
                     <a data-link-name="nav2 : comment activity"
-                      class="js-add-comment-activity-link" hidden>
+                       class="fly-in-item__title js-add-comment-activity-link" hidden>
                         Comment activity
                     </a>
                 </li>
                 <li class="fly-in-item">
                     <a href="@Configuration.id.url/public/edit"
-                       data-link-name="nav2 : edit profile">
+                       data-link-name="nav2 : edit profile"
+                       class="fly-in-item__title">
                             Edit profile
                     </a>
                 </li>
                 <li class="fly-in-item">
                     <a href="@Configuration.id.url/email-prefs"
-                       data-link-name="nav2 : email preferences">
+                       data-link-name="nav2 : email preferences"
+                       class="fly-in-item__title">
                         Email preferences
                     </a>
                 </li>
                 <li class="fly-in-item">
                     <a href="@Configuration.id.url/password/change"
-                       data-link-name="nav2 : change password">
+                       data-link-name="nav2 : change password"
+                       class="fly-in-item__title">
                         Change password
                     </a>
                 </li>
                 <li class="fly-in-item">
                     <a href="@Configuration.id.url/signout"
-                       data-link-name="nav2 : sign out">
+                       data-link-name="nav2 : sign out"
+                       class="fly-in-item__title">
                         Sign out
                     </a>
                 </li>

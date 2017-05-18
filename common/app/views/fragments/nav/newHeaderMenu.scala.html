@@ -9,7 +9,7 @@
         <details class="js-close-nav-list"
                  id="primary-list-@topLevelSection.name"
                  open>
-            <summary class="js-navigation-button"
+            <summary class="fly-in-item__title js-navigation-button"
                      data-link-name="nav2 : secondary : @topLevelSection.name">
                 <i class="fly-in-item__toggle"></i>
                 @topLevelSection.name
@@ -20,7 +20,8 @@
                     data-edition="@{edition.id.toLowerCase}" >
                     @topLevelSection.getAllEditionalisedNavLinks(edition).map { sectionItem =>
                         <li class="fly-in-item">
-                            <a href="@LinkTo { @sectionItem.url }"
+                            <a class="fly-in-item__title"
+                               href="@LinkTo { @sectionItem.url }"
                                data-link-name="nav2 : secondary : @{ if(sectionItem.longTitle.isEmpty) sectionItem.title else sectionItem.longTitle }">
                                     @if(sectionItem.iconName.nonEmpty) {
                                         @fragments.inlineSvg(sectionItem.iconName, "icon", List("fly-in-item__icon"))
@@ -86,7 +87,8 @@
                 <li class="fly-in-item js-editionalise-secondary-nav"
                     data-edition=@{edition.id.toLowerCase}>
 
-                    <a href="@item.url"
+                    <a class="fly-in-item__title"
+                       href="@item.url"
                        data-link-name="nav2 : @item.title">
                         @item.title
                     </a>
@@ -104,7 +106,8 @@
 
             @NewNavigation.NavFooterLinks.getAllEditionalisedNavLinks(edition).map { item =>
                 <li class="fly-in-item">
-                    <a href="@LinkTo { @item.url }"
+                    <a class="fly-in-item__title"
+                       href="@LinkTo { @item.url }"
                        data-link-name="nav2 : @item.title">
                         @item.title
                     </a>
@@ -115,7 +118,8 @@
 
     <ul class="fly-in-group">
         <li class="fly-in-item">
-            <a href="https://www.facebook.com/theguardian"
+            <a class="fly-in-item__title"
+               href="https://www.facebook.com/theguardian"
                data-link-name="nav2 : facebook">
                 @fragments.inlineSvg("share-facebook", "icon", List("fly-in-item__icon"))
                 Facebook
@@ -123,7 +127,8 @@
         </li>
 
         <li class="fly-in-item">
-            <a href="https://twitter.com/guardian"
+            <a class="fly-in-item__title"
+               href="https://twitter.com/guardian"
                data-link-name="nav2 : twitter">
                 @fragments.inlineSvg("share-twitter", "icon", List("fly-in-item__icon"))
                 Twitter

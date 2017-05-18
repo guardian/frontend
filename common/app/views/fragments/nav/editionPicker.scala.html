@@ -5,7 +5,8 @@
 
 <li class="fly-in-item">
     <details>
-        <summary data-link-name="nav2 : edition picker">
+        <summary class="fly-in-item__title"
+                 data-link-name="nav2 : edition picker">
             <i class="fly-in-item__toggle"></i>
             @Edition(request).displayName
         </summary>
@@ -15,7 +16,8 @@
                  @if((edition != Edition(request))) {
                     <li class="fly-in-item">
                         <a data-link-name="nav2 : edition-picker: @edition.id"
-                            href="@LinkTo(s"/preference/edition/${edition.id.toLowerCase}")">
+                            href="@LinkTo(s"/preference/edition/${edition.id.toLowerCase}")"
+                            class="fly-in-item__title">
                             <span class="u-h">switch to the </span>
                             <span>@edition.displayName</span>
                         </a>

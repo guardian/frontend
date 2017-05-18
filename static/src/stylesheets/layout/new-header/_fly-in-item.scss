@@ -2,34 +2,6 @@
     position: relative;
     width: 100%;
 
-    > a,
-    > details > summary,
-    > * > section > *:not(.fly-in-group) {
-        color: currentColor;
-        cursor: pointer;
-        display: block;
-        font-size: 20px;
-        outline: none;
-        padding-bottom: $gs-baseline / 1.5;
-        padding-right: $gs-gutter;
-        padding-top: $gs-baseline / 1.5;
-        user-select: none;
-
-        @include mq(mobileMedium) {
-            font-size: 22px;
-        }
-
-        &:hover,
-        &:focus {
-            text-decoration: none;
-        }
-
-        .fly-in-group--primary & {
-            padding-bottom: $gs-baseline * 1.2;
-            padding-top: $gs-baseline / 2.5;
-        }
-    }
-
     > *[data-link-name='nav2 : the guardian app'],
     > *[data-link-name='nav2 : facebook'] {
         border-top: 1px solid darken($guardian-brand-dark, 4%);
@@ -62,6 +34,32 @@
         &:first-child > * {
             border-top: 0;
         }
+    }
+}
+
+.fly-in-item__title {
+    color: currentColor;
+    cursor: pointer;
+    display: block;
+    font-size: 20px;
+    outline: none;
+    padding-bottom: $gs-baseline / 1.5;
+    padding-right: $gs-gutter;
+    padding-top: $gs-baseline / 1.5;
+    user-select: none;
+
+    @include mq(mobileMedium) {
+        font-size: 22px;
+    }
+
+    &:hover,
+    &:focus {
+        text-decoration: none;
+    }
+
+    .fly-in-group--primary & {
+        padding-bottom: $gs-baseline * 1.2;
+        padding-top: $gs-baseline / 2.5;
     }
 }
 
