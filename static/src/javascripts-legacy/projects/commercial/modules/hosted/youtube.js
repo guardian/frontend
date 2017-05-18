@@ -40,7 +40,7 @@ define([
         });
     }
 
-    function init(el) {
+    function init(el, posterImage) {
         var atomId = $(el).data('media-id');
         var duration = $(el).data('duration');
         var $currentTime = $('.js-youtube-current-time');
@@ -77,6 +77,12 @@ define([
                     }, 1000);
                 } else {
                     clearTimeout(playTimer);
+                }
+
+                if (posterImage) {
+                    if (event.data === -1 || event.data === window.YT.PlayerState.PLAYING) {
+                        posterImage.style.backgroundImage = null;
+                    }
                 }
             },
             onPlayerReady: function (event) {
