@@ -278,8 +278,8 @@ case class ContentCard(
   useShortByline: Boolean,
   group: String,
   branding: Option[Branding],
-  capiContent: Option[ContentType] = None,
-  properties: Option[PressedProperties] = None
+  capiContent: Option[ContentType] ,
+  properties: Option[PressedProperties]
 ) extends FaciaCard {
 
   def paidImage: Option[ImageMedia] = {
