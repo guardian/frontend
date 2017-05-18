@@ -1,54 +1,61 @@
 // @flow
 import config from 'lib/config';
-import mediator from 'lib/mediator';
 import fetchJson from 'lib/fetch-json';
 import fastdom from 'lib/fastdom-promise';
-import HostedCarousel from 'commercial/modules/hosted/onward-journey-carousel';
+import { initHostedCarousel } from './onward-journey-carousel';
 
-const loadOnwardComponent = (
+const getPlaceholdersFromDom = (dom = document): Array<any> =>
+    [].slice.call(dom.getElementsByClassName('js-onward-placeholder'));
+
+const generateUrlFromConfig = (
+    c: {
+        page: {
+            ajaxUrl: string,
+            pageId: string,
+            contentType: string,
+        },
+    } = config
+): string => `${c.page.ajaxUrl}/${c.page.pageId}/${c.page.contentType.toLowerCase()}/onward.json`;
+
+const insertHTMLfromPlaceholders = (
+    json: { html: string },
+    placeholders: Array<any>
+): void => {
+    placeholders[0].insertAdjacentHTML('beforeend', json.html);
+};
+
+export const loadOnwardComponent = (
     start: () => void,
-    stop: () => void
+    stop: () => void,
+    getPlaceholders: () => Array<any> = getPlaceholdersFromDom,
+    getUrl: () => string = generateUrlFromConfig,
+    getJson: (url: string, options: RequestOptions) => Promise<any> = fetchJson,
+    insertHtmlFn: (
+        json: { html: string },
+        placeholders: Array<any>
+    ) => void = insertHTMLfromPlaceholders,
+    initHostedComponent: () => Promise<any> = initHostedCarousel
 ): Promise<any> => {
     start();
 
-    const placeholders = document.getElementsByClassName(
-        'js-onward-placeholder'
-    );
+    const placeholders = getPlaceholders();
+    const url = getUrl();
 
-    if (placeholders.length) {
-        fetchJson(
-            `${config.page.ajaxUrl}/${config.page.pageId}/${config.page.contentType.toLowerCase()}/` +
-                `onward.json`,
-            {
-                mode: 'cors',
-            }
-        )
+    if (placeholders && placeholders.length) {
+        getJson(url, { mode: 'cors' })
             .then(json =>
                 fastdom.write(() => {
-                    let i;
-                    for (i = 0; i < placeholders.length; i += 1) {
-                        placeholders[i].insertAdjacentHTML(
-                            'beforeend',
-                            json.html
-                        );
-                    }
+                    insertHtmlFn(json, placeholders);
                 })
             )
             .then(() => {
-                HostedCarousel.init();
-                mediator.emit('hosted:onward:done');
+                initHostedComponent();
             })
             .then(stop);
     } else {
         stop();
     }
-
     return Promise.resolve();
 };
 
-export default {
-    init: loadOnwardComponent,
-    whenRendered: new Promise(resolve => {
-        mediator.on('hosted:onward:done', resolve);
-    }),
-};
+export const _ = { insertHTMLfromPlaceholders, generateUrlFromConfig };

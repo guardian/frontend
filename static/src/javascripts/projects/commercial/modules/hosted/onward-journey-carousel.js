@@ -65,14 +65,9 @@ class HostedCarousel {
     }
 }
 
-const init = (): Promise<any> => {
+export const initHostedCarousel = (): Promise<any> => {
     if (qwery('.js-carousel-pages').length) {
         new HostedCarousel().bindButtons();
     }
     return Promise.resolve();
-};
-
-export default {
-    init,
-    HostedCarousel,
 };
