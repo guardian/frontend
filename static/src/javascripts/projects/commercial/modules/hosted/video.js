@@ -10,13 +10,13 @@ import hostedYoutube from 'commercial/modules/hosted/youtube';
 import nextVideoAutoplay from 'commercial/modules/hosted/next-video-autoplay';
 import loadingTmpl from 'raw-loader!common/views/ui/loading.html';
 
-const isDesktop = () => detect.isBreakpoint({ min: 'desktop' });
+const isDesktop = (): boolean => detect.isBreakpoint({ min: 'desktop' });
 
-const initLoadingSpinner = (player: Object) => {
-    player.loadingSpinner.contentEl().innerHTML = loadingTmpl;
+const initLoadingSpinner = (player: Object, loadingTemplate: string): void => {
+    player.loadingSpinner.contentEl().innerHTML = loadingTemplate;
 };
 
-const upgradeVideoPlayerAccessibility = (player: Object) => {
+const upgradeVideoPlayerAccessibility = (player: Object): void => {
     // Set the video tech element to aria-hidden, and label the buttons in the videojs control bar.
     $('.vjs-tech', player.el()).attr('aria-hidden', true);
 
@@ -35,7 +35,7 @@ const upgradeVideoPlayerAccessibility = (player: Object) => {
     );
 };
 
-const onPlayerError = (player: Object) => {
+const onPlayerError = (player: Object): void => {
     const err = player.error();
     if (err && 'message' in err && 'code' in err) {
         reportError(
@@ -49,9 +49,13 @@ const onPlayerError = (player: Object) => {
     }
 };
 
-const onPlayerReady = (player: Object, mediaId) => {
+const onPlayerReady = (
+    player: { volume: () => void, on: () => void, fullscreener: () => void },
+    mediaId: string,
+    loadingTemplate: string
+): void => {
     const vol = player.volume();
-    initLoadingSpinner(player);
+    initLoadingSpinner(player, loadingTemplate);
     upgradeVideoPlayerAccessibility(player);
 
     // unglitching the volume on first load
@@ -71,7 +75,8 @@ const onPlayerReady = (player: Object, mediaId) => {
     player.on('error', onPlayerError);
 };
 
-const setupVideo = (video, videojs) => {
+// #? Should we have some type aliases for HostedPlayer, Videojs?
+const setupVideo = (video: Object, videojs: () => Object) => {
     const mediaId = video.getAttribute('data-media-id');
     const player = videojs(video, videojsOptions());
 
@@ -82,7 +87,7 @@ const setupVideo = (video, videojs) => {
     events.bindGoogleAnalyticsEvents(player, window.location.pathname);
 
     player.ready(() => {
-        onPlayerReady(player, mediaId);
+        onPlayerReady(player, mediaId, loadingTmpl);
     });
 
     nextVideoAutoplay.init().then(() => {
@@ -105,7 +110,10 @@ const setupVideo = (video, videojs) => {
     });
 };
 
-export const initHostedVideo = (start: () => void, stop: () => void) => {
+export const initHostedVideo = (
+    start: () => void,
+    stop: () => void
+): Promise<any> => {
     start();
 
     const $videoEl = $('.vjs-hosted__video, video');
@@ -118,6 +126,7 @@ export const initHostedVideo = (start: () => void, stop: () => void) => {
     }
 
     // Return a promise that resolves after the async work is done.
+    // #? target for `async` `await` goodness
     new Promise(resolve => {
         require.ensure(
             [],
