@@ -35,18 +35,18 @@
     }
 
     .fc-sublink {
-        margin-top: 0;
+        margin: 0;
+        padding: $gs-baseline / 2;
 
         &:after {
             @include mq(tablet) {
                 content: '';
                 position: absolute;
+                top: $gs-baseline / 3;
                 bottom: 0;
-                right: 0;
-                height: 100%;
+                right: -$gs-gutter / 2;
                 display: block;
                 border-right: 1px solid rgba(#ffffff, .5);;
-                margin: 0 -$gs-baseline * .75;
             }
         }
 
