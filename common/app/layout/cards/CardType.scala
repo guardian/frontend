@@ -1,4 +1,4 @@
-package cards
+package layout.cards
 
 sealed trait CardType {
   val cssClassName: String
