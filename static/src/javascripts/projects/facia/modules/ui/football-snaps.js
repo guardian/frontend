@@ -1,15 +1,13 @@
+// @flow
 import bonzo from 'bonzo';
 import detect from 'lib/detect';
-var FootballSnaps = {
-    /**
-     * All the football snaps sitting in a "big" slice (if any) will take the height of their trail trails
-     */
-    resizeIfPresent: function(el) {
-        if (detect.getBreakpoint() !== 'mobile' && el) {
-            var $el = bonzo(el);
-            $el.css('height', $el.parent().css('height'));
-        }
+
+/**
+ * All the football snaps sitting in a "big" slice (if any) will take the height of their trail trails
+ */
+export const resizeForFootballSnaps = (el: bonzo): void => {
+    if (detect.getBreakpoint() !== 'mobile' && el) {
+        const $el = bonzo(el);
+        $el.css('height', $el.parent().css('height'));
     }
 };
-
-export default FootballSnaps;
