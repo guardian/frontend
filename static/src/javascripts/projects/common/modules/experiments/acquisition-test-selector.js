@@ -12,15 +12,12 @@ import acquisitionsEpicLiveBlog
     from 'common/modules/experiments/tests/acquisitions-epic-liveblog';
 import acquisitionsEpicTestimonialsRoundTwo
     from 'common/modules/experiments/tests/acquisitions-epic-testimonials-round-two';
-import acquisitionsEpicSingleCta
-    from 'common/modules/experiments/tests/acquisitions-epic-single-cta';
 
 /**
  * acquisition tests in priority order (highest to lowest)
  */
 const tests = [
     alwaysAsk,
-    acquisitionsEpicSingleCta,
     acquisitionsEpicTestimonialsRoundTwo,
     askFourEarning,
     acquisitionsEpicLiveBlog,
