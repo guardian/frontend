@@ -37,7 +37,7 @@ const toggleSidebar = (): void => {
     const documentElement = document.documentElement;
     const openClass = 'new-header--open';
     const globalOpenClass = 'nav-is-open';
-    const trigger = document.querySelector('.veggi-burger');
+    const trigger = document.querySelector('.veggie-burger');
     const newHeader = document.querySelector('.new-header');
     const flyInToggle = newHeader && newHeader.querySelector('.js-change-link');
     const isOpen = trigger && trigger.getAttribute('aria-expanded') === 'true';
