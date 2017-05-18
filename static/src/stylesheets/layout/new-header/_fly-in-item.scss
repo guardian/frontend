@@ -3,15 +3,21 @@
     width: 100%;
 
     > a,
-    > details > summary {
+    > details > summary,
+    > * > section > *:not(.fly-in-group) {
         color: currentColor;
         cursor: pointer;
         display: block;
+        font-size: 20px;
         outline: none;
         padding-bottom: $gs-baseline / 1.5;
         padding-right: $gs-gutter;
         padding-top: $gs-baseline / 1.5;
         user-select: none;
+
+        @include mq(mobileMedium) {
+            font-size: 22px;
+        }
 
         &:hover,
         &:focus {

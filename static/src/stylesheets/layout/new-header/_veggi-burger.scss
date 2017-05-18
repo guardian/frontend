@@ -2,6 +2,7 @@
     background-color: $news-main-2;
     bottom: -$gs-baseline / 2;
     box-shadow: 0 0 0 1px rgba(0, 0, 0, .08);
+    color: #ffffff;
     cursor: pointer;
     height: $veggie-burger-small;
     min-width: $veggie-burger-small;
@@ -73,7 +74,7 @@
     }
 }
 
-.veggie-burger-icon {
+.veggie-burger__icon {
     top: 50%;
     display: block;
     margin-top: -($gs-baseline / 6) / 2;
@@ -85,11 +86,12 @@
     &,
     &:before,
     &:after {
+        background-color: currentColor;
         content: '';
+        height: $gs-baseline / 6;
+        left: 0;
         position: absolute;
         width: $gs-gutter;
-        height: $gs-baseline / 6;
-        background-color: #ffffff;
     }
 
     &:before {

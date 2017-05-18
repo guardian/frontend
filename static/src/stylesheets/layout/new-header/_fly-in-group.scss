@@ -37,16 +37,6 @@
     color: $guardian-brand-dark;
 }
 
-// unify font-size between primary and secondary level
-.fly-in-group--primary,
-.fly-in-group--secondary {
-    font-size: 20px;
-
-    @include mq(mobileMedium) {
-        font-size: 22px;
-    }
-}
-
 // unify alignment of lists starting on the left side
 .fly-in-group--secondary,
 .fly-in-group--downlight {
