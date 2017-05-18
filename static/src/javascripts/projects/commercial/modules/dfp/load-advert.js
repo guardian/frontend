@@ -1,5 +1,5 @@
 // @flow
-import Advert from 'commercial/modules/dfp/Advert';
+import { Advert } from 'commercial/modules/dfp/Advert';
 
 const loadAdvert = (advert: Advert): void => {
     advert.whenSlotReady
@@ -7,7 +7,7 @@ const loadAdvert = (advert: Advert): void => {
             // The display needs to be called, even in the event of an error.
         })
         .then(() => {
-            Advert.startLoading(advert);
+            advert.startLoading();
             window.googletag.display(advert.id);
         });
 };

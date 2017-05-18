@@ -2,7 +2,7 @@ define([
     'lodash/utilities/template',
     'common/modules/commercial/contributions-utilities',
     'raw-loader!common/views/acquisitions-epic-testimonials.html',
-    'svg-loader!svgs/icon/quote.svg'
+    'svgs/icon/quote.svg'
 ], function (
     template,
     contributionsUtilities,

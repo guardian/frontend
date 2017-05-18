@@ -81,7 +81,7 @@ module.exports = {
             },
             {
                 test: /\.svg$/,
-                exclude: /(node_modules|javascripts-legacy)/,
+                exclude: /(node_modules)/,
                 loader: 'svg-loader',
             },
         ],

@@ -1,8 +1,8 @@
 // @flow
+
+import { Advert } from 'commercial/modules/dfp/Advert';
 import { getUrlVars } from 'lib/url';
 import config from 'lib/config';
-
-type Map<K, V> = { [indexer: K]: V };
 
 export type DfpEnv = {
     renderStartTime: number,
@@ -12,10 +12,10 @@ export type DfpEnv = {
     lazyLoadEnabled: boolean,
     lazyLoadObserve: boolean,
     creativeIDs: Array<number>,
-    advertIds: Map<string, number>,
-    advertsToLoad: Array<Object>,
-    advertsToRefresh: Array<Object>,
-    adverts: Array<Object>,
+    advertIds: { [k: string]: number },
+    advertsToLoad: Array<Advert>,
+    advertsToRefresh: Array<Advert>,
+    adverts: Array<Advert>,
     shouldLazyLoad: () => boolean,
 };
 
