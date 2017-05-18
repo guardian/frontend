@@ -21,8 +21,8 @@ define([
         recordFirstAdRendered();
 
         var advert = getAdvertById.getAdvertById(event.slot.getSlotElementId());
-        Advert.stopLoading(advert, true);
-        Advert.startRendering(advert);
+        advert.stopLoading(true);
+        advert.startRendering();
         advert.isEmpty = event.isEmpty;
 
         if (event.isEmpty) {
@@ -37,7 +37,7 @@ define([
         }
 
         function emitRenderEvents(isRendered) {
-            Advert.stopRendering(advert, isRendered);
+            advert.stopRendering(isRendered);
             mediator.emit('modules:commercial:dfp:rendered', event);
         }
     }
