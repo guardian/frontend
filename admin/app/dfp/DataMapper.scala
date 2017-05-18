@@ -171,7 +171,7 @@ object DataMapper {
           Option(u.getValue) getOrElse ""
         case _: AssetCreativeTemplateVariableValue =>
           exampleAssetUrl
-        case other => "???"
+        case _ => "???"
       }
       variableValue.getUniqueName -> argValue
     }

@@ -142,7 +142,7 @@ import test.ConfiguredTestSuite
       }
 
       "matches should only come from the specified competition" in {
-        fixtures.relevantMatches.foreach { case (fMatch, comp) =>
+        fixtures.relevantMatches.foreach { case (_, comp) =>
           comp.id should equal("500")
         }
       }
@@ -158,7 +158,7 @@ import test.ConfiguredTestSuite
       }
 
       "matches should only come from the specified competition" in {
-        fixtures.relevantMatches.foreach { case (fMatch, comp) =>
+        fixtures.relevantMatches.foreach { case (_, comp) =>
           comp.id should equal("100")
         }
       }
@@ -193,7 +193,7 @@ import test.ConfiguredTestSuite
   }
 
   def checkIsFixture: Function1[(FootballMatch, Competition), Unit] = {
-    case (fMatch: Fixture, _) =>
+    case (_: Fixture, _) =>
     case (fMatch: MatchDay, _) => if ("-" != fMatch.matchStatus) fail(s"$fMatch is not a fixture (status is ${fMatch.matchStatus})")
     case (fMatch, _) => fail(s"$fMatch was not a fixture")
   }

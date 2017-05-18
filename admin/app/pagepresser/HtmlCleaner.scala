@@ -94,7 +94,7 @@ abstract class HtmlCleaner extends Logging with ExecutionContexts {
       document
     }
     catch {
-      case e: Exception =>
+      case _: Exception =>
         log.warn("Unable to convert links for document from http to protocol relative url.")
         document
     }
@@ -154,7 +154,6 @@ abstract class HtmlCleaner extends Logging with ExecutionContexts {
     document.getAllElements.filter( elementContainsCombo ) .foreach { el =>
 
       val combinerRegex = """//combo.guim.co.uk/(\w+)/(.+)(\.\w+)$""".r("cacheBustId", "paths", "extension")
-      val microAppRegex = """^m-(\d+)~(.+)""".r
       val href = if (el.hasAttr("href")) {
         el.attr("href")
       } else {

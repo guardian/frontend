@@ -22,7 +22,7 @@ trait FrontJsonFapi extends Logging with ExecutionContexts {
     val json = Json.parse(j)
     json.validate[PressedPage] match {
       case JsSuccess(page, _) => Option(page)
-      case JsError(errors) =>
+      case JsError(_) =>
         log.warn("Could not parse JSON in FrontJson")
         None
     }

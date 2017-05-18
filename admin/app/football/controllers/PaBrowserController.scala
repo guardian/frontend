@@ -34,7 +34,7 @@ class PaBrowserController(val wsClient: WSClient)(implicit val context: Applicat
     Cached(60)(RevalidatableResult.Ok(views.html.football.browse()))
   }
 
-  def browser(query: String) = Action.async { implicit request =>
+  def browser(query: String): Action[AnyContent] = Action.async { implicit request =>
     val replacedQuery = URLDecoder.decode(query, "UTF-8").replace("{apiKey}", client.apiKey)
     client.get("/" + replacedQuery).map{ content =>
       val response = Ok(content)

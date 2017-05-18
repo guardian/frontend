@@ -1,7 +1,7 @@
 package controllers.admin
 
 import contentapi.{CapiHttpClient, PreviewContentApi}
-import play.api.mvc.{Action, Controller}
+import play.api.mvc.{Action, AnyContent, Controller}
 import common.{ExecutionContexts, Logging}
 import model.{ApplicationContext, NoCache}
 import play.api.libs.ws.WSClient
@@ -27,7 +27,7 @@ class TroubleshooterController(wsClient: WSClient)(implicit context: Application
     NoCache(Ok(views.html.troubleshooter(LoadBalancer.all.filter(_.testPath.isDefined))))
   }
 
-  def test(id: String, testPath: String) = Action.async{ implicit request =>
+  def test(id: String, testPath: String): Action[AnyContent] = Action.async{ implicit request =>
 
     val pathToTest = if(testPath.startsWith("/")) testPath else s"/$testPath" // appending leading '/' if user forgot to include it
 

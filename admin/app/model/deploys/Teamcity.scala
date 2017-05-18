@@ -26,7 +26,7 @@ case class TeamCityBuild(number: String,
                          commits: List[Commit]) {
 
   val isSuccess = status == "SUCCESS"
-  def committers() = commits.map(_.username).distinct
+  def committers(): List[String] = commits.map(_.username).distinct
   def link = s"${Configuration.teamcity.host}/viewLog.html?buildId=$id"
 }
 

@@ -14,7 +14,7 @@ sealed trait OptaEvent {
 case object WorldCup2015 extends OptaEvent {
   override val competition = "210"
   override val season = "2016"
-  override def hasGroupTable(stage: Stage.Value) = stage == Stage.Group
+  override def hasGroupTable(stage: Stage.Value): Boolean = stage == Stage.Group
 }
 
 case class RugbyOptaFeedException(message: String) extends RuntimeException(message)

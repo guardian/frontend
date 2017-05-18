@@ -14,7 +14,7 @@ import scala.concurrent.Future
 
 class TablesController(val wsClient: WSClient)(implicit val context: ApplicationContext) extends Controller with ExecutionContexts with PaFootballClient with Logging {
 
-  def tablesIndex = Action.async { implicit request =>
+  def tablesIndex: Action[AnyContent] = Action.async { implicit request =>
     for {
       allCompetitions <- client.competitions
     } yield {
@@ -25,12 +25,12 @@ class TablesController(val wsClient: WSClient)(implicit val context: Application
 
   def redirectToTable = Action { implicit request =>
     val submission = request.body.asFormUrlEncoded.get
-    val competitionId = submission.get("competitionId").get.head
-    val url = submission.get("focus").get.head match {
+    val competitionId = submission("competitionId").head
+    val url = submission("focus").head match {
       case "top" => s"/admin/football/tables/league/$competitionId/top"
       case "bottom" => s"/admin/football/tables/league/$competitionId/bottom"
       case "team" =>
-        val teamId = submission.get("teamId").get.head
+        val teamId = submission("teamId").head
         submission.get("team2Id") match {
           case Some(Seq(team2Id)) if !team2Id.startsWith("Choose") => s"/admin/football/tables/league/$competitionId/$teamId/$team2Id"
           case _ => s"/admin/football/tables/league/$competitionId/$teamId"
@@ -43,7 +43,7 @@ class TablesController(val wsClient: WSClient)(implicit val context: Application
     NoCache(SeeOther(url))
   }
 
-  def leagueTableFragment(competitionId: String, focus: String) = Action.async { implicit request =>
+  def leagueTableFragment(competitionId: String, focus: String): Action[AnyContent] = Action.async { implicit request =>
     client.competitions.map(PA.filterCompetitions(_).find(_.competitionId == competitionId)).flatMap { seasonOpt =>
       seasonOpt.fold(Future.successful(Cors(NoCache(InternalServerError(views.html.football.error("Please provide a valid league")))))){ season =>
         client.leagueTable(season.competitionId, LocalDate.now()).map { tableEntries =>
@@ -60,7 +60,7 @@ class TablesController(val wsClient: WSClient)(implicit val context: Application
     }
   }
 
-  def leagueTable2Teams(competitionId: String, team1Id: String, team2Id: String) = Action.async { implicit request =>
+  def leagueTable2Teams(competitionId: String, team1Id: String, team2Id: String): Action[AnyContent] = Action.async { implicit request =>
     client.competitions.map(PA.filterCompetitions(_).find(_.competitionId == competitionId)).flatMap { seasonOpt =>
       seasonOpt.fold(Future.successful(NoCache(InternalServerError(views.html.football.error("Please provide a valid league"))))){ season =>
         client.leagueTable(season.competitionId, LocalDate.now()).map { tableEntries =>
@@ -78,7 +78,7 @@ class TablesController(val wsClient: WSClient)(implicit val context: Application
     }
   }
 
-  def leagueTable(competitionId: String) = Action.async { implicit request =>
+  def leagueTable(competitionId: String): Action[AnyContent] = Action.async { implicit request =>
     client.competitions.map(PA.filterCompetitions(_).find(_.competitionId == competitionId)).flatMap { seasonOpt =>
       seasonOpt.fold(Future.successful(Cors(NoCache(InternalServerError(views.html.football.error("Please provide a valid league")))))){ season =>
         client.leagueTable(season.competitionId, LocalDate.now()).map { tableEntries =>

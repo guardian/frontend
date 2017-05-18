@@ -10,8 +10,6 @@ class CricketStatsJob(paFeed: PaFeed) extends ExecutionContexts with Logging {
 
   private val cricketStatsAgents = CricketTeams.teams.map(Team => (Team, AkkaAgent[Map[String, Match]](Map.empty)))
 
-  private val dateFormatUTC = DateTimeFormat.forPattern("yyyy/MMM/dd").withZone(DateTimeZone.UTC)
-
   def getMatch(team: CricketTeam, date: String): Option[Match] = cricketStatsAgents.find(_._1 == team)
     .flatMap{ case (_, agent) => agent().get(date)}
 

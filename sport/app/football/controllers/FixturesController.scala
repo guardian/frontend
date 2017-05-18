@@ -14,18 +14,18 @@ class FixturesController(val competitionsService: CompetitionsService)(implicit 
   private def fixtures(date: LocalDate) = FixturesList(date, competitionsService.competitions)
   private val page = new FootballPage("football/fixtures", "football", "All fixtures")
 
-  def allFixturesForJson(year: String, month: String, day: String) = allFixturesFor(year, month, day)
+  def allFixturesForJson(year: String, month: String, day: String): Action[AnyContent] = allFixturesFor(year, month, day)
   def allFixturesFor(year: String, month: String, day: String): Action[AnyContent] =
     renderAllFixtures(createDate(year, month, day))
 
-  def allFixturesJson() = allFixtures()
+  def allFixturesJson(): Action[AnyContent] = allFixtures()
   def allFixtures(): Action[AnyContent] =
     renderAllFixtures(LocalDate.now(Edition.defaultEdition.timezone))
 
   def moreFixturesFor(year: String, month: String, day: String): Action[AnyContent] =
     renderMoreFixtures(createDate(year, month, day))
 
-  def moreFixturesForJson(year: String, month: String, day: String) = moreFixturesFor(year, month, day)
+  def moreFixturesForJson(year: String, month: String, day: String): Action[AnyContent] = moreFixturesFor(year, month, day)
 
   private def renderAllFixtures(date: LocalDate) = Action { implicit request =>
     renderMatchList(page, fixtures(date), filters)
@@ -35,11 +35,11 @@ class FixturesController(val competitionsService: CompetitionsService)(implicit 
     renderMoreMatches(page, fixtures(date), filters)
   }
 
-  def tagFixturesJson(tag: String) = tagFixtures(tag)
+  def tagFixturesJson(tag: String): Action[AnyContent] = tagFixtures(tag)
   def tagFixtures(tag: String): Action[AnyContent] =
     renderTagFixtures(LocalDate.now(Edition.defaultEdition.timezone), tag)
 
-  def tagFixturesForJson(year: String, month: String, day: String, tag: String) = tagFixturesFor(year, month, day, tag)
+  def tagFixturesForJson(year: String, month: String, day: String, tag: String): Action[AnyContent] = tagFixturesFor(year, month, day, tag)
   def tagFixturesFor(year: String, month: String, day: String, tag: String): Action[AnyContent] =
     renderTagFixtures(createDate(year, month, day), tag)
 
@@ -65,7 +65,7 @@ class FixturesController(val competitionsService: CompetitionsService)(implicit 
     renderMatchList(page, fixtures, filters)
   }
 
-  def teamFixturesComponentJson(teamId: String) = teamFixturesComponent(teamId)
+  def teamFixturesComponentJson(teamId: String): Action[AnyContent] = teamFixturesComponent(teamId)
   def teamFixturesComponent(teamId: String) = Action { implicit request =>
     competitionsService.findTeam(teamId).map { team =>
       val now = LocalDate.now(Edition.defaultEdition.timezone)

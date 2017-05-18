@@ -30,7 +30,7 @@ object CreativeTemplate extends Logging with implicits.Collections {
     }
 
     val relabelledDuplicates = duplicate.flatMap {
-      case (label, labelParams) =>
+      case (_, labelParams) =>
         val tail = labelParams.tail.sortBy(_._2.toLong).zipWithIndex.map {
           case ((lbl, value), index) => s"$lbl.${index + 1}" -> value
         }

@@ -9,13 +9,13 @@ import common.{Edition, JsonComponent}
 
 class MatchDayController(val competitionsService: CompetitionsService)(implicit context: ApplicationContext) extends MatchListController with CompetitionLiveFilters {
 
-  def liveMatchesJson() = liveMatches()
+  def liveMatchesJson(): Action[AnyContent] = liveMatches()
   def liveMatches(): Action[AnyContent] =
     renderLiveMatches(LocalDate.now(Edition.defaultEdition.timezone))
 
-  def matchesFor(year: String, month: String, day: String) =
+  def matchesFor(year: String, month: String, day: String): Action[AnyContent] =
     renderLiveMatches(createDate(year, month, day))
-  def matchesForJson(year: String, month: String, day: String) =
+  def matchesForJson(year: String, month: String, day: String): Action[AnyContent] =
     matchesFor(year, month, day)
 
   private def renderLiveMatches(date: LocalDate) = Action { implicit request =>
@@ -25,13 +25,13 @@ class MatchDayController(val competitionsService: CompetitionsService)(implicit 
     renderMatchList(page, matches, filters)
   }
 
-  def competitionMatchesJson(competitionTag: String) = competitionMatches(competitionTag)
+  def competitionMatchesJson(competitionTag: String): Action[AnyContent] = competitionMatches(competitionTag)
   def competitionMatches(competitionTag: String): Action[AnyContent] =
     renderCompetitionMatches(competitionTag, LocalDate.now(Edition.defaultEdition.timezone))
 
-  def competitionMatchesFor(competitionTag: String, year: String, month: String, day: String) =
+  def competitionMatchesFor(competitionTag: String, year: String, month: String, day: String): Action[AnyContent] =
     renderCompetitionMatches(competitionTag, createDate(year, month, day))
-  def competitionMatchesForJson(competitionTag: String, year: String, month: String, day: String) =
+  def competitionMatchesForJson(competitionTag: String, year: String, month: String, day: String): Action[AnyContent] =
       competitionMatchesFor(competitionTag, year, month, day)
 
   private def renderCompetitionMatches(competitionTag: String, date: LocalDate): Action[AnyContent] = Action { implicit request =>

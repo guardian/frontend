@@ -64,7 +64,7 @@ trait Chart {
   def name: String
   def labels: Seq[String]
   def dataset: Seq[ChartRow]
-  def hasData = dataset.nonEmpty
+  def hasData: Boolean = dataset.nonEmpty
   def format: ChartFormat
   def dualY: Boolean = false
 
@@ -148,7 +148,7 @@ class ABDataChart(name: String, ablabels: Seq[String], format: ChartFormat, char
     // Do not consider any metrics that have less than three data points.
     (ablabels.tail, charts.toList).zipped.map( (column, chart) =>
       (column, ChartColumn(chart.getDatapoints))
-    ).filter{ case (label, column)  => column.values.length > 3 }
+    ).filter{ case (_, column)  => column.values.length > 3 }
   }
 
   override def dataset: Seq[ChartRow] = {
@@ -193,5 +193,5 @@ case class FormattedChart(
   lazy val labels: Seq[String] = columns.map(_.label)
   lazy val lastValue: Option[String] = rows.lastOption.flatMap {_.c.lastOption.map(_.v.take(6)) }
 
-  def asJson() = Json.toJson(FormattedChart.DataTable(columns, rows))
+  def asJson(): JsValue = Json.toJson(FormattedChart.DataTable(columns, rows))
 }

@@ -13,7 +13,7 @@ trait Lineups extends ExecutionContexts with Logging {
   def footballClient: FootballClient
   def competitions: Competitions
   def teamNameBuilder = new TeamNameBuilder(competitions)
-  def getLineup(theMatch: FootballMatch) = footballClient.lineUp(theMatch.id).map{ m =>
+  def getLineup(theMatch: FootballMatch): Future[LineUp] = footballClient.lineUp(theMatch.id).map{ m =>
     val homeTeam = m.homeTeam.copy(name = teamNameBuilder.withTeam(m.homeTeam))
     val awayTeam = m.awayTeam.copy(name = teamNameBuilder.withTeam(m.awayTeam))
     LineUp(homeTeam, awayTeam, m.homeTeamPossession)
@@ -47,7 +47,7 @@ trait LeagueTables extends ExecutionContexts with Logging {
   def footballClient: FootballClient
   def teamNameBuilder: TeamNameBuilder
 
-  def getLeagueTable(competition: Competition) = {
+  def getLeagueTable(competition: Competition): Future[List[LeagueTableEntry]] = {
     log.info(s"refreshing table for ${competition.id}")
     footballClient.leagueTable(competition.id, new LocalDate).map {
       _.map { t =>
@@ -64,7 +64,7 @@ trait Fixtures extends ExecutionContexts with Logging {
   def footballClient: FootballClient
   def teamNameBuilder: TeamNameBuilder
 
-  def getFixtures(competition: Competition) = {
+  def getFixtures(competition: Competition): Future[List[Fixture]] = {
     log.info(s"refreshing fixtures for ${competition.id}")
     footballClient.fixtures(competition.id).map {
       _.map { f =>
@@ -82,7 +82,7 @@ trait Results extends ExecutionContexts with Logging with implicits.Collections 
   def footballClient: FootballClient
   def teamNameBuilder: TeamNameBuilder
 
-  def getResults(competition: Competition) = {
+  def getResults(competition: Competition): Future[List[Result]] = {
     log.info(s"refreshing results for ${competition.id} with startDate: ${competition.startDate}")
     //it is possible that we do not know the startdate of the competition yet (concurrency)
     //in that case just get the last 30 days results, the start date will catch up soon enough
@@ -101,24 +101,24 @@ class CompetitionAgent(val footballClient: FootballClient, val teamNameBuilder: 
 
   private lazy val agent = AkkaAgent(_competition)
 
-  def competition = agent()
+  def competition: Competition = agent()
 
-  def update(competition: Competition) = agent.send(competition)
+  def update(competition: Competition): Unit = agent.send(competition)
 
-  def refreshFixtures() = getFixtures(competition) foreach addMatches
+  def refreshFixtures(): Unit = getFixtures(competition) foreach addMatches
 
-  def refreshResults() = getResults(competition) foreach addMatches
+  def refreshResults(): Unit = getResults(competition) foreach addMatches
 
-  def refreshLeagueTable() = getLeagueTable(competition) foreach { entries =>
+  def refreshLeagueTable(): Unit = getLeagueTable(competition) foreach { entries =>
     agent.send{ _.copy(leagueTable = entries) }
   }
 
   object MatchStatusOrdering extends Ordering[FootballMatch] {
     private def statusValue(m: FootballMatch) = if (m.isResult) 1 else if (m.isLive) 2 else 3
-    def compare(a: FootballMatch, b: FootballMatch) = statusValue(a) - statusValue(b)
+    def compare(a: FootballMatch, b: FootballMatch): Int = statusValue(a) - statusValue(b)
   }
 
-  def addMatches(newMatches: Seq[FootballMatch]) = agent.alter{ comp =>
+  def addMatches(newMatches: Seq[FootballMatch]): Future[Competition] = agent.alter{ comp =>
 
     //log any changes to the status of the match
     newMatches.foreach{ newMatch =>

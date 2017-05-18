@@ -65,7 +65,7 @@ final case class CollectionConfig(
   hideShowMore: Boolean,
   displayHints: Option[DisplayHints]
 ) {
-  def showBranding = metadata exists (_ contains Branded)
+  def showBranding: Boolean = metadata exists (_ contains Branded)
 }
 
 object CardStyle {

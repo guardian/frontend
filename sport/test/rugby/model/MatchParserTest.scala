@@ -139,8 +139,7 @@ import scala.io.Source
       england.scrums_lost should be(2)
       england.scrums_total should be(7)
 
-      val france = matchStat.teams.last
-    }
+     }
 
     "should parse group tables correctly" in {
       val tablesData = Source.fromInputStream(getClass.getClassLoader.getResourceAsStream("rugby/feed/group-tables.xml")).mkString

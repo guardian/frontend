@@ -83,12 +83,12 @@ object Reference {
     )
   }
 
-  def split(s: String) = {
+  def split(s: String): (String, String) = {
     val parts = s.split("/")
     parts(0) -> parts.drop(1).mkString("/")
   }
 
-  def toJavaScript(s: String) = {
+  def toJavaScript(s: String): JsObject = {
     val (k, v) = split(s)
 
     /** Yeah ... so ... in the JavaScript references are represented like this:

@@ -19,7 +19,7 @@ object LiveBlogCurrentPage {
   }
 
   // filters newer blocks out of the list
-  def updates(blocks: Blocks, sinceBlockId: SinceBlockId) = {
+  def updates(blocks: Blocks, sinceBlockId: SinceBlockId): Some[LiveBlogCurrentPage] = {
     val bodyBlocks = blocks.requestedBodyBlocks.get(sinceBlockId.around).toSeq.flatMap { bodyBlocks =>
       bodyBlocks.takeWhile(_.id != sinceBlockId.lastUpdate)
     }
@@ -48,7 +48,7 @@ object LiveBlogCurrentPage {
   }
 
   // turns a full capi blocks list into a page model of the page with a specific block in it
-  def findPageWithBlock(pageSize: Int, blocks: Seq[BodyBlock], isRequestedBlock: String) = {
+  def findPageWithBlock(pageSize: Int, blocks: Seq[BodyBlock], isRequestedBlock: String): Option[LiveBlogCurrentPage] = {
     val (mainPageBlocks, restPagesBlocks) = getPages(pageSize, blocks)
     val newestPage = FirstPage(mainPageBlocks)
     val pages = newestPage :: restPagesBlocks
@@ -67,7 +67,7 @@ object LiveBlogCurrentPage {
 
 
     endedPages.sliding(3).toList.zipWithIndex.map {
-      case (List(newerPage, Some(currentPage), olderPage), index) =>
+      case (List(newerPage, Some(currentPage), olderPage), _) =>
         val isNewestPage = newestPage.equals(currentPage)
         LiveBlogCurrentPage(
           currentPage = currentPage,

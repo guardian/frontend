@@ -12,7 +12,7 @@ trait Logging {
 
   lazy implicit val log = Logger(getClass)
 
-  protected def logException(e: Exception) = {
+  protected def logException(e: Exception): Unit = {
     log.error(ExceptionUtils.getStackTrace(e))
   }
 
@@ -42,10 +42,10 @@ object LoggingField {
   case class LogFieldDouble(name: String, value: Double) extends LogField
   case class LogFieldLong(name: String, value: Long) extends LogField
 
-  implicit def tupleToLogFieldInt(t: (String, Int)) = LogFieldInt(t._1, t._2)
-  implicit def tupleToLogFieldString(t: (String, String)) = LogFieldString(t._1, t._2)
-  implicit def tupleToLogFieldDouble(t: (String, Double)) = LogFieldDouble(t._1, t._2)
-  implicit def tupleToLogFieldLong(t: (String, Long)) = LogFieldLong(t._1, t._2)
+  implicit def tupleToLogFieldInt(t: (String, Int)): LogFieldInt = LogFieldInt(t._1, t._2)
+  implicit def tupleToLogFieldString(t: (String, String)): LogFieldString = LogFieldString(t._1, t._2)
+  implicit def tupleToLogFieldDouble(t: (String, Double)): LogFieldDouble = LogFieldDouble(t._1, t._2)
+  implicit def tupleToLogFieldLong(t: (String, Long)): LogFieldLong = LogFieldLong(t._1, t._2)
 
   def customFieldMarkers(fields: List[LogField]) : LogstashMarker = {
     val fieldsMap = fields.map {

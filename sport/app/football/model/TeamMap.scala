@@ -127,9 +127,9 @@ object TeamUrl {
 }
 
 class TeamNameBuilder(competitions: Competitions) {
-  def withTeam(team: FootballTeam) = TeamMap.shortNames.getOrElse(team.id, team.name)
+  def withTeam(team: FootballTeam): String = TeamMap.shortNames.getOrElse(team.id, team.name)
 
-  def withId(id: String) = competitions.findTeam(id).map(withTeam)
+  def withId(id: String): Option[String] = competitions.findTeam(id).map(withTeam)
 }
 
 // if we have tags for the matches we can make a sensible url for it

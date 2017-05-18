@@ -24,8 +24,6 @@ class RiffRaffService(httpClient: HttpLike) extends ExecutionContexts {
   def getRiffRaffDeploys(projectName: Option[String], stage: Option[String], pageSize: Option[Int], status: Option[String] = None): Future[ApiResponse[List[RiffRaffDeploy]]] = {
     val url = s"${Configuration.riffraff.url}/api/history"
 
-    val u = pageSize.map("pageSize" -> _.toString)
-
     httpClient.GET(url,
       queryString = Map("key" -> Configuration.riffraff.apiKey)
         ++ pageSize.map("pageSize" -> _.toString)
@@ -37,7 +35,7 @@ class RiffRaffService(httpClient: HttpLike) extends ExecutionContexts {
         case 200 =>
           (response.json \ "response" \ "results").validate[List[RiffRaffDeploy]] match {
             case JsSuccess(listOfDeploys, _) => Right(listOfDeploys)
-            case JsError(error) => Left(ApiErrors(List(ApiError("Invalid JSON from RiffRaff API", 500))))
+            case JsError(_) => Left(ApiErrors(List(ApiError("Invalid JSON from RiffRaff API", 500))))
           }
         case statusCode => Left(ApiErrors(List(ApiError(s"Invalid status code from RiffRaff: $statusCode", 500 ))))
       }

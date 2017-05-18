@@ -9,6 +9,6 @@ import org.joda.time.DateTime
 object PersonalInvestmentsCampaign {
     lazy val endDate = new DateTime(2017, 4, 26, 0, 0)
 
-    def isRunning(keywordIds: Seq[String]) = keywordIds.exists(t => t.endsWith("/personal-investments")) &&
+    def isRunning(keywordIds: Seq[String]): Boolean = keywordIds.exists(t => t.endsWith("/personal-investments")) &&
         DateTime.now().isBefore(endDate)
 }

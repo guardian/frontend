@@ -61,7 +61,7 @@ import test.ConfiguredTestSuite
       }
 
       "matches should only come from the specified competition" in {
-        results.relevantMatches.foreach { case (fMatch, comp) =>
+        results.relevantMatches.foreach { case (_, comp) =>
           comp.id should equal("500")
         }
       }
@@ -77,7 +77,7 @@ import test.ConfiguredTestSuite
       }
 
       "matches should only come from the specified competition" in {
-        results.relevantMatches.foreach { case (fMatch, comp) =>
+        results.relevantMatches.foreach { case (_, comp) =>
           comp.id should equal("100")
         }
       }
@@ -110,7 +110,7 @@ import test.ConfiguredTestSuite
   }
 
   def checkIsResult: Function1[(FootballMatch, Competition), Unit] = {
-    case (fMatch: Result, _) =>
+    case (_: Result, _) =>
     case (fMatch: MatchDay, _) => if (!fMatch.result) fail(s"$fMatch is not a result (status is ${fMatch.matchStatus})")
     case (fMatch, _) => fail(s"$fMatch was not a result")
   }

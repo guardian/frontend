@@ -1,7 +1,7 @@
 package views.support
 
 object Treat {
-    def fromUrl(url: String) = {
+    def fromUrl(url: String): Treat = {
         if (url.contains("/crosswords")) {
             CrosswordTreat
         } else if (url.contains("/politics/general-election-2015")) {

@@ -11,7 +11,7 @@ case class NavLinkLists(mostPopular: Seq[NavLink], leastPopular: Seq[NavLink] = 
 
 object NewNavigation {
 
-  var PrimaryLinks = List(headlines, opinion, sport, culture, lifestyle)
+  val PrimaryLinks = List(headlines, opinion, sport, culture, lifestyle)
   val topLevelSections = List(News, Opinion, Sport, Arts, Life)
 
   def getMembershipLinks(edition: Edition): NavLinkLists = {
@@ -53,7 +53,7 @@ object NewNavigation {
     }
   }
 
-  def getTopLevelSection(name: String) = name match {
+  def getTopLevelSection(name: String): EditionalisedNavigationSection = name match {
     case "news" => News
     case "opinion" => Opinion
     case "sport" => Sport
@@ -281,13 +281,13 @@ object NewNavigation {
 
   object SectionLinks {
 
-    var sectionLinks = List(
+    val sectionLinks = List(
 
       SectionsLink("uk", headlines, MostPopular),
       SectionsLink("us", headlines, MostPopular),
       SectionsLink("au", headlines, MostPopular),
       SectionsLink("international", headlines, MostPopular),
-      SectionsLink("uk-news", ukNews,News),
+      SectionsLink("uk-news", ukNews, News),
       SectionsLink("world", world, News),
       SectionsLink("world/europe-news", europe, News),
       SectionsLink("politics", politics, News),
@@ -578,7 +578,7 @@ object NewNavigation {
       sectionMap.getOrElse(sectionId, sectionId)
     }
 
-    def simplifyFootball(sectionId: String) = {
+    def simplifyFootball(sectionId: String): String = {
       val sectionMap = Map(
         "football/live" -> "football",
         "football/tables" -> "football",

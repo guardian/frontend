@@ -38,7 +38,7 @@ class RebuildIndexJob(contentApiClient: ContentApiClient) extends ExecutionConte
     */
   private def alphaTitle(key: String) = key.toUpperCase.replace("-", "–")
 
-  def rebuildKeywordIndexes() = {
+  def rebuildKeywordIndexes(): Future[Unit] = {
     val keywords = contentApiTagsEnumerator.enumerateTagTypeFiltered("keyword")
     val series = contentApiTagsEnumerator.enumerateTagTypeFiltered("series")
 
@@ -51,7 +51,7 @@ class RebuildIndexJob(contentApiClient: ContentApiClient) extends ExecutionConte
     }
   }
 
-  def rebuildNewspaperBooks() = {
+  def rebuildNewspaperBooks(): Future[Unit] = {
     contentApiTagsEnumerator.enumerateTagTypeFiltered("newspaper-book").run(byPublication) map { booksMap =>
       blocking {
         saveToS3("newspaper_books", toPages(booksMap)(alphaTitle, asciiLowerWebTitle))
@@ -59,7 +59,7 @@ class RebuildIndexJob(contentApiClient: ContentApiClient) extends ExecutionConte
     }
   }
 
-  def rebuildNewspaperBookSections() = {
+  def rebuildNewspaperBookSections(): Future[Unit] = {
     contentApiTagsEnumerator.enumerateTagTypeFiltered("newspaper-book-section").run(byPublication) map { bookSectionMap =>
       blocking {
         saveToS3("newspaper_book_sections", toPages(bookSectionMap)(alphaTitle, asciiLowerWebTitle))
@@ -67,7 +67,7 @@ class RebuildIndexJob(contentApiClient: ContentApiClient) extends ExecutionConte
     }
   }
 
-  def rebuildContributorIndex() = {
+  def rebuildContributorIndex(): Future[Unit] = {
     contentApiTagsEnumerator.enumerateTagTypeFiltered("contributor").run(byContributorNameOrder) map { alphaMap =>
       blocking {
         saveToS3("contributors", toPages(alphaMap)(alphaTitle, nameOrder))
@@ -76,7 +76,7 @@ class RebuildIndexJob(contentApiClient: ContentApiClient) extends ExecutionConte
   }
 
   implicit class RichFuture[A](future: Future[A]) {
-    def withErrorLogging = {
+    def withErrorLogging: Future[A] = {
       future onFailure {
         case throwable: Throwable => log.error("Error rebuilding index", throwable)
       }

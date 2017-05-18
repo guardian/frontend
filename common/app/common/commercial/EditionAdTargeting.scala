@@ -35,10 +35,10 @@ object EditionAdTargeting {
           JsSuccess(
             jsonMap.toMap flatMap {
               case (k, JsString(v)) =>
-                Some(adCallParamKeyByName(k) -> new SingleValue { override def raw = v })
+                Some(adCallParamKeyByName(k) -> new SingleValue { override def raw: String = v })
               case (k, JsArray(jsonSeq)) =>
                 Some(adCallParamKeyByName(k) -> new MultipleValues {
-                  override def raw =
+                  override def raw: Set[String] =
                     jsonSeq.flatMap {
                       case JsString(v) => Some(v)
                       case _ => None

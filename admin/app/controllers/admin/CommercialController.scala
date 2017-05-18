@@ -7,7 +7,7 @@ import dfp.{AdvertiserAgent, CreativeTemplateAgent, CustomFieldAgent, DfpApi, Df
 import model._
 import ophan.SurgingContentAgent
 import play.api.libs.json.{Format, JsString, JsValue, Json}
-import play.api.mvc.{Action, Controller, RequestHeader}
+import play.api.mvc.{Action, AnyContent, Controller, RequestHeader}
 import tools._
 
 import scala.concurrent.duration._
@@ -97,7 +97,7 @@ class CommercialController(implicit context: ApplicationContext) extends Control
     NoCache(Ok(views.html.commercial.adTests(report.timestamp, sortedGroups)))
   }
 
-  def renderCommercialRadiator() = Action.async { implicit request =>
+  def renderCommercialRadiator(): Action[AnyContent] = Action.async { implicit request =>
     for (adResponseConfidenceGraph <- CloudWatch.eventualAdResponseConfidenceGraph) yield {
       Ok(views.html.commercial.commercialRadiator(adResponseConfidenceGraph))
     }
@@ -168,7 +168,7 @@ class CommercialController(implicit context: ApplicationContext) extends Control
       case _ => "unknown"
     }
 
-    val sonobiItems = groupedItems.get("sonobi").getOrElse(Seq.empty)
+    val sonobiItems = groupedItems.getOrElse("sonobi", Seq.empty)
     val invalidItemsMap = GuLineItem.asMap(invalidLineItems)
 
     val unidentifiedLineItems = invalidItemsMap.keySet -- pageskins.map(_.lineItemId) -- topAboveNav.map(_.id) -- highMerch.map(_.id) -- sonobiItems.map(_.id)

@@ -7,6 +7,7 @@ import common.Edition
 import conf.Configuration
 import contentapi.Paths
 import model.facia.PressedCollection
+import model.pressed.PressedContent
 import play.api.libs.json.{JsBoolean, JsString, JsValue}
 
 import scala.language.postfixOps
@@ -108,7 +109,7 @@ case class PressedPage (
 
   val keywordIds: Seq[String] = frontKeywordIds(id)
 
-  def allItems = collections.flatMap(_.curatedPlusBackfillDeduplicated).distinct
+  def allItems: List[PressedContent] = collections.flatMap(_.curatedPlusBackfillDeduplicated).distinct
 
   def isBranded(edition: Edition): Boolean = branding(edition).isDefined
 

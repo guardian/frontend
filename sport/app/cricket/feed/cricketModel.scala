@@ -57,7 +57,7 @@ case class Innings(
   lazy val firstIn: Option[InningsBatsman] = batsmen.find( _.notOut )
   lazy val secondIn: Option[InningsBatsman] = {
     batsmen.filter( _.notOut ) match {
-      case first :: second :: _ => Some(second)
+      case _ :: second :: _ => Some(second)
       case _ => None
     }
   }

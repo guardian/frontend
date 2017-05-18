@@ -5,10 +5,12 @@ import controllers.Helpers.DeploysTestHttpRecorder
 import model.deploys._
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, Matchers, WordSpec}
 import play.api.libs.json.JsArray
-import play.api.libs.ws.WSClient
+import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import test.{ConfiguredTestSuite, WithMaterializer, WithTestWsClient}
+
+import scala.concurrent.Future
 import scala.concurrent.duration._
 
 @DoNotDiscover class DeploysControllerTest
@@ -23,7 +25,7 @@ import scala.concurrent.duration._
   val existingBuild = "3123"
 
   class TestHttpClient(wsClient: WSClient) extends HttpLike {
-    override def GET(url: String, queryString: Map[String, String] = Map.empty, headers: Map[String, String] = Map.empty) = {
+    override def GET(url: String, queryString: Map[String, String] = Map.empty, headers: Map[String, String] = Map.empty): Future[WSResponse] = {
       import implicits.Strings.string2encodings
       val urlWithParams = url + "?" + queryString.updated("key", "").toList.sortBy(_._1).map(kv=> kv._1 + "=" + kv._2).mkString("&").encodeURIComponent
       DeploysTestHttpRecorder.load(urlWithParams, headers) {
