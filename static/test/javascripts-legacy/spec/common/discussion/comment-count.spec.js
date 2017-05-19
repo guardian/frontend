@@ -21,11 +21,6 @@ define([
                     + '</div>';
 
         beforeEach(function (done) {
-            injector.mock('common/views/svgs', {
-                inlineSvg: function() {
-                    return '';
-                }
-            });
             injector.require([
                 'common/modules/discussion/comment-count',
                 'lib/mediator'
