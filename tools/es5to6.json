@@ -24,7 +24,6 @@
   "Regis Kuckaertz": [],
   "Richard Nguyen": [],
   "Kate Whalen": [
-    "projects/commercial/modules/hosted/youtube.js",
     "projects/commercial/modules/liveblog-adverts.js",
     "projects/commercial/modules/messenger.js",
     "projects/commercial/modules/messenger/background.js",
