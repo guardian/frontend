@@ -2,14 +2,13 @@
 
 /* eslint no-use-before-define: "off" */
 
-export type AdSize = 'fluid' | Array<number>;
 export type AdSizes = { [k: string]: Array<AdSize> };
+export type AdSize = SingleSizeArray | NamedSize;
 
 export type SingleSizeArray = Array<number>;
-export type NamedSize = string;
-export type SingleSize = SingleSizeArray | NamedSize;
-export type MultiSize = Array<SingleSize>;
-export type GeneralSize = SingleSize | MultiSize;
+export type NamedSize = 'fluid';
+export type MultiSize = Array<AdSize>;
+export type GeneralSize = AdSize | MultiSize;
 export type SizeMapping = Array<GeneralSize>;
 
 export type ResponseInformation = {
@@ -68,3 +67,33 @@ export type SlotOnloadEvent = {
     serviceName: string,
     slot: Slot,
 };
+
+export type SlotRenderEndedEvent = {
+    advertiserId?: number,
+    campaignId?: number,
+    creativeId?: number,
+    isEmpty: boolean,
+    lineItemId?: number,
+    serviceName: string,
+    size: AdSize,
+    slot: Slot,
+    sourceAgnosticCreativeId?: number,
+    sourceAgnosticLineItemId?: number,
+};
+
+type MPUUnitId = 228;
+type LeaderboardUnitId = 229;
+type BillboardUnitId = 229;
+
+export type SwitchUnitId = MPUUnitId | LeaderboardUnitId | BillboardUnitId;
+
+export type GuAdSize = {
+    width: number,
+    height: number,
+    switchUnitId: ?SwitchUnitId,
+    toString: (_: void) => string,
+};
+
+export const mpuUnitId: MPUUnitId = 228;
+export const leaderboardUnitId: LeaderboardUnitId = 229;
+export const billboardUnitId: BillboardUnitId = 229;

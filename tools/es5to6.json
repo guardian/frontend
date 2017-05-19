@@ -21,9 +21,7 @@
     "projects/commercial/modules/creatives/scrollable-mpu-v2.js",
     "projects/common/modules/atoms/youtube.js"
   ],
-  "Regis Kuckaertz": [
-    "projects/commercial/modules/dfp/on-slot-render.js"
-  ],
+  "Regis Kuckaertz": [],
   "Richard Nguyen": [],
   "Kate Whalen": [
     "projects/commercial/modules/hosted/youtube.js",
