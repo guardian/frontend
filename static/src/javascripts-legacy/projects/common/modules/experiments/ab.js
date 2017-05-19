@@ -21,6 +21,7 @@ define([
     'common/modules/experiments/tests/sleeve-notes-new-email-variant',
     'common/modules/experiments/tests/sleeve-notes-legacy-email-variant',
     'common/modules/experiments/tests/increase-inline-ads',
+    'common/modules/experiments/tests/explainer-snippet',
     'common/modules/experiments/tests/measure-understanding',
     'ophan/ng',
     'common/modules/experiments/tests/paid-commenting',
@@ -47,6 +48,7 @@ define([
              SleevenotesNewEmailVariant,
              SleevenotesLegacyEmailVariant,
              increaseInlineAdsRedux,
+             ExplainerSnippet,
              measureUnderstanding,
              ophan,
              PaidCommenting,
@@ -66,7 +68,8 @@ define([
         new increaseInlineAdsRedux(),
         measureUnderstanding.MeasureUnderstanding(),
         new PaidCommenting(),
-        new BundleDigitalSubPriceTest1()
+        new BundleDigitalSubPriceTest1(),
+        ExplainerSnippet.ExplainerSnippet()
     ].concat(MembershipEngagementBannerTests));
 
     function cleanParticipations() {
@@ -191,7 +194,7 @@ define([
                 variantId = participations[test.id].variant;
             var variant = abUtils.getVariant(test, variantId);
             if (variant) {
-                variant.test();
+                variant.test(variant.options || {});
             } else if (!segmentUtil.isInTest(test) && test.notInTest) {
                 test.notInTest();
             }
