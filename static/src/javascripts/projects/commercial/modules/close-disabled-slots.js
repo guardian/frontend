@@ -9,7 +9,7 @@ const shouldDisableAdSlot = adSlot =>
 
 const closeDisabledSlots = (force: boolean): Promise<void> => {
     // Get all ad slots
-    let adSlots: qwery = qwery(adSlotSelector);
+    let adSlots: Array<Element> = qwery(adSlotSelector);
 
     if (!force) {
         // remove the ones which should not be there
