@@ -61,7 +61,7 @@ define([
                     var tabs = self.accountProfileForms.querySelector(self.classes.tabs);
 
                     require.ensure([], function (require) {
-                        require('bootstraps/enhanced/membership').init();
+                        require('../javascripts/bootstraps/enhanced/membership').init();
                     }, 'membership');
 
                     $(self.classes.tabs + ' .tabs__tab a').each(function () { // enhance tab urls to work with JS tabs module
