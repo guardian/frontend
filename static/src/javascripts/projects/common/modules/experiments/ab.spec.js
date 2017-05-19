@@ -13,7 +13,7 @@ import { overwriteMvtCookie } from 'common/modules/analytics/mvt-cookie';
 import { TESTS } from 'common/modules/experiments/ab-tests';
 import config from 'lib/config';
 
-import { genAbTest } from '../__fixtures__/ab-test';
+import { genAbTest } from './__fixtures__/ab-test';
 
 jest.mock('lib/storage');
 jest.mock('common/modules/analytics/mvt-cookie');
@@ -121,7 +121,7 @@ describe('A/B tests', () => {
             );
             dummyTest.expiry = '1999-01-01';
             ab.segment([dummyTest]);
-            cleanParticipations();
+            cleanParticipations([dummyTest]);
 
             expect(getParticipations()).toEqual({});
         });
@@ -134,7 +134,7 @@ describe('A/B tests', () => {
                 '{ "value": { "DummyTest": { "variant": "foo" } } }'
             );
             ab.segment([dummyTest]);
-            cleanParticipations();
+            cleanParticipations([dummyTest]);
 
             expect(getParticipations()).toEqual({});
         });

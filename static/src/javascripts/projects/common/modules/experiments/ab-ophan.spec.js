@@ -11,7 +11,7 @@ import { local } from 'lib/storage';
 import { TESTS } from 'common/modules/experiments/ab-tests';
 import config from 'lib/config';
 
-import { genAbTest } from '../__fixtures__/ab-test';
+import { genAbTest } from './__fixtures__/ab-test';
 
 jest.mock('lib/storage');
 jest.mock('lib/report-error');
