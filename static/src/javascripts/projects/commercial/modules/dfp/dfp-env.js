@@ -63,4 +63,4 @@ const dfpEnv: DfpEnv = {
     },
 };
 
-export default dfpEnv;
+export { dfpEnv };
