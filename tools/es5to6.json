@@ -61,8 +61,7 @@
     "bootstraps/enhanced/image-content.js",
     "bootstraps/enhanced/liveblog.js",
     "bootstraps/enhanced/media/main.js",
-    "bootstraps/enhanced/media/video-player.js",
-    "projects/common/modules/check-mediator.js"
+    "bootstraps/enhanced/media/video-player.js"
   ],
   "Nicolas Long": [
     "lib/atob.js",
