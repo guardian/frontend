@@ -60,36 +60,16 @@ define([
                     }
                 };
 
-                if (toggle.classList.contains('is-active')) {
-                    bean.on(document, 'click', maybeDismissSearchPopup);
-                }
+                setTimeout(function() {
+                    if (toggle.classList.contains('is-active')) {
+                        bean.on(document, 'click', maybeDismissSearchPopup);
+                    }
+                })
 
                 searchLoader();
                 // Make sure search is always in the correct state
                 self.focusSearchField();
                 e.preventDefault();
-            });
-
-            bean.on(document, 'keydown', '.gsc-input', function () {
-                fastdom.read(function () {
-                    var $autoCompleteObject = $('.gssb_c'),
-                        searchFromTop       = $autoCompleteObject.css('top'),
-                        windowOffset        = $(window).scrollTop();
-
-                    fastdom.write(function () {
-                        $autoCompleteObject.css({
-                            'top': parseInt(searchFromTop, 10) + windowOffset,
-                            'z-index': '1030'
-                        });
-                    });
-                });
-            });
-
-            bean.on(document, 'click', '.search-results', function (e) {
-                var targetEl = e.target;
-                if (targetEl.nodeName.toLowerCase() === 'a') {
-                    targetEl.target = '_self';
-                }
             });
         }
 
@@ -133,6 +113,28 @@ define([
                         '</div>';
                 });
 
+                bean.on(container, 'keydown', '.gsc-input', function () {
+                    fastdom.read(function () {
+                        var $autoCompleteObject = $('.gssb_c'),
+                            searchFromTop       = $autoCompleteObject.css('top'),
+                            windowOffset        = $(window).scrollTop();
+
+                        fastdom.write(function () {
+                            $autoCompleteObject.css({
+                                'top': parseInt(searchFromTop, 10) + windowOffset,
+                                'z-index': '1030'
+                            });
+                        });
+                    });
+                });
+
+                bean.on(container, 'click', '.search-results', function (e) {
+                    var targetEl = e.target;
+                    if (targetEl.nodeName.toLowerCase() === 'a') {
+                        targetEl.target = '_self';
+                    }
+                });
+
                 s = document.createElement('script');
                 s.async = true;
                 s.src = gcsUrl;
@@ -144,7 +146,6 @@ define([
         };
 
         this.init = function () { };
-
     };
 
     return Search;
