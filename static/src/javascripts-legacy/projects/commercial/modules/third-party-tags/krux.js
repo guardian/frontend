@@ -20,7 +20,7 @@ define([
     }
 
     return {
-        shouldRun: !(config.page.contentType == 'Network Front') && config.switches.krux,
+        shouldRun: config.switches.krux,
         url: kruxUrl,
         getSegments: getSegments
     };

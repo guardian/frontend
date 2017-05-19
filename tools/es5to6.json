@@ -12,7 +12,6 @@
   "Jon Norman": [
     "projects/commercial/modules/dfp/apply-creative-template.js",
     "projects/commercial/modules/dfp/breakpoint-name-to-attribute.js",
-    "projects/commercial/modules/dfp/Advert.js",
     "projects/commercial/modules/dfp/display-ads.js",
     "projects/commercial/modules/creatives/fabric-v1.js",
     "projects/commercial/modules/creatives/fabric-video.js",
@@ -21,13 +20,9 @@
     "projects/commercial/modules/creatives/scrollable-mpu-v2.js",
     "projects/common/modules/atoms/youtube.js"
   ],
-  "Regis Kuckaertz": [
-    "projects/commercial/modules/dfp/on-slot-load.js",
-    "projects/commercial/modules/dfp/on-slot-render.js"
-  ],
+  "Regis Kuckaertz": [],
   "Richard Nguyen": [],
   "Kate Whalen": [
-    "projects/commercial/modules/hosted/video.js",
     "projects/commercial/modules/hosted/youtube.js",
     "projects/commercial/modules/liveblog-adverts.js",
     "projects/commercial/modules/messenger.js",
@@ -94,7 +89,6 @@
     "projects/common/modules/crosswords/anagram-helper/clue-input.js"
   ],
   "GHaberis": [
-    "projects/admin/bootstraps/radiator.js",
     "projects/admin/modules/abtests/abtest-report-item.js",
     "projects/admin/modules/abtests/audience-item.js",
     "projects/admin/modules/abtests/audience.js",
@@ -254,7 +248,6 @@
   "Philip Wills": [
     "projects/facia/modules/ui/container-show-more.js",
     "projects/facia/modules/ui/container-toggle.js",
-    "projects/facia/modules/ui/football-snaps.js",
     "projects/facia/modules/ui/lazy-load-containers.js",
     "projects/common/modules/video/ga-helper.js",
     "projects/facia/modules/ui/live-blog-updates.js",

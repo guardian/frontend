@@ -1,3 +1,5 @@
+require('babel-polyfill');
+
 // Stub global Guardian config
 window.guardian = {
     config: {
