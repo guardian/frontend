@@ -43,8 +43,9 @@ define([
                                  which is the outer autocomplete element, but
                                  google stops the event bubbling earlier
                         */
-                        if (el.classList.contains('js-search-popup') ||
-                            el.classList.contains('gsq_a')) {
+                        if (el && el.classList &&
+                            (el.classList.contains('js-search-popup') ||
+                             el.classList.contains('gsq_a'))) {
                             clickedPop = true;
                         }
 
