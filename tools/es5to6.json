@@ -1,6 +1,5 @@
 {
   "Francis Carr": [
-    "projects/commercial/modules/close-disabled-slots.js",
     "projects/commercial/modules/comment-adverts.js",
     "projects/commercial/modules/commercial-features.js",
     "projects/commercial/modules/creatives/add-tracking-pixel.js",
@@ -61,8 +60,7 @@
     "bootstraps/enhanced/image-content.js",
     "bootstraps/enhanced/liveblog.js",
     "bootstraps/enhanced/media/main.js",
-    "bootstraps/enhanced/media/video-player.js",
-    "projects/common/modules/check-mediator.js"
+    "bootstraps/enhanced/media/video-player.js"
   ],
   "Nicolas Long": [
     "lib/atob.js",
@@ -255,7 +253,6 @@
     "projects/commercial/modules/third-party-tags/imr-worldwide.js"
   ],
   "Santiago Villa Fernandez": [
-    "bootstraps/enhanced/membership.js",
     "projects/common/modules/video/more-in-series-container.js"
   ],
   "Jamie Byers": [

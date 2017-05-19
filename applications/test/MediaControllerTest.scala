@@ -44,7 +44,7 @@ import scala.util.matching.Regex
 
   it should "display an expired message for expired content" in {
     val result = mediaController.render("world/video/2008/dec/11/guantanamo-bay")(TestRequest("/world/video/2008/dec/11/guantanamo-bay"))
-    status(result) should be(200)
+    status(result) should be(410)
     contentAsString(result) should include("Sorry - this page has been removed.")
   }
 
