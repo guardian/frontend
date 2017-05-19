@@ -76,7 +76,7 @@ const onPlayerReady = (
 };
 
 // #? Should we have some type aliases for HostedPlayer, Videojs?
-const setupVideo = (video: Object, videojs: () => Object) => {
+const setupVideo = (video: Object, videojs: () => Object): void => {
     const mediaId = video.getAttribute('data-media-id');
     const player = videojs(video, videojsOptions());
 
@@ -113,7 +113,7 @@ const setupVideo = (video: Object, videojs: () => Object) => {
 export const initHostedVideo = (
     start: () => void,
     stop: () => void
-): Promise<any> => {
+): Promise<void> => {
     start();
 
     const $videoEl = $('.vjs-hosted__video, video');
