@@ -10,7 +10,7 @@ import play.api.mvc.EssentialFilter
 
 class AdminFilters(cryptoConfig: CryptoConfig)(implicit mat: Materializer, context: ApplicationContext) extends HttpFilters {
 
-  val filterExemptions = new FilterExemptions(
+  val filterExemptions = FilterExemptions(
     "/deploys" //not authenticated so it can be accessed by Prout to determine which builds have been deployed
   )
   val adminAuthFilter = new AuthFilterWithExemptions(

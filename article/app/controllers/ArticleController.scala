@@ -23,8 +23,8 @@ import scala.concurrent.Future
 case class ArticlePage(article: Article, related: RelatedContent) extends PageWithStoryPackage
 case class MinutePage(article: Article, related: RelatedContent) extends PageWithStoryPackage
 
-class ArticleController(contentApiClient: ContentApiClient)(implicit context: ApplicationContext) extends Controller with RendersItemResponse with Logging with ExecutionContexts {
-
+class ArticleController(contentApiClient: ContentApiClient)(implicit context: ApplicationContext) extends Controller
+    with RendersItemResponse with Logging with ExecutionContexts {
 
   private def isSupported(c: ApiContent) = c.isArticle || c.isLiveBlog || c.isSudoku
   override def canRender(i: ItemResponse): Boolean = i.content.exists(isSupported)
@@ -122,7 +122,6 @@ class ArticleController(contentApiClient: ContentApiClient)(implicit context: Ap
         }
         else views.html.article(article, recipePageNotInTest = article.article.showNewRecipeDesign)
       }
-
       val jsonResponse = () => views.html.fragments.articleBody(article)
       renderFormat(htmlResponse, jsonResponse, article, Switches.all)
   }

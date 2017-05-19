@@ -1,4 +1,4 @@
-package campaigns
+package commercial.campaigns
 
 object ShortCampaignCodes {
 

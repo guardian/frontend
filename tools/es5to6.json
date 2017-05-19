@@ -21,12 +21,9 @@
     "projects/commercial/modules/creatives/scrollable-mpu-v2.js",
     "projects/common/modules/atoms/youtube.js"
   ],
-  "Regis Kuckaertz": [
-    "projects/commercial/modules/dfp/on-slot-render.js"
-  ],
+  "Regis Kuckaertz": [],
   "Richard Nguyen": [],
   "Kate Whalen": [
-    "projects/commercial/modules/hosted/video.js",
     "projects/commercial/modules/hosted/youtube.js",
     "projects/commercial/modules/liveblog-adverts.js",
     "projects/commercial/modules/messenger.js",
@@ -252,14 +249,12 @@
   "Philip Wills": [
     "projects/facia/modules/ui/container-show-more.js",
     "projects/facia/modules/ui/container-toggle.js",
-    "projects/facia/modules/ui/football-snaps.js",
     "projects/facia/modules/ui/lazy-load-containers.js",
     "projects/common/modules/video/ga-helper.js",
     "projects/facia/modules/ui/live-blog-updates.js",
     "projects/commercial/modules/third-party-tags/imr-worldwide.js"
   ],
   "Santiago Villa Fernandez": [
-    "bootstraps/enhanced/membership.js",
     "projects/common/modules/video/more-in-series-container.js"
   ],
   "Jamie Byers": [

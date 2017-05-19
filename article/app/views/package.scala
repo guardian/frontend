@@ -72,6 +72,7 @@ object BodyCleaner {
       MinuteCleaner(article),
       RecipeBodyImage(article.showNewRecipeDesign)
     ) ++
+      ListIf(!amp)(ExplainerCleaner) ++
       ListIf(!amp)(VideoEmbedCleaner(article)) ++
       ListIf(amp)(AmpEmbedCleaner(article)) ++
       ListIf(amp && shouldShowAds && !article.isLiveBlog)(AmpAdCleaner(edition, request.uri, article))

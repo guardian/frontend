@@ -16,7 +16,7 @@ import prepareSonobiTag from 'commercial/modules/dfp/prepare-sonobi-tag';
 import prepareSwitchTag from 'commercial/modules/dfp/prepare-switch-tag';
 import { fillAdvertSlots } from 'commercial/modules/dfp/fill-advert-slots';
 import hostedAbout from 'commercial/modules/hosted/about';
-import hostedVideo from 'commercial/modules/hosted/video';
+import { initHostedVideo } from 'commercial/modules/hosted/video';
 import hostedGallery from 'commercial/modules/hosted/gallery';
 import hostedOJCarousel
     from 'commercial/modules/hosted/onward-journey-carousel';
@@ -50,7 +50,7 @@ const commercialModules: Array<Array<any>> = [
 if (config.page.isHosted) {
     commercialModules.push(
         ['cm-hostedAbout', hostedAbout.init],
-        ['cm-hostedVideo', hostedVideo.init, true],
+        ['cm-hostedVideo', initHostedVideo, true],
         ['cm-hostedGallery', hostedGallery.init],
         ['cm-hostedOnward', hostedOnward.init, true],
         ['cm-hostedOJCarousel', hostedOJCarousel.init]

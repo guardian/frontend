@@ -1,4 +1,4 @@
-package targeting
+package commercial.targeting
 
 import common._
 import com.gu.targeting.client.CampaignCache

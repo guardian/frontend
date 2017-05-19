@@ -21,11 +21,21 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-explainer-snippet",
+    "Displays an explainer in the form of a disclosure widget",
+    owners = Seq(Owner.withGithub("regiskuckaertz")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 5, 29),
+    exposeClientSide = true
+  )
+  
+  Switch(
+    ABTests,
     "ab-measure-understanding",
     "Asks users if they feel better informed after reading an article",
     owners = Seq(Owner.withGithub("regiskuckaertz")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 5, 19),
+    sellByDate = new LocalDate(2017, 5, 29),
     exposeClientSide = true
   )
 
