@@ -30,8 +30,6 @@ import PaidCommenting from 'common/modules/experiments/tests/paid-commenting';
 import BundleDigitalSubPriceTest1
     from 'common/modules/experiments/tests/bundle-digital-sub-price-test-1';
 
-// this should be an Array<ABTest> but that
-// needs all of the imported tests to be converted
 export const TESTS: Array<ABTest> = [
     new OpinionEmailVariants(),
     new PaidContentVsOutbrain2(),
