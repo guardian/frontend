@@ -7,24 +7,33 @@ import {
     TESTS,
 } from 'common/modules/experiments/ab-tests';
 import { buildOphanSubmitter } from 'common/modules/experiments/ab-ophan';
-import * as segmentUtil from 'common/modules/experiments/segment-util';
-import * as testCanRunChecks
-    from 'common/modules/experiments/test-can-run-checks';
-import * as abUtils from 'common/modules/experiments/utils';
+import {
+    isInTest,
+    variantIdFor,
+} from 'common/modules/experiments/segment-util';
+import { testCanBeRun } from 'common/modules/experiments/test-can-run-checks';
+import {
+    isParticipating,
+    getParticipations,
+    getVariant,
+    addParticipation,
+    getTestVariantId,
+    cleanParticipations,
+} from 'common/modules/experiments/utils';
 import { local } from 'lib/storage';
 
 const noop = (): null => null;
 
 // Finds variant in specific tests and runs it
-const runTest = test => {
-    if (abUtils.isParticipating(test) && testCanRunChecks.testCanBeRun(test)) {
-        const participations = abUtils.getParticipations();
+const runTest = (test: ABTest): void => {
+    if (isParticipating(test) && testCanBeRun(test)) {
+        const participations = getParticipations();
         const variantId = participations[test.id].variant;
-        const variant = abUtils.getVariant(test, variantId);
+        const variant = getVariant(test, variantId);
 
         if (variant) {
             variant.test();
-        } else if (!segmentUtil.isInTest(test) && test.notInTest) {
+        } else if (!isInTest(test) && test.notInTest) {
             test.notInTest();
         }
     }
@@ -32,46 +41,41 @@ const runTest = test => {
 
 const allocateUserToTest = test => {
     // Only allocate the user if the test is valid and they're not already participating.
-    if (testCanRunChecks.testCanBeRun(test) && !abUtils.isParticipating(test)) {
-        abUtils.addParticipation(test, segmentUtil.variantIdFor(test));
+    if (testCanBeRun(test) && !isParticipating(test)) {
+        addParticipation(test, variantIdFor(test));
     }
 };
 
 const getForcedIntoTests = () => {
-    if (/^#ab/.test(window.location.hash)) {
+    if (window.location.hash.startsWith('#ab')) {
         const tokens = window.location.hash.replace('#ab-', '').split(',');
 
         return tokens.map(token => {
-            const abParam = token.split('=');
-
-            return {
-                id: abParam[0],
-                variant: abParam[1],
-            };
+            const [id, variant] = token.split('=');
+            return { id, variant };
         });
     }
 
     return JSON.parse(local.get('gu.devtools.ab')) || [];
 };
 
-export const shouldRunTest = (id: string, variant: string) => {
-    const test = getTest(id);
+export const shouldRunTest = (testId: string, variantName: string) => {
+    const test = getTest(testId);
 
     return (
         test &&
-        abUtils.isParticipating(test) &&
-        abUtils.getTestVariantId(id) === variant &&
-        testCanRunChecks.testCanBeRun(test)
+        isParticipating(test) &&
+        getTestVariantId(testId) === variantName &&
+        testCanBeRun(test)
     );
 };
 
 export const segment = (tests: Array<ABTest>) =>
     tests.forEach(allocateUserToTest);
 
-export const forceSegment = (testId: string, variant: string) => {
-    getActiveTests().filter(test => test.id === testId).forEach(test => {
-        abUtils.addParticipation(test, variant);
-    });
+export const forceSegment = (testId: string, variantName: string) => {
+    const test: ?ABTest = getActiveTests().find(t => t.id === testId);
+    if (test) addParticipation(test, variantName);
 };
 
 export const forceVariantCompleteFunctions = (
@@ -106,19 +110,7 @@ export const segmentUser = () => {
         segment(getActiveTests());
     }
 
-    abUtils.cleanParticipations(TESTS);
+    cleanParticipations(TESTS);
 };
 
 export const run = (tests: Array<ABTest>) => tests.forEach(runTest);
-
-/**
- * check if a test can be run (i.e. is not expired and switched on)
- */
-export const testCanBeRun = (test: string | ABTest) => {
-    if (typeof test === 'string') {
-        const testObj = getTest(test);
-        return testObj && testCanRunChecks.testCanBeRun(testObj);
-    }
-
-    return test.id && test.expiry && testCanRunChecks.testCanBeRun(test);
-};

@@ -1,11 +1,10 @@
 // @flow
 import type { ABTest } from 'common/modules/experiments/ab-types';
-
-import * as testCanRunChecks
-    from 'common/modules/experiments/test-can-run-checks';
-import * as abUtils from 'common/modules/experiments/utils';
-import * as acquisitionTestSelector
-    from 'common/modules/experiments/acquisition-test-selector';
+import { isExpired } from 'common/modules/experiments/test-can-run-checks';
+import { removeParticipation } from 'common/modules/experiments/utils';
+import {
+    getTest as getAcquisitionTest,
+} from 'common/modules/experiments/acquisition-test-selector';
 import OpinionEmailVariants
     from 'common/modules/experiments/tests/opinion-email-variants';
 import MembershipEngagementBannerTests
@@ -33,10 +32,10 @@ import BundleDigitalSubPriceTest1
 
 // this should be an Array<ABTest> but that
 // needs all of the imported tests to be converted
-export const TESTS = [
+export const TESTS: Array<ABTest> = [
     new OpinionEmailVariants(),
     new PaidContentVsOutbrain2(),
-    acquisitionTestSelector.getTest(),
+    getAcquisitionTest(),
     tailorSurvey,
     TheLongReadEmailVariants,
     FashionStatementEmailVariants,
@@ -51,17 +50,17 @@ export const TESTS = [
     .concat(MembershipEngagementBannerTests)
     .filter(t => t !== undefined && t !== null);
 
-export const getActiveTests = () =>
+export const getActiveTests = (): Array<ABTest> =>
     TESTS.filter(test => {
-        if (testCanRunChecks.isExpired(test.expiry)) {
-            abUtils.removeParticipation(test);
+        if (isExpired(test.expiry)) {
+            removeParticipation(test);
             return false;
         }
         return true;
     });
 
-export const getExpiredTests = () =>
-    TESTS.filter(test => testCanRunChecks.isExpired(test.expiry));
+export const getExpiredTests = (): Array<ABTest> =>
+    TESTS.filter(test => isExpired(test.expiry));
 
 export const getTest = (id: string): ?ABTest => {
     const testIds = TESTS.map(test => test.id);
