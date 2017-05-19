@@ -19,7 +19,7 @@ export type DfpEnv = {
     shouldLazyLoad: () => boolean,
 };
 
-const dfpEnv: DfpEnv = {
+export const dfpEnv: DfpEnv = {
     /* renderStartTime: integer. Point in time when DFP kicks in */
     renderStartTime: -1,
 
@@ -62,5 +62,3 @@ const dfpEnv: DfpEnv = {
         return !config.page.hasPageSkin && getUrlVars().dll !== '1';
     },
 };
-
-export { dfpEnv };

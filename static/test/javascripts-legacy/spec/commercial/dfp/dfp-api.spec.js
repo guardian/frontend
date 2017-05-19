@@ -87,7 +87,7 @@ define([
                 commercialFeatures = arguments[6];
                 detect = arguments[7];
                 closeDisabledSlots = arguments[8];
-                dfpEnv = arguments[9];
+                dfpEnv = arguments[9].dfpEnv;
 
                 config.switches = {
                     commercial:      true,
