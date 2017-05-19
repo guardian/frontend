@@ -23,7 +23,7 @@ const creativeLookup: Object = {
 };
 
 const renderCreativeTemplate = (
-    adSlot: HTMLElement,
+    adSlot: Element,
     iFrame: HTMLIFrameElement
 ): Promise<boolean> => {
     const fetchCreativeConfig = (): ?string => {
@@ -83,7 +83,7 @@ const renderCreativeTemplate = (
     return Promise.resolve(true);
 };
 
-const getAdvertIframe = (adSlot: HTMLElement): Promise<HTMLIFrameElement> =>
+const getAdvertIframe = (adSlot: Element): Promise<HTMLIFrameElement> =>
     new Promise((resolve, reject) => {
         // DFP will sometimes return empty iframes, denoted with a '__hidden__' parameter embedded in its ID.
         // We need to be sure only to select the ad content frame.
@@ -120,7 +120,7 @@ const getAdvertIframe = (adSlot: HTMLElement): Promise<HTMLIFrameElement> =>
  * Not all adverts render themselves - some just provide data for templates that we implement in commercial.js.
  * This looks for any such data and, if we find it, renders the appropriate component.
  */
-const applyCreativeTemplate = (adSlot: HTMLElement) =>
+const applyCreativeTemplate = (adSlot: Element) =>
     getAdvertIframe(adSlot).then((iframe: HTMLIFrameElement) =>
         renderCreativeTemplate(adSlot, iframe)
     );

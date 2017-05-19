@@ -4,6 +4,7 @@ import qwery from 'qwery';
 import raven from 'lib/raven';
 import fastdom from 'lib/fastdom-promise';
 import mediator from 'lib/mediator';
+import { Advert } from 'commercial/modules/dfp/Advert';
 import adSizes from 'commercial/modules/ad-sizes';
 import stickyMpu from 'commercial/modules/sticky-mpu';
 import {
@@ -135,21 +136,25 @@ const addContentClass = adSlotNode => {
  * @param slotRenderEvent - GPT slotRenderEndedEvent
  * @returns {Promise} - resolves once all necessary rendering is queued up
  */
-const renderAdvert = (advert: any, slotRenderEvent: any) => {
+const renderAdvert = (advert: Advert, slotRenderEvent: any) => {
     addContentClass(advert.node);
 
     return applyCreativeTemplate(advert.node)
         .then(isRendered => {
             const callSizeCallback = () => {
-                let size = advert.size.toString();
-                if (size === '0,0') {
-                    size = 'fluid';
+                if (advert.size) {
+                    let size = advert.size.toString();
+                    if (size === '0,0') {
+                        size = 'fluid';
+                    }
+
+                    return Promise.resolve(
+                        sizeCallbacks[size]
+                            ? sizeCallbacks[size](slotRenderEvent, advert)
+                            : null
+                    );
                 }
-                return Promise.resolve(
-                    sizeCallbacks[size]
-                        ? sizeCallbacks[size](slotRenderEvent, advert)
-                        : null
-                );
+                return Promise.resolve(null);
             };
 
             const addRenderedClass = () =>
