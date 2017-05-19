@@ -4,7 +4,6 @@ define([
     'lib/$',
     'lib/config',
     'lib/detect',
-    'lib/mediator',
     'lodash/functions/throttle'
 ], function (
     bean,
@@ -12,12 +11,10 @@ define([
     $,
     config,
     detect,
-    mediator,
     throttle
 ) {
 
     var Search = function () {
-
         var searchLoader,
             gcsUrl,
             resultSetSize,
@@ -36,19 +33,26 @@ define([
             bean.on(document, 'click', '.js-search-toggle', function (e) {
                 var searchToggleLink = $('.js-search-toggle');
                 var searchPopup = $('.js-search-popup');
-                var maybeDismissSearchPopup = function(e) {
-                    var el = $(e.target);
+                var maybeDismissSearchPopup = function(event) {
+                    var el = event.target;
                     var clickedPop = false;
 
-                    while (el.length && !clickedPop) {
-                        if (el.hasClass('js-search-popup')) {
+                    while (el && !clickedPop) {
+                        /* either the search pop-up or the autocomplete resultSetSize
+                           NOTE: it would be better to check for `.gssb_c`,
+                                 which is the outer autocomplete element, but
+                                 google stops the event bubbling earlier
+                        */
+                        if (el.classList.contains('js-search-popup') ||
+                            el.classList.contains('gsq_a')) {
                             clickedPop = true;
                         }
-                        el = el.parent();
+
+                        el = el.parentNode;
                     }
 
                     if (!clickedPop) {
-                        e.preventDefault();
+                        event.preventDefault();
                         searchToggleLink.removeClass('is-active');
                         searchPopup.addClass('is-off');
                         bean.off(document, 'click', maybeDismissSearchPopup);
@@ -63,7 +67,6 @@ define([
                 // Make sure search is always in the correct state
                 self.focusSearchField();
                 e.preventDefault();
-                mediator.emit('modules:search');
             });
 
             bean.on(document, 'keydown', '.gsc-input', function () {
