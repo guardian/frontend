@@ -15,6 +15,7 @@ define([
 ) {
 
     var Search = function () {
+        var toggle = document.querySelector('.js-search-toggle');
         var searchLoader,
             gcsUrl,
             resultSetSize,
@@ -30,9 +31,8 @@ define([
                 self.load();
             });
 
-            bean.on(document, 'click', '.js-search-toggle', function (e) {
-                var searchToggleLink = $('.js-search-toggle');
-                var searchPopup = $('.js-search-popup');
+            bean.on(toggle, 'click', function (e) {
+                var popup = document.querySelector('.js-search-popup');
                 var maybeDismissSearchPopup = function(event) {
                     var el = event.target;
                     var clickedPop = false;
@@ -53,13 +53,13 @@ define([
 
                     if (!clickedPop) {
                         event.preventDefault();
-                        searchToggleLink.removeClass('is-active');
-                        searchPopup.addClass('is-off');
+                        toggle.classList.remove('is-active');
+                        popup.classList.add('is-off');
                         bean.off(document, 'click', maybeDismissSearchPopup);
                     }
                 };
 
-                if (searchToggleLink.hasClass('is-active')) {
+                if (toggle.classList.contains('is-active')) {
                     bean.on(document, 'click', maybeDismissSearchPopup);
                 }
 
