@@ -5,7 +5,7 @@ import once from 'lodash/functions/once';
 import mediator from 'lib/mediator';
 import reportError from 'lib/report-error';
 import beacon from 'common/modules/analytics/beacon';
-import dfpEnv from 'commercial/modules/dfp/dfp-env';
+import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 import { Advert } from 'commercial/modules/dfp/Advert';
 import renderAdvert from 'commercial/modules/dfp/render-advert';
 import { emptyAdvert } from 'commercial/modules/dfp/empty-advert';

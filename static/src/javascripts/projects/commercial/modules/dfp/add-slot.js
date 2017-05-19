@@ -1,5 +1,5 @@
 // @flow
-import dfpEnv from 'commercial/modules/dfp/dfp-env';
+import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 import { Advert } from 'commercial/modules/dfp/Advert';
 import queueAdvert from 'commercial/modules/dfp/queue-advert';
 import loadAdvert from 'commercial/modules/dfp/load-advert';
