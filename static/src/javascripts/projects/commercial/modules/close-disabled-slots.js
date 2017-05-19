@@ -16,13 +16,9 @@ const closeDisabledSlots = (force: boolean): Promise<void> => {
         adSlots = adSlots.filter(shouldDisableAdSlot);
     }
 
-    return fastdom.write(() => {
-        adSlots.forEach((adSlot: Node) => {
-            if (adSlot.parentNode) {
-                adSlot.parentNode.removeChild(adSlot);
-            }
-        });
-    });
+    return fastdom.write(() =>
+        adSlots.forEach((adSlot: Element) => adSlot.remove())
+    );
 };
 
 export { closeDisabledSlots };
