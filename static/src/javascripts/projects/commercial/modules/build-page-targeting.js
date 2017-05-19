@@ -11,7 +11,6 @@ import { getParticipations } from 'common/modules/experiments/utils';
 import flatten from 'lodash/arrays/flatten';
 import once from 'lodash/functions/once';
 import pick from 'lodash/objects/pick';
-import commercialFeatures from 'commercial/modules/commercial-features';
 
 const format = (keyword: string): string =>
     keyword.replace(/[+\s]+/g, '-').toLowerCase();
@@ -124,11 +123,11 @@ const formatAppNexusTargeting = (obj: Object): string =>
             })
     ).join(',');
 
-const buildPageTargeting = once((): Object => {
+const buildPageTargeting = once((adFree: ?boolean): Object => {
     const page: Object = config.page;
-    if (commercialFeatures.adFree) {
-        page.sharedAdTargeting.p = 'ngaf';
-    }
+    const adFreeTargeting: Object = adFree
+        ? Object.assign({ af: 't' })
+        : Object.assign({});
     const pageTargets: Object = Object.assign(
         {
             x: krux.getSegments(),
@@ -147,6 +146,7 @@ const buildPageTargeting = once((): Object => {
                 : undefined,
         },
         page.sharedAdTargeting,
+        adFreeTargeting,
         getWhitelistedQueryParams()
     );
 
