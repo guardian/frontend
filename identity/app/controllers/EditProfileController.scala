@@ -85,7 +85,7 @@ class EditProfileController(idUrlBuilder: IdentityUrlBuilder,
             case Left(errors) => profileFormsView(page, forms.withErrors(errors), user)
             case Right(updatedUser) => profileFormsView(page, forms.bindForms(updatedUser), updatedUser)
           }
-      }.getOrElse(Future(profileFormsView(page, forms.bindForms(user), user)))
+      }.getOrElse(Future(profileFormsView(page, forms, user)))
     }
   }
 
