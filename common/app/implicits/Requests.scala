@@ -1,6 +1,5 @@
 package implicits
 
-import common.Edition
 import conf.Configuration
 import play.api.mvc.RequestHeader
 
@@ -37,8 +36,6 @@ trait Requests {
     lazy val isHealthcheck: Boolean = r.headers.keys.exists(_ equalsIgnoreCase "X-Gu-Management-Healthcheck") || r.path == "/_healthcheck"
 
     lazy val rawQueryStringOption: Option[String] = if (r.rawQueryString.nonEmpty) Some(r.rawQueryString) else None
-
-    private val networkFronts = Edition.all.map(_.id).map(id => s"/$id")
 
     //This is a header reliably set by jQuery for AJAX requests used in facia-tool
     lazy val isXmlHttpRequest: Boolean = r.headers.get("X-Requested-With").contains("XMLHttpRequest")
