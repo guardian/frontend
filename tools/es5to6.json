@@ -1,6 +1,5 @@
 {
   "Francis Carr": [
-    "projects/commercial/modules/comment-adverts.js",
     "projects/commercial/modules/commercial-features.js",
     "projects/commercial/modules/creatives/add-tracking-pixel.js",
     "projects/commercial/modules/creatives/add-viewability-tracker.js",
