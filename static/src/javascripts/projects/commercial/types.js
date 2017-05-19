@@ -2,13 +2,13 @@
 
 /* eslint no-use-before-define: "off" */
 
-export type AdSizes = { [k: string]: Array<SingleSize> };
+export type AdSizes = { [k: string]: Array<AdSize> };
+export type AdSize = SingleSizeArray | NamedSize;
 
 export type SingleSizeArray = Array<number>;
 export type NamedSize = 'fluid';
-export type SingleSize = SingleSizeArray | NamedSize;
-export type MultiSize = Array<SingleSize>;
-export type GeneralSize = SingleSize | MultiSize;
+export type MultiSize = Array<AdSize>;
+export type GeneralSize = AdSize | MultiSize;
 export type SizeMapping = Array<GeneralSize>;
 
 export type ResponseInformation = {
@@ -75,8 +75,25 @@ export type SlotRenderEndedEvent = {
     isEmpty: boolean,
     lineItemId?: number,
     serviceName: string,
-    size: SingleSize,
+    size: AdSize,
     slot: Slot,
     sourceAgnosticCreativeId?: number,
     sourceAgnosticLineItemId?: number,
 };
+
+type MPUUnitId = 228;
+type LeaderboardUnitId = 229;
+type BillboardUnitId = 229;
+
+export type SwitchUnitId = MPUUnitId | LeaderboardUnitId | BillboardUnitId;
+
+export type GuAdSize = {
+    width: number,
+    height: number,
+    switchUnitId: ?SwitchUnitId,
+    toString: (_: void) => string,
+};
+
+export const mpuUnitId: MPUUnitId = 228;
+export const leaderboardUnitId: LeaderboardUnitId = 229;
+export const billboardUnitId: BillboardUnitId = 229;

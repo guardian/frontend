@@ -1,5 +1,5 @@
 // @flow
-import type { SingleSize, AdSizes } from 'commercial/types';
+import type { AdSize, AdSizes } from 'commercial/types';
 
 import detect from 'lib/detect';
 import { getCurrentTime } from 'lib/user-timing';
@@ -16,7 +16,7 @@ type Resolver = (x: boolean) => void;
  * One size       - `data-mobile="300,50"`
  * Multiple sizes - `data-mobile="300,50|320,50"`
  */
-const createSizeMapping = (attr: string): Array<SingleSize> =>
+const createSizeMapping = (attr: string): Array<AdSize> =>
     attr
         .split('|')
         .map(
@@ -36,7 +36,7 @@ class Advert {
     id: string;
     node: Element;
     sizes: AdSizes;
-    size: ?SingleSize;
+    size: ?AdSize;
     slot: any;
     isEmpty: ?boolean;
     isLoading: boolean;
