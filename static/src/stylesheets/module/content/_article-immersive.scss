@@ -164,7 +164,11 @@
 
 .content--immersive {
     .content__main {
-        padding-top: $gs-baseline / 2;
+        padding-top: 0;
+
+        @include mq(desktop) {
+            padding-top: $gs-baseline * 2;
+        }
     }
 }
 
