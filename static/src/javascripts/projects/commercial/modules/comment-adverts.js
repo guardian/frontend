@@ -1,45 +1,55 @@
+// @flow
 import $ from 'lib/$';
 import config from 'lib/config';
-import detect from 'lib/detect';
 import mediator from 'lib/mediator';
 import fastdom from 'lib/fastdom-promise';
-import addSlot from 'commercial/modules/dfp/add-slot';
+import { addSlot } from 'commercial/modules/dfp/add-slot';
 import commercialFeatures from 'commercial/modules/commercial-features';
 import createSlot from 'commercial/modules/dfp/create-slot';
-export default function() {
-    var $adSlotContainer = $('.js-discussion__ad-slot');
+
+const init = (): ?boolean => {
+    const $adSlotContainer = $('.js-discussion__ad-slot');
 
     if (!commercialFeatures.commentAdverts || !$adSlotContainer.length) {
         return false;
     }
 
-    mediator.once('modules:comments:renderComments:rendered', function() {
-        var $commentMainColumn = $('.js-comments .content__main-column');
+    mediator.once('modules:comments:renderComments:rendered', (): void => {
+        const $commentMainColumn = $('.js-comments .content__main-column');
 
-        fastdom.read(function() {
-                return $commentMainColumn.dim().height;
-            })
-            .then(function(mainColHeight) {
-                //if comments container is lower than 280px
+        fastdom
+            .read(() => $commentMainColumn.dim().height)
+            .then(mainColHeight => {
+                // if comments container is lower than 280px
                 if (mainColHeight < 280) {
                     return;
                 }
 
-                var adSlot = createSlot('comments', {
-                    classes: 'mpu-banner-ad'
+                const adSlot = createSlot('comments', {
+                    classes: 'mpu-banner-ad',
                 });
 
-                fastdom.write(function() {
+                fastdom
+                    .write(() => {
                         $commentMainColumn.addClass('discussion__ad-wrapper');
 
-                        if (!config.page.isLiveBlog && !config.page.isMinuteArticle) {
-                            $commentMainColumn.addClass('discussion__ad-wrapper-wider');
+                        if (
+                            !config.page.isLiveBlog &&
+                            !config.page.isMinuteArticle
+                        ) {
+                            $commentMainColumn.addClass(
+                                'discussion__ad-wrapper-wider'
+                            );
                         }
 
                         $adSlotContainer.append(adSlot);
                         return adSlot;
                     })
-                    .then(addSlot.addSlot);
+                    .then((htmlElement: HTMLElement) =>
+                        addSlot(htmlElement, false)
+                    );
             });
     });
 };
+
+export default init;
