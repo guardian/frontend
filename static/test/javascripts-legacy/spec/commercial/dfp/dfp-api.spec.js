@@ -52,8 +52,10 @@ define([
                 'common/modules/analytics/google': function noop() {
                     // No implementation
                 },
-                'commercial/modules/dfp/apply-creative-template': function () {
-                    return Promise.resolve();
+                'commercial/modules/dfp/apply-creative-template': {
+                    applyCreativeTemplate: function () {
+                      return Promise.resolve(true);
+                    }
                 },
                 'lib/load-script': {
                     loadScript: function () {
