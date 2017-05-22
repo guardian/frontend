@@ -9,7 +9,7 @@ import common.dfp._
 import common.{Edition, ManifestData, NavItem, Pagination}
 import conf.Configuration
 import cricketPa.CricketTeams
-import model.content.{MediaAtom, StoryQuestionsAtom}
+import model.content.{Atom, MediaAtom, StoryQuestionsAtom}
 import model.liveblog.Blocks
 import model.meta.{Guardian, LinkedData, PotentialAction, WebPage}
 import org.apache.commons.lang3.StringUtils
@@ -371,16 +371,29 @@ case class GalleryPage(
 
 case class EmbedPage(item: Video, title: String, isExpired: Boolean = false) extends ContentPage
 
-case class MediaAtomEmbedPage(atom: MediaAtom) extends Page {
-  override val metadata = MetaData.make(id = atom.id,
-    webTitle = atom.title,
-    section = None)
+trait AtomPage extends Page {
+  def stylesheet: String
+  def javascript: String
 }
 
-case class StoryQuestionsAtomEmbedPage(atom: StoryQuestionsAtom) extends Page {
-  override val metadata = MetaData.make(id = atom.id,
+case class MediaAtomPage(atom: MediaAtom) extends AtomPage {
+  override val stylesheet = "media-player"
+  override val javascript = "youtube-embed"
+  override val metadata = MetaData.make(
+    id = atom.id,
+    webTitle = atom.title,
+    section = None
+  )
+}
+
+case class StoryQuestionsAtomPage(atom: StoryQuestionsAtom) extends AtomPage {
+  override val stylesheet = "storyquestions"
+  override val javascript = "youtube-embed"
+  override val metadata = MetaData.make(
+    id = atom.id,
     webTitle = atom.atom.title.getOrElse("Story questions"),
-    section = None)
+    section = None
+  )
 }
 
 case class TagCombiner(
