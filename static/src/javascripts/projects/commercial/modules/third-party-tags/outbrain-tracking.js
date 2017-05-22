@@ -3,7 +3,7 @@
 import ophan from 'ophan/ng';
 
 const tracking = function(trackingObj: {
-    widgetId?: string,
+    widgetId?: ?string,
     state?: string,
 }): void {
     ophan.record({
