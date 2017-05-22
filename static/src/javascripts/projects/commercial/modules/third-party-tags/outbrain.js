@@ -2,7 +2,7 @@
 import detect from 'lib/detect';
 import checkMediator from 'common/modules/check-mediator';
 import { load } from './outbrain-load';
-import { tracking } from './outbrain-tracking';
+// import { tracking } from './outbrain-tracking';
 
 /*
  Loading Outbrain is dependent on successful return of high relevance component
@@ -18,22 +18,21 @@ const canLoadInstantly = () =>
     );
 
 const onIsOutbrainNonCompliant = outbrainNonCompliant => {
-    if (outbrainNonCompliant) load('nonCompliant');
-    else load();
-    tracking({
-        state: outbrainNonCompliant ? 'nonCompliant' : 'compliant',
-    });
+    if (outbrainNonCompliant) {
+        load('nonCompliant');
+    } else {
+        load();
+    }
+
     return Promise.resolve();
 };
 
 const onIsOutbrainMerchandiseCompliant = outbrainMerchandiseCompliant => {
     if (outbrainMerchandiseCompliant) {
         load('merchandising');
-        tracking({
-            state: 'outbrainMerchandiseCompliant',
-        });
         return Promise.resolve();
     }
+
     return checkMediator
         .waitForCheck('isOutbrainNonCompliant')
         .then(onIsOutbrainNonCompliant);
@@ -41,11 +40,9 @@ const onIsOutbrainMerchandiseCompliant = outbrainMerchandiseCompliant => {
 
 const onIsOutbrainBlockedByAds = outbrainBlockedByAds => {
     if (outbrainBlockedByAds) {
-        tracking({
-            state: 'outbrainBlockedByAds',
-        });
         return Promise.resolve();
     }
+
     return checkMediator
         .waitForCheck('isOutbrainMerchandiseCompliant')
         .then(onIsOutbrainMerchandiseCompliant);
@@ -57,6 +54,7 @@ const onCanLoadInstantly = loadInstantly => {
             .waitForCheck('isOutbrainNonCompliant')
             .then(onIsOutbrainNonCompliant);
     }
+
     return checkMediator
         .waitForCheck('isOutbrainBlockedByAds')
         .then(onIsOutbrainBlockedByAds);
@@ -64,11 +62,9 @@ const onCanLoadInstantly = loadInstantly => {
 
 const onIsOutbrainDisabled = outbrainDisabled => {
     if (outbrainDisabled) {
-        tracking({
-            state: 'outbrainDisabled',
-        });
         return Promise.resolve();
     }
+
     return canLoadInstantly().then(onCanLoadInstantly);
 };
 

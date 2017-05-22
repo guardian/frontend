@@ -10,74 +10,36 @@ class DeferredCheck {
     resolve: Function;
     reject: Function;
 
-    constructor(
-        dependentCheckPromises?: Array<any>,
-        dependentChecksPassCondition?: Function
-    ): void {
+    constructor(): void {
         this.complete = new Promise((resolve, reject) => {
             this.resolve = resolve;
             this.reject = reject;
         });
-
-        if (dependentCheckPromises) {
-            Promise.all(dependentCheckPromises).then(results => {
-                const hasPassed = result => result;
-
-                if (dependentChecksPassCondition) {
-                    this.resolve(
-                        dependentChecksPassCondition.call(results, hasPassed)
-                    );
-                }
-            });
-        }
     }
 }
 
-const registerDefferedCheck = (check: Object): Promise<any> | DeferredCheck => {
-    const registerDependentCheck = (dependentCheck: Object): Promise<any> => {
-        const registeredCheck = registeredChecks[dependentCheck.id];
-
-        if (registeredCheck) {
-            return registeredCheck.complete;
-        }
-
-        // eslint-disable-next-line no-use-before-define
-        return registerCheck(dependentCheck).complete;
-    };
-
-    if (check.dependentChecks) {
-        return new DeferredCheck(
-            check.dependentChecks.map(registerDependentCheck),
-            check.passCondition
-        );
-    }
-
-    return new DeferredCheck();
-};
-
-const registerCheck = (check: Object): Object => {
-    const { id } = check;
-
+const registerCheck = (id: string): Object => {
     if (!registeredChecks[id]) {
-        registeredChecks[id] = registerDefferedCheck(check);
+        registeredChecks[id] = new DeferredCheck();
     }
 
     return registeredChecks[id];
 };
 
-const init = (): void => {
-    checks.forEach(registerCheck);
-};
-
-const resolveCheck = (id: string, resolve?: boolean): ?Array<any> => {
-    const argsArray = [id, resolve].slice(1);
+const resolveCheck = (id: string, result?: boolean): void => {
     const check = registeredChecks[id];
 
     if (check) {
-        return check.resolve.apply(null, argsArray);
+        check.resolve(result);
     }
+};
 
-    return undefined;
+const rejectCheck = (id: string, reason?: string): void => {
+    const check = registeredChecks[id];
+
+    if (check) {
+        check.reject(reason);
+    }
 };
 
 const waitForCheck = (id: string): Promise<any> => {
@@ -90,6 +52,10 @@ const waitForCheck = (id: string): Promise<any> => {
     return Promise.reject(`No deferred check with id ${id}`);
 };
 
+const init = (): void => {
+    checks.forEach(registerCheck);
+};
+
 const testClean = (): void => {
     registeredChecks = {};
 };
@@ -97,8 +63,8 @@ const testClean = (): void => {
 export default {
     init,
     resolveCheck,
+    rejectCheck,
     waitForCheck,
-
     // exposed for unit testing
     test: {
         testClean,
