@@ -46,9 +46,7 @@ class FrontTest extends FlatSpec with Matchers with OneAppPerSuite {
       image = None,
       properties = ContentProperties.fromResolvedMetaData(ResolvedMetaData.Default),
       byline = None,
-      kicker = None,
-      brandingByEdition = Map.empty
-    )
+      kicker = None)
 
     LatestSnap.make(fapiLatestSnap)
   }
