@@ -373,6 +373,9 @@ case class EmbedPage(item: Video, title: String, isExpired: Boolean = false) ext
 
 trait AtomPage extends Page {
   def atomType: String
+  def getJavascriptConfig: Map[String, JsValue] = Map(
+    ("atomType" -> JsString(atomType))
+  )
 }
 
 case class MediaAtomPage(atom: MediaAtom) extends AtomPage {

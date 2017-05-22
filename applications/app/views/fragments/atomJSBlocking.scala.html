@@ -1,9 +1,10 @@
+@import common.InlineJs
 @import model.AtomPage
+@import templates.inlineJS.blocking.js.{config, shouldEnhance, loadApp}
 
 @(page: AtomPage)(implicit request: RequestHeader, context: model.ApplicationContext)
 <script id="gu">
     // ************* RENDER-CRITICAL BLOCKING JS *************
-
 
     // determine whether to run enhanced JS
     @InlineJs(shouldEnhance(page.metadata).body, "shouldEnhance.js")
@@ -13,6 +14,6 @@
 
     // ************* LOAD THE MAIN APP ASYNC *************
 
-    @InlineJs(loadApp(page.atomType).body, "loadApp.js")
+    @InlineJs(loadApp("atoms").body, "loadApp.js")
 
 </script>

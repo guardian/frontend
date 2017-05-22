@@ -47,6 +47,7 @@ object JavaScriptPage {
     val javascriptConfig = page match {
       case c: ContentPage => c.getJavascriptConfig
       case s: StandalonePage => s.getJavascriptConfig
+      case a: AtomPage => a.getJavascriptConfig
       case _ => Map()
     }
 
