@@ -1,6 +1,4 @@
 // @flow
-import type { ABTest } from 'common/modules/experiments/ab-types';
-
 import {
     getActiveTests,
     getTest,

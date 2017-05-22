@@ -1,14 +1,8 @@
 // @flow
-import type {
-    ABTest,
-    Variant,
-    Participations,
-} from 'common/modules/experiments/ab-types';
-
 import { local } from 'lib/storage';
 import { testCanBeRun } from 'common/modules/experiments/test-can-run-checks';
 
-const participationsKey = 'gu.ab.participations';
+export const participationsKey = 'gu.ab.participations';
 
 export const getParticipations = (): Participations =>
     local.get(participationsKey) || {};

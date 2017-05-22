@@ -2,7 +2,7 @@
 
 type ListenerFunction = (f: () => void) => void;
 
-export type Variant = {
+declare type Variant = {
     id: string,
     test: () => void,
     impression?: ListenerFunction,
@@ -10,7 +10,7 @@ export type Variant = {
     options?: Object,
 };
 
-export type ABTest = {
+declare type ABTest = {
     id: string,
     start: string,
     expiry: string,
@@ -31,7 +31,7 @@ export type ABTest = {
 /**
  * the structure stored in localStorage
  */
-export type Participations = {
+declare type Participations = {
     [testId: string]: {
         variant: string,
     },
@@ -40,7 +40,7 @@ export type Participations = {
 /**
  * an individual A/B test, structured for Ophan
  */
-export type OphanABEvent = {
+declare type OphanABEvent = {
     variantName: string,
     complete: string | boolean,
     campaignCodes?: Array<string>,
@@ -49,6 +49,6 @@ export type OphanABEvent = {
 /**
  * the actual payload we send to Ophan: an object of OphanABEvents with test IDs as keys
  */
-export type OphanABPayload = {
+declare type OphanABPayload = {
     [testId: string]: OphanABEvent,
 };

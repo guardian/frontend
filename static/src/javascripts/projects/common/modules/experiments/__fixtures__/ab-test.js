@@ -1,6 +1,4 @@
 // @flow
-import type { ABTest, Variant } from '../ab-types';
-
 export const genVariant = (id: string): Variant => ({
     id,
     test: () => undefined,

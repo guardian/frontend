@@ -1,15 +1,6 @@
 // @flow
-
-import type {
-    ABTest,
-    Variant,
-    OphanABEvent,
-    OphanABPayload,
-} from 'common/modules/experiments/ab-types';
-
 import { getActiveTests } from 'common/modules/experiments/ab-tests';
-import * as testCanRunChecks
-    from 'common/modules/experiments/test-can-run-checks';
+import { testCanBeRun } from 'common/modules/experiments/test-can-run-checks';
 import { isInTest } from 'common/modules/experiments/segment-util';
 import {
     getVariant,
@@ -21,7 +12,8 @@ import config from 'lib/config';
 import reportError from 'lib/report-error';
 import ophan from 'ophan/ng';
 
-const not = f => (...args): boolean => !f.apply(this, args);
+const not = f => (...args: any[]): boolean => !f(...args);
+// const and = (f, g) => (...args: any[]): boolean => f(...args) && g(...args);
 const noop = (): null => null;
 
 const submit = (payload: OphanABPayload): void =>
@@ -114,7 +106,7 @@ export const buildOphanPayload = (): OphanABPayload => {
         getActiveTests()
             .filter(not(defersImpression))
             .filter(isParticipating)
-            .filter(testCanRunChecks.testCanBeRun)
+            .filter(testCanBeRun)
             .forEach(test => {
                 const variant = getAssignedVariant(test);
 
@@ -134,7 +126,6 @@ export const buildOphanPayload = (): OphanABPayload => {
 
         return log;
     } catch (error) {
-        console.log(error);
         // Encountering an error should invalidate the logging process.
         reportError(error, {}, false);
         return {};

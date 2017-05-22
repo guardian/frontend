@@ -1,5 +1,4 @@
 // @flow
-import type { ABTest } from 'common/modules/experiments/ab-types';
 import { isExpired } from 'common/modules/experiments/test-can-run-checks';
 import { removeParticipation } from 'common/modules/experiments/utils';
 import {

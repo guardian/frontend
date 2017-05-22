@@ -1,6 +1,4 @@
 // @flow
-
-import type { ABTest } from 'common/modules/experiments/ab-types';
 import bean from 'bean';
 import bonzo from 'bonzo';
 import fastdom from 'fastdom';
