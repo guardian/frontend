@@ -13,7 +13,7 @@ import reportError from 'lib/report-error';
 import ophan from 'ophan/ng';
 
 const not = f => (...args: any[]): boolean => !f(...args);
-// const and = (f, g) => (...args: any[]): boolean => f(...args) && g(...args);
+const and = (f, g) => (...args: any[]): boolean => f(...args) && g(...args);
 const noop = (): null => null;
 
 const submit = (payload: OphanABPayload): void =>
@@ -104,9 +104,9 @@ export const buildOphanPayload = (): OphanABPayload => {
         );
 
         getActiveTests()
-            .filter(not(defersImpression))
-            .filter(isParticipating)
-            .filter(testCanBeRun)
+            .filter(
+                and(not(defersImpression), and(isParticipating, testCanBeRun))
+            )
             .forEach(test => {
                 const variant = getAssignedVariant(test);
 
