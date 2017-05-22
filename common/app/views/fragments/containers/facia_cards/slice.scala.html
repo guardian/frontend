@@ -1,5 +1,5 @@
 @import model.FrontProperties
-@(slice: layout.SliceWithCards, containerIndex: Int, frontProperties: Option[FrontProperties] = None)(implicit request: RequestHeader)
+@(slice: layout.SliceWithCards, containerIndex: Int, isElectionContainer: Boolean = false, frontProperties: Option[FrontProperties] = None)(implicit request: RequestHeader)
 
 @import layout.{ColumnAndCards, SingleItem, Rows, SplitColumn, MPU}
 @import views.html.fragments.items.facia_cards.item
