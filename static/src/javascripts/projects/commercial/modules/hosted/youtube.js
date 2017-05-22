@@ -2,11 +2,8 @@
 import nextVideoAutoplay from 'commercial/modules/hosted/next-video-autoplay';
 import { initYoutubePlayer } from 'common/modules/atoms/youtube-player';
 import tracking from 'common/modules/atoms/youtube-tracking';
-import $ from 'lib/$';
 import detect from 'lib/detect';
 import mediator from 'lib/mediator';
-
-import type { bonzo } from 'bonzo';
 
 type videoPlayerComponent = { getCurrentTime: () => number };
 
@@ -40,9 +37,16 @@ const sendPercentageCompleteEvents = (
 };
 
 export const initHostedYoutube = (el: HTMLElement): void => {
-    const atomId: string = $(el).data('media-id');
-    const duration: number = $(el).data('duration');
-    const $currentTime: bonzo = $('.js-youtube-current-time');
+    const atomId: string = el.hasAttribute('data-media-id')
+        ? toString(el.getAttribute('data-media-id'))
+        : '';
+    const duration: number = el.getAttribute('data-duration')
+        ? Number(el.getAttribute('data-duration'))
+        : 30;
+    const youtubeTimer = document.getElementsByClassName(
+        'js-youtube-current-time'
+    )[0];
+
     let playTimer;
 
     tracking.init(atomId);
@@ -55,7 +59,7 @@ export const initHostedYoutube = (el: HTMLElement): void => {
                 // show end slate when movie finishes
                 if (event.data === window.YT.PlayerState.ENDED) {
                     tracking.track('end', atomId);
-                    $currentTime.text('0:00');
+                    youtubeTimer.textContent = '0:00';
                     if (nextVideoAutoplay.canAutoplay()) {
                         // on mobile show the next video link in the end of the currently watching video
                         if (!isDesktop()) {
@@ -67,9 +71,8 @@ export const initHostedYoutube = (el: HTMLElement): void => {
                     const currentTime = Math.floor(player.getCurrentTime());
                     const seconds = currentTime % 60;
                     const minutes = (currentTime - seconds) / 60;
-                    $currentTime.text(
-                        minutes + (seconds < 10 ? ':0' : ':') + seconds
-                    );
+                    youtubeTimer.textContent =
+                        minutes + (seconds < 10 ? ':0' : ':') + seconds;
                 }
 
                 if (event.data === window.YT.PlayerState.PLAYING) {
