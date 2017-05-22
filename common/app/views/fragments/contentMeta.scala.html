@@ -40,13 +40,13 @@
         </div>
     }
 
-    @if(item.content.showCircularBylinePicAtSide) {
+    @if(item.content.showCircularBylinePicAtSide && !item.content.isImmersive) {
         <div class="media__img meta__image">
             @fragments.meta.bylineImage(item.tags)
         </div>
     }
 
-    @if(!item.content.isGallery) {
+    @if(!(item.content.isGallery || item.content.isImmersive)) {
         @if(!item.content.hasTonalHeaderByline) {
             @byline()
         }
@@ -60,10 +60,12 @@
             @fragments.meta.contactAuthor(item.tags, amp)
         }
 
-        @if(!item.trail.shouldHidePublicationDate) {
-            @fragments.meta.dateline(item.trail.webPublicationDate, item.fields.lastModified, item.content.hasBeenModified, item.fields.firstPublicationDate, item.tags.isLiveBlog, item.fields.isLive)
-        }
     }
+
+    @if(!(item.trail.shouldHidePublicationDate || item.content.isGallery)) {
+        @fragments.meta.dateline(item.trail.webPublicationDate, item.fields.lastModified, item.content.hasBeenModified, item.fields.firstPublicationDate, item.tags.isLiveBlog, item.fields.isLive)
+    }
+
 }
 
 <div class="content__meta-container js-content-meta js-football-meta u-cf
