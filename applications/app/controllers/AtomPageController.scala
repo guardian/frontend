@@ -33,7 +33,6 @@ class AtomPageController(contentApiClient: ContentApiClient)(implicit context: A
 
   private def lookup(path: String)(implicit request: RequestHeader): Future[Either[Atom, Result]] = {
     val edition = Edition(request)
-    println(s"Looking up $path")
     contentApiClient.getResponse(contentApiClient.item(path, edition)) map make map {
       case Some(x) => Left(x)
       case _ => Right(NotFound)

@@ -62,6 +62,7 @@ object css {
   def liveblogAmp(implicit context: ApplicationContext) = inline("head.amp-liveblog")
   def emailArticle(implicit context: ApplicationContext) = inline("head.email-article")
   def emailFront(implicit context: ApplicationContext) = inline("head.email-front")
+  def inlineAtom(atomType: String)(implicit content: ApplicationContext) = inline(s"head.atom-$atomType")
 
   def projectCss(projectOverride: Option[String])(implicit context: ApplicationContext) = project(projectOverride.getOrElse(context.applicationIdentity.name))
   def headOldIE(projectOverride: Option[String])(implicit context: ApplicationContext) = cssOldIE(projectOverride.getOrElse(context.applicationIdentity.name))

@@ -372,12 +372,12 @@ case class GalleryPage(
 case class EmbedPage(item: Video, title: String, isExpired: Boolean = false) extends ContentPage
 
 trait AtomPage extends Page {
-  def stylesheet: String
   def javascript: String
+  def atomType: String
 }
 
 case class MediaAtomPage(atom: MediaAtom) extends AtomPage {
-  override val stylesheet = "media-player"
+  override val atomType = "media"
   override val javascript = "youtube-embed"
   override val metadata = MetaData.make(
     id = atom.id,
@@ -387,7 +387,7 @@ case class MediaAtomPage(atom: MediaAtom) extends AtomPage {
 }
 
 case class StoryQuestionsAtomPage(atom: StoryQuestionsAtom) extends AtomPage {
-  override val stylesheet = "storyquestions"
+  override val atomType = "storyquestions"
   override val javascript = "youtube-embed"
   override val metadata = MetaData.make(
     id = atom.id,
