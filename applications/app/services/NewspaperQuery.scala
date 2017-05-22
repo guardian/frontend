@@ -154,22 +154,22 @@ class NewspaperQuery(contentApiClient: ContentApiClient) extends ExecutionContex
       val displayFormat = d.toString(dateForFrontPagePattern)
       val hrefDateFormat = d.toString(hrefFormat).toLowerCase
       val href = if(d.getDayOfWeek == DateTimeConstants.SUNDAY) s"/theobserver/$hrefDateFormat" else s"/theguardian/$hrefDateFormat"
-      val fapiSnap = fapi
-                     .LinkSnap("no-id",
-                       None,
-                       "no-snap-type",
-                       None,
-                       None,
-                       Some(displayFormat),
-                       Some(href),
-                       None,
-                       "group",
-                       None,
-                       ContentProperties.fromResolvedMetaData(ResolvedMetaData.Default),
-                       None,
-                       None,
-                       Map.empty
-                     )
+      val fapiSnap = fapi.LinkSnap(
+        id = "no-id",
+        maybeFrontPublicationDate = None,
+        snapType = "no-snap-type",
+        snapUri = None,
+        snapCss = None,
+        headline = Some(displayFormat),
+        href = Some(href),
+        trailText = None,
+        group = "group",
+        image = None,
+        properties = ContentProperties.fromResolvedMetaData(ResolvedMetaData.Default),
+        byline = None,
+        kicker = None,
+        brandingByEdition = Map.empty
+      )
       LinkSnap.make(fapiSnap)
     }
   }
