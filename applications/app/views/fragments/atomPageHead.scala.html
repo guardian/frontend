@@ -10,10 +10,12 @@
   "javascripts/vendor/polyfillio.fallback.js"
 }) { polyfillsUrl =>
     <link rel="preload" as="script" href="@Static("javascripts/graun.atom.js")">
-    <link rel="preload" as="script" href="@Static("javascripts/graun.${page.javascript}.js")">
+    <link rel="preload" as="script" href="@Static(s"javascripts/graun.${page.atomType}.js")">
     <link rel="preload" as="script" href="@polyfillsUrl">
 }
 
 <style>
   @Html(common.Assets.css.inlineAtom(page.atomType))
 </style>
+
+@fragments.atomJSBlocking(page)
