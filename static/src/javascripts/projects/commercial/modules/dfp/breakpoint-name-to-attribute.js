@@ -1,5 +1,6 @@
-export default breakpointNameToAttribute;
+// @flow
 
-function breakpointNameToAttribute(breakpointName) {
-    return breakpointName.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
-}
+const breakpointNameToAttribute = (breakpointName: string) =>
+    breakpointName.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
+
+export { breakpointNameToAttribute };
