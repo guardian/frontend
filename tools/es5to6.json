@@ -98,9 +98,7 @@
     "projects/common/modules/atoms/youtube-tracking.js",
     "projects/commercial/modules/messenger/viewport.js"
   ],
-  "Gideon Goldberg": [
-    "projects/commercial/modules/user-features.js"
-  ],
+  "Gideon Goldberg": [],
   "Matthew Walls": [
     "projects/common/modules/crosswords/anagram-helper/main.js",
     "projects/common/modules/crosswords/anagram-helper/ring.js",
