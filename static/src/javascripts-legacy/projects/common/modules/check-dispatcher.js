@@ -12,7 +12,7 @@ define([
     find,
     config,
     checkMediator,
-    checks,
+    checkMediatorChecks,
     emailRunChecks,
     emailArticle,
     clash,
@@ -178,7 +178,7 @@ define([
 
     function init() {
         Object.keys(checksToDispatch).forEach(function(key) {
-            if (checks.indexOf(key)) {
+            if (checkMediatorChecks.checks.indexOf(key)) {
                 checkMediator.resolveCheck(key, checksToDispatch[key]());
             }
         });

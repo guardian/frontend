@@ -21,4 +21,4 @@ const checks = [
     'isOutbrainDisabled',
 ];
 
-export default checks;
+export { checks };

@@ -1,6 +1,6 @@
 // @flow
 
-import checks from './check-mediator-checks';
+import { checks } from './check-mediator-checks';
 
 // registeredChecks will store references to instances of DefferedCheck
 let registeredChecks = {};
