@@ -87,9 +87,9 @@ const getAdvertIframe = (adSlot: Element): Promise<HTMLIFrameElement> =>
     new Promise((resolve, reject) => {
         // DFP will sometimes return empty iframes, denoted with a '__hidden__' parameter embedded in its ID.
         // We need to be sure only to select the ad content frame.
-        const contentFrame = ((adSlot.querySelector(
+        const contentFrame: ?HTMLIFrameElement = (adSlot.querySelector(
             'iframe:not([id*="__hidden__"])'
-        ): any): ?HTMLIFrameElement);
+        ): any);
 
         if (!contentFrame) {
             reject();
