@@ -14,6 +14,8 @@ import com.typesafe.sbt.packager.Keys.packageName
 trait Prototypes {
   val version = "1-SNAPSHOT"
 
+  val cleanAll = taskKey[Unit]("Cleans all projects in a build, regardless of dependencies")
+
   val frontendCompilationSettings = Seq(
     organization := "com.gu",
     maxErrors := 20,
@@ -29,7 +31,11 @@ trait Prototypes {
       val _ = initialize.value
       assert(sys.props("java.specification.version") == "1.8",
         "Java 8 is required for this project.")
-    }
+    },
+    cleanAll := Def.taskDyn {
+      val allProjects = ScopeFilter(inAnyProject)
+      clean.all(allProjects)
+    }.value
   )
 
   val frontendIntegrationTestsSettings = Seq (

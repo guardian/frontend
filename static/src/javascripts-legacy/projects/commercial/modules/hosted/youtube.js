@@ -47,7 +47,7 @@ define([
         var playTimer;
 
         tracking.init(atomId);
-        youtubePlayer.init(el, {
+        youtubePlayer.initYoutubePlayer(el, {
             onPlayerStateChange: function (event) {
                 var player = event.target;
 

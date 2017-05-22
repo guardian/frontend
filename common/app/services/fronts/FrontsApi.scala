@@ -1,4 +1,4 @@
-package fronts
+package services.fronts
 
 import com.amazonaws.services.s3.AmazonS3Client
 import com.gu.facia.client.{AmazonSdkS3Client, ApiClient}

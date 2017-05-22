@@ -21,11 +21,21 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-explainer-snippet",
+    "Displays an explainer in the form of a disclosure widget",
+    owners = Seq(Owner.withGithub("regiskuckaertz")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 5, 29),
+    exposeClientSide = true
+  )
+  
+  Switch(
+    ABTests,
     "ab-measure-understanding",
     "Asks users if they feel better informed after reading an article",
     owners = Seq(Owner.withGithub("regiskuckaertz")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 5, 19),
+    sellByDate = new LocalDate(2017, 5, 29),
     exposeClientSide = true
   )
 
@@ -186,16 +196,6 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("Mullefa")),
     safeState = On,
     sellByDate = new LocalDate(2017, 6, 13),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-acquisitions-epic-single-cta",
-    "Test an epic with a single CTA: contribute in the US and support everywhere else",
-    owners = Seq(Owner.withGithub("joelochlann")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 5, 25),
     exposeClientSide = true
   )
 }

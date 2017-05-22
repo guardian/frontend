@@ -10,13 +10,13 @@ import {
 import {
     articleBodyAdvertsInit,
 } from 'commercial/modules/article-body-adverts';
-import closeDisabledSlots from 'commercial/modules/close-disabled-slots';
+import { closeDisabledSlots } from 'commercial/modules/close-disabled-slots';
 import prepareGoogletag from 'commercial/modules/dfp/prepare-googletag';
 import prepareSonobiTag from 'commercial/modules/dfp/prepare-sonobi-tag';
 import prepareSwitchTag from 'commercial/modules/dfp/prepare-switch-tag';
 import { fillAdvertSlots } from 'commercial/modules/dfp/fill-advert-slots';
 import hostedAbout from 'commercial/modules/hosted/about';
-import hostedVideo from 'commercial/modules/hosted/video';
+import { initHostedVideo } from 'commercial/modules/hosted/video';
 import hostedGallery from 'commercial/modules/hosted/gallery';
 import hostedOJCarousel
     from 'commercial/modules/hosted/onward-journey-carousel';
@@ -26,8 +26,13 @@ import stickyTopBanner from 'commercial/modules/sticky-top-banner';
 import thirdPartyTags from 'commercial/modules/third-party-tags';
 import paidforBand from 'commercial/modules/paidfor-band';
 import { paidContainers } from 'commercial/modules/paid-containers';
-import * as performanceLogging
-    from 'commercial/modules/dfp/performance-logging';
+import {
+    defer,
+    wrap,
+    addStartTimeBaseline,
+    addEndTimeBaseline,
+    primaryBaseline,
+} from 'commercial/modules/dfp/performance-logging';
 import { trackPerformance } from 'common/modules/analytics/google';
 import userFeatures from 'commercial/modules/user-features';
 
@@ -40,7 +45,7 @@ const commercialModules: Array<Array<any>> = [
     ['cm-prepare-googletag', prepareGoogletag.init, true],
     ['cm-articleBodyAdverts', articleBodyAdvertsInit],
     ['cm-liveblogAdverts', liveblogAdverts.init, true],
-    ['cm-closeDisabledSlots', closeDisabledSlots.init],
+    ['cm-closeDisabledSlots', closeDisabledSlots],
     ['cm-stickyTopBanner', stickyTopBanner.init],
     ['cm-fill-advert-slots', fillAdvertSlots, true],
     ['cm-paidContainers', paidContainers],
@@ -50,7 +55,7 @@ const commercialModules: Array<Array<any>> = [
 if (config.page.isHosted) {
     commercialModules.push(
         ['cm-hostedAbout', hostedAbout.init],
-        ['cm-hostedVideo', hostedVideo.init, true],
+        ['cm-hostedVideo', initHostedVideo, true],
         ['cm-hostedGallery', hostedGallery.init],
         ['cm-hostedOnward', hostedOnward.init, true],
         ['cm-hostedOJCarousel', hostedOJCarousel.init]
@@ -58,7 +63,7 @@ if (config.page.isHosted) {
 }
 
 const loadModules = (modules, baseline): Promise<void> => {
-    performanceLogging.addStartTimeBaseline(baseline);
+    addStartTimeBaseline(baseline);
 
     const modulePromises = [];
 
@@ -75,8 +80,8 @@ const loadModules = (modules, baseline): Promise<void> => {
                     // perf logging, to time when their async work is done. The command buffer guarantees execution order,
                     // so we don't use the returned promise to order the bootstrap's module invocations.
                     const wrapped = moduleDefer
-                        ? performanceLogging.defer(moduleName, moduleInit)
-                        : performanceLogging.wrap(moduleName, moduleInit);
+                        ? defer(moduleName, moduleInit)
+                        : wrap(moduleName, moduleInit);
                     const result = wrapped();
                     modulePromises.push(result);
                 },
@@ -85,13 +90,13 @@ const loadModules = (modules, baseline): Promise<void> => {
     });
 
     return Promise.all(modulePromises).then((): void => {
-        performanceLogging.addEndTimeBaseline(baseline);
+        addEndTimeBaseline(baseline);
     });
 };
 
 export default (): Promise<void> => {
     if (config.switches.adFreeMembershipTrial && userFeatures.isAdFreeUser()) {
-        closeDisabledSlots.init(true);
+        closeDisabledSlots(true);
         return Promise.resolve();
     }
 
@@ -114,7 +119,7 @@ export default (): Promise<void> => {
         cmd: [],
     };
 
-    return loadModules(commercialModules, performanceLogging.primaryBaseline)
+    return loadModules(commercialModules, primaryBaseline)
         .then(() => {
             markTime('commercial end');
             catchErrorsWithContext([

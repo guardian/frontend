@@ -63,7 +63,7 @@ define([
         var shouldServePlista = config.switches.plistaForOutbrainAu && config.page.edition.toLowerCase() === 'au';
 
         if (shouldServePlista) {
-            renderWidget('plista', plista.init);
+            renderWidget('plista', plista.default.init);
         } else {
             renderWidget('outbrain', outbrain.init);
         }

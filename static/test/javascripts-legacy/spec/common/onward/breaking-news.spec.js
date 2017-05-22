@@ -48,10 +48,16 @@ define([
                         return '';
                     }
                 };
+                var fakeConfig = {
+                    page: {
+                        edition: 'UK'
+                    }
+                };
 
                 injector.mock({
                     'lib/storage': storage,
                     'lib/fetch-json': fetchJson,
+                    'lib/config': fakeConfig,
                     'common/views/svgs': fakeSvgs
                 }).require(['common/modules/onward/breaking-news'], function (breakingNews) {
                     breakingNews.DEFAULT_DELAY = 100;
@@ -71,7 +77,6 @@ define([
 
         beforeAll(function () {
             fetchJson = jasmine.createSpy('fetch-json');
-            config.page.edition = 'UK';
         });
 
         beforeEach(function (done) {

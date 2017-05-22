@@ -1,6 +1,6 @@
 package controllers
 
-import campaigns.ShortCampaignCodes
+import commercial.campaigns.ShortCampaignCodes
 import common._
 import model.Cached.{CacheableResult, WithoutRevalidationResult}
 import play.api.mvc._
