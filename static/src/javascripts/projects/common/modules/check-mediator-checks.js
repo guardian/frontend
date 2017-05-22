@@ -14,7 +14,6 @@ export const checks = [
     'isUserNotInContributionsAbTest',
     'isUserInEmailAbTestAndEmailCanRun',
     'isUserInEmailAbTest',
-    'isOutbrainNonCompliant',
     'isUserInContributionsAbTest',
     'isStoryQuestionsOnPage',
     'emailCanRunPostCheck',

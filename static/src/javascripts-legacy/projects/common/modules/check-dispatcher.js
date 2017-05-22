@@ -150,18 +150,6 @@ define([
             });
         },
 
-        isOutbrainNonCompliant: function() {
-            var dependentChecks = [
-                checkMediator.waitForCheck('isUserInContributionsAbTest'),
-                checkMediator.waitForCheck('isUserInEmailAbTestAndEmailCanRun'),
-                checkMediator.waitForCheck('isStoryQuestionsOnPage')
-            ];
-
-            return Promise.all(dependentChecks).then(function (results) {
-                return someCheckPassed(results); 
-            });
-        },
-
         emailCanRunPostCheck: function() {
             var dependentChecks = [
                 checkMediator.waitForCheck('isUserInEmailAbTest'),

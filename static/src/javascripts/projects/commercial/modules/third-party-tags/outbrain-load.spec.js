@@ -38,122 +38,213 @@ describe('Outbrain Load', () => {
         expect(load).toBeDefined();
     });
 
-    it('should create two containers for desktop with correct IDs for slot 1', done => {
-        config.page.section = 'uk-news';
+    describe('desktop', () => {
+        beforeEach(() => {
+            detect.getBreakpoint.mockReturnValueOnce('desktop');
+        });
 
-        load().then(() => {
-            expect($('.OUTBRAIN').first().data('widgetId')).toEqual('AR_12');
-            expect($('.OUTBRAIN').last().data('widgetId')).toEqual('AR_14');
-            done();
+        // compliant news
+        it('should create two containers for desktop with correct IDs for slot 1', done => {
+            config.page.section = 'uk-news';
+
+            load('compliant').then(() => {
+                expect($('.OUTBRAIN').first().data('widgetId')).toEqual(
+                    'AR_12'
+                );
+                expect($('.OUTBRAIN').last().data('widgetId')).toEqual('AR_14');
+                expect(tracking).toHaveBeenCalledWith({
+                    state: 'compliant',
+                    widgetId: 'AR_12',
+                });
+                done();
+            });
+        });
+
+        // compliant non-news
+        it('should create two containers for desktop with correct IDs for slot 2', done => {
+            config.page.section = 'football';
+
+            load('compliant').then(() => {
+                expect($('.OUTBRAIN').first().data('widgetId')).toEqual(
+                    'AR_13'
+                );
+                expect($('.OUTBRAIN').last().data('widgetId')).toEqual('AR_15');
+                expect(tracking).toHaveBeenCalledWith({
+                    state: 'compliant',
+                    widgetId: 'AR_13',
+                });
+                done();
+            });
+        });
+
+        // merch
+        it('should create one container for destkop with correct IDs for slot merch', done => {
+            config.page.edition = 'AU';
+
+            load('merchandising').then(() => {
+                expect($('.OUTBRAIN').first().data('widgetId')).toEqual(
+                    'AR_28'
+                );
+                expect(tracking).toHaveBeenCalledWith({
+                    state: 'merchandising',
+                    widgetId: 'AR_28',
+                });
+                done();
+            });
+        });
+
+        // non-compliant
+        it('should create one container for destkop with correct IDs for nonCompliant', done => {
+            config.page.edition = 'AU';
+
+            load('nonCompliant', 'blockedByTest').then(() => {
+                expect($('.OUTBRAIN').first().data('widgetId')).toEqual(
+                    'AR_28'
+                );
+                expect(tracking).toHaveBeenCalledWith({
+                    state: 'nonCompliant.blockedByTest',
+                    widgetId: 'AR_28',
+                });
+                done();
+            });
         });
     });
 
-    it('should create two containers for desktop with correct IDs for slot 2', done => {
-        config.page.section = 'football';
+    describe('tablet', () => {
+        beforeEach(() => {
+            detect.getBreakpoint.mockReturnValueOnce('tablet');
+        });
 
-        load().then(() => {
-            expect($('.OUTBRAIN').first().data('widgetId')).toEqual('AR_13');
-            expect($('.OUTBRAIN').last().data('widgetId')).toEqual('AR_15');
-            done();
+        // compliant news
+        it('should create two containers for tablet with correct IDs for slot 1', done => {
+            config.page.section = 'uk-news';
+
+            load('compliant').then(() => {
+                expect($('.OUTBRAIN').first().data('widgetId')).toEqual('MB_6');
+                expect($('.OUTBRAIN').last().data('widgetId')).toEqual('MB_8');
+                expect(tracking).toHaveBeenCalledWith({
+                    state: 'compliant',
+                    widgetId: 'MB_6',
+                });
+                done();
+            });
+        });
+
+        // compliant non-news
+        it('should create two containers for tablet with correct IDs for slot 2', done => {
+            config.page.section = 'football';
+
+            load('compliant').then(() => {
+                expect($('.OUTBRAIN').first().data('widgetId')).toEqual('MB_7');
+                expect($('.OUTBRAIN').last().data('widgetId')).toEqual('MB_9');
+                expect(tracking).toHaveBeenCalledWith({
+                    state: 'compliant',
+                    widgetId: 'MB_7',
+                });
+                done();
+            });
+        });
+
+        // merch
+        it('should create one container for tablet with correct IDs for slot merch', done => {
+            config.page.edition = 'AU';
+
+            load('merchandising').then(() => {
+                expect($('.OUTBRAIN').first().data('widgetId')).toEqual(
+                    'MB_11'
+                );
+                expect(tracking).toHaveBeenCalledWith({
+                    state: 'merchandising',
+                    widgetId: 'MB_11',
+                });
+                done();
+            });
+        });
+
+        // non-compliant
+        it('should create one container for tablet with correct IDs for nonCompliant', done => {
+            load('nonCompliant', 'blockedByTest').then(() => {
+                expect($('.OUTBRAIN').first().data('widgetId')).toEqual(
+                    'MB_11'
+                );
+                expect(tracking).toHaveBeenCalledWith({
+                    state: 'nonCompliant.blockedByTest',
+                    widgetId: 'MB_11',
+                });
+                done();
+            });
         });
     });
 
-    it('should detect wide breakpoint as desktop', done => {
-        detect.getBreakpoint.mockReturnValueOnce('wide');
-        config.page.section = 'football';
-
-        load().then(() => {
-            expect($('.OUTBRAIN').first().data('widgetId')).toEqual('AR_13');
-            expect($('.OUTBRAIN').last().data('widgetId')).toEqual('AR_15');
-            done();
+    describe('mobile', () => {
+        beforeEach(() => {
+            detect.getBreakpoint.mockReturnValueOnce('mobile');
         });
-    });
 
-    it('should create two containers for tablet with correct IDs for slot 1', done => {
-        detect.getBreakpoint.mockReturnValueOnce('tablet');
-        config.page.section = 'uk-news';
+        // compliant news
+        it('should create one container for mobile with correct ID for slot 1', done => {
+            config.page.section = 'uk-news';
 
-        load().then(() => {
-            expect($('.OUTBRAIN').first().data('widgetId')).toEqual('MB_6');
-            expect($('.OUTBRAIN').last().data('widgetId')).toEqual('MB_8');
-            done();
+            load('compliant').then(() => {
+                expect($('.OUTBRAIN').first().data('widgetId')).toEqual('MB_4');
+                expect(tracking).toHaveBeenCalledWith({
+                    state: 'compliant',
+                    widgetId: 'MB_4',
+                });
+                done();
+            });
         });
-    });
 
-    it('should create two containers for tablet with correct IDs for slot 2', done => {
-        detect.getBreakpoint.mockReturnValueOnce('tablet');
-        config.page.section = 'football';
+        // compliant non-news
+        it('should create one container for mobile with correct IDs for slot 1', done => {
+            config.page.section = 'football';
 
-        load().then(() => {
-            expect($('.OUTBRAIN').first().data('widgetId')).toEqual('MB_7');
-            expect($('.OUTBRAIN').last().data('widgetId')).toEqual('MB_9');
-            done();
+            load('compliant').then(() => {
+                expect($('.OUTBRAIN').first().data('widgetId')).toEqual('MB_5');
+                expect(tracking).toHaveBeenCalledWith({
+                    state: 'compliant',
+                    widgetId: 'MB_5',
+                });
+                done();
+            });
         });
-    });
 
-    it('should create only one container for mobile with correct IDs for slot 1', done => {
-        detect.getBreakpoint.mockReturnValueOnce('mobile');
-        config.page.section = 'uk-news';
+        // merch
+        it('should create one container for mobile with correct IDs for slot merch', done => {
+            config.page.edition = 'AU';
 
-        load().then(() => {
-            expect($('.OUTBRAIN').first().data('widgetId')).toEqual('MB_4');
-            done();
+            load('merchandising').then(() => {
+                expect($('.OUTBRAIN').first().data('widgetId')).toEqual(
+                    'MB_10'
+                );
+                expect(tracking).toHaveBeenCalledWith({
+                    state: 'merchandising',
+                    widgetId: 'MB_10',
+                });
+                done();
+            });
         });
-    });
 
-    it('should create only one container for mobile with correct IDs for slot 2', done => {
-        detect.getBreakpoint.mockReturnValueOnce('mobile');
-        config.page.section = 'football';
-
-        load().then(() => {
-            expect($('.OUTBRAIN').first().data('widgetId')).toEqual('MB_5');
-            done();
-        });
-    });
-
-    it('should create two containers for destkop with correct IDs for slot merch', done => {
-        config.page.edition = 'AU';
-
-        load('merchandising').then(() => {
-            expect($('.OUTBRAIN').first().data('widgetId')).toEqual('AR_28');
-            done();
-        });
-    });
-
-    it('should create two containers for tablet with correct IDs for slot merch', done => {
-        detect.getBreakpoint.mockReturnValueOnce('tablet');
-
-        load('merchandising').then(() => {
-            expect($('.OUTBRAIN').first().data('widgetId')).toEqual('MB_11');
-            done();
-        });
-    });
-
-    it('should create only one container for mobile with correct IDs for slot merch', done => {
-        detect.getBreakpoint.mockReturnValueOnce('mobile');
-
-        load('merchandising').then(() => {
-            expect($('.OUTBRAIN').first().data('widgetId')).toEqual('MB_10');
-            done();
+        // non-compliant
+        it('should create one container for mobile with correct IDs for nonCompliant', done => {
+            load('nonCompliant', 'blockedByTest').then(() => {
+                expect($('.OUTBRAIN').first().data('widgetId')).toEqual(
+                    'MB_10'
+                );
+                expect(tracking).toHaveBeenCalledWith({
+                    state: 'nonCompliant.blockedByTest',
+                    widgetId: 'MB_10',
+                });
+                done();
+            });
         });
     });
 
     it('should require outbrain javascript', done => {
-        load().then(() => {
+        load('compliant').then(() => {
             expect(loadScript).toHaveBeenCalledWith(
                 '//widgets.outbrain.com/outbrain.js'
             );
-            done();
-        });
-    });
-
-    it('should call tracking method', done => {
-        config.page.section = 'football';
-
-        load().then(() => {
-            expect(tracking).toHaveBeenCalledWith({
-                widgetId: 'AR_13',
-            });
             done();
         });
     });
