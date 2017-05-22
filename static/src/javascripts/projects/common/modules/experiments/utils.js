@@ -1,4 +1,5 @@
 // @flow
+import config from 'lib/config';
 import { local } from 'lib/storage';
 import { testCanBeRun } from 'common/modules/experiments/test-can-run-checks';
 
