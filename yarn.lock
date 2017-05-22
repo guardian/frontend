@@ -873,15 +873,7 @@ babel-plugin-transform-system-register@0.0.1:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/babel-plugin-transform-system-register/-/babel-plugin-transform-system-register-0.0.1.tgz#9dff40390c2763ac518f0b2ad7c5ea4f65a5be25"
 
-babel-polyfill@^6.16.0, babel-polyfill@^6.6.1, babel-polyfill@^6.9.1:
-  version "6.20.0"
-  resolved "https://registry.yarnpkg.com/babel-polyfill/-/babel-polyfill-6.20.0.tgz#de4a371006139e20990aac0be367d398331204e7"
-  dependencies:
-    babel-runtime "^6.20.0"
-    core-js "^2.4.0"
-    regenerator-runtime "^0.10.0"
-
-babel-polyfill@^6.23.0:
+babel-polyfill@^6.16.0, babel-polyfill@^6.23.0, babel-polyfill@^6.6.1, babel-polyfill@^6.9.1:
   version "6.23.0"
   resolved "https://registry.yarnpkg.com/babel-polyfill/-/babel-polyfill-6.23.0.tgz#8364ca62df8eafb830499f699177466c3b03499d"
   dependencies:
@@ -1487,6 +1479,10 @@ cipher-base@^1.0.0, cipher-base@^1.0.1:
   resolved "https://registry.yarnpkg.com/cipher-base/-/cipher-base-1.0.3.tgz#eeabf194419ce900da3018c207d212f2a6df0a07"
   dependencies:
     inherits "^2.0.1"
+
+circular-dependency-plugin@3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/circular-dependency-plugin/-/circular-dependency-plugin-3.0.0.tgz#9b68692e35b0e3510998d0164b6ae5011bea5760"
 
 circular-json@^0.3.0:
   version "0.3.1"
