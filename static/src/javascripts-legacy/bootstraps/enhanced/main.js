@@ -60,7 +60,7 @@ define([
                     ['ab-tests-registerCompleteEvents', function () { abOphan.registerCompleteEvents(tests); }],
                 ]);
 
-                ab.trackEvent();
+                abOphan.trackABTests();
             }]
         ]);
 
