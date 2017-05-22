@@ -102,6 +102,15 @@ $hosted-video-height: 551px;
     }
 }
 
+.hosted__cta-fine-print {
+    @include f-headlineSans;
+    color: #ffffff;
+    display: block;
+    font-size: 12px;
+    margin: 8px 0;
+    line-height: 14px;
+}
+
 .host__header {
     display: flex;
     flex-direction: column;
@@ -587,7 +596,7 @@ $hosted-video-height: 551px;
     }
 
     @include mq(mobile) {
-        height: 200px;
+        min-height: 200px;
         background-position: left;
     }
 

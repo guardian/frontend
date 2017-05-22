@@ -21,6 +21,11 @@
                     <div class="hosted__cta-wrapper hosted__cta-btn-wrapper content__hosted-body">
                         <span class="hosted__cta-label">@{cta.label}</span>
                         <span class="hosted__cta-btn-text hosted-tone-btn">@{cta.btnText} @fragments.inlineSvg("external-link", "icon")</span>
+                        @if(page.campaign.id == "lloyds-bank-wealth"){
+                            <span class="hosted__cta-fine-print">
+                                Advertisement creative produced by Guardian Labs on behalf of Lloyds Bank.
+                            </span>
+                        }
                     </div>
                 }
             </a>
