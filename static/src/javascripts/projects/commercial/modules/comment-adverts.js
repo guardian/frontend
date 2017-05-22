@@ -6,26 +6,29 @@ import fastdom from 'lib/fastdom-promise';
 import { addSlot } from 'commercial/modules/dfp/add-slot';
 import commercialFeatures from 'commercial/modules/commercial-features';
 import createSlot from 'commercial/modules/dfp/create-slot';
+import type bonzo from 'bonzo';
 
 const init = (): ?boolean => {
-    const $adSlotContainer = $('.js-discussion__ad-slot');
+    const $adSlotContainer: bonzo = $('.js-discussion__ad-slot');
 
     if (!commercialFeatures.commentAdverts || !$adSlotContainer.length) {
         return false;
     }
 
     mediator.once('modules:comments:renderComments:rendered', (): void => {
-        const $commentMainColumn = $('.js-comments .content__main-column');
+        const $commentMainColumn: bonzo = $(
+            '.js-comments .content__main-column'
+        );
 
         fastdom
             .read(() => $commentMainColumn.dim().height)
-            .then(mainColHeight => {
+            .then((mainColHeight: number) => {
                 // if comments container is lower than 280px
                 if (mainColHeight < 280) {
                     return;
                 }
 
-                const adSlot = createSlot('comments', {
+                const adSlot: HTMLDivElement = createSlot('comments', {
                     classes: 'mpu-banner-ad',
                 });
 
