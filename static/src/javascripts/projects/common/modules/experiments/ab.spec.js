@@ -1,5 +1,5 @@
 // @flow
-import * as ab from 'common/modules/experiments/ab';
+import { segment, forceSegment, run } from 'common/modules/experiments/ab';
 import {
     getParticipations,
     isParticipating,
@@ -42,16 +42,16 @@ describe('A/B tests', () => {
 
             config.switches.abDummyTest = false;
 
-            ab.segment([dummyTest]);
-            ab.run([dummyTest]);
+            segment([dummyTest]);
+            run([dummyTest]);
 
             expect(controlSpy).not.toHaveBeenCalled();
             expect(variantSpy).not.toHaveBeenCalled();
         });
 
         test('users should be assigned to a variant', () => {
-            ab.segment(TESTS);
-            ab.run(TESTS);
+            segment(TESTS);
+            run(TESTS);
 
             TESTS.forEach(test => {
                 expect(isParticipating(test)).toBeTruthy();
@@ -65,8 +65,8 @@ describe('A/B tests', () => {
 
             dummyTest.audience = 0;
 
-            ab.segment([dummyTest]);
-            ab.run([dummyTest]);
+            segment([dummyTest]);
+            run([dummyTest]);
 
             expect(controlSpy).not.toHaveBeenCalled();
             expect(variantSpy).not.toHaveBeenCalled();
@@ -76,7 +76,7 @@ describe('A/B tests', () => {
         test("tests should not segment users when they can't be run", () => {
             const dummyTest = genAbTest('DummyTest', false);
 
-            ab.segment([dummyTest]);
+            segment([dummyTest]);
             expect(getParticipations()).toEqual({});
         });
 
@@ -84,7 +84,7 @@ describe('A/B tests', () => {
             const dummyTest = genAbTest('DummyTest', false);
             dummyTest.expiry = '1999-01-01';
 
-            ab.segment([dummyTest]);
+            segment([dummyTest]);
             expect(getParticipations()).toEqual({});
         });
 
@@ -92,7 +92,7 @@ describe('A/B tests', () => {
             const dummyTest = genAbTest('DummyTest');
             config.switches.abDummyTest = false;
 
-            ab.segment([dummyTest]);
+            segment([dummyTest]);
             expect(getParticipations()).toEqual({});
         });
 
@@ -100,12 +100,12 @@ describe('A/B tests', () => {
             const dummyTest = genAbTest('DummyTest');
 
             overwriteMvtCookie(1);
-            ab.segment([dummyTest]);
+            segment([dummyTest]);
             expect(getParticipations().DummyTest.variant).toEqual('variant');
         });
 
         test('all tests should be retrieved', () => {
-            ab.segment(TESTS);
+            segment(TESTS);
 
             expect(Object.keys(getParticipations())).toEqual(
                 TESTS.map(t => t.id)
@@ -120,7 +120,7 @@ describe('A/B tests', () => {
                 '{ "value": { "DummyTest": { "variant": "foo" } } }'
             );
             dummyTest.expiry = '1999-01-01';
-            ab.segment([dummyTest]);
+            segment([dummyTest]);
             cleanParticipations([dummyTest]);
 
             expect(getParticipations()).toEqual({});
@@ -133,7 +133,7 @@ describe('A/B tests', () => {
                 participationsKey,
                 '{ "value": { "DummyTest": { "variant": "foo" } } }'
             );
-            ab.segment([dummyTest]);
+            segment([dummyTest]);
             cleanParticipations([dummyTest]);
 
             expect(getParticipations()).toEqual({});
@@ -142,10 +142,10 @@ describe('A/B tests', () => {
         test('forcing users into tests', () => {
             const dummyTest = genAbTest('DummyTest');
 
-            ab.segment([dummyTest]);
+            segment([dummyTest]);
             expect(getParticipations().DummyTest.variant).toBe('variant');
 
-            ab.forceSegment('DummyTest', 'control');
+            forceSegment('DummyTest', 'control');
             expect(getParticipations().DummyTest.variant).toBe('control');
         });
     });
@@ -156,8 +156,8 @@ describe('A/B tests', () => {
             const controlSpy = jest.spyOn(dummyTest.variants[0], 'test');
             const variantSpy = jest.spyOn(dummyTest.variants[1], 'test');
 
-            ab.segment([dummyTest]);
-            ab.run([dummyTest]);
+            segment([dummyTest]);
+            run([dummyTest]);
 
             expect(
                 controlSpy.mock.calls.length + variantSpy.mock.calls.length
@@ -174,8 +174,8 @@ describe('A/B tests', () => {
 
             dummyTest.expiry = dateString;
 
-            ab.segment([dummyTest]);
-            ab.run([dummyTest]);
+            segment([dummyTest]);
+            run([dummyTest]);
 
             expect(Object.keys(getParticipations())).toEqual(['DummyTest']);
             expect(
@@ -190,8 +190,8 @@ describe('A/B tests', () => {
 
             dummyTest.expiry = '1999-01-01';
 
-            ab.segment([dummyTest]);
-            ab.run([dummyTest]);
+            segment([dummyTest]);
+            run([dummyTest]);
 
             expect(controlSpy).not.toHaveBeenCalled();
             expect(variantSpy).not.toHaveBeenCalled();
