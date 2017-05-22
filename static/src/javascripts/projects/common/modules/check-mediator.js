@@ -1,5 +1,4 @@
 // @flow
-
 import { checks } from './check-mediator-checks';
 
 // registeredChecks will store references to instances of DefferedCheck
@@ -52,7 +51,7 @@ const waitForCheck = (id: string): Promise<any> => {
     return Promise.reject(`No deferred check with id ${id}`);
 };
 
-const init = (): void => {
+const initCheckMediator = (): void => {
     checks.forEach(registerCheck);
 };
 
@@ -60,13 +59,8 @@ const testClean = (): void => {
     registeredChecks = {};
 };
 
-export default {
-    init,
-    resolveCheck,
-    rejectCheck,
-    waitForCheck,
-    // exposed for unit testing
-    test: {
-        testClean,
-    },
+export { initCheckMediator, resolveCheck, rejectCheck, waitForCheck };
+
+export const _ = {
+    testClean,
 };

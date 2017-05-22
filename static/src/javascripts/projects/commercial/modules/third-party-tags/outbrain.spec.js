@@ -1,6 +1,10 @@
 // @flow
 import config from 'lib/config';
-import checkMediator from 'common/modules/check-mediator';
+import {
+    initCheckMediator,
+    resolveCheck,
+    _,
+} from 'common/modules/check-mediator';
 import detect from 'lib/detect';
 import { load } from './outbrain-load';
 // import { tracking } from './outbrain-tracking';
@@ -26,7 +30,7 @@ describe('Outbrain', () => {
                 `;
         }
         // init checkMediator so we can resolve checks in tests
-        checkMediator.init();
+        initCheckMediator();
 
         config.switches.outbrain = true;
         config.switches.emailInArticleOutbrain = false;
@@ -39,7 +43,7 @@ describe('Outbrain', () => {
     });
 
     afterEach(() => {
-        checkMediator.test.testClean();
+        _.testClean();
         if (document.body) {
             document.body.innerHTML = '';
         }
@@ -60,7 +64,7 @@ describe('Outbrain', () => {
 
         it('should not load if outbrain disabled', done => {
             // isOutbrainDisabled check
-            checkMediator.resolveCheck('isOutbrainDisabled', true);
+            resolveCheck('isOutbrainDisabled', true);
 
             init().then(() => {
                 expect(load).not.toHaveBeenCalled();
@@ -75,8 +79,8 @@ describe('Outbrain', () => {
         it('should load instantly when ad block is in use', done => {
             detect.adblockInUse = Promise.resolve(true);
             // isOutbrainDisabled check
-            checkMediator.resolveCheck('isOutbrainDisabled', false);
-            checkMediator.resolveCheck('isOutbrainNonCompliant', true);
+            resolveCheck('isOutbrainDisabled', false);
+            resolveCheck('isOutbrainNonCompliant', true);
 
             init().then(() => {
                 expect(load).toHaveBeenCalled();
@@ -92,9 +96,9 @@ describe('Outbrain', () => {
 
         it('should not load if both merch components are loaded', done => {
             // isOutbrainDisabled check
-            checkMediator.resolveCheck('isOutbrainDisabled', false);
+            resolveCheck('isOutbrainDisabled', false);
             // isOutbrainBlockedByAds checks
-            checkMediator.resolveCheck('isOutbrainBlockedByAds', true);
+            resolveCheck('isOutbrainBlockedByAds', true);
 
             init().then(() => {
                 expect(load).not.toHaveBeenCalled();
@@ -108,10 +112,10 @@ describe('Outbrain', () => {
 
         it('should load in the low-priority merch component', done => {
             // isOutbrainDisabled check
-            checkMediator.resolveCheck('isOutbrainDisabled', false);
+            resolveCheck('isOutbrainDisabled', false);
             // isOutbrainBlockedByAds and isOutbrainMerchandiseCompliant checks
-            checkMediator.resolveCheck('isOutbrainBlockedByAds', false);
-            checkMediator.resolveCheck('isOutbrainMerchandiseCompliant', true);
+            resolveCheck('isOutbrainBlockedByAds', false);
+            resolveCheck('isOutbrainMerchandiseCompliant', true);
 
             init().then(() => {
                 expect(load).toHaveBeenCalled();
@@ -126,11 +130,11 @@ describe('Outbrain', () => {
 
         it('should load a non compliant component', done => {
             // isOutbrainDisabled check
-            checkMediator.resolveCheck('isOutbrainDisabled', false);
+            resolveCheck('isOutbrainDisabled', false);
             // isOutbrainBlockedByAds and isOutbrainMerchandiseCompliant checks
-            checkMediator.resolveCheck('isOutbrainBlockedByAds', false);
-            checkMediator.resolveCheck('isOutbrainMerchandiseCompliant', false);
-            checkMediator.resolveCheck('isOutbrainNonCompliant', true);
+            resolveCheck('isOutbrainBlockedByAds', false);
+            resolveCheck('isOutbrainMerchandiseCompliant', false);
+            resolveCheck('isOutbrainNonCompliant', true);
 
             init().then(() => {
                 expect(load).toHaveBeenCalled();
@@ -145,11 +149,11 @@ describe('Outbrain', () => {
 
         it('should load a compliant component', done => {
             // isOutbrainDisabled check
-            checkMediator.resolveCheck('isOutbrainDisabled', false);
+            resolveCheck('isOutbrainDisabled', false);
             // isOutbrainBlockedByAds and isOutbrainMerchandiseCompliant checks
-            checkMediator.resolveCheck('isOutbrainBlockedByAds', false);
-            checkMediator.resolveCheck('isOutbrainMerchandiseCompliant', false);
-            checkMediator.resolveCheck('isOutbrainNonCompliant', false);
+            resolveCheck('isOutbrainBlockedByAds', false);
+            resolveCheck('isOutbrainMerchandiseCompliant', false);
+            resolveCheck('isOutbrainNonCompliant', false);
 
             init().then(() => {
                 expect(load).toHaveBeenCalled();

@@ -1,6 +1,6 @@
 // @flow
 
-const checks = [
+export const checks = [
     'isOutbrainBlockedByAds',
     'hasHighPriorityAdLoaded',
     'hasLowPriorityAdLoaded',
@@ -20,5 +20,3 @@ const checks = [
     'emailCanRunPostCheck',
     'isOutbrainDisabled',
 ];
-
-export { checks };

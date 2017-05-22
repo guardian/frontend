@@ -1,8 +1,7 @@
 // @flow
 import detect from 'lib/detect';
-import checkMediator from 'common/modules/check-mediator';
+import { waitForCheck } from 'common/modules/check-mediator';
 import { load } from './outbrain-load';
-// import { tracking } from './outbrain-tracking';
 
 /*
  Loading Outbrain is dependent on successful return of high relevance component
@@ -33,9 +32,9 @@ const onIsOutbrainMerchandiseCompliant = outbrainMerchandiseCompliant => {
         return Promise.resolve();
     }
 
-    return checkMediator
-        .waitForCheck('isOutbrainNonCompliant')
-        .then(onIsOutbrainNonCompliant);
+    return waitForCheck('isOutbrainNonCompliant').then(
+        onIsOutbrainNonCompliant
+    );
 };
 
 const onIsOutbrainBlockedByAds = outbrainBlockedByAds => {
@@ -43,21 +42,21 @@ const onIsOutbrainBlockedByAds = outbrainBlockedByAds => {
         return Promise.resolve();
     }
 
-    return checkMediator
-        .waitForCheck('isOutbrainMerchandiseCompliant')
-        .then(onIsOutbrainMerchandiseCompliant);
+    return waitForCheck('isOutbrainMerchandiseCompliant').then(
+        onIsOutbrainMerchandiseCompliant
+    );
 };
 
 const onCanLoadInstantly = loadInstantly => {
     if (loadInstantly) {
-        return checkMediator
-            .waitForCheck('isOutbrainNonCompliant')
-            .then(onIsOutbrainNonCompliant);
+        return waitForCheck('isOutbrainNonCompliant').then(
+            onIsOutbrainNonCompliant
+        );
     }
 
-    return checkMediator
-        .waitForCheck('isOutbrainBlockedByAds')
-        .then(onIsOutbrainBlockedByAds);
+    return waitForCheck('isOutbrainBlockedByAds').then(
+        onIsOutbrainBlockedByAds
+    );
 };
 
 const onIsOutbrainDisabled = outbrainDisabled => {
@@ -69,6 +68,6 @@ const onIsOutbrainDisabled = outbrainDisabled => {
 };
 
 const init = () =>
-    checkMediator.waitForCheck('isOutbrainDisabled').then(onIsOutbrainDisabled);
+    waitForCheck('isOutbrainDisabled').then(onIsOutbrainDisabled);
 
 export { init };
