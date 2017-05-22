@@ -85,8 +85,8 @@ define([
 
         function getUserVariantParams(userVariant, campaignId, defaultOffering) {
 
-            if (userVariant && userVariant.engagementBannerParams) {
-                var userVariantParams = userVariant.engagementBannerParams;
+            if (userVariant && userVariant.options && userVariant.options.engagementBannerParams) {
+                var userVariantParams = userVariant.options.engagementBannerParams;
 
                 if (!userVariantParams.campaignCode) {
                     var offering = userVariantParams.offering || defaultOffering;
@@ -129,7 +129,7 @@ define([
             var campaignId = userTest ? userTest.campaignId : undefined;
             var userVariant = getUserVariant(userTest);
 
-            if (userVariant && userVariant.blockEngagementBanner) {
+            if (userVariant && userVariant.options && userVariant.options.blockEngagementBanner) {
                 return DO_NOT_RENDER_ENGAGEMENT_BANNER;
             }
 

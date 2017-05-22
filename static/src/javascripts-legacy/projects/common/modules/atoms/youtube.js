@@ -197,7 +197,7 @@ define([
 
                 tracking.init(getTrackingId(atomId));
 
-                youtubePlayer.init(iframe, {
+                youtubePlayer.initYoutubePlayer(iframe, {
                     onPlayerReady: onPlayerReady.bind(null, atomId, overlay, iframe),
                     onPlayerStateChange: onPlayerStateChange.bind(null, atomId)
                 }, iframe.id);

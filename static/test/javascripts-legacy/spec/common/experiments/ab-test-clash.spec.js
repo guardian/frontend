@@ -9,10 +9,16 @@ define([
 
             beforeEach(function (done) {
                 var injector = new Injector();
+                var fakeSvg = {
+                    markup: ''
+                };
 
                 sandbox = sinon.sandbox.create();
-                injector.mock('svgs/icon/thumb.svg', {
-                    markup: ''
+                injector.mock({
+                    'svgs/icon/thumb.svg': fakeSvg,
+                    'svgs/icon/quote.svg': fakeSvg,
+                    'svgs/icon/plus.svg': fakeSvg,
+                    'svgs/icon/minus.svg': fakeSvg
                 });
                 injector.require([
                     'common/modules/experiments/ab-test-clash'
@@ -33,7 +39,9 @@ define([
                     id: 'outbrainCompliantTest',
                     variants: [{
                         id: 'control',
-                        isOutbrainCompliant: true
+                        options: {
+                            isOutbrainCompliant: true
+                        }
                     }]
                 };
                 var clashingTests = [test];
@@ -48,10 +56,14 @@ define([
                     id: 'outbrainCompliantTest',
                     variants: [{
                         id: 'control',
-                        isOutbrainCompliant: true
+                        options: {
+                            isOutbrainCompliant: true
+                        }
                     }, {
                         id: 'variant',
-                        isOutbrainCompliant: false
+                        options: {
+                            isOutbrainCompliant: false
+                        }
                     }]
                 };
                 var clashingTests = [test];
@@ -68,10 +80,14 @@ define([
                     id: 'outbrainCompliantTest',
                     variants: [{
                         id: 'control',
-                        isOutbrainCompliant: true
+                        options: {
+                            isOutbrainCompliant: true
+                        }
                     }, {
                         id: 'variant',
-                        isOutbrainCompliant: false
+                        options: {
+                            isOutbrainCompliant: false
+                        }
                     }]
                 };
                 var clashingTests = [test];

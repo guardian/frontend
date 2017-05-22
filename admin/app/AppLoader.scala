@@ -14,7 +14,7 @@ import dev.DevAssetsController
 import football.feed.MatchDayRecorder
 import jobs._
 import model.{AdminLifecycle, ApplicationIdentity}
-import ophan.SurgingContentAgentLifecycle
+import services.ophan.SurgingContentAgentLifecycle
 import play.api.ApplicationLoader.Context
 import play.api.BuiltInComponentsFromContext
 import play.api.http.HttpErrorHandler

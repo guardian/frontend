@@ -14,7 +14,7 @@ const maxLogEntries = 50;
  *
  * @param testId
  */
-export const logView = (testId: string): void => {
+const logView = (testId: string): void => {
     viewLog.push({
         date: new Date().getTime(),
         testId,
@@ -23,7 +23,7 @@ export const logView = (testId: string): void => {
     local.set(viewKey, viewLog.slice(-maxLogEntries));
 };
 
-export const viewsInPreviousDays = (days: number, test: ABTest): number => {
+const viewsInPreviousDays = (days: number, test?: ABTest): number => {
     const ms = days * 1000 * 60 * 60 * 24;
     const now = new Date().getTime();
 
@@ -31,3 +31,5 @@ export const viewsInPreviousDays = (days: number, test: ABTest): number => {
         view => (test ? view.testId === test.id : true) && view.date > now - ms
     ).length;
 };
+
+export { logView, viewsInPreviousDays };

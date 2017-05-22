@@ -259,6 +259,7 @@ case class FaciaContainer(
 
   def isStoryPackage = container match {
     case Dynamic(DynamicPackage) => true
+    case Dynamic(DynamicElection) => true // #election2017
     case _ => false
   }
 }

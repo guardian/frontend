@@ -33,7 +33,7 @@ const MeasureUnderstanding = () => {
 
     // Test duration
     const start = '2017-05-11';
-    const expiry = '2017-05-18';
+    const expiry = '2017-05-29';
 
     // will run in articles only if no story questions atom is already there
     // *and* the user hasn't already answered the question

@@ -6,8 +6,7 @@ import type {
 } from 'common/modules/experiments/ab-types';
 
 import { local } from 'lib/storage';
-import * as testCanRunChecks
-    from 'common/modules/experiments/test-can-run-checks';
+import { testCanBeRun } from 'common/modules/experiments/test-can-run-checks';
 
 const participationsKey = 'gu.ab.participations';
 
@@ -73,4 +72,4 @@ export const setTestVariant = (testId: string, variant: string): void => {
 export const isInVariant = (test: ABTest, variant: Variant): boolean =>
     getParticipations()[test.id] &&
     getParticipations()[test.id].variant === variant.id &&
-    testCanRunChecks.testCanBeRun(test);
+    testCanBeRun(test);

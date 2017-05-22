@@ -1,7 +1,7 @@
 @(page: model.Page, projectName: Option[String] = None, head: Html)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @import model.Page.getContent
-@import conf.switches.Switches.{preflightServerSideAdCallSwitch, PolyfillIO}
+@import conf.switches.Switches.{preflightServerSideAdCallSwitch}
 @import conf.Static
 @import implicits.Strings.String2Uri
 @import views.support.JavaScriptPage.getMap
@@ -14,14 +14,6 @@
 
 @* stylesheet <link>s - get the stylesheets downloading ASAP *@
 @fragments.stylesheets(projectName, getContent(page).exists(_.tags.isCrossword))
-
-<link rel="preload" as="script" href="@Static("javascripts/graun.standard.js")">
-@if(PolyfillIO.isSwitchedOn) {
-    <link rel="preload" as="script" href="@common.Assets.js.polyfillioUrl">
-} else {
-    <link rel="preload" as="script" href="@Static("javascripts/vendor/polyfillio.fallback.js")">
-}
-<link rel="preload" as="script" href="@Static("javascripts/graun.commercial.js")">
 
 @*
 Protect against ReferenceErrors in IE:

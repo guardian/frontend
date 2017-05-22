@@ -68,7 +68,11 @@ const setupPlayer = (videoId: string, onReady, onStateChange) =>
 
 const hasPlayerStarted = event => event.target.getCurrentTime() > 0;
 
-const init = (el: HTMLElement, handlers: Handlers, videoId: string) => {
+export const initYoutubePlayer = (
+    el: HTMLElement,
+    handlers: Handlers,
+    videoId: string
+) => {
     loadYoutubeJs();
 
     return promise.then(() => {
@@ -87,5 +91,3 @@ const init = (el: HTMLElement, handlers: Handlers, videoId: string) => {
         return setupPlayer(videoId, onPlayerReady, onPlayerStateChange);
     });
 };
-
-export { init };
