@@ -789,7 +789,8 @@ case class CommercialComponentHigh(isPaidContent: Boolean, isNetworkFront: Boole
 object ExplainerCleaner extends HtmlCleaner {
   val prefixLength = "https://interactive.guim.co.uk/2016/08/explainer-interactive/embed/embed.html?id=".length
   val eids = Seq(
-    "77b1f6d5-e4df-4650-89b2-e8c1c9653b23"
+    "77b1f6d5-e4df-4650-89b2-e8c1c9653b23",
+    "acb90e30-85a7-4d80-8dfa-a4d1f3fae642"
   )
 
   override def clean(document: Document): Document = {
