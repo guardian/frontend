@@ -1,6 +1,6 @@
 // @flow
 
-/* code smell: */
+/* #? code smell: keys should be immutable */
 /* eslint "react/no-array-index-key": "off" */
 
 import React from 'react/addons';
