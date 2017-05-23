@@ -21,6 +21,7 @@ class CommercialFeatures {
     paidforBand: any;
     canReasonablyAskForMoney: any;
     asynchronous: any;
+    adFeedback: any;
 
     constructor() {
         // this is used for SpeedCurve tests
