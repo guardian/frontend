@@ -5,7 +5,7 @@
 
 import React from 'react/addons';
 
-type WeirdKey = ',' | '-';
+type WordSeparator = ',' | '-';
 
 const CluePreview = React.createClass({
     /**
@@ -32,7 +32,7 @@ const CluePreview = React.createClass({
 
     // Checks a object in the form{",":[4,7]}
     checkIfLetterHasSeparator(
-        locations: { [k: WeirdKey]: number[] },
+        locations: { [k: WordSeparator]: number[] },
         letterIndex: number
     ): string {
         const spaces = locations[','];
