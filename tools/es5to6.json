@@ -126,7 +126,6 @@
     "projects/common/modules/charts/table-doughnut.js"
   ],
   "Matthew Walls": [
-    "projects/common/modules/crosswords/anagram-helper/main.js",
     "projects/common/modules/crosswords/anagram-helper/ring.js",
     "projects/common/modules/crosswords/cell.js",
     "projects/common/modules/crosswords/classNames.js",
