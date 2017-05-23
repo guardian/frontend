@@ -66,9 +66,9 @@ define([
 
     function controlTemplate(variant) {
         return template(acquisitionsEpicControlTemplate, {
-            membershipUrl: variant.membershipURL,
-            contributionUrl: variant.contributeURL,
-            componentName: variant.componentName
+            membershipUrl: variant.options.membershipURL,
+            contributionUrl: variant.options.contributeURL,
+            componentName: variant.options.componentName
         });
     }
 
