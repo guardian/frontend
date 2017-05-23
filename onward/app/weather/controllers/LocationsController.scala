@@ -2,10 +2,10 @@ package weather.controllers
 
 import common._
 import weather.geo._
-import model.Cached
+import model.{CacheTime, Cached}
 import weather.models.CityResponse
 import play.api.libs.json.Json
-import play.api.mvc.{Controller, Action}
+import play.api.mvc.{Action, Controller}
 import weather.WeatherApi
 
 import scala.language.postfixOps
@@ -65,7 +65,10 @@ class LocationsController(weatherApi: WeatherApi) extends Controller with Execut
             }
         }
 
-      case (_, _, _) => Future.successful(Cached(1 hour)(JsonComponent(cityFromRequestEdition)))
+      case (_, _, _) =>
+        cityFromRequestEdition.fold
+          { Future.successful(Cached(CacheTime.NotFound)(JsonNotFound())) }
+          { city => Future.successful(Cached(1 hour)(JsonComponent(city))) }
     }
   }
 }
