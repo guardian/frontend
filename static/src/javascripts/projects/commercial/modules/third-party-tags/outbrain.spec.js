@@ -70,7 +70,6 @@ describe('Outbrain', () => {
                 expect(load).not.toHaveBeenCalled();
                 expect(tracking).toHaveBeenCalled();
                 expect(tracking).toHaveBeenCalledWith({
-                    widgetId: null,
                     state: 'outbrainDisabled',
                 });
                 done();
@@ -104,7 +103,6 @@ describe('Outbrain', () => {
                 expect(load).not.toHaveBeenCalled();
                 expect(tracking).toHaveBeenCalled();
                 expect(tracking).toHaveBeenCalledWith({
-                    widgetId: null,
                     state: 'outbrainBlockedByAds',
                 });
                 done();

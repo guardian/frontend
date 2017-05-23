@@ -63,7 +63,6 @@ const onIsOutbrainMerchandiseCompliant = outbrainMerchandiseCompliant => {
 const onIsOutbrainBlockedByAds = outbrainBlockedByAds => {
     if (outbrainBlockedByAds) {
         tracking({
-            widgetId: null,
             state: 'outbrainBlockedByAds',
         });
         return Promise.resolve();
@@ -89,7 +88,6 @@ const onCanLoadInstantly = loadInstantly => {
 const onIsOutbrainDisabled = outbrainDisabled => {
     if (outbrainDisabled) {
         tracking({
-            widgetId: null,
             state: 'outbrainDisabled',
         });
         return Promise.resolve();
