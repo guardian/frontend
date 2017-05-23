@@ -20,11 +20,11 @@ class AtomPageController(contentApiClient: ContentApiClient)(implicit context: A
         (MediaAtomPage(model), MediaAtomBody(model, displayCaption = false, mediaWrapper = Some(MediaWrapper.EmbedPage)))
       case Left(model: StoryQuestionsAtom) =>
         (StoryQuestionsAtomPage(model), StoryQuestionsAtomBody(model, isAmp = false))
-      case Left(model: Quiz) => /* noop */
-      case Left(model: InteractiveAtom) => /* noop */
-      case Left(model: RecipeAtom) => /* noop */
-      case Left(model: ReviewAtom) => /* noop */
-      case Right(other) => (other, Nil)
+      case Left(model: Quiz) =>             (NotFound, Nil)
+      case Left(model: InteractiveAtom) =>  (NotFound, Nil)
+      case Left(model: RecipeAtom) =>       (NotFound, Nil)
+      case Left(model: ReviewAtom) =>       (NotFound, Nil)
+      case Right(other) =>                  (other, Nil)
     } map {
       case (atom: AtomPage, body: Html) => renderAtom(atom, body)
       case (error: Result, _) => renderOther(error)
