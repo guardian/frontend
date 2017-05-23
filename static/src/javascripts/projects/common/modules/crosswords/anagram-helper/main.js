@@ -1,11 +1,11 @@
 // @flow
 import React from 'react/addons';
 import { markup as closeCentralIcon } from 'svgs/icon/close-central.svg';
-import CluePreview from 'common/modules/crosswords/anagram-helper/clue-preview';
 import Ring from 'common/modules/crosswords/anagram-helper/ring';
 import helpers from 'common/modules/crosswords/helpers';
 import shuffle from 'lodash/collections/shuffle';
 import { ClueInput } from './clue-input';
+import { CluePreview } from './clue-preview';
 
 const AnagramHelper = React.createClass({
     getInitialState() {
