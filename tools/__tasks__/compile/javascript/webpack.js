@@ -6,7 +6,7 @@ const Observable = require('any-observable');
 const webpack = require('webpack');
 const chalk = require('chalk');
 
-const config = require('../../../../webpack.config.atoms.js');
+const config = require('../../../../webpack.config.prod.js');
 
 module.exports = {
     description: 'Create Webpack bundles',
