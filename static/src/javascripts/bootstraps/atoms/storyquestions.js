@@ -2,6 +2,7 @@
 
 import domready from 'domready';
 import config from 'lib/config';
+import { init } from 'common/modules/atoms/story-questions';
 
 // let webpack know where to get files from
 // __webpack_public_path__ is a special webpack variable
@@ -11,7 +12,7 @@ __webpack_public_path__ = `${config.page.assetsPath}javascripts/`;
 
 // kick off the app
 const go = () => {
-    domready(() => {});
+    domready(init);
 };
 
 // make sure we've patched the env before running the app
