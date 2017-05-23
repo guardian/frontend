@@ -17,8 +17,8 @@ import {
     addParticipation,
     getTestVariantId,
     cleanParticipations,
+    getForcedTests,
 } from 'common/modules/experiments/utils';
-import { local } from 'lib/storage';
 
 const noop = (): null => null;
 
@@ -42,19 +42,6 @@ const allocateUserToTest = test => {
     if (testCanBeRun(test) && !isParticipating(test)) {
         addParticipation(test, variantIdFor(test));
     }
-};
-
-const getForcedIntoTests = () => {
-    if (window.location.hash.startsWith('#ab')) {
-        const tokens = window.location.hash.replace('#ab-', '').split(',');
-
-        return tokens.map(token => {
-            const [id, variant] = token.split('=');
-            return { id, variant };
-        });
-    }
-
-    return JSON.parse(local.get('gu.devtools.ab')) || [];
 };
 
 export const shouldRunTest = (testId: string, variantName: string) => {
@@ -97,12 +84,12 @@ export const forceVariantCompleteFunctions = (
 };
 
 export const segmentUser = () => {
-    const forcedIntoTests = getForcedIntoTests();
+    const forcedIntoTests = getForcedTests();
 
     if (forcedIntoTests.length) {
         forcedIntoTests.forEach(test => {
-            forceSegment(test.id, test.variant);
-            forceVariantCompleteFunctions(test.id, test.variant);
+            forceSegment(test.testId, test.variantId);
+            forceVariantCompleteFunctions(test.testId, test.variantId);
         });
     } else {
         segment(getActiveTests());

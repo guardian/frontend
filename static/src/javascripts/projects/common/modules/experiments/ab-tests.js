@@ -53,7 +53,7 @@ export const TESTS: Array<ABTest> = [
     MeasureUnderstanding(),
 ]
     .concat(MembershipEngagementBannerTests)
-    .filter(t => t !== undefined && t !== null);
+    .filter(Boolean);
 
 export const getActiveTests = (): Array<ABTest> =>
     TESTS.filter(test => {

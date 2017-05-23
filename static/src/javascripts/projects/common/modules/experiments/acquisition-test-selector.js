@@ -1,5 +1,9 @@
 // @flow
 import { variantFor, isInTest } from 'common/modules/experiments/segment-util';
+import {
+    getForcedTests,
+    getForcedVariant,
+} from 'common/modules/experiments/utils';
 import { testCanBeRun } from 'common/modules/experiments/test-can-run-checks';
 import {
     viewsInPreviousDays,
@@ -21,47 +25,44 @@ const tests = [
     acquisitionsEpicTestimonialsRoundTwo,
     askFourEarning,
     acquisitionsEpicLiveBlog,
-];
+].map(Test => new Test());
 
-export const epicEngagementBannerTests = tests.reduce((out, Test) => {
-    const testInstance = new Test();
+const isViewable = (v: Variant): boolean => {
+    if (!v.options || !v.options.maxViews) return false;
 
-    if (testInstance.isEngagementBannerTest) {
-        out.push(testInstance);
-    }
-    return out;
-}, []);
+    const {
+        count: maxViewCount,
+        days: maxViewDays,
+        minDaysBetweenViews: minViewDays,
+    } = v.options.maxViews;
 
-export const abTestClashData = tests.map(Test => new Test());
+    const isUnlimited = v.options.isUnlimited;
+
+    const withinViewLimit = viewsInPreviousDays(maxViewDays) < maxViewCount;
+    const enoughDaysBetweenViews = viewsInPreviousDays(minViewDays) === 0;
+
+    return (withinViewLimit && enoughDaysBetweenViews) || isUnlimited;
+};
+
+export const epicEngagementBannerTests = () =>
+    tests.filter(t => t.isEngagementBannerTest);
+
+export const abTestClashData = tests;
 
 // This can be annotated with a return type of ABTest when all of the imported tests are converted
 export const getTest = () => {
-    const eligibleTests = tests.filter(Test => {
-        const t = new Test();
-        const forced = window.location.hash.indexOf(`ab-${t.id}`) > -1;
-        const variant: Variant = variantFor(t);
+    const forcedTests = getForcedTests()
+        .map(({ testId }) => tests.find(t => t.id === testId))
+        .filter(Boolean);
 
-        if (!variant || !variant.options || !variant.options.maxViews)
-            return false;
+    if (forcedTests.length)
+        return forcedTests.find(t => {
+            const variant: ?Variant = getForcedVariant(t);
+            return variant && testCanBeRun(t) && isViewable(variant);
+        });
 
-        const {
-            count: maxViewCount,
-            days: maxViewDays,
-            minDaysBetweenViews: minViewDays,
-        } = variant.options.maxViews;
-
-        const isUnlimited = variant.options.isUnlimited;
-
-        const withinViewLimit = viewsInPreviousDays(maxViewDays) < maxViewCount;
-        const enoughDaysBetweenViews = viewsInPreviousDays(minViewDays) === 0;
-
-        const hasNotReachedRateLimit =
-            (withinViewLimit && enoughDaysBetweenViews) || isUnlimited;
-
-        return (
-            forced || (testCanBeRun(t) && isInTest(t) && hasNotReachedRateLimit)
-        );
+    return tests.find(t => {
+        const variant: ?Variant = variantFor(t);
+        return variant && testCanBeRun(t) && isInTest(t) && isViewable(variant);
     });
-
-    return eligibleTests[0] && new eligibleTests[0]();
 };
