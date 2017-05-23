@@ -15,7 +15,7 @@ type spaceFillerRules = {
     bodySelector: string,
     slotSelector: string,
     fromBottom: boolean,
-    startAt: Node | null | typeof undefined, // #? I feel this is curcumventing the point of Flow
+    startAt: Node | null | typeof undefined, // #? I feel this is circumventing the point of Flow
     absoluteMinAbove: number,
     minAbove: number,
     minBelow: number,
@@ -141,3 +141,5 @@ export const initLiveblogAdverts = (
 
     return Promise.resolve();
 };
+
+export const _ = { getSlotName };
