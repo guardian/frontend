@@ -10,7 +10,7 @@
         @column match {
             case SingleItem(colSpan, _) => {
                 @cards.headOption.map { card =>
-                    @item(card, containerIndex, colSpan = colSpan, frontProperties = frontProperties)
+                    @item(card, containerIndex, colSpan = colSpan, frontProperties = frontProperties, isElectionContainer = isElectionContainer)
                 }
             }
 
@@ -19,7 +19,7 @@
                     <ul class="u-unstyled l-list l-list--columns-@columns l-list--rows-@rows">
                         @if(cards.nonEmpty) {
                             @cards.map{ card =>
-                                @item(card, containerIndex, isList = true, frontProperties = frontProperties)
+                                @item(card, containerIndex, isList = true, frontProperties = frontProperties, isElectionContainer = isElectionContainer)
                             }
                         }
                     </ul>
@@ -30,7 +30,7 @@
                 <li class="fc-slice__item l-row__item l-row__item--span-@colSpan">
                     <ul class="u-unstyled l-list l-list--columns-1 l-list--rows-@(topItemRows + bottomItemRows)">
                         @cards.map { card =>
-                            @item(card, containerIndex, isList = true, frontProperties = frontProperties)
+                            @item(card, containerIndex, isList = true, frontProperties = frontProperties, isElectionContainer = isElectionContainer)
                         }
                     </ul>
                 </li>
