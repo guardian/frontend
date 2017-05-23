@@ -157,7 +157,7 @@ const checksToDispatch = {
 
 const initCheckDispatcher = (): void => {
     Object.keys(checksToDispatch).forEach(key => {
-        if (checks.includes[key]) {
+        if (checks.includes(key)) {
             resolveCheck(key, checksToDispatch[key]());
         }
     });

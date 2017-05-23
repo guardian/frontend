@@ -3,6 +3,7 @@
 export const checks = [
     'isOutbrainDisabled',
     'isUserInContributionsAbTest',
+    'isUserNotInContributionsAbTest',
     'isUserInEmailAbTest',
     'emailCanRunPreCheck',
     'listCanRun',
