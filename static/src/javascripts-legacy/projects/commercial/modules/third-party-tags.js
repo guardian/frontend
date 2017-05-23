@@ -6,8 +6,7 @@ define([
     'lib/config',
     'lib/fastdom-promise',
     'lodash/utilities/template',
-    'common/modules/experiments/test-can-run-checks',
-    'common/modules/experiments/utils',
+    'common/modules/experiments/ab',
     'commercial/modules/commercial-features',
     'commercial/modules/third-party-tags/audience-science-gateway',
     'commercial/modules/third-party-tags/audience-science-pql',
@@ -19,15 +18,13 @@ define([
     'commercial/modules/third-party-tags/krux',
     'commercial/modules/third-party-tags/outbrain',
     'commercial/modules/third-party-tags/plista',
-    'common/modules/experiments/tests/paid-content-vs-outbrain',
     'raw-loader!common/views/commercial/external-content.html'
 ], function (
     $,
     config,
     fastdom,
     template,
-    testCanRunChecks,
-    abUtils,
+    ab,
     commercialFeatures,
     audienceScienceGateway,
     audienceSciencePql,
@@ -39,7 +36,6 @@ define([
     krux,
     outbrain,
     plista,
-    PaidContentVsOutbrain2,
     externalContentContainerStr
     ) {
 
@@ -90,8 +86,8 @@ define([
     }
 
     function isLuckyBastard() {
-        return testCanRunChecks.testCanBeRun(PaidContentVsOutbrain2) &&
-            abUtils.getTestVariantId(PaidContentVsOutbrain2.id) === 'paid-content';
+        var testName = 'PaidContentVsOutbrain2';
+        return ab.testCanBeRun(testName) && ab.getTestVariantId(testName) === 'paid-content';
     }
 
     function loadOther() {

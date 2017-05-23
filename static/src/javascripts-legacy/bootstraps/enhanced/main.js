@@ -8,8 +8,6 @@ define([
     'lib/user-timing',
     'lib/robust',
     'common/modules/experiments/ab',
-    'common/modules/experiments/ab-tests',
-    'common/modules/experiments/ab-ophan',
     './common',
     './sport',
     'common/modules/analytics/google',
@@ -25,8 +23,6 @@ define([
     userTiming,
     robust,
     ab,
-    abTests,
-    abOphan,
     common,
     sport,
     ga,
@@ -51,16 +47,15 @@ define([
             //
 
             ['ab-tests', function () {
-                var tests = abTests.getActiveTests();
                 ab.segmentUser();
 
                 robust.catchErrorsWithContext([
-                    ['ab-tests-run', function() { ab.run(tests); }],
-                    ['ab-tests-registerImpressionEvents', function () { abOphan.registerImpressionEvents(tests); }],
-                    ['ab-tests-registerCompleteEvents', function () { abOphan.registerCompleteEvents(tests); }],
+                    ['ab-tests-run', ab.run],
+                    ['ab-tests-registerImpressionEvents', ab.registerImpressionEvents],
+                    ['ab-tests-registerCompleteEvents', ab.registerCompleteEvents],
                 ]);
 
-                abOphan.trackABTests();
+                ab.trackEvent();
             }]
         ]);
 
