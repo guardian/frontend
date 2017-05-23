@@ -52,7 +52,7 @@ class AtomPageController(contentApiClient: ContentApiClient)(implicit context: A
 
   private def renderOther(result: Result)(implicit request: RequestHeader) = result.header.status match {
     case 404 => NoCache(NotFound)
-    case 410 => Cached(60)(WithoutRevalidationResult(Gone(views.html.videoEmbedMissing())))
+    case 410 => Cached(86400)(WithoutRevalidationResult(Gone(views.html.videoEmbedMissing())))
     case _ => result
   }
 
