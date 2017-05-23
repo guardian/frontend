@@ -3,7 +3,7 @@ import fastdom from 'lib/fastdom-promise';
 import template from 'lodash/utilities/template';
 import popupTemplate from 'raw-loader!commercial/views/ad-feedback-popup.html';
 import tick from 'svgs/icon/tick.svg';
-import config from 'lib/config';
+import commercialFeatures from 'commercial/modules/commercial-features';
 
 const shouldRenderLabel = adSlotNode =>
     !(adSlotNode.classList.contains('ad-slot--fluid') ||
@@ -16,7 +16,7 @@ const renderAdvertLabel = (adSlotNode: any) => {
     if (shouldRenderLabel(adSlotNode)) {
         let feedbackPopup = '';
         let feedbackThanksMessage = '';
-        if (config.switches.adFeedback) {
+        if (commercialFeatures.adFeedback) {
             feedbackPopup = template(popupTemplate, {
                 feedbackOptions: {
                     inappropriate: "It's offensive or inappropriate",
