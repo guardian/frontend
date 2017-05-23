@@ -68,11 +68,13 @@ class LocationsController(weatherApi: WeatherApi) extends Controller with Execut
         }
 
       case (_, _, _) =>
-        cityFromRequestEdition.fold {
-          Future.successful(Cached(CacheTime.NotFound)(JsonNotFound()))
-        } { city =>
-          Future.successful(Cached(1 hour)(JsonComponent(city)))
-        }
+        Future.successful(
+          cityFromRequestEdition.fold {
+            Cached(CacheTime.NotFound)(JsonNotFound())
+          } { city =>
+            Cached(1 hour)(JsonComponent(city))
+          }
+        )
     }
   }
 }
