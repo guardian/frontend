@@ -11,6 +11,11 @@ import { markup as thumbIcon } from 'svgs/icon/thumb.svg';
 import { markup as plusIcon } from 'svgs/icon/plus.svg';
 import { markup as minusIcon } from 'svgs/icon/minus.svg';
 
+const htmlDecode = (input: string): string => {
+    const doc = new DOMParser().parseFromString(input, 'text/html');
+    return doc && doc.documentElement ? doc.documentElement.textContent : '';
+};
+
 const ExplainerSnippet = () => {
     // Test id
     const id = 'ExplainerSnippet';
@@ -75,8 +80,8 @@ const ExplainerSnippet = () => {
         }
 
         const [title: string, body: string] = [
-            hook.querySelector('.js-explainer-body'),
-            hook.querySelector('.js-explainer-body'),
+            hook.querySelector('meta[name="explainer-title"]'),
+            hook.querySelector('meta[name="explainer-body"]'),
         ].map(
             (el: ?Element) =>
                 (el && el instanceof HTMLMetaElement && el.content) || ''
@@ -88,7 +93,7 @@ const ExplainerSnippet = () => {
             minusIcon,
             style: options.style,
             title,
-            body,
+            body: htmlDecode(body),
         });
         fastdom
             .write(() => {
