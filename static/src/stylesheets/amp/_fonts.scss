@@ -37,6 +37,7 @@
     .fc-container__header__description,
     .paid-content,
     .witness__button,
+    .main-navigation .main-navigation_link,
     .d2-username,
     .liveblog-block-byline__name {
         font-family: 'Guardian Egyptian Web', Georgia, serif;
@@ -55,7 +56,7 @@
     .from-content-api h2,
     .from-content-api .block-elements h2,
     .from-content-api p strong,
-    .header__support {
+    .header__supporter-cta {
         font-family: 'Guardian Egyptian Web', Georgia, serif;
         font-weight: 500;
     }
@@ -64,9 +65,7 @@
 .guardian-text-sans-loaded {
     .hosted-page,
     .hosted__header,
-    .pillar-link,
-    .fly-in-item > a,
-    .fly-in-item > * > section > *,
+    .header__nav-link,
     .caption,
     .content__dateline,
     .ad-slot--paid-for-badge__header,

@@ -3,46 +3,44 @@
 @import conf.Configuration
 @import common.{LinkTo, NewNavigation}
 
-<header class="new-header"
+<header class="header"
         role="banner">
-    <nav class="new-header__inner gs-container">
-        <div class="new-header__support">
+    <div class="header__inner gs-container">
+        <div class="header__support">
             <a class="support-item"
                data-link-name="amp : nav : supporter-cta"
-               href="@Configuration.id.membershipUrl/supporter?INTCMP=AMP_HEADER_GU_SUPPORTER">
-               <span class="support-item__label">
-                   Become a <span class="support-item__new-line">Supporter</span>
+            href="@Configuration.id.membershipUrl/supporter?INTCMP=AMP_HEADER_GU_SUPPORTER">
+                <span class="support-item__label">
+                    Become a <span class="support-item__new-line">Supporter</span>
                 </span>
             </a>
         </div>
 
-        <a href="@LinkTo{/}"
-           class="new-header__logo"
-           tabindex="0"
-           data-link-name="amp : nav : logo">
+        <a href="@LinkTo{/}" class="header__logo-wrapper" tabindex="0" data-link-name="amp : nav : logo">
             <span class="u-h">The Guardian - Back to home</span>
-            @fragments.inlineSvg("guardian-logo-160", "logo")
+            @fragments.inlineSvg("guardian-logo-160", "logo", List("header__logo"))
         </a>
 
-        <ul class="pillars">
-            @NewNavigation.PrimaryLinks.map { link =>
-                <li class="pillars__item">
-                    <a class="pillar-link"
-                        href="@LinkTo(link.url)"
-                        data-link-name="amp : nav : @link.title">
-                        @link.title
-                    </a>
-                </li>
-            }
-        </ul>
+        <nav class="header__nav">
+            <ul class="header__nav-primary-links">
+                @NewNavigation.PrimaryLinks.map { link =>
+                    <li class="header__nav-link-item">
+                        <a class="header__nav-link"
+                            href="@LinkTo(link.url)"
+                            data-link-name="amp : nav : @link.title">
+                                @link.title
+                        </a>
+                    </li>
+                }
+            </ul>
 
-        <button class="veggie-burger"
-                on='tap:sidebar1.toggle'
+            <button class="header__nav__menu-button" on='tap:sidebar1.toggle'
                 data-link-name="amp : nav : toggle-veggie-burger">
-            <span class="veggie-burger__icon"></span>
-            <span class="u-h">Menu</span>
-        </button>
-    </nav>
+                    <span class="header__veggie-burger-icon"></span>
+                    <span class="u-h">Home</span>
+            </button>
+        </nav>
+    </div>
 </header>
 
 @fragments.amp.headerMenu()

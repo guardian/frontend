@@ -3,31 +3,30 @@
 @import conf.Configuration
 @import play.api.Mode.Dev
 
-<amp-sidebar class="fly-in"
-             layout="nodisplay"
-             id="sidebar1">
+<amp-sidebar class="main-navigation-container" layout="nodisplay" id="sidebar1">
+
     <amp-list layout="fill"
-              src="@Configuration.amp.baseUrl/editionalised-nav.json"
+        src="@Configuration.amp.baseUrl/editionalised-nav.json"
         @if(context.environment.mode != Dev) { credentials="include" }>
 
         <template type="amp-mustache">
-                <ul class="fly-in-group fly-in-group--primary">
+
+                <ul class="main-navigation">
                     {{ #topLevelSections }}
-                        <li class="fly-in-item">
+                        <li class="main-navigation__item">
                             <amp-accordion>
                                 <section>
-                                    <h2 class="fly-in-item__title"
+                                    <h2 class="main-navigation__item__button navigation-border"
                                         data-link-name="amp : nav : secondary : {{ title }}">
-                                        <i class="fly-in-item__toggle"></i>
+                                        <i class="main-menu__icon main-menu__icon--chevron"></i>
                                         {{ title }}
                                     </h2>
 
-                                    <ul class="fly-in-group fly-in-group--secondary">
+                                    <ul class="main-navigation__secondary navigation-group">
                                         {{ #subSections }}
-                                            <li class="fly-in-item">
-                                                <a class="fly-in-item__title"
-                                                   href="{{ url }}"
-                                                   data-link-name="amp : nav : secondary : {{ title }}">
+                                            <li class="navigation-group__item">
+                                                <a href="{{ url }}"
+                                                data-link-name="amp : nav : secondary : {{ title }}">
                                                     {{ title }}
                                                 </a>
                                             </li>
@@ -39,12 +38,12 @@
                     {{ /topLevelSections }}
                 </ul>
 
-                <ul class="fly-in-group">
+                <ul class="navigation-group secondary-navigation navigation-border">
+
                     {{ #secondarySections }}
-                        <li class="fly-in-item">
-                            <a class="fly-in-item__title"
-                               href="{{ url }}"
-                               data-link-name="amp : nav : {{ title }}">
+                        <li class="navigation-group__item">
+                            <a href="{{ url }}"
+                            data-link-name="amp : nav : {{ title }}">
                                 {{ title }}
                             </a>
                         </li>
