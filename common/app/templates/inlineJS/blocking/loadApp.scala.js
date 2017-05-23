@@ -33,14 +33,13 @@ function guardianPolyfilled() {
     var pendingScripts = [];
     var firstScript = document.scripts[0];
 
-    @if(PolyfillIO.isSwitchedOn) {
-        var scripts = [
-            '@common.Assets.js.polyfillioUrl',
-            '@Static(s"javascripts/graun.$bootModule.js")'
-        ];
+    @defining(if(PolyfillIO.isSwitchedOn) {
+      common.Assets.js.polyfillioUrl
     } else {
+      Static("javascripts/vendor/polyfillio.fallback.js")
+    }) { polyfillioUrl =>
         var scripts = [
-            '@Static("javascripts/vendor/polyfillio.fallback.js")',
+            '@polyfillioUrl',
             '@Static(s"javascripts/graun.$bootModule.js")'
         ];
     }

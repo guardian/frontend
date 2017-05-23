@@ -7,13 +7,6 @@ const config = require('./webpack.config.js');
 
 // Blatantly override JS entry points
 config.entry = {
-    atoms: path.join(
-        __dirname,
-        'static',
-        'src',
-        'javascripts',
-        'atoms-boot.js'
-    ),
     storyquestions: path.join(
         __dirname,
         'static',
@@ -23,7 +16,7 @@ config.entry = {
         'atoms',
         'storyquestions.js'
     ),
-}
+};
 
 module.exports = webpackMerge.smart(config, {
     devtool: 'inline-source-map',
