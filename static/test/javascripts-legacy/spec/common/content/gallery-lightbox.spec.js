@@ -30,11 +30,6 @@ define([
         var injector = new Injector();
 
         beforeEach(function (done) {
-            injector.mock('common/views/svgs', {
-                inlineSvg: function() {
-                    return '';
-                }
-            });
             injector.require(['common/modules/gallery/lightbox'], function(galleryLightbox) {
                 lightbox = new galleryLightbox.GalleryLightbox();
                 done();

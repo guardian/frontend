@@ -62,9 +62,6 @@ define([
                         return Promise.resolve();
                     }
                 },
-                'svgs/icon/tick.svg': {
-                    markup: ''
-                }
             });
             injector.require([
                 'commercial/modules/dfp/prepare-googletag',
