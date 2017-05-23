@@ -23,19 +23,22 @@ const STATE_HIDDEN = 'hidden';
 const STATE_LOADING = 'loading';
 const REQUEST_TIMEOUT = 5000;
 
-type ButtonState =
+type DisplayState =
     | typeof STATE_DISPLAYED
     | typeof STATE_HIDDEN
     | typeof STATE_LOADING;
 
-const readPrefs = containerId => {
+const readDisplayPrefForContainer = (containerId: string): DisplayState => {
     const prefs = userPrefs.get(PREF_NAME, {
         type: 'session',
     });
     return prefs && prefs[containerId] ? STATE_DISPLAYED : STATE_HIDDEN;
 };
 
-const updatePref = (containerId, state: ButtonState) => {
+const updateDisplayPrefForContainer = (
+    containerId: string,
+    state: DisplayState
+): void => {
     const prefs = userPrefs.get(PREF_NAME, {
         type: 'session',
     }) || {};
@@ -49,7 +52,7 @@ const updatePref = (containerId, state: ButtonState) => {
     });
 };
 
-const loadShowMore = (pageId, containerId) => {
+const loadShowMore = (pageId: string, containerId: string): Promise<any> => {
     const url = `/${pageId}/show-more/${containerId}.json`;
     return timeout(
         REQUEST_TIMEOUT,
@@ -59,12 +62,12 @@ const loadShowMore = (pageId, containerId) => {
     );
 };
 
-const itemsByArticleId = ($el: bonzo) =>
+const itemsByArticleId = ($el: bonzo): Object =>
     groupBy(qwery(ITEM_SELECTOR, $el), el =>
         bonzo(el).attr(ARTICLE_ID_ATTRIBUTE)
     );
 
-const dedupShowMore = ($container: bonzo, html: string) => {
+const dedupShowMore = ($container: bonzo, html: string): bonzo => {
     const seenArticles = itemsByArticleId($container);
     const $html = bonzo.create(html);
 
@@ -80,7 +83,7 @@ const dedupShowMore = ($container: bonzo, html: string) => {
 
 class Button {
     id: string;
-    state: ButtonState;
+    state: DisplayState;
     isLoaded: boolean;
     $el: bonzo;
     $container: bonzo;
@@ -88,11 +91,11 @@ class Button {
     $placeholder: bonzo;
     $textEl: bonzo;
     $errorMessage: ?bonzo;
-    messages: Map<ButtonState, string>;
+    messages: Map<DisplayState, string>;
 
     constructor(el: bonzo, container: bonzo) {
         this.id = container.attr('data-id');
-        this.state = readPrefs(this.id);
+        this.state = readDisplayPrefForContainer(this.id);
         this.$el = el;
         this.$container = container;
         this.isLoaded = false;
@@ -111,7 +114,7 @@ class Button {
         ]);
     }
 
-    setState(state: ButtonState): void {
+    setState(state: DisplayState): void {
         this.$textEl.html(this.messages.get(state));
         this.$el
             .attr('data-link-name', state === STATE_DISPLAYED ? 'less' : 'more')
@@ -124,7 +127,7 @@ class Button {
         this.state = state;
     }
 
-    loadShowMoreForContainer() {
+    loadShowMoreForContainer(): void {
         fastdom.write(() => {
             this.setState(STATE_LOADING);
         });
@@ -143,7 +146,7 @@ class Button {
                         this.$placeholder.replaceWith(dedupedShowMore);
                     }
                     this.setState(STATE_DISPLAYED);
-                    updatePref(this.id, this.state);
+                    updateDisplayPrefForContainer(this.id, this.state);
                     mediator.emit('modules:show-more:loaded');
                 });
                 this.isLoaded = true;
@@ -199,7 +202,7 @@ class Button {
     }
 }
 
-const showMore = (button: Button) => {
+const showMore = (button: Button): void => {
     fastdom.write(() => {
         /**
          * Do not remove: it should retain context for the click stream module, which recurses upwards through
@@ -208,11 +211,11 @@ const showMore = (button: Button) => {
         button.setState(
             button.state === STATE_HIDDEN ? STATE_DISPLAYED : STATE_HIDDEN
         );
-        updatePref(button.id, button.state);
+        updateDisplayPrefForContainer(button.id, button.state);
     });
 };
 
-const renderToDom = (button: Button) => {
+const renderToDom = (button: Button): void => {
     fastdom.write(() => {
         button.$container
             .addClass(HIDDEN_CLASS_NAME)
