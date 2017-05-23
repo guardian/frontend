@@ -4,7 +4,6 @@ import fastdom from 'lib/fastdom-promise';
 import commercialFeatures from 'commercial/modules/commercial-features';
 
 const adSlotSelector: string = '.js-ad-slot';
-const mpuCandidateSelector: string = '.fc-slice__item--mpu-candidate';
 
 const shouldDisableAdSlotWhenAdFree = adSlot =>
     commercialFeatures.adFree &&
@@ -28,15 +27,4 @@ const closeDisabledSlots = (force: boolean): Promise<void> => {
     );
 };
 
-const closeAdFreeDisabledSlots = (): Promise<void> => {
-    const mpuCandidates: Array<Element> = qwery(mpuCandidateSelector).filter(
-        shouldDisableAdSlotWhenAdFree
-    );
-    return fastdom.write(() =>
-        mpuCandidates.forEach((candidate: Element) =>
-            candidate.classList.add('fc-slice__item--no-mpu')
-        )
-    );
-};
-
-export { closeDisabledSlots, closeAdFreeDisabledSlots };
+export { closeDisabledSlots };

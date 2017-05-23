@@ -5,10 +5,7 @@ import config from 'lib/config';
 import { loadScript } from 'lib/load-script';
 import commercialFeatures from 'commercial/modules/commercial-features';
 import { buildPageTargeting } from 'commercial/modules/build-page-targeting';
-import {
-    closeDisabledSlots,
-    closeAdFreeDisabledSlots,
-} from 'commercial/modules/close-disabled-slots';
+import { closeDisabledSlots } from 'commercial/modules/close-disabled-slots';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 import onSlotRender from 'commercial/modules/dfp/on-slot-render';
 import onSlotLoad from 'commercial/modules/dfp/on-slot-load';
@@ -40,9 +37,9 @@ const setPageTargeting = (): void => {
     });
 };
 
-const removeAdSlots = (): Promise<void> => closeDisabledSlots(true);
+const forceRemoveAdSlots = (): Promise<void> => closeDisabledSlots(true);
 
-const removeAdSlotsForAdFree = (): Promise<void> => closeAdFreeDisabledSlots();
+const removeAdSlots = (): Promise<void> => closeDisabledSlots(false);
 
 const init = (start: () => void, stop: () => void): Promise<void> => {
     const setupAdvertising = (): Promise<void> => {
@@ -64,16 +61,16 @@ const init = (start: () => void, stop: () => void): Promise<void> => {
             // A promise error here, from a failed module load,
             // could be a network problem or an intercepted request.
             // Abandon the init sequence.
-            .catch(removeAdSlots);
+            .catch(forceRemoveAdSlots);
         return Promise.resolve();
     }
 
     if (commercialFeatures.adFree) {
-        setupAdvertising().then(removeAdSlotsForAdFree).catch(removeAdSlots);
+        setupAdvertising().then(removeAdSlots).catch(forceRemoveAdSlots);
         return Promise.resolve();
     }
 
-    return removeAdSlots();
+    return forceRemoveAdSlots();
 };
 
 export default {
