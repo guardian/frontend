@@ -162,11 +162,11 @@ define([
         });
 
         it('should not contain an ad-free param when disabled', function () {
-            expect(buildPageTargeting(false).af).toBe(undefined);
+            expect(buildPageTargeting(false).af).toBeUndefined();
         });
 
         it('should not contain an ad-free param when not specified', function () {
-            expect(buildPageTargeting().af).toBe(undefined);
+            expect(buildPageTargeting().af).toBeUndefined();
         });
 
         it('should remove empty values', function () {
