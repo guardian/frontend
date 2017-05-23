@@ -1,9 +1,5 @@
-define(function () {
+export default addTrackingPixel;
 
-    return addTrackingPixel;
-
-    function addTrackingPixel(url) {
-        new Image().src = url;
-    }
-
-});
+function addTrackingPixel(url) {
+    new Image().src = url;
+}
