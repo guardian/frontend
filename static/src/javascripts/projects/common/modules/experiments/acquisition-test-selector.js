@@ -41,6 +41,7 @@ export const getTest = () => {
         const forced = window.location.hash.indexOf(`ab-${t.id}`) > -1;
         const variant: Variant = variantFor(t);
 
+        if (forced) return true;
         if (!variant || !variant.options || !variant.options.maxViews)
             return false;
 
@@ -58,9 +59,7 @@ export const getTest = () => {
         const hasNotReachedRateLimit =
             (withinViewLimit && enoughDaysBetweenViews) || isUnlimited;
 
-        return (
-            forced || (testCanBeRun(t) && isInTest(t) && hasNotReachedRateLimit)
-        );
+        return testCanBeRun(t) && isInTest(t) && hasNotReachedRateLimit;
     });
 
     return eligibleTests[0] && new eligibleTests[0]();
