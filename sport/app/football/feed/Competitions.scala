@@ -134,16 +134,14 @@ class CompetitionsService(val footballClient: FootballClient, competitionDefinit
     DateTimeComparator.getInstance.asInstanceOf[Comparator[DateTime]]
   )
 
-  private def mostRecentCompetitionSeason(competitions: List[Season]): List[Season] = {
-    def compMatchesSeason(compDef: Competition)(season: Season) =
-      season.competitionId == compDef.id && season.startDate.isBefore(LocalDate.now())
-
+  private def mostRecentCompetitionSeason(competitions: List[Season]): List[Season] =
     competitionDefinitions.flatMap { compDef =>
-      competitions.filter(compMatchesSeason(compDef))
+      competitions
+        .filter(_.competitionId == compDef.id)
+        .filter(_.startDate.isBefore(LocalDate.now()))
         .sortBy(_.startDate.toDateTimeAtStartOfDay.getMillis).reverse
         .headOption
     }
-  }
 
   override val teamNameBuilder = new TeamNameBuilder(this)
 
