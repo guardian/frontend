@@ -1,4 +1,4 @@
-&.content__main-column--liveblog {
+.content__main-column--liveblog {
     @include mq(desktop) {
         margin-left: gs-span(4) + $gs-gutter;
         margin-right: 0;
