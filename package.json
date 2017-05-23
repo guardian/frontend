@@ -148,16 +148,12 @@
     ],
     "moduleDirectories": [
       "<rootDir>/static/src/javascripts",
+      "<rootDir>/static/src/javascripts/projects",
       "<rootDir>/static/src/javascripts-legacy",
       "<rootDir>/static/vendor/javascripts",
       "node_modules"
     ],
     "moduleNameMapper": {
-      "admin": "projects/admin",
-      "common": "projects/common",
-      "facia": "projects/facia",
-      "membership": "projects/membership",
-      "commercial": "projects/commercial",
       "^lodash\/(.*)$": "lodash-node/compat/$1",
       "picturefill": "projects/common/utils/picturefill",
       "raven": "raven-js",

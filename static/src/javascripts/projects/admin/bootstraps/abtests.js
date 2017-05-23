@@ -1,5 +1,8 @@
 // @flow
-import abTests from 'common/modules/experiments/ab';
+import {
+    getActiveTests,
+    getExpiredTests,
+} from 'common/modules/experiments/ab-tests';
 import ReportItem from 'admin/modules/abtests/abtest-report-item';
 import Audience from 'admin/modules/abtests/audience';
 
@@ -23,20 +26,20 @@ const renderTests = (
 
 const initABTests = (): void => {
     renderTests(
-        abTests.getActiveTests(),
+        getActiveTests(),
         true,
         document.querySelector('.abtests-report__data')
     );
 
     const expiredTestItems = renderTests(
-        abTests.getExpiredTests(),
+        getExpiredTests(),
         false,
         document.querySelector('.abtests-expired')
     );
 
     // Display audience breakdown.
     const audience = new Audience({
-        tests: abTests.getActiveTests(),
+        tests: getActiveTests(),
     });
     audience.render(document.querySelector('.abtests-audience'));
 

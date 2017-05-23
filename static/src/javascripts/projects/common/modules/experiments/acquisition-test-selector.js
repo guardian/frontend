@@ -1,6 +1,4 @@
 // @flow
-import type { Variant } from 'common/modules/experiments/ab-types';
-
 import { variantFor, isInTest } from 'common/modules/experiments/segment-util';
 import { testCanBeRun } from 'common/modules/experiments/test-can-run-checks';
 import {

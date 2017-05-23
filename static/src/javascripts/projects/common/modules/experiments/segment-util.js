@@ -1,6 +1,4 @@
 // @flow
-import type { ABTest, Variant } from 'common/modules/experiments/ab-types';
-
 import memoize from 'lodash/functions/memoize';
 import {
     getMvtNumValues,
