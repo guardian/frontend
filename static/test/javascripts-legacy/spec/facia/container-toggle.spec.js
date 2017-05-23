@@ -43,11 +43,6 @@ define([
                 '</section>'
             )[0];
             $container = bonzo(container);
-            injector.mock('common/views/svgs', {
-                inlineSvg: function() {
-                    return '';
-                }
-            });
             injector.require([
                 'facia/modules/ui/container-toggle',
                 'lib/mediator'

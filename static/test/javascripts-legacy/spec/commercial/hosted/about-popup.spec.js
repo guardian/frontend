@@ -19,19 +19,7 @@ define([
                 ]
             };
 
-
-
         beforeEach(function (done) {
-            var fakeSvg = {
-                markup: ''
-            };
-
-            injector.mock({
-                'svgs/icon/arrow-white-right.svg': fakeSvg,
-                'svgs/icon/marque-36.svg': fakeSvg,
-                'svgs/icon/cross.svg': fakeSvg,
-                'svgs/commercial/paid-content.svg': fakeSvg,
-            });
             injector.require([
                 'commercial/modules/hosted/about'
             ], function () {
