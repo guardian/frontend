@@ -7,4 +7,3 @@ GET        /_healthcheck                            controllers.HealthCheck.heal
 
 # 404
 GET        /404$path</.*>                           controllers.ArchiveController.lookup(path)
-

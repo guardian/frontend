@@ -11,7 +11,7 @@ define([
         var queryParams = {
             ad_rule: 1,
             correlator: new Date().getTime(),
-            cust_params: encodeURIComponent(urlUtils.constructQuery(buildPageTargeting())),
+            cust_params: encodeURIComponent(urlUtils.constructQuery(buildPageTargeting.buildPageTargeting())),
             env: 'vp',
             gdfp_req: 1,
             impl:'s',

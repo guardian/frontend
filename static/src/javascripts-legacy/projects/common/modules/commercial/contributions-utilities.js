@@ -171,7 +171,7 @@ define([
 
     function ContributionsABTestVariant(options, test) {
         var trackingCampaignId = test.epic ? 'epic_' + test.campaignId : test.campaignId;
-        var campaignCode = getCampaignCode(test.campaignPrefix, test.campaignId, this.id, test.campaignSuffix);
+        var campaignCode = getCampaignCode(test.campaignPrefix, test.campaignId, options.id, test.campaignSuffix);
 
         this.id = options.id;
 
@@ -263,11 +263,11 @@ define([
 
 
     ContributionsABTestVariant.prototype.contributionsURLBuilder = function(codeModifier) {
-        return this.getURL(contributionsBaseURL, codeModifier(this.campaignCode));
+        return this.getURL(contributionsBaseURL, codeModifier(this.options.campaignCode));
     };
 
     ContributionsABTestVariant.prototype.membershipURLBuilder = function(codeModifier) {
-        return this.getURL(membershipBaseURL, codeModifier(this.campaignCode));
+        return this.getURL(membershipBaseURL, codeModifier(this.options.campaignCode));
     };
 
     ContributionsABTestVariant.prototype.registerListener = function (type, defaultFlag, event, options) {

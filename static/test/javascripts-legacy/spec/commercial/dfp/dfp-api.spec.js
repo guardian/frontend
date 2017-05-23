@@ -52,8 +52,10 @@ define([
                 'common/modules/analytics/google': function noop() {
                     // No implementation
                 },
-                'commercial/modules/dfp/apply-creative-template': function () {
-                    return Promise.resolve();
+                'commercial/modules/dfp/apply-creative-template': {
+                    applyCreativeTemplate: function () {
+                      return Promise.resolve(true);
+                    }
                 },
                 'lib/load-script': {
                     loadScript: function () {
@@ -86,8 +88,9 @@ define([
                 var performanceLogging = arguments[5];
                 commercialFeatures = arguments[6];
                 detect = arguments[7];
-                closeDisabledSlots = arguments[8];
-                dfpEnv = arguments[9];
+                closeDisabledSlots = arguments[8].closeDisabledSlots;
+                dfpEnv = arguments[9].dfpEnv;
+
 
                 config.switches = {
                     commercial:      true,
@@ -211,7 +214,7 @@ define([
 
         it('should not get hidden ad slots', function (done) {
             $('.js-ad-slot').first().css('display', 'none');
-            closeDisabledSlots.init()
+            closeDisabledSlots()
                 .then(function() {
                     return dfp.prepareGoogletag.init(noop, noop);
                 })
