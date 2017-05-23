@@ -23,7 +23,7 @@
             </div>
             <div class="fc-container__body fc-container--rolled-up-hide">
                 @for(sliceWithCards <- containerLayout.slices) {
-                    @slice(sliceWithCards, containerIndex, webTitle == "general election 2017")
+                    @slice(sliceWithCards, containerIndex)
                 }
 
                 @if(nav.isDefined) {
