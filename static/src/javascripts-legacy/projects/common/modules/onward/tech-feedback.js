@@ -4,7 +4,7 @@ define([
     'lib/config',
     'lib/detect',
     'commercial/modules/dfp/get-creative-ids',
-    'common/modules/experiments/ab',
+    'common/modules/experiments/utils',
     'lodash/collections/map',
     'lodash/collections/reduce',
     'lodash/objects/assign',

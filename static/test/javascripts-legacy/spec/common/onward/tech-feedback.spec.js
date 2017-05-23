@@ -9,9 +9,6 @@ define([
 
         var injector = new Injector();
         var TechFeedback;
-
-        //.feedback__form input[name=extra]
-
         var fixturesConfig = {
             id: 'related',
             fixtures: [
@@ -35,13 +32,11 @@ define([
             fixtures.clean(fixturesConfig.id);
         });
 
-
         it("Should place the extra information into the forms", function(){
             new TechFeedback();
             expect(document.querySelectorAll(".feedback__form input[name=extra]")[0].value).toContain("browser");
             expect(document.querySelectorAll(".feedback__form input[name=extra]")[0].value).toContain("No tests running");
         });
-        
 
         it("Should hide the un-enhanced form", function(){
             new TechFeedback();
