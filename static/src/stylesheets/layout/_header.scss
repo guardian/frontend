@@ -16,7 +16,7 @@ $c-guardian-services-action: #ffffff;
         }
     }
 
-    @include mq(desktop) {
+    @include mq(tablet) {
         display: block;
     }
 }
