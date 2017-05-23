@@ -13,12 +13,12 @@ import common.commercial.CommercialProperties
 import conf.Configuration
 import conf.switches.Switches.FaciaInlineEmbeds
 import contentapi.{CapiHttpClient, CircuitBreakingContentApiClient, ContentApiClient, QueryDefaults}
-import services.fronts.FrontsApi
 import model._
 import model.facia.PressedCollection
 import model.pressed._
 import play.api.libs.json._
 import play.api.libs.ws.WSClient
+import services.fronts.FrontsApi
 import services.{ConfigAgent, S3FrontsApi}
 
 import scala.concurrent.Future
@@ -35,12 +35,14 @@ class LiveFapiFrontPress(val wsClient: WSClient, val capiClientForFrontsSeo: Con
 
   def pressByPathId(path: String): Future[Unit] =
     getPressedFrontForPath(path)
-      .map { pressedFront => S3FrontsApi.putLiveFapiPressedJson(path, Json.stringify(Json.toJson(pressedFront)))}
-      .asFuture.map(_.fold(
-        e => {
-          StatusNotification.notifyFailedJob(path, isLive = true, e)
-          throw new RuntimeException(s"${e.cause} ${e.message}")},
-        _ => StatusNotification.notifyCompleteJob(path, isLive = true)))
+    .map { pressedFront => S3FrontsApi.putLiveFapiPressedJson(path, Json.stringify(Json.toJson(pressedFront))) }
+    .asFuture.map(_.fold(
+      e => {
+        StatusNotification.notifyFailedJob(path, isLive = true, e)
+        throw new RuntimeException(s"Failed to press path '$path': ${ e.cause } ${ e.message }")
+      },
+      _ => StatusNotification.notifyCompleteJob(path, isLive = true)
+    ))
 
   def collectionContentWithSnaps(
     collection: Collection,
