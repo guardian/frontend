@@ -53,6 +53,10 @@ compile: install
 compile-dev: install
 	@./tools/task-runner/runner compile --dev
 
+# Compile atom-specific JS
+compile-atoms: install
+	@./tools/task-runner/runner compile/javascript/index.atoms
+
 # Compile all assets for watch.
 compile-watch: install # PRIVATE
 	@./tools/task-runner/runner compile/index.watch

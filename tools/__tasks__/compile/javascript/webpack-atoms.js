@@ -9,7 +9,7 @@ const chalk = require('chalk');
 const config = require('../../../../webpack.config.atoms.js');
 
 module.exports = {
-    description: 'Create Webpack bundles',
+    description: 'Create Webpack bundles for atoms',
     task: () =>
         new Observable(observer => {
             config.plugins = [
