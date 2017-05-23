@@ -4,8 +4,12 @@ import fetchJson from 'lib/fetch-json';
 import fastdom from 'lib/fastdom-promise';
 import { initHostedCarousel } from './onward-journey-carousel';
 
-const getPlaceholdersFromDom = (dom = document): Array<any> =>
-    [].slice.call(dom.getElementsByClassName('js-onward-placeholder'));
+// there should only ever be one onward component on the page
+// if the component does not exist, return an empty array rather than `undefined`
+const getPlaceholderFromDom = (
+    dom: typeof document = document
+): Array<HTMLElement> =>
+    [...dom.getElementsByClassName('js-onward-placeholder')].slice(0, 1);
 
 const generateUrlFromConfig = (
     c: {
@@ -15,11 +19,14 @@ const generateUrlFromConfig = (
             contentType: string,
         },
     } = config
-): string => `${c.page.ajaxUrl}/${c.page.pageId}/${c.page.contentType.toLowerCase()}/onward.json`;
+): string =>
+    c.page.ajaxUrl && c.page.pageId && c.page.contentType
+        ? `${c.page.ajaxUrl}/${c.page.pageId}/${c.page.contentType.toLowerCase()}/onward.json`
+        : '';
 
 const insertHTMLfromPlaceholders = (
     json: { html: string },
-    placeholders: Array<any>
+    placeholders: Array<HTMLElement>
 ): void => {
     placeholders[0].insertAdjacentHTML('beforeend', json.html);
 };
@@ -27,29 +34,25 @@ const insertHTMLfromPlaceholders = (
 export const loadOnwardComponent = (
     start: () => void,
     stop: () => void,
-    getPlaceholders: () => Array<any> = getPlaceholdersFromDom,
-    getUrl: () => string = generateUrlFromConfig,
-    getJson: (url: string, options: RequestOptions) => Promise<any> = fetchJson,
     insertHtmlFn: (
         json: { html: string },
-        placeholders: Array<any>
-    ) => void = insertHTMLfromPlaceholders,
-    initHostedComponent: () => Promise<any> = initHostedCarousel
+        placeholders: Array<HTMLElement>
+    ) => void = insertHTMLfromPlaceholders
 ): Promise<any> => {
     start();
 
-    const placeholders = getPlaceholders();
-    const url = getUrl();
+    const placeholders: Array<HTMLElement> = getPlaceholderFromDom();
+    const jsonUrl: string = generateUrlFromConfig();
 
     if (placeholders && placeholders.length) {
-        getJson(url, { mode: 'cors' })
+        fetchJson(jsonUrl, { mode: 'cors' })
             .then(json =>
                 fastdom.write(() => {
                     insertHtmlFn(json, placeholders);
                 })
             )
             .then(() => {
-                initHostedComponent();
+                initHostedCarousel();
             })
             .then(stop);
     } else {

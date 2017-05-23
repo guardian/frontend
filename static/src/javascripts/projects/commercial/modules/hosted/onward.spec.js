@@ -15,29 +15,30 @@ describe('URL generator', () => {
     it('generates correct URL from valid config', () => {
         const expectResult = 'some.url/pageId/gallery/onward.json';
         const result = generateUrlFromConfig(fakeConfig);
+
         expect(result).toEqual(expectResult);
     });
 });
 
 describe('Insert onward HTML', () => {
     it('calls own insertion method', () => {
-        const fakePlaceholders = [{ insertAdjacentHTML: jest.fn() }];
+        const fakePlaceholder = document.createElement('div');
+        fakePlaceholder.innerHTML = '<div class="js-onward-placeholder"></div>';
         const fakeJson = { html: '<div class="next-page"></div>' };
-        insertHTMLfromPlaceholders(fakeJson, fakePlaceholders);
+        const result =
+            '<div class="js-onward-placeholder"></div><div class="next-page"></div>';
 
-        expect(fakePlaceholders[0].insertAdjacentHTML).toHaveBeenCalledTimes(1);
+        insertHTMLfromPlaceholders(fakeJson, [fakePlaceholder]);
+        expect(fakePlaceholder.innerHTML).toBe(result);
     });
 });
 
 describe('Loading onward component', () => {
     it('calls stop if placeholder length is 0', () => {
-        const fakePlaceholdersFn = () => [];
-        const fakeUrlFn = () => 'fake.url/pageId/gallery/onward.json';
         const fakeStart = jest.fn();
         const fakeStop = jest.fn();
 
-        loadOnwardComponent(fakeStart, fakeStop, fakePlaceholdersFn, fakeUrlFn);
-
+        loadOnwardComponent(fakeStart, fakeStop);
         expect(fakeStop).toHaveBeenCalledTimes(1);
     });
 });
