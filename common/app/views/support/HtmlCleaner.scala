@@ -8,7 +8,7 @@ import conf.switches.Switches._
 import layout.ContentWidths
 import layout.ContentWidths._
 import model._
-import model.content.{Atom, Atoms, MediaAtom, MediaWrapper}
+import model.content.{Atom, Atoms, MediaAtom, MediaWrapper, ExplainerAtom}
 import org.jsoup.Jsoup
 import org.jsoup.nodes.{Document, Element, TextNode}
 import play.api.mvc.RequestHeader
@@ -786,12 +786,9 @@ case class CommercialComponentHigh(isPaidContent: Boolean, isNetworkFront: Boole
 
 }
 
-object ExplainerCleaner extends HtmlCleaner {
+case class ExplainerCleaner(explainers: Seq[ExplainerAtom]) extends HtmlCleaner {
   val prefixLength = "https://interactive.guim.co.uk/2016/08/explainer-interactive/embed/embed.html?id=".length
-  val eids = Seq(
-    "77b1f6d5-e4df-4650-89b2-e8c1c9653b23",
-    "acb90e30-85a7-4d80-8dfa-a4d1f3fae642"
-  )
+  val eids = explainers.filter(_.labels.contains("test/test")).map(_.id)
 
   override def clean(document: Document): Document = {
     document
