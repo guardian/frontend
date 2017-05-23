@@ -41,11 +41,11 @@
     color: currentColor;
     cursor: pointer;
     display: block;
-    font-size: 20px;
+    font-size: 18px;
     outline: none;
-    padding-bottom: $gs-baseline / 1.5;
+    padding-bottom: $gs-baseline / 1.8;
     padding-right: $gs-gutter;
-    padding-top: $gs-baseline / 1.5;
+    padding-top: $gs-baseline / 1.8;
     user-select: none;
 
     @include mq(mobileMedium) {
@@ -58,6 +58,7 @@
     }
 
     .fly-in-group--primary & {
+        font-size: 20px;
         padding-bottom: $gs-baseline * 1.2;
         padding-top: $gs-baseline / 2.5;
     }
@@ -73,7 +74,7 @@
 
 .fly-in-item__toggle {
     &:before {
-        border: 2px solid $news-support-2;
+        border: 2px solid currentColor;
         border-top: 0;
         border-left: 0;
         content: '';
@@ -82,11 +83,14 @@
         margin-top: -3px;
         transform: rotate(45deg);
         width: 8px;
-    }
 
-    [aria-expanded='true'] &:before,
-    details[open] &:before {
-        transform: rotate(-135deg);
+        .fly-in-group--primary & {
+            border-color: $news-support-2;
+        }
+
+        details[open] & {
+            transform: rotate(-135deg);
+        }
     }
 }
 

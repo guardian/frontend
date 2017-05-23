@@ -5,7 +5,7 @@
     flex-wrap: wrap;
     list-style: none;
     margin: $gs-baseline / 2 0 0 0;
-    padding: $gs-baseline / 2 0 $gs-baseline $gs-gutter * 2 + $gs-gutter / 2;
+    padding: $gs-baseline / 3.5 0 $gs-baseline $gs-gutter * 2 + $gs-gutter / 2;
     text-transform: lowercase;
 
     @include mq(tablet) {
@@ -15,6 +15,7 @@
 
 .fly-in-group--primary {
     color: $news-support-1;
+    padding-top: 0;
 }
 
 .fly-in-group--secondary {
