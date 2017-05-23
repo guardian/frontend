@@ -29,7 +29,7 @@ define([
                 }
             });
             injector.require(['common/modules/crosswords/anagram-helper/main'], function(AnagramHelperModule) {
-                AnagramHelper = AnagramHelperModule;
+                AnagramHelper = AnagramHelperModule.AnagramHelper;
                 done();
             });
         });

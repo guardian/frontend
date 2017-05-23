@@ -163,4 +163,4 @@ const AnagramHelper = React.createClass({
     },
 });
 
-export default AnagramHelper;
+export { AnagramHelper };
