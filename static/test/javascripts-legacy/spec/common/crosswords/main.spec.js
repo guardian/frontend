@@ -632,10 +632,8 @@ define([
         var renderedComponent;
 
         beforeEach(function (done) {
-            injector.mock('common/views/svgs', {
-                inlineSvg: function() {
-                    return '';
-                }
+            injector.mock('svgs/icon/close-central.svg', {
+                markup: ''
             });
             injector.require([
                 'react/addons',
