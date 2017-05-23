@@ -33,10 +33,9 @@ class AtomPageController(contentApiClient: ContentApiClient)(implicit context: A
 
   private def lookup(path: String)(implicit request: RequestHeader): Future[Either[Atom, Result]] = {
     val edition = Edition(request)
-    contentApiClient.getResponse(contentApiClient.item(path, edition)) map makeAtom map {
-      case Some(x) => Left(x)
-      case _ => Right(NotFound)
-    } recover convertApiExceptions
+    contentApiClient.getResponse(contentApiClient.item(path, edition))
+      .map(makeAtom _ andThen { _.toLeft(NotFound) })
+      .recover(convertApiExceptions)
   }
 
   def makeAtom(apiAtom: ItemResponse): Option[Atom] = {
