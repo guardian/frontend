@@ -12,6 +12,7 @@ import model.content.{Atom, Atoms, MediaAtom, MediaWrapper, ExplainerAtom}
 import org.jsoup.Jsoup
 import org.jsoup.nodes.{Document, Element, TextNode}
 import play.api.mvc.RequestHeader
+import play.twirl.api.HtmlFormat
 
 import scala.collection.JavaConversions._
 import scala.util.Try
@@ -804,8 +805,8 @@ case class ExplainerCleaner(explainers: Seq[ExplainerAtom]) extends HtmlCleaner 
             .attr("name", "explainer-title")
             .attr("content", explainer.title)
           val body = document.createElement("meta")
-            .attr("name", "explainer-title")
-            .attr("content", explainer.body)
+            .attr("name", "explainer-body")
+            .attr("content", HtmlFormat.escape(explainer.body).toString)
           hook.appendChild(title).appendChild(body)
           i.after(hook)
         }

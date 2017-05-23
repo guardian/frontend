@@ -414,7 +414,7 @@ object StoryQuestionsAtom {
 
 object ExplainerAtom {
   def make(atom: AtomApiAtom): ExplainerAtom = {
-    val explainer = atom.data.asInstanceOf[com.gu.contentatom.thrift.atom.explainer.ExplainerAtom]
-    ExplainerAtom(atom.id, atom.labels, explainer.title, explainer.body)
+    val explainer = atom.data.asInstanceOf[AtomData.Explainer].explainer
+    ExplainerAtom(atom.id, explainer.tags.getOrElse(Nil), explainer.title, explainer.body)
   }
 }
