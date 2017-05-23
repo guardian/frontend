@@ -26,7 +26,10 @@ let scrollBgTpl;
 class FabricV1 {
     adSlot: Element;
     params: Object;
-    scrollingBg: ?Element;
+
+    scrollingBg: ?HTMLElement;
+    layer2: ?HTMLElement;
+    scrollType: string;
 
     constructor(adSlot: Element, params: Object) {
         this.adSlot = adSlot;
@@ -110,13 +113,18 @@ class FabricV1 {
             // be visible before the animation has been initiated.
             if (
                 this.params.layerTwoAnimation === 'enabled' &&
+                this.layer2 &&
                 isEnhanced &&
                 !isIE10OrLess
             ) {
                 this.layer2.style.backgroundPosition = '';
             }
 
-            if (this.scrollType === 'fixed' && hasBackgroundFixedSupport) {
+            if (
+                this.scrollType === 'fixed' &&
+                this.scrollingBg &&
+                hasBackgroundFixedSupport
+            ) {
                 this.scrollingBg.style.backgroundAttachment = 'fixed';
             }
 
@@ -129,6 +137,8 @@ class FabricV1 {
             this.adSlot.classList.add('content__mobile-full-width');
 
             if (
+                this.adSlot.parentNode &&
+                this.adSlot.parentNode instanceof HTMLElement &&
                 this.adSlot.parentNode.classList.contains(
                     'top-banner-ad-container'
                 )
@@ -155,9 +165,11 @@ class FabricV1 {
             const scrollAmount =
                 Math.ceil(this.adSlot.getBoundingClientRect().top * 0.3) + 20;
             fastdom.write(() => {
-                this.scrollingBg.classList.add('ad-scrolling-bg-parallax');
-                this.scrollingBg.style.backgroundPosition = `50% ${scrollAmount}%`;
-            }, this);
+                if (this.scrollingBg) {
+                    this.scrollingBg.style.backgroundPosition = `50% ${scrollAmount}%`;
+                    this.scrollingBg.classList.add('ad-scrolling-bg-parallax');
+                }
+            });
         } else if (this.scrollType === 'fixed' && !hasBackgroundFixedSupport) {
             const adRect = this.adSlot.getBoundingClientRect();
             const vPos =
@@ -165,7 +177,9 @@ class FabricV1 {
                 window.innerHeight *
                 100;
             fastdom.write(() => {
-                this.scrollingBg.style.backgroundPosition = `50% ${vPos}%`;
+                if (this.scrollingBg) {
+                    this.scrollingBg.style.backgroundPosition = `50% ${vPos}%`;
+                }
             });
         }
         this.layer2Animation();
@@ -182,9 +196,11 @@ class FabricV1 {
                 detect.getViewport().height >
                 this.adSlot.getBoundingClientRect().top;
             fastdom.write(() => {
-                this.layer2.classList
-                    .add(`ad-scrolling-text-hide${this.params.layerTwoAnimationPosition ? `-${this.params.layerTwoAnimationPosition}` : ''}`);
-                if (inViewB) {
+                if (this.layer2) {
+                    this.layer2.classList
+                        .add(`ad-scrolling-text-hide${this.params.layerTwoAnimationPosition ? `-${this.params.layerTwoAnimationPosition}` : ''}`);
+                }
+                if (this.layer2 && inViewB) {
                     this.layer2.classList
                         .add(`ad-scrolling-text-animate${this.params.layerTwoAnimationPosition ? `-${this.params.layerTwoAnimationPosition}` : ''}`);
                 }
