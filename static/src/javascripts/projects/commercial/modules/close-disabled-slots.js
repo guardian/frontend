@@ -8,7 +8,7 @@ const mpuCandidateSelector: string = '.fc-slice__item--mpu-candidate';
 
 const shouldDisableAdSlotWhenAdFree = adSlot =>
     commercialFeatures.adFree &&
-    !adSlot.className.toLowerCase().contains('merchandising');
+    !adSlot.className.toLowerCase().includes('merchandising');
 
 const shouldDisableAdSlot = adSlot =>
     window.getComputedStyle(adSlot).display === 'none' ||
