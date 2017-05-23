@@ -25,7 +25,7 @@ const registerCheck = (id: string): Object => {
     return registeredChecks[id];
 };
 
-const resolveCheck = (id: string, result?: boolean): void => {
+const resolveCheck = (id: string, result?: any): void => {
     const check = registeredChecks[id];
 
     if (check) {
