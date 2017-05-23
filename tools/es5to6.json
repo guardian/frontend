@@ -168,7 +168,6 @@
     "projects/commercial/modules/sticky-top-banner.js"
   ],
   "davidfurey": [
-    "projects/common/modules/experiments/tests/bookmarks-email-variants-2.js",
     "projects/common/modules/ui/blockSharing.js",
     "projects/common/modules/ui/clickstream.js",
     "projects/common/modules/experiments/tests/editorial-email-variants.js",
