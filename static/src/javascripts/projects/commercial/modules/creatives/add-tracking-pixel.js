@@ -1,5 +1,4 @@
-export default addTrackingPixel;
+// @flow
+const addTrackingPixel = (url: string): string => (new Image().src = url);
 
-function addTrackingPixel(url) {
-    new Image().src = url;
-}
+export default addTrackingPixel;
