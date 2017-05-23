@@ -1,17 +1,16 @@
 // @flow
-
-type AdSize = {
-    width: number,
-    height: number,
-    switchUnitId: ?number,
-    toString: (_: void) => string,
-};
+import type { GuAdSize, SwitchUnitId } from 'commercial/types';
+import {
+    mpuUnitId,
+    leaderboardUnitId,
+    billboardUnitId,
+} from 'commercial/types';
 
 const getAdSize = (
     width: number,
     height: number,
-    switchUnitId: ?number
-): AdSize => {
+    switchUnitId: ?SwitchUnitId
+): GuAdSize => {
     const toString = (): string =>
         width === height && height === 0 ? 'fluid' : `${width},${height}`;
 
@@ -23,23 +22,11 @@ const getAdSize = (
     });
 };
 
-type SwitchUnitId = {
-    mpu: number,
-    leaderboard: number,
-    billboard: number,
-};
-
-const switchUnitId: SwitchUnitId = {
-    mpu: 228,
-    leaderboard: 229,
-    billboard: 229,
-};
-
 const adSizes: Object = {
     // standard ad sizes
-    billboard: getAdSize(970, 250, switchUnitId.billboard),
-    leaderboard: getAdSize(728, 90, switchUnitId.leaderboard),
-    mpu: getAdSize(300, 250, switchUnitId.mpu),
+    billboard: getAdSize(970, 250, billboardUnitId),
+    leaderboard: getAdSize(728, 90, leaderboardUnitId),
+    mpu: getAdSize(300, 250, mpuUnitId),
     halfPage: getAdSize(300, 600),
     portrait: getAdSize(300, 1050),
 

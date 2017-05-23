@@ -15,6 +15,7 @@ module.exports = {
         'import/no-extraneous-dependencies': 'off', // necessary while we use aliases
         'import/extensions': 'off',
         'import/no-webpack-loader-syntax': 'off', // used for require plugins still
+        'import/no-namespace': 2,
 
         // these are bad habits in react that we're already abusing.
         // if we go more [p]react we should look at them.

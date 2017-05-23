@@ -1,0 +1,129 @@
+/*****************************************************
+ * #election2017 temp styling for election container *
+ * Remove this file when the UK election is done     *
+*****************************************************/
+
+.fc-item__content-election {
+    display: none;
+}
+
+// Results stage - headline above
+.qqqtall-q1--election {
+    .fc-item .fc-item__content {
+        background-color: $news-support-7;
+
+        @include mq(tablet) {
+            background-color: rgba($news-support-7, .8);
+            position: absolute;
+            bottom: 0;
+            padding-bottom: 0;
+        }
+    }
+
+    .fc-sublink__title {
+        font-weight: 500;
+        line-height: 16px;
+
+        &:before {
+            width: 25%;
+            border-top-style: solid;
+
+            @include mq(tablet) {
+                content: none;
+            }
+        }
+    }
+
+    .fc-sublink {
+        margin: 0;
+        padding: $gs-baseline / 2;
+
+        &:after {
+            @include mq(tablet) {
+                content: '';
+                position: absolute;
+                top: $gs-baseline / 3;
+                bottom: 0;
+                right: -$gs-gutter / 2;
+                display: block;
+                border-right: 1px solid rgba(#ffffff, .5);;
+            }
+        }
+
+        &:last-child:after {
+            content: none;
+        }
+    }
+
+    .fc-sublinks {
+        @include mq($until: tablet) {
+            padding-top: $gs-baseline / 3;
+        }
+    }
+
+    .fc-item__content-election {
+        display: block;
+        padding-left: $fc-item-gutter;
+        padding-right: $fc-item-gutter;
+
+        @include mq(leftCol) {
+            padding-bottom: $gs-baseline * 2;
+        }
+
+        .fc-item__header {
+            @include fs-headline(4, true);
+
+            @include mq($from: tablet) {
+                @include fs-headline(7, true);
+            }
+        }
+    }
+
+    .l-row__item--span-3 .fc-item__content {
+        .fc-item__header,
+        .fc-item__standfirst {
+            display: none !important;
+        }
+    }
+}
+
+// winner announced - showcase image
+.qqqtall-q1--election {
+    .fc-item--has-boosted-title {
+
+        &.fc-item {
+            background: inherit !important;
+
+            .u-faux-block-link--hover {
+                background: inherit !important;
+            }
+        }
+
+        .fc-item__content-election {
+            display: none;
+        }
+
+        .fc-item__container:before {
+            content: none;
+        }
+
+        .fc-item__content {
+            @include mq($from: tablet, $until: desktop) {
+                background-color: $news-support-7;
+                position: relative;
+                padding-bottom: 0;
+            }
+        }
+
+        .fc-item__media-wrapper,
+        .u-faux-block-link__overlay {
+            @include mq(leftCol) {
+                margin-left: -1 * ($left-column + $gs-gutter);
+            }
+
+            @include mq(wide) {
+                margin-left: -1 * ($left-column-wide + $gs-gutter);
+            }
+        }
+    }
+}

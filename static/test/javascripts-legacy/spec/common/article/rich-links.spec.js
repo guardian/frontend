@@ -29,10 +29,16 @@ define([
             injector = new Injector();
 
         beforeEach(function (done) {
-            articleBodyFixtureElement = fixtures.render(articleBodyConf);
-
-            injector.mock('svgs/icon/thumb.svg', {
+            var fakeSvg = {
                 markup: ''
+            };
+
+            articleBodyFixtureElement = fixtures.render(articleBodyConf);
+            injector.mock({
+                'svgs/icon/thumb.svg': fakeSvg,
+                'svgs/icon/quote.svg': fakeSvg,
+                'svgs/icon/plus.svg': fakeSvg,
+                'svgs/icon/minus.svg': fakeSvg
             });
             injector.require(['common/modules/article/rich-links', 'lib/config', 'common/modules/article/space-filler'], function () {
                 richLinks = arguments[0];

@@ -15,7 +15,7 @@
                     "content--has-body" -> media.fields.body.nonEmpty,
                     "content--paid-content paid-content" -> isPaidContent
                 ),
-                "content", "content--media", s"content--media--$mediaType", "tonal", s"tonal--${toneClass(media)}"
+                "content", "content--media", s"content--media--$mediaType", "tonal", "tonal--tone-media", s"tonal--${toneClass(media)}"
             )"
             itemscope itemtype="@media.metadata.schemaType" role="main">
 

@@ -21,6 +21,12 @@ make test
 
 ## Server-side development
 
+### Clean all projects
+
+It is often necessary to clean the `root` project when 3rd-party libs have been updated for instance.
+Developers can use the `cleanAll` sbt task to clean all sbt projects, rather than only cleaning the current project.
+
+
 ### Debugging Play application
 You can debug your local Frontend application, by attaching a debugger.
 

@@ -1,7 +1,7 @@
 // @flow
 
-import dfpEnv from 'commercial/modules/dfp/dfp-env';
+import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 
-const getCreativeIDs = (): Array<string> => dfpEnv.creativeIDs;
+const getCreativeIDs = (): Array<number> => dfpEnv.creativeIDs;
 
 export default getCreativeIDs;
