@@ -269,10 +269,7 @@ $control-offset: 36 + $gs-gutter/2;
 /* Ad feedback menu
    ========================================================================== */
 .ad-feedback.popup__toggle {
-    position: absolute;
-    padding-right: $gs-gutter/2;
-    right: 0;
-    top: 0;
+    display: inline;
     cursor: pointer;
 
     &::after {
@@ -288,8 +285,6 @@ $control-offset: 36 + $gs-gutter/2;
 .ad-feedback.popup {
     width: 240px;
     top: 100%;
-    left: auto;
-    right: $gs-gutter/2;
     border: 1px solid $neutral-4;
     z-index: $zindex-overlay;
     padding: 0;
