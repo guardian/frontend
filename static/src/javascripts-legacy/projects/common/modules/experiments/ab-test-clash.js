@@ -1,10 +1,10 @@
 define([
     'lodash/collections/some',
-    'common/modules/experiments/utils',
+    'common/modules/experiments/ab',
     'common/modules/experiments/acquisition-test-selector'
 ], function (
     some,
-    abUtils,
+    ab,
     acquisitionTestSelector
 ) {
 
@@ -15,7 +15,7 @@ define([
     function userIsInAClashingAbTest(tests) {
         tests = tests || clashingTests;
 
-        return _testABClash(abUtils.isInVariant, tests);
+        return _testABClash(ab.isInVariant, tests);
     }
 
     function _testABClash(f, clashingTests) {
