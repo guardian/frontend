@@ -4,7 +4,7 @@ type ListenerFunction = (f: () => void) => void;
 
 declare type Variant = {
     id: string,
-    test: () => void,
+    test: (x: Object) => void,
     impression?: ListenerFunction,
     success?: ListenerFunction,
     options?: Object,

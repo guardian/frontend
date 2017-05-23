@@ -23,11 +23,6 @@ define([
         var AnagramHelper;
 
         beforeEach(function(done) {
-            injector.mock('common/views/svgs', {
-                inlineSvg: function() {
-                    return '';
-                }
-            });
             injector.require(['common/modules/crosswords/anagram-helper/main'], function(AnagramHelperModule) {
                 AnagramHelper = AnagramHelperModule.AnagramHelper;
                 done();

@@ -632,9 +632,6 @@ define([
         var renderedComponent;
 
         beforeEach(function (done) {
-            injector.mock('svgs/icon/close-central.svg', {
-                markup: ''
-            });
             injector.require([
                 'react/addons',
                 'common/modules/crosswords/crossword'

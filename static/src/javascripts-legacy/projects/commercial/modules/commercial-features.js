@@ -126,6 +126,10 @@ define([
                 return !adblockUsed && self.canReasonablyAskForMoney;
             })
         };
+
+        this.adFeedback =
+            config.switches.adFeedback &&
+            ['artanddesign', 'society', 'tvandradio'].indexOf(config.page.section) > -1;
     }
 
     try {

@@ -30,7 +30,7 @@ const runTest = (test: ABTest): void => {
         const variant = getVariant(test, variantId);
 
         if (variant) {
-            variant.test();
+            variant.test(variant.options || {});
         } else if (!isInTest(test) && test.notInTest) {
             test.notInTest();
         }

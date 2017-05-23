@@ -59,11 +59,12 @@ object CityResponse {
     country = "Australia"
   )
 
-  def fromEdition(edition: Edition) = {
+  def fromEdition(edition: Edition): Option[CityResponse] = {
     edition match {
-      case Uk => London
-      case Us => NewYork
-      case Au => Sydney
+      case Uk => Some(London)
+      case Us => Some(NewYork)
+      case Au => Some(Sydney)
+      case _ => None
     }
   }
 }

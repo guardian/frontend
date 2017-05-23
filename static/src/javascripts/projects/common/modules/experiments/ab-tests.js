@@ -28,6 +28,12 @@ import IncreaseInlineAdsRedux
 import PaidCommenting from 'common/modules/experiments/tests/paid-commenting';
 import BundleDigitalSubPriceTest1
     from 'common/modules/experiments/tests/bundle-digital-sub-price-test-1';
+import {
+    ExplainerSnippet,
+} from 'common/modules/experiments/tests/explainer-snippet';
+import {
+    MeasureUnderstanding,
+} from 'common/modules/experiments/tests/measure-understanding';
 
 export const TESTS: Array<ABTest> = [
     new OpinionEmailVariants(),
@@ -43,6 +49,8 @@ export const TESTS: Array<ABTest> = [
     new IncreaseInlineAdsRedux(),
     new PaidCommenting(),
     new BundleDigitalSubPriceTest1(),
+    ExplainerSnippet(),
+    MeasureUnderstanding(),
 ]
     .concat(MembershipEngagementBannerTests)
     .filter(t => t !== undefined && t !== null);
