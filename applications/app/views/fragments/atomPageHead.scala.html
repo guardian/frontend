@@ -9,7 +9,7 @@
 } else {
   "javascripts/vendor/polyfillio.fallback.js"
 }) { polyfillsUrl =>
-    <link rel="preload" as="script" href="@Static(s"javascripts/graun.${page.atomType}.js")">
+    <link rel="preload" as="script" href="@Static(s"javascripts/graun.${page.javascriptModule}.js")">
     <link rel="preload" as="script" href="@polyfillsUrl">
 }
 

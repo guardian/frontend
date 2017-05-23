@@ -373,10 +373,12 @@ case class EmbedPage(item: Video, title: String, isExpired: Boolean = false) ext
 
 trait AtomPage extends Page {
   def atomType: String
+  def javascriptModule: String = atomType
 }
 
 case class MediaAtomPage(atom: MediaAtom) extends AtomPage {
   override val atomType = "media"
+  override val javascriptModule = "youtube-embed"
   override val metadata = MetaData.make(
     id = atom.id,
     webTitle = atom.title,
