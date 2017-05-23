@@ -7,6 +7,8 @@ import template from 'lodash/utilities/template';
 import ophan from 'ophan/ng';
 import ExplainerSnippetStr
     from 'raw-loader!common/views/experiments/explainer.html';
+import ExplainerSnippetStr2
+    from 'raw-loader!common/views/experiments/explainer-2.html';
 import { markup as thumbIcon } from 'svgs/icon/thumb.svg';
 import { markup as plusIcon } from 'svgs/icon/plus.svg';
 import { markup as minusIcon } from 'svgs/icon/minus.svg';
@@ -21,6 +23,11 @@ const ExplainerSnippet = () => {
     // Test duration
     const start = '2017-05-18';
     const expiry = '2017-05-25';
+
+    const explainers = {
+        '77b1f6d5-e4df-4650-89b2-e8c1c9653b23': ExplainerSnippetStr,
+        'acb90e30-85a7-4d80-8dfa-a4d1f3fae642': ExplainerSnippetStr2,
+    };
 
     // will run in specific articles
     const canRun = (): boolean =>
@@ -69,11 +76,12 @@ const ExplainerSnippet = () => {
     const test = (options: Object) => {
         const hook = document.querySelector('.js-explainer-snippet');
         const explainer = hook && hook.previousElementSibling;
-        if (!hook || !explainer) {
+        const eid = hook && hook.getAttribute('data-explainer-id');
+        if (!hook || !explainer || !eid || !explainers[eid]) {
             return;
         }
 
-        const html = template(ExplainerSnippetStr, {
+        const html = template(explainers[eid], {
             thumbIcon,
             plusIcon,
             minusIcon,
@@ -90,7 +98,6 @@ const ExplainerSnippet = () => {
                 ];
             })
             .then(([handle, question, ack]) => {
-                const eid = hook.getAttribute('data-explainer-id') || '';
                 addEventListener(handle, 'click', onShow, { once: true });
                 addEventListener(
                     question,
