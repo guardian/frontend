@@ -10,10 +10,7 @@ import {
 import {
     articleBodyAdvertsInit,
 } from 'commercial/modules/article-body-adverts';
-import {
-    closeDisabledSlots,
-    closeAdFreeDisabledSlots,
-} from 'commercial/modules/close-disabled-slots';
+import { closeDisabledSlots } from 'commercial/modules/close-disabled-slots';
 import prepareGoogletag from 'commercial/modules/dfp/prepare-googletag';
 import prepareSonobiTag from 'commercial/modules/dfp/prepare-sonobi-tag';
 import prepareSwitchTag from 'commercial/modules/dfp/prepare-switch-tag';
@@ -44,7 +41,7 @@ const commercialModules: Array<Array<any>> = commercialFeatures.adFree
           ['cm-highMerch', highMerch.init],
           ['cm-thirdPartyTags', thirdPartyTags.init],
           ['cm-prepare-googletag', prepareGoogletag.init, true],
-          ['cm-closeDisabledSlots', closeAdFreeDisabledSlots],
+          ['cm-closeDisabledSlots', closeDisabledSlots],
           ['cm-fill-advert-slots', fillAdvertSlots, true],
           ['cm-paidContainers', paidContainers],
           ['cm-paidforBand', paidforBand.init],
