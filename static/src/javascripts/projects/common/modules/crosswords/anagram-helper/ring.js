@@ -17,7 +17,7 @@ const Ring = React.createClass({
      * @param  {Number} i       letter index
      * @return {Object}         with 'left' and 'top' properties in percent
      */
-    getPosition(angle: number, i: number) {
+    getPosition(angle: number, i: number): { left: string, top: string } {
         const diameter = 40;
         const theta = angle * Math.PI / 180 * i;
 
