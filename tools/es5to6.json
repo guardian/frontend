@@ -1,5 +1,7 @@
 {
   "Francis Carr": [
+    "projects/commercial/modules/close-disabled-slots.js",
+    "projects/commercial/modules/comment-adverts.js",
     "projects/commercial/modules/commercial-features.js",
     "projects/commercial/modules/creatives/add-tracking-pixel.js",
     "projects/commercial/modules/creatives/add-viewability-tracker.js",
@@ -136,9 +138,7 @@
     "projects/common/modules/crosswords/grid.js",
     "projects/common/modules/crosswords/helpers.js"
   ],
-  "Sam Desborough": [
-    "projects/common/modules/experiments/ab.js"
-  ],
+  "Sam Desborough": [],
   "Akash A": [
     "projects/common/modules/crosswords/hidden-input.js",
     "projects/common/modules/crosswords/keycodes.js",
