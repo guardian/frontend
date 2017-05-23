@@ -133,5 +133,4 @@ try {
     logError('cm-commercialFeatures', error);
 }
 
-/* eslint no-mutable-exports: off */
 export const commercialFeatures = commercialFeaturesExport;
