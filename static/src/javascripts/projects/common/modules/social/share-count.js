@@ -74,7 +74,7 @@ const fetch = (): void => {
     });
 };
 
-const initShareCount = (): void => {
+const loadShareCount = (): void => {
     /* asking for social counts in preview "leaks" upcoming URLs to social sites.
        when they then crawl them they get 404s which affects later sharing.
       don't call counts in preview */
@@ -97,4 +97,4 @@ const initShareCount = (): void => {
     }
 };
 
-export default initShareCount;
+export default loadShareCount;
