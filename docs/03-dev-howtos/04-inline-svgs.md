@@ -92,7 +92,7 @@ define([
 - `Classes` **Array** (optional) An array of bespoke classes for this image
 - `Title` **String** (optional) A title that gets added to the wrapping `span`
 
-To ensure tests pass, when you add a new file to `common/views/svgs.js`, please also add an equivalent entry to [`static/test/helpers/svg-paths.js`](../../static/test/helpers/svg-paths.js)
+To ensure tests pass, when you add a new file to `common/views/svgs.js`, please also add an equivalent entry to [`static/test/javascripts-legacy/helpers/svg-paths.js`](../../static/test/javascripts-legacy/helpers/svg-paths.js)
 
 ## Output
 
