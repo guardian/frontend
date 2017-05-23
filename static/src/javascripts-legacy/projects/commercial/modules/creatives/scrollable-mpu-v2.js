@@ -66,11 +66,11 @@ define([
         this.$scrollableMpu = $.create(template(scrollableMpuTpl, templateOptions)).appendTo(this.adSlot);
 
         if (this.params.trackingPixel) {
-            addTrackingPixel(this.params.trackingPixel + this.params.cacheBuster)
+            addTrackingPixel.addTrackingPixel(this.params.trackingPixel + this.params.cacheBuster)
         }
 
         if (this.params.researchPixel) {
-            addTrackingPixel(this.params.researchPixel + this.params.cacheBuster);
+            addTrackingPixel.addTrackingPixel(this.params.researchPixel + this.params.cacheBuster);
         }
 
         if (this.params.viewabilityTracker) {
