@@ -86,8 +86,7 @@
     "projects/admin/modules/abtests/audience.js",
     "projects/admin/modules/abtests/participation-item.js",
     "projects/admin/modules/abtests/participation.js",
-    "projects/common/modules/accessibility/helpers.js",
-    "projects/common/modules/crosswords/anagram-helper/clue-preview.js"
+    "projects/common/modules/accessibility/helpers.js"
   ],
   "Gustav Pursche": [
     "projects/common/modules/ui/tabs.js",
