@@ -36,10 +36,6 @@
     padding-top: $gs-baseline / 1.8;
     user-select: none;
 
-    @include mq(mobileMedium) {
-        font-size: 22px;
-    }
-
     &:hover,
     &:focus {
         text-decoration: none;
@@ -49,6 +45,11 @@
         font-size: 20px;
         padding-bottom: $gs-baseline * 1.2;
         padding-top: $gs-baseline / 2.5;
+
+        @include mq(mobileMedium) {
+            font-size: 22px;
+            padding-top: $gs-baseline / 2.3;
+        }
     }
 
     .fly-in-group--secondary & {

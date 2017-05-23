@@ -18,6 +18,10 @@
     vertical-align: middle;
     width: 100%;
 
+    @include mq(mobileMedium) {
+        font-size: 17px;
+    }
+
     &::placeholder {
         color: $news-support-1;
     }

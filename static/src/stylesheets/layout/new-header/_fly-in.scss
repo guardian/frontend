@@ -23,6 +23,7 @@
     @include mq(mobileMedium) {
         font-size: 22px;
         margin-right: $gutter-medium + ($veggie-burger-medium / 2);
+        padding-top: $gs-baseline / 2;
     }
 
     @include mq(mobileLandscape) {
