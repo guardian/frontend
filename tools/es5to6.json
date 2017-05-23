@@ -11,8 +11,6 @@
     "projects/commercial/modules/third-party-tags/krux.js"
   ],
   "Jon Norman": [
-    "projects/commercial/modules/dfp/apply-creative-template.js",
-    "projects/commercial/modules/dfp/breakpoint-name-to-attribute.js",
     "projects/commercial/modules/dfp/display-ads.js",
     "projects/commercial/modules/creatives/fabric-v1.js",
     "projects/commercial/modules/creatives/fabric-video.js",
@@ -21,13 +19,9 @@
     "projects/commercial/modules/creatives/scrollable-mpu-v2.js",
     "projects/common/modules/atoms/youtube.js"
   ],
-  "Regis Kuckaertz": [
-    "projects/commercial/modules/dfp/on-slot-render.js"
-  ],
+  "Regis Kuckaertz": [],
   "Richard Nguyen": [],
   "Kate Whalen": [
-    "projects/commercial/modules/hosted/video.js",
-    "projects/commercial/modules/hosted/youtube.js",
     "projects/commercial/modules/liveblog-adverts.js",
     "projects/commercial/modules/messenger.js",
     "projects/commercial/modules/messenger/background.js",
@@ -39,11 +33,7 @@
     "projects/commercial/modules/messenger/scroll.js",
     "projects/common/modules/charts/doughnut.js"
   ],
-  "Lydia Shepherd": [
-    "projects/commercial/modules/user-features.js",
-    "projects/common/modules/commercial/adblock-messages.js",
-    "projects/common/modules/charts/table-doughnut.js"
-  ],
+  "Lydia Shepherd": [],
   "sndrs": [
     "lib/detect.js",
     "bootstraps/enhanced/accessibility.js",
@@ -64,8 +54,7 @@
     "bootstraps/enhanced/image-content.js",
     "bootstraps/enhanced/liveblog.js",
     "bootstraps/enhanced/media/main.js",
-    "bootstraps/enhanced/media/video-player.js",
-    "projects/common/modules/check-mediator.js"
+    "bootstraps/enhanced/media/video-player.js"
   ],
   "Nicolas Long": [
     "lib/atob.js",
@@ -131,9 +120,12 @@
     "projects/common/modules/atoms/youtube-tracking.js",
     "projects/commercial/modules/messenger/viewport.js"
   ],
-  "Gideon Goldberg": [],
-  "Sam Desborough": [
-    "projects/common/modules/experiments/ab.js",
+  "Gideon Goldberg": [
+    "projects/commercial/modules/user-features.js",
+    "projects/common/modules/commercial/adblock-messages.js",
+    "projects/common/modules/charts/table-doughnut.js"
+  ],
+  "Matthew Walls": [
     "projects/common/modules/crosswords/anagram-helper/main.js",
     "projects/common/modules/crosswords/anagram-helper/ring.js",
     "projects/common/modules/crosswords/cell.js",
@@ -147,6 +139,7 @@
     "projects/common/modules/crosswords/grid.js",
     "projects/common/modules/crosswords/helpers.js"
   ],
+  "Sam Desborough": [],
   "Akash A": [
     "projects/common/modules/crosswords/hidden-input.js",
     "projects/common/modules/crosswords/keycodes.js",
@@ -252,14 +245,12 @@
   "Philip Wills": [
     "projects/facia/modules/ui/container-show-more.js",
     "projects/facia/modules/ui/container-toggle.js",
-    "projects/facia/modules/ui/football-snaps.js",
     "projects/facia/modules/ui/lazy-load-containers.js",
     "projects/common/modules/video/ga-helper.js",
     "projects/facia/modules/ui/live-blog-updates.js",
     "projects/commercial/modules/third-party-tags/imr-worldwide.js"
   ],
   "Santiago Villa Fernandez": [
-    "bootstraps/enhanced/membership.js",
     "projects/common/modules/video/more-in-series-container.js"
   ],
   "Jamie Byers": [

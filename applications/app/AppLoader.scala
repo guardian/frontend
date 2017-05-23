@@ -12,7 +12,7 @@ import dev.{DevAssetsController, DevParametersHttpRequestHandler}
 import http.{CommonFilters, CorsHttpErrorHandler}
 import jobs.{SiteMapJob, SiteMapLifecycle}
 import model.{ApplicationContext, ApplicationIdentity}
-import ophan.SurgingContentAgentLifecycle
+import services.ophan.SurgingContentAgentLifecycle
 import play.api.ApplicationLoader.Context
 import play.api.BuiltInComponentsFromContext
 import play.api.http.{HttpErrorHandler, HttpRequestHandler}

@@ -1,9 +1,9 @@
 // @flow
-import type { Variant } from 'common/modules/experiments/ab-types';
-
 import { variantFor, isInTest } from 'common/modules/experiments/segment-util';
 import { testCanBeRun } from 'common/modules/experiments/test-can-run-checks';
-import * as viewLog from 'common/modules/commercial/acquisitions-view-log';
+import {
+    viewsInPreviousDays,
+} from 'common/modules/commercial/acquisitions-view-log';
 import alwaysAsk
     from 'common/modules/experiments/tests/contributions-epic-always-ask-strategy';
 import askFourEarning
@@ -52,10 +52,8 @@ export const getTest = () => {
 
         const isUnlimited = variant.options.isUnlimited;
 
-        const withinViewLimit =
-            viewLog.viewsInPreviousDays(maxViewDays) < maxViewCount;
-        const enoughDaysBetweenViews =
-            viewLog.viewsInPreviousDays(minViewDays) === 0;
+        const withinViewLimit = viewsInPreviousDays(maxViewDays) < maxViewCount;
+        const enoughDaysBetweenViews = viewsInPreviousDays(minViewDays) === 0;
 
         const hasNotReachedRateLimit =
             (withinViewLimit && enoughDaysBetweenViews) || isUnlimited;

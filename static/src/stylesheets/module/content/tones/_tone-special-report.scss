@@ -42,11 +42,8 @@
     }
 
     &.content--media:not(.content--gallery) {
-        .content__main,
-        .tonal__standfirst,
-        .content__standfirst {
-            background-color: $news-support-6;
-            color: #ffffff;
+        .tonal__standfirst {
+            background-color: $multimedia-support-5;
         }
 
         a.tone-colour {
@@ -56,40 +53,10 @@
                 color: mix($special-report-accent, #ffffff, 70%);
             }
         }
+    }
 
-        .byline,
-        .content__dateline,
-        .meta__numbers .sharecount__heading,
-        .meta__numbers .sharecount__value,
-
-        .meta__numbers .inline-share {
-            fill: #ffffff;
-        }
-
-        .byline,
-        .content__meta-container,
-        .content__secondary-column--media,
-        .content__dateline,
-        .fc-item:before,
-        .meta__social,
-        .meta__numbers,
-        .most-viewed-container--media,
-
-        .button--tag {
-            background-color: mix($news-support-6, $neutral-1, 70%);
-            border-color: mix($news-support-6, $neutral-1, 70%);
-        }
-
-        .button--secondary {
-            @include button-colour(
-                $neutral-2,
-                $neutral-1
-            );
-
-            @include button-hover-colour(
-                darken($neutral-2, 10%)
-            );
-        }
+    &.tonal--tone-media {
+        background-color: $multimedia-support-5;
     }
 
     .immersive-main-media__headline-container--dark {
