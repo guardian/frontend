@@ -26,7 +26,7 @@
                 <div class="gs-container">
                     <div class="content__main-column content__main-column--article js-content-main-column @if(article.tags.isSudoku) {sudoku}">
 
-                        @fragments.contentMetaImmersive(article)
+                        @fragments.contentMeta(article, model, amp = amp)
 
                         @if(article.tags.isNews && !article.elements.hasMainEmbed && article.elements.elements("main").isEmpty) {
                             <hr class="content__hr hide-until-leftcol" />
@@ -35,7 +35,6 @@
                         <div class="content__article-body from-content-api js-article__body"
                              itemprop="@if(article.tags.isReview){reviewBody} else {articleBody}"
                              data-test-id="article-review-body">
-                            @fragments.commercial.badge(article, model)
                             @BodyCleaner(article, article.fields.body, amp = amp)
                         </div>
 

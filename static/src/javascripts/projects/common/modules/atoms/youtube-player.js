@@ -21,8 +21,8 @@ const addVideoStartedClass = (el: HTMLElement) => {
 };
 
 type Handlers = {
-    onPlayerReady: () => void,
-    onPlayerStateChange: () => void,
+    onPlayerReady: (event: Object) => void,
+    onPlayerStateChange: (event: Object) => void,
 };
 
 const onPlayerStateChangeEvent = (

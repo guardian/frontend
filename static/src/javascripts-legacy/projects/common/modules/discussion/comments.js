@@ -16,7 +16,7 @@ define([
     'common/modules/ui/relativedates',
     'common/modules/user-prefs',
     'common/views/svgs',
-    'common/modules/experiments/ab'
+    'common/modules/experiments/utils',
 ], function(
     bean,
     bonzo,
@@ -35,7 +35,7 @@ define([
     relativedates,
     userPrefs,
     svgs,
-    ab
+    abUtils
 ) {
 'use strict';
 
@@ -385,7 +385,7 @@ Comments.prototype.replyToComment = function(e) {
         $replyToComment = bonzo(replyToComment),
         replyToBody = qwery(this.getClass('commentBody'), replyToComment)[0].innerHTML,
         replyToTimestamp = qwery(this.getClass('commentTimestampJs'), replyToComment)[0].innerHTML,
-        testVariant = ab.getTestVariantId('PaidCommentingInternal'),
+        testVariant = abUtils.getTestVariantId('PaidCommentingInternal'),
         hasPaidCommentingCookie = document.cookie.indexOf('GU_PDCOMCTA') !== -1,
         isPaidCommenting = (testVariant && testVariant !== 'notintest' && !hasPaidCommentingCookie) || false,
         commentBox = new CommentBox({

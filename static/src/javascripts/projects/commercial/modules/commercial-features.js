@@ -112,6 +112,12 @@ class CommercialFeatures {
                 adblockUsed => !adblockUsed && this.canReasonablyAskForMoney
             ),
         };
+
+        this.adFeedback =
+            config.switches.adFeedback &&
+            ['artanddesign', 'society', 'tvandradio'].indexOf(
+                config.page.section
+            ) > -1;
     }
 }
 
