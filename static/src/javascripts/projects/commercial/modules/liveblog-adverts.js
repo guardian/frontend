@@ -1,89 +1,131 @@
+// @flow
 import fastdom from 'lib/fastdom-promise';
 import detect from 'lib/detect';
-import config from 'lib/config';
 import mediator from 'lib/mediator';
-import addSlot from 'commercial/modules/dfp/add-slot';
+import { addSlot } from 'commercial/modules/dfp/add-slot';
 import commercialFeatures from 'commercial/modules/commercial-features';
 import createSlot from 'commercial/modules/dfp/create-slot';
 import spaceFiller from 'common/modules/article/space-filler';
-var INTERVAL = 5; // number of posts between ads
-var OFFSET = 1.5; // ratio of the screen height from which ads are loaded
-var MAX_ADS = 8; // maximum number of ads to display
 
-var slotCounter = 0,
-    isMobile, windowHeight, firstSlot;
+const INTERVAL = 5; // number of posts between ads
+const OFFSET = 1.5; // ratio of the screen height from which ads are loaded
+const MAX_ADS = 8; // maximum number of ads to display
 
-function startListening() {
+type spaceFillerRules = {
+    bodySelector: string,
+    slotSelector: string,
+    fromBottom: boolean,
+    startAt: Node | null | typeof undefined, // #? I feel this is curcumventing the point of Flow
+    absoluteMinAbove: number,
+    minAbove: number,
+    minBelow: number,
+    filter: (slot: { top: number }, index: number) => boolean,
+};
+
+let SLOTCOUNTER = 0;
+let WINDOWHEIGHT;
+let firstSlot;
+
+const startListening = () => {
+    // eslint-disable-next-line no-use-before-define
     mediator.on('modules:autoupdate:updates', onUpdate);
-}
+};
 
-function stopListening() {
+const stopListening = () => {
+    // eslint-disable-next-line no-use-before-define
     mediator.off('modules:autoupdate:updates', onUpdate);
-}
+};
 
-function getSpaceFillerRules(windowHeight, update) {
-    var prevSlot, prevIndex;
-    update = !!update;
-    return {
-        bodySelector: '.js-liveblog-body',
-        slotSelector: ' > .block',
-        fromBottom: update,
-        startAt: update ? firstSlot : null,
-        absoluteMinAbove: update ? 0 : (windowHeight * OFFSET),
-        minAbove: 0,
-        minBelow: 0,
-        filter: filterSlot
-    };
+const getWindowHeight = (doc = document): number => {
+    if (doc.documentElement && doc.documentElement.clientHeight) {
+        return doc.documentElement.clientHeight;
+    }
+    return 0; // #? zero, or throw an error?
+};
 
-    function filterSlot(slot, index) {
+const getSpaceFillerRules = (
+    windowHeight: number,
+    update?: boolean
+): spaceFillerRules => {
+    let prevSlot;
+    let prevIndex;
+    const shouldUpdate: boolean = !!update;
+
+    const filterSlot = (slot: { top: number }, index: number): boolean => {
         if (index === 0) {
             prevSlot = slot;
             prevIndex = index;
-            return !update;
-        } else if (index - prevIndex >= INTERVAL && Math.abs(slot.top - prevSlot.top) >= windowHeight) {
+            return !shouldUpdate;
+        } else if (
+            index - prevIndex >= INTERVAL &&
+            Math.abs(slot.top - prevSlot.top) >= windowHeight
+        ) {
             prevSlot = slot;
             prevIndex = index;
             return true;
         }
-
         return false;
-    }
-}
+    };
 
-function insertAds(slots) {
-    for (var i = 0; i < slots.length && slotCounter < MAX_ADS; i++) {
-        var slotName = isMobile && slotCounter === 0 ?
-            'top-above-nav' : isMobile ?
-            'inline' + slotCounter :
-            'inline' + (slotCounter + 1);
-        var adSlot = createSlot('inline', {
+    return {
+        bodySelector: '.js-liveblog-body',
+        slotSelector: ' > .block',
+        fromBottom: shouldUpdate,
+        startAt: shouldUpdate ? firstSlot : null,
+        absoluteMinAbove: shouldUpdate ? 0 : WINDOWHEIGHT * OFFSET,
+        minAbove: 0,
+        minBelow: 0,
+        filter: filterSlot,
+    };
+};
+
+const getSlotName = (isMobile: boolean, slotCounter: number): string => {
+    if (isMobile && slotCounter === 0) {
+        return 'top-above-nav';
+    } else if (isMobile) {
+        return `inline${slotCounter}`;
+    }
+    return `inline${slotCounter + 1}`;
+};
+
+const insertAds = (slots: HTMLCollection<HTMLElement>): void => {
+    const isMobile = detect.getBreakpoint() === 'mobile';
+
+    for (let i = 0; i < slots.length && SLOTCOUNTER < MAX_ADS; i += 1) {
+        const slotName = getSlotName(isMobile, SLOTCOUNTER);
+
+        const adSlot = createSlot('inline', {
             name: slotName,
-            classes: 'liveblog-inline'
+            classes: 'liveblog-inline',
         });
-        slots[i].parentNode.insertBefore(adSlot, slots[i].nextSibling);
-        addSlot.addSlot(adSlot);
-        slotCounter += 1;
+        if (slots[i] && slots[i].parentNode) {
+            slots[i].parentNode.insertBefore(adSlot, slots[i].nextSibling);
+            addSlot(adSlot, false);
+            SLOTCOUNTER += 1;
+        }
     }
-}
+};
 
-function fill(rules) {
-    return spaceFiller.fillSpace(rules, insertAds)
-        .then(function(result) {
-            if (result && slotCounter < MAX_ADS) {
-                firstSlot = document.querySelector(rules.bodySelector + ' > .ad-slot').previousSibling;
-                startListening();
-            } else {
-                firstSlot = null;
-            }
-        });
-}
+const fill = (rules: spaceFillerRules): void =>
+    spaceFiller.fillSpace(rules, insertAds).then(result => {
+        if (result && SLOTCOUNTER < MAX_ADS) {
+            const el = document.querySelector(`${rules.bodySelector} > .ad-slot`);
+            firstSlot = el ? el.previousSibling : null;
+            startListening();
+        } else {
+            firstSlot = null;
+        }
+    });
 
-function onUpdate() {
+const onUpdate = () => {
     stopListening();
-    Promise.resolve(getSpaceFillerRules(windowHeight, true)).then(fill);
-}
+    Promise.resolve(getSpaceFillerRules(WINDOWHEIGHT, true)).then(fill);
+};
 
-function init(start, stop) {
+export const initLiveblogAdverts = (
+    start: () => void,
+    stop: () => void
+): Promise<void> => {
     start();
 
     if (!commercialFeatures.liveblogAdverts) {
@@ -91,18 +133,11 @@ function init(start, stop) {
         return Promise.resolve();
     }
 
-    isMobile = detect.getBreakpoint() === 'mobile';
-
-    fastdom.read(function() {
-            return windowHeight = document.documentElement.clientHeight;
-        })
+    fastdom
+        .read(() => (WINDOWHEIGHT = getWindowHeight()))
         .then(getSpaceFillerRules)
         .then(fill)
         .then(stop);
 
     return Promise.resolve();
-}
-
-export default {
-    init: init
 };
