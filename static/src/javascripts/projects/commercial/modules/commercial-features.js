@@ -1,125 +1,130 @@
+// @flow
 import config from 'lib/config';
 import detect from 'lib/detect';
-import robust from 'lib/robust';
+import { logError } from 'lib/robust';
 import userFeatures from 'commercial/modules/user-features';
 import identityApi from 'common/modules/identity/api';
 import userPrefs from 'common/modules/user-prefs';
+
 // Having a constructor means we can easily re-instantiate the object in a test
-function CommercialFeatures() {
-    var self = this;
+class CommercialFeatures {
+    dfpAdvertising: any;
+    stickyTopBannerAd: any;
+    articleBodyAdverts: any;
+    articleAsideAdverts: any;
+    videoPreRolls: any;
+    highMerch: any;
+    thirdPartyTags: any;
+    outbrain: any;
+    commentAdverts: any;
+    liveblogAdverts: any;
+    paidforBand: any;
+    canReasonablyAskForMoney: any;
+    asynchronous: any;
 
-    // this is used for SpeedCurve tests
-    var noadsUrl = window.location.hash.match(/[#&]noads(&.*)?$/);
+    constructor() {
+        // this is used for SpeedCurve tests
+        const noadsUrl = window.location.hash.match(/[#&]noads(&.*)?$/);
+        const externalAdvertising = !noadsUrl && !userPrefs.isOff('adverts');
+        const sensitiveContent =
+            config.page.shouldHideAdverts ||
+            config.page.section === 'childrens-books-site';
+        const isMinuteArticle = config.page.isMinuteArticle;
+        const isArticle = config.page.contentType === 'Article';
+        const isInteractive = config.page.contentType === 'Interactive';
+        const isLiveBlog = config.page.isLiveBlog;
+        const isHosted = config.page.isHosted;
+        const isMatchReport = config.hasTone('Match reports');
+        const isIdentityPage =
+            config.page.contentType === 'Identity' ||
+            config.page.section === 'identity'; // needed for pages under profile.* subdomain
+        const switches = config.switches;
+        const isWidePage = detect.getBreakpoint() === 'wide';
+        const supportsSticky =
+            document.documentElement &&
+            document.documentElement.classList.contains('has-sticky');
+        const newRecipeDesign =
+            config.page.showNewRecipeDesign && config.tests.abNewRecipeDesign;
 
-    var externalAdvertising = !noadsUrl &&
-        !userPrefs.isOff('adverts');
+        // Feature switches
+        this.dfpAdvertising =
+            switches.commercial && externalAdvertising && !sensitiveContent;
 
-    var sensitiveContent =
-        config.page.shouldHideAdverts ||
-        config.page.section === 'childrens-books-site';
+        this.stickyTopBannerAd =
+            !config.page.disableStickyTopBanner && !supportsSticky;
 
-    var isMinuteArticle = config.page.isMinuteArticle;
+        this.articleBodyAdverts =
+            this.dfpAdvertising &&
+            !isMinuteArticle &&
+            isArticle &&
+            !isLiveBlog &&
+            !isHosted &&
+            !newRecipeDesign;
 
-    var isArticle = config.page.contentType === 'Article';
+        this.articleAsideAdverts =
+            this.dfpAdvertising &&
+            !isMinuteArticle &&
+            !isMatchReport &&
+            !!(isArticle || isLiveBlog) &&
+            !newRecipeDesign;
 
-    var isInteractive = config.page.contentType === 'Interactive';
+        this.videoPreRolls = this.dfpAdvertising;
 
-    var isLiveBlog = config.page.isLiveBlog;
+        this.highMerch =
+            this.dfpAdvertising &&
+            !isMinuteArticle &&
+            !isHosted &&
+            !isInteractive &&
+            !config.page.isFront &&
+            !newRecipeDesign;
 
-    var isHosted = config.page.isHosted;
+        this.thirdPartyTags = externalAdvertising && !isIdentityPage;
 
-    var isMatchReport = config.hasTone('Match reports');
+        this.outbrain =
+            this.dfpAdvertising &&
+            switches.outbrain &&
+            isArticle &&
+            !config.page.isPreview &&
+            config.page.showRelatedContent &&
+            !(identityApi.isUserLoggedIn() && config.page.commentable);
 
-    var isIdentityPage =
-        config.page.contentType === 'Identity' ||
-        config.page.section === 'identity'; // needed for pages under profile.* subdomain
+        this.commentAdverts =
+            this.dfpAdvertising &&
+            !isMinuteArticle &&
+            config.switches.discussion &&
+            config.page.commentable &&
+            identityApi.isUserLoggedIn() &&
+            (!isLiveBlog || isWidePage);
 
-    var switches = config.switches;
+        this.liveblogAdverts = isLiveBlog && this.dfpAdvertising;
 
-    var isWidePage = detect.getBreakpoint() === 'wide';
+        this.paidforBand =
+            config.page.isPaidContent &&
+            !config.page.hasSuperStickyBanner &&
+            !supportsSticky;
 
-    var supportsSticky = document.documentElement.classList.contains('has-sticky');
+        this.canReasonablyAskForMoney = !(userFeatures.isPayingMember() || // eg become a supporter, give a contribution
+            config.page.shouldHideAdverts ||
+            config.page.isPaidContent);
 
-    var newRecipeDesign = config.page.showNewRecipeDesign && config.tests.abNewRecipeDesign;
-
-    // Feature switches
-
-    this.dfpAdvertising =
-        switches.commercial &&
-        externalAdvertising &&
-        !sensitiveContent;
-
-    this.stickyTopBannerAd = !config.page.disableStickyTopBanner &&
-        !supportsSticky;
-
-    this.articleBodyAdverts =
-        this.dfpAdvertising &&
-        !isMinuteArticle &&
-        isArticle &&
-        !isLiveBlog &&
-        !isHosted &&
-        !newRecipeDesign;
-
-    this.articleAsideAdverts =
-        this.dfpAdvertising &&
-        !isMinuteArticle &&
-        !isMatchReport &&
-        !!(isArticle || isLiveBlog) &&
-        !newRecipeDesign;
-
-    this.videoPreRolls =
-        this.dfpAdvertising;
-
-    this.highMerch =
-        this.dfpAdvertising &&
-        !isMinuteArticle &&
-        !isHosted &&
-        !isInteractive &&
-        !config.page.isFront &&
-        !newRecipeDesign;
-
-    this.thirdPartyTags =
-        externalAdvertising &&
-        !isIdentityPage;
-
-    this.outbrain =
-        this.dfpAdvertising &&
-        switches.outbrain &&
-        isArticle &&
-        !config.page.isPreview &&
-        config.page.showRelatedContent &&
-        !(identityApi.isUserLoggedIn() && config.page.commentable);
-
-    this.commentAdverts =
-        this.dfpAdvertising &&
-        !isMinuteArticle &&
-        config.switches.discussion &&
-        config.page.commentable &&
-        identityApi.isUserLoggedIn() &&
-        (!isLiveBlog || isWidePage);
-
-    this.liveblogAdverts =
-        isLiveBlog &&
-        this.dfpAdvertising;
-
-    this.paidforBand =
-        config.page.isPaidContent &&
-        !config.page.hasSuperStickyBanner &&
-        !supportsSticky;
-
-    this.canReasonablyAskForMoney = // eg become a supporter, give a contribution
-        !(userFeatures.isPayingMember() || config.page.shouldHideAdverts || config.page.isPaidContent);
-
-    this.async = {
-        canDisplayMembershipEngagementBanner: detect.adblockInUse.then(function(adblockUsed) {
-            return !adblockUsed && self.canReasonablyAskForMoney;
-        })
-    };
+        this.asynchronous = {
+            canDisplayMembershipEngagementBanner: detect.adblockInUse.then(
+                adblockUsed => !adblockUsed && this.canReasonablyAskForMoney
+            ),
+        };
+    }
 }
+
+let commercialFeaturesExport;
 
 try {
     config.commercial = config.commercial || {};
-    return config.commercial.featuresDebug = new CommercialFeatures();
+    config.commercial.featuresDebug = new CommercialFeatures();
+    commercialFeaturesExport = config.commercial.featuresDebug;
 } catch (error) {
-    robust.logError('cm-commercialFeatures', error);
+    commercialFeaturesExport = {};
+    logError('cm-commercialFeatures', error);
 }
+
+/* eslint no-mutable-exports: off */
+export const commercialFeatures = commercialFeaturesExport;

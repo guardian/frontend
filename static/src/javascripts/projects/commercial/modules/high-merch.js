@@ -5,7 +5,7 @@ import ab from 'common/modules/experiments/ab';
 import { addSlot } from 'commercial/modules/dfp/add-slot';
 import createSlot from 'commercial/modules/dfp/create-slot';
 import trackAdRender from 'commercial/modules/dfp/track-ad-render';
-import commercialFeatures from 'commercial/modules/commercial-features';
+import { commercialFeatures } from 'commercial/modules/commercial-features';
 
 const isLuckyBastard = () => {
     const testName = 'PaidContentVsOutbrain2';

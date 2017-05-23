@@ -20,7 +20,7 @@ define([
 
     var checksToDispatch = {
         isOutbrainDisabled: function () {
-            return !commercialFeatures.outbrain;
+            return !commercialFeatures.commercialFeatures.outbrain;
         },
         isUserInContributionsAbTest: function() {
             return clash.userIsInAClashingAbTest(clash.contributionsTests);
@@ -44,7 +44,7 @@ define([
         },
         hasHighPriorityAdLoaded: function() {
             // if thirdPartyTags false no external ads are loaded
-            if (commercialFeatures.thirdPartyTags && commercialFeatures.highMerch) {
+            if (commercialFeatures.commercialFeatures.thirdPartyTags && commercialFeatures.commercialFeatures.highMerch) {
                 return trackAdRender('dfp-ad--merchandising-high');
             } else {
                 return false;
@@ -52,7 +52,7 @@ define([
         },
         hasLowPriorityAdLoaded: function() {
             // if thirdPartyTags false no external ads are loaded
-            if (commercialFeatures.thirdPartyTags) {
+            if (commercialFeatures.commercialFeatures.thirdPartyTags) {
                 return checkMediator.waitForCheck('hasHighPriorityAdLoaded').then(function (highPriorityAdLoaded) {
                     if (highPriorityAdLoaded) {
                         return trackAdRender('dfp-ad--merchandising');

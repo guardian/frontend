@@ -206,7 +206,7 @@ define([
                 var bannerParams = deriveBannerParams(location);
 
                 if (bannerParams && (storage.local.get('gu.alreadyVisited') || 0) >= bannerParams.minArticles) {
-                    return commercialFeatures.async.canDisplayMembershipEngagementBanner.then(function (canShow) {
+                    return commercialFeatures.commercialFeatures.asynchronous.canDisplayMembershipEngagementBanner.then(function (canShow) {
 
                         if (canShow) {
                             mediator.on('modules:onwards:breaking-news:ready', function (breakingShown) {

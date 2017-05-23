@@ -5,7 +5,7 @@ import config from 'lib/config';
 import detect from 'lib/detect';
 import template from 'lodash/utilities/template';
 import trackAdRender from 'commercial/modules/dfp/track-ad-render';
-import commercialFeatures from 'commercial/modules/commercial-features';
+import { commercialFeatures } from 'commercial/modules/commercial-features';
 import plistaStr from 'raw-loader!commercial/views/plista.html';
 import { loadScript } from 'lib/load-script';
 
