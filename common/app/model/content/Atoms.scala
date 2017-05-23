@@ -126,7 +126,9 @@ final case class StoryQuestionsAtom(
 
 final case class ExplainerAtom(
   override val id: String,
-  labels: Seq[String]
+  labels: Seq[String],
+  title: String,
+  body: String
 ) extends Atom
 
 
@@ -411,5 +413,8 @@ object StoryQuestionsAtom {
 }
 
 object ExplainerAtom {
-  def make(atom: AtomApiAtom): ExplainerAtom = ExplainerAtom(atom.id, atom.labels)
+  def make(atom: AtomApiAtom): ExplainerAtom = {
+    val explainer = atom.data.asInstanceOf[com.gu.contentatom.thrift.atom.explainer.ExplainerAtom]
+    ExplainerAtom(atom.id, atom.labels, explainer.title, explainer.body)
+  }
 }

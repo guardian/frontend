@@ -788,17 +788,25 @@ case class CommercialComponentHigh(isPaidContent: Boolean, isNetworkFront: Boole
 
 case class ExplainerCleaner(explainers: Seq[ExplainerAtom]) extends HtmlCleaner {
   val prefixLength = "https://interactive.guim.co.uk/2016/08/explainer-interactive/embed/embed.html?id=".length
-  val eids = explainers.filter(_.labels.contains("test/test")).map(_.id)
+  val eids = explainers.filter(_.labels.contains("test/test"))
 
   override def clean(document: Document): Document = {
     document
       .getElementsByClass("element-interactive")
       .foreach { i =>
         val eid = i.attr("data-canonical-url").drop(prefixLength)
-        if (eids.contains(eid)) {
+        val eidInTest = eids.find(_.id == eid)
+        eidInTest.foreach { explainer =>
           val hook = document.createElement("div")
             .addClass("js-explainer-snippet")
-            .attr("data-explainer-id", eid)
+            .attr("data-explainer-id", explainer.id)
+          val title = document.createElement("meta")
+            .attr("name", "explainer-title")
+            .attr("content", explainer.title)
+          val body = document.createElement("meta")
+            .attr("name", "explainer-title")
+            .attr("content", explainer.body)
+          hook.appendChild(title).appendChild(body)
           i.after(hook)
         }
       }
