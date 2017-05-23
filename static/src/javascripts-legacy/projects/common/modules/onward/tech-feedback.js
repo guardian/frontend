@@ -52,6 +52,7 @@ define([
     }
 
     function toggleFormVisibility() {
+
         $.forEachElement("#feedback-category>option", function(elem){
             if(elem.selected && elem.value !== "nothing"){
                 document.getElementById(elem.value).classList.add("feedback__form--selected");
@@ -130,11 +131,6 @@ define([
 
         initForms();
         hideUnenhancedFallback();
-
-        // exposed for testing
-
-        this.getExtraDataInformation = getExtraDataInformation;
-        this.summariseAbTests = summariseAbTests;
 
     };
 
