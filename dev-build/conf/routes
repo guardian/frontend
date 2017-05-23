@@ -348,7 +348,7 @@ POST           /notification/delete                                             
 GET            /2015-06-24-manifest.json                                                                                         controllers.WebAppController.manifest()
 GET            /preferences                                                                                                      controllers.PreferencesController.indexPrefs()
 GET            /embed/video/*path                                                                                                controllers.EmbedController.render(path)
-GET            /embed/atom/$atomType<media|storyquestions>/:id                                                                  controllers.AtomPageController.render(atomType: String, id: String)
+GET            /embed/atom/:atomType/:id                                                                                         controllers.AtomPageController.render(atomType: String, id: String)
 GET            /index/subjects                                                                                                   controllers.TagIndexController.keywords()
 GET            /index/subjects/*index                                                                                            controllers.TagIndexController.keyword(index)
 GET            /index/contributors                                                                                               controllers.TagIndexController.contributors()

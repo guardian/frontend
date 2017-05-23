@@ -43,7 +43,7 @@ GET        /index/contributors                                                  
 GET        /index/contributors/*contributor                                     controllers.TagIndexController.contributor(contributor)
 
 GET        /embed/video/*path                                                   controllers.EmbedController.render(path)
-GET        /embed/atom/$atomType<media|storyquestions>/:id                      controllers.AtomPageController.render(atomType: String, id: String)
+GET        /embed/atom/:atomType/:id                                            controllers.AtomPageController.render(atomType: String, id: String)
 
 # Share counts
 GET        /sharecount/*path.json                                               controllers.ShareCountController.fetch(path)
