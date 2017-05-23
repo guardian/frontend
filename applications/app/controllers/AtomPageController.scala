@@ -33,13 +33,13 @@ class AtomPageController(contentApiClient: ContentApiClient)(implicit context: A
 
   private def lookup(path: String)(implicit request: RequestHeader): Future[Either[Atom, Result]] = {
     val edition = Edition(request)
-    contentApiClient.getResponse(contentApiClient.item(path, edition)) map make map {
+    contentApiClient.getResponse(contentApiClient.item(path, edition)) map makeAtom map {
       case Some(x) => Left(x)
       case _ => Right(NotFound)
     } recover convertApiExceptions
   }
 
-  def make(apiAtom: ItemResponse): Option[Atom] = {
+  def makeAtom(apiAtom: ItemResponse): Option[Atom] = {
     apiAtom.media.map(atom => MediaAtom.make(atom = atom, endSlatePath = None)) orElse
     apiAtom.storyquestions.map(atom => StoryQuestionsAtom.make(atom))           orElse
     /*
