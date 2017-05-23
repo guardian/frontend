@@ -19,7 +19,7 @@
                     "tone-comment" -> isContributor,
                     "tone-colour" -> isContributor))">
                     @href.map { href =>
-                    <a data-link-name="section heading" href="@LinkTo {/@href}">
+                    <a data-link-name="section heading" href="/@LinkTo(href, None)">
                     @if(ArticleBadgesSwitch.isSwitchedOn){
                         @badgeFor(containerDefinition).map { badge =>
                             <div class="badge-slot">

@@ -20,7 +20,7 @@ class NavigationController extends Controller {
       implicit val sectionLinkWrites = new Writes[SectionLinkAndEdition] {
         def writes(item: SectionLinkAndEdition) = Json.obj(
           "title" -> item.link.title,
-          "href" -> LinkTo(item.link.href, item.edition)
+          "href" -> LinkTo(item.link.href, Some(item.edition))
         )
       }
 

@@ -66,7 +66,7 @@
     https://support.google.com/webmasters/answer/189077
 *@
 @Edition.otherPagesFor(request).map{ link =>
-    <link rel="alternate" href="@LinkTo(link.path, link.edition)" hreflang="@link.edition.locale.toLanguageTag" />
+    <link rel="alternate" href="@LinkTo(link.path, Some(link.edition))" hreflang="@link.edition.locale.toLanguageTag" />
 }
 
 @page.metadata.rssPath.map { path =>

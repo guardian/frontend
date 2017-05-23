@@ -218,7 +218,7 @@ case class InBodyLinkCleaner(dataLinkName: String, amp: Boolean = false)(implici
 
     links.foreach { link =>
       if (link.tagName == "a") {
-        link.attr("href", LinkTo(link.attr("href"), edition))
+        link.attr("href", LinkTo(link.attr("href"), Some(edition)))
         link.attr("data-link-name", dataLinkName)
         link.addClass("u-underline")
       }
@@ -382,7 +382,7 @@ case class TagLinker(article: Article)(implicit val edition: Edition, implicit v
 
           paragraphsWithMatchers.foreach { case (matcher, p) =>
             val tagLink = doc.createElement("a")
-            tagLink.attr("href", LinkTo(keyword.metadata.url, edition))
+            tagLink.attr("href", LinkTo(keyword.metadata.url, Some(edition)))
             tagLink.text(keyword.name)
             tagLink.attr("data-link-name", "auto-linked-tag")
             tagLink.attr("data-component", "auto-linked-tag")
