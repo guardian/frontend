@@ -167,7 +167,7 @@
         padding-top: 0;
 
         @include mq(desktop) {
-             padding-top: $gs-baseline * 2;
+            padding-top: $gs-baseline * 2;
         }
     }
 }
