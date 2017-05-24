@@ -1,4 +1,4 @@
-package models
+package model
 
 import model.liveblog.BodyBlock.{KeyEvent, SummaryEvent}
 import model.liveblog.{Blocks, BodyBlock, LiveBlogDate}

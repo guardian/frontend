@@ -1,4 +1,4 @@
-package models
+package model
 
 sealed trait BlockRange { def query: Option[Seq[String]] }
 

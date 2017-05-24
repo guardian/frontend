@@ -1,6 +1,4 @@
-package models
-
-import model.{Article, ArticleSchemas, ContentPage, RelatedContent}
+package model
 
 trait PageWithStoryPackage extends ContentPage {
   def article: Article

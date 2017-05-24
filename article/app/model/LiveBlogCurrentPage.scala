@@ -1,4 +1,4 @@
-package models
+package model
 
 import model.liveblog.{Blocks, BodyBlock}
 

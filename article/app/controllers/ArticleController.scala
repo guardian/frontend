@@ -5,7 +5,7 @@ import com.gu.contentapi.client.model.v1.{ItemResponse, Content => ApiContent}
 import common._
 import conf.switches.Switches
 import contentapi.ContentApiClient
-import ParseBlockId.{InvalidFormat, ParsedBlockId}
+import model.ParseBlockId.{InvalidFormat, ParsedBlockId}
 import model.Cached.WithoutRevalidationResult
 import model._
 import model.content.RecipeAtom
@@ -37,7 +37,7 @@ class ArticleController(contentApiClient: ContentApiClient)(implicit context: Ap
       block.id != lastUpdateBlockId.lastUpdate
     }
     val blocksHtml = views.html.liveblog.liveBlogBlocks(newBlocks, page.article, Edition(request).timezone)
-    val timelineHtml = views.html.liveblog.keyEvents("", models.KeyEventData(newBlocks, Edition(request).timezone))
+    val timelineHtml = views.html.liveblog.keyEvents("", model.KeyEventData(newBlocks, Edition(request).timezone))
     val allPagesJson = Seq(
       "timeline" -> timelineHtml,
       "numNewBlocks" -> newBlocks.size

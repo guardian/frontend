@@ -1,10 +1,9 @@
-package models
+package model
 
 import com.gu.contentapi.client.model.v1.ItemResponse
 import common.`package`._
-import model.{Article, CacheTime, StoryPackages}
 import model.liveblog.BodyBlock
-import models.ParseBlockId.ParsedBlockId
+import model.ParseBlockId.ParsedBlockId
 
 object LiveBlogHelpers {
 
