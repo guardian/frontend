@@ -1,4 +1,4 @@
-package views.structuredData
+package model.structuredData
 
 import common.LinkTo
 import model.Article
