@@ -227,11 +227,11 @@ define([
             $('.ad-exp-collapse__slide', $fabricExpandingV1).css('height', this.closedHeight);
 
             if (this.params.trackingPixel) {
-                addTrackingPixel(this.params.trackingPixel + this.params.cacheBuster);
+                addTrackingPixel.addTrackingPixel(this.params.trackingPixel + this.params.cacheBuster);
             }
 
             if (this.params.researchPixel) {
-                addTrackingPixel(this.params.researchPixel + this.params.cacheBuster);
+                addTrackingPixel.addTrackingPixel(this.params.researchPixel + this.params.cacheBuster);
             }
 
             $fabricExpandingV1.appendTo(this.adSlot);
