@@ -5,7 +5,7 @@ define([
     'lib/cookies',
     'lib/storage',
     'lodash/utilities/template',
-    'raw-loader!common/views/contributions-epic-equal-buttons.html',
+    'raw-loader!common/views/acquisitions-epic-equal-buttons.html',
 ], function (
             commercialFeatures,
             contributionsUtilities,
