@@ -34,7 +34,7 @@ import {
     primaryBaseline,
 } from 'commercial/modules/dfp/performance-logging';
 import { trackPerformance } from 'common/modules/analytics/google';
-import commercialFeatures from 'commercial/modules/commercial-features';
+import { commercialFeatures } from 'commercial/modules/commercial-features';
 
 const commercialModules: Array<Array<any>> = commercialFeatures.adFree
     ? [
