@@ -16,10 +16,18 @@
 .immersive-main-media {
     // The headline wrapper is position absolute within this div
     position: relative;
+    min-height: 400px;
+
+    @include mq(desktop) {
+        min-height: 500px;
+    }
+
+    @include mq(wide) {
+        min-height: 800px;
+    }
 
     @supports (object-fit: cover) and (height: 1vh) and (display: flex) {
         flex: 1;
-        min-height: 400px;
     }
 
     &.atom-playing {
@@ -63,7 +71,6 @@
 
 .immersive-main-media__media {
     width: 100%;
-    height: 100vh;
     // Remove inline spacing
     display: block;
 
