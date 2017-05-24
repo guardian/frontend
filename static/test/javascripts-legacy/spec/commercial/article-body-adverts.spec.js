@@ -46,7 +46,7 @@ define([
             ], function ($1, $2, $3, $4, $5) {
                 articleBodyAdverts = $1;
 
-                commercialFeatures = $2;
+                commercialFeatures = $2.commercialFeatures;
                 commercialFeatures.articleBodyAdverts = true;
 
                 spaceFiller = $3;

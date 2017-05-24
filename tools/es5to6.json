@@ -1,7 +1,5 @@
 {
   "Francis Carr": [
-    "projects/commercial/modules/commercial-features.js",
-    "projects/commercial/modules/creatives/add-tracking-pixel.js",
     "projects/commercial/modules/creatives/add-viewability-tracker.js",
     "projects/commercial/modules/creatives/fabric-expandable-video-v2.js",
     "projects/commercial/modules/creatives/fabric-expanding-v1.js",
@@ -9,7 +7,6 @@
     "projects/commercial/modules/third-party-tags/krux.js"
   ],
   "Jon Norman": [
-    "projects/commercial/modules/dfp/display-ads.js",
     "projects/commercial/modules/creatives/fabric-v1.js",
     "projects/commercial/modules/creatives/fabric-video.js",
     "projects/commercial/modules/creatives/frame.js",
@@ -47,7 +44,6 @@
     "projects/common/modules/check-dispatcher.js"
   ],
   "Simon Adcock": [
-    "projects/common/modules/ui/rhc.js",
     "bootstraps/enhanced/identity-common.js",
     "bootstraps/enhanced/image-content.js",
     "bootstraps/enhanced/liveblog.js",
@@ -92,7 +88,6 @@
     "projects/common/modules/ui/tabs.js",
     "projects/common/modules/social/hidden-share-toggle.js",
     "projects/common/modules/social/pinterest.js",
-    "projects/common/modules/social/share-count.js",
     "projects/common/modules/sport/football/football.js",
     "projects/common/modules/sport/football/match-info.js",
     "projects/common/modules/sport/football/match-list-live.js",
@@ -137,9 +132,7 @@
     "projects/common/modules/crosswords/grid.js",
     "projects/common/modules/crosswords/helpers.js"
   ],
-  "Sam Desborough": [
-    "projects/common/modules/experiments/ab.js"
-  ],
+  "Sam Desborough": [],
   "Akash A": [
     "projects/common/modules/crosswords/hidden-input.js",
     "projects/common/modules/crosswords/keycodes.js",
@@ -243,7 +236,6 @@
     "projects/commercial/modules/paidfor-band.js"
   ],
   "Philip Wills": [
-    "projects/facia/modules/ui/container-show-more.js",
     "projects/facia/modules/ui/container-toggle.js",
     "projects/facia/modules/ui/lazy-load-containers.js",
     "projects/common/modules/video/ga-helper.js",
@@ -254,7 +246,6 @@
     "projects/common/modules/video/more-in-series-container.js"
   ],
   "Jamie Byers": [
-    "bootstraps/enhanced/main.js",
     "bootstraps/enhanced/newsletters.js"
   ]
 }

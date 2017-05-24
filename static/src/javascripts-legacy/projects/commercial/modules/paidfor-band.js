@@ -4,7 +4,7 @@ define([
     'commercial/modules/commercial-features'
 ], function (config, sticky, commercialFeatures) {
     function init() {
-        if (!commercialFeatures.paidforBand) {
+        if (!commercialFeatures.commercialFeatures.paidforBand) {
             return Promise.resolve(false);
         }
 

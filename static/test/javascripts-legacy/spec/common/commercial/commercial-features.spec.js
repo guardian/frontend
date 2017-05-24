@@ -14,7 +14,7 @@ define(['helpers/injector'], function (Injector) {
                 'commercial/modules/user-features',
                 'common/modules/identity/api'
             ], function () {
-                CommercialFeatures = arguments[0].constructor;
+                CommercialFeatures = arguments[0].commercialFeatures.constructor;
                 config = arguments[1];
                 userPrefs = arguments[2];
                 detect = arguments[3];
@@ -469,7 +469,7 @@ define(['helpers/injector'], function (Injector) {
         describe('Membership messages', function () {
             it('Displays messages by default', function (done) {
                 features = new CommercialFeatures;
-                features.async.canDisplayMembershipEngagementBanner.then(function (flag) {
+                features.asynchronous.canDisplayMembershipEngagementBanner.then(function (flag) {
                     expect(flag).toBe(true);
                     done();
                 });
@@ -479,7 +479,7 @@ define(['helpers/injector'], function (Injector) {
                 // i.e. we want to show the adblock message instead
                 detect.adblockInUse = Promise.resolve(true);
                 features = new CommercialFeatures;
-                features.async.canDisplayMembershipEngagementBanner.then(function (flag) {
+                features.asynchronous.canDisplayMembershipEngagementBanner.then(function (flag) {
                     expect(flag).toBe(false);
                     done();
                 });

@@ -10,7 +10,7 @@ define([
         'commercial/modules/user-features',
         'lib/mediator',
         'lib/fastdom-promise',
-        'common/modules/experiments/ab',
+        'common/modules/experiments/test-can-run-checks',
         'common/modules/experiments/tests/membership-engagement-banner-tests',
         'lodash/objects/assign',
         'lodash/collections/find',
@@ -34,7 +34,7 @@ define([
                  userFeatures,
                  mediator,
                  fastdom,
-                 ab,
+                 testCanRunChecks,
                  MembershipEngagementBannerTests,
                  assign,
                  find,
@@ -60,7 +60,7 @@ define([
                 .concat(acquisitionTestSelector.epicEngagementBannerTests);
 
             return find(engagementBannerTests, function(test) {
-                return ab.testCanBeRun(test) && segmentUtil.isInTest(test)
+                return testCanRunChecks.testCanBeRun(test) && segmentUtil.isInTest(test)
             });
         }
 
@@ -206,7 +206,7 @@ define([
                 var bannerParams = deriveBannerParams(location);
 
                 if (bannerParams && (storage.local.get('gu.alreadyVisited') || 0) >= bannerParams.minArticles) {
-                    return commercialFeatures.async.canDisplayMembershipEngagementBanner.then(function (canShow) {
+                    return commercialFeatures.commercialFeatures.asynchronous.canDisplayMembershipEngagementBanner.then(function (canShow) {
 
                         if (canShow) {
                             mediator.on('modules:onwards:breaking-news:ready', function (breakingShown) {

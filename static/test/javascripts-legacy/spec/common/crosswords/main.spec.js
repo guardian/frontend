@@ -632,11 +632,6 @@ define([
         var renderedComponent;
 
         beforeEach(function (done) {
-            injector.mock('common/views/svgs', {
-                inlineSvg: function() {
-                    return '';
-                }
-            });
             injector.require([
                 'react/addons',
                 'common/modules/crosswords/crossword'

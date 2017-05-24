@@ -1,7 +1,7 @@
 // @flow
 import qwery from 'qwery';
 import fastdom from 'lib/fastdom-promise';
-import commercialFeatures from 'commercial/modules/commercial-features';
+import { commercialFeatures } from 'commercial/modules/commercial-features';
 
 const adSlotSelector: string = '.js-ad-slot';
 
