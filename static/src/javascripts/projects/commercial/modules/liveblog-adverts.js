@@ -3,7 +3,7 @@ import fastdom from 'lib/fastdom-promise';
 import detect from 'lib/detect';
 import mediator from 'lib/mediator';
 import { addSlot } from 'commercial/modules/dfp/add-slot';
-import commercialFeatures from 'commercial/modules/commercial-features';
+import { commercialFeatures } from 'commercial/modules/commercial-features';
 import createSlot from 'commercial/modules/dfp/create-slot';
 import spaceFiller from 'common/modules/article/space-filler';
 
