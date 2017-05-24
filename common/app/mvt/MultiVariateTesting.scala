@@ -16,6 +16,17 @@ import conf.switches.Switches.ServerSideTests
 //    val tests = List(ExampleTest)
 // }
 
+object CommercialGalleryBannerAds extends TestDefinition(
+  name = "commercial-gallery-banner-ads",
+  description = "Users in the test will see banner ads instead of MPUs in galleries",
+  owners = Seq(Owner.withGithub("JonNorman")),
+  sellByDate = new LocalDate(2017, 6, 1)
+) {
+  def canRun(implicit request: RequestHeader): Boolean = {
+    request.headers.get("X-GU-commercial-gallery-banner-ads").contains("variant")
+  }
+}
+
 object CommercialClientLoggingVariant extends TestDefinition(
   name = "commercial-client-logging",
   description = "A slice of the audience who will post their commercial js performance data",
@@ -52,6 +63,7 @@ trait ServerSideABTests {
 object ActiveTests extends ServerSideABTests {
   val tests: Seq[TestDefinition] = List(
     CommercialClientLoggingVariant,
+    CommercialGalleryBannerAds,
     ABNewDesktopHeader
   )
 }
