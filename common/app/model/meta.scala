@@ -373,10 +373,11 @@ case class EmbedPage(item: Video, title: String, isExpired: Boolean = false) ext
 
 trait AtomPage extends Page {
   def atomType: String
+  def withJavaScript: Boolean
   def javascriptModule: String = atomType
 }
 
-case class MediaAtomPage(atom: MediaAtom) extends AtomPage {
+case class MediaAtomPage(atom: MediaAtom, override val withJavaScript: Boolean) extends AtomPage {
   override val atomType = "media"
   override val javascriptModule = "youtube-embed"
   override val metadata = MetaData.make(
@@ -386,7 +387,7 @@ case class MediaAtomPage(atom: MediaAtom) extends AtomPage {
   )
 }
 
-case class StoryQuestionsAtomPage(atom: StoryQuestionsAtom) extends AtomPage {
+case class StoryQuestionsAtomPage(atom: StoryQuestionsAtom, override val withJavaScript: Boolean) extends AtomPage {
   override val atomType = "storyquestions"
   override val metadata = MetaData.make(
     id = atom.id,

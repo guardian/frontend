@@ -2,6 +2,7 @@
 
 @(page: AtomPage)(implicit request: RequestHeader, context: model.ApplicationContext)
 
-@fragments.atomJSNonBlocking(page)
-
-@fragments.analytics.base(page)
+@if(page.withJavaScript) {
+  @fragments.atomJSNonBlocking(page)
+  @fragments.analytics.base(page)
+}

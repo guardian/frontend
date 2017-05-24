@@ -15,13 +15,13 @@ class AtomPageController(contentApiClient: ContentApiClient)(implicit context: A
 
   val notYetImplemented = (NotFound, Nil)
 
-  def render(atomType: String, id: String) = Action.async { implicit request =>
+  def render(atomType: String, id: String, js: Boolean) = Action.async { implicit request =>
 
     lookup(s"atom/$atomType/$id") map {
       case Left(model: MediaAtom) =>
-        (MediaAtomPage(model), MediaAtomBody(model, displayCaption = false, mediaWrapper = Some(MediaWrapper.EmbedPage)))
+        (MediaAtomPage(model, withJavaScript = js), MediaAtomBody(model, displayCaption = false, mediaWrapper = Some(MediaWrapper.EmbedPage)))
       case Left(model: StoryQuestionsAtom) =>
-        (StoryQuestionsAtomPage(model), StoryQuestionsAtomBody(model, isAmp = false))
+        (StoryQuestionsAtomPage(model, withJavaScript = js), StoryQuestionsAtomBody(model, isAmp = false))
       case Left(model: Quiz) =>             notYetImplemented
       case Left(model: InteractiveAtom) =>  notYetImplemented
       case Left(model: RecipeAtom) =>       notYetImplemented

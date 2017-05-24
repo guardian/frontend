@@ -9,12 +9,16 @@
 } else {
   "javascripts/vendor/polyfillio.fallback.js"
 }) { polyfillsUrl =>
+  @if(page.withJavaScript) {
     <link rel="preload" as="script" href="@Static(s"javascripts/graun.${page.javascriptModule}.js")">
     <link rel="preload" as="script" href="@polyfillsUrl">
+  }
 }
 
 <style>
   @Html(common.Assets.css.inlineAtom(page.atomType))
 </style>
 
-@fragments.atomJSBlocking(page)
+@if(page.withJavaScript) {
+  @fragments.atomJSBlocking(page)
+}
