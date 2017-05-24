@@ -91,13 +91,6 @@ const STATES = {
     PAUSED: onPlayerPaused,
 };
 
-const onVideoContainerNavigation = (atomId: string): void => {
-    const player = players[atomId];
-    if (player) {
-        player.player.pauseVideo();
-    }
-};
-
 const checkState = (atomId, state, status): void => {
     if (state === window.YT.PlayerState[status] && STATES[status]) {
         STATES[status](atomId);
@@ -230,7 +223,7 @@ const checkElemForVideo = elem =>
         });
     });
 
-const checkElemsForVideos = (elems: ?Array<HTMLElement>) => {
+export const checkElemsForVideos = (elems: ?Array<HTMLElement>) => {
     if (elems && elems.length) {
         elems.forEach(checkElemForVideo);
     } else {
@@ -238,4 +231,9 @@ const checkElemsForVideos = (elems: ?Array<HTMLElement>) => {
     }
 };
 
-export { checkElemsForVideos, onVideoContainerNavigation };
+export const onVideoContainerNavigation = (atomId: string): void => {
+    const player = players[atomId];
+    if (player) {
+        player.player.pauseVideo();
+    }
+};
