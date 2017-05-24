@@ -63,6 +63,7 @@
 
 .immersive-main-media__media {
     width: 100%;
+    height: 100vh;
     // Remove inline spacing
     display: block;
 
@@ -93,7 +94,6 @@
         position: absolute;
         top: 0;
         height: 100%;
-        width: 100%;
     }
 }
 
