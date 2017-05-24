@@ -35,6 +35,7 @@ import {
 } from 'commercial/modules/dfp/performance-logging';
 import { trackPerformance } from 'common/modules/analytics/google';
 import { commercialFeatures } from 'commercial/modules/commercial-features';
+import { isAdFreeUser } from 'commercial/modules/user-features';
 
 const commercialModules: Array<Array<any>> = [
     ['cm-highMerch', highMerch.init],
@@ -101,6 +102,10 @@ const loadModules = (modules, baseline): Promise<void> => {
 };
 
 export default (): Promise<void> => {
+    if (config.switches.adFreeMembershipTrial && isAdFreeUser()) {
+        closeDisabledSlots(true);
+        return Promise.resolve();
+    }
     markTime('commercial start');
     catchErrorsWithContext([
         [

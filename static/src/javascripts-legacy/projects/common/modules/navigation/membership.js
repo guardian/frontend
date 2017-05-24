@@ -7,7 +7,7 @@ define(['commercial/modules/user-features', 'lib/fastdom-promise', 'lib/$'], fun
             var $subscriberLink = $('.js-subscribe');
             fastdom.write(function () {
                 $becomeMemberLink.attr('hidden', 'hidden');
-                $subscriberLink.removeClass(LAST_CLASS);
+                $subscriberLink.removeClass(LAST_CLASS)
             });
         }
     }
