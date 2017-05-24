@@ -7,7 +7,7 @@ import conf.switches.Switches
 import contentapi.ContentApiClient
 import ParseBlockId.{InvalidFormat, ParsedBlockId}
 import model.Cached.WithoutRevalidationResult
-import model.{_}
+import model._
 import model.content.RecipeAtom
 import LiveBlogHelpers._
 import model.liveblog._
@@ -18,7 +18,6 @@ import play.api.mvc._
 import views.support._
 
 import scala.concurrent.Future
-
 
 case class ArticlePage(article: Article, related: RelatedContent) extends PageWithStoryPackage
 case class MinutePage(article: Article, related: RelatedContent) extends PageWithStoryPackage

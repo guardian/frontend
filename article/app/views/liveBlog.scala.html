@@ -13,17 +13,12 @@
     <script type="application/ld+json">
         @Html(views.structuredData.Organisation().toString())
     </script>
-
-    <script>console.log('The page was @request.getQueryString("page")')</script>
-
     <script type="application/ld+json">
         @Html(views.structuredData.LiveBlogPosting(
             model.article,
             LiveBlogHelpers.blocksForLiveBlogRequest(model.article, request.getQueryString("page"))
         ).toString())
     </script>
-
-
 
 }{
     @views.html.liveblog.liveBlogBody(model)
