@@ -52,17 +52,16 @@ define([
                 'common/modules/analytics/google': function noop() {
                     // No implementation
                 },
-                'commercial/modules/dfp/apply-creative-template': function () {
-                    return Promise.resolve();
+                'commercial/modules/dfp/apply-creative-template': {
+                    applyCreativeTemplate: function () {
+                      return Promise.resolve(true);
+                    }
                 },
                 'lib/load-script': {
                     loadScript: function () {
                         return Promise.resolve();
                     }
                 },
-                'svgs/icon/tick.svg': {
-                    markup: ''
-                }
             });
             injector.require([
                 'commercial/modules/dfp/prepare-googletag',
@@ -84,7 +83,7 @@ define([
                 };
                 config = arguments[4];
                 var performanceLogging = arguments[5];
-                commercialFeatures = arguments[6];
+                commercialFeatures = arguments[6].commercialFeatures;
                 detect = arguments[7];
                 closeDisabledSlots = arguments[8].closeDisabledSlots;
                 dfpEnv = arguments[9].dfpEnv;

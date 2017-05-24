@@ -173,7 +173,6 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter / 2;
 }
 
 .new-header {
-    @include mobile-only;
     background-color: $guardian-brand;
 }
 

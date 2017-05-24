@@ -66,9 +66,9 @@ define([
 
     function controlTemplate(variant) {
         return template(acquisitionsEpicControlTemplate, {
-            membershipUrl: variant.membershipURL,
-            contributionUrl: variant.contributeURL,
-            componentName: variant.componentName
+            membershipUrl: variant.options.membershipURL,
+            contributionUrl: variant.options.contributeURL,
+            componentName: variant.options.componentName
         });
     }
 
@@ -109,7 +109,7 @@ define([
 
         var tagsMatch = doTagsMatch(testConfig);
 
-        var canReasonablyAskForMoney = commercialFeatures.canReasonablyAskForMoney;
+        var canReasonablyAskForMoney = commercialFeatures.commercialFeatures.canReasonablyAskForMoney;
 
         return enoughTimeSinceLastContribution &&
             canReasonablyAskForMoney &&

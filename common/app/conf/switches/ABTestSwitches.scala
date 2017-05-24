@@ -28,7 +28,7 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2017, 5, 29),
     exposeClientSide = true
   )
-  
+
   Switch(
     ABTests,
     "ab-measure-understanding",
@@ -185,7 +185,7 @@ trait ABTestSwitches {
     "Test pricing options for digital subs",
     owners = Seq(Owner.withGithub("justinpinner")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 5, 25),  // Thursday
+    sellByDate = new LocalDate(2017, 6, 1),  // Thursday 1st June
     exposeClientSide = true
   )
 
