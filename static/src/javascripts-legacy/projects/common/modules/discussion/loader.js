@@ -18,7 +18,7 @@ define([
     'common/modules/discussion/comments',
     'common/modules/discussion/discussion-frontend',
     'common/modules/discussion/upvote',
-    'common/modules/experiments/ab',
+    'common/modules/experiments/utils',
     'common/modules/identity/api',
     'common/modules/user-prefs',
     'lodash/objects/isNumber'
@@ -42,7 +42,7 @@ define([
     Comments,
     discussionFrontend,
     upvote,
-    ab,
+    abUtils,
     Id,
     userPrefs,
     isNumber
@@ -343,7 +343,7 @@ Loader.prototype.commentPosted = function () {
 };
 
 Loader.prototype.renderCommentBox = function(elem) {
-    var testVariant = ab.getTestVariantId('PaidCommentingInternal');
+    var testVariant = abUtils.getTestVariantId('PaidCommentingInternal');
     var hasPaidCommentingCookie = document.cookie.indexOf('GU_PDCOMCTA') !== -1;
     var isPaidCommenting = (testVariant && testVariant !== 'notintest' && !hasPaidCommentingCookie) || false;
     return new CommentBox({
@@ -366,7 +366,7 @@ Loader.prototype.getDiscussionClosed = function() {
 };
 
 Loader.prototype.renderCommentCount = function () {
-    return discussionFrontend.load(ab, this, {
+    return discussionFrontend.load(this, {
         apiHost: config.page.discussionApiUrl,
         avatarImagesHost: config.page.avatarImagesUrl,
         closed: this.getDiscussionClosed(),

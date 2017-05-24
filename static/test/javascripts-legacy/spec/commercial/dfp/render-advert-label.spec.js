@@ -13,9 +13,6 @@ define([
         var renderAdvertLabel;
 
         beforeEach(function (done) {
-            injector.mock('svgs/icon/tick.svg', {
-                markup: ''
-            });
             injector.require(['commercial/modules/dfp/render-advert-label'], function(renderAdvertLabelModule) {
                 renderAdvertLabel = renderAdvertLabelModule;
 
