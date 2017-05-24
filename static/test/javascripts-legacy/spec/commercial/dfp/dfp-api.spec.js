@@ -83,7 +83,7 @@ define([
                 };
                 config = arguments[4];
                 var performanceLogging = arguments[5];
-                commercialFeatures = arguments[6];
+                commercialFeatures = arguments[6].commercialFeatures;
                 detect = arguments[7];
                 closeDisabledSlots = arguments[8].closeDisabledSlots;
                 dfpEnv = arguments[9].dfpEnv;

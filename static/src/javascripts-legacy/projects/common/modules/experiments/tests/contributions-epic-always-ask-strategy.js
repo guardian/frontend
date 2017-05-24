@@ -21,7 +21,7 @@ define([
         var isSensitive = config.page.isSensitive === true;
 
         return userHasNeverContributed &&
-            commercialFeatures.canReasonablyAskForMoney &&
+            commercialFeatures.commercialFeatures.canReasonablyAskForMoney &&
             worksWellWithPageTemplate && !isSensitive;
     }
 

@@ -376,7 +376,7 @@ define([
 
     function init() {
         // The `hasMultipleVideosInPage` flag is temporary until the # will be fixed
-        var shouldPreroll = commercialFeatures.videoPreRolls &&
+        var shouldPreroll = commercialFeatures.commercialFeatures.videoPreRolls &&
             !config.page.hasMultipleVideosInPage &&
             !config.page.hasYouTubeAtom &&
             !config.page.isFront &&

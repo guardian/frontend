@@ -27,7 +27,8 @@ object FixtureBuilder {
       section = "",
       maybeFrontPublicationDate = None,
       href = None,
-      webUrl = None
+      webUrl = None,
+      editionBrandings = None
     )
 
     def mkHeader(): PressedCardHeader = PressedCardHeader(
