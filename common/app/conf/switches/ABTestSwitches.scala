@@ -28,7 +28,7 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2017, 5, 29),
     exposeClientSide = true
   )
-  
+
   Switch(
     ABTests,
     "ab-measure-understanding",
@@ -156,16 +156,6 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("davidfurey")),
     safeState = Off,
     sellByDate = new LocalDate(2017, 5, 30),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-paid-commenting-internal",
-    "Paid commenting test",
-    owners = Seq(Owner.withGithub("justinpinner")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 5, 25),  // Thurs 25th May
     exposeClientSide = true
   )
 
