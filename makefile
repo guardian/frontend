@@ -79,12 +79,6 @@ compile-svgs: install # PRIVATE
 compile-fonts: install # PRIVATE
 	@./tools/task-runner/runner compile/fonts
 
-# * Not ready for primetime use yet... *
-pasteup: install # PRIVATE
-	@cd static/src/stylesheets/pasteup && npm --silent i && node publish.js
-
-
-
 # *********************** CHECKS ***********************
 
 # Run the JS test suite.

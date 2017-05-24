@@ -1,6 +1,4 @@
 // @flow
-import type { ABTest } from 'common/modules/experiments/ab-types';
-
 import config from 'lib/config';
 
 const isTestSwitchedOn = (test: ABTest): boolean =>

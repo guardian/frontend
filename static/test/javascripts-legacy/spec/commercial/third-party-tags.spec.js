@@ -9,22 +9,12 @@ define([
             tagsContainer, commercialFeatures;
 
         beforeEach(function (done) {
-            var fakeSvg = {
-                markup: ''
-            };
-
-            injector.mock({
-                'svgs/icon/thumb.svg': fakeSvg,
-                'svgs/icon/quote.svg': fakeSvg,
-                'svgs/icon/plus.svg': fakeSvg,
-                'svgs/icon/minus.svg': fakeSvg,
-            });
             injector.require([
                 'commercial/modules/third-party-tags',
                 'commercial/modules/commercial-features'
             ], function () {
                 tagsContainer = arguments[0];
-                commercialFeatures = arguments[1];
+                commercialFeatures = arguments[1].commercialFeatures;
                 commercialFeatures.thirdPartyTags = true;
                 done();
             });

@@ -1,5 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
 const path = require('path');
+const CircularDependencyPlugin = require('circular-dependency-plugin');
 const webpack = require('webpack');
 
 module.exports = {
@@ -92,6 +93,13 @@ module.exports = {
         // but it's sufficient to scope it at the chunk level
         new webpack.ProvidePlugin({
             videojs: 'videojs',
+        }),
+
+        new CircularDependencyPlugin({
+            // exclude detection of files based on a RegExp
+            exclude: /node_modules/,
+            // add errors to webpack instead of warnings
+            failOnError: true,
         }),
     ],
     externals: {
