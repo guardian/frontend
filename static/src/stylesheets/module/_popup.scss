@@ -269,7 +269,7 @@ $control-offset: 36 + $gs-gutter/2;
 /* Ad feedback menu
    ========================================================================== */
 .ad-feedback.popup__toggle {
-    display: inline;
+    display: inline-block;
     cursor: pointer;
 
     &::after {
