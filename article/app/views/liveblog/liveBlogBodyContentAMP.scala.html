@@ -4,7 +4,6 @@
 @import common.Edition
 @import views.support.{AmpAd, AmpAdDataSlot}
 @import org.joda.time.DateTimeZone
-@import views.structuredData.LiveBlogPosting
 
 @liveBlogBlocksAMP(article: Article, timezone: DateTimeZone) = {
     @model.currentPage.currentPage.blocks.sliding(5, 5).zipWithIndex.map { case (blockGroup, index) =>
