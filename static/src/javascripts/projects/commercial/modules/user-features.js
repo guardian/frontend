@@ -21,14 +21,14 @@ const persistResponse = JsonResponse => {
     addCookie(AD_FREE_USER_COOKIE, JsonResponse.adFree);
 };
 
-const makeDeleteOldData = (): void => {
+const deleteOldData = (): void => {
     // We expect adfree cookies to be cleaned up by the logout process, but what if the user's login simply times out?
     removeCookie(USER_FEATURES_EXPIRY_COOKIE);
     removeCookie(PAYING_MEMBER_COOKIE);
     removeCookie(AD_FREE_USER_COOKIE);
 };
 
-const makeRequestNewData = (): void => {
+const requestNewData = (): void => {
     fetchJson(`${config.page.userAttributesApiUrl}/me/features`, {
         mode: 'cors',
         credentials: 'include',
@@ -38,8 +38,8 @@ const makeRequestNewData = (): void => {
 };
 
 // exposed for testing
-const requestNewData = makeRequestNewData();
-const deleteOldData = makeDeleteOldData();
+const makeRequestNewData = requestNewData();
+const makeDeleteOldData = deleteOldData();
 
 const featuresDataIsMissing =
     !getCookie(USER_FEATURES_EXPIRY_COOKIE) ||
