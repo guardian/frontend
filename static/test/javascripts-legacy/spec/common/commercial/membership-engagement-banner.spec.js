@@ -43,7 +43,7 @@ define([
                 'lib/mediator',
                 'lib/geolocation'
             ], function () {
-                commercialFeatures = arguments[0];
+                commercialFeatures = arguments[0].commercialFeatures;
                 membershipMessages = arguments[1];
                 storage = arguments[2];
                 mediator = arguments[3];
@@ -81,9 +81,9 @@ define([
 
         describe('If breaking news banner', function () {
             beforeEach(function (done) {
-                showMembershipMessages = commercialFeatures.async.canDisplayMembershipEngagementBanner;
+                showMembershipMessages = commercialFeatures.asynchronous.canDisplayMembershipEngagementBanner;
                 alreadyVisited = storage.local.get('gu.alreadyVisited');
-                commercialFeatures.async.canDisplayMembershipEngagementBanner = Promise.resolve(true);
+                commercialFeatures.asynchronous.canDisplayMembershipEngagementBanner = Promise.resolve(true);
                 fixtures.render(conf);
                 storage.local.set('gu.alreadyVisited', 10);
                 geolocation.setGeolocation('GB');
@@ -91,7 +91,7 @@ define([
             });
 
             afterEach(function () {
-                commercialFeatures.async.canDisplayMembershipEngagementBanner = showMembershipMessages;
+                commercialFeatures.asynchronous.canDisplayMembershipEngagementBanner = showMembershipMessages;
                 storage.local.set('gu.alreadyVisited', alreadyVisited);
                 fixtures.clean(conf.id);
                 mediator.removeAllListeners();
@@ -124,8 +124,8 @@ define([
 
         describe('If user already member', function () {
             beforeEach(function (done) {
-                showMembershipMessages = commercialFeatures.async.canDisplayMembershipEngagementBanner;
-                commercialFeatures.async.canDisplayMembershipEngagementBanner = Promise.resolve(false);
+                showMembershipMessages = commercialFeatures.asynchronous.canDisplayMembershipEngagementBanner;
+                commercialFeatures.asynchronous.canDisplayMembershipEngagementBanner = Promise.resolve(false);
                 alreadyVisited = storage.local.get('gu.alreadyVisited');
                 storage.local.set('gu.alreadyVisited', 10);
                 fixtures.render(conf);
@@ -136,7 +136,7 @@ define([
             });
 
             afterEach(function () {
-                commercialFeatures.async.canDisplayMembershipEngagementBanner = showMembershipMessages;
+                commercialFeatures.asynchronous.canDisplayMembershipEngagementBanner = showMembershipMessages;
                 storage.local.set('gu.alreadyVisited', alreadyVisited);
                 storage.local.set('gu.ab.participations', participations);
                 fixtures.clean(conf.id);
@@ -158,9 +158,9 @@ define([
 
         describe('If user not member', function () {
             beforeEach(function (done) {
-                showMembershipMessages = commercialFeatures.async.canDisplayMembershipEngagementBanner;
+                showMembershipMessages = commercialFeatures.asynchronous.canDisplayMembershipEngagementBanner;
                 alreadyVisited = storage.local.get('gu.alreadyVisited');
-                commercialFeatures.async.canDisplayMembershipEngagementBanner = Promise.resolve(true);
+                commercialFeatures.asynchronous.canDisplayMembershipEngagementBanner = Promise.resolve(true);
                 fixtures.render(conf);
                 storage.local.set('gu.alreadyVisited', 10);
                 geolocation.setGeolocation('GB');
@@ -168,7 +168,7 @@ define([
             });
 
             afterEach(function () {
-                commercialFeatures.async.canDisplayMembershipEngagementBanner = showMembershipMessages;
+                commercialFeatures.asynchronous.canDisplayMembershipEngagementBanner = showMembershipMessages;
                 storage.local.set('gu.alreadyVisited', alreadyVisited);
                 mediator.removeAllListeners();
                 fixtures.clean(conf.id);

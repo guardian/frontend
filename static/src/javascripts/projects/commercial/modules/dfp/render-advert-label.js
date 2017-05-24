@@ -3,7 +3,7 @@ import fastdom from 'lib/fastdom-promise';
 import template from 'lodash/utilities/template';
 import popupTemplate from 'raw-loader!commercial/views/ad-feedback-popup.html';
 import tick from 'svgs/icon/tick.svg';
-import commercialFeatures from 'commercial/modules/commercial-features';
+import { commercialFeatures } from 'commercial/modules/commercial-features';
 
 const shouldRenderLabel = adSlotNode =>
     !(adSlotNode.classList.contains('ad-slot--fluid') ||
