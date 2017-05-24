@@ -18,21 +18,22 @@ const PREF_NAME = 'section-states';
 const BUTTON_SPINNER_CLASS = 'collection__show-more--loading';
 const ARTICLE_ID_ATTRIBUTE = 'data-id';
 const ITEM_SELECTOR = '.js-fc-item';
-const STATE_DISPLAYED = 'displayed';
-const STATE_HIDDEN = 'hidden';
-const STATE_LOADING = 'loading';
 const REQUEST_TIMEOUT = 5000;
+const DISPLAY_STATE = Object.freeze({
+    displayed: 'displayed',
+    loading: 'loading',
+    hidden: 'hidden',
+});
 
-type DisplayState =
-    | typeof STATE_DISPLAYED
-    | typeof STATE_HIDDEN
-    | typeof STATE_LOADING;
+type DisplayState = $Keys<typeof DISPLAY_STATE>;
 
 const readDisplayPrefForContainer = (containerId: string): DisplayState => {
     const prefs = userPrefs.get(PREF_NAME, {
         type: 'session',
     });
-    return prefs && prefs[containerId] ? STATE_DISPLAYED : STATE_HIDDEN;
+    return prefs && prefs[containerId]
+        ? DISPLAY_STATE.displayed
+        : DISPLAY_STATE.hidden;
 };
 
 const updateDisplayPrefForContainer = (
@@ -42,7 +43,7 @@ const updateDisplayPrefForContainer = (
     const prefs = userPrefs.get(PREF_NAME, {
         type: 'session',
     }) || {};
-    if (state !== STATE_DISPLAYED) {
+    if (state !== DISPLAY_STATE.displayed) {
         delete prefs[containerId];
     } else {
         prefs[containerId] = 'more';
@@ -103,33 +104,36 @@ class Button {
         this.$placeholder = $('.js-show-more-placeholder', this.$container);
         this.$textEl = $(`.${TEXT_HOOK}`, this.$el);
 
-        if (this.state === STATE_DISPLAYED) {
+        if (this.state === DISPLAY_STATE.displayed) {
             this.loadShowMoreForContainer();
         }
 
         this.messages = new Map([
-            [STATE_HIDDEN, $('.js-button-text', this.$el).text()],
-            [STATE_DISPLAYED, 'Less'],
-            [STATE_LOADING, 'Loading&hellip;'],
+            [DISPLAY_STATE.hidden, $('.js-button-text', this.$el).text()],
+            [DISPLAY_STATE.displayed, 'Less'],
+            [DISPLAY_STATE.loading, 'Loading&hellip;'],
         ]);
     }
 
     setState(state: DisplayState): void {
         this.$textEl.html(this.messages.get(state));
         this.$el
-            .attr('data-link-name', state === STATE_DISPLAYED ? 'less' : 'more')
-            .toggleClass('button--primary', state !== STATE_DISPLAYED)
-            .toggleClass('button--tertiary', state === STATE_DISPLAYED)
-            .toggleClass(BUTTON_SPINNER_CLASS, state === STATE_LOADING);
+            .attr(
+                'data-link-name',
+                state === DISPLAY_STATE.displayed ? 'less' : 'more'
+            )
+            .toggleClass('button--primary', state !== DISPLAY_STATE.displayed)
+            .toggleClass('button--tertiary', state === DISPLAY_STATE.displayed)
+            .toggleClass(BUTTON_SPINNER_CLASS, state === DISPLAY_STATE.loading);
         this.$container
-            .toggleClass(HIDDEN_CLASS_NAME, state !== STATE_DISPLAYED)
-            .toggleClass(VISIBLE_CLASS_NAME, state === STATE_DISPLAYED);
+            .toggleClass(HIDDEN_CLASS_NAME, state !== DISPLAY_STATE.displayed)
+            .toggleClass(VISIBLE_CLASS_NAME, state === DISPLAY_STATE.displayed);
         this.state = state;
     }
 
     loadShowMoreForContainer(): void {
         fastdom.write(() => {
-            this.setState(STATE_LOADING);
+            this.setState(DISPLAY_STATE.loading);
         });
 
         loadShowMore(config.page.pageId, this.id)
@@ -145,7 +149,7 @@ class Button {
                     if (dedupedShowMore) {
                         this.$placeholder.replaceWith(dedupedShowMore);
                     }
-                    this.setState(STATE_DISPLAYED);
+                    this.setState(DISPLAY_STATE.displayed);
                     updateDisplayPrefForContainer(this.id, this.state);
                     mediator.emit('modules:show-more:loaded');
                 });
@@ -153,7 +157,7 @@ class Button {
             })
             .catch(err => {
                 fastdom.write(() => {
-                    this.setState(STATE_HIDDEN);
+                    this.setState(DISPLAY_STATE.hidden);
                 });
 
                 this.showErrorMessage();
@@ -209,7 +213,9 @@ const showMore = (button: Button): void => {
          * DOM nodes.
          */
         button.setState(
-            button.state === STATE_HIDDEN ? STATE_DISPLAYED : STATE_HIDDEN
+            button.state === DISPLAY_STATE.hidden
+                ? DISPLAY_STATE.displayed
+                : DISPLAY_STATE.hidden
         );
         updateDisplayPrefForContainer(button.id, button.state);
     });
@@ -220,7 +226,10 @@ const renderToDom = (button: Button): void => {
         button.$container
             .addClass(HIDDEN_CLASS_NAME)
             .removeClass('js-container--fc-show-more')
-            .toggleClass(HIDDEN_CLASS_NAME, button.state === STATE_HIDDEN);
+            .toggleClass(
+                HIDDEN_CLASS_NAME,
+                button.state === DISPLAY_STATE.hidden
+            );
         // Initialise state, as it might be different from what was rendered server side based on localstorage prefs
         button.setState(button.state);
     });
@@ -242,7 +251,10 @@ export const init = (): void => {
             const clickedButton = buttons.find(
                 button => button.$el[0] === clickSpec.target
             );
-            if (clickedButton && clickedButton.state !== STATE_LOADING) {
+            if (
+                clickedButton &&
+                clickedButton.state !== DISPLAY_STATE.loading
+            ) {
                 if (clickedButton.isLoaded) {
                     showMore(clickedButton);
                 } else {
