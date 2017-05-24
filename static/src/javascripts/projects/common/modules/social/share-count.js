@@ -43,12 +43,11 @@ const updateTooltip = (): void => {
     $shareCountEls.attr('title', template(tooltip, counts));
 };
 
-const addToShareCount = (val: number) => {
+const addToShareCount = (val: number): void => {
     const shareSvg = inlineSvg('share');
     const shareTemplate = $shareCountEls.hasClass('js-sharecount-immersive')
         ? shareCountImmersiveTemplate
         : shareCountTemplate;
-
     const html = template(shareTemplate, {
         icon: shareSvg,
     });
