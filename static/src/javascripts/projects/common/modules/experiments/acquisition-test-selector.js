@@ -49,8 +49,7 @@ export const epicEngagementBannerTests = () =>
 
 export const abTestClashData = tests;
 
-// This can be annotated with a return type of ABTest when all of the imported tests are converted
-export const getTest = () => {
+export const getTest = (): ?ABTest => {
     const forcedTests = getForcedTests()
         .map(({ testId }) => tests.find(t => t.id === testId))
         .filter(Boolean);
