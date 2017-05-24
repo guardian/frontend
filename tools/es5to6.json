@@ -73,7 +73,6 @@
     "lib/picturefill.js",
     "lib/proximity-loader.js",
     "projects/common/modules/video/metadata.js",
-    "projects/common/modules/ui/smartAppBanner.js",
     "projects/common/modules/crosswords/anagram-helper/clue-input.js"
   ],
   "GHaberis": [
