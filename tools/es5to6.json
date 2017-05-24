@@ -88,7 +88,6 @@
     "projects/common/modules/ui/tabs.js",
     "projects/common/modules/social/hidden-share-toggle.js",
     "projects/common/modules/social/pinterest.js",
-    "projects/common/modules/social/share-count.js",
     "projects/common/modules/sport/football/football.js",
     "projects/common/modules/sport/football/match-info.js",
     "projects/common/modules/sport/football/match-list-live.js",
