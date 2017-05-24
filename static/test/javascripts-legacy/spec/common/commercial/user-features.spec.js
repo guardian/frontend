@@ -2,8 +2,7 @@ define(['helpers/injector'], function (Injector) {
     var injector = new Injector();
 
     describe('The user features service:', function () {
-        var cookies, userFeatures, identityApi,
-            PERSISTENCE_KEYS;
+        var cookies, userFeatures, identityApi, deleteOldData, requestNewData, PERSISTENCE_KEYS;
 
         PERSISTENCE_KEYS = {
             USER_FEATURES_EXPIRY_COOKIE : 'gu_user_features_expiry',
@@ -19,11 +18,13 @@ define(['helpers/injector'], function (Injector) {
             ], function () {
                 cookies = arguments[0];
                 userFeatures = arguments[1];
+                deleteOldData = userFeatures._.makeDeleteOldData;
+                requestNewData = userFeatures._.makeRequestNewData;
                 identityApi = arguments[2];
 
-                spyOn(userFeatures, '_requestNewData');
-                spyOn(userFeatures, '_deleteOldData');
-                spyOn(userFeatures, '_persistResponse');
+                spyOn(userFeatures, 'requestNewData');
+                spyOn(userFeatures, 'deleteOldData');
+                spyOn(userFeatures, 'persistResponse');
 
                 done();
             });
@@ -39,25 +40,25 @@ define(['helpers/injector'], function (Injector) {
                 it('Performs an update if the user has missing data', function () {
                     deleteAllFeaturesData();
                     userFeatures.refresh();
-                    expect(userFeatures._requestNewData).toHaveBeenCalled();
+                    expect(userFeatures.requestNewData).toHaveBeenCalled();
                 });
 
                 it('Performs an update if the user has expired data', function () {
                     setAllFeaturesData({isExpired: true});
                     userFeatures.refresh();
-                    expect(userFeatures._requestNewData).toHaveBeenCalled();
+                    expect(requestNewData).toHaveBeenCalled();
                 });
 
                 it('Does not delete the data just because it has expired', function () {
                     setAllFeaturesData({isExpired: true});
                     userFeatures.refresh();
-                    expect(userFeatures._deleteOldData).not.toHaveBeenCalled();
+                    expect(deleteOldData).not.toHaveBeenCalled();
                 });
 
                 it('Does not perform update if user has fresh feature data', function () {
                     setAllFeaturesData({isExpired: false});
                     userFeatures.refresh();
-                    expect(userFeatures._requestNewData).not.toHaveBeenCalled();
+                    expect(userFeatures.requestNewData).not.toHaveBeenCalled();
                 });
 
                 it('Performs an update if membership-frontend wipes just the paying-member cookie', function () {
@@ -66,7 +67,7 @@ define(['helpers/injector'], function (Injector) {
                     cookies.removeCookie(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE);
 
                     userFeatures.refresh();
-                    expect(userFeatures._requestNewData).toHaveBeenCalled();
+                    expect(userFeatures.requestNewData).toHaveBeenCalled();
                 });
 
                 it('Performs an update if the ad-free state is missing', function() {
@@ -75,7 +76,7 @@ define(['helpers/injector'], function (Injector) {
                     cookies.removeCookie(PERSISTENCE_KEYS.AD_FREE_USER_COOKIE);
 
                     userFeatures.refresh();
-                    expect(userFeatures._requestNewData).toHaveBeenCalled();
+                    expect(userFeatures.requestNewData).toHaveBeenCalled();
                 });
 
             });
@@ -88,13 +89,13 @@ define(['helpers/injector'], function (Injector) {
                 it('Does not perform update, even if feature data missing', function () {
                     deleteAllFeaturesData();
                     userFeatures.refresh();
-                    expect(userFeatures._requestNewData).not.toHaveBeenCalled();
+                    expect(userFeatures.requestNewData).not.toHaveBeenCalled();
                 });
 
                 it('Deletes leftover feature data', function () {
                     setAllFeaturesData({isExpired: false});
                     userFeatures.refresh();
-                    expect(userFeatures._deleteOldData).toHaveBeenCalled();
+                    expect(userFeatures.makeDeleteOldData).toHaveBeenCalled();
                 });
             });
         });
@@ -103,7 +104,7 @@ define(['helpers/injector'], function (Injector) {
         describe('The isPayingMember getter', function () {
             it('Is false when the user is logged out', function () {
                 identityApi.isUserLoggedIn = function () {return false;};
-                expect(userFeatures.isPayingMember()).toBe(false);
+                expect(userFeatures.isAdFreeUser).toBe(false);
             });
 
             describe('When the user is logged in', function () {
@@ -132,12 +133,12 @@ define(['helpers/injector'], function (Injector) {
         describe('Deleting old feature data', function () {
             beforeEach(function () {
                 // Unspy method to test it
-                userFeatures._deleteOldData.and.callThrough();
+                userFeatures.deleteOldData.and.callThrough();
             });
 
             it('Removes all cookies', function () {
                 setAllFeaturesData({isExpired: false});
-                userFeatures._deleteOldData();
+                userFeatures.deleteOldData();
 
                 expect(cookies.getCookie(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE)).toBeNull();
                 expect(cookies.getCookie(PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE)).toBeNull();
@@ -155,27 +156,27 @@ define(['helpers/injector'], function (Injector) {
                 };
 
                 // Unspy method to test it
-                userFeatures._persistResponse.and.callThrough();
+                userFeatures.persistResponse.and.callThrough();
             });
 
             it('Puts the paying-member state in a cookie, so that membership-frontend can wipe it', function () {
                 serverResponse.adblockMessage = true;
-                userFeatures._persistResponse(serverResponse);
+                userFeatures.persistResponse(serverResponse);
                 expect(cookies.getCookie(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE)).toBe('false');
 
                 serverResponse.adblockMessage = false;
-                userFeatures._persistResponse(serverResponse);
+                userFeatures.persistResponse(serverResponse);
                 expect(cookies.getCookie(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE)).toBe('true');
             });
 
             it('Puts an expiry date in an accompanying cookie', function () {
-                userFeatures._persistResponse(serverResponse);
+                userFeatures.persistResponse(serverResponse);
                 var expiryDate = cookies.getCookie(PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE);
                 expect(expiryDate).not.toBeNull();
             });
 
             it('The expiry date can be parsed into a Unix epoch', function () {
-                userFeatures._persistResponse(serverResponse);
+                userFeatures.persistResponse(serverResponse);
                 var expiryDateString = cookies.getCookie(PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE);
                 expect(isNaN(expiryDateString)).toBe(false);
             });
@@ -183,7 +184,7 @@ define(['helpers/injector'], function (Injector) {
             it('The expiry date is in the future', function () {
                 var expiryDateString, expiryDateEpoch, currentTimeEpoch;
 
-                userFeatures._persistResponse(serverResponse);
+                userFeatures.persistResponse(serverResponse);
 
                 expiryDateString = cookies.getCookie(PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE);
                 expiryDateEpoch = parseInt(expiryDateString, 10);
