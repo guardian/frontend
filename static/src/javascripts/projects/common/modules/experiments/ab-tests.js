@@ -25,7 +25,6 @@ import SleevenotesLegacyEmailVariant
     from 'common/modules/experiments/tests/sleeve-notes-legacy-email-variant';
 import IncreaseInlineAdsRedux
     from 'common/modules/experiments/tests/increase-inline-ads';
-import PaidCommenting from 'common/modules/experiments/tests/paid-commenting';
 import BundleDigitalSubPriceTest1
     from 'common/modules/experiments/tests/bundle-digital-sub-price-test-1';
 import {
@@ -47,7 +46,6 @@ export const TESTS: Array<ABTest> = [
     SleevenotesNewEmailVariant,
     SleevenotesLegacyEmailVariant,
     new IncreaseInlineAdsRedux(),
-    new PaidCommenting(),
     new BundleDigitalSubPriceTest1(),
     ExplainerSnippet(),
     MeasureUnderstanding(),

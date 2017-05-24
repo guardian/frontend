@@ -161,16 +161,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-paid-commenting-internal",
-    "Paid commenting test",
-    owners = Seq(Owner.withGithub("justinpinner")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 5, 25),  // Thurs 25th May
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-paid-content-vs-outbrain-2",
     "Displays a paid content widget instead of Outbrain",
     owners = Seq(Owner.withName("commercial team")),
