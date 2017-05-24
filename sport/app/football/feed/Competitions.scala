@@ -134,13 +134,14 @@ class CompetitionsService(val footballClient: FootballClient, competitionDefinit
     DateTimeComparator.getInstance.asInstanceOf[Comparator[DateTime]]
   )
 
-  private def mostRecentCompetitionSeason(competitions: List[Season]): List[Season] =
+  // Avoid fetching very old results from PA by restricting to most recent 2 seasons
+  private def oldestRelevantCompetitionSeasons(competitions: List[Season]): List[Season] =
     competitionDefinitions.flatMap { compDef =>
       competitions
         .filter(_.competitionId == compDef.id)
-        .filter(_.startDate.isBefore(LocalDate.now()))
         .sortBy(_.startDate.toDateTimeAtStartOfDay.getMillis).reverse
-        .headOption
+        .take(2)  // Take most recent 2 seasons
+        .lastOption // Use the older of these for the start date
     }
 
   override val teamNameBuilder = new TeamNameBuilder(this)
@@ -160,7 +161,7 @@ class CompetitionsService(val footballClient: FootballClient, competitionDefinit
   def refreshCompetitionData() = {
     log.info("Refreshing competition data")
     footballClient.competitions.map { allComps =>
-      mostRecentCompetitionSeason(allComps).foreach { season =>
+      oldestRelevantCompetitionSeasons(allComps).foreach { season =>
         competitionAgents.find(_.competition.id == season.id).foreach { agent =>
           agent.competition.startDate match {
             case Some(existingStartDate) if season.startDate.isAfter(existingStartDate.toDateTimeAtStartOfDay) =>
