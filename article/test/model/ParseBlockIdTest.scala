@@ -1,6 +1,6 @@
-package models
+package model
 
-import ParseBlockId.{InvalidFormat, ParsedBlockId}
+import model.ParseBlockId.{InvalidFormat, ParsedBlockId}
 import org.scalatest.{FlatSpec, Matchers}
 
 class ParseBlockIdTest extends FlatSpec with Matchers {

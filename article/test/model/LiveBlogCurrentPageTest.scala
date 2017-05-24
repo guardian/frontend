@@ -1,4 +1,4 @@
-package models
+package model
 
 import model.liveblog._
 import org.joda.time.DateTime
