@@ -5,7 +5,7 @@ define([
     'lib/cookies',
     'lib/storage',
     'lodash/utilities/template',
-    'raw-loader!common/views/acquisitions-epic-equal-buttons.html',
+    'raw-loader!common/views/acquisitions-epic-test-template.html',
 ], function (
             commercialFeatures,
             contributionsUtilities,
@@ -13,7 +13,7 @@ define([
             cookies,
             store,
             template,
-            contributionsEpicEqualButtons) {
+            contributionsEpicTestTemplate) {
 
     function canBeDisplayed() {
         var userHasNeverContributed = !cookies.getCookie('gu.contributions.contrib-timestamp');
@@ -59,9 +59,9 @@ define([
             {
                 id: 'alwaysAsk',
                 template: function (variant) {
-                    return template(contributionsEpicEqualButtons, {
-                        linkUrl1: variant.options.membershipURL,
-                        linkUrl2: variant.options.contributeURL,
+                    return template(contributionsEpicTestTemplate, {
+                        membershipUrl: variant.options.membershipURL,
+                        contributionUrl: variant.options.contributeURL,
                         componentName: variant.options.componentName,
                         title: 'Since you’re here…',
                         p1: '… we have a small favour to ask. More people are reading the Guardian than ever but far fewer are paying for it. And advertising revenues across the media are falling fast. So you can see why we need to ask for your help. The Guardian\'s independent, investigative journalism takes a lot of time, money and hard work to produce. But we do it because we believe our perspective matters &ndash; because it might well be your perspective, too.',

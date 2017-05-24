@@ -43,7 +43,6 @@ const isViewable = (v: Variant): boolean => {
 
     const withinViewLimit = viewsInPreviousDays(maxViewDays) < maxViewCount;
     const enoughDaysBetweenViews = viewsInPreviousDays(minViewDays) === 0;
-        if (forced) return true;
     return (withinViewLimit && enoughDaysBetweenViews) || isUnlimited;
 };
 
