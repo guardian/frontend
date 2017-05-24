@@ -3,16 +3,15 @@ import { loadOnwardComponent, _ } from './onward.js';
 
 const { insertHTMLfromPlaceholders, generateUrlFromConfig } = _;
 
-const fakeConfig = {
-    page: {
-        ajaxUrl: 'some.url',
-        contentType: 'gallery',
-        pageId: 'pageId',
-    },
-};
-
 describe('URL generator', () => {
     it('generates correct URL from valid config', () => {
+        const fakeConfig = {
+            page: {
+                ajaxUrl: 'some.url',
+                contentType: 'gallery',
+                pageId: 'pageId',
+            },
+        };
         const expectResult = 'some.url/pageId/gallery/onward.json';
         const result = generateUrlFromConfig(fakeConfig);
 
