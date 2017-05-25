@@ -1,4 +1,5 @@
-@import model.liveblog.LiveBlogPage
+@import model.LiveBlogPage
+
 @(model: LiveBlogPage)(implicit request: RequestHeader, context: _root_.model.ApplicationContext)
 
 @mainAMP(model, model.related, model.article.content){

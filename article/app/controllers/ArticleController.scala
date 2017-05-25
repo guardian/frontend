@@ -1,15 +1,13 @@
 package controllers
 
-import _root_.liveblog._
 import com.gu.contentapi.client.model.v1.{ItemResponse, Content => ApiContent}
 import common._
 import conf.switches.Switches
 import contentapi.ContentApiClient
-import model.liveblog.ParseBlockId.{InvalidFormat, ParsedBlockId}
+import model.ParseBlockId.{InvalidFormat, ParsedBlockId}
 import model.Cached.WithoutRevalidationResult
 import model._
-import model.content.RecipeAtom
-import model.liveblog.LiveBlogHelpers._
+import LiveBlogHelpers._
 import model.liveblog._
 import org.joda.time.DateTime
 import play.api.libs.functional.syntax._
@@ -18,7 +16,6 @@ import play.api.mvc._
 import views.support._
 
 import scala.concurrent.Future
-
 
 case class ArticlePage(article: Article, related: RelatedContent) extends PageWithStoryPackage
 case class MinutePage(article: Article, related: RelatedContent) extends PageWithStoryPackage
@@ -38,7 +35,7 @@ class ArticleController(contentApiClient: ContentApiClient)(implicit context: Ap
       block.id != lastUpdateBlockId.lastUpdate
     }
     val blocksHtml = views.html.liveblog.liveBlogBlocks(newBlocks, page.article, Edition(request).timezone)
-    val timelineHtml = views.html.liveblog.keyEvents("", _root_.liveblog.KeyEventData(newBlocks, Edition(request).timezone))
+    val timelineHtml = views.html.liveblog.keyEvents("", model.KeyEventData(newBlocks, Edition(request).timezone))
     val allPagesJson = Seq(
       "timeline" -> timelineHtml,
       "numNewBlocks" -> newBlocks.size
@@ -115,12 +112,7 @@ class ArticleController(contentApiClient: ContentApiClient)(implicit context: Ap
         else if (article.article.isExplore) views.html.articleExplore(article)
         else if (article.article.isImmersive) views.html.articleImmersive(article)
         else if (request.isAmp) views.html.articleAMP(article)
-        else if (article.article.showNewRecipeDesign && mvt.ABNewRecipeDesign.isParticipating) {
-          val recipeAtoms = article.article.content.atoms.fold(Nil: Seq[RecipeAtom])(_.recipes)
-          val maybeMainImage: Option[ImageMedia] = article.article.content.elements.mainPicture.map{ _.images}
-          views.html.recipeArticle(article, recipeAtoms, maybeMainImage)
-        }
-        else views.html.article(article, recipePageNotInTest = article.article.showNewRecipeDesign)
+        else views.html.article(article)
       }
       val jsonResponse = () => views.html.fragments.articleBody(article)
       renderFormat(htmlResponse, jsonResponse, article, Switches.all)

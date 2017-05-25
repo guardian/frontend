@@ -1,8 +1,5 @@
 {
   "Francis Carr": [
-    "projects/commercial/modules/commercial-features.js",
-    "projects/commercial/modules/creatives/add-tracking-pixel.js",
-    "projects/commercial/modules/creatives/add-viewability-tracker.js",
     "projects/commercial/modules/creatives/fabric-expandable-video-v2.js",
     "projects/commercial/modules/creatives/fabric-expanding-v1.js",
     "projects/common/modules/video/events.js",
@@ -45,8 +42,6 @@
     "projects/common/modules/check-dispatcher.js"
   ],
   "Simon Adcock": [
-    "projects/common/modules/ui/rhc.js",
-    "bootstraps/enhanced/identity-common.js",
     "bootstraps/enhanced/image-content.js",
     "bootstraps/enhanced/liveblog.js",
     "bootstraps/enhanced/media/main.js",
@@ -74,7 +69,6 @@
     "lib/picturefill.js",
     "lib/proximity-loader.js",
     "projects/common/modules/video/metadata.js",
-    "projects/common/modules/ui/smartAppBanner.js",
     "projects/common/modules/crosswords/anagram-helper/clue-input.js"
   ],
   "GHaberis": [
@@ -90,7 +84,6 @@
     "projects/common/modules/ui/tabs.js",
     "projects/common/modules/social/hidden-share-toggle.js",
     "projects/common/modules/social/pinterest.js",
-    "projects/common/modules/social/share-count.js",
     "projects/common/modules/sport/football/football.js",
     "projects/common/modules/sport/football/match-info.js",
     "projects/common/modules/sport/football/match-list-live.js",
@@ -99,7 +92,6 @@
     "projects/common/modules/tailor/fetch-data.js",
     "projects/common/modules/ui/accessibility-prefs.js",
     "projects/common/modules/ui/autoupdate.js",
-    "bootstraps/enhanced/preferences.js",
     "projects/commercial/modules/messenger/type.js"
   ],
   "NataliaLKB": [
@@ -135,9 +127,7 @@
     "projects/common/modules/crosswords/grid.js",
     "projects/common/modules/crosswords/helpers.js"
   ],
-  "Sam Desborough": [
-    "projects/common/modules/experiments/ab.js"
-  ],
+  "Sam Desborough": [],
   "Akash A": [
     "projects/common/modules/crosswords/hidden-input.js",
     "projects/common/modules/crosswords/keycodes.js",
@@ -176,7 +166,6 @@
     "projects/common/modules/experiments/tests/fashion-statement-email-variants.js",
     "projects/common/modules/experiments/tests/film-today-email-variants.js",
     "projects/common/modules/experiments/tests/generic-email-variants.js",
-    "projects/common/modules/experiments/tests/increase-inline-ads.js",
     "projects/common/modules/experiments/tests/opinion-email-variants.js",
     "projects/common/modules/experiments/tests/paid-card-logo.js",
     "projects/commercial/modules/survey/survey-simple.js"
@@ -241,7 +230,6 @@
     "projects/commercial/modules/paidfor-band.js"
   ],
   "Philip Wills": [
-    "projects/facia/modules/ui/container-show-more.js",
     "projects/facia/modules/ui/container-toggle.js",
     "projects/facia/modules/ui/lazy-load-containers.js",
     "projects/common/modules/video/ga-helper.js",
@@ -252,7 +240,6 @@
     "projects/common/modules/video/more-in-series-container.js"
   ],
   "Jamie Byers": [
-    "bootstraps/enhanced/main.js",
     "bootstraps/enhanced/newsletters.js"
   ]
 }

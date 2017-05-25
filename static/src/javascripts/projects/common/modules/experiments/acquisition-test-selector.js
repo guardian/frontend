@@ -1,7 +1,9 @@
 // @flow
-import type { Variant } from 'common/modules/experiments/ab-types';
-
 import { variantFor, isInTest } from 'common/modules/experiments/segment-util';
+import {
+    getForcedTests,
+    getForcedVariant,
+} from 'common/modules/experiments/utils';
 import { testCanBeRun } from 'common/modules/experiments/test-can-run-checks';
 import {
     viewsInPreviousDays,
@@ -14,56 +16,54 @@ import acquisitionsEpicLiveBlog
     from 'common/modules/experiments/tests/acquisitions-epic-liveblog';
 import acquisitionsEpicTestimonialsRoundTwo
     from 'common/modules/experiments/tests/acquisitions-epic-testimonials-round-two';
+import acquisitionsEpicPreElection
+    from 'common/modules/experiments/tests/acquisitions-epic-pre-election';
 
 /**
  * acquisition tests in priority order (highest to lowest)
  */
 const tests = [
     alwaysAsk,
+    acquisitionsEpicPreElection,
     acquisitionsEpicTestimonialsRoundTwo,
     askFourEarning,
     acquisitionsEpicLiveBlog,
-];
+].map(Test => new Test());
 
-export const epicEngagementBannerTests = tests.reduce((out, Test) => {
-    const testInstance = new Test();
+const isViewable = (v: Variant): boolean => {
+    if (!v.options || !v.options.maxViews) return false;
 
-    if (testInstance.isEngagementBannerTest) {
-        out.push(testInstance);
-    }
-    return out;
-}, []);
+    const {
+        count: maxViewCount,
+        days: maxViewDays,
+        minDaysBetweenViews: minViewDays,
+    } = v.options.maxViews;
 
-export const abTestClashData = tests.map(Test => new Test());
+    const isUnlimited = v.options.isUnlimited;
 
-// This can be annotated with a return type of ABTest when all of the imported tests are converted
-export const getTest = () => {
-    const eligibleTests = tests.filter(Test => {
-        const t = new Test();
-        const forced = window.location.hash.indexOf(`ab-${t.id}`) > -1;
-        const variant: Variant = variantFor(t);
+    const withinViewLimit = viewsInPreviousDays(maxViewDays) < maxViewCount;
+    const enoughDaysBetweenViews = viewsInPreviousDays(minViewDays) === 0;
+    return (withinViewLimit && enoughDaysBetweenViews) || isUnlimited;
+};
 
-        if (!variant || !variant.options || !variant.options.maxViews)
-            return false;
+export const epicEngagementBannerTests = () =>
+    tests.filter(t => t.isEngagementBannerTest);
 
-        const {
-            count: maxViewCount,
-            days: maxViewDays,
-            minDaysBetweenViews: minViewDays,
-        } = variant.options.maxViews;
+export const abTestClashData = tests;
 
-        const isUnlimited = variant.options.isUnlimited;
+export const getTest = (): ?ABTest => {
+    const forcedTests = getForcedTests()
+        .map(({ testId }) => tests.find(t => t.id === testId))
+        .filter(Boolean);
 
-        const withinViewLimit = viewsInPreviousDays(maxViewDays) < maxViewCount;
-        const enoughDaysBetweenViews = viewsInPreviousDays(minViewDays) === 0;
+    if (forcedTests.length)
+        return forcedTests.find(t => {
+            const variant: ?Variant = getForcedVariant(t);
+            return variant && testCanBeRun(t) && isViewable(variant);
+        });
 
-        const hasNotReachedRateLimit =
-            (withinViewLimit && enoughDaysBetweenViews) || isUnlimited;
-
-        return (
-            forced || (testCanBeRun(t) && isInTest(t) && hasNotReachedRateLimit)
-        );
+    return tests.find(t => {
+        const variant: ?Variant = variantFor(t);
+        return variant && testCanBeRun(t) && isInTest(t) && isViewable(variant);
     });
-
-    return eligibleTests[0] && new eligibleTests[0]();
 };

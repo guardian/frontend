@@ -27,15 +27,14 @@ object CommercialClientLoggingVariant extends TestDefinition(
   }
 }
 
-/** Watch out for "TODO: #new-recipe:" when removing the test */
-object ABNewRecipeDesign extends TestDefinition(
-  name = "ab-new-recipe-design",
-  description = "Users in the test will see the new design on articles with structured recipes",
-  owners = Seq(Owner.withGithub("tsop14")),
-  sellByDate = new LocalDate(2017, 5, 30)
+object ABNewDesktopHeader extends TestDefinition(
+  name = "ab-new-desktop-header",
+  description = "Users in this test will see the new desktop design.",
+  owners = Seq(Owner.withGithub("natalialkb"), Owner.withGithub("gustavpursche")),
+  sellByDate = new LocalDate(2017, 7, 5)
 ) {
   def canRun(implicit request: RequestHeader): Boolean = {
-    request.headers.get("X-GU-ab-new-recipe-design").contains("variant")
+    request.headers.get("X-GU-ab-new-desktop-header").contains("variant")
   }
 }
 
@@ -53,7 +52,7 @@ trait ServerSideABTests {
 object ActiveTests extends ServerSideABTests {
   val tests: Seq[TestDefinition] = List(
     CommercialClientLoggingVariant,
-    ABNewRecipeDesign
+    ABNewDesktopHeader
   )
 }
 

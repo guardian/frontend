@@ -3,7 +3,7 @@
 import raven from 'lib/raven';
 import config from 'lib/config';
 import { loadScript } from 'lib/load-script';
-import commercialFeatures from 'commercial/modules/commercial-features';
+import { commercialFeatures } from 'commercial/modules/commercial-features';
 import { buildPageTargeting } from 'commercial/modules/build-page-targeting';
 import { closeDisabledSlots } from 'commercial/modules/close-disabled-slots';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';

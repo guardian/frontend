@@ -100,12 +100,10 @@ $control-offset: 36 + $gs-gutter/2;
     .is-active > &,
     .is-not-modern .brand-bar__item--has-control:hover &,
     .is-not-modern .is-signed-in.brand-bar__item--profile:hover & {
-        @include mq(tablet) {
-            &:after {
-                border-top: 0;
-                border-bottom: $popup-toggle-arrow-size solid $c-popup-bg;
-            }
-        };
+        &:after {
+            border-top: 0;
+            border-bottom: $popup-toggle-arrow-size solid $c-popup-bg;
+        }
 
         // This is the exposed menu arrow pointing up
         // to the link. It's placed on the link to center it.
@@ -269,7 +267,7 @@ $control-offset: 36 + $gs-gutter/2;
 /* Ad feedback menu
    ========================================================================== */
 .ad-feedback.popup__toggle {
-    display: inline;
+    display: inline-block;
     cursor: pointer;
 
     &::after {

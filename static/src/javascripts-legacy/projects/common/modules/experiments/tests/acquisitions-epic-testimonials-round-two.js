@@ -13,6 +13,7 @@ define([
     function createTestimonialTemplate(epicTemplate, testimonialInfo) {
         return function(variant) {
             return template(epicTemplate, {
+                p1: '&hellip; we’ve got a small favour to ask. More people are reading the Guardian than ever, but far fewer are paying for it. Advertising revenues across the media are falling fast. And <span class="contributions__highlight">unlike many news organisations, we haven’t put up a paywall – we want to keep our journalism as open as we can</span>. So you can see why we need to ask for your help. The Guardian’s independent, investigative journalism takes a lot of time, money and hard work to produce. But we do it because we believe our perspective matters – because it might well be your perspective, too.',
                 membershipUrl: variant.options.membershipURL,
                 contributionUrl: variant.options.contributeURL,
                 componentName: variant.options.componentName,
