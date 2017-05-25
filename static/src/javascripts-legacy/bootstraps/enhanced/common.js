@@ -315,7 +315,7 @@ define([
                 ['c-analytics', modules.loadAnalytics],
 
                 ['c-cookies-banner', cookiesBanner.init],
-                ['c-identity', identity],
+                ['c-identity', identity.init],
                 ['c-adverts', userAdTargeting.requestUserSegmentsFromId],
                 ['c-discussion', modules.initDiscussion],
                 ['c-test-cookie', modules.testCookie],
