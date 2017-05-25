@@ -3,7 +3,7 @@
 /* We live in a rainbow of chaos. */
 // ^ U WOT
 
-import $ from 'lib/$';
+import fastdom from 'fastdom';
 import { isOn } from 'common/modules/user-prefs';
 
 const FILTERS = [
@@ -18,21 +18,23 @@ const FILTERS = [
 const set = (mode: string): void => {
     const val = `${mode}(100%)`;
 
-    $('body').css({
+    Object.assign(document.body.style, {
         '-webkit-filter': val,
         filter: val,
     });
 };
 
 const breuer = (): void => {
-    $('body').addClass('is-breuer-mode');
+    document.body.classList.add('is-breuer-mode');
 };
 
 const initAccessibilityPreferences = (): void => {
-    FILTERS.forEach(filter => {
-        if (isOn(filter)) {
-            set(filter);
-        }
+    fastdom.write(() => {
+        FILTERS.forEach(filter => {
+            if (isOn(filter)) {
+                set(filter);
+            }
+        });
     });
 
     if (isOn('breuerMode')) {
