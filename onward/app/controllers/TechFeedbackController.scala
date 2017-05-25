@@ -13,7 +13,7 @@ import play.api.libs.ws._
 import play.api.data.Forms._
 import scala.concurrent.duration._
 
-class TechFeedbackController @Inject() (ws: WSClient) (implicit context: ApplicationContext) extends Controller with Logging {
+class TechFeedbackController(ws: WSClient) (implicit context: ApplicationContext) extends Controller with Logging {
 
   def submitFeedback(path: String) = Action { implicit request =>
 
