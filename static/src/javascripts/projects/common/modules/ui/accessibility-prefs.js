@@ -4,7 +4,7 @@
 // ^ U WOT
 
 import fastdom from 'fastdom';
-import { isOn } from 'common/modules/user-prefs';
+import userPrefs from 'common/modules/user-prefs';
 
 const FILTERS = [
     'sepia',
@@ -15,29 +15,35 @@ const FILTERS = [
     'opacity',
 ];
 
-const set = (mode: string): void => {
-    const val = `${mode}(100%)`;
+const setFilter = (mode: string): void => {
+    const body = document.body;
+    const value: string = `${mode}(100%)`;
 
-    Object.assign(document.body.style, {
-        '-webkit-filter': val,
-        filter: val,
-    });
+    if (body) {
+        // $FlowFixMe -webkit-filter is not recognised
+        Object.assign(body.style, {
+            '-webkit-filter': value,
+            filter: value,
+        });
+    }
 };
 
 const breuer = (): void => {
-    document.body.classList.add('is-breuer-mode');
+    if (document.body) {
+        document.body.classList.add('is-breuer-mode');
+    }
 };
 
 const initAccessibilityPreferences = (): void => {
     fastdom.write(() => {
         FILTERS.forEach(filter => {
-            if (isOn(filter)) {
-                set(filter);
+            if (userPrefs.isOn(filter)) {
+                setFilter(filter);
             }
         });
     });
 
-    if (isOn('breuerMode')) {
+    if (userPrefs.isOn('breuerMode')) {
         breuer();
     }
 };
