@@ -11,9 +11,9 @@ import debounce from 'lodash/functions/debounce';
 const players = {};
 
 // retrieves actual id of atom without appended index
-const getTrackingId = (atomId: string) => atomId.split('/')[0];
+const getTrackingId = (atomId: string): string => atomId.split('/')[0];
 
-const recordPlayerProgress = (atomId: string) => {
+const recordPlayerProgress = (atomId: string): void => {
     const player = players[atomId].player;
     const pendingTrackingCalls = players[atomId].pendingTrackingCalls;
 
@@ -34,19 +34,19 @@ const recordPlayerProgress = (atomId: string) => {
     }
 };
 
-const killProgressTracker = (atomId: string) => {
+const killProgressTracker = (atomId: string): void => {
     if (players[atomId].progressTracker) {
         clearInterval(players[atomId].progressTracker);
     }
 };
 
-const setProgressTracker = (atomId: string) =>
+const setProgressTracker = (atomId: string): number =>
     (players[atomId].progressTracker = setInterval(
         recordPlayerProgress.bind(null, atomId),
         1000
     ));
 
-const onPlayerPlaying = atomId => {
+const onPlayerPlaying = (atomId: string): void => {
     const player = players[atomId];
 
     killProgressTracker(atomId);
@@ -68,9 +68,9 @@ const onPlayerPlaying = atomId => {
     }
 };
 
-const onPlayerPaused = atomId => killProgressTracker(atomId);
+const onPlayerPaused = (atomId: string): void => killProgressTracker(atomId);
 
-const onPlayerEnded = (atomId: string) => {
+const onPlayerEnded = (atomId: string): void => {
     const player = players[atomId];
 
     killProgressTracker(atomId);
@@ -97,7 +97,7 @@ const checkState = (atomId, state, status): void => {
     }
 };
 
-const shouldAutoplay = (atomId: string) => {
+const shouldAutoplay = (atomId: string): boolean => {
     const isAutoplayBlockingPlatform = () =>
         detect.isIOS() || detect.isAndroid();
 
@@ -123,8 +123,10 @@ const shouldAutoplay = (atomId: string) => {
     );
 };
 
-const getEndSlate = overlay => {
-    const endSlatePath = overlay.parentNode.dataset.endSlate;
+const getEndSlate = (overlay: HTMLElement): Component => {
+    const overlayParent = ((overlay.parentNode: any): ?HTMLElement);
+
+    const endSlatePath = overlayParent ? overlayParent.dataset.endSlate : null;
     const endSlate = new Component();
 
     endSlate.endpoint = endSlatePath;
@@ -132,7 +134,7 @@ const getEndSlate = overlay => {
     return endSlate;
 };
 
-const updateImmersiveButtonPos = () => {
+const updateImmersiveButtonPos = (): void => {
     const player = document.querySelector(
         '.immersive-main-media__media .youtube-media-atom'
     );
@@ -151,7 +153,7 @@ const updateImmersiveButtonPos = () => {
     }
 };
 
-const onPlayerReady = (atomId, overlay, iframe, event) => {
+const onPlayerReady = (atomId, overlay, iframe, event): void => {
     players[atomId] = {
         player: event.target,
         pendingTrackingCalls: [25, 50, 75],
@@ -187,7 +189,9 @@ const onPlayerReady = (atomId, overlay, iframe, event) => {
 const onPlayerStateChange = (atomId, event): void =>
     Object.keys(STATES).forEach(checkState.bind(null, atomId, event.data));
 
-const checkElemForVideo = elem =>
+const checkElemForVideo = (elem: ?HTMLElement): void => {
+    if (!elem) return;
+
     fastdom.read(() => {
         $('.youtube-media-atom', elem).each((el, index) => {
             const iframe = el.querySelector('iframe');
@@ -222,8 +226,9 @@ const checkElemForVideo = elem =>
             );
         });
     });
+};
 
-export const checkElemsForVideos = (elems: ?Array<HTMLElement>) => {
+export const checkElemsForVideos = (elems: ?Array<HTMLElement>): void => {
     if (elems && elems.length) {
         elems.forEach(checkElemForVideo);
     } else {
