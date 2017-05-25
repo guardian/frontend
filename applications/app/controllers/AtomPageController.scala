@@ -7,29 +7,34 @@ import model._
 import play.api.mvc._
 import play.twirl.api.Html
 import scala.concurrent.Future
+import scala.concurrent.duration._
 import contentapi.ContentApiClient
 import model.content._
 import views.html.fragments.atoms.{ media => MediaAtomBody, storyquestions => StoryQuestionsAtomBody }
 
 class AtomPageController(contentApiClient: ContentApiClient)(implicit context: ApplicationContext) extends Controller with Logging with ExecutionContexts {
 
-  val notYetImplemented = (NotFound, Nil)
+  def notYetImplemented = NoCache(NotFound)
 
   def render(atomType: String, id: String, js: Boolean) = Action.async { implicit request =>
 
     lookup(s"atom/$atomType/$id") map {
       case Left(model: MediaAtom) =>
-        (MediaAtomPage(model, withJavaScript = js), MediaAtomBody(model, displayCaption = false, mediaWrapper = Some(MediaWrapper.EmbedPage)))
+        renderAtom(
+          MediaAtomPage(model, withJavaScript = js),
+          MediaAtomBody(model, displayCaption = false, mediaWrapper = Some(MediaWrapper.EmbedPage))
+        )
       case Left(model: StoryQuestionsAtom) =>
-        (StoryQuestionsAtomPage(model, withJavaScript = js), StoryQuestionsAtomBody(model, isAmp = false))
+        renderAtom(
+          StoryQuestionsAtomPage(model, withJavaScript = js),
+          StoryQuestionsAtomBody(model, isAmp = false)
+        )
       case Left(model: Quiz) =>             notYetImplemented
       case Left(model: InteractiveAtom) =>  notYetImplemented
       case Left(model: RecipeAtom) =>       notYetImplemented
       case Left(model: ReviewAtom) =>       notYetImplemented
-      case Right(other) =>                  (other, Nil)
-    } map {
-      case (atom: AtomPage, body: Html) => renderAtom(atom, body)
-      case (error: Result, _) => renderOther(error)
+      case Left(model: ExplainerAtom) =>    notYetImplemented
+      case Right(other) =>                  renderOther(other)
     }
   }
 
@@ -54,7 +59,7 @@ class AtomPageController(contentApiClient: ContentApiClient)(implicit context: A
 
   private def renderOther(result: Result)(implicit request: RequestHeader) = result.header.status match {
     case 404 => NoCache(NotFound)
-    case 410 => Cached(86400)(WithoutRevalidationResult(Gone(views.html.videoEmbedMissing())))
+    case 410 => Cached(24.hours)(WithoutRevalidationResult(Gone(views.html.videoEmbedMissing())))
     case _ => result
   }
 
