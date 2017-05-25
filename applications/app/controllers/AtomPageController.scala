@@ -10,31 +10,19 @@ import scala.concurrent.Future
 import scala.concurrent.duration._
 import contentapi.ContentApiClient
 import model.content._
-import views.html.fragments.atoms.{ media => MediaAtomBody, storyquestions => StoryQuestionsAtomBody }
 
 class AtomPageController(contentApiClient: ContentApiClient)(implicit context: ApplicationContext) extends Controller with Logging with ExecutionContexts {
 
-  def notYetImplemented = NoCache(NotFound)
-
   def render(atomType: String, id: String, isJsEnabled: Boolean) = Action.async { implicit request =>
-
     lookup(s"atom/$atomType/$id") map {
       case Left(model: MediaAtom) =>
-        renderAtom(
-          MediaAtomPage(model, withJavaScript = isJsEnabled),
-          MediaAtomBody(model, displayCaption = false, mediaWrapper = Some(MediaWrapper.EmbedPage))
-        )
+        renderAtom(MediaAtomPage(model, withJavaScript = isJsEnabled))
       case Left(model: StoryQuestionsAtom) =>
-        renderAtom(
-          StoryQuestionsAtomPage(model, withJavaScript = isJsEnabled),
-          StoryQuestionsAtomBody(model, isAmp = false)
-        )
-      case Left(model: Quiz) =>             notYetImplemented
-      case Left(model: InteractiveAtom) =>  notYetImplemented
-      case Left(model: RecipeAtom) =>       notYetImplemented
-      case Left(model: ReviewAtom) =>       notYetImplemented
-      case Left(model: ExplainerAtom) =>    notYetImplemented
-      case Right(other) =>                  renderOther(other)
+        renderAtom(StoryQuestionsAtomPage(model, withJavaScript = isJsEnabled))
+      case Left(_) =>
+        renderOther(NotFound)
+      case Right(other) =>
+        renderOther(other)
     }
   }
 
@@ -63,7 +51,7 @@ class AtomPageController(contentApiClient: ContentApiClient)(implicit context: A
     case _ => result
   }
 
-  private def renderAtom(page: AtomPage, body: Html)(implicit request: RequestHeader): Result = {
-    Cached(600)(RevalidatableResult.Ok(views.html.atomEmbed(page, body)))
+  private def renderAtom(page: AtomPage)(implicit request: RequestHeader): Result = {
+    Cached(600)(RevalidatableResult.Ok(views.html.atomEmbed(page)))
   }
 }
