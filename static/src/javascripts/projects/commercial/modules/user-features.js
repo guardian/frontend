@@ -37,10 +37,6 @@ const requestNewData = (): void => {
         .catch(() => {});
 };
 
-// exposed for testing
-const makeRequestNewData = requestNewData();
-const makeDeleteOldData = deleteOldData();
-
 const featuresDataIsMissing =
     !getCookie(USER_FEATURES_EXPIRY_COOKIE) ||
     !getCookie(PAYING_MEMBER_COOKIE) ||
@@ -72,6 +68,7 @@ const refresh = () => {
      * Does our _existing_ data say the user is a paying member?
      * This data may be stale; we do not wait for userFeatures.refresh()
      * @returns {boolean}
+     * @returns {boolean}
      */
 const isPayingMember = (): boolean =>
     // If the user is logged in, but has no cookie yet, play it safe and assume they're a paying user
@@ -85,4 +82,4 @@ const isAdFreeUser = () => {
 };
 
 export { isAdFreeUser, isPayingMember };
-export const _ = { makeRequestNewData, makeDeleteOldData };
+export const _ = { requestNewData, deleteOldData, persistResponse, refresh };
