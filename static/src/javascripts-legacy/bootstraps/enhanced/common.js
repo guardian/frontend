@@ -276,7 +276,7 @@ define([
 
             initPinterest: function () {
                 if (/Article|LiveBlog|Gallery|Video/.test(config.page.contentType)) {
-                    pinterest();
+                    pinterest.initPinterest();
                 }
             },
 
