@@ -20,7 +20,10 @@ const resizeMessage = (payload: Object): Object => ({
 
 /* in app article will send a message when ready to interact */
 const comready = (callback: () => void): void => {
-    window.addEventListener('message', callback);
+    window.addEventListener('message', function onM() {
+        callback();
+        window.removeEventListener('message', onM);
+    });
 };
 
 Promise.all([
