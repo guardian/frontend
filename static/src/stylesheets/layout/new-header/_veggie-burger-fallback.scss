@@ -2,11 +2,11 @@
     display: none;
 
     &:checked {
-        & ~ .main-menu-container {
+        & ~ .menu {
             @include menu-animation(0%);
         }
 
-        & ~ .main-menu-container__overlay {
+        & ~ .menu__overlay {
             opacity: 1;
         }
     }
