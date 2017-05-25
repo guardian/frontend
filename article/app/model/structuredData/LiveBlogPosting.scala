@@ -1,16 +1,12 @@
-package views.support.structuredData
+package model.structuredData
 
 import common.LinkTo
-import model.Cached.WithoutRevalidationResult
 import model.{Article, Cached}
 import model.liveblog._
-import model.liveblog.ParseBlockId.{InvalidFormat, ParsedBlockId}
 import org.joda.time.DateTime
 import play.api.libs.json._
 import play.api.mvc.RequestHeader
 import views.support.Format
-
-import scala.concurrent.Future
 
 // Since Json-Ld has fields that start with the @ character I can't just marshall it from
 // case classes which would be simpler. I've opted to construct the JsonValues manually. I
