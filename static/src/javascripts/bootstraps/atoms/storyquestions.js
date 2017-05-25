@@ -3,6 +3,8 @@
 import domready from 'domready';
 import config from 'lib/config';
 import { init } from 'common/modules/atoms/story-questions';
+import fastdom from 'lib/fastdom-promise';
+import post from 'commercial/modules/messenger/post-message';
 
 // let webpack know where to get files from
 // __webpack_public_path__ is a special webpack variable
@@ -10,14 +12,34 @@ import { init } from 'common/modules/atoms/story-questions';
 // eslint-disable-next-line camelcase,no-undef
 __webpack_public_path__ = `${config.page.assetsPath}javascripts/`;
 
-// kick off the app
-const go = () => {
-    domready(init);
+const resizeMessage = (payload: Object): Object => ({
+    id: window.name,
+    type: 'resize',
+    value: payload,
+});
+
+/* in app article will send a message when ready to interact */
+const comready = (callback: () => void): void => {
+    window.addEventListener('message', callback);
 };
 
-// make sure we've patched the env before running the app
-if (window.guardian.polyfilled) {
-    go();
-} else {
-    window.guardian.onPolyfilled = go;
-}
+Promise.all([
+    window.guardian.polyfilled
+        ? Promise.resolve()
+        : new Promise(resolve => {
+              window.guardian.onPolyfilled = resolve;
+          }),
+    new Promise(resolve => domready(resolve)),
+    new Promise(resolve => comready(resolve)),
+]).then(() => {
+    init();
+    fastdom
+        .read(
+            () =>
+                document.documentElement &&
+                document.documentElement.getBoundingClientRect().height
+        )
+        .then(height => {
+            post(resizeMessage({ height }), window.top, '*');
+        });
+});
