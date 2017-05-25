@@ -30,15 +30,19 @@ trait PreferenceController extends Results {
   def switchTo(cookies: Seq[(String, String)], url: String)(implicit request: RequestHeader): Result = if (allowedUrl(url)){
     NoCache(
       Found(url)
-      .withCookies(cookies.map{ case (name, value) =>
+      .withCookies(cookies.map { case (name, value) =>
         // Expire after one year or if value is empty
         val oneYearInSeconds = 31536000
-        Cookie( name,
-                value,
-                maxAge = if (value.nonEmpty) { Some(oneYearInSeconds) } else { Some(-1) },
-                domain = getShortenedDomain(request.domain),
-                httpOnly = false)
-      }.toSeq:_*)
+        Cookie(name,
+          value,
+          maxAge = if (value.nonEmpty) {
+            Some(oneYearInSeconds)
+          } else {
+            Some(-1)
+          },
+          domain = getShortenedDomain(request.domain),
+          httpOnly = false)
+      }:_*)
     )
   } else Forbidden("will not redirect there")
 }

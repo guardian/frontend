@@ -28,7 +28,7 @@ object GoogleAuthFilters {
       } else {
         authCookie.toUserIdentity(request).filter(_.isValid).orElse(UserIdentity.fromRequest(request)) match {
           case Some(identity) if identity.isValid => nextFilter(request)
-          case otherIdentity =>
+          case _ =>
             Future.successful(Redirect(loginUrl.path)
               .addingToSession((LOGIN_ORIGIN_KEY, request.uri))(request))
         }

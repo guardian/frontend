@@ -51,9 +51,6 @@ trait DynamicContainerTest extends FlatSpec with Matchers with GeneratorDrivenPr
   /** This test should cover all of the above cases for the normal slice for when there is an additional slice above */
   it should "for any stories, respecting overflow, follow the same rules for the original slice, except for " +
     "that pesky HalfQuarterQl2Ql4B thing" in {
-    // You can have more very bigs and huges than these but they overflow into the size below
-    val maximumVeryBigs = 2
-    val maximumHuges = 1
 
     forAll { stories: Seq[Story] =>
       val byGroup = Story.segmentByGroup(stories)

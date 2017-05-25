@@ -59,8 +59,6 @@ sealed trait ElementProfile {
   }
 
 
-
-  private def toResizeString(i: Option[Int]) = i.map(_.toString).getOrElse("-")
 }
 
 case class Profile(

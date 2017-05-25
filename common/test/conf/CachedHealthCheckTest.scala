@@ -40,7 +40,6 @@ import scala.util.Random
 
     // Create a CachedHealthCheck controller with mock results
     val mockHealthChecks: Seq[SingleHealthCheck] = mockResults.map(result => ExpiringSingleHealthCheck(result.url))
-    val mockTestPort: Int = 9100
     val controller = new CachedHealthCheck(policy, precondition)(mockHealthChecks:_*)(wsClient) {
       override val cache = new HealthCheckCache(precondition)(wsClient) {
         var remainingMockResults = mockResults

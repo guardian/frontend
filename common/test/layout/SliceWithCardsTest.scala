@@ -58,8 +58,6 @@ class SliceWithCardsTest extends FlatSpec with Matchers with GeneratorDrivenProp
         showSeriesAndBlogKickers = false
       )
 
-      def idFromTrail(trail: Trail) = trail.metadata.id
-
       slice.columns.flatMap(_.cards).map(_.index) ++ remaining.map(_.index) shouldEqual cardFixtures.map(_.index)
     }
   }

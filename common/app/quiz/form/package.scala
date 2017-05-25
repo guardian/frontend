@@ -23,7 +23,7 @@ package object form {
     val questionsWithAnswers = quiz.questions.flatMap( question => question.answers.map(question -> _))
 
     questionsWithAnswers.find {
-      case (question, answer) => answer.id == answerId
+      case (_, answer) => answer.id == answerId
     }
   }
 

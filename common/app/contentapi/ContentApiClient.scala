@@ -120,7 +120,7 @@ trait ApiQueryDefaults extends Logging {
 trait MonitoredContentApiClientLogic extends ContentApiClientLogic with ApiQueryDefaults with Logging {
 
   val httpClient: HttpClient
-  var _httpClient = httpClient //TODO: to delete once ContentApiClient fully uses DI
+  val _httpClient = httpClient //TODO: to delete once ContentApiClient fully uses DI
 
   override def get(url: String, headers: Map[String, String])(implicit executionContext: ExecutionContext): Future[HttpResponse] = {
     val futureContent = _httpClient.GET(url, headers) map { response: Response =>

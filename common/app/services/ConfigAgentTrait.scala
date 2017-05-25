@@ -30,7 +30,7 @@ trait ConfigAgentTrait extends ExecutionContexts with Logging {
   def refresh() = {
     val futureConfig = getClient.config
     futureConfig.onComplete {
-      case Success(config) => log.info(s"Successfully got config")
+      case Success(_) => log.info(s"Successfully got config")
       case Failure(t) => log.error(s"Getting config failed with $t", t)
     }
     futureConfig.map(Option.apply).map(configAgent.send)
@@ -142,7 +142,7 @@ trait ConfigAgentTrait extends ExecutionContexts with Logging {
   def editorsPicksForCollection(collectionId: String): Option[Seq[String]] =
     configAgent.get()
       .map(_.fronts
-        .filter{ case (path, front) => front.collections.headOption == Option(collectionId)}
+        .filter{ case (_, front) => front.collections.headOption == Option(collectionId)}
         .keys.toSeq).filter(_.nonEmpty)
 }
 

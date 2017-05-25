@@ -322,7 +322,7 @@ case class BreakpointWidth(breakpoint: Breakpoint, width: BrowserWidth) {
   private val SourcesToEmitOnMobile = 3
 
   def toPixels = (breakpointWidths: Seq[BreakpointWidth]) => this match {
-    case BreakpointWidth(breakpoint, PixelWidth(pixels)) =>
+    case BreakpointWidth(_, PixelWidth(pixels)) =>
       Seq(pixels)
     case BreakpointWidth(Mobile, _: PercentageWidth | _: ViewportWidth) =>
       // Percentage and viewport widths are not explicitly associated with any pixel widths that could be used with a srcset.

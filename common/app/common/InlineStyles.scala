@@ -106,7 +106,7 @@ object InlineStyles {
       Retry(3)(cssParser.parseStyleSheet(source, null, null)) { (exception, attemptNumber) =>
         Logger.error(s"Attempt $attemptNumber to parse stylesheet failed", exception)
       } match {
-        case Failure(exception) =>
+        case Failure(_) =>
           (inline, head :+ element.html)
         case Success(sheet) =>
           val (styles, others) = seq(sheet.getCssRules).partition(isStyleRule)
@@ -141,7 +141,7 @@ object InlineStyles {
     */
   def sortStyles(styles: String): String = {
     val stylesMap = CSSRule.styleMapFromString(styles)
-    val importantStylesLast = ListMap(stylesMap.toSeq.sortWith { case((k1, v1), (k2, v2)) =>
+    val importantStylesLast = ListMap(stylesMap.toSeq.sortWith { case((_, v1), (_, v2)) =>
       if (v1.contains("!important") || !v2.contains("!important")) false
       else true
     }:_*)
