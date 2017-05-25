@@ -3,8 +3,7 @@
 @import common._
 @import views.support.RenderClasses
 
-@* TODO: #new-recipe - remove when removing the test *@
-@hasSlimHeader = @{page.metadata.hasSlimHeader || (page.metadata.isNewRecipeDesign && mvt.ABNewRecipeDesign.isParticipating)}
+@hasSlimHeader = @{page.metadata.hasSlimHeader}
 
 @defining(Edition(request).navigation) { navigation =>
     <div class="@RenderClasses(Map(

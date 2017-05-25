@@ -8,10 +8,11 @@ import conf.switches.Switches._
 import layout.ContentWidths
 import layout.ContentWidths._
 import model._
-import model.content.{Atom, Atoms, MediaAtom, MediaWrapper}
+import model.content.{Atom, Atoms, MediaAtom, MediaWrapper, ExplainerAtom}
 import org.jsoup.Jsoup
 import org.jsoup.nodes.{Document, Element, TextNode}
 import play.api.mvc.RequestHeader
+import play.twirl.api.HtmlFormat
 
 import scala.collection.JavaConversions._
 import scala.util.Try
@@ -786,22 +787,27 @@ case class CommercialComponentHigh(isPaidContent: Boolean, isNetworkFront: Boole
 
 }
 
-object ExplainerCleaner extends HtmlCleaner {
+case class ExplainerCleaner(explainers: Seq[ExplainerAtom]) extends HtmlCleaner {
   val prefixLength = "https://interactive.guim.co.uk/2016/08/explainer-interactive/embed/embed.html?id=".length
-  val eids = Seq(
-    "77b1f6d5-e4df-4650-89b2-e8c1c9653b23",
-    "acb90e30-85a7-4d80-8dfa-a4d1f3fae642"
-  )
+  val eids = explainers.filter(_.labels.contains("test/test"))
 
   override def clean(document: Document): Document = {
     document
       .getElementsByClass("element-interactive")
       .foreach { i =>
         val eid = i.attr("data-canonical-url").drop(prefixLength)
-        if (eids.contains(eid)) {
+        val eidInTest = eids.find(_.id == eid)
+        eidInTest.foreach { explainer =>
           val hook = document.createElement("div")
             .addClass("js-explainer-snippet")
-            .attr("data-explainer-id", eid)
+            .attr("data-explainer-id", explainer.id)
+          val title = document.createElement("meta")
+            .attr("name", "explainer-title")
+            .attr("content", explainer.title)
+          val body = document.createElement("meta")
+            .attr("name", "explainer-body")
+            .attr("content", HtmlFormat.escape(explainer.body).toString)
+          hook.appendChild(title).appendChild(body)
           i.after(hook)
         }
       }

@@ -1,4 +1,4 @@
-package views.support.structuredData
+package model.structuredData
 
 import model.{Article, EndSlateComponents, VideoElement, VideoPlayer}
 import play.api.libs.json.{JsValue, Json}

@@ -26,6 +26,7 @@ declare type ABTest = {
     variants: Array<Variant>,
     canRun: () => boolean,
     notInTest?: () => void,
+    isEngagementBannerTest?: boolean,
 };
 
 /**

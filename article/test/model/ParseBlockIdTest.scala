@@ -1,7 +1,6 @@
-package liveblog
+package model
 
-import model.liveblog.ParseBlockId.{InvalidFormat, ParsedBlockId}
-import model.liveblog.ParseBlockId
+import model.ParseBlockId.{InvalidFormat, ParsedBlockId}
 import org.scalatest.{FlatSpec, Matchers}
 
 class ParseBlockIdTest extends FlatSpec with Matchers {

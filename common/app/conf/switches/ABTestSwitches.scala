@@ -25,7 +25,7 @@ trait ABTestSwitches {
     "Displays an explainer in the form of a disclosure widget",
     owners = Seq(Owner.withGithub("regiskuckaertz")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 5, 29),
+    sellByDate = new LocalDate(2017, 6, 6),
     exposeClientSide = true
   )
 
@@ -35,7 +35,7 @@ trait ABTestSwitches {
     "Asks users if they feel better informed after reading an article",
     owners = Seq(Owner.withGithub("regiskuckaertz")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 5, 29),
+    sellByDate = new LocalDate(2017, 6, 6),
     exposeClientSide = true
   )
 
@@ -156,16 +156,6 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("davidfurey")),
     safeState = Off,
     sellByDate = new LocalDate(2017, 5, 30),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-paid-commenting-internal",
-    "Paid commenting test",
-    owners = Seq(Owner.withGithub("justinpinner")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 5, 25),  // Thurs 25th May
     exposeClientSide = true
   )
 
