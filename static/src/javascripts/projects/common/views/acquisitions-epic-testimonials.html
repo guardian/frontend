@@ -1,4 +1,4 @@
-<div class="contributions__epic" data-component="<%=componentName%>">
+<div class="contributions__epic <%=(typeof epicClass !== "undefined") ? epicClass : '' %>" data-component="<%=componentName%>">
     <div>
         <h2 class="contributions__title contributions__title--epic">
             Since you’re here &hellip;
@@ -13,8 +13,11 @@
             </div>
             <blockquote class="epic__testimonial-text">
                 <%=testimonialMessage%>
-                <br>
                 <cite class="epic__testimonial-name">
+                    <%=(typeof citeImage !== "undefined") ?
+                        ('<img src="' + citeImage + '" class="epic__testimonial__icon"/>') :
+                        ''
+                    %>
                     <%=testimonialName%>
                 </cite>
             </blockquote>
