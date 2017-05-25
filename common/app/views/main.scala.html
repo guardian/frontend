@@ -1,11 +1,11 @@
-@(page: model.Page, projectName: Option[String] = None)(head: Html)(body: Html)(implicit request: RequestHeader, context: model.ApplicationContext)
+@(page: model.Page, projectName: Option[String] = None, showNormalHeader: Boolean = false)(head: Html)(body: Html)(implicit request: RequestHeader, context: model.ApplicationContext)
 @import common.{Edition, Navigation, commercial}
 @import conf.switches.Switches.BreakingNewsSwitch
 @import model.Page.getContent
 @import views.support.{Commercial, RenderClasses}
 @import play.api.Mode.Dev
 
-@headerAndTopAds(showAdverts: Boolean, edition: Edition, content: Option[model.ContentType]) = {
+@headerAndTopAds(showAdverts: Boolean, edition: Edition, content: Option[model.ContentType], showNormalHeader: Boolean = false) = {
   @if(!page.metadata.shouldHideHeaderAndTopAds) {
     @defining(showAdverts && !content.exists(_.tags.isTheMinuteArticle)) { showTopSlot =>
       @if(content.exists(_.tags.hasSuperStickyBanner)) {
@@ -18,7 +18,7 @@
               @if(showTopSlot) {
                 @fragments.commercial.topBanner(page.metadata)
               }
-              @fragments.header(page)
+              @fragments.header(page, showNormalHeader)
           </div>
       }
       <div id="maincontent" tabindex="0"></div>
@@ -92,7 +92,7 @@
             }
             case _: commercial.hosted.HostedPage => {}
             case _ => {
-                @headerAndTopAds(showAdverts, edition, content)
+                @headerAndTopAds(showAdverts, edition, content, showNormalHeader)
             }
         }
 

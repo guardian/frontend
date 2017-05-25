@@ -4,10 +4,10 @@ define([
     'lodash/utilities/template',
     'common/modules/user-prefs',
     'raw-loader!commercial/views/survey/survey-simple.html',
-    'svgs/icon/arrow-white-right.svg',
-    'svgs/icon/marque-36.svg',
-    'svgs/icon/cross.svg',
-    'svgs/commercial/paid-content.svg',
+    'svg-loader!svgs/icon/arrow-white-right.svg',
+    'svg-loader!svgs/icon/marque-36.svg',
+    'svg-loader!svgs/icon/cross.svg',
+    'svg-loader!svgs/commercial/paid-content.svg',
     'lodash/arrays/uniq'
 ], function (
     fastdom,

@@ -87,7 +87,7 @@ define([
         var bannerToUse = sample(flatBanners);
 
         if (bannerToUse) {
-            new AdblockBanner.AdblockBanner(bannerToUse.template, bannerToUse).show();
+            new AdblockBanner(bannerToUse.template, bannerToUse).show();
         }
     }
 

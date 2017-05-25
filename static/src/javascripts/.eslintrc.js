@@ -15,7 +15,6 @@ module.exports = {
         'import/no-extraneous-dependencies': 'off', // necessary while we use aliases
         'import/extensions': 'off',
         'import/no-webpack-loader-syntax': 'off', // used for require plugins still
-        'import/no-namespace': 2,
 
         // these are bad habits in react that we're already abusing.
         // if we go more [p]react we should look at them.
@@ -50,7 +49,6 @@ module.exports = {
                     'lodash/collections/filter',
                     'lodash/collections/every',
                     'lodash/collections/contains',
-                    'lodash/collections/find',
                     'lodash/objects/assign',
                     'lodash/objects/values',
                     'lodash/objects/merge',
@@ -65,12 +63,10 @@ module.exports = {
         ],
 
         'flow-header/flow-header': 'error',
-        'no-param-reassign': ['error', { props: false }],
 
         // our own rules for frontend
         // live in tools/eslint-plugin-guardian-frontend
         'guardian-frontend/global-config': 'error',
-        'guardian-frontend/no-multiple-classlist-parameters': 'error',
         'guardian-frontend/no-default-export': 'warn',
         'import/prefer-default-export': 'off',
 

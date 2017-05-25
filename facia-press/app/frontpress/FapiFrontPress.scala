@@ -13,7 +13,7 @@ import common.commercial.CommercialProperties
 import conf.Configuration
 import conf.switches.Switches.FaciaInlineEmbeds
 import contentapi.{CapiHttpClient, CircuitBreakingContentApiClient, ContentApiClient, QueryDefaults}
-import services.fronts.FrontsApi
+import fronts.FrontsApi
 import model._
 import model.facia.PressedCollection
 import model.pressed._

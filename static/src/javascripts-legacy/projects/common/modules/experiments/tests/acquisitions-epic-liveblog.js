@@ -48,9 +48,9 @@ define([
 
                 template: function (variant) {
                     return template(liveblogEpicTemplate, {
-                        membershipUrl: variant.options.membershipURL,
-                        contributionUrl: variant.options.contributeURL,
-                        componentName: variant.options.componentName
+                        membershipUrl: variant.membershipURL,
+                        contributionUrl: variant.contributeURL,
+                        componentName: variant.componentName
                     });
                 },
             }

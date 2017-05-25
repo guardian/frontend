@@ -2,8 +2,7 @@
 
 @import views.support.TrailCssClasses.toneClass
 
-@* Manually placing tonal__head--tone-media as temporary fix to ensute special report tones have it *@
-<header class="content__head tonal__head tonal__head--tone-media tonal__head--@toneClass(gallery.item)">
+<header class="content__head tonal__head tonal__head--@toneClass(gallery.item)">
     @* Hidden because we visually show this data in the head, but needed
     here for SEO. *@
     <h1 class="is-hidden" itemprop="headline">@Html(gallery.item.trail.headline)</h1>

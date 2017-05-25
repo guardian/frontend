@@ -2,10 +2,10 @@ package weather.controllers
 
 import common._
 import weather.geo._
-import model.{CacheTime, Cached}
+import model.Cached
 import weather.models.CityResponse
 import play.api.libs.json.Json
-import play.api.mvc.{Action, Controller}
+import play.api.mvc.{Controller, Action}
 import weather.WeatherApi
 
 import scala.language.postfixOps
@@ -57,24 +57,15 @@ class LocationsController(weatherApi: WeatherApi) extends Controller with Execut
             log.warn(s"Could not find $city, $region, $country in database, trying text search")
             weatherApi.searchForLocations(city) map { locations =>
               val cities = CityResponse.fromLocationResponses(locations.filter(_.Country.ID == country).toList)
+              val weatherCity = cities.headOption.getOrElse(cityFromRequestEdition)
 
-              cities.headOption.fold {
-                Cached(CacheTime.NotFound)(JsonNotFound())
-              } { weatherCity =>
-                log.info(s"Resolved geo info (City=$city Region=$region Country=$country) to city $weatherCity")
-                Cached(1 hour)(JsonComponent(weatherCity))
-              }
+              log.info(s"Resolved geo info (City=$city Region=$region Country=$country) to city $weatherCity")
+
+              Cached(1 hour)(JsonComponent(weatherCity))
             }
         }
 
-      case (_, _, _) =>
-        Future.successful(
-          cityFromRequestEdition.fold {
-            Cached(CacheTime.NotFound)(JsonNotFound())
-          } { city =>
-            Cached(1 hour)(JsonComponent(city))
-          }
-        )
+      case (_, _, _) => Future.successful(Cached(1 hour)(JsonComponent(cityFromRequestEdition)))
     }
   }
 }

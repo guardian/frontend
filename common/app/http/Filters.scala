@@ -83,8 +83,7 @@ object Filters {
     new Gzipper,
     new BackendHeaderFilter,
     new SurrogateKeyFilter,
-    new AmpFilter,
-    new H2PreloadFilter
+    new AmpFilter
   )
 }
 

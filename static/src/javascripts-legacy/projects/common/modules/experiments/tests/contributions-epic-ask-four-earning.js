@@ -43,9 +43,9 @@ define([
 
                         return render(function(variant) {
                             return template(t, {
-                                membershipUrl: variant.options.membershipURL,
-                                contributionUrl: variant.options.contributeURL,
-                                componentName: variant.options.componentName
+                                membershipUrl: variant.membershipURL,
+                                contributionUrl: variant.contributeURL,
+                                componentName: variant.componentName
                             });
                         });
                     });

@@ -63,9 +63,7 @@ const go = () => {
                                 // eslint-disable-next-line no-shadow
                                 require => {
                                     markTime('enhanced boot');
-                                    require(
-                                        'bootstraps/enhanced/main'
-                                    ).bootEnhanced();
+                                    require('bootstraps/enhanced/main')();
 
                                     if (document.readyState === 'complete') {
                                         capturePerfTimings();

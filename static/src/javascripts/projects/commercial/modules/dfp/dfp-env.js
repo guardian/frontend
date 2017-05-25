@@ -1,8 +1,8 @@
 // @flow
-
-import type { Advert } from 'commercial/modules/dfp/Advert';
 import { getUrlVars } from 'lib/url';
 import config from 'lib/config';
+
+type Map<K, V> = { [indexer: K]: V };
 
 export type DfpEnv = {
     renderStartTime: number,
@@ -11,15 +11,15 @@ export type DfpEnv = {
     preFlightAdCallEnabled: boolean,
     lazyLoadEnabled: boolean,
     lazyLoadObserve: boolean,
-    creativeIDs: Array<number>,
-    advertIds: { [k: string]: number },
-    advertsToLoad: Array<Advert>,
-    advertsToRefresh: Array<Advert>,
-    adverts: Array<Advert>,
+    creativeIDs: Array<string>,
+    advertIds: Map<string, number>,
+    advertsToLoad: Array<Object>,
+    advertsToRefresh: Array<Object>,
+    adverts: Array<Object>,
     shouldLazyLoad: () => boolean,
 };
 
-export const dfpEnv: DfpEnv = {
+const dfpEnv: DfpEnv = {
     /* renderStartTime: integer. Point in time when DFP kicks in */
     renderStartTime: -1,
 
@@ -62,3 +62,5 @@ export const dfpEnv: DfpEnv = {
         return !config.page.hasPageSkin && getUrlVars().dll !== '1';
     },
 };
+
+export default dfpEnv;

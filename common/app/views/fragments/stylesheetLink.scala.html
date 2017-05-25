@@ -5,10 +5,18 @@
 
 @* temporarily disable async css on crossword pages so they're usable on safari 6 and below *@
 @if(AsyncCss.isSwitchedOn && !isCrossword) {
-    <link rel="stylesheet" type="text/css" href="@Static(stylesheet)" media="only x" />
+    <link rel="preload"
+          as="style"
+          href="@Static(stylesheet)"
+          onload="this.rel='stylesheet'" />
+
     <noscript>
-        <link rel="stylesheet" type="text/css" href="@Static(stylesheet)" />
+        <link rel="stylesheet"
+              type="text/css"
+              href="@Static(stylesheet)" />
     </noscript>
 } else {
-    <link rel="stylesheet" type="text/css" href="@Static(stylesheet)" />
+    <link rel="stylesheet"
+          type="text/css"
+          href="@Static(stylesheet)" />
 }

@@ -13,7 +13,7 @@ define([
     config,
     loadScript
 ) {
-    function load(loader, opts) {
+    function load(ab, loader, opts) {
         function onDiscussionFrontendLoad (emitter) {
             emitter.on('error', function (feature, error) {
                 reportError(error, { feature: 'discussion-' + feature }, false);

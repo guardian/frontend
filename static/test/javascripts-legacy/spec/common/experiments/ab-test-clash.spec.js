@@ -9,8 +9,9 @@ define([
 
             beforeEach(function (done) {
                 var injector = new Injector();
-
+                
                 sandbox = sinon.sandbox.create();
+
                 injector.require([
                     'common/modules/experiments/ab-test-clash'
                 ], function (sut) {
@@ -30,9 +31,7 @@ define([
                     id: 'outbrainCompliantTest',
                     variants: [{
                         id: 'control',
-                        options: {
-                            isOutbrainCompliant: true
-                        }
+                        isOutbrainCompliant: true
                     }]
                 };
                 var clashingTests = [test];
@@ -47,14 +46,10 @@ define([
                     id: 'outbrainCompliantTest',
                     variants: [{
                         id: 'control',
-                        options: {
-                            isOutbrainCompliant: true
-                        }
+                        isOutbrainCompliant: true
                     }, {
                         id: 'variant',
-                        options: {
-                            isOutbrainCompliant: false
-                        }
+                        isOutbrainCompliant: false
                     }]
                 };
                 var clashingTests = [test];
@@ -71,14 +66,10 @@ define([
                     id: 'outbrainCompliantTest',
                     variants: [{
                         id: 'control',
-                        options: {
-                            isOutbrainCompliant: true
-                        }
+                        isOutbrainCompliant: true
                     }, {
                         id: 'variant',
-                        options: {
-                            isOutbrainCompliant: false
-                        }
+                        isOutbrainCompliant: false
                     }]
                 };
                 var clashingTests = [test];

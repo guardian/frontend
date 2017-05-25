@@ -84,6 +84,21 @@
     }
 }
 
+.content--immersive-article {
+    .badge--alt {
+        @include mq(leftCol) {
+            position: absolute;
+            left: ($gs-column-width * -3 + $gs-gutter);
+            top: 10px;
+        }
+        @include mq(wide) {
+            position: absolute;
+            left: ($gs-column-width * -4);
+            top: 10px;
+        }
+    }
+}
+
 .content--media--video:not(.paid-content),
 .content--media--audio:not(.paid-content),
 .content--gallery:not(.paid-content) {

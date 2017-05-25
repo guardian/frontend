@@ -122,7 +122,7 @@
             background: none;
         }
 
-        .gallery__main-content .meta__extras {
+        .l-side-margins--gallery .meta__extras {
             border: 0;
         }
 
@@ -144,6 +144,12 @@
             padding-top: 1.25rem;
             margin-top: 1.25rem;
             border-top: 1px solid $neutral-6;
+        }
+    }
+
+    .content__headline--paidgallery {
+        .inline-tone-fill {
+            fill: $paid-article-brand;
         }
     }
 }

@@ -4,7 +4,7 @@ define([
     'bean',
     'lib/$',
     'lib/mediator',
-    'helpers/injector',
+    'common/modules/gallery/lightbox',
     'fixtures/content/gallery-lightbox'
 ], function (
     bonzo,
@@ -12,7 +12,7 @@ define([
     bean,
     $,
     mediator,
-    Injector,
+    galleryLightbox,
     lightboxFixtures
 ) {
     function testImageSrc(srcActual, srcTemplate) {
@@ -25,15 +25,11 @@ define([
 
     describe('Gallery lightbox', function () {
 
-        var lightbox;
-        var testJson = lightboxFixtures.barbie.gallery;
-        var injector = new Injector();
+        var lightbox,
+            testJson = lightboxFixtures.barbie.gallery;
 
-        beforeEach(function (done) {
-            injector.require(['common/modules/gallery/lightbox'], function(galleryLightbox) {
-                lightbox = new galleryLightbox.GalleryLightbox();
-                done();
-            });
+        beforeEach(function () {
+            lightbox = new galleryLightbox.GalleryLightbox();
         });
 
         it('should create a DOM element in the body', function () {

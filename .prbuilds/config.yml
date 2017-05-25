@@ -4,8 +4,8 @@ teardown:
   ansible: .prbuilds/cleanup.playbook.yml
 checks:
   screenshots:
-      url: http://localhost:9000/books/2014/may/21/guardian-journalists-jonathan-freedland-ghaith-abdul-ahad-win-orwell-prize-journalism
+      url: http://localhost:9000/uk
   exceptions:
-      url: http://localhost:9000/books/2014/may/21/guardian-journalists-jonathan-freedland-ghaith-abdul-ahad-win-orwell-prize-journalism
+      url: http://localhost:9000/uk
   a11yvalidation:
         dummy: dummy

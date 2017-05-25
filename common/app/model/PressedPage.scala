@@ -1,6 +1,6 @@
 package model
 
-import commercial.campaigns.PersonalInvestmentsCampaign
+import campaigns.PersonalInvestmentsCampaign
 import com.gu.commercial.branding.Branding
 import com.gu.facia.api.models._
 import common.Edition

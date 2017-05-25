@@ -1,6 +1,6 @@
 package model
 
-import commercial.campaigns.PersonalInvestmentsCampaign
+import campaigns.PersonalInvestmentsCampaign
 import com.gu.contentapi.client.model.v1.{Content => CapiContent}
 import com.gu.contentapi.client.model.{v1 => contentapi}
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichCapiDateTime

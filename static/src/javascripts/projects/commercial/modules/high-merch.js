@@ -1,18 +1,19 @@
 // @flow
 import config from 'lib/config';
 import fastdom from 'lib/fastdom-promise';
-import { getTestVariantId } from 'common/modules/experiments/utils';
-import { testCanBeRun } from 'common/modules/experiments/test-can-run-checks';
+import ab from 'common/modules/experiments/ab';
 import { addSlot } from 'commercial/modules/dfp/add-slot';
 import createSlot from 'commercial/modules/dfp/create-slot';
 import trackAdRender from 'commercial/modules/dfp/track-ad-render';
-import { commercialFeatures } from 'commercial/modules/commercial-features';
-import PaidContentVsOutbrain2
-    from 'common/modules/experiments/tests/paid-content-vs-outbrain';
+import commercialFeatures from 'commercial/modules/commercial-features';
 
-const isLuckyBastard = () =>
-    testCanBeRun(PaidContentVsOutbrain2) &&
-    getTestVariantId(PaidContentVsOutbrain2.id) === 'paid-content';
+const isLuckyBastard = () => {
+    const testName = 'PaidContentVsOutbrain2';
+    return (
+        ab.testCanBeRun(testName) &&
+        ab.getTestVariantId(testName) === 'paid-content'
+    );
+};
 
 const insertAlternativeSlot = isHiResLoaded => {
     if (isHiResLoaded) {

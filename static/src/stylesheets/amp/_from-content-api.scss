@@ -138,16 +138,12 @@
     line-height: 16px;
     color: $neutral-2;
 
-    a {
-        color: inherit;
-    }
-
     .inline-information {
         margin-right: $gs-gutter/10;
         margin-top: -$gs-baseline/4;
         width: 14px;
         height: 14px;
-        background-color: $neutral-3;
+        background-color: $neutral-2;
 
         .inline-information__svg {
             width: 4px;

@@ -1,4 +1,3 @@
-// #? move to Jest once user-prefs has been ported to ES6
 define([
     'bonzo',
     'lib/$',
@@ -12,13 +11,12 @@ define([
         var container,
             $weather,
             injector = new Injector(),
-            sut, config, isNetworkFront;
+            sut, config;
 
         beforeEach(function (done) {
 
             injector.require(['facia/modules/onwards/weather', 'lib/config'], function () {
-                sut = arguments[0].Weather;
-                isNetworkFront = arguments[0]._.isNetworkFront;
+                sut = arguments[0];
                 config = arguments[1];
 
                 container = bonzo.create(
@@ -78,16 +76,16 @@ define([
 
         it('should return false when the page is not front', function () {
             config.page.pageId = 'uk';
-            expect(isNetworkFront()).toBeTruthy();
+            expect(sut.isNetworkFront()).toBeTruthy();
 
             config.page.pageId = 'us';
-            expect(isNetworkFront()).toBeTruthy();
+            expect(sut.isNetworkFront()).toBeTruthy();
 
             config.page.pageId = 'au';
-            expect(isNetworkFront()).toBeTruthy();
+            expect(sut.isNetworkFront()).toBeTruthy();
 
             config.page.pageId = 'social';
-            expect(isNetworkFront()).toBeFalsy();
+            expect(sut.isNetworkFront()).toBeFalsy();
         });
 
         it('should get location from local storage', function () {
@@ -118,8 +116,7 @@ define([
 
         it('should remove data from localStorage and fetchWeatherData if user searches', function () {
             spyOn(sut, 'saveUserLocation');
-            // eslint-disable-next-line no-unused-vars
-            spyOn(sut, 'fetchWeatherData').and.returnValue(new Promise(function(resolve, reject) { resolve(); }));
+            spyOn(sut, 'fetchWeatherData');
 
             sut.saveDeleteLocalStorage({store: 'set'});
 

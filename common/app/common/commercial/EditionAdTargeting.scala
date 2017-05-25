@@ -3,7 +3,7 @@ package common.commercial
 import com.gu.commercial.display._
 import com.gu.contentapi.client.model.v1.{Content, Section, Tag}
 import common.Edition
-import services.ophan.SurgingContentAgent
+import ophan.SurgingContentAgent
 import play.api.libs.json._
 
 case class EditionAdTargeting(edition: Edition, params: Map[AdCallParamKey, AdCallParamValue])
@@ -82,14 +82,14 @@ object EditionAdTargeting {
     }
 
   def fromTag(tag: Tag): Seq[EditionAdTargeting] =
-    editionTargeting(edition => adCall.pageLevelTargetingForTagPage(edition.id)(tag))
+    editionTargeting(edition => adCall.pageLevelTargetingForTagPage(tag)(edition.id))
 
   def fromSection(section: Section): Seq[EditionAdTargeting] =
-    editionTargeting(edition => adCall.pageLevelTargetingForSectionFront(edition.id)(section))
+    editionTargeting(edition => adCall.pageLevelTargetingForSectionFront(section)(edition.id))
 
   def forNetworkFront(frontId: String): Seq[EditionAdTargeting] =
-    editionTargeting(edition => adCall.pageLevelTargetingForNetworkFront(edition.id)(networkFrontPath = s"/$frontId"))
+    editionTargeting(edition => adCall.pageLevelTargetingForNetworkFront(networkFrontPath = s"/$frontId")(edition.id))
 
   def forFrontUnknownToCapi(frontId: String): Seq[EditionAdTargeting] =
-    editionTargeting(edition => adCall.pageLevelTargetingForFrontUnknownToCapi(edition.id)(frontId))
+    editionTargeting(edition => adCall.pageLevelTargetingForFrontUnknownToCapi(frontId)(edition.id))
 }

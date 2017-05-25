@@ -14,7 +14,7 @@ define([
                 'commercial/modules/commercial-features'
             ], function () {
                 tagsContainer = arguments[0];
-                commercialFeatures = arguments[1].commercialFeatures;
+                commercialFeatures = arguments[1];
                 commercialFeatures.thirdPartyTags = true;
                 done();
             });

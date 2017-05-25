@@ -38,7 +38,7 @@ define([
                 detect = $1;
                 messenger = $2;
                 sticky = $3;
-                commercialFeatures = $4.commercialFeatures;
+                commercialFeatures = $4;
 
                 commercialFeatures.stickyTopBannerAd = true;
 

@@ -2,7 +2,7 @@ package controllers
 
 import common.{ExecutionContexts, LinkTo, Logging}
 import common.`package`._
-import _root_.commercial.campaigns.ShortCampaignCodes
+import campaigns.ShortCampaignCodes
 import contentapi.ContentApiClient
 import model.{ApplicationContext, Cached}
 import play.api.mvc.{Action, Controller, RequestHeader}

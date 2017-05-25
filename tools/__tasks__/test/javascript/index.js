@@ -27,6 +27,7 @@ const legacyTests = ['commercial', 'common', 'facia'].map(set => ({
 module.exports = {
     description: 'Test JS app',
     task: [
+        require('../../compile/inline-svgs'),
         require('../../compile/javascript/clean'),
         require('../../compile/javascript/copy'),
         require('../../compile/javascript/babel'),

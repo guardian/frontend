@@ -29,7 +29,7 @@ define([
     };
 
     function engagementBannerCopy(cta) {
-        return 'Unlike many others, we haven\'t put up a paywall &ndash; we want to keep our journalism as open as we can. ' + cta
+        return 'Unlike many others, we haven\'t put up a paywall - we want to keep our journalism as open as we can. ' + cta
     }
 
     // Prices taken from https://membership.theguardian.com/<region>/supporter
@@ -95,8 +95,7 @@ define([
             buttonCaption: 'Become a Supporter',
             linkUrl: 'https://membership.theguardian.com/supporter',
             offering: offerings.membership,
-            messageText: supporterEngagementBannerCopy(location),
-            pageviewId: (config.ophan && config.ophan.pageViewId) || 'not_found'
+            messageText: supporterEngagementBannerCopy(location)
         })
     }
 
@@ -105,8 +104,7 @@ define([
             buttonCaption: 'Make a Contribution',
             linkUrl: 'https://contribute.theguardian.com',
             offering: offerings.contributions,
-            messageText: contributionEngagementBannerCopy(),
-            pageviewId: (config.ophan && config.ophan.pageViewId) || 'not_found'
+            messageText: contributionEngagementBannerCopy()
         });
     }
 

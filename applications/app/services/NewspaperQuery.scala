@@ -1,7 +1,7 @@
 package services
 
-import com.gu.contentapi.client.model.v1.{Tag, Content => ApiContent}
-import com.gu.facia.api.utils.{ContentProperties, ResolvedMetaData}
+import com.gu.contentapi.client.model.v1.{Content => ApiContent, Tag}
+import com.gu.facia.api.utils.{ResolvedMetaData, ContentProperties}
 import com.gu.facia.api.{models => fapi}
 import common._
 import contentapi.ContentApiClient
@@ -9,9 +9,8 @@ import implicits.Dates
 import layout.{CollectionEssentials, FaciaContainer}
 import model.pressed.{CollectionConfig, LinkSnap, PressedContent}
 import org.joda.time.format.DateTimeFormat
-import org.joda.time.{DateTime, DateTimeConstants, DateTimeZone}
+import org.joda.time.{DateTimeConstants, DateTime, DateTimeZone}
 import slices.{ContainerDefinition, Fixed, FixedContainers, TTT}
-
 import scala.concurrent.Future
 
 case class BookSectionContent(tag: Tag, content: Seq[ApiContent])
@@ -154,22 +153,7 @@ class NewspaperQuery(contentApiClient: ContentApiClient) extends ExecutionContex
       val displayFormat = d.toString(dateForFrontPagePattern)
       val hrefDateFormat = d.toString(hrefFormat).toLowerCase
       val href = if(d.getDayOfWeek == DateTimeConstants.SUNDAY) s"/theobserver/$hrefDateFormat" else s"/theguardian/$hrefDateFormat"
-      val fapiSnap = fapi.LinkSnap(
-        id = "no-id",
-        maybeFrontPublicationDate = None,
-        snapType = "no-snap-type",
-        snapUri = None,
-        snapCss = None,
-        headline = Some(displayFormat),
-        href = Some(href),
-        trailText = None,
-        group = "group",
-        image = None,
-        properties = ContentProperties.fromResolvedMetaData(ResolvedMetaData.Default),
-        byline = None,
-        kicker = None,
-        brandingByEdition = Map.empty
-      )
+      val fapiSnap = fapi.LinkSnap("no-id", None, "no-snap-type", None, None, Some(displayFormat), Some(href), None, "group", None, ContentProperties.fromResolvedMetaData(ResolvedMetaData.Default), None, None)
       LinkSnap.make(fapiSnap)
     }
   }

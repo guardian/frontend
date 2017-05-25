@@ -1,18 +1,21 @@
-@(item: layout.ContentCard, omnitureId :String, containerIndex: Int, index: Int)(implicit request: RequestHeader)
+@import com.gu.commercial.branding.Branding
+@(item: layout.PaidCard, omnitureId :String, containerIndex: Int, index: Int)(implicit request: RequestHeader)
 
 @import views.html.fragments.items.elements.facia_cards._
+@import views.html.fragments.commercial.cardLogo
 
-<div class="fc-item fc-item--has-image js-fc-item fc-item--list-media-mobile fc-item--standard-tablet adverts--within-unbranded @item.cardTypes.classes)">
+
+<div class="fc-item fc-item--has-image js-fc-item fc-item--list-media-mobile fc-item--standard-tablet adverts--within-unbranded @item.cardTypes.map(_.classes)">
     <div class="fc-item__container">
-        @item.paidImage.map(image => itemImage(
+        @item.image.map(image => itemImage(
             image,
             inlineImage = containerIndex == 0 && index < 4
         ))
         <div class="fc-item__content">
             <div class="fc-item__header">
                 <div class="fc-item__title">
-                    @item.paidIcon.map(icon => fragments.inlineSvg(icon, "icon"))
-                    @item.header.headline
+                    @item.icon.map(icon => fragments.inlineSvg(icon, "icon"))
+                    @item.headline
                 </div>
             </div>
 
@@ -24,7 +27,7 @@
 
         </div>
 
-        <a href="@item.header.url.get"
+        <a href="@item.targetUrl"
         class="u-faux-block-link__overlay js-headline-text"
         data-link-name="Labs paid card | @omnitureId"
         data-component="Labs paid card | @omnitureId"

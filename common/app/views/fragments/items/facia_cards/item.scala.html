@@ -1,5 +1,4 @@
-@import model.FrontProperties
-@(card: layout.FaciaCardAndIndex, containerIndex: Int, isRow: Boolean = true, isList: Boolean = false, colSpan: Int = 1, frontProperties: Option[FrontProperties] = None, isElectionContainer: Boolean = false)(implicit request: RequestHeader)
+@(card: layout.FaciaCardAndIndex, containerIndex: Int, isRow: Boolean = true, isList: Boolean = false, colSpan: Int = 1)(implicit request: RequestHeader)
 @import layout.{ContentCard, HtmlBlob, PaidCard}
 @import views.html.fragments.items.facia_cards.contentCard
 @import views.html.fragments.items.facia_cards.paidContentCard
@@ -18,20 +17,18 @@
 
 @defining(containerIndex == 0) { case (isFirstContainer) =>
     @item match {
+        case content: ContentCard => {
+            @contentCard(content, containerIndex, index, card.visibilityDataAttribute, isFirstContainer, isList)
+        }
 
-        case paidContentOnEditorialPage: ContentCard if paidContentOnEditorialPage.branding.exists(_.isPaid) && !frontProperties.exists(_.isPaidContent) => {
+        case paidCard: PaidCard => {
             @paidContentCard(
-                item = paidContentOnEditorialPage,
-                omnitureId = mkInteractionTrackingCode(containerIndex, index, paidContentOnEditorialPage),
+                item = paidCard,
+                omnitureId = mkInteractionTrackingCode(containerIndex, index, paidCard),
                 containerIndex,
                 index
             )
         }
-
-        case content: ContentCard => {
-            @contentCard(content, containerIndex, index, card.visibilityDataAttribute, isFirstContainer, isList, isElectionContainer)
-        }
-
 
         case htmlBlob: HtmlBlob => {
             <div class="@GetClasses.forHtmlBlob(htmlBlob)">@htmlBlob.html</div>

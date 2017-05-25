@@ -7,12 +7,12 @@ const execa = require('execa');
 const chalk = require('chalk');
 
 execa
-    .stdout('git', ['diff', '--name-only', '--cached', '--diff-filter=AM'])
+    .stdout('git', ['diff', '--name-only', '--cached'])
     .then(staged => staged.split('\n'))
     // lint and commit any lint fixes
     .then(staged => {
         const jsFiles = staged
-            .filter(file => file.startsWith('static') && file.endsWith('.js'))
+            .filter(file => file.endsWith('.js'))
             .filter(file => fs.existsSync(file));
         if (jsFiles.length) {
             return execa('eslint', ['--fix', ...jsFiles], {

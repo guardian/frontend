@@ -25,10 +25,10 @@ object CSV extends implicits.Strings {
 
     def COMMA = ","
     def DQUOTE = "\""
-    def DQUOTE2: Parser[String] = "\"\"" ^^ (_ => "\"")
+    def DQUOTE2: _root_.common.CSV.Parser.Parser[String] = "\"\"" ^^ (_ => "\"")
 
     // combine 2 dquotes into 1
-    def CRLF: Parser[String] = "\r\n" | "\n"
+    def CRLF: _root_.common.CSV.Parser.Parser[String] = "\r\n" | "\n"
     def TXT: Regex = "[^\",\r\n]".r
     def SPACES: Regex = "[ \t]+".r
 

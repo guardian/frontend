@@ -3,9 +3,10 @@ import template from 'lodash/utilities/template';
 import { local as storage } from 'lib/storage';
 import $ from 'lib/$';
 import bean from 'bean';
+import find from 'lodash/collections/find';
 import overlay from 'raw-loader!common/views/devtools/overlay.html';
 import styles from 'raw-loader!common/views/devtools/styles.css';
-import { TESTS } from 'common/modules/experiments/ab-tests';
+import { TESTS as tests } from 'common/modules/experiments/ab';
 
 const getSelectedAbTests = () =>
     JSON.parse(storage.get('gu.devtools.ab')) || [];
@@ -18,7 +19,7 @@ const selectRadios = () => {
     });
 
     abTests.forEach(test => {
-        $(`#${test.variantId}-${test.variantId}`).attr('checked', true);
+        $(`#${test.id}-${test.variant}`).attr('checked', true);
     });
 };
 
@@ -28,14 +29,12 @@ const bindEvents = () => {
             const testId = label.getAttribute('data-ab-test');
             const variantId = label.getAttribute('data-ab-variant');
             const abTests = getSelectedAbTests();
-            const existingVariantForThisTest = abTests.find(
-                test => test.testId === testId
-            );
+            const existingVariantForThisTest = find(abTests, { id: testId });
 
             if (existingVariantForThisTest) {
-                existingVariantForThisTest.variantId = variantId;
+                existingVariantForThisTest.variant = variantId;
             } else {
-                abTests.push({ testId, variantId });
+                abTests.push({ id: testId, variant: variantId });
             }
             storage.set('gu.devtools.ab', JSON.stringify(abTests));
         });
@@ -71,10 +70,7 @@ const applyCss = () => {
 
 const appendOverlay = () => {
     const data = {
-        tests: TESTS.map(test => ({
-            id: test.id,
-            variants: test.variants,
-        })),
+        tests: tests.map(test => ({ id: test.id, variants: test.variants })),
     };
 
     $('body').prepend(template(overlay, data));

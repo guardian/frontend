@@ -117,7 +117,7 @@ define([
         robust.catchErrorsWithContext([
             ['c-discussion', initDiscussion],
             ['c-comments', repositionComments],
-            ['c-shares', shareCount.loadShareCounts],
+            ['c-shares', shareCount],
             ['c-popular', initPopular],
             ['c-related', initRelated],
             ['c-onward', initOnwardContent],

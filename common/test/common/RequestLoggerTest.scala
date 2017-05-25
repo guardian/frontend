@@ -33,9 +33,7 @@ class RequestLoggerTest extends FlatSpec with Matchers {
       "req.header.X-GU-header1" -> "value1",
       "req.header.X-GU-header2" -> "value2",
       "req.header.Host" -> "someHost",
-      "req.header.Referer" -> "someReferer",
-      "action.controller" -> "unknown",
-      "action.method" -> "unknown"
+      "req.header.Referer" -> "someReferer"
     )
     val notExpectedFields: List[LogField] = List("NotSupported" -> "value")
     expectedFields.forall(fields.toList.contains) should be(true)

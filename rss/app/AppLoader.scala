@@ -9,7 +9,7 @@ import controllers.{HealthCheck, RssController}
 import dev.DevParametersHttpRequestHandler
 import http.CommonFilters
 import model.ApplicationIdentity
-import services.ophan.SurgingContentAgentLifecycle
+import ophan.SurgingContentAgentLifecycle
 import play.api.ApplicationLoader.Context
 import play.api.BuiltInComponentsFromContext
 import play.api.http.HttpRequestHandler

@@ -1,0 +1,6 @@
+@(modelPage: ArticlePage, recipes: Seq[model.content.RecipeAtom], maybeMainImage: Option[model.ImageMedia])(implicit request: RequestHeader, context: _root_.model.ApplicationContext)
+
+@main(modelPage){
+}{
+    @fragments.recipeArticleBody(modelPage, recipes, maybeMainImage)
+}

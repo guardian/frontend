@@ -8,50 +8,42 @@
 
 @(page: GalleryPage)(implicit request: RequestHeader, context: model.ApplicationContext)
 
-<div class="gallery__main-content">
+<div class="@RenderClasses(
+            Map("l-side-margins--paidgallery" -> isPaidContent(page)),
+            "l-side-margins", "l-side-margins--media", "l-side-margins--gallery"
+        )">
 
-    @* Manually placing tonal--tone-media as temporary fix to ensute special report tones have it *@
     <article id="article" class="@RenderClasses(
             Map("content--paidgallery" -> isPaidContent(page)),
-            "content", "content--media", "content--gallery", "tonal", "content--immersive", "tonal--tone-media", s"tonal--${toneClass(page.item)}"
+            "content", "content--media", "content--gallery", "tonal", "content--immersive", s"tonal--${toneClass(page.item)}"
         )"
         itemscope itemtype="@page.item.metadata.schemaType" role="main">
 
         @fragments.galleryHeader(page)
 
-        <div class="@RenderClasses(
-                    Map("l-side-margins--paidgallery" -> isPaidContent(page)),
-                    "l-side-margins", "l-side-margins--media", "l-side-margins--gallery"
-                )">
-            <div class="content__main tonal__main tonal__main--@toneClass(page.item)">
-                <div class="gs-container gallery__divider">
-                    <div class="content__main-column content__main-column--gallery">
-                        @fragments.witnessCallToAction(page.item.content)
-                        <ul class="gallery">
-                            @page.item.lightbox.largestCrops.zipWithRowInfo.map { case (image, row) =>
-                                @galleryItem(4, image, row.rowNum, page.item.lightbox.imageContainer(row.rowNum - 1))
-                            }
-                        </ul>
-                        @fragments.witnessCallToAction(page.item.content)
-                        @fragments.submeta(page.item)
-                    </div>
+        <div class="content__main tonal__main tonal__main--@toneClass(page.item)">
+            <div class="gs-container gallery__divider">
+                <div class="content__main-column content__main-column--gallery">
+                    @fragments.witnessCallToAction(page.item.content)
+                    <ul class="gallery">
+                        @page.item.lightbox.largestCrops.zipWithRowInfo.map { case (image, row) =>
+                            @galleryItem(4, image, row.rowNum, page.item.lightbox.imageContainer(row.rowNum - 1))
+                        }
+                    </ul>
+                    @fragments.witnessCallToAction(page.item.content)
+                    @fragments.submeta(page.item)
                 </div>
             </div>
         </div>
     </article>
 
     @if(page.item.content.showInRelated && !isPaidContent(page)) {
-        <div class="@RenderClasses(
-                    Map("l-side-margins--paidgallery" -> isPaidContent(page)),
-                    "l-side-margins", "l-side-margins--media", "l-side-margins--gallery"
-                )">
-            <div class="gallery__most-popular facia-container fc-container fc-container--media hide-on-childrens-books-site js-gallery-most-popular tonal--@toneClass(page.item)">
-                <div class="fc-container__inner">
-                    <div class="fc-container__header">
-                        <h2 class="fc-container__header__title">
-                            <a class="most-viewed-no-js tone-colour" href="@LinkTo{/gallery/most-viewed}" data-link-name="Most viewed galleries">More galleries</a>
-                        </h2>
-                    </div>
+        <div class="gallery__most-popular facia-container fc-container fc-container--media hide-on-childrens-books-site js-gallery-most-popular tonal--@toneClass(page.item)">
+            <div class="fc-container__inner">
+                <div class="fc-container__header">
+                    <h2 class="fc-container__header__title">
+                        <a class="most-viewed-no-js tone-colour" href="@LinkTo{/gallery/most-viewed}" data-link-name="Most viewed galleries">More galleries</a>
+                    </h2>
                 </div>
             </div>
         </div>

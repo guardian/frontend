@@ -5,7 +5,7 @@ import common.{ExecutionContexts, JsonComponent, Logging}
 import conf.Configuration
 import dfp.{AdvertiserAgent, CreativeTemplateAgent, CustomFieldAgent, DfpApi, DfpDataExtractor, OrderAgent}
 import model._
-import services.ophan.SurgingContentAgent
+import ophan.SurgingContentAgent
 import play.api.libs.json.{Format, JsString, JsValue, Json}
 import play.api.mvc.{Action, AnyContent, Controller, RequestHeader}
 import tools._

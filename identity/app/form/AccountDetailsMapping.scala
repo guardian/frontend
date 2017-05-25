@@ -14,8 +14,8 @@ class AccountDetailsMapping(val messagesApi: MessagesApi) extends UserFormMappin
     mapping(
       ("primaryEmailAddress", idEmail),
       ("title", comboList("" :: Titles.titles)),
-      ("firstName",  nonEmptyText),
-      ("secondName", nonEmptyText),
+      ("firstName",  textField),
+      ("secondName", textField),
       ("gender", comboList(genders)),
       "birthDate" -> dateMapping,
       "address" -> idAddress,

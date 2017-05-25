@@ -1,23 +1,12 @@
 define([
-    'squire',
-    './svg-paths'
+    'squire'
 ], function (
-    Squire,
-    svgPaths
+    Squire
 ) {
-
-    var buildSvgMocks = function() {
-        return svgPaths.reduce(function(acc, path) {
-            acc[path] = { markup: '' }
-
-            return acc
-        }, {});
-    };
 
     var r = Squire.prototype.require;
 
     Squire.prototype.require = function (deps, cb, eb) {
-        this.mock(buildSvgMocks());
 
         return new Promise(function (resolve, reject) {
             r.call(this, deps, function () {

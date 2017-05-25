@@ -1,6 +1,6 @@
 {
-  "name": "@guardian/pasteup",
-  "version": "0.0.1-alpha.1",
+  "name": "pasteup",
+  "version": "0.0.1-alpha.34",
   "description": "Sass and CSS helpers for common styles in use on the Guardian website.",
   "main": "pasteup.css",
   "keywords": [
@@ -8,5 +8,17 @@
     "pasteup",
     "guardian"
   ],
-  "license": "Apache-2.0"
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "bluebird": "^3.3.4",
+    "cli-spinners": "^0.1.2",
+    "del": "^2.2.0",
+    "home-dir": "^1.0.0",
+    "inquirer": "^0.12.0",
+    "java-properties": "^0.2.9",
+    "megalog": "^0.1.0",
+    "ora": "^0.2.1",
+    "git-rev": "^0.2.1",
+    "is-git-clean": "^1.0.0"
+  }
 }

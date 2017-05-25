@@ -21,8 +21,8 @@ const addVideoStartedClass = (el: HTMLElement) => {
 };
 
 type Handlers = {
-    onPlayerReady: (event: Object) => void,
-    onPlayerStateChange: (event: Object) => void,
+    onPlayerReady: () => void,
+    onPlayerStateChange: () => void,
 };
 
 const onPlayerStateChangeEvent = (
@@ -68,11 +68,7 @@ const setupPlayer = (videoId: string, onReady, onStateChange) =>
 
 const hasPlayerStarted = event => event.target.getCurrentTime() > 0;
 
-export const initYoutubePlayer = (
-    el: HTMLElement,
-    handlers: Handlers,
-    videoId: string
-) => {
+const init = (el: HTMLElement, handlers: Handlers, videoId: string) => {
     loadYoutubeJs();
 
     return promise.then(() => {
@@ -91,3 +87,5 @@ export const initYoutubePlayer = (
         return setupPlayer(videoId, onPlayerReady, onPlayerStateChange);
     });
 };
+
+export { init };

@@ -1,45 +1,37 @@
 define([
     'bonzo',
-    'helpers/injector'
+    'commercial/modules/dfp/render-advert-label'
 ], function (
     bonzo,
-    Injector
+    renderAdvertLabel
 ) {
     describe('Rendering advert labels', function () {
 
         var adverts = {};
         var labelSelector = '.ad-slot__label';
-        var injector = new Injector();
-        var renderAdvertLabel;
 
-        beforeEach(function (done) {
-            injector.require(['commercial/modules/dfp/render-advert-label'], function(renderAdvertLabelModule) {
-                renderAdvertLabel = renderAdvertLabelModule;
+        beforeEach(function () {
+            adverts.withLabel = bonzo(bonzo.create(
+                '<div class="js-ad-slot"></div>'
+            ));
 
-                adverts.withLabel = bonzo(bonzo.create(
-                    '<div class="js-ad-slot"></div>'
-                ));
+            adverts.labelDisabled = bonzo(bonzo.create(
+                '<div class="js-ad-slot" data-label="false"></div>'
+            ));
 
-                adverts.labelDisabled = bonzo(bonzo.create(
-                    '<div class="js-ad-slot" data-label="false"></div>'
-                ));
-
-                adverts.alreadyLabelled = bonzo(bonzo.create(
-                    '<div class="js-ad-slot">' +
+            adverts.alreadyLabelled = bonzo(bonzo.create(
+                '<div class="js-ad-slot">' +
                     '<div class="ad-slot__label">Advertisement</div>' +
-                    '</div>'
-                ));
+                '</div>'
+            ));
 
-                adverts.guStyle = bonzo(bonzo.create(
-                    '<div class="js-ad-slot gu-style"></div>'
-                ));
+            adverts.guStyle = bonzo(bonzo.create(
+                '<div class="js-ad-slot gu-style"></div>'
+            ));
 
-                adverts.frame = bonzo(bonzo.create(
-                    '<div class="js-ad-slot ad-slot--frame"></div>'
-                ));
-
-                done();
-            });
+            adverts.frame = bonzo(bonzo.create(
+                '<div class="js-ad-slot ad-slot--frame"></div>'
+            ));
         });
 
         it('Can add a label', function (done) {

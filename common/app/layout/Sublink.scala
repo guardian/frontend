@@ -37,7 +37,7 @@ case class EditionalisedLink(
 }
 
 object Sublink {
-  def fromFaciaContent(faciaContent: PressedContent): Sublink =
+  def fromFaciaContent(faciaContent: PressedContent) =
     Sublink(
       faciaContent.header.kicker,
       faciaContent.header.headline,
@@ -207,50 +207,48 @@ object FaciaCard {
     config: CollectionConfig,
     cardTypes: ItemClasses,
     showSeriesAndBlogKickers: Boolean
-
   ): FaciaCard = {
-      val maybeKicker = faciaContent.header.kicker orElse {
-        if (showSeriesAndBlogKickers) {
-          faciaContent.header.seriesOrBlogKicker
-        } else {
-          None
-        }
+
+
+    val maybeKicker = faciaContent.header.kicker orElse {
+      if (showSeriesAndBlogKickers) {
+        faciaContent.header.seriesOrBlogKicker
+      } else {
+        None
       }
+    }
 
-      /** If the kicker contains the byline, don't display it */
-      val suppressByline = (
-                             for {
-                               kicker <- maybeKicker
-                               kickerText <- kicker.properties.kickerText
-                               byline <- faciaContent.properties.byline
-                             } yield kickerText contains byline
-                             ) getOrElse false
+    /** If the kicker contains the byline, don't display it */
+    val suppressByline = (
+                           for {
+                             kicker <- maybeKicker
+                             kickerText <- kicker.properties.kickerText
+                             byline <- faciaContent.properties.byline
+                           } yield kickerText contains byline
+                           ) getOrElse false
 
-        ContentCard(
-        faciaContent.properties.maybeContentId.orElse(Option(faciaContent.card.id)),
-        FaciaCardHeader.fromTrailAndKicker(faciaContent, maybeKicker, Some(config)),
-        getByline(faciaContent).filterNot(Function.const(suppressByline)),
-        FaciaDisplayElement.fromFaciaContentAndCardType(faciaContent, cardTypes),
-        CutOut.fromTrail(faciaContent),
-        faciaContent.card.cardStyle,
-        cardTypes,
-        Sublinks.takeSublinks(faciaContent.supporting, cardTypes).map(Sublink.fromFaciaContent),
-        faciaContent.card.starRating,
-        DiscussionSettings.fromTrail(faciaContent),
-        SnapStuff.fromTrail(faciaContent),
-        faciaContent.card.webPublicationDateOption.filterNot(const(faciaContent.shouldHidePublicationDate)),
-        faciaContent.card.trailText,
-        faciaContent.card.mediaType,
-        DisplaySettings.fromTrail(faciaContent),
-        faciaContent.card.isLive,
-        if (config.showTimestamps) Option(DateTimestamp) else None,
-        faciaContent.card.shortUrlPath,
-        useShortByline = false,
-        faciaContent.card.group,
-        branding = faciaContent.branding(defaultEdition),
-        properties = Some(faciaContent.properties),
-        capiContent = faciaContent.properties.maybeContent
-      )
+    ContentCard(
+      faciaContent.properties.maybeContentId.orElse(Option(faciaContent.card.id)),
+      FaciaCardHeader.fromTrailAndKicker(faciaContent, maybeKicker, Some(config)),
+      getByline(faciaContent).filterNot(Function.const(suppressByline)),
+      FaciaDisplayElement.fromFaciaContentAndCardType(faciaContent, cardTypes),
+      CutOut.fromTrail(faciaContent),
+      faciaContent.card.cardStyle,
+      cardTypes,
+      Sublinks.takeSublinks(faciaContent.supporting, cardTypes).map(Sublink.fromFaciaContent),
+      faciaContent.card.starRating,
+      DiscussionSettings.fromTrail(faciaContent),
+      SnapStuff.fromTrail(faciaContent),
+      faciaContent.card.webPublicationDateOption.filterNot(const(faciaContent.shouldHidePublicationDate)),
+      faciaContent.card.trailText,
+      faciaContent.card.mediaType,
+      DisplaySettings.fromTrail(faciaContent),
+      faciaContent.card.isLive,
+      if (config.showTimestamps) Option(DateTimestamp) else None,
+      faciaContent.card.shortUrlPath,
+      useShortByline = false,
+      faciaContent.card.group
+    )
   }
 }
 
@@ -276,26 +274,8 @@ case class ContentCard(
   timeStampDisplay: Option[FaciaCardTimestamp],
   shortUrl: Option[String],
   useShortByline: Boolean,
-  group: String,
-  branding: Option[Branding],
-  capiContent: Option[ContentType] ,
-  properties: Option[PressedProperties]
+  group: String
 ) extends FaciaCard {
-
-  def paidImage: Option[ImageMedia] = {
-    lazy val videoImageMedia = capiContent flatMap (_.elements.mainVideo.map(_.images))
-    lazy val imageOverride: Option[ImageMedia] = properties.flatMap(_.image flatMap ImageOverride.createImageMedia)
-    lazy val defaultTrailPicture = capiContent flatMap (_.trail.trailPicture)
-    imageOverride.orElse(videoImageMedia).orElse(defaultTrailPicture)
-  }
-
-  def paidIcon: Option[String] = {
-    if (header.isVideo) Some("video-icon")
-    else if (header.isGallery) Some("camera")
-    else if (header.isAudio) Some("volume-high")
-    else None
-  }
-
   def bylineText: Option[String] = if (useShortByline) byline.map(_.shortByline) else byline.map(_.get)
 
   def setKicker(kicker: Option[ItemKicker]): ContentCard = copy(header = header.copy(kicker = kicker))
@@ -401,6 +381,36 @@ object PaidCard {
       targetUrl = header.url,
       cardTypes = cardTypes,
       branding = content.branding(defaultEdition)
+    )
+  }
+
+  def fromContentItem(
+    item: model.ContentType,
+    edition: Edition,
+    clickMacro: Option[String],
+    withDescription: Boolean
+  ): PaidCard = {
+    val tags = item.tags
+    PaidCard(
+      icon = {
+        if (tags.isVideo) Some("video-icon")
+        else if (tags.isGallery) Some("camera")
+        else if (tags.isAudio) Some("volume-high")
+        else None
+      },
+      headline = item.trail.headline,
+      kicker = None,
+      description = {
+        if (withDescription) item.fields.trailText
+        else None
+      },
+      image = item.trail.trailPicture,
+      fallbackImageUrl = item.trail.trailPicture flatMap ImgSrc.getFallbackUrl,
+      targetUrl = {
+        val url = item.metadata.webUrl
+        clickMacro map { cm => s"$cm$url" } getOrElse url
+      },
+      branding = item.metadata.commercial.flatMap(_.branding(edition))
     )
   }
 }

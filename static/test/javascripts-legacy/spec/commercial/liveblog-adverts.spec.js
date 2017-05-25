@@ -40,7 +40,7 @@ define([
             $style = $.create('<style type="text/css"></style>')
                 .html('.block{ height: 1200px }')
                 .appendTo('head');
-            commercialFeatures.commercialFeatures.liveblogAdverts = true;
+            commercialFeatures.liveblogAdverts = true;
 
             afterEach(function () {
                 fixtures.clean(fixturesConfig.id);

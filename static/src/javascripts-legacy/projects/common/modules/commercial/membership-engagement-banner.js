@@ -10,7 +10,7 @@ define([
         'commercial/modules/user-features',
         'lib/mediator',
         'lib/fastdom-promise',
-        'common/modules/experiments/test-can-run-checks',
+        'common/modules/experiments/ab',
         'common/modules/experiments/tests/membership-engagement-banner-tests',
         'lodash/objects/assign',
         'lodash/collections/find',
@@ -19,10 +19,8 @@ define([
         'common/modules/experiments/segment-util',
         'common/modules/experiments/acquisition-test-selector',
         'common/modules/commercial/membership-engagement-banner-parameters',
-        'common/modules/commercial/contributions-utilities',
         'ophan/ng',
-        'lib/geolocation',
-        'lib/url'
+        'lib/geolocation'
     ], function (bean,
                  $,
                  config,
@@ -34,7 +32,7 @@ define([
                  userFeatures,
                  mediator,
                  fastdom,
-                 testCanRunChecks,
+                 ab,
                  MembershipEngagementBannerTests,
                  assign,
                  find,
@@ -43,10 +41,8 @@ define([
                  segmentUtil,
                  acquisitionTestSelector,
                  membershipEngagementBannerUtils,
-                 contributionsUtilities,
                  ophan,
-                 geolocation,
-                 url) {
+                 geolocation) {
 
 
         // change messageCode to force redisplay of the message to users who already closed it.
@@ -60,7 +56,7 @@ define([
                 .concat(acquisitionTestSelector.epicEngagementBannerTests);
 
             return find(engagementBannerTests, function(test) {
-                return testCanRunChecks.testCanBeRun(test) && segmentUtil.isInTest(test)
+                return ab.testCanBeRun(test) && segmentUtil.isInTest(test)
             });
         }
 
@@ -85,8 +81,8 @@ define([
 
         function getUserVariantParams(userVariant, campaignId, defaultOffering) {
 
-            if (userVariant && userVariant.options && userVariant.options.engagementBannerParams) {
-                var userVariantParams = userVariant.options.engagementBannerParams;
+            if (userVariant && userVariant.engagementBannerParams) {
+                var userVariantParams = userVariant.engagementBannerParams;
 
                 if (!userVariantParams.campaignCode) {
                     var offering = userVariantParams.offering || defaultOffering;
@@ -129,7 +125,7 @@ define([
             var campaignId = userTest ? userTest.campaignId : undefined;
             var userVariant = getUserVariant(userTest);
 
-            if (userVariant && userVariant.options && userVariant.options.blockEngagementBanner) {
+            if (userVariant && userVariant.blockEngagementBanner) {
                 return DO_NOT_RENDER_ENGAGEMENT_BANNER;
             }
 
@@ -164,14 +160,8 @@ define([
 
             var messageText = Array.isArray(params.messageText)?selectSequentiallyFrom(params.messageText):params.messageText;
 
-            var urlParameters = {
-                REFPVID : params.pageviewId,
-                INTCMP:  params.campaignCode
-            };
-            var linkUrl = params.linkUrl + '?' + url.constructQuery(urlParameters);
-
             var renderedBanner = template(messageTemplate, {
-                linkHref: linkUrl,
+                linkHref: params.linkUrl + '?INTCMP=' + params.campaignCode,
                 messageText: messageText,
                 buttonCaption: params.buttonCaption,
                 colourClass: colourClass,
@@ -206,7 +196,7 @@ define([
                 var bannerParams = deriveBannerParams(location);
 
                 if (bannerParams && (storage.local.get('gu.alreadyVisited') || 0) >= bannerParams.minArticles) {
-                    return commercialFeatures.commercialFeatures.asynchronous.canDisplayMembershipEngagementBanner.then(function (canShow) {
+                    return commercialFeatures.async.canDisplayMembershipEngagementBanner.then(function (canShow) {
 
                         if (canShow) {
                             mediator.on('modules:onwards:breaking-news:ready', function (breakingShown) {

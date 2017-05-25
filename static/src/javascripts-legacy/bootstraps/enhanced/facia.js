@@ -78,7 +78,7 @@ define([
             showWeather: function () {
                 if (config.switches.weather) {
                     mediator.on('page:front:ready', function () {
-                        weather.Weather.init();
+                        weather.init();
                     });
                 }
             },

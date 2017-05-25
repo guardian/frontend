@@ -1,36 +1,23 @@
-define([
-    'helpers/injector',
-    'helpers/fixtures'
-], function (
-    Injector,
-    fixtures
-) {
-    describe('Relative dates', function () {
-
-        var conf =  {
-                id: 'relative-dates',
-                fixtures: [
+define(['common/modules/ui/relativedates',
+    'helpers/fixtures'],
+function (RelativeDates, fixtures) {
+    var conf =  {
+        id: 'relative-dates',
+        fixtures: [
                     '<time id="time-valid" class="js-timestamp" datetime="2012-08-12T18:43:00.000Z">12th August</time>',
                     '<time id="time-invalid" class="js-timestamp" datetime="201-08-12agd18:43:00.000Z">Last Tuesday</time>',
                     '<time id="time-locale" class="js-locale-timestamp" datetime="2014-06-13T17:00:00+0100" data-timestamp="1402675200000">16:00</time>'
-                ]
-            };
-        // make the date static so tests are stable
-        var fakeNow = Date.parse('2012-08-13T12:00:00+01:00');
-        var injector = new Injector();
-        var RelativeDates;
-        var date;
+                   ]
+    },
+    // make the date static so tests are stable
+    fakeNow = Date.parse('2012-08-13T12:00:00+01:00'),
+    date;
 
-        beforeEach(function (done) {
-            injector.require([
-                'common/modules/ui/relativedates',
-            ], function(RelativeDatesModule) {
-                RelativeDates = RelativeDatesModule;
+    describe('Relative dates', function () {
 
-                fixtures.render(conf);
-                date = sinon.useFakeTimers(fakeNow, 'Date');
-                done();
-            });
+        beforeEach(function () {
+            fixtures.render(conf);
+            date = sinon.useFakeTimers(fakeNow, 'Date');
         });
 
         afterEach(function () {

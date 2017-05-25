@@ -25,6 +25,7 @@
 
 .gallery__divider {
     border-top: 1px solid $media-mute;
+    margin-top: $gs-baseline;
 
     @include mq(desktop) {
         padding-top: $gs-baseline / 2;
@@ -197,15 +198,7 @@
     }
 }
 
-.gallery__main-content {
-    .content__head {
-        padding-bottom: $gs-baseline;
-    }
-
-    .content--immersive .content__main {
-        padding-top: 0;
-    }
-
+.l-side-margins--gallery {
     .content__meta-container {
         border: 0;
         min-height: auto;
@@ -230,10 +223,6 @@
         }
     }
 
-    .content {
-        padding-bottom: 0;
-    }
-
     .witness-cta {
         border: 0;
     }
@@ -241,7 +230,6 @@
     .meta__extras {
         border-top: 1px dotted $media-mute;
         border-bottom: 1px dotted $media-mute;
-        margin-top: $gs-baseline / 2;
     }
 
     // Reset the styles from _content.scss

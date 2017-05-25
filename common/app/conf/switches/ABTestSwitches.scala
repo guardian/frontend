@@ -21,26 +21,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-explainer-snippet",
-    "Displays an explainer in the form of a disclosure widget",
-    owners = Seq(Owner.withGithub("regiskuckaertz")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 6, 6),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-measure-understanding",
-    "Asks users if they feel better informed after reading an article",
-    owners = Seq(Owner.withGithub("regiskuckaertz")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 6, 6),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-increase-inline-ads-redux-redux",
     "Displays more inline ads in articles on desktop",
     owners = Seq(Owner.withGithub("gidsg")),
@@ -105,7 +85,7 @@ trait ABTestSwitches {
     "Assign some of the new sleeve notes subscribers to receive the new email",
     owners = Seq(Owner.withGithub("lmath")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 5, 30),
+    sellByDate = new LocalDate(2017, 5, 19),
     exposeClientSide = true
   )
 
@@ -115,7 +95,7 @@ trait ABTestSwitches {
     "Assign some of the new sleeve notes subscribers to receive the old email",
     owners = Seq(Owner.withGithub("lmath")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 5, 30),
+    sellByDate = new LocalDate(2017, 5, 19),
     exposeClientSide = true
   )
 
@@ -161,6 +141,16 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-paid-commenting-internal",
+    "Paid commenting test",
+    owners = Seq(Owner.withGithub("justinpinner")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 5, 25),  // Thurs 25th May
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
     "ab-paid-content-vs-outbrain-2",
     "Displays a paid content widget instead of Outbrain",
     owners = Seq(Owner.withName("commercial team")),
@@ -171,21 +161,11 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-bundle-digital-sub-price-test-1-m",
+    "ab-bundle-digital-sub-price-test-1",
     "Test pricing options for digital subs",
     owners = Seq(Owner.withGithub("justinpinner")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 6, 1),  // Thursday 1st June
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-acquisitions-epic-testimonials-round-two",
-    "Test placing reader testimonials in the Epic",
-    owners = Seq(Owner.withGithub("Mullefa")),
-    safeState = On,
-    sellByDate = new LocalDate(2017, 6, 13),
+    sellByDate = new LocalDate(2017, 5, 25),  // Thursday
     exposeClientSide = true
   )
 }

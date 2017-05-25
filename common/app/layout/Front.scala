@@ -168,6 +168,7 @@ object FaciaContainer {
     None,
     useShowMore = true,
     hasShowMoreEnabled = !config.config.hideShowMore,
+    showBranding = config.config.showBranding,
     isThrasher = config.config.collectionType == "fixed/thrasher"
   )
 
@@ -201,6 +202,7 @@ case class FaciaContainer(
   dateLinkPath: Option[String],
   useShowMore: Boolean,
   hasShowMoreEnabled: Boolean,
+  showBranding: Boolean,
   isThrasher: Boolean
 ) {
   def transformCards(f: ContentCard => ContentCard): FaciaContainer = copy(
@@ -259,7 +261,6 @@ case class FaciaContainer(
 
   def isStoryPackage: Boolean = container match {
     case Dynamic(DynamicPackage) => true
-    case Dynamic(DynamicElection) => true // #election2017
     case _ => false
   }
 }

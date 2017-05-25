@@ -8,7 +8,7 @@ define([
     config,
     mediator,
     fastdom,
-    sticky,
+    Sticky,
     messenger
 ) {
     var noSticky = document.documentElement.classList.contains('has-no-sticky');
@@ -37,7 +37,7 @@ define([
             if (noSticky) {
                 //if there is a sticky 'paid by' band move the sticky mpu down so it will be always visible
                 var options = config.page.isPaidContent ? {top: 43} : {};
-                stickyElement = new sticky.Sticky(adSlot, options);
+                stickyElement = new Sticky(adSlot, options);
                 stickyElement.init();
                 messenger.register('resize', onResize);
             }

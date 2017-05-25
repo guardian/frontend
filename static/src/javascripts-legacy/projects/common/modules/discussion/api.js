@@ -28,7 +28,7 @@ define([
     Api.send = function (endpoint, method, data) {
         data = data || {};
 
-        var request = ajax.ajax({
+        var request = ajax({
             url: Api.root + endpoint,
             type: (method === 'get') ? 'jsonp' : 'json',
             method: method,

@@ -7,8 +7,10 @@
         @for(questions <- storyquestions.data.editorialQuestions) {
             @for(qs <- questions) {
                 <p>
-                    <div class="user__question-section"></div>
-                    
+                    <div class="user__question-section">
+                        <h3>@qs.questionSetTitle</h3>
+                    </div>
+
                     @for(question <- qs.questions) {
                         <div class="user__questions-text--wrapper js-ask-question-link">
                             <span class="user__question-text">

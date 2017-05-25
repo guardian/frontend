@@ -20,7 +20,7 @@ import feed._
 import football.controllers._
 import http.{CorsHttpErrorHandler, DevBuildParametersHttpRequestHandler, DevFilters}
 import model.{AdminLifecycle, ApplicationIdentity}
-import services.ophan.SurgingContentAgentLifecycle
+import ophan.SurgingContentAgentLifecycle
 import play.api.ApplicationLoader.Context
 import play.api._
 import play.api.routing.Router
@@ -29,7 +29,7 @@ import router.Routes
 import rugby.conf.RugbyLifecycle
 import rugby.controllers.RugbyControllers
 import services._
-import _root_.commercial.targeting.TargetingLifecycle
+import targeting.TargetingLifecycle
 
 class AppLoader extends FrontendApplicationLoader {
   override def buildComponents(context: Context): FrontendComponents = new BuiltInComponentsFromContext(context) with AppComponents

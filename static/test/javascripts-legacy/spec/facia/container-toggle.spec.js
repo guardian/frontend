@@ -1,32 +1,32 @@
 define([
+    'facia/modules/ui/container-toggle',
     'lib/$',
+    'lib/mediator',
     'bonzo',
     'fastdom',
     'common/modules/user-prefs',
-    'helpers/injector'
+    'qwery'
 ], function (
+    ContainerDisplayToggle,
     $,
+    mediator,
     bonzo,
     fastdom,
     userPrefs,
-    Injector
+    qwery
 ) {
     describe('Container Toggle', function () {
-        var container;
-        var $container;
-        var mediator;
-        var ContainerDisplayToggle;
-        var injector = new Injector();
-        var containerId = 'uk/culture/regular-stories';
-        var storageId = 'container-states';
+        var container,
+            $container,
+            containerId = 'uk/culture/regular-stories',
+            storageId = 'container-states',
         // helper assertion method
-        var assertState = function ($cont, state) {
-            var $button = $('button', $cont[0]);
-
-            expect($cont.hasClass('fc-container--rolled-up'))[state === 'open' ? 'toBeFalsy' : 'toBeTruthy']();
-            expect($button.text().trim()).toBe(state === 'open' ? 'Hide' : 'Show');
-            expect($button.attr('data-link-name')).toBe(state === 'open' ? 'Show' : 'Hide');
-        };
+            assertState = function ($cont, state) {
+                var $button = $('button', $cont[0]);
+                expect($cont.hasClass('fc-container--rolled-up'))[state === 'open' ? 'toBeFalsy' : 'toBeTruthy']();
+                expect($button.text().trim()).toBe(state === 'open' ? 'Hide' : 'Show');
+                expect($button.attr('data-link-name')).toBe(state === 'open' ? 'Show' : 'Hide');
+            };
 
         function simulateClick() {
             mediator.emit('module:clickstream:click', {
@@ -34,7 +34,7 @@ define([
             });
         }
 
-        beforeEach(function (done) {
+        beforeEach(function () {
             container = bonzo.create(
                 '<section class="fc-container js-container--toggle" data-id="' + containerId + '">' +
                 '<div class="fc-container__header js-container__header">' +
@@ -43,14 +43,6 @@ define([
                 '</section>'
             )[0];
             $container = bonzo(container);
-            injector.require([
-                'facia/modules/ui/container-toggle',
-                'lib/mediator'
-            ], function(containerDisplayToggleModule, mediatorModule) {
-                ContainerDisplayToggle = containerDisplayToggleModule;
-                mediator = mediatorModule;
-                done();
-            });
         });
 
         afterEach(function () {
@@ -94,7 +86,7 @@ define([
             new ContainerDisplayToggle(container).addToggle();
 
             fastdom.defer(1, function () {
-                expect($('.js-container__header .fc-container__toggle', container).length).toBe(1);
+                expect(qwery('.js-container__header .fc-container__toggle', container).length).toBe(1);
                 done();
             });
         });

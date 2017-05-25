@@ -33,7 +33,7 @@ define([
                     'common/modules/experiments/utils',
                     'commercial/modules/third-party-tags/krux'],
                 function () {
-                    buildPageTargeting = arguments[0].buildPageTargeting;
+                    buildPageTargeting = arguments[0];
                     config = arguments[1];
                     cookies = arguments[2];
                     detect = arguments[3];

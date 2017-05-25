@@ -83,9 +83,11 @@ class EditProfileController(idUrlBuilder: IdentityUrlBuilder,
         case data: UserFormData =>
           identityApiClient.saveUser(user.id, data.toUserUpdate(user), user.auth) map {
             case Left(errors) => profileFormsView(page, forms.withErrors(errors), user)
-            case Right(updatedUser) => profileFormsView(page, forms.bindForms(updatedUser), updatedUser)
+            case Right(updatedUser) =>
+              logger.info(s"$updatedUser")
+              profileFormsView(page, forms.bindForms(updatedUser), updatedUser)
           }
-      }.getOrElse(Future(profileFormsView(page, forms, user)))
+      }.getOrElse(Future(profileFormsView(page, forms.bindForms(user), user)))
     }
   }
 

@@ -195,7 +195,6 @@ object ContentTypeFormat {
   implicit val quizFormat = Json.format[Quiz]
   implicit val mediaAssetFormat = Json.format[MediaAsset]
   implicit val mediaAtomFormat = Json.format[MediaAtom]
-  implicit val explainerAtomFormat = Json.format[ExplainerAtom]
   implicit val interactiveAtomFormat = Json.format[InteractiveAtom]
   implicit val genericThriftAtomFormat = GenericThriftAtomFormat
   implicit val recipeThriftAtomFormat = RecipeThriftAtomFormat
@@ -221,8 +220,7 @@ object ContentTypeFormat {
       (__ \ "interactives").read[Seq[InteractiveAtom]].orElse(Reads.pure(Nil)) and
       (__ \ "recipes").read[Seq[RecipeAtom]].orElse(Reads.pure(Nil)) and
       (__ \ "reviews").read[Seq[ReviewAtom]].orElse(Reads.pure(Nil)) and
-      (__ \ "storyquestions").read[Seq[StoryQuestionsAtom]].orElse(Reads.pure(Nil)) and
-      (__ \ "explainers").read[Seq[ExplainerAtom]].orElse(Reads.pure(Nil))
+      (__ \ "storyquestions").read[Seq[StoryQuestionsAtom]].orElse(Reads.pure(Nil))
     )(Atoms.apply _)
 
 
@@ -452,11 +450,6 @@ object ReviewThriftAtomFormat extends Format[com.gu.contentatom.thrift.atom.revi
 object StoryquestionsThriftAtomFormat extends Format[com.gu.contentatom.thrift.atom.storyquestions.StoryQuestionsAtom] {
   def reads(json: JsValue) = JsError("Converting from Json is not supported by intent!")
   def writes(storyquestions: com.gu.contentatom.thrift.atom.storyquestions.StoryQuestionsAtom) = JsObject(Seq.empty)
-}
-
-object ExplainerThriftAtomFormat extends Format[com.gu.contentatom.thrift.atom.explainer.ExplainerAtom] {
-  def reads(json: JsValue) = JsError("Converting from Json is not supported by intent!")
-  def writes(explainer: com.gu.contentatom.thrift.atom.explainer.ExplainerAtom) = JsObject(Seq.empty)
 }
 
 object CardStyleFormat extends Format[CardStyle] {

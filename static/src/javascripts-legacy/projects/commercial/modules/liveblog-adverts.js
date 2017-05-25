@@ -93,7 +93,7 @@ define([
     function init(start, stop) {
         start();
 
-        if (!commercialFeatures.commercialFeatures.liveblogAdverts) {
+        if (!commercialFeatures.liveblogAdverts) {
             stop();
             return Promise.resolve();
         }

@@ -2,9 +2,8 @@ package common
 
 import play.api.mvc.{RequestHeader, Result}
 import common.LoggingField._
-import play.api.routing.Router.Tags
 
-import scala.util.{Random, Try}
+import scala.util.Random
 
 case class RequestLoggerFields(request: Option[RequestHeader], response: Option[Result], stopWatch: Option[StopWatch]) {
 
@@ -55,14 +54,7 @@ case class RequestLoggerFields(request: Option[RequestHeader], response: Option[
       )
     }.getOrElse(Nil)
 
-    val actionInfo: List[LogField] = request.map { r: RequestHeader =>
-      List[LogField](
-        "action.controller" -> Try(r.tags(Tags.RouteController)).getOrElse("unknown"),
-        "action.method" -> Try(r.tags(Tags.RouteActionMethod)).getOrElse("unknown")
-      )
-    }.getOrElse(Nil)
-
-    requestHeaders ++ responseHeaders ++ stopWatchHeaders ++ actionInfo
+    requestHeaders ++ responseHeaders ++ stopWatchHeaders
   }
 
   def toList: List[LogField] = customFields ++ requestHeadersFields

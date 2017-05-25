@@ -29,7 +29,7 @@ define([
     };
 
     function init(_window) {
-        if (!commercialFeatures.commercialFeatures.stickyTopBannerAd) {
+        if (!commercialFeatures.stickyTopBannerAd) {
             return Promise.resolve();
         }
 

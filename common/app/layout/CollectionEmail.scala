@@ -4,7 +4,7 @@ import conf.switches.Switches
 import model.PressedPage
 import model.facia.PressedCollection
 import model.pressed.{CollectionConfig, PressedContent}
-import commercial.campaigns.EmailAdvertisements._
+import campaigns.EmailAdvertisements._
 
 import PartialFunction.condOpt
 
