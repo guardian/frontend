@@ -188,4 +188,14 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2017, 6, 13),
     exposeClientSide = true
   )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-epic-always-ask-if-tagged",
+    "This guarantees that any on any article that is tagged with a tag that is on the allowed list of tags as set by the tagging tool, the epic will be displayed",
+    owners = Seq(Owner.withGithub("jranks123")),
+    safeState = On,
+    sellByDate = new LocalDate(2018, 7, 19),
+    exposeClientSide = true
+  )
 }
