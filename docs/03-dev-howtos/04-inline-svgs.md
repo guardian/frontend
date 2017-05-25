@@ -48,8 +48,9 @@ These are a bit more complex. To ensures they only appear in the source once, al
 
 // common/views/svgs.js
 define([
-    'inlineSvg!svgs/Filename',
-    'inlineSvg!svgs/Filename2!Subdirectory'
+    // svgs/ resolves to static/src/inline-svgs/
+    'svgs/filename.svg',
+    'svgs/path/to/filename-2.svg'
 ], function (
     myImage,
     myOtherImage
@@ -61,9 +62,6 @@ define([
     // other code hidden...
 });
 ```
-
-- `Filename` **String** The name of the file, excluding the extention
-- `Subdirectory` **String** (optional) The folder the image lives in within `inline-svgs/`, prefixed by a `!`
 
 Then in the file that will use the template, require `svgs.js`:
 
@@ -93,6 +91,8 @@ define([
 ```
 - `Classes` **Array** (optional) An array of bespoke classes for this image
 - `Title` **String** (optional) A title that gets added to the wrapping `span`
+
+To ensure tests pass, when you add a new file to `common/views/svgs.js`, please also add an equivalent entry to [`static/test/javascripts-legacy/helpers/svg-paths.js`](../../static/test/javascripts-legacy/helpers/svg-paths.js)
 
 ## Output
 

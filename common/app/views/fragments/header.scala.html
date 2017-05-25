@@ -1,4 +1,4 @@
-@(page: model.Page, showNormalHeader: Boolean = false)(implicit request: RequestHeader)
+@(page: model.Page)(implicit request: RequestHeader)
 @import common.{Edition, LinkTo, SubscribeLink}
 @import conf.Configuration
 @import conf.switches.Switches._
@@ -6,12 +6,11 @@
 @* TODO: When implementing the desktop design, aim to consolidate the html *@
 @fragments.newHeader(page)
 
-@* TODO: #new-recipe - remove when removing the test *@
-@hasSlimHeader = @{page.metadata.hasSlimHeader || (page.metadata.isNewRecipeDesign && mvt.ABNewRecipeDesign.isParticipating)}
+@hasSlimHeader = @{page.metadata.hasSlimHeader}
 
 @if(!mvt.ABNewDesktopHeader.isParticipating) {
     <header id="header"
-            class="l-header u-cf @if(hasSlimHeader && !showNormalHeader) {l-header--is-slim l-header--no-navigation} js-header hide-on-mobile"
+            class="l-header u-cf @if(hasSlimHeader) {l-header--is-slim l-header--no-navigation} js-header hide-on-mobile"
             role="banner"
             data-link-name="global navigation: header">
         <div class="js-navigation-header navigation-container navigation-container--collapsed">

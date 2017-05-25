@@ -1,9 +1,5 @@
 {
   "Francis Carr": [
-    "projects/commercial/modules/close-disabled-slots.js",
-    "projects/commercial/modules/comment-adverts.js",
-    "projects/commercial/modules/commercial-features.js",
-    "projects/commercial/modules/creatives/add-tracking-pixel.js",
     "projects/commercial/modules/creatives/add-viewability-tracker.js",
     "projects/commercial/modules/creatives/fabric-expandable-video-v2.js",
     "projects/commercial/modules/creatives/fabric-expanding-v1.js",
@@ -48,7 +44,6 @@
     "projects/common/modules/check-dispatcher.js"
   ],
   "Simon Adcock": [
-    "projects/common/modules/ui/rhc.js",
     "bootstraps/enhanced/identity-common.js",
     "bootstraps/enhanced/image-content.js",
     "bootstraps/enhanced/liveblog.js",
@@ -77,7 +72,6 @@
     "lib/picturefill.js",
     "lib/proximity-loader.js",
     "projects/common/modules/video/metadata.js",
-    "projects/common/modules/ui/smartAppBanner.js",
     "projects/common/modules/crosswords/anagram-helper/clue-input.js"
   ],
   "GHaberis": [
@@ -93,7 +87,6 @@
     "projects/common/modules/ui/tabs.js",
     "projects/common/modules/social/hidden-share-toggle.js",
     "projects/common/modules/social/pinterest.js",
-    "projects/common/modules/social/share-count.js",
     "projects/common/modules/sport/football/football.js",
     "projects/common/modules/sport/football/match-info.js",
     "projects/common/modules/sport/football/match-list-live.js",
@@ -242,7 +235,6 @@
     "projects/commercial/modules/paidfor-band.js"
   ],
   "Philip Wills": [
-    "projects/facia/modules/ui/container-show-more.js",
     "projects/facia/modules/ui/container-toggle.js",
     "projects/facia/modules/ui/lazy-load-containers.js",
     "projects/common/modules/video/ga-helper.js",
@@ -253,7 +245,6 @@
     "projects/common/modules/video/more-in-series-container.js"
   ],
   "Jamie Byers": [
-    "bootstraps/enhanced/main.js",
     "bootstraps/enhanced/newsletters.js"
   ]
 }

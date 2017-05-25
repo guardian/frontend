@@ -18,7 +18,7 @@ const selectRadios = () => {
     });
 
     abTests.forEach(test => {
-        $(`#${test.id}-${test.variant}`).attr('checked', true);
+        $(`#${test.variantId}-${test.variantId}`).attr('checked', true);
     });
 };
 
@@ -29,13 +29,13 @@ const bindEvents = () => {
             const variantId = label.getAttribute('data-ab-variant');
             const abTests = getSelectedAbTests();
             const existingVariantForThisTest = abTests.find(
-                test => test.id === testId
+                test => test.testId === testId
             );
 
             if (existingVariantForThisTest) {
-                existingVariantForThisTest.variant = variantId;
+                existingVariantForThisTest.variantId = variantId;
             } else {
-                abTests.push({ id: testId, variant: variantId });
+                abTests.push({ testId, variantId });
             }
             storage.set('gu.devtools.ab', JSON.stringify(abTests));
         });

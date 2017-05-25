@@ -1,9 +1,10 @@
 package services
 
 import com.gu.contentapi.client.model.v1.Content
+import com.gu.facia.api.utils.{ContentProperties, ItemKicker, ResolvedMetaData}
 import com.gu.facia.api.{models => fapi}
-import com.gu.facia.api.utils.{ContentProperties, ResolvedMetaData, ItemKicker}
 import com.gu.facia.client.models.TrailMetaData
+import common.commercial.EditionBranding
 import model.pressed.PressedContent
 
 object FaciaContentConvert {
@@ -28,7 +29,11 @@ object FaciaContentConvert {
       kicker = ItemKicker.fromContentAndTrail(Some(content), trailMetaData, resolvedMetaData, None),
       embedType = None,
       embedUri = None,
-      embedCss = None)
+      embedCss = None,
+      brandingByEdition = EditionBranding.fromContent(content).map { editionBranding =>
+        editionBranding.edition.id -> editionBranding.branding
+      }.toMap
+    )
 
     PressedContent.make(curated)
   }

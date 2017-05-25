@@ -6,7 +6,6 @@ define([
     'lib/mediator',
     'common/modules/discussion/api',
     'common/modules/identity/api',
-    'commercial/modules/user-features',
     'common/modules/component',
     'common/modules/discussion/user-avatars',
     'common/modules/identity/validation-email'
@@ -18,7 +17,6 @@ define([
     mediator,
     DiscussionApi,
     IdentityApi,
-    UserFeatures,
     Component,
     UserAvatars,
     ValidationEmail
@@ -102,9 +100,7 @@ CommentBox.prototype.defaultOptions = {
     focus: false,
     state: 'top-level',
     replyTo: null,
-    priorToVerificationDate: new Date(1392719401337), // Tue Feb 18 2014 10:30:01 GMT
-    paymentRequired: false,
-    testVariant: null
+    priorToVerificationDate: new Date(1392719401337) // Tue Feb 18 2014 10:30:01 GMT
 };
 
 /**
@@ -123,7 +119,6 @@ CommentBox.prototype.prerender = function() {
     }
 
     var userData = this.getUserData();
-    var isPayingMember = UserFeatures.isPayingMember();
 
     this.getElem('author').innerHTML = userData.displayName;
 
@@ -155,15 +150,6 @@ CommentBox.prototype.prerender = function() {
         window.setTimeout(setSpoutMargin.bind(this), 0);
 
     }
-
-    if (this.options.paymentRequired && !isPayingMember) {
-        // hide the text box, show the payment required UI
-        this.getElem('submit').innerHTML = 'Payment required';
-        this.getElem('d-comment-box__onboarding').addState('is-hidden');
-        this.getElem('d-comment-box__content').addState('is-hidden');
-        this.getElem('d-comment-box__payment-required').removeState('is-hidden');
-    }
-
 };
 
 CommentBox.prototype.showOnboarding = function(e) {
@@ -444,19 +430,6 @@ CommentBox.prototype.clearErrors = function() {
  */
 CommentBox.prototype.setExpanded = function() {
     this.setState('expanded');
-    if (this.options.paymentRequired) {
-        this.setState('expanded-payment-required');
-        var payLinkUrl = config.page.membershipUrl + '/bundles?INTCMP=MEMBERSHIP_A_PDCOM_' + this.options.testVariant.toUpperCase();
-        var returnAnchor = '#' + (this.options.replyTo ? 'comment-' + this.options.replyTo.commentId : "comments");
-        payLinkUrl = payLinkUrl + '&returnUrl=' + encodeURIComponent(document.location.href.indexOf('#') > 0 ? document.location.href : document.location.href + returnAnchor);
-        this.getElem('payment-cta-button__content').href = payLinkUrl;
-        this.on('click', this.getClass('payment-cta-cancel-button'), this.clearPaymentRequired);
-    }
-};
-
-CommentBox.prototype.clearPaymentRequired = function() {
-    this.removeState('expanded');
-    this.removeState('expanded-payment-required');
 };
 
 /**
