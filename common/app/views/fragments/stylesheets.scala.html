@@ -1,4 +1,4 @@
-@(projectName: Option[String], isCrossword: Boolean = false)(implicit request: RequestHeader, context: model.ApplicationContext)
+@(projectName: Option[String], isCrossword: Boolean = false, isInteractive: Boolean = false)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @import conf.switches.Switches._
 @import play.api.Mode.Dev
@@ -57,6 +57,9 @@
 } else {
     <style class="js-loggable">
         @Html(common.Assets.css.head(projectName))
+        @if(isInteractive) {
+            @Html("assets/inline-stylesheets/head.interactive.css")
+        }
     </style>
 }
 @fragments.stylesheetLink(common.Assets.css.projectCss(projectName), isCrossword)
