@@ -16,12 +16,15 @@ import acquisitionsEpicLiveBlog
     from 'common/modules/experiments/tests/acquisitions-epic-liveblog';
 import acquisitionsEpicTestimonialsRoundTwo
     from 'common/modules/experiments/tests/acquisitions-epic-testimonials-round-two';
+import acquisitionsEpicPreElection
+    from 'common/modules/experiments/tests/acquisitions-epic-pre-election';
 
 /**
  * acquisition tests in priority order (highest to lowest)
  */
 const tests = [
     alwaysAsk,
+    acquisitionsEpicPreElection,
     acquisitionsEpicTestimonialsRoundTwo,
     askFourEarning,
     acquisitionsEpicLiveBlog,
@@ -40,7 +43,6 @@ const isViewable = (v: Variant): boolean => {
 
     const withinViewLimit = viewsInPreviousDays(maxViewDays) < maxViewCount;
     const enoughDaysBetweenViews = viewsInPreviousDays(minViewDays) === 0;
-
     return (withinViewLimit && enoughDaysBetweenViews) || isUnlimited;
 };
 
