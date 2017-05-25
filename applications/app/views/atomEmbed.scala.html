@@ -1,8 +1,5 @@
-@import conf.Static
 @import model.AtomPage
 @import conf.Configuration
-@import model.content.{ MediaAtom, MediaWrapper, StoryQuestionsAtom }
-@import views.html.fragments.atoms.{ media, storyquestions }
 
 @(page: AtomPage)(implicit request: RequestHeader, context: model.ApplicationContext)
 
@@ -15,15 +12,7 @@
     @fragments.atomPageHead(page)
 </head>
 <body>
-    @page.atom match {
-      case model: MediaAtom => {
-          @media(model, displayCaption = false, mediaWrapper = Some(MediaWrapper.EmbedPage))
-      }
-      case model: StoryQuestionsAtom => {
-          @storyquestions(model, isAmp = false)
-      }
-      case _ => {}
-    }
+    @page.body
     @fragments.atomPageFoot(page)
 </body>
 </html>

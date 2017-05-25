@@ -9,7 +9,7 @@ import common.dfp._
 import common.{Edition, ManifestData, NavItem, Pagination}
 import conf.Configuration
 import cricketPa.CricketTeams
-import model.content.{Atom, MediaAtom, StoryQuestionsAtom}
+import model.content.{Atom, MediaAtom, MediaWrapper, StoryQuestionsAtom}
 import model.liveblog.Blocks
 import model.meta.{Guardian, LinkedData, PotentialAction, WebPage}
 import org.apache.commons.lang3.StringUtils
@@ -17,6 +17,7 @@ import org.joda.time.DateTime
 import org.scala_tools.time.Imports._
 import play.api.libs.json.{JsBoolean, JsString, JsValue}
 import play.api.mvc.RequestHeader
+import play.twirl.api.Html
 
 object Commercial {
 
@@ -374,12 +375,17 @@ case class EmbedPage(item: Video, title: String, isExpired: Boolean = false) ext
 trait AtomPage extends Page {
   def atom: Atom
   def atomType: String
+  def body: Html
   def withJavaScript: Boolean
   def javascriptModule: String = atomType
 }
 
-case class MediaAtomPage(override val atom: MediaAtom, override val withJavaScript: Boolean) extends AtomPage {
+case class MediaAtomPage(
+  override val atom: MediaAtom,
+  override val withJavaScript: Boolean
+)(implicit request: RequestHeader) extends AtomPage {
   override val atomType = "media"
+  override val body = views.html.fragments.atoms.media(atom, displayCaption = false, mediaWrapper = Some(MediaWrapper.EmbedPage))
   override val javascriptModule = "youtube-embed"
   override val metadata = MetaData.make(
     id = atom.id,
@@ -388,8 +394,12 @@ case class MediaAtomPage(override val atom: MediaAtom, override val withJavaScri
   )
 }
 
-case class StoryQuestionsAtomPage(override val atom: StoryQuestionsAtom, override val withJavaScript: Boolean) extends AtomPage {
+case class StoryQuestionsAtomPage(
+  override val atom: StoryQuestionsAtom,
+  override val withJavaScript: Boolean
+)(implicit request: RequestHeader) extends AtomPage {
   override val atomType = "storyquestions"
+  override val body = views.html.fragments.atoms.storyquestions(atom, isAmp = false)
   override val metadata = MetaData.make(
     id = atom.id,
     webTitle = atom.atom.title.getOrElse("Story questions"),
