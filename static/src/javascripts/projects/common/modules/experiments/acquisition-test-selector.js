@@ -18,6 +18,8 @@ import acquisitionsEpicTestimonialsRoundTwo
     from 'common/modules/experiments/tests/acquisitions-epic-testimonials-round-two';
 import acquisitionsEpicPreElection
     from 'common/modules/experiments/tests/acquisitions-epic-pre-election';
+import acquisitionsEpicTestimonialsUSA
+    from 'common/modules/experiments/tests/acquisitions-epic-testimonials-usa';
 
 /**
  * acquisition tests in priority order (highest to lowest)
@@ -25,6 +27,7 @@ import acquisitionsEpicPreElection
 const tests = [
     alwaysAsk,
     acquisitionsEpicPreElection,
+    acquisitionsEpicTestimonialsUSA,
     acquisitionsEpicTestimonialsRoundTwo,
     askFourEarning,
     acquisitionsEpicLiveBlog,
