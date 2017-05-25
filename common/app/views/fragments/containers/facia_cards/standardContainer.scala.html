@@ -39,7 +39,7 @@
          data-id="@containerDefinition.dataId">
 
         @for(sliceWithCards <- containerLayout.slices) {
-            @slice(sliceWithCards, containerDefinition.index, frontProperties = Some(frontProperties))
+            @slice(sliceWithCards, containerDefinition.index, isElectionContainer = containerDefinition.displayName.contains("general election 2017"), frontProperties = Some(frontProperties))
         }
 
         @if(containerDefinition.hasShowMore && containerDefinition.hasShowMoreEnabled) {

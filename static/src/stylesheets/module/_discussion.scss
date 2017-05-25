@@ -1241,10 +1241,6 @@ $comment-recommend-button-size: 19px;
     }
 }
 
-.d-comment-box__payment-required.is_hidden {
-    display: none;
-}
-
 .d-bar {
     @include fs-textSans(4);
     margin-bottom: ($gs-baseline / 3) * 4;
@@ -1564,74 +1560,4 @@ $comment-recommend-button-size: 19px;
 
 .d-comment-box__onboarding-username-error-message {
     color: $error;
-}
-
-.d-comment-box__payment-cta {
-    display: none;
-}
-
-.d-comment-box--expanded-payment-required {
-    padding: 5px;
-    background-color: #d4ebf8;
-    .d-comment-box__body,
-    .d-comment-box__submit,
-    .d-comment-box__cancel,
-    .d-comment-box__preview,
-    .d-comment-box__hide-preview,
-    .d-comment-box__formatting-controls,
-    .d-comment-box__community-standards {
-        display: none;
-    }
-    .d-comment-box__payment-cta {
-        display: block;
-        height: 100px;
-    }
-    >h2 {
-        @include fs-headline(4);
-        padding: 8px $gs-gutter/2 0;
-        font-weight: 900;
-    }
-    .d-comment-box__payment-cta__description {
-        >p {
-            @include fs-textSans(1);
-            line-height: 18px;
-            color: $neutral-2;
-        }
-    }
-    .d-comment-box__payment-cta {
-        >.button {
-            margin-top: 10px;
-        }
-        p {
-            color: $neutral-1;
-        }
-    }
-    .d-comment-box__payment-cta-button {
-        background-color: $guardian-brand;
-        border-color: $guardian-brand-dark;
-        display: inline-block;
-        float: right;
-        p {
-            color: #ffffff;
-        }
-    }
-    .d-comment-box__payment-cta-button__content {
-        p {
-            @include fs-textSans(4);
-            font-weight: 600;
-            font-size: 15px;
-            line-height: 30px;
-            display: inline-block;
-            vertical-align: middle;
-            margin: 0;
-        }
-    }
-    .d-comment-box__payment-cta-cancel-button {
-        background-color: $neutral-4;
-        border-color: $neutral-3;
-        p {
-            color: $neutral-2;
-        }
-    }
-
 }

@@ -1,6 +1,4 @@
 // @flow
-import type { ABTest, Variant } from 'common/modules/experiments/ab-types';
-
 import memoize from 'lodash/functions/memoize';
 import {
     getMvtNumValues,
@@ -44,7 +42,7 @@ export const variantIdFor = memoize(computeVariantIdFor, getId);
 export const isInTest = (test: ABTest): boolean =>
     variantIdFor(test) !== NOT_IN_TEST;
 
-export const variantFor = (test: ABTest): Variant => {
+export const variantFor = (test: ABTest): ?Variant => {
     const variantId = variantIdFor(test);
-    return test.variants.filter(variant => variant.id === variantId)[0];
+    return test.variants.find(variant => variant.id === variantId);
 };

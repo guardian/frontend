@@ -1,5 +1,10 @@
 // @flow
-// Include any images needed in templates here.
+
+// DEPRECATED: please don't use this file to inject SVGs into your markup
+// Instead load the SVGs directly into your JavaScript module
+
+// If you must add a new SVG file here, please reflect this in:
+// static/test/javascripts-legacy/helpers/svg-paths.js
 
 import commentCount16icon from 'svgs/icon/comment-16.svg';
 import marque36icon from 'svgs/icon/marque-36.svg';

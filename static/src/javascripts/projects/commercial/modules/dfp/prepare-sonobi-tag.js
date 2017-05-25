@@ -1,7 +1,7 @@
 // @flow
 import config from 'lib/config';
 import { loadScript } from 'lib/load-script';
-import commercialFeatures from 'commercial/modules/commercial-features';
+import { commercialFeatures } from 'commercial/modules/commercial-features';
 import { buildPageTargeting } from 'commercial/modules/build-page-targeting';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 

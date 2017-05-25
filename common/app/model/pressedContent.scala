@@ -4,8 +4,9 @@ import com.gu.commercial.branding.Branding
 import com.gu.contentapi.client.model.v1.ElementType
 import com.gu.facia.api.utils.FaciaContentUtils
 import com.gu.facia.api.{models => fapi, utils => fapiutils}
-import com.gu.facia.client.models.{Backfill, Branded, CollectionConfigJson, Metadata}
+import com.gu.facia.client.models.{Backfill, CollectionConfigJson, Metadata}
 import common.Edition
+import common.commercial.EditionBranding
 import model.{ContentType, SupportedUrl}
 import org.joda.time.DateTime
 
@@ -64,9 +65,7 @@ final case class CollectionConfig(
   showTimestamps: Boolean,
   hideShowMore: Boolean,
   displayHints: Option[DisplayHints]
-) {
-  def showBranding = metadata exists (_ contains Branded)
-}
+)
 
 object CardStyle {
   def make(cardStyle: fapiutils.CardStyle): CardStyle = cardStyle match {
@@ -138,7 +137,10 @@ object PressedProperties {
       section = FaciaContentUtils.section(content),
       maybeFrontPublicationDate = FaciaContentUtils.maybeFrontPublicationDate(content),
       href = FaciaContentUtils.href(content),
-      webUrl = FaciaContentUtils.webUrl(content)
+      webUrl = FaciaContentUtils.webUrl(content),
+      editionBrandings = Some(content.brandingByEdition.flatMap {
+        case (editionId, branding) => Edition.byId(editionId) map (EditionBranding(_, branding))
+      }.toSeq)
     )
   }
 
@@ -173,14 +175,9 @@ final case class PressedProperties(
   section: String,
   maybeFrontPublicationDate: Option[Long],
   href: Option[String],
-  webUrl: Option[String]
-) {
-  def branding(edition: Edition): Option[Branding] = for {
-    content <- maybeContent
-    commercial <- content.metadata.commercial
-    branding <- commercial.branding(edition)
-  } yield branding
-}
+  webUrl: Option[String],
+  editionBrandings: Option[Seq[EditionBranding]]
+)
 
 object PressedCardHeader {
   def make(content: fapi.FaciaContent): PressedCardHeader = {
@@ -302,8 +299,14 @@ sealed trait PressedContent {
   def discussion: PressedDiscussionSettings
   def display: PressedDisplaySettings
 
-  def branding(edition: Edition): Option[Branding] = properties.branding(edition)
+  def branding(edition: Edition): Option[Branding] =
+    for {
+      brandings <- properties.editionBrandings
+      editionBranding <- brandings find (_.edition == edition)
+      branding <- editionBranding.branding
+    } yield branding
 }
+
 sealed trait Snap extends PressedContent
 
 object CuratedContent {

@@ -17,7 +17,7 @@ define([
         var self = this;
         this.id = 'BundleDigitalSubPriceTest1M';
         this.start = '2017-05-10';
-        this.expiry = '2017-05-25'; // Thursday 25th May
+        this.expiry = '2017-06-01'; // Thursday 1st June
         this.author = 'Justin Pinner';
         this.description = 'Test digital subs price points via thrasher';
         this.showForSensitive = true;
