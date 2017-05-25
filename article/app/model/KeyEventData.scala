@@ -1,7 +1,7 @@
-package liveblog
+package model
 
 import model.liveblog.BodyBlock.{KeyEvent, SummaryEvent}
-import model.liveblog.{Blocks, BodyBlock, Canonical, LiveBlogDate}
+import model.liveblog.{Blocks, BodyBlock, LiveBlogDate}
 import org.scala_tools.time.Imports._
 
 object KeyEventData {

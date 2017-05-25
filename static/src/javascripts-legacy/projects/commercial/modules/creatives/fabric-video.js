@@ -40,10 +40,10 @@ define([
         function create() {
             return fastdom.write(function () {
                 if (params.Trackingpixel) {
-                    addTrackingPixel(params.Trackingpixel + params.cacheBuster);
+                    addTrackingPixel.addTrackingPixel(params.Trackingpixel + params.cacheBuster);
                 }
                 if (params.Researchpixel) {
-                    addTrackingPixel(params.Researchpixel + params.cacheBuster)
+                    addTrackingPixel.addTrackingPixel(params.Researchpixel + params.cacheBuster)
                 }
                 adSlot.insertAdjacentHTML('beforeend', fabricVideoTpl({ data: params }));
                 if (params.viewabilityTracker) {

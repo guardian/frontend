@@ -310,22 +310,6 @@ const bootEnhanced = (): void => {
         );
     }
 
-    if (config.page.showNewRecipeDesign === true) {
-        // below is for during testing
-        if (config.tests.abNewRecipeDesign) {
-            require.ensure(
-                [],
-                require => {
-                    bootstrapContext(
-                        'recipes',
-                        require('bootstraps/enhanced/recipe-article').init
-                    );
-                },
-                'recipes'
-            );
-        }
-    }
-
     fastdom.read(() => {
         if ($('.youtube-media-atom').length > 0) {
             require.ensure(

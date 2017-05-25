@@ -18,9 +18,10 @@ final case class Atoms(
   interactives: Seq[InteractiveAtom],
   recipes: Seq[RecipeAtom],
   reviews: Seq[ReviewAtom],
-  storyquestions: Seq[StoryQuestionsAtom]
+  storyquestions: Seq[StoryQuestionsAtom],
+  explainers: Seq[ExplainerAtom]
 ) {
-  val all: Seq[Atom] = quizzes ++ media ++ interactives ++ recipes ++ reviews ++ storyquestions
+  val all: Seq[Atom] = quizzes ++ media ++ interactives ++ recipes ++ reviews ++ storyquestions ++ explainers
 }
 
 sealed trait Atom {
@@ -123,6 +124,13 @@ final case class StoryQuestionsAtom(
   data: atomapi.storyquestions.StoryQuestionsAtom
 ) extends Atom
 
+final case class ExplainerAtom(
+  override val id: String,
+  labels: Seq[String],
+  title: String,
+  body: String
+) extends Atom
+
 
 object Atoms extends common.Logging {
   def extract[T](atoms: Option[Seq[AtomApiAtom]], extractFn: AtomApiAtom => T): Seq[T] = {
@@ -156,7 +164,17 @@ object Atoms extends common.Logging {
 
       val storyquestions = extract(atoms.storyquestions, atom => { StoryQuestionsAtom.make(atom) })
 
-      Atoms(quizzes = quizzes, media = media, interactives = interactives, recipes = recipes, reviews = reviews, storyquestions = storyquestions)
+      val explainers = extract(atoms.explainers, atom => { ExplainerAtom.make(atom) })
+
+      Atoms(
+        quizzes = quizzes,
+        media = media,
+        interactives = interactives,
+        recipes = recipes,
+        reviews = reviews,
+        storyquestions = storyquestions,
+        explainers = explainers
+      )
     }
   }
 }
@@ -392,4 +410,11 @@ object ReviewAtom {
 
 object StoryQuestionsAtom {
   def make(atom: AtomApiAtom): StoryQuestionsAtom = StoryQuestionsAtom(atom.id, atom, atom.data.asInstanceOf[AtomData.Storyquestions].storyquestions)
+}
+
+object ExplainerAtom {
+  def make(atom: AtomApiAtom): ExplainerAtom = {
+    val explainer = atom.data.asInstanceOf[AtomData.Explainer].explainer
+    ExplainerAtom(atom.id, explainer.tags.getOrElse(Nil), explainer.title, explainer.body)
+  }
 }

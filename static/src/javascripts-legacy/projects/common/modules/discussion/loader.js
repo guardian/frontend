@@ -343,17 +343,12 @@ Loader.prototype.commentPosted = function () {
 };
 
 Loader.prototype.renderCommentBox = function(elem) {
-    var testVariant = abUtils.getTestVariantId('PaidCommentingInternal');
-    var hasPaidCommentingCookie = document.cookie.indexOf('GU_PDCOMCTA') !== -1;
-    var isPaidCommenting = (testVariant && testVariant !== 'notintest' && !hasPaidCommentingCookie) || false;
     return new CommentBox({
         discussionId: this.getDiscussionId(),
         premod: this.user.privateFields.isPremoderated,
         newCommenter: !this.user.privateFields.hasCommented,
         hasUsername: this.username !== null,
-        shouldRenderMainAvatar: false,
-        paymentRequired: isPaidCommenting,
-        testVariant: testVariant
+        shouldRenderMainAvatar: false
     }).render(elem).on('post:success', this.commentPosted.bind(this));
 };
 

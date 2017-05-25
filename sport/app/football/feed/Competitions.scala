@@ -134,13 +134,15 @@ class CompetitionsService(val footballClient: FootballClient, competitionDefinit
     DateTimeComparator.getInstance.asInstanceOf[Comparator[DateTime]]
   )
 
-  private def mostRecentCompetitionSeasons(competitions: List[Season]): List[Season] = {
-    competitionDefinitions.flatMap{ compDef =>
-      competitions.filter(_.competitionId == compDef.id)
+  // Avoid fetching very old results from PA by restricting to most recent 2 seasons
+  private def oldestRelevantCompetitionSeasons(competitions: List[Season]): List[Season] =
+    competitionDefinitions.flatMap { compDef =>
+      competitions
+        .filter(_.competitionId == compDef.id)
         .sortBy(_.startDate.toDateTimeAtStartOfDay.getMillis).reverse
-        .take(2)
+        .take(2)  // Take most recent 2 seasons
+        .lastOption // Use the older of these for the start date
     }
-  }
 
   override val teamNameBuilder = new TeamNameBuilder(this)
 
@@ -149,9 +151,9 @@ class CompetitionsService(val footballClient: FootballClient, competitionDefinit
 
   override def competitions: Seq[Competition] = competitionAgents.map(_.competition)
 
-  def refreshCompetitionAgent(id: String): Option[Unit] = competitionAgents
+  def refreshCompetitionAgent(id: String): Unit = competitionAgents
     .find { _.competition.id == id }
-    .map { c =>
+    .foreach { c =>
       c.refresh()
       log.info(s"Completed refresh of competition '${c.competition.fullName}': currently ${c.competition.matches.length} matches")
     }
@@ -159,9 +161,9 @@ class CompetitionsService(val footballClient: FootballClient, competitionDefinit
   def refreshCompetitionData() = {
     log.info("Refreshing competition data")
     footballClient.competitions.map { allComps =>
-      mostRecentCompetitionSeasons(allComps).map { season =>
-        competitionAgents.find(_.competition.id == season.id).map { agent =>
-          val newCompetition = agent.competition.startDate match {
+      oldestRelevantCompetitionSeasons(allComps).foreach { season =>
+        competitionAgents.find(_.competition.id == season.id).foreach { agent =>
+          agent.competition.startDate match {
             case Some(existingStartDate) if season.startDate.isAfter(existingStartDate.toDateTimeAtStartOfDay) =>
               log.info(s"updating competition: ${season.id} season: ${season.seasonId} startDate was: ${existingStartDate.toString} now: ${season.startDate.toString}")
               agent.update(agent.competition.copy(startDate = Some(season.startDate)))

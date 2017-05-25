@@ -47,10 +47,10 @@ define([
             this.adSlot.lastElementChild.insertAdjacentHTML('afterbegin', labelMarkup);
             this.adSlot.classList.add('ad-slot--frame');
             if (this.params.trackingPixel) {
-                addTrackingPixel(this.params.trackingPixel + this.params.cacheBuster);
+                addTrackingPixel.addTrackingPixel(this.params.trackingPixel + this.params.cacheBuster);
             }
             if (this.params.researchPixel) {
-                addTrackingPixel(this.params.researchPixel + this.params.cacheBuster);
+                addTrackingPixel.addTrackingPixel(this.params.researchPixel + this.params.cacheBuster);
             }
             if (this.params.viewabilityTracker) {
                 addViewabilityTracker(this.adSlot, this.params.id, this.params.viewabilityTracker);
