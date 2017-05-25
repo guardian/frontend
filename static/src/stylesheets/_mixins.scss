@@ -270,7 +270,7 @@
     right: -.19em;
 }
 
-@mixin fly-in-animation($percentage) {
+@mixin menu-animation($percentage) {
     transform: translateX($percentage);
     transition: transform .4s cubic-bezier(.23, 1, .32, 1);
 }

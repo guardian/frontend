@@ -1,4 +1,4 @@
-.fly-in-item {
+.menu-item {
     position: relative;
     width: 100%;
 
@@ -14,7 +14,7 @@
     }
 
     // First level overwrites
-    .fly-in-group--primary & {
+    .menu-group--primary & {
         > *:not([open]) {
             border-bottom: 1px solid darken($guardian-brand-dark, 4%);
         }
@@ -25,7 +25,7 @@
     }
 }
 
-.fly-in-item__title {
+.menu-item__title {
     color: currentColor;
     cursor: pointer;
     display: block;
@@ -46,7 +46,7 @@
         display: none;
     }
 
-    .fly-in-group--primary & {
+    .menu-group--primary & {
         font-size: 20px;
         padding-bottom: $gs-baseline * 1.2;
         padding-top: $gs-baseline / 2.5;
@@ -57,21 +57,21 @@
         }
     }
 
-    .fly-in-group--secondary & {
+    .menu-group--secondary & {
         padding-bottom: $gs-baseline / 1.6;
         padding-top: $gs-baseline / 1.6;
     }
 }
 
-.fly-in-item__icon,
-.fly-in-item__toggle {
+.menu-item__icon,
+.menu-item__toggle {
     position: absolute;
     left: -($gs-gutter * 1.25);
     text-align: center;
     width: $gs-gutter / 2;
 }
 
-.fly-in-item__toggle {
+.menu-item__toggle {
     margin-top: -3px;
 
     &:before {
@@ -85,7 +85,7 @@
         transform: rotate(45deg);
         width: 8px;
 
-        .fly-in-group--primary & {
+        .menu-group--primary & {
             border-color: $news-support-2;
         }
 
@@ -94,7 +94,7 @@
         }
     }
 
-    .fly-in-group--primary & {
+    .menu-group--primary & {
         margin-top: -5px;
     }
 
@@ -103,7 +103,7 @@
     }
 }
 
-.fly-in-item__icon {
+.menu-item__icon {
     left: -($gs-gutter * 1.5);
 
     > svg {
@@ -115,8 +115,8 @@
 }
 
 // Special alignment for social channel icons
-.fly-in-item .inline-share-facebook,
-.fly-in-item .inline-share-twitter {
+.menu-item .inline-share-facebook,
+.menu-item .inline-share-twitter {
     left: -($gs-gutter * 2);
 
     > svg {

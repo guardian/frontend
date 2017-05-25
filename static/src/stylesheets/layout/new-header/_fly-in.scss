@@ -1,5 +1,5 @@
-.fly-in {
-    @include fly-in-animation(-110%);
+.menu {
+    @include menu-animation(-110%);
     -webkit-overflow-scrolling: touch;
     background-color: $guardian-brand-dark;
     box-shadow: 3px 0 16px rgba(0, 0, 0, .4);
@@ -35,7 +35,7 @@
     }
 
     .new-header--open & {
-        @include fly-in-animation(0%);
+        @include menu-animation(0%);
     }
 
     // Don't show menu on opera mini: https://wp-mix.com/css-target-opera/
@@ -44,7 +44,7 @@
     }
 }
 
-.fly-in__overlay {
+.menu__overlay {
     background-color: hsla(0, 0%, 0%, .5);
     height: 100%;
     left: 0;

@@ -1,4 +1,4 @@
-.fly-in-group {
+.menu-group {
     color: #ffffff;
     display: flex;
     font-size: 18px;
@@ -13,34 +13,34 @@
     }
 }
 
-.fly-in-group--primary {
+.menu-group--primary {
     color: $news-support-1;
     padding-top: 0;
 }
 
-.fly-in-group--secondary {
+.menu-group--secondary {
     background-color: darken($guardian-brand-dark, 4%);
     margin-top: 0;
     padding-top: 0;
 }
 
-.fly-in-group--highlight {
+.menu-group--highlight {
     color: $guardian-brand-dark;
     background-color: $news-main-2;
 
-    .fly-in-item:last-child .fly-in-group {
+    .menu-item:last-child .menu-group {
         margin-bottom: -$gs-baseline;
     }
 }
 
-.fly-in-group--downlight {
+.menu-group--downlight {
     background-color: darken($news-main-2, 10%);
     color: $guardian-brand-dark;
 }
 
 // unify alignment of lists starting on the left side
-.fly-in-group--secondary,
-.fly-in-group--downlight {
+.menu-group--secondary,
+.menu-group--downlight {
     margin-left: -1 * ($gs-gutter * 2 + $gs-gutter / 2);
 
     @include mq(tablet) {

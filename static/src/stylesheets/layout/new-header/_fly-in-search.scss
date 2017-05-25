@@ -1,4 +1,4 @@
-.fly-in-search {
+.menu-search {
     font-size: 18px;
     padding-bottom: $gs-baseline / 2;
     padding-left: $gs-gutter / 2;
@@ -6,7 +6,7 @@
     position: relative;
 }
 
-.fly-in-search__search-box {
+.menu-search__search-box {
     background-color: $guardian-brand;
     border: 0;
     border-radius: 1000px;
@@ -37,7 +37,7 @@
     }
 }
 
-.fly-in-search__submit {
+.menu-search__submit {
     left: $gs-gutter * 1.1;
     position: absolute;
     top: $gs-baseline / 1.3;
