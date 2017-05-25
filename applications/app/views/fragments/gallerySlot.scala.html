@@ -7,9 +7,9 @@
 
 @additionalSizes = @{
     if(CommercialGalleryBannerAds.isParticipating)
-        Seq("970,250", "900,350")
+        Map("desktop" -> Seq("970,250", "900,350"))
     else
-        Seq.empty
+        Map.empty
 }
 
 @if(CommercialSwitch.isSwitchedOn) {
@@ -20,7 +20,7 @@
         @fragments.commercial.adSlot(
             slotName,
             Seq("gallery-inline", "dark") ++ (if(isMobile) Some("mobile") else None),
-            Map("mobile" -> (sizes ++ additionalSizes)),
+            Map("mobile" -> sizes) ++ additionalSizes,
             optId = if(isMobile) Some(s"$slotName--mobile") else None,
             optClassNames = if(isMobile) Some("mobile-only") else Some("hide-until-tablet")
         ){ }
