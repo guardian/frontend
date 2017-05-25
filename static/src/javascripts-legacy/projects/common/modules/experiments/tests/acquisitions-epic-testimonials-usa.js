@@ -35,7 +35,7 @@ define([
         campaignId: 'kr1_epic_testimonials_usa',
 
         start: '2017-05-24',
-        expiry: '2017-07-01',
+        expiry: '2017-06-26',
 
         author: 'Sam Desborough',
         description: 'Test localisation of testimonials in the Epic',

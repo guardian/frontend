@@ -195,7 +195,7 @@ trait ABTestSwitches {
     "Test placing localised reader testimonials in the Epic",
     owners = Seq(Owner.withGithub("desbo")),
     safeState = On,
-    sellByDate = new LocalDate(2017, 7, 1),
+    sellByDate = new LocalDate(2017, 6, 26),
     exposeClientSide = true
   )
 }
