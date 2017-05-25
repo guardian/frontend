@@ -162,6 +162,15 @@ class CompetitionsService(val footballClient: FootballClient, competitionDefinit
     footballClient.competitions.map { allComps =>
       mostRecentCompetitionSeasons(allComps).map { season =>
         competitionAgents.find(_.competition.id == season.id).map { agent =>
+          agent.competition.startDate match {
+            case Some(existingStartDate) if season.startDate.isAfter(existingStartDate.toDateTimeAtStartOfDay) =>
+              log.info(s"updating competition: ${season.id} season: ${season.seasonId} startDate was: ${existingStartDate.toString} now: ${season.startDate.toString}")
+              agent.update(agent.competition.copy(startDate = Some(season.startDate)))
+            case None =>
+              log.info(s"setting competition: ${season.id} season: ${season.seasonId} startDate was: None now: ${season.startDate.toString}")
+              agent.update(agent.competition.copy(startDate = Some(season.startDate)))
+            case _ =>
+          }
         }
       }
     }.recover(footballClient.logErrors)
