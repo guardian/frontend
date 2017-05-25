@@ -35,11 +35,7 @@ trait PreferenceController extends Results {
         val oneYearInSeconds = 31536000
         Cookie(name,
           value,
-          maxAge = if (value.nonEmpty) {
-            Some(oneYearInSeconds)
-          } else {
-            Some(-1)
-          },
+          maxAge = if (value.nonEmpty) Some(oneYearInSeconds) else Some(-1),
           domain = getShortenedDomain(request.domain),
           httpOnly = false)
       }:_*)
