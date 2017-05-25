@@ -1,8 +1,9 @@
 
 define([
-    'react/addons',
-    'common/modules/crosswords/crossword'
-], function (React, Crossword) {
+    'helpers/injector'
+], function (
+    Injector
+) {
 
     // This stuff comes out of CAPI normally
 
@@ -627,19 +628,24 @@ define([
 
     describe('Crosswords', function () {
 
-        var ReactTestUtils = React.addons.TestUtils;
-        var component;
+        var injector = new Injector();
         var renderedComponent;
 
-        beforeEach(function () {
+        beforeEach(function (done) {
+            injector.require([
+                'react/addons',
+                'common/modules/crosswords/crossword'
+            ], function(React, Crossword) {
+                var ReactTestUtils = React.addons.TestUtils;
+                var component = React.createElement(Crossword, {
+                    data: CROSSWORD_MOCK_DATA
+                });
 
-            component = React.createElement(Crossword, {
-                data: CROSSWORD_MOCK_DATA
+                renderedComponent = ReactTestUtils.renderIntoDocument(component);
+                renderedComponent.save = function(){};
+
+                done();
             });
-
-            renderedComponent = ReactTestUtils.renderIntoDocument(component);
-            renderedComponent.save = function(){};
-
         });
 
         it('Can move focus with direction keys', function () {

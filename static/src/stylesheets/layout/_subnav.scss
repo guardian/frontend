@@ -70,6 +70,10 @@
         @include trailing-slash;
         color: rgba(255, 255, 255, .3);
     }
+
+    .js-off .subnav__link-item:nth-last-child(2) &:after {
+        content: none;
+    }
 }
 
 .subnav__link--toggle-more {

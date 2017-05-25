@@ -1,6 +1,5 @@
 package implicits
 
-import common.Edition
 import conf.Configuration
 import play.api.mvc.RequestHeader
 

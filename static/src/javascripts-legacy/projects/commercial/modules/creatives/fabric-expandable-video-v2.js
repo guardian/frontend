@@ -6,8 +6,8 @@ define([
     'lodash/utilities/template',
     'raw-loader!commercial/views/creatives/fabric-expandable-video-v2.html',
     'raw-loader!commercial/views/creatives/fabric-expandable-video-v2-cta.html',
-    'svg-loader!svgs/icon/arrow-down.svg',
-    'svg-loader!svgs/icon/close-central.svg',
+    'svgs/icon/arrow-down.svg',
+    'svgs/icon/close-central.svg',
     'commercial/modules/creatives/add-tracking-pixel',
     'commercial/modules/creatives/add-viewability-tracker'
 ], function (
@@ -66,10 +66,10 @@ define([
                 $ad.css('height', closedHeight);
                 $('.ad-exp-collapse__slide', $fabricExpandableVideo).css('height', closedHeight);
                 if (params.trackingPixel) {
-                    addTrackingPixel(params.trackingPixel + params.cacheBuster);
+                    addTrackingPixel.addTrackingPixel(params.trackingPixel + params.cacheBuster);
                 }
                 if (params.researchPixel) {
-                    addTrackingPixel(params.researchPixel + params.cacheBuster);
+                    addTrackingPixel.addTrackingPixel(params.researchPixel + params.cacheBuster);
                 }
                 $fabricExpandableVideo.appendTo(adSlot);
                 if (params.viewabilityTracker) {

@@ -9,9 +9,8 @@ define([
 
             beforeEach(function (done) {
                 var injector = new Injector();
-                
-                sandbox = sinon.sandbox.create();
 
+                sandbox = sinon.sandbox.create();
                 injector.require([
                     'common/modules/experiments/ab-test-clash'
                 ], function (sut) {
@@ -31,7 +30,9 @@ define([
                     id: 'outbrainCompliantTest',
                     variants: [{
                         id: 'control',
-                        isOutbrainCompliant: true
+                        options: {
+                            isOutbrainCompliant: true
+                        }
                     }]
                 };
                 var clashingTests = [test];
@@ -46,10 +47,14 @@ define([
                     id: 'outbrainCompliantTest',
                     variants: [{
                         id: 'control',
-                        isOutbrainCompliant: true
+                        options: {
+                            isOutbrainCompliant: true
+                        }
                     }, {
                         id: 'variant',
-                        isOutbrainCompliant: false
+                        options: {
+                            isOutbrainCompliant: false
+                        }
                     }]
                 };
                 var clashingTests = [test];
@@ -66,10 +71,14 @@ define([
                     id: 'outbrainCompliantTest',
                     variants: [{
                         id: 'control',
-                        isOutbrainCompliant: true
+                        options: {
+                            isOutbrainCompliant: true
+                        }
                     }, {
                         id: 'variant',
-                        isOutbrainCompliant: false
+                        options: {
+                            isOutbrainCompliant: false
+                        }
                     }]
                 };
                 var clashingTests = [test];

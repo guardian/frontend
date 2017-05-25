@@ -38,8 +38,8 @@ define([
                 'commercial/modules/commercial-features'
             ], function () {
                 config = arguments[0];
-                sut = arguments[1];
-                commercialFeatures = arguments[2];
+                sut = arguments[1].default;
+                commercialFeatures = arguments[2].commercialFeatures;
 
                 commercialFeatures.thirdPartyTags = true;
                 commercialFeatures.outbrain = true;

@@ -1,18 +1,14 @@
 define([
     'helpers/injector',
     'helpers/fixtures',
-
     'lib/$',
     'lodash/utilities/template',
-
     'raw-loader!common/views/content/richLinkTag.html'
 ], function (
     Injector,
     fixtures,
-
     $,
     template,
-
     richLinkTagTmpl
 ) {
     describe('richLinks', function () {

@@ -8,8 +8,8 @@ import { loadScript } from 'lib/load-script';
 import reportError from 'lib/report-error';
 import timeout from 'lib/timeout';
 import adSizes from 'commercial/modules/ad-sizes';
-import commercialFeatures from 'commercial/modules/commercial-features';
-import dfpEnv from 'commercial/modules/dfp/dfp-env';
+import { commercialFeatures } from 'commercial/modules/commercial-features';
+import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 import uniq from 'lodash/arrays/uniq';
 // The view id is used as the unique load id, for easier Switch log querying.
 const loadId = window.esi && window.esi.viewId;

@@ -1,17 +1,16 @@
 // @flow
+import type { GuAdSize, SwitchUnitId } from 'commercial/types';
+import {
+    mpuUnitId,
+    leaderboardUnitId,
+    billboardUnitId,
+} from 'commercial/types';
 
-type $AdSize = {
+const getAdSize = (
     width: number,
     height: number,
-    switchUnitId: ?number,
-    toString: (_: void) => string,
-};
-
-const AdSize = (
-    width: number,
-    height: number,
-    switchUnitId: ?number
-): $AdSize => {
+    switchUnitId: ?SwitchUnitId
+): GuAdSize => {
     const toString = (): string =>
         width === height && height === 0 ? 'fluid' : `${width},${height}`;
 
@@ -23,39 +22,27 @@ const AdSize = (
     });
 };
 
-type SwitchUnitId = {
-    mpu: number,
-    leaderboard: number,
-    billboard: number,
-};
-
-const switchUnitId: SwitchUnitId = {
-    mpu: 228,
-    leaderboard: 229,
-    billboard: 229,
-};
-
 const adSizes: Object = {
     // standard ad sizes
-    billboard: AdSize(970, 250, switchUnitId.billboard),
-    leaderboard: AdSize(728, 90, switchUnitId.leaderboard),
-    mpu: AdSize(300, 250, switchUnitId.mpu),
-    halfPage: AdSize(300, 600),
-    portrait: AdSize(300, 1050),
+    billboard: getAdSize(970, 250, billboardUnitId),
+    leaderboard: getAdSize(728, 90, leaderboardUnitId),
+    mpu: getAdSize(300, 250, mpuUnitId),
+    halfPage: getAdSize(300, 600),
+    portrait: getAdSize(300, 1050),
 
     // dfp proprietary ad sizes
-    fluid: AdSize(0, 0),
-    outOfPage: AdSize(1, 1),
+    fluid: getAdSize(0, 0),
+    outOfPage: getAdSize(1, 1),
 
     // guardian proprietary ad sizes
-    video: AdSize(620, 1),
-    video2: AdSize(620, 350),
-    merchandisingHighAdFeature: AdSize(88, 89),
-    merchandisingHigh: AdSize(88, 87),
-    merchandising: AdSize(88, 88),
-    inlineMerchandising: AdSize(88, 85),
-    fabric: AdSize(88, 71),
-    empty: AdSize(2, 2),
+    video: getAdSize(620, 1),
+    video2: getAdSize(620, 350),
+    merchandisingHighAdFeature: getAdSize(88, 89),
+    merchandisingHigh: getAdSize(88, 87),
+    merchandising: getAdSize(88, 88),
+    inlineMerchandising: getAdSize(88, 85),
+    fabric: getAdSize(88, 71),
+    empty: getAdSize(2, 2),
 };
 
 adSizes['970x250'] = adSizes.billboard;

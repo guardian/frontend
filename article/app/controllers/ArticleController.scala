@@ -23,8 +23,8 @@ import scala.concurrent.Future
 case class ArticlePage(article: Article, related: RelatedContent) extends PageWithStoryPackage
 case class MinutePage(article: Article, related: RelatedContent) extends PageWithStoryPackage
 
-class ArticleController(contentApiClient: ContentApiClient)(implicit context: ApplicationContext) extends Controller with RendersItemResponse with Logging with ExecutionContexts {
-
+class ArticleController(contentApiClient: ContentApiClient)(implicit context: ApplicationContext) extends Controller
+    with RendersItemResponse with Logging with ExecutionContexts {
 
   private def isSupported(c: ApiContent) = c.isArticle || c.isLiveBlog || c.isSudoku
   override def canRender(i: ItemResponse): Boolean = i.content.exists(isSupported)
@@ -115,14 +115,8 @@ class ArticleController(contentApiClient: ContentApiClient)(implicit context: Ap
         else if (article.article.isExplore) views.html.articleExplore(article)
         else if (article.article.isImmersive) views.html.articleImmersive(article)
         else if (request.isAmp) views.html.articleAMP(article)
-        else if (article.article.showNewRecipeDesign && mvt.ABNewRecipeDesign.isParticipating) {
-          val recipeAtoms = article.article.content.atoms.fold(Nil: Seq[RecipeAtom])(_.recipes)
-          val maybeMainImage: Option[ImageMedia] = article.article.content.elements.mainPicture.map{ _.images}
-          views.html.recipeArticle(article, recipeAtoms, maybeMainImage)
-        }
-        else views.html.article(article, recipePageNotInTest = article.article.showNewRecipeDesign)
+        else views.html.article(article)
       }
-
       val jsonResponse = () => views.html.fragments.articleBody(article)
       renderFormat(htmlResponse, jsonResponse, article, Switches.all)
   }

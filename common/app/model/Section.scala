@@ -1,6 +1,6 @@
 package model
 
-import campaigns.PersonalInvestmentsCampaign
+import commercial.campaigns.PersonalInvestmentsCampaign
 import com.gu.contentapi.client.model.v1.{Section => ApiSection}
 import common.Pagination
 import common.commercial.CommercialProperties

@@ -12,10 +12,7 @@ class AmpFilter(implicit val mat: Materializer) extends Filter with ExecutionCon
     if (request.isAmp) {
       val exposeAmpHeader = "Access-Control-Expose-Headers" -> "AMP-Access-Control-Allow-Source-Origin"
       val ampHeader = "AMP-Access-Control-Allow-Source-Origin" -> Configuration.amp.baseUrl
-
       nextFilter(request).map(_.withHeaders(exposeAmpHeader, ampHeader))
-    } else {
-      nextFilter(request)
-    }
+    } else nextFilter(request)
   }
 }

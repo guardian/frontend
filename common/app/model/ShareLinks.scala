@@ -1,6 +1,6 @@
 package model
 
-import campaigns.ShortCampaignCodes
+import commercial.campaigns.ShortCampaignCodes
 import common.`package`._
 import conf.Configuration.facebook.{appId => facebookAppId}
 

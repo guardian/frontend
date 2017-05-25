@@ -150,9 +150,12 @@ class CompetitionsService(val footballClient: FootballClient, competitionDefinit
 
   override def competitions: Seq[Competition] = competitionAgents.map(_.competition)
 
-  def refreshCompetitionAgent(id: String) {
-    competitionAgents find { _.competition.id == id } map { _.refresh() }
-  }
+  def refreshCompetitionAgent(id: String): Option[Unit] = competitionAgents
+    .find { _.competition.id == id }
+    .map { c =>
+      c.refresh()
+      log.info(s"Completed refresh of competition '${c.competition.fullName}': currently ${c.competition.matches.length} matches")
+    }
 
   def refreshCompetitionData(): Future[List[Option[Unit]]] = {
     log.info("Refreshing competition data")

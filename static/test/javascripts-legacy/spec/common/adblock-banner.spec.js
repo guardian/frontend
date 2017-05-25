@@ -33,7 +33,7 @@ define([
         it('should be able to render every type of banner', function () {
             ukBanners.forEach(function (banners) {
                 banners.forEach(function (variant) {
-                    new AdblockBanner(variant.template, variant).renderTemplate();
+                    new AdblockBanner.AdblockBanner(variant.template, variant).renderTemplate();
                 });
             });
         });

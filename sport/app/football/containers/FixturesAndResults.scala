@@ -115,7 +115,6 @@ class FixturesAndResults(competitions: Competitions) extends Football {
           dateLinkPath = None,
           useShowMore = false,
           hasShowMoreEnabled = true,
-          showBranding = false,
           isThrasher = false
         )
         Some(faciaContainer)

@@ -1,37 +1,45 @@
 define([
     'bonzo',
-    'commercial/modules/dfp/render-advert-label'
+    'helpers/injector'
 ], function (
     bonzo,
-    renderAdvertLabel
+    Injector
 ) {
     describe('Rendering advert labels', function () {
 
         var adverts = {};
         var labelSelector = '.ad-slot__label';
+        var injector = new Injector();
+        var renderAdvertLabel;
 
-        beforeEach(function () {
-            adverts.withLabel = bonzo(bonzo.create(
-                '<div class="js-ad-slot"></div>'
-            ));
+        beforeEach(function (done) {
+            injector.require(['commercial/modules/dfp/render-advert-label'], function(renderAdvertLabelModule) {
+                renderAdvertLabel = renderAdvertLabelModule;
 
-            adverts.labelDisabled = bonzo(bonzo.create(
-                '<div class="js-ad-slot" data-label="false"></div>'
-            ));
+                adverts.withLabel = bonzo(bonzo.create(
+                    '<div class="js-ad-slot"></div>'
+                ));
 
-            adverts.alreadyLabelled = bonzo(bonzo.create(
-                '<div class="js-ad-slot">' +
+                adverts.labelDisabled = bonzo(bonzo.create(
+                    '<div class="js-ad-slot" data-label="false"></div>'
+                ));
+
+                adverts.alreadyLabelled = bonzo(bonzo.create(
+                    '<div class="js-ad-slot">' +
                     '<div class="ad-slot__label">Advertisement</div>' +
-                '</div>'
-            ));
+                    '</div>'
+                ));
 
-            adverts.guStyle = bonzo(bonzo.create(
-                '<div class="js-ad-slot gu-style"></div>'
-            ));
+                adverts.guStyle = bonzo(bonzo.create(
+                    '<div class="js-ad-slot gu-style"></div>'
+                ));
 
-            adverts.frame = bonzo(bonzo.create(
-                '<div class="js-ad-slot ad-slot--frame"></div>'
-            ));
+                adverts.frame = bonzo(bonzo.create(
+                    '<div class="js-ad-slot ad-slot--frame"></div>'
+                ));
+
+                done();
+            });
         });
 
         it('Can add a label', function (done) {

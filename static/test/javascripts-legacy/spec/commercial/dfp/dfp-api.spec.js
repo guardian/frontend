@@ -48,21 +48,21 @@ define([
         }
 
         beforeEach(function (done) {
-
-            injector.mock('common/modules/analytics/google', function noop() {
-                // No implementation
+            injector.mock({
+                'common/modules/analytics/google': function noop() {
+                    // No implementation
+                },
+                'commercial/modules/dfp/apply-creative-template': {
+                    applyCreativeTemplate: function () {
+                      return Promise.resolve(true);
+                    }
+                },
+                'lib/load-script': {
+                    loadScript: function () {
+                        return Promise.resolve();
+                    }
+                },
             });
-
-            injector.mock('commercial/modules/dfp/apply-creative-template', function () {
-                return Promise.resolve();
-            });
-
-            injector.mock('lib/load-script', {
-                loadScript: function () {
-                    return Promise.resolve();
-                }
-            });
-
             injector.require([
                 'commercial/modules/dfp/prepare-googletag',
                 'commercial/modules/dfp/fill-advert-slots',
@@ -83,10 +83,11 @@ define([
                 };
                 config = arguments[4];
                 var performanceLogging = arguments[5];
-                commercialFeatures = arguments[6];
+                commercialFeatures = arguments[6].commercialFeatures;
                 detect = arguments[7];
-                closeDisabledSlots = arguments[8];
-                dfpEnv = arguments[9];
+                closeDisabledSlots = arguments[8].closeDisabledSlots;
+                dfpEnv = arguments[9].dfpEnv;
+
 
                 config.switches = {
                     commercial:      true,
@@ -210,7 +211,7 @@ define([
 
         it('should not get hidden ad slots', function (done) {
             $('.js-ad-slot').first().css('display', 'none');
-            closeDisabledSlots.init()
+            closeDisabledSlots()
                 .then(function() {
                     return dfp.prepareGoogletag.init(noop, noop);
                 })

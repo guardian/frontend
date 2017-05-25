@@ -3,12 +3,12 @@
 import qwery from 'qwery';
 import sha1 from 'lib/sha1';
 import identity from 'common/modules/identity/api';
-import commercialFeatures from 'commercial/modules/commercial-features';
-import dfpEnv from 'commercial/modules/dfp/dfp-env';
-import Advert from 'commercial/modules/dfp/Advert';
+import { commercialFeatures } from 'commercial/modules/commercial-features';
+import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
+import { Advert } from 'commercial/modules/dfp/Advert';
 import queueAdvert from 'commercial/modules/dfp/queue-advert';
 import { displayLazyAds } from 'commercial/modules/dfp/display-lazy-ads';
-import displayAds from 'commercial/modules/dfp/display-ads';
+import { displayAds } from 'commercial/modules/dfp/display-ads';
 import refreshOnResize from 'commercial/modules/dfp/refresh-on-resize';
 import prepareSwitchTag from 'commercial/modules/dfp/prepare-switch-tag';
 
@@ -16,7 +16,7 @@ const createAdverts = (): void => {
     // Get all ad slots
     const adverts = qwery(dfpEnv.adSlotSelector)
         .filter(adSlot => !(adSlot.id in dfpEnv.advertIds))
-        .map(Advert);
+        .map(adSlot => new Advert(adSlot));
     const currentLength = dfpEnv.adverts.length;
     dfpEnv.adverts = dfpEnv.adverts.concat(adverts);
     adverts.forEach((advert, index) => {

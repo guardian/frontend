@@ -43,9 +43,16 @@ define([
                 });
 
             return new Promise(function (resolve, reject) {
+                var fakeConfig = {
+                    page: {
+                        edition: 'UK'
+                    }
+                };
+
                 injector.mock({
                     'lib/storage': storage,
-                    'lib/fetch-json': fetchJson
+                    'lib/fetch-json': fetchJson,
+                    'lib/config': fakeConfig,
                 }).require(['common/modules/onward/breaking-news'], function (breakingNews) {
                     breakingNews.DEFAULT_DELAY = 100;
                     Promise.resolve().then(function () {
@@ -64,7 +71,6 @@ define([
 
         beforeAll(function () {
             fetchJson = jasmine.createSpy('fetch-json');
-            config.page.edition = 'UK';
         });
 
         beforeEach(function (done) {

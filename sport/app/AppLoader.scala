@@ -15,7 +15,7 @@ import feed.{CompetitionsProvider, CompetitionsService}
 import football.controllers.{FootballControllers, HealthCheck}
 import jobs.CricketStatsJob
 import model.ApplicationIdentity
-import ophan.SurgingContentAgentLifecycle
+import services.ophan.SurgingContentAgentLifecycle
 import play.api.ApplicationLoader.Context
 import play.api.BuiltInComponentsFromContext
 import play.api.http.{HttpErrorHandler, HttpRequestHandler}

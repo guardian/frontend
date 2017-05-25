@@ -8,10 +8,11 @@ import conf.switches.Switches._
 import layout.ContentWidths
 import layout.ContentWidths._
 import model._
-import model.content.{Atom, Atoms, MediaAtom, MediaWrapper}
+import model.content.{Atom, Atoms, MediaAtom, MediaWrapper, ExplainerAtom}
 import org.jsoup.Jsoup
 import org.jsoup.nodes.{Document, Element, TextNode}
 import play.api.mvc.RequestHeader
+import play.twirl.api.HtmlFormat
 
 import scala.collection.JavaConversions._
 import scala.util.Try
@@ -257,10 +258,10 @@ case class TruncateCleaner(limit: Int)(implicit val edition: Edition, implicit v
       element.childNodes.foldLeft(charLimit) {
         (t, node) =>
           node match {
-            case node1: TextNode =>
-              truncateTextNode(t, node1)
-            case element1: Element =>
-              truncateElement(t, element1)
+            case tNode: TextNode =>
+              truncateTextNode(t, tNode)
+            case elem: Element =>
+              truncateElement(t, elem)
             case _ =>
               t
           }
@@ -785,4 +786,32 @@ case class CommercialComponentHigh(isPaidContent: Boolean, isNetworkFront: Boole
     document
   }
 
+}
+
+case class ExplainerCleaner(explainers: Seq[ExplainerAtom]) extends HtmlCleaner {
+  val prefixLength = "https://interactive.guim.co.uk/2016/08/explainer-interactive/embed/embed.html?id=".length
+  val eids = explainers.filter(_.labels.contains("test/test"))
+
+  override def clean(document: Document): Document = {
+    document
+      .getElementsByClass("element-interactive")
+      .foreach { i =>
+        val eid = i.attr("data-canonical-url").drop(prefixLength)
+        val eidInTest = eids.find(_.id == eid)
+        eidInTest.foreach { explainer =>
+          val hook = document.createElement("div")
+            .addClass("js-explainer-snippet")
+            .attr("data-explainer-id", explainer.id)
+          val title = document.createElement("meta")
+            .attr("name", "explainer-title")
+            .attr("content", explainer.title)
+          val body = document.createElement("meta")
+            .attr("name", "explainer-body")
+            .attr("content", HtmlFormat.escape(explainer.body).toString)
+          hook.appendChild(title).appendChild(body)
+          i.after(hook)
+        }
+      }
+    document
+  }
 }

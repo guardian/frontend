@@ -7,8 +7,8 @@ define([
     'commercial/modules/creatives/add-viewability-tracker',
     'raw-loader!commercial/views/creatives/frame.html',
     'raw-loader!commercial/views/creatives/gustyle-label.html',
-    'svg-loader!svgs/icon/external-link.svg',
-    'svg-loader!svgs/icon/arrow.svg'
+    'svgs/icon/external-link.svg',
+    'svgs/icon/arrow.svg'
 ], function (
     fastdom,
     template,
@@ -47,10 +47,10 @@ define([
             this.adSlot.lastElementChild.insertAdjacentHTML('afterbegin', labelMarkup);
             this.adSlot.classList.add('ad-slot--frame');
             if (this.params.trackingPixel) {
-                addTrackingPixel(this.params.trackingPixel + this.params.cacheBuster);
+                addTrackingPixel.addTrackingPixel(this.params.trackingPixel + this.params.cacheBuster);
             }
             if (this.params.researchPixel) {
-                addTrackingPixel(this.params.researchPixel + this.params.cacheBuster);
+                addTrackingPixel.addTrackingPixel(this.params.researchPixel + this.params.cacheBuster);
             }
             if (this.params.viewabilityTracker) {
                 addViewabilityTracker(this.adSlot, this.params.id, this.params.viewabilityTracker);

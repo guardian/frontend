@@ -31,7 +31,7 @@ define([
                 'lib/detect':  {
                     hasTouchScreen:      function () { return false; },
                     hasPushStateSupport: function () { return true; }
-                }
+                },
             });
             injector.require(['common/modules/ui/selection-sharing'], function () {
                 selectionSharing = arguments[0];

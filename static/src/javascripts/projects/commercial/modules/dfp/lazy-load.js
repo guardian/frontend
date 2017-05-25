@@ -3,11 +3,10 @@
 /* eslint no-use-before-define: "off" */
 
 import detect from 'lib/detect';
-import mediator from 'lib/mediator';
 import { getCurrentTime } from 'lib/user-timing';
-import dfpEnv from 'commercial/modules/dfp/dfp-env';
+import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 import loadAdvert from 'commercial/modules/dfp/load-advert';
-import performanceLogging from 'commercial/modules/dfp/performance-logging';
+import { updateAdvertMetric } from 'commercial/modules/dfp/performance-logging';
 import { getAdvertById } from 'commercial/modules/dfp/get-advert-by-id';
 
 const IntersectionObserver = window.IntersectionObserver;
@@ -16,24 +15,12 @@ const IntersectionObserverEntry = window.IntersectionObserverEntry;
 /* depthOfScreen: double. Top and bottom margin of the visual viewport to check for the presence of an advert */
 const depthOfScreen = 1.5;
 
-const stopListening = (): void => {
-    dfpEnv.lazyLoadEnabled = false;
-    mediator.off('window:throttledScroll', onScroll);
-};
-
-const stopObserving = (observer: IntersectionObserver): void => {
-    dfpEnv.lazyLoadEnabled = false;
-    observer.disconnect();
-};
-
 const displayAd = (advertId: string): void => {
     const advert = getAdvertById(advertId);
-    performanceLogging.updateAdvertMetric(
-        advert,
-        'lazyWaitComplete',
-        getCurrentTime()
-    );
-    loadAdvert(advert);
+    if (advert) {
+        updateAdvertMetric(advert, 'lazyWaitComplete', getCurrentTime());
+        loadAdvert(advert);
+    }
 };
 
 const onScroll = (): void => {
@@ -57,10 +44,6 @@ const onScroll = (): void => {
         advert => !lazyLoadAds.includes(advert.id)
     );
 
-    if (dfpEnv.advertsToLoad.length === 0) {
-        stopListening();
-    }
-
     lazyLoadAds.forEach(displayAd);
 };
 
@@ -81,10 +64,6 @@ const onIntersect = (
     dfpEnv.advertsToLoad = dfpEnv.advertsToLoad.filter(
         advert => advertIds.indexOf(advert.id) < 0
     );
-
-    if (dfpEnv.advertsToLoad.length === 0) {
-        stopObserving(observer);
-    }
 };
 
 export { onIntersect, onScroll };
