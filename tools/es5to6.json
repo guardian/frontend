@@ -91,7 +91,6 @@
     "projects/common/modules/sport/football/tag-page-stats.js",
     "projects/common/modules/sport/score-board.js",
     "projects/common/modules/tailor/fetch-data.js",
-    "projects/common/modules/ui/accessibility-prefs.js",
     "projects/common/modules/ui/autoupdate.js",
     "bootstraps/enhanced/preferences.js",
     "projects/commercial/modules/messenger/type.js"
