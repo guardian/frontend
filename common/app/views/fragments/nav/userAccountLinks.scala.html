@@ -5,7 +5,7 @@
 
 @if(IdentityProfileNavigationSwitch.isSwitchedOn) {
 
-    <li class="menu-item u-h js-show-user-account-links">
+    <li class="menu-item js-navigation-sign-in">
         <a href="@Configuration.id.url/signin?INTCMP=DOTCOM_HEADER_SIGNIN"
            data-link-name="nav2 : sign in"
            class="menu-item__title">
@@ -13,7 +13,7 @@
         </a>
     </li>
 
-    <li class="menu-item">
+    <li class="menu-item u-h js-navigation-account-details">
         <details>
             <summary class="menu-item__title"
                      data-link-name="nav2 : my account">

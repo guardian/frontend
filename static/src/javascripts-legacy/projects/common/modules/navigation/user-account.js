@@ -21,18 +21,21 @@ define([
 
     function showMyAccountIfNecessary () {
         if(id.isUserLoggedIn()) {
-            var userAccountLinksContainer = qwery('.js-show-user-account-links')[0];
+            var signIn = document.querySelector('.js-navigation-sign-in');
+            var accountDetails = document.querySelector('.js-navigation-account-details');
 
-            if (userAccountLinksContainer) {
-                fastdom.write(function () {
-                    userAccountLinksContainer.classList.add('user-signed-in');
+            fastdom.write(function () {
+                if (signIn) {
+                    signIn.classList.addClass('u-h');
+                }
 
+                if (accountDetails) {
+                    accountDetails.classList.remove('u-h');
                     updateCommentLink();
-                });
-            }
+                }
+            });
         }
     }
-
 
     return showMyAccountIfNecessary;
 });
