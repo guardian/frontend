@@ -41,6 +41,11 @@
         text-decoration: none;
     }
 
+    // only for Chrome/ Safari - FF loses the marker via display: block
+    &::-webkit-details-marker {
+        display: none;
+    }
+
     .fly-in-group--primary & {
         font-size: 20px;
         padding-bottom: $gs-baseline * 1.2;
