@@ -46,7 +46,6 @@ define([
                         testimonialMessage: 'I’m a 19 year old student disillusioned by an unequal society with a government that has stopped even pretending to work in my generation’s interests. So for the strength of our democracy, for the voice of the young, for a credible, independent check on the government, this contribution was pretty good value for money.',
                         testimonialName: 'Jack H.'
                     })
-                    
                 }
             },
             {
