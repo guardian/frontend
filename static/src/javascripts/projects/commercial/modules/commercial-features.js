@@ -1,7 +1,7 @@
 // @flow
 import config from 'lib/config';
 import detect from 'lib/detect';
-import { logError } from 'lib/robust';
+// import { logError } from 'lib/robust';
 import userFeatures from 'commercial/modules/user-features';
 import identityApi from 'common/modules/identity/api';
 import userPrefs from 'common/modules/user-prefs';
@@ -134,15 +134,15 @@ class CommercialFeatures {
     }
 }
 
-let commercialFeaturesExport;
+// let commercialFeaturesExport;
 
-try {
-    config.commercial = config.commercial || {};
-    config.commercial.featuresDebug = new CommercialFeatures();
-    commercialFeaturesExport = config.commercial.featuresDebug;
-} catch (error) {
-    commercialFeaturesExport = {};
-    logError('cm-commercialFeatures', error);
-}
+// try {
+config.commercial = config.commercial || {};
+config.commercial.featuresDebug = new CommercialFeatures();
+const commercialFeaturesExport = config.commercial.featuresDebug;
+// } catch (error) {
+//    commercialFeaturesExport = {};
+//    logError('cm-commercialFeatures', error);
+// }
 
 export const commercialFeatures = commercialFeaturesExport;
