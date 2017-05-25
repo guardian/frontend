@@ -1,7 +1,6 @@
 // @flow
+
 import fastdom from 'fastdom';
-import bean from 'bean';
-import $ from 'lib/$';
 import { loadScript } from 'lib/load-script';
 
 const launchOverlay = (event: Event): void => {
@@ -9,10 +8,13 @@ const launchOverlay = (event: Event): void => {
 
     const scriptUrl = 'https://assets.pinterest.com/js/pinmarklet.js';
     const cachePurge = new Date().getTime();
+    const images = document.querySelectorAll(
+        'img:not(.gu-image):not(.responsive-img)'
+    );
 
-    $('img:not(.gu-image):not(.responsive-img)').each(img => {
-        fastdom.write(() => {
-            $(img).attr('data-pin-nopin', 'true');
+    fastdom.write(() => {
+        images.forEach(img => {
+            img.setAttribute('data-pin-nopin', 'true');
         });
     });
 
@@ -20,10 +22,10 @@ const launchOverlay = (event: Event): void => {
 };
 
 const initPinterest = (): void => {
-    const buttons = $('.social__item--pinterest');
+    const buttons = document.querySelectorAll('.social__item--pinterest');
 
-    buttons.each(el => {
-        bean.on(el, 'click', launchOverlay);
+    [...buttons].forEach(el => {
+        el.addEventListener('click', launchOverlay);
     });
 };
 
