@@ -170,7 +170,6 @@
     "projects/common/modules/experiments/tests/fashion-statement-email-variants.js",
     "projects/common/modules/experiments/tests/film-today-email-variants.js",
     "projects/common/modules/experiments/tests/generic-email-variants.js",
-    "projects/common/modules/experiments/tests/increase-inline-ads.js",
     "projects/common/modules/experiments/tests/opinion-email-variants.js",
     "projects/common/modules/experiments/tests/paid-card-logo.js",
     "projects/commercial/modules/survey/survey-simple.js"
