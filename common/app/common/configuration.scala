@@ -526,6 +526,7 @@ class GuardianConfiguration extends Logging {
       // this is a bit of a convoluted way to check whether we actually have credentials.
       // I guess in an ideal world there would be some sort of isConfigued() method...
       try {
+        provider.getCredentials
         Some(provider)
       } catch {
         case ex: AmazonClientException =>

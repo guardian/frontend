@@ -258,12 +258,9 @@ case class TruncateCleaner(limit: Int)(implicit val edition: Edition, implicit v
       element.childNodes.foldLeft(charLimit) {
         (t, node) =>
           node match {
-            case tNode: TextNode =>
-              truncateTextNode(t, tNode)
-            case elem: Element =>
-              truncateElement(t, elem)
-            case _ =>
-              t
+            case tNode: TextNode => truncateTextNode(t, tNode)
+            case elem: Element => truncateElement(t, elem)
+            case _ => t
           }
       }
     }

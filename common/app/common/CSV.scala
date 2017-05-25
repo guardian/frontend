@@ -24,9 +24,7 @@ object CSV extends implicits.Strings {
 
     def COMMA = ","
     def DQUOTE = "\""
-    def DQUOTE2 = "\"\"" ^^ (_ => "\"")
-
-    // combine 2 dquotes into 1
+    def DQUOTE2 = "\"\"" ^^ (_ => "\"") // combine 2 dquotes into 1
     def CRLF = "\r\n" | "\n"
     def TXT = "[^\",\r\n]".r
     def SPACES = "[ \t]+".r
