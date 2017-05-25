@@ -1,6 +1,5 @@
 package controllers
 
-import _root_.models._
 import com.gu.contentapi.client.model.v1.{ItemResponse, Content => ApiContent}
 import common._
 import conf.switches.Switches
@@ -8,7 +7,6 @@ import contentapi.ContentApiClient
 import model.ParseBlockId.{InvalidFormat, ParsedBlockId}
 import model.Cached.WithoutRevalidationResult
 import model._
-import model.content.RecipeAtom
 import LiveBlogHelpers._
 import model.liveblog._
 import org.joda.time.DateTime
