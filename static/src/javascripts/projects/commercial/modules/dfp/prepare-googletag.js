@@ -31,7 +31,12 @@ const setDfpListeners = (): void => {
 
 const setPageTargeting = (): void => {
     const pubads = window.googletag.pubads();
-    const targeting = buildPageTargeting(commercialFeatures.adFree);
+    let adFree = false;
+    // because commercialFeatures has the potential to export itself as {}
+    if (commercialFeatures.adFree) {
+        adFree = commercialFeatures.adFree;
+    }
+    const targeting = buildPageTargeting(adFree);
     Object.keys(targeting).forEach(key => {
         pubads.setTargeting(key, targeting[key]);
     });
