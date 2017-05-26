@@ -16,7 +16,7 @@ object IndexPageGrouping extends Collections {
   def fromContent(trails: Seq[Content], timezone: DateTimeZone): Seq[IndexPageGrouping] = {
     val trailsAndDates = trails.map(content => TrailAndDate(content, content.trail.webPublicationDate.withZone(timezone).toLocalDate))
 
-    trailsAndDates.groupBy(_.date.withDayOfYear(1)).toSeq.sortBy(_._1).reverse flatMap { case (startOfYear, trailsThatYear) =>
+    trailsAndDates.groupBy(_.date.withDayOfYear(1)).toSeq.sortBy(_._1).reverse flatMap { case (_, trailsThatYear) =>
       val trailsByMonth = trailsThatYear.groupBy(_.date.withDayOfMonth(1))
 
       trailsByMonth.toSeq.sortBy(_._1).reverse flatMap {

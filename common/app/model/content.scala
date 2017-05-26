@@ -306,11 +306,11 @@ object Content {
     val content = make(apiContent)
 
     apiContent match {
-      case article if apiContent.isLiveBlog || apiContent.isArticle || apiContent.isSudoku => Article.make(content)
-      case gallery if apiContent.isGallery => Gallery.make(content)
-      case video if apiContent.isVideo => Video.make(content)
-      case audio if apiContent.isAudio => Audio.make(content)
-      case picture if apiContent.isImageContent => ImageContent.make(content)
+      case _ if apiContent.isLiveBlog || apiContent.isArticle || apiContent.isSudoku => Article.make(content)
+      case _ if apiContent.isGallery => Gallery.make(content)
+      case _ if apiContent.isVideo => Video.make(content)
+      case _ if apiContent.isAudio => Audio.make(content)
+      case _ if apiContent.isImageContent => ImageContent.make(content)
       case _ => GenericContent(content)
     }
   }
@@ -401,7 +401,6 @@ object Article {
 
     val contentType = if (content.tags.isLiveBlog) GuardianContentTypes.LiveBlog else GuardianContentTypes.Article
     val section = content.metadata.sectionId
-    val id = content.metadata.id
     val fields = content.fields
     val bookReviewIsbn = content.isbn.map { i: String => Map("isbn" -> JsString(i)) }.getOrElse(Map())
 
@@ -484,7 +483,7 @@ final case class Article (
   val isLiveBlog: Boolean = content.tags.isLiveBlog && content.fields.blocks.nonEmpty
   val isTheMinute: Boolean = content.tags.isTheMinuteArticle
   val isImmersive: Boolean = content.isImmersive
-  var isPhotoEssay : Boolean = content.isPhotoEssay
+  val isPhotoEssay: Boolean = content.isPhotoEssay
   val isExplore: Boolean = content.isExplore
   lazy val hasVideoAtTop: Boolean = soupedBody.body().children().headOption
     .exists(e => e.hasClass("gu-video") && e.tagName() == "video")
@@ -506,8 +505,6 @@ object Audio {
   def make(content: Content): Audio = {
 
     val contentType = GuardianContentTypes.Audio
-    val fields = content.fields
-    val id = content.metadata.id
     val section = content.metadata.sectionId
     val javascriptConfig: Map[String, JsValue] = Map(
       "isPodcast" -> JsBoolean(content.tags.isPodcast))
@@ -565,10 +562,8 @@ object Video {
   def make(content: Content): Video = {
 
     val contentType = GuardianContentTypes.Video
-    val fields = content.fields
     val elements = content.elements
     val section = content.metadata.sectionId
-    val id = content.metadata.id
     val source: Option[String] = elements.videos.find(_.properties.isMain).flatMap(_.videos.source)
 
     val javascriptConfig: Map[String, JsValue] = Map(
@@ -822,9 +817,7 @@ object Interactive {
     val content = Content(apiContent).content
     val contentType = GuardianContentTypes.Interactive
     val fields = content.fields
-    val tags = content.tags
     val section = content.metadata.sectionId
-    val id = content.metadata.id
 
     val metadata = content.metadata.copy(
       contentType = contentType,

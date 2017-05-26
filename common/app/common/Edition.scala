@@ -109,12 +109,11 @@ object Edition {
 
   def otherPagesFor(request: RequestHeader): Seq[EditionLink] = {
     val path = request.path
-    val edition = Edition(request)
     path match {
       case EditionalisedId(editionId, section) if Edition.defaultEdition.isEditionalised(section.drop(1)) =>
         val links = Edition.othersById(editionId).map(EditionLink(_, section))
         links.filter(link => link.edition.isEditionalised(link.path.drop(1)))
-      case EditionalisedFront(editionId) =>
+      case EditionalisedFront(_) =>
         Edition.othersByHomepage(path).map(EditionLink(_, "/"))
       case _ => Nil
     }

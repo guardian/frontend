@@ -109,7 +109,7 @@ object GuardianConfiguration extends Logging {
     def getProperty[T](get: String => T)(property: String): Option[T] =
       Try(get(property)) match {
           case Success(value) => Some(value)
-          case Failure(e: ConfigException.Missing) => None
+          case Failure(_: ConfigException.Missing) => None
           case Failure(e) =>
             log.error(s"couldn't retrive $property", e)
             None
@@ -526,7 +526,7 @@ class GuardianConfiguration extends Logging {
       // this is a bit of a convoluted way to check whether we actually have credentials.
       // I guess in an ideal world there would be some sort of isConfigued() method...
       try {
-        val creds = provider.getCredentials
+        provider.getCredentials
         Some(provider)
       } catch {
         case ex: AmazonClientException =>
