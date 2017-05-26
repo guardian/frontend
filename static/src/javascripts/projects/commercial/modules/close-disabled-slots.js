@@ -4,10 +4,13 @@ import fastdom from 'lib/fastdom-promise';
 import { commercialFeatures } from 'commercial/modules/commercial-features';
 
 const adSlotSelector: string = '.js-ad-slot';
+const mpuCandidateClass: string = 'fc-slice__item--mpu-candidate';
+const mpuCandidateSelector: string = `.${mpuCandidateClass}`;
 
 const shouldDisableAdSlotWhenAdFree = adSlot =>
     commercialFeatures.adFree &&
-    !adSlot.className.toLowerCase().includes('merchandising');
+    (adSlot.className.toLowerCase().includes(mpuCandidateClass) ||
+        !adSlot.className.toLowerCase().includes('merchandising'));
 
 const shouldDisableAdSlot = adSlot =>
     window.getComputedStyle(adSlot).display === 'none' ||
@@ -16,6 +19,10 @@ const shouldDisableAdSlot = adSlot =>
 const closeDisabledSlots = (force: boolean): Promise<void> => {
     // Get all ad slots
     let adSlots: Array<Element> = qwery(adSlotSelector);
+
+    if (commercialFeatures.adFree) {
+        adSlots.concat(qwery(mpuCandidateSelector));
+    }
 
     if (!force) {
         // remove the ones which should not be there
