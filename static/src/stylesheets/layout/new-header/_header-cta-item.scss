@@ -1,4 +1,4 @@
-.support-item {
+.header-cta-item {
     display: none;
     overflow: hidden;
 
@@ -30,7 +30,7 @@
     }
 }
 
-.support-item__label {
+.header-cta-item__label {
     color: $guardian-brand-dark;
     display: block;
     font-family: 'Guardian Egyptian Web', 'Guardian Text Egyptian Web', Georgia, serif;
@@ -47,6 +47,6 @@
     }
 }
 
-.support-item__new-line {
+.header-cta-item__new-line {
     display: block;
 }
