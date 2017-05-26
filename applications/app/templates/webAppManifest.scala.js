@@ -17,6 +17,11 @@
     },
     {
         "type": "image/png",
+        "sizes": "144x144",
+        "src": "@{JavaScript(Static("images/favicons/144x144.png").path)}"
+    },
+    {
+        "type": "image/png",
         "sizes": "114x114",
         "src": "@{JavaScript(Static("images/favicons/roundel-114x114.png"))}"
     }
