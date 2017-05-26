@@ -116,7 +116,7 @@ const maybePushAdUnit = (dfpDivId: string, sizeMapping: any) => {
 };
 
 const init = (start: () => void, stop: () => void) => {
-    if (dfpEnv.preFlightAdCallEnabled && commercialFeatures.dfpAdvertising) {
+    if (commercialFeatures.dfpAdvertising) {
         setupSwitch(start, stop);
     }
 
