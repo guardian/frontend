@@ -80,31 +80,38 @@ const findAdUnitIds = sizes =>
 //
 // Dynamically constructed slots that are made using create-slot are not supported here,
 // until callSwitch can handle lazy loading.
-const pushAdUnit = (dfpDivId: string, sizeMapping: any) => {
-    const __switch_zero = window.__switch_zero;
-    const promises = [];
+const maybePushAdUnit = (dfpDivId: string, sizeMapping: any) => {
+    // Only push units to switch when it's in a pre-flight ad-call zone (has window.esi from the ESI call)
+    // This is managed in fastly; currently /artanddesign
+    // We STILL drop the switch 0.js script on locations where there is no pre-flight ad-call
+    // but it won't have any units pushed to it; this is for user synching
+    if (dfpEnv.preFlightAdCallEnabled) {
+        const __switch_zero = window.__switch_zero;
+        const promises = [];
 
-    if (__switch_zero) {
-        const adUnitIds = findAdUnitIds(sizeMapping.sizes);
+        if (__switch_zero) {
+            const adUnitIds = findAdUnitIds(sizeMapping.sizes);
 
-        adUnitIds.forEach(adUnitId => {
-            if (adUnitId) {
-                promises.push(
-                    new Promise(resolve => {
-                        __switch_zero.units.push({
-                            dfpDivId,
-                            switchAdUnitId: adUnitId,
-                            deliveryCallback: resolve,
-                        });
-                    })
-                );
-            }
-        });
+            adUnitIds.forEach(adUnitId => {
+                if (adUnitId) {
+                    promises.push(
+                        new Promise(resolve => {
+                            __switch_zero.units.push({
+                                dfpDivId,
+                                switchAdUnitId: adUnitId,
+                                deliveryCallback: resolve,
+                            });
+                        })
+                    );
+                }
+            });
 
-        return timeout(REQUEST_TIMEOUT, Promise.all(promises)).catch(() => {
-            // The display needs to be called, even in the event of an error.
-        });
+            return timeout(REQUEST_TIMEOUT, Promise.all(promises)).catch(() => {
+                // The display needs to be called, even in the event of an error.
+            });
+        }
     }
+
     return Promise.resolve();
 };
 
@@ -119,5 +126,5 @@ const init = (start: () => void, stop: () => void) => {
 export default {
     init,
     callSwitch,
-    pushAdUnit,
+    maybePushAdUnit,
 };
