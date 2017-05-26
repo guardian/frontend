@@ -5,7 +5,7 @@ $gutter-large: 55px;
 $veggie-burger-small: 42px;
 $veggie-burger-medium: 52px;
 
-@import '../layout/new-header/_support-item';
+@import '../layout/new-header/_header-cta-item';
 
 .header {
     background-color: $guardian-brand;
@@ -335,7 +335,7 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter / 2;
     margin: 0;
 }
 
-.header__support {
+.header__cta {
     left: ($gs-gutter / 4) - 1px;
     position: absolute;
 
