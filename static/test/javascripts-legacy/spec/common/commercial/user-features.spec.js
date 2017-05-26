@@ -43,7 +43,6 @@ define(['helpers/injector'], function (Injector) {
                 it('Performs an update if the user has expired data', function () {
                     setAllFeaturesData({isExpired: true});
                     userFeatures._.refresh();
-
                     expect(userFeatures._.requestNewData).toHaveBeenCalled();
                 });
 
@@ -102,7 +101,7 @@ define(['helpers/injector'], function (Injector) {
         describe('The isPayingMember getter', function () {
             it('Is false when the user is logged out', function () {
                 identityApi.isUserLoggedIn = function () {return false;};
-                expect(userFeatures.isAdFreeUser).toBe(false);
+                expect(userFeatures.isAdFreeUser()).toBe(false);
             });
 
             describe('When the user is logged in', function () {
