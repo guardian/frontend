@@ -14,6 +14,8 @@ import askFourEarning
     from 'common/modules/experiments/tests/contributions-epic-ask-four-earning';
 import acquisitionsEpicLiveBlog
     from 'common/modules/experiments/tests/acquisitions-epic-liveblog';
+import acquisitionsEpicElectionInteractive
+    from 'common/modules/experiments/tests/acquisitions-epic-election-interactive';
 import acquisitionsEpicPreElection
     from 'common/modules/experiments/tests/acquisitions-epic-pre-election';
 import acquisitionsEpicAlwaysAskIfTagged
@@ -31,6 +33,7 @@ const tests = [
     askFourEarning,
     acquisitionsEpicAlwaysAskIfTagged,
     acquisitionsEpicLiveBlog,
+    acquisitionsEpicElectionInteractive,
 ].map(Test => new Test());
 
 const isViewable = (v: Variant): boolean => {
