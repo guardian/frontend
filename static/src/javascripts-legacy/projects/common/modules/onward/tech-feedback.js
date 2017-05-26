@@ -125,12 +125,16 @@ define([
 
     return function () {
 
-        detect.adblockInUse.then(function(adblockInUse){
-            adblockBeingUsed = adblockInUse;
-        });
+        if(document.getElementById("feedback-category")){
 
-        initForms();
-        hideUnenhancedFallback();
+            detect.adblockInUse.then(function(adblockInUse){
+                adblockBeingUsed = adblockInUse;
+            });
+
+            initForms();
+            hideUnenhancedFallback();
+            
+        }
 
     };
 
