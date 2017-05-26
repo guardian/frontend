@@ -1,0 +1,51 @@
+
+.feedback__form {
+    border: 0;
+    outline: none;
+    display: none;
+}
+
+.feedback__form--selected {
+    display: block;
+}
+
+.feedback__element {
+    margin-top: $gs-baseline * 2;
+    margin-bottom: $gs-baseline * 2;
+}
+
+.feedback__entry {
+    border: 1px solid $neutral-4;
+    padding: 12px;
+    outline: none;
+    appearance: none;
+    border-radius: 8px;
+    display: block;
+    width: 80%;
+}
+
+.feedback__textarea {
+    height: 13em;
+}
+
+.feedback__select {
+    border: 1px solid $neutral-4;
+    padding: 8px;
+    margin-top: $gs-baseline * 2;
+    outline: none;
+    appearance: none;
+    border-radius: 20px;
+    display: block;
+    cursor: pointer;
+    background: #ffffff url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAxOCI+PHBhdGggZD0iTTIzLjIuN0wxMi43IDkuMWwtMS4xLjktMS4xLS44OThMMCAuNy41IDBsMTEuMSA2LjNMMjIuNyAwbC41Ljd6Ij48L3BhdGg+PC9zdmc+') no-repeat 93% 60%;
+    background-size: 16px auto;
+    width: 80%;
+}
+
+.feedback__entry--mandatory-failed {
+    border-color: $error;
+}
+
+#feedback__explainer {
+    color: $error;
+}
