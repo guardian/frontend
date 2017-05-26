@@ -1,7 +1,5 @@
 package controllers
 
-import javax.inject.Inject
-
 import conf.Configuration
 import common._
 import model.Cached.RevalidatableResult
