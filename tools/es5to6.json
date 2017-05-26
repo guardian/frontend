@@ -25,7 +25,10 @@
     "projects/commercial/modules/messenger/scroll.js",
     "projects/common/modules/charts/doughnut.js"
   ],
-  "Lydia Shepherd": [],
+  "Lydia Shepherd": [
+    "projects/common/modules/commercial/adblock-messages.js",
+    "projects/common/modules/charts/table-doughnut.js"
+  ],
   "sndrs": [
     "lib/detect.js",
     "bootstraps/enhanced/accessibility.js",
@@ -108,9 +111,7 @@
     "projects/commercial/modules/messenger/viewport.js"
   ],
   "Gideon Goldberg": [
-    "projects/commercial/modules/user-features.js",
-    "projects/common/modules/commercial/adblock-messages.js",
-    "projects/common/modules/charts/table-doughnut.js"
+    "projects/commercial/modules/user-features.js"
   ],
   "Matthew Walls": [
     "projects/common/modules/crosswords/anagram-helper/main.js",
