@@ -38,9 +38,7 @@ const requestNewData = (): void => {
 };
 
 const featuresDataIsMissing =
-    !getCookie(USER_FEATURES_EXPIRY_COOKIE) ||
-    !getCookie(PAYING_MEMBER_COOKIE) ||
-    !getCookie(AD_FREE_USER_COOKIE);
+    !getCookie(USER_FEATURES_EXPIRY_COOKIE) || !getCookie(AD_FREE_USER_COOKIE);
 
 const featuresDataIsOld = () => {
     const featuresExpiryCookie = getCookie(USER_FEATURES_EXPIRY_COOKIE);
