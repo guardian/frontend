@@ -6,7 +6,7 @@ import userAccount from 'common/modules/navigation/user-account';
 
 const enhanced = {};
 
-const getFlyIn = (): ?HTMLElement => document.getElementById('main-menu');
+const getMenu = (): ?HTMLElement => document.getElementById('main-menu');
 
 const closeSidebarSection = (section: HTMLElement): void => {
     section.removeAttribute('open');
@@ -29,8 +29,11 @@ const openSidebarSection = (
     section.setAttribute('open', '');
 
     if (options.scrollIntoView === true) {
-        scrollToElement(section, 0, 'easeInQuad', getFlyIn());
+        scrollToElement(section, 0, 'easeInQuad', getMenu());
     }
+
+    // the sections should behave like an accordion
+    closeAllSidebarSections(section);
 };
 
 const toggleSidebar = (): void => {
@@ -39,11 +42,11 @@ const toggleSidebar = (): void => {
     const globalOpenClass = 'nav-is-open';
     const trigger = document.querySelector('.veggie-burger');
     const newHeader = document.querySelector('.new-header');
-    const flyInToggle = newHeader && newHeader.querySelector('.js-change-link');
+    const menuToggle = newHeader && newHeader.querySelector('.js-change-link');
     const isOpen = trigger && trigger.getAttribute('aria-expanded') === 'true';
-    const flyIn = getFlyIn();
+    const menu = getMenu();
 
-    if (!newHeader || !flyIn || !flyInToggle) {
+    if (!newHeader || !menu || !menuToggle) {
         return;
     }
 
@@ -68,7 +71,7 @@ const toggleSidebar = (): void => {
         const expandedAttr = isOpen ? 'false' : 'true';
         const hiddenAttr = isOpen ? 'true' : 'false';
 
-        flyInToggle.setAttribute(
+        menuToggle.setAttribute(
             'data-link-name',
             `nav2 : veggie-burger : ${isOpen ? 'show' : 'hide'}`
         );
@@ -77,7 +80,7 @@ const toggleSidebar = (): void => {
             trigger.setAttribute('aria-expanded', expandedAttr);
         }
 
-        flyIn.setAttribute('aria-hidden', hiddenAttr);
+        menu.setAttribute('aria-hidden', hiddenAttr);
         newHeader.classList.toggle(openClass, !isOpen);
 
         if (documentElement) {
@@ -142,11 +145,11 @@ const enhanceSidebarToggle = (): void => {
 };
 
 const toggleSidebarWithOpenSection = () => {
-    const flyIn = getFlyIn();
-    const subnav = document.querySelector('.subnav');
+    const menu = getMenu();
+    const subnav = document.querySelector('.subnav__list');
     const pillarTitle = (subnav && subnav.dataset.pillarTitle) || '';
     const targetSelector = `.js-navigation-item[data-section-name="${pillarTitle}"]`;
-    const target = flyIn && flyIn.querySelector(targetSelector);
+    const target = menu && menu.querySelector(targetSelector);
 
     if (target) {
         openSidebarSection(target.children[0], { scrollIntoView: true });
@@ -156,24 +159,19 @@ const toggleSidebarWithOpenSection = () => {
 };
 
 const addEventHandler = (): void => {
-    const subnav = document.querySelector('.subnav');
+    const menu = getMenu();
     const toggle = document.querySelector('.js-toggle-nav-section');
-    const flyIn = getFlyIn();
 
-    if (!flyIn) {
-        return;
-    }
-
-    flyIn.addEventListener('click', (event: Event) => {
+    menu.addEventListener('click', (event: Event) => {
         const target: HTMLElement = (event.target: any);
 
-        if (target.matches('.js-close-nav-list')) {
+        if (target.matches('.js-navigation-button')) {
             event.stopPropagation();
-            closeAllSidebarSections(target);
+            closeAllSidebarSections(target.parentNode);
         }
     });
 
-    if (subnav && toggle) {
+    if (toggle) {
         toggle.addEventListener('click', () => {
             toggleSidebarWithOpenSection();
         });
