@@ -33,7 +33,7 @@
     "amd-to-es6": "^0.1.0",
     "amphtml-validator": "^1.0.10",
     "any-observable": "^0.2.0",
-    "autoprefixer": "^6.5.3",
+    "autoprefixer": "^7.1.1",
     "aws-sdk": "~2.0.0-rc4",
     "babel-cli": "^6.18.0",
     "babel-core": "^6.21.0",

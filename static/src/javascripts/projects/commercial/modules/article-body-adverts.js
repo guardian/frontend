@@ -66,7 +66,12 @@ const addArticleAds = (count: number, rules: Object): Promise<number> => {
             .slice(0, Math.min(paras.length, count))
             .map((para: Node) => {
                 bodyAds += 1;
-                return insertAdAtPara(para, getSlotName(), getSlotType());
+                return insertAdAtPara(
+                    para,
+                    getSlotName(),
+                    getSlotType(),
+                    'inline'
+                );
             });
 
         return Promise.all(slots).then(() => slots.length);

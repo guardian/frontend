@@ -398,7 +398,10 @@ object PaidCard {
       description = content.card.trailText,
       image,
       fallbackImageUrl,
-      targetUrl = header.url,
+      targetUrl = content match {
+        case snap: LinkSnap => snap.properties.href getOrElse ""
+        case _ => header.url
+      },
       cardTypes = cardTypes,
       branding = content.branding(defaultEdition)
     )
