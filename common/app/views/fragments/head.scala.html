@@ -14,7 +14,7 @@
 
 @* stylesheet <link>s - get the stylesheets downloading ASAP *@
 @defining(getContent(page)) { content =>
-    @fragments.stylesheets(projectName, content.exists(_.tags.isCrossword), content.exists(_.tags.isInteractive));
+    @fragments.stylesheets(projectName, content.exists(_.tags.isCrossword), content.exists(_.tags.isInteractive))
 }
 
 @*
