@@ -16,10 +16,10 @@
 
 .feedback__entry {
     border: 1px solid $neutral-4;
-    padding: .75rem;
+    padding: 12px;
     outline: none;
     appearance: none;
-    border-radius: .5rem;
+    border-radius: 8px;
     display: block;
     width: 80%;
 }
@@ -30,11 +30,11 @@
 
 .feedback__select {
     border: 1px solid $neutral-4;
-    padding: .5rem;
+    padding: 8px;
     margin-top: $gs-baseline * 2;
     outline: none;
     appearance: none;
-    border-radius: 1.2rem;
+    border-radius: 20px;
     display: block;
     cursor: pointer;
     background: #ffffff url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAxOCI+PHBhdGggZD0iTTIzLjIuN0wxMi43IDkuMWwtMS4xLjktMS4xLS44OThMMCAuNy41IDBsMTEuMSA2LjNMMjIuNyAwbC41Ljd6Ij48L3BhdGg+PC9zdmc+') no-repeat 93% 60%;
