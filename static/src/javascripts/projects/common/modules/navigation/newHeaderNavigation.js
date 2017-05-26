@@ -12,7 +12,7 @@ const closeSidebarSection = (section: HTMLElement): void => {
     section.removeAttribute('open');
 };
 
-const closeAllSidebarSections = (exclude?: HTMLElement): void => {
+const closeAllSidebarSections = (exclude?: Node): void => {
     const sections = [...document.querySelectorAll('.js-close-nav-list')];
 
     sections.forEach(section => {
@@ -162,14 +162,17 @@ const addEventHandler = (): void => {
     const menu = getMenu();
     const toggle = document.querySelector('.js-toggle-nav-section');
 
-    menu.addEventListener('click', (event: Event) => {
-        const target: HTMLElement = (event.target: any);
+    if (menu) {
+        menu.addEventListener('click', (event: Event) => {
+            const target: HTMLElement = (event.target: any);
+            const parent: HTMLElement = (target.parentNode: any);
 
-        if (target.matches('.js-navigation-button')) {
-            event.stopPropagation();
-            closeAllSidebarSections(target.parentNode);
-        }
-    });
+            if (target.matches('.js-navigation-button') && parent) {
+                event.stopPropagation();
+                closeAllSidebarSections(parent);
+            }
+        });
+    }
 
     if (toggle) {
         toggle.addEventListener('click', () => {
