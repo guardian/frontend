@@ -158,4 +158,4 @@ const FabricExpandableVideoV2 = (adSlot: Element, params: Object) => {
     });
 };
 
-export default FabricExpandableVideoV2;
+export { FabricExpandableVideoV2 as fabricExpandVideo };
