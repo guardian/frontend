@@ -13,7 +13,7 @@ const userHasData = () =>
     getCookie(PAYING_MEMBER_COOKIE) ||
     getCookie(AD_FREE_USER_COOKIE);
 
-const persistResponse = JsonResponse => {
+const persistResponse = (JsonResponse: () => void) => {
     const expiryDate = new Date();
     expiryDate.setDate(expiryDate.getDate() + 1);
     addCookie(USER_FEATURES_EXPIRY_COOKIE, expiryDate.getTime().toString());
