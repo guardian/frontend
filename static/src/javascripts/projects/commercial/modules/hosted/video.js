@@ -1,6 +1,6 @@
 // @flow
-import $ from 'lib/$';
 import detect from 'lib/detect';
+import fastdom from 'fastdom';
 import deferToAnalytics from 'lib/defer-to-analytics';
 import reportError from 'lib/report-error';
 import events from 'common/modules/video/events';
@@ -18,21 +18,38 @@ const initLoadingSpinner = (player: Object, loadingTemplate: string): void => {
 
 const upgradeVideoPlayerAccessibility = (player: Object): void => {
     // Set the video tech element to aria-hidden, and label the buttons in the videojs control bar.
-    $('.vjs-tech', player.el()).attr('aria-hidden', true);
+    const playerEl = player.el();
 
-    // Hide superfluous controls, and label useful buttons.
-    $('.vjs-big-play-button', player.el()).attr('aria-hidden', true);
-    $('.vjs-current-time', player.el()).attr('aria-hidden', true);
-    $('.vjs-time-divider', player.el()).attr('aria-hidden', true);
-    $('.vjs-duration', player.el()).attr('aria-hidden', true);
-    $('.vjs-embed-button', player.el()).attr('aria-hidden', true);
-
-    $('.vjs-play-control', player.el()).attr('aria-label', 'video play');
-    $('.vjs-mute-control', player.el()).attr('aria-label', 'video mute');
-    $('.vjs-fullscreen-control', player.el()).attr(
-        'aria-label',
-        'video fullscreen'
-    );
+    fastdom.write(() => {
+        playerEl.querySelectorAll('.vjs-tech').forEach(el => {
+            el.setAttribute('aria-hidden', 'true');
+        });
+        // Hide superfluous controls, and label useful buttons.
+        playerEl.querySelectorAll('.vjs-big-play-button').forEach(el => {
+            el.setAttribute('aria-hidden', 'true');
+        });
+        playerEl.querySelectorAll('.vjs-current-time').forEach(el => {
+            el.setAttribute('aria-hidden', 'true');
+        });
+        playerEl.querySelectorAll('.vjs-time-divider').forEach(el => {
+            el.setAttribute('aria-hidden', 'true');
+        });
+        playerEl.querySelectorAll('.vjs-duration').forEach(el => {
+            el.setAttribute('aria-hidden', 'true');
+        });
+        playerEl.querySelectorAll('.vjs-embed-button').forEach(el => {
+            el.setAttribute('aria-hidden', 'true');
+        });
+        playerEl.querySelectorAll('.vjs-play-control').forEach(el => {
+            el.setAttribute('aria-label', 'video play');
+        });
+        playerEl.querySelectorAll('.vjs-mute-control').forEach(el => {
+            el.setAttribute('aria-label', 'video mute');
+        });
+        playerEl.querySelectorAll('.vjs-fullscreen-control').forEach(el => {
+            el.setAttribute('aria-label', 'video fullscreen');
+        });
+    });
 };
 
 const onPlayerError = (player: Object): void => {
@@ -116,10 +133,10 @@ export const initHostedVideo = (
 ): Promise<void> => {
     start();
 
-    const $videoEl = $('.vjs-hosted__video, video');
-    const $youtubeIframe = $('.js-hosted-youtube-video');
+    const videoEl = document.querySelectorAll('.vjs-hosted__video');
+    const youtubeIframe = document.querySelectorAll('.js-hosted-youtube-video');
 
-    if (!$youtubeIframe.length && !$videoEl.length) {
+    if (!youtubeIframe.length && !videoEl.length) {
         // Halt execution if there are no video containers on the page.
         stop();
         return Promise.resolve();
@@ -151,11 +168,11 @@ export const initHostedVideo = (
                 })
         )
         .then(videojs => {
-            $videoEl.each(el => {
+            videoEl.forEach(el => {
                 setupVideo(el, videojs);
             });
 
-            $youtubeIframe.each(initHostedYoutube);
+            youtubeIframe.forEach(initHostedYoutube);
         })
         .then(stop, stop);
 
