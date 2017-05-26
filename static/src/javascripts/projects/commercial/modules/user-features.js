@@ -8,7 +8,7 @@ const USER_FEATURES_EXPIRY_COOKIE = 'gu_user_features_expiry';
 const PAYING_MEMBER_COOKIE = 'gu_paying_member';
 const AD_FREE_USER_COOKIE = 'GU_AFU';
 
-const userHasData =
+const userHasData = () =>
     getCookie(USER_FEATURES_EXPIRY_COOKIE) ||
     getCookie(PAYING_MEMBER_COOKIE) ||
     getCookie(AD_FREE_USER_COOKIE);
@@ -37,7 +37,7 @@ const requestNewData = (): void => {
         .catch(() => {});
 };
 
-const featuresDataIsMissing =
+const featuresDataIsMissing = () =>
     !getCookie(USER_FEATURES_EXPIRY_COOKIE) || !getCookie(AD_FREE_USER_COOKIE);
 
 const featuresDataIsOld = () => {
@@ -47,18 +47,23 @@ const featuresDataIsOld = () => {
     return timeNow >= featuresExpiryTime;
 };
 
-const userNeedsNewFeatureData = featuresDataIsMissing || featuresDataIsOld();
+const userNeedsNewFeatureData = () =>
+    featuresDataIsMissing() || featuresDataIsOld();
 
-const userHasDataAfterSignout = !identity.isUserLoggedIn() && userHasData;
+const userHasDataAfterSignout = () =>
+    !identity.isUserLoggedIn() && userHasData();
 
 /**
      * Updates the user's data in a lazy fashion
      */
+
 const refresh = () => {
-    if (identity.isUserLoggedIn() && userNeedsNewFeatureData) {
-        requestNewData();
-    } else if (userHasDataAfterSignout) {
-        deleteOldData();
+    if (identity.isUserLoggedIn() && userNeedsNewFeatureData()) {
+        // eslint-disable-next-line no-use-before-define
+        _.requestNewData();
+    } else if (userHasDataAfterSignout()) {
+        // eslint-disable-next-line no-use-before-define
+        _.deleteOldData();
     }
 };
 
@@ -80,6 +85,7 @@ const isAdFreeUser = () => {
 };
 
 export { isAdFreeUser, isPayingMember };
+
 export const _ = {
     requestNewData,
     deleteOldData,
