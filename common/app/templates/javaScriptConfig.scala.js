@@ -25,7 +25,8 @@
                 "adblock-coins-us": "@Static("images/membership/adblock-coins-us.png")"
             },
             "acquisitions": {
-                "paypal-and-credit-card": "@Static("images/acquisitions/paypal-and-credit-card.png")"
+                "paypal-and-credit-card": "@Static("images/acquisitions/paypal-and-credit-card.png")",
+                "usa-flag": "@Static("images/acquisitions/usa-flag.png")"
              }
         },
         "stylesheets": {

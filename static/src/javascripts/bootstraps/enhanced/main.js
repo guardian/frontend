@@ -265,7 +265,7 @@ const bootEnhanced = (): void => {
             require => {
                 bootstrapContext(
                     'preferences',
-                    require('bootstraps/enhanced/preferences').init
+                    require('common/modules/preferences/main').init
                 );
             },
             'preferences'
@@ -308,22 +308,6 @@ const bootEnhanced = (): void => {
             },
             'accessibility'
         );
-    }
-
-    if (config.page.showNewRecipeDesign === true) {
-        // below is for during testing
-        if (config.tests.abNewRecipeDesign) {
-            require.ensure(
-                [],
-                require => {
-                    bootstrapContext(
-                        'recipes',
-                        require('bootstraps/enhanced/recipe-article').init
-                    );
-                },
-                'recipes'
-            );
-        }
     }
 
     fastdom.read(() => {

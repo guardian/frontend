@@ -2,7 +2,7 @@ package model.liveblog
 
 import com.gu.contentapi.client.model.v1.ElementType.{Map => _, _}
 import com.gu.contentapi.client.model.v1.{BlockElement => ApiBlockElement}
-import model.{ImageMedia, ImageAsset, AudioAsset, VideoAsset}
+import model.{AudioAsset, ImageAsset, ImageMedia, VideoAsset}
 import play.api.libs.json._
 
 sealed trait BlockElement

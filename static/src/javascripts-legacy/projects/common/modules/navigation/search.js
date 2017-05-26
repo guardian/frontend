@@ -15,13 +15,17 @@ define([
 ) {
 
     var Search = function () {
+        var toggle = document.querySelector('.js-search-toggle');
         var searchLoader,
             gcsUrl,
             resultSetSize,
             container,
             self = this;
 
-        if (config.switches.googleSearch && config.page.googleSearchUrl && config.page.googleSearchId) {
+        if (config.switches.googleSearch &&
+            config.page.googleSearchUrl &&
+            config.page.googleSearchId &&
+            toggle) {
 
             gcsUrl = config.page.googleSearchUrl + '?cx=' + config.page.googleSearchId;
             resultSetSize = config.page.section === 'identity' ? 3 : 10;
@@ -30,9 +34,8 @@ define([
                 self.load();
             });
 
-            bean.on(document, 'click', '.js-search-toggle', function (e) {
-                var searchToggleLink = $('.js-search-toggle');
-                var searchPopup = $('.js-search-popup');
+            bean.on(toggle, 'click', function (e) {
+                var popup = document.querySelector('.js-search-popup');
                 var maybeDismissSearchPopup = function(event) {
                     var el = event.target;
                     var clickedPop = false;
@@ -54,42 +57,22 @@ define([
 
                     if (!clickedPop) {
                         event.preventDefault();
-                        searchToggleLink.removeClass('is-active');
-                        searchPopup.addClass('is-off');
+                        toggle.classList.remove('is-active');
+                        popup.classList.add('is-off');
                         bean.off(document, 'click', maybeDismissSearchPopup);
                     }
                 };
 
-                if (searchToggleLink.hasClass('is-active')) {
-                    bean.on(document, 'click', maybeDismissSearchPopup);
-                }
+                setTimeout(function() {
+                    if (toggle.classList.contains('is-active')) {
+                        bean.on(document, 'click', maybeDismissSearchPopup);
+                    }
+                })
 
                 searchLoader();
                 // Make sure search is always in the correct state
                 self.focusSearchField();
                 e.preventDefault();
-            });
-
-            bean.on(document, 'keydown', '.gsc-input', function () {
-                fastdom.read(function () {
-                    var $autoCompleteObject = $('.gssb_c'),
-                        searchFromTop       = $autoCompleteObject.css('top'),
-                        windowOffset        = $(window).scrollTop();
-
-                    fastdom.write(function () {
-                        $autoCompleteObject.css({
-                            'top': parseInt(searchFromTop, 10) + windowOffset,
-                            'z-index': '1030'
-                        });
-                    });
-                });
-            });
-
-            bean.on(document, 'click', '.search-results', function (e) {
-                var targetEl = e.target;
-                if (targetEl.nodeName.toLowerCase() === 'a') {
-                    targetEl.target = '_self';
-                }
             });
         }
 
@@ -133,6 +116,28 @@ define([
                         '</div>';
                 });
 
+                bean.on(container, 'keydown', '.gsc-input', function () {
+                    fastdom.read(function () {
+                        var $autoCompleteObject = $('.gssb_c'),
+                            searchFromTop       = $autoCompleteObject.css('top'),
+                            windowOffset        = $(window).scrollTop();
+
+                        fastdom.write(function () {
+                            $autoCompleteObject.css({
+                                'top': parseInt(searchFromTop, 10) + windowOffset,
+                                'z-index': '1030'
+                            });
+                        });
+                    });
+                });
+
+                bean.on(container, 'click', '.search-results', function (e) {
+                    var targetEl = e.target;
+                    if (targetEl.nodeName.toLowerCase() === 'a') {
+                        targetEl.target = '_self';
+                    }
+                });
+
                 s = document.createElement('script');
                 s.async = true;
                 s.src = gcsUrl;
@@ -144,7 +149,6 @@ define([
         };
 
         this.init = function () { };
-
     };
 
     return Search;

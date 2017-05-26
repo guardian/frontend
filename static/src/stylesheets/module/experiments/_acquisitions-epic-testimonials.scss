@@ -29,6 +29,8 @@
 }
 
 .epic__testimonial-name {
+    display: block;
+    margin-top: 5px;
     font-family: $f-sans-serif-text;
     font-style: normal;
 }
@@ -65,4 +67,17 @@
 
 .contributions__paragraph--subtle {
     margin-top: 0;
+}
+
+.contributions__epic--testimonial-usa {
+    .inline-quote svg {
+        fill: #ffbb00;
+    }
+}
+
+.epic__testimonial__icon {
+    height: 24px;
+    width: 24px;
+    float: left;
+    margin-right: 5px;
 }
