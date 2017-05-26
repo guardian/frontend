@@ -7,7 +7,7 @@ import org.apache.commons.io.IOUtils
 import play.api.libs.json._
 import play.api.Mode
 
-import scala.collection.concurrent.{Map => ConcurrentMap, TrieMap}
+import scala.collection.concurrent.{TrieMap, Map => ConcurrentMap}
 import scala.util.{Failure, Success, Try}
 
 // turns an unhashed name into a name that's hashed if it needs to be
