@@ -82,4 +82,10 @@ const isAdFreeUser = () => {
 };
 
 export { isAdFreeUser, isPayingMember };
-export const _ = { requestNewData, deleteOldData, persistResponse, refresh };
+export const _ = {
+    requestNewData,
+    deleteOldData,
+    persistResponse,
+    refresh,
+    userNeedsNewFeatureData,
+};
