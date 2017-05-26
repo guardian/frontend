@@ -25,7 +25,7 @@ const { src, target } = require('./__tasks__/config').paths;
 const sassDir = path.resolve(src, 'stylesheets');
 
 const SASS_SETTINGS = {
-    outputStyle: 'expanded',
+    outputStyle: 'compressed',
     sourceMap: true,
     precision: 5,
 };
