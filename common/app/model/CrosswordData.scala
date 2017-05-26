@@ -82,7 +82,7 @@ object CrosswordData {
 
   implicit val jsonWrites = Json.writes[CrosswordData]
 
-  def fromCrossword(crossword: Crossword) = {
+  def fromCrossword(crossword: Crossword): CrosswordData = {
     // For entry groups, all separator locations for entries within the
     // group are incorrectly stored on the first group entry. We normalize
     // the data to store the separator locations on their corresponding entries.

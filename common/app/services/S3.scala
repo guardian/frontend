@@ -160,16 +160,16 @@ object S3FrontsApi extends S3 {
   def getDraftFapiPressedKeyForPath(path: String): String =
     s"$location/pressed/draft/$path/fapi/pressed.json"
 
-  def putLivePressedJson(path: String, json: String) =
+  def putLivePressedJson(path: String, json: String): Unit =
     putPrivateGzipped(getLivePressedKeyForPath(path), json, "application/json")
 
-  def putDraftPressedJson(path: String, json: String) =
+  def putDraftPressedJson(path: String, json: String): Unit =
     putPrivateGzipped(getDraftPressedKeyForPath(path), json, "application/json")
 
-  def putLiveFapiPressedJson(path: String, json: String) =
+  def putLiveFapiPressedJson(path: String, json: String): Unit =
     putPrivateGzipped(getLiveFapiPressedKeyForPath(path), json, "application/json")
 
-  def putDraftFapiPressedJson(path: String, json: String) =
+  def putDraftFapiPressedJson(path: String, json: String): Unit =
     putPrivateGzipped(getDraftFapiPressedKeyForPath(path), json, "application/json")
 
   def getPressedLastModified(path: String): Option[String] =
@@ -232,13 +232,13 @@ class SecureS3Request(wsClient: WSClient) extends implicits.Dates with Logging {
 
 object S3Archive extends S3 {
  override lazy val bucket = if (Configuration.environment.isNonProd) "aws-frontend-archive-code" else "aws-frontend-archive"
- def getHtml(path: String) = get(path)
+ def getHtml(path: String): Option[String] = get(path)
 }
 
 object S3Infosec extends S3 {
   override lazy val bucket = "aws-frontend-infosec"
   val key = "blocked-email-domains.txt"
-  def getBlockedEmailDomains = get(key)
+  def getBlockedEmailDomains: Option[String] = get(key)
 }
 
 object S3ArchiveOriginals extends S3 {

@@ -16,7 +16,7 @@ case class LogStashConf(enabled: Boolean,
                         customFields: Map[String, String])
 
 class LogstashLifecycle(playConfig: PlayConfiguration) extends LifecycleComponent {
-  override def start() = {
+  override def start(): Unit = {
     Logstash.init(playConfig)
   }
 }
@@ -32,7 +32,7 @@ object Logstash extends ExecutionContexts {
     "ec2_instance" -> Option(EC2MetadataUtils.getInstanceId).getOrElse("Not running on ec2")
   )
 
-  def config(playConfig: PlayConfiguration) = for {
+  def config(playConfig: PlayConfiguration): Option[LogStashConf] = for {
     stream <- Configuration.Logstash.stream
     region <- Configuration.Logstash.streamRegion
   } yield {

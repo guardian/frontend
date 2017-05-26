@@ -50,7 +50,7 @@ object ContainerLayout extends implicits.Collections {
     containerDefinition: ContainerDefinition,
     config: ContainerDisplayConfig,
     items: Seq[PressedContent]
-  ) = fromContainerDefinition(
+  ): ContainerLayout = fromContainerDefinition(
     containerDefinition,
     ContainerLayoutContext.empty,
     config,
@@ -62,7 +62,7 @@ object ContainerLayout extends implicits.Collections {
       containerLayoutContext: ContainerLayoutContext,
       config: ContainerDisplayConfig,
       items: Seq[PressedContent]
-  ) = apply(
+  ): (ContainerLayout, ContainerLayoutContext) = apply(
       containerDefinition.slices,
       items,
       containerLayoutContext,
@@ -75,13 +75,13 @@ object ContainerLayout extends implicits.Collections {
       containerLayoutContext: ContainerLayoutContext,
       config: ContainerDisplayConfig,
       items: Seq[PressedContent]
-  ) =
+  ): Option[(ContainerLayout, ContainerLayoutContext)] =
     ContainerDefinition.fromContainer(container, items) map {
       definition: ContainerDefinition =>
         fromContainerDefinition(definition, containerLayoutContext, config, items)
     }
 
-  def forHtmlBlobs(sliceDefinitions: Seq[Slice], blobs: Seq[HtmlAndClasses]) = {
+  def forHtmlBlobs(sliceDefinitions: Seq[Slice], blobs: Seq[HtmlAndClasses]): ContainerLayout = {
     val slicesWithItemsCount = (sliceDefinitions zip sliceDefinitions.map(_.layout.columns.map(_.numItems).sum)).toList
 
     @tailrec
@@ -112,16 +112,16 @@ case class ContainerLayout(
   slices: Seq[SliceWithCards],
   remainingCards: Seq[FaciaCardAndIndex]
 ) {
-  def transformCards(f: ContentCard => ContentCard) = copy(
+  def transformCards(f: ContentCard => ContentCard): ContainerLayout = copy(
     slices = slices.map(_.transformCards(f)),
     remainingCards.map(cardAndIndex => cardAndIndex.transformCard(f))
   )
 
-  def hasMobileShowMore =
+  def hasMobileShowMore: Boolean =
     slices.flatMap(_.columns.flatMap(_.cards)).exists(_.hideUpTo.contains(Mobile))
 
-  def hasDesktopShowMore =
+  def hasDesktopShowMore: Boolean =
     remainingCards.nonEmpty
 
-  def hasShowMore = hasDesktopShowMore || hasMobileShowMore
+  def hasShowMore: Boolean = hasDesktopShowMore || hasMobileShowMore
 }

@@ -2,7 +2,7 @@ package dev
 
 import play.api.http.{DefaultHttpRequestHandler, HttpConfiguration, HttpErrorHandler, HttpFilters}
 import play.api.routing.Router
-import play.api.mvc.RequestHeader
+import play.api.mvc.{Handler, RequestHeader}
 import common.CanonicalLink
 import model.ApplicationContext
 import play.api.Mode.Prod
@@ -67,7 +67,7 @@ class DevParametersHttpRequestHandler(
   val playBugs = Seq("") // (Play 2.5 bug?) request.queryString is returning an empty string when empty
   val allowedParams = CanonicalLink.significantParams ++ commercialParams ++ insignificantParams ++ playBugs
 
-  override def routeRequest(request: RequestHeader) = {
+  override def routeRequest(request: RequestHeader): Option[Handler] = {
 
     // json requests have no SEO implication but will affect caching
     if (

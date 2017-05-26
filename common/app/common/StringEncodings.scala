@@ -3,7 +3,7 @@ package common
 import java.text.Normalizer
 
 object StringEncodings {
-  def asAscii(s: String) =
+  def asAscii(s: String): String =
     Normalizer.normalize(s, Normalizer.Form.NFD).replaceAll("[^\\p{ASCII}]", "")
 
   /**
@@ -14,7 +14,7 @@ object StringEncodings {
    * @param json the original json source
    * @return the JS
    */
-  def jsonToJS(json: String) =
+  def jsonToJS(json: String): String =
     json
       .replaceAll("""\u2028""", """\\u2028""")
       .replaceAll("""\u2029""", """\\u2029""")

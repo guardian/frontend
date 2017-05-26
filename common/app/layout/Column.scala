@@ -17,21 +17,21 @@ case class ItemClasses(mobile: CardType, tablet: CardType, desktop: Option[CardT
   def classes: String = s"fc-item--${mobile.cssClassName}-mobile fc-item--${tablet.cssClassName}-tablet" +
     desktop.map(d => s" fc-item--${d.cssClassName}-desktop").getOrElse("")
 
-  def allTypes = Set(mobile, tablet) ++ desktop.toSet
+  def allTypes: Set[CardType] = Set(mobile, tablet) ++ desktop.toSet
 
-  def showVideoPlayer = allTypes.exists(_.videoPlayer.show)
-  def showVideoEndSlate = allTypes.exists(_.videoPlayer.showEndSlate)
-  def showYouTubeMediaAtomPlayer = allTypes.exists(_.youTubeMediaAtomPlayer.show)
-  def showYouTubeMediaAtomEndSlate = allTypes.exists(_.youTubeMediaAtomPlayer.showEndSlate)
-  def showCutOut = allTypes.exists(_.showCutOut)
-  def canShowSlideshow = allTypes.exists(_.canShowSlideshow)
+  def showVideoPlayer: Boolean = allTypes.exists(_.videoPlayer.show)
+  def showVideoEndSlate: Boolean = allTypes.exists(_.videoPlayer.showEndSlate)
+  def showYouTubeMediaAtomPlayer: Boolean = allTypes.exists(_.youTubeMediaAtomPlayer.show)
+  def showYouTubeMediaAtomEndSlate: Boolean = allTypes.exists(_.youTubeMediaAtomPlayer.showEndSlate)
+  def showCutOut: Boolean = allTypes.exists(_.showCutOut)
+  def canShowSlideshow: Boolean = allTypes.exists(_.canShowSlideshow)
 }
 case class SliceLayout(cssClassName: String, columns: Seq[Column]) {
-  def numItems = columns.map(_.numItems).sum
+  def numItems: Int = columns.map(_.numItems).sum
 }
 
 object Column {
-  def cardStyle(column: Column, index: Int) = column match {
+  def cardStyle(column: Column, index: Int): Option[ItemClasses] = column match {
     case SingleItem(_, itemClasses) => Some(itemClasses)
     case Rows(_, _, _, itemClasses) => Some(itemClasses)
     case SplitColumn(_, topItemRows, top, _, _) if topItemRows > index => Some(top)
@@ -137,18 +137,18 @@ object SliceWithCards {
 }
 
 case class SliceWithCards(cssClassName: String, columns: Seq[ColumnAndCards]) {
-  def numberOfItems = (columns map { columnAndCards: ColumnAndCards =>
+  def numberOfItems: Int = (columns map { columnAndCards: ColumnAndCards =>
     columnAndCards.column match {
       case Rows(_, cols, _, _) => cols
       case _ => 1
     }
   }).sum
 
-  def numberOfCols = (columns map { columnAndCards: ColumnAndCards =>
+  def numberOfCols: Int = (columns map { columnAndCards: ColumnAndCards =>
     columnAndCards.column.colSpan
   }).sum
 
-  def transformCards(f: ContentCard => ContentCard) = copy(columns = columns map { column =>
+  def transformCards(f: ContentCard => ContentCard): SliceWithCards = copy(columns = columns map { column =>
     column.copy(cards = column.cards map { cardAndIndex =>
       cardAndIndex.copy(item = cardAndIndex.item match {
         case content: ContentCard => f(content)

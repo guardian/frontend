@@ -33,9 +33,9 @@ object EmailHelpers {
     s"""<img width="$width" class="full-width" src="$src" ${alt.map(alt => s"""alt="$alt"""").getOrElse("")}>"""
   }
 
-  def imgForArticle = img(EmailImage.knownWidth) _
+  def imgForArticle: (String, Option[String]) => Html = img(EmailImage.knownWidth) _
 
-  def imgForFront = img(FrontEmailImage.knownWidth) _
+  def imgForFront: (String, Option[String]) => Html = img(FrontEmailImage.knownWidth) _
 
   def imgFromCard(card: ContentCard, colWidth: Int = 12)(implicit requestHeader: RequestHeader): Option[Html] = {
     val width = ((colWidth.toDouble / 12.toDouble) * FrontEmailImage.knownWidth).toInt

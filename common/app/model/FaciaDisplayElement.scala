@@ -53,7 +53,7 @@ object InlineImage {
 case class InlineImage(imageMedia: ImageMedia) extends FaciaDisplayElement
 
 case class CrosswordSvg(id: String) extends FaciaDisplayElement {
-  def persistenceId = id.stripPrefix("crosswords/")
+  def persistenceId: String = id.stripPrefix("crosswords/")
 
   def imageUrl = s"${Configuration.ajax.url}/$id.svg"
 }

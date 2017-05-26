@@ -1,8 +1,9 @@
 package commercial.targeting
 
 import common._
-import com.gu.targeting.client.CampaignCache
+import com.gu.targeting.client.{Campaign, CampaignCache}
 import conf.Configuration
+
 import scala.concurrent.Future
 import conf.switches.Switches.Targeting
 
@@ -31,7 +32,7 @@ object CampaignAgent extends Logging with ExecutionContexts {
     }
   }
 
-  def getCampaignsForTags(tags: Seq[String]) = {
+  def getCampaignsForTags(tags: Seq[String]): List[Campaign] = {
     if (Targeting.isSwitchedOn) {
       agent().getCampaignsForTags(tags)
     } else {
