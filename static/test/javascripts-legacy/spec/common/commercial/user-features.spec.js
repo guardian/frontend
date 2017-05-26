@@ -65,7 +65,7 @@ define(['helpers/injector'], function (Injector) {
                     cookies.removeCookie(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE);
 
                     userFeatures._.refresh();
-                    expect(userFeatures.requestNewData).toHaveBeenCalled();
+                    expect(userFeatures._.requestNewData).toHaveBeenCalled();
                 });
 
                 it('Performs an update if the ad-free state is missing', function() {
@@ -93,7 +93,7 @@ define(['helpers/injector'], function (Injector) {
                 it('Deletes leftover feature data', function () {
                     setAllFeaturesData({isExpired: false});
                     userFeatures._.refresh();
-                    expect(userFeatures.deleteOldData).toHaveBeenCalled();
+                    expect(userFeatures._.deleteOldData).toHaveBeenCalled();
                 });
             });
         });
