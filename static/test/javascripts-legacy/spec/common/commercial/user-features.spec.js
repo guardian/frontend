@@ -1,7 +1,7 @@
 define(['helpers/injector'], function (Injector) {
     var injector = new Injector();
 
-    fdescribe('The user features service:', function () {
+    describe('The user features service:', function () {
         var cookies, userFeatures, identityApi, PERSISTENCE_KEYS;
 
         PERSISTENCE_KEYS = {
@@ -65,7 +65,7 @@ define(['helpers/injector'], function (Injector) {
                     cookies.removeCookie(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE);
 
                     userFeatures._.refresh();
-                    expect(userFeatures._.requestNewData).toHaveBeenCalled();
+                    expect(userFeatures.requestNewData).toHaveBeenCalled();
                 });
 
                 it('Performs an update if the ad-free state is missing', function() {
