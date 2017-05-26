@@ -25,7 +25,7 @@ const { src, target } = require('./__tasks__/config').paths;
 const sassDir = path.resolve(src, 'stylesheets');
 
 const SASS_SETTINGS = {
-    outputStyle: 'compressed',
+    outputStyle: 'expanded',
     sourceMap: true,
     precision: 5,
 };
@@ -50,7 +50,7 @@ const REMIFICATIONS = {
     replace: true,
     root_value: 16,
     unit_precision: 5,
-    prop_white_list: [],
+    propList: ['*'],
 };
 
 const getFiles = sassGlob => glob.sync(path.resolve(sassDir, sassGlob));
