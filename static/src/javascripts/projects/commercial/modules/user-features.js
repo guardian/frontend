@@ -8,7 +8,7 @@ const USER_FEATURES_EXPIRY_COOKIE = 'gu_user_features_expiry';
 const PAYING_MEMBER_COOKIE = 'gu_paying_member';
 const AD_FREE_USER_COOKIE = 'GU_AFU';
 
-const userHasData = () =>
+const userHasData = (): ?string =>
     getCookie(USER_FEATURES_EXPIRY_COOKIE) ||
     getCookie(PAYING_MEMBER_COOKIE) ||
     getCookie(AD_FREE_USER_COOKIE);
@@ -37,27 +37,27 @@ const requestNewData = (): void => {
         .catch(() => {});
 };
 
-const featuresDataIsMissing = () =>
+const featuresDataIsMissing = (): boolean =>
     !getCookie(USER_FEATURES_EXPIRY_COOKIE) || !getCookie(AD_FREE_USER_COOKIE);
 
-const featuresDataIsOld = () => {
+const featuresDataIsOld = (): boolean => {
     const featuresExpiryCookie = getCookie(USER_FEATURES_EXPIRY_COOKIE);
     const featuresExpiryTime = parseInt(featuresExpiryCookie, 10);
     const timeNow = new Date().getTime();
     return timeNow >= featuresExpiryTime;
 };
 
-const userNeedsNewFeatureData = () =>
+const userNeedsNewFeatureData = (): boolean =>
     featuresDataIsMissing() || featuresDataIsOld();
 
-const userHasDataAfterSignout = () =>
-    !identity.isUserLoggedIn() && userHasData();
+const userHasDataAfterSignout = (): boolean =>
+    !identity.isUserLoggedIn() && !!userHasData();
 
 /**
      * Updates the user's data in a lazy fashion
      */
 
-const refresh = () => {
+const refresh = (): void => {
     if (identity.isUserLoggedIn() && userNeedsNewFeatureData()) {
         // eslint-disable-next-line no-use-before-define
         _.requestNewData();
@@ -77,7 +77,7 @@ const isPayingMember = (): boolean =>
     // If the user is logged in, but has no cookie yet, play it safe and assume they're a paying user
     identity.isUserLoggedIn() && getCookie(PAYING_MEMBER_COOKIE) !== 'false';
 
-const isAdFreeUser = () => {
+const isAdFreeUser = (): boolean => {
     if (getCookie(AD_FREE_USER_COOKIE) === null) {
         refresh();
     }
