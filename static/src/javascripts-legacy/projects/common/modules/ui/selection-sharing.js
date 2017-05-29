@@ -74,14 +74,15 @@ define([
 
         if (selection && selection.rangeCount > 0 && selection.toString()) {
             range = selection.getRangeAt(0);
-            rect = clientRects.getBoundingClientRect(range);
-            top = $body.scrollTop() + rect.top;
-            twitterMessage = range.toString();
 
             if (!isValidSelection(range)) {
                 hideSelection();
                 return;
             }
+
+            rect = clientRects.getBoundingClientRect(range);
+            top = $body.scrollTop() + rect.top;
+            twitterMessage = range.toString();
 
             // Truncate the twitter message.
             if (twitterMessage.length > twitterMessageLimit) {
