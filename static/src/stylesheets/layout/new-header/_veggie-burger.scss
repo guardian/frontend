@@ -70,6 +70,10 @@
     @include mq(desktop) {
         display: block;
     }
+
+    .new-header--open & {
+        display: none;
+    }
 }
 
 .veggie-burger__icon {
