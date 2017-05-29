@@ -1,5 +1,6 @@
 // @flow
 
+import detect from 'lib/detect';
 import fastdom from 'fastdom';
 import { scrollToElement } from 'lib/scroller';
 import userAccount from 'common/modules/navigation/user-account';
@@ -70,6 +71,15 @@ const toggleSidebar = (): void => {
     const update = () => {
         const expandedAttr = isOpen ? 'false' : 'true';
         const hiddenAttr = isOpen ? 'true' : 'false';
+        const haveToCalcTogglePosition = detect.isBreakpoint({ min: 'tablet' });
+
+        // TODO: listen for changes and refactor into a function
+        if (haveToCalcTogglePosition) {
+            const docRect = document.body.getBoundingClientRect();
+            const rect = menuToggle.getBoundingClientRect();
+            const right = docRect.right - rect.right + rect.width / 2;
+            menu.style.marginRight = `${right}px`;
+        }
 
         menuToggle.setAttribute(
             'data-link-name',
