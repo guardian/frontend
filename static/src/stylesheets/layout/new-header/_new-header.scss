@@ -9,7 +9,7 @@ from scrolling */
     background-color: $guardian-brand;
     position: relative;
 
-    @include mq(tablet) {
+    @include mq(desktop) {
         display: none;
     }
 }
