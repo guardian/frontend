@@ -74,11 +74,13 @@ const toggleSidebar = (): void => {
         const haveToCalcTogglePosition = detect.isBreakpoint({ min: 'tablet' });
 
         // TODO: listen for changes and refactor into a function
-        if (haveToCalcTogglePosition) {
+        if (!isOpen && haveToCalcTogglePosition && document.body) {
             const docRect = document.body.getBoundingClientRect();
             const rect = menuToggle.getBoundingClientRect();
             const right = docRect.right - rect.right + rect.width / 2;
             menu.style.marginRight = `${right}px`;
+        } else if (isOpen) {
+            menu.style.marginRight = '';
         }
 
         menuToggle.setAttribute(
