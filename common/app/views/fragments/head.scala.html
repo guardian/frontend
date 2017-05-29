@@ -13,7 +13,9 @@
 @head
 
 @* stylesheet <link>s - get the stylesheets downloading ASAP *@
-@fragments.stylesheets(projectName, getContent(page).exists(_.tags.isCrossword))
+@defining(getContent(page)) { content =>
+    @fragments.stylesheets(projectName, content.exists(_.tags.isCrossword), content.exists(_.tags.isInteractive))
+}
 
 @*
 Protect against ReferenceErrors in IE:

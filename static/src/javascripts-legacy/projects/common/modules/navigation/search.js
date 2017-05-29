@@ -22,7 +22,10 @@ define([
             container,
             self = this;
 
-        if (config.switches.googleSearch && config.page.googleSearchUrl && config.page.googleSearchId) {
+        if (config.switches.googleSearch &&
+            config.page.googleSearchUrl &&
+            config.page.googleSearchId &&
+            toggle) {
 
             gcsUrl = config.page.googleSearchUrl + '?cx=' + config.page.googleSearchId;
             resultSetSize = config.page.section === 'identity' ? 3 : 10;

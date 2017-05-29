@@ -1,18 +1,15 @@
 {
   "Francis Carr": [
-    "projects/commercial/modules/creatives/add-viewability-tracker.js",
     "projects/commercial/modules/creatives/fabric-expandable-video-v2.js",
     "projects/commercial/modules/creatives/fabric-expanding-v1.js",
     "projects/common/modules/video/events.js",
     "projects/commercial/modules/third-party-tags/krux.js"
   ],
   "Jon Norman": [
-    "projects/commercial/modules/creatives/fabric-v1.js",
     "projects/commercial/modules/creatives/fabric-video.js",
     "projects/commercial/modules/creatives/frame.js",
     "projects/commercial/modules/creatives/revealer.js",
-    "projects/commercial/modules/creatives/scrollable-mpu-v2.js",
-    "projects/common/modules/atoms/youtube.js"
+    "projects/commercial/modules/creatives/scrollable-mpu-v2.js"
   ],
   "Regis Kuckaertz": [],
   "Richard Nguyen": [],
@@ -28,7 +25,10 @@
     "projects/commercial/modules/messenger/scroll.js",
     "projects/common/modules/charts/doughnut.js"
   ],
-  "Lydia Shepherd": [],
+  "Lydia Shepherd": [
+    "projects/common/modules/commercial/adblock-messages.js",
+    "projects/common/modules/charts/table-doughnut.js"
+  ],
   "sndrs": [
     "lib/detect.js",
     "bootstraps/enhanced/accessibility.js",
@@ -44,7 +44,6 @@
     "projects/common/modules/check-dispatcher.js"
   ],
   "Simon Adcock": [
-    "bootstraps/enhanced/identity-common.js",
     "bootstraps/enhanced/image-content.js",
     "bootstraps/enhanced/liveblog.js",
     "bootstraps/enhanced/media/main.js",
@@ -95,7 +94,6 @@
     "projects/common/modules/tailor/fetch-data.js",
     "projects/common/modules/ui/accessibility-prefs.js",
     "projects/common/modules/ui/autoupdate.js",
-    "bootstraps/enhanced/preferences.js",
     "projects/commercial/modules/messenger/type.js"
   ],
   "NataliaLKB": [
@@ -113,9 +111,7 @@
     "projects/commercial/modules/messenger/viewport.js"
   ],
   "Gideon Goldberg": [
-    "projects/commercial/modules/user-features.js",
-    "projects/common/modules/commercial/adblock-messages.js",
-    "projects/common/modules/charts/table-doughnut.js"
+    "projects/commercial/modules/user-features.js"
   ],
   "Matthew Walls": [
     "projects/common/modules/crosswords/anagram-helper/main.js",
@@ -170,7 +166,6 @@
     "projects/common/modules/experiments/tests/fashion-statement-email-variants.js",
     "projects/common/modules/experiments/tests/film-today-email-variants.js",
     "projects/common/modules/experiments/tests/generic-email-variants.js",
-    "projects/common/modules/experiments/tests/increase-inline-ads.js",
     "projects/common/modules/experiments/tests/opinion-email-variants.js",
     "projects/common/modules/experiments/tests/paid-card-logo.js",
     "projects/commercial/modules/survey/survey-simple.js"

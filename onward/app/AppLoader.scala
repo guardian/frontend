@@ -7,7 +7,7 @@ import common.Logback.LogstashLifecycle
 import conf.switches.SwitchboardLifecycle
 import conf.CachedHealthCheckLifeCycle
 import contentapi.{CapiHttpClient, ContentApiClient, HttpClient}
-import controllers.{HealthCheck, OnwardControllers}
+import controllers.{HealthCheck, OnwardControllers, TechFeedbackController}
 import dev.{DevAssetsController, DevParametersHttpRequestHandler}
 import feed._
 import model.{ApplicationContext, ApplicationIdentity}
@@ -52,6 +52,7 @@ trait AppComponents extends FrontendComponents with OnwardControllers with Onwar
 
   lazy val healthCheck = wire[HealthCheck]
   lazy val devAssetsController = wire[DevAssetsController]
+  lazy val feedbackController = wire[TechFeedbackController]
 
   override lazy val lifecycleComponents = List(
     wire[LogstashLifecycle],

@@ -42,7 +42,7 @@ define([
         });
 
         it('should show next page on clicking arrow buttons', function (done) {
-            hostedOnwardCarousel.init()
+            hostedOnwardCarousel.initHostedCarousel()
                 .then(function () {
                     document.querySelector('.next-oj-item').click();
                     return expectToBeOnNthPage(2);
@@ -64,7 +64,7 @@ define([
         });
 
         it('should change page on clicking the dots', function (done) {
-            hostedOnwardCarousel.init()
+            hostedOnwardCarousel.initHostedCarousel()
                 .then(function () {
                     document.querySelector('.js-carousel-dot:nth-child(4)').click();
                     return expectToBeOnNthPage(4);

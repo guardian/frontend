@@ -1,0 +1,106 @@
+@()(implicit request: RequestHeader)
+
+<div id="feedback-form-account" class="feedback__form">
+    <p>This is for queries about accessing or managing your Guardian account on the website or apps, most of which can be edited <a href="https://profile.theguardian.com/account/edit">here</a></p>
+    <p>Please note that queries about payment and billing should be sent to the relevant membership or subscription team using this form.</p>
+    @fragments.feedbackForm("account")
+</div>
+
+<div id="feedback-form-website" class="feedback__form">
+    <p>If you are having an issue with a particular page it would be very helpful if you could provide the link to the page. It would also be useful to know which country you're accessing the Guardian from.</p>
+    @fragments.feedbackForm("website")
+</div>
+
+<div id="feedback-form-jobs" class="feedback__form">
+    <h4>How can I unsubscribe from Job alerts? </h4>
+    <p>At the bottom of the email you will see an unsubscribe link.  By clicking the link you will be taken to a page confirming you have unsubscribed from the emails. </p>
+    <h4>How can I unsubscribe from Job Match emails?</h4>
+    <p>As with Job alerts there will be an unsubscribe link at the bottom of the email.  The link will take you to your Guardian account page.  At the bottom of the page there are two tick boxes.
+
+        Select No and Save then log back into your Jobs account.  You will no longer receive any Job Match emails.
+    </p>
+    <br/>
+    @fragments.feedbackForm("jobs")
+</div>
+
+<div id="feedback-form-email" class="feedback__form">
+    <p>If you have an existing Guardian account you can easily subscribe/unsubscribe from emails <a href="https://profile.theguardian.com/email-prefs">here</a></p>
+    <p>Alternatively, if you want to unsubscribe from a particular mailing list please simply use the link at the bottom of the email</p>
+    <p>If you have a query about job alerts, please contact the jobs team using the dropdown.</p>
+    @fragments.feedbackForm("email")
+</div>
+
+<div id="feedback-form-membership" class="feedback__form">
+    <p>Please include any information you have about your membership or subscription - for example membership tier and membership number; or type of subscription.
+        You may find the answer to your questions here:  our membership FAQs <a href="https://membership.theguardian.com/help">here</a> and our subscription FAQs <a href="https://www.theguardian.com/subscriber-direct/subscription-frequently-asked-questions">here</a></p>
+    <p>For queries about free registration and commenting accounts, please use 'I need help with my Guardian account' dropdown.</p>
+    @fragments.feedbackForm("membership")
+</div>
+
+<div id="feedback-form-membership-billing" class="feedback__form">
+    <p>If you have any payment issue with your supporter, partner or patron tier membership then please use this drop-down. <a href="https://membership.theguardian.com/help">See this first for clarification</a></p>
+    @fragments.feedbackForm("membership-billing")
+</div>
+
+<div id="feedback-form-subs-billing" class="feedback__form">
+    <p>If you have any issue with your digital pack, your newpaper delivery or voucher delivery either of the Guardian or Guardian Weekly or Observer then please use this form. <a href="https://www.theguardian.com/subscriber-direct/subscription-frequently-asked-questions">See this first for clarification</a></p>
+    @fragments.feedbackForm("subs-billing")
+</div>
+
+<div id="feedback-form-adverts" class="feedback__form">
+    <p>If you are having an issue with a particular advert it would be very helpful if you could let us know what page you were on when you saw this advert. It would also be useful to know which country you're accessing the Guardian from.</p>
+    @fragments.feedbackForm("adverts")
+</div>
+
+<div id="feedback-form-android" class="feedback__form">
+    <p>Please ensure that you are on the latest version of the app.</p>
+    <p>If you are, and your problem persists, please contact us from within the app if you can (press menu icon > cog icon > send feedback).</p>
+    <p>If you cannot use the app at all, can you please use this form and let us know the make and model of your device, the version of Android you are running, and the version number of the Guardian app?</p>
+    @fragments.feedbackForm("android")
+</div>
+
+<div id="feedback-form-ios" class="feedback__form">
+    <p>Please ensure that you are on the latest version of the app.</p>
+    <p>If you are, and your problem persists, please contact us from within the app if you can (press menu icon > cog icon > help > iOS app feedback email address).</p>
+    <p>If you cannot use the app at all, can you please use this form and let us know which iPhone or iPad you are using, the version of iOS you are running, and the version number of the Guardian app?</p>
+    @fragments.feedbackForm("ios")
+</div>
+
+<div id="feedback-form-daily" class="feedback__form">
+    <p>Please ensure that you are on the latest version of the app.</p>
+    <p>If you are, and your problem persists, please contact us from within the app if you can (from issue picker screen press settings icon > contact us > iOS edition feedback email address).</p>
+    <p>If you cannot use the app at all, can you please use this form and let us know which iPad you are using, the version of iOS you are running, and the version number of the daily edition app?</p>
+    @fragments.feedbackForm("daily")
+</div>
+
+<div id="feedback-form-tablet" class="feedback__form">
+    <p>Please ensure that you are on the latest version of the app.</p>
+    <p>If you are, and your problem persists, please contact us from within the app if you can (from issue picker screen press cog icon > contact us > Android edition feedback email address).</p>
+    <p>If you cannot use the app at all, can you please use this form and let us know which make and model of tablet you are using, the version of Android you are running, and the version number of the daily edition app?</p>
+    @fragments.feedbackForm("membership-tablet")
+</div>
+
+<div id="feedback-form-windows" class="feedback__form">
+    <p>Please ensure that you are on the latest version of the app.</p>
+    <p>If you are, and your problem persists, please contact us from within the app if you can (press menu icon > cog icon > support > send feedback).</p>
+    <p>If you cannot use the app at all, can you please use this form and let us know which make and model of device that you are using, the version of Windows mobile you are running, and the version number of the Guardian app?</p>
+    @fragments.feedbackForm("windows")
+</div>
+
+<div id="feedback-form-editorial" class="feedback__form">
+    <p>If you've spotted a mistake in our copy please let us know so that we can fix it. If you have a complaint about content please see here to find out what to do next. <a href="https://www.theguardian.com/info/2014/sep/12/-sp-how-to-make-a-complaint-about-guardian-or-observer-content">Link to readers editor page</a></p>
+    @fragments.feedbackForm("editorial")
+</div>
+
+<div id="feedback-form-discussion" class="feedback__form">
+    <p>Our community FAQs can be found <a href="https://www.theguardian.com/community-faqs">here</a>. If you are having difficulties either reading comments or posting a comment please use the 'I want to report a problem with/have some feedback on your Website' option above</p>
+    @fragments.feedbackForm("discussion")
+</div>
+
+<div id="feedback-form-other" class="feedback__form">
+    @fragments.feedbackForm("other")
+</div>
+
+<div id="feedback-form-default">
+    @fragments.feedbackForm("default")
+</div>

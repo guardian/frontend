@@ -13,7 +13,6 @@ class CommercialTest extends FlatSpec with Matchers with OptionValues with Befor
     javascriptConfigOverrides = Map())
 
   def pageShouldRequestAdSizes(pageId: String)(sizes: Seq[String]): Unit = {
-    val metaData = metaDataFromId(pageId)
     topAboveNavSlot.adSizes.get("desktop").value shouldBe sizes
   }
 

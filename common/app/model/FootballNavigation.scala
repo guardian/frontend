@@ -26,10 +26,7 @@ object FootballNavigation {
     Link("/football/competitions", "leagues and competitions", "Leagues & competitions")
   )
 
-  def navFor(tag: Tag): Seq[Link] = tag match {
-    case competition if tag.isFootballCompetition => navFor(tag.metadata.url)
-    case _ => defaultNav
-  }
+  def navFor(tag: Tag): Seq[Link] = if (tag.isFootballCompetition) navFor(tag.metadata.url) else defaultNav
 
   def navFor(competition: String): Seq[Link] = if (competitionsWithTeams.contains(competition)) {
     val competitionAnchor = competition.split("/").last
