@@ -11,7 +11,7 @@
     border-radius: 50%;
     outline: none;
     right: $gutter-small;
-    z-index: $zindex-main-menu + 1;
+    z-index: 2;
 
     @include mq(mobileMedium) {
         height: $veggie-burger-medium;
@@ -31,6 +31,8 @@
 
     // menu is open
     .new-header--open & {
+        z-index: $zindex-main-menu + 1;
+
         &:before {
             border-radius: ($veggie-burger-small * 2) 0 0 ($veggie-burger-small * 2);
             // Extended hit area for veggie burger close state, for fat fingers
