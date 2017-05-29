@@ -33,14 +33,14 @@
     }
 }
 
-.menu-group--downlight {
+.menu-group--lowlight {
     background-color: darken($news-main-2, 10%);
     color: $guardian-brand-dark;
 }
 
 // unify alignment of lists starting on the left side
 .menu-group--secondary,
-.menu-group--downlight {
+.menu-group--lowlight {
     margin-left: -1 * ($gs-gutter * 2 + $gs-gutter / 2);
 
     @include mq(tablet) {
