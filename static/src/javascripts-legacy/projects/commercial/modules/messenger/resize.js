@@ -9,7 +9,7 @@ define([
     });
 
     function resize(specs, iframe, adSlot) {
-        if (!specs || !('height' in specs || 'width' in specs) || !adSlot) {
+        if (!specs || !('height' in specs || 'width' in specs) || !iframe || !adSlot) {
             return null;
         }
 
