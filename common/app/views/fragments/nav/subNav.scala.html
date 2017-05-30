@@ -3,7 +3,7 @@
 @import common.{NewNavigation, Edition, LinkTo}
 @import views.support.RenderClasses
 
-<div class="subnav @if(!isFooter) {subnav--increase-z-index}">
+<div class="subnav">
     <div class="gs-container">
 
         @defining(NewNavigation.SectionLinks.getActivePillar(page)) { case (id, activePillarName) =>
