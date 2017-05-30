@@ -110,7 +110,7 @@ const bootEnhanced = (): void => {
                     require('bootstraps/enhanced/article').init
                 );
                 bootstrapContext(
-                    'article : image-content',
+                    'article : lightbox',
                     require('common/modules/gallery/lightbox').init
                 );
             },
@@ -140,7 +140,7 @@ const bootEnhanced = (): void => {
                     require('bootstraps/enhanced/liveblog').init
                 );
                 bootstrapContext(
-                    'liveBlog : image-content',
+                    'liveBlog : lightbox',
                     require('common/modules/gallery/lightbox').init
                 );
             },
@@ -157,7 +157,7 @@ const bootEnhanced = (): void => {
                     require('bootstraps/enhanced/article-minute').init
                 );
                 bootstrapContext(
-                    'article : image-content',
+                    'article : lightbox',
                     require('common/modules/gallery/lightbox').init
                 );
             },
@@ -203,7 +203,7 @@ const bootEnhanced = (): void => {
                     require('bootstraps/enhanced/gallery').init
                 );
                 bootstrapContext(
-                    'gallery : image-content',
+                    'gallery : lightbox',
                     require('common/modules/gallery/lightbox').init
                 );
             },
@@ -216,7 +216,7 @@ const bootEnhanced = (): void => {
             [],
             require => {
                 bootstrapContext(
-                    'image-content',
+                    'image-content : lightbox',
                     require('common/modules/gallery/lightbox').init
                 );
                 bootstrapContext(
