@@ -202,6 +202,11 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
     z-index: $zindex-content;
     width: 100%;
 }
+
+.footer__primary {
+    overflow: hidden;
+}
+
 .footer__back-to-top__container {
     @include content-gutter();
     background-color: $guardian-brand;
@@ -224,7 +229,7 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
 
 .back-to-top__text {
     display: inline-block;
-    color: #ffffff;
+    color: $news-support-1;
     line-height: 30px;
     padding-right: $gs-gutter / 2;
 

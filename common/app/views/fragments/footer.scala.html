@@ -35,7 +35,9 @@
         </div>
     </div>
 
-    <div class="mobile-only footer__primary">
+    <div class="footer__primary @if(!mvt.ABNewDesktopHeader.isParticipating) {mobile-only}">
+        @fragments.nav.subNav(page, isFooter = true)
+
         <a data-link-name="back to top" href="#top">
             <div class="footer__back-to-top__container">
                 <div class="footer__back-to-top">
@@ -44,9 +46,6 @@
                 </div>
             </div>
         </a>
-
-
-        @fragments.nav.subNav(page)
     </div>
 
     <div class="l-footer__secondary js-footer__secondary @if(EmailInlineInFooterSwitch.isSwitchedOff) {l-footer__secondary--no-email} gs-container" role="contentinfo">

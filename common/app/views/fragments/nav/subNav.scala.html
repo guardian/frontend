@@ -1,10 +1,11 @@
-@(page: model.Page)(implicit request: RequestHeader)
+@(page: model.Page, isFooter: Boolean = false)(implicit request: RequestHeader)
 
 @import common.{NewNavigation, Edition, LinkTo}
 @import views.support.RenderClasses
 
-<div class="subnav">
+<div class="subnav @if(!isFooter) {subnav--increase-z-index}">
     <div class="gs-container">
+
         @defining(NewNavigation.SectionLinks.getActivePillar(page)) { case (id, activePillarName) =>
             <ul class="subnav__list"
                 data-pillar-title="@activePillarName">
