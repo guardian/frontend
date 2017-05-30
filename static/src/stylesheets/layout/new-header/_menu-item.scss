@@ -52,16 +52,17 @@
 .menu-item__icon,
 .menu-item__toggle {
     color: $news-support-2;
+    position: absolute;
+}
+
+.menu-item__toggle {
     left: -25px;
     margin-top: -4px;
-    position: absolute;
 
     details[open] & {
         margin-top: 2px;
     }
-}
 
-.menu-item__toggle {
     &:before {
         border: 2px solid currentColor;
         border-top: 0;
@@ -79,9 +80,20 @@
 }
 
 .menu-item__icon {
-    left: -$gs-gutter * 2;
+    left: -28px;
 
-    > svg {
+    .inline-icon__svg {
         fill: currentColor;
+    }
+
+    .inline-home__svg {
+        height: 16px;
+        width: 16px;
+    }
+
+    .inline-share-facebook__svg,
+    .inline-share-twitter__svg {
+        margin-left: -6px;
+        margin-top: -5px;
     }
 }
