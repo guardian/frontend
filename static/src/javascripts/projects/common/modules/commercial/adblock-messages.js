@@ -4,34 +4,31 @@ import detect from 'lib/detect';
 import { local } from 'lib/storage';
 import userFeatures from 'commercial/modules/user-features';
 
-const adblockInUse = () => detect.adblockInUse;
+const adblockInUse = (): Promise<boolean> => detect.adblockInUse;
 
-const notMobile = () => detect.getBreakpoint() !== 'mobile';
+const notMobile = (): boolean => detect.getBreakpoint() !== 'mobile';
 
-const isPayingMember = () => userFeatures.isPayingMember();
+const isPayingMember = (): boolean => userFeatures.isPayingMember();
 
-const visitedMoreThanOnce = () => {
+const visitedMoreThanOnce = (): boolean => {
     const alreadyVisited = local.get('gu.alreadyVisited') || 0;
 
     return alreadyVisited > 1;
 };
 
-const isAdblockSwitchOn = () => config.switches.adblock;
+const isAdblockSwitchOn = (): boolean => config.switches.adblock;
 
-const noAdblockMsg = () => {
-    if (notMobile()) {
-        if (!visitedMoreThanOnce() || !isAdblockSwitchOn()) {
-            return adblockInUse();
-        }
-
-        if (visitedMoreThanOnce() && isPayingMember()) {
-            return adblockInUse();
-        }
+const noAdblockMsg = (): Promise<boolean> => {
+    if (
+        notMobile() &&
+        (!visitedMoreThanOnce() || !isAdblockSwitchOn() || isPayingMember())
+    ) {
+        return adblockInUse();
     }
     return Promise.resolve(false);
 };
 
-const showAdblockMsg = () =>
+const showAdblockMsg = (): Promise<boolean> =>
     isAdblockSwitchOn() &&
         !isPayingMember() &&
         visitedMoreThanOnce() &&
