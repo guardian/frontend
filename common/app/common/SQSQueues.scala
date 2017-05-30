@@ -5,7 +5,7 @@ import java.util.concurrent.{Future => JavaFuture}
 import com.amazonaws.handlers.AsyncHandler
 import com.amazonaws.regions.{Region => AwsRegion}
 import com.amazonaws.services.sqs.AmazonSQSAsyncClient
-import com.amazonaws.services.sqs.model.{_, Message => AWSMessage}
+import com.amazonaws.services.sqs.model.{Message => AWSMessage, _}
 import play.api.libs.json.{Json, Reads, Writes}
 
 import scala.collection.JavaConverters._
