@@ -6,7 +6,6 @@
     list-style: none;
     margin: 0;
     padding: 0 0 $gs-baseline $gs-gutter * 2 + $gs-gutter / 2;
-    text-transform: lowercase;
 
     @include mq(tablet) {
         padding-left: $gs-gutter * 2 + $gs-gutter;
