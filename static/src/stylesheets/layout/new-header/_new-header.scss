@@ -22,7 +22,7 @@ from scrolling */
 }
 
 .new-header__cta {
-    left: ($gs-gutter / 4) - 1px;
+    left: $gs-gutter / 4;
     position: absolute;
 
     @include mq(mobileLandscape) {
