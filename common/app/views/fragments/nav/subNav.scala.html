@@ -23,8 +23,8 @@
                     </li>
                 }
 
-            @* Hiding the 'more' link on the homepage *@
-            @if(!(id == "uk" ||  id == "us" ||  id == "au" ||  id == "international")) {
+            @* Hiding the 'more' link on the homepage and footer *@
+            @if(!(id == "uk" ||  id == "us" ||  id == "au" ||  id == "international" || isFooter)) {
                 <li class="subnav__item js-visible">
                     <button class="
                         subnav-link
