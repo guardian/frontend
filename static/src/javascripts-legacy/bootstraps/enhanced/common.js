@@ -342,7 +342,7 @@ define([
                 ['c-public-api', modules.initPublicApi],
                 ['c-tech-feedback', techFeedback],
                 ['c-media-listeners', mediaListener],
-                ['c-accessibility-prefs', accessibilityPrefs],
+                ['c-accessibility-prefs', accessibilityPrefs.initAccessibilityPreferences],
                 ['c-pinterest', modules.initPinterest],
                 ['c-hidden-share-toggle', hiddenShareToggle],
                 ['c-show-membership-engagement-banner', modules.membershipEngagementBanner],

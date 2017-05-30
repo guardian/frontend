@@ -51,7 +51,7 @@ const fillAdvertSlots = (
             createAdverts,
             queueAdverts,
             setPublisherProvidedId,
-            prepareSwitchTag.callSwitch,
+            prepareSwitchTag.maybeCallSwitch,
             dfpEnv.shouldLazyLoad() ? displayLazyAds : displayAds,
             // anything we want to happen after displaying ads
             refreshOnResize,
