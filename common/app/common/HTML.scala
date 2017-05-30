@@ -7,7 +7,7 @@ import scala.collection.JavaConversions._
 
 
 object HTML {
-  def noHtml(headline: String) = StringEscapeUtils.unescapeHtml(Jsoup.clean(headline, Whitelist.none()))
+  def noHtml(headline: String): String = StringEscapeUtils.unescapeHtml(Jsoup.clean(headline, Whitelist.none()))
 
   def takeFirstNElements(html: String, n: Int): String =
     Jsoup.parse(html)

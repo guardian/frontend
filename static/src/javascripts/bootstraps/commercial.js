@@ -22,7 +22,7 @@ import {
     initHostedCarousel,
 } from 'commercial/modules/hosted/onward-journey-carousel';
 import { loadOnwardComponent } from 'commercial/modules/hosted/onward';
-import liveblogAdverts from 'commercial/modules/liveblog-adverts';
+import { initLiveblogAdverts } from 'commercial/modules/liveblog-adverts';
 import stickyTopBanner from 'commercial/modules/sticky-top-banner';
 import thirdPartyTags from 'commercial/modules/third-party-tags';
 import paidforBand from 'commercial/modules/paidfor-band';
@@ -45,7 +45,7 @@ const commercialModules: Array<Array<any>> = [
     ['cm-articleAsideAdverts', articleAsideAdvertsInit, true],
     ['cm-prepare-googletag', prepareGoogletag.init, true],
     ['cm-articleBodyAdverts', articleBodyAdvertsInit],
-    ['cm-liveblogAdverts', liveblogAdverts.init, true],
+    ['cm-liveblogAdverts', initLiveblogAdverts, true],
     ['cm-closeDisabledSlots', closeDisabledSlots],
     ['cm-stickyTopBanner', stickyTopBanner.init],
     ['cm-fill-advert-slots', fillAdvertSlots, true],

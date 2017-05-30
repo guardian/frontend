@@ -125,6 +125,7 @@
 }
 
 .youtube-media-atom__play-button.vjs-control-text {
+    transition: none;
     overflow: hidden !important;
     display: inline-block;
     z-index: 2;

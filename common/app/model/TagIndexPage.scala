@@ -46,7 +46,7 @@ case class TagDefinition(
     }: PartialFunction[String, String]).lift(id)
   }
 
-  def indexPath = "/" + ((for {
+  def indexPath: String = "/" + ((for {
     s <- sectionDefinition if isSectionTag
   } yield s.id) getOrElse id)
 }
@@ -85,10 +85,10 @@ case class TagIndexPage(
     Maps.insertWith(acc, tag.webTitle, 1) { _ + _ }
   }
 
-  def hasDuplicateWebTitle(tagDefinition: TagDefinition) =
+  def hasDuplicateWebTitle(tagDefinition: TagDefinition): Boolean =
     countsByWebTitle.get(tagDefinition.webTitle).exists(_ > 1)
 
-  def indexTitle(tagDefinition: TagDefinition) =
+  def indexTitle(tagDefinition: TagDefinition): String =
     tagDefinition.webTitle + (if (hasDuplicateWebTitle(tagDefinition))
       tagDefinition.tagTypeName.map(", " + _).getOrElse("")
     else "")

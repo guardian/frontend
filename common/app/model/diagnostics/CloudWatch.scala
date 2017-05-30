@@ -36,7 +36,7 @@ trait CloudWatch extends Logging {
   object LoggingAsyncHandler extends LoggingAsyncHandler
 
   case class AsyncHandlerForMetric(frontendStatisticSets: List[FrontendStatisticSet]) extends LoggingAsyncHandler {
-    override def onError(exception: Exception) = {
+    override def onError(exception: Exception): Unit = {
       log.warn(s"Failed to put ${frontendStatisticSets.size} metrics: $exception")
       log.warn(s"Failed to put ${frontendStatisticSets.map(_.name).mkString(",")}")
       super.onError(exception)

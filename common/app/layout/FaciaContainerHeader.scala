@@ -99,7 +99,7 @@ case class LoneDateHeadline(get: DateHeadline) extends FaciaContainerHeader
 case class DescriptionMetaHeader(description: String) extends FaciaContainerHeader
 
 object DateHeadline {
-  def cardTimestampDisplay(dateHeadline: DateHeadline) = dateHeadline match {
+  def cardTimestampDisplay(dateHeadline: DateHeadline): FaciaCardTimestamp = dateHeadline match {
     case _: DayHeadline => TimeTimestamp
     case _: MonthHeadline => DateTimestamp
   }
@@ -115,11 +115,11 @@ sealed trait DateHeadline {
 
   val day: LocalDate
 
-  def displayString = day.toDateTimeAtStartOfDay.toString(DateTimeFormat.forPattern(dateFormatString))
+  def displayString: String = day.toDateTimeAtStartOfDay.toString(DateTimeFormat.forPattern(dateFormatString))
 
-  def dateTimeString = day.toDateTimeAtStartOfDay.toString(DateTimeFormat.forPattern(dateTimeFormatString))
+  def dateTimeString: String = day.toDateTimeAtStartOfDay.toString(DateTimeFormat.forPattern(dateTimeFormatString))
 
-  def urlFragment = urlFragmentFormatString map { format =>
+  def urlFragment: Option[String] = urlFragmentFormatString map { format =>
     day.toDateTimeAtStartOfDay.toString(DateTimeFormat.forPattern(format)).toLowerCase
   }
 }

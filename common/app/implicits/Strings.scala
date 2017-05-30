@@ -7,7 +7,7 @@ import org.apache.commons.lang.StringEscapeUtils
 
 trait Strings {
 
-  def nullsafeString[A](a: A) = Option(a) map { _.toString } getOrElse ""
+  def nullsafeString[A](a: A): String = Option(a) map { _.toString } getOrElse ""
 
   implicit class String2ToOptions(s: String) {
     lazy val toIntOption: Option[Int] = try { Some(s.toInt) } catch { case _: Throwable => None }

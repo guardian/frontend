@@ -32,7 +32,7 @@ object ElementsFormat {
   val defaultElementFormat = Json.format[DefaultElement]
 
   implicit object elementFormat extends Format[Element] {
-    def reads(json: JsValue) = {
+    def reads(json: JsValue): JsResult[Element] = {
       (json \ "type").transform[JsString](Reads.JsStringReads) match {
         case JsSuccess(JsString("ImageElement"), _) => (json \ "item").validate[ImageElement](imageElementFormat)
         case JsSuccess(JsString("AudioElement"), _) => (json \ "item").validate[AudioElement](audioElementFormat)
@@ -43,7 +43,7 @@ object ElementsFormat {
       }
     }
 
-    def writes(element: Element) = element match {
+    def writes(element: Element): JsObject = element match {
       case image: ImageElement => JsObject(Seq("type" -> JsString("ImageElement"), "item" -> Json.toJson(image)(imageElementFormat)))
       case audio: AudioElement => JsObject(Seq("type" -> JsString("AudioElement"), "item" -> Json.toJson(audio)(audioElementFormat)))
       case video: VideoElement => JsObject(Seq("type" -> JsString("VideoElement"), "item" -> Json.toJson(video)(videoElementFormat)))
@@ -407,7 +407,7 @@ object ContentTypeFormat {
   val crosswordContentFormat = Json.format[CrosswordContent]
 
   object format extends Format[ContentType] {
-    def reads(json: JsValue) = {
+    def reads(json: JsValue): JsResult[ContentType] = {
       (json \ "type").transform[JsString](Reads.JsStringReads) match {
         case JsSuccess(JsString("Article"), _) => (json \ "item").validate[Article](articleFormat)
         case JsSuccess(JsString("Gallery"), _) => (json \ "item").validate[Gallery](galleryFormat)
@@ -421,7 +421,7 @@ object ContentTypeFormat {
       }
     }
 
-    def writes(content: ContentType) = content match {
+    def writes(content: ContentType): JsObject = content match {
       case article: Article => JsObject(Seq("type" -> JsString("Article"), "item" -> Json.toJson(article)(articleFormat)))
       case gallery: Gallery => JsObject(Seq("type" -> JsString("Gallery"), "item" -> Json.toJson(gallery)(galleryFormat)))
       case audio: Audio => JsObject(Seq("type" -> JsString("Audio"), "item" -> Json.toJson(audio)(audioFormat)))
@@ -478,7 +478,7 @@ object CardStyleFormat extends Format[CardStyle] {
     }
   }
 
-  def writes(cardStyle: CardStyle) = cardStyle match {
+  def writes(cardStyle: CardStyle): JsObject = cardStyle match {
     case SpecialReport => JsObject(Seq("type" -> JsString("SpecialReport")))
     case LiveBlog => JsObject(Seq("type" -> JsString("LiveBlog")))
     case DeadBlog => JsObject(Seq("type" -> JsString("DeadBlog")))
@@ -504,7 +504,7 @@ object MediaTypeFormat extends Format[MediaType] {
     }
   }
 
-  def writes(mediaType: MediaType) = mediaType match {
+  def writes(mediaType: MediaType): JsObject = mediaType match {
     case pressed.Video => JsObject(Seq("type" -> JsString("Video")))
     case pressed.Gallery => JsObject(Seq("type" -> JsString("Gallery")))
     case pressed.Audio => JsObject(Seq("type" -> JsString("Audio")))
@@ -524,7 +524,7 @@ object PressedContentFormat {
       case _ => JsError("Could not convert PressedContent")
     }
 
-    def writes(faciaContent: PressedContent) = faciaContent match {
+    def writes(faciaContent: PressedContent): JsValue = faciaContent match {
       case linkSnap: LinkSnap => Json.toJson(linkSnap)(linkSnapFormat)
         .transform[JsObject](Reads.JsObjectReads) match {
         case JsSuccess(l, _) =>
@@ -583,7 +583,7 @@ object ItemKickerFormat {
   private val freeHtmlKickerWithLinkFormat = Json.format[FreeHtmlKickerWithLink]
 
   object format extends Format[ItemKicker] {
-    def reads(json: JsValue) = {
+    def reads(json: JsValue): JsResult[ItemKicker] = {
       (json \ "type").transform[JsString](Reads.JsStringReads) match {
         case JsSuccess(JsString("BreakingNewsKicker"), _) => JsSuccess(BreakingNewsKicker)
         case JsSuccess(JsString("LiveKicker"), _) => JsSuccess(LiveKicker)
@@ -599,7 +599,7 @@ object ItemKickerFormat {
       }
     }
 
-    def writes(itemKicker: ItemKicker) = itemKicker match {
+    def writes(itemKicker: ItemKicker): JsObject = itemKicker match {
       case BreakingNewsKicker => JsObject(Seq("type" -> JsString("BreakingNewsKicker")))
       case LiveKicker => JsObject(Seq("type" -> JsString("LiveKicker")))
       case AnalysisKicker => JsObject(Seq("type" -> JsString("AnalysisKicker")))
@@ -620,7 +620,7 @@ object FaciaImageFormat {
   implicit val slideshowFormat = Json.format[ImageSlideshow]
 
   object format extends Format[Image] {
-    def reads(json: JsValue) = {
+    def reads(json: JsValue): JsResult[Image] = {
       (json \ "type").transform[JsString](Reads.JsStringReads) match {
         case JsSuccess(JsString("Cutout"), _) => (json \ "item").validate[Cutout](cutoutFormat)
         case JsSuccess(JsString("Replace"), _) => (json \ "item").validate[Replace](replaceFormat)
@@ -629,7 +629,7 @@ object FaciaImageFormat {
       }
     }
 
-    def writes(faciaImage: Image) = faciaImage match {
+    def writes(faciaImage: Image): JsObject = faciaImage match {
       case cutout: Cutout => JsObject(Seq("type" -> JsString("Cutout"), "item" -> Json.toJson(cutout)(cutoutFormat)))
       case replace: Replace => JsObject(Seq("type" -> JsString("Replace"), "item" -> Json.toJson(replace)(replaceFormat)))
       case imageSlideshow: ImageSlideshow => JsObject(Seq("type" -> JsString("ImageSlideshow"), "item" -> Json.toJson(imageSlideshow)(slideshowFormat)))

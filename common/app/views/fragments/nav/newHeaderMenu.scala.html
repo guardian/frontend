@@ -56,7 +56,7 @@
             <input type="text"
                    name="q"
                    class="menu-search__search-box"
-                   placeholder="search for..."
+                   placeholder="search"
                    data-link-name="nav2 : search">
 
             <input type="hidden"
@@ -113,26 +113,25 @@
                     </a>
                 </li>
             }
+
+            <li class="menu-item">
+                <a class="menu-item__title"
+                   href="https://www.facebook.com/theguardian"
+                   data-link-name="nav2 : facebook">
+                    @fragments.inlineSvg("share-facebook", "icon", List("menu-item__icon"))
+                    Facebook
+                </a>
+            </li>
+
+            <li class="menu-item">
+                <a class="menu-item__title"
+                   href="https://twitter.com/guardian"
+                   data-link-name="nav2 : twitter">
+                    @fragments.inlineSvg("share-twitter", "icon", List("menu-item__icon"))
+                    Twitter
+                </a>
+            </li>
         </ul>
     }
 
-    <ul class="menu-group">
-        <li class="menu-item">
-            <a class="menu-item__title"
-               href="https://www.facebook.com/theguardian"
-               data-link-name="nav2 : facebook">
-                @fragments.inlineSvg("share-facebook", "icon", List("menu-item__icon"))
-                Facebook
-            </a>
-        </li>
-
-        <li class="menu-item">
-            <a class="menu-item__title"
-               href="https://twitter.com/guardian"
-               data-link-name="nav2 : twitter">
-                @fragments.inlineSvg("share-twitter", "icon", List("menu-item__icon"))
-                Twitter
-            </a>
-        </li>
-    </ul>
 </div>

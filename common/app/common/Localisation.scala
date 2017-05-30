@@ -5,13 +5,13 @@ import play.api.mvc.RequestHeader
 
 object Translation {
   /* Helper functions for constructing translations */
-  def toLower(tuple: (String, Seq[Translation])) = {
+  def toLower(tuple: (String, Seq[Translation])): (String, Seq[Translation]) = {
     val (from, translations) = tuple
 
     (from.toLowerCase, translations.map(t => t.copy(get = t.get.toLowerCase)))
   }
 
-  def becomes(translations: (Edition, String)*) =
+  def becomes(translations: (Edition, String)*): Seq[Translation] =
     translations.map((Translation.apply _).tupled)
 }
 
@@ -42,12 +42,12 @@ object Localisation {
 
   val all = (caseInsensitive ++ caseInsensitive.map(toLower) ++ caseSensitive).toMap
 
-  def localise(word: String, edition: Edition) = {
+  def localise(word: String, edition: Edition): String = {
     all.get(word) flatMap { translations =>
       translations.find(_.edition == edition).map(_.get)
     } getOrElse word
   }
 
-  def apply(word: String)(implicit requestHeader: RequestHeader) =
+  def apply(word: String)(implicit requestHeader: RequestHeader): String =
     localise(word, Edition(requestHeader))
 }

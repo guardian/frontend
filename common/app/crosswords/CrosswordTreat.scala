@@ -2,6 +2,8 @@ package crosswords
 
 import com.gu.contentapi.client.model.v1.{CrosswordPosition => Position}
 
+import scala.xml.Elem
+
 object CrosswordGrid {
   val DefaultTreat = CrosswordGrid(Set(
     (2, 0),
@@ -56,7 +58,7 @@ object CrosswordPreview {
   val Width = position(Columns)
   val Height = position(Rows)
 
-  def fromCrosswordGrid(crosswordGrid: CrosswordGrid) =
+  def fromCrosswordGrid(crosswordGrid: CrosswordGrid): Elem =
     <svg xmlns="http://www.w3.org/2000/svg"
          xmlns:xlink="http://www.w3.org/1999/xlink"
          viewBox={s"0, 0, $Width, $Height"}
