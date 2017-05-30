@@ -125,9 +125,7 @@ const formatAppNexusTargeting = (obj: Object): string =>
 
 const buildPageTargeting = once((adFree: ?boolean): Object => {
     const page: Object = config.page;
-    const adFreeTargeting: Object = adFree
-        ? Object.assign({ af: 't' })
-        : Object.assign({});
+    const adFreeTargeting: Object = adFree ? { af: 't' } : {};
     const pageTargets: Object = Object.assign(
         {
             x: krux.getSegments(),
