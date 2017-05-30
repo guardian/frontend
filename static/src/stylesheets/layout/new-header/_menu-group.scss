@@ -1,14 +1,27 @@
 .menu-group {
+    $spacing-left-small: $gs-gutter * 2 + $gs-gutter / 2;
+    $spacing-left-medium: $gs-gutter * 2 + $gs-gutter;
+
     color: #ffffff;
     display: flex;
     font-size: 18px;
     flex-wrap: wrap;
     list-style: none;
     margin: 0;
-    padding: 0 0 $gs-baseline $gs-gutter * 2 + $gs-gutter / 2;
+    padding: 0 0 $gs-baseline $spacing-left-small;
 
     @include mq(tablet) {
-        padding-left: $gs-gutter * 2 + $gs-gutter;
+        padding-left: $spacing-left-medium;
+    }
+
+    // make these lists to start at the left side
+    &--secondary,
+    &--lowlight {
+        margin-left: -$spacing-left-small;
+
+        @include mq(tablet) {
+            margin-left: -$spacing-left-medium;
+        }
     }
 }
 
@@ -35,14 +48,4 @@
 .menu-group--lowlight {
     background-color: darken($news-main-2, 10%);
     color: $guardian-brand-dark;
-}
-
-// unify alignment of lists starting on the left side
-.menu-group--secondary,
-.menu-group--lowlight {
-    margin-left: -1 * ($gs-gutter * 2 + $gs-gutter / 2);
-
-    @include mq(tablet) {
-        margin-left: -1 * ($gs-gutter * 2 + $gs-gutter);
-    }
 }
