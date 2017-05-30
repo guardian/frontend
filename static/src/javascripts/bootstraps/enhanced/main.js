@@ -111,7 +111,7 @@ const bootEnhanced = (): void => {
                 );
                 bootstrapContext(
                     'article : image-content',
-                    require('bootstraps/enhanced/image-content').init
+                    require('common/modules/gallery/lightbox').init
                 );
             },
             'article'
@@ -141,7 +141,7 @@ const bootEnhanced = (): void => {
                 );
                 bootstrapContext(
                     'liveBlog : image-content',
-                    require('bootstraps/enhanced/image-content').init
+                    require('common/modules/gallery/lightbox').init
                 );
             },
             'live-blog'
@@ -158,7 +158,7 @@ const bootEnhanced = (): void => {
                 );
                 bootstrapContext(
                     'article : image-content',
-                    require('bootstraps/enhanced/image-content').init
+                    require('common/modules/gallery/lightbox').init
                 );
             },
             'article-minute'
@@ -204,7 +204,7 @@ const bootEnhanced = (): void => {
                 );
                 bootstrapContext(
                     'gallery : image-content',
-                    require('bootstraps/enhanced/image-content').init
+                    require('common/modules/gallery/lightbox').init
                 );
             },
             'gallery'
@@ -217,7 +217,7 @@ const bootEnhanced = (): void => {
             require => {
                 bootstrapContext(
                     'image-content',
-                    require('bootstraps/enhanced/image-content').init
+                    require('common/modules/gallery/lightbox').init
                 );
                 bootstrapContext(
                     'image-content : trail',
