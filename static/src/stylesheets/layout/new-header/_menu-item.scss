@@ -57,15 +57,16 @@
 .menu-item__icon,
 .menu-item__toggle {
     color: $news-support-2;
+    left: -25px;
+    margin-top: -4px;
     position: absolute;
-    left: -($gs-gutter * 1.25);
-    text-align: center;
-    width: $gs-gutter / 2;
+
+    details[open] & {
+        margin-top: 2px;
+    }
 }
 
 .menu-item__toggle {
-    margin-top: -4px;
-
     &:before {
         border: 2px solid currentColor;
         border-top: 0;
@@ -73,7 +74,6 @@
         content: '';
         display: inline-block;
         height: 8px;
-        margin-top: -3px;
         transform: rotate(45deg);
         width: 8px;
 
@@ -81,35 +81,12 @@
             transform: rotate(-135deg);
         }
     }
-
-    .menu-group--primary & {
-        margin-top: -4px;
-    }
-
-    details[open] & {
-        margin-top: 2px;
-    }
 }
 
 .menu-item__icon {
-    left: -($gs-gutter * 1.5);
+    left: -$gs-gutter * 2;
 
     > svg {
         fill: currentColor;
-        height: .8em;
-        margin-top: -.24em;
-        width: .8em;
-    }
-}
-
-// Special alignment for social channel icons
-.menu-item .inline-share-facebook,
-.menu-item .inline-share-twitter {
-    left: -($gs-gutter * 2);
-
-    > svg {
-        height: 1.8em;
-        margin-top: -.4em;
-        width: 1.8em;
     }
 }
