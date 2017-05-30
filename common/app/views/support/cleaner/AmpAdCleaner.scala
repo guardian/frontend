@@ -86,7 +86,7 @@ object AmpAdCleaner {
 
 case class AmpAdCleaner(edition: Edition, uri: String, article: Article) extends HtmlCleaner {
 
-  def adAfter(element: Element) = {
+  def adAfter(element: Element): Element = {
     val ampAd = <div class="amp-ad-container">
       <amp-ad width="300" height="250" type="doubleclick" data-loading-strategy="prefer-viewability-over-views"
               json={AmpAd(article, uri, edition.id.toLowerCase()).toString()}

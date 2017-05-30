@@ -25,7 +25,7 @@ case class ContainerLayoutContext(
   cutOutsSeen: Set[CutOut],
   hideCutOuts: Boolean
 ) {
-  def addCutOuts(cutOut: Set[CutOut]) = copy(cutOutsSeen = cutOutsSeen ++ cutOut)
+  def addCutOuts(cutOut: Set[CutOut]): ContainerLayoutContext = copy(cutOutsSeen = cutOutsSeen ++ cutOut)
 
   type CardAndContext = (ContentCard, ContainerLayoutContext)
 
@@ -49,7 +49,7 @@ case class ContainerLayoutContext(
     dedupCutOut _
   ).reduce(_ compose _)
 
-  def transform(card: FaciaCardAndIndex) = {
+  def transform(card: FaciaCardAndIndex): (FaciaCardAndIndex, ContainerLayoutContext) = {
     if (hideCutOuts) {
       (card.transformCard(_.copy(cutOut = None)), this)
     } else {
@@ -171,7 +171,7 @@ object FaciaContainer {
     isThrasher = config.config.collectionType == "fixed/thrasher"
   )
 
-  def forStoryPackage(dataId: String, items: Seq[PressedContent], title: String, href: Option[String] = None) = {
+  def forStoryPackage(dataId: String, items: Seq[PressedContent], title: String, href: Option[String] = None): FaciaContainer = {
     FaciaContainer(
       index = 2,
       container = Fixed(ContainerDefinition.fastForNumberOfItems(items.size)),
@@ -203,22 +203,22 @@ case class FaciaContainer(
   hasShowMoreEnabled: Boolean,
   isThrasher: Boolean
 ) {
-  def transformCards(f: ContentCard => ContentCard) = copy(
+  def transformCards(f: ContentCard => ContentCard): FaciaContainer = copy(
     containerLayout = containerLayout.map(_.transformCards(f))
   )
 
-  def faciaComponentName = componentId getOrElse {
+  def faciaComponentName: String = componentId getOrElse {
     displayName map { title: String =>
       title.toLowerCase.replace(" ", "-")
     } getOrElse "no-name"
   }
 
-  def latestUpdate = (collectionEssentials.items.flatMap(_.card.webPublicationDateOption) ++
+  def latestUpdate: Option[DateTime] = (collectionEssentials.items.flatMap(_.card.webPublicationDateOption) ++
     collectionEssentials.lastUpdated.map(DateTime.parse)).sortBy(-_.getMillis).headOption
 
-  def items = collectionEssentials.items
+  def items: Seq[PressedContent] = collectionEssentials.items
 
-  def withTimeStamps = transformCards(_.withTimeStamp)
+  def withTimeStamps: FaciaContainer = transformCards(_.withTimeStamp)
 
   def dateLink: Option[String] = {
     val maybeDateHeadline = customHeader flatMap  {
@@ -234,11 +234,11 @@ case class FaciaContainer(
     } yield s"$path/$urlFragment/all"
   }
 
-  def hasShowMore = containerLayout.exists(_.hasShowMore)
+  def hasShowMore: Boolean = containerLayout.exists(_.hasShowMore)
 
-  def hasDesktopShowMore = containerLayout.exists(_.hasDesktopShowMore)
+  def hasDesktopShowMore: Boolean = containerLayout.exists(_.hasDesktopShowMore)
 
-  def hasMobileOnlyShowMore =
+  def hasMobileOnlyShowMore: Boolean =
     containerLayout.exists(layout => layout.hasMobileShowMore && !layout.hasDesktopShowMore)
 
   /** Nasty hardcoded thing.
@@ -248,16 +248,16 @@ case class FaciaContainer(
     * Then if we end up adding more of these over time, there's an in-built mechanism for doing so. Will also mean apps
     * can consume this data if they want to.
     */
-  def showCPScottHeader = Set(
+  def showCPScottHeader: Boolean = Set(
     "uk/commentisfree/regular-stories",
     "au/commentisfree/regular-stories"
   ).contains(dataId)
 
-  def addShowMoreClasses() = useShowMore && containerLayout.exists(_.hasShowMore)
+  def addShowMoreClasses(): Boolean = useShowMore && containerLayout.exists(_.hasShowMore)
 
-  def shouldLazyLoad = Switches.LazyLoadContainersSwitch.isSwitchedOn && index > 8
+  def shouldLazyLoad: Boolean = Switches.LazyLoadContainersSwitch.isSwitchedOn && index > 8
 
-  def isStoryPackage = container match {
+  def isStoryPackage: Boolean = container match {
     case Dynamic(DynamicPackage) => true
     case Dynamic(DynamicElection) => true // #election2017
     case _ => false
@@ -295,11 +295,11 @@ object DedupedFrontResult {
 object Front extends implicits.Collections {
   type TrailUrl = String
 
-  def itemsVisible(containerDefinition: ContainerDefinition) =
+  def itemsVisible(containerDefinition: ContainerDefinition): Int =
     containerDefinition.slices.flatMap(_.layout.columns.map(_.numItems)).sum
 
   // Never de-duplicate snaps.
-  def participatesInDeduplication(faciaContent: PressedContent) = faciaContent.properties.embedType.isEmpty
+  def participatesInDeduplication(faciaContent: PressedContent): Boolean = faciaContent.properties.embedType.isEmpty
 
   /** Given a set of already seen trail URLs, a container type, and a set of trails, returns a new set of seen urls
     * for further de-duplication and the sequence of trails in the order that they ought to be shown for that
@@ -361,7 +361,7 @@ object Front extends implicits.Collections {
   def fromConfigsAndContainers(
     configs: Seq[((ContainerDisplayConfig, CollectionEssentials), Container)],
     initialContext: ContainerLayoutContext = ContainerLayoutContext.empty
-  ) = {
+  ): Front = {
 
     @tailrec
     def faciaContainers(allConfigs: Seq[((ContainerDisplayConfig, CollectionEssentials), Container)],
@@ -392,7 +392,7 @@ object Front extends implicits.Collections {
     )
   }
 
-  def fromConfigs(configs: Seq[(CollectionConfigWithId, CollectionEssentials)]) = {
+  def fromConfigs(configs: Seq[(CollectionConfigWithId, CollectionEssentials)]): Front = {
     fromConfigsAndContainers(configs.map {
       case (config, collectionEssentials) =>
         ((ContainerDisplayConfig.withDefaults(config), collectionEssentials), Container.fromConfig(config.config))

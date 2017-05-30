@@ -5,7 +5,7 @@ sealed trait CardType {
 
   case class VideoPlayerMode(show: Boolean, showEndSlate: Boolean)
 
-  def videoPlayer = this match {
+  def videoPlayer: VideoPlayerMode = this match {
     case FullMedia50 | FullMedia75 | FullMedia100 =>
       VideoPlayerMode(show = true, showEndSlate = true)
     case ThreeQuarters | ThreeQuartersRight | Half | Third | Standard =>
@@ -14,14 +14,14 @@ sealed trait CardType {
       VideoPlayerMode(show = false, showEndSlate = false)
   }
 
-  def youTubeMediaAtomPlayer = this match {
+  def youTubeMediaAtomPlayer: VideoPlayerMode = this match {
     case FullMedia50 | FullMedia75 | FullMedia100 | ThreeQuarters | ThreeQuartersRight | Half =>
       VideoPlayerMode(show = true, showEndSlate = true)
     case _ =>
       VideoPlayerMode(show = false, showEndSlate = false)
   }
 
-  def showCutOut = this match {
+  def showCutOut: Boolean = this match {
     case ListItem => false
     case _ => true
   }
@@ -31,17 +31,17 @@ sealed trait CardType {
     *
     * But some card sizes can never show media, regardless of those options, and this is what this represents.
     */
-  def canShowMedia = this match {
+  def canShowMedia: Boolean = this match {
     case ListItem => false
     case _ => true
   }
 
-  def showStandfirst = this match {
+  def showStandfirst: Boolean = this match {
     case Fluid | FullMedia100 | FullMedia75 | FullMedia50 | Half | ThreeQuarters | ThreeQuartersRight | Standard => true
     case _ => false
   }
 
-  def canShowSlideshow = this match {
+  def canShowSlideshow: Boolean = this match {
     case Half | ThreeQuarters | ThreeQuartersRight | ThreeQuartersTall | FullMedia50 | FullMedia75 | FullMedia100 => true
     case _ => false
   }

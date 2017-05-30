@@ -12,13 +12,13 @@ import scala.language.postfixOps
 
 case class CustomTarget(name: String, op: String, values: Seq[String]) {
 
-  def isPositive(targetName: String) = name == targetName && op == "IS"
-  def isNegative(targetName: String) = name == targetName && op == "IS_NOT"
+  def isPositive(targetName: String): Boolean = name == targetName && op == "IS"
+  def isNegative(targetName: String): Boolean = name == targetName && op == "IS_NOT"
 
-  def isSlot(value: String) = isPositive("slot") && values.contains(value)
+  def isSlot(value: String): Boolean = isPositive("slot") && values.contains(value)
 
-  def isPlatform(value: String) = isPositive("p") && values.contains(value)
-  def isNotPlatform(value: String) = isNegative("p") && values.contains(value)
+  def isPlatform(value: String): Boolean = isPositive("p") && values.contains(value)
+  def isNotPlatform(value: String): Boolean = isNegative("p") && values.contains(value)
 
   val isInlineMerchandisingSlot = isSlot("im")
 
@@ -42,7 +42,7 @@ object CustomTarget {
 
 case class CustomTargetSet(op: String, targets: Seq[CustomTarget]) {
 
-  def filterTags(tagCriteria: CustomTarget => Boolean)(bySlotType: CustomTarget => Boolean) = {
+  def filterTags(tagCriteria: CustomTarget => Boolean)(bySlotType: CustomTarget => Boolean): Seq[String] = {
     if (targets exists bySlotType) {
       targets.filter(tagCriteria).flatMap(_.values).distinct
     } else Nil
@@ -257,7 +257,7 @@ object GuLineItem {
     (JsPath \ "lastModified").read[String].map(timeFormatter.parseDateTime)
   )(GuLineItem.apply _)
 
-  def asMap(lineItems: Seq[GuLineItem]) = lineItems.map(item => item.id -> item).toMap
+  def asMap(lineItems: Seq[GuLineItem]): Map[Long, GuLineItem] = lineItems.map(item => item.id -> item).toMap
 }
 
 case class GuCreativePlaceholder(size: AdSize, targeting: Option[GuTargeting]) {

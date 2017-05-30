@@ -27,7 +27,7 @@ class ElementsTest extends FlatSpec with Matchers with OneAppPerSuite {
     images.mainPicture.flatMap(_.images.largestImage.flatMap(_.caption)) should be(Some("biggest picture 1"))
   }
 
-  def thumbnailFixture(crops: (Int, Int)*) = FixtureTemplates.emptyElement.copy(
+  def thumbnailFixture(crops: (Int, Int)*): ApiElement = FixtureTemplates.emptyElement.copy(
     `type` = ElementType.Image,
     relation = "thumbnail",
     assets = crops.toList map { case (width, height) =>
