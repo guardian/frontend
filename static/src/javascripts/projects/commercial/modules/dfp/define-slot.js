@@ -66,7 +66,7 @@ const defineSlot = (adSlotNode: Element, sizes: Object): Object => {
         slot = window.googletag
             .defineSlot(adUnit(), sizeOpts.sizes, id)
             .defineSizeMapping(sizeOpts.sizeMapping);
-        slotReady = prepareSwitchTag.pushAdUnit(id, sizeOpts);
+        slotReady = prepareSwitchTag.maybePushAdUnit(id, sizeOpts);
     }
 
     if (slotTarget === 'im' && config.page.isbn) {
