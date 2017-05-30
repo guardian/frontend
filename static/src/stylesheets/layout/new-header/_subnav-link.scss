@@ -1,14 +1,10 @@
 .subnav-link {
     @include fs-textSans(5);
-
     color: currentColor;
     display: inline-block;
+    font-size: 16px;
+    font-size: 5.1vw;
     line-height: 1.3em;
-
-    @include mq($from: mobile, $until: mobileLandscape) {
-        font-size: 16px;
-        font-size: 5.1vw;
-    }
 
     @include mq(mobileLandscape) {
         font-size: 22px;
