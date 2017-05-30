@@ -1,57 +1,50 @@
-define([
-    'lib/config',
-    'lib/detect',
-    'lib/storage',
-    'commercial/modules/user-features'
-], function (
-    config,
-    detect,
-    storage,
-    userFeatures
-) {
-    function adblockInUse() {
-        return detect.adblockInUse;
-    }
+import config from 'lib/config';
+import detect from 'lib/detect';
+import storage from 'lib/storage';
+import userFeatures from 'commercial/modules/user-features';
 
-    function notMobile() {
-        return detect.getBreakpoint() !== 'mobile';
-    }
+function adblockInUse() {
+    return detect.adblockInUse;
+}
 
-    function isPayingMember() {
-        return userFeatures.isPayingMember();
-    }
+function notMobile() {
+    return detect.getBreakpoint() !== 'mobile';
+}
 
-    function visitedMoreThanOnce() {
-        var alreadyVisited = storage.local.get('gu.alreadyVisited') || 0;
+function isPayingMember() {
+    return userFeatures.isPayingMember();
+}
 
-        return alreadyVisited > 1;
-    }
+function visitedMoreThanOnce() {
+    var alreadyVisited = storage.local.get('gu.alreadyVisited') || 0;
 
-    function isAdblockSwitchOn() {
-        return config.switches.adblock;
-    }
+    return alreadyVisited > 1;
+}
 
-    function noAdblockMsg() {
-        if(notMobile()) {
-            if(!visitedMoreThanOnce() || !isAdblockSwitchOn()) {
-                return adblockInUse();
-            }
+function isAdblockSwitchOn() {
+    return config.switches.adblock;
+}
 
-            if (visitedMoreThanOnce() && isPayingMember()) {
-                return adblockInUse();
-            }
+function noAdblockMsg() {
+    if (notMobile()) {
+        if (!visitedMoreThanOnce() || !isAdblockSwitchOn()) {
+            return adblockInUse();
         }
+
+        if (visitedMoreThanOnce() && isPayingMember()) {
+            return adblockInUse();
+        }
+    }
+    Promise.resolve(false);
+}
+
+function showAdblockMsg() {
+    return isAdblockSwitchOn() && !isPayingMember() && visitedMoreThanOnce() && notMobile() ?
+        adblockInUse() :
         Promise.resolve(false);
-    }
+}
 
-    function showAdblockMsg() {
-        return isAdblockSwitchOn() && !isPayingMember() && visitedMoreThanOnce()  && notMobile() ?
-            adblockInUse() :
-            Promise.resolve(false);
-    }
-
-    return {
-        noAdblockMsg: noAdblockMsg,
-        showAdblockMsg: showAdblockMsg
-    };
-});
+export default {
+    noAdblockMsg: noAdblockMsg,
+    showAdblockMsg: showAdblockMsg
+};
