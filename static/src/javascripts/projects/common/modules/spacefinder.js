@@ -41,7 +41,7 @@ type SpacefinderRules = {
         [k: string]: SpacefinderExclusion,
     },
     // will run each slot through this fn to check if it must be counted in
-    filter?: (Element, number, Element[]) => boolean,
+    filter?: (x: Element, y: number, z: Element[]) => boolean,
     // will remove slots before this one
     startAt?: Element,
     // will remove slots from this one on
@@ -306,7 +306,7 @@ const getCandidates = (rules: SpacefinderRules): Element[] => {
 const getMeasurements = (
     rules,
     candidates: Element[],
-    getDimensions: HTMLElement => SpacefinderItem
+    getDimensions: (x: HTMLElement) => SpacefinderItem
 ): Promise<Object> => {
     const contentMeta: ?Element = rules.clearContentMeta
         ? document.querySelector('.js-content-meta')
