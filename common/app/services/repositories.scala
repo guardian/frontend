@@ -130,7 +130,7 @@ trait Index extends ConciergeRepository with Collections {
       .showFields(fields)
     ) map { response =>
       val page = maybeSection.map(s => section(s, response)) orElse
-        response.tag.flatMap(t => tag(response, pageNum)) orElse
+        response.tag.flatMap(_ => tag(response, pageNum)) orElse
         response.section.map(s => section(s, response))
 
       ModelOrResult(page, response, maybeSection)

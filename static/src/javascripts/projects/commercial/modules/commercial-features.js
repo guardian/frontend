@@ -128,7 +128,7 @@ class CommercialFeatures {
 
         this.adFeedback =
             config.switches.adFeedback &&
-            ['artanddesign', 'society', 'tvandradio'].indexOf(
+            ['artanddesign', 'society', 'tv-and-radio'].indexOf(
                 config.page.section
             ) > -1;
     }

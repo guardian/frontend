@@ -15,7 +15,7 @@ object DynamicPackage extends DynamicContainer {
   }
 
   override protected def standardSlices(stories: Seq[Story], firstSlice: Option[Slice]): Seq[Slice] = {
-    val BigsAndStandards(bigs, _) = bigsAndStandards(stories)
+    val BigsAndStandards(_, _) = bigsAndStandards(stories)
 
     if (stories.isEmpty) {
       Nil

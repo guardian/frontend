@@ -11,7 +11,7 @@ case class NavLinkLists(mostPopular: Seq[NavLink], leastPopular: Seq[NavLink] = 
 
 object NewNavigation {
 
-  var PrimaryLinks = List(headlines, opinion, sport, culture, lifestyle)
+  val PrimaryLinks = List(headlines, opinion, sport, culture, lifestyle)
   val topLevelSections = List(News, Opinion, Sport, Arts, Life)
 
   def getMembershipLinks(edition: Edition): NavLinkLists = {
@@ -281,13 +281,13 @@ object NewNavigation {
 
   object SectionLinks {
 
-    var sectionLinks = List(
+    val sectionLinks = List(
 
       SectionsLink("uk", headlines, MostPopular),
       SectionsLink("us", headlines, MostPopular),
       SectionsLink("au", headlines, MostPopular),
       SectionsLink("international", headlines, MostPopular),
-      SectionsLink("uk-news", ukNews,News),
+      SectionsLink("uk-news", ukNews, News),
       SectionsLink("world", world, News),
       SectionsLink("world/europe-news", europe, News),
       SectionsLink("politics", politics, News),

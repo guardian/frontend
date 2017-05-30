@@ -4,7 +4,7 @@ import fastdom from 'lib/fastdom-promise';
 import $ from 'lib/$';
 import ElementInview from 'lib/element-inview';
 import videojs from 'bootstraps/enhanced/media/video-player';
-import youtube from 'common/modules/atoms/youtube';
+import { onVideoContainerNavigation } from 'common/modules/atoms/youtube';
 import detect from 'lib/detect';
 
 type State = {
@@ -28,9 +28,10 @@ const updateYouTubeVideo = (currentItem: ?Element): void => {
     if (currentItem != null) {
         const youTubeAtom = currentItem.querySelector('.youtube-media-atom');
         if (youTubeAtom) {
-            return youtube.onVideoContainerNavigation(
-                youTubeAtom.getAttribute('data-unique-atom-id')
-            );
+            const atomId = youTubeAtom.getAttribute('data-unique-atom-id');
+            if (atomId) {
+                return onVideoContainerNavigation(atomId);
+            }
         }
     }
 };

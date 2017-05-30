@@ -56,9 +56,10 @@ trait LinkTo extends Logging {
 
   def redirectWithParameters(request: Request[AnyContent], realPath: String): Result = {
     val params = if (request.hasParameters) s"?${request.rawQueryString}" else ""
-    Redirect(request.path.endsWith(".json") match {
-      case true => s"/$realPath.json$params"
-      case _ => s"/$realPath$params"
+    Redirect(if (request.path.endsWith(".json")) {
+      s"/$realPath.json$params"
+    } else {
+      s"/$realPath$params"
     })
   }
 }

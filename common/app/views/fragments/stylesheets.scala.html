@@ -1,4 +1,4 @@
-@(projectName: Option[String], isCrossword: Boolean = false)(implicit request: RequestHeader, context: model.ApplicationContext)
+@(projectName: Option[String], isCrossword: Boolean = false, isInteractive: Boolean = false)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @import conf.switches.Switches._
 @import play.api.Mode.Dev
@@ -54,9 +54,16 @@
 <!--[if (gt IE 9)|(IEMobile)]><!-->
 @if(context.environment.mode == Dev || !InlineCriticalCss.isSwitchedOn) {
     <link rel="stylesheet" id="head-css" data-reload="head@projectName.map("." + _).getOrElse(".content")" type="text/css" href="@Static("stylesheets/head" + projectName.map("." + _).getOrElse(".content") + ".css")" />
+
+    @if(isInteractive) {
+        <link rel="stylesheet" id="head-interactive" data-reload="head.interactive" type="text/css" href="@Static("stylesheets/head.interactive.css")" />
+    }
 } else {
     <style class="js-loggable">
         @Html(common.Assets.css.head(projectName))
+        @if(isInteractive) {
+            @Html(common.Assets.css.interactive)
+        }
     </style>
 }
 @fragments.stylesheetLink(common.Assets.css.projectCss(projectName), isCrossword)

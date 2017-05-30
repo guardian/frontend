@@ -23,8 +23,6 @@ import SleevenotesNewEmailVariant
     from 'common/modules/experiments/tests/sleeve-notes-new-email-variant';
 import SleevenotesLegacyEmailVariant
     from 'common/modules/experiments/tests/sleeve-notes-legacy-email-variant';
-import IncreaseInlineAdsRedux
-    from 'common/modules/experiments/tests/increase-inline-ads';
 import BundleDigitalSubPriceTest1
     from 'common/modules/experiments/tests/bundle-digital-sub-price-test-1';
 import {
@@ -45,7 +43,6 @@ export const TESTS: Array<ABTest> = [
     FilmTodayEmailVariants,
     SleevenotesNewEmailVariant,
     SleevenotesLegacyEmailVariant,
-    new IncreaseInlineAdsRedux(),
     new BundleDigitalSubPriceTest1(),
     ExplainerSnippet(),
     MeasureUnderstanding(),

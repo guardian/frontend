@@ -2,16 +2,12 @@
 import config from 'lib/config';
 import detect from 'lib/detect';
 import fastdom from 'lib/fastdom-promise';
-import { getTestVariantId } from 'common/modules/experiments/utils';
-import { testCanBeRun } from 'common/modules/experiments/test-can-run-checks';
 import spaceFiller from 'common/modules/article/space-filler';
 import adSizes from 'commercial/modules/ad-sizes';
 import { addSlot } from 'commercial/modules/dfp/add-slot';
 import trackAdRender from 'commercial/modules/dfp/track-ad-render';
 import createSlot from 'commercial/modules/dfp/create-slot';
 import { commercialFeatures } from 'commercial/modules/commercial-features';
-import IncreaseInlineAds
-    from 'common/modules/experiments/tests/increase-inline-ads';
 
 type AdSize = {
     width: number,
@@ -26,10 +22,6 @@ let bodyAds: number;
 let replaceTopSlot: boolean;
 let getSlotName: () => string;
 let getSlotType: () => string;
-
-const isOffsetingAds: boolean =
-    testCanBeRun(new IncreaseInlineAds()) &&
-    getTestVariantId('IncreaseInlineAdsReduxRedux') === 'yes';
 
 const getSlotNameForMobile = (): string =>
     bodyAds === 1 ? 'top-above-nav' : `inline${bodyAds - 1}`;
@@ -78,12 +70,7 @@ const addArticleAds = (count: number, rules: Object): Promise<number> => {
                     para,
                     getSlotName(),
                     getSlotType(),
-                    `inline${isOffsetingAds && bodyAds > 1 ? ' offset-right' : ''}`,
-                    isOffsetingAds && bodyAds > 1
-                        ? {
-                              desktop: [adSizes.halfPage],
-                          }
-                        : null
+                    'inline'
                 );
             });
 
@@ -144,21 +131,8 @@ const getRules = (): Object => {
     };
 };
 
-const getAltRules = (): Object => {
-    const altRules: Object = getRules();
-    altRules.selectors = {
-        ' .ad-slot': {
-            minAbove: 500,
-            minBelow: 500,
-        },
-    };
-    return altRules;
-};
-
 const getLongArticleRules = (): Object => {
-    const longArticleRules: Object = isOffsetingAds
-        ? getAltRules()
-        : getRules();
+    const longArticleRules: Object = getRules();
     const viewportHeight: number = detect.getViewport().height;
     longArticleRules.selectors[' .ad-slot'].minAbove = viewportHeight;
     longArticleRules.selectors[' .ad-slot'].minBelow = viewportHeight;
@@ -166,10 +140,7 @@ const getLongArticleRules = (): Object => {
 };
 
 const addInlineAds = (): Promise<number> =>
-    addArticleAds(
-        2,
-        isOffsetingAds ? getAltRules() : getRules()
-    ).then((countAdded: number) => {
+    addArticleAds(2, getRules()).then((countAdded: number) => {
         if (countAdded === 2) {
             return addArticleAds(8, getLongArticleRules()).then(
                 innerCountAdded => 2 + innerCountAdded

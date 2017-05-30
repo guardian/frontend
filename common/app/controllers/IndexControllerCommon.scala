@@ -28,7 +28,7 @@ trait IndexControllerCommon extends Controller with Index with RendersItemRespon
   }
 
   private def logGoogleBot(request: RequestHeader) = {
-    request.headers.get("User-Agent").filter(_.contains("Googlebot")).foreach { bot =>
+    request.headers.get("User-Agent").filter(_.contains("Googlebot")).foreach { _ =>
       log.info(s"GoogleBot => ${request.uri}")
     }
   }

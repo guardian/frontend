@@ -30,7 +30,7 @@ object `package` extends implicits.Strings with implicits.Requests with play.api
   def convertApiExceptionsWithoutEither[T](implicit request: RequestHeader,
                                            context: ApplicationContext,
                                            log: Logger): PartialFunction[Throwable, Result] = {
-    case e: CircuitBreakerOpenException =>
+    case _: CircuitBreakerOpenException =>
       log.error(s"Got a circuit breaker open error while calling content api")
       NoCache(ServiceUnavailable)
     case GuardianContentApiError(404, message, _) =>

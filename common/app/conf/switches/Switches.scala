@@ -24,7 +24,7 @@ object SwitchGroup {
     name = "Commercial: Labs",
     description = Some("Features of, and experiments with, branded content.")
   )
-  var Discussion = SwitchGroup("Discussion")
+  val Discussion = SwitchGroup("Discussion")
   val Facia = SwitchGroup("Facia")
   val Feature = SwitchGroup("Feature")
   val Identity = SwitchGroup("Identity")
