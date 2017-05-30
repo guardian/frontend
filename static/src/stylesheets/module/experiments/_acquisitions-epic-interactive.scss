@@ -5,17 +5,13 @@
 .contributions__epic-interactive-wrapper {
     padding: 0 20px;
     max-width: 620px;
-    clear: both
-}
+    clear: both;
 
-@media (min-width: 71.25em) {
-    .contributions__epic-interactive-wrapper {
-        margin-left: 160px
+    @include mq(leftCol) {
+        margin-left: 160px;
     }
-}
 
-@media (min-width: 81.25em) {
-    .contributions__epic-interactive-wrapper {
-        margin-left: 240px
+    @include mq(wide) {
+        margin-left: 240px;
     }
 }
