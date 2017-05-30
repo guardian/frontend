@@ -43,4 +43,6 @@ trait ApplicationsControllers {
 
   //A fake geolocation controller to test it locally
   lazy val geolocationController = wire[FakeGeolocationController]
+
+  lazy val myComponentController = wire[MyComponentController]
 }

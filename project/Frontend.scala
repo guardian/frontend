@@ -56,7 +56,7 @@ object Frontend extends Build with Prototypes {
       commercialShared
     )
   ).settings(
-      mappings in TestAssets ~= filterAssets
+    mappings in TestAssets ~= filterAssets
   )
 
   private def filterAssets(testAssets: Seq[(File, String)]) = testAssets.filterNot{ case (file, fileName) =>
@@ -80,8 +80,7 @@ object Frontend extends Build with Prototypes {
     .dependsOn(commonWithTests)
     .aggregate(common)
 
-  val archive = application("archive").dependsOn(commonWithTests).aggregate(common).settings(
-  )
+  val archive = application("archive").dependsOn(commonWithTests).aggregate(common)
 
   val sport = application("sport").dependsOn(commonWithTests).aggregate(common).settings(
     libraryDependencies ++= Seq(
