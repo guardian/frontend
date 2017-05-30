@@ -42,22 +42,24 @@ const setupSwitch = (start: () => void, stop: () => void) => {
 
 // The switch api's callSwitch function will perform the retrieval of a pre-flight ad call,
 // using the load id that has been previously set with setupLoadId.
-const callSwitch = () => {
-    const __switch_zero = window.__switch_zero;
+const maybeCallSwitch = () => {
+    if (dfpEnv.preFlightAdCallEnabled) {
+        const __switch_zero = window.__switch_zero;
 
-    if (__switch_zero) {
-        try {
-            __switch_zero.commands.push(() => {
-                __switch_zero.callSwitch();
-            });
-        } catch (error) {
-            reportError(
-                error,
-                {
-                    feature: 'commercial',
-                },
-                false
-            );
+        if (__switch_zero) {
+            try {
+                __switch_zero.commands.push(() => {
+                    __switch_zero.callSwitch();
+                });
+            } catch (error) {
+                reportError(
+                    error,
+                    {
+                        feature: 'commercial',
+                    },
+                    false
+                );
+            }
         }
     }
 };
@@ -125,6 +127,6 @@ const init = (start: () => void, stop: () => void) => {
 
 export default {
     init,
-    callSwitch,
+    maybeCallSwitch,
     maybePushAdUnit,
 };
