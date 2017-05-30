@@ -14,8 +14,6 @@ import askFourEarning
     from 'common/modules/experiments/tests/contributions-epic-ask-four-earning';
 import acquisitionsEpicLiveBlog
     from 'common/modules/experiments/tests/acquisitions-epic-liveblog';
-import acquisitionsEpicTestimonialsRoundTwo
-    from 'common/modules/experiments/tests/acquisitions-epic-testimonials-round-two';
 import acquisitionsEpicPreElection
     from 'common/modules/experiments/tests/acquisitions-epic-pre-election';
 import acquisitionsEpicAlwaysAskIfTagged
@@ -30,7 +28,6 @@ const tests = [
     alwaysAsk,
     acquisitionsEpicPreElection,
     acquisitionsEpicTestimonialsUSA,
-    acquisitionsEpicTestimonialsRoundTwo,
     askFourEarning,
     acquisitionsEpicAlwaysAskIfTagged,
     acquisitionsEpicLiveBlog,
