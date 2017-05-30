@@ -1,31 +1,32 @@
+// @flow
 import config from 'lib/config';
 import detect from 'lib/detect';
-import storage from 'lib/storage';
+import { local } from 'lib/storage';
 import userFeatures from 'commercial/modules/user-features';
 
-function adblockInUse() {
+const adblockInUse = function() {
     return detect.adblockInUse;
-}
+};
 
-function notMobile() {
+const notMobile = function() {
     return detect.getBreakpoint() !== 'mobile';
-}
+};
 
-function isPayingMember() {
+const isPayingMember = function() {
     return userFeatures.isPayingMember();
-}
+};
 
-function visitedMoreThanOnce() {
-    var alreadyVisited = storage.local.get('gu.alreadyVisited') || 0;
+const visitedMoreThanOnce = function() {
+    const alreadyVisited = local.get('gu.alreadyVisited') || 0;
 
     return alreadyVisited > 1;
-}
+};
 
-function isAdblockSwitchOn() {
+const isAdblockSwitchOn = function() {
     return config.switches.adblock;
-}
+};
 
-function noAdblockMsg() {
+const noAdblockMsg = function() {
     if (notMobile()) {
         if (!visitedMoreThanOnce() || !isAdblockSwitchOn()) {
             return adblockInUse();
@@ -36,15 +37,18 @@ function noAdblockMsg() {
         }
     }
     Promise.resolve(false);
-}
+};
 
-function showAdblockMsg() {
-    return isAdblockSwitchOn() && !isPayingMember() && visitedMoreThanOnce() && notMobile() ?
-        adblockInUse() :
-        Promise.resolve(false);
-}
+const showAdblockMsg = function() {
+    return isAdblockSwitchOn() &&
+        !isPayingMember() &&
+        visitedMoreThanOnce() &&
+        notMobile()
+        ? adblockInUse()
+        : Promise.resolve(false);
+};
 
 export default {
-    noAdblockMsg: noAdblockMsg,
-    showAdblockMsg: showAdblockMsg
+    noAdblockMsg,
+    showAdblockMsg,
 };
