@@ -4,13 +4,12 @@ define([
     'commercial/modules/messenger'
 ], function (assign, fastdom, messenger) {
     messenger.register('resize', function(specs, ret, iframe) {
-        return resize(specs, iframe, iframe.closest('.js-ad-slot'));
+        var adSlot = iframe && iframe.closest('.js-ad-slot');
+        return resize(specs, iframe, adSlot);
     });
 
-    return resize;
-
     function resize(specs, iframe, adSlot) {
-        if (!specs || !('height' in specs || 'width' in specs)) {
+        if (!specs || !('height' in specs || 'width' in specs) || !iframe || !adSlot) {
             return null;
         }
 
@@ -39,4 +38,6 @@ define([
         }
         return matches[1] + (matches[2] === undefined ? defaultUnit : matches[2]);
     }
+
+    return resize;
 });
