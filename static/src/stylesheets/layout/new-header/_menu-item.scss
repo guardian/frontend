@@ -29,7 +29,7 @@
     color: currentColor;
     cursor: pointer;
     display: block;
-    font-size: 18px;
+    font-size: 20px;
     outline: none;
     padding-bottom: $gs-baseline / 1.8;
     padding-right: $gs-gutter;
@@ -47,17 +47,13 @@
     }
 
     .menu-group--primary & {
-        font-size: 20px;
+        font-size: 24px;
         padding-bottom: $gs-baseline * 1.2;
         padding-top: $gs-baseline / 2.5;
-
-        @include mq(mobileMedium) {
-            font-size: 22px;
-            padding-top: $gs-baseline / 2.3;
-        }
     }
 
     .menu-group--secondary & {
+        font-size: 20px;
         padding-bottom: $gs-baseline / 1.6;
         padding-top: $gs-baseline / 1.6;
     }
@@ -72,7 +68,7 @@
 }
 
 .menu-item__toggle {
-    margin-top: -3px;
+    margin-top: -4px;
 
     &:before {
         border: 2px solid currentColor;
@@ -95,7 +91,7 @@
     }
 
     .menu-group--primary & {
-        margin-top: -5px;
+        margin-top: -4px;
     }
 
     details[open] & {

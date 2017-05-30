@@ -37,9 +37,9 @@ from scrolling */
 .new-header__logo__svg {
     display: block;
     height: calc(3 / 16 * 170px);
-    margin-bottom: $gs-baseline / 2;
+    margin-bottom: $gs-baseline;
     margin-right: $gs-gutter / 2;
-    margin-top: $gs-baseline;
+    margin-top: $gs-baseline / 2;
     width: 170px;
 
     @include mq(mobileMedium) {
