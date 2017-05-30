@@ -25,6 +25,11 @@
         }
 
         .block-time {
+            @include mq($until: tablet) {
+                padding-left: 0;
+                padding-right: 0;
+            }
+
             left: 0;
         }
     }

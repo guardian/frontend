@@ -5,7 +5,8 @@ define([
     'lib/config',
     'lib/$',
     'raw-loader!common/views/acquisitions-epic-liveblog.html',
-    'raw-loader!common/views/acquisitions-epic-liveblog-old-design.html'
+    'raw-loader!common/views/acquisitions-epic-liveblog-old-design-subtle.html',
+    'raw-loader!common/views/acquisitions-epic-liveblog-old-design-minimal.html'
 ], function (
     contributionsUtilities,
     geolocation,
@@ -13,9 +14,54 @@ define([
     config,
     $,
     liveblogEpicTemplateControl,
-    liveblogEpicTemplateOldDesign
+    liveblogEpicTemplateOldDesignSubtle,
+    liveblogEpicTemplateOldDesignMinimal
 ) {
+
     var pageId = config.page.pageId || '';
+
+    var insertEpicAfterSelector = '.js-insert-epic-after';
+
+    function getLiveblogEntryTimeData(el) {
+        var $timeEl = $('time', el);
+
+        return {
+            datetime: $timeEl.attr('datetime'),
+            title: $timeEl.attr('title'),
+            date: $timeEl.text(),
+            time: $('.block-time__absolute', el).text()
+        };
+    }
+
+    function getNextEpicElement(el) {
+        var $epic = $(el).next();
+
+        while ($epic.length && !$epic.hasClass('contributions__epic')) {
+            $epic = $epic.next();
+        }
+
+        if (!$epic.hasClass('contributions__epic')) {
+            return null;
+        }
+
+        return $epic[0];
+    }
+
+    function setEpicLiveblogEntryTimeData(el, timeData) {
+        var $epicTimeEl = $('time', el);
+        $epicTimeEl.attr('datetime', timeData.datetime);
+        $epicTimeEl.attr('title', timeData.title);
+        $epicTimeEl.text(timeData.date);
+        $('.block-time__absolute', el).text(timeData.time);
+    }
+
+    function copyLiveblogEntryTimeDataToEpic() {
+        $(insertEpicAfterSelector).each(function(el) {
+            var timeData = getLiveblogEntryTimeData(el);
+            var nextEpicElement = getNextEpicElement(el);
+            setEpicLiveblogEntryTimeData(nextEpicElement, timeData);
+        });
+    }
 
     return contributionsUtilities.makeABTest({
         id: 'AcquisitionsEpicLiveblogDesignTest',
@@ -45,7 +91,7 @@ define([
                 id: 'control',
                 isUnlimited: true,
 
-                insertAtSelector: '.js-insert-epic-after',
+                insertAtSelector: insertEpicAfterSelector,
                 insertAfter: true,
                 insertMultiple: true,
                 successOnView: true,
@@ -59,43 +105,42 @@ define([
                 },
             },
             {
-                id: 'old_design',
+                id: 'old_design_subtle',
                 isUnlimited: true,
 
-                insertAtSelector: '.js-insert-epic-after',
+                insertAtSelector: insertEpicAfterSelector,
                 insertAfter: true,
                 insertMultiple: true,
                 successOnView: true,
 
                 template: function (variant) {
-
-
-                    return template(liveblogEpicTemplateOldDesign, {
+                    return template(liveblogEpicTemplateOldDesignSubtle, {
                         membershipUrl: variant.options.membershipURL,
                         contributionUrl: variant.options.contributeURL,
                         componentName: variant.options.componentName
                     });
                 },
 
-                onInsert: function() {
-                    $('.js-insert-epic-after').each(function(el) {
-                        // Get time from liveblog post
-                        var $timeEl = $('time', el);
-                        var datetime = $timeEl.attr('datetime');
-                        var title = $timeEl.attr('title');
-                        var date = $timeEl.text();
-                        var time = $('.block-time__absolute', el).text();
+                onInsert: copyLiveblogEntryTimeDataToEpic
+            },
+            {
+                id: 'old_design_minimal',
+                isUnlimited: true,
 
-                        // Set time on epic
-                        // TODO: handle case where ad intervenes between post and epic
-                        var $epic = $(el).next();
-                        var $epicTimeEl = $('time', $epic);
-                        $epicTimeEl.attr('datetime', datetime);
-                        $epicTimeEl.attr('title', title);
-                        $epicTimeEl.text(date);
-                        $('.block-time__absolute', $epic).text(time);
+                insertAtSelector: insertEpicAfterSelector,
+                insertAfter: true,
+                insertMultiple: true,
+                successOnView: true,
+
+                template: function (variant) {
+                    return template(liveblogEpicTemplateOldDesignMinimal, {
+                        membershipUrl: variant.options.membershipURL,
+                        contributionUrl: variant.options.contributeURL,
+                        componentName: variant.options.componentName
                     });
-                }
+                },
+
+                onInsert: copyLiveblogEntryTimeDataToEpic
             }
         ]
     });
