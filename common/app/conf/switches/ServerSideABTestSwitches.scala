@@ -7,7 +7,6 @@ trait ServerSideABTestSwitches {
   val ServerSideTests = {
     // It's for the side effect. Blame agents.
     val tests = mvt.ActiveTests.tests
-
     Switch(
       SwitchGroup.ServerSideABTests,
       "server-side-tests",

@@ -50,7 +50,7 @@ const REMIFICATIONS = {
     replace: true,
     root_value: 16,
     unit_precision: 5,
-    prop_white_list: [],
+    propList: ['*'],
 };
 
 const getFiles = sassGlob => glob.sync(path.resolve(sassDir, sassGlob));

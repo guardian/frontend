@@ -65,7 +65,6 @@ class ElementsTest extends FlatSpec with Matchers with OneAppPerSuite {
   }
 
   it should "not die if an image has 0 height or width" in {
-    val theImage = thumbnailFixture((500, 300))
 
     Content(
       FixtureTemplates.emptyApiContent.copy(

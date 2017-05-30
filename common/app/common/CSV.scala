@@ -24,7 +24,7 @@ object CSV extends implicits.Strings {
 
     def COMMA = ","
     def DQUOTE = "\""
-    def DQUOTE2 = "\"\"" ^^ { case _ => "\"" } // combine 2 dquotes into 1
+    def DQUOTE2 = "\"\"" ^^ (_ => "\"") // combine 2 dquotes into 1
     def CRLF = "\r\n" | "\n"
     def TXT = "[^\",\r\n]".r
     def SPACES = "[ \t]+".r
@@ -33,12 +33,10 @@ object CSV extends implicits.Strings {
     def field: Parser[String] = escaped | nonescaped
 
     def escaped: Parser[String] = {
-      ((SPACES?) ~> DQUOTE ~> ((TXT | COMMA | CRLF | DQUOTE2)*) <~ DQUOTE <~ (SPACES?)) ^^ {
-        case ls => ls.mkString("")
-      }
+      ((SPACES?) ~> DQUOTE ~> ((TXT | COMMA | CRLF | DQUOTE2)*) <~ DQUOTE <~ (SPACES?)) ^^ (ls => ls.mkString(""))
     }
 
-    def nonescaped: Parser[String] = (TXT*) ^^ { case ls => ls.mkString("") }
+    def nonescaped: Parser[String] = (TXT*) ^^ (ls => ls.mkString(""))
 
     def apply(s: String) = parseAll(record, s) match {
       case Success(res, _) => res

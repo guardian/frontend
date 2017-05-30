@@ -40,7 +40,7 @@ case class SimpleDataPoint(value: Double, sampleTime: DateTime) extends DataPoin
   override val time = Some(sampleTime)
 }
 
-final case class SimpleMetric(override val name: String, val datapoint: SimpleDataPoint) extends FrontendMetric {
+final case class SimpleMetric(override val name: String, datapoint: SimpleDataPoint) extends FrontendMetric {
   override val metricUnit: StandardUnit = StandardUnit.Count
   override val getAndResetDataPoints: List[DataPoint] = List(datapoint)
   override val isEmpty = false

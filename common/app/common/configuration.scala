@@ -65,7 +65,7 @@ object GuardianConfiguration extends Logging {
   lazy val configuration = {
     // This is version number of the config file we read from s3,
     // increment this if you publish a new version of config
-    val s3ConfigVersion = 32
+    val s3ConfigVersion = 33
 
     lazy val userPrivate = FileConfigurationSource(s"${System.getProperty("user.home")}/.gu/frontend.conf")
     lazy val runtimeOnly = FileConfigurationSource("/etc/gu/frontend.conf")
@@ -109,7 +109,7 @@ object GuardianConfiguration extends Logging {
     def getProperty[T](get: String => T)(property: String): Option[T] =
       Try(get(property)) match {
           case Success(value) => Some(value)
-          case Failure(e: ConfigException.Missing) => None
+          case Failure(_: ConfigException.Missing) => None
           case Failure(e) =>
             log.error(s"couldn't retrive $property", e)
             None
@@ -127,6 +127,10 @@ class GuardianConfiguration extends Logging {
 
   object business {
     lazy val stocksEndpoint = configuration.getMandatoryStringProperty("business_data.url")
+  }
+
+  object feedback {
+    lazy val feedpipeEndpoint = configuration.getMandatoryStringProperty("feedback.feedpipeEndpoint")
   }
 
   object weather {
@@ -526,7 +530,7 @@ class GuardianConfiguration extends Logging {
       // this is a bit of a convoluted way to check whether we actually have credentials.
       // I guess in an ideal world there would be some sort of isConfigued() method...
       try {
-        val creds = provider.getCredentials
+        provider.getCredentials
         Some(provider)
       } catch {
         case ex: AmazonClientException =>

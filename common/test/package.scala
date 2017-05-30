@@ -82,7 +82,7 @@ trait SingleServerSuite extends OneServerPerSuite with OneBrowserPerSuite with H
   implicit override lazy val app: Application = {
     val environment = Environment.simple()
     val settings = Try(this.getClass.getClassLoader.loadClass("TestAppLoader")) match {
-      case Success(clazz) => initialSettings + ("play.application.loader" -> "TestAppLoader")
+      case Success(_) => initialSettings + ("play.application.loader" -> "TestAppLoader")
       case Failure(_) => initialSettings
     }
     val context = ApplicationLoader.createContext(
@@ -138,7 +138,7 @@ trait WithTestContentApiClient {
 }
 
 trait WithTestCryptoConfig {
-  val testCryptoConfig = new CryptoConfig(secret = "this is the test secret")
+  val testCryptoConfig = CryptoConfig(secret = "this is the test secret")
 }
 
 trait WithTestCSRF {

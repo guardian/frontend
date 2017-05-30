@@ -257,12 +257,10 @@ case class TruncateCleaner(limit: Int)(implicit val edition: Edition, implicit v
     def truncateElement(charLimit: Int, element: Element): Int = {
       element.childNodes.foldLeft(charLimit) {
         (t, node) =>
-          if (node.isInstanceOf[TextNode]) {
-            truncateTextNode(t, node.asInstanceOf[TextNode])
-          } else if (node.isInstanceOf[Element]) {
-            truncateElement(t, node.asInstanceOf[Element])
-          } else {
-            t
+          node match {
+            case tNode: TextNode => truncateTextNode(t, tNode)
+            case elem: Element => truncateElement(t, elem)
+            case _ => t
           }
       }
     }
@@ -774,7 +772,7 @@ case class CommercialComponentHigh(isPaidContent: Boolean, isNetworkFront: Boole
       val adSlot: Option[Element] = Jsoup.parseBodyFragment(adSlotHtml.toString).body().children().toList.headOption
 
       for {
-        (container, index) <- containers.lift(containerIndex)
+        (container, _) <- containers.lift(containerIndex)
         slot <- adSlot
       } {
           container.after(slot)

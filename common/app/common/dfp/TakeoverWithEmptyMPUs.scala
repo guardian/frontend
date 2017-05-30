@@ -45,7 +45,7 @@ object TakeoverWithEmptyMPUs {
         case _ => Valid
       }
     } catch {
-      case use: MalformedURLException => Invalid("Must be a valid URL. eg: http://www.theguardian.com/us")
+      case _: MalformedURLException => Invalid("Must be a valid URL. eg: http://www.theguardian.com/us")
     }
   }
 
