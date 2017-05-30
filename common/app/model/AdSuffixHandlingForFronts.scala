@@ -4,7 +4,7 @@ package model
 object AdSuffixHandlingForFronts {
   private val supportedCountries: List[String] = List("uk", "us", "au")
 
-  def extractAdUnitSuffixFrom(id: String, section: String) = {
+  def extractAdUnitSuffixFrom(id: String, section: String): String = {
     val frontSuffixList = List("front")
     val tagPageSuffixList = List("subsection")
 

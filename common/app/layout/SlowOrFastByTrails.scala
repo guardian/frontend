@@ -42,7 +42,7 @@ object SlowOrFastByTrails {
 
   val FrequencyThreshold = 0.8
 
-  def isSlow(trails: Seq[Trail]) = {
+  def isSlow(trails: Seq[Trail]): Boolean = {
     val histogram = TagHistogram.fromTrails(trails)
 
     SlowTags exists { tag => histogram.frequency(tag) > FrequencyThreshold }

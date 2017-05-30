@@ -4,6 +4,6 @@ import implicits.Strings
 
 object URLEncode extends Strings {
 
-  def apply(s: String) = s.urlEncoded
+  def apply(s: String): String = s.urlEncoded
 
 }

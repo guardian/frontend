@@ -47,7 +47,7 @@ object Cached extends implicits.Dates {
   case class WithoutRevalidationResult(result: Result) extends CacheableResult
 
   object RevalidatableResult {
-    def apply[C](result: Result, content: C)(implicit writeable: Writeable[C]) = {
+    def apply[C](result: Result, content: C)(implicit writeable: Writeable[C]): RevalidatableResult = {
       // hashing function from Arrays.java
       val hashLong: Long = writeable.transform(content).foldLeft(z = 1L){
         case (accu, nextByte) => 31 * accu + nextByte
@@ -55,7 +55,7 @@ object Cached extends implicits.Dates {
       new RevalidatableResult(result, Hash(hashLong.toString))
     }
 
-    def Ok[C](content: C)(implicit writeable: Writeable[C]) = {
+    def Ok[C](content: C)(implicit writeable: Writeable[C]): RevalidatableResult = {
       apply(Results.Ok(content), content)
     }
   }
@@ -82,7 +82,7 @@ object Cached extends implicits.Dates {
   // conventionally cacheable. Typically we only cache 200 and 404 responses.
   def explicitlyCache(seconds: Int)(result: Result): Result = cacheHeaders(seconds, result, None)
 
-  def apply(seconds: Int, cacheableResult: CacheableResult, ifNoneMatch: Option[String]) =
+  def apply(seconds: Int, cacheableResult: CacheableResult, ifNoneMatch: Option[String]): Result =
     if (cacheableStatusCodes.contains(cacheableResult.result.header.status)) {
       cacheableResult match {
         case RevalidatableResult(result, hash) =>

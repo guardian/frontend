@@ -45,7 +45,7 @@ final case class Commercial(
  * MetaData represents a page on the site, whether facia or content
  */
 object Fields {
-  def make(apiContent: contentapi.Content) = {
+  def make(apiContent: contentapi.Content): Fields = {
     Fields (
       trailText = apiContent.fields.flatMap(_.trailText),
       linkText = apiContent.webTitle,
@@ -140,7 +140,7 @@ object MetaData {
     )
   }
 
-  def make(fields: Fields, apiContent: contentapi.Content) = {
+  def make(fields: Fields, apiContent: contentapi.Content): MetaData = {
     val id = apiContent.id
     val url = s"/$id"
     val sectionSummary: Option[SectionSummary] = apiContent.section map SectionSummary.fromCapiSection
@@ -201,16 +201,16 @@ final case class MetaData (
 ){
   val sectionId = section map (_.id) getOrElse ""
 
-  def hasPageSkin(edition: Edition) = if (isPressedPage){
+  def hasPageSkin(edition: Edition): Boolean = if (isPressedPage){
     DfpAgent.hasPageSkin(adUnitSuffix, edition)
   } else false
-  def hasPageSkinOrAdTestPageSkin(edition: Edition) = if (isPressedPage){
+  def hasPageSkinOrAdTestPageSkin(edition: Edition): Boolean = if (isPressedPage){
     DfpAgent.hasPageSkinOrAdTestPageSkin(adUnitSuffix, edition)
   } else false
   def sizeOfTakeoverAdsInSlot(slot: AdSlot, edition: Edition): Seq[AdSize] = if (isPressedPage) {
     DfpAgent.sizeOfTakeoverAdsInSlot(slot, adUnitSuffix, edition)
   } else Nil
-  def omitMPUsFromContainers(edition: Edition) = if (isPressedPage) {
+  def omitMPUsFromContainers(edition: Edition): Boolean = if (isPressedPage) {
     DfpAgent.omitMPUsFromContainers(id, edition)
   } else false
 
@@ -416,7 +416,7 @@ object IsRatio {
  * designed to add some structure to the data that comes from CAPI
  */
 object Elements {
-  def make(apiContent: contentapi.Content) = {
+  def make(apiContent: contentapi.Content): Elements = {
     Elements(apiContent.elements
       .map(_.zipWithIndex.map { case (element, index) => Element(element, index) })
       .getOrElse(Nil))
@@ -537,7 +537,7 @@ final case class Tags(
   lazy val richLink: Option[String] = tags.flatMap(_.richLinkId).headOption
 
   // Tones are all considered to be 'News' it is the default so we do not list news tones explicitly
-  def isNews = !(isLiveBlog || isComment || isFeature)
+  def isNews: Boolean = !(isLiveBlog || isComment || isFeature)
 
   lazy val isLiveBlog: Boolean = tones.exists(t => Tags.liveMappings.contains(t.id))
   lazy val isComment = tones.exists(t => Tags.commentMappings.contains(t.id))
@@ -654,7 +654,7 @@ object Tags {
 
   val CommissioningDesk = """tracking/commissioningdesk/(.*)""".r
 
-  def make(apiContent: contentapi.Content) = {
+  def make(apiContent: contentapi.Content): Tags = {
     Tags(apiContent.tags.toList map { Tag.make(_) })
   }
 }

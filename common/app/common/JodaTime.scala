@@ -13,7 +13,7 @@ object JodaTime {
      * the actual duration of two periods, convert both to durations using toDuration, an operation that emphasises
      * that the result may differ according to the date you choose.
      */
-    def <(period2: Period) =
+    def <(period2: Period): Boolean =
       period.toStandardDuration.isShorterThan(period2.toStandardDuration)
   }
 

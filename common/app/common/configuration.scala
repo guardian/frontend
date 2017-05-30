@@ -26,7 +26,7 @@ object InstallVars {
 
   val properties = Properties(installVars)
 
-  def apply(key: String, default: String) = properties.getOrElse(key, default)
+  def apply(key: String, default: String): String = properties.getOrElse(key, default)
 
   object InstallationVars {
     val stack = apply("stack", "frontend")
@@ -92,9 +92,9 @@ object GuardianConfiguration extends Logging {
 
   implicit class ScalaConvertProperties(conf: Config) {
 
-    def getStringProperty = getProperty(conf.getString)_
-    def getMandatoryStringProperty = getMandatoryProperty(conf.getString)_
-    def getIntegerProperty = getProperty(conf.getInt)_
+    def getStringProperty: (String) => Option[String] = getProperty(conf.getString)_
+    def getMandatoryStringProperty: (String) => String = getMandatoryProperty(conf.getString)_
+    def getIntegerProperty: (String) => Option[Int] = getProperty(conf.getInt)_
 
     def getPropertyNames: Seq[String] = conf.entrySet.toSet.map((_.getKey): Entry[String, _] => String).toSeq
     def getStringPropertiesSplitByComma(propertyName: String): List[String] = {
@@ -104,7 +104,7 @@ object GuardianConfiguration extends Logging {
       }
     }
 
-    def getMandatoryProperty[T](get: String => T)(property: String) = getProperty(get)(property)
+    def getMandatoryProperty[T](get: String => T)(property: String): T = getProperty(get)(property)
       .getOrElse(throw new BadConfigurationException(s"$property not configured"))
     def getProperty[T](get: String => T)(property: String): Option[T] =
       Try(get(property)) match {
@@ -178,7 +178,7 @@ class GuardianConfiguration extends Logging {
     lazy val beaconUrl: String = configuration.getStringProperty("beacon.url").getOrElse("")
   }
 
-  override def toString = configuration.toString
+  override def toString: String = configuration.toString
 
   case class Auth(user: String, password: String)
 

@@ -26,13 +26,13 @@ object LogbackConfig {
     case _ => None
   }
 
-  def makeLayout(customFields: String) = {
+  def makeLayout(customFields: String): LogstashLayout = {
     val l = new LogstashLayout()
     l.setCustomFields(customFields)
     l
   }
 
-  def makeKinesisAppender(layout: LogstashLayout, context: LoggerContext, appenderConfig: KinesisAppenderConfig) = {
+  def makeKinesisAppender(layout: LogstashLayout, context: LoggerContext, appenderConfig: KinesisAppenderConfig): KinesisAppender[ILoggingEvent] = {
     val a = new KinesisAppender[ILoggingEvent]()
     a.setName("LoggingKinesisAppender")
     a.setStreamName(appenderConfig.stream)
@@ -48,7 +48,7 @@ object LogbackConfig {
     a
   }
 
-  def init(config: LogStashConf) = {
+  def init(config: LogStashConf): Unit = {
     if (config.enabled) {
       try {
         val rootLogger = LoggerFactory.getLogger(SLFLogger.ROOT_LOGGER_NAME)

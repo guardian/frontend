@@ -20,5 +20,5 @@ object MostPopularTags extends implicits.Collections {
       .sortBy(-_._2)
 
   /** The top n tags that occur for the given items of content */
-  def topTags(items: Seq[PressedContent]) = apply(items).map(_._1).distinctBy(_.id)
+  def topTags(items: Seq[PressedContent]): Seq[Tag] = apply(items).map(_._1).distinctBy(_.id)
 }
