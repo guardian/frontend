@@ -26,7 +26,7 @@ define([
 
             fastdom.write(function () {
                 if (signIn) {
-                    signIn.classList.addClass('u-h');
+                    signIn.classList.add('u-h');
                 }
 
                 if (accountDetails) {
