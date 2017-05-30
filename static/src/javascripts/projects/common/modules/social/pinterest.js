@@ -24,8 +24,10 @@ const launchOverlay = (event: Event): void => {
 const initPinterest = (): void => {
     const buttons = document.querySelectorAll('.social__item--pinterest');
 
-    [...buttons].forEach(el => {
-        el.addEventListener('click', launchOverlay);
+    fastdom.write(() => {
+        buttons.forEach(el => {
+            el.addEventListener('click', launchOverlay);
+        });
     });
 };
 
