@@ -36,21 +36,16 @@
         text-decoration: none;
     }
 
-    // only for Chrome/ Safari - FF loses the marker via display: block
+    // only for Chrome/ Safari - FF looses the marker via display: block
     &::-webkit-details-marker {
         display: none;
     }
 
-    .menu-group--primary & {
+    // only match the ones, which are not in --secondary
+    .menu-group--primary > .menu-item > * > & {
         font-size: 24px;
         padding-bottom: 16px;
         padding-top: $gs-baseline / 2;
-    }
-
-    .menu-group--secondary & {
-        font-size: 20px;
-        padding-bottom: 8px;
-        padding-top: 8px;
     }
 }
 
