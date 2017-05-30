@@ -22,6 +22,10 @@ define([
 
     var insertEpicAfterSelector = '.js-insert-epic-after';
 
+    function isEpic(el) {
+        $(el).hasClass('is-liveblog-epic');
+    }
+
     function getLiveblogEntryTimeData(el) {
         var $timeEl = $('time', el);
 
@@ -36,11 +40,11 @@ define([
     function getNextEpicElement(el) {
         var $epic = $(el).next();
 
-        while ($epic.length && !$epic.hasClass('contributions__epic')) {
+        while ($epic.length && !isEpic($epic[0])) {
             $epic = $epic.next();
         }
 
-        if (!$epic.hasClass('contributions__epic')) {
+        if (!isEpic($epic[0])) {
             return null;
         }
 

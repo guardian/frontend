@@ -23,15 +23,6 @@
         @include mq(tablet) {
             padding: ($gs-baseline / 3) ($gs-gutter / 2) $gs-baseline ($gs-gutter * 4);
         }
-
-        .block-time {
-            @include mq($until: tablet) {
-                padding-left: 0;
-                padding-right: 0;
-            }
-
-            left: 0;
-        }
     }
 }
 
