@@ -14,8 +14,8 @@ const shouldDisableAdSlotWhenAdFree = adSlot =>
         !adSlot.className.toLowerCase().includes('merchandising'));
 
 const shouldDisableAdSlot = adSlot =>
-    window.getComputedStyle(adSlot).display === 'none' ||
-    shouldDisableAdSlotWhenAdFree(adSlot);
+    shouldDisableAdSlotWhenAdFree(adSlot) ||
+    window.getComputedStyle(adSlot).display === 'none';
 
 const closeDisabledSlots = (force: boolean): Promise<void> => {
     // Get all ad slots
