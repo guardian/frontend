@@ -30,7 +30,9 @@ import { getUrlVars } from 'lib/url';
 import { catchErrorsWithContext } from 'lib/robust';
 import { markTime } from 'lib/user-timing';
 import config from 'lib/config';
-import newHeaderNavigation from 'common/modules/navigation/newHeaderNavigation';
+import {
+    newHeaderNavigationInit,
+} from 'common/modules/navigation/newHeaderNavigation';
 import { trackPerformance } from 'common/modules/analytics/google';
 import debounce from 'lodash/functions/debounce';
 import ophan from 'ophan/ng';
@@ -214,7 +216,7 @@ const bootStandard = (): void => {
 
     identity.init();
 
-    newHeaderNavigation();
+    newHeaderNavigationInit();
 
     markTime('standard end');
 
