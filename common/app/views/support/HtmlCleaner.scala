@@ -206,7 +206,7 @@ object VideoEncodingUrlCleaner extends HttpsUrl {
 }
 
 object AmpSrcCleaner extends HttpsUrl {
-  def apply(videoSrc: String) = {
+  def apply(videoSrc: String): String = {
     // All media sources need to start with https for AMP.
     // Temporary code until all media urls returned from CAPI are https
     ensureHttps(videoSrc)
@@ -257,12 +257,10 @@ case class TruncateCleaner(limit: Int)(implicit val edition: Edition, implicit v
     def truncateElement(charLimit: Int, element: Element): Int = {
       element.childNodes.foldLeft(charLimit) {
         (t, node) =>
-          if (node.isInstanceOf[TextNode]) {
-            truncateTextNode(t, node.asInstanceOf[TextNode])
-          } else if (node.isInstanceOf[Element]) {
-            truncateElement(t, node.asInstanceOf[Element])
-          } else {
-            t
+          node match {
+            case tNode: TextNode => truncateTextNode(t, tNode)
+            case elem: Element => truncateElement(t, elem)
+            case _ => t
           }
       }
     }
@@ -584,7 +582,7 @@ case class DropCaps(isFeature: Boolean, isImmersive: Boolean, isRecipeArticle: B
 // Gallery Caption's don't come back as structured data
 // This is a hack to serve the correct html
 object GalleryCaptionCleaner {
-  def apply(caption: String) = {
+  def apply(caption: String): String = {
     val galleryCaption = Jsoup.parse(caption)
     val firstStrong = Option(galleryCaption.getElementsByTag("strong").first())
     val captionTitle = galleryCaption.createElement("h2")
@@ -705,7 +703,7 @@ case class AtomsCleaner(atoms: Option[Atoms], shouldFence: Boolean = true, amp: 
 }
 
 object setSvgClasses {
-  def apply(svg: String, classes: Seq[String] = List()) = {
+  def apply(svg: String, classes: Seq[String] = List()): String = {
     val document = Jsoup.parse(svg)
     val svgHtml = document.getElementsByTag("svg")
     val modifiedClasses = classes.map(_.concat("__svg")).mkString(" ")
@@ -774,7 +772,7 @@ case class CommercialComponentHigh(isPaidContent: Boolean, isNetworkFront: Boole
       val adSlot: Option[Element] = Jsoup.parseBodyFragment(adSlotHtml.toString).body().children().toList.headOption
 
       for {
-        (container, index) <- containers.lift(containerIndex)
+        (container, _) <- containers.lift(containerIndex)
         slot <- adSlot
       } {
           container.after(slot)

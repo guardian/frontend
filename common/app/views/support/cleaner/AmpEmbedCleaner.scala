@@ -7,6 +7,7 @@ import org.jsoup.nodes.{Document, Element}
 import views.support.{AmpSrcCleaner, HtmlCleaner}
 
 import scala.collection.JavaConversions._
+import scala.collection.mutable
 
 case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
 
@@ -80,7 +81,7 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
       video
     }
 
-    def clean(document: Document) = {
+    def clean(document: Document): mutable.Buffer[Unit] = {
       for {
         videoElement <- document.getElementsByClass("element-video")
         iframeElement <- videoElement.getElementsByTag("iframe")
@@ -136,7 +137,7 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
       ampIframe
     }
 
-    def clean(document: Document) = {
+    def clean(document: Document): mutable.Buffer[Unit] = {
       for {
         audioElement <- document.getElementsByClass("element-audio")
         iframeElement <- audioElement.getElementsByTag("iframe")
@@ -162,7 +163,7 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
   }
 
 
-  def cleanAmpInstagram(document: Document) = {
+  def cleanAmpInstagram(document: Document): Unit = {
     document.getElementsByClass("element-instagram").foreach { embed: Element =>
       embed.getElementsByTag("a").map { element: Element =>
         val src = element.attr("href")
@@ -190,7 +191,7 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
     element.getElementsByTag("a").nonEmpty
   }
 
-  def cleanAmpInteractives(document: Document) = {
+  def cleanAmpInteractives(document: Document): Unit = {
     document.getElementsByClass("element-interactive").foreach {
       interactive: Element =>
         if (canRenderInteractive(interactive)) {
@@ -234,7 +235,7 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
   }
 
 
-  def cleanAmpMaps(document: Document) = {
+  def cleanAmpMaps(document: Document): Unit = {
     document.getElementsByClass("element-map").foreach { embed: Element =>
       embed.getElementsByTag("iframe").foreach { element: Element =>
         val src = element.attr("src")
@@ -264,7 +265,7 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
   }
 
 
-  def cleanAmpComments(document: Document) = {
+  def cleanAmpComments(document: Document): Unit = {
 
     document.getElementsByClass("element-comment").foreach { figure: Element =>
       figure.getElementsByTag("img").foreach { image: Element =>
@@ -290,7 +291,7 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
   }
 
 
-  def cleanAmpEmbed(document: Document) = {
+  def cleanAmpEmbed(document: Document): Unit = {
     document.getElementsByClass("element-embed")
       .filter(_.getElementsByTag("iframe").nonEmpty)
       .foreach(_.getElementsByTag("iframe").foreach {

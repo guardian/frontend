@@ -7,7 +7,7 @@ import org.apache.commons.io.IOUtils
 import play.api.libs.json._
 import play.api.Mode
 
-import scala.collection.concurrent.{Map => ConcurrentMap, TrieMap}
+import scala.collection.concurrent.{TrieMap, Map => ConcurrentMap}
 import scala.util.{Failure, Success, Try}
 
 // turns an unhashed name into a name that's hashed if it needs to be
@@ -53,19 +53,20 @@ object css {
 
   private val memoizedCss: ConcurrentMap[String, Try[String]] = TrieMap()
 
-  def head(projectOverride: Option[String])(implicit context: ApplicationContext) = inline(cssHead(projectOverride.getOrElse(context.applicationIdentity.name)))
-  def inlineStoryPackage(implicit context: ApplicationContext) = inline("story-package")
-  def inlineExplore(implicit context: ApplicationContext) = inline("article-explore")
-  def inlinePhotoEssay(implicit context: ApplicationContext) = inline("article-photo-essay")
-  def amp(implicit context: ApplicationContext) = inline("head.amp")
-  def hostedAmp(implicit context: ApplicationContext) = inline("head.hosted-amp")
-  def liveblogAmp(implicit context: ApplicationContext) = inline("head.amp-liveblog")
-  def emailArticle(implicit context: ApplicationContext) = inline("head.email-article")
-  def emailFront(implicit context: ApplicationContext) = inline("head.email-front")
+  def head(projectOverride: Option[String])(implicit context: ApplicationContext): String = inline(cssHead(projectOverride.getOrElse(context.applicationIdentity.name)))
+  def inlineStoryPackage(implicit context: ApplicationContext): String = inline("story-package")
+  def inlineExplore(implicit context: ApplicationContext): String = inline("article-explore")
+  def inlinePhotoEssay(implicit context: ApplicationContext): String = inline("article-photo-essay")
+  def amp(implicit context: ApplicationContext): String = inline("head.amp")
+  def hostedAmp(implicit context: ApplicationContext): String = inline("head.hosted-amp")
+  def liveblogAmp(implicit context: ApplicationContext): String = inline("head.amp-liveblog")
+  def emailArticle(implicit context: ApplicationContext): String = inline("head.email-article")
+  def emailFront(implicit context: ApplicationContext): String = inline("head.email-front")
+  def interactive(implicit context: ApplicationContext): String = inline("head.interactive")
 
-  def projectCss(projectOverride: Option[String])(implicit context: ApplicationContext) = project(projectOverride.getOrElse(context.applicationIdentity.name))
-  def headOldIE(projectOverride: Option[String])(implicit context: ApplicationContext) = cssOldIE(projectOverride.getOrElse(context.applicationIdentity.name))
-  def headIE9(projectOverride: Option[String])(implicit context: ApplicationContext) = cssIE9(projectOverride.getOrElse(context.applicationIdentity.name))
+  def projectCss(projectOverride: Option[String])(implicit context: ApplicationContext): String = project(projectOverride.getOrElse(context.applicationIdentity.name))
+  def headOldIE(projectOverride: Option[String])(implicit context: ApplicationContext): String = cssOldIE(projectOverride.getOrElse(context.applicationIdentity.name))
+  def headIE9(projectOverride: Option[String])(implicit context: ApplicationContext): String = cssIE9(projectOverride.getOrElse(context.applicationIdentity.name))
 
 
   private def inline(module: String)(implicit context: ApplicationContext): String = {
@@ -125,7 +126,7 @@ object js {
 }
 
 object Get {
-  def apply[T](`try`: Try[T]) = `try` match {
+  def apply[T](`try`: Try[T]): T = `try` match {
     case Success(s) => s
     case Failure(e) => throw e
   }

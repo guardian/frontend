@@ -14,10 +14,10 @@ import askFourEarning
     from 'common/modules/experiments/tests/contributions-epic-ask-four-earning';
 import acquisitionsEpicLiveBlog
     from 'common/modules/experiments/tests/acquisitions-epic-liveblog';
-import acquisitionsEpicTestimonialsRoundTwo
-    from 'common/modules/experiments/tests/acquisitions-epic-testimonials-round-two';
 import acquisitionsEpicPreElection
     from 'common/modules/experiments/tests/acquisitions-epic-pre-election';
+import acquisitionsEpicAlwaysAskIfTagged
+    from 'common/modules/experiments/tests/acquisitions-epic-always-ask-if-tagged';
 import acquisitionsEpicTestimonialsUSA
     from 'common/modules/experiments/tests/acquisitions-epic-testimonials-usa';
 
@@ -28,8 +28,8 @@ const tests = [
     alwaysAsk,
     acquisitionsEpicPreElection,
     acquisitionsEpicTestimonialsUSA,
-    acquisitionsEpicTestimonialsRoundTwo,
     askFourEarning,
+    acquisitionsEpicAlwaysAskIfTagged,
     acquisitionsEpicLiveBlog,
 ].map(Test => new Test());
 

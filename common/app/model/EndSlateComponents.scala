@@ -22,7 +22,7 @@ case class EndSlateComponents(
   sectionId: String,
   shortUrl: String
 ) {
-  def toUriPath = {
+  def toUriPath: String = {
     val url = seriesId.fold(s"/video/end-slate/section/$sectionId")(id => s"/video/end-slate/series/$id")
     s"$url.json?shortUrl=$shortUrl"
   }

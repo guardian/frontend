@@ -9,7 +9,7 @@ object InclusiveRange {
 
   def fromZero(n: Int) = InclusiveRange(0, n)
 
-  def constrain(range: InclusiveRange, n: Int) =
+  def constrain(range: InclusiveRange, n: Int): Int =
     (n max range.minimum) min range.maximum
 }
 
@@ -21,7 +21,7 @@ object Sublinks {
 
   val Default = unit(0)
 
-  def fromItemClasses(itemClasses: ItemClasses) = itemClasses.tablet match {
+  def fromItemClasses(itemClasses: ItemClasses): InclusiveRange = itemClasses.tablet match {
     case FullMedia50 | FullMedia75 => fromZero(4)
     case Half => fromZero(3)
     case ListItem | MediaList | Fluid => unit(0)
@@ -30,7 +30,7 @@ object Sublinks {
     case ThreeQuarters | ThreeQuartersRight | ThreeQuartersTall => fromZero(3)
   }
 
-  def takeSublinks(supporting: Seq[PressedContent], itemClasses: ItemClasses) = {
+  def takeSublinks(supporting: Seq[PressedContent], itemClasses: ItemClasses): Seq[PressedContent] = {
     val InclusiveRange(min, max) = fromItemClasses(itemClasses)
 
     val numberSupporting = supporting.length
@@ -42,6 +42,6 @@ object Sublinks {
     }
   }
 
-  def numberOfSublinks(faciaContent: PressedContent, itemClasses: ItemClasses) =
+  def numberOfSublinks(faciaContent: PressedContent, itemClasses: ItemClasses): Int =
     takeSublinks(faciaContent.supporting, itemClasses).length
 }

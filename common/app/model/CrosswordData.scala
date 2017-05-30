@@ -76,15 +76,13 @@ case class CrosswordDimensions(
 
 object CrosswordData {
 
-  private val dateFormatUTC = ISODateTimeFormat.dateParser().withZone(DateTimeZone.UTC)
-
   implicit val creatorWrites = Json.writes[CrosswordCreator]
 
   implicit val dimensionsWrites = Json.writes[CrosswordDimensions]
 
   implicit val jsonWrites = Json.writes[CrosswordData]
 
-  def fromCrossword(crossword: Crossword) = {
+  def fromCrossword(crossword: Crossword): CrosswordData = {
     // For entry groups, all separator locations for entries within the
     // group are incorrectly stored on the first group entry. We normalize
     // the data to store the separator locations on their corresponding entries.
@@ -103,7 +101,7 @@ object CrosswordData {
         (orderedGroupEntryIds, orderedGroupEntryIds.flatMap(id => groupEntries.find(_.id == id)))
       }
 
-    val newEntries = entryGroups.map { case (k, groupEntries) =>
+    val newEntries = entryGroups.map { case (_, groupEntries) =>
       val maybeSeparatorLocations: Option[Map[String, Seq[Int]]] =
         groupEntries
           .find(_.separatorLocations.exists(_.nonEmpty))

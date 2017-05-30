@@ -132,7 +132,7 @@ object TrailsToRss extends implicits.Collections {
     writer.toString
   }
 
-  def fromPressedPage(pressedPage: PressedPage)(implicit request: RequestHeader) = {
+  def fromPressedPage(pressedPage: PressedPage)(implicit request: RequestHeader): String = {
     val faciaContentList: List[ContentType] =
       pressedPage.collections
         .filterNot(_.config.excludeFromRss)

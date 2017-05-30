@@ -1,0 +1,32 @@
+@(page: model.Page, path: String)(implicit request: RequestHeader, context: model.ApplicationContext)
+
+@main(page){ } {
+    <div class="l-side-margins">
+        <div class="content content--expired">
+            <header class="content__head">
+                <div class="gs-container">
+                    <div class="content__main-column">
+                        <h1 itemprop="headline" class="content__headline">Report a technical issue</h1>
+                    </div>
+                </div>
+            </header>
+            <div class="content__main">
+                <div class="gs-container">
+                    <div class="content__main-column content__main-column--expired">
+                        <div class="js-article__container u-cf">
+                            <div class="from-content-api" itemprop="articleBody">
+                                <div class="from-content-api">
+                                Thank you for contacting us!
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="facia-container facia-container--layout-content">
+        @fragments.mostPopularPlaceholder("/")
+        </div>
+    </div>
+}

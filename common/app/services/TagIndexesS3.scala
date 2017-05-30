@@ -27,12 +27,12 @@ object TagIndexesS3 extends S3 {
     "application/json"
   )
 
-  def putIndex(indexType: String, tagPage: TagIndexPage) = putJson(
+  def putIndex(indexType: String, tagPage: TagIndexPage): Unit = putJson(
     indexKey(indexType, tagPage.id),
     tagPage
   )
 
-  def putListing(indexType: String, listing: TagIndexListings) = putJson(
+  def putListing(indexType: String, listing: TagIndexListings): Unit = putJson(
     indexKey(indexType, ListingKey),
     listing
   )

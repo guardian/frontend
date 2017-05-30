@@ -17,7 +17,7 @@ case class EmailNewsletter(
   triggerId: Option[Int] = None
 ) {
   val allIds = listId :: aliases
-  def subscribedTo(subscriptions: List[String]) = {
+  def subscribedTo(subscriptions: List[String]): Boolean = {
     subscriptions.exists(allIds.map(_.toString).contains(_))
   }
 }

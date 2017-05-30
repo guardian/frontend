@@ -196,7 +196,7 @@ class CloudWatchMetricsLifecycle(
     CloudWatch.putMetrics(applicationMetricsNamespace, allMetrics, applicationDimension)
   }
 
-  override def start() = {
+  override def start(): Unit = {
     jobs.deschedule("ApplicationSystemMetricsJob")
     //run every minute, 36 seconds after the minute
     jobs.schedule("ApplicationSystemMetricsJob", "36 * * * * ?") {

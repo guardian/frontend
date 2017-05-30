@@ -17,9 +17,9 @@ trait IndexControllerCommon extends Controller with Index with RendersItemRespon
   implicit val context: ApplicationContext
 
   // Needed as aliases for reverse routing
-  def renderCombinerRss(leftSide: String, rightSide: String) = renderCombiner(leftSide, rightSide)
+  def renderCombinerRss(leftSide: String, rightSide: String): Action[AnyContent] = renderCombiner(leftSide, rightSide)
 
-  def renderCombiner(leftSide: String, rightSide: String) = Action.async { implicit request =>
+  def renderCombiner(leftSide: String, rightSide: String): Action[AnyContent] = Action.async { implicit request =>
     logGoogleBot(request)
     index(Edition(request), leftSide, rightSide, inferPage(request), request.isRss).map {
       case Left(page) => renderFaciaFront(page)
@@ -28,24 +28,24 @@ trait IndexControllerCommon extends Controller with Index with RendersItemRespon
   }
 
   private def logGoogleBot(request: RequestHeader) = {
-    request.headers.get("User-Agent").filter(_.contains("Googlebot")).foreach { bot =>
+    request.headers.get("User-Agent").filter(_.contains("Googlebot")).foreach { _ =>
       log.info(s"GoogleBot => ${request.uri}")
     }
   }
 
-  def renderJson(path: String) = render(path)
+  def renderJson(path: String): Action[AnyContent] = render(path)
 
-  def renderRss(path: String) = render(path)
+  def renderRss(path: String): Action[AnyContent] = render(path)
 
-  def render(path: String) = Action.async { implicit request =>
+  def render(path: String): Action[AnyContent] = Action.async { implicit request =>
     renderItem(path)
   }
 
   private def redirect(id: String, isRss: Boolean) = WithoutRevalidationResult(MovedPermanently(if (isRss) s"/$id/rss" else s"/$id"))
 
-  def renderTrailsJson(path: String) = renderTrails(path)
+  def renderTrailsJson(path: String): Action[AnyContent] = renderTrails(path)
 
-  def renderTrails(path: String) = Action.async { implicit request =>
+  def renderTrails(path: String): Action[AnyContent] = Action.async { implicit request =>
     index(Edition(request), path, inferPage(request), request.isRss) map {
       case Left(model) => renderTrailsFragment(model)
       case Right(notFound) => notFound

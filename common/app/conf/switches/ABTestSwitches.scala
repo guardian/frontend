@@ -45,7 +45,7 @@ trait ABTestSwitches {
     "Assign users to variants of opinion emails",
     owners = Seq(Owner.withGithub("davidfurey")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 5, 30),
+    sellByDate = new LocalDate(2017, 6, 1),
     exposeClientSide = true
   )
 
@@ -55,7 +55,7 @@ trait ABTestSwitches {
     "Test to assess the effects of always asking readers to contribute via the Epic over a prolonged period",
     owners = Seq(Owner.withGithub("Mullefa")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 6, 1),
+    sellByDate = new LocalDate(2018, 7, 19),
     exposeClientSide = true
   )
 
@@ -65,7 +65,7 @@ trait ABTestSwitches {
     "This places the epic on all articles for all users, with a limit of 4 impressions in any given 30 days",
     owners = Seq(Owner.withGithub("jranks123")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 6, 1),
+    sellByDate = new LocalDate(2018, 7, 19),
     exposeClientSide = true
   )
 
@@ -75,7 +75,7 @@ trait ABTestSwitches {
     "This places the epic below those blocks on liveblogs which have been marked for displaying the epic in Composer",
     owners = Seq(Owner.withGithub("joelochlann")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 7, 3),
+    sellByDate = new LocalDate(2018, 7, 19),
     exposeClientSide = true
   )
 
@@ -95,7 +95,7 @@ trait ABTestSwitches {
     "Assign some of the new sleeve notes subscribers to receive the new email",
     owners = Seq(Owner.withGithub("lmath")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 5, 30),
+    sellByDate = new LocalDate(2017, 6, 1),
     exposeClientSide = true
   )
 
@@ -105,7 +105,7 @@ trait ABTestSwitches {
     "Assign some of the new sleeve notes subscribers to receive the old email",
     owners = Seq(Owner.withGithub("lmath")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 5, 30),
+    sellByDate = new LocalDate(2017, 6, 1),
     exposeClientSide = true
   )
 
@@ -115,7 +115,7 @@ trait ABTestSwitches {
     "Assign users to variants of long read email",
     owners = Seq(Owner.withGithub("davidfurey")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 5, 30),
+    sellByDate = new LocalDate(2017, 6, 1),
     exposeClientSide = true
   )
 
@@ -125,7 +125,7 @@ trait ABTestSwitches {
     "Assign users to variants of fashion statement email",
     owners = Seq(Owner.withGithub("davidfurey")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 5, 30),
+    sellByDate = new LocalDate(2017, 6, 1),
     exposeClientSide = true
   )
 
@@ -135,7 +135,7 @@ trait ABTestSwitches {
     "Assign users to variants of bookmarks email",
     owners = Seq(Owner.withGithub("davidfurey")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 5, 30),
+    sellByDate = new LocalDate(2017, 6, 1),
     exposeClientSide = true
   )
 
@@ -145,7 +145,7 @@ trait ABTestSwitches {
     "Assign users to variants of film today email",
     owners = Seq(Owner.withGithub("davidfurey")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 5, 30),
+    sellByDate = new LocalDate(2017, 6, 1),
     exposeClientSide = true
   )
 
@@ -171,21 +171,21 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-acquisitions-epic-testimonials-round-two",
-    "Test placing reader testimonials in the Epic",
-    owners = Seq(Owner.withGithub("Mullefa")),
-    safeState = On,
-    sellByDate = new LocalDate(2017, 6, 13),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-acquisitions-epic-pre-election",
     "Test 2 variants centered around the upcoming election",
     owners = Seq(Owner.withGithub("jranks123")),
     safeState = On,
     sellByDate = new LocalDate(2017, 6, 13),
+    exposeClientSide = true
+    )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-epic-always-ask-if-tagged",
+    "This guarantees that any on any article that is tagged with a tag that is on the allowed list of tags as set by the tagging tool, the epic will be displayed",
+    owners = Seq(Owner.withGithub("jranks123")),
+    safeState = On,
+    sellByDate = new LocalDate(2018, 7, 19),
     exposeClientSide = true
   )
 

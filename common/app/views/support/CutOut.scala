@@ -23,7 +23,7 @@ object CutOut extends Logging {
 }
 
 object Orientation {
-  def fromDimensions(width: Int, height: Int) = if (width >= height) Landscape else Portrait
+  def fromDimensions(width: Int, height: Int): Orientation = if (width >= height) Landscape else Portrait
 }
 
 sealed trait Orientation
@@ -32,7 +32,7 @@ case object Landscape extends Orientation
 case object Portrait extends Orientation
 
 case class CutOut(imageUrl: String, orientation: Orientation) {
-  def cssClass = orientation match {
+  def cssClass: String = orientation match {
     case Landscape => "image--landscape"
     case Portrait => "image--portrait"
   }
