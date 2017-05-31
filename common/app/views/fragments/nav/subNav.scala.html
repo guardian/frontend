@@ -1,10 +1,11 @@
-@(page: model.Page)(implicit request: RequestHeader)
+@(page: model.Page, isFooter: Boolean = false)(implicit request: RequestHeader)
 
 @import common.{NewNavigation, Edition, LinkTo}
 @import views.support.RenderClasses
 
 <div class="subnav">
     <div class="gs-container">
+
         @defining(NewNavigation.SectionLinks.getActivePillar(page)) { case (id, activePillarName) =>
             <ul class="subnav__list"
                 data-pillar-title="@activePillarName">
@@ -22,8 +23,8 @@
                     </li>
                 }
 
-            @* Hiding the 'more' link on the homepage *@
-            @if(!(id == "uk" ||  id == "us" ||  id == "au" ||  id == "international")) {
+            @* Hiding the 'more' link on the homepage and footer *@
+            @if(!(id == "uk" ||  id == "us" ||  id == "au" ||  id == "international" || isFooter)) {
                 <li class="subnav__item js-visible">
                     <button class="
                         subnav-link
@@ -38,4 +39,3 @@
         }
     </div>
 </div>
-

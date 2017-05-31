@@ -123,8 +123,9 @@ const formatAppNexusTargeting = (obj: Object): string =>
             })
     ).join(',');
 
-const buildPageTargeting = once((): Object => {
+const buildPageTargeting = once((adFree: ?boolean): Object => {
     const page: Object = config.page;
+    const adFreeTargeting: Object = adFree ? { af: 't' } : {};
     const pageTargets: Object = Object.assign(
         {
             x: krux.getSegments(),
@@ -143,6 +144,7 @@ const buildPageTargeting = once((): Object => {
                 : undefined,
         },
         page.sharedAdTargeting,
+        adFreeTargeting,
         getWhitelistedQueryParams()
     );
 
