@@ -152,7 +152,8 @@
       "EventEmitter": "wolfy87-eventemitter",
       "videojs": "video.js",
       "stripe": "stripe/stripe.min",
-      "svgs": "<rootDir>/static/src/inline-svgs",
+      "^svgs\/(.*)$": "<rootDir>/__mocks__/fileMock.js",
+      "\\.(html)$": "<rootDir>/__mocks__/fileMock.js",
       "ophan/ng": "ophan-tracker-js",
       "ophan/embed": "ophan-tracker-js/build/ophan.embed"
     },

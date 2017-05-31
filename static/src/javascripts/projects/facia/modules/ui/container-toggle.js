@@ -9,36 +9,36 @@ import { inlineSvg } from 'common/views/svgs';
 import btnTmpl from 'raw-loader!facia/views/button-toggle.html';
 
 type ToggleState = 'hidden' | 'displayed';
+
+const prefName = 'container-states';
+const toggleText = {
+    hidden: 'Show',
+    displayed: 'Hide',
+};
+
 export class ContainerToggle {
     $container: bonzo;
     state: ToggleState;
+    $button: bonzo;
     constructor(container: Element) {
         this.$container = bonzo(container);
         this.addToggle();
-    }
-
-    static $button = bonzo(
         bonzo.create(
             template(btnTmpl, {
                 text: 'Hide',
                 dataLink: 'Show',
                 icon: inlineSvg('arrowicon'),
             })
-        )
-    );
-    static buttonText = $(
-        '.fc-container__toggle__text',
-        ContainerToggle.$button[0]
-    );
-    static prefName = 'container-states';
-    static toggleText = {
-        hidden: 'Show',
-        displayed: 'Hide',
-    };
+        );
+    }
 
-    updatePref = (id: string): void => {
+    buttonText() {
+        $('.fc-container__toggle__text', this.$button[0]);
+    }
+
+    updatePref(id: string): void {
         // update user prefs
-        let prefs = userPrefs.get(ContainerToggle.prefName);
+        let prefs = userPrefs.get(prefName);
         const prefValue = id;
         if (this.state === 'displayed') {
             delete prefs[prefValue];
@@ -48,10 +48,10 @@ export class ContainerToggle {
             }
             prefs[prefValue] = 'closed';
         }
-        userPrefs.set(ContainerToggle.prefName, prefs);
-    };
+        userPrefs.set(prefName, prefs);
+    }
 
-    setState = (newState: ToggleState): void => {
+    setState(newState: ToggleState): void {
         this.state = newState;
 
         fastdom.write(() => {
@@ -60,46 +60,43 @@ export class ContainerToggle {
                 this.state === 'displayed' ? 'removeClass' : 'addClass'
             ]('fc-container--rolled-up');
             // data-link-name is inverted, as happens before clickstream
-            ContainerToggle.$button.attr(
+            this.$button.attr(
                 'data-link-name',
-                ContainerToggle.toggleText[
-                    this.state === 'displayed' ? 'hidden' : 'displayed'
-                ]
+                toggleText[this.state === 'displayed' ? 'hidden' : 'displayed']
             );
-            ContainerToggle.buttonText.text(
-                ContainerToggle.toggleText[this.state]
-            );
+            this.buttonText.text(toggleText[this.state]);
         });
-    };
+    }
 
-    readPrefs = (id: string): void => {
+    readPrefs(id: string): void {
         // update user prefs
-        const prefs = userPrefs.get(ContainerToggle.prefName);
+        const prefs = userPrefs.get(prefName);
         if (prefs && prefs[id]) {
             this.setState('hidden');
         }
-    };
+    }
 
-    addToggle = (): void => {
+    addToggle(): void {
         // append toggle button
         const id = this.$container.attr('data-id');
         const $containerHeader = $('.js-container__header', this.$container[0]);
 
         fastdom.write(() => {
-            $containerHeader.append(ContainerToggle.$button);
+            $containerHeader.append(this.$button);
             this.$container
                 .removeClass('js-container--toggle')
                 .addClass('fc-container--has-toggle');
+
             this.readPrefs(id);
         });
 
         mediator.on('module:clickstream:click', clickSpec => {
-            if (clickSpec.target === ContainerToggle.$button[0]) {
+            if (clickSpec.target === this.$button[0]) {
                 this.setState(
                     this.state === 'displayed' ? 'hidden' : 'displayed'
                 );
                 this.updatePref(id);
             }
         });
-    };
+    }
 }
