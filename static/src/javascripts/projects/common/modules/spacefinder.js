@@ -53,8 +53,6 @@ type SpacefinderRules = {
     fromBottom?: boolean,
 };
 
-// total_hours_spent_maintaining_this = 64
-//
 // maximum time (in ms) to wait for images to be loaded and rich links
 // to be upgraded
 const LOADING_TIMEOUT = 5000;
