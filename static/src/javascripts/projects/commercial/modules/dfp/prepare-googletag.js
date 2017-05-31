@@ -63,8 +63,12 @@ const init = (start: () => void, stop: () => void): Promise<void> => {
     const setupAdvertising = (): Promise<void> => {
         addTag(dfpEnv.sonobiEnabled ? 'sonobi' : 'waterfall');
 
+        start();
+
+        // note: fillAdvertSlots isn't synchronous like most buffered cmds, it's a promise. It's put in here to ensure
+        // it strictly follows preceding prepare-googletag work (and the module itself ensures dependencies are
+        // fulfilled), but don't assume fillAdvertSlots is complete when queueing subsequent work using cmd.push
         window.googletag.cmd.push(
-            start,
             setDfpListeners,
             setPageTargeting,
             setPublisherProvidedId,
