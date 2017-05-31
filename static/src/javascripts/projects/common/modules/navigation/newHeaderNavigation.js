@@ -3,7 +3,9 @@
 import detect from 'lib/detect';
 import fastdom from 'fastdom';
 import { scrollToElement } from 'lib/scroller';
+import { addEventListener } from 'lib/events';
 import userAccount from 'common/modules/navigation/user-account';
+import debounce from 'lodash/functions/debounce';
 
 const enhanced = {};
 
@@ -71,16 +73,35 @@ const toggleSidebar = (): void => {
     const update = () => {
         const expandedAttr = isOpen ? 'false' : 'true';
         const hiddenAttr = isOpen ? 'true' : 'false';
-        const haveToCalcTogglePosition = detect.isBreakpoint({ min: 'tablet' });
+        const haveToCalcTogglePosition = detect.isBreakpoint({
+            min: 'tablet',
+            max: 'desktop',
+        });
+        const enhanceMenuMargin = (): void => {
+            if (!document.body) {
+                return;
+            }
 
-        // TODO: listen for changes and refactor into a function
-        if (!isOpen && haveToCalcTogglePosition && document.body) {
             const docRect = document.body.getBoundingClientRect();
             const rect = menuToggle.getBoundingClientRect();
-            const right = docRect.right - rect.right + rect.width / 2;
-            menu.style.marginRight = `${right}px`;
-        } else if (isOpen) {
+            const marginRight = docRect.right - rect.right + rect.width / 2;
+            menu.style.marginRight = `${marginRight}px`;
+        };
+        const debouncedMenuEnhancement = debounce(enhanceMenuMargin, 200);
+        const removeEnhancedMenuMargin = (): void => {
             menu.style.marginRight = '';
+        };
+
+        if (!isOpen && haveToCalcTogglePosition) {
+            enhanceMenuMargin();
+
+            addEventListener(window, 'resize', debouncedMenuEnhancement, {
+                passive: true,
+            });
+        } else if (isOpen) {
+            removeEnhancedMenuMargin();
+
+            window.removeEventListener('resize', debouncedMenuEnhancement);
         }
 
         menuToggle.setAttribute(
