@@ -14,7 +14,6 @@ import { closeDisabledSlots } from 'commercial/modules/close-disabled-slots';
 import prepareGoogletag from 'commercial/modules/dfp/prepare-googletag';
 import prepareSonobiTag from 'commercial/modules/dfp/prepare-sonobi-tag';
 import prepareSwitchTag from 'commercial/modules/dfp/prepare-switch-tag';
-import { fillAdvertSlots } from 'commercial/modules/dfp/fill-advert-slots';
 import hostedAbout from 'commercial/modules/hosted/about';
 import { initHostedVideo } from 'commercial/modules/hosted/video';
 import hostedGallery from 'commercial/modules/hosted/gallery';
@@ -48,7 +47,6 @@ const commercialModules: Array<Array<any>> = [
     ['cm-liveblogAdverts', initLiveblogAdverts, true],
     ['cm-closeDisabledSlots', closeDisabledSlots],
     ['cm-stickyTopBanner', stickyTopBanner.init],
-    ['cm-fill-advert-slots', fillAdvertSlots, true],
     ['cm-paidContainers', paidContainers],
     ['cm-paidforBand', paidforBand.init],
 ];
