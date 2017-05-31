@@ -157,6 +157,18 @@ define([
             expect(buildPageTargeting().br).toEqual('p');
         });
 
+        it('should set the ad-free param to t when enabled', function () {
+            expect(buildPageTargeting(true).af).toBe('t');
+        });
+
+        it('should not contain an ad-free param when disabled', function () {
+            expect(buildPageTargeting(false).af).toBeUndefined();
+        });
+
+        it('should not contain an ad-free param when not specified', function () {
+            expect(buildPageTargeting().af).toBeUndefined();
+        });
+
         it('should remove empty values', function () {
             config.page = {};
             config.ophan.pageViewId = '123456';
