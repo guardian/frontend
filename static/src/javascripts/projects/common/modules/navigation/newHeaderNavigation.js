@@ -81,7 +81,7 @@ const toggleSidebar = (): void => {
         const enhanceMenuMargin = (): Promise<void> => {
             const body = document.body;
 
-            if (!body && !haveToCalcTogglePosition()) {
+            if (!body || !haveToCalcTogglePosition()) {
                 return Promise.resolve();
             }
 
