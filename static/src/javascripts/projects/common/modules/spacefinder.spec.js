@@ -4,9 +4,9 @@ import { _ } from 'common/modules/spacefinder';
 
 describe('spacefinder', () => {
     test('should test elements correctly', () => {
-        const para = { top: 200, bottom: 300 };
         const rules = { minAbove: 50, minBelow: 300 };
         const element = document.createElement('div');
+        const para = { top: 200, bottom: 300, element };
         const others: Object[] = [
             {
                 opponent: { top: 0, bottom: 100, element },
