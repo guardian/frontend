@@ -24,8 +24,7 @@
     "projects/common/modules/charts/doughnut.js"
   ],
   "Lydia Shepherd": [
-    "projects/common/modules/commercial/adblock-messages.js",
-    "projects/common/modules/charts/table-doughnut.js"
+    "projects/common/modules/commercial/adblock-messages.js"
   ],
   "sndrs": [
     "lib/detect.js",
