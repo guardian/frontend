@@ -46,8 +46,6 @@ class FabricExpandingV1 {
     }
 
     updateBgPosition() {
-        const that = this;
-
         const viewportHeight = detect.getViewport().height;
         const adSlotTop = this.adSlot.getBoundingClientRect().top;
 
@@ -73,7 +71,7 @@ class FabricExpandingV1 {
             case 'split':
                 scrollAmount = bottomScroll + topScroll;
                 fastdom.write(() => {
-                    $('.ad-exp--expand-scrolling-bg', that.adSlot).css({
+                    $('.ad-exp--expand-scrolling-bg', this.adSlot).css({
                         'background-repeat': 'no-repeat',
                         'background-position': `50%${scrollAmount}%`,
                     });
@@ -82,7 +80,7 @@ class FabricExpandingV1 {
             case 'fixed':
                 scrollAmount = -adSlotTop;
                 fastdom.write(() => {
-                    $('.ad-exp--expand-scrolling-bg', that.adSlot).css(
+                    $('.ad-exp--expand-scrolling-bg', this.adSlot).css(
                         'background-position',
                         `50%${scrollAmount}px`
                     );
@@ -90,7 +88,7 @@ class FabricExpandingV1 {
                 break;
             case 'fixed matching fluid250':
                 fastdom.write(() => {
-                    $('.ad-exp--expand-scrolling-bg', that.adSlot).addClass(
+                    $('.ad-exp--expand-scrolling-bg', this.adSlot).addClass(
                         'ad-exp--expand-scrolling-bg-fixed'
                     );
                 });
@@ -98,10 +96,10 @@ class FabricExpandingV1 {
             case 'parallax':
                 scrollAmount = Math.ceil(adSlotTop * 0.3) + 20;
                 fastdom.write(() => {
-                    $('.ad-exp--expand-scrolling-bg', that.adSlot).addClass(
+                    $('.ad-exp--expand-scrolling-bg', this.adSlot).addClass(
                         'ad-exp--expand-scrolling-bg-parallax'
                     );
-                    $('.ad-exp--expand-scrolling-bg', that.adSlot).css(
+                    $('.ad-exp--expand-scrolling-bg', this.adSlot).css(
                         'background-position',
                         `50%${scrollAmount}%`
                     );
@@ -115,13 +113,12 @@ class FabricExpandingV1 {
     }
 
     listener() {
-        const that = this;
         if (
             !this.initialExpandCounter &&
             detect.getViewport().height >
-                that.adSlot.getBoundingClientRect().top + this.openedHeight
+                this.adSlot.getBoundingClientRect().top + this.openedHeight
         ) {
-            const itemId = $('.ad-slot__content', that.adSlot).attr('id');
+            const itemId = $('.ad-slot__content', this.adSlot).attr('id');
             const itemIdArray = itemId.split('/');
 
             if (!local.get(`gu.commercial.expandable.${itemIdArray[1]}`)) {
@@ -135,13 +132,13 @@ class FabricExpandingV1 {
                             expires: Date.now() + week,
                         }
                     );
-                    that.$button.addClass('button-spin');
+                    this.$button.addClass('button-spin');
                     $('.ad-exp__open-chevron')
                         .removeClass('chevron-up')
                         .addClass('chevron-down');
-                    that.$ad.css('height', that.openedHeight);
-                    that.isClosed = false;
-                    that.initialExpandCounter = true;
+                    this.$ad.css('height', this.openedHeight);
+                    this.isClosed = false;
+                    this.initialExpandCounter = true;
                 });
             } else if (this.isClosed) {
                 fastdom.write(() => {
