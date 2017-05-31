@@ -18,16 +18,6 @@ const visitedMoreThanOnce = (): boolean => {
 
 const isAdblockSwitchOn = (): boolean => config.switches.adblock;
 
-const noAdblockMsg = (): Promise<boolean> => {
-    if (
-        notMobile() &&
-        (!visitedMoreThanOnce() || !isAdblockSwitchOn() || isPayingMember())
-    ) {
-        return adblockInUse();
-    }
-    return Promise.resolve(false);
-};
-
 const showAdblockMsg = (): Promise<boolean> =>
     isAdblockSwitchOn() &&
         !isPayingMember() &&
@@ -36,4 +26,4 @@ const showAdblockMsg = (): Promise<boolean> =>
         ? adblockInUse()
         : Promise.resolve(false);
 
-export { noAdblockMsg, showAdblockMsg };
+export { showAdblockMsg };
