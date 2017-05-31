@@ -58,25 +58,6 @@
     }
 }
 
-.veggie-burger__label {
-    @include fs-textSans(5);
-    bottom: -25px;
-    color: $neutral-3;
-    display: none;
-    left: 50%;
-    position: absolute;
-    text-transform: lowercase;
-    transform: translateX(-50%);
-
-    @include mq(desktop) {
-        display: block;
-    }
-
-    .new-header--open & {
-        display: none;
-    }
-}
-
 .veggie-burger__icon {
     top: 50%;
     display: block;
