@@ -29,7 +29,7 @@ type StandardMessage = {
 // A legacy from programmatic ads running in friendly iframes. They can
 // on occasion be larger than the size returned by DFP. And so they
 // have been setup to send a message of the form:
-type Payload = {
+type ProgrammaticMessage = {
     type: string,
     value: {
         id: string,
@@ -38,12 +38,12 @@ type Payload = {
     },
 };
 
-const isProgrammaticMessage = (payload: Payload): boolean =>
+const isProgrammaticMessage = (payload: ProgrammaticMessage): boolean =>
     payload.type === 'set-ad-height' &&
     'id' in payload.value &&
     'height' in payload.value;
 
-const toStandardMessage = (payload: Payload): StandardMessage => ({
+const toStandardMessage = (payload: ProgrammaticMessage): StandardMessage => ({
     id: 'aaaa0000-bb11-cc22-dd33-eeeeee444444',
     type: 'resize',
     iframeId: payload.value.id,
@@ -55,7 +55,7 @@ const toStandardMessage = (payload: Payload): StandardMessage => ({
 
 // Incoming messages contain the ID of the iframe into which the
 // source window is embedded.
-const getIframe = (data: Object): HTMLElement | null =>
+const getIframe = (data: StandardMessage): ?HTMLElement =>
     document.getElementById(data.iframeId);
 
 // Until DFP provides a way for us to identify with 100% certainty our
@@ -76,7 +76,7 @@ const isValidPayload = (payload: Object): boolean =>
 // formatError({ message: "%%, you are so %%" }, "Regis", "lovely")
 //
 // returns `{ message: "Regis, you are so lovely" }`. Oh, thank you!
-const formatError = (...args) => {
+const formatError = (...args): Object => {
     if (args.length < 2) {
         return args[0] || '';
     }
@@ -91,7 +91,7 @@ const formatError = (...args) => {
     return error;
 };
 
-const onMessage = (event: Object) => {
+const onMessage = (event: Object): void => {
     let data;
     // We only allow communication with ads created by DFP
     if (ALLOWED_HOSTS.indexOf(event.origin) < 0) {
@@ -201,9 +201,8 @@ export const register = (
         REGISTERED_LISTENERS += 1;
     } else {
         // set LISTENERS[type] to an empty array, if it is currently undefined or null
-        if (!LISTENERS[type]) {
-            LISTENERS[type] = [];
-        }
+        LISTENERS[type] = LISTENERS[type] || [];
+
         if (LISTENERS[type].indexOf(callback) === -1) {
             LISTENERS[type].push(callback);
             REGISTERED_LISTENERS += 1;
