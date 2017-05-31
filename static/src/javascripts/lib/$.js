@@ -9,7 +9,7 @@ bonzo.aug({
     },
 });
 
-const $ = (selector: ?string | ?Node, context: ?Element | ?string): bonzo =>
+const $ = (selector: ?string | ?Node, context: ?Node | ?string): bonzo =>
     bonzo(qwery(selector, context));
 
 $.create = (s: string): bonzo => bonzo(bonzo.create(s));
