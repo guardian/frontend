@@ -22,6 +22,7 @@ class CommercialFeatures {
     canReasonablyAskForMoney: any;
     asynchronous: any;
     adFeedback: any;
+    adFree: any;
 
     constructor() {
         // this is used for SpeedCurve tests
@@ -48,11 +49,21 @@ class CommercialFeatures {
             config.page.showNewRecipeDesign && config.tests.abNewRecipeDesign;
 
         // Feature switches
+        this.adFree =
+            switches.commercial &&
+            switches.adFreeMembershipTrial &&
+            userFeatures.isAdFreeUser();
+
         this.dfpAdvertising =
-            switches.commercial && externalAdvertising && !sensitiveContent;
+            !this.adFree &&
+            switches.commercial &&
+            externalAdvertising &&
+            !sensitiveContent;
 
         this.stickyTopBannerAd =
-            !config.page.disableStickyTopBanner && !supportsSticky;
+            !this.adFree &&
+            !config.page.disableStickyTopBanner &&
+            !supportsSticky;
 
         this.articleBodyAdverts =
             this.dfpAdvertising &&
@@ -72,18 +83,21 @@ class CommercialFeatures {
         this.videoPreRolls = this.dfpAdvertising;
 
         this.highMerch =
-            this.dfpAdvertising &&
+            (this.dfpAdvertising || this.adFree) &&
             !isMinuteArticle &&
             !isHosted &&
             !isInteractive &&
             !config.page.isFront &&
             !newRecipeDesign;
 
-        this.thirdPartyTags = externalAdvertising && !isIdentityPage;
+        this.thirdPartyTags =
+            (externalAdvertising || this.adFree) && !isIdentityPage;
 
         this.outbrain =
-            this.dfpAdvertising &&
+            (this.dfpAdvertising || this.adFree) &&
             switches.outbrain &&
+            !noadsUrl &&
+            !sensitiveContent &&
             isArticle &&
             !config.page.isPreview &&
             config.page.showRelatedContent &&

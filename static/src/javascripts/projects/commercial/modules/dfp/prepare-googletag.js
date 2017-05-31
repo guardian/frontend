@@ -31,13 +31,16 @@ const setDfpListeners = (): void => {
 
 const setPageTargeting = (): void => {
     const pubads = window.googletag.pubads();
-    const targeting = buildPageTargeting();
+    // because commercialFeatures may export itself as {} in the event of an exception during construction
+    const targeting = buildPageTargeting(commercialFeatures.adFree || false);
     Object.keys(targeting).forEach(key => {
         pubads.setTargeting(key, targeting[key]);
     });
 };
 
-const removeAdSlots = (): Promise<void> => closeDisabledSlots(true);
+const forceRemoveAdSlots = (): Promise<void> => closeDisabledSlots(true);
+
+const removeAdSlots = (): Promise<void> => closeDisabledSlots(false);
 
 const init = (start: () => void, stop: () => void): Promise<void> => {
     const setupAdvertising = (): Promise<void> => {
@@ -59,11 +62,16 @@ const init = (start: () => void, stop: () => void): Promise<void> => {
             // A promise error here, from a failed module load,
             // could be a network problem or an intercepted request.
             // Abandon the init sequence.
-            .catch(removeAdSlots);
+            .catch(forceRemoveAdSlots);
         return Promise.resolve();
     }
 
-    return removeAdSlots();
+    if (commercialFeatures.adFree) {
+        setupAdvertising().then(removeAdSlots).catch(forceRemoveAdSlots);
+        return Promise.resolve();
+    }
+
+    return forceRemoveAdSlots();
 };
 
 export default {
