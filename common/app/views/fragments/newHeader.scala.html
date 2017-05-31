@@ -5,8 +5,9 @@
 @import views.support.RenderClasses
 
 <header class="@RenderClasses(Map(
-            "mobile-only" -> !mvt.ABNewDesktopHeader.isParticipating
-        ), "new-header")"
+            "new-header--mvt-desktop" -> mvt.ABNewDesktopHeader.isParticipating
+            ),
+            "new-header")"
         role="banner">
     @defining(NewNavigation.SubSectionLinks.getSectionOrTagId(page)) { id =>
         @defining(
