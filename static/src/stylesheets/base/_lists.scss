@@ -28,6 +28,7 @@ nav ol {
 .inline-list {
     @extend %u-unstyled;
 }
+
 .inline-list__item {
     display: inline-block; // Prevent linebreak within an item
 }

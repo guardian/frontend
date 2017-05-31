@@ -26,7 +26,7 @@ trait Prototypes {
     sources in (Compile,doc) := Seq.empty,
     doc in Compile := target.map(_ / "none").value,
     incOptions := incOptions.value.withNameHashing(true),
-    scalaVersion := "2.11.8",
+    scalaVersion := "2.11.11",
     initialize := {
       val _ = initialize.value
       assert(sys.props("java.specification.version") == "1.8",
@@ -115,10 +115,9 @@ trait Prototypes {
          println("Tests failed, no riff raff upload will be performed.")
          throw inc
        }
-       case Value(_) => {
+       case Value(_) =>
          println("Tests passed, uploading artifact to riff raff.")
          upload.toTask
-       }
      }
     }).value
   )

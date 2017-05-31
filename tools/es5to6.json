@@ -24,9 +24,7 @@
     "projects/commercial/modules/messenger/scroll.js",
     "projects/common/modules/charts/doughnut.js"
   ],
-  "Lydia Shepherd": [
-    "projects/common/modules/charts/table-doughnut.js"
-  ],
+  "Lydia Shepherd": [],
   "sndrs": [
     "lib/detect.js",
     "bootstraps/enhanced/accessibility.js",

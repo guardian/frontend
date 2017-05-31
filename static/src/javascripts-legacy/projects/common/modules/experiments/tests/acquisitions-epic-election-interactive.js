@@ -30,7 +30,7 @@ define([
         showForSensitive: true,
 
         pageCheck: function(page) {
-            return page.keywordIds.includes('general-election-2017') && page.contentType === 'Interactive';
+            return page.keywordIds && page.keywordIds.includes('general-election-2017') && page.contentType === 'Interactive';
         },
 
         variants: [
