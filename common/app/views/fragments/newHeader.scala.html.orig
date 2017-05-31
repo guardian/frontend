@@ -5,9 +5,14 @@
 @import views.support.RenderClasses
 
 <header class="@RenderClasses(Map(
+<<<<<<< Updated upstream
+            "mobile-only" -> !mvt.ABNewDesktopHeader.isParticipating
+        ), "new-header")"
+=======
             "new-header--mvt-desktop" -> mvt.ABNewDesktopHeader.isParticipating
             ),
             "new-header")"
+>>>>>>> Stashed changes
         role="banner">
     @defining(NewNavigation.SubSectionLinks.getSectionOrTagId(page)) { id =>
         @defining(
