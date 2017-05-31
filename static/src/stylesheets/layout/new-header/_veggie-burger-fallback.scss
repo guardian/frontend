@@ -1,3 +1,14 @@
 .veggie-burger-fallback {
     display: none;
+
+    &:checked {
+        & ~ .menu {
+            @include menu-animation(0%);
+        }
+
+        & ~ .menu__overlay {
+            opacity: 1;
+            width: 100%;
+        }
+    }
 }
