@@ -1,7 +1,5 @@
 // @flow
 
-/* eslint class-methods-use-this: "off" */
-
 import qwery from 'qwery';
 import bean from 'bean';
 import fastdom from 'lib/fastdom-promise';
