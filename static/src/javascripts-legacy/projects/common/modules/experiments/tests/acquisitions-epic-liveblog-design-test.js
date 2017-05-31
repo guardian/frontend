@@ -76,9 +76,9 @@ define([
         expiry: '2018-04-01',
 
         author: 'Joseph Smith',
-        description: 'This places the epic underneath liveblog blocks which the author has specified in Composer should have an epic against them',
-        successMeasure: 'Member acquisition and contributions',
-        idealOutcome: 'Our wonderful readers will support The Guardian in this time of need!',
+        description: 'Test different variants of the Epic in the liveblog',
+        successMeasure: 'Conversion rate',
+        idealOutcome: 'We establish which variant of the Epic to display in the liveblog; we acquire data for related work.',
 
         audienceCriteria: 'All',
         audience: 1,
