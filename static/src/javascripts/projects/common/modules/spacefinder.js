@@ -260,20 +260,14 @@ const enforceRules = (
 };
 
 class SpaceError {
-    rules: SpacefinderRules;
     stack: string;
+    name: string;
+    message: string;
 
     constructor(rules: SpacefinderRules) {
-        this.rules = rules;
         this.stack = new Error().stack;
-    }
-
-    get name(): string {
-        return 'SpaceError';
-    }
-
-    get message(): string {
-        return `There is no space left matching rules from ${this.rules.bodySelector}`;
+        this.name = 'SpaceError';
+        this.message = `There is no space left matching rules from ${rules.bodySelector}`;
     }
 }
 
