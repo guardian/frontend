@@ -30,7 +30,7 @@ const setupLoadId = () => {
     });
 };
 
-const setupSwitch: Promise<void> = once(() =>
+const setupSwitch: () => Promise<void> = once(() =>
     // Setting the async property to false will _still_ load the script in
     // a non-blocking fashion but will ensure it is executed before googletag
     loadScript(config.libs.switch, { async: false }).then(setupLoadId)

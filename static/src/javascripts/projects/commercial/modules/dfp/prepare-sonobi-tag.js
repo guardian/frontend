@@ -30,7 +30,7 @@ const catchPolyfillErrors = () => {
     };
 };
 
-const setupSonobi: Promise<void> = once(() => {
+const setupSonobi: () => Promise<void> = once(() => {
     buildPageTargeting();
     // Setting the async property to false will _still_ load the script in
     // a non-blocking fashion but will ensure it is executed before googletag
