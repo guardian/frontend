@@ -5,7 +5,7 @@ import config from 'lib/config';
 import { loadScript } from 'lib/load-script';
 import { commercialFeatures } from 'commercial/modules/commercial-features';
 import { buildPageTargeting } from 'commercial/modules/build-page-targeting';
-import { closeDisabledSlots } from 'commercial/modules/close-disabled-slots';
+import { adSlotSelector } from 'commercial/modules/close-disabled-slots';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 import onSlotRender from 'commercial/modules/dfp/on-slot-render';
 import onSlotLoad from 'commercial/modules/dfp/on-slot-load';
@@ -37,7 +37,14 @@ const setPageTargeting = (): void => {
     });
 };
 
-const removeAdSlots = (): Promise<void> => closeDisabledSlots(true);
+const removeAdSlots = (): Promise<void> => {
+    // Get all ad slots
+    let adSlots: Array<Element> = qwery(adSlotSelector);
+
+    return fastdom.write(() =>
+        adSlots.forEach((adSlot: Element) => adSlot.remove())
+    );
+};
 
 const init = (start: () => void, stop: () => void): Promise<void> => {
     const setupAdvertising = (): Promise<void> => {

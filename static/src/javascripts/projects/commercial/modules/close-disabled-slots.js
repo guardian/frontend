@@ -21,4 +21,4 @@ const closeDisabledSlots = (force: boolean): Promise<void> => {
     );
 };
 
-export { closeDisabledSlots };
+export { closeDisabledSlots, adSlotSelector };
