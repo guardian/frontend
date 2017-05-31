@@ -7,7 +7,7 @@
 
 @commonSizes = @{Seq("1,1", "2,2", "300,250", "fluid")}
 
-@additionalDesktopSizes = @{
+@desktopSizes = @{
     if(CommercialGalleryBannerAds.isParticipating)
         Map("desktop" -> (commonSizes ++ Seq("970,250", "900,250")))
     else
@@ -22,7 +22,7 @@
         @fragments.commercial.adSlot(
             slotName,
             Seq("gallery-inline", "dark") ++ (if(isMobile) Some("mobile") else None),
-            Map("mobile" -> sizes) ++ additionalDesktopSizes,
+            Map("mobile" -> sizes) ++ desktopSizes,
             optId = if(isMobile) Some(s"$slotName--mobile") else None,
             optClassNames = if(isMobile) Some("mobile-only") else Some("hide-until-tablet")
         ){ }
