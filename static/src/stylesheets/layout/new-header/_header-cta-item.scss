@@ -27,6 +27,10 @@
         @include mq(mobileMedium) {
             border-top-width: ($gs-baseline * 4) + ($gs-baseline / 2);
         }
+
+        @include mq(tablet) {
+            border-top-width: ($gs-baseline * 5) + ($gs-baseline / 2);
+        }
     }
 }
 
@@ -44,6 +48,15 @@
     @include mq(mobileMedium) {
         font-size: 14px;
         padding-top: 14px;
+    }
+
+    // TODO: confirm where these magic numbers come from
+    @include mq(tablet) {
+        font-size: 18px;
+        font-weight: 900;
+        padding-left: 16px;
+        padding-right: 27px;
+        padding-top: 18px;
     }
 }
 
