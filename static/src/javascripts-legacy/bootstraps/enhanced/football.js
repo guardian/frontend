@@ -172,7 +172,7 @@ define([
                         $.create('<div class="match-stats__container"></div>').each(function (container) {
                             football.statsFor(statsUrl).fetch(container).then(function () {
                                 $('.js-chart', container).each(function (el) {
-                                    new Doughnut().render(el);
+                                    new Doughnut.TableDoughnut().render(el);
                                 });
                                 extras[0] = {
                                     name: 'Match stats',

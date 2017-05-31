@@ -4,7 +4,10 @@
 @import common.{LinkTo, NewNavigation, Edition}
 @import views.support.RenderClasses
 
-<header class="new-header"
+<header class="@RenderClasses(Map(
+            "new-header--mvt-desktop" -> mvt.ABNewDesktopHeader.isParticipating
+            ),
+            "new-header")"
         role="banner">
     @defining(NewNavigation.SubSectionLinks.getSectionOrTagId(page)) { id =>
         @defining(

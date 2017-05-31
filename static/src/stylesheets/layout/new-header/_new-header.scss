@@ -12,6 +12,12 @@ from scrolling */
     @include mq(desktop) {
         display: none;
     }
+
+    @include mq(desktop) {
+        &.new-header--mvt-desktop {
+            display: block;
+        }
+    }
 }
 
 .new-header__inner {
