@@ -55,7 +55,7 @@
     transition: opacity .2s cubic-bezier(.23, 1, .32, 1);
     // Without this, in Safari/IOS this element appears above the menu
     width: 0;
-    z-index: $zindex-overlay;
+    z-index: $zindex-main-menu - 1;
 
     .new-header--open & {
         opacity: 1;
