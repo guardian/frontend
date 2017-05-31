@@ -95,7 +95,7 @@ export const getForcedTests = (): Array<{
         });
     }
 
-    return JSON.parse(local.get('gu.devtools.ab')) || [];
+    return JSON.parse(local.get('gu.devtools.ab') || null) || [];
 };
 
 export const getForcedVariant = (test: ABTest): ?Variant => {
