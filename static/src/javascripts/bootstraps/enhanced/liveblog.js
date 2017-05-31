@@ -16,8 +16,8 @@ const affixTimeline = (): void => {
         detect.isBreakpoint({
             min: 'desktop',
         }) &&
-        config.page.keywordIds.indexOf('football/football') < 0 &&
-        config.page.keywordIds.indexOf('sport/rugby-union') < 0
+        !config.page.keywordIds.includes('football/football') &&
+        !config.page.keywordIds.includes('sport/rugby-union')
     ) {
         // eslint-disable-next-line no-new
         new Affix({
