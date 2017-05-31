@@ -1,20 +1,20 @@
+// @flow
 import config from 'lib/config';
-import cookies from 'lib/cookies';
-import storage from 'lib/storage';
-var kruxUrl = '//cdn.krxd.net/controltag?confid=JVZiE3vn';
+import { getCookie } from 'lib/cookies';
+import { local } from 'lib/storage';
 
-function retrieve(n) {
-    var k = 'kx' + n;
+const kruxUrl = '//cdn.krxd.net/controltag?confid=JVZiE3vn';
 
-    return storage.local.getRaw(k) || cookies.getCookie(k + '=([^;]*)') || '';
-}
+const retrieve = n => {
+    const k = `kx${n}`;
 
-function getSegments() {
-    return retrieve('segs') ? retrieve('segs').split(',') : [];
-}
+    return local.getRaw(k) || getCookie(`${k}=([^;]*)`) || '';
+};
+
+const getSegments = () => (retrieve('segs') ? retrieve('segs').split(',') : []);
 
 export default {
     shouldRun: config.switches.krux,
     url: kruxUrl,
-    getSegments: getSegments
+    getSegments,
 };
