@@ -1,14 +1,19 @@
 // @flow
 
+import qwery from 'qwery';
 import raven from 'lib/raven';
 import config from 'lib/config';
+import fastdom from 'lib/fastdom-promise';
+import sha1 from 'lib/sha1';
+import identity from 'common/modules/identity/api';
 import { loadScript } from 'lib/load-script';
 import { commercialFeatures } from 'commercial/modules/commercial-features';
 import { buildPageTargeting } from 'commercial/modules/build-page-targeting';
-import { adSlotSelector } from 'commercial/modules/close-disabled-slots';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 import onSlotRender from 'commercial/modules/dfp/on-slot-render';
 import onSlotLoad from 'commercial/modules/dfp/on-slot-load';
+import { fillAdvertSlots } from 'commercial/modules/dfp/fill-advert-slots';
+import refreshOnResize from 'commercial/modules/dfp/refresh-on-resize';
 import {
     addTag,
     setListeners,
@@ -39,11 +44,19 @@ const setPageTargeting = (): void => {
 
 const removeAdSlots = (): Promise<void> => {
     // Get all ad slots
-    let adSlots: Array<Element> = qwery(adSlotSelector);
+    const adSlots: Array<Element> = qwery(dfpEnv.adSlotSelector);
 
     return fastdom.write(() =>
         adSlots.forEach((adSlot: Element) => adSlot.remove())
     );
+};
+
+const setPublisherProvidedId = (): void => {
+    const user: ?Object = identity.getUserFromCookie();
+    if (user) {
+        const hashedId = sha1.hash(user.id);
+        window.googletag.pubads().setPublisherProvidedId(hashedId);
+    }
 };
 
 const init = (start: () => void, stop: () => void): Promise<void> => {
@@ -54,6 +67,9 @@ const init = (start: () => void, stop: () => void): Promise<void> => {
             start,
             setDfpListeners,
             setPageTargeting,
+            setPublisherProvidedId,
+            refreshOnResize,
+            fillAdvertSlots,
             stop
         );
 

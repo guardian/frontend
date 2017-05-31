@@ -1,24 +1,22 @@
 // @flow
 import qwery from 'qwery';
 import fastdom from 'lib/fastdom-promise';
-
-const adSlotSelector: string = '.js-ad-slot';
+import once from 'lodash/functions/once';
+import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 
 const shouldDisableAdSlot = adSlot =>
     window.getComputedStyle(adSlot).display === 'none';
 
-const closeDisabledSlots = (force: boolean): Promise<void> => {
+const closeDisabledSlots = once((): Promise<void> => {
     // Get all ad slots
-    let adSlots: Array<Element> = qwery(adSlotSelector);
+    let adSlots: Array<Element> = qwery(dfpEnv.adSlotSelector);
 
-    if (!force) {
-        // remove the ones which should not be there
-        adSlots = adSlots.filter(shouldDisableAdSlot);
-    }
+    // remove the ones which should not be there
+    adSlots = adSlots.filter(shouldDisableAdSlot);
 
     return fastdom.write(() =>
         adSlots.forEach((adSlot: Element) => adSlot.remove())
     );
-};
+});
 
-export { closeDisabledSlots, adSlotSelector };
+export { closeDisabledSlots };
