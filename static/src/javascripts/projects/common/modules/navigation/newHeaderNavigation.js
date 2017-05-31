@@ -1,7 +1,7 @@
 // @flow
 
 import detect from 'lib/detect';
-import fastdom from 'fastdom';
+import fastdom from 'lib/fastdom-promise';
 import { scrollToElement } from 'lib/scroller';
 import { addEventListener } from 'lib/events';
 import userAccount from 'common/modules/navigation/user-account';
@@ -77,31 +77,41 @@ const toggleSidebar = (): void => {
             min: 'tablet',
             max: 'desktop',
         });
-        const enhanceMenuMargin = (): void => {
-            if (!document.body) {
-                return;
+        const enhanceMenuMargin = (): Promise<void> => {
+            const body = document.body;
+
+            if (!body) {
+                return Promise.reject();
             }
 
-            const docRect = document.body.getBoundingClientRect();
-            const rect = menuToggle.getBoundingClientRect();
-            const marginRight = docRect.right - rect.right + rect.width / 2;
-            menu.style.marginRight = `${marginRight}px`;
+            return fastdom
+                .read(() => {
+                    const docRect = body.getBoundingClientRect();
+                    const rect = menuToggle.getBoundingClientRect();
+                    return docRect.right - rect.right + rect.width / 2;
+                })
+                .then(marginRight =>
+                    fastdom.write(() => {
+                        menu.style.marginRight = `${marginRight}px`;
+                    })
+                );
         };
         const debouncedMenuEnhancement = debounce(enhanceMenuMargin, 200);
-        const removeEnhancedMenuMargin = (): void => {
-            menu.style.marginRight = '';
-        };
+        const removeEnhancedMenuMargin = (): Promise<void> =>
+            fastdom.write(() => {
+                menu.style.marginRight = '';
+            });
 
         if (!isOpen && haveToCalcTogglePosition) {
-            enhanceMenuMargin();
-
-            addEventListener(window, 'resize', debouncedMenuEnhancement, {
-                passive: true,
+            enhanceMenuMargin().then(() => {
+                addEventListener(window, 'resize', debouncedMenuEnhancement, {
+                    passive: true,
+                });
             });
         } else if (isOpen) {
-            removeEnhancedMenuMargin();
-
-            window.removeEventListener('resize', debouncedMenuEnhancement);
+            removeEnhancedMenuMargin().then(() => {
+                window.removeEventListener('resize', debouncedMenuEnhancement);
+            });
         }
 
         menuToggle.setAttribute(
