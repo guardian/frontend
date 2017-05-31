@@ -1,5 +1,7 @@
 // @flow
 
+// total_hours_spent_maintaining_this = 65
+
 import qwery from 'qwery';
 import bean from 'bean';
 import fastdom from 'lib/fastdom-promise';
@@ -257,13 +259,12 @@ const enforceRules = (
     return candidates;
 };
 
-class SpaceError {
-    stack: string;
+class SpaceError extends Error {
     name: string;
     message: string;
 
     constructor(rules: SpacefinderRules) {
-        this.stack = new Error().stack;
+        super();
         this.name = 'SpaceError';
         this.message = `There is no space left matching rules from ${rules.bodySelector}`;
     }
