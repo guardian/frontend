@@ -31,7 +31,7 @@ const setDfpListeners = (): void => {
 
 const setPageTargeting = (): void => {
     const pubads = window.googletag.pubads();
-    // because commercialFeatures has the potential to export itself as {}
+    // because commercialFeatures may export itself as {} in the event of an exception during construction
     const targeting = buildPageTargeting(commercialFeatures.adFree || false);
     Object.keys(targeting).forEach(key => {
         pubads.setTargeting(key, targeting[key]);
