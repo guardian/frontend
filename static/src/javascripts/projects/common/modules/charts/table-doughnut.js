@@ -5,7 +5,7 @@ import Doughnut from 'common/modules/charts/doughnut';
 
 const TableDoughnut = () => {};
 
-TableDoughnut.prototype.render = el => {
+TableDoughnut.prototype.render = (el: Element) => {
     const width = el.scrollWidth || el.getAttribute('data-chart-width');
     const headings = $('th', el);
 
@@ -26,7 +26,7 @@ TableDoughnut.prototype.render = el => {
     return $doughnut
         .attr(
             'class',
-            `${currentClasses} ${el.getAttribute('data-chart-class')}`
+            `${currentClasses} ${el.getAttribute('data-chart-class') || ''}`
         )
         .insertAfter(el);
 };
