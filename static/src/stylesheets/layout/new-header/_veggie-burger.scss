@@ -60,16 +60,16 @@
 
 .veggie-burger__label {
     @include fs-textSans(5);
-    bottom: -25px;
+    bottom: -24px;
     color: $neutral-3;
-    display: none;
+    font-size: 16px;
     left: 50%;
     position: absolute;
     text-transform: lowercase;
     transform: translateX(-50%);
 
-    @include mq(desktop) {
-        display: block;
+    @include mq($until: 'desktop') {
+        @include u-h();
     }
 
     .new-header--open & {
