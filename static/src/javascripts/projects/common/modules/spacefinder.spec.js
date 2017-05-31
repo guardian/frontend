@@ -2,6 +2,10 @@
 
 import { _ } from 'common/modules/spacefinder';
 
+jest.mock('commercial/modules/dfp/track-ad-render', () =>
+    Promise.resolve(true)
+);
+
 describe('spacefinder', () => {
     test('should test elements correctly', () => {
         const rules = { minAbove: 50, minBelow: 300 };
@@ -44,7 +48,15 @@ describe('spacefinder', () => {
             );
         });
 
-        expect(_.testCandidates(rules, para, others)).toBe(false);
-        expect(_.testCandidates(rules, para, others.slice(0, 2))).toBe(true);
+        expect(_.testCandidates(rules, para, others.map(x => x.opponent))).toBe(
+            false
+        );
+        expect(
+            _.testCandidates(
+                rules,
+                para,
+                others.slice(0, 2).map(x => x.opponent)
+            )
+        ).toBe(true);
     });
 });

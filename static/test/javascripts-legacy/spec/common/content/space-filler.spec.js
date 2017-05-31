@@ -17,7 +17,7 @@ define([
 
             injector.require([
                 'common/modules/article/space-filler',
-                'common/modules/article/spacefinder',
+                'common/modules/spacefinder',
                 'lib/raven'
             ], function () {
                 spaceFiller = arguments[0];

@@ -1,4 +1,7 @@
 // @flow
+
+/* eslint class-methods-use-this: "off" */
+
 import qwery from 'qwery';
 import bean from 'bean';
 import fastdom from 'lib/fastdom-promise';
@@ -256,12 +259,23 @@ const enforceRules = (
     return candidates;
 };
 
-const SpaceError = (rules: SpacefinderRules) =>
-    Object.freeze({
-        name: 'SpaceError',
-        message: `There is no space left matching rules from ${rules.bodySelector}`,
-        stack: new Error().stack,
-    });
+class SpaceError {
+    rules: SpacefinderRules;
+    stack: string;
+
+    constructor(rules: SpacefinderRules) {
+        this.rules = rules;
+        this.stack = new Error().stack;
+    }
+
+    get name() {
+        return 'SpaceError';
+    }
+
+    get message() {
+        return `There is no space left matching rules from ${this.rules.bodySelector}`;
+    }
+}
 
 const getReady = (
     rules: SpacefinderRules,
