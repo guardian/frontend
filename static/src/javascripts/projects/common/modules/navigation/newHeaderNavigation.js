@@ -73,15 +73,16 @@ const toggleSidebar = (): void => {
     const update = () => {
         const expandedAttr = isOpen ? 'false' : 'true';
         const hiddenAttr = isOpen ? 'true' : 'false';
-        const haveToCalcTogglePosition = detect.isBreakpoint({
-            min: 'tablet',
-            max: 'desktop',
-        });
+        const haveToCalcTogglePosition = (): boolean =>
+            detect.isBreakpoint({
+                min: 'tablet',
+                max: 'desktop',
+            });
         const enhanceMenuMargin = (): Promise<void> => {
             const body = document.body;
 
-            if (!body) {
-                return Promise.reject();
+            if (!body && !haveToCalcTogglePosition()) {
+                return Promise.resolve();
             }
 
             return fastdom
@@ -102,13 +103,21 @@ const toggleSidebar = (): void => {
                 menu.style.marginRight = '';
             });
 
-        if (!isOpen && haveToCalcTogglePosition) {
+        /*
+            Between tablet and desktop the veggie-burger does not have a fixed
+            margin to the right. Therefore we have to calculate it's midpoint
+            and apply it as a margin to the menu.
+            The listeners have to be applied always, because the device
+            orientation could change and force the layout into the next
+            breakpoint.
+        */
+        if (!isOpen) {
             enhanceMenuMargin().then(() => {
                 addEventListener(window, 'resize', debouncedMenuEnhancement, {
                     passive: true,
                 });
             });
-        } else if (isOpen) {
+        } else {
             removeEnhancedMenuMargin().then(() => {
                 window.removeEventListener('resize', debouncedMenuEnhancement);
             });
