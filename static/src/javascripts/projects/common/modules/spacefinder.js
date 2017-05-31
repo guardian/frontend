@@ -268,11 +268,11 @@ class SpaceError {
         this.stack = new Error().stack;
     }
 
-    get name() {
+    get name(): string {
         return 'SpaceError';
     }
 
-    get message() {
+    get message(): string {
         return `There is no space left matching rules from ${this.rules.bodySelector}`;
     }
 }
