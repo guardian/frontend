@@ -73,8 +73,9 @@ const init = (start: () => void, stop: () => void): Promise<void> => {
             setPageTargeting,
             setPublisherProvidedId,
             refreshOnResize,
-            fillAdvertSlots,
-            stop
+            () => {
+                fillAdvertSlots().then(stop);
+            }
         );
 
         // Just load googletag. Sonobi's wrapper will already be loaded, and googletag is already added to the window by sonobi.
