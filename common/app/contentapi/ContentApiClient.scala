@@ -146,20 +146,20 @@ final case class CircuitBreakingContentApiClient(
     scheduler = circuitBreakerActorSystem.scheduler,
     maxFailures = contentApi.circuitBreakerErrorThreshold,
     callTimeout = contentApi.timeout,
-    resetTimeout = Duration(contentApi.circuitBreakerResetTimeout, MILLISECONDS)
+    resetTimeout = contentApi.circuitBreakerResetTimeout
   )
 
-  circuitBreaker.onOpen({
-    log.error("Reached error threshold for Content API Client circuit breaker - breaker is OPEN!")
-  })
+  circuitBreaker.onOpen(
+    log.error(s"CAPI circuit breaker: reached error threshold (${contentApi.circuitBreakerErrorThreshold}). Breaker is OPEN!")
+  )
 
-  circuitBreaker.onHalfOpen({
-    log.info("Reset timeout finished. Entered half open state for Content API Client circuit breaker.")
-  })
+  circuitBreaker.onHalfOpen(
+    log.info(s"CAPI circuit breaker: Reset timeout (${contentApi.circuitBreakerResetTimeout}s) finished. Entered half open state.")
+  )
 
-  circuitBreaker.onClose({
-    log.info("Content API Client looks healthy again, circuit breaker is closed.")
-  })
+  circuitBreaker.onClose(
+    log.info("CAPI circuit breaker: Content API Client looks healthy again, circuit breaker is closed.")
+  )
 
   override def fetch(url: String)(implicit executionContext: ExecutionContext): Future[Array[Byte]] = {
     if (CircuitBreakerSwitch.isSwitchedOn) {
