@@ -16,6 +16,12 @@ const error500 = {
     message: 'Internal server error\n\n%%',
 };
 
+type Event = {
+    data: string,
+    origin: number,
+    source: string,
+};
+
 type StandardMessage = {
     id: string,
     type: string,
@@ -38,7 +44,9 @@ type ProgrammaticMessage = {
     },
 };
 
-const isProgrammaticMessage = (payload: ProgrammaticMessage): boolean =>
+const isProgrammaticMessage = (
+    payload: ProgrammaticMessage | StandardMessage
+): boolean =>
     payload.type === 'set-ad-height' &&
     'id' in payload.value &&
     'height' in payload.value;
@@ -62,7 +70,7 @@ const getIframe = (data: StandardMessage): ?HTMLElement =>
 // in-house creatives, we are left with doing some basic tests
 // such as validating the anatomy of the payload and whitelisting
 // event type
-const isValidPayload = (payload: Object): boolean =>
+const isValidPayload = (payload: StandardMessage): boolean =>
     'type' in payload &&
     'value' in payload &&
     'id' in payload &&
@@ -76,7 +84,7 @@ const isValidPayload = (payload: Object): boolean =>
 // formatError({ message: "%%, you are so %%" }, "Regis", "lovely")
 //
 // returns `{ message: "Regis, you are so lovely" }`. Oh, thank you!
-const formatError = (...args): Object => {
+const formatError = (...args): { message: string } => {
     if (args.length < 2) {
         return args[0] || '';
     }
@@ -91,7 +99,7 @@ const formatError = (...args): Object => {
     return error;
 };
 
-const onMessage = (event: Object): void => {
+const onMessage = (event: Event): void => {
     let data;
     // We only allow communication with ads created by DFP
     if (ALLOWED_HOSTS.indexOf(event.origin) < 0) {
@@ -178,11 +186,11 @@ const onMessage = (event: Object): void => {
     }
 };
 
-const on = (window: Object): void => {
+const on = (window: WindowProxy): void => {
     window.addEventListener('message', onMessage);
 };
 
-const off = (window: Object): void => {
+const off = (window: WindowProxy): void => {
     window.removeEventListener('message', onMessage);
 };
 
