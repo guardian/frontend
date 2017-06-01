@@ -1,25 +1,27 @@
 define([
     'common/modules/commercial/contributions-utilities',
+    'lib/$',
     'lib/geolocation',
     'lodash/utilities/template',
     'lib/config',
-    'raw-loader!common/views/acquisitions-epic-control.html'
+    'raw-loader!common/views/acquisitions-epic-slice.html',
 ], function (
     contributionsUtilities,
+    $,
     geolocation,
     template,
     config,
-    epicControlTemplate
+    epicSlice
 ) {
     return contributionsUtilities.makeABTest({
-        id: 'AcquisitionsElectionInteractive',
-        campaignId: 'epic_election_interactive_end',
+        id: 'AcquisitionsElectionInteractiveSlice',
+        campaignId: 'epic_election_interactive_slice',
 
         start: '2017-05-22',
         expiry: '2017-07-03',
 
         author: 'Sam Desborough',
-        description: 'This places the epic underneath UK election-related interactives',
+        description: 'This places the epic (slice design) in the middle of UK election-related interactives',
         successMeasure: 'Member acquisition and contributions',
         idealOutcome: 'Our wonderful readers will support The Guardian in this time of need!',
 
@@ -30,7 +32,9 @@ define([
         showForSensitive: true,
 
         pageCheck: function(page) {
-            return page.keywordIds && page.keywordIds.includes('general-election-2017') && page.contentType === 'Interactive';
+            return page.keywordIds &&
+                page.keywordIds.includes('general-election-2017') &&
+                page.contentType === 'Interactive';
         },
 
         variants: [
@@ -38,18 +42,16 @@ define([
                 id: 'control',
                 isUnlimited: true,
 
-                insertAtSelector: '.content-footer',
+                insertAtSelector: '#js-interactive-epic',
                 successOnView: true,
 
-                template: function (variant) {
-                    return template(epicControlTemplate, {
+                template: function makeSliceTemplate(variant) {
+                    return template(epicSlice, {
                         membershipUrl: variant.options.membershipURL,
                         contributionUrl: variant.options.contributeURL,
                         componentName: variant.options.componentName,
-                        epicClass: 'contributions__epic--interactive gs-container',
-                        wrapperClass: 'contributions__epic-interactive-wrapper'
                     });
-                },
+                }
             }
         ]
     });
