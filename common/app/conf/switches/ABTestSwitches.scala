@@ -45,7 +45,7 @@ trait ABTestSwitches {
     "Assign users to variants of opinion emails",
     owners = Seq(Owner.withGithub("davidfurey")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 6, 1),
+    sellByDate = new LocalDate(2017, 6, 19),
     exposeClientSide = true
   )
 
@@ -103,49 +103,9 @@ trait ABTestSwitches {
     ABTests,
     "ab-tailor-survey",
     "Integrate Tailor with ab tests",
-    owners = Seq(Owner.withGithub("oilnam")),
+    owners = Seq(Owner.withGithub("oilnam"), Owner.withGithub("mike-ruane")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 5, 31),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-sleeve-notes-new-email-variant",
-    "Assign some of the new sleeve notes subscribers to receive the new email",
-    owners = Seq(Owner.withGithub("lmath")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 6, 1),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-sleeve-notes-legacy-email-variant",
-    "Assign some of the new sleeve notes subscribers to receive the old email",
-    owners = Seq(Owner.withGithub("lmath")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 6, 1),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-the-long-read-email-variants",
-    "Assign users to variants of long read email",
-    owners = Seq(Owner.withGithub("davidfurey")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 6, 1),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-fashion-statement-email-variants",
-    "Assign users to variants of fashion statement email",
-    owners = Seq(Owner.withGithub("davidfurey")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 6, 1),
+    sellByDate = new LocalDate(2017, 8, 31),
     exposeClientSide = true
   )
 
@@ -155,17 +115,7 @@ trait ABTestSwitches {
     "Assign users to variants of bookmarks email",
     owners = Seq(Owner.withGithub("davidfurey")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 6, 1),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-film-today-email-variants",
-    "Assign users to variants of film today email",
-    owners = Seq(Owner.withGithub("davidfurey")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 6, 1),
+    sellByDate = new LocalDate(2017, 6, 19),
     exposeClientSide = true
   )
 

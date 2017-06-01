@@ -39,7 +39,7 @@ define([
                 };
             },
             injector = new Injector(),
-            dfp, dfpEnv, config, detect, commercialFeatures, closeDisabledSlots;
+            dfp, dfpEnv, config, detect, commercialFeatures;
 
         function reset() {
             dfpEnv.advertIds = {};
@@ -62,32 +62,30 @@ define([
                         return Promise.resolve();
                     }
                 },
+                'lodash/functions/once': function once(func) {
+                    return func;
+                },
             });
             injector.require([
                 'commercial/modules/dfp/prepare-googletag',
-                'commercial/modules/dfp/fill-advert-slots',
                 'commercial/modules/dfp/get-adverts',
                 'commercial/modules/dfp/get-creative-ids',
                 'lib/config',
                 'commercial/modules/dfp/performance-logging',
                 'commercial/modules/commercial-features',
                 'lib/detect',
-                'commercial/modules/close-disabled-slots',
                 'commercial/modules/dfp/dfp-env'
             ], function () {
                 dfp = {
                     prepareGoogletag: arguments[0],
-                    fillAdvertSlots: arguments[1],
-                    getAdverts: arguments[2],
-                    getCreativeIDs: arguments[3]
+                    getAdverts: arguments[1],
+                    getCreativeIDs: arguments[2]
                 };
-                config = arguments[4];
-                var performanceLogging = arguments[5];
-                commercialFeatures = arguments[6].commercialFeatures;
-                detect = arguments[7];
-                closeDisabledSlots = arguments[8].closeDisabledSlots;
-                dfpEnv = arguments[9].dfpEnv;
-
+                config = arguments[3];
+                var performanceLogging = arguments[4];
+                commercialFeatures = arguments[5].commercialFeatures;
+                detect = arguments[6];
+                dfpEnv = arguments[7].dfpEnv;
 
                 config.switches = {
                     commercial:      true,
@@ -190,7 +188,10 @@ define([
             });
 
             it('hides all ad slots', function (done) {
-                dfp.prepareGoogletag.init(noop, noop).then(function () {
+                new Promise( function(resolve) {
+                    dfp.prepareGoogletag.init(noop, resolve);
+                })
+                .then(function () {
                     var remainingAdSlots = document.querySelectorAll('.js-ad-slot');
                     expect(remainingAdSlots.length).toBe(0);
                     done();
@@ -199,9 +200,8 @@ define([
         });
 
         it('should get the slots', function (done) {
-            dfp.prepareGoogletag.init(noop, noop)
-            .then(function() {
-                return dfp.fillAdvertSlots.fillAdvertSlots(noop, noop);
+            new Promise( function(resolve) {
+                dfp.prepareGoogletag.init(noop, resolve);
             })
             .then(function () {
                 expect(Object.keys(dfp.getAdverts()).length).toBe(4);
@@ -211,34 +211,32 @@ define([
 
         it('should not get hidden ad slots', function (done) {
             $('.js-ad-slot').first().css('display', 'none');
-            closeDisabledSlots()
-                .then(function() {
-                    return dfp.prepareGoogletag.init(noop, noop);
-                })
-                .then(function() {
-                    return dfp.fillAdvertSlots.fillAdvertSlots(noop, noop);
-                })
-                .then(function () {
-                    var slots = dfp.getAdverts();
-                    expect(Object.keys(slots).length).toBe(3);
-                    for (var slotId in slots) {
-                        expect(slotId).not.toBe('dfp-ad-html-slot');
-                    }
-                    done();
-                });
+            new Promise( function(resolve) {
+                dfp.prepareGoogletag.init(noop, resolve);
+            })
+            .then(function () {
+                var slots = dfp.getAdverts();
+                expect(Object.keys(slots).length).toBe(3);
+                for (var slotId in slots) {
+                    expect(slotId).not.toBe('dfp-ad-html-slot');
+                }
+                done();
+            });
         });
 
         it('should set listeners', function (done) {
-            dfp.prepareGoogletag.init(noop, noop).then(function () {
+            new Promise( function(resolve) {
+                dfp.prepareGoogletag.init(noop, resolve);
+            })
+            .then(function () {
                 expect(window.googletag.pubads().addEventListener).toHaveBeenCalledWith('slotRenderEnded');
                 done();
             });
         });
 
         it('should define slots', function (done) {
-            dfp.prepareGoogletag.init(noop, noop)
-            .then(function() {
-                return dfp.fillAdvertSlots.fillAdvertSlots(noop, noop);
+            new Promise( function(resolve) {
+                dfp.prepareGoogletag.init(noop, resolve);
             })
             .then(function () {
                 [
@@ -265,9 +263,8 @@ define([
             detect.getBreakpoint = function () {
                 return 'wide';
             };
-            dfp.prepareGoogletag.init(noop, noop)
-            .then(function() {
-                return dfp.fillAdvertSlots.fillAdvertSlots(noop, noop);
+            new Promise( function(resolve) {
+                dfp.prepareGoogletag.init(noop, resolve);
             })
             .then(function () {
                 expect(window.googletag.pubads().enableSingleRequest).toHaveBeenCalled();
@@ -280,9 +277,8 @@ define([
 
         it('should be able to create "out of page" ad slot', function (done) {
             $('.js-ad-slot').first().attr('data-out-of-page', true);
-            dfp.prepareGoogletag.init(noop, noop)
-            .then(function() {
-                return dfp.fillAdvertSlots.fillAdvertSlots(noop, noop);
+            new Promise( function(resolve) {
+                dfp.prepareGoogletag.init(noop, resolve);
             })
             .then(function () {
                 expect(window.googletag.defineOutOfPageSlot).toHaveBeenCalled();
@@ -296,9 +292,8 @@ define([
             fakeEventOne.creativeId = '1';
             fakeEventTwo.creativeId = '2';
 
-            dfp.prepareGoogletag.init(noop, noop)
-            .then(function() {
-                return dfp.fillAdvertSlots.fillAdvertSlots(noop, noop);
+            new Promise( function(resolve) {
+                dfp.prepareGoogletag.init(noop, resolve);
             })
             .then(function () {
                 window.googletag.pubads().listeners.slotRenderEnded(fakeEventOne);
@@ -330,7 +325,10 @@ define([
         describe('keyword targeting', function () {
 
             it('should send page level keywords', function (done) {
-                dfp.prepareGoogletag.init(noop, noop).then(function () {
+                new Promise( function(resolve) {
+                    dfp.prepareGoogletag.init(noop, resolve);
+                })
+                .then(function () {
                     expect(window.googletag.pubads().setTargeting).toHaveBeenCalledWith('k', ['korea', 'ukraine']);
                 }).then(done).catch(done.fail);
             });
