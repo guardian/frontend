@@ -154,7 +154,7 @@ final case class CircuitBreakingContentApiClient(
   )
 
   circuitBreaker.onHalfOpen(
-    log.info(s"CAPI circuit breaker: Reset timeout (${contentApi.circuitBreakerResetTimeout}s) finished. Entered half open state.")
+    log.info(s"CAPI circuit breaker: Reset timeout (${contentApi.circuitBreakerResetTimeout}) finished. Entered half open state.")
   )
 
   circuitBreaker.onClose(
