@@ -212,8 +212,8 @@ const handleSurveyResponse = surveyId => {
 export const tailorSurvey: ABTest = {
     id: 'TailorSurvey',
     start: '2017-03-07',
-    expiry: '2017-05-31',
-    author: 'Manlio & Mahana',
+    expiry: '2017-08-31',
+    author: 'Manlio & Mike',
     description: 'Testing Tailor',
     audience: 1,
     audienceOffset: 0,
