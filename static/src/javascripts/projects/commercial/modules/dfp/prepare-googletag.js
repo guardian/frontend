@@ -98,7 +98,7 @@ const init = (start: () => void, stop: () => void): Promise<void> => {
         setupAdvertising().catch(removeAdSlots);
         return Promise.resolve();
     }
-    return removeAdSlots();
+    return removeAdSlots().then(stop);
 };
 
 export default {

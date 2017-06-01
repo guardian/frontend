@@ -15,9 +15,9 @@ const closeDisabledSlots = once((): Promise<void> => {
     // remove the ones which should not be there
     adSlots = adSlots.filter(shouldDisableAdSlot);
 
-    return fastdom.write(() =>
-        adSlots.forEach((adSlot: Element) => adSlot.remove())
-    );
+    return fastdom.write(() => {
+        adSlots.forEach((adSlot: Element) => adSlot.remove());
+    });
 });
 
 const mpuCandidateClass: string = 'fc-slice__item--mpu-candidate';
