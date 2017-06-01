@@ -1,0 +1,44 @@
+.pillar-link {
+    @include fs-textSans(5);
+    color: currentColor;
+    cursor: pointer;
+    display: block;
+    font-size: 16px;
+    font-size: 5.1vw;
+    line-height: $gs-baseline * 2.5;
+    position: relative;
+
+    @include mq(mobileMedium) {
+        line-height: $gs-baseline * 3;
+    }
+
+    @include mq(mobileLandscape) {
+        font-size: 24px;
+        line-height: $gs-baseline * 3.5;
+    }
+
+    @include mq(tablet) {
+        font-size: 28px;
+    }
+
+    &:focus,
+    &:hover {
+        text-decoration: none;
+    }
+}
+
+.pillar-link--current-section {
+    color: #ffffff;
+
+    // triangle
+    &:before {
+        content: '';
+        position: absolute;
+        left: 50%;
+        bottom: 0;
+        transform: translateX(-100%);
+        border-bottom: $gs-baseline / 2 solid $subnav-grey;
+        border-left: $gs-baseline / 2 solid transparent;
+        border-right: $gs-baseline / 2 solid transparent;
+    }
+}

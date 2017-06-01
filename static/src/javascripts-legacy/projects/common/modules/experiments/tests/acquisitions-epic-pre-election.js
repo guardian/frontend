@@ -42,7 +42,7 @@ define([
                         contributionUrl: variant.options.contributeURL,
                         componentName: variant.options.componentName,
                         quoteSvg: quoteSvg.markup,
-                        p1: '&hellip; we have a small favour to ask. More people are reading the Guardian than ever, but far fewer are paying for it. Advertising revenues across the media are falling fast. And <span class="contributions__highlight">unlike many news organisations, we haven’t put up a paywall – we want to keep our journalism as open as we can</span>. So you can see why we need to ask for your help, especially during this UK election.',
+                        p1: '&hellip; we have a small favour to ask. More people are reading the Guardian than ever but advertising revenues across the media are falling fast. And <span class="contributions__highlight">unlike many news organisations, we haven’t put up a paywall – we want to keep our journalism as open as we can</span>. So you can see why we need to ask for your help, especially during this UK election.',
                         testimonialMessage: 'I’m a 19 year old student disillusioned by an unequal society with a government that has stopped even pretending to work in my generation’s interests. So for the strength of our democracy, for the voice of the young, for a credible, independent check on the government, this contribution was pretty good value for money.',
                         testimonialName: 'Jack H.'
                     })

@@ -3,12 +3,18 @@
 @import conf.Configuration
 @import common.{LinkTo, NewNavigation}
 
-<header class="header" role="banner">
+<header class="header"
+        role="banner">
     <div class="header__inner gs-container">
-        <a class="header__supporter-cta" data-link-name="amp : nav : supporter-cta"
-        href="@Configuration.id.membershipUrl/supporter?INTCMP=AMP_HEADER_GU_SUPPORTER">
-            Become a <span>Supporter</span>
-        </a>
+        <div class="header__cta">
+            <a class="header-cta-item"
+               data-link-name="amp : nav : supporter-cta"
+            href="@Configuration.id.membershipUrl/supporter?INTCMP=AMP_HEADER_GU_SUPPORTER">
+                <span class="header-cta-item__label">
+                    Become a <span class="header-cta-item__new-line">Supporter</span>
+                </span>
+            </a>
+        </div>
 
         <a href="@LinkTo{/}" class="header__logo-wrapper" tabindex="0" data-link-name="amp : nav : logo">
             <span class="u-h">The Guardian - Back to home</span>

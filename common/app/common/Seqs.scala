@@ -4,11 +4,11 @@ object Seqs {
   implicit class RichSeq[A](as: Seq[A]) {
     def frequencies: Map[A, Int] = as.groupBy(identity).mapValues(_.length)
 
-    def isDescending(implicit ordering: Ordering[A]) = as == reverseSorted
+    def isDescending(implicit ordering: Ordering[A]): Boolean = as == reverseSorted
 
-    def reverseSorted(implicit ordering: Ordering[A]) = as.sorted(ordering.reverse)
+    def reverseSorted(implicit ordering: Ordering[A]): Seq[A] = as.sorted(ordering.reverse)
 
-    def countWhile(f: A => Boolean) = as.takeWhile(f).length
+    def countWhile(f: A => Boolean): Int = as.takeWhile(f).length
 
     def around(maxBefore: Int, windowSize: Int)(f: A => Boolean): Option[Seq[A]] = {
       require(maxBefore <= windowSize, "maxBefore is greater than windowSize, meaning window would not include item")
@@ -22,7 +22,7 @@ object Seqs {
       }
     }
 
-    def filterByIndex(f: Int => Boolean) = as.zipWithIndex collect {
+    def filterByIndex(f: Int => Boolean): Seq[A] = as.zipWithIndex collect {
       case (a, index) if f(index) => a
     }
   }

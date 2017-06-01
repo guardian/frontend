@@ -96,9 +96,9 @@ case class BodyBlock(
     }
   }.map(LiveBlogDate.apply(_, timezone))
 
-  def publishedCreatedDate(timezone: DateTimeZone) = firstPublishedDate.orElse(createdDate).map(LiveBlogDate.apply(_, timezone))
+  def publishedCreatedDate(timezone: DateTimeZone): Option[LiveBlogDate] = firstPublishedDate.orElse(createdDate).map(LiveBlogDate.apply(_, timezone))
 
-  def publishedCreatedTimestamp() = firstPublishedDate.orElse(createdDate).map(_.getMillis())
+  def publishedCreatedTimestamp(): Option[Long] = firstPublishedDate.orElse(createdDate).map(_.getMillis())
 }
 
 object LiveBlogDate {

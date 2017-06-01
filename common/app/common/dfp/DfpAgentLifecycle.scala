@@ -17,7 +17,7 @@ class DfpAgentLifecycle(
 
   def refreshDfpAgent(): Unit = DfpAgent.refresh()
 
-  override def start() = {
+  override def start(): Unit = {
     jobs.deschedule("DfpDataRefreshJob")
     jobs.scheduleEveryNMinutes("DfpDataRefreshJob", 1) {
       refreshDfpAgent()

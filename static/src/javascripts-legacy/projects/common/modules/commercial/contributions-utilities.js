@@ -93,7 +93,7 @@ define([
     }
 
     function defaultCanEpicBeDisplayed(testConfig) {
-        var enoughTimeSinceLastContribution = daysSince(lastContributionDate) >= 90;
+        var enoughTimeSinceLastContribution = daysSince(lastContributionDate) >= 180;
 
         var worksWellWithPageTemplate = (typeof testConfig.pageCheck === 'function')
             ? testConfig.pageCheck(config.page)

@@ -1,8 +1,5 @@
 {
   "Francis Carr": [
-    "projects/commercial/modules/creatives/fabric-expandable-video-v2.js",
-    "projects/commercial/modules/creatives/fabric-expanding-v1.js",
-    "projects/common/modules/video/events.js",
     "projects/commercial/modules/third-party-tags/krux.js"
   ],
   "Jon Norman": [
@@ -23,10 +20,7 @@
     "projects/commercial/modules/messenger/scroll.js",
     "projects/common/modules/charts/doughnut.js"
   ],
-  "Lydia Shepherd": [
-    "projects/common/modules/commercial/adblock-messages.js",
-    "projects/common/modules/charts/table-doughnut.js"
-  ],
+  "Lydia Shepherd": [],
   "sndrs": [
     "lib/detect.js",
     "bootstraps/enhanced/accessibility.js",
@@ -42,7 +36,6 @@
     "projects/common/modules/check-dispatcher.js"
   ],
   "Simon Adcock": [
-    "bootstraps/enhanced/image-content.js",
     "bootstraps/enhanced/liveblog.js",
     "bootstraps/enhanced/media/main.js",
     "bootstraps/enhanced/media/video-player.js"
@@ -90,7 +83,6 @@
     "projects/common/modules/sport/football/tag-page-stats.js",
     "projects/common/modules/sport/score-board.js",
     "projects/common/modules/tailor/fetch-data.js",
-    "projects/common/modules/ui/accessibility-prefs.js",
     "projects/common/modules/ui/autoupdate.js",
     "projects/commercial/modules/messenger/type.js"
   ],

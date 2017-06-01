@@ -872,7 +872,7 @@ final case class ImageContent(
 }
 
 object CrosswordContent {
-  def make(crossword: CrosswordData, apicontent: contentapi.Content) = {
+  def make(crossword: CrosswordData, apicontent: contentapi.Content): CrosswordContent = {
 
     val content = Content(apicontent)
     val contentType= GuardianContentTypes.Crossword

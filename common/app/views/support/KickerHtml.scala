@@ -12,7 +12,7 @@ object KickerHtml {
     HtmlFormat.raw(List(left.body.trim, right.body.trim).filter(_.nonEmpty).mkString(" "))
   }
 
-  def trim(html: Html) = {
+  def trim(html: Html): Html = {
     HtmlFormat.raw(html.body.trim)
   }
 }

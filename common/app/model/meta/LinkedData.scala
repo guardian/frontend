@@ -13,7 +13,7 @@ object LinkedData {
 
   implicit val formats = DefaultFormats + FieldSerializer[LinkedData]()
 
-  def toJson(list: LinkedData) = write(list)
+  def toJson(list: LinkedData): String = write(list)
 }
 
 case class Guardian(

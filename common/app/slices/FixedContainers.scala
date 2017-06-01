@@ -7,7 +7,7 @@ object TagContainers {
 
   import ContainerDefinition.{ofSlices => slices}
 
-  def allTagPageSlices(n: Int) = n match {
+  def allTagPageSlices(n: Int): ContainerDefinition = n match {
     case 1 => slices(FullMedia100)
     case 2 => slices(HalfHalf2)
     case 3 => slices(TTT)

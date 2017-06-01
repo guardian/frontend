@@ -53,7 +53,7 @@ final case class MetricUploader(namespace: String) {
 
   private val datapoints: Agent[List[SimpleMetric]] = AkkaAgent(List.empty)
 
-  def put(metrics: Map[String, Double]) = {
+  def put(metrics: Map[String, Double]): Unit = {
     val timedMetrics = metrics.map { case (key, value) =>
       SimpleMetric(name = key, SimpleDataPoint(value, DateTime.now))
     }
@@ -152,7 +152,7 @@ final case class SamplerMetric(override val name: String, override val metricUni
     points
   }
 
-  def recordSample(sampleValue: Double, sampleTime: DateTime) = dataPoints.alter(SampledDataPoint(sampleValue, sampleTime) :: _)
+  def recordSample(sampleValue: Double, sampleTime: DateTime): Future[List[SampledDataPoint]] = dataPoints.alter(SampledDataPoint(sampleValue, sampleTime) :: _)
 
   override def isEmpty: Boolean = dataPoints.get().isEmpty
 }

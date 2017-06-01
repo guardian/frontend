@@ -1,38 +1,41 @@
 define([
     'fastdom',
-    'qwery',
     'common/modules/identity/api'
 ], function (
     fastdom,
-    qwery,
     id
 ) {
 
     function updateCommentLink () {
-        var commentLink = qwery('.js-add-comment-activity-link')[0];
+        var commentLink = document.querySelector('.js-add-comment-activity-link');
 
         if (commentLink) {
             var user = id.getUserFromCookie();
 
-            commentLink.removeAttribute('hidden');
-            commentLink.setAttribute('href', 'https://profile.theguardian.com/user/id/' + user.id);
+            fastdom.write(function() {
+                commentLink.classList.remove('u-h');
+                commentLink.setAttribute('href', 'https://profile.theguardian.com/user/id/' + user.id);
+            });
         }
     }
 
     function showMyAccountIfNecessary () {
         if(id.isUserLoggedIn()) {
-            var userAccountLinksContainer = qwery('.js-show-user-account-links')[0];
+            var signIn = document.querySelector('.js-navigation-sign-in');
+            var accountDetails = document.querySelector('.js-navigation-account-details');
 
-            if (userAccountLinksContainer) {
-                fastdom.write(function () {
-                    userAccountLinksContainer.classList.add('user-signed-in');
+            fastdom.write(function() {
+                if (signIn) {
+                    signIn.classList.add('u-h');
+                }
 
+                if (accountDetails) {
+                    accountDetails.classList.remove('u-h');
                     updateCommentLink();
-                });
-            }
+                }
+            });
         }
     }
-
 
     return showMyAccountIfNecessary;
 });

@@ -16,6 +16,8 @@ import play.api.libs.json.Json._
 import play.api.libs.json.Writes
 import play.api.mvc.{RequestHeader, Result}
 import play.twirl.api.Html
+import slices.ContainerDefinition
+
 import scala.collection.JavaConversions._
 
 /**
@@ -89,7 +91,7 @@ object `package` {
     Html(cleanedHtml.body.html)
   }
 
-  def getTagContainerDefinition(page: ContentPage) = {
+  def getTagContainerDefinition(page: ContentPage): ContainerDefinition = {
     if (page.item.tags.isContributorPage) {
       slices.TagContainers.contributorTagPage
     } else if (page.item.tags.keywords.nonEmpty) {
@@ -104,7 +106,7 @@ object `package` {
   }
 
   implicit class Seq2zipWithRowInfo[A](seq: Seq[A]) {
-    def zipWithRowInfo = seq.zipWithIndex.map {
+    def zipWithRowInfo: Seq[(A, RowInfo)] = seq.zipWithIndex.map {
       case (item, index) => (item, RowInfo(index + 1, seq.length == index + 1))
     }
   }
@@ -171,7 +173,7 @@ object TableEmbedComplimentaryToP extends HtmlCleaner {
 }
 
 object RenderOtherStatus {
-  def gonePage(implicit request: RequestHeader) = {
+  def gonePage(implicit request: RequestHeader): SimplePage = {
     val canonicalUrl: Option[String] = Some(s"/${request.path.drop(1).split("/").head}")
     SimplePage(MetaData.make(
       id = request.path,
@@ -181,7 +183,7 @@ object RenderOtherStatus {
     ))
   }
 
-  def apply(result: Result)(implicit request: RequestHeader, context: ApplicationContext) = result.header.status match {
+  def apply(result: Result)(implicit request: RequestHeader, context: ApplicationContext): Result = result.header.status match {
     case 404 => NoCache(NotFound)
     case 410 if request.isJson => Cached(60)(JsonComponent(gonePage, "status" -> "GONE"))
     case 410 => Cached(60)(WithoutRevalidationResult(Gone(views.html.expired(gonePage))))

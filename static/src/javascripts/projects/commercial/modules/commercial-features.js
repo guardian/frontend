@@ -22,6 +22,7 @@ class CommercialFeatures {
     canReasonablyAskForMoney: any;
     asynchronous: any;
     adFeedback: any;
+    adFree: any;
 
     constructor() {
         // this is used for SpeedCurve tests
@@ -48,14 +49,22 @@ class CommercialFeatures {
             config.page.showNewRecipeDesign && config.tests.abNewRecipeDesign;
 
         // Feature switches
+        this.adFree =
+            switches.commercial &&
+            switches.adFreeMembershipTrial &&
+            userFeatures.isAdFreeUser();
+
         this.dfpAdvertising =
             switches.commercial && externalAdvertising && !sensitiveContent;
 
         this.stickyTopBannerAd =
-            !config.page.disableStickyTopBanner && !supportsSticky;
+            !this.adFree &&
+            !config.page.disableStickyTopBanner &&
+            !supportsSticky;
 
         this.articleBodyAdverts =
             this.dfpAdvertising &&
+            !this.adFree &&
             !isMinuteArticle &&
             isArticle &&
             !isLiveBlog &&
@@ -64,12 +73,13 @@ class CommercialFeatures {
 
         this.articleAsideAdverts =
             this.dfpAdvertising &&
+            !this.adFree &&
             !isMinuteArticle &&
             !isMatchReport &&
             !!(isArticle || isLiveBlog) &&
             !newRecipeDesign;
 
-        this.videoPreRolls = this.dfpAdvertising;
+        this.videoPreRolls = this.dfpAdvertising && !this.adFree;
 
         this.highMerch =
             this.dfpAdvertising &&
@@ -84,6 +94,8 @@ class CommercialFeatures {
         this.outbrain =
             this.dfpAdvertising &&
             switches.outbrain &&
+            !noadsUrl &&
+            !sensitiveContent &&
             isArticle &&
             !config.page.isPreview &&
             config.page.showRelatedContent &&
@@ -91,13 +103,15 @@ class CommercialFeatures {
 
         this.commentAdverts =
             this.dfpAdvertising &&
+            !this.adFree &&
             !isMinuteArticle &&
             config.switches.discussion &&
             config.page.commentable &&
             identityApi.isUserLoggedIn() &&
             (!isLiveBlog || isWidePage);
 
-        this.liveblogAdverts = isLiveBlog && this.dfpAdvertising;
+        this.liveblogAdverts =
+            isLiveBlog && this.dfpAdvertising && !this.adFree;
 
         this.paidforBand =
             config.page.isPaidContent &&

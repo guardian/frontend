@@ -47,7 +47,7 @@ object PageSkinSponsorshipReport {
 
 object PageSkin {
 
-  def isValidAdUnit(adUnitPath: String) = getRelativePath(adUnitPath).isDefined
+  def isValidAdUnit(adUnitPath: String): Boolean = getRelativePath(adUnitPath).isDefined
 
   def getRelativePath(adUnitPath: String): Option[String] = {
 
@@ -66,7 +66,7 @@ object PageSkin {
 
 object PageSkinSponsorshipReportParser extends Logging {
 
-  def apply(jsonString: String) = {
+  def apply(jsonString: String): Option[PageSkinSponsorshipReport] = {
 
     implicit val reportReads: Reads[PageSkinSponsorshipReport] = (
       (JsPath \ "updatedTimeStamp").read[String] and

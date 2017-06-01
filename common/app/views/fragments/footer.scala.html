@@ -5,48 +5,52 @@
 @import common.LinkTo
 @import common.editions.{Au, Uk, Us, International}
 @import model.Page
-@import conf.switches.Switches._
+@import conf.switches.Switches.EmailInlineInFooterSwitch
 
 <footer class="l-footer u-cf" data-link-name="footer" data-component="footer">
-    @* TODO: remove this block when we are ready for the new desktop design *@
-    <div class="l-footer__primary hide-on-mobile">
-        <div id="footer-nav" class="gs-container">
-            <div class="brand-bar modern-visible u-cf">
-                <a href="@LinkTo {/}" data-link-name="site logo" class="guardian-logo-footer hide-on-mobile">
-                    <span class="u-h">The Guardian</span>
-                    <i class="i i-guardian-logo-160"></i>
-                </a>
+    @if(!mvt.ABNewDesktopHeader.isParticipating) {
+        <div class="l-footer__primary hide-on-mobile">
+            <div id="footer-nav" class="gs-container">
+                <div class="brand-bar modern-visible u-cf">
+                    <a href="@LinkTo {/}" data-link-name="site logo" class="guardian-logo-footer hide-on-mobile">
+                        <span class="u-h">The Guardian</span>
+                        <i class="i i-guardian-logo-160"></i>
+                    </a>
 
-                <a class="brand-bar__item brand-bar__item--action" data-link-name="back to top" href="#top">
-                    <span class="rounded-icon control__icon-wrapper">
-                        @fragments.inlineSvg("arrow-up", "icon")
-                    </span>
-                    <span class="control__info">back to top</span>
-                </a>
-            </div>
-
-            @if(showNav) {
-                <div class="l-footer__navigation-wrapper u-cf">
-                    @fragments.nav.navigationFooter(page)
+                    <a class="brand-bar__item brand-bar__item--action" data-link-name="back to top" href="#top">
+                        <span class="rounded-icon control__icon-wrapper">
+                            @fragments.inlineSvg("arrow-up", "icon")
+                        </span>
+                        <span class="control__info">back to top</span>
+                    </a>
                 </div>
-            }
 
-            @Page.getContentPage(page).map(fragments.breadcrumb(_))
+                @if(showNav) {
+                    <div class="l-footer__navigation-wrapper u-cf">
+                        @fragments.nav.navigationFooter(page)
+                    </div>
+                }
+
+                @Page.getContentPage(page).map(fragments.breadcrumb(_))
+            </div>
         </div>
-    </div>
+    }
 
-    <div class="mobile-only footer__primary">
+    <div class="footer__primary @if(!mvt.ABNewDesktopHeader.isParticipating) {mobile-only}">
+        @fragments.nav.subNav(page, isFooter = true)
+
         <a data-link-name="back to top" href="#top">
             <div class="footer__back-to-top__container">
-                <div class="footer__back-to-top">
-                    <span class="back-to-top__text">back to top</span>
-                    @fragments.inlineSvg("arrow-up", "icon", List("back-to-top__icon"))
+                <div class="gs-container">
+                    <div class="footer__back-to-top">
+                        <span class="back-to-top__text">back to top</span>
+                        <span class="back-to-top__icon-container">
+                            <i class="back-to-top__icon"></i>
+                        </span>
+                    </div>
                 </div>
             </div>
         </a>
-
-
-        @fragments.nav.subNav(page)
     </div>
 
     <div class="l-footer__secondary js-footer__secondary @if(EmailInlineInFooterSwitch.isSwitchedOff) {l-footer__secondary--no-email} gs-container" role="contentinfo">
