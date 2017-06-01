@@ -29,7 +29,6 @@ const fillAdvertSlots = (): Promise<void> => {
     ]);
 
     return dependencies.then(() => {
-        console.log('running ad slot selector');
         // Get all ad slots
         const adverts = qwery(dfpEnv.adSlotSelector)
             .filter(adSlot => !(adSlot.id in dfpEnv.advertIds))
