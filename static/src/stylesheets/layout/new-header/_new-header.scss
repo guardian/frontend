@@ -39,6 +39,7 @@ from scrolling */
 
 .new-header__cta {
     left: $gs-gutter / 4;
+    overflow-x: hidden;
     position: absolute;
 
     @include mq(mobileLandscape) {
