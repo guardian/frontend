@@ -55,10 +55,7 @@ class CommercialFeatures {
             userFeatures.isAdFreeUser();
 
         this.dfpAdvertising =
-            !this.adFree &&
-            switches.commercial &&
-            externalAdvertising &&
-            !sensitiveContent;
+            switches.commercial && externalAdvertising && !sensitiveContent;
 
         this.stickyTopBannerAd =
             !this.adFree &&
@@ -67,6 +64,7 @@ class CommercialFeatures {
 
         this.articleBodyAdverts =
             this.dfpAdvertising &&
+            !this.adFree &&
             !isMinuteArticle &&
             isArticle &&
             !isLiveBlog &&
@@ -75,26 +73,26 @@ class CommercialFeatures {
 
         this.articleAsideAdverts =
             this.dfpAdvertising &&
+            !this.adFree &&
             !isMinuteArticle &&
             !isMatchReport &&
             !!(isArticle || isLiveBlog) &&
             !newRecipeDesign;
 
-        this.videoPreRolls = this.dfpAdvertising;
+        this.videoPreRolls = this.dfpAdvertising && !this.adFree;
 
         this.highMerch =
-            (this.dfpAdvertising || this.adFree) &&
+            this.dfpAdvertising &&
             !isMinuteArticle &&
             !isHosted &&
             !isInteractive &&
             !config.page.isFront &&
             !newRecipeDesign;
 
-        this.thirdPartyTags =
-            (externalAdvertising || this.adFree) && !isIdentityPage;
+        this.thirdPartyTags = externalAdvertising && !isIdentityPage;
 
         this.outbrain =
-            (this.dfpAdvertising || this.adFree) &&
+            this.dfpAdvertising &&
             switches.outbrain &&
             !noadsUrl &&
             !sensitiveContent &&
@@ -105,13 +103,15 @@ class CommercialFeatures {
 
         this.commentAdverts =
             this.dfpAdvertising &&
+            !this.adFree &&
             !isMinuteArticle &&
             config.switches.discussion &&
             config.page.commentable &&
             identityApi.isUserLoggedIn() &&
             (!isLiveBlog || isWidePage);
 
-        this.liveblogAdverts = isLiveBlog && this.dfpAdvertising;
+        this.liveblogAdverts =
+            isLiveBlog && this.dfpAdvertising && !this.adFree;
 
         this.paidforBand =
             config.page.isPaidContent &&

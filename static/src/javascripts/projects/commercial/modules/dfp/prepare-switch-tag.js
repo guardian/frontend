@@ -11,6 +11,8 @@ import adSizes from 'commercial/modules/ad-sizes';
 import { commercialFeatures } from 'commercial/modules/commercial-features';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 import uniq from 'lodash/arrays/uniq';
+import once from 'lodash/functions/once';
+
 // The view id is used as the unique load id, for easier Switch log querying.
 const loadId = window.esi && window.esi.viewId;
 const REQUEST_TIMEOUT = 5000;
@@ -28,17 +30,11 @@ const setupLoadId = () => {
     });
 };
 
-const setupSwitch = (start: () => void, stop: () => void) => {
-    start();
-
+const setupSwitch: () => Promise<void> = once(() =>
     // Setting the async property to false will _still_ load the script in
     // a non-blocking fashion but will ensure it is executed before googletag
-    loadScript(config.libs.switch, {
-        async: false,
-    })
-        .then(setupLoadId)
-        .then(stop);
-};
+    loadScript(config.libs.switch, { async: false }).then(setupLoadId)
+);
 
 // The switch api's callSwitch function will perform the retrieval of a pre-flight ad call,
 // using the load id that has been previously set with setupLoadId.
@@ -119,11 +115,14 @@ const maybePushAdUnit = (dfpDivId: string, sizeMapping: any) => {
 
 const init = (start: () => void, stop: () => void) => {
     if (commercialFeatures.dfpAdvertising) {
-        setupSwitch(start, stop);
+        start();
+        setupSwitch().then(stop);
     }
 
     return Promise.resolve();
 };
+
+export { setupSwitch };
 
 export default {
     init,
