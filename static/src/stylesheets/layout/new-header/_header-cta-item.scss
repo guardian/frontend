@@ -50,7 +50,6 @@
         padding-top: 14px;
     }
 
-    // TODO: confirm where these magic numbers come from
     @include mq(tablet) {
         font-size: 18px;
         font-weight: 900;
