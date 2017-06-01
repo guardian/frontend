@@ -3,19 +3,19 @@ define([
     'helpers/injector',
     'lib/$',
     'lib/config',
-    'lib/storage',
     'lodash/objects/defaults'
 ], function (
     Injector,
     $,
     config,
-    storage,
     defaults
 ) {
     describe('Breaking news', function () {
-        var injector = new Injector(),
-            knownAlertIDsStorageKey = 'gu.breaking-news.hidden',
-            fetchJson;
+        var injector = new Injector();
+        var knownAlertIDsStorageKey = 'gu.breaking-news.hidden';
+        var fetchJson = jasmine.createSpy('fetch-json');
+        var storage;
+        var breakingNews;
 
         function alertThatIs(type, options) {
             options = defaults(options || {}, {
@@ -37,46 +37,60 @@ define([
         function mockBreakingNewsWith(collections) {
             fetchJson.and.callFake(function() {
                 return Promise.resolve({
-                        webTitle: 'Breaking News',
-                        collections: collections
-                    });
+                    webTitle: 'Breaking News',
+                    collections: collections
                 });
+            });
 
             return new Promise(function (resolve, reject) {
-                var fakeConfig = {
-                    page: {
-                        edition: 'UK'
-                    }
-                };
-
-                injector.mock({
-                    'lib/storage': storage,
-                    'lib/fetch-json': fetchJson,
-                    'lib/config': fakeConfig,
-                }).require(['common/modules/onward/breaking-news'], function (breakingNews) {
-                    breakingNews.DEFAULT_DELAY = 100;
-                    Promise.resolve().then(function () {
-                        return breakingNews();
-                    }).then(function(result) {
+                breakingNews.DEFAULT_DELAY = 100;
+                breakingNews()
+                    .then(function(result) {
                         // make sure the DOM has finished updating
                         setTimeout(function () {
                             resolve(result);
                         }, 30);
-                    }).catch(reject);
-                }, function (e) {
-                    console.log(e);
-                });
+                    })
+                    .catch(reject);
             });
         }
 
-        beforeAll(function () {
-            fetchJson = jasmine.createSpy('fetch-json');
-        });
+        function createFakeConfig() {
+            return {
+                page: {
+                    edition: 'UK'
+                }
+            };
+        }
 
         beforeEach(function (done) {
-            $('body').html('<div class="js-breaking-news-placeholder breaking-news breaking-news--hidden breaking-news--fade-in" data-link-name="breaking news" data-component="breaking-news"></div>');
-            requestAnimationFrame(done);
+            injector
+                .mock({
+                    'lib/fetch-json': fetchJson,
+                    'lib/config': createFakeConfig(),
+                })
+                .require([
+                    'lib/storage',
+                    'common/modules/onward/breaking-news'
+                ], function (
+                    storageModule,
+                    breakingNewsModule
+                ) {
+                    storage = storageModule;
+                    breakingNews = breakingNewsModule;
+
+                    storage.local.set(knownAlertIDsStorageKey, {
+                        'uk_known': false,
+                        'uk_dismissed': true
+                    });
+
+                    $('body').html('<div class="js-breaking-news-placeholder breaking-news breaking-news--hidden breaking-news--fade-in" data-link-name="breaking news" data-component="breaking-news"></div>');
+                    requestAnimationFrame(done);
+                }, function (e) {
+                    console.log(e);
+                });
         });
+
         afterEach(function (done) {
             $('.js-breaking-news-placeholder').remove();
             requestAnimationFrame(done);
@@ -103,13 +117,6 @@ define([
         });
 
         describe('user can dismiss alerts', function () {
-            beforeEach(function () {
-                storage.local.set(knownAlertIDsStorageKey, {
-                    'uk_known': false,
-                    'uk_dismissed': true
-                });
-            });
-
             it('should try and fetch the json', function (done) {
                 mockBreakingNewsWith([]).then(function () {
                     expect(fetchJson).toHaveBeenCalled();
