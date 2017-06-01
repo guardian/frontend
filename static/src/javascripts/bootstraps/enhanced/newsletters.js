@@ -16,7 +16,7 @@ const classes = {
     previewButton: 'js-newsletter-preview',
 };
 
-const hideInputAndShowPreview = el => {
+const hideInputAndShowPreview = (el: ?Node): void => {
     fastdom.write(() => {
         $(`.${classes.textInput}`, el).addClass('is-hidden');
         $(`.${classes.signupButton}`, el).removeClass(classes.styleSignup);
@@ -24,13 +24,13 @@ const hideInputAndShowPreview = el => {
     });
 };
 
-const validate = form => {
+const validate = (form: ?HTMLFormElement): boolean => {
     // simplistic email address validation
     const emailAddress = $(`.${classes.textInput}`, form).val();
     return typeof emailAddress === 'string' && emailAddress.indexOf('@') > -1;
 };
 
-const addSubscriptionMessage = buttonEl => {
+const addSubscriptionMessage = (buttonEl: HTMLButtonElement): void => {
     const meta = $.ancestor(buttonEl, classes.wrapper);
     fastdom.write(() => {
         $(buttonEl.form).addClass('is-hidden');
@@ -39,8 +39,14 @@ const addSubscriptionMessage = buttonEl => {
     });
 };
 
-const submitForm = (form, buttonEl) => {
-    const formQueryString = `email=${form.email.value}&listId=${form.listId.value}`;
+const submitForm = (
+    form: ?HTMLFormElement,
+    buttonEl: HTMLButtonElement
+): Promise<void> => {
+    const email = $('input[name="email"]', form).value;
+    const listId = $('input[name="listId"]', form).value;
+    const formQueryString = `email=${email}&listId=${listId}`;
+
     return fetch(`${config.page.ajaxUrl}/email`, {
         method: 'post',
         body: formQueryString,
@@ -54,7 +60,7 @@ const submitForm = (form, buttonEl) => {
     });
 };
 
-const subscribeToEmail = buttonEl => {
+const subscribeToEmail = (buttonEl: HTMLButtonElement): void => {
     bean.on(buttonEl, 'click', () => {
         const form = buttonEl.form;
         if (validate(form)) {
@@ -63,7 +69,7 @@ const subscribeToEmail = buttonEl => {
     });
 };
 
-const showSignupForm = buttonEl => {
+const showSignupForm = (buttonEl: HTMLButtonElement): void => {
     const form = buttonEl.form;
     const meta = $.ancestor(buttonEl, 'js-newsletter-meta');
     fastdom.write(() => {
@@ -74,14 +80,14 @@ const showSignupForm = buttonEl => {
     });
 };
 
-const updatePageForLoggedIn = (emailAddress, el) => {
+const updatePageForLoggedIn = (emailAddress: string, el: ?Node): void => {
     fastdom.write(() => {
         hideInputAndShowPreview(el);
         $(`.${classes.textInput}`, el).val(emailAddress);
     });
 };
 
-const showSecondStageSignup = buttonEl => {
+const showSecondStageSignup = (buttonEl: HTMLButtonElement): void => {
     fastdom.write(() => {
         buttonEl.setAttribute('type', 'button');
         bean.on(buttonEl, 'click', () => {
@@ -90,7 +96,7 @@ const showSecondStageSignup = buttonEl => {
     });
 };
 
-const enhanceNewsletters = () => {
+const enhanceNewsletters = (): void => {
     if (Id.getUserFromCookie() !== null) {
         // email address is not stored in the cookie, gotta go to the Api
         Id.getUserFromApi(userFromId => {
@@ -105,7 +111,7 @@ const enhanceNewsletters = () => {
     }
 };
 
-const init = () => {
+const init = (): void => {
     enhanceNewsletters();
 };
 
