@@ -64,6 +64,8 @@ define([
         }
     }
 
+    var daysSinceLastContribution = daysSince(lastContributionDate);
+
     function controlTemplate(variant) {
         return template(acquisitionsEpicControlTemplate, {
             membershipUrl: variant.options.membershipURL,
@@ -187,6 +189,10 @@ define([
             blockEngagementBanner: options.blockEngagementBanner || false,
             engagementBannerParams: options.engagementBannerParams || {},
             isOutbrainCompliant: options.isOutbrainCompliant || false,
+
+            // Set useLocalViewLog to true if only the views for the respective test
+            // should be used to determine variant viewability
+            useLocalViewLog: options.useLocalViewLog || false,
         };
 
         this.test = function () {
@@ -297,6 +303,7 @@ define([
             };
         },
 
-        variantBuilderFactory: variantBuilderFactory
+        variantBuilderFactory: variantBuilderFactory,
+        daysSinceLastContribution: daysSinceLastContribution
     };
 });

@@ -178,4 +178,14 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2017, 6, 26),
     exposeClientSide = true
   )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-epic-thank-you",
+    "Bootstrap the AB test framework to use the Epic to thank readers who have already supported the Guardian",
+    owners = Seq(Owner.withGithub("Mullefa")),
+    safeState = On,
+    sellByDate = new LocalDate(2017, 6, 19),
+    exposeClientSide = true
+  )
 }
