@@ -45,7 +45,7 @@ trait ABTestSwitches {
     "Assign users to variants of opinion emails",
     owners = Seq(Owner.withGithub("davidfurey")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 6, 1),
+    sellByDate = new LocalDate(2017, 6, 19),
     exposeClientSide = true
   )
 
@@ -111,61 +111,11 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-sleeve-notes-new-email-variant",
-    "Assign some of the new sleeve notes subscribers to receive the new email",
-    owners = Seq(Owner.withGithub("lmath")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 6, 1),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-sleeve-notes-legacy-email-variant",
-    "Assign some of the new sleeve notes subscribers to receive the old email",
-    owners = Seq(Owner.withGithub("lmath")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 6, 1),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-the-long-read-email-variants",
-    "Assign users to variants of long read email",
-    owners = Seq(Owner.withGithub("davidfurey")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 6, 1),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-fashion-statement-email-variants",
-    "Assign users to variants of fashion statement email",
-    owners = Seq(Owner.withGithub("davidfurey")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 6, 1),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-bookmarks-email-variants-2",
     "Assign users to variants of bookmarks email",
     owners = Seq(Owner.withGithub("davidfurey")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 6, 1),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-film-today-email-variants",
-    "Assign users to variants of film today email",
-    owners = Seq(Owner.withGithub("davidfurey")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 6, 1),
+    sellByDate = new LocalDate(2017, 6, 19),
     exposeClientSide = true
   )
 
