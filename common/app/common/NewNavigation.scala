@@ -53,7 +53,7 @@ object NewNavigation {
     }
   }
 
-  def getTopLevelSection(name: String) = name match {
+  def getTopLevelSection(name: String): EditionalisedNavigationSection = name match {
     case "news" => News
     case "opinion" => Opinion
     case "sport" => Sport
@@ -578,7 +578,7 @@ object NewNavigation {
       sectionMap.getOrElse(sectionId, sectionId)
     }
 
-    def simplifyFootball(sectionId: String) = {
+    def simplifyFootball(sectionId: String): String = {
       val sectionMap = Map(
         "football/live" -> "football",
         "football/tables" -> "football",

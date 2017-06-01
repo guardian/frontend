@@ -1,5 +1,6 @@
 package conf
 
+import akka.agent.Agent
 import app.LifecycleComponent
 import common._
 import org.joda.time.DateTime
@@ -112,7 +113,7 @@ private[conf] class HealthCheckCache(preconditionMaybe: Option[HealthCheckPrecon
                                     (val wsClient: WSClient)
                                     extends HealthCheckFetcher {
 
-  protected val cache = AkkaAgent[List[HealthCheckResult]](List[HealthCheckResult]())
+  protected val cache: Agent[List[HealthCheckResult]] = AkkaAgent[List[HealthCheckResult]](List[HealthCheckResult]())
   def get(): List[HealthCheckResult] = cache.get()
 
   def refresh(port: Int, healthChecks: SingleHealthCheck*): Future[List[HealthCheckResult]] = {
@@ -182,7 +183,7 @@ class CachedHealthCheckLifeCycle(
 
   private lazy val healthCheckRequestFrequencyInSec = Configuration.healthcheck.updateIntervalInSecs
 
-  override def start() = {
+  override def start(): Unit = {
     jobs.deschedule("HealthCheckFetch")
     if (healthCheckRequestFrequencyInSec > 0) {
       jobs.scheduleEvery("HealthCheckFetch", healthCheckRequestFrequencyInSec.seconds) {

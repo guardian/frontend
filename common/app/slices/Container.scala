@@ -4,6 +4,8 @@ import model.pressed.CollectionConfig
 import common.Logging
 import model.facia.PressedCollection
 
+import scala.collection.immutable.Iterable
+
 object Container extends Logging {
   /** This is THE top level resolver for containers */
   val all: Map[String, Container] = Map(
@@ -22,12 +24,12 @@ object Container extends Logging {
   /** So that we don't blow up at runtime, which would SUCK */
   val default = Fixed(FixedContainers.fixedSmallSlowIV)
 
-  def resolve(id: String) = all.getOrElse(id, {
+  def resolve(id: String): Container = all.getOrElse(id, {
     log.error(s"Could not resolve container id $id, using default container")
     default
   })
 
-  def fromConfig(collectionConfig: CollectionConfig) =
+  def fromConfig(collectionConfig: CollectionConfig): Container =
     resolve(collectionConfig.collectionType)
 
   def fromPressedCollection(pressedCollection: PressedCollection, omitMPU: Boolean): Container = {
@@ -41,12 +43,12 @@ object Container extends Logging {
     }
   }
 
-  def showToggle(container: Container) = container match {
+  def showToggle(container: Container): Boolean = container match {
     case NavList | NavMediaList | Video => false
     case _ => true
   }
 
-  def customClasses(container: Container) = container match {
+  def customClasses(container: Container): Iterable[String] = container match {
     case Dynamic(DynamicPackage) => Set("fc-container--story-package")
     case Dynamic(DynamicElection) => Set("fc-container--story-package", "fc-container--election") // #election2017
     case Fixed(fixedContainer) => fixedContainer.customCssClasses

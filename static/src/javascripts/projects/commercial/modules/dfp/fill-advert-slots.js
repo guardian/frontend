@@ -45,13 +45,13 @@ const fillAdvertSlots = (
     start: () => void,
     stop: () => void
 ): Promise<void> => {
-    if (commercialFeatures.dfpAdvertising) {
+    if (commercialFeatures.dfpAdvertising || commercialFeatures.adFree) {
         window.googletag.cmd.push(
             start,
             createAdverts,
             queueAdverts,
             setPublisherProvidedId,
-            prepareSwitchTag.callSwitch,
+            prepareSwitchTag.maybeCallSwitch,
             dfpEnv.shouldLazyLoad() ? displayLazyAds : displayAds,
             // anything we want to happen after displaying ads
             refreshOnResize,

@@ -89,7 +89,7 @@ trait HttpRecorder[A] extends ExecutionContexts {
 trait DefaultHttpRecorder extends HttpRecorder[WSResponse] {
 
   val errorPrefix = "Error:"
-  override def toResponse(b: Array[Byte]) = {
+  override def toResponse(b: Array[Byte]): AhcWSResponse = {
     val str = new String(b, UTF8.charSet)
     if (str.startsWith(errorPrefix)) {
       AhcWSResponse(Response("", str.replace(errorPrefix, "").toInt))

@@ -23,11 +23,11 @@ trait ConfigAgentTrait extends ExecutionContexts with Logging {
   implicit lazy val alterTimeout: Timeout = Configuration.faciatool.configBeforePressTimeout.millis
   private lazy val configAgent = AkkaAgent[Option[ConfigJson]](None)
 
-  def isLoaded() = configAgent.get().isDefined
+  def isLoaded(): Boolean = configAgent.get().isDefined
 
   def getClient: ApiClient = FrontsApi.crossAccountClient
 
-  def refresh() = {
+  def refresh(): Future[Unit] = {
     val futureConfig = getClient.config
     futureConfig.onComplete {
       case Success(_) => log.info(s"Successfully got config")
@@ -132,10 +132,10 @@ trait ConfigAgentTrait extends ExecutionContexts with Logging {
     getFrontPriorityFromConfig(id).contains(EmailPriority)
 
   // email fronts are only served if the email-friendly format has been specified in the request
-  def shouldServeFront(id: String)(implicit context: ApplicationContext) =
+  def shouldServeFront(id: String)(implicit context: ApplicationContext): Boolean =
     getPathIds.contains(id) && (context.isPreview || !isFrontHidden(id))
 
-  def shouldServeEditionalisedFront(edition: Edition, id: String)(implicit context: ApplicationContext) = {
+  def shouldServeEditionalisedFront(edition: Edition, id: String)(implicit context: ApplicationContext): Boolean = {
     shouldServeFront(s"${edition.id.toLowerCase}/$id")
   }
 
@@ -158,7 +158,7 @@ class ConfigAgentLifecycle(
     jobs.deschedule("ConfigAgentJob")
   }}
 
-  override def start() = {
+  override def start(): Unit = {
     jobs.deschedule("ConfigAgentJob")
     jobs.schedule("ConfigAgentJob", "18 * * * * ?") {
       ConfigAgent.refresh()

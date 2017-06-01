@@ -12,7 +12,7 @@ trait Logging {
 
   lazy implicit val log = Logger(getClass)
 
-  protected def logException(e: Exception) = {
+  protected def logException(e: Exception): Unit = {
     log.error(ExceptionUtils.getStackTrace(e))
   }
 

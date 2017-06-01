@@ -13,7 +13,7 @@ import scala.util.Try
 
 object JsMinifier {
 
-  def compilerOptions = {
+  def compilerOptions: CompilerOptions = {
     val options = new CompilerOptions()
 
     /* Checks */

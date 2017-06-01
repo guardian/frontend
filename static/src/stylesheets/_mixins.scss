@@ -154,12 +154,6 @@
     }
 }
 
-@mixin mobile-only {
-    @include mq(tablet) {
-        display: none !important;
-    }
-}
-
 @mixin video-play-button-size($size) {
     width: $size;
     height: $size;
@@ -274,4 +268,9 @@
     //optically aligns slashes
     top: 0;
     right: -.19em;
+}
+
+@mixin menu-animation($percentage) {
+    transform: translateX($percentage);
+    transition: transform .4s cubic-bezier(.23, 1, .32, 1);
 }

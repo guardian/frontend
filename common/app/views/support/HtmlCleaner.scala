@@ -206,7 +206,7 @@ object VideoEncodingUrlCleaner extends HttpsUrl {
 }
 
 object AmpSrcCleaner extends HttpsUrl {
-  def apply(videoSrc: String) = {
+  def apply(videoSrc: String): String = {
     // All media sources need to start with https for AMP.
     // Temporary code until all media urls returned from CAPI are https
     ensureHttps(videoSrc)
@@ -582,7 +582,7 @@ case class DropCaps(isFeature: Boolean, isImmersive: Boolean, isRecipeArticle: B
 // Gallery Caption's don't come back as structured data
 // This is a hack to serve the correct html
 object GalleryCaptionCleaner {
-  def apply(caption: String) = {
+  def apply(caption: String): String = {
     val galleryCaption = Jsoup.parse(caption)
     val firstStrong = Option(galleryCaption.getElementsByTag("strong").first())
     val captionTitle = galleryCaption.createElement("h2")
@@ -703,7 +703,7 @@ case class AtomsCleaner(atoms: Option[Atoms], shouldFence: Boolean = true, amp: 
 }
 
 object setSvgClasses {
-  def apply(svg: String, classes: Seq[String] = List()) = {
+  def apply(svg: String, classes: Seq[String] = List()): String = {
     val document = Jsoup.parse(svg)
     val svgHtml = document.getElementsByTag("svg")
     val modifiedClasses = classes.map(_.concat("__svg")).mkString(" ")

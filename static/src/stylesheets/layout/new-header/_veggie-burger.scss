@@ -1,0 +1,122 @@
+.veggie-burger {
+    background-color: $news-main-2;
+    bottom: -$gs-baseline / 2;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, .08);
+    color: #ffffff;
+    cursor: pointer;
+    height: $veggie-burger-small;
+    min-width: $veggie-burger-small;
+    position: absolute;
+    border: 0;
+    border-radius: 50%;
+    outline: none;
+    right: $gutter-small;
+
+    @include mq(mobileMedium) {
+        height: $veggie-burger-medium;
+        width: $veggie-burger-medium;
+        //Align with the 'i' in 'theguardian'
+        right: $gutter-medium;
+    }
+
+    @include mq(mobileLandscape) {
+        //Align with the 'i' in 'theguardian'
+        right: $gutter-large;
+    }
+
+    @include mq(tablet) {
+        right: $gutter-xlarge;
+    }
+
+    // menu is open
+    .new-header--open & {
+        z-index: $zindex-main-menu + 1;
+
+        &:before {
+            border-radius: ($veggie-burger-small * 2) 0 0 ($veggie-burger-small * 2);
+            // Extended hit area for veggie burger close state, for fat fingers
+            content: '';
+            height: $veggie-burger-small * 2;
+            position: absolute;
+            right: $veggie-burger-small / 2;
+            top: -$veggie-burger-small / 2;
+            width: $veggie-burger-small;
+
+            @include mq(mobileMedium) {
+                height: $veggie-burger-medium * 2;
+                width: $veggie-burger-medium;
+                top: -$veggie-burger-medium / 2;
+                right: $veggie-burger-medium / 2;
+                border-radius: ($veggie-burger-medium * 2) 0 0 ($veggie-burger-medium * 2);
+            }
+        }
+    }
+
+    // Don't show menu on opera mini: https://wp-mix.com/css-target-opera/
+    x:-o-prefocus & {
+        display: none;
+    }
+}
+
+.veggie-burger__label {
+    @include fs-textSans(5);
+    bottom: -24px;
+    color: $neutral-3;
+    font-size: 16px;
+    left: 50%;
+    position: absolute;
+    text-transform: lowercase;
+    transform: translateX(-50%);
+
+    @include mq($until: 'desktop') {
+        @include u-h();
+    }
+
+    .new-header--open & {
+        display: none;
+    }
+}
+
+.veggie-burger__icon {
+    top: 50%;
+    display: block;
+    margin-top: -($gs-baseline / 6) / 2;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+
+    &,
+    &:before,
+    &:after {
+        background-color: currentColor;
+        content: '';
+        height: $gs-baseline / 6;
+        left: 0;
+        position: absolute;
+        width: $gs-gutter;
+    }
+
+    &:before {
+        top: -$gs-gutter / 4;
+    }
+
+    &:after {
+        bottom: -$gs-gutter / 4;
+    }
+
+    // transform burger into cross
+    .new-header--open & {
+        background-color: transparent;
+
+        &:before {
+            top: 0;
+            transform: rotate(-45deg);
+        }
+
+        &:after {
+            bottom: 0;
+            transform: rotate(45deg);
+        }
+    }
+}
