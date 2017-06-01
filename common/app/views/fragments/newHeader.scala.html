@@ -5,8 +5,9 @@
 @import views.support.RenderClasses
 
 <header class="@RenderClasses(Map(
-            "mobile-only" -> !mvt.ABNewDesktopHeader.isParticipating
-        ), "new-header")"
+            "new-header--mvt-desktop" -> mvt.ABNewDesktopHeader.isParticipating
+            ),
+            "new-header")"
         role="banner">
     @defining(NewNavigation.SubSectionLinks.getSectionOrTagId(page)) { id =>
         @defining(
@@ -58,7 +59,7 @@
                        tabindex="0"
                        data-link-name="nav2 : veggie-burger : show">
                     <span class="veggie-burger__icon"></span>
-                    <span class="u-h">Menu</span>
+                    <span class="veggie-burger__label">Menu</span>
                 </label>
 
                 <input type="checkbox"

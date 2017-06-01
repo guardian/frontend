@@ -91,11 +91,21 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-acquisitions-epic-liveblog-design-test",
+    "This tests some different designs of the liveblog epic",
+    owners = Seq(Owner.withGithub("joelochlann")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 7, 3),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
     "ab-tailor-survey",
     "Integrate Tailor with ab tests",
-    owners = Seq(Owner.withGithub("oilnam")),
+    owners = Seq(Owner.withGithub("oilnam"), Owner.withGithub("mike-ruane")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 5, 31),
+    sellByDate = new LocalDate(2017, 8, 31),
     exposeClientSide = true
   )
 
@@ -175,7 +185,7 @@ trait ABTestSwitches {
     "Test pricing options for digital subs",
     owners = Seq(Owner.withGithub("justinpinner")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 6, 1),  // Thursday 1st June
+    sellByDate = new LocalDate(2017, 7, 6),  // Thursday 6th July
     exposeClientSide = true
   )
 
