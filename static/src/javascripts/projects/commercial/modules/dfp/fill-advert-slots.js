@@ -22,7 +22,7 @@ const fillAdvertSlots = (): Promise<void> => {
     // This module has the following strict dependencies. These dependencies must be
     // fulfilled before fillAdvertSlots can execute reliably. The bootstrap (commercial.js)
     // initiates these dependencies, to speed up the init process. Bootstrap also captures the module performance.
-    const dependencies = Promise.all([
+    const dependencies: Promise<void>[] = Promise.all([
         setupSonobi(),
         setupSwitch(),
         closeDisabledSlots(),
