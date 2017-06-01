@@ -9,11 +9,21 @@ from scrolling */
     background-color: $guardian-brand;
     position: relative;
 
-    @include mq(desktop) {
+    @include mq(tablet) {
         display: none;
+
+        // Switch: ABNewTabletHeader
+        &.new-header--switch-on-tablet {
+            display: block;
+
+            @include mq(desktop) {
+                display: none;
+            }
+        }
     }
 
     @include mq(desktop) {
+        // Switch: ABNewDesktopHeader
         &.new-header--mvt-desktop {
             display: block;
         }

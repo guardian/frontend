@@ -2,15 +2,17 @@
 @import common.{Edition, LinkTo, SubscribeLink}
 @import conf.Configuration
 @import conf.switches.Switches._
+@import conf.switches.Switches.NewTabletHeader
 
 @* TODO: When implementing the desktop design, aim to consolidate the html *@
 @fragments.newHeader(page)
 
 @hasSlimHeader = @{page.metadata.hasSlimHeader}
+@HideOnTablet = @{NewTabletHeader.isSwitchedOn}
 
 @if(!mvt.ABNewDesktopHeader.isParticipating) {
     <header id="header"
-            class="l-header u-cf @if(hasSlimHeader) {l-header--is-slim l-header--no-navigation} js-header"
+            class="l-header u-cf @if(HideOnTablet) {l-header--switch-on-hide-on-tablet} @if(hasSlimHeader) {l-header--is-slim l-header--no-navigation} js-header"
             role="banner"
             data-link-name="global navigation: header">
         <div class="js-navigation-header navigation-container navigation-container--collapsed">

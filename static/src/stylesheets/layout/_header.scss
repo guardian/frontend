@@ -16,6 +16,19 @@ $c-guardian-services-action: #ffffff;
         }
     }
 
+    @include mq(tablet) {
+        display: block;
+
+        // Switch: ABNewTabletHeader
+        &.l-header--switch-on-hide-on-tablet {
+            display: none;
+
+            @include mq(desktop) {
+                display: block;
+            }
+        }
+    }
+
     @include mq(desktop) {
         display: block;
     }

@@ -1,11 +1,13 @@
 @(page: model.Page)(implicit request: RequestHeader)
 
 @import conf.Configuration
+@import conf.switches.Switches.NewTabletHeader
 @import common.{LinkTo, NewNavigation, Edition}
 @import views.support.RenderClasses
 
 <header class="@RenderClasses(Map(
-            "new-header--mvt-desktop" -> mvt.ABNewDesktopHeader.isParticipating
+            "new-header--mvt-desktop" -> mvt.ABNewDesktopHeader.isParticipating,
+            "new-header--switch-on-tablet" -> NewTabletHeader.isSwitchedOn
             ),
             "new-header")"
         role="banner">
