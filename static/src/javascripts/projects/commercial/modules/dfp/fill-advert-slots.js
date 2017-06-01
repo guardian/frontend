@@ -23,12 +23,13 @@ const fillAdvertSlots = (): Promise<void> => {
     // fulfilled before fillAdvertSlots can execute reliably. The bootstrap (commercial.js)
     // initiates these dependencies, to speed up the init process. Bootstrap also captures the module performance.
     const dependencies = Promise.all([
-        setupSonobi,
-        setupSwitch,
-        closeDisabledSlots,
+        setupSonobi(),
+        setupSwitch(),
+        closeDisabledSlots(),
     ]);
 
     return dependencies.then(() => {
+        console.log('running ad slot selector');
         // Get all ad slots
         const adverts = qwery(dfpEnv.adSlotSelector)
             .filter(adSlot => !(adSlot.id in dfpEnv.advertIds))
