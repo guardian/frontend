@@ -2,12 +2,10 @@
 define([
     'helpers/injector',
     'lib/$',
-    'lib/config',
     'lodash/objects/defaults'
 ], function (
     Injector,
     $,
-    config,
     defaults
 ) {
     describe('Breaking news', function () {
@@ -21,8 +19,9 @@ define([
                 set: sandbox.spy(),
                 isAvailable: sandbox.stub(),
             },
-        }
+        };
         var breakingNews;
+        var mediator;
 
         function alertThatIs(type, options) {
             options = defaults(options || {}, {
@@ -83,11 +82,14 @@ define([
                     'lib/config': createFakeConfig(),
                 })
                 .require([
-                    'common/modules/onward/breaking-news'
+                    'common/modules/onward/breaking-news',
+                    'lib/mediator'
                 ], function (
-                    breakingNewsModule
+                    breakingNewsModule,
+                    mediatorModule
                 ) {
                     breakingNews = breakingNewsModule;
+                    mediator = mediatorModule;
 
                     $('body').html('<div class="js-breaking-news-placeholder breaking-news breaking-news--hidden breaking-news--fade-in" data-link-name="breaking news" data-component="breaking-news"></div>');
                     requestAnimationFrame(done);
@@ -98,6 +100,8 @@ define([
 
         afterEach(function (done) {
             sandbox.restore();
+            mediator.removeAllListeners();
+
             $('.js-breaking-news-placeholder').remove();
             requestAnimationFrame(done);
         });
@@ -254,45 +258,24 @@ define([
         });
 
         describe('banner emits ready events', function () {
-
-            var mediator;
-
-            beforeEach(function (done) {
-                injector.require([
-                    'lib/mediator'
-                ], function () {
-                    mediator = arguments[0];
-                    done();
-                }, function () {
-                    done();
-                });
-            });
-
-            afterEach(function () {
-                mediator.removeAllListeners();
-            });
-
             it('should pass false when banner will not show', function (done) {
-
                 mediator.on('modules:onwards:breaking-news:ready', function (breakingShown) {
                     expect(breakingShown).toBe(false);
                     done();
-                })
+                });
 
                 mockBreakingNewsWith([]).catch(done.fail);
-
             });
 
             it('should pass true when banner will show', function (done) {
+                var collections = [
+                    alertThatIs('unknown', {age: 2, collection: 'uk'})
+                ];
 
                 mediator.on('modules:onwards:breaking-news:ready', function (breakingShown) {
                     expect(breakingShown).toBe(true);
                     done();
-                })
-
-                var collections = [
-                    alertThatIs('unknown', {age: 2, collection: 'uk'})
-                ];
+                });
 
                 mockBreakingNewsWith(collections).catch(done.fail);
 
