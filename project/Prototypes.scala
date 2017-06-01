@@ -78,7 +78,11 @@ trait Prototypes {
     // Use ScalaTest https://groups.google.com/d/topic/play-framework/rZBfNoGtC0M/discussion
     testOptions in Test := Nil,
 
-    concurrentRestrictions in Global := List(Tags.limit(Tags.Test, 4)),
+    concurrentRestrictions in Global := {
+      val processorsCount = java.lang.Runtime.getRuntime.availableProcessors()
+      println(processorsCount)
+      List(Tags.limit(Tags.Test, if(parallelExecution.value) processorsCount else 1))
+    },
 
     // Copy unit test resources https://groups.google.com/d/topic/play-framework/XD3X6R-s5Mc/discussion
     unmanagedClasspath in Test += (baseDirectory map { bd => Attributed.blank(bd / "test") }).value,
