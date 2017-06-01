@@ -47,6 +47,7 @@ static/hash
 static/transpiled
 static/target
 static/riffraff
+static/abtests.json
 
 static/src/stylesheets/icons/*
 
