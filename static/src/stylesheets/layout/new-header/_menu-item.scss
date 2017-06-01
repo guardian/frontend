@@ -2,6 +2,17 @@
     position: relative;
     width: 100%;
 
+    @include mq(desktop) {
+        width: auto;
+    }
+
+    // TODO: tmp
+    > details {
+        @include mq(desktop) {
+            display: block;
+        }
+    }
+
     > *[data-link-name='nav2 : the guardian app'],
     > *[data-link-name='nav2 : facebook'] {
         border-top: 1px solid darken($guardian-brand-dark, 4%);
@@ -31,6 +42,10 @@
     padding-top: 8px;
     user-select: none;
 
+    @include mq(desktop) {
+        display: none;
+    }
+
     &:hover,
     &:focus {
         text-decoration: none;
@@ -53,6 +68,10 @@
 .menu-item__toggle {
     color: $news-support-2;
     position: absolute;
+
+    @include mq(desktop) {
+        display: none;
+    }
 }
 
 .menu-item__toggle {
