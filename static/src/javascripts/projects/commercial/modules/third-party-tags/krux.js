@@ -11,11 +11,9 @@ const retrieve = (n: string): string => {
     return local.getRaw(k) || getCookie(`${k}=([^;]*)`) || '';
 };
 
-const getSegments = (): Array<string> =>
+const getKruxSegments = (): Array<string> =>
     retrieve('segs') ? retrieve('segs').split(',') : [];
 
-export default {
-    shouldRun: config.switches.krux,
-    url: kruxUrl,
-    getSegments,
-};
+const shouldRun = config.switches.krux;
+
+export { shouldRun, kruxUrl, getKruxSegments };
