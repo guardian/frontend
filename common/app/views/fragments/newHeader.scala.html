@@ -8,8 +8,7 @@
 <header class="@RenderClasses(Map(
             "new-header--mvt-desktop" -> mvt.ABNewDesktopHeader.isParticipating,
             "new-header--switch-on-tablet" -> NewTabletHeader.isSwitchedOn
-            ),
-            "new-header")"
+        ), "new-header")"
         role="banner">
     @defining(NewNavigation.SubSectionLinks.getSectionOrTagId(page)) { id =>
         @defining(
