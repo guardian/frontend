@@ -43,8 +43,8 @@ const submitForm = (
     form: ?HTMLFormElement,
     buttonEl: HTMLButtonElement
 ): Promise<void> => {
-    const email = $('input[name="email"]', form).value;
-    const listId = $('input[name="listId"]', form).value;
+    const email = $('input[name="email"]', form).val();
+    const listId = $('input[name="listId"]', form).val();
     const formQueryString = `email=${email}&listId=${listId}`;
 
     return fetch(`${config.page.ajaxUrl}/email`, {
