@@ -34,22 +34,29 @@ import {
     primaryBaseline,
 } from 'commercial/modules/dfp/performance-logging';
 import { trackPerformance } from 'common/modules/analytics/google';
-import userFeatures from 'commercial/modules/user-features';
+import { commercialFeatures } from 'commercial/modules/commercial-features';
 
 const commercialModules: Array<Array<any>> = [
     ['cm-highMerch', highMerch.init],
     ['cm-thirdPartyTags', thirdPartyTags.init],
-    ['cm-prepare-sonobi-tag', prepareSonobiTag.init, true],
-    ['cm-prepare-switch-tag', prepareSwitchTag.init, true],
-    ['cm-articleAsideAdverts', articleAsideAdvertsInit, true],
     ['cm-prepare-googletag', prepareGoogletag.init, true],
-    ['cm-articleBodyAdverts', articleBodyAdvertsInit],
-    ['cm-liveblogAdverts', initLiveblogAdverts, true],
     ['cm-closeDisabledSlots', closeDisabledSlots],
-    ['cm-stickyTopBanner', stickyTopBanner.init],
     ['cm-paidContainers', paidContainers],
     ['cm-paidforBand', paidforBand.init],
 ];
+
+if (!commercialFeatures.adFree) {
+    commercialModules.push(
+        ['cm-prepare-sonobi-tag', prepareSonobiTag.init, true],
+        ['cm-prepare-switch-tag', prepareSwitchTag.init, true],
+        ['cm-articleAsideAdverts', articleAsideAdvertsInit, true],
+        ['cm-articleBodyAdverts', articleBodyAdvertsInit],
+        ['cm-liveblogAdverts', initLiveblogAdverts, true],
+        ['cm-stickyTopBanner', stickyTopBanner.init],
+        ['cm-paidContainers', paidContainers],
+        ['cm-paidforBand', paidforBand.init]
+    );
+}
 
 if (config.page.isHosted) {
     commercialModules.push(
@@ -94,11 +101,6 @@ const loadModules = (modules, baseline): Promise<void> => {
 };
 
 export default (): Promise<void> => {
-    if (config.switches.adFreeMembershipTrial && userFeatures.isAdFreeUser()) {
-        closeDisabledSlots(true);
-        return Promise.resolve();
-    }
-
     markTime('commercial start');
     catchErrorsWithContext([
         [

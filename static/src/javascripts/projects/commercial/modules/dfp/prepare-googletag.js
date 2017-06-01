@@ -14,6 +14,7 @@ import onSlotRender from 'commercial/modules/dfp/on-slot-render';
 import onSlotLoad from 'commercial/modules/dfp/on-slot-load';
 import { fillAdvertSlots } from 'commercial/modules/dfp/fill-advert-slots';
 import refreshOnResize from 'commercial/modules/dfp/refresh-on-resize';
+import { adFreeSlotRemove } from 'commercial/modules/close-disabled-slots';
 import {
     addTag,
     setListeners,
@@ -36,12 +37,16 @@ const setDfpListeners = (): void => {
 
 const setPageTargeting = (): void => {
     const pubads = window.googletag.pubads();
-    const targeting = buildPageTargeting();
+    // because commercialFeatures may export itself as {} in the event of an exception during construction
+    const targeting = buildPageTargeting(commercialFeatures.adFree || false);
     Object.keys(targeting).forEach(key => {
         pubads.setTargeting(key, targeting[key]);
     });
 };
 
+// This is specifically a separate function to close-disabled-slots. One is for
+// closing hidden/disabled slots, the other is for graceful recovery when prepare-googletag
+// encounters an error. Here, slots are closed unconditionally.
 const removeAdSlots = (): Promise<void> => {
     // Get all ad slots
     const adSlots: Array<Element> = qwery(dfpEnv.adSlotSelector);
@@ -83,14 +88,15 @@ const init = (start: () => void, stop: () => void): Promise<void> => {
     };
 
     if (commercialFeatures.dfpAdvertising) {
-        setupAdvertising()
-            // A promise error here, from a failed module load,
-            // could be a network problem or an intercepted request.
-            // Abandon the init sequence.
-            .catch(removeAdSlots);
+        // A promise error here, from a failed module load,
+        // could be a network problem or an intercepted request.
+        // Abandon the init sequence.
+        setupAdvertising().catch(removeAdSlots);
+        return Promise.resolve();
+    } else if (commercialFeatures.adFree) {
+        setupAdvertising().then(adFreeSlotRemove).catch(removeAdSlots);
         return Promise.resolve();
     }
-
     return removeAdSlots();
 };
 
