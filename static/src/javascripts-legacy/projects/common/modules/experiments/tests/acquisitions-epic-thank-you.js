@@ -53,11 +53,11 @@ define([
             return isTargetReader() && isTargetPage();
         },
 
+        useLocalViewLog: true,
+
         variants: [
             {
                 id: 'control',
-
-                useLocalViewLog: true,
 
                 maxViews: {
                   days: 365, // Arbitrarily high number - reader should only see the thank-you for one 'cycle'.

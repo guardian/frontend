@@ -143,6 +143,10 @@ define([
         this.viewEvent = this.makeEvent('view');
         this.isEngagementBannerTest = options.isEngagementBannerTest || false;
 
+        // Set useLocalViewLog to true if only the views for the respective test
+        // should be used to determine variant viewability
+        this.useLocalViewLog =  options.useLocalViewLog || false;
+
         /**
          * Provides a default `canRun` function with typical rules (see function below) for Contributions messages.
          * If your test provides its own `canRun` option, it will be included in the check.
@@ -189,10 +193,6 @@ define([
             blockEngagementBanner: options.blockEngagementBanner || false,
             engagementBannerParams: options.engagementBannerParams || {},
             isOutbrainCompliant: options.isOutbrainCompliant || false,
-
-            // Set useLocalViewLog to true if only the views for the respective test
-            // should be used to determine variant viewability
-            useLocalViewLog: options.useLocalViewLog || false,
         };
 
         this.test = function () {

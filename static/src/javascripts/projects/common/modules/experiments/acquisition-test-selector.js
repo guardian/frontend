@@ -52,7 +52,7 @@ const isViewable = (v: Variant, t: ABTest): boolean => {
     } = v.options.maxViews;
 
     const isUnlimited = v.options.isUnlimited;
-    const testId = v.options.useLocalViewLog ? t.id : undefined;
+    const testId = t.useLocalViewLog ? t.id : undefined;
 
     const withinViewLimit =
         viewsInPreviousDays(maxViewDays, testId) < maxViewCount;
