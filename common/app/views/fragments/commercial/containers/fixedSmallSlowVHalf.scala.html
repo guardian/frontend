@@ -21,7 +21,7 @@
     </div>
     @containerModel.content.initialCards.slice(4, 5).map(card => views.html.fragments.commercial.cards.itemCard(
         card,
-        cardType = cards.Half,
+        cardType = layout.cards.Half,
         optClassNames = Some(Seq("hide-until-tablet")),
         optAdvertClassNames = Some(Seq("paidfor")),
         omnitureId = mkInteractionTrackingCode(frontId, containerIndex, containerModel, card),

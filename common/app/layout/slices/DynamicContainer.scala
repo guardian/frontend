@@ -1,7 +1,7 @@
-package slices
+package layout.slices
 
 import common.Seqs._
-import slices.Story._
+import layout.slices.Story._
 
 /** Used for calculating the final slice -- any stories that are not standard are considered 'bigs' for the standard
   * slice

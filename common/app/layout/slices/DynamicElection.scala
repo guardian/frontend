@@ -1,6 +1,6 @@
-package slices
+package layout.slices
 
-import slices.Story.segmentByGroup
+import layout.slices.Story._
 
 object DynamicElection extends DynamicContainer {
 

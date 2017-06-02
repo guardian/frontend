@@ -1,4 +1,4 @@
-package slices
+package layout.slices
 
 import model.pressed.CollectionConfig
 import common.Logging

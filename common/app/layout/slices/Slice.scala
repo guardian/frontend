@@ -1,6 +1,6 @@
-package slices
+package layout.slices
 
-import cards._
+import layout.cards._
 import layout._
 
 sealed trait Slice {
