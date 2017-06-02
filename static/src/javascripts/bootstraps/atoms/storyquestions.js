@@ -32,14 +32,6 @@ type Webfont = {
     url?: string,
 };
 
-/* in app article will send a message when ready to interact */
-const comready = (callback: () => void): void => {
-    window.addEventListener('message', function onM() {
-        callback();
-        window.removeEventListener('message', onM);
-    });
-};
-
 const installWebfonts = (fonts: Webfont[]) => {
     const css = fonts
         .map(
@@ -56,25 +48,33 @@ const installWebfonts = (fonts: Webfont[]) => {
     (document.styleSheets[0]: window.CSSStyleSheet).insertRule(css);
 };
 
-const getWebfonts = (families: Webfont[]): Promise<void> =>
-    new Promise(resolve => {
-        const msgId = send('get-webfonts', families);
-        window.addEventListener('message', function onM(evt) {
-            if (!(evt instanceof MessageEvent)) {
-                return;
-            }
-            const { id, error, result } = JSON.parse(evt.data);
-            if (id !== msgId) {
-                return;
-            }
-            if (error) {
-                throw new Error(error);
-            }
-            window.removeEventListener('message', onM);
-            installWebfonts(result);
-            resolve();
-        });
+const getWebfonts = (families: Webfont[]): void => {
+    const msgId = send('get-webfonts', families);
+    // keep on sending until we get something back
+    const intId = setInterval(() => {
+        send('get-webfonts', families);
+    }, 500);
+
+    window.addEventListener('message', function onM(evt) {
+        if (!(evt instanceof MessageEvent)) {
+            return;
+        }
+
+        const { id, error, result } = JSON.parse(evt.data);
+        if (id !== msgId) {
+            return;
+        }
+
+        window.removeEventListener('message', onM);
+        clearInterval(intId);
+
+        if (error) {
+            throw new Error(error);
+        }
+
+        installWebfonts(result);
     });
+};
 
 Promise.all([
     window.guardian.polyfilled
@@ -83,7 +83,6 @@ Promise.all([
               window.guardian.onPolyfilled = resolve;
           }),
     new Promise(resolve => domready(resolve)),
-    new Promise(resolve => comready(resolve)),
 ]).then(() => {
     init();
     fastdom
