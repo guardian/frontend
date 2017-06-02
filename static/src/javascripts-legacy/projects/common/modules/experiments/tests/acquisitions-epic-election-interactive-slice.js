@@ -15,7 +15,7 @@ define([
 ) {
     return contributionsUtilities.makeABTest({
         id: 'AcquisitionsElectionInteractiveSlice',
-        campaignId: 'epic_election_interactive_slice',
+        campaignId: 'epic_ge2017_interactive_slice',
 
         start: '2017-05-22',
         expiry: '2017-07-03',
