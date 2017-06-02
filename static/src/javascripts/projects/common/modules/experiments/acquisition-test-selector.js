@@ -22,6 +22,8 @@ import acquisitionsEpicAlwaysAskIfTagged
     from 'common/modules/experiments/tests/acquisitions-epic-always-ask-if-tagged';
 import acquisitionsEpicTestimonialsUSA
     from 'common/modules/experiments/tests/acquisitions-epic-testimonials-usa';
+import acquisitionsEpicAlwaysAskElection
+    from 'common/modules/experiments/tests/acquisitions-epic-always-ask-election';
 
 /**
  * acquisition tests in priority order (highest to lowest)
@@ -34,6 +36,7 @@ const tests = [
     acquisitionsEpicAlwaysAskIfTagged,
     acquisitionsEpicLiveBlogDesignTest,
     acquisitionsEpicLiveBlog,
+    acquisitionsEpicAlwaysAskElection,
 ].map(Test => new Test());
 
 const isViewable = (v: Variant): boolean => {

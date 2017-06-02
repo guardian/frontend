@@ -161,6 +161,16 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-acquisitions-epic-always-ask-election",
+    "This will guarantee that the epic is always displayed on election stories",
+    owners = Seq(Owner.withGithub("jranks123")),
+    safeState = On,
+    sellByDate = new LocalDate(2018, 7, 19),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
     "ab-acquisitions-epic-testimonials-usa",
     "Test placing localised reader testimonials in the Epic",
     owners = Seq(Owner.withGithub("desbo")),
