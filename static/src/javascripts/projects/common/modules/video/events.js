@@ -31,14 +31,6 @@ const EVENTS = [
 ];
 const gaTracker = config.googleAnalytics.trackers.editorial;
 
-/**
- *
- * @param mediaId {string}
- * @param mediaType {string} audio|video
- * @param eventType {string} e.g. firstplay, firstend
- * @param isPreroll {boolean}
- * @returns {{mediaId: string, mediaType: string, eventType: string, isPreroll: boolean}}
- */
 const MediaEvent = (
     mediaId: string,
     mediaType: string,
