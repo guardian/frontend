@@ -46,7 +46,7 @@ class AtomCleanerTest extends FlatSpec
     explainers = Nil
   )
 )
-  def doc = Jsoup.parse( s"""<figure class="element element-atom">
+  def doc: Document = Jsoup.parse( s"""<figure class="element element-atom">
                                 <gu-atom data-atom-id="887fb7b4-b31d-4a38-9d1f-26df5878cf9c" data-atom-type="media">
                                 <div>
                                  <iframe src="https://www.youtube.com/embed/nQuN9CUsdVg" allowfullscreen="" width="420" height="315" frameborder="0"> </iframe>

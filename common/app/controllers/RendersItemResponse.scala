@@ -5,7 +5,7 @@ import com.gu.contentapi.client.model.v1.ItemResponse
 import common.{Edition, ExecutionContexts}
 import contentapi.ContentApiClient
 import model.NoCache
-import play.api.mvc.{Action, Controller, RequestHeader, Result}
+import play.api.mvc._
 
 import scala.concurrent.Future
 import scala.concurrent.Future._
@@ -22,7 +22,7 @@ trait RendersItemResponse {
 
 class ItemResponseController(contentApiClient: ContentApiClient, val controllers: RendersItemResponse*) extends Controller with ExecutionContexts {
 
-  def render(path: String) = Action.async{ implicit request =>
+  def render(path: String): Action[AnyContent] = Action.async{ implicit request =>
     val itemRequest = contentApiClient.item(path, Edition(request))
 
     controllers.find(_.canRender(path)).map(_.renderItem(path)).getOrElse {

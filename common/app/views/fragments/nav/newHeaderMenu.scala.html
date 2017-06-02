@@ -4,30 +4,27 @@
 @import conf.switches.Switches.SearchSwitch
 
 @sectionList(topLevelSection: NewNavigation.EditionalisedNavigationSection) = {
-    <li class="main-navigation__item navigation-border js-navigation-item"
+    <li class="menu-item js-navigation-item"
         data-section-name="@topLevelSection.name">
-        <details class="js-close-nav-list main-navigation__primary-list"
+        <details class="js-close-nav-list"
                  id="primary-list-@topLevelSection.name"
                  open>
-            <summary class="main-navigation__item__button js-navigation-button"
+            <summary class="menu-item__title js-navigation-button"
                      data-link-name="nav2 : secondary : @topLevelSection.name">
-                <i class="main-menu__icon main-menu__icon--chevron"></i>
+                <i class="menu-item__toggle"></i>
                 @topLevelSection.name
             </summary>
 
             @defining(Edition(request)) { edition =>
-                <ul class="main-navigation__secondary
-                    navigation-group
-                    navigation-group--@{edition.id.toLowerCase}
-                    js-editionalise-secondary-nav"
+                <ul class="menu-group menu-group--secondary js-editionalise-secondary-nav"
                     data-edition="@{edition.id.toLowerCase}" >
-
                     @topLevelSection.getAllEditionalisedNavLinks(edition).map { sectionItem =>
-                        <li class="navigation-group__item">
-                            <a href="@LinkTo { @sectionItem.url }"
+                        <li class="menu-item">
+                            <a class="menu-item__title"
+                               href="@LinkTo { @sectionItem.url }"
                                data-link-name="nav2 : secondary : @{ if(sectionItem.longTitle.isEmpty) sectionItem.title else sectionItem.longTitle }">
                                     @if(sectionItem.iconName.nonEmpty) {
-                                        @fragments.inlineSvg(sectionItem.iconName, "icon", List("main-menu__icon"))
+                                        @fragments.inlineSvg(sectionItem.iconName, "icon", List("menu-item__icon"))
                                     }
                                     @{ if(sectionItem.longTitle.isEmpty) sectionItem.title else sectionItem.longTitle }
                             </a>
@@ -40,108 +37,103 @@
 }
 
 <label for="main-menu-toggle"
-       class="main-menu-container__overlay"
+       class="menu__overlay"
        aria-hidden="true"
        data-link-name="nav2 : overlay"></label>
 
-<div class="main-menu-container">
-    <div class="main-menu-container__menu js-main-menu"
-         id="main-menu"
-         aria-hidden="true">
-        <ul class="main-navigation">
-            @NewNavigation.topLevelSections.map { section =>
-                @sectionList(section)
-            }
-        </ul>
-
-        @if(SearchSwitch.isSwitchedOn) {
-            <ul class="navigation-group">
-                <li class="navigation-group__item navigation-group__item--search">
-                    <form class="navigation-group__search-container"
-                          action="https://www.google.co.uk/search">
-                        <input type="text"
-                               name="q"
-                               class="navigation-group__search-box"
-                               placeholder="search for..."
-                               data-link-name="nav2 : search">
-
-                        <input type="hidden"
-                               name="as_sitesearch"
-                               value="www.theguardian.com">
-
-                        @* label surrounding the input and icon so that if you
-                        click the search icon it will trigger the submit *@
-                        <label for="submit-google-search">
-                            <input class="u-h"
-                                   type="submit"
-                                   id="submit-google-search"
-                                   data-link-name="nav2 : search : submit">
-                            @fragments.inlineSvg("search-36", "icon", List("main-menu__icon", "main-menu__icon--search"))
-                        </label>
-
-                        <label for="q"
-                               class="u-h">
-                            What term do you want to search?
-                        </label>
-                    </form>
-                </li>
-            </ul>
+<div class="menu js-main-menu"
+     id="main-menu"
+     aria-hidden="true">
+    <ul class="menu-group menu-group--primary">
+        @NewNavigation.topLevelSections.map { section =>
+            @sectionList(section)
         }
+    </ul>
 
-        <ul class="navigation-group navigation-group--contrast secondary-navigation">
+    @if(SearchSwitch.isSwitchedOn) {
+        <div class="menu-group">
+            <form class="menu-search"
+                  action="https://www.google.co.uk/search">
+                <input type="text"
+                       name="q"
+                       class="menu-search__search-box"
+                       placeholder="search"
+                       data-link-name="nav2 : search">
 
-            @defining(Edition(request)) { edition =>
+                <input type="hidden"
+                       name="as_sitesearch"
+                       value="www.theguardian.com">
 
-                @NewNavigation.getMembershipLinks(edition).mostPopular.map { item =>
-                    <li class="navigation-group__item js-editionalise-secondary-nav"
-                        data-edition=@{edition.id.toLowerCase}>
+                @* label surrounding the input and icon so that if you
+                click the search icon it will trigger the submit *@
+                <label for="submit-google-search"
+                       class="menu-search__submit">
+                    <input class="u-h"
+                           type="submit"
+                           id="submit-google-search"
+                           data-link-name="nav2 : search : submit">
+                    @fragments.inlineSvg("search-36", "icon", List("main-menu__icon", "main-menu__icon--search"))
+                </label>
 
-                        <a href="@item.url"
-                           data-link-name="nav2 : @item.title">
-                            @item.title
-                        </a>
-                    </li>
-                }
-            }
+                <label for="q"
+                       class="u-h">
+                    What term do you want to search?
+                </label>
+            </form>
+        </div>
+    }
 
-            @fragments.nav.userAccountLinks()
-
-            @fragments.nav.editionPicker()
-        </ul>
-
+    <ul class="menu-group menu-group--highlight">
         @defining(Edition(request)) { edition =>
-            <ul class="navigation-group
-                js-editionalise-secondary-nav
-                secondary-navigation"
-                data-edition=@{edition.id.toLowerCase}>
+            @NewNavigation.getMembershipLinks(edition).mostPopular.map { item =>
+                <li class="menu-item js-editionalise-secondary-nav"
+                    data-edition=@{edition.id.toLowerCase}>
 
-                @NewNavigation.NavFooterLinks.getAllEditionalisedNavLinks(edition).map { item =>
-                    <li class="navigation-group__item">
-                        <a href="@LinkTo { @item.url }"
-                           data-link-name="nav2 : @item.title">
-                            @item.title
-                        </a>
-                    </li>
-                }
-            </ul>
+                    <a class="menu-item__title"
+                       href="@item.url"
+                       data-link-name="nav2 : @item.title">
+                        @item.title
+                    </a>
+                </li>
+            }
         }
 
-        <ul class="navigation-group navigation-border secondary-navigation">
-            <li class="navigation-group__item">
-                <a href="https://www.facebook.com/theguardian"
+        @fragments.nav.userAccountLinks()
+        @fragments.nav.editionPicker()
+    </ul>
+
+    @defining(Edition(request)) { edition =>
+        <ul class="menu-group js-editionalise-secondary-nav"
+            data-edition=@{edition.id.toLowerCase}>
+
+            @NewNavigation.NavFooterLinks.getAllEditionalisedNavLinks(edition).map { item =>
+                <li class="menu-item">
+                    <a class="menu-item__title"
+                       href="@LinkTo { @item.url }"
+                       data-link-name="nav2 : @item.title">
+                        @item.title
+                    </a>
+                </li>
+            }
+
+            <li class="menu-item">
+                <a class="menu-item__title"
+                   href="https://www.facebook.com/theguardian"
                    data-link-name="nav2 : facebook">
-                    @fragments.inlineSvg("share-facebook", "icon", List("main-menu__icon", "main-menu__icon--social"))
+                    @fragments.inlineSvg("share-facebook", "icon", List("menu-item__icon"))
                     Facebook
                 </a>
             </li>
 
-            <li class="navigation-group__item">
-                <a href="https://twitter.com/guardian"
+            <li class="menu-item">
+                <a class="menu-item__title"
+                   href="https://twitter.com/guardian"
                    data-link-name="nav2 : twitter">
-                    @fragments.inlineSvg("share-twitter", "icon", List("main-menu__icon", "main-menu__icon--social"))
+                    @fragments.inlineSvg("share-twitter", "icon", List("menu-item__icon"))
                     Twitter
                 </a>
             </li>
         </ul>
-    </div>
+    }
+
 </div>

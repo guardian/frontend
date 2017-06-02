@@ -1,0 +1,29 @@
+.subnav-link {
+    @include fs-textSans(5);
+    color: currentColor;
+    display: inline-block;
+    font-size: 16px;
+    font-size: 5.1vw;
+    line-height: 1.3em;
+
+    @include mq(mobileLandscape) {
+        font-size: 22px;
+        max-height: $gs-baseline * 4.8;
+    }
+
+    &:hover,
+    &:focus {
+        text-decoration: none;
+    }
+}
+
+.subnav-link--toggle-more {
+    background: transparent;
+    border: 0;
+    color: $neutral-3;
+    padding: 0;
+}
+
+.subnav-link--current-section {
+    color: #ffffff;
+}

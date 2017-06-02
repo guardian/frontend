@@ -31,7 +31,7 @@ $left-column:      gs-span(2); // Grows to 3 columns on wide viewports
 $left-column-wide: gs-span(3);
 
 $veggie-burger-small: 42px;
-$veggie-burger-medium: 52px;
+$veggie-burger-medium: 54px;
 
 // Breakpoints
 // =============================================================================
@@ -50,7 +50,7 @@ $veggie-burger-medium: 52px;
 
 $mq-breakpoints: (
     mobile:          gs-span(4)  + $gs-gutter,   // 320px
-    mobileMedium:    gs-span(5)  - $gs-gutter/4, // 375px
+    mobileMedium:    gs-span(5)  - $gs-gutter,   // 360px
     mobileLandscape: gs-span(6)  + $gs-gutter,   // 480px
     phablet:         gs-span(8)  + $gs-gutter*2, // 660px
     tablet:          gs-span(9)  + $gs-gutter*2, // 740px

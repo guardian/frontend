@@ -1,0 +1,48 @@
+.menu-group {
+    color: #ffffff;
+    display: flex;
+    font-size: 18px;
+    flex-wrap: wrap;
+    list-style: none;
+    margin: 0;
+    padding: 0 0 $gs-baseline $menu-spacing-left-small;
+
+    @include mq(tablet) {
+        padding-left: $menu-spacing-left-medium;
+    }
+
+    // make these lists to start at the left side
+    &--secondary,
+    &--lowlight {
+        margin-left: -$menu-spacing-left-small;
+
+        @include mq(tablet) {
+            margin-left: -$menu-spacing-left-medium;
+        }
+    }
+}
+
+.menu-group--primary {
+    color: $news-support-1;
+    padding-top: 0;
+}
+
+.menu-group--secondary {
+    background-color: darken($guardian-brand-dark, 4%);
+    margin-top: 0;
+    padding-top: 0;
+}
+
+.menu-group--highlight {
+    color: $guardian-brand-dark;
+    background-color: $news-main-2;
+
+    .menu-item:last-child .menu-group {
+        margin-bottom: -$gs-baseline;
+    }
+}
+
+.menu-group--lowlight {
+    background-color: darken($news-main-2, 10%);
+    color: $guardian-brand-dark;
+}

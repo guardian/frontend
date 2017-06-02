@@ -1,0 +1,17 @@
+.contributions__epic.contributions__epic--interactive {
+    padding: ($gs-baseline / 3) 0 $gs-baseline;
+}
+
+.contributions__epic-interactive-wrapper {
+    padding: 0 20px;
+    max-width: 620px;
+    clear: both;
+
+    @include mq(leftCol) {
+        margin-left: 160px;
+    }
+
+    @include mq(wide) {
+        margin-left: 240px;
+    }
+}

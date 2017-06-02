@@ -22,7 +22,7 @@ class CorsHttpErrorHandler(
   private val varyFields = List("Origin", "Accept")
   private val defaultVaryFields = varyFields.mkString(",")
 
-  override def onServerError(request: RequestHeader, ex: Throwable) = {
+  override def onServerError(request: RequestHeader, ex: Throwable): Future[Result] = {
     // Overriding onError in Dev can hide helpful Exception messages.
     if (environment.mode == Mode.Dev) {
       super.onServerError(request, ex)

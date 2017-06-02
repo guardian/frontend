@@ -278,13 +278,13 @@ object Navigation {
     "technology/games" -> "/culture"
   )
 
-  def navFromOverride(navigation: Seq[NavItem], page: Page) = {
+  def navFromOverride(navigation: Seq[NavItem], page: Page): Option[NavItem] = {
     BafflingNavigationLookUpOverrides.get(page.metadata.id) flatMap { navHref =>
       navigation.find(_.name.href == navHref)
     }
   }
 
-  def getTagsFromPage(page: Page) = {
+  def getTagsFromPage(page: Page): Tags = {
     Page.getContent(page).map(_.tags).getOrElse(Tags(Nil))
   }
 

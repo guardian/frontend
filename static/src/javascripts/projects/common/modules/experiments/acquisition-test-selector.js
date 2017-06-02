@@ -14,8 +14,10 @@ import askFourEarning
     from 'common/modules/experiments/tests/contributions-epic-ask-four-earning';
 import acquisitionsEpicLiveBlog
     from 'common/modules/experiments/tests/acquisitions-epic-liveblog';
-import acquisitionsEpicTestimonialsRoundTwo
-    from 'common/modules/experiments/tests/acquisitions-epic-testimonials-round-two';
+import acquisitionsEpicLiveBlogDesignTest
+    from 'common/modules/experiments/tests/acquisitions-epic-liveblog-design-test';
+import acquisitionsEpicElectionInteractive
+    from 'common/modules/experiments/tests/acquisitions-epic-election-interactive';
 import acquisitionsEpicPreElection
     from 'common/modules/experiments/tests/acquisitions-epic-pre-election';
 import acquisitionsEpicAlwaysAskIfTagged
@@ -30,10 +32,11 @@ const tests = [
     alwaysAsk,
     acquisitionsEpicPreElection,
     acquisitionsEpicTestimonialsUSA,
-    acquisitionsEpicTestimonialsRoundTwo,
     askFourEarning,
     acquisitionsEpicAlwaysAskIfTagged,
+    acquisitionsEpicLiveBlogDesignTest,
     acquisitionsEpicLiveBlog,
+    acquisitionsEpicElectionInteractive,
 ].map(Test => new Test());
 
 const isViewable = (v: Variant): boolean => {

@@ -15,104 +15,104 @@ sealed trait ArticleEmailMetadata extends EmailMetadata[ContentPage] {
 }
 
 sealed trait FrontEmailMetadata extends EmailMetadata[PressedPage] {
-  def test(p: PressedPage) = p.metadata.webTitle == this.name
+  def test(p: PressedPage): Boolean = p.metadata.webTitle == this.name
 }
 
 case object ArtWeekly extends ArticleEmailMetadata {
   val name = "Art Weekly"
   override val banner = Some("art-weekly.png")
-  def test(c: ContentPage) = c.item.tags.series.exists(_.id == "artanddesign/series/art-weekly")
+  def test(c: ContentPage): Boolean = c.item.tags.series.exists(_.id == "artanddesign/series/art-weekly")
 }
 
 case object DocumentariesUpdate extends ArticleEmailMetadata {
   val name = "Documentaries Update"
   override val banner = Some("documentaries.png")
-  def test(c: ContentPage) = c.item.tags.series.exists(_.id == "news/series/guardian-documentaries-update")
+  def test(c: ContentPage): Boolean = c.item.tags.series.exists(_.id == "news/series/guardian-documentaries-update")
 }
 
 case object GreenLight extends ArticleEmailMetadata {
   val name = "Green Light"
   override val banner = Some("green-light.png")
-  def test(c: ContentPage) = c.item.tags.series.exists(_.id == "environment/series/green-light")
+  def test(c: ContentPage): Boolean = c.item.tags.series.exists(_.id == "environment/series/green-light")
 }
 
 case object MoneyTalks extends ArticleEmailMetadata {
   val name = "Money Talks"
   override val banner = Some("money-talks.png")
-  def test(c: ContentPage) = c.item.tags.series.exists(_.id == "money/series/money-talks")
+  def test(c: ContentPage): Boolean = c.item.tags.series.exists(_.id == "money/series/money-talks")
 }
 
 case object PovertyMatters extends ArticleEmailMetadata {
   val name = "Poverty Matters"
   override val banner = Some("poverty-matters.png")
-  def test(c: ContentPage) = c.item.tags.series.exists(_.id == "global-development/series/poverty-matters")
+  def test(c: ContentPage): Boolean = c.item.tags.series.exists(_.id == "global-development/series/poverty-matters")
 }
 
 case object TheBreakdown extends ArticleEmailMetadata {
   val name = "The Breakdown"
   override val banner = Some("the-breakdown.png")
-  def test(c: ContentPage) = c.item.tags.series.exists(_.id == "sport/series/breakdown")
+  def test(c: ContentPage): Boolean = c.item.tags.series.exists(_.id == "sport/series/breakdown")
 }
 
 case object TheFiver extends ArticleEmailMetadata {
   val name = "The Fiver"
   override val banner = Some("the-fiver.png")
-  def test(c: ContentPage) = c.item.tags.series.exists(_.id == "football/series/thefiver")
+  def test(c: ContentPage): Boolean = c.item.tags.series.exists(_.id == "football/series/thefiver")
 }
 
 case object TheSpin extends ArticleEmailMetadata {
   val name = "The Spin"
   override val banner = Some("the-spin.png")
-  def test(c: ContentPage) = c.item.tags.series.exists(_.id == "sport/series/thespin")
+  def test(c: ContentPage): Boolean = c.item.tags.series.exists(_.id == "sport/series/thespin")
 }
 
 case object MorningBriefing extends ArticleEmailMetadata {
   val name = "Morning Briefing"
   override val banner = Some("morning-briefing.png")
-  def test(c: ContentPage) = c.item.tags.series.exists(_.id == "world/series/guardian-morning-briefing")
+  def test(c: ContentPage): Boolean = c.item.tags.series.exists(_.id == "world/series/guardian-morning-briefing")
 }
 
 case object TheUSMinute extends ArticleEmailMetadata {
   val name = "The campaign minute 2016"
   override val banner = Some("the-us-minute.png")
-  def test(c: ContentPage) = c.item.tags.series.exists(_.id == "us-news/series/the-campaign-minute-2016")
+  def test(c: ContentPage): Boolean = c.item.tags.series.exists(_.id == "us-news/series/the-campaign-minute-2016")
 }
 
 case object USBriefing extends ArticleEmailMetadata {
   val name = "Guardian US Briefing"
   override val banner = Some("guardian-us-briefing.png")
   override val address = Some("222 Broadway, 22nd and 23rd Floors, New York, New York, 10038")
-  def test(c: ContentPage) = c.item.tags.series.exists(_.id == "us-news/series/guardian-us-briefing")
+  def test(c: ContentPage): Boolean = c.item.tags.series.exists(_.id == "us-news/series/guardian-us-briefing")
 }
 
 case object AusBriefing extends ArticleEmailMetadata {
   val name = "Australian election briefing"
   override val banner = Some("australian-election-briefing.png")
-  def test(c: ContentPage) = c.item.tags.series.exists(_.id == "australia-news/series/australian-election-briefing")
+  def test(c: ContentPage): Boolean = c.item.tags.series.exists(_.id == "australia-news/series/australian-election-briefing")
 }
 
 case object EuReferendum extends ArticleEmailMetadata {
   val name = "EU Referendum Morning Briefing"
   override val banner = Some("eu-referendum.png")
-  def test(c: ContentPage) = c.item.tags.series.exists(_.id == "politics/series/eu-referendum-morning-briefing")
+  def test(c: ContentPage): Boolean = c.item.tags.series.exists(_.id == "politics/series/eu-referendum-morning-briefing")
 }
 
 case object LabNotes extends ArticleEmailMetadata {
   val name = "Lab Notes"
   override val banner = Some("lab-notes.png")
-  def test(c: ContentPage) = c.item.tags.series.exists(_.id == "science/series/lab-notes")
+  def test(c: ContentPage): Boolean = c.item.tags.series.exists(_.id == "science/series/lab-notes")
 }
 
 case object OlympicsDailyBriefing extends ArticleEmailMetadata {
   val name = "Olympics Daily Briefing"
   override val banner = Some("olympics-daily-briefing.png")
-  def test(c: ContentPage) = c.item.tags.series.exists(_.id == "sport/series/olympics-2016-daily-briefing")
+  def test(c: ContentPage): Boolean = c.item.tags.series.exists(_.id == "sport/series/olympics-2016-daily-briefing")
 }
 
 case object HandwrittenMediaBriefing extends ArticleEmailMetadata {
   val name = "Media Briefing"
   override val banner = Some("media-briefing.png")
-  def test(c: ContentPage) = c.item.tags.series.exists(_.id == "media/series/mediaguardian-briefing")
+  def test(c: ContentPage): Boolean = c.item.tags.series.exists(_.id == "media/series/mediaguardian-briefing")
 }
 
 case object CuratedMediaBriefing extends FrontEmailMetadata {
@@ -123,43 +123,43 @@ case object CuratedMediaBriefing extends FrontEmailMetadata {
 case object VaginaDispatches extends ArticleEmailMetadata {
   val name = "Vagina Dispatches"
   override val banner = Some("vagina-dispatches.png")
-  def test(c: ContentPage) = c.item.tags.series.exists(_.id == "lifeandstyle/series/vagina-dispatches-newsletter")
+  def test(c: ContentPage): Boolean = c.item.tags.series.exists(_.id == "lifeandstyle/series/vagina-dispatches-newsletter")
 }
 
 case object KeepItInTheGround extends ArticleEmailMetadata {
   val name = "Keep It In The Ground"
   override val banner = Some("keep-it-in-the-ground.png")
-  def test(c: ContentPage) = c.item.tags.series.exists(_.id == "environment/series/keep-it-in-the-ground-updates")
+  def test(c: ContentPage): Boolean = c.item.tags.series.exists(_.id == "environment/series/keep-it-in-the-ground-updates")
 }
 
 case object TheWeekInPatriarchy extends ArticleEmailMetadata {
   val name = "The Week In Patriarchy"
   override val banner = Some("this-week-in-the-patriarchy.png")
-  def test(c: ContentPage) = c.item.tags.series.exists(_.id == "world/series/the-week-in-patriarchy")
+  def test(c: ContentPage): Boolean = c.item.tags.series.exists(_.id == "world/series/the-week-in-patriarchy")
 }
 
 case object OutsideInAmerica extends ArticleEmailMetadata {
   val name = "Outside in America"
   override val banner = Some("outside-in-america.png")
-  def test(c: ContentPage) = c.item.tags.series.exists(_.id == "us-news/series/outside-in-america-newsletter")
+  def test(c: ContentPage): Boolean = c.item.tags.series.exists(_.id == "us-news/series/outside-in-america-newsletter")
 }
 
 case object TheResistanceNow extends ArticleEmailMetadata {
   val name = "The Resistance Now"
   override val banner = Some("the-resistance-now.png")
-  def test(c: ContentPage) = c.item.tags.series.exists(_.id == "us-news/series/the-resistance-now-newsletter")
+  def test(c: ContentPage): Boolean = c.item.tags.series.exists(_.id == "us-news/series/the-resistance-now-newsletter")
 }
 
 case object BeyondTheBlade extends ArticleEmailMetadata {
   val name = "Beyond The Blade"
   override val banner = Some("beyond-the-blade.jpg")
-  def test(c: ContentPage) = c.item.tags.series.exists(_.id == "membership/series/beyond-the-blade")
+  def test(c: ContentPage): Boolean = c.item.tags.series.exists(_.id == "membership/series/beyond-the-blade")
 }
 
 case object TheSnap extends ArticleEmailMetadata {
   val name = "The Snap"
   override val banner = Some("the-snap.png")
-  def test(c: ContentPage) = c.item.tags.series.exists(_.id == "politics/series/the-snap")
+  def test(c: ContentPage): Boolean = c.item.tags.series.exists(_.id == "politics/series/the-snap")
 }
 
 case object TheFlyer extends FrontEmailMetadata {

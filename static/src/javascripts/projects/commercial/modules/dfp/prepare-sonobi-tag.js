@@ -4,6 +4,7 @@ import { loadScript } from 'lib/load-script';
 import { commercialFeatures } from 'commercial/modules/commercial-features';
 import { buildPageTargeting } from 'commercial/modules/build-page-targeting';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
+import once from 'lodash/functions/once';
 
 // Wrap the native implementation of getOwnPropertyNames in a try-catch. If any polyfill attempts
 // to re-implement this function, and doesn't consider the "access permissions" issue that exists in IE11,
@@ -29,24 +30,25 @@ const catchPolyfillErrors = () => {
     };
 };
 
-const setupSonobi = (start: () => void, stop: () => void) => {
-    start();
-
+const setupSonobi: () => Promise<void> = once(() => {
+    buildPageTargeting();
     // Setting the async property to false will _still_ load the script in
     // a non-blocking fashion but will ensure it is executed before googletag
-    loadScript(config.libs.sonobi, { async: false })
-        .then(catchPolyfillErrors)
-        .then(stop);
-};
+    return loadScript(config.libs.sonobi, { async: false }).then(
+        catchPolyfillErrors
+    );
+});
 
 const init = (start: () => void, stop: () => void) => {
     if (dfpEnv.sonobiEnabled && commercialFeatures.dfpAdvertising) {
-        buildPageTargeting();
-        setupSonobi(start, stop);
+        start();
+        setupSonobi().then(stop);
     }
 
     return Promise.resolve();
 };
+
+export { setupSonobi };
 
 export default {
     init,

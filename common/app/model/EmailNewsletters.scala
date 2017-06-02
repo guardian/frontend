@@ -17,7 +17,7 @@ case class EmailNewsletter(
   triggerId: Option[Int] = None
 ) {
   val allIds = listId :: aliases
-  def subscribedTo(subscriptions: List[String]) = {
+  def subscribedTo(subscriptions: List[String]): Boolean = {
     subscriptions.exists(allIds.map(_.toString).contains(_))
   }
 }
@@ -227,8 +227,8 @@ object EmailNewsletters {
     teaser = "Get lost in a great story; the Guardian’s award-winning long reads bring you the biggest ideas and the arguments that matter",
     description = "Get lost in a great story. From politics to fashion, international investigations to new thinking, culture to crime - we’ll bring you the biggest ideas and the arguments that matter. Sign up to have the Guardian’s award-winning long reads emailed to you every Saturday morning",
     frequency = "Every Saturday",
-    listId = 3322,
-    aliases = List(3868, 3869, 3890),
+    listId = 3890,
+    aliases = List(3322),
     tone = Some("feature"),
     signupPage = Some("/news/2015/jul/20/sign-up-to-the-long-read-email")
   )
@@ -263,7 +263,6 @@ object EmailNewsletters {
     description = "Sign up to the Guardian Film Today email and we’ll make sure you don’t miss a thing - the day’s insider news and our latest reviews, plus big name interviews and film festival coverage",
     frequency = "Every weekday",
     listId = 1950,
-    aliases = List(3864, 3865),
     tone = Some("feature"),
     signupPage = Some("/info/2016/feb/12/film-today-email-sign-up")
   )
@@ -334,7 +333,6 @@ object EmailNewsletters {
     description = "A weekly hit of style with substance. Smart fashion writing and chic shopping galleries delivered straight to your inbox. Sign up for our Friday email for the best of the week’s fashion brought to you with expertise, humour and irreverence",
     frequency = "Every Monday",
     listId = 105,
-    aliases = List(3862, 3863),
     tone = Some("feature"),
     signupPage = Some("/fashion/2016/aug/18/sign-up-for-the-guardians-fashion-email")
   )

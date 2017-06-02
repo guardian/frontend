@@ -12,7 +12,7 @@ case object Mobile extends Breakpoint {
 }
 
 case object MobileMedium extends Breakpoint {
-  val minWidth = Some(375)
+  val minWidth = Some(360)
 }
 
 case object MobileLandscape extends Breakpoint {

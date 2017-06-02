@@ -1,0 +1,51 @@
+.menu-search {
+    margin-left: -38px;
+    padding-bottom: $gs-baseline * 2;
+    padding-right: $veggie-burger-medium / 2 + $gs-gutter / 2;
+    position: relative;
+
+    @include mq(tablet) {
+        margin-left: -40px;
+    }
+}
+
+.menu-search__search-box {
+    background-color: $guardian-brand;
+    border: 0;
+    border-radius: 1000px;
+    box-sizing: border-box;
+    font-size: 20px;
+    height: $gs-row-height;
+    max-width: gs-span(4);
+    padding-left: 38px;
+    vertical-align: middle;
+    width: 100%;
+
+    @include mq(tablet) {
+        padding-left: 40px;
+    }
+
+    &::placeholder {
+        color: $news-support-1;
+    }
+
+    &:focus {
+        background-color: #ffffff;
+        color: $neutral-1;
+        outline: none;
+
+        &::placeholder {
+            color: $neutral-3;
+        }
+    }
+}
+
+.menu-search__submit {
+    left: 10px;
+    position: absolute;
+    top: 10px;
+
+    > .inline-search-36 {
+        fill: $news-support-2;
+    }
+}

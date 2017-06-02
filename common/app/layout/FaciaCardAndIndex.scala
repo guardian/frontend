@@ -21,19 +21,19 @@ case class FaciaCardAndIndex(
   item: FaciaCard,
   hideUpTo: Option[Breakpoint]
 ) {
-  def cssClasses = hideUpTo match {
+  def cssClasses: String = hideUpTo match {
     case Some(Mobile) => "fc-show-more--hide-on-mobile js-hide-on-mobile"
     case Some(Desktop) => "fc-show-more--hide js-hide"
     case _ => ""
   }
 
-  def visibilityDataAttribute = hideUpTo match {
+  def visibilityDataAttribute: String = hideUpTo match {
     case Some(Mobile) => "desktop"
     case Some(Desktop) => "hidden"
     case _ => "all"
   }
 
-  def transformCard(f: ContentCard => ContentCard) = copy(item = item match {
+  def transformCard(f: ContentCard => ContentCard): FaciaCardAndIndex = copy(item = item match {
     case content: ContentCard => f(content)
     case other => other
   })

@@ -211,7 +211,7 @@ case class IndexPage(
     Paths.withoutEdition(sectionId) map { idWithoutEdition => s"$idWithoutEdition/$idWithoutEdition" }
   ).flatten contains id
 
-  def isTagWithId(id: String) = page match {
+  def isTagWithId(id: String): Boolean = page match {
     case section: Section =>
       isSectionKeyword(section.metadata.id, id)
 
@@ -223,18 +223,18 @@ case class IndexPage(
     case _ => false
   }
 
-  def isFootballTeam = page match {
+  def isFootballTeam: Boolean = page match {
     case tag: Tag => tag.isFootballTeam
     case _ => false
   }
 
-  def forcesDayView = page match {
+  def forcesDayView: Boolean = page match {
     case tag: Tag if tag.metadata.sectionId == "crosswords" => false
     case tag: Tag => Set("Series", "Blog").contains(tag.properties.tagType)
     case _ => false
   }
 
-  def idWithoutEdition = page match {
+  def idWithoutEdition: String = page match {
     case section: Section if section.isEditionalised => Paths.stripEditionIfPresent(section.metadata.id)
     case other => other.metadata.id
   }

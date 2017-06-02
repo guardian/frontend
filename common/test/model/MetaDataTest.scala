@@ -4,7 +4,7 @@ import org.scalatest.{FlatSpec, Matchers}
 
 class MetaDataTest extends FlatSpec with Matchers {
 
-  def testMetaData(id: String, section: String) = {
+  def testMetaData(id: String, section: String): MetaData = {
     MetaData.make(
       id,
       section = Some(SectionSummary.fromId(section)),

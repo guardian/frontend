@@ -1,64 +1,54 @@
 // @flow
 
 import qwery from 'qwery';
-import sha1 from 'lib/sha1';
-import identity from 'common/modules/identity/api';
-import { commercialFeatures } from 'commercial/modules/commercial-features';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 import { Advert } from 'commercial/modules/dfp/Advert';
 import queueAdvert from 'commercial/modules/dfp/queue-advert';
 import { displayLazyAds } from 'commercial/modules/dfp/display-lazy-ads';
 import { displayAds } from 'commercial/modules/dfp/display-ads';
-import refreshOnResize from 'commercial/modules/dfp/refresh-on-resize';
-import prepareSwitchTag from 'commercial/modules/dfp/prepare-switch-tag';
+import { setupSonobi } from 'commercial/modules/dfp/prepare-sonobi-tag';
+import prepareSwitchTag, {
+    setupSwitch,
+} from 'commercial/modules/dfp/prepare-switch-tag';
+import { closeDisabledSlots } from 'commercial/modules/close-disabled-slots';
 
-const createAdverts = (): void => {
-    // Get all ad slots
-    const adverts = qwery(dfpEnv.adSlotSelector)
-        .filter(adSlot => !(adSlot.id in dfpEnv.advertIds))
-        .map(adSlot => new Advert(adSlot));
-    const currentLength = dfpEnv.adverts.length;
-    dfpEnv.adverts = dfpEnv.adverts.concat(adverts);
-    adverts.forEach((advert, index) => {
-        dfpEnv.advertIds[advert.id] = currentLength + index;
+// Pre-rendered ad slots that were rendered on the page by the server are collected here.
+// For dynamic ad slots that are created at js-runtime, see:
+//  article-aside-adverts
+//  article-body-adverts
+//  liveblog-adverts
+//  high-merch
+const fillAdvertSlots = (): Promise<void> => {
+    // This module has the following strict dependencies. These dependencies must be
+    // fulfilled before fillAdvertSlots can execute reliably. The bootstrap (commercial.js)
+    // initiates these dependencies, to speed up the init process. Bootstrap also captures the module performance.
+    const dependencies: Promise<void>[] = [
+        setupSonobi(),
+        setupSwitch(),
+        closeDisabledSlots(),
+    ];
+
+    return Promise.all(dependencies).then(() => {
+        // Get all ad slots
+        const adverts = qwery(dfpEnv.adSlotSelector)
+            .filter(adSlot => !(adSlot.id in dfpEnv.advertIds))
+            .map(adSlot => new Advert(adSlot));
+        const currentLength = dfpEnv.adverts.length;
+        dfpEnv.adverts = dfpEnv.adverts.concat(adverts);
+        adverts.forEach((advert, index) => {
+            dfpEnv.advertIds[advert.id] = currentLength + index;
+        });
+        dfpEnv.adverts.forEach(queueAdvert);
+
+        // Once Advert constructors are called, Switch can be called, if needed.
+        prepareSwitchTag.maybeCallSwitch();
+
+        if (dfpEnv.shouldLazyLoad()) {
+            displayLazyAds();
+        } else {
+            displayAds();
+        }
     });
-};
-
-/**
- * Loop through each slot detected on the page and define it based on the data
- * attributes on the element.
- */
-const queueAdverts = (): void => {
-    // queue ads for load
-    dfpEnv.adverts.forEach(queueAdvert);
-};
-
-const setPublisherProvidedId = (): void => {
-    const user: ?Object = identity.getUserFromCookie();
-    if (user) {
-        const hashedId = sha1.hash(user.id);
-        window.googletag.pubads().setPublisherProvidedId(hashedId);
-    }
-};
-
-const fillAdvertSlots = (
-    start: () => void,
-    stop: () => void
-): Promise<void> => {
-    if (commercialFeatures.dfpAdvertising) {
-        window.googletag.cmd.push(
-            start,
-            createAdverts,
-            queueAdverts,
-            setPublisherProvidedId,
-            prepareSwitchTag.callSwitch,
-            dfpEnv.shouldLazyLoad() ? displayLazyAds : displayAds,
-            // anything we want to happen after displaying ads
-            refreshOnResize,
-            stop
-        );
-    }
-    return Promise.resolve();
 };
 
 export { fillAdvertSlots };

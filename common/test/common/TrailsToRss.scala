@@ -4,8 +4,9 @@ import org.joda.time.DateTime
 import org.scalatest.{FlatSpec, Matchers}
 import org.scalatestplus.play.OneAppPerSuite
 import play.api.test.FakeRequest
-import com.gu.contentapi.client.model.v1.{Content => ApiContent, ContentFields}
+import com.gu.contentapi.client.model.v1.{ContentFields, Content => ApiContent}
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichJodaDateTime
+import model.Trail
 
 import scala.util.Try
 import scala.xml._
@@ -52,12 +53,12 @@ class TrailsToRssTest extends FlatSpec with Matchers with OneAppPerSuite {
     (rss \\ "item" \\ "pubDate" ).size should be(2)
   }
 
-  def isWellFormedXML(s: String) =
+  def isWellFormedXML(s: String): Boolean =
     Try {
       scala.xml.XML.loadString(s)
     }.isSuccess
 
-  def testTrail(url: String, customTitle: Option[String] = None) = {
+  def testTrail(url: String, customTitle: Option[String] = None): Trail = {
 
     val contentItem = ApiContent(
       id = url,
