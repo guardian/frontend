@@ -1,4 +1,3 @@
-@import model.Article
 @(page: model.Page, amp: Boolean = false)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @import common.{AnalyticsHost, _}
@@ -6,7 +5,7 @@
 @import model.meta.LinkedData
 @import model.Page
 @import views.support.{SeoThumbnail, StripHtmlTags}
-@import conf.switches.Switches.{AmpSwitch, ComscoreSwitch, CommercialSwitch, SmartAppBanner}
+@import conf.switches.Switches.{ComscoreSwitch, SmartAppBanner}
 @import play.api.Mode.Dev
 
 @* Critical meta data that have an impact on rendering speed *@
@@ -42,10 +41,8 @@
 
     @Page.getContentPage(page).map { page =>
         @if(
-            page.item.tags.isArticle &&
-            !page.item.content.isImmersive &&
-            !page.item.tags.isQuiz &&
-            AmpSwitch.isSwitchedOn
+            page.item.content.shouldAmpifyArticles ||
+            page.item.content.shouldAmpifyLiveblogs
         ) {
             <link rel="amphtml" href="@AmpLinkTo{/@page.metadata.id}">
         }
