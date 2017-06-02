@@ -11,18 +11,8 @@ import MembershipEngagementBannerTests
 import PaidContentVsOutbrain2
     from 'common/modules/experiments/tests/paid-content-vs-outbrain';
 import { tailorSurvey } from 'common/modules/experiments/tests/tailor-survey';
-import TheLongReadEmailVariants
-    from 'common/modules/experiments/tests/the-long-read-email-variants';
-import FashionStatementEmailVariants
-    from 'common/modules/experiments/tests/fashion-statement-email-variants';
 import BookmarksEmailVariants2
     from 'common/modules/experiments/tests/bookmarks-email-variants-2';
-import FilmTodayEmailVariants
-    from 'common/modules/experiments/tests/film-today-email-variants';
-import SleevenotesNewEmailVariant
-    from 'common/modules/experiments/tests/sleeve-notes-new-email-variant';
-import SleevenotesLegacyEmailVariant
-    from 'common/modules/experiments/tests/sleeve-notes-legacy-email-variant';
 import BundleDigitalSubPriceTest1
     from 'common/modules/experiments/tests/bundle-digital-sub-price-test-1';
 import {
@@ -32,20 +22,22 @@ import {
     MeasureUnderstanding,
 } from 'common/modules/experiments/tests/measure-understanding';
 
+import AcquisitionsEpicElectionInteractiveEnd
+    from 'common/modules/experiments/tests/acquisitions-epic-election-interactive-end';
+import AcquisitionsEpicElectionInteractiveSlice
+    from 'common/modules/experiments/tests/acquisitions-epic-election-interactive-slice';
+
 export const TESTS: Array<ABTest> = [
     new OpinionEmailVariants(),
     new PaidContentVsOutbrain2(),
     getAcquisitionTest(),
     tailorSurvey,
-    TheLongReadEmailVariants,
-    FashionStatementEmailVariants,
     BookmarksEmailVariants2,
-    FilmTodayEmailVariants,
-    SleevenotesNewEmailVariant,
-    SleevenotesLegacyEmailVariant,
     new BundleDigitalSubPriceTest1(),
     ExplainerSnippet(),
     MeasureUnderstanding(),
+    new AcquisitionsEpicElectionInteractiveEnd(),
+    new AcquisitionsEpicElectionInteractiveSlice(),
 ]
     .concat(MembershipEngagementBannerTests)
     .filter(Boolean);

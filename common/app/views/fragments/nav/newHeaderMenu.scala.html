@@ -51,34 +51,36 @@
     </ul>
 
     @if(SearchSwitch.isSwitchedOn) {
-        <form class="menu-search"
-              action="https://www.google.co.uk/search">
-            <input type="text"
-                   name="q"
-                   class="menu-search__search-box"
-                   placeholder="search"
-                   data-link-name="nav2 : search">
+        <div class="menu-group">
+            <form class="menu-search"
+                  action="https://www.google.co.uk/search">
+                <input type="text"
+                       name="q"
+                       class="menu-search__search-box"
+                       placeholder="search"
+                       data-link-name="nav2 : search">
 
-            <input type="hidden"
-                   name="as_sitesearch"
-                   value="www.theguardian.com">
+                <input type="hidden"
+                       name="as_sitesearch"
+                       value="www.theguardian.com">
 
-            @* label surrounding the input and icon so that if you
-            click the search icon it will trigger the submit *@
-            <label for="submit-google-search"
-                   class="menu-search__submit">
-                <input class="u-h"
-                       type="submit"
-                       id="submit-google-search"
-                       data-link-name="nav2 : search : submit">
-                @fragments.inlineSvg("search-36", "icon", List("main-menu__icon", "main-menu__icon--search"))
-            </label>
+                @* label surrounding the input and icon so that if you
+                click the search icon it will trigger the submit *@
+                <label for="submit-google-search"
+                       class="menu-search__submit">
+                    <input class="u-h"
+                           type="submit"
+                           id="submit-google-search"
+                           data-link-name="nav2 : search : submit">
+                    @fragments.inlineSvg("search-36", "icon", List("main-menu__icon", "main-menu__icon--search"))
+                </label>
 
-            <label for="q"
-                   class="u-h">
-                What term do you want to search?
-            </label>
-        </form>
+                <label for="q"
+                       class="u-h">
+                    What term do you want to search?
+                </label>
+            </form>
+        </div>
     }
 
     <ul class="menu-group menu-group--highlight">

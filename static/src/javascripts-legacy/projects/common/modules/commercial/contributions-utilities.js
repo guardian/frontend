@@ -93,7 +93,7 @@ define([
     }
 
     function defaultCanEpicBeDisplayed(testConfig) {
-        var enoughTimeSinceLastContribution = daysSince(lastContributionDate) >= 90;
+        var enoughTimeSinceLastContribution = daysSince(lastContributionDate) >= 180;
 
         var worksWellWithPageTemplate = (typeof testConfig.pageCheck === 'function')
             ? testConfig.pageCheck(config.page)
@@ -240,7 +240,7 @@ define([
                 }.bind(this));
             }
 
-            return (typeof options.test === 'function') ? options.test(render.bind(this)) : render.apply(this);
+            return (typeof options.test === 'function') ? options.test(render.bind(this), this) : render.apply(this);
         };
 
         this.registerListener('impression', 'impressionOnInsert', test.insertEvent, options);
