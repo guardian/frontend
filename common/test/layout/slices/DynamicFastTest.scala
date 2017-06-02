@@ -1,4 +1,4 @@
-package slices
+package layout.slices
 
 import org.scalacheck.Gen
 import org.scalatest.DoNotDiscover

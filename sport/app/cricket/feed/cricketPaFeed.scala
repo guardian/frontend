@@ -1,4 +1,4 @@
-package cricketPa
+package conf.cricketPa
 
 import akka.actor.ActorSystem
 import common.{ExecutionContexts, Logging}

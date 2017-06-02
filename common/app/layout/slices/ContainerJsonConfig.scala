@@ -1,4 +1,4 @@
-package slices
+package layout.slices
 
 import play.api.libs.json.Json
 

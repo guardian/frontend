@@ -7,7 +7,7 @@ import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
-import slices.Fixed
+import layout.slices.Fixed
 import test._
 
 import scala.concurrent.Future

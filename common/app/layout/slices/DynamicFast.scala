@@ -1,6 +1,6 @@
-package slices
+package layout.slices
 
-import cards.Standard
+import layout.cards.Standard
 import layout.SingleItem
 
 object DynamicFast extends DynamicContainer {
