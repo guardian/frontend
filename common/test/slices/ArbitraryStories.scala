@@ -1,4 +1,4 @@
-package layout.slices
+package slices
 
 import common.Seqs._
 import org.scalacheck.{Gen, Arbitrary}

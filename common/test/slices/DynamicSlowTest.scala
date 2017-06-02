@@ -1,4 +1,4 @@
-package layout.slices
+package slices
 
 import ArbitraryStories._
 import org.scalatest.DoNotDiscover

@@ -1,4 +1,4 @@
-package layout.slices
+package slices
 
 import conf.Configuration
 import model.pressed.PressedContent

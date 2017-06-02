@@ -1,4 +1,4 @@
-package conf.cricketPa
+package cricketPa
 
 import model.Content
 

@@ -1,4 +1,4 @@
-import layout.cards._
+import cards._
 import org.scalacheck.{Gen, Arbitrary}
 import Arbitrary.arbitrary
 import Gen.const
