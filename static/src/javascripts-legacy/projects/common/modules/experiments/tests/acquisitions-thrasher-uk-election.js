@@ -18,11 +18,11 @@ define([
     var UK_ELECTION_THRASHER_BLOCK_ELEMENT = "election-supporters__wrapper";
 
     function getThrasherViewedCount() {
-        return parseInt(storage.get(UK_ELECTION_THRASHER_VIEW_COUNTER)) || 0;
+        return parseInt(storage.local.get(UK_ELECTION_THRASHER_VIEW_COUNTER)) || 0;
     }
 
     function incrementThrasherViewedCount() {
-        storage.set(UK_ELECTION_THRASHER_VIEW_COUNTER, getThrasherViewedCount() + 1)
+        storage.local.set(UK_ELECTION_THRASHER_VIEW_COUNTER, getThrasherViewedCount() + 1)
     }
 
     var $ukElectionThrasher =  $("." + UK_ELECTION_THRASHER_BLOCK_ELEMENT);
@@ -42,7 +42,7 @@ define([
     function getReaderSpecificUkElectionThrasherClassList() {
         // There are eight variants of the thank you thrasher prefixed by -0, -1, -2, ..., -7
         var viewCountClass = UK_ELECTION_THRASHER_BLOCK_ELEMENT + "--" + getThrasherViewedCount() % 8;
-        var thrasherVariantClass =  UK_ELECTION_THRASHER_BLOCK_ELEMENT + "--" + isThankYouVariantReader() ? "thanks" : "ask";
+        var thrasherVariantClass =  UK_ELECTION_THRASHER_BLOCK_ELEMENT + "--" + (isThankYouVariantReader() ? "thanks" : "ask");
         return viewCountClass + " " + thrasherVariantClass
     }
 
