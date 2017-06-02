@@ -32,8 +32,34 @@ type Webfont = {
     url?: string,
 };
 
+const MAX_COUNT = 5;
+
+const comready = (resolve, reject) => {
+    let count = 0;
+    send('syn', true);
+    const intId = setInterval(() => {
+        count += 1;
+        if (count === MAX_COUNT) {
+            clearInterval(intId);
+            reject(new Error('Failed to reach page messenger'));
+        }
+        send('syn', true);
+    }, 500);
+    window.addEventListener('message', evt => {
+        if (JSON.parse(evt.data).result !== 'ack') {
+            return;
+        }
+        clearInterval(intId);
+        resolve();
+    });
+};
+
 const installWebfonts = (fonts: Webfont[]) => {
-    const css = fonts
+    const styles = (document.createElement('style'): window.HTMLStyleElement);
+    if (document.head) {
+        document.head.appendChild(styles);
+    }
+    fonts
         .map(
             (font: Webfont): string => `
         @font-face {
@@ -44,17 +70,14 @@ const installWebfonts = (fonts: Webfont[]) => {
         }
         `
         )
-        .join('\n');
-    (document.styleSheets[0]: window.CSSStyleSheet).insertRule(css);
+        .forEach(css => {
+            styles.sheet.insertRule(css);
+        });
 };
 
 const getWebfonts = (families: Webfont[]): void => {
     const msgId = send('get-webfonts', families);
     // keep on sending until we get something back
-    const intId = setInterval(() => {
-        send('get-webfonts', families);
-    }, 500);
-
     window.addEventListener('message', function onM(evt) {
         if (!(evt instanceof MessageEvent)) {
             return;
@@ -66,7 +89,6 @@ const getWebfonts = (families: Webfont[]): void => {
         }
 
         window.removeEventListener('message', onM);
-        clearInterval(intId);
 
         if (error) {
             throw new Error(error);
@@ -83,6 +105,7 @@ Promise.all([
               window.guardian.onPolyfilled = resolve;
           }),
     new Promise(resolve => domready(resolve)),
+    new Promise(comready),
 ]).then(() => {
     init();
     fastdom
