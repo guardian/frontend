@@ -9,12 +9,11 @@ define([
 
         var injector = new Injector(),
             requireStub,
-            shouldRun, kruxUrl, config;
+            krux, config;
 
         beforeEach(function (done) {
             injector.require(['commercial/modules/third-party-tags/krux', 'lib/config'], function () {
-                shouldRun = arguments[0].shouldRun;
-                kruxUrl = arguments[0].kruxUrl;
+                krux = arguments[0];
                 config = arguments[1];
 
                 config.switches = {
@@ -33,11 +32,11 @@ define([
         it('should not load if switch is off', function () {
             config.switches.krux = false;
 
-            expect(shouldRun).toBeFalsy();
+            expect(krux.shouldRun).toBeFalsy();
         });
 
         it('should send correct "netid" param', function () {
-            expect(kruxUrl).toBe('//cdn.krxd.net/controltag?confid=JVZiE3vn');
+            expect(krux.url).toBe('//cdn.krxd.net/controltag?confid=JVZiE3vn');
         });
 
     });
