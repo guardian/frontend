@@ -16,7 +16,7 @@ define([
 ) {
     return contributionsUtilities.makeABTest({
         id: 'AcquisitionsElectionInteractiveEnd',
-        campaignId: 'epic_election_interactive_end',
+        campaignId: 'epic_ge2017_interactive_end',
 
         start: '2017-05-22',
         expiry: '2017-07-03',
