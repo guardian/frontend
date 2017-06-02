@@ -37,7 +37,6 @@
     "projects/common/modules/check-dispatcher.js"
   ],
   "Simon Adcock": [
-    "bootstraps/enhanced/liveblog.js",
     "bootstraps/enhanced/media/main.js",
     "bootstraps/enhanced/media/video-player.js"
   ],
