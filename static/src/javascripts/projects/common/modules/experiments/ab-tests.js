@@ -18,9 +18,6 @@ import BundleDigitalSubPriceTest1
 import {
     ExplainerSnippet,
 } from 'common/modules/experiments/tests/explainer-snippet';
-import {
-    MeasureUnderstanding,
-} from 'common/modules/experiments/tests/measure-understanding';
 
 import AcquisitionsEpicElectionInteractiveEnd
     from 'common/modules/experiments/tests/acquisitions-epic-election-interactive-end';
@@ -35,7 +32,6 @@ export const TESTS: Array<ABTest> = [
     BookmarksEmailVariants2,
     new BundleDigitalSubPriceTest1(),
     ExplainerSnippet(),
-    MeasureUnderstanding(),
     new AcquisitionsEpicElectionInteractiveEnd(),
     new AcquisitionsEpicElectionInteractiveSlice(),
 ]

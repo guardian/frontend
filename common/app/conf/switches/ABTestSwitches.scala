@@ -31,16 +31,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-measure-understanding",
-    "Asks users if they feel better informed after reading an article",
-    owners = Seq(Owner.withGithub("regiskuckaertz")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 6, 6),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-opinion-email-variants",
     "Assign users to variants of opinion emails",
     owners = Seq(Owner.withGithub("davidfurey")),
