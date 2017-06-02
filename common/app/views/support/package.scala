@@ -16,7 +16,7 @@ import play.api.libs.json.Json._
 import play.api.libs.json.Writes
 import play.api.mvc.{RequestHeader, Result}
 import play.twirl.api.Html
-import slices.ContainerDefinition
+import layout.slices.ContainerDefinition
 
 import scala.collection.JavaConversions._
 
