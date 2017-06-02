@@ -1,19 +1,22 @@
 define([
     'common/modules/commercial/contributions-utilities',
+    'lib/$',
     'lib/geolocation',
     'lodash/utilities/template',
     'lib/config',
-    'raw-loader!common/views/acquisitions-epic-control.html'
+    'raw-loader!common/views/acquisitions-epic-control.html',
+    'raw-loader!common/views/acquisitions-epic-slice.html',
 ], function (
     contributionsUtilities,
+    $,
     geolocation,
     template,
     config,
     epicControlTemplate
 ) {
     return contributionsUtilities.makeABTest({
-        id: 'AcquisitionsElectionInteractive',
-        campaignId: 'epic_election_interactive_end',
+        id: 'AcquisitionsElectionInteractiveEnd',
+        campaignId: 'epic_ge2017_interactive_end',
 
         start: '2017-05-22',
         expiry: '2017-07-03',
@@ -30,7 +33,9 @@ define([
         showForSensitive: true,
 
         pageCheck: function(page) {
-            return page.keywordIds && page.keywordIds.includes('general-election-2017') && page.contentType === 'Interactive';
+            return page.keywordIds &&
+                page.keywordIds.includes('general-election-2017') &&
+                page.contentType === 'Interactive';
         },
 
         variants: [
@@ -41,7 +46,7 @@ define([
                 insertAtSelector: '.content-footer',
                 successOnView: true,
 
-                template: function (variant) {
+                template: function makeControlTemplate(variant) {
                     return template(epicControlTemplate, {
                         membershipUrl: variant.options.membershipURL,
                         contributionUrl: variant.options.contributeURL,
@@ -49,7 +54,7 @@ define([
                         epicClass: 'contributions__epic--interactive gs-container',
                         wrapperClass: 'contributions__epic-interactive-wrapper'
                     });
-                },
+                }
             }
         ]
     });

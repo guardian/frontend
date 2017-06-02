@@ -35,7 +35,6 @@
     "projects/common/modules/check-dispatcher.js"
   ],
   "Simon Adcock": [
-    "bootstraps/enhanced/liveblog.js",
     "bootstraps/enhanced/media/main.js",
     "bootstraps/enhanced/media/video-player.js"
   ],
@@ -228,7 +227,5 @@
   "Santiago Villa Fernandez": [
     "projects/common/modules/video/more-in-series-container.js"
   ],
-  "Jamie Byers": [
-    "bootstraps/enhanced/newsletters.js"
-  ]
+  "Jamie Byers": []
 }

@@ -81,8 +81,18 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-acquisitions-election-interactive",
+    "ab-acquisitions-election-interactive-end",
     "This places the epic underneath UK election-related interactives",
+    owners = Seq(Owner.withGithub("desbo")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 7, 3),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-election-interactive-slice",
+    "This places the epic (slice design) in the middle of UK election-related interactives",
     owners = Seq(Owner.withGithub("desbo")),
     safeState = Off,
     sellByDate = new LocalDate(2017, 7, 3),
