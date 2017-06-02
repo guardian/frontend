@@ -39,10 +39,11 @@ define([
         })
     }
 
-    function getReaderSpecificUkElectionThrasherClass() {
+    function getReaderSpecificUkElectionThrasherClassList() {
         // There are eight variants of the thank you thrasher prefixed by -0, -1, -2, ..., -7
-        var modifier = isThankYouVariantReader() ? "thanks-" + getThrasherViewedCount() % 8 : "ask";
-        return UK_ELECTION_THRASHER_BLOCK_ELEMENT + "--" + modifier;
+        var viewCountClass = UK_ELECTION_THRASHER_BLOCK_ELEMENT + "--" + getThrasherViewedCount() % 8;
+        var thrasherVariantClass =  UK_ELECTION_THRASHER_BLOCK_ELEMENT + "--" + isThankYouVariantReader() ? "thanks" : "ask";
+        return viewCountClass + " " + thrasherVariantClass
     }
 
     function onThrasherViewed(callback) {
@@ -76,7 +77,7 @@ define([
                     id: 'control',
 
                     test: function() {
-                        $ukElectionThrasher.addClass(getReaderSpecificUkElectionThrasherClass())
+                        $ukElectionThrasher.addClass(getReaderSpecificUkElectionThrasherClassList())
                     },
 
                     impression: function(callback) {
