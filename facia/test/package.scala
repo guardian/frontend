@@ -48,9 +48,9 @@ object `package` {
 class FaciaTestSuite extends Suites (
   new model.FaciaPageTest,
   new controllers.front.FaciaDefaultsTest,
-  new slices.DynamicFastTest,
-  new slices.DynamicSlowTest,
-  new slices.StoryTest,
+  new layout.slices.DynamicFastTest,
+  new layout.slices.DynamicSlowTest,
+  new layout.slices.StoryTest,
   new views.fragments.nav.NavigationTest,
   new FaciaControllerTest,
   new metadata.FaciaMetaDataTest

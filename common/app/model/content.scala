@@ -9,7 +9,7 @@ import com.gu.targeting.client.Campaign
 import common._
 import conf.Configuration
 import conf.switches.Switches._
-import cricketPa.CricketTeams
+import conf.cricketPa.CricketTeams
 import layout.ContentWidths.GalleryMedia
 import model.content.{Atoms, MediaAssetPlatform, MediaAtom, Quiz}
 import model.pressed._

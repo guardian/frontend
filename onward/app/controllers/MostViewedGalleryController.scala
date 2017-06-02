@@ -7,7 +7,7 @@ import model._
 import model.pressed.CollectionConfig
 import play.api.mvc.{Action, Controller, RequestHeader}
 import services.CollectionConfigWithId
-import slices.{Fixed, FixedContainers}
+import layout.slices.{Fixed, FixedContainers}
 
 class MostViewedGalleryController(mostViewedGalleryAgent: MostViewedGalleryAgent)(implicit context: ApplicationContext) extends Controller with Logging with ExecutionContexts {
 

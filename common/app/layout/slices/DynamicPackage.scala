@@ -1,6 +1,6 @@
-package slices
+package layout.slices
 
-import slices.Story._
+import layout.slices.Story._
 
 object DynamicPackage extends DynamicContainer {
   override protected def optionalFirstSlice(stories: Seq[Story]): Option[(Slice, Seq[Story])] = {
