@@ -22,6 +22,11 @@ import {
     MeasureUnderstanding,
 } from 'common/modules/experiments/tests/measure-understanding';
 
+import AcquisitionsEpicElectionInteractiveEnd
+    from 'common/modules/experiments/tests/acquisitions-epic-election-interactive-end';
+import AcquisitionsEpicElectionInteractiveSlice
+    from 'common/modules/experiments/tests/acquisitions-epic-election-interactive-slice';
+
 export const TESTS: Array<ABTest> = [
     new OpinionEmailVariants(),
     new PaidContentVsOutbrain2(),
@@ -31,6 +36,8 @@ export const TESTS: Array<ABTest> = [
     new BundleDigitalSubPriceTest1(),
     ExplainerSnippet(),
     MeasureUnderstanding(),
+    new AcquisitionsEpicElectionInteractiveEnd(),
+    new AcquisitionsEpicElectionInteractiveSlice(),
 ]
     .concat(MembershipEngagementBannerTests)
     .filter(Boolean);
