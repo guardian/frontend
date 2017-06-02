@@ -1,7 +1,7 @@
 package jobs
 
 import common.{AkkaAgent, ExecutionContexts, Logging}
-import cricketPa.{CricketTeams, CricketTeam, CricketFeedException, PaFeed}
+import conf.cricketPa.{CricketTeams, CricketTeam, CricketFeedException, PaFeed}
 import cricketModel.Match
 import org.joda.time.{Days, DateTimeZone, LocalDate}
 import org.joda.time.format.DateTimeFormat

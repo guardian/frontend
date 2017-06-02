@@ -9,7 +9,7 @@ import com.gu.targeting.client.Campaign
 import common._
 import conf.Configuration
 import conf.switches.Switches._
-import cricketPa.CricketTeams
+import conf.cricketPa.CricketTeams
 import layout.ContentWidths.GalleryMedia
 import model.content.{Atoms, MediaAssetPlatform, MediaAtom, Quiz}
 import model.pressed._
@@ -80,6 +80,10 @@ final case class Content(
   lazy val isImmersive = fields.displayHint.contains("immersive") || isGallery || tags.isTheMinuteArticle || isExplore || isPhotoEssay
   lazy val isPaidContent: Boolean = tags.tags.exists{ tag => tag.id == "tone/advertisement-features" }
   lazy val campaigns: List[Campaign] = _root_.commercial.targeting.CampaignAgent.getCampaignsForTags(tags.tags.map(_.id))
+
+  lazy val isAmpSupportedArticleType: Boolean = (tags.isArticle && !tags.isLiveBlog) && !isImmersive && !tags.isQuiz
+  lazy val shouldAmpifyArticles: Boolean = isAmpSupportedArticleType && AmpArticleSwitch.isSwitchedOn
+  lazy val shouldAmpifyLiveblogs: Boolean = tags.isLiveBlog && AmpLiveBlogSwitch.isSwitchedOn
 
   lazy val hasSingleContributor: Boolean = {
     (tags.contributors.headOption, trail.byline) match {
