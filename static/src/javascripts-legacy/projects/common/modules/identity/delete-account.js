@@ -6,9 +6,11 @@ define([
     bean
 ) {
     function setupLoadingAnimation() {
-        bean.on($('#deleteForm')[0], 'submit', function() {
-            $('#deleteLoader')[0].classList.remove("is-hidden");
-        });
+        if ($('#deleteForm').length && $('#deleteLoader').length) {
+            bean.on($('#deleteForm')[0], 'submit', function() {
+                $('#deleteLoader')[0].classList.remove("is-hidden");
+            });
+        }
     }
 
     return {
