@@ -80,24 +80,13 @@ const isValidPayload = (payload: StandardMessage): boolean =>
 // Cheap string formatting function. It accepts as its first argument
 // an object `{ code, message }`. `message` is a string where successive
 // occurences of %% will be replaced by the following arguments. e.g.
-//
-// formatError({ message: "%%, you are so %%" }, "Regis", "lovely")
-//
+// `formatError({ message: "%%, you are so %%" }, "Regis", "lovely")`
 // returns `{ message: "Regis, you are so lovely" }`. Oh, thank you!
-const formatError = (...args): { message: string } => {
-    if (args.length < 2) {
-        return args[0] || '';
-    }
-
-    const error = args[0];
-    Array.prototype.slice.call(args, 1).forEach(arg => {
-        // Keep in mind that when the first argument is a string,
-        // String.replace only replaces the first occurence
-        error.message = error.message.replace('%%', arg);
-    });
-
-    return error;
-};
+const formatError = (error, ...args) =>
+    args.reduce((e, arg) => {
+        e.message = e.message.replace('%%', arg);
+        return e;
+    }, error);
 
 const onMessage = (event: Event): void => {
     let data;
@@ -106,6 +95,7 @@ const onMessage = (event: Event): void => {
         return;
     }
 
+    // #? This try-catch is a good target for splitting out into a seperate function
     try {
         // Even though the postMessage API allows passing objects as-is, the
         // serialisation/deserialisation is slower than using JSON
