@@ -1,10 +1,10 @@
-package layout.slices
+package slices
 
 import org.scalatest.prop.GeneratorDrivenPropertyChecks
 import org.scalatest.{Matchers, FlatSpec}
 import org.scalatest.OptionValues._
 import common.Seqs._
-import layout.slices.ArbitraryStories._
+import slices.ArbitraryStories._
 
 /** Tests for common behaviour between the Dynamic Fast and Dynamic Slow containers -- this is mostly respecting error
   * conditions and the optional first slice, which appears for the same size combinations for either container.

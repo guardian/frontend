@@ -1,4 +1,4 @@
-package layout.slices
+package slices
 
 case class DynamicSlowMPU(omitMPU: Boolean) extends DynamicContainer {
   override protected def optionalFirstSlice(stories: Seq[Story]): Option[(Slice, Seq[Story])] = {

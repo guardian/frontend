@@ -6,7 +6,7 @@ import layout.{CollectionEssentials, FaciaContainer}
 import model.FrontProperties
 import model.pressed.{PressedContent, CollectionConfig}
 import services.CollectionConfigWithId
-import layout.slices.{ContainerDefinition, Fixed, FixedContainers, TTT}
+import slices.{ContainerDefinition, Fixed, FixedContainers, TTT}
 
 trait Containers {
 

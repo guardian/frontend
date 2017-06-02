@@ -1,4 +1,4 @@
-package layout.slices
+package slices
 
 import common.Maps._
 import model.pressed.PressedContent

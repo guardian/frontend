@@ -1,4 +1,4 @@
-package layout.slices
+package slices
 
 object DynamicSlow extends DynamicContainer {
   override protected def standardSlices(stories: Seq[Story], firstSlice: Option[Slice]): Seq[Slice] = {

@@ -1,7 +1,7 @@
 package commercial.model.capi
 
 import views.support.ImgSrc
-import layout.cards.{Half, Standard, Third}
+import cards.{Half, Standard, Third}
 import com.gu.contentapi.client.model.v1.{Asset, AssetType}
 import layout.{FaciaWidths, ItemClasses}
 import model.{ImageAsset, ImageMedia}

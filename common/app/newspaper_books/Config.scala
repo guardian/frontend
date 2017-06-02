@@ -1,4 +1,4 @@
-package conf.newspaper_books
+package newspaper_books
 
 case class NewspaperBookSection(
   id: String,

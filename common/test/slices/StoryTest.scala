@@ -1,4 +1,4 @@
-package layout.slices
+package slices
 
 import org.scalatest.prop.GeneratorDrivenPropertyChecks
 import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}

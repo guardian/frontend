@@ -16,7 +16,7 @@ import play.api.libs.json.Json._
 import play.api.libs.json.Writes
 import play.api.mvc.{RequestHeader, Result}
 import play.twirl.api.Html
-import layout.slices.ContainerDefinition
+import slices.ContainerDefinition
 
 import scala.collection.JavaConversions._
 
@@ -93,11 +93,11 @@ object `package` {
 
   def getTagContainerDefinition(page: ContentPage): ContainerDefinition = {
     if (page.item.tags.isContributorPage) {
-      layout.slices.TagContainers.contributorTagPage
+      slices.TagContainers.contributorTagPage
     } else if (page.item.tags.keywords.nonEmpty) {
-      layout.slices.TagContainers.keywordPage
+      slices.TagContainers.keywordPage
     } else {
-      layout.slices.TagContainers.tagPage
+      slices.TagContainers.tagPage
     }
   }
 

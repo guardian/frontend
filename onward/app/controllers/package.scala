@@ -1,4 +1,4 @@
-import layout.slices.FixedContainers
+import slices.FixedContainers
 
 package object controllers {
   def visuallyPleasingContainerForStories(numberOfStories: Int) = numberOfStories match {
