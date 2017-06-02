@@ -1,5 +1,7 @@
 {
-  "Francis Carr": [],
+  "Francis Carr": [
+    "projects/commercial/modules/third-party-tags/krux.js"
+  ],
   "Jon Norman": [
     "projects/commercial/modules/creatives/fabric-video.js",
     "projects/commercial/modules/creatives/frame.js",

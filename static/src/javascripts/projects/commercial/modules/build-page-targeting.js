@@ -4,7 +4,7 @@ import { getCookie, removeCookie } from 'lib/cookies';
 import detect from 'lib/detect';
 import { local } from 'lib/storage';
 import { getUrlVars } from 'lib/url';
-import { getKruxSegments } from 'commercial/modules/third-party-tags/krux';
+import krux from 'commercial/modules/third-party-tags/krux';
 import identity from 'common/modules/identity/api';
 import { getUserSegments } from 'commercial/modules/user-ad-targeting';
 import { getParticipations } from 'common/modules/experiments/utils';
@@ -128,7 +128,7 @@ const buildPageTargeting = once((adFree: ?boolean): Object => {
     const adFreeTargeting: Object = adFree ? { af: 't' } : {};
     const pageTargets: Object = Object.assign(
         {
-            x: getKruxSegments(),
+            x: krux.getSegments(),
             pv: config.ophan.pageViewId,
             bp: detect.getBreakpoint(),
             at: adtestParams(),
