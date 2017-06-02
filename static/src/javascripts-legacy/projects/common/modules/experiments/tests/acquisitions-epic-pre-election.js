@@ -2,14 +2,16 @@ define([
     'lodash/utilities/template',
     'common/modules/commercial/contributions-utilities',
     'raw-loader!common/views/acquisitions-epic-testimonials.html',
-    'raw-loader!common/views/acquisitions-epic-test-template.html',
-    'svgs/icon/quote.svg'
+    'raw-loader!common/views/acquisitions-epic-control.html',
+    'svgs/icon/quote.svg',
+    'common/modules/commercial/acquisitions-copy',
 ], function (
     template,
     contributionsUtilities,
     acquisitionsEpicTestimonialsTemplate,
-    acquisitionsEpicTestTemplate,
-    quoteSvg
+    acquisitionsEpicControlTemplate,
+    quoteSvg,
+    acquisitionsCopy
 ) {
 
 
@@ -46,23 +48,22 @@ define([
                         testimonialMessage: 'I’m a 19 year old student disillusioned by an unequal society with a government that has stopped even pretending to work in my generation’s interests. So for the strength of our democracy, for the voice of the young, for a credible, independent check on the government, this contribution was pretty good value for money.',
                         testimonialName: 'Jack H.'
                     })
-                }
+                },
+                successOnView: true,
+
             },
             {
                 id: 'election',
                 template:  function(variant) {
-                    return template(acquisitionsEpicTestTemplate, {
-                        title: 'Since you’re here &hellip;',
+                    return template(acquisitionsEpicControlTemplate, {
+                        copy: acquisitionsCopy.election,
                         membershipUrl: variant.options.membershipURL,
                         contributionUrl: variant.options.contributeURL,
                         componentName: variant.options.componentName,
-                        p1: '&hellip; we have a small favour to ask. Whoever wins the UK election, we promise to hold them to account with facts you can trust and opinions you can believe in. But advertising revenues are falling and <span class="contributions__highlight">unlike many news organisations, we haven’t put up a paywall &ndash; we want to keep our journalism as open as we can</span>. So you can see why we need to ask for your help. The Guardian’s independent, investigative journalism takes a lot of time, money and hard work to produce. But we do it because we believe our perspective matters &ndash; because it might well be your perspective, too.',
-                        p2: 'If everyone who reads our reporting, who likes it, helps to support it, our future would be much more secure.',
-                        p3: '',
-                        cta1: 'Become a supporter',
-                        cta2: 'Make a contribution'
                     })
-                }
+                },
+                successOnView: true,
+
             }
         ]
     });
