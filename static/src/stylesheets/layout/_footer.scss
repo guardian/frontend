@@ -242,7 +242,7 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
     position: relative;
     float: right;
     margin-top: -($gs-baseline / 2);
-    margin-bottom: -($gs-baseline / 2);
+    margin-bottom: -$gs-baseline;
     border-radius: 100%;
     background-color: $news-main-2;
     cursor: pointer;
