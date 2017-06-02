@@ -2,6 +2,7 @@ define([
     'lodash/arrays/uniq',
     'commercial/modules/commercial-features',
     'common/modules/commercial/targeting-tool',
+    'common/modules/commercial/acquisitions-copy',
     'common/modules/commercial/acquisitions-view-log',
     'lib/$',
     'lib/config',
@@ -20,6 +21,7 @@ define([
     uniq,
     commercialFeatures,
     targetingTool,
+    acquisitionsCopy,
     viewLog,
     $,
     config,
@@ -66,6 +68,7 @@ define([
 
     function controlTemplate(variant) {
         return template(acquisitionsEpicControlTemplate, {
+            copy: acquisitionsCopy.control,
             membershipUrl: variant.options.membershipURL,
             contributionUrl: variant.options.contributeURL,
             componentName: variant.options.componentName
