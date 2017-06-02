@@ -47,6 +47,8 @@ define([
 
     var lastContributionDate = cookies.getCookie('gu.contributions.contrib-timestamp');
 
+    var isContributor = !!lastContributionDate;
+
     /**
      * How many times the user can see the Epic, e.g. 6 times within 7 days with minimum of 1 day in between views.
      * @type {{days: number, count: number, minDaysBetweenViews: number}}
@@ -346,5 +348,6 @@ define([
         getControlTestimonialBlock: getControlTestimonialBlock,
         variantBuilderFactory: variantBuilderFactory,
         daysSinceLastContribution: daysSinceLastContribution
+        isContributor: isContributor
     };
 });
