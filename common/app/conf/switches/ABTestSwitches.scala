@@ -215,7 +215,7 @@ trait ABTestSwitches {
     "Bootstrap the AB test framework to show a different UK election thrasher to supporters/non-supporters respectively",
     owners = Seq(Owner.withGithub("Mullefa"), Owner.withGithub("joelochlann")),
     safeState = On,
-    sellByDate = new LocalDate(2017, 6, 26),
+    sellByDate = new LocalDate(2017, 7, 3),
     exposeClientSide = true
   )
 }

@@ -347,7 +347,7 @@ define([
         },
         getControlTestimonialBlock: getControlTestimonialBlock,
         variantBuilderFactory: variantBuilderFactory,
-        daysSinceLastContribution: daysSinceLastContribution
+        daysSinceLastContribution: daysSinceLastContribution,
         isContributor: isContributor
     };
 });
