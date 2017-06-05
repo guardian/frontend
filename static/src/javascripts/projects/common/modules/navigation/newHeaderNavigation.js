@@ -40,7 +40,7 @@ const openSidebarSection = (
     closeAllSidebarSections(section);
 };
 
-const isSidebarSectionClosed = (section: HTMLElement): void =>
+const isSidebarSectionClosed = (section: HTMLElement): boolean =>
     section.classList.contains(CLOSED_MODIFIER);
 
 const toggleSidebarSection = (section: HTMLElement): void => {
