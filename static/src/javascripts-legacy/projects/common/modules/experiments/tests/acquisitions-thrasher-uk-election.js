@@ -15,6 +15,7 @@ define([
 ) {
 
     var UK_ELECTION_THRASHER_VIEW_COUNTER = "gu.uk-election-thrasher.views";
+
     var UK_ELECTION_THRASHER_BLOCK_ELEMENT = "election-supporters__wrapper";
 
     function getThrasherViewedCount() {
