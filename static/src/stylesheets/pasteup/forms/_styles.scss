@@ -247,10 +247,18 @@
     width: 13px;
 }
 
+$delete-warn-red: #b20a0a;
+
 .delete-input-warn {
-    background: #b20a0a;
+    background: $delete-warn-red;
     &:hover,
     &:focus {
-        background: darken(#b20a0a, 5%);
+        background: darken($delete-warn-red, 5%);
     }
+}
+
+.delete-input-warn[disabled] {
+    background: lighten($delete-warn-red, 5%);
+    opacity: .6;
+    pointer-events: none;
 }
