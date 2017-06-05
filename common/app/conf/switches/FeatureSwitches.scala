@@ -336,10 +336,20 @@ trait FeatureSwitches {
     exposeClientSide = false
   )
 
-  val AmpSwitch = Switch(
+  val AmpArticleSwitch = Switch(
     SwitchGroup.Feature,
-    "amp-switch",
+    "amp-article-switch",
     "If this switch is on, link to amp pages will be in the metadata for articles",
+    owners = Seq(Owner.withGithub("NataliaLKB")),
+    safeState = On,
+    sellByDate = never,
+    exposeClientSide = false
+  )
+
+  val AmpLiveBlogSwitch = Switch(
+    SwitchGroup.Feature,
+    "amp-liveblog-switch",
+    "If this switch is on, link to amp pages will be in the metadata for liveblogs",
     owners = Seq(Owner.withGithub("NataliaLKB")),
     safeState = On,
     sellByDate = never,
@@ -504,6 +514,16 @@ trait FeatureSwitches {
     owners = Seq(Owner.withGithub("gidsg")),
     safeState = Off,
     sellByDate = never,
+    exposeClientSide = false
+  )
+
+  val NewTabletHeader = Switch(
+    SwitchGroup.Feature,
+    "new-header-tablet",
+    "When ON Users will see the new tablet header design.",
+    owners = Seq(Owner.withGithub("natalialkb"), Owner.withGithub("gustavpursche")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 6, 15),
     exposeClientSide = false
   )
 

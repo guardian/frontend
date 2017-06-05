@@ -1,7 +1,5 @@
 {
   "Francis Carr": [
-    "projects/commercial/modules/creatives/fabric-expanding-v1.js",
-    "projects/common/modules/video/events.js",
     "projects/commercial/modules/third-party-tags/krux.js"
   ],
   "Jon Norman": [
@@ -13,7 +11,6 @@
   "Regis Kuckaertz": [],
   "Richard Nguyen": [],
   "Kate Whalen": [
-    "projects/commercial/modules/messenger.js",
     "projects/commercial/modules/messenger/background.js",
     "projects/commercial/modules/messenger/click.js",
     "projects/commercial/modules/messenger/dfp-origin.js",
@@ -39,7 +36,6 @@
     "projects/common/modules/check-dispatcher.js"
   ],
   "Simon Adcock": [
-    "bootstraps/enhanced/liveblog.js",
     "bootstraps/enhanced/media/main.js",
     "bootstraps/enhanced/media/video-player.js"
   ],
@@ -231,7 +227,5 @@
   "Santiago Villa Fernandez": [
     "projects/common/modules/video/more-in-series-container.js"
   ],
-  "Jamie Byers": [
-    "bootstraps/enhanced/newsletters.js"
-  ]
+  "Jamie Byers": []
 }

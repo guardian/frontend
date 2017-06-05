@@ -14,7 +14,6 @@ import { closeDisabledSlots } from 'commercial/modules/close-disabled-slots';
 import prepareGoogletag from 'commercial/modules/dfp/prepare-googletag';
 import prepareSonobiTag from 'commercial/modules/dfp/prepare-sonobi-tag';
 import prepareSwitchTag from 'commercial/modules/dfp/prepare-switch-tag';
-import { fillAdvertSlots } from 'commercial/modules/dfp/fill-advert-slots';
 import hostedAbout from 'commercial/modules/hosted/about';
 import { initHostedVideo } from 'commercial/modules/hosted/video';
 import hostedGallery from 'commercial/modules/hosted/gallery';
@@ -37,31 +36,27 @@ import {
 import { trackPerformance } from 'common/modules/analytics/google';
 import { commercialFeatures } from 'commercial/modules/commercial-features';
 
-const commercialModules: Array<Array<any>> = commercialFeatures.adFree
-    ? [
-          ['cm-highMerch', highMerch.init],
-          ['cm-thirdPartyTags', thirdPartyTags.init],
-          ['cm-prepare-googletag', prepareGoogletag.init, true],
-          ['cm-closeDisabledSlots', closeDisabledSlots],
-          ['cm-fill-advert-slots', fillAdvertSlots, true],
-          ['cm-paidContainers', paidContainers],
-          ['cm-paidforBand', paidforBand.init],
-      ]
-    : [
-          ['cm-highMerch', highMerch.init],
-          ['cm-thirdPartyTags', thirdPartyTags.init],
-          ['cm-prepare-sonobi-tag', prepareSonobiTag.init, true],
-          ['cm-prepare-switch-tag', prepareSwitchTag.init, true],
-          ['cm-articleAsideAdverts', articleAsideAdvertsInit, true],
-          ['cm-prepare-googletag', prepareGoogletag.init, true],
-          ['cm-articleBodyAdverts', articleBodyAdvertsInit],
-          ['cm-liveblogAdverts', initLiveblogAdverts, true],
-          ['cm-closeDisabledSlots', closeDisabledSlots],
-          ['cm-stickyTopBanner', stickyTopBanner.init],
-          ['cm-fill-advert-slots', fillAdvertSlots, true],
-          ['cm-paidContainers', paidContainers],
-          ['cm-paidforBand', paidforBand.init],
-      ];
+const commercialModules: Array<Array<any>> = [
+    ['cm-highMerch', highMerch.init],
+    ['cm-thirdPartyTags', thirdPartyTags.init],
+    ['cm-prepare-googletag', prepareGoogletag.init, true],
+    ['cm-closeDisabledSlots', closeDisabledSlots],
+    ['cm-paidContainers', paidContainers],
+    ['cm-paidforBand', paidforBand.init],
+];
+
+if (!commercialFeatures.adFree) {
+    commercialModules.push(
+        ['cm-prepare-sonobi-tag', prepareSonobiTag.init, true],
+        ['cm-prepare-switch-tag', prepareSwitchTag.init, true],
+        ['cm-articleAsideAdverts', articleAsideAdvertsInit, true],
+        ['cm-articleBodyAdverts', articleBodyAdvertsInit],
+        ['cm-liveblogAdverts', initLiveblogAdverts, true],
+        ['cm-stickyTopBanner', stickyTopBanner.init],
+        ['cm-paidContainers', paidContainers],
+        ['cm-paidforBand', paidforBand.init]
+    );
+}
 
 if (config.page.isHosted) {
     commercialModules.push(

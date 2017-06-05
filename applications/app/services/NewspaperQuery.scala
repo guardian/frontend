@@ -10,7 +10,7 @@ import layout.{CollectionEssentials, FaciaContainer}
 import model.pressed.{CollectionConfig, LinkSnap, PressedContent}
 import org.joda.time.format.DateTimeFormat
 import org.joda.time.{DateTime, DateTimeConstants, DateTimeZone}
-import slices.{ContainerDefinition, Fixed, FixedContainers, TTT}
+import layout.slices.{ContainerDefinition, Fixed, FixedContainers, TTT}
 
 import scala.concurrent.Future
 

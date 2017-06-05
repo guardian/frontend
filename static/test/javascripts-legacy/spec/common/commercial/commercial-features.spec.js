@@ -88,15 +88,6 @@ define(['helpers/injector'], function (Injector) {
             });
         });
 
-        describe('DFP advertising under ad-free', function() {
-           it('is disabled', function() {
-              config.switches.adFreeMembershipTrial = true;
-              isSignedIn = true;
-              features = new CommercialFeatures;
-              expect(features.dfpAdvertising).toBe(false);
-           });
-        });
-
         describe('Article body adverts', function () {
             it('Runs by default', function () {
                 features = new CommercialFeatures;

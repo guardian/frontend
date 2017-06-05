@@ -50,3 +50,4 @@ OPTIONS    /email                                                               
 # Account deletion
 GET         /delete                                 controllers.AccountDeletionController.renderAccountDeletionForm
 POST        /delete                                 controllers.AccountDeletionController.processAccountDeletionForm
+GET         /delete/confirm                         controllers.AccountDeletionController.renderAccountDeletionConfirmation(autoDeletion: Boolean)

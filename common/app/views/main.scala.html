@@ -1,6 +1,6 @@
 @(page: model.Page, projectName: Option[String] = None)(head: Html)(body: Html)(implicit request: RequestHeader, context: model.ApplicationContext)
 @import common.{Edition, Navigation, commercial}
-@import conf.switches.Switches.BreakingNewsSwitch
+@import conf.switches.Switches.{BreakingNewsSwitch, SurveySwitch}
 @import model.Page.getContent
 @import views.support.{Commercial, RenderClasses}
 @import play.api.Mode.Dev
@@ -53,6 +53,10 @@
 
         @if(page.metadata.hasPageSkinOrAdTestPageSkin(edition)) {
             @fragments.commercial.pageSkin()
+        }
+
+        @if(!page.metadata.isFront && SurveySwitch.isSwitchedOn) {
+            @fragments.commercial.survey()
         }
 
         @page match {
