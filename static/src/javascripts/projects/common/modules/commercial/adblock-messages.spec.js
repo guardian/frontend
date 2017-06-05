@@ -44,8 +44,10 @@ describe('Adblock messages/banners rules', () => {
 
     let mockBreakpoint;
 
+    const payingMember: () => boolean = isPayingMember;
+
     beforeEach(done => {
-        isPayingMember.mockReturnValueOnce(settings[counter].userFeatures);
+        payingMember.mockReturnValueOnce(settings[counter].userFeatures);
 
         config.switches.adblock = settings[counter].switch;
         window.guardian.adBlockers.active = settings[counter].adBlocker;
