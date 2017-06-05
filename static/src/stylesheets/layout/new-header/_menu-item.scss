@@ -8,8 +8,10 @@
 
     > *[data-link-name='nav2 : the guardian app'],
     > *[data-link-name='nav2 : facebook'] {
-        border-top: 1px solid darken($guardian-brand-dark, 4%);
-        margin-top: $gs-baseline * 2;
+        @include mq($until: desktop) {
+            border-top: 1px solid darken($guardian-brand-dark, 4%);
+            margin-top: $gs-baseline * 2;
+        }
     }
 
     // First level overwrites
