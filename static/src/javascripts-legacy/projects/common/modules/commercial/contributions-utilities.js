@@ -64,6 +64,8 @@ define([
         }
     }
 
+    var daysSinceLastContribution = daysSince(lastContributionDate);
+
     function controlTemplate(variant) {
         return template(acquisitionsEpicControlTemplate, {
             membershipUrl: variant.options.membershipURL,
@@ -140,6 +142,10 @@ define([
         this.insertEvent = this.makeEvent('insert');
         this.viewEvent = this.makeEvent('view');
         this.isEngagementBannerTest = options.isEngagementBannerTest || false;
+
+        // Set useLocalViewLog to true if only the views for the respective test
+        // should be used to determine variant viewability
+        this.useLocalViewLog =  options.useLocalViewLog || false;
 
         /**
          * Provides a default `canRun` function with typical rules (see function below) for Contributions messages.
@@ -297,6 +303,7 @@ define([
             };
         },
 
-        variantBuilderFactory: variantBuilderFactory
+        variantBuilderFactory: variantBuilderFactory,
+        daysSinceLastContribution: daysSinceLastContribution
     };
 });
