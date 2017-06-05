@@ -1,6 +1,6 @@
 // @flow
 
-type TemplateCopy = {
+type AcquisitionsEpicTemplateCopy = {
     heading: string,
     p1: string,
     p2: string,
@@ -31,31 +31,31 @@ const liveblogMinimalP2 =
 
 const liveblogMinimalHeading = 'Since you’re here ';
 
-export const control: TemplateCopy = {
+export const control: AcquisitionsEpicTemplateCopy = {
     heading: controlHeading,
     p1: controlP1,
     p2: controlP2,
 };
 
-export const regulars: TemplateCopy = {
+export const regulars: AcquisitionsEpicTemplateCopy = {
     heading: controlHeadingRegulars,
     p1: controlP1Regulars,
     p2: controlP2,
 };
 
-export const election: TemplateCopy = {
+export const election: AcquisitionsEpicTemplateCopy = {
     heading: controlHeading,
     p1: electionP1,
     p2: controlP2,
 };
 
-export const liveblogSubtle: TemplateCopy = {
+export const liveblogSubtle: AcquisitionsEpicTemplateCopy = {
     heading: controlHeading,
     p1: controlP1,
     p2: liveblogSubtleP2,
 };
 
-export const liveblogMinimal: TemplateCopy = {
+export const liveblogMinimal: AcquisitionsEpicTemplateCopy = {
     heading: liveblogMinimalHeading,
     p1: controlP1,
     p2: liveblogMinimalP2,

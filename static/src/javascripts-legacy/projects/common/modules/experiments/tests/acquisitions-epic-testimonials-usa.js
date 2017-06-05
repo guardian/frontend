@@ -22,8 +22,7 @@ define([
                 p1: testimonialInfo.intro || defaultIntro,
                 quoteSvg: quoteSvg.markup,
                 testimonialMessage: testimonialInfo.message,
-                testimonialName: testimonialInfo.name,
-                additionalSentence: testimonialInfo.additionalSentence || '',
+                testimonialName: testimonialInfo.name, 
                 epicClass: 'contributions__epic--testimonial-usa',
                 citeImage: testimonialInfo.citeImage
             })
