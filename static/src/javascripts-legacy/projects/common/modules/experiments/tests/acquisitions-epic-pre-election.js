@@ -2,12 +2,12 @@ define([
     'lodash/utilities/template',
     'common/modules/commercial/contributions-utilities',
     'raw-loader!common/views/acquisitions-epic-testimonials.html',
-    'svgs/icon/quote.svg',
+    'svgs/icon/quote.svg'
 ], function (
     template,
     contributionsUtilities,
     acquisitionsEpicTestimonialsTemplate,
-    quoteSvg,
+    quoteSvg
 ) {
 
 
@@ -31,7 +31,7 @@ define([
         variants: [
             {
                 id: 'testimonial',
-                template: function(variant) {
+                template: function (variant) {
                     return template(acquisitionsEpicTestimonialsTemplate, {
                         membershipUrl: variant.options.membershipURL,
                         contributionUrl: variant.options.contributeURL,
@@ -41,6 +41,7 @@ define([
                         testimonialMessage: 'I’m a 19 year old student disillusioned by an unequal society with a government that has stopped even pretending to work in my generation’s interests. So for the strength of our democracy, for the voice of the young, for a credible, independent check on the government, this contribution was pretty good value for money.',
                         testimonialName: 'Jack H.'
                     })
+                }
             }
         ]
     });
