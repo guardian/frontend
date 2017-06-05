@@ -168,7 +168,7 @@ class CommercialController(implicit context: ApplicationContext) extends Control
       case _ => "unknown"
     }
 
-    val sonobiItems = groupedItems.get("sonobi").getOrElse(Seq.empty)
+    val sonobiItems = groupedItems.getOrElse("sonobi", Seq.empty)
     val invalidItemsMap = GuLineItem.asMap(invalidLineItems)
 
     val unidentifiedLineItems = invalidItemsMap.keySet -- pageskins.map(_.lineItemId) -- topAboveNav.map(_.id) -- highMerch.map(_.id) -- sonobiItems.map(_.id)
