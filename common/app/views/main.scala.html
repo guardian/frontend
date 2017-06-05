@@ -1,11 +1,11 @@
-@(page: model.Page, projectName: Option[String] = None, showNormalHeader: Boolean = false)(head: Html)(body: Html)(implicit request: RequestHeader, context: model.ApplicationContext)
+@(page: model.Page, projectName: Option[String] = None)(head: Html)(body: Html)(implicit request: RequestHeader, context: model.ApplicationContext)
 @import common.{Edition, Navigation, commercial}
-@import conf.switches.Switches.BreakingNewsSwitch
+@import conf.switches.Switches.{BreakingNewsSwitch, SurveySwitch}
 @import model.Page.getContent
 @import views.support.{Commercial, RenderClasses}
 @import play.api.Mode.Dev
 
-@headerAndTopAds(showAdverts: Boolean, edition: Edition, content: Option[model.ContentType], showNormalHeader: Boolean = false) = {
+@headerAndTopAds(showAdverts: Boolean, edition: Edition, content: Option[model.ContentType]) = {
   @if(!page.metadata.shouldHideHeaderAndTopAds) {
     @defining(showAdverts && !content.exists(_.tags.isTheMinuteArticle)) { showTopSlot =>
       @if(content.exists(_.tags.hasSuperStickyBanner)) {
@@ -18,7 +18,7 @@
               @if(showTopSlot) {
                 @fragments.commercial.topBanner(page.metadata)
               }
-              @fragments.header(page, showNormalHeader)
+              @fragments.header(page)
           </div>
       }
       <div id="maincontent" tabindex="0"></div>
@@ -53,6 +53,10 @@
 
         @if(page.metadata.hasPageSkinOrAdTestPageSkin(edition)) {
             @fragments.commercial.pageSkin()
+        }
+
+        @if(!page.metadata.isFront && SurveySwitch.isSwitchedOn) {
+            @fragments.commercial.survey()
         }
 
         @page match {
@@ -92,7 +96,7 @@
             }
             case _: commercial.hosted.HostedPage => {}
             case _ => {
-                @headerAndTopAds(showAdverts, edition, content, showNormalHeader)
+                @headerAndTopAds(showAdverts, edition, content)
             }
         }
 

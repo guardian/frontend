@@ -1,11 +1,12 @@
 package test
 
 import java.io.File
+
 import akka.stream.Materializer
 import com.gargoylesoftware.htmlunit.html.HtmlPage
 import com.gargoylesoftware.htmlunit.{BrowserVersion, Page, WebClient, WebResponse}
 import common.{ExecutionContexts, Lazy}
-import contentapi.{CapiHttpClient, ContentApiClient, HttpClient}
+import contentapi.{CapiHttpClient, ContentApiClient, HttpClient, Response}
 import model.{ApplicationContext, ApplicationIdentity}
 import org.openqa.selenium.htmlunit.HtmlUnitDriver
 import org.scalatest.BeforeAndAfterAll
@@ -18,6 +19,7 @@ import play.api.test._
 import play.filters.csrf.{CSRFAddToken, CSRFCheck, CSRFConfig}
 import recorder.ContentApiHttpRecorder
 
+import scala.concurrent.Future
 import scala.util.{Failure, Success, Try}
 
 trait ConfiguredTestSuite extends ConfiguredServer with ConfiguredBrowser with ExecutionContexts {
@@ -82,7 +84,7 @@ trait SingleServerSuite extends OneServerPerSuite with OneBrowserPerSuite with H
   implicit override lazy val app: Application = {
     val environment = Environment.simple()
     val settings = Try(this.getClass.getClassLoader.loadClass("TestAppLoader")) match {
-      case Success(clazz) => initialSettings + ("play.application.loader" -> "TestAppLoader")
+      case Success(_) => initialSettings + ("play.application.loader" -> "TestAppLoader")
       case Failure(_) => initialSettings
     }
     val context = ApplicationLoader.createContext(
@@ -115,7 +117,7 @@ trait WithTestWsClient {
   private val lazyWsClient = Lazy(AhcWSClient())
   lazy val wsClient: WSClient = lazyWsClient
 
-  override def afterAll() = if(lazyWsClient.isDefined) lazyWsClient.close
+  override def afterAll(): Unit = if(lazyWsClient.isDefined) lazyWsClient.close
 }
 
 trait WithTestContentApiClient {
@@ -126,7 +128,7 @@ trait WithTestContentApiClient {
   }
 
   class recorderHttpClient(originalHttpClient: HttpClient) extends HttpClient {
-    override def GET(url: String, headers: Iterable[(String, String)]) = {
+    override def GET(url: String, headers: Iterable[(String, String)]): Future[Response] = {
       httpRecorder.load(url.replaceAll("api-key=[^&]*", "api-key=none"), headers.toMap) {
         originalHttpClient.GET(url, headers)
       }
@@ -138,7 +140,7 @@ trait WithTestContentApiClient {
 }
 
 trait WithTestCryptoConfig {
-  val testCryptoConfig = new CryptoConfig(secret = "this is the test secret")
+  val testCryptoConfig = CryptoConfig(secret = "this is the test secret")
 }
 
 trait WithTestCSRF {

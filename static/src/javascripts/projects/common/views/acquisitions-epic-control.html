@@ -1,31 +1,33 @@
-<div class="contributions__epic" data-component="<%=componentName%>">
-    <div>
-        <h2 class="contributions__title contributions__title--epic">
-            Since you’re here …
-        </h2>
-        <p class="contributions__paragraph contributions__paragraph--epic">
-            … we’ve got a small favour to ask. More people are reading the Guardian than ever, but far fewer are paying for it. Advertising revenues across the media are falling fast. And <span class="contributions__highlight">unlike many news organisations, we haven’t put up a paywall &ndash; we want to keep our journalism as open as we can</span>. So you can see why we need to ask for your help. The Guardian’s independent, investigative journalism takes a lot of time, money and hard work to produce. But we do it because we believe our perspective matters &ndash; because it might well be your perspective, too.
-        </p>
-        <p class="contributions__paragraph contributions__paragraph--epic">
-            If everyone who reads our reporting, who likes it, helps to support it, our future would be much more secure.
-        </p>
-    </div>
-
-    <div class="contributions__amount-field">
+<div class="contributions__epic <%=typeof epicClass !== "undefined" ? epicClass : ''%>" data-component="<%=componentName%>">
+    <div class="<%=typeof wrapperClass !== "undefined" ? wrapperClass : ''%>">
         <div>
-            <a class="contributions__option-button contributions__contribute contributions__contribute--epic contributions__contribute--epic-member contributions__contribute--epic-member-top"
-               href="<%=membershipUrl%>"
-               target="_blank">
-                Become a supporter
-            </a>
+            <h2 class="contributions__title contributions__title--epic">
+                Since you’re here …
+            </h2>
+            <p class="contributions__paragraph contributions__paragraph--epic">
+                … we have a small favour to ask. More people are reading the Guardian than ever but advertising revenues across the media are falling fast. And <span class="contributions__highlight">unlike many news organisations, we haven’t put up a paywall &ndash; we want to keep our journalism as open as we can</span>. So you can see why we need to ask for your help. The Guardian’s independent, investigative journalism takes a lot of time, money and hard work to produce. But we do it because we believe our perspective matters &ndash; because it might well be your perspective, too.
+            </p>
+            <p class="contributions__paragraph contributions__paragraph--epic">
+                If everyone who reads our reporting, who likes it, helps to support it, our future would be much more secure.
+            </p>
         </div>
 
-        <div>
-            <a class="contributions__option-button contributions__contribute contributions__contribute--epic contributions__contribute--epic-member"
-               href="<%=contributionUrl%>"
-               target="_blank">
-                Make a contribution
-            </a>
+        <div class="contributions__amount-field">
+            <div>
+                <a class="contributions__option-button contributions__contribute contributions__contribute--epic contributions__contribute--epic-member contributions__contribute--epic-member-top"
+                   href="<%=membershipUrl%>"
+                   target="_blank">
+                    Become a supporter
+                </a>
+            </div>
+
+            <div>
+                <a class="contributions__option-button contributions__contribute contributions__contribute--epic contributions__contribute--epic-member"
+                   href="<%=contributionUrl%>"
+                   target="_blank">
+                    Make a contribution
+                </a>
+            </div>
         </div>
     </div>
 </div>

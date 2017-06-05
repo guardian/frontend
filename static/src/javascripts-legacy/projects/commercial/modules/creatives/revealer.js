@@ -24,16 +24,16 @@ define([
                 adSlot.insertAdjacentHTML('beforeend', markup);
                 // #? `classList.add` takes multiple arguments, but we are using it
                 // here with arity 1 because polyfill.io has incorrect support with IE 10 and 11.
-                // One may revert to adSlot.classList.add('ad-slot--revealer', 'ad-slot--fabric', 'content__mobile-full-width'); 
+                // One may revert to adSlot.classList.add('ad-slot--revealer', 'ad-slot--fabric', 'content__mobile-full-width');
                 // When support is correct or when we stop supporting IE <= 11
                 adSlot.classList.add('ad-slot--revealer');
                 adSlot.classList.add('ad-slot--fabric');
                 adSlot.classList.add('content__mobile-full-width');
                 if (params.trackingPixel) {
-                    addTrackingPixel(params.trackingPixel + params.cacheBuster);
+                    addTrackingPixel.addTrackingPixel(params.trackingPixel + params.cacheBuster);
                 }
                 if (params.researchPixel) {
-                    addTrackingPixel(params.researchPixel + params.cacheBuster);
+                    addTrackingPixel.addTrackingPixel(params.researchPixel + params.cacheBuster);
                 }
                 if (params.viewabilityTracker) {
                     addViewabilityTracker(adSlot, params.id, params.viewabilityTracker);

@@ -5,7 +5,7 @@ import model.pressed.{Audio, Gallery, Video}
 import slices.{Dynamic, DynamicSlowMPU}
 
 object GetClasses {
-  def forHtmlBlob(item: HtmlBlob) = {
+  def forHtmlBlob(item: HtmlBlob): String = {
     RenderClasses(Seq(
       "fc-item",
       "js-fc-item",
@@ -13,7 +13,7 @@ object GetClasses {
     ) ++ item.customCssClasses: _*)
   }
 
-  def forItem(item: ContentCard, isFirstContainer: Boolean) = {
+  def forItem(item: ContentCard, isFirstContainer: Boolean): String = {
     RenderClasses(Map(
       ("fc-item", true),
       ("js-fc-item", true),
@@ -42,19 +42,19 @@ object GetClasses {
     sublinkMediaTypeClass(sublink)
   ).flatten: _*)
 
-  def mediaTypeClass(faciaCard: ContentCard) = faciaCard.mediaType map {
+  def mediaTypeClass(faciaCard: ContentCard): Option[String] = faciaCard.mediaType map {
     case Gallery => "fc-item--gallery"
     case Video => "fc-item--video"
     case Audio => "fc-item--audio"
   }
 
-  def sublinkMediaTypeClass(sublink: Sublink) = sublink.mediaType map {
+  def sublinkMediaTypeClass(sublink: Sublink): Option[String] = sublink.mediaType map {
     case Gallery => "fc-sublink--gallery"
     case Video => "fc-sublink--video"
     case Audio => "fc-sublink--audio"
   }
 
-  def forContainerDefinition(containerDefinition: FaciaContainer) =
+  def forContainerDefinition(containerDefinition: FaciaContainer): String =
     forContainer(
       containerDefinition.showLatestUpdate,
       containerDefinition.index == 0 && containerDefinition.customHeader.isEmpty,
@@ -72,7 +72,7 @@ object GetClasses {
     )
 
   /** TODO get rid of this when we consolidate 'all' logic with index logic */
-  def forTagContainer(hasTitle: Boolean) = forContainer(
+  def forTagContainer(hasTitle: Boolean): String = forContainer(
     showLatestUpdate = false,
     isFirst = true,
     hasTitle,
@@ -100,7 +100,7 @@ object GetClasses {
     disableHide: Boolean = false,
     lazyLoad: Boolean,
     dynamicSlowMpu: Boolean
-  ) = {
+  ): String = {
     RenderClasses((Seq(
       ("fc-container", true),
       ("fc-container--first", isFirst),

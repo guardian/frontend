@@ -12,13 +12,13 @@ trait BaseBadge {
 }
 
 case class Badge(seriesTag: String, imageUrl: String, classModifier: Option[String] = None) extends BaseBadge {
-  def maybeThisBadge(tag: String) = if (seriesTag == tag) Some(this) else None
+  def maybeThisBadge(tag: String): Option[Badge] = if (seriesTag == tag) Some(this) else None
 }
 
 // for salt use a random unique string - e.g. some string from running in terminal: pwgen -n -y 20
 // it's fine to commit that, it just stops people using previously calculated tables to reverse the hash
 case class SpecialBadge(salt: String, hashedTag: String) extends BaseBadge {
-  def maybeThisBadge(tag: String) =
+  def maybeThisBadge(tag: String): Option[Badge] =
     if (md5(salt + tag).contains(hashedTag)) {
       Some(Badge(tag, s"https://assets.guim.co.uk/special/$tag/special-badge.svg"))
     } else None
@@ -45,11 +45,11 @@ object Badges {
 
   val allBadges = Seq(newArrivals, brexitGamble, beyondTheBlade, generalElection2017, facebookFiles)
 
-  def badgeFor(c: ContentType) = {
+  def badgeFor(c: ContentType): Option[Badge] = {
     badgeForTags(c.tags.tags.map(_.id))
   }
 
-  def badgeForTags(tags: Traversable[String]) = {
+  def badgeForTags(tags: Traversable[String]): Option[Badge] = {
 
     val badgesForTags =
       for {
@@ -60,6 +60,6 @@ object Badges {
     badgesForTags.headOption
   }
 
-  def badgeFor(fc: FaciaContainer) = badgeForTags(fc.href)
+  def badgeFor(fc: FaciaContainer): Option[Badge] = badgeForTags(fc.href)
 
 }

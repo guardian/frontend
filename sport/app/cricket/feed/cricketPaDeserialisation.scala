@@ -1,4 +1,4 @@
-package cricketPa
+package conf.cricketPa
 
 
 import xml.{NodeSeq, XML}

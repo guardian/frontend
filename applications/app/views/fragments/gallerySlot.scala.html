@@ -1,18 +1,28 @@
 @(
     id: Int,
     isMobile: Boolean = false
-)
+)(implicit request: RequestHeader)
 @import conf.switches.Switches.CommercialSwitch
+@import mvt.CommercialGalleryBannerAds
+
+@commonSizes = @{Seq("1,1", "2,2", "300,250", "fluid")}
+
+@desktopSizes = @{
+    if(CommercialGalleryBannerAds.isParticipating)
+        Map("desktop" -> (commonSizes ++ Seq("970,250", "900,250")))
+    else
+        Map.empty[String, Seq[String]]
+}
 
 @if(CommercialSwitch.isSwitchedOn) {
     @defining((isMobile, id) match {
-        case (true, 0) => ("top-above-nav", Seq("1,1", "2,2", "88,71", "300,250", "fluid"))
-        case _         => (s"inline$id", Seq("1,1", "2,2", "300,250", "fluid"))
-    }) { case(slotName, sizes) =>
+        case (true, 0) => ("top-above-nav", (commonSizes :+ "88,71"))
+        case _         => (s"inline$id", commonSizes)
+    }) { case(slotName: String, sizes: Seq[String]) =>
         @fragments.commercial.adSlot(
             slotName,
             Seq("gallery-inline", "dark") ++ (if(isMobile) Some("mobile") else None),
-            Map("mobile" -> sizes),
+            Map("mobile" -> sizes) ++ desktopSizes,
             optId = if(isMobile) Some(s"$slotName--mobile") else None,
             optClassNames = if(isMobile) Some("mobile-only") else Some("hide-until-tablet")
         ){ }

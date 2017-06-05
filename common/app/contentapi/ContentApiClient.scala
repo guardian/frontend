@@ -4,7 +4,7 @@ import akka.actor.ActorSystem
 import akka.pattern.CircuitBreaker
 import com.gu.contentapi.client.ContentApiClientLogic
 import com.gu.contentapi.client.model._
-import com.gu.contentapi.client.model.v1.ItemResponse
+import com.gu.contentapi.client.model.v1.{Edition => _, _}
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichCapiDateTime
 import common._
 import conf.Configuration
@@ -120,7 +120,7 @@ trait ApiQueryDefaults extends Logging {
 trait MonitoredContentApiClientLogic extends ContentApiClientLogic with ApiQueryDefaults with Logging {
 
   val httpClient: HttpClient
-  var _httpClient = httpClient //TODO: to delete once ContentApiClient fully uses DI
+  val _httpClient = httpClient //TODO: to delete once ContentApiClient fully uses DI
 
   override def get(url: String, headers: Map[String, String])(implicit executionContext: ExecutionContext): Future[HttpResponse] = {
     val futureContent = _httpClient.GET(url, headers) map { response: Response =>
@@ -146,22 +146,22 @@ final case class CircuitBreakingContentApiClient(
     scheduler = circuitBreakerActorSystem.scheduler,
     maxFailures = contentApi.circuitBreakerErrorThreshold,
     callTimeout = contentApi.timeout,
-    resetTimeout = Duration(contentApi.circuitBreakerResetTimeout, MILLISECONDS)
+    resetTimeout = contentApi.circuitBreakerResetTimeout
   )
 
-  circuitBreaker.onOpen({
-    log.error("Reached error threshold for Content API Client circuit breaker - breaker is OPEN!")
-  })
+  circuitBreaker.onOpen(
+    log.error(s"CAPI circuit breaker: reached error threshold (${contentApi.circuitBreakerErrorThreshold}). Breaker is OPEN!")
+  )
 
-  circuitBreaker.onHalfOpen({
-    log.info("Reset timeout finished. Entered half open state for Content API Client circuit breaker.")
-  })
+  circuitBreaker.onHalfOpen(
+    log.info(s"CAPI circuit breaker: Reset timeout (${contentApi.circuitBreakerResetTimeout}) finished. Entered half open state.")
+  )
 
-  circuitBreaker.onClose({
-    log.info("Content API Client looks healthy again, circuit breaker is closed.")
-  })
+  circuitBreaker.onClose(
+    log.info("CAPI circuit breaker: Content API Client looks healthy again, circuit breaker is closed.")
+  )
 
-  override def fetch(url: String)(implicit executionContext: ExecutionContext) = {
+  override def fetch(url: String)(implicit executionContext: ExecutionContext): Future[Array[Byte]] = {
     if (CircuitBreakerSwitch.isSwitchedOn) {
       circuitBreaker.withCircuitBreaker(super.fetch(url)(executionContext))
     } else {
@@ -183,21 +183,21 @@ class ContentApiClient(httpClient: HttpClient) extends ApiQueryDefaults {
     thriftClient
   }
 
-  def item(id: String) = getClient.item(id)
-  def tags = getClient.tags
-  def search = getClient.search
-  def sections = getClient.sections
-  def editions = getClient.editions
+  def item(id: String): ItemQuery = getClient.item(id)
+  def tags: TagsQuery = getClient.tags
+  def search: SearchQuery = getClient.search
+  def sections: SectionsQuery = getClient.sections
+  def editions: EditionsQuery = getClient.editions
 
-  def getResponse(itemQuery: ItemQuery)(implicit context: ExecutionContext) = getClient.getResponse(itemQuery)
+  def getResponse(itemQuery: ItemQuery)(implicit context: ExecutionContext): Future[ItemResponse] = getClient.getResponse(itemQuery)
 
-  def getResponse(searchQuery: SearchQuery)(implicit context: ExecutionContext) = getClient.getResponse(searchQuery)
+  def getResponse(searchQuery: SearchQuery)(implicit context: ExecutionContext): Future[SearchResponse] = getClient.getResponse(searchQuery)
 
-  def getResponse(tagsQuery: TagsQuery)(implicit context: ExecutionContext) = getClient.getResponse(tagsQuery)
+  def getResponse(tagsQuery: TagsQuery)(implicit context: ExecutionContext): Future[TagsResponse] = getClient.getResponse(tagsQuery)
 
-  def getResponse(sectionsQuery: SectionsQuery)(implicit context: ExecutionContext) = getClient.getResponse(sectionsQuery)
+  def getResponse(sectionsQuery: SectionsQuery)(implicit context: ExecutionContext): Future[SectionsResponse] = getClient.getResponse(sectionsQuery)
 
-  def getResponse(editionsQuery: EditionsQuery)(implicit context: ExecutionContext) = getClient.getResponse(editionsQuery)
+  def getResponse(editionsQuery: EditionsQuery)(implicit context: ExecutionContext): Future[EditionsResponse] = getClient.getResponse(editionsQuery)
 }
 
 // The Admin server uses this PreviewContentApi to check the preview environment.

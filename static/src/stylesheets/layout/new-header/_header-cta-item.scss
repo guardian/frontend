@@ -1,0 +1,64 @@
+.header-cta-item {
+    display: none;
+    overflow: hidden;
+
+    @include mq(mobile) {
+        display: block;
+    }
+
+    &:hover,
+    &:focus {
+        text-decoration: none;
+        color: currentColor;
+    }
+
+    &:before {
+        border-top: $gs-baseline * 4 solid $news-main-2;
+        border-left: $gs-gutter / 4 solid transparent;
+        border-right: $gs-gutter solid transparent;
+        content: '';
+        left: 1px;
+        position: absolute;
+        right: 0;
+        top: -$gs-baseline / 2;
+        transform: rotate(-3deg);
+        z-index: 1;
+
+        @include mq(mobileMedium) {
+            border-top-width: ($gs-baseline * 4) + ($gs-baseline / 2);
+        }
+
+        @include mq(tablet) {
+            border-top-width: ($gs-baseline * 5) + ($gs-baseline / 2);
+        }
+    }
+}
+
+.header-cta-item__label {
+    color: $guardian-brand-dark;
+    display: block;
+    font-family: 'Guardian Egyptian Web', 'Guardian Text Egyptian Web', Georgia, serif;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: .95;
+    padding: 10px 23px 12px 12px;
+    position: relative;
+    z-index: 2;
+
+    @include mq(mobileMedium) {
+        font-size: 14px;
+        padding-top: 14px;
+    }
+
+    @include mq(tablet) {
+        font-size: 18px;
+        font-weight: 900;
+        padding-left: 16px;
+        padding-right: 27px;
+        padding-top: 18px;
+    }
+}
+
+.header-cta-item__new-line {
+    display: block;
+}

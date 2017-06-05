@@ -7,7 +7,7 @@ define([
         {
             id: 'BookmarksEmailVariants2',
             start: '2017-03-31',
-            end: '2017-05-30',
+            end: '2017-06-19',
             author: 'David Furey',
             audience: 1,
             audienceOffset: 0,

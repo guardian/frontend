@@ -14,14 +14,14 @@ import { closeDisabledSlots } from 'commercial/modules/close-disabled-slots';
 import prepareGoogletag from 'commercial/modules/dfp/prepare-googletag';
 import prepareSonobiTag from 'commercial/modules/dfp/prepare-sonobi-tag';
 import prepareSwitchTag from 'commercial/modules/dfp/prepare-switch-tag';
-import { fillAdvertSlots } from 'commercial/modules/dfp/fill-advert-slots';
 import hostedAbout from 'commercial/modules/hosted/about';
 import { initHostedVideo } from 'commercial/modules/hosted/video';
 import hostedGallery from 'commercial/modules/hosted/gallery';
-import hostedOJCarousel
-    from 'commercial/modules/hosted/onward-journey-carousel';
-import hostedOnward from 'commercial/modules/hosted/onward';
-import liveblogAdverts from 'commercial/modules/liveblog-adverts';
+import {
+    initHostedCarousel,
+} from 'commercial/modules/hosted/onward-journey-carousel';
+import { loadOnwardComponent } from 'commercial/modules/hosted/onward';
+import { initLiveblogAdverts } from 'commercial/modules/liveblog-adverts';
 import stickyTopBanner from 'commercial/modules/sticky-top-banner';
 import thirdPartyTags from 'commercial/modules/third-party-tags';
 import paidforBand from 'commercial/modules/paidfor-band';
@@ -34,31 +34,37 @@ import {
     primaryBaseline,
 } from 'commercial/modules/dfp/performance-logging';
 import { trackPerformance } from 'common/modules/analytics/google';
-import userFeatures from 'commercial/modules/user-features';
+import { commercialFeatures } from 'commercial/modules/commercial-features';
 
 const commercialModules: Array<Array<any>> = [
     ['cm-highMerch', highMerch.init],
     ['cm-thirdPartyTags', thirdPartyTags.init],
-    ['cm-prepare-sonobi-tag', prepareSonobiTag.init, true],
-    ['cm-prepare-switch-tag', prepareSwitchTag.init, true],
-    ['cm-articleAsideAdverts', articleAsideAdvertsInit, true],
     ['cm-prepare-googletag', prepareGoogletag.init, true],
-    ['cm-articleBodyAdverts', articleBodyAdvertsInit],
-    ['cm-liveblogAdverts', liveblogAdverts.init, true],
     ['cm-closeDisabledSlots', closeDisabledSlots],
-    ['cm-stickyTopBanner', stickyTopBanner.init],
-    ['cm-fill-advert-slots', fillAdvertSlots, true],
     ['cm-paidContainers', paidContainers],
     ['cm-paidforBand', paidforBand.init],
 ];
+
+if (!commercialFeatures.adFree) {
+    commercialModules.push(
+        ['cm-prepare-sonobi-tag', prepareSonobiTag.init, true],
+        ['cm-prepare-switch-tag', prepareSwitchTag.init, true],
+        ['cm-articleAsideAdverts', articleAsideAdvertsInit, true],
+        ['cm-articleBodyAdverts', articleBodyAdvertsInit],
+        ['cm-liveblogAdverts', initLiveblogAdverts, true],
+        ['cm-stickyTopBanner', stickyTopBanner.init],
+        ['cm-paidContainers', paidContainers],
+        ['cm-paidforBand', paidforBand.init]
+    );
+}
 
 if (config.page.isHosted) {
     commercialModules.push(
         ['cm-hostedAbout', hostedAbout.init],
         ['cm-hostedVideo', initHostedVideo, true],
         ['cm-hostedGallery', hostedGallery.init],
-        ['cm-hostedOnward', hostedOnward.init, true],
-        ['cm-hostedOJCarousel', hostedOJCarousel.init]
+        ['cm-hostedOnward', loadOnwardComponent, true],
+        ['cm-hostedOJCarousel', initHostedCarousel]
     );
 }
 
@@ -95,11 +101,6 @@ const loadModules = (modules, baseline): Promise<void> => {
 };
 
 export default (): Promise<void> => {
-    if (config.switches.adFreeMembershipTrial && userFeatures.isAdFreeUser()) {
-        closeDisabledSlots(true);
-        return Promise.resolve();
-    }
-
     markTime('commercial start');
     catchErrorsWithContext([
         [

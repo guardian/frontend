@@ -34,7 +34,7 @@ trait LinkTo extends Logging {
 
   case class ProcessedUrl(url: String, shouldNoFollow: Boolean = false)
 
-  def processUrl(url: String, edition: Edition) = url match {
+  def processUrl(url: String, edition: Edition): ProcessedUrl = url match {
     case `url` if url.startsWith("//") => ProcessedUrl(url)
     case RssPath(path, format) => ProcessedUrl(urlFor(path, edition) + format)
     case GuardianUrl(_, path) => ProcessedUrl(urlFor(path, edition))
@@ -56,9 +56,10 @@ trait LinkTo extends Logging {
 
   def redirectWithParameters(request: Request[AnyContent], realPath: String): Result = {
     val params = if (request.hasParameters) s"?${request.rawQueryString}" else ""
-    Redirect(request.path.endsWith(".json") match {
-      case true => s"/$realPath.json$params"
-      case _ => s"/$realPath$params"
+    Redirect(if (request.path.endsWith(".json")) {
+      s"/$realPath.json$params"
+    } else {
+      s"/$realPath$params"
     })
   }
 }
@@ -138,7 +139,7 @@ trait AmpLinkTo extends LinkTo {
 
 object AmpLinkTo extends AmpLinkTo {
 
-  override def processUrl(url: String, edition: Edition) = {
+  override def processUrl(url: String, edition: Edition): ProcessedUrl = {
     val ampUrl = if (host.isEmpty) s"$url?amp=1" else url
     super.processUrl(ampUrl, edition)
   }

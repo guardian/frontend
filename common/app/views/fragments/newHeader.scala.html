@@ -1,72 +1,75 @@
 @(page: model.Page)(implicit request: RequestHeader)
 
 @import conf.Configuration
+@import conf.switches.Switches.NewTabletHeader
 @import common.{LinkTo, NewNavigation, Edition}
 @import views.support.RenderClasses
 
 <header class="@RenderClasses(Map(
-            "mobile-only" -> !mvt.ABNewDesktopHeader.isParticipating
+            "new-header--mvt-desktop" -> mvt.ABNewDesktopHeader.isParticipating,
+            "new-header--switch-on-tablet" -> NewTabletHeader.isSwitchedOn
         ), "new-header")"
         role="banner">
     @defining(NewNavigation.SubSectionLinks.getSectionOrTagId(page)) { id =>
         @defining(
             NewNavigation.SectionLinks.getPillarName(id)
         ) { case (currentTopLevelSection) =>
-            <div class="new-header__inner gs-container">
+            <nav class="new-header__inner gs-container"
+                 data-component="nav2"
+                 aria-label="Guardian sections">
                 <a href="@LinkTo{/}"
-                   class="new-header__logo-wrapper"
-                   tabindex="0"
+                   class="new-header__logo"
                    data-link-name="nav2 : logo">
                     <span class="u-h">The Guardian - Back to home</span>
-                    @fragments.inlineSvg("guardian-logo-160", "logo", List("new-header__logo"))
+                    @fragments.inlineSvg("guardian-logo-160", "logo", List(
+                        "new-header__logo"
+                    ))
                 </a>
 
-                @defining(
-                    Edition(request).id.toLowerCase()
-                ) { editionId =>
-                    <a class="header__supporter-cta"
-                        data-link-name="nav2 : supporter-cta"
-                        data-edition="@{editionId}"
-                        href="@{Configuration.id.membershipUrl}/@{editionId}/supporter?INTCMP=mem_@{editionId}_web_newheader_trapezoid">
-                        Become a <span>Supporter</span>
-                    </a>
-                }
+                <div class="new-header__cta">
+                    @defining(
+                        Edition(request).id.toLowerCase()
+                    ) { editionId =>
+                        <a class="header-cta-item"
+                            data-link-name="nav2 : supporter-cta"
+                            data-edition="@{editionId}"
+                            href="@{Configuration.id.membershipUrl}/@{editionId}/supporter?INTCMP=mem_@{editionId}_web_newheader_trapezoid">
+                            <span class="header-cta-item__label">
+                                Become a <span class="header-cta-item__new-line">Supporter</span>
+                            </span>
+                        </a>
+                    }
+                </div>
 
-                <nav class="new-header__nav"
-                     data-component="nav2"
-                     role="navigation"
-                     aria-label="Guardian sections">
+                <ul class="pillars">
+                    @NewNavigation.PrimaryLinks.map { link =>
+                        <li class="pillars__item">
+                            <a class="@RenderClasses(Map(
+                                "pillar-link" -> true,
+                                "pillar-link--current-section" -> ((link.title == currentTopLevelSection) && !page.metadata.hasSlimHeader)))"
+                                href="@LinkTo(link.url)"
+                                data-link-name="nav2 : primary : @link.title">
+                                    @link.title
+                            </a>
+                        </li>
+                    }
+                </ul>
 
-                    <ul class="new-header__nav-primary-links">
-                        @NewNavigation.PrimaryLinks.map { link =>
-                            <li class="new-header__nav-link-item">
-                                <a class="@RenderClasses(Map(
-                                    "new-header__nav-link" -> true,
-                                    "section-indicator" -> ((link.title == currentTopLevelSection) && !page.metadata.hasSlimHeader)))"
-                                    href="@LinkTo(link.url)"
-                                    data-link-name="nav2 : primary : @link.title">
-                                        @link.title
-                                </a>
-                            </li>
-                        }
-                    </ul>
+                <label for="main-menu-toggle"
+                       class="veggie-burger js-change-link"
+                       tabindex="0"
+                       data-link-name="nav2 : veggie-burger : show">
+                    <span class="veggie-burger__icon"></span>
+                    <span class="veggie-burger__label">Menu</span>
+                </label>
 
-                    <label for="main-menu-toggle"
-                           class="new-header__nav__menu-button js-change-link"
-                           tabindex="0"
-                           data-link-name="nav2 : veggie-burger : show">
-                        <span class="new-header__veggie-burger-icon"></span>
-                        <span class="u-h">Menu</span>
-                    </label>
+                <input type="checkbox"
+                       id="main-menu-toggle"
+                       class="veggie-burger-fallback js-enhance-checkbox"
+                       aria-controls="main-menu">
 
-                    <input type="checkbox"
-                           id="main-menu-toggle"
-                           class="new-header__nav-trigger js-enhance-checkbox"
-                           aria-controls="main-menu">
-
-                    @fragments.nav.newHeaderMenu()
-                </nav>
-            </div>
+                @fragments.nav.newHeaderMenu()
+            </nav>
 
             @if(!page.metadata.hasSlimHeader) {
                 @fragments.nav.subNav(page)

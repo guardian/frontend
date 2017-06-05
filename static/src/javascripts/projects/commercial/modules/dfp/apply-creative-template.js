@@ -5,17 +5,18 @@ import reportError from 'lib/report-error';
 
 import frame from 'commercial/modules/creatives/frame';
 import revealer from 'commercial/modules/creatives/revealer';
-import fabric from 'commercial/modules/creatives/fabric-v1';
+import { FabricV1 } from 'commercial/modules/creatives/fabric-v1';
 import fabricExpand from 'commercial/modules/creatives/fabric-expanding-v1';
-import fabricExpandVideo
-    from 'commercial/modules/creatives/fabric-expandable-video-v2';
+import {
+    fabricExpandVideo,
+} from 'commercial/modules/creatives/fabric-expandable-video-v2';
 import fabricVideo from 'commercial/modules/creatives/fabric-video';
 import scrollable from 'commercial/modules/creatives/scrollable-mpu-v2';
 
 const creativeLookup: Object = {
     frame,
     revealer,
-    'fabric-v1': fabric,
+    'fabric-v1': FabricV1,
     'fabric-expanding-v1': fabricExpand,
     'fabric-expandable-video-v2': fabricExpandVideo,
     'fabric-video': fabricVideo,

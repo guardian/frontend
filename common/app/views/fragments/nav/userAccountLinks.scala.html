@@ -5,50 +5,58 @@
 
 @if(IdentityProfileNavigationSwitch.isSwitchedOn) {
 
-    <li class="navigation-group__item navigation-group__item--user-account js-show-user-account-links">
-        <div class="user-account__login">
-            <a href="@Configuration.id.url/signin?INTCMP=DOTCOM_HEADER_SIGNIN" data-link-name="nav2 : sign in">
-                Sign in/up
-            </a>
-        </div>
+    <li class="menu-item js-navigation-sign-in">
+        <a href="@Configuration.id.url/signin?INTCMP=DOTCOM_HEADER_SIGNIN"
+           data-link-name="nav2 : sign in"
+           class="menu-item__title">
+            Sign in/up
+        </a>
+    </li>
 
-        <div class="user-account__signed-in">
-            <details>
-                <summary class="main-navigation__item__button user-account__signed-in__label"
-                    data-link-name="nav2 : my account">
+    <li class="menu-item u-h js-navigation-account-details">
+        <details>
+            <summary class="menu-item__title"
+                     data-link-name="nav2 : my account">
+                <i class="menu-item__toggle"></i>
+                my account
+            </summary>
 
-                    <i class="main-menu__icon main-menu__icon--chevron personalisation__icon"></i>
-                    my account
-                </summary>
-
-                <ul class="personalisation__links">
-                    <li class="personalisation__link">
-                        <a data-link-name="nav2 : comment activity" class="js-add-comment-activity-link" hidden>
-                            Comment activity
-                        </a>
-                    </li>
-                    <li class="personalisation__link">
-                        <a href="@Configuration.id.url/public/edit" data-link-name="nav2 : edit profile">
-                                Edit profile
-                        </a>
-                    </li>
-                    <li class="personalisation__link">
-                        <a href="@Configuration.id.url/email-prefs" data-link-name="nav2 : email preferences">
-                            Email preferences
-                        </a>
-                    </li>
-                    <li class="personalisation__link">
-                        <a href="@Configuration.id.url/password/change" data-link-name="nav2 : change password">
-                            Change password
-                        </a>
-                    </li>
-                    <li class="personalisation__link">
-                        <a href="@Configuration.id.url/signout" data-link-name="nav2 : sign out">
-                            Sign out
-                        </a>
-                    </li>
-                </ul>
-            </details>
-        </div>
+            <ul class="menu-group menu-group--lowlight">
+                <li class="menu-item">
+                    <a data-link-name="nav2 : comment activity"
+                       class="menu-item__title u-h js-add-comment-activity-link">
+                        Comment activity
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="@Configuration.id.url/public/edit"
+                       data-link-name="nav2 : edit profile"
+                       class="menu-item__title">
+                            Edit profile
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="@Configuration.id.url/email-prefs"
+                       data-link-name="nav2 : email preferences"
+                       class="menu-item__title">
+                        Email preferences
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="@Configuration.id.url/password/change"
+                       data-link-name="nav2 : change password"
+                       class="menu-item__title">
+                        Change password
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="@Configuration.id.url/signout"
+                       data-link-name="nav2 : sign out"
+                       class="menu-item__title">
+                        Sign out
+                    </a>
+                </li>
+            </ul>
+        </details>
     </li>
 }

@@ -276,7 +276,7 @@ define([
 
             initPinterest: function () {
                 if (/Article|LiveBlog|Gallery|Video/.test(config.page.contentType)) {
-                    pinterest();
+                    pinterest.initPinterest();
                 }
             },
 
@@ -315,7 +315,7 @@ define([
                 ['c-analytics', modules.loadAnalytics],
 
                 ['c-cookies-banner', cookiesBanner.init],
-                ['c-identity', identity],
+                ['c-identity', identity.init],
                 ['c-adverts', userAdTargeting.requestUserSegmentsFromId],
                 ['c-discussion', modules.initDiscussion],
                 ['c-test-cookie', modules.testCookie],
@@ -342,7 +342,7 @@ define([
                 ['c-public-api', modules.initPublicApi],
                 ['c-tech-feedback', techFeedback],
                 ['c-media-listeners', mediaListener],
-                ['c-accessibility-prefs', accessibilityPrefs],
+                ['c-accessibility-prefs', accessibilityPrefs.initAccessibilityPreferences],
                 ['c-pinterest', modules.initPinterest],
                 ['c-hidden-share-toggle', hiddenShareToggle],
                 ['c-show-membership-engagement-banner', modules.membershipEngagementBanner],

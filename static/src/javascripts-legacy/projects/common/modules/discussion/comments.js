@@ -15,8 +15,7 @@ define([
     'common/modules/discussion/whole-discussion',
     'common/modules/ui/relativedates',
     'common/modules/user-prefs',
-    'common/views/svgs',
-    'common/modules/experiments/utils',
+    'common/views/svgs'
 ], function(
     bean,
     bonzo,
@@ -34,8 +33,7 @@ define([
     WholeDiscussion,
     relativedates,
     userPrefs,
-    svgs,
-    abUtils
+    svgs
 ) {
 'use strict';
 
@@ -385,9 +383,6 @@ Comments.prototype.replyToComment = function(e) {
         $replyToComment = bonzo(replyToComment),
         replyToBody = qwery(this.getClass('commentBody'), replyToComment)[0].innerHTML,
         replyToTimestamp = qwery(this.getClass('commentTimestampJs'), replyToComment)[0].innerHTML,
-        testVariant = abUtils.getTestVariantId('PaidCommentingInternal'),
-        hasPaidCommentingCookie = document.cookie.indexOf('GU_PDCOMCTA') !== -1,
-        isPaidCommenting = (testVariant && testVariant !== 'notintest' && !hasPaidCommentingCookie) || false,
         commentBox = new CommentBox({
             discussionId: this.options.discussionId,
             premod: this.user.privateFields.isPremoderated,
@@ -399,9 +394,7 @@ Comments.prototype.replyToComment = function(e) {
                 body: replyToBody,
                 timestamp: replyToTimestamp
             },
-            focus: true,
-            paymentRequired: isPaidCommenting,
-            testVariant: testVariant
+            focus: true
         });
 
     // this is a bit toffee, but we don't have .parents() in bonzo

@@ -1,0 +1,30 @@
+@(category: String)(implicit request: RequestHeader)
+
+<div>
+
+    <form action="tech-feedback/send" method="post">
+
+        <input type="hidden" name="category" value="@category" />
+
+        <input class="feedback__element" name="extra" type="hidden" value="none available"/>
+
+        <div class="feedback__element">
+            <label for="fb-desc-entry">Description</label>
+            <textarea name="body" id="fb-desc-entry" class="feedback__entry feedback__input--wide feedback__textarea" placeholder="Please provide a description of your problem or feedback" required></textarea>
+        </div>
+        <div class="feedback__element">
+            <label for="fb-name-entry">Name</label>
+            <input name="name" class="feedback__entry feedback__input--wide" id="fb-name-entry" type="text" value="" placeholder="Alex Smith" required>
+        </div>
+        <div class="feedback__element">
+            <label for="fb-email-entry">Email</label>
+            <input name="user" class="feedback__entry feedback__input--wide" id="fb-email-entry" type="email" value="" placeholder="E.g. alexsmith@@example.com" required>
+        </div>
+        <div class="feedback__element">
+            <button class="button button--large button--primary" id="" type="submit">Submit Feedback</button>
+        </div>
+
+    </form>
+
+</div>
+

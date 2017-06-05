@@ -494,7 +494,6 @@ import collection.JavaConversions._
         findFirst("aside").getAttribute("role") should be("complementary")
         findFirst("header").getAttribute("role") should be("banner")
         findFirst(".l-footer__secondary").getAttribute("role") should be("contentinfo")
-        findFirst("nav").getAttribute("role") should be("navigation")
         findFirst("nav").getAttribute("aria-label") should not be empty
         browser.find("nav", 1).getAttribute("role") should be("navigation")
         browser.find("nav", 1).getAttribute("aria-label") should not be empty

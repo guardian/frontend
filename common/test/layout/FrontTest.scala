@@ -17,7 +17,7 @@ class FrontTest extends FlatSpec with Matchers with OneAppPerSuite {
     FaciaContentConvert.contentToFaciaContent(emptyApiContent.copy(id = theUrl, webUrl = theUrl))
   }
 
-  def dreamSnapWithUrl(theUrl: String) = {
+  def dreamSnapWithUrl(theUrl: String): LatestSnap = {
     val content: ApiContent = ApiContent(
       id = theUrl,
       sectionId = None,
@@ -46,7 +46,9 @@ class FrontTest extends FlatSpec with Matchers with OneAppPerSuite {
       image = None,
       properties = ContentProperties.fromResolvedMetaData(ResolvedMetaData.Default),
       byline = None,
-      kicker = None)
+      kicker = None,
+      brandingByEdition = Map.empty
+    )
 
     LatestSnap.make(fapiLatestSnap)
   }

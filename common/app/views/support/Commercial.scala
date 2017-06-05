@@ -20,7 +20,7 @@ object Commercial {
     case _ => true
   }
 
-  def articleAsideOptionalSizes(implicit request: RequestHeader) = Edition(request).id match {
+  def articleAsideOptionalSizes(implicit request: RequestHeader): Seq[String] = Edition(request).id match {
     case "US" => Seq("300,1050")
     case _   => Seq.empty
   }
@@ -115,29 +115,14 @@ object Commercial {
 
   object container {
 
-    def shouldRenderAsPaidContainer(isPaidFront: Boolean,
-                                    container: FaciaContainer,
-                                    optContainerModel: Option[ContainerModel]): Boolean = {
+    def shouldRenderAsPaidContainer(isPaidFront: Boolean, optContainerModel: Option[ContainerModel]): Boolean = {
 
-      def isPaid(containerModel: ContainerModel): Boolean = {
-
-        val isPaidContainer = {
-          containerModel.branding exists {
-            case PaidMultiSponsorBranding => true
-            case b: Branding => b.isPaid
-          }
-        }
-
-        val isAllPaidContent = {
-          val content = containerModel.content
-          val cards = content.initialCards ++ content.showMoreCards
-          cards.nonEmpty && cards.forall(_.branding.exists(_.isPaid))
-        }
-
-        isPaidContainer || isAllPaidContent
+      def isPaid(containerModel: ContainerModel): Boolean = containerModel.branding exists {
+        case PaidMultiSponsorBranding => true
+        case b: Branding => b.isPaid
       }
 
-      !isPaidFront && container.showBranding && optContainerModel.exists(isPaid)
+      !isPaidFront && optContainerModel.exists(isPaid)
     }
 
     def numberOfItems(container: FaciaContainer): Int = container.containerLayout.map {

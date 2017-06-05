@@ -28,7 +28,7 @@ trait OAuthLoginController extends Controller with ExecutionContexts with implic
   /*
   Redirect to Google with anti forgery token (that we keep in session storage - note that flashing is NOT secure)
    */
-  def loginAction = Action.async { implicit request =>
+  def loginAction: Action[AnyContent] = Action.async { implicit request =>
     googleAuthConfig(request).flatMap(overrideRedirectUrl).map { config =>
       val antiForgeryToken = GoogleAuth.generateAntiForgeryToken()
       GoogleAuth.redirectToGoogle(config, antiForgeryToken).map {
@@ -53,7 +53,7 @@ trait OAuthLoginController extends Controller with ExecutionContexts with implic
   We must ensure we have the anti forgery token from the loginAction call and pass this into a verification call which
   will return a Future[UserIdentity] if the authentication is successful. If unsuccessful then the Future will fail.
    */
-  def oauth2Callback = Action.async { implicit request =>
+  def oauth2Callback: Action[AnyContent] = Action.async { implicit request =>
     googleAuthConfig(request).flatMap(overrideRedirectUrl).map { config =>
       request.session.get(ANTI_FORGERY_KEY) match {
         case None =>

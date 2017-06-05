@@ -35,7 +35,7 @@ abstract class Edition(
   def navigation: Seq[NavItem]
   def briefNav: Seq[NavItem]
 
-  def isEditionalised(id: String) = editionalisedSections.contains(id)
+  def isEditionalised(id: String): Boolean = editionalisedSections.contains(id)
 
   def matchesCookie(cookieValue: String): Boolean = id.equalsIgnoreCase(cookieValue)
 
@@ -91,7 +91,7 @@ object Edition {
   def othersByHomepage(path: String): Seq[Edition] = all.find(_.homePagePath == path)
     .map(_.id).map(othersById).getOrElse(Nil)
 
-  def byId(id: String) = all.find(_.id.equalsIgnoreCase(id))
+  def byId(id: String): Option[Edition] = all.find(_.id.equalsIgnoreCase(id))
 
   implicit val editionWrites: Writes[Edition] = new Writes[Edition] {
     def writes(edition: Edition): JsValue = Json.obj("id" -> edition.id)
@@ -109,12 +109,11 @@ object Edition {
 
   def otherPagesFor(request: RequestHeader): Seq[EditionLink] = {
     val path = request.path
-    val edition = Edition(request)
     path match {
       case EditionalisedId(editionId, section) if Edition.defaultEdition.isEditionalised(section.drop(1)) =>
         val links = Edition.othersById(editionId).map(EditionLink(_, section))
         links.filter(link => link.edition.isEditionalised(link.path.drop(1)))
-      case EditionalisedFront(editionId) =>
+      case EditionalisedFront(_) =>
         Edition.othersByHomepage(path).map(EditionLink(_, "/"))
       case _ => Nil
     }

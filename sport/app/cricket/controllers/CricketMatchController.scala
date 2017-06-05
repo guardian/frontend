@@ -2,8 +2,8 @@ package cricket.controllers
 
 import common._
 import cricketModel.Match
-import cricketPa.PaFeed.dateFormat
-import cricketPa.{CricketTeam, CricketTeams}
+import conf.cricketPa.PaFeed.dateFormat
+import conf.cricketPa.{CricketTeam, CricketTeams}
 import jobs.CricketStatsJob
 import model.Cached.RevalidatableResult
 import model._

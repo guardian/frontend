@@ -16,7 +16,7 @@ resolvers ++= Seq(
   Resolver.url("bintray-sbt-plugin-releases", url("https://dl.bintray.com/content/sbt/sbt-plugin-releases"))(Resolver.ivyStylePatterns)
 )
 
-addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.5.10")
+addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.5.13")
 
 addSbtPlugin("com.typesafe.sbt" % "sbt-native-packager" % "1.0.3")
 

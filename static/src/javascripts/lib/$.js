@@ -9,7 +9,8 @@ bonzo.aug({
     },
 });
 
-const $ = (selector: ?string | ?Node, context: ?Element | ?string): bonzo =>
+// #? Use of `Node` throughout this file may need a second look?
+const $ = (selector: ?string | ?Node, context: ?Node | ?string): bonzo =>
     bonzo(qwery(selector, context));
 
 $.create = (s: string): bonzo => bonzo(bonzo.create(s));

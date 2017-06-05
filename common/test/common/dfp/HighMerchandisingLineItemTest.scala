@@ -36,7 +36,7 @@ class HighMerchandisingLineItemTest extends FlatSpec with Matchers {
       )
    }
 
-    override def isTargetedByHighMerch(adUnitSuffix:String, tags: Seq[Tag],edition:Edition,url:String) = {
+    override def isTargetedByHighMerch(adUnitSuffix:String, tags: Seq[Tag], edition:Edition, url:String): Boolean = {
         targetedHighMerchandisingLineItems.exists(_.matchesPageTargeting(adUnitSuffix, tags, edition, url))
     }
   }

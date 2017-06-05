@@ -9,11 +9,10 @@ import com.gu.targeting.client.Campaign
 import common._
 import conf.Configuration
 import conf.switches.Switches._
-import cricketPa.CricketTeams
+import conf.cricketPa.CricketTeams
 import layout.ContentWidths.GalleryMedia
 import model.content.{Atoms, MediaAssetPlatform, MediaAtom, Quiz}
 import model.pressed._
-import mvt.ABNewRecipeDesign
 import org.jsoup.Jsoup
 import org.jsoup.safety.Whitelist
 import org.scala_tools.time.Imports._
@@ -81,8 +80,10 @@ final case class Content(
   lazy val isImmersive = fields.displayHint.contains("immersive") || isGallery || tags.isTheMinuteArticle || isExplore || isPhotoEssay
   lazy val isPaidContent: Boolean = tags.tags.exists{ tag => tag.id == "tone/advertisement-features" }
   lazy val campaigns: List[Campaign] = _root_.commercial.targeting.CampaignAgent.getCampaignsForTags(tags.tags.map(_.id))
-  lazy val hasRecipeAtom: Boolean = atoms.fold(false)(a => a.recipes.nonEmpty)
-  lazy val showNewRecipeDesign: Boolean = hasRecipeAtom && ABNewRecipeDesign.switch.isSwitchedOn
+
+  lazy val isAmpSupportedArticleType: Boolean = (tags.isArticle && !tags.isLiveBlog) && !isImmersive && !tags.isQuiz
+  lazy val shouldAmpifyArticles: Boolean = isAmpSupportedArticleType && AmpArticleSwitch.isSwitchedOn
+  lazy val shouldAmpifyLiveblogs: Boolean = tags.isLiveBlog && AmpLiveBlogSwitch.isSwitchedOn
 
   lazy val hasSingleContributor: Boolean = {
     (tags.contributors.headOption, trail.byline) match {
@@ -212,8 +213,7 @@ final case class Content(
     ("isImmersive", JsBoolean(isImmersive)),
     ("isExplore", JsBoolean(isExplore)),
     ("isPaidContent", JsBoolean(isPaidContent)),
-    ("campaigns", JsArray(campaigns.map(Campaign.toJson))),
-    ("showNewRecipeDesign", JsBoolean(showNewRecipeDesign))
+    ("campaigns", JsArray(campaigns.map(Campaign.toJson)))
 
   )
 
@@ -310,11 +310,11 @@ object Content {
     val content = make(apiContent)
 
     apiContent match {
-      case article if apiContent.isLiveBlog || apiContent.isArticle || apiContent.isSudoku => Article.make(content)
-      case gallery if apiContent.isGallery => Gallery.make(content)
-      case video if apiContent.isVideo => Video.make(content)
-      case audio if apiContent.isAudio => Audio.make(content)
-      case picture if apiContent.isImageContent => ImageContent.make(content)
+      case _ if apiContent.isLiveBlog || apiContent.isArticle || apiContent.isSudoku => Article.make(content)
+      case _ if apiContent.isGallery => Gallery.make(content)
+      case _ if apiContent.isVideo => Video.make(content)
+      case _ if apiContent.isAudio => Audio.make(content)
+      case _ if apiContent.isImageContent => ImageContent.make(content)
       case _ => GenericContent(content)
     }
   }
@@ -405,7 +405,6 @@ object Article {
 
     val contentType = if (content.tags.isLiveBlog) GuardianContentTypes.LiveBlog else GuardianContentTypes.Article
     val section = content.metadata.sectionId
-    val id = content.metadata.id
     val fields = content.fields
     val bookReviewIsbn = content.isbn.map { i: String => Map("isbn" -> JsString(i)) }.getOrElse(Map())
 
@@ -446,8 +445,7 @@ object Article {
       javascriptConfigOverrides = javascriptConfig,
       opengraphPropertiesOverrides = opengraphProperties,
       shouldHideHeaderAndTopAds = (content.tags.isTheMinuteArticle || (content.isImmersive && (content.elements.hasMainMedia || content.fields.main.nonEmpty))) && content.tags.isArticle,
-      contentWithSlimHeader = (content.isImmersive && content.tags.isArticle),
-      isNewRecipeDesign = content.showNewRecipeDesign
+      contentWithSlimHeader = (content.isImmersive && content.tags.isArticle)
     )
   }
 
@@ -489,9 +487,8 @@ final case class Article (
   val isLiveBlog: Boolean = content.tags.isLiveBlog && content.fields.blocks.nonEmpty
   val isTheMinute: Boolean = content.tags.isTheMinuteArticle
   val isImmersive: Boolean = content.isImmersive
-  var isPhotoEssay : Boolean = content.isPhotoEssay
+  val isPhotoEssay: Boolean = content.isPhotoEssay
   val isExplore: Boolean = content.isExplore
-  val showNewRecipeDesign: Boolean = content.showNewRecipeDesign
   lazy val hasVideoAtTop: Boolean = soupedBody.body().children().headOption
     .exists(e => e.hasClass("gu-video") && e.tagName() == "video")
 
@@ -512,8 +509,6 @@ object Audio {
   def make(content: Content): Audio = {
 
     val contentType = GuardianContentTypes.Audio
-    val fields = content.fields
-    val id = content.metadata.id
     val section = content.metadata.sectionId
     val javascriptConfig: Map[String, JsValue] = Map(
       "isPodcast" -> JsBoolean(content.tags.isPodcast))
@@ -571,10 +566,8 @@ object Video {
   def make(content: Content): Video = {
 
     val contentType = GuardianContentTypes.Video
-    val fields = content.fields
     val elements = content.elements
     val section = content.metadata.sectionId
-    val id = content.metadata.id
     val source: Option[String] = elements.videos.find(_.properties.isMain).flatMap(_.videos.source)
 
     val javascriptConfig: Map[String, JsValue] = Map(
@@ -828,9 +821,7 @@ object Interactive {
     val content = Content(apiContent).content
     val contentType = GuardianContentTypes.Interactive
     val fields = content.fields
-    val tags = content.tags
     val section = content.metadata.sectionId
-    val id = content.metadata.id
 
     val metadata = content.metadata.copy(
       contentType = contentType,
@@ -885,7 +876,7 @@ final case class ImageContent(
 }
 
 object CrosswordContent {
-  def make(crossword: CrosswordData, apicontent: contentapi.Content) = {
+  def make(crossword: CrosswordData, apicontent: contentapi.Content): CrosswordContent = {
 
     val content = Content(apicontent)
     val contentType= GuardianContentTypes.Crossword

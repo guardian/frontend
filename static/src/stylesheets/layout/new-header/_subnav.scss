@@ -1,0 +1,63 @@
+.subnav {
+    background-color: $subnav-grey;
+    color: $neutral-4;
+    max-height: $gs-baseline * 3.4;
+    overflow: hidden;
+    padding: $gs-baseline / 3 $gs-gutter / 2;
+
+    @include mq(mobile) {
+        max-height: $gs-baseline * 3.5;
+        max-height: 13vw;
+    }
+
+    @include mq(mobileLandscape) {
+        padding: $gs-baseline / 2 0;
+    }
+
+    // Spacer to prevent text from sitting directly beneath the veggie burger
+    &:before {
+        content: '';
+        float: right;
+        width: $gutter-small + $veggie-burger-small - ($gs-gutter / 2);
+        height: 1px;
+
+        @include mq(mobileMedium) {
+            width: $gutter-medium + $veggie-burger-medium - ($gs-gutter / 2);
+        }
+
+        @include mq(mobileLandscape) {
+            width: $gutter-large + $veggie-burger-medium - ($gs-gutter / 2);
+        }
+    }
+}
+
+// TODO: reset list-style mixin
+.subnav__list {
+    line-height: 1;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    @include mq(mobileLandscape) {
+        padding-left: $gs-gutter;
+        padding-right: $gs-gutter;
+    }
+}
+
+.subnav__item {
+    display: inline-block;
+
+    > *:after {
+        content: '/';
+        color: rgba(255, 255, 255, .3);
+        display: inline-block;
+        font-size: 1em;
+        margin-left: -2px;
+        margin-right: -2px;
+        pointer-events: none;
+    }
+
+    &:last-child > *:after {
+        content: '';
+    }
+}

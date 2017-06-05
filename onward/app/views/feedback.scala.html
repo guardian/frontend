@@ -4,56 +4,65 @@
 
 @main(page){ } {
     <div class="l-side-margins">
-            <div class="content content--expired">
-                <header class="content__head">
-                    <div class="gs-container">
-                        <div class="content__main-column">
-                            <h1 itemprop="headline" class="content__headline">Report a technical issue</h1>
-                        </div>
+        <div class="content content--expired">
+            <header class="content__head">
+                <div class="gs-container">
+                    <div class="content__main-column">
+                        <h1 itemprop="headline" class="content__headline">Report a technical issue</h1>
                     </div>
-                </header>
-                <div class="content__main">
-                    <div class="gs-container">
-                        <div class="content__main-column content__main-column--expired">
-                            <div class="js-article__container u-cf">
-                                <div class="from-content-api" itemprop="articleBody">
-                                    <div class="from-content-api">
-                                        <p>Thanks for coming to report a technical issue with our web site.</p>
-                                        <h2>Self help</h2>
-                                        <p>If your problem includes the following</p>
-                                        <ul>
-                                            <li>crashing</li>
-                                            <li>reloading</li>
-                                            <li>very slow site access</li>
-                                        </ul>
-                                        <p>please learn about <a href="@LinkTo{/info/2015/sep/22/making-theguardiancom-work-best-for-you}">disabling optional features on our site</a></p>
-                                        <h2>Accessibility</h2>
-                                        <p>If you have an issue related to the accessibility of this website, please see our <a href="https://www.theguardian.com/help/accessibility-help">accessibility help page</a>.</p>
-                                        <h2>Contact us</h2>
-                                        <p>If you need help, please contact our user support desk at
-                                            @* Any link with mailto userhelp will be enhanced using the Javascript *@
-                                            <a data-link-name="tech feedback : mailto : userhelp" href="mailto:userhelp@@theguardian.com">
-                                                userhelp@@theguardian.com
-                                            </a> and someone should get back to you.
-                                        </p>
-                                        <p>
-                                            If you don't require any assistance but wish to report an issue to our developers, send comments to:
-                                            <a class="js-tech-feedback-mailto" data-link-name="tech feedback : mailto : dotcom" href="mailto:dotcom.feedback@@theguardian.com">
-                                                dotcom.feedback@@theguardian.com
-                                            </a>.<br>
-                                            <strong>We value and read all of the feedback that we receive, but we are unable to respond directly.</strong>
-                                        </p>
-                                        <p>Think you can fix it yourself? <a href="http://developers.theguardian.com/">Work for us</a>!</p>
+                </div>
+            </header>
+            <div class="content__main">
+                <div class="gs-container">
+                    <div class="content__main-column content__main-column--expired">
+                        <div class="js-article__container u-cf">
+                            <div class="from-content-api" itemprop="articleBody">
+                                <div class="from-content-api">
+
+                                    <h2>Contact us</h2>
+
+                                    <div class="feedback__element">
+                                        <label for="feedback-category">Please choose a service below </label>
+                                        <select id="feedback-category" class="feedback__select">
+                                            <option value="nothing">Please choose a selection...</option>
+                                            <option value="feedback-form-account">Help with my Guardian account</option>
+                                            <option value="feedback-form-website">Report a problem/give feedback on your website</option>
+                                            <option value="feedback-form-jobs">Unsubscribe from Jobs alerts/have other issues with my jobs account</option>
+                                            <option value="feedback-form-email">Manage my email preferences</option>
+                                            <option value="feedback-form-membership">Report a Memberships/subscriptions technical issue or give some feedback</option>
+                                            <option value="feedback-form-membership-billing">Membership payment or billing issues</option>
+                                            <option value="feedback-form-subs-billing">Subscriptions payment, billing or fulfillment issues</option>
+                                            <option value="feedback-form-adverts">Feedback about Adverts on your website/apps</option>
+                                            <option value="feedback-form-android">Help with my Android news app</option>
+                                            <option value="feedback-form-ios">Help with my iOS news app</option>
+                                            <option value="feedback-form-daily">Help with the daily edition on my iPad</option>
+                                            <option value="feedback-form-tablet">Help with the daily edition on my Android or Kindle Fire tablet</option>
+                                            <option value="feedback-form-windows">help with my Windows mobile news app</option>
+                                            <option value="feedback-form-editorial">Comment or query about an article</option>
+                                            <option value="feedback-form-discussion">Questions about commenting/moderation/community</option>
+                                            <option value="feedback-form-other">Other</option>
+                                        </select>
                                     </div>
+
+                                    @fragments.feedbackForms()
+
+                                    <p id="feedback__explainer"></p>
+
+                                    <small>
+                                        Or email us directly at <a data-link-name="tech feedback : mailto : userhelp" href="mailto:userhelp@@theguardian.com">userhelp@@theguardian.com</a> and someone should get back to you.
+                                    </small>
+
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
 
         <div class="facia-container facia-container--layout-content">
         @fragments.mostPopularPlaceholder("/")
         </div>
     </div>
 }
+

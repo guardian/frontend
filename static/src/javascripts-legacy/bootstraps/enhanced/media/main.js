@@ -247,14 +247,18 @@ define([
                                     }
 
                                     if (withPreroll) {
+                                        var isDebugMode = !!window.location.hash && window.location.hash === '#debug';
+
                                         raven.wrap({ tags: { feature: 'media' } }, function () {
                                             player.ima({
+                                                debug: isDebugMode,
                                                 id: mediaId,
                                                 adTagUrl: videoAdUrl.get(),
                                                 prerollTimeout: 1000,
                                                 // We set this sightly higher so contrib-ads never timeouts before ima.
                                                 contribAdsSettings: {
-                                                    timeout: 2000
+                                                    timeout: 2000,
+                                                    debug: isDebugMode
                                                 }
                                             });
                                             player.on('adstart', function() {
@@ -376,7 +380,7 @@ define([
 
     function init() {
         // The `hasMultipleVideosInPage` flag is temporary until the # will be fixed
-        var shouldPreroll = commercialFeatures.videoPreRolls &&
+        var shouldPreroll = commercialFeatures.commercialFeatures.videoPreRolls &&
             !config.page.hasMultipleVideosInPage &&
             !config.page.hasYouTubeAtom &&
             !config.page.isFront &&

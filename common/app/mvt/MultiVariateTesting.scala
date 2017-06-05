@@ -16,6 +16,17 @@ import conf.switches.Switches.ServerSideTests
 //    val tests = List(ExampleTest)
 // }
 
+object CommercialGalleryBannerAds extends TestDefinition(
+  name = "commercial-gallery-banner-ads",
+  description = "Users in the test will see banner ads instead of MPUs in galleries",
+  owners = Seq(Owner.withGithub("JonNorman")),
+  sellByDate = new LocalDate(2017, 6, 6)
+) {
+  def canRun(implicit request: RequestHeader): Boolean = {
+    request.headers.get("X-GU-commercial-gallery-banner-ads").contains("variant")
+  }
+}
+
 object CommercialClientLoggingVariant extends TestDefinition(
   name = "commercial-client-logging",
   description = "A slice of the audience who will post their commercial js performance data",
@@ -24,18 +35,6 @@ object CommercialClientLoggingVariant extends TestDefinition(
   ) {
   def canRun(implicit request: RequestHeader): Boolean = {
     request.headers.get("X-GU-ccl").contains("ccl-A")
-  }
-}
-
-/** Watch out for "TODO: #new-recipe:" when removing the test */
-object ABNewRecipeDesign extends TestDefinition(
-  name = "ab-new-recipe-design",
-  description = "Users in the test will see the new design on articles with structured recipes",
-  owners = Seq(Owner.withGithub("tsop14")),
-  sellByDate = new LocalDate(2017, 5, 30)
-) {
-  def canRun(implicit request: RequestHeader): Boolean = {
-    request.headers.get("X-GU-ab-new-recipe-design").contains("variant")
   }
 }
 
@@ -64,7 +63,7 @@ trait ServerSideABTests {
 object ActiveTests extends ServerSideABTests {
   val tests: Seq[TestDefinition] = List(
     CommercialClientLoggingVariant,
-    ABNewRecipeDesign,
+    CommercialGalleryBannerAds,
     ABNewDesktopHeader
   )
 }

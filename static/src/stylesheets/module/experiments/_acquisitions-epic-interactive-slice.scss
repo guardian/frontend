@@ -1,0 +1,98 @@
+@import 'svg';
+
+.contributions__epic-slice-wrapper {
+    background: $neutral-3;
+
+    @include mq(tablet) {
+        margin-left: -100%;
+        margin-right: -100%;
+    }
+}
+
+.contributions__epic-slice,
+.contributions__contribute.contributions__contribute--epic-slice {
+    background: $neutral-4;
+}
+
+.contributions__epic-slice.gs-container {
+    padding: 0 $gs-gutter $gs-gutter;
+}
+
+.contributions__epic-slice {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.contributions__epic-slice__bar {
+    border: 0;
+    background: $news-main-2;
+    width: 6.5rem;
+    height: $gs-gutter / 2;
+    margin: 0;
+    text-align: left;
+
+    @include mq(tablet) {
+        width: 8.25rem;
+    }
+}
+
+.contributions__epic-slice__heading,
+.contributions__epic-slice__subheading {
+    font-family: $f-serif-headline;
+}
+
+.contributions__epic-slice__heading,
+.contributions__contribute.contributions__contribute--epic-slice {
+    color: #005689;
+}
+
+.contributions__epic-slice__heading {
+    @include fs-headline(5, true);
+    color: $guardian-brand;
+    flex-basis: 100%;
+
+    @include mq(tablet) {
+        @include fs-headline(7, true);
+    }
+}
+
+.contributions__epic-slice__subheading {
+    @include fs-header(4, true);
+
+    @include mq(tablet) {
+        @include fs-header(5, true);
+        max-width: 42rem;
+    }
+}
+
+.contributions__epic-slice__buttons {
+    float: right;
+}
+
+.contributions__contribute.contributions__contribute--epic-slice {
+    width: auto;
+    background: transparent;
+    border: 1px solid #4bc6df;
+    margin-top: 0;
+    margin-left: $gs-gutter / 2;
+    font-size: 12px;
+
+    @include mq(tablet) {
+        font-size: 16px;
+    }
+
+    &:first-of-type {
+        margin-left: 0;
+    }
+
+    &:hover {
+        background: transparent;
+        border-color: $guardian-brand;
+        color: $guardian-brand;
+    }
+
+    &:after {
+        background-image: svg-url('<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40"><path fill="#005689" stroke="#005689" d="M22.8 14.6L15.2 7l-.7.7 5.5 6.6H6v1.5h14l-5.5 6.6.7.7 7.6-7.6v-.9"/></svg>')
+    }
+}

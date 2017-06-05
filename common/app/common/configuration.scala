@@ -26,7 +26,7 @@ object InstallVars {
 
   val properties = Properties(installVars)
 
-  def apply(key: String, default: String) = properties.getOrElse(key, default)
+  def apply(key: String, default: String): String = properties.getOrElse(key, default)
 
   object InstallationVars {
     val stack = apply("stack", "frontend")
@@ -65,7 +65,7 @@ object GuardianConfiguration extends Logging {
   lazy val configuration = {
     // This is version number of the config file we read from s3,
     // increment this if you publish a new version of config
-    val s3ConfigVersion = 32
+    val s3ConfigVersion = 33
 
     lazy val userPrivate = FileConfigurationSource(s"${System.getProperty("user.home")}/.gu/frontend.conf")
     lazy val runtimeOnly = FileConfigurationSource("/etc/gu/frontend.conf")
@@ -92,9 +92,9 @@ object GuardianConfiguration extends Logging {
 
   implicit class ScalaConvertProperties(conf: Config) {
 
-    def getStringProperty = getProperty(conf.getString)_
-    def getMandatoryStringProperty = getMandatoryProperty(conf.getString)_
-    def getIntegerProperty = getProperty(conf.getInt)_
+    def getStringProperty: (String) => Option[String] = getProperty(conf.getString)_
+    def getMandatoryStringProperty: (String) => String = getMandatoryProperty(conf.getString)_
+    def getIntegerProperty: (String) => Option[Int] = getProperty(conf.getInt)_
 
     def getPropertyNames: Seq[String] = conf.entrySet.toSet.map((_.getKey): Entry[String, _] => String).toSeq
     def getStringPropertiesSplitByComma(propertyName: String): List[String] = {
@@ -104,12 +104,12 @@ object GuardianConfiguration extends Logging {
       }
     }
 
-    def getMandatoryProperty[T](get: String => T)(property: String) = getProperty(get)(property)
+    def getMandatoryProperty[T](get: String => T)(property: String): T = getProperty(get)(property)
       .getOrElse(throw new BadConfigurationException(s"$property not configured"))
     def getProperty[T](get: String => T)(property: String): Option[T] =
       Try(get(property)) match {
           case Success(value) => Some(value)
-          case Failure(e: ConfigException.Missing) => None
+          case Failure(_: ConfigException.Missing) => None
           case Failure(e) =>
             log.error(s"couldn't retrive $property", e)
             None
@@ -127,6 +127,10 @@ class GuardianConfiguration extends Logging {
 
   object business {
     lazy val stocksEndpoint = configuration.getMandatoryStringProperty("business_data.url")
+  }
+
+  object feedback {
+    lazy val feedpipeEndpoint = configuration.getMandatoryStringProperty("feedback.feedpipeEndpoint")
   }
 
   object weather {
@@ -174,7 +178,7 @@ class GuardianConfiguration extends Logging {
     lazy val beaconUrl: String = configuration.getStringProperty("beacon.url").getOrElse("")
   }
 
-  override def toString = configuration.toString
+  override def toString: String = configuration.toString
 
   case class Auth(user: String, password: String)
 
@@ -191,11 +195,9 @@ class GuardianConfiguration extends Logging {
     lazy val key: Option[String] = configuration.getStringProperty("content.api.key")
     lazy val timeout: FiniteDuration = Duration.create(configuration.getIntegerProperty("content.api.timeout.millis").getOrElse(2000), MILLISECONDS)
 
-    lazy val circuitBreakerErrorThreshold =
-      configuration.getIntegerProperty("content.api.circuit_breaker.max_failures").getOrElse(5)
-
-    lazy val circuitBreakerResetTimeout =
-      configuration.getIntegerProperty("content.api.circuit_breaker.reset_timeout").getOrElse(20000)
+    lazy val circuitBreakerErrorThreshold: Int = configuration.getIntegerProperty("content.api.circuit_breaker.max_failures").getOrElse(30)
+    lazy val circuitBreakerResetTimeout: FiniteDuration =
+      FiniteDuration(configuration.getIntegerProperty("content.api.circuit_breaker.reset_timeout").getOrElse(2000), MILLISECONDS)
 
     lazy val previewAuth: Option[Auth] = for {
       user <- configuration.getStringProperty("content.api.preview.user")
@@ -526,7 +528,7 @@ class GuardianConfiguration extends Logging {
       // this is a bit of a convoluted way to check whether we actually have credentials.
       // I guess in an ideal world there would be some sort of isConfigued() method...
       try {
-        val creds = provider.getCredentials
+        provider.getCredentials
         Some(provider)
       } catch {
         case ex: AmazonClientException =>

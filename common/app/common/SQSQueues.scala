@@ -5,10 +5,11 @@ import java.util.concurrent.{Future => JavaFuture}
 import com.amazonaws.handlers.AsyncHandler
 import com.amazonaws.regions.{Region => AwsRegion}
 import com.amazonaws.services.sqs.AmazonSQSAsyncClient
-import com.amazonaws.services.sqs.model._
+import com.amazonaws.services.sqs.model.{Message => AWSMessage, _}
 import play.api.libs.json.{Json, Reads, Writes}
 
 import scala.collection.JavaConverters._
+import scala.collection.mutable
 import scala.concurrent.{ExecutionContext, Future, Promise}
 import scala.util.{Failure, Success}
 
@@ -41,7 +42,7 @@ object SQSQueues {
     def sendMessageFuture(request: SendMessageRequest): Future[SendMessageResult] =
       asFuture[SendMessageRequest, SendMessageResult](client.sendMessageAsync(request, _))
 
-    def withRegion(region: AwsRegion) = {
+    def withRegion(region: AwsRegion): AmazonSQSAsyncClient = {
       client.setRegion(region)
       client
     }
@@ -56,11 +57,11 @@ class MessageQueue[A](client: AmazonSQSAsyncClient, queueUrl: String)(implicit e
 
   import SQSQueues._
 
-  protected def sendMessage(sendRequest: SendMessageRequest) = {
+  protected def sendMessage(sendRequest: SendMessageRequest): Future[SendMessageResult] = {
     client.sendMessageFuture(sendRequest)
   }
 
-  protected def receiveMessages(receiveRequest: ReceiveMessageRequest) = {
+  protected def receiveMessages(receiveRequest: ReceiveMessageRequest): Future[mutable.Buffer[AWSMessage]] = {
     client.receiveMessageFuture(receiveRequest.withQueueUrl(queueUrl)) map { response =>
       response.getMessages.asScala
     }

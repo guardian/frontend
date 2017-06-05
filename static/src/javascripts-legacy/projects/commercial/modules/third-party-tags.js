@@ -75,7 +75,7 @@ define([
 
     function init() {
 
-        if (!commercialFeatures.thirdPartyTags) {
+        if (!commercialFeatures.commercialFeatures.thirdPartyTags) {
             return Promise.resolve(false);
         }
 

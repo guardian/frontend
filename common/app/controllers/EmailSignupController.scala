@@ -11,7 +11,7 @@ import play.api.data.format.Formats.stringFormat
 import play.api.data.validation.Constraints.emailAddress
 import play.api.libs.json._
 import play.api.libs.ws.{WSClient, WSResponse}
-import play.api.mvc.{Action, Controller, Result}
+import play.api.mvc.{Action, AnyContent, Controller, Result}
 
 import scala.concurrent.Future
 import scala.concurrent.duration._
@@ -88,7 +88,7 @@ class EmailSignupController(wsClient: WSClient)(implicit context: ApplicationCon
 
   }
 
-  def submit() = Action.async { implicit request =>
+  def submit(): Action[AnyContent] = Action.async { implicit request =>
     AllEmailSubmission.increment()
 
     def respond(result: SubscriptionResult): Result = {

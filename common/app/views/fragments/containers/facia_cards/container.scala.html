@@ -1,6 +1,6 @@
 @import common.commercial.ContainerModel
 @import layout.MetaDataHeader
-@import slices.{Dynamic, Fixed, MostPopular, NavList, NavMediaList, Video}
+@import layout.slices.{Dynamic, Fixed, MostPopular, NavList, NavMediaList, Video}
 @import views.html.fragments.commercial.containers.paidContainer
 @import views.html.fragments.containers.facia_cards._
 @import views.support.Commercial.container.shouldRenderAsPaidContainer
@@ -26,7 +26,7 @@
 
         case _: model.MostPopular if isPaidFront => {}
 
-        case Fixed(_) if shouldRenderAsPaidContainer(isPaidFront, containerDefinition, maybeContainerModel) => {
+        case Fixed(_) if shouldRenderAsPaidContainer(isPaidFront, maybeContainerModel) => {
             @maybeContainerModel match {
                 case Some(containerModel) => {
                     @paidContainer(frontId.getOrElse(""), containerDefinition.index, containerModel)

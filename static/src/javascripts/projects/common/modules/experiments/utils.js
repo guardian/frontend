@@ -81,3 +81,26 @@ export const isInVariant = (test: ABTest, variant: Variant): boolean =>
     getParticipations()[test.id] &&
     getParticipations()[test.id].variant === variant.id &&
     testCanBeRun(test);
+
+export const getForcedTests = (): Array<{
+    testId: string,
+    variantId: string,
+}> => {
+    if (window.location.hash.startsWith('#ab')) {
+        const tokens = window.location.hash.replace('#ab-', '').split(',');
+
+        return tokens.map(token => {
+            const [testId, variantId] = token.split('=');
+            return { testId, variantId };
+        });
+    }
+
+    return JSON.parse(local.get('gu.devtools.ab') || '[]') || [];
+};
+
+export const getForcedVariant = (test: ABTest): ?Variant => {
+    const forcedVariantIds: Array<string> = getForcedTests().map(
+        t => t.variantId
+    );
+    return test.variants.find(v => forcedVariantIds.includes(v.id));
+};

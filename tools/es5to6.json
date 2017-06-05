@@ -1,28 +1,16 @@
 {
   "Francis Carr": [
-    "projects/commercial/modules/close-disabled-slots.js",
-    "projects/commercial/modules/comment-adverts.js",
-    "projects/commercial/modules/commercial-features.js",
-    "projects/commercial/modules/creatives/add-tracking-pixel.js",
-    "projects/commercial/modules/creatives/add-viewability-tracker.js",
-    "projects/commercial/modules/creatives/fabric-expandable-video-v2.js",
-    "projects/commercial/modules/creatives/fabric-expanding-v1.js",
-    "projects/common/modules/video/events.js",
     "projects/commercial/modules/third-party-tags/krux.js"
   ],
   "Jon Norman": [
-    "projects/commercial/modules/creatives/fabric-v1.js",
     "projects/commercial/modules/creatives/fabric-video.js",
     "projects/commercial/modules/creatives/frame.js",
     "projects/commercial/modules/creatives/revealer.js",
-    "projects/commercial/modules/creatives/scrollable-mpu-v2.js",
-    "projects/common/modules/atoms/youtube.js"
+    "projects/commercial/modules/creatives/scrollable-mpu-v2.js"
   ],
   "Regis Kuckaertz": [],
   "Richard Nguyen": [],
   "Kate Whalen": [
-    "projects/commercial/modules/liveblog-adverts.js",
-    "projects/commercial/modules/messenger.js",
     "projects/commercial/modules/messenger/background.js",
     "projects/commercial/modules/messenger/click.js",
     "projects/commercial/modules/messenger/dfp-origin.js",
@@ -48,10 +36,6 @@
     "projects/common/modules/check-dispatcher.js"
   ],
   "Simon Adcock": [
-    "projects/common/modules/ui/rhc.js",
-    "bootstraps/enhanced/identity-common.js",
-    "bootstraps/enhanced/image-content.js",
-    "bootstraps/enhanced/liveblog.js",
     "bootstraps/enhanced/media/main.js",
     "bootstraps/enhanced/media/video-player.js"
   ],
@@ -77,7 +61,6 @@
     "lib/picturefill.js",
     "lib/proximity-loader.js",
     "projects/common/modules/video/metadata.js",
-    "projects/common/modules/ui/smartAppBanner.js"
   ],
   "GHaberis": [
     "projects/admin/modules/abtests/abtest-report-item.js",
@@ -91,16 +74,13 @@
     "projects/common/modules/ui/tabs.js",
     "projects/common/modules/social/hidden-share-toggle.js",
     "projects/common/modules/social/pinterest.js",
-    "projects/common/modules/social/share-count.js",
     "projects/common/modules/sport/football/football.js",
     "projects/common/modules/sport/football/match-info.js",
     "projects/common/modules/sport/football/match-list-live.js",
     "projects/common/modules/sport/football/tag-page-stats.js",
     "projects/common/modules/sport/score-board.js",
     "projects/common/modules/tailor/fetch-data.js",
-    "projects/common/modules/ui/accessibility-prefs.js",
     "projects/common/modules/ui/autoupdate.js",
-    "bootstraps/enhanced/preferences.js",
     "projects/commercial/modules/messenger/type.js"
   ],
   "NataliaLKB": [
@@ -109,7 +89,6 @@
     "projects/common/modules/article/membership-events.js",
     "projects/common/modules/article/rich-links.js",
     "projects/common/modules/article/space-filler.js",
-    "projects/common/modules/article/spacefinder.js",
     "projects/common/modules/article/twitter.js",
     "projects/common/modules/asyncCallMerger.js",
     "projects/common/modules/atoms/quiz.js",
@@ -118,9 +97,7 @@
     "projects/commercial/modules/messenger/viewport.js"
   ],
   "Gideon Goldberg": [
-    "projects/commercial/modules/user-features.js",
-    "projects/common/modules/commercial/adblock-messages.js",
-    "projects/common/modules/charts/table-doughnut.js"
+    "projects/commercial/modules/user-features.js"
   ],
   "Matthew Walls": [
     "projects/common/modules/crosswords/cell.js",
@@ -173,7 +150,6 @@
     "projects/common/modules/experiments/tests/fashion-statement-email-variants.js",
     "projects/common/modules/experiments/tests/film-today-email-variants.js",
     "projects/common/modules/experiments/tests/generic-email-variants.js",
-    "projects/common/modules/experiments/tests/increase-inline-ads.js",
     "projects/common/modules/experiments/tests/opinion-email-variants.js",
     "projects/common/modules/experiments/tests/paid-card-logo.js",
     "projects/commercial/modules/survey/survey-simple.js"
@@ -238,7 +214,6 @@
     "projects/commercial/modules/paidfor-band.js"
   ],
   "Philip Wills": [
-    "projects/facia/modules/ui/container-show-more.js",
     "projects/facia/modules/ui/container-toggle.js",
     "projects/facia/modules/ui/lazy-load-containers.js",
     "projects/common/modules/video/ga-helper.js",
@@ -248,8 +223,5 @@
   "Santiago Villa Fernandez": [
     "projects/common/modules/video/more-in-series-container.js"
   ],
-  "Jamie Byers": [
-    "bootstraps/enhanced/main.js",
-    "bootstraps/enhanced/newsletters.js"
-  ]
+  "Jamie Byers": []
 }

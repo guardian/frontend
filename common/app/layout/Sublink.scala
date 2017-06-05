@@ -86,7 +86,7 @@ case class Byline(
     }
   }
 
-  def shortByline = primaryContributor map { tag => s"${tag.metadata.webTitle} and others" } getOrElse get
+  def shortByline: String = primaryContributor map { tag => s"${tag.metadata.webTitle} and others" } getOrElse get
 }
 
 object DisplaySettings {
@@ -137,7 +137,7 @@ case class SnapStuff(
   snapType: SnapType,
   embedHtml: Option[String]
 ) {
-  def cssClasses = Seq(
+  def cssClasses: Seq[String] = Seq(
     Some("js-snap"),
     Some("facia-snap"),
     snapCss.map(t => s"facia-snap--$t").orElse(Some("facia-snap--default")),
@@ -146,7 +146,7 @@ case class SnapStuff(
 }
 
 object FaciaCardHeader {
-  def fromTrail(faciaContent: PressedContent, config: Option[CollectionConfig]) = fromTrailAndKicker(
+  def fromTrail(faciaContent: PressedContent, config: Option[CollectionConfig]): FaciaCardHeader = fromTrailAndKicker(
     faciaContent,
     faciaContent.header.kicker,
     config
@@ -298,14 +298,14 @@ case class ContentCard(
 
   def bylineText: Option[String] = if (useShortByline) byline.map(_.shortByline) else byline.map(_.get)
 
-  def setKicker(kicker: Option[ItemKicker]) = copy(header = header.copy(kicker = kicker))
+  def setKicker(kicker: Option[ItemKicker]): ContentCard = copy(header = header.copy(kicker = kicker))
 
-  def isVideo = displayElement match {
+  def isVideo: Boolean = displayElement match {
     case Some(InlineVideo(_, _, _, _)) => true
     case _ => false
   }
 
-  def hasImage = displayElement match {
+  def hasImage: Boolean = displayElement match {
     case Some(InlineVideo(_, _, _, Some(_))) => true
     case Some(InlineYouTubeMediaAtom(_, _)) => true
     case Some(InlineImage(_)) => true
@@ -314,16 +314,16 @@ case class ContentCard(
     case _ => false
   }
 
-  def withTimeStamp = copy(timeStampDisplay = Some(DateOrTimeAgo))
+  def withTimeStamp: ContentCard = copy(timeStampDisplay = Some(DateOrTimeAgo))
 
-  def showDisplayElement =
+  def showDisplayElement: Boolean =
     cardTypes.allTypes.exists(_.canShowMedia) && !displaySettings.imageHide && cutOut.isEmpty
 
-  def showStandfirst = cardTypes.allTypes.exists(_.showStandfirst)
+  def showStandfirst: Boolean = cardTypes.allTypes.exists(_.showStandfirst)
 
-  def mediaWidthsByBreakpoint = FaciaWidths.mediaFromItemClasses(cardTypes)
+  def mediaWidthsByBreakpoint: WidthsByBreakpoint = FaciaWidths.mediaFromItemClasses(cardTypes)
 
-  def showTimestamp = timeStampDisplay.isDefined && webPublicationDate.isDefined
+  def showTimestamp: Boolean = timeStampDisplay.isDefined && webPublicationDate.isDefined
 
   val analyticsPrefix = s"${cardStyle.toneString} | group-$group${if(displaySettings.isBoosted) "+" else ""}"
 
@@ -398,7 +398,10 @@ object PaidCard {
       description = content.card.trailText,
       image,
       fallbackImageUrl,
-      targetUrl = header.url,
+      targetUrl = content match {
+        case snap: LinkSnap => snap.properties.href getOrElse ""
+        case _ => header.url
+      },
       cardTypes = cardTypes,
       branding = content.branding(defaultEdition)
     )
