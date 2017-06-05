@@ -4,7 +4,6 @@ define([
     'lib/$',
     'lib/fetch',
     'bean',
-    'fastdom',
     'lib/config',
     'ophan/ng'
 ], function (
@@ -13,7 +12,6 @@ define([
     $,
     fetch,
     bean,
-    fastdom,
     config,
     ophan
 ) {
