@@ -38,12 +38,16 @@
         margin-right: $gutter-xlarge + ($veggie-burger-medium / 2);
     }
 
+    // based on https://css-tricks.com/full-width-containers-limited-width-parents/#article-header-id-6
     @include mq(desktop) {
         display: none;
-        flex-direction: row;
+        left: 50%;
+        margin-left: -50vw;
+        margin-right: -50vw;
         position: absolute;
+        right: 50%;
         top: 100%;
-        width: 100%;
+        width: 100vw;
     }
 
     .new-header--open & {
@@ -51,14 +55,27 @@
             @include menu-animation(0%);
         }
 
+        // TODO: replace with sexy animation
         @include mq(desktop) {
-            display: flex;
+            display: block;
         }
     }
 
     // Don't show menu on opera mini: https://wp-mix.com/css-target-opera/
     x:-o-prefocus & {
         display: none;
+    }
+}
+
+.menu__inner {
+    box-sizing: border-box;
+
+    @include mq(desktop) {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        padding-left: $gs-gutter;
+        padding-right: $gs-gutter;
     }
 }
 

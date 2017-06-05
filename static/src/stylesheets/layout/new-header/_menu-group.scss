@@ -11,12 +11,8 @@
         padding-left: $menu-spacing-left-medium;
     }
 
-    // TODO: tmp
     @include mq(desktop) {
-        display: flex;
-        flex: 1 0 auto;
-        flex-direction: column;
-        padding: 0;
+        padding-left: 0;
     }
 
     // make these lists to start at the left side
@@ -27,6 +23,10 @@
         @include mq(tablet) {
             margin-left: -$menu-spacing-left-medium;
         }
+
+        @include mq(desktop) {
+            margin-left: 0;
+        }
     }
 }
 
@@ -35,7 +35,6 @@
     padding-top: 0;
 
     @include mq(desktop) {
-        flex-direction: row;
         width: 100%;
     }
 }

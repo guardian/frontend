@@ -6,13 +6,6 @@
         width: auto;
     }
 
-    // TODO: tmp
-    > details {
-        @include mq(desktop) {
-            display: block;
-        }
-    }
-
     > *[data-link-name='nav2 : the guardian app'],
     > *[data-link-name='nav2 : facebook'] {
         border-top: 1px solid darken($guardian-brand-dark, 4%);
@@ -41,10 +34,6 @@
     padding-right: $veggie-burger-medium / 2 + $gs-gutter / 2;
     padding-top: 8px;
     user-select: none;
-
-    @include mq(desktop) {
-        display: none;
-    }
 
     &:hover,
     &:focus {
