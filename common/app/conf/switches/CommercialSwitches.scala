@@ -15,6 +15,16 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
+  val SurveySwitch = Switch(
+    SwitchGroup.Commercial,
+    "surveys",
+    "For delivering surveys, enables the requesting of the out-of-page slot on non-fronts",
+    owners = Seq(Owner.withGithub("JonNorman")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
   val BlockIASSwitch = Switch(
     SwitchGroup.Commercial,
     "block-ias",

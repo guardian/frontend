@@ -9,7 +9,7 @@ import model.{ApplicationContext, Cached, FrontProperties}
 import model.pressed.CollectionConfig
 import play.api.mvc.{Action, Controller}
 import services.{CollectionConfigWithId, FaciaContentConvert}
-import slices.Fixed
+import layout.slices.Fixed
 
 import scala.concurrent.Future.{successful => unit}
 

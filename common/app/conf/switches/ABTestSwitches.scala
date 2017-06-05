@@ -25,17 +25,7 @@ trait ABTestSwitches {
     "Displays an explainer in the form of a disclosure widget",
     owners = Seq(Owner.withGithub("regiskuckaertz")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 6, 6),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-measure-understanding",
-    "Asks users if they feel better informed after reading an article",
-    owners = Seq(Owner.withGithub("regiskuckaertz")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 6, 6),
+    sellByDate = new LocalDate(2017, 6, 13),
     exposeClientSide = true
   )
 
@@ -81,8 +71,18 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-acquisitions-election-interactive",
+    "ab-acquisitions-election-interactive-end",
     "This places the epic underneath UK election-related interactives",
+    owners = Seq(Owner.withGithub("desbo")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 7, 3),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-election-interactive-slice",
+    "This places the epic (slice design) in the middle of UK election-related interactives",
     owners = Seq(Owner.withGithub("desbo")),
     safeState = Off,
     sellByDate = new LocalDate(2017, 7, 3),
@@ -153,6 +153,16 @@ trait ABTestSwitches {
     ABTests,
     "ab-acquisitions-epic-always-ask-if-tagged",
     "This guarantees that any on any article that is tagged with a tag that is on the allowed list of tags as set by the tagging tool, the epic will be displayed",
+    owners = Seq(Owner.withGithub("jranks123")),
+    safeState = On,
+    sellByDate = new LocalDate(2018, 7, 19),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-epic-always-ask-election",
+    "This will guarantee that the epic is always displayed on election stories",
     owners = Seq(Owner.withGithub("jranks123")),
     safeState = On,
     sellByDate = new LocalDate(2018, 7, 19),

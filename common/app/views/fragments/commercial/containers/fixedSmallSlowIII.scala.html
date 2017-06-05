@@ -6,7 +6,7 @@
 <div class="adverts__row adverts__row--2x1x1">
     @containerModel.content.initialCards.take(1).map(card => views.html.fragments.commercial.cards.itemCard(
                             card,
-                            cardType = cards.Half,
+                            cardType = layout.cards.Half,
                             omnitureId = mkInteractionTrackingCode(frontId, containerIndex, containerModel, card),
                             optAdvertClassNames = Some(Seq("paidfor")),
                             useCardBranding = !containerModel.isSingleSponsorContainer))

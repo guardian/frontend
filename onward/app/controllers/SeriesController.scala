@@ -13,7 +13,7 @@ import model.pressed.CollectionConfig
 import play.api.libs.json.{JsArray, Json}
 import play.api.mvc.{Action, Controller, RequestHeader}
 import services.CollectionConfigWithId
-import slices.Fixed
+import layout.slices.Fixed
 import views.support.FaciaToMicroFormat2Helpers._
 
 import scala.concurrent.Future

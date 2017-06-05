@@ -16,14 +16,14 @@ import acquisitionsEpicLiveBlog
     from 'common/modules/experiments/tests/acquisitions-epic-liveblog';
 import acquisitionsEpicLiveBlogDesignTest
     from 'common/modules/experiments/tests/acquisitions-epic-liveblog-design-test';
-import acquisitionsEpicElectionInteractive
-    from 'common/modules/experiments/tests/acquisitions-epic-election-interactive';
 import acquisitionsEpicPreElection
     from 'common/modules/experiments/tests/acquisitions-epic-pre-election';
 import acquisitionsEpicAlwaysAskIfTagged
     from 'common/modules/experiments/tests/acquisitions-epic-always-ask-if-tagged';
 import acquisitionsEpicTestimonialsUSA
     from 'common/modules/experiments/tests/acquisitions-epic-testimonials-usa';
+import acquisitionsEpicAlwaysAskElection
+    from 'common/modules/experiments/tests/acquisitions-epic-always-ask-election';
 
 /**
  * acquisition tests in priority order (highest to lowest)
@@ -36,7 +36,7 @@ const tests = [
     acquisitionsEpicAlwaysAskIfTagged,
     acquisitionsEpicLiveBlogDesignTest,
     acquisitionsEpicLiveBlog,
-    acquisitionsEpicElectionInteractive,
+    acquisitionsEpicAlwaysAskElection,
 ].map(Test => new Test());
 
 const isViewable = (v: Variant): boolean => {
