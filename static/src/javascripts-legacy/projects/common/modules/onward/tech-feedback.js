@@ -53,6 +53,8 @@ define([
 
     function toggleFormVisibility() {
 
+        // make the associated category blurb visible
+
         $.forEachElement("#feedback-category>option", function(elem){
             if(elem.selected && elem.value !== "nothing"){
                 document.getElementById(elem.value).classList.add("feedback__blurb--selected");
@@ -60,6 +62,13 @@ define([
                 document.getElementById(elem.value).classList.remove("feedback__blurb--selected");
             }
         });
+
+        // enable the form elements
+
+        $.forEachElement("#feedback__form input,#feedback__form textarea", function (elem) {
+            elem.disabled = false;
+        });
+
     }
 
     function isInputFilled(elem) {
@@ -105,6 +114,12 @@ define([
                 return !hasFailed;
 
             });
+        });
+
+        // set the form elements to disabled to begin with
+
+        $.forEachElement("#feedback__form input,#feedback__form textarea", function(elem){
+            elem.disabled = true;
         });
 
         // form toggling
