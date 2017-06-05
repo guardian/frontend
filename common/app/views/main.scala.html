@@ -7,7 +7,7 @@
 
 @headerAndTopAds(showAdverts: Boolean, edition: Edition, content: Option[model.ContentType]) = {
   @if(!page.metadata.shouldHideHeaderAndTopAds) {
-    @defining(showAdverts && !content.exists(_.tags.isTheMinuteArticle)) { showTopSlot =>
+    @defining(showAdverts && !content.exists(_.tags.isTheMinuteArticle) && !Commercial.isAdFree(request)) { showTopSlot =>
       @if(content.exists(_.tags.hasSuperStickyBanner)) {
           @if(showTopSlot) {
             @fragments.commercial.topBanner(page.metadata)

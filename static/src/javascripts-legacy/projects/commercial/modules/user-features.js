@@ -93,7 +93,11 @@ define([
         expiryDate.setDate(expiryDate.getDate() + 1);
         cookies.addCookie(USER_FEATURES_EXPIRY_COOKIE, expiryDate.getTime().toString());
         cookies.addCookie(PAYING_MEMBER_COOKIE, !JsonResponse.adblockMessage);
-        cookies.addCookie(AD_FREE_USER_COOKIE, JsonResponse.adFree);
+        if(JsonResponse.adFree) {
+            cookies.addCookie(AD_FREE_USER_COOKIE, JsonResponse.adFree, 1);
+        } else {
+            cookies.removeCookie(AD_FREE_USER_COOKIE);
+        }
     }
 
     function deleteOldData() {
