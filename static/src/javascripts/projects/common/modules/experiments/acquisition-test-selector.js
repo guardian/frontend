@@ -16,8 +16,6 @@ import acquisitionsEpicLiveBlog
     from 'common/modules/experiments/tests/acquisitions-epic-liveblog';
 import acquisitionsEpicLiveBlogDesignTest
     from 'common/modules/experiments/tests/acquisitions-epic-liveblog-design-test';
-import acquisitionsEpicPreElection
-    from 'common/modules/experiments/tests/acquisitions-epic-pre-election';
 import acquisitionsEpicAlwaysAskIfTagged
     from 'common/modules/experiments/tests/acquisitions-epic-always-ask-if-tagged';
 import acquisitionsEpicTestimonialsUSA
@@ -32,7 +30,6 @@ import acquisitionsEpicThankYou
  */
 const tests = [
     alwaysAsk,
-    acquisitionsEpicPreElection,
     acquisitionsEpicTestimonialsUSA,
     askFourEarning,
     acquisitionsEpicAlwaysAskIfTagged,

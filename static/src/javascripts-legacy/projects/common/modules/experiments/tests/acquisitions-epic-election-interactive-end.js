@@ -54,6 +54,7 @@ define([
                         membershipUrl: variant.options.membershipURL,
                         contributionUrl: variant.options.contributeURL,
                         componentName: variant.options.componentName,
+                        testimonialBlock: variant.options.testimonialBlock,
                         epicClass: 'contributions__epic--interactive gs-container',
                         wrapperClass: 'contributions__epic-interactive-wrapper'
                     });
