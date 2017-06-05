@@ -56,9 +56,20 @@ trait ServerSideABTests {
   val tests: Seq[TestDefinition]
 
   def getJavascriptConfig(implicit request: RequestHeader): String = {
+
+    def testStatus(test: TestDefinition): String = {
+
+      val safeName: String = CamelCase.fromHyphenated(test.name)
+      val switchStatus: String = test.switch.isSwitchedOn.toString
+      val participationGroup: String = test.participationGroup.getOrElse("")
+
+
+      s""""$safeName" : "$switchStatus:$participationGroup""""
+    }
+
     tests
       .filter(_.isParticipating)
-      .map { test => s""""${CamelCase.fromHyphenated(test.name)}" : ${test.switch.isSwitchedOn}:${test.participationGroup.getOrElse("")}""" }
+      .map { testStatus }
       .mkString(",")
   }
 }
