@@ -23,6 +23,8 @@ import AcquisitionsEpicElectionInteractiveEnd
     from 'common/modules/experiments/tests/acquisitions-epic-election-interactive-end';
 import AcquisitionsEpicElectionInteractiveSlice
     from 'common/modules/experiments/tests/acquisitions-epic-election-interactive-slice';
+import AcquisitionsThrasherUkElection
+    from 'common/modules/experiments/tests/acquisitions-thrasher-uk-election';
 
 export const TESTS: Array<ABTest> = [
     new OpinionEmailVariants(),
@@ -34,6 +36,7 @@ export const TESTS: Array<ABTest> = [
     ExplainerSnippet(),
     new AcquisitionsEpicElectionInteractiveEnd(),
     new AcquisitionsEpicElectionInteractiveSlice(),
+    new AcquisitionsThrasherUkElection(),
 ]
     .concat(MembershipEngagementBannerTests)
     .filter(Boolean);
