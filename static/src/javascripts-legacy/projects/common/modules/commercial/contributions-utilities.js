@@ -129,8 +129,6 @@ define([
         }) : true;
         var locationCheck = (typeof testConfig.locationCheck === 'function') ? testConfig.locationCheck(storedGeolocation) : true;
 
-        var isImmersive = config.page.isImmersive === true;
-
         var tagsMatch = doTagsMatch(testConfig);
 
         return enoughTimeSinceLastContribution &&
@@ -138,7 +136,6 @@ define([
             worksWellWithPageTemplate &&
             inCompatibleLocation &&
             locationCheck &&
-            !isImmersive &&
             tagsMatch
     }
 
