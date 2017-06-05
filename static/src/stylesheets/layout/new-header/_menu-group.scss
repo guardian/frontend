@@ -29,6 +29,12 @@
             margin-left: 0;
         }
     }
+
+    .menu-item--closed > & {
+        @include mq($until: desktop) {
+            display: none;
+        }
+    }
 }
 
 .menu-group--primary {

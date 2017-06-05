@@ -4,36 +4,35 @@
 @import conf.switches.Switches.SearchSwitch
 
 @sectionList(topLevelSection: NewNavigation.EditionalisedNavigationSection) = {
-    <li class="menu-item js-navigation-item"
-        data-section-name="@topLevelSection.name">
-        <details class="js-close-nav-list"
-                 id="primary-list-@topLevelSection.name"
-                 open>
-            <summary class="menu-item__title js-navigation-button"
-                     data-link-name="nav2 : secondary : @topLevelSection.name">
+    @defining(Edition(request)) { edition =>
+        <li class="menu-item js-navigation-item"
+            data-section-name="@topLevelSection.name">
+            <a href="@{topLevelSection.getPopularEditionalisedNavLinks(edition)(0).url}"
+               class="menu-item__title js-navigation-toggle"
+               data-link-name="nav2 : secondary : @topLevelSection.name">
                 <i class="menu-item__toggle"></i>
                 @topLevelSection.name
-            </summary>
+            </a>
 
-            @defining(Edition(request)) { edition =>
-                <ul class="menu-group menu-group--secondary js-editionalise-secondary-nav"
-                    data-edition="@{edition.id.toLowerCase}" >
-                    @topLevelSection.getAllEditionalisedNavLinks(edition).map { sectionItem =>
-                        <li class="menu-item">
-                            <a class="menu-item__title"
-                               href="@LinkTo { @sectionItem.url }"
-                               data-link-name="nav2 : secondary : @{ if(sectionItem.longTitle.isEmpty) sectionItem.title else sectionItem.longTitle }">
-                                    @if(sectionItem.iconName.nonEmpty) {
-                                        @fragments.inlineSvg(sectionItem.iconName, "icon", List("menu-item__icon"))
-                                    }
-                                    @{ if(sectionItem.longTitle.isEmpty) sectionItem.title else sectionItem.longTitle }
-                            </a>
-                        </li>
-                    }
-                </ul>
-            }
-        </details>
-    </li>
+            <ul class="menu-group menu-group--secondary js-editionalise-secondary-nav"
+                data-edition="@{edition.id.toLowerCase}"
+                aria-label="Submenu @{topLevelSection.name}"
+                role="menu">
+                @topLevelSection.getAllEditionalisedNavLinks(edition).map { sectionItem =>
+                    <li class="menu-item">
+                        <a class="menu-item__title"
+                           href="@LinkTo { @sectionItem.url }"
+                           data-link-name="nav2 : secondary : @{ if(sectionItem.longTitle.isEmpty) sectionItem.title else sectionItem.longTitle }">
+                                @if(sectionItem.iconName.nonEmpty) {
+                                    @fragments.inlineSvg(sectionItem.iconName, "icon", List("menu-item__icon"))
+                                }
+                                @{ if(sectionItem.longTitle.isEmpty) sectionItem.title else sectionItem.longTitle }
+                        </a>
+                    </li>
+                }
+            </ul>
+        </li>
+    }
 }
 
 <label for="main-menu-toggle"

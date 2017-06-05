@@ -8,15 +8,16 @@ import userAccount from 'common/modules/navigation/user-account';
 import debounce from 'lodash/functions/debounce';
 
 const enhanced = {};
+const CLOSED_MODIFIER = 'menu-item--closed';
 
 const getMenu = (): ?HTMLElement => document.getElementById('main-menu');
 
 const closeSidebarSection = (section: HTMLElement): void => {
-    section.removeAttribute('open');
+    section.classList.add(CLOSED_MODIFIER);
 };
 
 const closeAllSidebarSections = (exclude?: Node): void => {
-    const sections = [...document.querySelectorAll('.js-close-nav-list')];
+    const sections = [...document.querySelectorAll('.js-navigation-item')];
 
     sections.forEach(section => {
         if (section !== exclude) {
@@ -29,7 +30,7 @@ const openSidebarSection = (
     section: HTMLElement,
     options?: Object = {}
 ): void => {
-    section.setAttribute('open', '');
+    section.classList.remove(CLOSED_MODIFIER);
 
     if (options.scrollIntoView === true) {
         scrollToElement(section, 0, 'easeInQuad', getMenu());
@@ -37,6 +38,17 @@ const openSidebarSection = (
 
     // the sections should behave like an accordion
     closeAllSidebarSections(section);
+};
+
+const isSidebarSectionClosed = (section: HTMLElement): void =>
+    section.classList.contains(CLOSED_MODIFIER);
+
+const toggleSidebarSection = (section: HTMLElement): void => {
+    if (isSidebarSectionClosed(section)) {
+        openSidebarSection(section);
+    } else {
+        closeSidebarSection(section);
+    }
 };
 
 const toggleSidebar = (): void => {
@@ -201,10 +213,10 @@ const toggleSidebarWithOpenSection = () => {
     const subnav = document.querySelector('.subnav__list');
     const pillarTitle = (subnav && subnav.dataset.pillarTitle) || '';
     const targetSelector = `.js-navigation-item[data-section-name="${pillarTitle}"]`;
-    const target = menu && menu.querySelector(targetSelector);
+    const section = menu && menu.querySelector(targetSelector);
 
-    if (target) {
-        openSidebarSection(target.children[0], { scrollIntoView: true });
+    if (section) {
+        openSidebarSection(section, { scrollIntoView: true });
     }
 
     toggleSidebar();
@@ -219,9 +231,9 @@ const addEventHandler = (): void => {
             const target: HTMLElement = (event.target: any);
             const parent: HTMLElement = (target.parentNode: any);
 
-            if (target.matches('.js-navigation-button') && parent) {
-                event.stopPropagation();
-                closeAllSidebarSections(parent);
+            if (target.matches('.js-navigation-toggle') && parent) {
+                event.preventDefault();
+                toggleSidebarSection(parent);
             }
         });
     }

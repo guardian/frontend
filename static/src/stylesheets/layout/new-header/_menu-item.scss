@@ -15,24 +15,29 @@
     }
 
     // First level overwrites
-    .menu-group--primary > & {
+    .menu-group--primary > & + & {
         @include mq($until: desktop) {
-            > *:not([open]) {
-                border-bottom: 1px solid darken($guardian-brand-dark, 4%);
-            }
-
-            &:last-child > * {
-                border-bottom: 0;
-            }
+            border-top: 1px solid darken($guardian-brand-dark, 4%);
         }
+    }
 
+    .menu-group--primary > &:not(.menu-item--closed) + & {
+        @include mq($until: desktop) {
+            border-top: 0;
+        }
+    }
+
+    .menu-group--primary > & {
         @include mq(desktop) {
-            padding-left: $gs-gutter / 2;
-            padding-right: $gs-gutter / 2;
             width: 100%;
+
+            &:not(:first-child) {
+                padding-left: $gs-gutter / 2;
+            }
 
             &:not(:last-child) {
                 border-right: 1px solid $news-main-2;
+                padding-right: $gs-gutter / 2;
             }
         }
     }
@@ -50,26 +55,26 @@
     display: block;
     font-size: 20px;
     outline: none;
-    padding-bottom: 8px;
-    padding-right: $veggie-burger-medium / 2 + $gs-gutter / 2;
-    padding-top: 8px;
-    user-select: none;
+    padding: 8px $veggie-burger-medium / 2 + $gs-gutter / 2 8px 0;
+
+    @include mq(desktop) {
+        font-size: 17px;
+    }
 
     &:hover,
     &:focus {
         text-decoration: none;
     }
 
-    // only for Chrome/ Safari - FF looses the marker via display: block
-    &::-webkit-details-marker {
-        display: none;
-    }
-
     // only match the ones, which are not in --secondary
-    .menu-group--primary > .menu-item > * > & {
+    .menu-group--primary > .menu-item > & {
         font-size: 24px;
         padding-bottom: 16px;
         padding-top: $gs-baseline / 2;
+
+        @include mq(desktop) {
+            font-size: 32px;
+        }
     }
 }
 
@@ -85,10 +90,10 @@
 
 .menu-item__toggle {
     left: -25px;
-    margin-top: -4px;
+    margin-top: 2px;
 
-    details[open] & {
-        margin-top: 2px;
+    .menu-item--closed & {
+        margin-top: -4px;
     }
 
     &:before {
@@ -98,11 +103,11 @@
         content: '';
         display: inline-block;
         height: 8px;
-        transform: rotate(45deg);
+        transform: rotate(-135deg);
         width: 8px;
 
-        details[open] & {
-            transform: rotate(-135deg);
+        .menu-item--closed & {
+            transform: rotate(45deg);
         }
     }
 }
