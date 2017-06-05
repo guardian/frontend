@@ -5,17 +5,21 @@ define([
     $,
     bean
 ) {
+    var deleteButtonElm = $('#deleteButton')[0];
+    var deleteFormElm = $('#deleteForm')[0];
+    var deleteLoaderElm = $('#deleteLoader')[0];
+
     function disableDeleteButton() {
-        $('#deleteButton')[0] && ($('#deleteButton')[0].disabled = true);
+        deleteButtonElm && (deleteButtonElm.disabled = true);
     }
 
     function showLoader() {
-        $('#deleteLoader')[0] && $('#deleteLoader')[0].classList.remove("is-hidden");
+        deleteLoaderElm && deleteLoaderElm.classList.remove("is-hidden");
     }
 
     function setupLoadingAnimation() {
-        if ($('#deleteForm')[0] && $('#deleteLoader')[0]) {
-            bean.on($('#deleteForm')[0], 'submit', function() {
+        if (deleteFormElm && deleteLoaderElm) {
+            bean.on(deleteFormElm, 'submit', function() {
                 disableDeleteButton();
                 showLoader();
             });
