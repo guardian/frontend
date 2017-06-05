@@ -60,11 +60,9 @@ trait ServerSideABTests {
     def testStatus(test: TestDefinition): String = {
 
       val safeName: String = CamelCase.fromHyphenated(test.name)
-      val switchStatus: String = test.switch.isSwitchedOn.toString
       val participationGroup: String = test.participationGroup.getOrElse("")
 
-
-      s""""$safeName" : "$switchStatus:$participationGroup""""
+      s""""$safeName" : "$participationGroup""""
     }
 
     tests
