@@ -15,7 +15,7 @@ define([
     acquisitionsCopy
 
 ) {
-    function createTestimonialTestTemplate(testimonialBlock, copy, citeImage) {
+    function createTestimonialTestTemplate(testimonialBlock, copy) {
         return function(variant) {
             return template(acquisitionsEpicControlTemplate, {
                 copy: copy,
@@ -23,8 +23,7 @@ define([
                 contributionUrl: variant.options.contributeURL,
                 componentName: variant.options.componentName,
                 testimonialBlock: testimonialBlock,
-                epicClass: 'contributions__epic--testimonial-usa',
-                citeImage: citeImage
+                epicClass: 'contributions__epic--testimonial-usa'
             })
         }
     }
@@ -63,7 +62,7 @@ define([
             },
             {
                 id: 'localised_flag',
-                template: createTestimonialTestTemplate(contributionsUtilities.getTestimonialBlock(acquisitionsTestimonialParameters.usLocalised), acquisitionsCopy.usLocalisedFlag, citeImage)
+                template: createTestimonialTestTemplate(contributionsUtilities.getTestimonialBlock(acquisitionsTestimonialParameters.usLocalised, citeImage), acquisitionsCopy.usLocalisedFlag, citeImage)
             }
         ]
     });

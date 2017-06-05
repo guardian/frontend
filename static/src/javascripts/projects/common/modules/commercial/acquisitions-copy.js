@@ -45,7 +45,6 @@ export const regulars: AcquisitionsEpicTemplateCopy = {
     p2: controlP2,
 };
 
-export const election: AcquisitionsEpicTemplateCopy = {
 export const usLocalisedFlag = {
     heading: controlHeading,
     p1: usLocalisedFlagP1,
