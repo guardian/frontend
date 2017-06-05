@@ -60,10 +60,10 @@ const userHasDataAfterSignout = (): boolean =>
 const refresh = (): void => {
     if (identity.isUserLoggedIn() && userNeedsNewFeatureData()) {
         // eslint-disable-next-line no-use-before-define
-        requestNewData();
+        _.requestNewData();
     } else if (userHasDataAfterSignout()) {
         // eslint-disable-next-line no-use-before-define
-        deleteOldData();
+        _.deleteOldData();
     }
 };
 
