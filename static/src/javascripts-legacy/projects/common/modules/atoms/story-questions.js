@@ -19,11 +19,11 @@ define([
     function askQuestion(event, isEmailSubmissionReady) {
         event.preventDefault();
 
-        var questionElement = event.currentTarget.querySelector('.user__question-upvote');
+        var askQuestionBtn = event.currentTarget.querySelector('.user__question-upvote');
         var atomIdElement = $('.js-storyquestion-atom-id');
 
-        if (questionElement && atomIdElement) {
-            var questionId = questionElement.id;
+        if (askQuestionBtn && atomIdElement) {
+            var questionId = askQuestionBtn.dataset.questionId;
             var atomId = atomIdElement.attr('id');
 
             var question = document.querySelector("meta[name=js-notranslate-" + questionId + "]");
@@ -32,7 +32,6 @@ define([
                 var questionText = question.content;
 
                 if (questionText && atomId) {
-                    var askQuestionBtn = document.getElementById('btn-ask-question-' + questionId);
 
                     if (askQuestionBtn) {
                         askQuestionBtn.classList.add('is-hidden');
