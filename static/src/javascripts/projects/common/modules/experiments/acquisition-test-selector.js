@@ -40,7 +40,6 @@ const tests = [
     acquisitionsThisLandSeries,
     acquisitionsThisLandEnvironmentEarning,
     acquisitionsThisLandEnvironmentLearning,
-    acquisitionsEpicPreElection,
     acquisitionsEpicTestimonialsUSA,
     askFourEarning,
     acquisitionsEpicAlwaysAskIfTagged,
