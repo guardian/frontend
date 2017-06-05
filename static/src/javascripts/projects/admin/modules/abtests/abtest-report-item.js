@@ -7,13 +7,22 @@
 import Component from 'common/modules/component';
 import Participation from 'admin/modules/abtests/participation';
 import bonzo from 'bonzo';
-import bean from 'bean';
+import debounce from 'lodash/functions/debounce';
 
 class ABTestReportItem extends Component {
     constructor(config: any): void {
         super();
 
-        this.config = Object.assign(Object.assign({}, this.config), config);
+        this.templateName = 'abtest-item-template';
+        this.componentClass = 'abtest-item';
+        this.useBem = true;
+        this.config = Object.assign(
+            {
+                test: {},
+                active: true,
+            },
+            config
+        );
 
         if (window.abCharts) {
             this.chart = window.abCharts[`ab${this.config.test.id}`];
@@ -23,14 +32,10 @@ class ABTestReportItem extends Component {
     ready(): void {
         if (this.chart) {
             const redraw = this.renderChart.bind(this);
+
             redraw();
-            let timerid;
-            bean.on(window, 'resize', () => {
-                if (timerid) {
-                    window.clearTimeout(timerid);
-                }
-                timerid = window.setTimeout(redraw, 150);
-            });
+
+            window.addEventListener('resize', debounce(redraw, 150));
         }
     }
 
@@ -109,13 +114,5 @@ class ABTestReportItem extends Component {
         }
     }
 }
-
-ABTestReportItem.prototype.config = {
-    test: {},
-    active: true,
-};
-ABTestReportItem.prototype.templateName = 'abtest-item-template';
-ABTestReportItem.prototype.componentClass = 'abtest-item';
-ABTestReportItem.prototype.useBem = true;
 
 export { ABTestReportItem };
