@@ -60,9 +60,10 @@ trait ServerSideABTests {
     def testStatus(test: TestDefinition): String = {
 
       val safeName: String = CamelCase.fromHyphenated(test.name)
-      val participationGroup: String = test.participationGroup.getOrElse("")
 
-      s""""$safeName" : "$participationGroup""""
+      test.participationGroup.fold(s""""$safeName"""") {
+        participationGroup: String => s""""$safeName" : "$participationGroup""""
+      }
     }
 
     tests
