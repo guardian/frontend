@@ -14,7 +14,7 @@ define([
         beforeEach(function (done) {
             injector.require(['commercial/modules/third-party-tags/krux', 'lib/config'], function () {
                 shouldRun = arguments[0].shouldRun;
-                kruxUrl = arguments[0].kruxUrl;
+                kruxUrl = arguments[0].url;
                 config = arguments[1];
 
                 config.switches = {

@@ -3,7 +3,7 @@ import config from 'lib/config';
 import { getCookie } from 'lib/cookies';
 import { local } from 'lib/storage';
 
-const kruxUrl: string = '//cdn.krxd.net/controltag?confid=JVZiE3vn';
+const url: string = '//cdn.krxd.net/controltag?confid=JVZiE3vn';
 
 const retrieve = (n: string): string => {
     const k: string = `kx${n}`;
@@ -16,4 +16,4 @@ const getKruxSegments = (): Array<string> =>
 
 const shouldRun = config.switches.krux;
 
-export { shouldRun, kruxUrl, getKruxSegments };
+export { shouldRun, url, getKruxSegments };
