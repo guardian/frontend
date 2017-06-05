@@ -27,11 +27,21 @@ import acquisitionsEpicAlwaysAskElection
 import acquisitionsEpicThankYou
     from 'common/modules/experiments/tests/acquisitions-epic-thank-you';
 
+import acquisitionsThisLandSeries
+    from 'common/modules/experiments/tests/acquisitions-this-land-series';
+import acquisitionsThisLandEnvironmentEarning
+    from 'common/modules/experiments/tests/acquisitions-this-land-environment-earning';
+import acquisitionsThisLandEnvironmentLearning
+    from 'common/modules/experiments/tests/acquisitions-this-land-environment-learning';
+
 /**
  * acquisition tests in priority order (highest to lowest)
  */
 const tests = [
     alwaysAsk,
+    acquisitionsThisLandSeries,
+    acquisitionsThisLandEnvironmentEarning,
+    acquisitionsThisLandEnvironmentLearning,
     acquisitionsEpicPreElection,
     acquisitionsEpicTestimonialsUSA,
     askFourEarning,
