@@ -22,9 +22,10 @@ object CommercialGalleryBannerAds extends TestDefinition(
   owners = Seq(Owner.withGithub("JonNorman")),
   sellByDate = new LocalDate(2017, 6, 6)
 ) {
-  def canRun(implicit request: RequestHeader): Boolean = {
-    request.headers.get("X-GU-commercial-gallery-banner-ads").contains("variant")
-  }
+
+  def participationGroup(implicit request: RequestHeader): Option[String] = request.headers.get("X-GU-commercial-gallery-banner-ads")
+
+  def canRun(implicit request: RequestHeader): Boolean = participationGroup.isDefined
 }
 
 object CommercialClientLoggingVariant extends TestDefinition(
@@ -33,9 +34,10 @@ object CommercialClientLoggingVariant extends TestDefinition(
   owners = Seq(Owner.withGithub("rich-nguyen")),
   sellByDate = new LocalDate(2018, 2, 1)
   ) {
-  def canRun(implicit request: RequestHeader): Boolean = {
-    request.headers.get("X-GU-ccl").contains("ccl-A")
-  }
+
+  def participationGroup(implicit request: RequestHeader): Option[String] = request.headers.get("X-GU-ccl")
+
+  def canRun(implicit request: RequestHeader): Boolean = participationGroup.contains("ccl-A")
 }
 
 object ABNewDesktopHeader extends TestDefinition(
@@ -44,9 +46,10 @@ object ABNewDesktopHeader extends TestDefinition(
   owners = Seq(Owner.withGithub("natalialkb"), Owner.withGithub("gustavpursche")),
   sellByDate = new LocalDate(2017, 7, 5)
 ) {
-  def canRun(implicit request: RequestHeader): Boolean = {
-    request.headers.get("X-GU-ab-new-desktop-header").contains("variant")
-  }
+
+  def participationGroup(implicit request: RequestHeader): Option[String] = request.headers.get("X-GU-ab-new-desktop-header")
+
+  def canRun(implicit request: RequestHeader): Boolean = participationGroup.contains("variant")
 }
 
 trait ServerSideABTests {
@@ -55,7 +58,7 @@ trait ServerSideABTests {
   def getJavascriptConfig(implicit request: RequestHeader): String = {
     tests
       .filter(_.isParticipating)
-      .map { test => s""""${CamelCase.fromHyphenated(test.name)}" : ${test.switch.isSwitchedOn}""" }
+      .map { test => s""""${CamelCase.fromHyphenated(test.name)}" : ${test.switch.isSwitchedOn}:${test.participationGroup.getOrElse("")}""" }
       .mkString(",")
   }
 }
@@ -88,5 +91,6 @@ abstract case class TestDefinition (
 
   def canRun(implicit request: RequestHeader): Boolean
   def isParticipating(implicit request: RequestHeader): Boolean = isSwitchedOn && canRun(request)
+  def participationGroup(implicit request: RequestHeader): Option[String]
 
 }
