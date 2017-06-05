@@ -15,13 +15,31 @@
     }
 
     // First level overwrites
-    .menu-group--primary & {
-        > *:not([open]) {
-            border-bottom: 1px solid darken($guardian-brand-dark, 4%);
+    .menu-group--primary > & {
+        @include mq($until: desktop) {
+            > *:not([open]) {
+                border-bottom: 1px solid darken($guardian-brand-dark, 4%);
+            }
+
+            &:last-child > * {
+                border-bottom: 0;
+            }
         }
 
-        &:last-child > * {
-            border-bottom: 0;
+        @include mq(desktop) {
+            padding-left: $gs-gutter / 2;
+            padding-right: $gs-gutter / 2;
+            width: 100%;
+
+            &:not(:last-child) {
+                border-right: 1px solid $news-main-2;
+            }
+        }
+    }
+
+    .menu-group--secondary > & {
+        @include mq(desktop) {
+            width: 100%;
         }
     }
 }

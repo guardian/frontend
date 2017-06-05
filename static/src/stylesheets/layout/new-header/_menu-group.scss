@@ -37,6 +37,9 @@
 
     @include mq(desktop) {
         color: $news-support-1;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
         width: 100%;
     }
 }
