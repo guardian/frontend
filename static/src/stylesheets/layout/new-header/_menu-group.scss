@@ -12,6 +12,7 @@
     }
 
     @include mq(desktop) {
+        color: $news-support-1;
         padding-left: 0;
     }
 
@@ -35,6 +36,7 @@
     padding-top: 0;
 
     @include mq(desktop) {
+        color: $news-support-1;
         width: 100%;
     }
 }
@@ -55,7 +57,7 @@
 
     @include mq(desktop) {
         background-color: transparent;
-        color: #ffffff;
+        color: $news-support-1;
     }
 
     .menu-item:last-child .menu-group {
@@ -69,6 +71,6 @@
 
     @include mq(desktop) {
         background-color: transparent;
-        color: #ffffff;
+        color: $news-support-1;
     }
 }
