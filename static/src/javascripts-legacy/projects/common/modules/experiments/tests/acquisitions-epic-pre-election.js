@@ -31,7 +31,7 @@ define([
         variants: [
             {
                 id: 'testimonial',
-                template: function (variant) {
+                template: function(variant) {
                     return template(acquisitionsEpicTestimonialsTemplate, {
                         membershipUrl: variant.options.membershipURL,
                         contributionUrl: variant.options.contributeURL,

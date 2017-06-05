@@ -5,7 +5,6 @@ define([
     'lodash/utilities/template',
     'lib/config',
     'raw-loader!common/views/acquisitions-epic-control.html',
-    'raw-loader!common/views/acquisitions-epic-slice.html',
     'common/modules/commercial/acquisitions-copy',
 
 ], function (
