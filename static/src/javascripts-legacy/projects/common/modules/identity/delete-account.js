@@ -1,14 +1,33 @@
 define([
     'lib/$',
-    'bean'
+    'bean',
+    'fastdom'
 ], function (
     $,
-    bean
+    bean,
+    fastdom
 ) {
+    var deleteButtonElm = $('#deleteButton')[0];
+    var deleteFormElm = $('#deleteForm')[0];
+    var deleteLoaderElm = $('#deleteLoader')[0];
+
+    function disableDeleteButton() {
+        fastdom.write(function () {
+            deleteButtonElm && (deleteButtonElm.disabled = true);
+        });
+    }
+
+    function showLoader() {
+        fastdom.write(function () {
+            deleteLoaderElm && deleteLoaderElm.classList.remove("is-hidden");
+        });
+    }
+
     function setupLoadingAnimation() {
-        if ($('#deleteForm').length && $('#deleteLoader').length) {
-            bean.on($('#deleteForm')[0], 'submit', function() {
-                $('#deleteLoader')[0].classList.remove("is-hidden");
+        if (deleteFormElm && deleteLoaderElm) {
+            bean.on(deleteFormElm, 'submit', function() {
+                disableDeleteButton();
+                showLoader();
             });
         }
     }
