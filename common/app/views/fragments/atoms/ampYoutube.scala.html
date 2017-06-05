@@ -2,7 +2,7 @@
 @(media: model.content.MediaAtom,  displayCaption: Boolean, mediaWrapper: Option[MediaWrapper])(implicit request: RequestHeader)
 @import views.html.fragments.atoms.mediaAtomCaption
     <amp-youtube
-    data-videoid="@media.assets.head.id"
+    data-videoid="@media.activeAsset.id"
     layout="responsive"
     width="16" height="9" data-param-rel="0">
     </amp-youtube>

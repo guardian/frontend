@@ -37,7 +37,8 @@ final case class MediaAtom(
   source: Option[String],
   posterImage: Option[ImageMedia],
   endSlatePath: Option[String],
-  expired: Option[Boolean]
+  expired: Option[Boolean],
+  activeVersion: Option[Long]
 ) extends Atom {
 
   def isoDuration: Option[String] = {
@@ -52,6 +53,11 @@ final case class MediaAtom(
       val formattedDuration = DurationFormatUtils.formatDuration(jodaDuration.getMillis, durationPattern, true)
       "^0".r.replaceFirstIn(formattedDuration, "") //strip leading zero
     }
+  }
+
+  def activeAsset: MediaAsset = activeVersion match {
+    case Some(version) => assets.find(_.version == version).getOrElse(assets.head)
+    case _ => assets.head
   }
 }
 
@@ -204,7 +210,8 @@ object MediaAtom extends common.Logging {
       source = mediaAtom.source,
       posterImage = mediaAtom.posterImage.map(imageMediaMake(_, mediaAtom.title)),
       endSlatePath = endSlatePath,
-      expired = expired
+      expired = expired,
+      activeVersion = mediaAtom.activeVersion
     )
   }
 

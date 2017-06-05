@@ -28,16 +28,19 @@ class AtomCleanerTest extends FlatSpec
 
   val image: ImageMedia = ImageMedia.apply(Seq(imageAsset))
 
+  val youTubeAsset = MediaAsset(id = "nQuN9CUsdVg", version = 1L, platform = MediaAssetPlatform.Youtube, mimeType = None)
+
   val youTubeAtom = Some(Atoms(quizzes = Nil,
     media = Seq(MediaAtom(id = "887fb7b4-b31d-4a38-9d1f-26df5878cf9c",
       defaultHtml = "<iframe width=\"420\" height=\"315\"\n src=\"https://www.youtube.com/embed/nQuN9CUsdVg\" frameborder=\"0\"\n allowfullscreen=\"\">\n</iframe>",
-      assets = Seq(MediaAsset(id = "nQuN9CUsdVg", version = 1L, platform = MediaAssetPlatform.Youtube, mimeType = None)),
+      assets = Seq(youTubeAsset),
       title = "Bird",
       duration = Some(36),
       source = None,
       posterImage = Some(image),
       endSlatePath = Some("/video/end-slate/section/football.json?shortUrl=https://gu.com/p/6vf9z"),
-      expired = None)
+      expired = None,
+      activeVersion = None)
     ),
     interactives = Nil,
     recipes = Nil,
@@ -91,6 +94,36 @@ class AtomCleanerTest extends FlatSpec
     val html = views.html.fragments.atoms.media(media = youTubeAtom.map(_.media.head).get, displayCaption = false, mediaWrapper = None)(TestRequest())
     val doc = Jsoup.parse(html.toString())
     doc.getElementsByClass("youtube-media-atom__bottom-bar__duration").html() should be("0:36")
+  }
+
+  "Youtube template" should "use active asset" in {
+    val atom = youTubeAtom.get.media.head.copy(
+      activeVersion = Some(2L),
+      assets = Seq(
+        youTubeAsset,
+        youTubeAsset.copy(id = "gyVuRflcEKM", version = 2),
+        youTubeAsset.copy(id = "QRplDNMsS4U", version = 3)
+      )
+    )
+
+    val html = views.html.fragments.atoms.media(media = atom, displayCaption = false, mediaWrapper = None)(TestRequest())
+    val doc = Jsoup.parse(html.toString())
+
+    doc.getElementsByClass("youtube-media-atom__iframe").attr("id") should be("youtube-gyVuRflcEKM")
+  }
+
+  "Youtube template" should "use latest asset if no active version" in {
+    val atom = youTubeAtom.get.media.head.copy(
+      assets = Seq(
+        youTubeAsset.copy(id = "gyVuRflcEKM", version = 2),
+        youTubeAsset.copy(id = "QRplDNMsS4U", version = 3)
+      )
+    )
+
+    val html = views.html.fragments.atoms.media(media = atom, displayCaption = false, mediaWrapper = None)(TestRequest())
+    val doc = Jsoup.parse(html.toString())
+
+    doc.getElementsByClass("youtube-media-atom__iframe").attr("id") should be(s"youtube-gyVuRflcEKM")
   }
 
   "Formatted duration" should "produce the expected format" in {
