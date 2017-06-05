@@ -39,6 +39,7 @@ export const regulars: AcquisitionsEpicTemplateCopy = {
     p2: controlP2,
 };
 
+export const election: AcquisitionsEpicTemplateCopy = {
 export const liveblogSubtle: AcquisitionsEpicTemplateCopy = {
     heading: controlHeading,
     p1: controlP1,
