@@ -101,6 +101,36 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-acquisitions-this-land-series-epic",
+    "This places a custom Epic at the ehnd of This Land Is Your Land articles",
+    owners = Seq(Owner.withGithub("desbo")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 8, 1),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-this-land-environment-epic-earning",
+    "This places a custom Epic at the ennd of environment articles",
+    owners = Seq(Owner.withGithub("desbo")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 8, 1),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-this-land-environment-epic-learning",
+    "This places a custom Epic at the ennd of environment articles",
+    owners = Seq(Owner.withGithub("desbo")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 8, 1),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
     "ab-acquisitions-epic-liveblog-design-test",
     "This tests some different designs of the liveblog epic",
     owners = Seq(Owner.withGithub("joelochlann")),
