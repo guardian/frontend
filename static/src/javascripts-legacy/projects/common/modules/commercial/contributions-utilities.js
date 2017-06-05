@@ -93,7 +93,8 @@ define([
     }
 
     function defaultCanEpicBeDisplayed(testConfig) {
-        var enoughTimeSinceLastContribution = daysSince(lastContributionDate) >= 180;
+        var enoughTimeSinceLastContribution =
+            testConfig.showToContributors ? true : daysSince(lastContributionDate) >= 180;
 
         var worksWellWithPageTemplate = (typeof testConfig.pageCheck === 'function')
             ? testConfig.pageCheck(config.page)
@@ -109,7 +110,8 @@ define([
 
         var tagsMatch = doTagsMatch(testConfig);
 
-        var canReasonablyAskForMoney = commercialFeatures.commercialFeatures.canReasonablyAskForMoney;
+        var canReasonablyAskForMoney =
+            testConfig.showToSupporters ? true : commercialFeatures.commercialFeatures.canReasonablyAskForMoney;
 
         return enoughTimeSinceLastContribution &&
             canReasonablyAskForMoney &&
@@ -187,6 +189,8 @@ define([
             blockEngagementBanner: options.blockEngagementBanner || false,
             engagementBannerParams: options.engagementBannerParams || {},
             isOutbrainCompliant: options.isOutbrainCompliant || false,
+            usesIframe: options.usesIframe || false,
+            iframeId: test.campaignId + '_' + 'iframe'
         };
 
         this.test = function () {
@@ -243,6 +247,7 @@ define([
             return (typeof options.test === 'function') ? options.test(render.bind(this), this) : render.apply(this);
         };
 
+        this.registerIframeListener();
         this.registerListener('impression', 'impressionOnInsert', test.insertEvent, options);
         this.registerListener('success', 'successOnView', test.viewEvent, options);
     }
@@ -261,7 +266,6 @@ define([
         return base + '?' + url.constructQuery(params);
     };
 
-
     ContributionsABTestVariant.prototype.contributionsURLBuilder = function(codeModifier) {
         return this.getURL(contributionsBaseURL, codeModifier(this.options.campaignCode));
     };
@@ -278,6 +282,26 @@ define([
             }).bind(this);
         }
     };
+
+    ContributionsABTestVariant.prototype.registerIframeListener = function() {
+        if (!this.options.usesIframe) return;
+
+        window.addEventListener('message', function(message) {
+            var iframe = document.getElementById(this.options.iframeId);
+
+            if (iframe) {
+                try {
+                    var data = JSON.parse(message.data);
+
+                    if (data.type === 'set-height' && data.value) {
+                        iframe.style.height = data.value + 'px';
+                    }
+                } catch (e) {
+                    return;
+                }
+            }
+        }.bind(this));
+    }
 
     function noop() {}
 
