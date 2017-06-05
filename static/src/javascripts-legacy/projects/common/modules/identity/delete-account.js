@@ -1,20 +1,26 @@
 define([
     'lib/$',
-    'bean'
+    'bean',
+    'fastdom'
 ], function (
     $,
-    bean
+    bean,
+    fastdom
 ) {
     var deleteButtonElm = $('#deleteButton')[0];
     var deleteFormElm = $('#deleteForm')[0];
     var deleteLoaderElm = $('#deleteLoader')[0];
 
     function disableDeleteButton() {
-        deleteButtonElm && (deleteButtonElm.disabled = true);
+        fastdom.write(function () {
+            deleteButtonElm && (deleteButtonElm.disabled = true);
+        });
     }
 
     function showLoader() {
-        deleteLoaderElm && deleteLoaderElm.classList.remove("is-hidden");
+        fastdom.write(function () {
+            deleteLoaderElm && deleteLoaderElm.classList.remove("is-hidden");
+        });
     }
 
     function setupLoadingAnimation() {
