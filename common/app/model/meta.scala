@@ -8,7 +8,7 @@ import common.commercial.{AdUnitMaker, CommercialProperties}
 import common.dfp._
 import common.{Edition, ManifestData, NavItem, Pagination}
 import conf.Configuration
-import cricketPa.CricketTeams
+import conf.cricketPa.CricketTeams
 import model.content.{MediaAtom, StoryQuestionsAtom}
 import model.liveblog.Blocks
 import model.meta.{Guardian, LinkedData, PotentialAction, WebPage}

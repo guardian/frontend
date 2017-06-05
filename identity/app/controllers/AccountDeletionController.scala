@@ -42,6 +42,7 @@ class AccountDeletionController(
   import views.html.profile.deletion._
 
   val page = IdentityPage("/deletion", "Account Deletion")
+  val pageConfirm = IdentityPage("/deletion/confirm", "Account Deletion Confirmation")
 
   val accountDeletionForm = Form(
     tuple(
@@ -67,6 +68,10 @@ class AccountDeletionController(
     }
   }
 
+  def renderAccountDeletionConfirmation(autoDeletion: Boolean) = Action.async { implicit request =>
+    Future(NoCache(Ok(accountDeletionConfirm(pageConfirm, autoDeletion))))
+  }
+
   private def deleteAccount[A](
       boundForm: Form[(String, Option[String])],
       emailPasswdAuth: EmailPassword,
@@ -86,7 +91,7 @@ class AccountDeletionController(
 
         case Right(deletionResult) =>
           logger.info(s"Account deletion succeeded for user ${request.user.user.id}: $deletionResult")
-          Ok(accountDeletionConfirm(page, deletionResult.auto == "true"))
+          SeeOther(routes.AccountDeletionController.renderAccountDeletionConfirmation(deletionResult.auto == "true").url)
       }
     }
 }

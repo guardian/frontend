@@ -2,6 +2,7 @@ define([
     'lodash/arrays/uniq',
     'commercial/modules/commercial-features',
     'common/modules/commercial/targeting-tool',
+    'common/modules/commercial/acquisitions-copy',
     'common/modules/commercial/acquisitions-view-log',
     'lib/$',
     'lib/config',
@@ -20,6 +21,7 @@ define([
     uniq,
     commercialFeatures,
     targetingTool,
+    acquisitionsCopy,
     viewLog,
     $,
     config,
@@ -64,8 +66,11 @@ define([
         }
     }
 
+    var daysSinceLastContribution = daysSince(lastContributionDate);
+
     function controlTemplate(variant) {
         return template(acquisitionsEpicControlTemplate, {
+            copy: acquisitionsCopy.control,
             membershipUrl: variant.options.membershipURL,
             contributionUrl: variant.options.contributeURL,
             componentName: variant.options.componentName
@@ -93,7 +98,7 @@ define([
     }
 
     function defaultCanEpicBeDisplayed(testConfig) {
-        var enoughTimeSinceLastContribution = daysSince(lastContributionDate) >= 90;
+        var enoughTimeSinceLastContribution = daysSince(lastContributionDate) >= 180;
 
         var worksWellWithPageTemplate = (typeof testConfig.pageCheck === 'function')
             ? testConfig.pageCheck(config.page)
@@ -140,6 +145,10 @@ define([
         this.insertEvent = this.makeEvent('insert');
         this.viewEvent = this.makeEvent('view');
         this.isEngagementBannerTest = options.isEngagementBannerTest || false;
+
+        // Set useLocalViewLog to true if only the views for the respective test
+        // should be used to determine variant viewability
+        this.useLocalViewLog =  options.useLocalViewLog || false;
 
         /**
          * Provides a default `canRun` function with typical rules (see function below) for Contributions messages.
@@ -240,7 +249,7 @@ define([
                 }.bind(this));
             }
 
-            return (typeof options.test === 'function') ? options.test(render.bind(this)) : render.apply(this);
+            return (typeof options.test === 'function') ? options.test(render.bind(this), this) : render.apply(this);
         };
 
         this.registerListener('impression', 'impressionOnInsert', test.insertEvent, options);
@@ -297,6 +306,7 @@ define([
             };
         },
 
-        variantBuilderFactory: variantBuilderFactory
+        variantBuilderFactory: variantBuilderFactory,
+        daysSinceLastContribution: daysSinceLastContribution
     };
 });

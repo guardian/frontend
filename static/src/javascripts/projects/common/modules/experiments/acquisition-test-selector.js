@@ -16,14 +16,16 @@ import acquisitionsEpicLiveBlog
     from 'common/modules/experiments/tests/acquisitions-epic-liveblog';
 import acquisitionsEpicLiveBlogDesignTest
     from 'common/modules/experiments/tests/acquisitions-epic-liveblog-design-test';
-import acquisitionsEpicElectionInteractive
-    from 'common/modules/experiments/tests/acquisitions-epic-election-interactive';
 import acquisitionsEpicPreElection
     from 'common/modules/experiments/tests/acquisitions-epic-pre-election';
 import acquisitionsEpicAlwaysAskIfTagged
     from 'common/modules/experiments/tests/acquisitions-epic-always-ask-if-tagged';
 import acquisitionsEpicTestimonialsUSA
     from 'common/modules/experiments/tests/acquisitions-epic-testimonials-usa';
+import acquisitionsEpicAlwaysAskElection
+    from 'common/modules/experiments/tests/acquisitions-epic-always-ask-election';
+import acquisitionsEpicThankYou
+    from 'common/modules/experiments/tests/acquisitions-epic-thank-you';
 
 /**
  * acquisition tests in priority order (highest to lowest)
@@ -36,10 +38,11 @@ const tests = [
     acquisitionsEpicAlwaysAskIfTagged,
     acquisitionsEpicLiveBlogDesignTest,
     acquisitionsEpicLiveBlog,
-    acquisitionsEpicElectionInteractive,
+    acquisitionsEpicAlwaysAskElection,
+    acquisitionsEpicThankYou,
 ].map(Test => new Test());
 
-const isViewable = (v: Variant): boolean => {
+const isViewable = (v: Variant, t: ABTest): boolean => {
     if (!v.options || !v.options.maxViews) return false;
 
     const {
@@ -49,9 +52,12 @@ const isViewable = (v: Variant): boolean => {
     } = v.options.maxViews;
 
     const isUnlimited = v.options.isUnlimited;
+    const testId = t.useLocalViewLog ? t.id : undefined;
 
-    const withinViewLimit = viewsInPreviousDays(maxViewDays) < maxViewCount;
-    const enoughDaysBetweenViews = viewsInPreviousDays(minViewDays) === 0;
+    const withinViewLimit =
+        viewsInPreviousDays(maxViewDays, testId) < maxViewCount;
+    const enoughDaysBetweenViews =
+        viewsInPreviousDays(minViewDays, testId) === 0;
     return (withinViewLimit && enoughDaysBetweenViews) || isUnlimited;
 };
 
@@ -68,11 +74,13 @@ export const getTest = (): ?ABTest => {
     if (forcedTests.length)
         return forcedTests.find(t => {
             const variant: ?Variant = getForcedVariant(t);
-            return variant && testCanBeRun(t) && isViewable(variant);
+            return variant && testCanBeRun(t) && isViewable(variant, t);
         });
 
     return tests.find(t => {
         const variant: ?Variant = variantFor(t);
-        return variant && testCanBeRun(t) && isInTest(t) && isViewable(variant);
+        return (
+            variant && testCanBeRun(t) && isInTest(t) && isViewable(variant, t)
+        );
     });
 };

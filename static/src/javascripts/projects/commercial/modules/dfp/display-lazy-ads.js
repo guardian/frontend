@@ -31,7 +31,9 @@ const displayLazyAds = (): void => {
     window.googletag.pubads().collapseEmptyDivs();
     window.googletag.enableServices();
     instantLoad();
-    enableLazyLoad();
+    dfpEnv.advertsToLoad.forEach((advert: Advert): void => {
+        enableLazyLoad(advert);
+    });
 };
 
 export { displayLazyAds };

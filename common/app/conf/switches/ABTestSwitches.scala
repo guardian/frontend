@@ -25,17 +25,7 @@ trait ABTestSwitches {
     "Displays an explainer in the form of a disclosure widget",
     owners = Seq(Owner.withGithub("regiskuckaertz")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 6, 6),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-measure-understanding",
-    "Asks users if they feel better informed after reading an article",
-    owners = Seq(Owner.withGithub("regiskuckaertz")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 6, 6),
+    sellByDate = new LocalDate(2017, 6, 13),
     exposeClientSide = true
   )
 
@@ -45,7 +35,7 @@ trait ABTestSwitches {
     "Assign users to variants of opinion emails",
     owners = Seq(Owner.withGithub("davidfurey")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 6, 1),
+    sellByDate = new LocalDate(2017, 6, 19),
     exposeClientSide = true
   )
 
@@ -81,8 +71,18 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-acquisitions-election-interactive",
+    "ab-acquisitions-election-interactive-end",
     "This places the epic underneath UK election-related interactives",
+    owners = Seq(Owner.withGithub("desbo")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 7, 3),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-election-interactive-slice",
+    "This places the epic (slice design) in the middle of UK election-related interactives",
     owners = Seq(Owner.withGithub("desbo")),
     safeState = Off,
     sellByDate = new LocalDate(2017, 7, 3),
@@ -103,49 +103,9 @@ trait ABTestSwitches {
     ABTests,
     "ab-tailor-survey",
     "Integrate Tailor with ab tests",
-    owners = Seq(Owner.withGithub("oilnam")),
+    owners = Seq(Owner.withGithub("oilnam"), Owner.withGithub("mike-ruane")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 5, 31),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-sleeve-notes-new-email-variant",
-    "Assign some of the new sleeve notes subscribers to receive the new email",
-    owners = Seq(Owner.withGithub("lmath")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 6, 1),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-sleeve-notes-legacy-email-variant",
-    "Assign some of the new sleeve notes subscribers to receive the old email",
-    owners = Seq(Owner.withGithub("lmath")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 6, 1),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-the-long-read-email-variants",
-    "Assign users to variants of long read email",
-    owners = Seq(Owner.withGithub("davidfurey")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 6, 1),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-fashion-statement-email-variants",
-    "Assign users to variants of fashion statement email",
-    owners = Seq(Owner.withGithub("davidfurey")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 6, 1),
+    sellByDate = new LocalDate(2017, 8, 31),
     exposeClientSide = true
   )
 
@@ -155,17 +115,7 @@ trait ABTestSwitches {
     "Assign users to variants of bookmarks email",
     owners = Seq(Owner.withGithub("davidfurey")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 6, 1),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-film-today-email-variants",
-    "Assign users to variants of film today email",
-    owners = Seq(Owner.withGithub("davidfurey")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 6, 1),
+    sellByDate = new LocalDate(2017, 6, 19),
     exposeClientSide = true
   )
 
@@ -211,11 +161,31 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-acquisitions-epic-always-ask-election",
+    "This will guarantee that the epic is always displayed on election stories",
+    owners = Seq(Owner.withGithub("jranks123")),
+    safeState = On,
+    sellByDate = new LocalDate(2018, 7, 19),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
     "ab-acquisitions-epic-testimonials-usa",
     "Test placing localised reader testimonials in the Epic",
     owners = Seq(Owner.withGithub("desbo")),
     safeState = On,
     sellByDate = new LocalDate(2017, 6, 26),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-epic-thank-you",
+    "Bootstrap the AB test framework to use the Epic to thank readers who have already supported the Guardian",
+    owners = Seq(Owner.withGithub("Mullefa")),
+    safeState = On,
+    sellByDate = new LocalDate(2017, 6, 19),
     exposeClientSide = true
   )
 }

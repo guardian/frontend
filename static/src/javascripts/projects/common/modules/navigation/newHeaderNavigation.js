@@ -1,8 +1,11 @@
 // @flow
 
-import fastdom from 'fastdom';
+import detect from 'lib/detect';
+import fastdom from 'lib/fastdom-promise';
 import { scrollToElement } from 'lib/scroller';
+import { addEventListener } from 'lib/events';
 import userAccount from 'common/modules/navigation/user-account';
+import debounce from 'lodash/functions/debounce';
 
 const enhanced = {};
 
@@ -70,6 +73,55 @@ const toggleSidebar = (): void => {
     const update = () => {
         const expandedAttr = isOpen ? 'false' : 'true';
         const hiddenAttr = isOpen ? 'true' : 'false';
+        const haveToCalcTogglePosition = (): boolean =>
+            detect.isBreakpoint({
+                min: 'tablet',
+                max: 'desktop',
+            });
+        const enhanceMenuMargin = (): Promise<void> => {
+            const body = document.body;
+
+            if (!body || !haveToCalcTogglePosition()) {
+                return Promise.resolve();
+            }
+
+            return fastdom
+                .read(() => {
+                    const docRect = body.getBoundingClientRect();
+                    const rect = menuToggle.getBoundingClientRect();
+                    return docRect.right - rect.right + rect.width / 2;
+                })
+                .then(marginRight =>
+                    fastdom.write(() => {
+                        menu.style.marginRight = `${marginRight}px`;
+                    })
+                );
+        };
+        const debouncedMenuEnhancement = debounce(enhanceMenuMargin, 200);
+        const removeEnhancedMenuMargin = (): Promise<void> =>
+            fastdom.write(() => {
+                menu.style.marginRight = '';
+            });
+
+        /*
+            Between tablet and desktop the veggie-burger does not have a fixed
+            margin to the right. Therefore we have to calculate it's midpoint
+            and apply it as a margin to the menu.
+            The listeners have to be applied always, because the device
+            orientation could change and force the layout into the next
+            breakpoint.
+        */
+        if (!isOpen) {
+            enhanceMenuMargin().then(() => {
+                addEventListener(window, 'resize', debouncedMenuEnhancement, {
+                    passive: true,
+                });
+            });
+        } else {
+            removeEnhancedMenuMargin().then(() => {
+                window.removeEventListener('resize', debouncedMenuEnhancement);
+            });
+        }
 
         menuToggle.setAttribute(
             'data-link-name',

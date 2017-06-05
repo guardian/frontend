@@ -1,7 +1,5 @@
 {
   "Francis Carr": [
-    "projects/commercial/modules/creatives/fabric-expanding-v1.js",
-    "projects/common/modules/video/events.js",
     "projects/commercial/modules/third-party-tags/krux.js"
   ],
   "Jon Norman": [
@@ -13,7 +11,6 @@
   "Regis Kuckaertz": [],
   "Richard Nguyen": [],
   "Kate Whalen": [
-    "projects/commercial/modules/messenger.js",
     "projects/commercial/modules/messenger/background.js",
     "projects/commercial/modules/messenger/click.js",
     "projects/commercial/modules/messenger/dfp-origin.js",
@@ -23,9 +20,7 @@
     "projects/commercial/modules/messenger/scroll.js",
     "projects/common/modules/charts/doughnut.js"
   ],
-  "Lydia Shepherd": [
-    "projects/common/modules/commercial/adblock-messages.js"
-  ],
+  "Lydia Shepherd": [],
   "sndrs": [
     "lib/detect.js",
     "bootstraps/enhanced/accessibility.js",
@@ -41,7 +36,6 @@
     "projects/common/modules/check-dispatcher.js"
   ],
   "Simon Adcock": [
-    "bootstraps/enhanced/liveblog.js",
     "bootstraps/enhanced/media/main.js",
     "bootstraps/enhanced/media/video-player.js"
   ],
@@ -97,7 +91,6 @@
     "projects/common/modules/article/membership-events.js",
     "projects/common/modules/article/rich-links.js",
     "projects/common/modules/article/space-filler.js",
-    "projects/common/modules/article/spacefinder.js",
     "projects/common/modules/article/twitter.js",
     "projects/common/modules/asyncCallMerger.js",
     "projects/common/modules/atoms/quiz.js",
@@ -234,7 +227,5 @@
   "Santiago Villa Fernandez": [
     "projects/common/modules/video/more-in-series-container.js"
   ],
-  "Jamie Byers": [
-    "bootstraps/enhanced/newsletters.js"
-  ]
+  "Jamie Byers": []
 }

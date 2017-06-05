@@ -1,17 +1,14 @@
 .menu-group {
-    $spacing-left-small: $gs-gutter * 2 + $gs-gutter / 2;
-    $spacing-left-medium: $gs-gutter * 2 + $gs-gutter;
-
     color: #ffffff;
     display: flex;
     font-size: 18px;
     flex-wrap: wrap;
     list-style: none;
     margin: 0;
-    padding: 0 0 $gs-baseline $spacing-left-small;
+    padding: 0 0 $gs-baseline $menu-spacing-left-small;
 
     @include mq(tablet) {
-        padding-left: $spacing-left-medium;
+        padding-left: $menu-spacing-left-medium;
     }
 
     // TODO: tmp
@@ -25,12 +22,10 @@
     // make these lists to start at the left side
     &--secondary,
     &--lowlight {
-        @include mq($until: desktop) {
-            margin-left: -$spacing-left-small;
+        margin-left: -$menu-spacing-left-small;
 
-            @include mq(tablet) {
-                margin-left: -$spacing-left-medium;
-            }
+        @include mq(tablet) {
+            margin-left: -$menu-spacing-left-medium;
         }
     }
 }

@@ -11,8 +11,7 @@
     }
 
     @include mq(mobileLandscape) {
-        padding-left: 0;
-        padding-right: 0;
+        padding: $gs-baseline / 2 0;
     }
 
     // Spacer to prevent text from sitting directly beneath the veggie burger

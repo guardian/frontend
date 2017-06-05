@@ -89,7 +89,7 @@
                 </p>
             </div>
 
-            <form class="form" novalidate action="@idUrlBuilder.buildUrl("/delete", idRequest)" role="main" method="post">
+            <form class="form" novalidate action="@idUrlBuilder.buildUrl("/delete", idRequest)" role="main" method="post" id="deleteForm">
                 @views.html.helper.CSRF.formField
 
                 <div class="identity-section">
@@ -124,6 +124,7 @@
 
                             <li>
                                 <button type="submit" class="submit-input delete-input-warn" data-link-name="Delete Account" data-test-id="delete-account">Delete your account</button>
+                                <div id="deleteLoader" class="loading-animation is-updating inline-loading is-hidden"></div>
                             </li>
                         </ul>
                     </div>

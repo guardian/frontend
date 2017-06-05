@@ -10,6 +10,7 @@ define([
     'common/modules/identity/account-profile',
     'common/modules/identity/public-profile',
     'common/modules/identity/email-preferences',
+    'common/modules/identity/delete-account',
     'common/modules/discussion/user-avatars',
     'lib/mediator',
     'common/modules/ui/tabs'
@@ -25,6 +26,7 @@ define([
     AccountProfile,
     PublicProfile,
     EmailPreferences,
+    DeleteAccount,
     UserAvatars,
     mediator,
     Tabs
@@ -95,6 +97,12 @@ define([
             mediator.on('page:identity:ready', function () {
                 EmailPreferences.init();
             });
+        },
+
+        deleteAccount: function () {
+            mediator.on('page:identity:ready', function () {
+                DeleteAccount.init();
+            });
         }
     };
 
@@ -109,6 +117,7 @@ define([
             modules.tabs();
             modules.accountProfile();
             modules.emailPreferences();
+            modules.deleteAccount();
             PublicProfile.init();
 
             mediator.emit('page:identity:ready', config);
