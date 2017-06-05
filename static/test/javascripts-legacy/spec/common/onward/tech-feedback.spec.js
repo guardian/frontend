@@ -13,10 +13,9 @@ define([
             id: 'related',
             fixtures: [
                 '<p id="feedback-warning"></p>',
-                '<select id="feedback-category"><option id="testoption" value="feedback-form-website">Website</option></select>',
+                '<form id="feedback__form"><select id="feedback-category"><option id="testoption" value="feedback-form-website">Website</option></select><input name="extra" value=""></form>',
                 '<div id="feedback-form-default"></div>',
-                '<div id="feedback-form-website"></div>',
-                '<div class="feedback__form"><input name="extra"/></div>'
+                '<div id="feedback-form-website"></div>'
             ]
         };
 
@@ -32,23 +31,22 @@ define([
             fixtures.clean(fixturesConfig.id);
         });
 
-        it("Should place the extra information into the forms", function(){
+        it("Should place the extra information into the form", function(){
             new TechFeedback();
-            expect(document.querySelectorAll(".feedback__form input[name=extra]")[0].value).toContain("browser");
-            expect(document.querySelectorAll(".feedback__form input[name=extra]")[0].value).toContain("No tests running");
+            expect(document.querySelectorAll("#feedback__form input[name=extra]")[0].value).toContain("browser");
         });
 
-        it("Should hide the un-enhanced form", function(){
+        it("Should start off with the inputs disabled", function(){
             new TechFeedback();
-            expect(document.getElementById("feedback-form-default")).toBeNull();
+            expect(document.querySelectorAll("#feedback__form input[name=extra]")[0].disabled).toBeTruthy();
         });
 
-        it("Should flip to the correct form after we choose something from the dropdown", function() {
+        it("Should enable inputs after we choose something from the category select", function() {
             new TechFeedback();
             document.getElementById("testoption").setAttribute('selected', 'selected');
             document.getElementById("feedback-category").value = "feedback-form-website";
             document.getElementById("feedback-category").dispatchEvent(new Event('change'));
-            expect(document.getElementById("feedback-form-website").classList).toContain("feedback__form--selected")
+            expect(document.querySelectorAll("#feedback__form input[name=extra]")[0].disabled).toBeFalsy();
         })
 
     });
