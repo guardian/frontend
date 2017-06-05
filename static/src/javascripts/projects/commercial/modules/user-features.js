@@ -84,12 +84,11 @@ const isAdFreeUser = (): boolean => {
     return getCookie(AD_FREE_USER_COOKIE) === 'true';
 };
 
-export { isAdFreeUser, isPayingMember };
+export { isAdFreeUser, isPayingMember, refresh };
 
 export const _ = {
     requestNewData,
     deleteOldData,
     persistResponse,
-    refresh,
     userNeedsNewFeatureData,
 };

@@ -36,25 +36,25 @@ define(['helpers/injector'], function (Injector) {
 
                 it('Performs an update if the user has missing data', function () {
                     deleteAllFeaturesData();
-                    userFeatures._.refresh();
+                    userFeatures.refresh();
                     expect(userFeatures._.requestNewData).toHaveBeenCalled();
                 });
 
                 it('Performs an update if the user has expired data', function () {
                     setAllFeaturesData({isExpired: true});
-                    userFeatures._.refresh();
+                    userFeatures.refresh();
                     expect(userFeatures._.requestNewData).toHaveBeenCalled();
                 });
 
                 it('Does not delete the data just because it has expired', function () {
                     setAllFeaturesData({isExpired: true});
-                    userFeatures._.refresh();
+                    userFeatures.refresh();
                     expect(userFeatures._.deleteOldData).not.toHaveBeenCalled();
                 });
 
                 it('Does not perform update if user has fresh feature data', function () {
                     setAllFeaturesData({isExpired: false});
-                    userFeatures._.refresh();
+                    userFeatures.refresh();
                     expect(userFeatures._.requestNewData).not.toHaveBeenCalled();
                 });
 
@@ -63,7 +63,7 @@ define(['helpers/injector'], function (Injector) {
                     setAllFeaturesData({isExpired: true});
                     cookies.removeCookie(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE);
 
-                    userFeatures._.refresh();
+                    userFeatures.refresh();
                     expect(userFeatures._.requestNewData).toHaveBeenCalled();
                 });
 
@@ -72,7 +72,7 @@ define(['helpers/injector'], function (Injector) {
                     setAllFeaturesData({isExpired: true});
                     cookies.removeCookie(PERSISTENCE_KEYS.AD_FREE_USER_COOKIE);
 
-                    userFeatures._.refresh();
+                    userFeatures.refresh();
                     expect(userFeatures._.requestNewData).toHaveBeenCalled();
                 });
 
@@ -85,13 +85,13 @@ define(['helpers/injector'], function (Injector) {
 
                 it('Does not perform update, even if feature data missing', function () {
                     deleteAllFeaturesData();
-                    userFeatures._.refresh();
+                    userFeatures.refresh();
                     expect(userFeatures._.requestNewData).not.toHaveBeenCalled();
                 });
 
                 it('Deletes leftover feature data', function () {
                     setAllFeaturesData({isExpired: false});
-                    userFeatures._.refresh();
+                    userFeatures.refresh();
                     expect(userFeatures._.deleteOldData).toHaveBeenCalled();
                 });
             });
