@@ -6,7 +6,9 @@ define([
     'lib/$',
     'raw-loader!common/views/acquisitions-epic-liveblog.html',
     'raw-loader!common/views/acquisitions-epic-liveblog-old-design-subtle.html',
-    'raw-loader!common/views/acquisitions-epic-liveblog-old-design-minimal.html'
+    'raw-loader!common/views/acquisitions-epic-liveblog-old-design-minimal.html',
+    'common/modules/commercial/acquisitions-copy',
+
 ], function (
     contributionsUtilities,
     geolocation,
@@ -15,7 +17,8 @@ define([
     $,
     liveblogEpicTemplateControl,
     liveblogEpicTemplateOldDesignSubtle,
-    liveblogEpicTemplateOldDesignMinimal
+    liveblogEpicTemplateOldDesignMinimal,
+    acquisitionsCopy
 ) {
 
     var pageId = config.page.pageId || '';
@@ -102,6 +105,7 @@ define([
 
                 template: function (variant) {
                     return template(liveblogEpicTemplateControl, {
+                        copy: acquisitionsCopy.control,
                         membershipUrl: variant.options.membershipURL,
                         contributionUrl: variant.options.contributeURL,
                         componentName: variant.options.componentName
@@ -119,6 +123,7 @@ define([
 
                 template: function (variant) {
                     return template(liveblogEpicTemplateOldDesignSubtle, {
+                        copy: acquisitionsCopy.liveblogSubtle,
                         membershipUrl: variant.options.membershipURL,
                         contributionUrl: variant.options.contributeURL,
                         componentName: variant.options.componentName
@@ -138,6 +143,7 @@ define([
 
                 template: function (variant) {
                     return template(liveblogEpicTemplateOldDesignMinimal, {
+                        copy: acquisitionsCopy.liveblogMinimal,
                         membershipUrl: variant.options.membershipURL,
                         contributionUrl: variant.options.contributeURL,
                         componentName: variant.options.componentName

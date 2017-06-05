@@ -2,13 +2,11 @@ define([
     'lodash/utilities/template',
     'common/modules/commercial/contributions-utilities',
     'raw-loader!common/views/acquisitions-epic-testimonials.html',
-    'raw-loader!common/views/acquisitions-epic-test-template.html',
     'svgs/icon/quote.svg'
 ], function (
     template,
     contributionsUtilities,
     acquisitionsEpicTestimonialsTemplate,
-    acquisitionsEpicTestTemplate,
     quoteSvg
 ) {
 
