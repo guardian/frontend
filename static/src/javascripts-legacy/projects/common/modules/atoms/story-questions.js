@@ -2,18 +2,23 @@ define([
     'lib/mediator',
     'lib/detect',
     'lib/$',
+    'lib/fetch',
     'bean',
+    'lib/config',
     'ophan/ng'
 ], function (
     mediator,
     detect,
     $,
+    fetch,
     bean,
+    config,
     ophan
 ) {
 
-    function askQuestion(event) {
+    function askQuestion(event, isEmailSubmissionReady) {
         event.preventDefault();
+
         var questionElement = event.currentTarget.querySelector('.user__question-upvote');
         var atomIdElement = $('.js-storyquestion-atom-id');
 
@@ -27,13 +32,27 @@ define([
                 var questionText = question.content;
 
                 if (questionText && atomId) {
+                    var askQuestionBtn = document.getElementById('btn-ask-question-' + questionId);
 
-                    var questionElementClicked = $('#' + questionId);
-                    var thankYouMessage = $('#js-question-thankyou-' + questionId);
+                    if (askQuestionBtn) {
+                        askQuestionBtn.classList.add('is-hidden');
+                    }
 
-                    if (questionElementClicked && thankYouMessage) {
-                        questionElementClicked.addClass('is-hidden');
-                        thankYouMessage.removeClass('is-hidden');
+                    if (isEmailSubmissionReady === true) {
+                        var signupForm = document.forms['js-storyquestion-email-signup-form-' + questionId];
+                        var thankYouMessageForEmailSubmission = document.getElementById('js-question-thankyou-' + questionId);
+
+                        if (thankYouMessageForEmailSubmission && signupForm) {
+                            thankYouMessageForEmailSubmission.classList.remove('is-hidden');
+                            signupForm.classList.remove('is-hidden');
+                        }
+
+                    } else {
+                        var thankYouMessageNoEmailSubmission = document.getElementById('js-thankyou-message-no-submission-' + questionId);
+
+                        if (thankYouMessageNoEmailSubmission) {
+                            thankYouMessageNoEmailSubmission.classList.remove('is-hidden');
+                        }
                     }
 
                     ophan.record({
@@ -46,15 +65,57 @@ define([
         }
     }
 
+    function submitSignUpForm(event) {
+        event.preventDefault();
+
+        var answersEmailSignupForm = event.currentTarget;
+        var email = answersEmailSignupForm.elements['email'];
+        var listId = answersEmailSignupForm.listId;
+        var questionId = answersEmailSignupForm.dataset.questionId;
+
+        if (email && listId && questionId) {
+
+            fetch(config.page.ajaxUrl + '/story-questions/answers/signup', {
+                method: 'POST',
+                body: {email : email.value, listId: listId.value}
+            })
+            .then(function (response) {
+                if (response.ok) {
+                    var submissionContainerEl = answersEmailSignupForm.parentElement;
+                    var thankyouMessage = document.getElementById('js-final-thankyou-message-' + questionId);
+
+                    if (submissionContainerEl && thankyouMessage) {
+                        submissionContainerEl.classList.add('is-hidden');
+                        thankyouMessage.classList.remove('is-hidden');
+                    }
+                }
+            });
+        }
+    }
+
     return {
         init: function() {
             var askQuestionLinks = $('.js-ask-question-link');
+            var isEmailSubmissionReadyElement = document.getElementById('js-storyquestion-is-email-submission-ready');
 
-            if (askQuestionLinks) {
-                askQuestionLinks.each(function (el) {
-                    bean.on(el, 'click', askQuestion);
-                });
+            var isEmailSubmissionReady = false;
+
+            if (isEmailSubmissionReadyElement) {
+                isEmailSubmissionReady = isEmailSubmissionReadyElement.dataset.isEmailSubmissionReady ? isEmailSubmissionReadyElement.dataset.isEmailSubmissionReady : false;
             }
+
+            askQuestionLinks.each(function (el) {
+                bean.on(el, 'click', function(event) {
+                    askQuestion(event, isEmailSubmissionReady)
+                });
+            });
+
+            var answersEmailSignupForms = $('.js-storyquestion-email-signup-form');
+
+            answersEmailSignupForms.each(function (el) {
+                bean.on(el, 'submit', submitSignUpForm);
+            });
+
 
             var storyQuestionsComponent = document.querySelector('.js-view-tracking-component');
             var atomElement = $('.js-storyquestion-atom-id');
