@@ -43,11 +43,20 @@
     background-color: darken($guardian-brand-dark, 4%);
     margin-top: 0;
     padding-top: 0;
+
+    @include mq(desktop) {
+        background-color: transparent;
+    }
 }
 
 .menu-group--highlight {
     color: $guardian-brand-dark;
     background-color: $news-main-2;
+
+    @include mq(desktop) {
+        background-color: transparent;
+        color: #ffffff;
+    }
 
     .menu-item:last-child .menu-group {
         margin-bottom: -$gs-baseline;
@@ -57,4 +66,9 @@
 .menu-group--lowlight {
     background-color: darken($news-main-2, 10%);
     color: $guardian-brand-dark;
+
+    @include mq(desktop) {
+        background-color: transparent;
+        color: #ffffff;
+    }
 }
