@@ -44,8 +44,8 @@ define([
         successMeasure: 'N/A',
         idealOutcome: 'N/A',
         audienceCriteria: 'Readers who have supported the Guardian',
-        audience: 0,
-        audienceOffset: 1,
+        audience: 1,
+        audienceOffset: 0,
 
         overrideCanRun: true,
 
