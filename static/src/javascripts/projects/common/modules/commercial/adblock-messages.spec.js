@@ -1,6 +1,6 @@
 // @flow
 
-import userFeatures from 'projects/commercial/modules/user-features';
+import { isPayingMember } from 'projects/commercial/modules/user-features';
 import detect from 'lib/detect';
 import config from 'lib/config';
 import { local } from 'lib/storage';
@@ -45,9 +45,7 @@ describe('Adblock messages/banners rules', () => {
     let mockBreakpoint;
 
     beforeEach(done => {
-        userFeatures.isPayingMember.mockReturnValueOnce(
-            settings[counter].userFeatures
-        );
+        isPayingMember.mockReturnValueOnce(settings[counter].userFeatures);
 
         config.switches.adblock = settings[counter].switch;
         window.guardian.adBlockers.active = settings[counter].adBlocker;
