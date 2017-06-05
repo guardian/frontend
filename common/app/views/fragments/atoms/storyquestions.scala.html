@@ -4,7 +4,7 @@
     <div class="js-view-tracking-component submeta user__question">
         <span class="js-storyquestion-atom-id is-hidden" id="@storyquestions.id"></span>
 
-        @defining("test/test" == storyquestions.data.relatedStoryId && storyquestions.atom.labels.find(_.length == 4)) { isEmailSubmissionReady =>
+        @defining("test/test" == storyquestions.data.relatedStoryId && storyquestions.atom.labels.exists(_.length == 4)) { isEmailSubmissionReady =>
             <span class="is-hidden" id="js-storyquestion-is-email-submission-ready" data-is-email-submission-ready="@isEmailSubmissionReady"></span>
         }
 
@@ -21,7 +21,7 @@
                                 @question.questionText
                                 </span>
                             </span>
-                            <button id="@question.questionId" class="user__question-upvote" data--is-email-submission-ready="">
+                            <button id="btn-ask-question-@question.questionId" class="user__question-upvote">
                                 Ask this
                                 @fragments.inlineSvg("tick", "icon")
                             </button>

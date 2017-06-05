@@ -32,10 +32,10 @@ define([
                 var questionText = question.content;
 
                 if (questionText && atomId) {
-                    var questionElementClicked = document.getElementById(questionId);
+                    var askQuestionBtn = document.getElementById('btn-ask-question-' + questionId);
 
-                    if (questionElementClicked) {
-                        questionElementClicked.classList.add('is-hidden');
+                    if (askQuestionBtn) {
+                        askQuestionBtn.classList.add('is-hidden');
                     }
 
                     if (isEmailSubmissionReady === true) {
