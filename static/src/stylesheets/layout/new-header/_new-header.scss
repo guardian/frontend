@@ -1,8 +1,10 @@
 /* When the menu is open this class is added to the html to prevent users
 from scrolling */
 .nav-is-open {
-    overflow: hidden;
-    width: 100%;
+    @include mq($until: desktop) {
+        overflow: hidden;
+        width: 100%;
+    }
 }
 
 .new-header {

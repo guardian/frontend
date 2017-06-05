@@ -2,20 +2,44 @@
     position: relative;
     width: 100%;
 
+    @include mq(desktop) {
+        width: auto;
+    }
+
     > *[data-link-name='nav2 : the guardian app'],
     > *[data-link-name='nav2 : facebook'] {
-        border-top: 1px solid darken($guardian-brand-dark, 4%);
-        margin-top: $gs-baseline * 2;
+        @include mq($until: desktop) {
+            border-top: 1px solid darken($guardian-brand-dark, 4%);
+            margin-top: $gs-baseline * 2;
+        }
     }
 
     // First level overwrites
-    .menu-group--primary & {
-        > *:not([open]) {
-            border-bottom: 1px solid darken($guardian-brand-dark, 4%);
+    .menu-group--primary > & {
+        @include mq($until: desktop) {
+            > *:not([open]) {
+                border-bottom: 1px solid darken($guardian-brand-dark, 4%);
+            }
+
+            &:last-child > * {
+                border-bottom: 0;
+            }
         }
 
-        &:last-child > * {
-            border-bottom: 0;
+        @include mq(desktop) {
+            padding-left: $gs-gutter / 2;
+            padding-right: $gs-gutter / 2;
+            width: 100%;
+
+            &:not(:last-child) {
+                border-right: 1px solid $news-main-2;
+            }
+        }
+    }
+
+    .menu-group--secondary > & {
+        @include mq(desktop) {
+            width: 100%;
         }
     }
 }
@@ -53,6 +77,10 @@
 .menu-item__toggle {
     color: $news-support-2;
     position: absolute;
+
+    @include mq(desktop) {
+        display: none;
+    }
 }
 
 .menu-item__toggle {
