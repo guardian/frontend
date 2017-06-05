@@ -31,18 +31,26 @@ define([
         return userFeatures.isPayingMember() || contributionUtilities.isContributor
     }
 
+    function getThrasherVariant() {
+        return isThankYouVariantReader() ? "thanks" : "ask"
+    }
+
+    function getThrasherCampaignCode() {
+        return "gdnwb_copts_memco_thrasher_uk_election_" + getThrasherVariant()
+    }
+
     function recordThrasherVariant() {
         // Enables the conversion rate of the ask variant to be calculated.
         ophan.record({
-            component: 'uk_election_thrasher_variant',
-            value: isThankYouVariantReader() ? "thank_you" : "ask"
+            component: 'uk_election_thrasher_campaign_code',
+            value: getThrasherCampaignCode()
         })
     }
 
     function getReaderSpecificUkElectionThrasherClassList() {
         // There are eight variants of the thank you thrasher prefixed by -0, -1, -2, ..., -7
         var viewCountClass = UK_ELECTION_THRASHER_BLOCK_ELEMENT + "--" + getThrasherViewedCount() % 8;
-        var thrasherVariantClass =  UK_ELECTION_THRASHER_BLOCK_ELEMENT + "--" + (isThankYouVariantReader() ? "thanks" : "ask");
+        var thrasherVariantClass = UK_ELECTION_THRASHER_BLOCK_ELEMENT + "--" + getThrasherVariant();
         return viewCountClass + " " + thrasherVariantClass
     }
 
@@ -56,7 +64,7 @@ define([
 
             this.id = 'AcquisitionsThrasherUkElection';
 
-            this.start = '2017-06-02';
+            this.start = '2017-06-06';
             this.expiry = '2017-07-03';
 
             this.author = 'Guy Dawson and Joe Smith';
