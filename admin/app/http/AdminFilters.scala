@@ -11,7 +11,8 @@ import play.api.mvc.EssentialFilter
 class AdminFilters(cryptoConfig: CryptoConfig)(implicit mat: Materializer, context: ApplicationContext) extends HttpFilters {
 
   val filterExemptions = FilterExemptions(
-    "/deploys" //not authenticated so it can be accessed by Prout to determine which builds have been deployed
+    "/deploys", //not authenticated so it can be accessed by Prout to determine which builds have been deployed
+    "/deploy"   //not authenticated so it can be accessed by Riff-Raff to notify about a new build being deployed
   )
   val adminAuthFilter = new AuthFilterWithExemptions(
     filterExemptions.loginExemption,
