@@ -346,7 +346,7 @@ define([
                 return new ContributionsABTest(test);
             };
         },
-        getControlTestimonialBlock: getControlTestimonialBlock,
+        getTestimonialBlock: getTestimonialBlock,
         variantBuilderFactory: variantBuilderFactory,
         daysSinceLastContribution: daysSinceLastContribution
     };
