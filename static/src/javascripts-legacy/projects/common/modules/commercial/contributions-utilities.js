@@ -93,8 +93,8 @@ define([
     }
 
     function defaultCanEpicBeDisplayed(testConfig) {
-        var enoughTimeSinceLastContribution =
-            testConfig.showToContributors ? true : daysSince(lastContributionDate) >= 180;
+        var enoughTimeSinceLastContribution = testConfig.showToContributors || daysSince(lastContributionDate) >= 180;
+        var canReasonablyAskForMoney = testConfig.showToSupporters || commercialFeatures.commercialFeatures.canReasonablyAskForMoney;
 
         var worksWellWithPageTemplate = (typeof testConfig.pageCheck === 'function')
             ? testConfig.pageCheck(config.page)
@@ -109,9 +109,6 @@ define([
         var isImmersive = config.page.isImmersive === true;
 
         var tagsMatch = doTagsMatch(testConfig);
-
-        var canReasonablyAskForMoney =
-            testConfig.showToSupporters ? true : commercialFeatures.commercialFeatures.canReasonablyAskForMoney;
 
         return enoughTimeSinceLastContribution &&
             canReasonablyAskForMoney &&
