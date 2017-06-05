@@ -37,7 +37,7 @@ define([
                         askQuestionBtn.classList.add('is-hidden');
                     }
 
-                    if (isEmailSubmissionReady === true) {
+                    if (isEmailSubmissionReady === "true") {
                         var signupForm = document.forms['js-storyquestion-email-signup-form-' + questionId];
                         var thankYouMessageForEmailSubmission = document.getElementById('js-question-thankyou-' + questionId);
 
