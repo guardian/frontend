@@ -7,12 +7,11 @@
     @defining(Edition(request)) { edition =>
         <li class="menu-item js-navigation-item"
             data-section-name="@topLevelSection.name">
-            <a href="@{topLevelSection.getPopularEditionalisedNavLinks(edition)(0).url}"
-               class="menu-item__title js-navigation-toggle"
-               data-link-name="nav2 : secondary : @topLevelSection.name">
+            <button class="menu-item__title js-navigation-toggle"
+                    data-link-name="nav2 : secondary : @topLevelSection.name">
                 <i class="menu-item__toggle"></i>
                 @topLevelSection.name
-            </a>
+            </button>
 
             <ul class="menu-group menu-group--secondary js-editionalise-secondary-nav"
                 data-edition="@{edition.id.toLowerCase}"
