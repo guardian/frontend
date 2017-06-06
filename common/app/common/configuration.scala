@@ -618,11 +618,6 @@ class GuardianConfiguration extends Logging {
     lazy val apiKey = configuration.getStringProperty("news-alert.api.key")
   }
 
-  object Notifications {
-    lazy val latestMessageUrl = configuration.getMandatoryStringProperty("notifications.latest_message.url")
-    lazy val notificationSubscriptionTable = configuration.getMandatoryStringProperty("notifications.subscriptions_table")
-  }
-
   object Logstash {
     lazy val enabled = configuration.getStringProperty("logstash.enabled").exists(_.toBoolean)
     lazy val stream = configuration.getStringProperty("logstash.stream.name")

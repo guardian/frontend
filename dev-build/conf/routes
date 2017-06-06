@@ -341,10 +341,6 @@ GET            /service-worker.js                                               
 GET            /$path<[\w\d-]*(/[\w\d-]*)+>/$file<interactive(-service)?-worker.js>                                              controllers.InteractiveController.proxyInteractiveWebWorker(path, file)
 GET            /sharecount/*path.json                                                                                            controllers.ShareCountController.fetch(path)
 
-#Notifications Store
-POST           /notification/store                                                                                               controllers.NotificationsController.saveSubscription()
-POST           /notification/delete                                                                                              controllers.NotificationsController.deleteSubscription()
-
 GET            /2015-06-24-manifest.json                                                                                         controllers.WebAppController.manifest()
 GET            /preferences                                                                                                      controllers.PreferencesController.indexPrefs()
 GET            /embed/video/*path                                                                                                controllers.EmbedController.render(path)
