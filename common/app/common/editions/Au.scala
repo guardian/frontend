@@ -51,6 +51,7 @@ object Au extends Edition(
       NavItem(fashion),
       NavItem(science),
       NavItem(membership),
+      NavItem(digitalNewspaperArchive),
       NavItem(crosswords, crosswordsLocalNav),
       NavItem(video, Seq(podcast))
     )

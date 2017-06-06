@@ -235,6 +235,8 @@ trait Navigation {
   val theGuide = SectionLink("todayspaper", "the guide", "The Guide", "/theguardian/theguide")
   val saturdayreview = SectionLink("todayspaper", "saturday review", "Saturday Review", "/theguardian/guardianreview")
 
+  // Archive
+  val digitalNewspaperArchive = SectionLink("todayspaper", "digital newspaper archive", "Digital Newspaper Archive", "https://theguardian.newspapers.com")
 
   // Observer newspaper
   val sundayPaper = SectionLink("theobserver", "sunday's paper", "The Observer", "/theobserver")

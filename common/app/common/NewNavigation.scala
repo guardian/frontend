@@ -238,6 +238,7 @@ object NewNavigation {
       newsletters,
       todaysPaper,
       observer,
+      digitalNewspaperArchive,
       crosswords
     ))
 
@@ -249,6 +250,7 @@ object NewNavigation {
       video,
       pictures,
       newsletters,
+      digitalNewspaperArchive,
       crosswords
     ))
 
@@ -259,6 +261,7 @@ object NewNavigation {
       video,
       pictures,
       newsletters,
+      digitalNewspaperArchive,
       crosswords
     ))
 
@@ -272,6 +275,7 @@ object NewNavigation {
       newsletters,
       todaysPaper,
       observer,
+      digitalNewspaperArchive,
       crosswords
     ))
   }
