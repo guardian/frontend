@@ -88,6 +88,10 @@ class AtomPageController(contentApiClient: ContentApiClient, wsClient: WSClient)
     }
   }
 
+  def options() = Action { implicit request =>
+    TinyResponse.noContent(Some("POST, OPTIONS"))
+  }
+
   private def lookup(path: String)(implicit request: RequestHeader): Future[Either[Atom, Result]] = {
     val edition = Edition(request)
     contentApiClient.getResponse(contentApiClient.item(path, edition))

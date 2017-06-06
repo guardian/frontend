@@ -46,6 +46,7 @@ GET        /embed/video/*path                                                   
 GET        /embed/atom/:atomType/:id                                            controllers.AtomPageController.render(atomType: String, id: String, isJsEnabled: Boolean = true)
 GET        /embed/atom/:atomType/:id/nojs                                       controllers.AtomPageController.render(atomType: String, id: String, isJsEnabled: Boolean = false)
 POST       /story-questions/answers/signup                                      controllers.AtomPageController.signup()
+OPTIONS    /story-questions/answers/signup                                      controllers.AtomPageController.options()
 
 # Share counts
 GET        /sharecount/*path.json                                               controllers.ShareCountController.fetch(path)
