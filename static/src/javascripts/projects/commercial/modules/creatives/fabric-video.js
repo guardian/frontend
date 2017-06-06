@@ -12,8 +12,6 @@ import addViewabilityTracker
 import fabricVideoStr
     from 'raw-loader!commercial/views/creatives/fabric-video.html';
 
-const fabricVideoTpl = template(fabricVideoStr);
-
 class FabricVideo {
     isUpdating: boolean;
     adSlot: HTMLElement;
@@ -109,6 +107,8 @@ class FabricVideo {
     }
 
     create() {
+        const fabricVideoTpl = template(fabricVideoStr);
+
         return fastdom
             .write(() => {
                 if (this.params.Trackingpixel) {
