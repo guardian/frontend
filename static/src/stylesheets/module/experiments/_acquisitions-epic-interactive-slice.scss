@@ -4,8 +4,9 @@
     background: $neutral-3;
 
     @include mq(tablet) {
-        margin-left: -100%;
-        margin-right: -100%;
+        @supports (margin: 0 calc(50% - 50vw)) {
+            margin: 0 calc(50% - 50vw);
+        }
     }
 }
 
@@ -74,16 +75,12 @@
     width: auto;
     background: transparent;
     border: 1px solid #4bc6df;
-    margin-top: 0;
-    margin-left: $gs-gutter / 2;
+    margin-top: $gs-baseline / 2;
+    margin-right: $gs-gutter / 2;
     font-size: 12px;
 
     @include mq(tablet) {
         font-size: 16px;
-    }
-
-    &:first-of-type {
-        margin-left: 0;
     }
 
     &:hover {

@@ -33,7 +33,7 @@ class MultiVariateTestingTest extends FlatSpec with Matchers {
         "X-GU-Test2" -> "test2variant"
       )
     val jsConfig = AllAbTests.getJavascriptConfig(testRequest)
-    jsConfig should be("\"test0\" : true,\"test2\" : true")
+    jsConfig should be(""""test0","test2" : "test2variant"""")
 
   }
 
@@ -45,6 +45,7 @@ class MultiVariateTestingTest extends FlatSpec with Matchers {
       new LocalDate(2100, 1, 1)
     ) {
       def canRun(implicit request: RequestHeader): Boolean = true
+      def participationGroup(implicit request: RequestHeader): Option[String] = None
     }
     object test1 extends TestDefinition(
       "test1",
@@ -53,8 +54,9 @@ class MultiVariateTestingTest extends FlatSpec with Matchers {
       new LocalDate(2100, 1, 1)
     ) {
       def canRun(implicit request: RequestHeader): Boolean = {
-        request.headers.get("X-GU-Test1").contains("test1variant")
+        participationGroup.contains("test1variant")
       }
+      def participationGroup(implicit request: RequestHeader): Option[String] = request.headers.get("X-GU-Test1")
     }
     object test2 extends TestDefinition(
       "test2",
@@ -63,8 +65,9 @@ class MultiVariateTestingTest extends FlatSpec with Matchers {
       new LocalDate(2100, 1, 1)
     ) {
       def canRun(implicit request: RequestHeader): Boolean = {
-        request.headers.get("X-GU-Test2").contains("test2variant")
+        participationGroup.contains("test2variant")
       }
+      def participationGroup(implicit request: RequestHeader): Option[String] = request.headers.get("X-GU-Test2")
     }
 
     val tests = List(test0, test1, test2)

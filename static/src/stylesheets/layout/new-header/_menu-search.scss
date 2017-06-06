@@ -7,6 +7,10 @@
     @include mq(tablet) {
         margin-left: -40px;
     }
+
+    @include mq(desktop) {
+        margin-left: 0;
+    }
 }
 
 .menu-search__search-box {
