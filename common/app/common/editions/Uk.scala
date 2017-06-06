@@ -116,7 +116,7 @@ object Uk extends Edition(
       NavItem(sundayPaper, Seq(observerComment, observerNewReview, observerMagazine)),
       NavItem(membership),
       NavItem(crosswords, crosswordsLocalNav),
-      NavItem(video)
+      NavItem(video, Seq(podcast))
     )
   }
 
