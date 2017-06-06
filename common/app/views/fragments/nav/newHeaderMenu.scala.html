@@ -6,9 +6,12 @@
 @sectionList(topLevelSection: NewNavigation.EditionalisedNavigationSection) = {
     @defining(Edition(request)) { edition =>
         <li class="menu-item js-navigation-item"
-            data-section-name="@topLevelSection.name">
+            data-section-name="@topLevelSection.name"
+            role="menuitem">
             <button class="menu-item__title js-navigation-toggle"
-                    data-link-name="nav2 : secondary : @topLevelSection.name">
+                    data-link-name="nav2 : secondary : @topLevelSection.name"
+                    aria-haspopup="true"
+                    aria-expanded="true">
                 <i class="menu-item__toggle"></i>
                 @topLevelSection.name
             </button>
@@ -18,7 +21,8 @@
                 aria-label="Submenu @{topLevelSection.name}"
                 role="menu">
                 @topLevelSection.getAllEditionalisedNavLinks(edition).map { sectionItem =>
-                    <li class="menu-item">
+                    <li class="menu-item"
+                        role="menuitem">
                         <a class="menu-item__title"
                            href="@LinkTo { @sectionItem.url }"
                            data-link-name="nav2 : secondary : @{ if(sectionItem.longTitle.isEmpty) sectionItem.title else sectionItem.longTitle }">
@@ -43,7 +47,8 @@
      id="main-menu"
      aria-hidden="true">
     <div class="menu__inner gs-container">
-        <ul class="menu-group menu-group--primary">
+        <ul class="menu-group menu-group--primary"
+            role="menubar">
             @NewNavigation.topLevelSections.map { section =>
                 @sectionList(section)
             }
@@ -82,11 +87,13 @@
             </div>
         }
 
-        <ul class="menu-group menu-group--highlight">
+        <ul class="menu-group menu-group--highlight"
+            role="menubar">
             @defining(Edition(request)) { edition =>
                 @NewNavigation.getMembershipLinks(edition).mostPopular.map { item =>
                     <li class="menu-item"
-                        data-edition=@{edition.id.toLowerCase}>
+                        data-edition="@{edition.id.toLowerCase}"
+                        role="menuitem">
 
                         <a class="menu-item__title"
                            href="@item.url"
@@ -103,10 +110,12 @@
 
         @defining(Edition(request)) { edition =>
             <ul class="menu-group"
-                data-edition=@{edition.id.toLowerCase}>
+                data-edition="@{edition.id.toLowerCase}"
+                role="menubar">
 
                 @NewNavigation.NavFooterLinks.getAllEditionalisedNavLinks(edition).map { item =>
-                    <li class="menu-item">
+                    <li class="menu-item"
+                        role="menuitem">
                         <a class="menu-item__title"
                            href="@LinkTo { @item.url }"
                            data-link-name="nav2 : @item.title">
@@ -115,7 +124,8 @@
                     </li>
                 }
 
-                <li class="menu-item">
+                <li class="menu-item"
+                    role="menuitem">
                     <a class="menu-item__title"
                        href="https://www.facebook.com/theguardian"
                        data-link-name="nav2 : facebook">
@@ -124,7 +134,8 @@
                     </a>
                 </li>
 
-                <li class="menu-item">
+                <li class="menu-item"
+                    role="menuitem">
                     <a class="menu-item__title"
                        href="https://twitter.com/guardian"
                        data-link-name="nav2 : twitter">
