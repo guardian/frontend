@@ -21,7 +21,7 @@
                                 @question.questionText
                                 </span>
                             </span>
-                            <button id="btn-ask-question-@question.questionId" class="user__question-upvote">
+                            <button id="btn-ask-question-@question.questionId" class="user__question-upvote" data-question-id="@question.questionId">
                                 Ask this
                                 @fragments.inlineSvg("tick", "icon")
                             </button>

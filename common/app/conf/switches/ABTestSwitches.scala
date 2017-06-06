@@ -171,16 +171,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-acquisitions-epic-pre-election",
-    "Test 2 variants centered around the upcoming election",
-    owners = Seq(Owner.withGithub("jranks123")),
-    safeState = On,
-    sellByDate = new LocalDate(2017, 6, 13),
-    exposeClientSide = true
-    )
-
-  Switch(
-    ABTests,
     "ab-acquisitions-epic-always-ask-if-tagged",
     "This guarantees that any on any article that is tagged with a tag that is on the allowed list of tags as set by the tagging tool, the epic will be displayed",
     owners = Seq(Owner.withGithub("jranks123")),
@@ -216,6 +206,16 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("Mullefa")),
     safeState = On,
     sellByDate = new LocalDate(2017, 6, 19),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-thrasher-uk-election",
+    "Bootstrap the AB test framework to show a different UK election thrasher to supporters/non-supporters respectively",
+    owners = Seq(Owner.withGithub("Mullefa"), Owner.withGithub("joelochlann")),
+    safeState = On,
+    sellByDate = new LocalDate(2017, 7, 3),
     exposeClientSide = true
   )
 }

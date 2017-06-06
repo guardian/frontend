@@ -3,6 +3,7 @@ define([
     'commercial/modules/commercial-features',
     'common/modules/commercial/targeting-tool',
     'common/modules/commercial/acquisitions-copy',
+    'common/modules/commercial/acquisitions-epic-testimonial-parameters',
     'common/modules/commercial/acquisitions-view-log',
     'lib/$',
     'lib/config',
@@ -16,12 +17,14 @@ define([
     'lodash/objects/assign',
     'lodash/utilities/template',
     'lodash/collections/toArray',
-    'raw-loader!common/views/acquisitions-epic-control.html'
+    'raw-loader!common/views/acquisitions-epic-control.html',
+    'raw-loader!common/views/acquisitions-epic-testimonial-block.html'
 ], function (
     uniq,
     commercialFeatures,
     targetingTool,
     acquisitionsCopy,
+    acquisitionsTestimonialParameters,
     viewLog,
     $,
     config,
@@ -35,13 +38,16 @@ define([
     assign,
     template,
     toArray,
-    acquisitionsEpicControlTemplate
+    acquisitionsEpicControlTemplate,
+    acquisitionsTestimonialBlockTemplate
 ) {
 
     var membershipBaseURL = 'https://membership.theguardian.com/supporter';
     var contributionsBaseURL = 'https://contribute.theguardian.com';
 
     var lastContributionDate = cookies.getCookie('gu.contributions.contrib-timestamp');
+
+    var isContributor = !!lastContributionDate;
 
     /**
      * How many times the user can see the Epic, e.g. 6 times within 7 days with minimum of 1 day in between views.
@@ -73,7 +79,8 @@ define([
             copy: acquisitionsCopy.control,
             membershipUrl: variant.options.membershipURL,
             contributionUrl: variant.options.contributeURL,
-            componentName: variant.options.componentName
+            componentName: variant.options.componentName,
+            testimonialBlock: variant.options.testimonialBlock
         });
     }
 
@@ -97,6 +104,20 @@ define([
         return [];
     }
 
+    function getTestimonialBlock(testimonialParameters, citeImage){
+        return template(acquisitionsTestimonialBlockTemplate, {
+            quoteSvg: testimonialParameters.quoteSvg,
+            testimonialMessage: testimonialParameters.testimonialMessage,
+            testimonialName: testimonialParameters.testimonialName,
+            citeImage: citeImage
+        });
+    }
+
+    function getControlTestimonialBlock(location){
+        var testimonialParameters = location == 'GB' ? acquisitionsTestimonialParameters.controlGB : acquisitionsTestimonialParameters.control;
+        return getTestimonialBlock(testimonialParameters);
+    }
+
     function defaultCanEpicBeDisplayed(testConfig) {
         var enoughTimeSinceLastContribution = testConfig.showToContributors || daysSince(lastContributionDate) >= 180;
         var canReasonablyAskForMoney = testConfig.showToSupporters || commercialFeatures.commercialFeatures.canReasonablyAskForMoney;
@@ -111,8 +132,6 @@ define([
         }) : true;
         var locationCheck = (typeof testConfig.locationCheck === 'function') ? testConfig.locationCheck(storedGeolocation) : true;
 
-        var isImmersive = config.page.isImmersive === true;
-
         var tagsMatch = doTagsMatch(testConfig);
 
         return enoughTimeSinceLastContribution &&
@@ -120,7 +139,6 @@ define([
             worksWellWithPageTemplate &&
             inCompatibleLocation &&
             locationCheck &&
-            !isImmersive &&
             tagsMatch
     }
 
@@ -192,12 +210,14 @@ define([
             membershipURL: options.membershipURL || this.getURL(membershipBaseURL, campaignCode),
             componentName: 'mem_acquisition_' + trackingCampaignId + '_' + this.id,
             template: options.template || controlTemplate,
+            testimonialBlock: options.testimonialBlock || getControlTestimonialBlock(geolocation.getSync()),
             blockEngagementBanner: options.blockEngagementBanner || false,
             engagementBannerParams: options.engagementBannerParams || {},
             isOutbrainCompliant: options.isOutbrainCompliant || false,
             usesIframe: options.usesIframe || false,
             iframeId: test.campaignId + '_' + 'iframe'
         };
+
 
         this.test = function () {
 
@@ -326,8 +346,9 @@ define([
                 return new ContributionsABTest(test);
             };
         },
-
+        getTestimonialBlock: getTestimonialBlock,
         variantBuilderFactory: variantBuilderFactory,
-        daysSinceLastContribution: daysSinceLastContribution
+        daysSinceLastContribution: daysSinceLastContribution,
+        isContributor: isContributor
     };
 });
