@@ -13,19 +13,19 @@ object EditionAdTargeting {
   implicit val adTargetingFormat: Format[Map[AdCallParamKey, AdCallParamValue]] = {
 
     def adCallParamKeyByName(name: String): AdCallParamKey = name match {
-      case AuthorKey.name => AuthorKey
-      case BlogKey.name => BlogKey
-      case BrandingKey.name => BrandingKey
+      case AuthorKey.name      => AuthorKey
+      case BlogKey.name        => BlogKey
+      case BrandingKey.name    => BrandingKey
       case ContentTypeKey.name => ContentTypeKey
-      case EditionKey.name => EditionKey
-      case KeywordKey.name => KeywordKey
-      case ObserverKey.name => ObserverKey
-      case PathKey.name => PathKey
-      case PlatformKey.name => PlatformKey
-      case SeriesKey.name => SeriesKey
-      case SurgeLevelKey.name => SurgeLevelKey
-      case ToneKey.name => ToneKey
-      case _ => KeywordKey
+      case EditionKey.name     => EditionKey
+      case KeywordKey.name     => KeywordKey
+      case ObserverKey.name    => ObserverKey
+      case PathKey.name        => PathKey
+      case PlatformKey.name    => PlatformKey
+      case SeriesKey.name      => SeriesKey
+      case SurgeLevelKey.name  => SurgeLevelKey
+      case ToneKey.name        => ToneKey
+      case _                   => KeywordKey
     }
 
     new Format[Map[AdCallParamKey, AdCallParamValue]] {
@@ -35,15 +35,9 @@ object EditionAdTargeting {
           JsSuccess(
             jsonMap.toMap flatMap {
               case (k, JsString(v)) =>
-                Some(adCallParamKeyByName(k) -> new SingleValue { override def raw: String = v })
+                Some(adCallParamKeyByName(k) -> SingleValue(v))
               case (k, JsArray(jsonSeq)) =>
-                Some(adCallParamKeyByName(k) -> new MultipleValues {
-                  override def raw: Set[String] =
-                    jsonSeq.flatMap {
-                      case JsString(v) => Some(v)
-                      case _ => None
-                    }.toSet
-                })
+                Some(adCallParamKeyByName(k) -> MultipleValues(jsonSeq.collect { case JsString(v) => v }.toSet))
               case _ =>
                 None
             }
@@ -57,8 +51,8 @@ object EditionAdTargeting {
           case (k, v) =>
             k.name -> (
               v match {
-                case v: SingleValue => JsString(v.toCleanString)
-                case vs: MultipleValues => JsArray(vs.toCleanStrings.toSeq.map(JsString))
+                case v: SingleValue    => JsString(v.value)
+                case v: MultipleValues => JsArray(v.values.toSeq.map(JsString))
               }
             )
         }

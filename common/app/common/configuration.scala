@@ -195,9 +195,9 @@ class GuardianConfiguration extends Logging {
     lazy val key: Option[String] = configuration.getStringProperty("content.api.key")
     lazy val timeout: FiniteDuration = Duration.create(configuration.getIntegerProperty("content.api.timeout.millis").getOrElse(2000), MILLISECONDS)
 
-    lazy val circuitBreakerErrorThreshold: Int = configuration.getIntegerProperty("content.api.circuit_breaker.max_failures").getOrElse(50)
+    lazy val circuitBreakerErrorThreshold: Int = configuration.getIntegerProperty("content.api.circuit_breaker.max_failures").getOrElse(30)
     lazy val circuitBreakerResetTimeout: FiniteDuration =
-      FiniteDuration(configuration.getIntegerProperty("content.api.circuit_breaker.reset_timeout").getOrElse(3000), MILLISECONDS)
+      FiniteDuration(configuration.getIntegerProperty("content.api.circuit_breaker.reset_timeout").getOrElse(2000), MILLISECONDS)
 
     lazy val previewAuth: Option[Auth] = for {
       user <- configuration.getStringProperty("content.api.preview.user")

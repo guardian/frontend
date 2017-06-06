@@ -3,13 +3,15 @@ define([
     'lib/geolocation',
     'lodash/utilities/template',
     'lib/config',
-    'raw-loader!common/views/acquisitions-epic-liveblog.html'
+    'raw-loader!common/views/acquisitions-epic-liveblog.html',
+    'common/modules/commercial/acquisitions-copy',
 ], function (
     contributionsUtilities,
     geolocation,
     template,
     config,
-    liveblogEpicTemplate
+    liveblogEpicTemplate,
+    acquisitionsCopy
 ) {
     var pageId = config.page.pageId || '';
 
@@ -48,6 +50,7 @@ define([
 
                 template: function (variant) {
                     return template(liveblogEpicTemplate, {
+                        copy: acquisitionsCopy.control,
                         membershipUrl: variant.options.membershipURL,
                         contributionUrl: variant.options.contributeURL,
                         componentName: variant.options.componentName

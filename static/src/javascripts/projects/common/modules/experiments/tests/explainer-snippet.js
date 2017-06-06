@@ -25,7 +25,7 @@ const ExplainerSnippet = () => {
 
     // Test duration
     const start = '2017-05-18';
-    const expiry = '2017-06-06';
+    const expiry = '2017-06-13';
 
     // will run in specific articles
     const canRun = (): boolean =>

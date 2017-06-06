@@ -14,10 +14,14 @@ define([
             writeError = new Error('Mock writer exception');
 
         beforeEach(function (done) {
+            injector.mock('common/modules/spacefinder', {
+              findSpace: function () {},
+              SpaceError: function () { this.name = 'SpaceError'; }
+            });
 
             injector.require([
                 'common/modules/article/space-filler',
-                'common/modules/article/spacefinder',
+                'common/modules/spacefinder',
                 'lib/raven'
             ], function () {
                 spaceFiller = arguments[0];
@@ -38,7 +42,7 @@ define([
             spacefinderResult = Promise.resolve(null);
             var insertion = spaceFiller.fillSpace(rules, function writer() {});
             expect(insertion).toEqual(jasmine.any(Promise));
-            insertion.then(done);
+            insertion.then(done).catch(done.fail);
         });
 
         it('Passes a ruleset to the spacefinder', function (done) {
@@ -47,12 +51,13 @@ define([
                 var spaceFinderArgs = spaceFinder.findSpace.calls.mostRecent().args;
                 expect(spaceFinderArgs[0]).toBe(rules);
                 done();
-            });
+            })
+            .catch(done.fail);
         });
 
         it('If it finds a space, it calls the writer', function (done) {
             spacefinderResult = Promise.resolve(document.createElement('p'));
-            spaceFiller.fillSpace(rules, done);
+            spaceFiller.fillSpace(rules, done).catch(done.fail);
         });
 
         it('If there are no spaces, it rejects the promise and does not call the writer', function (done) {
@@ -65,7 +70,8 @@ define([
                 expect(result).toBe(false);
                 expect(mockWriter).not.toHaveBeenCalled();
                 done();
-            });
+            })
+            .catch(done.fail);
         });
 
         it('If there are no spaces, the spacefinder exception is not recorded by Raven', function (done) {
@@ -74,9 +80,11 @@ define([
             var insertion = spaceFiller.fillSpace(rules, function writer() {});
 
             insertion.then(function () {
+                expect(new spaceFinder.SpaceError({}) instanceof spaceFinder.SpaceError).toBe(true);
                 expect(raven.captureException).not.toHaveBeenCalled();
                 done();
-            });
+            })
+            .catch(done.fail);
         });
 
         it('Calls writers in order', function (done) {
@@ -85,11 +93,13 @@ define([
             spacefinderResult = Promise.resolve(document.createElement('p'));
             var firstWriter = jasmine.createSpy('first write');
 
-            spaceFiller.fillSpace(rules, firstWriter);
+            spaceFiller.fillSpace(rules, firstWriter)
+            .catch(done.fail);
             spaceFiller.fillSpace(rules, function secondWriter() {
                 expect(firstWriter).toHaveBeenCalled();
                 done();
-            });
+            })
+            .catch(done.fail);
         });
 
         it('If a writer throws an exception, we record it', function (done) {
@@ -101,15 +111,18 @@ define([
             insertion.then(function () {
                 expect(raven.captureException).toHaveBeenCalledWith(writeError);
                 done();
-            });
+            })
+            .catch(done.fail);
         });
 
         it('If a writer throws an exception, we still call subsequent writers', function (done) {
             spacefinderResult = Promise.resolve(document.createElement('p'));
             spaceFiller.fillSpace(rules, function () {
                 throw writeError;
-            });
-            spaceFiller.fillSpace(rules, done);
+            })
+            .catch(done.fail);
+            spaceFiller.fillSpace(rules, done)
+            .catch(done.fail);
         });
 
         it('If a writer throws an exception, the promise is resolved with "false"', function (done) {
@@ -121,7 +134,8 @@ define([
             insertion.then(function (result) {
                 expect(result).toBe(false);
                 done();
-            });
+            })
+            .catch(done.fail);
         });
 
         describe('If spacefinder throws an unexpected error', function () {
@@ -138,21 +152,24 @@ define([
                 insertion.then(function () {
                     expect(writer).not.toHaveBeenCalled();
                     done();
-                });
+                })
+                .catch(done);
             });
 
             it('Resolves the promise with "false"', function (done) {
                 insertion.then(function (result) {
                     expect(result).toBe(false);
                     done();
-                });
+                })
+                .catch(done);
             });
 
             it('Records the exception', function (done) {
                 insertion.then(function () {
                     expect(raven.captureException).toHaveBeenCalledWith(spaceFinderError);
                     done();
-                });
+                })
+                .catch(done);
             });
         });
     });

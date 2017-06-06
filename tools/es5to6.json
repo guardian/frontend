@@ -1,7 +1,5 @@
 {
-  "Francis Carr": [
-    "projects/commercial/modules/third-party-tags/krux.js"
-  ],
+  "Francis Carr": [],
   "Jon Norman": [
     "projects/commercial/modules/creatives/fabric-video.js",
     "projects/commercial/modules/creatives/frame.js",
@@ -64,7 +62,6 @@
     "projects/common/modules/crosswords/anagram-helper/clue-input.js"
   ],
   "GHaberis": [
-    "projects/admin/modules/abtests/abtest-report-item.js",
     "projects/admin/modules/abtests/audience-item.js",
     "projects/admin/modules/abtests/audience.js",
     "projects/admin/modules/abtests/participation-item.js",
@@ -91,7 +88,6 @@
     "projects/common/modules/article/membership-events.js",
     "projects/common/modules/article/rich-links.js",
     "projects/common/modules/article/space-filler.js",
-    "projects/common/modules/article/spacefinder.js",
     "projects/common/modules/article/twitter.js",
     "projects/common/modules/asyncCallMerger.js",
     "projects/common/modules/atoms/quiz.js",

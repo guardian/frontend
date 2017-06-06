@@ -248,9 +248,15 @@
 }
 
 .delete-input-warn {
-    background: #b20a0a;
+    background-color: $live-main-1;
     &:hover,
     &:focus {
-        background: darken(#b20a0a, 5%);
+        background-color: darken($live-main-1, 5%);
     }
+}
+
+.delete-input-warn[disabled] {
+    background-color: lighten($live-main-1, 5%);
+    opacity: .6;
+    pointer-events: none;
 }

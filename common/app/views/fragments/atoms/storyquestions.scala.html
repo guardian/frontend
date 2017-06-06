@@ -3,31 +3,62 @@
 @if(!isAmp) {
     <div class="js-view-tracking-component submeta user__question">
         <span class="js-storyquestion-atom-id is-hidden" id="@storyquestions.id"></span>
+
+        @defining("test/test" == storyquestions.data.relatedStoryId && storyquestions.atom.labels.exists(_.length == 4)) { isEmailSubmissionReady =>
+            <span class="is-hidden" id="js-storyquestion-is-email-submission-ready" data-is-email-submission-ready="@isEmailSubmissionReady"></span>
+        }
+
         <h2 class="user__question-title">Need something explained?<span class="user__question-title--secondary">Let us know which of these questions we can answer for you.</span></h2>
         @for(questions <- storyquestions.data.editorialQuestions) {
             @for(qs <- questions) {
                 <p>
                     <div class="user__question-section"></div>
-                    
                     @for(question <- qs.questions) {
                         <div class="user__questions-text--wrapper js-ask-question-link">
                             <span class="user__question-text">
                                 <meta class="notranslate" name="js-notranslate-@question.questionId" content="@question.questionText">
                                 <span class="user__questions-text--inner">
-                                    @question.questionText
+                                @question.questionText
                                 </span>
                             </span>
-                            <button id="@question.questionId" class="user__question-upvote">
+                            <button id="btn-ask-question-@question.questionId" class="user__question-upvote" data-question-id="@question.questionId">
                                 Ask this
                                 @fragments.inlineSvg("tick", "icon")
                             </button>
-                            <span id="js-question-thankyou-@question.questionId" class="user__question-response submeta__label is-hidden">
+                            <span id="js-final-thankyou-message-@question.questionId" class="user__question-response submeta__label is-hidden">
+                                Thanks, we'll send you the answer soon.
+                            </span>
+                            <span id="js-thankyou-message-no-submission-@question.questionId" class="user__question-response submeta__label is-hidden">
                                 Thanks, we've registered your vote.
                             </span>
+                        </div>
+                        <div class="js-storyquestion-submission-container">
+                            <span id="js-question-thankyou-@question.questionId" class="user__question-response is-hidden">
+                                    We've registered your vote. Would you like us to send the answer to the most popular question?
+                            </span>
+                            @*********************
+                            * This workaround enables us to run a test for demand of receiving the answers commissioned to questions by email.
+
+                            * If the story questions atom belongs to the test/test tag and has a label 4 characters long (an email list id) then
+                            * show the form allowing a user to submit their email address and receive an answer.
+                            *********************@
+
+                            @if("test/test" == storyquestions.data.relatedStoryId) {
+                                @storyquestions.atom.labels.find(_.length == 4).map { listId =>
+                                    <form id="js-storyquestion-email-signup-form-@question.questionId" class="is-hidden js-storyquestion-email-signup-form form" data-question-id="@question.questionId">
+                                        <div class="form-field">
+                                            <input class="text-input" type="email" name="email" placeholder="Email address" required />
+                                        </div>
+                                        <input class="" type="hidden" name="listId" value="@listId" />
+                                        <button type="submit" class="button button--primary">Send me the answer</button>
+                                    </form>
+                                }
+                            }
                         </div>
                     }
                 </p>
             }
     </div>
 }
+
 }

@@ -2,33 +2,36 @@ define([
     'lib/config',
     'lodash/utilities/template',
     'common/modules/commercial/contributions-utilities',
-    'raw-loader!common/views/acquisitions-epic-testimonials.html',
-    'svgs/icon/quote.svg'
+    'raw-loader!common/views/acquisitions-epic-control.html',
+    'common/modules/commercial/acquisitions-epic-testimonial-parameters',
+    'common/modules/commercial/acquisitions-copy'
+
 ], function (
     config,
     template,
     contributionsUtilities,
-    acquisitionsEpicTestimonials,
-    quoteSvg
-) {
-    var defaultIntro = '&hellip; we’ve got a small favour to ask. More people are reading the Guardian than ever, but far fewer are paying for it. Advertising revenues across the media are falling fast. And <span class="contributions__highlight">unlike many news organisations, we haven’t put up a paywall &ndash; we want to keep our journalism as open as we can</span>. So you can see why we need to ask for your help. The Guardian’s independent, investigative journalism takes a lot of time, money and hard work to produce. But we do it because we believe our perspective matters &ndash; because it might well be your perspective, too.';
+    acquisitionsEpicControlTemplate,
+    acquisitionsTestimonialParameters,
+    acquisitionsCopy
 
-    function createTestimonialTemplate(testimonialInfo) {
+) {
+    function createTestimonialTestTemplate(testimonialBlock, copy) {
         return function(variant) {
-            return template(acquisitionsEpicTestimonials, {
+            return template(acquisitionsEpicControlTemplate, {
+                copy: copy,
                 membershipUrl: variant.options.membershipURL,
                 contributionUrl: variant.options.contributeURL,
                 componentName: variant.options.componentName,
-                p1: testimonialInfo.intro || defaultIntro,
-                quoteSvg: quoteSvg.markup,
-                testimonialMessage: testimonialInfo.message,
-                testimonialName: testimonialInfo.name,
-                additionalSentence: testimonialInfo.additionalSentence || '',
-                epicClass: 'contributions__epic--testimonial-usa',
-                citeImage: testimonialInfo.citeImage
+                testimonialBlock: testimonialBlock,
+                epicClass: 'contributions__epic--testimonial-usa'
             })
         }
     }
+
+    var citeImage = (function() {
+        try { return config.images.acquisitions['usa-flag']; }
+        catch(e) { return; }
+    })();
 
     return contributionsUtilities.makeABTest({
         id: 'AcquisitionsEpicTestimonialsUsa',
@@ -51,29 +54,15 @@ define([
         variants: [
             {
                 id: 'control',
-                template: createTestimonialTemplate({
-                    message: 'Because I appreciate there not being a paywall: it is more democratic for the media to be available for all and not a commodity to be purchased by a few. I’m happy to make a contribution so others with less means still have access to information.',
-                    name: 'Thomasine F-R'
-                })
+                template: createTestimonialTestTemplate(contributionsUtilities.getTestimonialBlock(acquisitionsTestimonialParameters.control), acquisitionsCopy.control)
             },
             {
                 id: 'localised',
-                template: createTestimonialTemplate({
-                    message: 'I made a contribution to the Guardian today because I believe our country, the US, is in peril and we need quality independent journalism more than ever. Reading news from websites like this helps me keep some sense of sanity and provides a bit of hope in these dangerous, alarming times. Keep up the good work! I appreciate you.',
-                    name: 'Charru B'
-                })
+                template: createTestimonialTestTemplate(contributionsUtilities.getTestimonialBlock(acquisitionsTestimonialParameters.usLocalised), acquisitionsCopy.control)
             },
             {
                 id: 'localised_flag',
-                template: createTestimonialTemplate({
-                    intro: defaultIntro + ' Here’s why other <strong>readers from the US</strong> are supporting us:',
-                    message: 'I made a contribution to the Guardian today because I believe our country, the US, is in peril and we need quality independent journalism more than ever. Reading news from websites like this helps me keep some sense of sanity and provides a bit of hope in these dangerous, alarming times. Keep up the good work! I appreciate you.',
-                    name: 'Charru B',
-                    citeImage: (function() {
-                        try { return config.images.acquisitions['usa-flag']; }
-                        catch(e) { return; }
-                    })()
-                })
+                template: createTestimonialTestTemplate(contributionsUtilities.getTestimonialBlock(acquisitionsTestimonialParameters.usLocalised, citeImage), acquisitionsCopy.usLocalisedFlag, citeImage)
             }
         ]
     });
