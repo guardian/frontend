@@ -30,7 +30,7 @@
     >
 }
 
-        @if(playable && !expired) {
+        @if(playable && !expired && media.assets.nonEmpty) {
             @defining(s"https://www.youtube.com/embed${
                 media.activeAsset.id
                 .addParams(List(

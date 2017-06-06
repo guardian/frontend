@@ -65,7 +65,7 @@ class AtomCleanerTest extends FlatSpec
   }
 
  private def renderAndGetId(atom: MediaAtom): String = {
-   val html = views.html.fragments.atoms.media(media = atom, displayCaption = false, mediaWrapper = None)(TestRequest())
+   val html = views.html.fragments.atoms.youtube(media = atom, displayCaption = false, mediaWrapper = None)(TestRequest())
    val doc = Jsoup.parse(html.toString())
 
    doc.getElementsByClass("youtube-media-atom__iframe").attr("id")
@@ -125,6 +125,21 @@ class AtomCleanerTest extends FlatSpec
     )
 
     renderAndGetId(atom) should be(s"youtube-gyVuRflcEKM")
+  }
+
+  "Youtube template" should "render nothing if there are no assets" in {
+    val atom = youTubeAtom.get.media.head.copy(assets = Seq.empty)
+
+    renderAndGetId(atom) shouldBe empty
+  }
+
+  "AMP Youtube template" should "render nothing if there are no assets" in {
+    val atom = youTubeAtom.get.media.head.copy(assets = Seq.empty)
+
+    val html = views.html.fragments.atoms.ampYoutube(media = atom, displayCaption = false, mediaWrapper = None)(TestRequest())
+    val doc = Jsoup.parse(html.toString())
+
+    doc.getElementsByTag("amp-youtube") shouldBe empty
   }
 
   "Formatted duration" should "produce the expected format" in {
