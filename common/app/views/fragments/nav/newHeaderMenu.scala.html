@@ -13,7 +13,7 @@
                 @topLevelSection.name
             </button>
 
-            <ul class="menu-group menu-group--secondary js-editionalise-secondary-nav"
+            <ul class="menu-group menu-group--secondary"
                 data-edition="@{edition.id.toLowerCase}"
                 aria-label="Submenu @{topLevelSection.name}"
                 role="menu">
@@ -85,7 +85,7 @@
         <ul class="menu-group menu-group--highlight">
             @defining(Edition(request)) { edition =>
                 @NewNavigation.getMembershipLinks(edition).mostPopular.map { item =>
-                    <li class="menu-item js-editionalise-secondary-nav"
+                    <li class="menu-item"
                         data-edition=@{edition.id.toLowerCase}>
 
                         <a class="menu-item__title"
@@ -102,7 +102,7 @@
         </ul>
 
         @defining(Edition(request)) { edition =>
-            <ul class="menu-group js-editionalise-secondary-nav"
+            <ul class="menu-group"
                 data-edition=@{edition.id.toLowerCase}>
 
                 @NewNavigation.NavFooterLinks.getAllEditionalisedNavLinks(edition).map { item =>
