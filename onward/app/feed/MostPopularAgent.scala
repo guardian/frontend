@@ -50,7 +50,7 @@ class GeoMostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi
   }
 
   def update(countryCode: String) {
-    val ophanQuery = ophanApi.getMostRead(hours = 3, count = 10, country = countryCode.toLowerCase)
+    val ophanQuery = ophanApi.getMostRead(hours = 3, count = 12, country = countryCode.toLowerCase)
 
     ophanQuery.map { ophanResults =>
 
