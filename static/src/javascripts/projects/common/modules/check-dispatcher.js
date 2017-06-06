@@ -17,16 +17,18 @@ const everyCheckPassed = (results): boolean => !results.includes(false);
     be added to the array of checks in './check-mediator-checks'. 
 **/
 const checksToDispatch = {
-    isOutbrainDisabled(): boolean {
+    isOutbrainDisabled(): Promise<boolean> {
         if (commercialFeatures.outbrain) {
-            return false;
+            return Promise.resolve(false);
         }
 
-        return true;
+        return Promise.resolve(true);
     },
 
-    isUserInContributionsAbTest(): boolean {
-        return clash.userIsInAClashingAbTest(clash.contributionsTests);
+    isUserInContributionsAbTest(): Promise<boolean> {
+        return Promise.resolve(
+            clash.userIsInAClashingAbTest(clash.contributionsTests)
+        );
     },
 
     isUserNotInContributionsAbTest(): Promise<boolean> {
@@ -35,47 +37,50 @@ const checksToDispatch = {
         );
     },
 
-    isUserInEmailAbTest(): boolean {
-        return clash.userIsInAClashingAbTest(clash.emailTests);
+    isUserInEmailAbTest(): Promise<boolean> {
+        return Promise.resolve(clash.userIsInAClashingAbTest(clash.emailTests));
     },
 
-    emailCanRunPreCheck(): boolean {
-        return allEmailCanRun();
+    emailCanRunPreCheck(): Promise<boolean> {
+        return Promise.resolve(allEmailCanRun());
     },
 
-    listCanRun(): boolean {
+    listCanRun(): Promise<boolean> {
         const listConfigs = emailArticle.getListConfigs();
-
-        return !!Object.keys(listConfigs).find(key =>
+        const canRun = !!Object.keys(listConfigs).find(key =>
             listCanRun(listConfigs[key])
         );
+
+        return Promise.resolve(canRun);
     },
 
-    emailInArticleOutbrainEnabled(): boolean {
-        return config.switches.emailInArticleOutbrain;
+    emailInArticleOutbrainEnabled(): Promise<boolean> {
+        return Promise.resolve(config.switches.emailInArticleOutbrain);
     },
 
-    hasHighPriorityAdLoaded(): any {
+    hasHighPriorityAdLoaded(): Promise<boolean> {
         // if thirdPartyTags false no external ads are loaded
         if (commercialFeatures.thirdPartyTags && commercialFeatures.highMerch) {
-            return trackAdRender('dfp-ad--merchandising-high');
+            return Promise.resolve(trackAdRender('dfp-ad--merchandising-high'));
         }
-        return false;
+        return Promise.resolve(false);
     },
 
-    hasLowPriorityAdLoaded(): any {
+    hasLowPriorityAdLoaded(): Promise<boolean> {
         // if thirdPartyTags false no external ads are loaded
         if (commercialFeatures.thirdPartyTags) {
             return waitForCheck(
                 'hasHighPriorityAdLoaded'
             ).then(highPriorityAdLoaded => {
                 if (highPriorityAdLoaded) {
-                    return trackAdRender('dfp-ad--merchandising');
+                    return Promise.resolve(
+                        trackAdRender('dfp-ad--merchandising')
+                    );
                 }
-                return true;
+                return Promise.resolve(true);
             });
         }
-        return false;
+        return Promise.resolve(false);
     },
 
     hasLowPriorityAdNotLoaded(): Promise<boolean> {
@@ -84,8 +89,10 @@ const checksToDispatch = {
         );
     },
 
-    isStoryQuestionsOnPage(): boolean {
-        return document.querySelectorAll('.js-ask-question-link').length > 0;
+    isStoryQuestionsOnPage(): Promise<boolean> {
+        return Promise.resolve(
+            document.querySelectorAll('.js-ask-question-link').length > 0
+        );
     },
 
     isOutbrainBlockedByAds(): Promise<boolean> {
