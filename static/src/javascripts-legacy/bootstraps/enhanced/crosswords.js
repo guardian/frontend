@@ -1,7 +1,7 @@
 define([
-    'projects/common/modules/crosswords/main',
-    'projects/common/modules/crosswords/comments',
-    'projects/common/modules/crosswords/series'
+    'common/modules/crosswords/main',
+    'common/modules/crosswords/comments',
+    'common/modules/crosswords/series'
 ], function (
     init,
     initComments,

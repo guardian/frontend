@@ -1,6 +1,6 @@
 // @flow
 import detect from 'lib/detect';
-import checkMediator from 'projects/common/modules/check-mediator';
+import checkMediator from 'common/modules/check-mediator';
 import { load } from './outbrain-load';
 import { tracking } from './outbrain-tracking';
 
