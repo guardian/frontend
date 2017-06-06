@@ -2,20 +2,37 @@
 define([
     'helpers/injector',
     'lib/$',
-    'lib/config',
-    'lib/storage',
     'lodash/objects/defaults'
 ], function (
     Injector,
     $,
-    config,
-    storage,
     defaults
 ) {
     describe('Breaking news', function () {
-        var injector = new Injector(),
-            knownAlertIDsStorageKey = 'gu.breaking-news.hidden',
-            fetchJson;
+        var injector = new Injector();
+        var knownAlertIDsStorageKey = 'gu.breaking-news.hidden';
+        var fetchJson = jasmine.createSpy('fetch-json');
+        var sandbox = sinon.sandbox.create();
+        var storageStub = {
+            local: {
+                get: sandbox.stub(),
+                set: sandbox.spy(),
+                isAvailable: sandbox.stub(),
+            },
+        };
+        var fakeConfig = {
+            page: {
+                edition: 'UK'
+            }
+        };
+        var fakeFastdom = {
+            write: function(callback) {
+                callback();
+            }
+        };
+        var BREAKING_NEWS_DELAY = 100;
+        var breakingNews;
+        var mediator;
 
         function alertThatIs(type, options) {
             options = defaults(options || {}, {
@@ -34,61 +51,62 @@ define([
             };
         }
 
-        function mockBreakingNewsWith(collections) {
+        function callBreakingNewsWith(collections) {
             fetchJson.and.callFake(function() {
                 return Promise.resolve({
-                        webTitle: 'Breaking News',
-                        collections: collections
-                    });
+                    webTitle: 'Breaking News',
+                    collections: collections
                 });
+            });
+            storageStub.local.get.withArgs(knownAlertIDsStorageKey).returns({
+                'uk_known': false,
+                'uk_dismissed': true
+            });
+            breakingNews.DEFAULT_DELAY = BREAKING_NEWS_DELAY;
 
-            return new Promise(function (resolve, reject) {
-                var fakeConfig = {
-                    page: {
-                        edition: 'UK'
-                    }
-                };
+            return breakingNews();
+        }
 
-                injector.mock({
-                    'lib/storage': storage,
+        beforeEach(function (done) {
+            injector
+                .mock({
+                    'lib/storage': storageStub,
                     'lib/fetch-json': fetchJson,
                     'lib/config': fakeConfig,
-                }).require(['common/modules/onward/breaking-news'], function (breakingNews) {
-                    breakingNews.DEFAULT_DELAY = 100;
-                    Promise.resolve().then(function () {
-                        return breakingNews();
-                    }).then(function(result) {
-                        // make sure the DOM has finished updating
-                        setTimeout(function () {
-                            resolve(result);
-                        }, 30);
-                    }).catch(reject);
+                    'fastdom': fakeFastdom,
+                })
+                .require([
+                    'common/modules/onward/breaking-news',
+                    'lib/mediator'
+                ], function (
+                    breakingNewsModule,
+                    mediatorModule
+                ) {
+                    breakingNews = breakingNewsModule;
+                    mediator = mediatorModule;
+
+                    $('body').html('<div class="js-breaking-news-placeholder breaking-news breaking-news--hidden breaking-news--fade-in" data-link-name="breaking news" data-component="breaking-news"></div>');
+                    requestAnimationFrame(done);
                 }, function (e) {
                     console.log(e);
                 });
-            });
-        }
-
-        beforeAll(function () {
-            fetchJson = jasmine.createSpy('fetch-json');
         });
 
-        beforeEach(function (done) {
-            $('body').html('<div class="js-breaking-news-placeholder breaking-news breaking-news--hidden breaking-news--fade-in" data-link-name="breaking news" data-component="breaking-news"></div>');
-            requestAnimationFrame(done);
-        });
         afterEach(function (done) {
+            sandbox.restore();
+            mediator.removeAllListeners();
+
             $('.js-breaking-news-placeholder').remove();
             requestAnimationFrame(done);
         });
 
         describe('user cannot dismiss alerts', function () {
             beforeEach(function () {
-                sinon.stub(storage.local, 'isAvailable').returns(false);
+                storageStub.local.isAvailable.returns(false);
             });
 
             it('should not try and fetch the json', function (done) {
-                mockBreakingNewsWith([]).then(function () {
+                callBreakingNewsWith([]).then(function () {
                     done.fail('user cannot use local storage, but we seem to think things are okish');
                 }, function (res) {
                     expect(fetchJson).not.toHaveBeenCalled();
@@ -96,22 +114,15 @@ define([
                     expect($('.js-breaking-news-placeholder:not(:empty)').length).toBe(0);
                 }).then(done).catch(done.fail);
             });
-
-            afterEach(function () {
-                storage.local.isAvailable.restore();
-            });
         });
 
         describe('user can dismiss alerts', function () {
             beforeEach(function () {
-                storage.local.set(knownAlertIDsStorageKey, {
-                    'uk_known': false,
-                    'uk_dismissed': true
-                });
+                storageStub.local.isAvailable.returns(true);
             });
 
             it('should try and fetch the json', function (done) {
-                mockBreakingNewsWith([]).then(function () {
+                callBreakingNewsWith([]).then(function () {
                     expect(fetchJson).toHaveBeenCalled();
                 }).then(done).catch(done.fail);
             });
@@ -121,9 +132,7 @@ define([
                     alertThatIs('unknown', {age: 2, collection: 'uk'})
                 ];
 
-                expect(storage.local.get(knownAlertIDsStorageKey).uk_unknown).toBeUndefined();
-
-                mockBreakingNewsWith(collections).then(function (alert) {
+                callBreakingNewsWith(collections).then(function (alert) {
                     expect(alert.headline).toEqual('2min uk unknown headline');
                     expect($('.breaking-news--hidden.breaking-news--fade-in').length).toBe(1);
                     expect($('.breaking-news--spectre').length).toBe(0);
@@ -131,9 +140,12 @@ define([
                     setTimeout(function () {
                         expect($('.breaking-news--spectre').length).toBe(1);
                         expect($('.breaking-news--hidden').length).toBe(0);
-                        expect(storage.local.get(knownAlertIDsStorageKey).uk_unknown).toBe(false);
+                        expect(storageStub.local.set.lastCall.args[0]).toEqual(knownAlertIDsStorageKey);
+                        expect(storageStub.local.set.lastCall.args[1]).toEqual({
+                            'uk_unknown': false
+                        });
                         done();
-                    }, 120);
+                    }, BREAKING_NEWS_DELAY);
                 }).catch(done.fail);
             });
 
@@ -141,11 +153,13 @@ define([
                 var collections = [
                     alertThatIs('known')
                 ];
-                mockBreakingNewsWith(collections).then(function (alert) {
-                    expect(alert.headline).toEqual('uk known headline');
-                    expect($('.breaking-news--hidden.breaking-news--fade-in').length).toBe(0);
-                    expect($('.breaking-news--spectre').length).toBe(1);
-                    expect($('.breaking-news--hidden').length).toBe(0);
+                callBreakingNewsWith(collections).then(function (alert) {
+                    requestAnimationFrame(function() {
+                        expect(alert.headline).toEqual('uk known headline');
+                        expect($('.breaking-news--hidden.breaking-news--fade-in').length).toBe(0);
+                        expect($('.breaking-news--spectre').length).toBe(1);
+                        expect($('.breaking-news--hidden').length).toBe(0);
+                    });
                 }).then(done).catch(done.fail);
             });
 
@@ -153,7 +167,7 @@ define([
                 var collections = [
                     alertThatIs('dismissed')
                 ];
-                mockBreakingNewsWith(collections).then(function (alert) {
+                callBreakingNewsWith(collections).then(function (alert) {
                     expect(alert).toBeFalsy();
                     expect($('.js-breaking-news-placeholder:not(:empty)').length).toBe(0);
                 }).then(done).catch(done.fail);
@@ -163,7 +177,7 @@ define([
                 var collections = [
                     alertThatIs('unknown', {collection: 'uk'})
                 ];
-                mockBreakingNewsWith(collections).then(function (alert) {
+                callBreakingNewsWith(collections).then(function (alert) {
                     expect(alert).not.toBeUndefined();
                 }).then(done).catch(done.fail);
             });
@@ -172,7 +186,7 @@ define([
                 var collections = [
                     alertThatIs('unknown', {collection: 'us'})
                 ];
-                mockBreakingNewsWith(collections).then(function (alert) {
+                callBreakingNewsWith(collections).then(function (alert) {
                     expect(alert).toBeUndefined();
                 }).then(done).catch(done.fail);
             });
@@ -182,7 +196,7 @@ define([
                     alertThatIs('unknown', {collection: 'uk'}),
                     alertThatIs('unknown', {collection: 'global'})
                 ];
-                mockBreakingNewsWith(collections).then(function (alert) {
+                callBreakingNewsWith(collections).then(function (alert) {
                     expect(alert.headline).toEqual('global unknown headline');
                 }).then(done).catch(done.fail);
             });
@@ -192,7 +206,7 @@ define([
                     alertThatIs('unknown', {collection: 'uk'}),
                     alertThatIs('unknown', {collection: 'football'})
                 ];
-                mockBreakingNewsWith(collections).then(function (alert) {
+                callBreakingNewsWith(collections).then(function (alert) {
                     expect(alert.headline).toEqual('uk unknown headline');
                 }).then(done).catch(done.fail);
             });
@@ -201,7 +215,7 @@ define([
                 var collections = [
                     alertThatIs('unknown', {age: 20})
                 ];
-                mockBreakingNewsWith(collections).then(function (alert) {
+                callBreakingNewsWith(collections).then(function (alert) {
                     expect(alert).toBeUndefined();
                 }).then(done).catch(done.fail);
             });
@@ -210,7 +224,7 @@ define([
                 var collections = [
                     alertThatIs('unknown', {age: 19})
                 ];
-                mockBreakingNewsWith(collections).then(function (alert) {
+                callBreakingNewsWith(collections).then(function (alert) {
                     expect(alert).not.toBeUndefined();
                 }).then(done).catch(done.fail);
             });
@@ -220,7 +234,7 @@ define([
                     alertThatIs('unknown', {age: 5}),
                     alertThatIs('unknown', {age: 2})
                 ];
-                mockBreakingNewsWith(collections).then(function (alert) {
+                callBreakingNewsWith(collections).then(function (alert) {
                     expect(alert.headline).toEqual('2min uk unknown headline');
                 }).then(done).catch(done.fail);
             });
@@ -230,58 +244,36 @@ define([
                     alertThatIs('known')
                 ];
 
-                expect(storage.local.get(knownAlertIDsStorageKey).uk_known).not.toBeUndefined();
-                expect(storage.local.get(knownAlertIDsStorageKey).uk_dismissed).not.toBeUndefined();
-
-                mockBreakingNewsWith(collections).then(function () {
-                    expect(storage.local.get(knownAlertIDsStorageKey).uk_known).not.toBeUndefined();
-                    expect(storage.local.get(knownAlertIDsStorageKey).uk_dismissed).toBeUndefined();
+                callBreakingNewsWith(collections).then(function () {
+                    expect(storageStub.local.set.lastCall.args[0]).toBe(knownAlertIDsStorageKey);
+                    expect(storageStub.local.set.lastCall.args[1]).toEqual({
+                        'uk_known': false
+                    });
                 }).then(done).catch(done.fail);
             });
         });
 
         describe('banner emits ready events', function () {
-
-            var mediator;
-
-            beforeEach(function (done) {
-                injector.require([
-                    'lib/mediator'
-                ], function () {
-                    mediator = arguments[0];
-                    done();
-                }, function () {
-                    done();
-                });
-            });
-
-            afterEach(function () {
-                mediator.removeAllListeners();
-            });
-
             it('should pass false when banner will not show', function (done) {
-
                 mediator.on('modules:onwards:breaking-news:ready', function (breakingShown) {
                     expect(breakingShown).toBe(false);
                     done();
-                })
+                });
 
-                mockBreakingNewsWith([]).catch(done.fail);
-
+                callBreakingNewsWith([]).catch(done.fail);
             });
 
             it('should pass true when banner will show', function (done) {
-
-                mediator.on('modules:onwards:breaking-news:ready', function (breakingShown) {
-                    expect(breakingShown).toBe(true);
-                    done();
-                })
-
                 var collections = [
                     alertThatIs('unknown', {age: 2, collection: 'uk'})
                 ];
 
-                mockBreakingNewsWith(collections).catch(done.fail);
+                mediator.on('modules:onwards:breaking-news:ready', function (breakingShown) {
+                    expect(breakingShown).toBe(true);
+                    done();
+                });
+
+                callBreakingNewsWith(collections).catch(done.fail);
 
             });
         });
