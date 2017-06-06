@@ -55,7 +55,7 @@
         </ul>
 
         @if(SearchSwitch.isSwitchedOn) {
-            <div class="menu-group">
+            <div class="menu-group menu-group--search">
                 <form class="menu-search"
                       action="https://www.google.co.uk/search">
                     <input type="text"
@@ -87,11 +87,11 @@
             </div>
         }
 
-        <ul class="menu-group menu-group--highlight"
+        <ul class="menu-group menu-group--editions"
             role="menubar">
             @defining(Edition(request)) { edition =>
                 @NewNavigation.getMembershipLinks(edition).mostPopular.map { item =>
-                    <li class="menu-item"
+                    <li class="menu-item hide-on-desktop"
                         data-edition="@{edition.id.toLowerCase}"
                         role="menuitem">
 
@@ -109,7 +109,7 @@
         </ul>
 
         @defining(Edition(request)) { edition =>
-            <ul class="menu-group"
+            <ul class="menu-group menu-group--footer"
                 data-edition="@{edition.id.toLowerCase}"
                 role="menubar">
 

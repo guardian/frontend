@@ -1,4 +1,5 @@
 .menu-group {
+    box-sizing: border-box;
     color: #ffffff;
     display: flex;
     font-size: 18px;
@@ -9,10 +10,14 @@
 
     @include mq(desktop) {
         color: $news-support-1;
+        display: flex;
+        flex-direction: column;
     }
 
     [aria-expanded='false'] ~ & {
-        display: none;
+        @include mq($until: desktop) {
+            display: none;
+        }
     }
 
     [aria-expanded='true'] ~ & {
@@ -26,10 +31,11 @@
 
     @include mq(desktop) {
         color: $news-support-1;
-        display: flex;
         flex-direction: row;
         flex-wrap: nowrap;
-        width: 100%;
+        margin-bottom: $gs-baseline * 3;
+        order: 1;
+        width: gs-span(10);
     }
 }
 
@@ -43,13 +49,16 @@
     }
 }
 
-.menu-group--highlight {
+.menu-group--editions {
     color: $guardian-brand-dark;
     background-color: $news-main-2;
 
     @include mq(desktop) {
         background-color: transparent;
         color: $news-support-1;
+        flex-direction: row;
+        order: 4;
+        width: gs-span(4);
     }
 
     .menu-item:last-child .menu-group {
@@ -64,5 +73,21 @@
     @include mq(desktop) {
         background-color: transparent;
         color: $news-support-1;
+        flex-direction: row;
+    }
+}
+
+.menu-group--footer {
+    @include mq(desktop) {
+        order: 2;
+        padding-left: $gs-gutter / 2;
+        width: gs-span(2);
+    }
+}
+
+.menu-group--search {
+    @include mq(desktop) {
+        order: 3;
+        width: gs-span(8);
     }
 }
