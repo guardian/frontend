@@ -8,16 +8,16 @@ import { commercialFeatures } from 'commercial/modules/commercial-features';
 import { checks } from './check-mediator-checks';
 import { resolveCheck, waitForCheck } from './check-mediator';
 
-const someCheckPassed = results => results.includes(true);
+const someCheckPassed = (results): boolean => results.includes(true);
 
-const everyCheckPassed = results => !results.includes(false);
+const everyCheckPassed = (results): boolean => !results.includes(false);
 
 /**
     Any check added to checksToDispatch should also 
     be added to the array of checks in './check-mediator-checks'. 
 **/
 const checksToDispatch = {
-    isOutbrainDisabled() {
+    isOutbrainDisabled(): boolean {
         if (commercialFeatures.outbrain) {
             return false;
         }
@@ -25,25 +25,25 @@ const checksToDispatch = {
         return true;
     },
 
-    isUserInContributionsAbTest() {
+    isUserInContributionsAbTest(): boolean {
         return clash.userIsInAClashingAbTest(clash.contributionsTests);
     },
 
-    isUserNotInContributionsAbTest() {
+    isUserNotInContributionsAbTest(): Promise<boolean> {
         return waitForCheck('isUserInContributionsAbTest').then(
             userInContributionsAbTest => !userInContributionsAbTest
         );
     },
 
-    isUserInEmailAbTest() {
+    isUserInEmailAbTest(): boolean {
         return clash.userIsInAClashingAbTest(clash.emailTests);
     },
 
-    emailCanRunPreCheck() {
+    emailCanRunPreCheck(): boolean {
         return allEmailCanRun();
     },
 
-    listCanRun() {
+    listCanRun(): boolean {
         const listConfigs = emailArticle.getListConfigs();
 
         return !!Object.keys(listConfigs).find(key =>
@@ -51,11 +51,11 @@ const checksToDispatch = {
         );
     },
 
-    emailInArticleOutbrainEnabled() {
+    emailInArticleOutbrainEnabled(): boolean {
         return config.switches.emailInArticleOutbrain;
     },
 
-    hasHighPriorityAdLoaded() {
+    hasHighPriorityAdLoaded(): any {
         // if thirdPartyTags false no external ads are loaded
         if (commercialFeatures.thirdPartyTags && commercialFeatures.highMerch) {
             return trackAdRender('dfp-ad--merchandising-high');
@@ -63,7 +63,7 @@ const checksToDispatch = {
         return false;
     },
 
-    hasLowPriorityAdLoaded() {
+    hasLowPriorityAdLoaded(): any {
         // if thirdPartyTags false no external ads are loaded
         if (commercialFeatures.thirdPartyTags) {
             return waitForCheck(
@@ -78,17 +78,17 @@ const checksToDispatch = {
         return false;
     },
 
-    hasLowPriorityAdNotLoaded() {
+    hasLowPriorityAdNotLoaded(): Promise<boolean> {
         return waitForCheck('hasLowPriorityAdLoaded').then(
             lowPriorityAdLoaded => !lowPriorityAdLoaded
         );
     },
 
-    isStoryQuestionsOnPage() {
+    isStoryQuestionsOnPage(): boolean {
         return document.querySelectorAll('.js-ask-question-link').length > 0;
     },
 
-    isOutbrainBlockedByAds() {
+    isOutbrainBlockedByAds(): Promise<boolean> {
         const dependentChecks = [
             waitForCheck('hasHighPriorityAdLoaded'),
             waitForCheck('hasLowPriorityAdLoaded'),
@@ -99,7 +99,7 @@ const checksToDispatch = {
         );
     },
 
-    isOutbrainMerchandiseCompliant() {
+    isOutbrainMerchandiseCompliant(): Promise<boolean> {
         const dependentChecks = [
             waitForCheck('hasHighPriorityAdLoaded'),
             waitForCheck('hasLowPriorityAdNotLoaded'),
@@ -110,7 +110,7 @@ const checksToDispatch = {
         );
     },
 
-    isOutbrainMerchandiseCompliantOrBlockedByAds() {
+    isOutbrainMerchandiseCompliantOrBlockedByAds(): Promise<boolean> {
         const dependentChecks = [
             waitForCheck('isOutbrainMerchandiseCompliant'),
             waitForCheck('isOutbrainBlockedByAds'),
@@ -121,7 +121,7 @@ const checksToDispatch = {
         );
     },
 
-    emailCanRun() {
+    emailCanRun(): Promise<boolean> {
         const dependentChecks = [
             waitForCheck('emailCanRunPreCheck'),
             waitForCheck('listCanRun'),
@@ -134,7 +134,7 @@ const checksToDispatch = {
         );
     },
 
-    isUserInEmailAbTestAndEmailCanRun() {
+    isUserInEmailAbTestAndEmailCanRun(): Promise<boolean> {
         const dependentChecks = [
             waitForCheck('isUserInEmailAbTest'),
             waitForCheck('emailCanRun'),
@@ -145,7 +145,7 @@ const checksToDispatch = {
         );
     },
 
-    emailCanRunPostCheck() {
+    emailCanRunPostCheck(): Promise<boolean> {
         const dependentChecks = [
             waitForCheck('isUserInEmailAbTest'),
             waitForCheck('isOutbrainMerchandiseCompliantOrBlockedByAds'),
