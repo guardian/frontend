@@ -44,7 +44,7 @@ const build = (
 };
 
 const load = (target?: string): Promise<void> => {
-    const slot = target in selectors ? target : 'defaults';
+    const slot = target && target in selectors ? target : 'defaults';
     const $outbrain = $(selectors.outbrain.widget);
     const $container = $(selectors.outbrain.container, $outbrain[0]);
     const breakpoint = detect.getBreakpoint();
