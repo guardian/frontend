@@ -75,6 +75,7 @@ define([
         if (email && listId && questionId) {
 
             fetch(config.page.ajaxUrl + '/story-questions/answers/signup', {
+                mode: 'cors',
                 method: 'POST',
                 body: {email : email.value, listId: listId.value}
             })
