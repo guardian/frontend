@@ -64,6 +64,13 @@ class AtomCleanerTest extends FlatSpec
     document
   }
 
+ private def renderAndGetId(atom: MediaAtom): String = {
+   val html = views.html.fragments.atoms.media(media = atom, displayCaption = false, mediaWrapper = None)(TestRequest())
+   val doc = Jsoup.parse(html.toString())
+
+   doc.getElementsByClass("youtube-media-atom__iframe").attr("id")
+ }
+
   "AtomsCleaner" should "create YouTube template" in {
     Switches.UseAtomsSwitch.switchOn()
     val result: Document = clean(doc, youTubeAtom, amp = false)
@@ -100,30 +107,24 @@ class AtomCleanerTest extends FlatSpec
     val atom = youTubeAtom.get.media.head.copy(
       activeVersion = Some(2L),
       assets = Seq(
-        youTubeAsset,
-        youTubeAsset.copy(id = "gyVuRflcEKM", version = 2),
-        youTubeAsset.copy(id = "QRplDNMsS4U", version = 3)
+        youTubeAsset.copy(id = "gyVuRflcEKM", version = 3),
+        youTubeAsset.copy(id = "QRplDNMsS4U", version = 2),
+        youTubeAsset
       )
     )
 
-    val html = views.html.fragments.atoms.media(media = atom, displayCaption = false, mediaWrapper = None)(TestRequest())
-    val doc = Jsoup.parse(html.toString())
-
-    doc.getElementsByClass("youtube-media-atom__iframe").attr("id") should be("youtube-gyVuRflcEKM")
+    renderAndGetId(atom) should be("youtube-QRplDNMsS4U")
   }
 
   "Youtube template" should "use latest asset if no active version" in {
     val atom = youTubeAtom.get.media.head.copy(
       assets = Seq(
-        youTubeAsset.copy(id = "gyVuRflcEKM", version = 2),
-        youTubeAsset.copy(id = "QRplDNMsS4U", version = 3)
+        youTubeAsset.copy(id = "gyVuRflcEKM", version = 3),
+        youTubeAsset.copy(id = "QRplDNMsS4U", version = 2)
       )
     )
 
-    val html = views.html.fragments.atoms.media(media = atom, displayCaption = false, mediaWrapper = None)(TestRequest())
-    val doc = Jsoup.parse(html.toString())
-
-    doc.getElementsByClass("youtube-media-atom__iframe").attr("id") should be(s"youtube-gyVuRflcEKM")
+    renderAndGetId(atom) should be(s"youtube-gyVuRflcEKM")
   }
 
   "Formatted duration" should "produce the expected format" in {
