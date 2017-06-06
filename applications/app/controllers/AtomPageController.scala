@@ -1,15 +1,16 @@
 package controllers
 
-import com.gu.contentapi.client.model.v1.ItemResponse
+import conf.Configuration
+import contentapi.ContentApiClient
 import common._
-import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model._
+import model.content._
+import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
+import com.gu.contentapi.client.model.v1.ItemResponse
 import play.api.mvc._
 import play.twirl.api.Html
 import scala.concurrent.Future
 import scala.concurrent.duration._
-import contentapi.ContentApiClient
-import model.content._
 import play.api.data.Form
 import play.api.data.Forms._
 import play.api.data.format.Formats._
