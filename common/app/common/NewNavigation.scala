@@ -427,7 +427,8 @@ object NewNavigation {
     val todaysPaperSubNav = NavLinkLists(
       List(
         todaysPaper,
-        NavLink("editorials & letters", "/theguardian/mainsection/editorialsandreply"),
+        NavLink("letters", "/theguardian/mainsection/editorialsandreply"),
+        NavLink("editorials", "/tone/editorials"),
         NavLink("obituaries", "/tone/obituaries"),
         NavLink("g2", "/theguardian/g2"),
         NavLink("weekend", "/theguardian/weekend"),
