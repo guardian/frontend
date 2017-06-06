@@ -62,7 +62,11 @@ class GeoMostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi
         url <- (item \ "url").asOpt[String]
       } yield {
         contentApiClient
-          .getResponse(contentApiClient.item(urlToContentPath(url), edition).showTags("tone"))
+          .getResponse(contentApiClient
+            .item(urlToContentPath(url), edition)
+            .showTags("paid-content")
+            .showSection(true)
+            .showFields("isAppropriateForSponsorship"))
           .map(_.content
             .filterNot { content =>
               val branding: Option[Branding] = BrandingFinder.findBranding(content, countryCode)
