@@ -54,11 +54,6 @@ final case class MediaAtom(
       "^0".r.replaceFirstIn(formattedDuration, "") //strip leading zero
     }
   }
-
-  def activeAsset: MediaAsset = activeVersion match {
-    case Some(version) => assets.find(_.version == version).getOrElse(assets.head)
-    case _ => assets.head
-  }
 }
 
 
@@ -241,6 +236,19 @@ object MediaAtom extends common.Logging {
     )
   }
 
+  def activeYouTubeAsset(atom: MediaAtom): Option[MediaAsset] = {
+    val defaultAsset = atom.assets.headOption
+
+    val activeAsset = for {
+      version <- atom.activeVersion
+      asset <- atom.assets.find(_.version == version)
+    } yield asset
+
+    val asset = activeAsset orElse defaultAsset
+
+    // sanity check the platform to avoid template rendering errors
+    asset.filter(_.platform == MediaAssetPlatform.Youtube)
+  }
 }
 
 object Quiz extends common.Logging {

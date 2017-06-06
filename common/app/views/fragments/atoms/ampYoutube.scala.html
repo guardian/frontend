@@ -1,10 +1,11 @@
 @import model.content.MediaWrapper
-@(media: model.content.MediaAtom,  displayCaption: Boolean, mediaWrapper: Option[MediaWrapper])(implicit request: RequestHeader)
+@import model.content.MediaAtom.activeYouTubeAsset
+@(media: model.content.MediaAtom, displayCaption: Boolean, mediaWrapper: Option[MediaWrapper])(implicit request: RequestHeader)
 @import views.html.fragments.atoms.mediaAtomCaption
 
-@if(media.assets.nonEmpty) {
+@for(asset <- activeYouTubeAsset(media)) {
     <amp-youtube
-    data-videoid="@media.activeAsset.id"
+    data-videoid="@asset.id"
     layout="responsive"
     width="16" height="9" data-param-rel="0">
     </amp-youtube>
