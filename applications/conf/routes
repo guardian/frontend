@@ -46,6 +46,8 @@ GET        /embed/video/*path                                                   
 GET        /embed/atom/media/:id                                                controllers.MediaAtomEmbedController.render(id)
 GET        /embed/atom/story-questions/:id                                      controllers.StoryQuestionsAtomEmbedController.render(id)
 POST       /story-questions/answers/signup                                      controllers.StoryQuestionsAtomEmbedController.signup()
+OPTIONS    /story-questions/answers/signup                                      controllers.StoryQuestionsAtomEmbedController.options()
+
 
 # Share counts
 GET        /sharecount/*path.json                                               controllers.ShareCountController.fetch(path)
