@@ -43,8 +43,7 @@ const build = (
     return html;
 };
 
-const load = (target: string, cause?: string): Promise<void> => {
-    const state = cause ? `${target}.${cause}` : target;
+const load = (target?: string): Promise<void> => {
     const slot = target in selectors ? target : 'defaults';
     const $outbrain = $(selectors.outbrain.widget);
     const $container = $(selectors.outbrain.container, $outbrain[0]);
@@ -70,7 +69,6 @@ const load = (target: string, cause?: string): Promise<void> => {
             .then(() => {
                 tracking({
                     widgetId: widgetCodes.code || widgetCodes.image,
-                    state,
                 });
                 loadScript(outbrainUrl);
             });

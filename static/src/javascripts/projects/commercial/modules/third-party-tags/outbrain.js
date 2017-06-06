@@ -2,7 +2,6 @@
 import detect from 'lib/detect';
 import { waitForCheck } from 'common/modules/check-mediator';
 import { load } from './outbrain-load';
-import { tracking } from './outbrain-tracking';
 
 /*
  Loading Outbrain is dependent on successful return of high relevance component
@@ -19,9 +18,9 @@ const canLoadInstantly = () =>
 
 const onIsStoryQuestionsOnPage = isStoryQuestionsOnPage => {
     if (isStoryQuestionsOnPage) {
-        load('nonCompliant', 'storyQuestionsOnPage');
+        load('nonCompliant');
     } else {
-        load('compliant');
+        load();
     }
 
     return Promise.resolve();
@@ -29,7 +28,7 @@ const onIsStoryQuestionsOnPage = isStoryQuestionsOnPage => {
 
 const onIsUserInEmailAbTestAndEmailCanRun = userInEmailAbTestAndEmailCanRun => {
     if (userInEmailAbTestAndEmailCanRun) {
-        load('nonCompliant', 'userInEmailAbTestAndEmailCanRun');
+        load('nonCompliant');
         return Promise.resolve();
     }
 
@@ -40,7 +39,7 @@ const onIsUserInEmailAbTestAndEmailCanRun = userInEmailAbTestAndEmailCanRun => {
 
 const onIsUserInContributionsAbTest = userInContributionsAbTest => {
     if (userInContributionsAbTest) {
-        load('nonCompliant', 'userInContributionsAbTest');
+        load('nonCompliant');
         return Promise.resolve();
     }
 
@@ -62,9 +61,6 @@ const onIsOutbrainMerchandiseCompliant = outbrainMerchandiseCompliant => {
 
 const onIsOutbrainBlockedByAds = outbrainBlockedByAds => {
     if (outbrainBlockedByAds) {
-        tracking({
-            state: 'outbrainBlockedByAds',
-        });
         return Promise.resolve();
     }
 
@@ -87,9 +83,6 @@ const onCanLoadInstantly = loadInstantly => {
 
 const onIsOutbrainDisabled = outbrainDisabled => {
     if (outbrainDisabled) {
-        tracking({
-            state: 'outbrainDisabled',
-        });
         return Promise.resolve();
     }
 

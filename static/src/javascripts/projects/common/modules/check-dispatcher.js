@@ -4,7 +4,7 @@ import { allEmailCanRun, listCanRun } from 'common/modules/email/run-checks';
 import emailArticle from 'common/modules/email/email-article';
 import clash from 'common/modules/experiments/ab-test-clash';
 import trackAdRender from 'commercial/modules/dfp/track-ad-render';
-import commercialFeatures from 'commercial/modules/commercial-features';
+import { commercialFeatures } from 'commercial/modules/commercial-features';
 import { checks } from './check-mediator-checks';
 import { resolveCheck, waitForCheck } from './check-mediator';
 
