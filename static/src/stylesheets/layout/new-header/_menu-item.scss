@@ -50,12 +50,16 @@
 }
 
 .menu-item__title {
+    background-color: transparent;
+    border: none;
     color: currentColor;
     cursor: pointer;
     display: block;
     font-size: 20px;
     outline: none;
     padding: 8px $veggie-burger-medium / 2 + $gs-gutter / 2 8px 0;
+    text-align: left;
+    width: 100%;
 
     @include mq(desktop) {
         font-size: 17px;
