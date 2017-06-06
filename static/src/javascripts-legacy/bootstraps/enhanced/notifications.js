@@ -178,7 +178,7 @@ define([
             return modules.getSub().then(function (sub) {
                 var endpoint = sub && sub.endpoint;
                 if (endpoint) {
-                    return fetch(notificationsEndpoint, {
+                    return fetch(config.page.ajaxUrl + notificationsEndpoint, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/x-www-form-urlencoded',
