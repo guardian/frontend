@@ -16,7 +16,7 @@
     margin-bottom: $gs-baseline * 2;
 }
 
-.feedback__element input:disabled, .feedback__element textarea:disabled {
+.feedback__element input:disabled, .feedback__element textarea:disabled, .feedback__element button:disabled {
     opacity: .5;
 }
 

@@ -51,7 +51,7 @@ define([
         }
     }
 
-    function toggleFormVisibility() {
+    function toggleFormVisibility(evt) {
 
         // make the associated category blurb visible
 
@@ -65,8 +65,8 @@ define([
 
         // enable the form elements
 
-        $.forEachElement("#feedback__form input,#feedback__form textarea", function (elem) {
-            elem.disabled = false;
+        $.forEachElement("#feedback__form input,#feedback__form textarea,#feedback__form button", function (elem) {
+            elem.disabled = evt.target.value == "nothing"
         });
 
     }
@@ -118,7 +118,7 @@ define([
 
         // set the form elements to disabled to begin with
 
-        $.forEachElement("#feedback__form input,#feedback__form textarea", function(elem){
+        $.forEachElement("#feedback__form input,#feedback__form textarea,#feedback__form button", function(elem){
             elem.disabled = true;
         });
 
