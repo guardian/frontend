@@ -68,7 +68,6 @@ describe('Outbrain', () => {
 
             init().then(() => {
                 expect(load).not.toHaveBeenCalled();
-                expect(tracking).toHaveBeenCalled();
                 expect(tracking).toHaveBeenCalledWith({
                     state: 'outbrainDisabled',
                 });
@@ -86,7 +85,6 @@ describe('Outbrain', () => {
             resolveCheck('isStoryQuestionsOnPage', false);
 
             init().then(() => {
-                expect(load).toHaveBeenCalled();
                 expect(load).toHaveBeenCalledWith('compliant');
                 detect.adblockInUse = Promise.resolve(false);
                 done();
@@ -101,7 +99,6 @@ describe('Outbrain', () => {
 
             init().then(() => {
                 expect(load).not.toHaveBeenCalled();
-                expect(tracking).toHaveBeenCalled();
                 expect(tracking).toHaveBeenCalledWith({
                     state: 'outbrainBlockedByAds',
                 });
@@ -117,7 +114,6 @@ describe('Outbrain', () => {
             resolveCheck('isOutbrainMerchandiseCompliant', true);
 
             init().then(() => {
-                expect(load).toHaveBeenCalled();
                 expect(load).toHaveBeenCalledWith('merchandising');
                 done();
             });
@@ -132,7 +128,6 @@ describe('Outbrain', () => {
             resolveCheck('isUserInContributionsAbTest', true);
 
             init().then(() => {
-                expect(load).toHaveBeenCalled();
                 expect(load).toHaveBeenCalledWith(
                     'nonCompliant',
                     'userInContributionsAbTest'
@@ -151,7 +146,6 @@ describe('Outbrain', () => {
             resolveCheck('isUserInEmailAbTestAndEmailCanRun', true);
 
             init().then(() => {
-                expect(load).toHaveBeenCalled();
                 expect(load).toHaveBeenCalledWith(
                     'nonCompliant',
                     'userInEmailAbTestAndEmailCanRun'
@@ -171,7 +165,6 @@ describe('Outbrain', () => {
             resolveCheck('isStoryQuestionsOnPage', true);
 
             init().then(() => {
-                expect(load).toHaveBeenCalled();
                 expect(load).toHaveBeenCalledWith(
                     'nonCompliant',
                     'storyQuestionsOnPage'
@@ -191,7 +184,6 @@ describe('Outbrain', () => {
             resolveCheck('isStoryQuestionsOnPage', false);
 
             init().then(() => {
-                expect(load).toHaveBeenCalled();
                 expect(load).toHaveBeenCalledWith('compliant');
                 done();
             });
