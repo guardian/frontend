@@ -79,21 +79,6 @@ define([
 
         var warning = document.getElementById("feedback__explainer");
 
-        // mandatory checks (realtime)
-
-        function toggleMandatoryOutline(elem) {
-            if(isInputFilled(elem)){
-                elem.classList.add("feedback__entry--mandatory-failed");
-            } else {
-                elem.classList.remove("feedback__entry--mandatory-failed");
-            }
-        }
-
-        $.forEachElement("#feedback__form input,#feedback__form textarea", function(elem){
-            elem.addEventListener("blur", function(){ toggleMandatoryOutline(elem); });
-            elem.addEventListener("input", function(){ toggleMandatoryOutline(elem); });
-        });
-
         // mandatory checks (on submit)
 
         $.forEachElement(".feedback__form", function(elem){
