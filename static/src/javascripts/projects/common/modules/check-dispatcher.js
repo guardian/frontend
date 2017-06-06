@@ -18,7 +18,11 @@ const everyCheckPassed = results => !results.includes(false);
 **/
 const checksToDispatch = {
     isOutbrainDisabled() {
-        return !commercialFeatures.outbrain;
+        if (commercialFeatures.outbrain) {
+            return false;
+        }
+
+        return true;
     },
 
     isUserInContributionsAbTest() {
