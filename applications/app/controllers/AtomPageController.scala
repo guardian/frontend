@@ -10,8 +10,14 @@ import scala.concurrent.Future
 import scala.concurrent.duration._
 import contentapi.ContentApiClient
 import model.content._
+import play.api.data.Form
+import play.api.data.Forms._
+import play.api.data.format.Formats._
+import play.api.data.validation.Constraints._
+import play.api.libs.json.{JsNull, JsObject, Json}
+import play.api.libs.ws.{WSClient, WSResponse}
 
-class AtomPageController(contentApiClient: ContentApiClient)(implicit context: ApplicationContext) extends Controller with Logging with ExecutionContexts {
+class AtomPageController(contentApiClient: ContentApiClient, wsClient: WSClient)(implicit context: ApplicationContext) extends Controller with Logging with ExecutionContexts {
 
   case class AnswersSignupForm(
                         email: String,
