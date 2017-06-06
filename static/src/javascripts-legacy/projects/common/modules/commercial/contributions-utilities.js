@@ -104,11 +104,12 @@ define([
         return [];
     }
 
-    function getTestimonialBlock(testimonialParameters){
+    function getTestimonialBlock(testimonialParameters, citeImage){
         return template(acquisitionsTestimonialBlockTemplate, {
             quoteSvg: testimonialParameters.quoteSvg,
             testimonialMessage: testimonialParameters.testimonialMessage,
-            testimonialName: testimonialParameters.testimonialName
+            testimonialName: testimonialParameters.testimonialName,
+            citeImage: citeImage
         });
     }
 
@@ -345,7 +346,7 @@ define([
                 return new ContributionsABTest(test);
             };
         },
-        getControlTestimonialBlock: getControlTestimonialBlock,
+        getTestimonialBlock: getTestimonialBlock,
         variantBuilderFactory: variantBuilderFactory,
         daysSinceLastContribution: daysSinceLastContribution,
         isContributor: isContributor

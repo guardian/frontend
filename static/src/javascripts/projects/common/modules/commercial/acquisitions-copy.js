@@ -27,6 +27,12 @@ const liveblogMinimalP2 =
 
 const liveblogMinimalHeading = 'Since you’re here ';
 
+// US localised testimonials test
+const usLocalisedFlagP1 = `${controlP1} Here’s why other <strong>readers from the US</strong> are supporting us:`;
+
+/*
+ Exported instances of AcquisitionsEpicTemplateCopy
+ */
 export const control: AcquisitionsEpicTemplateCopy = {
     heading: controlHeading,
     p1: controlP1,
@@ -36,6 +42,12 @@ export const control: AcquisitionsEpicTemplateCopy = {
 export const regulars: AcquisitionsEpicTemplateCopy = {
     heading: controlHeadingRegulars,
     p1: controlP1Regulars,
+    p2: controlP2,
+};
+
+export const usLocalisedFlag = {
+    heading: controlHeading,
+    p1: usLocalisedFlagP1,
     p2: controlP2,
 };
 
