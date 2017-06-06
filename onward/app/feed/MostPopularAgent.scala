@@ -6,7 +6,6 @@ import common._
 import services.OphanApi
 import play.api.libs.json.{JsArray, JsValue}
 import model.RelatedContentItem
-
 import scala.concurrent.Future
 import scala.util.control.NonFatal
 
