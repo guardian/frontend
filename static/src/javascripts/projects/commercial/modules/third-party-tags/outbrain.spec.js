@@ -7,7 +7,7 @@ import {
 } from 'common/modules/check-mediator';
 import detect from 'lib/detect';
 import { load } from './outbrain-load';
-import { tracking } from './outbrain-tracking';
+// import { tracking } from './outbrain-tracking';
 import { init } from './outbrain';
 import { getSection } from './outbrain-sections';
 
@@ -18,7 +18,8 @@ jest.mock('lib/detect', () => ({
 }));
 jest.mock('lib/load-script', () => ({ loadScript: jest.fn() }));
 jest.mock('./outbrain-load', () => ({ load: jest.fn() }));
-jest.mock('./outbrain-tracking', () => ({ tracking: jest.fn() }));
+
+// jest.mock('./outbrain-tracking', () => ({ tracking: jest.fn() }));
 
 describe('Outbrain', () => {
     beforeEach(done => {
@@ -68,9 +69,6 @@ describe('Outbrain', () => {
 
             init().then(() => {
                 expect(load).not.toHaveBeenCalled();
-                expect(tracking).toHaveBeenCalledWith({
-                    state: 'outbrainDisabled',
-                });
                 done();
             });
         });
@@ -85,7 +83,7 @@ describe('Outbrain', () => {
             resolveCheck('isStoryQuestionsOnPage', false);
 
             init().then(() => {
-                expect(load).toHaveBeenCalledWith('compliant');
+                expect(load).toHaveBeenCalled();
                 detect.adblockInUse = Promise.resolve(false);
                 done();
             });
@@ -99,9 +97,6 @@ describe('Outbrain', () => {
 
             init().then(() => {
                 expect(load).not.toHaveBeenCalled();
-                expect(tracking).toHaveBeenCalledWith({
-                    state: 'outbrainBlockedByAds',
-                });
                 done();
             });
         });
@@ -128,10 +123,7 @@ describe('Outbrain', () => {
             resolveCheck('isUserInContributionsAbTest', true);
 
             init().then(() => {
-                expect(load).toHaveBeenCalledWith(
-                    'nonCompliant',
-                    'userInContributionsAbTest'
-                );
+                expect(load).toHaveBeenCalledWith('nonCompliant');
                 done();
             });
         });
@@ -146,10 +138,7 @@ describe('Outbrain', () => {
             resolveCheck('isUserInEmailAbTestAndEmailCanRun', true);
 
             init().then(() => {
-                expect(load).toHaveBeenCalledWith(
-                    'nonCompliant',
-                    'userInEmailAbTestAndEmailCanRun'
-                );
+                expect(load).toHaveBeenCalledWith('nonCompliant');
                 done();
             });
         });
@@ -165,10 +154,7 @@ describe('Outbrain', () => {
             resolveCheck('isStoryQuestionsOnPage', true);
 
             init().then(() => {
-                expect(load).toHaveBeenCalledWith(
-                    'nonCompliant',
-                    'storyQuestionsOnPage'
-                );
+                expect(load).toHaveBeenCalledWith('nonCompliant');
                 done();
             });
         });
@@ -184,7 +170,7 @@ describe('Outbrain', () => {
             resolveCheck('isStoryQuestionsOnPage', false);
 
             init().then(() => {
-                expect(load).toHaveBeenCalledWith('compliant');
+                expect(load).toHaveBeenCalled();
                 done();
             });
         });

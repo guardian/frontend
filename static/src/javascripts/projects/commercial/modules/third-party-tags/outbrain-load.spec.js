@@ -53,7 +53,6 @@ describe('Outbrain Load', () => {
                 );
                 expect($('.OUTBRAIN').last().data('widgetId')).toEqual('AR_14');
                 expect(tracking).toHaveBeenCalledWith({
-                    state: 'compliant',
                     widgetId: 'AR_12',
                 });
                 done();
@@ -70,7 +69,6 @@ describe('Outbrain Load', () => {
                 );
                 expect($('.OUTBRAIN').last().data('widgetId')).toEqual('AR_15');
                 expect(tracking).toHaveBeenCalledWith({
-                    state: 'compliant',
                     widgetId: 'AR_13',
                 });
                 done();
@@ -86,7 +84,6 @@ describe('Outbrain Load', () => {
                     'AR_28'
                 );
                 expect(tracking).toHaveBeenCalledWith({
-                    state: 'merchandising',
                     widgetId: 'AR_28',
                 });
                 done();
@@ -102,7 +99,6 @@ describe('Outbrain Load', () => {
                     'AR_28'
                 );
                 expect(tracking).toHaveBeenCalledWith({
-                    state: 'nonCompliant.blockedByTest',
                     widgetId: 'AR_28',
                 });
                 done();
@@ -123,7 +119,6 @@ describe('Outbrain Load', () => {
                 expect($('.OUTBRAIN').first().data('widgetId')).toEqual('MB_6');
                 expect($('.OUTBRAIN').last().data('widgetId')).toEqual('MB_8');
                 expect(tracking).toHaveBeenCalledWith({
-                    state: 'compliant',
                     widgetId: 'MB_6',
                 });
                 done();
@@ -138,7 +133,6 @@ describe('Outbrain Load', () => {
                 expect($('.OUTBRAIN').first().data('widgetId')).toEqual('MB_7');
                 expect($('.OUTBRAIN').last().data('widgetId')).toEqual('MB_9');
                 expect(tracking).toHaveBeenCalledWith({
-                    state: 'compliant',
                     widgetId: 'MB_7',
                 });
                 done();
@@ -154,7 +148,6 @@ describe('Outbrain Load', () => {
                     'MB_11'
                 );
                 expect(tracking).toHaveBeenCalledWith({
-                    state: 'merchandising',
                     widgetId: 'MB_11',
                 });
                 done();
@@ -168,7 +161,6 @@ describe('Outbrain Load', () => {
                     'MB_11'
                 );
                 expect(tracking).toHaveBeenCalledWith({
-                    state: 'nonCompliant.blockedByTest',
                     widgetId: 'MB_11',
                 });
                 done();
@@ -188,7 +180,6 @@ describe('Outbrain Load', () => {
             load('compliant').then(() => {
                 expect($('.OUTBRAIN').first().data('widgetId')).toEqual('MB_4');
                 expect(tracking).toHaveBeenCalledWith({
-                    state: 'compliant',
                     widgetId: 'MB_4',
                 });
                 done();
@@ -202,7 +193,6 @@ describe('Outbrain Load', () => {
             load('compliant').then(() => {
                 expect($('.OUTBRAIN').first().data('widgetId')).toEqual('MB_5');
                 expect(tracking).toHaveBeenCalledWith({
-                    state: 'compliant',
                     widgetId: 'MB_5',
                 });
                 done();
@@ -218,7 +208,6 @@ describe('Outbrain Load', () => {
                     'MB_10'
                 );
                 expect(tracking).toHaveBeenCalledWith({
-                    state: 'merchandising',
                     widgetId: 'MB_10',
                 });
                 done();
@@ -232,7 +221,6 @@ describe('Outbrain Load', () => {
                     'MB_10'
                 );
                 expect(tracking).toHaveBeenCalledWith({
-                    state: 'nonCompliant.blockedByTest',
                     widgetId: 'MB_10',
                 });
                 done();
