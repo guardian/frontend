@@ -11,13 +11,17 @@ const enhanced = {};
 
 const getMenu = (): ?HTMLElement => document.getElementById('main-menu');
 
-const getSectionToggleMenuItem = (section: HTMLElement): HTMLElement => {
+const getSectionToggleMenuItem = (section: HTMLElement): ?HTMLElement => {
     const children = [...section.children];
     return children.find(child => child.classList.contains('menu-item__title'));
 };
 
 const closeSidebarSection = (section: HTMLElement): void => {
-    getSectionToggleMenuItem(section).setAttribute('aria-expanded', 'false');
+    const toggle = getSectionToggleMenuItem(section);
+
+    if (toggle) {
+        toggle.setAttribute('aria-expanded', 'false');
+    }
 };
 
 const closeAllSidebarSections = (exclude?: Node): void => {
@@ -34,7 +38,11 @@ const openSidebarSection = (
     section: HTMLElement,
     options?: Object = {}
 ): void => {
-    getSectionToggleMenuItem(section).setAttribute('aria-expanded', 'true');
+    const toggle = getSectionToggleMenuItem(section);
+
+    if (toggle) {
+        toggle.setAttribute('aria-expanded', 'true');
+    }
 
     if (options.scrollIntoView === true) {
         scrollToElement(section, 0, 'easeInQuad', getMenu());
@@ -44,8 +52,15 @@ const openSidebarSection = (
     closeAllSidebarSections(section);
 };
 
-const isSidebarSectionClosed = (section: HTMLElement): boolean =>
-    getSectionToggleMenuItem(section).getAttribute('aria-expanded') === 'false';
+const isSidebarSectionClosed = (section: HTMLElement): boolean => {
+    const toggle = getSectionToggleMenuItem(section);
+
+    if (toggle) {
+        return toggle.getAttribute('aria-expanded') === 'false';
+    }
+
+    return true;
+};
 
 const toggleSidebarSection = (section: HTMLElement): void => {
     if (isSidebarSectionClosed(section)) {

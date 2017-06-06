@@ -5,17 +5,17 @@
     flex-wrap: wrap;
     list-style: none;
     margin: 0;
-    padding: 0 0 $gs-baseline 0;
+    padding: 0 0 $gs-baseline;
 
     @include mq(desktop) {
         color: $news-support-1;
     }
 
-    [aria-expanded="false"] ~ & {
+    [aria-expanded='false'] ~ & {
         display: none;
     }
 
-    [aria-expanded="true"] ~ & {
+    [aria-expanded='true'] ~ & {
         margin-bottom: -1px;
     }
 }

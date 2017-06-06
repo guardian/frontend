@@ -113,7 +113,7 @@
 .menu-item__toggle {
     margin-top: -4px;
 
-    [aria-expanded="true"] > & {
+    [aria-expanded='true'] > & {
         margin-top: 2px;
     }
 
@@ -127,7 +127,7 @@
         transform: rotate(45deg);
         width: 8px;
 
-        [aria-expanded="true"] > & {
+        [aria-expanded='true'] > & {
             transform: rotate(-135deg);
         }
     }
