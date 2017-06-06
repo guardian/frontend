@@ -103,13 +103,12 @@ object NewNavigation {
         inMyOpinion
       ),
       List(
+        letters,
+        editorials,
         NavLink("Polly Toynbee", "/profile/pollytoynbee"),
         NavLink("Owen Jones", "/profile/owen-jones"),
         NavLink("Jonathan Freedland", "/profile/jonathanfreedland"),
-        NavLink("Marina Hyde", "/profile/marinahyde"),
-        NavLink("George Monbiot", "/profile/georgemonbiot"),
-        NavLink("Gary Younge", "/profile/garyyounge"),
-        NavLink("Nick Cohen", "/profile/nickcohen")
+        NavLink("Marina Hyde", "/profile/marinahyde")
       )
     )
 
@@ -127,9 +126,7 @@ object NewNavigation {
         NavLink("Kristina Keneally", "/profile/kristina-keneally"),
         NavLink("Richard Ackland", "/profile/richard-ackland"),
         NavLink("Van Badham", "/profile/van-badham"),
-        NavLink("Lenore Taylor", "/profile/lenore-taylor"),
-        NavLink("Jason Wilson", "/profile/wilson-jason"),
-        NavLink("Brigid Delaney", "/profile/brigiddelaney")
+        NavLink("Lenore Taylor", "/profile/lenore-taylor")
       )
     )
 
@@ -241,6 +238,7 @@ object NewNavigation {
       newsletters,
       todaysPaper,
       observer,
+      digitalNewspaperArchive,
       crosswords
     ))
 
@@ -252,6 +250,7 @@ object NewNavigation {
       video,
       pictures,
       newsletters,
+      digitalNewspaperArchive,
       crosswords
     ))
 
@@ -262,6 +261,7 @@ object NewNavigation {
       video,
       pictures,
       newsletters,
+      digitalNewspaperArchive,
       crosswords
     ))
 
@@ -275,6 +275,7 @@ object NewNavigation {
       newsletters,
       todaysPaper,
       observer,
+      digitalNewspaperArchive,
       crosswords
     ))
   }
@@ -427,7 +428,8 @@ object NewNavigation {
     val todaysPaperSubNav = NavLinkLists(
       List(
         todaysPaper,
-        NavLink("editorials & letters", "/theguardian/mainsection/editorialsandreply"),
+        letters,
+        editorials,
         NavLink("obituaries", "/tone/obituaries"),
         NavLink("g2", "/theguardian/g2"),
         NavLink("weekend", "/theguardian/weekend"),
