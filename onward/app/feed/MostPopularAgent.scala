@@ -60,7 +60,7 @@ class GeoMostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi
         url <- (item \ "url").asOpt[String]
       } yield {
         contentApiClient.getResponse(contentApiClient.item(urlToContentPath(url), Edition.defaultEdition))
-          .map(_.content.map(RelatedContentItem(_)))
+          .map(_.content.filterNot(_.isHosted).map(RelatedContentItem(_)))
           .recover {
             case NonFatal(e)  =>
               log.error(s"Error requesting $url", e)
