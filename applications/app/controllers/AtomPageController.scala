@@ -13,6 +13,61 @@ import model.content._
 
 class AtomPageController(contentApiClient: ContentApiClient)(implicit context: ApplicationContext) extends Controller with Logging with ExecutionContexts {
 
+  case class AnswersSignupForm(
+                        email: String,
+                        listId: Int,
+                        referrer: Option[String],
+                        campaignCode: Option[String])
+
+  val answersSignupForm: Form[AnswersSignupForm] = Form(
+    mapping(
+      "email" -> nonEmptyText.verifying(emailAddress),
+      "listId" -> number,
+      "referrer" -> optional[String](of[String]),
+      "campaignCode" -> optional[String](of[String])
+    )(AnswersSignupForm.apply)(AnswersSignupForm.unapply)
+  )
+
+  object EmailService {
+    def submit(form: AnswersSignupForm)(wsClient: WSClient): Future[WSResponse] = {
+
+      wsClient.url(Configuration.emailSignup.url).post(
+        JsObject(Json.obj(
+          "email" -> form.email,
+          "listId" -> form.listId,
+          "triggeredSendKey" -> JsNull,
+          "emailGroup" -> "readers-questions-answers-test",
+          "referrer" -> form.referrer,
+          "campaignCode" -> form.campaignCode)
+          .fields
+          .filterNot{ case (_, v) => v == JsNull}))
+    }
+  }
+
+  def signup() = Action.async { implicit request =>
+    answersSignupForm.bindFromRequest.fold(
+      formWithErrors => {
+        log.info(s"Form has been submitted with errors: ${formWithErrors.errors}")
+        Future.successful(Cors(NoCache(BadRequest("Invalid email"))))
+      },
+
+      form => {
+        EmailService.submit(form)(wsClient).map(_.status match {
+          case 200 | 201 =>
+            Cors(NoCache(Created("Subscribed")))
+
+          case status =>
+            log.error(s"Error posting to ExactTarget: HTTP $status")
+            Cors(NoCache(InternalServerError("Internal error")))
+
+        }).recover {
+          case e: Exception =>
+            log.error(s"Error posting to ExactTarget: ${e.getMessage}")
+            Cors(NoCache(InternalServerError("Internal error")))
+        }
+      })
+  }
+
   def render(atomType: String, id: String, isJsEnabled: Boolean) = Action.async { implicit request =>
     lookup(s"atom/$atomType/$id") map {
       case Left(model: MediaAtom) =>

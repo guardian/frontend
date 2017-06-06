@@ -91,6 +91,36 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-acquisitions-this-land-series-epic",
+    "This places a custom Epic at the ehnd of This Land Is Your Land articles",
+    owners = Seq(Owner.withGithub("desbo")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 8, 1),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-this-land-environment-epic-earning",
+    "This places a custom Epic at the ennd of environment articles",
+    owners = Seq(Owner.withGithub("desbo")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 8, 1),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-this-land-environment-epic-learning",
+    "This places a custom Epic at the ennd of environment articles",
+    owners = Seq(Owner.withGithub("desbo")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 8, 1),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
     "ab-acquisitions-epic-liveblog-design-test",
     "This tests some different designs of the liveblog epic",
     owners = Seq(Owner.withGithub("joelochlann")),
@@ -141,16 +171,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-acquisitions-epic-pre-election",
-    "Test 2 variants centered around the upcoming election",
-    owners = Seq(Owner.withGithub("jranks123")),
-    safeState = On,
-    sellByDate = new LocalDate(2017, 6, 13),
-    exposeClientSide = true
-    )
-
-  Switch(
-    ABTests,
     "ab-acquisitions-epic-always-ask-if-tagged",
     "This guarantees that any on any article that is tagged with a tag that is on the allowed list of tags as set by the tagging tool, the epic will be displayed",
     owners = Seq(Owner.withGithub("jranks123")),
@@ -176,6 +196,26 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("desbo")),
     safeState = On,
     sellByDate = new LocalDate(2017, 6, 26),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-epic-thank-you",
+    "Bootstrap the AB test framework to use the Epic to thank readers who have already supported the Guardian",
+    owners = Seq(Owner.withGithub("Mullefa")),
+    safeState = On,
+    sellByDate = new LocalDate(2017, 6, 19),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-thrasher-uk-election",
+    "Bootstrap the AB test framework to show a different UK election thrasher to supporters/non-supporters respectively",
+    owners = Seq(Owner.withGithub("Mullefa"), Owner.withGithub("joelochlann")),
+    safeState = On,
+    sellByDate = new LocalDate(2017, 7, 3),
     exposeClientSide = true
   )
 }

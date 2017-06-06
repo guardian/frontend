@@ -21,12 +21,12 @@ const logView = (testId: string): void => {
     local.set(viewKey, viewLog.slice(-maxLogEntries));
 };
 
-const viewsInPreviousDays = (days: number, test?: ABTest): number => {
+const viewsInPreviousDays = (days: number, testId: ?string): number => {
     const ms = days * 1000 * 60 * 60 * 24;
     const now = new Date().getTime();
 
     return viewLog.filter(
-        view => (test ? view.testId === test.id : true) && view.date > now - ms
+        view => (testId ? view.testId === testId : true) && view.date > now - ms
     ).length;
 };
 

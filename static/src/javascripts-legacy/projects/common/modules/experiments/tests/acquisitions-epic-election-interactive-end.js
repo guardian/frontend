@@ -5,14 +5,16 @@ define([
     'lodash/utilities/template',
     'lib/config',
     'raw-loader!common/views/acquisitions-epic-control.html',
-    'raw-loader!common/views/acquisitions-epic-slice.html',
+    'common/modules/commercial/acquisitions-copy',
+
 ], function (
     contributionsUtilities,
     $,
     geolocation,
     template,
     config,
-    epicControlTemplate
+    epicControlTemplate,
+    acquisitionsCopy
 ) {
     return contributionsUtilities.makeABTest({
         id: 'AcquisitionsElectionInteractiveEnd',
@@ -48,9 +50,11 @@ define([
 
                 template: function makeControlTemplate(variant) {
                     return template(epicControlTemplate, {
+                        copy: acquisitionsCopy.control,
                         membershipUrl: variant.options.membershipURL,
                         contributionUrl: variant.options.contributeURL,
                         componentName: variant.options.componentName,
+                        testimonialBlock: variant.options.testimonialBlock,
                         epicClass: 'contributions__epic--interactive gs-container',
                         wrapperClass: 'contributions__epic-interactive-wrapper'
                     });

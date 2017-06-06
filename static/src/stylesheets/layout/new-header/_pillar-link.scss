@@ -40,5 +40,9 @@
         border-bottom: $gs-baseline / 2 solid $subnav-grey;
         border-left: $gs-baseline / 2 solid transparent;
         border-right: $gs-baseline / 2 solid transparent;
+
+        @include mq(desktop) {
+            display: none;
+        }
     }
 }
