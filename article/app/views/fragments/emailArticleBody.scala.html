@@ -130,20 +130,18 @@
                     }
 
                     case ContentAtomBlockElement(atomId) => {
-                        @page.article.content.media.map { atom: MediaAtom =>
-                            @if(atom.id == atomId) {
-                                @row(Seq("padded")) {
-                                    @EmailVideoImage.bestFor(atom.posterImage.get).map { imageUrl =>
-                                        @atom.assets.map { asset =>
-                                            @asset.platform match {
-                                                case MediaAssetPlatform.Youtube => {
-                                                    <a href="https://www.youtube.com/watch?v=@asset.id">
-                                                    @imgForArticle(imageUrl, Some(atom.title))
-                                                    </a>
-                                                }
-                                                case _ => {
-                                                    @imgForArticle(imageUrl, Some(atom.title))
-                                                }
+                        @page.article.content.media.find(_.id == atomId).map { atom: MediaAtom =>
+                            @atom.posterImage.flatMap(EmailVideoImage.bestFor).map { imageUrl =>
+                                @atom.assets.map { asset =>
+                                    @row(Seq("padded")) {
+                                        @asset.platform match {
+                                            case MediaAssetPlatform.Youtube => {
+                                                <a href="https://www.youtube.com/watch?v=@asset.id">
+                                                @imgForArticle(imageUrl, Some(atom.title))
+                                                </a>
+                                            }
+                                            case _ => {
+                                                @imgForArticle(imageUrl, Some(atom.title))
                                             }
                                         }
                                     }
