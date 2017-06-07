@@ -25,6 +25,13 @@
         @include mq(desktop) {
             width: 100%;
         }
+
+        // hide * home links, which are duplicated on large screens
+        &:first-child {
+            @include mq(desktop) {
+                display: none;
+            }
+        }
     }
 }
 
