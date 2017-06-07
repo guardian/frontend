@@ -120,9 +120,9 @@ amdefine@>=0.0.4:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/amdefine/-/amdefine-1.0.0.tgz#fd17474700cb5cc9c2b709f0be9d23ce3c198c33"
 
-amphtml-validator@^1.0.10:
-  version "1.0.13"
-  resolved "https://registry.yarnpkg.com/amphtml-validator/-/amphtml-validator-1.0.13.tgz#5e8a2d328cb12d41a6547d7c3e8f90d50dec326c"
+amphtml-validator@^1.0.20:
+  version "1.0.20"
+  resolved "https://registry.yarnpkg.com/amphtml-validator/-/amphtml-validator-1.0.20.tgz#5f6a75ca1917844526e5d87f74c1334c0eccb514"
   dependencies:
     colors "1.1.2"
     commander "2.9.0"
