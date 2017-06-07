@@ -14,6 +14,7 @@ define([
     'lib/storage',
     'lib/geolocation',
     'lib/url',
+    'lib/time-utils',
     'lodash/objects/assign',
     'lodash/utilities/template',
     'lodash/collections/toArray',
@@ -35,6 +36,7 @@ define([
     storage,
     geolocation,
     url,
+    timeUtils,
     assign,
     template,
     toArray,
@@ -59,20 +61,7 @@ define([
         minDaysBetweenViews: 0
     };
 
-    function daysSince(date) {
-        var oneDay = 24 * 60 * 60 * 1000;
-
-        try {
-            var ms = Date.parse(date);
-
-            if (isNaN(ms)) return Infinity;
-            return (new Date() - ms) / oneDay;
-        } catch(e) {
-            return Infinity;
-        }
-    }
-
-    var daysSinceLastContribution = daysSince(lastContributionDate);
+    var daysSinceLastContribution = timeUtils.daysSince(lastContributionDate);
 
     function controlTemplate(variant) {
         return template(acquisitionsEpicControlTemplate, {
@@ -119,8 +108,7 @@ define([
     }
 
     function defaultCanEpicBeDisplayed(testConfig) {
-        var enoughTimeSinceLastContribution = testConfig.showToContributors || daysSince(lastContributionDate) >= 180;
-        var canReasonablyAskForMoney = testConfig.showToSupporters || commercialFeatures.commercialFeatures.canReasonablyAskForMoney;
+        var canReasonablyAskForMoney = testConfig.showToContributorsAndSupporters || commercialFeatures.commercialFeatures.canReasonablyAskForMoney;
 
         var worksWellWithPageTemplate = (typeof testConfig.pageCheck === 'function')
             ? testConfig.pageCheck(config.page)
@@ -134,8 +122,7 @@ define([
 
         var tagsMatch = doTagsMatch(testConfig);
 
-        return enoughTimeSinceLastContribution &&
-            canReasonablyAskForMoney &&
+        return canReasonablyAskForMoney &&
             worksWellWithPageTemplate &&
             inCompatibleLocation &&
             locationCheck &&
