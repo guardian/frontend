@@ -1,13 +1,18 @@
-import google from 'common/modules/analytics/google';
-import messenger from 'commercial/modules/messenger';
-messenger.register('click', function(linkName, ret, iframe) {
-    return sendClick(iframe.closest('.js-ad-slot') || {
-        id: 'unknown'
-    }, linkName);
-});
+// @flow
+import { trackNativeAdLinkClick } from 'common/modules/analytics/google';
+import { register } from 'commercial/modules/messenger';
 
-export default sendClick;
+const sendClick = (adSlot: Element, linkName: string): void => {
+    trackNativeAdLinkClick(adSlot.id, linkName);
+};
 
-function sendClick(adSlot, linkName) {
-    google.trackNativeAdLinkClick(adSlot.id, linkName);
-}
+register('click', (linkName, ret, iframe = {}) =>
+    sendClick(
+        iframe.closest('.js-ad-slot') || {
+            id: 'unknown',
+        },
+        linkName || ''
+    )
+);
+
+export { sendClick };
