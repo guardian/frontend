@@ -100,6 +100,10 @@
         @include mq($until: desktop) {
             margin-top: $gs-baseline * 2;
         }
+
+        @include mq(desktop) {
+            display: none;
+        }
     }
 
     .menu-group--primary > *:not(:first-child) > &,
@@ -120,6 +124,14 @@
                     left: $menu-spacing-left-medium;
                 }
             }
+        }
+    }
+
+    // already shown as part of brand extensions
+    &[data-link-name='nav2 : jobs'],
+    &[data-link-name='nav2 : dating'] {
+        @include mq(desktop) {
+            display: none;
         }
     }
 
