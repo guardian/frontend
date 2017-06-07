@@ -21,9 +21,6 @@ $footer-line-colour: darken($neutral-2, 20%);
     padding: 0;
     background: $c-footer-background;
 
-    .hide-in-footer {
-        display: none !important;
-    }
     .global-navigation__section:nth-of-type(2) .global-navigation__title {
         border-top: 0;
     }
@@ -44,17 +41,6 @@ $footer-line-colour: darken($neutral-2, 20%);
 
     .control__info {
         display: inline-block;
-    }
-}
-
-.site-message--footer {
-    position: relative;
-    z-index: 1;
-    background-color: $c-primary-footer-background-side-bar;
-    border-bottom: 1px solid #ffffff;
-
-    .site-message__inner {
-        background-color: $guardian-brand;
     }
 }
 
@@ -215,13 +201,6 @@ $footer-line-colour: darken($neutral-2, 20%);
 /****************
  * NEW FOOTER - TODO: consolidate when desktop design has been done
  ****************/
-
-.l-footer {
-    // these two lines are needed so that the footer sits over the nav
-    position: absolute;
-    z-index: $zindex-content;
-    width: 100%;
-}
 
 .footer__primary {
     overflow: hidden;
