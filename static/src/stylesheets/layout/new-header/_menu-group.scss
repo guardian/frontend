@@ -5,29 +5,18 @@
     flex-wrap: wrap;
     list-style: none;
     margin: 0;
-    padding: 0 0 $gs-baseline $menu-spacing-left-small;
-
-    @include mq(tablet) {
-        padding-left: $menu-spacing-left-medium;
-    }
+    padding: 0 0 $gs-baseline;
 
     @include mq(desktop) {
         color: $news-support-1;
-        padding-left: 0;
     }
 
-    // make these lists to start at the left side
-    &--secondary,
-    &--lowlight {
-        margin-left: -$menu-spacing-left-small;
+    [aria-expanded='false'] ~ & {
+        display: none;
+    }
 
-        @include mq(tablet) {
-            margin-left: -$menu-spacing-left-medium;
-        }
-
-        @include mq(desktop) {
-            margin-left: 0;
-        }
+    [aria-expanded='true'] ~ & {
+        margin-bottom: -1px;
     }
 }
 

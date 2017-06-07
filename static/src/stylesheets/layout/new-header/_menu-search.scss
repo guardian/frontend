@@ -1,11 +1,11 @@
 .menu-search {
-    margin-left: -38px;
+    margin-left: 13px;
     padding-bottom: $gs-baseline * 2;
     padding-right: $veggie-burger-medium / 2 + $gs-gutter / 2;
     position: relative;
 
     @include mq(tablet) {
-        margin-left: -40px;
+        margin-left: 22px;
     }
 
     @include mq(desktop) {
