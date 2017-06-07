@@ -68,7 +68,7 @@ trait Navigation {
   val africa = SectionLink("world", "africa", "Africa", "/world/africa")
   val middleEast = SectionLink("world", "middle east", "Middle east", "/world/middleeast")
   val video = SectionLink("video", "video", "Video", "/video")
-  val podcast = SectionLink("podcast", "podcast", "Podcast", "/podcasts")
+  val podcast = SectionLink("podcasts", "podcasts", "Podcasts", "/podcasts")
   val guardianProfessional = SectionLink("guardian-professional", "professional networks", "Guardian Professional", "/guardian-professional")
   val observer = SectionLink("observer", "the observer", "The Observer", "/observer")
   val health = SectionLink("society", "health", "Health", "/society/health")
