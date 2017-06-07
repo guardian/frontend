@@ -35,15 +35,9 @@ import sharePinterest from 'svgs/icon/share-pinterest.svg';
 import shareGPlus from 'svgs/icon/share-gplus.svg';
 import externalLink from 'svgs/icon/external-link.svg';
 import tick from 'svgs/icon/tick.svg';
-import notificationsOff from 'svgs/icon/notification-off.svg';
-import notificationsOn from 'svgs/icon/notification-on.svg';
 import glabsLogoSmall from 'svgs/logo/glabs-logo-small.svg';
 import logomembership from 'svgs/commercial/logo-membership.svg';
 import adblockCoinsUk from 'svgs/commercial/adblock-coins.svg';
-import notificationsExplainerDesktop
-    from 'svgs/notifications-explainer-desktop.svg';
-import notificationsExplainerMobile
-    from 'svgs/notifications-explainer-mobile.svg';
 import adblockCoinsUs from 'svgs/commercial/adblock-coins-us.svg';
 import star from 'svgs/icon/star.svg';
 import chevronRight from 'svgs/icon/chevron-right.svg';
@@ -80,14 +74,10 @@ const svgs = {
     shareGPlus,
     externalLink,
     tick,
-    notificationsOff,
-    notificationsOn,
     glabsLogoSmall,
     adblockCoinsUk,
     adblockCoinsUs,
     logomembership,
-    notificationsExplainerDesktop,
-    notificationsExplainerMobile,
     star,
     chevronRight,
 };

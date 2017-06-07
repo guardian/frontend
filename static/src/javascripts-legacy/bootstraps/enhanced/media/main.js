@@ -247,18 +247,14 @@ define([
                                     }
 
                                     if (withPreroll) {
-                                        var isDebugMode = !!window.location.hash && window.location.hash === '#debug';
-
                                         raven.wrap({ tags: { feature: 'media' } }, function () {
                                             player.ima({
-                                                debug: isDebugMode,
                                                 id: mediaId,
                                                 adTagUrl: videoAdUrl.get(),
                                                 prerollTimeout: 1000,
                                                 // We set this sightly higher so contrib-ads never timeouts before ima.
                                                 contribAdsSettings: {
-                                                    timeout: 2000,
-                                                    debug: isDebugMode
+                                                    timeout: 2000
                                                 }
                                             });
                                             player.on('adstart', function() {

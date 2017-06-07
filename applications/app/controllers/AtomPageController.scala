@@ -1,33 +1,24 @@
 package controllers
 
-import com.gu.contentapi.client.model.v1.ItemResponse
-import com.gu.contentatom.thrift.{Atom => ApiAtom}
-import play.api.data.format.Formats._
-import common._
 import conf.Configuration
-import model.Cached.RevalidatableResult
-import model.{NoCache, _}
-import play.api.mvc._
-
-import scala.concurrent.Future
 import contentapi.ContentApiClient
-import model.content.StoryQuestionsAtom
+import common._
+import model._
+import model.content._
+import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
+import com.gu.contentapi.client.model.v1.ItemResponse
+import play.api.mvc._
+import play.twirl.api.Html
+import scala.concurrent.Future
+import scala.concurrent.duration._
 import play.api.data.Form
 import play.api.data.Forms._
+import play.api.data.format.Formats._
 import play.api.data.validation.Constraints._
 import play.api.libs.json.{JsNull, JsObject, Json}
 import play.api.libs.ws.{WSClient, WSResponse}
 
-class StoryQuestionsAtomEmbedController(
-  contentApiClient: ContentApiClient,
-  wsClient: WSClient
-)(
-  implicit context: ApplicationContext
-)
-  extends Controller
-  with Logging
-  with ExecutionContexts
-{
+class AtomPageController(contentApiClient: ContentApiClient, wsClient: WSClient)(implicit context: ApplicationContext) extends Controller with Logging with ExecutionContexts {
 
   case class AnswersSignupForm(
                         email: String,
@@ -84,36 +75,49 @@ class StoryQuestionsAtomEmbedController(
       })
   }
 
-  def render(id: String) = Action.async { implicit request =>
-    lookup(s"atom/storyquestions/$id") map {
-      case Left(model) => renderStoryQuestionsAtom(model)
-      case Right(other) => renderOther(other)
+  def render(atomType: String, id: String, isJsEnabled: Boolean) = Action.async { implicit request =>
+    lookup(s"atom/$atomType/$id") map {
+      case Left(model: MediaAtom) =>
+        renderAtom(MediaAtomPage(model, withJavaScript = isJsEnabled))
+      case Left(model: StoryQuestionsAtom) =>
+        renderAtom(StoryQuestionsAtomPage(model, withJavaScript = isJsEnabled))
+      case Left(_) =>
+        renderOther(NotFound)
+      case Right(other) =>
+        renderOther(other)
     }
   }
 
-  private def make(apiAtom: Option[ApiAtom]): Option[StoryQuestionsAtom] = apiAtom map StoryQuestionsAtom.make _
+  def options() = Action { implicit request =>
+    TinyResponse.noContent(Some("POST, OPTIONS"))
+  }
 
-  private def lookup(path: String)(implicit request: RequestHeader) = {
+  private def lookup(path: String)(implicit request: RequestHeader): Future[Either[Atom, Result]] = {
     val edition = Edition(request)
+    contentApiClient.getResponse(contentApiClient.item(path, edition))
+      .map(makeAtom _ andThen { _.toLeft(NotFound) })
+      .recover(convertApiExceptions)
+  }
 
-    val response: Future[ItemResponse] = contentApiClient.getResponse(contentApiClient.item(path, edition))
-
-    val result = response map { response =>
-      make(response.storyquestions) match  {
-        case Some(x) => Left(x)
-        case _ => Right(NotFound)
-      }
-    }
-    result recover convertApiExceptions
+  def makeAtom(apiAtom: ItemResponse): Option[Atom] = {
+    apiAtom.media.map(atom => MediaAtom.make(atom = atom, endSlatePath = None)) orElse
+    apiAtom.storyquestions.map(atom => StoryQuestionsAtom.make(atom))           orElse
+    /*
+    apiAtom.quiz.map(atom => Quiz.make(atom))                                   orElse
+    apiAtom.interactive.map(atom => InteractiveAtom.make(atom))                 orElse
+    apiAtom.review.map(atom => RecipeAtom.make(atom))                           orElse
+    apiAtom.recipe.map(atom => ReviewAtom.make(atom))                           orElse
+    */
+    None
   }
 
   private def renderOther(result: Result)(implicit request: RequestHeader) = result.header.status match {
     case 404 => NoCache(NotFound)
+    case 410 => Cached(24.hours)(WithoutRevalidationResult(Gone(views.html.videoEmbedMissing())))
     case _ => result
   }
 
-  private def renderStoryQuestionsAtom(model: StoryQuestionsAtom)(implicit request: RequestHeader): Result = {
-    val page = StoryQuestionsAtomEmbedPage(model)
-    Cached(600)(RevalidatableResult.Ok(views.html.fragments.atoms.storyQuestionsEmbed(page)))
+  private def renderAtom(page: AtomPage)(implicit request: RequestHeader): Result = {
+    Cached(600)(RevalidatableResult.Ok(views.html.atomEmbed(page)))
   }
 }

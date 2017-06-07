@@ -3,7 +3,7 @@
 import bonzo from 'bonzo';
 import qwery from 'qwery';
 
-import { _ } from 'projects/facia/modules/ui/container-show-more';
+import { _ } from 'facia/modules/ui/container-show-more';
 
 const { itemsByArticleId, dedupShowMore } = _;
 
