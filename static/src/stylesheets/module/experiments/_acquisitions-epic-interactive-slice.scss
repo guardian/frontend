@@ -4,8 +4,9 @@
     background: $neutral-3;
 
     @include mq(tablet) {
-        margin-left: -100%;
-        margin-right: -100%;
+        @supports (margin: 0 calc(50% - 50vw)) {
+            margin: 0 calc(50% - 50vw);
+        }
     }
 }
 

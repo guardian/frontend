@@ -94,7 +94,7 @@ define([
                             }
                         };
                     };
-                    krux.getSegments = function () {
+                    krux.getKruxSegments = function () {
                         return ['E012712', 'E012390', 'E012478'];
                     };
                     storage.local.set('gu.alreadyVisited', 0);
@@ -175,7 +175,7 @@ define([
             userAdTargeting.getUserSegments = function () {
                 return [];
             };
-            krux.getSegments = function () {
+            krux.getKruxSegments = function () {
                 return [];
             };
 
