@@ -1,27 +1,30 @@
 .menu {
-    @include menu-animation(-110%);
-    -webkit-overflow-scrolling: touch;
     background-color: $guardian-brand-dark;
-    box-shadow: 3px 0 16px rgba(0, 0, 0, .4);
     box-sizing: border-box;
-    bottom: 0;
     color: #ffffff;
     font-family: $f-sans-serif-text;
     font-size: 20px;
-    height: 100%;
     left: 0;
     line-height: 1;
     margin-right: $gutter-small + ($veggie-burger-small / 2);
     padding-top: $gs-baseline / 2;
     padding-bottom: $gs-baseline * 2;
-    position: fixed;
     overflow: auto;
-    right: 0;
     text-transform: lowercase;
     top: 0;
-    transition: transform .2s cubic-bezier(.23, 1, .32, 1);
-    will-change: transform;
     z-index: $zindex-main-menu;
+
+    @include mq($until: desktop) {
+        @include menu-animation(-110%);
+        -webkit-overflow-scrolling: touch;
+        box-shadow: 3px 0 16px rgba(0, 0, 0, .4);
+        bottom: 0;
+        height: 100%;
+        position: fixed;
+        right: 0;
+        transition: transform .2s cubic-bezier(.23, 1, .32, 1);
+        will-change: transform;
+    }
 
     @include mq(mobileMedium) {
         margin-right: $gutter-medium + ($veggie-burger-medium / 2);
@@ -35,13 +38,50 @@
         margin-right: $gutter-xlarge + ($veggie-burger-medium / 2);
     }
 
+    // based on https://css-tricks.com/full-width-containers-limited-width-parents/#article-header-id-6
+    @include mq(desktop) {
+        display: none;
+        left: 50%;
+        margin-left: -50vw;
+        margin-right: -50vw;
+        position: absolute;
+        right: 50%;
+        top: 100%;
+        width: 100vw;
+    }
+
     .new-header--open & {
-        @include menu-animation(0%);
+        @include mq($until: desktop) {
+            @include menu-animation(0%);
+        }
+
+        // TODO: replace with sexy animation
+        @include mq(desktop) {
+            display: block;
+        }
     }
 
     // Don't show menu on opera mini: https://wp-mix.com/css-target-opera/
     x:-o-prefocus & {
         display: none;
+    }
+}
+
+.menu__inner {
+    box-sizing: border-box;
+
+    @include mq($until: desktop) {
+        &.gs-container {
+            max-width: none;
+        }
+    }
+
+    @include mq(desktop) {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        padding-left: $gs-gutter;
+        padding-right: $gs-gutter;
     }
 }
 
@@ -60,5 +100,9 @@
     .new-header--open & {
         opacity: 1;
         width: 100%;
+    }
+
+    @include mq(desktop) {
+        display: none;
     }
 }

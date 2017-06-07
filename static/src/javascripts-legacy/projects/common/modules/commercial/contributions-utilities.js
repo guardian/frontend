@@ -2,7 +2,10 @@ define([
     'lodash/arrays/uniq',
     'commercial/modules/commercial-features',
     'common/modules/commercial/targeting-tool',
+    'common/modules/commercial/acquisitions-copy',
+    'common/modules/commercial/acquisitions-epic-testimonial-parameters',
     'common/modules/commercial/acquisitions-view-log',
+    'common/modules/tailor/tailor',
     'lib/$',
     'lib/config',
     'lib/cookies',
@@ -15,12 +18,16 @@ define([
     'lodash/objects/assign',
     'lodash/utilities/template',
     'lodash/collections/toArray',
-    'raw-loader!common/views/acquisitions-epic-control.html'
+    'raw-loader!common/views/acquisitions-epic-control.html',
+    'raw-loader!common/views/acquisitions-epic-testimonial-block.html'
 ], function (
     uniq,
     commercialFeatures,
     targetingTool,
+    acquisitionsCopy,
+    acquisitionsTestimonialParameters,
     viewLog,
+    tailor,
     $,
     config,
     cookies,
@@ -33,13 +40,16 @@ define([
     assign,
     template,
     toArray,
-    acquisitionsEpicControlTemplate
+    acquisitionsEpicControlTemplate,
+    acquisitionsTestimonialBlockTemplate
 ) {
 
     var membershipBaseURL = 'https://membership.theguardian.com/supporter';
     var contributionsBaseURL = 'https://contribute.theguardian.com';
 
     var lastContributionDate = cookies.getCookie('gu.contributions.contrib-timestamp');
+
+    var isContributor = !!lastContributionDate;
 
     /**
      * How many times the user can see the Epic, e.g. 6 times within 7 days with minimum of 1 day in between views.
@@ -64,11 +74,15 @@ define([
         }
     }
 
-    function controlTemplate(variant) {
+    var daysSinceLastContribution = daysSince(lastContributionDate);
+
+    function controlTemplate(variant, copy) {
         return template(acquisitionsEpicControlTemplate, {
+            copy: copy,
             membershipUrl: variant.options.membershipURL,
             contributionUrl: variant.options.contributeURL,
-            componentName: variant.options.componentName
+            componentName: variant.options.componentName,
+            testimonialBlock: variant.options.testimonialBlock
         });
     }
 
@@ -92,8 +106,23 @@ define([
         return [];
     }
 
+    function getTestimonialBlock(testimonialParameters, citeImage){
+        return template(acquisitionsTestimonialBlockTemplate, {
+            quoteSvg: testimonialParameters.quoteSvg,
+            testimonialMessage: testimonialParameters.testimonialMessage,
+            testimonialName: testimonialParameters.testimonialName,
+            citeImage: citeImage
+        });
+    }
+
+    function getControlTestimonialBlock(location){
+        var testimonialParameters = location == 'GB' ? acquisitionsTestimonialParameters.controlGB : acquisitionsTestimonialParameters.control;
+        return getTestimonialBlock(testimonialParameters);
+    }
+
     function defaultCanEpicBeDisplayed(testConfig) {
-        var enoughTimeSinceLastContribution = daysSince(lastContributionDate) >= 90;
+        var enoughTimeSinceLastContribution = testConfig.showToContributors || daysSince(lastContributionDate) >= 180;
+        var canReasonablyAskForMoney = testConfig.showToSupporters || commercialFeatures.commercialFeatures.canReasonablyAskForMoney;
 
         var worksWellWithPageTemplate = (typeof testConfig.pageCheck === 'function')
             ? testConfig.pageCheck(config.page)
@@ -105,18 +134,13 @@ define([
         }) : true;
         var locationCheck = (typeof testConfig.locationCheck === 'function') ? testConfig.locationCheck(storedGeolocation) : true;
 
-        var isImmersive = config.page.isImmersive === true;
-
         var tagsMatch = doTagsMatch(testConfig);
-
-        var canReasonablyAskForMoney = commercialFeatures.commercialFeatures.canReasonablyAskForMoney;
 
         return enoughTimeSinceLastContribution &&
             canReasonablyAskForMoney &&
             worksWellWithPageTemplate &&
             inCompatibleLocation &&
             locationCheck &&
-            !isImmersive &&
             tagsMatch
     }
 
@@ -140,6 +164,10 @@ define([
         this.insertEvent = this.makeEvent('insert');
         this.viewEvent = this.makeEvent('view');
         this.isEngagementBannerTest = options.isEngagementBannerTest || false;
+
+        // Set useLocalViewLog to true if only the views for the respective test
+        // should be used to determine variant viewability
+        this.useLocalViewLog =  options.useLocalViewLog || false;
 
         /**
          * Provides a default `canRun` function with typical rules (see function below) for Contributions messages.
@@ -169,6 +197,18 @@ define([
         return this.id + ':' + event;
     };
 
+    function getCopy(useTailor) {
+        if (useTailor) {
+            return tailor.isRegular().then(function (regular) {
+                return regular ? acquisitionsCopy.regulars : acquisitionsCopy.control;
+            })
+        }
+
+        return new Promise(function (resolve) {
+            return resolve(acquisitionsCopy.control);
+        });
+    }
+
     function ContributionsABTestVariant(options, test) {
         var trackingCampaignId = test.epic ? 'epic_' + test.campaignId : test.campaignId;
         var campaignCode = getCampaignCode(test.campaignPrefix, test.campaignId, options.id, test.campaignSuffix);
@@ -184,13 +224,15 @@ define([
             membershipURL: options.membershipURL || this.getURL(membershipBaseURL, campaignCode),
             componentName: 'mem_acquisition_' + trackingCampaignId + '_' + this.id,
             template: options.template || controlTemplate,
+            testimonialBlock: options.testimonialBlock || getControlTestimonialBlock(geolocation.getSync()),
             blockEngagementBanner: options.blockEngagementBanner || false,
             engagementBannerParams: options.engagementBannerParams || {},
             isOutbrainCompliant: options.isOutbrainCompliant || false,
+            usesIframe: options.usesIframe || false,
+            iframeId: test.campaignId + '_' + 'iframe',
         };
 
         this.test = function () {
-
             var displayEpic = (typeof options.canEpicBeDisplayed === 'function') ?
                 options.canEpicBeDisplayed(test) : true;
 
@@ -202,47 +244,53 @@ define([
             var onView = options.onView || noop;
 
             function render(templateFn) {
-                var template = templateFn || this.options.template;
-                var component = $.create(template(this));
+                return getCopy(options.useTailoredCopyForRegulars).then(function (copy) {
+                    var template = templateFn || this.options.template;
+                    return template(this, copy);
+                }.bind(this)).then(function(template) {
+                    var component = $.create(template);
 
-                mediator.emit('register:begin', trackingCampaignId);
-                return fastdom.write(function () {
-                    var targets = [];
+                    mediator.emit('register:begin', trackingCampaignId);
 
-                    if (!options.insertAtSelector) {
-                        targets = getTargets('.submeta', false);
-                    } else {
-                        targets = getTargets(options.insertAtSelector, options.insertMultiple);
-                    }
+                    return fastdom.write(function () {
+                        var targets = [];
 
-                    if (targets.length > 0) {
-                        if (options.insertAfter) {
-                            component.insertAfter(targets);
+                        if (!options.insertAtSelector) {
+                            targets = getTargets('.submeta', false);
                         } else {
-                            component.insertBefore(targets);
+                            targets = getTargets(options.insertAtSelector, options.insertMultiple);
                         }
 
-                        mediator.emit(test.insertEvent, component);
-                        onInsert(component);
+                        if (targets.length > 0) {
+                            if (options.insertAfter) {
+                                component.insertAfter(targets);
+                            } else {
+                                component.insertBefore(targets);
+                            }
 
-                        component.each(function (element) {
-                            // top offset of 18 ensures view only counts when half of element is on screen
-                            var elementInView = ElementInView(element, window, { top: 18 });
+                            mediator.emit(test.insertEvent, component);
+                            onInsert(component);
 
-                            elementInView.on('firstview', function () {
-                                viewLog.logView(test.id);
-                                mediator.emit(test.viewEvent);
-                                mediator.emit('register:end', trackingCampaignId);
-                                onView(this);
+                            component.each(function (element) {
+                                // top offset of 18 ensures view only counts when half of element is on screen
+                                var elementInView = ElementInView(element, window, { top: 18 });
+
+                                elementInView.on('firstview', function () {
+                                    viewLog.logView(test.id);
+                                    mediator.emit(test.viewEvent);
+                                    mediator.emit('register:end', trackingCampaignId);
+                                    onView(this);
+                                });
                             });
-                        });
-                    }
-                }.bind(this));
+                        }
+                    }.bind(this));
+                });
             }
 
-            return (typeof options.test === 'function') ? options.test(render.bind(this)) : render.apply(this);
+            return (typeof options.test === 'function') ? options.test(render.bind(this), this) : render.apply(this);
         };
 
+        this.registerIframeListener();
         this.registerListener('impression', 'impressionOnInsert', test.insertEvent, options);
         this.registerListener('success', 'successOnView', test.viewEvent, options);
     }
@@ -261,7 +309,6 @@ define([
         return base + '?' + url.constructQuery(params);
     };
 
-
     ContributionsABTestVariant.prototype.contributionsURLBuilder = function(codeModifier) {
         return this.getURL(contributionsBaseURL, codeModifier(this.options.campaignCode));
     };
@@ -278,6 +325,26 @@ define([
             }).bind(this);
         }
     };
+
+    ContributionsABTestVariant.prototype.registerIframeListener = function() {
+        if (!this.options.usesIframe) return;
+
+        window.addEventListener('message', function(message) {
+            var iframe = document.getElementById(this.options.iframeId);
+
+            if (iframe) {
+                try {
+                    var data = JSON.parse(message.data);
+
+                    if (data.type === 'set-height' && data.value) {
+                        iframe.style.height = data.value + 'px';
+                    }
+                } catch (e) {
+                    return;
+                }
+            }
+        }.bind(this));
+    }
 
     function noop() {}
 
@@ -296,7 +363,9 @@ define([
                 return new ContributionsABTest(test);
             };
         },
-
-        variantBuilderFactory: variantBuilderFactory
+        getTestimonialBlock: getTestimonialBlock,
+        variantBuilderFactory: variantBuilderFactory,
+        daysSinceLastContribution: daysSinceLastContribution,
+        isContributor: isContributor
     };
 });

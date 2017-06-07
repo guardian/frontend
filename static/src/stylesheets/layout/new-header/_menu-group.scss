@@ -1,44 +1,65 @@
 .menu-group {
-    $spacing-left-small: $gs-gutter * 2 + $gs-gutter / 2;
-    $spacing-left-medium: $gs-gutter * 2 + $gs-gutter;
-
+    box-sizing: border-box;
     color: #ffffff;
     display: flex;
     font-size: 18px;
     flex-wrap: wrap;
     list-style: none;
     margin: 0;
-    padding: 0 0 $gs-baseline $spacing-left-small;
+    padding: 0 0 $gs-baseline;
 
-    @include mq(tablet) {
-        padding-left: $spacing-left-medium;
+    @include mq(desktop) {
+        color: $news-support-1;
+        display: flex;
+        flex-direction: column;
     }
 
-    // make these lists to start at the left side
-    &--secondary,
-    &--lowlight {
-        margin-left: -$spacing-left-small;
-
-        @include mq(tablet) {
-            margin-left: -$spacing-left-medium;
+    [aria-expanded='false'] ~ & {
+        @include mq($until: desktop) {
+            display: none;
         }
+    }
+
+    [aria-expanded='true'] ~ & {
+        margin-bottom: -1px;
     }
 }
 
 .menu-group--primary {
     color: $news-support-1;
     padding-top: 0;
+
+    @include mq(desktop) {
+        color: $news-support-1;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        margin-bottom: $gs-row-height * 2;
+        order: 1;
+        width: gs-span(10);
+    }
 }
 
 .menu-group--secondary {
     background-color: darken($guardian-brand-dark, 4%);
     margin-top: 0;
     padding-top: 0;
+
+    @include mq(desktop) {
+        background-color: transparent;
+    }
 }
 
-.menu-group--highlight {
+.menu-group--editions {
     color: $guardian-brand-dark;
     background-color: $news-main-2;
+
+    @include mq(desktop) {
+        background-color: transparent;
+        color: $news-support-1;
+        flex-direction: row;
+        order: 4;
+        width: gs-span(4);
+    }
 
     .menu-item:last-child .menu-group {
         margin-bottom: -$gs-baseline;
@@ -48,4 +69,25 @@
 .menu-group--lowlight {
     background-color: darken($news-main-2, 10%);
     color: $guardian-brand-dark;
+
+    @include mq(desktop) {
+        background-color: transparent;
+        color: $news-support-1;
+        flex-direction: row;
+    }
+}
+
+.menu-group--footer {
+    @include mq(desktop) {
+        order: 2;
+        padding-left: $gs-gutter / 2;
+        width: gs-span(2);
+    }
+}
+
+.menu-group--search {
+    @include mq(desktop) {
+        order: 3;
+        width: gs-span(8);
+    }
 }

@@ -2,7 +2,7 @@
 import config from 'lib/config';
 import detect from 'lib/detect';
 import { local } from 'lib/storage';
-import userFeatures from 'projects/commercial/modules/user-features';
+import userFeatures from 'commercial/modules/user-features';
 
 const adblockInUse = (): Promise<boolean> => detect.adblockInUse;
 

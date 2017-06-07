@@ -1,4 +1,5 @@
 @import model.{Article, LiveBlogPage, LatestBlock}
+@import views.support.Commercial.{shouldShowAds}
 
 @(model: LiveBlogPage)(implicit request: RequestHeader, context: _root_.model.ApplicationContext)
 
@@ -11,7 +12,7 @@
         @views.html.liveblog.liveBlogBlocks(blockGroup, article, timezone, amp = true)
 
         @* Add advert every 5 blog posts, up to a maximum of 8 *@
-        @if(blockGroup.length == 5 && index < 8) {
+        @if(shouldShowAds(model) && blockGroup.length == 5 && index < 8) {
             <div id="amp-ad-@index" data-sort-time="1" class="block amp-ad-container amp-ad-container--live-blog">
                 <amp-ad width="300" height="250" type="doubleclick"
                 data-loading-strategy="prefer-viewability-over-views"

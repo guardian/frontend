@@ -10,7 +10,7 @@ import model._
 import model.pressed.CollectionConfig
 import play.api.mvc.{Action, Controller, RequestHeader}
 import services.CollectionConfigWithId
-import slices.{Fixed, FixedContainers}
+import layout.slices.{Fixed, FixedContainers}
 
 import scala.concurrent.Future
 

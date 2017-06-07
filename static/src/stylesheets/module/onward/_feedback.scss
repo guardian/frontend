@@ -1,17 +1,23 @@
 
-.feedback__form {
+.feedback__blurb {
     border: 0;
     outline: none;
     display: none;
+    background-color: $news-support-1;
+    padding: 10px;
 }
 
-.feedback__form--selected {
+.feedback__blurb--selected {
     display: block;
 }
 
 .feedback__element {
     margin-top: $gs-baseline * 2;
     margin-bottom: $gs-baseline * 2;
+}
+
+.feedback__element input:disabled, .feedback__element textarea:disabled, .feedback__element button:disabled {
+    opacity: .5;
 }
 
 .feedback__entry {

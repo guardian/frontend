@@ -7,7 +7,7 @@ import model.pressed.CollectionConfig
 import model.{ApplicationContext, Cached, FrontProperties, RelatedContentItem}
 import play.api.mvc.{Action, Controller, RequestHeader}
 import services.CollectionConfigWithId
-import slices.{Fixed, FixedContainers}
+import layout.slices.{Fixed, FixedContainers}
 
 class MostViewedAudioController(mostViewedAudioAgent: MostViewedAudioAgent)(implicit context: ApplicationContext) extends Controller with Logging with ExecutionContexts {
   def renderMostViewed() = Action { implicit request =>

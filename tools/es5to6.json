@@ -1,11 +1,6 @@
 {
-  "Francis Carr": [
-    "projects/commercial/modules/creatives/fabric-expanding-v1.js",
-    "projects/common/modules/video/events.js",
-    "projects/commercial/modules/third-party-tags/krux.js"
-  ],
+  "Francis Carr": [],
   "Jon Norman": [
-    "projects/commercial/modules/creatives/fabric-video.js",
     "projects/commercial/modules/creatives/frame.js",
     "projects/commercial/modules/creatives/revealer.js",
     "projects/commercial/modules/creatives/scrollable-mpu-v2.js"
@@ -13,7 +8,6 @@
   "Regis Kuckaertz": [],
   "Richard Nguyen": [],
   "Kate Whalen": [
-    "projects/commercial/modules/messenger.js",
     "projects/commercial/modules/messenger/background.js",
     "projects/commercial/modules/messenger/click.js",
     "projects/commercial/modules/messenger/dfp-origin.js",
@@ -39,7 +33,6 @@
     "projects/common/modules/check-dispatcher.js"
   ],
   "Simon Adcock": [
-    "bootstraps/enhanced/liveblog.js",
     "bootstraps/enhanced/media/main.js",
     "bootstraps/enhanced/media/video-player.js"
   ],
@@ -68,7 +61,6 @@
     "projects/common/modules/crosswords/anagram-helper/clue-input.js"
   ],
   "GHaberis": [
-    "projects/admin/modules/abtests/abtest-report-item.js",
     "projects/admin/modules/abtests/audience-item.js",
     "projects/admin/modules/abtests/audience.js",
     "projects/admin/modules/abtests/participation-item.js",
@@ -95,7 +87,6 @@
     "projects/common/modules/article/membership-events.js",
     "projects/common/modules/article/rich-links.js",
     "projects/common/modules/article/space-filler.js",
-    "projects/common/modules/article/spacefinder.js",
     "projects/common/modules/article/twitter.js",
     "projects/common/modules/asyncCallMerger.js",
     "projects/common/modules/atoms/quiz.js",
@@ -232,7 +223,5 @@
   "Santiago Villa Fernandez": [
     "projects/common/modules/video/more-in-series-container.js"
   ],
-  "Jamie Byers": [
-    "bootstraps/enhanced/newsletters.js"
-  ]
+  "Jamie Byers": []
 }

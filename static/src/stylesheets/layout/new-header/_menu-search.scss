@@ -1,8 +1,19 @@
 .menu-search {
+    box-sizing: border-box;
+    margin-left: 13px;
     padding-bottom: $gs-baseline * 2;
-    padding-left: $gs-gutter / 2;
     padding-right: $veggie-burger-medium / 2 + $gs-gutter / 2;
     position: relative;
+
+    @include mq(tablet) {
+        margin-left: 22px;
+    }
+
+    @include mq(desktop) {
+        margin-left: 0;
+        margin-right: $gs-gutter;
+        width: 100%;
+    }
 }
 
 .menu-search__search-box {
@@ -13,9 +24,19 @@
     font-size: 20px;
     height: $gs-row-height;
     max-width: gs-span(4);
-    padding-left: ($gs-gutter * 2 + $gs-gutter / 2) - $gs-gutter / 2;
+    padding-left: 38px;
     vertical-align: middle;
     width: 100%;
+
+    @include mq(tablet) {
+        padding-left: 40px;
+    }
+
+    @include mq(desktop) {
+        height: 54px;
+        max-width: none;
+        padding-left: 54px;
+    }
 
     &::placeholder {
         color: $news-support-1;
@@ -33,11 +54,21 @@
 }
 
 .menu-search__submit {
-    left: $gs-gutter * 1.1;
+    left: 10px;
     position: absolute;
-    top: $gs-baseline / 1.3;
+    top: 10px;
 
-    > .inline-search-36 {
+    @include mq(desktop) {
+        left: 12px;
+        top: 12px;
+    }
+
+    .inline-search-36__svg {
         fill: $news-support-2;
+
+        @include mq(desktop) {
+            height: 32px;
+            width: 32px;
+        }
     }
 }

@@ -272,7 +272,7 @@ object TravelOffer {
       fromPrice = parseDouble(text("@fromprice")),
       earliestDeparture = DateTime.parse(text("@earliestdeparture")),
       keywordIdSuffixes = Nil,
-      countries = tagText("Country"),
+      countries = tagText("Country").distinct,
       category = tagText("Holiday Type").headOption,
       tags = Nil,
       duration = parseInt(text("@duration")),

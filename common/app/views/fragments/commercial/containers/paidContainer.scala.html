@@ -16,8 +16,10 @@
         optStamp = Some(stamp),
         optBadge = if(containerModel.isSingleSponsorContainer){ Some(logoSlot) } else { None }
     ){
-        <a class="adverts__logo u-text-hyphenate"
-           href="/@containerModel.content.targetUrl">@containerModel.content.title</a>
+        @containerModel.content.targetUrl match {
+            case None => { <span tabindex="0">@containerModel.content.title</span> }
+            case Some(href) => { <a class="adverts__logo u-text-hyphenate" href="/@href">@containerModel.content.title</a> }
+        }
     }{
 
         @containerModel.layoutName match {

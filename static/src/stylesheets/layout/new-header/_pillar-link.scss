@@ -18,11 +18,12 @@
     }
 
     @include mq(tablet) {
-        font-size: 32px;
+        font-size: 28px;
     }
 
     &:focus,
     &:hover {
+        color: #ffffff;
         text-decoration: none;
     }
 }
@@ -40,5 +41,9 @@
         border-bottom: $gs-baseline / 2 solid $subnav-grey;
         border-left: $gs-baseline / 2 solid transparent;
         border-right: $gs-baseline / 2 solid transparent;
+
+        @include mq(desktop) {
+            display: none;
+        }
     }
 }

@@ -1,19 +1,31 @@
 // @flow
 
-import fastdom from 'fastdom';
+import detect from 'lib/detect';
+import fastdom from 'lib/fastdom-promise';
 import { scrollToElement } from 'lib/scroller';
+import { addEventListener } from 'lib/events';
 import userAccount from 'common/modules/navigation/user-account';
+import debounce from 'lodash/functions/debounce';
 
 const enhanced = {};
 
 const getMenu = (): ?HTMLElement => document.getElementById('main-menu');
 
+const getSectionToggleMenuItem = (section: HTMLElement): ?HTMLElement => {
+    const children = [...section.children];
+    return children.find(child => child.classList.contains('menu-item__title'));
+};
+
 const closeSidebarSection = (section: HTMLElement): void => {
-    section.removeAttribute('open');
+    const toggle = getSectionToggleMenuItem(section);
+
+    if (toggle) {
+        toggle.setAttribute('aria-expanded', 'false');
+    }
 };
 
 const closeAllSidebarSections = (exclude?: Node): void => {
-    const sections = [...document.querySelectorAll('.js-close-nav-list')];
+    const sections = [...document.querySelectorAll('.js-navigation-item')];
 
     sections.forEach(section => {
         if (section !== exclude) {
@@ -26,7 +38,11 @@ const openSidebarSection = (
     section: HTMLElement,
     options?: Object = {}
 ): void => {
-    section.setAttribute('open', '');
+    const toggle = getSectionToggleMenuItem(section);
+
+    if (toggle) {
+        toggle.setAttribute('aria-expanded', 'true');
+    }
 
     if (options.scrollIntoView === true) {
         scrollToElement(section, 0, 'easeInQuad', getMenu());
@@ -34,6 +50,24 @@ const openSidebarSection = (
 
     // the sections should behave like an accordion
     closeAllSidebarSections(section);
+};
+
+const isSidebarSectionClosed = (section: HTMLElement): boolean => {
+    const toggle = getSectionToggleMenuItem(section);
+
+    if (toggle) {
+        return toggle.getAttribute('aria-expanded') === 'false';
+    }
+
+    return true;
+};
+
+const toggleSidebarSection = (section: HTMLElement): void => {
+    if (isSidebarSectionClosed(section)) {
+        openSidebarSection(section);
+    } else {
+        closeSidebarSection(section);
+    }
 };
 
 const toggleSidebar = (): void => {
@@ -70,6 +104,55 @@ const toggleSidebar = (): void => {
     const update = () => {
         const expandedAttr = isOpen ? 'false' : 'true';
         const hiddenAttr = isOpen ? 'true' : 'false';
+        const haveToCalcTogglePosition = (): boolean =>
+            detect.isBreakpoint({
+                min: 'tablet',
+                max: 'desktop',
+            });
+        const enhanceMenuMargin = (): Promise<void> => {
+            const body = document.body;
+
+            if (!body || !haveToCalcTogglePosition()) {
+                return Promise.resolve();
+            }
+
+            return fastdom
+                .read(() => {
+                    const docRect = body.getBoundingClientRect();
+                    const rect = menuToggle.getBoundingClientRect();
+                    return docRect.right - rect.right + rect.width / 2;
+                })
+                .then(marginRight =>
+                    fastdom.write(() => {
+                        menu.style.marginRight = `${marginRight}px`;
+                    })
+                );
+        };
+        const debouncedMenuEnhancement = debounce(enhanceMenuMargin, 200);
+        const removeEnhancedMenuMargin = (): Promise<void> =>
+            fastdom.write(() => {
+                menu.style.marginRight = '';
+            });
+
+        /*
+            Between tablet and desktop the veggie-burger does not have a fixed
+            margin to the right. Therefore we have to calculate it's midpoint
+            and apply it as a margin to the menu.
+            The listeners have to be applied always, because the device
+            orientation could change and force the layout into the next
+            breakpoint.
+        */
+        if (!isOpen) {
+            enhanceMenuMargin().then(() => {
+                addEventListener(window, 'resize', debouncedMenuEnhancement, {
+                    passive: true,
+                });
+            });
+        } else {
+            removeEnhancedMenuMargin().then(() => {
+                window.removeEventListener('resize', debouncedMenuEnhancement);
+            });
+        }
 
         menuToggle.setAttribute(
             'data-link-name',
@@ -149,10 +232,10 @@ const toggleSidebarWithOpenSection = () => {
     const subnav = document.querySelector('.subnav__list');
     const pillarTitle = (subnav && subnav.dataset.pillarTitle) || '';
     const targetSelector = `.js-navigation-item[data-section-name="${pillarTitle}"]`;
-    const target = menu && menu.querySelector(targetSelector);
+    const section = menu && menu.querySelector(targetSelector);
 
-    if (target) {
-        openSidebarSection(target.children[0], { scrollIntoView: true });
+    if (section) {
+        openSidebarSection(section, { scrollIntoView: true });
     }
 
     toggleSidebar();
@@ -164,12 +247,16 @@ const addEventHandler = (): void => {
 
     if (menu) {
         menu.addEventListener('click', (event: Event) => {
+            const selector = '.js-navigation-toggle';
             const target: HTMLElement = (event.target: any);
-            const parent: HTMLElement = (target.parentNode: any);
 
-            if (target.matches('.js-navigation-button') && parent) {
-                event.stopPropagation();
-                closeAllSidebarSections(parent);
+            if (target.matches(selector)) {
+                const parent: HTMLElement = (target.parentNode: any);
+
+                if (parent) {
+                    event.preventDefault();
+                    toggleSidebarSection(parent);
+                }
             }
         });
     }
