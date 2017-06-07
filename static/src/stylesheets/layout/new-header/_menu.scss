@@ -70,6 +70,12 @@
 .menu__inner {
     box-sizing: border-box;
 
+    @include mq($until: desktop) {
+        &.gs-container {
+            max-width: none;
+        }
+    }
+
     @include mq(desktop) {
         display: flex;
         flex-direction: row;

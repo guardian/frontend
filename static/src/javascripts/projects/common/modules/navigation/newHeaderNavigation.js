@@ -11,12 +11,21 @@ const enhanced = {};
 
 const getMenu = (): ?HTMLElement => document.getElementById('main-menu');
 
+const getSectionToggleMenuItem = (section: HTMLElement): ?HTMLElement => {
+    const children = [...section.children];
+    return children.find(child => child.classList.contains('menu-item__title'));
+};
+
 const closeSidebarSection = (section: HTMLElement): void => {
-    section.removeAttribute('open');
+    const toggle = getSectionToggleMenuItem(section);
+
+    if (toggle) {
+        toggle.setAttribute('aria-expanded', 'false');
+    }
 };
 
 const closeAllSidebarSections = (exclude?: Node): void => {
-    const sections = [...document.querySelectorAll('.js-close-nav-list')];
+    const sections = [...document.querySelectorAll('.js-navigation-item')];
 
     sections.forEach(section => {
         if (section !== exclude) {
@@ -29,7 +38,11 @@ const openSidebarSection = (
     section: HTMLElement,
     options?: Object = {}
 ): void => {
-    section.setAttribute('open', '');
+    const toggle = getSectionToggleMenuItem(section);
+
+    if (toggle) {
+        toggle.setAttribute('aria-expanded', 'true');
+    }
 
     if (options.scrollIntoView === true) {
         scrollToElement(section, 0, 'easeInQuad', getMenu());
@@ -37,6 +50,24 @@ const openSidebarSection = (
 
     // the sections should behave like an accordion
     closeAllSidebarSections(section);
+};
+
+const isSidebarSectionClosed = (section: HTMLElement): boolean => {
+    const toggle = getSectionToggleMenuItem(section);
+
+    if (toggle) {
+        return toggle.getAttribute('aria-expanded') === 'false';
+    }
+
+    return true;
+};
+
+const toggleSidebarSection = (section: HTMLElement): void => {
+    if (isSidebarSectionClosed(section)) {
+        openSidebarSection(section);
+    } else {
+        closeSidebarSection(section);
+    }
 };
 
 const toggleSidebar = (): void => {
@@ -201,10 +232,10 @@ const toggleSidebarWithOpenSection = () => {
     const subnav = document.querySelector('.subnav__list');
     const pillarTitle = (subnav && subnav.dataset.pillarTitle) || '';
     const targetSelector = `.js-navigation-item[data-section-name="${pillarTitle}"]`;
-    const target = menu && menu.querySelector(targetSelector);
+    const section = menu && menu.querySelector(targetSelector);
 
-    if (target) {
-        openSidebarSection(target.children[0], { scrollIntoView: true });
+    if (section) {
+        openSidebarSection(section, { scrollIntoView: true });
     }
 
     toggleSidebar();
@@ -219,9 +250,9 @@ const addEventHandler = (): void => {
             const target: HTMLElement = (event.target: any);
             const parent: HTMLElement = (target.parentNode: any);
 
-            if (target.matches('.js-navigation-button') && parent) {
-                event.stopPropagation();
-                closeAllSidebarSections(parent);
+            if (target.matches('.js-navigation-toggle') && parent) {
+                event.preventDefault();
+                toggleSidebarSection(parent);
             }
         });
     }

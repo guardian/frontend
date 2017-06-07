@@ -3,27 +3,27 @@
 @import common.{Edition, LinkTo}
 @import views.support.RenderClasses
 
-<li class="menu-item">
-    <details>
-        <summary class="menu-item__title"
-                 data-link-name="nav2 : edition picker">
-            <i class="menu-item__toggle"></i>
-            @Edition(request).displayName
-        </summary>
+<li class="menu-item js-navigation-item">
+    <button class="menu-item__title js-navigation-toggle"
+            data-link-name="nav2 : edition picker"
+            aria-haspopup="true"
+            aria-expanded="true">
+        <i class="menu-item__toggle"></i>
+        @Edition(request).displayName
+    </button>
 
-        <ul class="menu-group menu-group--lowlight">
-            @Edition.all.map { edition =>
-                 @if((edition != Edition(request))) {
-                    <li class="menu-item">
-                        <a data-link-name="nav2 : edition-picker: @edition.id"
-                            href="@LinkTo(s"/preference/edition/${edition.id.toLowerCase}")"
-                            class="menu-item__title">
-                            <span class="u-h">switch to the </span>
-                            <span>@edition.displayName</span>
-                        </a>
-                    </li>
-                }
+    <ul class="menu-group menu-group--lowlight">
+        @Edition.all.map { edition =>
+             @if((edition != Edition(request))) {
+                <li class="menu-item">
+                    <a data-link-name="nav2 : edition-picker: @edition.id"
+                        href="@LinkTo(s"/preference/edition/${edition.id.toLowerCase}")"
+                        class="menu-item__title">
+                        <span class="u-h">switch to the </span>
+                        <span>@edition.displayName</span>
+                    </a>
+                </li>
             }
-        </ul>
-    </details>
+        }
+    </ul>
 </li>
