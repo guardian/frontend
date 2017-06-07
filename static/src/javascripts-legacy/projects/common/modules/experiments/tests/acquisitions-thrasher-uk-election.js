@@ -16,7 +16,11 @@ define([
 
     var UK_ELECTION_THRASHER_VIEW_COUNTER = "gu.uk-election-thrasher.views";
 
-    var UK_ELECTION_THRASHER_BLOCK_ELEMENT = "election-supporters__wrapper";
+    var UK_ELECTION_THRASHER_BLOCK_ELEMENT = "election-supporters__container";
+
+    // Default is used for when the AB test can't be run.
+    // The instance we know about is Safari in incognito mode, where local storage is not available.
+    var UK_ELECTION_THRASHER_DEFAULT_CLASS_LIST = "election-supporters__container--ask election-supporters__container--0";
 
     function getThrasherViewedCount() {
         return parseInt(storage.local.get(UK_ELECTION_THRASHER_VIEW_COUNTER)) || 0;
@@ -85,6 +89,7 @@ define([
                     id: 'control',
 
                     test: function() {
+                        $ukElectionThrasher.removeClass(UK_ELECTION_THRASHER_DEFAULT_CLASS_LIST);
                         $ukElectionThrasher.addClass(getReaderSpecificUkElectionThrasherClassList())
                     },
 
