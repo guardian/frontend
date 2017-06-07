@@ -195,6 +195,36 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
+  val MembershipEngagementBannerBlockUK = Switch(
+    SwitchGroup.Commercial,
+    "membership-engagement-banner-block-uk",
+    "Prevent the engagement banner from showing on UK fronts",
+    owners = Seq(Owner.withGithub("desbo")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
+  val MembershipEngagementBannerBlockUS = Switch(
+    SwitchGroup.Commercial,
+    "membership-engagement-banner-block-us",
+    "Prevent the engagement banner from showing on US fronts",
+    owners = Seq(Owner.withGithub("desbo")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
+  val MembershipEngagementBannerBlockAU = Switch(
+    SwitchGroup.Commercial,
+    "membership-engagement-banner-block-au",
+    "Prevent the engagement banner from showing on AU fronts",
+    owners = Seq(Owner.withGithub("desbo")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
   val AdBlockMessage = Switch(
     SwitchGroup.Commercial,
     "adblock",
