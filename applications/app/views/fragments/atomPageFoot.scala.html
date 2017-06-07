@@ -1,0 +1,8 @@
+@import model.AtomPage
+
+@(page: AtomPage)(implicit request: RequestHeader, context: model.ApplicationContext)
+
+@if(page.withJavaScript) {
+  @fragments.atomJSNonBlocking(page)
+  @fragments.analytics.base(page)
+}

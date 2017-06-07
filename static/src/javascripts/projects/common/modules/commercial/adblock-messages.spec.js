@@ -1,12 +1,12 @@
 // @flow
 
-import { isPayingMember } from 'projects/commercial/modules/user-features';
+import { isPayingMember } from 'commercial/modules/user-features';
 import detect from 'lib/detect';
 import config from 'lib/config';
 import { local } from 'lib/storage';
 import { showAdblockMsg } from './adblock-messages';
 
-jest.mock('projects/commercial/modules/user-features', () => ({
+jest.mock('commercial/modules/user-features', () => ({
     isPayingMember: jest.fn(),
 }));
 

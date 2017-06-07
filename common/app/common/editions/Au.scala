@@ -37,7 +37,7 @@ object Au extends Edition(
       NavItem(home),
       NavItem(australia),
       NavItem(world, Seq(uk, us, asia, europeNews, americas, africa, middleEast)),
-      NavItem(opinion),
+      NavItem(opinion, Seq(letters, editorials)),
       NavItem(australiaPolitics),
       NavItem(sport, Seq(australiaSport, afl, nrl, aLeague, football, cricket, rugbyunion, tennis, cycling, boxing)),
       NavItem(football, aLeague :: footballNav.toList),
@@ -52,7 +52,8 @@ object Au extends Edition(
       NavItem(science),
       NavItem(membership),
       NavItem(crosswords, crosswordsLocalNav),
-      NavItem(video)
+      NavItem(video, Seq(podcast)),
+      NavItem(digitalNewspaperArchive)
     )
   }
 
