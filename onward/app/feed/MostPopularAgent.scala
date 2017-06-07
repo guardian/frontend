@@ -68,7 +68,7 @@ class GeoMostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi
             .showSection(true)
             .showFields("isInappropriateForSponsorship"))
           .map(_.content
-            .filterNot { content => BrandingFinder.findBranding(content, countryCode).exists(_.isPaid)}
+            .filterNot { content => BrandingFinder.findBranding(countryCode)(content).exists(_.isPaid)}
             .map(RelatedContentItem(_)))
           .recover {
             case NonFatal(e)  =>
