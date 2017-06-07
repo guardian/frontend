@@ -29,7 +29,7 @@ define([
                     minDaysBetweenViews: 0
                 },
 
-                useTailoredCopy: true,
+                useTailoredCopyForRegulars: true,
                 insertAtSelector: '.submeta',
                 successOnView: true
             }

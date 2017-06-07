@@ -27,7 +27,7 @@ define([
             {
                 id: 'control',
                 isUnlimited : true,
-                useTailoredCopy: true
+                useTailoredCopyForRegulars: true
             }
         ]
     });

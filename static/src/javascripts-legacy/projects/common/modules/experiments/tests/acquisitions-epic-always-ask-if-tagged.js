@@ -29,7 +29,7 @@ define([
                 id: 'control',
                 isUnlimited : true,
                 successOnView: true,
-                useTailoredCopy: true
+                useTailoredCopyForRegulars: true
             }
         ]
     });

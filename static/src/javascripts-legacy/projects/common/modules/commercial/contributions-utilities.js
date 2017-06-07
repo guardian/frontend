@@ -244,7 +244,7 @@ define([
             var onView = options.onView || noop;
 
             function render(templateFn) {
-                return getCopy(options.useTailoredCopy).then(function (copy) {
+                return getCopy(options.useTailoredCopyForRegulars).then(function (copy) {
                     var template = templateFn || this.options.template;
                     return template(this, copy);
                 }.bind(this)).then(function(template) {
