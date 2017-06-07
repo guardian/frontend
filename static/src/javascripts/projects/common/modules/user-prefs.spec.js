@@ -1,5 +1,5 @@
 // @flow
-import userPrefs from 'projects/common/modules/user-prefs';
+import userPrefs from 'common/modules/user-prefs';
 import { local } from 'lib/storage';
 
 class LocalStorageMock {
