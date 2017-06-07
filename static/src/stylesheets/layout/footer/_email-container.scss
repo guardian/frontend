@@ -1,0 +1,27 @@
+.footer__email-container {
+    margin-bottom: $gs-baseline;
+    border-bottom: 1px solid $footer-line-colour;
+
+    @include mq(leftCol) {
+        float: left;
+        padding-right: 0;
+        padding-left: 0;
+        border: 0;
+        width: gs-span(4);
+        margin-right: gs-span(2) + $gs-gutter * 2;
+    }
+
+    .button {
+        border-color: $neutral-2;
+
+        &:hover {
+            border-color: $neutral-4;
+        }
+
+        @include mq(tablet) {
+            display: inline-block;
+            margin-bottom: $gs-baseline;
+            width: auto;
+        }
+    }
+}
