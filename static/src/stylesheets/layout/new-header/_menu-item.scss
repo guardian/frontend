@@ -83,8 +83,12 @@
 
     &:hover,
     &:focus {
-        color: #ffffff;
         text-decoration: none;
+
+        // TODO: maybe unify?
+        @include mq(desktop) {
+            color: #ffffff;
+        }
     }
 
     > * {
