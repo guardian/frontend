@@ -5,7 +5,7 @@ import identity from 'common/modules/identity/api';
 import { refresh } from './user-features.js';
 
 jest.mock('projects/common/modules/identity/api', () => jest.fn());
-jest.mock('lib/fetch-json', () => jest.fn(() => Promise.resolve()));
+jest.mock('lib/fetch-json', () => jest.fn());
 const fetchJsonSpy: any = require('lib/fetch-json');
 
 jest.mock('lib/cookies', () => ({
@@ -45,6 +45,8 @@ describe('Refreshing the features data', () => {
     describe('If user signed in', () => {
         beforeEach(() => {
             identity.isUserLoggedIn = () => true;
+            jest.resetAllMocks();
+            fetchJsonSpy.mockReturnValue(Promise.resolve());
         });
 
         it('Performs an update if the user has missing data', () => {
