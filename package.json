@@ -29,7 +29,7 @@
   },
   "devDependencies": {
     "amd-to-es6": "^0.1.0",
-    "amphtml-validator": "^1.0.10",
+    "amphtml-validator": "^1.0.20",
     "any-observable": "^0.2.0",
     "autoprefixer": "^7.1.1",
     "aws-sdk": "~2.0.0-rc4",
