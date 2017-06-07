@@ -59,7 +59,7 @@ object Us extends Edition(
       NavItem(us),
       NavItem(usPolitics),
       NavItem(world, worldLocalNav),
-      NavItem(opinion),
+      NavItem(opinion, Seq(letters, editorials)),
       NavItem(sports, Seq(soccer, mls, nfl, mlb, nba, nhl)),
       NavItem(soccer, footballNav),
       NavItem(technology),

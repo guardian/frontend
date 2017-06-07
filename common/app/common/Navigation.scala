@@ -227,7 +227,7 @@ trait Navigation {
 
   // Guardian newspaper
   val todaysPaper = SectionLink("todayspaper", "today's paper", "Today's Paper", "/theguardian")
-  val letters = SectionLink("todayspaper", "letters", "Letters", "/theguardian/mainsection/editorialsandreply")
+  val letters = SectionLink("todayspaper", "letters", "Letters", "/tone/letters")
   val editorials = SectionLink("todayspaper", "editorials", "Editorials", "/tone/editorials")
   val obituaries = SectionLink("todayspaper", "obituaries", "Obituaries", "/tone/obituaries")
   val g2 = SectionLink("todayspaper", "g2", "G2", "/theguardian/g2")
