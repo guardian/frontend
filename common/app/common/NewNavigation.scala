@@ -13,6 +13,7 @@ object NewNavigation {
 
   val PrimaryLinks = List(headlines, opinion, sport, culture, lifestyle)
   val topLevelSections = List(News, Opinion, Sport, Arts, Life)
+  val brandExtensions = List(jobs, dating, holidays, ukMasterClasses)
 
   def getMembershipLinks(edition: Edition): NavLinkLists = {
     val editionId = edition.id.toLowerCase()

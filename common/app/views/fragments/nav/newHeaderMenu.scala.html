@@ -1,6 +1,6 @@
 @()(implicit request: RequestHeader)
 
-@import common.{ NewNavigation, LinkTo, Edition }
+@import common.{ NewNavigation, LinkTo, Edition, NavLink }
 @import conf.switches.Switches.SearchSwitch
 
 @sectionList(topLevelSection: NewNavigation.EditionalisedNavigationSection) = {
@@ -36,6 +36,13 @@
             </ul>
         </li>
     }
+}
+
+@brandExtension(item: NavLink) = {
+    <li class="menu-brand-extensions__list-item">
+        <a href="@LinkTo { @item.url }"
+           class="menu-brand-extensions-item">@{item.title}</a>
+    </li>
 }
 
 <label for="main-menu-toggle"
@@ -154,25 +161,9 @@
             ))
 
             <ul class="menu-brand-extensions__list">
-                <li class="menu-brand-extensions__list-item">
-                    <a href="#"
-                       class="menu-brand-extensions-item">Jobs</a>
-                </li>
-
-                <li class="menu-brand-extensions__list-item">
-                    <a href="#"
-                       class="menu-brand-extensions-item">Dating</a>
-                </li>
-
-                <li class="menu-brand-extensions__list-item">
-                    <a href="#"
-                       class="menu-brand-extensions-item">Holidays</a>
-                </li>
-
-                <li class="menu-brand-extensions__list-item">
-                    <a href="#"
-                       class="menu-brand-extensions-item">Masterclasses</a>
-                </li>
+                @NewNavigation.brandExtensions.map { item =>
+                    @brandExtension(item)
+                }
             </ul>
         </div>
     </div>
