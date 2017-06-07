@@ -24,8 +24,10 @@ const reportError = (
     if (shouldThrow) {
         // Flag to ensure it is not reported to Sentry again via global handlers
         const error = err;
-        error.reported = true;
-        throw error;
+        if (typeof error !== "undefined") {
+            error.reported = true;
+            throw error;
+        }
     }
 };
 
