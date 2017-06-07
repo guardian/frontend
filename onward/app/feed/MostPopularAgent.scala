@@ -68,9 +68,7 @@ class GeoMostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi
             .showSection(true)
             .showFields("isAppropriateForSponsorship"))
           .map(_.content
-            .filterNot { content =>
-              val branding: Option[Branding] = BrandingFinder.findBranding(content, countryCode)
-              branding.exists(_.isPaid)}
+            .filterNot { content => BrandingFinder.findBranding(content, countryCode).exists(_.isPaid)}
             .map(RelatedContentItem(_)))
           .recover {
             case NonFatal(e)  =>
