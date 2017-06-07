@@ -87,6 +87,10 @@
         text-decoration: none;
     }
 
+    > * {
+        pointer-events: none;
+    }
+
     &[data-link-name='nav2 : the guardian app'],
     &[data-link-name='nav2 : facebook'] {
         @include mq($until: desktop) {
@@ -138,7 +142,6 @@
 .menu-item__toggle {
     color: $news-support-2;
     left: 25px;
-    pointer-events: none;
     position: absolute;
 
     @include mq(tablet) {
