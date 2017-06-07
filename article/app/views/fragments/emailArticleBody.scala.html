@@ -7,6 +7,7 @@
 @import fragments.email._
 @import model.liveblog._
 @import model.EmailAddons.EmailContentType
+@import model.content.{MediaAtom, MediaAssetPlatform}
 
 <table class="article-body">
 @defining(page.article) { article =>
@@ -123,6 +124,27 @@
                                     <a href="@linkUrl">
                                         @imgForArticle(imageUrl, data.get("alt"))
                                     </a>
+                                }
+                            }
+                        }
+                    }
+
+                    case ContentAtomBlockElement(atomId) => {
+                        @page.article.content.media.find(_.id == atomId).map { atom: MediaAtom =>
+                            @atom.posterImage.flatMap(EmailVideoImage.bestFor).map { imageUrl =>
+                                @atom.assets.map { asset =>
+                                    @row(Seq("padded")) {
+                                        @asset.platform match {
+                                            case MediaAssetPlatform.Youtube => {
+                                                <a href="https://www.youtube.com/watch?v=@asset.id">
+                                                @imgForArticle(imageUrl, Some(atom.title))
+                                                </a>
+                                            }
+                                            case _ => {
+                                                @imgForArticle(imageUrl, Some(atom.title))
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         }

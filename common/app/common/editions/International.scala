@@ -110,11 +110,12 @@ object International extends Edition(
       NavItem(science),
       NavItem(guardianProfessional),
       NavItem(observer),
-      NavItem(todaysPaper, Seq(editorialsandletters, obituaries, g2, weekend, theGuide, saturdayreview)),
+      NavItem(todaysPaper, Seq(letters, editorials, obituaries, g2, weekend, theGuide, saturdayreview)),
       NavItem(sundayPaper, Seq(observerComment, observerNewReview, observerMagazine)),
       NavItem(membership),
       NavItem(crosswords, crosswordsLocalNav),
-      NavItem(video)
+      NavItem(video, Seq(podcast)),
+      NavItem(digitalNewspaperArchive)
     )
   }
 

@@ -1,6 +1,7 @@
-$c-footer-background: $multimedia-support-4;
+$c-footer-background: $neutral-1;
 $c-primary-footer-background: $guardian-brand;
 $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff, 90%);
+$footer-line-colour: darken($neutral-2, 20%);
 
 
 /* Elements modifiers specific to the footer
@@ -23,7 +24,6 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
     .hide-in-footer {
         display: none !important;
     }
-
     .global-navigation__section:nth-of-type(2) .global-navigation__title {
         border-top: 0;
     }
@@ -70,55 +70,59 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
     padding-right: $gs-gutter / 2;
     padding-left: $gs-gutter / 2;
 
-    //mobile,phablet,leftcol,wide need $gs-gutter divided by 2, so duplication needed//
-    @include mq($from: tablet, $until: desktop) {
-        padding-right: $gs-gutter / 2;
-        padding-left: $gs-gutter / 2;
+    @include mq(mobileLandscape) {
+        padding-left: $gs-gutter;
+        padding-right: $gs-gutter;
     }
 
     &,
     a {
-        color: $neutral-4;
+        color: $neutral-3;
     }
 }
 
 .colophon {
-    padding-top: $gs-baseline * 2;
-    padding-bottom: $gs-baseline * .5;
+    padding-top: $gs-baseline;
+    padding-bottom: $gs-baseline;
+
+    @include mq(tablet) {
+        padding-bottom: $gs-baseline / 2;
+    }
+}
+
+.colophon__lists-container {
+    @include f-textSans();
+    font-size: 14px;
+    line-height: 14px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    @include mq(leftCol) {
+        max-width: gs-span(8) + $gs-gutter;
+
+        .l-footer__secondary--no-email & {
+            max-width: none;
+        }
+    }
 }
 
 .colophon__list {
     @include clearfix();
-    @include fs-bodyHeading(1, true);
-    @include f-textSans();
     list-style: none;
+    position: relative;
     margin: 0;
 
     @include mq($until: tablet) {
-        @include columns(2, $gs-gutter);
+        padding-right: $gs-gutter / 2;
+        width: calc(50% - 10px);
     }
 
     @include mq(tablet) {
-        box-sizing: border-box;
-        padding-left: $gs-gutter / 2;
-    }
-
-    @include mq($from: tablet, $until: leftCol) {
-        @include columns(3, $gs-gutter / 2);
-    }
-
-    @include mq(desktop) {
-        @include columns(3, $gs-gutter);
-        padding-left: $gs-gutter;
-    }
-
-    @include mq(wide) {
-        padding-right: gs-span(1) + $gs-gutter;
-    }
-
-
-    .l-footer__secondary--no-email & {
-        padding-left: 0;
+        margin: 0 $gs-gutter / 2 $gs-row-height 0;
+        // width fallback for browsers which don't fully support flex
+        width: 20%;
+        flex: 1 0 0;
     }
 
     a {
@@ -126,40 +130,56 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
         padding-bottom: $gs-baseline;
         text-transform: lowercase;
     }
+
+    &:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: -$gs-gutter / 2;
+        width: 1px;
+        display: block;
+        background-color: $footer-line-colour;
+
+        @include mq(tablet) {
+            top: -$gs-baseline;
+            bottom: $gs-baseline;
+        }
+    }
+
+    @include mq($until: tablet) {
+        &:nth-of-type(3) {
+            &:before {
+                content: none;
+            }
+        }
+    }
+
+    @include mq($until: leftCol) {
+        &:first-of-type {
+            &:before {
+                content: none;
+            }
+        }
+    }
 }
 
 .colophon__item {
     box-sizing: border-box;
+    position: relative;
 }
 
 .footer__email-container {
     margin-bottom: $gs-baseline;
-    padding-bottom: $gs-baseline;
-    border-bottom: 1px solid $neutral-2;
-
-    @include mq(tablet) {
-        float: left;
-        border: 0;
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0 $gs-gutter / 2;
-        width: 25%;
-    }
-
-    @include mq(desktop) {
-        padding-right: 0;
-        padding-left: 0;
-        width: gs-span(3);
-    }
+    border-bottom: 1px solid $footer-line-colour;
 
     @include mq(leftCol) {
-        width: gs-span(5);
-        padding-right: gs-span(1);
-    }
-
-    @include mq(wide) {
-        width: gs-span(6);
-        padding-right: gs-span(2);
+        float: left;
+        padding-right: 0;
+        padding-left: 0;
+        border: 0;
+        width: gs-span(4);
+        margin-right: gs-span(2) + $gs-gutter * 2;
     }
 
     .button {
@@ -185,7 +205,7 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
 .l-footer__misc {
     padding-top: $gs-baseline * .5;
     padding-bottom: $gs-baseline * 1.5;
-    border-top: 1px solid $neutral-2;
+    border-top: 1px solid $footer-line-colour;
 }
 
 .really-serious-copyright {
@@ -193,7 +213,7 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
 }
 
 /****************
- * MOBILE FOOTER - TODO: consolidate when desktop design has been done
+ * NEW FOOTER - TODO: consolidate when desktop design has been done
  ****************/
 
 .l-footer {
@@ -230,11 +250,11 @@ $c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff
 .back-to-top__text {
     display: inline-block;
     color: $news-support-1;
-    line-height: 30px;
+    line-height: 32px;
     padding-right: $gs-gutter / 2;
 
     @include mq(mobileMedium) {
-        line-height: 40px;
+        line-height: 43px;
     }
 }
 

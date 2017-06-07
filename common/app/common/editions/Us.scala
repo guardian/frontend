@@ -72,7 +72,8 @@ object Us extends Edition(
       NavItem(science),
       NavItem(media),
       NavItem(crosswords, crosswordsLocalNav),
-      NavItem(video)
+      NavItem(video, Seq(podcast)),
+      NavItem(digitalNewspaperArchive)
     )
   }
 
