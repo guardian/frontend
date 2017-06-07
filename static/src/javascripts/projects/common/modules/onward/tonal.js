@@ -64,11 +64,11 @@ class TonalComponent extends Component {
     }
 
     getEndpoint(): string {
-        return `/container/${tones[this.edition][this.getTone()]}.json`;
+        return `/container/${tones[this.edition][TonalComponent.getTone()]}.json`;
     }
 
     isSupported(): boolean {
-        return this.getTone() in tones[this.edition];
+        return TonalComponent.getTone() in tones[this.edition];
     }
 }
 
