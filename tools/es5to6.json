@@ -182,7 +182,6 @@
     "projects/common/modules/onward/popular.js",
     "projects/common/modules/onward/related.js",
     "projects/common/modules/onward/tech-feedback.js",
-    "projects/common/modules/onward/tonal.js",
     "projects/common/modules/open/cta.js",
     "projects/common/modules/preferences/main.js",
     "projects/commercial/modules/third-party-tags/audience-science-pql.js"
