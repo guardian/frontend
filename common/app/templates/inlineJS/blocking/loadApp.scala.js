@@ -1,7 +1,8 @@
-@()(implicit request: RequestHeader)
 @import conf.Static
 @import conf.Configuration
 @import conf.switches.Switches.{PolyfillIO}
+
+@(bootModule: String = "standard")(implicit request: RequestHeader)
 
 // the app is bundled without any polyfills. babel transpiles the syntax
 // to es5 but we do not provide any polyfills for missing methods.
@@ -27,19 +28,21 @@ function guardianPolyfilled() {
 // Load the app and try to patch the env with polyfill.io
 // Adapted from https://www.html5rocks.com/en/tutorials/speed/script-loading/#toc-aggressive-optimisation
 (function (document, window) {
-    var scripts = [];
     var src;
     var script;
     var pendingScripts = [];
     var firstScript = document.scripts[0];
 
-    @if(PolyfillIO.isSwitchedOn) {
-        scripts.push('@common.Assets.js.polyfillioUrl');
+    @defining(if(PolyfillIO.isSwitchedOn) {
+      common.Assets.js.polyfillioUrl
     } else {
-        scripts.push('@Static("javascripts/vendor/polyfillio.fallback.js")');
+      Static("javascripts/vendor/polyfillio.fallback.js")
+    }) { polyfillioUrl =>
+        var scripts = [
+            '@polyfillioUrl',
+            '@Static(s"javascripts/graun.$bootModule.js")'
+        ];
     }
-
-    scripts.push('@Static("javascripts/graun.standard.js")');
 
     function stateChange() {
         var pendingScript;
