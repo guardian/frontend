@@ -21,30 +21,61 @@
 
                                     <h2>Contact us</h2>
 
-                                    <div class="feedback__element">
-                                        <label for="feedback-category">Please choose a service below </label>
-                                        <select id="feedback-category" class="feedback__select">
-                                            <option value="nothing">Please choose a selection...</option>
-                                            <option value="feedback-form-account">Help with my Guardian account</option>
-                                            <option value="feedback-form-website">Report a problem/give feedback on your website</option>
-                                            <option value="feedback-form-jobs">Unsubscribe from Jobs alerts/have other issues with my jobs account</option>
-                                            <option value="feedback-form-email">Manage my email preferences</option>
-                                            <option value="feedback-form-membership">Report a Memberships/subscriptions technical issue or give some feedback</option>
-                                            <option value="feedback-form-membership-billing">Membership payment or billing issues</option>
-                                            <option value="feedback-form-subs-billing">Subscriptions payment, billing or fulfillment issues</option>
-                                            <option value="feedback-form-adverts">Feedback about Adverts on your website/apps</option>
-                                            <option value="feedback-form-android">Help with my Android news app</option>
-                                            <option value="feedback-form-ios">Help with my iOS news app</option>
-                                            <option value="feedback-form-daily">Help with the daily edition on my iPad</option>
-                                            <option value="feedback-form-tablet">Help with the daily edition on my Android or Kindle Fire tablet</option>
-                                            <option value="feedback-form-windows">help with my Windows mobile news app</option>
-                                            <option value="feedback-form-editorial">Comment or query about an article</option>
-                                            <option value="feedback-form-discussion">Questions about commenting/moderation/community</option>
-                                            <option value="feedback-form-other">Other</option>
-                                        </select>
-                                    </div>
+                                    <form id="feedback__form" action="tech-feedback/send" method="post">
 
-                                    @fragments.feedbackForms()
+                                        <!-- category dropdown -->
+
+                                        <div class="feedback__element">
+                                            <label for="feedback-category">Please choose a service below </label>
+                                            <select name="category" id="feedback-category" class="feedback__select">
+                                                <option value="nothing">Please choose a category first...</option>
+                                                <option value="feedback-form-account">Help with my Guardian account</option>
+                                                <option value="feedback-form-website">Report a problem/give feedback on your website</option>
+                                                <option value="feedback-form-jobs">Unsubscribe from Jobs alerts/have other issues with my jobs account</option>
+                                                <option value="feedback-form-email">Manage my email preferences</option>
+                                                <option value="feedback-form-membership">Report a Memberships/subscriptions technical issue or give some feedback</option>
+                                                <option value="feedback-form-membership-billing">Membership payment or billing issues</option>
+                                                <option value="feedback-form-subs-billing">Subscriptions payment, billing or fulfillment issues</option>
+                                                <option value="feedback-form-adverts">Feedback about Adverts on your website/apps</option>
+                                                <option value="feedback-form-android">Help with my Android news app</option>
+                                                <option value="feedback-form-ios">Help with my iOS news app</option>
+                                                <option value="feedback-form-daily">Help with the daily edition on my iPad</option>
+                                                <option value="feedback-form-tablet">Help with the daily edition on my Android or Kindle Fire tablet</option>
+                                                <option value="feedback-form-windows">help with my Windows mobile news app</option>
+                                                <option value="feedback-form-editorial">Comment or query about an article</option>
+                                                <option value="feedback-form-discussion">Questions about commenting/moderation/community</option>
+                                                <option value="feedback-form-other">Other</option>
+                                            </select>
+                                        </div>
+
+                                        <!-- hidden blurb -->
+
+                                        @fragments.feedbackForms()
+
+                                        <!-- other form elements -->
+
+                                        <input class="feedback__element" name="extra" type="hidden" value="none available"/>
+
+                                        <div class="feedback__element">
+                                            <label for="fb-desc-entry">Description</label>
+                                            <textarea name="body" id="fb-desc-entry" class="feedback__entry feedback__input--wide feedback__textarea" placeholder="Please provide a description of your problem or feedback" required></textarea>
+                                        </div>
+                                        <div class="feedback__element">
+                                            <label for="fb-name-entry">Name</label>
+                                            <input name="name" class="feedback__entry feedback__input--wide" id="fb-name-entry" type="text" value="" placeholder="Alex Smith" required>
+                                        </div>
+                                        <div class="feedback__element">
+                                            <label for="fb-email-entry">Email</label>
+                                            <input name="user" class="feedback__entry feedback__input--wide" id="fb-email-entry" type="email" value="" placeholder="E.g. alexsmith@@example.com" required>
+                                        </div>
+
+                                        <!-- submit button -->
+
+                                        <div class="feedback__element">
+                                            <button class="button button--large button--primary" id="" type="submit">Submit Feedback</button>
+                                        </div>
+
+                                    </form>
 
                                     <p id="feedback__explainer"></p>
 
@@ -52,7 +83,7 @@
                                         Or email us directly at <a data-link-name="tech feedback : mailto : userhelp" href="mailto:userhelp@@theguardian.com">userhelp@@theguardian.com</a> and someone should get back to you.
                                     </small>
 
-                                </div>
+                                </form>
                             </div>
                         </div>
                     </div>

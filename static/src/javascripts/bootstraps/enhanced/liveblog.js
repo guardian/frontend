@@ -8,7 +8,6 @@ import AutoUpdate from 'common/modules/ui/autoupdate';
 import RelativeDates from 'common/modules/ui/relativedates';
 import articleLiveblogCommon from 'bootstraps/enhanced/article-liveblog-common';
 import trail from 'bootstraps/enhanced/trail';
-import notifications from 'bootstraps/enhanced/notifications';
 import { catchErrorsWithContext } from 'lib/robust';
 
 const affixTimeline = (): void => {
@@ -47,26 +46,11 @@ const keepTimestampsCurrent = (): void => {
     }, 60000);
 };
 
-const notificationsCondition = (): boolean =>
-    config.switches.liveBlogChromeNotificationsProd &&
-    !detect.isIOS() &&
-    (window.location.protocol === 'https:' ||
-        window.location.hash === '#force-sw') &&
-    detect.getUserAgent.browser === 'Chrome' &&
-    config.page.isLive;
-
-const initNotifications = (): void => {
-    if (notificationsCondition()) {
-        notifications.init();
-    }
-};
-
 const init = (): void => {
     catchErrorsWithContext([
         ['lb-autoupdate', createAutoUpdate],
         ['lb-timeline', affixTimeline],
         ['lb-timestamp', keepTimestampsCurrent],
-        ['lb-notifications', initNotifications],
         ['lb-richlinks', richLinks.upgradeRichLinks],
     ]);
 
@@ -83,4 +67,4 @@ const init = (): void => {
     ]);
 };
 
-export { init, notificationsCondition };
+export { init };

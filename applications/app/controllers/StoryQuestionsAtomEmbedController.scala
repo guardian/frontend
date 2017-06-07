@@ -84,6 +84,10 @@ class StoryQuestionsAtomEmbedController(
       })
   }
 
+  def options() = Action { implicit request =>
+    TinyResponse.noContent(Some("POST, OPTIONS"))
+  }
+
   def render(id: String) = Action.async { implicit request =>
     lookup(s"atom/storyquestions/$id") map {
       case Left(model) => renderStoryQuestionsAtom(model)
