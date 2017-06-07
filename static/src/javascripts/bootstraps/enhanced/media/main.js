@@ -400,7 +400,7 @@ const initFacia = () => {
     }
 };
 
-const init = () => {
+export const init = () => {
     // The `hasMultipleVideosInPage` flag is temporary until the # will be fixed
     const shouldPreroll =
         commercialFeatures.videoPreRolls &&
@@ -441,8 +441,4 @@ const init = () => {
     initMoreInSection();
 
     initOnwardContainer();
-};
-
-export default {
-    init,
 };
