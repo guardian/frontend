@@ -5,8 +5,8 @@ import { logError } from 'lib/robust';
 import userFeatures from 'commercial/modules/user-features';
 import identityApi from 'common/modules/identity/api';
 import userPrefs from 'common/modules/user-prefs';
-import daysSince from 'lib/time-utils';
-import getCookie from 'lib/cookies';
+import { daysSince } from 'lib/time-utils';
+import { getCookie } from 'lib/cookies';
 
 // Having a constructor means we can easily re-instantiate the object in a test
 class CommercialFeatures {
