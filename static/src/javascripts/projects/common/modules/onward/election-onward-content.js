@@ -19,7 +19,8 @@ class ElectionOnwardContent extends Component {
         super();
         register.begin('general-election-content');
         this.context = context;
-        this.endpoint = '/container/381f3487-3726-40d7-9742-136bed95a244.json';
+        this.endpoint =
+            '/container/use-layout/381f3487-3726-40d7-9742-136bed95a244.json';
         this.fetch(this.context, 'html');
     }
 }
