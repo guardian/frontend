@@ -15,6 +15,7 @@ define([
     var USER_FEATURES_EXPIRY_COOKIE = 'gu_user_features_expiry';
     var PAYING_MEMBER_COOKIE = 'gu_paying_member';
     var AD_FREE_USER_COOKIE = 'GU_AFU';
+    var JOIN_DATE_COOKIE = 'gu_join_date';
 
     function UserFeatures() {
         // Exposed for testing
@@ -45,6 +46,15 @@ define([
             && (cookies.getCookie(PAYING_MEMBER_COOKIE) !== 'false');
     };
 
+    UserFeatures.prototype.isInBrexitCohort = function() {
+        //12th June - 18th July TODO: what is the definition of the cohort?
+        var start = new Date("2016-06-12");
+        var end = new Date("2016-07-18");
+        var joinDate = new Date(cookies.getCookie(JOIN_DATE_COOKIE));
+
+        return (joinDate - start > 0) && (end - joinDate > 0);
+    };
+
     UserFeatures.prototype.isAdFreeUser = function () {
         if (cookies.getCookie(AD_FREE_USER_COOKIE) === null) {
             this.refresh();
@@ -59,7 +69,8 @@ define([
     function featuresDataIsMissing() {
         return !cookies.getCookie(USER_FEATURES_EXPIRY_COOKIE)
             || !cookies.getCookie(PAYING_MEMBER_COOKIE)
-            || !cookies.getCookie(AD_FREE_USER_COOKIE);
+            || !cookies.getCookie(AD_FREE_USER_COOKIE)
+            || !cookies.getCookie(JOIN_DATE_COOKIE);
     }
 
     function featuresDataIsOld() {
@@ -76,7 +87,9 @@ define([
     function userHasData() {
         return cookies.getCookie(USER_FEATURES_EXPIRY_COOKIE)
             || cookies.getCookie(PAYING_MEMBER_COOKIE)
-            || cookies.getCookie(AD_FREE_USER_COOKIE);
+            || cookies.getCookie(AD_FREE_USER_COOKIE)
+            || cookies.getCookie(JOIN_DATE_COOKIE);
+
     }
 
     function requestNewData() {
@@ -94,6 +107,7 @@ define([
         cookies.addCookie(USER_FEATURES_EXPIRY_COOKIE, expiryDate.getTime().toString());
         cookies.addCookie(PAYING_MEMBER_COOKIE, !JsonResponse.adblockMessage);
         cookies.addCookie(AD_FREE_USER_COOKIE, JsonResponse.adFree);
+        cookies.addCookie(JOIN_DATE_COOKIE, JsonResponse.joinDate);
     }
 
     function deleteOldData() {
@@ -101,6 +115,7 @@ define([
         cookies.removeCookie(USER_FEATURES_EXPIRY_COOKIE);
         cookies.removeCookie(PAYING_MEMBER_COOKIE);
         cookies.removeCookie(AD_FREE_USER_COOKIE);
+        cookies.removeCookie(JOIN_DATE_COOKIE);
     }
 
     return new UserFeatures();

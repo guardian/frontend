@@ -31,7 +31,8 @@ import acquisitionsThisLandEnvironmentEarning
     from 'common/modules/experiments/tests/acquisitions-this-land-environment-earning';
 import acquisitionsThisLandEnvironmentLearning
     from 'common/modules/experiments/tests/acquisitions-this-land-environment-learning';
-
+import epicForBrexitCohort
+    from 'common/modules/experiments/tests/epic-for-brexit-cohort';
 /**
  * acquisition tests in priority order (highest to lowest)
  */
@@ -47,6 +48,7 @@ const tests = [
     acquisitionsEpicLiveBlog,
     acquisitionsEpicAlwaysAskElection,
     acquisitionsEpicThankYou,
+    epicForBrexitCohort,
 ].map(Test => new Test());
 
 const isViewable = (v: Variant, t: ABTest): boolean => {
