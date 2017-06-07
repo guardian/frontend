@@ -10,7 +10,7 @@ import fabricExpand from 'commercial/modules/creatives/fabric-expanding-v1';
 import {
     fabricExpandVideo,
 } from 'commercial/modules/creatives/fabric-expandable-video-v2';
-import fabricVideo from 'commercial/modules/creatives/fabric-video';
+import { FabricVideo } from 'commercial/modules/creatives/fabric-video';
 import scrollable from 'commercial/modules/creatives/scrollable-mpu-v2';
 
 const creativeLookup: Object = {
@@ -19,7 +19,7 @@ const creativeLookup: Object = {
     'fabric-v1': FabricV1,
     'fabric-expanding-v1': fabricExpand,
     'fabric-expandable-video-v2': fabricExpandVideo,
-    'fabric-video': fabricVideo,
+    'fabric-video': FabricVideo,
     'scrollable-mpu-v2': scrollable,
 };
 

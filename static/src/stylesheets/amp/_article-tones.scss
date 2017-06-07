@@ -8,7 +8,6 @@
     .tonal--tone-review &,
     .tonal--tone-editorial &,
     .tonal--tone-analysis &,
-    .tonal--tone-live &,
     .tonal--tone-media &,
     .tonal--tone-special-report & {
         margin-bottom: 1.5rem;
@@ -30,11 +29,6 @@
         background-color: $features-main-2;
     }
 
-    .tonal--tone-dead & {
-        color: $multimedia-support-4;
-        background-color: $neutral-5;
-    }
-
     .tonal--tone-review & {
         background-color: $comment-support-1;
     }
@@ -45,10 +39,6 @@
 
     .tonal--tone-analysis & {
         background-color: $neutral-6;
-    }
-
-    .tonal--tone-live & {
-        background-color: $live-main-2;
     }
 
     .tonal--tone-special-report & {
@@ -75,10 +65,6 @@
 
     .tonal--tone-analysis & {
         background-color: #f1f1f1;
-    }
-
-    .tonal--tone-live & {
-        background-color: $live-main-1;
     }
 
     .tonal--tone-special-report & {
@@ -124,8 +110,6 @@
 .tonal--tone-review .tonal__standfirst .bullet:before,
 .tonal--tone-editorial .tonal__standfirst ul>li:before,
 .tonal--tone-editorial .tonal__standfirst .bullet:before,
-.tonal--tone-live .tonal__standfirst ul>li:before,
-.tonal--tone-live .tonal__standfirst .bullet:before,
 .tonal--tone-special-report .tonal__standfirst ul>li:before,
 .tonal--tone-special-report .tonal__standfirst .bullet:before,
 .tonal--tone-letters .tonal__standfirst ul>li:before,
@@ -153,13 +137,11 @@
 
 .tonal--tone-review .tonal__header .content__headline,
 .tonal--tone-feature .tonal__header .content__headline,
-.tonal--tone-live .tonal__header .content__headline,
 .tonal--tone-special-report .tonal__header .content__headline,
 .tonal--tone-letters .tonal__standfirst,
 .tonal--tone-letters .tonal__standfirst .content__standfirst,
 .tone-media .fc-item__title,
 .tone-review .fc-item__title,
-.tone-live .fc-item__title,
 .tone-special-report .fc-item__title,
 .tone-special-report .fc-item__title {
     color: #ffffff;
@@ -179,16 +161,6 @@
     color: $news-main-2;
 }
 
-.tonal--tone-live .tone-colour,
-.tonal--tone-dead .tone-colour {
-    color: $live-main-1;
-}
-
-.tonal--tone-dead .tonal__standfirst .u-underline {
-    color: $live-main-1;
-    border-bottom-color: rgba(72, 72, 72, .3);
-}
-
 .tonal--tone-media .tone-colour {
     color: $multimedia-main-2;
 }
@@ -202,82 +174,9 @@
 .tonal--tone-feature .tonal__standfirst .u-underline,
 .tonal--tone-review .tonal__standfirst .u-underline,
 .tonal--tone-editorial .tonal__standfirst .u-underline,
-.tonal--tone-live .tonal__standfirst .u-underline,
 .tonal--tone-media .tonal__standfirst .u-underline,
 .tonal--tone-special-report .tonal__standfirst .u-underline,
 .tonal--tone-letters .tonal__standfirst .u-underline {
     color: #ffffff;
     border-bottom-color: rgba(255, 255, 255, .3);
-}
-
-.fc-item {
-    &.tone-feature {
-        background-color: $features-support-1;
-        border-top-color: $features-support-3;
-
-        h2 {
-            color: #ffffff;
-        }
-
-        .fc-item__meta {
-            color: $features-support-3;
-
-            svg {
-                fill: $features-support-3;
-            }
-        }
-    }
-
-    &.tone-review {
-        background-color: $comment-support-1;
-
-        .fc-item__meta {
-            color: $neutral-4;
-        }
-    }
-
-    &.tone-special-report {
-        background-color: $news-support-6;
-        border-top-color: $news-support-1;
-
-        .fc-item__meta {
-            color: $neutral-4;
-        }
-    }
-
-    &.tone-live {
-        background-color: $live-main-1;
-        border-top-color: $features-support-3;
-
-        .fc-item__meta {
-            color: $features-support-3;
-
-            svg {
-                fill: $features-support-3;
-            }
-        }
-    }
-
-    &.tone-special-report {
-        border-top-color: $news-support-1;
-    }
-
-    &.tone-comment {
-        background-color: $comment-support-2;
-        border-top-color: $comment-support-4;
-    }
-
-    &.tone-review,
-    &.tone-media {
-        border-top-color: #fb0fb0;
-
-        .fc-item__header svg {
-            fill: #fb0fb0;
-            margin-right: .1em;
-        }
-    }
-
-    &.tone-media {
-        background-color: $neutral-1;
-    }
 }

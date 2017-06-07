@@ -247,12 +247,16 @@ const addEventHandler = (): void => {
 
     if (menu) {
         menu.addEventListener('click', (event: Event) => {
+            const selector = '.js-navigation-toggle';
             const target: HTMLElement = (event.target: any);
-            const parent: HTMLElement = (target.parentNode: any);
 
-            if (target.matches('.js-navigation-toggle') && parent) {
-                event.preventDefault();
-                toggleSidebarSection(parent);
+            if (target.matches(selector)) {
+                const parent: HTMLElement = (target.parentNode: any);
+
+                if (parent) {
+                    event.preventDefault();
+                    toggleSidebarSection(parent);
+                }
             }
         });
     }
