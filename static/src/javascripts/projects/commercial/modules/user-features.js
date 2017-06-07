@@ -59,11 +59,9 @@ const userHasDataAfterSignout = (): boolean =>
 
 const refresh = (): void => {
     if (identity.isUserLoggedIn() && userNeedsNewFeatureData()) {
-        // eslint-disable-next-line no-use-before-define
-        _.requestNewData();
+        requestNewData();
     } else if (userHasDataAfterSignout()) {
-        // eslint-disable-next-line no-use-before-define
-        _.deleteOldData();
+        deleteOldData();
     }
 };
 
