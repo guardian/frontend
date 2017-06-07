@@ -1,8 +1,10 @@
 .menu-brand-extensions {
     background-color: $news-main-2;
     color: $guardian-brand-dark;
-    padding-bottom: $gs-baseline / 3;
-    padding-top: $gs-baseline;
+}
+
+.menu-brand-extensions__inner {
+    padding: $gs-baseline $gs-gutter $gs-baseline / 3 $gs-gutter;
 }
 
 .menu-brand-extensions__list {
@@ -21,8 +23,8 @@
         display: inline-block;
         font-size: 28px;
         opacity: .6;
-        padding-left: 2px;
-        padding-right: 2px;
+        padding-left: -2px;
+        padding-right: -2px;
         pointer-events: none;
     }
 }
