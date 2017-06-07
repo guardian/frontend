@@ -57,7 +57,7 @@ define([
 
     function onThrasherViewed(thrasherElement, callback) {
         // Element in view logic taken from contribution utilities.
-        elementInView(thrasherElement, window, { top: 18 }).on('firstview', callback())
+        elementInView(thrasherElement, window, { top: 18 }).on('firstview', callback)
     }
 
     return function() {
