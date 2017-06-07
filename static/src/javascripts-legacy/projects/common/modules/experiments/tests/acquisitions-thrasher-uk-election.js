@@ -55,10 +55,9 @@ define([
         return viewCountClass + " " + thrasherVariantClass
     }
 
-    function onThrasherViewed(callback) {
-        // Safe selecting from array - function will only be called if length of array element is positive.
+    function onThrasherViewed(thrasherElement, callback) {
         // Element in view logic taken from contribution utilities.
-        elementInView($ukElectionThrasher[0], window, { top: 18 }).on('firstview', callback())
+        elementInView(thrasherElement, window, { top: 18 }).on('firstview', callback())
     }
 
     return function() {
@@ -97,10 +96,14 @@ define([
                     },
 
                     success: function(callback) {
-                        onThrasherViewed(function() {
-                            callback();
-                            incrementThrasherViewedCount()
-                        })
+                        // Check the thrasher is on the page as the success function is still fired,
+                        // even if the test can't be run.
+                        if ($ukElectionThrasher.length > 0) {
+                            onThrasherViewed($ukElectionThrasher[0], function() {
+                                callback();
+                                incrementThrasherViewedCount()
+                            })
+                        }
                     }
                 }
             ]
