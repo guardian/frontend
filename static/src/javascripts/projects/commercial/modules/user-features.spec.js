@@ -126,6 +126,7 @@ describe('Refreshing the features data', () => {
 
 describe('The isAdFreeUser getter', () => {
     it('Is false when the user is logged out', () => {
+        jest.resetAllMocks();
         isUserLoggedIn.mockReturnValue(false);
         expect(isAdFreeUser()).toBe(false);
     });
@@ -133,6 +134,7 @@ describe('The isAdFreeUser getter', () => {
 
 describe('The isPayingMember getter', () => {
     it('Is false when the user is logged out', () => {
+        jest.resetAllMocks();
         isUserLoggedIn.mockReturnValue(false);
         expect(isAdFreeUser()).toBe(false);
     });
@@ -157,6 +159,70 @@ describe('The isPayingMember getter', () => {
             // If we don't know, we err on the side of caution, rather than annoy paying users
             removeCookie(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE);
             expect(isPayingMember()).toBe(true);
+        });
+    });
+});
+
+describe('Storing new feature data', () => {
+    beforeEach(() => {
+        jest.resetAllMocks();
+        fetchJsonSpy.mockReturnValue(Promise.resolve());
+        deleteAllFeaturesData();
+        isUserLoggedIn.mockReturnValue(true);
+    });
+
+    it('Puts the paying-member state and ad-free state in appropriate cookie', () => {
+        fetchJsonSpy.mockReturnValueOnce(
+            Promise.resolve({
+                adblockMessage: true,
+                adFree: false,
+            })
+        );
+        refresh().then(() => {
+            expect(getCookie(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE)).toBe(
+                'false'
+            );
+            expect(getCookie(PERSISTENCE_KEYS.AD_FREE_USER_COOKIE)).toBe(
+                'false'
+            );
+        });
+    });
+
+    it('Puts the paying-member state and ad-free state in appropriate cookie', () => {
+        fetchJsonSpy.mockReturnValueOnce(
+            Promise.resolve({
+                adblockMessage: false,
+                adFree: true,
+            })
+        );
+        refresh().then(() => {
+            expect(getCookie(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE)).toBe(
+                'true'
+            );
+            expect(getCookie(PERSISTENCE_KEYS.AD_FREE_USER_COOKIE)).toBe(
+                'true'
+            );
+        });
+    });
+
+    it('Puts an expiry date in an accompanying cookie', () => {
+        refresh().then(() => {
+            const expiryDate = getCookie(
+                PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE
+            );
+            expect(expiryDate).not.toBeNull();
+            expect(isNaN(expiryDate)).toBe(false);
+        });
+    });
+
+    it('The expiry date is in the future', () => {
+        refresh().then(() => {
+            const expiryDateString = getCookie(
+                PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE
+            );
+            const expiryDateEpoch = parseInt(expiryDateString, 10);
+            const currentTimeEpoch = new Date().getTime();
+            expect(currentTimeEpoch < expiryDateEpoch).toBe(true);
         });
     });
 });

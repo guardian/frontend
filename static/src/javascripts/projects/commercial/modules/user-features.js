@@ -28,14 +28,13 @@ const deleteOldData = (): void => {
     removeCookie(AD_FREE_USER_COOKIE);
 };
 
-const requestNewData = (): void => {
+const requestNewData = (): Promise<void> =>
     fetchJson(`${config.page.userAttributesApiUrl}/me/features`, {
         mode: 'cors',
         credentials: 'include',
     })
         .then(persistResponse)
         .catch(() => {});
-};
 
 const featuresDataIsMissing = (): boolean =>
     !getCookie(USER_FEATURES_EXPIRY_COOKIE) || !getCookie(AD_FREE_USER_COOKIE);
@@ -57,12 +56,13 @@ const userHasDataAfterSignout = (): boolean =>
      * Updates the user's data in a lazy fashion
      */
 
-const refresh = (): void => {
+const refresh = (): Promise<void> => {
     if (identity.isUserLoggedIn() && userNeedsNewFeatureData()) {
-        requestNewData();
+        return requestNewData();
     } else if (userHasDataAfterSignout()) {
         deleteOldData();
     }
+    return Promise.resolve();
 };
 
 /**
