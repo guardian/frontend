@@ -75,7 +75,7 @@ object GuardianConfiguration extends Logging {
 
     // test mode is self contained and won't need to use anything secret
     lazy val test = ClassPathConfigurationSource("env/DEVINFRA.properties")
-    lazy val testConfig = new CM(List(test), PlayDefaultLogger).load.resolve
+    lazy val testConfig = new CM(List(userPrivate, test), PlayDefaultLogger).load.resolve
 
     val appConfig =
       if (stage == "DEVINFRA") testConfig
