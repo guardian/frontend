@@ -41,8 +41,7 @@ define([
                 'common/modules/commercial/membership-engagement-banner',
                 'lib/storage',
                 'lib/mediator',
-                'lib/geolocation',
-                'lib/cookies'
+                'lib/geolocation'
             ], function () {
                 commercialFeatures = arguments[0].commercialFeatures;
                 membershipMessages = arguments[1];
