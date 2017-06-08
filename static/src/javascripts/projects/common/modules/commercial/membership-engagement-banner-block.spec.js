@@ -2,31 +2,53 @@
 import config from 'lib/config';
 import { isBlocked } from './membership-engagement-banner-block';
 
-const switches = ['foo', 'bar'];
+const switches = ['ukBlock', 'usBlock'];
 
-const switchUrls = {
-    foo: ['/a', '/b'],
-    bar: ['/c', '/d'],
+const switchConfigs = {
+    ukBlock: {
+        urls: ['/uk1', '/uk2'],
+        geolocation: 'GB',
+    },
+    usBlock: {
+        urls: ['/us1', '/us2'],
+        geolocation: 'US',
+    },
 };
 
 describe('Engagement Banner blocking', () => {
-    it('should block correctly', () => {
-        config.switches.foo = true;
-        config.switches.bar = false;
+    beforeEach(() => {
+        // disable all blocks
+        config.switches.ukBlock = false;
+        config.switches.usBlock = false;
+    });
 
-        expect(isBlocked(switches, switchUrls, '/a')).toBe(true);
-        expect(isBlocked(switches, switchUrls, '/b')).toBe(true);
-        expect(isBlocked(switches, switchUrls, '/c')).toBe(false);
-        expect(isBlocked(switches, switchUrls, '/d')).toBe(false);
-        expect(isBlocked(switches, switchUrls, '/e')).toBe(false);
+    it('should block correct paths when user is in a blocked geolocation', () => {
+        config.switches.ukBlock = true;
 
-        config.switches.foo = false;
-        config.switches.bar = true;
+        expect(isBlocked(switches, switchConfigs, '/uk1', 'GB')).toBe(true);
+        expect(isBlocked(switches, switchConfigs, '/uk2', 'GB')).toBe(true);
+        expect(isBlocked(switches, switchConfigs, '/us1', 'GB')).toBe(false);
+        expect(isBlocked(switches, switchConfigs, '/us2', 'GB')).toBe(false);
+        expect(isBlocked(switches, switchConfigs, '/e', 'GB')).toBe(false);
 
-        expect(isBlocked(switches, switchUrls, '/a')).toBe(false);
-        expect(isBlocked(switches, switchUrls, '/b')).toBe(false);
-        expect(isBlocked(switches, switchUrls, '/c')).toBe(true);
-        expect(isBlocked(switches, switchUrls, '/d')).toBe(true);
-        expect(isBlocked(switches, switchUrls, '/e')).toBe(false);
+        config.switches.ukBlock = false;
+        config.switches.usBlock = true;
+
+        expect(isBlocked(switches, switchConfigs, '/uk1', 'US')).toBe(false);
+        expect(isBlocked(switches, switchConfigs, '/uk2', 'US')).toBe(false);
+        expect(isBlocked(switches, switchConfigs, '/us1', 'US')).toBe(true);
+        expect(isBlocked(switches, switchConfigs, '/us2', 'US')).toBe(true);
+        expect(isBlocked(switches, switchConfigs, '/e', 'US')).toBe(false);
+    });
+
+    it('should never block paths when user is not in a blocked geolocation', () => {
+        config.switches.ukBlock = true;
+        config.switches.usBlock = true;
+
+        expect(isBlocked(switches, switchConfigs, '/uk1', 'US')).toBe(false);
+        expect(isBlocked(switches, switchConfigs, '/uk2', 'AU')).toBe(false);
+        expect(isBlocked(switches, switchConfigs, '/us1', 'AU')).toBe(false);
+        expect(isBlocked(switches, switchConfigs, '/us2', 'AU')).toBe(false);
+        expect(isBlocked(switches, switchConfigs, '/e', 'AU')).toBe(false);
     });
 });

@@ -1,5 +1,6 @@
 // @flow
 import config from 'lib/config';
+import { getSync } from 'lib/geolocation';
 import flatten from 'lodash/arrays/flatten';
 
 /**
@@ -10,18 +11,35 @@ import flatten from 'lodash/arrays/flatten';
 type RegionalFrontURLs = Array<string>;
 
 /**
- * Associate switch names with sets of URLs to block
+ * Blocking incorporates URLs and the user's geolocation
  */
-type SwitchURLMap = { [switchName: string]: RegionalFrontURLs };
+type BlockConfig = {
+    urls: RegionalFrontURLs,
+    geolocation: string,
+};
 
-const UK: RegionalFrontURLs = ['/uk', '/uk-news'];
-const US: RegionalFrontURLs = ['/us', '/us-news'];
-const AU: RegionalFrontURLs = ['/au', '/australia-news'];
+/**
+ * Associate switch names with blocking configurations
+ */
+type SwitchBlockConfig = {
+    [switchName: string]: BlockConfig,
+};
 
-const defaultSwitchUrls: SwitchURLMap = {
-    membershipEngagementBannerBlockUk: UK,
-    membershipEngagementBannerBlockUs: US,
-    membershipEngagementBannerBlockAu: AU,
+const defaultSwitchConfig: SwitchBlockConfig = {
+    membershipEngagementBannerBlockUk: {
+        urls: ['/uk', '/uk-news'],
+        geolocation: 'GB',
+    },
+
+    membershipEngagementBannerBlockUs: {
+        urls: ['/us', '/us-news'],
+        geolocation: 'US',
+    },
+
+    membershipEngagementBannerBlockAu: {
+        urls: ['/au', '/australia-news'],
+        geolocation: 'AU',
+    },
 };
 
 const allSwitches: Array<string> = ['Uk', 'Us', 'Au'].map(
@@ -30,11 +48,18 @@ const allSwitches: Array<string> = ['Uk', 'Us', 'Au'].map(
 
 export const isBlocked = (
     switches: Array<string> = allSwitches,
-    switchUrls: SwitchURLMap = defaultSwitchUrls,
-    pathname: string = document.location.pathname
+    switchBlockConfig: SwitchBlockConfig = defaultSwitchConfig,
+    pathname: string = document.location.pathname,
+    geolocation: string = getSync()
 ): boolean => {
+    // the enabled block configurations that apply to the provided geolocation
+    const activeBlockConfigs: Array<BlockConfig> = switches
+        .filter(switchName => !!config.switches[switchName])
+        .map(switchName => switchBlockConfig[switchName])
+        .filter(conf => conf.geolocation === geolocation);
+
     const blockedUrls: Array<string> = flatten(
-        switches.filter(s => !!config.switches[s]).map(s => switchUrls[s])
+        activeBlockConfigs.map(conf => conf.urls)
     );
 
     return blockedUrls.includes(pathname);
