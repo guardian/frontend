@@ -42,7 +42,9 @@ define([
         UP_SELL = '.js-mem-up-sell',
         MEMBER_INFO = '.js-mem-info',
         LOADER = '.js-mem-loader',
-        IS_HIDDEN_CLASSNAME = 'is-hidden';
+        IS_HIDDEN_CLASSNAME = 'is-hidden',
+        ERROR = '.js-mem-error'
+    ;
 
     function fetchUserDetails() {
         fetch(config.page.userAttributesApiUrl + '/me/mma-membership', {
@@ -54,10 +56,14 @@ define([
             if (json && json.subscription) {
                 hideLoader();
                 populateUserDetails(json);
-            } else {
+                } else {
                 hideLoader();
                 displayMembershipUpSell();
             }
+        }).catch(function (){
+            hideLoader();
+            displayErrorMessage();
+            //TODO: HANDLE THIS ERROR
         });
     }
 
@@ -143,6 +149,10 @@ define([
 
     function displayMembershipUpSell() {
         $(UP_SELL).removeClass(IS_HIDDEN_CLASSNAME);
+    }
+
+    function displayErrorMessage() {
+        $(ERROR).removeClass(IS_HIDDEN_CLASSNAME);
     }
 
     function init() {

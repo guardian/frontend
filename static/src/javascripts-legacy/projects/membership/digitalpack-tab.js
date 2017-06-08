@@ -33,7 +33,9 @@ define([
         UP_SELL = '.js-dig-up-sell',
         DIG_INFO = '.js-dig-info',
         LOADER = '.js-dig-loader',
-        IS_HIDDEN_CLASSNAME = 'is-hidden';
+        IS_HIDDEN_CLASSNAME = 'is-hidden',
+        ERROR = '.js-dig-error'
+    ;
 
     function fetchUserDetails() {
         fetch(config.page.userAttributesApiUrl + '/me/mma-digitalpack', {
@@ -49,7 +51,11 @@ define([
                 hideLoader();
                 displayDigitalPackUpSell();
             }
-        });
+        }).catch(function (){
+            hideLoader();
+            displayErrorMessage();
+            //TODO: handle this
+       });
     }
 
     function hideLoader() {
@@ -98,6 +104,11 @@ define([
     function displayDigitalPackUpSell() {
         $(UP_SELL).removeClass(IS_HIDDEN_CLASSNAME);
     }
+
+    function displayErrorMessage() {
+        $(ERROR).removeClass(IS_HIDDEN_CLASSNAME);
+    }
+
 
     return {
         init: fetchUserDetails
