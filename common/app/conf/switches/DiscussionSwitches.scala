@@ -1,6 +1,7 @@
 package conf.switches
 
 import conf.switches.Expiry.never
+import org.joda.time.LocalDate
 
 trait DiscussionSwitches {
   val DiscussionAllPageSizeSwitch = Switch(
@@ -41,6 +42,16 @@ trait DiscussionSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true
+  )
+
+  val DiscussionWarnVoteDeclaration = Switch(
+    SwitchGroup.Discussion,
+    "discussion-warn-vote-declaration",
+    "If this is switched on, warn readers not to share voting behaviour before commenting",
+    owners = Seq(Owner.withGithub("nicl")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 6, 13),
+    exposeClientSide = false
   )
 
 }
