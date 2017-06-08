@@ -26,7 +26,8 @@ define([
         variants: [
             {
                 id: 'control',
-                isUnlimited : true
+                isUnlimited : true,
+                useTailoredCopyForRegulars: true
             }
         ]
     });

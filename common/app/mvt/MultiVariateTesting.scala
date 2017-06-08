@@ -20,12 +20,12 @@ object CommercialGalleryBannerAds extends TestDefinition(
   name = "commercial-gallery-banner-ads",
   description = "Users in the test will see banner ads instead of MPUs in galleries",
   owners = Seq(Owner.withGithub("JonNorman")),
-  sellByDate = new LocalDate(2017, 6, 8)
+  sellByDate = new LocalDate(2017, 7, 11)
 ) {
 
   def participationGroup(implicit request: RequestHeader): Option[String] = request.headers.get("X-GU-commercial-gallery-banner-ads")
 
-  def canRun(implicit request: RequestHeader): Boolean = participationGroup.isDefined
+  def canRun(implicit request: RequestHeader): Boolean = participationGroup.contains("variant")
 }
 
 object CommercialClientLoggingVariant extends TestDefinition(

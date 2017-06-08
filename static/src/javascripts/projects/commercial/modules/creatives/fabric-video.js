@@ -60,7 +60,7 @@ class FabricVideo {
         this.inView = rect.top >= 0 && rect.bottom < viewportHeight;
         if (!this.isUpdating) {
             this.isUpdating = true;
-            fastdom.write(this.updateView);
+            fastdom.write(this.updateView, this);
         }
     }
 
@@ -167,7 +167,7 @@ class FabricVideo {
                     this.video.onended = this.onVideoEnded;
                 }
 
-                fastdom.read(this.onScroll);
+                fastdom.read(this.onScroll, this);
 
                 return true;
             });

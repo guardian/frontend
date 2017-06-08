@@ -3,7 +3,7 @@
 import fastdom from 'lib/fastdom-promise';
 import reportError from 'lib/report-error';
 
-import frame from 'commercial/modules/creatives/frame';
+import { Frame } from 'commercial/modules/creatives/frame';
 import revealer from 'commercial/modules/creatives/revealer';
 import { FabricV1 } from 'commercial/modules/creatives/fabric-v1';
 import fabricExpand from 'commercial/modules/creatives/fabric-expanding-v1';
@@ -14,7 +14,7 @@ import { FabricVideo } from 'commercial/modules/creatives/fabric-video';
 import scrollable from 'commercial/modules/creatives/scrollable-mpu-v2';
 
 const creativeLookup: Object = {
-    frame,
+    frame: Frame,
     revealer,
     'fabric-v1': FabricV1,
     'fabric-expanding-v1': fabricExpand,
