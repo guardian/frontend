@@ -19,6 +19,7 @@ define([
         'common/modules/experiments/segment-util',
         'common/modules/experiments/acquisition-test-selector',
         'common/modules/commercial/membership-engagement-banner-parameters',
+        'common/modules/commercial/membership-engagement-banner-block',
         'common/modules/commercial/contributions-utilities',
         'ophan/ng',
         'lib/geolocation',
@@ -43,6 +44,7 @@ define([
                  segmentUtil,
                  acquisitionTestSelector,
                  membershipEngagementBannerUtils,
+                 membershipEngagementBannerBlock,
                  contributionsUtilities,
                  ophan,
                  geolocation,
@@ -156,7 +158,7 @@ define([
 
         function showBanner(params) {
 
-            if (params === DO_NOT_RENDER_ENGAGEMENT_BANNER) {
+            if (params === DO_NOT_RENDER_ENGAGEMENT_BANNER || membershipEngagementBannerBlock.isBlocked()) {
                 return;
             }
 
