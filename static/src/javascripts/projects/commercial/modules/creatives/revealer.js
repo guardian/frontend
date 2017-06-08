@@ -1,55 +1,69 @@
+// @flow
 import fastdom from 'lib/fastdom-promise';
 import template from 'lodash/utilities/template';
 import detect from 'lib/detect';
-import addTrackingPixel from 'commercial/modules/creatives/add-tracking-pixel';
-import addViewabilityTracker from 'commercial/modules/creatives/add-viewability-tracker';
+import {
+    addTrackingPixel,
+} from 'commercial/modules/creatives/add-tracking-pixel';
+import addViewabilityTracker
+    from 'commercial/modules/creatives/add-viewability-tracker';
 import revealerStr from 'raw-loader!commercial/views/creatives/revealer.html';
-var revealerTpl;
 
-function Revealer(adSlot, params) {
-    revealerTpl || (revealerTpl = template(revealerStr));
+class Revealer {
+    adSlot: HTMLElement;
+    params: Object;
 
-    params.id = 'revealer-' + (Math.random() * 10000 | 0).toString(16);
+    constructor(adSlot: HTMLElement, params: Object) {
+        params.id = `revealer-${Math.floor(Math.random() * 10000).toString(16)}`;
+        this.adSlot = adSlot;
+        this.params = params;
+    }
 
-    return Object.freeze({
-        create: create
-    });
+    create() {
+        const revealerTpl = template(revealerStr);
+        const markup = revealerTpl(this.params);
 
-    function create() {
-        var markup = revealerTpl(params);
-
-        return fastdom.write(function() {
-            adSlot.insertAdjacentHTML('beforeend', markup);
-            // #? `classList.add` takes multiple arguments, but we are using it
-            // here with arity 1 because polyfill.io has incorrect support with IE 10 and 11.
-            // One may revert to adSlot.classList.add('ad-slot--revealer', 'ad-slot--fabric', 'content__mobile-full-width');
-            // When support is correct or when we stop supporting IE <= 11
-            adSlot.classList.add('ad-slot--revealer');
-            adSlot.classList.add('ad-slot--fabric');
-            adSlot.classList.add('content__mobile-full-width');
-            if (params.trackingPixel) {
-                addTrackingPixel.addTrackingPixel(params.trackingPixel + params.cacheBuster);
-            }
-            if (params.researchPixel) {
-                addTrackingPixel.addTrackingPixel(params.researchPixel + params.cacheBuster);
-            }
-            if (params.viewabilityTracker) {
-                addViewabilityTracker(adSlot, params.id, params.viewabilityTracker);
-            }
-        }).then(function() {
-            return fastdom.read(function() {
-                return detect.getViewport();
-            });
-        }).then(function(viewport) {
-            return fastdom.write(function() {
-                var background = adSlot.getElementsByClassName('creative__background')[0];
-                // for the height, we need to account for the height of the location bar, which
-                // may or may not be there. 70px padding is not too much.
-                background.style.height = (viewport.height + 70) + 'px';
-                return true;
-            });
-        });
+        return fastdom
+            .write(() => {
+                this.adSlot.insertAdjacentHTML('beforeend', markup);
+                // #? `classList.add` takes multiple arguments, but we are using it
+                // here with arity 1 because polyfill.io has incorrect support with IE 10 and 11.
+                // One may revert to adSlot.classList.add('ad-slot--revealer', 'ad-slot--fabric', 'content__mobile-full-width');
+                // When support is correct or when we stop supporting IE <= 11
+                this.adSlot.classList.add('ad-slot--revealer');
+                this.adSlot.classList.add('ad-slot--fabric');
+                this.adSlot.classList.add('content__mobile-full-width');
+                if (this.params.trackingPixel) {
+                    addTrackingPixel(
+                        this.params.trackingPixel + this.params.cacheBuster
+                    );
+                }
+                if (this.params.researchPixel) {
+                    addTrackingPixel(
+                        this.params.researchPixel + this.params.cacheBuster
+                    );
+                }
+                if (this.params.viewabilityTracker) {
+                    addViewabilityTracker(
+                        this.adSlot,
+                        this.params.id,
+                        this.params.viewabilityTracker
+                    );
+                }
+            })
+            .then(() => fastdom.read(() => detect.getViewport()))
+            .then(viewport =>
+                fastdom.write(() => {
+                    const background = this.adSlot.getElementsByClassName(
+                        'creative__background'
+                    )[0];
+                    // for the height, we need to account for the height of the location bar, which
+                    // may or may not be there. 70px padding is not too much.
+                    background.style.height = `${viewport.height + 70}px`;
+                    return true;
+                })
+            );
     }
 }
 
-export default Revealer;
+export { Revealer };
