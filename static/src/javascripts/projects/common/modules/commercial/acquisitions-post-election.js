@@ -7,7 +7,7 @@ import {
     postElectionResults as postElectionResultsCopy,
 } from 'common/modules/commercial/acquisitions-copy';
 
-export const template = variant =>
+export const template = (variant: Variant) =>
     lodashTemplate(epicControlTemplate, {
         copy: postElectionResultsCopy,
         membershipUrl: variant.options.membershipURL,
