@@ -21,6 +21,17 @@
         font-size: 28px;
     }
 
+    @include mq(desktop) {
+        .new-header--open .pillars__item:not(:first-child) > & {
+            // + 2px becaue of the border
+            padding-left: $gs-gutter / 2 + 2;
+        }
+
+        .new-header--open & {
+            width: gs-span(2) + $gs-gutter;
+        }
+    }
+
     &:focus,
     &:hover {
         color: #ffffff;
