@@ -10,8 +10,8 @@ define([
         id: 'ContributionsEpicAskFourPostElection',
         campaignId: 'kr1_epic_ask_four_post_election',
 
-        start: '2017-07-07',
-        expiry: '2017-08-07',
+        start: '2017-06-07',
+        expiry: '2017-07-07',
 
         author: 'Joseph Smith',
         description: 'This tests a custom post-election epic on all articles for UK users, with a limit of 4 impressions in any given 30 days',
