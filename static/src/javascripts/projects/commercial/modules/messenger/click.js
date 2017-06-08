@@ -15,4 +15,4 @@ register('click', (linkName, ret, iframe = {}) =>
     )
 );
 
-export { sendClick };
+export const _ = { sendClick };
