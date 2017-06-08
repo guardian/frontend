@@ -69,6 +69,7 @@ const sassGraph = require('sass-graph').parseDir(sassDir, {
 });
 
 const compileSass = require('../tools/compile-css');
+const copyFiles = require('../tools/__tasks__/compile/conf/copy');
 
 // when we detect a change in a sass file, we look up the tree of imports
 // and only compile what we need to. anything matching this regex, we can just ignore in dev.
@@ -95,6 +96,9 @@ chokidar.watch(`${sassDir}/**/*.scss`).on('change', changedFile => {
             browserSync.reload(
                 filesToCompile.map(file => file.replace('scss', 'css'))
             );
+        })
+        .then(() => {
+            copyFiles.task();
         })
         .catch(e => {
             // send editing errors to console and browser
