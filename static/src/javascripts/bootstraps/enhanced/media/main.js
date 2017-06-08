@@ -25,11 +25,11 @@ import loadingTmpl from 'raw-loader!common/views/ui/loading.html';
 import userFeatures from 'commercial/modules/user-features';
 import { loadScript } from 'lib/load-script';
 
-const initLoadingSpinner = player => {
+const initLoadingSpinner = (player: any): void => {
     player.loadingSpinner.contentEl().innerHTML = loadingTmpl;
 };
 
-const upgradeVideoPlayerAccessibility = player => {
+const upgradeVideoPlayerAccessibility = (player: any): void => {
     // Set the video tech element to aria-hidden, and label the buttons in the videojs control bar.
     $('.vjs-tech', player.el()).attr('aria-hidden', true);
 
@@ -48,7 +48,7 @@ const upgradeVideoPlayerAccessibility = player => {
     );
 };
 
-const createVideoPlayer = (el, options) => {
+const createVideoPlayer = (el: HTMLElement, options: Object): any => {
     const player = videojs(el, options);
 
     const duration = parseInt(el.getAttribute('data-duration'), 10);
@@ -69,7 +69,7 @@ const createVideoPlayer = (el, options) => {
     return player;
 };
 
-const initEndSlate = (player, endSlatePath) => {
+const initEndSlate = (player: any, endSlatePath: string): void => {
     const endSlate = new Component();
     const endStateClass = 'vjs-has-ended';
 
@@ -88,7 +88,7 @@ const initEndSlate = (player, endSlatePath) => {
     });
 };
 
-const initExploreVideo = () => {
+const initExploreVideo = (): void => {
     const player = $('.vjs-tech');
     const headline = $('.explore-series-headline')[0];
     const controls = $('.vjs-control-bar');
@@ -105,7 +105,11 @@ const initExploreVideo = () => {
     }
 };
 
-const enhanceVideo = (el, autoplay, shouldPreroll) => {
+const enhanceVideo = (
+    el: HTMLElement,
+    autoplay: boolean,
+    shouldPreroll: boolean = false
+): any => {
     const mediaType = el.tagName.toLowerCase();
     const $el = bonzo(el).addClass('vjs');
     const mediaId = $el.attr('data-media-id');
@@ -299,7 +303,7 @@ const enhanceVideo = (el, autoplay, shouldPreroll) => {
     return player;
 };
 
-const initPlayButtons = root => {
+const initPlayButtons = (root: ?HTMLElement): void => {
     fastdom.read(() => {
         $('.js-video-play-button', root).each(el => {
             const $el = bonzo(el);
@@ -330,7 +334,7 @@ const initPlayButtons = root => {
     });
 };
 
-const initPlayer = withPreroll => {
+const initPlayer = (withPreroll: boolean): void => {
     videojs.plugin('skipAd', skipAd);
     videojs.plugin('fullscreener', fullscreener);
 
@@ -341,9 +345,9 @@ const initPlayer = withPreroll => {
     });
 };
 
-const getMediaType = () => config.page.contentType.toLowerCase();
+const getMediaType = (): string => config.page.contentType.toLowerCase();
 
-const initMoreInSection = () => {
+const initMoreInSection = (): void => {
     if (
         !config.isMedia ||
         !config.page.showRelatedContent ||
@@ -362,7 +366,7 @@ const initMoreInSection = () => {
     );
 };
 
-const initOnwardContainer = () => {
+const initOnwardContainer = (): void => {
     if (!config.isMedia) {
         return;
     }
@@ -379,7 +383,7 @@ const initOnwardContainer = () => {
     });
 };
 
-const initWithRaven = withPreroll => {
+const initWithRaven = (withPreroll: boolean = false): void => {
     raven.wrap(
         {
             tags: {
@@ -392,7 +396,7 @@ const initWithRaven = withPreroll => {
     )();
 };
 
-const initFacia = () => {
+const initFacia = (): void => {
     if (config.page.isFront) {
         $('.js-video-playlist').each(el => {
             videoContainer.init(el);
@@ -400,7 +404,7 @@ const initFacia = () => {
     }
 };
 
-export const init = () => {
+export const init = (): void => {
     // The `hasMultipleVideosInPage` flag is temporary until the # will be fixed
     const shouldPreroll =
         commercialFeatures.videoPreRolls &&
