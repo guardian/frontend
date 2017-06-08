@@ -11,7 +11,7 @@ import {
     fabricExpandVideo,
 } from 'commercial/modules/creatives/fabric-expandable-video-v2';
 import { FabricVideo } from 'commercial/modules/creatives/fabric-video';
-import scrollable from 'commercial/modules/creatives/scrollable-mpu-v2';
+import { ScrollableMpu } from 'commercial/modules/creatives/scrollable-mpu-v2';
 
 const creativeLookup: Object = {
     frame: Frame,
@@ -20,7 +20,7 @@ const creativeLookup: Object = {
     'fabric-expanding-v1': fabricExpand,
     'fabric-expandable-video-v2': fabricExpandVideo,
     'fabric-video': FabricVideo,
-    'scrollable-mpu-v2': scrollable,
+    'scrollable-mpu-v2': ScrollableMpu,
 };
 
 const renderCreativeTemplate = (
