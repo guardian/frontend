@@ -8,10 +8,13 @@ const USER_FEATURES_EXPIRY_COOKIE = 'gu_user_features_expiry';
 const PAYING_MEMBER_COOKIE = 'gu_paying_member';
 const AD_FREE_USER_COOKIE = 'GU_AFU';
 
-const userHasData = (): ?string =>
-    getCookie(USER_FEATURES_EXPIRY_COOKIE) ||
-    getCookie(PAYING_MEMBER_COOKIE) ||
-    getCookie(AD_FREE_USER_COOKIE);
+const userHasData = (): boolean => {
+    const cookie =
+        getCookie(USER_FEATURES_EXPIRY_COOKIE) ||
+        getCookie(PAYING_MEMBER_COOKIE) ||
+        getCookie(AD_FREE_USER_COOKIE);
+    return !!cookie;
+};
 
 const persistResponse = (JsonResponse: () => void) => {
     const expiryDate = new Date();
@@ -50,7 +53,7 @@ const userNeedsNewFeatureData = (): boolean =>
     featuresDataIsMissing() || featuresDataIsOld();
 
 const userHasDataAfterSignout = (): boolean =>
-    !identity.isUserLoggedIn() && !!userHasData();
+    !identity.isUserLoggedIn() && userHasData();
 
 /**
      * Updates the user's data in a lazy fashion
