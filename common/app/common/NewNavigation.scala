@@ -11,9 +11,26 @@ case class NavLinkLists(mostPopular: Seq[NavLink], leastPopular: Seq[NavLink] = 
 
 object NewNavigation {
 
-  val PrimaryLinks = List(headlines, opinion, sport, culture, lifestyle)
-  val topLevelSections = List(News, Opinion, Sport, Arts, Life)
-  val brandExtensions = List(jobs, dating, holidays, ukMasterClasses)
+  val PrimaryLinks = List(
+    headlines,
+    opinion,
+    sport,
+    culture,
+    lifestyle
+  )
+  val topLevelSections = List(
+    News,
+    Opinion,
+    Sport,
+    Arts,
+    Life
+  )
+  val brandExtensions = List(
+    jobs,
+    dating,
+    holidays.copy(url = holidays.url + "?campaign=NewHeader"),
+    ukMasterClasses
+  )
 
   def getMembershipLinks(edition: Edition): NavLinkLists = {
     val editionId = edition.id.toLowerCase()
@@ -233,7 +250,6 @@ object NewNavigation {
     val uk = NavLinkLists(List(
       jobs.copy(url = jobs.url + "?INTCMP=jobs_uk_web_newheader"),
       dating.copy(url = dating.url + "?INTCMP=soulmates_uk_web_newheader"),
-      NavLink("holidays", "https://holidays.theguardian.com/?utm_source=theguardian&utm_medium=guardian-links&utm_campaign=topnav&INTCMP=topnav"),
       ukMasterClasses,
       NavLink("professional networks", "/guardian-professional"),
       apps.copy(url = apps.url + "?INTCMP=apps_uk_web_newheader"),
