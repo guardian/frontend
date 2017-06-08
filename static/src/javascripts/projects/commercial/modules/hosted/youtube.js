@@ -37,11 +37,15 @@ const sendPercentageCompleteEvents = (
 };
 
 export const initHostedYoutube = (el: HTMLElement): void => {
-    const atomId: string = toString(el.getAttribute('data-media-id'));
+    const atomId: ?string = el && el.getAttribute('data-media-id');
     const duration: number = Number(el.getAttribute('data-duration'));
     const youtubeTimer = document.getElementsByClassName(
         'js-youtube-current-time'
     )[0];
+
+    if (!atomId || !duration) {
+        return;
+    }
 
     let playTimer;
 

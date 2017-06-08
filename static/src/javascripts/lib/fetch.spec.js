@@ -21,7 +21,7 @@ describe('Fetch util', () => {
         fetch('error-path')
             .then(done.fail)
             .catch(ex => {
-                expect(ex instanceof Error).toBe(true, 'rejects an error');
+                expect(ex instanceof Error).toBe(true);
                 expect(ex.message).toMatch(/fetch error/i);
                 done();
             })
@@ -33,9 +33,9 @@ describe('Fetch util', () => {
     it('returns a promise which resolves on error responses', done => {
         fetch('404-error-response')
             .then(resp => {
-                expect(resp.ok).toBe(false, 'resp.ok');
-                expect(resp.status).toBe(404, 'resp.status');
-                expect(resp.statusText).toBe('Not Found', 'resp.statusText');
+                expect(resp.ok).toBe(false);
+                expect(resp.status).toBe(404);
+                expect(resp.statusText).toBe('Not Found');
 
                 return resp.text();
             })
@@ -51,15 +51,15 @@ describe('Fetch util', () => {
     it('rejects if response is not correct json', done => {
         fetch('invalid-json')
             .then(resp => {
-                expect(resp.ok).toBe(true, 'resp.ok');
-                expect(resp.status).toBe(200, 'resp.status');
-                expect(resp.statusText).toBe('OK', 'resp.statusText');
+                expect(resp.ok).toBe(true);
+                expect(resp.status).toBe(200);
+                expect(resp.statusText).toBe('OK');
 
                 return resp.json();
             })
             .then(done.fail)
             .catch(ex => {
-                expect(ex instanceof Error).toBe(true, 'rejects an error');
+                expect(ex instanceof Error).toBe(true);
                 expect(ex.message).toMatch(/json/i);
                 done();
             })
@@ -73,7 +73,7 @@ describe('Fetch util', () => {
             .then(resp => Promise.all([resp.text(), resp.json()]))
             .then(done.fail)
             .catch(ex => {
-                expect(ex instanceof TypeError).toBe(true, 'rejects an error');
+                expect(ex instanceof TypeError).toBe(true);
                 expect(ex.message).toBe('Already read');
                 done();
             })
@@ -85,9 +85,9 @@ describe('Fetch util', () => {
     it('resolves a correct response in plain text', done => {
         fetch('correct-json')
             .then(resp => {
-                expect(resp.ok).toBe(true, 'resp.ok');
-                expect(resp.status).toBe(200, 'resp.status');
-                expect(resp.statusText).toBe('OK', 'resp.statusText');
+                expect(resp.ok).toBe(true);
+                expect(resp.status).toBe(200);
+                expect(resp.statusText).toBe('OK');
 
                 return resp.text();
             })
@@ -103,9 +103,9 @@ describe('Fetch util', () => {
     it('resolves a correct response in json', done => {
         fetch('correct-json')
             .then(resp => {
-                expect(resp.ok).toBe(true, 'resp.ok');
-                expect(resp.status).toBe(200, 'resp.status');
-                expect(resp.statusText).toBe('OK', 'resp.statusText');
+                expect(resp.ok).toBe(true);
+                expect(resp.status).toBe(200);
+                expect(resp.statusText).toBe('OK');
 
                 return resp.json();
             })
