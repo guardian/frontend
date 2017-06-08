@@ -3,12 +3,15 @@
 import { addCookie, removeCookie, getCookie } from 'lib/cookies';
 import fetchJson from 'lib/fetch-json';
 import identity from 'common/modules/identity/api';
-import { refresh } from './user-features.js';
+import { refresh, isAdFreeUser, isPayingMember } from './user-features.js';
 
-jest.mock('projects/common/modules/identity/api', () => jest.fn());
-jest.mock('lib/fetch-json', () => jest.fn());
+jest.mock('projects/common/modules/identity/api', () => ({
+    isUserLoggedIn: jest.fn(),
+}));
+jest.mock('lib/fetch-json', () => jest.fn(() => Promise.resolve()));
 
 const fetchJsonSpy: any = fetchJson;
+const isUserLoggedIn: any = identity.isUserLoggedIn;
 
 const PERSISTENCE_KEYS = {
     USER_FEATURES_EXPIRY_COOKIE: 'gu_user_features_expiry',
@@ -40,8 +43,8 @@ const deleteAllFeaturesData = () => {
 describe('Refreshing the features data', () => {
     describe('If user signed in', () => {
         beforeEach(() => {
-            identity.isUserLoggedIn = () => true;
             jest.resetAllMocks();
+            isUserLoggedIn.mockReturnValue(true);
             fetchJsonSpy.mockReturnValue(Promise.resolve());
         });
 
@@ -93,6 +96,67 @@ describe('Refreshing the features data', () => {
 
             refresh();
             expect(fetchJsonSpy).toHaveBeenCalledTimes(1);
+        });
+    });
+
+    describe('If user signed out', () => {
+        beforeEach(() => {
+            jest.resetAllMocks();
+            isUserLoggedIn.mockReturnValue(false);
+            fetchJsonSpy.mockReturnValue(Promise.resolve());
+        });
+
+        it('Does not perform update, even if feature data missing', () => {
+            deleteAllFeaturesData();
+            refresh();
+            expect(fetchJsonSpy).not.toHaveBeenCalled();
+        });
+
+        it('Deletes leftover feature data', () => {
+            setAllFeaturesData({ isExpired: false });
+            refresh();
+            expect(getCookie(PERSISTENCE_KEYS.AD_FREE_USER_COOKIE)).toBeNull();
+            expect(getCookie(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE)).toBeNull();
+            expect(
+                getCookie(PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE)
+            ).toBeNull();
+        });
+    });
+});
+
+describe('The isAdFreeUser getter', () => {
+    it('Is false when the user is logged out', () => {
+        isUserLoggedIn.mockReturnValue(false);
+        expect(isAdFreeUser()).toBe(false);
+    });
+});
+
+describe('The isPayingMember getter', () => {
+    it('Is false when the user is logged out', () => {
+        isUserLoggedIn.mockReturnValue(false);
+        expect(isAdFreeUser()).toBe(false);
+    });
+
+    describe('When the user is logged in', () => {
+        beforeEach(() => {
+            jest.resetAllMocks();
+            isUserLoggedIn.mockReturnValue(true);
+        });
+
+        it('Is true when the user has a `true` paying member cookie', () => {
+            addCookie(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE, 'true');
+            expect(isPayingMember()).toBe(true);
+        });
+
+        it('Is false when the user has a `false` paying member cookie', () => {
+            addCookie(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE, 'false');
+            expect(isPayingMember()).toBe(false);
+        });
+
+        it('Is true when the user has no paying member cookie', () => {
+            // If we don't know, we err on the side of caution, rather than annoy paying users
+            removeCookie(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE);
+            expect(isPayingMember()).toBe(true);
         });
     });
 });
