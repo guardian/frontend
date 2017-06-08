@@ -123,9 +123,7 @@ define([
 
                 template: function (variant) {
                     return template(liveblogEpicTemplateOldDesignSubtle, {
-                        copy: acquisitionsCopy.liveblogSubtle,
-                        membershipUrl: variant.options.membershipURL,
-                        contributionUrl: variant.options.contributeURL,
+                        copy: acquisitionsCopy.liveblogSubtle(variant.options.membershipURL, variant.options.contributeURL),
                         componentName: variant.options.componentName
                     });
                 },
@@ -143,9 +141,7 @@ define([
 
                 template: function (variant) {
                     return template(liveblogEpicTemplateOldDesignMinimal, {
-                        copy: acquisitionsCopy.liveblogMinimal,
-                        membershipUrl: variant.options.membershipURL,
-                        contributionUrl: variant.options.contributeURL,
+                        copy: acquisitionsCopy.liveblogMinimal(variant.options.membershipURL, variant.options.contributeURL),
                         componentName: variant.options.componentName
                     });
                 },
