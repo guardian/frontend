@@ -1,17 +1,33 @@
-import assign from 'lodash/objects/assign';
+// @flow
 import fastdom from 'lib/fastdom-promise';
-import messenger from 'commercial/modules/messenger';
-messenger.register('resize', function(specs, ret, iframe) {
-    var adSlot = iframe && iframe.closest('.js-ad-slot');
-    return resize(specs, iframe, adSlot);
-});
+import { register } from 'commercial/modules/messenger';
 
-function resize(specs, iframe, adSlot) {
-    if (!specs || !('height' in specs || 'width' in specs) || !iframe || !adSlot) {
+type Specs = {
+    width?: string,
+    height?: string,
+};
+
+const normalise = (length: string | number): string => {
+    const lengthRegexp = /^(\d+)(%|px|em|ex|ch|rem|vh|vw|vmin|vmax)?/;
+    const defaultUnit = 'px';
+    const matches = String(length).match(lengthRegexp);
+    if (!matches) {
+        return '';
+    }
+    return matches[1] + (matches[2] === undefined ? defaultUnit : matches[2]);
+};
+
+const resize = (specs: Specs, iframe: HTMLElement, adSlot: HTMLElement) => {
+    if (
+        !specs ||
+        !('height' in specs || 'width' in specs) ||
+        !iframe ||
+        !adSlot
+    ) {
         return null;
     }
 
-    var styles = {};
+    const styles = {};
 
     if (specs.width) {
         styles.width = normalise(specs.width);
@@ -21,20 +37,17 @@ function resize(specs, iframe, adSlot) {
         styles.height = normalise(specs.height);
     }
 
-    return fastdom.write(function() {
-        assign(adSlot.style, styles);
-        assign(iframe.style, styles);
+    return fastdom.write(() => {
+        Object.assign(adSlot.style, styles);
+        Object.assign(iframe.style, styles);
     });
-}
+};
 
-function normalise(length) {
-    var lengthRegexp = /^(\d+)(%|px|em|ex|ch|rem|vh|vw|vmin|vmax)?/;
-    var defaultUnit = 'px';
-    var matches = String(length).match(lengthRegexp);
-    if (!matches) {
-        return null;
+register('resize', (specs, ret, iframe) => {
+    if (iframe && specs) {
+        const adSlot = iframe && iframe.closest('.js-ad-slot');
+        return resize(specs, iframe, adSlot);
     }
-    return matches[1] + (matches[2] === undefined ? defaultUnit : matches[2]);
-}
+});
 
-export default resize;
+export const _ = { resize, normalise };
