@@ -10,8 +10,8 @@ import {
 export const template = (variant: Variant) =>
     lodashTemplate(epicControlTemplate, {
         copy: postElectionResultsCopy,
-        membershipUrl: variant.options.membershipURL,
-        contributionUrl: variant.options.contributeURL,
-        componentName: variant.options.componentName,
+        membershipUrl: variant.options && variant.options.membershipURL,
+        contributionUrl: variant.options && variant.options.contributeURL,
+        componentName: variant.options && variant.options.componentName,
         testimonialBlock: '',
     });
