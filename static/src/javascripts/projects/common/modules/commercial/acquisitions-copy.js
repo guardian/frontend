@@ -59,3 +59,10 @@ export const liveblogMinimal = (
     p1: controlP1,
     p2: `If everyone who reads our reporting, who likes it, helps to support it, our future would be much more secure. You can give to the Guardian by <a href="${membershipUrl}" target="_blank" class="u-underline">becoming a monthly supporter</a> or by making a <a href="${contributionsUrl}" target="_blank" class="u-underline">one-off contribution</a>. - Guardian HQ`,
 });
+
+// This one will be changed to reflect the situation after the election results come in
+export const postElectionResults: AcquisitionsEpicTemplateCopy = {
+    heading: 'POST ELECTION HEADING - CHANGE ME',
+    p1: 'POST ELECTION PARAGRAPH ONE - CHANGE ME',
+    p2: 'POST ELECTION PARAGRAPH TWO - CHANGE ME',
+};

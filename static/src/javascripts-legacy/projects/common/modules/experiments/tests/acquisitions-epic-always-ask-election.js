@@ -1,7 +1,15 @@
 define([
     'common/modules/commercial/contributions-utilities',
+    'raw-loader!common/views/acquisitions-epic-control.html',
+    'common/modules/commercial/acquisitions-copy',
+    'common/modules/commercial/acquisitions-epic-testimonial-parameters',
+    'common/modules/commercial/acquisitions-post-election'
 ], function (
-    contributionsUtilities
+    contributionsUtilities,
+    epicControlTemplate,
+    acquisitionsCopy,
+    acquisitionsTestimonialParameters,
+    acquisitionsPostElection
 ) {
 
 
@@ -28,6 +36,11 @@ define([
                 id: 'control',
                 isUnlimited : true,
                 useTailoredCopyForRegulars: true
+            },
+            {
+                id: 'post_election_message',
+                isUnlimited: true,
+                template: acquisitionsPostElection.template
             }
         ]
     });

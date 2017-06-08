@@ -1,0 +1,17 @@
+// @flow
+
+import epicControlTemplate
+    from 'raw-loader!common/views/acquisitions-epic-control.html';
+import lodashTemplate from 'lodash/utilities/template';
+import {
+    postElectionResults as postElectionResultsCopy,
+} from 'common/modules/commercial/acquisitions-copy';
+
+export const template = variant =>
+    lodashTemplate(epicControlTemplate, {
+        copy: postElectionResultsCopy,
+        membershipUrl: variant.options.membershipURL,
+        contributionUrl: variant.options.contributeURL,
+        componentName: variant.options.componentName,
+        testimonialBlock: '',
+    });
