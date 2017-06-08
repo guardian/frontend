@@ -6,33 +6,17 @@
         width: auto;
     }
 
-    > *[data-link-name='nav2 : the guardian app'],
-    > *[data-link-name='nav2 : facebook'] {
-        @include mq($until: desktop) {
-            border-top: 1px solid darken($guardian-brand-dark, 4%);
-            margin-top: $gs-baseline * 2;
-        }
-    }
-
-    // First level overwrites
     .menu-group--primary > & {
-        @include mq($until: desktop) {
-            > *:not([open]) {
-                border-bottom: 1px solid darken($guardian-brand-dark, 4%);
-            }
-
-            &:last-child > * {
-                border-bottom: 0;
-            }
-        }
-
         @include mq(desktop) {
-            padding-left: $gs-gutter / 2;
-            padding-right: $gs-gutter / 2;
             width: 100%;
 
-            &:not(:last-child) {
+            &:not(:first-child) {
+                padding-left: $gs-gutter / 2;
+            }
+
+            & {
                 border-right: 1px solid $news-main-2;
+                padding-right: $gs-gutter / 2;
             }
         }
     }
@@ -44,39 +28,129 @@
     }
 }
 
+.menu-item--edition {
+    @include mq(desktop) {
+        background-color: $guardian-brand;
+        display: block;
+        height: 54px;
+        border-radius: 50%;
+        text-align: center;
+        width: 54px;
+    }
+
+    &:hover,
+    &:focus {
+        // TODO: Zef!!1
+        background-color: #00d4ff;
+        color: #ffffff;
+    }
+
+    & + & {
+        @include mq(desktop) {
+            margin-left: $gs-gutter / 2;
+        }
+    }
+}
+
+.menu-item--edition-active {
+    @include mq(desktop) {
+        background-color: $guardian-brand-light;
+        color: $guardian-brand-dark;
+    }
+}
+
 .menu-item__title {
+    background-color: transparent;
+    border: 0;
     color: currentColor;
     cursor: pointer;
     display: block;
     font-size: 20px;
     outline: none;
-    padding-bottom: 8px;
-    padding-right: $veggie-burger-medium / 2 + $gs-gutter / 2;
-    padding-top: 8px;
-    user-select: none;
+    padding: 8px $veggie-burger-medium / 2 + $gs-gutter / 2 8px $menu-spacing-left-small;
+    position: relative;
+    text-align: left;
+    width: 100%;
+
+    @include mq(tablet) {
+        padding-left: $menu-spacing-left-medium;
+    }
+
+    @include mq(desktop) {
+        font-size: 17px;
+        padding-left: 0;
+    }
 
     &:hover,
     &:focus {
         text-decoration: none;
+
+        // TODO: maybe unify?
+        @include mq(desktop) {
+            color: #ffffff;
+        }
     }
 
-    // only for Chrome/ Safari - FF looses the marker via display: block
-    &::-webkit-details-marker {
-        display: none;
+    > * {
+        pointer-events: none;
+    }
+
+    &[data-link-name='nav2 : the guardian app'],
+    &[data-link-name='nav2 : facebook'] {
+        @include mq($until: desktop) {
+            margin-top: $gs-baseline * 2;
+        }
+    }
+
+    .menu-group--primary > *:not(:first-child) > &,
+    &[data-link-name='nav2 : the guardian app'],
+    &[data-link-name='nav2 : facebook'] {
+        @include mq($until: desktop) {
+            &:before {
+                background-color: darken($guardian-brand-dark, 4%);
+                content: '';
+                display: block;
+                height: 1px;
+                left: $menu-spacing-left-small;
+                position: absolute;
+                top: 0;
+                width: 100%;
+
+                @include mq(tablet) {
+                    left: $menu-spacing-left-medium;
+                }
+            }
+        }
     }
 
     // only match the ones, which are not in --secondary
-    .menu-group--primary > .menu-item > * > & {
+    .menu-group--primary > .menu-item > & {
         font-size: 24px;
         padding-bottom: 16px;
         padding-top: $gs-baseline / 2;
+
+        @include mq(desktop) {
+            font-size: 32px;
+        }
+    }
+
+    .menu-item--edition > & {
+        @include mq(desktop) {
+            line-height: 40px;
+            text-align: center;
+        }
     }
 }
 
 .menu-item__icon,
 .menu-item__toggle {
     color: $news-support-2;
+    left: 25px;
     position: absolute;
+
+    @include mq(tablet) {
+        left: 35px;
+    }
 
     @include mq(desktop) {
         display: none;
@@ -84,10 +158,9 @@
 }
 
 .menu-item__toggle {
-    left: -25px;
     margin-top: -4px;
 
-    details[open] & {
+    [aria-expanded='true'] > & {
         margin-top: 2px;
     }
 
@@ -101,14 +174,14 @@
         transform: rotate(45deg);
         width: 8px;
 
-        details[open] & {
+        [aria-expanded='true'] > & {
             transform: rotate(-135deg);
         }
     }
 }
 
 .menu-item__icon {
-    left: -28px;
+    margin-left: -3px;
 
     .inline-icon__svg {
         fill: currentColor;
@@ -124,4 +197,11 @@
         margin-left: -6px;
         margin-top: -5px;
     }
+}
+
+.menu-item__editions-label {
+    font-size: 17px;
+    left: 0;
+    position: absolute;
+    top: -$gs-baseline * 2;
 }

@@ -61,7 +61,7 @@ object NavLinks {
   val theGuardianView = NavLink("the guardian view", "/profile/editorial", "profile/editorial")
   val cartoons = NavLink("cartoons", "/cartoons/archive", "cartoons/archive")
   val inMyOpinion = NavLink("opinion videos", "/commentisfree/series/comment-is-free-weekly", "commentisfree/series/comment-is-free-weekly")
-  val letters = NavLink("letters", "/theguardian/mainsection/editorialsandreply")
+  val letters = NavLink("letters", "/tone/letters")
   val editorials = NavLink("editorials", "/tone/editorials")
 
   /* SPORT */

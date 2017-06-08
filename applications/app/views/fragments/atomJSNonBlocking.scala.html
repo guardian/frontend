@@ -1,0 +1,15 @@
+@import conf.Configuration
+@import model.Page
+@import templates.inlineJS.nonBlocking.js.ophanConfig
+
+@(page: Page)(implicit request: RequestHeader, context: model.ApplicationContext)
+
+@**
+ * Use this fragment to add JavaScript that can improve the perceived rendering speed
+ * but that is too blocking / risky to be put in the `head` of the document
+ *@
+
+ <script>
+     @* Find the Ophan browser ID as well, for sharing with GA *@
+     @Html(ophanConfig().body)
+ </script>

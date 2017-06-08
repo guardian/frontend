@@ -1,0 +1,18 @@
+@import model.AtomPage
+@import conf.Configuration
+
+@(page: AtomPage)(implicit request: RequestHeader, context: model.ApplicationContext)
+
+<!DOCTYPE html>
+<html lang="en-GB" class="gu-atom-embed-html">
+<head>
+    <meta charset="utf-8">
+    <title>@page.metadata.webTitle</title>
+    <base target="_top">
+    @fragments.atomPageHead(page)
+</head>
+<body>
+    @page.body
+    @fragments.atomPageFoot(page)
+</body>
+</html>

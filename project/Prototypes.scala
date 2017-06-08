@@ -15,6 +15,7 @@ trait Prototypes {
   val version = "1-SNAPSHOT"
 
   val cleanAll = taskKey[Unit]("Cleans all projects in a build, regardless of dependencies")
+  val checkScalastyle = taskKey[Unit]("check scalastyle compliance")
 
   val frontendCompilationSettings = Seq(
     organization := "com.gu",
@@ -77,8 +78,10 @@ trait Prototypes {
   val frontendTestSettings = Seq(
     // Use ScalaTest https://groups.google.com/d/topic/play-framework/rZBfNoGtC0M/discussion
     testOptions in Test := Nil,
-
     concurrentRestrictions in Global := List(Tags.limit(Tags.Test, 4)),
+
+    checkScalastyle := org.scalastyle.sbt.ScalastylePlugin.scalastyle.in(Test).toTask("").value,
+    (test in Test) := (test in Test).dependsOn(checkScalastyle).value,
 
     // Copy unit test resources https://groups.google.com/d/topic/play-framework/XD3X6R-s5Mc/discussion
     unmanagedClasspath in Test += (baseDirectory map { bd => Attributed.blank(bd / "test") }).value,
@@ -105,7 +108,7 @@ trait Prototypes {
   val upload = taskKey[Unit]("upload riff-raff artifact from root project")
   val testThenUpload = taskKey[Unit]("Conditional task that uploads to riff raff only if tests pass")
 
-  def frontendRootSettings= List(
+  def frontendRootSettings: Seq[Def.Setting[Task[Unit]]] = List(
     testAll := (test in Test).all(ScopeFilter(inAggregates(ThisProject, includeRoot = false))).value,
     upload := riffRaffUpload.in(LocalRootProject).value,
 
@@ -122,11 +125,11 @@ trait Prototypes {
     }).value
   )
 
-  def root() = Project("root", base = file(".")).enablePlugins(PlayScala, RiffRaffArtifact)
+  def root(): Project = Project("root", base = file(".")).enablePlugins(PlayScala, RiffRaffArtifact)
     .settings(frontendCompilationSettings)
     .settings(frontendRootSettings)
 
-  def application(applicationName: String) = {
+  def application(applicationName: String): Project = {
     Project(applicationName, file(applicationName)).enablePlugins(PlayScala, UniversalPlugin)
     .settings(frontendDependencyManagementSettings)
     .settings(frontendCompilationSettings)
@@ -137,7 +140,7 @@ trait Prototypes {
     .settingSets(settingSetsOrder)
   }
 
-  def library(applicationName: String) = {
+  def library(applicationName: String): Project = {
     Project(applicationName, file(applicationName)).enablePlugins(PlayScala)
     .settings(frontendDependencyManagementSettings)
     .settings(frontendCompilationSettings)

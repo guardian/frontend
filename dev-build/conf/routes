@@ -344,11 +344,10 @@ GET            /sharecount/*path.json                                           
 GET            /2015-06-24-manifest.json                                                                                         controllers.WebAppController.manifest()
 GET            /preferences                                                                                                      controllers.PreferencesController.indexPrefs()
 GET            /embed/video/*path                                                                                                controllers.EmbedController.render(path)
-GET            /embed/atom/media/:id                                                                                             controllers.MediaAtomEmbedController.render(id)
-GET            /embed/atom/story-questions/:id                                                                                   controllers.StoryQuestionsAtomEmbedController.render(id)
-POST           /story-questions/answers/signup                                                                                   controllers.StoryQuestionsAtomEmbedController.signup()
-OPTIONS        /story-questions/answers/signup                                                                                   controllers.StoryQuestionsAtomEmbedController.options()
-
+GET            /embed/atom/:atomType/:id                                                                                         controllers.AtomPageController.render(atomType: String, id: String, isJsEnabled: Boolean = true)
+GET            /embed/atom/:atomType/:id/nojs                                                                                    controllers.AtomPageController.render(atomType: String, id: String, isJsEnabled: Boolean = false)
+POST           /story-questions/answers/signup                                                                                   controllers.AtomPageController.signup()
+OPTIONS        /story-questions/answers/signup                                                                                   controllers.AtomPageController.options()
 
 GET            /index/subjects                                                                                                   controllers.TagIndexController.keywords()
 GET            /index/subjects/*index                                                                                            controllers.TagIndexController.keyword(index)
