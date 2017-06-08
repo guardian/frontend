@@ -137,25 +137,3 @@ class DayMostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi
     }
   }
 }
-
-class MostPopularExpandableAgent(contentApiClient: ContentApiClient) extends Logging with ExecutionContexts {
-
-  private val agent = AkkaAgent[Map[String, Seq[RelatedContentItem]]](Map.empty)
-
-  def mostPopular(edition: Edition): Seq[RelatedContentItem] = agent().getOrElse(edition.id, Nil)
-
-  def refresh() {
-    log.info("Refreshing most popular.")
-    Edition.all foreach { edition =>
-      contentApiClient.getResponse(contentApiClient.item("/", edition)
-        .showMostViewed(true)
-        .showFields("headline,trail-text,liveBloggingNow,thumbnail,hasStoryPackage,wordcount,shortUrl,body")
-      ).foreach { response =>
-        val mostViewed = response.mostViewed.getOrElse(Nil) take 10 map { RelatedContentItem(_) }
-        agent.send{ old =>
-          old + (edition.id -> mostViewed)
-        }
-      }
-    }
-  }
-}

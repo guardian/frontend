@@ -12,7 +12,6 @@ class OnwardJourneyLifecycle(
   geoMostPopularAgent: GeoMostPopularAgent,
   dayMostPopularAgent: DayMostPopularAgent,
   mostPopularAgent: MostPopularAgent,
-  mostPopularExpandableAgent: MostPopularExpandableAgent,
   mostViewedAudioAgent: MostViewedAudioAgent,
   mostViewedGalleryAgent: MostViewedGalleryAgent,
   mostViewedVideoAgent: MostViewedVideoAgent)(implicit ec: ExecutionContext) extends LifecycleComponent {
@@ -28,7 +27,6 @@ class OnwardJourneyLifecycle(
     // fire every min
     jobs.schedule("OnwardJourneyAgentsRefreshJob", "0 * * * * ?") {
       mostPopularAgent.refresh()
-      mostPopularExpandableAgent.refresh()
       geoMostPopularAgent.refresh()
       mostViewedVideoAgent.refresh()
       mostViewedAudioAgent.refresh()
@@ -42,7 +40,6 @@ class OnwardJourneyLifecycle(
 
     akkaAsync.after1s {
       mostPopularAgent.refresh()
-      mostPopularExpandableAgent.refresh()
       geoMostPopularAgent.refresh()
       mostViewedVideoAgent.refresh()
       mostViewedAudioAgent.refresh()
