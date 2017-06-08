@@ -1,4 +1,6 @@
-@()(implicit request: RequestHeader)
+@import conf.switches.Switches._
+
+@(isPolitics: Boolean)(implicit request: RequestHeader)
 <form class="component js-comment-box d-comment-box">
 
     <div class="d-comment-box__meta">
@@ -47,7 +49,12 @@
             <span class="d-discussion__error-text">Your comments are currently being pre-moderated (<a href="/community-faqs#311" target="_blank">why?</a>)</span>
         </div>
 
-        <div class="d-comment-box__community-standards">Please keep comments respectful and abide by the <a href="/community-standards">community guidelines</a>.</div>
+        @if(DiscussionWarnVoteDeclaration.isSwitchedOn && isPolitics) {
+          <div class="d-comment-box__community-standards">While polls remain open, and if you are entitled to vote in the election, please refrain from disclosing your voting choices. Any comment declaring how you cast your vote will be removed by moderators owing to restrictions on polls and reporting, set out in article 66A of the Representation of the People Act 1983. Once all polling stations have closed this restriction will be lifted. Thank you for your cooperation.</div>
+        } else {
+          <div class="d-comment-box__community-standards">Please keep comments respectful and abide by the <a href="/community-standards">community guidelines</a>.</div>
+        }
+
         <label for="d-comment-box" class="u-h">Enter comment</label>
         <textarea name="body" class="textarea d-comment-box__body" placeholder="Join the discussion…" id="d-comment-box"></textarea>
         <button type="submit" data-link-name="post comment" class="u-button-reset button button--large button--primary submit-input--behaviour d-comment-box__submit">Post your comment</button>
