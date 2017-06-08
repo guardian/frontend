@@ -14,7 +14,7 @@ define([
     config
 ) {
     var commercialFeatures, membershipMessages, mediator,
-        showMembershipMessages, alreadyVisited, storage, participations, geolocation;
+        showMembershipMessages, alreadyVisited, storage, participations, geolocation, cookies;
 
     var injector = new Injector();
 
@@ -41,13 +41,15 @@ define([
                 'common/modules/commercial/membership-engagement-banner',
                 'lib/storage',
                 'lib/mediator',
-                'lib/geolocation'
+                'lib/geolocation',
+                'lib/cookies'
             ], function () {
                 commercialFeatures = arguments[0].commercialFeatures;
                 membershipMessages = arguments[1];
                 storage = arguments[2];
                 mediator = arguments[3];
                 geolocation = arguments[4];
+                cookies = arguments[5];
                 done();
             }, function () {
                 // woohoo
@@ -227,6 +229,80 @@ define([
                     config.page = { edition: 'UK' };
                     mediator.on('banner-message:complete', function() {
                         expectMessageNotToBeVisible();
+                        done();
+                    });
+                    membershipMessages
+                        .init()
+                        .then(function () {
+                            mediator.emit('modules:onwards:breaking-news:ready', false);
+                        });
+                });
+            });
+        });
+        describe('If a contributor', function () {
+            beforeEach(function (done) {
+                showMembershipMessages = commercialFeatures.asynchronous.canDisplayMembershipEngagementBanner;
+                alreadyVisited = storage.local.get('gu.alreadyVisited');
+                fixtures.render(conf);
+                storage.local.set('gu.alreadyVisited', 10);
+                var now = new Date().getTime()
+                cookies.addCookie('gu.contributions.contrib-timestamp', now);
+                geolocation.setGeolocation('GB');
+                done();
+            });
+
+            afterEach(function () {
+                commercialFeatures.asynchronous.canDisplayMembershipEngagementBanner = showMembershipMessages;
+                storage.local.set('gu.alreadyVisited', alreadyVisited);
+                mediator.removeAllListeners();
+                fixtures.clean(conf.id);
+            });
+
+            describe('on the UK edition', function () {
+                it('should not redisplay that message', function (done) {
+                    var message = new Message(membershipMessages.messageCode);
+
+                    message.acknowledge();
+                    config.page = { edition: 'UK' };
+                    mediator.on('banner-message:complete', function() {
+                        expectMessageNotToBeVisible();
+                        done();
+                    });
+                    membershipMessages
+                        .init()
+                        .then(function () {
+                            mediator.emit('modules:onwards:breaking-news:ready', false);
+                        });
+                });
+            });
+        });
+        describe('If a lapsed contributor', function () {
+            beforeEach(function (done) {
+                showMembershipMessages = commercialFeatures.asynchronous.canDisplayMembershipEngagementBanner;
+                alreadyVisited = storage.local.get('gu.alreadyVisited');
+                fixtures.render(conf);
+                storage.local.set('gu.alreadyVisited', 10);
+                var moreThanSixMonthsAgo = (new Date().getTime()) - (181 * 24 * 60 * 60)
+                cookies.addCookie('gu.contributions.contrib-timestamp', moreThanSixMonthsAgo);
+                geolocation.setGeolocation('GB');
+                done();
+            });
+
+            afterEach(function () {
+                commercialFeatures.asynchronous.canDisplayMembershipEngagementBanner = showMembershipMessages;
+                storage.local.set('gu.alreadyVisited', alreadyVisited);
+                mediator.removeAllListeners();
+                fixtures.clean(conf.id);
+            });
+
+            describe('on the UK edition', function () {
+                it('should redisplay that message', function (done) {
+                    var message = new Message(membershipMessages.messageCode);
+
+                    message.acknowledge();
+                    config.page = { edition: 'UK' };
+                    mediator.on('banner-message:complete', function() {
+                        expectMessageToBeShown();
                         done();
                     });
                     membershipMessages
