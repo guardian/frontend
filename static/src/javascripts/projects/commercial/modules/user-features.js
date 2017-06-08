@@ -86,10 +86,3 @@ const isAdFreeUser = (): boolean => {
 };
 
 export { isAdFreeUser, isPayingMember, refresh };
-
-export const _ = {
-    requestNewData,
-    deleteOldData,
-    persistResponse,
-    userNeedsNewFeatureData,
-};
