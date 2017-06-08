@@ -1,14 +1,8 @@
 define([
     'common/modules/commercial/contributions-utilities',
-    'raw-loader!common/views/acquisitions-epic-control.html',
-    'common/modules/commercial/acquisitions-copy',
-    'common/modules/commercial/acquisitions-epic-testimonial-parameters',
     'common/modules/commercial/acquisitions-post-election'
 ], function (
     contributionsUtilities,
-    epicControlTemplate,
-    acquisitionsCopy,
-    acquisitionsTestimonialParameters,
     acquisitionsPostElection
 ) {
 
