@@ -287,7 +287,7 @@ define([
                 });
             }
 
-            return (typeof options.test === 'function') ? options.test(render.bind(this), this) : render.apply(this);
+            return (typeof options.test === 'function') ? options.test(render.bind(this), this, test) : render.apply(this);
         };
 
         this.registerIframeListener();
