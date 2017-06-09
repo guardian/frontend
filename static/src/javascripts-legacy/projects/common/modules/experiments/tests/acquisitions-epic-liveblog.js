@@ -1,7 +1,6 @@
 define([
     'common/modules/commercial/contributions-utilities',
     'common/modules/commercial/acquisitions-view-log',
-    'lib/geolocation',
     'lodash/utilities/template',
     'lib/$',
     'lib/config',
@@ -13,7 +12,6 @@ define([
 ], function (
     contributionsUtilities,
     viewLog,
-    geolocation,
     template,
     $,
     config,
