@@ -1,4 +1,4 @@
-// flow-typed signature: 075970e2fb5bbc0e1a6640cce9761707
+// flow-typed signature: 17104986e6da40918f03d129c01ae465
 // flow-typed version: <<STUB>>/requirejs_v^2.3.2/flow_v0.40.0
 
 /**
@@ -8,8 +8,8 @@
  *
  * Fill this stub out by replacing all the `any` types.
  *
- * Once filled out, we encourage you to share your work with the 
- * community by sending a pull request to: 
+ * Once filled out, we encourage you to share your work with the
+ * community by sending a pull request to:
  * https://github.com/flowtype/flow-typed
  */
 

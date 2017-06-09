@@ -1,4 +1,4 @@
-// flow-typed signature: d47053226f870d2279e3949fcdc8eea6
+// flow-typed signature: 3138ea7b8445fd1a16d4bb3461c91bfe
 // flow-typed version: <<STUB>>/karma-script-launcher_v^1.0.0/flow_v0.40.0
 
 /**
@@ -8,8 +8,8 @@
  *
  * Fill this stub out by replacing all the `any` types.
  *
- * Once filled out, we encourage you to share your work with the 
- * community by sending a pull request to: 
+ * Once filled out, we encourage you to share your work with the
+ * community by sending a pull request to:
  * https://github.com/flowtype/flow-typed
  */
 
