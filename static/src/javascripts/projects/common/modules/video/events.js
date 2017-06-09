@@ -12,7 +12,7 @@ import gaHelper from 'common/modules/video/ga-helper';
 import ophan from 'ophan/ng';
 
 /* global require */
-declare function Krux(): void;
+declare function Krux(eventType: string, ident: string, data: Object): void;
 
 const isDesktop = detect.isBreakpoint({
     min: 'desktop',
