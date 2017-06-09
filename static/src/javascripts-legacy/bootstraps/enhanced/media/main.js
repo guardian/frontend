@@ -333,7 +333,7 @@ define([
     }
 
     function initMoreInSection() {
-        if (!config.isMedia || !config.page.showRelatedContent || !config.page.section) {
+        if (!config.isMedia || !config.page.showRelatedContent || config.page.isPaidContent || !config.page.section) {
             return;
         }
 
