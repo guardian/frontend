@@ -1,7 +1,9 @@
 define([
+    'lib/noop',
     'helpers/fixtures',
     'helpers/injector'
 ], function (
+    noop,
     fixtures,
     Injector
 ) {
@@ -23,9 +25,7 @@ define([
                     return '<div class="ad-slot"></div>';
                 },
                 'commercial/modules/dfp/add-slot': {
-                    addSlot: function () {
-                        /* noop */
-                    }
+                    addSlot: noop.noop,
                 }
             });
             injector.require([

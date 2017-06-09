@@ -1,6 +1,6 @@
 // @flow
 
-const noop = (...args: Array<any>): any => {};
+import { noop } from 'lib/noop';
 
 const api = window.performance ||
 window.msPerformance ||
