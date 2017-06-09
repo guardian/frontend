@@ -3,12 +3,10 @@ package feed
 import contentapi.ContentApiClient
 import common._
 import model.RelatedContentItem
-import play.api.libs.json.{JsArray, JsValue}
-
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 import services.OphanApi
 
-class MostViewedAudioAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) extends Logging with ExecutionContexts {
+class MostViewedAudioAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) extends Logging {
 
   private val audioAgent = AkkaAgent[Seq[RelatedContentItem]](Nil)
   private val podcastAgent = AkkaAgent[Seq[RelatedContentItem]](Nil)
@@ -16,33 +14,19 @@ class MostViewedAudioAgent(contentApiClient: ContentApiClient, ophanApi: OphanAp
   def mostViewedAudio(): Seq[RelatedContentItem] = audioAgent()
   def mostViewedPodcast(): Seq[RelatedContentItem] = podcastAgent()
 
-  def refresh() = {
+  def refresh()(implicit ec: ExecutionContext) : Future[Seq[RelatedContentItem]] = {
     log.info("Refreshing most viewed audio.")
 
-    val ophanResponse = ophanApi.getMostViewedAudio(hours = 3, count = 100)
-
-    ophanResponse.map { result =>
-
-      val mostViewed: Iterable[Future[Option[RelatedContentItem]]] = for {
-        item: JsValue <- result.asOpt[JsArray].map(_.value).getOrElse(Nil)
-        url <- (item \ "url").asOpt[String]
-        count <- (item \ "count").asOpt[Int]
-      } yield {
-        contentApiClient.getResponse(contentApiClient.item(urlToContentPath(url), Edition.defaultEdition)).map(_.content.map { item =>
-          RelatedContentItem(item)
-        })
+    val ophanMostViewed = ophanApi.getMostViewedAudio(hours = 3, count = 100)
+    MostViewed.relatedContentItems(ophanMostViewed)(contentApiClient).flatMap { items =>
+      val allAudio = items.collect {
+        case audio if audio.exists(_.content.tags.isAudio) => audio
       }
+      val audio = allAudio.flatten.filter(!_.content.tags.isPodcast)
+      val podcast = allAudio.flatten.filter(_.content.tags.isPodcast)
 
-      Future.sequence(mostViewed).map { contentSeq =>
-        val allAudio = contentSeq.toSeq.collect {
-          case audio if audio.exists(_.content.tags.isAudio) => audio
-        }
-        val audio = allAudio.flatten.filter(!_.content.tags.isPodcast)
-        val podcast = allAudio.flatten.filter(_.content.tags.isPodcast)
-
-        audioAgent alter audio
-        podcastAgent alter podcast
-      }
+      audioAgent alter audio
+      podcastAgent alter podcast
     }
   }
 }
