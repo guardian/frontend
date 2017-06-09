@@ -46,7 +46,7 @@ module.exports = {
                     })
                     .catch(err => {
                         ctx.messages
-                            .push(`Your editor may be able to catch flow errors as you work:\n${chalk.underline('https://docs.google.com/a/guardian.co.uk/document/d/1-w5KdwNVAZcGRL3Q9QCvj5y3aQyoVizm6GrHQaqQHNE/edit?usp=sharing')}`);
+                            .push(`Your editor may be able to catch flow errors as you work:\n${chalk.underline('https://github.com/guardian/frontend/wiki/So-you-want-to-ES6%3F')}`);
 
                         throw err;
                     }),
