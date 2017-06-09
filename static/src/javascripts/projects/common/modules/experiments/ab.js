@@ -20,7 +20,7 @@ import {
     getForcedTests,
 } from 'common/modules/experiments/utils';
 
-const noop = (): null => null;
+const noop = (...args: Array<any>): null => null;
 
 // Finds variant in specific tests and runs it
 const runTest = (test: ABTest): void => {

@@ -57,7 +57,7 @@ class FiniteStateMachine {
         this.log('fsm: (event)', event);
 
         const state = this.context.state;
-        const noop = () => {};
+        const noop = (...args: Array<any>) => {};
 
         (this.states[state].events[event] || noop).call(this.context, data);
 

@@ -14,7 +14,7 @@ import ophan from 'ophan/ng';
 
 const not = f => (...args: any[]): boolean => !f(...args);
 const and = (f, g) => (...args: any[]): boolean => f(...args) && g(...args);
-const noop = (): null => null;
+const noop = (...args: Array<any>): null => null;
 
 const submit = (payload: OphanABPayload): void =>
     ophan.record({
