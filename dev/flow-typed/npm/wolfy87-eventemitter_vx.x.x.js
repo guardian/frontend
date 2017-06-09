@@ -1,4 +1,4 @@
-// flow-typed signature: 4783e2f738005006912ac582c3115261
+// flow-typed signature: 5485adf60bbea49b6d4c307c191cf658
 // flow-typed version: <<STUB>>/wolfy87-eventemitter_v~4.2.6/flow_v0.40.0
 
 /**
@@ -8,8 +8,8 @@
  *
  * Fill this stub out by replacing all the `any` types.
  *
- * Once filled out, we encourage you to share your work with the 
- * community by sending a pull request to: 
+ * Once filled out, we encourage you to share your work with the
+ * community by sending a pull request to:
  * https://github.com/flowtype/flow-typed
  */
 

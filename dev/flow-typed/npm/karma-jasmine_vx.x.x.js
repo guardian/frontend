@@ -1,4 +1,4 @@
-// flow-typed signature: 6d4bac47ab50b6df966aef3ae2d59cdb
+// flow-typed signature: 6ed855797138522107c2166557172969
 // flow-typed version: <<STUB>>/karma-jasmine_v^1.0.2/flow_v0.40.0
 
 /**
@@ -8,8 +8,8 @@
  *
  * Fill this stub out by replacing all the `any` types.
  *
- * Once filled out, we encourage you to share your work with the 
- * community by sending a pull request to: 
+ * Once filled out, we encourage you to share your work with the
+ * community by sending a pull request to:
  * https://github.com/flowtype/flow-typed
  */
 

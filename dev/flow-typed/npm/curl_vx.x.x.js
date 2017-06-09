@@ -1,4 +1,4 @@
-// flow-typed signature: 95cf5dec41f4e95892514830f76124fe
+// flow-typed signature: bcc7959050f15f49ac1af0292c2d2d07
 // flow-typed version: <<STUB>>/curl_vcujojs/curl#0.8.9/flow_v0.40.0
 
 /**
@@ -8,8 +8,8 @@
  *
  * Fill this stub out by replacing all the `any` types.
  *
- * Once filled out, we encourage you to share your work with the 
- * community by sending a pull request to: 
+ * Once filled out, we encourage you to share your work with the
+ * community by sending a pull request to:
  * https://github.com/flowtype/flow-typed
  */
 
