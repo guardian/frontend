@@ -232,7 +232,7 @@ const bindPrerollEvents = (player: Object) => {
     const events = {
         end() {
             player.trigger(constructEventName('preroll:end', player));
-            bindContentEvents(player, true);
+            bindContentEvents(player);
         },
         start() {
             const duration = player.duration();
