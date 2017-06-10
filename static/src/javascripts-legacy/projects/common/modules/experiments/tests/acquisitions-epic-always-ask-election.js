@@ -1,9 +1,7 @@
 define([
-    'common/modules/commercial/contributions-utilities',
-    'common/modules/commercial/acquisitions-post-election'
+    'common/modules/commercial/contributions-utilities'
 ], function (
-    contributionsUtilities,
-    acquisitionsPostElection
+    contributionsUtilities
 ) {
 
 
@@ -30,11 +28,6 @@ define([
                 id: 'control',
                 isUnlimited : true,
                 useTailoredCopyForRegulars: true
-            },
-            {
-                id: 'post_election_message',
-                isUnlimited: true,
-                template: acquisitionsPostElection.template
             }
         ]
     });
