@@ -114,11 +114,11 @@ class ScrollableMpu {
             if (
                 this.params.backgroundImagePType === 'fixed matching fluid250'
             ) {
-                updateFn = this.updateBgFluid250;
+                updateFn = () => this.updateBgFluid250();
             } else if (this.params.backgroundImagePType === 'parallax') {
-                updateFn = this.updateBgParallax;
+                updateFn = () => this.updateBgParallax();
             } else {
-                updateFn = this.updateBg;
+                updateFn = () => this.updateBg();
             }
 
             this.$scrollableImage = $(
