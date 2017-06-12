@@ -12,9 +12,7 @@ import bonzo from 'bonzo';
  * @return {Bonzo}
  */
 const svgEl = (type: string): bonzo =>
-    $.create(
-        document.createElementNS('http://www.w3.org/2000/svg', type).outerHTML
-    );
+    $.create(document.createElementNS('http://www.w3.org/2000/svg', type));
 
 /**
  * @param {Array} v
