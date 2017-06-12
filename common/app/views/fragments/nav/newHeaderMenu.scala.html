@@ -2,6 +2,7 @@
 
 @import common.{ NewNavigation, LinkTo, Edition }
 @import conf.switches.Switches.SearchSwitch
+@import views.support.RenderClasses
 
 @sectionList(topLevelSection: NewNavigation.EditionalisedNavigationSection) = {
     @defining(Edition(request)) { edition =>
@@ -21,7 +22,9 @@
                 aria-label="Submenu @{topLevelSection.name}"
                 role="menu">
                 @topLevelSection.getAllEditionalisedNavLinks(edition).map { sectionItem =>
-                    <li class="menu-item"
+                    <li class="@RenderClasses(Map(
+                                "menu-item--home" -> (sectionItem.iconName == "home")
+                            ), "menu-item")"
                         role="menuitem">
                         <a class="menu-item__title"
                            href="@LinkTo { @sectionItem.url }"

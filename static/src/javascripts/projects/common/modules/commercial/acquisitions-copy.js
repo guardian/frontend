@@ -59,3 +59,10 @@ export const liveblogMinimal = (
     p1: controlP1,
     p2: `If everyone who reads our reporting, who likes it, helps to support it, our future would be much more secure. You can give to the Guardian by <a href="${membershipUrl}" target="_blank" class="u-underline">becoming a monthly supporter</a> or by making a <a href="${contributionsUrl}" target="_blank" class="u-underline">one-off contribution</a>. - Guardian HQ`,
 });
+
+// This one will be changed to reflect the situation after the election results come in
+export const postElectionResults: AcquisitionsEpicTemplateCopy = {
+    heading: 'In a changing political landscape &hellip;',
+    p1: '&hellip; you can rely on the Guardian to report fairly and thoughtfully on what happens next. Democracy depends on debate and an independent media to hold power to account. But while more people are reading the Guardian than ever, advertising revenues across the media are falling fast. And unlike many news organisations, we haven’t put up a paywall &ndash; we want to keep our journalism as open as we can. So you can see why we need to ask for your help. The Guardian’s independent, investigative journalism takes a lot of time, money and hard work to produce. But we do it because we believe our perspective matters &ndash; because it might well be your perspective, too.',
+    p2: 'If you read the Guardian’s journalism, if you value it, join the hundreds of thousands of readers who are helping to fund it.',
+};

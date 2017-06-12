@@ -28,6 +28,12 @@
     }
 }
 
+.menu-item--home {
+    @include mq(desktop) {
+        display: none;
+    }
+}
+
 .menu-item--edition {
     @include mq(desktop) {
         background-color: $guardian-brand;

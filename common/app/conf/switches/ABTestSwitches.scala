@@ -61,6 +61,16 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-contributions-epic-ask-four-post-election",
+    "This tests a custom post-election epic on all articles for UK users, with a limit of 4 impressions in any given 30 days",
+    owners = Seq(Owner.withGithub("joelochlann")),
+    safeState = On,
+    sellByDate = new LocalDate(2018, 8, 7),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
     "ab-acquisitions-epic-liveblog",
     "This places the epic below those blocks on liveblogs which have been marked for displaying the epic in Composer",
     owners = Seq(Owner.withGithub("joelochlann")),

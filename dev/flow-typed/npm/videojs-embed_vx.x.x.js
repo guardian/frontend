@@ -1,4 +1,4 @@
-// flow-typed signature: 3eed160bab122597acd8dfa2f595bc52
+// flow-typed signature: 16ddde7958158b74a626c772c917e045
 // flow-typed version: <<STUB>>/videojs-embed_vguardian/videojs-embed#0.3.3/flow_v0.40.0
 
 /**
@@ -8,8 +8,8 @@
  *
  * Fill this stub out by replacing all the `any` types.
  *
- * Once filled out, we encourage you to share your work with the 
- * community by sending a pull request to: 
+ * Once filled out, we encourage you to share your work with the
+ * community by sending a pull request to:
  * https://github.com/flowtype/flow-typed
  */
 
