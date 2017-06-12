@@ -26,7 +26,7 @@ const translate = v => `translate(${v})`;
  * @param {Object.<string, *>} o the options
  * @return {Bonzo} SVG Element
  */
-const Doughnut = function(data, o) {
+const Doughnut = (data, o) => {
     let obj = o;
     obj = Object.assign(
         {
@@ -191,4 +191,4 @@ const Doughnut = function(data, o) {
     );
 };
 
-export default Doughnut; // define
+export const doughnut = Doughnut;
