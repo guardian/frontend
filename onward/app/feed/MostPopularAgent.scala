@@ -7,25 +7,38 @@ import services.OphanApi
 import model.RelatedContentItem
 import scala.concurrent.{ExecutionContext, Future}
 
+object MostPopularRefresh {
+
+  def all[A](as: Seq[A])
+            (refreshOne: A => Future[Map[String, Seq[RelatedContentItem]]])
+            (implicit ec: ExecutionContext) = {
+    as.map(refreshOne)
+      .reduce( (itemsF, otherItemsF) =>
+        for {
+          items <- itemsF
+          otherItems <- otherItemsF
+        } yield items ++ otherItems
+      )
+  }
+}
+
 class MostPopularAgent(contentApiClient: ContentApiClient) extends Logging {
 
   private val agent = AkkaAgent[Map[String, Seq[RelatedContentItem]]](Map.empty)
 
   def mostPopular(edition: Edition): Seq[RelatedContentItem] = agent().getOrElse(edition.id, Nil)
 
-  def refresh()(implicit ec: ExecutionContext): Future[List[Map[String, Seq[RelatedContentItem]]]] = {
+  def refresh()(implicit ec: ExecutionContext): Future[Map[String, Seq[RelatedContentItem]]] = {
     log.info("Refreshing most popular.")
-    Future.sequence(Edition.all.map(refresh))
+    MostPopularRefresh.all(Edition.all)(refresh)
   }
 
   private def refresh(edition: Edition)(implicit ec: ExecutionContext): Future[Map[String, Seq[RelatedContentItem]]] =
     contentApiClient.getResponse(contentApiClient.item("/", edition)
       .showMostViewed(true)
     ).flatMap { response =>
-      val mostViewed = response.mostViewed.getOrElse(Nil).take(10).map { RelatedContentItem(_) }
-      agent.alter{ old =>
-        old + (edition.id -> mostViewed)
-      }
+      val mostViewed = response.mostViewed.getOrElse(Nil).take(10).map(RelatedContentItem(_))
+      agent.alter(_ + (edition.id -> mostViewed))
     }
 
 }
@@ -46,9 +59,9 @@ class GeoMostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi
   def mostPopular(country: String): Seq[RelatedContentItem] =
     ophanPopularAgent().getOrElse(country, ophanPopularAgent().getOrElse(defaultCountry, Nil)).take(MaxMostRead)
 
-  def refresh()(implicit ec: ExecutionContext): Future[Seq[Map[String, Seq[RelatedContentItem]]]] = {
+  def refresh()(implicit ec: ExecutionContext): Future[Map[String, Seq[RelatedContentItem]]] = {
     log.info("Refreshing most popular for countries.")
-    Future.sequence(countries.map(refresh))
+    MostPopularRefresh.all(countries)(refresh)
   }
 
   private def refresh(countryCode: String)(implicit ec: ExecutionContext): Future[Map[String, Seq[RelatedContentItem]]] = {
@@ -73,9 +86,9 @@ class DayMostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi
 
   def mostPopular(country: String): Seq[RelatedContentItem] = ophanPopularAgent().getOrElse(country, Nil)
 
-  def refresh()(implicit ec: ExecutionContext): Future[Seq[Map[String, Seq[RelatedContentItem]]]] = {
+  def refresh()(implicit ec: ExecutionContext): Future[Map[String, Seq[RelatedContentItem]]] = {
     log.info("Refreshing most popular for the day.")
-    Future.sequence(countries.map(refresh))
+    MostPopularRefresh.all(countries)(refresh)
   }
 
   def refresh(countryCode: String)(implicit ec: ExecutionContext): Future[Map[String, Seq[RelatedContentItem]]] = {
