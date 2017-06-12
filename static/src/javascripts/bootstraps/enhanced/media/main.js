@@ -351,6 +351,7 @@ const initMoreInSection = (): void => {
     if (
         !config.isMedia ||
         !config.page.showRelatedContent ||
+        config.page.isPaidContent ||
         !config.page.section
     ) {
         return;
