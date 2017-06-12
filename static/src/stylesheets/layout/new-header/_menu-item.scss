@@ -88,7 +88,7 @@
     @include mq(desktop) {
         font-size: 17px;
         overflow-x: hidden;
-        padding: 6px 0;
+        padding: $gs-baseline / 2 0;
         text-overflow: ellipsis;
         white-space: nowrap;
     }
