@@ -1,7 +1,6 @@
 package feed
 
-import com.gu.commercial.branding.{Branding, BrandingFinder}
-import contentapi.{ContentApiClient, QueryDefaults}
+import contentapi.ContentApiClient
 import common._
 import services.OphanApi
 import model.RelatedContentItem
@@ -11,7 +10,7 @@ object MostPopularRefresh {
 
   def all[A](as: Seq[A])
             (refreshOne: A => Future[Map[String, Seq[RelatedContentItem]]])
-            (implicit ec: ExecutionContext) = {
+            (implicit ec: ExecutionContext): Future[Map[String, Seq[RelatedContentItem]]] = {
     as.map(refreshOne)
       .reduce( (itemsF, otherItemsF) =>
         for {

@@ -1,11 +1,10 @@
 package feed
 
-import com.gu.commercial.branding.{Branding, BrandingFinder}
+import com.gu.commercial.branding.BrandingFinder
 import common.{Edition, Logging}
 import contentapi.{ContentApiClient, QueryDefaults}
 import model.RelatedContentItem
 import services.MostReadItem
-
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.control.NonFatal
 
