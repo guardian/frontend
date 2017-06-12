@@ -1,14 +1,13 @@
 define([
-    'lib/noop',
     'helpers/injector'
 ], function (
-    noop,
     Injector
 ) {
     describe('Cross-frame messenger', function () {
         var messenger, dfpOrigin, mockWindow, mockFrame, onMessage, response;
 
         var routines = {
+            noop: function() {},
             thrower: function() {
                 throw 'catch this if you can!';
             },
@@ -21,7 +20,7 @@ define([
         };
 
         var injector = new Injector();
-        injector.mock('lib/report-error', noop.noop);
+        injector.mock('lib/report-error', routines.noop);
 
         beforeEach(function (done) {
             injector.require([
@@ -51,9 +50,9 @@ define([
         });
 
         it('should register an event listener when there is at least one message routine', function () {
-            messenger.register('test', noop.noop, { window: mockWindow });
+            messenger.register('test', routines.noop, { window: mockWindow });
             expect(mockWindow.addEventListener).toHaveBeenCalled();
-            messenger.unregister('test', noop.noop, { window: mockWindow });
+            messenger.unregister('test', routines.noop, { window: mockWindow });
             expect(mockWindow.removeEventListener).toHaveBeenCalled();
         });
 
@@ -83,14 +82,14 @@ define([
 
         it('should respond with a 405 code when no listener is attached to a message type', function () {
             var payload = { id: '01234567-89ab-cdef-fedc-ba9876543210', type: 'that', value: 'hello' };
-            messenger.register('this', noop.noop, { window: mockWindow });
-            messenger.register('that', noop.noop, { window: mockWindow });
-            messenger.unregister('that', noop.noop, { window: mockWindow });
+            messenger.register('this', routines.noop, { window: mockWindow });
+            messenger.register('that', routines.noop, { window: mockWindow });
+            messenger.unregister('that', routines.noop, { window: mockWindow });
             onMessage({ origin: dfpOrigin, data: JSON.stringify(payload), source: mockFrame });
             expect(mockFrame.postMessage).toHaveBeenCalled();
             expect(response.error.code).toBe(405);
             expect(response.error.message).toBe('Service that not implemented');
-            messenger.unregister('this', noop.noop, { window: mockWindow });
+            messenger.unregister('this', routines.noop, { window: mockWindow });
         });
 
         it('should throw when the listener fails', function (done) {

@@ -1,7 +1,4 @@
 // @flow
-
-import { noop } from 'lib/noop';
-
 /*
     simple practical and flexible "finite state machine" implementation
 
@@ -60,6 +57,8 @@ class FiniteStateMachine {
         this.log('fsm: (event)', event);
 
         const state = this.context.state;
+        const noop = () => {};
+
         (this.states[state].events[event] || noop).call(this.context, data);
 
         // execute leave/enter callbacks if present and we have changed state

@@ -21,7 +21,7 @@ describe('Fetch JSON util', () => {
 
         fetchJson('error-path')
             .catch(ex => {
-                expect(ex).toBe(error);
+                expect(ex).toBe(error, 'rejects an error');
             })
             .then(done)
             .catch(done.fail);
@@ -38,7 +38,7 @@ describe('Fetch JSON util', () => {
 
         fetchJson('404-error-response')
             .catch(ex => {
-                expect(ex instanceof Error).toBe(true);
+                expect(ex instanceof Error).toBe(true, 'rejects an error');
                 expect(ex.message).toMatch(/JSON/i);
             })
             .then(done)
