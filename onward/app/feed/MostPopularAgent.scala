@@ -75,10 +75,10 @@ class DayMostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi
 
   def refresh()(implicit ec: ExecutionContext): Future[Seq[Map[String, Seq[RelatedContentItem]]]] = {
     log.info("Refreshing most popular for the day.")
-    Future.sequence(countries.map(update))
+    Future.sequence(countries.map(refresh))
   }
 
-  def update(countryCode: String)(implicit ec: ExecutionContext): Future[Map[String, Seq[RelatedContentItem]]] = {
+  def refresh(countryCode: String)(implicit ec: ExecutionContext): Future[Map[String, Seq[RelatedContentItem]]] = {
     val ophanMostViewed = ophanApi.getMostRead(hours = 24, count = 10, country = countryCode)
     MostViewed.relatedContentItems(ophanMostViewed)(contentApiClient).flatMap { items =>
       val validItems = items.flatten
