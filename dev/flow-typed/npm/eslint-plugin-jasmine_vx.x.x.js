@@ -1,4 +1,4 @@
-// flow-typed signature: 94b36f6e5bdbcb2614da09502b1b0761
+// flow-typed signature: 784c22c44ea6d05c8bc6630d92c59253
 // flow-typed version: <<STUB>>/eslint-plugin-jasmine_v^1.8.1/flow_v0.40.0
 
 /**
@@ -8,8 +8,8 @@
  *
  * Fill this stub out by replacing all the `any` types.
  *
- * Once filled out, we encourage you to share your work with the 
- * community by sending a pull request to: 
+ * Once filled out, we encourage you to share your work with the
+ * community by sending a pull request to:
  * https://github.com/flowtype/flow-typed
  */
 

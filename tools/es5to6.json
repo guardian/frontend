@@ -8,13 +8,11 @@
   "Richard Nguyen": [],
   "Kate Whalen": [
     "projects/commercial/modules/messenger/background.js",
-    "projects/commercial/modules/messenger/click.js",
     "projects/commercial/modules/messenger/dfp-origin.js",
     "projects/commercial/modules/messenger/get-stylesheet.js",
     "projects/commercial/modules/messenger/post-message.js",
     "projects/commercial/modules/messenger/resize.js",
-    "projects/commercial/modules/messenger/scroll.js",
-    "projects/common/modules/charts/doughnut.js"
+    "projects/commercial/modules/messenger/scroll.js"
   ],
   "Lydia Shepherd": [],
   "sndrs": [
@@ -32,7 +30,6 @@
     "projects/common/modules/check-dispatcher.js"
   ],
   "Simon Adcock": [
-    "bootstraps/enhanced/media/main.js",
     "bootstraps/enhanced/media/video-player.js"
   ],
   "Nicolas Long": [
@@ -76,7 +73,6 @@
     "projects/common/modules/sport/football/match-list-live.js",
     "projects/common/modules/sport/football/tag-page-stats.js",
     "projects/common/modules/sport/score-board.js",
-    "projects/common/modules/tailor/fetch-data.js",
     "projects/common/modules/ui/autoupdate.js",
     "projects/commercial/modules/messenger/type.js"
   ],
@@ -94,7 +90,7 @@
     "projects/commercial/modules/messenger/viewport.js"
   ],
   "Gideon Goldberg": [
-    "projects/commercial/modules/user-features.js"
+      "projects/common/modules/charts/doughnut.js"
   ],
   "Matthew Walls": [
     "projects/common/modules/crosswords/anagram-helper/main.js",
@@ -214,7 +210,6 @@
   ],
   "Philip Wills": [
     "projects/facia/modules/ui/container-toggle.js",
-    "projects/facia/modules/ui/lazy-load-containers.js",
     "projects/common/modules/video/ga-helper.js",
     "projects/facia/modules/ui/live-blog-updates.js",
     "projects/commercial/modules/third-party-tags/imr-worldwide.js"

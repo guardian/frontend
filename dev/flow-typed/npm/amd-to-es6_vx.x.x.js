@@ -1,4 +1,4 @@
-// flow-typed signature: a37a0bc16c8494362f4a9481eb9657b2
+// flow-typed signature: 07871be99aceb47ef74f95dafb9a6f14
 // flow-typed version: <<STUB>>/amd-to-es6_v^0.1.0/flow_v0.40.0
 
 /**
@@ -8,8 +8,8 @@
  *
  * Fill this stub out by replacing all the `any` types.
  *
- * Once filled out, we encourage you to share your work with the 
- * community by sending a pull request to: 
+ * Once filled out, we encourage you to share your work with the
+ * community by sending a pull request to:
  * https://github.com/flowtype/flow-typed
  */
 

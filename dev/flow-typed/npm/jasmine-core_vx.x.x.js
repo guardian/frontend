@@ -1,4 +1,4 @@
-// flow-typed signature: 748ddae0da8fd47fa90cf9b323b0c7da
+// flow-typed signature: d4609c06843edcd57b1bbcbddc9ea937
 // flow-typed version: <<STUB>>/jasmine-core_v^2.3.2/flow_v0.40.0
 
 /**
@@ -8,8 +8,8 @@
  *
  * Fill this stub out by replacing all the `any` types.
  *
- * Once filled out, we encourage you to share your work with the 
- * community by sending a pull request to: 
+ * Once filled out, we encourage you to share your work with the
+ * community by sending a pull request to:
  * https://github.com/flowtype/flow-typed
  */
 

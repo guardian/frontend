@@ -1,4 +1,4 @@
-// flow-typed signature: 252b4c121a9501a24efc802ae092432e
+// flow-typed signature: 492b808d7d38f7a7e0a0f4dda24b298f
 // flow-typed version: <<STUB>>/megalog_v^0.1.0/flow_v0.40.0
 
 /**
@@ -8,8 +8,8 @@
  *
  * Fill this stub out by replacing all the `any` types.
  *
- * Once filled out, we encourage you to share your work with the 
- * community by sending a pull request to: 
+ * Once filled out, we encourage you to share your work with the
+ * community by sending a pull request to:
  * https://github.com/flowtype/flow-typed
  */
 

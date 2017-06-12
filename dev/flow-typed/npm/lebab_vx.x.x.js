@@ -1,4 +1,4 @@
-// flow-typed signature: 07fdd7150cfaf1fb80a7c38d41eccee1
+// flow-typed signature: 6c41bca7b3667bb2054764012bfa830a
 // flow-typed version: <<STUB>>/lebab_v^2.7.1/flow_v0.40.0
 
 /**
@@ -8,8 +8,8 @@
  *
  * Fill this stub out by replacing all the `any` types.
  *
- * Once filled out, we encourage you to share your work with the 
- * community by sending a pull request to: 
+ * Once filled out, we encourage you to share your work with the
+ * community by sending a pull request to:
  * https://github.com/flowtype/flow-typed
  */
 

@@ -1,4 +1,4 @@
-// flow-typed signature: fa4a14f6ec3d251c8ae5203d85d7071f
+// flow-typed signature: 6b19007362231606f3d649235046d48a
 // flow-typed version: <<STUB>>/requireindex_v^1.1.0/flow_v0.40.0
 
 /**
@@ -8,8 +8,8 @@
  *
  * Fill this stub out by replacing all the `any` types.
  *
- * Once filled out, we encourage you to share your work with the 
- * community by sending a pull request to: 
+ * Once filled out, we encourage you to share your work with the
+ * community by sending a pull request to:
  * https://github.com/flowtype/flow-typed
  */
 
