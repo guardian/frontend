@@ -67,7 +67,7 @@ class GeoMostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi
             .item(urlToContentPath(url), edition)
             .showTags("paid-content")
             .showSection(true)
-            .showFields((QueryDefaults.trailFields :+ "isInappropriateForSponsorship").mkString(",")))
+            .showFields((QueryDefaults.trailFieldsList :+ "isInappropriateForSponsorship").mkString(",")))
           .map(_.content
             .filterNot { content => BrandingFinder.findBranding(countryCode)(content).exists(_.isPaid)}
             .map(RelatedContentItem(_)))
