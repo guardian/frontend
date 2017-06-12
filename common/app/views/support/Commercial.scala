@@ -6,17 +6,13 @@ import common.commercial._
 import layout.{ColumnAndCards, ContentCard, FaciaContainer, PaidCard}
 import model.{Page, PressedPage}
 import org.apache.commons.lang.StringEscapeUtils._
-import play.Logger
 import play.api.libs.json.JsBoolean
 import play.api.mvc.RequestHeader
 
 object Commercial {
   def isAdFree(request: RequestHeader): Boolean = {
-    // TODO: debugging - remove when done (fastly may not be passing cookie on, so use header if available)
-    val cookieVal = request.cookies.get("GU_AFU").exists(_.value.toLowerCase == "true")
-    val headerVal = request.headers.get("X-GU-Commercial-Ad-Free").exists(_.toLowerCase == "true")
-    Logger.info(s"adFreeCookie:$cookieVal adFreeHeader:$headerVal")
-    cookieVal || headerVal
+    request.headers.get("X-GU-Commercial-Ad-Free").exists(_.toLowerCase == "true") ||
+      request.cookies.get("GU_AFU").exists(_.value.toLowerCase == "true")
   }
 
   def shouldShowAds(page: Page): Boolean = page match {
