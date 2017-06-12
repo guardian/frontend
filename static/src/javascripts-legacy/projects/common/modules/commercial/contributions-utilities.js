@@ -15,7 +15,6 @@ define([
     'lib/storage',
     'lib/geolocation',
     'lib/url',
-    'lib/noop',
     'lodash/objects/assign',
     'lodash/utilities/template',
     'lodash/collections/toArray',
@@ -38,7 +37,6 @@ define([
     storage,
     geolocation,
     url,
-    noop,
     assign,
     template,
     toArray,
@@ -237,8 +235,8 @@ define([
                 return;
             }
 
-            var onInsert = options.onInsert || noop.noop;
-            var onView = options.onView || noop.noop;
+            var onInsert = options.onInsert || noop;
+            var onView = options.onView || noop;
 
             function render(templateFn) {
                 return getCopy(options.useTailoredCopyForRegulars).then(function (copy) {
@@ -342,6 +340,8 @@ define([
             }
         }.bind(this));
     }
+
+    function noop() {}
 
     // Utility function to build variants with common properties.
     function variantBuilderFactory(commonVariantProps) {

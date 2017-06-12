@@ -1,12 +1,10 @@
 define([
     'lib/$',
-    'lib/noop',
     'helpers/fixtures',
     'fastdom',
     'helpers/injector'
 ], function (
     $,
-    noop,
     fixtures,
     fastdom,
     Injector
@@ -38,7 +36,7 @@ define([
             $fixturesContainer;
 
         beforeEach(function (done) {
-            injector.mock('common/modules/analytics/google', noop);
+            injector.mock('common/modules/analytics/google', function noop() {});
             injector.mock('commercial/modules/hosted/next-video',  {
                 load: function() { return Promise.resolve() },
                 init: function() { return Promise.resolve() }

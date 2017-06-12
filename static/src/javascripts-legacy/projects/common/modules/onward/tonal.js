@@ -1,16 +1,16 @@
 define([
     'lib/config',
     'lib/mediator',
-    'lib/noop',
     'common/modules/analytics/register',
     'common/modules/component'
 ], function (
     config,
     mediator,
-    noop,
     register,
     Component
 ) {
+
+    var noop = function () {};
 
     function TonalComponent() {
 
@@ -22,7 +22,7 @@ define([
         if (this.isSupported()) {
             this.endpoint = this.getEndpoint();
         } else {
-            this.fetch = noop.noop;
+            this.fetch = noop;
         }
     }
 
