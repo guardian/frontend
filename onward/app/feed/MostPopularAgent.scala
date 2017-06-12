@@ -43,37 +43,45 @@ class MostPopularAgent(contentApiClient: ContentApiClient) extends Logging {
 
 }
 
+case class Country(code: String, edition: Edition)
+
 class GeoMostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) extends Logging {
 
   private val ophanPopularAgent = AkkaAgent[Map[String, Seq[RelatedContentItem]]](Map.empty)
 
-  private val MaxMostRead: Int = 10
+  private val defaultCountry: Country = Country("row", Edition.defaultEdition)
 
   // These are the only country codes (row must be lower-case) passed to us from the fastly service.
   // This allows us to choose carefully the codes that give us the most impact. The trade-off is caching.
-  private val countries = Seq("GB", "US", "AU", "CA", "IN", "NG", "NZ", "row")
-
-  // Default country if the country does is not currently populated
-  private val defaultCountry: String = "row"
+  private val countries = Seq(
+    Country("GB", editions.Uk),
+    Country("US", editions.Us),
+    Country("AU", editions.Au),
+    Country("CA", editions.Us),
+    Country("IN", Edition.defaultEdition),
+    Country("NG", Edition.defaultEdition),
+    Country("NZ", editions.Au),
+    defaultCountry
+  )
 
   def mostPopular(country: String): Seq[RelatedContentItem] =
-    ophanPopularAgent().getOrElse(country, ophanPopularAgent().getOrElse(defaultCountry, Nil)).take(MaxMostRead)
+    ophanPopularAgent().getOrElse(country, ophanPopularAgent().getOrElse(defaultCountry.code, Nil))
 
   def refresh()(implicit ec: ExecutionContext): Future[Map[String, Seq[RelatedContentItem]]] = {
     log.info("Refreshing most popular for countries.")
     MostPopularRefresh.all(countries)(refresh)
   }
 
-  private def refresh(countryCode: String)(implicit ec: ExecutionContext): Future[Map[String, Seq[RelatedContentItem]]] = {
-    val ophanMostViewed = ophanApi.getMostRead(hours = 3, count = 10, country = countryCode.toLowerCase)
-    MostViewed.relatedContentItems(ophanMostViewed)(contentApiClient).flatMap { items =>
+  private def refresh(country: Country)(implicit ec: ExecutionContext): Future[Map[String, Seq[RelatedContentItem]]] = {
+    val ophanMostViewed = ophanApi.getMostRead(hours = 3, count = 10, country = country.code.toLowerCase)
+    MostViewed.relatedContentItems(ophanMostViewed, country.edition)(contentApiClient).flatMap { items =>
       val validItems = items.flatten
       if (validItems.nonEmpty) {
-        log.info(s"Geo popular $countryCode updated successfully.")
+        log.info(s"Geo popular ${country.code} updated successfully.")
       } else {
-        log.info(s"Geo popular update for $countryCode found nothing.")
+        log.info(s"Geo popular update for ${country.code} found nothing.")
       }
-      ophanPopularAgent.alter(_ + (countryCode -> validItems))
+      ophanPopularAgent.alter(_ + (country.code -> validItems))
     }
   }
 }
@@ -82,7 +90,11 @@ class DayMostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi
 
   private val ophanPopularAgent = AkkaAgent[Map[String, Seq[RelatedContentItem]]](Map.empty)
 
-  private val countries = Seq("GB", "US", "AU")
+  private val countries = Seq(
+    Country("GB", editions.Uk),
+    Country("US", editions.Us),
+    Country("AU", editions.Au)
+  )
 
   def mostPopular(country: String): Seq[RelatedContentItem] = ophanPopularAgent().getOrElse(country, Nil)
 
@@ -91,14 +103,14 @@ class DayMostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi
     MostPopularRefresh.all(countries)(refresh)
   }
 
-  def refresh(countryCode: String)(implicit ec: ExecutionContext): Future[Map[String, Seq[RelatedContentItem]]] = {
-    val ophanMostViewed = ophanApi.getMostRead(hours = 24, count = 10, country = countryCode)
-    MostViewed.relatedContentItems(ophanMostViewed)(contentApiClient).flatMap { items =>
+  def refresh(country: Country)(implicit ec: ExecutionContext): Future[Map[String, Seq[RelatedContentItem]]] = {
+    val ophanMostViewed = ophanApi.getMostRead(hours = 24, count = 10, country = country.code.toLowerCase())
+    MostViewed.relatedContentItems(ophanMostViewed, country.edition)(contentApiClient).flatMap { items =>
       val validItems = items.flatten
       if (validItems.isEmpty) {
-        log.info(s"Day popular update for $countryCode found nothing.")
+        log.info(s"Day popular update for ${country.code} found nothing.")
       }
-      ophanPopularAgent.alter(_ + (countryCode -> validItems))
+      ophanPopularAgent.alter(_ + (country.code -> validItems))
     }
   }
 }
