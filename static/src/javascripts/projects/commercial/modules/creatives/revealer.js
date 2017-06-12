@@ -51,7 +51,7 @@ class Revealer {
                     );
                 }
             })
-            .then(() => fastdom.read(() => detect.getViewport()))
+            .then(() => fastdom.read(detect.getViewport))
             .then(viewport =>
                 fastdom.write(() => {
                     const background = this.adSlot.getElementsByClassName(
@@ -59,7 +59,9 @@ class Revealer {
                     )[0];
                     // for the height, we need to account for the height of the location bar, which
                     // may or may not be there. 70px padding is not too much.
-                    background.style.height = `${viewport.height + 70}px`;
+                    if (background) {
+                        background.style.height = `${viewport.height + 70}px`;
+                    }
                     return true;
                 })
             );
