@@ -73,14 +73,17 @@ const renderCreativeTemplate = (
             .then(() => JSON.parse(creativeConfig))
             .then(mergeViewabilityTracker)
             .then(renderCreative)
-            .catch(err =>
+            .catch(err => {
                 reportError(
                     Error(`Failed to get creative JSON ${err}`),
                     { feature: 'commercial' },
                     false
-                )
-            );
+                );
+
+                return Promise.resolve(true);
+            });
     }
+
     return Promise.resolve(true);
 };
 

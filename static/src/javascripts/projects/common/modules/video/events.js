@@ -12,7 +12,7 @@ import gaHelper from 'common/modules/video/ga-helper';
 import ophan from 'ophan/ng';
 
 /* global require */
-declare function Krux(): void;
+declare function Krux(eventType: string, ident: string, data: Object): void;
 
 const isDesktop = detect.isBreakpoint({
     min: 'desktop',
@@ -232,7 +232,7 @@ const bindPrerollEvents = (player: Object) => {
     const events = {
         end() {
             player.trigger(constructEventName('preroll:end', player));
-            bindContentEvents(player, true);
+            bindContentEvents(player);
         },
         start() {
             const duration = player.duration();
