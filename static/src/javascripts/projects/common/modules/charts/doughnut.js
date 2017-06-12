@@ -30,7 +30,6 @@ const translate = (v: Array<number>) => `translate(${v.toString()})`;
 const Doughnut = (data: Object, o: Object): bonzo => {
     let obj: Object = o;
     obj = Object.assign(
-        {},
         {
             percentCutout: 35,
             unit: '',
