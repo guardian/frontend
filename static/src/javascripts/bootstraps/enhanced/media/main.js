@@ -22,7 +22,7 @@ import moreInSeriesContainer
 import videojsOptions from 'common/modules/video/videojs-options';
 import videojs from 'bootstraps/enhanced/media/video-player';
 import loadingTmpl from 'raw-loader!common/views/ui/loading.html';
-import userFeatures from 'commercial/modules/user-features';
+import { isAdFreeUser } from 'commercial/modules/user-features';
 import { loadScript } from 'lib/load-script';
 
 const initLoadingSpinner = (player: any): void => {
@@ -182,7 +182,7 @@ const enhanceVideo = (
                     blockVideoAds =
                         videoInfo.shouldHideAdverts ||
                         (config.switches.adFreeMembershipTrial &&
-                            userFeatures.isAdFreeUser());
+                            isAdFreeUser());
 
                     withPreroll = shouldPreroll && !blockVideoAds;
 
