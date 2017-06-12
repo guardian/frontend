@@ -26,7 +26,7 @@ define([
     var insertEpicAfterSelector = '.js-insert-epic-after';
 
     function isEpic(el) {
-        $(el).hasClass('is-liveblog-epic');
+        return $(el).hasClass('is-liveblog-epic');
     }
 
     function getLiveblogEntryTimeData(el) {
@@ -55,6 +55,10 @@ define([
     }
 
     function setEpicLiveblogEntryTimeData(el, timeData) {
+        if (!el) {
+            return;
+        }
+
         var $epicTimeEl = $('time', el);
         $epicTimeEl.attr('datetime', timeData.datetime);
         $epicTimeEl.attr('title', timeData.title);
@@ -123,9 +127,7 @@ define([
 
                 template: function (variant) {
                     return template(liveblogEpicTemplateOldDesignSubtle, {
-                        copy: acquisitionsCopy.liveblogSubtle,
-                        membershipUrl: variant.options.membershipURL,
-                        contributionUrl: variant.options.contributeURL,
+                        copy: acquisitionsCopy.liveblogSubtle(variant.options.membershipURL, variant.options.contributeURL),
                         componentName: variant.options.componentName
                     });
                 },
@@ -143,9 +145,7 @@ define([
 
                 template: function (variant) {
                     return template(liveblogEpicTemplateOldDesignMinimal, {
-                        copy: acquisitionsCopy.liveblogMinimal,
-                        membershipUrl: variant.options.membershipURL,
-                        contributionUrl: variant.options.contributeURL,
+                        copy: acquisitionsCopy.liveblogMinimal(variant.options.membershipURL, variant.options.contributeURL),
                         componentName: variant.options.componentName
                     });
                 },

@@ -1,7 +1,8 @@
 @import 'svg';
 
 .contributions__epic-slice-wrapper {
-    background: $neutral-3;
+    // margin background colour
+    background: $neutral-5;
 
     @include mq(tablet) {
         @supports (margin: 0 calc(50% - 50vw)) {
@@ -12,7 +13,8 @@
 
 .contributions__epic-slice,
 .contributions__contribute.contributions__contribute--epic-slice {
-    background: $neutral-4;
+    // main slice background colour
+    background: $neutral-6;
 }
 
 .contributions__epic-slice.gs-container {

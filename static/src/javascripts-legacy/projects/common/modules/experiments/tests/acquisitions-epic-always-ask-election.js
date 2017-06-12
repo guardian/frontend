@@ -1,5 +1,5 @@
 define([
-    'common/modules/commercial/contributions-utilities',
+    'common/modules/commercial/contributions-utilities'
 ], function (
     contributionsUtilities
 ) {

@@ -4,7 +4,7 @@ import fastdom from 'lib/fastdom-promise';
 import reportError from 'lib/report-error';
 
 import { Frame } from 'commercial/modules/creatives/frame';
-import revealer from 'commercial/modules/creatives/revealer';
+import { Revealer } from 'commercial/modules/creatives/revealer';
 import { FabricV1 } from 'commercial/modules/creatives/fabric-v1';
 import fabricExpand from 'commercial/modules/creatives/fabric-expanding-v1';
 import {
@@ -15,7 +15,7 @@ import scrollable from 'commercial/modules/creatives/scrollable-mpu-v2';
 
 const creativeLookup: Object = {
     frame: Frame,
-    revealer,
+    revealer: Revealer,
     'fabric-v1': FabricV1,
     'fabric-expanding-v1': fabricExpand,
     'fabric-expandable-video-v2': fabricExpandVideo,
@@ -73,14 +73,17 @@ const renderCreativeTemplate = (
             .then(() => JSON.parse(creativeConfig))
             .then(mergeViewabilityTracker)
             .then(renderCreative)
-            .catch(err =>
+            .catch(err => {
                 reportError(
                     Error(`Failed to get creative JSON ${err}`),
                     { feature: 'commercial' },
                     false
-                )
-            );
+                );
+
+                return Promise.resolve(true);
+            });
     }
+
     return Promise.resolve(true);
 };
 

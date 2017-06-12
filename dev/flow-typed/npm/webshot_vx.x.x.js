@@ -1,4 +1,4 @@
-// flow-typed signature: b1cd69de9cf8a2c2caa2665fbecbc9ac
+// flow-typed signature: eb216ad219a94cf2e8e3dfdc867787ce
 // flow-typed version: <<STUB>>/webshot_v^0.18.0/flow_v0.40.0
 
 /**
@@ -8,8 +8,8 @@
  *
  * Fill this stub out by replacing all the `any` types.
  *
- * Once filled out, we encourage you to share your work with the 
- * community by sending a pull request to: 
+ * Once filled out, we encourage you to share your work with the
+ * community by sending a pull request to:
  * https://github.com/flowtype/flow-typed
  */
 

@@ -126,7 +126,7 @@
                         </button>
 
                         <script type="text/template" id="tmpl-comment-box">
-                        @fragments.commentBox()
+                        @fragments.commentBox(content.metadata.section.map(_.id).contains("politics"))
                         </script>
 
                     </div>
