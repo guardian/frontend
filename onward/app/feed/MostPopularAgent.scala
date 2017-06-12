@@ -36,6 +36,8 @@ class GeoMostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi
 
   private val ophanPopularAgent = AkkaAgent[Map[String, Seq[RelatedContentItem]]](Map.empty)
 
+  private val MaxMostRead: Int = 10
+
   // These are the only country codes (row must be lower-case) passed to us from the fastly service.
   // This allows us to choose carefully the codes that give us the most impact. The trade-off is caching.
   private val countries = Seq("GB", "US", "AU", "CA", "IN", "NG", "NZ", "row")
@@ -44,7 +46,7 @@ class GeoMostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi
   private val defaultCountry: String = "row"
 
   def mostPopular(country: String): Seq[RelatedContentItem] =
-    ophanPopularAgent().getOrElse(country, ophanPopularAgent().getOrElse(defaultCountry, Nil))
+    ophanPopularAgent().getOrElse(country, ophanPopularAgent().getOrElse(defaultCountry, Nil)).take(MaxMostRead)
 
   def refresh(): Unit = {
     log.info("Refreshing most popular for countries.")
@@ -52,7 +54,7 @@ class GeoMostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi
   }
 
   def update(countryCode: String) {
-    val ophanQuery: Future[JsValue] = ophanApi.getMostRead(hours = 3, count = 12, country = countryCode.toLowerCase)
+    val ophanQuery: Future[JsValue] = ophanApi.getMostRead(hours = 3, count = MaxMostRead + 2, country = countryCode.toLowerCase)
     val edition: Edition = Edition.byId(countryCode).getOrElse(Edition.defaultEdition)
 
     ophanQuery.map { ophanResults =>
@@ -78,7 +80,7 @@ class GeoMostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi
       }
 
       Future.sequence(mostRead).map { contentSeq =>
-        val validContents = contentSeq.flatten
+        val validContents: Seq[RelatedContentItem] = contentSeq.flatten
         if (validContents.nonEmpty) {
 
           // Add each country code to the map.
