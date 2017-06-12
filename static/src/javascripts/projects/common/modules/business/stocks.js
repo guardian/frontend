@@ -65,7 +65,7 @@ export default () => {
 
     if (isBusinessFront() && $container) {
         getStocksData().then(data => {
-            if (data && data.stocks && data.stocks.length > 0) {
+            if (data.stocks.length > 0) {
                 $container.append(renderData(data));
             }
         });

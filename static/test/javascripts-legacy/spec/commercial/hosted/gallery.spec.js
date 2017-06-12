@@ -1,13 +1,11 @@
 define([
     'lib/$',
-    'lib/noop',
     'helpers/fixtures',
     'fastdom',
     'raw-loader!fixtures/commercial/hosted/gallery.html',
     'helpers/injector'
 ], function (
     $,
-    noop,
     fixtures,
     fastdom,
     galleryHtml,
@@ -15,6 +13,7 @@ define([
 ) {
     var gallery,
         interactionTracking = { trackNonClickInteraction : sinon.stub() },
+        noop = function () {},
         injector = new Injector();
 
     describe('Hosted Gallery', function () {
@@ -30,14 +29,14 @@ define([
             injector.mock('lib/load-css-promise', {
                 loadCssPromise : Promise.resolve()
             });
-            injector.mock('commercial/modules/dfp/performance-logging', {moduleStart: noop.noop, moduleEnd: noop.noop});
+            injector.mock('commercial/modules/dfp/performance-logging', {moduleStart: noop, moduleEnd: noop});
 
             injector.require([
                 'commercial/modules/hosted/gallery'
             ], function (galleryModule) {
                 $fixturesContainer = fixtures.render(fixturesConfig);
                 galleryModule
-                    .init(noop.noop, noop.noop)
+                    .init(noop, noop)
                     .then(function (galleryInstance) {
                         gallery = galleryInstance;
                         done();
@@ -82,13 +81,13 @@ define([
         });
 
         it('should log navigation in GA when using arrow key navigation', function (done) {
-            gallery.handleKeyEvents({keyCode : 40, preventDefault: noop.noop});
+            gallery.handleKeyEvents({keyCode : 40, preventDefault: noop});
             expect(interactionTracking.trackNonClickInteraction).toHaveBeenCalledWith("KeyPress:down - image 2");
-            gallery.handleKeyEvents({keyCode : 39, preventDefault: noop.noop});
+            gallery.handleKeyEvents({keyCode : 39, preventDefault: noop});
             expect(interactionTracking.trackNonClickInteraction).toHaveBeenCalledWith("KeyPress:right - image 3");
-            gallery.handleKeyEvents({keyCode : 38, preventDefault: noop.noop});
+            gallery.handleKeyEvents({keyCode : 38, preventDefault: noop});
             expect(interactionTracking.trackNonClickInteraction).toHaveBeenCalledWith("KeyPress:up - image 2");
-            gallery.handleKeyEvents({keyCode : 37, preventDefault: noop.noop});
+            gallery.handleKeyEvents({keyCode : 37, preventDefault: noop});
             expect(interactionTracking.trackNonClickInteraction).toHaveBeenCalledWith("KeyPress:left - image 1");
             done();
         });
@@ -108,7 +107,7 @@ define([
                 this.scrollTop = 20;
                 this.scrollHeight = 30;
             };
-
+            
             gallery.fadeContent({
                 target: new window.HTMLElement()
             });

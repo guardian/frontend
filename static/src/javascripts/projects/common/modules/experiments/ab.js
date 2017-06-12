@@ -1,6 +1,4 @@
 // @flow
-
-import { noop } from 'lib/noop';
 import {
     getActiveTests,
     getTest,
@@ -21,6 +19,8 @@ import {
     cleanParticipations,
     getForcedTests,
 } from 'common/modules/experiments/utils';
+
+const noop = (): null => null;
 
 // Finds variant in specific tests and runs it
 const runTest = (test: ABTest): void => {

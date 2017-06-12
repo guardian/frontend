@@ -67,7 +67,7 @@ const onPlayerError = (player: Object): void => {
 };
 
 const onPlayerReady = (
-    player: any,
+    player: { volume: () => void, on: () => void, fullscreener: () => void },
     mediaId: string,
     loadingTemplate: string
 ): void => {
@@ -77,8 +77,8 @@ const onPlayerReady = (
 
     // unglitching the volume on first load
     if (vol) {
-        player.setVolume(0);
-        player.setVolume(vol);
+        player.volume(0);
+        player.volume(vol);
     }
 
     player.fullscreener();
@@ -93,23 +93,12 @@ const onPlayerReady = (
 };
 
 // #? Should we have some type aliases for HostedPlayer, Videojs?
-const setupVideo = (
-    video: HTMLElement,
-    videojsInstance: (
-        el: string | HTMLElement,
-        options: ?Object,
-        callback?: () => void
-    ) => Object
-): void => {
+const setupVideo = (video: Object, videojs: () => Object): void => {
     const mediaId = video.getAttribute('data-media-id');
-    const player = videojsInstance(video, videojsOptions());
-
-    if (!mediaId) {
-        return;
-    }
+    const player = videojs(video, videojsOptions());
 
     player.guMediaType = 'video';
-    videojsInstance.plugin('fullscreener', fullscreener);
+    videojs.plugin('fullscreener', fullscreener);
 
     events.addContentEvents(player, mediaId, player.guMediaType);
     events.bindGoogleAnalyticsEvents(player, window.location.pathname);
@@ -178,9 +167,9 @@ export const initHostedVideo = (
                     );
                 })
         )
-        .then(videojsInstance => {
+        .then(videojs => {
             videoEl.forEach(el => {
-                setupVideo(el, videojsInstance);
+                setupVideo(el, videojs);
             });
 
             youtubeIframe.forEach(initHostedYoutube);
