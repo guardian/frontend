@@ -6,11 +6,12 @@
  * - https://github.com/mbostock/d3/blob/master/src/svg/arc.js
  */
 import $ from 'lib/$';
+import bonzo from 'bonzo';
 /**
  * @param {string} type
  * @return {Bonzo}
  */
-const svgEl = type =>
+const svgEl = (type: string): bonzo =>
     $.create(
         document.createElementNS('http://www.w3.org/2000/svg', type).outerHTML
     );
@@ -19,16 +20,17 @@ const svgEl = type =>
  * @param {Array} v
  * @return {string}
  */
-const translate = v => `translate(${v})`;
+const translate = (v: Array<number>) => `translate(${v.toString()})`;
 
 /**
  * @param {Object.<string, *>} data in the format { label: string, value: number, color: HEX }
  * @param {Object.<string, *>} o the options
  * @return {Bonzo} SVG Element
  */
-const Doughnut = (data, o) => {
-    let obj = o;
+const Doughnut = (data: Object, o: Object): bonzo => {
+    let obj: Object = o;
     obj = Object.assign(
+        {},
         {
             percentCutout: 35,
             unit: '',
@@ -191,4 +193,4 @@ const Doughnut = (data, o) => {
     );
 };
 
-export const doughnut = Doughnut;
+export { Doughnut };
