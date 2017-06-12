@@ -65,7 +65,6 @@ class GeoMostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi
         contentApiClient
           .getResponse(contentApiClient
             .item(urlToContentPath(url), edition)
-            .showTags("paid-content")
             .showSection(true)
             .showFields((QueryDefaults.trailFieldsList :+ "isInappropriateForSponsorship").mkString(",")))
           .map(_.content
