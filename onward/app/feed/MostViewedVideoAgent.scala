@@ -19,7 +19,7 @@ class MostViewedVideoAgent(contentApiClient: ContentApiClient, ophanApi: OphanAp
 
   def mostViewedVideo(): Seq[Video] = agent()
 
-  def refresh()(implicit ec: ExecutionContext) : Future[Seq[Video]] = {
+  def refresh()(implicit ec: ExecutionContext): Future[Seq[Video]] = {
     log.info("Refreshing most viewed video.")
 
     val ophanResponse = ophanApi.getMostViewedVideos(hours = 3, count = 20)
@@ -46,8 +46,7 @@ class MostViewedVideoAgent(contentApiClient: ContentApiClient, ophanApi: OphanAp
         videoContent.map(Content(_)).collect { case v: Video => v }
       }
 
-      mostViewed.filter(_.nonEmpty).foreach(agent.alter)
-      mostViewed
+      mostViewed.filter(_.nonEmpty).flatMap(agent.alter)
     }
   }
 }
