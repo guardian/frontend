@@ -1,11 +1,12 @@
 package feed
 
 import com.gu.commercial.branding.{Branding, BrandingFinder}
-import contentapi.ContentApiClient
+import contentapi.{ContentApiClient, QueryDefaults}
 import common._
 import services.OphanApi
 import play.api.libs.json.{JsArray, JsValue}
 import model.RelatedContentItem
+
 import scala.concurrent.Future
 import scala.util.control.NonFatal
 
@@ -66,7 +67,7 @@ class GeoMostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi
             .item(urlToContentPath(url), edition)
             .showTags("paid-content")
             .showSection(true)
-            .showFields("isInappropriateForSponsorship"))
+            .showFields((QueryDefaults.trailFields :+ "isInappropriateForSponsorship").mkString(",")))
           .map(_.content
             .filterNot { content => BrandingFinder.findBranding(countryCode)(content).exists(_.isPaid)}
             .map(RelatedContentItem(_)))
