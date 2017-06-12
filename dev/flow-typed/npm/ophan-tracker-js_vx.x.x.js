@@ -1,4 +1,4 @@
-// flow-typed signature: c9024398543e60efe5fa2c7c8a0000b4
+// flow-typed signature: dae981d4bdad87feae79bf066983b776
 // flow-typed version: <<STUB>>/ophan-tracker-js_v^1.3.6/flow_v0.40.0
 
 /**
@@ -8,8 +8,8 @@
  *
  * Fill this stub out by replacing all the `any` types.
  *
- * Once filled out, we encourage you to share your work with the 
- * community by sending a pull request to: 
+ * Once filled out, we encourage you to share your work with the
+ * community by sending a pull request to:
  * https://github.com/flowtype/flow-typed
  */
 

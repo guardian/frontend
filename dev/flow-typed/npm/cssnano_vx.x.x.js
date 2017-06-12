@@ -1,4 +1,4 @@
-// flow-typed signature: e49bc416e5857f932e64afdb7b12aae7
+// flow-typed signature: c7315c4e3659b0e133ec34b262348071
 // flow-typed version: <<STUB>>/cssnano_v^3.8.1/flow_v0.40.0
 
 /**
@@ -8,8 +8,8 @@
  *
  * Fill this stub out by replacing all the `any` types.
  *
- * Once filled out, we encourage you to share your work with the 
- * community by sending a pull request to: 
+ * Once filled out, we encourage you to share your work with the
+ * community by sending a pull request to:
  * https://github.com/flowtype/flow-typed
  */
 

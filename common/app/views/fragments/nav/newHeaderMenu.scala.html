@@ -2,13 +2,14 @@
 
 @import common.{ NewNavigation, LinkTo, Edition, NavLink }
 @import conf.switches.Switches.SearchSwitch
+@import views.support.RenderClasses
 
 @sectionList(topLevelSection: NewNavigation.EditionalisedNavigationSection) = {
     @defining(Edition(request)) { edition =>
         <li class="menu-item js-navigation-item"
             data-section-name="@topLevelSection.name"
             role="menuitem">
-            <button class="menu-item__title js-navigation-toggle"
+            <button class="menu-item__title hide-on-desktop js-navigation-toggle"
                     data-link-name="nav2 : secondary : @topLevelSection.name"
                     aria-haspopup="true"
                     aria-expanded="true">
@@ -21,7 +22,9 @@
                 aria-label="Submenu @{topLevelSection.name}"
                 role="menu">
                 @topLevelSection.getAllEditionalisedNavLinks(edition).map { sectionItem =>
-                    <li class="menu-item"
+                    <li class="@RenderClasses(Map(
+                                "menu-item--home" -> (sectionItem.iconName == "home")
+                            ), "menu-item")"
                         role="menuitem">
                         <a class="menu-item__title"
                            href="@LinkTo { @sectionItem.url }"

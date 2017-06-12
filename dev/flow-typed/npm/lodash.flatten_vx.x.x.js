@@ -1,4 +1,4 @@
-// flow-typed signature: 1e3a4ae4d267b5a41597c1bce5259471
+// flow-typed signature: 6811ff674c2a66db541a59970865399d
 // flow-typed version: <<STUB>>/lodash.flatten_v^4.4.0/flow_v0.40.0
 
 /**
@@ -8,8 +8,8 @@
  *
  * Fill this stub out by replacing all the `any` types.
  *
- * Once filled out, we encourage you to share your work with the 
- * community by sending a pull request to: 
+ * Once filled out, we encourage you to share your work with the
+ * community by sending a pull request to:
  * https://github.com/flowtype/flow-typed
  */
 

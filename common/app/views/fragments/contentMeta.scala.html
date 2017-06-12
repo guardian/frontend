@@ -77,7 +77,7 @@
 
 
     @if(
-        item.tags.isVideo || item.tags.isAudio || (item.tags.isArticle && !isPaidContent(page))
+        item.tags.isVideo || item.tags.isAudio || (item.tags.isArticle && (item.content.isImmersive || !isPaidContent(page)))
     ) {
         @fragments.commercial.badge(item, page)
     }

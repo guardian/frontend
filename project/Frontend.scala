@@ -64,7 +64,7 @@ object Frontend extends Build with Prototypes {
     fileName.endsWith("bower.json")
   }
 
-  def withTests(project: Project) = project % "test->test;compile->compile"
+  private def withTests(project: Project) = project % "test->test;compile->compile"
 
   val commonWithTests = withTests(common)
 

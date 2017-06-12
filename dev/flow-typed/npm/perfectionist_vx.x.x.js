@@ -1,4 +1,4 @@
-// flow-typed signature: 5da82699ccee1d8043317ab5c20b8f5d
+// flow-typed signature: 76c86f368f14d292ddc21586af0763b6
 // flow-typed version: <<STUB>>/perfectionist_v^2.3.1/flow_v0.40.0
 
 /**
@@ -8,8 +8,8 @@
  *
  * Fill this stub out by replacing all the `any` types.
  *
- * Once filled out, we encourage you to share your work with the 
- * community by sending a pull request to: 
+ * Once filled out, we encourage you to share your work with the
+ * community by sending a pull request to:
  * https://github.com/flowtype/flow-typed
  */
 
