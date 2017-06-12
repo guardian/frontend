@@ -19,12 +19,10 @@ class MostViewedAudioAgent(contentApiClient: ContentApiClient, ophanApi: OphanAp
 
     val ophanMostViewed = ophanApi.getMostViewedAudio(hours = 3, count = 100)
     MostViewed.relatedContentItems(ophanMostViewed)(contentApiClient).flatMap { items =>
-      val allAudio = items.collect {
-        case audio if audio.exists(_.content.tags.isAudio) => audio
-      }
-      val audio = allAudio.flatten.filter(!_.content.tags.isPodcast)
-      val podcast = allAudio.flatten.filter(_.content.tags.isPodcast)
-
+      val (podcast, audio) =  items
+        .filter(_.exists(_.content.tags.isAudio))
+        .flatten
+        .partition(_.content.tags.isPodcast)
       audioAgent alter audio
       podcastAgent alter podcast
     }

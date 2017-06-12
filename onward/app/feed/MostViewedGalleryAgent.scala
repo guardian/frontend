@@ -17,10 +17,7 @@ class MostViewedGalleryAgent(contentApiClient: ContentApiClient, ophanApi: Ophan
 
     val ophanMostViewed = ophanApi.getMostViewedGalleries(hours = 3, count = 12)
     MostViewed.relatedContentItems(ophanMostViewed)(contentApiClient).flatMap { items =>
-      val galleries = items.collect {
-        case gallery if gallery.exists(_.content.tags.isGallery) => gallery
-      }
-      agent alter galleries.flatten
+      agent alter items.filter(_.exists(_.content.tags.isGallery)).flatten
     }
   }
 }
