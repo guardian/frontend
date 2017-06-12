@@ -6,13 +6,20 @@ import { register } from 'commercial/modules/messenger';
 
 type AdSpec = {
     scrollType: string,
+    backgroundColour: string,
+    backgroundImage: string,
+    backgroundRepeat: string,
+    backgroundPosition: string,
+};
+
+type SpecStyles = {
     backgroundColor: string,
     backgroundImage: string,
     backgroundRepeat: string,
     backgroundPosition: string,
 };
 
-const setBackground = (specs: AdSpec, adSlot: Node): Promise<any> | null => {
+const setBackground = (specs: AdSpec, adSlot: Node): ?Promise<any> => {
     if (
         !specs ||
         !('backgroundImage' in specs) ||
@@ -23,7 +30,7 @@ const setBackground = (specs: AdSpec, adSlot: Node): Promise<any> | null => {
         return null;
     }
 
-    const specsStyles = Object.keys(specs).reduce((result, key) => {
+    const specsStyles: SpecStyles = Object.keys(specs).reduce((result, key) => {
         if (key !== 'scrollType') {
             result[key] = specs[key];
         }
@@ -64,7 +71,7 @@ const setBackground = (specs: AdSpec, adSlot: Node): Promise<any> | null => {
             fastdom.read(() => {
                 updateQueued = false;
                 const rect = backgroundParent.getBoundingClientRect();
-                const dy = Math.round(0.3 * rect.top) + 20;
+                const dy = Math.floor(0.3 * rect.top) + 20;
 
                 // We update the style in a read batch because the DIV
                 // has been promoted to its own layer and is also
@@ -91,7 +98,7 @@ const setBackground = (specs: AdSpec, adSlot: Node): Promise<any> | null => {
         });
 };
 
-register('background', (specs, ret, iframe) => {
+register('background', (specs, ret, iframe): ?Promise<any> => {
     if (iframe && specs) {
         return setBackground(specs, iframe.closest('.js-ad-slot'));
     }
