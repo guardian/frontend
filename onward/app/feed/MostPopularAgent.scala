@@ -1,5 +1,6 @@
 package feed
 
+import com.gu.commercial.branding.{Branding, BrandingFinder}
 import contentapi.ContentApiClient
 import common._
 import services.OphanApi
@@ -50,7 +51,8 @@ class GeoMostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi
   }
 
   def update(countryCode: String) {
-    val ophanQuery = ophanApi.getMostRead(hours = 3, count = 10, country = countryCode.toLowerCase)
+    val ophanQuery: Future[JsValue] = ophanApi.getMostRead(hours = 3, count = 12, country = countryCode.toLowerCase)
+    val edition: Edition = Edition.byId(countryCode).getOrElse(Edition.defaultEdition)
 
     ophanQuery.map { ophanResults =>
 
@@ -59,8 +61,15 @@ class GeoMostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi
         item: JsValue <- ophanResults.asOpt[JsArray].map(_.value).getOrElse(Nil)
         url <- (item \ "url").asOpt[String]
       } yield {
-        contentApiClient.getResponse(contentApiClient.item(urlToContentPath(url), Edition.defaultEdition))
-          .map(_.content.map(RelatedContentItem(_)))
+        contentApiClient
+          .getResponse(contentApiClient
+            .item(urlToContentPath(url), edition)
+            .showTags("paid-content")
+            .showSection(true)
+            .showFields("isInappropriateForSponsorship"))
+          .map(_.content
+            .filterNot { content => BrandingFinder.findBranding(countryCode)(content).exists(_.isPaid)}
+            .map(RelatedContentItem(_)))
           .recover {
             case NonFatal(e)  =>
               log.error(s"Error requesting $url", e)
