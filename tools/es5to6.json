@@ -212,7 +212,6 @@
   ],
   "Philip Wills": [
     "projects/facia/modules/ui/container-toggle.js",
-    "projects/facia/modules/ui/lazy-load-containers.js",
     "projects/common/modules/video/ga-helper.js",
     "projects/facia/modules/ui/live-blog-updates.js",
     "projects/commercial/modules/third-party-tags/imr-worldwide.js"
