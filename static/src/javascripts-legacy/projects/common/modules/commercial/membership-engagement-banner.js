@@ -19,6 +19,7 @@ define([
         'common/modules/experiments/segment-util',
         'common/modules/experiments/acquisition-test-selector',
         'common/modules/commercial/membership-engagement-banner-parameters',
+        'common/modules/commercial/membership-engagement-banner-block',
         'common/modules/commercial/contributions-utilities',
         'ophan/ng',
         'lib/geolocation',
@@ -43,6 +44,7 @@ define([
                  segmentUtil,
                  acquisitionTestSelector,
                  membershipEngagementBannerUtils,
+                 membershipEngagementBannerBlock,
                  contributionsUtilities,
                  ophan,
                  geolocation,
@@ -51,7 +53,7 @@ define([
 
         // change messageCode to force redisplay of the message to users who already closed it.
         // messageCode is also consumed by .../test/javascripts/spec/common/commercial/membership-engagement-banner.spec.js
-        var messageCode = 'engagement-banner-2017-05-11';
+        var messageCode = 'engagement-banner-2017-06-08';
 
         var DO_NOT_RENDER_ENGAGEMENT_BANNER = 'do no render engagement banner';
 
@@ -156,7 +158,7 @@ define([
 
         function showBanner(params) {
 
-            if (params === DO_NOT_RENDER_ENGAGEMENT_BANNER) {
+            if (params === DO_NOT_RENDER_ENGAGEMENT_BANNER || membershipEngagementBannerBlock.isBlocked()) {
                 return;
             }
 

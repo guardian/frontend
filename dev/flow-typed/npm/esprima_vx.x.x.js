@@ -1,4 +1,4 @@
-// flow-typed signature: dbcbf5c5d91c2925c5b947166ea55c40
+// flow-typed signature: 4a494cc5b3cd9c656c4f7df105060f02
 // flow-typed version: <<STUB>>/esprima_v1.2.2/flow_v0.40.0
 
 /**
@@ -8,8 +8,8 @@
  *
  * Fill this stub out by replacing all the `any` types.
  *
- * Once filled out, we encourage you to share your work with the 
- * community by sending a pull request to: 
+ * Once filled out, we encourage you to share your work with the
+ * community by sending a pull request to:
  * https://github.com/flowtype/flow-typed
  */
 

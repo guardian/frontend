@@ -1,4 +1,4 @@
-// flow-typed signature: e7515add2467f68b54949f4e922bfbd1
+// flow-typed signature: 0c5f7d7b0e6a59fbaf5294c5a8acb0bb
 // flow-typed version: <<STUB>>/tcp-ping_v^0.1.1/flow_v0.40.0
 
 /**
@@ -8,8 +8,8 @@
  *
  * Fill this stub out by replacing all the `any` types.
  *
- * Once filled out, we encourage you to share your work with the 
- * community by sending a pull request to: 
+ * Once filled out, we encourage you to share your work with the
+ * community by sending a pull request to:
  * https://github.com/flowtype/flow-typed
  */
 
