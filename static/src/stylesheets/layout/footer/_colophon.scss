@@ -1,0 +1,82 @@
+.colophon {
+    padding-top: $gs-baseline;
+    padding-bottom: $gs-baseline;
+
+    @include mq(tablet) {
+        padding-bottom: $gs-baseline / 2;
+    }
+}
+
+.colophon__lists-container {
+    @include f-textSans();
+    font-size: 14px;
+    line-height: 14px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    @include mq(leftCol) {
+        max-width: gs-span(8) + $gs-gutter;
+
+        .l-footer__secondary--no-email & {
+            max-width: none;
+        }
+    }
+}
+
+.colophon__list {
+    @include clearfix();
+    list-style: none;
+    position: relative;
+    margin: 0;
+
+    @include mq($until: tablet) {
+        padding-right: $gs-gutter / 2;
+        width: calc(50% - #{$gs-gutter / 2});
+    }
+
+    @include mq(tablet) {
+        margin: 0 $gs-gutter / 2 $gs-row-height 0;
+        // width fallback for browsers which don't fully support flex
+        width: 20%;
+        flex: 1 0 0;
+    }
+
+    a {
+        display: inline-block;
+        padding-bottom: $gs-baseline;
+        text-transform: lowercase;
+    }
+
+    &:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: -$gs-gutter / 2;
+        width: 1px;
+        display: block;
+        background-color: $footer-line-colour;
+
+        @include mq(tablet) {
+            top: -$gs-baseline;
+            bottom: $gs-baseline;
+        }
+    }
+
+    @include mq($until: tablet) {
+        &:nth-of-type(3) {
+            &:before {
+                content: none;
+            }
+        }
+    }
+
+    @include mq($until: leftCol) {
+        &:first-of-type {
+            &:before {
+                content: none;
+            }
+        }
+    }
+}

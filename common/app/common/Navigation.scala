@@ -68,7 +68,7 @@ trait Navigation {
   val africa = SectionLink("world", "africa", "Africa", "/world/africa")
   val middleEast = SectionLink("world", "middle east", "Middle east", "/world/middleeast")
   val video = SectionLink("video", "video", "Video", "/video")
-  val podcast = SectionLink("podcast", "podcast", "Podcast", "/podcast")
+  val podcast = SectionLink("podcasts", "podcasts", "Podcasts", "/podcasts")
   val guardianProfessional = SectionLink("guardian-professional", "professional networks", "Guardian Professional", "/guardian-professional")
   val observer = SectionLink("observer", "the observer", "The Observer", "/observer")
   val health = SectionLink("society", "health", "Health", "/society/health")
@@ -227,7 +227,7 @@ trait Navigation {
 
   // Guardian newspaper
   val todaysPaper = SectionLink("todayspaper", "today's paper", "Today's Paper", "/theguardian")
-  val letters = SectionLink("todayspaper", "letters", "Letters", "/theguardian/mainsection/editorialsandreply")
+  val letters = SectionLink("todayspaper", "letters", "Letters", "/tone/letters")
   val editorials = SectionLink("todayspaper", "editorials", "Editorials", "/tone/editorials")
   val obituaries = SectionLink("todayspaper", "obituaries", "Obituaries", "/tone/obituaries")
   val g2 = SectionLink("todayspaper", "g2", "G2", "/theguardian/g2")

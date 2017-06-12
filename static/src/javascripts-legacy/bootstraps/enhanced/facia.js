@@ -104,7 +104,7 @@ define([
                 ['f-show-more', modules.showContainerShowMore],
                 ['f-container-toggle', modules.showContainerToggle],
                 ['f-geo-most-popular', modules.upgradeMostPopularToGeo],
-                ['f-lazy-load-containers', lazyLoadContainers],
+                ['f-lazy-load-containers', lazyLoadContainers.lazyLoadContainers],
                 ['f-stocks', stocks],
                 ['f-sponsorship', sponsorship],
                 ['f-weather', modules.showWeather],

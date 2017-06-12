@@ -1,4 +1,5 @@
 .menu-item {
+    position: relative;
     width: 100%;
 
     @include mq(desktop) {
@@ -13,7 +14,7 @@
                 padding-left: $gs-gutter / 2;
             }
 
-            &:not(:last-child) {
+            & {
                 border-right: 1px solid $news-main-2;
                 padding-right: $gs-gutter / 2;
             }
@@ -24,6 +25,43 @@
         @include mq(desktop) {
             width: 100%;
         }
+    }
+}
+
+.menu-item--home {
+    @include mq(desktop) {
+        display: none;
+    }
+}
+
+.menu-item--edition {
+    @include mq(desktop) {
+        background-color: $guardian-brand;
+        display: block;
+        height: 54px;
+        border-radius: 50%;
+        text-align: center;
+        width: 54px;
+    }
+
+    &:hover,
+    &:focus {
+        // TODO: Zef!!1
+        background-color: #00d4ff;
+        color: #ffffff;
+    }
+
+    & + & {
+        @include mq(desktop) {
+            margin-left: $gs-gutter / 2;
+        }
+    }
+}
+
+.menu-item--edition-active {
+    @include mq(desktop) {
+        background-color: $guardian-brand-light;
+        color: $guardian-brand-dark;
     }
 }
 
@@ -39,6 +77,29 @@
     position: relative;
     text-align: left;
     width: 100%;
+
+    @include mq(tablet) {
+        padding-left: $menu-spacing-left-medium;
+    }
+
+    @include mq(desktop) {
+        font-size: 17px;
+        padding-left: 0;
+    }
+
+    &:hover,
+    &:focus {
+        text-decoration: none;
+
+        // TODO: maybe unify?
+        @include mq(desktop) {
+            color: #ffffff;
+        }
+    }
+
+    > * {
+        pointer-events: none;
+    }
 
     &[data-link-name='nav2 : the guardian app'],
     &[data-link-name='nav2 : facebook'] {
@@ -68,20 +129,6 @@
         }
     }
 
-    @include mq(tablet) {
-        padding-left: $menu-spacing-left-medium;
-    }
-
-    @include mq(desktop) {
-        font-size: 17px;
-        padding-left: 0;
-    }
-
-    &:hover,
-    &:focus {
-        text-decoration: none;
-    }
-
     // only match the ones, which are not in --secondary
     .menu-group--primary > .menu-item > & {
         font-size: 24px;
@@ -92,13 +139,19 @@
             font-size: 32px;
         }
     }
+
+    .menu-item--edition > & {
+        @include mq(desktop) {
+            line-height: 40px;
+            text-align: center;
+        }
+    }
 }
 
 .menu-item__icon,
 .menu-item__toggle {
     color: $news-support-2;
     left: 25px;
-    pointer-events: none;
     position: absolute;
 
     @include mq(tablet) {
@@ -150,4 +203,11 @@
         margin-left: -6px;
         margin-top: -5px;
     }
+}
+
+.menu-item__editions-label {
+    font-size: 17px;
+    left: 0;
+    position: absolute;
+    top: -$gs-baseline * 2;
 }

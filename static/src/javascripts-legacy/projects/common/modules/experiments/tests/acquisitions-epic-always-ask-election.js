@@ -1,5 +1,5 @@
 define([
-    'common/modules/commercial/contributions-utilities',
+    'common/modules/commercial/contributions-utilities'
 ], function (
     contributionsUtilities
 ) {
@@ -26,7 +26,8 @@ define([
         variants: [
             {
                 id: 'control',
-                isUnlimited : true
+                isUnlimited : true,
+                useTailoredCopyForRegulars: true
             }
         ]
     });

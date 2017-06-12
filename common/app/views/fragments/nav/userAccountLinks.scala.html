@@ -4,7 +4,7 @@
 @import conf.switches.Switches.IdentityProfileNavigationSwitch
 
 @if(IdentityProfileNavigationSwitch.isSwitchedOn) {
-    <li class="menu-item js-navigation-sign-in">
+    <li class="menu-item js-navigation-sign-in hide-on-desktop">
         <a href="@Configuration.id.url/signin?INTCMP=DOTCOM_HEADER_SIGNIN"
            data-link-name="nav2 : sign in"
            class="menu-item__title">
@@ -12,7 +12,7 @@
         </a>
     </li>
 
-    <li class="menu-item u-h js-navigation-account-details">
+    <li class="menu-item u-h js-navigation-account-details hide-on-desktop">
         <button class="menu-item__title js-navigation-toggle"
                 data-link-name="nav2 : my account"
                 aria-haspopup="true"

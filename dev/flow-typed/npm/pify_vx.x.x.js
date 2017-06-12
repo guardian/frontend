@@ -1,4 +1,4 @@
-// flow-typed signature: da2786414c0fa7d4d9cf2662cb5e0afe
+// flow-typed signature: c0487ef7df8bb2095790f7e05a4de92e
 // flow-typed version: <<STUB>>/pify_v^2.3.0/flow_v0.40.0
 
 /**
@@ -8,8 +8,8 @@
  *
  * Fill this stub out by replacing all the `any` types.
  *
- * Once filled out, we encourage you to share your work with the 
- * community by sending a pull request to: 
+ * Once filled out, we encourage you to share your work with the
+ * community by sending a pull request to:
  * https://github.com/flowtype/flow-typed
  */
 

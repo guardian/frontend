@@ -32,6 +32,12 @@
     }
 }
 
+.hide-until-desktop {
+    @include mq($until: desktop) {
+        display: none !important;
+    }
+}
+
 // Hide from
 
 .hide-from-mobile-landscape {
@@ -71,12 +77,6 @@
     }
 }
 
-.desktop-only {
-    @include mq($until: desktop) {
-        display: none !important;
-    }
-}
-
 .hide-on-mobile {
     display: none !important;
 
@@ -84,20 +84,12 @@
         display: block !important;
     }
 }
+
 .hide-on-mobile-inline {
     display: none !important;
 
     @include mq(tablet) {
         display: inline !important;
-    }
-}
-
-.tablet-only {
-    @include mq($until: mobile) {
-        display: none !important;
-    }
-    @include mq(desktop) {
-        display: none !important;
     }
 }
 

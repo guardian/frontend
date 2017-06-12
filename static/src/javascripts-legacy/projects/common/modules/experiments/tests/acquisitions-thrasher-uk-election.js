@@ -16,7 +16,11 @@ define([
 
     var UK_ELECTION_THRASHER_VIEW_COUNTER = "gu.uk-election-thrasher.views";
 
-    var UK_ELECTION_THRASHER_BLOCK_ELEMENT = "election-supporters__wrapper";
+    var UK_ELECTION_THRASHER_BLOCK_ELEMENT = "election-supporters__container";
+
+    // Default is used for when the AB test can't be run.
+    // The instance we know about is Safari in incognito mode, where local storage is not available.
+    var UK_ELECTION_THRASHER_DEFAULT_CLASS_LIST = "election-supporters__container--ask election-supporters__container--0";
 
     function getThrasherViewedCount() {
         return parseInt(storage.local.get(UK_ELECTION_THRASHER_VIEW_COUNTER)) || 0;
@@ -55,10 +59,9 @@ define([
         return viewCountClass + " " + thrasherVariantClass
     }
 
-    function onThrasherViewed(callback) {
-        // Safe selecting from array - function will only be called if length of array element is positive.
+    function onThrasherViewed(thrasherElement, callback) {
         // Element in view logic taken from contribution utilities.
-        elementInView($ukElectionThrasher[0], window, { top: 18 }).on('firstview', callback())
+        elementInView(thrasherElement, window, { top: 18 }).on('firstview', callback)
     }
 
     return function() {
@@ -86,6 +89,7 @@ define([
                     id: 'control',
 
                     test: function() {
+                        $ukElectionThrasher.removeClass(UK_ELECTION_THRASHER_DEFAULT_CLASS_LIST);
                         $ukElectionThrasher.addClass(getReaderSpecificUkElectionThrasherClassList())
                     },
 
@@ -97,10 +101,14 @@ define([
                     },
 
                     success: function(callback) {
-                        onThrasherViewed(function() {
-                            callback();
-                            incrementThrasherViewedCount()
-                        })
+                        // Check the thrasher is on the page as the success function is still fired,
+                        // even if the test can't be run.
+                        if ($ukElectionThrasher.length > 0) {
+                            onThrasherViewed($ukElectionThrasher[0], function() {
+                                callback();
+                                incrementThrasherViewedCount()
+                            })
+                        }
                     }
                 }
             ]

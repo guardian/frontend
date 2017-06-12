@@ -2,7 +2,7 @@
 import config from 'lib/config';
 import detect from 'lib/detect';
 import { logError } from 'lib/robust';
-import userFeatures from 'commercial/modules/user-features';
+import { isPayingMember, isAdFreeUser } from 'commercial/modules/user-features';
 import identityApi from 'common/modules/identity/api';
 import userPrefs from 'common/modules/user-prefs';
 import { daysSince } from 'lib/time-utils';
@@ -58,7 +58,7 @@ class CommercialFeatures {
         this.adFree =
             switches.commercial &&
             switches.adFreeMembershipTrial &&
-            userFeatures.isAdFreeUser();
+            isAdFreeUser();
 
         this.dfpAdvertising =
             switches.commercial && externalAdvertising && !sensitiveContent;
@@ -124,7 +124,7 @@ class CommercialFeatures {
             !config.page.hasSuperStickyBanner &&
             !supportsSticky;
 
-        this.canReasonablyAskForMoney = !(userFeatures.isPayingMember() || // eg become a supporter
+        this.canReasonablyAskForMoney = !(isPayingMember() || // eg become a supporter, give a contribution
         daysSinceLastContribution <= 180 || // has contributed in the last 6 months
             config.page.shouldHideAdverts ||
             config.page.isPaidContent);

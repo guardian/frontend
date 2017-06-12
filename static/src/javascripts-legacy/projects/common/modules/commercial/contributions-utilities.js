@@ -5,6 +5,7 @@ define([
     'common/modules/commercial/acquisitions-copy',
     'common/modules/commercial/acquisitions-epic-testimonial-parameters',
     'common/modules/commercial/acquisitions-view-log',
+    'common/modules/tailor/tailor',
     'lib/$',
     'lib/config',
     'lib/cookies',
@@ -27,6 +28,7 @@ define([
     acquisitionsCopy,
     acquisitionsTestimonialParameters,
     viewLog,
+    tailor,
     $,
     config,
     cookies,
@@ -63,9 +65,9 @@ define([
 
     var daysSinceLastContribution = timeUtils.daysSince(lastContributionDate);
 
-    function controlTemplate(variant) {
+    function controlTemplate(variant, copy) {
         return template(acquisitionsEpicControlTemplate, {
-            copy: acquisitionsCopy.control,
+            copy: copy,
             membershipUrl: variant.options.membershipURL,
             contributionUrl: variant.options.contributeURL,
             componentName: variant.options.componentName,
@@ -100,11 +102,6 @@ define([
             testimonialName: testimonialParameters.testimonialName,
             citeImage: citeImage
         });
-    }
-
-    function getControlTestimonialBlock(location){
-        var testimonialParameters = location == 'GB' ? acquisitionsTestimonialParameters.controlGB : acquisitionsTestimonialParameters.control;
-        return getTestimonialBlock(testimonialParameters);
     }
 
     function defaultCanEpicBeDisplayed(testConfig) {
@@ -182,6 +179,18 @@ define([
         return this.id + ':' + event;
     };
 
+    function getCopy(useTailor) {
+        if (useTailor) {
+            return tailor.isRegular().then(function (regular) {
+                return regular ? acquisitionsCopy.regulars : acquisitionsCopy.control;
+            })
+        }
+
+        return new Promise(function (resolve) {
+            return resolve(acquisitionsCopy.control);
+        });
+    }
+
     function ContributionsABTestVariant(options, test) {
         var trackingCampaignId = test.epic ? 'epic_' + test.campaignId : test.campaignId;
         var campaignCode = getCampaignCode(test.campaignPrefix, test.campaignId, options.id, test.campaignSuffix);
@@ -197,17 +206,15 @@ define([
             membershipURL: options.membershipURL || this.getURL(membershipBaseURL, campaignCode),
             componentName: 'mem_acquisition_' + trackingCampaignId + '_' + this.id,
             template: options.template || controlTemplate,
-            testimonialBlock: options.testimonialBlock || getControlTestimonialBlock(geolocation.getSync()),
+            testimonialBlock: options.testimonialBlock || getTestimonialBlock(acquisitionsTestimonialParameters.control),
             blockEngagementBanner: options.blockEngagementBanner || false,
             engagementBannerParams: options.engagementBannerParams || {},
             isOutbrainCompliant: options.isOutbrainCompliant || false,
             usesIframe: options.usesIframe || false,
-            iframeId: test.campaignId + '_' + 'iframe'
+            iframeId: test.campaignId + '_' + 'iframe',
         };
 
-
         this.test = function () {
-
             var displayEpic = (typeof options.canEpicBeDisplayed === 'function') ?
                 options.canEpicBeDisplayed(test) : true;
 
@@ -219,45 +226,50 @@ define([
             var onView = options.onView || noop;
 
             function render(templateFn) {
-                var template = templateFn || this.options.template;
-                var component = $.create(template(this));
+                return getCopy(options.useTailoredCopyForRegulars).then(function (copy) {
+                    var template = templateFn || this.options.template;
+                    return template(this, copy);
+                }.bind(this)).then(function(template) {
+                    var component = $.create(template);
 
-                mediator.emit('register:begin', trackingCampaignId);
-                return fastdom.write(function () {
-                    var targets = [];
+                    mediator.emit('register:begin', trackingCampaignId);
 
-                    if (!options.insertAtSelector) {
-                        targets = getTargets('.submeta', false);
-                    } else {
-                        targets = getTargets(options.insertAtSelector, options.insertMultiple);
-                    }
+                    return fastdom.write(function () {
+                        var targets = [];
 
-                    if (targets.length > 0) {
-                        if (options.insertAfter) {
-                            component.insertAfter(targets);
+                        if (!options.insertAtSelector) {
+                            targets = getTargets('.submeta', false);
                         } else {
-                            component.insertBefore(targets);
+                            targets = getTargets(options.insertAtSelector, options.insertMultiple);
                         }
 
-                        mediator.emit(test.insertEvent, component);
-                        onInsert(component);
+                        if (targets.length > 0) {
+                            if (options.insertAfter) {
+                                component.insertAfter(targets);
+                            } else {
+                                component.insertBefore(targets);
+                            }
 
-                        component.each(function (element) {
-                            // top offset of 18 ensures view only counts when half of element is on screen
-                            var elementInView = ElementInView(element, window, { top: 18 });
+                            mediator.emit(test.insertEvent, component);
+                            onInsert(component);
 
-                            elementInView.on('firstview', function () {
-                                viewLog.logView(test.id);
-                                mediator.emit(test.viewEvent);
-                                mediator.emit('register:end', trackingCampaignId);
-                                onView(this);
+                            component.each(function (element) {
+                                // top offset of 18 ensures view only counts when half of element is on screen
+                                var elementInView = ElementInView(element, window, { top: 18 });
+
+                                elementInView.on('firstview', function () {
+                                    viewLog.logView(test.id);
+                                    mediator.emit(test.viewEvent);
+                                    mediator.emit('register:end', trackingCampaignId);
+                                    onView(this);
+                                });
                             });
-                        });
-                    }
-                }.bind(this));
+                        }
+                    }.bind(this));
+                });
             }
 
-            return (typeof options.test === 'function') ? options.test(render.bind(this), this) : render.apply(this);
+            return (typeof options.test === 'function') ? options.test(render.bind(this), this, test) : render.apply(this);
         };
 
         this.registerIframeListener();

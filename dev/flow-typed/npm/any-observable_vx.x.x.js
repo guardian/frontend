@@ -1,4 +1,4 @@
-// flow-typed signature: 8253ae810c56df2e9bf5bdeacc552f34
+// flow-typed signature: 1680d56a32c6c2670648802351145f67
 // flow-typed version: <<STUB>>/any-observable_v^0.2.0/flow_v0.40.0
 
 /**
@@ -8,8 +8,8 @@
  *
  * Fill this stub out by replacing all the `any` types.
  *
- * Once filled out, we encourage you to share your work with the 
- * community by sending a pull request to: 
+ * Once filled out, we encourage you to share your work with the
+ * community by sending a pull request to:
  * https://github.com/flowtype/flow-typed
  */
 

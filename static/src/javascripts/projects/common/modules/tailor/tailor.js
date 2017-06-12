@@ -1,5 +1,5 @@
 // @flow
-import fetchData from 'common/modules/tailor/fetch-data';
+import { fetchData } from 'common/modules/tailor/fetch-data';
 
 /**
  * Given a response from tailor, we see if the response has a survey suggestion, and if so return the first
