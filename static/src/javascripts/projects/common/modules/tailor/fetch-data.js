@@ -8,7 +8,7 @@ import config from 'lib/config';
 
 const BROWSER_ID = getCookie('bwid');
 const URLS = {
-    suggestions: 'https://tailor.guardianapis.com/suggestions?browserId=',
+    surveys: 'https://tailor.guardianapis.com/surveys?browserId=',
 };
 
 const getURL = (type: string, queryParams?: Object): ?string => {
@@ -67,9 +67,10 @@ const fetchData = (
         return Promise.resolve(tailorData[url]);
     }
 
-    return fetchJson(url)
-        .then(handleResponse.bind(null, url))
-        .catch(handleError.bind(null, url));
+    return fetchJson(url).then(data => handleResponse(url, data)).catch(err => {
+        handleError(url, err);
+        return Promise.resolve({});
+    });
 };
 
 export { fetchData };

@@ -5,6 +5,8 @@ import { logError } from 'lib/robust';
 import { isPayingMember, isAdFreeUser } from 'commercial/modules/user-features';
 import identityApi from 'common/modules/identity/api';
 import userPrefs from 'common/modules/user-prefs';
+import { daysSince } from 'lib/time-utils';
+import { getCookie } from 'lib/cookies';
 
 // Having a constructor means we can easily re-instantiate the object in a test
 class CommercialFeatures {
@@ -47,6 +49,10 @@ class CommercialFeatures {
             document.documentElement.classList.contains('has-sticky');
         const newRecipeDesign =
             config.page.showNewRecipeDesign && config.tests.abNewRecipeDesign;
+        const lastContributionDate = getCookie(
+            'gu.contributions.contrib-timestamp'
+        );
+        const daysSinceLastContribution = daysSince(lastContributionDate);
 
         // Feature switches
         this.adFree =
@@ -119,6 +125,7 @@ class CommercialFeatures {
             !supportsSticky;
 
         this.canReasonablyAskForMoney = !(isPayingMember() || // eg become a supporter, give a contribution
+        daysSinceLastContribution <= 180 || // has contributed in the last 6 months
             config.page.shouldHideAdverts ||
             config.page.isPaidContent);
 

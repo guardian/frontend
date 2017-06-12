@@ -31,7 +31,7 @@ const get = (): Promise<string> =>
                 if (response.country) {
                     resolve(response.country);
                 } else {
-                    reject('No country in geolocation response', response);
+                    reject('No country in geolocation response');
                 }
             })
             .catch(reject);

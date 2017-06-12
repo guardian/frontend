@@ -296,9 +296,9 @@ Loader.prototype.getUser = function() {
     if (Id.getUserFromCookie()) {
         DiscussionApi.getUser().then(function(resp) {
             self.user = resp.userProfile;
-            Id.getUserFromApiWithRefreshedCookie().then(function (response) {
-                if (response.user.publicFields.username) {
-                    self.username = response.user.publicFields.username;
+            Id.getUserFromApi(function (user) {
+                if (user && user.publicFields.username) {
+                    self.username = user.publicFields.username;
                 }
                 self.emit('user:loaded');
             });

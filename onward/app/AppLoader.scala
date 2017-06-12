@@ -57,7 +57,6 @@ trait AppComponents extends FrontendComponents with OnwardControllers with Onwar
     wire[LogstashLifecycle],
     wire[OnwardJourneyLifecycle],
     wire[CloudWatchMetricsLifecycle],
-    wire[MostReadLifecycle],
     wire[StocksDataLifecycle],
     wire[MostPopularFacebookAutoRefreshLifecycle],
     wire[SwitchboardLifecycle],

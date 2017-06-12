@@ -1,55 +1,63 @@
 package feed
 
+import java.util.concurrent.Executors
 import app.LifecycleComponent
-import common.{JobScheduler, AkkaAsync}
+import common.{AkkaAsync, JobScheduler}
 import play.api.inject.ApplicationLifecycle
-import scala.concurrent.{Future, ExecutionContext}
+import scala.concurrent.{ExecutionContext, Future}
 
 class OnwardJourneyLifecycle(
   appLifecycle: ApplicationLifecycle,
   jobs: JobScheduler,
   akkaAsync: AkkaAsync,
+  mostReadAgent: MostReadAgent,
   geoMostPopularAgent: GeoMostPopularAgent,
   dayMostPopularAgent: DayMostPopularAgent,
   mostPopularAgent: MostPopularAgent,
   mostViewedAudioAgent: MostViewedAudioAgent,
   mostViewedGalleryAgent: MostViewedGalleryAgent,
-  mostViewedVideoAgent: MostViewedVideoAgent)(implicit ec: ExecutionContext) extends LifecycleComponent {
+  mostViewedVideoAgent: MostViewedVideoAgent) extends LifecycleComponent {
+
+  implicit val capiClientExecutionContext = ExecutionContext.fromExecutorService(Executors.newSingleThreadExecutor())
 
   appLifecycle.addStopHook { () => Future {
-    stop()
+    descheduleAll()
   }}
 
-  override def start(): Unit = {
-    jobs.deschedule("OnwardJourneyAgentsRefreshJob")
-    jobs.deschedule("OnwardJourneyAgentsRefreshHourlyJob")
+  private def descheduleAll(): Unit = {
+    jobs.deschedule("OnwardJourneyAgentsHighFrequencyRefreshJob")
+    jobs.deschedule("OnwardJourneyAgentsMediumFrequencyRefreshJob")
+    jobs.deschedule("OnwardJourneyAgentsLowFrequencyRefreshJob")
+  }
 
-    // fire every min
-    jobs.schedule("OnwardJourneyAgentsRefreshJob", "0 * * * * ?") {
+  override def start(): Unit = {
+
+    descheduleAll()
+
+    jobs.scheduleEveryNMinutes("OnwardJourneyAgentsHighFrequencyRefreshJob", 5) {
       mostPopularAgent.refresh()
       geoMostPopularAgent.refresh()
+    }
+
+    jobs.scheduleEveryNMinutes("OnwardJourneyAgentsMediumFrequencyRefreshJob", 30) {
       mostViewedVideoAgent.refresh()
       mostViewedAudioAgent.refresh()
       mostViewedGalleryAgent.refresh()
+      mostReadAgent.refresh()
     }
 
-    // fire every hour
-    jobs.schedule("OnwardJourneyAgentsRefreshHourlyJob", "0 0 * * * ?") {
+    jobs.scheduleEveryNMinutes("OnwardJourneyAgentsLowFrequencyRefreshJob", 60) {
       dayMostPopularAgent.refresh()
     }
 
     akkaAsync.after1s {
       mostPopularAgent.refresh()
       geoMostPopularAgent.refresh()
-      mostViewedVideoAgent.refresh()
+      dayMostPopularAgent.refresh()
       mostViewedAudioAgent.refresh()
       mostViewedGalleryAgent.refresh()
-      dayMostPopularAgent.refresh()
+      mostViewedVideoAgent.refresh()
+      mostReadAgent.refresh()
     }
-  }
-
-  def stop(): Unit = {
-    jobs.deschedule("OnwardJourneyAgentsRefreshJob")
-    jobs.deschedule("OnwardJourneyAgentsRefreshHourlyJob")
   }
 }
