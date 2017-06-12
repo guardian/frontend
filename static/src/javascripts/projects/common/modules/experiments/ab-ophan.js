@@ -1,4 +1,6 @@
 // @flow
+
+import { noop } from 'lib/noop';
 import { getActiveTests } from 'common/modules/experiments/ab-tests';
 import { testCanBeRun } from 'common/modules/experiments/test-can-run-checks';
 import { isInTest } from 'common/modules/experiments/segment-util';
@@ -14,7 +16,6 @@ import ophan from 'ophan/ng';
 
 const not = f => (...args: any[]): boolean => !f(...args);
 const and = (f, g) => (...args: any[]): boolean => f(...args) && g(...args);
-const noop = (): null => null;
 
 const submit = (payload: OphanABPayload): void =>
     ophan.record({
