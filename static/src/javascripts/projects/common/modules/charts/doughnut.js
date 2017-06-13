@@ -6,7 +6,7 @@
  * - https://github.com/mbostock/d3/blob/master/src/svg/arc.js
  */
 import $ from 'lib/$';
-import bonzo from 'bonzo';
+import type { bonzo } from 'bonzo';
 
 const svgEl = (type: string): bonzo =>
     $.create(document.createElementNS('http://www.w3.org/2000/svg', type));
