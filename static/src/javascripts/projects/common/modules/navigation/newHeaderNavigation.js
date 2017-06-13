@@ -243,7 +243,9 @@ const toggleSidebarWithOpenSection = () => {
 
 const addEventHandler = (): void => {
     const menu = getMenu();
-    const toggle = document.querySelector('.js-toggle-nav-section');
+    const toggleWithMoreButton = document.querySelector(
+        '.js-toggle-nav-section'
+    );
 
     if (menu) {
         menu.addEventListener('click', (event: Event) => {
@@ -261,8 +263,8 @@ const addEventHandler = (): void => {
         });
     }
 
-    if (toggle) {
-        toggle.addEventListener('click', () => {
+    if (toggleWithMoreButton) {
+        toggleWithMoreButton.addEventListener('click', () => {
             toggleSidebarWithOpenSection();
         });
     }
