@@ -10,7 +10,7 @@
     "content__standfirst--explore" -> (item.content.isExplore && item.tags.isArticle),
     "content__standfirst--advertisement" -> (item.content.isImmersive && item.tags.isPaidContent),
     "content__standfirst--immersive-minute-article" -> item.tags.isTheMinuteArticle),
-    "content__standfirst")" data-link-name="standfirst" data-component="standfirst" dir="auto">
+    "content__standfirst")" data-link-name="standfirst" data-component="standfirst" @item.fields.lang.map { l => lang="@l" } @if(item.content.fields.isRightToLeftLang){ dir="rtl" }>
     @item.fields.trailText.map{ t =>
 
         @defining({
