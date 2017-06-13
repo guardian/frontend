@@ -14,7 +14,7 @@ let iframeCounter = 0;
 let observer;
 let visibleIframeIds;
 
-const reset = window_ => {
+const reset = (window_: WindowProxy) => {
     w = window_ || window;
     useIO = 'IntersectionObserver' in w;
     taskQueued = false;
@@ -50,7 +50,7 @@ const onIntersect = changes => {
         .map(_ => _.target.id);
 };
 
-const onScroll = () => {
+const onScroll = (): ?Promise<any> => {
     if (!taskQueued) {
         const viewport = detect.getViewport();
         taskQueued = true;
@@ -76,7 +76,10 @@ const onScroll = () => {
     }
 };
 
-const addScrollListener = (iframe, respond) => {
+const addScrollListener = (
+    iframe: Element,
+    respond: ?() => mixed
+): ?Promise<any> => {
     if (iframeCounter === 0) {
         addEventListener(w, 'scroll', onScroll, {
             passive: true,
@@ -96,7 +99,7 @@ const addScrollListener = (iframe, respond) => {
     };
     iframeCounter += 1;
 
-    if (useIO) {
+    if (useIO && observer) {
         observer.observe(iframe);
     }
 
@@ -105,7 +108,7 @@ const addScrollListener = (iframe, respond) => {
     });
 };
 
-const removeScrollListener = iframe => {
+const removeScrollListener = (iframe: Element) => {
     if (iframes[iframe.id]) {
         if (useIO && observer) {
             observer.unobserve(iframe);
@@ -123,7 +126,8 @@ const removeScrollListener = iframe => {
     }
 };
 
-const onMessage = (respond, start, iframe) => {
+const onMessage = (respond: ?() => mixed, start, iframe: ?Element): void => {
+    if (!iframe) return;
     if (start) {
         addScrollListener(iframe, respond);
     } else {
