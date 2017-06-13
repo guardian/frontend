@@ -141,15 +141,15 @@ object EmailNewsletters {
     exampleUrl = Some("/science/series/lab-notes/latest/email")
   )
 
-  val povertyMatters = EmailNewsletter(
-    name = "Poverty Matters",
+  val globalDispatch = EmailNewsletter(
+    name = "Global Dispatch",
     theme = "news",
-    teaser = "From the shocking to the uplifting - get the world’s biggest stories that you’re missing",
-    description = "Our editors track what’s happening in development with a special focus on the millennium development goals. Sign up to get all the most important debate and discussion from around the world delivered to your inbox every fortnight",
+    teaser = "Breaking stories and hard-hitting features of people living under extraordinary circumstances, uncovered by the Guardian’s global development team",
+    description = "Get a different world view: breaking stories and hard-hitting features, uncovered by the Guardian’s global development team and our correspondents across Africa, Asia, South and Central America and beyond. We bring you the voices and opinions of people living under extraordinary circumstances",
     frequency = "Every other Tuesday",
     listId = 113,
-    signupPage = Some("/global-development/2015/nov/10/sign-up-to-the-poverty-matters-email-newsletter"),
-    exampleUrl = Some("/global-development/series/poverty-matters/latest/email")
+    signupPage = Some("/info/2017/jun/08/global-dispatch-sign-up-for-a-different-world-view"),
+    exampleUrl = Some("/email/global-dispatch")
   )
 
   val australianPolitics = EmailNewsletter(
@@ -445,7 +445,7 @@ object EmailNewsletters {
     brexitBriefing,
     greenLight,
     labNotes,
-    povertyMatters,
+    globalDispatch,
     australianPolitics
   )
 
