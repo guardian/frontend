@@ -11,8 +11,20 @@ case class NavLinkLists(mostPopular: Seq[NavLink], leastPopular: Seq[NavLink] = 
 
 object NewNavigation {
 
-  val PrimaryLinks = List(headlines, opinion, sport, culture, lifestyle)
-  val topLevelSections = List(News, Opinion, Sport, Arts, Life)
+  val PrimaryLinks = List(
+    headlines,
+    opinion,
+    sport,
+    culture,
+    lifestyle
+  )
+  val topLevelSections = List(
+    News,
+    Opinion,
+    Sport,
+    Arts,
+    Life
+  )
 
   def getMembershipLinks(edition: Edition): NavLinkLists = {
     val editionId = edition.id.toLowerCase()
@@ -226,14 +238,38 @@ object NewNavigation {
     )
   }
 
-  case object NavFooterLinks extends EditionalisedNavigationSection {
+  case object BrandExtensions extends EditionalisedNavigationSection {
     val name = ""
 
     val uk = NavLinkLists(List(
       jobs.copy(url = jobs.url + "?INTCMP=jobs_uk_web_newheader"),
       dating.copy(url = dating.url + "?INTCMP=soulmates_uk_web_newheader"),
-      NavLink("holidays", "https://holidays.theguardian.com/?utm_source=theguardian&utm_medium=guardian-links&utm_campaign=topnav&INTCMP=topnav"),
-      ukMasterClasses,
+      holidays,
+      ukMasterClasses
+    ))
+
+    val au = NavLinkLists(List(
+      jobs.copy(url = jobs.url + "/landingpage/2868291/jobs-australia-html/?INTCMP=jobs_au_web_newheader"),
+      holidays,
+      auEvents
+    ))
+
+    val us = NavLinkLists(List(
+      jobs.copy(url = jobs.url + "?INTCMP=jobs_us_web_newheader"),
+      holidays
+    ))
+
+    val int = NavLinkLists(List(
+      jobs.copy(url = jobs.url + "?INTCMP=jobs_int_web_newheader"),
+      holidays,
+      dating.copy(url = dating.url + "?INTCMP=soulmates_int_web_newheader")
+    ))
+  }
+
+  case object OtherLinks extends EditionalisedNavigationSection {
+    val name = ""
+
+    val uk = NavLinkLists(List(
       NavLink("professional networks", "/guardian-professional"),
       apps.copy(url = apps.url + "?INTCMP=apps_uk_web_newheader"),
       podcasts,
@@ -247,8 +283,6 @@ object NewNavigation {
     ))
 
     val au = NavLinkLists(List(
-      jobs.copy(url = jobs.url + "/landingpage/2868291/jobs-australia-html/?INTCMP=jobs_au_web_newheader"),
-      auEvents,
       apps.copy(url = apps.url + "?INTCMP=apps_au_web_newheader"),
       podcasts,
       video,
@@ -259,7 +293,6 @@ object NewNavigation {
     ))
 
     val us = NavLinkLists(List(
-      jobs.copy(url = jobs.url + "?INTCMP=jobs_us_web_newheader"),
       apps.copy(url = apps.url + "?INTCMP=apps_us_web_newheader"),
       podcasts,
       video,
@@ -270,8 +303,6 @@ object NewNavigation {
     ))
 
     val int = NavLinkLists(List(
-      jobs.copy(url = jobs.url + "?INTCMP=jobs_int_web_newheader"),
-      dating.copy(url = dating.url + "?INTCMP=soulmates_int_web_newheader"),
       apps.copy(url = apps.url + "?INTCMP=apps_int_web_newheader"),
       podcasts,
       video,

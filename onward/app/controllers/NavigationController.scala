@@ -40,6 +40,11 @@ class NavigationController extends Controller {
   //  This is to editionalise the menu on AMP
   def renderAmpNav = Action { implicit request =>
     val edition = Edition(request)
+    val navSecondarySections = List.concat(
+      NewNavigation.BrandExtensions.getAllEditionalisedNavLinks(edition).map(section => navSectionLink(section)),
+      NewNavigation.OtherLinks.getAllEditionalisedNavLinks(edition).map(section => navSectionLink(section))
+    )
+
 
     Cached(900) {
 
@@ -61,7 +66,7 @@ class NavigationController extends Controller {
         "items" -> Json.arr(
           Json.obj(
             "topLevelSections" -> NewNavigation.topLevelSections.map( section => topLevelNavItems(section) ),
-            "secondarySections" -> NewNavigation.NavFooterLinks.getAllEditionalisedNavLinks(edition).map(section => navSectionLink(section))
+            "secondarySections" -> navSecondarySections
           )
         )
       )
