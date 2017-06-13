@@ -135,6 +135,12 @@
         }
     }
 
+    &[data-link-name='nav2 : the guardian app'] {
+        @include mq(desktop) {
+            display: none;
+        }
+    }
+
     // only match the ones, which are not in --secondary
     .menu-group--primary > .menu-item > & {
         font-size: 24px;
