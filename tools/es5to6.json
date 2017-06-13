@@ -8,8 +8,7 @@
     "projects/commercial/modules/messenger/dfp-origin.js",
     "projects/commercial/modules/messenger/get-stylesheet.js",
     "projects/commercial/modules/messenger/post-message.js",
-    "projects/commercial/modules/messenger/resize.js",
-    "projects/commercial/modules/messenger/scroll.js"
+    "projects/commercial/modules/messenger/resize.js"
   ],
   "Lydia Shepherd": [],
   "sndrs": [
@@ -87,7 +86,7 @@
     "projects/commercial/modules/messenger/viewport.js"
   ],
   "Gideon Goldberg": [
-      "projects/common/modules/charts/doughnut.js"
+    "projects/common/modules/charts/doughnut.js"
   ],
   "Matthew Walls": [
     "projects/common/modules/crosswords/anagram-helper/main.js",
