@@ -1,4 +1,4 @@
-// flow-typed signature: 39f04a281834afb5c4d1d1b9f3d73098
+// flow-typed signature: f96cb7fc745b38dfe9ba982fb045b53d
 // flow-typed version: <<STUB>>/videojs-ima_vgoogleads/videojs-ima#0.3.0/flow_v0.40.0
 
 /**
@@ -8,8 +8,8 @@
  *
  * Fill this stub out by replacing all the `any` types.
  *
- * Once filled out, we encourage you to share your work with the 
- * community by sending a pull request to: 
+ * Once filled out, we encourage you to share your work with the
+ * community by sending a pull request to:
  * https://github.com/flowtype/flow-typed
  */
 

@@ -15,8 +15,10 @@
             }
 
             & {
-                border-right: 1px solid $news-main-2;
+                border-right: 2px solid rgba($news-main-2, .3);
+                margin-top: -$gs-baseline * 3.5;
                 padding-right: $gs-gutter / 2;
+                padding-top: $gs-baseline * 3.5;
             }
         }
     }
@@ -25,6 +27,12 @@
         @include mq(desktop) {
             width: 100%;
         }
+    }
+}
+
+.menu-item--home {
+    @include mq(desktop) {
+        display: none;
     }
 }
 
@@ -62,6 +70,7 @@
 .menu-item__title {
     background-color: transparent;
     border: 0;
+    box-sizing: border-box;
     color: currentColor;
     cursor: pointer;
     display: block;
@@ -78,7 +87,10 @@
 
     @include mq(desktop) {
         font-size: 17px;
-        padding-left: 0;
+        overflow-x: hidden;
+        padding: $gs-baseline / 2 0;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
 
     &:hover,
@@ -120,6 +132,12 @@
                     left: $menu-spacing-left-medium;
                 }
             }
+        }
+    }
+
+    &[data-link-name='nav2 : the guardian app'] {
+        @include mq(desktop) {
+            display: none;
         }
     }
 

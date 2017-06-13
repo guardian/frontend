@@ -15,6 +15,8 @@ define([
     'lib/storage',
     'lib/geolocation',
     'lib/url',
+    'lib/noop',
+    'lib/time-utils',
     'lodash/objects/assign',
     'lodash/utilities/template',
     'lodash/collections/toArray',
@@ -37,6 +39,8 @@ define([
     storage,
     geolocation,
     url,
+    noop,
+    timeUtils,
     assign,
     template,
     toArray,
@@ -61,20 +65,7 @@ define([
         minDaysBetweenViews: 0
     };
 
-    function daysSince(date) {
-        var oneDay = 24 * 60 * 60 * 1000;
-
-        try {
-            var ms = Date.parse(date);
-
-            if (isNaN(ms)) return Infinity;
-            return (new Date() - ms) / oneDay;
-        } catch(e) {
-            return Infinity;
-        }
-    }
-
-    var daysSinceLastContribution = daysSince(lastContributionDate);
+    var daysSinceLastContribution = timeUtils.daysSince(lastContributionDate);
 
     function controlTemplate(variant, copy) {
         return template(acquisitionsEpicControlTemplate, {
@@ -115,14 +106,8 @@ define([
         });
     }
 
-    function getControlTestimonialBlock(location){
-        var testimonialParameters = location == 'GB' ? acquisitionsTestimonialParameters.controlGB : acquisitionsTestimonialParameters.control;
-        return getTestimonialBlock(testimonialParameters);
-    }
-
     function defaultCanEpicBeDisplayed(testConfig) {
-        var enoughTimeSinceLastContribution = testConfig.showToContributors || daysSince(lastContributionDate) >= 180;
-        var canReasonablyAskForMoney = testConfig.showToSupporters || commercialFeatures.commercialFeatures.canReasonablyAskForMoney;
+        var canReasonablyAskForMoney = testConfig.showToContributorsAndSupporters || commercialFeatures.commercialFeatures.canReasonablyAskForMoney;
 
         var worksWellWithPageTemplate = (typeof testConfig.pageCheck === 'function')
             ? testConfig.pageCheck(config.page)
@@ -136,8 +121,7 @@ define([
 
         var tagsMatch = doTagsMatch(testConfig);
 
-        return enoughTimeSinceLastContribution &&
-            canReasonablyAskForMoney &&
+        return canReasonablyAskForMoney &&
             worksWellWithPageTemplate &&
             inCompatibleLocation &&
             locationCheck &&
@@ -224,7 +208,7 @@ define([
             membershipURL: options.membershipURL || this.getURL(membershipBaseURL, campaignCode),
             componentName: 'mem_acquisition_' + trackingCampaignId + '_' + this.id,
             template: options.template || controlTemplate,
-            testimonialBlock: options.testimonialBlock || getControlTestimonialBlock(geolocation.getSync()),
+            testimonialBlock: options.testimonialBlock || getTestimonialBlock(acquisitionsTestimonialParameters.control),
             blockEngagementBanner: options.blockEngagementBanner || false,
             engagementBannerParams: options.engagementBannerParams || {},
             isOutbrainCompliant: options.isOutbrainCompliant || false,
@@ -240,8 +224,8 @@ define([
                 return;
             }
 
-            var onInsert = options.onInsert || noop;
-            var onView = options.onView || noop;
+            var onInsert = options.onInsert || noop.noop;
+            var onView = options.onView || noop.noop;
 
             function render(templateFn) {
                 return getCopy(options.useTailoredCopyForRegulars).then(function (copy) {
@@ -287,7 +271,7 @@ define([
                 });
             }
 
-            return (typeof options.test === 'function') ? options.test(render.bind(this), this) : render.apply(this);
+            return (typeof options.test === 'function') ? options.test(render.bind(this), this, test) : render.apply(this);
         };
 
         this.registerIframeListener();
@@ -345,8 +329,6 @@ define([
             }
         }.bind(this));
     }
-
-    function noop() {}
 
     // Utility function to build variants with common properties.
     function variantBuilderFactory(commonVariantProps) {

@@ -35,7 +35,6 @@
         flex-wrap: nowrap;
         margin-bottom: $gs-row-height * 2;
         order: 1;
-        width: gs-span(10);
     }
 }
 
@@ -46,6 +45,7 @@
 
     @include mq(desktop) {
         background-color: transparent;
+        width: gs-span(2) + $gs-gutter / 2;
     }
 }
 
@@ -81,7 +81,7 @@
     @include mq(desktop) {
         order: 2;
         padding-left: $gs-gutter / 2;
-        width: gs-span(2);
+        width: gs-span(2) + $gs-gutter / 2;
     }
 }
 

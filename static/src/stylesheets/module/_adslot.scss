@@ -344,6 +344,10 @@
     }
 }
 
+.fc-container--commercial .ad-slot--commercial-component-high {
+    margin-bottom: $gs-baseline * 2;
+}
+
 .ad-slot--im {
     float: left;
     width: $gs-gutter * 6.5;

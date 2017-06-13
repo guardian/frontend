@@ -1,4 +1,4 @@
-// flow-typed signature: 09210122288c3f844871d74bfaa5938f
+// flow-typed signature: 717548d23161eb3cf2beb7d13a4939bf
 // flow-typed version: <<STUB>>/karma-coverage_v^1.1.1/flow_v0.40.0
 
 /**
@@ -8,8 +8,8 @@
  *
  * Fill this stub out by replacing all the `any` types.
  *
- * Once filled out, we encourage you to share your work with the 
- * community by sending a pull request to: 
+ * Once filled out, we encourage you to share your work with the
+ * community by sending a pull request to:
  * https://github.com/flowtype/flow-typed
  */
 
