@@ -9,7 +9,8 @@ import debounce from 'lodash/functions/debounce';
 
 const enhanced = {};
 
-const getMenu = (): ?HTMLElement => document.getElementById('main-menu');
+const getMenu = (): ?HTMLElement =>
+    document.getElementsByClassName('js-main-menu')[0];
 
 const getSectionToggleMenuItem = (section: HTMLElement): ?HTMLElement => {
     const children = [...section.children];
