@@ -20,7 +20,7 @@ case class CommercialProperties(
     branding <- editionBranding.branding
   } yield branding
 
-  def combineTheMaps(
+  def combineAdCallParams(
       leftMap: Map[AdCallParamKey, AdCallParamValue],
       rightMap: Map[AdCallParamKey, AdCallParamValue]): Map[AdCallParamKey, AdCallParamValue] = {
     leftMap.map{
@@ -45,7 +45,7 @@ case class CommercialProperties(
     editionAdTargetings.
       filter(_.edition == edition)
       .map(_.params)
-      .reduce{ (m1, m2) => combineTheMaps(m1, m2) }
+      .reduce{ (m1, m2) => combineAdCallParams(m1, m2) }
 
 }
 
