@@ -24,7 +24,8 @@ case class CommercialProperties(
     editionAdTargetings.
       filter(_.edition == edition)
       .map(_.params)
-      .reduce{ (m1, m2) => CommercialProperties.combineAdCallParams(m1, m2) }
+      .headOption
+      .getOrElse(Map.empty)
 
 }
 
@@ -64,25 +65,4 @@ object CommercialProperties {
     editionBrandings = Nil,
     editionAdTargetings = EditionAdTargeting.forFrontUnknownToCapi(frontId)
   )
-
-  def combineAdCallParams(
-    leftMap: Map[AdCallParamKey, AdCallParamValue],
-    rightMap: Map[AdCallParamKey, AdCallParamValue]): Map[AdCallParamKey, AdCallParamValue] = {
-    leftMap.map{
-      case (leftKey, leftSingleValue@SingleValue(leftValue)) =>
-        val newSingleValue: SingleValue = rightMap.get(leftKey).collect {
-          case SingleValue(rightValue) if leftValue != rightValue => SingleValue(s"$leftValue$rightValue")
-        }.getOrElse(leftSingleValue)
-
-        (leftKey, newSingleValue)
-
-      case (leftKey, leftMultipleValues@MultipleValues(leftValues)) =>
-        val newMultipleValues: MultipleValues = rightMap.get(leftKey).collect {
-          case MultipleValues(rightValues) =>
-            MultipleValues(leftValues ++ rightValues)}
-          .getOrElse(leftMultipleValues)
-
-        (leftKey, newMultipleValues)
-    }
-  }
 }
