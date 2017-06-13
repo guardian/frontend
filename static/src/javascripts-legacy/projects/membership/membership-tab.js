@@ -3,6 +3,7 @@ define([
     'lib/$',
     'lib/fetch',
     'lib/config',
+    'lib/report-error',
     'membership/formatters',
     'membership/stripe'
 ], function (
@@ -10,6 +11,7 @@ define([
     $,
     fetch,
     config,
+    reportError,
     formatters,
     stripe
 ) {
@@ -60,10 +62,10 @@ define([
                 hideLoader();
                 displayMembershipUpSell();
             }
-        }).catch(function (){
+        }).catch(function (err){
             hideLoader();
             displayErrorMessage();
-            //TODO: HANDLE THIS ERROR
+            reportError(err,{feature:'mma-membership'})
         });
     }
 

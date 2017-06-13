@@ -3,6 +3,7 @@ define([
     'lib/$',
     'lib/fetch',
     'lib/config',
+    'lib/report-error',
     'membership/formatters',
     'membership/stripe'
 ], function (
@@ -10,6 +11,7 @@ define([
     $,
     fetch,
     config,
+    reportError,
     formatters,
     stripe
 ) {
@@ -51,10 +53,10 @@ define([
                 hideLoader();
                 displayDigitalPackUpSell();
             }
-        }).catch(function (){
+        }).catch(function (err){
             hideLoader();
             displayErrorMessage();
-            //TODO: handle this
+            reportError(err,{feature:'mma-digipack'})
        });
     }
 
