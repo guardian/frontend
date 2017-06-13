@@ -1,4 +1,4 @@
-@(item: layout.ContentCard, containerIndex: Int, index: Int, visibilityDataAttribute: String, isFirstContainer: Boolean, isList: Boolean)(implicit request: RequestHeader)
+@(item: layout.ContentCard, containerIndex: Int, index: Int, visibilityDataAttribute: String, isFirstContainer: Boolean, isList: Boolean, isElectionContainer: Boolean = false)(implicit request: RequestHeader)
 
 @import layout.{FaciaWidths, FrontendLatestSnap}
 @import model.{CrosswordSvg, InlineImage, InlineSlideshow, InlineVideo, InlineYouTubeMediaAtom, VideoPlayer}
@@ -38,6 +38,30 @@ data-test-id="facia-card"
 
 @container(item: layout.ContentCard) = {
     <div class="fc-item__container">
+
+        @if(isElectionContainer) {
+            @*****************************************************
+            * #election2017 Duplicate headline for election 2017 *
+            *****************************************************@
+            <div class="fc-item__content-election">
+                <div class="fc-item__header fc-item__header--election-title">
+                    @title(item.header, index, containerIndex, snapType = item.snapStuff.map(_.snapType))
+
+                    @item.bylineText.map { byline =>
+                        <div class="fc-item__byline">@byline</div>
+                    }
+
+                    @item.starRating.map { rating =>
+                        @starRating(rating)
+                    }
+                </div>
+
+                @item.trailText.filter(const(item.showStandfirst)).map { text =>
+                    <div class="fc-item__standfirst">@Html(text)</div>
+                }
+            </div>
+        }
+
 
         @if(item.snapStuff.map(_.snapType).contains(FrontendLatestSnap)) {
             @kicker(item.header, List("fc-item__kicker--dreamsnap", "fc-item__kicker--dreamsnap-list"))
