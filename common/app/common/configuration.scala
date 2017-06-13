@@ -65,7 +65,7 @@ object GuardianConfiguration extends Logging {
   lazy val configuration = {
     // This is version number of the config file we read from s3,
     // increment this if you publish a new version of config
-    val s3ConfigVersion = 33
+    val s3ConfigVersion = 34
 
     lazy val userPrivate = FileConfigurationSource(s"${System.getProperty("user.home")}/.gu/frontend.conf")
     lazy val runtimeOnly = FileConfigurationSource("/etc/gu/frontend.conf")
@@ -616,11 +616,6 @@ class GuardianConfiguration extends Logging {
 
   object NewsAlert {
     lazy val apiKey = configuration.getStringProperty("news-alert.api.key")
-  }
-
-  object Notifications {
-    lazy val latestMessageUrl = configuration.getMandatoryStringProperty("notifications.latest_message.url")
-    lazy val notificationSubscriptionTable = configuration.getMandatoryStringProperty("notifications.subscriptions_table")
   }
 
   object Logstash {

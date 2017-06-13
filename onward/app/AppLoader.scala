@@ -38,7 +38,6 @@ trait OnwardServices {
   lazy val geoMostPopularAgent = wire[GeoMostPopularAgent]
   lazy val dayMostPopularAgent = wire[DayMostPopularAgent]
   lazy val mostPopularAgent = wire[MostPopularAgent]
-  lazy val mostPopularExpandableAgent = wire[MostPopularExpandableAgent]
   lazy val mostReadAgent = wire[MostReadAgent]
   lazy val mostPopularSocialAutoRefresh = wire[MostPopularSocialAutoRefresh]
   lazy val mostViewedAudioAgent = wire[MostViewedAudioAgent]
@@ -58,7 +57,6 @@ trait AppComponents extends FrontendComponents with OnwardControllers with Onwar
     wire[LogstashLifecycle],
     wire[OnwardJourneyLifecycle],
     wire[CloudWatchMetricsLifecycle],
-    wire[MostReadLifecycle],
     wire[StocksDataLifecycle],
     wire[MostPopularFacebookAutoRefreshLifecycle],
     wire[SwitchboardLifecycle],

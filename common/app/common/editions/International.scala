@@ -98,7 +98,7 @@ object International extends Edition(
       NavItem(world, worldLocalNav),
       NavItem(sport, sportLocalNav),
       NavItem(football, footballNav),
-      NavItem(opinion, Seq(columnists)),
+      NavItem(opinion, Seq(columnists, letters, editorials)),
       NavItem(culture, cultureLocalNav),
       NavItem(business, businessLocalNav),
       NavItem(lifeandstyle, Seq(foodanddrink, recipes, healthandwellbeing, loveAndSex, family, women, homeAndGarden)),
@@ -110,12 +110,12 @@ object International extends Edition(
       NavItem(science),
       NavItem(guardianProfessional),
       NavItem(observer),
-      NavItem(todaysPaper, Seq(letters, editorials, obituaries, g2, weekend, theGuide, saturdayreview)),
-      NavItem(digitalNewspaperArchive),
+      NavItem(todaysPaper, Seq(obituaries, g2, weekend, theGuide, saturdayreview)),
       NavItem(sundayPaper, Seq(observerComment, observerNewReview, observerMagazine)),
       NavItem(membership),
       NavItem(crosswords, crosswordsLocalNav),
-      NavItem(video, Seq(podcast))
+      NavItem(video, Seq(podcast)),
+      NavItem(digitalNewspaperArchive)
     )
   }
 

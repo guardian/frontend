@@ -51,15 +51,24 @@ define([
         }
     }
 
-    function toggleFormVisibility() {
+    function toggleFormVisibility(evt) {
+
+        // make the associated category blurb visible
 
         $.forEachElement("#feedback-category>option", function(elem){
             if(elem.selected && elem.value !== "nothing"){
-                document.getElementById(elem.value).classList.add("feedback__form--selected");
+                document.getElementById(elem.value).classList.add("feedback__blurb--selected");
             } else if(elem.value !== "nothing") {
-                document.getElementById(elem.value).classList.remove("feedback__form--selected");
+                document.getElementById(elem.value).classList.remove("feedback__blurb--selected");
             }
         });
+
+        // enable the form elements
+
+        $.forEachElement("#feedback__form input,#feedback__form textarea,#feedback__form button", function (elem) {
+            elem.disabled = evt.target.value == "nothing"
+        });
+
     }
 
     function isInputFilled(elem) {
@@ -70,29 +79,14 @@ define([
 
         var warning = document.getElementById("feedback__explainer");
 
-        // mandatory checks (realtime)
-
-        function toggleMandatoryOutline(elem) {
-            if(isInputFilled(elem)){
-                elem.classList.add("feedback__entry--mandatory-failed");
-            } else {
-                elem.classList.remove("feedback__entry--mandatory-failed");
-            }
-        }
-
-        $.forEachElement(".feedback__form input,.feedback__form textarea", function(elem){
-            elem.addEventListener("blur", function(){ toggleMandatoryOutline(elem); });
-            elem.addEventListener("input", function(){ toggleMandatoryOutline(elem); });
-        });
-
         // mandatory checks (on submit)
 
-        $.forEachElement(".feedback__form form", function(elem){
+        $.forEachElement(".feedback__form", function(elem){
             elem.addEventListener("submit", function() {
 
                 var hasFailed = false;
 
-                $.forEachElement(".feedback__form--selected input,.feedback__form--selected textarea", function(elem){
+                $.forEachElement("#feedback__form input,#feedback__form textarea", function(elem){
                     if(!isInputFilled(elem)){
                         hasFailed = true;
                     }
@@ -107,20 +101,22 @@ define([
             });
         });
 
+        // set the form elements to disabled to begin with
+
+        $.forEachElement("#feedback__form input,#feedback__form textarea,#feedback__form button", function(elem){
+            elem.disabled = true;
+        });
+
         // form toggling
 
         document.getElementById("feedback-category").addEventListener("change", toggleFormVisibility, false);
 
         // insert hidden extra data into forms
 
-        $.forEachElement(".feedback__form input[name=extra]", function(elem){
+        $.forEachElement("#feedback__form input[name=extra]", function(elem){
             elem.value = JSON.stringify(getExtraDataInformation());
         })
 
-    }
-
-    function hideUnenhancedFallback() {
-        document.getElementById("feedback-form-default").remove();
     }
 
     return function () {
@@ -132,8 +128,7 @@ define([
             });
 
             initForms();
-            hideUnenhancedFallback();
-            
+
         }
 
     };

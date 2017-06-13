@@ -10,6 +10,8 @@ import {
 } from 'common/modules/commercial/acquisitions-view-log';
 import alwaysAsk
     from 'common/modules/experiments/tests/contributions-epic-always-ask-strategy';
+import askFourPostElection
+    from 'common/modules/experiments/tests/contributions-epic-ask-four-post-election';
 import askFourEarning
     from 'common/modules/experiments/tests/contributions-epic-ask-four-earning';
 import acquisitionsEpicLiveBlog
@@ -41,6 +43,7 @@ const tests = [
     acquisitionsThisLandEnvironmentEarning,
     acquisitionsThisLandEnvironmentLearning,
     acquisitionsEpicTestimonialsUSA,
+    askFourPostElection,
     askFourEarning,
     acquisitionsEpicAlwaysAskIfTagged,
     acquisitionsEpicLiveBlogDesignTest,

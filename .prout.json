@@ -2,7 +2,10 @@
     "checkpoints": {
         "PROD": {
             "url": "https://frontend.gutools.co.uk/deploys?stage=PROD&pageSize=50",
-            "overdue": "30M"
+            "overdue": "30M",
+            "messages": {
+                "seen": "prout/seen.md",
+            }
         }
     }
 }

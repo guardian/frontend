@@ -1,4 +1,4 @@
-@(page: model.Page, showNav: Boolean = true)(implicit request: RequestHeader)
+@(page: model.Page, showNav: Boolean = true, isAmp: Boolean = false)(implicit request: RequestHeader)
 
 @import org.joda.time.DateTime
 @import common.Edition
@@ -8,7 +8,7 @@
 @import conf.switches.Switches.EmailInlineInFooterSwitch
 
 <footer class="l-footer u-cf" data-link-name="footer" data-component="footer">
-    @if(!mvt.ABNewDesktopHeader.isParticipating) {
+    @if(!mvt.ABNewDesktopHeader.isParticipating && !isAmp) {
         <div class="l-footer__primary hide-on-mobile">
             <div id="footer-nav" class="gs-container">
                 <div class="brand-bar modern-visible u-cf">
@@ -37,10 +37,13 @@
     }
 
     <div class="footer__primary @if(!mvt.ABNewDesktopHeader.isParticipating) {mobile-only}">
-        @fragments.nav.subNav(page, isFooter = true)
+
+        @if(!isAmp) {
+            @fragments.nav.subNav(page, isFooter = true)
+        }
 
         <a data-link-name="back to top" href="#top">
-            <div class="footer__back-to-top__container">
+            <div class="footer__back-to-top-container">
                 <div class="gs-container">
                     <div class="footer__back-to-top">
                         <span class="back-to-top__text">back to top</span>
@@ -57,7 +60,7 @@
         <div class="colophon u-cf">
 
             @defining(Edition(request)) { currentEdition =>
-                @if(EmailInlineInFooterSwitch.isSwitchedOn) {
+                @if(EmailInlineInFooterSwitch.isSwitchedOn && !isAmp) {
                     <div class="footer__email-container js-footer__email-container">
                     @currentEdition match {
                         case Uk => {
@@ -381,7 +384,7 @@
             }
             </div>
         </div>
-        <div class="l-footer__misc">
+        <div class="copyright-container">
             <div class="really-serious-copyright">© @{new DateTime().year.getAsText} Guardian News and Media Limited or its affiliated companies. All rights reserved.</div>
         </div>
     </div>

@@ -1,0 +1,24 @@
+@import conf.Static
+@import model.AtomPage
+@import conf.switches.Switches.{PolyfillIO}
+
+@(page: AtomPage)(implicit request: RequestHeader, context: model.ApplicationContext)
+
+@defining(if(PolyfillIO.isSwitchedOn){
+  common.Assets.js.polyfillioUrl
+} else {
+  "javascripts/vendor/polyfillio.fallback.js"
+}) { polyfillsUrl =>
+  @if(page.withJavaScript) {
+    <link rel="preload" as="script" href="@Static(s"javascripts/graun.${page.javascriptModule}.js")">
+    <link rel="preload" as="script" href="@polyfillsUrl">
+  }
+}
+
+<style>
+  @Html(common.Assets.css.inlineAtom(page.atomType))
+</style>
+
+@if(page.withJavaScript) {
+  @fragments.atomJSBlocking(page)
+}

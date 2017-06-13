@@ -1,4 +1,4 @@
-// flow-typed signature: cdd6bccd5a3aa69e88685c11bfcbd032
+// flow-typed signature: fa45393bb092e72885d101276145a885
 // flow-typed version: <<STUB>>/btoa_v1.1.2/flow_v0.40.0
 
 /**
@@ -8,8 +8,8 @@
  *
  * Fill this stub out by replacing all the `any` types.
  *
- * Once filled out, we encourage you to share your work with the 
- * community by sending a pull request to: 
+ * Once filled out, we encourage you to share your work with the
+ * community by sending a pull request to:
  * https://github.com/flowtype/flow-typed
  */
 

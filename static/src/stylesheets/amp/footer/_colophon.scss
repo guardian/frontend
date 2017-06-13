@@ -1,0 +1,39 @@
+.colophon {
+    padding-top: $gs-baseline;
+    padding-bottom: $gs-baseline;
+}
+
+.colophon__lists-container {
+    font-size: 14px;
+    line-height: 14px;
+}
+
+.colophon__list {
+    @include clearfix();
+    list-style: none;
+    position: relative;
+    margin: 0;
+    padding-right: $gs-gutter / 4;
+    width: calc(50% - #{$gs-gutter / 2});
+    display: inline-block;
+
+    a {
+        display: inline-block;
+        padding-bottom: $gs-baseline;
+        text-transform: lowercase;
+    }
+
+    &:nth-of-type(2),
+    &:nth-of-type(4) {
+        &:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: -$gs-gutter / 2;
+            width: 1px;
+            display: block;
+            background-color: $footer-line-colour;
+        }
+    }
+}

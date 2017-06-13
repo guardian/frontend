@@ -1,0 +1,6 @@
+$c-footer-background: $neutral-1;
+$footer-line-colour: darken($neutral-2, 20%);
+
+// These two variables can be removed when the new desktop header/footer is live
+$c-primary-footer-background: $guardian-brand;
+$c-primary-footer-background-side-bar: mix($c-primary-footer-background, #ffffff, 90%);

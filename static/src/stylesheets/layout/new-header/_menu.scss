@@ -9,7 +9,6 @@
     margin-right: $gutter-small + ($veggie-burger-small / 2);
     padding-top: $gs-baseline / 2;
     padding-bottom: $gs-baseline * 2;
-    overflow: auto;
     text-transform: lowercase;
     top: 0;
     z-index: $zindex-main-menu;
@@ -20,6 +19,7 @@
         box-shadow: 3px 0 16px rgba(0, 0, 0, .4);
         bottom: 0;
         height: 100%;
+        overflow: auto;
         position: fixed;
         right: 0;
         transition: transform .2s cubic-bezier(.23, 1, .32, 1);
@@ -69,6 +69,12 @@
 
 .menu__inner {
     box-sizing: border-box;
+
+    @include mq($until: desktop) {
+        &.gs-container {
+            max-width: none;
+        }
+    }
 
     @include mq(desktop) {
         display: flex;

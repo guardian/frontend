@@ -1,4 +1,4 @@
-// flow-typed signature: 7e68daf3bc4b5f1fee7c4788571ce5c1
+// flow-typed signature: 885ae1132949e1b25cc22fc898b92f6b
 // flow-typed version: <<STUB>>/listr_v^0.8.0/flow_v0.40.0
 
 /**
@@ -8,8 +8,8 @@
  *
  * Fill this stub out by replacing all the `any` types.
  *
- * Once filled out, we encourage you to share your work with the 
- * community by sending a pull request to: 
+ * Once filled out, we encourage you to share your work with the
+ * community by sending a pull request to:
  * https://github.com/flowtype/flow-typed
  */
 
