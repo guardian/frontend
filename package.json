@@ -67,7 +67,7 @@
     "eslint-plugin-prettier": "^2.0.1",
     "eslint-plugin-react": "^6.9.0",
     "esprima": "1.2.2",
-    "execa": "^0.5.0",
+    "execa": "^0.7.0",
     "figures": "^2.0.0",
     "flow-bin": "^0.47.0",
     "flow-typed": "^2.1.2",
