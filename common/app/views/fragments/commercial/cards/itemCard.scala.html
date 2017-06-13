@@ -25,7 +25,7 @@
             @for(kicker <- item.kicker){
                 <span class="advert__kicker">@kicker</span>
             }
-            @item.headline
+            @Html(item.headline)
         </h2>
         <div class="advert__image-container
             @if(minimiseOnMobile){hide-until-tablet}
