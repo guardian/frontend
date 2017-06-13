@@ -55,9 +55,8 @@ const Doughnut = (data: Object, o: Object): bonzo => {
         viewbox: `0 0 ${[w, h].join(' ')}`,
     });
 
-    let // Segments
-    segmentAngle;
-
+    // Segments
+    let segmentAngle;
     let endRadius;
     let arc;
     let outer;
