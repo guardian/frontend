@@ -75,8 +75,8 @@
                             <hr class="content__hr hide-until-leftcol" />
                         }
 
-                        <div class="content__article-body from-content-api js-article__body" dir="auto" itemprop="@bodyType(model)"
-                            data-test-id="article-review-body">
+                        <div class="content__article-body from-content-api js-article__body" itemprop="@bodyType(model)"
+                            data-test-id="article-review-body" @article.fields.lang.map { l => lang="@l" } @if(article.content.fields.isRightToLeftLang){ dir="rtl" }>
                             @BodyCleaner(article, article.fields.body, amp = amp)
 
                             @* A value for the image field is required for AMP article
