@@ -13,6 +13,7 @@ object Container extends Logging {
     ("dynamic/slow", Dynamic(DynamicSlow)),
     ("dynamic/package", Dynamic(DynamicPackage)),
     ("dynamic/slow-mpu", Dynamic(DynamicSlowMPU(omitMPU = false))),
+    ("dynamic/election", Dynamic(DynamicElection)), // #election2017
     ("fixed/video", Video),
     ("nav/list", NavList),
     ("nav/media-list", NavMediaList),
@@ -49,6 +50,7 @@ object Container extends Logging {
 
   def customClasses(container: Container): Iterable[String] = container match {
     case Dynamic(DynamicPackage) => Set("fc-container--story-package")
+    case Dynamic(DynamicElection) => Set("fc-container--story-package", "fc-container--election") // #election2017
     case Fixed(fixedContainer) => fixedContainer.customCssClasses
     case _ => Nil
   }

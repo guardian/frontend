@@ -1,5 +1,5 @@
 @import model.FrontProperties
-@(card: layout.FaciaCardAndIndex, containerIndex: Int, isRow: Boolean = true, isList: Boolean = false, colSpan: Int = 1, frontProperties: Option[FrontProperties] = None)(implicit request: RequestHeader)
+@(card: layout.FaciaCardAndIndex, containerIndex: Int, isRow: Boolean = true, isList: Boolean = false, colSpan: Int = 1, frontProperties: Option[FrontProperties] = None, isElectionContainer: Boolean = false)(implicit request: RequestHeader)
 @import layout.{ContentCard, HtmlBlob, PaidCard}
 @import views.html.fragments.items.facia_cards.contentCard
 @import views.html.fragments.items.facia_cards.paidContentCard
@@ -29,7 +29,7 @@
         }
 
         case content: ContentCard => {
-            @contentCard(content, containerIndex, index, card.visibilityDataAttribute, isFirstContainer, isList)
+            @contentCard(content, containerIndex, index, card.visibilityDataAttribute, isFirstContainer, isList, isElectionContainer)
         }
 
 
