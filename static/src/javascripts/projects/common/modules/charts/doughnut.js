@@ -11,7 +11,7 @@ import bonzo from 'bonzo';
 const svgEl = (type: string): bonzo =>
     $.create(document.createElementNS('http://www.w3.org/2000/svg', type));
 
-const translate = (v: Array<number>) => `translate(${v.toString()})`;
+const translate = (v: Array<number>): string => `translate(${v.toString()})`;
 
 /**
  * @param {Object.<string, *>} data in the format { label: string, value: number, color: HEX }
