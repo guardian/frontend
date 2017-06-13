@@ -9,14 +9,13 @@
 @import model.content.MediaWrapper._
 @import model.content.MediaWrapper
 @import model.content.MediaAsset
-@import model.content.MediaAtom.activeYouTubeAsset
 @import conf.switches.Switches.YouTubePosterOverride
 @import model.VideoFaciaProperties
 @import views.html.fragments.items.elements.facia_cards.title
 
 @(media: model.content.MediaAtom, displayCaption: Boolean, displayDuration: Boolean = true, displayEndSlate: Boolean = true, playable: Boolean = true, posterImageOverride: Option[ImageMedia] = None, cardStyle: Option[CardStyle] = None, mediaWrapper: Option[MediaWrapper] = None, faciaHeaderProperties: Option[VideoFaciaProperties] = None)(implicit request: RequestHeader)
 
-@defining(activeYouTubeAsset(media)) { activeAsset: Option[MediaAsset] =>
+@defining(media.activeAssets.headOption) { activeAsset: Option[MediaAsset] =>
 @defining(media.expired.getOrElse(false)){expired: Boolean =>
 @defining(playable && !posterImageOverride.exists(_ => YouTubePosterOverride.isSwitchedOn)){sixteenByNine: Boolean =>
 

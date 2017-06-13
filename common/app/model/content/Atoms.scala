@@ -41,6 +41,10 @@ final case class MediaAtom(
   activeVersion: Option[Long]
 ) extends Atom {
 
+  def activeAssets: Seq[MediaAsset] = activeVersion
+    .map { version => assets.filter(_.version == version) }
+    .getOrElse(assets)
+
   def isoDuration: Option[String] = {
     duration.map(d => new Duration(Duration.standardSeconds(d)).toString)
   }
@@ -234,20 +238,6 @@ object MediaAtom extends common.Logging {
         "altText" -> Some(caption)
       ).collect{ case(k, Some(v)) => (k,v) }
     )
-  }
-
-  def activeYouTubeAsset(atom: MediaAtom): Option[MediaAsset] = {
-    val defaultAsset = atom.assets.headOption
-
-    val activeAsset = for {
-      version <- atom.activeVersion
-      asset <- atom.assets.find(_.version == version)
-    } yield asset
-
-    val asset = activeAsset orElse defaultAsset
-
-    // sanity check the platform to avoid template rendering errors
-    asset.filter(_.platform == MediaAssetPlatform.Youtube)
   }
 }
 

@@ -1,9 +1,8 @@
 @import model.content.MediaWrapper
-@import model.content.MediaAtom.activeYouTubeAsset
 @(media: model.content.MediaAtom, displayCaption: Boolean, mediaWrapper: Option[MediaWrapper])(implicit request: RequestHeader)
 @import views.html.fragments.atoms.mediaAtomCaption
 
-@for(asset <- activeYouTubeAsset(media)) {
+@for(asset <- media.activeAssets.headOption) {
     <amp-youtube
     data-videoid="@asset.id"
     layout="responsive"
