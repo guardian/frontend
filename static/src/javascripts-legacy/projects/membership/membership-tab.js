@@ -6,15 +6,13 @@ define([
     'lib/report-error',
     'membership/formatters',
     'membership/stripe'
-], function (
-    bean,
-    $,
-    fetch,
-    config,
-    reportError,
-    formatters,
-    stripe
-) {
+], function (bean,
+             $,
+             fetch,
+             config,
+             reportError,
+             formatters,
+             stripe) {
 
     var CARD_DETAILS = '.js-mem-card-details',
         PAYPAL = '.js-mem-paypal',
@@ -58,14 +56,14 @@ define([
             if (json && json.subscription) {
                 hideLoader();
                 populateUserDetails(json);
-                } else {
+            } else {
                 hideLoader();
                 displayMembershipUpSell();
             }
-        }).catch(function (err){
+        }).catch(function (err) {
             hideLoader();
             displayErrorMessage();
-            reportError(err,{feature:'mma-membership'})
+            reportError(err, {feature: 'mma-membership'})
         });
     }
 
@@ -87,7 +85,7 @@ define([
 
         if (userDetails.subscription.card) {
             $(CHANGE_TIER_CARD_LAST4).text(userDetails.subscription.card.last4);
-        } else if(userDetails.subscription.payPalEmail){
+        } else if (userDetails.subscription.payPalEmail) {
             $(PAYPAL_EMAIL_ADDRESS).text(userDetails.subscription.payPalEmail);
         }
 
@@ -126,7 +124,7 @@ define([
         } else if (userDetails.subscription.card) {
             // only show card details if user hasn't changed their subscription and has stripe as payment method
             stripe.display(CARD_DETAILS, userDetails.subscription.card);
-        } else if(userDetails.subscription.payPalEmail){
+        } else if (userDetails.subscription.payPalEmail) {
             // if the user hasn't changed their subscription and has PayPal as a payment method
             $(PAYPAL).removeClass(IS_HIDDEN_CLASSNAME);
             bean.one($(PAYPAL_SHOW_EMAIL_BUTTON)[0], 'click', showPayPalAccountName);

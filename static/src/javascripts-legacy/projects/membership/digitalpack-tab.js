@@ -6,15 +6,13 @@ define([
     'lib/report-error',
     'membership/formatters',
     'membership/stripe'
-], function (
-    bean,
-    $,
-    fetch,
-    config,
-    reportError,
-    formatters,
-    stripe
-) {
+], function (bean,
+             $,
+             fetch,
+             config,
+             reportError,
+             formatters,
+             stripe) {
 
     var PACKAGE_COST = '.js-dig-package-cost',
         PAYMENT_FORM = '.js-dig-card-details',
@@ -53,11 +51,11 @@ define([
                 hideLoader();
                 displayDigitalPackUpSell();
             }
-        }).catch(function (err){
+        }).catch(function (err) {
             hideLoader();
             displayErrorMessage();
-            reportError(err,{feature:'mma-digipack'})
-       });
+            reportError(err, {feature: 'mma-digipack'})
+        });
     }
 
     function hideLoader() {
@@ -98,7 +96,7 @@ define([
             $(NOTIFICATION_CANCEL).removeClass(IS_HIDDEN_CLASSNAME);
             $(DIGITALPACK_DETAILS).addClass(IS_HIDDEN_CLASSNAME);
         } else if (userDetails.subscription.card) {
-            stripe.display(PAYMENT_FORM,userDetails.subscription.card);
+            stripe.display(PAYMENT_FORM, userDetails.subscription.card);
         }
         $(DIG_INFO).removeClass(IS_HIDDEN_CLASSNAME);
     }
