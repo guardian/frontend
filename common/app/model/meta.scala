@@ -414,12 +414,6 @@ case class TagCombiner(
   pagination: Option[Pagination] = None
 ) extends StandalonePage {
 
-  //We only use the left tag for CommercialProperties
-  val commercialPropertiesEditionAdTargeting: Seq[EditionAdTargeting] =
-    leftTag.properties.commercial.map(_.editionAdTargetings).getOrElse(Nil)
-  val commercialPropertiesEditionBrandings: Seq[EditionBranding] =
-    leftTag.properties.commercial.map(_.editionBrandings).getOrElse(Nil)
-
   override val metadata: MetaData = MetaData.make(
     id = id,
     section = leftTag.metadata.section,
@@ -427,9 +421,10 @@ case class TagCombiner(
     pagination = pagination,
     description = Some(GuardianContentTypes.TagIndex),
     commercial = Some(
+      //We only use the left tag for CommercialProperties
       CommercialProperties(
-        commercialPropertiesEditionBrandings,
-        commercialPropertiesEditionAdTargeting
+        leftTag.properties.commercial.map(_.editionBrandings).getOrElse(Nil),
+        leftTag.properties.commercial.map(_.editionAdTargetings).getOrElse(Nil)
       )
     )
   )
