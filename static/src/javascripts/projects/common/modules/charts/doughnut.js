@@ -7,17 +7,10 @@
  */
 import $ from 'lib/$';
 import bonzo from 'bonzo';
-/**
- * @param {string} type
- * @return {Bonzo}
- */
+
 const svgEl = (type: string): bonzo =>
     $.create(document.createElementNS('http://www.w3.org/2000/svg', type));
 
-/**
- * @param {Array} v
- * @return {string}
- */
 const translate = (v: Array<number>) => `translate(${v.toString()})`;
 
 /**
