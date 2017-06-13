@@ -1,7 +1,7 @@
 package common.commercial
 
 import com.gu.commercial.branding.Branding
-import com.gu.commercial.display.{AdCallParamKey, AdCallParamValue}
+import com.gu.commercial.display._
 import com.gu.contentapi.client.model.v1.{Content, Section, Tag}
 import common.Edition
 import common.Edition.defaultEdition
@@ -20,12 +20,33 @@ case class CommercialProperties(
     branding <- editionBranding.branding
   } yield branding
 
-  def adTargeting(edition: Edition): Map[AdCallParamKey, AdCallParamValue] = {
-    val params = for {
-      editionAdTargeting <- editionAdTargetings.find(_.edition == edition)
-    } yield editionAdTargeting.params
-    params getOrElse Map.empty
+  def combineTheMaps(
+      leftMap: Map[AdCallParamKey, AdCallParamValue],
+      rightMap: Map[AdCallParamKey, AdCallParamValue]): Map[AdCallParamKey, AdCallParamValue] = {
+    leftMap.map{
+      case (leftKey, leftSingleValue@SingleValue(leftValue)) =>
+        val newSingleValue: SingleValue = rightMap.get(leftKey).collect {
+          case SingleValue(rightValue) if leftValue != rightValue => SingleValue(s"$leftValue$rightValue")
+        }.getOrElse(leftSingleValue)
+
+        (leftKey, newSingleValue)
+
+      case (leftKey, leftMultipleValues@MultipleValues(leftValues)) =>
+        val newMultipleValues: MultipleValues = rightMap.get(leftKey).collect {
+            case MultipleValues(rightValues) =>
+              MultipleValues(leftValues ++ rightValues)}
+          .getOrElse(leftMultipleValues)
+
+        (leftKey, newMultipleValues)
+    }
   }
+
+  def adTargeting(edition: Edition): Map[AdCallParamKey, AdCallParamValue] =
+    editionAdTargetings.
+      filter(_.edition == edition)
+      .map(_.params)
+      .reduce{ (m1, m2) => combineTheMaps(m1, m2) }
+
 }
 
 object CommercialProperties {

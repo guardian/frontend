@@ -4,7 +4,7 @@ import commercial.campaigns.PersonalInvestmentsCampaign
 import com.gu.contentapi.client.model.v1.{Content => CapiContent}
 import com.gu.contentapi.client.model.{v1 => contentapi}
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichCapiDateTime
-import common.commercial.{AdUnitMaker, CommercialProperties}
+import common.commercial.{AdUnitMaker, CommercialProperties, EditionAdTargeting, EditionBranding}
 import common.dfp._
 import common.{Edition, ManifestData, NavItem, Pagination}
 import conf.Configuration
@@ -414,12 +414,24 @@ case class TagCombiner(
   pagination: Option[Pagination] = None
 ) extends StandalonePage {
 
+  val commercialPropertiesEditionBrandings: Seq[EditionBranding] =
+    leftTag.properties.commercial.map(_.editionBrandings).getOrElse(Nil) ++ rightTag.properties.commercial.map(_.editionBrandings).getOrElse(Nil)
+
+  val commercialPropertiesEditionAdTargeting: Seq[EditionAdTargeting] =
+    leftTag.properties.commercial.map(_.editionAdTargetings).getOrElse(Nil) ++ rightTag.properties.commercial.map(_.editionAdTargetings).getOrElse(Nil)
+
   override val metadata: MetaData = MetaData.make(
     id = id,
     section = leftTag.metadata.section,
     webTitle = s"${leftTag.name} + ${rightTag.name}",
     pagination = pagination,
-    description = Some(GuardianContentTypes.TagIndex)
+    description = Some(GuardianContentTypes.TagIndex),
+    commercial = Some(
+      CommercialProperties(
+        commercialPropertiesEditionBrandings,
+        commercialPropertiesEditionAdTargeting
+      )
+    )
   )
 }
 
