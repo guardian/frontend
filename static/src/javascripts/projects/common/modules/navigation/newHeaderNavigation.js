@@ -173,6 +173,7 @@ const toggleSidebar = (): void => {
 
         if (isOpen) {
             resetItemOrder();
+            closeAllSidebarSections();
         } else {
             focusFirstSidebarSection();
         }
