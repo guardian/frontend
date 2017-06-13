@@ -99,7 +99,7 @@
                 </div>
             }
 
-            <ul class="menu-group menu-group--editions"
+            <ul class="menu-group menu-group--membership"
                 role="menubar">
                 @NewNavigation.getMembershipLinks(edition).mostPopular.map { item =>
                     <li class="menu-item hide-on-desktop"
@@ -115,6 +115,9 @@
                 }
 
                 @fragments.nav.userAccountLinks()
+            </ul>
+
+            <ul class="menu-group menu-group--editions">
                 @fragments.nav.editionPicker()
             </ul>
 
