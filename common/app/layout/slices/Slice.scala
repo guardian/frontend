@@ -605,6 +605,44 @@ case object ThreeQuarterTallQuarter2 extends Slice {
 
 /* .__________________________.________.
  * |##########################|########|
+ * |##########################|########|
+ * |##########################|        |
+ * |##########################|        |
+ * |##########################|        |
+ * |##########################|        |
+ * |##########################|        |
+ * |##########################|        |
+ * |                          |        |
+ * |                          |        |
+ * |                          |        |
+ * `--------------------------'--------'
+ */
+case object ThreeQuarterTallQuarter1 extends Slice {
+  val layout = SliceLayout(
+    cssClassName = "qqqtall-q1 qqqtall-q1--election",
+    columns = Seq(
+      SingleItem(
+        colSpan = 3,
+        ItemClasses(
+          mobile = Standard,
+          tablet = ThreeQuartersTall
+        )
+      ),
+      Rows(
+        colSpan = 1,
+        columns = 1,
+        rows = 1,
+        ItemClasses(
+          mobile = Standard,
+          tablet = Standard
+        )
+      )
+    )
+  )
+}
+
+/* .__________________________.________.
+ * |##########################|########|
  * |##########################|        |
  * |##########################|        |
  * |##########################|--------|
