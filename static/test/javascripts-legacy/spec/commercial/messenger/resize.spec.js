@@ -1,12 +1,13 @@
 define([
     'helpers/fixtures',
-    'helpers/injector'
+    'helpers/injector',
+    'commercial/modules/messenger/resize'
 ], function (
     fixtures,
-    Injector
+    Injector,
+    resize
 ) {
     describe('Cross-frame messenger: resize', function () {
-        var resize;
 
         var fixturesConfig = {
             id: 'resize-page',
@@ -31,13 +32,8 @@ define([
         });
 
         beforeEach(function (done) {
-            injector.require([
-                'commercial/modules/messenger/resize'
-            ], function($1) {
-                resize = $1;
-                fixtures.render(fixturesConfig);
-                done();
-            });
+            fixtures.render(fixturesConfig);
+            done();
         });
 
         afterEach(function () {
@@ -45,14 +41,14 @@ define([
         });
 
         it('should return nothing if specs are empty', function () {
-            expect(resize({})).toBeNull();
-            expect(resize({ dontcare: 'hello' })).toBeNull();
+            expect(resize._.resize({})).toBeNull();
+            expect(resize._.resize({ dontcare: 'hello' })).toBeNull();
         });
 
         it('should set width and height of the ad slot', function (done) {
             var iframe = document.getElementById('iframe01');
             var adSlot = iframe.parentNode;
-            resize({ width: '10', height: '10' }, iframe, adSlot)
+            resize._.resize({ width: '10', height: '10' }, iframe, adSlot)
             .then(function () {
                 expect(iframe.style.height).toBe('10px');
                 expect(iframe.style.width).toBe('10px');
@@ -68,7 +64,7 @@ define([
             Promise.all(
                 iframes
                 .map(function (iframe) {
-                    return resize({ height: '10' + iframe.dataset.unit }, iframe, iframe.parentNode)
+                    return resize._.resize({ height: '10' + iframe.dataset.unit }, iframe, iframe.parentNode)
                     .then(function () {
                         expect(iframe.parentNode.style.height).toBe('10' + iframe.dataset.unit);
                     });
