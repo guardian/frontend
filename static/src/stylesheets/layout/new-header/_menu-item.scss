@@ -60,10 +60,9 @@
 
     .menu-group--membership-actions & {
         @include mq(desktop) {
-            margin-left: -2px;
-            padding-left: $gs-gutter / 2 + 2;
+            padding-left: $gs-gutter / 2;
             padding-right: $gs-gutter / 2;
-            width: gs-span(2) + $gs-gutter + 2;
+            width: gs-span(2) + $gs-gutter;
         }
     }
 }

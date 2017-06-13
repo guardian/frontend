@@ -24,7 +24,6 @@
 
     @include mq(desktop) {
         .new-header--open .pillars__item:not(:first-child) > & {
-            // + 2px because of the border
             padding-left: $gs-gutter / 2;
         }
 
