@@ -96,6 +96,7 @@
     padding: 8px $veggie-burger-medium / 2 + $gs-gutter / 2 8px $menu-spacing-left-small;
     position: relative;
     text-align: left;
+    text-transform: lowercase;
     width: 100%;
 
     @include mq(tablet) {
