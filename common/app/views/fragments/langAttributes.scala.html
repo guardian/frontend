@@ -1,3 +1,7 @@
 @(content: model.Content)(implicit request: RequestHeader)
 
-@content.fields.lang.map { l => lang="@l" } @if(content.fields.isRightToLeftLang){ dir="rtl" }
+@defining(content.fields.lang.exists(!_.equals("en"))) { nonEnLang =>
+    @if(nonEnLang){ lang="@content.fields.lang" } @if(content.fields.isRightToLeftLang){ dir="rtl" }
+}
+
+
