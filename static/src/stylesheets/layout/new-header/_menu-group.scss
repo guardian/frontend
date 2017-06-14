@@ -57,14 +57,16 @@
     }
 }
 
+.menu-group--editions {
+    padding-bottom: 0;
+}
+
 .menu-group--editions .menu-group {
     @include mq($until: desktop) {
         color: $guardian-brand-dark;
         background-color: darken($news-main-2, 10%);
-        margin-bottom: -$gs-baseline;
     }
 }
-
 
 .menu-group--membership {
     padding-bottom: 0;
