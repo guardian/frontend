@@ -39,9 +39,8 @@ const AnagramHelper = React.createClass({
      * array to flag letters that are already entered in the puzzle, and
      * shuffle it.
      *
-     * @param  {String}   word     word to shuffle
-     * @param  {[Object]} entries  array of entries (i.e. grid cells)
-     * @return {[Object]}          array of shuffled letters
+     * @param  word     word to shuffle
+     * @param  entries  array of entries (i.e. grid cells)
      */
     shuffleWord(word: string, entries: Array<{ value: string }>) {
         const wordEntries = entries
