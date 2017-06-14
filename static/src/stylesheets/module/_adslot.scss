@@ -74,7 +74,7 @@
 
     &:not(.top-banner-ad-container--not-sticky) {
         position: sticky;
-        z-index: $zindex-sticky;
+        z-index: $zindex-sticky-top-banner;
     }
 }
 
