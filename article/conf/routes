@@ -9,6 +9,9 @@ GET     /_healthcheck               controllers.HealthCheck.healthCheck()
 
 GET     /_cdn_healthcheck           controllers.HealthCheck.healthCheck()
 
+GET     /render/js                  controllers.NashornController.renderJs(title: Option[String])
+GET     /render/twirl               controllers.NashornController.renderTwirl(title: Option[String])
+
 # Newspaper pages paths
 # gallery format (?)
 #  e.g. /theobserver/gallery/2013/sep/14/the-10-best-fonts
