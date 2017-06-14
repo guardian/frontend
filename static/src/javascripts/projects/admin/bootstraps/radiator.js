@@ -43,7 +43,8 @@ const initRadiator = (): void => {
                         `//${location.host}/radiator/commit/${revision}`
                     ).then(rev => {
                         if (rev.commit) {
-                            li.innerHTML = `${rev.commit.author.name} <small>(deployed by ${deployer})</small>`;
+                            li.innerHTML = `${rev.commit.author
+                                .name} <small>(deployed by ${deployer})</small>`;
                         }
                     });
                 }
@@ -101,7 +102,12 @@ const initRadiator = (): void => {
         renderDeploys('PROD', document.getElementById('riffraffPROD'));
     };
     const jsonpScript = document.createElement('script');
-    jsonpScript.src = `https://riffraff.gutools.co.uk/api/history?${[`projectName=dotcom${encodeURIComponent(':')}`, `key=${apiKey}`, 'pageSize=200', `callback=${callback}`].join('&')}`;
+    jsonpScript.src = `https://riffraff.gutools.co.uk/api/history?${[
+        `projectName=dotcom${encodeURIComponent(':')}`,
+        `key=${apiKey}`,
+        'pageSize=200',
+        `callback=${callback}`,
+    ].join('&')}`;
     if (document.body) {
         document.body.appendChild(jsonpScript);
     }
