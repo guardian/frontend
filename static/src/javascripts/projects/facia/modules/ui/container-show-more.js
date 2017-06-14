@@ -40,9 +40,10 @@ const updateDisplayPrefForContainer = (
     containerId: string,
     state: DisplayState
 ): void => {
-    const prefs = userPrefs.get(PREF_NAME, {
-        type: 'session',
-    }) || {};
+    const prefs =
+        userPrefs.get(PREF_NAME, {
+            type: 'session',
+        }) || {};
     if (state !== DISPLAY_STATE.displayed) {
         delete prefs[containerId];
     } else {

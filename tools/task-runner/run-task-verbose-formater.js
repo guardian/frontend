@@ -2,9 +2,11 @@ const figures = require('figures');
 const chalk = require('chalk');
 
 const log = (title, parents, message = '') => {
-    console.log(`${chalk.dim(`${parents.concat([
-        '',
-    ]).join(` ${figures.arrowRight} `)}${title}`)} ${message}`);
+    console.log(
+        `${chalk.dim(
+            `${parents.concat(['']).join(` ${figures.arrowRight} `)}${title}`
+        )} ${message}`
+    );
 };
 
 const render = (tasks, parents = []) => {

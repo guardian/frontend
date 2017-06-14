@@ -3,11 +3,8 @@ import fastdom from 'lib/fastdom-promise';
 import template from 'lodash/utilities/template';
 import Toggles from 'common/modules/ui/toggles';
 import { addClassesAndTitle } from 'common/views/svg';
-import {
-    addTrackingPixel,
-} from 'commercial/modules/creatives/add-tracking-pixel';
-import addViewabilityTracker
-    from 'commercial/modules/creatives/add-viewability-tracker';
+import { addTrackingPixel } from 'commercial/modules/creatives/add-tracking-pixel';
+import addViewabilityTracker from 'commercial/modules/creatives/add-viewability-tracker';
 import frameStr from 'raw-loader!commercial/views/creatives/frame.html';
 import labelStr from 'raw-loader!commercial/views/creatives/gustyle-label.html';
 import externalLink from 'svgs/icon/external-link.svg';
@@ -29,7 +26,9 @@ class Frame {
         this.params.target = this.params.newWindow === 'yes'
             ? '_blank'
             : '_self';
-        this.params.id = `frame-${Math.floor(Math.random() * 10000).toString(16)}`;
+        this.params.id = `frame-${Math.floor(Math.random() * 10000).toString(
+            16
+        )}`;
 
         const frameMarkup = template(frameStr, {
             data: this.params,
@@ -39,8 +38,10 @@ class Frame {
                 buttonTitle: 'Ad',
                 infoTitle: 'Advertising on the Guardian',
                 infoText: 'is created and paid for by third parties.',
-                infoLinkText: 'Learn more about how advertising supports the Guardian.',
-                infoLinkUrl: 'https://www.theguardian.com/advertising-on-the-guardian',
+                infoLinkText:
+                    'Learn more about how advertising supports the Guardian.',
+                infoLinkUrl:
+                    'https://www.theguardian.com/advertising-on-the-guardian',
                 icon: addClassesAndTitle(arrow.markup, ['gu-comlabel__icon']),
                 dataAttr: this.adSlot.id,
             },

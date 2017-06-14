@@ -109,7 +109,9 @@ const insertAds = (slots: HTMLCollection<HTMLElement>): void => {
 const fill = (rules: spaceFillerRules): void =>
     spaceFiller.fillSpace(rules, insertAds).then(result => {
         if (result && SLOTCOUNTER < MAX_ADS) {
-            const el = document.querySelector(`${rules.bodySelector} > .ad-slot`);
+            const el = document.querySelector(
+                `${rules.bodySelector} > .ad-slot`
+            );
             firstSlot = el ? el.previousSibling : null;
             startListening();
         } else {

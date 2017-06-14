@@ -484,3 +484,9 @@
         margin-right: -25em;
     }
 }
+
+.ad-slot--survey {
+    // we avoid 'display none' otherwise the slot would close, but the survey slot is
+    // out-of-page and shouldn't be seen
+    height: 0;
+}

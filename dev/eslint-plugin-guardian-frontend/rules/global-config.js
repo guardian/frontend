@@ -25,7 +25,8 @@ module.exports = {
                     ) {
                         context.report({
                             node,
-                            message: "use the 'config' module instead of window.guardian.config",
+                            message:
+                                "use the 'config' module instead of window.guardian.config",
                         });
                     }
                 }

@@ -33,7 +33,7 @@
         color: $news-support-1;
         flex-direction: row;
         flex-wrap: nowrap;
-        margin-bottom: $gs-row-height * 2;
+        margin-bottom: $gs-row-height;
         order: 1;
     }
 }
@@ -49,31 +49,66 @@
     }
 }
 
+.menu-group--membership,
 .menu-group--editions {
-    color: $guardian-brand-dark;
-    background-color: $news-main-2;
-
-    @include mq(desktop) {
-        background-color: transparent;
-        color: $news-support-1;
-        flex-direction: row;
-        order: 4;
-        width: gs-span(4);
+    @include mq($until: desktop) {
+        color: $guardian-brand-dark;
+        background-color: $news-main-2;
     }
+}
 
-    .menu-item:last-child .menu-group {
+.menu-group--editions .menu-group {
+    @include mq($until: desktop) {
+        color: $guardian-brand-dark;
+        background-color: darken($news-main-2, 10%);
         margin-bottom: -$gs-baseline;
     }
 }
 
-.menu-group--lowlight {
-    background-color: darken($news-main-2, 10%);
-    color: $guardian-brand-dark;
+
+.menu-group--membership {
+    padding-bottom: 0;
 
     @include mq(desktop) {
-        background-color: transparent;
-        color: $news-support-1;
+        border-top: 1px solid rgba($news-main-2, .3);
         flex-direction: row;
+        flex-wrap: nowrap;
+        order: 3;
+        padding-bottom: $gs-baseline * 3;
+        padding-top: $gs-baseline / 2;
+        width: 100%;
+    }
+}
+
+.menu-group--editions {
+    @include mq(desktop) {
+        order: 5;
+    }
+
+    .menu-group {
+        @include mq(desktop) {
+            flex-direction: row;
+            flex-wrap: nowrap;
+        }
+    }
+}
+
+.menu-group--editions-details {
+    @include mq(desktop) {
+        flex-direction: row;
+    }
+}
+
+.menu-group--membership-actions {
+    @include mq($until: desktop) {
+        background-color: darken($news-main-2, 10%);
+        color: $guardian-brand-dark;
+    }
+
+    @include mq(desktop) {
+        color: #ffffff;
+        flex-direction: row;
+        flex-wrap: wrap;
     }
 }
 
@@ -87,7 +122,7 @@
 
 .menu-group--search {
     @include mq(desktop) {
-        order: 3;
+        order: 4;
         width: gs-span(8);
     }
 }

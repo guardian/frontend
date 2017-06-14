@@ -17,8 +17,7 @@ import fullscreener from 'common/modules/media/videojs-plugins/fullscreener';
 import skipAd from 'common/modules/media/videojs-plugins/skip-ad';
 import videoContainer from 'common/modules/video/video-container';
 import onwardContainer from 'common/modules/video/onward-container';
-import moreInSeriesContainer
-    from 'common/modules/video/more-in-series-container';
+import moreInSeriesContainer from 'common/modules/video/more-in-series-container';
 import videojsOptions from 'common/modules/video/videojs-options';
 import videojs from 'bootstraps/enhanced/media/video-player';
 import loadingTmpl from 'raw-loader!common/views/ui/loading.html';
@@ -138,11 +137,14 @@ const enhanceVideo = (
         videojsOptions({
             plugins: {
                 embed: {
-                    embeddable: !config.page.isFront &&
-                        config.switches.externalVideoEmbeds &&
-                        (config.page.contentType === 'Video' ||
-                            $el.attr('data-embeddable') === 'true'),
-                    location: `${config.page.externalEmbedHost}/embed/video/${embedPath || config.page.pageId}`,
+                    embeddable:
+                        !config.page.isFront &&
+                            config.switches.externalVideoEmbeds &&
+                            (config.page.contentType === 'Video' ||
+                                $el.attr('data-embeddable') === 'true'),
+                    location: `${config.page
+                        .externalEmbedHost}/embed/video/${embedPath ||
+                        config.page.pageId}`,
                 },
             },
         })
@@ -158,8 +160,9 @@ const enhanceVideo = (
                 player.error({
                     code: 0,
                     type: 'Video Expired',
-                    message: 'This video has been removed. This could be because it launched early, ' +
-                        'our rights have expired, there was a legal issue, or for another reason.',
+                    message:
+                        'This video has been removed. This could be because it launched early, ' +
+                            'our rights have expired, there was a legal issue, or for another reason.',
                 });
                 player.bigPlayButton.dispose();
                 player.errorDisplay.open();
@@ -172,7 +175,8 @@ const enhanceVideo = (
                         player.error({
                             code: 0,
                             type: 'Video Unavailable',
-                            message: 'Sorry, this video is not available in your region due to rights restrictions.',
+                            message:
+                                'Sorry, this video is not available in your region due to rights restrictions.',
                         });
                         player.bigPlayButton.dispose();
                         player.errorDisplay.open();
