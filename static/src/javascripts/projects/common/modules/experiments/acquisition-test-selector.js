@@ -20,19 +20,12 @@ import acquisitionsEpicLiveBlogDesignTest
     from 'common/modules/experiments/tests/acquisitions-epic-liveblog-design-test';
 import acquisitionsEpicAlwaysAskIfTagged
     from 'common/modules/experiments/tests/acquisitions-epic-always-ask-if-tagged';
-import acquisitionsEpicTestimonialsUSA
-    from 'common/modules/experiments/tests/acquisitions-epic-testimonials-usa';
 import acquisitionsEpicAlwaysAskElection
     from 'common/modules/experiments/tests/acquisitions-epic-always-ask-election';
 import acquisitionsEpicThankYou
     from 'common/modules/experiments/tests/acquisitions-epic-thank-you';
-
 import acquisitionsThisLandSeries
     from 'common/modules/experiments/tests/acquisitions-this-land-series';
-import acquisitionsThisLandEnvironmentEarning
-    from 'common/modules/experiments/tests/acquisitions-this-land-environment-earning';
-import acquisitionsThisLandEnvironmentLearning
-    from 'common/modules/experiments/tests/acquisitions-this-land-environment-learning';
 
 /**
  * acquisition tests in priority order (highest to lowest)
@@ -40,9 +33,6 @@ import acquisitionsThisLandEnvironmentLearning
 const tests = [
     alwaysAsk,
     acquisitionsThisLandSeries,
-    acquisitionsThisLandEnvironmentEarning,
-    acquisitionsThisLandEnvironmentLearning,
-    acquisitionsEpicTestimonialsUSA,
     askFourPostElection,
     askFourEarning,
     acquisitionsEpicAlwaysAskIfTagged,
