@@ -4,27 +4,26 @@ import bonzo from 'bonzo';
 import fastdom from 'fastdom';
 import config from 'lib/config';
 import { getCookie, addCookie, removeCookie } from 'lib/cookies';
-import { local } from 'lib/storage';
 import mediator from 'lib/mediator';
-import tailorSurveyHtml
-    from 'raw-loader!common/views/experiments/tailor-survey.html';
+import tailorSurveyHtml from 'raw-loader!common/views/experiments/tailor-survey.html';
 import ophan from 'ophan/ng';
 import template from 'lodash/utilities/template';
-import { fillSpace } from 'common/modules/article/space-filler';
-import { getSuggestedSurvey } from 'common/modules/tailor/tailor';
+import fillSpace from 'common/modules/article/space-filler';
+import { getSurvey } from 'common/modules/tailor/tailor';
 
-// Every time we show a survey to a user, we cannot show it again to that suer for a specified number of days.
+// Every time we show a survey to a user, we cannot show it again to that user for a specified number of days.
 // We store 'surveyId=dayShowAgain' in the cookie, and pass any surveys that cannot currently be shown in the
 // call to tailor.
-const storeSurveyShowedInCookie = data => {
-    const id = data.survey.surveyId;
-    const dayCanShowAgain = data.dayCanShowAgain;
-    const newCookieValue = `${id}=${dayCanShowAgain}`;
+const storeSurveyShowedInCookie = survey => {
+    const newCookieValue = `${survey.id}=${survey.dayCanShowAgain}`;
     let currentCookieValues = getCookie('GU_TAILOR_SURVEY');
 
     if (currentCookieValues) {
         // we've shown surveys already
-        currentCookieValues = `${currentCookieValues},${newCookieValue}`;
+        if (!currentCookieValues.split(',').includes(newCookieValue)) {
+            // new cookie value, add it to the list
+            currentCookieValues = `${currentCookieValues},${newCookieValue}`;
+        }
         removeCookie('GU_TAILOR_SURVEY');
         addCookie('GU_TAILOR_SURVEY', currentCookieValues, 365);
     } else {
@@ -49,12 +48,6 @@ const getSurveyIdsNotToShow = () => {
         .map(idAndDate => idAndDate.split('=')[0])
         .toString();
 };
-
-// Getting simple json from tailor's reponse to be passed to the html template
-const getJsonFromSurvey = survey => ({
-    question: survey.question,
-    id: survey.surveyId,
-});
 
 // Rules to use when finding a space for the survey
 const spacefinderRules = {
@@ -97,7 +90,7 @@ const spacefinderRules = {
 
 // we can write a survey into a spare space using spaceFiller
 const inArticleWriter = (survey, surveyId) =>
-    fillSpace(spacefinderRules, paras => {
+    fillSpace.fillSpace(spacefinderRules, paras => {
         const componentName = `data_tailor_survey_${surveyId}`;
 
         mediator.emit('register:begin', componentName);
@@ -106,6 +99,9 @@ const inArticleWriter = (survey, surveyId) =>
 
         return surveyId;
     });
+
+// Getting simple json from tailor's response to be passed to the html template
+const getJsonFromSurvey = ({ question, id }) => ({ question, id });
 
 // the main function to render the survey
 const renderQuickSurvey = () => {
@@ -118,29 +114,32 @@ const renderQuickSurvey = () => {
     // look for a survey with this ID to return. This is useful as we can easily see how a particular survey
     // would be rendered, without actually putting it live. If this parameter is empty or not specified, tailor
     // behaves as usual.
-    const surveyToShow = local.get('surveyToShow');
+
+    const surveyToShow = window.localStorage
+        ? window.localStorage.surveyToShow
+        : [];
 
     if (surveyToShow) {
-        queryParams.surveyToShow = surveyToShow;
+        queryParams.force = surveyToShow;
     }
 
     // get the list of surveys that can't be shown as they have been shown recently
     const surveysNotToShow = getSurveyIdsNotToShow();
 
     if (surveysNotToShow) {
-        queryParams.surveysNotToShow = surveysNotToShow;
+        queryParams.hide = surveysNotToShow;
     }
 
-    return getSuggestedSurvey(queryParams).then(suggestion => {
-        if (suggestion) {
-            storeSurveyShowedInCookie(suggestion.data);
+    return getSurvey(queryParams).then(s => {
+        if (s) {
+            storeSurveyShowedInCookie(s);
 
-            const json = getJsonFromSurvey(suggestion.data.survey);
-            const survey = bonzo.create(template(tailorSurveyHtml, json));
+            const survey = bonzo.create(
+                template(tailorSurveyHtml, getJsonFromSurvey(s))
+            );
 
-            return inArticleWriter(survey, suggestion.data.survey.surveyId);
+            return inArticleWriter(survey, s.id);
         }
-        Promise.resolve();
     });
 };
 
@@ -175,7 +174,7 @@ const thankyouFadeIn = () => {
 };
 
 const recordOphanAbEvent = (answer, surveyId) => {
-    const componentId = `data_tailor_survey_${surveyId}`;
+    const componentId = `new_tailor_survey_${surveyId}`;
 
     ophan.record({
         component: componentId,

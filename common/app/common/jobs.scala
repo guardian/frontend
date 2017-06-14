@@ -12,7 +12,7 @@ import scala.util.{Failure, Success}
 
 object JobsState {
   implicit val global = scala.concurrent.ExecutionContext.global
-  val jobs = mutable.Map[String, () => Future[Unit]]()
+  val jobs = mutable.Map[String, () => Future[_]]()
   val outstanding = akka.agent.Agent(Map[String,Int]().withDefaultValue(0))
 }
 
@@ -70,7 +70,7 @@ class JobScheduler(context: ApplicationContext) extends Logging {
     }
   }
 
-  def scheduleEveryNMinutes(name: String, intervalInMinutes: Int)(block: => Future[Unit]): Unit = {
+  def scheduleEveryNMinutes(name: String, intervalInMinutes: Int)(block: => Future[_]): Unit = {
     if (context.environment.mode != Test) {
       val schedule = DailyTimeIntervalScheduleBuilder.dailyTimeIntervalSchedule().withIntervalInMinutes(intervalInMinutes)
       log.info(s"Scheduling $name to run every $intervalInMinutes minutes")

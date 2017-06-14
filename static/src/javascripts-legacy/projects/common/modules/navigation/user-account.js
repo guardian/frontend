@@ -1,13 +1,15 @@
 define([
     'fastdom',
-    'common/modules/identity/api'
+    'common/modules/identity/api',
+    'lib/config',
 ], function (
     fastdom,
-    id
+    id,
+    config
 ) {
 
     function updateCommentLink () {
-        var commentLink = document.querySelector('.js-add-comment-activity-link');
+        var commentLink = document.querySelector('.js-add-comment-activity');
 
         if (commentLink) {
             var user = id.getUserFromCookie();
@@ -23,6 +25,9 @@ define([
         if(id.isUserLoggedIn()) {
             var signIn = document.querySelector('.js-navigation-sign-in');
             var accountDetails = document.querySelector('.js-navigation-account-details');
+            var accountActions = document.querySelector('.js-navigation-account-actions');
+            var user = config.user;
+            var userNameEl = document.querySelector('.js-navigation-account-username');
 
             fastdom.write(function() {
                 if (signIn) {
@@ -31,7 +36,15 @@ define([
 
                 if (accountDetails) {
                     accountDetails.classList.remove('u-h');
+                }
+
+                if (accountActions) {
+                    accountActions.classList.remove('u-h');
                     updateCommentLink();
+                }
+
+                if (userNameEl && user && user.displayName) {
+                    userNameEl.innerText = user.displayName;
                 }
             });
         }

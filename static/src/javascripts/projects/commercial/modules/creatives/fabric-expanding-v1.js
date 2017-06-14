@@ -6,18 +6,13 @@ import detect from 'lib/detect';
 import mediator from 'lib/mediator';
 import { local } from 'lib/storage';
 import template from 'lodash/utilities/template';
-import fabricExpandingV1Html
-    from 'raw-loader!commercial/views/creatives/fabric-expanding-v1.html';
-import fabricExpandingVideoHtml
-    from 'raw-loader!commercial/views/creatives/fabric-expanding-video.html';
+import fabricExpandingV1Html from 'raw-loader!commercial/views/creatives/fabric-expanding-v1.html';
+import fabricExpandingVideoHtml from 'raw-loader!commercial/views/creatives/fabric-expanding-video.html';
 import arrowDown from 'svgs/icon/arrow-down.svg';
 import closeCentral from 'svgs/icon/close-central.svg';
 import bindAll from 'lodash/functions/bindAll';
-import {
-    addTrackingPixel,
-} from 'commercial/modules/creatives/add-tracking-pixel';
-import addViewabilityTracker
-    from 'commercial/modules/creatives/add-viewability-tracker';
+import { addTrackingPixel } from 'commercial/modules/creatives/add-tracking-pixel';
+import addViewabilityTracker from 'commercial/modules/creatives/add-viewability-tracker';
 
 // Forked from expandable-v3.js
 class FabricExpandingV1 {
@@ -170,7 +165,8 @@ class FabricExpandingV1 {
         const viewModel = {
             width: videoWidth,
             height: videoHeight,
-            src: `${this.params.videoURL}?rel=0&amp;controls=0&amp;showinfo=0&amp;title=0&amp;byline=0&amp;portrait=0`,
+            src: `${this.params
+                .videoURL}?rel=0&amp;controls=0&amp;showinfo=0&amp;title=0&amp;byline=0&amp;portrait=0`,
             className: [
                 'expandable_video',
                 `expandable_video--horiz-pos-${this.params.videoPositionH}`,
@@ -223,10 +219,16 @@ class FabricExpandingV1 {
         const scrollbgDefaultY = '0%'; // used if no parallax / fixed background scroll support
         const scrollingbg = {
             scrollbg: this.params.backgroundImagePType !== 'none'
-                ? `<div class="ad-exp--expand-scrolling-bg" style="background-image: url(${this.params.backgroundImageP}); background-position: ${this.params.backgroundImagePPosition} ${scrollbgDefaultY}; background-repeat: ${this.params.backgroundImagePRepeat};"></div>`
+                ? `<div class="ad-exp--expand-scrolling-bg" style="background-image: url(${this
+                      .params.backgroundImageP}); background-position: ${this
+                      .params
+                      .backgroundImagePPosition} ${scrollbgDefaultY}; background-repeat: ${this
+                      .params.backgroundImagePRepeat};"></div>`
                 : '',
         };
-        this.params.id = `fabric-expanding-${Math.floor(Math.random() * 10000).toString(16)}`;
+        this.params.id = `fabric-expanding-${Math.floor(
+            Math.random() * 10000
+        ).toString(16)}`;
         const $fabricExpandingV1 = $.create(
             template(fabricExpandingV1Html, {
                 data: Object.assign(

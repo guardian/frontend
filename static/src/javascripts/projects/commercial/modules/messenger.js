@@ -186,7 +186,7 @@ const off = (window: WindowProxy): void => {
 
 export const register = (
     type: string,
-    callback: () => void,
+    callback: () => ?Promise<any>,
     options: Object = {}
 ): void => {
     if (REGISTERED_LISTENERS === 0) {
@@ -210,7 +210,7 @@ export const register = (
 
 export const unregister = (
     type: string,
-    callback: () => void,
+    callback: () => ?Promise<any>,
     options: Object = {}
 ): void => {
     if (LISTENERS[type] === undefined) {

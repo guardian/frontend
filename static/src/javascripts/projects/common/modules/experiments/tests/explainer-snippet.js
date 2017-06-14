@@ -5,8 +5,7 @@ import fastdom from 'lib/fastdom-promise';
 import mediator from 'lib/mediator';
 import template from 'lodash/utilities/template';
 import ophan from 'ophan/ng';
-import ExplainerSnippetStr
-    from 'raw-loader!common/views/experiments/explainer.html';
+import ExplainerSnippetStr from 'raw-loader!common/views/experiments/explainer.html';
 import { markup as thumbIcon } from 'svgs/icon/thumb.svg';
 import { markup as plusIcon } from 'svgs/icon/plus.svg';
 import { markup as minusIcon } from 'svgs/icon/minus.svg';
@@ -25,7 +24,7 @@ const ExplainerSnippet = () => {
 
     // Test duration
     const start = '2017-05-18';
-    const expiry = '2017-06-13';
+    const expiry = '2017-06-27';
 
     // will run in specific articles
     const canRun = (): boolean =>
@@ -147,7 +146,8 @@ const ExplainerSnippet = () => {
         description: 'Measure Understanding survey',
         successMeasure: '',
         audienceCriteria: '',
-        idealOutcome: "We improve users' understanding of a topic by showing them Explainers",
+        idealOutcome:
+            "We improve users' understanding of a topic by showing them Explainers",
         canRun,
         showForSensitive: true,
         variants: [

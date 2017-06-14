@@ -1,0 +1,16 @@
+.menu-user {
+    display: flex;
+    flex-direction: row;
+    padding-top: $gs-baseline / 3;
+}
+
+.menu-user__avatar {
+    border-radius: 50%;
+    margin-right: $gs-gutter;
+    width: gs-span(1);
+}
+
+.menu-user__name {
+    font-size: 24px;
+    text-transform: none;
+}

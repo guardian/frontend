@@ -344,6 +344,10 @@
     }
 }
 
+.fc-container--commercial .ad-slot--commercial-component-high {
+    margin-bottom: $gs-baseline * 2;
+}
+
 .ad-slot--im {
     float: left;
     width: $gs-gutter * 6.5;
@@ -479,4 +483,10 @@
     @include mq(wide) {
         margin-right: -25em;
     }
+}
+
+.ad-slot--survey {
+    // we avoid 'display none' otherwise the slot would close, but the survey slot is
+    // out-of-page and shouldn't be seen
+    height: 0;
 }

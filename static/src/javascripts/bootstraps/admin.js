@@ -1,8 +1,7 @@
 // @flow
 import { initABTests } from 'admin/bootstraps/abtests';
 import { initRadiator } from 'admin/bootstraps/radiator';
-import commercialBrowserPerformance
-    from 'admin/bootstraps/commercial-browser-performance';
+import commercialBrowserPerformance from 'admin/bootstraps/commercial-browser-performance';
 import domReady from 'domready';
 
 domReady(() => {

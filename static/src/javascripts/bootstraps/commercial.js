@@ -4,12 +4,8 @@ import { catchErrorsWithContext } from 'lib/robust';
 import { markTime } from 'lib/user-timing';
 import reportError from 'lib/report-error';
 import highMerch from 'commercial/modules/high-merch';
-import {
-    articleAsideAdvertsInit,
-} from 'commercial/modules/article-aside-adverts';
-import {
-    articleBodyAdvertsInit,
-} from 'commercial/modules/article-body-adverts';
+import { articleAsideAdvertsInit } from 'commercial/modules/article-aside-adverts';
+import { articleBodyAdvertsInit } from 'commercial/modules/article-body-adverts';
 import { closeDisabledSlots } from 'commercial/modules/close-disabled-slots';
 import prepareGoogletag from 'commercial/modules/dfp/prepare-googletag';
 import prepareSonobiTag from 'commercial/modules/dfp/prepare-sonobi-tag';
@@ -17,9 +13,7 @@ import prepareSwitchTag from 'commercial/modules/dfp/prepare-switch-tag';
 import hostedAbout from 'commercial/modules/hosted/about';
 import { initHostedVideo } from 'commercial/modules/hosted/video';
 import hostedGallery from 'commercial/modules/hosted/gallery';
-import {
-    initHostedCarousel,
-} from 'commercial/modules/hosted/onward-journey-carousel';
+import { initHostedCarousel } from 'commercial/modules/hosted/onward-journey-carousel';
 import { loadOnwardComponent } from 'commercial/modules/hosted/onward';
 import { initLiveblogAdverts } from 'commercial/modules/liveblog-adverts';
 import stickyTopBanner from 'commercial/modules/sticky-top-banner';

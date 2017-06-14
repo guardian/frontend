@@ -39,9 +39,8 @@ from scrolling */
     justify-content: space-between;
 }
 
-.new-header__cta {
+.new-header__cta-container {
     left: $gs-gutter / 4;
-    overflow-x: hidden;
     position: absolute;
 
     @include mq(mobileLandscape) {
@@ -56,7 +55,7 @@ from scrolling */
 .new-header__logo__svg {
     display: block;
     height: calc(3 / 16 * 170px);
-    margin-bottom: $gs-baseline;
+    margin-bottom: $gs-baseline / 2;
     margin-right: $gs-gutter / 2;
     margin-top: $gs-baseline / 2;
     width: 170px;
@@ -73,12 +72,16 @@ from scrolling */
     }
 
     @include mq(tablet) {
-        height: calc(3 / 16 * 400px);
-        width: 400px;
+        height: calc(3 / 16 * 370px);
+        width: 370px;
+    }
+
+    @include mq(desktop) {
+        margin-bottom: $gs-baseline / 4;
     }
 }
 
 // Don't show trapezoid on opera mini: https://wp-mix.com/css-target-opera/
-x:-o-prefocus, .new-header__support {
+x:-o-prefocus, .new-header__cta-container  {
     display: none;
 }

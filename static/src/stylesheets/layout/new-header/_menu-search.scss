@@ -1,17 +1,21 @@
 .menu-search {
     box-sizing: border-box;
     margin-left: 13px;
-    padding-bottom: $gs-baseline * 2;
-    padding-right: $veggie-burger-medium / 2 + $gs-gutter / 2;
     position: relative;
+
+    @include mq($until: desktop) {
+        padding-bottom: $gs-baseline * 2;
+        padding-right: $veggie-burger-medium / 2 + $gs-gutter / 2;
+    }
 
     @include mq(tablet) {
         margin-left: 22px;
     }
 
     @include mq(desktop) {
+        margin-bottom: $gs-baseline;
         margin-left: 0;
-        margin-right: $gs-gutter;
+        padding-right: $gs-gutter;
         width: 100%;
     }
 }
@@ -33,9 +37,9 @@
     }
 
     @include mq(desktop) {
-        height: 54px;
+        height: 42px;
         max-width: none;
-        padding-left: 54px;
+        padding-left: 48px;
     }
 
     &::placeholder {
@@ -60,15 +64,14 @@
 
     @include mq(desktop) {
         left: 12px;
-        top: 12px;
     }
 
     .inline-search-36__svg {
         fill: $news-support-2;
 
         @include mq(desktop) {
-            height: 32px;
-            width: 32px;
+            height: 22px;
+            width: 22px;
         }
     }
 }

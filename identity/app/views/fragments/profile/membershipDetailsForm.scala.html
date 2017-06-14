@@ -8,6 +8,11 @@
         <span class="is-updating show-updating"></span>
     </div>
     <div id="qa-success-message" class="form__success is-hidden js-mem-card-change-success-msg">Your card details have been updated</div>
+    @fragments.error("mem") {
+        <p>
+            Please contact us on <a href="mailto:membershipsupport@@theguardian.com">✉️ membershipsupport@@theguardian.com</a> or phone <a href="tel:0044330 333 6898">📞 +44 (0)330 333 6898</a>.
+        </p>
+}
     @fragments.profile.membershipForm.cancelled()
     @fragments.profile.membershipForm.changed()
     @fragments.profile.membershipForm.details(user)

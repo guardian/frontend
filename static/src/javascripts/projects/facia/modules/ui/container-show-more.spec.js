@@ -14,7 +14,11 @@ describe('Container Show More', () => {
 
     beforeEach(() => {
         $container = bonzo(
-            bonzo.create(`<div>${itemWithId('loldongs')}${itemWithId('corgi')}${itemWithId('geekpie')}</div>`)
+            bonzo.create(
+                `<div>${itemWithId('loldongs')}${itemWithId(
+                    'corgi'
+                )}${itemWithId('geekpie')}</div>`
+            )
         );
     });
 

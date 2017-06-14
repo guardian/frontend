@@ -8,7 +8,7 @@ import config from 'lib/config';
 
 const BROWSER_ID = getCookie('bwid');
 const URLS = {
-    suggestions: 'https://tailor.guardianapis.com/suggestions?browserId=',
+    surveys: 'https://tailor.guardianapis.com/surveys?browserId=',
 };
 
 const getURL = (type: string, queryParams?: Object): ?string => {

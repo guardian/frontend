@@ -9,7 +9,8 @@ import debounce from 'lodash/functions/debounce';
 
 const enhanced = {};
 
-const getMenu = (): ?HTMLElement => document.getElementById('main-menu');
+const getMenu = (): ?HTMLElement =>
+    document.getElementsByClassName('js-main-menu')[0];
 
 const getSectionToggleMenuItem = (section: HTMLElement): ?HTMLElement => {
     const children = [...section.children];
@@ -172,6 +173,7 @@ const toggleSidebar = (): void => {
 
         if (isOpen) {
             resetItemOrder();
+            closeAllSidebarSections();
         } else {
             focusFirstSidebarSection();
         }
@@ -243,7 +245,9 @@ const toggleSidebarWithOpenSection = () => {
 
 const addEventHandler = (): void => {
     const menu = getMenu();
-    const toggle = document.querySelector('.js-toggle-nav-section');
+    const toggleWithMoreButton = document.querySelector(
+        '.js-toggle-nav-section'
+    );
 
     if (menu) {
         menu.addEventListener('click', (event: Event) => {
@@ -261,8 +265,8 @@ const addEventHandler = (): void => {
         });
     }
 
-    if (toggle) {
-        toggle.addEventListener('click', () => {
+    if (toggleWithMoreButton) {
+        toggleWithMoreButton.addEventListener('click', () => {
             toggleSidebarWithOpenSection();
         });
     }

@@ -21,7 +21,11 @@ const persistResponse = (JsonResponse: () => void) => {
     expiryDate.setDate(expiryDate.getDate() + 1);
     addCookie(USER_FEATURES_EXPIRY_COOKIE, expiryDate.getTime().toString());
     addCookie(PAYING_MEMBER_COOKIE, !JsonResponse.adblockMessage);
-    addCookie(AD_FREE_USER_COOKIE, JsonResponse.adFree);
+    if (JsonResponse.adFree) {
+        addCookie(AD_FREE_USER_COOKIE, JsonResponse.adFree, 1);
+    } else {
+        removeCookie(AD_FREE_USER_COOKIE);
+    }
 };
 
 const deleteOldData = (): void => {
