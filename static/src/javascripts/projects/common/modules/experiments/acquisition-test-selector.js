@@ -12,8 +12,6 @@ import alwaysAsk
     from 'common/modules/experiments/tests/contributions-epic-always-ask-strategy';
 import askFourPostElection
     from 'common/modules/experiments/tests/contributions-epic-ask-four-post-election';
-import bundlePriceTest1
-    from 'common/modules/experiments/tests/bundle-digital-sub-price-test-1';
 import askFourEarning
     from 'common/modules/experiments/tests/contributions-epic-ask-four-earning';
 import acquisitionsEpicLiveBlog
@@ -28,6 +26,8 @@ import acquisitionsEpicThankYou
     from 'common/modules/experiments/tests/acquisitions-epic-thank-you';
 import acquisitionsThisLandSeries
     from 'common/modules/experiments/tests/acquisitions-this-land-series';
+import bundlePriceTest1
+    from 'common/modules/experiments/tests/bundle-digital-sub-price-test-1';
 
 /**
  * acquisition tests in priority order (highest to lowest)

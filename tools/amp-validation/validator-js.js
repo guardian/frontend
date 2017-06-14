@@ -23,7 +23,9 @@ const fetchValidator = devChannel => {
             defaultOptions,
             devChannel ? devOptions : {}
         );
-        const errorMessage = `Unable to retrieve ${options.path} with dev channel ${devChannel ? 'enabled' : 'disabled'}.`;
+        const errorMessage = `Unable to retrieve ${options.path} with dev channel ${devChannel
+            ? 'enabled'
+            : 'disabled'}.`;
 
         const req = https.get(options, res => {
             if (res.statusCode !== 200) {
