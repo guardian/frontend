@@ -1,6 +1,7 @@
-package services
+package uiComponent.core
 
 import java.io.FileNotFoundException
+import javax.script.SimpleScriptContext
 
 import jdk.nashorn.api.scripting.JSObject
 import model.ApplicationContext
@@ -12,15 +13,14 @@ import scala.util.{Failure, Success, Try}
 
 class JavascriptRenderer(javascriptFile: String) {
 
-  private lazy val engine = new JavascriptEngine()
+  private implicit lazy val scriptContext = new SimpleScriptContext()
   private lazy val memoizedJs: Try[JSObject] = loadJavascript()
 
   def render(props: Option[JsValue] = None)(implicit ac: ApplicationContext): Try[String] = {
-    val propsId = "props"
     for {
       propsObject <- encodeProps(props)
       js <- if(ac.environment.mode == Mode.Dev) loadJavascript() else memoizedJs
-      rendering <- engine.call[String]("render", propsObject)(js)
+      rendering <- JavascriptEngine.call[String](js)("render", propsObject)
     } yield rendering
   }
 
@@ -28,14 +28,14 @@ class JavascriptRenderer(javascriptFile: String) {
     val propsId = "props"
     val emptyJson = JsObject(Seq())
     for {
-      _ <- engine.put(propsId, props.getOrElse(emptyJson))
-      propsObject <- engine.eval(s"JSON.parse($propsId)")
+      _ <- JavascriptEngine.put(propsId, props.getOrElse(emptyJson))
+      propsObject <- JavascriptEngine.eval(s"JSON.parse($propsId)")
     } yield propsObject
   }
 
   private def loadJavascript(): Try[JSObject] = for {
     file <- loadFile(javascriptFile)
-    js <- engine.eval(file.reader)
+    js <- JavascriptEngine.eval(file.reader)
   } yield js
 
   private def loadFile(fileName: String): Try[BufferedSource] = {

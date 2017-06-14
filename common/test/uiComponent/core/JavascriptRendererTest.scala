@@ -1,9 +1,10 @@
+package uiComponent.core
+
 import java.io.FileNotFoundException
 
 import helpers.ExceptionMatcher
 import org.scalatest.{FlatSpec, Matchers}
 import play.api.libs.json.{JsObject, JsString}
-import services.JavascriptRenderer
 import test.WithTestContext
 
 import scala.util.Try
@@ -15,7 +16,7 @@ class JavascriptRendererTest
   with ExceptionMatcher {
 
   "Rendering" should "return correct HTML string" in {
-    val rendered = new JavascriptRenderer("js/TestButtonComponent.js")
+    val rendered = new JavascriptRenderer("components/TestButtonComponent.js")
     val state: Option[JsObject] = Some(JsObject(Seq("title" -> JsString("my title"))))
     rendered.render(state) should be (Try("<button type='button'>my title</button>"))
   }
