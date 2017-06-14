@@ -36,7 +36,8 @@ trait Prototypes {
     cleanAll := Def.taskDyn {
       val allProjects = ScopeFilter(inAnyProject)
       clean.all(allProjects)
-    }.value
+    }.value,
+    unmanagedClasspath in Runtime += baseDirectory.value / "resources"
   )
 
   val frontendIntegrationTestsSettings = Seq (
