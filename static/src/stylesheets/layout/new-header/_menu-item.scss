@@ -46,8 +46,10 @@
 
         &:hover,
         &:focus {
-            background-color: $news-main-2;
-            color: #ffffff;
+            @include mq(desktop) {
+                background-color: $news-main-2;
+                color: #ffffff;
+            }
         }
 
         &--edition-active {
@@ -177,6 +179,14 @@
         @include mq(desktop) {
             line-height: 40px;
             text-align: center;
+        }
+    }
+
+    .menu-group--editions &[aria-haspopup="true"] {
+        margin-bottom: $gs-baseline;
+
+        &[aria-expanded="true"] {
+            margin-bottom: 0;
         }
     }
 }
