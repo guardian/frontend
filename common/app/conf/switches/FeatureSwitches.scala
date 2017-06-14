@@ -482,7 +482,7 @@ trait FeatureSwitches {
     "When ON, the Guardian Today US Email will contain Live Intent advertisements",
     owners = Seq(Owner.withGithub("davidfurey")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 6, 6),
+    sellByDate = new LocalDate(2017, 8, 8),
     exposeClientSide = false
   )
 

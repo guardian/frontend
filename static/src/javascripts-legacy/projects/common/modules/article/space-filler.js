@@ -1,7 +1,7 @@
 define([
     'lib/raven',
     'lib/fastdom-promise',
-    'common/modules/article/spacefinder'
+    'common/modules/spacefinder'
 ], function (
     raven,
     fastdom,

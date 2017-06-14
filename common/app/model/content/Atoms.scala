@@ -37,8 +37,13 @@ final case class MediaAtom(
   source: Option[String],
   posterImage: Option[ImageMedia],
   endSlatePath: Option[String],
-  expired: Option[Boolean]
+  expired: Option[Boolean],
+  activeVersion: Option[Long]
 ) extends Atom {
+
+  def activeAssets: Seq[MediaAsset] = activeVersion
+    .map { version => assets.filter(_.version == version) }
+    .getOrElse(assets)
 
   def isoDuration: Option[String] = {
     duration.map(d => new Duration(Duration.standardSeconds(d)).toString)
@@ -204,7 +209,8 @@ object MediaAtom extends common.Logging {
       source = mediaAtom.source,
       posterImage = mediaAtom.posterImage.map(imageMediaMake(_, mediaAtom.title)),
       endSlatePath = endSlatePath,
-      expired = expired
+      expired = expired,
+      activeVersion = mediaAtom.activeVersion
     )
   }
 
@@ -233,7 +239,6 @@ object MediaAtom extends common.Logging {
       ).collect{ case(k, Some(v)) => (k,v) }
     )
   }
-
 }
 
 object Quiz extends common.Logging {

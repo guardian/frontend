@@ -4,12 +4,12 @@ import commercial.campaigns.PersonalInvestmentsCampaign
 import com.gu.contentapi.client.model.v1.{Content => CapiContent}
 import com.gu.contentapi.client.model.{v1 => contentapi}
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichCapiDateTime
-import common.commercial.{AdUnitMaker, CommercialProperties}
+import common.commercial.{AdUnitMaker, CommercialProperties, EditionAdTargeting, EditionBranding}
 import common.dfp._
 import common.{Edition, ManifestData, NavItem, Pagination}
 import conf.Configuration
 import conf.cricketPa.CricketTeams
-import model.content.{MediaAtom, StoryQuestionsAtom}
+import model.content.{Atom, MediaAtom, MediaWrapper, StoryQuestionsAtom}
 import model.liveblog.Blocks
 import model.meta.{Guardian, LinkedData, PotentialAction, WebPage}
 import org.apache.commons.lang3.StringUtils
@@ -17,6 +17,7 @@ import org.joda.time.DateTime
 import org.scala_tools.time.Imports._
 import play.api.libs.json.{JsBoolean, JsString, JsValue}
 import play.api.mvc.RequestHeader
+import play.twirl.api.Html
 
 object Commercial {
 
@@ -371,16 +372,39 @@ case class GalleryPage(
 
 case class EmbedPage(item: Video, title: String, isExpired: Boolean = false) extends ContentPage
 
-case class MediaAtomEmbedPage(atom: MediaAtom) extends Page {
-  override val metadata = MetaData.make(id = atom.id,
-    webTitle = atom.title,
-    section = None)
+trait AtomPage extends Page {
+  def atom: Atom
+  def atomType: String
+  def body: Html
+  def withJavaScript: Boolean
+  def javascriptModule: String = atomType
 }
 
-case class StoryQuestionsAtomEmbedPage(atom: StoryQuestionsAtom) extends Page {
-  override val metadata = MetaData.make(id = atom.id,
+case class MediaAtomPage(
+  override val atom: MediaAtom,
+  override val withJavaScript: Boolean
+)(implicit request: RequestHeader) extends AtomPage {
+  override val atomType = "media"
+  override val body = views.html.fragments.atoms.media(atom, displayCaption = false, mediaWrapper = Some(MediaWrapper.EmbedPage))
+  override val javascriptModule = "youtube-embed"
+  override val metadata = MetaData.make(
+    id = atom.id,
+    webTitle = atom.title,
+    section = None
+  )
+}
+
+case class StoryQuestionsAtomPage(
+  override val atom: StoryQuestionsAtom,
+  override val withJavaScript: Boolean
+)(implicit request: RequestHeader) extends AtomPage {
+  override val atomType = "storyquestions"
+  override val body = views.html.fragments.atoms.storyquestions(atom, isAmp = false)
+  override val metadata = MetaData.make(
+    id = atom.id,
     webTitle = atom.atom.title.getOrElse("Story questions"),
-    section = None)
+    section = None
+  )
 }
 
 case class TagCombiner(
@@ -395,7 +419,14 @@ case class TagCombiner(
     section = leftTag.metadata.section,
     webTitle = s"${leftTag.name} + ${rightTag.name}",
     pagination = pagination,
-    description = Some(GuardianContentTypes.TagIndex)
+    description = Some(GuardianContentTypes.TagIndex),
+    commercial = Some(
+      //We only use the left tag for CommercialProperties
+      CommercialProperties(
+        leftTag.properties.commercial.map(_.editionBrandings).getOrElse(Nil),
+        leftTag.properties.commercial.map(_.editionAdTargetings).getOrElse(Nil)
+      )
+    )
   )
 }
 

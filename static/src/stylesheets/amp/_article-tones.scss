@@ -1,0 +1,182 @@
+.tonal__standfirst {
+    padding-top: .375rem;
+}
+
+.content__standfirst {
+    .tonal--tone-comment &,
+    .tonal--tone-feature &,
+    .tonal--tone-review &,
+    .tonal--tone-editorial &,
+    .tonal--tone-analysis &,
+    .tonal--tone-media &,
+    .tonal--tone-special-report & {
+        margin-bottom: 1.5rem;
+        color: #ffffff;
+    }
+
+    .tonal--tone-analysis & {
+        color: $neutral-2;
+    }
+}
+
+.tonal__standfirst {
+    .tonal--tone-comment &,
+    .tonal--tone-letters & {
+        background-color: $comment-support-4;
+    }
+
+    .tonal--tone-feature & {
+        background-color: $features-main-2;
+    }
+
+    .tonal--tone-review & {
+        background-color: $comment-support-1;
+    }
+
+    .tonal--tone-editorial & {
+        background-color: $guardian-brand;
+    }
+
+    .tonal--tone-analysis & {
+        background-color: $neutral-6;
+    }
+
+    .tonal--tone-special-report & {
+        background-color: #6e7e88;
+    }
+
+    .tonal--tone-media & {
+        background-color: $multimedia-main-2;
+    }
+}
+
+.tonal--tone-news .tonal__standfirst {
+    padding-top: 0;
+}
+
+.tonal__header {
+    .tonal--tone-feature & {
+        background-color: $features-support-1;
+    }
+
+    .tonal__head--tone-review & {
+        background-color: #615b52;
+    }
+
+    .tonal--tone-analysis & {
+        background-color: #f1f1f1;
+    }
+
+    .tonal--tone-special-report & {
+        background-color: $news-support-6;
+    }
+}
+
+.tonal--tone-news .tone-colour,
+.tonal--tone-analysis .tonal__header .content__headline {
+    color: $guardian-brand;
+}
+
+.tonal--tone-comment .tonal__header,
+.tonal--tone-editorial .tonal__header,
+.tonal--tone-letters .tonal__header {
+    background-color: $comment-support-2;
+}
+
+.tonal--tone-comment .tone-colour,
+.tonal--tone-comment .tonal__main .element-pullquote cite,
+.tonal--tone-letters .tonal__main .element-pullquote cite,
+.tonal--tone-comment .tonal__main .drop-cap,
+.tone-comment .fc-item__byline {
+    color: $comment-support-4;
+}
+
+.tonal--tone-feature .tone-colour,
+.tonal--tone-feature .tonal__main .element-pullquote cite,
+.tonal--tone-feature .tonal__main .drop-cap {
+    color: $features-support-1;
+}
+
+.tonal--tone-review .tonal__main .element-pullquote cite,
+.tonal--tone-review .tonal__main .drop-cap {
+    color: #615b52;
+}
+
+.tonal--tone-feature .tonal__standfirst ul>li:before,
+.tonal--tone-feature .tonal__standfirst .bullet:before,
+.tonal--tone-comment .tonal__standfirst ul>li:before,
+.tonal--tone-comment .tonal__standfirst .bullet:before,
+.tonal--tone-review .tonal__standfirst ul>li:before,
+.tonal--tone-review .tonal__standfirst .bullet:before,
+.tonal--tone-editorial .tonal__standfirst ul>li:before,
+.tonal--tone-editorial .tonal__standfirst .bullet:before,
+.tonal--tone-special-report .tonal__standfirst ul>li:before,
+.tonal--tone-special-report .tonal__standfirst .bullet:before,
+.tonal--tone-letters .tonal__standfirst ul>li:before,
+.tonal--tone-letters .tonal__standfirst .bullet:before {
+    background-color: rgba(255, 255, 255, .4);
+}
+
+.tonal--tone-review .tone-colour {
+    color: $comment-support-1;
+}
+
+.tonal--tone-review .stars {
+    margin-top: -1.125rem;
+    margin-bottom: 1.125rem;
+}
+
+.tonal--tone-review .stars .star__item--golden {
+    fill: #ffce4b;
+}
+
+.tonal--tone-review .stars .star__item--grey {
+    fill: #000000;
+    opacity: .15;
+}
+
+.tonal--tone-review .tonal__header .content__headline,
+.tonal--tone-feature .tonal__header .content__headline,
+.tonal--tone-special-report .tonal__header .content__headline,
+.tonal--tone-letters .tonal__standfirst,
+.tonal--tone-letters .tonal__standfirst .content__standfirst,
+.tone-media .fc-item__title,
+.tone-review .fc-item__title,
+.tone-special-report .fc-item__title,
+.tone-special-report .fc-item__title {
+    color: #ffffff;
+}
+
+.tonal--tone-editorial .tone-colour,
+.tonal--tone-editorial .tonal__main .element-pullquote cite,
+.tonal--tone-editorial .tonal__main .drop-cap {
+    color: $guardian-brand;
+}
+
+.tonal--tone-analysis .tonal__main .element-pullquote cite {
+    color: #21a2bc;
+}
+
+.tonal--tone-analysis .tone-colour {
+    color: $news-main-2;
+}
+
+.tonal--tone-media .tone-colour {
+    color: $multimedia-main-2;
+}
+
+.tonal--tone-special-report .tone-colour,
+.tonal--tone-special-report .tonal__main .element-pullquote cite {
+    color: $news-support-6;
+}
+
+.tonal--tone-comment .tonal__standfirst .u-underline,
+.tonal--tone-feature .tonal__standfirst .u-underline,
+.tonal--tone-review .tonal__standfirst .u-underline,
+.tonal--tone-editorial .tonal__standfirst .u-underline,
+.tonal--tone-media .tonal__standfirst .u-underline,
+.tonal--tone-special-report .tonal__standfirst .u-underline,
+.tonal--tone-letters .tonal__standfirst .u-underline {
+    color: #ffffff;
+    border-bottom-color: rgba(255, 255, 255, .3);
+}

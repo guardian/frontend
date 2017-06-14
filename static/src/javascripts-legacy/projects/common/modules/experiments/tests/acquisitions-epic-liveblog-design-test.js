@@ -6,7 +6,9 @@ define([
     'lib/$',
     'raw-loader!common/views/acquisitions-epic-liveblog.html',
     'raw-loader!common/views/acquisitions-epic-liveblog-old-design-subtle.html',
-    'raw-loader!common/views/acquisitions-epic-liveblog-old-design-minimal.html'
+    'raw-loader!common/views/acquisitions-epic-liveblog-old-design-minimal.html',
+    'common/modules/commercial/acquisitions-copy',
+
 ], function (
     contributionsUtilities,
     geolocation,
@@ -15,7 +17,8 @@ define([
     $,
     liveblogEpicTemplateControl,
     liveblogEpicTemplateOldDesignSubtle,
-    liveblogEpicTemplateOldDesignMinimal
+    liveblogEpicTemplateOldDesignMinimal,
+    acquisitionsCopy
 ) {
 
     var pageId = config.page.pageId || '';
@@ -23,7 +26,7 @@ define([
     var insertEpicAfterSelector = '.js-insert-epic-after';
 
     function isEpic(el) {
-        $(el).hasClass('is-liveblog-epic');
+        return $(el).hasClass('is-liveblog-epic');
     }
 
     function getLiveblogEntryTimeData(el) {
@@ -52,6 +55,10 @@ define([
     }
 
     function setEpicLiveblogEntryTimeData(el, timeData) {
+        if (!el) {
+            return;
+        }
+
         var $epicTimeEl = $('time', el);
         $epicTimeEl.attr('datetime', timeData.datetime);
         $epicTimeEl.attr('title', timeData.title);
@@ -102,6 +109,7 @@ define([
 
                 template: function (variant) {
                     return template(liveblogEpicTemplateControl, {
+                        copy: acquisitionsCopy.control,
                         membershipUrl: variant.options.membershipURL,
                         contributionUrl: variant.options.contributeURL,
                         componentName: variant.options.componentName
@@ -119,8 +127,7 @@ define([
 
                 template: function (variant) {
                     return template(liveblogEpicTemplateOldDesignSubtle, {
-                        membershipUrl: variant.options.membershipURL,
-                        contributionUrl: variant.options.contributeURL,
+                        copy: acquisitionsCopy.liveblogSubtle(variant.options.membershipURL, variant.options.contributeURL),
                         componentName: variant.options.componentName
                     });
                 },
@@ -138,8 +145,7 @@ define([
 
                 template: function (variant) {
                     return template(liveblogEpicTemplateOldDesignMinimal, {
-                        membershipUrl: variant.options.membershipURL,
-                        contributionUrl: variant.options.contributeURL,
+                        copy: acquisitionsCopy.liveblogMinimal(variant.options.membershipURL, variant.options.contributeURL),
                         componentName: variant.options.componentName
                     });
                 },

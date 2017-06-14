@@ -1,4 +1,4 @@
-// flow-typed signature: 3971b623d4a6a16b046ad1253c332511
+// flow-typed signature: d6b0f74d90aed2829584de41e715d152
 // flow-typed version: <<STUB>>/sass-graph_v^2.1.2/flow_v0.40.0
 
 /**
@@ -8,8 +8,8 @@
  *
  * Fill this stub out by replacing all the `any` types.
  *
- * Once filled out, we encourage you to share your work with the 
- * community by sending a pull request to: 
+ * Once filled out, we encourage you to share your work with the
+ * community by sending a pull request to:
  * https://github.com/flowtype/flow-typed
  */
 

@@ -1,0 +1,70 @@
+.footer__back-to-top-container {
+    @include content-gutter();
+    background-color: $guardian-brand;
+}
+
+.footer__back-to-top {
+    @include fs-textSans(4);
+    position: relative;
+    text-align: right;
+
+    @include mq($from: mobile, $until: mobileLandscape) {
+        font-size: 14px;
+        font-size: 4.6vw;
+    }
+
+    @include mq(mobileLandscape) {
+        font-size: 20px;
+    }
+}
+
+.back-to-top__text {
+    display: inline-block;
+    color: $news-support-1;
+    line-height: 32px;
+    padding-right: $gs-gutter / 2;
+
+    @include mq(mobileMedium) {
+        line-height: 43px;
+    }
+}
+
+.back-to-top__icon-container {
+    position: relative;
+    float: right;
+    margin-top: -($gs-baseline / 2);
+    margin-bottom: -($gs-baseline / 2);
+    border-radius: 100%;
+    background-color: $news-main-2;
+    cursor: pointer;
+    height: $veggie-burger-small;
+    min-width: $veggie-burger-small;
+
+    @include mq(mobileMedium) {
+        height: $veggie-burger-medium;
+        width: $veggie-burger-medium;
+    }
+}
+
+.back-to-top__icon {
+    &:before {
+        position: absolute;
+        top: $gs-baseline / 2;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: auto;
+        border: 2px solid #ffffff;
+        border-bottom: 0;
+        border-right: 0;
+        content: '';
+        height: 11px;
+        width: 11px;
+        transform: rotate(45deg);
+
+        @include mq(mobileMedium) {
+            height: 14px;
+            width: 14px;
+        }
+    }
+}

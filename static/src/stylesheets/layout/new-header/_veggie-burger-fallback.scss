@@ -3,12 +3,20 @@
 
     &:checked {
         & ~ .menu {
-            @include menu-animation(0%);
+            @include mq($until: desktop) {
+                @include menu-animation(0%);
+            }
+
+            @include mq(desktop) {
+                display: block;
+            }
         }
 
         & ~ .menu__overlay {
-            opacity: 1;
-            width: 100%;
+            @include mq($until: desktop) {
+                opacity: 1;
+                width: 100%;
+            }
         }
     }
 }

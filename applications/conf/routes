@@ -27,10 +27,6 @@ GET        /crosswords/accessible/$crosswordType<cryptic|quick|quiptic|prize|eve
 GET            /crosswords/search                                                                                                controllers.CrosswordSearchController.search()
 GET            /crosswords/lookup                                                                                                controllers.CrosswordSearchController.lookup()
 
-#Notifications Store
-POST           /notification/store                                              controllers.NotificationsController.saveSubscription()
-POST           /notification/delete                                             controllers.NotificationsController.deleteSubscription()
-
 # Email paths
 GET        /email/form/$emailType<article|footer|plain|plaindark|plaintone>/:listId       controllers.EmailSignupController.renderForm(emailType: String, listId: Int)
 GET        /email/:result                                                       controllers.EmailSignupController.subscriptionResult(result: String)
@@ -43,8 +39,10 @@ GET        /index/contributors                                                  
 GET        /index/contributors/*contributor                                     controllers.TagIndexController.contributor(contributor)
 
 GET        /embed/video/*path                                                   controllers.EmbedController.render(path)
-GET        /embed/atom/media/:id                                                controllers.MediaAtomEmbedController.render(id)
-GET        /embed/atom/story-questions/:id                                      controllers.StoryQuestionsAtomEmbedController.render(id)
+GET        /embed/atom/:atomType/:id                                            controllers.AtomPageController.render(atomType: String, id: String, isJsEnabled: Boolean = true)
+GET        /embed/atom/:atomType/:id/nojs                                       controllers.AtomPageController.render(atomType: String, id: String, isJsEnabled: Boolean = false)
+POST       /story-questions/answers/signup                                      controllers.AtomPageController.signup()
+OPTIONS    /story-questions/answers/signup                                      controllers.AtomPageController.options()
 
 # Share counts
 GET        /sharecount/*path.json                                               controllers.ShareCountController.fetch(path)

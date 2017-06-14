@@ -1,0 +1,25 @@
+.l-footer {
+    padding: 0;
+    background: $c-footer-background;
+}
+
+.l-footer__secondary {
+    @include fs-textSans(1);
+    box-sizing: border-box;
+    padding-right: $gs-gutter / 2;
+    padding-left: $gs-gutter / 2;
+
+    @include mq(mobileLandscape) {
+        padding-left: $gs-gutter;
+        padding-right: $gs-gutter;
+    }
+
+    &,
+    a {
+        color: $neutral-3;
+    }
+}
+
+.footer__primary {
+    overflow: hidden;
+}

@@ -10,6 +10,10 @@ import play.api.libs.json.JsBoolean
 import play.api.mvc.RequestHeader
 
 object Commercial {
+  def isAdFree(request: RequestHeader): Boolean = {
+    request.headers.get("X-GU-Commercial-Ad-Free").exists(_.toLowerCase == "true") ||
+      request.cookies.get("GU_AFU").exists(_.value.toLowerCase == "true")
+  }
 
   def shouldShowAds(page: Page): Boolean = page match {
     case c: model.ContentPage if c.item.content.shouldHideAdverts => false

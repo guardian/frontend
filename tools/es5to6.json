@@ -1,23 +1,14 @@
 {
   "Francis Carr": [],
-  "Jon Norman": [
-    "projects/commercial/modules/creatives/fabric-video.js",
-    "projects/commercial/modules/creatives/frame.js",
-    "projects/commercial/modules/creatives/revealer.js",
-    "projects/commercial/modules/creatives/scrollable-mpu-v2.js"
-  ],
+  "Jon Norman": [],
   "Regis Kuckaertz": [],
   "Richard Nguyen": [],
   "Kate Whalen": [
-    "projects/commercial/modules/messenger.js",
-    "projects/commercial/modules/messenger/background.js",
-    "projects/commercial/modules/messenger/click.js",
     "projects/commercial/modules/messenger/dfp-origin.js",
     "projects/commercial/modules/messenger/get-stylesheet.js",
     "projects/commercial/modules/messenger/post-message.js",
     "projects/commercial/modules/messenger/resize.js",
-    "projects/commercial/modules/messenger/scroll.js",
-    "projects/common/modules/charts/doughnut.js"
+    "projects/commercial/modules/messenger/scroll.js"
   ],
   "Lydia Shepherd": [],
   "sndrs": [
@@ -35,7 +26,6 @@
     "projects/common/modules/check-dispatcher.js"
   ],
   "Simon Adcock": [
-    "bootstraps/enhanced/media/main.js",
     "bootstraps/enhanced/media/video-player.js"
   ],
   "Nicolas Long": [
@@ -63,7 +53,6 @@
     "projects/common/modules/crosswords/anagram-helper/clue-input.js"
   ],
   "GHaberis": [
-    "projects/admin/modules/abtests/abtest-report-item.js",
     "projects/admin/modules/abtests/audience-item.js",
     "projects/admin/modules/abtests/audience.js",
     "projects/admin/modules/abtests/participation-item.js",
@@ -80,7 +69,6 @@
     "projects/common/modules/sport/football/match-list-live.js",
     "projects/common/modules/sport/football/tag-page-stats.js",
     "projects/common/modules/sport/score-board.js",
-    "projects/common/modules/tailor/fetch-data.js",
     "projects/common/modules/ui/autoupdate.js",
     "projects/commercial/modules/messenger/type.js"
   ],
@@ -90,7 +78,6 @@
     "projects/common/modules/article/membership-events.js",
     "projects/common/modules/article/rich-links.js",
     "projects/common/modules/article/space-filler.js",
-    "projects/common/modules/article/spacefinder.js",
     "projects/common/modules/article/twitter.js",
     "projects/common/modules/asyncCallMerger.js",
     "projects/common/modules/atoms/quiz.js",
@@ -99,7 +86,7 @@
     "projects/commercial/modules/messenger/viewport.js"
   ],
   "Gideon Goldberg": [
-    "projects/commercial/modules/user-features.js"
+      "projects/common/modules/charts/doughnut.js"
   ],
   "Matthew Walls": [
     "projects/common/modules/crosswords/anagram-helper/main.js",
@@ -219,7 +206,6 @@
   ],
   "Philip Wills": [
     "projects/facia/modules/ui/container-toggle.js",
-    "projects/facia/modules/ui/lazy-load-containers.js",
     "projects/common/modules/video/ga-helper.js",
     "projects/facia/modules/ui/live-blog-updates.js",
     "projects/commercial/modules/third-party-tags/imr-worldwide.js"

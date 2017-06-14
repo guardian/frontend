@@ -14,11 +14,15 @@ class Sticky {
     constructor(element: HTMLElement, options: Object = {}): void {
         this.element = element;
 
-        this.opts = Object.assign(options, {
-            top: 0,
-            containInParent: true,
-            emitMessage: false,
-        });
+        this.opts = Object.assign(
+            {},
+            {
+                top: 0,
+                containInParent: true,
+                emitMessage: false,
+            },
+            options
+        );
     }
 
     init(): void {

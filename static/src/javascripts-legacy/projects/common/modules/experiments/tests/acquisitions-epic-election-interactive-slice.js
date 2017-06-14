@@ -45,6 +45,12 @@ define([
                 insertAtSelector: '#js-interactive-epic',
                 successOnView: true,
 
+                test: function(render) {
+                    var article = document.getElementById('article');
+                    if (article) article.style['overflow-x'] = 'hidden';
+                    render();
+                },
+
                 template: function makeSliceTemplate(variant) {
                     return template(epicSlice, {
                         membershipUrl: variant.options.membershipURL,

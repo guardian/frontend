@@ -1,4 +1,4 @@
-// flow-typed signature: d59f96eeb87a8b502f20cbfa77cd49ec
+// flow-typed signature: a775bb15d4ccd78cc6a2e04b1d0ec184
 // flow-typed version: <<STUB>>/karma-phantomjs-launcher_v^1.0.2/flow_v0.40.0
 
 /**
@@ -8,8 +8,8 @@
  *
  * Fill this stub out by replacing all the `any` types.
  *
- * Once filled out, we encourage you to share your work with the 
- * community by sending a pull request to: 
+ * Once filled out, we encourage you to share your work with the
+ * community by sending a pull request to:
  * https://github.com/flowtype/flow-typed
  */
 

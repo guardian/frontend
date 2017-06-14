@@ -103,13 +103,12 @@ object NewNavigation {
         inMyOpinion
       ),
       List(
+        letters,
+        editorials,
         NavLink("Polly Toynbee", "/profile/pollytoynbee"),
         NavLink("Owen Jones", "/profile/owen-jones"),
         NavLink("Jonathan Freedland", "/profile/jonathanfreedland"),
-        NavLink("Marina Hyde", "/profile/marinahyde"),
-        NavLink("George Monbiot", "/profile/georgemonbiot"),
-        NavLink("Gary Younge", "/profile/garyyounge"),
-        NavLink("Nick Cohen", "/profile/nickcohen")
+        NavLink("Marina Hyde", "/profile/marinahyde")
       )
     )
 
@@ -122,14 +121,12 @@ object NewNavigation {
         theGuardianView
       ),
       List(
+        letters,
+        editorials,
         NavLink("first dog on the moon", "/profile/first-dog-on-the-moon"),
         NavLink("Katharine Murphy", "/profile/katharine-murphy"),
         NavLink("Kristina Keneally", "/profile/kristina-keneally"),
-        NavLink("Richard Ackland", "/profile/richard-ackland"),
-        NavLink("Van Badham", "/profile/van-badham"),
-        NavLink("Lenore Taylor", "/profile/lenore-taylor"),
-        NavLink("Jason Wilson", "/profile/wilson-jason"),
-        NavLink("Brigid Delaney", "/profile/brigiddelaney")
+        NavLink("Richard Ackland", "/profile/richard-ackland")
       )
     )
 
@@ -142,12 +139,12 @@ object NewNavigation {
         inMyOpinion
       ),
       List(
+        letters,
+        editorials,
         NavLink("Jill Abramson", "/profile/jill-abramson"),
         NavLink("Jessica Valenti", "/commentisfree/series/jessica-valenti-column"),
         NavLink( "Steven W Thrasher", "/profile/steven-w-thrasher"),
-        NavLink("Trevor Timm", "/profile/trevor-timm"),
-        NavLink("Rebecca Carroll", "/commentisfree/series/rebecca-carroll-column"),
-        NavLink("Chelsea E Manning", "/profile/chelsea-e-manning")
+        NavLink("Trevor Timm", "/profile/trevor-timm")
       )
     )
 
@@ -158,7 +155,11 @@ object NewNavigation {
           columnists,
           cartoons,
           inMyOpinion
-        )
+        ),
+      List(
+        letters,
+        editorials
+      )
     )
   }
 
@@ -225,14 +226,38 @@ object NewNavigation {
     )
   }
 
-  case object NavFooterLinks extends EditionalisedNavigationSection {
+  case object BrandExtensions extends EditionalisedNavigationSection {
     val name = ""
 
     val uk = NavLinkLists(List(
       jobs.copy(url = jobs.url + "?INTCMP=jobs_uk_web_newheader"),
       dating.copy(url = dating.url + "?INTCMP=soulmates_uk_web_newheader"),
-      NavLink("holidays", "https://holidays.theguardian.com/?utm_source=theguardian&utm_medium=guardian-links&utm_campaign=topnav&INTCMP=topnav"),
-      ukMasterClasses,
+      holidays,
+      ukMasterClasses
+    ))
+
+    val au = NavLinkLists(List(
+      jobs.copy(url = jobs.url + "/landingpage/2868291/jobs-australia-html/?INTCMP=jobs_au_web_newheader"),
+      auEvents,
+      holidays
+    ))
+
+    val us = NavLinkLists(List(
+      jobs.copy(url = jobs.url + "?INTCMP=jobs_us_web_newheader"),
+      holidays
+    ))
+
+    val int = NavLinkLists(List(
+      jobs.copy(url = jobs.url + "?INTCMP=jobs_int_web_newheader"),
+      dating.copy(url = dating.url + "?INTCMP=soulmates_int_web_newheader"),
+      holidays
+    ))
+  }
+
+  case object OtherLinks extends EditionalisedNavigationSection {
+    val name = ""
+
+    val uk = NavLinkLists(List(
       NavLink("professional networks", "/guardian-professional"),
       apps.copy(url = apps.url + "?INTCMP=apps_uk_web_newheader"),
       podcasts,
@@ -241,33 +266,31 @@ object NewNavigation {
       newsletters,
       todaysPaper,
       observer,
+      digitalNewspaperArchive,
       crosswords
     ))
 
     val au = NavLinkLists(List(
-      jobs.copy(url = jobs.url + "/landingpage/2868291/jobs-australia-html/?INTCMP=jobs_au_web_newheader"),
-      auEvents,
       apps.copy(url = apps.url + "?INTCMP=apps_au_web_newheader"),
       podcasts,
       video,
       pictures,
       newsletters,
+      digitalNewspaperArchive,
       crosswords
     ))
 
     val us = NavLinkLists(List(
-      jobs.copy(url = jobs.url + "?INTCMP=jobs_us_web_newheader"),
       apps.copy(url = apps.url + "?INTCMP=apps_us_web_newheader"),
       podcasts,
       video,
       pictures,
       newsletters,
+      digitalNewspaperArchive,
       crosswords
     ))
 
     val int = NavLinkLists(List(
-      jobs.copy(url = jobs.url + "?INTCMP=jobs_int_web_newheader"),
-      dating.copy(url = dating.url + "?INTCMP=soulmates_int_web_newheader"),
       apps.copy(url = apps.url + "?INTCMP=apps_int_web_newheader"),
       podcasts,
       video,
@@ -275,6 +298,7 @@ object NewNavigation {
       newsletters,
       todaysPaper,
       observer,
+      digitalNewspaperArchive,
       crosswords
     ))
   }
@@ -427,7 +451,6 @@ object NewNavigation {
     val todaysPaperSubNav = NavLinkLists(
       List(
         todaysPaper,
-        NavLink("editorials & letters", "/theguardian/mainsection/editorialsandreply"),
         NavLink("obituaries", "/tone/obituaries"),
         NavLink("g2", "/theguardian/g2"),
         NavLink("weekend", "/theguardian/weekend"),

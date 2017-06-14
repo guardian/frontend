@@ -1,4 +1,4 @@
-// flow-typed signature: f2ae1880121ea3bcac5885b8e3bbf357
+// flow-typed signature: 99e180c7d6d08779321e2af78723d0b9
 // flow-typed version: <<STUB>>/videojs-contrib-ads_v3.1.3/flow_v0.40.0
 
 /**
@@ -8,8 +8,8 @@
  *
  * Fill this stub out by replacing all the `any` types.
  *
- * Once filled out, we encourage you to share your work with the 
- * community by sending a pull request to: 
+ * Once filled out, we encourage you to share your work with the
+ * community by sending a pull request to:
  * https://github.com/flowtype/flow-typed
  */
 

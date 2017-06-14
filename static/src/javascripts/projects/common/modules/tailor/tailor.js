@@ -1,20 +1,13 @@
 // @flow
-import fetchData from 'common/modules/tailor/fetch-data';
+import { fetchData } from 'common/modules/tailor/fetch-data';
 
 /**
- * Given a response from tailor, we see if the response has a survey suggestion, and if so return the first
- * survey suggestion (there should only ever be one, but just in case).
+ * Given a response from tailor, if there are surveys to show we randomly pick one to display
  */
-const getSuggestedSurvey = (queryParams: Object): Promise<any> =>
-    fetchData('suggestions', false, queryParams).then(response => {
-        if (response.suggestions) {
-            const surveySuggestions = response.suggestions.filter(
-                suggestion => suggestion.class === 'SurveySuggestion'
-            );
-
-            if (surveySuggestions.length > 0) {
-                return surveySuggestions[0];
-            }
+const getSurvey = (queryParams: Object): Promise<any> =>
+    fetchData('surveys', false, queryParams).then(response => {
+        if (response) {
+            return response[Math.floor(Math.random() * response.length)];
         }
     });
 
@@ -32,4 +25,4 @@ const isRegular = (): Promise<boolean> =>
         })
         .catch(() => false);
 
-export { isRegular, getSuggestedSurvey };
+export { isRegular, getSurvey };

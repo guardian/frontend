@@ -83,11 +83,23 @@ object EmailNewsletters {
     signupPage = Some("/world/guardian-australia-morning-mail/2014/jun/24/-sp-guardian-australias-morning-mail-subscribe-by-email")
   )
 
-  val mediaBriefing = EmailNewsletter(
-    name = "MediaGuardian Briefing",
+  val businessToday = EmailNewsletter(
+    name = "Business Today",
     theme = "news",
-    teaser = "An indispensable summary of what the papers are saying about media on your desktop at 9am",
-    description = "An indispensable summary of the media industry headlines in your inbox at 9am. We dig out the most important stories from every and any newspaper, broadcaster and website",
+    teaser = "Every morning, Business Today will deliver the biggest stories, smartest analysis and hottest topics direct to your inbox",
+    description = "We'll deliver the biggest stories, smartest analysis and hottest topics direct to your inbox. Along with the key news headlines, there’ll be an at-a-glance agenda of the day’s main events, insightful opinion pieces and a quality feature to sink your teeth into",
+    frequency = "Weekday mornings",
+    listId = 3887,
+    tone = Some("news"),
+    signupPage = Some("/info/2017/may/16/guardian-business-today-sign-up-financial-news-email"),
+    exampleUrl = Some("/email/business-today")
+  )
+
+  val mediaBriefing = EmailNewsletter(
+    name = "Media Briefing",
+    theme = "news",
+    teaser = "An indispensable summary of the media industry headlines in your inbox at 9am, plus thought-provoking features and the liveliest debate",
+    description = "An indispensable summary of the media industry headlines in your inbox at 9am, plus thought-provoking features and the liveliest debate. Whether you’re in broadcasting, digital or print, whether you’re in news or marketing, we’ve got the stories you need to read",
     frequency = "Weekday mornings",
     listId = 217,
     tone = Some("news"),
@@ -129,15 +141,15 @@ object EmailNewsletters {
     exampleUrl = Some("/science/series/lab-notes/latest/email")
   )
 
-  val povertyMatters = EmailNewsletter(
-    name = "Poverty Matters",
+  val globalDispatch = EmailNewsletter(
+    name = "Global Dispatch",
     theme = "news",
-    teaser = "From the shocking to the uplifting - get the world’s biggest stories that you’re missing",
-    description = "Our editors track what’s happening in development with a special focus on the millennium development goals. Sign up to get all the most important debate and discussion from around the world delivered to your inbox every fortnight",
+    teaser = "Breaking stories and hard-hitting features of people living under extraordinary circumstances, uncovered by the Guardian’s global development team",
+    description = "Get a different world view: breaking stories and hard-hitting features, uncovered by the Guardian’s global development team and our correspondents across Africa, Asia, South and Central America and beyond. We bring you the voices and opinions of people living under extraordinary circumstances",
     frequency = "Every other Tuesday",
     listId = 113,
-    signupPage = Some("/global-development/2015/nov/10/sign-up-to-the-poverty-matters-email-newsletter"),
-    exampleUrl = Some("/global-development/series/poverty-matters/latest/email")
+    signupPage = Some("/info/2017/jun/08/global-dispatch-sign-up-for-a-different-world-view"),
+    exampleUrl = Some("/email/global-dispatch")
   )
 
   val australianPolitics = EmailNewsletter(
@@ -148,6 +160,17 @@ object EmailNewsletters {
     frequency = "Weekdays at 10am",
     listId = 1866,
     signupPage = Some("/australia-news/2014/dec/10/australian-politics-subscribe-by-email")
+  )
+
+  val theRecap = EmailNewsletter(
+    name = "The Recap",
+    theme = "sport",
+    teaser = "With the best of our sports journalism from the past seven days and a heads-up on the weekend’s action, you won’t miss a thing",
+    description = "With the best of our sports journalism from the past seven days and a heads-up on the weekend’s action, you won’t miss a thing. Expect stand-out features and interviews, insightful analysis and highlights from the archive, plus films, podcasts, galleries and more.",
+    frequency = "Every Friday",
+    listId = 3888,
+    signupPage = Some("/sport/2017/may/15/the-recap-sign-up-for-the-best-of-the-guardians-sport-coverage"),
+    exampleUrl = Some("/email/the-recap")
   )
 
   val theFiver = EmailNewsletter(
@@ -417,15 +440,17 @@ object EmailNewsletters {
   )
 
   val newsEmails = List(
+    businessToday,
     mediaBriefing,
     brexitBriefing,
     greenLight,
     labNotes,
-    povertyMatters,
+    globalDispatch,
     australianPolitics
   )
 
   val sportEmails = List(
+    theRecap,
     theFiver,
     theBreakdown,
     theSpin,

@@ -1,5 +1,6 @@
 .pillar-link {
     @include fs-textSans(5);
+    box-sizing: border-box;
     color: currentColor;
     cursor: pointer;
     display: block;
@@ -21,8 +22,19 @@
         font-size: 28px;
     }
 
+    @include mq(desktop) {
+        .new-header--open .pillars__item:not(:first-child) > & {
+            padding-left: $gs-gutter / 2;
+        }
+
+        .new-header--open & {
+            width: gs-span(2) + $gs-gutter;
+        }
+    }
+
     &:focus,
     &:hover {
+        color: #ffffff;
         text-decoration: none;
     }
 }
@@ -40,5 +52,9 @@
         border-bottom: $gs-baseline / 2 solid $subnav-grey;
         border-left: $gs-baseline / 2 solid transparent;
         border-right: $gs-baseline / 2 solid transparent;
+
+        @include mq(desktop) {
+            display: none;
+        }
     }
 }
