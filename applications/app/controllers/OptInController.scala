@@ -30,11 +30,12 @@ class OptInController extends Controller {
   def handle(feature: String, choice: String) = Action { implicit request =>
     Cached(60)(WithoutRevalidationResult(feature match {
       case "commercial-gallery-banner-ads" => commercialGalleryBannerAds.opt(choice)
+      case "ab-new-desktop-header" => newDesktopHeader.opt(choice)
       case _ => NotFound
     }))
   }
 
   //cookies should correspond with those checked by fastly-edge-cache
   val commercialGalleryBannerAds = OptInFeature("commercial_gallery_banner_ads")
-
+  val newDesktopHeader = OptInFeature("new_desktop_header")
 }
