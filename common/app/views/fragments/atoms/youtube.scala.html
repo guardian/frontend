@@ -8,12 +8,14 @@
 @import model.ImageMedia
 @import model.content.MediaWrapper._
 @import model.content.MediaWrapper
+@import model.content.MediaAsset
 @import conf.switches.Switches.YouTubePosterOverride
 @import model.VideoFaciaProperties
 @import views.html.fragments.items.elements.facia_cards.title
 
 @(media: model.content.MediaAtom, displayCaption: Boolean, displayDuration: Boolean = true, displayEndSlate: Boolean = true, playable: Boolean = true, posterImageOverride: Option[ImageMedia] = None, cardStyle: Option[CardStyle] = None, mediaWrapper: Option[MediaWrapper] = None, faciaHeaderProperties: Option[VideoFaciaProperties] = None)(implicit request: RequestHeader)
 
+@defining(media.activeAssets.headOption) { activeAsset: Option[MediaAsset] =>
 @defining(media.expired.getOrElse(false)){expired: Boolean =>
 @defining(playable && !posterImageOverride.exists(_ => YouTubePosterOverride.isSwitchedOn)){sixteenByNine: Boolean =>
 
@@ -30,16 +32,16 @@
     >
 }
 
-        @if(playable && !expired) {
+        @for(asset <- activeAsset if playable && !expired) {
             @defining(s"https://www.youtube.com/embed${
-                media.assets.head.id
+                asset.id
                 .addParams(List(
                 "enablejsapi" -> 1,
                 "rel" -> 0,
                 "origin" -> (if(mediaWrapper.contains(EmbedPage)) Some(Media.externalEmbedHost) else if(!host.isEmpty) Some(host) else None)
                 )).toString
                 }") { embedUri: String  =>
-                <iframe class="youtube-media-atom__iframe" id="youtube-@media.assets.head.id" width="100%" height="100%"
+                <iframe class="youtube-media-atom__iframe" id="youtube-@asset.id" width="100%" height="100%"
                         src="@embedUri" frameborder="0"
                         allowfullscreen="">
                 </iframe>
@@ -106,6 +108,7 @@
             }
         }
         </div>
+}
 }
 
 @if(displayCaption & !mediaWrapper.contains(ImmersiveMainMedia)) {

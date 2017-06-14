@@ -19,14 +19,18 @@ const COOKIE_IMPRESSION_KEY = 'GU_SMARTAPPBANNER';
 const DATA = {
     IOS: {
         LOGO: 'https://assets.guim.co.uk/images/apps/ios-logo.png',
-        SCREENSHOTS: 'https://assets.guim.co.uk/images/apps/ios-screenshots.jpg',
-        LINK: 'https://app.adjust.com/w97upi?deep_link=gnmguardian://root?contenttype=front&source=adjust',
+        SCREENSHOTS:
+            'https://assets.guim.co.uk/images/apps/ios-screenshots.jpg',
+        LINK:
+            'https://app.adjust.com/w97upi?deep_link=gnmguardian://root?contenttype=front&source=adjust',
         STORE: 'on the App Store',
     },
     ANDROID: {
         LOGO: 'https://assets.guim.co.uk/images/apps/android-logo-2x.png',
-        SCREENSHOTS: 'https://assets.guim.co.uk/images/apps/ios-screenshots.jpg',
-        LINK: 'https://app.adjust.com/642i3r?deep_link=x-gu://www.theguardian.com/?source=adjust',
+        SCREENSHOTS:
+            'https://assets.guim.co.uk/images/apps/ios-screenshots.jpg',
+        LINK:
+            'https://app.adjust.com/642i3r?deep_link=x-gu://www.theguardian.com/?source=adjust',
         STORE: 'in Google Play',
     },
 };

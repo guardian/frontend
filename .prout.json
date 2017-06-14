@@ -4,7 +4,7 @@
             "url": "https://frontend.gutools.co.uk/deploys?stage=PROD&pageSize=50",
             "overdue": "30M",
             "messages": {
-                "seen": "prout/seen.md",
+                "seen": "prout/seen.md"
             }
         }
     }

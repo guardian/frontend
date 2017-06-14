@@ -4,13 +4,9 @@ import $ from 'lib/$';
 import detect from 'lib/detect';
 import mediator from 'lib/mediator';
 import template from 'lodash/utilities/template';
-import scrollableMpuTpl
-    from 'raw-loader!commercial/views/creatives/scrollable-mpu-v2.html';
-import {
-    addTrackingPixel,
-} from 'commercial/modules/creatives/add-tracking-pixel';
-import addViewabilityTracker
-    from 'commercial/modules/creatives/add-viewability-tracker';
+import scrollableMpuTpl from 'raw-loader!commercial/views/creatives/scrollable-mpu-v2.html';
+import { addTrackingPixel } from 'commercial/modules/creatives/add-tracking-pixel';
+import addViewabilityTracker from 'commercial/modules/creatives/add-viewability-tracker';
 import type { bonzo } from 'bonzo';
 
 /**
@@ -74,14 +70,17 @@ class ScrollableMpu {
 
     create() {
         const templateOptions = {
-            id: `scrollable-mpu-${Math.floor(Math.random() * 10000).toString(16)}`,
+            id: `scrollable-mpu-${Math.floor(Math.random() * 10000).toString(
+                16
+            )}`,
             clickMacro: this.params.clickMacro,
             destination: this.params.destination,
             layer1Image: hasScrollEnabled
                 ? this.params.layer1Image
                 : this.params.mobileImage,
             backgroundImage: hasScrollEnabled && this.params.backgroundImage
-                ? `<div class="creative--scrollable-mpu-image" style="background-image: url(${this.params.backgroundImage});"></div>`
+                ? `<div class="creative--scrollable-mpu-image" style="background-image: url(${this
+                      .params.backgroundImage});"></div>`
                 : '',
         };
 

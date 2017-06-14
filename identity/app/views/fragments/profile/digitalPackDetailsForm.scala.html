@@ -3,6 +3,11 @@
 @import views.html.fragments.registrationFooter
 
 <div class="manage-account-tab">
+    @fragments.error("dig") {
+        <p>
+            For help with Guardian and Observer subscription services please email <a href="mailto:subscriptions@@theguardian.com">✉️ subscriptions@@theguardian.com</a> or call <a href="00443303336767">📞 +44 (0) 330 333 6767</a>. Open BST 8am to 8pm, Monday to Sunday.
+        </p>
+    }
     <div class="manage-account-loader js-dig-loader">
         <span class="is-updating show-updating"></span>
     </div>

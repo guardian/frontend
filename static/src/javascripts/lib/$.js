@@ -13,7 +13,7 @@ bonzo.aug({
 const $ = (selector: ?string | ?Node, context: ?Node | ?string): bonzo =>
     bonzo(qwery(selector, context));
 
-$.create = (s: string): bonzo => bonzo(bonzo.create(s));
+$.create = (s: string | Node): bonzo => bonzo(bonzo.create(s));
 
 // #? duplicated in lib/closest.js?
 $.ancestor = (el: ?Node, className: string): ?Node => {
