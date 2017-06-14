@@ -30,7 +30,7 @@ class OptInController extends Controller {
   def handle(feature: String, choice: String) = Action { implicit request =>
     Cached(60)(WithoutRevalidationResult(feature match {
       case "commercial-gallery-banner-ads" => commercialGalleryBannerAds.opt(choice)
-      case "ab-new-desktop-header" => newDesktopHeader.opt(choice)
+      case "desktopheader" => newDesktopHeader.opt(choice)
       case _ => NotFound
     }))
   }
