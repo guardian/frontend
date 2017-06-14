@@ -1,0 +1,3 @@
+@(content: model.Content)(implicit request: RequestHeader)
+
+@content.fields.lang.map { l => lang="@l" } @if(content.fields.isRightToLeftLang){ dir="rtl" }

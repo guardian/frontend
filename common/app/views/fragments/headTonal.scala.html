@@ -1,5 +1,6 @@
 @(item: model.ContentType, page: model.Page, showBadge: Boolean = false, showMeta: Boolean = true, amp: Boolean = false)(implicit request: RequestHeader)
 
+@import views.html.fragments.langAttributes
 @import model.Badges.badgeFor
 @import views.support.Commercial.isPaidContent
 @import views.support.ContributorLinks
@@ -19,7 +20,7 @@
                     @fragments.meta.metaInline(item)
                 }
 
-                <h1 class="content__headline js-score" itemprop="headline" lang="@{item.content.fields.isRightToLeftLang}" @item.fields.lang.map { l => lang="@l" } @if(item.content.fields.isRightToLeftLang){ dir="rtl" }>
+                <h1 class="content__headline js-score" itemprop="headline" @langAttributes(item.content)>
                     @if(item.tags.isMedia) {
                         @defining(
                             item match {

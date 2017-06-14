@@ -1,6 +1,7 @@
 @import common.Edition
 @import model.ContentType
 @import views.support.{BulletCleaner, ContributorLinks, InBodyLinkCleaner, RenderClasses, withJsoup}
+@import views.html.fragments.langAttributes
 
 @(item: ContentType)(implicit request: RequestHeader)
 
@@ -10,7 +11,7 @@
     "content__standfirst--explore" -> (item.content.isExplore && item.tags.isArticle),
     "content__standfirst--advertisement" -> (item.content.isImmersive && item.tags.isPaidContent),
     "content__standfirst--immersive-minute-article" -> item.tags.isTheMinuteArticle),
-    "content__standfirst")" data-link-name="standfirst" data-component="standfirst" @item.fields.lang.map { l => lang="@l" } @if(item.content.fields.isRightToLeftLang){ dir="rtl" }>
+    "content__standfirst")" data-link-name="standfirst" data-component="standfirst" @langAttributes(item.content)>
     @item.fields.trailText.map{ t =>
 
         @defining({

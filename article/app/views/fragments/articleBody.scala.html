@@ -1,5 +1,6 @@
 @(model: ArticlePage, amp: Boolean = false)(implicit request: RequestHeader, context: _root_.model.ApplicationContext)
 
+@import views.html.fragments.langAttributes
 @import common.LinkTo
 @import views.BodyCleaner
 @import views.support.Commercial.{isPaidContent, articleAsideOptionalSizes, shouldShowAds}
@@ -76,7 +77,7 @@
                         }
 
                         <div class="content__article-body from-content-api js-article__body" itemprop="@bodyType(model)"
-                            data-test-id="article-review-body" @article.fields.lang.map { l => lang="@l" } @if(article.content.fields.isRightToLeftLang){ dir="rtl" }>
+                            data-test-id="article-review-body" @langAttributes(article.content)>
                             @BodyCleaner(article, article.fields.body, amp = amp)
 
                             @* A value for the image field is required for AMP article
