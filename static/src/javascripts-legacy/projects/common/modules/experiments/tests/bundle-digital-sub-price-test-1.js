@@ -49,7 +49,7 @@ define([
         hypothesis: 'One of our price points will be more desirable than the others',
         audienceCriteria: 'Non-paying UK edition readers - mobile resolution and above',
         audience: 0.1,
-        audienceOffset: 0.5,    //TODO: CONFIRM BEFORE MERGE!
+        audienceOffset: 0,
         showForSensitive: false,
         useTargetingTool: false,
 
