@@ -6,7 +6,6 @@ import CluePreview from 'common/modules/crosswords/anagram-helper/clue-preview';
 import Ring from 'common/modules/crosswords/anagram-helper/ring';
 import helpers from 'common/modules/crosswords/helpers';
 import shuffle from 'lodash/collections/shuffle';
-import rest from 'lodash/arrays/rest';
 
 const AnagramHelper = React.createClass({
     getInitialState() {
@@ -41,7 +40,7 @@ const AnagramHelper = React.createClass({
      *
      * @param  word     word to shuffle
      * @param  entries  array of entries (i.e. grid cells)
-     * 
+     *
      */
     shuffleWord(word: string, entries: Array<{ value: string }>) {
         const wordEntries = entries
@@ -52,13 +51,14 @@ const AnagramHelper = React.createClass({
 
         return shuffle(
             word.trim().split('').sort().reduce((acc, letter) => {
-                const entered = acc.entries[0] === letter.toLowerCase();
+                const [head, ...tail] = acc.entries;
+                const entered = head === letter.toLowerCase();
                 return {
                     letters: acc.letters.concat({
                         value: letter,
                         entered,
                     }),
-                    entries: entered ? rest(acc.entries) : acc.entries,
+                    entries: entered ? tail : acc.entries,
                 };
             }, {
                 letters: [],
