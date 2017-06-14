@@ -9,12 +9,14 @@ import { register } from 'commercial/modules/messenger';
 let w = window;
 let useIO = 'IntersectionObserver' in w;
 let taskQueued = false;
-let iframes = {};
-let iframeCounter = 0;
+let iframes: {
+    [iframeId: string]: any,
+} = {};
+let iframeCounter: number = 0;
 let observer;
 let visibleIframeIds;
 
-const reset = (window_: WindowProxy) => {
+const reset = (window_: WindowProxy): void => {
     w = window_ || window;
     useIO = 'IntersectionObserver' in w;
     taskQueued = false;
@@ -22,10 +24,21 @@ const reset = (window_: WindowProxy) => {
     iframeCounter = 0;
 };
 
+type DOMRect = window.DOMRect;
+type IframeTuple = [string, DOMRect];
+type FrameCoords = {
+    width: number,
+    height: number,
+    top: number,
+    bottom: number,
+    left: number,
+    right: number,
+};
+
 // Instances of classes bound to the current view are not serialised correctly
 // by JSON.stringify. That's ok, we don't care if it's a DOMRect or some other
 // object, as long as the calling view receives the frame coordinates.
-const domRectToRect = rect => ({
+const domRectToRect = (rect: DOMRect): FrameCoords => ({
     width: rect.width,
     height: rect.height,
     top: rect.top,
@@ -34,13 +47,16 @@ const domRectToRect = rect => ({
     right: rect.right,
 });
 
-const sendCoordinates = (iframeId, domRect) => {
+const sendCoordinates = (iframeId: string, domRect: DOMRect): void => {
     iframes[iframeId].respond(null, domRectToRect(domRect));
 };
 
-const getDimensions = id => [id, iframes[id].node.getBoundingClientRect()];
+const getDimensions = (id: string): IframeTuple => [
+    id,
+    iframes[id].node.getBoundingClientRect(),
+];
 
-const isIframeInViewport = function(item) {
+const isIframeInViewport = function(item: IframeTuple): boolean {
     return item[1].bottom > 0 && item[1].top < this.height;
 };
 
@@ -76,10 +92,7 @@ const onScroll = (): ?Promise<any> => {
     }
 };
 
-const addScrollListener = (
-    iframe: Element,
-    respond: ?() => mixed
-): ?Promise<any> => {
+const addScrollListener = (iframe: Element, respond: any): ?Promise<any> => {
     if (iframeCounter === 0) {
         addEventListener(w, 'scroll', onScroll, {
             passive: true,
@@ -108,7 +121,7 @@ const addScrollListener = (
     });
 };
 
-const removeScrollListener = (iframe: Element) => {
+const removeScrollListener = (iframe: Element): void => {
     if (iframes[iframe.id]) {
         if (useIO && observer) {
             observer.unobserve(iframe);
@@ -126,7 +139,7 @@ const removeScrollListener = (iframe: Element) => {
     }
 };
 
-const onMessage = (respond: ?() => mixed, start, iframe: ?Element): void => {
+const onMessage = (respond: any, start, iframe: ?Element): void => {
     if (!iframe) return;
     if (start) {
         addScrollListener(iframe, respond);
