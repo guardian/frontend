@@ -21,7 +21,9 @@
     }
 
     [aria-expanded='true'] ~ & {
-        margin-bottom: -1px;
+        @include mq($until: desktop) {
+            margin-bottom: -1px;
+        }
     }
 }
 
