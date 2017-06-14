@@ -23,7 +23,7 @@
     }
 
     @include mq(desktop) {
-        font-size: 32px;
+        font-size: 29px;
 
         .new-header--open .pillars__item:not(:first-child) > & {
             padding-left: $gs-gutter / 2;

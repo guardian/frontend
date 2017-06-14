@@ -26,8 +26,9 @@
         color: $news-main-2;
         display: inline-block;
         line-height: 1;
-        margin-left: -2px;
+        margin-left: -1px;
         margin-right: 2px;
+        opacity: .6;
         pointer-events: none;
 
         .new-header--open & {

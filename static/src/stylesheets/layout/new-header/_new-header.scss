@@ -72,8 +72,12 @@ from scrolling */
     }
 
     @include mq(tablet) {
-        height: calc(3 / 16 * 400px);
-        width: 400px;
+        height: calc(3 / 16 * 370px);
+        width: 370px;
+    }
+
+    @include mq(desktop) {
+        margin-bottom: $gs-baseline / 4;
     }
 }
 
