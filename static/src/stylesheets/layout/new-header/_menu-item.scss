@@ -37,11 +37,11 @@
         @include mq(desktop) {
             background-color: $guardian-brand;
             display: block;
-            height: 54px;
+            height: 42px;
             border-radius: 50%;
             margin-right: $gs-gutter / 2;
             text-align: center;
-            width: 54px;
+            width: 42px;
         }
 
         &:hover,
@@ -107,7 +107,7 @@
     }
 
     @include mq(desktop) {
-        font-size: 17px;
+        font-size: 16px;
         overflow-x: hidden;
         padding: $gs-baseline / 2 0;
         text-overflow: ellipsis;
@@ -177,7 +177,8 @@
 
     .menu-group--editions & {
         @include mq(desktop) {
-            line-height: 40px;
+            font-size: 15px;
+            line-height: 30px;
             text-align: center;
         }
     }

@@ -7,7 +7,7 @@
     line-height: 1.3em;
 
     @include mq(mobileLandscape) {
-        font-size: 22px;
+        font-size: 20px;
         max-height: $gs-baseline * 4.8;
     }
 
