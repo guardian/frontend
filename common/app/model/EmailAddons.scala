@@ -197,6 +197,16 @@ case object GlobalDispatch extends FrontEmailMetadata {
   override val banner = Some("global-dispatch.png")
 }
 
+case object Bookmarks extends FrontEmailMetadata {
+  val name = "Bookmarks"
+  override val banner = Some("bookmarks.png")
+}
+
+case object TheLongRead extends FrontEmailMetadata {
+  val name = "The Long Read"
+  override val banner = Some("the-long-read.png")
+}
+
 object EmailAddons {
   private val defaultAddress = "Kings Place, 90 York Way, London, N1 9GU. Registered in England No. 908396"
   private val defaultBanner = "generic.png"
@@ -232,7 +242,9 @@ object EmailAddons {
     SleeveNotes,
     BusinessToday,
     TheRecap,
-    GlobalDispatch
+    GlobalDispatch,
+    Bookmarks,
+    TheLongRead
   )
 
   implicit class EmailContentType(p: Page) {
