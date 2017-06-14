@@ -1,11 +1,12 @@
-package components
+package uiComponent
 
 import model.ApplicationContext
 import play.api.libs.json.JsValue
 import play.api.mvc.Result
-import scala.util.{Failure, Success}
 import play.api.mvc.Results._
-import services.JavascriptRenderer
+import uiComponent.core.JavascriptRenderer
+
+import scala.util.{Failure, Success}
 
 trait UIComponentState {
   def asJson: JsValue
