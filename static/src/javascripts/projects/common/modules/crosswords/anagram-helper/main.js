@@ -43,7 +43,7 @@ const AnagramHelper = React.createClass({
      * @param  {[Object]} entries  array of entries (i.e. grid cells)
      * @return {[Object]}          array of shuffled letters
      */
-    shuffleWord(word: string, entries: Array<any>) {
+    shuffleWord(word: string, entries: Array<{ value: string }>) {
         const wordEntries = entries
             .map(entry => entry.value.toLowerCase())
             .filter(entry => word.includes(entry))
