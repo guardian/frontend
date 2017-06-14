@@ -34,7 +34,7 @@
 
                         <div class="content__article-body from-content-api js-article__body"
                              itemprop="@if(article.tags.isReview){reviewBody} else {articleBody}"
-                             data-test-id="article-review-body">
+                             data-test-id="article-review-body" @article.fields.lang.map { l => lang="@l" } @if(article.content.fields.isRightToLeftLang){ dir="rtl" }>
                             @BodyCleaner(article, article.fields.body, amp = amp)
                         </div>
 

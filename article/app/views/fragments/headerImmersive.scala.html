@@ -5,5 +5,5 @@
 <header class="content__head tonal__head tonal__head--@toneClass(article) @if(article.isTheMinute) { content__head--minute-article }">
     @* Hidden because we visually show this data in the head, but needed
     here for SEO. *@
-    <h1 class="is-hidden" itemprop="headline">@Html(article.trail.headline)</h1>
+    <h1 class="is-hidden" itemprop="headline" lang="@{article.content.fields.isRightToLeftLang}" @article.fields.lang.map { l => lang="@l" } @if(article.content.fields.isRightToLeftLang){ dir="rtl" }>@Html(article.trail.headline)</h1>
 </header>
