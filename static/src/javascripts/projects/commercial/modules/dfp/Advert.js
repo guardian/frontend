@@ -5,9 +5,7 @@ import detect from 'lib/detect';
 import { getCurrentTime } from 'lib/user-timing';
 import { defineSlot } from 'commercial/modules/dfp/define-slot';
 import { updateAdvertMetric } from 'commercial/modules/dfp/performance-logging';
-import {
-    breakpointNameToAttribute,
-} from 'commercial/modules/dfp/breakpoint-name-to-attribute';
+import { breakpointNameToAttribute } from 'commercial/modules/dfp/breakpoint-name-to-attribute';
 
 type Resolver = (x: boolean) => void;
 
@@ -26,7 +24,9 @@ const createSizeMapping = (attr: string): Array<AdSize> =>
 
 const getAdBreakpointSizes = (advertNode: Element): AdSizes =>
     detect.breakpoints.reduce((sizes, breakpoint) => {
-        const data = advertNode.getAttribute(`data-${breakpointNameToAttribute(breakpoint.name)}`);
+        const data = advertNode.getAttribute(
+            `data-${breakpointNameToAttribute(breakpoint.name)}`
+        );
         if (data) {
             sizes[breakpoint.name] = createSizeMapping(data);
         }

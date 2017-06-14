@@ -120,7 +120,8 @@ export const Weather = {
 
     fetchForecastData(location: Location): Promise<void> {
         return this.getWeatherData(
-            `${config.page.forecastsapiurl}/${location.id}.json?_edition=${config.page.edition.toLowerCase()}`
+            `${config.page
+                .forecastsapiurl}/${location.id}.json?_edition=${config.page.edition.toLowerCase()}`
         )
             .then(response => {
                 this.renderForecast(response);
