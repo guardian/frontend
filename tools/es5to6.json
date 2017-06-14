@@ -4,6 +4,7 @@
   "Regis Kuckaertz": [],
   "Richard Nguyen": [],
   "Kate Whalen": [
+    "projects/commercial/modules/messenger/background.js",
     "projects/commercial/modules/messenger/dfp-origin.js",
     "projects/commercial/modules/messenger/get-stylesheet.js",
     "projects/commercial/modules/messenger/post-message.js",
