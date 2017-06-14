@@ -182,10 +182,10 @@
         }
     }
 
-    .menu-group--editions &[aria-haspopup="true"] {
+    .menu-group--editions &[aria-haspopup='true'] {
         margin-bottom: $gs-baseline;
 
-        &[aria-expanded="true"] {
+        &[aria-expanded='true'] {
             margin-bottom: 0;
         }
     }
