@@ -4,13 +4,9 @@ import { addEventListener } from 'lib/events';
 import fastdom from 'lib/fastdom-promise';
 import detect from 'lib/detect';
 import template from 'lodash/utilities/template';
-import {
-    addTrackingPixel,
-} from 'commercial/modules/creatives/add-tracking-pixel';
-import addViewabilityTracker
-    from 'commercial/modules/creatives/add-viewability-tracker';
-import fabricVideoStr
-    from 'raw-loader!commercial/views/creatives/fabric-video.html';
+import { addTrackingPixel } from 'commercial/modules/creatives/add-tracking-pixel';
+import addViewabilityTracker from 'commercial/modules/creatives/add-viewability-tracker';
+import fabricVideoStr from 'raw-loader!commercial/views/creatives/fabric-video.html';
 
 class FabricVideo {
     isUpdating: boolean;
@@ -27,23 +23,31 @@ class FabricVideo {
         });
 
         this.isUpdating = false;
-        this.hasVideo = !(detect.isIOS() ||
+        this.hasVideo = !(
+            detect.isIOS() ||
             detect.isAndroid() ||
-            isSmallScreen);
+            isSmallScreen
+        );
         this.inView = false;
         this.adSlot = adSlot;
         this.params = params;
 
-        this.params.id = `fabric-video-${Math.floor(Math.random() * 10000).toString(16)}`;
+        this.params.id = `fabric-video-${Math.floor(
+            Math.random() * 10000
+        ).toString(16)}`;
 
         if (isSmallScreen) {
-            this.params.posterMobile = `<div class="creative__poster" style="background-image:url(${this.params.Videobackupimage})"></div>`;
+            this.params.posterMobile = `<div class="creative__poster" style="background-image:url(${this
+                .params.Videobackupimage})"></div>`;
         } else {
             if (this.hasVideo) {
-                this.params.video = `<video muted class="creative__video creative__video--${this.params.Videoalignment}"><source src="${this.params.VideoURL}" type="video/mp4"></video>`;
+                this.params.video = `<video muted class="creative__video creative__video--${this
+                    .params.Videoalignment}"><source src="${this.params
+                    .VideoURL}" type="video/mp4"></video>`;
             }
 
-            this.params.posterTablet = `<div class="creative__poster" style="background-image:url(${this.params.BackgroundImagemobile})"></div>`;
+            this.params.posterTablet = `<div class="creative__poster" style="background-image:url(${this
+                .params.BackgroundImagemobile})"></div>`;
         }
     }
 

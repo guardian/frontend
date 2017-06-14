@@ -5,8 +5,7 @@ import fastdom from 'fastdom';
 import config from 'lib/config';
 import { getCookie, addCookie, removeCookie } from 'lib/cookies';
 import mediator from 'lib/mediator';
-import tailorSurveyHtml
-    from 'raw-loader!common/views/experiments/tailor-survey.html';
+import tailorSurveyHtml from 'raw-loader!common/views/experiments/tailor-survey.html';
 import ophan from 'ophan/ng';
 import template from 'lodash/utilities/template';
 import fillSpace from 'common/modules/article/space-filler';

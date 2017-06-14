@@ -148,10 +148,8 @@ const getMediaType = player => (isEmbed ? 'video' : player.guMediaType);
 const shouldAutoPlay = player =>
     isDesktop && !history.isRevisit(config.page.pageId) && player.guAutoplay;
 
-const constructEventName = (
-    eventName: string,
-    player: Object
-): string => `${getMediaType(player)}:${eventName}`;
+const constructEventName = (eventName: string, player: Object): string =>
+    `${getMediaType(player)}:${eventName}`;
 
 const ophanRecord = (id: ?string, event: Object, player: Object) => {
     if (!id) return;

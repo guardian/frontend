@@ -161,7 +161,9 @@ const update = (state: State, container: Element): Promise<number> => {
         );
         if (activeEl != null)
             activeEl.classList.remove('video-playlist__item--active');
-        const newActive = container.querySelector(`.js-video-playlist-item-${state.position}`);
+        const newActive = container.querySelector(
+            `.js-video-playlist-item-${state.position}`
+        );
         if (newActive != null)
             newActive.classList.add('video-playlist__item--active');
 
@@ -183,7 +185,9 @@ const update = (state: State, container: Element): Promise<number> => {
             videojs($(el)[0]).pause();
         });
 
-        const activePlaylistItem = container.querySelector(`.js-video-playlist-item-${state.position}`);
+        const activePlaylistItem = container.querySelector(
+            `.js-video-playlist-item-${state.position}`
+        );
         if (activePlaylistItem != null)
             activePlaylistItem.classList.add('video-playlist__item--active');
 

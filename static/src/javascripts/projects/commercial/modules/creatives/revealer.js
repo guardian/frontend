@@ -2,11 +2,8 @@
 import fastdom from 'lib/fastdom-promise';
 import template from 'lodash/utilities/template';
 import detect from 'lib/detect';
-import {
-    addTrackingPixel,
-} from 'commercial/modules/creatives/add-tracking-pixel';
-import addViewabilityTracker
-    from 'commercial/modules/creatives/add-viewability-tracker';
+import { addTrackingPixel } from 'commercial/modules/creatives/add-tracking-pixel';
+import addViewabilityTracker from 'commercial/modules/creatives/add-viewability-tracker';
 import revealerStr from 'raw-loader!commercial/views/creatives/revealer.html';
 
 class Revealer {
@@ -14,7 +11,9 @@ class Revealer {
     params: Object;
 
     constructor(adSlot: HTMLElement, params: Object) {
-        params.id = `revealer-${Math.floor(Math.random() * 10000).toString(16)}`;
+        params.id = `revealer-${Math.floor(Math.random() * 10000).toString(
+            16
+        )}`;
         this.adSlot = adSlot;
         this.params = params;
     }

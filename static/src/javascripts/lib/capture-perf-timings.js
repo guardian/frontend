@@ -25,8 +25,8 @@ const capturePerfTimings = (): void => {
         connection: timing.connectEnd - timing.connectStart,
         firstByte: timing.responseStart - timing.connectEnd,
         lastByte: timing.responseEnd - timing.responseStart,
-        domContentLoadedEvent: timing.domContentLoadedEventStart -
-            timing.responseEnd,
+        domContentLoadedEvent:
+            timing.domContentLoadedEventStart - timing.responseEnd,
         loadEvent: timing.loadEventStart - timing.domContentLoadedEventStart,
         navType: performanceAPI.navigation.type,
         redirectCount: performanceAPI.navigation.redirectCount,
