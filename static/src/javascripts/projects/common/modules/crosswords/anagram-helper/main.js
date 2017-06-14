@@ -41,6 +41,7 @@ const AnagramHelper = React.createClass({
      *
      * @param  word     word to shuffle
      * @param  entries  array of entries (i.e. grid cells)
+     * 
      */
     shuffleWord(word: string, entries: Array<{ value: string }>) {
         const wordEntries = entries
