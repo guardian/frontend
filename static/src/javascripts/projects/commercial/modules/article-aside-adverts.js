@@ -23,9 +23,11 @@ const articleAsideAdvertsInit = (
 
     // are article aside ads disabled, or secondary column hidden?
     if (
-        !(commercialFeatures.articleAsideAdverts &&
+        !(
+            commercialFeatures.articleAsideAdverts &&
             $col.length &&
-            $col.css('display') !== 'none')
+            $col.css('display') !== 'none'
+        )
     ) {
         stop();
         return Promise.resolve(false);

@@ -319,10 +319,12 @@ class HostedGallery {
         galleryEl.style.mozTransitionDuration = `${duration}ms`;
         galleryEl.style.msTransitionDuration = `${duration}ms`;
         galleryEl.style.transitionDuration = `${duration}ms`;
-        galleryEl.style.webkitTransform = `translate(${px + offset}px,0) translateZ(0)`;
+        galleryEl.style.webkitTransform = `translate(${px +
+            offset}px,0) translateZ(0)`;
         galleryEl.style.mozTransform = `translate(${px + offset}px,0)`;
         galleryEl.style.msTransform = `translate(${px + offset}px,0)`;
-        galleryEl.style.transform = `translate(${px + offset}px,0) translateZ(0)`;
+        galleryEl.style.transform = `translate(${px +
+            offset}px,0) translateZ(0)`;
         fastdom.write(() => {
             bonzo($meta).css('opacity', offset !== 0 ? 0 : 1);
         });
@@ -388,7 +390,9 @@ class HostedGallery {
     trackNavBetweenImages(data: Object) {
         if (data && data.nav) {
             const trackingPrefix = config.page.trackingPrefix || '';
-            interactionTracking.trackNonClickInteraction(`${trackingPrefix + data.nav} - image ${this.index}`);
+            interactionTracking.trackNonClickInteraction(
+                `${trackingPrefix + data.nav} - image ${this.index}`
+            );
         }
     }
 

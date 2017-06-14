@@ -2,10 +2,8 @@
 import fastdom from 'fastdom';
 import $ from 'lib/$';
 import template from 'lodash/utilities/template';
-import adblockStickyMessage
-    from 'raw-loader!common/views/commercial/adblock-sticky-message.html';
-import adblockStickyMessageCoin
-    from 'raw-loader!common/views/commercial/adblock-sticky-message-coin.html';
+import adblockStickyMessage from 'raw-loader!common/views/commercial/adblock-sticky-message.html';
+import adblockStickyMessageCoin from 'raw-loader!common/views/commercial/adblock-sticky-message-coin.html';
 
 /**
  * Message which is shown at the top of the page to the adblock users.

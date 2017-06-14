@@ -106,7 +106,7 @@
     "pify": "^2.3.0",
     "postcss": "^6.0.1",
     "postcss-pxtorem": "^4.0.1",
-    "prettier": "^1.3.0",
+    "prettier": "^1.4.4",
     "prettysize": "^0.0.3",
     "raw-loader": "^0.5.1",
     "request": "^2.81.0",
