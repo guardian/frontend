@@ -12,15 +12,10 @@ from scrolling */
     position: relative;
 
     @include mq(tablet) {
-        display: none;
+        display: block;
 
-        // Switch: ABNewTabletHeader
-        &.new-header--switch-on-tablet {
-            display: block;
-
-            @include mq(desktop) {
-                display: none;
-            }
+        @include mq(desktop) {
+            display: none;
         }
     }
 
