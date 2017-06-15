@@ -52,15 +52,9 @@ const waitForCheck = (id: string): Promise<any> => {
 };
 
 const initCheckMediator = (): void => {
+    registeredChecks = {};
+
     checks.forEach(registerCheck);
 };
 
-const testClean = (): void => {
-    registeredChecks = {};
-};
-
 export { initCheckMediator, resolveCheck, rejectCheck, waitForCheck };
-
-export const _ = {
-    testClean,
-};

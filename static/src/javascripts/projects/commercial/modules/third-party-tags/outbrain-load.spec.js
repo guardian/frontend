@@ -94,7 +94,7 @@ describe('Outbrain Load', () => {
         it('should create one container for destkop with correct IDs for nonCompliant', done => {
             config.page.edition = 'AU';
 
-            load('nonCompliant', 'blockedByTest').then(() => {
+            load('nonCompliant').then(() => {
                 expect($('.OUTBRAIN').first().data('widgetId')).toEqual(
                     'AR_28'
                 );
@@ -156,7 +156,7 @@ describe('Outbrain Load', () => {
 
         // non-compliant
         it('should create one container for tablet with correct IDs for nonCompliant', done => {
-            load('nonCompliant', 'blockedByTest').then(() => {
+            load('nonCompliant').then(() => {
                 expect($('.OUTBRAIN').first().data('widgetId')).toEqual(
                     'MB_11'
                 );
@@ -216,7 +216,7 @@ describe('Outbrain Load', () => {
 
         // non-compliant
         it('should create one container for mobile with correct IDs for nonCompliant', done => {
-            load('nonCompliant', 'blockedByTest').then(() => {
+            load('nonCompliant').then(() => {
                 expect($('.OUTBRAIN').first().data('widgetId')).toEqual(
                     'MB_10'
                 );

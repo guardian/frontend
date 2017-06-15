@@ -1,10 +1,6 @@
 // @flow
 import config from 'lib/config';
-import {
-    initCheckMediator,
-    resolveCheck,
-    _,
-} from 'common/modules/check-mediator';
+import { initCheckMediator, resolveCheck } from 'common/modules/check-mediator';
 import detect from 'lib/detect';
 import { load } from './outbrain-load';
 import { init } from './outbrain';
@@ -41,7 +37,6 @@ describe('Outbrain', () => {
     });
 
     afterEach(() => {
-        _.testClean();
         if (document.body) {
             document.body.innerHTML = '';
         }
