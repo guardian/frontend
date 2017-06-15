@@ -7,7 +7,7 @@ type Specs = {
     height?: string,
 };
 
-const normalise = (length: string | number): string => {
+const normalise = (length: string): string => {
     const lengthRegexp = /^(\d+)(%|px|em|ex|ch|rem|vh|vw|vmin|vmax)?/;
     const defaultUnit = 'px';
     const matches = String(length).match(lengthRegexp);
