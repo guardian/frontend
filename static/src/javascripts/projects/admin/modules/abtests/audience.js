@@ -2,47 +2,38 @@
  Module: audience.js
  Description: Displays information about how the test users are divided.
  */
-define([
-    'common/modules/component',
-    'admin/modules/abtests/audience-item',
-    'lodash/objects/assign',
-    'lodash/objects/clone'
-], function (
-    Component,
-    AudienceItem,
-    assign,
-    clone
-) {
+import Component from 'common/modules/component';
+import AudienceItem from 'admin/modules/abtests/audience-item';
+import assign from 'lodash/objects/assign';
+import clone from 'lodash/objects/clone';
 
-    function Audience(config) {
-        this.config = assign(clone(this.config), config);
-    }
+function Audience(config) {
+    this.config = assign(clone(this.config), config);
+}
 
-    Component.define(Audience);
+Component.define(Audience);
 
-    Audience.prototype.config = {
-        tests: []
-    };
+Audience.prototype.config = {
+    tests: []
+};
 
-    Audience.prototype.templateName = 'audience-template';
-    Audience.prototype.componentClass = 'audience-breakdown';
-    Audience.prototype.useBem = true;
+Audience.prototype.templateName = 'audience-template';
+Audience.prototype.componentClass = 'audience-breakdown';
+Audience.prototype.useBem = true;
 
-    Audience.prototype.prerender = function () {
+Audience.prototype.prerender = function() {
 
-        var testsContainer = this.getElem('tests');
+    var testsContainer = this.getElem('tests');
 
-        this.config.tests.forEach(function (test) {
-            /*eslint-disable new-cap*/
-            new AudienceItem.AudienceItem({test: test}).render(testsContainer);
-            /*eslint-enable new-cap*/
-        });
-    };
+    this.config.tests.forEach(function(test) {
+        new AudienceItem({
+            test: test
+        }).render(testsContainer);
+    });
+};
 
-    Audience.prototype.ready = function () {
+Audience.prototype.ready = function() {
 
-    };
+};
 
-    return Audience;
-
-});
+export default Audience;
