@@ -195,7 +195,7 @@ define([
 
     function ContributionsABTestVariant(options, test) {
         var trackingCampaignId = test.epic ? 'epic_' + test.campaignId : test.campaignId;
-        var campaignCode = getCampaignCode(test.campaignPrefix, test.campaignId, options.id, test.campaignSuffix);
+        var campaignCode = options.campaignCode || getCampaignCode(test.campaignPrefix, test.campaignId, options.id, test.campaignSuffix);
 
         this.id = options.id;
 
