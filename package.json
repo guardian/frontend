@@ -124,9 +124,9 @@
     "svgo": "^0.7.1",
     "uglify-js": "^2.7.4",
     "webpack": "^2.6.0",
-    "webpack-bundle-analyzer": "^2.3.1",
+    "webpack-bundle-analyzer": "^2.8.2",
     "webpack-merge": "^4.1.0",
-    "webpack-visualizer-plugin": "^0.1.10",
+    "webpack-visualizer-plugin": "^0.1.11",
     "yargs": "^8.0.1"
   },
   "optionalDependencies": {
