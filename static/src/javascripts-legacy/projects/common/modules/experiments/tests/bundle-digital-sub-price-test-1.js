@@ -4,7 +4,7 @@ define([
     'lib/config',
     'lib/detect',
     'lib/cookies',
-    'commercial/modules/user-features',
+    'commercial/modules/commercial-features',
     'common/modules/commercial/contributions-utilities',
     'lib/storage',
     'lodash/utilities/template',
@@ -15,7 +15,7 @@ define([
     config,
     detect,
     cookies,
-    userFeatures,
+    commercialFeatures,
     contributionsUtilities,
     store,
     template,
@@ -56,8 +56,10 @@ define([
         overrideCanRun: false,
         canRun: function () {
             return !cookies.getCookie('GU_DBPT1M') &&
-                !userFeatures.isPayingMember() &&
-                config.page.edition.toUpperCase() === 'UK';
+                config.page.edition.toUpperCase() === 'UK' &&
+                config.page.contentType === 'Article' &&
+                !config.page.isMinuteArticle &&
+                commercialFeatures.canReasonablyAskForMoney()
         },
 
         variants: [
