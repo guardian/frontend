@@ -40,10 +40,11 @@
         height: 42px;
         max-width: none;
         padding-left: 48px;
+        font-size: 18px;
     }
 
     &::placeholder {
-        color: $news-support-1;
+        color: #ffffff;
     }
 
     &:focus {
