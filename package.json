@@ -66,7 +66,6 @@
     "eslint-plugin-jsx-a11y": "^4.0.0",
     "eslint-plugin-prettier": "^2.0.1",
     "eslint-plugin-react": "^6.9.0",
-    "esprima": "1.2.2",
     "execa": "^0.7.0",
     "figures": "^2.0.0",
     "flow-bin": "^0.48.0",
