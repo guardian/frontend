@@ -59,7 +59,7 @@ define([
                 config.page.edition.toUpperCase() === 'UK' &&
                 config.page.contentType === 'Article' &&
                 !config.page.isMinuteArticle &&
-                commercialFeatures.canReasonablyAskForMoney()
+                commercialFeatures.commercialFeatures.canReasonablyAskForMoney
         },
 
         variants: [
