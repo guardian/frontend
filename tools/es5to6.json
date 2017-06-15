@@ -53,7 +53,6 @@
     "projects/common/modules/crosswords/anagram-helper/clue-input.js"
   ],
   "GHaberis": [
-    "projects/admin/modules/abtests/audience-item.js",
     "projects/admin/modules/abtests/audience.js",
     "projects/admin/modules/abtests/participation-item.js",
     "projects/admin/modules/abtests/participation.js",
