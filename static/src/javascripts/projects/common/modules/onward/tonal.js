@@ -64,7 +64,8 @@ class TonalComponent extends Component {
     }
 
     getEndpoint(): string {
-        return `/container/${tones[this.edition][TonalComponent.getTone()]}.json`;
+        const endpoint = tones[this.edition][TonalComponent.getTone()];
+        return `/container/${endpoint}.json`;
     }
 
     isSupported(): boolean {
