@@ -17,8 +17,7 @@ define([
     'common/modules/onward/popular',
     'common/modules/onward/related',
     'common/modules/onward/tonal',
-    'common/modules/social/share-count',
-    'common/modules/onward/election-onward-content',
+    'common/modules/social/share-count'
 ], function (
     fastdom,
     qwery,
@@ -36,8 +35,7 @@ define([
     Popular,
     Related,
     TonalComponent,
-    shareCount,
-    ElectionOnward
+    shareCount
 ) {
 
     function insertOrProximity(selector, insert) {
@@ -83,12 +81,7 @@ define([
 
     function initOnwardContent() {
         insertOrProximity('.js-onward', function () {
-            // isGeneralElectionContent and ElectionOnward import are temporary and will be removed in time
-            var isGeneralElectionContent = config.page.keywordIds && config.page.keywordIds.split(',').includes('politics/general-election-2017');
-
-            if (isGeneralElectionContent) {
-                new ElectionOnward.ElectionOnwardContent(qwery('.js-onward'));
-            } else if ((config.page.seriesId || config.page.blogIds) && config.page.showRelatedContent) {
+            if ((config.page.seriesId || config.page.blogIds) && config.page.showRelatedContent) {
                 new Onward(qwery('.js-onward'));
             } else if (config.page.tones !== '') {
                 $('.js-onward').each(function (c) {

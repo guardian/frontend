@@ -15,8 +15,9 @@ export const addClassesAndTitle = (
             );
         } else if (window.console && window.console.error) {
             // Some environments don't support or don't always expose the console object
-            window.console
-                .error(`Classes for inlineSvg must be an array: ${classes}`);
+            window.console.error(
+                `Classes for inlineSvg must be an array: ${classes}`
+            );
         }
     }
 

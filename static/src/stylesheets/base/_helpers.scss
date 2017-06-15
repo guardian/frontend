@@ -8,6 +8,12 @@
 
 // Hide until
 
+.hide-until-mobile {
+    @include mq($until: mobile) {
+        display: none !important;
+    }
+}
+
 .hide-until-mobile-landscape {
     @include mq($until: mobileLandscape) {
         display: none !important;

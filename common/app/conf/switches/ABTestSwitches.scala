@@ -111,26 +111,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-acquisitions-this-land-environment-epic-earning",
-    "This places a custom Epic at the ennd of environment articles",
-    owners = Seq(Owner.withGithub("desbo")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 8, 1),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-acquisitions-this-land-environment-epic-learning",
-    "This places a custom Epic at the ennd of environment articles",
-    owners = Seq(Owner.withGithub("desbo")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 8, 1),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-acquisitions-epic-liveblog-design-test",
     "This tests some different designs of the liveblog epic",
     owners = Seq(Owner.withGithub("joelochlann")),
@@ -199,15 +179,6 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  Switch(
-    ABTests,
-    "ab-acquisitions-epic-testimonials-usa",
-    "Test placing localised reader testimonials in the Epic",
-    owners = Seq(Owner.withGithub("desbo")),
-    safeState = On,
-    sellByDate = new LocalDate(2017, 6, 26),
-    exposeClientSide = true
-  )
 
   Switch(
     ABTests,

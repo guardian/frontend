@@ -3,14 +3,10 @@ import fastdom from 'lib/fastdom-promise';
 import detect from 'lib/detect';
 import template from 'lodash/utilities/template';
 import mediator from 'lib/mediator';
-import {
-    addTrackingPixel,
-} from 'commercial/modules/creatives/add-tracking-pixel';
-import addViewabilityTracker
-    from 'commercial/modules/creatives/add-viewability-tracker';
+import { addTrackingPixel } from 'commercial/modules/creatives/add-tracking-pixel';
+import addViewabilityTracker from 'commercial/modules/creatives/add-viewability-tracker';
 import fabricV1Html from 'raw-loader!commercial/views/creatives/fabric-v1.html';
-import iframeVideoStr
-    from 'raw-loader!commercial/views/creatives/iframe-video.html';
+import iframeVideoStr from 'raw-loader!commercial/views/creatives/iframe-video.html';
 import scrollBgStr from 'raw-loader!commercial/views/creatives/scrollbg.html';
 
 const hasBackgroundFixedSupport = !detect.isAndroid();
@@ -48,7 +44,8 @@ class FabricV1 {
         const videoPosition = {
             position: this.params.videoPositionH === 'left' ||
                 this.params.videoPositionH === 'right'
-                ? `${this.params.videoPositionH}:${this.params.videoHorizSpace}px;`
+                ? `${this.params.videoPositionH}:${this.params
+                      .videoHorizSpace}px;`
                 : '',
         };
 
@@ -199,12 +196,20 @@ class FabricV1 {
                 this.adSlot.getBoundingClientRect().top;
             fastdom.write(() => {
                 if (this.layer2) {
-                    this.layer2.classList
-                        .add(`ad-scrolling-text-hide${this.params.layerTwoAnimationPosition ? `-${this.params.layerTwoAnimationPosition}` : ''}`);
+                    this.layer2.classList.add(
+                        `ad-scrolling-text-hide${this.params
+                            .layerTwoAnimationPosition
+                            ? `-${this.params.layerTwoAnimationPosition}`
+                            : ''}`
+                    );
                 }
                 if (this.layer2 && inViewB) {
-                    this.layer2.classList
-                        .add(`ad-scrolling-text-animate${this.params.layerTwoAnimationPosition ? `-${this.params.layerTwoAnimationPosition}` : ''}`);
+                    this.layer2.classList.add(
+                        `ad-scrolling-text-animate${this.params
+                            .layerTwoAnimationPosition
+                            ? `-${this.params.layerTwoAnimationPosition}`
+                            : ''}`
+                    );
                 }
             });
         }

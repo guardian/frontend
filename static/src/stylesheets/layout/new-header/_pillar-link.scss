@@ -1,5 +1,6 @@
 .pillar-link {
     @include fs-textSans(5);
+    box-sizing: border-box;
     color: currentColor;
     cursor: pointer;
     display: block;
@@ -22,9 +23,10 @@
     }
 
     @include mq(desktop) {
+        font-size: 29px;
+
         .new-header--open .pillars__item:not(:first-child) > & {
-            // + 2px becaue of the border
-            padding-left: $gs-gutter / 2 + 2;
+            padding-left: $gs-gutter / 2;
         }
 
         .new-header--open & {

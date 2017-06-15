@@ -5,8 +5,7 @@ import fetchJson from 'lib/fetch-json';
 import reportError from 'lib/report-error';
 import template from 'lodash/utilities/template';
 import { inlineSvg } from 'common/views/svgs';
-import stockValueTemplate
-    from 'raw-loader!common/views/business/stock-value.html';
+import stockValueTemplate from 'raw-loader!common/views/business/stock-value.html';
 import stocksTemplate from 'raw-loader!common/views/business/stocks.html';
 
 const isBusinessFront = () =>

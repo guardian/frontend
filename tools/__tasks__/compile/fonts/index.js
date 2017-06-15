@@ -19,12 +19,10 @@ const mimeTypes = {
 
 const typeFaces = require('./index.config');
 
-const toDataURI = (
-    srcPath,
-    data
-) => `url(data:${mimeTypes[path
-        .extname(srcPath)
-        .substr(1)]};base64,${data.toString()})`;
+const toDataURI = (srcPath, data) =>
+    `url(data:${mimeTypes[
+        path.extname(srcPath).substr(1)
+    ]};base64,${data.toString()})`;
 
 const generateCSS = (fontFamily, font) =>
     readFile(path.resolve(src, 'fonts', `${font.src}`), 'base64')
