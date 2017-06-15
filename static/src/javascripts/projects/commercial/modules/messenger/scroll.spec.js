@@ -1,0 +1,187 @@
+// @flow
+import {
+    addScrollListener,
+    removeScrollListener,
+    reset,
+} from 'commercial/modules/messenger/scroll';
+import detect from 'lib/detect';
+
+jest.mock('commercial/modules/messenger', () => ({
+    register: jest.fn(),
+}));
+
+jest.mock('lib/detect', () => ({
+    getViewport: jest.fn(),
+}));
+
+describe('Cross-frame messenger: scroll', () => {
+    let iframe1 = {};
+    let iframe2 = {};
+    let onScroll = () => Promise.resolve();
+
+    const respond1 = jest.fn();
+    const respond2 = jest.fn();
+
+    const domSnippet = `
+         <div id="ad-slot-1" class="js-ad-slot"><div id="iframe1" style="height: 200px"></div></div>
+         <div id="ad-slot-2" class="js-ad-slot"><div id="iframe2" style="height: 200px"></div></div>
+     `;
+
+    beforeEach(done => {
+        jest
+            .spyOn(global, 'addEventListener')
+            .mockImplementation((_, callback) => {
+                onScroll = callback;
+            });
+        jest.spyOn(global, 'removeEventListener').mockImplementation(() => {
+            onScroll = () => Promise.resolve();
+        });
+        if (document.body) {
+            document.body.innerHTML = domSnippet;
+        }
+        iframe1 = document.getElementById('iframe1');
+        iframe2 = document.getElementById('iframe2');
+
+        if (iframe1) {
+            jest
+                .spyOn(iframe1, 'getBoundingClientRect')
+                .mockImplementation(() => ({
+                    left: 8,
+                    right: 392,
+                    top: 8,
+                    height: 200,
+                    bottom: 208,
+                    width: 384,
+                }));
+        }
+        if (iframe2) {
+            jest
+                .spyOn(iframe2, 'getBoundingClientRect')
+                .mockImplementation(() => ({
+                    left: 8,
+                    right: 392,
+                    top: 6320,
+                    height: 200,
+                    bottom: 6520,
+                    width: 384,
+                }));
+        }
+
+        done();
+    });
+
+    afterEach(() => {
+        // $FlowFixMe
+        removeScrollListener(iframe1);
+        // $FlowFixMe
+        removeScrollListener(iframe2);
+        iframe1 = {};
+        iframe2 = {};
+        jest.resetModules();
+        jest.resetAllMocks();
+        if (document.body) {
+            document.body.innerHTML = '';
+        }
+    });
+
+    describe('With IntersectionObserver', () => {
+        let onIntersect = null;
+        class IntersectionObserver {
+            constructor(callback) {
+                onIntersect = callback;
+                return Object.freeze({
+                    observe: () => {},
+                    unobserve: () => {},
+                    disconnect: () => {
+                        onIntersect = null;
+                    },
+                });
+            }
+        }
+
+        beforeEach(() => {
+            Object.defineProperty(global, 'IntersectionObserver', {
+                value: IntersectionObserver,
+                writable: true,
+            });
+            reset(true);
+            // $FlowFixMe
+            addScrollListener(iframe1, respond1);
+            // $FlowFixMe
+            addScrollListener(iframe2, respond2);
+        });
+
+        afterEach(() => {
+            Object.defineProperty(global, 'IntersectionObserver', {
+                value: null,
+                writable: true,
+            });
+        });
+
+        it('should call respond1 but not respond2 at the top of the page', done => {
+            console.log(onIntersect);
+            if (onIntersect) {
+                onIntersect([
+                    { target: iframe1, intersectionRatio: 0.5 },
+                    { target: iframe2, intersectionRatio: 0 },
+                ]);
+            }
+            onScroll()
+                .then(() => {
+                    expect(respond1).toHaveBeenCalledTimes(2);
+                    expect(respond2).toHaveBeenCalledTimes(1);
+                })
+                .then(done)
+                .catch(done.fail);
+        });
+
+        it('should call respond2 but not respond1 at the bottom of the page', done => {
+            if (onIntersect) {
+                onIntersect([
+                    { target: iframe1, intersectionRatio: 0 },
+                    { target: iframe2, intersectionRatio: 0.5 },
+                ]);
+            }
+            onScroll()
+                .then(() => {
+                    expect(respond1).toHaveBeenCalledTimes(1);
+                    expect(respond2).toHaveBeenCalledTimes(2);
+                })
+                .then(done)
+                .catch(done.fail);
+        });
+    });
+
+    describe('Without IntersectionObserver', () => {
+        beforeEach(() => {
+            reset(false);
+            // $FlowFixMe
+            addScrollListener(iframe1, respond1);
+            // $FlowFixMe
+            addScrollListener(iframe2, respond2);
+        });
+
+        it('should call respond1 but not respond2 at the top of the page', done => {
+            detect.getViewport.mockReturnValue({ width: 400, height: 300 });
+            onScroll()
+                .then(() => {
+                    expect(respond1).toHaveBeenCalledTimes(2);
+                    expect(respond2).toHaveBeenCalledTimes(1);
+                })
+                .then(done)
+                .catch(done.fail);
+        });
+
+        it('should call respond2 but not respond1 at the bottom of the page', done => {
+            detect.getViewport.mockReturnValue({ width: 400, height: 6528 });
+            window.scrollTo(0, 6300);
+            onScroll()
+                .then(() => {
+                    // expect(respond1).toHaveBeenCalledTimes(1);
+                    expect(respond2).toHaveBeenCalledTimes(2);
+                })
+                .then(done)
+                .catch(done.fail);
+        });
+    });
+});

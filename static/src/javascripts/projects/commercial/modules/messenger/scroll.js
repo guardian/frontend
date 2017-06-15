@@ -6,7 +6,7 @@ import { register } from 'commercial/modules/messenger';
 
 // An intersection observer will allow us to efficiently send slot
 // coordinates for only those that are in the viewport.
-let w = window;
+const w = window;
 let useIO = 'IntersectionObserver' in w;
 let taskQueued = false;
 let iframes: {
@@ -16,9 +16,8 @@ let iframeCounter: number = 0;
 let observer;
 let visibleIframeIds;
 
-const reset = (window_: WindowProxy): void => {
-    w = window_ || window;
-    useIO = 'IntersectionObserver' in w;
+const reset = (useIO_: boolean): void => {
+    useIO = useIO_;
     taskQueued = false;
     iframes = {};
     iframeCounter = 0;
