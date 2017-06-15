@@ -7,7 +7,7 @@ import Component from 'common/modules/component';
 import bonzo from 'bonzo';
 
 class AudienceItem extends Component {
-    constructor(config: any): void {
+    constructor(config: Object): void {
         super();
 
         this.templateName = 'audience-item-template';
