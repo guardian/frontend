@@ -8,6 +8,7 @@ import { testCanBeRun } from 'common/modules/experiments/test-can-run-checks';
 import { viewsInPreviousDays } from 'common/modules/commercial/acquisitions-view-log';
 import alwaysAsk from 'common/modules/experiments/tests/contributions-epic-always-ask-strategy';
 import askFourPostElection from 'common/modules/experiments/tests/contributions-epic-ask-four-post-election';
+import bundlePriceTest1 from 'common/modules/experiments/tests/bundle-digital-sub-price-test-1';
 import askFourEarning from 'common/modules/experiments/tests/contributions-epic-ask-four-earning';
 import acquisitionsEpicLiveBlog from 'common/modules/experiments/tests/acquisitions-epic-liveblog';
 import acquisitionsEpicLiveBlogDesignTest from 'common/modules/experiments/tests/acquisitions-epic-liveblog-design-test';
@@ -23,6 +24,7 @@ const tests = [
     alwaysAsk,
     acquisitionsThisLandSeries,
     askFourPostElection,
+    bundlePriceTest1,
     askFourEarning,
     acquisitionsEpicAlwaysAskIfTagged,
     acquisitionsEpicLiveBlogDesignTest,
