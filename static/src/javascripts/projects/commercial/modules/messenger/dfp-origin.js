@@ -1,2 +1,2 @@
 // @flow
-export default `${location.protocol}//tpc.googlesyndication.com`;
+export const dfpOrigin = `${location.protocol}//tpc.googlesyndication.com`;
