@@ -73,6 +73,16 @@ const defineSlot = (adSlotNode: Element, sizes: Object): Object => {
         slot.setTargeting('isbn', config.page.isbn);
     }
 
+    const fabricKeyValues = new Map([
+        ['top-above-nav', 'fabric1'],
+        ['merchandising-high', 'fabric2'],
+        ['merchandising', 'fabric3'],
+    ]);
+
+    if (fabricKeyValues.has(slotTarget)) {
+        slot.setTargeting('slot-fabric', fabricKeyValues.get(slotTarget));
+    }
+
     slot.addService(window.googletag.pubads()).setTargeting('slot', slotTarget);
 
     return {
