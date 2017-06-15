@@ -21,7 +21,7 @@ sealed trait ElementProfile {
   def autoFormat: Boolean
 
   def elementFor(image: ImageMedia): Option[ImageAsset] = {
-    val sortedCrops = image.imageCrops.sortBy(-_.width)
+    val sortedCrops = image.imageCrops.sortBy(_.width)
     width.flatMap{ desiredWidth =>
       sortedCrops.find(_.width >= desiredWidth)
     }.orElse(image.largestImage)
