@@ -13,6 +13,7 @@ $gallery-lightbox-sidebar-breakpoint: desktop;
     position: fixed;
     background-color: lighten($media-background, 2.5%);
     overflow: hidden;
+    z-index: $zindex-lightbox;
 }
 
 .gallery-lightbox--open {
