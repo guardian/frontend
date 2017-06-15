@@ -40,7 +40,7 @@
         padding-bottom: 0px;
     }
 
-    &.is-clicked + .js-storyquestion-submission-container {
+    &.is-clicked + .storyquestion-submission-container {
         background-color: $news-support-5;
     }
 
@@ -110,7 +110,7 @@
     position: absolute;
     color: $news-main-1;
     font-weight: 900;
-    border: 1px solid #005689;
+    border: 1px solid $news-main-1;
     padding-top: $gs-baseline / 3;
     float: right;
     outline: 0;
