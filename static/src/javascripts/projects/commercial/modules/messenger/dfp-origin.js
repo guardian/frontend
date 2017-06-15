@@ -1,1 +1,2 @@
-export default location.protocol + '//tpc.googlesyndication.com';
+// @flow
+export default `${location.protocol}//tpc.googlesyndication.com`;
