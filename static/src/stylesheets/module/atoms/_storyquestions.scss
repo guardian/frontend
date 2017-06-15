@@ -1,11 +1,17 @@
 .user__question {
     padding-bottom: $gs-baseline;
     overflow: auto;
+
+    &.submeta {
+        border: none;
+    }
 }
 .user__question-title {
     @include fs-headline(3);
     font-weight: 900;
     color: $news-main-1;
+    border-top: 1px solid $news-main-2;
+    padding-top: $gs-baseline / 2;
 
     @include mq($from: tablet) {
         @include fs-headline(4);
@@ -16,26 +22,34 @@
 .user__question-title--secondary {
     color: $neutral-1;
     display: block;
+    font-size: $gs-baseline + 6;
+    font-weight: 400;
 }
 
 .user__questions-text--wrapper {
     position: relative;
     overflow: hidden;
+    background-color: $neutral-8;
+    margin-bottom: 0px;
+    padding-top: 6px;
+    padding-bottom: 12px;
+
+    &.is-clicked {
+        background-color: $news-support-5;
+        margin-bottom: 0px;
+        padding-bottom: 0px;
+    }
+
+    &.is-clicked + .js-storyquestion-submission-container {
+        background-color: $news-support-5;
+    }
 
     &:hover {
-        .user__question-text {
-            color: #ffffff;
-        }
-        .inline-tick {
+        background-color: $news-support-5;
+
+        .user__question-upvote {
             background-color: $news-main-1;
-        }
-        .user__questions-text--inner {
-            background-color: $news-main-1;
-        }
-        .inline-tick__svg {
-            path {
-                fill: #ffffff;
-            }
+            color: white;
         }
         cursor: pointer;
     }
@@ -56,37 +70,19 @@
     @include fs-headline(2);
     font-weight: 900;
     display: block;
-    max-width: 68%;
+    max-width: 77%;
     // font-size: 18px;
     float: left;
     color: $news-main-1;
-    padding-left: $gs-baseline / 4;
+    padding-left: $gs-baseline - 4;
     position: relative;
     margin-bottom: $gs-baseline;
 
     @include mq($from: tablet) {
         @include fs-headline(3);
-        line-height: 27px;
+        line-height: $gs-baseline * 2;
         max-width: 80%;
         font-weight: 900;
-    }
-
-    .user__questions-text--inner {
-        background-color: $neutral-6;
-        padding: $gs-baseline / 2 $gs-baseline / 2 $gs-baseline / 2 0;
-        transition: .2s background-color ease-in-out;
-        position: relative;
-
-        &:before {
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            width: $gs-baseline / 4;
-            content: '';
-            display: block;
-            left: -$gs-baseline / 4;
-            background-color: inherit;
-        }
     }
 }
 
@@ -94,26 +90,34 @@
     clear: both;
     margin-top: $gs-baseline;
     margin-bottom: $gs-baseline;
+    font-size: $gs-baseline + 2;
+    line-height: $gs-baseline + 4;
+    width: 90%;
+    display: block;
+    @include fs-textSans(3);
 
     @include mq($from: tablet) {
-        float: right;
         clear: none;
         margin-top: 0;
+        font-size: $gs-baseline + 4;
     }
 }
 
 .user__question-upvote {
     @include fs-textSans(3);
-    right: 0px;
+    right: 8px;
+    bottom: 10px;
+    position: absolute;
     color: $news-main-1;
     font-weight: 900;
-    border: 0;
-    padding: 0;
-    border-top: 1px solid $neutral-6;
+    border: 1px solid #005689;
     padding-top: $gs-baseline / 3;
     float: right;
-    background-color: #ffffff;
     outline: 0;
+    padding-left: 12px;
+    padding-right: 12px;
+    border-radius: 20px;
+    background-color: transparent;
 
     &:hover {
         text-decoration: none;
@@ -139,4 +143,31 @@
             fill: $news-main-1;
         }
     }
+}
+.storyquestion-submission-container {
+    overflow: hidden;
+    padding-left: 8px;
+    margin-bottom: 12px;
+}
+
+.storyquestion-email-signup-form.form {
+    margin: 0;
+
+    .form-field {
+        float: left;
+        width: 50%;
+        margin-bottom: 12px;
+    }
+
+    .text-input {
+        border-bottom-left-radius: 28px;
+        border-top-left-radius: 28px;
+    }
+
+    .button--primary {
+        height: 36px;
+        border-bottom-left-radius: 0;
+        border-top-left-radius: 0;
+    }
+
 }
