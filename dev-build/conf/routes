@@ -334,6 +334,9 @@ GET            /editionalised-nav.json                                          
 # Onward journeys
 GET            /series/*path.json                                                                                                controllers.SeriesController.renderSeriesStories(path)
 
+# opt-in/out routes
+GET            /opt/$choice<in|out|delete>/:feature                                                                              controllers.OptInController.handle(feature, choice)
+
 # Applications (must come before wildcard)
 GET            /sitemaps/news.xml                                                                                                controllers.SiteMapController.renderNewsSiteMap()
 GET            /sitemaps/video.xml                                                                                               controllers.SiteMapController.renderVideoSiteMap()
