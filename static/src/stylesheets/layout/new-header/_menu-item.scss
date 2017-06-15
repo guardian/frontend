@@ -108,10 +108,8 @@
 
     @include mq(desktop) {
         font-size: 16px;
-        overflow-x: hidden;
+        line-height: 18px;
         padding: $gs-baseline / 2 0;
-        text-overflow: ellipsis;
-        white-space: nowrap;
     }
 
     &:hover,
