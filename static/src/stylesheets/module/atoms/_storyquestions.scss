@@ -31,8 +31,8 @@
     overflow: hidden;
     background-color: $neutral-8;
     margin-bottom: 0px;
-    padding-top: 6px;
-    padding-bottom: 12px;
+    padding-top: $gs-baseline / 2;
+    padding-bottom: $gs-baseline;
 
     &.is-clicked {
         background-color: $news-support-5;
@@ -70,8 +70,8 @@
     @include fs-headline(2);
     font-weight: 900;
     display: block;
+    //used to avoid fixed width across multiple break points.
     max-width: 77%;
-    // font-size: 18px;
     float: left;
     color: $news-main-1;
     padding-left: $gs-baseline - 4;
@@ -105,8 +105,8 @@
 
 .user__question-upvote {
     @include fs-textSans(3);
-    right: 8px;
-    bottom: 10px;
+    right: $gs-gutter - 2;
+    bottom: $gs-gutter;
     position: absolute;
     color: $news-main-1;
     font-weight: 900;
@@ -114,40 +114,19 @@
     padding-top: $gs-baseline / 3;
     float: right;
     outline: 0;
-    padding-left: 12px;
-    padding-right: 12px;
-    border-radius: 20px;
+    padding-left: $gs-baseline;
+    padding-right: $gs-baseline;
+    border-radius: $gs-gutter * 2;
     background-color: transparent;
 
     &:hover {
         text-decoration: none;
     }
-
-    .inline-tick {
-        border-radius: 50%;
-        height: 12px;
-        width: 12px;
-        border: 1px solid $news-main-1;
-        padding: 3px;
-        margin-left: $gs-baseline;
-        display: block;
-        float: right;
-    }
-
-    .inline-tick__svg {
-        width: 12px;
-        height: 9px;
-        margin-bottom: $gs-baseline / 4;
-
-        path {
-            fill: $news-main-1;
-        }
-    }
 }
 .storyquestion-submission-container {
     overflow: hidden;
-    padding-left: 8px;
-    margin-bottom: 12px;
+    padding-left: $gs-gutter - 2;
+    margin-bottom: $gs-baseline;
 }
 
 .storyquestion-email-signup-form.form {
@@ -156,17 +135,17 @@
     .form-field {
         float: left;
         width: 50%;
-        margin-bottom: 12px;
+        margin-bottom: $gs-baseline;
     }
 
     .text-input {
-        border-bottom-left-radius: 28px;
-        border-top-left-radius: 28px;
-        font-size: 14px;
+        border-bottom-left-radius: calc(#{$gs-baseline} * 2) + 4;
+        border-top-left-radius: calc(#{$gs-baseline} * 2) + 4;
+        font-size: $gs-baseline + 2;
     }
 
     .button--primary {
-        height: 36px;
+        height: $gs-baseline * 3;
         border-bottom-left-radius: 0;
         border-top-left-radius: 0;
     }
