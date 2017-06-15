@@ -1,3 +1,1 @@
-define(function () {
-    return location.protocol + '//tpc.googlesyndication.com';
-});
+export default location.protocol + '//tpc.googlesyndication.com';
