@@ -9,13 +9,14 @@ define([
 ) {
 
     function updateCommentLink () {
-        var commentLink = document.querySelector('.js-add-comment-activity');
+        var commentItem = document.querySelector('.js-show-comment-activity');
+        var commentLink = commentItem.querySelector('.js-add-comment-activity-link');
 
-        if (commentLink) {
+        if (commentItem && commentLink) {
             var user = id.getUserFromCookie();
 
             fastdom.write(function() {
-                commentLink.classList.remove('u-h');
+                commentItem.classList.remove('u-h');
                 commentLink.setAttribute('href', 'https://profile.theguardian.com/user/id/' + user.id);
             });
         }
