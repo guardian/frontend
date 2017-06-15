@@ -7,7 +7,7 @@ import Component from 'common/modules/component';
 import { AudienceItem } from 'admin/modules/abtests/audience-item';
 
 class Audience extends Component {
-    constructor(config: any): void {
+    constructor(config: Object): void {
         super();
 
         this.templateName = 'audience-template';
