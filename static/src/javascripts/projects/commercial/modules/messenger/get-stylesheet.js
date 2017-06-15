@@ -1,31 +1,47 @@
-import messenger from 'commercial/modules/messenger';
-var aProto = Array.prototype;
+// @flow
+import { register } from 'commercial/modules/messenger';
 
-messenger.register('get-styles', function(specs) {
-    return getStyles(specs, document.styleSheets);
-});
-export default getStyles;
+type Specs = {
+    selector: string,
+};
 
-function getStyles(specs, styleSheets) {
+type Sheet = {
+    ownerNode: Element,
+};
+
+const getStyles = (specs: Specs, styleSheets: Object): ?Array<any> => {
     if (!specs || typeof specs.selector !== 'string') {
         return null;
     }
 
-    var i = 0;
-    var ii = styleSheets.length;
-    var result = [];
-    while (i < ii) {
-        var sheet = styleSheets[i++];
-        if (sheet.ownerNode && sheet.ownerNode.matches && sheet.ownerNode.matches(specs.selector)) {
+    const result = [];
+    for (let i = 0; i < styleSheets.length; i += 1) {
+        const sheet: Sheet = styleSheets[i];
+        if (
+            sheet.ownerNode &&
+            sheet.ownerNode.matches &&
+            sheet.ownerNode.matches(specs.selector)
+        ) {
             if (sheet.ownerNode.tagName === 'STYLE') {
                 result.push(sheet.ownerNode.textContent);
             } else {
-                result.push(aProto.reduce.call(sheet.cssRules || [], function(res, input) {
-                    return res + input.cssText;
-                }, ''));
+                result.push(
+                    Array.prototype.reduce.call(
+                        sheet.cssRules || [],
+                        (res, input) => res + input.cssText,
+                        ''
+                    )
+                );
             }
         }
     }
-
     return result;
-}
+};
+
+register('get-styles', (specs): ?Array<any> => {
+    if (specs) {
+        return getStyles(specs, document.styleSheets);
+    }
+});
+
+export default { getStyles };

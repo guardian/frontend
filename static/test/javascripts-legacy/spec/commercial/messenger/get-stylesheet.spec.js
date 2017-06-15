@@ -29,7 +29,7 @@ define([
             injector.require([
                 'commercial/modules/messenger/get-stylesheet'
             ], function($1) {
-                getStyles = $1;
+                getStyles = $1.getStyles;
                 fixtures.render(fixturesConfig);
                 styleSheets = Array.prototype.map.call(document.querySelectorAll('style'), function (style) {
                     return Object.assign({
