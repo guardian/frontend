@@ -10,7 +10,7 @@ define([
 
     function updateCommentLink () {
         var commentItem = document.querySelector('.js-show-comment-activity');
-        var commentLink = commentItem.querySelector('.js-add-comment-activity-link');
+        var commentLink = commentItem && commentItem.querySelector('.js-add-comment-activity-link');
 
         if (commentItem && commentLink) {
             var user = id.getUserFromCookie();
