@@ -239,7 +239,7 @@ object EmailAddons {
     OutsideInAmerica,
     TheResistanceNow,
     BeyondTheBlade,
-    TheSnap
+    TheSnap,
     MorningMail)
   private val frontEmails = Seq(
     TheFlyer,
