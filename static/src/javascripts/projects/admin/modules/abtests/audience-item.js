@@ -1,43 +1,42 @@
+// @flow
 /*
  Module: audience-item.js
  Description: Displays information about how the test users are divided.
  */
 import Component from 'common/modules/component';
 import bonzo from 'bonzo';
-import assign from 'lodash/objects/assign';
-import clone from 'lodash/objects/clone';
 
-function AudienceItem(config) {
-    this.config = assign(clone(this.config), config);
+class AudienceItem extends Component {
+    constructor(config: any): void {
+        super();
+
+        this.templateName = 'audience-item-template';
+        this.componentClass = 'audience-item';
+        this.useBem = true;
+        this.config = Object.assign(
+            {
+                test: {},
+            },
+            config
+        );
+    }
+
+    prerender(): void {
+        bonzo(this.getElem('test-label')).prepend(this.config.test.id);
+
+        // Set the width and absolute position to match the audience size and offset.
+        const audience = this.config.test.audience * 100;
+        const audienceOffset = this.config.test.audienceOffset * 100;
+        const audienceEnd = audience + audienceOffset;
+
+        this.getElem('test').style.width = `${audience.toString()}%`;
+        this.getElem('test').style.left = `${audienceOffset.toString()}%`;
+
+        bonzo(this.getElem('caption-test')).append(this.config.test.id);
+        bonzo(this.getElem('caption-range')).append(
+            `${audienceOffset}% to ${audienceEnd}%`
+        );
+    }
 }
 
-Component.define(AudienceItem);
-
-AudienceItem.prototype.config = {
-    test: {}
-};
-
-AudienceItem.prototype.templateName = 'audience-item-template';
-AudienceItem.prototype.componentClass = 'audience-item';
-AudienceItem.prototype.useBem = true;
-
-AudienceItem.prototype.prerender = function() {
-    bonzo(this.getElem('test-label')).prepend(this.config.test.id);
-
-    // Set the width and absolute position to match the audience size and offset.
-    var audience = this.config.test.audience * 100;
-    var audienceOffset = this.config.test.audienceOffset * 100;
-    var audienceEnd = audience + audienceOffset;
-
-    this.getElem('test').style.width = audience.toString() + '%';
-    this.getElem('test').style.left = audienceOffset.toString() + '%';
-
-    bonzo(this.getElem('caption-test')).append(this.config.test.id);
-    bonzo(this.getElem('caption-range')).append(audienceOffset + '% to ' + audienceEnd + '%');
-};
-
-AudienceItem.prototype.ready = function() {
-
-};
-
-export default AudienceItem;
+export { AudienceItem };
