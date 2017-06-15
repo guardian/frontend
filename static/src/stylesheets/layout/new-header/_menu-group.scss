@@ -48,7 +48,6 @@
     @include mq(desktop) {
         background-color: transparent;
         padding-bottom: 0;
-        width: gs-span(2) + $gs-gutter / 2;
     }
 }
 
@@ -73,15 +72,35 @@
 
 .menu-group--membership {
     padding-bottom: 0;
+    position: relative;
+
+    @include mq($from: desktop, $until: leftCol) {
+        flex-wrap: nowrap;
+    }
 
     @include mq(desktop) {
         border-top: 1px solid rgba($news-main-2, .3);
         flex-direction: row;
-        flex-wrap: nowrap;
         order: 3;
         padding-bottom: $gs-baseline * 2;
         padding-top: $gs-baseline / 2;
         width: 100%;
+    }
+
+    @include mq(leftCol) {
+        width: gs-span(2) + $gs-gutter / 2;
+        border-top: 0;
+        padding-left: $gs-gutter / 2;
+
+        &:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            // This is awful. How else can we do this?
+            bottom: 31px;
+            left: 0px;
+            border-left: 2px solid rgba($news-main-2, .3);
+        }
     }
 }
 
@@ -118,10 +137,31 @@
 }
 
 .menu-group--footer {
+
     @include mq(desktop) {
+        position: relative;
         order: 2;
         padding-left: $gs-gutter / 2;
-        width: gs-span(2) + $gs-gutter / 2;
+        padding-right: $gs-gutter / 2;
+        width: gs-span(2);
+
+        &:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            // This is awful. How else can we do this?
+            bottom: 31px;
+            left: 0px;
+            border-left: 2px solid rgba($news-main-2, .3);
+        }
+    }
+
+    @include mq(leftCol) {
+        width: gs-span(2) + $gs-gutter;
+    }
+
+    @include mq(wide) {
+        width: gs-span(3) + $gs-gutter;
     }
 }
 
