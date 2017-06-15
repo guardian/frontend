@@ -3,7 +3,7 @@
     overflow: auto;
 
     &.submeta {
-        border: none;
+        border: 0;
     }
 }
 .user__question-title {
@@ -49,7 +49,7 @@
 
         .user__question-upvote {
             background-color: $news-main-1;
-            color: white;
+            color: #ffffff;
         }
         cursor: pointer;
     }
@@ -87,6 +87,7 @@
 }
 
 .user__question-response {
+    @include fs-textSans(3);
     clear: both;
     margin-top: $gs-baseline;
     margin-bottom: $gs-baseline;
@@ -94,7 +95,6 @@
     line-height: $gs-baseline + 4;
     width: 90%;
     display: block;
-    @include fs-textSans(3);
 
     @include mq($from: tablet) {
         clear: none;
