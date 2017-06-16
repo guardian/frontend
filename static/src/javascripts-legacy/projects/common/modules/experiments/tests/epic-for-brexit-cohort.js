@@ -3,16 +3,22 @@ define([
     'commercial/modules/user-features',
     'common/modules/commercial/contributions-utilities',
     'lib/config',
-    'raw-loader!common/views/epic-for-brexit-cohort.html'
+    'raw-loader!common/views/epic-for-brexit-cohort.html',
+    'svg-loader!svgs/icon/quote.svg',
+    'common/modules/commercial/acquisitions-epic-testimonial-parameters'
 ], function (
     template,
     userFeatures,
     contributionsUtilities,
     config,
-    epicForBrexitCohortTemplate
+    epicForBrexitCohortTemplate,
+    quoteSvg,
+    acquisitionsEpicTestimonialParameters
 ) {
-    function isTargetReader() {
-        return userFeatures.isInBrexitCohort();
+
+    function hasBrexitTag(){
+        var tags = config.page.keywordIds.concat(config.page.nonKeywordTagIds);
+        return tags.indexOf('politics/eu-referendum') > -1;
     }
 
     function worksWellWithPageTemplate() {
@@ -24,7 +30,17 @@ define([
     function isTargetPage() {
         return worksWellWithPageTemplate() &&
             !config.page.isPaidContent &&
-            !config.page.shouldHideAdverts
+            !config.page.shouldHideAdverts &&
+             hasBrexitTag();
+    }
+
+    function createBrexitTestTemplate() {
+        return function(variant){
+            return template(epicForBrexitCohortTemplate, {
+                componentName: variant.options.componentName,
+                testimonialBlock: contributionsUtilities.getTestimonialBlock(acquisitionsEpicTestimonialParameters.brexit)
+            });
+        }
     }
 
     return contributionsUtilities.makeABTest({
@@ -32,13 +48,13 @@ define([
         id: 'EpicForBrexitCohort',
         campaignId: 'epic_brexit_cohort',
 
-        start: '2017-06-06',
-        expiry: '2017-07-09',
+        start: '2017-06-19',
+        expiry: '2017-07-31',
 
         author: 'Leigh-Anne Mathieson',
         description: 'Special message in an epic for the brexit cohort.',
         successMeasure: 'Reducing churn of members who joined in the Brexit cohort',
-        idealOutcome: 'Members who joined in the Brexit cohort will be more likely to support us.',
+        idealOutcome: 'Members who joined in the Brexit cohort will be more likely to continue supporting us.',
         audienceCriteria: 'Readers who began supporting the Guardian in the Brexit cohort',
         audience: 0,
         audienceOffset: 1,
@@ -46,7 +62,7 @@ define([
         overrideCanRun: true,
 
         canRun: function() {
-            return isTargetReader() && isTargetPage();
+            return userFeatures.isInBrexitCohort() && isTargetPage();
         },
 
         useLocalViewLog: true,
@@ -54,20 +70,12 @@ define([
         variants: [
             {
                 id: 'control',
-
                 maxViews: {
-                    days: 1, // see it plenty of times for testing
-                    count: 100, //TODO: adjust
-                    minDaysBetweenViews: 0
+                    days: 30,
+                    count: 4,
+                    minDaysBetweenViews: 0 // Same as ask four for now
                 },
-
-                template: function(variant) {
-                    return template(epicForBrexitCohortTemplate, {
-                        componentName: variant.options.componentName,
-                        membershipUrl: variant.getURL("https://www.theguardian.com/membership", variant.options.campaignCode)
-                    })
-                }
-
+                template: createBrexitTestTemplate()
             }
         ]
     });

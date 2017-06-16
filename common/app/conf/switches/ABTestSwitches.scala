@@ -224,8 +224,8 @@ trait ABTestSwitches {
     "ab-epic-for-brexit-cohort",
     "Displays an epic for supports who joined just after Brexit",
     owners = Seq(Owner.withGithub("lmath")),
-    safeState = On,
-    sellByDate = new LocalDate(2017, 7, 3),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 7, 31),
     exposeClientSide = true
   )
 }

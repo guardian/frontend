@@ -107,7 +107,7 @@ define([
         cookies.addCookie(USER_FEATURES_EXPIRY_COOKIE, expiryDate.getTime().toString());
         cookies.addCookie(PAYING_MEMBER_COOKIE, !JsonResponse.adblockMessage);
         cookies.addCookie(AD_FREE_USER_COOKIE, JsonResponse.adFree);
-        cookies.addCookie(JOIN_DATE_COOKIE, JsonResponse.joinDate);
+        cookies.addCookie(JOIN_DATE_COOKIE, JsonResponse.membershipJoinDate);
     }
 
     function deleteOldData() {
