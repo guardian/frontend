@@ -10,11 +10,11 @@ const Ring = React.createClass({
      * To get the diameter:
      *   (width of .crossword__anagram-helper-shuffler) - (2 * desired padding)
      *
-     * @param  {Number} angle   angle of letters on the circle
-     * @param  {Number} i       letter index
-     * @return {Object}         with 'left' and 'top' properties in percent
+     * @param  angle   angle of letters on the circle
+     * @param  i       letter index
+     *
      */
-    getPosition(angle, i) {
+    getPosition(angle: number, i: number) {
         const diameter = 40;
         const theta = angle * Math.PI / 180 * i;
 
