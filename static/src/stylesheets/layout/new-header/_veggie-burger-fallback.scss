@@ -1,5 +1,5 @@
 .veggie-burger-fallback {
-    display: none;
+    @include u-h;
 
     &:checked {
         & ~ .menu {
@@ -62,5 +62,9 @@
                 }
             }
         }
+    }
+
+    &:focus ~ .veggie-burger {
+        background-color: darken($news-main-2, 10%);
     }
 }
