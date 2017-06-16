@@ -29,7 +29,7 @@ define([
                 'commercial/modules/messenger/dfp-origin'
             ], function($1, $2) {
                 messenger = $1;
-                dfpOrigin = $2.dfpOrigin;
+                dfpOrigin = $2;
                 mockWindow = jasmine.createSpyObj('window', ['addEventListener', 'removeEventListener', 'postMessage']);
                 mockWindow.addEventListener.and.callFake(function(_, _onMessage) {
                     onMessage = _onMessage;
