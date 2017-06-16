@@ -122,7 +122,7 @@ object NavLinks {
 
   val todaysPaper = NavLink("today's paper", "/theguardian", "theguardian")
   val observer = NavLink("the observer", "/observer", "observer")
-  val digitalNewspaperArchive = NavLink("digital newspaper archive", "https://theguardian.newspapers.com")
+  val digitalNewspaperArchive = NavLink("digital archive", "https://theguardian.newspapers.com")
   val crosswords = NavLink("crosswords", "/crosswords", "crosswords")
   val video =  NavLink("video", "/video")
   val podcasts =  NavLink("podcasts", "/podcasts")

@@ -258,22 +258,22 @@ object NewNavigation {
     val name = ""
 
     val uk = NavLinkLists(List(
-      NavLink("professional networks", "/guardian-professional"),
       apps.copy(url = apps.url + "?INTCMP=apps_uk_web_newheader"),
-      podcasts,
       video,
+      podcasts,
       pictures,
       newsletters,
       todaysPaper,
       observer,
       digitalNewspaperArchive,
+      NavLink("professional networks", "/guardian-professional"),
       crosswords
     ))
 
     val au = NavLinkLists(List(
       apps.copy(url = apps.url + "?INTCMP=apps_au_web_newheader"),
-      podcasts,
       video,
+      podcasts,
       pictures,
       newsletters,
       digitalNewspaperArchive,
@@ -282,8 +282,8 @@ object NewNavigation {
 
     val us = NavLinkLists(List(
       apps.copy(url = apps.url + "?INTCMP=apps_us_web_newheader"),
-      podcasts,
       video,
+      podcasts,
       pictures,
       newsletters,
       digitalNewspaperArchive,
@@ -292,8 +292,8 @@ object NewNavigation {
 
     val int = NavLinkLists(List(
       apps.copy(url = apps.url + "?INTCMP=apps_int_web_newheader"),
-      podcasts,
       video,
+      podcasts,
       pictures,
       newsletters,
       todaysPaper,
