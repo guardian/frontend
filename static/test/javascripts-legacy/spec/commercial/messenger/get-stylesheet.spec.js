@@ -67,7 +67,10 @@ define([
         });
 
         it('should return only the GuardianSansWeb and GuardianSansTextWeb webfonts', function () {
-            var selector = '.webfont[data-cache-name="GuardianSansWeb"], .webfont[data-cache-name="GuardianSansWeb"]';
+          // this test doesn't seem to work as expected; both the selectors were
+          // the same... I believe the second selector is suppose to target
+          // GuardianSansTextWeb, otherwise this test is identical to the prior
+            var selector = '.webfont[data-cache-name="GuardianSansWeb"], .webfont[data-cache-name="GuardianSansTextWeb"]';
             var result = getStyles({ selector: selector }, styleSheets);
             expect(result).not.toBeNull();
             expect(result.length).toBe($(selector).length);

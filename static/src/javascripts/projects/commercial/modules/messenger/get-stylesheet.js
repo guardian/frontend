@@ -5,22 +5,23 @@ type Specs = {
     selector: string,
 };
 
-type Sheet = {
-    ownerNode: Element,
-};
-
-const getStyles = (specs: Specs, styleSheets: Object): ?Array<any> => {
+const getStyles = (specs: Specs, styleSheets: StyleSheetList): ?Array<any> => {
     if (!specs || typeof specs.selector !== 'string') {
         return null;
     }
 
     const result = [];
     for (let i = 0; i < styleSheets.length; i += 1) {
-        const sheet: Sheet = styleSheets[i];
+        const sheet: StyleSheet = styleSheets[i];
+        // #? Why are we coercing the Type to `Object` rather than being more
+        // specific? Flow typing of `Node` does not account for `matches` or
+        // `tagName` but the code below works. Could we use `nodeName` instead?
+        const ownerNode: Object = sheet.ownerNode;
+
         if (
-            sheet.ownerNode &&
-            sheet.ownerNode.matches &&
-            sheet.ownerNode.matches(specs.selector)
+            ownerNode &&
+            ownerNode.matches &&
+            ownerNode.matches(specs.selector)
         ) {
             if (sheet.ownerNode.tagName === 'STYLE') {
                 result.push(sheet.ownerNode.textContent);
@@ -44,4 +45,4 @@ register('get-styles', (specs): ?Array<any> => {
     }
 });
 
-export default { getStyles };
+export { getStyles };
