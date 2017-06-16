@@ -34,7 +34,7 @@ define([
 
         this.config.tests.forEach(function (test) {
             /*eslint-disable new-cap*/
-            new AudienceItem({test: test}).render(testsContainer);
+            new AudienceItem.AudienceItem({test: test}).render(testsContainer);
             /*eslint-enable new-cap*/
         });
     };
