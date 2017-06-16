@@ -1,6 +1,13 @@
+// @flow
 import dfpOrigin from 'commercial/modules/messenger/dfp-origin';
-export default postMessage;
 
-function postMessage(message, targetWindow, targetOrigin) {
-    targetWindow.postMessage(JSON.stringify(message), targetOrigin || dfpOrigin);
-}
+export const postMessage = (
+    message: {},
+    targetWindow: WindowProxy,
+    targetOrigin: ?string
+): void => {
+    targetWindow.postMessage(
+        JSON.stringify(message),
+        targetOrigin || dfpOrigin
+    );
+};
