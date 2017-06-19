@@ -31,19 +31,19 @@ const catchPolyfillErrors = () => {
 };
 
 const setupSonobi: () => Promise<void> = once(() => {
-    buildPageTargeting();
-    // Setting the async property to false will _still_ load the script in
-    // a non-blocking fashion but will ensure it is executed before googletag
-    return loadScript(config.libs.sonobi, { async: false }).then(
-        catchPolyfillErrors
-    );
+    if (dfpEnv.sonobiEnabled && commercialFeatures.dfpAdvertising) {
+        buildPageTargeting();
+        // Setting the async property to false will _still_ load the script in
+        // a non-blocking fashion but will ensure it is executed before googletag
+        return loadScript(config.libs.sonobi, { async: false }).then(
+            catchPolyfillErrors
+        );
+    }
 });
 
 const init = (start: () => void, stop: () => void) => {
-    if (dfpEnv.sonobiEnabled && commercialFeatures.dfpAdvertising) {
-        start();
-        setupSonobi().then(stop);
-    }
+    start();
+    setupSonobi().then(stop);
 
     return Promise.resolve();
 };
