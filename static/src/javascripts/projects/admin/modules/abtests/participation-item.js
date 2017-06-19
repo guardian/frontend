@@ -1,32 +1,36 @@
+// @flow
 /*
  Module: participation-item.js
  Description: Displays opt-in link for a variant
  */
 import Component from 'common/modules/component';
-import assign from 'lodash/objects/assign';
 
-function ParticipationItem(config) {
-    this.config = assign(this.config, config);
+class ParticipationItem extends Component {
+    constructor(config: Object): void {
+        super();
+
+        this.templateName = 'participation-item-template';
+        this.componentClass = 'participation-item';
+        this.classes = {};
+        this.useBem = true;
+        this.config = Object.assign(
+            {
+                test: '',
+                examplePath: '',
+                variant: '',
+            },
+            config
+        );
+    }
+
+    prerender(): void {
+        const origin = /gutools.co.uk$/.test(document.location.origin)
+            ? 'http://www.theguardian.com'
+            : document.location.origin;
+        const href = `${this.config.examplePath}=${this.config.variant}`;
+        this.elem.textContent = this.config.variant;
+        this.elem.href = origin + href;
+    }
 }
 
-Component.define(ParticipationItem);
-
-ParticipationItem.prototype.config = {
-    test: '',
-    examplePath: '',
-    variant: ''
-};
-
-ParticipationItem.prototype.templateName = 'participation-item-template';
-ParticipationItem.prototype.componentClass = 'participation-item';
-ParticipationItem.prototype.classes = {};
-ParticipationItem.prototype.useBem = true;
-
-ParticipationItem.prototype.prerender = function() {
-    var origin = /gutools.co.uk$/.test(document.location.origin) ? 'http://www.theguardian.com' : document.location.origin,
-        href = this.config.examplePath + '=' + this.config.variant;
-    this.elem.textContent = this.config.variant;
-    this.elem.href = origin + href;
-};
-
-export default ParticipationItem;
+export { ParticipationItem };
