@@ -30,11 +30,15 @@ const setupLoadId = () => {
     });
 };
 
-const setupSwitch: () => Promise<void> = once(() =>
-    // Setting the async property to false will _still_ load the script in
-    // a non-blocking fashion but will ensure it is executed before googletag
-    loadScript(config.libs.switch, { async: false }).then(setupLoadId)
-);
+const setupSwitch: () => Promise<void> = once(() => {
+    if (commercialFeatures.dfpAdvertising) {
+        // Setting the async property to false will _still_ load the script in
+        // a non-blocking fashion but will ensure it is executed before googletag
+        return loadScript(config.libs.switch, { async: false }).then(
+            setupLoadId
+        );
+    }
+});
 
 // The switch api's callSwitch function will perform the retrieval of a pre-flight ad call,
 // using the load id that has been previously set with setupLoadId.
@@ -114,10 +118,8 @@ const maybePushAdUnit = (dfpDivId: string, sizeMapping: any) => {
 };
 
 const init = (start: () => void, stop: () => void) => {
-    if (commercialFeatures.dfpAdvertising) {
-        start();
-        setupSwitch().then(stop);
-    }
+    start();
+    setupSwitch().then(stop);
 
     return Promise.resolve();
 };
