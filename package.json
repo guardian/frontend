@@ -73,7 +73,7 @@
     "git-user-name": "^1.2.0",
     "glob": "^7",
     "gzip-size": "^3.0.0",
-    "hasha": "^2.2.0",
+    "hasha": "^3.0.0",
     "jasmine-core": "^2.3.2",
     "jest": "^20.0.3",
     "jest-teamcity-reporter": "^0.6.2",
