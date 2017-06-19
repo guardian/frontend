@@ -1,7 +1,7 @@
 // @flow
 import reportError from 'lib/report-error';
 import dfpOrigin from 'commercial/modules/messenger/dfp-origin';
-import postMessage from 'commercial/modules/messenger/post-message';
+import { postMessage } from 'commercial/modules/messenger/post-message';
 
 const ALLOWED_HOSTS = [dfpOrigin, `${location.protocol}//${location.host}`];
 const LISTENERS = {};
@@ -18,7 +18,7 @@ const error500 = {
 
 type Event = {
     data: string,
-    origin: number,
+    origin: string,
     source: string,
 };
 

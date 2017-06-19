@@ -6,7 +6,6 @@
   "Kate Whalen": [
     "projects/commercial/modules/messenger/dfp-origin.js",
     "projects/commercial/modules/messenger/get-stylesheet.js",
-    "projects/commercial/modules/messenger/post-message.js",
     "projects/commercial/modules/messenger/resize.js",
     "projects/commercial/modules/messenger/scroll.js"
   ],
