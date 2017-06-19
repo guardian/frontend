@@ -37,6 +37,7 @@ from scrolling */
 .new-header__cta-container {
     left: $gs-gutter / 4;
     position: absolute;
+    top: 0;
 
     @include mq(mobileLandscape) {
         left: $gs-gutter / 2;
@@ -44,6 +45,7 @@ from scrolling */
 }
 
 .new-header__logo {
+    display: flex;
     margin-left: auto;
 }
 
