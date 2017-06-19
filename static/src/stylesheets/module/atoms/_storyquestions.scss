@@ -22,7 +22,7 @@
 .user__question-title--secondary {
     color: $neutral-1;
     display: block;
-    font-size: $gs-baseline + 6;
+    font-size: 18px;
     font-weight: 400;
 }
 
@@ -30,14 +30,13 @@
     position: relative;
     overflow: hidden;
     background-color: $neutral-8;
-    margin-bottom: 0px;
+    margin-bottom: 0;
     padding-top: $gs-baseline / 2;
     padding-bottom: $gs-baseline;
 
     &.is-clicked {
         background-color: $news-support-5;
-        margin-bottom: 0px;
-        padding-bottom: 0px;
+        padding-bottom: 0;
     }
 
     &.is-clicked + .storyquestion-submission-container {
@@ -91,15 +90,15 @@
     clear: both;
     margin-top: $gs-baseline;
     margin-bottom: $gs-baseline;
-    font-size: $gs-baseline + 2;
-    line-height: $gs-baseline + 4;
+    font-size: 14px;
+    line-height: 18px;
     width: 90%;
     display: block;
 
     @include mq($from: tablet) {
         clear: none;
         margin-top: 0;
-        font-size: $gs-baseline + 4;
+        font-size: 16px;
     }
 }
 
@@ -141,7 +140,7 @@
     .text-input {
         border-bottom-left-radius: calc(#{$gs-baseline} * 2) + 4;
         border-top-left-radius: calc(#{$gs-baseline} * 2) + 4;
-        font-size: $gs-baseline + 2;
+        font-size: 14px;
     }
 
     .button--primary {
