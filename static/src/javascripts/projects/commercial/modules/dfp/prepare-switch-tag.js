@@ -38,6 +38,8 @@ const setupSwitch: () => Promise<void> = once(() => {
             setupLoadId
         );
     }
+
+    return Promise.resolve();
 });
 
 // The switch api's callSwitch function will perform the retrieval of a pre-flight ad call,

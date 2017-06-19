@@ -39,6 +39,8 @@ const setupSonobi: () => Promise<void> = once(() => {
             catchPolyfillErrors
         );
     }
+
+    return Promise.resolve();
 });
 
 const init = (start: () => void, stop: () => void) => {
