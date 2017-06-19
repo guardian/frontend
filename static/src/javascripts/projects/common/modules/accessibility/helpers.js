@@ -1,11 +1,14 @@
+// @flow
 import fastdom from 'fastdom';
 import accessibility from 'common/modules/accessibility/main';
-import $ from 'lib/$';
 
-function shouldHideFlashingElements(callback) {
+const shouldHideFlashingElements = (callback: ?() => {}): void => {
     if (!accessibility.isOn('flashing-elements')) {
-        fastdom.write(function() {
-            $('body').addClass('disable-flashing-elements');
+        fastdom.write(() => {
+            if (document.body) {
+                document.body.classList.add('disable-flashing-elements');
+            }
+
             if (callback) {
                 callback();
             }
@@ -13,8 +16,6 @@ function shouldHideFlashingElements(callback) {
     } else if (callback) {
         callback();
     }
-}
-
-export default {
-    shouldHideFlashingElements: shouldHideFlashingElements
 };
+
+export { shouldHideFlashingElements };
