@@ -202,13 +202,13 @@ object ImgSrc extends Logging with implicits.Strings {
     }
   }
 
-  def findNearestSrc(ImageElement: ImageMedia, profile: Profile): Option[String] = {
+  def findNearestSrc(ImageElement: ImageMedia, profile: ElementProfile): Option[String] = {
     profile.elementFor(ImageElement).flatMap(_.url).map{ largestImage =>
       ImgSrc(largestImage, profile)
     }
   }
 
-  def findLargestSrc(ImageElement: ImageMedia, profile: Profile): Option[String] = {
+  def findLargestSrc(ImageElement: ImageMedia, profile: ElementProfile): Option[String] = {
     profile.largestFor(ImageElement).flatMap(_.url).map{ largestImage =>
       ImgSrc(largestImage, profile)
     }
@@ -231,15 +231,18 @@ object ImgSrc extends Logging with implicits.Strings {
       .mkString(", ")
   }
 
-  def srcsetForProfile(profile: Profile, imageContainer: ImageMedia, hidpi: Boolean): String = {
-    if(ImageServerSwitch.isSwitchedOn) {
-      s"${findLargestSrc(imageContainer, profile).get} ${profile.width.get * (if (hidpi) 2 else 1)}w"
-    } else {
-      s"${findNearestSrc(imageContainer, profile).get} ${profile.width.get * (if (hidpi) 2 else 1)}w"
+  def maybeSrcsetForProfile(profile: ElementProfile, imageContainer: ImageMedia, hidpi: Boolean): Option[String] = {
+    val largestOrNearest = if(ImageServerSwitch.isSwitchedOn) findLargestSrc(_, _) else findNearestSrc(_, _)
+
+    largestOrNearest(imageContainer, profile).map { src =>
+      s"$src ${profile.width.get * (if (hidpi) 2 else 1)}w"
     }
   }
 
-  def srcsetForProfile(profile: Profile, path: String, hidpi: Boolean): String = {
+  def srcsetForProfile(profile: ElementProfile, imageContainer: ImageMedia, hidpi: Boolean): String =
+    maybeSrcsetForProfile(profile, imageContainer, hidpi).get
+
+  def srcsetForProfile(profile: ElementProfile, path: String, hidpi: Boolean): String = {
     s"${ImgSrc(path, profile)} ${profile.width.get * (if (hidpi) 2 else 1)}w"
   }
 
