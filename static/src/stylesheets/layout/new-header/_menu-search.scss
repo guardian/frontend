@@ -15,6 +15,7 @@
     @include mq(desktop) {
         margin-bottom: $gs-baseline;
         margin-left: 0;
+        margin-top: $gs-row-height / 2;
         padding-right: $gs-gutter;
         width: 100%;
     }
