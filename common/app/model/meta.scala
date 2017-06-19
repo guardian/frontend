@@ -59,6 +59,7 @@ object Fields {
       displayHint = apiContent.fields.flatMap(_.displayHint).getOrElse(""),
       isLive = apiContent.fields.flatMap(_.liveBloggingNow).getOrElse(false),
       sensitive = apiContent.fields.flatMap(_.sensitive),
+      shouldHideReaderRevenue = apiContent.fields.flatMap(_.shouldHideReaderRevenue).getOrElse(false),
       legallySensitive = apiContent.fields.flatMap(_.legallySensitive),
       firstPublicationDate = apiContent.fields.flatMap(_.firstPublicationDate).map(_.toJodaDateTime)
     )
@@ -77,6 +78,7 @@ final case class Fields(
   displayHint: String,
   isLive: Boolean,
   sensitive: Option[Boolean],
+  shouldHideReaderRevenue: Boolean,
   legallySensitive: Option[Boolean],
   firstPublicationDate: Option[DateTime]
 ){
