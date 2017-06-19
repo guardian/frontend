@@ -10,7 +10,7 @@ import bonzo from 'bonzo';
 import debounce from 'lodash/functions/debounce';
 
 class ABTestReportItem extends Component {
-    constructor(config: any): void {
+    constructor(config: Object): void {
         super();
 
         this.templateName = 'abtest-item-template';
@@ -61,17 +61,17 @@ class ABTestReportItem extends Component {
             (daysTillExpiry === 1 ? ' day' : ' days');
         this.getElem('expiry').setAttribute('title', this.config.test.expiry);
 
-        this.getElem(
-            'audience'
-        ).textContent = `${this.config.test.audience * 100}%`;
-        this.getElem(
-            'audience-offset'
-        ).textContent = `${this.config.test.audienceOffset * 100}%`;
+        this.getElem('audience').textContent = `${this.config.test.audience *
+            100}%`;
+        this.getElem('audience-offset').textContent = `${this.config.test
+            .audienceOffset * 100}%`;
 
-        const tableauUrl = `https://tableau-datascience.gutools.co.uk/views/AutomatedMVTDashboard-MkII/MainMVTDashboard?:embed=y&id=${this.config.test.id}`;
+        const tableauUrl = `https://tableau-datascience.gutools.co.uk/views/AutomatedMVTDashboard-MkII/MainMVTDashboard?:embed=y&id=${this
+            .config.test.id}`;
         this.getElem('tableau').innerHTML = `<a href="${tableauUrl}">view</a>`;
 
-        const ophanUrl = `https://dashboard.ophan.co.uk/graph/breakdown?ab=${this.config.test.id}`;
+        const ophanUrl = `https://dashboard.ophan.co.uk/graph/breakdown?ab=${this
+            .config.test.id}`;
         this.getElem('ophan').innerHTML = `<a href="${ophanUrl}">graph</a>`;
 
         this.getElem('hypothesis').textContent =

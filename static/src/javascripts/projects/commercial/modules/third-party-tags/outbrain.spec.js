@@ -1,9 +1,8 @@
 // @flow
 import config from 'lib/config';
-import checkMediator from 'common/modules/check-mediator';
+import { initCheckMediator, resolveCheck } from 'common/modules/check-mediator';
 import detect from 'lib/detect';
 import { load } from './outbrain-load';
-import { tracking } from './outbrain-tracking';
 import { init } from './outbrain';
 import { getSection } from './outbrain-sections';
 
@@ -14,7 +13,6 @@ jest.mock('lib/detect', () => ({
 }));
 jest.mock('lib/load-script', () => ({ loadScript: jest.fn() }));
 jest.mock('./outbrain-load', () => ({ load: jest.fn() }));
-jest.mock('./outbrain-tracking', () => ({ tracking: jest.fn() }));
 
 describe('Outbrain', () => {
     beforeEach(done => {
@@ -26,7 +24,7 @@ describe('Outbrain', () => {
                 `;
         }
         // init checkMediator so we can resolve checks in tests
-        checkMediator.init();
+        initCheckMediator();
 
         config.switches.outbrain = true;
         config.switches.emailInArticleOutbrain = false;
@@ -39,7 +37,6 @@ describe('Outbrain', () => {
     });
 
     afterEach(() => {
-        checkMediator.test.testClean();
         if (document.body) {
             document.body.innerHTML = '';
         }
@@ -60,22 +57,10 @@ describe('Outbrain', () => {
 
         it('should not load if outbrain disabled', done => {
             // isOutbrainDisabled check
-            checkMediator.resolveCheck('isOutbrainDisabled', true);
-            // isUserInNonCompliantAbTest checks
-            checkMediator.resolveCheck('isUserInContributionsAbTest', true);
-            checkMediator.resolveCheck('isUserNotInContributionsAbTest', false);
-            checkMediator.resolveCheck('isUserInEmailAbTest', false);
-            checkMediator.resolveCheck('emailCanRunPreCheck', false);
-            checkMediator.resolveCheck('listCanRun', false);
-            checkMediator.resolveCheck('emailInArticleOutbrainEnabled', false);
-            checkMediator.resolveCheck('isStoryQuestionsOnPage', false);
+            resolveCheck('isOutbrainDisabled', true);
 
             init().then(() => {
                 expect(load).not.toHaveBeenCalled();
-                expect(tracking).toHaveBeenCalled();
-                expect(tracking).toHaveBeenCalledWith({
-                    state: 'outbrainDisabled',
-                });
                 done();
             });
         });
@@ -83,115 +68,101 @@ describe('Outbrain', () => {
         it('should load instantly when ad block is in use', done => {
             detect.adblockInUse = Promise.resolve(true);
             // isOutbrainDisabled check
-            checkMediator.resolveCheck('isOutbrainDisabled', false);
-            // isUserInNonCompliantAbTest checks
-            checkMediator.resolveCheck('isUserInContributionsAbTest', true);
-            checkMediator.resolveCheck('isUserInEmailAbTest', false);
-            checkMediator.resolveCheck('emailCanRunPreCheck', false);
-            checkMediator.resolveCheck('listCanRun', false);
-            checkMediator.resolveCheck('emailInArticleOutbrainEnabled', false);
-            checkMediator.resolveCheck('isUserNotInContributionsAbTest', false);
-            checkMediator.resolveCheck('isStoryQuestionsOnPage', false);
+            resolveCheck('isOutbrainDisabled', false);
+            // make outbrain compliant
+            resolveCheck('isUserInContributionsAbTest', false);
+            resolveCheck('isUserInEmailAbTestAndEmailCanRun', false);
+            resolveCheck('isStoryQuestionsOnPage', false);
 
             init().then(() => {
                 expect(load).toHaveBeenCalled();
-                expect(load).toHaveBeenCalledWith('nonCompliant');
-                expect(tracking).toHaveBeenCalled();
-                expect(tracking).toHaveBeenCalledWith({
-                    state: 'nonCompliant',
-                });
                 detect.adblockInUse = Promise.resolve(false);
-                done();
-            });
-        });
-
-        it('should load in the low-priority merch component', done => {
-            // isOutbrainDisabled check
-            checkMediator.resolveCheck('isOutbrainDisabled', false);
-            // isOutbrainBlockedByAds and isOutbrainMerchandiseCompliant checks
-            checkMediator.resolveCheck('hasHighPriorityAdLoaded', true);
-            checkMediator.resolveCheck('hasLowPriorityAdLoaded', false);
-            checkMediator.resolveCheck('hasLowPriorityAdNotLoaded', true);
-
-            init().then(() => {
-                expect(load).toHaveBeenCalled();
-                expect(load).toHaveBeenCalledWith('merchandising');
-                expect(tracking).toHaveBeenCalled();
-                expect(tracking).toHaveBeenCalledWith({
-                    state: 'outbrainMerchandiseCompliant',
-                });
                 done();
             });
         });
 
         it('should not load if both merch components are loaded', done => {
             // isOutbrainDisabled check
-            checkMediator.resolveCheck('isOutbrainDisabled', false);
+            resolveCheck('isOutbrainDisabled', false);
             // isOutbrainBlockedByAds checks
-            checkMediator.resolveCheck('hasHighPriorityAdLoaded', true);
-            checkMediator.resolveCheck('hasLowPriorityAdLoaded', true);
+            resolveCheck('isOutbrainBlockedByAds', true);
 
             init().then(() => {
                 expect(load).not.toHaveBeenCalled();
-                expect(tracking).toHaveBeenCalled();
-                expect(tracking).toHaveBeenCalledWith({
-                    state: 'outbrainBlockedByAds',
-                });
+                done();
+            });
+        });
+
+        it('should load in the low-priority merch component', done => {
+            // isOutbrainDisabled check
+            resolveCheck('isOutbrainDisabled', false);
+            // isOutbrainBlockedByAds and isOutbrainMerchandiseCompliant checks
+            resolveCheck('isOutbrainBlockedByAds', false);
+            resolveCheck('isOutbrainMerchandiseCompliant', true);
+
+            init().then(() => {
+                expect(load).toHaveBeenCalledWith('merchandising');
+                done();
+            });
+        });
+
+        it('should load a non compliant component if user in contributions AB test', done => {
+            // isOutbrainDisabled check
+            resolveCheck('isOutbrainDisabled', false);
+            // isOutbrainBlockedByAds and isOutbrainMerchandiseCompliant checks
+            resolveCheck('isOutbrainBlockedByAds', false);
+            resolveCheck('isOutbrainMerchandiseCompliant', false);
+            resolveCheck('isUserInContributionsAbTest', true);
+
+            init().then(() => {
+                expect(load).toHaveBeenCalledWith('nonCompliant');
+                done();
+            });
+        });
+
+        it('should load a non compliant component if user in Email AB test and Email can run', done => {
+            // isOutbrainDisabled check
+            resolveCheck('isOutbrainDisabled', false);
+            // isOutbrainBlockedByAds and isOutbrainMerchandiseCompliant checks
+            resolveCheck('isOutbrainBlockedByAds', false);
+            resolveCheck('isOutbrainMerchandiseCompliant', false);
+            resolveCheck('isUserInContributionsAbTest', false);
+            resolveCheck('isUserInEmailAbTestAndEmailCanRun', true);
+
+            init().then(() => {
+                expect(load).toHaveBeenCalledWith('nonCompliant');
+                done();
+            });
+        });
+
+        it('should load a non compliant component if story questions on page', done => {
+            // isOutbrainDisabled check
+            resolveCheck('isOutbrainDisabled', false);
+            // isOutbrainBlockedByAds and isOutbrainMerchandiseCompliant checks
+            resolveCheck('isOutbrainBlockedByAds', false);
+            resolveCheck('isOutbrainMerchandiseCompliant', false);
+            resolveCheck('isUserInContributionsAbTest', false);
+            resolveCheck('isUserInEmailAbTestAndEmailCanRun', false);
+            resolveCheck('isStoryQuestionsOnPage', true);
+
+            init().then(() => {
+                expect(load).toHaveBeenCalledWith('nonCompliant');
                 done();
             });
         });
 
         it('should load a compliant component', done => {
             // isOutbrainDisabled check
-            checkMediator.resolveCheck('isOutbrainDisabled', false);
+            resolveCheck('isOutbrainDisabled', false);
             // isOutbrainBlockedByAds and isOutbrainMerchandiseCompliant checks
-            checkMediator.resolveCheck('hasHighPriorityAdLoaded', false);
-            checkMediator.resolveCheck('hasLowPriorityAdLoaded', false);
-            checkMediator.resolveCheck('hasLowPriorityAdNotLoaded', true);
-            // isUserInNonCompliantAbTest checks
-            checkMediator.resolveCheck('isUserInContributionsAbTest', false);
-            checkMediator.resolveCheck('isUserNotInContributionsAbTest', false);
-            checkMediator.resolveCheck('isUserInEmailAbTest', false);
-            checkMediator.resolveCheck('emailCanRunPreCheck', false);
-            checkMediator.resolveCheck('listCanRun', false);
-            checkMediator.resolveCheck('emailInArticleOutbrainEnabled', false);
-            checkMediator.resolveCheck('isStoryQuestionsOnPage', false);
+            resolveCheck('isOutbrainBlockedByAds', false);
+            resolveCheck('isOutbrainMerchandiseCompliant', false);
+            resolveCheck('isUserInContributionsAbTest', false);
+            resolveCheck('isUserInEmailAbTestAndEmailCanRun', false);
+            resolveCheck('isStoryQuestionsOnPage', false);
 
             init().then(() => {
                 expect(load).toHaveBeenCalled();
-                expect(load).not.toHaveBeenCalledWith('nonCompliant');
-                expect(load).not.toHaveBeenCalledWith('merchandising');
-                expect(tracking).toHaveBeenCalled();
-                expect(tracking).toHaveBeenCalledWith({
-                    state: 'compliant',
-                });
-                done();
-            });
-        });
-
-        it('should not load a compliant component if story questions are on page', done => {
-            // isOutbrainDisabled check
-            checkMediator.resolveCheck('isOutbrainDisabled', false);
-            // isOutbrainBlockedByAds and isOutbrainMerchandiseCompliant checks
-            checkMediator.resolveCheck('hasHighPriorityAdLoaded', false);
-            checkMediator.resolveCheck('hasLowPriorityAdLoaded', false);
-            checkMediator.resolveCheck('hasLowPriorityAdNotLoaded', true);
-            // isUserInNonCompliantAbTest checks
-            checkMediator.resolveCheck('isUserInContributionsAbTest', false);
-            checkMediator.resolveCheck('isUserNotInContributionsAbTest', false);
-            checkMediator.resolveCheck('isUserInEmailAbTest', false);
-            checkMediator.resolveCheck('emailCanRunPreCheck', false);
-            checkMediator.resolveCheck('listCanRun', false);
-            checkMediator.resolveCheck('emailInArticleOutbrainEnabled', false);
-            checkMediator.resolveCheck('isStoryQuestionsOnPage', true);
-
-            init().then(() => {
-                expect(load).toHaveBeenCalled();
-                expect(load).toHaveBeenCalledWith('nonCompliant');
-                expect(tracking).toHaveBeenCalled();
-                expect(tracking).toHaveBeenCalledWith({
-                    state: 'nonCompliant',
-                });
                 done();
             });
         });

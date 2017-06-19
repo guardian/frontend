@@ -99,9 +99,11 @@ const getReferrer = (): ?string => {
         },
     ];
 
-    const matchedRef: MatchType = referrerTypes.filter(
-        referrerType => detect.getReferrer().indexOf(referrerType.match) > -1
-    )[0] || {};
+    const matchedRef: MatchType =
+        referrerTypes.filter(
+            referrerType =>
+                detect.getReferrer().indexOf(referrerType.match) > -1
+        )[0] || {};
 
     return matchedRef.id;
 };

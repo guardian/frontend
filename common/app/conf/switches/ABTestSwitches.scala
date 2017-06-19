@@ -61,16 +61,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-contributions-epic-ask-four-post-election",
-    "This tests a custom post-election epic on all articles for UK users, with a limit of 4 impressions in any given 30 days",
-    owners = Seq(Owner.withGithub("joelochlann")),
-    safeState = On,
-    sellByDate = new LocalDate(2018, 8, 7),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-acquisitions-epic-liveblog",
     "This places the epic below those blocks on liveblogs which have been marked for displaying the epic in Composer",
     owners = Seq(Owner.withGithub("joelochlann")),
@@ -103,26 +93,6 @@ trait ABTestSwitches {
     ABTests,
     "ab-acquisitions-this-land-series-epic",
     "This places a custom Epic at the ehnd of This Land Is Your Land articles",
-    owners = Seq(Owner.withGithub("desbo")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 8, 1),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-acquisitions-this-land-environment-epic-earning",
-    "This places a custom Epic at the ennd of environment articles",
-    owners = Seq(Owner.withGithub("desbo")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 8, 1),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-acquisitions-this-land-environment-epic-learning",
-    "This places a custom Epic at the ennd of environment articles",
     owners = Seq(Owner.withGithub("desbo")),
     safeState = Off,
     sellByDate = new LocalDate(2017, 8, 1),
@@ -171,8 +141,8 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-bundle-digital-sub-price-test-1-m",
-    "Test pricing options for digital subs",
+    "ab-bundle-digital-sub-price-test-1-m-e",
+    "Test pricing options for digital subs from epic",
     owners = Seq(Owner.withGithub("justinpinner")),
     safeState = Off,
     sellByDate = new LocalDate(2017, 7, 6),  // Thursday 6th July
@@ -199,15 +169,6 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  Switch(
-    ABTests,
-    "ab-acquisitions-epic-testimonials-usa",
-    "Test placing localised reader testimonials in the Epic",
-    owners = Seq(Owner.withGithub("desbo")),
-    safeState = On,
-    sellByDate = new LocalDate(2017, 6, 26),
-    exposeClientSide = true
-  )
 
   Switch(
     ABTests,

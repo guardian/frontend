@@ -44,16 +44,11 @@
             } else {
                 <div class="hide-on-mobile">
                     @fragments.headTonal(article, model, isPaidContent, amp = amp)
+                </div>
 
-                    @if(article.tags.isFeature && article.elements.hasShowcaseMainElement) {
-                        @fragments.mainMedia(article, amp)
-                    }
-                </div>
-                <div class="mobile-only">
-                    @if(article.tags.isFeature && article.elements.hasShowcaseMainElement) {
-                        @fragments.mainMedia(article, amp)
-                    }
-                </div>
+                @if(article.tags.isFeature && article.elements.hasShowcaseMainElement) {
+                    @fragments.mainMedia(article, amp)
+                }
             }
 
             <div class="content__main tonal__main tonal__main--@toneClass(article)">

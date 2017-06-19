@@ -52,7 +52,6 @@ object NavLinks {
   val borrowing = NavLink("borrowing", "/money/debt", "money/debt")
   val careers = NavLink("careers", "/money/work-and-careers", "money/work-and-careers")
   val obituaries = NavLink("obituaries", "/tone/obituaries")
-  val ukElection2017 = NavLink("election", "/politics/general-election-2017")
 
   /* OPINION */
   val opinion = NavLink("opinion", "/commentisfree", longTitle = "opinion home", iconName = "home", uniqueSection = "commentisfree")
@@ -122,7 +121,7 @@ object NavLinks {
 
   val todaysPaper = NavLink("today's paper", "/theguardian", "theguardian")
   val observer = NavLink("the observer", "/observer", "observer")
-  val digitalNewspaperArchive = NavLink("digital newspaper archive", "https://theguardian.newspapers.com")
+  val digitalNewspaperArchive = NavLink("digital archive", "https://theguardian.newspapers.com")
   val crosswords = NavLink("crosswords", "/crosswords", "crosswords")
   val video =  NavLink("video", "/video")
   val podcasts =  NavLink("podcasts", "/podcasts")
@@ -133,6 +132,7 @@ object NavLinks {
   val apps = NavLink("the guardian app", "https://app.adjust.com/f8qm1x_8q69t7?campaign=NewHeader&adgroup=Mobile&creative=generic")
   val ukMasterClasses = NavLink("masterclasses", "/guardian-masterclasses?INTCMP=masterclasses_uk_web_newheader")
   val auEvents = NavLink("events", "/guardian-live-australia")
+  var holidays = NavLink("holidays", "https://holidays.theguardian.com/?utm_source=theguardian&utm_medium=guardian-links&utm_campaign=topnav&INTCMP=topnav")
 
   val tagPages = List(
     "technology/games",

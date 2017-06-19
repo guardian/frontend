@@ -4,7 +4,7 @@
 @import conf.switches.Switches.IdentityProfileNavigationSwitch
 
 @if(IdentityProfileNavigationSwitch.isSwitchedOn) {
-    <li class="menu-item js-navigation-sign-in hide-on-desktop">
+    <li class="menu-item js-navigation-sign-in">
         <a href="@Configuration.id.url/signin?INTCMP=DOTCOM_HEADER_SIGNIN"
            data-link-name="nav2 : sign in"
            class="menu-item__title">
@@ -12,8 +12,20 @@
         </a>
     </li>
 
-    <li class="menu-item u-h js-navigation-account-details hide-on-desktop">
-        <button class="menu-item__title js-navigation-toggle"
+    <li class="menu-item menu-item--user-detail u-h hide-until-desktop js-navigation-account-details">
+        <div class="menu-user">
+            @*
+                <!-- TODO: Show the users avatar -->
+                <img src=""
+                     class="menu-user__avatar" />
+            *@
+
+            <p class="menu-user__name js-navigation-account-username"></p>
+        </div>
+    </li>
+
+    <li class="menu-item menu-item--membership u-h js-navigation-account-actions">
+        <button class="menu-item__title hide-on-desktop js-navigation-toggle"
                 data-link-name="nav2 : my account"
                 aria-haspopup="true"
                 aria-expanded="true">
@@ -21,10 +33,10 @@
             my account
         </button>
 
-        <ul class="menu-group menu-group--lowlight">
-            <li class="menu-item">
+        <ul class="menu-group menu-group--membership-actions">
+            <li class="menu-item u-h js-show-comment-activity">
                 <a data-link-name="nav2 : comment activity"
-                   class="menu-item__title u-h js-add-comment-activity-link">
+                   class="menu-item__title js-add-comment-activity-link">
                     Comment activity
                 </a>
             </li>

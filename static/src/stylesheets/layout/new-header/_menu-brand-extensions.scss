@@ -1,0 +1,49 @@
+.menu-brand-extensions {
+    background-color: $news-main-2;
+    color: $guardian-brand-dark;
+}
+
+.menu-brand-extensions__inner {
+    box-sizing: border-box;
+    padding: $gs-baseline / 2 $gs-gutter;
+}
+
+.menu-brand-extensions__list {
+    display: inline-block;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    vertical-align: middle;
+}
+
+.menu-brand-extensions__list-item {
+    display: inline-block;
+
+    & + &:before {
+        color: currentColor;
+        content: '/';
+        display: inline-block;
+        font-size: 22px;
+        opacity: .6;
+        padding-left: -2px;
+        padding-right: -2px;
+        pointer-events: none;
+    }
+}
+
+.menu-brand-extensions__logo {
+    display: inline-block;
+    margin-right: $gs-gutter / 3;
+    position: relative;
+    top: 4px;
+    vertical-align: middle;
+}
+
+.menu-brand-extensions__logo__svg {
+    height: 28px;
+    width: 170px;
+
+    path {
+        fill: currentColor;
+    }
+}
