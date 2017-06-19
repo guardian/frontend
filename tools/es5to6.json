@@ -169,7 +169,6 @@
   ],
   "jfsoul": [
     "projects/common/modules/navigation/search.js",
-    "projects/common/modules/navigation/user-account.js",
     "projects/common/modules/onward/breaking-news.js",
     "projects/common/modules/onward/geo-most-popular.js",
     "projects/common/modules/onward/history.js",
