@@ -110,12 +110,14 @@ from scrolling */
     }
 
     @include mq(tablet) {
-        height: calc(3 / 16 * 370px);
-        width: 370px;
+        height: calc(3 / 16 * 385px);
+        width: 385px;
     }
 
     @include mq(desktop) {
+        height: calc(3 / 16 * 385px);
         margin-bottom: $gs-baseline / 4;
+        width: 385px;
     }
 
     .new-header--slim & {
