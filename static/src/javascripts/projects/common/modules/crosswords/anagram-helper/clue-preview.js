@@ -26,7 +26,7 @@ const CluePreview = React.createClass({
 
     // Checks a object in the form{",":[4,7]}
     checkIfLetterHasSeparator(
-        locations: { ',': Array<number> },
+        locations: { ','?: Array<number>, '-'?: Array<number> },
         letterIndex: number
     ): string {
         const spaces = locations[','];
