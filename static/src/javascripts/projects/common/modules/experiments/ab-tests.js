@@ -7,7 +7,6 @@ import MembershipEngagementBannerTests from 'common/modules/experiments/tests/me
 import PaidContentVsOutbrain2 from 'common/modules/experiments/tests/paid-content-vs-outbrain';
 import { tailorSurvey } from 'common/modules/experiments/tests/tailor-survey';
 import BookmarksEmailVariants2 from 'common/modules/experiments/tests/bookmarks-email-variants-2';
-import BundleDigitalSubPriceTest1 from 'common/modules/experiments/tests/bundle-digital-sub-price-test-1';
 import { ExplainerSnippet } from 'common/modules/experiments/tests/explainer-snippet';
 
 import AcquisitionsEpicElectionInteractiveEnd from 'common/modules/experiments/tests/acquisitions-epic-election-interactive-end';
@@ -20,7 +19,6 @@ export const TESTS: Array<ABTest> = [
     getAcquisitionTest(),
     tailorSurvey,
     BookmarksEmailVariants2,
-    new BundleDigitalSubPriceTest1(),
     ExplainerSnippet(),
     new AcquisitionsEpicElectionInteractiveEnd(),
     new AcquisitionsEpicElectionInteractiveSlice(),

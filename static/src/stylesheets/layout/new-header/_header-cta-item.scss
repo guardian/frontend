@@ -28,10 +28,6 @@
     @include mq(tablet) {
         font-size: 17px;
     }
-
-    @include mq(desktop) {
-        font-size: 18px;
-    }
 }
 
 .header-cta-item__new-line {

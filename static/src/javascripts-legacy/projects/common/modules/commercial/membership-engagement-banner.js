@@ -155,6 +155,7 @@ define([
 
 
         function showBanner(params) {
+            
 
             if (params === DO_NOT_RENDER_ENGAGEMENT_BANNER || membershipEngagementBannerBlock.isBlocked()) {
                 return;

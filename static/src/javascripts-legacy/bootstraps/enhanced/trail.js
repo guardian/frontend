@@ -85,7 +85,7 @@ define([
                 new Onward(qwery('.js-onward'));
             } else if (config.page.tones !== '') {
                 $('.js-onward').each(function (c) {
-                    new TonalComponent().fetch(c, 'html');
+                    new TonalComponent.TonalComponent().fetch(c, 'html');
                 });
             }
         });
