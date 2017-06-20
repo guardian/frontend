@@ -4516,7 +4516,7 @@ json-stable-stringify@^1.0.0, json-stable-stringify@^1.0.1:
   dependencies:
     jsonify "~0.0.0"
 
-json-stringify-safe@^5.0.1, json-stringify-safe@~5.0.1:
+json-stringify-safe@~5.0.1:
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/json-stringify-safe/-/json-stringify-safe-5.0.1.tgz#1296a2d58fd45f19a0f6ce01d65701e2c735b6eb"
 
@@ -6453,11 +6453,9 @@ range-parser@^1.2.0, range-parser@~1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/range-parser/-/range-parser-1.2.0.tgz#f49be6b487894ddc40dcc94a322f611092e00d5e"
 
-raven-js@^3.14.0:
-  version "3.14.0"
-  resolved "https://registry.yarnpkg.com/raven-js/-/raven-js-3.14.0.tgz#94dda81d975fdc4a42f193db437cf70021d654e0"
-  dependencies:
-    json-stringify-safe "^5.0.1"
+raven-js@^3.16.0:
+  version "3.16.0"
+  resolved "https://registry.yarnpkg.com/raven-js/-/raven-js-3.16.0.tgz#a799da4fdd04c63943f67deb93daa0ecfe101eab"
 
 raw-body@~2.1.7:
   version "2.1.7"
@@ -7758,7 +7756,7 @@ ua-parser-js@0.7.12, ua-parser-js@^0.7.9:
   version "0.7.12"
   resolved "https://registry.yarnpkg.com/ua-parser-js/-/ua-parser-js-0.7.12.tgz#04c81a99bdd5dc52263ea29d24c6bf8d4818a4bb"
 
-uglify-js, uglify-js@^2.6, uglify-js@^2.6.1:
+uglify-js, uglify-js@^2.6.1:
   version "2.7.4"
   resolved "https://registry.yarnpkg.com/uglify-js/-/uglify-js-2.7.4.tgz#a295a0de12b6a650c031c40deb0dc40b14568bd2"
   dependencies:
@@ -7767,7 +7765,7 @@ uglify-js, uglify-js@^2.6, uglify-js@^2.6.1:
     uglify-to-browserify "~1.0.0"
     yargs "~3.10.0"
 
-uglify-js@^2.8.29:
+uglify-js@^2.6, uglify-js@^2.8.29:
   version "2.8.29"
   resolved "https://registry.yarnpkg.com/uglify-js/-/uglify-js-2.8.29.tgz#29c5733148057bb4e1f75df35b7a9cb72e6a59dd"
   dependencies:
