@@ -14,7 +14,7 @@
     "lodash-amd": "~2.4.1",
     "ophan-tracker-js": "^1.3.6",
     "qwery": "3.4.2",
-    "raven-js": "^3.14.0",
+    "raven-js": "^3.16.0",
     "react": "0.13.2",
     "reqwest": "2.0.5",
     "tcp-ping": "^0.1.1",
