@@ -122,7 +122,7 @@
     "strip-ansi": "^3.0.1",
     "svgo": "^0.7.1",
     "uglify-js": "^2.7.4",
-    "webpack": "^2.6.0",
+    "webpack": "^3.0.0",
     "webpack-bundle-analyzer": "^2.8.2",
     "webpack-merge": "^4.1.0",
     "webpack-visualizer-plugin": "^0.1.11",
