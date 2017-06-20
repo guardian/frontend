@@ -5,7 +5,6 @@
   "Richard Nguyen": [],
   "Kate Whalen": [
     "projects/commercial/modules/messenger/get-stylesheet.js",
-    "projects/commercial/modules/messenger/post-message.js",
     "projects/commercial/modules/messenger/resize.js",
     "projects/commercial/modules/messenger/scroll.js"
   ],
@@ -53,7 +52,6 @@
   "GHaberis": [
     "projects/admin/modules/abtests/participation-item.js",
     "projects/admin/modules/abtests/participation.js",
-    "projects/common/modules/accessibility/helpers.js",
     "projects/common/modules/crosswords/anagram-helper/clue-preview.js"
   ],
   "Gustav Pursche": [

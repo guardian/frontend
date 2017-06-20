@@ -1,11 +1,17 @@
 .user__question {
     padding-bottom: $gs-baseline;
     overflow: auto;
+
+    &.submeta {
+        border: 0;
+    }
 }
 .user__question-title {
     @include fs-headline(3);
     font-weight: 900;
     color: $news-main-1;
+    border-top: 1px solid $news-main-2;
+    padding-top: $gs-baseline / 2;
 
     @include mq($from: tablet) {
         @include fs-headline(4);
@@ -16,26 +22,33 @@
 .user__question-title--secondary {
     color: $neutral-1;
     display: block;
+    font-size: 18px;
+    font-weight: 400;
 }
 
 .user__questions-text--wrapper {
     position: relative;
     overflow: hidden;
+    background-color: $neutral-8;
+    margin-bottom: 0;
+    padding-top: $gs-baseline / 2;
+    padding-bottom: $gs-baseline;
+
+    &.is-clicked {
+        background-color: $news-support-5;
+        padding-bottom: 0;
+    }
+
+    &.is-clicked + .storyquestion-submission-container {
+        background-color: $news-support-5;
+    }
 
     &:hover {
-        .user__question-text {
+        background-color: $news-support-5;
+
+        .user__question-upvote {
+            background-color: $news-main-1;
             color: #ffffff;
-        }
-        .inline-tick {
-            background-color: $news-main-1;
-        }
-        .user__questions-text--inner {
-            background-color: $news-main-1;
-        }
-        .inline-tick__svg {
-            path {
-                fill: #ffffff;
-            }
         }
         cursor: pointer;
     }
@@ -56,87 +69,84 @@
     @include fs-headline(2);
     font-weight: 900;
     display: block;
-    max-width: 68%;
-    // font-size: 18px;
+    //used to avoid fixed width across multiple break points.
+    max-width: 77%;
     float: left;
     color: $news-main-1;
-    padding-left: $gs-baseline / 4;
+    padding-left: $gs-baseline - 4;
     position: relative;
     margin-bottom: $gs-baseline;
 
     @include mq($from: tablet) {
         @include fs-headline(3);
-        line-height: 27px;
+        line-height: $gs-baseline * 2;
         max-width: 80%;
         font-weight: 900;
-    }
-
-    .user__questions-text--inner {
-        background-color: $neutral-6;
-        padding: $gs-baseline / 2 $gs-baseline / 2 $gs-baseline / 2 0;
-        transition: .2s background-color ease-in-out;
-        position: relative;
-
-        &:before {
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            width: $gs-baseline / 4;
-            content: '';
-            display: block;
-            left: -$gs-baseline / 4;
-            background-color: inherit;
-        }
     }
 }
 
 .user__question-response {
+    @include fs-textSans(3);
     clear: both;
     margin-top: $gs-baseline;
     margin-bottom: $gs-baseline;
+    font-size: 14px;
+    line-height: 18px;
+    width: 90%;
+    display: block;
 
     @include mq($from: tablet) {
-        float: right;
         clear: none;
         margin-top: 0;
+        font-size: 16px;
     }
 }
 
 .user__question-upvote {
     @include fs-textSans(3);
-    right: 0px;
+    right: $gs-gutter - 2;
+    bottom: $gs-gutter;
+    position: absolute;
     color: $news-main-1;
     font-weight: 900;
-    border: 0;
-    padding: 0;
-    border-top: 1px solid $neutral-6;
+    border: 1px solid $news-main-1;
     padding-top: $gs-baseline / 3;
     float: right;
-    background-color: #ffffff;
     outline: 0;
+    padding-left: $gs-baseline;
+    padding-right: $gs-baseline;
+    border-radius: $gs-gutter * 2;
+    background-color: transparent;
 
     &:hover {
         text-decoration: none;
     }
+}
+.storyquestion-submission-container {
+    overflow: hidden;
+    padding-left: $gs-gutter - 2;
+    margin-bottom: $gs-baseline;
+}
 
-    .inline-tick {
-        border-radius: 50%;
-        height: 12px;
-        width: 12px;
-        border: 1px solid $news-main-1;
-        padding: 3px;
-        margin-left: $gs-baseline;
-        display: block;
-        float: right;
+.storyquestion-email-signup-form.form {
+    margin: 0;
+
+    .form-field {
+        float: left;
+        width: 50%;
+        margin-bottom: $gs-baseline;
     }
 
-    .inline-tick__svg {
-        width: 12px;
-        height: 9px;
-        margin-bottom: $gs-baseline / 4;
-
-        path {
-            fill: $news-main-1;
-        }
+    .text-input {
+        border-bottom-left-radius: calc(#{$gs-baseline} * 2) + 4;
+        border-top-left-radius: calc(#{$gs-baseline} * 2) + 4;
+        font-size: 14px;
     }
+
+    .button--primary {
+        height: $gs-baseline * 3;
+        border-bottom-left-radius: 0;
+        border-top-left-radius: 0;
+    }
+
 }

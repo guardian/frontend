@@ -1,5 +1,5 @@
 // @flow
-import post from 'commercial/modules/messenger/post-message';
+import { postMessage } from 'commercial/modules/messenger/post-message';
 
 /* eslint no-bitwise: "off" */
 
@@ -13,7 +13,7 @@ const send = (type: string, payload: any): string => {
         value: payload,
     };
 
-    post(msg, window.top, '*');
+    postMessage(msg, window.top, '*');
 
     return msg.id;
 };
