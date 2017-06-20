@@ -7,7 +7,7 @@ module.exports = {
     description: 'Copy assets',
     task: () =>
         Promise.all([
-            cpy(['curl.js'], conf, {
+            cpy('curl.js', conf, {
                 cwd: path.resolve(
                     path.dirname(require.resolve('curl')),
                     '..',
