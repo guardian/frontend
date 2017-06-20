@@ -25,7 +25,10 @@ const CluePreview = React.createClass({
     },
 
     // Checks a object in the form{",":[4,7]}
-    checkIfLetterHasSeparator(locations: Object, letterIndex: number): string {
+    checkIfLetterHasSeparator(
+        locations: { ',': Array<number> },
+        letterIndex: number
+    ): string {
         const spaces = locations[','];
         if (spaces && this.letterHasBoundary(spaces, letterIndex)) {
             return 'crossword__anagram-helper__cell crossword__anagram-helper__cell--with-space';
