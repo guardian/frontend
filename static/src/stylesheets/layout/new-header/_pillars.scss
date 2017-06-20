@@ -19,7 +19,18 @@
 }
 
 .pillars__item {
+    box-sizing: border-box;
     display: inline-block;
+
+    @include mq(desktop) {
+        .new-header--open & {
+            width: gs-span(2) + $gs-gutter / 2 + 1;
+        }
+
+        .new-header--open &:not(:first-child) {
+            margin-left: $gs-gutter / 2 - 1;
+        }
+    }
 
     > *:after {
         content: '/';
