@@ -24,14 +24,6 @@
 
     @include mq(desktop) {
         font-size: 29px;
-
-        .new-header--open .pillars__item:not(:first-child) > & {
-            padding-left: $gs-gutter / 2;
-        }
-
-        .new-header--open & {
-            width: gs-span(2) + $gs-gutter;
-        }
     }
 
     &:focus,

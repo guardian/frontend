@@ -38,7 +38,7 @@
     }
 
     @include mq(desktop) {
-        height: 42px;
+        height: $search-and-edition-height-desktop;
         max-width: none;
         padding-left: 48px;
         font-size: 18px;
