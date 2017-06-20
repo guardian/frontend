@@ -4,7 +4,7 @@ define([
     'common/modules/commercial/contributions-utilities',
     'lib/config',
     'raw-loader!common/views/epic-for-brexit-cohort.html',
-    'svg-loader!svgs/icon/quote.svg',
+    'svgs/icon/quote.svg',
     'common/modules/commercial/acquisitions-epic-testimonial-parameters'
 ], function (
     template,
