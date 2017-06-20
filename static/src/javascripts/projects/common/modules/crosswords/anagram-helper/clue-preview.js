@@ -12,7 +12,7 @@ const CluePreview = React.createClass({
      * If the user hasn't yet clicked 'shuffle' (this.props.hasShuffled) just
      * display the entries as they are, preserving any blank spaces.
      */
-    getEntries() {
+    getEntries(): Array<Object> {
         const unsolved = this.props.letters.filter(l => !l.entered);
 
         return this.props.entries.map(entry => {
@@ -84,7 +84,7 @@ const CluePreview = React.createClass({
                         className:
                             classNames +
                                 (entry && entry.solved ? ' has-value' : ''),
-                        key: i,
+                        key: entry.key,
                     },
                     (entry && entry.value) || ''
                 );
