@@ -3,7 +3,7 @@ import React from 'react/addons';
 import { inlineSvg } from 'common/views/svgs';
 import ClueInput from 'common/modules/crosswords/anagram-helper/clue-input';
 import CluePreview from 'common/modules/crosswords/anagram-helper/clue-preview';
-import Ring from 'common/modules/crosswords/anagram-helper/ring';
+import { Ring } from 'common/modules/crosswords/anagram-helper/ring';
 import helpers from 'common/modules/crosswords/helpers';
 import shuffle from 'lodash/collections/shuffle';
 
