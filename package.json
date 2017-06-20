@@ -110,7 +110,7 @@
     "request": "^2.81.0",
     "requireindex": "^1.1.0",
     "requirejs": "^2.3.2",
-    "rimraf": "^2.5.4",
+    "rimraf": "^2.6.1",
     "sass-graph": "^2.2.4",
     "sass-lint": "~1.10.2",
     "sass-mq": "~3.3.2",
