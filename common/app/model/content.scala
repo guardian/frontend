@@ -424,6 +424,7 @@ object Article {
       ("isHosted", JsBoolean(false)),
       ("isPhotoEssay", JsBoolean(content.isPhotoEssay)),
       ("isSensitive", JsBoolean(fields.sensitive.getOrElse(false))),
+      ("shouldHideReaderRevenue", JsBoolean(fields.shouldHideReaderRevenue.getOrElse(false))),
       "videoDuration" -> videoDuration
     ) ++ bookReviewIsbn ++ AtomProperties(content.atoms)
 

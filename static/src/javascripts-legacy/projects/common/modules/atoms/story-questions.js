@@ -107,6 +107,7 @@ define([
             askQuestionLinks.each(function (el) {
                 bean.on(el, 'click', function(event) {
                     askQuestion(event, isEmailSubmissionReady)
+                    this.classList.add('is-clicked')
                 });
             });
 

@@ -59,10 +59,10 @@
             }
             @fragments.meta.contactAuthor(item.tags, amp)
         }
+    }
 
-        @if(!(item.trail.shouldHidePublicationDate || item.content.isGallery)) {
-            @fragments.meta.dateline(item.trail.webPublicationDate, item.fields.lastModified, item.content.hasBeenModified, item.fields.firstPublicationDate, item.tags.isLiveBlog, item.fields.isLive)
-        }
+    @if(!(item.trail.shouldHidePublicationDate || item.content.isGallery)) {
+        @fragments.meta.dateline(item.trail.webPublicationDate, item.fields.lastModified, item.content.hasBeenModified, item.fields.firstPublicationDate, item.tags.isLiveBlog, item.fields.isLive)
     }
 }
 
