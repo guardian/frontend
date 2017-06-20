@@ -53,7 +53,6 @@
   "GHaberis": [
     "projects/admin/modules/abtests/participation-item.js",
     "projects/admin/modules/abtests/participation.js",
-    "projects/common/modules/accessibility/helpers.js",
     "projects/common/modules/crosswords/anagram-helper/clue-preview.js"
   ],
   "Gustav Pursche": [
