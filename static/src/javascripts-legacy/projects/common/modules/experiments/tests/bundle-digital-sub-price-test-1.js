@@ -23,7 +23,7 @@ define([
 ) {
     var buildTemplate = function(variant) {
         return template(contributionsEpicSingleButton, {
-            linkUrl1: config.page.membershipUrl + '/bundles?INTCMP=' + 'BUNDLE_PRICE_TEST_1M_' + config.page.edition.toUpperCase() + '_' + variant.id.toUpperCase(),
+            linkUrl1: config.page.membershipUrl + '/bundles?INTCMP=' + 'BUNDLE_PRICE_TEST_1M_E_' + config.page.edition.toUpperCase() + '_' + variant.id.toUpperCase(),
             componentName: variant.componentName,
             title: 'Since you’re here…',
             p1: '… we’ve got a small favour to ask. More people are reading the Guardian than ever, but far fewer are paying for it. Advertising revenues across the media are falling fast. And ' +
@@ -36,7 +36,7 @@ define([
     };
 
     return contributionsUtilities.makeABTest({
-        id: 'BundleDigitalSubPriceTest1M',
+        id: 'BundleDigitalSubPriceTest1ME',
         campaignPrefix: '',
         campaignSuffix: '',
         start: '2017-05-10',
@@ -55,7 +55,7 @@ define([
 
         overrideCanRun: false,
         canRun: function () {
-            return !cookies.getCookie('GU_DBPT1M') &&
+            return !cookies.getCookie('GU_DBPT1ME') &&
                 config.page.edition.toUpperCase() === 'UK' &&
                 config.page.contentType === 'Article' &&
                 !config.page.isMinuteArticle &&
