@@ -35,7 +35,8 @@ module.exports = {
                     ) {
                         context.report({
                             node,
-                            message: 'Export statements should appear at the end of the file',
+                            message:
+                                'Export statements should appear at the end of the file',
                         });
                     }
                 });

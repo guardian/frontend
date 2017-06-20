@@ -18,7 +18,7 @@ const selectRadios = () => {
     });
 
     abTests.forEach(test => {
-        $(`#${test.variantId}-${test.variantId}`).attr('checked', true);
+        $(`#${test.testId}-${test.variantId}`).attr('checked', true);
     });
 };
 

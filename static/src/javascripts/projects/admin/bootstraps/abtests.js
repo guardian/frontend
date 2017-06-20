@@ -6,7 +6,7 @@ import {
 import {
     ABTestReportItem as ReportItem,
 } from 'admin/modules/abtests/abtest-report-item';
-import Audience from 'admin/modules/abtests/audience';
+import { Audience } from 'admin/modules/abtests/audience';
 
 const renderTests = (
     tests: Array<any>,

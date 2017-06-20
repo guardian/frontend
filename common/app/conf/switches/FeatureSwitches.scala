@@ -516,15 +516,4 @@ trait FeatureSwitches {
     sellByDate = never,
     exposeClientSide = false
   )
-
-  val NewTabletHeader = Switch(
-    SwitchGroup.Feature,
-    "new-header-tablet",
-    "When ON Users will see the new tablet header design.",
-    owners = Seq(Owner.withGithub("natalialkb"), Owner.withGithub("gustavpursche")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 6, 15),
-    exposeClientSide = false
-  )
-
 }

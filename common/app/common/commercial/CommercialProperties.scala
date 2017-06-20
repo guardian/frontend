@@ -1,7 +1,7 @@
 package common.commercial
 
 import com.gu.commercial.branding.Branding
-import com.gu.commercial.display.{AdCallParamKey, AdCallParamValue}
+import com.gu.commercial.display._
 import com.gu.contentapi.client.model.v1.{Content, Section, Tag}
 import common.Edition
 import common.Edition.defaultEdition
@@ -20,12 +20,13 @@ case class CommercialProperties(
     branding <- editionBranding.branding
   } yield branding
 
-  def adTargeting(edition: Edition): Map[AdCallParamKey, AdCallParamValue] = {
-    val params = for {
-      editionAdTargeting <- editionAdTargetings.find(_.edition == edition)
-    } yield editionAdTargeting.params
-    params getOrElse Map.empty
-  }
+  def adTargeting(edition: Edition): Map[AdCallParamKey, AdCallParamValue] =
+    editionAdTargetings.
+      filter(_.edition == edition)
+      .map(_.params)
+      .headOption
+      .getOrElse(Map.empty)
+
 }
 
 object CommercialProperties {

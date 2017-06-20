@@ -3,16 +3,16 @@ define([
     'lib/$',
     'lib/fetch',
     'lib/config',
+    'lib/report-error',
     'membership/formatters',
     'membership/stripe'
-], function (
-    bean,
-    $,
-    fetch,
-    config,
-    formatters,
-    stripe
-) {
+], function (bean,
+             $,
+             fetch,
+             config,
+             reportError,
+             formatters,
+             stripe) {
 
     var PACKAGE_COST = '.js-dig-package-cost',
         PAYMENT_FORM = '.js-dig-card-details',
@@ -33,7 +33,9 @@ define([
         UP_SELL = '.js-dig-up-sell',
         DIG_INFO = '.js-dig-info',
         LOADER = '.js-dig-loader',
-        IS_HIDDEN_CLASSNAME = 'is-hidden';
+        IS_HIDDEN_CLASSNAME = 'is-hidden',
+        ERROR = '.js-dig-error'
+    ;
 
     function fetchUserDetails() {
         fetch(config.page.userAttributesApiUrl + '/me/mma-digitalpack', {
@@ -49,6 +51,10 @@ define([
                 hideLoader();
                 displayDigitalPackUpSell();
             }
+        }).catch(function (err) {
+            hideLoader();
+            displayErrorMessage();
+            reportError(err, {feature: 'mma-digipack'})
         });
     }
 
@@ -90,7 +96,7 @@ define([
             $(NOTIFICATION_CANCEL).removeClass(IS_HIDDEN_CLASSNAME);
             $(DIGITALPACK_DETAILS).addClass(IS_HIDDEN_CLASSNAME);
         } else if (userDetails.subscription.card) {
-            stripe.display(PAYMENT_FORM,userDetails.subscription.card);
+            stripe.display(PAYMENT_FORM, userDetails.subscription.card);
         }
         $(DIG_INFO).removeClass(IS_HIDDEN_CLASSNAME);
     }
@@ -98,6 +104,11 @@ define([
     function displayDigitalPackUpSell() {
         $(UP_SELL).removeClass(IS_HIDDEN_CLASSNAME);
     }
+
+    function displayErrorMessage() {
+        $(ERROR).removeClass(IS_HIDDEN_CLASSNAME);
+    }
+
 
     return {
         init: fetchUserDetails

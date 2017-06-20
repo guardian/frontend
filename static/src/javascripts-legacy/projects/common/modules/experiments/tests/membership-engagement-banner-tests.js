@@ -5,7 +5,6 @@ define([
     'lib/storage',
     'lodash/utilities/template',
     'commercial/modules/commercial-features',
-    'commercial/modules/user-features',
     'lib/mediator'
 ], function (
     bean,
@@ -14,7 +13,6 @@ define([
     storage,
     template,
     commercialFeatures,
-    userFeatures,
     mediator) {
     var EditionTest = function (edition, id, start, expiry, campaignPrefix) {
 

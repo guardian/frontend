@@ -10,7 +10,7 @@ import bonzo from 'bonzo';
 import debounce from 'lodash/functions/debounce';
 
 class ABTestReportItem extends Component {
-    constructor(config: any): void {
+    constructor(config: Object): void {
         super();
 
         this.templateName = 'abtest-item-template';

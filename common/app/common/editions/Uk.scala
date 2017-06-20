@@ -96,7 +96,7 @@ object Uk extends Edition(
     Seq(
       NavItem(home),
       NavItem(uk, ukLocalNav),
-      NavItem(politics, Seq(ukElection2017)),
+      NavItem(politics),
       NavItem(world, worldLocalNav),
       NavItem(sport, sportLocalNav),
       NavItem(football, footballNav),
@@ -124,7 +124,7 @@ object Uk extends Edition(
   override val briefNav: Seq[NavItem] = Seq(
     NavItem(home),
     NavItem(uk, ukLocalNav),
-    NavItem(ukElection2017),
+    NavItem(politics),
     NavItem(world, worldLocalNav),
     NavItem(sport, sportLocalNav),
     NavItem(football, footballNav),

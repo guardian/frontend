@@ -1,4 +1,4 @@
-// flow-typed signature: fce9e85a303ed48488a95d8ae1352e97
+// flow-typed signature: 1d421b04f70f14e2308ec4745f7754f2
 // flow-typed version: <<STUB>>/webpack-visualizer-plugin_v^0.1.10/flow_v0.40.0
 
 /**
@@ -8,8 +8,8 @@
  *
  * Fill this stub out by replacing all the `any` types.
  *
- * Once filled out, we encourage you to share your work with the 
- * community by sending a pull request to: 
+ * Once filled out, we encourage you to share your work with the
+ * community by sending a pull request to:
  * https://github.com/flowtype/flow-typed
  */
 

@@ -64,7 +64,7 @@ object NewNavigation {
   case object MostPopular extends EditionalisedNavigationSection {
     val name = "news"
 
-    val uk = NavLinkLists(List(headlines, ukNews, ukElection2017, world, tech, business, football))
+    val uk = NavLinkLists(List(headlines, ukNews, environment, world, tech, business, football))
     val au = NavLinkLists(List(headlines, australiaNews, world, auPolitics, environment, economy, football))
     val us = NavLinkLists(List(headlines, usNews, world, usPolitics, business, science, soccer))
     val int = NavLinkLists(List(headlines, world, ukNews, business, science, globalDevelopment, football))
@@ -74,7 +74,7 @@ object NewNavigation {
     val name = "news"
 
     val uk = NavLinkLists(
-      List(headlines, ukNews, world, business, ukElection2017, tech, politics),
+      List(headlines, ukNews, world, business, environment, tech, politics),
       List(science, globalDevelopment, cities, obituaries)
     )
     val au = NavLinkLists(
@@ -226,32 +226,54 @@ object NewNavigation {
     )
   }
 
-  case object NavFooterLinks extends EditionalisedNavigationSection {
+  case object BrandExtensions extends EditionalisedNavigationSection {
     val name = ""
 
     val uk = NavLinkLists(List(
       jobs.copy(url = jobs.url + "?INTCMP=jobs_uk_web_newheader"),
       dating.copy(url = dating.url + "?INTCMP=soulmates_uk_web_newheader"),
-      NavLink("holidays", "https://holidays.theguardian.com/?utm_source=theguardian&utm_medium=guardian-links&utm_campaign=topnav&INTCMP=topnav"),
-      ukMasterClasses,
-      NavLink("professional networks", "/guardian-professional"),
-      apps.copy(url = apps.url + "?INTCMP=apps_uk_web_newheader"),
-      podcasts,
-      video,
-      pictures,
-      newsletters,
-      todaysPaper,
-      observer,
-      digitalNewspaperArchive,
-      crosswords
+      holidays,
+      ukMasterClasses
     ))
 
     val au = NavLinkLists(List(
       jobs.copy(url = jobs.url + "/landingpage/2868291/jobs-australia-html/?INTCMP=jobs_au_web_newheader"),
       auEvents,
-      apps.copy(url = apps.url + "?INTCMP=apps_au_web_newheader"),
-      podcasts,
+      holidays
+    ))
+
+    val us = NavLinkLists(List(
+      jobs.copy(url = jobs.url + "?INTCMP=jobs_us_web_newheader"),
+      holidays
+    ))
+
+    val int = NavLinkLists(List(
+      jobs.copy(url = jobs.url + "?INTCMP=jobs_int_web_newheader"),
+      dating.copy(url = dating.url + "?INTCMP=soulmates_int_web_newheader"),
+      holidays
+    ))
+  }
+
+  case object OtherLinks extends EditionalisedNavigationSection {
+    val name = ""
+
+    val uk = NavLinkLists(List(
+      apps.copy(url = apps.url + "?INTCMP=apps_uk_web_newheader"),
       video,
+      podcasts,
+      pictures,
+      newsletters,
+      todaysPaper,
+      observer,
+      digitalNewspaperArchive,
+      NavLink("professional networks", "/guardian-professional"),
+      crosswords
+    ))
+
+    val au = NavLinkLists(List(
+      apps.copy(url = apps.url + "?INTCMP=apps_au_web_newheader"),
+      video,
+      podcasts,
       pictures,
       newsletters,
       digitalNewspaperArchive,
@@ -259,10 +281,9 @@ object NewNavigation {
     ))
 
     val us = NavLinkLists(List(
-      jobs.copy(url = jobs.url + "?INTCMP=jobs_us_web_newheader"),
       apps.copy(url = apps.url + "?INTCMP=apps_us_web_newheader"),
-      podcasts,
       video,
+      podcasts,
       pictures,
       newsletters,
       digitalNewspaperArchive,
@@ -270,11 +291,9 @@ object NewNavigation {
     ))
 
     val int = NavLinkLists(List(
-      jobs.copy(url = jobs.url + "?INTCMP=jobs_int_web_newheader"),
-      dating.copy(url = dating.url + "?INTCMP=soulmates_int_web_newheader"),
       apps.copy(url = apps.url + "?INTCMP=apps_int_web_newheader"),
-      podcasts,
       video,
+      podcasts,
       pictures,
       newsletters,
       todaysPaper,

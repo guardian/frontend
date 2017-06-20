@@ -1,5 +1,6 @@
 .pillars {
     color: $news-support-1;
+    font-size: 0;
     list-style: none;
     margin: 0;
     padding: 0 $gs-gutter / 2;
@@ -8,6 +9,12 @@
     @include mq(mobileLandscape) {
         padding-left: $gs-gutter;
         padding-right: $gs-gutter;
+    }
+
+    @include mq(desktop) {
+        .new-header--open & {
+            z-index: $zindex-main-menu + 1;
+        }
     }
 }
 
@@ -19,9 +26,16 @@
         color: $news-main-2;
         display: inline-block;
         line-height: 1;
-        margin-left: -2px;
-        margin-right: -2px;
+        margin-left: -1px;
+        margin-right: 2px;
+        opacity: .6;
         pointer-events: none;
+
+        .new-header--open & {
+            @include mq(desktop) {
+                display: none;
+            }
+        }
     }
 
     &:last-child > *:after {

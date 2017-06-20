@@ -1,4 +1,4 @@
-// flow-typed signature: 6b3c168188de7a1db35ce675d9f69c17
+// flow-typed signature: ba3b7c351f3d112d912a893490956a10
 // flow-typed version: <<STUB>>/bs-fullscreen-message_v^1.1.0/flow_v0.40.0
 
 /**
@@ -8,8 +8,8 @@
  *
  * Fill this stub out by replacing all the `any` types.
  *
- * Once filled out, we encourage you to share your work with the 
- * community by sending a pull request to: 
+ * Once filled out, we encourage you to share your work with the
+ * community by sending a pull request to:
  * https://github.com/flowtype/flow-typed
  */
 

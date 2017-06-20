@@ -6,7 +6,7 @@ define([
     'lib/mediator',
     'lib/detect',
     'lib/scroller',
-    './anagram-helper/main',
+    'common/modules/crosswords/anagram-helper/main',
     './clues',
     './controls',
     './hidden-input',
@@ -609,7 +609,7 @@ define([
                 }.bind(this)) : false;
             }.bind(this);
 
-            var anagramHelper = this.state.showAnagramHelper && React.createElement(AnagramHelper, {
+            var anagramHelper = this.state.showAnagramHelper && React.createElement(AnagramHelper.AnagramHelper, {
                     focussedEntry: focussed,
                     entries: this.props.data.entries,
                     grid: this.state.grid,
