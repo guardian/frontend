@@ -124,10 +124,12 @@ class CommercialFeatures {
             !config.page.hasSuperStickyBanner &&
             !supportsSticky;
 
-        this.canReasonablyAskForMoney = !(isPayingMember() || // eg become a supporter, give a contribution
-        daysSinceLastContribution <= 180 || // has contributed in the last 6 months
+        this.canReasonablyAskForMoney = !(
+            isPayingMember() || // eg become a supporter, give a contribution
+            daysSinceLastContribution <= 180 || // has contributed in the last 6 months
             config.page.shouldHideAdverts ||
-            config.page.isPaidContent);
+            config.page.isPaidContent
+        );
 
         this.asynchronous = {
             canDisplayMembershipEngagementBanner: detect.adblockInUse.then(

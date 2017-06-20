@@ -21,7 +21,8 @@ const generateUrlFromConfig = (
     } = config
 ): string =>
     c.page.ajaxUrl && c.page.pageId && c.page.contentType
-        ? `${c.page.ajaxUrl}/${c.page.pageId}/${c.page.contentType.toLowerCase()}/onward.json`
+        ? `${c.page.ajaxUrl}/${c.page
+              .pageId}/${c.page.contentType.toLowerCase()}/onward.json`
         : '';
 
 const insertHTMLfromPlaceholders = (

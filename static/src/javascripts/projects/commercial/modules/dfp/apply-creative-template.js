@@ -7,9 +7,7 @@ import { Frame } from 'commercial/modules/creatives/frame';
 import { Revealer } from 'commercial/modules/creatives/revealer';
 import { FabricV1 } from 'commercial/modules/creatives/fabric-v1';
 import fabricExpand from 'commercial/modules/creatives/fabric-expanding-v1';
-import {
-    fabricExpandVideo,
-} from 'commercial/modules/creatives/fabric-expandable-video-v2';
+import { fabricExpandVideo } from 'commercial/modules/creatives/fabric-expandable-video-v2';
 import { FabricVideo } from 'commercial/modules/creatives/fabric-video';
 import { ScrollableMpu } from 'commercial/modules/creatives/scrollable-mpu-v2';
 

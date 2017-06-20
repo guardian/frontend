@@ -33,8 +33,9 @@ class AudienceItem extends Component {
         this.getElem('test').style.left = `${audienceOffset.toString()}%`;
 
         bonzo(this.getElem('caption-test')).append(this.config.test.id);
-        bonzo(this.getElem('caption-range'))
-            .append(`${audienceOffset}% to ${audienceEnd}%`);
+        bonzo(this.getElem('caption-range')).append(
+            `${audienceOffset}% to ${audienceEnd}%`
+        );
     }
 }
 

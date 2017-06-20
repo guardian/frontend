@@ -131,7 +131,8 @@ const AnagramHelper = React.createClass({
                 inner
             ),
             React.createElement('button', {
-                className: 'button button--large button--tertiary crossword__anagram-helper-close',
+                className:
+                    'button button--large button--tertiary crossword__anagram-helper-close',
                 onClick: this.props.close,
                 dangerouslySetInnerHTML: closeIcon,
                 'data-link-name': 'Close',
@@ -139,7 +140,9 @@ const AnagramHelper = React.createClass({
             React.createElement(
                 'button',
                 {
-                    className: `button button--large ${!this.state.clueInput ? 'button--tertiary' : ''}`,
+                    className: `button button--large ${!this.state.clueInput
+                        ? 'button--tertiary'
+                        : ''}`,
                     onClick: this.reset,
                     'data-link-name': 'Start Again',
                 },
@@ -148,7 +151,9 @@ const AnagramHelper = React.createClass({
             React.createElement(
                 'button',
                 {
-                    className: `button button--large ${!this.canShuffle() ? 'button--tertiary' : ''}`,
+                    className: `button button--large ${!this.canShuffle()
+                        ? 'button--tertiary'
+                        : ''}`,
                     onClick: this.shuffle,
                     'data-link-name': 'Shuffle',
                 },
