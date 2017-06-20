@@ -44,6 +44,7 @@ const deleteAllFeaturesData = () => {
     removeCookie(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE);
     removeCookie(PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE);
     removeCookie(PERSISTENCE_KEYS.AD_FREE_USER_COOKIE);
+    removeCookie(PERSISTENCE_KEYS.JOIN_DATE_COOKIE);
 };
 
 describe('Refreshing the features data', () => {
