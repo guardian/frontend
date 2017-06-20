@@ -29,7 +29,7 @@ object Trail {
     // Filtering the list of images here means that facia-press does not need to slim down the Trail object any further.
     trailImageMedia.flatMap { imageMedia =>
       val filteredTrailImages = imageMedia.allImages.filter { image =>
-        IsRatio(5, 3, image.width, image.height)
+        IsRatio(5, 3, image.width, image.height) && image.width >= trailPicMinDesiredSize
       } sortBy(_.width)
 
       Seq(
