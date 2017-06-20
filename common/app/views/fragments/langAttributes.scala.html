@@ -1,5 +1,5 @@
 @(content: model.Content)(implicit request: RequestHeader)
-
+@* CAPI defaults to 'en' for any unrecognised language. Therefore we filter 'en' out to avoid setting an erroneous value when a new language is used *@
 @defining(content.fields.lang.exists(!_.equals("en"))) { nonEnLang =>
     @if(nonEnLang){ lang="@content.fields.lang" } @if(content.fields.isRightToLeftLang){ dir="rtl" }
 }
