@@ -100,13 +100,11 @@ const AnagramHelper = React.createClass({
             this.props.entries,
             this.props.focussedEntry
         );
-        const entries = cells.map(coords => {
-            const entry = this.props.grid[coords.x][coords.y];
-
-            entry.key = `${coords.x},${coords.y}`;
-
-            return entry;
-        });
+        const entries = cells.map(coords =>
+            Object.assign({}, this.props.grid[coords.x][coords.y], {
+                key: `${coords.x},${coords.y}`,
+            })
+        );
 
         const letters = this.shuffleWord(this.state.clueInput, entries);
 
