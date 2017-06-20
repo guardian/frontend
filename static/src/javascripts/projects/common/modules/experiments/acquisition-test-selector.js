@@ -29,8 +29,8 @@ const tests = [
     acquisitionsEpicLiveBlogDesignTest,
     acquisitionsEpicLiveBlog,
     acquisitionsEpicAlwaysAskElection,
-    acquisitionsEpicThankYou,
     epicForBrexitCohort,
+    acquisitionsEpicThankYou,
 ].map(Test => new Test());
 
 const isViewable = (v: Variant, t: ABTest): boolean => {

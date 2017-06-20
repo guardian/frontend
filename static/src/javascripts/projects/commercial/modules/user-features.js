@@ -28,7 +28,12 @@ const persistResponse = (JsonResponse: () => void) => {
     } else {
         removeCookie(AD_FREE_USER_COOKIE);
     }
-    addCookie(JOIN_DATE_COOKIE, JsonResponse.membershipJoinDate);
+
+    if (JsonResponse.membershipJoinDate) {
+        addCookie(JOIN_DATE_COOKIE, JsonResponse.membershipJoinDate);
+    } else {
+        removeCookie(JOIN_DATE_COOKIE);
+    }
 };
 
 const deleteOldData = (): void => {

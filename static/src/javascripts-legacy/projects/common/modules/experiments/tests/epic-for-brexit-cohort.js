@@ -56,8 +56,8 @@ define([
         successMeasure: 'Reducing churn of members who joined in the Brexit cohort',
         idealOutcome: 'Members who joined in the Brexit cohort will be more likely to continue supporting us.',
         audienceCriteria: 'Readers who began supporting the Guardian in the Brexit cohort',
-        audience: 0,
-        audienceOffset: 1,
+        audience: 1,
+        audienceOffset: 0,
 
         overrideCanRun: true,
 
