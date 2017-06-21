@@ -28,16 +28,25 @@ from scrolling */
 }
 
 .new-header__inner {
-    @include clearfix();
-}
+    align-items: flex-start;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
 
-@supports (display: flex) {
-    .new-header__inner {
+    @supports (display: flex) {
         align-items: flex-start;
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
         padding-bottom: 0;
+    }
+
+    .new-header--slim & {
+        @include content-gutter;
+
+        @include mq($until: desktop) {
+            max-width: 100%;
+        }
     }
 }
 
@@ -50,15 +59,20 @@ from scrolling */
     @include mq(mobileLandscape) {
         left: $gs-gutter / 2;
     }
+
+    .new-header--slim & {
+        position: relative;
+        left: -$gs-gutter / 4;
+        order: -1;
+        z-index: 1;
+    }
 }
 
 .new-header__logo {
     display: block;
     float: right;
-}
 
-@supports (display: flex) {
-    .new-header__logo {
+    @supports (display: flex) {
         display: flex;
         float: none;
         margin-left: auto;
@@ -91,6 +105,17 @@ from scrolling */
 
     @include mq(desktop) {
         margin-bottom: $gs-baseline / 4;
+    }
+
+    .new-header--slim & {
+        height: calc(3 / 16 * 155px);
+        width: 155px;
+
+        @include mq(tablet) {
+            height: calc(3 / 16 * 170px);
+            width: 170px;
+            margin-right: $gs-gutter / 2;
+        }
     }
 }
 

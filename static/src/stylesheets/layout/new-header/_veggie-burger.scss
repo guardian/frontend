@@ -57,6 +57,15 @@
     x:-o-prefocus & {
         display: none;
     }
+
+    .new-header--slim & {
+        right: 0;
+        position: relative;
+        top: -$gs-baseline / 2;
+        margin-bottom: -$gs-baseline;
+        height: $veggie-burger-medium;
+        width: $veggie-burger-medium;
+    }
 }
 
 .veggie-burger__label {

@@ -17,6 +17,17 @@
             z-index: $zindex-main-menu + 1;
         }
     }
+
+    .new-header--slim & {
+        width: auto;
+        order: -1;
+        padding-left: $gs-gutter / 2;
+        padding-right: $gs-gutter / 2;
+
+        @include mq($until: tablet) {
+            display: none;
+        }
+    }
 }
 
 .pillars__item {
