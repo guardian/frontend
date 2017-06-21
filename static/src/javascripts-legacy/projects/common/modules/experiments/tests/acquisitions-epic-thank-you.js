@@ -68,7 +68,7 @@ define([
                 template: function(variant) {
                     return template(acquisitionsEpicThankYouTemplate, {
                         componentName: variant.options.componentName,
-                        membershipUrl: variant.getURL("https://www.theguardian.com/membership", variant.options.campaignCode)
+                        membershipUrl: variant.constructor.getURL("https://www.theguardian.com/membership", variant.options.campaignCode)
                     })
                 }
             }
