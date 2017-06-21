@@ -49,9 +49,7 @@
     "projects/common/modules/video/metadata.js",
     "projects/common/modules/crosswords/anagram-helper/clue-input.js"
   ],
-  "GHaberis": [
-    "projects/common/modules/crosswords/anagram-helper/clue-preview.js"
-  ],
+  "GHaberis": [],
   "Gustav Pursche": [
     "projects/common/modules/ui/tabs.js",
     "projects/common/modules/social/hidden-share-toggle.js",
