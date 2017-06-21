@@ -50,12 +50,14 @@
     "projects/common/modules/crosswords/anagram-helper/clue-input.js"
   ],
   "GHaberis": [
-    "projects/common/modules/gallery/lightbox.js",
     "projects/common/modules/media/videojs-plugins/fullscreener.js",
     "projects/common/modules/media/videojs-plugins/skip-ad.js",
     "projects/common/modules/onward/breaking-news.js",
     "projects/common/modules/onward/geo-most-popular.js",
-    "projects/common/modules/onward/history.js"
+    "projects/common/modules/onward/history.js",
+    "projects/common/modules/discussion/activity-stream.js",
+    "projects/common/modules/discussion/api.js",
+    "projects/common/modules/discussion/comment-box.js"
   ],
   "Gustav Pursche": [
     "projects/common/modules/ui/tabs.js",
@@ -145,6 +147,7 @@
     "projects/common/modules/experiments/tests/sleeve-notes-legacy-email-variant.js",
     "projects/common/modules/experiments/tests/sleeve-notes-new-email-variant.js",
     "projects/common/modules/experiments/tests/the-long-read-email-variants.js",
+    "projects/common/modules/gallery/lightbox.js",
     "projects/common/modules/identity/account-profile.js",
     "projects/common/modules/identity/api.js",
     "projects/common/modules/identity/cookierefresh.js",
