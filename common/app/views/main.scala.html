@@ -83,14 +83,18 @@
                     ("immersive-header-container", page.item.fields.main.nonEmpty),
                     ("immersive-header-container--photo-essay", page.item.content.isPhotoEssay)))">
 
-                    @headerAndTopAds(showAdverts, edition, content)
+                    @if(mvt.ABNewDesktopHeader.isParticipating) {
+                        @fragments.header(page)
+                    }
 
                     @fragments.photoEssay(page)
                 </div>
             }
             case page: model.ContentPage if (page.item.content.isImmersive && !page.item.content.tags.isInteractive && !page.item.content.tags.isVideo) => {
                 <div class="@if(page.item.fields.main.nonEmpty) { immersive-header-container }">
-                    @headerAndTopAds(showAdverts, edition, content)
+                    @if(mvt.ABNewDesktopHeader.isParticipating) {
+                        @fragments.header(page)
+                    }
                     @fragments.immersiveMainMedia(page)
                 </div>
             }
