@@ -64,4 +64,10 @@
     &:last-child > *:after {
         display: none;
     }
+
+    .new-header--slim.new-header--open & {
+        @include mq(tablet) {
+            padding-left: $gs-gutter / 2;
+        }
+    }
 }
