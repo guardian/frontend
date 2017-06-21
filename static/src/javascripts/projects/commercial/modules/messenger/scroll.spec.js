@@ -27,6 +27,21 @@ describe('Cross-frame messenger: scroll', () => {
          <div id="ad-slot-2" class="js-ad-slot"><div id="iframe2" style="height: 200px"></div></div>
      `;
 
+    const mockIframePosition = (iframe: ?Element, top: number) => {
+        if (iframe) {
+            jest
+                .spyOn(iframe, 'getBoundingClientRect')
+                .mockImplementation(() => ({
+                    left: 8,
+                    right: 392,
+                    height: 200,
+                    width: 384,
+                    top,
+                    bottom: top + 200,
+                }));
+        }
+    };
+
     beforeEach(done => {
         jest
             .spyOn(global, 'addEventListener')
@@ -42,30 +57,7 @@ describe('Cross-frame messenger: scroll', () => {
         iframe1 = document.getElementById('iframe1');
         iframe2 = document.getElementById('iframe2');
 
-        if (iframe1) {
-            jest
-                .spyOn(iframe1, 'getBoundingClientRect')
-                .mockImplementation(() => ({
-                    left: 8,
-                    right: 392,
-                    top: 8,
-                    height: 200,
-                    bottom: 208,
-                    width: 384,
-                }));
-        }
-        if (iframe2) {
-            jest
-                .spyOn(iframe2, 'getBoundingClientRect')
-                .mockImplementation(() => ({
-                    left: 8,
-                    right: 392,
-                    top: 6320,
-                    height: 200,
-                    bottom: 6520,
-                    width: 384,
-                }));
-        }
+        detect.getViewport.mockReturnValue({ width: 400, height: 300 });
 
         done();
     });
@@ -162,7 +154,8 @@ describe('Cross-frame messenger: scroll', () => {
         });
 
         it('should call respond1 but not respond2 at the top of the page', done => {
-            detect.getViewport.mockReturnValue({ width: 400, height: 300 });
+            mockIframePosition(iframe1, 8);
+            mockIframePosition(iframe2, 6320);
             onScroll()
                 .then(() => {
                     expect(respond1).toHaveBeenCalledTimes(2);
@@ -173,11 +166,11 @@ describe('Cross-frame messenger: scroll', () => {
         });
 
         it('should call respond2 but not respond1 at the bottom of the page', done => {
-            detect.getViewport.mockReturnValue({ width: 400, height: 6528 });
-            window.scrollTo(0, 6300);
+            mockIframePosition(iframe1, -6304);
+            mockIframePosition(iframe2, 8);
             onScroll()
                 .then(() => {
-                    // expect(respond1).toHaveBeenCalledTimes(1);
+                    expect(respond1).toHaveBeenCalledTimes(1);
                     expect(respond2).toHaveBeenCalledTimes(2);
                 })
                 .then(done)
