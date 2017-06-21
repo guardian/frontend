@@ -5,7 +5,7 @@ import Component from 'common/modules/component';
 import detect from 'lib/detect';
 import $ from 'lib/$';
 
-const getScoreContainerHtml = context => `
+const getScoreContainerHtml = (context: Object): string => `
     <div class="score-container">
         <div class="score__loading ${context.loadingState}">
             <div class="loading__text">Fetching the scores…</div>
