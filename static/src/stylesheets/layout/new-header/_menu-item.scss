@@ -133,30 +133,35 @@
         pointer-events: none;
     }
 
+    .menu-group--primary > *:not(:last-child) > &,
     &[data-link-name='nav2 : the guardian app'],
     &[data-link-name='nav2 : facebook'] {
         @include mq($until: desktop) {
-            margin-top: $gs-baseline * 2;
-        }
-    }
-
-    .menu-group--primary > *:not(:first-child) > &,
-    &[data-link-name='nav2 : the guardian app'],
-    &[data-link-name='nav2 : facebook'] {
-        @include mq($until: desktop) {
-            &:before {
+            &:not([aria-expanded='true']):after {
                 background-color: darken($guardian-brand-dark, 4%);
+                bottom: 0;
                 content: '';
                 display: block;
                 height: 1px;
                 left: $menu-spacing-left-small;
                 position: absolute;
-                top: 0;
                 width: 100%;
 
                 @include mq(tablet) {
                     left: $menu-spacing-left-medium;
                 }
+            }
+        }
+    }
+
+    &[data-link-name='nav2 : the guardian app'],
+    &[data-link-name='nav2 : facebook'] {
+        @include mq($until: desktop) {
+            margin-top: $gs-baseline * 2;
+
+            &:after {
+                bottom: auto;
+                top: 0;
             }
         }
     }
