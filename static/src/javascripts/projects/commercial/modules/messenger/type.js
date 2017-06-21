@@ -1,13 +1,14 @@
+// @flow
 import fastdom from 'lib/fastdom-promise';
-import messenger from 'commercial/modules/messenger';
-messenger.register('type', function(specs, ret, iframe) {
-    return setType(specs, iframe.closest('.js-ad-slot'));
-});
+import { register } from 'commercial/modules/messenger';
 
-export default setType;
-
-function setType(type, adSlot) {
-    return fastdom.write(function() {
-        adSlot.classList.add('ad-slot--' + type);
+const setType = (type: ?string, adSlot: any) =>
+    fastdom.write(() => {
+        adSlot.classList.add(`ad-slot--${type || ''}`);
     });
-}
+
+register('type', (specs: ?string, ret, iframe) =>
+    setType(specs, iframe && iframe.closest('.js-ad-slot'))
+);
+
+export { setType };
