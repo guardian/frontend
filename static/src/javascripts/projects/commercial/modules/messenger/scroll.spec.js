@@ -27,19 +27,15 @@ describe('Cross-frame messenger: scroll', () => {
          <div id="ad-slot-2" class="js-ad-slot"><div id="iframe2" style="height: 200px"></div></div>
      `;
 
-    const mockIframePosition = (iframe: ?Element, top: number) => {
-        if (iframe) {
-            jest
-                .spyOn(iframe, 'getBoundingClientRect')
-                .mockImplementation(() => ({
-                    left: 8,
-                    right: 392,
-                    height: 200,
-                    width: 384,
-                    top,
-                    bottom: top + 200,
-                }));
-        }
+    const mockIframePosition = (iframe: any, top: number) => {
+        jest.spyOn(iframe, 'getBoundingClientRect').mockImplementation(() => ({
+            left: 8,
+            right: 392,
+            height: 200,
+            width: 384,
+            top,
+            bottom: top + 200,
+        }));
     };
 
     beforeEach(done => {
