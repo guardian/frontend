@@ -83,7 +83,9 @@
                     ("immersive-header-container", page.item.fields.main.nonEmpty),
                     ("immersive-header-container--photo-essay", page.item.content.isPhotoEssay)))">
 
-                    @headerAndTopAds(showAdverts, edition, content)
+                    @if(mvt.ABNewDesktopHeader.isParticipating) {
+                        @fragments.header(page)
+                    }
 
                     @fragments.photoEssay(page)
                 </div>
