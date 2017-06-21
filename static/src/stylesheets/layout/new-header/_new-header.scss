@@ -32,6 +32,14 @@ from scrolling */
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+
+    .new-header--slim & {
+        @include content-gutter;
+
+        @include mq($until: desktop) {
+            max-width: 100%;
+        }
+    }
 }
 
 .new-header__cta-container {
@@ -41,6 +49,13 @@ from scrolling */
 
     @include mq(mobileLandscape) {
         left: $gs-gutter / 2;
+    }
+
+    .new-header--slim & {
+        position: relative;
+        left: -$gs-gutter / 4;
+        order: -1;
+        z-index: 1;
     }
 }
 
@@ -75,6 +90,17 @@ from scrolling */
 
     @include mq(desktop) {
         margin-bottom: $gs-baseline / 4;
+    }
+
+    .new-header--slim & {
+        height: calc(3 / 16 * 155px);
+        width: 155px;
+
+        @include mq(tablet) {
+            height: calc(3 / 16 * 170px);
+            width: 170px;
+            margin-right: $gs-gutter / 2;
+        }
     }
 }
 
