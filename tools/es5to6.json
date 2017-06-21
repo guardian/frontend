@@ -49,7 +49,16 @@
     "projects/common/modules/video/metadata.js",
     "projects/common/modules/crosswords/anagram-helper/clue-input.js"
   ],
-  "GHaberis": [],
+  "GHaberis": [
+    "projects/common/modules/media/videojs-plugins/fullscreener.js",
+    "projects/common/modules/media/videojs-plugins/skip-ad.js",
+    "projects/common/modules/onward/breaking-news.js",
+    "projects/common/modules/onward/geo-most-popular.js",
+    "projects/common/modules/onward/history.js",
+    "projects/common/modules/discussion/activity-stream.js",
+    "projects/common/modules/discussion/api.js",
+    "projects/common/modules/discussion/comment-box.js"
+  ],
   "Gustav Pursche": [
     "projects/common/modules/ui/tabs.js",
     "projects/common/modules/social/hidden-share-toggle.js",
@@ -96,9 +105,6 @@
     "projects/common/modules/crosswords/main.js",
     "projects/common/modules/crosswords/persistence.js",
     "projects/common/modules/crosswords/series.js",
-    "projects/common/modules/discussion/activity-stream.js",
-    "projects/common/modules/discussion/api.js",
-    "projects/common/modules/discussion/comment-box.js",
     "projects/common/modules/discussion/comment-count.js",
     "projects/common/modules/discussion/comments.js",
     "projects/common/modules/discussion/discussion-frontend.js",
@@ -154,8 +160,6 @@
     "projects/common/modules/identity/public-profile.js",
     "projects/common/modules/identity/validation-email.js",
     "projects/common/modules/lazyload.js",
-    "projects/common/modules/media/videojs-plugins/fullscreener.js",
-    "projects/common/modules/media/videojs-plugins/skip-ad.js",
     "projects/common/modules/navigation/membership.js",
     "projects/common/modules/navigation/navigation.js",
     "projects/common/modules/navigation/profile.js",
@@ -164,9 +168,6 @@
   "jfsoul": [
     "projects/common/modules/navigation/search.js",
     "projects/common/modules/navigation/user-account.js",
-    "projects/common/modules/onward/breaking-news.js",
-    "projects/common/modules/onward/geo-most-popular.js",
-    "projects/common/modules/onward/history.js",
     "projects/common/modules/onward/onward-content.js",
     "projects/common/modules/onward/popular.js",
     "projects/common/modules/onward/related.js",
