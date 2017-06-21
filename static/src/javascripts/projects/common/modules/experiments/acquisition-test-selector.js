@@ -24,12 +24,12 @@ const tests = [
     alwaysAsk,
     acquisitionsThisLandSeries,
     bundlePriceTest1,
+    epicForBrexitCohort,
     askFourEarning,
     acquisitionsEpicAlwaysAskIfTagged,
     acquisitionsEpicLiveBlogDesignTest,
     acquisitionsEpicLiveBlog,
     acquisitionsEpicAlwaysAskElection,
-    epicForBrexitCohort,
     acquisitionsEpicThankYou,
 ].map(Test => new Test());
 
