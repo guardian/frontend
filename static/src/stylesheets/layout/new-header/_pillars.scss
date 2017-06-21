@@ -38,6 +38,10 @@
         .new-header--open & {
             width: gs-span(2) + $gs-gutter / 2 + 1;
         }
+
+        .new-header--open &:not(:first-child) {
+            margin-left: $gs-gutter / 2 - 1;
+        }
     }
 
     > *:after {
