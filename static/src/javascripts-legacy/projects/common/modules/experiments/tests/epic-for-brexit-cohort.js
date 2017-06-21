@@ -21,19 +21,6 @@ define([
         return tags.indexOf('politics/eu-referendum') > -1;
     }
 
-    function worksWellWithPageTemplate() {
-        return config.page.contentType === 'Article' &&
-            !config.page.isMinuteArticle &&
-            !(config.page.isImmersive === true)
-    }
-
-    function isTargetPage() {
-        return worksWellWithPageTemplate() &&
-            !config.page.isPaidContent &&
-            !config.page.shouldHideAdverts &&
-             hasBrexitTag();
-    }
-
     function createBrexitTestTemplate() {
         return function(variant){
             return template(epicForBrexitCohortTemplate, {
@@ -59,10 +46,8 @@ define([
         audience: 1,
         audienceOffset: 0,
 
-        overrideCanRun: true,
-
         canRun: function() {
-            return userFeatures.isInBrexitCohort() && isTargetPage();
+            return userFeatures.isInBrexitCohort() && hasBrexitTag();
         },
 
         useLocalViewLog: true,
