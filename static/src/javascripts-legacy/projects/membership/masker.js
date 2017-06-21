@@ -4,22 +4,23 @@
  *   el.addEventListener('keyup', maskInput(' / ', 2)) // date
  *   el.addEventListener('keyup', maskInput('', 4)) // cvc
  */
-define(function () {
+define(function() {
     function maskInput(delim, len) {
-
         var tokRegex = new RegExp('\\d{1,' + len + '}', 'g'),
             validRegex = new RegExp('\\d|(' + delim + ')|^', 'g'),
             delimRegex = new RegExp(delim, 'g'),
             prevValue = '';
 
-        return function (event) {
+        return function(event) {
             if (event.keyCode !== 8) {
                 var toks = this.value.replace(delimRegex, '').match(tokRegex),
                     value = '';
 
                 if (toks && this.selectionEnd === this.value.length) {
-                    if (this.value.length >= prevValue.length
-                        && toks[toks.length - 1].length === len) {
+                    if (
+                        this.value.length >= prevValue.length &&
+                        toks[toks.length - 1].length === len
+                    ) {
                         toks.push('');
                     }
 

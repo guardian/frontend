@@ -1,8 +1,4 @@
-define([
-    'lib/config'
-], function (
-    config
-) {
+define(['lib/config'], function(config) {
     // The Nielsen NetRatings tag. Also known as IMR worldwide.
 
     var imrWorldwideUrl = '//secure-au.imrworldwide.com/v60.js';
@@ -18,7 +14,6 @@ define([
     return {
         shouldRun: config.switches.imrWorldwide,
         url: imrWorldwideUrl,
-        onLoad: onLoad
+        onLoad: onLoad,
     };
-
 });

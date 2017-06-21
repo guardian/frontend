@@ -1,15 +1,10 @@
-define([
-    'lib/$',
-    'lib/clamp',
-    'common/modules/component'
-], function (
+define(['lib/$', 'lib/clamp', 'common/modules/component'], function(
     $,
     clamp,
     Component
 ) {
-
     /** @constructor */
-    var Cta = function (mediator, options) {
+    var Cta = function(mediator, options) {
         this.mediator = mediator;
         this.setOptions(options);
     };
@@ -35,11 +30,11 @@ define([
 
     /** @type {Object.<string.*>} */
     Cta.prototype.defaultOptions = {
-        discussionKey: null
+        discussionKey: null,
     };
 
     /** @override */
-    Cta.prototype.prerender = function () {
+    Cta.prototype.prerender = function() {
         var comments = $('.comment', this.elem),
             comment = comments[Math.floor(Math.random() * comments.length) + 0];
 
@@ -51,10 +46,9 @@ define([
     };
 
     /** @override */
-    Cta.prototype.ready = function () {
+    Cta.prototype.ready = function() {
         clamp(this.getElem('body'), 10, true);
     };
 
     return Cta;
-
 });

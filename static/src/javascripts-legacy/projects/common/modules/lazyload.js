@@ -1,20 +1,12 @@
-define([
-    'lib/fetch-json',
-    'lib/fastdom-promise',
-    'bonzo',
-    'lodash/objects/merge'
-], function (
-    fetchJSON,
-    fastdom,
-    bonzo,
-    merge
-) {
-    function identity(x) {
-        return x;
-    }
+define(
+    ['lib/fetch-json', 'lib/fastdom-promise', 'bonzo', 'lodash/objects/merge'],
+    function(fetchJSON, fastdom, bonzo, merge) {
+        function identity(x) {
+            return x;
+        }
 
-    function lazyload(url, options) {
-        /*
+        function lazyload(url, options) {
+            /*
             Accepts these options:
 
             url               - string
@@ -25,34 +17,38 @@ define([
             force             - boolean, default false. Reload an already-populated container
         */
 
-        options = merge({
-            beforeInsert: identity,
-            force: false,
-            finally: identity,
-            catch: identity,
-        }, options);
+            options = merge(
+                {
+                    beforeInsert: identity,
+                    force: false,
+                    finally: identity,
+                    catch: identity,
+                },
+                options
+            );
 
-        if (url && options.container) {
-            var $container = bonzo(options.container);
+            if (url && options.container) {
+                var $container = bonzo(options.container);
 
-            if (options.force || !$container.hasClass('lazyloaded')) {
-                return fetchJSON(url, {
-                    mode: 'cors',
-                })
-                .then(function (resp) {
-                    return fastdom.write(function() {
-                        $container
-                            .html(options.beforeInsert(resp.html))
-                            .addClass('lazyloaded');
+                if (options.force || !$container.hasClass('lazyloaded')) {
+                    return fetchJSON(url, {
+                        mode: 'cors',
+                    })
+                        .then(function(resp) {
+                            return fastdom.write(function() {
+                                $container
+                                    .html(options.beforeInsert(resp.html))
+                                    .addClass('lazyloaded');
 
-                        return resp;
-                    });
-                })
-                .then(options.finally)
-                .catch(options.catch);
+                                return resp;
+                            });
+                        })
+                        .then(options.finally)
+                        .catch(options.catch);
+                }
             }
         }
-    }
 
-    return lazyload;
-});
+        return lazyload;
+    }
+);

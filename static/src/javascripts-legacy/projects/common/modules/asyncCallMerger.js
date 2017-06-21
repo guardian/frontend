@@ -2,7 +2,7 @@
  * This module is used to merge calls to async functions that use callbacks. Ensuring the target function is
  * called once only but the result is passed to all the call backs that require it.
  */
-define([], function () {
+define([], function() {
     /**
      * Creates a function that will merge calls to the supplied target function
      * @param {function} function to be merged, the function takes one argument, a callback that will
@@ -10,9 +10,7 @@ define([], function () {
      * @return {?Date} the current date
      */
     function mergeCalls(targetFunction) {
-        var callbacks,
-            status,
-            callbackArguments;
+        var callbacks, status, callbackArguments;
 
         function targetCallbackHandler() {
             callbackArguments = arguments;
@@ -49,6 +47,6 @@ define([], function () {
     }
 
     return {
-        mergeCalls: mergeCalls
+        mergeCalls: mergeCalls,
     };
 });

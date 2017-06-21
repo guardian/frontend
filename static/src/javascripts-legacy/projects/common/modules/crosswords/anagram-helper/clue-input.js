@@ -1,33 +1,28 @@
-define([
-    'react/addons'
-], function (
-    React
-) {
+define(['react/addons'], function(React) {
     var ClueInput = React.createClass({
-
-        componentDidMount: function () {
+        componentDidMount: function() {
             React.findDOMNode(this).focus();
         },
 
-        componentDidUpdate: function () {
+        componentDidUpdate: function() {
             // focus on reset
             if (this.props.value === '') {
                 React.findDOMNode(this).focus();
             }
         },
 
-        onInputChange: function (e) {
+        onInputChange: function(e) {
             this.props.onChange(e.target.value.toLowerCase());
         },
 
-        onKeyDown: function (e) {
+        onKeyDown: function(e) {
             if (e.keyCode === 13) {
                 React.findDOMNode(this).blur();
                 this.props.onEnter();
             }
         },
 
-        render: function () {
+        render: function() {
             return React.createElement('input', {
                 type: 'text',
                 className: 'crossword__anagram-helper__clue-input',
@@ -35,9 +30,9 @@ define([
                 maxLength: this.props.clue.length,
                 value: this.props.value,
                 onChange: this.onInputChange,
-                onKeyDown: this.onKeyDown
+                onKeyDown: this.onKeyDown,
             });
-        }
+        },
     });
 
     return ClueInput;

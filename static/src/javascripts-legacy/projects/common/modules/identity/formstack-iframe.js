@@ -1,20 +1,10 @@
-define([
-    'bean',
-    'lib/$',
-    'lib/mediator'
-], function (
-    bean,
-    $,
-    mediator
-) {
-
+define(['bean', 'lib/$', 'lib/mediator'], function(bean, $, mediator) {
     function FormstackIframe(el, config) {
-
         var self = this;
 
-        self.init = function () {
+        self.init = function() {
             // Setup postMessage listener for events from "modules/identity/formstack"
-            bean.on(window, 'message', function (event) {
+            bean.on(window, 'message', function(event) {
                 if (event.origin === config.page.idUrl) {
                     self.onMessage(event);
                 } else {
@@ -26,13 +16,13 @@ define([
 
             // Listen for load of form confirmation or error page,
             // which has no form, so won't instantiate the Formstack module
-            bean.on(el, 'load', function () {
+            bean.on(el, 'load', function() {
                 self.show();
                 self.refreshHeight();
             });
         };
 
-        self.onMessage = function (event) {
+        self.onMessage = function(event) {
             switch (event.data) {
                 case 'ready':
                     self.show();
@@ -49,28 +39,31 @@ define([
             }
         };
 
-        self.refreshHeight = function (reset) {
+        self.refreshHeight = function(reset) {
             if (reset) {
                 // If a height is set on the iframe, the following calculation
                 // will be at least that height, optionally reset first
-                $(el).css({ 'height': 0 });
+                $(el).css({ height: 0 });
             }
 
             var iframe = el.contentWindow.document,
                 body = iframe.body,
                 html = iframe.documentElement,
-                height = Math.max(body.scrollHeight, body.offsetHeight,
-                                  html.clientHeight, html.scrollHeight, html.offsetHeight);
+                height = Math.max(
+                    body.scrollHeight,
+                    body.offsetHeight,
+                    html.clientHeight,
+                    html.scrollHeight,
+                    html.offsetHeight
+                );
 
-            $(el).css({ 'height': height });
+            $(el).css({ height: height });
         };
 
-        self.show = function () {
+        self.show = function() {
             $(el).removeClass('is-hidden');
         };
-
     }
 
     return FormstackIframe;
-
 });

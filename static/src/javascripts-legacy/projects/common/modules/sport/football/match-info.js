@@ -1,18 +1,13 @@
-define([
-    'lib/$',
-    'lib/fetch-json'
-], function (
-    $,
-    fetchJSON
-) {
-
+define(['lib/$', 'lib/fetch-json'], function($, fetchJSON) {
     /**
      * @param {Object} match
      * @param {string} whosCalling (url)
      */
-    var MatchInfo = function (match, whosCalling) {
-        this.endpoint += (match.id ? match.id : [match.date].concat(match.teams).join('/')) +
-                '.json?page=' + encodeURIComponent(whosCalling);
+    var MatchInfo = function(match, whosCalling) {
+        this.endpoint +=
+            (match.id ? match.id : [match.date].concat(match.teams).join('/')) +
+            '.json?page=' +
+            encodeURIComponent(whosCalling);
     };
 
     /**
@@ -23,12 +18,11 @@ define([
     /**
      * @return Promise
      */
-    MatchInfo.prototype.fetch = function () {
+    MatchInfo.prototype.fetch = function() {
         return fetchJSON(this.endpoint, {
             mode: 'cors',
         });
     };
 
     return MatchInfo;
-
 }); // define

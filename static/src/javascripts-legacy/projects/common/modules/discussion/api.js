@@ -1,13 +1,8 @@
-define([
-    'common/modules/user-prefs',
-    'lib/ajax',
-    'lib/config'
-], function (
+define(['common/modules/user-prefs', 'lib/ajax', 'lib/config'], function(
     prefs,
     ajax,
     config
 ) {
-
     /**
      * Singleton to deal with Discussion API requests
      * @type {Object}
@@ -16,7 +11,7 @@ define([
         Api = {
             root: root,
             clientHeader: config.page.discussionApiClientHeader,
-            d2Uid: config.page.discussionD2Uid
+            d2Uid: config.page.discussionD2Uid,
         };
 
     /**
@@ -25,20 +20,20 @@ define([
      * @param {Object.<string.*>} data
      * @return {Reqwest} a promise
      */
-    Api.send = function (endpoint, method, data) {
+    Api.send = function(endpoint, method, data) {
         data = data || {};
 
         var request = ajax.ajax({
             url: Api.root + endpoint,
-            type: (method === 'get') ? 'jsonp' : 'json',
+            type: method === 'get' ? 'jsonp' : 'json',
             method: method,
             crossOrigin: true,
             data: data,
             headers: {
                 'D2-X-UID': Api.d2Uid,
-                'GU-Client': Api.clientHeader
+                'GU-Client': Api.clientHeader,
             },
-            withCredentials: true
+            withCredentials: true,
         });
 
         return request;
@@ -49,8 +44,11 @@ define([
      * @param {Object.<string.*>} comment
      * @return {Reqwest} a promise
      */
-    Api.postComment = function (discussionId, comment) {
-        var endpoint = '/discussion/' + discussionId + '/comment' +
+    Api.postComment = function(discussionId, comment) {
+        var endpoint =
+            '/discussion/' +
+            discussionId +
+            '/comment' +
             (comment.replyTo ? '/' + comment.replyTo.commentId + '/reply' : '');
 
         return Api.send(endpoint, 'post', comment);
@@ -60,7 +58,7 @@ define([
      * @param {string} comment
      * @return {Reqwest} a promise
      */
-    Api.previewComment = function (comment) {
+    Api.previewComment = function(comment) {
         var endpoint = '/comment/preview';
         return Api.send(endpoint, 'post', comment);
     };
@@ -69,7 +67,7 @@ define([
      * @param {number} id the comment ID
      * @return {Reqwest} a promise
      */
-    Api.recommendComment = function (id) {
+    Api.recommendComment = function(id) {
         var endpoint = '/comment/' + id + '/recommend';
         return Api.send(endpoint, 'post');
     };
@@ -78,7 +76,7 @@ define([
      * @param {number} id the comment ID
      * @return {Reqwest} a promise
      */
-    Api.pickComment = function (id) {
+    Api.pickComment = function(id) {
         var endpoint = '/comment/' + id + '/highlight';
         return Api.send(endpoint, 'post');
     };
@@ -87,7 +85,7 @@ define([
      * @param {number} id the comment ID
      * @return {Reqwest} a promise
      */
-    Api.unPickComment = function (id) {
+    Api.unPickComment = function(id) {
         var endpoint = '/comment/' + id + '/unhighlight';
         return Api.send(endpoint, 'post');
     };
@@ -98,7 +96,7 @@ define([
               { reason: string, emailAddress: string, categoryId: number }
      * @return {Reqwest} a promise
      */
-    Api.reportComment = function (id, report) {
+    Api.reportComment = function(id, report) {
         var endpoint = '/comment/' + id + '/reportAbuse';
         return Api.send(endpoint, 'post', report);
     };
@@ -108,11 +106,10 @@ define([
      * If it isn't we use profile/me, which isn't as cachable
      * @param {number=} id (optional)
      */
-    Api.getUser = function (id) {
+    Api.getUser = function(id) {
         var endpoint = '/profile/' + (!id ? 'me' : id);
         return Api.send(endpoint, 'get');
     };
 
     return Api;
-
 });

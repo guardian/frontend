@@ -1,8 +1,4 @@
-define([
-    'common/modules/user-prefs'
-], function (
-    userPrefs
-) {
+define(['common/modules/user-prefs'], function(userPrefs) {
     var KEY_PREFIX = 'accessibility';
 
     function saveState(state) {
@@ -26,7 +22,7 @@ define([
     var module = {
         KEY_PREFIX: KEY_PREFIX,
         saveState: saveState,
-        isOn: isOn
+        isOn: isOn,
     };
     return module;
 });

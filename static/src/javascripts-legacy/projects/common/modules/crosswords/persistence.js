@@ -1,13 +1,7 @@
-define([
-    'lib/storage',
-    'lodash/collections/map'
-], function (
-    storage,
-    map
-) {
+define(['lib/storage', 'lodash/collections/map'], function(storage, map) {
     var localStorage = storage.local;
 
-    var localStorageKey = function (id) {
+    var localStorageKey = function(id) {
         return 'crosswords.' + id;
     };
 
@@ -16,8 +10,8 @@ define([
          * Take only the entries from the grid. Other state information like what cells are highlighted ought not
          * to be persisted.
          */
-        var entries = map(grid, function (row) {
-            return map(row, function (cell) {
+        var entries = map(grid, function(row) {
+            return map(row, function(cell) {
                 return cell.value;
             });
         });
@@ -29,12 +23,12 @@ define([
         }
     }
 
-    var loadGridState = function (id) {
+    var loadGridState = function(id) {
         return localStorage.get(localStorageKey(id));
     };
 
     return {
-        'saveGridState': saveGridState,
-        'loadGridState': loadGridState
+        saveGridState: saveGridState,
+        loadGridState: loadGridState,
     };
 });

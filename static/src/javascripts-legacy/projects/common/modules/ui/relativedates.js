@@ -1,19 +1,31 @@
-define([
-    'lib/$',
-    'lib/mediator',
-    'bonzo'
-], function (
-    $,
-    mediator,
-    bonzo
-) {
-
+define(['lib/$', 'lib/mediator', 'bonzo'], function($, mediator, bonzo) {
     function dayOfWeek(day) {
-        return ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][day];
+        return [
+            'Sunday',
+            'Monday',
+            'Tuesday',
+            'Wednesday',
+            'Thursday',
+            'Friday',
+            'Saturday',
+        ][day];
     }
 
     function monthAbbr(month) {
-        return ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][month];
+        return [
+            'Jan',
+            'Feb',
+            'Mar',
+            'Apr',
+            'May',
+            'Jun',
+            'Jul',
+            'Aug',
+            'Sep',
+            'Oct',
+            'Nov',
+            'Dec',
+        ][month];
     }
 
     function pad(n) {
@@ -22,28 +34,28 @@ define([
 
     function isToday(date) {
         var today = new Date();
-        return date && (date.toDateString() === today.toDateString());
+        return date && date.toDateString() === today.toDateString();
     }
 
     function isWithin24Hours(date) {
         var today = new Date();
-        return date && (date.valueOf() > today.valueOf() - (24 * 60 * 60 * 1000));
+        return date && date.valueOf() > today.valueOf() - 24 * 60 * 60 * 1000;
     }
 
     function isWithinSeconds(date, seconds) {
         var today = new Date();
-        return date && (date.valueOf() > today.valueOf() - ((seconds || 0) * 1000));
+        return date && date.valueOf() > today.valueOf() - (seconds || 0) * 1000;
     }
 
     function isYesterday(relative) {
         var today = new Date(),
             yesterday = new Date();
         yesterday.setDate(today.getDate() - 1);
-        return (relative.toDateString() === yesterday.toDateString());
+        return relative.toDateString() === yesterday.toDateString();
     }
 
     function isWithinPastWeek(date) {
-        var weekAgo = new Date().valueOf() - (7 * 24 * 60 * 60 * 1000);
+        var weekAgo = new Date().valueOf() - 7 * 24 * 60 * 60 * 1000;
         return date.valueOf() >= weekAgo;
     }
 
@@ -58,25 +70,25 @@ define([
         var strs,
             units = {
                 s: {
-                    'short': ['s'],
-                    'med': ['s ago'],
-                    'long':  [' second ago', ' seconds ago']
+                    short: ['s'],
+                    med: ['s ago'],
+                    long: [' second ago', ' seconds ago'],
                 },
                 m: {
-                    'short': ['m'],
-                    'med': ['m ago'],
-                    'long':  [' minute ago', ' minutes ago']
+                    short: ['m'],
+                    med: ['m ago'],
+                    long: [' minute ago', ' minutes ago'],
                 },
                 h: {
-                    'short': ['h'],
-                    'med': ['h ago'],
-                    'long':  [' hour ago', ' hours ago']
+                    short: ['h'],
+                    med: ['h ago'],
+                    long: [' hour ago', ' hours ago'],
                 },
                 d: {
-                    'short': ['d'],
-                    'med': ['d ago'],
-                    'long':  [' day ago', ' days ago']
-                }
+                    short: ['d'],
+                    med: ['d ago'],
+                    long: [' day ago', ' days ago'],
+                },
             };
         if (units[type]) {
             strs = units[type][format];
@@ -93,11 +105,15 @@ define([
     function makeRelativeDate(epoch, opts) {
         opts = opts || {};
 
-        var minutes, hours, days, delta,
+        var minutes,
+            hours,
+            days,
+            delta,
             then = new Date(Number(epoch)),
             now = new Date(),
             format = opts.format || 'short',
-            extendedFormatting = (opts.format === 'short' || opts.format === 'med');
+            extendedFormatting =
+                opts.format === 'short' || opts.format === 'med';
 
         if (!isValidDate(then)) {
             return false;
@@ -107,34 +123,43 @@ define([
 
         if (delta < 0) {
             return false;
-
         } else if (opts.notAfter && delta > opts.notAfter) {
             return false;
-
         } else if (delta < 55) {
             return delta + getSuffix('s', format, delta);
-
-        } else if (delta < (55 * 60)) {
+        } else if (delta < 55 * 60) {
             minutes = Math.round(delta / 60, 10);
             return minutes + getSuffix('m', format, minutes);
-
-        } else if (isToday(then) || (extendedFormatting && isWithin24Hours(then))) {
+        } else if (
+            isToday(then) ||
+            (extendedFormatting && isWithin24Hours(then))
+        ) {
             hours = Math.round(delta / 3600);
             return hours + getSuffix('h', format, hours);
-
         } else if (extendedFormatting && isWithinPastWeek(then)) {
             days = Math.round(delta / 3600 / 24);
             return days + getSuffix('d', format, days);
-
-        } else if (isYesterday(then)) { // yesterday
+        } else if (isYesterday(then)) {
+            // yesterday
             return 'Yesterday' + withTime(then);
-
-        } else if (delta < 5 * 24 * 60 * 60) { // less than 5 days
-            return [dayOfWeek(then.getDay()), then.getDate(), monthAbbr(then.getMonth()), then.getFullYear()].join(' ') +
-                   (opts.showTime ? withTime(then) : '');
+        } else if (delta < 5 * 24 * 60 * 60) {
+            // less than 5 days
+            return (
+                [
+                    dayOfWeek(then.getDay()),
+                    then.getDate(),
+                    monthAbbr(then.getMonth()),
+                    then.getFullYear(),
+                ].join(' ') + (opts.showTime ? withTime(then) : '')
+            );
         } else {
-            return [then.getDate(), monthAbbr(then.getMonth()), then.getFullYear()].join(' ') +
-                   (opts.showTime ? withTime(then) : '');
+            return (
+                [
+                    then.getDate(),
+                    monthAbbr(then.getMonth()),
+                    then.getFullYear(),
+                ].join(' ') + (opts.showTime ? withTime(then) : '')
+            );
         }
     }
 
@@ -151,14 +176,15 @@ define([
         var cls = 'js-locale-timestamp';
         var context = html || document;
 
-        $('.' + cls, context).each(function (el) {
+        $('.' + cls, context).each(function(el) {
             var datetime,
                 $el = bonzo(el),
                 timestamp = parseInt($el.attr('data-timestamp'), 10);
 
             if (timestamp) {
                 datetime = new Date(timestamp);
-                el.innerHTML = pad(datetime.getHours()) + ':' + pad(datetime.getMinutes());
+                el.innerHTML =
+                    pad(datetime.getHours()) + ':' + pad(datetime.getMinutes());
                 $el.removeClass(cls);
             }
         });
@@ -167,17 +193,19 @@ define([
     function replaceValidTimestamps(opts) {
         opts = opts || {};
 
-        findValidTimestamps().each(function (el) {
+        findValidTimestamps().each(function(el) {
             var targetEl,
                 $el = bonzo(el),
                 // Epoch dates are more reliable, fallback to datetime for liveblog blocks
-                timestamp = parseInt($el.attr('data-timestamp'), 10) || $el.attr('datetime'),
+                timestamp =
+                    parseInt($el.attr('data-timestamp'), 10) ||
+                    $el.attr('datetime'),
                 datetime = new Date(timestamp),
                 relativeDate = makeRelativeDate(datetime.getTime(), {
                     // NOTE: if this is in a block (blog), assume we want added time on > 1 day old dates
                     showTime: bonzo($el.parent()).hasClass('block-time'),
-                    format:   $el.attr('data-relativeformat'),
-                    notAfter: opts.notAfter
+                    format: $el.attr('data-relativeformat'),
+                    notAfter: opts.notAfter,
                 });
 
             if (relativeDate) {
@@ -194,7 +222,7 @@ define([
     }
 
     // DEPRECATED: Bindings
-    ['related', 'autoupdate'].forEach(function (module) {
+    ['related', 'autoupdate'].forEach(function(module) {
         mediator.on('modules:' + module + ':render', replaceValidTimestamps);
     });
 
@@ -207,7 +235,6 @@ define([
         replaceLocaleTimestamps: replaceLocaleTimestamps,
         makeRelativeDate: makeRelativeDate,
         isWithinSeconds: isWithinSeconds,
-        init: init
+        init: init,
     };
-
 });

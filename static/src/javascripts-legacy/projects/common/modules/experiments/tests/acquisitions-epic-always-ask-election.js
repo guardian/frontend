@@ -1,11 +1,6 @@
-define([
-    'common/modules/commercial/contributions-utilities'
-], function (
+define(['common/modules/commercial/contributions-utilities'], function(
     contributionsUtilities
 ) {
-
-
-
     return contributionsUtilities.makeABTest({
         id: 'AcquisitionsEpicAlwaysAskElection',
         campaignId: 'epic_always_ask_election',
@@ -14,7 +9,8 @@ define([
         expiry: '2018-07-19',
 
         author: 'Jonathan Rankin',
-        description: 'This will guarantee that the epic is always displayed on election stories',
+        description:
+            'This will guarantee that the epic is always displayed on election stories',
         successMeasure: 'Conversion rate',
         idealOutcome: 'We can always show the epic on election articles',
         audienceCriteria: 'All',
@@ -26,9 +22,9 @@ define([
         variants: [
             {
                 id: 'control',
-                isUnlimited : true,
-                useTailoredCopyForRegulars: true
-            }
-        ]
+                isUnlimited: true,
+                useTailoredCopyForRegulars: true,
+            },
+        ],
     });
 });

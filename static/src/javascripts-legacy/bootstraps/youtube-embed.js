@@ -1,14 +1,9 @@
-define([
-    'bootstraps/enhanced/youtube'
-], function (
-    youtube
-) {
-
+define(['bootstraps/enhanced/youtube'], function(youtube) {
     function init() {
         youtube.init();
     }
 
     return {
-        init: init
+        init: init,
     };
 });

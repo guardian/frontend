@@ -1,24 +1,17 @@
-define([
-    'lib/mediator'
-], function (
-    mediator
-) {
+define(['lib/mediator'], function(mediator) {
     'use strict';
-
     var originalPageTitle = document.title;
 
-    function NotificationCounter() {
+    function NotificationCounter() {}
 
-    }
-
-    NotificationCounter.prototype.init = function () {
+    NotificationCounter.prototype.init = function() {
         var self = this;
-        mediator.on('modules:autoupdate:unread', function (count) {
+        mediator.on('modules:autoupdate:unread', function(count) {
             self.setCount(count);
         });
     };
 
-    NotificationCounter.prototype.setCount = function (count) {
+    NotificationCounter.prototype.setCount = function(count) {
         if (count > 0) {
             document.title = '(' + count + ') ' + originalPageTitle;
         } else {
@@ -26,7 +19,7 @@ define([
         }
     };
 
-    NotificationCounter.prototype.restorePageTitle = function () {
+    NotificationCounter.prototype.restorePageTitle = function() {
         document.title = originalPageTitle;
     };
 

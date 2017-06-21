@@ -1,9 +1,4 @@
-define([
-    'common/modules/component'
-], function (
-    Component
-) {
-
+define(['common/modules/component'], function(Component) {
     /**
      * @param {string} endpoint
      * @return Component
@@ -20,7 +15,9 @@ define([
      * @return Component
      */
     function matchDayFor(competition, date) {
-        return blankComponent('/football/match-day/' + competition + '/' + date + '.json');
+        return blankComponent(
+            '/football/match-day/' + competition + '/' + date + '.json'
+        );
     }
 
     /**
@@ -44,7 +41,6 @@ define([
     return {
         matchDayFor: matchDayFor,
         tableFor: tableFor,
-        statsFor: statsFor
+        statsFor: statsFor,
     };
-
 }); //define

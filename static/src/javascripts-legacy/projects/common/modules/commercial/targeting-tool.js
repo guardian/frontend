@@ -1,8 +1,4 @@
-define([
-    'lib/config',
-], function(
-    config
-) {
+define(['lib/config'], function(config) {
     function clean(string) {
         return string.trim().toLowerCase();
     }
@@ -15,8 +11,11 @@ define([
      */
     function campaignsFor(id) {
         try {
-            return config.page.campaigns.filter(function (campaign) {
-                return campaign.fields && clean(campaign.fields.campaignId) === clean(id);
+            return config.page.campaigns.filter(function(campaign) {
+                return (
+                    campaign.fields &&
+                    clean(campaign.fields.campaignId) === clean(id)
+                );
             });
         } catch (e) {
             return [];
@@ -34,6 +33,6 @@ define([
     }
 
     return {
-        isAbTestTargeted: isAbTestTargeted
+        isAbTestTargeted: isAbTestTargeted,
     };
 });
