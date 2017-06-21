@@ -83,6 +83,12 @@ from scrolling */
         margin-left: auto;
     }
 
+    @include mq(desktop) {
+        &:focus {
+            outline: none;
+        }
+    }
+
     .new-header--slim.new-header--open & {
         @include mq($from: desktop, $until: leftCol) {
             display: none;

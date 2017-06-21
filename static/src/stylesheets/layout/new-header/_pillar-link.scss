@@ -8,6 +8,7 @@
     font-size: 5.1vw;
     line-height: $gs-baseline * 2.5;
     position: relative;
+    transition: color 350ms;
 
     @include mq(mobileMedium) {
         line-height: $gs-baseline * 3;
@@ -20,15 +21,17 @@
 
     @include mq(tablet) {
         font-size: 28px;
+        letter-spacing: -0.04rem;
     }
 
     @include mq(desktop) {
-        font-size: 29px;
+        font-size: 32px;
     }
 
     &:focus,
     &:hover {
         color: #ffffff;
+        outline: none;
         text-decoration: none;
     }
 
@@ -42,6 +45,18 @@
 .pillar-link--current-section {
     color: #ffffff;
 
+    @include mq(desktop) {
+        .new-header--open & {
+            color: $news-support-1;
+
+            &:focus,
+            &:hover {
+                color: #ffffff;
+                text-decoration: none;
+            }
+        }
+    }
+
     // triangle
     &:before {
         content: '';
@@ -54,7 +69,9 @@
         border-right: $gs-baseline / 2 solid transparent;
 
         @include mq(desktop) {
-            display: none;
+            .new-header--open & {
+                display: none;
+            }
         }
     }
 }

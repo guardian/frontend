@@ -24,10 +24,18 @@
         content: '/';
         display: inline-block;
         font-size: 22px;
-        opacity: .6;
-        padding-left: -2px;
-        padding-right: -2px;
+        opacity: .5;
+        margin-left: -2px;
+        margin-right: -2px;
         pointer-events: none;
+    }
+}
+
+.menu-brand-extensions-item {
+    &:focus,
+    &:hover {
+        color: darken($guardian-brand-dark, 5%);
+        text-decoration: none;
     }
 }
 

@@ -9,7 +9,6 @@
     padding: 0 0 $gs-baseline;
 
     @include mq(desktop) {
-        color: $news-support-1;
         display: flex;
         flex-direction: column;
         padding-bottom: 0;
@@ -28,10 +27,8 @@
     padding-top: 0;
 
     @include mq(desktop) {
-        color: $news-support-1;
         flex-direction: row;
         flex-wrap: nowrap;
-        margin-bottom: $gs-row-height / 2;
         order: 1;
     }
 }
@@ -44,6 +41,7 @@
     @include mq(desktop) {
         background-color: transparent;
         padding-bottom: 0;
+        transition: color 250ms;
         width: 100%;
     }
 }
@@ -146,6 +144,7 @@
 
 .menu-group--footer {
     @include mq(desktop) {
+        color: $news-support-1;
         padding-left: $gs-gutter / 2;
         position: absolute;
         right: gs-span(2) + $gs-gutter * 1.5 + 1;

@@ -43,6 +43,10 @@
         max-width: none;
         padding-left: 48px;
         font-size: 18px;
+
+        &:hover {
+            background: lighten($guardian-brand, 4%);
+        }
     }
 
     &::placeholder {

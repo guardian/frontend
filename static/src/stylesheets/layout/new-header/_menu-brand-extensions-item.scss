@@ -1,4 +1,8 @@
 .menu-brand-extensions-item {
     color: currentColor;
-    font-size: 21px;
+    font-size: 24px;
+
+    &:focus {
+        outline: none;
+    }
 }
