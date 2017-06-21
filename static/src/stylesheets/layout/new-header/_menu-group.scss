@@ -20,12 +20,6 @@
             display: none;
         }
     }
-
-    [aria-expanded='true'] ~ & {
-        @include mq($until: desktop) {
-            margin-bottom: -1px;
-        }
-    }
 }
 
 .menu-group--primary {
