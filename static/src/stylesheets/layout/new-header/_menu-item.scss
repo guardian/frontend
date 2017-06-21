@@ -6,20 +6,21 @@
 
     .menu-group--primary > & {
         @include mq(desktop) {
-            width: 100%;
+            border-right: 2px solid rgba($news-main-2, .3);
+            float: left;
+            width: gs-span(2) + $gs-gutter / 2 + 1;
 
             &:not(:first-child) {
                 margin-left: $gs-gutter / 2 - 1;
             }
 
-            & {
-                border-right: 2px solid rgba($news-main-2, .3);
-                width: gs-span(2) + $gs-gutter / 2 + 1;
-            }
-
             &:not(:last-child) {
                 margin-top: -$gs-baseline * 3.5;
                 padding-top: $gs-baseline * 3.5;
+            }
+
+            @supports(display: flex) {
+                float: none;
             }
         }
     }
@@ -35,11 +36,16 @@
         @include mq(desktop) {
             background-color: $guardian-brand;
             display: block;
+            float: left;
             height: $search-and-edition-height-desktop;
             border-radius: 50%;
             margin-right: $gs-gutter / 2;
             text-align: center;
             width: $search-and-edition-height-desktop;
+
+            @supports(display: flex) {
+                float: none;
+            }
         }
 
         &:hover,
@@ -57,6 +63,7 @@
             }
         }
     }
+
     .menu-group--membership-actions & {
         @include mq($from: desktop, $until: leftCol) {
             margin-left: $gs-gutter / 2 - 1;
@@ -133,30 +140,35 @@
         pointer-events: none;
     }
 
+    .menu-group--primary > *:not(:last-child) > &,
     &[data-link-name='nav2 : the guardian app'],
     &[data-link-name='nav2 : facebook'] {
         @include mq($until: desktop) {
-            margin-top: $gs-baseline * 2;
-        }
-    }
-
-    .menu-group--primary > *:not(:first-child) > &,
-    &[data-link-name='nav2 : the guardian app'],
-    &[data-link-name='nav2 : facebook'] {
-        @include mq($until: desktop) {
-            &:before {
+            &:not([aria-expanded='true']):after {
                 background-color: darken($guardian-brand-dark, 4%);
+                bottom: 0;
                 content: '';
                 display: block;
                 height: 1px;
                 left: $menu-spacing-left-small;
                 position: absolute;
-                top: 0;
                 width: 100%;
 
                 @include mq(tablet) {
                     left: $menu-spacing-left-medium;
                 }
+            }
+        }
+    }
+
+    &[data-link-name='nav2 : the guardian app'],
+    &[data-link-name='nav2 : facebook'] {
+        @include mq($until: desktop) {
+            margin-top: $gs-baseline * 2;
+
+            &:after {
+                bottom: auto;
+                top: 0;
             }
         }
     }

@@ -31,6 +31,12 @@
         color: #ffffff;
         text-decoration: none;
     }
+
+    .new-header--slim & {
+        @include mq($from: tablet, $until: desktop) {
+            font-size: 24px;
+        }
+    }
 }
 
 .pillar-link--current-section {
