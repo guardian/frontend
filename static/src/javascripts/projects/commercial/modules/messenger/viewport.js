@@ -1,56 +1,58 @@
+// @flow
 import detect from 'lib/detect';
 import fastdom from 'lib/fastdom-promise';
-import messenger from 'commercial/modules/messenger';
-var w = window;
-var iframes = {};
-var iframeCounter = 0;
-var taskQueued = false;
-var lastViewportRead, lastViewport;
+import { register } from 'commercial/modules/messenger';
 
-messenger.register('viewport', onMessage, {
-    persist: true
-});
-lastViewportRead = fastdom.read(function() {
+let w = window;
+let iframes = {};
+let iframeCounter = 0;
+let taskQueued = false;
+let lastViewport;
+
+const lastViewportRead = fastdom.read(() => {
     lastViewport = detect.getViewport();
 });
 
-export default {
-    addResizeListener: addResizeListener,
-    removeResizeListener: removeResizeListener,
-    reset: reset
-};
-
-function reset(window_) {
+const reset = (window_: WindowProxy) => {
     w = window_ || window;
     taskQueued = false;
     iframes = {};
     iframeCounter = 0;
-}
+};
 
-function onMessage(respond, start, iframe) {
-    if (start) {
-        addResizeListener(iframe, respond);
-    } else {
-        removeResizeListener(iframe);
+const sendViewportDimensions = function(iframeId) {
+    iframes[iframeId].respond(null, this);
+};
+
+const onResize = () => {
+    if (!taskQueued) {
+        taskQueued = true;
+
+        return fastdom
+            .read(() => (lastViewport = detect.getViewport()))
+            .then(viewport => {
+                Object.keys(iframes).forEach(sendViewportDimensions, viewport);
+                taskQueued = false;
+            });
     }
-}
+};
 
-function addResizeListener(iframe, respond) {
+const addResizeListener = (iframe: Element, respond: any): Promise<any> => {
     if (iframeCounter === 0) {
         w.addEventListener('resize', onResize);
     }
 
     iframes[iframe.id] = {
         node: iframe,
-        respond: respond
+        respond,
     };
     iframeCounter += 1;
-    return lastViewportRead.then(function() {
+    return lastViewportRead.then(() => {
         sendViewportDimensions.bind(lastViewport)(iframe.id);
     });
-}
+};
 
-function removeResizeListener(iframe) {
+const removeResizeListener = (iframe: Element) => {
     if (iframes[iframe.id]) {
         iframes[iframe.id] = false;
         iframeCounter -= 1;
@@ -59,21 +61,19 @@ function removeResizeListener(iframe) {
     if (iframeCounter === 0) {
         w.removeEventListener('resize', onResize);
     }
-}
+};
 
-function onResize() {
-    if (!taskQueued) {
-        taskQueued = true;
-
-        return fastdom.read(function() {
-            return lastViewport = detect.getViewport();
-        }).then(function(viewport) {
-            Object.keys(iframes).forEach(sendViewportDimensions, viewport);
-            taskQueued = false;
-        });
+const onMessage = (respond: any, start, iframe: ?Element): void => {
+    if (!iframe) return;
+    if (start) {
+        addResizeListener(iframe, respond);
+    } else {
+        removeResizeListener(iframe);
     }
-}
+};
 
-function sendViewportDimensions(iframeId) {
-    iframes[iframeId].respond(null, this);
-}
+register('viewport', onMessage, {
+    persist: true,
+});
+
+export { addResizeListener, removeResizeListener, reset };
