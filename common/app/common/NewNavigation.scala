@@ -64,7 +64,7 @@ object NewNavigation {
   case object MostPopular extends EditionalisedNavigationSection {
     val name = "news"
 
-    val uk = NavLinkLists(List(headlines, ukNews, ukElection2017, world, tech, business, football))
+    val uk = NavLinkLists(List(headlines, ukNews, environment, world, tech, business, football))
     val au = NavLinkLists(List(headlines, australiaNews, world, auPolitics, environment, economy, football))
     val us = NavLinkLists(List(headlines, usNews, world, usPolitics, business, science, soccer))
     val int = NavLinkLists(List(headlines, world, ukNews, business, science, globalDevelopment, football))
@@ -74,7 +74,7 @@ object NewNavigation {
     val name = "news"
 
     val uk = NavLinkLists(
-      List(headlines, ukNews, world, business, ukElection2017, tech, politics),
+      List(headlines, ukNews, world, business, environment, tech, politics),
       List(science, globalDevelopment, cities, obituaries)
     )
     val au = NavLinkLists(
@@ -258,22 +258,22 @@ object NewNavigation {
     val name = ""
 
     val uk = NavLinkLists(List(
-      NavLink("professional networks", "/guardian-professional"),
       apps.copy(url = apps.url + "?INTCMP=apps_uk_web_newheader"),
-      podcasts,
       video,
+      podcasts,
       pictures,
       newsletters,
       todaysPaper,
       observer,
       digitalNewspaperArchive,
+      NavLink("professional networks", "/guardian-professional"),
       crosswords
     ))
 
     val au = NavLinkLists(List(
       apps.copy(url = apps.url + "?INTCMP=apps_au_web_newheader"),
-      podcasts,
       video,
+      podcasts,
       pictures,
       newsletters,
       digitalNewspaperArchive,
@@ -282,8 +282,8 @@ object NewNavigation {
 
     val us = NavLinkLists(List(
       apps.copy(url = apps.url + "?INTCMP=apps_us_web_newheader"),
-      podcasts,
       video,
+      podcasts,
       pictures,
       newsletters,
       digitalNewspaperArchive,
@@ -292,8 +292,8 @@ object NewNavigation {
 
     val int = NavLinkLists(List(
       apps.copy(url = apps.url + "?INTCMP=apps_int_web_newheader"),
-      podcasts,
       video,
+      podcasts,
       pictures,
       newsletters,
       todaysPaper,

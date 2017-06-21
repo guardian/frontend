@@ -11,6 +11,7 @@
     border-radius: 50%;
     outline: none;
     right: $gutter-small;
+    z-index: 1;
 
     @include mq(mobileMedium) {
         height: $veggie-burger-medium;

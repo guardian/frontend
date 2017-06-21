@@ -5,7 +5,7 @@
 
 .menu-brand-extensions__inner {
     box-sizing: border-box;
-    padding: $gs-baseline $gs-gutter $gs-baseline / 3 $gs-gutter;
+    padding: $gs-baseline / 2 $gs-gutter;
 }
 
 .menu-brand-extensions__list {
@@ -13,6 +13,7 @@
     list-style: none;
     margin: 0;
     padding: 0;
+    vertical-align: middle;
 }
 
 .menu-brand-extensions__list-item {
@@ -22,7 +23,7 @@
         color: currentColor;
         content: '/';
         display: inline-block;
-        font-size: 28px;
+        font-size: 22px;
         opacity: .6;
         padding-left: -2px;
         padding-right: -2px;
@@ -32,13 +33,15 @@
 
 .menu-brand-extensions__logo {
     display: inline-block;
-    margin-right: $gs-gutter / 2;
+    margin-right: $gs-gutter / 3;
+    position: relative;
+    top: 4px;
     vertical-align: middle;
 }
 
 .menu-brand-extensions__logo__svg {
-    height: 35px;
-    width: 185px;
+    height: 28px;
+    width: 140px;
 
     path {
         fill: currentColor;

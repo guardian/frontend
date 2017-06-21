@@ -1,13 +1,11 @@
 @(page: model.Page)(implicit request: RequestHeader)
 
 @import conf.Configuration
-@import conf.switches.Switches.NewTabletHeader
 @import common.{LinkTo, NewNavigation, Edition}
 @import views.support.RenderClasses
 
 <header class="@RenderClasses(Map(
-            "new-header--mvt-desktop" -> mvt.ABNewDesktopHeader.isParticipating,
-            "new-header--switch-on-tablet" -> NewTabletHeader.isSwitchedOn
+            "new-header--mvt-desktop" -> mvt.ABNewDesktopHeader.isParticipating
         ), "new-header")"
         role="banner">
     @defining(NewNavigation.SubSectionLinks.getSectionOrTagId(page)) { id =>
@@ -60,6 +58,11 @@
                     }
                 </div>
 
+                <input type="checkbox"
+                       id="main-menu-toggle"
+                       class="veggie-burger-fallback js-enhance-checkbox"
+                       aria-controls="main-menu">
+
                 <ul class="pillars">
                     @NewNavigation.PrimaryLinks.map { link =>
                         <li class="pillars__item">
@@ -81,11 +84,6 @@
                     <span class="veggie-burger__icon"></span>
                     <span class="veggie-burger__label">Menu</span>
                 </label>
-
-                <input type="checkbox"
-                       id="main-menu-toggle"
-                       class="veggie-burger-fallback js-enhance-checkbox"
-                       aria-controls="main-menu">
 
                 @fragments.nav.newHeaderMenu()
             </nav>

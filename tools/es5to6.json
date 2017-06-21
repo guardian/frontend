@@ -4,9 +4,7 @@
   "Regis Kuckaertz": [],
   "Richard Nguyen": [],
   "Kate Whalen": [
-    "projects/commercial/modules/messenger/dfp-origin.js",
     "projects/commercial/modules/messenger/get-stylesheet.js",
-    "projects/commercial/modules/messenger/post-message.js",
     "projects/commercial/modules/messenger/resize.js"
   ],
   "Lydia Shepherd": [],
@@ -21,8 +19,7 @@
     "bootstraps/enhanced/facia.js",
     "bootstraps/enhanced/football.js",
     "projects/common/modules/video/onward-container.js",
-    "bootstraps/enhanced/gallery.js",
-    "projects/common/modules/check-dispatcher.js"
+    "bootstraps/enhanced/gallery.js"
   ],
   "Simon Adcock": [
     "bootstraps/enhanced/media/video-player.js"
@@ -51,14 +48,7 @@
     "projects/common/modules/video/metadata.js",
     "projects/common/modules/crosswords/anagram-helper/clue-input.js"
   ],
-  "GHaberis": [
-    "projects/admin/modules/abtests/audience-item.js",
-    "projects/admin/modules/abtests/audience.js",
-    "projects/admin/modules/abtests/participation-item.js",
-    "projects/admin/modules/abtests/participation.js",
-    "projects/common/modules/accessibility/helpers.js",
-    "projects/common/modules/crosswords/anagram-helper/clue-preview.js"
-  ],
+  "GHaberis": [],
   "Gustav Pursche": [
     "projects/common/modules/ui/tabs.js",
     "projects/common/modules/social/hidden-share-toggle.js",
@@ -86,7 +76,6 @@
   ],
   "Gideon Goldberg": [],
   "Matthew Walls": [
-    "projects/common/modules/crosswords/anagram-helper/main.js",
     "projects/common/modules/crosswords/anagram-helper/ring.js",
     "projects/common/modules/crosswords/cell.js",
     "projects/common/modules/crosswords/classNames.js",
@@ -181,7 +170,6 @@
     "projects/common/modules/onward/popular.js",
     "projects/common/modules/onward/related.js",
     "projects/common/modules/onward/tech-feedback.js",
-    "projects/common/modules/onward/tonal.js",
     "projects/common/modules/open/cta.js",
     "projects/common/modules/preferences/main.js",
     "projects/commercial/modules/third-party-tags/audience-science-pql.js"

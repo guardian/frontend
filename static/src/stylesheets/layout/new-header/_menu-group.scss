@@ -12,6 +12,7 @@
         color: $news-support-1;
         display: flex;
         flex-direction: column;
+        padding-bottom: 0;
     }
 
     [aria-expanded='false'] ~ & {
@@ -21,7 +22,9 @@
     }
 
     [aria-expanded='true'] ~ & {
-        margin-bottom: -1px;
+        @include mq($until: desktop) {
+            margin-bottom: -1px;
+        }
     }
 }
 
@@ -33,7 +36,7 @@
         color: $news-support-1;
         flex-direction: row;
         flex-wrap: nowrap;
-        margin-bottom: $gs-row-height;
+        margin-bottom: $gs-row-height / 2;
         order: 1;
     }
 }
@@ -45,7 +48,8 @@
 
     @include mq(desktop) {
         background-color: transparent;
-        width: gs-span(2) + $gs-gutter / 2;
+        padding-bottom: 0;
+        width: 100%;
     }
 }
 
@@ -57,26 +61,45 @@
     }
 }
 
+.menu-group--editions {
+    padding-bottom: 0;
+
+    @include mq(desktop) {
+        margin-top: $gs-row-height / 2;
+    }
+}
+
 .menu-group--editions .menu-group {
     @include mq($until: desktop) {
         color: $guardian-brand-dark;
         background-color: darken($news-main-2, 10%);
-        margin-bottom: -$gs-baseline;
     }
 }
 
-
 .menu-group--membership {
     padding-bottom: 0;
+    position: relative;
+
+    @include mq($from: desktop, $until: leftCol) {
+        border-top: 1px solid rgba($news-main-2, .3);
+        flex-wrap: nowrap;
+        width: 100%;
+    }
 
     @include mq(desktop) {
-        border-top: 1px solid rgba($news-main-2, .3);
         flex-direction: row;
-        flex-wrap: nowrap;
         order: 3;
-        padding-bottom: $gs-baseline * 3;
+        padding-bottom: 0;
         padding-top: $gs-baseline / 2;
         width: 100%;
+    }
+
+    @include mq(leftCol) {
+        border-left: 2px solid rgba($news-main-2, .3);
+        flex-direction: column;
+        padding-left: $gs-gutter / 2 - 1;
+        padding-top: $gs-baseline;
+        width: gs-span(2) + $gs-gutter / 2 - 1;
     }
 }
 
@@ -116,7 +139,16 @@
     @include mq(desktop) {
         order: 2;
         padding-left: $gs-gutter / 2;
-        width: gs-span(2) + $gs-gutter / 2;
+        position: relative;
+        width: gs-span(2) + $gs-gutter / 2 - 1;
+    }
+
+    @include mq(leftCol) {
+        width: gs-span(2) + $gs-gutter - 1;
+    }
+
+    @include mq(wide) {
+        width: gs-span(3) + $gs-gutter - 1;
     }
 }
 

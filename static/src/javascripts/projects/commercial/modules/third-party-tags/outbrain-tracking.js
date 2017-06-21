@@ -2,10 +2,7 @@
 
 import ophan from 'ophan/ng';
 
-const tracking = function(trackingObj: {
-    widgetId?: string,
-    state?: string,
-}): void {
+const tracking = (trackingObj: { widgetId?: string }): void => {
     ophan.record({
         outbrain: trackingObj,
     });

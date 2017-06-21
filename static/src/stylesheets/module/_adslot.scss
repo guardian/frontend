@@ -75,6 +75,10 @@
     &:not(.top-banner-ad-container--not-sticky) {
         position: sticky;
         z-index: $zindex-sticky;
+
+        @include mq(desktop) {
+            z-index: $zindex-sticky-top-banner;
+        }
     }
 }
 

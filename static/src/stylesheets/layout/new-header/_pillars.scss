@@ -19,15 +19,27 @@
 }
 
 .pillars__item {
+    box-sizing: border-box;
     display: inline-block;
+
+    @include mq(desktop) {
+        .new-header--open & {
+            width: gs-span(2) + $gs-gutter / 2 + 1;
+        }
+
+        .new-header--open &:not(:first-child) {
+            margin-left: $gs-gutter / 2 - 1;
+        }
+    }
 
     > *:after {
         content: '/';
         color: $news-main-2;
         display: inline-block;
         line-height: 1;
-        margin-left: -2px;
+        margin-left: -1px;
         margin-right: 2px;
+        opacity: .6;
         pointer-events: none;
 
         .new-header--open & {

@@ -52,7 +52,6 @@ object NavLinks {
   val borrowing = NavLink("borrowing", "/money/debt", "money/debt")
   val careers = NavLink("careers", "/money/work-and-careers", "money/work-and-careers")
   val obituaries = NavLink("obituaries", "/tone/obituaries")
-  val ukElection2017 = NavLink("election", "/politics/general-election-2017")
 
   /* OPINION */
   val opinion = NavLink("opinion", "/commentisfree", longTitle = "opinion home", iconName = "home", uniqueSection = "commentisfree")
@@ -122,7 +121,7 @@ object NavLinks {
 
   val todaysPaper = NavLink("today's paper", "/theguardian", "theguardian")
   val observer = NavLink("the observer", "/observer", "observer")
-  val digitalNewspaperArchive = NavLink("digital newspaper archive", "https://theguardian.newspapers.com")
+  val digitalNewspaperArchive = NavLink("digital archive", "https://theguardian.newspapers.com")
   val crosswords = NavLink("crosswords", "/crosswords", "crosswords")
   val video =  NavLink("video", "/video")
   val podcasts =  NavLink("podcasts", "/podcasts")

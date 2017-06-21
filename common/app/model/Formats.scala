@@ -201,10 +201,17 @@ object ContentTypeFormat {
   implicit val recipeThriftAtomFormat = RecipeThriftAtomFormat
   implicit val reviewThriftAtomFormat = ReviewThriftAtomFormat
   implicit val storyquestionsThriftAtomFormat = StoryquestionsThriftAtomFormat
+  implicit val qandasThriftAtomFormat = QandasThriftAtomFormat
+  implicit val guidesThriftAtomFormat = GuidesThriftAtomFormat
+  implicit val profilesThriftAtomFormat = ProfilesThriftAtomFormat
+  implicit val timelinesThriftAtomFormat = TimelinesThriftAtomFormat
   implicit val recipeAtomFormat = Json.format[RecipeAtom]
   implicit val reviewAtomFormat = Json.format[ReviewAtom]
   implicit val storyquestionsAtomFormat = Json.format[StoryQuestionsAtom]
-
+  implicit val qandaAtomForm = Json.format[model.content.QandaAtom]
+  implicit val guideAtomForm = Json.format[model.content.GuideAtom]
+  implicit val profileAtomForm = Json.format[model.content.ProfileAtom]
+  implicit val timelineAtomForm = Json.format[model.content.TimelineAtom]
 
   implicit val atomsWrite = Json.writes[Atoms]
 
@@ -222,7 +229,11 @@ object ContentTypeFormat {
       (__ \ "recipes").read[Seq[RecipeAtom]].orElse(Reads.pure(Nil)) and
       (__ \ "reviews").read[Seq[ReviewAtom]].orElse(Reads.pure(Nil)) and
       (__ \ "storyquestions").read[Seq[StoryQuestionsAtom]].orElse(Reads.pure(Nil)) and
-      (__ \ "explainers").read[Seq[ExplainerAtom]].orElse(Reads.pure(Nil))
+      (__ \ "explainers").read[Seq[ExplainerAtom]].orElse(Reads.pure(Nil)) and
+      (__ \ "qandas").read[Seq[QandaAtom]].orElse(Reads.pure(Nil)) and
+      (__ \ "guides").read[Seq[GuideAtom]].orElse(Reads.pure(Nil)) and
+      (__ \ "profiles").read[Seq[ProfileAtom]].orElse(Reads.pure(Nil)) and
+      (__ \ "timelines").read[Seq[TimelineAtom]].orElse(Reads.pure(Nil))
     )(Atoms.apply _)
 
 
@@ -457,6 +468,26 @@ object StoryquestionsThriftAtomFormat extends Format[com.gu.contentatom.thrift.a
 object ExplainerThriftAtomFormat extends Format[com.gu.contentatom.thrift.atom.explainer.ExplainerAtom] {
   def reads(json: JsValue) = JsError("Converting from Json is not supported by intent!")
   def writes(explainer: com.gu.contentatom.thrift.atom.explainer.ExplainerAtom) = JsObject(Seq.empty)
+}
+
+object QandasThriftAtomFormat extends Format[com.gu.contentatom.thrift.atom.qanda.QAndAAtom] {
+  def reads(json: JsValue) = JsError("Converting from Json is not supported by intent!")
+  def writes(qanda: com.gu.contentatom.thrift.atom.qanda.QAndAAtom) = JsObject(Seq.empty)
+}
+
+object GuidesThriftAtomFormat extends Format[com.gu.contentatom.thrift.atom.guide.GuideAtom] {
+  def reads(json: JsValue) = JsError("Converting from Json is not supported by intent!")
+  def writes(guide: com.gu.contentatom.thrift.atom.guide.GuideAtom) = JsObject(Seq.empty)
+}
+
+object ProfilesThriftAtomFormat extends Format[com.gu.contentatom.thrift.atom.profile.ProfileAtom] {
+  def reads(json: JsValue) = JsError("Converting from Json is not supported by intent!")
+  def writes(profile: com.gu.contentatom.thrift.atom.profile.ProfileAtom) = JsObject(Seq.empty)
+}
+
+object TimelinesThriftAtomFormat extends Format[com.gu.contentatom.thrift.atom.timeline.TimelineAtom] {
+  def reads(json: JsValue) = JsError("Converting from Json is not supported by intent!")
+  def writes(timeline: com.gu.contentatom.thrift.atom.timeline.TimelineAtom) = JsObject(Seq.empty)
 }
 
 object CardStyleFormat extends Format[CardStyle] {

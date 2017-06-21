@@ -59,8 +59,10 @@ object Fields {
       displayHint = apiContent.fields.flatMap(_.displayHint).getOrElse(""),
       isLive = apiContent.fields.flatMap(_.liveBloggingNow).getOrElse(false),
       sensitive = apiContent.fields.flatMap(_.sensitive),
+      shouldHideReaderRevenue = apiContent.fields.flatMap(_.shouldHideReaderRevenue),
       legallySensitive = apiContent.fields.flatMap(_.legallySensitive),
-      firstPublicationDate = apiContent.fields.flatMap(_.firstPublicationDate).map(_.toJodaDateTime)
+      firstPublicationDate = apiContent.fields.flatMap(_.firstPublicationDate).map(_.toJodaDateTime),
+      lang = apiContent.fields.flatMap(_.lang)
     )
   }
 }
@@ -77,10 +79,15 @@ final case class Fields(
   displayHint: String,
   isLive: Boolean,
   sensitive: Option[Boolean],
+  shouldHideReaderRevenue: Option[Boolean],
   legallySensitive: Option[Boolean],
-  firstPublicationDate: Option[DateTime]
+  firstPublicationDate: Option[DateTime],
+  lang: Option[String]
 ){
   lazy val shortUrlId = shortUrl.replaceFirst("^[a-zA-Z]+://gu.com", "") //removing scheme://gu.com
+  lazy val isRightToLeftLang: Boolean = lang.contains("ar")
+
+
 
   def javascriptConfig: Map[String, JsValue] = {
     Map(
