@@ -90,6 +90,9 @@
             }
             case page: model.ContentPage if (page.item.content.isImmersive && !page.item.content.tags.isInteractive && !page.item.content.tags.isVideo) => {
                 <div class="@if(page.item.fields.main.nonEmpty) { immersive-header-container }">
+                    @if(mvt.ABNewDesktopHeader.isParticipating) {
+                        @fragments.header(page)
+                    }
                     @fragments.immersiveMainMedia(page)
                 </div>
             }
