@@ -28,14 +28,22 @@ from scrolling */
 }
 
 .new-header__inner {
-    align-items: flex-start;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+    @include clearfix();
+}
+
+@supports (display: flex) {
+    .new-header__inner {
+        align-items: flex-start;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        padding-bottom: 0;
+    }
 }
 
 .new-header__cta-container {
     left: $gs-gutter / 4;
+    overflow: hidden;
     position: absolute;
     top: 0;
 
@@ -45,8 +53,16 @@ from scrolling */
 }
 
 .new-header__logo {
-    display: flex;
-    margin-left: auto;
+    display: block;
+    float: right;
+}
+
+@supports (display: flex) {
+    .new-header__logo {
+        display: flex;
+        float: none;
+        margin-left: auto;
+    }
 }
 
 .new-header__logo__svg {

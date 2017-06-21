@@ -1,4 +1,5 @@
 .pillars {
+    clear: right;
     color: $news-support-1;
     font-size: 0;
     list-style: none;
@@ -25,10 +26,6 @@
     @include mq(desktop) {
         .new-header--open & {
             width: gs-span(2) + $gs-gutter / 2 + 1;
-        }
-
-        .new-header--open &:not(:first-child) {
-            margin-left: $gs-gutter / 2 - 1;
         }
     }
 
