@@ -4,9 +4,7 @@ import fastdom from 'fastdom';
 import $ from 'lib/$';
 import mediator from 'lib/mediator';
 import userPrefs from 'common/modules/user-prefs';
-import template from 'lodash/utilities/template';
 import { inlineSvg } from 'common/views/svgs';
-import btnTmpl from 'raw-loader!facia/views/button-toggle.html';
 
 type ToggleState = 'hidden' | 'displayed';
 
@@ -16,30 +14,40 @@ const toggleText = {
     displayed: 'Hide',
 };
 
+const btnTmpl = ({ text, dataLink, icon }) => `
+    <button class="fc-container__toggle" data-link-name="${dataLink}">
+        ${icon}
+        <span class="fc-container__toggle__text">${text}</span>
+    </button>
+`;
+
 export class ContainerToggle {
     $container: bonzo;
     state: ToggleState;
     $button: bonzo;
     constructor(container: Element) {
         this.$container = bonzo(container);
-        this.addToggle();
-        bonzo.create(
-            template(btnTmpl, {
-                text: 'Hide',
-                dataLink: 'Show',
-                icon: inlineSvg('arrowicon'),
-            })
+        this.$button = bonzo(
+            bonzo.create(
+                btnTmpl({
+                    text: 'Hide',
+                    dataLink: 'Show',
+                    icon: inlineSvg('arrowicon'),
+                })
+            )
         );
+        this.state = 'displayed';
     }
 
-    buttonText() {
-        $('.fc-container__toggle__text', this.$button[0]);
+    buttonText(): bonzo {
+        return $('.fc-container__toggle__text', this.$button);
     }
 
     updatePref(id: string): void {
         // update user prefs
         let prefs = userPrefs.get(prefName);
         const prefValue = id;
+
         if (this.state === 'displayed') {
             delete prefs[prefValue];
         } else {
@@ -64,7 +72,7 @@ export class ContainerToggle {
                 'data-link-name',
                 toggleText[this.state === 'displayed' ? 'hidden' : 'displayed']
             );
-            this.buttonText.text(toggleText[this.state]);
+            this.buttonText().text(toggleText[this.state]);
         });
     }
 

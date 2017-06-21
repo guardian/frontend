@@ -2,13 +2,15 @@
 import $ from 'lib/$';
 import bonzo from 'bonzo';
 import fastdom from 'fastdom';
+import mediator from 'lib/mediator';
 import userPrefs from 'common/modules/user-prefs';
 import { ContainerToggle } from 'facia/modules/ui/container-toggle';
+
+jest.mock('lib/storage');
 
 describe('Container Toggle', () => {
     let container;
     let $container;
-    let mediator;
     const containerId = 'uk/culture/regular-stories';
     const storageId = 'container-states';
     // helper assertion method
@@ -24,27 +26,26 @@ describe('Container Toggle', () => {
         );
     };
 
-    function simulateClick() {
+    const simulateClick = () => {
         mediator.emit('module:clickstream:click', {
             target: $('button', container)[0],
         });
-    }
+    };
 
-    beforeEach(done => {
+    beforeEach(() => {
         container = bonzo.create(
             `<section class="fc-container js-container--toggle" data-id="${containerId}">` +
                 `<div class="fc-container__header js-container__header">` +
                 `<h2>A container</h2>` +
                 `</div>` +
                 `</section>`
-        )[0];
-        $container = bonzo(container);
-
-        done();
+        );
+        $container = bonzo(container[0]);
     });
 
     afterEach(() => {
         $container.remove();
+        userPrefs.remove('container-states');
     });
 
     it('should be able to initialise', () => {
@@ -53,19 +54,18 @@ describe('Container Toggle', () => {
     });
 
     it('should remove "js-container--toggle" class from container', done => {
-        new ContainerToggle(container).addToggle();
+        const toggle = new ContainerToggle(container);
+        toggle.addToggle();
 
-        console.log($container.hasClass('js-container--toggle'));
         fastdom.defer(1, () => {
-            console.log('foo');
-            console.log(`bar: ${$container.hasClass('js-container--toggle')}`);
             expect($container.hasClass('js-container--toggle')).toBeFalsy();
             done();
         });
     });
 
     it('should add "container--has-toggle" class to container', done => {
-        new ContainerToggle(container).addToggle();
+        const toggle = new ContainerToggle(container);
+        toggle.addToggle();
 
         fastdom.defer(1, () => {
             expect(
@@ -76,7 +76,8 @@ describe('Container Toggle', () => {
     });
 
     it("should add button to the container's header", done => {
-        new ContainerToggle(container).addToggle();
+        const toggle = new ContainerToggle(container);
+        toggle.addToggle();
 
         fastdom.defer(1, () => {
             expect(
@@ -88,7 +89,8 @@ describe('Container Toggle', () => {
     });
 
     it('initial state should be open', done => {
-        new ContainerToggle(container).addToggle();
+        const toggle = new ContainerToggle(container);
+        toggle.addToggle();
 
         fastdom.defer(1, () => {
             assertState($container, 'open');
@@ -97,7 +99,8 @@ describe('Container Toggle', () => {
     });
 
     it('should be able to close container', done => {
-        new ContainerToggle(container).addToggle();
+        const toggle = new ContainerToggle(container);
+        toggle.addToggle();
 
         fastdom.defer(1, () => {
             simulateClick();
@@ -110,9 +113,10 @@ describe('Container Toggle', () => {
     });
 
     it('should store state as user preference', done => {
-        new ContainerToggle(container).addToggle();
-        // click button
+        const toggle = new ContainerToggle(container);
+        toggle.addToggle();
 
+        // click button
         fastdom.defer(1, () => {
             simulateClick();
 
@@ -138,7 +142,8 @@ describe('Container Toggle', () => {
         const prefs = {};
         prefs[containerId] = 'closed';
         userPrefs.set(storageId, prefs);
-        new ContainerToggle(container).addToggle();
+        const toggle = new ContainerToggle(container);
+        toggle.addToggle();
 
         fastdom.defer(1, () => {
             assertState($container, 'closed');
