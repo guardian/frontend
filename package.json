@@ -126,7 +126,7 @@
     "webpack-bundle-analyzer": "^2.8.2",
     "webpack-merge": "^4.1.0",
     "webpack-visualizer-plugin": "^0.1.11",
-    "yargs": "^8.0.1"
+    "yargs": "^8.0.2"
   },
   "optionalDependencies": {
     "fsevents": "^1.1.2"
