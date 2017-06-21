@@ -49,7 +49,14 @@
     "projects/common/modules/video/metadata.js",
     "projects/common/modules/crosswords/anagram-helper/clue-input.js"
   ],
-  "GHaberis": [],
+  "GHaberis": [
+    "projects/common/modules/gallery/lightbox.js",
+    "projects/common/modules/media/videojs-plugins/fullscreener.js",
+    "projects/common/modules/media/videojs-plugins/skip-ad.js",
+    "projects/common/modules/onward/breaking-news.js",
+    "projects/common/modules/onward/geo-most-popular.js",
+    "projects/common/modules/onward/history.js"
+  ],
   "Gustav Pursche": [
     "projects/common/modules/ui/tabs.js",
     "projects/common/modules/social/hidden-share-toggle.js",
@@ -138,7 +145,6 @@
     "projects/common/modules/experiments/tests/sleeve-notes-legacy-email-variant.js",
     "projects/common/modules/experiments/tests/sleeve-notes-new-email-variant.js",
     "projects/common/modules/experiments/tests/the-long-read-email-variants.js",
-    "projects/common/modules/gallery/lightbox.js",
     "projects/common/modules/identity/account-profile.js",
     "projects/common/modules/identity/api.js",
     "projects/common/modules/identity/cookierefresh.js",
@@ -154,8 +160,6 @@
     "projects/common/modules/identity/public-profile.js",
     "projects/common/modules/identity/validation-email.js",
     "projects/common/modules/lazyload.js",
-    "projects/common/modules/media/videojs-plugins/fullscreener.js",
-    "projects/common/modules/media/videojs-plugins/skip-ad.js",
     "projects/common/modules/navigation/membership.js",
     "projects/common/modules/navigation/navigation.js",
     "projects/common/modules/navigation/profile.js",
@@ -164,9 +168,6 @@
   "jfsoul": [
     "projects/common/modules/navigation/search.js",
     "projects/common/modules/navigation/user-account.js",
-    "projects/common/modules/onward/breaking-news.js",
-    "projects/common/modules/onward/geo-most-popular.js",
-    "projects/common/modules/onward/history.js",
     "projects/common/modules/onward/onward-content.js",
     "projects/common/modules/onward/popular.js",
     "projects/common/modules/onward/related.js",
