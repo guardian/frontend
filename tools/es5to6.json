@@ -9,8 +9,7 @@
     "projects/commercial/modules/messenger/scroll.js"
   ],
   "Lydia Shepherd": [
-      "projects/commercial/modules/messenger/type.js",
-      "projects/commercial/modules/messenger/viewport.js"
+    "projects/commercial/modules/messenger/viewport.js"
   ],
   "sndrs": [
     "lib/detect.js",
