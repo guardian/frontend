@@ -12,7 +12,6 @@ import { ExplainerSnippet } from 'common/modules/experiments/tests/explainer-sni
 import AcquisitionsEpicElectionInteractiveEnd from 'common/modules/experiments/tests/acquisitions-epic-election-interactive-end';
 import AcquisitionsEpicElectionInteractiveSlice from 'common/modules/experiments/tests/acquisitions-epic-election-interactive-slice';
 import AcquisitionsThrasherUkElection from 'common/modules/experiments/tests/acquisitions-thrasher-uk-election';
-import EpicForBrexitCohort from 'common/modules/experiments/tests/epic-for-brexit-cohort';
 
 export const TESTS: Array<ABTest> = [
     new OpinionEmailVariants(),
@@ -24,7 +23,6 @@ export const TESTS: Array<ABTest> = [
     new AcquisitionsEpicElectionInteractiveEnd(),
     new AcquisitionsEpicElectionInteractiveSlice(),
     new AcquisitionsThrasherUkElection(),
-    new EpicForBrexitCohort(),
 ]
     .concat(MembershipEngagementBannerTests)
     .filter(Boolean);
