@@ -1,11 +1,11 @@
-@(page: model.Page, related: model.RelatedContent, content: model.Content)(body: Html)(implicit request: RequestHeader, context: model.ApplicationContext)
+@(page: model.Page, related: model.RelatedContent, content: model.Content)(head: Html)(body: Html)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @import common.{CanonicalLink, LinkTo}
 
 <!doctype html>
 <html AMP>
 
-    @fragments.amp.headAmp(page, content)
+    @fragments.amp.headAmp(page, content)(head)
 
     <body class="guardian-egyptian-loading">
 
