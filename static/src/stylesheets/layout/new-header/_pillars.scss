@@ -1,4 +1,5 @@
 .pillars {
+    clear: right;
     color: $news-support-1;
     font-size: 0;
     list-style: none;
@@ -62,5 +63,11 @@
 
     &:last-child > *:after {
         display: none;
+    }
+
+    .new-header--slim.new-header--open & {
+        @include mq(tablet) {
+            padding-left: $gs-gutter / 2;
+        }
     }
 }

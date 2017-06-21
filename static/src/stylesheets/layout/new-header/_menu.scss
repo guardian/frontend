@@ -62,6 +62,14 @@
         }
     }
 
+    .new-header--slim.new-header--open & {
+        margin-right: ($gs-gutter / 2) + ($veggie-burger-medium / 2);
+
+        @include mq(mobileLandscape) {
+            margin-right: $gs-gutter + ($veggie-burger-medium / 2);
+        }
+    }
+
     // Don't show menu on opera mini: https://wp-mix.com/css-target-opera/
     x:-o-prefocus & {
         display: none;

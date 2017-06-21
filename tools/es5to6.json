@@ -5,12 +5,9 @@
   "Richard Nguyen": [],
   "Kate Whalen": [
     "projects/commercial/modules/messenger/get-stylesheet.js",
-    "projects/commercial/modules/messenger/resize.js",
-    "projects/commercial/modules/messenger/scroll.js"
+    "projects/commercial/modules/messenger/resize.js"
   ],
-  "Lydia Shepherd": [
-    "projects/commercial/modules/messenger/type.js"
-  ],
+  "Lydia Shepherd": [],
   "sndrs": [
     "lib/detect.js",
     "bootstraps/enhanced/accessibility.js",

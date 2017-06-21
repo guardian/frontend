@@ -23,6 +23,7 @@
 }
 
 .menu-group--primary {
+    @include clearfix();
     color: $news-support-1;
     padding-top: 0;
 
@@ -85,7 +86,16 @@
         order: 3;
         padding-bottom: 0;
         padding-top: $gs-baseline / 2;
+        position: absolute;
+        right: 0;
+        top: 0;
         width: 100%;
+
+        @supports(display: flex) {
+            position: relative;
+            right: auto;
+            top: auto;
+        }
     }
 
     @include mq(leftCol) {
@@ -99,7 +109,12 @@
 
 .menu-group--editions {
     @include mq(desktop) {
+        padding-bottom: $gs-baseline * 2;
         order: 5;
+
+        @supports(display: flex) {
+            padding-bottom: 0;
+        }
     }
 
     .menu-group {
@@ -131,10 +146,18 @@
 
 .menu-group--footer {
     @include mq(desktop) {
-        order: 2;
         padding-left: $gs-gutter / 2;
-        position: relative;
+        position: absolute;
+        right: gs-span(2) + $gs-gutter * 1.5 + 1;
+        top: 0;
         width: gs-span(2) + $gs-gutter / 2 - 1;
+
+        @supports(display: flex) {
+            order: 2;
+            position: relative;
+            right: auto;
+            top: auto;
+        }
     }
 
     @include mq(leftCol) {
