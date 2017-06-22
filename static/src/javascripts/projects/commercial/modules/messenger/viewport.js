@@ -7,11 +7,8 @@ let w = window;
 let iframes = {};
 let iframeCounter = 0;
 let taskQueued = false;
-let lastViewport;
 
-const lastViewportRead = fastdom.read(() => {
-    lastViewport = detect.getViewport();
-});
+const lastViewportRead = () => fastdom.read(() => detect.getViewport());
 
 const reset = (window_: WindowProxy): void => {
     w = window_ || window;
@@ -20,20 +17,20 @@ const reset = (window_: WindowProxy): void => {
     iframeCounter = 0;
 };
 
-const sendViewportDimensions = function(iframeId): void {
-    iframes[iframeId].respond(null, this);
+const sendViewportDimensions = (iframeId, viewport): void => {
+    iframes[iframeId].respond(null, viewport);
 };
 
 const onResize = (): ?Promise<any> => {
     if (!taskQueued) {
         taskQueued = true;
 
-        return fastdom
-            .read(() => (lastViewport = detect.getViewport()))
-            .then(viewport => {
-                Object.keys(iframes).forEach(sendViewportDimensions, viewport);
-                taskQueued = false;
+        return lastViewportRead().then(viewport => {
+            Object.keys(iframes).forEach(iframeId => {
+                sendViewportDimensions(iframeId, viewport);
             });
+            taskQueued = false;
+        });
     }
 };
 
@@ -47,8 +44,8 @@ const addResizeListener = (iframe: Element, respond: any): Promise<any> => {
         respond,
     };
     iframeCounter += 1;
-    return lastViewportRead.then(() => {
-        sendViewportDimensions.bind(lastViewport)(iframe.id);
+    return lastViewportRead().then(viewport => {
+        sendViewportDimensions(iframe.id, viewport);
     });
 };
 
