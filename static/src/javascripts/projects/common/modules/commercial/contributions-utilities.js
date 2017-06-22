@@ -6,6 +6,7 @@ import {
     control as acquisitionsCopyControl,
 } from 'common/modules/commercial/acquisitions-copy';
 import { control as acquisitionsTestimonialParametersControl } from 'common/modules/commercial/acquisitions-epic-testimonial-parameters';
+import type { AcquisitionsEpicTestimonialTemplateParameters } from 'common/modules/commercial/acquisitions-epic-testimonial-parameters';
 import { logView } from 'common/modules/commercial/acquisitions-view-log';
 import { isRegular } from 'common/modules/tailor/tailor';
 import $ from 'lib/$';
@@ -47,8 +48,8 @@ const controlTemplate = (variant, copy) =>
         testimonialBlock: variant.options.testimonialBlock,
     });
 
-const doTagsMatch = options =>
-    options.useTargetingTool ? targetingTool.isAbTestTargeted(options) : true;
+const doTagsMatch = (campaignId: string, useTargetingTool: boolean) =>
+    useTargetingTool ? targetingTool.isAbTestTargeted(campaignId) : true;
 
 // Returns an array containing:
 // - the first element matching insertAtSelector, if isMultiple is false or not supplied
@@ -66,7 +67,10 @@ const getTargets = (insertAtSelector, isMultiple) => {
     return [];
 };
 
-const getTestimonialBlock = (testimonialParameters, citeImage) =>
+const getTestimonialBlock = (
+    testimonialParameters: AcquisitionsEpicTestimonialTemplateParameters,
+    citeImage: String
+) =>
     template(acquisitionsTestimonialBlockTemplate, {
         quoteSvg: testimonialParameters.quoteSvg,
         testimonialMessage: testimonialParameters.testimonialMessage,
@@ -74,30 +78,37 @@ const getTestimonialBlock = (testimonialParameters, citeImage) =>
         citeImage,
     });
 
-const defaultCanEpicBeDisplayed = testConfig => {
+const defaultPageCheck = (page: Object): boolean =>
+    page.contentType === 'Article' && !page.isMinuteArticle;
+
+const defaultCanEpicBeDisplayed = (
+    campaignId: string,
+    showToContributorsAndSupporters: boolean,
+    useTargetingTool: boolean,
+    // it would be nice to have a type for page, as well as config.
+    // set this default here as well as test factory so that this function is more usable externally
+    pageCheck: (page: Object) => boolean = defaultPageCheck,
+    locations: Array<string> = [],
+    locationCheck: (location: string) => boolean = () => true
+): boolean => {
     const canReasonablyAskForMoney =
-        testConfig.showToContributorsAndSupporters ||
+        showToContributorsAndSupporters ||
         commercialFeatures.commercialFeatures.canReasonablyAskForMoney;
 
-    const worksWellWithPageTemplate = typeof testConfig.pageCheck === 'function'
-        ? testConfig.pageCheck(config.page)
-        : config.page.contentType === 'Article' && !config.page.isMinuteArticle;
+    const worksWellWithPageTemplate = pageCheck(config.page);
 
     const storedGeolocation = geolocationGetSync();
-    const inCompatibleLocation = testConfig.locations
-        ? testConfig.locations.some(geo => geo === storedGeolocation)
-        : true;
-    const locationCheck = typeof testConfig.locationCheck === 'function'
-        ? testConfig.locationCheck(storedGeolocation)
+    const inCompatibleLocation = locations.length
+        ? locations.some(geo => geo === storedGeolocation)
         : true;
 
-    const tagsMatch = doTagsMatch(testConfig);
+    const tagsMatch = doTagsMatch(campaignId, useTargetingTool);
 
     return (
         canReasonablyAskForMoney &&
         worksWellWithPageTemplate &&
         inCompatibleLocation &&
-        locationCheck &&
+        locationCheck(storedGeolocation) &&
         tagsMatch
     );
 };
@@ -306,62 +317,108 @@ class ContributionsABTestVariant {
     }
 }
 
-class ContributionsABTest {
-    constructor(options) {
-        this.id = options.id;
-        this.epic = options.epic || true;
-        this.start = options.start;
-        this.expiry = options.expiry;
-        this.author = options.author;
-        this.idealOutcome = options.idealOutcome;
-        this.campaignId = options.campaignId;
-        this.description = options.description;
-        this.showForSensitive = options.showForSensitive || false;
-        this.audience = options.audience;
-        this.audienceOffset = options.audienceOffset;
-        this.successMeasure = options.successMeasure;
-        this.audienceCriteria = options.audienceCriteria;
-        this.dataLinkNames = options.dataLinkNames || '';
-        this.campaignPrefix = options.campaignPrefix || 'gdnwb_copts_memco';
-        this.campaignSuffix = options.campaignSuffix || '';
-        this.insertEvent = this.makeEvent('insert');
-        this.viewEvent = this.makeEvent('view');
-        this.isEngagementBannerTest = options.isEngagementBannerTest || false;
+type ContributionsABTest = ABTest & {
+    epic: boolean,
+    campaignId: string,
+    campaignPrefix: string,
+    campaignSuffix: string,
+    useLocalViewLog: boolean,
+    overrideCanRun: boolean,
+    showToContributorsAndSupporters: boolean,
+    pageCheck: (page: Object) => boolean,
+    locations: Array<string>,
+    locationCheck: (location: string) => boolean,
+    useTargetingTool: boolean,
+    insertEvent: string,
+    viewEvent: string,
+};
 
-        // Set useLocalViewLog to true if only the views for the respective test
-        // should be used to determine variant viewability
-        this.useLocalViewLog = options.useLocalViewLog || false;
+const makeEvent = (id: string, event: string): string => `${id}:${event}`;
 
-        /**
-         * Provides a default `canRun` function with typical rules (see function below) for Contributions messages.
-         * If your test provides its own `canRun` option, it will be included in the check.
-         *
-         * You can alternatively use the `overrideCanRun` option, which, if true, will only use the `canRun`
-         * option provided and ignore the rules here (except for the targeting tool tags check, which will still be
-         * honoured if `useTargetingTool` is provided alongside `overrideCanRun`.
-         *
-         * @type {Function}
-         */
-        this.canRun = () => {
-            if (options.overrideCanRun) {
-                return doTagsMatch(options) && options.canRun();
+const makeABTest = (options: Object): ContributionsABTest => {
+    const {
+        id,
+        epic = true,
+        start,
+        expiry,
+        author,
+        idealOutcome,
+        campaignId,
+        description,
+        showForSensitive = false,
+        audience,
+        audienceOffset,
+        successMeasure,
+        audienceCriteria,
+        // should empty string defaults actually be optional?
+        dataLinkNames = '',
+        campaignPrefix = 'gdnwb_copts_memco',
+        campaignSuffix = '',
+        isEngagementBannerTest = false,
+        useLocalViewLog = false,
+        overrideCanRun = false,
+        useTargetingTool = false,
+        showToContributorsAndSupporters = false,
+        canRun = () => true,
+        pageCheck = defaultPageCheck,
+        locations,
+        locationCheck,
+        variants,
+    } = options;
+
+    return {
+        id,
+        start,
+        expiry,
+        author,
+        description,
+        audience,
+        audienceOffset,
+        successMeasure,
+        audienceCriteria,
+        showForSensitive,
+        idealOutcome,
+        dataLinkNames,
+        variants: variants.map(
+            variant => new ContributionsABTestVariant(variant, this)
+        ),
+        canRun: () => {
+            if (overrideCanRun) {
+                return (
+                    doTagsMatch(campaignId, useTargetingTool) &&
+                    options.canRun()
+                );
             }
 
-            const testCanRun = typeof options.canRun === 'function'
-                ? options.canRun()
-                : true;
-            return testCanRun && defaultCanEpicBeDisplayed(options);
-        };
+            const testCanRun = typeof canRun === 'function' ? canRun() : true;
+            const canEpicBeDisplayed = defaultCanEpicBeDisplayed(
+                campaignId,
+                showToContributorsAndSupporters,
+                useTargetingTool,
+                pageCheck,
+                locations,
+                locationCheck
+            );
 
-        this.variants = options.variants.map(
-            variant => new ContributionsABTestVariant(variant, this)
-        );
-    }
+            return testCanRun && canEpicBeDisplayed;
+        },
+        isEngagementBannerTest,
 
-    makeEvent(event) {
-        return `${this.id}:${event}`;
-    }
-}
+        epic,
+        campaignId,
+        campaignPrefix,
+        campaignSuffix,
+        useLocalViewLog,
+        overrideCanRun,
+        showToContributorsAndSupporters,
+        pageCheck,
+        locations,
+        locationCheck,
+        useTargetingTool,
+        insertEvent: makeEvent(id, 'insert'),
+        viewEvent: makeEvent(id, 'view'),
+    };
+};
 
 // Utility function to build variants with common properties.
 export const variantBuilderFactory = commonVariantProps => (id, variantProps) =>
@@ -374,12 +431,8 @@ export const variantBuilderFactory = commonVariantProps => (id, variantProps) =>
         variantProps
     );
 
-export { defaultCanEpicBeDisplayed, getTestimonialBlock };
+export { defaultCanEpicBeDisplayed, getTestimonialBlock, makeABTest };
 
 export const daysSinceLastContribution = daysSince(lastContributionDate);
 
 export const isContributor = !!lastContributionDate;
-
-export const makeABTest = test =>
-    // this is so it can be instantiated with `new` later
-    () => new ContributionsABTest(test);

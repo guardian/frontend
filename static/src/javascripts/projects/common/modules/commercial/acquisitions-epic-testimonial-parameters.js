@@ -3,7 +3,7 @@ import quoteSvg from 'svgs/icon/quote.svg';
 
 // @flow
 
-type AcquisitionsEpicTestimonialTemplateParameters = {
+export type AcquisitionsEpicTestimonialTemplateParameters = {
     quoteSvg: string,
     testimonialMessage: string,
     testimonialName: string,
