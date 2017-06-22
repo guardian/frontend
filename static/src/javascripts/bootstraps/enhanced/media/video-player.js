@@ -1,10 +1,7 @@
-define([
-    'videojs',
-    'videojs-ima',
-    'videojs-embed',
-    'videojs-persistvolume',
-    'videojs-playlist',
-    'videojs-contrib-ads'
-], function (video) {
-    return video;
-});
+import video from 'videojs';
+import 'videojs-ima';
+import 'videojs-embed';
+import 'videojs-persistvolume';
+import 'videojs-playlist';
+import 'videojs-contrib-ads';
+export default video;
