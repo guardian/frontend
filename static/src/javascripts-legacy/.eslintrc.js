@@ -3,25 +3,20 @@ module.exports = {
         browser: true,
         amd: true,
         jasmine: true,
-        commonjs: true
+        commonjs: true,
     },
-    extends: 'eslint:recommended',
+    extends: ['eslint:recommended', 'prettier'],
     parserOptions: {
         ecmaVersion: 5,
     },
-    plugins: [
-        'guardian-frontend',
-    ],
+    plugins: ['guardian-frontend', 'prettier'],
     rules: {
         camelcase: 'off',
         'no-shadow': 'off',
         strict: 'off',
         'no-alert': 'off',
         'no-undef': 'error',
-        'no-use-before-define': [
-            'error',
-            'nofunc'
-        ],
+        'no-use-before-define': ['error', 'nofunc'],
         'no-multi-spaces': 'off',
         'no-underscore-dangle': 'off',
         'key-spacing': 'off',
@@ -42,10 +37,13 @@ module.exports = {
         'react/no-render-return-value': 'off',
 
         // disallow modules we used to use but are retiring
-        'no-restricted-imports': ['error', {
-            paths: ['lodash'],
-            patterns: ['!lodash/*'],
-        }],
+        'no-restricted-imports': [
+            'error',
+            {
+                paths: ['lodash'],
+                patterns: ['!lodash/*'],
+            },
+        ],
 
         // these are re-defined because this config does not extend the main one
         // which is annoying but this whole directory is not long for this world anwyay
@@ -54,9 +52,19 @@ module.exports = {
         // our own rules for frontend
         // live in tools/eslint-plugin-guardian-frontend
         'guardian-frontend/global-config': 2,
+
+        'prettier/prettier': [
+            'error',
+            {
+                trailingComma: 'es5',
+                singleQuote: true,
+                bracketSpacing: true,
+                tabWidth: 4,
+            },
+        ],
     },
     globals: {
-        Promise: true
+        Promise: true,
     },
     root: true,
-}
+};

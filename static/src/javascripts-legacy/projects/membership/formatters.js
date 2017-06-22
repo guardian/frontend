@@ -1,15 +1,15 @@
-define([], function () {
+define([], function() {
     return {
-        formatAmount: function (amount, glyph) {
+        formatAmount: function(amount, glyph) {
             return amount ? glyph + (amount / 100).toFixed(2) : 'FREE';
         },
-        formatDate: function (timestamp) {
+        formatDate: function(timestamp) {
             var options = {
                 day: 'numeric',
                 month: 'long',
-                year: 'numeric'
+                year: 'numeric',
             };
-            return (new Date(timestamp)).toLocaleDateString('en-GB', options);
-        }
+            return new Date(timestamp).toLocaleDateString('en-GB', options);
+        },
     };
 });

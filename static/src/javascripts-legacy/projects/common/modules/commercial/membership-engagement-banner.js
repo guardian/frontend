@@ -1,4 +1,5 @@
-define([
+define(
+    [
         'bean',
         'lib/$',
         'lib/config',
@@ -22,33 +23,34 @@ define([
         'common/modules/commercial/contributions-utilities',
         'ophan/ng',
         'lib/geolocation',
-        'lib/url'
-    ], function (bean,
-                 $,
-                 config,
-                 storage,
-                 template,
-                 Message,
-                 messageTemplate,
-                 commercialFeatures,
-                 mediator,
-                 fastdom,
-                 testCanRunChecks,
-                 MembershipEngagementBannerTests,
-                 assign,
-                 find,
-                 svgs,
-                 fetch,
-                 segmentUtil,
-                 acquisitionTestSelector,
-                 membershipEngagementBannerUtils,
-                 membershipEngagementBannerBlock,
-                 contributionsUtilities,
-                 ophan,
-                 geolocation,
-                 url) {
-
-
+        'lib/url',
+    ],
+    function(
+        bean,
+        $,
+        config,
+        storage,
+        template,
+        Message,
+        messageTemplate,
+        commercialFeatures,
+        mediator,
+        fastdom,
+        testCanRunChecks,
+        MembershipEngagementBannerTests,
+        assign,
+        find,
+        svgs,
+        fetch,
+        segmentUtil,
+        acquisitionTestSelector,
+        membershipEngagementBannerUtils,
+        membershipEngagementBannerBlock,
+        contributionsUtilities,
+        ophan,
+        geolocation,
+        url
+    ) {
         // change messageCode to force redisplay of the message to users who already closed it.
         // messageCode is also consumed by .../test/javascripts/spec/common/commercial/membership-engagement-banner.spec.js
         var messageCode = 'engagement-banner-2017-06-08';
@@ -56,11 +58,15 @@ define([
         var DO_NOT_RENDER_ENGAGEMENT_BANNER = 'do no render engagement banner';
 
         function getUserTest() {
-            var engagementBannerTests = MembershipEngagementBannerTests
-                .concat(acquisitionTestSelector.epicEngagementBannerTests);
+            var engagementBannerTests = MembershipEngagementBannerTests.concat(
+                acquisitionTestSelector.epicEngagementBannerTests
+            );
 
             return find(engagementBannerTests, function(test) {
-                return testCanRunChecks.testCanBeRun(test) && segmentUtil.isInTest(test)
+                return (
+                    testCanRunChecks.testCanBeRun(test) &&
+                    segmentUtil.isInTest(test)
+                );
             });
         }
 
@@ -75,22 +81,34 @@ define([
             // mem and cont chosen to be consistent with default campaign code prefixes.
             if (offering === offerings.membership) {
                 prefix = 'mem_';
-            }
-            else if (offering === offerings.contributions) {
+            } else if (offering === offerings.contributions) {
                 prefix = 'cont_';
             }
 
             return prefix + campaignId + '_' + variantId;
         }
 
-        function getUserVariantParams(userVariant, campaignId, defaultOffering) {
-
-            if (userVariant && userVariant.options && userVariant.options.engagementBannerParams) {
-                var userVariantParams = userVariant.options.engagementBannerParams;
+        function getUserVariantParams(
+            userVariant,
+            campaignId,
+            defaultOffering
+        ) {
+            if (
+                userVariant &&
+                userVariant.options &&
+                userVariant.options.engagementBannerParams
+            ) {
+                var userVariantParams =
+                    userVariant.options.engagementBannerParams;
 
                 if (!userVariantParams.campaignCode) {
-                    var offering = userVariantParams.offering || defaultOffering;
-                    userVariantParams.campaignCode = buildCampaignCode(offering, campaignId, userVariant.id);
+                    var offering =
+                        userVariantParams.offering || defaultOffering;
+                    userVariantParams.campaignCode = buildCampaignCode(
+                        offering,
+                        campaignId,
+                        userVariant.id
+                    );
                 }
 
                 return userVariantParams;
@@ -124,16 +142,30 @@ define([
          *
          */
         function deriveBannerParams(location) {
-            var defaultParams = membershipEngagementBannerUtils.defaultParams(location);
+            var defaultParams = membershipEngagementBannerUtils.defaultParams(
+                location
+            );
             var userTest = getUserTest();
             var campaignId = userTest ? userTest.campaignId : undefined;
             var userVariant = getUserVariant(userTest);
 
-            if (userVariant && userVariant.options && userVariant.options.blockEngagementBanner) {
+            if (
+                userVariant &&
+                userVariant.options &&
+                userVariant.options.blockEngagementBanner
+            ) {
                 return DO_NOT_RENDER_ENGAGEMENT_BANNER;
             }
 
-            return assign({}, defaultParams, getUserVariantParams(userVariant, campaignId, defaultParams.offering));
+            return assign(
+                {},
+                defaultParams,
+                getUserVariantParams(
+                    userVariant,
+                    campaignId,
+                    defaultParams.offering
+                )
+            );
         }
 
         // Used to send an interaction if the engagement banner is shown.
@@ -145,31 +177,38 @@ define([
                 if (component && value) {
                     ophan.record({
                         component: component,
-                        value: value
-                    })
+                        value: value,
+                    });
                 }
             }
         }
 
-        var paypalAndCreditCardImage = (config.images && config.images.acquisitions && config.images.acquisitions['paypal-and-credit-card']) || '';
-
+        var paypalAndCreditCardImage =
+            (config.images &&
+                config.images.acquisitions &&
+                config.images.acquisitions['paypal-and-credit-card']) ||
+            '';
 
         function showBanner(params) {
-            
-
-            if (params === DO_NOT_RENDER_ENGAGEMENT_BANNER || membershipEngagementBannerBlock.isBlocked()) {
+            if (
+                params === DO_NOT_RENDER_ENGAGEMENT_BANNER ||
+                membershipEngagementBannerBlock.isBlocked()
+            ) {
                 return;
             }
 
             var colourClass = params.colourStrategy();
 
-            var messageText = Array.isArray(params.messageText)?selectSequentiallyFrom(params.messageText):params.messageText;
+            var messageText = Array.isArray(params.messageText)
+                ? selectSequentiallyFrom(params.messageText)
+                : params.messageText;
 
             var urlParameters = {
-                REFPVID : params.pageviewId,
-                INTCMP:  params.campaignCode
+                REFPVID: params.pageviewId,
+                INTCMP: params.campaignCode,
             };
-            var linkUrl = params.linkUrl + '?' + url.constructQuery(urlParameters);
+            var linkUrl =
+                params.linkUrl + '?' + url.constructQuery(urlParameters);
 
             var renderedBanner = template(messageTemplate, {
                 linkHref: linkUrl,
@@ -177,21 +216,19 @@ define([
                 buttonCaption: params.buttonCaption,
                 colourClass: colourClass,
                 arrowWhiteRight: svgs.inlineSvg('arrowWhiteRight'),
-                paypalLogoSrc: paypalAndCreditCardImage
+                paypalLogoSrc: paypalAndCreditCardImage,
             });
 
-            var messageShown = new Message(
-                messageCode, {
-                    pinOnHide: false,
-                    siteMessageLinkName: 'membership message',
-                    siteMessageCloseBtn: 'hide',
-                    siteMessageComponentName: params.campaignCode,
-                    trackDisplay: true,
-                    cssModifierClass: colourClass
-                }).show(renderedBanner);
+            var messageShown = new Message(messageCode, {
+                pinOnHide: false,
+                siteMessageLinkName: 'membership message',
+                siteMessageCloseBtn: 'hide',
+                siteMessageComponentName: params.campaignCode,
+                trackDisplay: true,
+                cssModifierClass: colourClass,
+            }).show(renderedBanner);
 
             if (messageShown) {
-
                 recordInteraction(params.interactionOnMessageShown);
 
                 mediator.emit('membership-message:display');
@@ -201,26 +238,34 @@ define([
         }
 
         function init() {
-
             return geolocation.get().then(function(location) {
-
                 var bannerParams = deriveBannerParams(location);
 
-                if (bannerParams && (storage.local.get('gu.alreadyVisited') || 0) >= bannerParams.minArticles) {
-                    return commercialFeatures.commercialFeatures.asynchronous.canDisplayMembershipEngagementBanner.then(function (canShow) {
-
-                        if (canShow) {
-                            mediator.on('modules:onwards:breaking-news:ready', function (breakingShown) {
-                                if (!breakingShown) {
-                                    showBanner(bannerParams);
-                                } else {
-                                    mediator.emit('banner-message:complete');
-                                }
-                            });
-                        } else {
-                            mediator.emit('banner-message:complete');
+                if (
+                    bannerParams &&
+                    (storage.local.get('gu.alreadyVisited') || 0) >=
+                        bannerParams.minArticles
+                ) {
+                    return commercialFeatures.commercialFeatures.asynchronous.canDisplayMembershipEngagementBanner.then(
+                        function(canShow) {
+                            if (canShow) {
+                                mediator.on(
+                                    'modules:onwards:breaking-news:ready',
+                                    function(breakingShown) {
+                                        if (!breakingShown) {
+                                            showBanner(bannerParams);
+                                        } else {
+                                            mediator.emit(
+                                                'banner-message:complete'
+                                            );
+                                        }
+                                    }
+                                );
+                            } else {
+                                mediator.emit('banner-message:complete');
+                            }
                         }
-                    });
+                    );
                 }
             });
         }
@@ -231,7 +276,7 @@ define([
 
         return {
             init: init,
-            messageCode: messageCode
+            messageCode: messageCode,
         };
     }
 );

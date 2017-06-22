@@ -1,9 +1,4 @@
-define([
-    'bean',
-    'bonzo',
-    'fastdom',
-    'lib/$'
-], function (
+define(['bean', 'bonzo', 'fastdom', 'lib/$'], function(
     bean,
     bonzo,
     fastdom,
@@ -12,21 +7,31 @@ define([
     var overlaySelector = '.u-faux-block-link__overlay',
         hoverStateClassName = 'u-faux-block-link--hover';
 
-    return function () {
-        var showIntentToClick = function (e) {
-            fastdom.write(function () {
+    return function() {
+        var showIntentToClick = function(e) {
+            fastdom.write(function() {
                 $(e.currentTarget).parent().addClass(hoverStateClassName);
             });
         };
-        var removeIntentToClick = function (e) {
-            fastdom.write(function () {
+        var removeIntentToClick = function(e) {
+            fastdom.write(function() {
                 $(e.currentTarget).parent().removeClass(hoverStateClassName);
             });
         };
 
         // mouseover
-        bean.on(document.body, 'mouseenter', overlaySelector, showIntentToClick);
+        bean.on(
+            document.body,
+            'mouseenter',
+            overlaySelector,
+            showIntentToClick
+        );
         // mouseout
-        bean.on(document.body, 'mouseleave', overlaySelector, removeIntentToClick);
+        bean.on(
+            document.body,
+            'mouseleave',
+            overlaySelector,
+            removeIntentToClick
+        );
     };
 });

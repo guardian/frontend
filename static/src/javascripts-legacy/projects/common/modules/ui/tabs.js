@@ -1,13 +1,4 @@
-define([
-    'lib/$',
-    'bean',
-    'bonzo'
-], function (
-    $,
-    bean,
-    bonzo
-) {
-
+define(['lib/$', 'bean', 'bonzo'], function($, bean, bonzo) {
     /*
         expects the following HTML structure
 
@@ -24,18 +15,20 @@ define([
         </div>
     */
 
-    var Tabs = function () {
-
+    var Tabs = function() {
         var view = {
-
-            showTab: function (container, clickedTab, originalEvent) {
-
-                var classes = 'tabs__tab--selected tone-colour tone-accent-border',
+            showTab: function(container, clickedTab, originalEvent) {
+                var classes =
+                    'tabs__tab--selected tone-colour tone-accent-border',
                     // find the active tab in the set. returns an array of 1 item, hence [0]
                     currentTab = $('.tabs__tab--selected a', container)[0],
                     // trim the leading # and find the matching panel element
-                    paneToShow = container.querySelector('#' + clickedTab.getAttribute('href').substring(1)),
-                    paneToHide = container.querySelector('#' + currentTab.getAttribute('href').substring(1));
+                    paneToShow = container.querySelector(
+                        '#' + clickedTab.getAttribute('href').substring(1)
+                    ),
+                    paneToHide = container.querySelector(
+                        '#' + currentTab.getAttribute('href').substring(1)
+                    );
 
                 // show hide stuff
                 bonzo(currentTab.parentNode).removeClass(classes);
@@ -47,42 +40,41 @@ define([
 
                 // only do this if we know the href was a tab ID, not a URL
                 originalEvent.preventDefault();
-            }
+            },
         };
 
-        this.init = function () {
+        this.init = function() {
+            Array.prototype.forEach.call(
+                document.body.querySelectorAll('.tabs'),
+                function(container) {
+                    var tabSet = $('.js-tabs', container)[0],
+                        vPos = 0,
+                        vScroll = 0;
 
-            Array.prototype.forEach.call(document.body.querySelectorAll('.tabs'), function (container) {
-
-                var tabSet = $('.js-tabs', container)[0],
-                    vPos = 0,
-                    vScroll = 0;
-
-                if (tabSet) {
-
-                    if (tabSet.getAttribute('data-is-bound') === true) {
-                        return false;
-                    }
-
-                    vPos = bonzo(tabSet).offset().top;
-
-                    bean.add(tabSet, 'click', function (e) {
-                        var targetElm = e.target;
-                        // verify they clicked an <a> element
-                        if (targetElm.nodeName.toLowerCase() === 'a') {
-                            view.showTab(container, targetElm, e);
-                            if (vScroll > vPos) {
-                                window.scrollTo(0, vPos);
-                            }
+                    if (tabSet) {
+                        if (tabSet.getAttribute('data-is-bound') === true) {
+                            return false;
                         }
-                    });
 
-                    tabSet.setAttribute('data-is-bound', true);
+                        vPos = bonzo(tabSet).offset().top;
+
+                        bean.add(tabSet, 'click', function(e) {
+                            var targetElm = e.target;
+                            // verify they clicked an <a> element
+                            if (targetElm.nodeName.toLowerCase() === 'a') {
+                                view.showTab(container, targetElm, e);
+                                if (vScroll > vPos) {
+                                    window.scrollTo(0, vPos);
+                                }
+                            }
+                        });
+
+                        tabSet.setAttribute('data-is-bound', true);
+                    }
                 }
-            });
+            );
         };
     };
 
     return Tabs;
-
 });

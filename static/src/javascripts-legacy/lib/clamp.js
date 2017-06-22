@@ -1,12 +1,5 @@
-define([
-    'bonzo',
-    'bean'
-], function (
-    bonzo,
-    bean
-) {
-
-    var clamp = function (elem, lines, showMore) {
+define(['bonzo', 'bean'], function(bonzo, bean) {
+    var clamp = function(elem, lines, showMore) {
         var height = elem.clientHeight,
             lineHeight = getComputedStyle(elem).getPropertyValue('line-height'),
             maxHeight = (parseInt(lineHeight, 10) + (showMore ? 2 : 0)) * lines,
@@ -20,24 +13,27 @@ define([
 
         $elem.css({
             maxHeight: maxHeight + 'px',
-            overflow: 'hidden'
+            overflow: 'hidden',
         });
 
         $elem.after($fade);
 
         if (showMore) {
-            $showMore = bonzo(bonzo.create('<span class="clamp-fade__content u-fauxlink" role="button">Read more</span>'));
+            $showMore = bonzo(
+                bonzo.create(
+                    '<span class="clamp-fade__content u-fauxlink" role="button">Read more</span>'
+                )
+            );
             $fade.append($showMore);
-            bean.on($showMore[0], 'click', function () {
+            bean.on($showMore[0], 'click', function() {
                 $fade.remove();
                 $elem.css({
                     maxHeight: 'none',
-                    overflow: 'auto'
+                    overflow: 'auto',
                 });
             });
         }
     };
 
     return clamp;
-
 }); // define

@@ -1,99 +1,105 @@
-define([
-    'bean',
-    'bonzo',
-    'fastdom',
-    'lib/config',
-    'lib/mediator',
-    'common/modules/identity/api',
-    'lodash/objects/assign'
-], function (
-    bean,
-    bonzo,
-    fastdom,
-    config,
-    mediator,
-    id,
-    assign
-) {
-
-    /**
+define(
+    [
+        'bean',
+        'bonzo',
+        'fastdom',
+        'lib/config',
+        'lib/mediator',
+        'common/modules/identity/api',
+        'lodash/objects/assign',
+    ],
+    function(bean, bonzo, fastdom, config, mediator, id, assign) {
+        /**
      * @param {Object} config
      * @constructor
      */
-    function Profile(options) {
-        this.opts = assign(this.opts, options);
-        this.dom.container = document.body.querySelector('.' + Profile.CONFIG.classes.container);
-        this.dom.content = this.dom.container.querySelector('.' + Profile.CONFIG.classes.content);
-        this.dom.popup = document.body.querySelector('.' + Profile.CONFIG.classes.popup);
-        this.dom.register = document.body.querySelector('.' + Profile.CONFIG.classes.register);
-        this.dom.commentActivity = document.body.querySelector('.' + Profile.CONFIG.classes.commentActivity);
-    }
-
-    /** @type {Object.<string.*>} */
-    Profile.CONFIG = {
-        eventName: 'modules:profilenav',
-        classes: {
-            container: 'js-profile-nav',
-            content: 'js-profile-info',
-            popup: 'js-profile-popup',
-            register: 'js-profile-register',
-            commentActivity: 'js-comment-activity',
-            action: 'brand-bar__item--action'
+        function Profile(options) {
+            this.opts = assign(this.opts, options);
+            this.dom.container = document.body.querySelector(
+                '.' + Profile.CONFIG.classes.container
+            );
+            this.dom.content = this.dom.container.querySelector(
+                '.' + Profile.CONFIG.classes.content
+            );
+            this.dom.popup = document.body.querySelector(
+                '.' + Profile.CONFIG.classes.popup
+            );
+            this.dom.register = document.body.querySelector(
+                '.' + Profile.CONFIG.classes.register
+            );
+            this.dom.commentActivity = document.body.querySelector(
+                '.' + Profile.CONFIG.classes.commentActivity
+            );
         }
-    };
 
-    /** @type {Object.<string.*>} */
-    Profile.prototype.opts = {
-        url: 'https://profile.theguardian.com'
-    };
+        /** @type {Object.<string.*>} */
+        Profile.CONFIG = {
+            eventName: 'modules:profilenav',
+            classes: {
+                container: 'js-profile-nav',
+                content: 'js-profile-info',
+                popup: 'js-profile-popup',
+                register: 'js-profile-register',
+                commentActivity: 'js-comment-activity',
+                action: 'brand-bar__item--action',
+            },
+        };
 
-    /** @enum {Element} */
-    Profile.prototype.dom = {};
+        /** @type {Object.<string.*>} */
+        Profile.prototype.opts = {
+            url: 'https://profile.theguardian.com',
+        };
 
-    /** */
-    Profile.prototype.init = function () {
-        this.setFragmentFromCookie();
-    };
+        /** @enum {Element} */
+        Profile.prototype.dom = {};
 
-    Profile.prototype.setFragmentFromCookie = function () {
-        var user = id.getUserFromCookie(),
-            $container = bonzo(this.dom.container),
-            $content = bonzo(this.dom.content),
-            $register = bonzo(this.dom.register),
-            $commentActivity = bonzo(this.dom.commentActivity);
+        /** */
+        Profile.prototype.init = function() {
+            this.setFragmentFromCookie();
+        };
 
-        if (user) {
-            // Run this code only if we haven't already inserted
-            // the username in the header
-            if (!$container.hasClass('is-signed-in')) {
-                fastdom.write(function () {
-                    $content.text(user.displayName);
-                    $container.addClass('is-signed-in');
-                    $register.hide();
-                });
+        Profile.prototype.setFragmentFromCookie = function() {
+            var user = id.getUserFromCookie(),
+                $container = bonzo(this.dom.container),
+                $content = bonzo(this.dom.content),
+                $register = bonzo(this.dom.register),
+                $commentActivity = bonzo(this.dom.commentActivity);
+
+            if (user) {
+                // Run this code only if we haven't already inserted
+                // the username in the header
+                if (!$container.hasClass('is-signed-in')) {
+                    fastdom.write(function() {
+                        $content.text(user.displayName);
+                        $container.addClass('is-signed-in');
+                        $register.hide();
+                    });
+                }
+
+                $commentActivity.removeClass('u-h');
+                $commentActivity.attr(
+                    'href',
+                    this.opts.url + '/user/id/' + user.id
+                );
             }
 
-            $commentActivity.removeClass('u-h');
-            $commentActivity.attr('href', this.opts.url + '/user/id/' + user.id);
-        }
+            this.emitLoadedEvent(user);
+        };
 
-        this.emitLoadedEvent(user);
-    };
-
-    /**
+        /**
      * @param {Object} resp response from the server
      */
-    Profile.prototype.emitLoadedEvent = function (user) {
-        mediator.emit(Profile.CONFIG.eventName + ':loaded', user);
-    };
+        Profile.prototype.emitLoadedEvent = function(user) {
+            mediator.emit(Profile.CONFIG.eventName + ':loaded', user);
+        };
 
-    /**
+        /**
      * @param {Object} resp response from the server
      */
-    Profile.prototype.emitErrorEvent = function () {
-        mediator.emit(Profile.CONFIG.eventName + ':error');
-    };
+        Profile.prototype.emitErrorEvent = function() {
+            mediator.emit(Profile.CONFIG.eventName + ':error');
+        };
 
-    return Profile;
-
-});
+        return Profile;
+    }
+);

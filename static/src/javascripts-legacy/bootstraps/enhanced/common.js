@@ -1,106 +1,108 @@
 /*eslint-disable no-new*/
 /* TODO - fix module constructors */
-define([
-    'bean',
-    'bonzo',
-    'qwery',
-    'lib/$',
-    'lib/config',
-    'lib/cookies',
-    'lib/detect',
-    'lib/mediator',
-    'lodash/utilities/template',
-    'lib/url',
-    'lib/robust',
-    'lib/storage',
-    'common/modules/analytics/foresee-survey',
-    'common/modules/analytics/media-listener',
-    'common/modules/analytics/interaction-tracking',
-    'common/modules/analytics/register',
-    'common/modules/analytics/scrollDepth',
-    'commercial/modules/user-ad-targeting',
-    'common/modules/commercial/donot-use-adblock',
-    'commercial/modules/user-features',
-    'common/modules/discussion/comment-count',
-    'common/modules/identity/cookierefresh',
-    'common/modules/navigation/navigation',
-    'common/modules/navigation/profile',
-    'common/modules/navigation/search',
-    'common/modules/navigation/membership',
-    'common/modules/onward/history',
-    'common/modules/onward/tech-feedback',
-    'common/modules/ui/accessibility-prefs',
-    'common/modules/ui/clickstream',
-    'common/modules/ui/dropdowns',
-    'common/modules/ui/faux-block-link',
-    'common/modules/ui/message',
-    'common/modules/ui/cookiesBanner',
-    'common/modules/ui/relativedates',
-    'common/modules/ui/smartAppBanner',
-    'common/modules/ui/tabs',
-    'common/modules/ui/toggles',
-    'common/modules/user-prefs',
-    'common/modules/onward/breaking-news',
-    'common/modules/social/pinterest',
-    'common/modules/social/hidden-share-toggle',
-    'common/modules/commercial/membership-engagement-banner',
-    'common/modules/email/email',
-    'common/modules/email/email-article',
-    'bootstraps/enhanced/identity-common',
-    'lodash/collections/forEach',
-    'ophan/ng'
-], function (
-    bean,
-    bonzo,
-    qwery,
-    $,
-    config,
-    cookies,
-    detect,
-    mediator,
-    template,
-    url,
-    robust,
-    storage,
-    Foresee,
-    mediaListener,
-    interactionTracking,
-    register,
-    ScrollDepth,
-    userAdTargeting,
-    donotUseAdblock,
-    userFeatures,
-    CommentCount,
-    CookieRefresh,
-    navigation,
-    Profile,
-    Search,
-    membership,
-    history,
-    techFeedback,
-    accessibilityPrefs,
-    Clickstream,
-    Dropdowns,
-    fauxBlockLink,
-    Message,
-    cookiesBanner,
-    RelativeDates,
-    customSmartAppBanner,
-    Tabs,
-    Toggles,
-    userPrefs,
-    breakingNews,
-    pinterest,
-    hiddenShareToggle,
-    membershipEngagementBanner,
-    email,
-    emailArticle,
-    identity,
-    forEach,
-    ophan
-) {
-    var modules = {
-            initialiseTopNavItems: function () {
+define(
+    [
+        'bean',
+        'bonzo',
+        'qwery',
+        'lib/$',
+        'lib/config',
+        'lib/cookies',
+        'lib/detect',
+        'lib/mediator',
+        'lodash/utilities/template',
+        'lib/url',
+        'lib/robust',
+        'lib/storage',
+        'common/modules/analytics/foresee-survey',
+        'common/modules/analytics/media-listener',
+        'common/modules/analytics/interaction-tracking',
+        'common/modules/analytics/register',
+        'common/modules/analytics/scrollDepth',
+        'commercial/modules/user-ad-targeting',
+        'common/modules/commercial/donot-use-adblock',
+        'commercial/modules/user-features',
+        'common/modules/discussion/comment-count',
+        'common/modules/identity/cookierefresh',
+        'common/modules/navigation/navigation',
+        'common/modules/navigation/profile',
+        'common/modules/navigation/search',
+        'common/modules/navigation/membership',
+        'common/modules/onward/history',
+        'common/modules/onward/tech-feedback',
+        'common/modules/ui/accessibility-prefs',
+        'common/modules/ui/clickstream',
+        'common/modules/ui/dropdowns',
+        'common/modules/ui/faux-block-link',
+        'common/modules/ui/message',
+        'common/modules/ui/cookiesBanner',
+        'common/modules/ui/relativedates',
+        'common/modules/ui/smartAppBanner',
+        'common/modules/ui/tabs',
+        'common/modules/ui/toggles',
+        'common/modules/user-prefs',
+        'common/modules/onward/breaking-news',
+        'common/modules/social/pinterest',
+        'common/modules/social/hidden-share-toggle',
+        'common/modules/commercial/membership-engagement-banner',
+        'common/modules/email/email',
+        'common/modules/email/email-article',
+        'bootstraps/enhanced/identity-common',
+        'lodash/collections/forEach',
+        'ophan/ng',
+    ],
+    function(
+        bean,
+        bonzo,
+        qwery,
+        $,
+        config,
+        cookies,
+        detect,
+        mediator,
+        template,
+        url,
+        robust,
+        storage,
+        Foresee,
+        mediaListener,
+        interactionTracking,
+        register,
+        ScrollDepth,
+        userAdTargeting,
+        donotUseAdblock,
+        userFeatures,
+        CommentCount,
+        CookieRefresh,
+        navigation,
+        Profile,
+        Search,
+        membership,
+        history,
+        techFeedback,
+        accessibilityPrefs,
+        Clickstream,
+        Dropdowns,
+        fauxBlockLink,
+        Message,
+        cookiesBanner,
+        RelativeDates,
+        customSmartAppBanner,
+        Tabs,
+        Toggles,
+        userPrefs,
+        breakingNews,
+        pinterest,
+        hiddenShareToggle,
+        membershipEngagementBanner,
+        email,
+        emailArticle,
+        identity,
+        forEach,
+        ophan
+    ) {
+        var modules = {
+            initialiseTopNavItems: function() {
                 var profile,
                     search = new Search(),
                     header = document.getElementById('header');
@@ -108,7 +110,7 @@ define([
                 if (header) {
                     if (config.switches.idProfileNavigation) {
                         profile = new Profile({
-                            url: config.page.idUrl
+                            url: config.page.idUrl,
                         });
                         profile.init();
                     }
@@ -117,68 +119,83 @@ define([
                 search.init(header);
             },
 
-            initialiseNavigation: function () {
+            initialiseNavigation: function() {
                 navigation.init();
             },
 
-            showTabs: function () {
+            showTabs: function() {
                 var tabs = new Tabs();
-                ['modules:popular:loaded', 'modules:geomostpopular:ready'].forEach(function (event) {
-                    mediator.on(event, function (el) {
+                [
+                    'modules:popular:loaded',
+                    'modules:geomostpopular:ready',
+                ].forEach(function(event) {
+                    mediator.on(event, function(el) {
                         tabs.init(el);
                     });
                 });
             },
 
-            showToggles: function () {
+            showToggles: function() {
                 var toggles = new Toggles();
                 toggles.init(document);
                 toggles.reset();
                 Dropdowns.init();
             },
 
-            showRelativeDates: function () {
+            showRelativeDates: function() {
                 var dates = RelativeDates;
                 dates.init();
             },
 
-            initClickstream: function () {
-                new Clickstream({filter: ['a', 'button']});
+            initClickstream: function() {
+                new Clickstream({ filter: ['a', 'button'] });
             },
 
-            showAdblockMessage: function () {
+            showAdblockMessage: function() {
                 donotUseAdblock.init();
             },
 
-            loadAnalytics: function () {
+            loadAnalytics: function() {
                 interactionTracking.init();
                 if (config.switches.ophan) {
                     if (config.switches.scrollDepth) {
                         mediator.on('scrolldepth:data', ophan.record);
 
                         new ScrollDepth({
-                            isContent: /Article|LiveBlog/.test(config.page.contentType)
+                            isContent: /Article|LiveBlog/.test(
+                                config.page.contentType
+                            ),
                         });
                     }
                 }
             },
 
-            cleanupCookies: function () {
-                cookies.cleanUp(['mmcore.pd', 'mmcore.srv', 'mmid', 'GU_ABFACIA', 'GU_FACIA', 'GU_ALPHA', 'GU_ME', 'at', 'gu_adfree_user']);
+            cleanupCookies: function() {
+                cookies.cleanUp([
+                    'mmcore.pd',
+                    'mmcore.srv',
+                    'mmid',
+                    'GU_ABFACIA',
+                    'GU_FACIA',
+                    'GU_ALPHA',
+                    'GU_ME',
+                    'at',
+                    'gu_adfree_user',
+                ]);
             },
 
-            cleanupLocalStorage : function () {
+            cleanupLocalStorage: function() {
                 var deprecatedKeys = [
                     'gu.subscriber',
                     'gu.contributor',
                     'gu.cachedRecommendations',
                     'gu.recommendationsEnabled',
-                    'gu.abb3.exempt'
+                    'gu.abb3.exempt',
                 ];
                 forEach(deprecatedKeys, storage.remove);
             },
 
-            updateHistory: function () {
+            updateHistory: function() {
                 if (config.page.contentType !== 'Network Front') {
                     history.logSummary(config.page);
                 }
@@ -186,73 +203,91 @@ define([
                 history.logHistory(config.page);
             },
 
-            showHistoryInMegaNav: function () {
+            showHistoryInMegaNav: function() {
                 if (config.switches.historyTags) {
-                    mediator.once('modules:nav:open', function () {
+                    mediator.once('modules:nav:open', function() {
                         history.showInMegaNav();
                     });
                 }
             },
 
-            idCookieRefresh: function () {
+            idCookieRefresh: function() {
                 if (config.switches.idCookieRefresh) {
                     new CookieRefresh().init();
                 }
             },
 
-            windowEventListeners: function () {
-                ['orientationchange'].forEach(function (event) {
-                    bean.on(window, event, mediator.emit.bind(mediator, 'window:' + event));
+            windowEventListeners: function() {
+                ['orientationchange'].forEach(function(event) {
+                    bean.on(
+                        window,
+                        event,
+                        mediator.emit.bind(mediator, 'window:' + event)
+                    );
                 });
             },
 
-            checkIframe: function () {
+            checkIframe: function() {
                 if (window.self !== window.top) {
                     $('html').addClass('iframed');
                 }
             },
 
-            runForseeSurvey: function () {
+            runForseeSurvey: function() {
                 if (config.switches.foresee) {
                     Foresee.load();
                 }
             },
 
-            startRegister: function () {
+            startRegister: function() {
                 register.initialise();
             },
 
-            initDiscussion: function () {
+            initDiscussion: function() {
                 if (config.switches.discussion) {
                     CommentCount.init();
                 }
             },
 
-            testCookie: function () {
+            testCookie: function() {
                 var queryParams = url.getUrlVars();
                 if (queryParams.test) {
-                    cookies.addSessionCookie('GU_TEST', encodeURIComponent(queryParams.test));
+                    cookies.addSessionCookie(
+                        'GU_TEST',
+                        encodeURIComponent(queryParams.test)
+                    );
                 }
             },
 
-            initOpenOverlayOnClick: function () {
+            initOpenOverlayOnClick: function() {
                 var offset;
 
-                bean.on(document.body, 'click', '[data-open-overlay-on-click]', function (e) {
-                    var elId = bonzo(e.currentTarget).data('open-overlay-on-click');
-                    offset = document.body.scrollTop;
-                    bonzo(document.body).addClass('has-overlay');
-                    $('#' + elId).addClass('overlay--open').appendTo(document.body);
-                });
+                bean.on(
+                    document.body,
+                    'click',
+                    '[data-open-overlay-on-click]',
+                    function(e) {
+                        var elId = bonzo(e.currentTarget).data(
+                            'open-overlay-on-click'
+                        );
+                        offset = document.body.scrollTop;
+                        bonzo(document.body).addClass('has-overlay');
+                        $('#' + elId)
+                            .addClass('overlay--open')
+                            .appendTo(document.body);
+                    }
+                );
 
-                bean.on(document.body, 'click', '.js-overlay-close', function (e) {
+                bean.on(document.body, 'click', '.js-overlay-close', function(
+                    e
+                ) {
                     var overlay = $.ancestor(e.target, 'overlay');
                     if (overlay) {
                         bonzo(overlay).removeClass('overlay--open');
                     }
                     bonzo(document.body).removeClass('has-overlay');
                     if (offset) {
-                        window.setTimeout(function () {
+                        window.setTimeout(function() {
                             document.body.scrollTop = offset;
                             offset = null;
                         }, 1);
@@ -260,22 +295,29 @@ define([
                 });
             },
 
-            loadBreakingNews: function () {
-                if (config.switches.breakingNews && config.page.section !== 'identity' && !config.page.isHosted) {
+            loadBreakingNews: function() {
+                if (
+                    config.switches.breakingNews &&
+                    config.page.section !== 'identity' &&
+                    !config.page.isHosted
+                ) {
                     breakingNews().catch(function() {
                         // breaking news may not load if local storage is unavailable - this is fine
                     });
                 }
             },
 
-            initPublicApi: function () {
+            initPublicApi: function() {
                 // BE CAREFUL what you expose here...
-                window.guardian.api = {
-                };
+                window.guardian.api = {};
             },
 
-            initPinterest: function () {
-                if (/Article|LiveBlog|Gallery|Video/.test(config.page.contentType)) {
+            initPinterest: function() {
+                if (
+                    /Article|LiveBlog|Gallery|Video/.test(
+                        config.page.contentType
+                    )
+                ) {
                     pinterest.initPinterest();
                 }
             },
@@ -286,7 +328,7 @@ define([
                 }
             },
 
-            initEmail: function () {
+            initEmail: function() {
                 // Initalise email embedded in page
                 email.init();
 
@@ -296,60 +338,76 @@ define([
                 }
 
                 // Initalise email forms in iframes
-                forEach(document.getElementsByClassName('js-email-sub__iframe'), function (el) {
-                    email.init(el);
-                });
+                forEach(
+                    document.getElementsByClassName('js-email-sub__iframe'),
+                    function(el) {
+                        email.init(el);
+                    }
+                );
 
                 // Listen for interactive load event and initalise forms
-                bean.on(window, 'interactive-loaded', function () {
-                    forEach(qwery('.guInteractive .js-email-sub__iframe'), function (el) {
-                        email.init(el);
-                    });
+                bean.on(window, 'interactive-loaded', function() {
+                    forEach(
+                        qwery('.guInteractive .js-email-sub__iframe'),
+                        function(el) {
+                            email.init(el);
+                        }
+                    );
                 });
-            }
+            },
         };
-    return {
-        init: function () {
-            robust.catchErrorsWithContext([
-                // Analytics comes at the top. If you think your thing is more important then please think again...
-                ['c-analytics', modules.loadAnalytics],
+        return {
+            init: function() {
+                robust.catchErrorsWithContext([
+                    // Analytics comes at the top. If you think your thing is more important then please think again...
+                    ['c-analytics', modules.loadAnalytics],
 
-                ['c-cookies-banner', cookiesBanner.init],
-                ['c-identity', identity.init],
-                ['c-adverts', userAdTargeting.requestUserSegmentsFromId],
-                ['c-discussion', modules.initDiscussion],
-                ['c-test-cookie', modules.testCookie],
-                ['c-event-listeners', modules.windowEventListeners],
-                ['c-breaking-news', modules.loadBreakingNews],
-                ['c-block-link', fauxBlockLink],
-                ['c-iframe', modules.checkIframe],
-                ['c-tabs', modules.showTabs],
-                ['c-top-nav', modules.initialiseTopNavItems],
-                ['c-init-nav', modules.initialiseNavigation],
-                ['c-toggles', modules.showToggles],
-                ['c-dates', modules.showRelativeDates],
-                ['c-clickstream', modules.initClickstream],
-                ['c-history', modules.updateHistory],
-                ['c-id-cookie-refresh', modules.idCookieRefresh],
-                ['c-history-nav', modules.showHistoryInMegaNav],
-                ['c-forsee', modules.runForseeSurvey],
-                ['c-start-register', modules.startRegister],
-                ['c-smart-banner', customSmartAppBanner.init],
-                ['c-adblock', modules.showAdblockMessage],
-                ['c-cookies', modules.cleanupCookies],
-                ['c-localStorage', modules.cleanupLocalStorage],
-                ['c-overlay', modules.initOpenOverlayOnClick],
-                ['c-public-api', modules.initPublicApi],
-                ['c-tech-feedback', techFeedback],
-                ['c-media-listeners', mediaListener],
-                ['c-accessibility-prefs', accessibilityPrefs.initAccessibilityPreferences],
-                ['c-pinterest', modules.initPinterest],
-                ['c-hidden-share-toggle', hiddenShareToggle],
-                ['c-show-membership-engagement-banner', modules.membershipEngagementBanner],
-                ['c-email', modules.initEmail],
-                ['c-user-features', userFeatures.refresh.bind(userFeatures)],
-                ['c-membership', membership]
-            ]);
-        }
-    };
-});
+                    ['c-cookies-banner', cookiesBanner.init],
+                    ['c-identity', identity.init],
+                    ['c-adverts', userAdTargeting.requestUserSegmentsFromId],
+                    ['c-discussion', modules.initDiscussion],
+                    ['c-test-cookie', modules.testCookie],
+                    ['c-event-listeners', modules.windowEventListeners],
+                    ['c-breaking-news', modules.loadBreakingNews],
+                    ['c-block-link', fauxBlockLink],
+                    ['c-iframe', modules.checkIframe],
+                    ['c-tabs', modules.showTabs],
+                    ['c-top-nav', modules.initialiseTopNavItems],
+                    ['c-init-nav', modules.initialiseNavigation],
+                    ['c-toggles', modules.showToggles],
+                    ['c-dates', modules.showRelativeDates],
+                    ['c-clickstream', modules.initClickstream],
+                    ['c-history', modules.updateHistory],
+                    ['c-id-cookie-refresh', modules.idCookieRefresh],
+                    ['c-history-nav', modules.showHistoryInMegaNav],
+                    ['c-forsee', modules.runForseeSurvey],
+                    ['c-start-register', modules.startRegister],
+                    ['c-smart-banner', customSmartAppBanner.init],
+                    ['c-adblock', modules.showAdblockMessage],
+                    ['c-cookies', modules.cleanupCookies],
+                    ['c-localStorage', modules.cleanupLocalStorage],
+                    ['c-overlay', modules.initOpenOverlayOnClick],
+                    ['c-public-api', modules.initPublicApi],
+                    ['c-tech-feedback', techFeedback],
+                    ['c-media-listeners', mediaListener],
+                    [
+                        'c-accessibility-prefs',
+                        accessibilityPrefs.initAccessibilityPreferences,
+                    ],
+                    ['c-pinterest', modules.initPinterest],
+                    ['c-hidden-share-toggle', hiddenShareToggle],
+                    [
+                        'c-show-membership-engagement-banner',
+                        modules.membershipEngagementBanner,
+                    ],
+                    ['c-email', modules.initEmail],
+                    [
+                        'c-user-features',
+                        userFeatures.refresh.bind(userFeatures),
+                    ],
+                    ['c-membership', membership],
+                ]);
+            },
+        };
+    }
+);

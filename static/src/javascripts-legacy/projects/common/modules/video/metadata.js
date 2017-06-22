@@ -1,8 +1,4 @@
-define([
-    'lib/fetch',
-    'lib/fetch-json',
-    'lib/config'
-], function (
+define(['lib/fetch', 'lib/fetch-json', 'lib/config'], function(
     fetch,
     fetchJSON,
     config
@@ -16,16 +12,18 @@ define([
             return new Promise(function(resolve) {
                 fetch(source, {
                     mode: 'cors',
-                    method: 'head'
-                }).then(function() {
-                    resolve(false);
-                }).catch(function (res) {
-                    // videos are blocked at the CDN level
-                    resolve(res.status === 403);
-                });
+                    method: 'head',
+                })
+                    .then(function() {
+                        resolve(false);
+                    })
+                    .catch(function(res) {
+                        // videos are blocked at the CDN level
+                        resolve(res.status === 403);
+                    });
             });
         } else {
-            return new Promise(function (resolve) {
+            return new Promise(function(resolve) {
                 resolve(false);
             });
         }
@@ -36,20 +34,22 @@ define([
         var embedPath = $el.attr('data-embed-path');
 
         // we need to look up the embedPath for main media videos
-        var canonicalUrl = $el.attr('data-canonical-url') || (embedPath ? embedPath : null);
+        var canonicalUrl =
+            $el.attr('data-canonical-url') || (embedPath ? embedPath : null);
 
         return new Promise(function(resolve) {
             // We only have the canonical URL in videos embedded in articles / main media.
             // These are set to the safest defaults that will always play video.
             var defaultVideoInfo = {
                 expired: false,
-                shouldHideAdverts: shouldHideAdverts
+                shouldHideAdverts: shouldHideAdverts,
             };
 
             if (!canonicalUrl) {
                 resolve(defaultVideoInfo);
             } else {
-                var url = config.page.ajaxUrl + '/' + canonicalUrl + '/info.json';
+                var url =
+                    config.page.ajaxUrl + '/' + canonicalUrl + '/info.json';
 
                 fetchJSON(url, {
                     mode: 'cors',
@@ -65,6 +65,6 @@ define([
 
     return {
         isGeoBlocked: isGeoBlocked,
-        getVideoInfo: getVideoInfo
+        getVideoInfo: getVideoInfo,
     };
 });

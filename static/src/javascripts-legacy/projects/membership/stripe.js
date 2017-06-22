@@ -1,18 +1,17 @@
 /* global StripeCheckout */
-define([
-    'lib/$',
-    'bean',
-    'lib/fetch',
-    'lib/config',
-    'fastdom'
-], function ($, bean, fetch, config, fastdom) {
-
+define(['lib/$', 'bean', 'lib/fetch', 'lib/config', 'fastdom'], function(
+    $,
+    bean,
+    fetch,
+    config,
+    fastdom
+) {
     var checkoutHandler = StripeCheckout.configure({
         key: config.page.stripePublicToken,
         locale: 'auto',
         name: 'The Guardian',
         allowRememberMe: false,
-        image: 'https://d24w1tjgih0o9s.cloudfront.net/gu.png'
+        image: 'https://d24w1tjgih0o9s.cloudfront.net/gu.png',
     });
 
     /* Renders the card details
@@ -32,37 +31,37 @@ define([
         /*  show/hide
          *   once we've sent the token, we don't want to change the state of the dots until we redisplay
          * */
-        var loading = function () {
+        var loading = (function() {
             var HIDDEN = 'is-hidden';
             var $elems = [$button, $number, $type, $last4];
             var sent = false;
-            var showDots = function () {
+            var showDots = function() {
                 if (sent) {
                     return;
                 }
-                $elems.forEach(function ($e) {
+                $elems.forEach(function($e) {
                     $e.addClass(HIDDEN);
                 });
                 $updating.removeClass(HIDDEN);
             };
-            var hideDots = function () {
+            var hideDots = function() {
                 if (sent) {
                     return;
                 }
-                $elems.forEach(function ($e) {
+                $elems.forEach(function($e) {
                     $e.removeClass(HIDDEN);
                 });
                 $updating.addClass(HIDDEN);
             };
-            var send = function () {
+            var send = function() {
                 sent = true;
             };
             return {
                 send: send,
                 showDots: showDots,
-                hideDots: hideDots
+                hideDots: hideDots,
             };
-        }();
+        })();
 
         //Decode and display card
         var oldCardType = $type.data('type');
@@ -72,7 +71,7 @@ define([
 
         bean.on($button[0], 'click', handler());
 
-        fastdom.write(function () {
+        fastdom.write(function() {
             if (oldCardType) {
                 $type.removeClass(oldCardType);
             }
@@ -83,16 +82,18 @@ define([
             loading.hideDots();
         });
 
-
         /*
          * Closes over the event handler for the Change Card button
          */
         function handler() {
-
             var product = $parent.data('product');
-            var endpoint = config.page.userAttributesApiUrl + '/me/' + product + '-update-card';
+            var endpoint =
+                config.page.userAttributesApiUrl +
+                '/me/' +
+                product +
+                '-update-card';
             var email = $button.data('email');
-            return function (e) {
+            return function(e) {
                 e.preventDefault();
                 fastdom.write(loading.showDots);
 
@@ -101,9 +102,9 @@ define([
                     description: 'Update your card details',
                     panelLabel: 'Update',
                     token: update(endpoint),
-                    closed: function () {
+                    closed: function() {
                         fastdom.write(loading.hideDots);
-                    }
+                    },
                 });
                 /*
                  Nonstandard javascript alert:
@@ -114,10 +115,9 @@ define([
                  https://stripe.com/docs/checkout#integration-custom
 
                  Close Checkout on page navigation: */
-                window.addEventListener('popstate', function () {
+                window.addEventListener('popstate', function() {
                     checkoutHandler.close();
                 });
-
             };
         }
 
@@ -126,31 +126,36 @@ define([
          *   -id: string of the stripe token id
          */
         function update(endpoint) {
-            return function (token) {
+            return function(token) {
                 loading.send();
                 fetch(endpoint, {
                     mode: 'cors',
                     credentials: 'include',
                     method: 'post',
                     headers: {
-                        'Csrf-Token': 'nocheck'
+                        'Csrf-Token': 'nocheck',
                     },
                     body: {
-                        stripeToken: token.id
+                        stripeToken: token.id,
                     },
-                }).then(function(resp) {
-                    return resp.json();
-                }).then(function (json) {
-                    var card = json;
-                    display($parent, card);
-                }).catch(function() {
-                    $parent.text('We have not been able to update your card details at this time.');
-                });
+                })
+                    .then(function(resp) {
+                        return resp.json();
+                    })
+                    .then(function(json) {
+                        var card = json;
+                        display($parent, card);
+                    })
+                    .catch(function() {
+                        $parent.text(
+                            'We have not been able to update your card details at this time.'
+                        );
+                    });
             };
         }
     }
 
     return {
-        display: display
+        display: display,
     };
 });

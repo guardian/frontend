@@ -1,27 +1,21 @@
-define([
-    'lib/$',
-    'bonzo',
-    'bean'
-], function (
-    $,
-    bonzo,
-    bean
-) {
+define(['lib/$', 'bonzo', 'bean'], function($, bonzo, bean) {
     var s = {
         container: '.dropdown',
         button: '.dropdown__button',
-        content: '.dropdown__content'
+        content: '.dropdown__content',
     };
     function init() {
-        bean.on(document.body, 'click', s.button, function (e) {
-            var $container = bonzo($.ancestor(e.currentTarget, s.container.substring(1)));
+        bean.on(document.body, 'click', s.button, function(e) {
+            var $container = bonzo(
+                $.ancestor(e.currentTarget, s.container.substring(1))
+            );
             $container.toggleClass('dropdown--active');
             updateAria($container);
         });
     }
 
     function updateAria($container) {
-        $container.each(function (d) {
+        $container.each(function(d) {
             var v = bonzo(d).hasClass('dropdown--active');
             $(s.content, d).attr('aria-hidden', !v);
             $(s.button, d).attr('aria-expanded', v);
@@ -31,6 +25,6 @@ define([
 
     return {
         init: init,
-        updateAria: updateAria
+        updateAria: updateAria,
     };
 });
