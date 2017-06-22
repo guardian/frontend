@@ -71,7 +71,7 @@
     "flow-bin": "^0.48.0",
     "flow-typed": "^2.1.2",
     "git-user-name": "^1.2.0",
-    "glob": "^7",
+    "glob": "^7.1.2",
     "gzip-size": "^3.0.0",
     "hasha": "^3.0.0",
     "jasmine-core": "^2.3.2",
