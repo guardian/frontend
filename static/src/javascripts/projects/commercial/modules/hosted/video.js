@@ -21,32 +21,46 @@ const upgradeVideoPlayerAccessibility = (player: Object): void => {
     const playerEl = player.el();
 
     fastdom.write(() => {
-        playerEl.querySelectorAll('.vjs-tech').forEach(el => {
+        Array.from(playerEl.querySelectorAll('.vjs-tech')).forEach(el => {
             el.setAttribute('aria-hidden', 'true');
         });
         // Hide superfluous controls, and label useful buttons.
-        playerEl.querySelectorAll('.vjs-big-play-button').forEach(el => {
+        Array.from(
+            playerEl.querySelectorAll('.vjs-big-play-button')
+        ).forEach(el => {
             el.setAttribute('aria-hidden', 'true');
         });
-        playerEl.querySelectorAll('.vjs-current-time').forEach(el => {
+        Array.from(
+            playerEl.querySelectorAll('.vjs-current-time')
+        ).forEach(el => {
             el.setAttribute('aria-hidden', 'true');
         });
-        playerEl.querySelectorAll('.vjs-time-divider').forEach(el => {
+        Array.from(
+            playerEl.querySelectorAll('.vjs-time-divider')
+        ).forEach(el => {
             el.setAttribute('aria-hidden', 'true');
         });
-        playerEl.querySelectorAll('.vjs-duration').forEach(el => {
+        Array.from(playerEl.querySelectorAll('.vjs-duration')).forEach(el => {
             el.setAttribute('aria-hidden', 'true');
         });
-        playerEl.querySelectorAll('.vjs-embed-button').forEach(el => {
+        Array.from(
+            playerEl.querySelectorAll('.vjs-embed-button')
+        ).forEach(el => {
             el.setAttribute('aria-hidden', 'true');
         });
-        playerEl.querySelectorAll('.vjs-play-control').forEach(el => {
+        Array.from(
+            playerEl.querySelectorAll('.vjs-play-control')
+        ).forEach(el => {
             el.setAttribute('aria-label', 'video play');
         });
-        playerEl.querySelectorAll('.vjs-mute-control').forEach(el => {
+        Array.from(
+            playerEl.querySelectorAll('.vjs-mute-control')
+        ).forEach(el => {
             el.setAttribute('aria-label', 'video mute');
         });
-        playerEl.querySelectorAll('.vjs-fullscreen-control').forEach(el => {
+        Array.from(
+            playerEl.querySelectorAll('.vjs-fullscreen-control')
+        ).forEach(el => {
             el.setAttribute('aria-label', 'video fullscreen');
         });
     });
@@ -179,11 +193,11 @@ export const initHostedVideo = (
                 })
         )
         .then(videojsInstance => {
-            videoEl.forEach(el => {
+            Array.from(videoEl).forEach(el => {
                 setupVideo(el, videojsInstance);
             });
 
-            youtubeIframe.forEach(initHostedYoutube);
+            Array.from(youtubeIframe).forEach(initHostedYoutube);
         })
         .then(stop, stop);
 
