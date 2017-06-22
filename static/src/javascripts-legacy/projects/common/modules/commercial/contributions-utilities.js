@@ -216,6 +216,14 @@ define([
             iframeId: test.campaignId + '_' + 'iframe',
         };
 
+        this.impression = options.impression || (function(submitImpression) {
+            return mediator.once(test.insertEvent, submitImpression)
+        });
+
+        this.success = options.success || (function(submitSuccess) {
+            return mediator.once(test.viewEvent, submitSuccess)
+        });
+
         this.test = function () {
             var displayEpic = (typeof options.canEpicBeDisplayed === 'function') ?
                 options.canEpicBeDisplayed(test) : true;
@@ -275,8 +283,6 @@ define([
         };
 
         this.registerIframeListener();
-        this.registerListener('impression', 'impressionOnInsert', test.insertEvent, options);
-        this.registerListener('success', 'successOnView', test.viewEvent, options);
     }
 
     function getCampaignCode(campaignCodePrefix, campaignID, id, campaignCodeSuffix) {
@@ -299,15 +305,6 @@ define([
 
     ContributionsABTestVariant.prototype.membershipURLBuilder = function(codeModifier) {
         return this.getURL(membershipBaseURL, codeModifier(this.options.campaignCode));
-    };
-
-    ContributionsABTestVariant.prototype.registerListener = function (type, defaultFlag, event, options) {
-        if (options[type]) this[type] = options[type];
-        else if (options[defaultFlag]) {
-            this[type] = (function (track) {
-                return mediator.on(event, track);
-            }).bind(this);
-        }
     };
 
     ContributionsABTestVariant.prototype.registerIframeListener = function() {
