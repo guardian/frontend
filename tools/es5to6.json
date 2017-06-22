@@ -22,9 +22,7 @@
     "projects/common/modules/video/onward-container.js",
     "bootstraps/enhanced/gallery.js"
   ],
-  "Simon Adcock": [
-    "bootstraps/enhanced/media/video-player.js"
-  ],
+  "Simon Adcock": [],
   "Nicolas Long": [
     "lib/atob.js",
     "projects/common/modules/ui/selection-sharing.js",
