@@ -13,18 +13,18 @@ const lastViewportRead = fastdom.read(() => {
     lastViewport = detect.getViewport();
 });
 
-const reset = (window_: WindowProxy) => {
+const reset = (window_: WindowProxy): void => {
     w = window_ || window;
     taskQueued = false;
     iframes = {};
     iframeCounter = 0;
 };
 
-const sendViewportDimensions = function(iframeId) {
+const sendViewportDimensions = function(iframeId): void {
     iframes[iframeId].respond(null, this);
 };
 
-const onResize = () => {
+const onResize = (): ?Promise<any> => {
     if (!taskQueued) {
         taskQueued = true;
 
@@ -52,7 +52,7 @@ const addResizeListener = (iframe: Element, respond: any): Promise<any> => {
     });
 };
 
-const removeResizeListener = (iframe: Element) => {
+const removeResizeListener = (iframe: Element): void => {
     if (iframes[iframe.id]) {
         iframes[iframe.id] = false;
         iframeCounter -= 1;
