@@ -31,16 +31,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-opinion-email-variants",
-    "Assign users to variants of opinion emails",
-    owners = Seq(Owner.withGithub("davidfurey")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 6, 23),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-contributions-epic-always-ask-strategy",
     "Test to assess the effects of always asking readers to contribute via the Epic over a prolonged period",
     owners = Seq(Owner.withGithub("Mullefa")),
@@ -116,16 +106,6 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("oilnam"), Owner.withGithub("mike-ruane")),
     safeState = Off,
     sellByDate = new LocalDate(2017, 8, 31),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-bookmarks-email-variants-2",
-    "Assign users to variants of bookmarks email",
-    owners = Seq(Owner.withGithub("davidfurey")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 6, 23),
     exposeClientSide = true
   )
 
