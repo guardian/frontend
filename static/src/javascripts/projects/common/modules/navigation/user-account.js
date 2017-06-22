@@ -29,6 +29,10 @@ const enhanceAvatar = (): Promise<void> => {
     );
     const avatarEl = document.querySelector('.js-navigation-account-avatar');
 
+    if (!isUserLoggedIn() || !avatarEl) {
+        return Promise.resolve();
+    }
+
     return avatarAPI.getActive().then(res => {
         if (res && res.data && res.data.avatarUrl) {
             return fastdom.write(() => {

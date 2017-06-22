@@ -52,11 +52,6 @@ const openSidebarSection = (
 
     // the sections should behave like an accordion
     closeAllSidebarSections(section);
-
-    if (!avatarIsEnhanced) {
-        enhanceAvatar();
-        avatarIsEnhanced = true;
-    }
 };
 
 const isSidebarSectionClosed = (section: HTMLElement): boolean => {
@@ -182,6 +177,11 @@ const toggleSidebar = (): void => {
             closeAllSidebarSections();
         } else {
             focusFirstSidebarSection();
+
+            if (!avatarIsEnhanced) {
+                enhanceAvatar();
+                avatarIsEnhanced = true;
+            }
         }
     };
 
