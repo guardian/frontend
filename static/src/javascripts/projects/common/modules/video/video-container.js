@@ -3,7 +3,7 @@ import bean from 'bean';
 import fastdom from 'lib/fastdom-promise';
 import $ from 'lib/$';
 import ElementInview from 'lib/element-inview';
-import videojs from 'bootstraps/enhanced/media/video-player';
+import { videojs } from 'bootstraps/enhanced/media/video-player';
 import { onVideoContainerNavigation } from 'common/modules/atoms/youtube';
 import detect from 'lib/detect';
 
@@ -266,14 +266,12 @@ const createStore = (
     };
 };
 
-export default {
-    init: (container: Element) => {
-        const initialState = getInitialState(container);
-        const store = createStore(reducer, initialState);
+export const videoContainerInit = (container: Element) => {
+    const initialState = getInitialState(container);
+    const store = createStore(reducer, initialState);
 
-        setupDispatches(store.dispatch, container);
-        store.subscribe(() => {
-            update(store.getState(), container);
-        });
-    },
+    setupDispatches(store.dispatch, container);
+    store.subscribe(() => {
+        update(store.getState(), container);
+    });
 };

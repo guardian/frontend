@@ -60,7 +60,8 @@ define([
             showContainerToggle: function () {
                 var containerToggleAdd = function (context) {
                         $('.js-container--toggle', $(context || document)[0]).each(function (container) {
-                            new ContainerToggle(container).addToggle();
+                            var toggle = new ContainerToggle.ContainerToggle(container);
+                            toggle.addToggle();
                         });
                     };
                 mediator.addListeners({

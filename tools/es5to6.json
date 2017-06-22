@@ -4,13 +4,10 @@
   "Regis Kuckaertz": [],
   "Richard Nguyen": [],
   "Kate Whalen": [
-    "projects/commercial/modules/messenger/get-stylesheet.js",
-    "projects/commercial/modules/messenger/resize.js",
-    "projects/commercial/modules/messenger/scroll.js"
+    "projects/commercial/modules/messenger/get-stylesheet.js"
   ],
   "Lydia Shepherd": [
-      "projects/commercial/modules/messenger/type.js",
-      "projects/commercial/modules/messenger/viewport.js"
+    "projects/commercial/modules/messenger/viewport.js"
   ],
   "sndrs": [
     "lib/detect.js",
@@ -25,9 +22,7 @@
     "projects/common/modules/video/onward-container.js",
     "bootstraps/enhanced/gallery.js"
   ],
-  "Simon Adcock": [
-    "bootstraps/enhanced/media/video-player.js"
-  ],
+  "Simon Adcock": [],
   "Nicolas Long": [
     "lib/atob.js",
     "projects/common/modules/ui/selection-sharing.js",
@@ -192,8 +187,6 @@
     "projects/commercial/modules/paidfor-band.js"
   ],
   "Philip Wills": [
-    "projects/facia/modules/ui/container-toggle.js",
-    "projects/common/modules/video/ga-helper.js",
     "projects/facia/modules/ui/live-blog-updates.js",
     "projects/commercial/modules/third-party-tags/imr-worldwide.js"
   ],

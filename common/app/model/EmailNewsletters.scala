@@ -403,8 +403,8 @@ object EmailNewsletters {
     teaser = "Get out of your bubble and see things from another point of view. Join the debate every afternoon and you might even change your mind",
     description = "Get out of your bubble. See things from another point of view - join the debate and you might even change your mind. Sign up to have the Guardian’s best opinion pieces emailed to you every weekday afternoon",
     frequency = "Weekday afternoons",
-    listId = 3811,
-    aliases = List(3814, 2313),
+    listId = 2313,
+    aliases = List(3814, 3811),
     subheading = Some("UK"),
     tone = Some("comment"),
     signupPage = Some("/commentisfree/2014/jan/29/comment-is-free-daily-roundup")
