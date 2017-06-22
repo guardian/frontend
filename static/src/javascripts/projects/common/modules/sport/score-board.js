@@ -77,4 +77,4 @@ class ScoreBoard extends Component {
     }
 }
 
-export default ScoreBoard;
+export { ScoreBoard };
