@@ -20,12 +20,14 @@
         ),
         "content", "tonal", s"tonal--${toneClass(page.item)}")
     ">
-        <div class="gs-container immersive-main-media__logo">
-            <a href="@LinkTo{/}">
-                <span class="u-h">The Guardian</span>
-                @fragments.inlineSvg("guardian-logo-160", "logo", Seq("immersive-main-media__logo__svg"))
-            </a>
-        </div>
+        @if(!mvt.ABNewDesktopHeader.isParticipating) {
+            <div class="gs-container immersive-main-media__logo">
+                <a href="@LinkTo {/}">
+                    <span class="u-h">The Guardian</span>
+                    @fragments.inlineSvg("guardian-logo-160", "logo", Seq("immersive-main-media__logo__svg"))
+                </a>
+            </div>
+        }
         <div class="immersive-main-media__media">
             @if(page.item.elements.hasMainPicture) {
                 @page.item.elements.mainPicture.map(_.images).orElse(page.item.trail.trailPicture).map { picture =>

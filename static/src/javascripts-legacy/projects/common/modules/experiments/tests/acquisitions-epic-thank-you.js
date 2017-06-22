@@ -42,7 +42,7 @@ define(
             campaignId: 'epic_thank_you',
 
             start: '2017-06-01',
-            expiry: '2017-06-19',
+            expiry: '2017-07-03',
 
             author: 'Guy Dawson',
             description:

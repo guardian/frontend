@@ -59,9 +59,16 @@ from scrolling */
 
     .new-header--slim & {
         position: relative;
+        overflow: visible;
         left: -$gs-gutter / 4;
         order: -1;
         z-index: 1;
+    }
+
+    .new-header--slim.new-header--open & {
+        @include mq(tablet) {
+            display: none;
+        }
     }
 }
 
@@ -73,6 +80,12 @@ from scrolling */
         display: flex;
         float: none;
         margin-left: auto;
+    }
+
+    .new-header--slim.new-header--open & {
+        @include mq($from: desktop, $until: leftCol) {
+            display: none;
+        }
     }
 }
 
