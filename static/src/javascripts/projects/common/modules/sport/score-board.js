@@ -5,6 +5,17 @@ import Component from 'common/modules/component';
 import detect from 'lib/detect';
 import $ from 'lib/$';
 
+type ScoreBoardContext = {
+    autoupdated: boolean,
+    componentClass: string,
+    pageType: 'minbymin' | 'preview' | 'report' | 'stats',
+    placeholder: HTMLElement,
+    parent: bonzo,
+    responseDataKey: string,
+    endpoint: string,
+    updateEvery: number,
+};
+
 const getScoreContainerHtml = (context: Object): string => `
     <div class="score-container">
         <div class="score__loading ${context.loadingState}">
@@ -15,8 +26,10 @@ const getScoreContainerHtml = (context: Object): string => `
 `;
 
 class ScoreBoard extends Component {
-    constructor(context: Object): void {
-        super(context);
+    constructor(context: ScoreBoardContext): void {
+        super();
+
+        Object.assign(this, context);
 
         const scoreContainerHtml = getScoreContainerHtml({
             loadingState: this.pageType !== 'report'
@@ -24,12 +37,6 @@ class ScoreBoard extends Component {
                 : '',
         });
 
-        this.componentClass = 'match-summary';
-        this.pageType = context.pageType;
-        this.parent = context.parent;
-        this.endpoint = context.endpoint;
-        this.autoupdated = context.autoupdated;
-        this.responseDataKey = context.responseDataKey;
         this.updateEvery = detect.isBreakpoint({ min: 'desktop' }) ? 30 : 60;
         this.placeholder = bonzo.create(scoreContainerHtml)[0];
 
@@ -39,15 +46,6 @@ class ScoreBoard extends Component {
             context.parent.addClass('u-h').before(this.placeholder);
         }
     }
-
-    autoupdated: boolean;
-    componentClass: string;
-    pageType: 'minbymin' | 'preview' | 'report' | 'stats';
-    placeholder: HTMLElement;
-    parent: bonzo;
-    responseDataKey: string;
-    endpoint: string;
-    updateEvery: number;
 
     prerender(): void {
         const scoreLoadingPlaceholder = $(
