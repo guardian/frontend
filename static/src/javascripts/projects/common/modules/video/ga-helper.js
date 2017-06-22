@@ -1,12 +1,18 @@
 // @flow
-import type { MediaEventT } from 'common/modules/video/events';
+
+type MediaEvent = {
+    mediaId: string,
+    mediaType: string,
+    eventType: string,
+    isPreroll: boolean,
+};
 
 const buildGoogleAnalyticsEvent = (
-    mediaEvent: MediaEventT,
+    mediaEvent: MediaEvent,
     metrics: Object,
     canonicalUrl: string,
     player: string,
-    eventAction: MediaEventT => string,
+    eventAction: MediaEvent => string,
     videoId: string
 ) => {
     const category = 'media';
@@ -27,7 +33,7 @@ const buildGoogleAnalyticsEvent = (
     return fieldsObject;
 };
 
-const getGoogleAnalyticsEventAction = (mediaEvent: MediaEventT) => {
+const getGoogleAnalyticsEventAction = (mediaEvent: MediaEvent) => {
     let action = `${mediaEvent.mediaType} `;
     if (mediaEvent.isPreroll) {
         action += 'preroll';
@@ -37,4 +43,5 @@ const getGoogleAnalyticsEventAction = (mediaEvent: MediaEventT) => {
     return action;
 };
 
+export type { MediaEvent };
 export { buildGoogleAnalyticsEvent, getGoogleAnalyticsEventAction };

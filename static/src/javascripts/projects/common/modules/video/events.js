@@ -12,6 +12,7 @@ import {
     buildGoogleAnalyticsEvent,
     getGoogleAnalyticsEventAction,
 } from 'common/modules/video/ga-helper';
+import type { MediaEvent } from 'common/modules/video/ga-helper';
 import ophan from 'ophan/ng';
 
 /* global require */
@@ -34,24 +35,6 @@ const EVENTS = [
 ];
 const gaTracker = config.googleAnalytics.trackers.editorial;
 
-export type MediaEventT = {
-    mediaId: string,
-    mediaType: string,
-    eventType: string,
-    isPreroll: boolean,
-};
-const MediaEvent = (
-    mediaId: string,
-    mediaType: string,
-    eventType: string,
-    isPreroll: boolean
-): MediaEventT => ({
-    mediaId,
-    mediaType,
-    eventType,
-    isPreroll,
-});
-
 const bindCustomMediaEvents = (
     eventsMap: Object,
     player: Object,
@@ -61,7 +44,12 @@ const bindCustomMediaEvents = (
 ): void => {
     forOwn(eventsMap, (value, key) => {
         const fullEventName = `media:${value}`;
-        const mediaEvent = MediaEvent(mediaId, mediaType, value, isPreroll);
+        const mediaEvent: MediaEvent = {
+            mediaId,
+            mediaType,
+            eventType: value,
+            isPreroll,
+        };
 
         player.one(key, () => {
             player.trigger(fullEventName, mediaEvent);
