@@ -22,13 +22,13 @@
         & ~ .pillars {
             .pillars__item:not(:first-child) > .pillar-link {
                 @include mq(desktop) {
-                    padding-left: $gs-gutter / 2;
+                    margin-left: $gs-gutter / 2 - 1;
                 }
             }
 
             .pillar-link {
                 @include mq(desktop) {
-                    width: gs-span(2) + $gs-gutter;
+                    width: gs-span(2) + $gs-gutter / 2 + 1;
                 }
             }
 

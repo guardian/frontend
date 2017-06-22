@@ -3,7 +3,12 @@
 import { addCookie, removeCookie, getCookie } from 'lib/cookies';
 import fetchJson from 'lib/fetch-json';
 import identity from 'common/modules/identity/api';
-import { refresh, isAdFreeUser, isPayingMember } from './user-features.js';
+import {
+    refresh,
+    isAdFreeUser,
+    isPayingMember,
+    isInBrexitCohort,
+} from './user-features.js';
 
 jest.mock('projects/common/modules/identity/api', () => ({
     isUserLoggedIn: jest.fn(),
@@ -17,6 +22,7 @@ const PERSISTENCE_KEYS = {
     USER_FEATURES_EXPIRY_COOKIE: 'gu_user_features_expiry',
     PAYING_MEMBER_COOKIE: 'gu_paying_member',
     AD_FREE_USER_COOKIE: 'GU_AFU',
+    JOIN_DATE_COOKIE: 'gu_join_date',
 };
 
 const setAllFeaturesData = opts => {
@@ -38,6 +44,7 @@ const deleteAllFeaturesData = () => {
     removeCookie(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE);
     removeCookie(PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE);
     removeCookie(PERSISTENCE_KEYS.AD_FREE_USER_COOKIE);
+    removeCookie(PERSISTENCE_KEYS.JOIN_DATE_COOKIE);
 };
 
 describe('Refreshing the features data', () => {
@@ -163,6 +170,41 @@ describe('The isPayingMember getter', () => {
     });
 });
 
+describe('The isInBrexitCohort getter', () => {
+    it('Is false if the user is logged out', () => {
+        jest.resetAllMocks();
+        isUserLoggedIn.mockReturnValue(false);
+        expect(isAdFreeUser()).toBe(false);
+    });
+
+    describe('When the user is logged in', () => {
+        beforeEach(() => {
+            jest.resetAllMocks();
+            isUserLoggedIn.mockReturnValue(true);
+        });
+
+        it('Is true for a user who joined on referendum day', () => {
+            addCookie(PERSISTENCE_KEYS.JOIN_DATE_COOKIE, '2016-06-23');
+            expect(isInBrexitCohort()).toBe(true);
+        });
+
+        it('Is false when the user joined before referendum day', () => {
+            addCookie(PERSISTENCE_KEYS.JOIN_DATE_COOKIE, '2016-01-01');
+            expect(isInBrexitCohort()).toBe(false);
+        });
+
+        it('Is false when the user joined after end of cohort', () => {
+            addCookie(PERSISTENCE_KEYS.JOIN_DATE_COOKIE, '2016-08-01');
+            expect(isInBrexitCohort()).toBe(false);
+        });
+
+        it('Is false when the user has no join date cookie', () => {
+            removeCookie(PERSISTENCE_KEYS.JOIN_DATE_COOKIE);
+            expect(isInBrexitCohort()).toBe(false);
+        });
+    });
+});
+
 describe('Storing new feature data', () => {
     beforeEach(() => {
         jest.resetAllMocks();
@@ -223,6 +265,25 @@ describe('Storing new feature data', () => {
             const expiryDateEpoch = parseInt(expiryDateString, 10);
             const currentTimeEpoch = new Date().getTime();
             expect(currentTimeEpoch < expiryDateEpoch).toBe(true);
+        });
+    });
+
+    it('Puts the membershipJoinDate in an appropriate cookie', () => {
+        fetchJsonSpy.mockReturnValueOnce(
+            Promise.resolve({
+                membershipJoinDate: '2016-06-30',
+            })
+        );
+        refresh().then(() => {
+            expect(getCookie(PERSISTENCE_KEYS.JOIN_DATE_COOKIE)).toBe(
+                '2016-06-30'
+            );
+        });
+    });
+
+    it('Saves no join date cookie if no join date', () => {
+        refresh().then(() => {
+            expect(getCookie(PERSISTENCE_KEYS.JOIN_DATE_COOKIE)).toBeNull();
         });
     });
 });

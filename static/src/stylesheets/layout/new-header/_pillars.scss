@@ -1,4 +1,5 @@
 .pillars {
+    clear: right;
     color: $news-support-1;
     font-size: 0;
     list-style: none;
@@ -14,6 +15,17 @@
     @include mq(desktop) {
         .new-header--open & {
             z-index: $zindex-main-menu + 1;
+        }
+    }
+
+    .new-header--slim & {
+        width: auto;
+        order: -1;
+        padding-left: $gs-gutter / 2;
+        padding-right: $gs-gutter / 2;
+
+        @include mq($until: tablet) {
+            display: none;
         }
     }
 }
@@ -51,5 +63,11 @@
 
     &:last-child > *:after {
         display: none;
+    }
+
+    .new-header--slim.new-header--open & {
+        @include mq(tablet) {
+            padding-left: $gs-gutter / 2;
+        }
     }
 }

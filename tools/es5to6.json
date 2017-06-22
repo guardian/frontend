@@ -4,12 +4,11 @@
   "Regis Kuckaertz": [],
   "Richard Nguyen": [],
   "Kate Whalen": [
-    "projects/commercial/modules/messenger/dfp-origin.js",
-    "projects/commercial/modules/messenger/get-stylesheet.js",
-    "projects/commercial/modules/messenger/resize.js",
-    "projects/commercial/modules/messenger/scroll.js"
+    "projects/commercial/modules/messenger/get-stylesheet.js"
   ],
-  "Lydia Shepherd": [],
+  "Lydia Shepherd": [
+    "projects/commercial/modules/messenger/viewport.js"
+  ],
   "sndrs": [
     "lib/detect.js",
     "bootstraps/enhanced/accessibility.js",
@@ -51,7 +50,14 @@
     "projects/common/modules/crosswords/anagram-helper/clue-input.js"
   ],
   "GHaberis": [
-    "projects/common/modules/crosswords/anagram-helper/clue-preview.js"
+    "projects/common/modules/media/videojs-plugins/fullscreener.js",
+    "projects/common/modules/media/videojs-plugins/skip-ad.js",
+    "projects/common/modules/onward/breaking-news.js",
+    "projects/common/modules/onward/geo-most-popular.js",
+    "projects/common/modules/onward/history.js",
+    "projects/common/modules/discussion/activity-stream.js",
+    "projects/common/modules/discussion/api.js",
+    "projects/common/modules/discussion/comment-box.js"
   ],
   "Gustav Pursche": [
     "projects/common/modules/ui/tabs.js",
@@ -62,8 +68,7 @@
     "projects/common/modules/sport/football/match-list-live.js",
     "projects/common/modules/sport/football/tag-page-stats.js",
     "projects/common/modules/sport/score-board.js",
-    "projects/common/modules/ui/autoupdate.js",
-    "projects/commercial/modules/messenger/type.js"
+    "projects/common/modules/ui/autoupdate.js"
   ],
   "NataliaLKB": [
     "lib/client-rects.js",
@@ -75,8 +80,7 @@
     "projects/common/modules/asyncCallMerger.js",
     "projects/common/modules/atoms/quiz.js",
     "projects/common/modules/atoms/story-questions.js",
-    "projects/common/modules/atoms/youtube-tracking.js",
-    "projects/commercial/modules/messenger/viewport.js"
+    "projects/common/modules/atoms/youtube-tracking.js"
   ],
   "Gideon Goldberg": [],
   "Matthew Walls": [
@@ -99,9 +103,6 @@
     "projects/common/modules/crosswords/main.js",
     "projects/common/modules/crosswords/persistence.js",
     "projects/common/modules/crosswords/series.js",
-    "projects/common/modules/discussion/activity-stream.js",
-    "projects/common/modules/discussion/api.js",
-    "projects/common/modules/discussion/comment-box.js",
     "projects/common/modules/discussion/comment-count.js",
     "projects/common/modules/discussion/comments.js",
     "projects/common/modules/discussion/discussion-frontend.js",
@@ -157,8 +158,6 @@
     "projects/common/modules/identity/public-profile.js",
     "projects/common/modules/identity/validation-email.js",
     "projects/common/modules/lazyload.js",
-    "projects/common/modules/media/videojs-plugins/fullscreener.js",
-    "projects/common/modules/media/videojs-plugins/skip-ad.js",
     "projects/common/modules/navigation/membership.js",
     "projects/common/modules/navigation/navigation.js",
     "projects/common/modules/navigation/profile.js",
@@ -166,9 +165,6 @@
   ],
   "jfsoul": [
     "projects/common/modules/navigation/search.js",
-    "projects/common/modules/onward/breaking-news.js",
-    "projects/common/modules/onward/geo-most-popular.js",
-    "projects/common/modules/onward/history.js",
     "projects/common/modules/onward/onward-content.js",
     "projects/common/modules/onward/popular.js",
     "projects/common/modules/onward/related.js",

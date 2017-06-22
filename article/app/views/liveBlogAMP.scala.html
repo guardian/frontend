@@ -1,7 +1,19 @@
 @import model.LiveBlogPage
+@import model.structuredData.{Organisation, LiveBlogPosting}
+@import model.LiveBlogHelpers
 
 @(model: LiveBlogPage)(implicit request: RequestHeader, context: _root_.model.ApplicationContext)
 
 @mainAMP(model, model.related, model.article.content){
+    <script type="application/ld+json">
+        @Html(Organisation().toString())
+    </script>
+    <script type="application/ld+json">
+        @Html(LiveBlogPosting(
+            model.article,
+            LiveBlogHelpers.blocksForLiveBlogRequest(model.article, request.getQueryString("page"))
+        ).toString())
+    </script>
+}{
     @views.html.liveblog.liveBlogBody(model, amp = true)
 }
