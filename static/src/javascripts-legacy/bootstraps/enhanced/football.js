@@ -147,7 +147,7 @@ define([
                 renderNav(match);
             } else {
                 var $h = $('.js-score'),
-                    scoreBoard = new ScoreBoard({
+                    scoreBoard = new ScoreBoard.ScoreBoard({
                         pageType: match.pageType,
                         parent: $h,
                         responseDataKey: 'matchSummary',
