@@ -1,5 +1,6 @@
 @(model: ArticlePage, amp: Boolean = false)(implicit request: RequestHeader, context: _root_.model.ApplicationContext)
 
+@import views.html.fragments.langAttributes
 @import common.LinkTo
 @import views.BodyCleaner
 @import views.support.Commercial.{isPaidContent, articleAsideOptionalSizes, shouldShowAds}
@@ -44,16 +45,11 @@
             } else {
                 <div class="hide-on-mobile">
                     @fragments.headTonal(article, model, isPaidContent, amp = amp)
+                </div>
 
-                    @if(article.tags.isFeature && article.elements.hasShowcaseMainElement) {
-                        @fragments.mainMedia(article, amp)
-                    }
-                </div>
-                <div class="mobile-only">
-                    @if(article.tags.isFeature && article.elements.hasShowcaseMainElement) {
-                        @fragments.mainMedia(article, amp)
-                    }
-                </div>
+                @if(article.tags.isFeature && article.elements.hasShowcaseMainElement) {
+                    @fragments.mainMedia(article, amp)
+                }
             }
 
             <div class="content__main tonal__main tonal__main--@toneClass(article)">
@@ -81,7 +77,7 @@
                         }
 
                         <div class="content__article-body from-content-api js-article__body" itemprop="@bodyType(model)"
-                            data-test-id="article-review-body">
+                            data-test-id="article-review-body" @langAttributes(article.content)>
                             @BodyCleaner(article, article.fields.body, amp = amp)
 
                             @* A value for the image field is required for AMP article

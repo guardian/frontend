@@ -7,7 +7,7 @@ define([
     'lib/mediator',
     'lib/detect',
     'lib/scroller',
-    './anagram-helper/main',
+    'common/modules/crosswords/anagram-helper/main',
     './clues',
     './controls',
     './hidden-input',

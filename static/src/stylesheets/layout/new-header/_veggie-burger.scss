@@ -11,6 +11,7 @@
     border-radius: 50%;
     outline: none;
     right: $gutter-small;
+    z-index: 1;
 
     @include mq(mobileMedium) {
         height: $veggie-burger-medium;
@@ -55,6 +56,15 @@
     // Don't show menu on opera mini: https://wp-mix.com/css-target-opera/
     x:-o-prefocus & {
         display: none;
+    }
+
+    .new-header--slim & {
+        right: 0;
+        position: relative;
+        top: -$gs-baseline / 2;
+        margin-bottom: -$gs-baseline;
+        height: $veggie-burger-medium;
+        width: $veggie-burger-medium;
     }
 }
 

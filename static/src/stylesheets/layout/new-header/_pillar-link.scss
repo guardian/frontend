@@ -24,20 +24,18 @@
 
     @include mq(desktop) {
         font-size: 29px;
-
-        .new-header--open .pillars__item:not(:first-child) > & {
-            padding-left: $gs-gutter / 2;
-        }
-
-        .new-header--open & {
-            width: gs-span(2) + $gs-gutter;
-        }
     }
 
     &:focus,
     &:hover {
         color: #ffffff;
         text-decoration: none;
+    }
+
+    .new-header--slim & {
+        @include mq($from: tablet, $until: desktop) {
+            font-size: 24px;
+        }
     }
 }
 

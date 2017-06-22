@@ -1,5 +1,6 @@
 .menu-search {
     box-sizing: border-box;
+    display: block;
     margin-left: 13px;
     position: relative;
 
@@ -15,6 +16,7 @@
     @include mq(desktop) {
         margin-bottom: $gs-baseline;
         margin-left: 0;
+        margin-top: $gs-row-height / 2;
         padding-right: $gs-gutter;
         width: 100%;
     }
@@ -37,13 +39,14 @@
     }
 
     @include mq(desktop) {
-        height: 42px;
+        height: $search-and-edition-height-desktop;
         max-width: none;
         padding-left: 48px;
+        font-size: 18px;
     }
 
     &::placeholder {
-        color: $news-support-1;
+        color: #ffffff;
     }
 
     &:focus {
