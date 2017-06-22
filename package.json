@@ -43,7 +43,7 @@
     "babel-plugin-transform-flow-strip-types": "^6.22.0",
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-polyfill": "^6.23.0",
-    "babel-preset-env": "^1.5.1",
+    "babel-preset-env": "^1.5.2",
     "browser-sync": "^2.18.12",
     "bs-fullscreen-message": "^1.1.0",
     "btoa": "1.1.2",
