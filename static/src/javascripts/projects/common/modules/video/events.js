@@ -8,7 +8,10 @@ import detect from 'lib/detect';
 import history from 'common/modules/onward/history';
 import throttle from 'lodash/functions/throttle';
 import forOwn from 'lodash/objects/forOwn';
-import gaHelper from 'common/modules/video/ga-helper';
+import {
+    buildGoogleAnalyticsEvent,
+    getGoogleAnalyticsEventAction,
+} from 'common/modules/video/ga-helper';
 import ophan from 'ophan/ng';
 
 /* global require */
@@ -130,12 +133,12 @@ const bindGoogleAnalyticsEvents = (player: Object, canonicalUrl: string) => {
                 window.ga(
                     `${gaTracker}.send`,
                     'event',
-                    gaHelper.buildGoogleAnalyticsEvent(
+                    buildGoogleAnalyticsEvent(
                         mediaEvent,
                         events,
                         canonicalUrl,
                         'guardian-videojs',
-                        gaHelper.getGoogleAnalyticsEventAction,
+                        getGoogleAnalyticsEventAction,
                         mediaEvent.mediaId
                     )
                 );
