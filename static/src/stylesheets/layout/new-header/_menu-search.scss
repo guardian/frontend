@@ -5,8 +5,8 @@
     position: relative;
 
     @include mq($until: desktop) {
-        padding-bottom: $gs-baseline * 2;
-        padding-right: $veggie-burger-medium / 2 + $gs-gutter / 2;
+        margin-bottom: $gs-baseline * 2;
+        margin-right: $veggie-burger-medium / 2 + $gs-gutter / 2;
     }
 
     @include mq(tablet) {
@@ -14,10 +14,10 @@
     }
 
     @include mq(desktop) {
-        margin-bottom: $gs-baseline;
+        margin-bottom: $gs-baseline * 2;
         margin-left: 0;
-        margin-top: $gs-row-height / 2;
-        padding-right: $gs-gutter;
+        margin-top: $gs-baseline * 2;
+        padding-right: 0;
         width: 100%;
     }
 }
@@ -35,14 +35,14 @@
     width: 100%;
 
     @include mq(tablet) {
-        padding-left: 40px;
+        padding-left: $gs-gutter * 2;
     }
 
     @include mq(desktop) {
         height: $search-and-edition-height-desktop;
         max-width: none;
         padding-left: 48px;
-        font-size: 18px;
+        font-size: 24px;
 
         &:hover {
             background: lighten($guardian-brand, 4%);
@@ -57,6 +57,8 @@
         background-color: #ffffff;
         color: $neutral-1;
         outline: none;
+        padding-right: 38px;
+        transition: background-color 500ms;
 
         &::placeholder {
             color: $neutral-3;
@@ -64,21 +66,93 @@
     }
 }
 
-.menu-search__submit {
-    left: 10px;
+.menu-search__glass {
     position: absolute;
-    top: 10px;
+    left: 10px;
+    top: 7px;
 
     @include mq(desktop) {
         left: 12px;
+        top: 10px;
     }
 
     .inline-search-36__svg {
         fill: $news-support-2;
+        height: 22px;
+        width: 22px;
+
+        .menu-search__search-box:focus ~ & {
+            fill: $neutral-2;
+        }
+    }
+}
+
+.menu-search__submit {
+    background: transparent;
+    border: none;
+    bottom: 0;
+    cursor: pointer;
+    display: block;
+    opacity: 0;
+    pointer-events: none;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: $gs-gutter * 2.5;
+
+    &:before,
+    &:after {
+        border: 2px solid $guardian-brand;
+        border-left: none;
+        border-top: none;
+        content: '';
+        display: block;
+        position: absolute;
+        right: 14px;
 
         @include mq(desktop) {
-            height: 22px;
-            width: 22px;
+            right: 16px;
         }
+    }
+
+    &:before {
+        height: $gs-baseline;
+        top: $gs-baseline - 1;
+        transform: rotate(-45deg);
+        width: $gs-baseline;
+
+        @include mq(desktop) {
+            top: $gs-baseline + 2;
+        }
+    }
+
+    &:after {
+        border-right: none;
+        top: 17px;
+        width: 20px;
+
+        @include mq(desktop) {
+            top: 20px;
+        }
+    }
+
+    &:hover,
+    &:active {
+        border-color: $guardian-brand;
+    }
+
+    &:focus {
+        &:before,
+        &:after {
+            border-color: #ffffff;
+        }
+    }
+
+    // Reveals search button & retains visibility of search button when form loses focus
+    .menu-search__search-box:focus ~ &,
+    &:focus {
+        opacity: 1;
+        outline: none;
+        pointer-events: all;
     }
 }
