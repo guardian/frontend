@@ -344,7 +344,7 @@ define([
                 ['c-media-listeners', mediaListener],
                 ['c-accessibility-prefs', accessibilityPrefs.initAccessibilityPreferences],
                 ['c-pinterest', modules.initPinterest],
-                ['c-hidden-share-toggle', hiddenShareToggle],
+                ['c-hidden-share-toggle', hiddenShareToggle.hiddenShareToggle],
                 ['c-show-membership-engagement-banner', modules.membershipEngagementBanner],
                 ['c-email', modules.initEmail],
                 ['c-user-features', userFeatures.refresh.bind(userFeatures)],
