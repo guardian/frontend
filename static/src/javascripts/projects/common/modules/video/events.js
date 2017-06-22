@@ -34,12 +34,18 @@ const EVENTS = [
 ];
 const gaTracker = config.googleAnalytics.trackers.editorial;
 
+export type MediaEventT = {
+    mediaId: string,
+    mediaType: string,
+    eventType: string,
+    isPreroll: boolean,
+};
 const MediaEvent = (
     mediaId: string,
     mediaType: string,
     eventType: string,
     isPreroll: boolean
-): Object => ({
+): MediaEventT => ({
     mediaId,
     mediaType,
     eventType,
