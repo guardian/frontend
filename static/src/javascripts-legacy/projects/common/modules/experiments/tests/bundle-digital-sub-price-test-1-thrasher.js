@@ -21,8 +21,8 @@ define([
 
         this.description = 'Test digital subs price points via thrasher';
         this.showForSensitive = true;
-        this.audience = 0.1;
-        this.audienceOffset = 0.1;
+        this.audience = 0.25;   // 25% of UK front audience (non-paying only)
+        this.audienceOffset = 0.1;  // offset by 10% for our Epic version
         this.successMeasure = '';
         this.audienceCriteria = 'Non-paying UK network front users - mobile resolution and above';
         this.dataLinkNames = '';
