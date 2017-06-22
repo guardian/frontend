@@ -1,11 +1,6 @@
-$mobile-medium: 375px; // Breakpoint for our most common device sizes
-$gutter-small: 29px;
-$gutter-medium: 37px;
-$gutter-large: 55px;
-$veggie-burger-small: 42px;
-$veggie-burger-medium: 54px;
+@import '../layout/new-header/_variables';
 
-@import '../layout/new-header/_header-cta-item';
+@import 'header/_header-cta-item';
 
 .header {
     background-color: $guardian-brand;
@@ -333,13 +328,4 @@ $navigation-horizontal-padding: $gs-gutter * 2 + $gs-gutter / 2;
 .secondary-navigation {
     font-size: .9em;
     margin: 0;
-}
-
-.header__cta {
-    left: ($gs-gutter / 4) - 1px;
-    position: absolute;
-
-    @include mq(mobileLandscape) {
-        left: $gs-gutter / 2;
-    }
 }
