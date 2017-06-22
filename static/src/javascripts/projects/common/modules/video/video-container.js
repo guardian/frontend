@@ -3,7 +3,7 @@ import bean from 'bean';
 import fastdom from 'lib/fastdom-promise';
 import $ from 'lib/$';
 import ElementInview from 'lib/element-inview';
-import videojs from 'bootstraps/enhanced/media/video-player';
+import { videojs } from 'bootstraps/enhanced/media/video-player';
 import { onVideoContainerNavigation } from 'common/modules/atoms/youtube';
 import detect from 'lib/detect';
 

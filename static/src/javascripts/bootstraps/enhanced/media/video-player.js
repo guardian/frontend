@@ -7,4 +7,4 @@ import 'videojs-persistvolume';
 import 'videojs-playlist';
 import 'videojs-contrib-ads';
 
-export default video;
+export { video as videojs };

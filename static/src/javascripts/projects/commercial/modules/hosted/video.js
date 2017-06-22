@@ -186,6 +186,7 @@ export const initHostedVideo = (
                         require => {
                             resolve(
                                 require('bootstraps/enhanced/media/video-player')
+                                    .videojs
                             );
                         },
                         'video-player'
