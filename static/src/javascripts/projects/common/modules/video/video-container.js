@@ -266,14 +266,12 @@ const createStore = (
     };
 };
 
-export default {
-    init: (container: Element) => {
-        const initialState = getInitialState(container);
-        const store = createStore(reducer, initialState);
+export const videoContainerInit = (container: Element) => {
+    const initialState = getInitialState(container);
+    const store = createStore(reducer, initialState);
 
-        setupDispatches(store.dispatch, container);
-        store.subscribe(() => {
-            update(store.getState(), container);
-        });
-    },
+    setupDispatches(store.dispatch, container);
+    store.subscribe(() => {
+        update(store.getState(), container);
+    });
 };
