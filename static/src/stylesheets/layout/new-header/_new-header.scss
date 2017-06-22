@@ -28,25 +28,65 @@ from scrolling */
 }
 
 .new-header__inner {
-    align-items: flex-start;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+    @include clearfix();
+
+    @supports(display: flex) {
+        align-items: flex-start;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        padding-bottom: 0;
+    }
+
+    .new-header--slim & {
+        @include content-gutter;
+
+        @include mq($until: desktop) {
+            max-width: 100%;
+        }
+    }
 }
 
 .new-header__cta-container {
     left: $gs-gutter / 4;
+    overflow: hidden;
     position: absolute;
     top: 0;
 
     @include mq(mobileLandscape) {
         left: $gs-gutter / 2;
     }
+
+    .new-header--slim & {
+        position: relative;
+        overflow: visible;
+        left: -$gs-gutter / 4;
+        order: -1;
+        z-index: 1;
+    }
+
+    .new-header--slim.new-header--open & {
+        @include mq(tablet) {
+            display: none;
+        }
+    }
 }
 
 .new-header__logo {
-    display: flex;
-    margin-left: auto;
+    display: block;
+    float: right;
+
+    @supports(display: flex) {
+        display: flex;
+        float: none;
+        margin-left: auto;
+    }
+
+    .new-header--slim.new-header--open & {
+        @include mq($from: desktop, $until: leftCol) {
+            display: none;
+        }
+    }
 }
 
 .new-header__logo__svg {
@@ -75,6 +115,17 @@ from scrolling */
 
     @include mq(desktop) {
         margin-bottom: $gs-baseline / 4;
+    }
+
+    .new-header--slim & {
+        height: calc(3 / 16 * 155px);
+        width: 155px;
+
+        @include mq(tablet) {
+            height: calc(3 / 16 * 170px);
+            width: 170px;
+            margin-right: $gs-gutter / 2;
+        }
     }
 }
 

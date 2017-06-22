@@ -5,7 +5,8 @@
 @import views.support.RenderClasses
 
 <header class="@RenderClasses(Map(
-            "new-header--mvt-desktop" -> mvt.ABNewDesktopHeader.isParticipating
+            "new-header--mvt-desktop" -> mvt.ABNewDesktopHeader.isParticipating,
+            "new-header--slim" -> page.metadata.hasSlimHeader
         ), "new-header")"
         role="banner">
     @defining(NewNavigation.SubSectionLinks.getSectionOrTagId(page)) { id =>
@@ -37,24 +38,26 @@
                             </span>
                         </a>
 
-                        <a class="header-cta-item hide-until-tablet header-cta-item--secondary"
-                            data-link-name="nav2 : subscribe-cta"
-                            data-edition="@{editionId}"
-                            href="@{Configuration.id.digitalPackUrl}/@{editionId}?INTCMP=NGW_NEWHEADER_@{editionId}_GU_SUBSCRIBE">
-                            <span class="header-cta-item__label">
-                                subscribe
-                            </span>
-                        </a>
+                        @if(!page.metadata.hasSlimHeader) {
 
-                        <a class="header-cta-item hide-until-tablet header-cta-item--secondary"
-                            data-link-name="nav2 : job-cta"
-                            data-edition="@{editionId}"
-                            href="@{Configuration.commercial.jobsUrl}?INTCMP=jobs_@{editionId}_web_newheader">
-                            <span class="header-cta-item__label">
-                                <span class="hide-until-tablet">find a job</span>
-                                <span class="hide-from-tablet">jobs</span>
-                            </span>
-                        </a>
+                            <a class="header-cta-item hide-until-tablet header-cta-item--secondary"
+                                data-link-name="nav2 : subscribe-cta"
+                                data-edition="@{editionId}"
+                                href="@{Configuration.id.digitalPackUrl}/@{editionId}?INTCMP=NGW_NEWHEADER_@{editionId}_GU_SUBSCRIBE">
+                                <span class="header-cta-item__label">
+                                    subscribe
+                                </span>
+                            </a>
+
+                            <a class="header-cta-item hide-until-tablet header-cta-item--secondary"
+                                data-link-name="nav2 : job-cta"
+                                data-edition="@{editionId}" href="@{Configuration.commercial.jobsUrl}?INTCMP=jobs_@{editionId}_web_newheader">
+                                <span class="header-cta-item__label">
+                                    <span class="hide-until-tablet">find a job</span>
+                                    <span class="hide-from-tablet">jobs</span>
+                                </span>
+                            </a>
+                        }
                     }
                 </div>
 
@@ -82,7 +85,9 @@
                        tabindex="0"
                        data-link-name="nav2 : veggie-burger : show">
                     <span class="veggie-burger__icon"></span>
-                    <span class="veggie-burger__label">Menu</span>
+                    <span class="@RenderClasses(Map(
+                            "u-h" -> page.metadata.hasSlimHeader
+                        ), "veggie-burger__label")">Menu</span>
                 </label>
 
                 @fragments.nav.newHeaderMenu()
