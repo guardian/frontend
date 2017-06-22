@@ -6,7 +6,9 @@
   "Kate Whalen": [
     "projects/commercial/modules/messenger/get-stylesheet.js"
   ],
-  "Lydia Shepherd": [],
+  "Lydia Shepherd": [
+    "projects/commercial/modules/messenger/viewport.js"
+  ],
   "sndrs": [
     "lib/detect.js",
     "bootstraps/enhanced/accessibility.js",
