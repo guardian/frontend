@@ -35,7 +35,7 @@ define([
                 !userFeatures.isPayingMember() &&
                 config.page.isFront &&
                 config.page.pageId.toLowerCase() === "uk" &&
-                config.page.edition.toUpperCase() === 'UK';
+                config.page.edition.toUpperCase() === "UK";
         };
 
         this.thrasherContainer = function() {
