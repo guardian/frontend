@@ -1,52 +1,10 @@
 @import '../layout/new-header/_variables';
 
+@import 'header/_header';
 @import 'header/_header-cta-item';
-
-.header {
-    background-color: $guardian-brand;
-    max-width: 600px;
-    margin: 0 auto;
-}
-
-.header__inner {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    align-items: flex-start;
-    z-index: 1;
-    max-width: 600px;
-}
-
-.header__logo-wrapper {
-    padding-top: $gs-baseline / 2;
-    padding-bottom: $gs-baseline / 2;
-    margin-left: auto;
-}
-
-.header__logo__svg {
-    // Removes extra spacing
-    display: block;
-    height: auto;
-
-    // Aspect ratio: 16:3
-    @include mq($until: mobileMedium) {
-        width: 170px;
-        // height: auto doesn't work in Safari
-        height: calc(3 / 16 * 170px);
-    }
-
-    @include mq($from: mobileMedium, $until: mobileLandscape) {
-        width: 225px;
-        height: calc(3 / 16 * 225px);
-    }
-
-    @include mq(mobileLandscape) {
-        width: 260px;
-        // height: auto doesn't work in Safari
-        height: calc(3 / 16 * 260px);
-        padding-top: $gs-baseline / 2;
-    }
-}
+@import 'header/_pillars';
+@import 'header/_pillar-link';
+@import 'header/_veggie-burger';
 
 .header__nav {
     width: 100%;
@@ -60,116 +18,6 @@
 
     @include mq(mobileLandscape) {
         margin-left: 0;
-    }
-}
-
-.header__nav__menu-button {
-    // Override button from user agent stylesheet
-    position: absolute;
-    // Unset button from user agent stylesheet
-    border: 0;
-    outline: none;
-    // Override button from user agent stylesheet
-    border-radius: 100%;
-    z-index: 1049;
-    background-color: $news-main-2;
-    cursor: pointer;
-    bottom: -$gs-baseline / 2;
-
-    @include mq($until: mobileMedium) {
-        //Smaller menu button
-        height: $veggie-burger-small;
-        min-width: $veggie-burger-small;
-        //Align with the 'i' in 'theguardian'
-        right: $gutter-small;
-    }
-
-    @include mq(mobileMedium) {
-        height: $veggie-burger-medium;
-        width: $veggie-burger-medium;
-        //Align with the 'i' in 'theguardian'
-        right: $gutter-medium;
-    }
-
-    @include mq(mobileLandscape) {
-        //Align with the 'i' in 'theguardian'
-        right: $gutter-large;
-    }
-}
-
-.header__veggie-burger-icon {
-    top: 50%;
-    display: block;
-    margin-top: -($gs-baseline / 6) / 2;
-    margin-left: auto;
-    margin-right: auto;
-
-    &,
-    &:before,
-    &:after {
-        content: '';
-        position: absolute;
-        width: $gs-gutter;
-        height: $gs-baseline / 6;
-        background-color: #ffffff;
-        left: 0;
-        right: 0;
-    }
-
-    &:before {
-        top: -$gs-gutter / 4;
-    }
-
-    &:after {
-        bottom: -$gs-gutter / 4;
-    }
-}
-
-.header__nav-primary-links {
-    font-size: 0;
-    margin: 0;
-}
-
-.header__nav-link-item {
-    @include trailing-slash-item;
-}
-
-.header__nav-link {
-    @include trailing-slash-link;
-    font-size: 16px;
-    line-height: $gs-baseline * 2.5;
-    color: #ffffff;
-    cursor: pointer;
-
-    @include mq($from: mobile, $until: mobileLandscape) {
-        font-size: 5.1vw;
-    }
-
-    @include mq($from: mobileMedium, $until: mobileLandscape) {
-        line-height: $gs-baseline * 3;
-    }
-
-    @include mq(mobileLandscape) {
-        font-size: 24px;
-        line-height: $gs-baseline * 3.5;
-    }
-
-    &:focus,
-    &:hover {
-        text-decoration: none;
-    }
-
-    &:after {
-        @include trailing-slash;
-        color: $news-main-2;
-    }
-
-    .header__nav-link-item:first-child & {
-        padding-left: 0;
-    }
-
-    .header__nav-link-item:last-of-type &:after {
-        content: none;
     }
 }
 
