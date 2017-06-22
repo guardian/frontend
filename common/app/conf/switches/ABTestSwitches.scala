@@ -151,6 +151,16 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-bundle-digital-sub-price-test-1-m-t",
+    "Test pricing options for digital subs from thrasher",
+    owners = Seq(Owner.withGithub("justinpinner")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 7, 6),  // Thursday 6th July
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
     "ab-acquisitions-epic-always-ask-if-tagged",
     "This guarantees that any on any article that is tagged with a tag that is on the allowed list of tags as set by the tagging tool, the epic will be displayed",
     owners = Seq(Owner.withGithub("jranks123")),
