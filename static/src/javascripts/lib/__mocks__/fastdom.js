@@ -1,5 +1,5 @@
 // @flow
-/* eslint-disable */
+/* eslint-disable no-unused-vars */
 export default {
     read: (fn: Function, ctx: ?Object): number => fn(),
     write: (fn: Function, ctx: ?Object): number => fn(),
