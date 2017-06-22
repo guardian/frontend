@@ -216,12 +216,12 @@ define([
             iframeId: test.campaignId + '_' + 'iframe',
         };
 
-        this.impression = options.impression || (function(callback) {
-            return mediator.once(test.insertEvent, callback)
+        this.impression = options.impression || (function(submitImpression) {
+            return mediator.once(test.insertEvent, submitImpression)
         });
 
-        this.success = options.success || (function(callback) {
-            return mediator.once(test.viewEvent, callback)
+        this.success = options.success || (function(submitSuccess) {
+            return mediator.once(test.viewEvent, submitSuccess)
         });
 
         this.test = function () {
