@@ -224,7 +224,7 @@ define([
         });
 
         page.isLiveClockwatch(function () {
-            var ml = new MatchListLive('match-day', page.isCompetition() || 'premierleague', config.dateFromSlug()),
+            var ml = new MatchListLive.MatchListLive('match-day', page.isCompetition() || 'premierleague', config.dateFromSlug()),
                 $img = $('.media-primary'),
                 $matchListContainer = $.create('<div class="football-matches__container" data-link-name="football-matches-clockwatch"></div>')
                                           .css({ minHeight: $img[0] ? $img[0].offsetHeight : 0 });
