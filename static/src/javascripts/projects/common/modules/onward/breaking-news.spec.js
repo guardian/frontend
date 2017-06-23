@@ -25,7 +25,7 @@ jest.mock('common/modules/ui/relativedates', () => ({
     },
 }));
 
-const fakeFetchJson = require('lib/fetch-json');
+const fakeFetchJson: any = require('lib/fetch-json');
 
 describe('Breaking news', () => {
     const knownAlertIDsStorageKey = 'gu.breaking-news.hidden';

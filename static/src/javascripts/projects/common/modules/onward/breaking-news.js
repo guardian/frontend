@@ -33,33 +33,33 @@ const DEFAULT_DELAY = 3000;
 const knownAlertIDsStorageKey = 'gu.breaking-news.hidden';
 let knownAlertIDs;
 
-const storeKnownAlertIDs = () => {
+const storeKnownAlertIDs = (): void => {
     local.set(knownAlertIDsStorageKey, knownAlertIDs);
 };
 
-const updateKnownAlertID = (id, state) => {
+const updateKnownAlertID = (id, state): void => {
     knownAlertIDs[id] = state;
     storeKnownAlertIDs();
 };
 
-const markAlertAsSeen = id => {
+const markAlertAsSeen = (id): void => {
     updateKnownAlertID(id, false);
 };
 
-const markAlertAsDismissed = id => {
+const markAlertAsDismissed = (id): void => {
     updateKnownAlertID(id, true);
 };
 
 // if we can't record a dismissal, we won't show an alert
-const userCanDismissAlerts = () => local.isAvailable();
+const userCanDismissAlerts = (): ?boolean => local.isAvailable();
 
-const fetchBreakingNews = () =>
+const fetchBreakingNews = (): Promise<any> =>
     fetchJson(breakingNewsURL, {
         mode: 'cors',
     });
 
 // handle the breaking news JSON
-const parseResponse = response =>
+const parseResponse = (response): Array<Object> =>
     (response.collections || [])
         .filter(
             collection =>
@@ -73,7 +73,7 @@ const parseResponse = response =>
 
 // pull out the alerts from the edition/section buckets that apply to us
 // global > current edition > current section
-const getRelevantAlerts = alerts => {
+const getRelevantAlerts = (alerts): Array<Object> => {
     const edition = (page.edition || '').toLowerCase();
     const section = supportedSections[page.section];
 
@@ -91,7 +91,7 @@ const getRelevantAlerts = alerts => {
 };
 
 // keep the local alert history in sync with live alerts
-const pruneKnownAlertIDs = alerts => {
+const pruneKnownAlertIDs = (alerts): Array<Object> => {
     // 'dismiss' this page ID, since if there's an alert for it,
     // we don't want to show it ever
     knownAlertIDs[page.pageId] = true;
@@ -107,11 +107,11 @@ const pruneKnownAlertIDs = alerts => {
 };
 
 // don't show alerts if we've already dismissed them
-const filterAlertsByDismissed = alerts =>
+const filterAlertsByDismissed = (alerts): Array<Object> =>
     alerts.filter(alert => knownAlertIDs[alert.id] !== true);
 
 // don't show alerts if they're over a certain age
-const filterAlertsByAge = alerts =>
+const filterAlertsByAge = (alerts): Array<Object> =>
     alerts.filter(alert => {
         const alertTime = alert.frontPublicationDate;
         return (
@@ -121,10 +121,10 @@ const filterAlertsByAge = alerts =>
     });
 
 // we only show one alert at a time, pick the youngest available
-const pickNewest = alerts =>
+const pickNewest = (alerts): Object =>
     alerts.sort((a, b) => b.frontPublicationDate - a.frontPublicationDate)[0];
 
-const renderAlert = alert => {
+const renderAlert = (alert): bonzo => {
     alert.marque36icon = inlineSvg('marque36icon');
     alert.closeIcon = inlineSvg('closeCentralIcon');
 
@@ -143,13 +143,13 @@ const renderAlert = alert => {
     return $alert;
 };
 
-const renderSpectre = $breakingNews =>
+const renderSpectre = ($breakingNews): bonzo =>
     bonzo(bonzo.create($breakingNews[0]))
         .addClass('breaking-news--spectre')
         .removeClass('breaking-news--fade-in breaking-news--hidden');
 
 // show an alert
-const showAlert = alert => {
+const showAlert = (alert: Object): Object => {
     if (alert) {
         const $body = bonzo(document.body);
         const $breakingNews = bonzo(qwery('.js-breaking-news-placeholder'));
@@ -185,7 +185,7 @@ const showAlert = alert => {
     return alert;
 };
 
-const breakingNewsInit = () => {
+const breakingNewsInit = (): Promise<any> => {
     if (userCanDismissAlerts()) {
         knownAlertIDs = local.get(knownAlertIDsStorageKey) || {};
 
