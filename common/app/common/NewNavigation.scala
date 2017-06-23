@@ -66,7 +66,7 @@ object NewNavigation {
 
     val uk = NavLinkLists(List(headlines, ukNews, environment, world, tech, business, football))
     val au = NavLinkLists(List(headlines, australiaNews, world, auPolitics, environment, economy, football))
-    val us = NavLinkLists(List(headlines, usNews, world, usPolitics, business, science, soccer))
+    val us = NavLinkLists(List(headlines, usNews, world, usPolitics, business, environment, soccer))
     val int = NavLinkLists(List(headlines, world, ukNews, business, science, globalDevelopment, football))
   }
 
@@ -82,8 +82,8 @@ object NewNavigation {
       List(indigenousAustralia, tech, environment, media, obituaries)
     )
     val us = NavLinkLists(
-      List(headlines, usNews, world, science, usPolitics, business),
-      List(environment, money, tech, obituaries)
+      List(headlines, usNews, world, environment, usPolitics, business),
+      List(science, money, tech, obituaries)
     )
     val int = NavLinkLists(
       List(headlines, world, ukNews, science, cities, globalDevelopment),
@@ -135,16 +135,16 @@ object NewNavigation {
         opinion,
         theGuardianView,
         columnists,
-        cartoons,
-        inMyOpinion
+        letters,
+        editorials
       ),
       List(
-        letters,
-        editorials,
         NavLink("Jill Abramson", "/profile/jill-abramson"),
         NavLink("Jessica Valenti", "/commentisfree/series/jessica-valenti-column"),
-        NavLink( "Steven W Thrasher", "/profile/steven-w-thrasher"),
-        NavLink("Trevor Timm", "/profile/trevor-timm")
+        NavLink("Steven W Thrasher", "/profile/steven-w-thrasher"),
+        NavLink("Richard Wolffe", "/profile/richard-wolffe"),
+        inMyOpinion,
+        cartoons
       )
     )
 
@@ -214,11 +214,11 @@ object NewNavigation {
     )
     val au = NavLinkLists(
       List(lifestyle, travel, foodAu, relationshipsAu, fashionAu, healthAu),
-      List(loveAndSex, family, women, home, money)
+      List(loveAndSex, family, home, money)
     )
     val us = NavLinkLists(
       List(lifestyle, fashion, food, recipes, loveAndSex, home),
-      List(health, women, family, travel, money)
+      List(health, family, travel, money)
     )
     val int = NavLinkLists(
       List(lifestyle, fashion, food, recipes, loveAndSex, health),
@@ -244,7 +244,7 @@ object NewNavigation {
 
     val us = NavLinkLists(List(
       jobs.copy(url = jobs.url + "?INTCMP=jobs_us_web_newheader"),
-      holidays
+      holidays.copy(title = "vacations")
     ))
 
     val int = NavLinkLists(List(
