@@ -161,7 +161,7 @@ const getCampaignCode = (
     return `${campaignCodePrefix}_${campaignID}_${id}${suffix}`;
 };
 
-const addTrackingCodesToUrl = (base, campaignCode) => {
+const addTrackingCodesToUrl = (base: string, campaignCode: string) => {
     const params = {
         REFPVID: (config.ophan && config.ophan.pageViewId) || 'not_found',
         INTCMP: campaignCode,
