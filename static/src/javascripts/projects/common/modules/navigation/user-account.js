@@ -41,7 +41,7 @@ const enhanceAvatar = (): Promise<void> => {
                 }
 
                 if (avatarEl) {
-                    avatarEl.setAttribute('href', res.data.avatarUrl);
+                    avatarEl.setAttribute('src', res.data.avatarUrl);
                     avatarEl.classList.remove('u-h');
                 }
             });
