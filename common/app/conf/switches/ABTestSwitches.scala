@@ -61,11 +61,11 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-acquisitions-election-interactive-end",
-    "This places the epic underneath UK election-related interactives",
+    "ab-acquisitions-interactive-end",
+    "This places the epic underneath certain interactives",
     owners = Seq(Owner.withGithub("desbo")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 7, 3),
+    sellByDate = new LocalDate(2018, 7, 3),
     exposeClientSide = true
   )
 
