@@ -5,18 +5,6 @@
     margin: 0 auto;
 }
 
-.header__inner {
-    @include clearfix();
-
-    @supports(display: flex) {
-        align-items: flex-start;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        padding-bottom: 0;
-    }
-}
-
 .header__cta-container {
     left: $gs-gutter / 4;
     position: absolute;
@@ -28,31 +16,21 @@
 }
 
 .header__logo {
-    display: block;
-    float: right;
-
-    @supports(display: flex) {
-        display: flex;
-        float: none;
-        margin-left: auto;
-    }
+    display: flex;
+    float: none;
+    margin-left: auto;
 }
 
 .header__logo__svg {
     display: block;
     height: calc(3 / 16 * 170px);
+    width: 170px;
     margin-bottom: $gs-baseline / 2;
     margin-right: $gs-gutter / 2;
     margin-top: $gs-baseline / 2;
-    width: 170px;
 
     @include mq(mobileMedium) {
         height: calc(3 / 16 * 225px);
         width: 225px;
     }
-}
-
-// Don't show trapezoid on opera mini: https://wp-mix.com/css-target-opera/
-x:-o-prefocus, .new-header__cta-container  {
-    display: none;
 }

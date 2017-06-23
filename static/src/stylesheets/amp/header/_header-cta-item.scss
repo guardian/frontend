@@ -1,7 +1,4 @@
 .header-cta-item {
-    float: left;
-    position: relative;
-    transition: color 250ms;
     color: $guardian-brand-dark;
 
     &:before {
@@ -25,7 +22,6 @@
 .header-cta-item__label {
     display: inline-block;
     font-size: 13px;
-    font-weight: 700;
     line-height: 1;
     padding: $gs-baseline $gs-gutter / 2;
     position: relative;
@@ -42,5 +38,5 @@
 }
 
 .header-cta-item__new-line {
-        display: block;
+    display: block;
 }

@@ -3,7 +3,7 @@
 @import conf.Configuration
 @import play.api.Mode.Dev
 
-<amp-sidebar class="main-navigation-container" layout="nodisplay" id="sidebar1">
+<amp-sidebar class="menu" layout="nodisplay" id="sidebar1">
 
     <amp-list layout="fill"
         src="@Configuration.amp.baseUrl/editionalised-nav.json"
@@ -11,22 +11,23 @@
 
         <template type="amp-mustache">
 
-                <ul class="main-navigation">
+                <ul class="menu-group menu-group--primary">
                     {{ #topLevelSections }}
-                        <li class="main-navigation__item">
+                        <li class="menu-item">
                             <amp-accordion>
                                 <section>
-                                    <h2 class="main-navigation__item__button navigation-border"
+                                    <h2 class="menu-item__title menu-item__title--primary"
                                         data-link-name="amp : nav : secondary : {{ title }}">
-                                        <i class="main-menu__icon main-menu__icon--chevron"></i>
+                                        <i class="menu-item__toggle"></i>
                                         {{ title }}
                                     </h2>
 
-                                    <ul class="main-navigation__secondary navigation-group">
+                                    <ul class="menu-group menu-group--secondary">
                                         {{ #subSections }}
-                                            <li class="navigation-group__item">
-                                                <a href="{{ url }}"
-                                                data-link-name="amp : nav : secondary : {{ title }}">
+                                            <li class="menu-item">
+                                                <a class="menu-item__title"
+                                                    href="{{ url }}"
+                                                    data-link-name="amp : nav : secondary : {{ title }}">
                                                     {{ title }}
                                                 </a>
                                             </li>
@@ -38,12 +39,13 @@
                     {{ /topLevelSections }}
                 </ul>
 
-                <ul class="navigation-group secondary-navigation navigation-border">
+                <ul class="menu-group">
 
                     {{ #secondarySections }}
-                        <li class="navigation-group__item">
-                            <a href="{{ url }}"
-                            data-link-name="amp : nav : {{ title }}">
+                        <li class="menu-item">
+                            <a class="menu-item__title"
+                                href="{{ url }}"
+                                data-link-name="amp : nav : {{ title }}">
                                 {{ title }}
                             </a>
                         </li>

@@ -11,7 +11,6 @@
     border-radius: 50%;
     outline: none;
     right: $gutter-small;
-    z-index: 1;
 
     @include mq(mobileMedium) {
         height: $veggie-burger-medium;
@@ -19,32 +18,10 @@
         //Align with the 'i' in 'theguardian'
         right: $gutter-medium;
     }
-
-    // Don't show menu on opera mini: https://wp-mix.com/css-target-opera/
-    x:-o-prefocus & {
-        display: none;
-    }
-}
-
-.veggie-burger__label {
-    bottom: -24px;
-    color: $neutral-3;
-    font-size: 16px;
-    left: 50%;
-    position: absolute;
-    text-transform: lowercase;
-    transform: translateX(-50%);
-
-    @include mq($until: 'desktop') {
-        @include u-h();
-    }
 }
 
 .veggie-burger__icon {
-    top: 50%;
-    display: block;
     margin-top: -($gs-baseline / 6) / 2;
-    left: 0;
     right: 0;
     margin-left: auto;
     margin-right: auto;

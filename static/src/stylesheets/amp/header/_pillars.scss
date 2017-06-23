@@ -1,8 +1,6 @@
 .pillars {
-    clear: right;
     color: $news-support-1;
     font-size: 0;
-    list-style: none;
     margin: 0;
     padding: 0 $gs-gutter / 2;
     width: 100%;
@@ -14,14 +12,11 @@
 }
 
 .pillars__item {
-    box-sizing: border-box;
     display: inline-block;
 
     > *:after {
         content: '/';
         color: $news-main-2;
-        display: inline-block;
-        line-height: 1;
         margin-left: -1px;
         margin-right: 2px;
         opacity: .6;

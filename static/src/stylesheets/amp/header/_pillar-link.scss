@@ -1,13 +1,9 @@
 .pillar-link {
     font-size: 16px;
-    font-size: 5.1vw;
-    line-height: 22px;
-    box-sizing: border-box;
+    font-size: 5.1vw; // scss-lint:disable-line no-duplicate-properties
+    line-height: $gs-baseline * 2.5;
     color: currentColor;
     cursor: pointer;
-    display: block;
-    line-height: $gs-baseline * 2.5;
-    position: relative;
 
     @include mq(mobileMedium) {
         line-height: $gs-baseline * 3;
@@ -20,21 +16,5 @@
 
     .guardian-text-sans-loaded & {
         font-family: 'Guardian Text Sans Web', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
-    }
-}
-
-.pillar-link--current-section {
-    color: #ffffff;
-
-    // triangle
-    &:before {
-        content: '';
-        position: absolute;
-        left: 50%;
-        bottom: 0;
-        transform: translateX(-100%);
-        border-bottom: $gs-baseline / 2 solid $subnav-grey;
-        border-left: $gs-baseline / 2 solid transparent;
-        border-right: $gs-baseline / 2 solid transparent;
     }
 }
