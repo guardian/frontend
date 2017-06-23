@@ -133,6 +133,12 @@ describe('Breaking news', () => {
 
             callBreakingNewsWith(collections)
                 .then(alert => {
+                    if (!alert) {
+                        return done.fail(
+                            'Exception reported in breaking news initialisation'
+                        );
+                    }
+
                     expect(alert.headline).toEqual('2min uk unknown headline');
                     expect(
                         $('.breaking-news--hidden.breaking-news--fade-in')
@@ -164,6 +170,12 @@ describe('Breaking news', () => {
             const collections = [alertThatIs('known')];
             callBreakingNewsWith(collections)
                 .then(alert => {
+                    if (!alert) {
+                        return done.fail(
+                            'Exception reported in breaking news initialisation'
+                        );
+                    }
+
                     expect(alert.headline).toEqual('uk known headline');
                     expect(
                         $('.breaking-news--hidden.breaking-news--fade-in')
@@ -216,6 +228,12 @@ describe('Breaking news', () => {
             ];
             callBreakingNewsWith(collections)
                 .then(alert => {
+                    if (!alert) {
+                        return done.fail(
+                            'Exception reported in breaking news initialisation'
+                        );
+                    }
+
                     expect(alert.headline).toEqual('global unknown headline');
                 })
                 .then(done)
@@ -229,6 +247,10 @@ describe('Breaking news', () => {
             ];
             callBreakingNewsWith(collections)
                 .then(alert => {
+                    if (!alert) {
+                        return done.fail();
+                    }
+
                     expect(alert.headline).toEqual('uk unknown headline');
                 })
                 .then(done)
@@ -262,6 +284,12 @@ describe('Breaking news', () => {
             ];
             callBreakingNewsWith(collections)
                 .then(alert => {
+                    if (!alert) {
+                        return done.fail(
+                            'Exception reported in breaking news initialisation'
+                        );
+                    }
+
                     expect(alert.headline).toEqual('2min uk unknown headline');
                 })
                 .then(done)
