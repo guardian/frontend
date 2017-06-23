@@ -140,18 +140,23 @@ describe('Breaking news', () => {
                     ).toBe(1);
                     expect($('.breaking-news--spectre').length).toBe(0);
 
-                    setTimeout(() => {
-                        expect($('.breaking-news--spectre').length).toBe(1);
-                        expect($('.breaking-news--hidden').length).toBe(0);
-                        expect(localStorageStub.set.lastCall.args[0]).toEqual(
-                            knownAlertIDsStorageKey
-                        );
-                        expect(localStorageStub.set.lastCall.args[1]).toEqual({
-                            uk_unknown: false,
-                        });
-                        done();
-                    }, BREAKING_NEWS_DELAY);
+                    return new Promise(resolve => {
+                        setTimeout(resolve, BREAKING_NEWS_DELAY);
+                    });
                 })
+                .then(() => {
+                    const callLength = localStorageStub.set.mock.calls.length;
+                    const lastCallArgs =
+                        localStorageStub.set.mock.calls[callLength - 1];
+
+                    expect($('.breaking-news--spectre').length).toBe(1);
+                    expect($('.breaking-news--hidden').length).toBe(0);
+                    expect(lastCallArgs[0]).toEqual(knownAlertIDsStorageKey);
+                    expect(lastCallArgs[1]).toEqual({
+                        uk_unknown: false,
+                    });
+                })
+                .then(done)
                 .catch(done.fail);
         });
 
