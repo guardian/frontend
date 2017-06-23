@@ -161,7 +161,7 @@ const getCampaignCode = (
     return `${campaignCodePrefix}_${campaignID}_${id}${suffix}`;
 };
 
-const getURL = (base, campaignCode) => {
+const addTrackingCodesToUrl = (base, campaignCode) => {
     const params = {
         REFPVID: (config.ophan && config.ophan.pageViewId) || 'not_found',
         INTCMP: campaignCode,
@@ -219,10 +219,10 @@ const makeABTestVariant = (
             campaignCodes: [campaignCode],
             contributeURL:
                 options.contributeURL ||
-                    getURL(contributionsBaseURL, campaignCode),
+                    addTrackingCodesToUrl(contributionsBaseURL, campaignCode),
             membershipURL:
                 options.membershipURL ||
-                    getURL(membershipBaseURL, campaignCode),
+                    addTrackingCodesToUrl(membershipBaseURL, campaignCode),
             componentName: `mem_acquisition_${trackingCampaignId}_${options.id}`,
             template: options.template || controlTemplate,
             testimonialBlock:
@@ -326,14 +326,14 @@ const makeABTestVariant = (
                 (submitSuccess => mediator.once(test.viewEvent, submitSuccess)),
 
         contributionsURLBuilder(codeModifier) {
-            return this.constructor.getURL(
+            return addTrackingCodesToUrl(
                 contributionsBaseURL,
                 codeModifier(this.options.campaignCode)
             );
         },
 
         membershipURLBuilder(codeModifier) {
-            return this.constructor.getURL(
+            return addTrackingCodesToUrl(
                 membershipBaseURL,
                 codeModifier(this.options.campaignCode)
             );
@@ -430,7 +430,12 @@ const makeABTest = (options: Object): ContributionsABTest => {
     return test;
 };
 
-export { defaultCanEpicBeDisplayed, getTestimonialBlock, makeABTest };
+export {
+    defaultCanEpicBeDisplayed,
+    getTestimonialBlock,
+    addTrackingCodesToUrl,
+    makeABTest,
+};
 
 export const daysSinceLastContribution = daysSince(lastContributionDate);
 
