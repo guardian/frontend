@@ -40,9 +40,9 @@ class FootballPage(
    *
    * Has to be 'def' to pick up current switch state.
    */
-  private def brandings: Seq[EditionBranding] =
+  private def brandings: Set[EditionBranding] =
     if (sponsoredFootballFeedPages.isSwitchedOn) {
-      for (edition <- Edition.all)
+      for (edition <- Edition.all.toSet[Edition])
         yield
           EditionBranding(
             edition = edition,
@@ -62,7 +62,7 @@ class FootballPage(
                 hostedCampaignColour = None
               ))
           )
-    } else Nil
+    } else Set.empty
 
   // Has to be 'def' to pick up current switch state
   override def metadata = MetaData

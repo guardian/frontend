@@ -1,5 +1,6 @@
 package views.support
 
+import com.gu.commercial.display.AdTargetParam.toMap
 import common.Edition
 import common.Maps.RichMap
 import common.commercial.EditionAdTargeting._
@@ -41,7 +42,7 @@ object JavaScriptPage {
         case _: CommercialExpiryPage => true
         case _ => false
       }),
-      "sharedAdTargeting" -> Json.toJson(metaData.commercial.map(_.adTargeting(edition)).getOrElse(Map.empty))
+      "sharedAdTargeting" -> Json.toJson(toMap(metaData.commercial.map(_.adTargeting(edition)) getOrElse Set.empty))
     ) ++ sponsorshipType
 
     val javascriptConfig = page match {
