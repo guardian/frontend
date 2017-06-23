@@ -5,8 +5,7 @@ import { logError } from 'lib/robust';
 import { isPayingMember, isAdFreeUser } from 'commercial/modules/user-features';
 import identityApi from 'common/modules/identity/api';
 import userPrefs from 'common/modules/user-prefs';
-import { daysSince } from 'lib/time-utils';
-import { getCookie } from 'lib/cookies';
+import { daysSinceLastContribution } from 'common/modules/commercial/contributions-utilities';
 
 // Having a constructor means we can easily re-instantiate the object in a test
 class CommercialFeatures {
@@ -21,7 +20,7 @@ class CommercialFeatures {
     commentAdverts: any;
     liveblogAdverts: any;
     paidforBand: any;
-    canReasonablyAskForMoney: any;
+    canReasonablyAskForMoney: boolean;
     asynchronous: any;
     adFeedback: any;
     adFree: any;
@@ -49,10 +48,6 @@ class CommercialFeatures {
             document.documentElement.classList.contains('has-sticky');
         const newRecipeDesign =
             config.page.showNewRecipeDesign && config.tests.abNewRecipeDesign;
-        const lastContributionDate = getCookie(
-            'gu.contributions.contrib-timestamp'
-        );
-        const daysSinceLastContribution = daysSince(lastContributionDate);
 
         // Feature switches
         this.adFree =
@@ -152,6 +147,7 @@ try {
     config.commercial.featuresDebug = new CommercialFeatures();
     commercialFeaturesExport = config.commercial.featuresDebug;
 } catch (error) {
+    // TODO: see if this catch is really necessary!
     commercialFeaturesExport = {};
     logError('cm-commercialFeatures', error);
 }

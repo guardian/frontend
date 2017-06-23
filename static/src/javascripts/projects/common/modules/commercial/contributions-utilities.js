@@ -5,6 +5,7 @@ import {
     regulars as acquisitionsCopyRegulars,
     control as acquisitionsCopyControl,
 } from 'common/modules/commercial/acquisitions-copy';
+import type { AcquisitionsEpicTemplateCopy } from 'common/modules/commercial/acquisitions-copy';
 import { control as acquisitionsTestimonialParametersControl } from 'common/modules/commercial/acquisitions-epic-testimonial-parameters';
 import type { AcquisitionsEpicTestimonialTemplateParameters } from 'common/modules/commercial/acquisitions-epic-testimonial-parameters';
 import { logView } from 'common/modules/commercial/acquisitions-view-log';
@@ -23,6 +24,24 @@ import template from 'lodash/utilities/template';
 import toArray from 'lodash/collections/toArray';
 import acquisitionsEpicControlTemplate from 'raw-loader!common/views/acquisitions-epic-control.html';
 import acquisitionsTestimonialBlockTemplate from 'raw-loader!common/views/acquisitions-epic-testimonial-block.html';
+
+type ContributionsABTest = ABTest & {
+    epic: boolean,
+    campaignId: string,
+    campaignPrefix: string,
+    campaignSuffix: string,
+    useLocalViewLog: boolean,
+    overrideCanRun: boolean,
+    showToContributorsAndSupporters: boolean,
+    pageCheck: (page: Object) => boolean,
+    locations: Array<string>,
+    locationCheck: (location: string) => boolean,
+    useTargetingTool: boolean,
+    insertEvent: string,
+    viewEvent: string,
+};
+
+type EpicTemplate = (Variant, AcquisitionsEpicTemplateCopy) => string;
 
 const membershipBaseURL = 'https://membership.theguardian.com/supporter';
 const contributionsBaseURL = 'https://contribute.theguardian.com';
@@ -69,7 +88,7 @@ const getTargets = (insertAtSelector, isMultiple) => {
 
 const getTestimonialBlock = (
     testimonialParameters: AcquisitionsEpicTestimonialTemplateParameters,
-    citeImage: String
+    citeImage: ?String
 ) =>
     template(acquisitionsTestimonialBlockTemplate, {
         quoteSvg: testimonialParameters.quoteSvg,
@@ -85,15 +104,23 @@ const defaultCanEpicBeDisplayed = (
     campaignId: string,
     showToContributorsAndSupporters: boolean,
     useTargetingTool: boolean,
-    // it would be nice to have a type for page, as well as config.
+    // TODO: it would be nice to have a type for page, as well as config.
     // set this default here as well as test factory so that this function is more usable externally
     pageCheck: (page: Object) => boolean = defaultPageCheck,
     locations: Array<string> = [],
     locationCheck: (location: string) => boolean = () => true
 ): boolean => {
-    const canReasonablyAskForMoney =
+    let canReasonablyAskForMoney = false;
+
+    // This is really stupid but because commercialFeatures could be an empty object
+    // if an error is thrown when initialising, flow doesn't like if I read from
+    // commercialFeatures.canReasonablyAskForMoney outside of an if clause
+    if (
         showToContributorsAndSupporters ||
-        commercialFeatures.commercialFeatures.canReasonablyAskForMoney;
+        commercialFeatures.canReasonablyAskForMoney
+    ) {
+        canReasonablyAskForMoney = true;
+    }
 
     const worksWellWithPageTemplate = pageCheck(config.page);
 
@@ -113,7 +140,7 @@ const defaultCanEpicBeDisplayed = (
     );
 };
 
-const getCopy = useTailor => {
+const getCopy = (useTailor: boolean): Promise<AcquisitionsEpicTemplateCopy> => {
     if (useTailor) {
         return isRegular().then(
             regular =>
@@ -134,32 +161,69 @@ const getCampaignCode = (
     return `${campaignCodePrefix}_${campaignID}_${id}${suffix}`;
 };
 
-class ContributionsABTestVariant {
-    constructor(options, test) {
-        const trackingCampaignId = test.epic
-            ? `epic_${test.campaignId}`
-            : test.campaignId;
-        const campaignCode = getCampaignCode(
-            test.campaignPrefix,
-            test.campaignId,
-            options.id,
-            test.campaignSuffix
-        );
+const getURL = (base, campaignCode) => {
+    const params = {
+        REFPVID: (config.ophan && config.ophan.pageViewId) || 'not_found',
+        INTCMP: campaignCode,
+    };
 
-        this.id = options.id;
+    return `${base}?${constructURLQuery(params)}`;
+};
 
-        this.options = {
+const makeEvent = (id: string, event: string): string => `${id}:${event}`;
+
+const registerIframeListener = (iframeId: string) => {
+    window.addEventListener('message', message => {
+        const iframe = document.getElementById(iframeId);
+
+        if (iframe) {
+            try {
+                const data = JSON.parse(message.data);
+
+                if (data.type === 'set-height' && data.value) {
+                    iframe.style.height = `${data.value}px`;
+                }
+            } catch (e) {
+                // Apparently I need a comment here to satisfy the linter
+                // TODO: change linter rule??
+            }
+        }
+    });
+};
+
+const makeABTestVariant = (
+    options: Object,
+    test: ContributionsABTest
+): Variant => {
+    const trackingCampaignId = test.epic
+        ? `epic_${test.campaignId}`
+        : test.campaignId;
+    const campaignCode = getCampaignCode(
+        test.campaignPrefix,
+        test.campaignId,
+        options.id,
+        test.campaignSuffix
+    );
+
+    if (options.usesIframe) {
+        registerIframeListener(options.iframeId);
+    }
+
+    return {
+        id: options.id,
+
+        options: {
             maxViews: options.maxViews || maxViews,
             isUnlimited: options.isUnlimited || false,
             campaignCode,
             campaignCodes: [campaignCode],
             contributeURL:
                 options.contributeURL ||
-                    this.getURL(contributionsBaseURL, campaignCode),
+                    getURL(contributionsBaseURL, campaignCode),
             membershipURL:
                 options.membershipURL ||
-                    this.getURL(membershipBaseURL, campaignCode),
-            componentName: `mem_acquisition_${trackingCampaignId}_${this.id}`,
+                    getURL(membershipBaseURL, campaignCode),
+            componentName: `mem_acquisition_${trackingCampaignId}_${options.id}`,
             template: options.template || controlTemplate,
             testimonialBlock:
                 options.testimonialBlock ||
@@ -171,9 +235,9 @@ class ContributionsABTestVariant {
             isOutbrainCompliant: options.isOutbrainCompliant || false,
             usesIframe: options.usesIframe || false,
             iframeId: `${test.campaignId}_iframe`,
-        };
+        },
 
-        this.test = function testFn() {
+        test() {
             const displayEpic = typeof options.canEpicBeDisplayed === 'function'
                 ? options.canEpicBeDisplayed(test)
                 : true;
@@ -185,11 +249,12 @@ class ContributionsABTestVariant {
             const onInsert = options.onInsert || noop;
             const onView = options.onView || noop;
 
-            const render = templateFn =>
+            const render = (templateFn: ?EpicTemplate) =>
                 getCopy(options.useTailoredCopyForRegulars)
-                    .then(copy => {
-                        const renderTemplate =
-                            templateFn || this.options.template;
+                    .then((copy: AcquisitionsEpicTemplateCopy) => {
+                        const renderTemplate: EpicTemplate =
+                            templateFn ||
+                            (this.options && this.options.template);
                         return renderTemplate(this, copy);
                     })
                     .then(renderedTemplate => {
@@ -229,111 +294,50 @@ class ContributionsABTestVariant {
                                         }
                                     );
 
-                                    elementInView.on(
-                                        'firstview',
-                                        function logElementInView() {
-                                            logView(test.id);
-                                            mediator.emit(test.viewEvent);
-                                            mediator.emit(
-                                                'register:end',
-                                                trackingCampaignId
-                                            );
-                                            onView(this);
-                                        }
-                                    );
+                                    elementInView.on('firstview', () => {
+                                        logView(test.id);
+                                        mediator.emit(test.viewEvent);
+                                        mediator.emit(
+                                            'register:end',
+                                            trackingCampaignId
+                                        );
+                                        onView(this);
+                                    });
                                 });
                             }
                         });
                     });
 
-            return typeof options.test === 'function'
-                ? options.test(render.bind(this), this, test)
-                : render.apply(this);
-        };
-
-        this.registerIframeListener();
-        this.registerListener(
-            'impression',
-            'impressionOnInsert',
-            test.insertEvent,
-            options
-        );
-        this.registerListener(
-            'success',
-            'successOnView',
-            test.viewEvent,
-            options
-        );
-    }
-
-    static getURL(base, campaignCode) {
-        const params = {
-            REFPVID: (config.ophan && config.ophan.pageViewId) || 'not_found',
-            INTCMP: campaignCode,
-        };
-
-        return `${base}?${constructURLQuery(params)}`;
-    }
-
-    contributionsURLBuilder(codeModifier) {
-        return this.constructor.getURL(
-            contributionsBaseURL,
-            codeModifier(this.options.campaignCode)
-        );
-    }
-
-    membershipURLBuilder(codeModifier) {
-        return this.constructor.getURL(
-            membershipBaseURL,
-            codeModifier(this.options.campaignCode)
-        );
-    }
-
-    registerListener(type, defaultFlag, event, options) {
-        if (options[type]) this[type] = options[type];
-        else if (options[defaultFlag]) {
-            this[type] = track => mediator.on(event, track);
-        }
-    }
-
-    registerIframeListener() {
-        if (!this.options.usesIframe) return;
-
-        window.addEventListener('message', message => {
-            const iframe = document.getElementById(this.options.iframeId);
-
-            if (iframe) {
-                try {
-                    const data = JSON.parse(message.data);
-
-                    if (data.type === 'set-height' && data.value) {
-                        iframe.style.height = `${data.value}px`;
-                    }
-                } catch (e) {
-                    // Apparently I need a comment here to satisfy the linter
-                }
+            if (typeof options.test === 'function') {
+                options.test(render.bind(this), this, test);
+            } else {
+                render.apply(this);
             }
-        });
-    }
-}
+        },
 
-type ContributionsABTest = ABTest & {
-    epic: boolean,
-    campaignId: string,
-    campaignPrefix: string,
-    campaignSuffix: string,
-    useLocalViewLog: boolean,
-    overrideCanRun: boolean,
-    showToContributorsAndSupporters: boolean,
-    pageCheck: (page: Object) => boolean,
-    locations: Array<string>,
-    locationCheck: (location: string) => boolean,
-    useTargetingTool: boolean,
-    insertEvent: string,
-    viewEvent: string,
+        impression:
+            options.impression ||
+                (submitImpression =>
+                    mediator.once(test.insertEvent, submitImpression)),
+        success:
+            options.success ||
+                (submitSuccess => mediator.once(test.viewEvent, submitSuccess)),
+
+        contributionsURLBuilder(codeModifier) {
+            return this.constructor.getURL(
+                contributionsBaseURL,
+                codeModifier(this.options.campaignCode)
+            );
+        },
+
+        membershipURLBuilder(codeModifier) {
+            return this.constructor.getURL(
+                membershipBaseURL,
+                codeModifier(this.options.campaignCode)
+            );
+        },
+    };
 };
-
-const makeEvent = (id: string, event: string): string => `${id}:${event}`;
 
 const makeABTest = (options: Object): ContributionsABTest => {
     const {
@@ -366,7 +370,7 @@ const makeABTest = (options: Object): ContributionsABTest => {
         variants,
     } = options;
 
-    return {
+    const test = {
         id,
         start,
         expiry,
@@ -379,9 +383,7 @@ const makeABTest = (options: Object): ContributionsABTest => {
         showForSensitive,
         idealOutcome,
         dataLinkNames,
-        variants: variants.map(
-            variant => new ContributionsABTestVariant(variant, this)
-        ),
+        variants: variants.map(variant => makeABTestVariant(variant, test)),
         canRun: () => {
             if (overrideCanRun) {
                 return (
@@ -418,18 +420,9 @@ const makeABTest = (options: Object): ContributionsABTest => {
         insertEvent: makeEvent(id, 'insert'),
         viewEvent: makeEvent(id, 'view'),
     };
-};
 
-// Utility function to build variants with common properties.
-export const variantBuilderFactory = commonVariantProps => (id, variantProps) =>
-    Object.assign(
-        {},
-        commonVariantProps,
-        {
-            id,
-        },
-        variantProps
-    );
+    return test;
+};
 
 export { defaultCanEpicBeDisplayed, getTestimonialBlock, makeABTest };
 
