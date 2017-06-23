@@ -91,8 +91,8 @@ const onPlayerReady = (
 
     // unglitching the volume on first load
     if (vol) {
-        player.setVolume(0);
-        player.setVolume(vol);
+        player.volume(0);
+        player.volume(vol);
     }
 
     player.fullscreener();
