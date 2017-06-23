@@ -288,7 +288,7 @@ define([
             window.location = this.value;
         });
 
-        tagPageStats();
+        tagPageStats.tagPageStats();
     }
 
     return {
