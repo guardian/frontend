@@ -172,14 +172,16 @@ const sanitizeBlocks = (blocks: Array<Block>): Array<Block> =>
 const showUpdatesFromLiveBlog = (): Promise<void> =>
     fastdomPromise
         .read(() => {
-            const elementsById = {};
+            const elementsById: Map<string, Array<Element>> = new Map();
 
             $(selector).each(element => {
                 const articleId = element.getAttribute(articleIdAttribute);
 
                 if (articleId) {
-                    elementsById[articleId] = elementsById[articleId] || [];
-                    elementsById[articleId].push(element);
+                    const elementsForArticle =
+                        elementsById.get(articleId) || [];
+                    elementsForArticle.push(element);
+                    elementsById.set(articleId, elementsForArticle);
                 }
             });
             return elementsById;
