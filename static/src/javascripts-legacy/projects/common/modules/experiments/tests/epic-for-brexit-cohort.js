@@ -45,6 +45,7 @@ define([
         audienceCriteria: 'Readers who began supporting the Guardian in the Brexit cohort',
         audience: 1,
         audienceOffset: 0,
+        showToContributorsAndSupporters: true,
 
         canRun: function() {
             return userFeatures.isInBrexitCohort() && hasBrexitTag();
