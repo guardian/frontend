@@ -1,3 +1,4 @@
+// @flow
 import bean from 'bean';
 import bonzo from 'bonzo';
 import $ from 'lib/$';
@@ -6,152 +7,153 @@ import qwery from 'qwery';
 import config from 'lib/config';
 import fetchJson from 'lib/fetch-json';
 import reportError from 'lib/report-error';
-import storage from 'lib/storage';
+import { local } from 'lib/storage';
 import template from 'lodash/utilities/template';
 import mediator from 'lib/mediator';
 import relativeDates from 'common/modules/ui/relativedates';
-import svgs from 'common/views/svgs';
+import { inlineSvg } from 'common/views/svgs';
 import alertHtml from 'raw-loader!common/views/breaking-news.html';
-import isArray from 'lodash/objects/isArray';
 import has from 'lodash/objects/has';
 import flatten from 'lodash/arrays/flatten';
 import pick from 'lodash/objects/pick';
-var supportedSections = {
-        'sport': 'sport',
-        'football': 'sport'
-    },
-    breakingNewsURL = '/news-alert/alerts',
-    page = config.page,
 
-    // get the users breaking news alert history
-    // {
-    //     alertID: true, <- dismissed/visited
-    //     alertID: false <- seen, but not dismissed/visited
-    // }
-    knownAlertIDsStorageKey = 'gu.breaking-news.hidden',
-    knownAlertIDs;
+const supportedSections = {
+    sport: 'sport',
+    football: 'sport',
+};
+const breakingNewsURL = '/news-alert/alerts';
+const page = config.page;
+const DEFAULT_DELAY = 3000;
 
-function storeKnownAlertIDs() {
-    storage.local.set(knownAlertIDsStorageKey, knownAlertIDs);
-}
+// get the users breaking news alert history
+// {
+//     alertID: true, <- dismissed/visited
+//     alertID: false <- seen, but not dismissed/visited
+// }
+const knownAlertIDsStorageKey = 'gu.breaking-news.hidden';
+let knownAlertIDs;
 
-function markAlertAsSeen(id) {
-    updateKnownAlertID(id, false);
-}
+const storeKnownAlertIDs = () => {
+    local.set(knownAlertIDsStorageKey, knownAlertIDs);
+};
 
-function markAlertAsDismissed(id) {
-    updateKnownAlertID(id, true);
-}
-
-function updateKnownAlertID(id, state) {
+const updateKnownAlertID = (id, state) => {
     knownAlertIDs[id] = state;
     storeKnownAlertIDs();
-}
+};
+
+const markAlertAsSeen = id => {
+    updateKnownAlertID(id, false);
+};
+
+const markAlertAsDismissed = id => {
+    updateKnownAlertID(id, true);
+};
 
 // if we can't record a dismissal, we won't show an alert
-function userCanDismissAlerts() {
-    return storage.local.isAvailable();
-}
+const userCanDismissAlerts = () => local.isAvailable();
 
-function fetchBreakingNews() {
-    return fetchJson(breakingNewsURL, {
-        mode: 'cors'
+const fetchBreakingNews = () =>
+    fetchJson(breakingNewsURL, {
+        mode: 'cors',
     });
-}
 
 // handle the breaking news JSON
-function parseResponse(response) {
-    return (response.collections || [])
-        .filter(function(collection) {
-            return isArray(collection.content) && collection.content.length;
-        })
-        .map(function(collection) {
+const parseResponse = response =>
+    (response.collections || [])
+        .filter(
+            collection =>
+                Array.isArray(collection.content) && collection.content.length
+        )
+        .map(collection => {
             // collection.href is string or null
             collection.href = (collection.href || '').toLowerCase();
             return collection;
         });
-}
 
 // pull out the alerts from the edition/section buckets that apply to us
 // global > current edition > current section
-function getRelevantAlerts(alerts) {
-    var edition = (page.edition || '').toLowerCase(),
-        section = supportedSections[page.section];
+const getRelevantAlerts = alerts => {
+    const edition = (page.edition || '').toLowerCase();
+    const section = supportedSections[page.section];
 
     return flatten([
         alerts
-        .filter(function(alert) {
-            return alert.href === 'global';
-        })
-        .map(function(alert) {
-            return alert.content;
-        }),
+            .filter(alert => alert.href === 'global')
+            .map(alert => alert.content),
         alerts
-        .filter(function(alert) {
-            return alert.href === edition;
-        })
-        .map(function(alert) {
-            return alert.content;
-        }),
+            .filter(alert => alert.href === edition)
+            .map(alert => alert.content),
         alerts
-        .filter(function(alert) {
-            return section && alert.href === section;
-        })
-        .map(function(alert) {
-            return alert.content;
-        })
+            .filter(alert => section && alert.href === section)
+            .map(alert => alert.content),
     ]);
-}
+};
 
 // keep the local alert history in sync with live alerts
-function pruneKnownAlertIDs(alerts) {
+const pruneKnownAlertIDs = alerts => {
     // 'dismiss' this page ID, since if there's an alert for it,
     // we don't want to show it ever
     knownAlertIDs[page.pageId] = true;
 
     // then remove all known alert ids that are not
     // in the current breaking news alerts
-    knownAlertIDs = pick(knownAlertIDs, function(state, id) {
-        return alerts.some(function(alert) {
-            return alert.id === id;
-        });
-    });
+    knownAlertIDs = pick(knownAlertIDs, (state, id) =>
+        alerts.some(alert => alert.id === id)
+    );
 
     storeKnownAlertIDs();
     return alerts;
-}
+};
 
 // don't show alerts if we've already dismissed them
-function filterAlertsByDismissed(alerts) {
-    return alerts.filter(function(alert) {
-        return knownAlertIDs[alert.id] !== true;
-    });
-}
+const filterAlertsByDismissed = alerts =>
+    alerts.filter(alert => knownAlertIDs[alert.id] !== true);
 
 // don't show alerts if they're over a certain age
-function filterAlertsByAge(alerts) {
-    return alerts.filter(function(alert) {
-        var alertTime = alert.frontPublicationDate;
-        return alertTime && relativeDates.isWithinSeconds(new Date(alertTime), 1200); // 20 mins
+const filterAlertsByAge = alerts =>
+    alerts.filter(alert => {
+        const alertTime = alert.frontPublicationDate;
+        return (
+            alertTime &&
+            relativeDates.isWithinSeconds(new Date(alertTime), 1200)
+        ); // 20 mins
     });
-}
 
 // we only show one alert at a time, pick the youngest available
-function pickNewest(alerts) {
-    return alerts.sort(function(a, b) {
-        return b.frontPublicationDate - a.frontPublicationDate;
-    })[0];
-}
+const pickNewest = alerts =>
+    alerts.sort((a, b) => b.frontPublicationDate - a.frontPublicationDate)[0];
+
+const renderAlert = alert => {
+    alert.marque36icon = inlineSvg('marque36icon');
+    alert.closeIcon = inlineSvg('closeCentralIcon');
+
+    const $alert = bonzo.create(template(alertHtml, alert));
+
+    bean.on($('.js-breaking-news__item__close', $alert)[0], 'click', () => {
+        fastdom.write(() => {
+            $('[data-breaking-article-id]').hide();
+        });
+        markAlertAsDismissed(alert.id);
+    });
+
+    return $alert;
+};
+
+const renderSpectre = $breakingNews =>
+    bonzo(bonzo.create($breakingNews[0]))
+        .addClass('breaking-news--spectre')
+        .removeClass('breaking-news--fade-in breaking-news--hidden');
 
 // show an alert
-function alert(alert) {
+const showAlert = alert => {
     if (alert) {
-        var $body = bonzo(document.body);
-        var $breakingNews = bonzo(qwery('.js-breaking-news-placeholder'));
+        const $body = bonzo(document.body);
+        const $breakingNews = bonzo(qwery('.js-breaking-news-placeholder'));
 
         // if its the first time we've seen this alert, we wait 3 secs to show it
         // otherwise we show it immediately
-        var alertDelay = has(knownAlertIDs, alert.id) ? 0 : init.DEFAULT_DELAY;
+        const alertDelay = has(knownAlertIDs, alert.id) ? 0 : DEFAULT_DELAY;
 
         // $breakingNews is hidden, so this won't trigger layout etc
         $breakingNews.append(renderAlert(alert));
@@ -159,11 +161,11 @@ function alert(alert) {
         // copy of breaking news banner (with blank content) used inline at the
         // bottom of the body, so the bottom of the body can visibly scroll
         // past the pinned alert
-        var $spectre = renderSpectre($breakingNews);
+        const $spectre = renderSpectre($breakingNews);
 
         // inject the alerts into DOM
-        setTimeout(function() {
-            fastdom.write(function() {
+        setTimeout(() => {
+            fastdom.write(() => {
                 if (alertDelay === 0) {
                     $breakingNews.removeClass('breaking-news--fade-in');
                 }
@@ -178,33 +180,11 @@ function alert(alert) {
         mediator.emit('modules:onwards:breaking-news:ready', false);
     }
     return alert;
-}
+};
 
-function renderAlert(alert) {
-    alert.marque36icon = svgs.inlineSvg('marque36icon');
-    alert.closeIcon = svgs.inlineSvg('closeCentralIcon');
-
-    var $alert = bonzo.create(template(alertHtml, alert));
-
-    bean.on($('.js-breaking-news__item__close', $alert)[0], 'click', function() {
-        fastdom.write(function() {
-            $('[data-breaking-article-id]').hide();
-        });
-        markAlertAsDismissed(alert.id);
-    });
-
-    return $alert;
-}
-
-function renderSpectre($breakingNews) {
-    return bonzo(bonzo.create($breakingNews[0]))
-        .addClass('breaking-news--spectre')
-        .removeClass('breaking-news--fade-in breaking-news--hidden');
-}
-
-function init() {
+const init = () => {
     if (userCanDismissAlerts()) {
-        knownAlertIDs = storage.local.get(knownAlertIDsStorageKey) || {};
+        knownAlertIDs = local.get(knownAlertIDsStorageKey) || {};
 
         return fetchBreakingNews()
             .then(parseResponse)
@@ -213,16 +193,16 @@ function init() {
             .then(filterAlertsByDismissed)
             .then(filterAlertsByAge)
             .then(pickNewest)
-            .then(alert)
-            .catch(function(ex) {
+            .then(showAlert)
+            .catch(ex => {
                 reportError(ex, {
-                    feature: 'breaking-news'
+                    feature: 'breaking-news',
                 });
             });
-    } else {
-        return Promise.reject(new Error('cannot dismiss'));
     }
-}
+    return Promise.reject(new Error('cannot dismiss'));
+};
 
-init.DEFAULT_DELAY = 3000;
-export default init;
+const _ = { DEFAULT_DELAY };
+
+export { init, _ };

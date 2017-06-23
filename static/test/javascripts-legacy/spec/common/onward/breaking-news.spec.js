@@ -62,7 +62,7 @@ define([
                 'uk_known': false,
                 'uk_dismissed': true
             });
-            breakingNews.DEFAULT_DELAY = BREAKING_NEWS_DELAY;
+            breakingNews._.DEFAULT_DELAY = BREAKING_NEWS_DELAY;
 
             return breakingNews();
         }
