@@ -214,11 +214,11 @@ object NewNavigation {
     )
     val au = NavLinkLists(
       List(lifestyle, travel, foodAu, relationshipsAu, fashionAu, healthAu),
-      List(loveAndSex, family, women, home, money)
+      List(loveAndSex, family, home, money)
     )
     val us = NavLinkLists(
       List(lifestyle, fashion, food, recipes, loveAndSex, home),
-      List(health, women, family, travel, money)
+      List(health, family, travel, money)
     )
     val int = NavLinkLists(
       List(lifestyle, fashion, food, recipes, loveAndSex, health),
