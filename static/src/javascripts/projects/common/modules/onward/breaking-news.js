@@ -129,13 +129,16 @@ const renderAlert = alert => {
     alert.closeIcon = inlineSvg('closeCentralIcon');
 
     const $alert = bonzo.create(template(alertHtml, alert));
+    const closeButton = $('.js-breaking-news__item__close', $alert)[0];
 
-    bean.on($('.js-breaking-news__item__close', $alert)[0], 'click', () => {
-        fastdom.write(() => {
-            $('[data-breaking-article-id]').hide();
+    if (closeButton) {
+        bean.on(closeButton, 'click', () => {
+            fastdom.write(() => {
+                $('[data-breaking-article-id]').hide();
+            });
+            markAlertAsDismissed(alert.id);
         });
-        markAlertAsDismissed(alert.id);
-    });
+    }
 
     return $alert;
 };
@@ -182,7 +185,7 @@ const showAlert = alert => {
     return alert;
 };
 
-const init = () => {
+const breakingNewsInit = () => {
     if (userCanDismissAlerts()) {
         knownAlertIDs = local.get(knownAlertIDsStorageKey) || {};
 
@@ -205,4 +208,4 @@ const init = () => {
 
 const _ = { DEFAULT_DELAY };
 
-export { init, _ };
+export { breakingNewsInit, _ };
