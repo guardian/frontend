@@ -58,13 +58,13 @@ const maxViews = {
     minDaysBetweenViews: 0,
 };
 
-const controlTemplate = (variant, copy) =>
+const controlTemplate: EpicTemplate = (variant, copy) =>
     template(acquisitionsEpicControlTemplate, {
         copy,
-        membershipUrl: variant.options.membershipURL,
-        contributionUrl: variant.options.contributeURL,
-        componentName: variant.options.componentName,
-        testimonialBlock: variant.options.testimonialBlock,
+        membershipUrl: variant.options && variant.options.membershipURL,
+        contributionUrl: variant.options && variant.options.contributeURL,
+        componentName: variant.options && variant.options.componentName,
+        testimonialBlock: variant.options && variant.options.testimonialBlock,
     });
 
 const doTagsMatch = (campaignId: string, useTargetingTool: boolean) =>
