@@ -11,6 +11,8 @@ import AcquisitionsEpicElectionInteractiveEnd from 'common/modules/experiments/t
 import AcquisitionsEpicElectionInteractiveSlice from 'common/modules/experiments/tests/acquisitions-epic-election-interactive-slice';
 import AcquisitionsThrasherUkElection from 'common/modules/experiments/tests/acquisitions-thrasher-uk-election';
 
+import BundleDigitalSubPriceTest1Thrasher from 'common/modules/experiments/tests/bundle-digital-sub-price-test-1-thrasher';
+
 export const TESTS: Array<ABTest> = [
     new PaidContentVsOutbrain2(),
     getAcquisitionTest(),
@@ -19,6 +21,7 @@ export const TESTS: Array<ABTest> = [
     new AcquisitionsEpicElectionInteractiveEnd(),
     new AcquisitionsEpicElectionInteractiveSlice(),
     new AcquisitionsThrasherUkElection(),
+    new BundleDigitalSubPriceTest1Thrasher(),
 ]
     .concat(MembershipEngagementBannerTests)
     .filter(Boolean);
