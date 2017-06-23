@@ -67,7 +67,7 @@
         }
         @defining(posterImageOverride.filter(_ => !playable || YouTubePosterOverride.isSwitchedOn) orElse media.posterImage) { bestPosterImage =>
             @bestPosterImage.map { image =>
-                <div class="@RenderClasses(Map("youtube-media-atom__overlay" -> true, "vjs-big-play-button" -> !expired))" style="background-image: url(@Video700.bestFor(image))">
+                <div class="@RenderClasses(Map("youtube-media-atom__overlay" -> true, "vjs-big-play-button" -> !expired))" style="background-image: url(@Video700.bestSrcFor(image))">
 
                 @if(!expired) {
                     @if(mediaWrapper.contains(ImmersiveMainMedia)) {
