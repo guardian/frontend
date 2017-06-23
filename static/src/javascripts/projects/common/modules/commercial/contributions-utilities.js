@@ -385,7 +385,7 @@ const makeABTest = (options: Object): ContributionsABTest => {
         showForSensitive,
         idealOutcome,
         dataLinkNames,
-        variants: variants.map(variant => makeABTestVariant(variant, test)),
+        variants,
         canRun: () => {
             if (overrideCanRun) {
                 return (
@@ -422,6 +422,10 @@ const makeABTest = (options: Object): ContributionsABTest => {
         insertEvent: makeEvent(id, 'insert'),
         viewEvent: makeEvent(id, 'view'),
     };
+
+    test.variants = test.variants.map(variant =>
+        makeABTestVariant(variant, test)
+    );
 
     return test;
 };

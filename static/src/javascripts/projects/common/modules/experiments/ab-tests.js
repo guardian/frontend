@@ -20,8 +20,8 @@ export const TESTS: Array<ABTest> = [
     tailorSurvey,
     BookmarksEmailVariants2,
     ExplainerSnippet(),
-    new AcquisitionsEpicElectionInteractiveEnd(),
-    new AcquisitionsEpicElectionInteractiveSlice(),
+    AcquisitionsEpicElectionInteractiveEnd,
+    AcquisitionsEpicElectionInteractiveSlice,
     new AcquisitionsThrasherUkElection(),
 ]
     .concat(MembershipEngagementBannerTests)
