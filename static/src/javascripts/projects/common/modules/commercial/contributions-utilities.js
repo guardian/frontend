@@ -305,6 +305,8 @@ const makeABTestVariant = (
                                     });
                                 });
                             }
+
+                            return component[0];
                         });
                     });
 
