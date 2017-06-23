@@ -4321,16 +4321,16 @@ js-tokens@^3.0.0:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/js-tokens/-/js-tokens-3.0.1.tgz#08e9f132484a2c45a30907e9dc4d5567b7f114d7"
 
-js-yaml@3.x, js-yaml@^3.4.6, js-yaml@^3.5.1, js-yaml@^3.5.4:
-  version "3.6.1"
-  resolved "https://registry.yarnpkg.com/js-yaml/-/js-yaml-3.6.1.tgz#6e5fe67d8b205ce4d22fad05b7781e8dadcc4b30"
+js-yaml@3.x, js-yaml@^3.4.6, js-yaml@^3.7.0, js-yaml@~3.7.0:
+  version "3.7.0"
+  resolved "https://registry.yarnpkg.com/js-yaml/-/js-yaml-3.7.0.tgz#5c967ddd837a9bfdca5f2de84253abe8a1c03b80"
   dependencies:
     argparse "^1.0.7"
     esprima "^2.6.0"
 
-js-yaml@^3.7.0, js-yaml@~3.7.0:
-  version "3.7.0"
-  resolved "https://registry.yarnpkg.com/js-yaml/-/js-yaml-3.7.0.tgz#5c967ddd837a9bfdca5f2de84253abe8a1c03b80"
+js-yaml@^3.5.1, js-yaml@^3.5.4:
+  version "3.6.1"
+  resolved "https://registry.yarnpkg.com/js-yaml/-/js-yaml-3.6.1.tgz#6e5fe67d8b205ce4d22fad05b7781e8dadcc4b30"
   dependencies:
     argparse "^1.0.7"
     esprima "^2.6.0"
@@ -5624,9 +5624,9 @@ p-map@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/p-map/-/p-map-1.1.1.tgz#05f5e4ae97a068371bc2a5cc86bfbdbc19c4ae7a"
 
-pa11y@^4.10.0:
-  version "4.10.0"
-  resolved "https://registry.yarnpkg.com/pa11y/-/pa11y-4.10.0.tgz#1610e813a01fdda5cc854cc81a722996390d2dc9"
+pa11y@^4.11.0:
+  version "4.11.0"
+  resolved "https://registry.yarnpkg.com/pa11y/-/pa11y-4.11.0.tgz#7a2bf459ad9586ebf1547cb0c772daa1de40ca17"
   dependencies:
     async "^2.2.0"
     bfj "^2.1.2"
@@ -5636,7 +5636,7 @@ pa11y@^4.10.0:
     node.extend "^1.1.6"
     once "^1.4.0"
     phantomjs-prebuilt "^2.1.12"
-    truffler "^3.0.1"
+    truffler "^3.1.0"
 
 pako@~0.2.0:
   version "0.2.9"
@@ -7316,9 +7316,9 @@ trim@0.0.1:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/trim/-/trim-0.0.1.tgz#5858547f6b290757ee95cccc666fb50084c460dd"
 
-truffler@^3.0.1:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/truffler/-/truffler-3.0.1.tgz#1f9a0885a0defe44639f8000349c4327e0974cce"
+truffler@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/truffler/-/truffler-3.1.0.tgz#c6e486f802b1e479d59eef95a5a1ed0728264f90"
   dependencies:
     async "~2.1.5"
     freeport "~1.0.5"
