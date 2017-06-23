@@ -7,11 +7,15 @@ const staticUrl = `${config.page.avatarImagesUrl}/user`;
 
 type HttpVerb = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
 
-const request = (method: HttpVerb, path: string, data?: Object): Object => {
+const request = (
+    method: HttpVerb,
+    path: string,
+    data?: string | Object
+): Object => {
     const params = {
         url: apiUrl + path,
         type: 'json',
-        data: data || {},
+        data,
         processData: false,
         method,
         crossOrigin: true,
