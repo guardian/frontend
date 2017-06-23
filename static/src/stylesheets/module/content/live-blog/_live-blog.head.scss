@@ -1,3 +1,8 @@
+$block-padding-left: gs-span(1) + $gs-gutter;
+
+/* Layout
+   ========================================================================== */
+
 .content__main-column--liveblog {
     @include mq(desktop) {
         margin-left: gs-span(4) + $gs-gutter;
@@ -17,9 +22,18 @@
             border-bottom: 0;
         }
     }
+
+    .caption--main {
+        padding-bottom: 0;
+    }
 }
 
+/* Header
+   ========================================================================== */
+
 .content__meta-container--liveblog {
+    border-bottom: 0;
+
     @include mq(desktop) {
         border-top: 0;
         margin-left: 0;
@@ -27,6 +41,40 @@
         padding-top: 0;
         position: static;
         width: 100%;
+
+        .meta__numbers {
+            @include clearfix;
+            border-bottom: 0;
+            border-top: 1px dotted $neutral-5;
+            height: 36px;
+            padding-bottom: $gs-baseline / 4;
+            padding-top: $gs-baseline / 4;
+            position: static;
+        }
+    }
+
+    .byline {
+        padding-right: 0;
+
+        @include mq(desktop) {
+            padding-top: $gs-baseline/6;
+            border-top: 1px dotted $neutral-5;
+        }
+    }
+}
+
+.content__head__comment-count--liveblog {
+    display: block;
+
+    .commentcount {
+        display: block;
+        position: static;
+
+        @include mq(mobileLandscape, desktop) {
+            position: absolute;
+            right: 0;
+            top: $gs-baseline/1.5;
+        }
     }
 }
 
@@ -46,5 +94,794 @@
         z-index: 200;
         left: ($right-column + $gs-gutter) * - 1;
         width: $right-column;
+    }
+}
+
+.content--liveblog .content__main {
+    background-color: $neutral-8;
+}
+
+/* Timestamps
+   ========================================================================== */
+.timestamp,
+.published-time {
+    @include font($f-sans-serif-text, bold, 13, 20);
+    display: block;
+    padding: $gs-baseline/3 0;
+    margin-top: ($gs-baseline/3)*2;
+
+    time {
+        display: inline-block;
+        margin-bottom: $gs-baseline/2;
+    }
+}
+
+.published-time {
+
+    @include mq($from: tablet) {
+        width: gs-span(1);
+    }
+
+}
+
+.block-time {
+    line-height: 15px;
+    padding: $gs-baseline/4 0 $gs-baseline $gs-gutter/2;
+    position: relative;
+
+    &.published-time {
+        @include fs-textSans(2);
+        margin: 0;
+        font-weight: bold;
+    }
+
+    .live-pulse-icon--red {
+        @include circular;
+        $size: 12px;
+        display: inline-block;
+        content: '';
+        background-color: $live-default;
+        width: $size;
+        height: $size;
+        margin-bottom: -1px;
+        margin-right: 3px;
+        animation: live-pulse 2s infinite;
+    }
+
+    .block-time__absolute {
+        @include fs-textSans(1);
+        display: inline-block;
+        margin-left: $gs-gutter/4;
+        color: $neutral-2;
+        font-weight: normal;
+    }
+
+    .timezone {
+        display: none;
+    }
+
+    @include mq(tablet) {
+        position: absolute;
+        .block-time__absolute {
+            display: block;
+            margin-left: 0;
+        }
+    }
+}
+
+.block-time__link {
+    color: $neutral-1;
+}
+
+.updated-time {
+    @include fs-textSans(1);
+    color: $neutral-2;
+    position: absolute;
+    right: $gs-gutter;
+    bottom: $gs-baseline / 3;
+    margin: 0;
+}
+
+/* Blocks
+   ========================================================================== */
+.blocks {
+    margin-top: $gs-baseline;
+}
+
+.block {
+    @include clearfix;
+
+    margin-bottom: $gs-baseline;
+    position: relative;
+}
+
+.block--content {
+    padding-top: $gs-baseline/2;
+    padding-bottom: $gs-baseline;
+    background-color: #ffffff;
+    border-top: 1px solid $neutral-3;
+    border-bottom: 1px solid $neutral-6;
+}
+
+.block.is-key-event,
+.block.is-summary {
+    border-top: 1px solid $live-accent;
+}
+
+.truncated-block {
+    display: none;
+}
+
+
+/* Autoupdate
+   ========================================================================== */
+.autoupdate--hidden,
+.notify--hidden {
+    display: none;
+}
+
+.block--notification {
+    border-top-color: $live-default;
+}
+
+.notify {
+    padding-left: $gs-gutter/2;
+}
+
+.notify__btn {
+    @include fs-textSans(3);
+    text-align: left;
+    font-weight: bold;
+    color: $live-default;
+}
+
+.autoupdate--has-animation {
+    .autoupdate--highlight {
+        animation: new-block-animation 5s ease-out;
+    }
+}
+
+@keyframes new-block-animation {
+    0% { opacity: 0; border-top-color: $live-accent; }
+    100% { opacity: 1; border-top-color: $neutral-3; }
+}
+
+/* Above/Below content
+   ========================================================= */
+.blog {
+    .content__keywords {
+        border-top: 1px dotted $neutral-3;
+        line-height: 20px;
+    }
+}
+
+/* Content styling
+   ========================================================================== */
+.blog .from-content-api {
+
+    .block-title {
+        @include fs-header(2);
+        @include mq(tablet) {
+            @include fs-header(3, true);
+        }
+        margin-top: ($gs-baseline/4)*-1;
+        margin-bottom: $gs-baseline;
+
+        & + .block-elements .element-image:first-child:not(.element--thumbnail),
+        & + .block-elements .element-video:first-child {
+            margin-top: 34px; // Extra margin top to position media below block-time
+        }
+    }
+
+    .block-title,
+    .block-elements > *,
+    .block-elements > .element.element-tweet,
+    .block-elements > .element.element-rich-link,
+    .block-elements > .element.element-witness,
+    .block-elements > .element.element--thumbnail,
+    .liveblog-block-byline {
+        margin-left: $gs-gutter/2;
+        margin-right: $gs-gutter/2;
+        @include mq(tablet) {
+            margin-right: $gs-gutter;
+            margin-left: $block-padding-left;
+        }
+    }
+
+    /* Bylines
+       ========================================================= */
+    .liveblog-block-byline {
+        margin-bottom: $gs-baseline * .5;
+        border-bottom: 1px dotted $neutral-4;
+        padding-bottom: $gs-baseline * .5;
+    }
+
+    .liveblog-block-byline__img {
+        display: inline;
+        border-radius: 50%;
+        max-width: 36px;
+        vertical-align: middle;
+        margin-right: $gs-gutter * .2;
+    }
+
+    .liveblog-block-byline__name {
+        @include fs-bodyCopy(2);
+        display: inline;
+        color: $neutral-1;
+    }
+
+    .block-elements {
+        /* Quotes
+           ========================================================= */
+        > blockquote,
+        > blockquote.quoted {
+            margin: 16px $gs-gutter $gs-baseline * 1.5 $block-padding-left;
+            @include mq($until: mobileLandscape) {
+                margin-left: $gs-gutter / 2;
+                margin-right: $gs-gutter / 2;
+                &:before {
+                    display: none;
+                }
+            }
+            &:first-child {
+                margin-top: 0;
+                @include mq(tablet) {
+                    margin-top: -2px;
+                }
+            }
+        }
+
+        > blockquote {
+            color: $neutral-2;
+        }
+
+        /* Media
+           ========================================================= */
+        > .element {
+            margin-left: 0;
+            margin-right: 0;
+        }
+
+        > .element-table {
+            margin: 0;
+
+            .table {
+                background: none;
+                border: 0;
+            }
+            td {
+                background: none;
+            }
+            tr {
+                border-bottom: 1px solid darken($neutral-8, 4%);
+
+                th:first-child,
+                td:first-child {
+                    padding-left: 0;
+                }
+                th:last-child,
+                td:last-child {
+                    padding-right: 0;
+                }
+            }
+            thead {
+                border-top: 1px solid darken($neutral-8, 4%);
+            }
+        }
+
+        > .element-table .table--football,
+        > .element-comment,
+        > .element-embed,
+        > .element-audio,
+        > .element-interactive {
+            width: auto;
+            margin: $gs-baseline $gs-gutter/2 ($gs-baseline / 3) * 4;
+
+            @include mq(tablet) {
+                margin-left: $block-padding-left;
+                margin-right: $gs-gutter;
+            }
+        }
+
+        > .embed-video-wrapper {
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%; // 16:9 aspect ratio
+
+            iframe {
+                position: absolute;
+                top: 0;
+                width: 100%;
+                height: 100%;
+            }
+        }
+
+        > .element-image,
+        > .element-video {
+            clear: left;
+            border-bottom: 2px solid $neutral-8;
+            margin-bottom: $gs-baseline;
+            padding-bottom: $gs-baseline/2;
+
+            &:last-child {
+                border-bottom: 0;
+            }
+        }
+
+        > .element figcaption {
+            background-color: #ffffff;
+            margin-left: $gs-gutter/2;
+            margin-right: $gs-gutter/2;
+            padding-bottom: $gs-baseline/2;
+
+            @include mq(mobileLandscape) {
+                margin-left: $block-padding-left;
+                margin-right: $gs-gutter;
+            }
+        }
+
+        &.block-elements--no-byline > .element-image:first-child:not(.element--thumbnail),
+        &.block-elements--no-byline > .element-video:first-child {
+            @include mq(tablet) {
+                margin-top: 55px; // Extra margin top to position media below block-time
+            }
+        }
+
+        > .element.element--thumbnail {
+            border-bottom: 0;
+            margin-bottom: 0;
+            margin-top: $gs-baseline / 3;
+
+            figcaption {
+                margin-left: 0;
+                margin-right: 0;
+                padding-bottom: $gs-baseline / 2;
+            }
+        }
+    }
+}
+
+/* Dropdowns
+   ========================================================================== */
+.dropdown--key-events,
+.dropdown--live-feed {
+    border-top: 0;
+    margin-top: $gs-baseline;
+
+    $content-gutter: $gs-gutter / 2;
+
+    @include mq($until: desktop) {
+        margin-right: $content-gutter * -1;
+        margin-left: $content-gutter * -1;
+    }
+
+    .dropdown__button {
+        @include mq($until: desktop) {
+            background-color: #ffffff;
+            padding-right: $gs-gutter;
+            padding-left: $gs-gutter;
+        }
+
+        @include mq(desktop) {
+            display: none;
+        }
+
+        .blog__timeline & {
+            @include mq(desktop) {
+                display: block;
+                border-top: 0;
+                padding-top: 0;
+                margin-top: ($gs-baseline/3)*-1;
+                margin-bottom: $gs-baseline/2;
+            }
+        }
+    }
+
+    .dropdown__label {
+        @include fs-header(3);
+    }
+
+    .dropdown__content {
+        position: relative;
+        margin: 0;
+
+        @include mq($until: desktop) {
+            background-color: $neutral-8;
+            padding: $gs-baseline $content-gutter;
+        }
+
+        @include mq(desktop) {
+            display: block !important; //Overrides JS active state
+        }
+    }
+
+    .is-not-modern & {
+        border-top: 0;
+    }
+}
+
+/* Timeline
+   ========================================================================== */
+$timeline-width: 15px;
+
+.blog__timeline {
+    @include mq(desktop) {
+        &:before,
+        &:after,
+        .control {
+            display: none;
+        }
+
+        .dropdown {
+            border-top: 1px solid $live-main-1;
+            padding-top: $gs-baseline/2;
+        }
+    }
+}
+
+.comment-count--timeline {
+    margin-top: -11px;
+    @include mq($until: desktop) {
+        display: none;
+    }
+
+    .commentcount {
+        z-index: 101;
+        position: relative;
+        padding-left: $timeline-width / 2 + $gs-gutter;
+    }
+}
+
+.live-blog__sticky-components-container {
+    @include mq(desktop) {
+        transform: translateZ(0); //To force on GPU
+        width: $right-column;
+        top: $gs-baseline;
+        padding-top: $gs-baseline/2;
+    }
+}
+
+.toast__container {
+    padding-bottom: $gs-baseline;
+    text-align: center;
+    transition: transform .3s ease-in-out;
+    width: 100%;
+
+    @include mq(desktop) {
+        width: gs-span(8);
+    }
+
+    @include mq(tablet) {
+        width: gs-span(9);
+    }
+
+    @include mq(desktop) {
+        width: gs-span(8);
+    }
+
+    @include mq(leftCol) {
+        width: gs-span(10);
+    }
+
+    @include mq(wide) {
+        width: gs-span(8);
+    }
+}
+
+/* prevent toast from dropping behind first post when not fixed */
+.toast__container:not(.is-sticky) {
+    position: absolute;
+    // Make sure we're not covering the pagination buttons
+    width: 50%;
+    left: 25%;
+}
+
+.toast__container--open {
+    z-index: $zindex-content;
+}
+
+.toast__button {
+    @include fs-textSans(1);
+    background-color: $live-main-2;
+    color: #ffffff;
+    box-sizing: border-box;
+    overflow: hidden;
+    border: 0;
+    margin-right: 0;
+    max-width: 300px; // somewhat arbitrary, just need a max-width to animate from
+    position: relative;
+
+    &:hover,
+    &:focus {
+        color: #ffffff;
+        background-color: $live-main-1;
+    }
+
+    &.toast__button--closed {
+        height: 0px;
+    }
+
+    .toast__text {
+        display: inline-block;
+        font-weight: 700;
+        float: right;
+        opacity: 1;
+        padding-left: $gs-gutter * 5/4;
+        transition: opacity .3s ease-in-out;
+    }
+
+    svg {
+        height: 20px;
+        width: 20px;
+        display: inline-block;
+        position: absolute;
+        top: 8px;
+        left: 8px;
+    }
+
+    &.loading {
+        max-width: $gs-baseline*3; // same as the height, making it circular
+        transition: max-width .3s ease-in-out;
+
+        .toast__text {
+            opacity: 0;
+        }
+
+        svg {
+            animation: rotating 1.5s linear infinite;
+        }
+    }
+}
+
+@keyframes rotating {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.toast__space-reserver {
+    height: $gs-baseline*3; // was 0, for testing
+    margin-bottom: -$gs-baseline*3;
+    display: block;
+}
+
+.timeline {
+    position: relative;
+
+    @include mq(desktop) {
+        margin-left: $timeline-width/2;
+    }
+}
+.timeline__item {
+    display: table;
+    width: 100%;
+    overflow: hidden;
+    min-height: gs-height(1) + $gs-baseline/3;
+    border-bottom: 1px solid $neutral-4;
+
+    &:last-child {
+        border-bottom: 0;
+    }
+
+    @include mq(desktop) {
+        display: block;
+        overflow: visible;
+        border-bottom: 0;
+    }
+}
+.timeline__link {
+    display: block;
+    padding: $gs-baseline/6 0 $gs-baseline/2;
+
+    &,
+    &:hover,
+    &:visited,
+    &:active {
+        color: $neutral-1;
+        text-decoration: none;
+    }
+
+    @include mq(desktop) {
+        position: relative;
+        padding: 0 $gs-gutter $gs-baseline*2;
+        border-left: 1px solid $neutral-5;
+
+        &:before {
+            @include circular;
+            display: block;
+            position: absolute;
+            content: ' ';
+            top: -4px;
+            left: ($timeline-width/2)*-1;
+            width: $timeline-width;
+            height: $timeline-width;
+            background-color: $neutral-3;
+        }
+
+        &:hover:before {
+            background-color: $neutral-2;
+        }
+        &.live-blog__key-event--selected:before {
+            background-color: $neutral-1;
+        }
+
+        .timeline__item:first-child &:before,
+        .timeline__item:last-child &:before {
+            border-radius: 0;
+            top: 0;
+            height: 1px;
+        }
+
+        .timeline__item:last-child & {
+            border-color: transparent;
+        }
+    }
+}
+.timeline__date {
+    @include fs-textSans(2);
+    display: table-cell;
+    width: gs-span(1);
+    font-weight: bold;
+
+    .block-time__absolute,
+    .timezone {
+        display: none;
+    }
+
+    @include mq(desktop) {
+        display: block;
+        position: relative;
+        top: ($gs-baseline/3)*-1;
+        line-height: $timeline-width;
+    }
+}
+.timeline__title {
+    @include fs-textSans(3);
+    display: table-cell;
+    border-color: $neutral-8;
+
+    .timeline__link:hover & {
+        border-color: $neutral-2;
+    }
+
+    @include mq(desktop) {
+        display: inline;
+
+        .live-blog__key-event--selected & {
+            font-weight: bold;
+        }
+    }
+}
+
+/* Related content
+   ========================================================================== */
+.blog__related {
+    width: gs-span(3);
+    margin-left: gs-span(1) + $gs-gutter;
+
+    .tone-news--item {
+        .fc-item__content {
+            background-color: darken($neutral-8, 3%);
+        }
+
+        .u-faux-block-link--hover {
+            .fc-item__content {
+                background-color: darken($neutral-8, 8%);
+            }
+        }
+    }
+}
+
+.blog__related__head {
+    @include fs-header(2);
+    padding-top: $gs-baseline / 4;
+    margin-bottom: ($gs-baseline/3)*4;
+    border-top: 1px solid $neutral-4;
+}
+
+/* Football components
+   ========================================================================== */
+.blog {
+    .tabs__container--multiple {
+        margin-bottom: 0;
+    }
+
+    .tabs__tab--selected {
+        border-bottom-color: $neutral-8 !important;
+    }
+
+    .match-summary {
+        border-bottom: 0;
+    }
+
+    .element-table {
+        .player-card {
+            padding: 0;
+            background: none;
+            border: 0;
+            margin: $gs-baseline/2 $gs-gutter/2 0;
+
+            @include mq(mobileLandscape) {
+                border-left: 1px solid darken($neutral-8, 4%);
+                margin-left: $gs-gutter;
+                margin-right: $gs-gutter;
+                padding-left: $gs-gutter;
+            }
+        }
+        .player-card__position {
+            @include fs-textSans(2);
+            color: $neutral-1;
+            font-weight: 700;
+        }
+    }
+
+    .dropdown .match-stats__container {
+        margin-bottom: $gs-baseline;
+    }
+
+    @include mq(desktop) {
+        .tabs__container--multiple {
+            background-color: $neutral-8;
+        }
+
+        .tabs__tab--selected .tab__link {
+            background-color: $neutral-8;
+        }
+
+        .match-summary {
+            padding-bottom: 0;
+        }
+    }
+}
+
+.blog {
+    .content__headline {
+        @include fs-headline(5);
+
+        @include mq(tablet) {
+            @include fs-headline(7, true);
+        }
+    }
+
+    .content__section-label {
+        @include mq(desktop) {
+            @include fs-header(3);
+            float: none;
+        }
+    }
+
+    .content__series-label {
+        @include mq(desktop) {
+            @include fs-headline(3);
+            float: none;
+        }
+    }
+
+    .content__secondary-column {
+        @include mq($until: wide) {
+            display: none;
+        }
+    }
+}
+
+.content--liveblog.section-football, .content--liveblog--rugby { // Football & rugby overrides
+    .tonal__header {
+        background-color: #ffffff;
+
+        .content__labels {
+            border-bottom-color: $neutral-5;
+        }
+        .content__section-label__link {
+            color: $live-default;
+        }
+        .content__series-label__link {
+            color: $neutral-2;
+        }
+        .content__headline {
+            color: $neutral-1;
+        }
     }
 }
