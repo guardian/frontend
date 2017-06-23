@@ -30,7 +30,7 @@
     <div class="rich-link__container">
         @if(content.content.cardStyle == Media || content.content.cardStyle == Feature || content.content.cardStyle == DefaultCardstyle) {
             @content.trail.trailPicture.map { trailPictureContainer =>
-                @Item460.bestFor(trailPictureContainer).map { imgSrc =>
+                @Item460.bestSrcFor(trailPictureContainer).map { imgSrc =>
 
                     <div class="rich-link__image-container u-responsive-ratio">
                         <img src="@imgSrc" itemprop="contentURL">
