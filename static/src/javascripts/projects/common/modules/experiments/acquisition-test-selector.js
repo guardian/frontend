@@ -29,7 +29,7 @@ const tests = [
     acquisitionsEpicLiveBlog,
     acquisitionsEpicAlwaysAskElection,
     acquisitionsEpicThankYou,
-].map(Test => new Test());
+];
 
 const isViewable = (v: Variant, t: ABTest): boolean => {
     if (!v.options || !v.options.maxViews) return false;
