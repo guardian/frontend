@@ -69,7 +69,6 @@
   ],
   "Gustav Pursche": [
     "projects/common/modules/ui/tabs.js",
-    "projects/common/modules/sport/football/football.js",
     "projects/common/modules/sport/football/match-info.js",
     "projects/common/modules/sport/football/match-list-live.js",
     "projects/common/modules/sport/football/tag-page-stats.js",
