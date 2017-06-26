@@ -22,11 +22,18 @@
 
     @include mq(mobileMedium) {
         font-size: 14px;
-        padding-top: 14px;
     }
 
     @include mq(tablet) {
         font-size: 17px;
+        padding-top: 14px;
+    }
+
+    .new-header--slim & {
+        @include mq($until: desktop) {
+            padding-top: $gs-baseline / 2;
+            padding-bottom: 0;
+        }
     }
 }
 
@@ -53,10 +60,18 @@
 
         @include mq(mobileMedium) {
             border-top-width: ($gs-baseline * 4) + ($gs-baseline / 2);
+
+            .new-header--slim & {
+                border-top: $gs-baseline * 4 solid $news-main-2;
+            }
         }
 
         @include mq($from: tablet, $until: desktop) {
             border-top-width: ($gs-baseline * 5) + ($gs-baseline / 2);
+        }
+
+        .new-header--slim & {
+            border-top-width: ($gs-baseline * 4) + ($gs-baseline / 3);
         }
     }
 

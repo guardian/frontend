@@ -20,23 +20,28 @@ sealed trait ElementProfile {
   def isPng: Boolean
   def autoFormat: Boolean
 
-  def elementFor(image: ImageMedia): Option[ImageAsset] = {
-    val sortedCrops = image.imageCrops.sortBy(_.width)
-    width.flatMap{ desiredWidth =>
-      sortedCrops.find(_.width >= desiredWidth)
-    }.orElse(image.largestImage)
+  private def toSrc(maybeAsset: Option[ImageAsset]): Option[String] =
+    maybeAsset.flatMap(_.url).map(ImgSrc(_, this))
+
+  def bestFor(image: ImageMedia): Option[ImageAsset] = {
+    if(ImageServerSwitch.isSwitchedOn) {
+      val sortedCrops = image.imageCrops.sortBy(_.width)
+      width.flatMap{ desiredWidth =>
+        sortedCrops.find(_.width >= desiredWidth)
+      }.orElse(image.largestImage)
+    }
+    else image.largestImage
   }
+  def bestSrcFor(image: ImageMedia): Option[String] = toSrc(bestFor(image))
 
   def largestFor(image: ImageMedia): Option[ImageAsset] = image.largestImage
-
-  def bestFor(image: ImageMedia): Option[String] =
-    elementFor(image).flatMap(_.url).map{ url => ImgSrc(url, this) }
+  def largestSrcFor(image: ImageMedia): Option[String] = toSrc(largestFor(image))
 
   def captionFor(image: ImageMedia): Option[String] =
-    elementFor(image).flatMap(_.caption)
+    bestFor(image).flatMap(_.caption)
 
   def altTextFor(image: ImageMedia): Option[String] =
-    elementFor(image).flatMap(_.altText)
+    bestFor(image).flatMap(_.altText)
 
   // NOTE - if you modify this in any way there is a decent chance that you decache all our images :(
   val qualityparam = if (hidpi) {"q=20"} else {"q=55"}
@@ -100,8 +105,6 @@ object Item1200 extends Profile(width = Some(1200))
 object Video640 extends VideoProfile(width = Some(640), height = Some(360)) // 16:9
 object Video700 extends VideoProfile(width = Some(700), height = Some(394)) // 16:9
 object Video1280 extends VideoProfile(width = Some(1280), height = Some(720)) // 16:9
-
-
 object GoogleStructuredData extends Profile(width = Some(300), height = Some(300)) // 1:1
 
 abstract class ShareImage(shouldIncludeOverlay: Boolean) extends Profile(width = Some(1200)) {
@@ -202,18 +205,6 @@ object ImgSrc extends Logging with implicits.Strings {
     }
   }
 
-  def findNearestSrc(ImageElement: ImageMedia, profile: ElementProfile): Option[String] = {
-    profile.elementFor(ImageElement).flatMap(_.url).map{ largestImage =>
-      ImgSrc(largestImage, profile)
-    }
-  }
-
-  def findLargestSrc(ImageElement: ImageMedia, profile: ElementProfile): Option[String] = {
-    profile.largestFor(ImageElement).flatMap(_.url).map{ largestImage =>
-      ImgSrc(largestImage, profile)
-    }
-  }
-
   def srcset(imageContainer: ImageMedia, widths: WidthsByBreakpoint): String = {
     widths.profiles.map { profile => srcsetForProfile(profile, imageContainer, hidpi = false) } mkString ", "
   }
@@ -232,9 +223,9 @@ object ImgSrc extends Logging with implicits.Strings {
   }
 
   def maybeSrcsetForProfile(profile: ElementProfile, imageContainer: ImageMedia, hidpi: Boolean): Option[String] = {
-    val largestOrNearest = if(ImageServerSwitch.isSwitchedOn) findLargestSrc(_, _) else findNearestSrc(_, _)
+    val largestOrNearest = if(ImageServerSwitch.isSwitchedOn) profile.bestSrcFor _ else profile.largestSrcFor _
 
-    largestOrNearest(imageContainer, profile).map { src =>
+    largestOrNearest(imageContainer).map { src =>
       s"$src ${profile.width.get * (if (hidpi) 2 else 1)}w"
     }
   }
@@ -242,30 +233,22 @@ object ImgSrc extends Logging with implicits.Strings {
   def srcsetForProfile(profile: ElementProfile, imageContainer: ImageMedia, hidpi: Boolean): String =
     maybeSrcsetForProfile(profile, imageContainer, hidpi).get
 
-  def srcsetForProfile(profile: ElementProfile, path: String, hidpi: Boolean): String = {
+  def srcsetForProfile(profile: ElementProfile, path: String, hidpi: Boolean): String =
     s"${ImgSrc(path, profile)} ${profile.width.get * (if (hidpi) 2 else 1)}w"
-  }
 
-  def getFallbackUrl(ImageElement: ImageMedia): Option[String] = {
-    if(ImageServerSwitch.isSwitchedOn) {
-      findLargestSrc(ImageElement, Item300)
-    } else {
-      findNearestSrc(ImageElement, Item300)
-    }
-  }
+  def getFallbackUrl(ImageElement: ImageMedia): Option[String] =
+    Item300.bestSrcFor(ImageElement)
 
-  def getAmpImageUrl(ImageElement: ImageMedia): Option[String] = {
-    findNearestSrc(ImageElement, Item620)
-  }
+  def getAmpImageUrl(ImageElement: ImageMedia): Option[String] =
+    Item620.bestSrcFor(ImageElement)
 
-  def getFallbackAsset(ImageElement: ImageMedia): Option[ImageAsset] = {
-    Item300.elementFor(ImageElement)
-  }
+  def getFallbackAsset(ImageElement: ImageMedia): Option[ImageAsset] =
+    Item300.bestFor(ImageElement)
 }
 
 object SeoThumbnail {
   def apply(page: Page): Option[String] = page match {
-    case content: ContentPage => content.item.elements.thumbnail.flatMap(thumbnail => Item620.bestFor(thumbnail.images))
+    case content: ContentPage => content.item.elements.thumbnail.flatMap(thumbnail => Item620.bestSrcFor(thumbnail.images))
     case _ => None
   }
 }

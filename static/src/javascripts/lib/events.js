@@ -20,7 +20,7 @@ try {
 const addEventListener = (
     node: EventTarget,
     name: string,
-    handler: (e: Event) => void,
+    handler: (e: Event) => mixed,
     { passive = false, capture = false, once = false }: Object = {}
 ): void => {
     if (supportsOptions) {

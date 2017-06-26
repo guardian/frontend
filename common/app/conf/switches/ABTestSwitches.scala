@@ -31,16 +31,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-opinion-email-variants",
-    "Assign users to variants of opinion emails",
-    owners = Seq(Owner.withGithub("davidfurey")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 6, 23),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-contributions-epic-always-ask-strategy",
     "Test to assess the effects of always asking readers to contribute via the Epic over a prolonged period",
     owners = Seq(Owner.withGithub("Mullefa")),
@@ -71,11 +61,11 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-acquisitions-election-interactive-end",
-    "This places the epic underneath UK election-related interactives",
+    "ab-acquisitions-interactive-end",
+    "This places the epic underneath certain interactives",
     owners = Seq(Owner.withGithub("desbo")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 7, 3),
+    sellByDate = new LocalDate(2018, 7, 3),
     exposeClientSide = true
   )
 
@@ -121,16 +111,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-bookmarks-email-variants-2",
-    "Assign users to variants of bookmarks email",
-    owners = Seq(Owner.withGithub("davidfurey")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 6, 23),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-paid-content-vs-outbrain-2",
     "Displays a paid content widget instead of Outbrain",
     owners = Seq(Owner.withName("commercial team")),
@@ -143,6 +123,16 @@ trait ABTestSwitches {
     ABTests,
     "ab-bundle-digital-sub-price-test-1-m-e",
     "Test pricing options for digital subs from epic",
+    owners = Seq(Owner.withGithub("justinpinner")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 7, 6),  // Thursday 6th July
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-bundle-digital-sub-price-test-1-m-t",
+    "Test pricing options for digital subs from thrasher",
     owners = Seq(Owner.withGithub("justinpinner")),
     safeState = Off,
     sellByDate = new LocalDate(2017, 7, 6),  // Thursday 6th July
@@ -176,7 +166,7 @@ trait ABTestSwitches {
     "Bootstrap the AB test framework to use the Epic to thank readers who have already supported the Guardian",
     owners = Seq(Owner.withGithub("Mullefa")),
     safeState = On,
-    sellByDate = new LocalDate(2017, 6, 21),
+    sellByDate = new LocalDate(2017, 7, 3),
     exposeClientSide = true
   )
 
@@ -187,6 +177,16 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("Mullefa"), Owner.withGithub("joelochlann")),
     safeState = On,
     sellByDate = new LocalDate(2017, 7, 3),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-epic-for-brexit-cohort",
+    "Displays an epic for supports who joined just after Brexit",
+    owners = Seq(Owner.withGithub("lmath")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 7, 31),
     exposeClientSide = true
   )
 }

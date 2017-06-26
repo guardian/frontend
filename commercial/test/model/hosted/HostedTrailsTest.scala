@@ -18,7 +18,7 @@ class HostedTrailsTest extends FlatSpec with Matchers {
     val storyquestions = None
     val guides = None
     val profiles = None
-    val qas = None
+    val qandas = None
     val timelines = None
     val cta = Some(
       Seq(

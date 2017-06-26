@@ -1,0 +1,20 @@
+.pillar-link {
+    font-size: 16px;
+    font-size: 5.1vw; // scss-lint:disable-line no-duplicate-properties
+    line-height: $gs-baseline * 2.5;
+    color: currentColor;
+    cursor: pointer;
+
+    @include mq(mobileMedium) {
+        line-height: $gs-baseline * 3;
+    }
+
+    @include mq(mobileLandscape) {
+        font-size: 24px;
+        line-height: $gs-baseline * 3.5;
+    }
+
+    .guardian-text-sans-loaded & {
+        font-family: 'Guardian Text Sans Web', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
+    }
+}

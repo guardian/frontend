@@ -1,0 +1,18 @@
+.menu-group {
+    color: #ffffff;
+    font-size: 18px;
+    list-style: none;
+    margin: 0;
+    padding: 0 0 $gs-baseline;
+}
+
+.menu-group--primary {
+    color: $news-support-1;
+    padding-top: $gs-baseline / 2;
+}
+
+.menu-group--secondary {
+    background-color: darken($guardian-brand-dark, 4%);
+    margin-top: 0;
+    padding-top: 0;
+}

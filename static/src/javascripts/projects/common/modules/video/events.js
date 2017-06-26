@@ -8,7 +8,11 @@ import detect from 'lib/detect';
 import history from 'common/modules/onward/history';
 import throttle from 'lodash/functions/throttle';
 import forOwn from 'lodash/objects/forOwn';
-import gaHelper from 'common/modules/video/ga-helper';
+import {
+    buildGoogleAnalyticsEvent,
+    getGoogleAnalyticsEventAction,
+} from 'common/modules/video/ga-helper';
+import type { MediaEvent } from 'common/modules/video/ga-helper';
 import ophan from 'ophan/ng';
 
 /* global require */
@@ -31,18 +35,6 @@ const EVENTS = [
 ];
 const gaTracker = config.googleAnalytics.trackers.editorial;
 
-const MediaEvent = (
-    mediaId: string,
-    mediaType: string,
-    eventType: string,
-    isPreroll: boolean
-): Object => ({
-    mediaId,
-    mediaType,
-    eventType,
-    isPreroll,
-});
-
 const bindCustomMediaEvents = (
     eventsMap: Object,
     player: Object,
@@ -52,7 +44,12 @@ const bindCustomMediaEvents = (
 ): void => {
     forOwn(eventsMap, (value, key) => {
         const fullEventName = `media:${value}`;
-        const mediaEvent = MediaEvent(mediaId, mediaType, value, isPreroll);
+        const mediaEvent: MediaEvent = {
+            mediaId,
+            mediaType,
+            eventType: value,
+            isPreroll,
+        };
 
         player.one(key, () => {
             player.trigger(fullEventName, mediaEvent);
@@ -130,12 +127,12 @@ const bindGoogleAnalyticsEvents = (player: Object, canonicalUrl: string) => {
                 window.ga(
                     `${gaTracker}.send`,
                     'event',
-                    gaHelper.buildGoogleAnalyticsEvent(
+                    buildGoogleAnalyticsEvent(
                         mediaEvent,
                         events,
                         canonicalUrl,
                         'guardian-videojs',
-                        gaHelper.getGoogleAnalyticsEventAction,
+                        getGoogleAnalyticsEventAction,
                         mediaEvent.mediaId
                     )
                 );

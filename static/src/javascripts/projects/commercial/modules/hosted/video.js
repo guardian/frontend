@@ -5,7 +5,7 @@ import deferToAnalytics from 'lib/defer-to-analytics';
 import reportError from 'lib/report-error';
 import events from 'common/modules/video/events';
 import videojsOptions from 'common/modules/video/videojs-options';
-import fullscreener from 'common/modules/media/videojs-plugins/fullscreener';
+import { fullscreener } from 'common/modules/media/videojs-plugins/fullscreener';
 import { initHostedYoutube } from 'commercial/modules/hosted/youtube';
 import nextVideoAutoplay from 'commercial/modules/hosted/next-video-autoplay';
 import loadingTmpl from 'raw-loader!common/views/ui/loading.html';
@@ -21,32 +21,46 @@ const upgradeVideoPlayerAccessibility = (player: Object): void => {
     const playerEl = player.el();
 
     fastdom.write(() => {
-        playerEl.querySelectorAll('.vjs-tech').forEach(el => {
+        Array.from(playerEl.querySelectorAll('.vjs-tech')).forEach(el => {
             el.setAttribute('aria-hidden', 'true');
         });
         // Hide superfluous controls, and label useful buttons.
-        playerEl.querySelectorAll('.vjs-big-play-button').forEach(el => {
+        Array.from(
+            playerEl.querySelectorAll('.vjs-big-play-button')
+        ).forEach(el => {
             el.setAttribute('aria-hidden', 'true');
         });
-        playerEl.querySelectorAll('.vjs-current-time').forEach(el => {
+        Array.from(
+            playerEl.querySelectorAll('.vjs-current-time')
+        ).forEach(el => {
             el.setAttribute('aria-hidden', 'true');
         });
-        playerEl.querySelectorAll('.vjs-time-divider').forEach(el => {
+        Array.from(
+            playerEl.querySelectorAll('.vjs-time-divider')
+        ).forEach(el => {
             el.setAttribute('aria-hidden', 'true');
         });
-        playerEl.querySelectorAll('.vjs-duration').forEach(el => {
+        Array.from(playerEl.querySelectorAll('.vjs-duration')).forEach(el => {
             el.setAttribute('aria-hidden', 'true');
         });
-        playerEl.querySelectorAll('.vjs-embed-button').forEach(el => {
+        Array.from(
+            playerEl.querySelectorAll('.vjs-embed-button')
+        ).forEach(el => {
             el.setAttribute('aria-hidden', 'true');
         });
-        playerEl.querySelectorAll('.vjs-play-control').forEach(el => {
+        Array.from(
+            playerEl.querySelectorAll('.vjs-play-control')
+        ).forEach(el => {
             el.setAttribute('aria-label', 'video play');
         });
-        playerEl.querySelectorAll('.vjs-mute-control').forEach(el => {
+        Array.from(
+            playerEl.querySelectorAll('.vjs-mute-control')
+        ).forEach(el => {
             el.setAttribute('aria-label', 'video mute');
         });
-        playerEl.querySelectorAll('.vjs-fullscreen-control').forEach(el => {
+        Array.from(
+            playerEl.querySelectorAll('.vjs-fullscreen-control')
+        ).forEach(el => {
             el.setAttribute('aria-label', 'video fullscreen');
         });
     });
@@ -77,8 +91,8 @@ const onPlayerReady = (
 
     // unglitching the volume on first load
     if (vol) {
-        player.setVolume(0);
-        player.setVolume(vol);
+        player.volume(0);
+        player.volume(vol);
     }
 
     player.fullscreener();
@@ -172,6 +186,7 @@ export const initHostedVideo = (
                         require => {
                             resolve(
                                 require('bootstraps/enhanced/media/video-player')
+                                    .videojs
                             );
                         },
                         'video-player'
@@ -179,11 +194,11 @@ export const initHostedVideo = (
                 })
         )
         .then(videojsInstance => {
-            videoEl.forEach(el => {
+            Array.from(videoEl).forEach(el => {
                 setupVideo(el, videojsInstance);
             });
 
-            youtubeIframe.forEach(initHostedYoutube);
+            Array.from(youtubeIframe).forEach(initHostedYoutube);
         })
         .then(stop, stop);
 

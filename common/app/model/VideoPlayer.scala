@@ -25,6 +25,7 @@ case class VideoPlayer(
   hasFaciaHeader: Boolean = false,
   faciaHeaderProperties: Option[VideoFaciaProperties] = None
 ) {
+
   def poster: String = ImgSrc.maybeSrcsetForProfile(profile, video.images, profile.hidpi)
     .getOrElse(Static("images/media-holding.jpg"))
 

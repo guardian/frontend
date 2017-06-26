@@ -7,12 +7,14 @@ import identity from 'common/modules/identity/api';
 const USER_FEATURES_EXPIRY_COOKIE = 'gu_user_features_expiry';
 const PAYING_MEMBER_COOKIE = 'gu_paying_member';
 const AD_FREE_USER_COOKIE = 'GU_AFU';
+const JOIN_DATE_COOKIE = 'gu_join_date';
 
 const userHasData = (): boolean => {
     const cookie =
         getCookie(USER_FEATURES_EXPIRY_COOKIE) ||
         getCookie(PAYING_MEMBER_COOKIE) ||
-        getCookie(AD_FREE_USER_COOKIE);
+        getCookie(AD_FREE_USER_COOKIE) ||
+        getCookie(JOIN_DATE_COOKIE);
     return !!cookie;
 };
 
@@ -26,6 +28,12 @@ const persistResponse = (JsonResponse: () => void) => {
     } else {
         removeCookie(AD_FREE_USER_COOKIE);
     }
+
+    if (JsonResponse.membershipJoinDate) {
+        addCookie(JOIN_DATE_COOKIE, JsonResponse.membershipJoinDate);
+    } else {
+        removeCookie(JOIN_DATE_COOKIE);
+    }
 };
 
 const deleteOldData = (): void => {
@@ -33,6 +41,7 @@ const deleteOldData = (): void => {
     removeCookie(USER_FEATURES_EXPIRY_COOKIE);
     removeCookie(PAYING_MEMBER_COOKIE);
     removeCookie(AD_FREE_USER_COOKIE);
+    removeCookie(JOIN_DATE_COOKIE);
 };
 
 const requestNewData = (): Promise<void> =>
@@ -60,8 +69,8 @@ const userHasDataAfterSignout = (): boolean =>
     !identity.isUserLoggedIn() && userHasData();
 
 /**
-     * Updates the user's data in a lazy fashion
-     */
+ * Updates the user's data in a lazy fashion
+ */
 
 const refresh = (): Promise<void> => {
     if (identity.isUserLoggedIn() && userNeedsNewFeatureData()) {
@@ -73,11 +82,11 @@ const refresh = (): Promise<void> => {
 };
 
 /**
-     * Does our _existing_ data say the user is a paying member?
-     * This data may be stale; we do not wait for userFeatures.refresh()
-     * @returns {boolean}
-     * @returns {boolean}
-     */
+ * Does our _existing_ data say the user is a paying member?
+ * This data may be stale; we do not wait for userFeatures.refresh()
+ * @returns {boolean}
+ * @returns {boolean}
+ */
 const isPayingMember = (): boolean =>
     // If the user is logged in, but has no cookie yet, play it safe and assume they're a paying user
     identity.isUserLoggedIn() && getCookie(PAYING_MEMBER_COOKIE) !== 'false';
@@ -89,4 +98,24 @@ const isAdFreeUser = (): boolean => {
     return getCookie(AD_FREE_USER_COOKIE) === 'true';
 };
 
-export { isAdFreeUser, isPayingMember, refresh };
+const toDate = (dateStr: string): Date => {
+    const parts = Array.from(dateStr.split('-'), s => parseInt(s, 10));
+
+    return new Date(parts[0], parts[1] - 1, parts[2]);
+};
+
+const isInBrexitCohort = (): boolean => {
+    if (identity.isUserLoggedIn()) {
+        const start = toDate('2016-06-23');
+        const end = toDate('2016-07-31');
+
+        const cookie = getCookie(JOIN_DATE_COOKIE);
+        if (cookie) {
+            const joinDate = toDate(cookie.toString());
+            return joinDate && joinDate - start >= 0 && end - joinDate >= 0;
+        }
+    }
+    return false;
+};
+
+export { isAdFreeUser, isPayingMember, refresh, isInBrexitCohort };

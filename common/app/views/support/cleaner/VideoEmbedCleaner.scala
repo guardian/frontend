@@ -69,9 +69,7 @@ case class VideoEmbedCleaner(article: Article) extends HtmlCleaner {
         element.getElementsByTag("source").remove()
 
         // add the poster url
-        video.map(_.images).flatMap(Item640.bestFor).map(_.toString()).foreach { url =>
-          element.attr("poster", url)
-        }
+        video.map(_.images).flatMap(Item640.bestSrcFor).foreach(element.attr("poster", _))
 
         video.foreach { videoElement =>
           videoElement.videos.encodings.map { encoding => {
