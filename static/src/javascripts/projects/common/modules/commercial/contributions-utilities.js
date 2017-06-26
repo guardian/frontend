@@ -169,8 +169,7 @@ const registerIframeListener = (iframeId: string) => {
                     iframe.style.height = `${data.value}px`;
                 }
             } catch (e) {
-                // Apparently I need a comment here to satisfy the linter
-                // TODO: change linter rule??
+                // Nothing we can do in the error case
             }
         }
     });
