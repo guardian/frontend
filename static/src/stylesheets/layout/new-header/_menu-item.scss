@@ -99,7 +99,7 @@
 
     @include mq(desktop) {
         font-size: 16px;
-        letter-spacing: .02rem;
+        letter-spacing: .3px;
         line-height: 18px;
         padding-bottom: 9px;
         padding-left: 0;
@@ -112,7 +112,7 @@
         text-decoration: none;
 
         @include mq(desktop) {
-            color: #00d4ff;
+            color: $highlight-blue;
         }
     }
 
@@ -184,7 +184,7 @@
 
             &:hover,
             &:focus {
-                color: #00d4ff;
+                color: $highlight-blue;
             }
         }
     }

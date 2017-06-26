@@ -37,11 +37,11 @@
     @include mq(desktop) {
         min-width: 0;
         padding-right: 16px;
-        transition: min-width 600ms ease;
+        transition: min-width 400ms ease;
 
         .new-header--open & {
             min-width: gs-span(2) + $gs-gutter / 2 + 1;
-            transition: min-width 300ms ease;
+            transition: min-width 200ms ease;
         }
 
         .new-header--open &:not(:first-child) {
