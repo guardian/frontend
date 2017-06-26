@@ -65,7 +65,7 @@ object NewNavigation {
     val name = "news"
 
     val uk = NavLinkLists(List(headlines, ukNews, environment, world, tech, business, football))
-    val au = NavLinkLists(List(headlines, australiaNews, world, auPolitics, environment, economy, football))
+    val au = NavLinkLists(List(headlines, australiaNews, world, auPolitics, environment, football))
     val us = NavLinkLists(List(headlines, usNews, world, usPolitics, business, environment, soccer))
     val int = NavLinkLists(List(headlines, world, ukNews, business, science, globalDevelopment, football))
   }
@@ -78,8 +78,8 @@ object NewNavigation {
       List(science, globalDevelopment, cities, obituaries)
     )
     val au = NavLinkLists(
-      List(headlines, australiaNews, world, auPolitics, environment, economy),
-      List(indigenousAustralia, tech, environment, media, obituaries)
+      List(headlines, australiaNews, world, auPolitics, environment),
+      List(indigenousAustralia, media)
     )
     val us = NavLinkLists(
       List(headlines, usNews, world, environment, usPolitics, business),
@@ -124,9 +124,7 @@ object NewNavigation {
         letters,
         editorials,
         NavLink("first dog on the moon", "/profile/first-dog-on-the-moon"),
-        NavLink("Katharine Murphy", "/profile/katharine-murphy"),
-        NavLink("Kristina Keneally", "/profile/kristina-keneally"),
-        NavLink("Richard Ackland", "/profile/richard-ackland")
+        NavLink("Katharine Murphy", "/profile/katharine-murphy")
       )
     )
 
@@ -171,8 +169,8 @@ object NewNavigation {
       List(boxing, rugbyLeague, racing, usSports, golf)
     )
     val au = NavLinkLists(
-      List(sport, football, cricket, AFL, NRL, tennis, rugbyUnion),
-      List(aLeague, australiaSport)
+      List(sport, football, AFL, NRL, aLeague, cricket, rugbyUnion),
+      List(tennis)
     )
     val us = NavLinkLists(
       List(sport, soccer, NFL, tennis, MLB, MLS),
@@ -214,7 +212,7 @@ object NewNavigation {
     )
     val au = NavLinkLists(
       List(lifestyle, travel, foodAu, relationshipsAu, fashionAu, healthAu),
-      List(loveAndSex, family, home, money)
+      List(loveAndSex, family, home)
     )
     val us = NavLinkLists(
       List(lifestyle, fashion, food, recipes, loveAndSex, home),
