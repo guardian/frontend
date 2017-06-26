@@ -61,11 +61,11 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-acquisitions-election-interactive-end",
-    "This places the epic underneath UK election-related interactives",
+    "ab-acquisitions-interactive-end",
+    "This places the epic underneath certain interactives",
     owners = Seq(Owner.withGithub("desbo")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 7, 3),
+    sellByDate = new LocalDate(2018, 7, 3),
     exposeClientSide = true
   )
 
@@ -123,6 +123,16 @@ trait ABTestSwitches {
     ABTests,
     "ab-bundle-digital-sub-price-test-1-m-e",
     "Test pricing options for digital subs from epic",
+    owners = Seq(Owner.withGithub("justinpinner")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 7, 6),  // Thursday 6th July
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-bundle-digital-sub-price-test-1-m-t",
+    "Test pricing options for digital subs from thrasher",
     owners = Seq(Owner.withGithub("justinpinner")),
     safeState = Off,
     sellByDate = new LocalDate(2017, 7, 6),  // Thursday 6th July

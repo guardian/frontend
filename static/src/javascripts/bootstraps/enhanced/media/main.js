@@ -15,11 +15,11 @@ import events from 'common/modules/video/events';
 import videoMetadata from 'common/modules/video/metadata';
 import fullscreener from 'common/modules/media/videojs-plugins/fullscreener';
 import skipAd from 'common/modules/media/videojs-plugins/skip-ad';
-import videoContainer from 'common/modules/video/video-container';
+import { videoContainerInit } from 'common/modules/video/video-container';
 import onwardContainer from 'common/modules/video/onward-container';
 import moreInSeriesContainer from 'common/modules/video/more-in-series-container';
 import videojsOptions from 'common/modules/video/videojs-options';
-import videojs from 'bootstraps/enhanced/media/video-player';
+import { videojs } from 'bootstraps/enhanced/media/video-player';
 import loadingTmpl from 'raw-loader!common/views/ui/loading.html';
 import { isAdFreeUser } from 'commercial/modules/user-features';
 import { loadScript } from 'lib/load-script';
@@ -404,7 +404,7 @@ const initWithRaven = (withPreroll: boolean = false): void => {
 const initFacia = (): void => {
     if (config.page.isFront) {
         $('.js-video-playlist').each(el => {
-            videoContainer.init(el);
+            videoContainerInit(el);
         });
     }
 };

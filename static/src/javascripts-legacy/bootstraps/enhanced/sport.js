@@ -49,7 +49,7 @@ define([
 
             var $h = $('.js-score');
 
-            var scoreBoard = new ScoreBoard({
+            var scoreBoard = new ScoreBoard.ScoreBoard({
                 pageType: pageType,
                 parent: $h,
                 autoupdated: config.page.isLive,

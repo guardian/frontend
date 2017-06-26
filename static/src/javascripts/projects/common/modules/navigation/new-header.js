@@ -1,13 +1,14 @@
 // @flow
 
+import debounce from 'lodash/functions/debounce';
 import detect from 'lib/detect';
 import fastdom from 'lib/fastdom-promise';
 import { scrollToElement } from 'lib/scroller';
 import { addEventListener } from 'lib/events';
-import userAccount from 'common/modules/navigation/user-account';
-import debounce from 'lodash/functions/debounce';
+import { showMyAccountIfNecessary, enhanceAvatar } from './user-account';
 
 const enhanced = {};
+let avatarIsEnhanced = false;
 
 const getMenu = (): ?HTMLElement =>
     document.getElementsByClassName('js-main-menu')[0];
@@ -176,6 +177,11 @@ const toggleSidebar = (): void => {
             closeAllSidebarSections();
         } else {
             focusFirstSidebarSection();
+
+            if (!avatarIsEnhanced) {
+                enhanceAvatar();
+                avatarIsEnhanced = true;
+            }
         }
     };
 
@@ -272,9 +278,9 @@ const addEventHandler = (): void => {
     }
 };
 
-export const newHeaderNavigationInit = (): void => {
+export const newHeaderInit = (): void => {
     enhanceSidebarToggle();
     addEventHandler();
-    userAccount();
+    showMyAccountIfNecessary();
     closeAllSidebarSections();
 };

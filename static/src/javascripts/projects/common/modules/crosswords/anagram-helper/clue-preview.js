@@ -18,9 +18,11 @@ const CluePreview = React.createClass({
         return this.props.entries.map(entry => {
             entry.solved = !!entry.value;
 
-            return this.props.hasShuffled
+            const returnVal = this.props.hasShuffled
                 ? (entry.value && entry) || unsolved.shift()
                 : entry;
+
+            return Object.assign({}, { key: entry.key }, returnVal);
         });
     },
 
@@ -85,11 +87,10 @@ const CluePreview = React.createClass({
                     'span',
                     {
                         className:
-                            classNames +
-                                (entry && entry.solved ? ' has-value' : ''),
+                            classNames + (entry.solved ? ' has-value' : ''),
                         key: entry.key,
                     },
-                    (entry && entry.value) || ''
+                    entry.value || ''
                 );
 
                 return span;

@@ -1,0 +1,74 @@
+.menu-item {
+    box-sizing: border-box;
+    overflow-x: hidden;
+    position: relative;
+    width: 100%;
+}
+
+.menu-item__title {
+    background-color: transparent;
+    border: 0;
+    box-sizing: border-box;
+    color: currentColor;
+    cursor: pointer;
+    display: block;
+    font-size: 20px;
+    line-height: 20px;
+    outline: none;
+    padding: 8px $veggie-burger-medium / 2 + $gs-gutter / 2 8px $menu-spacing-left-small;
+    position: relative;
+    text-align: left;
+    text-transform: lowercase;
+    width: 100%;
+
+    > * {
+        pointer-events: none;
+    }
+}
+
+.menu-item__title--primary {
+    font-size: 24px;
+    font-weight: 400;
+    padding-bottom: 16px;
+    padding-top: $gs-baseline / 2;
+
+    &:after {
+        background-color: darken($guardian-brand-dark, 4%);
+        bottom: 0;
+        content: '';
+        display: block;
+        height: 1px;
+        left: $menu-spacing-left-small;
+        position: absolute;
+        width: 100%;
+    }
+}
+
+.menu-item__toggle {
+    color: $news-support-2;
+    left: 25px;
+    position: absolute;
+}
+
+.menu-item__toggle {
+    margin-top: -4px;
+
+    [aria-expanded='true'] > & {
+        margin-top: 2px;
+    }
+
+    &:before {
+        border: 2px solid currentColor;
+        border-top: 0;
+        border-left: 0;
+        content: '';
+        display: inline-block;
+        height: 8px;
+        transform: rotate(45deg);
+        width: 8px;
+
+        [aria-expanded='true'] > & {
+            transform: rotate(-135deg);
+        }
+    }
+}

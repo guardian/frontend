@@ -37,9 +37,12 @@
         @if(isMain) {
             <meta itemprop="representativeOfPage" content="true">
         }
-        <meta itemprop="url" content="@ImgSrc.findNearestSrc(picture, Item700)">
-        <meta itemprop="width" content="@ImgSrc.getFallbackAsset(picture).fold(0)(_.width)">
-        <meta itemprop="height" content="@ImgSrc.getFallbackAsset(picture).fold(0)(_.height)">
+
+        @defining(Item700.bestFor(picture)) { asset =>
+            <meta itemprop="url" content="@Item700.bestSrcFor(picture).getOrElse("")">
+            <meta itemprop="width" content="@asset.fold(0)(_.width)">
+            <meta itemprop="height" content="@asset.fold(0)(_.height)">
+        }
 
         @defining(
             if (isMain) {

@@ -4,9 +4,7 @@
   "Regis Kuckaertz": [],
   "Richard Nguyen": [],
   "Kate Whalen": [],
-  "Lydia Shepherd": [
-    "projects/commercial/modules/messenger/viewport.js"
-  ],
+  "Lydia Shepherd": [],
   "sndrs": [
     "lib/detect.js",
     "bootstraps/enhanced/accessibility.js",
@@ -21,7 +19,16 @@
     "bootstraps/enhanced/gallery.js"
   ],
   "Simon Adcock": [
-    "bootstraps/enhanced/media/video-player.js"
+      "projects/common/modules/onward/breaking-news.js",
+      "projects/commercial/modules/sticky-top-banner.js",
+      "projects/common/modules/article/membership-events.js",
+      "projects/common/modules/discussion/upvote.js",
+      "projects/common/modules/discussion/user-avatars.js",
+      "projects/common/modules/discussion/whole-discussion.js",
+      "projects/common/modules/experiments/tests/bookmarks-email-variants-2.js",
+      "projects/common/modules/ui/blockSharing.js",
+      "projects/common/modules/ui/clickstream.js",
+      "lib/client-rects.js"
   ],
   "Nicolas Long": [
     "lib/atob.js",
@@ -50,7 +57,7 @@
   "GHaberis": [
     "projects/common/modules/media/videojs-plugins/fullscreener.js",
     "projects/common/modules/media/videojs-plugins/skip-ad.js",
-    "projects/common/modules/onward/breaking-news.js",
+    "projects/common/modules/ui/toggles.js",
     "projects/common/modules/onward/geo-most-popular.js",
     "projects/common/modules/onward/history.js",
     "projects/common/modules/discussion/activity-stream.js",
@@ -59,19 +66,10 @@
   ],
   "Gustav Pursche": [
     "projects/common/modules/ui/tabs.js",
-    "projects/common/modules/social/hidden-share-toggle.js",
-    "projects/common/modules/social/pinterest.js",
-    "projects/common/modules/sport/football/football.js",
     "projects/common/modules/sport/football/match-info.js",
-    "projects/common/modules/sport/football/match-list-live.js",
-    "projects/common/modules/sport/football/tag-page-stats.js",
-    "projects/common/modules/sport/score-board.js",
     "projects/common/modules/ui/autoupdate.js"
   ],
   "NataliaLKB": [
-    "lib/client-rects.js",
-    "projects/common/modules/ui/toggles.js",
-    "projects/common/modules/article/membership-events.js",
     "projects/common/modules/article/rich-links.js",
     "projects/common/modules/article/space-filler.js",
     "projects/common/modules/article/twitter.js",
@@ -108,22 +106,15 @@
     "projects/commercial/modules/sticky-mpu.js"
   ],
   "dominickendrick": [
-    "projects/common/modules/discussion/upvote.js",
-    "projects/common/modules/discussion/user-avatars.js",
-    "projects/common/modules/discussion/whole-discussion.js",
     "projects/common/modules/email/email-article.js",
     "projects/common/modules/email/email.js",
     "projects/common/modules/email/run-checks.js",
     "projects/common/modules/ui/expandable.js",
     "projects/common/modules/ui/faux-block-link.js",
     "projects/common/modules/ui/full-height.js",
-    "projects/common/modules/experiments/affix.js",
-    "projects/commercial/modules/sticky-top-banner.js"
+    "projects/common/modules/experiments/affix.js"
   ],
   "davidfurey": [
-    "projects/common/modules/experiments/tests/bookmarks-email-variants-2.js",
-    "projects/common/modules/ui/blockSharing.js",
-    "projects/common/modules/ui/clickstream.js",
     "projects/common/modules/experiments/tests/editorial-email-variants.js",
     "projects/common/modules/ui/cookiesBanner.js",
     "projects/common/modules/ui/dropdowns.js",
@@ -163,7 +154,6 @@
   ],
   "jfsoul": [
     "projects/common/modules/navigation/search.js",
-    "projects/common/modules/navigation/user-account.js",
     "projects/common/modules/onward/onward-content.js",
     "projects/common/modules/onward/popular.js",
     "projects/common/modules/onward/related.js",
@@ -188,8 +178,6 @@
     "projects/commercial/modules/paidfor-band.js"
   ],
   "Philip Wills": [
-    "projects/facia/modules/ui/container-toggle.js",
-    "projects/common/modules/video/ga-helper.js",
     "projects/facia/modules/ui/live-blog-updates.js",
     "projects/commercial/modules/third-party-tags/imr-worldwide.js"
   ],

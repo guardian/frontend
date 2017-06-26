@@ -33,5 +33,5 @@ object ContentUtils {
     } getOrElse ImageMedia(Nil)
 
   def thumbnailUrl(item: Content): String =
-    ImgSrc.findNearestSrc(imageMedia(item), Item300) getOrElse ""
+    Item300.bestSrcFor(imageMedia(item)) getOrElse ""
 }
