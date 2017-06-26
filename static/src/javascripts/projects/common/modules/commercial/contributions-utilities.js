@@ -215,6 +215,7 @@ const makeABTestVariant = (
     const {
         id,
 
+        // optional params
         maxViews = defaultMaxViews,
         isUnlimited = false,
         contributeURL = addTrackingCodesToUrl(
@@ -375,12 +376,14 @@ const makeABTest = (options: Object): ContributionsABTest => {
         audienceOffset,
         successMeasure,
         audienceCriteria,
-        locations,
-        locationCheck,
         variants,
 
+        // optional params
         epic = true,
         showForSensitive = false,
+        // locations is a filter where empty is taken to mean 'all'
+        locations = [],
+        locationCheck = () => true,
         dataLinkNames = '',
         campaignPrefix = 'gdnwb_copts_memco',
         campaignSuffix = '',
