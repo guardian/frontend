@@ -43,25 +43,58 @@ sealed trait ElementProfile {
   def altTextFor(image: ImageMedia): Option[String] =
     bestFor(image).flatMap(_.altText)
 
-  private def trueDimensionFor(dimension: ImageAsset => Int, default: Option[Int])(image: ImageMedia): Option[Int] =
-    if(ImageServerSwitch.isSwitchedOn) default
-    else bestFor(image).map(dimension)
+  def trueWidthFor(image: ImageMedia): Option[Int] = {
+    val maybeAssetWidth: Option[Int] = bestFor(image).map(_.width)
+    val maybeTrueProfileWidth: Option[Int] = width.map { pixels =>
+      Math.round(pixels * dpr.getOrElse(1d)).toInt
+    }
 
-  def trueWidthFor = trueDimensionFor(_.width, width) _
-  def trueHeightFor = trueDimensionFor(_.height, height) _
+    // If the asset and profile have valid dimensions then take the minimum (due to fit=max)
+    val resizedDimension = for {
+      assetWidth <- maybeAssetWidth
+      profileWidth <- maybeTrueProfileWidth
+    } yield Math.min(assetWidth, profileWidth)
+
+    if(isCropped && ImageServerSwitch.isSwitchedOn) maybeTrueProfileWidth
+    else if(ImageServerSwitch.isSwitchedOn) resizedDimension.orElse(maybeAssetWidth).orElse(maybeTrueProfileWidth)
+    else maybeAssetWidth
+  }
+
+  def trueHeightFor(image: ImageMedia): Option[Int] = {
+    val best = bestFor(image)
+    val maybeTrueProfileHeight: Option[Int] = height.map { pixels =>
+      Math.round(pixels * dpr.getOrElse(1d)).toInt
+    }
+
+    if(isCropped) {
+      maybeTrueProfileHeight
+    } else {
+      // If we are fit=max then the aspect ratio is maintained, so use the true width
+      for {
+        height <- best.map(_.height)
+        width <- best.map(_.width)
+        trueWidth <- trueWidthFor(image)
+        if height != 0
+      } yield  (trueWidth * height) / width
+    }
+  }
+
+  val dpr: Option[Double] = if (hidpi) {
+    if (isPng) {
+      Some(1.3)
+    } else {
+      Some(2)
+    }
+  } else None
+
+  lazy val isCropped = fitParam.endsWith("=crop")
 
   // NOTE - if you modify this in any way there is a decent chance that you decache all our images :(
   val qualityparam = if (hidpi) {"q=20"} else {"q=55"}
   val autoParam = if (autoFormat) "auto=format" else ""
   val sharpParam = "usm=12"
   val fitParam = "fit=max"
-  val dprParam = if (hidpi) {
-    if (isPng) {
-      "dpr=1.3"
-    } else {
-      "dpr=2"
-    }
-  } else {""}
+  val dprParam = dpr.map("dpr=" + _.toString).getOrElse("")
   val heightParam = height.map(pixels => s"h=$pixels").getOrElse("")
   val widthParam = width.map(pixels => s"w=$pixels").getOrElse("")
 

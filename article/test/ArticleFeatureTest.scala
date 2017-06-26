@@ -138,7 +138,7 @@ import collection.JavaConversions._
           include("/img/static/sys-images/Guardian/Pix/pictures/2012/8/6/1344274684805/Gunnerside-village-Swaled-009.jpg?w=700&q=55&auto=format&usm=12&fit=max&s=")
 
         And("I should see the image width")
-        findFirst("[itemprop='associatedMedia image'] [itemprop=width]").getAttribute("content") should be("700")
+        findFirst("[itemprop='associatedMedia image'] [itemprop=width]").getAttribute("content") should be("460")
 
         And("I should see the image height")
         findFirst("[itemprop='associatedMedia image'] [itemprop=height]").getAttribute("content") should be("276")
