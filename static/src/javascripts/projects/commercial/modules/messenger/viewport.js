@@ -60,7 +60,7 @@ const removeResizeListener = (iframe: Element): void => {
     }
 };
 
-const onMessage = (respond: any, start, iframe: ?Element): void => {
+const onMessage = (respond: any, start: any, iframe: ?Element): void => {
     if (!iframe) return;
     if (start) {
         addResizeListener(iframe, respond);

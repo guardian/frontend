@@ -55,7 +55,7 @@ describe('Cross-frame messenger: viewport', () => {
             height: 600,
         };
         detect.getViewport.mockReturnValue(size);
-        // $FlowFixMe
+        // $FlowFixMe flow is overly concerned that iframe could be null
         addResizeListener(iframe, respond)
             .then(() => {
                 expect(respond).toHaveBeenCalledWith(null, size);
@@ -70,7 +70,7 @@ describe('Cross-frame messenger: viewport', () => {
             height: 768,
         };
         detect.getViewport.mockReturnValue(size);
-        // $FlowFixMe
+        // $FlowFixMe flow is overly concerned that iframe could be null
         addResizeListener(iframe, respond)
             .then(() => onResize && onResize())
             .then(() => {
