@@ -1,19 +1,17 @@
 package model.structuredData
 
-import model.{ImageAsset, ImageElement}
+import model.ImageElement
 import play.api.libs.json.{JsString, JsValue, Json}
 import views.support.Item700
 
 object Image {
 
-  def apply(picture: ImageElement): JsValue = {
-    val asset: Option[ImageAsset] = Item700.bestFor(picture.images)
+  def apply(picture: ImageElement): JsValue =
     Json.obj(
       "@type" -> "ImageObject",
       "url" -> JsString(Item700.bestSrcFor(picture.images).getOrElse("")),
-      "height" -> asset.fold(0)(_.height),
-      "width" -> asset.fold(0)(_.width)
+      "height" -> Item700.trueHeightFor(picture.images).getOrElse(0),
+      "width" -> Item700.trueWidthFor(picture.images).getOrElse(0)
     )
-  }
 
 }

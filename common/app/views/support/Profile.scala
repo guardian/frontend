@@ -43,6 +43,13 @@ sealed trait ElementProfile {
   def altTextFor(image: ImageMedia): Option[String] =
     bestFor(image).flatMap(_.altText)
 
+  private def trueDimensionFor(dimension: ImageAsset => Int, default: Option[Int])(image: ImageMedia): Option[Int] =
+    if(ImageServerSwitch.isSwitchedOn) default
+    else bestFor(image).map(dimension)
+
+  def trueWidthFor = trueDimensionFor(_.width, width)
+  def trueHeightFor = trueDimensionFor(_.height, height)
+
   // NOTE - if you modify this in any way there is a decent chance that you decache all our images :(
   val qualityparam = if (hidpi) {"q=20"} else {"q=55"}
   val autoParam = if (autoFormat) "auto=format" else ""
