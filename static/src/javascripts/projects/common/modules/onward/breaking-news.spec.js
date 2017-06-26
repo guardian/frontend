@@ -1,7 +1,7 @@
 // @flow
 
 import $ from 'lib/$';
-import { breakingNewsInit, _ } from 'common/modules/onward/breaking-news';
+import { breakingNewsInit } from 'common/modules/onward/breaking-news';
 import mediator from 'lib/mediator';
 import { local as localStorageStub } from 'lib/storage';
 
@@ -24,12 +24,13 @@ jest.mock('common/modules/ui/relativedates', () => ({
         return true;
     },
 }));
+jest.useFakeTimers();
 
 const fakeFetchJson: any = require('lib/fetch-json');
 
 describe('Breaking news', () => {
     const knownAlertIDsStorageKey = 'gu.breaking-news.hidden';
-    const BREAKING_NEWS_DELAY = 100;
+    const BREAKING_NEWS_DELAY = 3000;
     const alertThatIs = (type, options) => {
         const opts = Object.assign(
             {},
@@ -72,14 +73,11 @@ describe('Breaking news', () => {
         return breakingNewsInit();
     };
 
-    beforeAll(() => {
-        _.setDefaultDelay(BREAKING_NEWS_DELAY);
-    });
-
     beforeEach(() => {
         $('body').html(
             '<div class="js-breaking-news-placeholder breaking-news breaking-news--hidden breaking-news--fade-in" data-link-name="breaking news" data-component="breaking-news"></div>'
         );
+        setTimeout.mockClear();
     });
 
     afterEach(() => {
@@ -141,6 +139,9 @@ describe('Breaking news', () => {
                             'Exception reported in breaking news initialisation'
                         );
                     }
+                    const callLength = localStorageStub.set.mock.calls.length;
+                    const lastCallArgs =
+                        localStorageStub.set.mock.calls[callLength - 1];
 
                     expect(alert.headline).toEqual('2min uk unknown headline');
                     expect(
@@ -149,14 +150,10 @@ describe('Breaking news', () => {
                     ).toBe(1);
                     expect($('.breaking-news--spectre').length).toBe(0);
 
-                    return new Promise(resolve => {
-                        setTimeout(resolve, BREAKING_NEWS_DELAY);
-                    });
-                })
-                .then(() => {
-                    const callLength = localStorageStub.set.mock.calls.length;
-                    const lastCallArgs =
-                        localStorageStub.set.mock.calls[callLength - 1];
+                    jest.runAllTimers();
+                    expect(setTimeout.mock.calls[0][1]).toBe(
+                        BREAKING_NEWS_DELAY
+                    );
 
                     expect($('.breaking-news--spectre').length).toBe(1);
                     expect($('.breaking-news--hidden').length).toBe(0);
@@ -178,6 +175,9 @@ describe('Breaking news', () => {
                             'Exception reported in breaking news initialisation'
                         );
                     }
+
+                    jest.runAllTimers();
+                    expect(setTimeout.mock.calls[0][1]).toBe(0);
 
                     expect(alert.headline).toEqual('uk known headline');
                     expect(

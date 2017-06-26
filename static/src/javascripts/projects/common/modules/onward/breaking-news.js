@@ -23,7 +23,6 @@ const supportedSections = {
 };
 const breakingNewsURL = '/news-alert/alerts';
 const page = config.page;
-let DEFAULT_DELAY = 3000;
 
 // get the users breaking news alert history
 // {
@@ -31,6 +30,7 @@ let DEFAULT_DELAY = 3000;
 //     alertID: false <- seen, but not dismissed/visited
 // }
 const knownAlertIDsStorageKey = 'gu.breaking-news.hidden';
+const DEFAULT_DELAY = 3000;
 let knownAlertIDs;
 
 type Alert = {
@@ -42,10 +42,6 @@ type Alert = {
     frontPublicationDate: number,
     marque36icon: string,
     trailText: string,
-};
-
-const setDefaultDelay = (delay: number): void => {
-    DEFAULT_DELAY = delay;
 };
 
 const storeKnownAlertIDs = (): void => {
@@ -221,6 +217,4 @@ const breakingNewsInit = (): Promise<?Alert> => {
     return Promise.reject(new Error('cannot dismiss'));
 };
 
-const _ = { setDefaultDelay };
-
-export { breakingNewsInit, _ };
+export { breakingNewsInit };
