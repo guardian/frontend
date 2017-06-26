@@ -9,7 +9,7 @@ import bonzo from 'bonzo';
 **/
 
 // eslint-disable-next-line func-style
-function fullscreener(): void {
+const fullscreener = function fullscreener(): void {
     const player = this;
     const clickbox = bonzo.create(
         '<div class="vjs-fullscreen-clickbox"></div>'
@@ -43,6 +43,6 @@ function fullscreener(): void {
             player.trigger('player:fullscreen');
         }
     });
-}
+};
 
 export { fullscreener };
