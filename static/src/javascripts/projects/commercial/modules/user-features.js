@@ -53,7 +53,7 @@ const requestNewData = (): Promise<void> =>
         .catch(() => {});
 
 const featuresDataIsMissing = (): boolean =>
-    !getCookie(USER_FEATURES_EXPIRY_COOKIE) || !getCookie(AD_FREE_USER_COOKIE);
+    !getCookie(USER_FEATURES_EXPIRY_COOKIE);
 
 const featuresDataIsOld = (): boolean => {
     const featuresExpiryCookie = getCookie(USER_FEATURES_EXPIRY_COOKIE);
