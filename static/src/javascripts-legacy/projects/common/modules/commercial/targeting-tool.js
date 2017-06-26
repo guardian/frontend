@@ -29,8 +29,8 @@ define([
      * @param test        an A/B test object (with an 'id' property)
      * @return {Boolean}
      */
-    function isAbTestTargeted(campaignId) {
-        return campaignsFor(campaignId).length > 0;
+    function isAbTestTargeted(test) {
+        return campaignsFor(test.campaignId).length > 0;
     }
 
     return {

@@ -67,8 +67,8 @@ const controlTemplate: EpicTemplate = (variant, copy) =>
         testimonialBlock: variant.options && variant.options.testimonialBlock,
     });
 
-const doTagsMatch = (campaignId: string, useTargetingTool: boolean) =>
-    useTargetingTool ? targetingTool.isAbTestTargeted(campaignId) : true;
+const doTagsMatch = (test: ContributionsABTest): boolean =>
+    test.useTargetingTool ? targetingTool.isAbTestTargeted(test) : true;
 
 // Returns an array containing:
 // - the first element matching insertAtSelector, if isMultiple is false or not supplied
@@ -100,33 +100,25 @@ const getTestimonialBlock = (
 const defaultPageCheck = (page: Object): boolean =>
     page.contentType === 'Article' && !page.isMinuteArticle;
 
-const defaultCanEpicBeDisplayed = (
-    campaignId: string,
-    showToContributorsAndSupporters: boolean,
-    useTargetingTool: boolean,
-    // set this default here as well as makeABTest so that this function is more usable externally
-    pageCheck: (page: Object) => boolean = defaultPageCheck,
-    locations: Array<string> = [],
-    locationCheck: (location: string) => boolean = () => true
-): boolean => {
+const defaultCanEpicBeDisplayed = (test: ContributionsABTest): boolean => {
     const canReasonablyAskForMoney =
-        showToContributorsAndSupporters ||
+        test.showToContributorsAndSupporters ||
         commercialFeatures.canReasonablyAskForMoney;
 
-    const worksWellWithPageTemplate = pageCheck(config.page);
+    const worksWellWithPageTemplate = test.pageCheck(config.page);
 
     const storedGeolocation = geolocationGetSync();
-    const inCompatibleLocation = locations.length
-        ? locations.some(geo => geo === storedGeolocation)
+    const inCompatibleLocation = test.locations.length
+        ? test.locations.some(geo => geo === storedGeolocation)
         : true;
 
-    const tagsMatch = doTagsMatch(campaignId, useTargetingTool);
+    const tagsMatch = doTagsMatch(test);
 
     return (
         canReasonablyAskForMoney &&
         worksWellWithPageTemplate &&
         inCompatibleLocation &&
-        locationCheck(storedGeolocation) &&
+        test.locationCheck(storedGeolocation) &&
         tagsMatch
     );
 };
@@ -382,20 +374,13 @@ const makeABTest = (options: Object): ContributionsABTest => {
     } = options;
 
     const test = {
-        canRun: () => {
+        canRun() {
             if (overrideCanRun) {
-                return doTagsMatch(campaignId, useTargetingTool) && canRun();
+                return doTagsMatch(this) && canRun();
             }
 
             const testCanRun = typeof canRun === 'function' ? canRun() : true;
-            const canEpicBeDisplayed = defaultCanEpicBeDisplayed(
-                campaignId,
-                showToContributorsAndSupporters,
-                useTargetingTool,
-                pageCheck,
-                locations,
-                locationCheck
-            );
+            const canEpicBeDisplayed = defaultCanEpicBeDisplayed(this);
 
             return testCanRun && canEpicBeDisplayed;
         },
