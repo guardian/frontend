@@ -75,7 +75,7 @@ object NewNavigation {
 
     val uk = NavLinkLists(
       List(headlines, ukNews, world, business, environment, tech, politics),
-      List(science, cities, obituaries, globalDevelopment)
+      List(science, globalDevelopment, cities, obituaries)
     )
     val au = NavLinkLists(
       List(headlines, australiaNews, world, auPolitics, environment, economy),
