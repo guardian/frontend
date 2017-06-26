@@ -2,6 +2,12 @@
 import bean from 'bean';
 import bonzo from 'bonzo';
 
+/**
+    videojs plugins can't use arrow functions
+    as 'this' needs to be available as it 
+    represents an instance of the videojs player
+**/
+
 // eslint-disable-next-line func-style
 function fullscreener(): void {
     const player = this;
