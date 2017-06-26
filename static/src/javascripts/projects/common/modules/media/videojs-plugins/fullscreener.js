@@ -15,7 +15,7 @@ function fullscreener(): void {
         '<div class="vjs-fullscreen-clickbox"></div>'
     )[0];
     const events = {
-        click(e: Object): void {
+        click(e: bean): void {
             if (player.paused()) {
                 player.play();
             } else {
@@ -23,7 +23,7 @@ function fullscreener(): void {
             }
             e.stop();
         },
-        dblclick(e: Object): void {
+        dblclick(e: bean): void {
             e.stop();
             if (player.isFullscreen()) {
                 player.exitFullscreen();
