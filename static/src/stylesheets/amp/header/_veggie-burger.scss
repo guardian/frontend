@@ -1,0 +1,47 @@
+.veggie-burger {
+    background-color: $news-main-2;
+    bottom: -$gs-baseline / 2;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, .08);
+    color: #ffffff;
+    cursor: pointer;
+    height: $veggie-burger-small;
+    min-width: $veggie-burger-small;
+    position: absolute;
+    border: 0;
+    border-radius: 50%;
+    outline: none;
+    right: $gutter-small;
+
+    @include mq(mobileMedium) {
+        height: $veggie-burger-medium;
+        width: $veggie-burger-medium;
+        //Align with the 'i' in 'theguardian'
+        right: $gutter-medium;
+    }
+}
+
+.veggie-burger__icon {
+    margin-top: -($gs-baseline / 6) / 2;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+
+    &,
+    &:before,
+    &:after {
+        background-color: currentColor;
+        content: '';
+        height: $gs-baseline / 6;
+        left: 0;
+        position: absolute;
+        width: $gs-gutter;
+    }
+
+    &:before {
+        top: -$gs-gutter / 4;
+    }
+
+    &:after {
+        bottom: -$gs-gutter / 4;
+    }
+}

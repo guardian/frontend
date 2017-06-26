@@ -86,7 +86,7 @@
                     }
 
                     case ImageBlockElement(media, data, showCredit) => {
-                        @EmailImage.bestFor(media).map { imageUrl =>
+                        @EmailImage.bestSrcFor(media).map { imageUrl =>
                             @row(Seq("no-pad")) {
                                 @if(article.isTheMinute && block.url.isDefined) {
                                     <a href="@block.url.getOrElse("#")">
@@ -116,7 +116,7 @@
                     }
 
                     case GuVideoBlockElement(video, media, data) => {
-                        @EmailVideoImage.bestFor(media).map { imageUrl =>
+                        @EmailVideoImage.bestSrcFor(media).map { imageUrl =>
                             @row(Seq("no-pad")) {
                                 @data.get("url").fold {
                                     @imgForArticle(imageUrl, data.get("alt"))
@@ -131,7 +131,7 @@
 
                     case ContentAtomBlockElement(atomId) => {
                         @page.article.content.media.find(_.id == atomId).map { atom: MediaAtom =>
-                            @atom.posterImage.flatMap(EmailVideoImage.bestFor).map { imageUrl =>
+                            @atom.posterImage.flatMap(EmailVideoImage.bestSrcFor).map { imageUrl =>
                                 @atom.assets.map { asset =>
                                     @row(Seq("padded")) {
                                         @asset.platform match {

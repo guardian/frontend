@@ -10,7 +10,7 @@ object EmailHelpers {
   def imageUrlFromCard(contentCard: ContentCard, width: Int): Option[String] = {
     for {
       InlineImage(imageMedia) <- contentCard.displayElement
-      url <- SmallFrontEmailImage(width).bestFor(imageMedia)
+      url <- SmallFrontEmailImage(width).bestSrcFor(imageMedia)
     } yield url
   }
 

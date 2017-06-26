@@ -13,7 +13,7 @@ import { commercialFeatures } from 'commercial/modules/commercial-features';
 import Component from 'common/modules/component';
 import events from 'common/modules/video/events';
 import videoMetadata from 'common/modules/video/metadata';
-import fullscreener from 'common/modules/media/videojs-plugins/fullscreener';
+import { fullscreener } from 'common/modules/media/videojs-plugins/fullscreener';
 import skipAd from 'common/modules/media/videojs-plugins/skip-ad';
 import { videoContainerInit } from 'common/modules/video/video-container';
 import onwardContainer from 'common/modules/video/onward-container';

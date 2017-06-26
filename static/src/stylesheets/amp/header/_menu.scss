@@ -1,0 +1,9 @@
+.menu {
+    background-color: $guardian-brand-dark;
+    // This is the max width AMP allows
+    width: 80vw;
+
+    .guardian-text-sans-loaded & {
+        font-family: $f-sans-serif-text;
+    }
+}
