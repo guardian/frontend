@@ -5,7 +5,7 @@ import deferToAnalytics from 'lib/defer-to-analytics';
 import reportError from 'lib/report-error';
 import events from 'common/modules/video/events';
 import videojsOptions from 'common/modules/video/videojs-options';
-import fullscreener from 'common/modules/media/videojs-plugins/fullscreener';
+import { fullscreener } from 'common/modules/media/videojs-plugins/fullscreener';
 import { initHostedYoutube } from 'commercial/modules/hosted/youtube';
 import nextVideoAutoplay from 'commercial/modules/hosted/next-video-autoplay';
 import loadingTmpl from 'raw-loader!common/views/ui/loading.html';
