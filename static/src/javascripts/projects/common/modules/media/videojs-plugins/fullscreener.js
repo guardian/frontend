@@ -7,8 +7,6 @@ import bonzo from 'bonzo';
     as 'this' needs to be available as it 
     represents an instance of the videojs player
 **/
-
-// eslint-disable-next-line func-style
 const fullscreener = function fullscreener(): void {
     const clickbox = bonzo.create(
         '<div class="vjs-fullscreen-clickbox"></div>'
