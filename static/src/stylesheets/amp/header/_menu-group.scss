@@ -17,8 +17,14 @@
     padding-top: 0;
 }
 
-.menu-group--membership {
+.menu-group--membership,
+.menu-group--editions {
     background-color: $news-main-2;
     color: $guardian-brand-dark;
     padding-bottom: 0;
+}
+
+.menu-group--editions .menu-group {
+    color: $guardian-brand-dark;
+    background-color: darken($news-main-2, 10%);
 }

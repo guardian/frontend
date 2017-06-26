@@ -1,6 +1,7 @@
 @()(implicit context: model.ApplicationContext)
 
 @import conf.Configuration
+@import common.Edition
 @import play.api.Mode.Dev
 
 <amp-sidebar class="menu" layout="nodisplay" id="sidebar1">
@@ -54,13 +55,34 @@
                     {{ /membershipLinks }}
 
                     <li class="menu-item">
-                        <a href="@Configuration.id.url/signin?INTCMP=DOTCOM_HEADER_SIGNIN"
-                            data-link-name="nav2 : sign in"
+                        <a href="@{Configuration.id.url}/signin?INTCMP=DOTCOM_HEADER_SIGNIN"
+                            data-link-name="amp : nav : sign in"
                             class="menu-item__title">
                             Sign in/up
                         </a>
                     </li>
                 </ul>
+
+                <amp-accordion class="menu-group menu-group--editions">
+                    <section>
+                        <h2 class="menu-item__title">
+                            <i class="menu-item__toggle"></i>
+                            switch edition
+                        </h2>
+
+                        <ul class="menu-group">
+                            @Edition.all.map { edition =>
+                                <li class="menu-item">
+                                    <a data-link-name="amp : nav : edition-picker : @edition.id"
+                                    href="@{Configuration.id.url}/preference/edition/@{edition.id.toLowerCase}"
+                                    class="menu-item__title">
+                                        @edition.displayName
+                                    </a>
+                                </li>
+                            }
+                        </ul>
+                    </section>
+                </amp-accordion>
 
                 <ul class="menu-group">
                     {{ #secondarySections }}
