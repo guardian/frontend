@@ -20,7 +20,7 @@ import { getSync as geolocationGetSync } from 'lib/geolocation';
 import { constructQuery as constructURLQuery } from 'lib/url';
 import { noop } from 'lib/noop';
 import { daysSince } from 'lib/time-utils';
-import template from 'lodash/utilities/template';
+import lodashTemplate from 'lodash/utilities/template';
 import toArray from 'lodash/collections/toArray';
 import acquisitionsEpicControlTemplate from 'raw-loader!common/views/acquisitions-epic-control.html';
 import acquisitionsTestimonialBlockTemplate from 'raw-loader!common/views/acquisitions-epic-testimonial-block.html';
@@ -61,7 +61,7 @@ const defaultMaxViews: {
 };
 
 const controlTemplate: EpicTemplate = ({ options = {} }, copy) =>
-    template(acquisitionsEpicControlTemplate, {
+    lodashTemplate(acquisitionsEpicControlTemplate, {
         copy,
         membershipUrl: options.membershipURL,
         contributionUrl: options.contributeURL,
@@ -92,7 +92,7 @@ const getTestimonialBlock = (
     testimonialParameters: AcquisitionsEpicTestimonialTemplateParameters,
     citeImage: ?String
 ) =>
-    template(acquisitionsTestimonialBlockTemplate, {
+    lodashTemplate(acquisitionsTestimonialBlockTemplate, {
         quoteSvg: testimonialParameters.quoteSvg,
         testimonialMessage: testimonialParameters.testimonialMessage,
         testimonialName: testimonialParameters.testimonialName,
@@ -201,7 +201,7 @@ const makeABTestVariant = (
             campaignCode
         ),
         membershipURL = addTrackingCodesToUrl(membershipBaseURL, campaignCode),
-        templateFunction = controlTemplate,
+        template = controlTemplate,
         testimonialBlock = getTestimonialBlock(
             acquisitionsTestimonialParametersControl
         ),
@@ -238,7 +238,7 @@ const makeABTestVariant = (
             campaignCode,
             contributeURL,
             membershipURL,
-            template: templateFunction,
+            template,
             testimonialBlock,
             blockEngagementBanner,
             engagementBannerParams,
