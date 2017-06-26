@@ -48,11 +48,13 @@ const contributionsBaseURL = 'https://contribute.theguardian.com';
 
 const lastContributionDate = getCookie('gu.contributions.contrib-timestamp');
 
-/**
- * How many times the user can see the Epic, e.g. 6 times within 7 days with minimum of 1 day in between views.
- * @type {{days: number, count: number, minDaysBetweenViews: number}}
- */
-const defaultMaxViews = {
+// How many times the user can see the Epic,
+// e.g. 6 times within 7 days with minimum of 1 day in between views.
+const defaultMaxViews: {
+    days: number,
+    count: number,
+    minDaysBetweenViews: number,
+} = {
     days: 30,
     count: 4,
     minDaysBetweenViews: 0,
@@ -131,7 +133,7 @@ const getCopy = (useTailor: boolean): Promise<AcquisitionsEpicTemplateCopy> => {
         );
     }
 
-    return new Promise(resolve => resolve(acquisitionsCopyControl));
+    return Promise.resolve(acquisitionsCopyControl);
 };
 
 const getCampaignCode = (
