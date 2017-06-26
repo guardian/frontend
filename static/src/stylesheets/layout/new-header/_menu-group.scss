@@ -41,7 +41,6 @@
     @include mq(desktop) {
         background-color: transparent;
         padding-bottom: 0;
-        transition: color 250ms;
         width: 100%;
     }
 }
@@ -95,6 +94,7 @@
     @include mq(leftCol) {
         border-left: 2px solid $guardian-brand;
         flex-direction: column;
+        margin-left: -9px;
         padding-left: $gs-gutter / 2 - 1;
         width: gs-span(2) + $gs-gutter / 2 + 1;
     }
@@ -145,11 +145,10 @@
 .menu-group--footer {
     @include mq(desktop) {
         color: $news-support-1;
-        padding-left: $gs-gutter / 2;
         position: absolute;
         right: gs-span(2) + $gs-gutter * 1.5 + 1;
         top: 0;
-        width: gs-span(2) + $gs-gutter / 2 - 1;
+        width: gs-span(2);
 
         @supports(display: flex) {
             order: 2;

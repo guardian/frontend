@@ -30,8 +30,6 @@
     }
 
     @include mq(desktop) {
-        transition: box-shadow 250ms;
-
         &:focus {
             background-color: darken($news-main-2, 10%);
         }
