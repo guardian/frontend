@@ -38,11 +38,9 @@
             <meta itemprop="representativeOfPage" content="true">
         }
 
-        @defining(Item700.bestFor(picture)) { asset =>
-            <meta itemprop="url" content="@Item700.bestSrcFor(picture).getOrElse("")">
-            <meta itemprop="width" content="@asset.fold(0)(_.width)">
-            <meta itemprop="height" content="@asset.fold(0)(_.height)">
-        }
+        <meta itemprop="url" content="@Item700.bestSrcFor(picture).getOrElse("")">
+        <meta itemprop="width" content="@Item700.trueWidthFor(picture).getOrElse(0)">
+        <meta itemprop="height" content="@Item700.trueHeightFor(picture).getOrElse(0)">
 
         @defining(
             if (isMain) {
