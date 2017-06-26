@@ -52,7 +52,7 @@ const lastContributionDate = getCookie('gu.contributions.contrib-timestamp');
  * How many times the user can see the Epic, e.g. 6 times within 7 days with minimum of 1 day in between views.
  * @type {{days: number, count: number, minDaysBetweenViews: number}}
  */
-const maxViews = {
+const defaultMaxViews = {
     days: 30,
     count: 4,
     minDaysBetweenViews: 0,
@@ -199,64 +199,87 @@ const registerIframeListener = (iframeId: string) => {
 
 const makeABTestVariant = (
     options: Object,
-    test: ContributionsABTest
+    parentTest: ContributionsABTest
 ): Variant => {
-    const trackingCampaignId = test.epic
-        ? `epic_${test.campaignId}`
-        : test.campaignId;
+    const trackingCampaignId = parentTest.epic
+        ? `epic_${parentTest.campaignId}`
+        : parentTest.campaignId;
     const campaignCode = getCampaignCode(
-        test.campaignPrefix,
-        test.campaignId,
+        parentTest.campaignPrefix,
+        parentTest.campaignId,
         options.id,
-        test.campaignSuffix
+        parentTest.campaignSuffix
     );
+    const iframeId = `${parentTest.campaignId}_iframe`;
 
-    if (options.usesIframe) {
-        registerIframeListener(options.iframeId);
+    const {
+        id,
+
+        maxViews = defaultMaxViews,
+        isUnlimited = false,
+        contributeURL = addTrackingCodesToUrl(
+            contributionsBaseURL,
+            campaignCode
+        ),
+        membershipURL = addTrackingCodesToUrl(membershipBaseURL, campaignCode),
+        templateFunction = controlTemplate,
+        testimonialBlock = getTestimonialBlock(
+            acquisitionsTestimonialParametersControl
+        ),
+        blockEngagementBanner = false,
+        engagementBannerParams = {},
+        isOutbrainCompliant = false,
+        usesIframe = false,
+        onInsert = noop,
+        onView = noop,
+        useTailoredCopyForRegulars = false,
+        insertAtSelector = '.submeta',
+        insertMultiple = false,
+        insertAfter = false,
+        test = noop,
+        impression = submitImpression =>
+            mediator.once(parentTest.insertEvent, submitImpression),
+        success = submitSuccess =>
+            mediator.once(parentTest.viewEvent, submitSuccess),
+    } = options;
+
+    if (usesIframe) {
+        registerIframeListener(iframeId);
     }
 
     return {
-        id: options.id,
+        id,
 
         options: {
-            maxViews: options.maxViews || maxViews,
-            isUnlimited: options.isUnlimited || false,
-            campaignCode,
+            componentName: `mem_acquisition_${trackingCampaignId}_${id}`,
             campaignCodes: [campaignCode],
-            contributeURL:
-                options.contributeURL ||
-                    addTrackingCodesToUrl(contributionsBaseURL, campaignCode),
-            membershipURL:
-                options.membershipURL ||
-                    addTrackingCodesToUrl(membershipBaseURL, campaignCode),
-            componentName: `mem_acquisition_${trackingCampaignId}_${options.id}`,
-            template: options.template || controlTemplate,
-            testimonialBlock:
-                options.testimonialBlock ||
-                    getTestimonialBlock(
-                        acquisitionsTestimonialParametersControl
-                    ),
-            blockEngagementBanner: options.blockEngagementBanner || false,
-            engagementBannerParams: options.engagementBannerParams || {},
-            isOutbrainCompliant: options.isOutbrainCompliant || false,
-            usesIframe: options.usesIframe || false,
-            iframeId: `${test.campaignId}_iframe`,
+
+            maxViews,
+            isUnlimited,
+            campaignCode,
+            contributeURL,
+            membershipURL,
+            template: templateFunction,
+            testimonialBlock,
+            blockEngagementBanner,
+            engagementBannerParams,
+            isOutbrainCompliant,
+            usesIframe,
+            onInsert,
+            onView,
+            useTailoredCopyForRegulars,
+            insertAtSelector,
+            insertMultiple,
+            insertAfter,
+            test,
+            impression,
+            success,
+            iframeId,
         },
 
         test() {
-            const displayEpic = typeof options.canEpicBeDisplayed === 'function'
-                ? options.canEpicBeDisplayed(test)
-                : true;
-
-            if (!displayEpic) {
-                return;
-            }
-
-            const onInsert = options.onInsert || noop;
-            const onView = options.onView || noop;
-
             const render = (templateFn: ?EpicTemplate) =>
-                getCopy(options.useTailoredCopyForRegulars)
+                getCopy(useTailoredCopyForRegulars)
                     .then((copy: AcquisitionsEpicTemplateCopy) => {
                         const renderTemplate: EpicTemplate =
                             templateFn ||
@@ -269,25 +292,22 @@ const makeABTestVariant = (
                         mediator.emit('register:begin', trackingCampaignId);
 
                         return fastdom.write(() => {
-                            let targets = [];
-
-                            if (!options.insertAtSelector) {
-                                targets = getTargets('.submeta', false);
-                            } else {
-                                targets = getTargets(
-                                    options.insertAtSelector,
-                                    options.insertMultiple
-                                );
-                            }
+                            const targets = getTargets(
+                                insertAtSelector,
+                                insertMultiple
+                            );
 
                             if (targets.length > 0) {
-                                if (options.insertAfter) {
+                                if (insertAfter) {
                                     component.insertAfter(targets);
                                 } else {
                                     component.insertBefore(targets);
                                 }
 
-                                mediator.emit(test.insertEvent, component);
+                                mediator.emit(
+                                    parentTest.insertEvent,
+                                    component
+                                );
                                 onInsert(component);
 
                                 component.each(element => {
@@ -301,8 +321,8 @@ const makeABTestVariant = (
                                     );
 
                                     elementInView.on('firstview', () => {
-                                        logView(test.id);
-                                        mediator.emit(test.viewEvent);
+                                        logView(parentTest.id);
+                                        mediator.emit(parentTest.viewEvent);
                                         mediator.emit(
                                             'register:end',
                                             trackingCampaignId
@@ -316,65 +336,62 @@ const makeABTestVariant = (
                         });
                     });
 
-            if (typeof options.test === 'function') {
-                options.test(render.bind(this), this, test);
+            if (test !== noop && typeof test === 'function') {
+                test(render.bind(this), this, parentTest);
             } else {
                 render.apply(this);
             }
         },
 
-        impression:
-            options.impression ||
-                (submitImpression =>
-                    mediator.once(test.insertEvent, submitImpression)),
-        success:
-            options.success ||
-                (submitSuccess => mediator.once(test.viewEvent, submitSuccess)),
+        impression,
+        success,
 
         contributionsURLBuilder(codeModifier) {
             return addTrackingCodesToUrl(
                 contributionsBaseURL,
-                codeModifier(this.options.campaignCode)
+                codeModifier(campaignCode)
             );
         },
 
         membershipURLBuilder(codeModifier) {
             return addTrackingCodesToUrl(
                 membershipBaseURL,
-                codeModifier(this.options.campaignCode)
+                codeModifier(campaignCode)
             );
         },
     };
 };
 
-const makeABTest = ({
-    id,
-    epic = true,
-    start,
-    expiry,
-    author,
-    idealOutcome,
-    campaignId,
-    description,
-    showForSensitive = false,
-    audience,
-    audienceOffset,
-    successMeasure,
-    audienceCriteria,
-    dataLinkNames = '',
-    campaignPrefix = 'gdnwb_copts_memco',
-    campaignSuffix = '',
-    isEngagementBannerTest = false,
-    useLocalViewLog = false,
-    overrideCanRun = false,
-    useTargetingTool = false,
-    showToContributorsAndSupporters = false,
-    canRun = () => true,
-    pageCheck = defaultPageCheck,
-    locations,
-    locationCheck,
-    variants,
-}: Object): ContributionsABTest => {
+const makeABTest = (options: Object): ContributionsABTest => {
+    const {
+        id,
+        epic = true,
+        start,
+        expiry,
+        author,
+        idealOutcome,
+        campaignId,
+        description,
+        showForSensitive = false,
+        audience,
+        audienceOffset,
+        successMeasure,
+        audienceCriteria,
+        dataLinkNames = '',
+        campaignPrefix = 'gdnwb_copts_memco',
+        campaignSuffix = '',
+        isEngagementBannerTest = false,
+        useLocalViewLog = false,
+        overrideCanRun = false,
+        useTargetingTool = false,
+        showToContributorsAndSupporters = false,
+        canRun = () => true,
+        pageCheck = defaultPageCheck,
+        locations,
+        locationCheck,
+        variants,
+    } = options;
+
     const test = {
         id,
         start,
