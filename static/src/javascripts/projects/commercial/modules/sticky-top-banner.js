@@ -24,7 +24,7 @@ let scrollY;
 // of the header.
 // This is also the best place to adjust the scrolling position in case the
 // user has scrolled past the header.
-const resizeStickyBanner = newHeight => {
+const resizeStickyBanner = (newHeight: number): Promise<any> => {
     if (topSlotHeight !== newHeight) {
         return fastdom.write(() => {
             stickyBanner.classList.add('sticky-top-banner-ad');
@@ -39,13 +39,15 @@ const resizeStickyBanner = newHeight => {
             return newHeight;
         });
     }
+
+    // TODO: Arcane weirdness?
     return Promise.resolve(-1);
 };
 
 // Sudden changes in the layout can be jarring to the user, so we animate
 // them for a better experience. We only do this if the slot is in view
 // though.
-const setupAnimation = () =>
+const setupAnimation = (): void =>
     fastdom.write(() => {
         if (scrollY <= headerHeight) {
             header.classList.add('l-header--animate');
@@ -56,7 +58,7 @@ const setupAnimation = () =>
         }
     });
 
-const onScroll = () => {
+const onScroll = (): void => {
     scrollY = win.pageYOffset;
     if (!updateQueued) {
         updateQueued = true;
@@ -75,7 +77,7 @@ const onScroll = () => {
     }
 };
 
-const initState = () =>
+const initState = (): void =>
     fastdom
         .read(() => {
             headerHeight = header.offsetHeight;
@@ -85,7 +87,7 @@ const initState = () =>
             Promise.all([resizeStickyBanner(currentHeight), onScroll()])
         );
 
-const update = newHeight =>
+const update = (newHeight: number): Promise<any> =>
     fastdom
         .read(() => {
             topSlotStyles = topSlotStyles || win.getComputedStyle(topSlot);
@@ -97,7 +99,8 @@ const update = newHeight =>
         })
         .then(resizeStickyBanner);
 
-const onResize = (specs, _, iframe) => {
+// TODO: what are we expecting these parameters to be?
+const onResize = (specs: any, _: any, iframe: any): void => {
     if (topSlot.contains(iframe)) {
         update(specs.height);
         unregister('resize', onResize);
@@ -108,7 +111,7 @@ const onResize = (specs, _, iframe) => {
 // its container
 // We also listen for scroll events if we need to, to snap the slot in
 // place when it reaches the end of the header.
-const setupListeners = () => {
+const setupListeners = (): void => {
     register('resize', onResize);
     if (!config.page.hasSuperStickyBanner) {
         addEventListener(win, 'scroll', onScroll, {
@@ -117,7 +120,7 @@ const setupListeners = () => {
     }
 };
 
-const onFirstRender = () => {
+const onFirstRender = (): void => {
     trackAdRender(topSlotId).then(isRendered => {
         if (isRendered) {
             const advert = getAdvertById(topSlotId);
@@ -148,7 +151,8 @@ const onFirstRender = () => {
     });
 };
 
-const initStickyTopBanner = _window => {
+// TODO: is it really necessary to inject a mock window here?
+const initStickyTopBanner = (_window: any): Promise<void> => {
     if (!commercialFeatures.stickyTopBannerAd) {
         return Promise.resolve();
     }
