@@ -54,13 +54,13 @@ describe('Breaking news', () => {
         };
     };
     const callBreakingNewsWith = collections => {
-        fakeFetchJson.mockImplementation(() =>
+        fakeFetchJson.mockReturnValue(
             Promise.resolve({
                 webTitle: 'Breaking News',
                 collections,
             })
         );
-        localStorageStub.get.mockImplementation(key => {
+        localStorageStub.get.mockImplementationOnce(key => {
             if (key === knownAlertIDsStorageKey) {
                 return {
                     uk_known: false,
