@@ -104,17 +104,23 @@ const defaultCanEpicBeDisplayed = (
     campaignId: string,
     showToContributorsAndSupporters: boolean,
     useTargetingTool: boolean,
-    // TODO: it would be nice to have a type for page, as well as config.
-    // set this default here as well as test factory so that this function is more usable externally
+    // set this default here as well as makeABTest so that this function is more usable externally
     pageCheck: (page: Object) => boolean = defaultPageCheck,
     locations: Array<string> = [],
     locationCheck: (location: string) => boolean = () => true
 ): boolean => {
     let canReasonablyAskForMoney = false;
 
-    // This is really stupid but because commercialFeatures could be an empty object
-    // if an error is thrown when initialising, flow doesn't like if I read from
-    // commercialFeatures.canReasonablyAskForMoney outside of an if clause
+    // You may be wondering why I don't just do the following:
+    //
+    // const canReasonablyAskForMoney =
+    //     showToContributorsAndSupporters ||
+    //     commercialFeatures.canReasonablyAskForMoney;
+    //
+    // Unfortunately commercialFeatures could be an empty object if an error
+    // is thrown when initialising, which means flow doesn't like if I read from
+    // commercialFeatures.canReasonablyAskForMoney outside of an if condition
+    // TODO: change commercial-features.js so it can never be an empty object??
     if (
         showToContributorsAndSupporters ||
         commercialFeatures.canReasonablyAskForMoney
@@ -341,37 +347,34 @@ const makeABTestVariant = (
     };
 };
 
-const makeABTest = (options: Object): ContributionsABTest => {
-    const {
-        id,
-        epic = true,
-        start,
-        expiry,
-        author,
-        idealOutcome,
-        campaignId,
-        description,
-        showForSensitive = false,
-        audience,
-        audienceOffset,
-        successMeasure,
-        audienceCriteria,
-        // should empty string defaults actually be optional?
-        dataLinkNames = '',
-        campaignPrefix = 'gdnwb_copts_memco',
-        campaignSuffix = '',
-        isEngagementBannerTest = false,
-        useLocalViewLog = false,
-        overrideCanRun = false,
-        useTargetingTool = false,
-        showToContributorsAndSupporters = false,
-        canRun = () => true,
-        pageCheck = defaultPageCheck,
-        locations,
-        locationCheck,
-        variants,
-    } = options;
-
+const makeABTest = ({
+    id,
+    epic = true,
+    start,
+    expiry,
+    author,
+    idealOutcome,
+    campaignId,
+    description,
+    showForSensitive = false,
+    audience,
+    audienceOffset,
+    successMeasure,
+    audienceCriteria,
+    dataLinkNames = '',
+    campaignPrefix = 'gdnwb_copts_memco',
+    campaignSuffix = '',
+    isEngagementBannerTest = false,
+    useLocalViewLog = false,
+    overrideCanRun = false,
+    useTargetingTool = false,
+    showToContributorsAndSupporters = false,
+    canRun = () => true,
+    pageCheck = defaultPageCheck,
+    locations,
+    locationCheck,
+    variants,
+}: Object): ContributionsABTest => {
     const test = {
         id,
         start,
@@ -388,10 +391,7 @@ const makeABTest = (options: Object): ContributionsABTest => {
         variants,
         canRun: () => {
             if (overrideCanRun) {
-                return (
-                    doTagsMatch(campaignId, useTargetingTool) &&
-                    options.canRun()
-                );
+                return doTagsMatch(campaignId, useTargetingTool) && canRun();
             }
 
             const testCanRun = typeof canRun === 'function' ? canRun() : true;
