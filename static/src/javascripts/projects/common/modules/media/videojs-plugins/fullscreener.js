@@ -35,8 +35,8 @@ function fullscreener(): void {
 
     bonzo(clickbox).appendTo(player.contentEl());
 
-    bean.on(clickbox, 'click', events.click.bind(player));
-    bean.on(clickbox, 'dblclick', events.dblclick.bind(player));
+    bean.on(clickbox, 'click', events.click);
+    bean.on(clickbox, 'dblclick', events.dblclick);
 
     player.on('fullscreenchange', (): void => {
         if (player.isFullscreen()) {
