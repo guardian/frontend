@@ -22,11 +22,11 @@
 
     @include mq(mobileMedium) {
         font-size: 14px;
-        padding-top: 14px;
     }
 
     @include mq(tablet) {
         font-size: 17px;
+        padding-top: 14px;
     }
 
     .new-header--slim & {

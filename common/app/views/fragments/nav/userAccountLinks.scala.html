@@ -14,11 +14,10 @@
 
     <li class="menu-item menu-item--user-detail u-h hide-until-desktop js-navigation-account-details">
         <div class="menu-user">
-            @*
-                <!-- TODO: Show the users avatar -->
-                <img src=""
-                     class="menu-user__avatar" />
-            *@
+            @fragments.inlineSvg("profile", "icon", List("menu-user__avatar-fallback", "js-navigation-account-avatar-fallback"))
+
+            <img src=""
+                 class="menu-user__avatar u-h js-navigation-account-avatar" />
 
             <p class="menu-user__name js-navigation-account-username"></p>
         </div>
