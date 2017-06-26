@@ -23,7 +23,7 @@ case class CommercialProperties(
   def adTargeting(edition: Edition): Set[AdTargetParam] =
     editionAdTargetings
       .find(_.edition == edition)
-      .map(_.paramSet.getOrElse(Set.empty))
+      .flatMap(_.paramSet)
       .getOrElse(Set.empty)
 }
 
