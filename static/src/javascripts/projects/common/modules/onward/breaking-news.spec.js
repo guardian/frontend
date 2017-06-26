@@ -20,13 +20,12 @@ jest.mock('lib/config', () => ({
 jest.mock('lib/fetch-json', () => jest.fn());
 jest.mock('fastdom');
 jest.mock('common/modules/ui/relativedates', () => ({
-    isWithinSeconds() {
-        return true;
-    },
+    isWithinSeconds: jest.fn(() => true),
 }));
 jest.useFakeTimers();
 
 const fakeFetchJson: any = require('lib/fetch-json');
+const fakeRelativeDates: any = require('common/modules/ui/relativedates');
 
 describe('Breaking news', () => {
     const knownAlertIDsStorageKey = 'gu.breaking-news.hidden';
@@ -262,6 +261,10 @@ describe('Breaking news', () => {
 
         it('should not show an alert that is 20 mins old', done => {
             const collections = [alertThatIs('unknown', { age: 20 })];
+
+            fakeRelativeDates.isWithinSeconds.mockImplementationOnce(
+                () => false
+            );
             callBreakingNewsWith(collections)
                 .then(alert => {
                     expect(alert).toBeUndefined();
