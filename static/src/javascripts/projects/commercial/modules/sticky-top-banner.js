@@ -148,7 +148,7 @@ const onFirstRender = () => {
     });
 };
 
-const init = _window => {
+const initStickyTopBanner = _window => {
     if (!commercialFeatures.stickyTopBannerAd) {
         return Promise.resolve();
     }
@@ -177,9 +177,4 @@ const init = _window => {
     return Promise.resolve();
 };
 
-export default {
-    init,
-    update,
-    resize: resizeStickyBanner,
-    onScroll,
-};
+export { initStickyTopBanner, update, resizeStickyBanner as resize, onScroll };
