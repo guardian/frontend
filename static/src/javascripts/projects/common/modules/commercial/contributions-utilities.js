@@ -58,13 +58,13 @@ const defaultMaxViews = {
     minDaysBetweenViews: 0,
 };
 
-const controlTemplate: EpicTemplate = (variant, copy) =>
+const controlTemplate: EpicTemplate = ({ options = {} }, copy) =>
     template(acquisitionsEpicControlTemplate, {
         copy,
-        membershipUrl: variant.options && variant.options.membershipURL,
-        contributionUrl: variant.options && variant.options.contributeURL,
-        componentName: variant.options && variant.options.componentName,
-        testimonialBlock: variant.options && variant.options.testimonialBlock,
+        membershipUrl: options.membershipURL,
+        contributionUrl: options.contributeURL,
+        componentName: options.componentName,
+        testimonialBlock: options.testimonialBlock,
     });
 
 const doTagsMatch = (test: ContributionsABTest): boolean =>
