@@ -1,7 +1,7 @@
 package model.structuredData
 
 import model.ImageElement
-import play.api.libs.json.{JsString, JsValue, Json}
+import play.api.libs.json.{JsNumber, JsString, JsValue, Json}
 import views.support.Item700
 
 object Image {
@@ -10,8 +10,8 @@ object Image {
     Json.obj(
       "@type" -> "ImageObject",
       "url" -> JsString(Item700.bestSrcFor(picture.images).getOrElse("")),
-      "height" -> Item700.trueHeightFor(picture.images).getOrElse(0),
-      "width" -> Item700.trueWidthFor(picture.images).getOrElse(0)
+      "height" -> JsNumber(BigDecimal(Item700.trueHeightFor(picture.images).getOrElse(0))),
+      "width" -> JsNumber(BigDecimal(Item700.trueWidthFor(picture.images).getOrElse(0)))
     )
 
 }

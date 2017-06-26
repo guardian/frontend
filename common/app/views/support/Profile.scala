@@ -47,8 +47,8 @@ sealed trait ElementProfile {
     if(ImageServerSwitch.isSwitchedOn) default
     else bestFor(image).map(dimension)
 
-  def trueWidthFor = trueDimensionFor(_.width, width)
-  def trueHeightFor = trueDimensionFor(_.height, height)
+  def trueWidthFor = trueDimensionFor(_.width, width) _
+  def trueHeightFor = trueDimensionFor(_.height, height) _
 
   // NOTE - if you modify this in any way there is a decent chance that you decache all our images :(
   val qualityparam = if (hidpi) {"q=20"} else {"q=55"}
