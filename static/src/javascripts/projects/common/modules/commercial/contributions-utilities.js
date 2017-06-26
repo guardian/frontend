@@ -365,18 +365,22 @@ const makeABTestVariant = (
 const makeABTest = (options: Object): ContributionsABTest => {
     const {
         id,
-        epic = true,
         start,
         expiry,
         author,
         idealOutcome,
         campaignId,
         description,
-        showForSensitive = false,
         audience,
         audienceOffset,
         successMeasure,
         audienceCriteria,
+        locations,
+        locationCheck,
+        variants,
+
+        epic = true,
+        showForSensitive = false,
         dataLinkNames = '',
         campaignPrefix = 'gdnwb_copts_memco',
         campaignSuffix = '',
@@ -387,25 +391,9 @@ const makeABTest = (options: Object): ContributionsABTest => {
         showToContributorsAndSupporters = false,
         canRun = () => true,
         pageCheck = defaultPageCheck,
-        locations,
-        locationCheck,
-        variants,
     } = options;
 
     const test = {
-        id,
-        start,
-        expiry,
-        author,
-        description,
-        audience,
-        audienceOffset,
-        successMeasure,
-        audienceCriteria,
-        showForSensitive,
-        idealOutcome,
-        dataLinkNames,
-        variants,
         canRun: () => {
             if (overrideCanRun) {
                 return doTagsMatch(campaignId, useTargetingTool) && canRun();
@@ -423,8 +411,23 @@ const makeABTest = (options: Object): ContributionsABTest => {
 
             return testCanRun && canEpicBeDisplayed;
         },
-        isEngagementBannerTest,
+        insertEvent: makeEvent(id, 'insert'),
+        viewEvent: makeEvent(id, 'view'),
 
+        id,
+        start,
+        expiry,
+        author,
+        description,
+        audience,
+        audienceOffset,
+        successMeasure,
+        audienceCriteria,
+        showForSensitive,
+        idealOutcome,
+        dataLinkNames,
+        variants,
+        isEngagementBannerTest,
         epic,
         campaignId,
         campaignPrefix,
@@ -436,8 +439,6 @@ const makeABTest = (options: Object): ContributionsABTest => {
         locations,
         locationCheck,
         useTargetingTool,
-        insertEvent: makeEvent(id, 'insert'),
-        viewEvent: makeEvent(id, 'view'),
     };
 
     test.variants = test.variants.map(variant =>
