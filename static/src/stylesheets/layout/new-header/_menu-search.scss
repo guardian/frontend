@@ -89,7 +89,7 @@
 
 .menu-search__submit {
     background: transparent;
-    border: none;
+    border: 0;
     bottom: 0;
     cursor: pointer;
     display: block;
@@ -103,8 +103,8 @@
     &:before,
     &:after {
         border: 2px solid $guardian-brand;
-        border-left: none;
-        border-top: none;
+        border-left: 0;
+        border-top: 0;
         content: '';
         display: block;
         position: absolute;
@@ -127,7 +127,7 @@
     }
 
     &:after {
-        border-right: none;
+        border-right: 0;
         top: 17px;
         width: 20px;
 

@@ -21,7 +21,7 @@
 
     @include mq(tablet) {
         font-size: 28px;
-        letter-spacing: -0.04rem;
+        letter-spacing: -.04rem;
     }
 
     @include mq(desktop) {
