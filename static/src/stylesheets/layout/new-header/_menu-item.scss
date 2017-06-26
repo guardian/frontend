@@ -170,15 +170,6 @@
         }
     }
 
-    .menu-group--editions & {
-        @include mq(desktop) {
-            font-size: 15px;
-            line-height: $search-and-edition-height-desktop;
-            padding: 0;
-            text-align: center;
-        }
-    }
-
     .menu-group--editions &[aria-haspopup='true'] {
         margin-bottom: $gs-baseline;
 
@@ -188,14 +179,47 @@
     }
 
     .menu-group--membership & {
-        @include mq($from: desktop, $until: leftCol) {
+        @include mq(desktop) {
             color: #ffffff;
-            font-size: 17px;
-            line-height: 20px;
 
             &:hover,
             &:focus {
-                color: $news-support-1;
+                color: #00d4ff;
+            }
+        }
+    }
+
+    .menu-group--editions & {
+        @include mq(desktop) {
+            background-color: $guardian-brand;
+            color: $news-support-1;
+            display: block;
+            font-size: 15px;
+            height: $search-and-edition-height-desktop;
+            border-radius: 50%;
+            line-height: $search-and-edition-height-desktop;
+            margin-right: $gs-gutter / 4;
+            padding: 0;
+            text-align: center;
+            width: $search-and-edition-height-desktop;
+        }
+
+        &:hover,
+        &:focus {
+            @include mq(desktop) {
+                background-color: lighten($guardian-brand, 4%);
+                color: #ffffff;
+            }
+        }
+    }
+
+    .menu-item--edition-active & {
+        @include mq(desktop) {
+            &,
+            &:hover,
+            &:focus {
+                background-color: $news-support-1;
+                color: $guardian-brand-dark;
             }
         }
     }
@@ -259,8 +283,8 @@
 }
 
 .menu-item__editions-label {
-    font-size: 17px;
-    left: 0;
-    position: absolute;
-    top: -$gs-baseline * 2;
+    color: #ffffff;
+    font-size: 16px;
+    line-height: $search-and-edition-height-desktop;
+    margin-right: $gs-gutter / 2;
 }

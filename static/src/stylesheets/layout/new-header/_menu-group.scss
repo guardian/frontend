@@ -56,10 +56,6 @@
 
 .menu-group--editions {
     padding-bottom: 0;
-
-    @include mq(desktop) {
-        margin-top: $gs-row-height / 2;
-    }
 }
 
 .menu-group--editions .menu-group {
