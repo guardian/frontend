@@ -1,5 +1,20 @@
-@(guide: model.content.ProfileAtom, isAmp: Boolean)(implicit request: RequestHeader)
+@(profile: model.content.ProfileAtom, isAmp: Boolean)(implicit request: RequestHeader)
 
 @if(!isAmp) {
-    <div></div>
+  @fragments.atoms.snippet(
+    className = "profile",
+    label = profile.data.typeLabel.getOrElse("Quick Guide"),
+    headline = profile.atom.title.getOrElse("")
+  ){
+    @profile.data.headshot.map { image => image.master }
+
+    @for(item <- profile.data.items) {
+      <div class="explainer-snippet__item">
+        @item.title.map { t =>
+          <div class="explainer-snippet__heading"><b>@t</b></div>
+        }
+        @item.body
+      </div>
+    }
+  }
 }
