@@ -6,7 +6,11 @@
     label = profile.data.typeLabel.getOrElse("Quick Guide"),
     headline = profile.atom.title.getOrElse("")
   ){
-    @profile.data.headshot.map { image => image.master }
+    @profile.data.headshot.map { image =>
+      <div class="explainer-snippet__image">
+        image.master
+      </div>
+    }
 
     @for(item <- profile.data.items) {
       <div class="explainer-snippet__item">

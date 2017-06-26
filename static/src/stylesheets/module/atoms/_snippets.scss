@@ -1,19 +1,45 @@
-.explainer-snippet--guide {
-    .explainer-snippet__image {
-        float: left;
-        margin-right: $gs-gutter / 2;
+.explainer-snippet__image {
+    float: left;
+    margin-right: $gs-gutter / 2;
+}
+
+.explainer-snippet__item::before {
+    content: '';
+    display: block;
+    width: 200px;
+    height: 0;
+    border-top: 1px dotted $neutral-2;
+}
+
+.explainer-snippet__item+.explainer-snippet__item {
+    padding-top: $gs-baseline;
+}
+
+.explainer-snippet__heading {
+    font-size: 18px;
+}
+
+.explainer-snippet__event-date::before {
+    content: '';
+    width: 16px;
+    height: 16px;
+    border-radius: 100%;
+    float: left;
+    margin-left: -26px;
+    background-color: $neutral-2;
+}
+
+.explainer-snippet__event-date {
+    font-size: 18px;
+}
+
+.explainer-snippet--timeline {
+    .explainer-snippet__body {
+        margin-left: 8px;
     }
 
-    .explainer-snippet__item::before {
-        content: '';
-        display: block;
-        width: 100px;
-        height: 0;
-        border-top: 1px dotted #ffffff;
-    }
-
-    .explainer-snippet__heading {
-        color: $news-support-5;
-        font-size: 18px;
+    .explainer-snippet__item {
+        padding-left: 17px;
+        border-left: 1px solid rgba($neutral-2, .5);
     }
 }
