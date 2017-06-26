@@ -2,11 +2,13 @@
     box-sizing: border-box;
     display: block;
     margin-left: 13px;
+    max-width: gs-span(5);
     position: relative;
+    width: 100%;
 
     @include mq($until: desktop) {
         margin-bottom: $gs-baseline * 2;
-        margin-right: $veggie-burger-medium / 2 + $gs-gutter / 2;
+        margin-right: $veggie-burger-medium / 2 + $gs-gutter;
     }
 
     @include mq(tablet) {
@@ -17,8 +19,8 @@
         margin-bottom: $gs-baseline * 2;
         margin-left: 0;
         margin-top: $gs-baseline * 2;
+        max-width: none;
         padding-right: 0;
-        width: 100%;
     }
 }
 
@@ -29,18 +31,12 @@
     box-sizing: border-box;
     font-size: 20px;
     height: $gs-row-height;
-    max-width: gs-span(4);
     padding-left: 38px;
     vertical-align: middle;
     width: 100%;
 
-    @include mq(tablet) {
-        padding-left: $gs-gutter * 2;
-    }
-
     @include mq(desktop) {
         height: $search-and-edition-height-desktop;
-        max-width: none;
         padding-left: 48px;
         font-size: 24px;
 

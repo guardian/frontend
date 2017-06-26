@@ -29,12 +29,6 @@
         right: $gutter-xlarge;
     }
 
-    @include mq(desktop) {
-        &:focus {
-            background-color: darken($news-main-2, 10%);
-        }
-    }
-
     // menu is open
     .new-header--open & {
         z-index: $zindex-main-menu + 1;

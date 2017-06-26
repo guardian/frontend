@@ -1,6 +1,4 @@
 .veggie-burger-fallback {
-    display: none;
-
     &:checked {
         & ~ .menu {
             @include mq($until: desktop) {
@@ -62,5 +60,9 @@
                 }
             }
         }
+    }
+
+    &:focus ~ .veggie-burger {
+        background-color: darken($news-main-2, 10%);
     }
 }
