@@ -109,24 +109,9 @@ const defaultCanEpicBeDisplayed = (
     locations: Array<string> = [],
     locationCheck: (location: string) => boolean = () => true
 ): boolean => {
-    let canReasonablyAskForMoney = false;
-
-    // You may be wondering why I don't just do the following:
-    //
-    // const canReasonablyAskForMoney =
-    //     showToContributorsAndSupporters ||
-    //     commercialFeatures.canReasonablyAskForMoney;
-    //
-    // Unfortunately commercialFeatures could be an empty object if an error
-    // is thrown when initialising, which means flow doesn't like if I read from
-    // commercialFeatures.canReasonablyAskForMoney outside of an if condition
-    // TODO: change commercial-features.js so it can never be an empty object??
-    if (
+    const canReasonablyAskForMoney =
         showToContributorsAndSupporters ||
-        commercialFeatures.canReasonablyAskForMoney
-    ) {
-        canReasonablyAskForMoney = true;
-    }
+        commercialFeatures.canReasonablyAskForMoney;
 
     const worksWellWithPageTemplate = pageCheck(config.page);
 

@@ -1,7 +1,6 @@
 // @flow
 import config from 'lib/config';
 import detect from 'lib/detect';
-import { logError } from 'lib/robust';
 import { isPayingMember, isAdFreeUser } from 'commercial/modules/user-features';
 import identityApi from 'common/modules/identity/api';
 import userPrefs from 'common/modules/user-prefs';
@@ -145,16 +144,4 @@ class CommercialFeatures {
     }
 }
 
-let commercialFeaturesExport;
-
-try {
-    config.commercial = config.commercial || {};
-    config.commercial.featuresDebug = new CommercialFeatures();
-    commercialFeaturesExport = config.commercial.featuresDebug;
-} catch (error) {
-    // TODO: see if this catch is really necessary!
-    commercialFeaturesExport = {};
-    logError('cm-commercialFeatures', error);
-}
-
-export const commercialFeatures = commercialFeaturesExport;
+export const commercialFeatures = new CommercialFeatures();
