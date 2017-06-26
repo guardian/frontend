@@ -18,7 +18,9 @@ const reset = (window_: WindowProxy): void => {
 };
 
 const sendViewportDimensions = (iframeId, viewport): void => {
-    iframes[iframeId].respond(null, viewport);
+    if (iframes[iframeId] && iframes[iframeId].respond) {
+        iframes[iframeId].respond(null, viewport);
+    }
 };
 
 const onResize = (): ?Promise<any> => {
