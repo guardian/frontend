@@ -68,10 +68,13 @@ describe('Breaking news', () => {
                 };
             }
         });
-        _.DEFAULT_DELAY = BREAKING_NEWS_DELAY;
 
         return breakingNewsInit();
     };
+
+    beforeAll(() => {
+        _.setDefaultDelay(BREAKING_NEWS_DELAY);
+    });
 
     beforeEach(() => {
         $('body').html(

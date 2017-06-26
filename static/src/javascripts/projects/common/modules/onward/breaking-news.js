@@ -23,7 +23,7 @@ const supportedSections = {
 };
 const breakingNewsURL = '/news-alert/alerts';
 const page = config.page;
-const DEFAULT_DELAY = 3000;
+let DEFAULT_DELAY = 3000;
 
 // get the users breaking news alert history
 // {
@@ -42,6 +42,10 @@ type Alert = {
     frontPublicationDate: number,
     marque36icon: string,
     trailText: string,
+};
+
+const setDefaultDelay = (delay: number): void => {
+    DEFAULT_DELAY = delay;
 };
 
 const storeKnownAlertIDs = (): void => {
@@ -217,6 +221,6 @@ const breakingNewsInit = (): Promise<?Alert> => {
     return Promise.reject(new Error('cannot dismiss'));
 };
 
-const _ = { DEFAULT_DELAY };
+const _ = { setDefaultDelay };
 
 export { breakingNewsInit, _ };
