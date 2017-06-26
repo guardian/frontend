@@ -6,18 +6,9 @@
 
     .menu-group--primary > & {
         @include mq(desktop) {
-            border-right: 2px solid rgba($news-main-2, .3);
             float: left;
-            width: gs-span(2) + $gs-gutter / 2 + 1;
-
-            &:not(:first-child) {
-                margin-left: $gs-gutter / 2 - 1;
-            }
-
-            &:not(:last-child) {
-                margin-top: -$gs-baseline * 3;
-                padding-top: $gs-baseline * 3;
-            }
+            margin-right: $gs-gutter;
+            width: gs-span(2);
 
             @supports(display: flex) {
                 float: none;
@@ -25,45 +16,31 @@
         }
     }
 
-    .menu-group--editions > &,
-    .menu-group--secondary > & {
+    .menu-group--secondary > &,
+    .menu-group--footer > & {
+        @include mq(desktop) {
+            border-top: 1px solid $guardian-brand;
+            width: gs-span(2) - 5;
+        }
+    }
+
+    .menu-group--secondary > &:nth-child(2),
+    &.menu-item--no-border {
+        @include mq(desktop) {
+            border: transparent;
+            margin-top: $gs-baseline / 4;
+        }
+    }
+
+    .menu-group--editions > & {
         @include mq(desktop) {
             width: 100%;
         }
     }
 
-    .menu-group--editions .menu-group & {
+    .menu-group--editions > & {
         @include mq(desktop) {
-            background-color: $guardian-brand;
-            display: block;
-            float: left;
-            height: $search-and-edition-height-desktop;
-            border-radius: 50%;
-            margin-right: $gs-gutter / 2;
-            text-align: center;
-            width: $search-and-edition-height-desktop;
-
-            @supports(display: flex) {
-                float: none;
-            }
-        }
-
-        &:hover,
-        &:focus {
-            @include mq(desktop) {
-                background-color: lighten($guardian-brand, 4%);
-            }
-        }
-
-        &--edition-active {
-            @include mq(desktop) {
-                &,
-                & .menu-item__title:focus,
-                & .menu-item__title:hover {
-                    background-color: $news-support-1;
-                    color: $guardian-brand-dark;
-                }
-            }
+            display: flex;
         }
     }
 
@@ -179,14 +156,6 @@
                 bottom: auto;
                 top: 0;
             }
-        }
-    }
-
-    &[data-link-name='nav2 : the guardian app'],
-    &[data-link-name='nav2 : facebook'],
-    &[data-link-name='nav2 : twitter'] {
-        @include mq(desktop) {
-            display: none;
         }
     }
 

@@ -74,7 +74,7 @@
     position: relative;
 
     @include mq($from: desktop, $until: leftCol) {
-        border-top: 1px solid rgba($news-main-2, .3);
+        border-top: 1px solid $guardian-brand;
         flex-wrap: nowrap;
         width: 100%;
     }
@@ -83,7 +83,7 @@
         flex-direction: row;
         order: 3;
         padding-bottom: 0;
-        padding-top: $gs-baseline / 2;
+        padding-top: $gs-baseline;
         position: absolute;
         right: 0;
         top: 0;
@@ -97,17 +97,21 @@
     }
 
     @include mq(leftCol) {
-        border-left: 2px solid rgba($news-main-2, .3);
+        border-left: 2px solid $guardian-brand;
         flex-direction: column;
         padding-left: $gs-gutter / 2 - 1;
-        padding-top: $gs-baseline;
-        width: gs-span(2) + $gs-gutter / 2 - 1;
+        width: gs-span(2) + $gs-gutter / 2 + 1;
+    }
+
+    @include mq(wide) {
+        width: gs-span(3) + $gs-gutter / 2 + 1;
     }
 }
 
 .menu-group--editions {
     @include mq(desktop) {
         padding-bottom: $gs-baseline * 2;
+        margin-top: $gs-baseline * 2;
         order: 5;
 
         @supports(display: flex) {
