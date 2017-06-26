@@ -6,4 +6,8 @@
     .guardian-text-sans-loaded & {
         font-family: $f-sans-serif-text;
     }
+
+    div:first-of-type {
+        overflow-y: scroll;
+    }
 }
