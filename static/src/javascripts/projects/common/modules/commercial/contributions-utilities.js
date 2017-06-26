@@ -341,39 +341,37 @@ const makeABTestVariant = (
     };
 };
 
-const makeABTest = (options: Object): ContributionsABTest => {
-    const {
-        id,
-        start,
-        expiry,
-        author,
-        idealOutcome,
-        campaignId,
-        description,
-        audience,
-        audienceOffset,
-        successMeasure,
-        audienceCriteria,
-        variants,
+const makeABTest = ({
+    id,
+    start,
+    expiry,
+    author,
+    idealOutcome,
+    campaignId,
+    description,
+    audience,
+    audienceOffset,
+    successMeasure,
+    audienceCriteria,
+    variants,
 
-        // optional params
-        epic = true,
-        showForSensitive = false,
-        // locations is a filter where empty is taken to mean 'all'
-        locations = [],
-        locationCheck = () => true,
-        dataLinkNames = '',
-        campaignPrefix = 'gdnwb_copts_memco',
-        campaignSuffix = '',
-        isEngagementBannerTest = false,
-        useLocalViewLog = false,
-        overrideCanRun = false,
-        useTargetingTool = false,
-        showToContributorsAndSupporters = false,
-        canRun = () => true,
-        pageCheck = defaultPageCheck,
-    } = options;
-
+    // optional params
+    epic = true,
+    showForSensitive = false,
+    // locations is a filter where empty is taken to mean 'all'
+    locations = [],
+    locationCheck = () => true,
+    dataLinkNames = '',
+    campaignPrefix = 'gdnwb_copts_memco',
+    campaignSuffix = '',
+    isEngagementBannerTest = false,
+    useLocalViewLog = false,
+    overrideCanRun = false,
+    useTargetingTool = false,
+    showToContributorsAndSupporters = false,
+    canRun = () => true,
+    pageCheck = defaultPageCheck,
+}: Object): ContributionsABTest => {
     const test = {
         canRun() {
             if (overrideCanRun) {
