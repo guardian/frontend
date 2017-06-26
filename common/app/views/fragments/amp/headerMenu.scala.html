@@ -39,8 +39,30 @@
                     {{ /topLevelSections }}
                 </ul>
 
-                <ul class="menu-group">
+                <ul class="menu-group menu-group--membership"
+                    role="menubar">
+                    {{ #membershipLinks }}
+                        <li class="menu-item hide-on-desktop"
+                            role="menuitem">
 
+                            <a class="menu-item__title"
+                                href="{{ url }}"
+                                data-link-name="amp : nav : {{ title }}">
+                                {{ title }}
+                            </a>
+                        </li>
+                    {{ /membershipLinks }}
+
+                    <li class="menu-item">
+                        <a href="@Configuration.id.url/signin?INTCMP=DOTCOM_HEADER_SIGNIN"
+                            data-link-name="nav2 : sign in"
+                            class="menu-item__title">
+                            Sign in/up
+                        </a>
+                    </li>
+                </ul>
+
+                <ul class="menu-group">
                     {{ #secondarySections }}
                         <li class="menu-item">
                             <a class="menu-item__title"
