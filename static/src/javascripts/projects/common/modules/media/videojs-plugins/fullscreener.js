@@ -10,37 +10,33 @@ import bonzo from 'bonzo';
 
 // eslint-disable-next-line func-style
 const fullscreener = function fullscreener(): void {
-    const player = this;
     const clickbox = bonzo.create(
         '<div class="vjs-fullscreen-clickbox"></div>'
     )[0];
-    const events = {
-        click(e: bean): void {
-            if (player.paused()) {
-                player.play();
-            } else {
-                player.pause();
-            }
-            e.stop();
-        },
-        dblclick(e: bean): void {
-            e.stop();
-            if (player.isFullscreen()) {
-                player.exitFullscreen();
-            } else {
-                player.requestFullscreen();
-            }
-        },
-    };
 
-    bonzo(clickbox).appendTo(player.contentEl());
+    bonzo(clickbox).appendTo(this.contentEl());
 
-    bean.on(clickbox, 'click', events.click);
-    bean.on(clickbox, 'dblclick', events.dblclick);
+    bean.on(clickbox, 'click', (e: bean): void => {
+        if (this.paused()) {
+            this.play();
+        } else {
+            this.pause();
+        }
+        e.stop();
+    });
 
-    player.on('fullscreenchange', (): void => {
-        if (player.isFullscreen()) {
-            player.trigger('player:fullscreen');
+    bean.on(clickbox, 'dblclick', (e: bean): void => {
+        e.stop();
+        if (this.isFullscreen()) {
+            this.exitFullscreen();
+        } else {
+            this.requestFullscreen();
+        }
+    });
+
+    this.on('fullscreenchange', (): void => {
+        if (this.isFullscreen()) {
+            this.trigger('player:fullscreen');
         }
     });
 };
