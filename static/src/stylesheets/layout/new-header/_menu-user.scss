@@ -14,6 +14,8 @@
 }
 
 .menu-user__avatar-fallback {
+    /* SVGs inherit the font-size and therefor the line-height
+       is bigger, so we have to reset it */
     font-size: 0;
 }
 
