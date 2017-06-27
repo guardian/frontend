@@ -1,4 +1,6 @@
 // @flow
+import type { Advert } from 'commercial/modules/dfp/Advert';
+
 import { addEventListener } from 'lib/events';
 import config from 'lib/config';
 import detect from 'lib/detect';
@@ -11,12 +13,12 @@ import { register, unregister } from 'commercial/modules/messenger';
 const topSlotId = 'dfp-ad--top-above-nav';
 let updateQueued = false;
 let win;
-let header;
+let header: ?HTMLElement;
 let headerHeight;
-let topSlot;
+let topSlot: ?HTMLElement;
 let topSlotHeight;
 let topSlotStyles;
-let stickyBanner;
+let stickyBanner: ?HTMLElement;
 let scrollY;
 
 // Because the top banner is not in the document flow, resizing it requires
@@ -24,13 +26,14 @@ let scrollY;
 // of the header.
 // This is also the best place to adjust the scrolling position in case the
 // user has scrolled past the header.
-const resizeStickyBanner = (newHeight: number): Promise<any> => {
+const resizeStickyBanner = (newHeight: number): Promise<number> => {
     if (topSlotHeight !== newHeight) {
         return fastdom.write(() => {
-            stickyBanner.classList.add('sticky-top-banner-ad');
-            // eslint-disable-next-line no-multi-assign
-            stickyBanner.style.height = header.style.marginTop = `${newHeight}px`;
-
+            if (stickyBanner && header) {
+                stickyBanner.classList.add('sticky-top-banner-ad');
+                stickyBanner.style.height = `${newHeight}px`;
+                header.style.marginTop = `${newHeight}px`;
+            }
             if (topSlotHeight !== undefined && headerHeight <= scrollY) {
                 win.scrollBy(0, newHeight - topSlotHeight);
             }
@@ -40,48 +43,58 @@ const resizeStickyBanner = (newHeight: number): Promise<any> => {
         });
     }
 
-    // TODO: Arcane weirdness?
     return Promise.resolve(-1);
 };
 
 // Sudden changes in the layout can be jarring to the user, so we animate
 // them for a better experience. We only do this if the slot is in view
 // though.
-const setupAnimation = (): void =>
+const setupAnimation = (): Promise<any> =>
     fastdom.write(() => {
-        if (scrollY <= headerHeight) {
-            header.classList.add('l-header--animate');
-            stickyBanner.classList.add('sticky-top-banner-ad--animate');
-        } else {
-            header.classList.remove('l-header--animate');
-            stickyBanner.classList.remove('sticky-top-banner-ad--animate');
+        if (stickyBanner && header) {
+            if (scrollY <= headerHeight) {
+                header.classList.add('l-header--animate');
+                stickyBanner.classList.add('sticky-top-banner-ad--animate');
+            } else {
+                header.classList.remove('l-header--animate');
+                stickyBanner.classList.remove('sticky-top-banner-ad--animate');
+            }
         }
     });
 
-const onScroll = (): void => {
+const onScroll = (): ?Promise<any> => {
     scrollY = win.pageYOffset;
     if (!updateQueued) {
         updateQueued = true;
+
         return fastdom
             .write(() => {
                 updateQueued = false;
-                if (headerHeight < scrollY) {
-                    stickyBanner.style.position = 'absolute';
-                    stickyBanner.style.top = `${headerHeight}px`;
-                } else {
-                    // eslint-disable-next-line no-multi-assign
-                    stickyBanner.style.position = stickyBanner.style.top = null;
+                if (stickyBanner) {
+                    if (headerHeight < scrollY) {
+                        stickyBanner.style.position = 'absolute';
+                        stickyBanner.style.top = `${headerHeight}px`;
+                    } else {
+                        stickyBanner.style.position = 'static';
+                        stickyBanner.style.top = 'auto';
+                    }
                 }
             })
             .then(setupAnimation);
     }
 };
 
-const initState = (): void =>
+const initState = (): Promise<any> =>
     fastdom
         .read(() => {
-            headerHeight = header.offsetHeight;
-            return topSlot.offsetHeight;
+            if (header) {
+                headerHeight = header.offsetHeight;
+            }
+            if (topSlot) {
+                return topSlot.offsetHeight;
+            }
+
+            return 0;
         })
         .then(currentHeight =>
             Promise.all([resizeStickyBanner(currentHeight), onScroll()])
@@ -101,7 +114,7 @@ const update = (newHeight: number): Promise<any> =>
 
 // TODO: what are we expecting these parameters to be?
 const onResize = (specs: any, _: any, iframe: any): void => {
-    if (topSlot.contains(iframe)) {
+    if (topSlot && topSlot.contains(iframe)) {
         update(specs.height);
         unregister('resize', onResize);
     }
@@ -120,31 +133,46 @@ const setupListeners = (): void => {
     }
 };
 
+const getAdvertSizeByIndex = (advert: ?Advert, index: number): ?number => {
+    if (advert && advert.size && typeof advert.size !== 'string') {
+        return advert.size[index];
+    }
+};
+
 const onFirstRender = (): void => {
     trackAdRender(topSlotId).then(isRendered => {
         if (isRendered) {
             const advert = getAdvertById(topSlotId);
+            const adSize0 = getAdvertSizeByIndex(advert, 0);
+            const adSize1 = getAdvertSizeByIndex(advert, 1);
+
             if (
-                advert &&
-                advert.size &&
                 // skip for Fabric creatives
-                advert.size[0] !== 88 &&
+                adSize0 !== 88 &&
                 // skip for native ads
-                advert.size[1] > 0
+                adSize1 &&
+                adSize1 > 0
             ) {
                 fastdom
                     .read(() => {
                         const styles = window.getComputedStyle(topSlot);
+
                         return (
                             parseInt(styles.paddingTop, 10) +
-                            parseInt(styles.paddingBottom, 10) +
-                            advert.size[1]
+                                parseInt(styles.paddingBottom, 10) +
+                                adSize1 || 0
                         );
                     })
                     .then(resizeStickyBanner);
             } else {
                 fastdom
-                    .read(() => topSlot.offsetHeight)
+                    .read(() => {
+                        if (topSlot) {
+                            return topSlot.offsetHeight;
+                        }
+
+                        return 0;
+                    })
                     .then(resizeStickyBanner);
             }
         }
@@ -166,7 +194,7 @@ const initStickyTopBanner = (_window: any): Promise<void> => {
         })
     ) {
         header = document.getElementById('header');
-        stickyBanner = topSlot.parentNode;
+        stickyBanner = ((topSlot.parentNode: any): HTMLElement);
 
         // First, let's assign some default values so that everything
         // is in good order before we start animating changes in height
