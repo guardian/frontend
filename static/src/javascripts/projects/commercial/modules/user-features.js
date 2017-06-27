@@ -18,7 +18,7 @@ const userHasData = (): boolean => {
     return !!cookie;
 };
 
-const adFreeDataIsMissing = (): boolean => !getCookie(AD_FREE_USER_COOKIE);
+const adFreeDataIsPresent = (): boolean => !!getCookie(AD_FREE_USER_COOKIE);
 
 const persistResponse = (JsonResponse: () => void) => {
     const expiryDate = new Date();
@@ -27,7 +27,7 @@ const persistResponse = (JsonResponse: () => void) => {
     addCookie(PAYING_MEMBER_COOKIE, !JsonResponse.adblockMessage);
     if (JsonResponse.adFree) {
         addCookie(AD_FREE_USER_COOKIE, expiryDate.getTime().toString());
-    } else if (!adFreeDataIsMissing()) {
+    } else if (adFreeDataIsPresent()) {
         removeCookie(AD_FREE_USER_COOKIE);
     }
 
@@ -70,15 +70,12 @@ const featuresDataIsMissing = (): boolean =>
 const featuresDataIsOld = (): boolean =>
     datedCookieIsOld(USER_FEATURES_EXPIRY_COOKIE);
 
-const adFreeDataIsOld = (): boolean => {
-    const maxDays = 2;
-    return (
-        !adFreeDataIsMissing() && datedCookieIsOld(AD_FREE_USER_COOKIE, maxDays)
-    );
-};
+const adFreeDataIsOld = (): boolean => datedCookieIsOld(AD_FREE_USER_COOKIE, 2);
 
 const userNeedsNewFeatureData = (): boolean =>
-    featuresDataIsMissing() || featuresDataIsOld() || adFreeDataIsOld();
+    featuresDataIsMissing() ||
+    featuresDataIsOld() ||
+    (adFreeDataIsPresent() && adFreeDataIsOld());
 
 const userHasDataAfterSignout = (): boolean =>
     !identity.isUserLoggedIn() && userHasData();
@@ -106,8 +103,7 @@ const isPayingMember = (): boolean =>
     // If the user is logged in, but has no cookie yet, play it safe and assume they're a paying user
     identity.isUserLoggedIn() && getCookie(PAYING_MEMBER_COOKIE) !== 'false';
 
-const isAdFreeUser = (): boolean =>
-    !adFreeDataIsMissing() && !adFreeDataIsOld();
+const isAdFreeUser = (): boolean => adFreeDataIsPresent() && !adFreeDataIsOld();
 
 const toDate = (dateStr: string): Date => {
     const parts = Array.from(dateStr.split('-'), s => parseInt(s, 10));
