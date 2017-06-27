@@ -24,27 +24,48 @@ const updateCommentLink = (): void => {
 };
 
 const enhanceAvatar = (): Promise<void> => {
-    const fallback = document.querySelector(
+    const fallbackEl = document.querySelector(
         '.js-navigation-account-avatar-fallback'
     );
     const avatarEl = document.querySelector('.js-navigation-account-avatar');
+
+    const preloadAvatar = (src: string): Promise<void> => {
+        const image = new Image();
+        image.src = src;
+
+        return new Promise(resolve => {
+            image.onload = resolve;
+        });
+    };
+
+    const swapFallback = (
+        fallback: ?HTMLElement,
+        avatar: ?HTMLElement,
+        src: string
+    ) => {
+        fastdom.write(() => {
+            if (fallback) {
+                fallback.classList.add('u-h');
+            }
+
+            if (avatar) {
+                avatar.setAttribute('src', src);
+                avatar.classList.remove('u-h');
+            }
+        });
+    };
 
     if (!isUserLoggedIn() || !avatarEl) {
         return Promise.resolve();
     }
 
     return avatarAPI.getActive().then(res => {
-        if (res && res.data && res.data.avatarUrl) {
-            return fastdom.write(() => {
-                if (fallback) {
-                    fallback.classList.add('u-h');
-                }
+        const src = res && res.data && res.data.avatarUrl;
 
-                if (avatarEl) {
-                    avatarEl.setAttribute('src', res.data.avatarUrl);
-                    avatarEl.classList.remove('u-h');
-                }
-            });
+        if (src) {
+            preloadAvatar(src).then(() =>
+                swapFallback(fallbackEl, avatarEl, src)
+            );
         }
     });
 };
