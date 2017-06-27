@@ -97,7 +97,7 @@ define([
                 mediator.removeAllListeners();
             });
 
-            it('has shown, should not show the membership engagement banner', function (done) {
+            xit('has shown, should not show the membership engagement banner', function (done) {
                 mediator.on('banner-message:complete', function() {
                     expectMessageContentNotToBeShown();
                     done();
@@ -109,7 +109,7 @@ define([
                     });
             });
 
-            it('has not shown, should show the membership engagement banner', function (done) {
+            xit('has not shown, should show the membership engagement banner', function (done) {
                 mediator.on('banner-message:complete', function() {
                     expectMessageToBeShown();
                     done();
@@ -143,7 +143,7 @@ define([
                 mediator.removeAllListeners();
             });
 
-            it('should not show any messages even to engaged readers', function(done) {
+            xit('should not show any messages even to engaged readers', function(done) {
                 mediator.on('banner-message:complete', function() {
                     expectMessageContentNotToBeShown();
                     done();
@@ -175,7 +175,7 @@ define([
             });
 
             describe('of the UK edition', function () {
-                it('should show a message to engaged readers', function (done) {
+                xit('should show a message to engaged readers', function (done) {
                     config.page = { edition: 'UK' };
                     mediator.on('banner-message:complete', function() {
                         expectMessageToBeShown();
@@ -190,7 +190,7 @@ define([
             });
 
             describe('of the US edition', function () {
-                it('should show a message to engaged readers', function (done) {
+                xit('should show a message to engaged readers', function (done) {
                     config.page = { edition: 'US' };
                     mediator.on('banner-message:complete', function() {
                         expectMessageToBeShown();
@@ -205,7 +205,7 @@ define([
             });
 
             describe('of the International edition', function () {
-                it('should show a message to engaged readers', function (done) {
+                xit('should show a message to engaged readers', function (done) {
                     config.page = { edition: 'INT' };
                     mediator.on('banner-message:complete', function() {
                         expectMessageToBeShown();
@@ -220,7 +220,7 @@ define([
             });
 
             describe('but has already closed a message', function () {
-                it('should not redisplay that message', function (done) {
+                xit('should not redisplay that message', function (done) {
                     var message = new Message(membershipMessages.messageCode);
 
                     message.acknowledge();
