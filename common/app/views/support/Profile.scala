@@ -24,13 +24,11 @@ sealed trait ElementProfile {
     maybeAsset.flatMap(_.url).map(ImgSrc(_, this))
 
   def bestFor(image: ImageMedia): Option[ImageAsset] = {
-    if(ImageServerSwitch.isSwitchedOn) {
-      val sortedCrops = image.imageCrops.sortBy(-_.width)
-      width.flatMap{ desiredWidth =>
-        sortedCrops.find(_.width >= desiredWidth)
-      }.orElse(image.largestImage)
-    }
-    else image.largestImage
+    def closest(crops: Seq[ImageAsset])(width: Int): Option[ImageAsset] =
+      crops.sortBy(crop => (crop.width - width).abs).headOption
+
+    if(ImageServerSwitch.isSwitchedOn) image.largestImage
+    else width.flatMap(closest(image.imageCrops)).orElse(image.largestImage)
   }
   def bestSrcFor(image: ImageMedia): Option[String] = toSrc(bestFor(image))
 
@@ -222,10 +220,18 @@ object ImgSrc extends Logging with implicits.Strings {
       .mkString(", ")
   }
 
-  def srcsetForProfile(profile: Profile, imageContainer: ImageMedia, hidpi: Boolean): String =
-    s"${profile.bestSrcFor(imageContainer).get} ${profile.width.get * (if (hidpi) 2 else 1)}w"
+  def maybeSrcsetForProfile(profile: ElementProfile, imageContainer: ImageMedia, hidpi: Boolean): Option[String] = {
+    val largestOrNearest = if(ImageServerSwitch.isSwitchedOn) profile.bestSrcFor _ else profile.largestSrcFor _
 
-  def srcsetForProfile(profile: Profile, path: String, hidpi: Boolean): String =
+    largestOrNearest(imageContainer).map { src =>
+      s"$src ${profile.width.get * (if (hidpi) 2 else 1)}w"
+    }
+  }
+
+  def srcsetForProfile(profile: ElementProfile, imageContainer: ImageMedia, hidpi: Boolean): String =
+    maybeSrcsetForProfile(profile, imageContainer, hidpi).get
+
+  def srcsetForProfile(profile: ElementProfile, path: String, hidpi: Boolean): String =
     s"${ImgSrc(path, profile)} ${profile.width.get * (if (hidpi) 2 else 1)}w"
 
   def getFallbackUrl(ImageElement: ImageMedia): Option[String] =
