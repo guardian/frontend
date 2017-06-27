@@ -96,7 +96,7 @@ define([
                 $element = bonzo(element);
 
             fastdomPromise.write(function () {
-                $element.append(el);
+                $element.empty().append(el);
             })
             .then(function () {
                 if (hasNewBlock) {

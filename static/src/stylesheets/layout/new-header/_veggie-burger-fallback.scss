@@ -1,6 +1,4 @@
 .veggie-burger-fallback {
-    display: none;
-
     &:checked {
         & ~ .menu {
             @include mq($until: desktop) {
@@ -22,13 +20,13 @@
         & ~ .pillars {
             .pillars__item:not(:first-child) > .pillar-link {
                 @include mq(desktop) {
-                    margin-left: $gs-gutter / 2 - 1;
+                    margin-left: $gs-gutter / 2;
                 }
             }
 
             .pillar-link {
                 @include mq(desktop) {
-                    width: gs-span(2) + $gs-gutter / 2 + 1;
+                    width: gs-span(2) + $gs-gutter / 2;
                 }
             }
 
@@ -62,5 +60,9 @@
                 }
             }
         }
+    }
+
+    &:focus ~ .veggie-burger {
+        background-color: darken($news-main-2, 10%);
     }
 }

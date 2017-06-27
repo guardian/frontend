@@ -2,12 +2,12 @@
     color: $news-support-1;
     float: left;
     position: relative;
-    transition: color 250ms;
 
     &:hover,
     &:focus {
         color: #ffffff;
         text-decoration: none;
+        outline: none;
     }
 }
 
@@ -56,7 +56,6 @@
         right: -$gs-gutter / 2;
         top: -$gs-baseline / 2;
         transform: rotate(-3deg);
-        transition: border-color 250ms, transform 250ms;
 
         @include mq(mobileMedium) {
             border-top-width: ($gs-baseline * 4) + ($gs-baseline / 2);
@@ -77,10 +76,10 @@
 
     &:hover,
     &:focus {
-        color: currentColor;
+        color: $guardian-brand-dark;
 
         &:before {
-            transform: rotate(-3deg) scale(1.05);
+            border-top-color: darken($news-main-2, 10%);
         }
     }
 }
