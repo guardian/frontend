@@ -133,8 +133,7 @@ object NewNavigation {
         opinion,
         theGuardianView,
         columnists,
-        letters,
-        editorials
+        letters
       ),
       List(
         NavLink("Jill Abramson", "/profile/jill-abramson"),
