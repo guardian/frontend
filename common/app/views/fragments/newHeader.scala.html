@@ -12,6 +12,14 @@
     }
 }
 
+@ContributionOrSupporterUrl(edition: String) = {
+    @if(edition == "us") {
+        https://contribute.theguardian.com/us?INTCMP=gdnwb_copts_co_dotcom_header
+    } else {
+        @{Configuration.id.membershipUrl}/@{edition}/supporter?INTCMP=mem_@{edition}_web_newheader_trapezoid
+    }
+}
+
 <header class="@RenderClasses(Map(
             "new-header--mvt-desktop" -> mvt.ABNewDesktopHeader.isParticipating,
             "new-header--slim" -> page.metadata.hasSlimHeader
@@ -40,7 +48,7 @@
                         <a class="header-cta-item header-cta-item--primary"
                             data-link-name="nav2 : supporter-cta"
                             data-edition="@{editionId}"
-                            href="@{Configuration.id.membershipUrl}/@{editionId}/supporter?INTCMP=mem_@{editionId}_web_newheader_trapezoid">
+                            href="@ContributionOrSupporterUrl(editionId)">
                             <span class="header-cta-item__label">
                                 @if(editionId == "us") {
                                     make a <span class="header-cta-item__new-line">contribution</span>
