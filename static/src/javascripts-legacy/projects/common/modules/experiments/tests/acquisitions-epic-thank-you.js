@@ -68,7 +68,10 @@ define([
                 template: function(variant) {
                     return template(acquisitionsEpicThankYouTemplate, {
                         componentName: variant.options.componentName,
-                        membershipUrl: variant.getURL("https://www.theguardian.com/membership", variant.options.campaignCode)
+                        membershipUrl: contributionsUtilities.addTrackingCodesToUrl(
+                            "https://www.theguardian.com/membership",
+                            variant.options.campaignCode
+                        )
                     })
                 }
             }

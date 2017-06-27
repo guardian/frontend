@@ -162,7 +162,6 @@
     "projects/commercial/modules/third-party-tags/audience-science-pql.js"
   ],
   "Joseph Smith": [
-    "projects/common/modules/commercial/contributions-utilities.js",
     "projects/common/modules/experiments/tests/acquisitions-epic-liveblog.js",
     "projects/common/modules/experiments/tests/contributions-epic-always-ask-strategy.js",
     "projects/common/modules/experiments/tests/contributions-epic-ask-four-earning.js",
