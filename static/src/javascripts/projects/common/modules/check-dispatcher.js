@@ -13,8 +13,8 @@ const someCheckPassed = (results): boolean => results.includes(true);
 const everyCheckPassed = (results): boolean => !results.includes(false);
 
 /**
-    Any check added to checksToDispatch should also 
-    be added to the array of checks in './check-mediator-checks'. 
+    Any check added to checksToDispatch should also
+    be added to the array of checks in './check-mediator-checks'.
 **/
 const checksToDispatch = {
     isOutbrainDisabled(): Promise<boolean> {

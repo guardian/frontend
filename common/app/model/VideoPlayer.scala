@@ -25,7 +25,7 @@ case class VideoPlayer(
   hasFaciaHeader: Boolean = false,
   faciaHeaderProperties: Option[VideoFaciaProperties] = None
 ) {
-  def poster: String = profile.bestFor(video.images).getOrElse(Static("images/media-holding.jpg"))
+  def poster: String = profile.bestSrcFor(video.images).getOrElse(Static("images/media-holding.jpg"))
 
   /** Width and height are always defined for video profile, so this is OK. */
   def width: Int = profile.width.get

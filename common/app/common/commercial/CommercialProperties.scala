@@ -8,8 +8,8 @@ import common.Edition.defaultEdition
 import play.api.libs.json.Json
 
 case class CommercialProperties(
-  editionBrandings: Seq[EditionBranding],
-  editionAdTargetings: Seq[EditionAdTargeting]
+  editionBrandings: Set[EditionBranding],
+  editionAdTargetings: Set[EditionAdTargeting]
 ) {
   val isPaidContent: Boolean = branding(defaultEdition).exists(_.isPaid)
   val isFoundationFunded: Boolean = branding(defaultEdition).exists(_.isFoundationFunded)
@@ -20,20 +20,18 @@ case class CommercialProperties(
     branding <- editionBranding.branding
   } yield branding
 
-  def adTargeting(edition: Edition): Map[AdCallParamKey, AdCallParamValue] =
-    editionAdTargetings.
-      filter(_.edition == edition)
-      .map(_.params)
-      .headOption
-      .getOrElse(Map.empty)
-
+  def adTargeting(edition: Edition): Set[AdTargetParam] =
+    editionAdTargetings
+      .find(_.edition == edition)
+      .flatMap(_.paramSet)
+      .getOrElse(Set.empty)
 }
 
 object CommercialProperties {
 
   implicit val commercialPropertiesFormat = Json.format[CommercialProperties]
 
-  val empty = CommercialProperties(editionBrandings = Nil, editionAdTargetings = Nil)
+  val empty = CommercialProperties(editionBrandings = Set.empty, editionAdTargetings = Set.empty)
 
   def fromContent(item: Content): CommercialProperties = CommercialProperties(
     editionBrandings = EditionBranding.fromContent(item),
@@ -54,15 +52,17 @@ object CommercialProperties {
 
   def forNetworkFront(frontId: String): Option[CommercialProperties] = {
     if (isNetworkFront(frontId)) {
-      Some(CommercialProperties(
-        editionBrandings = Nil,
-        editionAdTargetings = EditionAdTargeting.forNetworkFront(frontId)
-      ))
+      Some(
+        CommercialProperties(
+          editionBrandings = Set.empty,
+          editionAdTargetings = EditionAdTargeting.forNetworkFront(frontId)
+        )
+      )
     } else None
   }
 
   def forFrontUnknownToCapi(frontId: String): CommercialProperties = CommercialProperties(
-    editionBrandings = Nil,
+    editionBrandings = Set.empty,
     editionAdTargetings = EditionAdTargeting.forFrontUnknownToCapi(frontId)
   )
 }

@@ -3,12 +3,8 @@
   "Jon Norman": [],
   "Regis Kuckaertz": [],
   "Richard Nguyen": [],
-  "Kate Whalen": [
-    "projects/commercial/modules/messenger/get-stylesheet.js"
-  ],
-  "Lydia Shepherd": [
-    "projects/commercial/modules/messenger/viewport.js"
-  ],
+  "Kate Whalen": [],
+  "Lydia Shepherd": [],
   "sndrs": [
     "lib/detect.js",
     "bootstraps/enhanced/accessibility.js",
@@ -23,16 +19,16 @@
     "bootstraps/enhanced/gallery.js"
   ],
   "Simon Adcock": [
-      "projects/common/modules/onward/breaking-news.js",
-      "projects/commercial/modules/sticky-top-banner.js",
-      "projects/common/modules/article/membership-events.js",
-      "projects/common/modules/discussion/upvote.js",
-      "projects/common/modules/discussion/user-avatars.js",
-      "projects/common/modules/discussion/whole-discussion.js",
-      "projects/common/modules/experiments/tests/bookmarks-email-variants-2.js",
-      "projects/common/modules/ui/blockSharing.js",
-      "projects/common/modules/ui/clickstream.js",
-      "lib/client-rects.js"
+    "projects/common/modules/onward/breaking-news.js",
+    "projects/commercial/modules/sticky-top-banner.js",
+    "projects/common/modules/article/membership-events.js",
+    "projects/common/modules/discussion/upvote.js",
+    "projects/common/modules/discussion/user-avatars.js",
+    "projects/common/modules/discussion/whole-discussion.js",
+    "projects/common/modules/experiments/tests/bookmarks-email-variants-2.js",
+    "projects/common/modules/ui/blockSharing.js",
+    "projects/common/modules/ui/clickstream.js",
+    "lib/client-rects.js"
   ],
   "Nicolas Long": [
     "lib/atob.js",
@@ -59,7 +55,6 @@
     "projects/common/modules/crosswords/anagram-helper/clue-input.js"
   ],
   "GHaberis": [
-    "projects/common/modules/media/videojs-plugins/fullscreener.js",
     "projects/common/modules/media/videojs-plugins/skip-ad.js",
     "projects/common/modules/ui/toggles.js",
     "projects/common/modules/onward/geo-most-popular.js",
@@ -167,7 +162,6 @@
     "projects/commercial/modules/third-party-tags/audience-science-pql.js"
   ],
   "Joseph Smith": [
-    "projects/common/modules/commercial/contributions-utilities.js",
     "projects/common/modules/experiments/tests/acquisitions-epic-liveblog.js",
     "projects/common/modules/experiments/tests/contributions-epic-always-ask-strategy.js",
     "projects/common/modules/experiments/tests/contributions-epic-ask-four-earning.js",

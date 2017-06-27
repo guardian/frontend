@@ -17,7 +17,7 @@ object NavLinks {
   val cities = NavLink("cities", "/cities", "cities")
   val globalDevelopment = NavLink("global development", "/global-development", "global-development")
   val australiaNews = NavLink("australia", "/australia-news", "australia-news", longTitle = "australia news")
-  val auPolitics = NavLink("AU politics", "/australia-news/australian-politics", "australia-news/australian-politics", longTitle = "australian politics")
+  val auPolitics = NavLink("AU politics", "/australia-news/australian-politics", "australia-news/australian-politics", longTitle = "politics")
   val auImmigration = NavLink("immigration", "/australia-news/australian-immigration-and-asylum", "australia-news/australian-immigration-and-asylum")
   val indigenousAustralia = NavLink("indigenous australia", "/australia-news/indigenous-australians", "australia-news/indigenous-australians")
   val indigenousAustraliaOpinion = NavLink("Indigenous", "/commentisfree/series/indigenousx", "commentisfree/series/indigenousx")

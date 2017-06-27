@@ -89,7 +89,7 @@ class VideoSiteMap(contentApiClient: ContentApiClient) extends ExecutionContexts
 
         Url(
           location = item.metadata.webUrl,
-          thumbnail_loc = item.elements.thumbnail.flatMap(thumbnail => Naked.bestFor(thumbnail.images)),
+          thumbnail_loc = item.elements.thumbnail.flatMap(thumbnail => Naked.bestSrcFor(thumbnail.images)),
           content_loc = contentLocation,
           title = item.trail.headline,
           description = item.fields.trailText,

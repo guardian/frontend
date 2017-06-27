@@ -448,7 +448,7 @@ object ReviewAtom {
     for {
       image <- images.headOption
       media = model.content.MediaAtom.imageMediaMake(image, "")
-      url <- ImgSrc.findLargestSrc(media, GoogleStructuredData)
+      url <- GoogleStructuredData.bestSrcFor(media)
     } yield url
   }
 }

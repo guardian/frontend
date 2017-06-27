@@ -72,7 +72,7 @@
                                 <div class="fc-item__image-container u-responsive-ratio inlined-image">
                                 @InlineImage.fromFaciaContent(item).map { fallbackImage =>
                                     <img
-                                    @if(index > 1) {data-}src="@Video700.bestFor(fallbackImage.imageMedia)" class="js-video-playlist-image js-video-playlist-image--@{
+                                    @if(index > 1) {data-}src="@Video700.bestSrcFor(fallbackImage.imageMedia)" class="js-video-playlist-image js-video-playlist-image--@{
                                     index
                                 }" />
                                 }

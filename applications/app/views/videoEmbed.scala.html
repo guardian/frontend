@@ -38,7 +38,7 @@
             }
             <meta itemprop="requiresSubscription" content="no" />
             <meta itemprop="image" content="@Html(video.content.openGraphImage)" />
-            @video.elements.thumbnail.map { img => <meta itemprop="thumbnail" content="@SeoOptimisedContentImage.bestFor(img.images)" /> }
+            @video.elements.thumbnail.map { img => <meta itemprop="thumbnail" content="@SeoOptimisedContentImage.bestSrcFor(img.images)" /> }
             @video.elements.mainVideo.map { videoElement =>
                 @fragments.media.video(VideoPlayer(
                     videoElement,
