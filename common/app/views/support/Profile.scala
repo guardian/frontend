@@ -211,12 +211,12 @@ object ImgSrc extends Logging with implicits.Strings {
     val isPng = maybePath.exists(path => path.toLowerCase.endsWith("png"))
     breakpointWidth.toPixels(breakpointWidths)
       .map(browserWidth => Profile(width = Some(browserWidth), hidpi = hidpi, isPng = isPng))
-      .map { profile => {
+      .map { profile =>
         maybePath
           .map(url => srcsetForProfile(profile, url, hidpi))
           .orElse(maybeImageMedia.map(imageContainer => srcsetForProfile(profile, imageContainer, hidpi)))
           .getOrElse("")
-      } }
+      }
       .mkString(", ")
   }
 
