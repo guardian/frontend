@@ -18,8 +18,8 @@ export const TESTS: Array<ABTest> = [
     getAcquisitionTest(),
     tailorSurvey,
     ExplainerSnippet(),
-    new AcquisitionsEpicElectionInteractiveEnd(),
-    new AcquisitionsEpicElectionInteractiveSlice(),
+    AcquisitionsEpicElectionInteractiveEnd,
+    AcquisitionsEpicElectionInteractiveSlice,
     new AcquisitionsThrasherUkElection(),
     new BundleDigitalSubPriceTest1Thrasher(),
 ]

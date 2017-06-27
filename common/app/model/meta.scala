@@ -1,10 +1,10 @@
 package model
 
-import commercial.campaigns.PersonalInvestmentsCampaign
 import com.gu.contentapi.client.model.v1.{Content => CapiContent}
 import com.gu.contentapi.client.model.{v1 => contentapi}
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichCapiDateTime
-import common.commercial.{AdUnitMaker, CommercialProperties, EditionAdTargeting, EditionBranding}
+import commercial.campaigns.PersonalInvestmentsCampaign
+import common.commercial.{AdUnitMaker, CommercialProperties}
 import common.dfp._
 import common.{Edition, ManifestData, NavItem, Pagination}
 import conf.Configuration
@@ -430,8 +430,8 @@ case class TagCombiner(
     commercial = Some(
       //We only use the left tag for CommercialProperties
       CommercialProperties(
-        leftTag.properties.commercial.map(_.editionBrandings).getOrElse(Nil),
-        leftTag.properties.commercial.map(_.editionAdTargetings).getOrElse(Nil)
+        leftTag.properties.commercial.map(_.editionBrandings).getOrElse(Set.empty),
+        leftTag.properties.commercial.map(_.editionAdTargetings).getOrElse(Set.empty)
       )
     )
   )

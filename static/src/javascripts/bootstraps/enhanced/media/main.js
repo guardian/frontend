@@ -14,7 +14,7 @@ import Component from 'common/modules/component';
 import events from 'common/modules/video/events';
 import videoMetadata from 'common/modules/video/metadata';
 import { fullscreener } from 'common/modules/media/videojs-plugins/fullscreener';
-import skipAd from 'common/modules/media/videojs-plugins/skip-ad';
+import { skipAd } from 'common/modules/media/videojs-plugins/skip-ad';
 import { videoContainerInit } from 'common/modules/video/video-container';
 import onwardContainer from 'common/modules/video/onward-container';
 import moreInSeriesContainer from 'common/modules/video/more-in-series-container';

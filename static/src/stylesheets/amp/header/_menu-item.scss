@@ -3,6 +3,19 @@
     overflow-x: hidden;
     position: relative;
     width: 100%;
+
+    .menu-group--primary & {
+        &:not(:last-child):after {
+            background-color: darken($guardian-brand-dark, 4%);
+            bottom: 0;
+            content: '';
+            display: block;
+            height: 1px;
+            left: $menu-spacing-left-small;
+            position: absolute;
+            width: 100%;
+        }
+    }
 }
 
 .menu-item__title {
@@ -13,6 +26,7 @@
     cursor: pointer;
     display: block;
     font-size: 20px;
+    font-weight: 400;
     line-height: 20px;
     outline: none;
     padding: 8px $veggie-burger-medium / 2 + $gs-gutter / 2 8px $menu-spacing-left-small;
@@ -28,21 +42,10 @@
 
 .menu-item__title--primary {
     font-size: 24px;
-    font-weight: 400;
     padding-bottom: 16px;
     padding-top: $gs-baseline / 2;
-
-    &:after {
-        background-color: darken($guardian-brand-dark, 4%);
-        bottom: 0;
-        content: '';
-        display: block;
-        height: 1px;
-        left: $menu-spacing-left-small;
-        position: absolute;
-        width: 100%;
-    }
 }
+
 
 .menu-item__toggle {
     color: $news-support-2;

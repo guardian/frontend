@@ -65,6 +65,7 @@ class NavigationController extends Controller {
         "items" -> Json.arr(
           Json.obj(
             "topLevelSections" -> NewNavigation.topLevelSections.map( section => topLevelNavItems(section) ),
+            "membershipLinks" -> NewNavigation.getMembershipLinks(edition).mostPopular.map( section => navSectionLink(section)),
             "secondarySections" -> navSecondarySections
           )
         )
