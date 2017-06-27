@@ -220,16 +220,8 @@ object ImgSrc extends Logging with implicits.Strings {
       .mkString(", ")
   }
 
-  def maybeSrcsetForProfile(profile: ElementProfile, imageContainer: ImageMedia, hidpi: Boolean): Option[String] = {
-    val largestOrNearest = if(ImageServerSwitch.isSwitchedOn) profile.bestSrcFor _ else profile.largestSrcFor _
-
-    largestOrNearest(imageContainer).map { src =>
-      s"$src ${profile.width.get * (if (hidpi) 2 else 1)}w"
-    }
-  }
-
   def srcsetForProfile(profile: ElementProfile, imageContainer: ImageMedia, hidpi: Boolean): String =
-    maybeSrcsetForProfile(profile, imageContainer, hidpi).get
+    s"${profile.bestSrcFor(imageContainer).get} ${profile.width.get * (if (hidpi) 2 else 1)}w"
 
   def srcsetForProfile(profile: ElementProfile, path: String, hidpi: Boolean): String =
     s"${ImgSrc(path, profile)} ${profile.width.get * (if (hidpi) 2 else 1)}w"
