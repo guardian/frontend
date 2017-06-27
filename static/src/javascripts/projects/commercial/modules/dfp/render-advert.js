@@ -31,7 +31,7 @@ const addClassIfHasClass = newClassNames =>
                     advert.node.classList.contains(className)
                 )
             ) {
-                return fastdom.write(() => {
+                return fastdom.mutate(() => {
                     newClassNames.forEach(className => {
                         advert.node.classList.add(className);
                     });
@@ -69,13 +69,13 @@ sizeCallbacks[adSizes.halfPage] = () => {
 };
 
 sizeCallbacks[adSizes.video] = (_, advert) => {
-    fastdom.write(() => {
+    fastdom.mutate(() => {
         advert.node.classList.add('u-h');
     });
 };
 
 sizeCallbacks[adSizes.video2] = (_, advert) => {
-    fastdom.write(() => {
+    fastdom.mutate(() => {
         advert.node.classList.add('ad-slot--outstream');
     });
 };
@@ -87,7 +87,7 @@ sizeCallbacks[adSizes.video2] = (_, advert) => {
 const outOfPageCallback = (event, advert) => {
     if (!event.slot.getOutOfPage()) {
         const parent = advert.node.parentNode;
-        return fastdom.write(() => {
+        return fastdom.mutate(() => {
             advert.node.classList.add('u-h');
             // if in a slice, add the 'no mpu' class
             if (parent.classList.contains('fc-slice__item--mpu-candidate')) {
@@ -105,7 +105,7 @@ sizeCallbacks[adSizes.empty] = outOfPageCallback;
 sizeCallbacks[adSizes.portrait] = () => {
     // remove geo most popular
     geoMostPopular.whenRendered.then(popular =>
-        fastdom.write(() => {
+        fastdom.mutate(() => {
             popular.elem.remove();
             popular.elem = null;
         })
@@ -123,7 +123,7 @@ const addContentClass = adSlotNode => {
     const adSlotContent = qwery('> div:not(.ad-slot__label)', adSlotNode);
 
     if (adSlotContent.length) {
-        fastdom.write(() => {
+        fastdom.mutate(() => {
             adSlotContent[0].classList.add('ad-slot__content');
         });
     }
@@ -157,14 +157,14 @@ const renderAdvert = (advert: Advert, slotRenderEvent: any) => {
 
             const addRenderedClass = () =>
                 isRendered
-                    ? fastdom.write(() => {
+                    ? fastdom.mutate(() => {
                           advert.node.classList.add('ad-slot--rendered');
                       })
                     : Promise.resolve();
 
             const addFeedbackDropdownToggle = () =>
                 config.switches.adFeedback && isRendered
-                    ? fastdom.write(() => {
+                    ? fastdom.mutate(() => {
                           if (
                               !advert.node.classList.contains('js-toggle-ready')
                           ) {
@@ -177,7 +177,7 @@ const renderAdvert = (advert: Advert, slotRenderEvent: any) => {
             const applyFeedbackOnClickListeners = slotRender => {
                 const readyClass = 'js-onclick-ready';
                 return config.switches.adFeedback && isRendered
-                    ? fastdom.write(() => {
+                    ? fastdom.mutate(() => {
                           qwery(
                               '.js-ad-feedback-option:not(.js-onclick-ready)'
                           ).forEach(el => {

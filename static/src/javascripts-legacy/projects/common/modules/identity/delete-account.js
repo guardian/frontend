@@ -12,13 +12,13 @@ define([
     var deleteLoaderElm = $('#deleteLoader')[0];
 
     function disableDeleteButton() {
-        fastdom.write(function () {
+        fastdom.mutate(function () {
             deleteButtonElm && (deleteButtonElm.disabled = true);
         });
     }
 
     function showLoader() {
-        fastdom.write(function () {
+        fastdom.mutate(function () {
             deleteLoaderElm && deleteLoaderElm.classList.remove("is-hidden");
         });
     }

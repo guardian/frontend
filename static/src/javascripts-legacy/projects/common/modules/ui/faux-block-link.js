@@ -14,12 +14,12 @@ define([
 
     return function () {
         var showIntentToClick = function (e) {
-            fastdom.write(function () {
+            fastdom.mutate(function () {
                 $(e.currentTarget).parent().addClass(hoverStateClassName);
             });
         };
         var removeIntentToClick = function (e) {
-            fastdom.write(function () {
+            fastdom.mutate(function () {
                 $(e.currentTarget).parent().removeClass(hoverStateClassName);
             });
         };

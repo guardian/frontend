@@ -23,7 +23,7 @@ class Revealer {
         const markup = revealerTpl(this.params);
 
         return fastdom
-            .write(() => {
+            .mutate(() => {
                 this.adSlot.insertAdjacentHTML('beforeend', markup);
                 // #? `classList.add` takes multiple arguments, but we are using it
                 // here with arity 1 because polyfill.io has incorrect support with IE 10 and 11.
@@ -50,9 +50,9 @@ class Revealer {
                     );
                 }
             })
-            .then(() => fastdom.read(detect.getViewport))
+            .then(() => fastdom.measure(detect.getViewport))
             .then(viewport =>
-                fastdom.write(() => {
+                fastdom.mutate(() => {
                     const background = this.adSlot.getElementsByClassName(
                         'creative__background'
                     )[0];

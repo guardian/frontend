@@ -44,7 +44,7 @@ Promise.all([
 ]).then(() => {
     init();
     fastdom
-        .read(
+        .measure(
             () =>
                 document.documentElement &&
                 document.documentElement.getBoundingClientRect().height

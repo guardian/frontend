@@ -17,7 +17,7 @@ const classes = {
 };
 
 const hideInputAndShowPreview = (el: ?Node): void => {
-    fastdom.write(() => {
+    fastdom.mutate(() => {
         $(`.${classes.textInput}`, el).addClass('is-hidden');
         $(`.${classes.signupButton}`, el).removeClass(classes.styleSignup);
         $(`.${classes.previewButton}`, el).removeClass('is-hidden');
@@ -32,7 +32,7 @@ const validate = (form: ?HTMLFormElement): boolean => {
 
 const addSubscriptionMessage = (buttonEl: HTMLButtonElement): void => {
     const meta = $.ancestor(buttonEl, classes.wrapper);
-    fastdom.write(() => {
+    fastdom.mutate(() => {
         $(buttonEl.form).addClass('is-hidden');
         $(`.${classes.previewButton}`, meta).addClass('is-hidden');
         $(`.${classes.signupConfirm}`, meta).removeClass('is-hidden');
@@ -72,7 +72,7 @@ const subscribeToEmail = (buttonEl: HTMLButtonElement): void => {
 const showSignupForm = (buttonEl: HTMLButtonElement): void => {
     const form = buttonEl.form;
     const meta = $.ancestor(buttonEl, 'js-newsletter-meta');
-    fastdom.write(() => {
+    fastdom.mutate(() => {
         $(`.${classes.textInput}`, form).removeClass('is-hidden').focus();
         $(`.${classes.signupButton}`, form).addClass(classes.styleSignup);
         $(`.${classes.previewButton}`, meta).addClass('is-hidden');
@@ -81,14 +81,14 @@ const showSignupForm = (buttonEl: HTMLButtonElement): void => {
 };
 
 const updatePageForLoggedIn = (emailAddress: string, el: ?Node): void => {
-    fastdom.write(() => {
+    fastdom.mutate(() => {
         hideInputAndShowPreview(el);
         $(`.${classes.textInput}`, el).val(emailAddress);
     });
 };
 
 const showSecondStageSignup = (buttonEl: HTMLButtonElement): void => {
-    fastdom.write(() => {
+    fastdom.mutate(() => {
         buttonEl.setAttribute('type', 'button');
         bean.on(buttonEl, 'click', () => {
             showSignupForm(buttonEl);

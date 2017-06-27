@@ -1,7 +1,6 @@
 // @flow
 import $ from 'lib/$';
 import bonzo from 'bonzo';
-import fastdom from 'fastdom';
 import mediator from 'lib/mediator';
 import userPrefs from 'common/modules/user-prefs';
 import { ContainerToggle } from 'facia/modules/ui/container-toggle';
@@ -57,7 +56,7 @@ describe('Container Toggle', () => {
         const toggle = new ContainerToggle(container);
         toggle.addToggle();
 
-        fastdom.defer(1, () => {
+        setTimeout(() => {
             expect($container.hasClass('js-container--toggle')).toBeFalsy();
             done();
         });
@@ -67,7 +66,7 @@ describe('Container Toggle', () => {
         const toggle = new ContainerToggle(container);
         toggle.addToggle();
 
-        fastdom.defer(1, () => {
+        setTimeout(() => {
             expect(
                 $container.hasClass('fc-container--has-toggle')
             ).toBeTruthy();
@@ -79,7 +78,7 @@ describe('Container Toggle', () => {
         const toggle = new ContainerToggle(container);
         toggle.addToggle();
 
-        fastdom.defer(1, () => {
+        setTimeout(() => {
             expect(
                 $('.js-container__header .fc-container__toggle', container)
                     .length
@@ -92,7 +91,7 @@ describe('Container Toggle', () => {
         const toggle = new ContainerToggle(container);
         toggle.addToggle();
 
-        fastdom.defer(1, () => {
+        setTimeout(() => {
             assertState($container, 'open');
             done();
         });
@@ -102,10 +101,10 @@ describe('Container Toggle', () => {
         const toggle = new ContainerToggle(container);
         toggle.addToggle();
 
-        fastdom.defer(1, () => {
+        setTimeout(() => {
             simulateClick();
 
-            fastdom.defer(1, () => {
+            setTimeout(() => {
                 assertState($container, 'closed');
                 done();
             });
@@ -117,25 +116,25 @@ describe('Container Toggle', () => {
         toggle.addToggle();
 
         // click button
-        fastdom.defer(1, () => {
+        setTimeout(() => {
             simulateClick();
 
             const expectedValue = {};
             expectedValue[containerId] = 'closed';
 
-            fastdom.defer(1, () => {
+            setTimeout(() => {
                 expect(userPrefs.get(storageId)).toEqual(expectedValue);
 
                 // now close container
                 simulateClick();
 
-                fastdom.defer(1, () => {
+                setTimeout(() => {
                     expect(userPrefs.get(storageId)).toEqual({});
 
                     done();
-                });
-            });
-        });
+                }, 10);
+            }, 10);
+        }, 10);
     });
 
     it('initial state should be based on user preference', done => {
@@ -145,9 +144,9 @@ describe('Container Toggle', () => {
         const toggle = new ContainerToggle(container);
         toggle.addToggle();
 
-        fastdom.defer(1, () => {
+        setTimeout(() => {
             assertState($container, 'closed');
             done();
-        });
+        }, 10);
     });
 });

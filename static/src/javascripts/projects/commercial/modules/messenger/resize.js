@@ -41,7 +41,7 @@ const resize = (
         styles.height = normalise(specs.height);
     }
 
-    return fastdom.write(() => {
+    return fastdom.mutate(() => {
         Object.assign(adSlot.style, styles);
         Object.assign(iframe.style, styles);
     });

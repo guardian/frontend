@@ -400,7 +400,7 @@ Loader.prototype.gotoComment = function(id, fromRequest) {
         var commentsAreHidden = $('.js-discussion-main-comments').css('display') === 'none';
         // If comments are hidden, lets show them
         if (commentsAreHidden) {
-            fastdom.write(function(){
+            fastdom.mutate(function(){
                 thisLoader.comments.showHiddenComments();
                 thisLoader.removeState('truncated');
                 var $showAllButton = $('.d-discussion__show-all-comments');
@@ -420,7 +420,7 @@ Loader.prototype.gotoComment = function(id, fromRequest) {
 
         // Scroll to toolbar and show message
         scroller.scrollToElement(qwery('.js-discussion-toolbar'), 100);
-        fastdom.write(function(){
+        fastdom.mutate(function(){
             $('.js-discussion-main-comments').prepend('<div class="d-discussion__message d-discussion__message--error">The comment you requested could not be found.</div>');
         });
 

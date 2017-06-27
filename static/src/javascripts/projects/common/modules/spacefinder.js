@@ -323,7 +323,7 @@ const getMeasurements = (
           ])
         : null;
 
-    return fastdom.read(() => {
+    return fastdom.measure(() => {
         const bodyDims =
             rules.body instanceof Element && rules.body.getBoundingClientRect();
         const candidatesWithDims = (candidates: any[]).map(getDimensions);

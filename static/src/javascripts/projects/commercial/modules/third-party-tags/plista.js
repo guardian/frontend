@@ -63,7 +63,7 @@ const embed = function(publickey, widgetName, geo, u, categories) {
 };
 
 module.load = function() {
-    fastdom.write(() => {
+    fastdom.mutate(() => {
         embed(config.page.plistaPublicApiKey, 'innerArticle', 'au');
     });
 };

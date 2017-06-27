@@ -2,13 +2,11 @@ define([
     'lib/$',
     'lib/noop',
     'helpers/fixtures',
-    'fastdom',
     'helpers/injector'
 ], function (
     $,
     noop,
     fixtures,
-    fastdom,
     Injector
 ) {
     var nextVideoAutoplay,
@@ -68,21 +66,21 @@ define([
             done();
         });
 
-        it('should show end slate information', function (done) {
+        it('should show end slate information', function(done) {
             nextVideoAutoplay.triggerEndSlate();
-            fastdom.read(function () {
+            setTimeout(function() {
                 expect($('.js-hosted-next-autoplay', $fixturesContainer).hasClass('js-autoplay-start')).toBeTruthy();
                 done();
-            });
+            }, 20);
         });
 
-        it('should hide end slate information when cancel button is clicked', function (done) {
+        it('should hide end slate information when cancel button is clicked', function(done) {
             nextVideoAutoplay.addCancelListener();
             document.querySelector('.js-autoplay-cancel').click();
-            fastdom.read(function () {
+            setTimeout(function() {
                 expect($('.js-hosted-next-autoplay', $fixturesContainer).hasClass('hosted-slide-out')).toBeTruthy();
                 done();
-            });
+            }, 20);
         });
 
         it('should not trigger autoplay when there is no next video', function (done) {

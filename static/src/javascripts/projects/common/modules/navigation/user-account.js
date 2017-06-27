@@ -13,7 +13,7 @@ const updateCommentLink = (): void => {
     if (commentItem && commentLink) {
         const user = getUserFromCookie();
 
-        fastdom.write(() => {
+        fastdom.mutate(() => {
             commentItem.classList.remove('u-h');
             commentLink.setAttribute(
                 'href',
@@ -43,7 +43,7 @@ const enhanceAvatar = (): Promise<void> => {
         avatar: ?HTMLElement,
         src: string
     ) => {
-        fastdom.write(() => {
+        fastdom.mutate(() => {
             if (fallback) {
                 fallback.classList.add('u-h');
             }
@@ -87,7 +87,7 @@ const showMyAccountIfNecessary = (): void => {
         '.js-navigation-account-username'
     );
 
-    fastdom.write(() => {
+    fastdom.mutate(() => {
         if (signIn) {
             signIn.classList.add('u-h');
         }

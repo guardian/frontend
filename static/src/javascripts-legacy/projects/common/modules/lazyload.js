@@ -40,7 +40,7 @@ define([
                     mode: 'cors',
                 })
                 .then(function (resp) {
-                    return fastdom.write(function() {
+                    return fastdom.mutate(function() {
                         $container
                             .html(options.beforeInsert(resp.html))
                             .addClass('lazyloaded');

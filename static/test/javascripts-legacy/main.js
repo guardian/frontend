@@ -21,7 +21,7 @@ requirejs.config({
         'react/addons': '/base/node_modules/react/dist/react-with-addons',
         EventEmitter: '/base/node_modules/wolfy87-eventemitter/EventEmitter',
         fastclick:    '/base/node_modules/fastclick/fastclick',
-        fastdom:      '/base/node_modules/fastdom/index',
+        fastdom:      '/base/node_modules/fastdom/fastdom',
         fence:        '/base/node_modules/fence/fence',
         lodash:       '/base/node_modules/lodash-amd/compat',
         qwery:        '/base/node_modules/qwery/qwery',

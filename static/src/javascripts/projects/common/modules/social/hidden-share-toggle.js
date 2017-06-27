@@ -10,13 +10,13 @@ const toggleDisplay = (event?: Event): void => {
     }
 
     $('.js-social__secondary').each(icon => {
-        fastdom.write(() => {
+        fastdom.mutate(() => {
             $(icon).toggleClass('social--hidden');
         });
     });
 
     $('.js-social--top').each(topSocial => {
-        fastdom.write(() => {
+        fastdom.mutate(() => {
             $(topSocial).toggleClass('social--expanded-top');
         });
     });
@@ -38,7 +38,7 @@ const hiddenShareToggle = (): void => {
         toggleDisplay();
     });
 
-    fastdom.write(() => {
+    fastdom.mutate(() => {
         $('.js-social__item--more').toggleClass('social--hidden');
     });
 };

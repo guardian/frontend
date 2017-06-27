@@ -2,14 +2,12 @@ define([
     'lib/$',
     'lib/noop',
     'helpers/fixtures',
-    'fastdom',
     'raw-loader!fixtures/commercial/hosted/gallery.html',
     'helpers/injector'
 ], function (
     $,
     noop,
     fixtures,
-    fastdom,
     galleryHtml,
     Injector
 ) {

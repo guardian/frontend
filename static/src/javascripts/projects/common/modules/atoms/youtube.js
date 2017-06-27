@@ -192,7 +192,7 @@ const onPlayerStateChange = (atomId, event): void =>
 const checkElemForVideo = (elem: ?HTMLElement): void => {
     if (!elem) return;
 
-    fastdom.read(() => {
+    fastdom.measure(() => {
         $('.youtube-media-atom', elem).each((el, index) => {
             const iframe = el.querySelector('iframe');
 

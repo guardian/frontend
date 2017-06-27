@@ -22,7 +22,7 @@ define([
                 mode: 'cors'
             }).then(function (resp) {
                 if (resp.html) {
-                    fastdom.write(function () {
+                    fastdom.mutate(function () {
                         $(el).html(resp.html)
                             .removeClass(ELEMENT_INITIAL_CLASS)
                             .addClass(ELEMENT_UPGRADED_CLASS);

@@ -77,7 +77,7 @@ define([
                     min: 'tablet',
                     max: 'leftCol'
                 }) && (!prev.focussed || prev.focussed.id !== this.props.focussed.id)) {
-                fastdom.read(function () {
+                fastdom.measure(function () {
                     this.scrollIntoView(this.props.focussed);
                 }.bind(this));
             }

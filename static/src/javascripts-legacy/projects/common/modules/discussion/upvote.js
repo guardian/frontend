@@ -41,21 +41,21 @@ define([
     }
 
     function setClicked (target) {
-        return fastdom.write(function () {
+        return fastdom.mutate(function () {
             target.classList.remove(RECOMMENDATION_CLASS);
             target.classList.add('d-comment__recommend--clicked');
         });
     }
 
     function unsetClicked (target) {
-        return fastdom.write(function () {
+        return fastdom.mutate(function () {
             target.classList.add(RECOMMENDATION_CLASS);
             target.classList.remove('d-comment__recommend--clicked');
         });
     }
 
     function setRecommended (target) {
-        return fastdom.write(function () {
+        return fastdom.mutate(function () {
             target.classList.add('d-comment__recommend--recommended');
         });
     }
@@ -64,7 +64,7 @@ define([
         var tooltip = document.querySelector('.' + TOOLTIP_CLASS);
         var links = tooltip.querySelectorAll('.js-rec-tooltip-link');
 
-        return fastdom.write(function () {
+        return fastdom.mutate(function () {
             updateReturnUrl(links, target.getAttribute('data-comment-url'));
             tooltip.removeAttribute('hidden');
             target.appendChild(tooltip);
@@ -83,7 +83,7 @@ define([
     }
 
     function closeTooltip () {
-        return fastdom.write(function () {
+        return fastdom.mutate(function () {
             document.querySelector('.' + TOOLTIP_CLASS).setAttribute('hidden', '');
         });
     }

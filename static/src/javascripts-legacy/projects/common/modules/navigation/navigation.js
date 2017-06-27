@@ -22,14 +22,14 @@ define([
 
             if (detect.isIOS() && detect.getUserAgent.version > 5) {
                 // crashes mobile safari < 6, so we add it here after detection
-                fastdom.write(function () {
+                fastdom.mutate(function () {
                     $('.navigation__scroll').css({'-webkit-overflow-scrolling': 'touch'});
                 });
             }
         },
 
         jsEnableFooterNav: function () {
-            fastdom.write(function () {
+            fastdom.mutate(function () {
                 $('.navigation-container--default').removeClass('navigation-container--default').addClass('navigation-container--collapsed');
             });
         },
@@ -38,7 +38,7 @@ define([
             var megaNavCopy = $.create($('.js-mega-nav').html()),
                 placeholder = $('.js-mega-nav-placeholder');
 
-            fastdom.write(function () {
+            fastdom.mutate(function () {
                 $('.global-navigation', megaNavCopy).addClass('global-navigation--top');
                 placeholder.append(megaNavCopy);
             });
@@ -53,7 +53,7 @@ define([
                 var target = $('.' + e.currentTarget.getAttribute('data-target-nav'));
 
                 e.preventDefault();
-                fastdom.write(function () {
+                fastdom.mutate(function () {
                     target.toggleClass('navigation-container--expanded navigation-container--collapsed');
                     mediator.emit(target.hasClass('navigation-container--expanded') ? 'modules:nav:open' : 'modules:nav:close');
                 });

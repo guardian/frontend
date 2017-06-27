@@ -62,7 +62,7 @@ define([
                 },
                 submissionHtml = template(successHtml, submissionMessage);
 
-            fastdom.write(function () {
+            fastdom.mutate(function () {
                 $form.addClass('email-sub__form--is-hidden');
                 $form.after(submissionHtml);
             });
@@ -114,7 +114,7 @@ define([
                     ui.updateFormForLoggedIn(userFromId, el);
                 });
 
-                fastdom.write(function () {
+                fastdom.muate(function () {
                     if (formDisplayNameNormalText) {
                         $('.js-email-sub__display-name-normal-text', el).text(formDisplayNameNormalText);
 
@@ -157,7 +157,7 @@ define([
             },
             updateFormForLoggedIn: function (userFromId, el) {
                 if (userFromId && userFromId.primaryEmailAddress) {
-                    fastdom.write(function () {
+                    fastdom.mutate(function () {
                         $('.js-email-sub__inline-label', el).addClass('email-sub__inline-label--is-hidden');
                         $('.js-email-sub__submit-button', el).addClass('email-sub__submit-button--solo');
                         $('.js-email-sub__text-input', el).val(userFromId.primaryEmailAddress);
@@ -167,17 +167,17 @@ define([
             freezeHeight: function ($wrapper, reset) {
                 var wrapperHeight,
                     getHeight = function () {
-                        fastdom.read(function () {
+                        fastdom.measure(function () {
                             wrapperHeight = $wrapper[0].clientHeight;
                         });
                     },
                     setHeight = function () {
-                        fastdom.defer(function () {
+                        fastdom.mutate(function () {
                             $wrapper.css('min-height', wrapperHeight);
                         });
                     },
                     resetHeight = function () {
-                        fastdom.write(function () {
+                        fastdom.mutate(function () {
                             $wrapper.css('min-height', '');
                             getHeight();
                             setHeight();
@@ -195,7 +195,7 @@ define([
             },
             setIframeHeight: function (iFrameEl, callback) {
                 return function () {
-                    fastdom.write(function () {
+                    fastdom.mutate(function () {
                         iFrameEl.height = '';
                         iFrameEl.height = iFrameEl.contentWindow.document.body.clientHeight + 'px';
                         callback.call();

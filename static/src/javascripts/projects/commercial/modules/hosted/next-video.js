@@ -13,7 +13,7 @@ const loadNextVideo = () => {
                 mode: 'cors',
             }
         ).then(json =>
-            fastdom.write(() => {
+            fastdom.mutate(() => {
                 let i;
                 for (i = 0; i < placeholders.length; i += 1) {
                     placeholders[i].innerHTML = json.html;

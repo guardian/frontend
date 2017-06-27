@@ -12,7 +12,7 @@ const launchOverlay = (event: Event): void => {
         'img:not(.gu-image):not(.responsive-img)'
     );
 
-    fastdom.write(() => {
+    fastdom.mutate(() => {
         images.forEach(img => {
             img.setAttribute('data-pin-nopin', 'true');
         });
@@ -24,7 +24,7 @@ const launchOverlay = (event: Event): void => {
 const initPinterest = (): void => {
     const buttons = document.querySelectorAll('.social__item--pinterest');
 
-    fastdom.write(() => {
+    fastdom.mutate(() => {
         buttons.forEach(el => {
             el.addEventListener('click', launchOverlay);
         });

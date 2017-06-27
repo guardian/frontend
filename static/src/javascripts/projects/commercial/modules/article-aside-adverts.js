@@ -42,11 +42,11 @@ const articleAsideAdvertsInit = (
     }
 
     return fastdom
-        .read((): number => $mainCol.dim().height)
+        .measure((): number => $mainCol.dim().height)
         .then((mainColHeight: number) => {
             // Should switch to 'right-small' MPU for short articles
             if (mainColHeight < minContentHeight()) {
-                return fastdom.write(() => {
+                return fastdom.mutate(() => {
                     $adSlot.removeClass('right-sticky js-sticky-mpu is-sticky');
                     $adSlot[0].setAttribute(
                         'data-mobile',

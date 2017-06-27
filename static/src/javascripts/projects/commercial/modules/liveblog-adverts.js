@@ -136,7 +136,7 @@ export const initLiveblogAdverts = (
     }
 
     fastdom
-        .read(() => (WINDOWHEIGHT = getWindowHeight()))
+        .measure(() => (WINDOWHEIGHT = getWindowHeight()))
         .then(getSpaceFillerRules)
         .then(fill)
         .then(stop);

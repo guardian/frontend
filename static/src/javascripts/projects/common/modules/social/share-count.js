@@ -30,7 +30,7 @@ const incrementShareCount = (amount: number): void => {
             ? `${Math.round(displayCount / 1000)}k`
             : displayCount;
 
-        fastdom.write(() => {
+        fastdom.mutate(() => {
             $fullValueEls.text(formattedDisplayCount);
             $shortValueEls.text(shortDisplayCount);
         });

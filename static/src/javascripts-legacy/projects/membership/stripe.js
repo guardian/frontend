@@ -72,7 +72,7 @@ define([
 
         bean.on($button[0], 'click', handler());
 
-        fastdom.write(function () {
+        fastdom.mutate(function () {
             if (oldCardType) {
                 $type.removeClass(oldCardType);
             }
@@ -94,7 +94,7 @@ define([
             var email = $button.data('email');
             return function (e) {
                 e.preventDefault();
-                fastdom.write(loading.showDots);
+                fastdom.mutate(loading.showDots);
 
                 checkoutHandler.open({
                     email: email,
@@ -102,7 +102,7 @@ define([
                     panelLabel: 'Update',
                     token: update(endpoint),
                     closed: function () {
-                        fastdom.write(loading.hideDots);
+                        fastdom.mutate(loading.hideDots);
                     }
                 });
                 /*

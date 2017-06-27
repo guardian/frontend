@@ -131,12 +131,12 @@ define([
             }, 0);
         }
 
-        var seriesTags = pick(getSummary().tags, function(v, k) { 
-            return contains(k, 'series'); 
+        var seriesTags = pick(getSummary().tags, function(v, k) {
+            return contains(k, 'series');
         });
 
-        var seriesTagsSummary = mapValues(seriesTags, function(tag) { 
-            return views(tag[1]) + views(tag[2]); 
+        var seriesTagsSummary = mapValues(seriesTags, function(tag) {
+            return views(tag[1]) + views(tag[2]);
         });
 
         return seriesTagsSummary;
@@ -387,7 +387,7 @@ define([
 
         if (tags.length) {
             tagsHTML = template(viewMegaNav, {tags: tags.map(tagHtml).join('')});
-            fastdom.write(function () {
+            fastdom.mutate(function () {
                 getMegaNav().prepend(tagsHTML);
             });
             inMegaNav = true;
@@ -396,7 +396,7 @@ define([
 
     function removeFromMegaNav() {
         getMegaNav().each(function (megaNav) {
-            fastdom.write(function () {
+            fastdom.mutate(function () {
                 $('.js-global-navigation__section--history', megaNav).remove();
             });
         });

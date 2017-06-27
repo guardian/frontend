@@ -82,7 +82,7 @@ define([
                 var stickyClueWrapperOffset = $stickyClueWrapper.offset();
                 var scrollY = window.scrollY;
 
-                fastdom.write(function () {
+                fastdom.mutate(function () {
                     // Clear previous state
                     $stickyClueWrapper.css('top', '').css('bottom', '').removeClass('is-fixed');
 
@@ -286,10 +286,10 @@ define([
             if (detect.isBreakpoint({
                     max: 'tablet'
                 })) {
-                fastdom.read(function () {
+                fastdom.measure(function () {
                     // Our grid is a square, set the height of the grid wrapper
                     // to the width of the grid wrapper
-                    fastdom.write(function () {
+                    fastdom.mutate(function () {
                         this.$gridWrapper.css('height', this.$gridWrapper.offset().width + 'px');
                     }.bind(this));
                     this.gridHeightIsSet = true;

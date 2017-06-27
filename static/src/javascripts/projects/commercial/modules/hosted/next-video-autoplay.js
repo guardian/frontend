@@ -11,14 +11,14 @@ let $timer;
 let nextVideoPage;
 
 const cancelAutoplay = () => {
-    fastdom.write(() => {
+    fastdom.mutate(() => {
         $hostedNext.addClass('hosted-slide-out');
     });
     clearInterval(nextVideoInterval);
 };
 
 const cancelAutoplayMobile = () => {
-    fastdom.write(() => {
+    fastdom.mutate(() => {
         $hostedNext.addClass('u-h');
     });
 };
@@ -29,7 +29,7 @@ const triggerAutoplay = (getCurrentTimeFn: () => number, duration: number) => {
         const countdownLength = 10; // seconds before the end when to show the timer
 
         if (timeLeft <= countdownLength) {
-            fastdom.write(() => {
+            fastdom.mutate(() => {
                 $hostedNext.addClass('js-autoplay-start');
                 $timer.text(`${timeLeft}s`);
             });
@@ -42,7 +42,7 @@ const triggerAutoplay = (getCurrentTimeFn: () => number, duration: number) => {
 };
 
 const triggerEndSlate = () => {
-    fastdom.write(() => {
+    fastdom.mutate(() => {
         $hostedNext.addClass('js-autoplay-start');
     });
     bean.on(document, 'click', $('.js-autoplay-cancel'), () => {

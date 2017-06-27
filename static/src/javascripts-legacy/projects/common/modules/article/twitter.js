@@ -38,7 +38,7 @@ define([
             var $el = bonzo(element),
                 elOffset = $el.offset();
             if (((scrollTop + (viewportHeight * 2.5)) > elOffset.top) && (scrollTop < (elOffset.top + elOffset.height))) {
-                fastdom.write(function () {
+                fastdom.mutate(function () {
                     $(element).removeClass('js-tweet').addClass('twitter-tweet');
                     // We only want to render tweets once the class has been added
                     renderTweets();

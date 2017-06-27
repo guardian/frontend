@@ -8,7 +8,6 @@ define([
         'raw-loader!common/views/membership-message.html',
         'commercial/modules/commercial-features',
         'lib/mediator',
-        'lib/fastdom-promise',
         'common/modules/experiments/test-can-run-checks',
         'common/modules/experiments/tests/membership-engagement-banner-tests',
         'lodash/objects/assign',
@@ -32,7 +31,6 @@ define([
                  messageTemplate,
                  commercialFeatures,
                  mediator,
-                 fastdom,
                  testCanRunChecks,
                  MembershipEngagementBannerTests,
                  assign,
@@ -155,7 +153,7 @@ define([
 
 
         function showBanner(params) {
-            
+
 
             if (params === DO_NOT_RENDER_ENGAGEMENT_BANNER || membershipEngagementBannerBlock.isBlocked()) {
                 return;

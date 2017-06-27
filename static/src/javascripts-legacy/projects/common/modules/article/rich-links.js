@@ -32,7 +32,7 @@ define([
 ) {
 
     function elementIsBelowViewport (el) {
-        return fastdomPromise.read(function(){
+        return fastdomPromise.measure(function(){
             var rect = el.getBoundingClientRect();
             return rect.top > (window.innerHeight || document.documentElement.clientHeight);
         });
@@ -45,7 +45,7 @@ define([
 
         function doUpgrade(shouldUpgrade, resp) {
             if (shouldUpgrade) {
-                return fastdom.write(function () {
+                return fastdom.mutate(function () {
                     $(el).html(resp.html)
                         .removeClass('element-rich-link--not-upgraded')
                         .addClass('element-rich-link--upgraded');
@@ -62,7 +62,7 @@ define([
             }).then(function (resp) {
                 if (resp.html) {
 
-                    // Fastdom read the viewport height before upgrading if on mobile
+                    // fastdom.measure the viewport height before upgrading if on mobile
                     if (isOnMobile) {
                         elementIsBelowViewport(el).then(function(shouldUpgrade){
                             doUpgrade(shouldUpgrade, resp);

@@ -59,7 +59,7 @@ const load = (target?: string): Promise<void> => {
 
     if ($container.length) {
         return fastdom
-            .write(() => {
+            .mutate(() => {
                 if (slot === 'merchandising') {
                     $(selectors[slot].widget).replaceWith($outbrain[0]);
                 }

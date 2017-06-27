@@ -32,7 +32,7 @@ const onPlayerStateChangeEvent = (
 ) => {
     // change class according to the current state
     // TODO: Fix this so we can add poster image.
-    fastdom.write(() => {
+    fastdom.mutate(() => {
         ['ENDED', 'PLAYING', 'PAUSED', 'BUFFERING', 'CUED'].forEach(status => {
             el.classList.toggle(
                 `youtube__video-${status.toLocaleLowerCase()}`,
@@ -48,7 +48,7 @@ const onPlayerStateChangeEvent = (
 };
 
 const onPlayerReadyEvent = (event, handlers: Handlers, el: HTMLElement) => {
-    fastdom.write(() => {
+    fastdom.mutate(() => {
         el.classList.add('youtube__video-ready');
     });
 

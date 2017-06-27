@@ -15,7 +15,7 @@ const closeDisabledSlots = once((): Promise<void> => {
     // remove the ones which should not be there
     adSlots = adSlots.filter(shouldDisableAdSlot);
 
-    return fastdom.write(() => {
+    return fastdom.mutate(() => {
         adSlots.forEach((adSlot: Element) => adSlot.remove());
     });
 });
@@ -36,7 +36,7 @@ const adFreeSlotRemove = (): Promise<void> => {
     adSlots = adSlots.filter(shouldDisableAdSlotWhenAdFree);
     mpuCandidates = mpuCandidates.filter(shouldDisableAdSlotWhenAdFree);
 
-    return fastdom.write(
+    return fastdom.mutate(
         () => adSlots.forEach((adSlot: Element) => adSlot.remove()),
         mpuCandidates.forEach((candidate: Element) =>
             candidate.classList.add(mpuHiderClass)

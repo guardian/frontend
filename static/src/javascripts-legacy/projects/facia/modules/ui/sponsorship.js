@@ -63,7 +63,7 @@ define([
     function startToneDisco() {
         var $items = map(qwery('.js-fc-item'), bonzo);
         setInterval(function () {
-            fastdom.write(function () {
+            fastdom.mutate(function () {
                 $items.forEach(function ($item) {
                     tones.forEach(function (tone) {
                         $item.removeClass(tone);

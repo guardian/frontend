@@ -357,7 +357,7 @@ define([
                 bestCandidate.url = pf.makeUrl(bestCandidate.url);
 
                 if (picImg.src !== bestCandidate.url) {
-                    fastdom.write(function () {
+                    fastdom.mutate(function () {
                         picImg.src = bestCandidate.url;
                         // currentSrc attribute and property to match
                         // http://picture.responsiveimages.org/#the-img-element
@@ -472,7 +472,7 @@ define([
 
             // w._browserWidth = pf.getBrowserWidth();
 
-            fastdom.read(function () {
+            fastdom.measure(function () {
                 pf.viewportWidth = Math.max(w.innerWidth || 0, doc.documentElement.clientWidth);
                 // Loop through all elements
                 for (var i = 0, plen = elements.length; i < plen; i++) {

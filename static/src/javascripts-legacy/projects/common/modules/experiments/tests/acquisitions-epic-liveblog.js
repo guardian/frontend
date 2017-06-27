@@ -38,7 +38,7 @@ define([
     }
 
     function addEpicToBlocks(epicHtml, test) {
-        return fastdom.write(function() {
+        return fastdom.measure(function() {
             var $blocksToInsertEpicAfter = $('.' + INSERT_EPIC_AFTER_CLASS);
 
             $blocksToInsertEpicAfter.each(function(el) {

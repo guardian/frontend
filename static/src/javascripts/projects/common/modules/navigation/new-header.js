@@ -119,20 +119,20 @@ const toggleSidebar = (): void => {
             }
 
             return fastdom
-                .read(() => {
+                .measure(() => {
                     const docRect = body.getBoundingClientRect();
                     const rect = menuToggle.getBoundingClientRect();
                     return docRect.right - rect.right + rect.width / 2;
                 })
                 .then(marginRight =>
-                    fastdom.write(() => {
+                    fastdom.mutate(() => {
                         menu.style.marginRight = `${marginRight}px`;
                     })
                 );
         };
         const debouncedMenuEnhancement = debounce(enhanceMenuMargin, 200);
         const removeEnhancedMenuMargin = (): Promise<void> =>
-            fastdom.write(() => {
+            fastdom.mutate(() => {
                 menu.style.marginRight = '';
             });
 
@@ -185,11 +185,11 @@ const toggleSidebar = (): void => {
         }
     };
 
-    fastdom.write(update);
+    fastdom.mutate(update);
 };
 
 const enhanceCheckbox = (checkbox: HTMLElement): void => {
-    fastdom.read(() => {
+    fastdom.measure(() => {
         const button = document.createElement('button');
         const checkboxId = checkbox.id;
         const checkboxControls = checkbox.getAttribute('aria-controls');
@@ -212,7 +212,7 @@ const enhanceCheckbox = (checkbox: HTMLElement): void => {
             enhanced[button.id] = true;
         };
 
-        fastdom.write(enhance);
+        fastdom.mutate(enhance);
     });
 };
 

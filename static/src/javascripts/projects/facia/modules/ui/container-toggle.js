@@ -62,7 +62,7 @@ export class ContainerToggle {
     setState(newState: ToggleState): void {
         this.state = newState;
 
-        fastdom.write(() => {
+        fastdom.mutate(() => {
             // add/remove rolled class
             this.$container[
                 this.state === 'displayed' ? 'removeClass' : 'addClass'
@@ -89,7 +89,7 @@ export class ContainerToggle {
         const id = this.$container.attr('data-id');
         const $containerHeader = $('.js-container__header', this.$container[0]);
 
-        fastdom.write(() => {
+        fastdom.mutate(() => {
             $containerHeader.append(this.$button);
             this.$container
                 .removeClass('js-container--toggle')

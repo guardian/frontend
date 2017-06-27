@@ -6,7 +6,7 @@ import detect from 'lib/detect';
 
 const onComplete = adSlotId => {
     // we're complete - update the UI
-    fastdom.write(() => {
+    fastdom.mutate(() => {
         const label = document.querySelector(`#${adSlotId}>.ad-slot__label`);
         if (label) {
             label.classList.add('feedback-submitted');

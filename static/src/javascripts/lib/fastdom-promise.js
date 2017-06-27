@@ -20,6 +20,6 @@ const promisify = fdaction => (fn: Function, ctx: ?Object) =>
     );
 
 export default {
-    read: promisify(fastdom.read.bind(fastdom)),
-    write: promisify(fastdom.write.bind(fastdom)),
+    measure: promisify(fastdom.measure.bind(fastdom)),
+    mutate: promisify(fastdom.mutate.bind(fastdom)),
 };

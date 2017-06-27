@@ -4,7 +4,7 @@ import accessibility from 'common/modules/accessibility/main';
 
 const shouldHideFlashingElements = (callback: ?() => {}): void => {
     if (!accessibility.isOn('flashing-elements')) {
-        fastdom.write(() => {
+        fastdom.mutate(() => {
             if (document.body) {
                 document.body.classList.add('disable-flashing-elements');
             }
