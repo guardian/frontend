@@ -24,7 +24,7 @@ sealed trait ElementProfile {
     maybeAsset.flatMap(_.url).map(ImgSrc(_, this))
 
   def bestFor(image: ImageMedia): Option[ImageAsset] = {
-    if(ImageServerSwitch.isSwitchedOn) {
+    if(!ImageServerSwitch.isSwitchedOn) {
       val sortedCrops = image.imageCrops.sortBy(-_.width)
       width.flatMap{ desiredWidth =>
         sortedCrops.find(_.width >= desiredWidth)
