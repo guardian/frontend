@@ -43,7 +43,6 @@ const AnagramHelper = React.createClass({
         const wordEntries = entries
             .map(entry => entry.value.toLowerCase())
             .filter(entry => word.includes(entry))
-            .filter(Boolean)
             .sort();
 
         return shuffle(
