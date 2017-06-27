@@ -1,5 +1,4 @@
 // @flow
-import { register } from 'commercial/modules/messenger';
 
 type Specs = {
     selector: string,
@@ -38,11 +37,5 @@ const getStyles = (specs: Specs, styleSheets: StyleSheetList): ?Array<any> => {
     }
     return result;
 };
-
-register('get-styles', (specs): ?Array<any> => {
-    if (specs) {
-        return getStyles(specs, document.styleSheets);
-    }
-});
 
 export { getStyles };

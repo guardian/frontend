@@ -2,8 +2,6 @@
 import { addEventListener } from 'lib/events';
 import fastdom from 'lib/fastdom-promise';
 
-import { register } from 'commercial/modules/messenger';
-
 type AdSpec = {
     scrollType: string,
     backgroundColour: string,
@@ -97,11 +95,5 @@ const setBackground = (specs: AdSpec, adSlot: Node): ?Promise<any> => {
             onScroll();
         });
 };
-
-register('background', (specs, ret, iframe): ?Promise<any> => {
-    if (iframe && specs) {
-        return setBackground(specs, iframe.closest('.js-ad-slot'));
-    }
-});
 
 export default { setBackground };
