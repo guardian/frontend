@@ -56,7 +56,7 @@ const markAlertAsSeen = (id: string): void => {
     updateKnownAlertID(id, false);
 };
 
-const markAlertAsDismissed = (id): void => {
+const markAlertAsDismissed = (id: string): void => {
     updateKnownAlertID(id, true);
 };
 
