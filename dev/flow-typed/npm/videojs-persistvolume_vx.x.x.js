@@ -1,4 +1,4 @@
-// flow-typed signature: 9b36c996e18cd507f3d3a89bdbb7d3bd
+// flow-typed signature: 045bd155901707b532e4b14f50ebef5b
 // flow-typed version: <<STUB>>/videojs-persistvolume_vguardian/videojs-persistvolume#0.1.4/flow_v0.40.0
 
 /**
@@ -8,8 +8,8 @@
  *
  * Fill this stub out by replacing all the `any` types.
  *
- * Once filled out, we encourage you to share your work with the 
- * community by sending a pull request to: 
+ * Once filled out, we encourage you to share your work with the
+ * community by sending a pull request to:
  * https://github.com/flowtype/flow-typed
  */
 

@@ -3,8 +3,8 @@ import {
     getActiveTests,
     getExpiredTests,
 } from 'common/modules/experiments/ab-tests';
-import ReportItem from 'admin/modules/abtests/abtest-report-item';
-import Audience from 'admin/modules/abtests/audience';
+import { ABTestReportItem as ReportItem } from 'admin/modules/abtests/abtest-report-item';
+import { Audience } from 'admin/modules/abtests/audience';
 
 const renderTests = (
     tests: Array<any>,

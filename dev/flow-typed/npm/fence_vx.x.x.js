@@ -1,4 +1,4 @@
-// flow-typed signature: d0f963159b4b50ce549b28d7866305ad
+// flow-typed signature: a11fa671967132be060382f929ab1e31
 // flow-typed version: <<STUB>>/fence_vguardian/fence.git#~0.2.11/flow_v0.40.0
 
 /**
@@ -8,8 +8,8 @@
  *
  * Fill this stub out by replacing all the `any` types.
  *
- * Once filled out, we encourage you to share your work with the 
- * community by sending a pull request to: 
+ * Once filled out, we encourage you to share your work with the
+ * community by sending a pull request to:
  * https://github.com/flowtype/flow-typed
  */
 

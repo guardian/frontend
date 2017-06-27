@@ -1,11 +1,24 @@
 .menu-search {
-    margin-left: -38px;
-    padding-bottom: $gs-baseline * 2;
-    padding-right: $veggie-burger-medium / 2 + $gs-gutter / 2;
+    box-sizing: border-box;
+    display: block;
+    margin-left: 13px;
     position: relative;
 
+    @include mq($until: desktop) {
+        padding-bottom: $gs-baseline * 2;
+        padding-right: $veggie-burger-medium / 2 + $gs-gutter / 2;
+    }
+
     @include mq(tablet) {
-        margin-left: -40px;
+        margin-left: 22px;
+    }
+
+    @include mq(desktop) {
+        margin-bottom: $gs-baseline;
+        margin-left: 0;
+        margin-top: $gs-row-height / 2;
+        padding-right: $gs-gutter;
+        width: 100%;
     }
 }
 
@@ -25,8 +38,15 @@
         padding-left: 40px;
     }
 
+    @include mq(desktop) {
+        height: $search-and-edition-height-desktop;
+        max-width: none;
+        padding-left: 48px;
+        font-size: 18px;
+    }
+
     &::placeholder {
-        color: $news-support-1;
+        color: #ffffff;
     }
 
     &:focus {
@@ -45,7 +65,16 @@
     position: absolute;
     top: 10px;
 
-    > .inline-search-36 {
+    @include mq(desktop) {
+        left: 12px;
+    }
+
+    .inline-search-36__svg {
         fill: $news-support-2;
+
+        @include mq(desktop) {
+            height: 22px;
+            width: 22px;
+        }
     }
 }

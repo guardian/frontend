@@ -37,15 +37,15 @@ define([
         campaignId: 'epic_thank_you',
 
         start: '2017-06-01',
-        expiry: '2017-06-19',
+        expiry: '2017-07-03',
 
         author: 'Guy Dawson',
         description: 'Bootstrap the AB test framework to use the Epic to thank readers who have already supported the Guardian',
         successMeasure: 'N/A',
         idealOutcome: 'N/A',
         audienceCriteria: 'Readers who have supported the Guardian',
-        audience: 0,
-        audienceOffset: 1,
+        audience: 1,
+        audienceOffset: 0,
 
         overrideCanRun: true,
 
@@ -68,7 +68,10 @@ define([
                 template: function(variant) {
                     return template(acquisitionsEpicThankYouTemplate, {
                         componentName: variant.options.componentName,
-                        membershipUrl: variant.getURL("https://www.theguardian.com/membership", variant.options.campaignCode)
+                        membershipUrl: contributionsUtilities.addTrackingCodesToUrl(
+                            "https://www.theguardian.com/membership",
+                            variant.options.campaignCode
+                        )
                     })
                 }
             }

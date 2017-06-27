@@ -3,12 +3,64 @@
 
     &:checked {
         & ~ .menu {
-            @include menu-animation(0%);
+            @include mq($until: desktop) {
+                @include menu-animation(0%);
+            }
+
+            @include mq(desktop) {
+                display: block;
+            }
         }
 
         & ~ .menu__overlay {
-            opacity: 1;
-            width: 100%;
+            @include mq($until: desktop) {
+                opacity: 1;
+                width: 100%;
+            }
+        }
+
+        & ~ .pillars {
+            .pillars__item:not(:first-child) > .pillar-link {
+                @include mq(desktop) {
+                    margin-left: $gs-gutter / 2 - 1;
+                }
+            }
+
+            .pillar-link {
+                @include mq(desktop) {
+                    width: gs-span(2) + $gs-gutter / 2 + 1;
+                }
+            }
+
+            .pillar-link:after {
+                @include mq(desktop) {
+                    display: none;
+                }
+            }
+        }
+
+        & ~ .veggie-burger {
+            z-index: $zindex-main-menu + 1;
+
+            .veggie-burger__icon {
+                background-color: transparent;
+
+                &:before {
+                    top: 0;
+                    transform: rotate(-45deg);
+                }
+
+                &:after {
+                    bottom: 0;
+                    transform: rotate(45deg);
+                }
+            }
+
+            .veggie-burger__label {
+                @include mq(desktop) {
+                    @include u-h();
+                }
+            }
         }
     }
 }

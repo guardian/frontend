@@ -4,7 +4,7 @@ import bean from 'bean';
 import $ from 'lib/$';
 import sinon from 'sinon';
 
-import { SearchTool } from 'projects/facia/modules/onwards/search-tool';
+import { SearchTool } from 'facia/modules/onwards/search-tool';
 import mediator from 'lib/mediator';
 
 describe('Search tool', () => {

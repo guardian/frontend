@@ -50,7 +50,9 @@ const generateSassForSVG = svg => {
     return `
             %svg-i-${name},
             .svg-i-${name} {
-                background-image: url(data:image/svg+xml;base64,${btoa(fileData.data)});
+                background-image: url(data:image/svg+xml;base64,${btoa(
+                    fileData.data
+                )});
                 background-position: 0 0;
                 width: ${width}px;
                 height: ${height}px;

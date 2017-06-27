@@ -39,7 +39,9 @@ const Ring = React.createClass({
                 React.createElement(
                     'div',
                     {
-                        className: `crossword__anagram-helper-shuffler__letter ${letter.entered ? 'entered' : ''}`,
+                        className: `crossword__anagram-helper-shuffler__letter ${letter.entered
+                            ? 'entered'
+                            : ''}`,
                         style: this.getPosition(angle, i),
                         key: i,
                     },

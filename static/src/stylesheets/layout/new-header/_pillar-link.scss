@@ -1,5 +1,6 @@
 .pillar-link {
     @include fs-textSans(5);
+    box-sizing: border-box;
     color: currentColor;
     cursor: pointer;
     display: block;
@@ -21,9 +22,20 @@
         font-size: 28px;
     }
 
+    @include mq(desktop) {
+        font-size: 29px;
+    }
+
     &:focus,
     &:hover {
+        color: #ffffff;
         text-decoration: none;
+    }
+
+    .new-header--slim & {
+        @include mq($from: tablet, $until: desktop) {
+            font-size: 24px;
+        }
     }
 }
 
@@ -40,5 +52,9 @@
         border-bottom: $gs-baseline / 2 solid $subnav-grey;
         border-left: $gs-baseline / 2 solid transparent;
         border-right: $gs-baseline / 2 solid transparent;
+
+        @include mq(desktop) {
+            display: none;
+        }
     }
 }

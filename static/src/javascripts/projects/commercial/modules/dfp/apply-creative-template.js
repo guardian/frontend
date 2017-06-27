@@ -3,24 +3,22 @@
 import fastdom from 'lib/fastdom-promise';
 import reportError from 'lib/report-error';
 
-import frame from 'commercial/modules/creatives/frame';
-import revealer from 'commercial/modules/creatives/revealer';
+import { Frame } from 'commercial/modules/creatives/frame';
+import { Revealer } from 'commercial/modules/creatives/revealer';
 import { FabricV1 } from 'commercial/modules/creatives/fabric-v1';
 import fabricExpand from 'commercial/modules/creatives/fabric-expanding-v1';
-import {
-    fabricExpandVideo,
-} from 'commercial/modules/creatives/fabric-expandable-video-v2';
-import fabricVideo from 'commercial/modules/creatives/fabric-video';
-import scrollable from 'commercial/modules/creatives/scrollable-mpu-v2';
+import { fabricExpandVideo } from 'commercial/modules/creatives/fabric-expandable-video-v2';
+import { FabricVideo } from 'commercial/modules/creatives/fabric-video';
+import { ScrollableMpu } from 'commercial/modules/creatives/scrollable-mpu-v2';
 
 const creativeLookup: Object = {
-    frame,
-    revealer,
+    frame: Frame,
+    revealer: Revealer,
     'fabric-v1': FabricV1,
     'fabric-expanding-v1': fabricExpand,
     'fabric-expandable-video-v2': fabricExpandVideo,
-    'fabric-video': fabricVideo,
-    'scrollable-mpu-v2': scrollable,
+    'fabric-video': FabricVideo,
+    'scrollable-mpu-v2': ScrollableMpu,
 };
 
 const renderCreativeTemplate = (
@@ -73,14 +71,17 @@ const renderCreativeTemplate = (
             .then(() => JSON.parse(creativeConfig))
             .then(mergeViewabilityTracker)
             .then(renderCreative)
-            .catch(err =>
+            .catch(err => {
                 reportError(
                     Error(`Failed to get creative JSON ${err}`),
                     { feature: 'commercial' },
                     false
-                )
-            );
+                );
+
+                return Promise.resolve(true);
+            });
     }
+
     return Promise.resolve(true);
 };
 

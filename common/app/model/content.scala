@@ -424,6 +424,7 @@ object Article {
       ("isHosted", JsBoolean(false)),
       ("isPhotoEssay", JsBoolean(content.isPhotoEssay)),
       ("isSensitive", JsBoolean(fields.sensitive.getOrElse(false))),
+      ("shouldHideReaderRevenue", JsBoolean(fields.shouldHideReaderRevenue.getOrElse(false))),
       "videoDuration" -> videoDuration
     ) ++ bookReviewIsbn ++ AtomProperties(content.atoms)
 
@@ -628,7 +629,7 @@ final case class Video (
 
   def sixteenByNineMetaImage: Option[String] = for {
     imageMedia <- mediaAtom.flatMap(_.posterImage) orElse content.elements.thumbnail.map(_.images)
-    videoProfile <- Video1280.bestFor(imageMedia)
+    videoProfile <- Video1280.bestSrcFor(imageMedia)
   } yield videoProfile
 }
 
@@ -733,7 +734,7 @@ case class GalleryLightbox(
         "caption" -> JsString(img.caption.getOrElse("")),
         "credit" -> JsString(img.credit.getOrElse("")),
         "displayCredit" -> JsBoolean(img.displayCredit),
-        "src" -> JsString(Item700.bestFor(container.images).getOrElse("")),
+        "src" -> JsString(Item700.bestSrcFor(container.images).getOrElse("")),
         "srcsets" -> JsString(ImgSrc.srcset(container.images, GalleryMedia.lightbox)),
         "sizes" -> JsString(GalleryMedia.lightbox.sizes),
         "ratio" -> Try(JsNumber(img.width.toDouble / img.height.toDouble)).getOrElse(JsNumber(1)),
@@ -782,7 +783,7 @@ case class GenericLightbox(
         "caption" -> JsString(img.caption.getOrElse("")),
         "credit" -> JsString(img.credit.getOrElse("")),
         "displayCredit" -> JsBoolean(img.displayCredit),
-        "src" -> JsString(Item700.bestFor(container.images).getOrElse("")),
+        "src" -> JsString(Item700.bestSrcFor(container.images).getOrElse("")),
         "srcsets" -> JsString(ImgSrc.srcset(container.images, GalleryMedia.lightbox)),
         "sizes" -> JsString(GalleryMedia.lightbox.sizes),
         "ratio" -> Try(JsNumber(img.width.toDouble / img.height.toDouble)).getOrElse(JsNumber(1)),

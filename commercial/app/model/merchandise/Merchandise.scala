@@ -241,7 +241,7 @@ object Masterclass {
       "venue" -> m.venue,
       "ticketPrice" -> m.tickets.headOption.map(_.price),
       "capacity" -> m.capacity,
-      "pictureUrl" -> m.mainPicture.map(picture => Item300.bestFor(picture.images)),
+      "pictureUrl" -> m.mainPicture.map(picture => Item300.bestSrcFor(picture.images)),
       "ratioTicketsLeft" -> m.ratioTicketsLeft
     )
   }
@@ -272,7 +272,7 @@ object TravelOffer {
       fromPrice = parseDouble(text("@fromprice")),
       earliestDeparture = DateTime.parse(text("@earliestdeparture")),
       keywordIdSuffixes = Nil,
-      countries = tagText("Country"),
+      countries = tagText("Country").distinct,
       category = tagText("Holiday Type").headOption,
       tags = Nil,
       duration = parseInt(text("@duration")),

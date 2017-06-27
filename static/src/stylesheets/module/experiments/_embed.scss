@@ -168,6 +168,10 @@
     width: 160px;
 }
 
+.contributions__option-button--support-landing-page {
+    width: auto;
+}
+
 .contributions__contribute--epic-member-top {
     margin-bottom: $gs-baseline/2;
     margin-right: $gs-gutter/2;
@@ -240,3 +244,8 @@
     vertical-align: middle;
 }
 
+.acquisitions-epic-iframe {
+    border: 0;
+    width: 100%;
+    max-width: 620px;
+}

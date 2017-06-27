@@ -1,16 +1,7 @@
 define([
-    'common/modules/commercial/contributions-utilities',
-    'raw-loader!common/views/acquisitions-epic-control.html',
-    'raw-loader!common/views/acquisitions-epic-control-regulars.html',
-    'common/modules/tailor/tailor',
-    'lodash/utilities/template'
-
+    'common/modules/commercial/contributions-utilities'
 ], function (
-    contributionsUtilities,
-    acquisitionsEpicControlTemplate,
-    acquisitionsEpicControlTemplateRegulars,
-    tailor,
-    template
+    contributionsUtilities
 ) {
 
    return contributionsUtilities.makeABTest({
@@ -37,19 +28,8 @@ define([
                     count: 4,
                     minDaysBetweenViews: 0
                 },
-                test: function(render) {
-                    tailor.isRegular().then(function (regular) {
-                        var t = regular ? acquisitionsEpicControlTemplateRegulars : acquisitionsEpicControlTemplate;
 
-                        return render(function(variant) {
-                            return template(t, {
-                                membershipUrl: variant.options.membershipURL,
-                                contributionUrl: variant.options.contributeURL,
-                                componentName: variant.options.componentName
-                            });
-                        });
-                    });
-                },
+                useTailoredCopyForRegulars: true,
                 insertAtSelector: '.submeta',
                 successOnView: true
             }

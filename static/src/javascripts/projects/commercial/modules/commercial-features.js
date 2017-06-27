@@ -1,10 +1,11 @@
 // @flow
 import config from 'lib/config';
 import detect from 'lib/detect';
-import { logError } from 'lib/robust';
-import userFeatures from 'commercial/modules/user-features';
+import { isPayingMember, isAdFreeUser } from 'commercial/modules/user-features';
 import identityApi from 'common/modules/identity/api';
 import userPrefs from 'common/modules/user-prefs';
+import { daysSince } from 'lib/time-utils';
+import { getCookie } from 'lib/cookies';
 
 // Having a constructor means we can easily re-instantiate the object in a test
 class CommercialFeatures {
@@ -47,12 +48,16 @@ class CommercialFeatures {
             document.documentElement.classList.contains('has-sticky');
         const newRecipeDesign =
             config.page.showNewRecipeDesign && config.tests.abNewRecipeDesign;
+        const lastContributionDate = getCookie(
+            'gu.contributions.contrib-timestamp'
+        );
+        const daysSinceLastContribution = daysSince(lastContributionDate);
 
         // Feature switches
         this.adFree =
             switches.commercial &&
             switches.adFreeMembershipTrial &&
-            userFeatures.isAdFreeUser();
+            isAdFreeUser();
 
         this.dfpAdvertising =
             switches.commercial && externalAdvertising && !sensitiveContent;
@@ -118,9 +123,12 @@ class CommercialFeatures {
             !config.page.hasSuperStickyBanner &&
             !supportsSticky;
 
-        this.canReasonablyAskForMoney = !(userFeatures.isPayingMember() || // eg become a supporter, give a contribution
+        this.canReasonablyAskForMoney = !(
+            isPayingMember() || // eg become a supporter, give a contribution
+            daysSinceLastContribution <= 180 || // has contributed in the last 6 months
             config.page.shouldHideAdverts ||
-            config.page.isPaidContent);
+            config.page.isPaidContent
+        );
 
         this.asynchronous = {
             canDisplayMembershipEngagementBanner: detect.adblockInUse.then(
@@ -136,15 +144,4 @@ class CommercialFeatures {
     }
 }
 
-let commercialFeaturesExport;
-
-try {
-    config.commercial = config.commercial || {};
-    config.commercial.featuresDebug = new CommercialFeatures();
-    commercialFeaturesExport = config.commercial.featuresDebug;
-} catch (error) {
-    commercialFeaturesExport = {};
-    logError('cm-commercialFeatures', error);
-}
-
-export const commercialFeatures = commercialFeaturesExport;
+export const commercialFeatures = new CommercialFeatures();

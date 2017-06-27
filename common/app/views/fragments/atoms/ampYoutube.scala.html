@@ -1,11 +1,14 @@
 @import model.content.MediaWrapper
-@(media: model.content.MediaAtom,  displayCaption: Boolean, mediaWrapper: Option[MediaWrapper])(implicit request: RequestHeader)
+@(media: model.content.MediaAtom, displayCaption: Boolean, mediaWrapper: Option[MediaWrapper])(implicit request: RequestHeader)
 @import views.html.fragments.atoms.mediaAtomCaption
+
+@for(asset <- media.activeAssets.headOption) {
     <amp-youtube
-    data-videoid="@media.assets.head.id"
+    data-videoid="@asset.id"
     layout="responsive"
     width="16" height="9" data-param-rel="0">
     </amp-youtube>
+}
 
 @if(displayCaption) {
     @mediaAtomCaption(media.title, mediaWrapper.contains(MediaWrapper.MainMedia))

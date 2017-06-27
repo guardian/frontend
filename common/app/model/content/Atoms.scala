@@ -19,9 +19,13 @@ final case class Atoms(
   recipes: Seq[RecipeAtom],
   reviews: Seq[ReviewAtom],
   storyquestions: Seq[StoryQuestionsAtom],
-  explainers: Seq[ExplainerAtom]
+  explainers: Seq[ExplainerAtom],
+  qandas: Seq[QandaAtom],
+  guides: Seq[GuideAtom],
+  profiles: Seq[ProfileAtom],
+  timelines: Seq[TimelineAtom]
 ) {
-  val all: Seq[Atom] = quizzes ++ media ++ interactives ++ recipes ++ reviews ++ storyquestions ++ explainers
+  val all: Seq[Atom] = quizzes ++ media ++ interactives ++ recipes ++ reviews ++ storyquestions ++ explainers ++ qandas ++ guides ++ profiles ++ timelines
 }
 
 sealed trait Atom {
@@ -37,8 +41,13 @@ final case class MediaAtom(
   source: Option[String],
   posterImage: Option[ImageMedia],
   endSlatePath: Option[String],
-  expired: Option[Boolean]
+  expired: Option[Boolean],
+  activeVersion: Option[Long]
 ) extends Atom {
+
+  def activeAssets: Seq[MediaAsset] = activeVersion
+    .map { version => assets.filter(_.version == version) }
+    .getOrElse(assets)
 
   def isoDuration: Option[String] = {
     duration.map(d => new Duration(Duration.standardSeconds(d)).toString)
@@ -131,6 +140,30 @@ final case class ExplainerAtom(
   body: String
 ) extends Atom
 
+final case class QandaAtom(
+  override val id: String,
+  atom: AtomApiAtom,
+  data: atomapi.qanda.QAndAAtom
+) extends Atom
+
+final case class GuideAtom(
+  override val id: String,
+  atom: AtomApiAtom,
+  data: atomapi.guide.GuideAtom
+) extends Atom
+
+final case class ProfileAtom(
+  override val id: String,
+  atom: AtomApiAtom,
+  data: atomapi.profile.ProfileAtom
+) extends Atom
+
+final case class TimelineAtom(
+  override val id: String,
+  atom: AtomApiAtom,
+  data: atomapi.timeline.TimelineAtom
+) extends Atom
+
 
 object Atoms extends common.Logging {
   def extract[T](atoms: Option[Seq[AtomApiAtom]], extractFn: AtomApiAtom => T): Seq[T] = {
@@ -166,6 +199,14 @@ object Atoms extends common.Logging {
 
       val explainers = extract(atoms.explainers, atom => { ExplainerAtom.make(atom) })
 
+      val qandas = extract(atoms.qandas, atom => {QandaAtom.make(atom)})
+
+      val guides = extract(atoms.guides, atom => {GuideAtom.make(atom)})
+
+      val profiles = extract(atoms.profiles, atom => {ProfileAtom.make(atom)})
+
+      val timelines = extract(atoms.timelines, atom => {TimelineAtom.make(atom)})
+
       Atoms(
         quizzes = quizzes,
         media = media,
@@ -173,7 +214,11 @@ object Atoms extends common.Logging {
         recipes = recipes,
         reviews = reviews,
         storyquestions = storyquestions,
-        explainers = explainers
+        explainers = explainers,
+        qandas = qandas,
+        guides = guides,
+        profiles = profiles,
+        timelines = timelines
       )
     }
   }
@@ -204,7 +249,8 @@ object MediaAtom extends common.Logging {
       source = mediaAtom.source,
       posterImage = mediaAtom.posterImage.map(imageMediaMake(_, mediaAtom.title)),
       endSlatePath = endSlatePath,
-      expired = expired
+      expired = expired,
+      activeVersion = mediaAtom.activeVersion
     )
   }
 
@@ -233,7 +279,6 @@ object MediaAtom extends common.Logging {
       ).collect{ case(k, Some(v)) => (k,v) }
     )
   }
-
 }
 
 object Quiz extends common.Logging {
@@ -403,7 +448,7 @@ object ReviewAtom {
     for {
       image <- images.headOption
       media = model.content.MediaAtom.imageMediaMake(image, "")
-      url <- ImgSrc.findLargestSrc(media, GoogleStructuredData)
+      url <- GoogleStructuredData.bestSrcFor(media)
     } yield url
   }
 }
@@ -418,3 +463,20 @@ object ExplainerAtom {
     ExplainerAtom(atom.id, explainer.tags.getOrElse(Nil), explainer.title, explainer.body)
   }
 }
+
+object QandaAtom {
+  def make(atom: AtomApiAtom): QandaAtom = QandaAtom(atom.id, atom, atom.data.asInstanceOf[AtomData.Qanda].qanda)
+}
+
+object GuideAtom {
+  def make(atom: AtomApiAtom): GuideAtom = GuideAtom(atom.id, atom, atom.data.asInstanceOf[AtomData.Guide].guide)
+}
+
+object ProfileAtom {
+  def make(atom: AtomApiAtom): ProfileAtom = ProfileAtom(atom.id, atom, atom.data.asInstanceOf[AtomData.Profile].profile)
+}
+
+object TimelineAtom {
+  def make(atom: AtomApiAtom): TimelineAtom = TimelineAtom(atom.id, atom, atom.data.asInstanceOf[AtomData.Timeline].timeline)
+}
+

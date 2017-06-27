@@ -193,27 +193,47 @@
 */
 
 // FOOTER MODS
+.footer__email-container .email-sub__iframe {
+    margin-left: 0;
+    width: 100%;
+    max-width: gs-span(6);
+}
+
 .email-sub__form--footer {
     margin-bottom: $gs-baseline;
     padding: 0 $gs-gutter;
 
     .email-sub__submit-button {
-        background-color: $neutral-2;
-        border-color: $neutral-2;
+        background-color: lighten($multimedia-support-5, 5%);
+        border-color: lighten($multimedia-support-5, 5%);
         margin-bottom: $gs-baseline;
 
         &:hover,
         &:focus,
         &:active {
-            background-color: darken($neutral-2, 10%);
-            border-color: darken($neutral-2, 10%);
+            background-color: $multimedia-support-5;
+            border-color: $multimedia-support-5;
         }
     }
 
-    .email-sub__small {
-        @include fs-textSans(1, $size-only: true);
-        clear: left;
-        color: $form-primary-colour;
+    .email-sub__text-input {
+        background-color: darken($neutral-2, 20%);
+        border-color: darken($neutral-2, 20%);
+
+        &:hover {
+            background-color: darken($neutral-2, 15%);
+            border-color: darken($neutral-2, 15%);
+        }
+
+        &:active,
+        &:focus {
+            background-color: #ffffff;
+            border-color: #ffffff;
+        }
+    }
+
+    .email-sub__label {
+        color: $neutral-3;
     }
 }
 

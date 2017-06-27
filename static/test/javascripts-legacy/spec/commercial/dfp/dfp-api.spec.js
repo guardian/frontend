@@ -2,18 +2,17 @@ define([
     'bonzo',
     'qwery',
     'lib/$',
+    'lib/noop',
     'helpers/fixtures',
     'helpers/injector'
 ], function (
     bonzo,
     qwery,
     $,
+    noop,
     fixtures,
     Injector
 ) {
-    function noop() {
-
-    }
     describe('DFP', function () {
 
         var $style,
@@ -49,9 +48,7 @@ define([
 
         beforeEach(function (done) {
             injector.mock({
-                'common/modules/analytics/google': function noop() {
-                    // No implementation
-                },
+                'common/modules/analytics/google': noop.noop,
                 'commercial/modules/dfp/apply-creative-template': {
                     applyCreativeTemplate: function () {
                       return Promise.resolve(true);
@@ -161,10 +158,7 @@ define([
                     display: sinon.spy()
                 };
                 window.__switch_zero = false;
-                performanceLogging.setListeners = function () {
-                    // noop
-                };
-
+                performanceLogging.setListeners = noop.noop;
                 commercialFeatures.dfpAdvertising = true;
 
                 done();
@@ -189,7 +183,7 @@ define([
 
             it('hides all ad slots', function (done) {
                 new Promise( function(resolve) {
-                    dfp.prepareGoogletag.init(noop, resolve);
+                    dfp.prepareGoogletag.init(noop.noop, resolve);
                 })
                 .then(function () {
                     var remainingAdSlots = document.querySelectorAll('.js-ad-slot');
@@ -201,7 +195,7 @@ define([
 
         it('should get the slots', function (done) {
             new Promise( function(resolve) {
-                dfp.prepareGoogletag.init(noop, resolve);
+                dfp.prepareGoogletag.init(noop.noop, resolve);
             })
             .then(function () {
                 expect(Object.keys(dfp.getAdverts()).length).toBe(4);
@@ -212,7 +206,7 @@ define([
         it('should not get hidden ad slots', function (done) {
             $('.js-ad-slot').first().css('display', 'none');
             new Promise( function(resolve) {
-                dfp.prepareGoogletag.init(noop, resolve);
+                dfp.prepareGoogletag.init(noop.noop, resolve);
             })
             .then(function () {
                 var slots = dfp.getAdverts();
@@ -226,7 +220,7 @@ define([
 
         it('should set listeners', function (done) {
             new Promise( function(resolve) {
-                dfp.prepareGoogletag.init(noop, resolve);
+                dfp.prepareGoogletag.init(noop.noop, resolve);
             })
             .then(function () {
                 expect(window.googletag.pubads().addEventListener).toHaveBeenCalledWith('slotRenderEnded');
@@ -236,7 +230,7 @@ define([
 
         it('should define slots', function (done) {
             new Promise( function(resolve) {
-                dfp.prepareGoogletag.init(noop, resolve);
+                dfp.prepareGoogletag.init(noop.noop, resolve);
             })
             .then(function () {
                 [
@@ -264,7 +258,7 @@ define([
                 return 'wide';
             };
             new Promise( function(resolve) {
-                dfp.prepareGoogletag.init(noop, resolve);
+                dfp.prepareGoogletag.init(noop.noop, resolve);
             })
             .then(function () {
                 expect(window.googletag.pubads().enableSingleRequest).toHaveBeenCalled();
@@ -278,7 +272,7 @@ define([
         it('should be able to create "out of page" ad slot', function (done) {
             $('.js-ad-slot').first().attr('data-out-of-page', true);
             new Promise( function(resolve) {
-                dfp.prepareGoogletag.init(noop, resolve);
+                dfp.prepareGoogletag.init(noop.noop, resolve);
             })
             .then(function () {
                 expect(window.googletag.defineOutOfPageSlot).toHaveBeenCalled();
@@ -293,7 +287,7 @@ define([
             fakeEventTwo.creativeId = '2';
 
             new Promise( function(resolve) {
-                dfp.prepareGoogletag.init(noop, resolve);
+                dfp.prepareGoogletag.init(noop.noop, resolve);
             })
             .then(function () {
                 window.googletag.pubads().listeners.slotRenderEnded(fakeEventOne);
@@ -326,7 +320,7 @@ define([
 
             it('should send page level keywords', function (done) {
                 new Promise( function(resolve) {
-                    dfp.prepareGoogletag.init(noop, resolve);
+                    dfp.prepareGoogletag.init(noop.noop, resolve);
                 })
                 .then(function () {
                     expect(window.googletag.pubads().setTargeting).toHaveBeenCalledWith('k', ['korea', 'ukraine']);

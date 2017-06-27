@@ -482,7 +482,7 @@ trait FeatureSwitches {
     "When ON, the Guardian Today US Email will contain Live Intent advertisements",
     owners = Seq(Owner.withGithub("davidfurey")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 6, 6),
+    sellByDate = new LocalDate(2017, 8, 8),
     exposeClientSide = false
   )
 
@@ -516,15 +516,4 @@ trait FeatureSwitches {
     sellByDate = never,
     exposeClientSide = false
   )
-
-  val NewTabletHeader = Switch(
-    SwitchGroup.Feature,
-    "new-header-tablet",
-    "When ON Users will see the new tablet header design.",
-    owners = Seq(Owner.withGithub("natalialkb"), Owner.withGithub("gustavpursche")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 6, 15),
-    exposeClientSide = false
-  )
-
 }

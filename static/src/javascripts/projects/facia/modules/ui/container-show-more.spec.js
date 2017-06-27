@@ -3,7 +3,7 @@
 import bonzo from 'bonzo';
 import qwery from 'qwery';
 
-import { _ } from 'projects/facia/modules/ui/container-show-more';
+import { _ } from 'facia/modules/ui/container-show-more';
 
 const { itemsByArticleId, dedupShowMore } = _;
 
@@ -14,7 +14,11 @@ describe('Container Show More', () => {
 
     beforeEach(() => {
         $container = bonzo(
-            bonzo.create(`<div>${itemWithId('loldongs')}${itemWithId('corgi')}${itemWithId('geekpie')}</div>`)
+            bonzo.create(
+                `<div>${itemWithId('loldongs')}${itemWithId(
+                    'corgi'
+                )}${itemWithId('geekpie')}</div>`
+            )
         );
     });
 

@@ -9,7 +9,7 @@ object Dependencies {
   val slf4jVersion = "1.7.5"
   val awsVersion = "1.11.7"
   val faciaVersion = "2.1.3"
-  val capiVersion = "11.12"
+  val capiVersion = "11.19"
   val dispatchVersion = "0.11.3"
   val configurationMagicVersion = "1.2.2"
   val romeVersion = "1.0"
@@ -76,7 +76,7 @@ object Dependencies {
   val targetingClient = "com.gu" %% "targeting-client" % "0.11.0"
   val scanamo = "com.gu" %% "scanamo" % "0.8.3"
   val enumeratumPlayJson = "com.beachape" %% "enumeratum-play-json" % "1.5.6"
-  val commercialShared = "com.gu" %% "commercial-shared" % "4.0.2"
+  val commercialShared = "com.gu" %% "commercial-shared" % "6.0.0"
 
   // Web jars
   val bootstrap = "org.webjars" % "bootstrap" % "3.3.5"

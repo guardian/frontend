@@ -5,24 +5,24 @@ define([
     'lodash/utilities/template',
     'lib/config',
     'raw-loader!common/views/acquisitions-epic-control.html',
-    'raw-loader!common/views/acquisitions-epic-slice.html',
-], function (
-    contributionsUtilities,
-    $,
-    geolocation,
-    template,
-    config,
-    epicControlTemplate
-) {
+    'common/modules/commercial/acquisitions-copy',
+
+], function (contributionsUtilities,
+             $,
+             geolocation,
+             template,
+             config,
+             epicControlTemplate,
+             acquisitionsCopy) {
     return contributionsUtilities.makeABTest({
-        id: 'AcquisitionsElectionInteractiveEnd',
-        campaignId: 'epic_ge2017_interactive_end',
+        id: 'AcquisitionsInteractiveEnd',
+        campaignId: 'epic_interactive_end',
 
         start: '2017-05-22',
-        expiry: '2017-07-03',
+        expiry: '2018-07-03',
 
         author: 'Sam Desborough',
-        description: 'This places the epic underneath UK election-related interactives',
+        description: 'This places the epic underneath certain interactives',
         successMeasure: 'Member acquisition and contributions',
         idealOutcome: 'Our wonderful readers will support The Guardian in this time of need!',
 
@@ -33,9 +33,13 @@ define([
         showForSensitive: true,
 
         pageCheck: function(page) {
-            return page.keywordIds &&
+            var isElection = page.keywordIds &&
                 page.keywordIds.includes('general-election-2017') &&
                 page.contentType === 'Interactive';
+
+            var isFootball = page.pageId.indexOf('transfer-window-2017-every-deal-in-europes-top-five-leagues') > -1;
+
+            return isElection || isFootball;
         },
 
         variants: [
@@ -48,9 +52,11 @@ define([
 
                 template: function makeControlTemplate(variant) {
                     return template(epicControlTemplate, {
+                        copy: acquisitionsCopy.control,
                         membershipUrl: variant.options.membershipURL,
                         contributionUrl: variant.options.contributeURL,
                         componentName: variant.options.componentName,
+                        testimonialBlock: variant.options.testimonialBlock,
                         epicClass: 'contributions__epic--interactive gs-container',
                         wrapperClass: 'contributions__epic-interactive-wrapper'
                     });

@@ -96,11 +96,11 @@ object Uk extends Edition(
     Seq(
       NavItem(home),
       NavItem(uk, ukLocalNav),
-      NavItem(politics, Seq(ukElection2017)),
+      NavItem(politics),
       NavItem(world, worldLocalNav),
       NavItem(sport, sportLocalNav),
       NavItem(football, footballNav),
-      NavItem(opinion, Seq(columnists)),
+      NavItem(opinion, Seq(columnists, letters, editorials)),
       NavItem(culture, cultureLocalNav),
       NavItem(business, businessLocalNav),
       NavItem(lifeandstyle, Seq(foodanddrink, recipes, healthandwellbeing, loveAndSex, family, women, homeAndGarden)),
@@ -112,18 +112,19 @@ object Uk extends Edition(
       NavItem(science),
       NavItem(guardianProfessional),
       NavItem(observer),
-      NavItem(todaysPaper, Seq(editorialsandletters, obituaries, g2, weekend, theGuide, saturdayreview)),
+      NavItem(todaysPaper, Seq(obituaries, g2, weekend, theGuide, saturdayreview)),
       NavItem(sundayPaper, Seq(observerComment, observerNewReview, observerMagazine)),
       NavItem(membership),
       NavItem(crosswords, crosswordsLocalNav),
-      NavItem(video)
+      NavItem(video, Seq(podcast)),
+      NavItem(digitalNewspaperArchive)
     )
   }
 
   override val briefNav: Seq[NavItem] = Seq(
     NavItem(home),
     NavItem(uk, ukLocalNav),
-    NavItem(ukElection2017),
+    NavItem(politics),
     NavItem(world, worldLocalNav),
     NavItem(sport, sportLocalNav),
     NavItem(football, footballNav),

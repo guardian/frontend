@@ -20,12 +20,12 @@ import scala.collection.JavaConverters._
 
 object TrailsToRss extends implicits.Collections {
 
-  /* 
+  /*
     This regex pattern matches all invalid XML characters (see https://www.w3.org/TR/xml/#charsets)
     by specifying individual and ranges of valid ones in a negated set.  The final range \\u10000-\\u10FFFF
     is intended to match the supplementary character set, but I believe it is invalid java regex.
     It ought to be changed to \\x{10000}-\\x{10FFFF} but that produces unexpected behaviour which I suspect
-    is a bug (http://bugs.java.com/bugdatabase/view_bug.do?bug_id=JDK-8179668).  For now, leaving this 
+    is a bug (http://bugs.java.com/bugdatabase/view_bug.do?bug_id=JDK-8179668).  For now, leaving this
     unchanged as the end result gives valid XML, although it may exclude supplementary characters.
   */
   val pattern = Pattern.compile("[^\\x09\\x0A\\x0D\\x20-\\uD7FF\\uE000-\\uFFFD\\u10000-\\u10FFFF]")
@@ -82,8 +82,8 @@ object TrailsToRss extends implicits.Collections {
       val mediaModules: Seq[MediaEntryModuleImpl] = for {
         profile: Profile <- List(Item140, Item460)
         trailPicture: ImageMedia <- trail.trailPicture
-        trailAsset: ImageAsset <- profile.elementFor(trailPicture)
-        resizedImage <- profile.bestFor(trailPicture)
+        trailAsset: ImageAsset <- profile.bestFor(trailPicture)
+        resizedImage <- profile.bestSrcFor(trailPicture)
       } yield {
         // create media
         val media = new MediaContent(new UrlReference(resizedImage))
@@ -189,8 +189,8 @@ object TrailsToRss extends implicits.Collections {
       val mediaModules: Seq[MediaEntryModuleImpl] = for {
         profile: Profile <- List(Item140, Item460)
         trailPicture: ImageMedia <- faciaContent.trail.trailPicture
-        trailAsset: ImageAsset <- profile.elementFor(trailPicture)
-        resizedImage <- profile.bestFor(trailPicture)
+        trailAsset: ImageAsset <- profile.bestFor(trailPicture)
+        resizedImage <- profile.bestSrcFor(trailPicture)
       } yield {
         // create image
         val media = new MediaContent(new UrlReference(resizedImage))

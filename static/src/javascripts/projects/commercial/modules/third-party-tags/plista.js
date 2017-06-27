@@ -3,13 +3,16 @@ import fastdom from 'fastdom';
 import $ from 'lib/$';
 import config from 'lib/config';
 import detect from 'lib/detect';
-import template from 'lodash/utilities/template';
 import trackAdRender from 'commercial/modules/dfp/track-ad-render';
 import { commercialFeatures } from 'commercial/modules/commercial-features';
-import plistaStr from 'raw-loader!commercial/views/plista.html';
 import { loadScript } from 'lib/load-script';
 
-const plistaTpl = template(plistaStr);
+const plistaTpl = ({ widgetName }) => `
+    <div class="PLISTA" data-ob-template="guardian">
+        <div data-display="plista_widget_${widgetName}"></div>
+    </div>
+`;
+
 const selectors = {
     container: '.js-plista-container',
 };

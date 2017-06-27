@@ -1,0 +1,40 @@
+/************************************
+ * This file should be removed once
+ * the new desktop design is live
+ ************************************/
+
+.guardian-logo-footer {
+    margin-top: $gs-baseline * .75;
+    float: right;
+    line-height: 0;
+}
+
+.l-footer {
+    .global-navigation__section:nth-of-type(2) .global-navigation__title {
+        border-top: 0;
+    }
+
+    .js-off & {
+        .navigation-container--collapsed {
+            height: auto;
+        }
+
+        .navigation__expandable {
+            display: block;
+        }
+
+        .navigation__inner {
+            display: none;
+        }
+    }
+
+    .control__info {
+        display: inline-block;
+    }
+}
+
+.l-footer__primary {
+    position: relative;
+    overflow: hidden;
+    background: $c-primary-footer-background-side-bar;
+}

@@ -38,9 +38,6 @@ const AnagramHelper = React.createClass({
      * array to flag letters that are already entered in the puzzle, and
      * shuffle it.
      *
-     * @param  {String}   word     word to shuffle
-     * @param  {[Object]} entries  array of entries (i.e. grid cells)
-     * @return {[Object]}          array of shuffled letters
      */
     shuffleWord(word: string, entries: { value: string }[]) {
         const wordEntries = entries
@@ -51,14 +48,15 @@ const AnagramHelper = React.createClass({
 
         return shuffle(
             word.trim().split('').sort().reduce((acc, letter) => {
-                const entered = acc.entries[0] === letter.toLowerCase();
+                const [head, ...tail] = acc.entries;
+                const entered = head === letter.toLowerCase();
 
                 return {
                     letters: acc.letters.concat({
                         value: letter,
                         entered,
                     }),
-                    entries: entered ? acc.entries.slice(1) : acc.entries,
+                    entries: entered ? tail : acc.entries,
                 };
             }, {
                 letters: [],
@@ -100,9 +98,12 @@ const AnagramHelper = React.createClass({
             this.props.entries,
             this.props.focussedEntry
         );
-        const entries = cells.map(
-            coords => this.props.grid[coords.x][coords.y]
+        const entries = cells.map(coords =>
+            Object.assign({}, this.props.grid[coords.x][coords.y], {
+                key: `${coords.x},${coords.y}`,
+            })
         );
+
         const letters = this.shuffleWord(this.state.clueInput, entries);
 
         const inner = this.state.showInput
@@ -130,7 +131,8 @@ const AnagramHelper = React.createClass({
                 inner
             ),
             React.createElement('button', {
-                className: 'button button--large button--tertiary crossword__anagram-helper-close',
+                className:
+                    'button button--large button--tertiary crossword__anagram-helper-close',
                 onClick: this.props.close,
                 dangerouslySetInnerHTML: closeIcon,
                 'data-link-name': 'Close',
@@ -138,7 +140,9 @@ const AnagramHelper = React.createClass({
             React.createElement(
                 'button',
                 {
-                    className: `button button--large ${this.state.clueInput ? '' : 'button--tertiary'}`,
+                    className: `button button--large ${!this.state.clueInput
+                        ? 'button--tertiary'
+                        : ''}`,
                     onClick: this.reset,
                     'data-link-name': 'Start Again',
                 },
@@ -147,7 +151,9 @@ const AnagramHelper = React.createClass({
             React.createElement(
                 'button',
                 {
-                    className: `button button--large ${this.canShuffle() ? '' : 'button--tertiary'}`,
+                    className: `button button--large ${this.canShuffle()
+                        ? ''
+                        : 'button--tertiary'}`,
                     onClick: this.shuffle,
                     'data-link-name': 'Shuffle',
                 },

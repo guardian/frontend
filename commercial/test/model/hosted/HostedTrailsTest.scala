@@ -16,6 +16,10 @@ class HostedTrailsTest extends FlatSpec with Matchers {
     val recipes = None
     val reviews = None
     val storyquestions = None
+    val guides = None
+    val profiles = None
+    val qandas = None
+    val timelines = None
     val cta = Some(
       Seq(
         new Atom {

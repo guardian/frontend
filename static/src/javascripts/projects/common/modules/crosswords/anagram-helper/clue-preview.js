@@ -18,15 +18,17 @@ const CluePreview = React.createClass({
      * If the user hasn't yet clicked 'shuffle' (this.props.hasShuffled) just
      * display the entries as they are, preserving any blank spaces.
      */
-    getEntries() {
+    getEntries(): Object[] {
         const unsolved = this.props.letters.filter(l => !l.entered);
 
         return this.props.entries.map(entry => {
             entry.solved = !!entry.value;
 
-            return this.props.hasShuffled
+            const returnVal = this.props.hasShuffled
                 ? (entry.value && entry) || unsolved.shift()
                 : entry;
+
+            return Object.assign({}, { key: entry.key }, returnVal);
         });
     },
 
@@ -58,7 +60,10 @@ const CluePreview = React.createClass({
         return React.createElement(
             'div',
             {
-                className: `crossword__anagram-helper__clue-preview ${entries.length >= 9 ? 'long' : ''}`,
+                className: `crossword__anagram-helper__clue-preview ${entries.length >=
+                    9
+                    ? 'long'
+                    : ''}`,
             },
             React.createElement(
                 'div',
@@ -79,7 +84,7 @@ const CluePreview = React.createClass({
                 ' ',
                 this.props.clue.clue
             ),
-            entries.map((entry: ?Object, i: number) => {
+            entries.map((entry: Object, i: number) => {
                 const classNames = this.checkIfLetterHasSeparator(
                     this.props.clue.separatorLocations,
                     i + 1
@@ -87,12 +92,13 @@ const CluePreview = React.createClass({
                 const span = React.createElement(
                     'span',
                     {
-                        className: classNames +
-                            (entry && entry.solved ? ' has-value' : ''),
-                        key: i,
+                        className:
+                            classNames + (entry.solved ? ' has-value' : ''),
+                        key: entry.key,
                     },
-                    (entry && entry.value) || ''
+                    entry.value || ''
                 );
+
                 return span;
             })
         );

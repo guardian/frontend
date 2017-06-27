@@ -68,13 +68,13 @@ trait Navigation {
   val africa = SectionLink("world", "africa", "Africa", "/world/africa")
   val middleEast = SectionLink("world", "middle east", "Middle east", "/world/middleeast")
   val video = SectionLink("video", "video", "Video", "/video")
+  val podcast = SectionLink("podcasts", "podcasts", "Podcasts", "/podcasts")
   val guardianProfessional = SectionLink("guardian-professional", "professional networks", "Guardian Professional", "/guardian-professional")
   val observer = SectionLink("observer", "the observer", "The Observer", "/observer")
   val health = SectionLink("society", "health", "Health", "/society/health")
   val scotland = SectionLink("scotland", "scotland", "Scotland", "/uk/scotland")
   val wales = SectionLink("wales", "wales", "Wales", "/uk/wales")
   val northernIreland = SectionLink("northernireland", "northern ireland", "Northern Ireland", "/uk/northernireland")
-  val ukElection2017 = SectionLink("politics", "election", "election", "/politics/general-election-2017")
 
   // Columnists
   val columnists = SectionLink("columnists", "columnists", "Columnists", "/index/contributors")
@@ -226,13 +226,16 @@ trait Navigation {
 
   // Guardian newspaper
   val todaysPaper = SectionLink("todayspaper", "today's paper", "Today's Paper", "/theguardian")
-  val editorialsandletters = SectionLink("todayspaper", "editorials & letters", "Editorials & Letters", "/theguardian/mainsection/editorialsandreply")
+  val letters = SectionLink("todayspaper", "letters", "Letters", "/tone/letters")
+  val editorials = SectionLink("todayspaper", "editorials", "Editorials", "/tone/editorials")
   val obituaries = SectionLink("todayspaper", "obituaries", "Obituaries", "/tone/obituaries")
   val g2 = SectionLink("todayspaper", "g2", "G2", "/theguardian/g2")
   val weekend = SectionLink("todayspaper", "weekend", "Weekend", "/theguardian/weekend")
   val theGuide = SectionLink("todayspaper", "the guide", "The Guide", "/theguardian/theguide")
   val saturdayreview = SectionLink("todayspaper", "saturday review", "Saturday Review", "/theguardian/guardianreview")
 
+  // Archive
+  val digitalNewspaperArchive = SectionLink("archive", "digital archive", "Digital Newspaper Archive", "https://theguardian.newspapers.com")
 
   // Observer newspaper
   val sundayPaper = SectionLink("theobserver", "sunday's paper", "The Observer", "/theobserver")
