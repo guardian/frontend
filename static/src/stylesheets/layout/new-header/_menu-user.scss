@@ -13,6 +13,10 @@
     border-radius: 50%;
 }
 
+.menu-user__avatar-fallback {
+    font-size: 0;
+}
+
 .menu-user__avatar-fallback__svg {
     opacity: .6;
 }
@@ -20,6 +24,7 @@
 .menu-user__avatar-fallback__svg,
 .menu-user__avatar {
     height: gs-span(1);
+    margin-bottom: $gs-baseline / 3;
     margin-right: $gs-gutter;
     width: gs-span(1);
 }
