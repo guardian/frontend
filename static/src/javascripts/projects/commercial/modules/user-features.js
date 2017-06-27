@@ -54,12 +54,9 @@ const requestNewData = (): Promise<void> =>
         .then(persistResponse)
         .catch(() => {});
 
-const datedCookieIsOld = (
-    datedCookieName: string,
-    isOldAfterDays: ?number
-): boolean => {
+const datedCookieIsOld = (datedCookieName: string): boolean => {
     const expiryDateFromCookie = getCookie(datedCookieName);
-    const expiryTime = parseInt(expiryDateFromCookie, isOldAfterDays || 10);
+    const expiryTime = parseInt(expiryDateFromCookie, 10);
     const timeNow = new Date().getTime();
     return timeNow >= expiryTime;
 };
@@ -70,7 +67,7 @@ const featuresDataIsMissing = (): boolean =>
 const featuresDataIsOld = (): boolean =>
     datedCookieIsOld(USER_FEATURES_EXPIRY_COOKIE);
 
-const adFreeDataIsOld = (): boolean => datedCookieIsOld(AD_FREE_USER_COOKIE, 2);
+const adFreeDataIsOld = (): boolean => datedCookieIsOld(AD_FREE_USER_COOKIE);
 
 const userNeedsNewFeatureData = (): boolean =>
     featuresDataIsMissing() ||
