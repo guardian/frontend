@@ -13,7 +13,6 @@ import mediator from 'lib/mediator';
 import relativeDates from 'common/modules/ui/relativedates';
 import { inlineSvg } from 'common/views/svgs';
 import alertHtml from 'raw-loader!common/views/breaking-news.html';
-import has from 'lodash/objects/has';
 import flatten from 'lodash/arrays/flatten';
 import pick from 'lodash/objects/pick';
 
@@ -167,7 +166,7 @@ const showAlert = (alert: Alert): Alert => {
 
         // if its the first time we've seen this alert, we wait 3 secs to show it
         // otherwise we show it immediately
-        const alertDelay = has(knownAlertIDs, alert.id) ? 0 : DEFAULT_DELAY;
+        const alertDelay = knownAlertIDs[alert.id] ? 0 : DEFAULT_DELAY;
 
         // $breakingNews is hidden, so this won't trigger layout etc
         $breakingNews.append(renderAlert(alert));
