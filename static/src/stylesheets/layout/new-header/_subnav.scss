@@ -47,6 +47,11 @@
 .subnav__item {
     display: inline-block;
 
+    &:focus,
+    &:hover {
+        color: #ffffff;
+    }
+
     > *:after {
         content: '/';
         color: rgba(255, 255, 255, .3);

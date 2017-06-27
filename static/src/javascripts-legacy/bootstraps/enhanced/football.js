@@ -37,7 +37,7 @@ define([
 ) {
 
     function renderNav(match, callback) {
-        var matchInfo = new MatchInfo(match, config.page.pageId);
+        var matchInfo = new MatchInfo.MatchInfo(match, config.page.pageId);
 
         return matchInfo.fetch()
             .then(function (resp) {

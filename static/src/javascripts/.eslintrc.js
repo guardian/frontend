@@ -66,6 +66,7 @@ module.exports = {
 
         'flow-header/flow-header': 'error',
         'no-param-reassign': ['error', { props: false }],
+        'no-prototype-builtins': 'off',
 
         // our own rules for frontend
         // live in tools/eslint-plugin-guardian-frontend

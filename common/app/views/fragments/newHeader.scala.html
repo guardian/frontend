@@ -42,7 +42,11 @@
                             data-edition="@{editionId}"
                             href="@{Configuration.id.membershipUrl}/@{editionId}/supporter?INTCMP=mem_@{editionId}_web_newheader_trapezoid">
                             <span class="header-cta-item__label">
-                                become a <span class="header-cta-item__new-line">supporter</span>
+                                @if(editionId == "us") {
+                                    make a <span class="header-cta-item__new-line">contribution</span>
+                                } else {
+                                    become a <span class="header-cta-item__new-line">supporter</span>
+                                }
                             </span>
                         </a>
 
@@ -72,7 +76,7 @@
 
                 <input type="checkbox"
                        id="main-menu-toggle"
-                       class="veggie-burger-fallback js-enhance-checkbox"
+                       class="veggie-burger-fallback js-enhance-checkbox u-h"
                        aria-controls="main-menu">
 
                 <ul class="pillars">

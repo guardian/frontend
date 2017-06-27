@@ -34,21 +34,23 @@
         z-index: $zindex-main-menu + 1;
 
         &:before {
-            border-radius: ($veggie-burger-small * 2) 0 0 ($veggie-burger-small * 2);
-            // Extended hit area for veggie burger close state, for fat fingers
-            content: '';
-            height: $veggie-burger-small * 2;
-            position: absolute;
-            right: $veggie-burger-small / 2;
-            top: -$veggie-burger-small / 2;
-            width: $veggie-burger-small;
+            @include mq($until: desktop) {
+                border-radius: ($veggie-burger-small * 2) 0 0 ($veggie-burger-small * 2);
+                // Extended hit area for veggie burger close state, for fat fingers
+                content: '';
+                height: $veggie-burger-small * 2;
+                position: absolute;
+                right: $veggie-burger-small / 2;
+                top: -$veggie-burger-small / 2;
+                width: $veggie-burger-small;
 
-            @include mq(mobileMedium) {
-                height: $veggie-burger-medium * 2;
-                width: $veggie-burger-medium;
-                top: -$veggie-burger-medium / 2;
-                right: $veggie-burger-medium / 2;
-                border-radius: ($veggie-burger-medium * 2) 0 0 ($veggie-burger-medium * 2);
+                @include mq(mobileMedium) {
+                    height: $veggie-burger-medium * 2;
+                    width: $veggie-burger-medium;
+                    top: -$veggie-burger-medium / 2;
+                    right: $veggie-burger-medium / 2;
+                    border-radius: ($veggie-burger-medium * 2) 0 0 ($veggie-burger-medium * 2);
+                }
             }
         }
     }

@@ -73,6 +73,7 @@
                         <input type="text"
                                name="q"
                                class="menu-search__search-box"
+                               id="google-search"
                                placeholder="search"
                                data-link-name="nav2 : search">
 
@@ -80,16 +81,18 @@
                                name="as_sitesearch"
                                value="www.theguardian.com">
 
-                        @* label surrounding the input and icon so that if you
-                        click the search icon it will trigger the submit *@
-                        <label for="submit-google-search"
-                               class="menu-search__submit">
-                            <input class="u-h"
-                                   type="submit"
-                                   id="submit-google-search"
-                                   data-link-name="nav2 : search : submit">
-                            @fragments.inlineSvg("search-36", "icon", List("main-menu__icon", "main-menu__icon--search"))
-                        </label>
+                       <label class="menu-search__glass"
+                              for="google-search">
+                           @fragments.inlineSvg("search-36", "icon", List("main-menu__icon", "main-menu__icon--search"))
+                       </label>
+
+                        @* Button that shows itself on form focus *@
+                        <button class="menu-search__submit"
+                                data-link-name="nav2 : search : submit"
+                                for="submit-google-search"
+                                type="submit">
+                            <i class="right-arrow__icon"></i>
+                        </button>
 
                         <label for="q"
                                class="u-h">
@@ -137,17 +140,21 @@
                 }
 
                 @NewNavigation.OtherLinks.getAllEditionalisedNavLinks(edition).map { item =>
-                    <li class="menu-item"
-                    role="menuitem">
+                    <li class="@RenderClasses(Map(
+                            "hide-on-desktop" -> (item.title == "the guardian app"),
+                            "menu-item--no-border" -> (item.title == "video")
+                        ), "menu-item")"
+                        role="menuitem">
+
                         <a class="menu-item__title"
-                        href="@LinkTo { @item.url }"
-                        data-link-name="nav2 : @item.title">
-                        @item.title
+                            href="@LinkTo { @item.url }"
+                            data-link-name="nav2 : @item.title">
+                            @item.title
                         </a>
                     </li>
                 }
 
-                <li class="menu-item"
+                <li class="menu-item hide-on-desktop"
                     role="menuitem">
                     <a class="menu-item__title"
                        href="https://www.facebook.com/theguardian"
@@ -157,7 +164,7 @@
                     </a>
                 </li>
 
-                <li class="menu-item"
+                <li class="menu-item hide-on-desktop"
                     role="menuitem">
                     <a class="menu-item__title"
                        href="https://twitter.com/guardian"
