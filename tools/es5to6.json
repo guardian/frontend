@@ -62,8 +62,7 @@
     "projects/common/modules/discussion/comment-box.js"
   ],
   "Gustav Pursche": [
-    "projects/common/modules/ui/tabs.js",
-    "projects/common/modules/ui/autoupdate.js"
+    "projects/common/modules/ui/tabs.js"
   ],
   "NataliaLKB": [
     "projects/common/modules/article/rich-links.js",
