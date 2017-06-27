@@ -39,8 +39,8 @@ const enhanceAvatar = (): Promise<void> => {
     };
 
     const swapFallback = (
-        fallback: HTMLElement,
-        avatar: HTMLElement,
+        fallback: ?HTMLElement,
+        avatar: ?HTMLElement,
         src: string
     ) => {
         fastdom.write(() => {
