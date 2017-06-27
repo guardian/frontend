@@ -53,7 +53,7 @@
         background-color: #ffffff;
         color: $neutral-1;
         outline: none;
-        padding-right: 38px;
+        padding-right: $gs-gutter * 2;
         transition: background-color 500ms;
 
         &::placeholder {
