@@ -1,6 +1,5 @@
 // @flow
 /* eslint-disable no-underscore-dangle */
-import qwery from 'qwery';
 import bean from 'bean';
 import $ from 'lib/$';
 
@@ -40,7 +39,11 @@ const skipAd = function skipAd(mediaType: string, skipTimeout: number): void {
                     <i class="i i-play-icon-gold skip-icon"></i>Skip advert
                 </button>`
             );
-            bean.on(qwery('.js-ads-skip-button')[0], 'click', skip);
+            bean.on(
+                document.querySelector('.js-ads-skip-button'),
+                'click',
+                skip
+            );
         }
     };
 
