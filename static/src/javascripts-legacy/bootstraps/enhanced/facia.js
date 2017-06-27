@@ -87,7 +87,7 @@ define([
             showLiveblogUpdates: function () {
                 if (detect.isBreakpoint({ min: 'desktop' })) {
                     mediator.on('page:front:ready', function () {
-                        liveblogUpdates.show();
+                        liveblogUpdates.showUpdatesFromLiveBlog();
                     });
                 }
             },
