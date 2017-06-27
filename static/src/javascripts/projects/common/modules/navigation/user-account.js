@@ -28,6 +28,14 @@ const enhanceAvatar = (): Promise<void> => {
         '.js-navigation-account-avatar-fallback'
     );
     const avatarEl = document.querySelector('.js-navigation-account-avatar');
+    const preloadImage = (src: string): Promise<void> => {
+        const image = new Image();
+        image.src = src;
+
+        return new Promise(resolve => {
+            image.onload = resolve;
+        });
+    };
 
     if (!isUserLoggedIn() || !avatarEl) {
         return Promise.resolve();
@@ -35,15 +43,17 @@ const enhanceAvatar = (): Promise<void> => {
 
     return avatarAPI.getActive().then(res => {
         if (res && res.data && res.data.avatarUrl) {
-            return fastdom.write(() => {
-                if (fallback) {
-                    fallback.classList.add('u-h');
-                }
+            preloadImage(res.data.avatarUrl).then(() => {
+                fastdom.write(() => {
+                    if (fallback) {
+                        fallback.classList.add('u-h');
+                    }
 
-                if (avatarEl) {
-                    avatarEl.setAttribute('src', res.data.avatarUrl);
-                    avatarEl.classList.remove('u-h');
-                }
+                    if (avatarEl) {
+                        avatarEl.setAttribute('src', res.data.avatarUrl);
+                        avatarEl.classList.remove('u-h');
+                    }
+                });
             });
         }
     });
