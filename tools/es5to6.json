@@ -54,7 +54,6 @@
     "projects/common/modules/crosswords/anagram-helper/clue-input.js"
   ],
   "GHaberis": [
-    "projects/common/modules/ui/toggles.js",
     "projects/common/modules/onward/history.js",
     "projects/common/modules/discussion/activity-stream.js",
     "projects/common/modules/discussion/api.js",
