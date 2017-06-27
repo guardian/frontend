@@ -28,7 +28,8 @@ const enhanceAvatar = (): Promise<void> => {
         '.js-navigation-account-avatar-fallback'
     );
     const avatarEl = document.querySelector('.js-navigation-account-avatar');
-    const preloadImage = (src: string): Promise<void> => {
+
+    const preloadAvatar = (src: string): Promise<void> => {
         const image = new Image();
         image.src = src;
 
@@ -37,24 +38,34 @@ const enhanceAvatar = (): Promise<void> => {
         });
     };
 
+    const swapFallback = (
+        standard: HTMLElement,
+        avatar: HTMLElement,
+        src: string
+    ) => {
+        fastdom.write(() => {
+            if (standard) {
+                fallback.classList.add('u-h');
+            }
+
+            if (avatar) {
+                avatar.setAttribute('src', src);
+                avatar.classList.remove('u-h');
+            }
+        });
+    };
+
     if (!isUserLoggedIn() || !avatarEl) {
         return Promise.resolve();
     }
 
     return avatarAPI.getActive().then(res => {
-        if (res && res.data && res.data.avatarUrl) {
-            preloadImage(res.data.avatarUrl).then(() => {
-                fastdom.write(() => {
-                    if (fallback) {
-                        fallback.classList.add('u-h');
-                    }
+        const src = res && res.data && res.data.avatarUrl;
 
-                    if (avatarEl) {
-                        avatarEl.setAttribute('src', res.data.avatarUrl);
-                        avatarEl.classList.remove('u-h');
-                    }
-                });
-            });
+        if (src) {
+            preloadAvatar(src).then(() =>
+                swapFallback(fallback, avatarEl, src)
+            );
         }
     });
 };
