@@ -23,7 +23,7 @@ type autoUpdateOptions = {
     backoffMultiplier: number,
 };
 
-const autoUpdate = (opts?: autoUpdateOptions) => {
+const autoUpdate = (opts?: autoUpdateOptions): void => {
     const options = Object.assign(
         {
             toastOffsetTop: 12,
@@ -180,7 +180,7 @@ const autoUpdate = (opts?: autoUpdateOptions) => {
             });
     };
 
-    const setUpListeners = () => {
+    const setUpListeners = (): void => {
         bean.on(document.body, 'click', '.toast__button', () => {
             if (isLivePage) {
                 fastdom.read(() => {
