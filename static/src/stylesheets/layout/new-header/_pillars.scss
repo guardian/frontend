@@ -14,7 +14,7 @@
 
     @include mq(desktop) {
         .new-header--open & {
-            z-index: $zindex-main-menu + 1;
+            z-index: $zindex-main-menu;
         }
     }
 
@@ -40,12 +40,12 @@
         transition: min-width 400ms ease;
 
         .new-header--open & {
-            min-width: gs-span(2) + $gs-gutter / 2 + 1;
+            min-width: gs-span(2) + $gs-gutter / 2;
             transition: min-width 200ms ease;
         }
 
         .new-header--open &:not(:first-child) {
-            margin-left: $gs-gutter / 2 - 1;
+            margin-left: $gs-gutter / 2;
         }
     }
 

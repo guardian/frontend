@@ -46,8 +46,8 @@
 
     .menu-group--membership-actions & {
         @include mq($from: desktop, $until: leftCol) {
-            margin-left: $gs-gutter / 2 - 1;
-            width: gs-span(2) + $gs-gutter / 2 + 1;
+            margin-left: $gs-gutter / 2;
+            width: gs-span(2) + $gs-gutter / 2;
         }
     }
 }
@@ -60,7 +60,7 @@
 
 .menu-item--user-detail {
     @include mq($from: desktop, $until: leftCol) {
-        width: gs-span(4) + $gs-gutter / 2 + 1;
+        width: gs-span(4) + $gs-gutter / 2;
     }
 
     @include mq(leftCol) {
