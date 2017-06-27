@@ -24,13 +24,11 @@ sealed trait ElementProfile {
     maybeAsset.flatMap(_.url).map(ImgSrc(_, this))
 
   def bestFor(image: ImageMedia): Option[ImageAsset] = {
-    if(ImageServerSwitch.isSwitchedOn) {
-      val sortedCrops = image.imageCrops.sortBy(_.width)
-      width.flatMap{ desiredWidth =>
-        sortedCrops.find(_.width >= desiredWidth)
-      }.orElse(image.largestImage)
-    }
-    else image.largestImage
+    def closest(crops: Seq[ImageAsset])(width: Int): Option[ImageAsset] =
+      crops.sortBy(crop => (crop.width - width).abs).headOption
+
+    if(ImageServerSwitch.isSwitchedOn) image.largestImage
+    else width.flatMap(closest(image.imageCrops)).orElse(image.largestImage)
   }
   def bestSrcFor(image: ImageMedia): Option[String] = toSrc(bestFor(image))
 
