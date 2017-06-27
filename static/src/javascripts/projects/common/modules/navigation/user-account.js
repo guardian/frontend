@@ -24,7 +24,7 @@ const updateCommentLink = (): void => {
 };
 
 const enhanceAvatar = (): Promise<void> => {
-    const fallback = document.querySelector(
+    const fallbackEl = document.querySelector(
         '.js-navigation-account-avatar-fallback'
     );
     const avatarEl = document.querySelector('.js-navigation-account-avatar');
@@ -39,12 +39,12 @@ const enhanceAvatar = (): Promise<void> => {
     };
 
     const swapFallback = (
-        standard: HTMLElement,
+        fallback: HTMLElement,
         avatar: HTMLElement,
         src: string
     ) => {
         fastdom.write(() => {
-            if (standard) {
+            if (fallback) {
                 fallback.classList.add('u-h');
             }
 
@@ -64,7 +64,7 @@ const enhanceAvatar = (): Promise<void> => {
 
         if (src) {
             preloadAvatar(src).then(() =>
-                swapFallback(fallback, avatarEl, src)
+                swapFallback(fallbackEl, avatarEl, src)
             );
         }
     });
