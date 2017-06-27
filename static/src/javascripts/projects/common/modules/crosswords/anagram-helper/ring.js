@@ -1,6 +1,5 @@
 // @flow
 
-/* #? code smell: keys should be immutable */
 /* eslint "react/no-array-index-key": "off" */
 
 import React from 'react/addons';
@@ -43,7 +42,7 @@ const Ring = React.createClass({
                             ? 'entered'
                             : ''}`,
                         style: this.getPosition(angle, i),
-                        key: i,
+                        key: `${letter.value}-${i}`,
                     },
                     letter.value
                 )
