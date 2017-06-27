@@ -37,20 +37,19 @@
                     @defining(
                         Edition(request).id.toLowerCase()
                     ) { editionId =>
-                        <a class="header-cta-item header-cta-item--primary"
-                            data-link-name="nav2 : supporter-cta"
-                            data-edition="@{editionId}"
-                            href="@{Configuration.id.membershipUrl}/@{editionId}/supporter?INTCMP=mem_@{editionId}_web_newheader_trapezoid">
-                            <span class="header-cta-item__label">
-                                @if(editionId == "us") {
-                                    make a <span class="header-cta-item__new-line">contribution</span>
-                                } else {
-                                    become a <span class="header-cta-item__new-line">supporter</span>
-                                }
-                            </span>
-                        </a>
-
                         @if(!page.metadata.hasSlimHeader) {
+                            <a class="header-cta-item header-cta-item--primary"
+                                data-link-name="nav2 : supporter-cta"
+                                data-edition="@{editionId}"
+                                href="@{Configuration.id.membershipUrl}/@{editionId}/supporter?INTCMP=mem_@{editionId}_web_newheader_trapezoid">
+                                <span class="header-cta-item__label">
+                                    @if(editionId == "us") {
+                                        make a <span class="header-cta-item__new-line">contribution</span>
+                                    } else {
+                                        become a <span class="header-cta-item__new-line">supporter</span>
+                                    }
+                                </span>
+                            </a>
 
                             <a class="header-cta-item hide-until-tablet header-cta-item--secondary"
                                 data-link-name="nav2 : subscribe-cta"
