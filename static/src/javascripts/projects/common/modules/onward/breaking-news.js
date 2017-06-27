@@ -166,7 +166,9 @@ const showAlert = (alert: Alert): Alert => {
 
         // if its the first time we've seen this alert, we wait 3 secs to show it
         // otherwise we show it immediately
-        const alertDelay = knownAlertIDs[alert.id] ? 0 : DEFAULT_DELAY;
+        const alertDelay = knownAlertIDs.hasOwnProperty(alert.id)
+            ? 0
+            : DEFAULT_DELAY;
 
         // $breakingNews is hidden, so this won't trigger layout etc
         $breakingNews.append(renderAlert(alert));
