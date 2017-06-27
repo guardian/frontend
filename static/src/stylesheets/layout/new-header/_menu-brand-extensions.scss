@@ -5,7 +5,7 @@
 
 .menu-brand-extensions__inner {
     box-sizing: border-box;
-    padding: $gs-baseline / 2 $gs-gutter;
+    padding: $gs-baseline / 1.5 $gs-gutter;
 }
 
 .menu-brand-extensions__list {
@@ -25,8 +25,8 @@
         display: inline-block;
         font-size: 22px;
         opacity: .6;
-        padding-left: -2px;
-        padding-right: -2px;
+        margin-left: -2px;
+        margin-right: -2px;
         pointer-events: none;
     }
 }
@@ -35,7 +35,7 @@
     display: inline-block;
     margin-right: $gs-gutter / 3;
     position: relative;
-    top: 4px;
+    top: 2px;
     vertical-align: middle;
 }
 
