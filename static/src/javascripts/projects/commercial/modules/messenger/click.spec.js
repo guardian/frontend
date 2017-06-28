@@ -2,9 +2,7 @@
 import type { JestMockT } from 'jest';
 
 import { trackNativeAdLinkClick } from 'common/modules/analytics/google';
-import { _ } from './click';
-
-const { sendClick } = _;
+import { sendClick } from './click';
 
 // Jest understands `register.mock.calls`, however, Flow gets angry because:
 // 'property mock not found in statics of function'. This is a helper to allow

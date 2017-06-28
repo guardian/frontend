@@ -96,4 +96,4 @@ const setBackground = (specs: AdSpec, adSlot: Node): ?Promise<any> => {
         });
 };
 
-export default { setBackground };
+export { setBackground };

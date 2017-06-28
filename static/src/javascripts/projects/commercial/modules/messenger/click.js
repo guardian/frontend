@@ -5,4 +5,4 @@ const sendClick = (adSlot: Element, linkName: string): void => {
     trackNativeAdLinkClick(adSlot.id, linkName);
 };
 
-export const _ = { sendClick };
+export { sendClick };
