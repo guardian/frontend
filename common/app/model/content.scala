@@ -3,9 +3,10 @@ package model
 import java.net.URL
 
 import com.gu.contentapi.client.model.{v1 => contentapi}
+import com.gu.facia.api.utils.SpecialReport
 import com.gu.facia.api.{utils => fapiutils}
-import com.gu.facia.client.models.TrailMetaData
-import com.gu.targeting.client.Campaign
+import com.gu.facia.client.models.{MetaDataCommonFields, TrailMetaData}
+import com.gu.targeting.client.{Campaign, ReportFields}
 import common._
 import conf.Configuration
 import conf.switches.Switches._
@@ -18,6 +19,7 @@ import org.jsoup.safety.Whitelist
 import org.scala_tools.time.Imports._
 import play.api.libs.json._
 import views.support._
+
 import scala.collection.JavaConversions._
 import scala.util.Try
 
@@ -93,7 +95,7 @@ final case class Content(
   }
 
   lazy val hasTonalHeaderByline: Boolean = {
-    (cardStyle == Comment || cardStyle == Editorial || (cardStyle == SpecialReport && tags.isComment)) &&
+    (cardStyle == Comment || cardStyle == Editorial || (cardStyle == model.pressed.SpecialReport && tags.isComment)) &&
       hasSingleContributor &&
       metadata.contentType != GuardianContentTypes.ImageContent
   }
@@ -304,6 +306,17 @@ final case class Content(
   val nonCompliantOutbrainAmp = (hasStoryPackage && tags.series.nonEmpty) || (tags.series.length > 1)
 }
 
+object CardStylePicker {
+  def apply(content: contentapi.Content, trailMetaData: MetaDataCommonFields): com.gu.facia.api.utils.CardStyle = {
+    specialReportFromTargeting(content) getOrElse fapiutils.CardStyle(content, TrailMetaData.empty)
+  }
+
+  private def specialReportFromTargeting(content: contentapi.Content): Option[com.gu.facia.api.utils.CardStyle] = {
+    val campaigns = _root_.commercial.targeting.CampaignAgent.getCampaignsForTags(content.tags.map(_.id))
+    campaigns.filterNot(_.fields == ReportFields).map(_ => SpecialReport).headOption
+  }
+}
+
 object Content {
 
   def apply(apiContent: contentapi.Content): ContentType = {
@@ -330,8 +343,7 @@ object Content {
     val atoms = Atoms.make(apiContent)
     val apifields = apiContent.fields
     val references: Map[String,String] = apiContent.references.map(ref => (ref.`type`, Reference.split(ref.id)._2)).toMap
-    val cardStyle: fapiutils.CardStyle = fapiutils.CardStyle(apiContent, TrailMetaData.empty)
-
+    val cardStyle: fapiutils.CardStyle = CardStylePicker(apiContent, TrailMetaData.empty)
 
     Content(
       trail = trail,
@@ -445,7 +457,7 @@ object Article {
       javascriptConfigOverrides = javascriptConfig,
       opengraphPropertiesOverrides = opengraphProperties,
       shouldHideHeaderAndTopAds = (content.tags.isTheMinuteArticle || (content.isImmersive && (content.elements.hasMainMedia || content.fields.main.nonEmpty))) && content.tags.isArticle,
-      contentWithSlimHeader = (content.isImmersive && content.tags.isArticle)
+      contentWithSlimHeader = content.isImmersive && content.tags.isArticle
     )
   }
 

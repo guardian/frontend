@@ -73,7 +73,7 @@ object Dependencies {
   val libPhoneNumber = "com.googlecode.libphonenumber" % "libphonenumber" % "7.2.4"
   val logback = "net.logstash.logback" % "logstash-logback-encoder" % "4.6"
   val kinesisLogbackAppender = "com.gu" % "kinesis-logback-appender" % "1.3.0"
-  val targetingClient = "com.gu" %% "targeting-client" % "0.11.0"
+  val targetingClient = "com.gu" %% "targeting-client" % "0.12.0"
   val scanamo = "com.gu" %% "scanamo" % "0.8.3"
   val enumeratumPlayJson = "com.beachape" %% "enumeratum-play-json" % "1.5.6"
   val commercialShared = "com.gu" %% "commercial-shared" % "5.0.0"
