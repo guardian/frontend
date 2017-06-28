@@ -105,6 +105,8 @@
 }
 
 .menu-group--editions {
+    padding-bottom: 0;
+
     @include mq(desktop) {
         padding-bottom: $gs-baseline * 2;
         margin-top: $gs-baseline * 2;
