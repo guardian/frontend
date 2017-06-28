@@ -610,13 +610,22 @@ final case class Video (
   source: Option[String],
   mediaAtom: Option[MediaAtom] ) extends ContentType {
 
-  lazy val bylineWithSource: Option[String] = Some(Seq(
-    trail.byline,
-    source.map{
+
+  lazy val bylineWithSource: Option[String] = {
+    val videoSource: Option[String] = source.orElse(mediaAtom.flatMap(_.source))
+
+    def prettySource(source: String): String = source match {
       case "guardian.co.uk" => "theguardian.com"
-      case other => s"Source: $other"
+      case other if other.nonEmpty => s"Source: $other"
     }
-  ).flatten.mkString(", ")).filter(_.nonEmpty)
+
+    (trail.byline, videoSource) match {
+      case (Some(b), Some(s)) if b.nonEmpty && s.nonEmpty => Some(s"$b, ${prettySource(s)}")
+      case (Some(b), _) if b.nonEmpty => Some(b)
+      case (_, Some(s)) if s.nonEmpty => Some(prettySource(s))
+      case _ => None
+    }
+  }
 
   lazy val videoLinkText: String = {
     val suffixVariations = List(
