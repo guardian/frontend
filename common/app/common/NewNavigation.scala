@@ -79,7 +79,7 @@ object NewNavigation {
     )
     val au = NavLinkLists(
       List(headlines, australiaNews, world, auPolitics, environment),
-      List(indigenousAustralia, media)
+      List(indigenousAustralia, auImmigration, media)
     )
     val us = NavLinkLists(
       List(headlines, usNews, world, environment, usPolitics, business),
