@@ -36,7 +36,7 @@
     }
 
     .new-header--slim & {
-        @include mq($from: tablet, $until: desktop) {
+        @include mq(tablet) {
             font-size: 24px;
         }
     }
