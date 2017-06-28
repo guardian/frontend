@@ -14,15 +14,13 @@
 
     @include mq(desktop) {
         .new-header--open & {
-            z-index: $zindex-main-menu + 1;
+            z-index: $zindex-main-menu;
         }
     }
 
     .new-header--slim & {
         width: auto;
         order: -1;
-        padding-left: $gs-gutter / 2;
-        padding-right: $gs-gutter / 2;
 
         @include mq($until: tablet) {
             display: none;
@@ -35,12 +33,17 @@
     display: inline-block;
 
     @include mq(desktop) {
+        min-width: 0;
+        padding-right: 16px;
+        transition: min-width 200ms ease;
+        will-change: min-width;
+
         .new-header--open & {
-            width: gs-span(2) + $gs-gutter / 2 + 1;
+            min-width: gs-span(2) + $gs-gutter / 2;
         }
 
         .new-header--open &:not(:first-child) {
-            margin-left: $gs-gutter / 2 - 1;
+            margin-left: $gs-gutter / 2;
         }
     }
 
@@ -48,26 +51,28 @@
         content: '/';
         color: $news-main-2;
         display: inline-block;
-        line-height: 1;
         margin-left: -1px;
         margin-right: 2px;
-        opacity: .6;
         pointer-events: none;
 
-        .new-header--open & {
-            @include mq(desktop) {
-                display: none;
-            }
+        // Slashes switch to left hand side for open animation
+        @include mq(desktop) {
+            left: -12px;
+            margin: 0;
+            position: absolute;
+            top: 0;
         }
     }
 
-    &:last-child > *:after {
-        display: none;
+    @include mq($until: desktop) {
+        &:last-child > *:after {
+            display: none;
+        }
     }
 
-    .new-header--slim.new-header--open & {
-        @include mq(tablet) {
-            padding-left: $gs-gutter / 2;
+    @include mq(desktop) {
+        &:first-child > *:after {
+            display: none;
         }
     }
 }

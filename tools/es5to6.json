@@ -19,16 +19,15 @@
     "bootstraps/enhanced/gallery.js"
   ],
   "Simon Adcock": [
-    "projects/common/modules/onward/breaking-news.js",
-    "projects/commercial/modules/sticky-top-banner.js",
-    "projects/common/modules/article/membership-events.js",
-    "projects/common/modules/discussion/upvote.js",
-    "projects/common/modules/discussion/user-avatars.js",
-    "projects/common/modules/discussion/whole-discussion.js",
-    "projects/common/modules/experiments/tests/bookmarks-email-variants-2.js",
-    "projects/common/modules/ui/blockSharing.js",
-    "projects/common/modules/ui/clickstream.js",
-    "lib/client-rects.js"
+      "projects/commercial/modules/sticky-top-banner.js",
+      "projects/common/modules/article/membership-events.js",
+      "projects/common/modules/discussion/upvote.js",
+      "projects/common/modules/discussion/user-avatars.js",
+      "projects/common/modules/discussion/whole-discussion.js",
+      "projects/common/modules/experiments/tests/bookmarks-email-variants-2.js",
+      "projects/common/modules/ui/blockSharing.js",
+      "projects/common/modules/ui/clickstream.js",
+      "lib/client-rects.js"
   ],
   "Nicolas Long": [
     "lib/atob.js",
@@ -55,7 +54,6 @@
     "projects/common/modules/crosswords/anagram-helper/clue-input.js"
   ],
   "GHaberis": [
-    "projects/common/modules/media/videojs-plugins/skip-ad.js",
     "projects/common/modules/ui/toggles.js",
     "projects/common/modules/onward/geo-most-popular.js",
     "projects/common/modules/onward/history.js",
@@ -64,9 +62,7 @@
     "projects/common/modules/discussion/comment-box.js"
   ],
   "Gustav Pursche": [
-    "projects/common/modules/ui/tabs.js",
-    "projects/common/modules/sport/football/match-info.js",
-    "projects/common/modules/ui/autoupdate.js"
+    "projects/common/modules/ui/tabs.js"
   ],
   "NataliaLKB": [
     "projects/common/modules/article/rich-links.js",
@@ -175,10 +171,7 @@
     "projects/commercial/modules/third-party-tags/imr-worldwide-legacy.js",
     "projects/commercial/modules/paidfor-band.js"
   ],
-  "Philip Wills": [
-    "projects/facia/modules/ui/live-blog-updates.js",
-    "projects/commercial/modules/third-party-tags/imr-worldwide.js"
-  ],
+  "Philip Wills": [],
   "Santiago Villa Fernandez": [
     "projects/common/modules/video/more-in-series-container.js"
   ],

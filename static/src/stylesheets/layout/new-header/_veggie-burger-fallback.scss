@@ -1,6 +1,4 @@
 .veggie-burger-fallback {
-    display: none;
-
     &:checked {
         & ~ .menu {
             @include mq($until: desktop) {
@@ -20,19 +18,19 @@
         }
 
         & ~ .pillars {
-            .pillars__item:not(:first-child) > .pillar-link {
+            .pillars__item {
                 @include mq(desktop) {
-                    margin-left: $gs-gutter / 2 - 1;
+                    min-width: gs-span(2) + $gs-gutter / 2;
                 }
             }
 
-            .pillar-link {
+            .pillars__item:not(:first-child) {
                 @include mq(desktop) {
-                    width: gs-span(2) + $gs-gutter / 2 + 1;
+                    margin-left: $gs-gutter / 2;
                 }
             }
 
-            .pillar-link:after {
+            .pillar-link--current-section:before {
                 @include mq(desktop) {
                     display: none;
                 }
@@ -62,5 +60,9 @@
                 }
             }
         }
+    }
+
+    &:focus ~ .veggie-burger {
+        background-color: darken($news-main-2, 10%);
     }
 }

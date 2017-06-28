@@ -37,39 +37,16 @@ from scrolling */
         justify-content: space-between;
         padding-bottom: 0;
     }
-
-    .new-header--slim & {
-        @include content-gutter;
-
-        @include mq($until: desktop) {
-            max-width: 100%;
-        }
-    }
 }
 
 .new-header__cta-container {
     left: $gs-gutter / 4;
-    overflow: hidden;
     padding-right: 6px;
     position: absolute;
     top: 0;
 
     @include mq(mobileLandscape) {
         left: $gs-gutter / 2;
-    }
-
-    .new-header--slim & {
-        position: relative;
-        overflow: visible;
-        left: -$gs-gutter / 4;
-        order: -1;
-        z-index: 1;
-    }
-
-    .new-header--slim.new-header--open & {
-        @include mq(tablet) {
-            display: none;
-        }
     }
 }
 
@@ -81,6 +58,12 @@ from scrolling */
         display: flex;
         float: none;
         margin-left: auto;
+    }
+
+    @include mq(desktop) {
+        &:focus {
+            outline: none;
+        }
     }
 
     .new-header--slim.new-header--open & {
@@ -110,22 +93,30 @@ from scrolling */
     }
 
     @include mq(tablet) {
-        height: calc(3 / 16 * 370px);
-        width: 370px;
+        height: calc(3 / 16 * 385px);
+        width: 385px;
     }
 
     @include mq(desktop) {
+        height: calc(3 / 16 * 385px);
         margin-bottom: $gs-baseline / 4;
+        width: 385px;
     }
 
     .new-header--slim & {
         height: calc(3 / 16 * 155px);
+        margin-right: $gs-gutter;
+        margin-top: 7px;
         width: 155px;
+
+        @include mq(mobileLandscape) {
+            margin-right: $gs-gutter * 1.5;
+        }
 
         @include mq(tablet) {
             height: calc(3 / 16 * 170px);
+            margin-top: 5px;
             width: 170px;
-            margin-right: $gs-gutter / 2;
         }
     }
 }
