@@ -334,6 +334,7 @@ object NewNavigation {
       SectionsLink("index/contributors", columnists, Opinion),
       SectionsLink("commentisfree/series/comment-is-free-weekly", inMyOpinion, Opinion),
       SectionsLink("profile/editorial", theGuardianView, Opinion),
+      SectionsLink("tone/editorials", editorials, Opinion),
 
       SectionsLink("sport", sport, Sport),
       SectionsLink("football", football, Sport),
