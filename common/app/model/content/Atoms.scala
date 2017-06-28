@@ -103,7 +103,8 @@ final case class Quiz(
   path: String,
   quizType: String,
   content: QuizContent,
-  revealAtEnd: Boolean
+  revealAtEnd: Boolean,
+  isStoryQuiz: Boolean
 ) extends Atom
 
 final case class InteractiveAtom(
@@ -186,12 +187,12 @@ object Atoms extends common.Logging {
       //      the purpose of this test will be tagged with "test/test"
       val quizzes = extract(
         atoms.quizzes.map { quizzes => quizzes.filterNot(_.labels.contains("test/test")) },
-        atom => { Quiz.make(content.id, atom) }
+        atom => { Quiz.make(content.id, false, atom) }
       )
 
       val quizStories = extract(
         atoms.quizzes.map { quizzes => quizzes.filter(_.labels.contains("test/test")) },
-        atom => { Quiz.make(content.id, atom) }
+        atom => { Quiz.make(content.id, true, atom) }
       )
       // -->
 
@@ -327,7 +328,7 @@ object Quiz extends common.Logging {
 
 
 
-  def make(path: String, atom: AtomApiAtom): Quiz = {
+  def make(path: String, isStoryQuiz: Boolean, atom: AtomApiAtom): Quiz = {
 
     val quiz = atom.data.asInstanceOf[AtomData.Quiz].quiz
     val questions = quiz.content.questions.map { question =>
@@ -378,7 +379,8 @@ object Quiz extends common.Logging {
       title = quiz.title,
       quizType = quiz.quizType,
       content = content,
-      revealAtEnd = quiz.revealAtEnd
+      revealAtEnd = quiz.revealAtEnd,
+      isStoryQuiz = isStoryQuiz
     )
   }
 }
