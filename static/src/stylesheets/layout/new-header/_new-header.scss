@@ -40,19 +40,19 @@ from scrolling */
 }
 
 .new-header__cta-container {
-    // -2 to normalize the padding-left
-    left: $gs-gutter / 4 - 2;
+    // -4 to normalize the padding-left
+    left: $gs-gutter / 4 - 4;
     overflow-y: hidden;
     /* necessary to make overflow-y work without cutting off
     the transform */
     padding-bottom: 10px;
-    padding-left: 2px;
+    padding-left: 4px;
     padding-right: 6px;
     position: absolute;
     top: 0;
 
     @include mq(mobileLandscape) {
-        left: $gs-gutter / 2 - 2;
+        left: $gs-gutter / 2 - 4;
     }
 }
 
