@@ -10,7 +10,7 @@ class Toggles {
             const controls = component.querySelectorAll('[data-toggle]');
 
             this.component = component;
-            this.controls = [...controls].map(control => control);
+            this.controls = [...controls];
 
             mediator.on('module:clickstream:click', clickSpec => {
                 this.reset(clickSpec ? clickSpec.target : null);
