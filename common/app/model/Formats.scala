@@ -224,6 +224,7 @@ object ContentTypeFormat {
    * */
   implicit val reads: Reads[Atoms] = (
     (__ \ "quizzes").read[Seq[Quiz]].orElse(Reads.pure(Nil)) and
+      (__ \ "quizStories").read[Seq[Quiz]].orElse(Reads.pure(Nil)) and
       (__ \ "media").read[Seq[MediaAtom]].orElse(Reads.pure(Nil)) and
       (__ \ "interactives").read[Seq[InteractiveAtom]].orElse(Reads.pure(Nil)) and
       (__ \ "recipes").read[Seq[RecipeAtom]].orElse(Reads.pure(Nil)) and

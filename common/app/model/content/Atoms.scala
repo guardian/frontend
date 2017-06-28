@@ -14,6 +14,7 @@ import views.support.{GoogleStructuredData, ImgSrc}
 
 final case class Atoms(
   quizzes: Seq[Quiz],
+  quizStories: Seq[Quiz],
   media: Seq[MediaAtom],
   interactives: Seq[InteractiveAtom],
   recipes: Seq[RecipeAtom],
@@ -25,7 +26,7 @@ final case class Atoms(
   profiles: Seq[ProfileAtom],
   timelines: Seq[TimelineAtom]
 ) {
-  val all: Seq[Atom] = quizzes ++ media ++ interactives ++ recipes ++ reviews ++ storyquestions ++ explainers ++ qandas ++ guides ++ profiles ++ timelines
+  val all: Seq[Atom] = quizzes ++ quizStories ++ media ++ interactives ++ recipes ++ reviews ++ storyquestions ++ explainers ++ qandas ++ guides ++ profiles ++ timelines
 }
 
 sealed trait Atom {
@@ -178,7 +179,21 @@ object Atoms extends common.Logging {
 
   def make(content: contentapi.Content): Option[Atoms] = {
     content.atoms.map { atoms =>
-      val quizzes = extract(atoms.quizzes, atom => { Quiz.make(content.id, atom) })
+      // <!-- This is a temporary hack for the duration of the test where story quizzes
+      //      are displayed at the bottom of an article. We reuse the quiz atom, even
+      //      though its model doesn't comply perfectly with the domain model of our
+      //      intended purpose. We will rely on the convention that quizzes created for
+      //      the purpose of this test will be tagged with "test/test"
+      val quizzes = extract(
+        atoms.quizzes.map { quizzes => quizzes.filterNot(_.labels.contains("test/test")) },
+        atom => { Quiz.make(content.id, atom) }
+      )
+
+      val quizStories = extract(
+        atoms.quizzes.map { quizzes => quizzes.filter(_.labels.contains("test/test")) },
+        atom => { Quiz.make(content.id, atom) }
+      )
+      // -->
 
       val media = extract(atoms.media, atom => {
         val endSlatePath = EndSlateComponents(
@@ -209,6 +224,7 @@ object Atoms extends common.Logging {
 
       Atoms(
         quizzes = quizzes,
+        quizStories = quizStories,
         media = media,
         interactives = interactives,
         recipes = recipes,
@@ -479,4 +495,3 @@ object ProfileAtom {
 object TimelineAtom {
   def make(atom: AtomApiAtom): TimelineAtom = TimelineAtom(atom.id, atom, atom.data.asInstanceOf[AtomData.Timeline].timeline)
 }
-
