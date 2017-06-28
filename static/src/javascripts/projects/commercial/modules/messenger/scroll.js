@@ -146,4 +146,6 @@ const onMessage = (respond: any, start: any, iframe: ?Element): void => {
     }
 };
 
-export { addScrollListener, removeScrollListener, reset, onMessage };
+export const _ = { addScrollListener, removeScrollListener, reset };
+
+export { onMessage };

@@ -70,4 +70,6 @@ const onMessage = (respond: any, start: any, iframe: ?Element): void => {
     }
 };
 
-export { addResizeListener, removeResizeListener, reset, onMessage };
+export const _ = { addResizeListener, removeResizeListener, reset };
+
+export { onMessage };
