@@ -14,7 +14,7 @@ import views.support.{GoogleStructuredData, ImgSrc}
 
 final case class Atoms(
   quizzes: Seq[Quiz],
-  quizStories: Seq[Quiz],
+  storyQuizzes: Seq[StoryQuiz],
   media: Seq[MediaAtom],
   interactives: Seq[InteractiveAtom],
   recipes: Seq[RecipeAtom],
@@ -26,7 +26,7 @@ final case class Atoms(
   profiles: Seq[ProfileAtom],
   timelines: Seq[TimelineAtom]
 ) {
-  val all: Seq[Atom] = quizzes ++ quizStories ++ media ++ interactives ++ recipes ++ reviews ++ storyquestions ++ explainers ++ qandas ++ guides ++ profiles ++ timelines
+  val all: Seq[Atom] = quizzes ++ storyQuizzes ++ media ++ interactives ++ recipes ++ reviews ++ storyquestions ++ explainers ++ qandas ++ guides ++ profiles ++ timelines
 }
 
 sealed trait Atom {
@@ -103,8 +103,16 @@ final case class Quiz(
   path: String,
   quizType: String,
   content: QuizContent,
-  revealAtEnd: Boolean,
-  isStoryQuiz: Boolean
+  revealAtEnd: Boolean
+) extends Atom
+
+final case class StoryQuiz(
+  override val id: String,
+  title: String,
+  description: Option[String],
+  image: Option[String],
+  path: String,
+  content: QuizContent
 ) extends Atom
 
 final case class InteractiveAtom(
@@ -187,12 +195,12 @@ object Atoms extends common.Logging {
       //      the purpose of this test will be tagged with "test/test"
       val quizzes = extract(
         atoms.quizzes.map { quizzes => quizzes.filterNot(_.labels.contains("test/test")) },
-        atom => { Quiz.make(content.id, false, atom) }
+        atom => { Quiz.make(content.id, atom) }
       )
 
-      val quizStories = extract(
+      val storyQuizzes = extract(
         atoms.quizzes.map { quizzes => quizzes.filter(_.labels.contains("test/test")) },
-        atom => { Quiz.make(content.id, true, atom) }
+        atom => { StoryQuiz.make(content.id, atom) }
       )
       // -->
 
@@ -225,7 +233,7 @@ object Atoms extends common.Logging {
 
       Atoms(
         quizzes = quizzes,
-        quizStories = quizStories,
+        storyQuizzes = storyQuizzes,
         media = media,
         interactives = interactives,
         recipes = recipes,
@@ -326,12 +334,8 @@ object Quiz extends common.Logging {
     }
   }
 
-
-
-  def make(path: String, isStoryQuiz: Boolean, atom: AtomApiAtom): Quiz = {
-
-    val quiz = atom.data.asInstanceOf[AtomData.Quiz].quiz
-    val questions = quiz.content.questions.map { question =>
+  def extractQuestions(quiz: atomapi.quiz.QuizAtom): Seq[Question] =
+    quiz.content.questions.map { question =>
       val answers = question.answers.map { answer =>
         Answer(
           id = answer.id,
@@ -349,7 +353,8 @@ object Quiz extends common.Logging {
         imageMedia = transformAssets(question.assets.headOption))
     }
 
-    val content = QuizContent(
+  def extractContent(questions: Seq[Question], quiz: atomapi.quiz.QuizAtom): QuizContent =
+    QuizContent(
       questions = questions,
       resultGroups = quiz.content.resultGroups.map(resultGroups => {
         resultGroups.groups.map(resultGroup => {
@@ -373,14 +378,47 @@ object Quiz extends common.Logging {
       }).getOrElse(Nil)
     )
 
+  def make(path: String, atom: AtomApiAtom): Quiz = {
+
+    val quiz = atom.data.asInstanceOf[AtomData.Quiz].quiz
+    val questions = extractQuestions(quiz)
+    val content = extractContent(questions, quiz)
+
     Quiz(
       id = quiz.id,
       path = path,
       title = quiz.title,
       quizType = quiz.quizType,
       content = content,
-      revealAtEnd = quiz.revealAtEnd,
-      isStoryQuiz = isStoryQuiz
+      revealAtEnd = quiz.revealAtEnd
+    )
+  }
+}
+
+object StoryQuiz {
+  def extractImage(quiz: atomapi.quiz.QuizAtom): Option[String] =
+    None
+
+  def make(path: String, atom: AtomApiAtom) = {
+    val (title, description) = atom.title.map { title =>
+      val s = title.split("|")
+      if(s.length == 2)
+        (s(0), Some(s(1)))
+      else
+        (s(0), None)
+    }.getOrElse(("", None))
+    val quiz = atom.data.asInstanceOf[AtomData.Quiz].quiz
+    val questions = Quiz.extractQuestions(quiz)
+    val content = Quiz.extractContent(questions, quiz)
+    val image = extractImage(quiz)
+
+    StoryQuiz(
+      id = quiz.id,
+      path = path,
+      title = title,
+      description = description,
+      image = image,
+      content = content
     )
   }
 }
