@@ -6,15 +6,12 @@
     label = qa.data.typeLabel.getOrElse("Q&amp;A"),
     headline = qa.atom.title.getOrElse("")
   ){
-    @qa.data.eventImage.map { image =>
+    @for(eventImage <- qa.data.eventImage; master <- eventImage.master) {
       <div class="explainer-snippet__image">
-        image.master
+        <img src="@master.file"/>
       </div>
     }
 
-    @qa.data.item.title.map { t =>
-      <div class="explainer-snippet__heading"><b>@t</b></div>
-    }
     @qa.data.item.body
   }
 }

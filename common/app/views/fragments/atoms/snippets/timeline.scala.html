@@ -5,7 +5,7 @@
 @if(!isAmp) {
   @fragments.atoms.snippet(
     className = "timeline",
-    label = timeline.data.typeLabel.getOrElse("Quick Guide"),
+    label = timeline.data.typeLabel.getOrElse("Timeline"),
     headline = timeline.atom.title.getOrElse("")
   ){
     @for(item <- timeline.data.events) {

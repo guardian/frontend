@@ -6,9 +6,9 @@
     label = profile.data.typeLabel.getOrElse("Quick Guide"),
     headline = profile.atom.title.getOrElse("")
   ){
-    @profile.data.headshot.map { image =>
+    @for(headshot <- profile.data.headshot; master <- headshot.master) {
       <div class="explainer-snippet__image">
-        image.master
+        <img src="@master.file"/>
       </div>
     }
 

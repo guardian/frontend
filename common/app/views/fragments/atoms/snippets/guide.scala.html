@@ -6,9 +6,9 @@
     label = guide.data.typeLabel.getOrElse("Quick Guide"),
     headline = guide.atom.title.getOrElse("")
   ){
-    @guide.data.guideImage.map { image =>
+    @for(guideImage <- guide.data.guideImage; master <- guideImage.master) {
       <div class="explainer-snippet__image">
-        image.master
+        <img src="@master.file"/>
       </div>
     }
 

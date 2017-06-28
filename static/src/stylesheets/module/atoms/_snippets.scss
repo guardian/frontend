@@ -1,12 +1,32 @@
 .explainer-snippet__image {
     float: left;
     margin-right: $gs-gutter / 2;
+
+    display: inline-block;
+    position: relative;
+    width: 33%;
+    height: 0;
+    overflow: hidden;
+    border-radius: 50%;
+    padding-top: 33%;
+}
+
+.explainer-snippet__image img {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    object-fit: cover;
 }
 
 .explainer-snippet__item::before {
     content: '';
-    display: block;
+    display: flex;
     width: 200px;
+    @include mq($until: mobileLandscape) {
+        width: 100px;
+    }
     height: 0;
     border-top: 1px dotted $neutral-2;
 }
@@ -36,6 +56,7 @@
 .explainer-snippet--timeline {
     .explainer-snippet__body {
         margin-left: 8px;
+        overflow: visible;
     }
 
     .explainer-snippet__item {
