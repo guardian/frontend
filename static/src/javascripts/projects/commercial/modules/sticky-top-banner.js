@@ -12,7 +12,6 @@ import { register, unregister } from 'commercial/modules/messenger';
 
 const topSlotId = 'dfp-ad--top-above-nav';
 let updateQueued = false;
-let win;
 let header: ?HTMLElement;
 let headerHeight;
 let topSlot: ?HTMLElement;
@@ -110,7 +109,7 @@ const onResize = (specs: any, _: any, iframe: any): void => {
 const setupListeners = (): void => {
     register('resize', onResize);
     if (!config.page.hasSuperStickyBanner) {
-        addEventListener(win, 'scroll', onScroll, {
+        addEventListener(window, 'scroll', onScroll, {
             passive: true,
         });
     }
@@ -179,13 +178,11 @@ const initState = (): Promise<any> =>
             Promise.all([resizeStickyBanner(currentHeight), onScroll()])
         );
 
-// TODO: is it really necessary to inject a mock window here?
-const initStickyTopBanner = (_window: any): Promise<void> => {
+const initStickyTopBanner = (): Promise<void> => {
     if (!commercialFeatures.stickyTopBannerAd) {
         return Promise.resolve();
     }
 
-    win = _window || window;
     topSlot = document.getElementById(topSlotId);
     if (
         topSlot &&
