@@ -60,7 +60,7 @@ const setupAnimation = (): Promise<any> =>
         }
     });
 
-const onScroll = (): ?Promise<any> => {
+const onScroll = (): Promise<any> => {
     scrollY = window.pageYOffset;
     if (!updateQueued) {
         updateQueued = true;
@@ -80,6 +80,8 @@ const onScroll = (): ?Promise<any> => {
             })
             .then(setupAnimation);
     }
+
+    return Promise.resolve();
 };
 
 const update = (newHeight: number): Promise<any> =>
