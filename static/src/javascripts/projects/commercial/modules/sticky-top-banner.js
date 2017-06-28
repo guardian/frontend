@@ -96,8 +96,7 @@ const update = (newHeight: number): Promise<any> =>
         })
         .then(resizeStickyBanner);
 
-// TODO: what are we expecting these parameters to be?
-const onResize = (specs: any, _: any, iframe: any): void => {
+const onResize = (specs: any, _: any, iframe: ?Element): void => {
     if (topSlot && topSlot.contains(iframe)) {
         update(specs.height);
         unregister('resize', onResize);
