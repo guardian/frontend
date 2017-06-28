@@ -44,12 +44,24 @@ object ABNewDesktopHeader extends TestDefinition(
   name = "ab-new-desktop-header",
   description = "Users in this test will see the new desktop design.",
   owners = Seq(Owner.withGithub("natalialkb"), Owner.withGithub("gustavpursche")),
-  sellByDate = new LocalDate(2017, 7, 5)
+  sellByDate = new LocalDate(2017, 7, 18)
 ) {
 
   def participationGroup(implicit request: RequestHeader): Option[String] = request.headers.get("X-GU-ab-new-desktop-header")
 
   def canRun(implicit request: RequestHeader): Boolean = participationGroup.contains("variant")
+}
+
+object ABNewDesktopHeaderControl extends TestDefinition(
+  name = "ab-new-desktop-header-control",
+  description = "Users in this test will not see the new desktop design, but act as a control group",
+  owners = Seq(Owner.withGithub("natalialkb"), Owner.withGithub("gustavpursche")),
+  sellByDate = new LocalDate(2017, 7, 18)
+) {
+
+  def participationGroup(implicit request: RequestHeader): Option[String] = request.headers.get("X-GU-ab-new-desktop-header")
+
+  def canRun(implicit request: RequestHeader): Boolean = participationGroup.contains("control")
 }
 
 trait ServerSideABTests {
@@ -77,7 +89,8 @@ object ActiveTests extends ServerSideABTests {
   val tests: Seq[TestDefinition] = List(
     CommercialClientLoggingVariant,
     CommercialGalleryBannerAds,
-    ABNewDesktopHeader
+    ABNewDesktopHeader,
+    ABNewDesktopHeaderControl
   )
 }
 
