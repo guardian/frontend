@@ -114,7 +114,7 @@ define([
                     ui.updateFormForLoggedIn(userFromId, el);
                 });
 
-                fastdom.muate(function () {
+                fastdom.mutate(function () {
                     if (formDisplayNameNormalText) {
                         $('.js-email-sub__display-name-normal-text', el).text(formDisplayNameNormalText);
 
