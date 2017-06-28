@@ -118,11 +118,10 @@ object NewNavigation {
         auColumnists,
         cartoons,
         indigenousAustraliaOpinion,
-        theGuardianView
+        editorials
       ),
       List(
         letters,
-        editorials,
         NavLink("first dog on the moon", "/profile/first-dog-on-the-moon"),
         NavLink("Katharine Murphy", "/profile/katharine-murphy")
       )
