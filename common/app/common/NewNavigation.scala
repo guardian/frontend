@@ -79,7 +79,7 @@ object NewNavigation {
     )
     val au = NavLinkLists(
       List(headlines, australiaNews, world, auPolitics, environment),
-      List(indigenousAustralia, media)
+      List(indigenousAustralia, auImmigration, media)
     )
     val us = NavLinkLists(
       List(headlines, usNews, world, environment, usPolitics, business),
@@ -118,11 +118,10 @@ object NewNavigation {
         auColumnists,
         cartoons,
         indigenousAustraliaOpinion,
-        theGuardianView
+        editorials
       ),
       List(
         letters,
-        editorials,
         NavLink("first dog on the moon", "/profile/first-dog-on-the-moon"),
         NavLink("Katharine Murphy", "/profile/katharine-murphy")
       )
@@ -335,6 +334,7 @@ object NewNavigation {
       SectionsLink("index/contributors", columnists, Opinion),
       SectionsLink("commentisfree/series/comment-is-free-weekly", inMyOpinion, Opinion),
       SectionsLink("profile/editorial", theGuardianView, Opinion),
+      SectionsLink("tone/editorials", editorials, Opinion),
 
       SectionsLink("sport", sport, Sport),
       SectionsLink("football", football, Sport),
