@@ -35,14 +35,13 @@ const resizeStickyBanner = (newHeight: number): Promise<number> => {
                 header.style.marginTop = `${newHeight}px`;
             }
             if (topSlotHeight !== undefined && headerHeight <= scrollY) {
-                win.scrollBy(0, newHeight - topSlotHeight);
+                window.scrollBy(0, newHeight - topSlotHeight);
             }
-
             topSlotHeight = newHeight;
+
             return newHeight;
         });
     }
-
     return Promise.resolve(-1);
 };
 
@@ -63,7 +62,7 @@ const setupAnimation = (): Promise<any> =>
     });
 
 const onScroll = (): ?Promise<any> => {
-    scrollY = win.pageYOffset;
+    scrollY = window.pageYOffset;
     if (!updateQueued) {
         updateQueued = true;
 
@@ -84,26 +83,10 @@ const onScroll = (): ?Promise<any> => {
     }
 };
 
-const initState = (): Promise<any> =>
-    fastdom
-        .read(() => {
-            if (header) {
-                headerHeight = header.offsetHeight;
-            }
-            if (topSlot) {
-                return topSlot.offsetHeight;
-            }
-
-            return 0;
-        })
-        .then(currentHeight =>
-            Promise.all([resizeStickyBanner(currentHeight), onScroll()])
-        );
-
 const update = (newHeight: number): Promise<any> =>
     fastdom
         .read(() => {
-            topSlotStyles = topSlotStyles || win.getComputedStyle(topSlot);
+            topSlotStyles = topSlotStyles || window.getComputedStyle(topSlot);
             return (
                 newHeight +
                 parseInt(topSlotStyles.paddingTop, 10) +
@@ -139,7 +122,7 @@ const getAdvertSizeByIndex = (advert: ?Advert, index: number): ?number => {
     }
 };
 
-const onFirstRender = (): void => {
+const onFirstRender = (): Promise<any> =>
     trackAdRender(topSlotId).then(isRendered => {
         if (isRendered) {
             const advert = getAdvertById(topSlotId);
@@ -153,7 +136,7 @@ const onFirstRender = (): void => {
                 adSize1 &&
                 adSize1 > 0
             ) {
-                fastdom
+                return fastdom
                     .read(() => {
                         const styles = window.getComputedStyle(topSlot);
 
@@ -164,20 +147,37 @@ const onFirstRender = (): void => {
                         );
                     })
                     .then(resizeStickyBanner);
-            } else {
-                fastdom
-                    .read(() => {
-                        if (topSlot) {
-                            return topSlot.offsetHeight;
-                        }
-
-                        return 0;
-                    })
-                    .then(resizeStickyBanner);
             }
+            return fastdom
+                .read(() => {
+                    if (topSlot) {
+                        return topSlot.offsetHeight;
+                    }
+
+                    return 0;
+                })
+                .then(resizeStickyBanner);
         }
     });
-};
+
+const initState = (): Promise<any> =>
+    fastdom
+        .read(() => {
+            if (header) {
+                headerHeight =
+                    parseInt(window.getComputedStyle(header).height, 10) || 0;
+            }
+            if (topSlot) {
+                return (
+                    parseInt(window.getComputedStyle(topSlot).height, 10) || 0
+                );
+            }
+
+            return 0;
+        })
+        .then(currentHeight =>
+            Promise.all([resizeStickyBanner(currentHeight), onScroll()])
+        );
 
 // TODO: is it really necessary to inject a mock window here?
 const initStickyTopBanner = (_window: any): Promise<void> => {
