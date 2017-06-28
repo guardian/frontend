@@ -9,7 +9,7 @@ import adSizes from 'commercial/modules/ad-sizes';
 import stickyMpu from 'commercial/modules/sticky-mpu';
 import { applyCreativeTemplate } from 'commercial/modules/dfp/apply-creative-template';
 import renderAdvertLabel from 'commercial/modules/dfp/render-advert-label';
-import geoMostPopular from 'common/modules/onward/geo-most-popular';
+import { geoMostPopular } from 'common/modules/onward/geo-most-popular';
 import Toggles from 'common/modules/ui/toggles';
 import { recordUserAdFeedback } from 'commercial/modules/user-ad-feedback';
 import config from 'lib/config';
