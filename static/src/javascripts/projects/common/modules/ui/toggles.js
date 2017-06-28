@@ -1,80 +1,108 @@
-import bean from 'bean';
+// @flow
 import mediator from 'lib/mediator';
-import contains from 'lodash/collections/contains';
 
-var Toggles = function(parent) {
+class Toggles {
+    component: ?HTMLElement;
+    controls: Array<HTMLElement>;
 
-    var self = this,
-        controls,
-        doNotReset = ['popup--search'],
-        readyClass = 'js-toggle-ready',
-        isSignedIn = (function() {
-            var nav = document.querySelector('.js-profile-nav');
-            return nav && nav.classList.contains('is-signed-in');
-        }()),
-        component = parent || document.body;
+    constructor(component: ?HTMLElement = document.body): void {
+        if (component) {
+            const controls = component.querySelectorAll('[data-toggle]');
 
-    this.init = function() {
-        controls = Array.prototype.slice.call(component.querySelectorAll('[data-toggle]'));
+            this.component = component;
+            this.controls = [...controls].map(control => control);
 
-        controls.forEach(function(control) {
-            if (!control.classList.contains(readyClass)) {
-                var target = self.getTarget(component, control);
+            mediator.on('module:clickstream:click', clickSpec => {
+                this.reset(clickSpec ? clickSpec.target : null);
+            });
+        }
+    }
 
-                if (target && !(!isSignedIn && control.getAttribute('data-toggle-signed-in') === 'true')) {
-                    control.toggleTarget = target;
-                    control.classList.add(readyClass);
-                    bean.add(control, 'click', function(e) {
-                        e.preventDefault();
-                        self.toggle(control, controls);
-                    });
+    init() {
+        this.controls.forEach(this.prepareControl, this);
+    }
+
+    toggle(control: HTMLElement): void {
+        this.controls.forEach(c => {
+            if (c === control) {
+                if (c.classList.contains('is-active')) {
+                    this.close(c);
+                } else {
+                    this.open(c);
                 }
+            } else {
+                this.close(c);
             }
         });
-    };
+    }
 
-    this.reset = function(omitEl) {
-        controls.filter(function(control) {
-            return !(omitEl === control || contains(doNotReset, control.getAttribute('data-toggle')));
-        }).map(self.close);
-    };
+    reset(omitEl: ?HTMLElement): void {
+        const doNotReset = ['popup--search'];
 
-    mediator.on('module:clickstream:click', function(clickSpec) {
-        self.reset(clickSpec ? clickSpec.target : null);
-    });
-};
+        this.controls
+            .filter(
+                control =>
+                    !(
+                        omitEl === control ||
+                        doNotReset.includes(control.getAttribute('data-toggle'))
+                    )
+            )
+            .forEach(close);
+    }
 
-Toggles.prototype.toggle = function(control, controls) {
-    var self = this;
+    prepareControl(control: HTMLElement): void {
+        const readyClass = 'js-toggle-ready';
+        const nav = document.querySelector('.js-profile-nav');
+        const isSignedIn = nav && nav.classList.contains('is-signed-in');
 
-    controls.forEach(function(c) {
-        if (c === control) {
-            self[c.classList.contains('is-active') ? 'close' : 'open'](c);
-        } else {
-            self.close(c);
+        if (!control.classList.contains(readyClass)) {
+            const target = this.getTarget(control);
+
+            if (
+                target &&
+                !(
+                    !isSignedIn &&
+                    control.getAttribute('data-toggle-signed-in') === 'true'
+                )
+            ) {
+                control.classList.add(readyClass);
+                control.addEventListener('click', (e: MouseEvent): void => {
+                    e.preventDefault();
+                    this.toggle(control);
+                });
+            }
         }
-    });
-};
-
-Toggles.prototype.getTarget = function(parent, control) {
-    var targetClass = control.getAttribute('data-toggle');
-    if (targetClass) {
-        return parent.querySelector('.' + targetClass);
     }
-};
 
-Toggles.prototype.open = function(c) {
-    c.classList.add('is-active');
-    if (c.toggleTarget) {
-        c.toggleTarget.classList.remove('is-off');
+    getTarget(control: HTMLElement): ?HTMLElement {
+        const targetClass = control.getAttribute('data-toggle');
+
+        if (targetClass) {
+            if (this.component) {
+                return this.component.querySelector(`.${targetClass}`);
+            }
+        }
     }
-};
 
-Toggles.prototype.close = function(c) {
-    c.classList.remove('is-active');
-    if (c.toggleTarget) {
-        c.toggleTarget.classList.add('is-off');
+    open(control: HTMLElement): void {
+        const target = this.getTarget(control);
+
+        control.classList.add('is-active');
+
+        if (target) {
+            target.classList.remove('is-off');
+        }
     }
-};
 
-export default Toggles;
+    close(control: HTMLElement): void {
+        const target = this.getTarget(control);
+
+        control.classList.remove('is-active');
+
+        if (target) {
+            target.classList.add('is-off');
+        }
+    }
+}
+
+export { Toggles };
