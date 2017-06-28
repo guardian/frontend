@@ -40,8 +40,8 @@ object CommercialClientLoggingVariant extends TestDefinition(
   def canRun(implicit request: RequestHeader): Boolean = participationGroup.contains("ccl-A")
 }
 
-object ABNewDesktopHeader extends TestDefinition(
-  name = "ab-new-desktop-header",
+object ABNewDesktopHeaderVariant extends TestDefinition(
+  name = "ab-new-desktop-header-variant",
   description = "Users in this test will see the new desktop design.",
   owners = Seq(Owner.withGithub("natalialkb"), Owner.withGithub("gustavpursche")),
   sellByDate = new LocalDate(2017, 7, 18)
@@ -89,7 +89,7 @@ object ActiveTests extends ServerSideABTests {
   val tests: Seq[TestDefinition] = List(
     CommercialClientLoggingVariant,
     CommercialGalleryBannerAds,
-    ABNewDesktopHeader,
+    ABNewDesktopHeaderVariant,
     ABNewDesktopHeaderControl
   )
 }
