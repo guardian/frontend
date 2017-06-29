@@ -1,4 +1,5 @@
 // @flow
+import type { RegisterListeners } from 'commercial/modules/messenger';
 
 type Specs = {
     selector: string,
@@ -38,4 +39,14 @@ const getStyles = (specs: Specs, styleSheets: StyleSheetList): ?Array<any> => {
     return result;
 };
 
-export { getStyles };
+const init = (register: RegisterListeners) => {
+    register('get-styles', (specs): ?Array<any> => {
+        if (specs) {
+            return getStyles(specs, document.styleSheets);
+        }
+    });
+};
+
+export const _ = { getStyles };
+
+export { init };

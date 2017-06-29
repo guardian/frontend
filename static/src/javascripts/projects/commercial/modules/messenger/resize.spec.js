@@ -1,8 +1,8 @@
 // @flow
 import type { JestMockT } from 'jest';
-import { resize, _ } from './resize.js';
+import { _ } from './resize.js';
 
-const { normalise } = _;
+const { normalise, resize } = _;
 
 const foolFlow = (mockFn: any) => ((mockFn: any): JestMockT);
 

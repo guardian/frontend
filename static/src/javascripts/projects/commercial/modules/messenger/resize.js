@@ -1,5 +1,6 @@
 // @flow
 import fastdom from 'lib/fastdom-promise';
+import type { RegisterListeners } from 'commercial/modules/messenger';
 
 type Specs = {
     width?: string,
@@ -46,5 +47,15 @@ const resize = (
     });
 };
 
-export const _ = { normalise };
-export { resize };
+const init = (register: RegisterListeners) => {
+    register('resize', (specs, ret, iframe) => {
+        if (iframe && specs) {
+            const adSlot = iframe && iframe.closest('.js-ad-slot');
+            return resize(specs, iframe, adSlot);
+        }
+    });
+};
+
+export const _ = { resize, normalise };
+
+export { init };
