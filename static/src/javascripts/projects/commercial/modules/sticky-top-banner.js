@@ -73,8 +73,8 @@ const onScroll = (): Promise<any> => {
                         stickyBanner.style.position = 'absolute';
                         stickyBanner.style.top = `${headerHeight}px`;
                     } else {
-                        stickyBanner.style.position = 'static';
-                        stickyBanner.style.top = 'auto';
+                        stickyBanner.style.position = '';
+                        stickyBanner.style.top = '';
                     }
                 }
             })
