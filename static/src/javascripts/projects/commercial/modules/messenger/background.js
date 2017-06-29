@@ -19,18 +19,8 @@ type SpecStyles = {
     backgroundPosition: string,
 };
 
-const setBackground = (specs: AdSpec, adSlot: Node): ?Promise<any> => {
-    if (
-        !specs ||
-        !('backgroundImage' in specs) ||
-        !('backgroundRepeat' in specs) ||
-        !('backgroundPosition' in specs) ||
-        !('scrollType' in specs)
-    ) {
-        return null;
-    }
-
-    const specsStyles: SpecStyles = Object.keys(specs).reduce((result, key) => {
+const getStylesFromSpec = (specs: AdSpec): SpecStyles =>
+    Object.keys(specs).reduce((result, key) => {
         if (key !== 'scrollType') {
             result[key] = specs[key];
         }
@@ -42,10 +32,23 @@ const setBackground = (specs: AdSpec, adSlot: Node): ?Promise<any> => {
         return result;
     }, {});
 
+const setBackground = (specs: AdSpec, adSlot: Node): Promise<any> => {
+    if (
+        !specs ||
+        !('backgroundImage' in specs) ||
+        !('backgroundRepeat' in specs) ||
+        !('backgroundPosition' in specs) ||
+        !('scrollType' in specs)
+    ) {
+        return Promise.resolve();
+    }
+
+    const specStyles: SpecStyles = getStylesFromSpec(specs);
+
     // Create an element to hold the background image
     const background = document.createElement('div');
     background.className = `creative__background creative__background--${specs.scrollType}`;
-    background.style = Object.assign(background.style, specsStyles);
+    background.style = Object.assign(background.style, specStyles);
 
     // Wrap the background image in a DIV for positioning. Also, we give
     // this DIV a background colour if it is provided. This is because
@@ -53,8 +56,8 @@ const setBackground = (specs: AdSpec, adSlot: Node): ?Promise<any> => {
     // image won't be visible (think z-indexed layers)
     const backgroundParent = document.createElement('div');
     backgroundParent.className = 'creative__background-parent';
-    if (specsStyles.backgroundColor) {
-        backgroundParent.style.backgroundColor = specsStyles.backgroundColor;
+    if (specStyles.backgroundColor) {
+        backgroundParent.style.backgroundColor = specStyles.backgroundColor;
     }
     backgroundParent.appendChild(background);
 
@@ -98,10 +101,11 @@ const setBackground = (specs: AdSpec, adSlot: Node): ?Promise<any> => {
         });
 };
 
-register('background', (specs, ret, iframe): ?Promise<any> => {
+register('background', (specs, ret, iframe): Promise<any> => {
     if (iframe && specs) {
         return setBackground(specs, iframe.closest('.js-ad-slot'));
     }
+    return Promise.resolve();
 });
 
-export default { setBackground };
+export const _ = { setBackground, getStylesFromSpec };
