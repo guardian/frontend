@@ -2,7 +2,6 @@
 import type { JestMockT } from 'jest';
 
 import { trackNativeAdLinkClick } from 'common/modules/analytics/google';
-import { register } from 'commercial/modules/messenger';
 import { _ } from './click';
 
 const { sendClick } = _;
@@ -16,16 +15,7 @@ jest.mock('common/modules/analytics/google', () => ({
     trackNativeAdLinkClick: jest.fn(),
 }));
 
-jest.mock('commercial/modules/messenger', () => ({
-    register: jest.fn(),
-}));
-
 describe('Cross-frame messenger: sendClick', () => {
-    it('should call register', () => {
-        expect(register).toHaveBeenCalled();
-        expect(foolFlow(register).mock.calls[0][0]).toBe('click');
-    });
-
     it('should call trackNativeAdLinkClick', () => {
         const fakeAdSlot = document.createElement('div');
         sendClick(fakeAdSlot, 'name');

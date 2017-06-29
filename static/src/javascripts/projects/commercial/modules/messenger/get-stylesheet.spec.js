@@ -1,12 +1,7 @@
 // @flow
-import { register } from 'commercial/modules/messenger';
-import { getStyles } from './get-stylesheet';
+import { _ } from './get-stylesheet';
 
-jest.mock('commercial/modules/messenger', () => ({
-    register: jest.fn(),
-}));
-
-jest.setMock('commercial/modules/messenger', register);
+const { getStyles } = _;
 
 let styleSheets;
 

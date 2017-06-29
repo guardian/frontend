@@ -1,10 +1,8 @@
 // @flow
-import {
-    addScrollListener,
-    removeScrollListener,
-    reset,
-} from 'commercial/modules/messenger/scroll';
+import { _ as testExports } from 'commercial/modules/messenger/scroll';
 import detect from 'lib/detect';
+
+const { addScrollListener, removeScrollListener, reset } = testExports;
 
 jest.mock('commercial/modules/messenger', () => ({
     register: jest.fn(),

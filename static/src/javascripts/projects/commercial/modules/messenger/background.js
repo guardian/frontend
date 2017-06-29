@@ -2,7 +2,7 @@
 import { addEventListener } from 'lib/events';
 import fastdom from 'lib/fastdom-promise';
 
-import { register } from 'commercial/modules/messenger';
+import type { RegisterListeners } from 'commercial/modules/messenger';
 
 type AdSpec = {
     scrollType: string,
@@ -101,11 +101,15 @@ const setBackground = (specs: AdSpec, adSlot: Node): Promise<any> => {
         });
 };
 
-register('background', (specs, ret, iframe): Promise<any> => {
-    if (iframe && specs) {
-        return setBackground(specs, iframe.closest('.js-ad-slot'));
-    }
-    return Promise.resolve();
-});
+const init = (register: RegisterListeners): void => {
+    register('background', (specs, ret, iframe): Promise<any> => {
+        if (iframe && specs) {
+            return setBackground(specs, iframe.closest('.js-ad-slot'));
+        }
+        return Promise.resolve();
+    });
+};
 
 export const _ = { setBackground, getStylesFromSpec };
+
+export { init };

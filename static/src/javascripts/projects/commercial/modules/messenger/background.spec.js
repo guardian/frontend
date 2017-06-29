@@ -1,19 +1,7 @@
 // @flow
-import type { JestMockT } from 'jest';
-
-import { register } from 'commercial/modules/messenger';
 import { _ } from './background';
 
 const { setBackground, getStylesFromSpec } = _;
-
-// Jest understands `register.mock.calls`, however, Flow gets angry because:
-// 'property mock not found in statics of function'. This is a helper to allow
-// `expect(register.mock.calls[0][0]).toBe('background');` to pass linting
-const foolFlow = (mockFn: any) => ((mockFn: any): JestMockT);
-
-jest.mock('commercial/modules/messenger', () => ({
-    register: jest.fn(),
-}));
 
 const adSpec = {
     scrollType: 'fixed',
@@ -32,11 +20,6 @@ describe('Cross-frame messenger: setBackground', () => {
               </div>`;
         }
         done();
-    });
-
-    it('should call register', () => {
-        expect(register).toHaveBeenCalled();
-        expect(foolFlow(register).mock.calls[0][0]).toBe('background');
     });
 
     it('should create new elements if there are specs', done => {
