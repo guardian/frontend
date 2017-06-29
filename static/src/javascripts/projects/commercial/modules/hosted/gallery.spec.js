@@ -1,5 +1,6 @@
 // @flow
 import interactionTracking from 'common/modules/analytics/interaction-tracking';
+import { noop } from 'lib/noop';
 import HostedGallery from './gallery';
 import { galleryHtml } from './gallery-html';
 
@@ -20,7 +21,6 @@ jest.mock('commercial/modules/dfp/performance-logging', () => ({
 }));
 
 let gallery: any;
-const noop = () => {};
 
 describe('Hosted Gallery', () => {
     beforeEach(done => {
