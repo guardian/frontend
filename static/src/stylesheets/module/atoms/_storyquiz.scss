@@ -1,0 +1,39 @@
+.storyquiz__image {
+    position: absolute;
+    right: 5px;
+    top: -10px;
+    border-radius: 100%;
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+}
+
+.storyquiz__answers {
+    list-style: none;
+
+    &.storyquiz__answers {
+        margin-top: $gs-baseline;
+    }
+
+    li {
+        border-top: 1px dotted $neutral-3;
+        margin: 0 $gs-gutter / -4;
+        padding: $gs-baseline / 2 $gs-gutter / 4 $gs-baseline;
+
+        font-weight: bold;
+    }
+
+    input[type=radio] {
+        margin-left: 0;
+    }
+}
+
+.storyquiz__next {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    .button + .button {
+        margin-top: $gs-baseline / 2;
+    }
+}
