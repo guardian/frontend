@@ -39,17 +39,11 @@ describe('Cross-frame messenger: setBackground', () => {
         expect(foolFlow(register).mock.calls[0][0]).toBe('background');
     });
 
-    it('should return nothing if there are no specs', () => {
-        const fakeAdSlot = document.createElement('div');
-        // Ignore the missing argument, becuase we want to test that... $FlowFixMe
-        expect(setBackground({}, fakeAdSlot)).toBeNull();
-    });
-
     it('should create new elements if there are specs', done => {
         const fallback = document.createElement('div');
         const fakeAdSlot = document.getElementById('slot01') || fallback;
 
-        foolFlow(setBackground(adSpec, fakeAdSlot))
+        setBackground(adSpec, fakeAdSlot)
             .then(() => {
                 const creative: Object =
                     document.querySelector('.creative__background') || {};
@@ -58,8 +52,7 @@ describe('Cross-frame messenger: setBackground', () => {
                     {};
                 expect(creative.toString()).toEqual('[object HTMLDivElement]');
                 expect(parent.toString()).toEqual('[object HTMLDivElement]');
-                // $FlowFixMe className will be there, I promise
-                expect(creative.className).toMatch('background--fixed');
+                expect(creative.className).toMatch(/background--fixed/);
             })
             .then(done)
             .catch(done.fail);

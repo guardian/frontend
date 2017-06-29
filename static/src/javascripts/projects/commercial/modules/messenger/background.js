@@ -32,7 +32,7 @@ const getStylesFromSpec = (specs: AdSpec): SpecStyles =>
         return result;
     }, {});
 
-const setBackground = (specs: AdSpec, adSlot: Node): ?Promise<any> => {
+const setBackground = (specs: AdSpec, adSlot: Node): Promise<any> => {
     if (
         !specs ||
         !('backgroundImage' in specs) ||
@@ -40,7 +40,7 @@ const setBackground = (specs: AdSpec, adSlot: Node): ?Promise<any> => {
         !('backgroundPosition' in specs) ||
         !('scrollType' in specs)
     ) {
-        return null;
+        return Promise.resolve();
     }
 
     const specStyles: SpecStyles = getStylesFromSpec(specs);
@@ -101,10 +101,11 @@ const setBackground = (specs: AdSpec, adSlot: Node): ?Promise<any> => {
         });
 };
 
-register('background', (specs, ret, iframe): ?Promise<any> => {
+register('background', (specs, ret, iframe): Promise<any> => {
     if (iframe && specs) {
         return setBackground(specs, iframe.closest('.js-ad-slot'));
     }
+    return Promise.resolve();
 });
 
 export const _ = { setBackground, getStylesFromSpec };
