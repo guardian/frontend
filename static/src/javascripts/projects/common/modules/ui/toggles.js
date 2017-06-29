@@ -47,7 +47,7 @@ class Toggles {
                         doNotReset.includes(control.getAttribute('data-toggle'))
                     )
             )
-            .forEach(close);
+            .forEach(this.close);
     }
 
     prepareControl(control: HTMLElement): void {
