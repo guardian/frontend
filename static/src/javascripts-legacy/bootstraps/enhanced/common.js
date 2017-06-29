@@ -131,8 +131,8 @@ define([
             },
 
             showToggles: function () {
-                var toggles = new Toggles();
-                toggles.init(document);
+                var toggles = new Toggles.Toggles();
+                toggles.init();
                 toggles.reset();
                 Dropdowns.init();
             },
