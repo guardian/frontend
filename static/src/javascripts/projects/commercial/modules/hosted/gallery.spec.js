@@ -47,8 +47,7 @@ describe('Hosted Gallery', () => {
     });
 
     const classListFor = (className: string): string =>
-        // $FlowFixMe
-        document.querySelector(`.${className}`).classList.toString();
+        (document.querySelector(`.${className}`): any).classList.toString();
 
     it('should open and close the caption on click', done => {
         const button: any = document.querySelector(
@@ -127,13 +126,11 @@ describe('Hosted Gallery', () => {
 
     it('should log navigation in GA when clicking through images', done => {
         gallery.initScroll.call(gallery);
-        // $FlowFixMe
-        document.querySelector('.inline-arrow-down').click();
+        (document.querySelector('.inline-arrow-down'): any).click();
         expect(
             interactionTracking.trackNonClickInteraction
         ).toHaveBeenCalledWith('Click - image 2');
-        // $FlowFixMe
-        document.querySelector('.inline-arrow-up').click();
+        (document.querySelector('.inline-arrow-up'): any).click();
         expect(
             interactionTracking.trackNonClickInteraction
         ).toHaveBeenCalledWith('Click - image 1');
