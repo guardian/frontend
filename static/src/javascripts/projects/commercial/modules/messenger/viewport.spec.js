@@ -3,7 +3,8 @@
 import { _ as testExports } from 'commercial/modules/messenger/viewport';
 import detect from 'lib/detect';
 
-const { addResizeListener, reset } = testExports;
+const addResizeListener: any = testExports.addResizeListener;
+const reset: any = testExports.reset;
 
 jest.mock('lib/detect', () => ({
     getViewport: jest.fn(),
@@ -54,7 +55,6 @@ describe('Cross-frame messenger: viewport', () => {
             height: 600,
         };
         detect.getViewport.mockReturnValue(size);
-        // $FlowFixMe flow is overly concerned that iframe could be null
         addResizeListener(iframe, respond)
             .then(() => {
                 expect(respond).toHaveBeenCalledWith(null, size);
@@ -69,7 +69,6 @@ describe('Cross-frame messenger: viewport', () => {
             height: 768,
         };
         detect.getViewport.mockReturnValue(size);
-        // $FlowFixMe flow is overly concerned that iframe could be null
         addResizeListener(iframe, respond)
             .then(() => onResize && onResize())
             .then(() => {

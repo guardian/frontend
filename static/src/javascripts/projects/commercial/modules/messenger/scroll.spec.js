@@ -2,7 +2,9 @@
 import { _ as testExports } from 'commercial/modules/messenger/scroll';
 import detect from 'lib/detect';
 
-const { addScrollListener, removeScrollListener, reset } = testExports;
+const addScrollListener: any = testExports.addScrollListener;
+const removeScrollListener: any = testExports.removeScrollListener;
+const reset: any = testExports.reset;
 
 jest.mock('commercial/modules/messenger', () => ({
     register: jest.fn(),
@@ -57,9 +59,7 @@ describe('Cross-frame messenger: scroll', () => {
     });
 
     afterEach(() => {
-        // $FlowFixMe
         removeScrollListener(iframe1);
-        // $FlowFixMe
         removeScrollListener(iframe2);
         iframe1 = {};
         iframe2 = {};
@@ -91,9 +91,7 @@ describe('Cross-frame messenger: scroll', () => {
                 writable: true,
             });
             reset(true);
-            // $FlowFixMe
             addScrollListener(iframe1, respond1);
-            // $FlowFixMe
             addScrollListener(iframe2, respond2);
         });
 
@@ -141,9 +139,7 @@ describe('Cross-frame messenger: scroll', () => {
     describe('Without IntersectionObserver', () => {
         beforeEach(() => {
             reset(false);
-            // $FlowFixMe
             addScrollListener(iframe1, respond1);
-            // $FlowFixMe
             addScrollListener(iframe2, respond2);
         });
 

@@ -1,7 +1,7 @@
 // @flow
 import { _ } from './get-stylesheet';
 
-const { getStyles } = _;
+const getStyles: any = _.getStyles;
 
 let styleSheets;
 
@@ -48,16 +48,12 @@ describe('Cross-frame messenger: get stylesheets', () => {
     });
 
     it('should return nothing if there is no CSS selector', () => {
-        // Ignore the missing argument, becuase we want to test that... $FlowFixMe
         expect(getStyles({})).toBeNull();
-        // We are mocking DOM stuff, so end up setting up styleSheets
-        // as an Array, rather than the expected StlyeSheetList... $FlowFixMe
         expect(getStyles({ dontcare: 'hello' }, [])).toBeNull();
     });
 
     it('should return all webfonts available', () => {
         expect(styleSheets.length).toBe(4);
-        // Ignore the Array === StyleSheetList issue... $FlowFixMe
         const result: Object = getStyles({ selector: '.webfont' }, styleSheets);
         expect(result).not.toBeNull();
         expect(result.length).toBe(3);
@@ -65,7 +61,6 @@ describe('Cross-frame messenger: get stylesheets', () => {
 
     it('should return only the GuardianSansWeb webfont', () => {
         const selector = '.webfont[data-cache-name="GuardianSansWeb"]';
-        // Ignore the Array === StyleSheetList issue... $FlowFixMe
         const result: Object = getStyles({ selector }, styleSheets);
         expect(result).not.toBeNull();
         expect(result.length).toBe(1);
@@ -74,7 +69,6 @@ describe('Cross-frame messenger: get stylesheets', () => {
     it('should return only the GuardianSansWeb and GuardianSansTextWeb webfonts', () => {
         const selector =
             '.webfont[data-cache-name="GuardianSansWeb"], .webfont[data-cache-name="GuardianSansTextWeb"]';
-        // Ignore the Array === StyleSheetList issue... $FlowFixMe
         const result: Object = getStyles({ selector }, styleSheets);
         expect(result).not.toBeNull();
         expect(result.length).toBe(2);
