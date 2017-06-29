@@ -57,7 +57,7 @@ define([
         function renderWidget(widgetType, init) {
             findAnchor()
             .then(function (anchorNode) {
-                return fastdom.write(function () {
+                return fastdom.mutate(function () {
                     $(anchorNode).after(externalTpl({widgetType: widgetType}));
                 })
             })

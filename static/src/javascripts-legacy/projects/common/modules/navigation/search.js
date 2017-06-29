@@ -97,7 +97,7 @@ define([
             // Unload any search placeholders elsewhere in the DOM
             Array.prototype.forEach.call(document.querySelectorAll('.js-search-placeholder'), function (c) {
                 if (c !== container) {
-                    fastdom.write(function () {
+                    fastdom.mutate(function () {
                         c.innerHTML = '';
                     });
                 }
@@ -106,7 +106,7 @@ define([
             // Load the Google search monolith, if not already present in this context.
             // We have to re-run their script each time we do this.
             if (!container.innerHTML) {
-                fastdom.write(function () {
+                fastdom.mutate(function () {
                     container.innerHTML = '' +
                         '<div class="search-box" role="search">' +
                             '<gcse:searchbox></gcse:searchbox>' +
@@ -117,12 +117,12 @@ define([
                 });
 
                 bean.on(container, 'keydown', '.gsc-input', function () {
-                    fastdom.read(function () {
+                    fastdom.measure(function () {
                         var $autoCompleteObject = $('.gssb_c'),
                             searchFromTop       = $autoCompleteObject.css('top'),
                             windowOffset        = $(window).scrollTop();
 
-                        fastdom.write(function () {
+                        fastdom.mutate(function () {
                             $autoCompleteObject.css({
                                 'top': parseInt(searchFromTop, 10) + windowOffset,
                                 'z-index': '1030'
@@ -142,7 +142,7 @@ define([
                 s.async = true;
                 s.src = gcsUrl;
                 x = document.getElementsByTagName('script')[0];
-                fastdom.write(function () {
+                fastdom.mutate(function () {
                     x.parentNode.insertBefore(s, x);
                 });
             }

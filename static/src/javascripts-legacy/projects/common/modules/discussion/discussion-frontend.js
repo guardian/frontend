@@ -35,7 +35,7 @@ define([
         }
 
         function updateCommentCount (element, value) {
-            fastdom.write(function () {
+            fastdom.mutate(function () {
                 element.textContent = formatters.integerCommas(value);
             });
         }

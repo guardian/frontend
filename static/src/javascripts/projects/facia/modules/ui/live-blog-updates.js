@@ -72,13 +72,13 @@ const maybeAnimateBlocks = (
     immediate?: boolean
 ): Promise<boolean> =>
     fastdomPromise
-        .read(() => el.getBoundingClientRect().top)
+        .measure(() => el.getBoundingClientRect().top)
         .then(vPosition => {
             if (vPosition > 0 && vPosition < viewportHeightPx) {
                 setTimeout(() => {
                     const $el = bonzo(el);
 
-                    fastdomPromise.write(() => {
+                    fastdomPromise.mutate(() => {
                         $el.removeClass(
                             'fc-item__liveblog-blocks__inner--offset'
                         );
@@ -149,7 +149,7 @@ const showBlocks = (
         const $element = bonzo(element);
 
         fastdomPromise
-            .write(() => {
+            .mutate(() => {
                 $element.empty().append(el);
             })
             .then(() => {
@@ -171,7 +171,7 @@ const sanitizeBlocks = (blocks: Array<Block>): Array<Block> =>
 
 const showUpdatesFromLiveBlog = (): Promise<void> =>
     fastdomPromise
-        .read(() => {
+        .measure(() => {
             const elementsById: Map<string, Array<Element>> = new Map();
 
             $(selector).each(element => {

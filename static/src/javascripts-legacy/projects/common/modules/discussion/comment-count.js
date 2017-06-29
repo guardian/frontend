@@ -1,6 +1,6 @@
 define([
     'bonzo',
-    'fastdom',
+    'lib/fastdom-promise',
     'qwery',
     'lib/$',
     'lib/fetch-json',
@@ -55,7 +55,9 @@ define([
     }
 
     function renderCounts(counts, indexedElements) {
-        counts.forEach(function (c) {
+        var countsPromises = [];
+
+        counts.forEach(function(c) {
             forEach(indexedElements[c.id], function (node) {
                 var format,
                     $node = bonzo(node),
@@ -78,23 +80,24 @@ define([
                 meta = qwery('.js-item__meta', node);
                 $container = meta.length ? bonzo(meta) : $node;
 
-                fastdom.write(function () {
+                var mutation = fastdom.mutate(function() {
                     $container.append(html);
                     $node.removeAttr(attributeName);
                     $node.removeClass('u-h');
                 });
+
+                countsPromises.push(mutation);
             });
         });
 
-        // This is the only way to ensure that this event is fired after all the comment counts have been rendered to
-        // the DOM.
-        fastdom.write(function () {
-            mediator.emit('modules:commentcount:loaded', counts);
-        });
+        Promise.all(countsPromises)
+            .then(function() {
+                mediator.emit('modules:commentcount:loaded', counts);
+            });
     }
 
     function getCommentCounts(context) {
-        fastdom.read(function () {
+        fastdom.measure(function() {
             var indexedElements = getElementsIndexedById(context || document.body);
             var endpoint = countUrl + getContentIds(indexedElements);
 

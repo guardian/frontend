@@ -27,10 +27,10 @@ define([
             return;
         }
 
-        fastdom.read(function () {
+        fastdom.measure(function () {
             return (referenceElement[config.page.hasShowcaseMainElement ? 'offsetHeight' : 'offsetTop']) + adSlot.offsetHeight;
         }).then(function (newHeight) {
-            return fastdom.write(function () {
+            return fastdom.mutate(function () {
                 adSlot.parentNode.style.height = newHeight + 'px';
             });
         }).then(function () {

@@ -52,7 +52,7 @@ define([
     }
 
     function initState() {
-        return fastdom.read(function () {
+        return fastdom.measure(function () {
             headerHeight = header.offsetHeight;
             return topSlot.offsetHeight;
         })
@@ -87,13 +87,13 @@ define([
                     // skip for native ads
                     advert.size[1] > 0
                 ) {
-                    fastdom.read(function () {
+                    fastdom.measure(function () {
                         var styles = window.getComputedStyle(topSlot);
                         return parseInt(styles.paddingTop) + parseInt(styles.paddingBottom) + advert.size[1];
                     })
                     .then(resizeStickyBanner);
                 } else {
-                    fastdom.read(function () {
+                    fastdom.mesure(function () {
                         return topSlot.offsetHeight;
                     })
                     .then(resizeStickyBanner);
@@ -110,7 +110,7 @@ define([
     }
 
     function update(newHeight) {
-        return fastdom.read(function () {
+        return fastdom.measure(function () {
             topSlotStyles || (topSlotStyles = win.getComputedStyle(topSlot));
             return newHeight + parseInt(topSlotStyles.paddingTop) + parseInt(topSlotStyles.paddingBottom);
         })
@@ -121,7 +121,7 @@ define([
         scrollY = win.pageYOffset;
         if (!updateQueued) {
             updateQueued = true;
-            return fastdom.write(function () {
+            return fastdom.mutate(function () {
                 updateQueued = false;
                 if (headerHeight < scrollY) {
                     stickyBanner.style.position = 'absolute';
@@ -139,7 +139,7 @@ define([
     // them for a better experience. We only do this if the slot is in view
     // though.
     function setupAnimation() {
-        return fastdom.write(function () {
+        return fastdom.mutate(function () {
             if (scrollY <= headerHeight) {
                 header.classList.add('l-header--animate');
                 stickyBanner.classList.add('sticky-top-banner-ad--animate');
@@ -157,7 +157,7 @@ define([
     // user has scrolled past the header.
     function resizeStickyBanner(newHeight) {
         if (topSlotHeight !== newHeight) {
-            return fastdom.write(function () {
+            return fastdom.mutate(function () {
                 stickyBanner.classList.add('sticky-top-banner-ad');
                 stickyBanner.style.height =
                 header.style.marginTop = newHeight + 'px';

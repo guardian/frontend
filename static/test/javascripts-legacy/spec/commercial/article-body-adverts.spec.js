@@ -120,12 +120,11 @@ define([
                     writer([paragraph]);
 
                     // Wait until fastdom has written before checking
-                    fastdom.read(function(){
+                    setTimeout(function() {
                         var expectedAd = fixture.querySelector('#dfp-ad--im');
                         expect(expectedAd).toBeTruthy();
                         done();
-                    });
-
+                    }, 20);
                 });
             });
 

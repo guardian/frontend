@@ -42,7 +42,7 @@ define([
 
     surveySimple.prototype.attach = function () {
         if (!this.hasSeen()) {
-            return fastdom.write(function () {
+            return fastdom.mutate(function () {
                 $(document.body).append(this.bannerTmpl);
 
                 if (this.config.showCloseBtn) {
@@ -74,7 +74,7 @@ define([
     };
 
     surveySimple.prototype.show = function () {
-        fastdom.write(function () {
+        fastdom.mutate(function () {
             $('.js-survey-overlay').removeClass('u-h');
         });
     };

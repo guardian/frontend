@@ -86,11 +86,11 @@ define([
             { width: 940, name: 'huge' }
         ];
 
-        fastdom.read(function () {
+        fastdom.measure(function () {
             width = el.offsetWidth;
         });
 
-        fastdom.write(function () {
+        fastdom.mutate(function () {
             breakpoints.map(function (breakpoint, i, arr) {
                 var isAdd = width >= breakpoint.width && (arr[i + 1] ? width < arr[i + 1].width : true);
                 breakpoint.action = isAdd ? 'addClass' : isResize ? 'removeClass' : false;
@@ -117,7 +117,7 @@ define([
         snapIframes.push(iframe);
         bindIframeMsgReceiverOnce();
 
-        fastdom.write(function () {
+        fastdom.mutate(function () {
             bonzo(el).empty().append(containerEl);
         });
     }
@@ -135,7 +135,7 @@ define([
             }
         }).then(function (resp) {
             $.create(resp).each(function (html) {
-                fastdom.write(function () {
+                fastdom.mutate(function () {
                     bonzo(el).html(html);
                 });
             });
@@ -147,7 +147,7 @@ define([
 
     function initStandardSnap(el) {
         proximityLoader.add(el, 1500, function () {
-            fastdom.write(function () {
+            fastdom.mutate(function () {
                 bonzo(el).addClass('facia-snap-embed');
             });
             addCss(el);

@@ -19,7 +19,7 @@ class HostedCarousel {
         const pageNo = Math.min(Math.max(index, 0), this.pageCount - 1);
         this.index = pageNo;
 
-        fastdom.write(() => {
+        fastdom.mutate(() => {
             const translate = `translate(-${pageNo}00%, 0)`;
             this.$carousel.css({
                 '-webkit-transform': translate,

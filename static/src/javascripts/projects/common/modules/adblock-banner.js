@@ -31,7 +31,7 @@ class AdblockBanner {
     show() {
         const bannerTmpl = this.renderTemplate();
 
-        fastdom.write(() => {
+        fastdom.mutate(() => {
             $('.js-top-banner').after(bannerTmpl);
         });
     }

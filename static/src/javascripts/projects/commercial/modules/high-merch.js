@@ -26,7 +26,7 @@ const insertAlternativeSlot = isHiResLoaded => {
     const slot = createSlot('high-merch-lucky');
 
     fastdom
-        .write(() => {
+        .mutate(() => {
             if (container && container.parentNode) {
                 container.parentNode.insertBefore(slot, container.nextSibling);
             }
@@ -57,7 +57,7 @@ const init = () => {
             );
         }
 
-        return fastdom.write(() => {
+        return fastdom.mutate(() => {
             if (anchor && anchor.parentNode) {
                 anchor.parentNode.insertBefore(container, anchor);
             }

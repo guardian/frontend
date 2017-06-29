@@ -63,7 +63,7 @@ const autoUpdate = (opts?: autoUpdateOptions): void => {
     const isLivePage = !window.location.search.includes('?page=');
 
     const revealInjectedElements = (): void => {
-        fastdom.write(() => {
+        fastdom.mutate(() => {
             $('.autoupdate--hidden', $liveblogBody)
                 .addClass('autoupdate--highlight')
                 .removeClass('autoupdate--hidden');
@@ -72,7 +72,7 @@ const autoUpdate = (opts?: autoUpdateOptions): void => {
     };
 
     const toastButtonRefresh = (): void => {
-        fastdom.write(() => {
+        fastdom.mutate(() => {
             if (unreadBlocksNo > 0) {
                 const updateText = unreadBlocksNo > 1
                     ? ' new updates'
@@ -94,7 +94,7 @@ const autoUpdate = (opts?: autoUpdateOptions): void => {
         const resultHtml = $.create(`<div>${newBlocks}</div>`)[0];
         let elementsToAdd;
 
-        fastdom.write(() => {
+        fastdom.mutate(() => {
             bonzo(resultHtml.children).addClass('autoupdate--hidden');
             elementsToAdd = [...resultHtml.children];
 
@@ -183,11 +183,11 @@ const autoUpdate = (opts?: autoUpdateOptions): void => {
     const setUpListeners = (): void => {
         bean.on(document.body, 'click', '.toast__button', () => {
             if (isLivePage) {
-                fastdom.read(() => {
+                fastdom.measure(() => {
                     scrollToElement(qwery('.blocks')[0], 300, 'easeOutQuad');
 
                     fastdom
-                        .write(() => {
+                        .mutate(() => {
                             $toastButton.addClass('loading');
                         })
                         .then(() => {
@@ -202,7 +202,7 @@ const autoUpdate = (opts?: autoUpdateOptions): void => {
         mediator.on('modules:toast__tofix:unfixed', () => {
             if (isLivePage && unreadBlocksNo > 0) {
                 fastdom
-                    .write(() => {
+                    .mutate(() => {
                         $toastButton.addClass('loading');
                     })
                     .then(() => {
@@ -233,7 +233,7 @@ const autoUpdate = (opts?: autoUpdateOptions): void => {
     detect.initPageVisibility();
     setUpListeners();
 
-    fastdom.write(() => {
+    fastdom.mutate(() => {
         // Enables the animations for injected blocks
         $liveblogBody.addClass('autoupdate--has-animation');
     });

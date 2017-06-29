@@ -32,7 +32,7 @@ define([
 
                                 // if we find a message for your total show it, and exit
                                 if ($bucket__message.length > 0) {
-                                    fastdom.write(function () {
+                                    fastdom.mutate(function () {
                                         $bucket__message.css({
                                             'display': 'block'
                                         });

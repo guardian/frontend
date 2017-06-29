@@ -1,14 +1,12 @@
 define([
     'bonzo',
     'bean',
-    'fastdom',
     'lib/$',
     'common/modules/navigation/navigation',
     'helpers/fixtures'
 ], function (
     bonzo,
     bean,
-    fastdom,
     $,
     sut,
     fixtures
@@ -50,10 +48,10 @@ define([
 
             sut.copyMegaNavMenu();
 
-            fastdom.defer(1, function () {
+            setTimeout(function () {
                 expect($('.js-mega-nav-placeholder').html()).toEqual('<div class="global-navigation">Nav</div>');
                 done();
-            });
+            }, 10);
         });
 
         it('should change all sections link', function () {
@@ -72,11 +70,10 @@ define([
             sut.enableMegaNavToggle();
             bean.fire($('.js-navigation-toggle')[0], 'click');
 
-            fastdom.defer(1, function () {
+            setTimeout(function () {
                 expect($('.' + className).hasClass('navigation-container--expanded')).toBeTruthy();
                 done();
-            });
+            }, 10);
         });
     });
 });
-

@@ -21,7 +21,7 @@ const init = (): ?boolean => {
         );
 
         fastdom
-            .read(() => $commentMainColumn.dim().height)
+            .measure(() => $commentMainColumn.dim().height)
             .then((mainColHeight: number) => {
                 // if comments container is lower than 280px
                 if (mainColHeight < 280) {
@@ -33,7 +33,7 @@ const init = (): ?boolean => {
                 });
 
                 fastdom
-                    .write(() => {
+                    .mutate(() => {
                         $commentMainColumn.addClass('discussion__ad-wrapper');
 
                         if (

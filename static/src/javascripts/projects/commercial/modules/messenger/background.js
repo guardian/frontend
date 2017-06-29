@@ -62,7 +62,7 @@ const setBackground = (specs: AdSpec, adSlot: Node): Promise<any> => {
     backgroundParent.appendChild(background);
 
     if (specs.scrollType === 'fixed') {
-        return fastdom.write(() => {
+        return fastdom.mutate(() => {
             adSlot.insertBefore(backgroundParent, adSlot.firstChild);
         });
     }
@@ -71,7 +71,7 @@ const setBackground = (specs: AdSpec, adSlot: Node): Promise<any> => {
     const onScroll = () => {
         if (!updateQueued) {
             updateQueued = true;
-            fastdom.read(() => {
+            fastdom.measure(() => {
                 updateQueued = false;
                 const rect = backgroundParent.getBoundingClientRect();
                 const dy = Math.floor(0.3 * rect.top) + 20;
@@ -90,7 +90,7 @@ const setBackground = (specs: AdSpec, adSlot: Node): Promise<any> => {
     };
 
     return fastdom
-        .write(() => {
+        .mutate(() => {
             adSlot.insertBefore(backgroundParent, adSlot.firstChild);
         })
         .then(() => {

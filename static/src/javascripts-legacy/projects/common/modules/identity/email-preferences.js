@@ -62,14 +62,14 @@ define([
     }
 
     function confirmUnsubscriptionFromAll(buttonEl) {
-        fastdom.write(function () {
+        fastdom.mutate(function () {
             $(buttonEl).addClass('email-unsubscribe--confirm js-confirm-unsubscribe');
             $('.email-unsubscribe-all__label').toggleClass('hide');
         });
     }
 
     function resetUnsubscribeFromAll(buttonEl) {
-        fastdom.write(function () {
+        fastdom.mutate(function () {
             $(buttonEl).removeClass('email-unsubscribe--confirm js-confirm-unsubscribe');
             $('.js-unsubscribe--confirm').addClass('hide');
             $('.js-unsubscribe--basic').removeClass('hide');
@@ -77,7 +77,7 @@ define([
     }
 
     function renderErrorMessage(buttonEl) {
-        return fastdom.write(function () {
+        return fastdom.mutate(function () {
             clearErrorMessages();
             var errorMessage = $.create(
                 '<div class="form__error">' +
@@ -97,7 +97,7 @@ define([
     }
 
     function addUpdatingState(buttonEl) {
-        fastdom.write(function() {
+        fastdom.mutate(function() {
             buttonEl.disabled = true;
             $(buttonEl).addClass('is-updating is-updating-subscriptions');
         });
@@ -108,7 +108,7 @@ define([
         var isSubscribing = !/unsubscribe/.test(buttonVal);
 
         if (isSubscribing) {
-            fastdom.write(function () {
+            fastdom.mutate(function () {
                 $(buttonEl).removeClass('is-updating is-updating-subscriptions');
                 buttonEl.value = 'unsubscribe-' + buttonVal;
                 buttonEl.innerHTML = 'Unsubscribe';
@@ -116,7 +116,7 @@ define([
                 buttonEl.disabled = false;
             });
         } else {
-            fastdom.write(function () {
+            fastdom.mutate(function () {
                 $(buttonEl).removeClass('is-updating is-updating-subscriptions');
                 buttonEl.value = buttonVal.replace('unsubscribe-', '');
                 buttonEl.innerHTML = 'Subscribe';
@@ -130,7 +130,7 @@ define([
         if ($(buttonEl).hasClass('js-subscription-button')) {
             updateSubscriptionButton(buttonEl);
         } else {
-            fastdom.write(function () {
+            fastdom.mutate(function () {
                 setTimeout(function () {
                     $(buttonEl).removeClass('is-updating is-updating-subscriptions');
                     buttonEl.disabled = false;

@@ -18,7 +18,7 @@ define([
         bean.on(window, 'click', this.checkPosition);
         mediator.addListener('window:throttledScroll', this.checkPosition);
         mediator.addListener('window:throttledResize', function () {
-            fastdom.write(this.calculateContainerPositioning);
+            fastdom.mutate(this.calculateContainerPositioning);
         });
 
         this.affixed  = null;
@@ -30,7 +30,7 @@ define([
 
         this.checkPosition();
 
-        fastdom.write(this.calculateContainerPositioning);
+        fastdom.mutate(this.calculateContainerPositioning);
     };
 
     Affix.CLASS = 'affix';
@@ -40,11 +40,11 @@ define([
         // The container defines the static positioning of the affix element.
         var that = this;
 
-        // aleady called from inside a fastdom.write cb...
+        // aleady called from inside a fastdom.mutate cb...
         this.$container.css('top', '0');
-        fastdom.read(function () {
+        fastdom.measure(function () {
             var containerTop = that.$markerTop.offset().top - that.$container.offset().top;
-            fastdom.write(function () {
+            fastdom.mutate(function () {
                 that.$container.css('top', containerTop + 'px');
             });
         });
@@ -75,7 +75,7 @@ define([
 
             // Lock the affix container to the bottom marker.
             if (bottomCheck) {
-                fastdom.write(function () {
+                fastdom.mutate(function () {
                     that.$container.removeClass(Affix.CLASSY_BOTTOM);
                     that.calculateContainerPositioning();
                 });
@@ -83,13 +83,13 @@ define([
                 // Store the container top, which needs to be re-applied when affixed to bottom.
                 oldContainerStyling = this.getPixels(this.$container.css('top'));
                 topStyle            = markerBottomTop - markerTopTop - elHeight + oldContainerStyling;
-                fastdom.write(function () {
+                fastdom.mutate(function () {
                     that.$container.css('top',  topStyle + 'px');
                     that.$container.addClass(Affix.CLASSY_BOTTOM);
                 });
             }
 
-            fastdom.write(function () {
+            fastdom.mutate(function () {
                 if (affix) {
                     that.$element.addClass(Affix.CLASS);
                 } else {

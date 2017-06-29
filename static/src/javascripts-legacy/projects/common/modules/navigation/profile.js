@@ -66,7 +66,7 @@ define([
             // Run this code only if we haven't already inserted
             // the username in the header
             if (!$container.hasClass('is-signed-in')) {
-                fastdom.write(function () {
+                fastdom.mutate(function () {
                     $content.text(user.displayName);
                     $container.addClass('is-signed-in');
                     $register.hide();

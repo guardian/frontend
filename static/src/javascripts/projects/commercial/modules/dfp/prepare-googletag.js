@@ -56,7 +56,7 @@ const removeAdSlots = (): Promise<void> => {
     // Get all ad slots
     const adSlots: Array<Element> = qwery(dfpEnv.adSlotSelector);
 
-    return fastdom.write(() =>
+    return fastdom.mutate(() =>
         adSlots.forEach((adSlot: Element) => adSlot.remove())
     );
 };

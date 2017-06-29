@@ -58,7 +58,7 @@ const ExplainerSnippet = () => {
                 style,
                 value,
             });
-            fastdom.write(() => {
+            fastdom.mutate(() => {
                 ack.hidden = false;
                 question.hidden = true;
             });
@@ -95,7 +95,7 @@ const ExplainerSnippet = () => {
             body: htmlDecode(body),
         });
         fastdom
-            .write(() => {
+            .mutate(() => {
                 explainer.setAttribute('hidden', 'hidden');
                 hook.insertAdjacentHTML('beforeend', html);
                 return [

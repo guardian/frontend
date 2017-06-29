@@ -270,7 +270,7 @@ const makeABTestVariant = (
 
                         mediator.emit('register:begin', trackingCampaignId);
 
-                        return fastdom.write(() => {
+                        return fastdom.mutate(() => {
                             const targets = getTargets(
                                 insertAtSelector,
                                 insertMultiple

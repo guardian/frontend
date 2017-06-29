@@ -1,11 +1,9 @@
 define([
     'lib/$',
-    'lib/fastdom-promise',
     'helpers/fixtures',
     'raw-loader!fixtures/commercial/hosted/onward-journey-carousel.html',
     'helpers/injector'
 ], function ($,
-             fastdom,
              fixtures,
              carouselHtml,
              Injector) {
@@ -86,15 +84,22 @@ define([
         });
 
         function expectToBeOnNthPage(n) {
-            return fastdom.read(function () {
-                var transform = (1 - n) * 100;
-                expect($('.js-carousel-pages', $fixturesContainer)[0].attributes['style'].value).toContain('transform: translate(' + transform + '%, 0px)');
-                expect($('.js-carousel-dot:nth-child(' + n + ')', $fixturesContainer).hasClass('highlighted')).toBeTruthy();
-                [1, 2, 3, 4].forEach(function (i) {
-                    if (i != n) {
-                        expect($('.js-carousel-dot:nth-child(' + i + ')', $fixturesContainer).hasClass('highlighted')).toBeFalsy();
-                    }
-                });
+            var transform = (1 - n) * 100;
+
+            return new Promise(function(resolve) {
+                setTimeout(function() {
+                    expect($('.js-carousel-pages', $fixturesContainer)[0].attributes['style'].value).toContain('transform: translate(' + transform + '%, 0px)');
+
+                    expect($('.js-carousel-dot:nth-child(' + n + ')', $fixturesContainer).hasClass('highlighted')).toBeTruthy();
+
+                    [1, 2, 3, 4].forEach(function (i) {
+                        if (i != n) {
+                            expect($('.js-carousel-dot:nth-child(' + i + ')', $fixturesContainer).hasClass('highlighted')).toBeFalsy();
+                        }
+                    });
+
+                    resolve();
+                }, 20);
             });
         }
     });

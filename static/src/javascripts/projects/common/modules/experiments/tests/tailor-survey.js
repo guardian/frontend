@@ -198,7 +198,7 @@ const handleSurveyResponse = surveyId => {
                 recordOphanAbEvent(answer, surveyId);
 
                 mediator.emit('tailor:survey:clicked');
-                fastdom.write(() => {
+                fastdom.mutate(() => {
                     disableRadioButtons('fi-survey__button');
                     surveyFadeOut();
                     thankyouFadeIn();

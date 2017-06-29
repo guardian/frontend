@@ -223,7 +223,7 @@ define([
                 });
 
                 if (listConfig.insertMethod) {
-                    fastdom.write(function () {
+                    fastdom.mutate(function () {
                         listConfig.insertMethod($iframeEl);
                         googleAnalytics.trackNonClickInteraction('rtrt | email form inline | article | ' + listConfig.listId + ' | sign-up shown');
                         onEmailAdded();

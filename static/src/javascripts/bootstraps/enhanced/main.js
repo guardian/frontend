@@ -310,7 +310,7 @@ const bootEnhanced = (): void => {
         );
     }
 
-    fastdom.read(() => {
+    fastdom.measure(() => {
         if ($('.youtube-media-atom').length > 0) {
             require.ensure(
                 [],
