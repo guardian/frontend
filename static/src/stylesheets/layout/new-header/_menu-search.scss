@@ -46,7 +46,7 @@
     }
 
     &::placeholder {
-        color: #ffffff;
+        color: $news-support-1;
     }
 
     &:focus {
@@ -73,7 +73,7 @@
     }
 
     .inline-search-36__svg {
-        fill: $news-support-2;
+        fill: $news-main-2;
         height: 22px;
         width: 22px;
 
