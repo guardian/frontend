@@ -112,7 +112,8 @@ final case class StoryQuiz(
   description: Option[String],
   image: Option[String],
   path: String,
-  content: QuizContent
+  questions: Seq[Question],
+  answers: Array[Int]
 ) extends Atom
 
 final case class InteractiveAtom(
@@ -194,12 +195,12 @@ object Atoms extends common.Logging {
       //      intended purpose. We will rely on the convention that quizzes created for
       //      the purpose of this test will be tagged with "test/test"
       val quizzes = extract(
-        atoms.quizzes.map { quizzes => quizzes.filterNot(_.labels.contains("test/test")) },
+        atoms.quizzes.map { quizzes => quizzes.filterNot(_.data.asInstanceOf[AtomData.Quiz].quiz.title.contains("|")) },
         atom => { Quiz.make(content.id, atom) }
       )
 
       val storyQuizzes = extract(
-        atoms.quizzes.map { quizzes => quizzes.filter(_.labels.contains("test/test")) },
+        atoms.quizzes.map { quizzes => quizzes.filter(_.data.asInstanceOf[AtomData.Quiz].quiz.title.contains("|")) },
         atom => { StoryQuiz.make(content.id, atom) }
       )
       // -->
@@ -396,29 +397,32 @@ object Quiz extends common.Logging {
 }
 
 object StoryQuiz {
-  def extractImage(quiz: atomapi.quiz.QuizAtom): Option[String] =
-    None
+  def extractImage(quiz: atomapi.quiz.QuizAtom): Option[String] = for {
+    firstQuestion <- quiz.content.questions.headOption
+    firstAsset <- firstQuestion.assets.headOption
+    json = Json.parse(firstAsset.data)
+    assets = json \ "assets"
+    widths = (assets \\ "width").map(_.as[Int])
+    width140 = widths.indexWhere(_ == 140)
+    url <- (assets(width140) \ "secureUrl").asOpt[String]
+  } yield url
 
   def make(path: String, atom: AtomApiAtom) = {
-    val (title, description) = atom.title.map { title =>
-      val s = title.split("|")
-      if(s.length == 2)
-        (s(0), Some(s(1)))
-      else
-        (s(0), None)
-    }.getOrElse(("", None))
+    val split: Array[String] = atom.data.asInstanceOf[AtomData.Quiz].quiz.title.split('|')
+    val (title, description) = (split(0), split(1))
     val quiz = atom.data.asInstanceOf[AtomData.Quiz].quiz
     val questions = Quiz.extractQuestions(quiz)
-    val content = Quiz.extractContent(questions, quiz)
+    val answers = questions map (_.answers.indexWhere(_.weight == 1))
     val image = extractImage(quiz)
 
     StoryQuiz(
       id = quiz.id,
       path = path,
       title = title,
-      description = description,
+      description = Some(description),
       image = image,
-      content = content
+      questions = questions,
+      answers = answers.toArray
     )
   }
 }

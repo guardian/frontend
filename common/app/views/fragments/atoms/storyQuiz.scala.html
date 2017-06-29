@@ -5,3 +5,59 @@
 @import views.support.RenderClasses
 
 @(quiz: model.content.StoryQuiz)
+
+<div class="explainer-snippet explainer-snippet--light explainer-snippet--storyquiz storyquiz js-storyquiz">
+  @quiz.image.map { src => <img class="storyquiz__image" src="@src"> }
+  <div class="storyquiz__card storyquiz__card--intro">
+    <div class="explainer-snippet__header">
+      <span class="explainer-snippet__label">Quick quiz</span>
+      <h4 class="explainer-snippet__headline">How much do you know about @quiz.title?</h4>
+    </div>
+    <div class="explainer-snippet__body">
+      <p>@quiz.description</p>
+
+      <button class="button button--primary storyquiz__start" type="button">Start now</button>
+    </div>
+  </div>
+
+  @for((question, i) <- quiz.questions.zipWithIndex) {
+    <div class="storyquiz__card storyquiz__card--question"
+      data-answer="@quiz.answers(i)">
+      <div class="explainer-snippet__header">
+        <span class="explainer-snippet__label">Quick quiz</span>
+        <h4 class="explainer-snippet__headline">Question @{i + 1} of @quiz.questions.length</h4>
+      </div>
+      <div class="explainer-snippet__body storyquiz__question">
+        @question.text
+
+        <ol class="storyquiz__answers">
+          @for(answer <- question.answers) {
+            <li><label><input name="q@i" type="radio"> @answer.text</label></li>
+          }
+        </ol>
+      </div>
+      <div class="explainer-snippet__body storyquiz__question-result">
+        <p></p>
+        @if(i < quiz.questions.length - 1) {
+          <button class="button button--primary">Next question</button>
+        }
+      </div>
+    </div>
+  }
+
+  <div class="storyquiz__card storyquiz__card--outro">
+    <div class="explainer-snippet__header">
+      <span class="explainer-snippet__label">Quick quiz</span>
+      <h4 class="explainer-snippet__headline">Your score</h4>
+    </div>
+    <div class="explainer-snippet__body">
+      <div class="storyquiz__score"></div>
+      <p class="storyquiz__comment"></p>
+
+      <div class="storyquiz__next">
+        <button class="button" type="button">Try again</button>
+        <a href="#" class="button button--primary">More on @quiz.title</a>
+      </div>
+    </div>
+  </div>
+</div>
