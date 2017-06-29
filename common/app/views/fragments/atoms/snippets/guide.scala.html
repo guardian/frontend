@@ -4,7 +4,8 @@
   @fragments.atoms.snippet(
     className = "guide",
     label = guide.data.typeLabel.getOrElse("Quick Guide"),
-    headline = guide.atom.title.getOrElse("")
+    headline = guide.atom.title.getOrElse(""),
+    guide.id
   ){
     @for(guideImage <- guide.data.guideImage; master <- guideImage.master) {
       <div class="explainer-snippet__image">

@@ -4,7 +4,8 @@
   @fragments.atoms.snippet(
     className = "profile",
     label = profile.data.typeLabel.getOrElse("Quick Guide"),
-    headline = profile.atom.title.getOrElse("")
+    headline = profile.atom.title.getOrElse(""),
+    profile.id
   ){
     @for(headshot <- profile.data.headshot; master <- headshot.master) {
       <div class="explainer-snippet__image">

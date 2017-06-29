@@ -1,6 +1,6 @@
-@(className: String, label: String, headline: String)(body: Html)(implicit request: RequestHeader)
+@(className: String, label: String, headline: String, id: String)(body: Html)(implicit request: RequestHeader)
 
-<details class="clean explainer-snippet explainer-snippet--light explainer-snippet--@className">
+<details data-snippet-id="@id" data-snippet-type="@className" class="clean explainer-snippet explainer-snippet--new explainer-snippet--light explainer-snippet--@className">
   <summary class="explainer-snippet__header">
     <span class="explainer-snippet__label">@label</span>
     <h4 class="explainer-snippet__headline">@headline</h4>

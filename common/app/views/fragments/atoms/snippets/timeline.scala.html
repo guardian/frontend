@@ -6,7 +6,8 @@
   @fragments.atoms.snippet(
     className = "timeline",
     label = timeline.data.typeLabel.getOrElse("Timeline"),
-    headline = timeline.atom.title.getOrElse("")
+    headline = timeline.atom.title.getOrElse(""),
+    timeline.id
   ){
     @for(item <- timeline.data.events) {
       <div class="explainer-snippet__item">
