@@ -129,27 +129,29 @@ describe('Sticky ad banner', () => {
     });
 
     it('should include height and paddings when setting the slot height', () => {
-        const pt = chance.integer({
+        const padingTop = chance.integer({
             max: 50,
         });
-        const pb = chance.integer({
+        const paddingBottom = chance.integer({
             max: 50,
         });
-        const h = chance.integer({
+        const height = chance.integer({
             max: 500,
         });
         const topSlot = document.getElementById('dfp-ad--top-above-nav');
 
         if (topSlot) {
-            topSlot.style.paddingTop = `${pt}px`;
-            topSlot.style.paddingBottom = `${pb}px`;
+            topSlot.style.paddingTop = `${padingTop}px`;
+            topSlot.style.paddingBottom = `${paddingBottom}px`;
         }
 
-        return initStickyTopBanner().then(() => update(h)).then(() => {
+        return initStickyTopBanner().then(() => update(height)).then(() => {
             if (!stickyBanner) {
                 throw Error('missing sticky banner element');
             } else {
-                expect(stickyBanner.style.height).toBe(`${h + pt + pb}px`);
+                expect(stickyBanner.style.height).toBe(
+                    `${height + padingTop + paddingBottom}px`
+                );
             }
         });
     });
