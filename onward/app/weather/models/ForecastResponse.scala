@@ -38,8 +38,5 @@ case class ForecastResponse(
     }
   }
 
-  def hourString(implicit request: RequestHeader) = {
-    val edition = Edition(request)
-    new DateTime(epochDateTime * 1000L).withZone(edition.timezone).toString("HH:00")
-  }
+  def hourString = new DateTime(epochDateTime * 1000L).toString("HH:00")
 }
