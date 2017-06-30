@@ -59,84 +59,76 @@ describe('Sticky ad banner', () => {
         window.pageYOffset = 0;
     });
 
-    it('should add listeners and classes', done => {
-        initStickyTopBanner()
-            .then(() => {
-                if (!header || !stickyBanner) {
-                    done.fail('missing header or sticky banner element');
-                } else {
-                    expect(registerSpy.mock.calls.length).toBe(1);
-                    expect(addEventListenerSpy).toHaveBeenCalled();
-                    expect(header.classList.contains('l-header--animate')).toBe(
-                        true
-                    );
-                    expect(
-                        stickyBanner.classList.contains(
-                            'sticky-top-banner-ad--animate'
-                        )
-                    ).toBe(true);
-                }
-            })
-            .then(done)
-            .catch(done.fail);
-    });
+    it('should add listeners and classes', () =>
+        initStickyTopBanner().then(() => {
+            if (!header || !stickyBanner) {
+                throw Error('missing header or sticky banner element');
+            } else {
+                expect(registerSpy.mock.calls.length).toBe(1);
+                expect(addEventListenerSpy).toHaveBeenCalled();
+                expect(header.classList.contains('l-header--animate')).toBe(
+                    true
+                );
+                expect(
+                    stickyBanner.classList.contains(
+                        'sticky-top-banner-ad--animate'
+                    )
+                ).toBe(true);
+            }
+        }));
 
-    it('should not add classes when scrolled past the header', done => {
+    it('should not add classes when scrolled past the header', () => {
         window.pageYOffset = 501;
-        initStickyTopBanner()
-            .then(() => {
-                if (!header || !stickyBanner) {
-                    done.fail('missing header or sticky banner element');
-                } else {
-                    window.pageYOffset = 0;
-                    expect(header.classList.contains('l-header--animate')).toBe(
-                        false
-                    );
-                    expect(
-                        stickyBanner.classList.contains(
-                            'sticky-top-banner-ad--animate'
-                        )
-                    ).toBe(false);
-                }
-            })
-            .then(done)
-            .catch(done.fail);
+
+        return initStickyTopBanner().then(() => {
+            if (!header || !stickyBanner) {
+                throw Error('missing header or sticky banner element');
+            } else {
+                window.pageYOffset = 0;
+                expect(header.classList.contains('l-header--animate')).toBe(
+                    false
+                );
+                expect(
+                    stickyBanner.classList.contains(
+                        'sticky-top-banner-ad--animate'
+                    )
+                ).toBe(false);
+            }
+        });
     });
 
-    it('should set the slot height and the header top margin', done => {
+    it('should set the slot height and the header top margin', () => {
         const randomHeight = chance.integer({
             max: 500,
         });
-        initStickyTopBanner()
+
+        return initStickyTopBanner()
             .then(() => resize(randomHeight))
             .then(() => {
                 if (!header || !stickyBanner) {
-                    done.fail('missing header or sticky banner element');
+                    throw Error('missing header or sticky banner element');
                 } else {
                     expect(header.style.marginTop).toBe(`${randomHeight}px`);
                     expect(stickyBanner.style.height).toBe(`${randomHeight}px`);
                 }
-            })
-            .then(done)
-            .catch(done.fail);
+            });
     });
 
-    it('should adjust the scroll position', done => {
+    it('should adjust the scroll position', () => {
         const randomHeight = chance.integer({
             max: 500,
         });
         window.pageYOffset = 501;
-        initStickyTopBanner()
+
+        return initStickyTopBanner()
             .then(() => resize(randomHeight))
             .then(() => {
                 window.pageYOffset = 0;
                 expect(scrollBySpy).toHaveBeenCalled();
-            })
-            .then(done)
-            .catch(done.fail);
+            });
     });
 
-    it('should include height and paddings when setting the slot height', done => {
+    it('should include height and paddings when setting the slot height', () => {
         const pt = chance.integer({
             max: 50,
         });
@@ -152,46 +144,36 @@ describe('Sticky ad banner', () => {
             topSlot.style.paddingTop = `${pt}px`;
             topSlot.style.paddingBottom = `${pb}px`;
         }
-        initStickyTopBanner()
-            .then(() => update(h))
-            .then(() => {
-                if (!stickyBanner) {
-                    done.fail('missing sticky banner element');
-                } else {
-                    expect(stickyBanner.style.height).toBe(`${h + pt + pb}px`);
-                }
-            })
-            .then(done)
-            .catch(done.fail);
+
+        return initStickyTopBanner().then(() => update(h)).then(() => {
+            if (!stickyBanner) {
+                throw Error('missing sticky banner element');
+            } else {
+                expect(stickyBanner.style.height).toBe(`${h + pt + pb}px`);
+            }
+        });
     });
 
-    it('should reset the banner position and top styles at the top of the page', done => {
-        onScroll()
-            .then(() => {
-                if (!stickyBanner) {
-                    done.fail('missing header or sticky banner element');
-                } else {
-                    expect(stickyBanner.style.position).toBe('');
-                    expect(stickyBanner.style.top).toBe('');
-                }
-            })
-            .then(done)
-            .catch(done.fail);
-    });
+    it('should reset the banner position and top styles at the top of the page', () =>
+        onScroll().then(() => {
+            if (!stickyBanner) {
+                throw Error('missing header or sticky banner element');
+            } else {
+                expect(stickyBanner.style.position).toBe('');
+                expect(stickyBanner.style.top).toBe('');
+            }
+        }));
 
-    it('should position the banner absolutely past the header', done => {
+    it('should position the banner absolutely past the header', () => {
         window.pageYOffset = 501;
-        initStickyTopBanner()
-            .then(onScroll)
-            .then(() => {
-                if (!stickyBanner) {
-                    done.fail('missing header or sticky banner element');
-                } else {
-                    expect(stickyBanner.style.position).toBe('absolute');
-                    expect(stickyBanner.style.top).toBe('500px');
-                }
-            })
-            .then(done)
-            .catch(done.fail);
+
+        return initStickyTopBanner().then(onScroll).then(() => {
+            if (!stickyBanner) {
+                throw Error('missing header or sticky banner element');
+            } else {
+                expect(stickyBanner.style.position).toBe('absolute');
+                expect(stickyBanner.style.top).toBe('500px');
+            }
+        });
     });
 });
