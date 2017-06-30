@@ -22,6 +22,7 @@ import toArray from 'lodash/collections/toArray';
 import acquisitionsEpicControlTemplate from 'raw-loader!common/views/acquisitions-epic-control.html';
 import acquisitionsTestimonialBlockTemplate from 'raw-loader!common/views/acquisitions-epic-testimonial-block.html';
 import { shouldSeeReaderRevenue as userShouldSeeReaderRevenue } from 'commercial/modules/user-features';
+import detect from 'lib/detect';
 
 type ContributionsABTest = ABTest & {
     epic: boolean,
@@ -103,6 +104,12 @@ const shouldShowReaderRevenue = (
 ): boolean =>
     (userShouldSeeReaderRevenue || showToContributorsAndSupporters) &&
     !config.page.shouldHideReaderRevenue;
+
+const canDisplayMembershipEngagementBanner: Promise<
+    boolean
+> = detect.adblockInUse.then(
+    adblockUsed => !adblockUsed && shouldShowReaderRevenue()
+);
 
 const defaultCanEpicBeDisplayed = (test: ContributionsABTest): boolean => {
     const worksWellWithPageTemplate = test.pageCheck(config.page);
@@ -425,4 +432,5 @@ export {
     getTestimonialBlock,
     addTrackingCodesToUrl,
     makeABTest,
+    canDisplayMembershipEngagementBanner,
 };
