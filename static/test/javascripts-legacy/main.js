@@ -25,6 +25,7 @@ requirejs.config({
         fence:        '/base/node_modules/fence/fence',
         lodash:       '/base/node_modules/lodash-amd/compat',
         qwery:        '/base/node_modules/qwery/qwery',
+        rangefix:     '/base/node_modules/rangefix/rangefix',
         reqwest:      '/base/node_modules/reqwest/reqwest',
         videojs:      '/base/node_modules/video.js',
         'videojs-ads-lib': '/base/node_modules/videojs-contrib-ads',
