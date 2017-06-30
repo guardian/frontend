@@ -10,12 +10,20 @@ const StoryQuiz = (quiz: Element) => {
     let score: ?Element;
 
     const sendResults = (correct: number, total: number): void => {
+        const snippetOpen = [
+            ...document.getElementsByClassName('explainer-snippet'),
+        ].reduce(
+            (res: boolean, el: any): boolean =>
+                res || (el: HTMLDetailsElement).open,
+            false
+        );
         ophan.record(
             Object.assign(
                 {
                     component: `storyquiz__${quiz.id}`,
                     correct,
                     total,
+                    snippetOpen,
                 },
                 results.reduce(
                     (acc: Object, res: boolean, i: number): Object => {
