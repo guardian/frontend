@@ -32,6 +32,8 @@ jest.mock('commercial/modules/dfp/get-advert-by-id', () => ({
     })),
 }));
 const registerSpy: any = require('commercial/modules/messenger').register;
+// $FlowFixMe we should not mutate native JS API prototypes
+Element.prototype.getBoundingClientRect = jest.fn(() => ({ height: 500 }));
 
 describe('Sticky ad banner', () => {
     const scrollBySpy = jest.spyOn(window, 'scrollBy');

@@ -165,13 +165,10 @@ const initState = (): Promise<any> =>
     fastdom
         .read(() => {
             if (header) {
-                headerHeight =
-                    parseInt(window.getComputedStyle(header).height, 10) || 0;
+                headerHeight = header.getBoundingClientRect().height;
             }
             if (topSlot) {
-                return (
-                    parseInt(window.getComputedStyle(topSlot).height, 10) || 0
-                );
+                return topSlot.getBoundingClientRect().height;
             }
 
             return 0;
