@@ -6,7 +6,7 @@
 
 @(quiz: model.content.StoryQuiz)
 
-<div class="explainer-snippet explainer-snippet--light explainer-snippet--storyquiz storyquiz js-storyquiz">
+<div id="@quiz.id" class="explainer-snippet explainer-snippet--light explainer-snippet--storyquiz storyquiz js-storyquiz">
   @quiz.image.map { src => <img class="storyquiz__image" src="@src"> }
   <div class="storyquiz__card storyquiz__card--intro is-active">
     <div class="explainer-snippet__header">

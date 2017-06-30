@@ -1,5 +1,6 @@
 // @flow
 import fastdom from 'lib/fastdom-promise';
+import ophan from 'ophan/ng';
 
 const StoryQuiz = (quiz: Element) => {
     const state = {
@@ -10,6 +11,22 @@ const StoryQuiz = (quiz: Element) => {
     let cards: Element[];
     let score: ?Element;
 
+    const sendResults = (correct: number, total: number): void => {
+        ophan.record(
+            Object.assign(
+                {
+                    component: `storyquiz__${quiz.id}`,
+                    correct,
+                    total,
+                },
+                state.results.reduce((acc: Object, res: boolean, i: number) => {
+                    acc[`question${i}`] = res;
+                    return acc;
+                }, {})
+            )
+        );
+    };
+
     const onBeforeCardActivate = (card: number): Promise<void> => {
         if (card < cards.length - 1) {
             return Promise.resolve();
@@ -17,13 +34,19 @@ const StoryQuiz = (quiz: Element) => {
 
         const correct: number = state.results.filter(Boolean).length;
         const total: number = state.results.length;
+        const final: ?Element = [
+            ...quiz.querySelectorAll('.storyquiz__result'),
+        ].find(el => parseInt(el.dataset.minScore, 10) >= correct);
+
+        sendResults(correct, total);
 
         return fastdom.write(() => {
-            if (score) score.innerHTML = `${correct} out of ${total}`;
+            if (score) score.innerHTML = `${correct} out of ${total}!`;
+            if (final) final.classList.add('is-result');
         });
     };
 
-    const activeCard = (newCard: number): void => {
+    const activeCard = (newCard: number): Promise<void> =>
         onBeforeCardActivate(newCard).then(() =>
             fastdom.write(() => {
                 cards[state.card].classList.remove('is-active');
@@ -31,7 +54,6 @@ const StoryQuiz = (quiz: Element) => {
                 state.card = newCard;
             })
         );
-    };
 
     const revealAnswer = (
         card: number,
@@ -47,23 +69,38 @@ const StoryQuiz = (quiz: Element) => {
             }
         });
     };
-    //
-    // const reset = () => {
-    //     const els = [...quiz.querySelectorAll('.is-answered, .is-answer')];
-    //     fastdom.write(() => {
-    //         els.forEach(el => {
-    //             el.classList.remove('.is-answered');
-    //             el.classList.remove('.is-answer');
-    //         });
-    //     });
-    // };
+
+    const reset = () => {
+        state.card = 0;
+        state.results.length = 0;
+        const els = [
+            ...quiz.querySelectorAll(
+                '.is-active, .is-answered, .is-answer, .is-result'
+            ),
+        ];
+        fastdom.write(() => {
+            els.forEach(el => {
+                el.classList.remove('is-answered');
+                el.classList.remove('is-correct');
+                el.classList.remove('is-wrong');
+                el.classList.remove('is-answer');
+                el.classList.remove('is-result');
+                el.classList.remove('is-active');
+            });
+            cards[0].classList.add('is-active');
+        });
+    };
 
     const onClick = (evt: Event): void => {
         const button = ((evt.target: any): Element).closest('.button');
         if (!button) {
             return;
         }
-        activeCard(state.card + 1);
+        if (button.classList.contains('storyquiz__reset')) {
+            reset();
+        } else {
+            activeCard(state.card + 1);
+        }
     };
 
     const onChange = (evt: Event): void => {
