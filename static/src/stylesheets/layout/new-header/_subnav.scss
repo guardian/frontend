@@ -14,6 +14,10 @@
         padding: $gs-baseline / 2 0;
     }
 
+    @include mq(desktop) {
+        max-height: $gs-baseline * 2;
+    }
+
     // Spacer to prevent text from sitting directly beneath the veggie burger
     &:before {
         content: '';
@@ -42,22 +46,31 @@
         padding-left: $gs-gutter;
         padding-right: $gs-gutter;
     }
+
+    @include mq(desktop) {
+        padding-right: $gs-column-width * 3;
+    }
 }
 
 .subnav__item {
     display: inline-block;
 
-    > *:after {
+    &:focus,
+    &:hover {
+        color: #ffffff;
+    }
+
+    > *:before {
         content: '/';
         color: rgba(255, 255, 255, .3);
         display: inline-block;
         font-size: 1em;
+        pointer-events: none;
         margin-left: -2px;
         margin-right: -2px;
-        pointer-events: none;
     }
 
-    &:last-child > *:after {
+    &:first-child > *:before {
         content: '';
     }
 }

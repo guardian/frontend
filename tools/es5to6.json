@@ -19,7 +19,6 @@
     "bootstraps/enhanced/gallery.js"
   ],
   "Simon Adcock": [
-    "projects/common/modules/onward/breaking-news.js",
     "projects/commercial/modules/sticky-top-banner.js",
     "projects/common/modules/article/membership-events.js",
     "projects/common/modules/discussion/upvote.js",
@@ -55,18 +54,13 @@
     "projects/common/modules/crosswords/anagram-helper/clue-input.js"
   ],
   "GHaberis": [
-    "projects/common/modules/media/videojs-plugins/skip-ad.js",
-    "projects/common/modules/ui/toggles.js",
-    "projects/common/modules/onward/geo-most-popular.js",
     "projects/common/modules/onward/history.js",
     "projects/common/modules/discussion/activity-stream.js",
     "projects/common/modules/discussion/api.js",
     "projects/common/modules/discussion/comment-box.js"
   ],
   "Gustav Pursche": [
-    "projects/common/modules/ui/tabs.js",
-    "projects/common/modules/sport/football/match-info.js",
-    "projects/common/modules/ui/autoupdate.js"
+    "projects/common/modules/ui/tabs.js"
   ],
   "NataliaLKB": [
     "projects/common/modules/article/rich-links.js",
@@ -175,12 +169,7 @@
     "projects/commercial/modules/third-party-tags/imr-worldwide-legacy.js",
     "projects/commercial/modules/paidfor-band.js"
   ],
-  "Philip Wills": [
-    "projects/facia/modules/ui/live-blog-updates.js",
-    "projects/commercial/modules/third-party-tags/imr-worldwide.js"
-  ],
-  "Santiago Villa Fernandez": [
-    "projects/common/modules/video/more-in-series-container.js"
-  ],
+  "Philip Wills": [],
+  "Santiago Villa Fernandez": [],
   "Jamie Byers": []
 }

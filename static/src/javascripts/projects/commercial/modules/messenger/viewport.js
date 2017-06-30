@@ -1,7 +1,7 @@
 // @flow
 import detect from 'lib/detect';
 import fastdom from 'lib/fastdom-promise';
-import { register } from 'commercial/modules/messenger';
+import type { RegisterListeners } from 'commercial/modules/messenger';
 
 let w = window;
 let iframes = {};
@@ -70,9 +70,12 @@ const onMessage = (respond: any, start: any, iframe: ?Element): void => {
         removeResizeListener(iframe);
     }
 };
+const init = (register: RegisterListeners) => {
+    register('viewport', onMessage, {
+        persist: true,
+    });
+};
 
-register('viewport', onMessage, {
-    persist: true,
-});
+export const _ = { addResizeListener, removeResizeListener, reset, onMessage };
 
-export { addResizeListener, removeResizeListener, reset };
+export { init };

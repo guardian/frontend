@@ -22,7 +22,7 @@ const createSizeMapping = (attr: string): Array<AdSize> =>
             size => (size === 'fluid' ? 'fluid' : size.split(',').map(Number))
         );
 
-const getAdBreakpointSizes = (advertNode: Element): AdSizes =>
+const getAdBreakpointSizes = (advertNode: HTMLElement): AdSizes =>
     detect.breakpoints.reduce((sizes, breakpoint) => {
         const data = advertNode.getAttribute(
             `data-${breakpointNameToAttribute(breakpoint.name)}`
@@ -35,7 +35,7 @@ const getAdBreakpointSizes = (advertNode: Element): AdSizes =>
 
 class Advert {
     id: string;
-    node: Element;
+    node: HTMLElement;
     sizes: AdSizes;
     size: ?AdSize;
     slot: any;
@@ -59,7 +59,7 @@ class Advert {
         lazyWaitComplete: ?number,
     };
 
-    constructor(adSlotNode: Element) {
+    constructor(adSlotNode: HTMLElement) {
         const sizes: AdSizes = getAdBreakpointSizes(adSlotNode);
         const slotDefinition = defineSlot(adSlotNode, sizes);
 

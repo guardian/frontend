@@ -1,7 +1,7 @@
 // @flow
 import fastdom from 'lib/fastdom-promise';
 import template from 'lodash/utilities/template';
-import Toggles from 'common/modules/ui/toggles';
+import { Toggles } from 'common/modules/ui/toggles';
 import { addClassesAndTitle } from 'common/views/svg';
 import { addTrackingPixel } from 'commercial/modules/creatives/add-tracking-pixel';
 import addViewabilityTracker from 'commercial/modules/creatives/add-viewability-tracker';
@@ -74,7 +74,8 @@ class Frame {
                     this.params.viewabilityTracker
                 );
             }
-            new Toggles(this.adSlot).init();
+            const toggles = new Toggles(this.adSlot);
+            toggles.init();
             return true;
         });
     }

@@ -31,13 +31,6 @@ object NewNavigation {
     def au: NavLinkLists
     def int: NavLinkLists
 
-    def getPopularEditionalisedNavLinks(edition: Edition): Seq[NavLink] = edition match {
-      case editions.Uk => uk.mostPopular
-      case editions.Au => au.mostPopular
-      case editions.Us => us.mostPopular
-      case editions.International => int.mostPopular
-    }
-
     def getAllEditionalisedNavLinks(edition: Edition): Seq[NavLink] = edition match {
       case editions.Uk => uk.mostPopular ++ uk.leastPopular
       case editions.Au => au.mostPopular ++ au.leastPopular
@@ -79,7 +72,7 @@ object NewNavigation {
     )
     val au = NavLinkLists(
       List(headlines, australiaNews, world, auPolitics, environment),
-      List(indigenousAustralia, media)
+      List(indigenousAustralia, auImmigration, media)
     )
     val us = NavLinkLists(
       List(headlines, usNews, world, environment, usPolitics, business),
@@ -118,11 +111,10 @@ object NewNavigation {
         auColumnists,
         cartoons,
         indigenousAustraliaOpinion,
-        theGuardianView
+        editorials
       ),
       List(
         letters,
-        editorials,
         NavLink("first dog on the moon", "/profile/first-dog-on-the-moon"),
         NavLink("Katharine Murphy", "/profile/katharine-murphy")
       )
@@ -133,8 +125,7 @@ object NewNavigation {
         opinion,
         theGuardianView,
         columnists,
-        letters,
-        editorials
+        letters
       ),
       List(
         NavLink("Jill Abramson", "/profile/jill-abramson"),
@@ -236,13 +227,11 @@ object NewNavigation {
 
     val au = NavLinkLists(List(
       jobs.copy(url = jobs.url + "/landingpage/2868291/jobs-australia-html/?INTCMP=jobs_au_web_newheader"),
-      auEvents,
-      holidays
+      auEvents
     ))
 
     val us = NavLinkLists(List(
-      jobs.copy(url = jobs.url + "?INTCMP=jobs_us_web_newheader"),
-      holidays.copy(title = "vacations")
+      jobs.copy(url = jobs.url + "?INTCMP=jobs_us_web_newheader")
     ))
 
     val int = NavLinkLists(List(
@@ -338,6 +327,7 @@ object NewNavigation {
       SectionsLink("index/contributors", columnists, Opinion),
       SectionsLink("commentisfree/series/comment-is-free-weekly", inMyOpinion, Opinion),
       SectionsLink("profile/editorial", theGuardianView, Opinion),
+      SectionsLink("tone/editorials", editorials, Opinion),
 
       SectionsLink("sport", sport, Sport),
       SectionsLink("football", football, Sport),
@@ -385,21 +375,25 @@ object NewNavigation {
       SectionsLink("au/lifeandstyle/health-and-wellbeing", healthAu, Life)
     )
 
-    def getSectionLinks(sectionName: String, edition: Edition): Seq[NavLink] = {
+    def getSectionLinks(sectionName: String, edition: Edition): Tuple2[Seq[NavLink], Seq[NavLink]] = {
       val sectionList = sectionLinks.filter { item =>
         item.pageId == sectionName
       }
 
       if (sectionList.isEmpty) {
-        News.getPopularEditionalisedNavLinks(edition).drop(1)
+        val mostPopular = News.getEditionalisedSubSectionLinks(edition).mostPopular.drop(1)
+        val leastPopular = News.getEditionalisedSubSectionLinks(edition).leastPopular
+
+        (mostPopular, leastPopular)
       } else {
         val section = sectionList.head
-        val parentSection = section.parentSection.getPopularEditionalisedNavLinks(edition).drop(1)
+        val mostPopular = section.parentSection.getEditionalisedSubSectionLinks(edition).mostPopular.drop(1)
+        val leastPopular = section.parentSection.getEditionalisedSubSectionLinks(edition).leastPopular
 
-        if (parentSection.contains(section.navLink) || NewNavigation.PrimaryLinks.contains(section.navLink)) {
-          parentSection
+        if (mostPopular.contains(section.navLink) || NewNavigation.PrimaryLinks.contains(section.navLink)) {
+          (mostPopular, leastPopular)
         } else {
-          Seq(section.navLink) ++ parentSection
+          (Seq(section.navLink) ++ mostPopular, leastPopular.filter(_.title != section.navLink.title))
         }
       }
     }
@@ -611,18 +605,21 @@ object NewNavigation {
       sectionMap.getOrElse(sectionId, sectionId)
     }
 
-    def getSubSectionNavLinks(id: String, edition: Edition, isFront: Boolean): Seq[NavLink] = {
+    def getSubSectionNavLinks(id: String, edition: Edition, isFront: Boolean): Tuple2[Seq[NavLink], Seq[NavLink]] = {
       if (isEditionalistedSubSection(id)) {
         val subNav = editionalisedSubSectionLinks.filter(_.pageId == id).head.parentSection
 
-        subNav.getEditionalisedSubSectionLinks(edition).mostPopular
+        (subNav.getEditionalisedSubSectionLinks(edition).mostPopular,
+        subNav.getEditionalisedSubSectionLinks(edition).leastPopular)
       } else {
         val subSectionList = subSectionLinks.filter(_.pageId == simplifyFootball(id))
 
         if (subSectionList.isEmpty) {
           NewNavigation.SectionLinks.getSectionLinks(id, edition)
         } else {
-          subSectionList.head.parentSection.mostPopular
+          (subSectionList.head.parentSection.mostPopular,
+            subSectionList.head.parentSection.leastPopular)
+
         }
       }
     }

@@ -3,6 +3,7 @@ package model
 import com.gu.contentapi.client.model.v1.{Content => ApiContent, Element => ApiElement, Tag => ApiTag, _}
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichJodaDateTime
 import common.Edition
+import model.content.MediaAtom
 import org.joda.time.DateTime
 import org.scalatest.{FlatSpec, Matchers}
 import org.scalatestplus.play.OneAppPerSuite
@@ -140,13 +141,13 @@ class ContentTest extends FlatSpec with Matchers with OneAppPerSuite with implic
       sectionId = None, sectionName = None, webUrl = url, apiUrl = "apiurl", references = Nil)
   }
 
-  private def content(contentType: String, elements: List[ApiElement]): ContentType = {
-    Content(contentApi(contentType, elements))
+  private def content(contentType: String, elements: List[ApiElement], maybeByline: Option[String] = None): ContentType = {
+    Content(contentApi(contentType, elements, maybeByline))
   }
 
   private val article = contentApi("article", Nil)
 
-  private def contentApi(contentType: String, elements: List[ApiElement]): ApiContent = {
+  private def contentApi(contentType: String, elements: List[ApiElement], maybeByline: Option[String] = None): ApiContent = {
     ApiContent(
       id = "/content",
       sectionId = None,
@@ -156,7 +157,8 @@ class ContentTest extends FlatSpec with Matchers with OneAppPerSuite with implic
       webUrl = "webUrl",
       apiUrl = "apiUrl",
       tags = List(tag(s"type/$contentType")),
-      elements = Some(elements)
+      elements = Some(elements),
+      fields = Some(ContentFields(byline = maybeByline))
     )
   }
 
@@ -171,5 +173,34 @@ class ContentTest extends FlatSpec with Matchers with OneAppPerSuite with implic
   private def asset(caption: String, width: Int): Asset = {
     Asset(AssetType.Image, Some("image/jpeg"), Some("http://www.foo.com/bar"),
       Some(AssetFields(caption = Some(caption), width = Some(width))))
+  }
+
+
+  "Video" should "return the correct byline" in {
+    val videoSource = Some("test-video-source")
+    val atomSource = Some("test-atom-source")
+    val emptySource = Some("")
+    val byline = Some("test-byline")
+
+    val contentNoByline = content("video", Nil).content
+    val contentWithByline = content("video", Nil, byline).content
+
+    val mediaAtomWithSource = Some(MediaAtom("", "", Nil, "", None, atomSource, None, None, None, None))
+    val mediaAtomWithNoSource = Some(MediaAtom("", "", Nil, "", None, None, None, None, None, None))
+    val mediaAtomWithEmptySource = Some(MediaAtom("", "", Nil, "", None, emptySource, None, None, None, None))
+
+    Video(contentNoByline, None, None).bylineWithSource should be (None)
+    Video(contentNoByline, videoSource, None).bylineWithSource should be (videoSource.map(s => s"Source: $s"))
+    Video(contentNoByline, None, mediaAtomWithSource).bylineWithSource should be (atomSource.map(s => s"Source: $s"))
+    Video(contentNoByline, None, mediaAtomWithNoSource).bylineWithSource should be (None)
+    Video(contentNoByline, None, mediaAtomWithEmptySource).bylineWithSource should be (None)
+    Video(contentNoByline, Some("guardian.co.uk"), None).bylineWithSource should be (Some("theguardian.com"))
+
+    Video(contentWithByline, None, None).bylineWithSource should be (byline)
+    Video(contentWithByline, videoSource, None).bylineWithSource should be (videoSource.map(s => s"${byline.get}, Source: $s"))
+    Video(contentWithByline, None, mediaAtomWithSource).bylineWithSource should be (atomSource.map(s => s"${byline.get}, Source: $s"))
+    Video(contentWithByline, None, mediaAtomWithNoSource).bylineWithSource should be (byline)
+    Video(contentWithByline, None, mediaAtomWithEmptySource).bylineWithSource should be (byline)
+    Video(contentWithByline, Some("guardian.co.uk"), None).bylineWithSource should be (Some(s"${byline.get}, theguardian.com"))
   }
 }

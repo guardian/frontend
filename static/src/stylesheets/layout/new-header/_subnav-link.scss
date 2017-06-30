@@ -11,6 +11,11 @@
         max-height: $gs-baseline * 4.8;
     }
 
+    @include mq(desktop) {
+        // to make sure that the words are not visible on subnav desktop if they fall to the second line
+        margin-bottom: $gs-baseline;
+    }
+
     &:hover,
     &:focus {
         text-decoration: none;

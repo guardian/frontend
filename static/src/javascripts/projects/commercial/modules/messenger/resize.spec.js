@@ -1,17 +1,10 @@
 // @flow
 import type { JestMockT } from 'jest';
-import { register } from 'commercial/modules/messenger';
 import { _ } from './resize.js';
 
-const { resize, normalise } = _;
+const { normalise, resize } = _;
 
 const foolFlow = (mockFn: any) => ((mockFn: any): JestMockT);
-
-jest.mock('commercial/modules/messenger', () => ({
-    register: jest.fn(),
-}));
-
-jest.setMock('commercial/modules/messenger', register);
 
 describe('Cross-frame messenger: resize', () => {
     beforeEach(done => {
@@ -35,11 +28,6 @@ describe('Cross-frame messenger: resize', () => {
         if (document.body) {
             document.body.innerHTML = '';
         }
-    });
-
-    it('will call register', () => {
-        expect(register).toHaveBeenCalled();
-        expect(foolFlow(register).mock.calls[0][0]).toBe('resize');
     });
 
     describe('normalise function', () => {

@@ -1,3 +1,5 @@
+// @flow
+export const galleryHtml = `
 <div>
     <div class="js-hosted-gallery-container">
         <div class="js-hosted-gallery-frame">
@@ -42,4 +44,4 @@
         <div class="js-gallery-caption-button"></div>
     </div>
 </div>
-
+`;

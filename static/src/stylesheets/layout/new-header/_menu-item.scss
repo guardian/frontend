@@ -6,18 +6,9 @@
 
     .menu-group--primary > & {
         @include mq(desktop) {
-            border-right: 2px solid rgba($news-main-2, .3);
             float: left;
-            width: gs-span(2) + $gs-gutter / 2 + 1;
-
-            &:not(:first-child) {
-                margin-left: $gs-gutter / 2 - 1;
-            }
-
-            &:not(:last-child) {
-                margin-top: -$gs-baseline * 3.5;
-                padding-top: $gs-baseline * 3.5;
-            }
+            margin-right: $gs-gutter;
+            width: gs-span(2);
 
             @supports(display: flex) {
                 float: none;
@@ -25,49 +16,38 @@
         }
     }
 
-    .menu-group--editions > &,
-    .menu-group--secondary > & {
+    .menu-group--secondary > &,
+    .menu-group--footer > & {
+        @include mq(desktop) {
+            border-top: 1px solid $guardian-brand;
+            width: gs-span(2) - 5;
+        }
+    }
+
+    .menu-group--secondary > &:nth-child(2),
+    &.menu-item--no-border {
+        @include mq(desktop) {
+            border: transparent;
+            margin-top: $gs-baseline / 4;
+        }
+    }
+
+    .menu-group--editions > & {
         @include mq(desktop) {
             width: 100%;
         }
     }
 
-    .menu-group--editions .menu-group & {
+    .menu-group--editions > & {
         @include mq(desktop) {
-            background-color: $guardian-brand;
-            display: block;
-            float: left;
-            height: $search-and-edition-height-desktop;
-            border-radius: 50%;
-            margin-right: $gs-gutter / 2;
-            text-align: center;
-            width: $search-and-edition-height-desktop;
-
-            @supports(display: flex) {
-                float: none;
-            }
-        }
-
-        &:hover,
-        &:focus {
-            @include mq(desktop) {
-                background-color: $news-main-2;
-                color: #ffffff;
-            }
-        }
-
-        &--edition-active {
-            @include mq(desktop) {
-                background-color: $guardian-brand-light;
-                color: $guardian-brand-dark;
-            }
+            display: flex;
         }
     }
 
     .menu-group--membership-actions & {
         @include mq($from: desktop, $until: leftCol) {
-            margin-left: $gs-gutter / 2 - 1;
-            width: gs-span(2) + $gs-gutter / 2 + 1;
+            margin-left: $gs-gutter / 2;
+            width: gs-span(2) + $gs-gutter / 2;
         }
     }
 }
@@ -80,7 +60,7 @@
 
 .menu-item--user-detail {
     @include mq($from: desktop, $until: leftCol) {
-        width: gs-span(4) + $gs-gutter / 2 + 1;
+        width: gs-span(4) + $gs-gutter / 2;
     }
 
     @include mq(leftCol) {
@@ -119,20 +99,26 @@
 
     @include mq(desktop) {
         font-size: 16px;
+        letter-spacing: .3px;
         line-height: 18px;
-        padding-bottom: $gs-baseline / 2;
+        padding-bottom: 9px;
         padding-left: 0;
-        padding-right: $gs-gutter / 2 - 1;
-        padding-top: $gs-baseline / 2;
+        padding-right: 0;
+        padding-top: $gs-baseline / 4;
     }
 
     &:hover,
     &:focus {
         text-decoration: none;
 
-        // TODO: maybe unify?
         @include mq(desktop) {
-            color: #ffffff;
+            color: $highlight-blue;
+        }
+    }
+
+    &:focus {
+        @include mq(desktop) {
+            text-decoration: underline;
         }
     }
 
@@ -173,14 +159,6 @@
         }
     }
 
-    &[data-link-name='nav2 : the guardian app'],
-    &[data-link-name='nav2 : facebook'],
-    &[data-link-name='nav2 : twitter'] {
-        @include mq(desktop) {
-            display: none;
-        }
-    }
-
     // only match the ones, which are not in --secondary
     .menu-group--primary > .menu-item > & {
         font-size: 24px;
@@ -189,15 +167,6 @@
 
         @include mq(desktop) {
             font-size: 32px;
-        }
-    }
-
-    .menu-group--editions & {
-        @include mq(desktop) {
-            font-size: 15px;
-            line-height: $search-and-edition-height-desktop;
-            padding: 0;
-            text-align: center;
         }
     }
 
@@ -210,14 +179,47 @@
     }
 
     .menu-group--membership & {
-        @include mq($from: desktop, $until: leftCol) {
+        @include mq(desktop) {
             color: #ffffff;
-            font-size: 17px;
-            line-height: 20px;
 
             &:hover,
             &:focus {
-                color: $news-support-1;
+                color: $highlight-blue;
+            }
+        }
+    }
+
+    .menu-group--editions & {
+        @include mq(desktop) {
+            background-color: $guardian-brand;
+            color: $news-support-1;
+            display: block;
+            font-size: 15px;
+            height: $search-and-edition-height-desktop;
+            border-radius: 50%;
+            line-height: $search-and-edition-height-desktop;
+            margin-right: $gs-gutter / 4;
+            padding: 0;
+            text-align: center;
+            width: $search-and-edition-height-desktop;
+        }
+
+        &:hover,
+        &:focus {
+            @include mq(desktop) {
+                background-color: lighten($guardian-brand, 4%);
+                color: #ffffff;
+            }
+        }
+    }
+
+    .menu-item--edition-active & {
+        @include mq(desktop) {
+            &,
+            &:hover,
+            &:focus {
+                background-color: $news-support-1;
+                color: $guardian-brand-dark;
             }
         }
     }
@@ -281,8 +283,8 @@
 }
 
 .menu-item__editions-label {
-    font-size: 17px;
-    left: 0;
-    position: absolute;
-    top: -$gs-baseline * 2;
+    color: #ffffff;
+    font-size: 16px;
+    line-height: $search-and-edition-height-desktop;
+    margin-right: $gs-gutter / 2;
 }

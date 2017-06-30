@@ -4,7 +4,7 @@ import detect from 'lib/detect';
 import mediator from 'lib/mediator';
 import richLinks from 'common/modules/article/rich-links';
 import Affix from 'common/modules/experiments/affix';
-import AutoUpdate from 'common/modules/ui/autoupdate';
+import { autoUpdate } from 'common/modules/ui/autoupdate';
 import RelativeDates from 'common/modules/ui/relativedates';
 import articleLiveblogCommon from 'bootstraps/enhanced/article-liveblog-common';
 import trail from 'bootstraps/enhanced/trail';
@@ -34,7 +34,7 @@ const affixTimeline = (): void => {
 
 const createAutoUpdate = (): void => {
     if (config.page.isLive) {
-        AutoUpdate();
+        autoUpdate();
     }
 };
 

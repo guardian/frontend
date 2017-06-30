@@ -9,7 +9,6 @@
     padding: 0 0 $gs-baseline;
 
     @include mq(desktop) {
-        color: $news-support-1;
         display: flex;
         flex-direction: column;
         padding-bottom: 0;
@@ -28,10 +27,8 @@
     padding-top: 0;
 
     @include mq(desktop) {
-        color: $news-support-1;
         flex-direction: row;
         flex-wrap: nowrap;
-        margin-bottom: $gs-row-height / 2;
         order: 1;
     }
 }
@@ -56,27 +53,12 @@
     }
 }
 
-.menu-group--editions {
-    padding-bottom: 0;
-
-    @include mq(desktop) {
-        margin-top: $gs-row-height / 2;
-    }
-}
-
-.menu-group--editions .menu-group {
-    @include mq($until: desktop) {
-        color: $guardian-brand-dark;
-        background-color: darken($news-main-2, 10%);
-    }
-}
-
 .menu-group--membership {
     padding-bottom: 0;
     position: relative;
 
     @include mq($from: desktop, $until: leftCol) {
-        border-top: 1px solid rgba($news-main-2, .3);
+        border-top: 1px solid $guardian-brand;
         flex-wrap: nowrap;
         width: 100%;
     }
@@ -85,7 +67,7 @@
         flex-direction: row;
         order: 3;
         padding-bottom: 0;
-        padding-top: $gs-baseline / 2;
+        padding-top: $gs-baseline;
         position: absolute;
         right: 0;
         top: 0;
@@ -99,17 +81,24 @@
     }
 
     @include mq(leftCol) {
-        border-left: 2px solid rgba($news-main-2, .3);
+        border-left: 2px solid $guardian-brand;
         flex-direction: column;
+        margin-left: 0;
         padding-left: $gs-gutter / 2 - 1;
-        padding-top: $gs-baseline;
-        width: gs-span(2) + $gs-gutter / 2 - 1;
+        width: gs-span(2) + $gs-gutter / 2;
+    }
+
+    @include mq(wide) {
+        width: gs-span(3) + $gs-gutter / 2;
     }
 }
 
 .menu-group--editions {
+    padding-bottom: 0;
+
     @include mq(desktop) {
         padding-bottom: $gs-baseline * 2;
+        margin-top: $gs-baseline * 2;
         order: 5;
 
         @supports(display: flex) {
@@ -118,16 +107,22 @@
     }
 
     .menu-group {
+        @include mq($until: desktop) {
+            color: $guardian-brand-dark;
+            background-color: darken($news-main-2, 10%);
+        }
+
         @include mq(desktop) {
-            flex-direction: row;
-            flex-wrap: nowrap;
+            @supports(display: flex) {
+                flex-direction: row;
+                flex-wrap: nowrap;
+            }
         }
     }
-}
 
-.menu-group--editions-details {
-    @include mq(desktop) {
-        flex-direction: row;
+    .menu-group .menu-item {
+        display: inline-block;
+        width: auto;
     }
 }
 
@@ -146,11 +141,11 @@
 
 .menu-group--footer {
     @include mq(desktop) {
-        padding-left: $gs-gutter / 2;
+        color: $news-support-1;
         position: absolute;
-        right: gs-span(2) + $gs-gutter * 1.5 + 1;
+        right: gs-span(2) + $gs-gutter * 1.5;
         top: 0;
-        width: gs-span(2) + $gs-gutter / 2 - 1;
+        width: gs-span(2);
 
         @supports(display: flex) {
             order: 2;
@@ -161,16 +156,17 @@
     }
 
     @include mq(leftCol) {
-        width: gs-span(2) + $gs-gutter - 1;
+        margin-right: $gs-gutter / 2;
     }
 
     @include mq(wide) {
-        width: gs-span(3) + $gs-gutter - 1;
+        margin-right: gs-span(1) + $gs-gutter * 1.5;
     }
 }
 
 .menu-group--search {
     @include mq(desktop) {
+        margin-right: $gs-gutter;
         order: 4;
         width: gs-span(8);
     }

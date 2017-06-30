@@ -20,14 +20,16 @@ const userHasData = (): boolean => {
     return !!cookie;
 };
 
+const adFreeDataIsPresent = (): boolean => !!getCookie(AD_FREE_USER_COOKIE);
+
 const persistResponse = (JsonResponse: () => void) => {
     const expiryDate = new Date();
     expiryDate.setDate(expiryDate.getDate() + 1);
     addCookie(USER_FEATURES_EXPIRY_COOKIE, expiryDate.getTime().toString());
     addCookie(PAYING_MEMBER_COOKIE, !JsonResponse.adblockMessage);
     if (JsonResponse.adFree) {
-        addCookie(AD_FREE_USER_COOKIE, JsonResponse.adFree, 1);
-    } else {
+        addCookie(AD_FREE_USER_COOKIE, expiryDate.getTime().toString());
+    } else if (adFreeDataIsPresent()) {
         removeCookie(AD_FREE_USER_COOKIE);
     }
 
@@ -54,18 +56,25 @@ const requestNewData = (): Promise<void> =>
         .then(persistResponse)
         .catch(() => {});
 
-const featuresDataIsMissing = (): boolean =>
-    !getCookie(USER_FEATURES_EXPIRY_COOKIE) || !getCookie(AD_FREE_USER_COOKIE);
-
-const featuresDataIsOld = (): boolean => {
-    const featuresExpiryCookie = getCookie(USER_FEATURES_EXPIRY_COOKIE);
-    const featuresExpiryTime = parseInt(featuresExpiryCookie, 10);
+const datedCookieIsOld = (datedCookieName: string): boolean => {
+    const expiryDateFromCookie = getCookie(datedCookieName);
+    const expiryTime = parseInt(expiryDateFromCookie, 10);
     const timeNow = new Date().getTime();
-    return timeNow >= featuresExpiryTime;
+    return timeNow >= expiryTime;
 };
 
+const featuresDataIsMissing = (): boolean =>
+    !getCookie(USER_FEATURES_EXPIRY_COOKIE);
+
+const featuresDataIsOld = (): boolean =>
+    datedCookieIsOld(USER_FEATURES_EXPIRY_COOKIE);
+
+const adFreeDataIsOld = (): boolean => datedCookieIsOld(AD_FREE_USER_COOKIE);
+
 const userNeedsNewFeatureData = (): boolean =>
-    featuresDataIsMissing() || featuresDataIsOld();
+    featuresDataIsMissing() ||
+    featuresDataIsOld() ||
+    (adFreeDataIsPresent() && adFreeDataIsOld());
 
 const userHasDataAfterSignout = (): boolean =>
     !identity.isUserLoggedIn() && userHasData();
@@ -105,12 +114,7 @@ const isRecentContributor = (): boolean => daysSinceLastContribution <= 180;
 const shouldSeeReaderRevenue = (): boolean =>
     !isPayingMember() && !isRecentContributor();
 
-const isAdFreeUser = (): boolean => {
-    if (getCookie(AD_FREE_USER_COOKIE) === null) {
-        refresh();
-    }
-    return getCookie(AD_FREE_USER_COOKIE) === 'true';
-};
+const isAdFreeUser = (): boolean => adFreeDataIsPresent() && !adFreeDataIsOld();
 
 const toDate = (dateStr: string): Date => {
     const parts = Array.from(dateStr.split('-'), s => parseInt(s, 10));
