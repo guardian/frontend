@@ -4,6 +4,7 @@ import detect from 'lib/detect';
 import { isAdFreeUser } from 'commercial/modules/user-features';
 import identityApi from 'common/modules/identity/api';
 import userPrefs from 'common/modules/user-prefs';
+import { shouldShowReaderRevenue } from 'common/modules/commercial/contributions-utilities';
 
 // Having a constructor means we can easily re-instantiate the object in a test
 class CommercialFeatures {
@@ -115,6 +116,12 @@ class CommercialFeatures {
             config.page.isPaidContent &&
             !config.page.hasSuperStickyBanner &&
             !supportsSticky;
+
+        this.asynchronous = {
+            canDisplayMembershipEngagementBanner: detect.adblockInUse.then(
+                adblockUsed => !adblockUsed && shouldShowReaderRevenue()
+            ),
+        };
 
         this.adFeedback =
             config.switches.adFeedback &&

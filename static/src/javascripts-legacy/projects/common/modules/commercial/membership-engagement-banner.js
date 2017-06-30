@@ -6,6 +6,7 @@ define([
         'lodash/utilities/template',
         'common/modules/ui/message',
         'raw-loader!common/views/membership-message.html',
+        'commercial/modules/commercial-features',
         'lib/mediator',
         'lib/fastdom-promise',
         'common/modules/experiments/test-can-run-checks',
@@ -29,6 +30,7 @@ define([
                  template,
                  Message,
                  messageTemplate,
+                 commercialFeatures,
                  mediator,
                  fastdom,
                  testCanRunChecks,
@@ -153,7 +155,7 @@ define([
 
 
         function showBanner(params) {
-
+            
 
             if (params === DO_NOT_RENDER_ENGAGEMENT_BANNER || membershipEngagementBannerBlock.isBlocked()) {
                 return;
@@ -205,7 +207,7 @@ define([
                 var bannerParams = deriveBannerParams(location);
 
                 if (bannerParams && (storage.local.get('gu.alreadyVisited') || 0) >= bannerParams.minArticles) {
-                    return contributionsUtilities.canDisplayMembershipEngagementBanner.then(function (canShow) {
+                    return commercialFeatures.commercialFeatures.asynchronous.canDisplayMembershipEngagementBanner.then(function (canShow) {
 
                         if (canShow) {
                             mediator.on('modules:onwards:breaking-news:ready', function (breakingShown) {
