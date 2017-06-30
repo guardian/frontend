@@ -21,21 +21,28 @@ define([
 
         this.description = 'Test digital subs price points via thrasher';
         this.showForSensitive = true;
-        this.audience = 0.25;   // 25% of UK front audience (non-paying only)
+        this.audience = 0.25;   // 25% of UK fronts audience (non-paying only)
         this.audienceOffset = 0.1;  // offset by 10% for our Epic version
         this.successMeasure = '';
-        this.audienceCriteria = 'Non-paying UK network front users - mobile resolution and above';
+        this.audienceCriteria = 'Non-paying UK selected front users - mobile resolution and above';
         this.dataLinkNames = '';
         this.idealOutcome = 'Find the price that works for most people.';
         this.hypothesis = 'One of our price points will be more desirable than the others';
 
         this.canRun = function () {
+            var pageIdLowered = config.page.pageId.toLowerCase();
             return document.querySelector('#membership-ab-thrasher') &&
                 !cookies.getCookie('GU_DBPT1ME') && // have to piggy-back this onto the epic version's dropped cookie
                 !userFeatures.isPayingMember() &&
                 config.page.isFront &&
-                config.page.pageId.toLowerCase() === "uk" &&
-                config.page.edition.toUpperCase() === "UK";
+                config.page.edition.toUpperCase() === "UK" &&
+                (pageIdLowered === "uk" ||
+                    pageIdLowered === "football" ||
+                    pageIdLowered === "politics" ||
+                    pageIdLowered === "world" ||
+                    pageIdLowered === "education" ||
+                    pageIdLowered === "uk/sport"
+                );
         };
 
         this.thrasherContainer = function() {
