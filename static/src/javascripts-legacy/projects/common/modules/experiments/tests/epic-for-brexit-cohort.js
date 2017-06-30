@@ -17,8 +17,8 @@ define([
 ) {
 
     function hasBrexitTag(){
-        var tags = config.page.keywordIds && config.page.keywordIds.concat(config.page.nonKeywordTagIds);
-        return tags && tags.indexOf('politics/eu-referendum') > -1;
+        var tags = config.get('page.keywordIds', []).concat(config.get('page.nonKeywordTagIds', []));
+        return tags.indexOf('politics/eu-referendum') > -1;
     }
 
     function createBrexitTestTemplate() {
