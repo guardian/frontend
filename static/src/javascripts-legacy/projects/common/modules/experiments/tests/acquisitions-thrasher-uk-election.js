@@ -3,14 +3,12 @@ define([
     'lib/element-inview',
     'lib/storage',
     'commercial/modules/user-features',
-    'common/modules/commercial/contributions-utilities',
     'ophan/ng'
 ], function (
     $,
     elementInView,
     storage,
     userFeatures,
-    contributionUtilities,
     ophan
 ) {
 
@@ -33,7 +31,7 @@ define([
     var $ukElectionThrasher =  $("." + UK_ELECTION_THRASHER_BLOCK_ELEMENT);
 
     function isThankYouVariantReader() {
-        return userFeatures.isPayingMember() || contributionUtilities.isContributor
+        return userFeatures.isPayingMember() || userFeatures.isContributor()
     }
 
     function getThrasherVariant() {

@@ -12,12 +12,8 @@ define([
     acquisitionsEpicThankYouTemplate
 ) {
 
-    function isRecentContributor() {
-        return contributionsUtilities.daysSinceLastContribution < 180
-    }
-
     function isTargetReader() {
-        return userFeatures.isPayingMember() || isRecentContributor()
+        return userFeatures.isPayingMember() || userFeatures.isRecentContributor()
     }
 
     function worksWellWithPageTemplate() {
@@ -27,9 +23,7 @@ define([
     }
 
     function isTargetPage() {
-        return worksWellWithPageTemplate() &&
-            !config.page.isPaidContent &&
-            !config.page.shouldHideAdverts
+        return worksWellWithPageTemplate() && !config.page.shouldHideReaderRevenue
     }
 
     return contributionsUtilities.makeABTest({

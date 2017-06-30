@@ -1,11 +1,10 @@
 // @flow
 import config from 'lib/config';
 import detect from 'lib/detect';
-import { isPayingMember, isAdFreeUser } from 'commercial/modules/user-features';
+import { isAdFreeUser } from 'commercial/modules/user-features';
 import identityApi from 'common/modules/identity/api';
 import userPrefs from 'common/modules/user-prefs';
-import { daysSince } from 'lib/time-utils';
-import { getCookie } from 'lib/cookies';
+import { shouldShowReaderRevenue } from 'common/modules/commercial/contributions-utilities';
 
 // Having a constructor means we can easily re-instantiate the object in a test
 class CommercialFeatures {
@@ -20,7 +19,6 @@ class CommercialFeatures {
     commentAdverts: any;
     liveblogAdverts: any;
     paidforBand: any;
-    canReasonablyAskForMoney: any;
     asynchronous: any;
     adFeedback: any;
     adFree: any;
@@ -48,10 +46,6 @@ class CommercialFeatures {
             document.documentElement.classList.contains('has-sticky');
         const newRecipeDesign =
             config.page.showNewRecipeDesign && config.tests.abNewRecipeDesign;
-        const lastContributionDate = getCookie(
-            'gu.contributions.contrib-timestamp'
-        );
-        const daysSinceLastContribution = daysSince(lastContributionDate);
 
         // Feature switches
         this.adFree =
@@ -123,16 +117,9 @@ class CommercialFeatures {
             !config.page.hasSuperStickyBanner &&
             !supportsSticky;
 
-        this.canReasonablyAskForMoney = !(
-            isPayingMember() || // eg become a supporter, give a contribution
-            daysSinceLastContribution <= 180 || // has contributed in the last 6 months
-            config.page.shouldHideAdverts ||
-            config.page.isPaidContent
-        );
-
         this.asynchronous = {
             canDisplayMembershipEngagementBanner: detect.adblockInUse.then(
-                adblockUsed => !adblockUsed && this.canReasonablyAskForMoney
+                adblockUsed => !adblockUsed && shouldShowReaderRevenue()
             ),
         };
 
