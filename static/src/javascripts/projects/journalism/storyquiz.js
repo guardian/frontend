@@ -93,7 +93,6 @@ const StoryQuiz = (quiz: Element) => {
         }
 
         state.card = 0;
-        state.total = cards.length - 2;
         quiz.addEventListener('click', onClick);
         quiz.addEventListener('change', onChange);
     };
