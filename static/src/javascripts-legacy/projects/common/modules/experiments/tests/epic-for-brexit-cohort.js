@@ -17,7 +17,7 @@ define([
 ) {
 
     function hasBrexitTag(){
-        var tags = config.page.keywordIds.concat(config.page.nonKeywordTagIds);
+        var tags = config.get('page.keywordIds', []).concat(config.get('page.nonKeywordTagIds', []));
         return tags.indexOf('politics/eu-referendum') > -1;
     }
 
