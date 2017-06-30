@@ -4,7 +4,7 @@ import detect from 'lib/detect';
 
 const addScrollListener: any = testExports.addScrollListener;
 const removeScrollListener: any = testExports.removeScrollListener;
-const reset: any = testExports.reset;
+const reset = testExports.reset;
 
 jest.mock('commercial/modules/messenger', () => ({
     register: jest.fn(),

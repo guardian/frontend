@@ -49,7 +49,7 @@ describe('Hosted Gallery', () => {
     const classListFor = (className: string): string =>
         (document.querySelector(`.${className}`): any).classList.toString();
 
-    it('should open and close the caption on click', done => {
+    it('should open and close the caption on click', () => {
         const button: any = document.querySelector(
             '.js-gallery-caption-button'
         );
@@ -65,11 +65,9 @@ describe('Hosted Gallery', () => {
         expect(classListFor('js-gallery-caption-bar')).not.toEqual(
             expect.stringContaining('hosted-gallery--show-caption')
         );
-
-        done();
     });
 
-    it('should open and close  the caption on pressing "i"', done => {
+    it('should open and close  the caption on pressing "i"', () => {
         gallery.handleKeyEvents({ keyCode: 73 });
 
         expect(classListFor('js-gallery-caption-bar')).toEqual(
@@ -81,11 +79,9 @@ describe('Hosted Gallery', () => {
         expect(classListFor('js-gallery-caption-bar')).not.toEqual(
             expect.stringContaining('hosted-gallery--show-caption')
         );
-
-        done();
     });
 
-    it('should open and close the onward journey on click', done => {
+    it('should open and close the onward journey on click', () => {
         const button: any = document.querySelector(
             '.js-hosted-gallery-oj-close'
         );
@@ -100,11 +96,9 @@ describe('Hosted Gallery', () => {
         expect(classListFor('js-hosted-gallery-oj')).not.toEqual(
             expect.stringContaining('minimise-oj')
         );
-
-        done();
     });
 
-    it('should log navigation in GA when using arrow key navigation', done => {
+    it('should log navigation in GA when using arrow key navigation', () => {
         gallery.handleKeyEvents({ keyCode: 40, preventDefault: noop });
         expect(
             interactionTracking.trackNonClickInteraction
@@ -121,10 +115,9 @@ describe('Hosted Gallery', () => {
         expect(
             interactionTracking.trackNonClickInteraction
         ).toHaveBeenCalledWith('KeyPress:left - image 1');
-        done();
     });
 
-    it('should log navigation in GA when clicking through images', done => {
+    it('should log navigation in GA when clicking through images', () => {
         gallery.initScroll.call(gallery);
         (document.querySelector('.inline-arrow-down'): any).click();
         expect(
@@ -134,10 +127,9 @@ describe('Hosted Gallery', () => {
         expect(
             interactionTracking.trackNonClickInteraction
         ).toHaveBeenCalledWith('Click - image 1');
-        done();
     });
 
-    it('should log navigation in GA when scrolling through images', done => {
+    it('should log navigation in GA when scrolling through images', () => {
         const nativeHTMLElement = window.HTMLElement;
         window.HTMLElement = function() {
             this.scrollTop = 20;
@@ -149,7 +141,6 @@ describe('Hosted Gallery', () => {
         expect(
             interactionTracking.trackNonClickInteraction
         ).toHaveBeenCalledWith('Scroll - image 3');
-        done();
         window.HTMLElement = nativeHTMLElement;
     });
 });

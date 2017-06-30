@@ -4,7 +4,7 @@ import { _ as testExports } from 'commercial/modules/messenger/viewport';
 import detect from 'lib/detect';
 
 const addResizeListener: any = testExports.addResizeListener;
-const reset: any = testExports.reset;
+const reset = testExports.reset;
 
 jest.mock('lib/detect', () => ({
     getViewport: jest.fn(),
