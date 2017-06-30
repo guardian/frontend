@@ -1,171 +1,179 @@
+// @flow
+/* eslint-disable no-useless-escape */
 /*
  Module: history.js
  Description: Gets and sets users reading history
  */
 import fastdom from 'fastdom';
 import $ from 'lib/$';
-import config from 'lib/config';
 import template from 'lodash/utilities/template';
-import storage from 'lib/storage';
-import url from 'lib/url';
+import { local } from 'lib/storage';
+import { getPath } from 'lib/url';
 import viewTag from 'raw-loader!common/views/history/tag.html';
 import viewMegaNav from 'raw-loader!common/views/history/mega-nav.html';
 import isObject from 'lodash/objects/isObject';
 import isNumber from 'lodash/objects/isNumber';
-import find from 'lodash/collections/find';
-import forEach from 'lodash/collections/forEach';
-import some from 'lodash/collections/some';
-import keys from 'lodash/objects/keys';
-import assign from 'lodash/objects/assign';
-import reduce from 'lodash/collections/reduce';
-import contains from 'lodash/collections/contains';
-import isArray from 'lodash/objects/isArray';
 import pick from 'lodash/objects/pick';
 import mapValues from 'lodash/objects/mapValues';
-var editions = [
-        'uk',
-        'us',
-        'au'
-    ],
-    editionalised = [
-        'business',
-        'commentisfree',
-        'culture',
-        'environment',
-        'media',
-        'money',
-        'sport',
-        'technology'
-    ],
-    pageMeta = [{
+
+const editions = ['uk', 'us', 'au'];
+
+const editionalised = [
+    'business',
+    'commentisfree',
+    'culture',
+    'environment',
+    'media',
+    'money',
+    'sport',
+    'technology',
+];
+
+const pageMeta = [
+    {
         tid: 'section',
-        tname: 'sectionName'
-    }, {
+        tname: 'sectionName',
+    },
+    {
         tid: 'keywordIds',
-        tname: 'keywords'
-    }, {
+        tname: 'keywords',
+    },
+    {
         tid: 'seriesId',
-        tname: 'series'
-    }, {
+        tname: 'series',
+    },
+    {
         tid: 'authorIds',
-        tname: 'author'
-    }],
-    buckets = [{
+        tname: 'author',
+    },
+];
+
+const buckets = [
+    {
         type: 'content',
-        indexInRecord: 1
-    }, {
+        indexInRecord: 1,
+    },
+    {
         type: 'front',
-        indexInRecord: 2
-    }],
-    summaryPeriodDays = 90,
-    forgetUniquesAfter = 10,
-    historySize = 50,
+        indexInRecord: 2,
+    },
+];
 
-    storageKeyHistory = 'gu.history',
-    storageKeySummary = 'gu.history.summary',
+const summaryPeriodDays = 90;
+const forgetUniquesAfter = 10;
+const historySize = 50;
+const storageKeyHistory = 'gu.history';
+const storageKeySummary = 'gu.history.summary';
 
-    today = Math.floor(Date.now() / 86400000), // 1 day in ms
-    historyCache,
-    summaryCache,
-    popularFilteredCache,
-    topNavItemsCache,
+const today = Math.floor(Date.now() / 86400000); // 1 day in ms
 
-    inMegaNav = false,
+let historyCache;
+let summaryCache;
+let popularFilteredCache;
+let topNavItemsCache;
+let inMegaNav = false;
 
-    isEditionalisedRx = new RegExp('^(' + editions.join('|') + ')\/(' + editionalised.join('|') + ')$'),
-    stripEditionRx = new RegExp('^(' + editions.join('|') + ')\/');
+const saveHistory = history => {
+    console.log('saveHistory --------------->', saveHistory);
 
-function saveHistory(history) {
     historyCache = history;
-    return storage.local.set(storageKeyHistory, history);
-}
+    return local.set(storageKeyHistory, history);
+};
 
-function saveSummary(summary) {
+const saveSummary = summary => {
     summaryCache = summary;
-    return storage.local.set(storageKeySummary, summary);
-}
+    return local.set(storageKeySummary, summary);
+};
 
-function getHistory() {
-    historyCache = historyCache || storage.local.get(storageKeyHistory) || [];
+const getHistory = () => {
+    historyCache = historyCache || local.get(storageKeyHistory) || [];
     return historyCache;
-}
+};
 
-function getSummary() {
+const getSummary = () => {
     if (!summaryCache) {
-        summaryCache = storage.local.get(storageKeySummary);
+        summaryCache = local.get(storageKeySummary);
 
-        if (!isObject(summaryCache) || !isObject(summaryCache.tags) || !isNumber(summaryCache.periodEnd)) {
+        if (
+            !isObject(summaryCache) ||
+            !isObject(summaryCache.tags) ||
+            !isNumber(summaryCache.periodEnd)
+        ) {
             summaryCache = {
                 periodEnd: today,
                 tags: {},
-                showInMegaNav: true
+                showInMegaNav: true,
             };
         }
     }
     return summaryCache;
-}
+};
 
-function seriesSummary() {
-    function views(item) {
-        return reduce(item, function(acc, record) {
-            return acc + record[1];
-        }, 0);
-    }
+const seriesSummary = () => {
+    const views = item => item.reduce((acc, record) => acc + record[1], 0);
 
-    var seriesTags = pick(getSummary().tags, function(v, k) {
-        return contains(k, 'series');
-    });
+    const seriesTags = pick(getSummary().tags, (v, k) => k.includes('series'));
 
-    var seriesTagsSummary = mapValues(seriesTags, function(tag) {
-        return views(tag[1]) + views(tag[2]);
-    });
+    const seriesTagsSummary = mapValues(
+        seriesTags,
+        tag => views(tag[1]) + views(tag[2])
+    );
 
     return seriesTagsSummary;
-}
+};
 
-function mostViewedSeries() {
-    return reduce(seriesSummary(), function(best, views, tag, summary) {
-        return views > (summary[best] || 0) ? tag : best;
-    }, '');
-}
+const mostViewedSeries = () =>
+    seriesSummary().reduce(
+        (best, views, tag, summary) =>
+            views > (summary[best] || 0) ? tag : best,
+        ''
+    );
 
-function deleteFromSummary(tag) {
-    var summary = getSummary();
+const deleteFromSummary = tag => {
+    const summary = getSummary();
 
     delete summary.tags[tag];
     saveSummary(summary);
-}
+};
 
-function isRevisit(pageId) {
-    return (find(getHistory(), function(page) {
-        return (page[0] === pageId);
-    }) || [])[1] > 1;
-}
+const isRevisit = pageId => {
+    const visited = getHistory().find(page => page[0] === pageId);
 
-function pruneSummary(summary, mockToday) {
-    var newToday = mockToday || today,
-        updateBy = newToday - summary.periodEnd;
+    return visited && visited[1] > 1;
+};
+
+const pruneSummary = (summary, mockToday) => {
+    const newToday = mockToday || today;
+    const updateBy = newToday - summary.periodEnd;
 
     if (updateBy !== 0) {
         summary.periodEnd = newToday;
 
-        forEach(summary.tags, function(record, tid) {
-            var result = buckets.map(function(bucket) {
-                if (record[bucket.indexInRecord]) {
-                    var visits = record[bucket.indexInRecord].map(function(day) {
-                        var newAge = day[0] + updateBy;
-                        return newAge < summaryPeriodDays && newAge >= 0 ? [newAge, day[1]] : false;
-                    }).filter(Boolean);
+        Object.keys(summary.tags).forEach(tid => {
+            const record = summary.tags[tid];
 
-                    return (visits.length > 1 || (visits.length === 1 && visits[0][0] < forgetUniquesAfter)) ? visits : [];
+            const result = buckets.map(bucket => {
+                if (record[bucket.indexInRecord]) {
+                    const visits = record[bucket.indexInRecord]
+                        .map(day => {
+                            const newAge = day[0] + updateBy;
+                            return newAge < summaryPeriodDays && newAge >= 0
+                                ? [newAge, day[1]]
+                                : false;
+                        })
+                        .filter(Boolean);
+
+                    return visits.length > 1 ||
+                        (visits.length === 1 &&
+                            visits[0][0] < forgetUniquesAfter)
+                        ? visits
+                        : [];
                 }
 
                 return [];
             });
 
-            if (result.some(function(r) {
-                    return r.length;
-                })) {
+            if (result.some(r => r.length)) {
                 summary.tags[tid] = [record[0]].concat(result);
             } else {
                 delete summary.tags[tid];
@@ -174,148 +182,171 @@ function pruneSummary(summary, mockToday) {
     }
 
     return summary;
-}
+};
 
-function getPopular(opts) {
-    var tags = getSummary().tags,
-        tids = keys(tags),
-        op = assign({
-            number: 100,
-            weights: {},
-            thresholds: {}
-        }, opts);
+const tally = (visits, weight = 1, minimum = 1) => {
+    let totalVisits = 0;
 
-    tids = op.whitelist ? tids.filter(function(tid) {
-        return op.whitelist.indexOf(tid) > -1;
-    }) : tids;
-    tids = op.blacklist ? tids.filter(function(tid) {
-        return op.blacklist.indexOf(tid) === -1;
-    }) : tids;
-
-    return tids.map(function(tid) {
-            var record = tags[tid],
-                rank = reduce(buckets, function(rank, bucket) {
-                    return rank + tally(record[bucket.indexInRecord], op.weights[bucket.type], op.thresholds[bucket.type]);
-                }, 0);
-
-            return {
-                idAndName: [tid, record[0]],
-                rank: rank
-            };
-        })
-        .filter(Boolean)
-        .sort(function(a, b) {
-            return a.rank - b.rank;
-        })
-        .slice(-op.number)
-        .map(function(tid) {
-            return tid.idAndName;
-        })
-        .reverse();
-}
-
-function getContributors() {
-    var contibutors = [],
-        tagId,
-        tags = getSummary().tags;
-    for (tagId in tags) {
-        if (tagId.indexOf('profile/') === 0) {
-            contibutors.push(tags[tagId]);
-        }
-    }
-    return contibutors;
-}
-
-function getPopularFiltered(opts) {
-    var flush = opts && opts.flush;
-
-    popularFilteredCache = (!flush && popularFilteredCache) || getPopular({
-        blacklist: getTopNavItems(),
-        number: 10,
-        weights: {
-            'content': 1,
-            'front': 5
-        },
-        thresholds: {
-            'content': 5,
-            'front': 1
-        }
-    });
-
-    return popularFilteredCache;
-}
-
-function tally(visits, weight, minimum) {
-    var totalVisits = 0,
-        result;
-
-    weight = weight || 1;
-    minimum = minimum || 1;
-
-    result = reduce(visits, function(tally, day) {
-        var dayOffset = day[0],
-            dayVisits = day[1];
+    const result = visits.reduce((t, day) => {
+        const dayOffset = day[0];
+        const dayVisits = day[1];
 
         totalVisits += dayVisits;
-        return tally + weight * (9 + dayVisits) * (summaryPeriodDays - dayOffset);
+        return t + weight * (9 + dayVisits) * (summaryPeriodDays - dayOffset);
     }, 0);
 
     return totalVisits < minimum ? 0 : result;
-}
+};
 
-function firstCsv(str) {
-    return (str || '').split(',')[0];
-}
+const getPopular = opts => {
+    const tags = getSummary().tags;
+    let tids = Object.keys(tags);
 
-function collapsePath(t) {
-    if (t) {
-        t = t.replace(/^\/|\/$/g, '');
-        if (t.match(isEditionalisedRx)) {
-            t = t.replace(stripEditionRx, '');
+    const op = Object.assign(
+        {},
+        {
+            number: 100,
+            weights: {},
+            thresholds: {},
+        },
+        opts
+    );
+
+    tids = op.whitelist
+        ? tids.filter(tid => op.whitelist.indexOf(tid) > -1)
+        : tids;
+    tids = op.blacklist
+        ? tids.filter(tid => op.blacklist.indexOf(tid) === -1)
+        : tids;
+
+    return tids
+        .map(tid => {
+            const record = tags[tid];
+            const rank = buckets.reduce(
+                (r, bucket) =>
+                    r +
+                    tally(
+                        record[bucket.indexInRecord],
+                        op.weights[bucket.type],
+                        op.thresholds[bucket.type]
+                    ),
+                0
+            );
+
+            return {
+                idAndName: [tid, record[0]],
+                rank,
+            };
+        })
+        .filter(Boolean)
+        .sort((a, b) => a.rank - b.rank)
+        .slice(-op.number)
+        .map(tid => tid.idAndName)
+        .reverse();
+};
+
+const getContributors = () => {
+    const contibutors = [];
+    const tags = getSummary().tags;
+
+    Object.keys(tags).forEach(tagId => {
+        if (tagId.indexOf('profile/') === 0) {
+            contibutors.push(tags[tagId]);
         }
-        t = t.split('/');
-        t = t.length === 2 && t[0] === t[1] ? [t[0]] : t;
-        return t.join('/');
-    } else {
-        return '';
-    }
-}
+    });
 
-function reset() {
+    return contibutors;
+};
+
+const collapsePath = t => {
+    const isEditionalisedRx = new RegExp(
+        `^(${editions.join('|')})\/(${editionalised.join('|')})$`
+    );
+    const stripEditionRx = new RegExp(`^(${editions.join('|')})\/`);
+
+    if (t) {
+        let path = t.replace(/^\/|\/$/g, '');
+
+        if (path.match(isEditionalisedRx)) {
+            path = path.replace(stripEditionRx, '');
+        }
+
+        path = path.split('/');
+
+        path = path.length === 2 && path[0] === path[1] ? [path[0]] : path;
+
+        return path.join('/');
+    }
+    return '';
+};
+
+const getTopNavItems = () => {
+    topNavItemsCache =
+        topNavItemsCache ||
+        $('.js-navigation-header .js-top-navigation a').map(item =>
+            collapsePath(getPath($(item).attr('href')))
+        );
+
+    return topNavItemsCache;
+};
+
+const getPopularFiltered = opts => {
+    const flush = opts && opts.flush;
+
+    popularFilteredCache =
+        (!flush && popularFilteredCache) ||
+        getPopular({
+            blacklist: getTopNavItems(),
+            number: 10,
+            weights: {
+                content: 1,
+                front: 5,
+            },
+            thresholds: {
+                content: 5,
+                front: 1,
+            },
+        });
+
+    return popularFilteredCache;
+};
+
+const firstCsv = str => (str || '').split(',')[0];
+
+const reset = () => {
     historyCache = undefined;
     summaryCache = undefined;
-    storage.local.remove(storageKeyHistory);
-    storage.local.remove(storageKeySummary);
-}
+    local.remove(storageKeyHistory);
+    local.remove(storageKeySummary);
+};
 
-function logHistory(pageConfig) {
-    var pageId = pageConfig.pageId,
-        history,
-        foundCount = 0;
+const logHistory = pageConfig => {
+    const pageId = pageConfig.pageId;
+    let history;
+    let foundCount = 0;
 
     if (!pageConfig.isFront) {
-        history = getHistory()
-            .filter(function(item) {
-                var isArr = isArray(item),
-                    found = isArr && (item[0] === pageId);
+        history = getHistory().filter(item => {
+            const isArr = Array.isArray(item);
+            const found = isArr && item[0] === pageId;
 
-                foundCount = found ? item[1] : foundCount;
-                return isArr && !found;
-            });
+            foundCount = found ? item[1] : foundCount;
+            return isArr && !found;
+        });
 
         history.unshift([pageId, foundCount + 1]);
         saveHistory(history.slice(0, historySize));
     }
-}
+};
 
-function logSummary(pageConfig, mockToday) {
-    var summary = pruneSummary(getSummary(), mockToday),
-        page = collapsePath(pageConfig.pageId),
-        isFront = false;
+const logSummary = (pageConfig, mockToday) => {
+    const summary = pruneSummary(getSummary(), mockToday);
+    const page = collapsePath(pageConfig.pageId);
+    let isFront = false;
 
-    var meta = pageMeta.reduceRight(function(tagMeta, tag) {
-        var tid = collapsePath(firstCsv(pageConfig[tag.tid])),
-            tname = tid && firstCsv(pageConfig[tag.tname]);
+    const meta = pageMeta.reduceRight((tagMeta, tag) => {
+        const tid = collapsePath(firstCsv(pageConfig[tag.tid]));
+        const tname = tid && firstCsv(pageConfig[tag.tname]);
 
         if (tid && tname) {
             tagMeta[tid] = tname;
@@ -324,25 +355,21 @@ function logSummary(pageConfig, mockToday) {
         return tagMeta;
     }, {});
 
-    Object.keys(meta).forEach(function(tid) {
-        var tname = meta[tid],
-            record = summary.tags[tid] || [],
-            visits,
-            today;
+    Object.keys(meta).forEach(tid => {
+        const tname = meta[tid];
+        const record = summary.tags[tid] || [];
 
-        buckets.forEach(function(bucket) {
+        buckets.forEach(bucket => {
             record[bucket.indexInRecord] = record[bucket.indexInRecord] || [];
         });
 
         record[0] = tname;
 
-        visits = record[isFront ? 2 : 1];
-        today = find(visits, function(day) {
-            return day[0] === 0;
-        });
+        const visits = record[isFront ? 2 : 1];
+        const todaysVisits = visits.find(day => day[0] === 0);
 
-        if (today) {
-            today[1] = today[1] + 1;
+        if (todaysVisits) {
+            todaysVisits[1] += 1;
         } else {
             visits.unshift([0, 1]);
         }
@@ -351,22 +378,28 @@ function logSummary(pageConfig, mockToday) {
     });
 
     saveSummary(summary);
-}
+};
 
-function getTopNavItems() {
-    topNavItemsCache = topNavItemsCache || $('.js-navigation-header .js-top-navigation a').map(function(item) {
-        return collapsePath(url.getPath($(item).attr('href')));
+const getMegaNav = () => $('.js-global-navigation');
+
+const removeFromMegaNav = () => {
+    getMegaNav().each(megaNav => {
+        fastdom.write(() => {
+            $('.js-global-navigation__section--history', megaNav).remove();
+        });
+    });
+    inMegaNav = false;
+};
+
+const tagHtml = (tag, index) =>
+    template(viewTag, {
+        id: tag[0],
+        name: tag[1],
+        index: index + 1,
     });
 
-    return topNavItemsCache;
-}
-
-function getMegaNav() {
-    return $('.js-global-navigation');
-}
-
-function showInMegaNav() {
-    var tags, tagsHTML;
+const showInMegaNav = () => {
+    let tagsHTML;
 
     if (getSummary().showInMegaNav === false) {
         return;
@@ -376,34 +409,23 @@ function showInMegaNav() {
         removeFromMegaNav();
     }
 
-    tags = getPopularFiltered();
+    const tags = getPopularFiltered();
 
     if (tags.length) {
         tagsHTML = template(viewMegaNav, {
-            tags: tags.map(tagHtml).join('')
+            tags: tags.map(tagHtml).join(''),
         });
-        fastdom.write(function() {
+        fastdom.write(() => {
             getMegaNav().prepend(tagsHTML);
         });
         inMegaNav = true;
     }
-}
+};
 
-function removeFromMegaNav() {
-    getMegaNav().each(function(megaNav) {
-        fastdom.write(function() {
-            $('.js-global-navigation__section--history', megaNav).remove();
-        });
-    });
-    inMegaNav = false;
-}
+const showInMegaNavEnabled = () => getSummary().showInMegaNav !== false;
 
-function showInMegaNavEnabled() {
-    return getSummary().showInMegaNav !== false;
-}
-
-function showInMegaNavEnable(bool) {
-    var summary = getSummary();
+const showInMegaNavEnable = bool => {
+    const summary = getSummary();
 
     summary.showInMegaNav = !!bool;
 
@@ -414,35 +436,27 @@ function showInMegaNavEnable(bool) {
     }
 
     saveSummary(summary);
-}
-
-function tagHtml(tag, index) {
-    return template(viewTag, {
-        id: tag[0],
-        name: tag[1],
-        index: index + 1
-    });
-}
+};
 
 export default {
-    logHistory: logHistory,
-    logSummary: logSummary,
-    showInMegaNav: showInMegaNav,
-    showInMegaNavEnable: showInMegaNavEnable,
-    showInMegaNavEnabled: showInMegaNavEnabled,
-    getPopular: getPopular,
-    getPopularFiltered: getPopularFiltered,
-    getContributors: getContributors,
-    deleteFromSummary: deleteFromSummary,
-    isRevisit: isRevisit,
-    reset: reset,
-    seriesSummary: seriesSummary,
-    mostViewedSeries: mostViewedSeries,
+    logHistory,
+    logSummary,
+    showInMegaNav,
+    showInMegaNavEnable,
+    showInMegaNavEnabled,
+    getPopular,
+    getPopularFiltered,
+    getContributors,
+    deleteFromSummary,
+    isRevisit,
+    reset,
+    seriesSummary,
+    mostViewedSeries,
 
     test: {
-        getSummary: getSummary,
-        getHistory: getHistory,
-        pruneSummary: pruneSummary,
-        seriesSummary: seriesSummary
-    }
+        getSummary,
+        getHistory,
+        pruneSummary,
+        seriesSummary,
+    },
 };
