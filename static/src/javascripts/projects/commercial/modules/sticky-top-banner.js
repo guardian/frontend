@@ -26,22 +26,23 @@ let scrollY: number;
 // This is also the best place to adjust the scrolling position in case the
 // user has scrolled past the header.
 const resizeStickyBanner = (newHeight: number): Promise<number> => {
-    if (topSlotHeight !== newHeight) {
-        return fastdom.write(() => {
-            if (stickyBanner && header) {
-                stickyBanner.classList.add('sticky-top-banner-ad');
-                stickyBanner.style.height = `${newHeight}px`;
-                header.style.marginTop = `${newHeight}px`;
-            }
-            if (topSlotHeight !== undefined && headerHeight <= scrollY) {
-                window.scrollBy(0, newHeight - topSlotHeight);
-            }
-            topSlotHeight = newHeight;
-
-            return newHeight;
-        });
+    if (topSlotHeight === newHeight) {
+        return Promise.resolve(-1);
     }
-    return Promise.resolve(-1);
+
+    return fastdom.write(() => {
+        if (stickyBanner && header) {
+            stickyBanner.classList.add('sticky-top-banner-ad');
+            stickyBanner.style.height = `${newHeight}px`;
+            header.style.marginTop = `${newHeight}px`;
+        }
+        if (topSlotHeight !== undefined && headerHeight <= scrollY) {
+            window.scrollBy(0, newHeight - topSlotHeight);
+        }
+        topSlotHeight = newHeight;
+
+        return newHeight;
+    });
 };
 
 // Sudden changes in the layout can be jarring to the user, so we animate
