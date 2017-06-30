@@ -113,7 +113,8 @@ final case class StoryQuiz(
   image: Option[String],
   path: String,
   questions: Seq[Question],
-  answers: Array[Int]
+  answers: Array[Int],
+  results: Seq[ResultGroup]
 ) extends Atom
 
 final case class InteractiveAtom(
@@ -354,19 +355,21 @@ object Quiz extends common.Logging {
         imageMedia = transformAssets(question.assets.headOption))
     }
 
+  def extractResultGroups(resultGroups: Option[com.gu.contentatom.thrift.atom.quiz.ResultGroups]): Seq[ResultGroup] =
+    resultGroups.map(_.groups.map { resultGroup =>
+        ResultGroup(
+          id = resultGroup.id,
+          title = resultGroup.title,
+          shareText = resultGroup.share,
+          minScore = resultGroup.minScore
+        )
+      }
+    ).getOrElse(Nil)
+
   def extractContent(questions: Seq[Question], quiz: atomapi.quiz.QuizAtom): QuizContent =
     QuizContent(
       questions = questions,
-      resultGroups = quiz.content.resultGroups.map(resultGroups => {
-        resultGroups.groups.map(resultGroup => {
-          ResultGroup(
-            id = resultGroup.id,
-            title = resultGroup.title,
-            shareText = resultGroup.share,
-            minScore = resultGroup.minScore
-          )
-        })
-      }).getOrElse(Nil),
+      resultGroups = extractResultGroups(quiz.content.resultGroups),
       resultBuckets = quiz.content.resultBuckets.map(resultBuckets =>{
         resultBuckets.buckets.map(resultBucket => {
           ResultBucket(
@@ -413,6 +416,7 @@ object StoryQuiz {
     val quiz = atom.data.asInstanceOf[AtomData.Quiz].quiz
     val questions = Quiz.extractQuestions(quiz)
     val answers = questions map (_.answers.indexWhere(_.weight == 1))
+    val results = Quiz.extractResultGroups(quiz.content.resultGroups)
     val image = extractImage(quiz)
 
     StoryQuiz(
@@ -422,7 +426,8 @@ object StoryQuiz {
       description = Some(description),
       image = image,
       questions = questions,
-      answers = answers.toArray
+      answers = answers.toArray,
+      results = results
     )
   }
 }

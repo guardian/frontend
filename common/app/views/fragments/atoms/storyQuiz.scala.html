@@ -61,10 +61,12 @@
     </div>
     <div class="explainer-snippet__body">
       <div class="storyquiz__score"></div>
-      <p class="storyquiz__comment"></p>
+      @for(result <- quiz.results.sortBy(_.minScore)) {
+        <p class="storyquiz__result" data-min-score="@result.minScore">@result.title</p>
+      }
 
       <div class="storyquiz__next">
-        <button class="button" type="button">Try again</button>
+        <button class="button storyquiz__reset" type="button">Try again</button>
         <a href="#" class="button button--primary">More on @quiz.title</a>
       </div>
     </div>
