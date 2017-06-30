@@ -4,33 +4,22 @@ import fastdom from 'lib/fastdom-promise';
 const StoryQuiz = (quiz: Element) => {
     const state = {
         card: -1,
-        total: 0,
-        correct: 0,
+        results: [],
     };
 
     let cards: Element[];
     let score: ?Element;
-    let comment: ?Element;
-
-    const cannedResponse = (weight: number): string => {
-        if (weight === 0) {
-            return `ouch, this is the first time someone couldn't get a single answer right. Someone didn't do his homework.`;
-        } else if (weight < 5) {
-            return `Not too bad, clearly you're paying some attention to what's happening in the world. This wasn't an easy quiz. Try again to see if you can get all questions right.`;
-        }
-        return `Well done, hombre!`;
-    };
 
     const onBeforeCardActivate = (card: number): Promise<void> => {
         if (card < cards.length - 1) {
             return Promise.resolve();
         }
 
+        const correct: number = state.results.filter(Boolean).length;
+        const total: number = state.results.length;
+
         return fastdom.write(() => {
-            if (score)
-                score.innerHTML = `${state.correct} out of ${state.total}`;
-            if (comment)
-                comment.innerHTML = cannedResponse(state.correct / state.total);
+            if (score) score.innerHTML = `${correct} out of ${total}`;
         });
     };
 
@@ -44,12 +33,30 @@ const StoryQuiz = (quiz: Element) => {
         );
     };
 
-    const revealAnswer = (card: number, correct: boolean): void => {
+    const revealAnswer = (
+        card: number,
+        correct: boolean,
+        answerId: ?string
+    ): void => {
+        const comment = answerId && document.getElementById(answerId);
         fastdom.write(() => {
             cards[card].classList.add('is-answered');
             cards[card].classList.add(correct ? 'is-correct' : 'is-wrong');
+            if (comment) {
+                comment.classList.add('is-answer');
+            }
         });
     };
+    //
+    // const reset = () => {
+    //     const els = [...quiz.querySelectorAll('.is-answered, .is-answer')];
+    //     fastdom.write(() => {
+    //         els.forEach(el => {
+    //             el.classList.remove('.is-answered');
+    //             el.classList.remove('.is-answer');
+    //         });
+    //     });
+    // };
 
     const onClick = (evt: Event): void => {
         const button = ((evt.target: any): Element).closest('.button');
@@ -61,10 +68,12 @@ const StoryQuiz = (quiz: Element) => {
 
     const onChange = (evt: Event): void => {
         const radio = ((evt.target: any): Element).closest('input[type=radio]');
-        if (!radio) {
+        if (!radio || !(radio instanceof HTMLInputElement)) {
             return;
         }
-        revealAnswer(state.card, radio.getAttribute('data-answer') === '1');
+        const correct: boolean = radio.value === '1';
+        state.results.push(correct);
+        revealAnswer(state.card, correct, radio.getAttribute('aria-controls'));
     };
 
     const init = () => {
@@ -77,9 +86,7 @@ const StoryQuiz = (quiz: Element) => {
 
         const outro = cards[cards.length - 1];
         score = outro.querySelector('.storyquiz__score');
-        comment = outro.querySelector('.storyquiz__comment');
-
-        if (!score || !comment) {
+        if (!score) {
             throw new Error(
                 'Mother of Jesus! Who took away my DOM nodes? Jenkins! JENKIIIIIIIIINS!'
             );
