@@ -1,14 +1,17 @@
 // @flow
 import { noop } from 'lib/noop';
 import {
-    register,
-    unregister,
+    register as register_,
+    unregister as unregister_,
     _ as testExports,
 } from 'commercial/modules/messenger';
 import dfpOrigin from 'commercial/modules/messenger/dfp-origin';
 import { postMessage } from 'commercial/modules/messenger/post-message';
 
 const onMessage: any = testExports.onMessage;
+const register: any = register_;
+const unregister: any = unregister_;
+
 const addEventListenerSpy = jest
     .spyOn(global, 'addEventListener')
     .mockImplementation(() => {});
