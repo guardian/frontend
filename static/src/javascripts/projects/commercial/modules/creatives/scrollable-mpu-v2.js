@@ -3,8 +3,6 @@ import fastdom from 'fastdom';
 import $ from 'lib/$';
 import detect from 'lib/detect';
 import mediator from 'lib/mediator';
-import template from 'lodash/utilities/template';
-import scrollableMpuTpl from 'raw-loader!commercial/views/creatives/scrollable-mpu-v2.html';
 import { addTrackingPixel } from 'commercial/modules/creatives/add-tracking-pixel';
 import addViewabilityTracker from 'commercial/modules/creatives/add-viewability-tracker';
 import type { bonzo } from 'bonzo';
@@ -17,10 +15,37 @@ const hasScrollEnabled = !detect.isAndroid();
 
 /**
  * https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10026567
+ * https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10037607
  */
+
+type ScrollableMpuParams = {
+    id: string,
+    backgroundImage: string,
+    backgroundImagePType: string,
+    layer1Image: string,
+    mobileImage: string,
+    destination: string,
+    trackingPixel: string,
+    researchPixel: string,
+    cacheBuster: string,
+    viewabilityTracker: string,
+    clickMacro: string,
+};
+
+const scrollableMpuTpl = (params: Object) => `
+<a id="${params.id}" class="creative--scrollable-mpu"
+    href="${params.clickMacro}${params.destination}"
+    target="_new">
+    <div class="creative--scrollable-mpu-inner">
+        ${params.backgroundImage}
+        <div class="creative--scrollable-mpu-static-image" style="background-image: url('${params.layer1Image}');"></div>
+    </div>
+</a>
+`;
+
 class ScrollableMpu {
     adSlot: HTMLElement;
-    params: Object;
+    params: ScrollableMpuParams;
     $scrollableImage: ?bonzo;
     $scrollableMpu: ?bonzo;
 
@@ -85,7 +110,7 @@ class ScrollableMpu {
         };
 
         this.$scrollableMpu = $.create(
-            template(scrollableMpuTpl, templateOptions)
+            scrollableMpuTpl(templateOptions)
         ).appendTo(this.adSlot);
 
         if (this.params.trackingPixel) {
