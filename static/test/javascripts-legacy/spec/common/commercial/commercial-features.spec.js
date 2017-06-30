@@ -475,12 +475,6 @@ define(['helpers/injector'], function (Injector) {
                     done();
                 });
             });
-
-            it('Does not ask paying members for money - because they are *already* giving us money, we do not want to hassle them', function () {
-                userFeatures.isPayingMember = function () {return true;};
-                features = new CommercialFeatures;
-                expect(features.canReasonablyAskForMoney).toBe(false);
-            });
         });
     });
 });
