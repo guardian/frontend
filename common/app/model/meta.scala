@@ -67,6 +67,9 @@ object Fields {
   }
 
   private def shouldHideReaderRevenue(apiContent: contentapi.Content): Option[Boolean] = {
+    // This is the time from which journalists start using the reader revenue flag in Composer.
+    // For content published before then, we need handle it as we did before, taking
+    // the sensitive flag to mean "don't display reader revenue asks"
     val cutoffDate = new DateTime("2017-07-03T12:00:00.000Z")
     val publishedBeforeCutoff = apiContent.webPublicationDate.exists(_.toJodaDateTime < cutoffDate)
     val isPaidContent = Tags.make(apiContent).isPaidContent
