@@ -4,32 +4,31 @@ import mediator from 'lib/mediator';
 import ophan from 'ophan/ng';
 import detect from 'lib/detect';
 
-const SnippetFeedback = () => {
-    const snippets = document.querySelectorAll('.explainer-snippet--new');
+const SnippetFeedback = (): void => {
+    let snippets = [...document.querySelectorAll('.explainer-snippet--new')];
 
-    [].forEach.call(snippets, snippet => {
-        const atomId = snippet.getAttribute('data-snippet-id');
-        const snippetType = snippet.getAttribute('data-snippet-type');
-        if (!atomId || !snippetType) {
+    snippets.forEach(snippet => {
+        const { snippetId, snippetType } = snippet.dataset;
+        if (!snippetId || !snippetType) {
             return;
         }
         const component = `snippet_${snippetType}`;
 
         // Callback for like/dislike
-        const onFeedback = e => {
-            const question = e.currentTarget;
-            const ack = snippet.querySelector('.explainer-snippet__ack');
-            if (!(question instanceof HTMLElement)) {
-                throw new Error('Flow phantom exception');
-            }
+        const onFeedback = (e: Event) => {
+            const question: HTMLElement = (e.currentTarget: any);
+            const ack: ?HTMLElement = (snippet.querySelector(
+                '.explainer-snippet__ack'
+            ): ?any);
+
             const button =
                 e.target instanceof Element && e.target.closest('.button');
             const value =
                 button && button instanceof HTMLButtonElement && button.value;
 
-            if (value) {
+            if (value && ack) {
                 const data = {
-                    atomId,
+                    snippetId,
                     component,
                     value: `${snippetType}_feedback_${value}`,
                 };
@@ -42,34 +41,21 @@ const SnippetFeedback = () => {
             }
         };
 
-        snippet
-            .querySelector('.explainer-snippet__feedback')
-            .addEventListener('click', onFeedback);
-
-        // Callback for scroll into view
-        mediator.on('window:throttledScroll', function onScroll() {
-            const height = detect.getViewport().height;
-            const coords = snippet.getBoundingClientRect();
-            const isInView = coords.top >= 0 && coords.bottom <= height;
-
-            if (isInView) {
-                const data = {
-                    atomId,
-                    component,
-                    value: `${snippetType}_component_in_view`,
-                };
-                ophan.record(data);
-
-                mediator.off('window:throttledScroll', onScroll);
-            }
-        });
+        const feedback: ?Element = snippet.querySelector(
+            '.explainer-snippet__feedback'
+        );
+        if (feedback) {
+            feedback.addEventListener('click', onFeedback);
+        }
 
         // Callback for expand
-        const handle = snippet.querySelector('.explainer-snippet__handle');
+        const handle: ?Element = snippet.querySelector(
+            '.explainer-snippet__handle'
+        );
         if (handle) {
-            handle.addEventListener('click', function onExpand(e) {
+            handle.addEventListener('click', function onExpand(e: Event) {
                 const data = {
-                    atomId,
+                    snippetId,
                     component,
                     value: `${snippetType}_expanded`,
                 };
@@ -77,6 +63,37 @@ const SnippetFeedback = () => {
 
                 e.currentTarget.removeEventListener('click', onExpand);
             });
+        }
+    });
+
+    // Callback for scroll into view
+    mediator.on('window:throttledScroll', function onScroll() {
+        snippets = snippets.filter(snippet => {
+            const height = detect.getViewport().height;
+            const coords = snippet.getBoundingClientRect();
+            const isInView = coords.top >= 0 && coords.bottom <= height;
+
+            if (isInView) {
+                const { snippetId, snippetType } = snippet.dataset;
+                if (!snippetId || !snippetType) {
+                    return false;
+                }
+                const component = `snippet_${snippetType}`;
+
+                const data = {
+                    snippetId,
+                    component,
+                    value: `${snippetType}_component_in_view`,
+                };
+                ophan.record(data);
+
+                return false;
+            }
+            return true;
+        });
+
+        if (snippets.length === 0) {
+            mediator.off('window:throttledScroll', onScroll);
         }
     });
 };

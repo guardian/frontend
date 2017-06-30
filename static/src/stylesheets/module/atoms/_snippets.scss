@@ -24,11 +24,11 @@
     content: '';
     display: flex;
     width: 200px;
+    height: 0;
+    border-top: 1px dotted $neutral-2;
     @include mq($until: mobileLandscape) {
         width: 100px;
     }
-    height: 0;
-    border-top: 1px dotted $neutral-2;
 }
 
 .explainer-snippet__item+.explainer-snippet__item {
