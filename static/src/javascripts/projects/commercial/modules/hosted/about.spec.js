@@ -15,8 +15,6 @@ jest.mock(
         }
 );
 
-const hostedAboutPopup: any = hostedAbout.init;
-
 describe('Hosted About Popup', () => {
     beforeEach(() => {
         if (document.body) {
@@ -33,11 +31,13 @@ describe('Hosted About Popup', () => {
     });
 
     it('should exist', () => {
-        expect(hostedAboutPopup).toBeDefined();
+        expect(hostedAbout).toBeDefined();
+        expect(hostedAbout.init).toBeDefined();
     });
 
     it('should hide popup after initialization', done => {
-        hostedAboutPopup()
+        hostedAbout
+            .init()
             .then(() => {
                 expect(
                     (document.querySelector(
@@ -50,7 +50,8 @@ describe('Hosted About Popup', () => {
     });
 
     it('should show popup after clicking on the button', done => {
-        hostedAboutPopup()
+        hostedAbout
+            .init()
             .then(() => {
                 (document.querySelector('.js-hosted-about'): any).click();
                 expect(
