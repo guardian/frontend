@@ -3,10 +3,8 @@ import fastdom from 'lib/fastdom-promise';
 import ophan from 'ophan/ng';
 
 const StoryQuiz = (quiz: Element) => {
-    const state = {
-        card: -1,
-        results: [],
-    };
+    let currentCard: number = -1;
+    const results: boolean[] = [];
 
     let cards: Element[];
     let score: ?Element;
@@ -19,21 +17,24 @@ const StoryQuiz = (quiz: Element) => {
                     correct,
                     total,
                 },
-                state.results.reduce((acc: Object, res: boolean, i: number) => {
-                    acc[`question${i}`] = res;
-                    return acc;
-                }, {})
+                results.reduce(
+                    (acc: Object, res: boolean, i: number): Object => {
+                        acc[`question${i}`] = res;
+                        return acc;
+                    },
+                    {}
+                )
             )
         );
     };
 
-    const onBeforeCardActivate = (card: number): Promise<void> => {
-        if (card < cards.length - 1) {
+    const onBeforeCardActivate = (cardIndex: number): Promise<void> => {
+        if (cardIndex < cards.length - 1) {
             return Promise.resolve();
         }
 
-        const correct: number = state.results.filter(Boolean).length;
-        const total: number = state.results.length;
+        const correct: number = results.filter(Boolean).length;
+        const total: number = results.length;
         const final: ?Element = [
             ...quiz.querySelectorAll('.storyquiz__result'),
         ].find(el => parseInt(el.dataset.minScore, 10) >= correct);
@@ -49,21 +50,21 @@ const StoryQuiz = (quiz: Element) => {
     const activeCard = (newCard: number): Promise<void> =>
         onBeforeCardActivate(newCard).then(() =>
             fastdom.write(() => {
-                cards[state.card].classList.remove('is-active');
+                cards[currentCard].classList.remove('is-active');
                 cards[newCard].classList.add('is-active');
-                state.card = newCard;
+                currentCard = newCard;
             })
         );
 
     const revealAnswer = (
-        card: number,
+        cardIndex: number,
         correct: boolean,
         answerId: ?string
     ): void => {
         const comment = answerId && document.getElementById(answerId);
         fastdom.write(() => {
-            cards[card].classList.add('is-answered');
-            cards[card].classList.add(correct ? 'is-correct' : 'is-wrong');
+            cards[cardIndex].classList.add('is-answered');
+            cards[cardIndex].classList.add(correct ? 'is-correct' : 'is-wrong');
             if (comment) {
                 comment.classList.add('is-answer');
             }
@@ -71,8 +72,8 @@ const StoryQuiz = (quiz: Element) => {
     };
 
     const reset = () => {
-        state.card = 0;
-        state.results.length = 0;
+        currentCard = 0;
+        results.length = 0;
         const els = [
             ...quiz.querySelectorAll(
                 '.is-active, .is-answered, .is-answer, .is-result'
@@ -99,7 +100,7 @@ const StoryQuiz = (quiz: Element) => {
         if (button.classList.contains('storyquiz__reset')) {
             reset();
         } else {
-            activeCard(state.card + 1);
+            activeCard(currentCard + 1);
         }
     };
 
@@ -109,8 +110,8 @@ const StoryQuiz = (quiz: Element) => {
             return;
         }
         const correct: boolean = radio.value === '1';
-        state.results.push(correct);
-        revealAnswer(state.card, correct, radio.getAttribute('aria-controls'));
+        results.push(correct);
+        revealAnswer(currentCard, correct, radio.getAttribute('aria-controls'));
     };
 
     const init = () => {
@@ -129,7 +130,7 @@ const StoryQuiz = (quiz: Element) => {
             );
         }
 
-        state.card = 0;
+        currentCard = 0;
         quiz.addEventListener('click', onClick);
         quiz.addEventListener('change', onChange);
     };
