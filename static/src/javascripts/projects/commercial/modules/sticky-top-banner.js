@@ -13,12 +13,12 @@ import { register, unregister } from 'commercial/modules/messenger';
 const topSlotId = 'dfp-ad--top-above-nav';
 let updateQueued = false;
 let header: ?HTMLElement;
-let headerHeight;
+let headerHeight: number;
 let topSlot: ?HTMLElement;
-let topSlotHeight;
-let topSlotStyles;
+let topSlotHeight: number;
+let topSlotStyles: CSSStyleDeclaration;
 let stickyBanner: ?HTMLElement;
-let scrollY;
+let scrollY: number;
 
 // Because the top banner is not in the document flow, resizing it requires
 // that we also make space for it. This is done by adjusting the top margin
