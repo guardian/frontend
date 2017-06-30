@@ -241,3 +241,5 @@ export const unregister = (
 export const init = (...modules: Array<(r: RegisterListeners) => void>) => {
     modules.forEach(moduleInit => moduleInit(register));
 };
+
+export const _ = { onMessage };
