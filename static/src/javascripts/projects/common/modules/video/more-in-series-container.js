@@ -8,16 +8,16 @@ const moreInSeriesContainerInit = (
     mediaType: string,
     section: string,
     shortUrl: string,
-    series: string
+    series?: string
 ): void => {
     const component = new Component();
-    const endpoint = `/${mediaType}/section/${section}${series
-        ? `/${series}`
-        : ''}.json?shortUrl=${shortUrl
+    const seriesStr = series ? `/${series}` : '';
     // exclude professional network content from video pages
-    }${mediaType === 'video'
+    const excludeProfContent = mediaType === 'video'
         ? '&exclude-tag=guardian-professional/guardian-professional'
-        : ''}`;
+        : '';
+
+    const endpoint = `/${mediaType}/section/${section}${seriesStr}.json?shortUrl=${shortUrl}${excludeProfContent}`;
 
     component.endpoint = endpoint;
 
