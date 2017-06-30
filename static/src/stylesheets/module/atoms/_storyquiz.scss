@@ -43,29 +43,9 @@
     }
 }
 
-.storyquiz__card--question {
-    &:not(.is-answered) {
-        .storyquiz__question {
-            display: block;
-        }
-
-        .storyquiz__question-result {
-            display: none;
-        }
-    }
-
-    &.is-answered {
-        .storyquiz__question {
-            display: none;
-        }
-
-        .storyquiz__question-result {
-            display: block;
-        }
-    }
-
-}
-
-.storyquiz__question-comment:not(.is-answer) {
+.storyquiz__card--question:not(.is-answered) .storyquiz__question-result,
+.storyquiz__card--question.is-answered .storyquiz__question,
+.storyquiz__question-comment:not(.is-answer),
+.storyquiz__result:not(.is-result) {
     display: none;
 }
