@@ -205,4 +205,5 @@ const initStickyTopBanner = (): Promise<void> => {
     return Promise.resolve();
 };
 
-export { initStickyTopBanner, update, resizeStickyBanner as resize, onScroll };
+const _ = { update, resizeStickyBanner, onScroll };
+export { initStickyTopBanner, _ };

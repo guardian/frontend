@@ -2,12 +2,9 @@
 
 import Chance from 'chance';
 import { addEventListener as addEventListenerSpy } from 'lib/events';
-import {
-    initStickyTopBanner,
-    update,
-    resize,
-    onScroll,
-} from './sticky-top-banner';
+import { initStickyTopBanner, _ } from './sticky-top-banner';
+
+const { resizeStickyBanner, update, onScroll } = _;
 
 jest.mock('lib/detect', () => ({
     isBreakpoint: jest.fn(() => true),
@@ -47,9 +44,7 @@ describe('Sticky ad banner', () => {
                 <div id="top-banner-parent">
                     <div id="dfp-ad--top-above-nav"></div>
                 </div>
-                <div id="header" style="height: 500px">
-                    Things
-                </div>
+                <div id="header"></div>
             `;
         }
         header = document.getElementById('header');
@@ -105,7 +100,7 @@ describe('Sticky ad banner', () => {
         });
 
         return initStickyTopBanner()
-            .then(() => resize(randomHeight))
+            .then(() => resizeStickyBanner(randomHeight))
             .then(() => {
                 if (!header || !stickyBanner) {
                     throw Error('missing header or sticky banner element');
@@ -123,7 +118,7 @@ describe('Sticky ad banner', () => {
         window.pageYOffset = 501;
 
         return initStickyTopBanner()
-            .then(() => resize(randomHeight))
+            .then(() => resizeStickyBanner(randomHeight))
             .then(() => {
                 window.pageYOffset = 0;
                 expect(scrollBySpy).toHaveBeenCalled();
