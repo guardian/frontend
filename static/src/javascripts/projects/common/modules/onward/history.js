@@ -74,8 +74,6 @@ let topNavItemsCache;
 let inMegaNav = false;
 
 const saveHistory = history => {
-    console.log('saveHistory --------------->', saveHistory);
-
     historyCache = history;
     return local.set(storageKeyHistory, history);
 };
@@ -438,7 +436,7 @@ const showInMegaNavEnable = bool => {
     saveSummary(summary);
 };
 
-export default {
+export {
     logHistory,
     logSummary,
     showInMegaNav,
@@ -452,11 +450,10 @@ export default {
     reset,
     seriesSummary,
     mostViewedSeries,
-
-    test: {
-        getSummary,
-        getHistory,
-        pruneSummary,
-        seriesSummary,
-    },
+    // test: {
+    //     getSummary,
+    //     getHistory,
+    //     pruneSummary,
+    //     seriesSummary,
+    // },
 };
