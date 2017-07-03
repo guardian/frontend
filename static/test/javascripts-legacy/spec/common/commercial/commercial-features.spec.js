@@ -35,7 +35,7 @@ define(['helpers/injector'], function (Injector) {
                     outbrain : true,
                     commercial : true,
                     discussion : true,
-                    adFreeMembershipTrial: false
+                    adFreeSubscriptionTrial: false
                 };
 
                 window.location.hash = '';
@@ -49,7 +49,7 @@ define(['helpers/injector'], function (Injector) {
 
                 userFeatures.isPayingMember = function () {return false;};
 
-                userFeatures.isAdFreeUser = function() {return isSignedIn && config.switches.adFreeMembershipTrial;};
+                userFeatures.isAdFreeUser = function() {return isSignedIn && config.switches.adFreeSubscriptionTrial;};
 
                 identityApi.isUserLoggedIn = function () {
                     return isSignedIn;
@@ -116,7 +116,7 @@ define(['helpers/injector'], function (Injector) {
         describe('Article body adverts under ad-free', function() {
             // LOL grammar
             it('are disabled', function() {
-                config.switches.adFreeMembershipTrial = true;
+                config.switches.adFreeSubscriptionTrial = true;
                 isSignedIn = true;
                 features = new CommercialFeatures;
                 expect(features.articleBodyAdverts).toBe(false);
@@ -153,7 +153,7 @@ define(['helpers/injector'], function (Injector) {
 
         describe('Article aside adverts under ad-free', function () {
             beforeEach(function () {
-                config.switches.adFreeMembershipTrial = true;
+                config.switches.adFreeSubscriptionTrial = true;
                 isSignedIn = true;
             });
 
@@ -193,7 +193,7 @@ define(['helpers/injector'], function (Injector) {
 
         describe('Video prerolls under ad-free', function () {
             it('are disabled', function () {
-                config.switches.adFreeMembershipTrial = true;
+                config.switches.adFreeSubscriptionTrial = true;
                 isSignedIn = true;
                 features = new CommercialFeatures;
                 expect(features.videoPreRolls).toBe(false);
@@ -222,7 +222,7 @@ define(['helpers/injector'], function (Injector) {
 
         describe('High-relevance commercial component under ad-free', function () {
             beforeEach(function () {
-                config.switches.adFreeMembershipTrial = true;
+                config.switches.adFreeSubscriptionTrial = true;
                 isSignedIn = true;
             });
 
@@ -267,7 +267,7 @@ define(['helpers/injector'], function (Injector) {
 
         describe('Third party tags under ad-free', function () {
             beforeEach(function () {
-                config.switches.adFreeMembershipTrial = true;
+                config.switches.adFreeSubscriptionTrial = true;
                 isSignedIn = true;
             });
 
@@ -325,7 +325,7 @@ define(['helpers/injector'], function (Injector) {
 
         describe('Outbrain / Plista under ad-free', function () {
             beforeEach(function () {
-                config.switches.adFreeMembershipTrial = true;
+                config.switches.adFreeSubscriptionTrial = true;
                 isSignedIn = true;
             });
 
@@ -410,7 +410,7 @@ define(['helpers/injector'], function (Injector) {
 
         describe('Comment adverts under ad-free', function () {
             beforeEach(function () {
-                config.switches.adFreeMembershipTrial = true;
+                config.switches.adFreeSubscriptionTrial = true;
                 config.page.commentable = true;
                 isSignedIn = true;
             });

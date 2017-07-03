@@ -21,7 +21,7 @@ const isUserLoggedIn: any = identity.isUserLoggedIn;
 const PERSISTENCE_KEYS = {
     USER_FEATURES_EXPIRY_COOKIE: 'gu_user_features_expiry',
     PAYING_MEMBER_COOKIE: 'gu_paying_member',
-    AD_FREE_USER_COOKIE: 'GU_AFU',
+    AD_FREE_USER_COOKIE: 'GU_AF1',
     JOIN_DATE_COOKIE: 'gu_join_date',
 };
 

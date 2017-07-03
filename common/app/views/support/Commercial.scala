@@ -11,8 +11,12 @@ import play.api.mvc.RequestHeader
 
 object Commercial {
   def isAdFree(request: RequestHeader): Boolean = {
-    request.headers.get("X-GU-Commercial-Ad-Free").exists(_.toLowerCase == "true") ||
-      request.cookies.get("GU_AFU").exists(_.value.toLowerCase == "true")
+    try {
+      request.headers.get("X-GU-Commercial-Ad-Free").exists(_.toLowerCase == "true") ||
+        request.cookies.get("GU_AF1").exists(_.value.toInt > 0)
+    } catch {
+       case e: Exception => false
+    }
   }
 
   def shouldShowAds(page: Page): Boolean = page match {

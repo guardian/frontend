@@ -6,7 +6,7 @@ import identity from 'common/modules/identity/api';
 // Persistence keys
 const USER_FEATURES_EXPIRY_COOKIE = 'gu_user_features_expiry';
 const PAYING_MEMBER_COOKIE = 'gu_paying_member';
-const AD_FREE_USER_COOKIE = 'GU_AFU';
+const AD_FREE_USER_COOKIE = 'GU_AF1';
 const JOIN_DATE_COOKIE = 'gu_join_date';
 
 const userHasData = (): boolean => {
@@ -18,16 +18,22 @@ const userHasData = (): boolean => {
     return !!cookie;
 };
 
-const adFreeDataIsPresent = (): boolean => !!getCookie(AD_FREE_USER_COOKIE);
+const adFreeDataIsPresent = (): boolean => {
+    const cookieVal = getCookie(AD_FREE_USER_COOKIE);
+    return !isNaN(parseInt(cookieVal, 10));
+};
 
 const persistResponse = (JsonResponse: () => void) => {
     const expiryDate = new Date();
     expiryDate.setDate(expiryDate.getDate() + 1);
     addCookie(USER_FEATURES_EXPIRY_COOKIE, expiryDate.getTime().toString());
     addCookie(PAYING_MEMBER_COOKIE, !JsonResponse.adblockMessage);
-    if (JsonResponse.adFree) {
+
+    removeCookie('GU_AFU'); // delete the old cookie - we can remove this line again in the future
+
+    if (config.switches.adFreeSubscriptionTrial && JsonResponse.adFree) {
         addCookie(AD_FREE_USER_COOKIE, expiryDate.getTime().toString());
-    } else if (adFreeDataIsPresent()) {
+    } else {
         removeCookie(AD_FREE_USER_COOKIE);
     }
 

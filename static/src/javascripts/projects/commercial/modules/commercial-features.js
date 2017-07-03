@@ -56,7 +56,7 @@ class CommercialFeatures {
         // Feature switches
         this.adFree =
             switches.commercial &&
-            switches.adFreeMembershipTrial &&
+            switches.adFreeSubscriptionTrial &&
             isAdFreeUser();
 
         this.dfpAdvertising =
