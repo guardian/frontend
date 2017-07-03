@@ -99,9 +99,9 @@ const defaultPageCheck = (page: Object): boolean =>
     page.contentType === 'Article' && !page.isMinuteArticle;
 
 const shouldShowReaderRevenue = (
-    showToContributorsAndSupporters: ?boolean = false
+    showToContributorsAndSupporters: boolean = false
 ): boolean =>
-    (userShouldSeeReaderRevenue || showToContributorsAndSupporters) &&
+    (userShouldSeeReaderRevenue() || showToContributorsAndSupporters) &&
     !config.page.shouldHideReaderRevenue;
 
 const defaultCanEpicBeDisplayed = (test: ContributionsABTest): boolean => {
