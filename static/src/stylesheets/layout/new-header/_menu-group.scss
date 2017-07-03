@@ -113,10 +113,8 @@
         }
 
         @include mq(desktop) {
-            @supports(display: flex) {
-                flex-direction: row;
-                flex-wrap: nowrap;
-            }
+            flex-direction: row;
+            flex-wrap: nowrap;
         }
     }
 
