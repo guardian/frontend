@@ -59,28 +59,29 @@ object Fields {
       displayHint = apiContent.fields.flatMap(_.displayHint).getOrElse(""),
       isLive = apiContent.fields.flatMap(_.liveBloggingNow).getOrElse(false),
       sensitive = apiContent.fields.flatMap(_.sensitive),
-      shouldHideReaderRevenue = shouldHideReaderRevenue(apiContent),
+      shouldHideReaderRevenue = Some(shouldHideReaderRevenue(apiContent)),
       legallySensitive = apiContent.fields.flatMap(_.legallySensitive),
       firstPublicationDate = apiContent.fields.flatMap(_.firstPublicationDate).map(_.toJodaDateTime),
       lang = apiContent.fields.flatMap(_.lang)
     )
   }
 
-  private def shouldHideReaderRevenue(apiContent: contentapi.Content): Option[Boolean] = {
+  def shouldHideReaderRevenue(apiContent: contentapi.Content): Boolean = {
     // This is the time from which journalists start using the reader revenue flag in Composer.
     // For content published before then, we need handle it as we did before, taking
     // the sensitive flag to mean "don't display reader revenue asks"
     val cutoffDate = new DateTime("2017-07-03T12:00:00.000Z")
+
     val publishedBeforeCutoff = apiContent.webPublicationDate.exists(_.toJodaDateTime < cutoffDate)
     val isPaidContent = Tags.make(apiContent).isPaidContent
+    val isSensitive = apiContent.fields.flatMap(_.sensitive).getOrElse(false)
 
-    val shouldHideBeforeCutoff = apiContent.fields.flatMap(_.sensitive).getOrElse(false) || apiContent.fields.flatMap(_.shouldHideAdverts).getOrElse(false)
-    val isPaidOrOldSensitive = isPaidContent || (publishedBeforeCutoff && shouldHideBeforeCutoff)
-
-    Some(apiContent.fields.flatMap(_.shouldHideReaderRevenue) match {
-      case None => isPaidOrOldSensitive
-      case Some(shouldHide) => shouldHide || isPaidOrOldSensitive
-    })
+    apiContent.fields.flatMap(_.shouldHideReaderRevenue) match {
+      case _ if isPaidContent => true
+      case Some(shouldHide) => shouldHide
+      case None if publishedBeforeCutoff => isSensitive
+      case None => false
+    }
   }
 }
 
