@@ -91,6 +91,15 @@
 
     @include mq(wide) {
         width: gs-span(3) + $gs-gutter / 2 - 2;
+
+        .has-page-skin & {
+            border-top: 1px solid $guardian-brand;
+            border-left-width: 0;
+            flex-wrap: nowrap;
+            flex-direction: row;
+            width: 100%;
+            padding-left: 0;
+        }
     }
 }
 
@@ -160,6 +169,10 @@
 
     @include mq(wide) {
         margin-right: gs-span(1) + $gs-gutter * 1.5;
+
+        .has-page-skin & {
+            margin-right: 0;
+        }
     }
 }
 
