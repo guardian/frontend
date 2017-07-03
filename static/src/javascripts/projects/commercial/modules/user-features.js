@@ -106,7 +106,10 @@ const isPayingMember = (): boolean =>
     // If the user is logged in, but has no cookie yet, play it safe and assume they're a paying user
     identity.isUserLoggedIn() && getCookie(PAYING_MEMBER_COOKIE) !== 'false';
 
-const isAdFreeUser = (): boolean => adFreeDataIsPresent() && !adFreeDataIsOld();
+const isAdFreeUser = (): boolean =>
+    config.switches.adFreeSubscriptionTrial &&
+    adFreeDataIsPresent() &&
+    !adFreeDataIsOld();
 
 const toDate = (dateStr: string): Date => {
     const parts = Array.from(dateStr.split('-'), s => parseInt(s, 10));
