@@ -1,13 +1,15 @@
 // @flow
 import fastdom from 'lib/fastdom-promise';
 import ophan from 'ophan/ng';
+import { addEventListener } from 'lib/events';
 
-const StoryQuiz = (quiz: Element) => {
+const StoryQuiz = (quiz: HTMLElement) => {
     let currentCard: number = -1;
     const results: boolean[] = [];
 
     let cards: Element[];
     let score: ?Element;
+    let scene: ?HTMLElement;
 
     const sendResults = (correct: number, total: number): void => {
         const snippets: Element[] = [
@@ -60,14 +62,44 @@ const StoryQuiz = (quiz: Element) => {
         });
     };
 
-    const activeCard = (newCard: number): Promise<void> =>
-        onBeforeCardActivate(newCard).then(() =>
-            fastdom.write(() => {
-                cards[currentCard].classList.remove('is-active');
-                cards[newCard].classList.add('is-active');
-                currentCard = newCard;
-            })
-        );
+    const demoteCard = (cardIndex: number): Promise<void> => {
+        const card = cards[cardIndex];
+        const promise = new Promise(resolve => {
+            addEventListener(
+                card,
+                'transitionend',
+                () => {
+                    fastdom
+                        .write(() => {
+                            card.classList.remove('is-active');
+                            card.classList.remove('ease-out');
+                        })
+                        .then(resolve);
+                },
+                { once: true }
+            );
+        });
+        // Kick-off the animation
+        fastdom.write(() => {
+            card.classList.remove('ease-in');
+            card.classList.add('ease-out');
+        });
+        return promise;
+    };
+
+    const promoteCard = (cardIndex: number): Promise<void> => {
+        const card = cards[cardIndex];
+        return onBeforeCardActivate(cardIndex)
+            .then(() => fastdom.read(() => card.getBoundingClientRect().height))
+            .then(cardHeight =>
+                fastdom.write(() => {
+                    if (scene) scene.style.height = `${cardHeight}px`;
+                    card.classList.add('is-active');
+                    card.classList.add('ease-in');
+                    currentCard = cardIndex;
+                })
+            );
+    };
 
     const revealAnswer = (
         cardIndex: number,
@@ -75,22 +107,25 @@ const StoryQuiz = (quiz: Element) => {
         answerId: ?string
     ): void => {
         const comment = answerId && document.getElementById(answerId);
-        fastdom.write(() => {
-            cards[cardIndex].classList.add('is-answered');
-            cards[cardIndex].classList.add(correct ? 'is-correct' : 'is-wrong');
-            if (comment) {
-                comment.classList.add('is-answer');
-            }
-        });
+        const card = cards[cardIndex];
+        fastdom
+            .write(() => {
+                card.classList.add('is-answered');
+                card.classList.add(correct ? 'is-correct' : 'is-wrong');
+                if (comment) {
+                    comment.classList.add('is-answer');
+                }
+            })
+            .then(() => fastdom.read(() => card.getBoundingClientRect().height))
+            .then(cardHeight => {
+                if (scene) scene.style.height = `${cardHeight}px`;
+            });
     };
 
     const reset = () => {
-        currentCard = 0;
         results.length = 0;
         const els = [
-            ...quiz.querySelectorAll(
-                '.is-active, .is-answered, .is-answer, .is-result'
-            ),
+            ...quiz.querySelectorAll('.is-answered, .is-answer, .is-result'),
         ];
         fastdom.write(() => {
             els.forEach(el => {
@@ -99,9 +134,9 @@ const StoryQuiz = (quiz: Element) => {
                 el.classList.remove('is-wrong');
                 el.classList.remove('is-answer');
                 el.classList.remove('is-result');
-                el.classList.remove('is-active');
             });
-            cards[0].classList.add('is-active');
+            demoteCard(currentCard);
+            promoteCard(0);
         });
     };
 
@@ -113,7 +148,8 @@ const StoryQuiz = (quiz: Element) => {
         if (button.classList.contains('storyquiz__reset')) {
             reset();
         } else {
-            activeCard(currentCard + 1);
+            demoteCard(currentCard);
+            promoteCard(currentCard + 1);
         }
     };
 
@@ -137,15 +173,17 @@ const StoryQuiz = (quiz: Element) => {
 
         const outro = cards[cards.length - 1];
         score = outro.querySelector('.storyquiz__score');
-        if (!score) {
+        scene = (quiz.querySelector('.storyquiz__scene'): any);
+        if (!score || !scene) {
             throw new Error(
                 'Mother of Jesus! Who took away my DOM nodes? Jenkins! JENKIIIIIIIIINS!'
             );
         }
 
-        currentCard = 0;
         quiz.addEventListener('click', onClick);
         quiz.addEventListener('change', onChange);
+
+        promoteCard(0);
     };
 
     return Object.freeze({
