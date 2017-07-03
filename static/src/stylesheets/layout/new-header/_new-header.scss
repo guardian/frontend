@@ -42,7 +42,7 @@ from scrolling */
 .new-header__cta-container {
     // -4 to normalize the padding-left
     left: $gs-gutter / 4 - 4;
-    overflow-y: hidden;
+    overflow: hidden;
     /* necessary to make overflow-y work without cutting off
     the transform */
     padding-bottom: 10px;
