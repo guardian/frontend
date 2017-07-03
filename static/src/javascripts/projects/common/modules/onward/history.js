@@ -13,6 +13,8 @@ import isNumber from 'lodash/objects/isNumber';
 import pick from 'lodash/objects/pick';
 import mapValues from 'lodash/objects/mapValues';
 
+import type { bonzo } from 'bonzo';
+
 const editions = ['uk', 'us', 'au'];
 
 const editionalised = [
@@ -70,22 +72,22 @@ let popularFilteredCache;
 let topNavItemsCache;
 let inMegaNav = false;
 
-const saveHistory = history => {
+const saveHistory = (history: Array<Array<any>>): void => {
     historyCache = history;
-    return local.set(storageKeyHistory, history);
+    local.set(storageKeyHistory, history);
 };
 
-const saveSummary = summary => {
+const saveSummary = (summary: Object): void => {
     summaryCache = summary;
-    return local.set(storageKeySummary, summary);
+    local.set(storageKeySummary, summary);
 };
 
-const getHistory = () => {
+const getHistory = (): Array<Array<any>> => {
     historyCache = historyCache || local.get(storageKeyHistory) || [];
     return historyCache;
 };
 
-const getSummary = () => {
+const getSummary = (): Object => {
     if (!summaryCache) {
         summaryCache = local.get(storageKeySummary);
 
@@ -117,9 +119,9 @@ const seriesSummary = (): Object => {
     return seriesTagsSummary;
 };
 
-const mostViewedSeries = () => {
+const mostViewedSeries = (): string => {
     const summary = seriesSummary();
-    let series;
+    let series = '';
 
     Object.keys(summary).forEach(key => {
         const views = summary[key];
@@ -132,20 +134,20 @@ const mostViewedSeries = () => {
     return series;
 };
 
-const deleteFromSummary = tag => {
+const deleteFromSummary = (tag: string): void => {
     const summary = getSummary();
 
     delete summary.tags[tag];
     saveSummary(summary);
 };
 
-const isRevisit = pageId => {
+const isRevisit = (pageId: string): boolean => {
     const visited = getHistory().find(page => page[0] === pageId);
 
-    return visited && visited[1] > 1;
+    return !!(visited && visited[1] > 1);
 };
 
-const pruneSummary = (summary, mockToday) => {
+const pruneSummary = (summary: Object, mockToday?: ?number) => {
     const newToday = mockToday || today;
     const updateBy = newToday - summary.periodEnd;
 
@@ -187,7 +189,11 @@ const pruneSummary = (summary, mockToday) => {
     return summary;
 };
 
-const tally = (visits, weight = 1, minimum = 1) => {
+const tally = (
+    visits: Array<Array<number>>,
+    weight: number = 1,
+    minimum: number = 1
+): number => {
     let totalVisits = 0;
 
     const result = visits.reduce((t, day) => {
@@ -201,7 +207,7 @@ const tally = (visits, weight = 1, minimum = 1) => {
     return totalVisits < minimum ? 0 : result;
 };
 
-const getPopular = opts => {
+const getPopular = (opts: ?Object): Array<Array<string>> => {
     const tags = getSummary().tags;
     let tids = Object.keys(tags);
 
@@ -248,7 +254,7 @@ const getPopular = opts => {
         .reverse();
 };
 
-const getContributors = () => {
+const getContributors = (): Array<any> => {
     const contibutors = [];
     const tags = getSummary().tags;
 
@@ -261,7 +267,7 @@ const getContributors = () => {
     return contibutors;
 };
 
-const collapsePath = t => {
+const collapsePath = (t: string): string => {
     const isEditionalisedRx = new RegExp(
         `^(${editions.join('|')})\/(${editionalised.join('|')})$`
     );
@@ -283,7 +289,7 @@ const collapsePath = t => {
     return '';
 };
 
-const getTopNavItems = () => {
+const getTopNavItems = (): Array<string> => {
     topNavItemsCache =
         topNavItemsCache ||
         $('.js-navigation-header .js-top-navigation a').map(item =>
@@ -293,7 +299,7 @@ const getTopNavItems = () => {
     return topNavItemsCache;
 };
 
-const getPopularFiltered = opts => {
+const getPopularFiltered = (opts?: Object): Array<Array<any>> => {
     const flush = opts && opts.flush;
 
     popularFilteredCache =
@@ -314,16 +320,16 @@ const getPopularFiltered = opts => {
     return popularFilteredCache;
 };
 
-const firstCsv = str => (str || '').split(',')[0];
+const firstCsv = (str: string): string => (str || '').split(',')[0];
 
-const reset = () => {
+const reset = (): void => {
     historyCache = undefined;
     summaryCache = undefined;
     local.remove(storageKeyHistory);
     local.remove(storageKeySummary);
 };
 
-const logHistory = pageConfig => {
+const logHistory = (pageConfig: Object): void => {
     const pageId = pageConfig.pageId;
     let history;
     let foundCount = 0;
@@ -343,7 +349,7 @@ const logHistory = pageConfig => {
     }
 };
 
-const logSummary = (pageConfig, mockToday) => {
+const logSummary = (pageConfig: Object, mockToday?: number): void => {
     const summary = pruneSummary(getSummary(), mockToday);
     const page = collapsePath(pageConfig.pageId);
     let isFront = false;
@@ -384,9 +390,9 @@ const logSummary = (pageConfig, mockToday) => {
     saveSummary(summary);
 };
 
-const getMegaNav = () => $('.js-global-navigation');
+const getMegaNav = (): bonzo => $('.js-global-navigation');
 
-const removeFromMegaNav = () => {
+const removeFromMegaNav = (): void => {
     getMegaNav().each(megaNav => {
         fastdom.write(() => {
             $('.js-global-navigation__section--history', megaNav).remove();
@@ -395,13 +401,15 @@ const removeFromMegaNav = () => {
     inMegaNav = false;
 };
 
-const tagHtml = (tag, index) =>
-    `<li class="inline-list__item">
+const tagHtml = (
+    tag: Array<string>,
+    index: number
+): string => `<li class="inline-list__item">
         <a href="/${tag[0]}" class="button button--small button--tag button--secondary" data-link-name="${index +
-        1} | ${tag[1]}">${tag[1]}</a>
+    1} | ${tag[1]}">${tag[1]}</a>
     </li>`;
 
-const showInMegaNav = () => {
+const showInMegaNav = (): void => {
     let tagsHTML;
 
     if (getSummary().showInMegaNav === false) {
@@ -429,12 +437,13 @@ const showInMegaNav = () => {
     }
 };
 
-const showInMegaNavEnabled = () => getSummary().showInMegaNav !== false;
+const showInMegaNavEnabled = (): boolean =>
+    getSummary().showInMegaNav !== false;
 
-const showInMegaNavEnable = bool => {
+const showInMegaNavEnable = (bool: boolean): void => {
     const summary = getSummary();
 
-    summary.showInMegaNav = !!bool;
+    summary.showInMegaNav = bool;
 
     if (summary.showInMegaNav) {
         showInMegaNav();
@@ -465,4 +474,5 @@ export const _ = {
     getSummary,
     getHistory,
     pruneSummary,
+    collapsePath,
 };

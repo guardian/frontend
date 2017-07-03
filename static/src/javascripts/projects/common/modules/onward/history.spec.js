@@ -2,12 +2,10 @@
 import {
     logHistory,
     logSummary,
-    // showInMegaNav,
-    // showInMegaNavEnable,
-    // showInMegaNavEnabled,
+    showInMegaNavEnable,
     getPopular,
     // getPopularFiltered,
-    // getContributors,
+    getContributors,
     // deleteFromSummary,
     isRevisit,
     reset,
@@ -328,5 +326,72 @@ describe('history', () => {
         it('should calculate most viewed series', () => {
             expect(mostViewedSeries()).toEqual('a/series/b');
         });
+    });
+
+    it('strips edition from matching pageId', () => {
+        expect(_.collapsePath('uk/business')).toEqual('business');
+    });
+
+    it('does not strips edition from non-matching pageId', () => {
+        expect(_.collapsePath('uk/xxx')).toEqual('uk/xxx');
+    });
+
+    it('removes tags from megaNav', () => {
+        const megaNav = document.createElement('div');
+
+        megaNav.classList.add('js-global-navigation');
+
+        megaNav.innerHTML =
+            '<div class="js-global-navigation__section--history"></div>' +
+            '<div class="js-global-navigation__section--history"></div>';
+
+        if (document.body) {
+            document.body.appendChild(megaNav);
+        }
+
+        logSummary(pageConfig);
+
+        expect(
+            megaNav.querySelectorAll('.js-global-navigation__section--history')
+                .length
+        ).toEqual(2);
+
+        showInMegaNavEnable(false);
+
+        expect(
+            megaNav.querySelectorAll('.js-global-navigation__section--history')
+                .length
+        ).toEqual(0);
+    });
+
+    it('adds tags to megaNav', () => {
+        const megaNav = document.createElement('div');
+
+        megaNav.classList.add('js-global-navigation');
+
+        if (document.body) {
+            document.body.appendChild(megaNav);
+        }
+
+        logSummary(pageConfig);
+
+        expect(
+            megaNav.querySelectorAll('.js-global-navigation__section--history')
+                .length
+        ).toEqual(0);
+
+        showInMegaNavEnable(true);
+
+        expect(
+            megaNav.querySelectorAll('.js-global-navigation__section--history')
+                .length
+        ).toEqual(1);
+    });
+
+    it('get contributor names', () => {
+        logSummary(pageConfig);
+
+        expect(getContributors().length).toEqual(1);
+        expect(getContributors()[0][0]).toEqual('Finbarr Saunders');
     });
 });
