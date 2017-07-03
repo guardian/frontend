@@ -11,12 +11,14 @@ const StoryQuiz = (quiz: Element) => {
 
     const sendResults = (correct: number, total: number): void => {
         const snippets: Element[] = [
-            ...document.getElementsByClassName('explainer-snippet'),
+            ...document.getElementsByClassName(
+                'explainer-snippet:not(.storyquiz)'
+            ),
         ];
         const snippetPresent: boolean = !!snippets.length;
         const snippetOpen: boolean = snippets.reduce(
             (res: boolean, el: any): boolean =>
-                res || (el: HTMLDetailsElement).open,
+                res || el.getAttribute('open') === 'open',
             false
         );
         ophan.record(
