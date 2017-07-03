@@ -13,7 +13,7 @@ import AcquisitionsThrasherUkElection from 'common/modules/experiments/tests/acq
 import BundleDigitalSubPriceTest1Thrasher from 'common/modules/experiments/tests/bundle-digital-sub-price-test-1-thrasher';
 
 export const TESTS: Array<ABTest> = [
-    new PaidContentVsOutbrain2(),
+    PaidContentVsOutbrain2,
     getAcquisitionTest(),
     tailorSurvey,
     AcquisitionsEpicElectionInteractiveEnd,
