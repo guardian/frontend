@@ -8,66 +8,68 @@
 
 <div id="@quiz.id" class="explainer-snippet explainer-snippet--light explainer-snippet--storyquiz storyquiz js-storyquiz">
   @quiz.image.map { src => <img class="storyquiz__image" src="@src"> }
-  <div class="storyquiz__card storyquiz__card--intro is-active">
-    <div class="explainer-snippet__header">
-      <span class="explainer-snippet__label">Quick quiz</span>
-      <h4 class="explainer-snippet__headline">How much do you know about @quiz.title?</h4>
-    </div>
-    <div class="explainer-snippet__body">
-      <p>@quiz.description</p>
-
-      <button class="button button--primary storyquiz__start" type="button">Start now</button>
-    </div>
-  </div>
-
-  @for((question, i) <- quiz.questions.zipWithIndex) {
-    <div class="storyquiz__card storyquiz__card--question">
+  <div class="storyquiz__scene">
+    <div class="storyquiz__card storyquiz__card--intro is-active">
       <div class="explainer-snippet__header">
         <span class="explainer-snippet__label">Quick quiz</span>
-        <h4 class="explainer-snippet__headline">Question @{i + 1} of @quiz.questions.length</h4>
+        <h4 class="explainer-snippet__headline">How much do you know about @quiz.title?</h4>
       </div>
-      <div class="explainer-snippet__body storyquiz__question">
-        @question.text
+      <div class="explainer-snippet__body">
+        <p>@quiz.description</p>
 
-        <ol class="storyquiz__answers">
-          @for((answer, j) <- question.answers.zipWithIndex) {
-            <li><label>
-              <input name="q@i" type="radio" value="@answer.weight" aria-controls="q@i-a@j">
-              @answer.text
-            </label></li>
-          }
-        </ol>
+        <button class="button button--primary storyquiz__start" type="button">Start now</button>
       </div>
-      <div class="explainer-snippet__body storyquiz__question-result">
-        @for((answer, j) <- question.answers.zipWithIndex) {
-          <p class="storyquiz__question-comment" id="q@i-a@j">@answer.revealText</p>
+    </div>
+
+    @for((question, i) <- quiz.questions.zipWithIndex) {
+      <div class="storyquiz__card storyquiz__card--question">
+        <div class="explainer-snippet__header">
+          <span class="explainer-snippet__label">Quick quiz</span>
+          <h4 class="explainer-snippet__headline">Question @{i + 1} of @quiz.questions.length</h4>
+        </div>
+        <div class="explainer-snippet__body storyquiz__question">
+          @question.text
+
+          <ol class="storyquiz__answers">
+            @for((answer, j) <- question.answers.zipWithIndex) {
+              <li><label>
+                <input name="q@i" type="radio" value="@answer.weight" aria-controls="q@i-a@j">
+                @answer.text
+              </label></li>
+            }
+          </ol>
+        </div>
+        <div class="explainer-snippet__body storyquiz__question-result">
+          @for((answer, j) <- question.answers.zipWithIndex) {
+            <p class="storyquiz__question-comment" id="q@i-a@j">@answer.revealText</p>
+          }
+
+          <button class="button button--primary">
+            @if(i < quiz.questions.length - 1) {
+              Next question
+            } else {
+              See your score
+            }
+          </button>
+        </div>
+      </div>
+    }
+
+    <div class="storyquiz__card storyquiz__card--outro">
+      <div class="explainer-snippet__header">
+        <span class="explainer-snippet__label">Quick quiz</span>
+        <h4 class="explainer-snippet__headline">Your score</h4>
+      </div>
+      <div class="explainer-snippet__body">
+        <div class="storyquiz__score"></div>
+        @for(result <- quiz.results.sortBy(_.minScore)) {
+          <p class="storyquiz__result" data-min-score="@result.minScore">@result.title</p>
         }
 
-        <button class="button button--primary">
-          @if(i < quiz.questions.length - 1) {
-            Next question
-          } else {
-            See your score
-          }
-        </button>
-      </div>
-    </div>
-  }
-
-  <div class="storyquiz__card storyquiz__card--outro">
-    <div class="explainer-snippet__header">
-      <span class="explainer-snippet__label">Quick quiz</span>
-      <h4 class="explainer-snippet__headline">Your score</h4>
-    </div>
-    <div class="explainer-snippet__body">
-      <div class="storyquiz__score"></div>
-      @for(result <- quiz.results.sortBy(_.minScore)) {
-        <p class="storyquiz__result" data-min-score="@result.minScore">@result.title</p>
-      }
-
-      <div class="storyquiz__next">
-        <button class="button storyquiz__reset" type="button">Try again</button>
-        <a href="#" class="button button--primary">More on @quiz.title</a>
+        <div class="storyquiz__next">
+          <button class="button storyquiz__reset" type="button">Try again</button>
+          <a href="#" class="button button--primary">More on @quiz.title</a>
+        </div>
       </div>
     </div>
   </div>
