@@ -129,8 +129,10 @@
     }
 
     .menu-group .menu-item {
-        display: inline-block;
-        width: auto;
+        @include mq(desktop) {
+            display: inline-block;
+            width: auto;
+        }
     }
 }
 
