@@ -25,6 +25,12 @@ from scrolling */
             display: block;
         }
     }
+
+    .has-page-skin & .gs-container {
+        @include mq(wide) {
+            width: gs-span(12) + ($gs-gutter * 2);
+        }
+    }
 }
 
 .new-header__inner {

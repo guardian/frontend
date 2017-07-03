@@ -19,6 +19,12 @@
 
     @include mq(wide) {
         width: $gs-column-width * 3;
+
+        .has-page-skin & {
+            width: auto;
+            position: relative;
+            left: 0;
+        }
     }
 }
 
@@ -36,6 +42,12 @@
         position: absolute;
         top: 2px;
         left: -$gs-gutter * 2;
+
+        .has-page-skin & {
+            position: relative;
+            top: $gs-baseline / 2;
+            left: 0;
+        }
     }
 }
 
