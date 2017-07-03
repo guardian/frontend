@@ -1,4 +1,8 @@
 @import model.content.MediaWrapper
+@import model.content.QandaAtom
+@import model.content.TimelineAtom
+@import model.content.GuideAtom
+@import model.content.ProfileAtom
 @(model: _root_.model.content.Atom, shouldFence: Boolean, amp: Boolean, mediaWrapper: Option[MediaWrapper])(implicit request: RequestHeader, context: _root_.model.ApplicationContext)
 @import _root_.model.ShareLinkMeta
 @import _root_.model.content.{InteractiveAtom, MediaAtom, Quiz, StoryQuiz, StoryQuestionsAtom}
@@ -10,6 +14,10 @@
         case media: MediaAtom => views.html.fragments.atoms.media(media = media, amp = amp, displayCaption = true, displayEndSlate = mediaWrapper.contains(MediaWrapper.MainMedia), mediaWrapper = mediaWrapper)
         case interactive: InteractiveAtom => views.html.fragments.atoms.interactive(interactive, shouldFence)
         case storyquestions: StoryQuestionsAtom => views.html.fragments.atoms.storyquestions(storyquestions, isAmp = amp)
+        case qanda: QandaAtom => views.html.fragments.atoms.snippets.qanda(qanda, isAmp = amp)
+        case timeline: TimelineAtom => views.html.fragments.atoms.snippets.timeline(timeline, isAmp = amp)
+        case guide: GuideAtom => views.html.fragments.atoms.snippets.guide(guide, isAmp = amp)
+        case profile: ProfileAtom => views.html.fragments.atoms.snippets.profile(profile, isAmp = amp)
         case _ =>
     }
 }

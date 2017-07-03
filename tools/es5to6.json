@@ -19,15 +19,16 @@
     "bootstraps/enhanced/gallery.js"
   ],
   "Simon Adcock": [
-      "projects/commercial/modules/sticky-top-banner.js",
-      "projects/common/modules/article/membership-events.js",
-      "projects/common/modules/discussion/upvote.js",
-      "projects/common/modules/discussion/user-avatars.js",
-      "projects/common/modules/discussion/whole-discussion.js",
-      "projects/common/modules/experiments/tests/bookmarks-email-variants-2.js",
-      "projects/common/modules/ui/blockSharing.js",
-      "projects/common/modules/ui/clickstream.js",
-      "lib/client-rects.js"
+    "projects/commercial/modules/sticky-top-banner.js",
+    "projects/common/modules/commercial/membership-engagement-banner.js",
+    "lib/client-rects.js",
+    "projects/common/modules/article/membership-events.js",
+    "projects/common/modules/discussion/upvote.js",
+    "projects/common/modules/discussion/user-avatars.js",
+    "projects/common/modules/discussion/whole-discussion.js",
+    "projects/common/modules/experiments/tests/bookmarks-email-variants-2.js",
+    "projects/common/modules/ui/blockSharing.js",
+    "projects/common/modules/ui/clickstream.js"
   ],
   "Nicolas Long": [
     "lib/atob.js",
@@ -54,8 +55,6 @@
     "projects/common/modules/crosswords/anagram-helper/clue-input.js"
   ],
   "GHaberis": [
-    "projects/common/modules/ui/toggles.js",
-    "projects/common/modules/onward/geo-most-popular.js",
     "projects/common/modules/onward/history.js",
     "projects/common/modules/discussion/activity-stream.js",
     "projects/common/modules/discussion/api.js",
@@ -171,11 +170,7 @@
     "projects/commercial/modules/third-party-tags/imr-worldwide-legacy.js",
     "projects/commercial/modules/paidfor-band.js"
   ],
-  "Philip Wills": [
-    "projects/commercial/modules/third-party-tags/imr-worldwide.js"
-  ],
-  "Santiago Villa Fernandez": [
-    "projects/common/modules/video/more-in-series-container.js"
-  ],
+  "Philip Wills": [],
+  "Santiago Villa Fernandez": [],
   "Jamie Byers": []
 }

@@ -1,5 +1,20 @@
-@(guide: model.content.TimelineAtom, isAmp: Boolean)(implicit request: RequestHeader)
+@(timeline: model.content.TimelineAtom, isAmp: Boolean)(implicit request: RequestHeader)
+
+@import org.joda.time.format.DateTimeFormat
 
 @if(!isAmp) {
-    <div></div>
+  @fragments.atoms.snippet(
+    className = "timeline",
+    label = timeline.data.typeLabel.getOrElse("Timeline"),
+    headline = timeline.atom.title.getOrElse(""),
+    timeline.id
+  ){
+    @for(item <- timeline.data.events) {
+      <div class="explainer-snippet__item">
+        <time class="explainer-snippet__event-date" datetime="">@DateTimeFormat.longDate.print(item.date)</time>
+        <div class="explainer-snippet__heading"><b>@item.title</b></div>
+        @item.body
+      </div>
+    }
+  }
 }

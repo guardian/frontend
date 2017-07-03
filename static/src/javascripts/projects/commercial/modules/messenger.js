@@ -184,17 +184,19 @@ const off = (window: WindowProxy): void => {
     window.removeEventListener('message', onMessage);
 };
 
-export const register = (
+export type RegisterListeners = (
     type: string,
     callback: () => ?Promise<any> | ?Array<any>,
-    options: Object = {}
-): void => {
+    options: ?Object
+) => void;
+
+export const register: RegisterListeners = (type, callback, options) => {
     if (REGISTERED_LISTENERS === 0) {
-        on(options.window || window);
+        on((options && options.window) || window);
     }
 
     /* Persistent LISTENERS are exclusive */
-    if (options.persist) {
+    if (options && options.persist) {
         LISTENERS[type] = callback;
         REGISTERED_LISTENERS += 1;
     } else {
@@ -234,4 +236,8 @@ export const unregister = (
     if (REGISTERED_LISTENERS === 0) {
         off(options.window || window);
     }
+};
+
+export const init = (...modules: Array<(r: RegisterListeners) => void>) => {
+    modules.forEach(moduleInit => moduleInit(register));
 };

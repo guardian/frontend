@@ -37,37 +37,22 @@ from scrolling */
         justify-content: space-between;
         padding-bottom: 0;
     }
-
-    .new-header--slim & {
-        @include content-gutter;
-
-        @include mq($until: desktop) {
-            max-width: 100%;
-        }
-    }
 }
 
 .new-header__cta-container {
-    left: $gs-gutter / 4;
+    // -4 to normalize the padding-left
+    left: $gs-gutter / 4 - 4;
+    overflow-y: hidden;
+    /* necessary to make overflow-y work without cutting off
+    the transform */
+    padding-bottom: 10px;
+    padding-left: 4px;
     padding-right: 6px;
     position: absolute;
     top: 0;
 
     @include mq(mobileLandscape) {
-        left: $gs-gutter / 2;
-    }
-
-    .new-header--slim & {
-        position: relative;
-        left: -$gs-gutter / 4;
-        order: -1;
-        z-index: 1;
-    }
-
-    .new-header--slim.new-header--open & {
-        @include mq(tablet) {
-            display: none;
-        }
+        left: $gs-gutter / 2 - 4;
     }
 }
 
@@ -126,12 +111,18 @@ from scrolling */
 
     .new-header--slim & {
         height: calc(3 / 16 * 155px);
+        margin-right: $gs-gutter;
+        margin-top: 7px;
         width: 155px;
+
+        @include mq(mobileLandscape) {
+            margin-right: $gs-gutter * 1.5;
+        }
 
         @include mq(tablet) {
             height: calc(3 / 16 * 170px);
+            margin-top: 5px;
             width: 170px;
-            margin-right: $gs-gutter / 2;
         }
     }
 }

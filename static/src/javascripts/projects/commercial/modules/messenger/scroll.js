@@ -2,7 +2,7 @@
 import { addEventListener } from 'lib/events';
 import detect from 'lib/detect';
 import fastdom from 'lib/fastdom-promise';
-import { register } from 'commercial/modules/messenger';
+import type { RegisterListeners } from 'commercial/modules/messenger';
 
 // An intersection observer will allow us to efficiently send slot
 // coordinates for only those that are in the viewport.
@@ -138,7 +138,7 @@ const removeScrollListener = (iframe: Element): void => {
     }
 };
 
-const onMessage = (respond: any, start, iframe: ?Element): void => {
+const onMessage = (respond: any, start: any, iframe: ?Element): void => {
     if (!iframe) return;
     if (start) {
         addScrollListener(iframe, respond);
@@ -147,8 +147,12 @@ const onMessage = (respond: any, start, iframe: ?Element): void => {
     }
 };
 
-register('scroll', onMessage, {
-    persist: true,
-});
+const init = (register: RegisterListeners) => {
+    register('scroll', onMessage, {
+        persist: true,
+    });
+};
 
-export { addScrollListener, removeScrollListener, reset };
+export const _ = { addScrollListener, removeScrollListener, reset, onMessage };
+
+export { init };

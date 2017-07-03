@@ -10,11 +10,15 @@ const StoryQuiz = (quiz: Element) => {
     let score: ?Element;
 
     const sendResults = (correct: number, total: number): void => {
-        const snippetOpen = [
-            ...document.getElementsByClassName('explainer-snippet'),
-        ].reduce(
+        const snippets: Element[] = [
+            ...document.getElementsByClassName(
+                'explainer-snippet:not(.storyquiz)'
+            ),
+        ];
+        const snippetPresent: boolean = !!snippets.length;
+        const snippetOpen: boolean = snippets.reduce(
             (res: boolean, el: any): boolean =>
-                res || (el: HTMLDetailsElement).open,
+                res || el.getAttribute('open') === 'open',
             false
         );
         ophan.record(
@@ -24,6 +28,7 @@ const StoryQuiz = (quiz: Element) => {
                     correct,
                     total,
                     snippetOpen,
+                    snippetPresent,
                 },
                 results.reduce(
                     (acc: Object, res: boolean, i: number): Object => {

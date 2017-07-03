@@ -19,8 +19,11 @@ class PopularInTag(val contentApiClient: ContentApiClient, val mostReadAgent: Mo
   }
 
   private def renderPopularInTag(trails: RelatedContent)(implicit request: RequestHeader) = Cached(600) {
+    // Initially a fix for PaidFor related content (where this problem is more common), the decision to truncate is due
+    // to aesthetic issues with the second slice when there are only 5 or 6 results in related content (7 looks fine).
+    val numberOfCards = if (trails.faciaItems.length == 5 || trails.faciaItems.length == 6) 4 else 8
     val html = views.html.fragments.containers.facia_cards.container(
-      onwardContainer("related content", trails.faciaItems take 8),
+      onwardContainer("related content", trails.faciaItems take numberOfCards),
       FrontProperties.empty
     )
 
