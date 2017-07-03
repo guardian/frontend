@@ -85,11 +85,12 @@
         flex-direction: column;
         margin-left: 0;
         padding-left: $gs-gutter / 2 - 1;
-        width: gs-span(2) + $gs-gutter / 2;
+        // substracting the border-width, otherwise it breaks in Safari
+        width: gs-span(2) + $gs-gutter / 2 - 2;
     }
 
     @include mq(wide) {
-        width: gs-span(3) + $gs-gutter / 2;
+        width: gs-span(3) + $gs-gutter / 2 - 2;
     }
 }
 
