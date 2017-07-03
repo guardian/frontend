@@ -16,9 +16,9 @@
     <div class="explainer-snippet__body">
       <p>@quiz.description</p>
 
-      <button class="button button--primary storyquiz__start" type="button">
-          Start now
-          <span>@fragments.inlineSvg("arrow-right", "icon")</span>
+      <button class="button button--large button--primary button--show-more storyquiz__start" type="button">
+          <span>Start now</span>
+              @fragments.inlineSvg("arrow-right", "icon")
       </button>
     </div>
   </div>
@@ -46,13 +46,13 @@
           <p class="storyquiz__question-comment" id="q@i-a@j">@answer.revealText</p>
         }
 
-        <button class="button button--primary">
-            <span>@fragments.inlineSvg("arrow-right", "icon")</span>
-          @if(i < quiz.questions.length - 1) {
+        <button class="button button--large button--primary button--show-more">
+          <span>@if(i < quiz.questions.length - 1) {
             Next question
           } else {
             See your score
-          }
+          }</span>
+            @fragments.inlineSvg("arrow-right", "icon")
         </button>
       </div>
     </div>
@@ -70,8 +70,8 @@
       }
 
       <div class="storyquiz__next">
-        <button class="button storyquiz__reset" type="button">Try again</button>
-        <a href="#" class="button button--primary">More on @quiz.title</a>
+          <button class="button button--large button--tertiary storyquiz__reset button--show-more" type="button"><span>Try again</span> @fragments.inlineSvg("arrow-right", "icon")</button>
+          <a href="#" class="button button--large button--primary button--show-more"><span>More on @quiz.title</span> @fragments.inlineSvg("arrow-right", "icon")</a>
       </div>
     </div>
   </div>
