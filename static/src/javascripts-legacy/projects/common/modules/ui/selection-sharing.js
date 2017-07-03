@@ -1,8 +1,8 @@
 define([
     'bean',
     'bonzo',
+    'rangefix',
     'lib/$',
-    'lib/client-rects',
     'lib/config',
     'lib/detect',
     'lib/mediator',
@@ -14,8 +14,8 @@ define([
 ], function (
     bean,
     bonzo,
+    Rangefix,
     $,
-    clientRects,
     config,
     detect,
     mediator,
@@ -74,7 +74,7 @@ define([
 
         if (selection && selection.rangeCount > 0 && selection.toString()) {
             range = selection.getRangeAt(0);
-            rect = clientRects.getBoundingClientRect(range);
+            rect = Rangefix.getBoundingClientRect(range);
             top = $body.scrollTop() + rect.top;
             twitterMessage = range.toString();
 
