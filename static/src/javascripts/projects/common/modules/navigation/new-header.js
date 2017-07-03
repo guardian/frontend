@@ -194,8 +194,7 @@ const enhanceCheckbox = (checkbox: HTMLElement): void => {
         const checkboxId = checkbox.id;
         const checkboxControls = checkbox.getAttribute('aria-controls');
         const enhance = () => {
-            [...checkbox.classList].forEach(c => button.classList.add(c));
-
+            button.setAttribute('class', checkbox.getAttribute('class'));
             button.addEventListener('click', () => toggleSidebar());
             button.setAttribute('id', checkboxId);
             button.setAttribute('aria-expanded', 'false');
