@@ -1,5 +1,25 @@
 @(guide: model.content.GuideAtom, isAmp: Boolean)(implicit request: RequestHeader)
 
 @if(!isAmp) {
-    <div></div>
+  @fragments.atoms.snippet(
+    className = "guide",
+    label = guide.data.typeLabel.getOrElse("Quick Guide"),
+    headline = guide.atom.title.getOrElse(""),
+    guide.id
+  ){
+    @for(guideImage <- guide.data.guideImage; master <- guideImage.master) {
+      <div class="explainer-snippet__image">
+        <img src="@master.file"/>
+      </div>
+    }
+
+    @for(item <- guide.data.items) {
+      <div class="explainer-snippet__item">
+        @item.title.map { t =>
+          <div class="explainer-snippet__heading"><b>@t</b></div>
+        }
+        @item.body
+      </div>
+    }
+  }
 }
