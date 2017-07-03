@@ -49,3 +49,33 @@
 .storyquiz__result:not(.is-result) {
     display: none;
 }
+
+.explainer-snippet--storyquiz {
+
+    border-top-color: #4bc6df;
+    border-top-style: solid;
+    border-top-width: 1px;
+
+    .explainer-snippet__header {
+        font-family: $f-serif-headline;
+    }
+
+    .explainer-snippet__label {
+        font-weight: 900;
+        font-size: 20px;
+        line-height: 24px;
+
+    }
+
+    .explainer-snippet__body {
+        font-family: $f-serif-text;
+    }
+
+    .storyquiz__start {
+        font-family: $f-sans-serif-text;
+        font-size: 14px;
+        border-radius: 18px;
+    }
+
+}
+

@@ -16,7 +16,10 @@
     <div class="explainer-snippet__body">
       <p>@quiz.description</p>
 
-      <button class="button button--primary storyquiz__start" type="button">Start now</button>
+      <button class="button button--primary storyquiz__start" type="button">
+          Start now
+          <span>@fragments.inlineSvg("arrow-right", "icon")</span>
+      </button>
     </div>
   </div>
 
@@ -44,6 +47,7 @@
         }
 
         <button class="button button--primary">
+            <span>@fragments.inlineSvg("arrow-right", "icon")</span>
           @if(i < quiz.questions.length - 1) {
             Next question
           } else {
