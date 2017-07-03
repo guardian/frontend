@@ -10,7 +10,8 @@
 }
 
 .storyquiz__card:not(.is-active) {
-    display: none;
+    visibility: hidden;
+    pointer-events: none;
 }
 
 .storyquiz__answers {
@@ -48,4 +49,36 @@
 .storyquiz__question-comment:not(.is-answer),
 .storyquiz__result:not(.is-result) {
     display: none;
+}
+
+
+/** Card transitions **/
+
+.storyquiz__scene {
+    position: relative;
+    overflow: hidden;
+    transition: height .35s ease-in-out;
+}
+
+.storyquiz__card {
+    // set up card positioning
+    position: absolute;
+    width: 100%;
+
+    // set up initial animation state
+    transition: all .15s;
+    transform: translate(50px, 0);
+    opacity: 0;
+}
+
+.ease-out {
+    transform: translate(-50px, 0);
+    transition-timing-function: ease-out;
+    opacity: 0;
+}
+
+.ease-in {
+    transform: translate(0, 0);
+    transition-timing-function: ease-in;
+    opacity: 1;
 }
