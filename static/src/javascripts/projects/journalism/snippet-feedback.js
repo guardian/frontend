@@ -28,7 +28,7 @@ const SnippetFeedback = (): void => {
 
             if (value && ack) {
                 const data = {
-                    snippetId,
+                    atomId: snippetId,
                     component,
                     value: `${snippetType}_feedback_${value}`,
                 };
@@ -55,7 +55,7 @@ const SnippetFeedback = (): void => {
         if (handle) {
             handle.addEventListener('click', function onExpand(e: Event) {
                 const data = {
-                    snippetId,
+                    atomId: snippetId,
                     component,
                     value: `${snippetType}_expanded`,
                 };
@@ -81,7 +81,7 @@ const SnippetFeedback = (): void => {
                 const component = `snippet_${snippetType}`;
 
                 const data = {
-                    snippetId,
+                    atomId: snippetId,
                     component,
                     value: `${snippetType}_component_in_view`,
                 };
