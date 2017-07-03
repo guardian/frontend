@@ -5,7 +5,6 @@ import { getTest as getAcquisitionTest } from 'common/modules/experiments/acquis
 import MembershipEngagementBannerTests from 'common/modules/experiments/tests/membership-engagement-banner-tests';
 import PaidContentVsOutbrain2 from 'common/modules/experiments/tests/paid-content-vs-outbrain';
 import { tailorSurvey } from 'common/modules/experiments/tests/tailor-survey';
-import { ExplainerSnippet } from 'common/modules/experiments/tests/explainer-snippet';
 
 import AcquisitionsEpicElectionInteractiveEnd from 'common/modules/experiments/tests/acquisitions-epic-election-interactive-end';
 import AcquisitionsEpicElectionInteractiveSlice from 'common/modules/experiments/tests/acquisitions-epic-election-interactive-slice';
@@ -17,7 +16,6 @@ export const TESTS: Array<ABTest> = [
     new PaidContentVsOutbrain2(),
     getAcquisitionTest(),
     tailorSurvey,
-    ExplainerSnippet(),
     AcquisitionsEpicElectionInteractiveEnd,
     AcquisitionsEpicElectionInteractiveSlice,
     new AcquisitionsThrasherUkElection(),

@@ -1,0 +1,66 @@
+.explainer-snippet__image {
+    float: left;
+    margin-right: $gs-gutter / 2;
+
+    display: inline-block;
+    position: relative;
+    width: 33%;
+    height: 0;
+    overflow: hidden;
+    border-radius: 50%;
+    padding-top: 33%;
+}
+
+.explainer-snippet__image img {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    object-fit: cover;
+}
+
+.explainer-snippet__item::before {
+    content: '';
+    display: flex;
+    width: 200px;
+    height: 0;
+    border-top: 1px dotted $neutral-2;
+    @include mq($until: mobileLandscape) {
+        width: 100px;
+    }
+}
+
+.explainer-snippet__item+.explainer-snippet__item {
+    padding-top: $gs-baseline;
+}
+
+.explainer-snippet__heading {
+    font-size: 18px;
+}
+
+.explainer-snippet__event-date::before {
+    content: '';
+    width: 16px;
+    height: 16px;
+    border-radius: 100%;
+    float: left;
+    margin-left: -26px;
+    background-color: $neutral-2;
+}
+
+.explainer-snippet__event-date {
+    font-size: 18px;
+}
+
+.explainer-snippet--timeline {
+    .explainer-snippet__body {
+        margin-left: 8px;
+        overflow: visible;
+    }
+
+    .explainer-snippet__item {
+        padding-left: 17px;
+        border-left: 1px solid rgba($neutral-2, .5);
+    }
+}

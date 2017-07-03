@@ -464,17 +464,6 @@ trait FeatureSwitches {
     exposeClientSide = true
   )
 
-  // Owner: Francis Carr
-  val LiveBlogChromeNotificationsProd = Switch(
-    SwitchGroup.Feature,
-    "live-blog-chrome-notifications-prod",
-    "Live blog chrome notifications - prod",
-    owners = Seq(Owner.withGithub("janua")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 6, 30), //Friday
-    exposeClientSide = true
-  )
-
   // Owner: David Furey
   val guTodayEmailAds = Switch(
     SwitchGroup.Feature,

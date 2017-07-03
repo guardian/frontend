@@ -21,16 +21,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-explainer-snippet",
-    "Displays an explainer in the form of a disclosure widget",
-    owners = Seq(Owner.withGithub("regiskuckaertz")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 7, 4),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-contributions-epic-always-ask-strategy",
     "Test to assess the effects of always asking readers to contribute via the Epic over a prolonged period",
     owners = Seq(Owner.withGithub("Mullefa")),

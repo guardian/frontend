@@ -61,7 +61,7 @@ object NavLinks {
   val cartoons = NavLink("cartoons", "/cartoons/archive", "cartoons/archive")
   val inMyOpinion = NavLink("opinion videos", "/commentisfree/series/comment-is-free-weekly", "commentisfree/series/comment-is-free-weekly")
   val letters = NavLink("letters", "/tone/letters")
-  val editorials = NavLink("editorials", "/tone/editorials")
+  val editorials = NavLink("editorials", "/tone/editorials", "tone/editorials")
 
   /* SPORT */
   val sport = NavLink("sport", "/sport", longTitle = "sport home", iconName = "home", uniqueSection = "sport")
@@ -168,6 +168,7 @@ object NavLinks {
     "cartoons/archive",
     "type/cartoon",
     "profile/editorial",
+    "tone/editorials",
     "au/index/contributors",
     "index/contributors",
     "commentisfree/series/comment-is-free-weekly",
