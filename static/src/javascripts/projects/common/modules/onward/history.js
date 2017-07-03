@@ -6,11 +6,8 @@
  */
 import fastdom from 'fastdom';
 import $ from 'lib/$';
-import template from 'lodash/utilities/template';
 import { local } from 'lib/storage';
 import { getPath } from 'lib/url';
-import viewTag from 'raw-loader!common/views/history/tag.html';
-import viewMegaNav from 'raw-loader!common/views/history/mega-nav.html';
 import isObject from 'lodash/objects/isObject';
 import isNumber from 'lodash/objects/isNumber';
 import pick from 'lodash/objects/pick';
@@ -107,7 +104,7 @@ const getSummary = () => {
     return summaryCache;
 };
 
-const seriesSummary = () => {
+const seriesSummary = (): Object => {
     const views = item => item.reduce((acc, record) => acc + record[1], 0);
 
     const seriesTags = pick(getSummary().tags, (v, k) => k.includes('series'));
@@ -120,12 +117,20 @@ const seriesSummary = () => {
     return seriesTagsSummary;
 };
 
-const mostViewedSeries = () =>
-    seriesSummary().reduce(
-        (best, views, tag, summary) =>
-            views > (summary[best] || 0) ? tag : best,
-        ''
-    );
+const mostViewedSeries = () => {
+    const summary = seriesSummary();
+    let series;
+
+    Object.keys(summary).forEach(key => {
+        const views = summary[key];
+
+        if (!series || views > summary[series]) {
+            series = key;
+        }
+    });
+
+    return series;
+};
 
 const deleteFromSummary = tag => {
     const summary = getSummary();
@@ -333,6 +338,7 @@ const logHistory = pageConfig => {
         });
 
         history.unshift([pageId, foundCount + 1]);
+
         saveHistory(history.slice(0, historySize));
     }
 };
@@ -390,11 +396,10 @@ const removeFromMegaNav = () => {
 };
 
 const tagHtml = (tag, index) =>
-    template(viewTag, {
-        id: tag[0],
-        name: tag[1],
-        index: index + 1,
-    });
+    `<li class="inline-list__item">
+        <a href="/${tag[0]}" class="button button--small button--tag button--secondary" data-link-name="${index +
+        1} | ${tag[1]}">${tag[1]}</a>
+    </li>`;
 
 const showInMegaNav = () => {
     let tagsHTML;
@@ -410,9 +415,13 @@ const showInMegaNav = () => {
     const tags = getPopularFiltered();
 
     if (tags.length) {
-        tagsHTML = template(viewMegaNav, {
-            tags: tags.map(tagHtml).join(''),
-        });
+        tagsHTML = `<li class="global-navigation__section js-global-navigation__section--history" data-link-name="shortcuts">
+                        <span class="global-navigation__title global-navigation__title--history">recently visited</span>
+                        <ul class="global-navigation__children global-navigation__children--history">
+                            ${tags.map(tagHtml).join('')}
+                            <a class="button button--small button--tag button--tertiary" href="/preferences" data-link-name="edit">edit these</a>
+                        </ul>
+                    </li>`;
         fastdom.write(() => {
             getMegaNav().prepend(tagsHTML);
         });
@@ -450,10 +459,10 @@ export {
     reset,
     seriesSummary,
     mostViewedSeries,
-    // test: {
-    //     getSummary,
-    //     getHistory,
-    //     pruneSummary,
-    //     seriesSummary,
-    // },
+};
+
+export const _ = {
+    getSummary,
+    getHistory,
+    pruneSummary,
 };
