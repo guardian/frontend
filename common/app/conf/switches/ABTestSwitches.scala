@@ -156,7 +156,7 @@ trait ABTestSwitches {
     "Bootstrap the AB test framework to use the Epic to thank readers who have already supported the Guardian",
     owners = Seq(Owner.withGithub("Mullefa")),
     safeState = On,
-    sellByDate = new LocalDate(2017, 7, 3),
+    sellByDate = new LocalDate(2017, 8, 1),
     exposeClientSide = true
   )
 
