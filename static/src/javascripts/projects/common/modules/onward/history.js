@@ -9,7 +9,6 @@ import $ from 'lib/$';
 import { local } from 'lib/storage';
 import { getPath } from 'lib/url';
 import isObject from 'lodash/objects/isObject';
-import isNumber from 'lodash/objects/isNumber';
 import pick from 'lodash/objects/pick';
 import mapValues from 'lodash/objects/mapValues';
 
@@ -94,7 +93,7 @@ const getSummary = (): Object => {
         if (
             !isObject(summaryCache) ||
             !isObject(summaryCache.tags) ||
-            !isNumber(summaryCache.periodEnd)
+            typeof summaryCache.periodEnd !== 'number'
         ) {
             summaryCache = {
                 periodEnd: today,
