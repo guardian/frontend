@@ -39,11 +39,6 @@ jest.mock('lib/detect', () => ({
             width: 980,
         },
         {
-            name: 'leftCol',
-            isTweakpoint: true,
-            width: 1140,
-        },
-        {
             name: 'wide',
             isTweakpoint: false,
             width: 1300,
@@ -80,9 +75,9 @@ jest.mock('common/modules/onward/geo-most-popular', () => ({
 }));
 
 let $style;
-const makeFakeEvent = function(id, isEmpty) {
+const makeFakeEvent = function(creativeId, id) {
     return {
-        isEmpty,
+        creativeId,
         slot: {
             getSlotElementId() {
                 return id;
@@ -91,11 +86,6 @@ const makeFakeEvent = function(id, isEmpty) {
         size: ['300', '250'],
     };
 };
-const dfp = {
-    prepareGoogletag,
-    getAdverts,
-    getCreativeIDs,
-};
 
 const reset = () => {
     dfpEnv.advertIds = {};
@@ -103,8 +93,6 @@ const reset = () => {
     dfpEnv.advertsToRefresh = [];
     dfpEnv.advertsToLoad = [];
 };
-
-const breakpoint = 'wide';
 
 describe('DFP', () => {
     const domSnippet = `
@@ -147,7 +135,7 @@ describe('DFP', () => {
         }
 
         $style = $.create('<style type="text/css"></style>')
-            .html(`body:after{ content: "${breakpoint}"}`)
+            .html(`body:after{ content: "wide"}`)
             .appendTo('head');
         const pubAds = {
             listeners: [],
@@ -203,12 +191,11 @@ describe('DFP', () => {
 
     afterEach(() => {
         reset();
-        // jest.resetAllMocks();
         if (document.body) {
             document.body.innerHTML = '';
         }
         $style.remove();
-        // window.googletag = null;
+        window.googletag = null;
     });
 
     it('should exist', () => {
@@ -238,7 +225,7 @@ describe('DFP', () => {
             prepareGoogletag.init(noop, resolve);
         })
             .then(() => {
-                expect(Object.keys(getAdverts()).length).toBe(4);
+                expect(Object.keys(getAdverts(true)).length).toBe(4);
             })
             .then(done)
             .catch(done.fail);
@@ -247,10 +234,10 @@ describe('DFP', () => {
     it('should not get hidden ad slots', done => {
         $('.js-ad-slot').first().css('display', 'none');
         new Promise(resolve => {
-            dfp.prepareGoogletag.init(noop, resolve);
+            prepareGoogletag.init(noop, resolve);
         })
             .then(() => {
-                const slots = getAdverts();
+                const slots = getAdverts(true);
                 expect(Object.keys(slots).length).toBe(3);
                 Object.keys(slots).forEach(slotId => {
                     expect(slotId).toBeTruthy();
@@ -370,7 +357,7 @@ describe('DFP', () => {
     it('should be able to create "out of page" ad slot', done => {
         $('.js-ad-slot').first().attr('data-out-of-page', true);
         new Promise(resolve => {
-            dfp.prepareGoogletag.init(noop, resolve);
+            prepareGoogletag.init(noop, resolve);
         })
             .then(() => {
                 expect(window.googletag.defineOutOfPageSlot).toHaveBeenCalled();
@@ -380,10 +367,10 @@ describe('DFP', () => {
     });
 
     it('should expose ads IDs', done => {
-        const fakeEventOne = makeFakeEvent('dfp-ad-html-slot');
-        const fakeEventTwo = makeFakeEvent('dfp-ad-script-slot');
-        fakeEventOne.creativeId = '1';
-        fakeEventTwo.creativeId = '2';
+        const fakeEventOne = makeFakeEvent('1', 'dfp-ad-html-slot');
+        const fakeEventTwo = makeFakeEvent('2', 'dfp-ad-script-slot');
+        // fakeEventOne.creativeId = '1';
+        // fakeEventTwo.creativeId = '2';
 
         new Promise(resolve => {
             prepareGoogletag.init(noop, resolve);
@@ -421,7 +408,7 @@ describe('DFP', () => {
     describe('keyword targeting', () => {
         it('should send page level keywords', done => {
             new Promise(resolve => {
-                dfp.prepareGoogletag.init(noop, resolve);
+                prepareGoogletag.init(noop, resolve);
             })
                 .then(() => {
                     expect(
