@@ -2,6 +2,7 @@
 import fastdom from 'lib/fastdom-promise';
 import ophan from 'ophan/ng';
 import { addEventListener } from 'lib/events';
+import mediator from 'lib/mediator';
 
 const StoryQuiz = (quiz: HTMLElement) => {
     let currentCard: number = -1;
@@ -41,6 +42,8 @@ const StoryQuiz = (quiz: HTMLElement) => {
                 )
             )
         );
+
+        mediator.emit('journalism:storyquiz:results');
     };
 
     const onBeforeCardActivate = (cardIndex: number): Promise<void> => {

@@ -12,7 +12,6 @@ define([
     'common/modules/onward/geo-most-popular',
     'common/modules/atoms/quiz',
     'common/modules/atoms/story-questions',
-    'journalism/storyquiz',
     'bootstraps/enhanced/article-liveblog-common',
     'bootstraps/enhanced/trail',
     'ophan/ng',
@@ -30,7 +29,6 @@ define([
     geoMostPopular,
     quiz,
     storyQuestions,
-    storyquiz,
     articleLiveblogCommon,
     trail,
     ophan,
@@ -75,7 +73,6 @@ define([
         mediator.emit('page:article:ready');
         quiz.handleCompletion();
         storyQuestions.init();
-        storyquiz.init();
         snippetFeedback.SnippetFeedback();
     };
 
