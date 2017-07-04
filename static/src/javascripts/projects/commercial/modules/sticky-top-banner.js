@@ -32,9 +32,10 @@ const resizeStickyBanner = (newHeight: number): Promise<number> => {
 
     return fastdom.write(() => {
         if (stickyBanner && header) {
+            const newCSSHeight = `${newHeight}px`;
             stickyBanner.classList.add('sticky-top-banner-ad');
-            stickyBanner.style.height = `${newHeight}px`;
-            header.style.marginTop = `${newHeight}px`;
+            stickyBanner.style.height = newCSSHeight;
+            header.style.marginTop = newCSSHeight;
         }
         if (topSlotHeight !== undefined && headerHeight <= scrollY) {
             window.scrollBy(0, newHeight - topSlotHeight);
@@ -150,13 +151,10 @@ const onFirstRender = (): Promise<any> =>
                     .then(resizeStickyBanner);
             }
             return fastdom
-                .read(() => {
-                    if (topSlot) {
-                        return topSlot.offsetHeight;
-                    }
-
-                    return 0;
-                })
+                .read(
+                    () =>
+                        (topSlot && topSlot.getBoundingClientRect().height) || 0
+                )
                 .then(resizeStickyBanner);
         }
     });
@@ -167,11 +165,8 @@ const initState = (): Promise<any> =>
             if (header) {
                 headerHeight = header.getBoundingClientRect().height;
             }
-            if (topSlot) {
-                return topSlot.getBoundingClientRect().height;
-            }
 
-            return 0;
+            return (topSlot && topSlot.getBoundingClientRect().height) || 0;
         })
         .then(currentHeight =>
             Promise.all([resizeStickyBanner(currentHeight), onScroll()])
@@ -190,7 +185,7 @@ const initStickyTopBanner = (): Promise<void> => {
         })
     ) {
         header = document.getElementById('header');
-        stickyBanner = ((topSlot.parentNode: any): HTMLElement);
+        stickyBanner = (topSlot.parentNode: any);
 
         // First, let's assign some default values so that everything
         // is in good order before we start animating changes in height
