@@ -3,6 +3,7 @@ package model.content
 import com.gu.contentapi.client.model.v1.TagType
 import com.gu.contentapi.client.model.{v1 => contentapi}
 import com.gu.contentatom.thrift.atom.media.{Asset => AtomApiMediaAsset, MediaAtom => AtomApiMediaAtom}
+import com.gu.contentatom.thrift.atom.timeline.{TimelineItem => TimelineApiItem}
 import com.gu.contentatom.thrift.{AtomData, Atom => AtomApiAtom, Image => AtomApiImage, ImageAsset => AtomApiImageAsset, atom => atomapi}
 import enumeratum._
 import model.{EndSlateComponents, ImageAsset, ImageMedia}
@@ -161,9 +162,15 @@ final case class ProfileAtom(
 final case class TimelineAtom(
   override val id: String,
   atom: AtomApiAtom,
-  data: atomapi.timeline.TimelineAtom
+  data: atomapi.timeline.TimelineAtom,
+  events: Seq[TimelineItem]
 ) extends Atom
 
+final case class TimelineItem(
+  title: String,
+  date: DateTime,
+  body: Option[String]
+)
 
 object Atoms extends common.Logging {
   def extract[T](atoms: Option[Seq[AtomApiAtom]], extractFn: AtomApiAtom => T): Seq[T] = {
@@ -477,6 +484,18 @@ object ProfileAtom {
 }
 
 object TimelineAtom {
-  def make(atom: AtomApiAtom): TimelineAtom = TimelineAtom(atom.id, atom, atom.data.asInstanceOf[AtomData.Timeline].timeline)
+  def make(atom: AtomApiAtom): TimelineAtom = TimelineAtom(
+    atom.id,
+    atom,
+    atom.data.asInstanceOf[AtomData.Timeline].timeline,
+    events = atom.data.asInstanceOf[AtomData.Timeline].timeline.events map TimelineItem.make _
+  )
 }
 
+object TimelineItem {
+  def make(item: TimelineApiItem): TimelineItem = TimelineItem(
+    item.title,
+    new DateTime(item.date),
+    item.body
+  )
+}

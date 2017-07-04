@@ -1,0 +1,25 @@
+@(className: String, label: String, headline: String, id: String)(body: Html)(implicit request: RequestHeader)
+
+<details data-snippet-id="@id" data-snippet-type="@className" class="clean explainer-snippet explainer-snippet--new explainer-snippet--light explainer-snippet--@className">
+  <summary class="explainer-snippet__header">
+    <span class="explainer-snippet__label">@label</span>
+    <h4 class="explainer-snippet__headline">@headline</h4>
+    <button class="button button--large explainer-snippet__handle" aria-hidden="true">
+      <span>@fragments.inlineSvg("plus", "icon") Show</span>
+      <span>@fragments.inlineSvg("minus", "icon") Hide</span>
+    </button>
+  </summary>
+  <div class="explainer-snippet__body">
+    @body
+  </div>
+  <footer class="explainer-snippet__footer">
+    <div class="explainer-snippet__feedback">
+      <div>Was this helpful?</div>
+      <button class="button" value="like" aria-label="Yes">@fragments.inlineSvg("thumb", "icon")</button>
+      <button class="button" value="dislike" aria-label="No">@fragments.inlineSvg("thumb", "icon")</button>
+    </div>
+    <div class="explainer-snippet__ack" hidden aria-role="alert" aria-live="polite">
+      Thank you for your feedback.
+    </div>
+  </footer>
+</details>

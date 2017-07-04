@@ -25,8 +25,7 @@
     "projects/common/modules/discussion/whole-discussion.js",
     "projects/common/modules/experiments/tests/bookmarks-email-variants-2.js",
     "projects/common/modules/ui/blockSharing.js",
-    "projects/common/modules/ui/clickstream.js",
-    "lib/client-rects.js"
+    "projects/common/modules/ui/clickstream.js"
   ],
   "Nicolas Long": [
     "lib/atob.js",
@@ -169,8 +168,6 @@
     "projects/commercial/modules/paidfor-band.js"
   ],
   "Philip Wills": [],
-  "Santiago Villa Fernandez": [
-    "projects/common/modules/video/more-in-series-container.js"
-  ],
+  "Santiago Villa Fernandez": [],
   "Jamie Byers": []
 }
