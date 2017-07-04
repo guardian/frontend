@@ -21,16 +21,20 @@
         margin-top: $gs-baseline;
     }
 
-    li {
+    label {
         border-top: 1px dotted $neutral-3;
         margin: 0 $gs-gutter / -4;
         padding: $gs-baseline / 2 $gs-gutter / 4 $gs-baseline;
-
+        display: block;
         font-weight: bold;
+        cursor: pointer;
+        &:hover, &:active {
+            background-color: $neutral-4;
+        }
     }
 
     input[type=radio] {
-        margin-left: 0;
+        margin: 5px;
     }
 }
 
@@ -51,6 +55,80 @@
     display: none;
 }
 
+.explainer-snippet--storyquiz {
+
+    .button--show-more {
+        margin: 24px 0px 12px;
+        font-size: 14px;
+        padding-left: 15px;
+        padding-right: 7px;
+        .inline-icon__svg {
+            height: 35px;
+            width: 30px;
+            position: static;
+        }
+    }
+
+    border-top: 1px solid $news-main-2;
+
+    .explainer-snippet__header {
+        font-family: $f-serif-headline;
+    }
+
+    .explainer-snippet__label {
+        font-weight: 900;
+        font-size: 20px;
+        line-height: 24px;
+
+    }
+
+    .explainer-snippet__body {
+        font-family: $f-serif-text;
+        overflow: visible;
+    }
+
+    .storyquiz__start {
+        font-family: $f-sans-serif-text;
+        font-size: 14px;
+        border-radius: 18px;
+    }
+
+    .explainer-snippet__headline::after {
+        display: inline-block;
+        height: 21px;
+        margin-left: 10px;
+    }
+
+    .is-correct .explainer-snippet__headline::after {
+        content: url('data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2aWV3Qm94PSIwIDAgMjEuOSAyMSI+PHN0eWxlPi5zdDB7ZmlsbDojODdCRTI3O308L3N0eWxlPjxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik0wIDYuM2guMmMwLS42LjYtLjcuOS0xLjEuMi0uMy41LS40LjgtLjIuNi40IDEuMi43IDEuOCAxIC41LjIuNi42LjggMSAuNC43IDEgMS40IDEuMSAyLjIgMCAuMi4xLjUuMS43di4yYy4yLjQuNC45LjYgMS4yLjMuNS45LjQgMS4zIDAgLjYtLjcgMS4zLTEuMyAxLjktMiAuNi0uNiAxLjEtMS40IDEuNi0yIC41LS42IDEuMS0xIDEuNi0xLjYuNS0uNS45LTEuMSAxLjQtMS43LjQtLjUuOC0uOSAxLjMtMS40LjQtLjQuOC0uOSAxLjItMS4zLjMtLjMuNy0uNiAxLS45LjEtLjEuMi0uMS4yLS4xLjQtLjUuOC0uMyAxLjEgMCAuNi41IDEuNC44IDEuOCAxLjYuMy42LjggMS4xIDEgMS43LjMuNC4yIDEuMS0uMSAxLjQtLjcuOS0xLjYgMS43LTIuNCAyLjYtLjUuNS0xIDEuMS0xLjQgMS42LS41LjYtMSAxLjMtMS41IDEuOS0uNi43LTEuMyAxLjMtMiAxLjktLjEuMS0uMi4zLS4zLjQtLjguNy0xLjQgMS42LTIuMiAyLjQtLjUuNi0xLjEgMS4yLTEuNiAxLjgtLjcuOS0xLjQgMS45LTIuMSAyLjgtLjEuMi0uNC4yLS41LjMtLjEuMS0uMy4yLS40LjNoLS4xYy0uNy0uMi0xLjQtLjUtMi4xLS44LS4yLS4xLS40LS40LS42LS42LS4yLS4yLS4zLS40LS40LS42LS4xLS4yLS4yLS40LS4yLS42LS4xLS4yLS4xLS40LS4yLS42LS4yLS4zLS42LS42LS41LTEgMC0uOS0uNC0xLjYtLjctMi40LS4yLS43LS41LTEuNC0uOC0yLjEtLjQtMS4xLS43LTIuMS0xLjEtMy4ydi0uM2MwLS4xLjEtLjMgMC0uNEMuNCA3LjkuMyA3LjMuMiA2LjdjMC0uMS0uMS0uMi0uMi0uM3YtLjF6Ii8+PC9zdmc+');
+        width: 21px;
+    }
+
+    .is-wrong .explainer-snippet__headline::after {
+        content: url('data:image/svg+xml;base64,PHN2ZyBpZD0iTGF5ZXJfMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2aWV3Qm94PSIwIDAgMTUuNSAyMSI+PHN0eWxlPi5zdDB7ZmlsbDojQ0MyQjEyO308L3N0eWxlPjxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik0zLjYgMjFjLS4xIDAtLjEtLjEtLjItLjEtLjQtLjMtLjktLjMtMS40LS40LS45LS4yLTEuMi0xLTEuNi0xLjctLjItLjMtLjMtLjYtLjQtLjl2LTEuMWMuMi0uMi4zLS41LjYtLjcuNy0uNiAxLjItMS4yIDEuNi0yIC4xLS4yLjItLjUuNC0uNy4yLS4zLjUtLjYuNy0uOXYtLjJjLjEtLjQgMC0uOS41LTEuMi4yLS4yLjMtLjguMS0xLS43LS41LTEtMS4xLTEuNC0xLjYtLjYtLjYtLjktMS40LTEuNC0yLjEtLjEtLjItLjItLjUtLjMtLjggMC0uMi0uMS0uNS0uMi0uNy0uNC0uNC0uMi0uOCAwLTEgLjItLjMuNC0uNy45LS44LjQtLjEuNy4yIDEuMS4zLjguMyAxLjUuNyAyIDEuNC41LjYgMSAxLjIgMS42IDEuNy4xLjEuNC4zLjUgMCAuMi0uNC41LS43LjctMS4xLjEtLjIuMy0uNC40LS42LjItLjEuMS0uNC4yLS41LjUtLjMuOS0uNiAxLTEuMSAwLS4xLjMtLjIuMy0uMyAwLS41LjMtLjcuNi0xIC4xLS4xLjMtLjEuMy0uMi41LS41IDEuMS0xIDEuNi0xLjUuMi0uMi41LS4zLjgtLjFsLjYuM2MuMi4xLjUuMi43LjQuMy4yLjUuNS44LjcuNC40LjcuOC43IDEuNCAwIC4yLS4yLjMtLjMuNS0uMi4zLS4xLjgtLjUgMS4xLS4yLjEtLjMuNC0uNC42LS4xLjItLjIuNC0uMy41LjEuMi0uMS40LS4yLjUtLjEuMi0uNC4yLS41LjQtLjEuMSAwIC40IDAgLjUtLjUgMC0uNSAwLS43LjcuMSAwIC4yIDAgLjIuMS0uMS4zLS4yLjUtLjMuOC0uMS4xLS4xLjItLjIuMy0uMi4yLS40LjYtLjYuNi0uNC0uMS0uNS4yLS42LjQtLjEuMi0uMS41LS4yLjctLjEuMi0uMS42LS4yLjctLjUuMy0uMi42IDAgLjguNC40LjkuNyAxLjIgMS4zLjEuMy41LjUuNy44LjMuMy42LjUuOS44LjMuMy40LjguNy45LjUuMi42LjYuOS45LjUuNS4yIDEuMi4zIDEuOGwtLjIuMmMtLjIuMi0uNC40LS43LjUtLjEuMS0uMi4xLS4zLjEtLjYtLjItMS4zLjEtMS45LS40aC0uMWMtLjUgMC0uOS0uMi0xLjEtLjdsLS42LS45Yy0uNy0uNy0xLjQtMS4zLTIuMS0yLS4xLS4xLS40LS4yLS41LS4yLS4yLjEtLjMuNC0uNC42LS4xLjEtLjEuMi0uMS4zbC0xLjIgMS41Yy0uMS42LS40LjktLjggMS4zLS4xLjMtLjMuNS0uMy43LS4xLjUtLjUuNy0uOS45LS4yLjEtLjMuMy0uNS41eiIvPjwvc3ZnPg==');
+        width: 15px;
+    }
+
+    .storyquiz__score {
+        font: normal 36px/40px $f-serif-text;
+    }
+
+    .storyquiz__next {
+        button {
+            color: $news-main-1;
+            border-color: $news-main-1;
+            svg {
+                fill: $news-main-1;
+            }
+        }
+
+        a {
+            color: #ffffff;
+        }
+    }
+
+
+}
 
 /** Card transitions **/
 

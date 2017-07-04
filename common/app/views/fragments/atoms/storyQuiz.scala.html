@@ -8,19 +8,21 @@
 
 <div id="@quiz.id" class="explainer-snippet explainer-snippet--light explainer-snippet--storyquiz storyquiz js-storyquiz">
   @quiz.image.map { src => <img class="storyquiz__image" src="@src"> }
-  <div class="storyquiz__scene">
-    <div class="storyquiz__card storyquiz__card--intro is-active">
-      <div class="explainer-snippet__header">
-        <span class="explainer-snippet__label">Quick quiz</span>
-        <h4 class="explainer-snippet__headline">How much do you know about @quiz.title?</h4>
-      </div>
-      <div class="explainer-snippet__body">
-        <p>@quiz.description</p>
+    <div class="storyquiz__scene">
+      <div class="storyquiz__card storyquiz__card--intro is-active">
+        <div class="explainer-snippet__header">
+          <span class="explainer-snippet__label">Quick quiz</span>
+          <h4 class="explainer-snippet__headline">How much do you know about @quiz.title?</h4>
+        </div>
+        <div class="explainer-snippet__body">
+          <p>@quiz.description</p>
 
-        <button class="button button--primary storyquiz__start" type="button">Start now</button>
+          <button class="button button--large button--primary button--show-more storyquiz__start" type="button">
+              <span>Start now</span>
+                  @fragments.inlineSvg("arrow-right", "icon")
+          </button>
+        </div>
       </div>
-    </div>
-
     @for((question, i) <- quiz.questions.zipWithIndex) {
       <div class="storyquiz__card storyquiz__card--question">
         <div class="explainer-snippet__header">
@@ -44,13 +46,14 @@
             <p class="storyquiz__question-comment" id="q@i-a@j">@answer.revealText</p>
           }
 
-          <button class="button button--primary">
-            @if(i < quiz.questions.length - 1) {
-              Next question
+        <button class="button button--large button--primary button--show-more">
+            <span>@if(i < quiz.questions.length - 1) {
+                Next question
             } else {
-              See your score
-            }
-          </button>
+                See your score
+            }</span>
+            @fragments.inlineSvg("arrow-right", "icon")
+        </button>
         </div>
       </div>
     }
@@ -68,11 +71,12 @@
 
         @for(answer <- quiz.results.headOption) {
           <div class="storyquiz__next">
-            <button class="button storyquiz__reset" type="button">Try again</button>
-            <a href="@answer.shareText" class="button button--primary">More on @quiz.title</a>
+            <button class="button button--large button--tertiary storyquiz__reset button--show-more" type="button"><span>Try again</span> @fragments.inlineSvg("arrow-right", "icon")</button>
+            <a href="@answer.shareText" class="button button--large button--primary button--show-more">More on @quiz.title @fragments.inlineSvg("arrow-right", "icon")</a>
           </div>
         }
       </div>
     </div>
   </div>
+</div>
 </div>
