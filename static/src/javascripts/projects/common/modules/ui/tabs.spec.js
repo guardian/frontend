@@ -1,5 +1,4 @@
 // @flow
-
 import { init as tabsInit, showPane, hidePane, getTabTarget } from './tabs';
 
 const NAV_CLASSES = [
