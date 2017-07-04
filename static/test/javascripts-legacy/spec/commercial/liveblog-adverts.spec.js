@@ -1,18 +1,18 @@
 define([
-    'commercial/modules/liveblog-adverts',
-    'commercial/modules/commercial-features',
     'lib/mediator',
+    'helpers/injector',
     'helpers/fixtures',
     'lib/$'
 ], function (
-    liveblogAdverts,
-    commercialFeatures,
     mediator,
+    Injector,
     fixtures,
     $
 ) {
     var $style, body;
-    var slotsCounter;
+    var slotsCounter, liveblogAdverts, commercialFeatures;
+
+    var injector = new Injector();
 
     describe('Liveblog Dynamic Adverts', function () {
         var fixturesConfig = {
@@ -35,18 +35,27 @@ define([
         };
 
         beforeEach(function (done) {
-            fixtures.render(fixturesConfig);
-            body = document.querySelector('.js-liveblog-body');
-            $style = $.create('<style type="text/css"></style>')
-                .html('.block{ height: 1200px }')
-                .appendTo('head');
-            commercialFeatures.commercialFeatures.liveblogAdverts = true;
+            injector.require([
+                'commercial/modules/liveblog-adverts',
+                'commercial/modules/commercial-features',
+            ], function($1, $2) {
+                liveblogAdverts = $1;
+                commercialFeatures = $2;
+                fixtures.render(fixturesConfig);
+                body = document.querySelector('.js-liveblog-body');
+                $style = $.create('<style type="text/css"></style>')
+                    .html('.block{ height: 1200px }')
+                    .appendTo('head');
+                commercialFeatures.commercialFeatures.liveblogAdverts = true;
 
-            afterEach(function () {
-                fixtures.clean(fixturesConfig.id);
-            });
+                afterEach(function () {
+                    fixtures.clean(fixturesConfig.id);
+                });
 
-            done();
+                done();
+            },
+            done.fail);
+
         });
 
         afterEach(function () {

@@ -3,6 +3,8 @@ import { getCookie, removeCookie, addCookie } from 'lib/cookies';
 import config from 'lib/config';
 import fetchJson from 'lib/fetch-json';
 import identity from 'common/modules/identity/api';
+import { daysSince } from 'lib/time-utils';
+
 // Persistence keys
 const USER_FEATURES_EXPIRY_COOKIE = 'gu_user_features_expiry';
 const PAYING_MEMBER_COOKIE = 'gu_paying_member';
@@ -100,6 +102,18 @@ const isPayingMember = (): boolean =>
     // If the user is logged in, but has no cookie yet, play it safe and assume they're a paying user
     identity.isUserLoggedIn() && getCookie(PAYING_MEMBER_COOKIE) !== 'false';
 
+const lastContributionDate = getCookie('gu.contributions.contrib-timestamp');
+
+const daysSinceLastContribution = daysSince(lastContributionDate);
+
+const isContributor = (): boolean => !!lastContributionDate;
+
+// in last six months
+const isRecentContributor = (): boolean => daysSinceLastContribution <= 180;
+
+const shouldSeeReaderRevenue = (): boolean =>
+    !isPayingMember() && !isRecentContributor();
+
 const isAdFreeUser = (): boolean => adFreeDataIsPresent() && !adFreeDataIsOld();
 
 const toDate = (dateStr: string): Date => {
@@ -122,4 +136,12 @@ const isInBrexitCohort = (): boolean => {
     return false;
 };
 
-export { isAdFreeUser, isPayingMember, refresh, isInBrexitCohort };
+export {
+    isAdFreeUser,
+    isPayingMember,
+    isContributor,
+    isRecentContributor,
+    shouldSeeReaderRevenue,
+    refresh,
+    isInBrexitCohort,
+};

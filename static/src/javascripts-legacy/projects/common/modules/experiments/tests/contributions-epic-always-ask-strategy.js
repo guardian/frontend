@@ -7,20 +7,8 @@ define([
 
 ], function (
             commercialFeatures,
-            contributionsUtilities,
-            config,
-            cookies
+            contributionsUtilities
 ) {
-
-    function canBeDisplayed() {
-        var userHasNeverContributed = !cookies.getCookie('gu.contributions.contrib-timestamp');
-        var worksWellWithPageTemplate = (config.page.contentType === 'Article') && !config.page.isMinuteArticle; // may render badly on other types
-        var isSensitive = config.page.isSensitive === true;
-
-        return userHasNeverContributed &&
-            commercialFeatures.commercialFeatures.canReasonablyAskForMoney &&
-            worksWellWithPageTemplate && !isSensitive;
-    }
 
     return contributionsUtilities.makeABTest({
         id: 'ContributionsEpicAlwaysAskStrategy',
@@ -37,7 +25,6 @@ define([
         audienceCriteria: 'All',
         audience: 0.02,
         audienceOffset: 0.88,
-        showForSensitive: true,
         useTargetingTool: true,
 
         overrideCanRun: true,
@@ -55,8 +42,10 @@ define([
 
             {
                 id: 'alwaysAsk',
-                test: function (render) {
-                    if (canBeDisplayed()) render();
+                test: function (render, variant, parentTest) {
+                    if (contributionsUtilities.defaultCanEpicBeDisplayed(parentTest)) {
+                        render();
+                    }
                 },
                 isUnlimited : true,
                 successOnView: true

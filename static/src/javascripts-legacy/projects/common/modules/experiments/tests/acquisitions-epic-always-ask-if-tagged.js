@@ -20,7 +20,6 @@ define([
         audienceCriteria: 'All',
         audience: 1,
         audienceOffset: 0,
-        showForSensitive: true,
         useTargetingTool: true,
 
 
