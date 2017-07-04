@@ -36,57 +36,46 @@ class OphanApi(wsClient: WSClient) extends ExecutionContexts with Logging with i
     }
   }
 
-  private def getBreakdown = getBody("breakdown") _
+  private def getBreakdown: (Map[String, String]) => Future[JsValue] = getBody("breakdown") _
 
   def getBreakdown(platform: String, hours: Int): Future[JsValue] =
     getBreakdown(Map("platform" -> platform, "hours" -> hours.toString))
 
   def getBreakdown(path: String): Future[JsValue] = getBreakdown(Map("path" -> s"/$path"))
 
-
-  private def getMostRead = getBody("mostread") _
+  private def getMostRead(params: Map[String, String]): Future[Seq[MostReadItem]] =
+    getBody("mostread")(params).map(_.as[Seq[MostReadItem]])
 
   def getMostReadFacebook(hours: Int): Future[Seq[MostReadItem]] =
-    getMostRead("Facebook", hours).map(_.as[Seq[MostReadItem]])
+    getMostRead("Facebook", hours)
 
   def getMostReadTwitter(hours: Int): Future[Seq[MostReadItem]] =
-    getMostRead("Twitter", hours).map(_.as[Seq[MostReadItem]])
+    getMostRead("Twitter", hours)
 
-  def getMostRead(referrer: String, hours: Int): Future[JsValue] =
+  def getMostRead(referrer: String, hours: Int): Future[Seq[MostReadItem]] =
     getMostRead(Map("referrer" -> referrer, "hours" -> hours.toString))
 
-  def getMostRead(hours: Int, count: Int): Future[JsValue] =
+  def getMostRead(hours: Int, count: Int): Future[Seq[MostReadItem]] =
     getMostRead(Map("hours" -> hours.toString, "count" -> count.toString))
 
-  def getMostRead(hours: Int, count: Int, country: String): Future[JsValue] =
+  def getMostRead(hours: Int, count: Int, country: String): Future[Seq[MostReadItem]] =
     getMostRead(Map("hours" -> hours.toString, "count" -> count.toString, "country" -> country))
 
-  def getMostReadInSection(section: String, days: Int, count: Int): Future[JsValue] =
+  def getMostReadInSection(section: String, days: Int, count: Int): Future[Seq[MostReadItem]] =
     getMostRead(Map("days" -> days.toString, "count" -> count.toString, "section" -> section))
 
-  def getMostReferredFromSocialMedia(days: Int): Future[JsValue] =
+  def getMostReferredFromSocialMedia(days: Int): Future[Seq[MostReadItem]] =
     getMostRead(Map("days" -> days.toString, "referrer" -> "social media"))
 
-  def getMostViewedGalleries(hours: Int, count: Int): Future[JsValue] =
+  def getMostViewedGalleries(hours: Int, count: Int): Future[Seq[MostReadItem]] =
     getMostRead(Map("content-type" -> "gallery",
       "hours" -> hours.toString,
       "count" -> count.toString))
 
-  def getMostViewedAudio(hours: Int, count: Int): Future[JsValue] =
+  def getMostViewedAudio(hours: Int, count: Int): Future[Seq[MostReadItem]] =
     getMostRead(Map("content-type" -> "audio",
       "hours" -> hours.toString,
       "count" -> count.toString))
-
-
-  def getMostPopularOnward(path: String,
-                           hours: Int,
-                           count: Int,
-                           isContent: Boolean): Future[JsValue] =
-    getBody("onward")(
-      Map("path" -> s"/$path",
-        "is-content" -> "true",
-        "hours" -> "3",
-        "count" -> "10"))
 
   def getAdsRenderTime(params: Map[String, Seq[String]]): Future[JsValue] = {
     val validatedParams = for {

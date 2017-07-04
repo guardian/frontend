@@ -71,7 +71,7 @@ const setPrefs = (loc: { hash: string }): void => {
     const qs = loc.hash.substr(1).split('&');
     let i;
     let j;
-    for ((i = 0), (j = qs.length); i < j; i += 1) {
+    for (i = 0, j = qs.length; i < j; i += 1) {
         const m = qs[i].match(/^gu\.prefs\.(.*)=(.*)$/);
         if (m) {
             const key = m[1];

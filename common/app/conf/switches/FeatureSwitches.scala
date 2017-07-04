@@ -19,9 +19,9 @@ trait FeatureSwitches {
     SwitchGroup.Feature,
     "explore-main-media",
     "If this switch is on, Explore template will be applied to explore articles. This template is part of a Membership Explore test",
-    owners = Seq(Owner.withGithub("siadcock")),
+    owners = Seq(Owner.withGithub("NataliaLKB"), Owner.withGithub("blongden73")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 7, 3),
+    sellByDate = new LocalDate(2017, 7, 25),
     exposeClientSide = true
   )
 
@@ -464,17 +464,6 @@ trait FeatureSwitches {
     exposeClientSide = true
   )
 
-  // Owner: Francis Carr
-  val LiveBlogChromeNotificationsProd = Switch(
-    SwitchGroup.Feature,
-    "live-blog-chrome-notifications-prod",
-    "Live blog chrome notifications - prod",
-    owners = Seq(Owner.withGithub("janua")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 6, 30), //Friday
-    exposeClientSide = true
-  )
-
   // Owner: David Furey
   val guTodayEmailAds = Switch(
     SwitchGroup.Feature,
@@ -516,15 +505,4 @@ trait FeatureSwitches {
     sellByDate = never,
     exposeClientSide = false
   )
-
-  val NewTabletHeader = Switch(
-    SwitchGroup.Feature,
-    "new-header-tablet",
-    "When ON Users will see the new tablet header design.",
-    owners = Seq(Owner.withGithub("natalialkb"), Owner.withGithub("gustavpursche")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 6, 15),
-    exposeClientSide = false
-  )
-
 }

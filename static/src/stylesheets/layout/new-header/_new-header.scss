@@ -12,15 +12,10 @@ from scrolling */
     position: relative;
 
     @include mq(tablet) {
-        display: none;
+        display: block;
 
-        // Switch: ABNewTabletHeader
-        &.new-header--switch-on-tablet {
-            display: block;
-
-            @include mq(desktop) {
-                display: none;
-            }
+        @include mq(desktop) {
+            display: none;
         }
     }
 
@@ -30,33 +25,70 @@ from scrolling */
             display: block;
         }
     }
+
+    .has-page-skin & .gs-container {
+        @include mq(wide) {
+            width: gs-span(12) + ($gs-gutter * 2);
+        }
+    }
 }
 
 .new-header__inner {
-    align-items: flex-start;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+    @include clearfix();
+
+    @supports(display: flex) {
+        align-items: flex-start;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        padding-bottom: 0;
+    }
 }
 
-.new-header__cta {
-    left: $gs-gutter / 4;
-    overflow-x: hidden;
+.new-header__cta-container {
+    // -4 to normalize the padding-left
+    left: $gs-gutter / 4 - 4;
+    overflow: hidden;
+    /* necessary to make overflow-y work without cutting off
+    the transform */
+    padding-bottom: 10px;
+    padding-left: 4px;
+    padding-right: 6px;
     position: absolute;
+    top: 0;
 
     @include mq(mobileLandscape) {
-        left: $gs-gutter / 2;
+        left: $gs-gutter / 2 - 4;
     }
 }
 
 .new-header__logo {
-    margin-left: auto;
+    display: block;
+    float: right;
+
+    @supports(display: flex) {
+        display: flex;
+        float: none;
+        margin-left: auto;
+    }
+
+    @include mq(desktop) {
+        &:focus {
+            outline: none;
+        }
+    }
+
+    .new-header--slim.new-header--open & {
+        @include mq($from: desktop, $until: leftCol) {
+            display: none;
+        }
+    }
 }
 
 .new-header__logo__svg {
     display: block;
     height: calc(3 / 16 * 170px);
-    margin-bottom: $gs-baseline;
+    margin-bottom: $gs-baseline / 2;
     margin-right: $gs-gutter / 2;
     margin-top: $gs-baseline / 2;
     width: 170px;
@@ -73,12 +105,35 @@ from scrolling */
     }
 
     @include mq(tablet) {
-        height: calc(3 / 16 * 400px);
-        width: 400px;
+        height: calc(3 / 16 * 385px);
+        width: 385px;
+    }
+
+    @include mq(desktop) {
+        height: calc(3 / 16 * 385px);
+        margin-bottom: $gs-baseline / 4;
+        width: 385px;
+    }
+
+    .new-header--slim & {
+        height: calc(3 / 16 * 155px);
+        margin-right: $gs-gutter;
+        margin-top: 7px;
+        width: 155px;
+
+        @include mq(mobileLandscape) {
+            margin-right: $gs-gutter * 1.5;
+        }
+
+        @include mq(tablet) {
+            height: calc(3 / 16 * 170px);
+            margin-top: 5px;
+            width: 170px;
+        }
     }
 }
 
 // Don't show trapezoid on opera mini: https://wp-mix.com/css-target-opera/
-x:-o-prefocus, .new-header__support {
+x:-o-prefocus, .new-header__cta-container  {
     display: none;
 }

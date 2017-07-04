@@ -1,0 +1,44 @@
+.menu-user {
+    display: flex;
+    flex-direction: row;
+    padding-top: $gs-baseline / 3;
+
+    @include mq(leftCol) {
+        flex-direction: column;
+        margin-bottom: $gs-baseline / 3;
+    }
+
+    .has-page-skin & {
+        @include mq(wide) {
+            flex-direction: row;
+            margin-bottom: 0;
+        }
+    }
+}
+
+.menu-user__avatar {
+    border-radius: 50%;
+}
+
+.menu-user__avatar-fallback {
+    /* SVGs inherit the font-size and therefor the line-height
+       is bigger, so we have to reset it */
+    font-size: 0;
+}
+
+.menu-user__avatar-fallback__svg {
+    opacity: .6;
+}
+
+.menu-user__avatar-fallback__svg,
+.menu-user__avatar {
+    height: gs-span(1);
+    margin-bottom: $gs-baseline / 3;
+    margin-right: $gs-gutter;
+    width: gs-span(1);
+}
+
+.menu-user__name {
+    font-size: 24px;
+    text-transform: none;
+}

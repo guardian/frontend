@@ -74,7 +74,7 @@ define([
 
     function initPlayer() {
 
-        videojs.plugin('fullscreener', fullscreener);
+        videojs.plugin('fullscreener', fullscreener.fullscreener);
 
         bonzo(qwery('.js-gu-media--enhance')).each(function (el) {
             var player,

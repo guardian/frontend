@@ -19,9 +19,7 @@ define([
         audience: 1,
         audienceOffset: 0,
 
-        showForSensitive: true,
-        showToContributors: true,
-        showToSupporters: true,
+        showToContributorsAndSupporters: true,
 
         useTargetingTool: true,
 

@@ -319,10 +319,12 @@ class HostedGallery {
         galleryEl.style.mozTransitionDuration = `${duration}ms`;
         galleryEl.style.msTransitionDuration = `${duration}ms`;
         galleryEl.style.transitionDuration = `${duration}ms`;
-        galleryEl.style.webkitTransform = `translate(${px + offset}px,0) translateZ(0)`;
+        galleryEl.style.webkitTransform = `translate(${px +
+            offset}px,0) translateZ(0)`;
         galleryEl.style.mozTransform = `translate(${px + offset}px,0)`;
         galleryEl.style.msTransform = `translate(${px + offset}px,0)`;
-        galleryEl.style.transform = `translate(${px + offset}px,0) translateZ(0)`;
+        galleryEl.style.transform = `translate(${px +
+            offset}px,0) translateZ(0)`;
         fastdom.write(() => {
             bonzo($meta).css('opacity', offset !== 0 ? 0 : 1);
         });
@@ -330,12 +332,10 @@ class HostedGallery {
 
     fadeContent(e: Event) {
         const length = this.$images.length;
-        const scrollTop = e.target instanceof HTMLElement
-            ? e.target.scrollTop
-            : 0;
-        const scrollHeight = e.target instanceof HTMLElement
-            ? e.target.scrollHeight
-            : 0;
+        const scrollTop =
+            e.target instanceof HTMLElement ? e.target.scrollTop : 0;
+        const scrollHeight =
+            e.target instanceof HTMLElement ? e.target.scrollHeight : 0;
         const progress =
             Math.round(length * (scrollTop / scrollHeight) * 100) / 100;
         const fractionProgress = progress % 1;
@@ -388,7 +388,9 @@ class HostedGallery {
     trackNavBetweenImages(data: Object) {
         if (data && data.nav) {
             const trackingPrefix = config.page.trackingPrefix || '';
-            interactionTracking.trackNonClickInteraction(`${trackingPrefix + data.nav} - image ${this.index}`);
+            interactionTracking.trackNonClickInteraction(
+                `${trackingPrefix + data.nav} - image ${this.index}`
+            );
         }
     }
 
@@ -554,7 +556,7 @@ HostedGallery.prototype.states = {
     },
 };
 
-const init = () => {
+const init = (): Promise<any> => {
     if (qwery('.js-hosted-gallery-container').length) {
         return loadCssPromise.then(() => {
             let res;

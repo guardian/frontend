@@ -1,5 +1,7 @@
 .pillars {
+    clear: right;
     color: $news-support-1;
+    font-size: 0;
     list-style: none;
     margin: 0;
     padding: 0 $gs-gutter / 2;
@@ -9,22 +11,68 @@
         padding-left: $gs-gutter;
         padding-right: $gs-gutter;
     }
+
+    @include mq(desktop) {
+        .new-header--open & {
+            z-index: $zindex-main-menu;
+        }
+    }
+
+    .new-header--slim & {
+        width: auto;
+        order: -1;
+
+        @include mq($until: tablet) {
+            display: none;
+        }
+    }
 }
 
 .pillars__item {
+    box-sizing: border-box;
     display: inline-block;
+
+    @include mq(desktop) {
+        min-width: 0;
+        padding-right: $gs-gutter;
+        transition: min-width 200ms ease;
+        will-change: min-width;
+
+        .new-header--open & {
+            min-width: gs-span(2) + $gs-gutter / 2;
+        }
+
+        .new-header--open &:not(:first-child) {
+            margin-left: $gs-gutter / 2;
+        }
+    }
 
     > *:after {
         content: '/';
         color: $news-main-2;
         display: inline-block;
-        line-height: 1;
-        margin-left: -2px;
-        margin-right: -2px;
+        margin-left: -1px;
+        margin-right: 2px;
         pointer-events: none;
+
+        // Slashes switch to left hand side for open animation
+        @include mq(desktop) {
+            left: -$gs-gutter / 1.5;
+            margin: 0;
+            position: absolute;
+            top: 0;
+        }
     }
 
-    &:last-child > *:after {
-        display: none;
+    @include mq($until: desktop) {
+        &:last-child > *:after {
+            display: none;
+        }
+    }
+
+    @include mq(desktop) {
+        &:first-child > *:after {
+            display: none;
+        }
     }
 }

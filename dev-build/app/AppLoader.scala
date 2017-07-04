@@ -83,7 +83,6 @@ trait AppComponents
     wire[DiagnosticsLifecycle],
     wire[OnwardJourneyLifecycle],
     wire[CommercialLifecycle],
-    wire[MostReadLifecycle],
     wire[DfpDataCacheLifecycle],
     wire[FaciaDfpAgentLifecycle],
     wire[ConfigAgentLifecycle],

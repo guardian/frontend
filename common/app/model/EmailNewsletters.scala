@@ -62,12 +62,13 @@ object EmailNewsletters {
   )
 
   val morningBriefing = EmailNewsletter(
-    name = "Morning Briefing UK",
+    name = "Morning Briefing",
     theme = "news",
     teaser = "Breaking down the day's stories, from latest manoeuvring in global politics to the ‘and finally’ story that’s going viral",
     description = "Breaking down the news stories of the day and telling you why they matter so you’ll be completely up-to-speed. Besides the headlines, you'll get a fantastic lunchtime read and highlights of what’s on the UK’s front pages that morning",
     frequency = "Every weekday",
     listId = 3640,
+    subheading = Some("UK"),
     signupPage = Some("/info/2016/mar/01/the-morning-briefing-start-the-day-one-step-ahead"),
     exampleUrl = Some("/world/series/guardian-morning-briefing/latest/email")
   )
@@ -75,12 +76,13 @@ object EmailNewsletters {
   val morningMail = EmailNewsletter(
     name = "Morning Mail",
     theme = "news",
-    teaser = "Get ahead with a shot of early morning news - our editors bring you everything you need",
-    description = "Get ahead with a shot of early morning news - our editors bring you everything you need",
+    teaser = "Australia's essential news roundup: nation and international headlines, the latest from sport, and the stories we love",
+    description = "Australia's essential news roundup: nation and international headlines, the latest from sport, and the stories we love – both from the Guardian and elsewhere around the web. Plus, it has a few pointers on the day ahead and what to watch out for",
     frequency = "Every weekday",
     listId = 2636,
     subheading = Some("AUS"),
-    signupPage = Some("/world/guardian-australia-morning-mail/2014/jun/24/-sp-guardian-australias-morning-mail-subscribe-by-email")
+    signupPage = Some("/world/guardian-australia-morning-mail/2014/jun/24/-sp-guardian-australias-morning-mail-subscribe-by-email"),
+    exampleUrl = Some("/australia-news/series/guardian-australia-s-morning-mail/latest/email")
   )
 
   val businessToday = EmailNewsletter(
@@ -107,18 +109,6 @@ object EmailNewsletters {
     exampleUrl = Some("/email/media-briefing")
   )
 
-  val brexitBriefing = EmailNewsletter(
-    name = "Brexit Briefing",
-    theme = "news",
-    teaser = "Keep on top of the key developments and most important debates as Britain takes its first steps on the long road to leaving the EU",
-    description = "Brexit: your weekly briefing. Sign up and we’ll email you the key developments and most important debates as Britain takes its first steps on the long road to leaving the EU",
-    frequency = "Tuesday mornings",
-    listId = 3698,
-    tone = Some("news"),
-    signupPage = Some("/politics/2016/may/31/eu-referendum-morning-briefing-sign-up"),
-    exampleUrl = Some("/politics/series/eu-referendum-morning-briefing/latest/email")
-  )
-
   val greenLight = EmailNewsletter(
     name = "Green Light",
     theme = "news",
@@ -141,15 +131,39 @@ object EmailNewsletters {
     exampleUrl = Some("/science/series/lab-notes/latest/email")
   )
 
-  val povertyMatters = EmailNewsletter(
-    name = "Poverty Matters",
+  val globalDispatch = EmailNewsletter(
+    name = "Global Dispatch",
     theme = "news",
-    teaser = "From the shocking to the uplifting - get the world’s biggest stories that you’re missing",
-    description = "Our editors track what’s happening in development with a special focus on the millennium development goals. Sign up to get all the most important debate and discussion from around the world delivered to your inbox every fortnight",
+    teaser = "Breaking stories and hard-hitting features of people living under extraordinary circumstances, uncovered by the Guardian’s global development team",
+    description = "Get a different world view: breaking stories and hard-hitting features, uncovered by the Guardian’s global development team and our correspondents across Africa, Asia, South and Central America and beyond. We bring you the voices and opinions of people living under extraordinary circumstances",
     frequency = "Every other Tuesday",
     listId = 113,
-    signupPage = Some("/global-development/2015/nov/10/sign-up-to-the-poverty-matters-email-newsletter"),
-    exampleUrl = Some("/global-development/series/poverty-matters/latest/email")
+    signupPage = Some("/info/2017/jun/08/global-dispatch-sign-up-for-a-different-world-view"),
+    exampleUrl = Some("/email/global-dispatch")
+  )
+
+  val brexitBriefing = EmailNewsletter(
+    name = "Brexit Briefing",
+    theme = "news",
+    teaser = "Keep on top of the key developments and most important debates as Britain takes its first steps on the long road to leaving the EU",
+    description = "Brexit: your weekly briefing. Sign up and we’ll email you the key developments and most important debates as Britain takes its first steps on the long road to leaving the EU",
+    frequency = "Tuesday mornings",
+    listId = 3698,
+    tone = Some("news"),
+    signupPage = Some("/politics/2016/may/31/eu-referendum-morning-briefing-sign-up"),
+    exampleUrl = Some("/politics/series/eu-referendum-morning-briefing/latest/email")
+  )
+
+  val usPoliticsMinute = EmailNewsletter(
+    name = "The US Politics Minute",
+    theme = "news",
+    teaser = "Get the day in US politics, condensed, If you’ve got a minute, we can get you up to speed on the most important stories",
+    description = "Get the day in US politics, condensed, If you’ve got a minute, we can get you up to speed on the most important stories",
+    frequency = "Every weekday",
+    listId = 3599,
+    tone = Some("news"),
+    signupPage = Some("/us-news/2017/feb/22/us-politics-minute-sign-up-email-newsletter-app-notification"),
+    exampleUrl = Some("/us-news/series/the-campaign-minute-2016/latest/email")
   )
 
   val australianPolitics = EmailNewsletter(
@@ -389,8 +403,8 @@ object EmailNewsletters {
     teaser = "Get out of your bubble and see things from another point of view. Join the debate every afternoon and you might even change your mind",
     description = "Get out of your bubble. See things from another point of view - join the debate and you might even change your mind. Sign up to have the Guardian’s best opinion pieces emailed to you every weekday afternoon",
     frequency = "Weekday afternoons",
-    listId = 3811,
-    aliases = List(3814, 2313),
+    listId = 2313,
+    aliases = List(3814, 3811),
     subheading = Some("UK"),
     tone = Some("comment"),
     signupPage = Some("/commentisfree/2014/jan/29/comment-is-free-daily-roundup")
@@ -406,6 +420,18 @@ object EmailNewsletters {
     subheading = Some("US"),
     tone = Some("comment"),
     signupPage = Some("/commentisfree/2015/may/11/sign-up-for-the-best-of-opinion-us-daily-email")
+  )
+
+  val weekInPatriarchy = EmailNewsletter(
+    name = "The Week in Patriarchy",
+    theme = "comment",
+    teaser = "Each week Jessica Valenti tracks what’s happening in the world of feminism and sexism, from politics to pop culture",
+    description = "Each week Jessica Valenti tracks what’s happening in the world of feminism and sexism, from politics to pop culture. She’ll keep you up to date on the worst news, the best news, and everything in between",
+    frequency = "Every Friday",
+    listId = 3820,
+    tone = Some("comment"),
+    signupPage = Some("/info/2017/jan/19/this-week-in-the-patriarchy-jessica-valenti-email"),
+    exampleUrl = Some("world/series/the-week-in-patriarchy/latest/email")
   )
 
   val bestOfOpinionAUS = EmailNewsletter(
@@ -442,10 +468,11 @@ object EmailNewsletters {
   val newsEmails = List(
     businessToday,
     mediaBriefing,
-    brexitBriefing,
     greenLight,
     labNotes,
-    povertyMatters,
+    globalDispatch,
+    brexitBriefing,
+    usPoliticsMinute,
     australianPolitics
   )
 
@@ -483,6 +510,7 @@ object EmailNewsletters {
   val commentEmails = List(
     bestOfOpinionUK,
     bestOfOpinionUS,
+    weekInPatriarchy,
     bestOfOpinionAUS,
     firstDogOnTheMoon
   )

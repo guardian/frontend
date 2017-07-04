@@ -28,7 +28,9 @@ module.exports = {
                     .sync('**/!(*.map)', { nodir: true, cwd: target })
                     .reduce((map, assetPath) => {
                         const assetLocation = path.resolve(target, assetPath);
-                        const hasSourceMap = fs.existsSync(`${assetLocation}.map`);
+                        const hasSourceMap = fs.existsSync(
+                            `${assetLocation}.map`
+                        );
 
                         // webpack bundles come pre-hashed, so we won't hash them, just add them
                         if (webpackRegex.test(assetPath)) {
@@ -104,7 +106,9 @@ module.exports = {
                             )
                         );
                     })
-                    .then((normalisedAssetMap) => // save the asset map
+                    .then((
+                        normalisedAssetMap // save the asset map
+                    ) =>
                         mkdirpp(path.resolve(hash, 'assets')).then(() =>
                             writeFile(
                                 path.resolve(hash, 'assets', 'assets.map'),

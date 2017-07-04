@@ -26,7 +26,7 @@ define([
     var insertEpicAfterSelector = '.js-insert-epic-after';
 
     function isEpic(el) {
-        $(el).hasClass('is-liveblog-epic');
+        return $(el).hasClass('is-liveblog-epic');
     }
 
     function getLiveblogEntryTimeData(el) {
@@ -55,6 +55,10 @@ define([
     }
 
     function setEpicLiveblogEntryTimeData(el, timeData) {
+        if (!el) {
+            return;
+        }
+
         var $epicTimeEl = $('time', el);
         $epicTimeEl.attr('datetime', timeData.datetime);
         $epicTimeEl.attr('title', timeData.title);
@@ -86,8 +90,6 @@ define([
         audienceCriteria: 'All',
         audience: 1,
         audienceOffset: 0,
-
-        showForSensitive: true,
 
         pageCheck: function(page) {
             return page.contentType === 'LiveBlog';

@@ -65,7 +65,7 @@ const chokidar = require('chokidar');
 
 const sassDir = path.resolve(__dirname, '../', 'static', 'src', 'stylesheets');
 const sassGraph = require('sass-graph').parseDir(sassDir, {
-    loadPaths: sassDir,
+    loadPaths: [sassDir],
 });
 
 const compileSass = require('../tools/compile-css');

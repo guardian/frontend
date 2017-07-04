@@ -1,4 +1,4 @@
-// flow-typed signature: dcd5291be84d5cfce73c21ddfca01f2e
+// flow-typed signature: f615a262c940cb372693ec73d0fdeabd
 // flow-typed version: <<STUB>>/hasha_v^2.2.0/flow_v0.40.0
 
 /**
@@ -8,8 +8,8 @@
  *
  * Fill this stub out by replacing all the `any` types.
  *
- * Once filled out, we encourage you to share your work with the 
- * community by sending a pull request to: 
+ * Once filled out, we encourage you to share your work with the
+ * community by sending a pull request to:
  * https://github.com/flowtype/flow-typed
  */
 

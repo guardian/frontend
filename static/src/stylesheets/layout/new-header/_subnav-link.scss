@@ -7,8 +7,13 @@
     line-height: 1.3em;
 
     @include mq(mobileLandscape) {
-        font-size: 22px;
+        font-size: 19px;
         max-height: $gs-baseline * 4.8;
+    }
+
+    @include mq(desktop) {
+        // to make sure that the words are not visible on subnav desktop if they fall to the second line
+        margin-bottom: $gs-baseline;
     }
 
     &:hover,

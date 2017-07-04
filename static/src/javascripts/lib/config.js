@@ -33,10 +33,10 @@ const webPublicationDateAsUrlPart = (): ?string => {
         const pubDate = new Date(config.page.webPublicationDate);
         return `${pubDate.getFullYear()}/${(pubDate.getMonth() + 1)
             .toString()
-            .padStart(
-                2,
-                '0'
-            )}/${pubDate.getDate().toString().padStart(2, '0')}`;
+            .padStart(2, '0')}/${pubDate
+            .getDate()
+            .toString()
+            .padStart(2, '0')}`;
     }
 
     return null;

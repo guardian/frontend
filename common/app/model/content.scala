@@ -424,6 +424,7 @@ object Article {
       ("isHosted", JsBoolean(false)),
       ("isPhotoEssay", JsBoolean(content.isPhotoEssay)),
       ("isSensitive", JsBoolean(fields.sensitive.getOrElse(false))),
+      ("shouldHideReaderRevenue", JsBoolean(fields.shouldHideReaderRevenue.getOrElse(false))),
       "videoDuration" -> videoDuration
     ) ++ bookReviewIsbn ++ AtomProperties(content.atoms)
 
@@ -609,13 +610,22 @@ final case class Video (
   source: Option[String],
   mediaAtom: Option[MediaAtom] ) extends ContentType {
 
-  lazy val bylineWithSource: Option[String] = Some(Seq(
-    trail.byline,
-    source.map{
+
+  lazy val bylineWithSource: Option[String] = {
+    val videoSource: Option[String] = source.orElse(mediaAtom.flatMap(_.source))
+
+    def prettySource(source: String): String = source match {
       case "guardian.co.uk" => "theguardian.com"
-      case other => s"Source: $other"
+      case other if other.nonEmpty => s"Source: $other"
     }
-  ).flatten.mkString(", ")).filter(_.nonEmpty)
+
+    (trail.byline, videoSource) match {
+      case (Some(b), Some(s)) if b.nonEmpty && s.nonEmpty => Some(s"$b, ${prettySource(s)}")
+      case (Some(b), _) if b.nonEmpty => Some(b)
+      case (_, Some(s)) if s.nonEmpty => Some(prettySource(s))
+      case _ => None
+    }
+  }
 
   lazy val videoLinkText: String = {
     val suffixVariations = List(
@@ -628,7 +638,7 @@ final case class Video (
 
   def sixteenByNineMetaImage: Option[String] = for {
     imageMedia <- mediaAtom.flatMap(_.posterImage) orElse content.elements.thumbnail.map(_.images)
-    videoProfile <- Video1280.bestFor(imageMedia)
+    videoProfile <- Video1280.bestSrcFor(imageMedia)
   } yield videoProfile
 }
 
@@ -733,7 +743,7 @@ case class GalleryLightbox(
         "caption" -> JsString(img.caption.getOrElse("")),
         "credit" -> JsString(img.credit.getOrElse("")),
         "displayCredit" -> JsBoolean(img.displayCredit),
-        "src" -> JsString(Item700.bestFor(container.images).getOrElse("")),
+        "src" -> JsString(Item700.bestSrcFor(container.images).getOrElse("")),
         "srcsets" -> JsString(ImgSrc.srcset(container.images, GalleryMedia.lightbox)),
         "sizes" -> JsString(GalleryMedia.lightbox.sizes),
         "ratio" -> Try(JsNumber(img.width.toDouble / img.height.toDouble)).getOrElse(JsNumber(1)),
@@ -782,7 +792,7 @@ case class GenericLightbox(
         "caption" -> JsString(img.caption.getOrElse("")),
         "credit" -> JsString(img.credit.getOrElse("")),
         "displayCredit" -> JsBoolean(img.displayCredit),
-        "src" -> JsString(Item700.bestFor(container.images).getOrElse("")),
+        "src" -> JsString(Item700.bestSrcFor(container.images).getOrElse("")),
         "srcsets" -> JsString(ImgSrc.srcset(container.images, GalleryMedia.lightbox)),
         "sizes" -> JsString(GalleryMedia.lightbox.sizes),
         "ratio" -> Try(JsNumber(img.width.toDouble / img.height.toDouble)).getOrElse(JsNumber(1)),

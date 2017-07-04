@@ -1,10 +1,10 @@
 // @flow
 import config from 'lib/config';
 import detect from 'lib/detect';
-import { logError } from 'lib/robust';
-import userFeatures from 'commercial/modules/user-features';
+import { isAdFreeUser } from 'commercial/modules/user-features';
 import identityApi from 'common/modules/identity/api';
 import userPrefs from 'common/modules/user-prefs';
+import { shouldShowReaderRevenue } from 'common/modules/commercial/contributions-utilities';
 
 // Having a constructor means we can easily re-instantiate the object in a test
 class CommercialFeatures {
@@ -19,7 +19,6 @@ class CommercialFeatures {
     commentAdverts: any;
     liveblogAdverts: any;
     paidforBand: any;
-    canReasonablyAskForMoney: any;
     asynchronous: any;
     adFeedback: any;
     adFree: any;
@@ -52,7 +51,7 @@ class CommercialFeatures {
         this.adFree =
             switches.commercial &&
             switches.adFreeMembershipTrial &&
-            userFeatures.isAdFreeUser();
+            isAdFreeUser();
 
         this.dfpAdvertising =
             switches.commercial && externalAdvertising && !sensitiveContent;
@@ -118,13 +117,9 @@ class CommercialFeatures {
             !config.page.hasSuperStickyBanner &&
             !supportsSticky;
 
-        this.canReasonablyAskForMoney = !(userFeatures.isPayingMember() || // eg become a supporter, give a contribution
-            config.page.shouldHideAdverts ||
-            config.page.isPaidContent);
-
         this.asynchronous = {
             canDisplayMembershipEngagementBanner: detect.adblockInUse.then(
-                adblockUsed => !adblockUsed && this.canReasonablyAskForMoney
+                adblockUsed => !adblockUsed && shouldShowReaderRevenue()
             ),
         };
 
@@ -136,15 +131,4 @@ class CommercialFeatures {
     }
 }
 
-let commercialFeaturesExport;
-
-try {
-    config.commercial = config.commercial || {};
-    config.commercial.featuresDebug = new CommercialFeatures();
-    commercialFeaturesExport = config.commercial.featuresDebug;
-} catch (error) {
-    commercialFeaturesExport = {};
-    logError('cm-commercialFeatures', error);
-}
-
-export const commercialFeatures = commercialFeaturesExport;
+export const commercialFeatures = new CommercialFeatures();

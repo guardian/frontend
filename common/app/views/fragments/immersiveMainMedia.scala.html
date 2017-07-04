@@ -5,7 +5,6 @@
 @import model.ContentPage
 @import views.support.RenderClasses
 @import views.support.TrailCssClasses.toneClass
-@import views.support.Commercial.isPaidContent
 @import views.support.ImmersiveMainCleaner
 
 @(page: ContentPage)(implicit request: RequestHeader, context: model.ApplicationContext)
@@ -26,7 +25,7 @@
         "content", "content--immersive", "content--immersive-article", "tonal", s"tonal--${toneClass(page.item)}")
     ">
         <div class="gs-container immersive-main-media__logo">
-            @if(page.item.elements.hasMainMedia || page.item.fields.main.nonEmpty) {
+            @if((page.item.elements.hasMainMedia || page.item.fields.main.nonEmpty) & !mvt.ABNewDesktopHeaderVariant.isParticipating) {
                 <a href="@LinkTo {/}">
                     <span class="u-h">The Guardian</span>
                     @fragments.inlineSvg("guardian-logo-160", "logo", Seq("immersive-main-media__logo__svg"))

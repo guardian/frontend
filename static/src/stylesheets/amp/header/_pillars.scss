@@ -1,0 +1,29 @@
+.pillars {
+    color: $news-support-1;
+    font-size: 0;
+    margin: 0;
+    padding: 0 $gs-gutter / 2;
+    width: 100%;
+
+    @include mq(mobileLandscape) {
+        padding-left: $gs-gutter;
+        padding-right: $gs-gutter;
+    }
+}
+
+.pillars__item {
+    display: inline-block;
+
+    > *:after {
+        content: '/';
+        color: $news-main-2;
+        margin-left: -1px;
+        margin-right: 2px;
+        opacity: .6;
+        pointer-events: none;
+    }
+
+    &:last-child > *:after {
+        display: none;
+    }
+}

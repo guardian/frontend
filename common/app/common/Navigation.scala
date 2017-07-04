@@ -75,7 +75,6 @@ trait Navigation {
   val scotland = SectionLink("scotland", "scotland", "Scotland", "/uk/scotland")
   val wales = SectionLink("wales", "wales", "Wales", "/uk/wales")
   val northernIreland = SectionLink("northernireland", "northern ireland", "Northern Ireland", "/uk/northernireland")
-  val ukElection2017 = SectionLink("politics", "election", "election", "/politics/general-election-2017")
 
   // Columnists
   val columnists = SectionLink("columnists", "columnists", "Columnists", "/index/contributors")

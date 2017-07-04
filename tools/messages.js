@@ -4,21 +4,25 @@ const takeWhile = require('lodash.takewhile');
 
 const notify = (message, userOptions = {}, type = 'log') => {
     // Set the default text colour for info to black as white was hard to see
-    const options = type === 'info'
-        ? Object.assign(
-              {
-                  colour: 'black',
-                  codeColour: 'white',
-              },
-              userOptions
-          )
-        : userOptions;
+    const options =
+        type === 'info'
+            ? Object.assign(
+                  {
+                      colour: 'black',
+                      codeColour: 'white',
+                  },
+                  userOptions
+              )
+            : userOptions;
 
     try {
         // eslint-disable-next-line global-require
         require('megalog')[type](message, options);
     } catch (e) {
-        console.log(`${(options.heading ? `\n${options.heading}:\n\n` : '') + message}\n\n(hint: you probably want to run \`make install\`)\n`);
+        console.log(
+            `${(options.heading ? `\n${options.heading}:\n\n` : '') +
+                message}\n\n(hint: you probably want to run \`make install\`)\n`
+        );
     }
 };
 
@@ -55,7 +59,11 @@ switch (process.argv[2]) {
 
                     if (comments.length) {
                         // add the target name with the first comment following it
-                        messageLines.push(`\`${targetName}\`${new Array(gutterWidth - targetName.length).join('.')}${comments.join(' ')}`);
+                        messageLines.push(
+                            `\`${targetName}\`${new Array(
+                                gutterWidth - targetName.length
+                            ).join('.')}${comments.join(' ')}`
+                        );
                     } else {
                         // just add the target name
                         messageLines.push(`\`${targetName}\``);
@@ -65,9 +73,9 @@ switch (process.argv[2]) {
                 // if we've got a divider, just add space to create a line break
                 if (line.match(/^# \*{3,}/)) {
                     if (listAll) {
-                        messageLines.push(`\n${line
-                            .replace(/#|\*/g, '')
-                            .trim()}`);
+                        messageLines.push(
+                            `\n${line.replace(/#|\*/g, '').trim()}`
+                        );
                     } else {
                         messageLines.push(' ');
                     }

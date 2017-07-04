@@ -7,7 +7,8 @@ Object.assign(window.guardian.config, {
         series: 'bar',
         references: [{ baz: 'one' }, { baz: 'two' }],
         webPublicationDate: '2013-03-20T17:07:00.000Z',
-        pageId: 'politics/2017/mar/14/ukip-donor-arron-banks-says-he-has-quit-party-to-set-up-ukip-20',
+        pageId:
+            'politics/2017/mar/14/ukip-donor-arron-banks-says-he-has-quit-party-to-set-up-ukip-20',
         x: {
             y: {
                 z: 'z',

@@ -1,20 +1,11 @@
 {
   "Francis Carr": [],
-  "Jon Norman": [
-    "projects/commercial/modules/creatives/revealer.js",
-    "projects/commercial/modules/creatives/scrollable-mpu-v2.js"
-  ],
+  "Jon Norman": [],
   "Regis Kuckaertz": [],
   "Richard Nguyen": [],
   "Kate Whalen": [
-    "projects/commercial/modules/messenger/background.js",
-    "projects/commercial/modules/messenger/click.js",
-    "projects/commercial/modules/messenger/dfp-origin.js",
-    "projects/commercial/modules/messenger/get-stylesheet.js",
-    "projects/commercial/modules/messenger/post-message.js",
-    "projects/commercial/modules/messenger/resize.js",
-    "projects/commercial/modules/messenger/scroll.js",
-    "projects/common/modules/charts/doughnut.js"
+    "projects/commercial/modules/third-party-tags/imr-worldwide-legacy.js",
+    "projects/commercial/modules/third-party-tags.js"
   ],
   "Lydia Shepherd": [],
   "sndrs": [
@@ -28,12 +19,18 @@
     "bootstraps/enhanced/facia.js",
     "bootstraps/enhanced/football.js",
     "projects/common/modules/video/onward-container.js",
-    "bootstraps/enhanced/gallery.js",
-    "projects/common/modules/check-dispatcher.js"
+    "bootstraps/enhanced/gallery.js"
   ],
   "Simon Adcock": [
-    "bootstraps/enhanced/media/main.js",
-    "bootstraps/enhanced/media/video-player.js"
+    "projects/commercial/modules/sticky-top-banner.js",
+    "projects/common/modules/commercial/membership-engagement-banner.js",
+    "projects/common/modules/article/membership-events.js",
+    "projects/common/modules/discussion/upvote.js",
+    "projects/common/modules/discussion/user-avatars.js",
+    "projects/common/modules/discussion/whole-discussion.js",
+    "projects/common/modules/experiments/tests/bookmarks-email-variants-2.js",
+    "projects/common/modules/ui/blockSharing.js",
+    "projects/common/modules/ui/clickstream.js"
   ],
   "Nicolas Long": [
     "lib/atob.js",
@@ -56,49 +53,28 @@
     "lib/page.js",
     "lib/picturefill.js",
     "lib/proximity-loader.js",
-    "projects/common/modules/video/metadata.js",
-    "projects/common/modules/crosswords/anagram-helper/clue-input.js"
+    "projects/common/modules/video/metadata.js"
   ],
   "GHaberis": [
-    "projects/admin/modules/abtests/audience-item.js",
-    "projects/admin/modules/abtests/audience.js",
-    "projects/admin/modules/abtests/participation-item.js",
-    "projects/admin/modules/abtests/participation.js",
-    "projects/common/modules/accessibility/helpers.js",
-    "projects/common/modules/crosswords/anagram-helper/clue-preview.js"
+    "projects/common/modules/onward/history.js",
+    "projects/common/modules/discussion/activity-stream.js",
+    "projects/common/modules/discussion/api.js",
+    "projects/common/modules/discussion/comment-box.js"
   ],
   "Gustav Pursche": [
-    "projects/common/modules/ui/tabs.js",
-    "projects/common/modules/social/hidden-share-toggle.js",
-    "projects/common/modules/social/pinterest.js",
-    "projects/common/modules/sport/football/football.js",
-    "projects/common/modules/sport/football/match-info.js",
-    "projects/common/modules/sport/football/match-list-live.js",
-    "projects/common/modules/sport/football/tag-page-stats.js",
-    "projects/common/modules/sport/score-board.js",
-    "projects/common/modules/tailor/fetch-data.js",
-    "projects/common/modules/ui/autoupdate.js",
-    "projects/commercial/modules/messenger/type.js"
+    "projects/common/modules/ui/tabs.js"
   ],
   "NataliaLKB": [
-    "lib/client-rects.js",
-    "projects/common/modules/ui/toggles.js",
-    "projects/common/modules/article/membership-events.js",
     "projects/common/modules/article/rich-links.js",
     "projects/common/modules/article/space-filler.js",
     "projects/common/modules/article/twitter.js",
     "projects/common/modules/asyncCallMerger.js",
     "projects/common/modules/atoms/quiz.js",
     "projects/common/modules/atoms/story-questions.js",
-    "projects/common/modules/atoms/youtube-tracking.js",
-    "projects/commercial/modules/messenger/viewport.js"
+    "projects/common/modules/atoms/youtube-tracking.js"
   ],
-  "Gideon Goldberg": [
-    "projects/commercial/modules/user-features.js"
-  ],
+  "Gideon Goldberg": [],
   "Matthew Walls": [
-    "projects/common/modules/crosswords/anagram-helper/main.js",
-    "projects/common/modules/crosswords/anagram-helper/ring.js",
     "projects/common/modules/crosswords/cell.js",
     "projects/common/modules/crosswords/classNames.js",
     "projects/common/modules/crosswords/clues.js",
@@ -117,9 +93,6 @@
     "projects/common/modules/crosswords/main.js",
     "projects/common/modules/crosswords/persistence.js",
     "projects/common/modules/crosswords/series.js",
-    "projects/common/modules/discussion/activity-stream.js",
-    "projects/common/modules/discussion/api.js",
-    "projects/common/modules/discussion/comment-box.js",
     "projects/common/modules/discussion/comment-count.js",
     "projects/common/modules/discussion/comments.js",
     "projects/common/modules/discussion/discussion-frontend.js",
@@ -127,22 +100,15 @@
     "projects/commercial/modules/sticky-mpu.js"
   ],
   "dominickendrick": [
-    "projects/common/modules/discussion/upvote.js",
-    "projects/common/modules/discussion/user-avatars.js",
-    "projects/common/modules/discussion/whole-discussion.js",
     "projects/common/modules/email/email-article.js",
     "projects/common/modules/email/email.js",
     "projects/common/modules/email/run-checks.js",
     "projects/common/modules/ui/expandable.js",
     "projects/common/modules/ui/faux-block-link.js",
     "projects/common/modules/ui/full-height.js",
-    "projects/common/modules/experiments/affix.js",
-    "projects/commercial/modules/sticky-top-banner.js"
+    "projects/common/modules/experiments/affix.js"
   ],
   "davidfurey": [
-    "projects/common/modules/experiments/tests/bookmarks-email-variants-2.js",
-    "projects/common/modules/ui/blockSharing.js",
-    "projects/common/modules/ui/clickstream.js",
     "projects/common/modules/experiments/tests/editorial-email-variants.js",
     "projects/common/modules/ui/cookiesBanner.js",
     "projects/common/modules/ui/dropdowns.js",
@@ -164,8 +130,7 @@
     "projects/common/modules/identity/api.js",
     "projects/common/modules/identity/cookierefresh.js",
     "projects/common/modules/identity/email-preferences.js",
-    "bootstraps/enhanced/notifications.js",
-    "projects/commercial/modules/third-party-tags.js"
+    "bootstraps/enhanced/notifications.js"
   ],
   "shaundillon": [
     "projects/common/modules/identity/forms.js",
@@ -175,30 +140,20 @@
     "projects/common/modules/identity/public-profile.js",
     "projects/common/modules/identity/validation-email.js",
     "projects/common/modules/lazyload.js",
-    "projects/common/modules/media/videojs-plugins/fullscreener.js",
-    "projects/common/modules/media/videojs-plugins/skip-ad.js",
     "projects/common/modules/navigation/membership.js",
     "projects/common/modules/navigation/navigation.js",
-    "projects/common/modules/navigation/profile.js",
-    "projects/commercial/modules/third-party-tags/audience-science-gateway.js"
+    "projects/common/modules/navigation/profile.js"
   ],
   "jfsoul": [
     "projects/common/modules/navigation/search.js",
-    "projects/common/modules/navigation/user-account.js",
-    "projects/common/modules/onward/breaking-news.js",
-    "projects/common/modules/onward/geo-most-popular.js",
-    "projects/common/modules/onward/history.js",
     "projects/common/modules/onward/onward-content.js",
     "projects/common/modules/onward/popular.js",
     "projects/common/modules/onward/related.js",
     "projects/common/modules/onward/tech-feedback.js",
-    "projects/common/modules/onward/tonal.js",
     "projects/common/modules/open/cta.js",
-    "projects/common/modules/preferences/main.js",
-    "projects/commercial/modules/third-party-tags/audience-science-pql.js"
+    "projects/common/modules/preferences/main.js"
   ],
   "Joseph Smith": [
-    "projects/common/modules/commercial/contributions-utilities.js",
     "projects/common/modules/experiments/tests/acquisitions-epic-liveblog.js",
     "projects/common/modules/experiments/tests/contributions-epic-always-ask-strategy.js",
     "projects/common/modules/experiments/tests/contributions-epic-ask-four-earning.js",
@@ -209,18 +164,9 @@
     "projects/common/modules/ui/message.js",
     "projects/common/modules/ui/notification-counter.js",
     "projects/common/modules/ui/relativedates.js",
-    "projects/commercial/modules/third-party-tags/imr-worldwide-legacy.js",
     "projects/commercial/modules/paidfor-band.js"
   ],
-  "Philip Wills": [
-    "projects/facia/modules/ui/container-toggle.js",
-    "projects/facia/modules/ui/lazy-load-containers.js",
-    "projects/common/modules/video/ga-helper.js",
-    "projects/facia/modules/ui/live-blog-updates.js",
-    "projects/commercial/modules/third-party-tags/imr-worldwide.js"
-  ],
-  "Santiago Villa Fernandez": [
-    "projects/common/modules/video/more-in-series-container.js"
-  ],
+  "Philip Wills": [],
+  "Santiago Villa Fernandez": [],
   "Jamie Byers": []
 }

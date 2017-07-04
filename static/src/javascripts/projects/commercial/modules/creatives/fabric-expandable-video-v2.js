@@ -3,17 +3,12 @@ import bean from 'bean';
 import fastdom from 'lib/fastdom-promise';
 import $ from 'lib/$';
 import template from 'lodash/utilities/template';
-import fabricExpandableVideoHtml
-    from 'raw-loader!commercial/views/creatives/fabric-expandable-video-v2.html';
-import fabricExpandableCtaHtml
-    from 'raw-loader!commercial/views/creatives/fabric-expandable-video-v2-cta.html';
+import fabricExpandableVideoHtml from 'raw-loader!commercial/views/creatives/fabric-expandable-video-v2.html';
+import fabricExpandableCtaHtml from 'raw-loader!commercial/views/creatives/fabric-expandable-video-v2-cta.html';
 import arrowDown from 'svgs/icon/arrow-down.svg';
 import closeCentral from 'svgs/icon/close-central.svg';
-import {
-    addTrackingPixel,
-} from 'commercial/modules/creatives/add-tracking-pixel';
-import addViewabilityTracker
-    from 'commercial/modules/creatives/add-viewability-tracker';
+import { addTrackingPixel } from 'commercial/modules/creatives/add-tracking-pixel';
+import addViewabilityTracker from 'commercial/modules/creatives/add-viewability-tracker';
 
 const FabricExpandableVideoV2 = (adSlot: Element, params: Object) => {
     let isClosed = true;
@@ -26,7 +21,9 @@ const FabricExpandableVideoV2 = (adSlot: Element, params: Object) => {
         const videoHeight = openedHeight;
         const plusIconPosition = params.showCrossInContainer.substring(3);
         const additionalParams = {
-            id: `fabric-expandable-${Math.round(Math.random() * 10000).toString(16)}`,
+            id: `fabric-expandable-${Math.round(Math.random() * 10000).toString(
+                16
+            )}`,
             desktopCTA: params.ctaDesktopImage
                 ? ctaTpl({
                       media: 'hide-until-tablet',
@@ -43,17 +40,20 @@ const FabricExpandableVideoV2 = (adSlot: Element, params: Object) => {
                       position: params.ctaMobilePosition,
                   })
                 : '',
-            showArrow: params.showMoreType === 'arrow-only' ||
+            showArrow:
+                params.showMoreType === 'arrow-only' ||
                 params.showMoreType === 'plus-and-arrow'
-                ? `<button class="ad-exp__open-chevron ad-exp__open">${arrowDown.markup}</button>`
-                : '',
-            showPlus: params.showMoreType === 'plus-only' ||
+                    ? `<button class="ad-exp__open-chevron ad-exp__open">${arrowDown.markup}</button>`
+                    : '',
+            showPlus:
+                params.showMoreType === 'plus-only' ||
                 params.showMoreType === 'plus-and-arrow'
-                ? `<button class="ad-exp__close-button ad-exp__open ad-exp__open--${plusIconPosition}">${closeCentral.markup}</button>`
-                : '',
-            videoEmbed: params.YoutubeVideoURL !== ''
-                ? `<iframe id="YTPlayer" width="100%" height="${videoHeight}" src="${params.YoutubeVideoURL}?showinfo=0&amp;rel=0&amp;controls=0&amp;fs=0&amp;title=0&amp;byline=0&amp;portrait=0" frameborder="0" class="expandable-video"></iframe>`
-                : '',
+                    ? `<button class="ad-exp__close-button ad-exp__open ad-exp__open--${plusIconPosition}">${closeCentral.markup}</button>`
+                    : '',
+            videoEmbed:
+                params.YoutubeVideoURL !== ''
+                    ? `<iframe id="YTPlayer" width="100%" height="${videoHeight}" src="${params.YoutubeVideoURL}?showinfo=0&amp;rel=0&amp;controls=0&amp;fs=0&amp;title=0&amp;byline=0&amp;portrait=0" frameborder="0" class="expandable-video"></iframe>`
+                    : '',
         };
 
         const $fabricExpandableVideo = $.create(

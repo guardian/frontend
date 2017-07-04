@@ -7,10 +7,7 @@
     left: 0;
     line-height: 1;
     margin-right: $gutter-small + ($veggie-burger-small / 2);
-    padding-top: $gs-baseline / 2;
     padding-bottom: $gs-baseline * 2;
-    overflow: auto;
-    text-transform: lowercase;
     top: 0;
     z-index: $zindex-main-menu;
 
@@ -20,6 +17,8 @@
         box-shadow: 3px 0 16px rgba(0, 0, 0, .4);
         bottom: 0;
         height: 100%;
+        overflow: auto;
+        padding-top: $gs-baseline / 2;
         position: fixed;
         right: 0;
         transition: transform .2s cubic-bezier(.23, 1, .32, 1);
@@ -44,6 +43,8 @@
         left: 50%;
         margin-left: -50vw;
         margin-right: -50vw;
+        padding-bottom: 0;
+        padding-top: 0;
         position: absolute;
         right: 50%;
         top: 100%;
@@ -58,6 +59,14 @@
         // TODO: replace with sexy animation
         @include mq(desktop) {
             display: block;
+        }
+    }
+
+    .new-header--slim.new-header--open & {
+        margin-right: ($gs-gutter / 2) + ($veggie-burger-medium / 2);
+
+        @include mq(mobileLandscape) {
+            margin-right: $gs-gutter + ($veggie-burger-medium / 2);
         }
     }
 

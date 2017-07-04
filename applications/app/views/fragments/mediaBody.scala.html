@@ -85,8 +85,8 @@
 
                                             @defining(video.elements.thumbnail.map(_.images) orElse video.mediaAtom.flatMap(_.posterImage)) {bestThumbnail =>
                                                 @bestThumbnail.map { thumbnail =>
-                                             <meta itemprop="thumbnail" content="@SeoOptimisedContentImage.bestFor(thumbnail)" />
-                                             <meta itemprop="thumbnailUrl" content="@SeoOptimisedContentImage.bestFor(thumbnail)" />
+                                             <meta itemprop="thumbnail" content="@SeoOptimisedContentImage.bestSrcFor(thumbnail)" />
+                                             <meta itemprop="thumbnailUrl" content="@SeoOptimisedContentImage.bestSrcFor(thumbnail)" />
                                                 }
                                             }
 

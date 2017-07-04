@@ -1,0 +1,18 @@
+@(qa: model.content.QandaAtom, isAmp: Boolean)(implicit request: RequestHeader)
+
+@if(!isAmp) {
+  @fragments.atoms.snippet(
+    className = "qanda",
+    label = qa.data.typeLabel.getOrElse("Q&amp;A"),
+    headline = qa.atom.title.getOrElse(""),
+    qa.id
+  ){
+    @for(eventImage <- qa.data.eventImage; master <- eventImage.master) {
+      <div class="explainer-snippet__image">
+        <img src="@master.file"/>
+      </div>
+    }
+
+    @qa.data.item.body
+  }
+}

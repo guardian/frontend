@@ -131,8 +131,8 @@ define([
             },
 
             showToggles: function () {
-                var toggles = new Toggles();
-                toggles.init(document);
+                var toggles = new Toggles.Toggles();
+                toggles.init();
                 toggles.reset();
                 Dropdowns.init();
             },
@@ -262,7 +262,7 @@ define([
 
             loadBreakingNews: function () {
                 if (config.switches.breakingNews && config.page.section !== 'identity' && !config.page.isHosted) {
-                    breakingNews().catch(function() {
+                    breakingNews.breakingNewsInit().catch(function() {
                         // breaking news may not load if local storage is unavailable - this is fine
                     });
                 }
@@ -344,7 +344,7 @@ define([
                 ['c-media-listeners', mediaListener],
                 ['c-accessibility-prefs', accessibilityPrefs.initAccessibilityPreferences],
                 ['c-pinterest', modules.initPinterest],
-                ['c-hidden-share-toggle', hiddenShareToggle],
+                ['c-hidden-share-toggle', hiddenShareToggle.hiddenShareToggle],
                 ['c-show-membership-engagement-banner', modules.membershipEngagementBanner],
                 ['c-email', modules.initEmail],
                 ['c-user-features', userFeatures.refresh.bind(userFeatures)],

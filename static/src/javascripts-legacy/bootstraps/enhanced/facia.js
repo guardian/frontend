@@ -60,7 +60,8 @@ define([
             showContainerToggle: function () {
                 var containerToggleAdd = function (context) {
                         $('.js-container--toggle', $(context || document)[0]).each(function (container) {
-                            new ContainerToggle(container).addToggle();
+                            var toggle = new ContainerToggle.ContainerToggle(container);
+                            toggle.addToggle();
                         });
                     };
                 mediator.addListeners({
@@ -86,7 +87,7 @@ define([
             showLiveblogUpdates: function () {
                 if (detect.isBreakpoint({ min: 'desktop' })) {
                     mediator.on('page:front:ready', function () {
-                        liveblogUpdates.show();
+                        liveblogUpdates.showUpdatesFromLiveBlog();
                     });
                 }
             },
@@ -104,7 +105,7 @@ define([
                 ['f-show-more', modules.showContainerShowMore],
                 ['f-container-toggle', modules.showContainerToggle],
                 ['f-geo-most-popular', modules.upgradeMostPopularToGeo],
-                ['f-lazy-load-containers', lazyLoadContainers],
+                ['f-lazy-load-containers', lazyLoadContainers.lazyLoadContainers],
                 ['f-stocks', stocks],
                 ['f-sponsorship', sponsorship],
                 ['f-weather', modules.showWeather],

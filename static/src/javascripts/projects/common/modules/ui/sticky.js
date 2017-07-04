@@ -65,10 +65,13 @@ class Sticky {
             message = 'unfixed';
         } else {
             stick = true;
-            const top = this.opts.containInParent &&
+            const top =
+                this.opts.containInParent &&
                 parentRect.bottom <= elementRect.height
-                ? Math.floor(parentRect.bottom - elementHeight - this.opts.top)
-                : this.opts.top;
+                    ? Math.floor(
+                          parentRect.bottom - elementHeight - this.opts.top
+                      )
+                    : this.opts.top;
             css = {
                 top: `${top}px`,
             };

@@ -5,7 +5,7 @@ import deferToAnalytics from 'lib/defer-to-analytics';
 import reportError from 'lib/report-error';
 import events from 'common/modules/video/events';
 import videojsOptions from 'common/modules/video/videojs-options';
-import fullscreener from 'common/modules/media/videojs-plugins/fullscreener';
+import { fullscreener } from 'common/modules/media/videojs-plugins/fullscreener';
 import { initHostedYoutube } from 'commercial/modules/hosted/youtube';
 import nextVideoAutoplay from 'commercial/modules/hosted/next-video-autoplay';
 import loadingTmpl from 'raw-loader!common/views/ui/loading.html';
@@ -21,32 +21,46 @@ const upgradeVideoPlayerAccessibility = (player: Object): void => {
     const playerEl = player.el();
 
     fastdom.write(() => {
-        playerEl.querySelectorAll('.vjs-tech').forEach(el => {
+        Array.from(playerEl.querySelectorAll('.vjs-tech')).forEach(el => {
             el.setAttribute('aria-hidden', 'true');
         });
         // Hide superfluous controls, and label useful buttons.
-        playerEl.querySelectorAll('.vjs-big-play-button').forEach(el => {
+        Array.from(
+            playerEl.querySelectorAll('.vjs-big-play-button')
+        ).forEach(el => {
             el.setAttribute('aria-hidden', 'true');
         });
-        playerEl.querySelectorAll('.vjs-current-time').forEach(el => {
+        Array.from(
+            playerEl.querySelectorAll('.vjs-current-time')
+        ).forEach(el => {
             el.setAttribute('aria-hidden', 'true');
         });
-        playerEl.querySelectorAll('.vjs-time-divider').forEach(el => {
+        Array.from(
+            playerEl.querySelectorAll('.vjs-time-divider')
+        ).forEach(el => {
             el.setAttribute('aria-hidden', 'true');
         });
-        playerEl.querySelectorAll('.vjs-duration').forEach(el => {
+        Array.from(playerEl.querySelectorAll('.vjs-duration')).forEach(el => {
             el.setAttribute('aria-hidden', 'true');
         });
-        playerEl.querySelectorAll('.vjs-embed-button').forEach(el => {
+        Array.from(
+            playerEl.querySelectorAll('.vjs-embed-button')
+        ).forEach(el => {
             el.setAttribute('aria-hidden', 'true');
         });
-        playerEl.querySelectorAll('.vjs-play-control').forEach(el => {
+        Array.from(
+            playerEl.querySelectorAll('.vjs-play-control')
+        ).forEach(el => {
             el.setAttribute('aria-label', 'video play');
         });
-        playerEl.querySelectorAll('.vjs-mute-control').forEach(el => {
+        Array.from(
+            playerEl.querySelectorAll('.vjs-mute-control')
+        ).forEach(el => {
             el.setAttribute('aria-label', 'video mute');
         });
-        playerEl.querySelectorAll('.vjs-fullscreen-control').forEach(el => {
+        Array.from(
+            playerEl.querySelectorAll('.vjs-fullscreen-control')
+        ).forEach(el => {
             el.setAttribute('aria-label', 'video fullscreen');
         });
     });
@@ -67,7 +81,7 @@ const onPlayerError = (player: Object): void => {
 };
 
 const onPlayerReady = (
-    player: { volume: () => void, on: () => void, fullscreener: () => void },
+    player: any,
     mediaId: string,
     loadingTemplate: string
 ): void => {
@@ -93,12 +107,23 @@ const onPlayerReady = (
 };
 
 // #? Should we have some type aliases for HostedPlayer, Videojs?
-const setupVideo = (video: Object, videojs: () => Object): void => {
+const setupVideo = (
+    video: HTMLElement,
+    videojsInstance: (
+        el: string | HTMLElement,
+        options: ?Object,
+        callback?: () => void
+    ) => Object
+): void => {
     const mediaId = video.getAttribute('data-media-id');
-    const player = videojs(video, videojsOptions());
+    const player = videojsInstance(video, videojsOptions());
+
+    if (!mediaId) {
+        return;
+    }
 
     player.guMediaType = 'video';
-    videojs.plugin('fullscreener', fullscreener);
+    videojsInstance.plugin('fullscreener', fullscreener);
 
     events.addContentEvents(player, mediaId, player.guMediaType);
     events.bindGoogleAnalyticsEvents(player, window.location.pathname);
@@ -161,18 +186,19 @@ export const initHostedVideo = (
                         require => {
                             resolve(
                                 require('bootstraps/enhanced/media/video-player')
+                                    .videojs
                             );
                         },
                         'video-player'
                     );
                 })
         )
-        .then(videojs => {
-            videoEl.forEach(el => {
-                setupVideo(el, videojs);
+        .then(videojsInstance => {
+            Array.from(videoEl).forEach(el => {
+                setupVideo(el, videojsInstance);
             });
 
-            youtubeIframe.forEach(initHostedYoutube);
+            Array.from(youtubeIframe).forEach(initHostedYoutube);
         })
         .then(stop, stop);
 

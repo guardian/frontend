@@ -9,9 +9,9 @@
     padding: 0 0 $gs-baseline;
 
     @include mq(desktop) {
-        color: $news-support-1;
         display: flex;
         flex-direction: column;
+        padding-bottom: 0;
     }
 
     [aria-expanded='false'] ~ & {
@@ -19,23 +19,17 @@
             display: none;
         }
     }
-
-    [aria-expanded='true'] ~ & {
-        margin-bottom: -1px;
-    }
 }
 
 .menu-group--primary {
+    @include clearfix();
     color: $news-support-1;
     padding-top: 0;
 
     @include mq(desktop) {
-        color: $news-support-1;
         flex-direction: row;
         flex-wrap: nowrap;
-        margin-bottom: $gs-row-height * 2;
         order: 1;
-        width: gs-span(10);
     }
 }
 
@@ -46,48 +40,146 @@
 
     @include mq(desktop) {
         background-color: transparent;
+        padding-bottom: 0;
+        width: 100%;
+    }
+}
+
+.menu-group--membership,
+.menu-group--editions {
+    @include mq($until: desktop) {
+        color: $guardian-brand-dark;
+        background-color: $news-main-2;
+    }
+}
+
+.menu-group--membership {
+    padding-bottom: 0;
+    position: relative;
+
+    @include mq($from: desktop, $until: leftCol) {
+        border-top: 1px solid $guardian-brand;
+        flex-wrap: nowrap;
+        width: 100%;
+    }
+
+    @include mq(desktop) {
+        flex-direction: row;
+        order: 3;
+        padding-bottom: 0;
+        padding-top: $gs-baseline;
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 100%;
+
+        @supports(display: flex) {
+            position: relative;
+            right: auto;
+            top: auto;
+        }
+    }
+
+    @include mq(leftCol) {
+        border-left: 2px solid $guardian-brand;
+        flex-direction: column;
+        margin-left: 0;
+        padding-left: $gs-gutter / 2 - 1;
+        // substracting the border-width, otherwise it breaks in Safari
+        width: gs-span(2) + $gs-gutter / 2 - 2;
+    }
+
+    @include mq(wide) {
+        width: gs-span(3) + $gs-gutter / 2 - 2;
+
+        .has-page-skin & {
+            border-top: 1px solid $guardian-brand;
+            border-left-width: 0;
+            flex-wrap: nowrap;
+            flex-direction: row;
+            width: 100%;
+            padding-left: 0;
+        }
     }
 }
 
 .menu-group--editions {
-    color: $guardian-brand-dark;
-    background-color: $news-main-2;
+    padding-bottom: 0;
 
     @include mq(desktop) {
-        background-color: transparent;
-        color: $news-support-1;
-        flex-direction: row;
-        order: 4;
-        width: gs-span(4);
+        padding-bottom: $gs-baseline * 2;
+        margin-top: $gs-baseline * 2;
+        order: 5;
+
+        @supports(display: flex) {
+            padding-bottom: 0;
+        }
     }
 
-    .menu-item:last-child .menu-group {
-        margin-bottom: -$gs-baseline;
+    .menu-group {
+        @include mq($until: desktop) {
+            color: $guardian-brand-dark;
+            background-color: darken($news-main-2, 10%);
+        }
+
+        @include mq(desktop) {
+            flex-direction: row;
+            flex-wrap: nowrap;
+        }
+    }
+
+    .menu-group .menu-item {
+        display: inline-block;
+        width: auto;
     }
 }
 
-.menu-group--lowlight {
-    background-color: darken($news-main-2, 10%);
-    color: $guardian-brand-dark;
+.menu-group--membership-actions {
+    @include mq($until: desktop) {
+        background-color: darken($news-main-2, 10%);
+        color: $guardian-brand-dark;
+    }
 
     @include mq(desktop) {
-        background-color: transparent;
-        color: $news-support-1;
+        color: #ffffff;
         flex-direction: row;
+        flex-wrap: wrap;
     }
 }
 
 .menu-group--footer {
     @include mq(desktop) {
-        order: 2;
-        padding-left: $gs-gutter / 2;
+        color: $news-support-1;
+        position: absolute;
+        right: gs-span(2) + $gs-gutter * 1.5;
+        top: 0;
         width: gs-span(2);
+
+        @supports(display: flex) {
+            order: 2;
+            position: relative;
+            right: auto;
+            top: auto;
+        }
+    }
+
+    @include mq(leftCol) {
+        margin-right: $gs-gutter / 2;
+    }
+
+    @include mq(wide) {
+        margin-right: gs-span(1) + $gs-gutter * 1.5;
+
+        .has-page-skin & {
+            margin-right: 0;
+        }
     }
 }
 
 .menu-group--search {
     @include mq(desktop) {
-        order: 3;
+        margin-right: $gs-gutter;
+        order: 4;
         width: gs-span(8);
     }
 }

@@ -38,7 +38,7 @@ const fillAdvertSlots = (): Promise<void> => {
         adverts.forEach((advert, index) => {
             dfpEnv.advertIds[advert.id] = currentLength + index;
         });
-        dfpEnv.adverts.forEach(queueAdvert);
+        adverts.forEach(queueAdvert);
 
         // Once Advert constructors are called, Switch can be called, if needed.
         prepareSwitchTag.maybeCallSwitch();

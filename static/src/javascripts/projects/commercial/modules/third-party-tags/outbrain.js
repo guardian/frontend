@@ -1,8 +1,7 @@
 // @flow
 import detect from 'lib/detect';
-import checkMediator from 'common/modules/check-mediator';
+import { waitForCheck } from 'common/modules/check-mediator';
 import { load } from './outbrain-load';
-import { tracking } from './outbrain-tracking';
 
 /*
  Loading Outbrain is dependent on successful return of high relevance component
@@ -17,62 +16,80 @@ const canLoadInstantly = () =>
             adblockInUse
     );
 
-const onIsOutbrainNonCompliant = outbrainNonCompliant => {
-    if (outbrainNonCompliant) load('nonCompliant');
-    else load();
-    tracking({
-        state: outbrainNonCompliant ? 'nonCompliant' : 'compliant',
-    });
+const onIsStoryQuestionsOnPage = isStoryQuestionsOnPage => {
+    if (isStoryQuestionsOnPage) {
+        load('nonCompliant');
+    } else {
+        load();
+    }
+
     return Promise.resolve();
+};
+
+const onIsUserInEmailAbTestAndEmailCanRun = userInEmailAbTestAndEmailCanRun => {
+    if (userInEmailAbTestAndEmailCanRun) {
+        load('nonCompliant');
+        return Promise.resolve();
+    }
+
+    return waitForCheck('isStoryQuestionsOnPage').then(
+        onIsStoryQuestionsOnPage
+    );
+};
+
+const onIsUserInContributionsAbTest = userInContributionsAbTest => {
+    if (userInContributionsAbTest) {
+        load('nonCompliant');
+        return Promise.resolve();
+    }
+
+    return waitForCheck('isUserInEmailAbTestAndEmailCanRun').then(
+        onIsUserInEmailAbTestAndEmailCanRun
+    );
 };
 
 const onIsOutbrainMerchandiseCompliant = outbrainMerchandiseCompliant => {
     if (outbrainMerchandiseCompliant) {
         load('merchandising');
-        tracking({
-            state: 'outbrainMerchandiseCompliant',
-        });
         return Promise.resolve();
     }
-    return checkMediator
-        .waitForCheck('isOutbrainNonCompliant')
-        .then(onIsOutbrainNonCompliant);
+
+    return waitForCheck('isUserInContributionsAbTest').then(
+        onIsUserInContributionsAbTest
+    );
 };
 
 const onIsOutbrainBlockedByAds = outbrainBlockedByAds => {
     if (outbrainBlockedByAds) {
-        tracking({
-            state: 'outbrainBlockedByAds',
-        });
         return Promise.resolve();
     }
-    return checkMediator
-        .waitForCheck('isOutbrainMerchandiseCompliant')
-        .then(onIsOutbrainMerchandiseCompliant);
+
+    return waitForCheck('isOutbrainMerchandiseCompliant').then(
+        onIsOutbrainMerchandiseCompliant
+    );
 };
 
 const onCanLoadInstantly = loadInstantly => {
     if (loadInstantly) {
-        return checkMediator
-            .waitForCheck('isOutbrainNonCompliant')
-            .then(onIsOutbrainNonCompliant);
+        return waitForCheck('isUserInContributionsAbTest').then(
+            onIsUserInContributionsAbTest
+        );
     }
-    return checkMediator
-        .waitForCheck('isOutbrainBlockedByAds')
-        .then(onIsOutbrainBlockedByAds);
+
+    return waitForCheck('isOutbrainBlockedByAds').then(
+        onIsOutbrainBlockedByAds
+    );
 };
 
 const onIsOutbrainDisabled = outbrainDisabled => {
     if (outbrainDisabled) {
-        tracking({
-            state: 'outbrainDisabled',
-        });
         return Promise.resolve();
     }
+
     return canLoadInstantly().then(onCanLoadInstantly);
 };
 
 const init = () =>
-    checkMediator.waitForCheck('isOutbrainDisabled').then(onIsOutbrainDisabled);
+    waitForCheck('isOutbrainDisabled').then(onIsOutbrainDisabled);
 
 export { init };

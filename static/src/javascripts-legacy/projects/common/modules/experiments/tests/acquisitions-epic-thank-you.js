@@ -12,12 +12,8 @@ define([
     acquisitionsEpicThankYouTemplate
 ) {
 
-    function isRecentContributor() {
-        return contributionsUtilities.daysSinceLastContribution < 180
-    }
-
     function isTargetReader() {
-        return userFeatures.isPayingMember() || isRecentContributor()
+        return userFeatures.isPayingMember() || userFeatures.isRecentContributor()
     }
 
     function worksWellWithPageTemplate() {
@@ -27,9 +23,7 @@ define([
     }
 
     function isTargetPage() {
-        return worksWellWithPageTemplate() &&
-            !config.page.isPaidContent &&
-            !config.page.shouldHideAdverts
+        return worksWellWithPageTemplate() && !config.page.shouldHideReaderRevenue
     }
 
     return contributionsUtilities.makeABTest({
@@ -37,7 +31,7 @@ define([
         campaignId: 'epic_thank_you',
 
         start: '2017-06-01',
-        expiry: '2017-06-19',
+        expiry: '2017-08-01',
 
         author: 'Guy Dawson',
         description: 'Bootstrap the AB test framework to use the Epic to thank readers who have already supported the Guardian',
@@ -68,7 +62,10 @@ define([
                 template: function(variant) {
                     return template(acquisitionsEpicThankYouTemplate, {
                         componentName: variant.options.componentName,
-                        membershipUrl: variant.getURL("https://www.theguardian.com/membership", variant.options.campaignCode)
+                        membershipUrl: contributionsUtilities.addTrackingCodesToUrl(
+                            "https://www.theguardian.com/membership",
+                            variant.options.campaignCode
+                        )
                     })
                 }
             }

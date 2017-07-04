@@ -1,7 +1,7 @@
 // @flow
 import reportError from 'lib/report-error';
 import dfpOrigin from 'commercial/modules/messenger/dfp-origin';
-import postMessage from 'commercial/modules/messenger/post-message';
+import { postMessage } from 'commercial/modules/messenger/post-message';
 
 const ALLOWED_HOSTS = [dfpOrigin, `${location.protocol}//${location.host}`];
 const LISTENERS = {};
@@ -18,7 +18,7 @@ const error500 = {
 
 type Event = {
     data: string,
-    origin: number,
+    origin: string,
     source: string,
 };
 
@@ -184,17 +184,19 @@ const off = (window: WindowProxy): void => {
     window.removeEventListener('message', onMessage);
 };
 
-export const register = (
+export type RegisterListeners = (
     type: string,
-    callback: () => void,
-    options: Object = {}
-): void => {
+    callback: () => ?Promise<any> | ?Array<any>,
+    options: ?Object
+) => void;
+
+export const register: RegisterListeners = (type, callback, options) => {
     if (REGISTERED_LISTENERS === 0) {
-        on(options.window || window);
+        on((options && options.window) || window);
     }
 
     /* Persistent LISTENERS are exclusive */
-    if (options.persist) {
+    if (options && options.persist) {
         LISTENERS[type] = callback;
         REGISTERED_LISTENERS += 1;
     } else {
@@ -210,7 +212,7 @@ export const register = (
 
 export const unregister = (
     type: string,
-    callback: () => void,
+    callback: () => ?Promise<any>,
     options: Object = {}
 ): void => {
     if (LISTENERS[type] === undefined) {
@@ -235,3 +237,9 @@ export const unregister = (
         off(options.window || window);
     }
 };
+
+export const init = (...modules: Array<(r: RegisterListeners) => void>) => {
+    modules.forEach(moduleInit => moduleInit(register));
+};
+
+export const _ = { onMessage };

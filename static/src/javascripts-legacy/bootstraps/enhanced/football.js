@@ -37,7 +37,7 @@ define([
 ) {
 
     function renderNav(match, callback) {
-        var matchInfo = new MatchInfo(match, config.page.pageId);
+        var matchInfo = new MatchInfo.MatchInfo(match, config.page.pageId);
 
         return matchInfo.fetch()
             .then(function (resp) {
@@ -147,7 +147,7 @@ define([
                 renderNav(match);
             } else {
                 var $h = $('.js-score'),
-                    scoreBoard = new ScoreBoard({
+                    scoreBoard = new ScoreBoard.ScoreBoard({
                         pageType: match.pageType,
                         parent: $h,
                         responseDataKey: 'matchSummary',
@@ -224,7 +224,7 @@ define([
         });
 
         page.isLiveClockwatch(function () {
-            var ml = new MatchListLive('match-day', page.isCompetition() || 'premierleague', config.dateFromSlug()),
+            var ml = new MatchListLive.MatchListLive('match-day', page.isCompetition() || 'premierleague', config.dateFromSlug()),
                 $img = $('.media-primary'),
                 $matchListContainer = $.create('<div class="football-matches__container" data-link-name="football-matches-clockwatch"></div>')
                                           .css({ minHeight: $img[0] ? $img[0].offsetHeight : 0 });
@@ -288,7 +288,7 @@ define([
             window.location = this.value;
         });
 
-        tagPageStats();
+        tagPageStats.tagPageStats();
     }
 
     return {

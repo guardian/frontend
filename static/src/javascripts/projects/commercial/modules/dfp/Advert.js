@@ -5,9 +5,7 @@ import detect from 'lib/detect';
 import { getCurrentTime } from 'lib/user-timing';
 import { defineSlot } from 'commercial/modules/dfp/define-slot';
 import { updateAdvertMetric } from 'commercial/modules/dfp/performance-logging';
-import {
-    breakpointNameToAttribute,
-} from 'commercial/modules/dfp/breakpoint-name-to-attribute';
+import { breakpointNameToAttribute } from 'commercial/modules/dfp/breakpoint-name-to-attribute';
 
 type Resolver = (x: boolean) => void;
 
@@ -24,9 +22,11 @@ const createSizeMapping = (attr: string): Array<AdSize> =>
             size => (size === 'fluid' ? 'fluid' : size.split(',').map(Number))
         );
 
-const getAdBreakpointSizes = (advertNode: Element): AdSizes =>
+const getAdBreakpointSizes = (advertNode: HTMLElement): AdSizes =>
     detect.breakpoints.reduce((sizes, breakpoint) => {
-        const data = advertNode.getAttribute(`data-${breakpointNameToAttribute(breakpoint.name)}`);
+        const data = advertNode.getAttribute(
+            `data-${breakpointNameToAttribute(breakpoint.name)}`
+        );
         if (data) {
             sizes[breakpoint.name] = createSizeMapping(data);
         }
@@ -35,7 +35,7 @@ const getAdBreakpointSizes = (advertNode: Element): AdSizes =>
 
 class Advert {
     id: string;
-    node: Element;
+    node: HTMLElement;
     sizes: AdSizes;
     size: ?AdSize;
     slot: any;
@@ -59,7 +59,7 @@ class Advert {
         lazyWaitComplete: ?number,
     };
 
-    constructor(adSlotNode: Element) {
+    constructor(adSlotNode: HTMLElement) {
         const sizes: AdSizes = getAdBreakpointSizes(adSlotNode);
         const slotDefinition = defineSlot(adSlotNode, sizes);
 

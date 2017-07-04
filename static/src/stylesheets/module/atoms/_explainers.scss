@@ -62,6 +62,7 @@
 }
 
 .explainer-snippet__body {
+    overflow: hidden;
     // > p {
     //     @include faux-bullet-point;
     //
@@ -159,6 +160,7 @@
 
     .explainer-snippet__label {
         color: $news-support-1;
+        margin-top: 2px;
     }
 
     .explainer-snippet__handle {

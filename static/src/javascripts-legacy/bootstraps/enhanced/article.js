@@ -14,7 +14,8 @@ define([
     'common/modules/atoms/story-questions',
     'bootstraps/enhanced/article-liveblog-common',
     'bootstraps/enhanced/trail',
-    'ophan/ng'
+    'ophan/ng',
+    'projects/journalism/snippet-feedback'
 ], function (
     qwery,
     $,
@@ -30,7 +31,8 @@ define([
     storyQuestions,
     articleLiveblogCommon,
     trail,
-    ophan
+    ophan,
+    snippetFeedback
 ) {
     var modules = {
         initCmpParam: function () {
@@ -47,7 +49,7 @@ define([
             var mainColumn = qwery('.js-content-main-column');
             // only render when we have >1000px or more (enough space for ad + most popular)
             if (mainColumn[0] && mainColumn[0].offsetHeight > 1150 && detect.isBreakpoint({ min: 'desktop' })) {
-                geoMostPopular.render();
+                geoMostPopular.geoMostPopular.render();
             } else {
                 mediator.emit('modules:onward:geo-most-popular:cancel');
             }
@@ -71,6 +73,7 @@ define([
         mediator.emit('page:article:ready');
         quiz.handleCompletion();
         storyQuestions.init();
+        snippetFeedback.SnippetFeedback();
     };
 
     return {

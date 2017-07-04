@@ -3,7 +3,7 @@ import bean from 'bean';
 import fastdom from 'lib/fastdom-promise';
 import $ from 'lib/$';
 import ElementInview from 'lib/element-inview';
-import videojs from 'bootstraps/enhanced/media/video-player';
+import { videojs } from 'bootstraps/enhanced/media/video-player';
 import { onVideoContainerNavigation } from 'common/modules/atoms/youtube';
 import detect from 'lib/detect';
 
@@ -44,9 +44,10 @@ const getPositionState = (position: number, length: number): Position => ({
 
 const reducers = {
     NEXT: function next(previousState: State): State {
-        const position = previousState.position >= previousState.length
-            ? previousState.position
-            : previousState.position + 1;
+        const position =
+            previousState.position >= previousState.length
+                ? previousState.position
+                : previousState.position + 1;
 
         updateYouTubeVideo(
             document.querySelector(`.js-video-playlist-item-${position - 1}`)
@@ -59,9 +60,8 @@ const reducers = {
     },
 
     PREV: function prev(previousState: State): State {
-        const position = previousState.position <= 0
-            ? 0
-            : previousState.position - 1;
+        const position =
+            previousState.position <= 0 ? 0 : previousState.position - 1;
         updateYouTubeVideo(
             document.querySelector(`.js-video-playlist-item-${position + 1}`)
         );
@@ -161,7 +161,9 @@ const update = (state: State, container: Element): Promise<number> => {
         );
         if (activeEl != null)
             activeEl.classList.remove('video-playlist__item--active');
-        const newActive = container.querySelector(`.js-video-playlist-item-${state.position}`);
+        const newActive = container.querySelector(
+            `.js-video-playlist-item-${state.position}`
+        );
         if (newActive != null)
             newActive.classList.add('video-playlist__item--active');
 
@@ -183,7 +185,9 @@ const update = (state: State, container: Element): Promise<number> => {
             videojs($(el)[0]).pause();
         });
 
-        const activePlaylistItem = container.querySelector(`.js-video-playlist-item-${state.position}`);
+        const activePlaylistItem = container.querySelector(
+            `.js-video-playlist-item-${state.position}`
+        );
         if (activePlaylistItem != null)
             activePlaylistItem.classList.add('video-playlist__item--active');
 
@@ -262,14 +266,12 @@ const createStore = (
     };
 };
 
-export default {
-    init: (container: Element) => {
-        const initialState = getInitialState(container);
-        const store = createStore(reducer, initialState);
+export const videoContainerInit = (container: Element) => {
+    const initialState = getInitialState(container);
+    const store = createStore(reducer, initialState);
 
-        setupDispatches(store.dispatch, container);
-        store.subscribe(() => {
-            update(store.getState(), container);
-        });
-    },
+    setupDispatches(store.dispatch, container);
+    store.subscribe(() => {
+        update(store.getState(), container);
+    });
 };
