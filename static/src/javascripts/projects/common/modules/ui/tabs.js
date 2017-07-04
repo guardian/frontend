@@ -1,5 +1,7 @@
 // @flow
 
+import fastdom from 'lib/fastdom-promise';
+
 const NAV_CLASSES = [
     'tabs__tab--selected',
     'tone-colour',
@@ -8,75 +10,91 @@ const NAV_CLASSES = [
 
 const getTabTarget = (tab: HTMLElement): ?string => tab.getAttribute('href');
 
-const hidePane = (tab: HTMLElement, pane: HTMLElement): void => {
+const hidePane = (tab: HTMLElement, pane: HTMLElement): Promise<void> => {
     const tabList: HTMLElement = (tab.parentNode: any);
 
-    if (tabList) {
-        tabList.setAttribute('aria-selected', 'false');
-        NAV_CLASSES.forEach(className => tabList.classList.remove(className));
-    }
+    return fastdom.write(() => {
+        if (tabList) {
+            tabList.setAttribute('aria-selected', 'false');
+            NAV_CLASSES.forEach(className =>
+                tabList.classList.remove(className)
+            );
+        }
 
-    pane.classList.add('u-h');
+        pane.classList.add('u-h');
+    });
 };
 
-const showPane = (tab: HTMLElement, pane: HTMLElement): void => {
+const showPane = (tab: HTMLElement, pane: HTMLElement): Promise<void> => {
     const tabList: HTMLElement = (tab.parentNode: any);
 
-    if (tabList) {
-        tabList.setAttribute('aria-selected', 'true');
-        NAV_CLASSES.forEach(className => tabList.classList.add(className));
-    }
+    return fastdom.write(() => {
+        if (tabList) {
+            tabList.setAttribute('aria-selected', 'true');
+            NAV_CLASSES.forEach(className => tabList.classList.add(className));
+        }
 
-    pane.classList.remove('u-h', 'modern-hidden');
-    pane.focus();
+        pane.classList.remove('u-h', 'modern-hidden');
+        pane.focus();
+    });
 };
 
 const init = (): void => {
-    [...document.querySelectorAll('.tabs')].forEach(tab => {
-        const nav = tab.querySelector('.js-tabs');
+    const findTabs = (): Promise<Array<HTMLElement>> =>
+        fastdom.read(() => [...document.querySelectorAll('.tabs')]);
 
-        if (!nav) {
-            return;
-        }
+    findTabs().then(tabs => {
+        tabs.forEach(tab => {
+            const nav = tab.querySelector('.js-tabs');
 
-        const { tabsInitialized } = nav.dataset;
-
-        if (tabsInitialized === 'true') {
-            return;
-        }
-
-        nav.setAttribute('data-tabs-initialized', 'true');
-        nav.addEventListener('click', (event: Event) => {
-            const target: HTMLElement = (event.target: any);
-
-            if (!target || target.nodeName !== 'A') {
+            if (!nav) {
                 return;
             }
 
-            event.preventDefault();
+            const { tabsInitialized } = nav.dataset;
 
-            const currentTab = tab.querySelector('.tabs__tab--selected a');
-            const nextPaneTarget = getTabTarget(target);
-
-            if (nextPaneTarget) {
-                const nextPane = tab.querySelector(nextPaneTarget);
-
-                if (nextPane) {
-                    showPane(target, nextPane);
-                }
+            if (tabsInitialized === 'true') {
+                return;
             }
 
-            if (currentTab) {
-                const currentPaneTarget = getTabTarget(currentTab);
+            fastdom.write(() => {
+                nav.setAttribute('data-tabs-initialized', 'true');
+            });
 
-                if (currentPaneTarget) {
-                    const currentPane = tab.querySelector(currentPaneTarget);
+            nav.addEventListener('click', (event: Event) => {
+                const target: HTMLElement = (event.target: any);
 
-                    if (currentPane) {
-                        hidePane(currentTab, currentPane);
+                if (!target || target.nodeName !== 'A') {
+                    return;
+                }
+
+                event.preventDefault();
+
+                const currentTab = tab.querySelector('.tabs__tab--selected a');
+                const nextPaneTarget = getTabTarget(target);
+
+                if (nextPaneTarget) {
+                    const nextPane = tab.querySelector(nextPaneTarget);
+
+                    if (nextPane) {
+                        showPane(target, nextPane);
                     }
                 }
-            }
+
+                if (currentTab) {
+                    const currentPaneTarget = getTabTarget(currentTab);
+
+                    if (currentPaneTarget) {
+                        const currentPane = tab.querySelector(
+                            currentPaneTarget
+                        );
+
+                        if (currentPane) {
+                            hidePane(currentTab, currentPane);
+                        }
+                    }
+                }
+            });
         });
     });
 };
