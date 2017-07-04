@@ -63,7 +63,7 @@ define([
 
     ready = function () {
         trail();
-        articleLiveblogCommon();
+        articleLiveblogCommon.init();
         modules.initRightHandComponent();
         modules.initCmpParam();
         modules.initQuizListeners();

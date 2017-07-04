@@ -8,7 +8,7 @@ define([
     fullHeight
 ) {
     var ready = function () {
-        articleLiveblogCommon();
+        articleLiveblogCommon.init();
         trail();
         fullHeight.init();
     };
