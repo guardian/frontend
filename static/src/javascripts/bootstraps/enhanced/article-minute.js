@@ -1,19 +1,12 @@
-define([
-    'bootstraps/enhanced/article-liveblog-common',
-    'bootstraps/enhanced/trail',
-    'common/modules/ui/full-height'
-], function (
-    articleLiveblogCommon,
-    trail,
-    fullHeight
-) {
-    var ready = function () {
-        articleLiveblogCommon();
-        trail();
-        fullHeight.init();
-    };
+import articleLiveblogCommon from 'bootstraps/enhanced/article-liveblog-common';
+import trail from 'bootstraps/enhanced/trail';
+import fullHeight from 'common/modules/ui/full-height';
+var ready = function() {
+    articleLiveblogCommon();
+    trail();
+    fullHeight.init();
+};
 
-    return {
-        init: ready
-    };
-});
+export default {
+    init: ready
+};
