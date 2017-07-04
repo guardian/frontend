@@ -7,6 +7,13 @@
         flex-direction: column;
         margin-bottom: $gs-baseline / 3;
     }
+
+    .has-page-skin & {
+        @include mq(wide) {
+            flex-direction: row;
+            margin-bottom: 0;
+        }
+    }
 }
 
 .menu-user__avatar {

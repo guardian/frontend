@@ -14,7 +14,8 @@ define([
     'common/modules/atoms/story-questions',
     'bootstraps/enhanced/article-liveblog-common',
     'bootstraps/enhanced/trail',
-    'ophan/ng'
+    'ophan/ng',
+    'projects/journalism/snippet-feedback'
 ], function (
     qwery,
     $,
@@ -30,7 +31,8 @@ define([
     storyQuestions,
     articleLiveblogCommon,
     trail,
-    ophan
+    ophan,
+    snippetFeedback
 ) {
     var modules = {
         initCmpParam: function () {
@@ -71,6 +73,7 @@ define([
         mediator.emit('page:article:ready');
         quiz.handleCompletion();
         storyQuestions.init();
+        snippetFeedback.SnippetFeedback();
     };
 
     return {

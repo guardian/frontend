@@ -211,6 +211,7 @@ object ContentTypeFormat {
   implicit val qandaAtomForm = Json.format[model.content.QandaAtom]
   implicit val guideAtomForm = Json.format[model.content.GuideAtom]
   implicit val profileAtomForm = Json.format[model.content.ProfileAtom]
+  implicit val timelineItemForm = Json.format[model.content.TimelineItem]
   implicit val timelineAtomForm = Json.format[model.content.TimelineAtom]
 
   implicit val atomsWrite = Json.writes[Atoms]
