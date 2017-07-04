@@ -1,13 +1,11 @@
 /*eslint-disable no-new*/
 import qwery from 'qwery';
 import $ from 'lib/$';
-import config from 'lib/config';
 import detect from 'lib/detect';
 import mediator from 'lib/mediator';
 import urlutils from 'lib/url';
 import richLinks from 'common/modules/article/rich-links';
 import membershipEvents from 'common/modules/article/membership-events';
-import ab from 'common/modules/experiments/ab';
 import geoMostPopular from 'common/modules/onward/geo-most-popular';
 import quiz from 'common/modules/atoms/quiz';
 import storyQuestions from 'common/modules/atoms/story-questions';
