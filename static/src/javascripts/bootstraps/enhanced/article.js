@@ -1,67 +1,50 @@
 /*eslint-disable no-new*/
-define([
-    'qwery',
-    'lib/$',
-    'lib/config',
-    'lib/detect',
-    'lib/mediator',
-    'lib/url',
-    'common/modules/article/rich-links',
-    'common/modules/article/membership-events',
-    'common/modules/experiments/ab',
-    'common/modules/onward/geo-most-popular',
-    'common/modules/atoms/quiz',
-    'common/modules/atoms/story-questions',
-    'bootstraps/enhanced/article-liveblog-common',
-    'bootstraps/enhanced/trail',
-    'ophan/ng',
-    'projects/journalism/snippet-feedback'
-], function (
-    qwery,
-    $,
-    config,
-    detect,
-    mediator,
-    urlutils,
-    richLinks,
-    membershipEvents,
-    ab,
-    geoMostPopular,
-    quiz,
-    storyQuestions,
-    articleLiveblogCommon,
-    trail,
-    ophan,
-    snippetFeedback
-) {
-    var modules = {
-        initCmpParam: function () {
+import qwery from 'qwery';
+import $ from 'lib/$';
+import config from 'lib/config';
+import detect from 'lib/detect';
+import mediator from 'lib/mediator';
+import urlutils from 'lib/url';
+import richLinks from 'common/modules/article/rich-links';
+import membershipEvents from 'common/modules/article/membership-events';
+import ab from 'common/modules/experiments/ab';
+import geoMostPopular from 'common/modules/onward/geo-most-popular';
+import quiz from 'common/modules/atoms/quiz';
+import storyQuestions from 'common/modules/atoms/story-questions';
+import articleLiveblogCommon from 'bootstraps/enhanced/article-liveblog-common';
+import trail from 'bootstraps/enhanced/trail';
+import ophan from 'ophan/ng';
+import snippetFeedback from 'projects/journalism/snippet-feedback';
+var modules = {
+        initCmpParam: function() {
             var allvars = urlutils.getUrlVars();
 
             if (allvars.CMP) {
-                $('.element-pass-cmp').each(function (el) {
+                $('.element-pass-cmp').each(function(el) {
                     el.src = el.src + '?CMP=' + allvars.CMP;
                 });
             }
         },
 
-        initRightHandComponent: function () {
+        initRightHandComponent: function() {
             var mainColumn = qwery('.js-content-main-column');
             // only render when we have >1000px or more (enough space for ad + most popular)
-            if (mainColumn[0] && mainColumn[0].offsetHeight > 1150 && detect.isBreakpoint({ min: 'desktop' })) {
+            if (mainColumn[0] && mainColumn[0].offsetHeight > 1150 && detect.isBreakpoint({
+                    min: 'desktop'
+                })) {
                 geoMostPopular.geoMostPopular.render();
             } else {
                 mediator.emit('modules:onward:geo-most-popular:cancel');
             }
         },
 
-        initQuizListeners: function () {
+        initQuizListeners: function() {
             // This event is for older-style quizzes implemented as interactives. See https://github.com/guardian/quiz-builder
             mediator.on('quiz/ophan-event', ophan.record);
         }
     },
 
-    ready = function () {
+    ready = function() {
         trail();
         articleLiveblogCommon();
         modules.initRightHandComponent();
@@ -76,8 +59,7 @@ define([
         snippetFeedback.SnippetFeedback();
     };
 
-    return {
-        init: ready,
-        modules: modules // exporting for LiveBlog bootstrap to use
-    };
-});
+export default {
+    init: ready,
+    modules: modules // exporting for LiveBlog bootstrap to use
+};
