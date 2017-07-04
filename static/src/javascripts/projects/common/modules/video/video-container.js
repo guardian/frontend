@@ -44,9 +44,10 @@ const getPositionState = (position: number, length: number): Position => ({
 
 const reducers = {
     NEXT: function next(previousState: State): State {
-        const position = previousState.position >= previousState.length
-            ? previousState.position
-            : previousState.position + 1;
+        const position =
+            previousState.position >= previousState.length
+                ? previousState.position
+                : previousState.position + 1;
 
         updateYouTubeVideo(
             document.querySelector(`.js-video-playlist-item-${position - 1}`)
@@ -59,9 +60,8 @@ const reducers = {
     },
 
     PREV: function prev(previousState: State): State {
-        const position = previousState.position <= 0
-            ? 0
-            : previousState.position - 1;
+        const position =
+            previousState.position <= 0 ? 0 : previousState.position - 1;
         updateYouTubeVideo(
             document.querySelector(`.js-video-playlist-item-${position + 1}`)
         );
