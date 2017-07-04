@@ -1,11 +1,11 @@
 // @flow
 import React from 'react/addons';
-import { inlineSvg } from 'common/views/svgs';
-import ClueInput from 'common/modules/crosswords/anagram-helper/clue-input';
-import { CluePreview } from 'common/modules/crosswords/anagram-helper/clue-preview';
-import Ring from 'common/modules/crosswords/anagram-helper/ring';
+import { markup as closeCentralIcon } from 'svgs/icon/close-central.svg';
 import helpers from 'common/modules/crosswords/helpers';
 import shuffle from 'lodash/collections/shuffle';
+import { ClueInput } from './clue-input';
+import { CluePreview } from './clue-preview';
+import { Ring } from './ring';
 
 const AnagramHelper = React.createClass({
     getInitialState() {
@@ -15,7 +15,7 @@ const AnagramHelper = React.createClass({
         };
     },
 
-    componentWillReceiveProps(next: any) {
+    componentWillReceiveProps(next: Object) {
         // reset on clue change
         if (next.clue !== this.props.focussedEntry) {
             this.reset();
@@ -38,11 +38,8 @@ const AnagramHelper = React.createClass({
      * array to flag letters that are already entered in the puzzle, and
      * shuffle it.
      *
-     * @param  word     word to shuffle
-     * @param  entries  array of entries (i.e. grid cells)
-     *
      */
-    shuffleWord(word: string, entries: Array<{ value: string }>) {
+    shuffleWord(word: string, entries: { value: string }[]) {
         const wordEntries = entries
             .map(entry => entry.value.toLowerCase())
             .filter(entry => word.includes(entry))
@@ -53,6 +50,7 @@ const AnagramHelper = React.createClass({
             word.trim().split('').sort().reduce((acc, letter) => {
                 const [head, ...tail] = acc.entries;
                 const entered = head === letter.toLowerCase();
+
                 return {
                     letters: acc.letters.concat({
                         value: letter,
@@ -84,13 +82,13 @@ const AnagramHelper = React.createClass({
         }
     },
 
-    canShuffle() {
-        return this.state.clueInput && this.state.clueInput.length > 0;
+    canShuffle(): boolean {
+        return !!this.state.clueInput && this.state.clueInput.length > 0;
     },
 
     render() {
         const closeIcon = {
-            __html: inlineSvg('closeCentralIcon'),
+            __html: closeCentralIcon,
         };
         const clue = helpers.getAnagramClueData(
             this.props.entries,
@@ -153,9 +151,9 @@ const AnagramHelper = React.createClass({
             React.createElement(
                 'button',
                 {
-                    className: `button button--large ${!this.canShuffle()
-                        ? 'button--tertiary'
-                        : ''}`,
+                    className: `button button--large ${this.canShuffle()
+                        ? ''
+                        : 'button--tertiary'}`,
                     onClick: this.shuffle,
                     'data-link-name': 'Shuffle',
                 },

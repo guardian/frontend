@@ -34,7 +34,7 @@
 
     @include mq(desktop) {
         min-width: 0;
-        padding-right: 16px;
+        padding-right: $gs-gutter;
         transition: min-width 200ms ease;
         will-change: min-width;
 
@@ -57,7 +57,7 @@
 
         // Slashes switch to left hand side for open animation
         @include mq(desktop) {
-            left: -12px;
+            left: -$gs-gutter / 1.5;
             margin: 0;
             position: absolute;
             top: 0;

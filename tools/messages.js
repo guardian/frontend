@@ -4,15 +4,16 @@ const takeWhile = require('lodash.takewhile');
 
 const notify = (message, userOptions = {}, type = 'log') => {
     // Set the default text colour for info to black as white was hard to see
-    const options = type === 'info'
-        ? Object.assign(
-              {
-                  colour: 'black',
-                  codeColour: 'white',
-              },
-              userOptions
-          )
-        : userOptions;
+    const options =
+        type === 'info'
+            ? Object.assign(
+                  {
+                      colour: 'black',
+                      codeColour: 'white',
+                  },
+                  userOptions
+              )
+            : userOptions;
 
     try {
         // eslint-disable-next-line global-require
