@@ -75,11 +75,12 @@ object Fields {
     val publishedBeforeCutoff = apiContent.webPublicationDate.exists(_.toJodaDateTime < cutoffDate)
     val isPaidContent = Tags.make(apiContent).isPaidContent
     val isSensitive = apiContent.fields.flatMap(_.sensitive).getOrElse(false)
+    val shouldHideAdverts = apiContent.fields.flatMap(_.shouldHideAdverts).getOrElse(false)
 
     apiContent.fields.flatMap(_.shouldHideReaderRevenue) match {
       case _ if isPaidContent => true
       case Some(shouldHide) => shouldHide
-      case None if publishedBeforeCutoff => isSensitive
+      case None if publishedBeforeCutoff => isSensitive || shouldHideAdverts
       case None => false
     }
   }

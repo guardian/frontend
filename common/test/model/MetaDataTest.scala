@@ -28,7 +28,11 @@ class MetaDataTest extends FlatSpec with Matchers {
   val dateBeforeCutoff = new DateTime("2017-07-02T12:00:00.000Z")
   val dateAfterCutoff = new DateTime("2017-07-04T12:00:00.000Z")
 
-  private def contentApi(shouldHideReaderRevenue: Option[Boolean], isSensitive: Boolean, isPaid: Boolean, publicationDate: DateTime) = {
+  private def contentApi( shouldHideReaderRevenue: Option[Boolean] = None,
+                          isPaid: Boolean = false,
+                          isSensitive: Boolean = false,
+                          shouldHideAdverts: Boolean = false,
+                          publicationDate: DateTime) = {
     ApiContent(
       id = "/content",
       sectionId = None,
@@ -39,30 +43,46 @@ class MetaDataTest extends FlatSpec with Matchers {
       apiUrl = "apiUrl",
       tags = defaultTag :: (if (isPaid) List(paidContentTag) else Nil),
       elements = None,
-      fields = Some(ContentFields(sensitive = Some(isSensitive), shouldHideReaderRevenue = shouldHideReaderRevenue))
+      fields = Some(
+        ContentFields(
+          sensitive = Some(isSensitive),
+          shouldHideReaderRevenue = shouldHideReaderRevenue,
+          shouldHideAdverts = Some(shouldHideAdverts)
+        )
+      )
     )
   }
 
   "shouldHideReaderRevenue" should "hide if shouldHideReaderRevenue is unset, and content is sensitive and published before cutoff" in {
-    val content = contentApi(shouldHideReaderRevenue = None, isSensitive = true, isPaid = false, publicationDate = dateBeforeCutoff)
+    val content = contentApi(isSensitive = true, publicationDate = dateBeforeCutoff)
+    Fields.shouldHideReaderRevenue(content, cutoffDate) should be(true)
+  }
+
+  it should "hide if shouldHideReaderRevenue is unset, and content is shouldHideAdverts and published before cutoff" in {
+    val content = contentApi(shouldHideAdverts = true, publicationDate = dateBeforeCutoff)
     Fields.shouldHideReaderRevenue(content, cutoffDate) should be(true)
   }
 
   it should "not hide if shouldHideReaderRevenue is unset and published after cutoff, even if sensitive" in {
-    val content = contentApi(shouldHideReaderRevenue = None, isSensitive = true, isPaid = false, publicationDate = dateAfterCutoff)
+    val content = contentApi(isSensitive = true, publicationDate = dateAfterCutoff)
+    Fields.shouldHideReaderRevenue(content, cutoffDate) should be(false)
+  }
+
+  it should "not hide if shouldHideReaderRevenue is unset and published after cutoff, even if shouldHideAdverts" in {
+    val content = contentApi(shouldHideAdverts = true, publicationDate = dateAfterCutoff)
     Fields.shouldHideReaderRevenue(content, cutoffDate) should be(false)
   }
 
   it should "not hide if shouldHideReaderRevenue is false and published before cutoff, even if sensitive" in {
-    val content = contentApi(shouldHideReaderRevenue = Some(false), isSensitive = true, isPaid = false, publicationDate = dateBeforeCutoff)
+    val content = contentApi(shouldHideReaderRevenue = Some(false), isSensitive = true, publicationDate = dateBeforeCutoff)
     Fields.shouldHideReaderRevenue(content, cutoffDate) should be(false)
   }
 
   it should "hide if shouldHideReaderRevenue is true, regardless of publication date or sensitive flag" in {
-    val sensitiveOldContent = contentApi(shouldHideReaderRevenue = Some(true), isSensitive = true, isPaid = false, publicationDate = dateBeforeCutoff)
-    val sensitiveNewContent = contentApi(shouldHideReaderRevenue = Some(true), isSensitive = true, isPaid = false, publicationDate = dateBeforeCutoff)
-    val notSensitiveOldContent = contentApi(shouldHideReaderRevenue = Some(true), isSensitive = false, isPaid = false, publicationDate = dateAfterCutoff)
-    val notSensitiveNewContent = contentApi(shouldHideReaderRevenue = Some(true), isSensitive = false, isPaid = false, publicationDate = dateAfterCutoff)
+    val sensitiveOldContent = contentApi(shouldHideReaderRevenue = Some(true), isSensitive = true, publicationDate = dateBeforeCutoff)
+    val sensitiveNewContent = contentApi(shouldHideReaderRevenue = Some(true), isSensitive = true, publicationDate = dateBeforeCutoff)
+    val notSensitiveOldContent = contentApi(shouldHideReaderRevenue = Some(true), publicationDate = dateAfterCutoff)
+    val notSensitiveNewContent = contentApi(shouldHideReaderRevenue = Some(true), publicationDate = dateAfterCutoff)
 
     Fields.shouldHideReaderRevenue(sensitiveOldContent, cutoffDate) should be(true)
     Fields.shouldHideReaderRevenue(sensitiveNewContent, cutoffDate) should be(true)
@@ -73,8 +93,8 @@ class MetaDataTest extends FlatSpec with Matchers {
   it should "hide if content is paid, regardless of shouldHideReaderRevenue flag, publication date or sensitive flag" in {
     val sensitiveOldContent = contentApi(shouldHideReaderRevenue = Some(false), isSensitive = true, isPaid = true, publicationDate = dateBeforeCutoff)
     val sensitiveNewContent = contentApi(shouldHideReaderRevenue = Some(true), isSensitive = true, isPaid = true, publicationDate = dateBeforeCutoff)
-    val notSensitiveOldContent = contentApi(shouldHideReaderRevenue = None, isSensitive = false, isPaid = true, publicationDate = dateAfterCutoff)
-    val notSensitiveNewContent = contentApi(shouldHideReaderRevenue = None, isSensitive = false, isPaid = true, publicationDate = dateAfterCutoff)
+    val notSensitiveOldContent = contentApi(shouldHideReaderRevenue = None, isPaid = true, publicationDate = dateAfterCutoff)
+    val notSensitiveNewContent = contentApi(shouldHideReaderRevenue = None, isPaid = true, publicationDate = dateAfterCutoff)
 
     Fields.shouldHideReaderRevenue(sensitiveOldContent, cutoffDate) should be(true)
     Fields.shouldHideReaderRevenue(sensitiveNewContent, cutoffDate) should be(true)
