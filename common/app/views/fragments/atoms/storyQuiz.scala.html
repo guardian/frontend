@@ -66,10 +66,12 @@
           <p class="storyquiz__result" data-min-score="@result.minScore">@result.title</p>
         }
 
-        <div class="storyquiz__next">
-          <button class="button storyquiz__reset" type="button">Try again</button>
-          <a href="#" class="button button--primary">More on @quiz.title</a>
-        </div>
+        @for(answer <- quiz.results.headOption) {
+          <div class="storyquiz__next">
+            <button class="button storyquiz__reset" type="button">Try again</button>
+            <a href="@answer.shareText" class="button button--primary">More on @quiz.title</a>
+          </div>
+        }
       </div>
     </div>
   </div>
