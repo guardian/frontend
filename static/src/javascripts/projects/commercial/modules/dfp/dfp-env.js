@@ -29,7 +29,7 @@ export const dfpEnv: DfpEnv = {
     /* sonobiEnabled: boolean. Set to true if sonobi real-time-bidding is enabled*/
     sonobiEnabled:
         (config.switches.sonobiHeaderBidding || getUrlVars().sonobi) &&
-            !(config.switches.preflightAdCall && !!window.esi),
+        !(config.switches.preflightAdCall && !!window.esi),
 
     /* preFlightAdCallEnabled: boolean. Set to true if real-time bidding should be performed through pre-flight ad call */
     preFlightAdCallEnabled: config.switches.preflightAdCall && !!window.esi,

@@ -18,9 +18,9 @@ const isAdblockSwitchOn = (): boolean => config.switches.adblock;
 
 const showAdblockMsg = (): Promise<boolean> =>
     isAdblockSwitchOn() &&
-        !isPayingMember() &&
-        visitedMoreThanOnce() &&
-        notMobile()
+    !isPayingMember() &&
+    visitedMoreThanOnce() &&
+    notMobile()
         ? adblockInUse()
         : Promise.resolve(false);
 

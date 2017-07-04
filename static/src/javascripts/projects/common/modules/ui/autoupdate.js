@@ -74,9 +74,8 @@ const autoUpdate = (opts?: autoUpdateOptions): void => {
     const toastButtonRefresh = (): void => {
         fastdom.write(() => {
             if (unreadBlocksNo > 0) {
-                const updateText = unreadBlocksNo > 1
-                    ? ' new updates'
-                    : ' new update';
+                const updateText =
+                    unreadBlocksNo > 1 ? ' new updates' : ' new update';
                 $toastButton.removeClass('toast__button--closed');
                 $(toastContainer).addClass('toast__container--open');
                 $toastText.html(unreadBlocksNo + updateText);
