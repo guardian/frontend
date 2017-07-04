@@ -55,8 +55,7 @@
     "lib/atob.js",
     "lib/clamp.js",
     "lib/element-inview.js",
-    "lib/page.js",
-    "projects/common/modules/ui/tabs.js"
+    "lib/page.js"
   ],
   "NataliaLKB": [
     "projects/common/modules/article/rich-links.js",
