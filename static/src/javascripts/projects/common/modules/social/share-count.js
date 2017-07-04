@@ -26,9 +26,10 @@ const incrementShareCount = (amount: number): void => {
 
         const displayCount = parseInt(shareCount.toFixed(0), 10);
         const formattedDisplayCount = integerCommas(displayCount);
-        const shortDisplayCount = displayCount > 10000
-            ? `${Math.round(displayCount / 1000)}k`
-            : displayCount;
+        const shortDisplayCount =
+            displayCount > 10000
+                ? `${Math.round(displayCount / 1000)}k`
+                : displayCount;
 
         fastdom.write(() => {
             $fullValueEls.text(formattedDisplayCount);

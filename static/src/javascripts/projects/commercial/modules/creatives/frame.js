@@ -23,9 +23,8 @@ class Frame {
         this.params.externalLinkIcon = addClassesAndTitle(externalLink.markup, [
             'frame__external-link-icon',
         ]);
-        this.params.target = this.params.newWindow === 'yes'
-            ? '_blank'
-            : '_self';
+        this.params.target =
+            this.params.newWindow === 'yes' ? '_blank' : '_self';
         this.params.id = `frame-${Math.floor(Math.random() * 10000).toString(
             16
         )}`;
