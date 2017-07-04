@@ -1,6 +1,6 @@
 .menu-item {
     box-sizing: border-box;
-    overflow-x: hidden;
+    overflow: hidden;
     position: relative;
     width: 100%;
 
@@ -49,6 +49,13 @@
             margin-left: $gs-gutter / 2;
             width: gs-span(2) + $gs-gutter / 2;
         }
+
+        .has-page-skin & {
+            @include mq(wide) {
+                margin-left: $gs-gutter / 2;
+                width: gs-span(2) + $gs-gutter / 2;
+            }
+        }
     }
 }
 
@@ -66,6 +73,12 @@
     @include mq(leftCol) {
         width: 100%;
     }
+
+    .has-page-skin & {
+        @include mq(wide) {
+            width: gs-span(4) + $gs-gutter / 2;
+        }
+    }
 }
 
 .menu-item--membership {
@@ -75,6 +88,12 @@
 
     @include mq(leftCol) {
         width: 100%;
+    }
+
+    .has-page-skin & {
+        @include mq(wide) {
+            width: gs-span(6) + $gs-gutter;
+        }
     }
 }
 

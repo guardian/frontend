@@ -46,9 +46,7 @@ if (!commercialFeatures.adFree) {
         ['cm-articleAsideAdverts', articleAsideAdvertsInit, true],
         ['cm-articleBodyAdverts', articleBodyAdvertsInit],
         ['cm-liveblogAdverts', initLiveblogAdverts, true],
-        ['cm-stickyTopBanner', stickyTopBanner.init],
-        ['cm-paidContainers', paidContainers],
-        ['cm-paidforBand', paidforBand.init]
+        ['cm-stickyTopBanner', stickyTopBanner.init]
     );
 }
 
