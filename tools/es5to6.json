@@ -53,7 +53,7 @@
     "lib/page.js",
     "lib/picturefill.js",
     "lib/proximity-loader.js",
-    "projects/common/modules/video/metadata.js",
+    "projects/common/modules/video/metadata.js"
   ],
   "GHaberis": [
     "projects/common/modules/onward/history.js",
