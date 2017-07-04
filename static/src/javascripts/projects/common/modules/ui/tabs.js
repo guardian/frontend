@@ -39,7 +39,7 @@ const showPane = (tab: HTMLElement, pane: HTMLElement): Promise<void> => {
     });
 };
 
-const init = (): void => {
+const init = (): Promise<void> => {
     const findTabs = (): Promise<Array<HTMLElement>> =>
         fastdom.read(() => [...document.querySelectorAll('.tabs')]);
 
