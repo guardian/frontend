@@ -15,6 +15,16 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
+  val VideoSlotsSwitch = Switch(
+    SwitchGroup.Commercial,
+    "keep-video-ad-slots-open",
+    "Deactivates the sizecallback for videos (620x1) that hides the slot.",
+    owners = Seq(Owner.withGithub("JonNorman")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 7, 12),
+    exposeClientSide = true
+  )
+
   val SurveySwitch = Switch(
     SwitchGroup.Commercial,
     "surveys",
