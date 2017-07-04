@@ -65,7 +65,7 @@ trait ABTestSwitches {
     "This places the epic (slice design) in the middle of UK election-related interactives",
     owners = Seq(Owner.withGithub("desbo")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 7, 3),
+    sellByDate = new LocalDate(2018, 7, 3),
     exposeClientSide = true
   )
 
@@ -85,7 +85,7 @@ trait ABTestSwitches {
     "This tests some different designs of the liveblog epic",
     owners = Seq(Owner.withGithub("joelochlann")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 7, 3),
+    sellByDate = new LocalDate(2017, 7, 10),
     exposeClientSide = true
   )
 
@@ -149,24 +149,13 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-
   Switch(
     ABTests,
     "ab-acquisitions-epic-thank-you",
     "Bootstrap the AB test framework to use the Epic to thank readers who have already supported the Guardian",
     owners = Seq(Owner.withGithub("Mullefa")),
     safeState = On,
-    sellByDate = new LocalDate(2017, 7, 3),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-acquisitions-thrasher-uk-election",
-    "Bootstrap the AB test framework to show a different UK election thrasher to supporters/non-supporters respectively",
-    owners = Seq(Owner.withGithub("Mullefa"), Owner.withGithub("joelochlann")),
-    safeState = On,
-    sellByDate = new LocalDate(2017, 7, 3),
+    sellByDate = new LocalDate(2017, 8, 1),
     exposeClientSide = true
   )
 
