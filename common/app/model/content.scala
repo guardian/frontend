@@ -3,10 +3,9 @@ package model
 import java.net.URL
 
 import com.gu.contentapi.client.model.{v1 => contentapi}
-import com.gu.facia.api.utils.SpecialReport
 import com.gu.facia.api.{utils => fapiutils}
-import com.gu.facia.client.models.{MetaDataCommonFields, TrailMetaData}
-import com.gu.targeting.client.{Campaign, ReportFields}
+import com.gu.facia.client.models.TrailMetaData
+import com.gu.targeting.client.Campaign
 import common._
 import conf.Configuration
 import conf.switches.Switches._
@@ -304,17 +303,6 @@ final case class Content(
   val media: Seq[MediaAtom] = atoms.map(_.media).getOrElse(Nil)
 
   val nonCompliantOutbrainAmp = (hasStoryPackage && tags.series.nonEmpty) || (tags.series.length > 1)
-}
-
-object CardStylePicker {
-  def apply(content: contentapi.Content, trailMetaData: MetaDataCommonFields): com.gu.facia.api.utils.CardStyle = {
-    specialReportFromTargeting(content) getOrElse fapiutils.CardStyle(content, TrailMetaData.empty)
-  }
-
-  private def specialReportFromTargeting(content: contentapi.Content): Option[com.gu.facia.api.utils.CardStyle] = {
-    val campaigns = _root_.commercial.targeting.CampaignAgent.getCampaignsForTags(content.tags.map(_.id))
-    campaigns.filterNot(_.fields == ReportFields).map(_ => SpecialReport).headOption
-  }
 }
 
 object Content {
