@@ -62,11 +62,11 @@ const storageKeySummary = 'gu.history.summary';
 
 const today = Math.floor(Date.now() / 86400000); // 1 day in ms
 
-let historyCache;
-let summaryCache;
-let popularFilteredCache;
-let topNavItemsCache;
-let inMegaNav = false;
+let historyCache: ?Array<Array<any>>;
+let summaryCache: ?Object;
+let popularFilteredCache: ?Array<Array<any>>;
+let topNavItemsCache: ?Array<string>;
+let inMegaNav: boolean = false;
 
 const saveHistory = (history: Array<Array<any>>): void => {
     historyCache = history;
