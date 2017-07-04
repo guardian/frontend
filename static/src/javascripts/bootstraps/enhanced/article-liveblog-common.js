@@ -28,9 +28,7 @@ const initOpenCta = (): void => {
 };
 
 const initFence = (): void => {
-    $('.fenced').each(el => {
-        fence.render(el);
-    });
+    $('.fenced').each(fence.render);
 };
 
 const initTwitter = (): void => {
