@@ -179,4 +179,15 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2017, 7, 31),
     exposeClientSide = true
   )
+
+  Switch(
+    ABTests,
+    "ab-membership-engagement-banner-digipack-price-test",
+    "Find the optimal price point for the digipack",
+    owners = Seq(Owner.withGithub("jranks123")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 8, 3),
+    exposeClientSide = true
+  )
+
 }
