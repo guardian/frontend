@@ -177,6 +177,14 @@ const bootStandard = (): void => {
     // Set adtest query if url param declares it
     setAdTestCookie();
 
+    // Remove the old ad-free cookie - we can delete this line in a few days
+    removeCookie('GU_AFU');
+
+    // If we turn off the ad-free trial, immediately remove the cookie
+    if (!config.switches.adFreeSubscriptionTrial) {
+        removeCookie('GU_AF1');
+    }
+
     // Images
     upgradePictures();
     listen();
