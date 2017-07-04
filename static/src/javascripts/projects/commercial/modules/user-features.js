@@ -24,16 +24,16 @@ const adFreeDataIsPresent = (): boolean => {
 };
 
 const persistResponse = (JsonResponse: () => void) => {
+    const switches = config.switches;
     const expiryDate = new Date();
     expiryDate.setDate(expiryDate.getDate() + 1);
     addCookie(USER_FEATURES_EXPIRY_COOKIE, expiryDate.getTime().toString());
     addCookie(PAYING_MEMBER_COOKIE, !JsonResponse.adblockMessage);
 
-    removeCookie('GU_AFU'); // delete the old cookie - we can remove this line again in the future
-
-    if (config.switches.adFreeSubscriptionTrial && JsonResponse.adFree) {
+    if (switches.adFreeSubscriptionTrial && JsonResponse.adFree) {
         addCookie(AD_FREE_USER_COOKIE, expiryDate.getTime().toString());
     } else {
+        removeCookie('GU_AFU'); // delete the old cookie - we can remove this line again in the future
         removeCookie(AD_FREE_USER_COOKIE);
     }
 
@@ -106,10 +106,7 @@ const isPayingMember = (): boolean =>
     // If the user is logged in, but has no cookie yet, play it safe and assume they're a paying user
     identity.isUserLoggedIn() && getCookie(PAYING_MEMBER_COOKIE) !== 'false';
 
-const isAdFreeUser = (): boolean =>
-    config.switches.adFreeSubscriptionTrial &&
-    adFreeDataIsPresent() &&
-    !adFreeDataIsOld();
+const isAdFreeUser = (): boolean => adFreeDataIsPresent() && !adFreeDataIsOld();
 
 const toDate = (dateStr: string): Date => {
     const parts = Array.from(dateStr.split('-'), s => parseInt(s, 10));
