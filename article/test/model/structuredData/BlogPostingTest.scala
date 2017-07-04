@@ -1,18 +1,17 @@
 package model.structuredData
 
-import model.{Article, Canonical, Content, ContentType, LiveBlogHelpers}
-import org.scalatest.{FlatSpec, Matchers}
-import play.api.libs.ws.WSClient
-import test._
 import akka.actor.ActorSystem
 import akka.stream.ActorMaterializer
-import play.api.libs.json.{JsObject, JsValue}
-import play.api.libs.ws._
+import model.{Article, Canonical, Content, LiveBlogHelpers}
+import org.scalatest.{FlatSpec, Matchers}
+import play.api.libs.json.JsValue
+import play.api.libs.ws.WSClient
 import play.api.libs.ws.ahc.AhcWSClient
+import test._
 
 import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.{Await, Future}
 import scala.concurrent.duration._
+import scala.concurrent.{Await, Future}
 import scala.language.postfixOps
 
 class BlogPostingTest extends FlatSpec with Matchers with WithTestContentApiClient {
@@ -20,7 +19,6 @@ class BlogPostingTest extends FlatSpec with Matchers with WithTestContentApiClie
   def getArticle(url: String): Future[Article] = {
 
     // Given capi ID, retrieve an Article instance
-    // TODO: This should only attempt to get it from local data, it should never actually go to capi.
 
     val query = testContentApiClient.item(url)
       .showTags("all")
