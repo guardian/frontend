@@ -30,10 +30,11 @@ const persistResponse = (JsonResponse: () => void) => {
     addCookie(USER_FEATURES_EXPIRY_COOKIE, expiryDate.getTime().toString());
     addCookie(PAYING_MEMBER_COOKIE, !JsonResponse.adblockMessage);
 
+    removeCookie('GU_AFU'); // delete the old cookie - we can remove this line again in the future
+
     if (switches.adFreeSubscriptionTrial && JsonResponse.adFree) {
         addCookie(AD_FREE_USER_COOKIE, expiryDate.getTime().toString());
     } else {
-        removeCookie('GU_AFU'); // delete the old cookie - we can remove this line again in the future
         removeCookie(AD_FREE_USER_COOKIE);
     }
 
