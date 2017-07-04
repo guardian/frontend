@@ -40,17 +40,20 @@ const FabricExpandableVideoV2 = (adSlot: Element, params: Object) => {
                       position: params.ctaMobilePosition,
                   })
                 : '',
-            showArrow: params.showMoreType === 'arrow-only' ||
+            showArrow:
+                params.showMoreType === 'arrow-only' ||
                 params.showMoreType === 'plus-and-arrow'
-                ? `<button class="ad-exp__open-chevron ad-exp__open">${arrowDown.markup}</button>`
-                : '',
-            showPlus: params.showMoreType === 'plus-only' ||
+                    ? `<button class="ad-exp__open-chevron ad-exp__open">${arrowDown.markup}</button>`
+                    : '',
+            showPlus:
+                params.showMoreType === 'plus-only' ||
                 params.showMoreType === 'plus-and-arrow'
-                ? `<button class="ad-exp__close-button ad-exp__open ad-exp__open--${plusIconPosition}">${closeCentral.markup}</button>`
-                : '',
-            videoEmbed: params.YoutubeVideoURL !== ''
-                ? `<iframe id="YTPlayer" width="100%" height="${videoHeight}" src="${params.YoutubeVideoURL}?showinfo=0&amp;rel=0&amp;controls=0&amp;fs=0&amp;title=0&amp;byline=0&amp;portrait=0" frameborder="0" class="expandable-video"></iframe>`
-                : '',
+                    ? `<button class="ad-exp__close-button ad-exp__open ad-exp__open--${plusIconPosition}">${closeCentral.markup}</button>`
+                    : '',
+            videoEmbed:
+                params.YoutubeVideoURL !== ''
+                    ? `<iframe id="YTPlayer" width="100%" height="${videoHeight}" src="${params.YoutubeVideoURL}?showinfo=0&amp;rel=0&amp;controls=0&amp;fs=0&amp;title=0&amp;byline=0&amp;portrait=0" frameborder="0" class="expandable-video"></iframe>`
+                    : '',
         };
 
         const $fabricExpandableVideo = $.create(

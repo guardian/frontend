@@ -35,9 +35,8 @@ const DATA = {
     },
 };
 const cookieVal = getCookie(COOKIE_IMPRESSION_KEY);
-const impressions = cookieVal && !isNaN(cookieVal)
-    ? parseInt(cookieVal, 10)
-    : 0;
+const impressions =
+    cookieVal && !isNaN(cookieVal) ? parseInt(cookieVal, 10) : 0;
 const tmp =
     '<img src="<%=LOGO%>" class="app__logo" alt="Guardian App logo" /><div class="app__cta"><h4 class="app__heading">The Guardian app</h4>' +
     '<p class="app__copy">Instant alerts. Offline reading.<br/>Tailored to you.</p>' +

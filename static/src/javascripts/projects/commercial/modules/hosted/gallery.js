@@ -332,12 +332,10 @@ class HostedGallery {
 
     fadeContent(e: Event) {
         const length = this.$images.length;
-        const scrollTop = e.target instanceof HTMLElement
-            ? e.target.scrollTop
-            : 0;
-        const scrollHeight = e.target instanceof HTMLElement
-            ? e.target.scrollHeight
-            : 0;
+        const scrollTop =
+            e.target instanceof HTMLElement ? e.target.scrollTop : 0;
+        const scrollHeight =
+            e.target instanceof HTMLElement ? e.target.scrollHeight : 0;
         const progress =
             Math.round(length * (scrollTop / scrollHeight) * 100) / 100;
         const fractionProgress = progress % 1;

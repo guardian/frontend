@@ -61,9 +61,10 @@ const onLoad = () => {
     const subBrandApId =
         guMetadata[sectionFromMeta] || guMetadata['brand-only'];
 
-    const sectionRef = sectionFromMeta in guMetadata
-        ? sectionFromMeta
-        : 'The Guardian - brand only';
+    const sectionRef =
+        sectionFromMeta in guMetadata
+            ? sectionFromMeta
+            : 'The Guardian - brand only';
 
     const nolggGlobalParams = {
         sfcode: 'dcr',

@@ -55,7 +55,7 @@ const CluePreview = React.createClass({
             'div',
             {
                 className: `crossword__anagram-helper__clue-preview ${entries.length >=
-                    9
+                9
                     ? 'long'
                     : ''}`,
             },

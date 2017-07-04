@@ -139,9 +139,9 @@ const enhanceVideo = (
                 embed: {
                     embeddable:
                         !config.page.isFront &&
-                            config.switches.externalVideoEmbeds &&
-                            (config.page.contentType === 'Video' ||
-                                $el.attr('data-embeddable') === 'true'),
+                        config.switches.externalVideoEmbeds &&
+                        (config.page.contentType === 'Video' ||
+                            $el.attr('data-embeddable') === 'true'),
                     location: `${config.page
                         .externalEmbedHost}/embed/video/${embedPath ||
                         config.page.pageId}`,
@@ -162,7 +162,7 @@ const enhanceVideo = (
                     type: 'Video Expired',
                     message:
                         'This video has been removed. This could be because it launched early, ' +
-                            'our rights have expired, there was a legal issue, or for another reason.',
+                        'our rights have expired, there was a legal issue, or for another reason.',
                 });
                 player.bigPlayButton.dispose();
                 player.errorDisplay.open();
