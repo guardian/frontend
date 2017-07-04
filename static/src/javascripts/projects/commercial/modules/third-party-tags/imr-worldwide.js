@@ -1,7 +1,5 @@
 // @flow
 import config from 'lib/config';
-// The Nielsen NetRatings tag. Also known as IMR worldwide.
-const imrWorldwideUrl = '//secure-dcr.imrworldwide.com/novms/js/2/ggcmb510.js';
 
 const guMetadata = {
     books: 'P5033A084-E9BF-453A-91D3-C558751D9A85',
@@ -87,8 +85,9 @@ const onLoad = () => {
     nSdkInstance.ggPM('staticstart', dcrStaticMetadata);
 };
 
-export default {
-    shouldRun: config.switches.imrWorldwide,
-    url: imrWorldwideUrl,
-    onLoad,
-};
+// The Nielsen NetRatings tag. Also known as IMR worldwide.
+const url = '//secure-dcr.imrworldwide.com/novms/js/2/ggcmb510.js';
+
+const shouldRun = config.switches.imrWorldwide;
+
+export { shouldRun, url, onLoad };

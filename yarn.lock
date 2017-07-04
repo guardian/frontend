@@ -6109,6 +6109,10 @@ range-parser@^1.2.0, range-parser@~1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/range-parser/-/range-parser-1.2.0.tgz#f49be6b487894ddc40dcc94a322f611092e00d5e"
 
+rangefix@^0.2.5:
+  version "0.2.5"
+  resolved "https://registry.yarnpkg.com/rangefix/-/rangefix-0.2.5.tgz#bce78c921b23582bae211f597464a591fd1a94f9"
+
 raven-js@^3.16.0:
   version "3.16.0"
   resolved "https://registry.yarnpkg.com/raven-js/-/raven-js-3.16.0.tgz#a799da4fdd04c63943f67deb93daa0ecfe101eab"

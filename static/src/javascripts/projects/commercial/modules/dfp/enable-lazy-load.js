@@ -17,11 +17,12 @@ const enableLazyLoad = (advert: Advert): void => {
             });
         } else {
             mediator.on('window:throttledScroll', onScroll);
-            onScroll();
         }
     }
     if (dfpEnv.lazyLoadObserve) {
         observer.observe(advert.node);
+    } else {
+        onScroll();
     }
 };
 
