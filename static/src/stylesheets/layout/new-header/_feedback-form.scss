@@ -11,14 +11,16 @@
     bottom: $gs-baseline;
     margin-bottom: 0;
 
-    @include mq(leftCol) {
-        width: $gs-column-width * 2 + $gs-gutter;
-        position: absolute;
-        right: 0;
-    }
-
     @include mq(wide) {
-        width: $gs-column-width * 3;
+        width: gs-span(3) - 34px;
+        position: absolute;
+        right: $gs-gutter;
+
+        .has-page-skin & {
+            width: auto;
+            position: relative;
+            right: auto;
+        }
     }
 }
 
@@ -28,18 +30,25 @@
 
 .feedback-form__icon {
     fill: $news-support-1;
-    margin-right: $gs-gutter / 2;
+    margin-right: $gs-gutter / 4;
     position: relative;
     top: $gs-baseline / 2;
 
-    @include mq(leftCol) {
+    @include mq(wide) {
         position: absolute;
-        top: 2px;
-        left: -$gs-gutter * 2;
+        top: 0;
+        left: -$gs-gutter / 2;
+        transform: translateX(-100%);
+
+        .has-page-skin & {
+            position: relative;
+            top: $gs-baseline / 2;
+            left: 0;
+        }
     }
 }
 
 .feedback-form__icon__svg {
-    height: 25px;
-    width: 25px;
+    height: 24px;
+    width: 24px;
 }

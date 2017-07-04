@@ -4,14 +4,22 @@ import common.Edition
 import common.editions.Us
 import org.joda.time.DateTime
 import play.api.libs.json.Json
-import play.api.mvc.RequestHeader
+import org.joda.time.format.ISODateTimeFormat
+
+import scala.util.Try
 
 object ForecastResponse {
   implicit val jsonWrites = Json.writes[ForecastResponse]
 
   def fromAccuweather(forecastResponse: accuweather.ForecastResponse): ForecastResponse = {
+    val dateTime = Try(
+      ISODateTimeFormat
+        .dateTimeNoMillis()
+        .withOffsetParsed()
+        .parseDateTime(forecastResponse.DateTime)
+    ).toOption
     ForecastResponse(
-      forecastResponse.EpochDateTime,
+      dateTime,
       forecastResponse.WeatherIcon,
       forecastResponse.IconPhrase,
       forecastResponse.Temperature.Unit match {
@@ -26,20 +34,17 @@ object ForecastResponse {
 }
 
 case class ForecastResponse(
-  epochDateTime: Long,
+  dateTime: Option[DateTime],
   weatherIcon: Int,
   weatherText: String,
   temperature: Temperatures
 ) {
-  def temperatureForEdition(edition: Edition) = {
+  def temperatureForEdition(edition: Edition): String = {
     edition match {
       case Us => s"${temperature.imperial.round}°F"
       case _ => s"${temperature.metric.round}°C"
     }
   }
 
-  def hourString(implicit request: RequestHeader) = {
-    val edition = Edition(request)
-    new DateTime(epochDateTime * 1000L).withZone(edition.timezone).toString("HH:00")
-  }
+  def hourString: String = dateTime.map(_.toString("HH:00")).getOrElse("")
 }
