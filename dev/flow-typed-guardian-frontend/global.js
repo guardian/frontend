@@ -11,4 +11,7 @@ declare var require: {
     void,
 };
 
-declare var NOLCMB: Object // This is needed for the Nielsen NetRatings tag. Also known as IMR worldwide.
+// These are needed for IMR worldwide, part of Commercial third-party-tags
+declare var NOLCMB: Object; // used in imr-worldwide
+
+declare var nol_t: (config: any) => any;  // used in imr-worldwide-legacy
