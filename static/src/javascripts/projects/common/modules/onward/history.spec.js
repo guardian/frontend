@@ -1,4 +1,5 @@
 // @flow
+import Chance from 'chance';
 import {
     logHistory,
     logSummary,
@@ -11,7 +12,6 @@ import {
     mostViewedSeries,
     _,
 } from 'common/modules/onward/history';
-
 import { local as localStorageStub } from 'lib/storage';
 
 jest.mock('lib/storage', () => ({
@@ -30,60 +30,6 @@ jest.mock('lib/url', () => ({
 jest.mock('fastdom');
 
 const contains = [['/p/3kvgc', 1], ['/p/3kx8f', 1], ['/p/3kx7e', 1]];
-
-const max = [
-    ['/p/3kxct', 1],
-    ['/p/3kxch', 1],
-    ['/p/3kx7n', 1],
-    ['/p/3kx8c', 1],
-    ['/p/3kx9p', 1],
-    ['/p/3kx8d', 1],
-    ['/p/3kx76', 1],
-    ['/p/3kvn8', 1],
-    ['/p/3kx7v', 1],
-    ['/p/3kx6b', 1],
-    ['/p/3kx6e', 1],
-    ['/p/3kx6n', 1],
-    ['/p/3kxvm', 1],
-    ['/p/3jqcq', 1],
-    ['/p/3kx66', 1],
-    ['/p/3kvv3', 1],
-    ['/p/3kx3k', 1],
-    ['/p/3kx2q', 1],
-    ['/p/3kvty', 1],
-    ['/p/3kxvc', 1],
-    ['/p/3kvz5', 1],
-    ['/p/3kvkt', 1],
-    ['/p/3kvjk', 1],
-    ['/p/3kvgc', 1],
-    ['/p/3kvc6', 1],
-    ['/p/3kvdv', 1],
-    ['/p/3kvbh', 1],
-    ['/p/3kvct', 1],
-    ['/p/3kv7v', 1],
-    ['/p/3kvxk', 1],
-    ['/p/3kv9f', 1],
-    ['/p/3kv9g', 1],
-    ['/p/3jqcp', 1],
-    ['/p/3kv5t', 1],
-    ['/p/3kv7b', 1],
-    ['/p/3kv5j', 1],
-    ['/p/3kv6h', 1],
-    ['/p/3kvx8', 1],
-    ['/p/3jpnc', 1],
-    ['/p/3jqnc', 1],
-    ['/p/3jqm3', 1],
-    ['/p/3jqzk', 1],
-    ['/p/3jqz5', 1],
-    ['/p/3jqyf', 1],
-    ['/p/3jqzg', 1],
-    ['/p/3jqmn', 1],
-    ['/p/3jqk5', 1],
-    ['/p/3jqha', 1],
-    ['/p/3jqg5', 1],
-    ['/p/3jqf9', 1],
-    ['/p/g7sf9', 1],
-];
 
 const today = Math.floor(Date.now() / 86400000); // 1 day in ms
 
@@ -171,6 +117,13 @@ describe('history', () => {
     });
 
     it('should only store 50 latest entries', () => {
+        const chance = new Chance();
+        const max = [];
+
+        while (max.length < 50) {
+            max.push([chance.string(), 1]);
+        }
+
         localStorageStub.set('gu.history', max);
 
         logHistory(pageConfig);

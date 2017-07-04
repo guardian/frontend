@@ -1,5 +1,4 @@
 // @flow
-/* eslint-disable no-useless-escape */
 /*
  Module: history.js
  Description: Gets and sets users reading history
@@ -9,8 +8,6 @@ import $ from 'lib/$';
 import { local } from 'lib/storage';
 import { getPath } from 'lib/url';
 import isObject from 'lodash/objects/isObject';
-import pick from 'lodash/objects/pick';
-import mapValues from 'lodash/objects/mapValues';
 
 import type { bonzo } from 'bonzo';
 
@@ -106,31 +103,38 @@ const getSummary = (): Object => {
 };
 
 const seriesSummary = (): Object => {
-    const views = item => item.reduce((acc, record) => acc + record[1], 0);
+    const views = item => item.reduce((acc, val) => acc + val[1], 0);
+    const summaryTags = getSummary().tags;
 
-    const seriesTags = pick(getSummary().tags, (v, k) => k.includes('series'));
+    const seriesTags = Object.keys(summaryTags).reduce((acc, val) => {
+        if (val.includes('series')) {
+            acc[val] = summaryTags[val];
+        }
 
-    const seriesTagsSummary = mapValues(
-        seriesTags,
-        tag => views(tag[1]) + views(tag[2])
-    );
+        return acc;
+    }, {});
+
+    const seriesTagsSummary = Object.keys(seriesTags).reduce((acc, val) => {
+        const tag = seriesTags[val];
+
+        acc[val] = views(tag[1]) + views(tag[2]);
+
+        return acc;
+    }, {});
 
     return seriesTagsSummary;
 };
 
 const mostViewedSeries = (): string => {
     const summary = seriesSummary();
-    let series = '';
 
-    Object.keys(summary).forEach(key => {
-        const views = summary[key];
-
-        if (!series || views > summary[series]) {
-            series = key;
-        }
-    });
-
-    return series;
+    return Object.keys(summary).reduce(
+        (topSeries, currentSeries) =>
+            summary[topSeries] > summary[currentSeries]
+                ? topSeries
+                : currentSeries,
+        ''
+    );
 };
 
 const deleteFromSummary = (tag: string): void => {
@@ -146,8 +150,7 @@ const isRevisit = (pageId: string): boolean => {
     return !!(visited && visited[1] > 1);
 };
 
-const pruneSummary = (summary: Object, mockToday?: ?number) => {
-    const newToday = mockToday || today;
+const pruneSummary = (summary: Object, newToday: number = today) => {
     const updateBy = newToday - summary.periodEnd;
 
     if (updateBy !== 0) {
@@ -220,12 +223,13 @@ const getPopular = (opts: ?Object): Array<Array<string>> => {
         opts
     );
 
-    tids = op.whitelist
-        ? tids.filter(tid => op.whitelist.indexOf(tid) > -1)
-        : tids;
-    tids = op.blacklist
-        ? tids.filter(tid => op.blacklist.indexOf(tid) === -1)
-        : tids;
+    if (op.whitelist) {
+        tids = tids.filter(tid => op.whitelist.includes(tid));
+    }
+
+    if (op.blacklist) {
+        tids = tids.filter(tid => !op.blacklist.includes(tid));
+    }
 
     return tids
         .map(tid => {
@@ -258,7 +262,7 @@ const getContributors = (): Array<any> => {
     const tags = getSummary().tags;
 
     Object.keys(tags).forEach(tagId => {
-        if (tagId.indexOf('profile/') === 0) {
+        if (tagId.startsWith('profile/')) {
             contibutors.push(tags[tagId]);
         }
     });
@@ -266,25 +270,28 @@ const getContributors = (): Array<any> => {
     return contibutors;
 };
 
-const collapsePath = (t: string): string => {
+const collapsePath = (path: string): string => {
     const isEditionalisedRx = new RegExp(
-        `^(${editions.join('|')})\/(${editionalised.join('|')})$`
+        `^(${editions.join('|')})/(${editionalised.join('|')})$`
     );
-    const stripEditionRx = new RegExp(`^(${editions.join('|')})\/`);
+    const stripEditionRx = new RegExp(`^(${editions.join('|')})/`);
 
-    if (t) {
-        let path = t.replace(/^\/|\/$/g, '');
+    if (path) {
+        let newPath = path.replace(/^\/|\/$/g, '');
 
-        if (path.match(isEditionalisedRx)) {
-            path = path.replace(stripEditionRx, '');
+        if (newPath.match(isEditionalisedRx)) {
+            newPath = newPath.replace(stripEditionRx, '');
         }
 
-        path = path.split('/');
+        const newPathSplit = newPath.split('/');
 
-        path = path.length === 2 && path[0] === path[1] ? [path[0]] : path;
+        if (newPathSplit.length === 2 && newPathSplit[0] === newPathSplit[1]) {
+            newPath = [newPathSplit[0]].join('/');
+        }
 
-        return path.join('/');
+        return newPath;
     }
+
     return '';
 };
 
@@ -329,7 +336,7 @@ const reset = (): void => {
 };
 
 const logHistory = (pageConfig: Object): void => {
-    const pageId = pageConfig.pageId;
+    const { pageId } = pageConfig;
     let history;
     let foundCount = 0;
 
