@@ -124,7 +124,7 @@ const getAdvertSizeByIndex = (advert: ?Advert, index: number): ?number => {
     }
 };
 
-const onFirstRender = (): Promise<any> =>
+const onFirstRender = (): void => {
     trackAdRender(topSlotId).then(isRendered => {
         if (isRendered) {
             const advert = getAdvertById(topSlotId);
@@ -158,6 +158,7 @@ const onFirstRender = (): Promise<any> =>
                 .then(resizeStickyBanner);
         }
     });
+};
 
 const initState = (): Promise<any> =>
     fastdom
