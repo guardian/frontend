@@ -22,13 +22,17 @@
     }
 
     @include mq(mobileLandscape) {
-        //Align with the 'i' in 'theguardian'
         right: $gutter-large;
     }
 
     @include mq(tablet) {
         right: $gutter-xlarge;
     }
+
+    @include mq(leftCol) {
+        right: $gutter-xxlarge;
+    }
+
 
     // menu is open
     .new-header--open & {

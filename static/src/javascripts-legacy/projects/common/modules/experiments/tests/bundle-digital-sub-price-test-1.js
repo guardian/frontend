@@ -50,7 +50,6 @@ define([
         audienceCriteria: 'Non-paying UK edition readers - mobile resolution and above',
         audience: 0.1,
         audienceOffset: 0,
-        showForSensitive: false,
         useTargetingTool: false,
 
         overrideCanRun: false,
@@ -59,7 +58,7 @@ define([
                 config.page.edition.toUpperCase() === 'UK' &&
                 config.page.contentType === 'Article' &&
                 !config.page.isMinuteArticle &&
-                commercialFeatures.commercialFeatures.canReasonablyAskForMoney
+                contributionsUtilities.shouldShowReaderRevenue()
         },
 
         variants: [

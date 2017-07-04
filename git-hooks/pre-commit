@@ -47,7 +47,7 @@ execa
             return execa(path.resolve(docs, 'generate-toc.sh'), ['>', readme], {
                 stdio: 'inherit',
             })
-                .then(() => execa.sync('git', [readme]))
+                .then(() => execa.sync('git', ['add', readme]))
                 .then(() => staged);
         }
         return staged;

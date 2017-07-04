@@ -46,6 +46,11 @@ final case class Commercial(
  * MetaData represents a page on the site, whether facia or content
  */
 object Fields {
+  // This is the time from which journalists start using the reader revenue flag in Composer.
+  // For content published before then, we need handle it as we did before, taking
+  // the sensitive flag to mean "don't display reader revenue asks"
+  private val shouldHideReaderRevenueCutoffDate = new DateTime("2017-07-03T12:00:00.000Z")
+
   def make(apiContent: contentapi.Content): Fields = {
     Fields (
       trailText = apiContent.fields.flatMap(_.trailText),
@@ -59,11 +64,25 @@ object Fields {
       displayHint = apiContent.fields.flatMap(_.displayHint).getOrElse(""),
       isLive = apiContent.fields.flatMap(_.liveBloggingNow).getOrElse(false),
       sensitive = apiContent.fields.flatMap(_.sensitive),
-      shouldHideReaderRevenue = apiContent.fields.flatMap(_.shouldHideReaderRevenue),
+      shouldHideReaderRevenue = Some(shouldHideReaderRevenue(apiContent, shouldHideReaderRevenueCutoffDate)),
       legallySensitive = apiContent.fields.flatMap(_.legallySensitive),
       firstPublicationDate = apiContent.fields.flatMap(_.firstPublicationDate).map(_.toJodaDateTime),
       lang = apiContent.fields.flatMap(_.lang)
     )
+  }
+
+  def shouldHideReaderRevenue(apiContent: contentapi.Content, cutoffDate: DateTime): Boolean = {
+    val publishedBeforeCutoff = apiContent.webPublicationDate.exists(_.toJodaDateTime < cutoffDate)
+    val isPaidContent = Tags.make(apiContent).isPaidContent
+    val isSensitive = apiContent.fields.flatMap(_.sensitive).getOrElse(false)
+    val shouldHideAdverts = apiContent.fields.flatMap(_.shouldHideAdverts).getOrElse(false)
+
+    apiContent.fields.flatMap(_.shouldHideReaderRevenue) match {
+      case _ if isPaidContent => true
+      case Some(shouldHide) => shouldHide
+      case None if publishedBeforeCutoff => isSensitive || shouldHideAdverts
+      case None => false
+    }
   }
 }
 

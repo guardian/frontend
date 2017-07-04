@@ -4,7 +4,7 @@ define([
     'lib/config',
     'lib/storage',
     'lodash/utilities/template',
-    'commercial/modules/commercial-features',
+    'common/modules/commercial/contributions-utilities',
     'lib/mediator'
 ], function (
     bean,
@@ -12,7 +12,7 @@ define([
     config,
     storage,
     template,
-    commercialFeatures,
+    contributionsUtilities,
     mediator) {
     var EditionTest = function (edition, id, start, expiry, campaignPrefix) {
 
@@ -34,7 +34,7 @@ define([
         // Required by the A/B testing framework - can not be async, unfortunately
         this.canRun = function () {
             var matchesEdition = config.page.edition == edition;
-            return matchesEdition && commercialFeatures.commercialFeatures.canReasonablyAskForMoney;
+            return matchesEdition && contributionsUtilities.shouldShowReaderRevenue();
         };
 
         this.completer = function (complete) {
