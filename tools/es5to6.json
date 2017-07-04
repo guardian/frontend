@@ -5,9 +5,7 @@
   "Richard Nguyen": [],
   "Kate Whalen": [
     "projects/commercial/modules/third-party-tags/imr-worldwide-legacy.js",
-    "projects/commercial/modules/third-party-tags.js",
-    "projects/commercial/modules/third-party-tags/audience-science-gateway.js",
-    "projects/commercial/modules/third-party-tags/audience-science-pql.js"
+    "projects/commercial/modules/third-party-tags.js"
   ],
   "Lydia Shepherd": [],
   "sndrs": [
@@ -146,7 +144,7 @@
     "projects/common/modules/lazyload.js",
     "projects/common/modules/navigation/membership.js",
     "projects/common/modules/navigation/navigation.js",
-    "projects/common/modules/navigation/profile.js",
+    "projects/common/modules/navigation/profile.js"
   ],
   "jfsoul": [
     "projects/common/modules/navigation/search.js",
@@ -155,7 +153,7 @@
     "projects/common/modules/onward/related.js",
     "projects/common/modules/onward/tech-feedback.js",
     "projects/common/modules/open/cta.js",
-    "projects/common/modules/preferences/main.js",
+    "projects/common/modules/preferences/main.js"
   ],
   "Joseph Smith": [
     "projects/common/modules/experiments/tests/acquisitions-epic-liveblog.js",
