@@ -54,7 +54,6 @@
     "lib/picturefill.js",
     "lib/proximity-loader.js",
     "projects/common/modules/video/metadata.js",
-    "projects/common/modules/crosswords/anagram-helper/clue-input.js"
   ],
   "GHaberis": [
     "projects/common/modules/onward/history.js",
@@ -76,7 +75,6 @@
   ],
   "Gideon Goldberg": [],
   "Matthew Walls": [
-    "projects/common/modules/crosswords/anagram-helper/ring.js",
     "projects/common/modules/crosswords/cell.js",
     "projects/common/modules/crosswords/classNames.js",
     "projects/common/modules/crosswords/clues.js",
