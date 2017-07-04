@@ -1,6 +1,8 @@
-define(['common/modules/ui/tabs', 'bean', 'helpers/fixtures'], function (Tabs, bean, fixtures) {
-    var t,
-        tab1,
+define([
+    'common/modules/ui/tabs',
+    'bean',
+    'helpers/fixtures'], function (tabs, bean, fixtures) {
+    var tab1,
         tab2,
         tab1panel,
         tab2panel,
@@ -39,8 +41,7 @@ define(['common/modules/ui/tabs', 'bean', 'helpers/fixtures'], function (Tabs, b
                 ]
             });
 
-            t = new Tabs();
-            t.init(document);
+            tabs.init('.tabs');
 
             tab1 = document.getElementById('tab1'); // is selected by default
             tab2 = document.getElementById('tab2');
@@ -85,7 +86,7 @@ define(['common/modules/ui/tabs', 'bean', 'helpers/fixtures'], function (Tabs, b
 
         it('should hide other panels when a tab is clicked', function () {
             bean.fire(tab2, 'click');
-            expect(tab1panel.getAttribute('style')).toContain('display: none');
+            expect(tab1panel.getAttribute('class')).toContain('u-h');
         });
 
         it('should operate independently of other tabsets on the page', function () {
