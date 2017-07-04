@@ -27,6 +27,7 @@ define(['helpers/injector'], function (Injector) {
                     isMinuteArticle : false,
                     section : 'politics',
                     shouldHideAdverts : false,
+                    shouldHideReaderRevenue: false,
                     isFront : false,
                     showRelatedContent: true
                 };
@@ -48,7 +49,8 @@ define(['helpers/injector'], function (Injector) {
                 detect.adblockInUse = Promise.resolve(false);
 
                 userFeatures.isPayingMember = function () {return false;};
-
+                userFeatures.isRecentContributor = function () {return false;};
+                userFeatures.shouldSeeReaderRevenue = function () {return true;};
                 userFeatures.isAdFreeUser = function() {return isSignedIn && config.switches.adFreeMembershipTrial;};
 
                 identityApi.isUserLoggedIn = function () {
