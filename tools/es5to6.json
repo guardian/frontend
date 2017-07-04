@@ -13,7 +13,6 @@
     "bootstraps/enhanced/accessibility.js",
     "bootstraps/enhanced/article-liveblog-common.js",
     "bootstraps/enhanced/article-minute.js",
-    "bootstraps/enhanced/article.js",
     "bootstraps/enhanced/common.js",
     "bootstraps/enhanced/crosswords.js",
     "bootstraps/enhanced/facia.js",
