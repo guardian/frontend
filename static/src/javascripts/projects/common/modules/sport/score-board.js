@@ -32,9 +32,8 @@ class ScoreBoard extends Component {
         Object.assign(this, context);
 
         const scoreContainerHtml = getScoreContainerHtml({
-            loadingState: this.pageType !== 'report'
-                ? ' score__loading--live'
-                : '',
+            loadingState:
+                this.pageType !== 'report' ? ' score__loading--live' : '',
         });
 
         this.updateEvery = detect.isBreakpoint({ min: 'desktop' }) ? 30 : 60;

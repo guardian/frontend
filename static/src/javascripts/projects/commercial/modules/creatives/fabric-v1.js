@@ -42,11 +42,12 @@ class FabricV1 {
         }
 
         const videoPosition = {
-            position: this.params.videoPositionH === 'left' ||
+            position:
+                this.params.videoPositionH === 'left' ||
                 this.params.videoPositionH === 'right'
-                ? `${this.params.videoPositionH}:${this.params
-                      .videoHorizSpace}px;`
-                : '',
+                    ? `${this.params.videoPositionH}:${this.params
+                          .videoHorizSpace}px;`
+                    : '',
         };
 
         const templateOptions = {
@@ -56,17 +57,19 @@ class FabricV1 {
                 ? iframeVideoTpl(Object.assign({}, this.params, videoPosition))
                 : '',
             hasContainer: 'layerTwoAnimation' in this.params,
-            layerTwoBGPosition: this.params.layerTwoBGPosition &&
+            layerTwoBGPosition:
+                this.params.layerTwoBGPosition &&
                 (!this.params.layerTwoAnimation ||
                     this.params.layerTwoAnimation === 'disabled' ||
                     (!isEnhanced &&
                         this.params.layerTwoAnimation === 'enabled'))
-                ? this.params.layerTwoBGPosition
-                : '0% 0%',
-            scrollbg: this.params.backgroundImagePType &&
+                    ? this.params.layerTwoBGPosition
+                    : '0% 0%',
+            scrollbg:
+                this.params.backgroundImagePType &&
                 this.params.backgroundImagePType !== 'none'
-                ? scrollBgTpl(this.params)
-                : false,
+                    ? scrollBgTpl(this.params)
+                    : false,
         };
 
         if (templateOptions.scrollbg) {

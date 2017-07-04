@@ -254,7 +254,7 @@ export class SearchTool {
             li.innerHTML =
                 `<a role="button" href="#${item.id}"` +
                 ` id="${index}sti" class="js-search-tool-link search-tool__link${index ===
-                    0
+                0
                     ? ' active"'
                     : '"'} data-link-name="weather-search-tool" data-weather-id="${item.id}" data-weather-city="${item.city}">${item.city} <span class="search-tool__meta">${item.country}</span></a>`;
 

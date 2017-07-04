@@ -103,10 +103,11 @@ class ScrollableMpu {
             layer1Image: hasScrollEnabled
                 ? this.params.layer1Image
                 : this.params.mobileImage,
-            backgroundImage: hasScrollEnabled && this.params.backgroundImage
-                ? `<div class="creative--scrollable-mpu-image" style="background-image: url(${this
-                      .params.backgroundImage});"></div>`
-                : '',
+            backgroundImage:
+                hasScrollEnabled && this.params.backgroundImage
+                    ? `<div class="creative--scrollable-mpu-image" style="background-image: url(${this
+                          .params.backgroundImage});"></div>`
+                    : '',
         };
 
         this.$scrollableMpu = $.create(
