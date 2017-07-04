@@ -1,12 +1,9 @@
 package model.structuredData
 
-import akka.actor.ActorSystem
-import akka.stream.ActorMaterializer
 import model.{Article, Canonical, Content, LiveBlogHelpers}
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.concurrent.ScalaFutures
+import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 import play.api.libs.json.JsValue
-import play.api.libs.ws.WSClient
-import play.api.libs.ws.ahc.AhcWSClient
 import test._
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -14,7 +11,15 @@ import scala.concurrent.duration._
 import scala.concurrent.{Await, Future}
 import scala.language.postfixOps
 
-class BlogPostingTest extends FlatSpec with Matchers with WithTestContentApiClient {
+@DoNotDiscover class BlogPostingTest extends FlatSpec
+  with Matchers
+  with ConfiguredTestSuite
+  with ScalaFutures
+  with BeforeAndAfterAll
+  with WithMaterializer
+  with WithTestWsClient
+  with WithTestContext
+  with WithTestContentApiClient {
 
   def getArticle(url: String): Future[Article] = {
 
@@ -66,10 +71,5 @@ class BlogPostingTest extends FlatSpec with Matchers with WithTestContentApiClie
 
   }
 
-  // required for the WithTestContentApiClient to work
-
-  implicit val system = ActorSystem()
-  implicit val materializer = ActorMaterializer()
-  override def wsClient: WSClient = AhcWSClient()
 
 }
