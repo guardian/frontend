@@ -7,7 +7,9 @@
     "projects/commercial/modules/third-party-tags/imr-worldwide-legacy.js",
     "projects/commercial/modules/third-party-tags.js"
   ],
-  "Lydia Shepherd": [],
+  "Lydia Shepherd": [
+    "projects/commercial/modules/survey/survey-simple.js"
+  ],
   "sndrs": [
     "lib/detect.js",
     "bootstraps/enhanced/accessibility.js",
@@ -115,8 +117,7 @@
     "projects/common/modules/experiments/tests/film-today-email-variants.js",
     "projects/common/modules/experiments/tests/generic-email-variants.js",
     "projects/common/modules/experiments/tests/opinion-email-variants.js",
-    "projects/common/modules/experiments/tests/paid-card-logo.js",
-    "projects/commercial/modules/survey/survey-simple.js"
+    "projects/common/modules/experiments/tests/paid-card-logo.js"
   ],
   "jranks123": [
     "projects/common/modules/experiments/tests/paid-commenting.js",
