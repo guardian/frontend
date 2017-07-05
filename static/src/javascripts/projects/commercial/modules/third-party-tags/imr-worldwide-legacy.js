@@ -1,14 +1,17 @@
 // @flow
 import config from 'lib/config';
 
+// nol_t is a global function defined by the IMR worldwide library
+// eslint-disable-next-line camelcase
+declare var nol_t: (config: any) => any;
+
 const onLoad = () => {
     const pvar = {
         cid: 'au-guardian',
         content: '0',
         server: 'secure-gl',
     };
-    // nol_t is a global function set by the imrworldwide library
-    // eslint-disable-next-line no-undef
+
     const trac = nol_t(pvar);
     trac.record().post();
 };
