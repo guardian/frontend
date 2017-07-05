@@ -127,6 +127,9 @@ const StoryQuiz = (quiz: HTMLElement) => {
 
     const reset = () => {
         results.length = 0;
+        [...quiz.querySelectorAll('input[type="radio"]')].forEach(
+            (input: any) => ((input: HTMLInputElement).checked = false)
+        );
         const els = [
             ...quiz.querySelectorAll('.is-answered, .is-answer, .is-result'),
         ];
@@ -186,7 +189,9 @@ const StoryQuiz = (quiz: HTMLElement) => {
         quiz.addEventListener('click', onClick);
         quiz.addEventListener('change', onChange);
 
-        promoteCard(0);
+        fastdom
+            .write(() => quiz.classList.add('is-enabled'))
+            .then(() => promoteCard(0));
     };
 
     return Object.freeze({

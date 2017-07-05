@@ -1,3 +1,7 @@
+.storyquiz:not(.is-enabled) {
+    display: none;
+}
+
 .storyquiz__image {
     float: right;
     margin-top: -1 * ($gs-baseline / 2 + 10);
