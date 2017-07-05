@@ -2,7 +2,7 @@
 import { send } from 'commercial/modules/messenger/send';
 
 /** Allows cross-frame communication with in-app articles */
-const comready = (resolve, reject) => {
+const comready = (resolve: (?any) => void, reject: (?any) => void) => {
     const MAX_COUNT = 5;
     let count = 0;
     send('syn', true);
