@@ -27,6 +27,55 @@ define([
 
     var INSERT_EPIC_AFTER_CLASS = 'js-insert-epic-after';
 
+    function isEpic(el) {
+        return $(el).hasClass('is-liveblog-epic');
+    }
+
+    function getLiveblogEntryTimeData(el) {
+        var $timeEl = $('time', el);
+
+        return {
+            datetime: $timeEl.attr('datetime'),
+            title: $timeEl.attr('title'),
+            date: $timeEl.text(),
+            time: $('.block-time__absolute', el).text()
+        };
+    }
+
+    function getNextEpicElement(el) {
+        var $epic = $(el).next();
+
+        while ($epic.length && !isEpic($epic[0])) {
+            $epic = $epic.next();
+        }
+
+        if (!isEpic($epic[0])) {
+            return null;
+        }
+
+        return $epic[0];
+    }
+
+    function setEpicLiveblogEntryTimeData(el, timeData) {
+        if (!el) {
+            return;
+        }
+
+        var $epicTimeEl = $('time', el);
+        $epicTimeEl.attr('datetime', timeData.datetime);
+        $epicTimeEl.attr('title', timeData.title);
+        $epicTimeEl.text(timeData.date);
+        $('.block-time__absolute', el).text(timeData.time);
+    }
+
+    function copyLiveblogEntryTimeDataToEpic() {
+        $('.' + INSERT_EPIC_AFTER_CLASS).each(function(el) {
+            var timeData = getLiveblogEntryTimeData(el);
+            var nextEpicElement = getNextEpicElement(el);
+            setEpicLiveblogEntryTimeData(nextEpicElement, timeData);
+        });
+    }
+
     function setupViewTracking(el, test) {
         // top offset of 18 ensures view only counts when half of element is on screen
         var elementInView = ElementInView(el, window, { top: 18 });
@@ -77,16 +126,14 @@ define([
                 id: 'control',
                 isUnlimited: true,
 
-                insertAtSelector: '.js-insert-epic-after',
+                insertAtSelector: '.' + INSERT_EPIC_AFTER_CLASS,
                 insertAfter: true,
                 insertMultiple: true,
                 successOnView: true,
 
                 template: function (variant) {
                     return template(liveblogEpicTemplate, {
-                        copy: acquisitionsCopy.control,
-                        membershipUrl: variant.options.membershipURL,
-                        contributionUrl: variant.options.contributeURL,
+                        copy: acquisitionsCopy.liveblog(variant.options.membershipURL, variant.options.contributeURL),
                         componentName: variant.options.componentName
                     });
                 },
@@ -101,7 +148,10 @@ define([
                         });
                         isAutoUpdateHandlerBound = true;
                     }
-                }
+                },
+
+                onInsert: copyLiveblogEntryTimeDataToEpic,
+
             }
         ]
     });

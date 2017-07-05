@@ -10,7 +10,6 @@ import alwaysAsk from 'common/modules/experiments/tests/contributions-epic-alway
 import bundlePriceTest1 from 'common/modules/experiments/tests/bundle-digital-sub-price-test-1';
 import askFourEarning from 'common/modules/experiments/tests/contributions-epic-ask-four-earning';
 import acquisitionsEpicLiveBlog from 'common/modules/experiments/tests/acquisitions-epic-liveblog';
-import acquisitionsEpicLiveBlogDesignTest from 'common/modules/experiments/tests/acquisitions-epic-liveblog-design-test';
 import acquisitionsEpicAlwaysAskIfTagged from 'common/modules/experiments/tests/acquisitions-epic-always-ask-if-tagged';
 import acquisitionsEpicAlwaysAskElection from 'common/modules/experiments/tests/acquisitions-epic-always-ask-election';
 import acquisitionsEpicThankYou from 'common/modules/experiments/tests/acquisitions-epic-thank-you';
@@ -27,7 +26,6 @@ const tests = [
     epicForBrexitCohort,
     askFourEarning,
     acquisitionsEpicAlwaysAskIfTagged,
-    acquisitionsEpicLiveBlogDesignTest,
     acquisitionsEpicLiveBlog,
     acquisitionsEpicAlwaysAskElection,
     acquisitionsEpicThankYou,

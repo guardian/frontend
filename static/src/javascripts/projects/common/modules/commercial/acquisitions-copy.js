@@ -1,7 +1,7 @@
 // @flow
 
 export type AcquisitionsEpicTemplateCopy = {
-    heading: string,
+    heading?: string,
     p1: string,
     p2: string,
 };
@@ -42,22 +42,12 @@ export const usLocalisedFlag = {
     p2: controlP2,
 };
 
-export const liveblogSubtle = (
+export const liveblog = (
     membershipUrl: string,
     contributionsUrl: string
 ): AcquisitionsEpicTemplateCopy => ({
-    heading: controlHeading,
     p1: controlP1,
-    p2: `If everyone who reads our reporting, who likes it, helps to support it, our future would be much more secure. Get closer to the Guardian, be part of our story and <a href="${membershipUrl}" target="_blank" class="u-underline">become a supporter</a>. Alternatively, you can <a href="${contributionsUrl}" target="_blank" class="u-underline">make a one-time contribution</a>.`,
-});
-
-export const liveblogMinimal = (
-    membershipUrl: string,
-    contributionsUrl: string
-): AcquisitionsEpicTemplateCopy => ({
-    heading: 'Since you’re here ',
-    p1: controlP1,
-    p2: `If everyone who reads our reporting, who likes it, helps to support it, our future would be much more secure. You can give to the Guardian by <a href="${membershipUrl}" target="_blank" class="u-underline">becoming a monthly supporter</a> or by making a <a href="${contributionsUrl}" target="_blank" class="u-underline">one-off contribution</a>. - Guardian HQ`,
+    p2: `${controlP2} You can give to the Guardian by <a href="${membershipUrl}" target="_blank" class="u-underline">becoming a monthly supporter</a> or by making a <a href="${contributionsUrl}" target="_blank" class="u-underline">one-off contribution</a>. - Guardian HQ`,
 });
 
 // This one will be changed to reflect the situation after the election results come in
