@@ -15,6 +15,15 @@ jest.mock('projects/common/modules/identity/api', () => ({
 }));
 jest.mock('lib/fetch-json', () => jest.fn(() => Promise.resolve()));
 
+jest.mock('lib/config', () => ({
+    switches: {
+        adFreeSubscriptionTrial: true,
+    },
+    page: {
+        userAttributesApiUrl: '',
+    },
+}));
+
 const fetchJsonSpy: any = fetchJson;
 const isUserLoggedIn: any = identity.isUserLoggedIn;
 
