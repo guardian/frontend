@@ -19,7 +19,6 @@ define([
         'common/modules/experiments/acquisition-test-selector',
         'common/modules/commercial/membership-engagement-banner-parameters',
         'common/modules/commercial/membership-engagement-banner-block',
-        'common/modules/commercial/contributions-utilities',
         'ophan/ng',
         'lib/geolocation',
         'lib/url'
@@ -43,7 +42,6 @@ define([
                  acquisitionTestSelector,
                  membershipEngagementBannerUtils,
                  membershipEngagementBannerBlock,
-                 contributionsUtilities,
                  ophan,
                  geolocation,
                  url) {
@@ -51,7 +49,7 @@ define([
 
         // change messageCode to force redisplay of the message to users who already closed it.
         // messageCode is also consumed by .../test/javascripts/spec/common/commercial/membership-engagement-banner.spec.js
-        var messageCode = 'engagement-banner-2017-06-08';
+        var messageCode = 'engagement-banner-2017-07-05';
 
         var DO_NOT_RENDER_ENGAGEMENT_BANNER = 'do no render engagement banner';
 
@@ -85,8 +83,8 @@ define([
 
         function getUserVariantParams(userVariant, campaignId, defaultOffering) {
 
-            if (userVariant && userVariant.options && userVariant.options.engagementBannerParams) {
-                var userVariantParams = userVariant.options.engagementBannerParams;
+            if (userVariant && userVariant.engagementBannerParams) {
+                var userVariantParams = userVariant.engagementBannerParams;
 
                 if (!userVariantParams.campaignCode) {
                     var offering = userVariantParams.offering || defaultOffering;
@@ -129,7 +127,7 @@ define([
             var campaignId = userTest ? userTest.campaignId : undefined;
             var userVariant = getUserVariant(userTest);
 
-            if (userVariant && userVariant.options && userVariant.options.blockEngagementBanner) {
+            if (userVariant && userVariant.blockEngagementBanner) {
                 return DO_NOT_RENDER_ENGAGEMENT_BANNER;
             }
 
@@ -155,7 +153,7 @@ define([
 
 
         function showBanner(params) {
-            
+
 
             if (params === DO_NOT_RENDER_ENGAGEMENT_BANNER || membershipEngagementBannerBlock.isBlocked()) {
                 return;
@@ -169,6 +167,8 @@ define([
                 REFPVID : params.pageviewId,
                 INTCMP:  params.campaignCode
             };
+            
+                     
             var linkUrl = params.linkUrl + '?' + url.constructQuery(urlParameters);
 
             var renderedBanner = template(messageTemplate, {

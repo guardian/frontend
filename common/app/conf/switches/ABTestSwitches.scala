@@ -115,7 +115,7 @@ trait ABTestSwitches {
     "Test pricing options for digital subs from epic",
     owners = Seq(Owner.withGithub("justinpinner")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 7, 6),  // Thursday 6th July
+    sellByDate = new LocalDate(2017, 7, 13),  // Thursday 13th July
     exposeClientSide = true
   )
 
@@ -125,7 +125,7 @@ trait ABTestSwitches {
     "Test pricing options for digital subs from thrasher",
     owners = Seq(Owner.withGithub("justinpinner")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 7, 6),  // Thursday 6th July
+    sellByDate = new LocalDate(2017, 7, 13),  // Thursday 13th July
     exposeClientSide = true
   )
 
@@ -168,4 +168,15 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2017, 7, 31),
     exposeClientSide = true
   )
+
+  Switch(
+    ABTests,
+    "ab-membership-engagement-banner-digipack-price-test",
+    "Find the optimal price point for the digipack",
+    owners = Seq(Owner.withGithub("jranks123")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 8, 3),
+    exposeClientSide = true
+  )
+
 }

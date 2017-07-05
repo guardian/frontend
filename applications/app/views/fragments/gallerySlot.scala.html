@@ -3,12 +3,12 @@
     isMobile: Boolean = false
 )(implicit request: RequestHeader)
 @import conf.switches.Switches.CommercialSwitch
-@import mvt.CommercialGalleryBannerAds
+@import mvt.CommercialGalleryBannerAdsVariant
 
 @commonSizes = @{Seq("1,1", "2,2", "300,250", "fluid")}
 
 @desktopSizes = @{
-    if(CommercialGalleryBannerAds.isParticipating)
+    if(CommercialGalleryBannerAdsVariant.isParticipating)
         Map("desktop" -> (commonSizes ++ Seq("970,250", "900,250")))
     else
         Map.empty[String, Seq[String]]

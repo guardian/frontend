@@ -68,11 +68,13 @@ sizeCallbacks[adSizes.halfPage] = () => {
     mediator.emit('page:commercial:sticky-mpu');
 };
 
-sizeCallbacks[adSizes.video] = (_, advert) => {
-    fastdom.write(() => {
-        advert.node.classList.add('u-h');
-    });
-};
+if (!config.switches.keepVideoAdSlotsOpen) {
+    sizeCallbacks[adSizes.video] = (_, advert) => {
+        fastdom.write(() => {
+            advert.node.classList.add('u-h');
+        });
+    };
+}
 
 sizeCallbacks[adSizes.video2] = (_, advert) => {
     fastdom.write(() => {

@@ -1,6 +1,9 @@
 // @flow
 import config from 'lib/config';
 
+// NOLCMB is a global function defined by the IMR worldwide library
+declare var NOLCMB: Object;
+
 const guMetadata = {
     books: 'P5033A084-E9BF-453A-91D3-C558751D9A85',
     business: 'P5B109609-6223-45BA-B052-55F34A79D7AD',
@@ -72,8 +75,6 @@ const onLoad = () => {
         apn: 'theguardian',
     };
 
-    // Lets assume that the imrworldwide library is defining NOLCMB
-    /* eslint-disable no-undef*/
     const nSdkInstance = NOLCMB.getInstance(nolggGlobalParams.apid);
     nSdkInstance.ggInitialize(nolggGlobalParams);
 

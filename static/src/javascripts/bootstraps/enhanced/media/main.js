@@ -185,7 +185,7 @@ const enhanceVideo = (
                 } else {
                     blockVideoAds =
                         videoInfo.shouldHideAdverts ||
-                        (config.switches.adFreeMembershipTrial &&
+                        (config.switches.adFreeSubscriptionTrial &&
                             isAdFreeUser());
 
                     withPreroll = shouldPreroll && !blockVideoAds;

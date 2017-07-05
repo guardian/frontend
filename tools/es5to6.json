@@ -3,16 +3,11 @@
   "Jon Norman": [],
   "Regis Kuckaertz": [],
   "Richard Nguyen": [],
-  "Kate Whalen": [
-    "projects/commercial/modules/third-party-tags/imr-worldwide-legacy.js"
-  ],
+  "Kate Whalen": [],
   "Lydia Shepherd": [],
   "sndrs": [
     "lib/detect.js",
     "bootstraps/enhanced/accessibility.js",
-    "bootstraps/enhanced/article-liveblog-common.js",
-    "bootstraps/enhanced/article-minute.js",
-    "bootstraps/enhanced/article.js",
     "bootstraps/enhanced/common.js",
     "bootstraps/enhanced/crosswords.js",
     "bootstraps/enhanced/facia.js",
@@ -21,7 +16,6 @@
     "bootstraps/enhanced/gallery.js"
   ],
   "Simon Adcock": [
-    "projects/commercial/modules/sticky-top-banner.js",
     "projects/common/modules/commercial/membership-engagement-banner.js",
     "projects/common/modules/article/membership-events.js",
     "projects/common/modules/discussion/upvote.js",
@@ -32,7 +26,6 @@
     "projects/common/modules/ui/clickstream.js"
   ],
   "Nicolas Long": [
-    "lib/atob.js",
     "projects/common/modules/ui/selection-sharing.js",
     "bootstraps/enhanced/profile.js",
     "bootstraps/enhanced/recipe-article.js",
@@ -45,11 +38,7 @@
     "projects/common/modules/component.js"
   ],
   "Calum Campbell": [
-    "lib/clamp.js",
-    "lib/client-rects.js",
     "lib/detect.js",
-    "lib/element-inview.js",
-    "lib/page.js",
     "lib/picturefill.js",
     "lib/proximity-loader.js",
     "projects/common/modules/video/metadata.js"
@@ -61,6 +50,10 @@
     "projects/common/modules/discussion/comment-box.js"
   ],
   "Gustav Pursche": [
+    "lib/atob.js",
+    "lib/clamp.js",
+    "lib/element-inview.js",
+    "lib/page.js",
     "projects/common/modules/ui/tabs.js"
   ],
   "NataliaLKB": [
@@ -115,8 +108,7 @@
     "projects/common/modules/experiments/tests/film-today-email-variants.js",
     "projects/common/modules/experiments/tests/generic-email-variants.js",
     "projects/common/modules/experiments/tests/opinion-email-variants.js",
-    "projects/common/modules/experiments/tests/paid-card-logo.js",
-    "projects/commercial/modules/survey/survey-simple.js"
+    "projects/common/modules/experiments/tests/paid-card-logo.js"
   ],
   "jranks123": [
     "projects/common/modules/experiments/tests/paid-commenting.js",

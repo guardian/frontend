@@ -30,9 +30,6 @@ $right-column:     gs-span(4);
 $left-column:      gs-span(2); // Grows to 3 columns on wide viewports
 $left-column-wide: gs-span(3);
 
-$veggie-burger-small: 42px;
-$veggie-burger-medium: 54px;
-
 // Breakpoints
 // =============================================================================
 
@@ -172,7 +169,7 @@ $paid-article-header:       #bfbfbf;
 $paid-article-header-bg:    #b8b8b8;
 $paid-article-subheader:    #cccccc;
 $paid-article-subheader-bg: #c4c4c4;
-$paid-article-card-bg:      #d7d7d7;
+$paid-article-card-bg:      $neutral-8;
 $paid-article-media-bg:     #bbb7b1;
 $paid-article-icon:         #767676;
 $paid-article-brand:        #69d1ca;

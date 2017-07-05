@@ -21,7 +21,7 @@ const isUserLoggedIn: any = identity.isUserLoggedIn;
 const PERSISTENCE_KEYS = {
     USER_FEATURES_EXPIRY_COOKIE: 'gu_user_features_expiry',
     PAYING_MEMBER_COOKIE: 'gu_paying_member',
-    AD_FREE_USER_COOKIE: 'GU_AFU',
+    AD_FREE_USER_COOKIE: 'GU_AF1',
     JOIN_DATE_COOKIE: 'gu_join_date',
 };
 
@@ -33,9 +33,22 @@ const setAllFeaturesData = opts => {
         : new Date(currentTime + msInOneDay);
 
     addCookie(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE, 'true');
-    addCookie(PERSISTENCE_KEYS.AD_FREE_USER_COOKIE, 'false');
+    addCookie(
+        PERSISTENCE_KEYS.AD_FREE_USER_COOKIE,
+        expiryDate.getTime().toString()
+    );
     addCookie(
         PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE,
+        expiryDate.getTime().toString()
+    );
+};
+
+const setExpiredAdFreeData = () => {
+    const currentTime = new Date().getTime();
+    const msInOneDay = 24 * 60 * 60 * 1000;
+    const expiryDate = new Date(currentTime - msInOneDay);
+    addCookie(
+        PERSISTENCE_KEYS.AD_FREE_USER_COOKIE,
         expiryDate.getTime().toString()
     );
 };
@@ -76,8 +89,8 @@ describe('Refreshing the features data', () => {
             expect(
                 getCookie(PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE)
             ).toEqual(expect.stringMatching(/\d{13}/));
-            expect(getCookie(PERSISTENCE_KEYS.AD_FREE_USER_COOKIE)).toBe(
-                'false'
+            expect(getCookie(PERSISTENCE_KEYS.AD_FREE_USER_COOKIE)).toEqual(
+                expect.stringMatching(/\d{13}/)
             );
         });
 
@@ -96,10 +109,10 @@ describe('Refreshing the features data', () => {
             expect(fetchJsonSpy).toHaveBeenCalledTimes(1);
         });
 
-        it('Performs an update if the ad-free state is missing', () => {
+        it('Performs an update if the ad-free state is stale', () => {
             // Set everything except the ad-free cookie
-            setAllFeaturesData({ isExpired: true });
-            removeCookie(PERSISTENCE_KEYS.AD_FREE_USER_COOKIE);
+            setAllFeaturesData({ isExpired: false });
+            setExpiredAdFreeData();
 
             refresh();
             expect(fetchJsonSpy).toHaveBeenCalledTimes(1);
@@ -143,7 +156,7 @@ describe('The isPayingMember getter', () => {
     it('Is false when the user is logged out', () => {
         jest.resetAllMocks();
         isUserLoggedIn.mockReturnValue(false);
-        expect(isAdFreeUser()).toBe(false);
+        expect(isPayingMember()).toBe(false);
     });
 
     describe('When the user is logged in', () => {
@@ -174,7 +187,7 @@ describe('The isInBrexitCohort getter', () => {
     it('Is false if the user is logged out', () => {
         jest.resetAllMocks();
         isUserLoggedIn.mockReturnValue(false);
-        expect(isAdFreeUser()).toBe(false);
+        expect(isInBrexitCohort()).toBe(false);
     });
 
     describe('When the user is logged in', () => {

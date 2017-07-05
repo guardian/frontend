@@ -16,16 +16,28 @@ import conf.switches.Switches.ServerSideTests
 //    val tests = List(ExampleTest)
 // }
 
-object CommercialGalleryBannerAds extends TestDefinition(
-  name = "commercial-gallery-banner-ads",
-  description = "Users in the test will see banner ads instead of MPUs in galleries",
+object CommercialGalleryBannerAdsVariant extends TestDefinition(
+  name = "ab-commercial-gallery-banner-ads-variant",
+  description = "Users in this test will see banner ads in galleries",
   owners = Seq(Owner.withGithub("JonNorman")),
   sellByDate = new LocalDate(2017, 7, 11)
 ) {
 
-  def participationGroup(implicit request: RequestHeader): Option[String] = request.headers.get("X-GU-commercial-gallery-banner-ads")
+  def participationGroup(implicit request: RequestHeader): Option[String] = request.headers.get("X-GU-ab-commercial-gallery-banner-ads")
 
   def canRun(implicit request: RequestHeader): Boolean = participationGroup.contains("variant")
+}
+
+object CommercialGalleryBannerAdsControl extends TestDefinition(
+  name = "ab-commercial-gallery-banner-ads-control",
+  description = "Users in this test will not see banner ads in galleries, as a control.",
+  owners = Seq(Owner.withGithub("JonNorman")),
+  sellByDate = new LocalDate(2017, 7, 11)
+) {
+
+  def participationGroup(implicit request: RequestHeader): Option[String] = request.headers.get("X-GU-ab-commercial-gallery-banner-ads")
+
+  def canRun(implicit request: RequestHeader): Boolean = participationGroup.contains("control")
 }
 
 object CommercialClientLoggingVariant extends TestDefinition(
@@ -88,7 +100,8 @@ trait ServerSideABTests {
 object ActiveTests extends ServerSideABTests {
   val tests: Seq[TestDefinition] = List(
     CommercialClientLoggingVariant,
-    CommercialGalleryBannerAds,
+    CommercialGalleryBannerAdsVariant,
+    CommercialGalleryBannerAdsControl,
     ABNewDesktopHeaderVariant,
     ABNewDesktopHeaderControl
   )
