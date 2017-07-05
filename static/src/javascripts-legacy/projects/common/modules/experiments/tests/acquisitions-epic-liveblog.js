@@ -27,10 +27,6 @@ define([
 
     var INSERT_EPIC_AFTER_CLASS = 'js-insert-epic-after';
 
-    function isEpic(el) {
-        return $(el).hasClass('is-liveblog-epic');
-    }
-
     function getLiveblogEntryTimeData(el) {
         var $timeEl = $('time', el);
 
@@ -40,20 +36,6 @@ define([
             date: $timeEl.text(),
             time: $('.block-time__absolute', el).text()
         };
-    }
-
-    function getNextEpicElement(el) {
-        var $epic = $(el).next();
-
-        while ($epic.length && !isEpic($epic[0])) {
-            $epic = $epic.next();
-        }
-
-        if (!isEpic($epic[0])) {
-            return null;
-        }
-
-        return $epic[0];
     }
 
     function setEpicLiveblogEntryTimeData(el, timeData) {
@@ -66,14 +48,6 @@ define([
         $epicTimeEl.attr('title', timeData.title);
         $epicTimeEl.text(timeData.date);
         $('.block-time__absolute', el).text(timeData.time);
-    }
-
-    function copyLiveblogEntryTimeDataToEpic() {
-        $('.' + INSERT_EPIC_AFTER_CLASS).each(function(el) {
-            var timeData = getLiveblogEntryTimeData(el);
-            var nextEpicElement = getNextEpicElement(el);
-            setEpicLiveblogEntryTimeData(nextEpicElement, timeData);
-        });
     }
 
     function setupViewTracking(el, test) {
@@ -92,8 +66,11 @@ define([
 
             $blocksToInsertEpicAfter.each(function(el) {
                 var $epic = $.create(epicHtml);
+
                 $epic.insertAfter(el);
                 $(el).removeClass(INSERT_EPIC_AFTER_CLASS);
+
+                setEpicLiveblogEntryTimeData($epic[0], getLiveblogEntryTimeData(el));
 
                 setupViewTracking(el, test);
             });
@@ -149,9 +126,6 @@ define([
                         isAutoUpdateHandlerBound = true;
                     }
                 },
-
-                onInsert: copyLiveblogEntryTimeDataToEpic,
-
             }
         ]
     });
