@@ -68,7 +68,7 @@ sizeCallbacks[adSizes.halfPage] = () => {
     mediator.emit('page:commercial:sticky-mpu');
 };
 
-if (config.switches.keepVideoAdSlotsOpen) {
+if (!config.switches.keepVideoAdSlotsOpen) {
     sizeCallbacks[adSizes.video] = (_, advert) => {
         fastdom.write(() => {
             advert.node.classList.add('u-h');
