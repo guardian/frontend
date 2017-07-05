@@ -1,5 +1,12 @@
 // @flow
 import { makeABTest } from 'common/modules/commercial/contributions-utilities';
+import template from 'lodash/utilities/template';
+import singleButtonTemplate from 'raw-loader!common/views/acquisitions-epic-single-button.html';
+
+const buildButtonTemplate = ({ supportUrl }) =>
+    template(singleButtonTemplate, {
+        url: supportUrl,
+    });
 
 export const acquisitionsEpicRebaselineSupportProposition = makeABTest({
     id: 'AcquisitionsEpicRebaselineSupportProposition',
@@ -22,27 +29,12 @@ export const acquisitionsEpicRebaselineSupportProposition = makeABTest({
     variants: [
         {
             id: 'control',
-            maxViews: {
-                days: 30,
-                count: 4,
-                minDaysBetweenViews: 0,
-            },
-
             useTailoredCopyForRegulars: true,
-            insertAtSelector: '.submeta',
-            successOnView: true,
         },
         {
             id: 'support_proposition',
-            maxViews: {
-                days: 30,
-                count: 4,
-                minDaysBetweenViews: 0,
-            },
-
+            buttonTemplate: buildButtonTemplate,
             useTailoredCopyForRegulars: true,
-            insertAtSelector: '.submeta',
-            successOnView: true,
         },
     ],
 });
