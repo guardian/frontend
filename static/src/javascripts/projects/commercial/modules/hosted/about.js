@@ -5,7 +5,7 @@ import $ from 'lib/$';
 import crossIcon from 'svgs/icon/cross.svg';
 import paidContent from 'svgs/commercial/paid-content.svg';
 
-const template = () => `
+const template = (): string => `
         <div class="survey-overlay-simple js-survey-overlay u-h" data-link-name="hosted page about overlay" role="dialog" aria-label="about hosted content">
             <div class="survey-container">
                 <h3 class="survey-text__header">
@@ -46,19 +46,14 @@ const init = () =>
             const aboutBtn = document.querySelector('.js-hosted-about');
             const closeBtn = document.querySelector('.js-survey-close');
             const overlay = document.querySelector('.js-survey-overlay');
+            if (!overlay || !aboutBtn || !closeBtn) return;
 
-            if (aboutBtn && overlay) {
-                aboutBtn.addEventListener('click', (e: Event): mixed => {
-                    e.preventDefault();
-                    fastdom.write(() => {
-                        overlay.classList.remove('u-h');
-                    });
-                });
-            }
+            aboutBtn.addEventListener('click', (e: Event): mixed => {
+                e.preventDefault();
+                fastdom.write(() => overlay.classList.remove('u-h'));
+            });
             closeBtn.addEventListener('click', () => {
-                fastdom.write(() => {
-                    overlay.classList.add('u-h');
-                });
+                fastdom.write(() => overlay.classList.add('u-h'));
             });
         });
 
