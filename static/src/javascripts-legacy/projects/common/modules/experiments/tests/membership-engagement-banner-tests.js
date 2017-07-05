@@ -107,7 +107,7 @@ define([
             campaignCode: createCampaignCode(variantId),
             buttonCaption: 'Support the Guardian',
             linkUrl: 'https://membership.theguardian.com/bundles',
-            messageText: 'Unlike many others, we haven\'t put up a paywall. Support us today and help us keep our journalism as open as we can',
+            messageText: 'Unlike many others, we haven\'t put up a paywall &ndash; we want to keep our journalism as open as we can. Support us with a contribution or subscription',
             pageviewId: (config.ophan && config.ophan.pageViewId) || 'not_found'
         };
 
@@ -145,13 +145,8 @@ define([
 
     return [
         new MembershipEngagementBannerDigipackPriceTest()
-            .addVariant(
-                'A'
-            )
-            .addVariant(
-                'B'
-            ).addVariant(
-            'C'
-        )
+            .addVariant('A')
+            .addVariant('B')
+            .addVariant('C')
     ]
 });
