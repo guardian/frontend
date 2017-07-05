@@ -7,9 +7,7 @@
     "projects/commercial/modules/third-party-tags/imr-worldwide-legacy.js",
     "projects/commercial/modules/third-party-tags.js"
   ],
-  "Lydia Shepherd": [
-    "projects/commercial/modules/survey/survey-simple.js"
-  ],
+  "Lydia Shepherd": [],
   "sndrs": [
     "lib/detect.js",
     "bootstraps/enhanced/accessibility.js",
