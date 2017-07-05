@@ -373,7 +373,7 @@
         background-color: $paid-article-card-bg;
         &:hover,
         &.u-faux-block-link--hover {
-            background: darken($paid-article-subheader, 7%);
+            background-color: $neutral-6;
         }
     }
     .fc-item__container:before {
@@ -383,7 +383,9 @@
         fill: $paid-article-brand;
     }
     .fc-item__title {
-        @include f-headlineSans;
+        @include f-textSans;
+        font-weight: 600;
+        color: $neutral-1;
     }
 
     .fc-item__content {
@@ -394,6 +396,10 @@
         @include mq(mobileLandscape, tablet) {
             flex-direction: row;
         }
+    }
+
+    .fc-item__standfirst {
+        color: $neutral-1;
     }
 
     .badge {
@@ -408,6 +414,7 @@
         }
     }
     .badge__label {
+        color: #757575;
         text-align: center;
         align-self: center;
     }
@@ -437,6 +444,11 @@
 
     .badge--no-image {
         margin-bottom: $gs-baseline/2;
+    }
+
+    .badge__sponsor-name {
+        @include f-textSans;
+        color: $neutral-1;
     }
 
     .inline-icon__svg {
