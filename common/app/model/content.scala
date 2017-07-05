@@ -18,7 +18,6 @@ import org.jsoup.safety.Whitelist
 import org.scala_tools.time.Imports._
 import play.api.libs.json._
 import views.support._
-
 import scala.collection.JavaConversions._
 import scala.util.Try
 
@@ -94,7 +93,7 @@ final case class Content(
   }
 
   lazy val hasTonalHeaderByline: Boolean = {
-    (cardStyle == Comment || cardStyle == Editorial || (cardStyle == model.pressed.SpecialReport && tags.isComment)) &&
+    (cardStyle == Comment || cardStyle == Editorial || (cardStyle == SpecialReport && tags.isComment)) &&
       hasSingleContributor &&
       metadata.contentType != GuardianContentTypes.ImageContent
   }
