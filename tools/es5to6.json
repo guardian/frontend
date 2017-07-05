@@ -34,7 +34,6 @@
     "projects/common/modules/ui/clickstream.js"
   ],
   "Nicolas Long": [
-    "lib/atob.js",
     "projects/common/modules/ui/selection-sharing.js",
     "bootstraps/enhanced/profile.js",
     "bootstraps/enhanced/recipe-article.js",
@@ -47,11 +46,7 @@
     "projects/common/modules/component.js"
   ],
   "Calum Campbell": [
-    "lib/clamp.js",
-    "lib/client-rects.js",
     "lib/detect.js",
-    "lib/element-inview.js",
-    "lib/page.js",
     "lib/picturefill.js",
     "lib/proximity-loader.js",
     "projects/common/modules/video/metadata.js"
@@ -63,6 +58,10 @@
     "projects/common/modules/discussion/comment-box.js"
   ],
   "Gustav Pursche": [
+    "lib/atob.js",
+    "lib/clamp.js",
+    "lib/element-inview.js",
+    "lib/page.js",
     "projects/common/modules/ui/tabs.js"
   ],
   "NataliaLKB": [
