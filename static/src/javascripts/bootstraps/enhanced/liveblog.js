@@ -6,7 +6,7 @@ import richLinks from 'common/modules/article/rich-links';
 import Affix from 'common/modules/experiments/affix';
 import { autoUpdate } from 'common/modules/ui/autoupdate';
 import RelativeDates from 'common/modules/ui/relativedates';
-import articleLiveblogCommon from 'bootstraps/enhanced/article-liveblog-common';
+import { init as initLiveblogCommon } from 'bootstraps/enhanced/article-liveblog-common';
 import trail from 'bootstraps/enhanced/trail';
 import { catchErrorsWithContext } from 'lib/robust';
 
@@ -55,7 +55,7 @@ const init = (): void => {
     ]);
 
     trail();
-    articleLiveblogCommon();
+    initLiveblogCommon();
 
     catchErrorsWithContext([
         [

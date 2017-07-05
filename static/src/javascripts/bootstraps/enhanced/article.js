@@ -10,7 +10,7 @@ import membershipEvents from 'common/modules/article/membership-events';
 import { geoMostPopular } from 'common/modules/onward/geo-most-popular';
 import quiz from 'common/modules/atoms/quiz';
 import storyQuestions from 'common/modules/atoms/story-questions';
-import articleLiveblogCommon from 'bootstraps/enhanced/article-liveblog-common';
+import { init as initLiveblogCommon } from 'bootstraps/enhanced/article-liveblog-common';
 import trail from 'bootstraps/enhanced/trail';
 import ophan from 'ophan/ng';
 import { SnippetFeedback } from 'projects/journalism/snippet-feedback';
@@ -50,7 +50,7 @@ const modules = {
 
 const init = () => {
     trail();
-    articleLiveblogCommon();
+    initLiveblogCommon();
     modules.initRightHandComponent();
     modules.initCmpParam();
     modules.initQuizListeners();
