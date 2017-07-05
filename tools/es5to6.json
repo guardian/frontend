@@ -22,7 +22,6 @@
     "bootstraps/enhanced/gallery.js"
   ],
   "Simon Adcock": [
-    "projects/commercial/modules/sticky-top-banner.js",
     "projects/common/modules/commercial/membership-engagement-banner.js",
     "projects/common/modules/article/membership-events.js",
     "projects/common/modules/discussion/upvote.js",
