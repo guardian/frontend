@@ -35,6 +35,7 @@ object NavLinks {
   val africa = NavLink("africa", "/world/africa", "world/africa")
   val middleEast = NavLink("middle east", "/world/middleeast", "world/middleeast")
   val economics = NavLink("economics", "/business/economics", "business/economics")
+  val inequality = NavLink("inequality", "/inequality", "inequality")
   val banking = NavLink("banking", "/business/banking", "business/banking")
   val retail = NavLink("retail", "/business/retail", "business/retail")
   val markets = NavLink("markets", "/business/stock-markets", "business/stock-markets")

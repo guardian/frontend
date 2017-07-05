@@ -311,6 +311,7 @@ object NewNavigation {
       SectionsLink("media", media, News),
       SectionsLink("us-news", usNews, News),
       SectionsLink("cities", cities, News),
+      SectionsLink("inequality", inequality, News),
       SectionsLink("global-development", globalDevelopment, News),
       SectionsLink("sustainable-business", sustainableBusiness, News),
       SectionsLink("law", law, News),
@@ -423,7 +424,7 @@ object NewNavigation {
 
     val worldSubNav = NavLinkLists(
       List(world, europe, usNews, americas, asia, australiaNews, middleEast, africa),
-      List(cities, globalDevelopment)
+      List(inequality, cities, globalDevelopment)
     )
 
     val moneySubNav = NavLinkLists(List(money, property, pensions, savings, borrowing, careers))
