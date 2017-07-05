@@ -385,7 +385,7 @@
     .fc-item__title {
         @include f-textSans;
         font-weight: 600;
-        color: #333333;
+        color: $neutral-1;
     }
 
     .fc-item__content {
@@ -399,7 +399,7 @@
     }
 
     .fc-item__standfirst {
-        color: #333333;
+        color: $neutral-1;
     }
 
     .badge {
@@ -448,7 +448,7 @@
 
     .badge__sponsor-name {
         @include f-textSans;
-        color: #333333;
+        color: $neutral-1;
     }
 
     .inline-icon__svg {
