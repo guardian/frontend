@@ -40,7 +40,7 @@ define([
         campaignPrefix: '',
         campaignSuffix: '',
         start: '2017-05-10',
-        expiry: '2017-07-06',
+        expiry: '2017-07-13',
 
         author: 'Justin Pinner',
         description: 'Test digital subs price points via epic',
