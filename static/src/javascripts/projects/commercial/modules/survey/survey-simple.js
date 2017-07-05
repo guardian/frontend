@@ -1,74 +1,61 @@
 // @flow
 import fastdom from 'lib/fastdom-promise';
 import $ from 'lib/$';
-import template from 'lodash/utilities/template';
-import userPrefs from 'common/modules/user-prefs';
-import surveySimpleTemplate from 'raw-loader!commercial/views/survey/survey-simple.html';
-import arrowWhiteRight from 'svgs/icon/arrow-white-right.svg';
-import marque36icon from 'svgs/icon/marque-36.svg';
 import crossIcon from 'svgs/icon/cross.svg';
 import paidContent from 'svgs/commercial/paid-content.svg';
-import uniq from 'lodash/arrays/uniq';
 
 class surveySimple {
-    constructor(config) {
+    constructor(config: {
+        header: string,
+        paragraph1: string,
+        paragraph2: string,
+        paragraph3: string,
+    }) {
         this.config = config || {};
-        this.id = this.config.id;
-        this.prefs = 'overlay-messages';
-        this.shouldClosePermanently =
-            this.config.shouldClosePermanently || false;
-        this.bannerTmpl = template(surveySimpleTemplate, {
-            header: this.config.header,
-            paragraph1: this.config.paragraph1,
-            paragraph2: this.config.paragraph2,
-            paragraph3: this.config.paragraph3,
-            showCloseBtn: this.config.showCloseBtn,
-            arrowWhiteRight: arrowWhiteRight.markup,
-            marque36icon: marque36icon.markup,
-            crossIcon: crossIcon.markup,
-            paidContent: paidContent.markup,
-        });
     }
 
     attach() {
-        if (!this.hasSeen()) {
-            return fastdom.write(() => {
-                $(document.body).append(this.bannerTmpl);
-
-                if (this.config.showCloseBtn) {
-                    const closeBtn = document.querySelector('.js-survey-close');
-                    closeBtn.addEventListener(
-                        'click',
-                        this.handleClick.bind(this)
-                    );
-                }
+        return fastdom.write(() => {
+            $(document.body).append(this.template());
+            const closeBtn = document.querySelector('.js-survey-close');
+            closeBtn.addEventListener('click', () => {
+                fastdom.write(() => {
+                    $('.js-survey-overlay').addClass('u-h');
+                });
             });
-        }
-        return Promise.resolve();
-    }
-
-    handleClick() {
-        $('.js-survey-overlay').addClass('u-h');
-        if (this.shouldClosePermanently) {
-            this.closePermanently();
-        }
-    }
-
-    hasSeen() {
-        const messageStates = userPrefs.get(this.prefs);
-        return messageStates && messageStates.indexOf(this.id) > -1;
-    }
-
-    closePermanently() {
-        const messageStates = userPrefs.get(this.prefs) || [];
-        messageStates.push(this.id);
-        userPrefs.set(this.prefs, uniq(messageStates));
-    }
-
-    static show() {
-        fastdom.write(() => {
-            $('.js-survey-overlay').removeClass('u-h');
         });
+    }
+
+    template() {
+        return `
+            <div class="survey-overlay-simple js-survey-overlay u-h" data-link-name="hosted page about overlay" role="dialog" aria-label="about hosted content">
+                <div class="survey-container">
+                    <h3 class="survey-text__header">
+                        ${this.config.header}
+                        <div class="survey-close js-survey-close">
+                            <button class="site-message__close-btn js-site-message-close" data-link-name="hide about hosted message">
+                                <span class="u-h">Close</span>
+                                ${crossIcon.markup}
+                            </button>
+                        </div>
+                    </h3>
+                    <div class="survey-icon">
+                        ${paidContent.markup}
+                    </div>
+                    <div class="survey-text">
+                        <p class="survey-text__paragraph">
+                            ${this.config.paragraph1}
+                        </p>
+                        <p class="survey-text__paragraph">
+                            ${this.config.paragraph2}
+                        </p>
+                        <p class="survey-text__paragraph">
+                            ${this.config.paragraph3}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        `;
     }
 }
 
