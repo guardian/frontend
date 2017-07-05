@@ -97,7 +97,6 @@ object NewNavigation {
       ),
       List(
         letters,
-        editorials,
         NavLink("Polly Toynbee", "/profile/pollytoynbee"),
         NavLink("Owen Jones", "/profile/owen-jones"),
         NavLink("Jonathan Freedland", "/profile/jonathanfreedland"),
@@ -111,7 +110,7 @@ object NewNavigation {
         auColumnists,
         cartoons,
         indigenousAustraliaOpinion,
-        editorials
+        theGuardianView.copy(title="editorials")
       ),
       List(
         letters,
@@ -146,8 +145,7 @@ object NewNavigation {
           inMyOpinion
         ),
       List(
-        letters,
-        editorials
+        letters
       )
     )
   }
@@ -328,7 +326,6 @@ object NewNavigation {
       SectionsLink("index/contributors", columnists, Opinion),
       SectionsLink("commentisfree/series/comment-is-free-weekly", inMyOpinion, Opinion),
       SectionsLink("profile/editorial", theGuardianView, Opinion),
-      SectionsLink("tone/editorials", editorials, Opinion),
 
       SectionsLink("sport", sport, Sport),
       SectionsLink("football", football, Sport),
