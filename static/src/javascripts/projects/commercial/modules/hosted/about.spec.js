@@ -1,20 +1,6 @@
 // @flow
 import hostedAbout from 'commercial/modules/hosted/about';
 
-jest.mock(
-    'commercial/modules/survey/survey-simple',
-    () =>
-        class {
-            attach() {
-                const overlay = global.document.createElement('div');
-                overlay.classList.add('js-survey-overlay');
-                overlay.classList.add('u-h');
-                global.document.body.appendChild(overlay);
-                return Promise.resolve(this);
-            }
-        }
-);
-
 describe('Hosted About Popup', () => {
     beforeEach(() => {
         if (document.body) {
