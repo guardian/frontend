@@ -7,12 +7,13 @@
     "projects/commercial/modules/third-party-tags/imr-worldwide-legacy.js",
     "projects/commercial/modules/third-party-tags.js"
   ],
-  "Lydia Shepherd": [],
+  "Lydia Shepherd": [
+    "projects/commercial/modules/survey/survey-simple.js"
+  ],
   "sndrs": [
     "lib/detect.js",
     "bootstraps/enhanced/accessibility.js",
     "bootstraps/enhanced/article-minute.js",
-    "bootstraps/enhanced/article.js",
     "bootstraps/enhanced/common.js",
     "bootstraps/enhanced/crosswords.js",
     "bootstraps/enhanced/facia.js",
@@ -21,7 +22,6 @@
     "bootstraps/enhanced/gallery.js"
   ],
   "Simon Adcock": [
-    "projects/commercial/modules/sticky-top-banner.js",
     "projects/common/modules/commercial/membership-engagement-banner.js",
     "projects/common/modules/article/membership-events.js",
     "projects/common/modules/discussion/upvote.js",
@@ -115,8 +115,7 @@
     "projects/common/modules/experiments/tests/film-today-email-variants.js",
     "projects/common/modules/experiments/tests/generic-email-variants.js",
     "projects/common/modules/experiments/tests/opinion-email-variants.js",
-    "projects/common/modules/experiments/tests/paid-card-logo.js",
-    "projects/commercial/modules/survey/survey-simple.js"
+    "projects/common/modules/experiments/tests/paid-card-logo.js"
   ],
   "jranks123": [
     "projects/common/modules/experiments/tests/paid-commenting.js",

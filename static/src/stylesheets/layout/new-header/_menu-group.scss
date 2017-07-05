@@ -68,16 +68,7 @@
         order: 3;
         padding-bottom: 0;
         padding-top: $gs-baseline;
-        position: absolute;
-        right: 0;
-        top: 0;
         width: 100%;
-
-        @supports(display: flex) {
-            position: relative;
-            right: auto;
-            top: auto;
-        }
     }
 
     @include mq(leftCol) {
@@ -87,6 +78,15 @@
         padding-left: $gs-gutter / 2 - 1;
         // substracting the border-width, otherwise it breaks in Safari
         width: gs-span(2) + $gs-gutter / 2 - 2;
+        position: absolute;
+        right: 0;
+        top: 0;
+
+        @supports(display: flex) {
+            position: relative;
+            right: auto;
+            top: auto;
+        }
     }
 
     @include mq(wide) {
@@ -129,8 +129,10 @@
     }
 
     .menu-group .menu-item {
-        display: inline-block;
-        width: auto;
+        @include mq(desktop) {
+            display: inline-block;
+            width: auto;
+        }
     }
 }
 
@@ -151,7 +153,7 @@
     @include mq(desktop) {
         color: $news-support-1;
         position: absolute;
-        right: gs-span(2) + $gs-gutter * 1.5;
+        right: $gs-gutter;
         top: 0;
         width: gs-span(2);
 
@@ -165,6 +167,11 @@
 
     @include mq(leftCol) {
         margin-right: $gs-gutter / 2;
+        right: gs-span(2) + $gs-gutter * 1.5;
+
+        @supports(display: flex) {
+            right: auto;
+        }
     }
 
     @include mq(wide) {

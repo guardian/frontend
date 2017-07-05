@@ -105,13 +105,13 @@ from scrolling */
     }
 
     @include mq(tablet) {
-        height: calc(3 / 16 * 385px);
-        width: 385px;
+        height: calc(3 / 16 * 345px);
+        margin-bottom: $gs-baseline / 4;
+        width: 345px;
     }
 
-    @include mq(desktop) {
+    @include mq(leftCol) {
         height: calc(3 / 16 * 385px);
-        margin-bottom: $gs-baseline / 4;
         width: 385px;
     }
 

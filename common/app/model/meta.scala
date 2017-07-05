@@ -49,7 +49,7 @@ object Fields {
   // This is the time from which journalists start using the reader revenue flag in Composer.
   // For content published before then, we need handle it as we did before, taking
   // the sensitive flag to mean "don't display reader revenue asks"
-  private val shouldHideReaderRevenueCutoffDate = new DateTime("2017-07-03T12:00:00.000Z")
+  private val shouldHideReaderRevenueCutoffDate = new DateTime("2017-07-10T12:00:00.000Z")
 
   def make(apiContent: contentapi.Content): Fields = {
     Fields (
