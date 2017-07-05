@@ -37,8 +37,8 @@ trait CommercialSwitches {
 
   val AdFreeTrialSwitch = Switch(
     SwitchGroup.Commercial,
-    "ad-free-membership-trial",
-    "Master switch for trialling ad-free membership perk",
+    "ad-free-subscription-trial",
+    "Master switch for trialling ad-free subscription perk",
     owners = Seq(Owner.withGithub("JustinPinner")),
     safeState = Off,
     sellByDate = never,
