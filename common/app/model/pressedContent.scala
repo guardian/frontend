@@ -7,7 +7,7 @@ import com.gu.facia.api.{models => fapi, utils => fapiutils}
 import com.gu.facia.client.models.{Backfill, CollectionConfigJson, Metadata}
 import common.Edition
 import common.commercial.EditionBranding
-import model.{ContentType, SupportedUrl}
+import model.{CardStylePicker, ContentType, SupportedUrl}
 import org.joda.time.DateTime
 
 object DisplayHints {
