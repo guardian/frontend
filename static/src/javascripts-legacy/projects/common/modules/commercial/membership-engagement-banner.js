@@ -49,7 +49,7 @@ define([
 
         // change messageCode to force redisplay of the message to users who already closed it.
         // messageCode is also consumed by .../test/javascripts/spec/common/commercial/membership-engagement-banner.spec.js
-        var messageCode = 'engagement-banner-2017-06-08';
+        var messageCode = 'engagement-banner-2017-07-05';
 
         var DO_NOT_RENDER_ENGAGEMENT_BANNER = 'do no render engagement banner';
 
