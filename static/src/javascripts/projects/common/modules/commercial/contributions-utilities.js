@@ -1,5 +1,4 @@
 // @flow
-import { commercialFeatures } from 'commercial/modules/commercial-features';
 import targetingTool from 'common/modules/commercial/targeting-tool';
 import {
     regulars as acquisitionsCopyRegulars,
@@ -12,18 +11,17 @@ import { logView } from 'common/modules/commercial/acquisitions-view-log';
 import { isRegular } from 'common/modules/tailor/tailor';
 import $ from 'lib/$';
 import config from 'lib/config';
-import { getCookie } from 'lib/cookies';
 import ElementInView from 'lib/element-inview';
 import fastdom from 'lib/fastdom-promise';
 import mediator from 'lib/mediator';
 import { getSync as geolocationGetSync } from 'lib/geolocation';
 import { constructQuery as constructURLQuery } from 'lib/url';
 import { noop } from 'lib/noop';
-import { daysSince } from 'lib/time-utils';
 import lodashTemplate from 'lodash/utilities/template';
 import toArray from 'lodash/collections/toArray';
 import acquisitionsEpicControlTemplate from 'raw-loader!common/views/acquisitions-epic-control.html';
 import acquisitionsTestimonialBlockTemplate from 'raw-loader!common/views/acquisitions-epic-testimonial-block.html';
+import { shouldSeeReaderRevenue as userShouldSeeReaderRevenue } from 'commercial/modules/user-features';
 
 type ContributionsABTest = ABTest & {
     epic: boolean,
@@ -45,8 +43,6 @@ type EpicTemplate = (Variant, AcquisitionsEpicTemplateCopy) => string;
 
 const membershipBaseURL = 'https://membership.theguardian.com/supporter';
 const contributionsBaseURL = 'https://contribute.theguardian.com';
-
-const lastContributionDate = getCookie('gu.contributions.contrib-timestamp');
 
 // How many times the user can see the Epic,
 // e.g. 6 times within 7 days with minimum of 1 day in between views.
@@ -102,11 +98,13 @@ const getTestimonialBlock = (
 const defaultPageCheck = (page: Object): boolean =>
     page.contentType === 'Article' && !page.isMinuteArticle;
 
-const defaultCanEpicBeDisplayed = (test: ContributionsABTest): boolean => {
-    const canReasonablyAskForMoney =
-        test.showToContributorsAndSupporters ||
-        commercialFeatures.canReasonablyAskForMoney;
+const shouldShowReaderRevenue = (
+    showToContributorsAndSupporters: boolean = false
+): boolean =>
+    (userShouldSeeReaderRevenue() || showToContributorsAndSupporters) &&
+    !config.page.shouldHideReaderRevenue;
 
+const defaultCanEpicBeDisplayed = (test: ContributionsABTest): boolean => {
     const worksWellWithPageTemplate = test.pageCheck(config.page);
 
     const storedGeolocation = geolocationGetSync();
@@ -117,7 +115,7 @@ const defaultCanEpicBeDisplayed = (test: ContributionsABTest): boolean => {
     const tagsMatch = doTagsMatch(test);
 
     return (
-        canReasonablyAskForMoney &&
+        shouldShowReaderRevenue(test.showToContributorsAndSupporters) &&
         worksWellWithPageTemplate &&
         inCompatibleLocation &&
         test.locationCheck(storedGeolocation) &&
@@ -357,7 +355,6 @@ const makeABTest = ({
 
     // optional params
     epic = true,
-    showForSensitive = false,
     // locations is a filter where empty is taken to mean 'all'
     locations = [],
     locationCheck = () => true,
@@ -373,6 +370,9 @@ const makeABTest = ({
     pageCheck = defaultPageCheck,
 }: Object): ContributionsABTest => {
     const test = {
+        // this is true because we use the reader revenue flag rather than sensitive
+        // to disable contributions asks for a particular piece of content
+        showForSensitive: true,
         canRun() {
             if (overrideCanRun) {
                 return doTagsMatch(this) && canRun();
@@ -395,7 +395,6 @@ const makeABTest = ({
         audienceOffset,
         successMeasure,
         audienceCriteria,
-        showForSensitive,
         idealOutcome,
         dataLinkNames,
         variants,
@@ -421,12 +420,9 @@ const makeABTest = ({
 };
 
 export {
+    shouldShowReaderRevenue,
     defaultCanEpicBeDisplayed,
     getTestimonialBlock,
     addTrackingCodesToUrl,
     makeABTest,
 };
-
-export const daysSinceLastContribution = daysSince(lastContributionDate);
-
-export const isContributor = !!lastContributionDate;

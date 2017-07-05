@@ -1,6 +1,8 @@
 // @flow
 import React from 'react/addons';
 
+type WordSeparator = ',' | '-';
+
 const CluePreview = React.createClass({
     /**
      * Get the entries for the preview cells: first filter the user's input to
@@ -12,7 +14,7 @@ const CluePreview = React.createClass({
      * If the user hasn't yet clicked 'shuffle' (this.props.hasShuffled) just
      * display the entries as they are, preserving any blank spaces.
      */
-    getEntries(): Array<Object> {
+    getEntries(): Object[] {
         const unsolved = this.props.letters.filter(l => !l.entered);
 
         return this.props.entries.map(entry => {
@@ -28,7 +30,7 @@ const CluePreview = React.createClass({
 
     // Checks a object in the form{",":[4,7]}
     checkIfLetterHasSeparator(
-        locations: { ','?: Array<number>, '-'?: Array<number> },
+        locations: { [k: WordSeparator]: number[] },
         letterIndex: number
     ): string {
         const spaces = locations[','];
@@ -44,8 +46,8 @@ const CluePreview = React.createClass({
         return 'crossword__anagram-helper__cell';
     },
 
-    letterHasBoundary(separators: Array<number>, letterIndex: number): boolean {
-        return separators.some(separator => separator === letterIndex);
+    letterHasBoundary(separators: number[], letterIndex: number): boolean {
+        return separators.includes(letterIndex);
     },
 
     render() {
@@ -55,7 +57,7 @@ const CluePreview = React.createClass({
             'div',
             {
                 className: `crossword__anagram-helper__clue-preview ${entries.length >=
-                    9
+                9
                     ? 'long'
                     : ''}`,
             },
@@ -78,7 +80,7 @@ const CluePreview = React.createClass({
                 ' ',
                 this.props.clue.clue
             ),
-            entries.map((entry, i) => {
+            entries.map((entry: Object, i: number) => {
                 const classNames = this.checkIfLetterHasSeparator(
                     this.props.clue.separatorLocations,
                     i + 1

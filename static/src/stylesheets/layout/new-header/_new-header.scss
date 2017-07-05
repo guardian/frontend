@@ -25,6 +25,12 @@ from scrolling */
             display: block;
         }
     }
+
+    .has-page-skin & .gs-container {
+        @include mq(wide) {
+            width: gs-span(12) + ($gs-gutter * 2);
+        }
+    }
 }
 
 .new-header__inner {
@@ -42,7 +48,7 @@ from scrolling */
 .new-header__cta-container {
     // -4 to normalize the padding-left
     left: $gs-gutter / 4 - 4;
-    overflow-y: hidden;
+    overflow: hidden;
     /* necessary to make overflow-y work without cutting off
     the transform */
     padding-bottom: 10px;
@@ -99,13 +105,13 @@ from scrolling */
     }
 
     @include mq(tablet) {
-        height: calc(3 / 16 * 385px);
-        width: 385px;
+        height: calc(3 / 16 * 345px);
+        margin-bottom: $gs-baseline / 4;
+        width: 345px;
     }
 
-    @include mq(desktop) {
+    @include mq(leftCol) {
         height: calc(3 / 16 * 385px);
-        margin-bottom: $gs-baseline / 4;
         width: 385px;
     }
 

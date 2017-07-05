@@ -68,10 +68,19 @@
         order: 3;
         padding-bottom: 0;
         padding-top: $gs-baseline;
+        width: 100%;
+    }
+
+    @include mq(leftCol) {
+        border-left: 2px solid $guardian-brand;
+        flex-direction: column;
+        margin-left: 0;
+        padding-left: $gs-gutter / 2 - 1;
+        // substracting the border-width, otherwise it breaks in Safari
+        width: gs-span(2) + $gs-gutter / 2 - 2;
         position: absolute;
         right: 0;
         top: 0;
-        width: 100%;
 
         @supports(display: flex) {
             position: relative;
@@ -80,16 +89,17 @@
         }
     }
 
-    @include mq(leftCol) {
-        border-left: 2px solid $guardian-brand;
-        flex-direction: column;
-        margin-left: 0;
-        padding-left: $gs-gutter / 2 - 1;
-        width: gs-span(2) + $gs-gutter / 2;
-    }
-
     @include mq(wide) {
-        width: gs-span(3) + $gs-gutter / 2;
+        width: gs-span(3) + $gs-gutter / 2 - 2;
+
+        .has-page-skin & {
+            border-top: 1px solid $guardian-brand;
+            border-left-width: 0;
+            flex-wrap: nowrap;
+            flex-direction: row;
+            width: 100%;
+            padding-left: 0;
+        }
     }
 }
 
@@ -113,16 +123,16 @@
         }
 
         @include mq(desktop) {
-            @supports(display: flex) {
-                flex-direction: row;
-                flex-wrap: nowrap;
-            }
+            flex-direction: row;
+            flex-wrap: nowrap;
         }
     }
 
     .menu-group .menu-item {
-        display: inline-block;
-        width: auto;
+        @include mq(desktop) {
+            display: inline-block;
+            width: auto;
+        }
     }
 }
 
@@ -143,7 +153,7 @@
     @include mq(desktop) {
         color: $news-support-1;
         position: absolute;
-        right: gs-span(2) + $gs-gutter * 1.5;
+        right: $gs-gutter;
         top: 0;
         width: gs-span(2);
 
@@ -157,10 +167,19 @@
 
     @include mq(leftCol) {
         margin-right: $gs-gutter / 2;
+        right: gs-span(2) + $gs-gutter * 1.5;
+
+        @supports(display: flex) {
+            right: auto;
+        }
     }
 
     @include mq(wide) {
         margin-right: gs-span(1) + $gs-gutter * 1.5;
+
+        .has-page-skin & {
+            margin-right: 0;
+        }
     }
 }
 

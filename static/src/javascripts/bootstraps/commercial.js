@@ -16,7 +16,7 @@ import hostedGallery from 'commercial/modules/hosted/gallery';
 import { initHostedCarousel } from 'commercial/modules/hosted/onward-journey-carousel';
 import { loadOnwardComponent } from 'commercial/modules/hosted/onward';
 import { initLiveblogAdverts } from 'commercial/modules/liveblog-adverts';
-import stickyTopBanner from 'commercial/modules/sticky-top-banner';
+import { initStickyTopBanner } from 'commercial/modules/sticky-top-banner';
 import thirdPartyTags from 'commercial/modules/third-party-tags';
 import paidforBand from 'commercial/modules/paidfor-band';
 import { paidContainers } from 'commercial/modules/paid-containers';
@@ -46,9 +46,7 @@ if (!commercialFeatures.adFree) {
         ['cm-articleAsideAdverts', articleAsideAdvertsInit, true],
         ['cm-articleBodyAdverts', articleBodyAdvertsInit],
         ['cm-liveblogAdverts', initLiveblogAdverts, true],
-        ['cm-stickyTopBanner', stickyTopBanner.init],
-        ['cm-paidContainers', paidContainers],
-        ['cm-paidforBand', paidforBand.init]
+        ['cm-stickyTopBanner', initStickyTopBanner]
     );
 }
 

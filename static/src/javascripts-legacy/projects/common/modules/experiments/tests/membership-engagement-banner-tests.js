@@ -4,16 +4,18 @@ define([
     'lib/config',
     'lib/storage',
     'lodash/utilities/template',
-    'commercial/modules/commercial-features',
-    'lib/mediator'
+    'common/modules/commercial/contributions-utilities',
+    'lib/mediator',
+    'lib/geolocation'
 ], function (
     bean,
     qwery,
     config,
     storage,
     template,
-    commercialFeatures,
-    mediator) {
+    contributionsUtilities,
+    mediator,
+    geolocation) {
     var EditionTest = function (edition, id, start, expiry, campaignPrefix) {
 
         this.edition = edition;
@@ -34,7 +36,7 @@ define([
         // Required by the A/B testing framework - can not be async, unfortunately
         this.canRun = function () {
             var matchesEdition = config.page.edition == edition;
-            return matchesEdition && commercialFeatures.commercialFeatures.canReasonablyAskForMoney;
+            return matchesEdition && contributionsUtilities.shouldShowReaderRevenue();
         };
 
         this.completer = function (complete) {
@@ -75,5 +77,76 @@ define([
         return this.addMessageVariant(variantId, {contributions: variantParams});
     };
 
-    return []
+    var MembershipEngagementBannerDigipackPriceTest = function() {
+        this.id = 'MembershipEngagementBannerDigipackPriceTest';
+        this.start = '2017-07-03';
+        this.expiry = '2017-08-03';
+        this.author = 'Jonathan Rankin';
+        this.description = 'Send ';
+        this.audience = 0.25;
+        this.audienceOffset = 0;
+        this.successMeasure = 'Each variant points to a different price point on the landing page. The success is measured' +
+            'by the click rate on th landing page';
+        this.audienceCriteria = 'UK';
+        this.idealOutcome = 'We are able to establish which price point is better for the digital edition';
+        this.canRun = function() {
+            return contributionsUtilities.shouldShowReaderRevenue() && geolocation.getSync() === 'GB';
+        };
+        this.variants = [];
+    };
+
+    // cta should be a function which returns the call-to-action which is placed after the message text.
+    MembershipEngagementBannerDigipackPriceTest.prototype.addVariant = function(variantId, messageText, cta, paypalClass) {
+
+        function createCampaignCode(variantId) {
+            // Campaign code follows convention. Talk to Alex for more information.
+            return 'BUNDLE_PRICE_TEST_1M_B_UK_' + variantId;
+        }
+
+        var engagementBannerParams = {
+            campaignCode: createCampaignCode(variantId),
+            buttonCaption: 'Support the Guardian',
+            linkUrl: 'https://membership.theguardian.com/bundles',
+            messageText: 'Unlike many others, we haven\'t put up a paywall &ndash; we want to keep our journalism as open as we can. Support us with a contribution or subscription',
+            pageviewId: (config.ophan && config.ophan.pageViewId) || 'not_found'
+        };
+
+        if (messageText) {
+
+            if (typeof cta === 'function') {
+                messageText = messageText + ' ' + cta()
+            }
+
+            engagementBannerParams.messageText = messageText;
+        }
+
+        if(paypalClass) {
+            engagementBannerParams.paypalClass = paypalClass;
+        }
+
+        this.variants.push({
+            id: variantId,
+
+            // We don't want to run any 'code' in this test, we just want a variant to be selected.
+            // All message display is performed in membership-engagement-banner.js,
+            // modifying the banner using the data in variantParams.
+            test: function () {},
+
+            success: this.completer,
+
+            // This allows a lot of the deriveBannerParams() logic (in membership-engagement-banner.js) to be by-passed.
+            // If that function has picked up a variant from the CopyTest test, call this method and be done with it.
+            engagementBannerParams : engagementBannerParams
+
+        });
+
+        return this;
+    };
+
+    return [
+        new MembershipEngagementBannerDigipackPriceTest()
+            .addVariant('A')
+            .addVariant('B')
+            .addVariant('C')
+    ]
 });

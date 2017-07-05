@@ -10,6 +10,7 @@ var includeNodeModules = [
     'fence',
     'lodash-amd',
     'qwery',
+    'rangefix',
     'reqwest',
     'video.js',
     'videojs-contrib-ads',

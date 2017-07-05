@@ -13,9 +13,10 @@ const moreInSeriesContainerInit = (
     const component = new Component();
     const seriesStr = series ? `/${series}` : '';
     // exclude professional network content from video pages
-    const excludeProfContent = mediaType === 'video'
-        ? '&exclude-tag=guardian-professional/guardian-professional'
-        : '';
+    const excludeProfContent =
+        mediaType === 'video'
+            ? '&exclude-tag=guardian-professional/guardian-professional'
+            : '';
 
     const endpoint = `/${mediaType}/section/${section}${seriesStr}.json?shortUrl=${shortUrl}${excludeProfContent}`;
 

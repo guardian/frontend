@@ -47,18 +47,20 @@ class FabricExpandingV1 {
         const adHeight = this.isClosed ? this.closedHeight : this.openedHeight;
         const inViewB = viewportHeight > adSlotTop;
         const inViewT = -adHeight * 2 < adSlotTop + 20;
-        const topCusp = inViewT && viewportHeight * 0.4 - adHeight > adSlotTop
-            ? 'true'
-            : 'false';
-        const bottomCusp = inViewB && viewportHeight * 0.5 < adSlotTop
-            ? 'true'
-            : 'false';
-        const bottomScroll = bottomCusp === 'true'
-            ? 50 - (viewportHeight * 0.5 - adSlotTop) * -0.2
-            : 50;
-        const topScroll = topCusp === 'true'
-            ? (viewportHeight * 0.4 - adSlotTop - adHeight) * 0.2
-            : 0;
+        const topCusp =
+            inViewT && viewportHeight * 0.4 - adHeight > adSlotTop
+                ? 'true'
+                : 'false';
+        const bottomCusp =
+            inViewB && viewportHeight * 0.5 < adSlotTop ? 'true' : 'false';
+        const bottomScroll =
+            bottomCusp === 'true'
+                ? 50 - (viewportHeight * 0.5 - adSlotTop) * -0.2
+                : 50;
+        const topScroll =
+            topCusp === 'true'
+                ? (viewportHeight * 0.4 - adSlotTop - adHeight) * 0.2
+                : 0;
 
         let scrollAmount;
 
@@ -152,15 +154,18 @@ class FabricExpandingV1 {
             ? 125
             : 250;
         const videoWidth = videoHeight * videoAspectRatio;
-        const leftMargin = this.params.videoPositionH === 'center'
-            ? `margin-left: ${videoWidth / -2}px`
-            : '';
-        const leftPosition = this.params.videoPositionH === 'left'
-            ? `left: ${this.params.videoHorizSpace}px`
-            : '';
-        const rightPosition = this.params.videoPositionH === 'right'
-            ? `right: ${this.params.videoHorizSpace}px`
-            : '';
+        const leftMargin =
+            this.params.videoPositionH === 'center'
+                ? `margin-left: ${videoWidth / -2}px`
+                : '';
+        const leftPosition =
+            this.params.videoPositionH === 'left'
+                ? `left: ${this.params.videoHorizSpace}px`
+                : '';
+        const rightPosition =
+            this.params.videoPositionH === 'right'
+                ? `right: ${this.params.videoHorizSpace}px`
+                : '';
 
         const viewModel = {
             width: videoWidth,
@@ -205,26 +210,30 @@ class FabricExpandingV1 {
                 : '',
         };
         const showmoreArrow = {
-            showArrow: this.params.showMoreType === 'arrow-only' ||
+            showArrow:
+                this.params.showMoreType === 'arrow-only' ||
                 this.params.showMoreType === 'plus-and-arrow'
-                ? `<button class="ad-exp__open-chevron ad-exp__open">${arrowDown.markup}</button>`
-                : '',
+                    ? `<button class="ad-exp__open-chevron ad-exp__open">${arrowDown.markup}</button>`
+                    : '',
         };
         const showmorePlus = {
-            showPlus: this.params.showMoreType === 'plus-only' ||
+            showPlus:
+                this.params.showMoreType === 'plus-only' ||
                 this.params.showMoreType === 'plus-and-arrow'
-                ? `<button class="ad-exp__close-button ad-exp__open">${closeCentral.markup}</button>`
-                : '',
+                    ? `<button class="ad-exp__close-button ad-exp__open">${closeCentral.markup}</button>`
+                    : '',
         };
         const scrollbgDefaultY = '0%'; // used if no parallax / fixed background scroll support
         const scrollingbg = {
-            scrollbg: this.params.backgroundImagePType !== 'none'
-                ? `<div class="ad-exp--expand-scrolling-bg" style="background-image: url(${this
-                      .params.backgroundImageP}); background-position: ${this
-                      .params
-                      .backgroundImagePPosition} ${scrollbgDefaultY}; background-repeat: ${this
-                      .params.backgroundImagePRepeat};"></div>`
-                : '',
+            scrollbg:
+                this.params.backgroundImagePType !== 'none'
+                    ? `<div class="ad-exp--expand-scrolling-bg" style="background-image: url(${this
+                          .params
+                          .backgroundImageP}); background-position: ${this
+                          .params
+                          .backgroundImagePPosition} ${scrollbgDefaultY}; background-repeat: ${this
+                          .params.backgroundImagePRepeat};"></div>`
+                    : '',
         };
         this.params.id = `fabric-expanding-${Math.floor(
             Math.random() * 10000
