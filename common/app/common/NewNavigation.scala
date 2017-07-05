@@ -57,7 +57,7 @@ object NewNavigation {
   case object MostPopular extends EditionalisedNavigationSection {
     val name = "news"
 
-    val uk = NavLinkLists(List(headlines, ukNews, environment, world, tech, business, football))
+    val uk = NavLinkLists(List(headlines, ukNews, world, business, environment, tech, football))
     val au = NavLinkLists(List(headlines, australiaNews, world, auPolitics, environment, football))
     val us = NavLinkLists(List(headlines, usNews, world, usPolitics, business, environment, soccer))
     val int = NavLinkLists(List(headlines, world, ukNews, business, science, globalDevelopment, football))
