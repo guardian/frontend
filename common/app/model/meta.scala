@@ -439,6 +439,7 @@ case class GuideAtomPage(
 )(implicit request: RequestHeader) extends AtomPage {
   override val atomType = "guide"
   override val body = views.html.fragments.atoms.snippets.guide(atom, isAmp = false)
+  override val javascriptModule = "snippet"
   override val metadata = MetaData.make(
     id = atom.id,
     webTitle = atom.atom.title.getOrElse("Guide"),
@@ -452,6 +453,7 @@ case class ProfileAtomPage(
 )(implicit request: RequestHeader) extends AtomPage {
   override val atomType = "profile"
   override val body = views.html.fragments.atoms.snippets.profile(atom, isAmp = false)
+  override val javascriptModule = "snippet"
   override val metadata = MetaData.make(
     id = atom.id,
     webTitle = atom.atom.title.getOrElse("Profile"),
@@ -465,6 +467,7 @@ override val withJavaScript: Boolean
 )(implicit request: RequestHeader) extends AtomPage {
   override val atomType = "qanda"
   override val body = views.html.fragments.atoms.snippets.qanda(atom, isAmp = false)
+  override val javascriptModule = "snippet"
   override val metadata = MetaData.make(
     id = atom.id,
     webTitle = atom.atom.title.getOrElse("Q&A"),
@@ -478,6 +481,7 @@ override val withJavaScript: Boolean
 )(implicit request: RequestHeader) extends AtomPage {
   override val atomType = "timeline"
   override val body = views.html.fragments.atoms.snippets.timeline(atom, isAmp = false)
+  override val javascriptModule = "snippet"
   override val metadata = MetaData.make(
     id = atom.id,
     webTitle = atom.atom.title.getOrElse("Timeline"),
