@@ -5,7 +5,6 @@ import { getTest as getAcquisitionTest } from 'common/modules/experiments/acquis
 import MembershipEngagementBannerTests from 'common/modules/experiments/tests/membership-engagement-banner-tests';
 import PaidContentVsOutbrain2 from 'common/modules/experiments/tests/paid-content-vs-outbrain';
 import { tailorSurvey } from 'common/modules/experiments/tests/tailor-survey';
-import { StoryQuizTest } from 'common/modules/experiments/tests/story-quiz';
 
 import AcquisitionsEpicElectionInteractiveEnd from 'common/modules/experiments/tests/acquisitions-epic-election-interactive-end';
 import AcquisitionsEpicElectionInteractiveSlice from 'common/modules/experiments/tests/acquisitions-epic-election-interactive-slice';
@@ -19,7 +18,6 @@ export const TESTS: Array<ABTest> = [
     AcquisitionsEpicElectionInteractiveEnd,
     AcquisitionsEpicElectionInteractiveSlice,
     new BundleDigitalSubPriceTest1Thrasher(),
-    StoryQuizTest(),
 ]
     .concat(MembershipEngagementBannerTests)
     .filter(Boolean);
