@@ -5,7 +5,8 @@ define([
     'lib/storage',
     'lodash/utilities/template',
     'common/modules/commercial/contributions-utilities',
-    'lib/mediator'
+    'lib/mediator',
+    'lib/geolocation'
 ], function (
     bean,
     qwery,
@@ -13,7 +14,8 @@ define([
     storage,
     template,
     contributionsUtilities,
-    mediator) {
+    mediator,
+    geolocation) {
     var EditionTest = function (edition, id, start, expiry, campaignPrefix) {
 
         this.edition = edition;
@@ -81,14 +83,15 @@ define([
         this.expiry = '2017-08-03';
         this.author = 'Jonathan Rankin';
         this.description = 'Send ';
-        this.audience = 1;
+        this.audience = 0.25;
         this.audienceOffset = 0;
         this.successMeasure = 'Each variant points to a different price point on the landing page. The success is measured' +
             'by the click rate on th landing page';
         this.audienceCriteria = 'UK';
         this.idealOutcome = 'We are able to establish which price point is better for the digital edition';
-        this.canRun = function() {return true;};
-
+        this.canRun = function() {
+            return contributionsUtilities.shouldShowReaderRevenue() && geolocation.getSync() === 'GB';
+        };
         this.variants = [];
     };
 
