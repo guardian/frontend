@@ -10,5 +10,3 @@ declare var require: {
     ? : string):
     void,
 };
-
-declare var NOLCMB: Object // This is needed for the Nielsen NetRatings tag. Also known as IMR worldwide.
