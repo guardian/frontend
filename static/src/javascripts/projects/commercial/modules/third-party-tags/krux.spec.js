@@ -1,18 +1,13 @@
 // @flow
 import { url, shouldRun } from 'commercial/modules/third-party-tags/krux';
-import config from 'lib/config';
+
+jest.mock('lib/config', () => ({
+    switches: { krux: false },
+}));
 
 describe('Krux', () => {
-    beforeEach(() => {
-        config.switches = {
-            krux: true,
-        };
-    });
-
     it('should not load if switch is off', () => {
-        config.switches.krux = false;
-
-        expect(shouldRun).toBeFalsy();
+        expect(shouldRun).toBe(false);
     });
 
     it('should send correct "netid" param', () => {

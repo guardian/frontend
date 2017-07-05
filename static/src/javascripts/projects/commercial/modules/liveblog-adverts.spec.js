@@ -81,7 +81,7 @@ describe('Liveblog Dynamic Adverts', () => {
                 c => c.classList.contains('ad-slot')
             );
             expect(adSlots.length).toBeGreaterThan(0);
-            expect(candidatesAreAllAds).toBeTruthy();
+            expect(candidatesAreAllAds).toBe(true);
             expect(candidates.length).toEqual(adSlots.length);
         })
     );
