@@ -46,7 +46,7 @@ const loadExternalContentWidget = (): void => {
         return Promise.resolve(document.querySelector(selector));
     };
 
-    const renderWidget = (widgetType, init: () => void): void => {
+    const renderWidget = (widgetType, init): void => {
         findAnchor()
             .then(anchorNode =>
                 fastdom.write(() => {
@@ -107,7 +107,7 @@ const loadOther = (): void => {
     }
 };
 
-const init = (): Promise<any> => {
+const initThirdPartyTags = (): Promise<any> => {
     if (!commercialFeatures.thirdPartyTags) {
         return Promise.resolve(false);
     }
@@ -123,4 +123,4 @@ const init = (): Promise<any> => {
     return Promise.resolve(true);
 };
 
-export { init };
+export { initThirdPartyTags };

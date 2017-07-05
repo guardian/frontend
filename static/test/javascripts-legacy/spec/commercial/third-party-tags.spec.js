@@ -26,7 +26,7 @@ define([
 
         it('should not run if disabled in commercial features', function (done) {
             commercialFeatures.thirdPartyTags = false;
-            tagsContainer.init()
+            tagsContainer.initThirdPartyTags()
                 .then(function(enabled) {
                     expect(enabled).toBe(false);
                     done();
