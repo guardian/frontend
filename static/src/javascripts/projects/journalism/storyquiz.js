@@ -135,11 +135,13 @@ const StoryQuiz = (quiz: HTMLElement) => {
         ];
         fastdom.write(() => {
             els.forEach(el => {
-                el.classList.remove('is-answered');
-                el.classList.remove('is-correct');
-                el.classList.remove('is-wrong');
-                el.classList.remove('is-answer');
-                el.classList.remove('is-result');
+                [
+                    'is-answered',
+                    'is-correct',
+                    'is-wrong',
+                    'is-answer',
+                    'is-result',
+                ].forEach(cn => el.classList.remove(cn));
             });
             demoteCard(currentCard);
             promoteCard(0);

@@ -24,10 +24,14 @@
         </div>
       </div>
     @for((question, i) <- quiz.questions.zipWithIndex) {
-      <div class="storyquiz__card storyquiz__card--question">
+      <fieldset class="storyquiz__card storyquiz__card--question">
         <div class="explainer-snippet__header">
           <span class="explainer-snippet__label">Quick quiz</span>
-          <h4 class="explainer-snippet__headline">Question @{i + 1} of @quiz.questions.length</h4>
+          <legend class="explainer-snippet__headline">
+            Question @{i + 1} of @quiz.questions.length
+            @fragments.inlineSvg("tick-green", "icon")
+            @fragments.inlineSvg("cross-red", "icon")
+          </legend>
         </div>
         <div class="explainer-snippet__body storyquiz__question">
           @question.text
@@ -55,7 +59,7 @@
             @fragments.inlineSvg("arrow-right", "icon")
         </button>
         </div>
-      </div>
+      </fieldset>
     }
 
     <div class="storyquiz__card storyquiz__card--outro">
