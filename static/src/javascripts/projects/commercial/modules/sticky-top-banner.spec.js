@@ -100,6 +100,7 @@ describe('Sticky ad banner', () => {
         });
 
         return initStickyTopBanner()
+            .then(() => _.whenFirstRendered)
             .then(() => resizeStickyBanner(randomHeight))
             .then(() => {
                 if (!header || !stickyBanner) {

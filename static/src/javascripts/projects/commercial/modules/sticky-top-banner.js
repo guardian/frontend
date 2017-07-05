@@ -125,7 +125,8 @@ const getAdvertSizeByIndex = (advert: ?Advert, index: number): ?number => {
 };
 
 const onFirstRender = (): void => {
-    trackAdRender(topSlotId).then(isRendered => {
+    // eslint-disable-next-line no-use-before-define
+    _.whenFirstRendered = trackAdRender(topSlotId).then(isRendered => {
         if (isRendered) {
             const advert = getAdvertById(topSlotId);
             const adSize0 = getAdvertSizeByIndex(advert, 0);
@@ -201,5 +202,5 @@ const initStickyTopBanner = (): Promise<void> => {
     return Promise.resolve();
 };
 
-const _ = { update, resizeStickyBanner, onScroll };
+const _ = { update, resizeStickyBanner, onScroll, whenFirstRendered: null };
 export { initStickyTopBanner, _ };
