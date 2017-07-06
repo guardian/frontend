@@ -23,7 +23,7 @@ export const acquisitionsEpicRebaselineSupportProposition = makeABTest({
         'We get a baseline for conversion of the bundles landing page',
 
     audienceCriteria: 'UK all devices',
-    audience: 0,
+    audience: 0.1,
     locations: ['GB'],
     audienceOffset: 0.9,
 
