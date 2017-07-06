@@ -57,7 +57,7 @@ object NewNavigation {
   case object MostPopular extends EditionalisedNavigationSection {
     val name = "news"
 
-    val uk = NavLinkLists(List(headlines, ukNews, environment, world, tech, business, football))
+    val uk = NavLinkLists(List(headlines, ukNews, world, business, environment, tech, football))
     val au = NavLinkLists(List(headlines, australiaNews, world, auPolitics, environment, football))
     val us = NavLinkLists(List(headlines, usNews, world, usPolitics, business, environment, soccer))
     val int = NavLinkLists(List(headlines, world, ukNews, business, science, globalDevelopment, football))
@@ -97,7 +97,6 @@ object NewNavigation {
       ),
       List(
         letters,
-        editorials,
         NavLink("Polly Toynbee", "/profile/pollytoynbee"),
         NavLink("Owen Jones", "/profile/owen-jones"),
         NavLink("Jonathan Freedland", "/profile/jonathanfreedland"),
@@ -111,7 +110,7 @@ object NewNavigation {
         auColumnists,
         cartoons,
         indigenousAustraliaOpinion,
-        editorials
+        theGuardianView.copy(title="editorials")
       ),
       List(
         letters,
@@ -146,8 +145,7 @@ object NewNavigation {
           inMyOpinion
         ),
       List(
-        letters,
-        editorials
+        letters
       )
     )
   }
@@ -311,6 +309,7 @@ object NewNavigation {
       SectionsLink("media", media, News),
       SectionsLink("us-news", usNews, News),
       SectionsLink("cities", cities, News),
+      SectionsLink("inequality", inequality, News),
       SectionsLink("global-development", globalDevelopment, News),
       SectionsLink("sustainable-business", sustainableBusiness, News),
       SectionsLink("law", law, News),
@@ -327,7 +326,6 @@ object NewNavigation {
       SectionsLink("index/contributors", columnists, Opinion),
       SectionsLink("commentisfree/series/comment-is-free-weekly", inMyOpinion, Opinion),
       SectionsLink("profile/editorial", theGuardianView, Opinion),
-      SectionsLink("tone/editorials", editorials, Opinion),
 
       SectionsLink("sport", sport, Sport),
       SectionsLink("football", football, Sport),
@@ -423,7 +421,7 @@ object NewNavigation {
 
     val worldSubNav = NavLinkLists(
       List(world, europe, usNews, americas, asia, australiaNews, middleEast, africa),
-      List(cities, globalDevelopment)
+      List(inequality, cities, globalDevelopment)
     )
 
     val moneySubNav = NavLinkLists(List(money, property, pensions, savings, borrowing, careers))
