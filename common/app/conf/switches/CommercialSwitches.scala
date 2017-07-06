@@ -65,16 +65,6 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
-  val AudienceScienceGatewaySwitch = Switch(
-    SwitchGroup.Commercial,
-    "audience-science-gateway",
-    "If this switch is on, Audience Science Gateway segments will be used to target ads.",
-    owners = Seq(Owner.withName("commercial team")),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
   val ImrWorldwideSwitch = Switch(
     SwitchGroup.Commercial,
     "imr-worldwide",

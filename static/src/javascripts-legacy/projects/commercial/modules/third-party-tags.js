@@ -9,8 +9,6 @@ define([
     'common/modules/experiments/test-can-run-checks',
     'common/modules/experiments/utils',
     'commercial/modules/commercial-features',
-    'commercial/modules/third-party-tags/audience-science-gateway',
-    'commercial/modules/third-party-tags/audience-science-pql',
     'commercial/modules/third-party-tags/imr-worldwide',
     'commercial/modules/third-party-tags/imr-worldwide-legacy',
     'commercial/modules/third-party-tags/remarketing',
@@ -29,8 +27,6 @@ define([
     testCanRunChecks,
     abUtils,
     commercialFeatures,
-    audienceScienceGateway,
-    audienceSciencePql,
     imrWorldwide,
     imrWorldwideLegacy,
     remarketing,
@@ -96,8 +92,6 @@ define([
 
     function loadOther() {
         var services = [
-            audienceSciencePql,
-            audienceScienceGateway,
             imrWorldwide,
             imrWorldwideLegacy,
             remarketing,
