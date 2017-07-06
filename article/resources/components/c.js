@@ -1405,14 +1405,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__style_scss___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__style_scss__);
 
 
-function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
 
-
-
-/* harmony default export */ var button_defaultExport = (function (_ref) {
-    var children = _ref.children,
-        props = _objectWithoutProperties(_ref, ['children']);
-
+/* harmony default export */ var button_defaultExport = (function (props) {
     return __WEBPACK_IMPORTED_MODULE_0_lib_h_jsx__["a" /* default */](
         'button',
         {
@@ -1420,9 +1414,8 @@ function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in ob
             onClick: function onClick() {
                 return console.log('clicked the button!!');
             }
-
         },
-        children
+        props.children
     );
 });
 // CONCATENATED MODULE: ./src/app/views/article.jsx
@@ -1433,11 +1426,7 @@ function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in ob
 
 
 
-/* harmony default export */ var article_defaultExport = (function (children) {
-    for (var _len = arguments.length, props = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-        props[_key - 1] = arguments[_key];
-    }
-
+/* harmony default export */ var article_defaultExport = (function (props) {
     return article___WEBPACK_IMPORTED_MODULE_0_lib_h_jsx__["a" /* default */](
         'header',
         { style: __WEBPACK_IMPORTED_MODULE_2__article_scss___default.a['.header'] },
@@ -1470,7 +1459,7 @@ function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in ob
         article___WEBPACK_IMPORTED_MODULE_0_lib_h_jsx__["a" /* default */](
             'h1',
             { style: __WEBPACK_IMPORTED_MODULE_2__article_scss___default.a['.headline'], itemProp: 'headline' },
-            'Revitalised and calmed by an English wood in spring'
+            props.page.headline
         )
     );
 });
@@ -1482,11 +1471,7 @@ function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in ob
 
 
 
-/* harmony default export */ __webpack_exports__["a"] = (function (children) {
-    for (var _len = arguments.length, props = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-        props[_key - 1] = arguments[_key];
-    }
-
+/* harmony default export */ __webpack_exports__["a"] = (function (props) {
     return body___WEBPACK_IMPORTED_MODULE_0_lib_h_jsx__["a" /* default */](
         'body',
         { style: __WEBPACK_IMPORTED_MODULE_2__style_scss__["body"] },
@@ -1581,11 +1566,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 var styletron = new __WEBPACK_IMPORTED_MODULE_3_styletron_server___default.a();
 
-var body = function body(children) {
-    for (var _len = arguments.length, props = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-        props[_key - 1] = arguments[_key];
-    }
-
+var body = function body(props) {
     return __WEBPACK_IMPORTED_MODULE_0_lib_h_jsx__["a" /* default */](
         __WEBPACK_IMPORTED_MODULE_2_styletron_preact__["StyletronProvider"],
         { styletron: styletron },
@@ -1596,7 +1577,7 @@ var body = function body(children) {
 // the main export for the JVM JS interpreter to run
 // eslint-disable-next-line import/prefer-default-export
 var render = function render(props) {
-    return '\n    <html lang="en">\n        <head>\n            <title>' + props.title + '</title>\n            <style>\n            *, * > * {\n                margin: 0;\n                padding: 0;\n                box-sizing: border-box;\n            }\n            </style>\n            ' + styletron.getStylesheetsHtml() + '\n            <script src="/bundle.browser.js" async defer></script>\n        </head>\n        ' + __WEBPACK_IMPORTED_MODULE_1_preact_render_to_string__["render"](body(props)) + '\n    </html>\n';
+    return '\n    <html lang="en">\n        <head>\n            <title>' + props.page.headline + ' | ' + props.page.section + ' | The Guardian</title>\n            <style>\n            *, * > * {\n                margin: 0;\n                padding: 0;\n                box-sizing: border-box;\n            }\n            </style>\n            ' + styletron.getStylesheetsHtml() + '\n            <script>window.guardian = ' + JSON.stringify(props, null, 2) + ';</script>\n            <script src="/bundle.browser.js" async defer></script>\n        </head>\n        ' + __WEBPACK_IMPORTED_MODULE_1_preact_render_to_string__["render"](body(props)) + '\n    </html>\n';
 };
 
 /***/ }),
