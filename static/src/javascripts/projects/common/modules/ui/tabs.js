@@ -101,4 +101,10 @@ const init = (): Promise<void> => {
     });
 };
 
-export { init, showPane, hidePane, getTabTarget };
+export { init };
+
+export const _ = {
+    showPane,
+    hidePane,
+    getTabTarget,
+};
