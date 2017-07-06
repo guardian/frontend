@@ -12,6 +12,7 @@ import org.joda.time.{DateTime, DateTimeZone, Duration}
 import play.api.libs.json.{JsError, JsSuccess, Json}
 import quiz._
 import views.support.{GoogleStructuredData, ImgSrc}
+import conf.switches.Switches
 
 final case class Atoms(
   quizzes: Seq[Quiz],
@@ -201,16 +202,23 @@ object Atoms extends common.Logging {
       //      are displayed at the bottom of an article. We reuse the quiz atom, even
       //      though its model doesn't comply perfectly with the domain model of our
       //      intended purpose. We will rely on the convention that quizzes created for
-      //      the purpose of this test will be tagged with "test/test"
-      val quizzes = extract(
-        atoms.quizzes.map { quizzes => quizzes.filterNot(_.data.asInstanceOf[AtomData.Quiz].quiz.title.contains("|")) },
-        atom => { Quiz.make(content.id, atom) }
-      )
+      //      the purpose of this test will have a special character in the title (|)
+      val quizzes = if (Switches.StoryQuizzes.isSwitchedOn) {
+        extract(
+          atoms.quizzes.map { quizzes => quizzes.filterNot(_.data.asInstanceOf[AtomData.Quiz].quiz.title.contains("|")) },
+          atom => { Quiz.make(content.id, atom) }
+        )
+      } else {
+        extract(atoms.quizzes, atom => { Quiz.make(content.id, atom) })
+      }
 
-      val storyQuizzes = extract(
-        atoms.quizzes.map { quizzes => quizzes.filter(_.data.asInstanceOf[AtomData.Quiz].quiz.title.contains("|")) },
-        atom => { StoryQuiz.make(content.id, atom) }
-      )
+      val storyQuizzes = if (Switches.StoryQuizzes.isSwitchedOn) {
+        extract(
+          atoms.quizzes.map { quizzes => quizzes.filter(_.data.asInstanceOf[AtomData.Quiz].quiz.title.contains("|")) },
+          atom => { StoryQuiz.make(content.id, atom) }
+        )
+      } else
+        Nil
       // -->
 
       val media = extract(atoms.media, atom => {
