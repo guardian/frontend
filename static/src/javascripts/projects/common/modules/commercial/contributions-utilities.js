@@ -42,6 +42,12 @@ type ContributionsABTest = ABTest & {
 
 type EpicTemplate = (Variant, AcquisitionsEpicTemplateCopy) => string;
 
+type CtaUrls = {
+    membershipUrl?: string,
+    contributeUrl?: string,
+    supportUrl?: string,
+};
+
 const membershipBaseURL = 'https://membership.theguardian.com/supporter';
 const contributionsBaseURL = 'https://contribute.theguardian.com';
 const supportBaseURL = 'https://support.theguardian.com/uk';
@@ -58,7 +64,7 @@ const defaultMaxViews: {
     minDaysBetweenViews: 0,
 };
 
-const defaultButtonTemplate = urls =>
+const defaultButtonTemplate = (urls: CtaUrls) =>
     lodashTemplate(acquisitionsEpicButtons, urls);
 
 const controlTemplate: EpicTemplate = ({ options = {} }, copy) =>
@@ -437,4 +443,5 @@ export {
     getTestimonialBlock,
     addTrackingCodesToUrl,
     makeABTest,
+    defaultButtonTemplate,
 };
