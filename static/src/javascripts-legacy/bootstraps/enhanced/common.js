@@ -86,7 +86,7 @@ define([
     cookiesBanner,
     RelativeDates,
     customSmartAppBanner,
-    tabs,
+    Tabs,
     Toggles,
     userPrefs,
     breakingNews,
@@ -122,12 +122,10 @@ define([
             },
 
             showTabs: function () {
-                [
-                    'modules:popular:loaded',
-                    'modules:geomostpopular:ready',
-                ].forEach(function (event) {
-                    mediator.on(event, function() {
-                        tabs.init();
+                var tabs = new Tabs();
+                ['modules:popular:loaded', 'modules:geomostpopular:ready'].forEach(function (event) {
+                    mediator.on(event, function (el) {
+                        tabs.init(el);
                     });
                 });
             },
