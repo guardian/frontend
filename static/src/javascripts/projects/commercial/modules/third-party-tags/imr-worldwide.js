@@ -87,9 +87,8 @@ const onLoad = () => {
     nSdkInstance.ggPM('staticstart', dcrStaticMetadata);
 };
 
-// The Nielsen NetRatings tag. Also known as IMR worldwide.
-const url = '//secure-dcr.imrworldwide.com/novms/js/2/ggcmb510.js';
-
-const shouldRun = config.switches.imrWorldwide;
-
-export { shouldRun, url, onLoad };
+export const imrWorldwide: ThirdPartyTag = {
+    shouldRun: config.switches.imrWorldwide,
+    url: '//secure-dcr.imrworldwide.com/novms/js/2/ggcmb510.js',
+    onLoad,
+};

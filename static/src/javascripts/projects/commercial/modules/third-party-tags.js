@@ -12,25 +12,14 @@ import audienceScienceGateway from 'commercial/modules/third-party-tags/audience
 import audienceSciencePql from 'commercial/modules/third-party-tags/audience-science-pql';
 import PaidContentVsOutbrain2 from 'common/modules/experiments/tests/paid-content-vs-outbrain';
 import externalContentContainerStr from 'raw-loader!common/views/commercial/external-content.html';
-
-// third-party-tags follow an API pattern with their exports, FlowTyped as
-// 'Service'. To avoid naming collisions, namespace imports are used here.
-/* eslint-disable import/no-namespace */
-import * as imrWorldwide from 'commercial/modules/third-party-tags/imr-worldwide';
-import * as imrWorldwideLegacy from 'commercial/modules/third-party-tags/imr-worldwide-legacy';
-import * as remarketing from 'commercial/modules/third-party-tags/remarketing';
-import * as simpleReach from 'commercial/modules/third-party-tags/simple-reach';
-import * as tourismAustralia from 'commercial/modules/third-party-tags/tourism-australia';
-import * as krux from 'commercial/modules/third-party-tags/krux';
-import * as outbrain from 'commercial/modules/third-party-tags/outbrain';
-import * as plista from 'commercial/modules/third-party-tags/plista';
-
-type Service = {
-    shouldRun: boolean,
-    url: string,
-    onLoad?: () => any,
-    useImage?: boolean,
-};
+import { imrWorldwide } from 'commercial/modules/third-party-tags/imr-worldwide';
+import { imrWorldwideLegacy } from 'commercial/modules/third-party-tags/imr-worldwide-legacy';
+import { remarketing } from 'commercial/modules/third-party-tags/remarketing';
+import { simpleReach } from 'commercial/modules/third-party-tags/simple-reach';
+import { tourismAustralia } from 'commercial/modules/third-party-tags/tourism-australia';
+import { krux } from 'commercial/modules/third-party-tags/krux';
+import { initOutbrain } from 'commercial/modules/third-party-tags/outbrain';
+import plista from 'commercial/modules/third-party-tags/plista';
 
 const isLuckyBastard = (): boolean =>
     testCanBeRun(PaidContentVsOutbrain2) &&
@@ -65,13 +54,13 @@ const loadExternalContentWidget = (): void => {
         config.page.edition.toLowerCase() === 'au';
 
     if (shouldServePlista) {
-        renderWidget('plista', plista.default.init);
+        renderWidget('plista', plista.init);
     } else {
-        renderWidget('outbrain', outbrain.init);
+        renderWidget('outbrain', initOutbrain);
     }
 };
 
-const insertScripts = (services: Array<Service>): void => {
+const insertScripts = (services: Array<ThirdPartyTag>): void => {
     const ref = document.scripts[0];
     const frag = document.createDocumentFragment();
     while (services.length) {
