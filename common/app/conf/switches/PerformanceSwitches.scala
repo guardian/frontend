@@ -110,7 +110,7 @@ trait PerformanceSwitches {
     "async-css",
     "If this switch is on CSS will be loaded with media set to 'only x' and updated to 'all' when the stylesheet " +
       "has loaded using javascript. Disabling it will use standard link elements.",
-    owners = Seq(Owner.withGithub("johnduffell")),
+    owners = Seq(Owner.withGithub("Calum-Campbell")),
     safeState = On,
     sellByDate = never,
     exposeClientSide = false
@@ -148,8 +148,8 @@ trait PerformanceSwitches {
 
   val DiscussionSwitch = Switch(
     SwitchGroup.Performance,
-    "discussion",
-    "If this switch is on, comments are displayed on articles. Turn this off if the Discussion API is blowing up.",
+    "comments-visible-on-article",
+    "If this switch is on, comments are displayed on articles on dotcom. This switch only show/hides the UI from the bottom of articles on dotcom and does not disable any underlying services/endpoints etc..",
     owners = Seq(Owner.withGithub("johnduffell")),
     safeState = On,
     sellByDate = never,
