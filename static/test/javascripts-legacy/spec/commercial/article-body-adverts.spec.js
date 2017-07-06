@@ -46,7 +46,7 @@ define([
                 commercialFeatures.articleBodyAdverts = true;
 
                 spaceFiller = $3;
-                spaceFillerStub = sinon.stub(spaceFiller, 'fillSpace');
+                spaceFillerStub = sinon.stub(spaceFiller, 'spaceFiller.fillSpace');
                 spaceFillerStub.returns(Promise.resolve(true));
 
                 config = $4;
