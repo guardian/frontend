@@ -42,6 +42,10 @@
 
     @include mq(wide) {
         top: $gs-baseline / 2;
+
+        .has-page-skin & {
+            top: $gs-baseline / 4;
+        }
     }
 }
 
