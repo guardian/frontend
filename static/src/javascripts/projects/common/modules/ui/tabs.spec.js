@@ -1,6 +1,6 @@
 // @flow
 
-import { init as tabsInit, showPane, hidePane, getTabTarget } from './tabs';
+import { init as tabsInit, _ } from './tabs';
 
 const NAV_CLASSES = [
     'tabs__tab--selected',
@@ -75,7 +75,7 @@ test('showPane()', () => {
     const tabList: HTMLElement = (tab.parentNode: any);
     const pane: HTMLElement = (document.getElementById('tab2panel'): any);
 
-    return showPane(tab, pane).then(() => {
+    return _.showPane(tab, pane).then(() => {
         expect(pane.classList.contains('u-h')).toBe(false);
         expect(pane.classList.contains('modern-hidden')).toBe(false);
         expect(tabList.getAttribute('aria-selected')).toBe('true');
@@ -91,8 +91,8 @@ test('hidePane()', () => {
     const tabList: HTMLElement = (tab.parentNode: any);
     const pane: HTMLElement = (document.getElementById('tab2panel'): any);
 
-    return showPane(tab, pane).then(() =>
-        hidePane(tab, pane).then(() => {
+    return _.showPane(tab, pane).then(() =>
+        _.hidePane(tab, pane).then(() => {
             expect(pane.classList.contains('u-h')).toBe(true);
             expect(tabList.getAttribute('aria-selected')).toBe('false');
 
@@ -106,7 +106,7 @@ test('hidePane()', () => {
 test('getTabTarget()', () => {
     const tab: HTMLElement = (document.getElementById('tab2'): any);
 
-    return getTabTarget(tab).then(target => {
+    return _.getTabTarget(tab).then(target => {
         expect(target).toBe('#tab2panel');
     });
 });

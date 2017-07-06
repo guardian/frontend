@@ -8,7 +8,8 @@ const NAV_CLASSES = [
     'tone-accent-border',
 ];
 
-const getTabTarget = (tab: HTMLElement): ?string => tab.getAttribute('href');
+const getTabTarget = (tab: HTMLElement): Promise<?string> =>
+    fastdom.read(() => tab.getAttribute('href'));
 
 const hidePane = (tab: HTMLElement, pane: HTMLElement): Promise<void> => {
     const tabList: HTMLElement = (tab.parentNode: any);
@@ -43,7 +44,7 @@ const init = (): Promise<void> => {
     const findTabs = (): Promise<Array<HTMLElement>> =>
         fastdom.read(() => [...document.querySelectorAll('.tabs')]);
 
-    findTabs().then(tabs => {
+    return findTabs().then(tabs => {
         tabs.forEach(tab => {
             const nav = tab.querySelector('.js-tabs');
 
@@ -71,32 +72,43 @@ const init = (): Promise<void> => {
                 event.preventDefault();
 
                 const currentTab = tab.querySelector('.tabs__tab--selected a');
-                const nextPaneTarget = getTabTarget(target);
 
-                if (nextPaneTarget) {
-                    const nextPane = tab.querySelector(nextPaneTarget);
+                getTabTarget(target).then(nextPaneTarget => {
+                    if (nextPaneTarget) {
+                        const nextPane = tab.querySelector(nextPaneTarget);
 
-                    if (nextPane) {
-                        showPane(target, nextPane);
-                    }
-                }
-
-                if (currentTab) {
-                    const currentPaneTarget = getTabTarget(currentTab);
-
-                    if (currentPaneTarget) {
-                        const currentPane = tab.querySelector(
-                            currentPaneTarget
-                        );
-
-                        if (currentPane) {
-                            hidePane(currentTab, currentPane);
+                        if (nextPane) {
+                            showPane(target, nextPane);
                         }
                     }
+                });
+
+                if (currentTab) {
+                    getTabTarget(currentTab).then(currentPaneTarget => {
+                        if (currentPaneTarget) {
+                            const currentPane = tab.querySelector(
+                                currentPaneTarget
+                            );
+
+                            if (currentPane) {
+                                hidePane(currentTab, currentPane);
+                            }
+                        }
+                    });
                 }
+            });
+
+            return fastdom.write(() => {
+                nav.setAttribute('data-tabs-initialized', 'true');
             });
         });
     });
 };
 
 export { init };
+
+export const _ = {
+    showPane,
+    hidePane,
+    getTabTarget,
+};
