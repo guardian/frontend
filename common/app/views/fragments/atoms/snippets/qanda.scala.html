@@ -1,5 +1,7 @@
 @(qa: model.content.QandaAtom, isAmp: Boolean)(implicit request: RequestHeader)
 
+@import views.html.fragments.atoms.snippets.snippetImage
+
 @if(!isAmp) {
   @fragments.atoms.snippet(
     className = "qanda",
@@ -7,9 +9,11 @@
     headline = qa.atom.title.getOrElse(""),
     qa.id
   ){
-    @for(eventImage <- qa.data.eventImage; master <- eventImage.master) {
+    @for(img <- qa.image ) {
       <div class="explainer-snippet__image">
-        <img src="@master.file"/>
+        @snippetImage(
+          picture = img
+        )
       </div>
     }
 

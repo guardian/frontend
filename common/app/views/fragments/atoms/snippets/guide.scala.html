@@ -1,5 +1,7 @@
 @(guide: model.content.GuideAtom, isAmp: Boolean)(implicit request: RequestHeader)
 
+@import views.html.fragments.atoms.snippets.snippetImage
+
 @if(!isAmp) {
   @fragments.atoms.snippet(
     className = "guide",
@@ -7,9 +9,11 @@
     headline = guide.atom.title.getOrElse(""),
     guide.id
   ){
-    @for(guideImage <- guide.data.guideImage; master <- guideImage.master) {
+    @for(img <- guide.image ) {
       <div class="explainer-snippet__image">
-        <img src="@master.file"/>
+        @snippetImage(
+          picture = img
+        )
       </div>
     }
 

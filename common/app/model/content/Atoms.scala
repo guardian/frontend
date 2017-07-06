@@ -144,19 +144,22 @@ final case class ExplainerAtom(
 final case class QandaAtom(
   override val id: String,
   atom: AtomApiAtom,
-  data: atomapi.qanda.QAndAAtom
+  data: atomapi.qanda.QAndAAtom,
+  image: Option[ImageMedia]
 ) extends Atom
 
 final case class GuideAtom(
   override val id: String,
   atom: AtomApiAtom,
-  data: atomapi.guide.GuideAtom
+  data: atomapi.guide.GuideAtom,
+  image: Option[ImageMedia]
 ) extends Atom
 
 final case class ProfileAtom(
   override val id: String,
   atom: AtomApiAtom,
-  data: atomapi.profile.ProfileAtom
+  data: atomapi.profile.ProfileAtom,
+  image: Option[ImageMedia]
 ) extends Atom
 
 final case class TimelineAtom(
@@ -228,6 +231,24 @@ object Atoms extends common.Logging {
         timelines = timelines
       )
     }
+  }
+
+  def atomImageToImageMedia(atomImage: com.gu.contentatom.thrift.Image): ImageMedia = {
+    val imageAssets: Seq[ImageAsset] = atomImage.assets.flatMap { asset =>
+      asset.dimensions.map { dims =>
+        ImageAsset(
+          fields = Map(
+            "width" -> dims.width.toString,
+            "height" -> dims.height.toString
+          ),
+          mediaType = "image",
+          mimeType = asset.mimeType,
+          url = Some(asset.file)
+        )
+      }
+    }
+
+    ImageMedia(imageAssets)
   }
 }
 
@@ -472,15 +493,24 @@ object ExplainerAtom {
 }
 
 object QandaAtom {
-  def make(atom: AtomApiAtom): QandaAtom = QandaAtom(atom.id, atom, atom.data.asInstanceOf[AtomData.Qanda].qanda)
+  def make(atom: AtomApiAtom): QandaAtom = {
+    val qanda = atom.data.asInstanceOf[AtomData.Qanda].qanda
+    QandaAtom(atom.id, atom, qanda, qanda.eventImage.map(Atoms.atomImageToImageMedia))
+  }
 }
 
 object GuideAtom {
-  def make(atom: AtomApiAtom): GuideAtom = GuideAtom(atom.id, atom, atom.data.asInstanceOf[AtomData.Guide].guide)
+  def make(atom: AtomApiAtom): GuideAtom = {
+    val guide = atom.data.asInstanceOf[AtomData.Guide].guide
+    GuideAtom(atom.id, atom, guide, guide.guideImage.map(Atoms.atomImageToImageMedia))
+  }
 }
 
 object ProfileAtom {
-  def make(atom: AtomApiAtom): ProfileAtom = ProfileAtom(atom.id, atom, atom.data.asInstanceOf[AtomData.Profile].profile)
+  def make(atom: AtomApiAtom): ProfileAtom = {
+    val profile = atom.data.asInstanceOf[AtomData.Profile].profile
+    ProfileAtom(atom.id, atom, profile, profile.headshot.map(Atoms.atomImageToImageMedia))
+  }
 }
 
 object TimelineAtom {

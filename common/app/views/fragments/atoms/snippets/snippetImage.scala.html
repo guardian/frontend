@@ -1,0 +1,25 @@
+@import layout.ContentWidths.MainMedia
+@import views.support.{ImgSrc, RenderClasses}
+
+@(
+    picture: model.ImageMedia,
+    widths: layout.WidthsByBreakpoint =  MainMedia.inline
+)
+
+<picture>
+    @* IE 9 needs this workaround as per https://scottjehl.github.io/picturefill/ *@
+        <!--[if IE 9]><video style="display: none;"><![endif]-->
+
+    @widths.breakpoints.map { breakpointWidth =>
+        <source media="(min-width: @breakpointWidth.breakpoint.minWidth.getOrElse("0")px) and (-webkit-min-device-pixel-ratio: 1.25), (min-width: @breakpointWidth.breakpoint.minWidth.getOrElse("0")px) and (min-resolution: 120dpi)"
+        sizes="@breakpointWidth.width"
+        srcset="@ImgSrc.srcsetForBreakpoint(breakpointWidth, widths.breakpoints, maybePath = None, maybeImageMedia = Some(picture), hidpi = true)" />
+        <source media="(min-width: @breakpointWidth.breakpoint.minWidth.getOrElse("0")px)"
+        sizes="@breakpointWidth.width"
+        srcset="@ImgSrc.srcsetForBreakpoint(breakpointWidth, widths.breakpoints, maybePath = None, maybeImageMedia = Some(picture))" />
+    }
+
+        <!--[if IE 9]></video><![endif]-->
+
+    <img itemprop="contentUrl" src="@ImgSrc.getFallbackUrl(picture)" />
+</picture>
