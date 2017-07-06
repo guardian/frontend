@@ -10,6 +10,9 @@ const NAV_CLASSES = [
 
 jest.mock('lib/fastdom-promise');
 
+// Not yet implemented, see https://github.com/tmpvar/jsdom/issues/961
+HTMLElement.prototype.dataset = {};
+
 const markup = `
     <p id="tabs-test">
         <div class="tabs">
