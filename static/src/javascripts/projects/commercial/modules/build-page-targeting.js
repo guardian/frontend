@@ -19,7 +19,6 @@ const formatTarget = (target: ?string): ?string =>
     target ? format(target).replace(/&/g, 'and').replace(/'/g, '') : null;
 
 const abParam = (): Array<string> => {
-    const cmRegex: RegExp = /^(cm|commercial)/;
     const abParticipations: Object = getParticipations();
     const abParams: Array<string> = [];
 
@@ -35,7 +34,7 @@ const abParam = (): Array<string> => {
     if (config.tests) {
         Object.keys(config.tests).forEach((testKey: string) => {
             const testValue: string = config.tests[testKey];
-            if (typeof testValue === 'string' && cmRegex.test(testValue)) {
+            if (typeof testValue === 'string') {
                 abParams.push(testValue);
             }
         });
