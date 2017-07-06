@@ -52,7 +52,7 @@ const init = (): Promise<void> => {
                 return;
             }
 
-            const { tabsInitialized } = nav.dataset || {};
+            const { tabsInitialized } = nav.dataset;
 
             if (tabsInitialized === 'true') {
                 return;
