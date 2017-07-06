@@ -13,8 +13,8 @@ export const acquisitionsEpicRebaselineSupportProposition = makeABTest({
     id: 'AcquisitionsEpicRebaselineSupportProposition',
     campaignId: 'sandc_epic_rebaseline_support_proposition',
 
-    start: '2017-07-05',
-    expiry: '2017-08-05',
+    start: '2017-07-07',
+    expiry: '2017-08-15',
 
     author: 'Ap0c',
     description:

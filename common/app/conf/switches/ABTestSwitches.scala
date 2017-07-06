@@ -185,7 +185,7 @@ trait ABTestSwitches {
     "Re-baseline the new support proposition against the old",
     owners = Seq(Owner.withGithub("Ap0c")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 8, 5),
+    sellByDate = new LocalDate(2017, 8, 15),
     exposeClientSide = true
   )
 
