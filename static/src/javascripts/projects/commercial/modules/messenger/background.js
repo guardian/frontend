@@ -48,7 +48,7 @@ const setBackground = (specs: AdSpec, adSlot: Node): Promise<any> => {
     // Create an element to hold the background image
     const background = document.createElement('div');
     background.className = `creative__background creative__background--${specs.scrollType}`;
-    background.style = Object.assign(background.style, specStyles);
+    Object.assign(background.style, specStyles);
 
     // Wrap the background image in a DIV for positioning. Also, we give
     // this DIV a background colour if it is provided. This is because
