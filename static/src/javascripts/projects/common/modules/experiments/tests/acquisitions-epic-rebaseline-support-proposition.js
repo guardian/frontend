@@ -2,7 +2,6 @@
 import { makeABTest } from 'common/modules/commercial/contributions-utilities';
 import template from 'lodash/utilities/template';
 import singleButtonTemplate from 'raw-loader!common/views/acquisitions-epic-single-button.html';
-import config from 'lib/config';
 
 const buildButtonTemplate = ({ supportUrl }) =>
     template(singleButtonTemplate, {
@@ -25,9 +24,8 @@ export const acquisitionsEpicRebaselineSupportProposition = makeABTest({
 
     audienceCriteria: 'UK all devices',
     audience: 0,
+    locations: ['GB'],
     audienceOffset: 0.9,
-
-    canRun: () => config.page.edition.toUpperCase() === 'UK',
 
     variants: [
         {
