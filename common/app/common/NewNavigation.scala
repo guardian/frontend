@@ -219,7 +219,7 @@ object NewNavigation {
     val uk = NavLinkLists(List(
       jobs.copy(url = jobs.url + "?INTCMP=jobs_uk_web_newheader"),
       dating.copy(url = dating.url + "?INTCMP=soulmates_uk_web_newheader"),
-      holidays,
+      holidays.copy(url = holidays.url + "?INTCMP=holidays_uk_web_newheader"),
       ukMasterClasses
     ))
 
@@ -235,7 +235,7 @@ object NewNavigation {
     val int = NavLinkLists(List(
       jobs.copy(url = jobs.url + "?INTCMP=jobs_int_web_newheader"),
       dating.copy(url = dating.url + "?INTCMP=soulmates_int_web_newheader"),
-      holidays
+      holidays.copy(url = holidays.url + "?INTCMP=holidays_int_web_newheader")
     ))
   }
 

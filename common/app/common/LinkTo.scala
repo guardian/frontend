@@ -114,6 +114,16 @@ object AnalyticsHost extends implicits.Requests {
   def apply(): String = "https://hits-secure.theguardian.com"
 }
 
+object MembershipLink {
+  def apply(implicit request: RequestHeader, edition: Edition): String = {
+    if(mvt.ABNewDesktopHeaderControl.isParticipating) {
+      s"${Configuration.id.membershipUrl}/supporter?INTCMP=mem_${edition.id}_web_newheader_control"
+    } else {
+      s"${Configuration.id.membershipUrl}/supporter?countryGroup=${edition.id}&INTCMP=DOTCOM_HEADER_BECOMEMEMBER_${edition.id}"
+    }
+  }
+}
+
 object SubscribeLink {
   private val subscribeEditions = Map(
     Us -> "us",
@@ -123,7 +133,13 @@ object SubscribeLink {
 
   private def subscribeLink(edition: Edition) = subscribeEditions.getOrDefault(edition, "")
 
-  def apply(edition: Edition): String = s"https://subscribe.theguardian.com/${subscribeLink(edition)}?INTCMP=NGW_HEADER_${edition.id}_GU_SUBSCRIBE"
+  def apply(implicit request: RequestHeader, edition: Edition): String = {
+    if(mvt.ABNewDesktopHeaderControl.isParticipating) {
+      s"https://subscribe.theguardian.com/${subscribeLink(edition)}?INTCMP=subs_${edition.id}_web_newheader_control"
+    } else {
+      s"https://subscribe.theguardian.com/${subscribeLink(edition)}?INTCMP=NGW_HEADER_${edition.id}_GU_SUBSCRIBE"
+    }
+  }
 }
 
 trait AmpLinkTo extends LinkTo {
