@@ -512,7 +512,7 @@ trait FeatureSwitches {
     "When ON a feedback prompt will be visible within the header test",
     owners = Seq(Owner.withGithub("zeftilldeath")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 8, 17),
+    sellByDate = new LocalDate(2017, 7, 17),
     exposeClientSide = false
   )
 }
