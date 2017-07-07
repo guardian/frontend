@@ -68,6 +68,7 @@ object NavLinks {
   val football = NavLink("football", "/football", uniqueSection = "football")
   val soccer = football.copy(title = "soccer")
   val cricket = NavLink("cricket", "/sport/cricket", "sport/cricket")
+  val cycling = NavLink("cycling", "/sport/cycling", "sport/cycling")
   val rugbyUnion = NavLink("rugby union", "/sport/rugby-union", "sport/rugby-union")
   val formulaOne = NavLink("F1", "/sport/formulaone", "sport/formulaone")
   val tennis = NavLink("tennis", "/sport/tennis", "sport/tennis")
