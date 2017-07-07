@@ -51,7 +51,6 @@
     "projects/common/modules/video/metadata.js"
   ],
   "GHaberis": [
-    "projects/common/modules/onward/history.js",
     "projects/common/modules/discussion/activity-stream.js",
     "projects/common/modules/discussion/api.js",
     "projects/common/modules/discussion/comment-box.js"

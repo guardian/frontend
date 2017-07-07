@@ -5,7 +5,7 @@ import reportError from 'lib/report-error';
 import $ from 'lib/$';
 import config from 'lib/config';
 import detect from 'lib/detect';
-import history from 'common/modules/onward/history';
+import { isRevisit } from 'common/modules/onward/history';
 import throttle from 'lodash/functions/throttle';
 import forOwn from 'lodash/objects/forOwn';
 import {
@@ -143,7 +143,7 @@ const bindGoogleAnalyticsEvents = (player: Object, canonicalUrl: string) => {
 const getMediaType = player => (isEmbed ? 'video' : player.guMediaType);
 
 const shouldAutoPlay = player =>
-    isDesktop && !history.isRevisit(config.page.pageId) && player.guAutoplay;
+    isDesktop && !isRevisit(config.page.pageId) && player.guAutoplay;
 
 const constructEventName = (eventName: string, player: Object): string =>
     `${getMediaType(player)}:${eventName}`;
