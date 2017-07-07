@@ -22,7 +22,7 @@ Promise.all([
     new Promise(domready),
     new Promise(comready),
 ]).then(([, , result]) => {
-    SnippetFeedback({ scroll: false, ophan: { path: result.src } });
+    SnippetFeedback({ scroll: false, ophan: { path: result.src || null } });
     [...document.getElementsByTagName('details')]
         .slice(0, 1)
         .forEach(details => {

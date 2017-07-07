@@ -5,7 +5,7 @@ import ophan from 'ophan/ng';
 import detect from 'lib/detect';
 
 const SnippetFeedback = (
-    options: { scroll: boolean, ophan: object } = { scroll: true, ophan: {} }
+    options: { scroll: boolean, ophan: Object } = { scroll: true, ophan: {} }
 ) => {
     let snippets = [...document.querySelectorAll('.explainer-snippet--new')];
 
