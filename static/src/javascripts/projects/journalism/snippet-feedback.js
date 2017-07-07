@@ -4,7 +4,9 @@ import mediator from 'lib/mediator';
 import ophan from 'ophan/ng';
 import detect from 'lib/detect';
 
-const SnippetFeedback = (options: { scroll: boolean } = { scroll: true }) => {
+const SnippetFeedback = (
+    options: { scroll: boolean, ophan: object } = { scroll: true, ophan: {} }
+) => {
     let snippets = [...document.querySelectorAll('.explainer-snippet--new')];
 
     snippets.forEach(snippet => {
@@ -27,11 +29,14 @@ const SnippetFeedback = (options: { scroll: boolean } = { scroll: true }) => {
                 button && button instanceof HTMLButtonElement && button.value;
 
             if (value && ack) {
-                const data = {
-                    atomId: snippetId,
-                    component,
-                    value: `${snippetType}_feedback_${value}`,
-                };
+                const data = Object.assign(
+                    {
+                        atomId: snippetId,
+                        component,
+                        value: `${snippetType}_feedback_${value}`,
+                    },
+                    options.ophan
+                );
                 ophan.record(data);
                 fastdom.write(() => {
                     ack.hidden = false;
@@ -54,11 +59,14 @@ const SnippetFeedback = (options: { scroll: boolean } = { scroll: true }) => {
         );
         if (handle) {
             handle.addEventListener('click', function onExpand(e: Event) {
-                const data = {
-                    atomId: snippetId,
-                    component,
-                    value: `${snippetType}_expanded`,
-                };
+                const data = Object.assign(
+                    {
+                        atomId: snippetId,
+                        component,
+                        value: `${snippetType}_expanded`,
+                    },
+                    options.ophan
+                );
                 ophan.record(data);
 
                 e.currentTarget.removeEventListener('click', onExpand);
@@ -81,11 +89,14 @@ const SnippetFeedback = (options: { scroll: boolean } = { scroll: true }) => {
                     }
                     const component = `snippet_${snippetType}`;
 
-                    const data = {
-                        atomId: snippetId,
-                        component,
-                        value: `${snippetType}_component_in_view`,
-                    };
+                    const data = Object.assign(
+                        {
+                            atomId: snippetId,
+                            component,
+                            value: `${snippetType}_component_in_view`,
+                        },
+                        options.ophan
+                    );
                     ophan.record(data);
 
                     return false;
