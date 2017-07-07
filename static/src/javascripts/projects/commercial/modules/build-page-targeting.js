@@ -25,6 +25,7 @@ const abParam = (): Array<string> => {
     const pushAbParams = (testName: string, testValue: mixed): void => {
         if (typeof testValue === 'string' && testValue !== 'notintest') {
             const testData: string = `${testName}-${testValue}`;
+            // DFP key-value pairs accept value strings up to 40 characters long
             abParams.push(testData.substring(0, 40));
         }
     };
