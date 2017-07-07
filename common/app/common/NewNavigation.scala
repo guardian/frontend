@@ -154,8 +154,8 @@ object NewNavigation {
     val name = "sport"
 
     val uk = NavLinkLists(
-      List(sport, football, rugbyUnion, cricket, tennis, formulaOne),
-      List(boxing, rugbyLeague, racing, usSports, golf)
+      List(sport, football, rugbyUnion, cricket, tennis, cycling, formulaOne),
+      List(rugbyLeague, racing, usSports, golf)
     )
     val au = NavLinkLists(
       List(sport, football, AFL, NRL, aLeague, cricket, rugbyUnion),
@@ -166,8 +166,8 @@ object NewNavigation {
       List(NBA, NHL)
     )
     val int = NavLinkLists(
-      List(sport, football, rugbyUnion, cricket, tennis, formulaOne),
-      List(golf, boxing, usSports)
+      List(sport, football, rugbyUnion, cricket, tennis, cycling, formulaOne),
+      List(golf, usSports)
     )
   }
 
