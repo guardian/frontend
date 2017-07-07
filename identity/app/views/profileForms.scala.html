@@ -22,7 +22,7 @@
 @content(i: Int, url: String, optionalClass: String = "")(body: => Html) = {
     <div id="tabs-account-profile-@i"
          class="@RenderClasses(Map(
-            "u-h" -> (page.metadata.id != url),
+            "u-h" -> (page.metadata.id != url)
          ), "tabs__pane u-cf @optionalClass")"
          role="tabpanel"
          aria-labelledby="tabs-account-profile-@i-tab"
