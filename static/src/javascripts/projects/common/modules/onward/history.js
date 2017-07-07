@@ -171,8 +171,7 @@ const pruneSummary = (summary: Object, newToday: number = today) => {
                         .filter(Boolean);
 
                     return visits.length > 1 ||
-                        (visits.length === 1 &&
-                            visits[0][0] < forgetUniquesAfter)
+                    (visits.length === 1 && visits[0][0] < forgetUniquesAfter)
                         ? visits
                         : [];
                 }
