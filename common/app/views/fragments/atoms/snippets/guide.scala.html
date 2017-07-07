@@ -1,6 +1,6 @@
 @(guide: model.content.GuideAtom, isAmp: Boolean)(implicit request: RequestHeader)
 
-@import views.html.fragments.atoms.snippets.snippetImage
+@import views.html.fragments.image
 
 @if(!isAmp) {
   @fragments.atoms.snippet(
@@ -11,8 +11,11 @@
   ){
     @for(img <- guide.image ) {
       <div class="explainer-snippet__image">
-        @snippetImage(
-          picture = img
+        @image(
+          picture = img,
+          classes = Nil,
+          imageAltText = "Guide",
+          isImmersiveMainMedia = true
         )
       </div>
     }

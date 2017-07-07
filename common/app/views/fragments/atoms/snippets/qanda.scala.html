@@ -1,6 +1,6 @@
 @(qa: model.content.QandaAtom, isAmp: Boolean)(implicit request: RequestHeader)
 
-@import views.html.fragments.atoms.snippets.snippetImage
+@import views.html.fragments.image
 
 @if(!isAmp) {
   @fragments.atoms.snippet(
@@ -11,8 +11,11 @@
   ){
     @for(img <- qa.image ) {
       <div class="explainer-snippet__image">
-        @snippetImage(
-          picture = img
+        @image(
+          picture = img,
+          classes = Nil,
+          imageAltText = "Q&amp;A",
+          isImmersiveMainMedia = true
         )
       </div>
     }

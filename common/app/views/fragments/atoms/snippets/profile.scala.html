@@ -1,6 +1,6 @@
 @(profile: model.content.ProfileAtom, isAmp: Boolean)(implicit request: RequestHeader)
 
-@import views.html.fragments.atoms.snippets.snippetImage
+@import views.html.fragments.image
 
 @if(!isAmp) {
   @fragments.atoms.snippet(
@@ -11,8 +11,11 @@
   ){
     @for(img <- profile.image ) {
       <div class="explainer-snippet__image">
-        @snippetImage(
-          picture = img
+        @image(
+          picture = img,
+          classes = Nil,
+          imageAltText = "Profile",
+          isImmersiveMainMedia = true
         )
       </div>
     }
