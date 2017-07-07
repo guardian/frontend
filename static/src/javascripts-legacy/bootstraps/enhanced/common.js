@@ -223,7 +223,7 @@ define([
             },
 
             initDiscussion: function () {
-                if (config.switches.discussion) {
+                if (config.switches.commentsVisibleOnArticle) {
                     CommentCount.init();
                 }
             },
