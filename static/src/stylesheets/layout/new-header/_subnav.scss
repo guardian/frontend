@@ -60,17 +60,35 @@
         color: #ffffff;
     }
 
-    > *:before {
-        content: '/';
-        color: rgba(255, 255, 255, .3);
-        display: inline-block;
-        font-size: 1em;
-        pointer-events: none;
-        margin-left: -2px;
-        margin-right: -2px;
+    @include mq($until: tablet) {
+        > *:after {
+            content: '/';
+            color: rgba(255, 255, 255, .3);
+            display: inline-block;
+            font-size: 1em;
+            pointer-events: none;
+            margin-left: -2px;
+            margin-right: -2px;
+        }
+
+        &:last-child > *:after {
+            content: '';
+        }
     }
 
-    &:first-child > *:before {
-        content: '';
+    @include mq(tablet) {
+        > *:before {
+            content: '/';
+            color: rgba(255, 255, 255, .3);
+            display: inline-block;
+            font-size: 1em;
+            pointer-events: none;
+            margin-left: -2px;
+            margin-right: -2px;
+        }
+
+        &:first-child > *:before {
+            content: '';
+        }
     }
 }
