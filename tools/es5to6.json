@@ -11,9 +11,7 @@
   "Kate Whalen": [
     "projects/commercial/modules/third-party-tags.js"
   ],
-  "Lydia Shepherd": [
-    "projects/commercial/modules/sticky-mpu.js"
-  ],
+  "Lydia Shepherd": [],
   "sndrs": [
     "lib/detect.js",
     "bootstraps/enhanced/accessibility.js",
