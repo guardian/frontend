@@ -21,4 +21,6 @@ const init = (register: RegisterListeners) => {
     });
 };
 
+export const _ = { hide };
+
 export { init };
