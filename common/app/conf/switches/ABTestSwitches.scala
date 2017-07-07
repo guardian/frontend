@@ -179,4 +179,14 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
+  Switch(
+    ABTests,
+    "ab-acquisitions-epic-rebaseline-support-proposition",
+    "Re-baseline the new support proposition against the old",
+    owners = Seq(Owner.withGithub("Ap0c")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 8, 15),
+    exposeClientSide = true
+  )
+
 }

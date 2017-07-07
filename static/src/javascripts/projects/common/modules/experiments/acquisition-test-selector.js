@@ -16,6 +16,7 @@ import acquisitionsEpicAlwaysAskElection from 'common/modules/experiments/tests/
 import acquisitionsEpicThankYou from 'common/modules/experiments/tests/acquisitions-epic-thank-you';
 import acquisitionsThisLandSeries from 'common/modules/experiments/tests/acquisitions-this-land-series';
 import epicForBrexitCohort from 'common/modules/experiments/tests/epic-for-brexit-cohort';
+import { acquisitionsEpicRebaselineSupportProposition } from 'common/modules/experiments/tests/acquisitions-epic-rebaseline-support-proposition';
 
 /**
  * acquisition tests in priority order (highest to lowest)
@@ -25,6 +26,7 @@ const tests = [
     acquisitionsThisLandSeries,
     bundlePriceTest1,
     epicForBrexitCohort,
+    acquisitionsEpicRebaselineSupportProposition,
     askFourEarning,
     acquisitionsEpicAlwaysAskIfTagged,
     acquisitionsEpicLiveBlogDesignTest,
