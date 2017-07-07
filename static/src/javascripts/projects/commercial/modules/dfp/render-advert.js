@@ -6,7 +6,7 @@ import fastdom from 'lib/fastdom-promise';
 import mediator from 'lib/mediator';
 import { Advert } from 'commercial/modules/dfp/Advert';
 import adSizes from 'commercial/modules/ad-sizes';
-import stickyMpu from 'commercial/modules/sticky-mpu';
+import { stickyMpu } from 'commercial/modules/sticky-mpu';
 import { applyCreativeTemplate } from 'commercial/modules/dfp/apply-creative-template';
 import renderAdvertLabel from 'commercial/modules/dfp/render-advert-label';
 import { geoMostPopular } from 'common/modules/onward/geo-most-popular';

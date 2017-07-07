@@ -5,7 +5,9 @@ import fastdom from 'lib/fastdom-promise';
 import { Sticky } from 'common/modules/ui/sticky';
 import { register, unregister } from 'commercial/modules/messenger';
 
-const noSticky = document.documentElement.classList.contains('has-no-sticky');
+const noSticky =
+    document.documentElement &&
+    document.documentElement.classList.contains('has-no-sticky');
 let stickyElement;
 let rightSlot;
 
@@ -16,19 +18,19 @@ const onResize = (specs, _, iframe) => {
     }
 };
 
-const stickyMpu = adSlot => {
+const stickyMpu = (adSlot: any) => {
     if (adSlot.getAttribute('data-name') !== 'right') {
         return;
     }
 
     rightSlot = adSlot;
 
-    const referenceElement = document.querySelector(
+    const referenceElement: any = document.querySelector(
         config.page.hasShowcaseMainElement
             ? '.media-primary'
             : '.content__article-body,.js-liveblog-body-content'
     );
-    if (!referenceElement) {
+    if (!referenceElement || !adSlot) {
         return;
     }
 
