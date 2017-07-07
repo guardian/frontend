@@ -21,8 +21,8 @@ Promise.all([
           }),
     new Promise(domready),
     new Promise(comready),
-]).then(() => {
-    SnippetFeedback({ scroll: false });
+]).then(([, , result]) => {
+    SnippetFeedback({ scroll: false, ophan: { path: result.src || null } });
     [...document.getElementsByTagName('details')]
         .slice(0, 1)
         .forEach(details => {

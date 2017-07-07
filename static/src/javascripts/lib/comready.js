@@ -15,11 +15,16 @@ const comready = (resolve: (?any) => void, reject: (?any) => void) => {
         send('syn', true);
     }, 500);
     window.addEventListener('message', evt => {
-        if (JSON.parse(evt.data).result !== 'ack') {
+        const response = JSON.parse(evt.data);
+        if (
+            typeof response !== 'object' ||
+            typeof response.result !== 'object' ||
+            response.result.msg !== 'ack'
+        ) {
             return;
         }
         clearInterval(intId);
-        resolve();
+        resolve(response.result);
     });
 };
 
