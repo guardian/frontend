@@ -119,7 +119,7 @@ object MembershipLink {
     if(mvt.ABNewDesktopHeaderControl.isParticipating) {
       s"${Configuration.id.membershipUrl}/supporter?INTCMP=mem_${edition.id}_web_newheader_control"
     } else {
-      s"${Configuration.id.membershipUrl}/supporter?countryGroup=${edition.id}&INTCMP=DOTCOM_HEADER_BECOMEMEMBER_${edition.id}"
+      s"${Configuration.id.membershipUrl}/supporter?countryGroup=${edition.id.toLowerCase}&INTCMP=DOTCOM_HEADER_BECOMEMEMBER_${edition.id}"
     }
   }
 }
