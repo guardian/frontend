@@ -13,7 +13,8 @@ import storyQuestions from 'common/modules/atoms/story-questions';
 import { init as initLiveblogCommon } from 'bootstraps/enhanced/article-liveblog-common';
 import trail from 'bootstraps/enhanced/trail';
 import ophan from 'ophan/ng';
-import { SnippetFeedback } from 'projects/journalism/snippet-feedback';
+import { SnippetFeedback } from 'journalism/snippet-feedback';
+import { init as initStoryQuiz } from 'journalism/storyquiz';
 
 const modules = {
     initCmpParam() {
@@ -60,6 +61,7 @@ const init = () => {
     mediator.emit('page:article:ready');
     quiz.handleCompletion();
     storyQuestions.init();
+    initStoryQuiz();
     SnippetFeedback();
 };
 
