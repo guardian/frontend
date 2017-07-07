@@ -11,7 +11,9 @@
   "Kate Whalen": [
     "projects/commercial/modules/third-party-tags.js"
   ],
-  "Lydia Shepherd": [],
+  "Lydia Shepherd": [
+    "projects/commercial/modules/sticky-mpu.js"
+  ],
   "sndrs": [
     "lib/detect.js",
     "bootstraps/enhanced/accessibility.js",
@@ -93,8 +95,7 @@
     "projects/common/modules/discussion/comment-count.js",
     "projects/common/modules/discussion/comments.js",
     "projects/common/modules/discussion/discussion-frontend.js",
-    "projects/common/modules/discussion/loader.js",
-    "projects/commercial/modules/sticky-mpu.js"
+    "projects/common/modules/discussion/loader.js"
   ],
   "dominickendrick": [
     "projects/common/modules/email/email-article.js",
