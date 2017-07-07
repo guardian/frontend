@@ -1,5 +1,5 @@
 @(page: model.Page)(implicit request: RequestHeader)
-@import common.{Edition, LinkTo, SubscribeLink}
+@import common.{Edition, LinkTo, SubscribeLink, MembershipLink}
 @import conf.Configuration
 @import conf.switches.Switches._
 @import views.support.RenderClasses
@@ -80,7 +80,7 @@
                                     hide-on-slim-header hide-on-tablet"
                             data-component="subscribe">
                             @fragments.inlineSvg("marque-36", "icon", List("rounded-icon", "control__icon-wrapper"))
-                            <a href="@Configuration.id.membershipUrl/supporter?countryGroup=@Edition(request).id.toLowerCase&INTCMP=DOTCOM_HEADER_BECOMEMEMBER_@Edition(request).id"
+                            <a href="@MembershipLink(request, Edition(request))"
                             data-link-name="Register link"
                             class="brand-bar__item--action brand-bar__item--split--first js-become-member">
                                 <span class="control__info js-control-info control__info--supporting">
@@ -88,7 +88,7 @@
                                 </span>
                             </a>
 
-                            <a href="@SubscribeLink(Edition(request))"
+                            <a href="@SubscribeLink(request, Edition(request))"
                                class="brand-bar__item--action brand-bar__item--split--last js-subscribe"
                                data-link-name="@Edition(request).id.toLowerCase : topNav : subscribe">
                                 <span class="control__info js-control-info">subscribe</span>
