@@ -41,6 +41,16 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-acquisitions-epic-multiple-testimonials",
+    "This tests two variants with multiple testimonials against the control epic which has one testimonial",
+    owners = Seq(Owner.withGithub("joelochlann")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 8, 19),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
     "ab-acquisitions-epic-liveblog",
     "This places the epic below those blocks on liveblogs which have been marked for displaying the epic in Composer",
     owners = Seq(Owner.withGithub("joelochlann")),

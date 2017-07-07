@@ -24,22 +24,6 @@ import acquisitionsEpicControlTemplate from 'raw-loader!common/views/acquisition
 import acquisitionsTestimonialBlockTemplate from 'raw-loader!common/views/acquisitions-epic-testimonial-block.html';
 import { shouldSeeReaderRevenue as userShouldSeeReaderRevenue } from 'commercial/modules/user-features';
 
-type ContributionsABTest = ABTest & {
-    epic: boolean,
-    campaignId: string,
-    campaignPrefix: string,
-    campaignSuffix: string,
-    useLocalViewLog: boolean,
-    overrideCanRun: boolean,
-    showToContributorsAndSupporters: boolean,
-    pageCheck: (page: Object) => boolean,
-    locations: Array<string>,
-    locationCheck: (location: string) => boolean,
-    useTargetingTool: boolean,
-    insertEvent: string,
-    viewEvent: string,
-};
-
 type EpicTemplate = (Variant, AcquisitionsEpicTemplateCopy) => string;
 
 type CtaUrls = {
