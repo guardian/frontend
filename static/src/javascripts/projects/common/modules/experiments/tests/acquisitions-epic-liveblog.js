@@ -23,16 +23,17 @@ type TimeData = {
     time: string,
 };
 
-const getLiveblogEntryTimeData = (el: Element): TimeData => {
-    const $timeEl = $('time', el);
+const getLiveblogEntryTimeData = (el: Element): Promise<TimeData> =>
+    fastdom.read(() => {
+        const $timeEl = $('time', el);
 
-    return {
-        datetime: $timeEl.attr('datetime'),
-        title: $timeEl.attr('title'),
-        date: $timeEl.text(),
-        time: $('.block-time__absolute', el).text(),
-    };
-};
+        return {
+            datetime: $timeEl.attr('datetime'),
+            title: $timeEl.attr('title'),
+            date: $timeEl.text(),
+            time: $('.block-time__absolute', el).text(),
+        };
+    });
 
 const setEpicLiveblogEntryTimeData = (
     el: Element,
@@ -65,17 +66,15 @@ const addEpicToBlocks = (
         .read(() => $(`.${INSERT_EPIC_AFTER_CLASS}`))
         .then($blocksToInsertEpicAfter => {
             $blocksToInsertEpicAfter.each(el => {
-                fastdom
-                    .read(() => getLiveblogEntryTimeData(el))
-                    .then((timeData: TimeData) => {
-                        fastdom.write(() => {
-                            const $epic = $.create(epicHtml);
-                            $epic.insertAfter(el);
-                            $(el).removeClass(INSERT_EPIC_AFTER_CLASS);
-                            setEpicLiveblogEntryTimeData($epic[0], timeData);
-                            setupViewTracking(el, test);
-                        });
+                getLiveblogEntryTimeData(el).then((timeData: TimeData) => {
+                    fastdom.write(() => {
+                        const $epic = $.create(epicHtml);
+                        $epic.insertAfter(el);
+                        $(el).removeClass(INSERT_EPIC_AFTER_CLASS);
+                        setEpicLiveblogEntryTimeData($epic[0], timeData);
+                        setupViewTracking(el, test);
                     });
+                });
             });
         });
 
