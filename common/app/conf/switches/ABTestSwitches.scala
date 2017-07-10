@@ -45,7 +45,7 @@ trait ABTestSwitches {
     "This tests two variants with multiple testimonials against the control epic which has one testimonial",
     owners = Seq(Owner.withGithub("joelochlann")),
     safeState = Off,
-    sellByDate = new LocalDate(2018, 8, 19),
+    sellByDate = new LocalDate(2018, 8, 16),
     exposeClientSide = true
   )
 
