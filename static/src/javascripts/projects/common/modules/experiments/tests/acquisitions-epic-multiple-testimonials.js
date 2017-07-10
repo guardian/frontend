@@ -44,18 +44,18 @@ export const acquisitionsEpicMultipleTestimonials: ContributionsABTest = makeABT
                 id: 'short',
                 testimonialBlock: makeTestimonialBlock([
                     {
-                        message: 'I read you daily. I want you to thrive!',
-                        name: 'Jennifer W, Australia',
+                        message: 'High-quality journalism is essential intellectual nourishment',
+                        name: 'Giacomo P, Italy',
+                    },
+                    {
+                        message:
+                            'The Guardian is working hard to confront and challenge those in power. I want to support that',
+                        name: 'Robb H, Canada',
                     },
                     {
                         message:
                             'I appreciate an alternative to newspapers owned by billionaires. You give me hope',
                         name: 'Fred F, UK',
-                    },
-                    {
-                        message:
-                            'Even-handed, fact-oriented, non-flamboyant reporting',
-                        name: 'Dennis M, US',
                     },
                     {
                         message:
