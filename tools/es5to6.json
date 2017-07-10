@@ -147,7 +147,6 @@
     "projects/common/modules/preferences/main.js"
   ],
   "Joseph Smith": [
-    "projects/common/modules/experiments/tests/acquisitions-epic-liveblog.js",
     "projects/common/modules/experiments/tests/contributions-epic-always-ask-strategy.js",
     "projects/common/modules/experiments/tests/contributions-epic-ask-four-earning.js",
     "projects/common/modules/experiments/tests/epic-to-support-landing-page.js",
