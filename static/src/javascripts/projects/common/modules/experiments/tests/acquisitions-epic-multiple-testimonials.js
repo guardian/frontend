@@ -22,18 +22,19 @@ const makeTestimonialBlock = (
 export const acquisitionsEpicMultipleTestimonials: ContributionsABTest = makeABTest(
     {
         id: 'AcquisitionsEpicMultipleTestimonials',
-        start: '2017-07-17',
+        start: '2017-07-10',
         expiry: '2017-08-17',
         author: 'Joseph Smith',
 
-        description: '',
+        description:
+            'Tests two variants with multiple testimonials against the control epic which has one testimonial',
         successMeasure: 'Conversion rate',
         idealOutcome: 'Acquires many Supporters',
 
         campaignId: 'epic_multiple_testimonials',
 
         audienceCriteria: 'All',
-        audience: 1,
+        audience: 0.9,
         audienceOffset: 0,
 
         variants: [
