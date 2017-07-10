@@ -1,5 +1,6 @@
-import contributionsUtilities from 'common/modules/commercial/contributions-utilities';
-import viewLog from 'common/modules/commercial/acquisitions-view-log';
+// @flow
+import { makeABTest } from 'common/modules/commercial/contributions-utilities';
+import { logView } from 'common/modules/commercial/acquisitions-view-log';
 import template from 'lodash/utilities/template';
 import $ from 'lib/$';
 import config from 'lib/config';
@@ -7,66 +8,69 @@ import mediator from 'lib/mediator';
 import ElementInView from 'lib/element-inview';
 import fastdom from 'lib/fastdom-promise';
 import liveblogEpicTemplate from 'raw-loader!common/views/acquisitions-epic-liveblog.html';
-import acquisitionsCopy from 'common/modules/commercial/acquisitions-copy';
-var pageId = config.page.pageId || '';
+import { liveblog as liveblogCopy } from 'common/modules/commercial/acquisitions-copy';
 
-var isAutoUpdateHandlerBound = false;
+const pageId = config.page.pageId || '';
 
-var INSERT_EPIC_AFTER_CLASS = 'js-insert-epic-after';
+let isAutoUpdateHandlerBound = false;
 
-function getLiveblogEntryTimeData(el) {
-    var $timeEl = $('time', el);
+const INSERT_EPIC_AFTER_CLASS = 'js-insert-epic-after';
+
+const getLiveblogEntryTimeData = el => {
+    const $timeEl = $('time', el);
 
     return {
         datetime: $timeEl.attr('datetime'),
         title: $timeEl.attr('title'),
         date: $timeEl.text(),
-        time: $('.block-time__absolute', el).text()
+        time: $('.block-time__absolute', el).text(),
     };
-}
+};
 
-function setEpicLiveblogEntryTimeData(el, timeData) {
+const setEpicLiveblogEntryTimeData = (el, timeData) => {
     if (!el) {
         return;
     }
 
-    var $epicTimeEl = $('time', el);
+    const $epicTimeEl = $('time', el);
     $epicTimeEl.attr('datetime', timeData.datetime);
     $epicTimeEl.attr('title', timeData.title);
     $epicTimeEl.text(timeData.date);
     $('.block-time__absolute', el).text(timeData.time);
-}
+};
 
-function setupViewTracking(el, test) {
+const setupViewTracking = (el, test) => {
     // top offset of 18 ensures view only counts when half of element is on screen
-    var elementInView = ElementInView(el, window, {
-        top: 18
+    const elementInView = ElementInView(el, window, {
+        top: 18,
     });
 
-    elementInView.on('firstview', function() {
-        viewLog.logView(test.id);
+    elementInView.on('firstview', () => {
+        logView(test.id);
         mediator.emit(test.viewEvent);
     });
-}
+};
 
-function addEpicToBlocks(epicHtml, test) {
-    return fastdom.write(function() {
-        var $blocksToInsertEpicAfter = $('.' + INSERT_EPIC_AFTER_CLASS);
+const addEpicToBlocks = (epicHtml, test) =>
+    fastdom.write(() => {
+        const $blocksToInsertEpicAfter = $(`.${INSERT_EPIC_AFTER_CLASS}`);
 
-        $blocksToInsertEpicAfter.each(function(el) {
-            var $epic = $.create(epicHtml);
+        $blocksToInsertEpicAfter.each(el => {
+            const $epic = $.create(epicHtml);
 
             $epic.insertAfter(el);
             $(el).removeClass(INSERT_EPIC_AFTER_CLASS);
 
-            setEpicLiveblogEntryTimeData($epic[0], getLiveblogEntryTimeData(el));
+            setEpicLiveblogEntryTimeData(
+                $epic[0],
+                getLiveblogEntryTimeData(el)
+            );
 
             setupViewTracking(el, test);
         });
     });
-}
 
-export default contributionsUtilities.makeABTest({
+export const acquisitionsEpicLiveblog: ContributionsABTest = makeABTest({
     id: 'AcquisitionsEpicLiveblog',
     campaignId: 'epic_liveblog',
     campaignSuffix: pageId.replace(/-/g, '_').replace(/\//g, '__'),
@@ -75,44 +79,51 @@ export default contributionsUtilities.makeABTest({
     expiry: '2018-04-01',
 
     author: 'Joseph Smith',
-    description: 'This places the epic underneath liveblog blocks which the author has specified in Composer should have an epic against them',
+    description:
+        'This places the epic underneath liveblog blocks which the author has specified in Composer should have an epic against them',
     successMeasure: 'Member acquisition and contributions',
-    idealOutcome: 'Our wonderful readers will support The Guardian in this time of need!',
+    idealOutcome:
+        'Our wonderful readers will support The Guardian in this time of need!',
 
     audienceCriteria: 'All',
     audience: 1,
     audienceOffset: 0,
 
-    pageCheck: function(page) {
+    pageCheck(page) {
         return page.contentType === 'LiveBlog';
     },
 
-    variants: [{
-        id: 'control',
-        isUnlimited: true,
+    variants: [
+        {
+            id: 'control',
+            isUnlimited: true,
 
-        insertAtSelector: '.' + INSERT_EPIC_AFTER_CLASS,
-        insertAfter: true,
-        insertMultiple: true,
-        successOnView: true,
+            insertAtSelector: `.${INSERT_EPIC_AFTER_CLASS}`,
+            insertAfter: true,
+            insertMultiple: true,
+            successOnView: true,
 
-        template: function(variant) {
-            return template(liveblogEpicTemplate, {
-                copy: acquisitionsCopy.liveblog(variant.options.membershipURL, variant.options.contributeURL),
-                componentName: variant.options.componentName
-            });
-        },
-
-        test: function(renderFn, variant, test) {
-            var epicHtml = variant.options.template(variant);
-            addEpicToBlocks(epicHtml, test);
-
-            if (!isAutoUpdateHandlerBound) {
-                mediator.on('modules:autoupdate:updates', function() {
-                    addEpicToBlocks(epicHtml, test);
+            template(variant) {
+                return template(liveblogEpicTemplate, {
+                    copy: liveblogCopy(
+                        variant.options.membershipURL,
+                        variant.options.contributeURL
+                    ),
+                    componentName: variant.options.componentName,
                 });
-                isAutoUpdateHandlerBound = true;
-            }
+            },
+
+            test(renderFn, variant, test) {
+                const epicHtml = variant.options.template(variant);
+                addEpicToBlocks(epicHtml, test);
+
+                if (!isAutoUpdateHandlerBound) {
+                    mediator.on('modules:autoupdate:updates', () => {
+                        addEpicToBlocks(epicHtml, test);
+                    });
+                    isAutoUpdateHandlerBound = true;
+                }
+            },
         },
-    }]
+    ],
 });

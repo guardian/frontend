@@ -9,7 +9,7 @@ import { viewsInPreviousDays } from 'common/modules/commercial/acquisitions-view
 import alwaysAsk from 'common/modules/experiments/tests/contributions-epic-always-ask-strategy';
 import bundlePriceTest1 from 'common/modules/experiments/tests/bundle-digital-sub-price-test-1';
 import askFourEarning from 'common/modules/experiments/tests/contributions-epic-ask-four-earning';
-import acquisitionsEpicLiveBlog from 'common/modules/experiments/tests/acquisitions-epic-liveblog';
+import { acquisitionsEpicLiveblog } from 'common/modules/experiments/tests/acquisitions-epic-liveblog';
 import acquisitionsEpicAlwaysAskIfTagged from 'common/modules/experiments/tests/acquisitions-epic-always-ask-if-tagged';
 import acquisitionsEpicAlwaysAskElection from 'common/modules/experiments/tests/acquisitions-epic-always-ask-election';
 import { acquisitionsEpicMultipleTestimonials } from 'common/modules/experiments/tests/acquisitions-epic-multiple-testimonials';
@@ -30,7 +30,7 @@ const tests = [
     acquisitionsEpicMultipleTestimonials,
     askFourEarning,
     acquisitionsEpicAlwaysAskIfTagged,
-    acquisitionsEpicLiveBlog,
+    acquisitionsEpicLiveblog,
     acquisitionsEpicAlwaysAskElection,
     acquisitionsEpicThankYou,
 ];
