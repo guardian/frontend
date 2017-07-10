@@ -1,7 +1,8 @@
 @()(implicit request: RequestHeader)
 
 @import common.{ NewNavigation, LinkTo, Edition, NavLink }
-@import conf.switches.Switches.{SearchSwitch, HeaderFeedback}
+@import conf.switches.Switches.HeaderFeedback
+@import conf.switches.Switches.SearchSwitch
 @import views.support.RenderClasses
 
 @sectionList(topLevelSection: NewNavigation.EditionalisedNavigationSection, edition: Edition) = {
