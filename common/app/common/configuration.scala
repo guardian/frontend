@@ -440,10 +440,6 @@ class GuardianConfiguration extends Logging {
     lazy val expiredPaidContentUrl = s"${site.host}/info/2015/feb/06/paid-content-removal-policy"
   }
 
-  object open {
-    lazy val ctaApiRoot = configuration.getMandatoryStringProperty("open.cta.apiRoot")
-  }
-
   object interactive {
     lazy val cdnPath = "https://interactive.guim.co.uk"
     lazy val url = s"$cdnPath/next-gen/"

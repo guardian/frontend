@@ -166,17 +166,6 @@ trait PerformanceSwitches {
     exposeClientSide = true
   )
 
-  val OpenCtaSwitch = Switch(
-    SwitchGroup.Performance,
-    "open-cta",
-    "If this switch is on, will see a CTA to comments on the right hand side. Turn this off if the Open API " +
-      "is blowing up.",
-    owners = Seq(Owner.withGithub("johnduffell")),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
   val ImageServerSwitch = Switch(
     SwitchGroup.Performance,
     "image-server",
