@@ -20,7 +20,7 @@ object CommercialGalleryBannerAdsVariant extends TestDefinition(
   name = "ab-commercial-gallery-banner-ads-variant",
   description = "Users in this test will see banner ads in galleries",
   owners = Seq(Owner.withGithub("JonNorman")),
-  sellByDate = new LocalDate(2017, 7, 11)
+  sellByDate = new LocalDate(2017, 7, 18)
 ) {
 
   def participationGroup(implicit request: RequestHeader): Option[String] = request.headers.get("X-GU-ab-commercial-gallery-banner-ads")
