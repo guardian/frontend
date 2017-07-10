@@ -29,7 +29,7 @@ define([
     DeleteAccount,
     UserAvatars,
     mediator,
-    Tabs
+    tabs
 ) {
     var modules = {
         initFormstack: function () {
@@ -80,7 +80,6 @@ define([
         },
 
         tabs: function () {
-            var tabs = new Tabs();
             mediator.on('page:identity:ready', function () {
                 tabs.init();
             });
