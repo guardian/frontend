@@ -10,6 +10,7 @@
 @import views.html.fragments.registrationFooter
 @import views.html.fragments.socialSignin
 @import conf.Static
+@import views.support.RenderClasses
 
 @tab(i: Int, name: String, url: String, dataTestId: Option[String], hidden: Boolean = false, optionalClass: String = "") = {
     <li class="tabs__tab @if(hidden){is-hidden} @if(page.metadata.id == url){tabs__tab--selected tone-colour tone-accent-border} @optionalClass" role="tab" id="tabs-account-profile-@i-tab" aria-selected="@(page.metadata.id == url)" aria-controls="tabs-account-profile-@i">
@@ -19,7 +20,14 @@
 }
 
 @content(i: Int, url: String, optionalClass: String = "")(body: => Html) = {
-    <div@if(page.metadata.id != url){ style="display: none;"} id="tabs-account-profile-@i" class="tabs__pane u-cf @optionalClass" role="tabpanel" aria-labelledby="tabs-account-profile-@i-tab" data-link-name="Public Profile" data-link-context="Identity/profile">
+    <div id="tabs-account-profile-@i"
+         class="@RenderClasses(Map(
+            "u-h" -> (page.metadata.id != url)
+         ), "tabs__pane u-cf @optionalClass")"
+         role="tabpanel"
+         aria-labelledby="tabs-account-profile-@i-tab"
+         data-link-name="Public Profile"
+         data-link-context="Identity/profile">
         @body
     </div>
 }
