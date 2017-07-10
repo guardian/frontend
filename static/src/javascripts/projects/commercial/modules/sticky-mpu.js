@@ -5,20 +5,21 @@ import fastdom from 'lib/fastdom-promise';
 import { Sticky } from 'common/modules/ui/sticky';
 import { register, unregister } from 'commercial/modules/messenger';
 
-const noSticky =
+const noSticky: boolean = !!(
     document.documentElement &&
-    document.documentElement.classList.contains('has-no-sticky');
-let stickyElement;
-let rightSlot;
+    document.documentElement.classList.contains('has-no-sticky')
+);
+let stickyElement: Sticky;
+let rightSlot: HTMLElement;
 
-const onResize = (specs, _, iframe) => {
+const onResize = (specs, _, iframe: ?HTMLElement) => {
     if (rightSlot.contains(iframe)) {
         unregister('resize', onResize);
         stickyElement.updatePosition();
     }
 };
 
-const stickyMpu = (adSlot: any) => {
+const stickyMpu = (adSlot: HTMLElement) => {
     if (adSlot.getAttribute('data-name') !== 'right') {
         return;
     }
@@ -45,7 +46,7 @@ const stickyMpu = (adSlot: any) => {
         )
         .then(newHeight =>
             fastdom.write(() => {
-                adSlot.parentNode.style.height = `${newHeight}px`;
+                (adSlot.parentNode: any).style.height = `${newHeight}px`;
             })
         )
         .then(() => {

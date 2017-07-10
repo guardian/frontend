@@ -103,7 +103,6 @@ describe('Cross-frame messenger: scroll', () => {
         });
 
         it('should call respond1 but not respond2 at the top of the page', done => {
-            console.log(onIntersect);
             if (onIntersect) {
                 onIntersect([
                     { target: iframe1, intersectionRatio: 0.5 },
