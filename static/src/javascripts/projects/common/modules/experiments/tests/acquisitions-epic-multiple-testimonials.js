@@ -44,7 +44,8 @@ export const acquisitionsEpicMultipleTestimonials: ContributionsABTest = makeABT
                 id: 'short',
                 testimonialBlock: makeTestimonialBlock([
                     {
-                        message: 'High-quality journalism is essential intellectual nourishment',
+                        message:
+                            'High-quality journalism is essential intellectual nourishment',
                         name: 'Giacomo P, Italy',
                     },
                     {
