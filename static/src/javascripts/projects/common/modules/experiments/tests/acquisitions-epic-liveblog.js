@@ -38,10 +38,6 @@ const setEpicLiveblogEntryTimeData = (
     el: Element,
     timeData: TimeData
 ): void => {
-    if (!el) {
-        return;
-    }
-
     const $epicTimeEl = $('time', el);
     $epicTimeEl.attr('datetime', timeData.datetime);
     $epicTimeEl.attr('title', timeData.title);
