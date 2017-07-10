@@ -29,6 +29,22 @@ declare type ABTest = {
     isEngagementBannerTest?: boolean,
 };
 
+declare type ContributionsABTest = ABTest & {
+    epic: boolean,
+    campaignId: string,
+    campaignPrefix: string,
+    campaignSuffix: string,
+    useLocalViewLog: boolean,
+    overrideCanRun: boolean,
+    showToContributorsAndSupporters: boolean,
+    pageCheck: (page: Object) => boolean,
+    locations: Array<string>,
+    locationCheck: (location: string) => boolean,
+    useTargetingTool: boolean,
+    insertEvent: string,
+    viewEvent: string,
+};
+
 /**
  * the structure stored in localStorage
  */
