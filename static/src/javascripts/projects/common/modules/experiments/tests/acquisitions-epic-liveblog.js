@@ -10,7 +10,7 @@ import fastdom from 'lib/fastdom-promise';
 import liveblogEpicTemplate from 'raw-loader!common/views/acquisitions-epic-liveblog.html';
 import { liveblog as liveblogCopy } from 'common/modules/commercial/acquisitions-copy';
 
-const pageId: string = config.get('pageId', '');
+const pageId: string = config.get('page.pageId', '');
 
 let isAutoUpdateHandlerBound = false;
 
