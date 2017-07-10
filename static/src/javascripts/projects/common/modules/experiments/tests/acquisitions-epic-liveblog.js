@@ -10,13 +10,20 @@ import fastdom from 'lib/fastdom-promise';
 import liveblogEpicTemplate from 'raw-loader!common/views/acquisitions-epic-liveblog.html';
 import { liveblog as liveblogCopy } from 'common/modules/commercial/acquisitions-copy';
 
-const pageId = config.page.pageId || '';
+const pageId: string = config.get('pageId', '');
 
 let isAutoUpdateHandlerBound = false;
 
 const INSERT_EPIC_AFTER_CLASS = 'js-insert-epic-after';
 
-const getLiveblogEntryTimeData = el => {
+type TimeData = {
+    datetime: string,
+    title: string,
+    date: string,
+    time: string,
+};
+
+const getLiveblogEntryTimeData = (el: Element): TimeData => {
     const $timeEl = $('time', el);
 
     return {
@@ -27,7 +34,10 @@ const getLiveblogEntryTimeData = el => {
     };
 };
 
-const setEpicLiveblogEntryTimeData = (el, timeData) => {
+const setEpicLiveblogEntryTimeData = (
+    el: Element,
+    timeData: TimeData
+): void => {
     if (!el) {
         return;
     }
@@ -39,7 +49,7 @@ const setEpicLiveblogEntryTimeData = (el, timeData) => {
     $('.block-time__absolute', el).text(timeData.time);
 };
 
-const setupViewTracking = (el, test) => {
+const setupViewTracking = (el: Element, test: ContributionsABTest): void => {
     // top offset of 18 ensures view only counts when half of element is on screen
     const elementInView = ElementInView(el, window, {
         top: 18,
@@ -51,24 +61,27 @@ const setupViewTracking = (el, test) => {
     });
 };
 
-const addEpicToBlocks = (epicHtml, test) =>
-    fastdom.write(() => {
-        const $blocksToInsertEpicAfter = $(`.${INSERT_EPIC_AFTER_CLASS}`);
-
-        $blocksToInsertEpicAfter.each(el => {
-            const $epic = $.create(epicHtml);
-
-            $epic.insertAfter(el);
-            $(el).removeClass(INSERT_EPIC_AFTER_CLASS);
-
-            setEpicLiveblogEntryTimeData(
-                $epic[0],
-                getLiveblogEntryTimeData(el)
-            );
-
-            setupViewTracking(el, test);
+const addEpicToBlocks = (
+    epicHtml: string,
+    test: ContributionsABTest
+): Promise<void> =>
+    fastdom
+        .read(() => $(`.${INSERT_EPIC_AFTER_CLASS}`))
+        .then($blocksToInsertEpicAfter => {
+            $blocksToInsertEpicAfter.each(el => {
+                fastdom
+                    .read(() => getLiveblogEntryTimeData(el))
+                    .then((timeData: TimeData) => {
+                        fastdom.write(() => {
+                            const $epic = $.create(epicHtml);
+                            $epic.insertAfter(el);
+                            $(el).removeClass(INSERT_EPIC_AFTER_CLASS);
+                            setEpicLiveblogEntryTimeData($epic[0], timeData);
+                            setupViewTracking(el, test);
+                        });
+                    });
+            });
         });
-    });
 
 export const acquisitionsEpicLiveblog: ContributionsABTest = makeABTest({
     id: 'AcquisitionsEpicLiveblog',
