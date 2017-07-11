@@ -2,7 +2,6 @@
   "Francis Carr": [],
   "Jon Norman": [],
   "Regis Kuckaertz": [
-    "projects/common/modules/ui/cookiesBanner.js",
     "projects/common/modules/ui/dropdowns.js",
     "projects/common/modules/lazyload.js",
     "projects/common/modules/ui/message.js"
