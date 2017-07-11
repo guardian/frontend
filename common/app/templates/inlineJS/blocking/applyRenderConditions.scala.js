@@ -102,7 +102,7 @@
             }
         }
 
-        return member.fullfilled && contribution.fullfilled;
+        return member.fullfilled || contribution.fullfilled;
     }
 
     // http://modernizr.com/download/#-svg
