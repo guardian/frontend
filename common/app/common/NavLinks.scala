@@ -35,6 +35,7 @@ object NavLinks {
   val africa = NavLink("africa", "/world/africa", "world/africa")
   val middleEast = NavLink("middle east", "/world/middleeast", "world/middleeast")
   val economics = NavLink("economics", "/business/economics", "business/economics")
+  val inequality = NavLink("inequality", "/inequality", "inequality")
   val banking = NavLink("banking", "/business/banking", "business/banking")
   val retail = NavLink("retail", "/business/retail", "business/retail")
   val markets = NavLink("markets", "/business/stock-markets", "business/stock-markets")
@@ -61,13 +62,13 @@ object NavLinks {
   val cartoons = NavLink("cartoons", "/cartoons/archive", "cartoons/archive")
   val inMyOpinion = NavLink("opinion videos", "/commentisfree/series/comment-is-free-weekly", "commentisfree/series/comment-is-free-weekly")
   val letters = NavLink("letters", "/tone/letters")
-  val editorials = NavLink("editorials", "/tone/editorials", "tone/editorials")
 
   /* SPORT */
   val sport = NavLink("sport", "/sport", longTitle = "sport home", iconName = "home", uniqueSection = "sport")
   val football = NavLink("football", "/football", uniqueSection = "football")
   val soccer = football.copy(title = "soccer")
   val cricket = NavLink("cricket", "/sport/cricket", "sport/cricket")
+  val cycling = NavLink("cycling", "/sport/cycling", "sport/cycling")
   val rugbyUnion = NavLink("rugby union", "/sport/rugby-union", "sport/rugby-union")
   val formulaOne = NavLink("F1", "/sport/formulaone", "sport/formulaone")
   val tennis = NavLink("tennis", "/sport/tennis", "sport/tennis")
@@ -132,7 +133,7 @@ object NavLinks {
   val apps = NavLink("the guardian app", "https://app.adjust.com/f8qm1x_8q69t7?campaign=NewHeader&adgroup=Mobile&creative=generic")
   val ukMasterClasses = NavLink("masterclasses", "/guardian-masterclasses?INTCMP=masterclasses_uk_web_newheader")
   val auEvents = NavLink("events", "/guardian-live-australia")
-  var holidays = NavLink("holidays", "https://holidays.theguardian.com/?utm_source=theguardian&utm_medium=guardian-links&utm_campaign=topnav&INTCMP=topnav")
+  var holidays = NavLink("holidays", "https://holidays.theguardian.com")
 
   val tagPages = List(
     "technology/games",
@@ -168,7 +169,6 @@ object NavLinks {
     "cartoons/archive",
     "type/cartoon",
     "profile/editorial",
-    "tone/editorials",
     "au/index/contributors",
     "index/contributors",
     "commentisfree/series/comment-is-free-weekly",

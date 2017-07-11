@@ -1,10 +1,17 @@
 {
   "Francis Carr": [],
   "Jon Norman": [],
-  "Regis Kuckaertz": [],
+  "Regis Kuckaertz": [
+    "projects/common/modules/ui/cookiesBanner.js",
+    "projects/common/modules/ui/dropdowns.js",
+    "projects/common/modules/lazyload.js",
+    "projects/common/modules/ui/message.js"
+  ],
   "Richard Nguyen": [],
   "Kate Whalen": [],
-  "Lydia Shepherd": [],
+  "Lydia Shepherd": [
+    "projects/commercial/modules/sticky-mpu.js"
+  ],
   "sndrs": [
     "lib/detect.js",
     "bootstraps/enhanced/accessibility.js",
@@ -44,21 +51,17 @@
     "projects/common/modules/video/metadata.js"
   ],
   "GHaberis": [
-    "projects/common/modules/onward/history.js",
     "projects/common/modules/discussion/activity-stream.js",
     "projects/common/modules/discussion/api.js",
     "projects/common/modules/discussion/comment-box.js"
   ],
   "Gustav Pursche": [
     "lib/atob.js",
-    "lib/clamp.js",
     "lib/element-inview.js",
-    "lib/page.js",
-    "projects/common/modules/ui/tabs.js"
+    "lib/page.js"
   ],
   "NataliaLKB": [
     "projects/common/modules/article/rich-links.js",
-    "projects/common/modules/article/space-filler.js",
     "projects/common/modules/article/twitter.js",
     "projects/common/modules/asyncCallMerger.js",
     "projects/common/modules/atoms/quiz.js",
@@ -88,8 +91,7 @@
     "projects/common/modules/discussion/comment-count.js",
     "projects/common/modules/discussion/comments.js",
     "projects/common/modules/discussion/discussion-frontend.js",
-    "projects/common/modules/discussion/loader.js",
-    "projects/commercial/modules/sticky-mpu.js"
+    "projects/common/modules/discussion/loader.js"
   ],
   "dominickendrick": [
     "projects/common/modules/email/email-article.js",
@@ -102,8 +104,6 @@
   ],
   "davidfurey": [
     "projects/common/modules/experiments/tests/editorial-email-variants.js",
-    "projects/common/modules/ui/cookiesBanner.js",
-    "projects/common/modules/ui/dropdowns.js",
     "projects/common/modules/experiments/tests/fashion-statement-email-variants.js",
     "projects/common/modules/experiments/tests/film-today-email-variants.js",
     "projects/common/modules/experiments/tests/generic-email-variants.js",
@@ -130,7 +130,6 @@
     "projects/common/modules/identity/formstack.js",
     "projects/common/modules/identity/public-profile.js",
     "projects/common/modules/identity/validation-email.js",
-    "projects/common/modules/lazyload.js",
     "projects/common/modules/navigation/membership.js",
     "projects/common/modules/navigation/navigation.js",
     "projects/common/modules/navigation/profile.js"
@@ -141,18 +140,15 @@
     "projects/common/modules/onward/popular.js",
     "projects/common/modules/onward/related.js",
     "projects/common/modules/onward/tech-feedback.js",
-    "projects/common/modules/open/cta.js",
     "projects/common/modules/preferences/main.js"
   ],
   "Joseph Smith": [
-    "projects/common/modules/experiments/tests/acquisitions-epic-liveblog.js",
     "projects/common/modules/experiments/tests/contributions-epic-always-ask-strategy.js",
     "projects/common/modules/experiments/tests/contributions-epic-ask-four-earning.js",
     "projects/common/modules/experiments/tests/epic-to-support-landing-page.js",
     "projects/common/modules/experiments/tests/membership-engagement-banner-tests.js",
     "projects/common/modules/commercial/acquisitions-view-log.js",
     "projects/common/modules/experiments/ab-test-clash.js",
-    "projects/common/modules/ui/message.js",
     "projects/common/modules/ui/notification-counter.js",
     "projects/common/modules/ui/relativedates.js",
     "projects/commercial/modules/paidfor-band.js"

@@ -9,13 +9,14 @@ import { viewsInPreviousDays } from 'common/modules/commercial/acquisitions-view
 import alwaysAsk from 'common/modules/experiments/tests/contributions-epic-always-ask-strategy';
 import bundlePriceTest1 from 'common/modules/experiments/tests/bundle-digital-sub-price-test-1';
 import askFourEarning from 'common/modules/experiments/tests/contributions-epic-ask-four-earning';
-import acquisitionsEpicLiveBlog from 'common/modules/experiments/tests/acquisitions-epic-liveblog';
-import acquisitionsEpicLiveBlogDesignTest from 'common/modules/experiments/tests/acquisitions-epic-liveblog-design-test';
+import { acquisitionsEpicLiveblog } from 'common/modules/experiments/tests/acquisitions-epic-liveblog';
 import acquisitionsEpicAlwaysAskIfTagged from 'common/modules/experiments/tests/acquisitions-epic-always-ask-if-tagged';
 import acquisitionsEpicAlwaysAskElection from 'common/modules/experiments/tests/acquisitions-epic-always-ask-election';
+import { acquisitionsEpicMultipleTestimonials } from 'common/modules/experiments/tests/acquisitions-epic-multiple-testimonials';
 import acquisitionsEpicThankYou from 'common/modules/experiments/tests/acquisitions-epic-thank-you';
 import acquisitionsThisLandSeries from 'common/modules/experiments/tests/acquisitions-this-land-series';
 import epicForBrexitCohort from 'common/modules/experiments/tests/epic-for-brexit-cohort';
+import { acquisitionsEpicRebaselineSupportProposition } from 'common/modules/experiments/tests/acquisitions-epic-rebaseline-support-proposition';
 
 /**
  * acquisition tests in priority order (highest to lowest)
@@ -25,10 +26,11 @@ const tests = [
     acquisitionsThisLandSeries,
     bundlePriceTest1,
     epicForBrexitCohort,
+    acquisitionsEpicRebaselineSupportProposition,
+    acquisitionsEpicMultipleTestimonials,
     askFourEarning,
     acquisitionsEpicAlwaysAskIfTagged,
-    acquisitionsEpicLiveBlogDesignTest,
-    acquisitionsEpicLiveBlog,
+    acquisitionsEpicLiveblog,
     acquisitionsEpicAlwaysAskElection,
     acquisitionsEpicThankYou,
 ];

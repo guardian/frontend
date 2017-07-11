@@ -366,7 +366,7 @@ const returnCandidates = (
 // SpaceFiller will safely queue up all the various asynchronous DOM actions to avoid any race conditions.
 const findSpace = (
     rules: SpacefinderRules,
-    options?: SpacefinderOptions
+    options: ?SpacefinderOptions
 ): Promise<Element[]> => {
     const getDimensions = rules.absoluteMinAbove
         ? mapElementToComputedDimensions

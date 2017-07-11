@@ -46,7 +46,7 @@ define([
                 commercialFeatures.articleBodyAdverts = true;
 
                 spaceFiller = $3;
-                spaceFillerStub = sinon.stub(spaceFiller, 'fillSpace');
+                spaceFillerStub = sinon.stub(spaceFiller.spaceFiller, 'fillSpace');
                 spaceFillerStub.returns(Promise.resolve(true));
 
                 config = $4;
@@ -71,7 +71,7 @@ define([
             commercialFeatures.articleBodyAdverts = false;
             articleBodyAdverts.articleBodyAdvertsInit(noop.noop, noop.noop).then(function(executionResult){
                 expect(executionResult).toBe(false);
-                expect(spaceFiller.fillSpace).not.toHaveBeenCalled();
+                expect(spaceFiller.spaceFiller.fillSpace).not.toHaveBeenCalled();
                 done();
             });
         });

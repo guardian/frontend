@@ -1,15 +1,22 @@
 @(profile: model.content.ProfileAtom, isAmp: Boolean)(implicit request: RequestHeader)
 
+@import views.html.fragments.image
+
 @if(!isAmp) {
   @fragments.atoms.snippet(
     className = "profile",
-    label = profile.data.typeLabel.getOrElse("Quick Guide"),
+    label = profile.data.typeLabel.getOrElse("Profile"),
     headline = profile.atom.title.getOrElse(""),
     profile.id
   ){
-    @for(headshot <- profile.data.headshot; master <- headshot.master) {
+    @for(img <- profile.image ) {
       <div class="explainer-snippet__image">
-        <img src="@master.file"/>
+        @image(
+          picture = img,
+          classes = Nil,
+          imageAltText = "Profile",
+          isImmersiveMainMedia = true
+        )
       </div>
     }
 

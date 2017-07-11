@@ -35,7 +35,7 @@ define(['helpers/injector'], function (Injector) {
                 config.switches = {
                     outbrain : true,
                     commercial : true,
-                    discussion : true,
+                    commentsVisibleOnArticle : true,
                     adFreeSubscriptionTrial: false
                 };
 

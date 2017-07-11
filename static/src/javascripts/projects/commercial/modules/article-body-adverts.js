@@ -2,7 +2,7 @@
 import config from 'lib/config';
 import detect from 'lib/detect';
 import fastdom from 'lib/fastdom-promise';
-import spaceFiller from 'common/modules/article/space-filler';
+import { spaceFiller } from 'common/modules/article/space-filler';
 import adSizes from 'commercial/modules/ad-sizes';
 import { addSlot } from 'commercial/modules/dfp/add-slot';
 import trackAdRender from 'commercial/modules/dfp/track-ad-render';
@@ -61,7 +61,7 @@ const insertAdAtPara = (
 
 // Add new ads while there is still space
 const addArticleAds = (count: number, rules: Object): Promise<number> => {
-    const insertInlineAds = (paras: Array<Node>): Promise<number> => {
+    const insertInlineAds = (paras: Element[]): Promise<number> => {
         const slots: Array<Promise<void>> = paras
             .slice(0, Math.min(paras.length, count))
             .map((para: Node) => {

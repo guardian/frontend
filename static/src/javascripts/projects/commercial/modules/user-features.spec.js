@@ -15,6 +15,15 @@ jest.mock('projects/common/modules/identity/api', () => ({
 }));
 jest.mock('lib/fetch-json', () => jest.fn(() => Promise.resolve()));
 
+jest.mock('lib/config', () => ({
+    switches: {
+        adFreeSubscriptionTrial: true,
+    },
+    page: {
+        userAttributesApiUrl: '',
+    },
+}));
+
 const fetchJsonSpy: any = fetchJson;
 const isUserLoggedIn: any = identity.isUserLoggedIn;
 
@@ -233,13 +242,11 @@ describe('Storing new feature data', () => {
                 adFree: false,
             })
         );
-        refresh().then(() => {
+        return refresh().then(() => {
             expect(getCookie(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE)).toBe(
                 'false'
             );
-            expect(getCookie(PERSISTENCE_KEYS.AD_FREE_USER_COOKIE)).toBe(
-                'false'
-            );
+            expect(getCookie(PERSISTENCE_KEYS.AD_FREE_USER_COOKIE)).toBeNull();
         });
     });
 
@@ -250,27 +257,26 @@ describe('Storing new feature data', () => {
                 adFree: true,
             })
         );
-        refresh().then(() => {
+        return refresh().then(() => {
             expect(getCookie(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE)).toBe(
                 'true'
             );
-            expect(getCookie(PERSISTENCE_KEYS.AD_FREE_USER_COOKIE)).toBe(
-                'true'
-            );
+            expect(
+                getCookie(PERSISTENCE_KEYS.AD_FREE_USER_COOKIE)
+            ).toBeTruthy();
         });
     });
 
-    it('Puts an expiry date in an accompanying cookie', () => {
+    it('Puts an expiry date in an accompanying cookie', () =>
         refresh().then(() => {
             const expiryDate = getCookie(
                 PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE
             );
-            expect(expiryDate).not.toBeNull();
-            expect(isNaN(expiryDate)).toBe(false);
-        });
-    });
+            expect(expiryDate).toBeTruthy();
+            expect(isNaN(parseInt(expiryDate, 10))).toBe(false);
+        }));
 
-    it('The expiry date is in the future', () => {
+    it('The expiry date is in the future', () =>
         refresh().then(() => {
             const expiryDateString = getCookie(
                 PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE
@@ -278,8 +284,7 @@ describe('Storing new feature data', () => {
             const expiryDateEpoch = parseInt(expiryDateString, 10);
             const currentTimeEpoch = new Date().getTime();
             expect(currentTimeEpoch < expiryDateEpoch).toBe(true);
-        });
-    });
+        }));
 
     it('Puts the membershipJoinDate in an appropriate cookie', () => {
         fetchJsonSpy.mockReturnValueOnce(
@@ -287,16 +292,15 @@ describe('Storing new feature data', () => {
                 membershipJoinDate: '2016-06-30',
             })
         );
-        refresh().then(() => {
+        return refresh().then(() => {
             expect(getCookie(PERSISTENCE_KEYS.JOIN_DATE_COOKIE)).toBe(
                 '2016-06-30'
             );
         });
     });
 
-    it('Saves no join date cookie if no join date', () => {
+    it('Saves no join date cookie if no join date', () =>
         refresh().then(() => {
             expect(getCookie(PERSISTENCE_KEYS.JOIN_DATE_COOKIE)).toBeNull();
-        });
-    });
+        }));
 });

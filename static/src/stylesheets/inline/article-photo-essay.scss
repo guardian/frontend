@@ -128,6 +128,10 @@
             & + .element-pullquote.element--halfWidth {
                 margin-top: 0;
             }
+
+            & + .element-image:not(.element--halfWidth) {
+                clear: left;
+            }
         }
         &.element--halfWidth.half-width-odd {
             margin-right: 2%;

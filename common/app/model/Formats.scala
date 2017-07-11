@@ -193,6 +193,7 @@ object ContentTypeFormat {
   implicit val quizResultGroupFormat = Json.format[ResultGroup]
   implicit val quizContentFormat = Json.format[QuizContent]
   implicit val quizFormat = Json.format[Quiz]
+  implicit val storyQuizFormat = Json.format[StoryQuiz]
   implicit val mediaAssetFormat = Json.format[MediaAsset]
   implicit val mediaAtomFormat = Json.format[MediaAtom]
   implicit val explainerAtomFormat = Json.format[ExplainerAtom]
@@ -225,6 +226,7 @@ object ContentTypeFormat {
    * */
   implicit val reads: Reads[Atoms] = (
     (__ \ "quizzes").read[Seq[Quiz]].orElse(Reads.pure(Nil)) and
+      (__ \ "storyQuizzes").read[Seq[StoryQuiz]].orElse(Reads.pure(Nil)) and
       (__ \ "media").read[Seq[MediaAtom]].orElse(Reads.pure(Nil)) and
       (__ \ "interactives").read[Seq[InteractiveAtom]].orElse(Reads.pure(Nil)) and
       (__ \ "recipes").read[Seq[RecipeAtom]].orElse(Reads.pure(Nil)) and

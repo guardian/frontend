@@ -81,6 +81,14 @@ class AtomPageController(contentApiClient: ContentApiClient, wsClient: WSClient)
         renderAtom(MediaAtomPage(model, withJavaScript = isJsEnabled))
       case Left(model: StoryQuestionsAtom) =>
         renderAtom(StoryQuestionsAtomPage(model, withJavaScript = isJsEnabled))
+      case Left(model: GuideAtom) =>
+        renderAtom(GuideAtomPage(model, withJavaScript = isJsEnabled))
+      case Left(model: ProfileAtom) =>
+        renderAtom(ProfileAtomPage(model, withJavaScript = isJsEnabled))
+      case Left(model: QandaAtom) =>
+        renderAtom(QandaAtomPage(model, withJavaScript = isJsEnabled))
+      case Left(model: TimelineAtom) =>
+        renderAtom(TimelineAtomPage(model, withJavaScript = isJsEnabled))
       case Left(_) =>
         renderOther(NotFound)
       case Right(other) =>
@@ -102,6 +110,10 @@ class AtomPageController(contentApiClient: ContentApiClient, wsClient: WSClient)
   def makeAtom(apiAtom: ItemResponse): Option[Atom] = {
     apiAtom.media.map(atom => MediaAtom.make(atom = atom, endSlatePath = None)) orElse
     apiAtom.storyquestions.map(atom => StoryQuestionsAtom.make(atom))           orElse
+    apiAtom.guide.map(atom => GuideAtom.make(atom))                             orElse
+    apiAtom.profile.map(atom => ProfileAtom.make(atom))                         orElse
+    apiAtom.qanda.map(atom => QandaAtom.make(atom))                             orElse
+    apiAtom.timeline.map(atom => TimelineAtom.make(atom))                       orElse
     /*
     apiAtom.quiz.map(atom => Quiz.make(atom))                                   orElse
     apiAtom.interactive.map(atom => InteractiveAtom.make(atom))                 orElse

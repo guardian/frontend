@@ -19,30 +19,22 @@ import { constructQuery as constructURLQuery } from 'lib/url';
 import { noop } from 'lib/noop';
 import lodashTemplate from 'lodash/utilities/template';
 import toArray from 'lodash/collections/toArray';
+import acquisitionsEpicButtons from 'raw-loader!common/views/acquisitions-epic-buttons.html';
 import acquisitionsEpicControlTemplate from 'raw-loader!common/views/acquisitions-epic-control.html';
 import acquisitionsTestimonialBlockTemplate from 'raw-loader!common/views/acquisitions-epic-testimonial-block.html';
 import { shouldSeeReaderRevenue as userShouldSeeReaderRevenue } from 'commercial/modules/user-features';
 
-type ContributionsABTest = ABTest & {
-    epic: boolean,
-    campaignId: string,
-    campaignPrefix: string,
-    campaignSuffix: string,
-    useLocalViewLog: boolean,
-    overrideCanRun: boolean,
-    showToContributorsAndSupporters: boolean,
-    pageCheck: (page: Object) => boolean,
-    locations: Array<string>,
-    locationCheck: (location: string) => boolean,
-    useTargetingTool: boolean,
-    insertEvent: string,
-    viewEvent: string,
-};
-
 type EpicTemplate = (Variant, AcquisitionsEpicTemplateCopy) => string;
+
+type CtaUrls = {
+    membershipUrl?: string,
+    contributeUrl?: string,
+    supportUrl?: string,
+};
 
 const membershipBaseURL = 'https://membership.theguardian.com/supporter';
 const contributionsBaseURL = 'https://contribute.theguardian.com';
+const supportBaseURL = 'https://support.theguardian.com/uk';
 
 // How many times the user can see the Epic,
 // e.g. 6 times within 7 days with minimum of 1 day in between views.
@@ -56,13 +48,19 @@ const defaultMaxViews: {
     minDaysBetweenViews: 0,
 };
 
+const defaultButtonTemplate = (urls: CtaUrls) =>
+    lodashTemplate(acquisitionsEpicButtons, urls);
+
 const controlTemplate: EpicTemplate = ({ options = {} }, copy) =>
     lodashTemplate(acquisitionsEpicControlTemplate, {
         copy,
-        membershipUrl: options.membershipURL,
-        contributionUrl: options.contributeURL,
         componentName: options.componentName,
         testimonialBlock: options.testimonialBlock,
+        buttonTemplate: options.buttonTemplate({
+            membershipUrl: options.membershipURL,
+            contributeUrl: options.contributeURL,
+            supportUrl: options.supportURL,
+        }),
     });
 
 const doTagsMatch = (test: ContributionsABTest): boolean =>
@@ -199,7 +197,9 @@ const makeABTestVariant = (
             campaignCode
         ),
         membershipURL = addTrackingCodesToUrl(membershipBaseURL, campaignCode),
+        supportURL = addTrackingCodesToUrl(supportBaseURL, campaignCode),
         template = controlTemplate,
+        buttonTemplate = defaultButtonTemplate,
         testimonialBlock = getTestimonialBlock(
             acquisitionsTestimonialParametersControl
         ),
@@ -236,7 +236,9 @@ const makeABTestVariant = (
             campaignCode,
             contributeURL,
             membershipURL,
+            supportURL,
             template,
+            buttonTemplate,
             testimonialBlock,
             blockEngagementBanner,
             engagementBannerParams,
@@ -425,4 +427,5 @@ export {
     getTestimonialBlock,
     addTrackingCodesToUrl,
     makeABTest,
+    defaultButtonTemplate,
 };

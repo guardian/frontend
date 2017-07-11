@@ -53,7 +53,6 @@
 @import 'module/preferences/_notifications';
 
 @import 'module/onward/_right-hand-most-popular';
-@import 'module/_clamp';
 
 @import 'module/_membership-events';
 
@@ -126,3 +125,10 @@
    ========================================================================== */
 
 @import 'module/_childrens-books-site';
+
+
+/* ==========================================================================
+   Journalism modules
+   ========================================================================== */
+
+@import 'module/atoms/_storyquiz';

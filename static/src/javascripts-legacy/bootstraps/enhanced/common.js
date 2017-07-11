@@ -86,7 +86,7 @@ define([
     cookiesBanner,
     RelativeDates,
     customSmartAppBanner,
-    Tabs,
+    tabs,
     Toggles,
     userPrefs,
     breakingNews,
@@ -122,10 +122,12 @@ define([
             },
 
             showTabs: function () {
-                var tabs = new Tabs();
-                ['modules:popular:loaded', 'modules:geomostpopular:ready'].forEach(function (event) {
-                    mediator.on(event, function (el) {
-                        tabs.init(el);
+                [
+                    'modules:popular:loaded',
+                    'modules:geomostpopular:ready',
+                ].forEach(function (event) {
+                    mediator.on(event, function() {
+                        tabs.init();
                     });
                 });
             },
@@ -223,7 +225,7 @@ define([
             },
 
             initDiscussion: function () {
-                if (config.switches.discussion) {
+                if (config.switches.commentsVisibleOnArticle) {
                     CommentCount.init();
                 }
             },

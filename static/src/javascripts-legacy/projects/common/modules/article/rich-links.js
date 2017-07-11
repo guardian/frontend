@@ -115,7 +115,7 @@ define([
             !isSensitive &&
             !isDuplicate
         ) {
-            return spaceFiller.fillSpace(getSpacefinderRules(), function (paras) {
+            return spaceFiller.spaceFiller.fillSpace(getSpacefinderRules(), function (paras) {
                 $insertedEl = $.create(template(richLinkTagTmpl, {href: config.page.richLink}));
                 $insertedEl.insertBefore(paras[0]);
                 return $insertedEl[0];

@@ -41,6 +41,16 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-acquisitions-epic-multiple-testimonials",
+    "This tests two variants with multiple testimonials against the control epic which has one testimonial",
+    owners = Seq(Owner.withGithub("joelochlann")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 8, 16),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
     "ab-acquisitions-epic-liveblog",
     "This places the epic below those blocks on liveblogs which have been marked for displaying the epic in Composer",
     owners = Seq(Owner.withGithub("joelochlann")),
@@ -76,16 +86,6 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("desbo")),
     safeState = Off,
     sellByDate = new LocalDate(2017, 8, 1),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-acquisitions-epic-liveblog-design-test",
-    "This tests some different designs of the liveblog epic",
-    owners = Seq(Owner.withGithub("joelochlann")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 7, 10),
     exposeClientSide = true
   )
 
@@ -176,6 +176,16 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("jranks123")),
     safeState = Off,
     sellByDate = new LocalDate(2017, 8, 3),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-epic-rebaseline-support-proposition",
+    "Re-baseline the new support proposition against the old",
+    owners = Seq(Owner.withGithub("Ap0c")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 8, 15),
     exposeClientSide = true
   )
 

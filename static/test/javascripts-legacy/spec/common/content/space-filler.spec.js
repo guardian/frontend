@@ -40,13 +40,13 @@ define([
 
         it('Returns a promise that resolves when the insertion completes', function (done) {
             spacefinderResult = Promise.resolve(null);
-            var insertion = spaceFiller.fillSpace(rules, function writer() {});
+            var insertion = spaceFiller.spaceFiller.fillSpace(rules, function writer() {});
             expect(insertion).toEqual(jasmine.any(Promise));
             insertion.then(done).catch(done.fail);
         });
 
         it('Passes a ruleset to the spacefinder', function (done) {
-            var insertion = spaceFiller.fillSpace(rules, function writer() {});
+            var insertion = spaceFiller.spaceFiller.fillSpace(rules, function writer() {});
             insertion.then(function () {
                 var spaceFinderArgs = spaceFinder.findSpace.calls.mostRecent().args;
                 expect(spaceFinderArgs[0]).toBe(rules);
@@ -57,14 +57,14 @@ define([
 
         it('If it finds a space, it calls the writer', function (done) {
             spacefinderResult = Promise.resolve(document.createElement('p'));
-            spaceFiller.fillSpace(rules, done).catch(done.fail);
+            spaceFiller.spaceFiller.fillSpace(rules, done).catch(done.fail);
         });
 
         it('If there are no spaces, it rejects the promise and does not call the writer', function (done) {
             spacefinderResult = Promise.reject(new spaceFinder.SpaceError({}));
 
             var mockWriter = jasmine.createSpy('mockWriter');
-            var insertion = spaceFiller.fillSpace(rules, mockWriter);
+            var insertion = spaceFiller.spaceFiller.fillSpace(rules, mockWriter);
 
             insertion.then(function (result) {
                 expect(result).toBe(false);
@@ -77,7 +77,7 @@ define([
         it('If there are no spaces, the spacefinder exception is not recorded by Raven', function (done) {
             // These exceptions are 'expected' and therefore shouldn't go into logging
             spacefinderResult = Promise.reject(new spaceFinder.SpaceError({}));
-            var insertion = spaceFiller.fillSpace(rules, function writer() {});
+            var insertion = spaceFiller.spaceFiller.fillSpace(rules, function writer() {});
 
             insertion.then(function () {
                 expect(new spaceFinder.SpaceError({}) instanceof spaceFinder.SpaceError).toBe(true);
@@ -93,9 +93,9 @@ define([
             spacefinderResult = Promise.resolve(document.createElement('p'));
             var firstWriter = jasmine.createSpy('first write');
 
-            spaceFiller.fillSpace(rules, firstWriter)
+            spaceFiller.spaceFiller.fillSpace(rules, firstWriter)
             .catch(done.fail);
-            spaceFiller.fillSpace(rules, function secondWriter() {
+            spaceFiller.spaceFiller.fillSpace(rules, function secondWriter() {
                 expect(firstWriter).toHaveBeenCalled();
                 done();
             })
@@ -104,7 +104,7 @@ define([
 
         it('If a writer throws an exception, we record it', function (done) {
             spacefinderResult = Promise.resolve(document.createElement('p'));
-            var insertion = spaceFiller.fillSpace(rules, function () {
+            var insertion = spaceFiller.spaceFiller.fillSpace(rules, function () {
                 throw writeError;
             });
 
@@ -117,17 +117,17 @@ define([
 
         it('If a writer throws an exception, we still call subsequent writers', function (done) {
             spacefinderResult = Promise.resolve(document.createElement('p'));
-            spaceFiller.fillSpace(rules, function () {
+            spaceFiller.spaceFiller.fillSpace(rules, function () {
                 throw writeError;
             })
             .catch(done.fail);
-            spaceFiller.fillSpace(rules, done)
+            spaceFiller.spaceFiller.fillSpace(rules, done)
             .catch(done.fail);
         });
 
         it('If a writer throws an exception, the promise is resolved with "false"', function (done) {
             spacefinderResult = Promise.resolve(document.createElement('p'));
-            var insertion = spaceFiller.fillSpace(rules, function () {
+            var insertion = spaceFiller.spaceFiller.fillSpace(rules, function () {
                 throw writeError;
             });
 
@@ -145,7 +145,7 @@ define([
 
             beforeEach(function () {
                 spacefinderResult = Promise.reject(spaceFinderError);
-                insertion = spaceFiller.fillSpace(rules, writer);
+                insertion = spaceFiller.spaceFiller.fillSpace(rules, writer);
             });
 
             it('Does not call the writer', function (done) {

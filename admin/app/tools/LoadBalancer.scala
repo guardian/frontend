@@ -16,22 +16,21 @@ object LoadBalancer extends Logging {
   import conf.Configuration.aws.credentials
 
     private val loadBalancers = Seq(
-      LoadBalancer("frontend-PROD-router", "Router", "frontend-router"),
+      LoadBalancer("frontend-PROD-router-ELB", "Router", "frontend-router"),
       LoadBalancer(
-        "frontend-PROD-article", "Article", "frontend-article",
+        "frontend-PROD-article-ELB", "Article", "frontend-article",
         testPath = Some("/uk-news/2014/jan/21/drax-protesters-convictions-quashed-police-spy-mark-kennedy")
       ),
-      LoadBalancer("frontend-PROD-facia", "Front", "frontend-facia", testPath = Some("/uk")),
-      LoadBalancer("frontend-PROD-applications", "Applications", "frontend-applications", testPath = Some("/books")),
-      LoadBalancer("frontend-PROD-discussion", "Discussion", "frontend-discussion"),
-      LoadBalancer("frontend-PROD-identity", "Identity", "frontend-identity"),
-      LoadBalancer("frontend-PROD-sport", "Sport", "frontend-sport"),
-      LoadBalancer("frontend-PROD-commercial", "Commercial", "frontend-commercial"),
-      LoadBalancer("frontend-PROD-onward", "Onward", "frontend-onward"),
-      LoadBalancer("frontend-PROD-diagnostics", "Diagnostics", "frontend-diagnostics" ),
-      LoadBalancer("frontend-PROD-archive", "Archive", "frontend-archive"),
-      LoadBalancer("frontend-PROD-admin-jobs", "AdminJobs", "frontend-adminJobs"),
-      LoadBalancer("frontend-PROD-rss", "Rss", "frontend-rss")
+      LoadBalancer("frontend-PROD-facia-ELB", "Front", "frontend-facia", testPath = Some("/uk")),
+      LoadBalancer("frontend-PROD-applications-ELB", "Applications", "frontend-applications", testPath = Some("/books")),
+      LoadBalancer("frontend-PROD-discussion-ELB", "Discussion", "frontend-discussion"),
+      LoadBalancer("frontend-PROD-identity-ELB", "Identity", "frontend-identity"),
+      LoadBalancer("frontend-PROD-sport-ELB", "Sport", "frontend-sport"),
+      LoadBalancer("frontend-PROD-commercial-ELB", "Commercial", "frontend-commercial"),
+      LoadBalancer("frontend-PROD-onward-ELB", "Onward", "frontend-onward"),
+      LoadBalancer("frontend-PROD-diagnostics-ELB", "Diagnostics", "frontend-diagnostics" ),
+      LoadBalancer("frontend-PROD-archive-ELB", "Archive", "frontend-archive"),
+      LoadBalancer("frontend-PROD-rss-ELB", "Rss", "frontend-rss")
     )
 
 

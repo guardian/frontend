@@ -229,7 +229,7 @@ define([
                         onEmailAdded();
                     });
                 } else {
-                    spaceFiller.fillSpace(getSpacefinderRules(), function (paras) {
+                    spaceFiller.spaceFiller.fillSpace(getSpacefinderRules(), function (paras) {
                         $iframeEl.insertBefore(paras[0]);
                         googleAnalytics.trackNonClickInteraction('rtrt | email form inline | article | ' + listConfig.listId + ' | sign-up shown');
                         onEmailAdded();

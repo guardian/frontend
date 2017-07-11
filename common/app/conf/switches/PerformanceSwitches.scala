@@ -146,11 +146,11 @@ trait PerformanceSwitches {
     exposeClientSide = true
   )
 
-  val DiscussionSwitch = Switch(
+  val CommentsVisibleOnArticleSwitch = Switch(
     SwitchGroup.Performance,
-    "discussion",
-    "If this switch is on, comments are displayed on articles. Turn this off if the Discussion API is blowing up.",
-    owners = Seq(Owner.withGithub("johnduffell")),
+    "comments-visible-on-article",
+    "If this switch is on, comments are displayed on articles on dotcom. This switch only show/hides the UI from dotcom and does not disable any underlying services/endpoints etc.",
+    owners = Seq(Owner.withGithub("Calum-Campbell")),
     safeState = On,
     sellByDate = never,
     exposeClientSide = true
@@ -160,17 +160,6 @@ trait PerformanceSwitches {
     SwitchGroup.Performance,
     "discussion-page-size",
     "If this is switched on then users will have the option to change their discussion page size",
-    owners = Seq(Owner.withGithub("johnduffell")),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
-  val OpenCtaSwitch = Switch(
-    SwitchGroup.Performance,
-    "open-cta",
-    "If this switch is on, will see a CTA to comments on the right hand side. Turn this off if the Open API " +
-      "is blowing up.",
     owners = Seq(Owner.withGithub("johnduffell")),
     safeState = Off,
     sellByDate = never,

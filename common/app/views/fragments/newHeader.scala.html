@@ -16,7 +16,7 @@
     @if(edition == "us") {
         https://contribute.theguardian.com/us?INTCMP=gdnwb_copts_co_dotcom_header
     } else {
-        @{Configuration.id.membershipUrl}/@{edition}/supporter?INTCMP=mem_@{edition}_web_newheader_trapezoid
+        @{Configuration.id.membershipUrl}/@{edition}/supporter?INTCMP=mem_@{edition}_web_newheader
     }
 }
 
@@ -62,7 +62,7 @@
                             <a class="header-cta-item hide-until-tablet header-cta-item--secondary"
                                 data-link-name="nav2 : subscribe-cta"
                                 data-edition="@{editionId}"
-                                href="@{Configuration.id.digitalPackUrl}/@{editionId}?INTCMP=NGW_NEWHEADER_@{editionId}_GU_SUBSCRIBE">
+                                href="@{Configuration.id.digitalPackUrl}/@{editionId}?INTCMP=subs_@{editionId}_web_newheader">
                                 <span class="header-cta-item__label">
                                     subscribe
                                 </span>

@@ -31,6 +31,7 @@ class AtomCleanerTest extends FlatSpec
   val youTubeAsset = MediaAsset(id = "nQuN9CUsdVg", version = 1L, platform = MediaAssetPlatform.Youtube, mimeType = None)
 
   val youTubeAtom = Some(Atoms(quizzes = Nil,
+    storyQuizzes = Nil,
     media = Seq(MediaAtom(id = "887fb7b4-b31d-4a38-9d1f-26df5878cf9c",
       defaultHtml = "<iframe width=\"420\" height=\"315\"\n src=\"https://www.youtube.com/embed/nQuN9CUsdVg\" frameborder=\"0\"\n allowfullscreen=\"\">\n</iframe>",
       assets = Seq(youTubeAsset),

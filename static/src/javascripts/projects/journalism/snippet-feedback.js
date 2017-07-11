@@ -4,7 +4,7 @@ import mediator from 'lib/mediator';
 import ophan from 'ophan/ng';
 import detect from 'lib/detect';
 
-const SnippetFeedback = (): void => {
+const SnippetFeedback = (options: { scroll: boolean } = { scroll: true }) => {
     let snippets = [...document.querySelectorAll('.explainer-snippet--new')];
 
     snippets.forEach(snippet => {
@@ -66,36 +66,38 @@ const SnippetFeedback = (): void => {
         }
     });
 
-    // Callback for scroll into view
-    mediator.on('window:throttledScroll', function onScroll() {
-        snippets = snippets.filter(snippet => {
-            const height = detect.getViewport().height;
-            const coords = snippet.getBoundingClientRect();
-            const isInView = coords.top >= 0 && coords.bottom <= height;
+    if (options.scroll) {
+        // Callback for scroll into view
+        mediator.on('window:throttledScroll', function onScroll() {
+            snippets = snippets.filter(snippet => {
+                const height = detect.getViewport().height;
+                const coords = snippet.getBoundingClientRect();
+                const isInView = coords.top >= 0 && coords.bottom <= height;
 
-            if (isInView) {
-                const { snippetId, snippetType } = snippet.dataset;
-                if (!snippetId || !snippetType) {
+                if (isInView) {
+                    const { snippetId, snippetType } = snippet.dataset;
+                    if (!snippetId || !snippetType) {
+                        return false;
+                    }
+                    const component = `snippet_${snippetType}`;
+
+                    const data = {
+                        atomId: snippetId,
+                        component,
+                        value: `${snippetType}_component_in_view`,
+                    };
+                    ophan.record(data);
+
                     return false;
                 }
-                const component = `snippet_${snippetType}`;
+                return true;
+            });
 
-                const data = {
-                    atomId: snippetId,
-                    component,
-                    value: `${snippetType}_component_in_view`,
-                };
-                ophan.record(data);
-
-                return false;
+            if (snippets.length === 0) {
+                mediator.off('window:throttledScroll', onScroll);
             }
-            return true;
         });
-
-        if (snippets.length === 0) {
-            mediator.off('window:throttledScroll', onScroll);
-        }
-    });
+    }
 };
 
 export { SnippetFeedback };

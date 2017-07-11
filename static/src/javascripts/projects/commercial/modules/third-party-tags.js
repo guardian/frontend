@@ -8,8 +8,6 @@ import template from 'lodash/utilities/template';
 import { testCanBeRun } from 'common/modules/experiments/test-can-run-checks';
 import { getTestVariantId } from 'common/modules/experiments/utils';
 import { commercialFeatures } from 'commercial/modules/commercial-features';
-import audienceScienceGateway from 'commercial/modules/third-party-tags/audience-science-gateway';
-import audienceSciencePql from 'commercial/modules/third-party-tags/audience-science-pql';
 import PaidContentVsOutbrain2 from 'common/modules/experiments/tests/paid-content-vs-outbrain';
 import externalContentContainerStr from 'raw-loader!common/views/commercial/external-content.html';
 import { imrWorldwide } from 'commercial/modules/third-party-tags/imr-worldwide';
@@ -74,15 +72,13 @@ const insertScripts = (services: Array<ThirdPartyTag>): void => {
             frag.appendChild(script);
         }
     }
-    if (ref.parentNode) {
+    if (ref && ref.parentNode) {
         ref.parentNode.insertBefore(frag, ref);
     }
 };
 
 const loadOther = (): void => {
-    const services = [
-        audienceSciencePql,
-        audienceScienceGateway,
+    const services: Array<ThirdPartyTag> = [
         imrWorldwide,
         imrWorldwideLegacy,
         remarketing,
@@ -96,7 +92,7 @@ const loadOther = (): void => {
     }
 };
 
-const initThirdPartyTags = (): Promise<any> => {
+export const initThirdPartyTags = (): Promise<any> => {
     if (!commercialFeatures.thirdPartyTags) {
         return Promise.resolve(false);
     }
@@ -112,4 +108,4 @@ const initThirdPartyTags = (): Promise<any> => {
     return Promise.resolve(true);
 };
 
-export { initThirdPartyTags };
+export const _ = { insertScripts, loadOther };
