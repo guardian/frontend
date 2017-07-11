@@ -89,7 +89,5 @@ const onIsOutbrainDisabled = outbrainDisabled => {
     return canLoadInstantly().then(onCanLoadInstantly);
 };
 
-const init = () =>
+export const initOutbrain = () =>
     waitForCheck('isOutbrainDisabled').then(onIsOutbrainDisabled);
-
-export { init };

@@ -16,9 +16,8 @@ const onLoad = () => {
     trac.record().post();
 };
 
-// The Nielsen NetRatings tag. Also known as IMR worldwide.
-const url: string = '//secure-au.imrworldwide.com/v60.js';
-
-const shouldRun: boolean = config.switches.imrWorldwide;
-
-export { shouldRun, url, onLoad };
+export const imrWorldwideLegacy: ThirdPartyTag = {
+    shouldRun: config.switches.imrWorldwide,
+    url: '//secure-au.imrworldwide.com/v60.js',
+    onLoad,
+};
