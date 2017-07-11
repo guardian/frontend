@@ -1,11 +1,8 @@
-@(item: layout.ContentCard, omnitureId :String, containerIndex: Int, index: Int, isFirstContainer: Boolean)(implicit request: RequestHeader)
+@(item: layout.ContentCard, omnitureId :String, containerIndex: Int, index: Int)(implicit request: RequestHeader)
 
 @import views.html.fragments.items.elements.facia_cards._
-@import views.support.GetClasses
-@import Function.const
-@import views.html.fragments.commercial.cardLogo
 
-<div class="adverts--within-unbranded @GetClasses.forItem(item, isFirstContainer) @item.cardTypes.classes @if(!item.hasInlineSnapHtml) {js-snappable}">
+<div class="fc-item fc-item--has-image js-fc-item fc-item--list-media-mobile fc-item--standard-tablet adverts--within-unbranded @item.cardTypes.classes)">
     <div class="fc-item__container">
         @item.paidImage.map(image => itemImage(
             image,
@@ -19,13 +16,11 @@
                 </div>
             </div>
 
-            @item.trailText.filter(const(item.showStandfirst)).map { text =>
-                <div class="fc-item__standfirst">@Html(text)</div>
-            }
-
-            @item.branding.map { branding =>
-                @cardLogo(branding, isStandardSizeCard = false)
-            }
+            <div class="badge badge--no-image">
+                <div class="badge__label">
+                    Paid for by @item.branding.map(_.sponsorName)
+                </div>
+            </div>
 
         </div>
 
