@@ -3,7 +3,7 @@
 // We use yarn to install our deps from npm.
 
 // We want to ensure a specific minimum version of yarn is installed.
-const requiredVersion = '~0.22.0';
+const requiredVersion = '0.27.5';
 
 const childProcess = require('child_process');
 

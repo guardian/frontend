@@ -30,6 +30,7 @@ if (shouldRun) {
     simpleReachUrl = '//d8rk54i4mohrb.cloudfront.net/js/reach.js';
 }
 
-const url = simpleReachUrl;
-
-export { shouldRun, url };
+export const simpleReach: ThirdPartyTag = {
+    shouldRun,
+    url: simpleReachUrl,
+};
