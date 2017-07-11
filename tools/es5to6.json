@@ -58,7 +58,6 @@
     "projects/common/modules/discussion/comment-box.js"
   ],
   "Gustav Pursche": [
-    "lib/clamp.js",
     "lib/element-inview.js",
     "lib/page.js"
   ],
@@ -142,11 +141,9 @@
     "projects/common/modules/onward/popular.js",
     "projects/common/modules/onward/related.js",
     "projects/common/modules/onward/tech-feedback.js",
-    "projects/common/modules/open/cta.js",
     "projects/common/modules/preferences/main.js"
   ],
   "Joseph Smith": [
-    "projects/common/modules/experiments/tests/acquisitions-epic-liveblog.js",
     "projects/common/modules/experiments/tests/contributions-epic-always-ask-strategy.js",
     "projects/common/modules/experiments/tests/contributions-epic-ask-four-earning.js",
     "projects/common/modules/experiments/tests/epic-to-support-landing-page.js",
