@@ -18,7 +18,7 @@ const init = (): boolean => {
 
     const EU_COOKIE_MSG = 'GU_EU_MSG';
     const euMessageCookie = getCookie(EU_COOKIE_MSG);
-    if (euMessageCookie && euMessageCookie !== 'seen') {
+    if (euMessageCookie && euMessageCookie === 'seen') {
         return false;
     }
 
