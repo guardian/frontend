@@ -5,6 +5,11 @@ from scrolling */
         overflow: hidden;
         width: 100%;
     }
+
+    // Prevents horizontal scrollbar https://codepen.io/tigt/post/bust-elements-out-of-containers-with-one-line-of-css#oh-no-a-horizontal-scrollbar-6
+    @include mq(desktop) {
+        overflow-x: hidden;
+    }
 }
 
 .new-header {
