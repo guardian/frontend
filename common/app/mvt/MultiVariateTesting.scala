@@ -32,7 +32,7 @@ object CommercialGalleryBannerAdsControl extends TestDefinition(
   name = "ab-commercial-gallery-banner-ads-control",
   description = "Users in this test will not see banner ads in galleries, as a control.",
   owners = Seq(Owner.withGithub("JonNorman")),
-  sellByDate = new LocalDate(2017, 7, 11)
+  sellByDate = new LocalDate(2017, 7, 18)
 ) {
 
   def participationGroup(implicit request: RequestHeader): Option[String] = request.headers.get("X-GU-ab-commercial-gallery-banner-ads")
