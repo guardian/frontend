@@ -40,7 +40,7 @@ describe('Rendering advert labels', () => {
     it('Can add a label', () =>
         renderAdvertLabel(adverts.withLabel[0]).then(() => {
             const label = adverts.withLabel[0].querySelector(labelSelector);
-            expect(label).not.toBe(null);
+            expect(label).not.toBeNull();
         }));
 
     it('The label has a message', () =>
@@ -52,7 +52,7 @@ describe('Rendering advert labels', () => {
     it('Won`t add a label if it has an attribute data-label=`false`', () =>
         renderAdvertLabel(adverts.labelDisabled[0]).then(() => {
             const label = adverts.labelDisabled[0].querySelector(labelSelector);
-            expect(label).toBe(null);
+            expect(label).toBeNull();
         }));
 
     it('Won`t add a label if the adSlot already has one', () =>
@@ -66,12 +66,12 @@ describe('Rendering advert labels', () => {
     it('Won`t add a label to guStyle ads', () =>
         renderAdvertLabel(adverts.guStyle[0]).then(() => {
             const label = adverts.guStyle[0].querySelector(labelSelector);
-            expect(label).toBe(null);
+            expect(label).toBeNull();
         }));
 
     it('Won`t add a label to frame ads', () =>
         renderAdvertLabel(adverts.frame[0]).then(() => {
             const label = adverts.frame[0].querySelector(labelSelector);
-            expect(label).toBe(null);
+            expect(label).toBeNull();
         }));
 });
