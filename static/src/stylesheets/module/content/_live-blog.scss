@@ -332,7 +332,7 @@ $block-padding-right: $gs-gutter;
         > .element-embed,
         > .element-audio,
         > .element-interactive,
-        > .element-atom {
+        > .element-atom:not(.element-atom--media) {
             width: auto;
             margin: $gs-baseline $gs-gutter/2 ($gs-baseline / 3) * 4;
 
