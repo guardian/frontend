@@ -3,7 +3,6 @@ import {
     articleBodyAdvertsInit,
     _,
 } from 'commercial/modules/article-body-adverts';
-import fastdom from 'lib/fastdom-promise';
 import config from 'lib/config';
 import { spaceFiller } from 'common/modules/article/space-filler';
 import { commercialFeatures } from 'commercial/modules/commercial-features';
@@ -99,12 +98,7 @@ describe('Article Body Adverts', () => {
                 const firstCall = spaceFillerStub.mock.calls[0];
                 const writer = firstCall[1];
                 writer([paragraph]);
-
-                // Wait until fastdom has written before checking
-                return fastdom.read(() => {
-                    const expectedAd = fixture.querySelector('#dfp-ad--im');
-                    expect(expectedAd).toBeTruthy();
-                });
+                expect(fixture.querySelector('#dfp-ad--im')).toBeTruthy();
             });
         });
 
