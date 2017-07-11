@@ -65,7 +65,7 @@ object GuardianConfiguration extends Logging {
   lazy val configuration = {
     // This is version number of the config file we read from s3,
     // increment this if you publish a new version of config
-    val s3ConfigVersion = 34
+    val s3ConfigVersion = 35
 
     lazy val userPrivate = FileConfigurationSource(s"${System.getProperty("user.home")}/.gu/frontend.conf")
     lazy val runtimeOnly = FileConfigurationSource("/etc/gu/frontend.conf")
@@ -438,10 +438,6 @@ class GuardianConfiguration extends Logging {
     lazy val gLabsTeam = configuration.getStringProperty("email.gLabsTeam")
 
     lazy val expiredPaidContentUrl = s"${site.host}/info/2015/feb/06/paid-content-removal-policy"
-  }
-
-  object open {
-    lazy val ctaApiRoot = configuration.getMandatoryStringProperty("open.cta.apiRoot")
   }
 
   object interactive {

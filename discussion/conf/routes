@@ -32,5 +32,3 @@ GET         /discussion/profile/:id/witness.json                                
 GET         /discussion/report-abuse/:commentId/thankyou                        controllers.CommentsController.reportAbuseThankYou(commentId: Int)
 GET         /discussion/report-abuse/*commentId                                 controllers.CommentsController.reportAbuseForm(commentId: Int)
 POST        /discussion/report-abuse/*commentId                                 controllers.CommentsController.reportAbuseSubmission(commentId: Int)
-
-GET         /open/cta/article/*discussionKey.json                               controllers.CtaController.cta(discussionKey: discussion.model.DiscussionKey)
