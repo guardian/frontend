@@ -1,20 +1,20 @@
 package controllers
-import components.{ButtonComponent, ButtonState}
+import components.{TestPageComponent, TestPageState}
 import model.ApplicationContext
 import play.api.mvc.{Action, Controller}
 
 class NashornController(implicit ac: ApplicationContext) extends Controller {
 
+  lazy val state = TestPageState("My headline", "My section")
+
   def renderJs(s: Option[String]) = {
     Action { implicit request =>
-      val state = Some(ButtonState(s.getOrElse("Click me!")))
-      ButtonComponent.render(state)
+      TestPageComponent.render(Some(state))
     }
   }
 
   def renderTwirl(s: Option[String]) = {
     Action { implicit request =>
-      val state = ButtonState(s.getOrElse("Click me!"))
       Ok(views.html.c(state))
     }
   }

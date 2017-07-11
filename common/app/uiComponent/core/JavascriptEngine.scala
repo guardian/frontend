@@ -2,7 +2,9 @@ package uiComponent.core
 
 import java.io.Reader
 import javax.script._
+
 import jdk.nashorn.api.scripting.JSObject
+
 import scala.util.Try
 
 object JavascriptEngine {
@@ -13,9 +15,23 @@ object JavascriptEngine {
 
   def eval(script: String)(implicit context: SimpleScriptContext): Try[JSObject] =
     Try(shared.eval(script, context).asInstanceOf[JSObject])
-  def eval(reader: Reader)(implicit context: SimpleScriptContext): Try[JSObject] =
-    Try(shared.eval(reader, context).asInstanceOf[JSObject])
 
-  def call[A](script: JSObject)(functionName: String, args: JSObject*): Try[A] =
-    Try(script.call(functionName, args:_*).asInstanceOf[A])
+  def eval(cs: CompiledScript)(implicit context: SimpleScriptContext): Try[JSObject] =
+    Try(cs.eval(context).asInstanceOf[JSObject])
+
+  def compile(reader: Reader)(implicit context: SimpleScriptContext): Try[CompiledScript] =
+    Try(shared.asInstanceOf[Compilable].compile(reader))
+
+  def invoke(cs: CompiledScript, method: String, args: JSObject*)(implicit context: SimpleScriptContext): Try[String] = {
+    for {
+      global <- eval(cs)
+      res <- Try(
+        cs
+          .getEngine
+          .asInstanceOf[Invocable]
+          .invokeMethod(global, method, args:_*)
+          .asInstanceOf[String]
+      )
+    } yield res
+  }
 }

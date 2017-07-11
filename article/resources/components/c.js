@@ -2168,3 +2168,5 @@ function generateHtmlString(sheets, className) {
 /***/ })
 /******/ ]);
 //# sourceMappingURL=bundle.server.js.map
+
+this.frontend
