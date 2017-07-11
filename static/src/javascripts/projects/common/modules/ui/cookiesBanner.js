@@ -1,7 +1,6 @@
 // @flow
 import { getCookie, addCookie } from 'lib/cookies';
 import Message from 'common/modules/ui/message';
-import mediator from 'lib/mediator';
 /**
  * Rules:
  *
@@ -13,24 +12,26 @@ import mediator from 'lib/mediator';
  */
 const init = (): boolean => {
     const geoContinentCookie = getCookie('GU_geo_continent');
-    if (geoContinentCookie && geoContinentCookie.toUpperCase() === 'EU') {
-        const EU_COOKIE_MSG = 'GU_EU_MSG';
-        const euMessageCookie = getCookie(EU_COOKIE_MSG);
-        if (!euMessageCookie || euMessageCookie !== 'seen') {
-            const link = 'https://www.theguardian.com/info/cookies';
-            const txt = `Welcome to the Guardian. This site uses cookies. Read <a href="${link}" class="cookie-message__link">our policy</a>.`;
-            const opts = {
-                important: true,
-            };
-            const cookieLifeDays = 365;
-            const msg = new Message('cookies', opts);
-            msg.show(txt);
-            addCookie(EU_COOKIE_MSG, 'seen', cookieLifeDays);
-            return true;
-        }
+    if (!geoContinentCookie || geoContinentCookie.toUpperCase() !== 'EU') {
+        return false;
     }
-    mediator.emit('modules:ui:cookiesBanner:notShown');
-    return false;
+
+    const EU_COOKIE_MSG = 'GU_EU_MSG';
+    const euMessageCookie = getCookie(EU_COOKIE_MSG);
+    if (euMessageCookie && euMessageCookie !== 'seen') {
+        return false;
+    }
+
+    const link = 'https://www.theguardian.com/info/cookies';
+    const txt = `Welcome to the Guardian. This site uses cookies. Read <a href="${link}" class="cookie-message__link">our policy</a>.`;
+    const opts = {
+        important: true,
+    };
+    const cookieLifeDays = 365;
+    const msg = new Message('cookies', opts);
+    msg.show(txt);
+    addCookie(EU_COOKIE_MSG, 'seen', cookieLifeDays);
+    return true;
 };
 
 export default {
