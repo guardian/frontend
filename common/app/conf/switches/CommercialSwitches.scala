@@ -261,7 +261,7 @@ trait CommercialSwitches {
     description = "Solicit feedback for ad impressions",
     owners = Owner.group(SwitchGroup.Commercial),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 7, 12),
+    sellByDate = new LocalDate(2017, 7, 26),
     exposeClientSide = true
   )
 
