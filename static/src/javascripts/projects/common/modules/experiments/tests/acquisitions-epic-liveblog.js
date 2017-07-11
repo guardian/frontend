@@ -25,25 +25,91 @@ type TimeData = {
 
 const getLiveblogEntryTimeData = (el: Element): Promise<TimeData> =>
     fastdom.read(() => {
-        const $timeEl = $('time', el);
+        const timeEl = el.querySelector('time');
+        const absoluteTimeEl = el.querySelector('.block-time__absolute');
 
-        return {
-            datetime: $timeEl.attr('datetime'),
-            title: $timeEl.attr('title'),
-            date: $timeEl.text(),
-            time: $('.block-time__absolute', el).text(),
-        };
+        if (timeEl && absoluteTimeEl) {
+            return {
+                datetime: timeEl.getAttribute('datetime'),
+                title: timeEl.getAttribute('title'),
+                date: timeEl.innerHTML,
+                time: absoluteTimeEl.innerHTML,
+            };
+        }
+    });
+
+const getBlocksOnPageLoad = () => {
+    const blocks = [...document.getElementsByClassName('block')];
+
+    // We auto-insert next to 1, 2 or 3
+    const autoBlockNum = Math.floor(Math.random() * 3) + 1;
+
+    // Which means potentially clashing blocks are 0, 1, 2, 3, or 4
+    const potentiallyClashingBlocks = blocks.slice(0, 5);
+
+    const blockWithAutoEpic = blocks[autoBlockNum];
+    const blocksWithManualEpic = [
+        ...document.getElementsByClassName(INSERT_EPIC_AFTER_CLASS),
+    ];
+
+    const isManualEpicInClashingSlot = potentiallyClashingBlocks
+        .slice(0, 5)
+        .some(el => el.classList.contains(INSERT_EPIC_AFTER_CLASS));
+
+    if (blocks.length > 4 && !isManualEpicInClashingSlot) {
+        return blocksWithManualEpic.concat(blockWithAutoEpic);
+    }
+    return blocksWithManualEpic;
+};
+
+const getBlocksOnAutoUpdate = () => {
+    const blocks = [...document.getElementsByClassName('block')];
+    const blocksWithManualEpic = [
+        ...document.getElementsByClassName(INSERT_EPIC_AFTER_CLASS),
+    ];
+
+    const liveblogBody = document.querySelector('.js-liveblog-body');
+
+    if (liveblogBody) {
+        const firstTenElements = [...liveblogBody.children].slice(0, 9);
+
+        const hasEpicNearTop = firstTenElements.some(
+            el =>
+                el.classList.contains(INSERT_EPIC_AFTER_CLASS) ||
+                el.classList.contains('is-epic')
+        );
+
+        if (blocks.length > 4 && !hasEpicNearTop) {
+            return [blocks[0]];
+        }
+    }
+
+    return blocksWithManualEpic;
+};
+
+const getBlocksToInsertEpicAfter = (
+    isAutoUpdate: boolean
+): Promise<Array<Element>> =>
+    fastdom.read(() => {
+        if (isAutoUpdate) {
+            return getBlocksOnAutoUpdate();
+        }
+        return getBlocksOnPageLoad();
     });
 
 const setEpicLiveblogEntryTimeData = (
     el: Element,
     timeData: TimeData
 ): void => {
-    const $epicTimeEl = $('time', el);
-    $epicTimeEl.attr('datetime', timeData.datetime);
-    $epicTimeEl.attr('title', timeData.title);
-    $epicTimeEl.text(timeData.date);
-    $('.block-time__absolute', el).text(timeData.time);
+    const epicTimeEl = el.querySelector('time');
+    const epicAbsoluteTimeEl = el.querySelector('.block-time__absolute');
+
+    if (epicTimeEl && epicAbsoluteTimeEl) {
+        epicTimeEl.setAttribute('datetime', timeData.datetime);
+        epicTimeEl.setAttribute('title', timeData.title);
+        epicTimeEl.innerHTML = timeData.date;
+        epicAbsoluteTimeEl.innerHTML = timeData.time;
+    }
 };
 
 const setupViewTracking = (el: Element, test: ContributionsABTest): void => {
@@ -60,23 +126,22 @@ const setupViewTracking = (el: Element, test: ContributionsABTest): void => {
 
 const addEpicToBlocks = (
     epicHtml: string,
-    test: ContributionsABTest
+    test: ContributionsABTest,
+    isAutoUpdate: boolean = false
 ): Promise<void> =>
-    fastdom
-        .read(() => $(`.${INSERT_EPIC_AFTER_CLASS}`))
-        .then($blocksToInsertEpicAfter => {
-            $blocksToInsertEpicAfter.each(el => {
-                getLiveblogEntryTimeData(el).then((timeData: TimeData) => {
-                    fastdom.write(() => {
-                        const $epic = $.create(epicHtml);
-                        $epic.insertAfter(el);
-                        $(el).removeClass(INSERT_EPIC_AFTER_CLASS);
-                        setEpicLiveblogEntryTimeData($epic[0], timeData);
-                        setupViewTracking(el, test);
-                    });
+    getBlocksToInsertEpicAfter(isAutoUpdate).then(blocksToInsertEpicAfter => {
+        blocksToInsertEpicAfter.forEach(el => {
+            getLiveblogEntryTimeData(el).then((timeData: TimeData) => {
+                fastdom.write(() => {
+                    const $epic = $.create(epicHtml);
+                    $epic.insertAfter(el);
+                    $(el).removeClass(INSERT_EPIC_AFTER_CLASS);
+                    setEpicLiveblogEntryTimeData($epic[0], timeData);
+                    setupViewTracking(el, test);
                 });
             });
         });
+    });
 
 export const acquisitionsEpicLiveblog: ContributionsABTest = makeABTest({
     id: 'AcquisitionsEpicLiveblog',
@@ -127,7 +192,7 @@ export const acquisitionsEpicLiveblog: ContributionsABTest = makeABTest({
 
                 if (!isAutoUpdateHandlerBound) {
                     mediator.on('modules:autoupdate:updates', () => {
-                        addEpicToBlocks(epicHtml, test);
+                        addEpicToBlocks(epicHtml, test, true);
                     });
                     isAutoUpdateHandlerBound = true;
                 }
