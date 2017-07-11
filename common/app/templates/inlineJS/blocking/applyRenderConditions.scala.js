@@ -64,6 +64,47 @@
         }).join(' ');
     }
 
+    /*
+        This is a shortened version of shouldSeeReaderRevenue() from
+        user-features.js. Since we are blocking rendering at this time we
+        can't/ don't want to online all required JS from this module.
+    */
+    function hideReaderRevenue() {
+        var cookies = document.cookie.split('; ');
+        var contribution = {
+            cookie: 'gu.contributions.contrib-timestamp',
+            fullfilled: false,
+            check: function(value) {
+                var now = new Date().getTime();
+                var lastContribution = new Date(value).getTime();
+                var diffDays = Math.ceil((now - lastContribution) / (1000 * 3600 * 24));
+
+                return diffDays <= 180;
+            },
+        };
+        var member = {
+            cookie: 'gu_paying_member',
+            fullfilled: false,
+            check: function(value) {
+                return value === 'true';
+            },
+        };
+
+        for(var i = 0; i < cookies.length; ++i) {
+            var cookie = cookies[i].split('=');
+
+            if (cookie.indexOf(contribution.cookie) !== -1) {
+                contribution.fullfilled = contribution.check(cookie[1]);
+            }
+
+            if (cookie.indexOf(member.cookie) !== -1) {
+                member.fullfilled = member.check(cookie[1]);
+            }
+        }
+
+        return member.fullfilled && contribution.fullfilled;
+    }
+
     // http://modernizr.com/download/#-svg
     if (!!document.createElementNS && !!document.createElementNS('http://www.w3.org/2000/svg', 'svg').createSVGRect) {
         docClass += ' svg';
@@ -101,5 +142,10 @@
     if (baseFontSize && parseInt(baseFontSize, 10) !== 16) {
         documentElement.style.fontSize = baseFontSize
     }
+
+    if (hideReaderRevenue()) {
+        docClass += ' hide-reader-revenue';
+    }
+
     documentElement.className = docClass.replace(/\bjs-off\b/g, 'js-on');
 })(document.documentElement, window, navigator);
