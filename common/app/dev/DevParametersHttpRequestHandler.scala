@@ -49,7 +49,7 @@ class DevParametersHttpRequestHandler(
     "heatmap", // used by ophan javascript to enable the heatmap
     "format", // used to determine whether HTML should be served in email-friendly format or not
     "timestamp", //used to get specific builds for inteactive serviceworkers
-    "title"
+    "headline"
   )
 
   val commercialParams = Seq(

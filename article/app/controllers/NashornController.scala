@@ -5,16 +5,17 @@ import play.api.mvc.{Action, Controller}
 
 class NashornController(implicit ac: ApplicationContext) extends Controller {
 
-  lazy val state = TestPageState("My headline", "My section")
 
-  def renderJs(s: Option[String]) = {
+  def renderJs(headline: Option[String]) = {
     Action { implicit request =>
+      val state = TestPageState(headline.getOrElse("My headline"), "My section")
       TestPageComponent.render(Some(state))
     }
   }
 
-  def renderTwirl(s: Option[String]) = {
+  def renderTwirl(headline: Option[String]) = {
     Action { implicit request =>
+      val state = TestPageState(headline.getOrElse("My headline"), "My section")
       Ok(views.html.c(state))
     }
   }
