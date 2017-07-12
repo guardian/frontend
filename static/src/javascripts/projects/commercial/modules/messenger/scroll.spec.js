@@ -28,14 +28,16 @@ describe('Cross-frame messenger: scroll', () => {
      `;
 
     const mockIframePosition = (iframe: any, top: number) => {
-        jest.spyOn(iframe, 'getBoundingClientRect').mockImplementation(() => ({
-            left: 8,
-            right: 392,
-            height: 200,
-            width: 384,
-            top,
-            bottom: top + 200,
-        }));
+        jest
+            .spyOn(iframe, 'getBoundingClientRect')
+            .mockImplementationOnce(() => ({
+                left: 8,
+                right: 392,
+                height: 200,
+                width: 384,
+                top,
+                bottom: top + 200,
+            }));
     };
 
     beforeEach(done => {
@@ -102,69 +104,58 @@ describe('Cross-frame messenger: scroll', () => {
             });
         });
 
-        it('should call respond1 but not respond2 at the top of the page', done => {
-            console.log(onIntersect);
+        it('should call respond1 but not respond2 at the top of the page', () => {
             if (onIntersect) {
                 onIntersect([
                     { target: iframe1, intersectionRatio: 0.5 },
                     { target: iframe2, intersectionRatio: 0 },
                 ]);
             }
-            onScroll()
-                .then(() => {
-                    expect(respond1).toHaveBeenCalledTimes(2);
-                    expect(respond2).toHaveBeenCalledTimes(1);
-                })
-                .then(done)
-                .catch(done.fail);
+            return onScroll().then(() => {
+                expect(respond1).toHaveBeenCalledTimes(2);
+                expect(respond2).toHaveBeenCalledTimes(1);
+            });
         });
 
-        it('should call respond2 but not respond1 at the bottom of the page', done => {
+        it('should call respond2 but not respond1 at the bottom of the page', () => {
             if (onIntersect) {
                 onIntersect([
                     { target: iframe1, intersectionRatio: 0 },
                     { target: iframe2, intersectionRatio: 0.5 },
                 ]);
             }
-            onScroll()
-                .then(() => {
-                    expect(respond1).toHaveBeenCalledTimes(1);
-                    expect(respond2).toHaveBeenCalledTimes(2);
-                })
-                .then(done)
-                .catch(done.fail);
+            return onScroll().then(() => {
+                expect(respond1).toHaveBeenCalledTimes(1);
+                expect(respond2).toHaveBeenCalledTimes(2);
+            });
         });
     });
 
     describe('Without IntersectionObserver', () => {
         beforeEach(() => {
             reset(false);
-            addScrollListener(iframe1, respond1);
-            addScrollListener(iframe2, respond2);
+            return Promise.all([
+                addScrollListener(iframe1, respond1),
+                addScrollListener(iframe2, respond2),
+            ]);
         });
 
-        it('should call respond1 but not respond2 at the top of the page', done => {
+        it('should call respond1 but not respond2 at the top of the page', () => {
             mockIframePosition(iframe1, 8);
             mockIframePosition(iframe2, 6320);
-            onScroll()
-                .then(() => {
-                    expect(respond1).toHaveBeenCalledTimes(2);
-                    expect(respond2).toHaveBeenCalledTimes(1);
-                })
-                .then(done)
-                .catch(done.fail);
+            return onScroll().then(() => {
+                expect(respond1).toHaveBeenCalledTimes(2);
+                expect(respond2).toHaveBeenCalledTimes(1);
+            });
         });
 
-        it('should call respond2 but not respond1 at the bottom of the page', done => {
+        it('should call respond2 but not respond1 at the bottom of the page', () => {
             mockIframePosition(iframe1, -6304);
             mockIframePosition(iframe2, 8);
-            onScroll()
-                .then(() => {
-                    expect(respond1).toHaveBeenCalledTimes(1);
-                    expect(respond2).toHaveBeenCalledTimes(2);
-                })
-                .then(done)
-                .catch(done.fail);
+            return onScroll().then(() => {
+                expect(respond1).toHaveBeenCalledTimes(1);
+                expect(respond2).toHaveBeenCalledTimes(2);
+            });
         });
     });
 });
