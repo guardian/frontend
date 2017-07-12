@@ -104,6 +104,10 @@
             return config && config.targeting;
         }
 
+        function noads() {
+            return document.cookie.indexOf('GU_AF1') > 0;
+        }
+
         function isMasterIframe(config) {
             return window.context.isMaster && config.type == 'doubleclick';
         }
@@ -148,19 +152,23 @@
         // this is the big AMP callback
         draw3p(function (config, done) {
 
-            if (configIsValid(config) && isMasterIframe(config)) {
-                exposeMetaDataForKrux(config);
-                loadKrux();
+            if (noads()) {
+                done('{}');
+            } else {
+                if (configIsValid(config) && isMasterIframe(config)) {
+                    exposeMetaDataForKrux(config);
+                    loadKrux();
+                }
+                if (configIsValid(config)) {
+                    var configWithAttachedQueryParams = attachQueryParams(config);
+                    var configWithAdTestParam = attachAdTestParam(configWithAttachedQueryParams);
+                    var result = attachKruxSegments(configWithAdTestParam);
+                    done(result);
+                } else {
+                    done(config);
+                }
             }
 
-            if (configIsValid(config)) {
-                var configWithAttachedQueryParams = attachQueryParams(config);
-                var configWithAdTestParam = attachAdTestParam(configWithAttachedQueryParams);
-                var result = attachKruxSegments(configWithAdTestParam);
-                done(result);
-            } else {
-                done(config);
-            }
         })</script>
 </div>
 <script>if (window.docEndCallback) window.docEndCallback()</script>
