@@ -1,3 +1,5 @@
-function render(props) {
-    return "<button type='button'>" + props.title + "</button>"
+this["myComponent"] = {
+    render : function(props) {
+        return "<button type='button'>" + props.title + "</button>"
+    }
 }

@@ -9,7 +9,7 @@ import play.api.libs.json.{JsValue, Json}
 import uiComponent.core.JavascriptEngine.EvalResult
 import scala.util.{Failure, Success, Try}
 
-class JavascriptRenderer(javascriptFile: String) {
+class JavascriptRenderer(javascriptFilePath: String) {
 
   private implicit lazy val scriptContext = new SimpleScriptContext()
   private lazy val memoizedJs: Try[EvalResult] = loadJavascript()
@@ -30,7 +30,7 @@ class JavascriptRenderer(javascriptFile: String) {
   }
 
   private def loadJavascript(): Try[EvalResult] = for {
-    file <- loadFile(javascriptFile)
+    file <- loadFile(javascriptFilePath)
     fullScript = new InputStreamReader(new SequenceInputStream(prescript, file))
     cs <- JavascriptEngine.compile(fullScript)
     js <- JavascriptEngine.eval(cs)
