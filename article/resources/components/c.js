@@ -1,4 +1,98 @@
-var frontend =
+var global = this;
+var self = this;
+var window = this;
+var process = {env: {}};
+var console = {};
+
+Object.assign = function (t) {
+  for (var s, i = 1, n = arguments.length; i < n; i++) {
+    s = arguments[i];
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+      t[p] = s[p];
+  }
+  return t;
+};
+
+(function consoleInit(context) {
+  var logger = context.__NASHORN_LOGGER__ || {
+      debug: print,
+      warn: print,
+      info: print,
+      error: print,
+      trace: print
+    };
+
+  console.debug = function(args){ logger.debug(args); };
+  console.warn = function(args){ logger.warn(args);};
+  console.log = function(args){ logger.info(args);};
+  console.error = function(args){ logger.error(args);};
+  console.trace = function(args){ logger.trace(args);};
+})(this);
+/*
+ Source is originated from https://github.com/morungos/java-xmlhttprequest
+
+ Articles about Nashorn:
+ - https://blog.codecentric.de/en/2014/06/project-nashorn-javascript-jvm-polyglott/
+
+ How it work:
+  in https://github.com/morungos/java-xmlhttprequest, it uses Timer to run setTimeout and setInterval task,
+  but they are run in a separate thread of the Timer creates that is different with the main JavaScript thread.
+
+  This implementation uses ScheduledExecutorService instead of Timer so the threads for task scheduling can be
+  reused instead of each JavasScript thread create a Timer thread when using Timer.
+
+  And most important thing is this adds global.nashornEventLoop and scheduled tasks only add function callback
+  object in eventLoop (ArrayQueue), and it is main JavaScript thread to run these function callback by calling
+  `global.nashornEventLoop.process();` at the end of JavaScript Application. It is just like browser or NodeJS
+  that event loop is called when the main stack is cleared.
+
+  When runs on server with Promise, remember to call `nashornEventLoop.process()` when waiting for Promise by
+  Thread.sleep(), and call `nashornEventLoop.reset()` if server thread (e.g. Servlet thread) decides to be
+  timeout so that eventLoop will be clean for next request.
+ */
+(function nashornEventLoopMain(context) {
+  'use strict';
+  var Runnable = Java.type("java.lang.Runnable");
+  var eventLoop = context.__NASHORN_EVENT_LOOP__;
+  var asRunnable = function (fn, args) {
+    return new (Java.extend(Runnable, {
+      run: function() {
+        try {
+          fn.apply(context, args);
+        } catch (e) {
+          console.trace(e);
+          console.trace(fn);
+          console.trace(args);
+        }
+      },
+      toString: function() {
+        return JSON.stringify({args: args, fn: fn.toString()});
+      }
+    }))();
+  };
+  context.setTimeout = function(fn, millis) {
+    var args = [].slice.call(arguments, 2, arguments.length);
+    return eventLoop.setTimeout(asRunnable(fn, args), millis);
+  };
+  context.clearTimeout = function(timerId) {
+    eventLoop.clearTimeout(timerId);
+  };
+  context.setImmediate = function(fn) {
+    var args = [].slice.call(arguments, 1, arguments.length);
+    return eventLoop.setImmediate(asRunnable(fn, args));
+  };
+  context.clearImmediate = function(timerId) {
+    eventLoop.clearImmediate(timerId);
+  };
+  context.setInterval = function (fn, delay) {
+    var args = [].slice.call(arguments, 2, arguments.length);
+    return eventLoop.setInterval(asRunnable(fn, args), delay);
+  };
+  context.clearInterval = function(timerId) {
+    eventLoop.clearInterval(timerId);
+  };
+})(typeof global !== "undefined" && global || typeof self !== "undefined" && self || this);
+this["frontend"] =
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -61,45 +155,11 @@ var frontend =
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 30);
+/******/ 	return __webpack_require__(__webpack_require__.s = 8);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_lib_h_jsx__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_styletron_preact__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_styletron_preact___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_styletron_preact__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_preact__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_preact___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_preact__);
-
-
-function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
-
-/* eslint-disable camelcase */
-
-// bespoke wrapper around preact's `h` that passes any CSS data
-// on `attributes.style` to styletron, then hands off to `preact#h`
-
-
-
-
-/* harmony default export */ __webpack_exports__["a"] = (function (nodeName, attributes) {
-    for (var _len = arguments.length, children = Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
-        children[_key - 2] = arguments[_key];
-    }
-
-    var _ref = attributes || {},
-        style = _ref.style,
-        otherAttributes = _objectWithoutProperties(_ref, ['style']);
-
-    return __WEBPACK_IMPORTED_MODULE_2_preact__["h"](__WEBPACK_IMPORTED_MODULE_1_styletron_preact__["styled"](nodeName, style), otherAttributes, children);
-});
-
-/***/ }),
-/* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -125,412 +185,984 @@ exports.default = function (property, value) {
 module.exports = exports['default'];
 
 /***/ }),
-/* 2 */
-/***/ (function(module, exports, __webpack_require__) {
+/* 1 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-!function() {
-    'use strict';
-    function VNode() {}
-    function h(nodeName, attributes) {
-        var lastSimple, child, simple, i, children = EMPTY_CHILDREN;
-        for (i = arguments.length; i-- > 2; ) stack.push(arguments[i]);
-        if (attributes && null != attributes.children) {
-            if (!stack.length) stack.push(attributes.children);
-            delete attributes.children;
-        }
-        while (stack.length) if ((child = stack.pop()) && void 0 !== child.pop) for (i = child.length; i--; ) stack.push(child[i]); else {
-            if (child === !0 || child === !1) child = null;
-            if (simple = 'function' != typeof nodeName) if (null == child) child = ''; else if ('number' == typeof child) child = String(child); else if ('string' != typeof child) simple = !1;
-            if (simple && lastSimple) children[children.length - 1] += child; else if (children === EMPTY_CHILDREN) children = [ child ]; else children.push(child);
-            lastSimple = simple;
-        }
-        var p = new VNode();
-        p.nodeName = nodeName;
-        p.children = children;
-        p.attributes = null == attributes ? void 0 : attributes;
-        p.key = null == attributes ? void 0 : attributes.key;
-        if (void 0 !== options.vnode) options.vnode(p);
-        return p;
-    }
-    function extend(obj, props) {
-        for (var i in props) obj[i] = props[i];
-        return obj;
-    }
-    function cloneElement(vnode, props) {
-        return h(vnode.nodeName, extend(extend({}, vnode.attributes), props), arguments.length > 2 ? [].slice.call(arguments, 2) : vnode.children);
-    }
-    function enqueueRender(component) {
-        if (!component.__d && (component.__d = !0) && 1 == items.push(component)) (options.debounceRendering || setTimeout)(rerender);
-    }
-    function rerender() {
-        var p, list = items;
-        items = [];
-        while (p = list.pop()) if (p.__d) renderComponent(p);
-    }
-    function isSameNodeType(node, vnode, hydrating) {
-        if ('string' == typeof vnode || 'number' == typeof vnode) return void 0 !== node.splitText;
-        if ('string' == typeof vnode.nodeName) return !node._componentConstructor && isNamedNode(node, vnode.nodeName); else return hydrating || node._componentConstructor === vnode.nodeName;
-    }
-    function isNamedNode(node, nodeName) {
-        return node.__n === nodeName || node.nodeName.toLowerCase() === nodeName.toLowerCase();
-    }
-    function getNodeProps(vnode) {
-        var props = extend({}, vnode.attributes);
-        props.children = vnode.children;
-        var defaultProps = vnode.nodeName.defaultProps;
-        if (void 0 !== defaultProps) for (var i in defaultProps) if (void 0 === props[i]) props[i] = defaultProps[i];
-        return props;
-    }
-    function createNode(nodeName, isSvg) {
-        var node = isSvg ? document.createElementNS('http://www.w3.org/2000/svg', nodeName) : document.createElement(nodeName);
-        node.__n = nodeName;
-        return node;
-    }
-    function removeNode(node) {
-        if (node.parentNode) node.parentNode.removeChild(node);
-    }
-    function setAccessor(node, name, old, value, isSvg) {
-        if ('className' === name) name = 'class';
-        if ('key' === name) ; else if ('ref' === name) {
-            if (old) old(null);
-            if (value) value(node);
-        } else if ('class' === name && !isSvg) node.className = value || ''; else if ('style' === name) {
-            if (!value || 'string' == typeof value || 'string' == typeof old) node.style.cssText = value || '';
-            if (value && 'object' == typeof value) {
-                if ('string' != typeof old) for (var i in old) if (!(i in value)) node.style[i] = '';
-                for (var i in value) node.style[i] = 'number' == typeof value[i] && IS_NON_DIMENSIONAL.test(i) === !1 ? value[i] + 'px' : value[i];
-            }
-        } else if ('dangerouslySetInnerHTML' === name) {
-            if (value) node.innerHTML = value.__html || '';
-        } else if ('o' == name[0] && 'n' == name[1]) {
-            var useCapture = name !== (name = name.replace(/Capture$/, ''));
-            name = name.toLowerCase().substring(2);
-            if (value) {
-                if (!old) node.addEventListener(name, eventProxy, useCapture);
-            } else node.removeEventListener(name, eventProxy, useCapture);
-            (node.__l || (node.__l = {}))[name] = value;
-        } else if ('list' !== name && 'type' !== name && !isSvg && name in node) {
-            setProperty(node, name, null == value ? '' : value);
-            if (null == value || value === !1) node.removeAttribute(name);
-        } else {
-            var ns = isSvg && name !== (name = name.replace(/^xlink\:?/, ''));
-            if (null == value || value === !1) if (ns) node.removeAttributeNS('http://www.w3.org/1999/xlink', name.toLowerCase()); else node.removeAttribute(name); else if ('function' != typeof value) if (ns) node.setAttributeNS('http://www.w3.org/1999/xlink', name.toLowerCase(), value); else node.setAttribute(name, value);
-        }
-    }
-    function setProperty(node, name, value) {
-        try {
-            node[name] = value;
-        } catch (e) {}
-    }
-    function eventProxy(e) {
-        return this.__l[e.type](options.event && options.event(e) || e);
-    }
-    function flushMounts() {
-        var c;
-        while (c = mounts.pop()) {
-            if (options.afterMount) options.afterMount(c);
-            if (c.componentDidMount) c.componentDidMount();
-        }
-    }
-    function diff(dom, vnode, context, mountAll, parent, componentRoot) {
-        if (!diffLevel++) {
-            isSvgMode = null != parent && void 0 !== parent.ownerSVGElement;
-            hydrating = null != dom && !('__preactattr_' in dom);
-        }
-        var ret = idiff(dom, vnode, context, mountAll, componentRoot);
-        if (parent && ret.parentNode !== parent) parent.appendChild(ret);
-        if (!--diffLevel) {
-            hydrating = !1;
-            if (!componentRoot) flushMounts();
-        }
-        return ret;
-    }
-    function idiff(dom, vnode, context, mountAll, componentRoot) {
-        var out = dom, prevSvgMode = isSvgMode;
-        if (null == vnode) vnode = '';
-        if ('string' == typeof vnode) {
-            if (dom && void 0 !== dom.splitText && dom.parentNode && (!dom._component || componentRoot)) {
-                if (dom.nodeValue != vnode) dom.nodeValue = vnode;
-            } else {
-                out = document.createTextNode(vnode);
-                if (dom) {
-                    if (dom.parentNode) dom.parentNode.replaceChild(out, dom);
-                    recollectNodeTree(dom, !0);
-                }
-            }
-            out.__preactattr_ = !0;
-            return out;
-        }
-        if ('function' == typeof vnode.nodeName) return buildComponentFromVNode(dom, vnode, context, mountAll);
-        isSvgMode = 'svg' === vnode.nodeName ? !0 : 'foreignObject' === vnode.nodeName ? !1 : isSvgMode;
-        if (!dom || !isNamedNode(dom, String(vnode.nodeName))) {
-            out = createNode(String(vnode.nodeName), isSvgMode);
-            if (dom) {
-                while (dom.firstChild) out.appendChild(dom.firstChild);
-                if (dom.parentNode) dom.parentNode.replaceChild(out, dom);
-                recollectNodeTree(dom, !0);
-            }
-        }
-        var fc = out.firstChild, props = out.__preactattr_ || (out.__preactattr_ = {}), vchildren = vnode.children;
-        if (!hydrating && vchildren && 1 === vchildren.length && 'string' == typeof vchildren[0] && null != fc && void 0 !== fc.splitText && null == fc.nextSibling) {
-            if (fc.nodeValue != vchildren[0]) fc.nodeValue = vchildren[0];
-        } else if (vchildren && vchildren.length || null != fc) innerDiffNode(out, vchildren, context, mountAll, hydrating || null != props.dangerouslySetInnerHTML);
-        diffAttributes(out, vnode.attributes, props);
-        isSvgMode = prevSvgMode;
-        return out;
-    }
-    function innerDiffNode(dom, vchildren, context, mountAll, isHydrating) {
-        var j, c, vchild, child, originalChildren = dom.childNodes, children = [], keyed = {}, keyedLen = 0, min = 0, len = originalChildren.length, childrenLen = 0, vlen = vchildren ? vchildren.length : 0;
-        if (0 !== len) for (var i = 0; i < len; i++) {
-            var _child = originalChildren[i], props = _child.__preactattr_, key = vlen && props ? _child._component ? _child._component.__k : props.key : null;
-            if (null != key) {
-                keyedLen++;
-                keyed[key] = _child;
-            } else if (props || (void 0 !== _child.splitText ? isHydrating ? _child.nodeValue.trim() : !0 : isHydrating)) children[childrenLen++] = _child;
-        }
-        if (0 !== vlen) for (var i = 0; i < vlen; i++) {
-            vchild = vchildren[i];
-            child = null;
-            var key = vchild.key;
-            if (null != key) {
-                if (keyedLen && void 0 !== keyed[key]) {
-                    child = keyed[key];
-                    keyed[key] = void 0;
-                    keyedLen--;
-                }
-            } else if (!child && min < childrenLen) for (j = min; j < childrenLen; j++) if (void 0 !== children[j] && isSameNodeType(c = children[j], vchild, isHydrating)) {
-                child = c;
-                children[j] = void 0;
-                if (j === childrenLen - 1) childrenLen--;
-                if (j === min) min++;
-                break;
-            }
-            child = idiff(child, vchild, context, mountAll);
-            if (child && child !== dom) if (i >= len) dom.appendChild(child); else if (child !== originalChildren[i]) if (child === originalChildren[i + 1]) removeNode(originalChildren[i]); else dom.insertBefore(child, originalChildren[i] || null);
-        }
-        if (keyedLen) for (var i in keyed) if (void 0 !== keyed[i]) recollectNodeTree(keyed[i], !1);
-        while (min <= childrenLen) if (void 0 !== (child = children[childrenLen--])) recollectNodeTree(child, !1);
-    }
-    function recollectNodeTree(node, unmountOnly) {
-        var component = node._component;
-        if (component) unmountComponent(component); else {
-            if (null != node.__preactattr_ && node.__preactattr_.ref) node.__preactattr_.ref(null);
-            if (unmountOnly === !1 || null == node.__preactattr_) removeNode(node);
-            removeChildren(node);
-        }
-    }
-    function removeChildren(node) {
-        node = node.lastChild;
-        while (node) {
-            var next = node.previousSibling;
-            recollectNodeTree(node, !0);
-            node = next;
-        }
-    }
-    function diffAttributes(dom, attrs, old) {
-        var name;
-        for (name in old) if ((!attrs || null == attrs[name]) && null != old[name]) setAccessor(dom, name, old[name], old[name] = void 0, isSvgMode);
-        for (name in attrs) if (!('children' === name || 'innerHTML' === name || name in old && attrs[name] === ('value' === name || 'checked' === name ? dom[name] : old[name]))) setAccessor(dom, name, old[name], old[name] = attrs[name], isSvgMode);
-    }
-    function collectComponent(component) {
-        var name = component.constructor.name;
-        (components[name] || (components[name] = [])).push(component);
-    }
-    function createComponent(Ctor, props, context) {
-        var inst, list = components[Ctor.name];
-        if (Ctor.prototype && Ctor.prototype.render) {
-            inst = new Ctor(props, context);
-            Component.call(inst, props, context);
-        } else {
-            inst = new Component(props, context);
-            inst.constructor = Ctor;
-            inst.render = doRender;
-        }
-        if (list) for (var i = list.length; i--; ) if (list[i].constructor === Ctor) {
-            inst.__b = list[i].__b;
-            list.splice(i, 1);
-            break;
-        }
-        return inst;
-    }
-    function doRender(props, state, context) {
-        return this.constructor(props, context);
-    }
-    function setComponentProps(component, props, opts, context, mountAll) {
-        if (!component.__x) {
-            component.__x = !0;
-            if (component.__r = props.ref) delete props.ref;
-            if (component.__k = props.key) delete props.key;
-            if (!component.base || mountAll) {
-                if (component.componentWillMount) component.componentWillMount();
-            } else if (component.componentWillReceiveProps) component.componentWillReceiveProps(props, context);
-            if (context && context !== component.context) {
-                if (!component.__c) component.__c = component.context;
-                component.context = context;
-            }
-            if (!component.__p) component.__p = component.props;
-            component.props = props;
-            component.__x = !1;
-            if (0 !== opts) if (1 === opts || options.syncComponentUpdates !== !1 || !component.base) renderComponent(component, 1, mountAll); else enqueueRender(component);
-            if (component.__r) component.__r(component);
-        }
-    }
-    function renderComponent(component, opts, mountAll, isChild) {
-        if (!component.__x) {
-            var rendered, inst, cbase, props = component.props, state = component.state, context = component.context, previousProps = component.__p || props, previousState = component.__s || state, previousContext = component.__c || context, isUpdate = component.base, nextBase = component.__b, initialBase = isUpdate || nextBase, initialChildComponent = component._component, skip = !1;
-            if (isUpdate) {
-                component.props = previousProps;
-                component.state = previousState;
-                component.context = previousContext;
-                if (2 !== opts && component.shouldComponentUpdate && component.shouldComponentUpdate(props, state, context) === !1) skip = !0; else if (component.componentWillUpdate) component.componentWillUpdate(props, state, context);
-                component.props = props;
-                component.state = state;
-                component.context = context;
-            }
-            component.__p = component.__s = component.__c = component.__b = null;
-            component.__d = !1;
-            if (!skip) {
-                rendered = component.render(props, state, context);
-                if (component.getChildContext) context = extend(extend({}, context), component.getChildContext());
-                var toUnmount, base, childComponent = rendered && rendered.nodeName;
-                if ('function' == typeof childComponent) {
-                    var childProps = getNodeProps(rendered);
-                    inst = initialChildComponent;
-                    if (inst && inst.constructor === childComponent && childProps.key == inst.__k) setComponentProps(inst, childProps, 1, context, !1); else {
-                        toUnmount = inst;
-                        component._component = inst = createComponent(childComponent, childProps, context);
-                        inst.__b = inst.__b || nextBase;
-                        inst.__u = component;
-                        setComponentProps(inst, childProps, 0, context, !1);
-                        renderComponent(inst, 1, mountAll, !0);
-                    }
-                    base = inst.base;
-                } else {
-                    cbase = initialBase;
-                    toUnmount = initialChildComponent;
-                    if (toUnmount) cbase = component._component = null;
-                    if (initialBase || 1 === opts) {
-                        if (cbase) cbase._component = null;
-                        base = diff(cbase, rendered, context, mountAll || !isUpdate, initialBase && initialBase.parentNode, !0);
-                    }
-                }
-                if (initialBase && base !== initialBase && inst !== initialChildComponent) {
-                    var baseParent = initialBase.parentNode;
-                    if (baseParent && base !== baseParent) {
-                        baseParent.replaceChild(base, initialBase);
-                        if (!toUnmount) {
-                            initialBase._component = null;
-                            recollectNodeTree(initialBase, !1);
-                        }
-                    }
-                }
-                if (toUnmount) unmountComponent(toUnmount);
-                component.base = base;
-                if (base && !isChild) {
-                    var componentRef = component, t = component;
-                    while (t = t.__u) (componentRef = t).base = base;
-                    base._component = componentRef;
-                    base._componentConstructor = componentRef.constructor;
-                }
-            }
-            if (!isUpdate || mountAll) mounts.unshift(component); else if (!skip) {
-                flushMounts();
-                if (component.componentDidUpdate) component.componentDidUpdate(previousProps, previousState, previousContext);
-                if (options.afterUpdate) options.afterUpdate(component);
-            }
-            if (null != component.__h) while (component.__h.length) component.__h.pop().call(component);
-            if (!diffLevel && !isChild) flushMounts();
-        }
-    }
-    function buildComponentFromVNode(dom, vnode, context, mountAll) {
-        var c = dom && dom._component, originalComponent = c, oldDom = dom, isDirectOwner = c && dom._componentConstructor === vnode.nodeName, isOwner = isDirectOwner, props = getNodeProps(vnode);
-        while (c && !isOwner && (c = c.__u)) isOwner = c.constructor === vnode.nodeName;
-        if (c && isOwner && (!mountAll || c._component)) {
-            setComponentProps(c, props, 3, context, mountAll);
-            dom = c.base;
-        } else {
-            if (originalComponent && !isDirectOwner) {
-                unmountComponent(originalComponent);
-                dom = oldDom = null;
-            }
-            c = createComponent(vnode.nodeName, props, context);
-            if (dom && !c.__b) {
-                c.__b = dom;
-                oldDom = null;
-            }
-            setComponentProps(c, props, 1, context, mountAll);
-            dom = c.base;
-            if (oldDom && dom !== oldDom) {
-                oldDom._component = null;
-                recollectNodeTree(oldDom, !1);
-            }
-        }
-        return dom;
-    }
-    function unmountComponent(component) {
-        if (options.beforeUnmount) options.beforeUnmount(component);
-        var base = component.base;
-        component.__x = !0;
-        if (component.componentWillUnmount) component.componentWillUnmount();
-        component.base = null;
-        var inner = component._component;
-        if (inner) unmountComponent(inner); else if (base) {
-            if (base.__preactattr_ && base.__preactattr_.ref) base.__preactattr_.ref(null);
-            component.__b = base;
-            removeNode(base);
-            collectComponent(component);
-            removeChildren(base);
-        }
-        if (component.__r) component.__r(null);
-    }
-    function Component(props, context) {
-        this.__d = !0;
-        this.context = context;
-        this.props = props;
-        this.state = this.state || {};
-    }
-    function render(vnode, parent, merge) {
-        return diff(merge, vnode, {}, !1, parent, !1);
-    }
-    var options = {};
-    var stack = [];
-    var EMPTY_CHILDREN = [];
-    var IS_NON_DIMENSIONAL = /acit|ex(?:s|g|n|p|$)|rph|ows|mnc|ntw|ine[ch]|zoo|^ord/i;
-    var items = [];
-    var mounts = [];
-    var diffLevel = 0;
-    var isSvgMode = !1;
-    var hydrating = !1;
-    var components = {};
-    extend(Component.prototype, {
-        setState: function(state, callback) {
-            var s = this.state;
-            if (!this.__s) this.__s = extend({}, s);
-            extend(s, 'function' == typeof state ? state(s, this.props) : state);
-            if (callback) (this.__h = this.__h || []).push(callback);
-            enqueueRender(this);
-        },
-        forceUpdate: function(callback) {
-            if (callback) (this.__h = this.__h || []).push(callback);
-            renderComponent(this, 2);
-        },
-        render: function() {}
-    });
-    var preact = {
-        h: h,
-        createElement: h,
-        cloneElement: cloneElement,
-        Component: Component,
-        render: render,
-        rerender: rerender,
-        options: options
-    };
-    if (true) module.exports = preact; else self.preact = preact;
-}();
-//# sourceMappingURL=preact.js.map
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return h; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createElement", function() { return h; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "cloneElement", function() { return cloneElement; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Component", function() { return Component; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "rerender", function() { return rerender; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "options", function() { return options; });
+/** Virtual DOM Node */
+function VNode() {}
+
+/** Global options
+ *	@public
+ *	@namespace options {Object}
+ */
+var options = {
+
+	/** If `true`, `prop` changes trigger synchronous component updates.
+  *	@name syncComponentUpdates
+  *	@type Boolean
+  *	@default true
+  */
+	//syncComponentUpdates: true,
+
+	/** Processes all created VNodes.
+  *	@param {VNode} vnode	A newly-created VNode to normalize/process
+  */
+	//vnode(vnode) { }
+
+	/** Hook invoked after a component is mounted. */
+	// afterMount(component) { }
+
+	/** Hook invoked after the DOM is updated with a component's latest render. */
+	// afterUpdate(component) { }
+
+	/** Hook invoked immediately before a component is unmounted. */
+	// beforeUnmount(component) { }
+};
+
+var stack = [];
+
+var EMPTY_CHILDREN = [];
+
+/** JSX/hyperscript reviver
+*	Benchmarks: https://esbench.com/bench/57ee8f8e330ab09900a1a1a0
+ *	@see http://jasonformat.com/wtf-is-jsx
+ *	@public
+ */
+function h(nodeName, attributes) {
+	var children = EMPTY_CHILDREN,
+	    lastSimple,
+	    child,
+	    simple,
+	    i;
+	for (i = arguments.length; i-- > 2;) {
+		stack.push(arguments[i]);
+	}
+	if (attributes && attributes.children != null) {
+		if (!stack.length) stack.push(attributes.children);
+		delete attributes.children;
+	}
+	while (stack.length) {
+		if ((child = stack.pop()) && child.pop !== undefined) {
+			for (i = child.length; i--;) {
+				stack.push(child[i]);
+			}
+		} else {
+			if (typeof child === 'boolean') child = null;
+
+			if (simple = typeof nodeName !== 'function') {
+				if (child == null) child = '';else if (typeof child === 'number') child = String(child);else if (typeof child !== 'string') simple = false;
+			}
+
+			if (simple && lastSimple) {
+				children[children.length - 1] += child;
+			} else if (children === EMPTY_CHILDREN) {
+				children = [child];
+			} else {
+				children.push(child);
+			}
+
+			lastSimple = simple;
+		}
+	}
+
+	var p = new VNode();
+	p.nodeName = nodeName;
+	p.children = children;
+	p.attributes = attributes == null ? undefined : attributes;
+	p.key = attributes == null ? undefined : attributes.key;
+
+	// if a "vnode hook" is defined, pass every created VNode to it
+	if (options.vnode !== undefined) options.vnode(p);
+
+	return p;
+}
+
+/** Copy own-properties from `props` onto `obj`.
+ *	@returns obj
+ *	@private
+ */
+function extend(obj, props) {
+  for (var i in props) {
+    obj[i] = props[i];
+  }return obj;
+}
+
+/** Call a function asynchronously, as soon as possible.
+ *	@param {Function} callback
+ */
+var defer = typeof Promise == 'function' ? Promise.resolve().then.bind(Promise.resolve()) : setTimeout;
+
+function cloneElement(vnode, props) {
+	return h(vnode.nodeName, extend(extend({}, vnode.attributes), props), arguments.length > 2 ? [].slice.call(arguments, 2) : vnode.children);
+}
+
+// DOM properties that should NOT have "px" added when numeric
+var IS_NON_DIMENSIONAL = /acit|ex(?:s|g|n|p|$)|rph|ows|mnc|ntw|ine[ch]|zoo|^ord/i;
+
+/** Managed queue of dirty components to be re-rendered */
+
+var items = [];
+
+function enqueueRender(component) {
+	if (!component._dirty && (component._dirty = true) && items.push(component) == 1) {
+		(options.debounceRendering || defer)(rerender);
+	}
+}
+
+function rerender() {
+	var p,
+	    list = items;
+	items = [];
+	while (p = list.pop()) {
+		if (p._dirty) renderComponent(p);
+	}
+}
+
+/** Check if two nodes are equivalent.
+ *	@param {Element} node
+ *	@param {VNode} vnode
+ *	@private
+ */
+function isSameNodeType(node, vnode, hydrating) {
+	if (typeof vnode === 'string' || typeof vnode === 'number') {
+		return node.splitText !== undefined;
+	}
+	if (typeof vnode.nodeName === 'string') {
+		return !node._componentConstructor && isNamedNode(node, vnode.nodeName);
+	}
+	return hydrating || node._componentConstructor === vnode.nodeName;
+}
+
+/** Check if an Element has a given normalized name.
+*	@param {Element} node
+*	@param {String} nodeName
+ */
+function isNamedNode(node, nodeName) {
+	return node.normalizedNodeName === nodeName || node.nodeName.toLowerCase() === nodeName.toLowerCase();
+}
+
+/**
+ * Reconstruct Component-style `props` from a VNode.
+ * Ensures default/fallback values from `defaultProps`:
+ * Own-properties of `defaultProps` not present in `vnode.attributes` are added.
+ * @param {VNode} vnode
+ * @returns {Object} props
+ */
+function getNodeProps(vnode) {
+	var props = extend({}, vnode.attributes);
+	props.children = vnode.children;
+
+	var defaultProps = vnode.nodeName.defaultProps;
+	if (defaultProps !== undefined) {
+		for (var i in defaultProps) {
+			if (props[i] === undefined) {
+				props[i] = defaultProps[i];
+			}
+		}
+	}
+
+	return props;
+}
+
+/** Create an element with the given nodeName.
+ *	@param {String} nodeName
+ *	@param {Boolean} [isSvg=false]	If `true`, creates an element within the SVG namespace.
+ *	@returns {Element} node
+ */
+function createNode(nodeName, isSvg) {
+	var node = isSvg ? document.createElementNS('http://www.w3.org/2000/svg', nodeName) : document.createElement(nodeName);
+	node.normalizedNodeName = nodeName;
+	return node;
+}
+
+/** Remove a child node from its parent if attached.
+ *	@param {Element} node		The node to remove
+ */
+function removeNode(node) {
+	var parentNode = node.parentNode;
+	if (parentNode) parentNode.removeChild(node);
+}
+
+/** Set a named attribute on the given Node, with special behavior for some names and event handlers.
+ *	If `value` is `null`, the attribute/handler will be removed.
+ *	@param {Element} node	An element to mutate
+ *	@param {string} name	The name/key to set, such as an event or attribute name
+ *	@param {any} old	The last value that was set for this name/node pair
+ *	@param {any} value	An attribute value, such as a function to be used as an event handler
+ *	@param {Boolean} isSvg	Are we currently diffing inside an svg?
+ *	@private
+ */
+function setAccessor(node, name, old, value, isSvg) {
+	if (name === 'className') name = 'class';
+
+	if (name === 'key') {
+		// ignore
+	} else if (name === 'ref') {
+		if (old) old(null);
+		if (value) value(node);
+	} else if (name === 'class' && !isSvg) {
+		node.className = value || '';
+	} else if (name === 'style') {
+		if (!value || typeof value === 'string' || typeof old === 'string') {
+			node.style.cssText = value || '';
+		}
+		if (value && typeof value === 'object') {
+			if (typeof old !== 'string') {
+				for (var i in old) {
+					if (!(i in value)) node.style[i] = '';
+				}
+			}
+			for (var i in value) {
+				node.style[i] = typeof value[i] === 'number' && IS_NON_DIMENSIONAL.test(i) === false ? value[i] + 'px' : value[i];
+			}
+		}
+	} else if (name === 'dangerouslySetInnerHTML') {
+		if (value) node.innerHTML = value.__html || '';
+	} else if (name[0] == 'o' && name[1] == 'n') {
+		var useCapture = name !== (name = name.replace(/Capture$/, ''));
+		name = name.toLowerCase().substring(2);
+		if (value) {
+			if (!old) node.addEventListener(name, eventProxy, useCapture);
+		} else {
+			node.removeEventListener(name, eventProxy, useCapture);
+		}
+		(node._listeners || (node._listeners = {}))[name] = value;
+	} else if (name !== 'list' && name !== 'type' && !isSvg && name in node) {
+		setProperty(node, name, value == null ? '' : value);
+		if (value == null || value === false) node.removeAttribute(name);
+	} else {
+		var ns = isSvg && name !== (name = name.replace(/^xlink\:?/, ''));
+		if (value == null || value === false) {
+			if (ns) node.removeAttributeNS('http://www.w3.org/1999/xlink', name.toLowerCase());else node.removeAttribute(name);
+		} else if (typeof value !== 'function') {
+			if (ns) node.setAttributeNS('http://www.w3.org/1999/xlink', name.toLowerCase(), value);else node.setAttribute(name, value);
+		}
+	}
+}
+
+/** Attempt to set a DOM property to the given value.
+ *	IE & FF throw for certain property-value combinations.
+ */
+function setProperty(node, name, value) {
+	try {
+		node[name] = value;
+	} catch (e) {}
+}
+
+/** Proxy an event to hooked event handlers
+ *	@private
+ */
+function eventProxy(e) {
+	return this._listeners[e.type](options.event && options.event(e) || e);
+}
+
+/** Queue of components that have been mounted and are awaiting componentDidMount */
+var mounts = [];
+
+/** Diff recursion count, used to track the end of the diff cycle. */
+var diffLevel = 0;
+
+/** Global flag indicating if the diff is currently within an SVG */
+var isSvgMode = false;
+
+/** Global flag indicating if the diff is performing hydration */
+var hydrating = false;
+
+/** Invoke queued componentDidMount lifecycle methods */
+function flushMounts() {
+	var c;
+	while (c = mounts.pop()) {
+		if (options.afterMount) options.afterMount(c);
+		if (c.componentDidMount) c.componentDidMount();
+	}
+}
+
+/** Apply differences in a given vnode (and it's deep children) to a real DOM Node.
+ *	@param {Element} [dom=null]		A DOM node to mutate into the shape of the `vnode`
+ *	@param {VNode} vnode			A VNode (with descendants forming a tree) representing the desired DOM structure
+ *	@returns {Element} dom			The created/mutated element
+ *	@private
+ */
+function diff(dom, vnode, context, mountAll, parent, componentRoot) {
+	// diffLevel having been 0 here indicates initial entry into the diff (not a subdiff)
+	if (!diffLevel++) {
+		// when first starting the diff, check if we're diffing an SVG or within an SVG
+		isSvgMode = parent != null && parent.ownerSVGElement !== undefined;
+
+		// hydration is indicated by the existing element to be diffed not having a prop cache
+		hydrating = dom != null && !('__preactattr_' in dom);
+	}
+
+	var ret = idiff(dom, vnode, context, mountAll, componentRoot);
+
+	// append the element if its a new parent
+	if (parent && ret.parentNode !== parent) parent.appendChild(ret);
+
+	// diffLevel being reduced to 0 means we're exiting the diff
+	if (! --diffLevel) {
+		hydrating = false;
+		// invoke queued componentDidMount lifecycle methods
+		if (!componentRoot) flushMounts();
+	}
+
+	return ret;
+}
+
+/** Internals of `diff()`, separated to allow bypassing diffLevel / mount flushing. */
+function idiff(dom, vnode, context, mountAll, componentRoot) {
+	var out = dom,
+	    prevSvgMode = isSvgMode;
+
+	// empty values (null, undefined, booleans) render as empty Text nodes
+	if (vnode == null || typeof vnode === 'boolean') vnode = '';
+
+	// Fast case: Strings & Numbers create/update Text nodes.
+	if (typeof vnode === 'string' || typeof vnode === 'number') {
+
+		// update if it's already a Text node:
+		if (dom && dom.splitText !== undefined && dom.parentNode && (!dom._component || componentRoot)) {
+			/* istanbul ignore if */ /* Browser quirk that can't be covered: https://github.com/developit/preact/commit/fd4f21f5c45dfd75151bd27b4c217d8003aa5eb9 */
+			if (dom.nodeValue != vnode) {
+				dom.nodeValue = vnode;
+			}
+		} else {
+			// it wasn't a Text node: replace it with one and recycle the old Element
+			out = document.createTextNode(vnode);
+			if (dom) {
+				if (dom.parentNode) dom.parentNode.replaceChild(out, dom);
+				recollectNodeTree(dom, true);
+			}
+		}
+
+		out['__preactattr_'] = true;
+
+		return out;
+	}
+
+	// If the VNode represents a Component, perform a component diff:
+	var vnodeName = vnode.nodeName;
+	if (typeof vnodeName === 'function') {
+		return buildComponentFromVNode(dom, vnode, context, mountAll);
+	}
+
+	// Tracks entering and exiting SVG namespace when descending through the tree.
+	isSvgMode = vnodeName === 'svg' ? true : vnodeName === 'foreignObject' ? false : isSvgMode;
+
+	// If there's no existing element or it's the wrong type, create a new one:
+	vnodeName = String(vnodeName);
+	if (!dom || !isNamedNode(dom, vnodeName)) {
+		out = createNode(vnodeName, isSvgMode);
+
+		if (dom) {
+			// move children into the replacement node
+			while (dom.firstChild) {
+				out.appendChild(dom.firstChild);
+			} // if the previous Element was mounted into the DOM, replace it inline
+			if (dom.parentNode) dom.parentNode.replaceChild(out, dom);
+
+			// recycle the old element (skips non-Element node types)
+			recollectNodeTree(dom, true);
+		}
+	}
+
+	var fc = out.firstChild,
+	    props = out['__preactattr_'],
+	    vchildren = vnode.children;
+
+	if (props == null) {
+		props = out['__preactattr_'] = {};
+		for (var a = out.attributes, i = a.length; i--;) {
+			props[a[i].name] = a[i].value;
+		}
+	}
+
+	// Optimization: fast-path for elements containing a single TextNode:
+	if (!hydrating && vchildren && vchildren.length === 1 && typeof vchildren[0] === 'string' && fc != null && fc.splitText !== undefined && fc.nextSibling == null) {
+		if (fc.nodeValue != vchildren[0]) {
+			fc.nodeValue = vchildren[0];
+		}
+	}
+	// otherwise, if there are existing or new children, diff them:
+	else if (vchildren && vchildren.length || fc != null) {
+			innerDiffNode(out, vchildren, context, mountAll, hydrating || props.dangerouslySetInnerHTML != null);
+		}
+
+	// Apply attributes/props from VNode to the DOM Element:
+	diffAttributes(out, vnode.attributes, props);
+
+	// restore previous SVG mode: (in case we're exiting an SVG namespace)
+	isSvgMode = prevSvgMode;
+
+	return out;
+}
+
+/** Apply child and attribute changes between a VNode and a DOM Node to the DOM.
+ *	@param {Element} dom			Element whose children should be compared & mutated
+ *	@param {Array} vchildren		Array of VNodes to compare to `dom.childNodes`
+ *	@param {Object} context			Implicitly descendant context object (from most recent `getChildContext()`)
+ *	@param {Boolean} mountAll
+ *	@param {Boolean} isHydrating	If `true`, consumes externally created elements similar to hydration
+ */
+function innerDiffNode(dom, vchildren, context, mountAll, isHydrating) {
+	var originalChildren = dom.childNodes,
+	    children = [],
+	    keyed = {},
+	    keyedLen = 0,
+	    min = 0,
+	    len = originalChildren.length,
+	    childrenLen = 0,
+	    vlen = vchildren ? vchildren.length : 0,
+	    j,
+	    c,
+	    f,
+	    vchild,
+	    child;
+
+	// Build up a map of keyed children and an Array of unkeyed children:
+	if (len !== 0) {
+		for (var i = 0; i < len; i++) {
+			var _child = originalChildren[i],
+			    props = _child['__preactattr_'],
+			    key = vlen && props ? _child._component ? _child._component.__key : props.key : null;
+			if (key != null) {
+				keyedLen++;
+				keyed[key] = _child;
+			} else if (props || (_child.splitText !== undefined ? isHydrating ? _child.nodeValue.trim() : true : isHydrating)) {
+				children[childrenLen++] = _child;
+			}
+		}
+	}
+
+	if (vlen !== 0) {
+		for (var i = 0; i < vlen; i++) {
+			vchild = vchildren[i];
+			child = null;
+
+			// attempt to find a node based on key matching
+			var key = vchild.key;
+			if (key != null) {
+				if (keyedLen && keyed[key] !== undefined) {
+					child = keyed[key];
+					keyed[key] = undefined;
+					keyedLen--;
+				}
+			}
+			// attempt to pluck a node of the same type from the existing children
+			else if (!child && min < childrenLen) {
+					for (j = min; j < childrenLen; j++) {
+						if (children[j] !== undefined && isSameNodeType(c = children[j], vchild, isHydrating)) {
+							child = c;
+							children[j] = undefined;
+							if (j === childrenLen - 1) childrenLen--;
+							if (j === min) min++;
+							break;
+						}
+					}
+				}
+
+			// morph the matched/found/created DOM child to match vchild (deep)
+			child = idiff(child, vchild, context, mountAll);
+
+			f = originalChildren[i];
+			if (child && child !== dom && child !== f) {
+				if (f == null) {
+					dom.appendChild(child);
+				} else if (child === f.nextSibling) {
+					removeNode(f);
+				} else {
+					dom.insertBefore(child, f);
+				}
+			}
+		}
+	}
+
+	// remove unused keyed children:
+	if (keyedLen) {
+		for (var i in keyed) {
+			if (keyed[i] !== undefined) recollectNodeTree(keyed[i], false);
+		}
+	}
+
+	// remove orphaned unkeyed children:
+	while (min <= childrenLen) {
+		if ((child = children[childrenLen--]) !== undefined) recollectNodeTree(child, false);
+	}
+}
+
+/** Recursively recycle (or just unmount) a node an its descendants.
+ *	@param {Node} node						DOM node to start unmount/removal from
+ *	@param {Boolean} [unmountOnly=false]	If `true`, only triggers unmount lifecycle, skips removal
+ */
+function recollectNodeTree(node, unmountOnly) {
+	var component = node._component;
+	if (component) {
+		// if node is owned by a Component, unmount that component (ends up recursing back here)
+		unmountComponent(component);
+	} else {
+		// If the node's VNode had a ref function, invoke it with null here.
+		// (this is part of the React spec, and smart for unsetting references)
+		if (node['__preactattr_'] != null && node['__preactattr_'].ref) node['__preactattr_'].ref(null);
+
+		if (unmountOnly === false || node['__preactattr_'] == null) {
+			removeNode(node);
+		}
+
+		removeChildren(node);
+	}
+}
+
+/** Recollect/unmount all children.
+ *	- we use .lastChild here because it causes less reflow than .firstChild
+ *	- it's also cheaper than accessing the .childNodes Live NodeList
+ */
+function removeChildren(node) {
+	node = node.lastChild;
+	while (node) {
+		var next = node.previousSibling;
+		recollectNodeTree(node, true);
+		node = next;
+	}
+}
+
+/** Apply differences in attributes from a VNode to the given DOM Element.
+ *	@param {Element} dom		Element with attributes to diff `attrs` against
+ *	@param {Object} attrs		The desired end-state key-value attribute pairs
+ *	@param {Object} old			Current/previous attributes (from previous VNode or element's prop cache)
+ */
+function diffAttributes(dom, attrs, old) {
+	var name;
+
+	// remove attributes no longer present on the vnode by setting them to undefined
+	for (name in old) {
+		if (!(attrs && attrs[name] != null) && old[name] != null) {
+			setAccessor(dom, name, old[name], old[name] = undefined, isSvgMode);
+		}
+	}
+
+	// add new & update changed attributes
+	for (name in attrs) {
+		if (name !== 'children' && name !== 'innerHTML' && (!(name in old) || attrs[name] !== (name === 'value' || name === 'checked' ? dom[name] : old[name]))) {
+			setAccessor(dom, name, old[name], old[name] = attrs[name], isSvgMode);
+		}
+	}
+}
+
+/** Retains a pool of Components for re-use, keyed on component name.
+ *	Note: since component names are not unique or even necessarily available, these are primarily a form of sharding.
+ *	@private
+ */
+var components = {};
+
+/** Reclaim a component for later re-use by the recycler. */
+function collectComponent(component) {
+	var name = component.constructor.name;
+	(components[name] || (components[name] = [])).push(component);
+}
+
+/** Create a component. Normalizes differences between PFC's and classful Components. */
+function createComponent(Ctor, props, context) {
+	var list = components[Ctor.name],
+	    inst;
+
+	if (Ctor.prototype && Ctor.prototype.render) {
+		inst = new Ctor(props, context);
+		Component.call(inst, props, context);
+	} else {
+		inst = new Component(props, context);
+		inst.constructor = Ctor;
+		inst.render = doRender;
+	}
+
+	if (list) {
+		for (var i = list.length; i--;) {
+			if (list[i].constructor === Ctor) {
+				inst.nextBase = list[i].nextBase;
+				list.splice(i, 1);
+				break;
+			}
+		}
+	}
+	return inst;
+}
+
+/** The `.render()` method for a PFC backing instance. */
+function doRender(props, state, context) {
+	return this.constructor(props, context);
+}
+
+/** Set a component's `props` (generally derived from JSX attributes).
+ *	@param {Object} props
+ *	@param {Object} [opts]
+ *	@param {boolean} [opts.renderSync=false]	If `true` and {@link options.syncComponentUpdates} is `true`, triggers synchronous rendering.
+ *	@param {boolean} [opts.render=true]			If `false`, no render will be triggered.
+ */
+function setComponentProps(component, props, opts, context, mountAll) {
+	if (component._disable) return;
+	component._disable = true;
+
+	if (component.__ref = props.ref) delete props.ref;
+	if (component.__key = props.key) delete props.key;
+
+	if (!component.base || mountAll) {
+		if (component.componentWillMount) component.componentWillMount();
+	} else if (component.componentWillReceiveProps) {
+		component.componentWillReceiveProps(props, context);
+	}
+
+	if (context && context !== component.context) {
+		if (!component.prevContext) component.prevContext = component.context;
+		component.context = context;
+	}
+
+	if (!component.prevProps) component.prevProps = component.props;
+	component.props = props;
+
+	component._disable = false;
+
+	if (opts !== 0) {
+		if (opts === 1 || options.syncComponentUpdates !== false || !component.base) {
+			renderComponent(component, 1, mountAll);
+		} else {
+			enqueueRender(component);
+		}
+	}
+
+	if (component.__ref) component.__ref(component);
+}
+
+/** Render a Component, triggering necessary lifecycle events and taking High-Order Components into account.
+ *	@param {Component} component
+ *	@param {Object} [opts]
+ *	@param {boolean} [opts.build=false]		If `true`, component will build and store a DOM node if not already associated with one.
+ *	@private
+ */
+function renderComponent(component, opts, mountAll, isChild) {
+	if (component._disable) return;
+
+	var props = component.props,
+	    state = component.state,
+	    context = component.context,
+	    previousProps = component.prevProps || props,
+	    previousState = component.prevState || state,
+	    previousContext = component.prevContext || context,
+	    isUpdate = component.base,
+	    nextBase = component.nextBase,
+	    initialBase = isUpdate || nextBase,
+	    initialChildComponent = component._component,
+	    skip = false,
+	    rendered,
+	    inst,
+	    cbase;
+
+	// if updating
+	if (isUpdate) {
+		component.props = previousProps;
+		component.state = previousState;
+		component.context = previousContext;
+		if (opts !== 2 && component.shouldComponentUpdate && component.shouldComponentUpdate(props, state, context) === false) {
+			skip = true;
+		} else if (component.componentWillUpdate) {
+			component.componentWillUpdate(props, state, context);
+		}
+		component.props = props;
+		component.state = state;
+		component.context = context;
+	}
+
+	component.prevProps = component.prevState = component.prevContext = component.nextBase = null;
+	component._dirty = false;
+
+	if (!skip) {
+		rendered = component.render(props, state, context);
+
+		// context to pass to the child, can be updated via (grand-)parent component
+		if (component.getChildContext) {
+			context = extend(extend({}, context), component.getChildContext());
+		}
+
+		var childComponent = rendered && rendered.nodeName,
+		    toUnmount,
+		    base;
+
+		if (typeof childComponent === 'function') {
+			// set up high order component link
+
+			var childProps = getNodeProps(rendered);
+			inst = initialChildComponent;
+
+			if (inst && inst.constructor === childComponent && childProps.key == inst.__key) {
+				setComponentProps(inst, childProps, 1, context, false);
+			} else {
+				toUnmount = inst;
+
+				component._component = inst = createComponent(childComponent, childProps, context);
+				inst.nextBase = inst.nextBase || nextBase;
+				inst._parentComponent = component;
+				setComponentProps(inst, childProps, 0, context, false);
+				renderComponent(inst, 1, mountAll, true);
+			}
+
+			base = inst.base;
+		} else {
+			cbase = initialBase;
+
+			// destroy high order component link
+			toUnmount = initialChildComponent;
+			if (toUnmount) {
+				cbase = component._component = null;
+			}
+
+			if (initialBase || opts === 1) {
+				if (cbase) cbase._component = null;
+				base = diff(cbase, rendered, context, mountAll || !isUpdate, initialBase && initialBase.parentNode, true);
+			}
+		}
+
+		if (initialBase && base !== initialBase && inst !== initialChildComponent) {
+			var baseParent = initialBase.parentNode;
+			if (baseParent && base !== baseParent) {
+				baseParent.replaceChild(base, initialBase);
+
+				if (!toUnmount) {
+					initialBase._component = null;
+					recollectNodeTree(initialBase, false);
+				}
+			}
+		}
+
+		if (toUnmount) {
+			unmountComponent(toUnmount);
+		}
+
+		component.base = base;
+		if (base && !isChild) {
+			var componentRef = component,
+			    t = component;
+			while (t = t._parentComponent) {
+				(componentRef = t).base = base;
+			}
+			base._component = componentRef;
+			base._componentConstructor = componentRef.constructor;
+		}
+	}
+
+	if (!isUpdate || mountAll) {
+		mounts.unshift(component);
+	} else if (!skip) {
+		// Ensure that pending componentDidMount() hooks of child components
+		// are called before the componentDidUpdate() hook in the parent.
+		flushMounts();
+
+		if (component.componentDidUpdate) {
+			component.componentDidUpdate(previousProps, previousState, previousContext);
+		}
+		if (options.afterUpdate) options.afterUpdate(component);
+	}
+
+	if (component._renderCallbacks != null) {
+		while (component._renderCallbacks.length) {
+			component._renderCallbacks.pop().call(component);
+		}
+	}
+
+	if (!diffLevel && !isChild) flushMounts();
+}
+
+/** Apply the Component referenced by a VNode to the DOM.
+ *	@param {Element} dom	The DOM node to mutate
+ *	@param {VNode} vnode	A Component-referencing VNode
+ *	@returns {Element} dom	The created/mutated element
+ *	@private
+ */
+function buildComponentFromVNode(dom, vnode, context, mountAll) {
+	var c = dom && dom._component,
+	    originalComponent = c,
+	    oldDom = dom,
+	    isDirectOwner = c && dom._componentConstructor === vnode.nodeName,
+	    isOwner = isDirectOwner,
+	    props = getNodeProps(vnode);
+	while (c && !isOwner && (c = c._parentComponent)) {
+		isOwner = c.constructor === vnode.nodeName;
+	}
+
+	if (c && isOwner && (!mountAll || c._component)) {
+		setComponentProps(c, props, 3, context, mountAll);
+		dom = c.base;
+	} else {
+		if (originalComponent && !isDirectOwner) {
+			unmountComponent(originalComponent);
+			dom = oldDom = null;
+		}
+
+		c = createComponent(vnode.nodeName, props, context);
+		if (dom && !c.nextBase) {
+			c.nextBase = dom;
+			// passing dom/oldDom as nextBase will recycle it if unused, so bypass recycling on L229:
+			oldDom = null;
+		}
+		setComponentProps(c, props, 1, context, mountAll);
+		dom = c.base;
+
+		if (oldDom && dom !== oldDom) {
+			oldDom._component = null;
+			recollectNodeTree(oldDom, false);
+		}
+	}
+
+	return dom;
+}
+
+/** Remove a component from the DOM and recycle it.
+ *	@param {Component} component	The Component instance to unmount
+ *	@private
+ */
+function unmountComponent(component) {
+	if (options.beforeUnmount) options.beforeUnmount(component);
+
+	var base = component.base;
+
+	component._disable = true;
+
+	if (component.componentWillUnmount) component.componentWillUnmount();
+
+	component.base = null;
+
+	// recursively tear down & recollect high-order component children:
+	var inner = component._component;
+	if (inner) {
+		unmountComponent(inner);
+	} else if (base) {
+		if (base['__preactattr_'] && base['__preactattr_'].ref) base['__preactattr_'].ref(null);
+
+		component.nextBase = base;
+
+		removeNode(base);
+		collectComponent(component);
+
+		removeChildren(base);
+	}
+
+	if (component.__ref) component.__ref(null);
+}
+
+/** Base Component class.
+ *	Provides `setState()` and `forceUpdate()`, which trigger rendering.
+ *	@public
+ *
+ *	@example
+ *	class MyFoo extends Component {
+ *		render(props, state) {
+ *			return <div />;
+ *		}
+ *	}
+ */
+function Component(props, context) {
+	this._dirty = true;
+
+	/** @public
+  *	@type {object}
+  */
+	this.context = context;
+
+	/** @public
+  *	@type {object}
+  */
+	this.props = props;
+
+	/** @public
+  *	@type {object}
+  */
+	this.state = this.state || {};
+}
+
+extend(Component.prototype, {
+
+	/** Returns a `boolean` indicating if the component should re-render when receiving the given `props` and `state`.
+  *	@param {object} nextProps
+  *	@param {object} nextState
+  *	@param {object} nextContext
+  *	@returns {Boolean} should the component re-render
+  *	@name shouldComponentUpdate
+  *	@function
+  */
+
+	/** Update component state by copying properties from `state` to `this.state`.
+  *	@param {object} state		A hash of state properties to update with new values
+  *	@param {function} callback	A function to be called once component state is updated
+  */
+	setState: function setState(state, callback) {
+		var s = this.state;
+		if (!this.prevState) this.prevState = extend({}, s);
+		extend(s, typeof state === 'function' ? state(s, this.props) : state);
+		if (callback) (this._renderCallbacks = this._renderCallbacks || []).push(callback);
+		enqueueRender(this);
+	},
+
+
+	/** Immediately perform a synchronous re-render of the component.
+  *	@param {function} callback		A function to be called after component is re-rendered.
+  *	@private
+  */
+	forceUpdate: function forceUpdate(callback) {
+		if (callback) (this._renderCallbacks = this._renderCallbacks || []).push(callback);
+		renderComponent(this, 2);
+	},
+
+
+	/** Accepts `props` and `state`, and returns a new Virtual DOM tree to build.
+  *	Virtual DOM is generally constructed via [JSX](http://jasonformat.com/wtf-is-jsx).
+  *	@param {object} props		Props (eg: JSX attributes) received from parent element/component
+  *	@param {object} state		The component's current state
+  *	@param {object} context		Context object (if a parent component has provided context)
+  *	@returns VNode
+  */
+	render: function render() {}
+});
+
+/** Render JSX into a `parent` Element.
+ *	@param {VNode} vnode		A (JSX) VNode to render
+ *	@param {Element} parent		DOM element to render into
+ *	@param {Element} [merge]	Attempt to re-use an existing DOM tree rooted at `merge`
+ *	@public
+ *
+ *	@example
+ *	// render a div into <body>:
+ *	render(<div id="hello">hello!</div>, document.body);
+ *
+ *	@example
+ *	// render a "Thing" component into #foo:
+ *	const Thing = ({ name }) => <span>{ name }</span>;
+ *	render(<Thing name="one" />, document.querySelector('#foo'));
+ */
+function render(vnode, parent, merge) {
+  return diff(merge, vnode, {}, false, parent, false);
+}
+
+var preact = {
+	h: h,
+	createElement: h,
+	cloneElement: cloneElement,
+	Component: Component,
+	render: render,
+	rerender: rerender,
+	options: options
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (preact);
+//# sourceMappingURL=preact.esm.js.map
+
 
 /***/ }),
-/* 3 */
+/* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -549,12 +1181,49 @@ exports.default = function (value) {
 module.exports = exports['default'];
 
 /***/ }),
+/* 3 */
+/***/ (function(module, exports) {
+
+module.exports = baseHandler;
+
+function baseHandler(key, valueObj) {
+  return key === 'pseudo' ?
+    pseudoObjToCss(valueObj) : valsObjToCss(key, valueObj);
+}
+
+function pseudoObjToCss(pseudoObj) {
+  var css = '';
+  for (var pseudoClass in pseudoObj) {
+    var propsObj = pseudoObj[pseudoClass];
+    for (var prop in propsObj) {
+      css += valsObjToCss(prop, propsObj[prop], pseudoClass);
+    }
+  }
+  return css;
+}
+
+function valsObjToCss(prop, valsObj, pseudo) {
+  var css = '';
+  for (var val in valsObj) {
+    var className = valsObj[val];
+    css += declToCss(prop, val, className, pseudo);
+  }
+  return css;
+}
+
+function declToCss(prop, val, className, pseudo) {
+  var classString = pseudo ? ("" + className + pseudo) : className;
+  return ("." + classString + "{" + prop + ":" + val + "}");
+}
+
+
+/***/ }),
 /* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = {
-  StyletronProvider: __webpack_require__(8),
-  styled: __webpack_require__(9)
+  StyletronProvider: __webpack_require__(10),
+  styled: __webpack_require__(11)
 };
 
 
@@ -613,7 +1282,163 @@ module.exports = exports["default"];
 /* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Preact = __webpack_require__(2);
+module.exports = __webpack_require__(9);
+
+
+/***/ }),
+/* 9 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+
+// CONCATENATED MODULE: ./src/lib/h.jsx
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_styletron_preact__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_styletron_preact___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_styletron_preact__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_preact__ = __webpack_require__(1);
+
+
+function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
+/* eslint-disable camelcase */
+
+// bespoke wrapper around preact's `h` that passes any CSS data
+// on `attributes.style` to styletron, then hands off to `preact#h`
+
+
+
+
+/* harmony default export */ var h_defaultExport = (function (nodeName, attributes) {
+    for (var _len = arguments.length, children = Array(_len > 2 ? _len - 2 : 0), _key = 2; _key < _len; _key++) {
+        children[_key - 2] = arguments[_key];
+    }
+
+    var _ref = attributes || {},
+        style = _ref.style,
+        otherAttributes = _objectWithoutProperties(_ref, ['style']);
+
+    return __WEBPACK_IMPORTED_MODULE_2_preact__["h"](__WEBPACK_IMPORTED_MODULE_1_styletron_preact__["styled"](nodeName, style), otherAttributes, children);
+});
+// CONCATENATED MODULE: ./src/app/components/button/index.jsx
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__style_scss__ = __webpack_require__(31);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__style_scss___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__style_scss__);
+
+
+
+/* harmony default export */ var button_defaultExport = (function (props) {
+    return h_defaultExport(
+        'button',
+        {
+            style: __WEBPACK_IMPORTED_MODULE_1__style_scss___default.a.button,
+            onClick: function onClick() {
+                return console.log('clicked the button!!');
+            }
+        },
+        props.children
+    );
+});
+// CONCATENATED MODULE: ./src/app/views/article.jsx
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__article_scss__ = __webpack_require__(32);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__article_scss___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__article_scss__);
+
+
+
+
+/* harmony default export */ var article_defaultExport = (function (props) {
+    return h_defaultExport(
+        'header',
+        { style: __WEBPACK_IMPORTED_MODULE_2__article_scss___default.a['.header'] },
+        h_defaultExport(
+            'div',
+            { style: __WEBPACK_IMPORTED_MODULE_2__article_scss___default.a['.content-labels'] },
+            h_defaultExport(
+                'a',
+                {
+                    style: __WEBPACK_IMPORTED_MODULE_2__article_scss___default.a['.section-label'],
+                    'data-link-name': 'article section',
+                    href: 'https://m.code.dev-theguardian.com/uk/ruralaffairs'
+                },
+                'Rural affairs'
+            ),
+            h_defaultExport(
+                'a',
+                {
+                    style: __WEBPACK_IMPORTED_MODULE_2__article_scss___default.a['.series-label'],
+                    href: 'https://m.code.dev-theguardian.com/environment/series/country-diary'
+                },
+                'Country diary'
+            ),
+            h_defaultExport(
+                button_defaultExport,
+                props,
+                'hi!'
+            )
+        ),
+        h_defaultExport(
+            'h1',
+            { style: __WEBPACK_IMPORTED_MODULE_2__article_scss___default.a['.headline'], itemProp: 'headline' },
+            props.page.headline
+        )
+    );
+});
+// CONCATENATED MODULE: ./src/app/layouts/body.js
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__style_scss__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__style_scss___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__style_scss__);
+
+
+
+
+console.log('some body');
+
+/* harmony default export */ var body_defaultExport = (function (props) {
+    return h_defaultExport(
+        'body',
+        { style: __WEBPACK_IMPORTED_MODULE_2__style_scss__["body"] },
+        h_defaultExport(
+            'div',
+            { style: __WEBPACK_IMPORTED_MODULE_2__style_scss__["side"] },
+            h_defaultExport(article_defaultExport, props)
+        )
+    );
+});
+// CONCATENATED MODULE: ./src/boot.server.jsx
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_preact_render_to_string__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_preact_render_to_string___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_preact_render_to_string__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_styletron_preact__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_styletron_preact___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_styletron_preact__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_styletron_server__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_styletron_server___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_styletron_server__);
+
+// //
+// /* eslint-disable global-require */
+
+
+
+
+
+
+var styletron = new __WEBPACK_IMPORTED_MODULE_3_styletron_server___default.a();
+
+var boot_server_body = function body(props) {
+    return h_defaultExport(
+        __WEBPACK_IMPORTED_MODULE_2_styletron_preact__["StyletronProvider"],
+        { styletron: styletron },
+        h_defaultExport(body_defaultExport, props)
+    );
+};
+
+// the main export for the JVM JS interpreter to run
+// eslint-disable-next-line import/prefer-default-export
+var render = function render(props) {
+    return '\n    <html lang="en">\n        <head>\n            <title>' + props.page.headline + ' | ' + props.page.section + ' | The Guardian</title>\n            <style>\n            *, * > * {\n                margin: 0;\n                padding: 0;\n                box-sizing: border-box;\n            }\n            </style>\n            ' + styletron.getStylesheetsHtml() + '\n            <script>window.guardian = ' + JSON.stringify(props, null, 2) + ';</script>\n            <script src="/bundle.browser.js" async defer></script>\n        </head>\n        ' + __WEBPACK_IMPORTED_MODULE_1_preact_render_to_string__["render"](boot_server_body(props)) + '\n    </html>\n';
+};
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Preact = __webpack_require__(1);
 
 /**
  * @class StyletronProvider
@@ -659,11 +1484,11 @@ module.exports = StyletronProvider;
 
 
 /***/ }),
-/* 9 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Preact = __webpack_require__(2);
-var utils = __webpack_require__(10);
+var Preact = __webpack_require__(1);
+var utils = __webpack_require__(12);
 
 var STYLETRON_KEY = '__STYLETRON';
 
@@ -768,17 +1593,17 @@ function assign(target, source) {
 
 
 /***/ }),
-/* 10 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = {
-  injectStyle: __webpack_require__(11),
-  injectStylePrefixed: __webpack_require__(12)
+  injectStyle: __webpack_require__(13),
+  injectStylePrefixed: __webpack_require__(14)
 };
 
 
 /***/ }),
-/* 11 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var hyphenate = __webpack_require__(5);
@@ -818,22 +1643,22 @@ function injectStyle(styletron, styles, media, pseudo) {
 
 
 /***/ }),
-/* 12 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var prefixProperties = __webpack_require__(6);
 var capitalizeString = __webpack_require__(7);
 var prefixPropertiesArray = Object.keys(prefixProperties);
 
-var calc = __webpack_require__(13);
-var cursor = __webpack_require__(14);
-var flex = __webpack_require__(15);
-var sizing = __webpack_require__(16);
-var gradient = __webpack_require__(17);
-var transition = __webpack_require__(18);
+var calc = __webpack_require__(15);
+var cursor = __webpack_require__(16);
+var flex = __webpack_require__(17);
+var sizing = __webpack_require__(18);
+var gradient = __webpack_require__(19);
+var transition = __webpack_require__(20);
 // special flexbox specifications
-var flexboxIE = __webpack_require__(20);
-var flexboxOld = __webpack_require__(21);
+var flexboxIE = __webpack_require__(22);
+var flexboxOld = __webpack_require__(23);
 
 var plugins = [
   calc,
@@ -921,7 +1746,7 @@ function injectWithPlugins(styletron, prop, val, media, pseudo) {
 
 
 /***/ }),
-/* 13 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -932,11 +1757,11 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = calc;
 
-var _joinPrefixedValue = __webpack_require__(1);
+var _joinPrefixedValue = __webpack_require__(0);
 
 var _joinPrefixedValue2 = _interopRequireDefault(_joinPrefixedValue);
 
-var _isPrefixedValue = __webpack_require__(3);
+var _isPrefixedValue = __webpack_require__(2);
 
 var _isPrefixedValue2 = _interopRequireDefault(_isPrefixedValue);
 
@@ -952,7 +1777,7 @@ function calc(property, value) {
 module.exports = exports['default'];
 
 /***/ }),
-/* 14 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -963,7 +1788,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = cursor;
 
-var _joinPrefixedValue = __webpack_require__(1);
+var _joinPrefixedValue = __webpack_require__(0);
 
 var _joinPrefixedValue2 = _interopRequireDefault(_joinPrefixedValue);
 
@@ -984,7 +1809,7 @@ function cursor(property, value) {
 module.exports = exports['default'];
 
 /***/ }),
-/* 15 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1006,7 +1831,7 @@ function flex(property, value) {
 module.exports = exports['default'];
 
 /***/ }),
-/* 16 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1017,7 +1842,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = sizing;
 
-var _joinPrefixedValue = __webpack_require__(1);
+var _joinPrefixedValue = __webpack_require__(0);
 
 var _joinPrefixedValue2 = _interopRequireDefault(_joinPrefixedValue);
 
@@ -1048,7 +1873,7 @@ function sizing(property, value) {
 module.exports = exports['default'];
 
 /***/ }),
-/* 17 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1059,11 +1884,11 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = gradient;
 
-var _joinPrefixedValue = __webpack_require__(1);
+var _joinPrefixedValue = __webpack_require__(0);
 
 var _joinPrefixedValue2 = _interopRequireDefault(_joinPrefixedValue);
 
-var _isPrefixedValue = __webpack_require__(3);
+var _isPrefixedValue = __webpack_require__(2);
 
 var _isPrefixedValue2 = _interopRequireDefault(_isPrefixedValue);
 
@@ -1079,7 +1904,7 @@ function gradient(property, value) {
 module.exports = exports['default'];
 
 /***/ }),
-/* 18 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1090,7 +1915,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = transition;
 
-var _hyphenateStyleName = __webpack_require__(19);
+var _hyphenateStyleName = __webpack_require__(21);
 
 var _hyphenateStyleName2 = _interopRequireDefault(_hyphenateStyleName);
 
@@ -1098,7 +1923,7 @@ var _capitalizeString = __webpack_require__(7);
 
 var _capitalizeString2 = _interopRequireDefault(_capitalizeString);
 
-var _isPrefixedValue = __webpack_require__(3);
+var _isPrefixedValue = __webpack_require__(2);
 
 var _isPrefixedValue2 = _interopRequireDefault(_isPrefixedValue);
 
@@ -1167,7 +1992,7 @@ function prefixValue(value) {
 module.exports = exports['default'];
 
 /***/ }),
-/* 19 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1190,7 +2015,7 @@ module.exports = hyphenateStyleName;
 
 
 /***/ }),
-/* 20 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1228,7 +2053,7 @@ function flexboxIE(property, value) {
 module.exports = exports['default'];
 
 /***/ }),
-/* 21 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1270,318 +2095,7 @@ function flexboxOld(property, value) {
 module.exports = exports['default'];
 
 /***/ }),
-/* 22 */
-/***/ (function(module, exports) {
-
-/**
- * The core styletron module
- * @packagename styletron-core
- */
-var StyletronCore = function StyletronCore(ref) {
-  if ( ref === void 0 ) ref = {};
-  var prefix = ref.prefix; if ( prefix === void 0 ) prefix = '';
-
-  this.cache = {
-    media: {},
-    pseudo: {}
-  };
-  this.prefix = prefix === '' ? false : prefix;
-  this.uniqueCount = 0;
-  this.offset = 10; // skip 0-9
-  this.msb = 35;
-  this.power = 1;
-};
-
-StyletronCore.assignDecl = function assignDecl (target, decl, className) {
-  var prop = decl.prop;
-    var val = decl.val;
-    var media = decl.media;
-    var pseudo = decl.pseudo;
-  var targetEntry;
-  if (media) {
-    if (!target.media[media]) {
-      target.media[media] = {pseudo: {}};
-    }
-    targetEntry = target.media[media];
-  } else {
-    targetEntry = target;
-  }
-  if (pseudo) {
-    if (!targetEntry.pseudo[pseudo]) {
-      targetEntry.pseudo[pseudo] = {};
-    }
-    targetEntry = targetEntry.pseudo[pseudo];
-  }
-  if (!targetEntry[prop]) {
-    targetEntry[prop] = {};
-  }
-  targetEntry[prop][val] = className;
-};
-
-/**
- * Injects a declaration (if not already injected) and returns a class name
- * @param{object} decl        The CSS declaration object
- * @param{string} decl.prop   The property name
- * @param{string} decl.val    The property value
- * @param{string} [decl.media]The media query
- * @param{string} [decl.pseudo] The pseudo selector
- * @return {string|undefined}   The class name for the declaration
- */
-StyletronCore.prototype.injectDeclaration = function injectDeclaration (decl) {
-  var cached = this.getCachedDeclaration(decl);
-  if (cached) {
-    return cached;
-  }
-  var virtualCount = this.incrementVirtualCount();
-  var hash = virtualCount.toString(36);
-  var className = this.prefix ? this.prefix + hash : hash;
-  StyletronCore.assignDecl(this.cache, decl, className);
-  return className;
-};
-
-/**
- * Get the next virtual class number, while setting
- * the uniqueCount, offset, and msb counters appropriately.
- * @return {number} The virtual class count
- * @private
- */
-StyletronCore.prototype.incrementVirtualCount = function incrementVirtualCount () {
-  var virtualCount = this.uniqueCount + this.offset;
-  if (virtualCount === this.msb) {
-    this.offset += (this.msb + 1) * 9;
-    this.msb = Math.pow(36, ++this.power) - 1;
-  }
-  this.uniqueCount++;
-  return virtualCount;
-};
-
-/**
- * Gets the class name for an already injected declaration
- * @param{object} decl        The CSS declaration object
- * @param{string} decl.prop   The property name
- * @param{string} decl.val    The property value
- * @param{string} [decl.media]The media query
- * @param{string} [decl.pseudo] The pseudo selector
- * @return {string|undefined}   The class name for the declaration
- * @private
- */
-StyletronCore.prototype.getCachedDeclaration = function getCachedDeclaration (ref) {
-    var prop = ref.prop;
-    var val = ref.val;
-    var media = ref.media;
-    var pseudo = ref.pseudo;
-
-  var entry;
-  if (media) {
-    entry = this.cache.media[media];
-    if (!entry) {
-      return false;
-    }
-  } else {
-    entry = this.cache;
-  }
-  if (pseudo) {
-    entry = entry.pseudo[pseudo];
-    if (!entry) {
-      return false;
-    }
-  }
-  return entry[prop] && entry[prop].hasOwnProperty(val) && entry[prop][val];
-};
-
-module.exports = StyletronCore;
-
-
-/***/ }),
-/* 23 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-
-// CONCATENATED MODULE: ./src/app/components/button/index.jsx
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_lib_h_jsx__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__style_scss__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__style_scss___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__style_scss__);
-
-
-
-/* harmony default export */ var button_defaultExport = (function (props) {
-    return __WEBPACK_IMPORTED_MODULE_0_lib_h_jsx__["a" /* default */](
-        'button',
-        {
-            style: __WEBPACK_IMPORTED_MODULE_1__style_scss___default.a.button,
-            onClick: function onClick() {
-                return console.log('clicked the button!!');
-            }
-        },
-        props.children
-    );
-});
-// CONCATENATED MODULE: ./src/app/views/article.jsx
-/* harmony import */ var article___WEBPACK_IMPORTED_MODULE_0_lib_h_jsx__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__article_scss__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__article_scss___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__article_scss__);
-
-
-
-
-/* harmony default export */ var article_defaultExport = (function (props) {
-    return article___WEBPACK_IMPORTED_MODULE_0_lib_h_jsx__["a" /* default */](
-        'header',
-        { style: __WEBPACK_IMPORTED_MODULE_2__article_scss___default.a['.header'] },
-        article___WEBPACK_IMPORTED_MODULE_0_lib_h_jsx__["a" /* default */](
-            'div',
-            { style: __WEBPACK_IMPORTED_MODULE_2__article_scss___default.a['.content-labels'] },
-            article___WEBPACK_IMPORTED_MODULE_0_lib_h_jsx__["a" /* default */](
-                'a',
-                {
-                    style: __WEBPACK_IMPORTED_MODULE_2__article_scss___default.a['.section-label'],
-                    'data-link-name': 'article section',
-                    href: 'https://m.code.dev-theguardian.com/uk/ruralaffairs'
-                },
-                'Rural affairs'
-            ),
-            article___WEBPACK_IMPORTED_MODULE_0_lib_h_jsx__["a" /* default */](
-                'a',
-                {
-                    style: __WEBPACK_IMPORTED_MODULE_2__article_scss___default.a['.series-label'],
-                    href: 'https://m.code.dev-theguardian.com/environment/series/country-diary'
-                },
-                'Country diary'
-            ),
-            article___WEBPACK_IMPORTED_MODULE_0_lib_h_jsx__["a" /* default */](
-                button_defaultExport,
-                props,
-                'hi!'
-            )
-        ),
-        article___WEBPACK_IMPORTED_MODULE_0_lib_h_jsx__["a" /* default */](
-            'h1',
-            { style: __WEBPACK_IMPORTED_MODULE_2__article_scss___default.a['.headline'], itemProp: 'headline' },
-            props.page.headline
-        )
-    );
-});
-// CONCATENATED MODULE: ./src/app/layouts/body.jsx
-/* harmony import */ var body___WEBPACK_IMPORTED_MODULE_0_lib_h_jsx__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__style_scss__ = __webpack_require__(26);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__style_scss___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__style_scss__);
-
-
-
-
-/* harmony default export */ __webpack_exports__["a"] = (function (props) {
-    return body___WEBPACK_IMPORTED_MODULE_0_lib_h_jsx__["a" /* default */](
-        'body',
-        { style: __WEBPACK_IMPORTED_MODULE_2__style_scss__["body"] },
-        body___WEBPACK_IMPORTED_MODULE_0_lib_h_jsx__["a" /* default */](
-            'div',
-            { style: __WEBPACK_IMPORTED_MODULE_2__style_scss__["side"] },
-            body___WEBPACK_IMPORTED_MODULE_0_lib_h_jsx__["a" /* default */](article_defaultExport, props)
-        )
-    );
-});
-
-/***/ }),
 /* 24 */
-/***/ (function(module, exports) {
-
-module.exports = {"button":{"font-size":"15px","background-color":"#00e600","@media (min-width: 20em) and (max-width: 46.24em)":{"background":"red"}}};
-
-/***/ }),
-/* 25 */
-/***/ (function(module, exports) {
-
-module.exports = {".header":{"background-color":"#951c55"},".content-labels":{"border-bottom":"1px dotted rgba(255, 255, 255, 0.3)","padding":"0.375rem 0"},".section-label":{"color":"#fdadba"},".series-label":{"color":"#fff"},".headline":{"font-weight":"200","color":"#fff","font-size":"2.25rem","line-height":"2.5rem","padding-top":"0.125rem","padding-bottom":"1.5rem"}};
-
-/***/ }),
-/* 26 */
-/***/ (function(module, exports) {
-
-module.exports = {"side":{":before":{"left":"0","content":"''","position":"relative","z-index":"1","background":"rgba(51, 51, 51, 0.05)","top":"0","height":"100%","width":"calc((100% - 46.25rem) / 2)"},":after":{"right":"0","content":"''","position":"relative","z-index":"1","background":"rgba(51, 51, 51, 0.05)","top":"0","height":"100%","width":"calc((100% - 46.25rem) / 2)"}},"body":{"background-color":"#fff","text-rendering":"optimizeLegibility","font-feature-settings":"kern","font-kerning":"normal","line-height":"1.5","color":"#333"}};
-
-/***/ }),
-/* 27 */
-/***/ (function(module, exports) {
-
-module.exports = baseHandler;
-
-function baseHandler(key, valueObj) {
-  return key === 'pseudo' ?
-    pseudoObjToCss(valueObj) : valsObjToCss(key, valueObj);
-}
-
-function pseudoObjToCss(pseudoObj) {
-  var css = '';
-  for (var pseudoClass in pseudoObj) {
-    var propsObj = pseudoObj[pseudoClass];
-    for (var prop in propsObj) {
-      css += valsObjToCss(prop, propsObj[prop], pseudoClass);
-    }
-  }
-  return css;
-}
-
-function valsObjToCss(prop, valsObj, pseudo) {
-  var css = '';
-  for (var val in valsObj) {
-    var className = valsObj[val];
-    css += declToCss(prop, val, className, pseudo);
-  }
-  return css;
-}
-
-function declToCss(prop, val, className, pseudo) {
-  var classString = pseudo ? ("" + className + pseudo) : className;
-  return ("." + classString + "{" + prop + ":" + val + "}");
-}
-
-
-/***/ }),
-/* 28 */,
-/* 29 */,
-/* 30 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_lib_h_jsx__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_preact_render_to_string__ = __webpack_require__(31);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_preact_render_to_string___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_preact_render_to_string__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_styletron_preact__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_styletron_preact___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_styletron_preact__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_styletron_server__ = __webpack_require__(32);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_styletron_server___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_styletron_server__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_layouts_body__ = __webpack_require__(23);
-
-// //
-// /* eslint-disable global-require */
-
-
-
-
-
-
-var styletron = new __WEBPACK_IMPORTED_MODULE_3_styletron_server___default.a();
-
-var body = function body(props) {
-    return __WEBPACK_IMPORTED_MODULE_0_lib_h_jsx__["a" /* default */](
-        __WEBPACK_IMPORTED_MODULE_2_styletron_preact__["StyletronProvider"],
-        { styletron: styletron },
-        __WEBPACK_IMPORTED_MODULE_0_lib_h_jsx__["a" /* default */](__WEBPACK_IMPORTED_MODULE_4_layouts_body__["a" /* default */], props)
-    );
-};
-
-// the main export for the JVM JS interpreter to run
-// eslint-disable-next-line import/prefer-default-export
-var render = function render(props) {
-    return '\n    <html lang="en">\n        <head>\n            <title>' + props.page.headline + ' | ' + props.page.section + ' | The Guardian</title>\n            <style>\n            *, * > * {\n                margin: 0;\n                padding: 0;\n                box-sizing: border-box;\n            }\n            </style>\n            ' + styletron.getStylesheetsHtml() + '\n            <script>window.guardian = ' + JSON.stringify(props, null, 2) + ';</script>\n            <script src="/bundle.browser.js" async defer></script>\n        </head>\n        ' + __WEBPACK_IMPORTED_MODULE_1_preact_render_to_string__["render"](body(props)) + '\n    </html>\n';
-};
-
-/***/ }),
-/* 31 */
 /***/ (function(module, exports, __webpack_require__) {
 
 (function (global, factory) {
@@ -1877,14 +2391,14 @@ return renderToString;
 
 
 /***/ }),
-/* 32 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var cacheToCss = __webpack_require__(33);
-var cacheToStylesheets = __webpack_require__(34);
-var cacheToStylesheetsOldIE = __webpack_require__(35);
-var generateHtmlString = __webpack_require__(36);
-var StyletronCore = __webpack_require__(22);
+var cacheToCss = __webpack_require__(26);
+var cacheToStylesheets = __webpack_require__(27);
+var cacheToStylesheetsOldIE = __webpack_require__(28);
+var generateHtmlString = __webpack_require__(29);
+var StyletronCore = __webpack_require__(30);
 
 /**
  * A Styletron class for extracting styles during server-side rendering
@@ -1995,10 +2509,10 @@ module.exports = StyletronServer;
 
 
 /***/ }),
-/* 33 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseHandler = __webpack_require__(27);
+var baseHandler = __webpack_require__(3);
 
 module.exports = cacheObjToCss;
 
@@ -2035,10 +2549,10 @@ function mediaObjToCss(mediaObj) {
 
 
 /***/ }),
-/* 34 */
+/* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseHandler = __webpack_require__(27);
+var baseHandler = __webpack_require__(3);
 
 module.exports = cacheToStylesheets;
 
@@ -2081,10 +2595,10 @@ function getMediaSheets(mediaObj) {
 
 
 /***/ }),
-/* 35 */
+/* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var baseHandler = __webpack_require__(27);
+var baseHandler = __webpack_require__(3);
 
 // https://blogs.msdn.microsoft.com/ieinternals/2011/05/14/stylesheet-limits-in-internet-explorer/
 var IE9_RULE_LIMIT = 4095;
@@ -2149,7 +2663,7 @@ function getMediaSheets(mediaObj) {
 
 
 /***/ }),
-/* 36 */
+/* 29 */
 /***/ (function(module, exports) {
 
 module.exports = generateHtmlString;
@@ -2165,8 +2679,146 @@ function generateHtmlString(sheets, className) {
 }
 
 
+/***/ }),
+/* 30 */
+/***/ (function(module, exports) {
+
+/**
+ * The core styletron module
+ * @packagename styletron-core
+ */
+var StyletronCore = function StyletronCore(ref) {
+  if ( ref === void 0 ) ref = {};
+  var prefix = ref.prefix; if ( prefix === void 0 ) prefix = '';
+
+  this.cache = {
+    media: {},
+    pseudo: {}
+  };
+  this.prefix = prefix === '' ? false : prefix;
+  this.uniqueCount = 0;
+  this.offset = 10; // skip 0-9
+  this.msb = 35;
+  this.power = 1;
+};
+
+StyletronCore.assignDecl = function assignDecl (target, decl, className) {
+  var prop = decl.prop;
+    var val = decl.val;
+    var media = decl.media;
+    var pseudo = decl.pseudo;
+  var targetEntry;
+  if (media) {
+    if (!target.media[media]) {
+      target.media[media] = {pseudo: {}};
+    }
+    targetEntry = target.media[media];
+  } else {
+    targetEntry = target;
+  }
+  if (pseudo) {
+    if (!targetEntry.pseudo[pseudo]) {
+      targetEntry.pseudo[pseudo] = {};
+    }
+    targetEntry = targetEntry.pseudo[pseudo];
+  }
+  if (!targetEntry[prop]) {
+    targetEntry[prop] = {};
+  }
+  targetEntry[prop][val] = className;
+};
+
+/**
+ * Injects a declaration (if not already injected) and returns a class name
+ * @param{object} decl        The CSS declaration object
+ * @param{string} decl.prop   The property name
+ * @param{string} decl.val    The property value
+ * @param{string} [decl.media]The media query
+ * @param{string} [decl.pseudo] The pseudo selector
+ * @return {string|undefined}   The class name for the declaration
+ */
+StyletronCore.prototype.injectDeclaration = function injectDeclaration (decl) {
+  var cached = this.getCachedDeclaration(decl);
+  if (cached) {
+    return cached;
+  }
+  var virtualCount = this.incrementVirtualCount();
+  var hash = virtualCount.toString(36);
+  var className = this.prefix ? this.prefix + hash : hash;
+  StyletronCore.assignDecl(this.cache, decl, className);
+  return className;
+};
+
+/**
+ * Get the next virtual class number, while setting
+ * the uniqueCount, offset, and msb counters appropriately.
+ * @return {number} The virtual class count
+ * @private
+ */
+StyletronCore.prototype.incrementVirtualCount = function incrementVirtualCount () {
+  var virtualCount = this.uniqueCount + this.offset;
+  if (virtualCount === this.msb) {
+    this.offset += (this.msb + 1) * 9;
+    this.msb = Math.pow(36, ++this.power) - 1;
+  }
+  this.uniqueCount++;
+  return virtualCount;
+};
+
+/**
+ * Gets the class name for an already injected declaration
+ * @param{object} decl        The CSS declaration object
+ * @param{string} decl.prop   The property name
+ * @param{string} decl.val    The property value
+ * @param{string} [decl.media]The media query
+ * @param{string} [decl.pseudo] The pseudo selector
+ * @return {string|undefined}   The class name for the declaration
+ * @private
+ */
+StyletronCore.prototype.getCachedDeclaration = function getCachedDeclaration (ref) {
+    var prop = ref.prop;
+    var val = ref.val;
+    var media = ref.media;
+    var pseudo = ref.pseudo;
+
+  var entry;
+  if (media) {
+    entry = this.cache.media[media];
+    if (!entry) {
+      return false;
+    }
+  } else {
+    entry = this.cache;
+  }
+  if (pseudo) {
+    entry = entry.pseudo[pseudo];
+    if (!entry) {
+      return false;
+    }
+  }
+  return entry[prop] && entry[prop].hasOwnProperty(val) && entry[prop][val];
+};
+
+module.exports = StyletronCore;
+
+
+/***/ }),
+/* 31 */
+/***/ (function(module, exports) {
+
+module.exports = {"button":{"font-size":"15px","background-color":"#00e600","@media (min-width: 20em) and (max-width: 46.24em)":{"background":"red"}}};
+
+/***/ }),
+/* 32 */
+/***/ (function(module, exports) {
+
+module.exports = {".header":{"background-color":"#951c55"},".content-labels":{"border-bottom":"1px dotted rgba(255, 255, 255, 0.3)","padding":"0.375rem 0"},".section-label":{"color":"#fdadba"},".series-label":{"color":"#fff"},".headline":{"font-weight":"200","color":"#fff","font-size":"2.25rem","line-height":"2.5rem","padding-top":"0.125rem","padding-bottom":"1.5rem"}};
+
+/***/ }),
+/* 33 */
+/***/ (function(module, exports) {
+
+module.exports = {"side":{":before":{"left":"0","content":"''","position":"relative","z-index":"1","background":"rgba(51, 51, 51, 0.05)","top":"0","height":"100%","width":"calc((100% - 46.25rem) / 2)"},":after":{"right":"0","content":"''","position":"relative","z-index":"1","background":"rgba(51, 51, 51, 0.05)","top":"0","height":"100%","width":"calc((100% - 46.25rem) / 2)"}},"body":{"background-color":"#fff","text-rendering":"optimizeLegibility","font-feature-settings":"kern","font-kerning":"normal","line-height":"1.5","color":"#333"}};
+
 /***/ })
 /******/ ]);
-//# sourceMappingURL=bundle.server.js.map
-
-this.frontend
