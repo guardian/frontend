@@ -3,7 +3,7 @@
 import { Sticky } from 'common/modules/ui/sticky';
 import { commercialFeatures } from 'commercial/modules/commercial-features';
 
-const initPaidForBand = () => {
+const initPaidForBand = (): Promise<any> => {
     if (!commercialFeatures.paidforBand) {
         return Promise.resolve(false);
     }
