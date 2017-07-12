@@ -14,45 +14,47 @@
                 <p>
                     <div class="user__question-section"></div>
                     @for(question <- qs.questions) {
-                        <div class="user__questions-text--wrapper js-ask-question-link">
-                            <span class="user__question-text">
-                                <meta class="notranslate" name="js-notranslate-@question.questionId" content="@question.questionText">
-                                <span class="user__questions-text--inner">
-                                @question.questionText
+                        <div class="user__question-container">
+                            <div class="user__questions-text--wrapper js-ask-question-link">
+                                <div class="user__question-text">
+                                    <meta class="notranslate" name="js-notranslate-@question.questionId" content="@question.questionText">
+                                    <span class="user__questions-text--inner">
+                                    @question.questionText
+                                    </span>
+                                </div>
+                                <button id="btn-ask-question-@question.questionId" class="user__question-upvote" data-question-id="@question.questionId">
+                                    Ask
+                                </button>
+                                <span id="js-final-thankyou-message-@question.questionId" class="user__question-response submeta__label is-hidden">
+                                    Thanks, we'll send you the answer soon.
                                 </span>
-                            </span>
-                            <button id="btn-ask-question-@question.questionId" class="user__question-upvote" data-question-id="@question.questionId">
-                                Ask
-                            </button>
-                            <span id="js-final-thankyou-message-@question.questionId" class="user__question-response submeta__label is-hidden">
-                                Thanks, we'll send you the answer soon.
-                            </span>
-                            <span id="js-thankyou-message-no-submission-@question.questionId" class="user__question-response submeta__label is-hidden">
-                                Thanks, we've registered your vote.
-                            </span>
-                        </div>
-                        <div class="storyquestion-submission-container js-storyquestion-submission-container">
-                            <span id="js-question-thankyou-@question.questionId" class="user__question-response is-hidden">
-                                    Thank you we've registered your vote. Enter your email address and we'll send you an answer.
-                            </span>
-                            @*********************
-                            * This workaround enables us to run a test for demand of receiving the answers commissioned to questions by email.
+                                <span id="js-thankyou-message-no-submission-@question.questionId" class="user__question-response submeta__label is-hidden">
+                                    Thanks, we've registered your vote.
+                                </span>
+                            </div>
+                            <div class="storyquestion-submission-container js-storyquestion-submission-container">
+                                <span id="js-question-thankyou-@question.questionId" class="user__question-response is-hidden">
+                                        Thank you, we've registered your vote. Enter your email address and we'll send you an answer.
+                                </span>
+                                @*********************
+                                * This workaround enables us to run a test for demand of receiving the answers commissioned to questions by email.
 
-                            * If the story questions atom belongs to the test/test tag and has a label 4 characters long (an email list id) then
-                            * show the form allowing a user to submit their email address and receive an answer.
-                            *********************@
+                                * If the story questions atom belongs to the test/test tag and has a label 4 characters long (an email list id) then
+                                * show the form allowing a user to submit their email address and receive an answer.
+                                *********************@
 
-                            @if("test/test" == storyquestions.data.relatedStoryId) {
-                                @storyquestions.atom.labels.find(_.length == 4).map { listId =>
-                                    <form id="js-storyquestion-email-signup-form-@question.questionId" class="is-hidden storyquestion-email-signup-form js-storyquestion-email-signup-form form" data-question-id="@question.questionId">
-                                        <div class="form-field">
-                                            <input class="text-input" type="email" name="email" placeholder="Email address" required />
-                                        </div>
-                                        <input class="" type="hidden" name="listId" value="@listId" />
-                                        <button type="submit" class="button button--primary">Notify me</button>
-                                    </form>
+                                @if("test/test" == storyquestions.data.relatedStoryId) {
+                                    @storyquestions.atom.labels.find(_.length == 4).map { listId =>
+                                        <form id="js-storyquestion-email-signup-form-@question.questionId" class="is-hidden storyquestion-email-signup-form js-storyquestion-email-signup-form form" data-question-id="@question.questionId">
+                                            <div class="form-field">
+                                                <input class="text-input" type="email" name="email" placeholder="Email address" required />
+                                            </div>
+                                            <input class="" type="hidden" name="listId" value="@listId" />
+                                            <button type="submit" class="button button--primary">Notify me</button>
+                                        </form>
+                                    }
                                 }
-                            }
+                            </div>
                         </div>
                     }
                 </p>

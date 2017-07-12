@@ -33,6 +33,7 @@
     margin-bottom: 0;
     padding-top: $gs-baseline / 2;
     padding-bottom: $gs-baseline;
+    padding-left: $gs-baseline - 4;
 
     &.is-clicked {
         background-color: $news-support-5;
@@ -71,9 +72,7 @@
     display: block;
     //used to avoid fixed width across multiple break points.
     max-width: 77%;
-    float: left;
     color: $news-main-1;
-    padding-left: $gs-baseline - 4;
     position: relative;
     margin-bottom: $gs-baseline;
 
@@ -85,6 +84,10 @@
     }
 }
 
+.user__question-container {
+    margin-bottom: $gs-baseline;
+}
+
 .user__question-response {
     @include fs-textSans(3);
     clear: both;
@@ -94,6 +97,7 @@
     line-height: 18px;
     width: 90%;
     display: block;
+    color: $neutral-1;
 
     @include mq($from: tablet) {
         clear: none;
@@ -124,7 +128,7 @@
 }
 .storyquestion-submission-container {
     overflow: hidden;
-    padding-left: $gs-gutter - 2;
+    padding-left: $gs-baseline - 4;
     margin-bottom: $gs-baseline;
 }
 
