@@ -16,4 +16,4 @@ object TestPageState {
   }
 }
 
-object TestPageComponent extends UIComponent("components/c.js")
+object TestPageComponent extends UIComponent("c.js")
