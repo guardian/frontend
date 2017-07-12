@@ -3,6 +3,8 @@
     font-size: 24px;
 
     &:focus {
+        color: currentColor;
         outline: none;
+        text-decoration: underline;
     }
 }
