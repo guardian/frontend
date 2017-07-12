@@ -70,7 +70,7 @@ import actions.AuthenticatedActions
         val result = emailController.preferences()(authRequest)
         status(result) should equal(OK)
         val content = contentAsString(result)
-        content should include("""<form class="form" novalidate action="/email-prefs" role="main" method="post">""")
+        content should include("addEmailSubscription")
       }
     }
 
