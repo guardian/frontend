@@ -9,8 +9,8 @@ GET     /_healthcheck               controllers.HealthCheck.healthCheck()
 
 GET     /_cdn_healthcheck           controllers.HealthCheck.healthCheck()
 
-GET     /render/js                  controllers.NashornController.renderJs(title: Option[String])
-GET     /render/twirl               controllers.NashornController.renderTwirl(title: Option[String])
+GET     /render/js                  controllers.NashornController.renderJs(headline: Option[String])
+GET     /render/twirl               controllers.NashornController.renderTwirl(headline: Option[String])
 
 # Newspaper pages paths
 # gallery format (?)
