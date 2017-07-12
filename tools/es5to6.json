@@ -8,7 +8,9 @@
   ],
   "Richard Nguyen": [],
   "Kate Whalen": [],
-  "Lydia Shepherd": [],
+  "Lydia Shepherd": [
+    "projects/commercial/modules/paidfor-band.js"
+  ],
   "sndrs": [
     "lib/detect.js",
     "bootstraps/enhanced/accessibility.js",
@@ -146,8 +148,7 @@
     "projects/common/modules/commercial/acquisitions-view-log.js",
     "projects/common/modules/experiments/ab-test-clash.js",
     "projects/common/modules/ui/notification-counter.js",
-    "projects/common/modules/ui/relativedates.js",
-    "projects/commercial/modules/paidfor-band.js"
+    "projects/common/modules/ui/relativedates.js"
   ],
   "Philip Wills": [],
   "Santiago Villa Fernandez": [],
