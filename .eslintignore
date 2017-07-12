@@ -11,6 +11,9 @@ static/vendor/javascripts
 static/src/javascripts-legacy/lib/atob.js
 static/src/javascripts-legacy/lib/picturefill.js
 
+# temporarily ignore this (it won't stay)
+article/resources/components/c.js
+
 # tests #karma-jest
 static/test/javascripts-legacy/components
 static/test/javascripts-legacy/helpers/raw-loader.js
