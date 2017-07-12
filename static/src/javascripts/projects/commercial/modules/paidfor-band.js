@@ -1,20 +1,19 @@
-import config from 'lib/config';
-import sticky from 'common/modules/ui/sticky';
-import commercialFeatures from 'commercial/modules/commercial-features';
+// @flow
 
-function init() {
-    if (!commercialFeatures.commercialFeatures.paidforBand) {
+import { Sticky } from 'common/modules/ui/sticky';
+import { commercialFeatures } from 'commercial/modules/commercial-features';
+
+const initPaidForBand = () => {
+    if (!commercialFeatures.paidforBand) {
         return Promise.resolve(false);
     }
 
-    var elem = document.querySelector('.paidfor-band');
+    const elem = document.querySelector('.paidfor-band');
     if (elem) {
-        new sticky.Sticky(elem).init();
+        new Sticky(elem).init();
     }
 
     return Promise.resolve();
-}
-
-export default {
-    init: init
 };
+
+export { initPaidForBand };
