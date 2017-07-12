@@ -70,11 +70,18 @@
         can't/ don't want to online all required JS from this module.
     */
     function hideReaderRevenue() {
-        var cookies = document.cookie.split('; ');
+        var getCookieValue = function(name) {
+            var val = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)');
+            return val ? val.pop() : undefined;
+        };
+
         var contribution = {
             cookie: 'gu.contributions.contrib-timestamp',
-            fullfilled: false,
             check: function(value) {
+                if (!value) {
+                    return false;
+                }
+
                 var now = new Date().getTime();
                 var lastContribution = new Date(value).getTime();
                 var diffDays = Math.ceil((now - lastContribution) / (1000 * 3600 * 24));
@@ -82,27 +89,18 @@
                 return diffDays <= 180;
             },
         };
+
         var member = {
             cookie: 'gu_paying_member',
-            fullfilled: false,
             check: function(value) {
                 return value === 'true';
             },
         };
 
-        for(var i = 0; i < cookies.length; ++i) {
-            var cookie = cookies[i].split('=');
+        var contribCookie = getCookieValue(contribution.cookie);
+        var memberCookie = getCookieValue(member.cookie);
 
-            if (cookie.indexOf(contribution.cookie) !== -1) {
-                contribution.fullfilled = contribution.check(cookie[1]);
-            }
-
-            if (cookie.indexOf(member.cookie) !== -1) {
-                member.fullfilled = member.check(cookie[1]);
-            }
-        }
-
-        return member.fullfilled || contribution.fullfilled;
+        return member.check(memberCookie) || contribution.check(contribCookie);
     }
 
     // http://modernizr.com/download/#-svg
