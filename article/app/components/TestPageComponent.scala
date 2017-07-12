@@ -1,15 +1,19 @@
 package components
 
 import play.api.libs.json.{JsValue, Json}
-import uiComponent.{UIComponent, UIComponentState}
+import uiComponent.{StateSerialization, UIComponent}
 
-case class TestPageState(headline: String, section: String) extends UIComponentState {
-  def asJson: JsValue = Json.obj(
-    "page" -> Json.obj(
-      "headline" -> headline,
-      "section" -> section
+case class TestPageState(headline: String, section: String)
+
+object TestPageState {
+  implicit object TestPageStateSerialization extends StateSerialization[TestPageState] {
+    def asJson(testPageState: TestPageState): JsValue = Json.obj(
+      "page" -> Json.obj(
+        "headline" -> testPageState.headline,
+        "section" -> testPageState.section
+      )
     )
-  )
+  }
 }
 
-object TestPageComponent extends UIComponent[TestPageState]("components/c.js")
+object TestPageComponent extends UIComponent("components/c.js")
