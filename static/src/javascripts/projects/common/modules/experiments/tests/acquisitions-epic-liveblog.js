@@ -133,11 +133,6 @@ export const acquisitionsEpicLiveblog: ContributionsABTest = makeABTest({
             id: 'control',
             isUnlimited: true,
 
-            insertAtSelector: `.${INSERT_EPIC_AFTER_CLASS}`,
-            insertAfter: true,
-            insertMultiple: true,
-            successOnView: true,
-
             template(variant) {
                 return template(liveblogEpicTemplate, {
                     copy: liveblogCopy(
