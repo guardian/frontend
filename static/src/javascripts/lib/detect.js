@@ -90,7 +90,7 @@ const findBreakpoint = (tweakpoint: BreakpointName): BreakpointName => {
     return breakpoint.name;
 };
 
-const updateBreakpoint = (breakpoint: Object): void => {
+const updateBreakpoint = (breakpoint: Breakpoint): void => {
     if (breakpoint.isTweakpoint) {
         currentTweakpoint = breakpoint.name;
         currentBreakpoint = findBreakpoint(currentTweakpoint);
@@ -100,7 +100,8 @@ const updateBreakpoint = (breakpoint: Object): void => {
     }
 };
 
-const onMatchingBreakpoint = mql => {
+// this function has a Breakpoint as context
+const onMatchingBreakpoint = function(mql) {
     if (mql && mql.matches) {
         updateBreakpoint(this);
     }
@@ -119,17 +120,20 @@ const updateBreakpoints = (): void => {
     updateBreakpoint(breakpoints[breakpointIndex]);
 };
 
-const initMediaQueryListeners = win => {
+const initMediaQueryListeners = (): void => {
     breakpoints.forEach((bp, index, bps) => {
         // We create mutually exclusive (min-width) and (max-width) media queries
         // to facilitate the breakpoint/tweakpoint logic.
+        const minWidth = `(min-width: ${bp.width}px)`;
+
         bp.mql =
             index < bps.length - 1
-                ? win.matchMedia(
-                      `(min-width:${bp.width}px) and (max-width:${bps[index + 1]
-                          .width - 1}px)`
+                ? window.matchMedia(
+                      `${minWidth} and (max-width: ${bps[index + 1].width -
+                          1}px)`
                   )
-                : win.matchMedia(`(min-width:${bp.width}px)`);
+                : window.matchMedia(minWidth);
+
         bp.listener = onMatchingBreakpoint.bind(bp);
 
         if (bp.mql) {
@@ -140,11 +144,11 @@ const initMediaQueryListeners = win => {
     });
 };
 
-const init = (win: window): void => {
-    if ('matchMedia' in win) {
-        initMediaQueryListeners(win);
+const init = (): void => {
+    if ('matchMedia' in window) {
+        initMediaQueryListeners();
     } else {
-        updateBreakpoints.call(win);
+        updateBreakpoints();
         mediator.on('window:throttledResize', updateBreakpoints);
     }
 };
@@ -329,9 +333,7 @@ const adblockInUse: Promise<?boolean> = new Promise(resolve => {
 
 const getReferrer = (): string => document.referrer || '';
 
-const getUserAgent:
-    | string
-    | { browser: string, version: string } = (function():
+const getUserAgent = (function():
     | string
     | { browser: string, version: string } {
     if (!navigator && !navigator.userAgent) {
@@ -371,7 +373,7 @@ const getUserAgent:
     };
 })();
 
-init(window);
+init();
 
 export {
     hasCrossedBreakpoint,
