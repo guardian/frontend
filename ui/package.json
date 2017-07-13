@@ -1,0 +1,85 @@
+{
+    "name": "frontend-future",
+    "version": "1.0.0",
+    "description": "",
+    "private": true,
+    "scripts": {
+        "preinstall": "node ./__tools__/preinstall.js && yarn check:env -s",
+        "check:env": "check-node-version --package",
+        "lint": "yarn install -s && eslint .",
+        "lint:fix": "yarn lint -- --fix",
+        "test": "yarn install -s && jest",
+        "test:watch": "yarn install -s && yarn test -- --watch",
+        "test:ci": "yarn test -- --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
+        "clean": "rm -rf ./dist",
+        "bundle": "BABEL_ENV=production yarn install -s && yarn run clean -s && webpack --config ./__config__/webpack.config.prod.js --progress",
+        "dev": "yarn install -s && webpack --config ./__config__/webpack.config.dev.js && node ./__tools__/dev-server.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/guardian/frontend-future.git"
+    },
+    "homepage": "https://github.com/guardian/frontend-future#readme",
+    "engines": {
+        "node": "^8.0.0",
+        "yarn": "0.27.5"
+    },
+    "dependencies": {
+        "preact": "^8.2.0",
+        "preact-render-to-string": "^3.6.0",
+        "styletron": "^2.5.7",
+        "styletron-client": "^2.5.7",
+        "styletron-preact": "^2.5.7",
+        "styletron-server": "^2.5.7"
+    },
+    "devDependencies": {
+        "babel-cli": "^6.24.1",
+        "babel-core": "^6.24.1",
+        "babel-eslint": "^7.2.3",
+        "babel-loader": "^7.0.0",
+        "babel-plugin-preact-require": "^1.0.0",
+        "babel-plugin-provide-modules": "^1.0.3",
+        "babel-plugin-transform-es2015-modules-commonjs": "^6.24.1",
+        "babel-plugin-transform-object-rest-spread": "^6.23.0",
+        "babel-plugin-transform-react-jsx": "^6.24.1",
+        "babel-preset-env": "^1.6.0",
+        "babel-preset-flow": "^6.23.0",
+        "check-node-version": "^2.1.0",
+        "coveralls": "^2.13.0",
+        "eslint": "^3.19.0",
+        "eslint-config-airbnb": "^15.0.2",
+        "eslint-config-prettier": "^2.3.0",
+        "eslint-import-resolver-webpack": "^0.8.3",
+        "eslint-plugin-flow-header": "^0.1.1",
+        "eslint-plugin-flowtype": "^2.34.1",
+        "eslint-plugin-html": "^3.0.0",
+        "eslint-plugin-import": "^2.6.1",
+        "eslint-plugin-jest": "^20.0.3",
+        "eslint-plugin-jsx-a11y": "^5.1.1",
+        "eslint-plugin-prettier": "^2.1.2",
+        "eslint-plugin-react": "^7.1.0",
+        "express": "^4.15.3",
+        "flow-bin": "^0.49.1",
+        "gzip-size-cli": "^2.0.0",
+        "jest": "^20.0.4",
+        "nashorn-babel-polyfill": "^0.2.7",
+        "node-sass": "^4.5.3",
+        "prepend-webpack-plugin": "^1.0.2",
+        "prettier": "^1.5.2",
+        "sass-loader": "^6.0.6",
+        "sass-mq": "^3.3.2",
+        "styletron-loader": "^0.6.0",
+        "webpack": "^3.2.0",
+        "webpack-bundle-analyzer": "^2.8.2",
+        "webpack-dev-middleware": "^1.10.2",
+        "webpack-hot-middleware": "^2.18.2",
+        "webpack-merge": "^4.1.0"
+    },
+    "jest": {
+        "moduleDirectories": [
+            "<rootDir>/src",
+            "<rootDir>/src/app",
+            "node_modules"
+        ]
+    }
+}

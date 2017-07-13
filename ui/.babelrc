@@ -1,0 +1,38 @@
+{
+    "presets": [
+        ["env", {
+            "modules": false
+        }],
+        "flow"
+    ],
+    "plugins": [
+        "transform-object-rest-spread",
+        ["transform-react-jsx", {
+            "pragma": "h"
+        }]
+    ],
+    "env": {
+        "development": {
+            "plugins": [
+                ["provide-modules", {
+                    "lib/h.jsx": "h"
+                }]
+            ]
+        },
+        "production": {
+            "plugins": [
+                ["provide-modules", {
+                    "lib/h.jsx": "h"
+                }]
+            ]
+        },
+        "test": {
+            "plugins": [
+                ["provide-modules", {
+                    "lib/h.jsx": "h"
+                }],
+                "transform-es2015-modules-commonjs"
+            ]
+        }
+    }
+}

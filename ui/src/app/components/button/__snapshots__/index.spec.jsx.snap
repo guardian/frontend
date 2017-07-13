@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Button generates the correct object 1`] = `
+VNode {
+  "attributes": undefined,
+  "children": Array [
+    "test button",
+  ],
+  "key": undefined,
+  "nodeName": Object {
+    "default": [Function],
+  },
+}
+`;
