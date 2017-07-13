@@ -72,7 +72,7 @@
     /*
         This is a shortened version of shouldSeeReaderRevenue() from
         user-features.js. Since we are blocking rendering at this time we
-        can't/ don't want to online all required JS from this module.
+        can't inline all required JS from this module.
     */
     function isRecentContributor() {
         var value = getCookieValue('gu.contributions.contrib-timestamp');
