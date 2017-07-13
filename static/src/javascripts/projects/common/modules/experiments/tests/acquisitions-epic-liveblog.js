@@ -46,10 +46,12 @@ const getBlocksToInsertEpicAfter = (): Promise<Array<Element>> =>
         );
         const epicsAlreadyOnPage = document.getElementsByClassName('is-epic');
 
+        const isLiveblogLongEnoughYet = blocks.length > 4;
+
         if (
             blocksToInsertManualEpicAfter.length ||
             epicsAlreadyOnPage.length ||
-            blocks.length < 4
+            !isLiveblogLongEnoughYet
         ) {
             return [...blocksToInsertManualEpicAfter];
         }
