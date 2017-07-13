@@ -1,0 +1,30 @@
+side {
+    &:before {
+        left: 0;
+    }
+
+    &:after {
+        right: 0;
+    }
+
+    &:before, &:after {
+        content: '';
+        position: absolute;
+        z-index: 1;
+        background: rgba(51,51,51,0.05);
+        top: 0;
+        height: 100%;
+        width: calc((100% - 46.25rem) / 2);
+        position: relative;
+        height: 100%;
+    }
+}
+
+body {
+    background-color: #fff;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: kern;
+    font-kerning: normal;
+    line-height: 1.5;
+    color: #333;
+};

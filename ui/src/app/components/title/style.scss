@@ -1,0 +1,17 @@
+.title {
+    color: red;
+    display: flex;
+
+    @include mq(desktop) {
+        color: blue;
+    }
+}
+
+// this is ignored by styletron, we should lint against this
+.title button {
+    font-size: 10px;
+}
+
+.title {
+    font-size: 15px;
+}
