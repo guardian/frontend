@@ -17,7 +17,7 @@ jest.mock('./outbrain-tracking', () => ({ tracking: jest.fn() }));
 detect.getBreakpoint.mockReturnValue('desktop');
 
 describe('Outbrain Load', () => {
-    beforeEach(done => {
+    beforeEach(() => {
         if (document.body) {
             document.body.innerHTML = `
                 <div id="dfp-ad--merchandising-high"></div>
@@ -25,7 +25,7 @@ describe('Outbrain Load', () => {
                 <div class="js-outbrain"><div class="js-outbrain-container"></div></div>
                 `;
         }
-        done();
+        expect.hasAssertions();
     });
 
     afterEach(() => {

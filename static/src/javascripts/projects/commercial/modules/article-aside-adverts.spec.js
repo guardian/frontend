@@ -77,6 +77,7 @@ describe('Article Aside Adverts', () => {
             enableServices: jest.fn(),
             display: jest.fn(),
         };
+        expect.hasAssertions();
     });
 
     afterEach(() => {

@@ -29,7 +29,7 @@ let loadSpy: any;
 trackAdRenderMock.mockReturnValue(Promise.resolve(true));
 
 describe('Plista', () => {
-    beforeEach(done => {
+    beforeEach(() => {
         config.switches.plistaForOutbrainAu = true;
         config.page = {
             section: 'uk-news',
@@ -49,7 +49,7 @@ describe('Plista', () => {
             getBreakpoint: jest.fn(() => 'desktop'),
             adblockInUse: Promise.resolve(false),
         });
-        done();
+        expect.hasAssertions();
     });
 
     afterEach(() => {

@@ -92,6 +92,8 @@ describe('Build Page Targeting', () => {
         getKruxSegments.mockReturnValue(['E012712', 'E012390', 'E012478']);
 
         local.set('gu.alreadyVisited', 0);
+
+        expect.hasAssertions();
     });
 
     afterEach(() => {

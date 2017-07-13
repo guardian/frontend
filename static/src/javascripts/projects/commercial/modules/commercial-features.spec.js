@@ -82,6 +82,8 @@ describe('Commercial features', () => {
         isAdFreeUser.mockReturnValue(false);
 
         identity.isUserLoggedIn.mockReturnValue(true);
+
+        expect.hasAssertions();
     });
 
     describe('DFP advertising', () => {

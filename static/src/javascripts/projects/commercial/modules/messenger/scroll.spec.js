@@ -40,7 +40,7 @@ describe('Cross-frame messenger: scroll', () => {
             }));
     };
 
-    beforeEach(done => {
+    beforeEach(() => {
         jest
             .spyOn(global, 'addEventListener')
             .mockImplementation((_, callback) => {
@@ -57,7 +57,7 @@ describe('Cross-frame messenger: scroll', () => {
 
         detect.getViewport.mockReturnValue({ width: 400, height: 300 });
 
-        done();
+        expect.hasAssertions();
     });
 
     afterEach(() => {

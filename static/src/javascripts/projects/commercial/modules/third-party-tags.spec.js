@@ -9,6 +9,7 @@ beforeEach(() => {
     if (document.body && firstScript) {
         document.body.appendChild(firstScript);
     }
+    expect.hasAssertions();
 });
 
 afterEach(() => {
