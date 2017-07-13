@@ -35,7 +35,7 @@ export const render = (props: Object) => {
                 null,
                 2
             )};</script>
-            <script src="/bundle.browser.js" async defer></script>
+            <script src="/assets/javascripts/ui.bundle.browser.js" async defer></script>
         </head>
         ${body}
     </html>
