@@ -80,15 +80,6 @@ const breakpointNames: Array<BreakpointName> = breakpoints.map(
     breakpoint => breakpoint.name
 );
 
-const init = (win: window): void => {
-    if ('matchMedia' in win) {
-        initMediaQueryListeners(win);
-    } else {
-        updateBreakpoints.call(win);
-        mediator.on('window:throttledResize', updateBreakpoints);
-    }
-};
-
 const findBreakpoint = (tweakpoint: BreakpointName): BreakpointName => {
     let breakpointIndex = breakpointNames.indexOf(tweakpoint);
     let breakpoint = breakpoints[breakpointIndex];
@@ -115,6 +106,19 @@ const onMatchingBreakpoint = mql => {
     }
 };
 
+const updateBreakpoints = (): void => {
+    // The implementation for browsers that don't support window.matchMedia is simpler,
+    // but relies on (1) the resize event, (2) layout and (3) hidden generated content
+    // on a pseudo-element
+    const bodyStyle = window.getComputedStyle(document.body, '::after');
+    const breakpointName = bodyStyle.content.substring(
+        1,
+        bodyStyle.content.length - 1
+    );
+    const breakpointIndex = breakpointNames.indexOf(breakpointName);
+    updateBreakpoint(breakpoints[breakpointIndex]);
+};
+
 const initMediaQueryListeners = win => {
     breakpoints.forEach((bp, index, bps) => {
         // We create mutually exclusive (min-width) and (max-width) media queries
@@ -136,17 +140,13 @@ const initMediaQueryListeners = win => {
     });
 };
 
-const updateBreakpoints = (): void => {
-    // The implementation for browsers that don't support window.matchMedia is simpler,
-    // but relies on (1) the resize event, (2) layout and (3) hidden generated content
-    // on a pseudo-element
-    const bodyStyle = window.getComputedStyle(document.body, '::after');
-    const breakpointName = bodyStyle.content.substring(
-        1,
-        bodyStyle.content.length - 1
-    );
-    const breakpointIndex = breakpointNames.indexOf(breakpointName);
-    updateBreakpoint(breakpoints[breakpointIndex]);
+const init = (win: window): void => {
+    if ('matchMedia' in win) {
+        initMediaQueryListeners(win);
+    } else {
+        updateBreakpoints.call(win);
+        mediator.on('window:throttledResize', updateBreakpoints);
+    }
 };
 
 const getViewport = (): { width: number, height: number } => {
@@ -164,6 +164,21 @@ const getViewport = (): { width: number, height: number } => {
         width: window.innerWidth || document.body.clientWidth,
         height: window.innerHeight || document.body.clientHeight,
     };
+};
+
+const getBreakpoint = (includeTweakpoint?: boolean): BreakpointName =>
+    includeTweakpoint ? currentTweakpoint : currentBreakpoint;
+
+const isBreakpoint = (criteria: Object): boolean => {
+    const indexMin = criteria.min ? breakpointNames.indexOf(criteria.min) : 0;
+    const indexMax = criteria.max
+        ? breakpointNames.indexOf(criteria.max)
+        : breakpointNames.length - 1;
+    const indexCur = breakpointNames.indexOf(
+        currentTweakpoint || currentBreakpoint
+    );
+
+    return indexMin <= indexCur && indexCur <= indexMax;
 };
 
 const hasCrossedBreakpoint = (includeTweakpoint: boolean): Function => {
@@ -249,28 +264,15 @@ const getVideoFormatSupport = () => {
                 .canPlayType('video/webm; codecs="vp8, vorbis"')
                 .replace(/^no$/, '');
         }
-    } catch (e) {}
+    } catch (e) {
+        /* ... */
+    }
 
     return types;
 };
 
 const getOrientation = (): 'portrait' | 'landscape' =>
     window.innerHeight > window.innerWidth ? 'portrait' : 'landscape';
-
-const getBreakpoint = (includeTweakpoint?: boolean): BreakpointName =>
-    includeTweakpoint ? currentTweakpoint : currentBreakpoint;
-
-const isBreakpoint = (criteria: Object): boolean => {
-    const indexMin = criteria.min ? breakpointNames.indexOf(criteria.min) : 0;
-    const indexMax = criteria.max
-        ? breakpointNames.indexOf(criteria.max)
-        : breakpointNames.length - 1;
-    const indexCur = breakpointNames.indexOf(
-        currentTweakpoint || currentBreakpoint
-    );
-
-    return indexMin <= indexCur && indexCur <= indexMax;
-};
 
 const initPageVisibility = (): void => {
     const onchange = (evt: Event = window.event) => {
