@@ -17,7 +17,7 @@ define([
         var self = this;
         this.id = 'BundleDigitalSubPriceTest1MT';
         this.start = '2017-06-21';
-        this.expiry = '2017-07-13';
+        this.expiry = '2017-07-20';
 
         this.description = 'Test digital subs price points via thrasher';
         this.showForSensitive = true;

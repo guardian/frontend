@@ -377,10 +377,10 @@
         }
     }
     .fc-item__container:before {
-        background-color: $paid-article-brand;
+        background-color: $paid-article-brand !important;
     }
     .inline-icon__svg {
-        fill: $paid-article-brand;
+        fill: $paid-article-brand !important;
     }
     .fc-item__title {
         @include f-textSans;

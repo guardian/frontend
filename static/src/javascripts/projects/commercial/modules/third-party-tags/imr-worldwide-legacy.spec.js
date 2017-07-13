@@ -1,5 +1,7 @@
 // @flow
-import { shouldRun, url, onLoad } from './imr-worldwide-legacy';
+import { imrWorldwideLegacy } from './imr-worldwide-legacy';
+
+const { shouldRun, url, onLoad } = imrWorldwideLegacy;
 
 jest.mock('lib/config', () => ({
     switches: {

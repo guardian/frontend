@@ -1,5 +1,7 @@
 // @flow
-import { url, shouldRun } from 'commercial/modules/third-party-tags/krux';
+import { krux } from 'commercial/modules/third-party-tags/krux';
+
+const { url, shouldRun } = krux;
 
 jest.mock('lib/config', () => ({
     switches: { krux: false },

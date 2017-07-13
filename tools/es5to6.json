@@ -2,17 +2,14 @@
   "Francis Carr": [],
   "Jon Norman": [],
   "Regis Kuckaertz": [
-    "projects/common/modules/ui/cookiesBanner.js",
     "projects/common/modules/ui/dropdowns.js",
     "projects/common/modules/lazyload.js",
     "projects/common/modules/ui/message.js"
   ],
   "Richard Nguyen": [],
-  "Kate Whalen": [
-    "projects/commercial/modules/third-party-tags.js"
-  ],
+  "Kate Whalen": [],
   "Lydia Shepherd": [
-    "projects/commercial/modules/sticky-mpu.js"
+    "projects/commercial/modules/paidfor-band.js"
   ],
   "sndrs": [
     "lib/detect.js",
@@ -58,7 +55,6 @@
     "projects/common/modules/discussion/comment-box.js"
   ],
   "Gustav Pursche": [
-    "lib/atob.js",
     "lib/element-inview.js",
     "lib/page.js"
   ],
@@ -152,8 +148,7 @@
     "projects/common/modules/commercial/acquisitions-view-log.js",
     "projects/common/modules/experiments/ab-test-clash.js",
     "projects/common/modules/ui/notification-counter.js",
-    "projects/common/modules/ui/relativedates.js",
-    "projects/commercial/modules/paidfor-band.js"
+    "projects/common/modules/ui/relativedates.js"
   ],
   "Philip Wills": [],
   "Santiago Villa Fernandez": [],

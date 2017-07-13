@@ -1,5 +1,7 @@
 // @flow
-import { shouldRun, url } from './simple-reach';
+import { simpleReach } from './simple-reach';
+
+const { shouldRun, url } = simpleReach;
 
 jest.mock('lib/config', () => ({
     switches: {

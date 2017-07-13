@@ -3,7 +3,7 @@ import config from 'lib/config';
 import { initCheckMediator, resolveCheck } from 'common/modules/check-mediator';
 import detect from 'lib/detect';
 import { load } from './outbrain-load';
-import { init } from './outbrain';
+import { initOutbrain } from './outbrain';
 import { getSection } from './outbrain-sections';
 
 jest.mock('ophan/ng', () => ({ record: () => undefined }));
@@ -43,7 +43,7 @@ describe('Outbrain', () => {
     });
 
     it('should exist', () => {
-        expect(init).toBeDefined();
+        expect(initOutbrain).toBeDefined();
     });
 
     describe('Init', () => {
@@ -59,7 +59,7 @@ describe('Outbrain', () => {
             // isOutbrainDisabled check
             resolveCheck('isOutbrainDisabled', true);
 
-            init().then(() => {
+            initOutbrain().then(() => {
                 expect(load).not.toHaveBeenCalled();
                 done();
             });
@@ -74,7 +74,7 @@ describe('Outbrain', () => {
             resolveCheck('isUserInEmailAbTestAndEmailCanRun', false);
             resolveCheck('isStoryQuestionsOnPage', false);
 
-            init().then(() => {
+            initOutbrain().then(() => {
                 expect(load).toHaveBeenCalled();
                 detect.adblockInUse = Promise.resolve(false);
                 done();
@@ -87,7 +87,7 @@ describe('Outbrain', () => {
             // isOutbrainBlockedByAds checks
             resolveCheck('isOutbrainBlockedByAds', true);
 
-            init().then(() => {
+            initOutbrain().then(() => {
                 expect(load).not.toHaveBeenCalled();
                 done();
             });
@@ -100,7 +100,7 @@ describe('Outbrain', () => {
             resolveCheck('isOutbrainBlockedByAds', false);
             resolveCheck('isOutbrainMerchandiseCompliant', true);
 
-            init().then(() => {
+            initOutbrain().then(() => {
                 expect(load).toHaveBeenCalledWith('merchandising');
                 done();
             });
@@ -114,7 +114,7 @@ describe('Outbrain', () => {
             resolveCheck('isOutbrainMerchandiseCompliant', false);
             resolveCheck('isUserInContributionsAbTest', true);
 
-            init().then(() => {
+            initOutbrain().then(() => {
                 expect(load).toHaveBeenCalledWith('nonCompliant');
                 done();
             });
@@ -129,7 +129,7 @@ describe('Outbrain', () => {
             resolveCheck('isUserInContributionsAbTest', false);
             resolveCheck('isUserInEmailAbTestAndEmailCanRun', true);
 
-            init().then(() => {
+            initOutbrain().then(() => {
                 expect(load).toHaveBeenCalledWith('nonCompliant');
                 done();
             });
@@ -145,7 +145,7 @@ describe('Outbrain', () => {
             resolveCheck('isUserInEmailAbTestAndEmailCanRun', false);
             resolveCheck('isStoryQuestionsOnPage', true);
 
-            init().then(() => {
+            initOutbrain().then(() => {
                 expect(load).toHaveBeenCalledWith('nonCompliant');
                 done();
             });
@@ -161,7 +161,7 @@ describe('Outbrain', () => {
             resolveCheck('isUserInEmailAbTestAndEmailCanRun', false);
             resolveCheck('isStoryQuestionsOnPage', false);
 
-            init().then(() => {
+            initOutbrain().then(() => {
                 expect(load).toHaveBeenCalled();
                 done();
             });

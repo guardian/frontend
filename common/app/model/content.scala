@@ -104,7 +104,7 @@ final case class Content(
   lazy val hasTonalHeaderIllustration: Boolean = tags.isLetters
 
   lazy val showCircularBylinePicAtSide: Boolean =
-    cardStyle == Feature && tags.hasLargeContributorImage && tags.contributors.length == 1 && !tags.isInteractive
+    cardStyle == Feature || tags.isReview && tags.hasLargeContributorImage && tags.contributors.length == 1 && !tags.isInteractive
 
   // read this before modifying: https://developers.facebook.com/docs/opengraph/howtos/maximizing-distribution-media-content#images
   lazy val openGraphImage: String = {

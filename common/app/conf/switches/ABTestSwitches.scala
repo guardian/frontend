@@ -115,7 +115,7 @@ trait ABTestSwitches {
     "Test pricing options for digital subs from epic",
     owners = Seq(Owner.withGithub("justinpinner")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 7, 13),  // Thursday 13th July
+    sellByDate = new LocalDate(2017, 7, 20),  // Thursday 20th July
     exposeClientSide = true
   )
 
@@ -125,7 +125,7 @@ trait ABTestSwitches {
     "Test pricing options for digital subs from thrasher",
     owners = Seq(Owner.withGithub("justinpinner")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 7, 13),  // Thursday 13th July
+    sellByDate = new LocalDate(2017, 7, 20),  // Thursday 20th July
     exposeClientSide = true
   )
 

@@ -10,3 +10,10 @@ declare var require: {
     ? : string):
     void,
 };
+
+declare type ThirdPartyTag = {
+    shouldRun: boolean,
+    url: string,
+    onLoad?: () => any,
+    useImage?: boolean,
+};
