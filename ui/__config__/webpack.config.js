@@ -2,11 +2,10 @@
 const path = require('path');
 const webpackMerge = require('webpack-merge');
 
-const { root } = require('./paths');
+const { ui, main } = require('./paths');
 
 const config = {
     output: {
-        path: path.join(root, 'dist'),
         filename: '[name].js',
         chunkFilename: `[name].js`,
     },
@@ -37,8 +36,8 @@ const config = {
     },
     resolve: {
         modules: [
-            path.resolve(root, 'src'),
-            path.resolve(root, 'src', 'app'),
+            path.resolve(ui, 'src'),
+            path.resolve(ui, 'src', 'app'),
             'node_modules', // default location, but we're overiding above, so it needs to be explicit
         ],
         extensions: ['.js', '.jsx'],
@@ -48,16 +47,20 @@ const config = {
 module.exports = [
     webpackMerge.smart(config, {
         entry: {
-            'ui.bundle.server': [path.join(root, 'src', 'boot.server.jsx')],
+            'ui.bundle.server': [path.join(ui, 'src', 'boot.server.jsx')],
         },
         output: {
             library: 'frontend',
             libraryTarget: 'this',
+            path: path.join(ui, 'dist'),
         },
     }),
     webpackMerge.smart(config, {
         entry: {
-            'ui.bundle.browser': [path.join(root, 'src', 'boot.browser.jsx')],
+            'ui.bundle.browser': [path.join(ui, 'src', 'boot.browser.jsx')],
+        },
+        output: {
+            path: path.join(main, 'static', 'target', 'javascripts'),
         },
     }),
 ];

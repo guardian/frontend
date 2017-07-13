@@ -1,5 +1,6 @@
 const path = require('path');
 
 module.exports = {
-    root: path.resolve(__dirname, '..'),
+    ui: path.resolve(__dirname, '..'),
+    main: path.resolve(__dirname, '..', '..'),
 };

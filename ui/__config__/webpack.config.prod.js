@@ -5,7 +5,7 @@ const webpackMerge = require('webpack-merge');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
     .BundleAnalyzerPlugin;
 
-const { root } = require('./paths');
+const { ui } = require('./paths');
 const [server, browser] = require('./webpack.config.js');
 
 module.exports = [
@@ -46,7 +46,7 @@ module.exports = [
             new BundleAnalyzerPlugin({
                 defaultSizes: 'gzip',
                 reportFilename: path.join(
-                    root,
+                    ui,
                     'dist',
                     'bundle.browser.stats.html'
                 ),
