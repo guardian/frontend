@@ -17,3 +17,9 @@ article/resources/components/c.js
 # tests #karma-jest
 static/test/javascripts-legacy/components
 static/test/javascripts-legacy/helpers/raw-loader.js
+
+# CCS componentisation
+coverage
+__snapshots__
+dist
+flow-types.js
