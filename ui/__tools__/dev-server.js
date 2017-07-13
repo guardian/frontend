@@ -8,7 +8,7 @@ const webpack = require('webpack');
 const createWebpackMiddleware = require('webpack-dev-middleware');
 const createWebpackHotMiddleware = require('webpack-hot-middleware');
 
-const { root } = require('../__config__/paths');
+const { ui } = require('../__config__/paths');
 const webpackConfig = require('../__config__/webpack.config.dev.js').find(
     config => config.entry['bundle.browser']
 );
@@ -34,7 +34,7 @@ app.use(
 const initialState = require('./article.json');
 
 // eslint-disable-next-line no-eval
-eval(readFileSync(path.resolve(root, 'dist', 'bundle.server.js'), 'utf8'));
+eval(readFileSync(path.resolve(ui, 'dist', 'bundle.server.js'), 'utf8'));
 
 app.get('/', (request, response) => {
     response.send(`<!DOCTYPE html>
