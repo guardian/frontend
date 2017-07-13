@@ -103,8 +103,14 @@
         @for(sponsorLogos <- listSponsorLogosOnPage(page)) {
           ga('@{trackerName}.set', 'dimension31', '@Html(sponsorLogos.mkString("|"))');
         }
+
         @for(brandingType <- Commercial.brandingType(page)) {
           ga('@{trackerName}.set', 'dimension42', '@brandingType.name');
+        }
+
+        var fbRegEx = new RegExp('https?:\/\/\w*\.?facebook\.com\/.*dialog\/auth');
+        if(document.referrer.match(fbRegEx)) {
+            ga('@{trackerName}.set', 'referrer', null);
         }
         ga('@{trackerName}.set', 'dimension43', getExperienceValue()); @* 'Experience' dimension, for short-lived experiment values. *@
     }
