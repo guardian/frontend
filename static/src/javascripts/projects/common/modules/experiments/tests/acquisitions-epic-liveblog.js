@@ -41,23 +41,25 @@ const getLiveblogEntryTimeData = (el: Element): Promise<TimeData> =>
 const getBlocksToInsertEpicAfter = (): Promise<Array<Element>> =>
     fastdom.read(() => {
         const blocks = document.getElementsByClassName('block');
-        const blocksWithManualEpic = document.getElementsByClassName(
+        const blocksToInsertManualEpicAfter = document.getElementsByClassName(
             INSERT_EPIC_AFTER_CLASS
         );
-        const existingEpics = document.getElementsByClassName('is-epic');
+        const epicsAlreadyOnPage = document.getElementsByClassName('is-epic');
 
         if (
-            blocksWithManualEpic.length ||
-            existingEpics.length ||
+            blocksToInsertManualEpicAfter.length ||
+            epicsAlreadyOnPage.length ||
             blocks.length < 4
         ) {
-            return [...blocksWithManualEpic];
+            return [...blocksToInsertManualEpicAfter];
         }
 
         const autoBlockNum = Math.floor(Math.random() * 3) + 1;
-        const blockWithAutoEpic = blocks[autoBlockNum];
+        const blockToInsertAutoEpicAfter = blocks[autoBlockNum];
 
-        return [...blocksWithManualEpic].concat(blockWithAutoEpic);
+        return [...blocksToInsertManualEpicAfter].concat(
+            blockToInsertAutoEpicAfter
+        );
     });
 
 const setEpicLiveblogEntryTimeData = (
