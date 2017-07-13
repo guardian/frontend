@@ -64,6 +64,34 @@
         }).join(' ');
     }
 
+    function getCookieValue(name) {
+        var val = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)');
+        return val ? val.pop() : undefined;
+    }
+
+    /*
+        This is a shortened version of shouldSeeReaderRevenue() from
+        user-features.js. Since we are blocking rendering at this time we
+        can't inline all required JS from this module.
+    */
+    function isRecentContributor() {
+        var value = getCookieValue('gu.contributions.contrib-timestamp');
+
+        if (!value) {
+            return false;
+        }
+
+        var now = new Date().getTime();
+        var lastContribution = new Date(value).getTime();
+        var diffDays = Math.ceil((now - lastContribution) / (1000 * 3600 * 24));
+
+        return diffDays <= 180;
+    }
+
+    function isPayingMember() {
+        return getCookieValue('gu_paying_member') === 'true';
+    }
+
     // http://modernizr.com/download/#-svg
     if (!!document.createElementNS && !!document.createElementNS('http://www.w3.org/2000/svg', 'svg').createSVGRect) {
         docClass += ' svg';
@@ -101,5 +129,14 @@
     if (baseFontSize && parseInt(baseFontSize, 10) !== 16) {
         documentElement.style.fontSize = baseFontSize
     }
+
+    if (isPayingMember()) {
+        docClass += ' is-paying-member';
+    }
+
+    if (isRecentContributor()) {
+        docClass += ' is-recent-contributor';
+    }
+
     documentElement.className = docClass.replace(/\bjs-off\b/g, 'js-on');
 })(document.documentElement, window, navigator);
