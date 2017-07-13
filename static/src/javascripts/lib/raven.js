@@ -2,7 +2,7 @@
 
 import raven from 'raven';
 import config from 'lib/config';
-import detect from 'lib/detect';
+import { adblockInUse } from 'lib/detect';
 
 const { sentryPublicApiKey, sentryHost } = config.page;
 const sentryUrl = `https://${sentryPublicApiKey}@${sentryHost}`;
@@ -61,8 +61,8 @@ const sentryOptions = {
     },
 };
 
-detect.adblockInUse.then(adblockInUse => {
-    adblockBeingUsed = adblockInUse;
+adblockInUse.then(isUse => {
+    adblockBeingUsed = isUse;
 });
 
 export default raven.config(sentryUrl, sentryOptions).install();

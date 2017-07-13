@@ -3,7 +3,7 @@ import type { Advert } from 'commercial/modules/dfp/Advert';
 
 import { addEventListener } from 'lib/events';
 import config from 'lib/config';
-import detect from 'lib/detect';
+import { isBreakpoint } from 'lib/detect';
 import fastdom from 'lib/fastdom-promise';
 import trackAdRender from 'commercial/modules/dfp/track-ad-render';
 import { commercialFeatures } from 'commercial/modules/commercial-features';
@@ -182,7 +182,7 @@ const initStickyTopBanner = (): Promise<void> => {
     topSlot = document.getElementById(topSlotId);
     if (
         topSlot &&
-        detect.isBreakpoint({
+        isBreakpoint({
             min: 'desktop',
         })
     ) {

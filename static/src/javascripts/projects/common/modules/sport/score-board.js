@@ -2,7 +2,7 @@
 
 import bonzo from 'bonzo';
 import Component from 'common/modules/component';
-import detect from 'lib/detect';
+import { isBreakpoint } from 'lib/detect';
 import $ from 'lib/$';
 
 type ScoreBoardContext = {
@@ -36,7 +36,7 @@ class ScoreBoard extends Component {
                 this.pageType !== 'report' ? ' score__loading--live' : '',
         });
 
-        this.updateEvery = detect.isBreakpoint({ min: 'desktop' }) ? 30 : 60;
+        this.updateEvery = isBreakpoint({ min: 'desktop' }) ? 30 : 60;
         this.placeholder = bonzo.create(scoreContainerHtml)[0];
 
         if (this.pageType === 'report') {

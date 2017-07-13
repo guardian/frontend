@@ -1,5 +1,5 @@
 // @flow
-import detect from 'lib/detect';
+import { getViewport } from 'lib/detect';
 import fastdom from 'lib/fastdom-promise';
 import type { RegisterListeners } from 'commercial/modules/messenger';
 
@@ -8,7 +8,7 @@ let iframes = {};
 let iframeCounter = 0;
 let taskQueued = false;
 
-const lastViewportRead = () => fastdom.read(() => detect.getViewport());
+const lastViewportRead = () => fastdom.read(() => getViewport());
 
 const reset = (window_: WindowProxy): void => {
     w = window_ || window;

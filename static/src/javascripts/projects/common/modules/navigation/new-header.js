@@ -1,7 +1,7 @@
 // @flow
 
 import debounce from 'lodash/functions/debounce';
-import detect from 'lib/detect';
+import { isBreakpoint } from 'lib/detect';
 import fastdom from 'lib/fastdom-promise';
 import { scrollToElement } from 'lib/scroller';
 import { addEventListener } from 'lib/events';
@@ -107,7 +107,7 @@ const toggleSidebar = (): void => {
         const expandedAttr = isOpen ? 'false' : 'true';
         const hiddenAttr = isOpen ? 'true' : 'false';
         const haveToCalcTogglePosition = (): boolean =>
-            detect.isBreakpoint({
+            isBreakpoint({
                 min: 'tablet',
                 max: 'desktop',
             });

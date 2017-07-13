@@ -1,6 +1,6 @@
 // @flow
 import config from 'lib/config';
-import detect from 'lib/detect';
+import { getBreakpoint, adblockInUse } from 'lib/detect';
 import { isAdFreeUser } from 'commercial/modules/user-features';
 import identityApi from 'common/modules/identity/api';
 import userPrefs from 'common/modules/user-prefs';
@@ -40,7 +40,7 @@ class CommercialFeatures {
             config.page.contentType === 'Identity' ||
             config.page.section === 'identity'; // needed for pages under profile.* subdomain
         const switches = config.switches;
-        const isWidePage = detect.getBreakpoint() === 'wide';
+        const isWidePage = getBreakpoint() === 'wide';
         const supportsSticky =
             document.documentElement &&
             document.documentElement.classList.contains('has-sticky');
@@ -118,7 +118,7 @@ class CommercialFeatures {
             !supportsSticky;
 
         this.asynchronous = {
-            canDisplayMembershipEngagementBanner: detect.adblockInUse.then(
+            canDisplayMembershipEngagementBanner: adblockInUse.then(
                 adblockUsed => !adblockUsed && shouldShowReaderRevenue()
             ),
         };

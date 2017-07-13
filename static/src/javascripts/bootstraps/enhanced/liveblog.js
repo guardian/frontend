@@ -1,6 +1,6 @@
 // @flow
 import config from 'lib/config';
-import detect from 'lib/detect';
+import { isBreakpoint } from 'lib/detect';
 import mediator from 'lib/mediator';
 import richLinks from 'common/modules/article/rich-links';
 import Affix from 'common/modules/experiments/affix';
@@ -12,7 +12,7 @@ import { catchErrorsWithContext } from 'lib/robust';
 
 const affixTimeline = (): void => {
     if (
-        detect.isBreakpoint({
+        isBreakpoint({
             min: 'desktop',
         }) &&
         !config.page.keywordIds.includes('football/football') &&

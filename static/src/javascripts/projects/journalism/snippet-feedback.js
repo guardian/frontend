@@ -2,7 +2,7 @@
 import fastdom from 'lib/fastdom-promise';
 import mediator from 'lib/mediator';
 import ophan from 'ophan/ng';
-import detect from 'lib/detect';
+import { getViewport } from 'lib/detect';
 
 const SnippetFeedback = (options: { scroll: boolean } = { scroll: true }) => {
     let snippets = [...document.querySelectorAll('.explainer-snippet--new')];
@@ -70,7 +70,7 @@ const SnippetFeedback = (options: { scroll: boolean } = { scroll: true }) => {
         // Callback for scroll into view
         mediator.on('window:throttledScroll', function onScroll() {
             snippets = snippets.filter(snippet => {
-                const height = detect.getViewport().height;
+                const height = getViewport().height;
                 const coords = snippet.getBoundingClientRect();
                 const isInView = coords.top >= 0 && coords.bottom <= height;
 
