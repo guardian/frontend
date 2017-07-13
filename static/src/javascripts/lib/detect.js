@@ -188,7 +188,7 @@ const isBreakpoint = (criteria: Object): boolean => {
 const hasCrossedBreakpoint = (includeTweakpoint: boolean): Function => {
     let was = getBreakpoint(includeTweakpoint);
 
-    return function(callback: Function): void {
+    return (callback: Function): void => {
         const is = getBreakpoint(includeTweakpoint);
 
         if (is !== was) {
@@ -333,9 +333,7 @@ const adblockInUse: Promise<?boolean> = new Promise(resolve => {
 
 const getReferrer = (): string => document.referrer || '';
 
-const getUserAgent = (function():
-    | string
-    | { browser: string, version: string } {
+const getUserAgent = ((): string | { browser: string, version: string } => {
     if (!navigator && !navigator.userAgent) {
         return '';
     }
