@@ -1,4 +1,3 @@
-// @flow
 /* eslint-disable flow-header, no-console, global-require, import/no-extraneous-dependencies */
 
 if (
