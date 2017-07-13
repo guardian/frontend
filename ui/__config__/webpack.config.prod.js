@@ -14,6 +14,16 @@ module.exports = [
             new webpack.DefinePlugin({
                 'process.env.NODE_ENV': JSON.stringify('production'),
             }),
+            new webpack.optimize.UglifyJsPlugin({
+                compress: {
+                    global_defs: {
+                        BROWSER: false,
+                        SERVER: true,
+                    },
+                },
+                mangle: false,
+                beautify: true,
+            }),
         ],
     }),
     webpackMerge.smart(browser, {
@@ -26,6 +36,12 @@ module.exports = [
             new webpack.optimize.OccurrenceOrderPlugin(),
             new webpack.optimize.UglifyJsPlugin({
                 sourceMap: true,
+                compress: {
+                    global_defs: {
+                        BROWSER: true,
+                        SERVER: false,
+                    },
+                },
             }),
             new BundleAnalyzerPlugin({
                 defaultSizes: 'gzip',
