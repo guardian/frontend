@@ -1,6 +1,6 @@
 package dfp
 
-import com.google.api.ads.dfp.axis.v201705.{CustomFieldValue, LineItem, TextValue}
+import com.google.api.ads.dfp.axis.v201608.{CustomFieldValue, LineItem, TextValue}
 import common.dfp.GuCustomField
 import dfp.DfpApi.getAllCustomFields
 
