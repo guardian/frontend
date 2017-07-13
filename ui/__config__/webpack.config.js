@@ -48,7 +48,7 @@ const config = {
 module.exports = [
     webpackMerge.smart(config, {
         entry: {
-            'bundle.server': [path.join(root, 'src', 'boot.server.jsx')],
+            'ui.bundle.server': [path.join(root, 'src', 'boot.server.jsx')],
         },
         output: {
             library: 'frontend',
@@ -57,7 +57,7 @@ module.exports = [
     }),
     webpackMerge.smart(config, {
         entry: {
-            'bundle.browser': [path.join(root, 'src', 'boot.browser.jsx')],
+            'ui.bundle.browser': [path.join(root, 'src', 'boot.browser.jsx')],
         },
     }),
 ];
