@@ -2,6 +2,14 @@
 
 import mediator from 'lib/mediator';
 
+type MediaQueryList = {
+    matches: boolean,
+    media: string,
+    onchange: (callback: (event: Event) => void) => void,
+    addListener: (callback: (event: Event) => void) => void,
+    removeListener: (callback: (event: Event) => void) => void,
+};
+
 type BreakpointName =
     | 'mobile'
     | 'mobileMedium'
@@ -15,8 +23,8 @@ type BreakpointName =
 type Breakpoint = {
     name: BreakpointName,
     isTweakpoint: boolean,
-    listener: void | ((mql: MediaQueryList) => void),
-    mql: ?MediaQueryList,
+    listener?: (mql: MediaQueryList) => void,
+    mql?: MediaQueryList,
     width: number,
 };
 
@@ -69,7 +77,7 @@ const breakpoints: Array<Breakpoint> = [
 let currentBreakpoint: BreakpointName;
 let currentTweakpoint: BreakpointName;
 let supportsPushState: boolean;
-let pageVisibility: string =
+let pageVisibility =
     document.visibilityState ||
     document.webkitVisibilityState ||
     document.mozVisibilityState ||
