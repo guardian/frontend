@@ -38,63 +38,26 @@ const getLiveblogEntryTimeData = (el: Element): Promise<TimeData> =>
         }
     });
 
-const getBlocksOnPageLoad = () => {
-    const blocks = [...document.getElementsByClassName('block')];
-
-    // We auto-insert next to 1, 2 or 3
-    const autoBlockNum = Math.floor(Math.random() * 3) + 1;
-
-    // Which means potentially clashing blocks are 0, 1, 2, 3, or 4
-    const potentiallyClashingBlocks = blocks.slice(0, 5);
-
-    const blockWithAutoEpic = blocks[autoBlockNum];
-    const blocksWithManualEpic = [
-        ...document.getElementsByClassName(INSERT_EPIC_AFTER_CLASS),
-    ];
-
-    const isManualEpicInClashingSlot = potentiallyClashingBlocks
-        .slice(0, 5)
-        .some(el => el.classList.contains(INSERT_EPIC_AFTER_CLASS));
-
-    if (blocks.length > 4 && !isManualEpicInClashingSlot) {
-        return blocksWithManualEpic.concat(blockWithAutoEpic);
-    }
-    return blocksWithManualEpic;
-};
-
-const getBlocksOnAutoUpdate = () => {
-    const blocks = [...document.getElementsByClassName('block')];
-    const blocksWithManualEpic = [
-        ...document.getElementsByClassName(INSERT_EPIC_AFTER_CLASS),
-    ];
-
-    const liveblogBody = document.querySelector('.js-liveblog-body');
-
-    if (liveblogBody) {
-        const firstTenElements = [...liveblogBody.children].slice(0, 9);
-
-        const hasEpicNearTop = firstTenElements.some(
-            el =>
-                el.classList.contains(INSERT_EPIC_AFTER_CLASS) ||
-                el.classList.contains('is-epic')
-        );
-
-        if (blocks.length > 4 && !hasEpicNearTop) {
-            return [blocks[0]];
-        }
-    }
-
-    return blocksWithManualEpic;
-};
-
-const getBlocksToInsertEpicAfter = (
-    isAutoUpdate: boolean
-): Promise<Array<Element>> =>
+const getBlocksToInsertEpicAfter = (): Promise<Array<Element>> =>
     fastdom.read(() => {
-        if (isAutoUpdate) {
-            return getBlocksOnAutoUpdate();
+        const blocks = document.getElementsByClassName('block');
+        const blocksWithManualEpic = document.getElementsByClassName(
+            INSERT_EPIC_AFTER_CLASS
+        );
+        const existingEpics = document.getElementsByClassName('is-epic');
+
+        if (
+            blocksWithManualEpic.length ||
+            existingEpics.length ||
+            blocks.length < 4
+        ) {
+            return [...blocksWithManualEpic];
         }
-        return getBlocksOnPageLoad();
+
+        const autoBlockNum = Math.floor(Math.random() * 3) + 1;
+        const blockWithAutoEpic = blocks[autoBlockNum];
+
+        return [...blocksWithManualEpic].concat(blockWithAutoEpic);
     });
 
 const setEpicLiveblogEntryTimeData = (
@@ -126,10 +89,9 @@ const setupViewTracking = (el: Element, test: ContributionsABTest): void => {
 
 const addEpicToBlocks = (
     epicHtml: string,
-    test: ContributionsABTest,
-    isAutoUpdate: boolean = false
+    test: ContributionsABTest
 ): Promise<void> =>
-    getBlocksToInsertEpicAfter(isAutoUpdate).then(blocksToInsertEpicAfter => {
+    getBlocksToInsertEpicAfter().then(blocksToInsertEpicAfter => {
         blocksToInsertEpicAfter.forEach(el => {
             getLiveblogEntryTimeData(el).then((timeData: TimeData) => {
                 fastdom.write(() => {
@@ -192,7 +154,7 @@ export const acquisitionsEpicLiveblog: ContributionsABTest = makeABTest({
 
                 if (!isAutoUpdateHandlerBound) {
                     mediator.on('modules:autoupdate:updates', () => {
-                        addEpicToBlocks(epicHtml, test, true);
+                        addEpicToBlocks(epicHtml, test);
                     });
                     isAutoUpdateHandlerBound = true;
                 }
