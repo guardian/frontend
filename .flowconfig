@@ -8,6 +8,9 @@
 dev/flow-typed
 dev/flow-typed-guardian-frontend
 
+# Additions for CSS componentisation
+ui/__tools__/flow-typed
+ui/__tools__/flow-types.js
 
 [options]
 module.name_mapper='^admin' -> 'projects/admin'
@@ -34,3 +37,10 @@ module.system.node.resolve_dirname=static/src/javascripts
 module.system.node.resolve_dirname=static/src/javascripts-legacy
 module.system.node.resolve_dirname=static/vendor/javascripts
 module.system.node.resolve_dirname=node_modules
+
+# Additions for CSS componentisation
+module.system.node.resolve_dirname=ui/src
+module.system.node.resolve_dirname=ui/src/app
+module.system.node.resolve_dirname=ui/node_modules
+module.file_ext=.scss
+module.file_ext=.jsx
