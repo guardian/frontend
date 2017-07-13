@@ -39,7 +39,8 @@
 .header-cta-item--primary {
     color: $guardian-brand-dark;
 
-    .hide-reader-revenue & {
+    .is-paying-member &,
+    .is-recent-contributor & {
         display: none;
     }
 

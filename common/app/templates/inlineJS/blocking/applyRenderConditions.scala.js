@@ -64,43 +64,32 @@
         }).join(' ');
     }
 
+    function getCookieValue(name) {
+        var val = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)');
+        return val ? val.pop() : undefined;
+    }
+
     /*
         This is a shortened version of shouldSeeReaderRevenue() from
         user-features.js. Since we are blocking rendering at this time we
         can't/ don't want to online all required JS from this module.
     */
-    function hideReaderRevenue() {
-        var getCookieValue = function(name) {
-            var val = document.cookie.match('(^|;)\\s*' + name + '\\s*=\\s*([^;]+)');
-            return val ? val.pop() : undefined;
-        };
+    function isRecentContributor() {
+        var value = getCookieValue('gu.contributions.contrib-timestamp');
 
-        var contribution = {
-            cookie: 'gu.contributions.contrib-timestamp',
-            check: function(value) {
-                if (!value) {
-                    return false;
-                }
+        if (!value) {
+            return false;
+        }
 
-                var now = new Date().getTime();
-                var lastContribution = new Date(value).getTime();
-                var diffDays = Math.ceil((now - lastContribution) / (1000 * 3600 * 24));
+        var now = new Date().getTime();
+        var lastContribution = new Date(value).getTime();
+        var diffDays = Math.ceil((now - lastContribution) / (1000 * 3600 * 24));
 
-                return diffDays <= 180;
-            },
-        };
+        return diffDays <= 180;
+    }
 
-        var member = {
-            cookie: 'gu_paying_member',
-            check: function(value) {
-                return value === 'true';
-            },
-        };
-
-        var contribCookie = getCookieValue(contribution.cookie);
-        var memberCookie = getCookieValue(member.cookie);
-
-        return member.check(memberCookie) || contribution.check(contribCookie);
+    function isPayingMember() {
+        return getCookieValue('gu_paying_member') === 'true';
     }
 
     // http://modernizr.com/download/#-svg
@@ -141,8 +130,12 @@
         documentElement.style.fontSize = baseFontSize
     }
 
-    if (hideReaderRevenue()) {
-        docClass += ' hide-reader-revenue';
+    if (isPayingMember()) {
+        docClass += ' is-paying-member';
+    }
+
+    if (isRecentContributor()) {
+        docClass += ' is-recent-contributor';
     }
 
     documentElement.className = docClass.replace(/\bjs-off\b/g, 'js-on');
