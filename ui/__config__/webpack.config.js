@@ -2,7 +2,7 @@
 const path = require('path');
 const webpackMerge = require('webpack-merge');
 
-const root = path.resolve(__dirname, '..');
+const { root } = require('./paths');
 
 const config = {
     output: {

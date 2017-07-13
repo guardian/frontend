@@ -8,7 +8,7 @@ const webpack = require('webpack');
 const createWebpackMiddleware = require('webpack-dev-middleware');
 const createWebpackHotMiddleware = require('webpack-hot-middleware');
 
-const root = path.resolve(__dirname, '..');
+const { root } = require('../__config__/paths');
 const webpackConfig = require('../__config__/webpack.config.dev.js').find(
     config => config.entry['bundle.browser']
 );

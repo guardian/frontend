@@ -5,7 +5,7 @@ const webpackMerge = require('webpack-merge');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
     .BundleAnalyzerPlugin;
 
-const root = path.resolve(__dirname, '..');
+const { root } = require('./paths');
 const [server, browser] = require('./webpack.config.js');
 
 module.exports = [
