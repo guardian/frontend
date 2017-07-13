@@ -31,6 +31,8 @@ const renderApp = () => {
 };
 
 if (module.hot) {
+    // chillout flow
+    // $FlowFixMe
     module.hot.accept();
 }
 
