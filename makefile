@@ -125,3 +125,10 @@ screenshots: install
 
 es6: install
 	@node ./tools/es5to6.js ${file}
+
+
+
+# *********************** UI ***********************
+
+compile-ui:
+	@cd ui && yarn bundle
