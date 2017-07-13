@@ -1,7 +1,7 @@
 package dfp
 
-import com.google.api.ads.dfp.axis.utils.v201705.StatementBuilder
-import com.google.api.ads.dfp.axis.v201705._
+import com.google.api.ads.dfp.axis.utils.v201608.StatementBuilder
+import com.google.api.ads.dfp.axis.v201608._
 import common.Logging
 
 import scala.util.control.NonFatal
