@@ -347,29 +347,35 @@ const getUserAgent = ((): string | { browser: string, version: string } => {
     }
 
     const ua: string = navigator.userAgent;
-    let tem: Array<string>;
-    let M: Array<string> =
+    let tem: ?Array<any>;
+    let M: ?Array<any> =
         ua.match(
             /(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i
         ) || [];
 
-    if (/trident/i.test(M[1])) {
-        tem = /\brv[ :]+(\d+)/g.exec(ua) || [];
-        return `IE ${tem[1] || ''}`;
+    if (M && M[1] && /trident/i.test(M[1])) {
+        tem = /\brv[ :]+(\d+)/g.exec(ua);
+
+        if (tem && tem[1]) {
+            return `IE ${tem[1]}`;
+        }
     }
 
-    if (M[1] === 'Chrome') {
+    if (M && M[1] === 'Chrome') {
         tem = ua.match(/\bOPR\/(\d+)/);
 
-        if (tem !== null) {
+        if (tem && tem[1]) {
             return `Opera ${tem[1]}`;
         }
     }
 
-    M = M[2] ? [M[1], M[2]] : [navigator.appName, navigator.appVersion, '-?'];
-    tem = ua && ua.match(/version\/(\d+)/i);
+    M =
+        M && M[2]
+            ? [M[1], M[2]]
+            : [navigator.appName, navigator.appVersion, '-?'];
+    tem = ua.match(/version\/(\d+)/i);
 
-    if (tem !== null) {
+    if (tem && tem[1]) {
         M.splice(1, 1, tem[1]);
     }
 
