@@ -1,7 +1,9 @@
 // @flow
 
 import { _ as testExports } from 'commercial/modules/messenger/viewport';
-import { getViewport } from 'lib/detect';
+import { getViewport as getViewport_ } from 'lib/detect';
+
+const getViewport: any = getViewport_;
 
 const addResizeListener: any = testExports.addResizeListener;
 const reset = testExports.reset;

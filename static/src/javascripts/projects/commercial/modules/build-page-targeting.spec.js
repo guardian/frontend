@@ -4,7 +4,10 @@ import { local } from 'lib/storage';
 import { buildPageTargeting } from 'commercial/modules/build-page-targeting';
 import config from 'lib/config';
 import { getCookie as getCookie_ } from 'lib/cookies';
-import { getReferrer, getBreakpoint } from 'lib/detect';
+import {
+    getReferrer as getReferrer_,
+    getBreakpoint as getBreakpoint_,
+} from 'lib/detect';
 import identity from 'common/modules/identity/api';
 import { getUserSegments as getUserSegments_ } from 'commercial/modules/user-ad-targeting';
 import { getParticipations as getParticipations_ } from 'common/modules/experiments/utils';
@@ -14,6 +17,8 @@ const getCookie: any = getCookie_;
 const getUserSegments: any = getUserSegments_;
 const getParticipations: any = getParticipations_;
 const getKruxSegments: any = getKruxSegments_;
+const getReferrer: any = getReferrer_;
+const getBreakpoint: any = getBreakpoint_;
 
 jest.mock('lib/storage');
 jest.mock('lib/config', () => ({}));

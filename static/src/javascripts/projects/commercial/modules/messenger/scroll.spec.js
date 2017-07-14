@@ -1,7 +1,8 @@
 // @flow
 import { _ as testExports } from 'commercial/modules/messenger/scroll';
-import { getViewport } from 'lib/detect';
+import { getViewport as getViewport_ } from 'lib/detect';
 
+const getViewport: any = getViewport_;
 const addScrollListener: any = testExports.addScrollListener;
 const removeScrollListener: any = testExports.removeScrollListener;
 const reset = testExports.reset;

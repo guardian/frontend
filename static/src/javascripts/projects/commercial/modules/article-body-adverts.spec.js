@@ -6,7 +6,15 @@ import {
 import config from 'lib/config';
 import { spaceFiller } from 'common/modules/article/space-filler';
 import { commercialFeatures } from 'commercial/modules/commercial-features';
-import { getViewport, getBreakpoint, isBreakpoint } from 'lib/detect';
+import {
+    getViewport as getViewport_,
+    getBreakpoint as getBreakpoint_,
+    isBreakpoint as isBreakpoint_,
+} from 'lib/detect';
+
+const getViewport: any = getViewport_;
+const getBreakpoint: any = getBreakpoint_;
+const isBreakpoint: any = isBreakpoint_;
 
 jest.mock('commercial/modules/dfp/track-ad-render', () => (id: string) => {
     const ads = {

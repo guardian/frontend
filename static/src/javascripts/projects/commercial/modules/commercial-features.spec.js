@@ -2,7 +2,10 @@
 import { commercialFeatures } from 'commercial/modules/commercial-features';
 import config from 'lib/config';
 import userPrefs from 'common/modules/user-prefs';
-import { getBreakpoint, adblockInUse } from 'lib/detect';
+import {
+    getBreakpoint as getBreakpoint_,
+    adblockInUse as adblockInUse_,
+} from 'lib/detect';
 import identity from 'common/modules/identity/api';
 import {
     isPayingMember as isPayingMember_,
@@ -17,6 +20,8 @@ const isRecentContributor: JestMockFn = (isRecentContributor_: any);
 const shouldSeeReaderRevenue: JestMockFn = (shouldSeeReaderRevenue_: any);
 const isAdFreeUser: JestMockFn = (isAdFreeUser_: any);
 const shouldShowReaderRevenue: JestMockFn = (shouldShowReaderRevenue_: any);
+const adblockInUse: any = adblockInUse_;
+const getBreakpoint: any = getBreakpoint_;
 
 const CommercialFeatures = commercialFeatures.constructor;
 

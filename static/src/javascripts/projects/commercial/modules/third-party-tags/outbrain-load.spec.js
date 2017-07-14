@@ -1,10 +1,12 @@
 // @flow
 import config from 'lib/config';
 import $ from 'lib/$';
-import { getBreakpoint } from 'lib/detect';
+import { getBreakpoint as getBreakpoint_ } from 'lib/detect';
 import { loadScript } from 'lib/load-script';
 import { tracking } from './outbrain-tracking';
 import { load } from './outbrain-load';
+
+const getBreakpoint: any = getBreakpoint_;
 
 jest.mock('ophan/ng', () => ({ record: () => undefined }));
 jest.mock('lib/detect', () => ({

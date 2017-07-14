@@ -1,7 +1,7 @@
 // @flow
 import $ from 'lib/$';
 import { noop } from 'lib/noop';
-import { getBreakpoint } from 'lib/detect';
+import { getBreakpoint as getBreakpoint_ } from 'lib/detect';
 import config from 'lib/config';
 
 import prepareGoogletag from 'commercial/modules/dfp/prepare-googletag';
@@ -9,6 +9,8 @@ import getAdverts from 'commercial/modules/dfp/get-adverts';
 import getCreativeIDs from 'commercial/modules/dfp/get-creative-ids';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 import { commercialFeatures } from 'commercial/modules/commercial-features';
+
+const getBreakpoint: any = getBreakpoint_;
 
 jest.mock('common/modules/identity/api', () => ({
     isUserLoggedIn: () => true,
