@@ -1,22 +1,6 @@
 // @flow
 
-export const wrappedElementsFromString = (
-    tagName: string,
-    html: string
-): Element => {
-    const wrapper = document.createElement(tagName);
-    wrapper.innerHTML = html;
-    return wrapper;
-};
-
-export const elementFromString = (html: string): ?Element =>
-    wrappedElementsFromString('div', html).firstElementChild;
-
-export const elementsFromString = (html: string): Array<Element> => [
-    ...wrappedElementsFromString('div', html).children,
-];
-
-export const insertAfter = (
+const insertAfter = (
     elementToInsert: Element,
     elementToInsertAfter: Element
 ): void => {
@@ -33,7 +17,7 @@ export const insertAfter = (
     }
 };
 
-export const insertBefore = (
+const insertBefore = (
     elementToInsert: Element,
     elementToInsertBefore: Element
 ): void => {
@@ -42,3 +26,28 @@ export const insertBefore = (
         parent.insertBefore(elementToInsert, elementToInsertBefore);
     }
 };
+
+export const wrappedElementsFromString = (
+    tagName: string,
+    html: string
+): Element => {
+    const wrapper = document.createElement(tagName);
+    wrapper.innerHTML = html;
+    return wrapper;
+};
+
+export const elementFromString = (html: string): ?Element =>
+    wrappedElementsFromString('div', html).firstElementChild;
+
+export const elementsFromString = (html: string): Array<Element> => [
+    ...wrappedElementsFromString('div', html).children,
+];
+
+export const insert = (elementToInsert: Element) => ({
+    after(elementToInsertAfter: Element) {
+        insertAfter(elementToInsert, elementToInsertAfter);
+    },
+    before(elementToInsertBefore: Element) {
+        insertBefore(elementToInsert, elementToInsertBefore);
+    },
+});

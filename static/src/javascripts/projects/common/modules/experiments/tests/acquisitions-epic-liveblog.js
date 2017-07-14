@@ -2,7 +2,7 @@
 import { makeABTest } from 'common/modules/commercial/contributions-utilities';
 import { logView } from 'common/modules/commercial/acquisitions-view-log';
 import template from 'lodash/utilities/template';
-import { elementFromString, insertAfter } from 'lib/dom';
+import { elementFromString, insert } from 'lib/dom';
 import config from 'lib/config';
 import mediator from 'lib/mediator';
 import ElementInView from 'lib/element-inview';
@@ -102,7 +102,7 @@ const addEpicToBlocks = (
                     const epic = elementFromString(epicHtml);
 
                     if (epic) {
-                        insertAfter(epic, el);
+                        insert(epic).after(el);
                         el.classList.remove(INSERT_EPIC_AFTER_CLASS);
                         setEpicLiveblogEntryTimeData(epic, timeData);
                         setupViewTracking(el, test);
