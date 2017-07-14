@@ -1,6 +1,6 @@
 package dfp
 
-import com.google.api.ads.dfp.axis.v201705._
+import com.google.api.ads.dfp.axis.v201608._
 import common.dfp._
 import dfp.ApiHelper.{isPageSkin, optJavaInt, toJodaTime, toSeq}
 

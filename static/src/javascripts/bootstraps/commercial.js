@@ -18,7 +18,7 @@ import { loadOnwardComponent } from 'commercial/modules/hosted/onward';
 import { initLiveblogAdverts } from 'commercial/modules/liveblog-adverts';
 import { initStickyTopBanner } from 'commercial/modules/sticky-top-banner';
 import { initThirdPartyTags } from 'commercial/modules/third-party-tags';
-import paidforBand from 'commercial/modules/paidfor-band';
+import { initPaidForBand } from 'commercial/modules/paidfor-band';
 import { paidContainers } from 'commercial/modules/paid-containers';
 import {
     defer,
@@ -36,7 +36,7 @@ const commercialModules: Array<Array<any>> = [
     ['cm-prepare-googletag', prepareGoogletag.init, true],
     ['cm-closeDisabledSlots', closeDisabledSlots],
     ['cm-paidContainers', paidContainers],
-    ['cm-paidforBand', paidforBand.init],
+    ['cm-paidforBand', initPaidForBand],
 ];
 
 if (!commercialFeatures.adFree) {
