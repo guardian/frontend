@@ -13,7 +13,9 @@
         "test:ci": "yarn test -- --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
         "clean": "rm -rf ./dist",
         "bundle": "BABEL_ENV=production yarn install -s && yarn run clean -s && webpack --config ./__config__/webpack.config.prod.js --progress",
-        "dev": "yarn install -s && webpack --config ./__config__/webpack.config.dev.js && node ./__tools__/dev-server.js"
+        "dev": "yarn install -s && yarn run clean -s && concurrently --kill-others -n \"BRSR,SRVR\" -c \"red.dim,cyan.dim\" \"yarn dev:browser\" \"yarn dev:server\"",
+        "dev:browser": "webpack-dev-server --config ./__config__/webpack.config.dev.js --env.browser",
+        "dev:server": "webpack --config ./__config__/webpack.config.dev.js --env.server"
     },
     "repository": {
         "type": "git",
@@ -45,6 +47,7 @@
         "babel-preset-env": "^1.6.0",
         "babel-preset-flow": "^6.23.0",
         "check-node-version": "^2.1.0",
+        "concurrently": "^3.5.0",
         "coveralls": "^2.13.0",
         "eslint": "^3.19.0",
         "eslint-config-airbnb": "^15.0.2",
@@ -72,6 +75,7 @@
         "webpack": "^3.2.0",
         "webpack-bundle-analyzer": "^2.8.2",
         "webpack-dev-middleware": "^1.10.2",
+        "webpack-dev-server": "^2.5.1",
         "webpack-hot-middleware": "^2.18.2",
         "webpack-merge": "^4.1.0"
     },

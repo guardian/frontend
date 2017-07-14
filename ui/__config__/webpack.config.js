@@ -1,8 +1,8 @@
-// @flow
 const path = require('path');
+const webpack = require('webpack');
 const webpackMerge = require('webpack-merge');
 
-const { ui, main } = require('./paths');
+const { ui } = require('./paths');
 
 const config = {
     output: {
@@ -42,25 +42,37 @@ const config = {
         ],
         extensions: ['.js', '.jsx'],
     },
+    watchOptions: { ignored: /node_modules/ },
 };
 
-module.exports = [
-    webpackMerge.smart(config, {
-        entry: {
-            'ui.bundle.server': [path.join(ui, 'src', 'boot.server.jsx')],
-        },
-        output: {
-            library: 'frontend',
-            libraryTarget: 'this',
-            path: path.join(ui, 'dist'),
-        },
-    }),
-    webpackMerge.smart(config, {
-        entry: {
-            'ui.bundle.browser': [path.join(ui, 'src', 'boot.browser.jsx')],
-        },
-        output: {
-            path: path.join(main, 'static', 'target', 'javascripts'),
-        },
-    }),
-];
+module.exports = env => {
+    if (env.server) {
+        return webpackMerge.smart(config, {
+            entry: {
+                'ui.bundle.server': [path.join(ui, 'src', 'boot.server.jsx')],
+            },
+            output: {
+                library: 'frontend',
+                libraryTarget: 'this',
+                path: path.join(ui, 'dist'),
+            },
+            plugins: [
+                new webpack.DefinePlugin({ BROWSER: false, SERVER: true }),
+            ],
+        });
+    }
+    if (env.browser) {
+        return webpackMerge.smart(config, {
+            entry: {
+                'ui.bundle.browser': [path.join(ui, 'src', 'boot.browser.jsx')],
+            },
+            output: {
+                publicPath: '/assets/javascripts/',
+            },
+            plugins: [
+                new webpack.DefinePlugin({ BROWSER: true, SERVER: false }),
+            ],
+        });
+    }
+    return config;
+};

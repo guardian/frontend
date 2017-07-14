@@ -6,9 +6,17 @@ Slack channel: [#dotcom-future](https://theguardian.slack.com/messages/C0JES5PEV
 
 ## Dev
 
-Currently only creating a production bundle works:
-
 1. start the `article` play application.
-2. run `make compile-ui`.
-3. browse to http://localhost:9000/render/js.
+2. run `make ui-dev`.
+3. browse to http://localhost:3000/render/js.
 
+## Prod
+
+1. run `make ui-bundle`.
+
+This will create the following files:
+
+- `ui/dist/ui.bundle.server.js`
+- `static/target/javascripts/ui.bundle.browser.js`
+- `static/target/javascripts/ui.bundle.browser.js.map`
+- `static/target/javascripts/ui.bundle.browser.stats.html`
