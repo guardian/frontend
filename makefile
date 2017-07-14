@@ -130,5 +130,8 @@ es6: install
 
 # *********************** UI ***********************
 
-compile-ui:
-	@cd ui && yarn bundle
+ui-bundle:
+	@cd ui && yarn bundle -s
+
+ui-dev:
+	@cd ui && yarn dev -s
