@@ -1,6 +1,6 @@
 // @flow
 import { _ as testExports } from 'commercial/modules/messenger/scroll';
-import detect from 'lib/detect';
+import { getViewport } from 'lib/detect';
 
 const addScrollListener: any = testExports.addScrollListener;
 const removeScrollListener: any = testExports.removeScrollListener;
@@ -55,7 +55,7 @@ describe('Cross-frame messenger: scroll', () => {
         iframe1 = document.getElementById('iframe1');
         iframe2 = document.getElementById('iframe2');
 
-        detect.getViewport.mockReturnValue({ width: 400, height: 300 });
+        getViewport.mockReturnValue({ width: 400, height: 300 });
 
         expect.hasAssertions();
     });

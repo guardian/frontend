@@ -4,7 +4,7 @@ import { local } from 'lib/storage';
 import { buildPageTargeting } from 'commercial/modules/build-page-targeting';
 import config from 'lib/config';
 import { getCookie as getCookie_ } from 'lib/cookies';
-import detect from 'lib/detect';
+import { getReferrer, getBreakpoint } from 'lib/detect';
 import identity from 'common/modules/identity/api';
 import { getUserSegments as getUserSegments_ } from 'commercial/modules/user-ad-targeting';
 import { getParticipations as getParticipations_ } from 'common/modules/experiments/utils';
@@ -77,8 +77,8 @@ describe('Build Page Targeting', () => {
 
         getCookie.mockReturnValue('ng101');
 
-        detect.getBreakpoint.mockReturnValue('mobile');
-        detect.getReferrer.mockReturnValue('');
+        getBreakpoint.mockReturnValue('mobile');
+        getReferrer.mockReturnValue('');
 
         identity.isUserLoggedIn.mockReturnValue(true);
 
@@ -211,46 +211,46 @@ describe('Build Page Targeting', () => {
 
     describe('Referrer', () => {
         afterEach(() => {
-            detect.getReferrer.mockReturnValue('');
+            getReferrer.mockReturnValue('');
         });
 
         it('should set ref to Facebook', () => {
-            detect.getReferrer.mockReturnValue(
+            getReferrer.mockReturnValue(
                 'https://www.facebook.com/feel-the-force'
             );
             expect(buildPageTargeting().ref).toEqual('facebook');
         });
 
         it('should set ref to Twitter', () => {
-            detect.getReferrer.mockReturnValue(
+            getReferrer.mockReturnValue(
                 'https://www.t.co/you-must-unlearn-what-you-have-learned'
             );
             expect(buildPageTargeting().ref).toEqual('twitter');
         });
 
         it('should set ref to Googleplus', () => {
-            detect.getReferrer.mockReturnValue(
+            getReferrer.mockReturnValue(
                 'https://plus.url.google.com/always-pass-on-what-you-have-learned'
             );
             expect(buildPageTargeting().ref).toEqual('googleplus');
         });
 
         it('should set ref to reddit', () => {
-            detect.getReferrer.mockReturnValue(
+            getReferrer.mockReturnValue(
                 'https://www.reddit.com/its-not-my-fault'
             );
             expect(buildPageTargeting().ref).toEqual('reddit');
         });
 
         it('should set ref to google', () => {
-            detect.getReferrer.mockReturnValue(
+            getReferrer.mockReturnValue(
                 'https://www.google.com/i-find-your-lack-of-faith-distrubing'
             );
             expect(buildPageTargeting().ref).toEqual('google');
         });
 
         it('should set ref empty string if referrer does not match', () => {
-            detect.getReferrer.mockReturnValue('https://theguardian.com');
+            getReferrer.mockReturnValue('https://theguardian.com');
             expect(buildPageTargeting().ref).toEqual(undefined);
         });
     });

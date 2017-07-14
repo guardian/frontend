@@ -1,7 +1,7 @@
 // @flow
 import $ from 'lib/$';
 import { noop } from 'lib/noop';
-import detect from 'lib/detect';
+import { getBreakpoint } from 'lib/detect';
 import config from 'lib/config';
 
 import prepareGoogletag from 'commercial/modules/dfp/prepare-googletag';
@@ -300,7 +300,7 @@ describe('DFP', () => {
 
     it('should display ads', () => {
         config.page.hasPageSkin = true;
-        detect.getBreakpoint.mockReturnValue('wide');
+        getBreakpoint.mockReturnValue('wide');
         return new Promise(resolve => {
             prepareGoogletag.init(noop, resolve);
         }).then(() => {
