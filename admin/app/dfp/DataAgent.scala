@@ -27,7 +27,7 @@ trait DataAgent[K, V] extends ExecutionContexts with Logging with implicits.Stri
           log.error("No fresh data loaded so keeping old data")
           oldCache
         case Failure(e) =>
-          log.error(ExceptionUtils.getStackTrace(e))
+          log.error("Loading of fresh data has failed.", e)
           oldCache
       }
     }

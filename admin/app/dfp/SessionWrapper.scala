@@ -180,7 +180,7 @@ object SessionWrapper extends Logging {
       }
     } catch {
       case NonFatal(e) =>
-        log.error(s"Building DFP session failed: ${e.getMessage}")
+        log.error(s"Building DFP session failed.", e)
         None
     }
 
