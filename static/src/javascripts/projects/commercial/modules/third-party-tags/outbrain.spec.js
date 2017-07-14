@@ -45,6 +45,8 @@ describe('Outbrain', () => {
             section: 'uk-news',
             commentable: true,
         };
+
+        expect.hasAssertions();
     });
 
     afterEach(() => {
