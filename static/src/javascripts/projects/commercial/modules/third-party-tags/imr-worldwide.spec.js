@@ -1,7 +1,8 @@
 // @flow
 import { imrWorldwide } from './imr-worldwide';
 
-const { shouldRun, url, onLoad } = imrWorldwide;
+const { shouldRun, url } = imrWorldwide;
+const onLoad: any = imrWorldwide.onLoad;
 
 jest.mock('lib/config', () => ({
     switches: {
@@ -44,7 +45,6 @@ describe('third party tag IMR worldwide', () => {
             apid: 'P0EE0F4F4-8D7C-4082-A2A4-82C84728DC59',
             apn: 'theguardian',
         };
-        // $FlowFixMe - onLoad will be there, and be a function. Promise.
         onLoad();
         expect(nSdkInstance.ggInitialize).toBeCalledWith(expectedNolggParams);
     });
@@ -55,7 +55,6 @@ describe('third party tag IMR worldwide', () => {
             section: 'The Guardian - brand only',
             type: 'static',
         };
-        // $FlowFixMe - onLoad will be there, and be a function. Promise.
         onLoad();
         expect(nSdkInstance.ggPM).toBeCalledWith(
             'staticstart',

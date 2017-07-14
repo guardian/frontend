@@ -2,7 +2,8 @@
 
 import { remarketing } from 'commercial/modules/third-party-tags/remarketing';
 
-const { shouldRun, url, onLoad } = remarketing;
+const { shouldRun, url } = remarketing;
+const onLoad: any = remarketing.onLoad;
 
 jest.mock('lib/config', () => ({
     switches: {
@@ -22,7 +23,6 @@ describe('Remarketing', () => {
     it('should call google_trackConversion', () => {
         window.google_trackConversion = jest.fn();
         window.google_tag_params = 'google_tag_params__test';
-        // $FlowFixMe - onLoad will be there, and be a function. Promise.
         onLoad();
         expect(window.google_trackConversion).toHaveBeenCalledWith({
             google_conversion_id: 971225648,

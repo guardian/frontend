@@ -47,6 +47,7 @@ describe('Cross-frame messenger', () => {
 
     beforeEach(() => {
         jest.resetAllMocks();
+        expect.hasAssertions();
     });
 
     it('should expose register and unregister as a public API', () => {

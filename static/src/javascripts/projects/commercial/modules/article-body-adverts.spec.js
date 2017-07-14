@@ -43,8 +43,9 @@ describe('Article Body Adverts', () => {
     beforeEach(() => {
         jest.resetAllMocks();
         commercialFeatures.articleBodyAdverts = true;
-        spaceFillerStub.mockImplementation(() => Promise.resolve(true));
-        detect.getViewport.mockReturnValue({ height: 1000 });
+        spaceFillerStub.mockImplementation(() => Promise.resolve(2));
+        detect.getViewport.mockReturnValue({ height: 1300 });
+        expect.hasAssertions();
     });
 
     it('should exist', () => {
@@ -149,8 +150,9 @@ describe('Article Body Adverts', () => {
                 // We do not want the same ad-density on long-read
                 // articles that we have on shorter pieces
                 articleBodyAdvertsInit().then(() => {
+                    expect(spaceFillerStub).toHaveBeenCalledTimes(2);
                     const longArticleInsertCalls = spaceFillerStub.mock.calls.slice(
-                        2
+                        1
                     );
                     const longArticleInsertRules = longArticleInsertCalls.map(
                         call => call[0]
