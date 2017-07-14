@@ -152,7 +152,7 @@ const initMediaQueryListeners = (): void => {
     });
 };
 
-const init = (): void => {
+const initBreakpoints = (): void => {
     if ('matchMedia' in window) {
         initMediaQueryListeners();
     } else {
@@ -385,7 +385,7 @@ const getUserAgent = ((): string | { browser: string, version: string } => {
     };
 })();
 
-init();
+initBreakpoints();
 
 export {
     hasCrossedBreakpoint,
@@ -413,5 +413,4 @@ export {
     isEnhanced,
     adblockInUse,
     getReferrer,
-    init,
 };

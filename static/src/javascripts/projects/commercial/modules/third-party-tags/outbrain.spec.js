@@ -45,8 +45,6 @@ describe('Outbrain', () => {
             section: 'uk-news',
             commentable: true,
         };
-
-        expect.hasAssertions();
     });
 
     afterEach(() => {
@@ -88,6 +86,7 @@ describe('Outbrain', () => {
 
             return initOutbrain().then(() => {
                 expect(load).toHaveBeenCalled();
+                adblockInUse.mockReturnValue(false);
             });
         });
 
