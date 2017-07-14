@@ -1,5 +1,6 @@
 // @flow
 import config from 'lib/config';
+import detect from 'lib/detect';
 import plista from 'commercial/modules/third-party-tags/plista';
 import { commercialFeatures } from 'commercial/modules/commercial-features';
 import trackAdRender from 'commercial/modules/dfp/track-ad-render';
@@ -13,10 +14,18 @@ jest.mock('commercial/modules/commercial-features', () => ({
     },
 }));
 
-jest.mock('lib/detect', () => ({
-    getBreakpoint: jest.fn(() => 'desktop'),
-    adblockInUse: Promise.resolve(false),
-}));
+jest.mock('lib/detect', () => {
+    let adblockInUse = false;
+    return {
+        getBreakpoint: jest.fn(() => 'desktop'),
+        adblockInUse: {
+            then: fn => Promise.resolve(fn(adblockInUse)),
+            mockReturnValue: value => {
+                adblockInUse = value;
+            },
+        },
+    };
+});
 
 jest.mock('common/modules/identity/api', () => ({
     isUserLoggedIn: jest.fn(() => true),
@@ -45,10 +54,7 @@ describe('Plista', () => {
             `;
         }
         loadSpy = jest.spyOn(plista, 'load');
-        jest.setMock('lib/detect', {
-            getBreakpoint: jest.fn(() => 'desktop'),
-            adblockInUse: Promise.resolve(false),
-        });
+        detect.adblockInUse.mockReturnValue(false);
         expect.hasAssertions();
     });
 
@@ -57,6 +63,7 @@ describe('Plista', () => {
             document.body.innerHTML = '';
         }
         loadSpy.mockReset();
+        jest.resetAllMocks();
     });
 
     describe('Init', () => {
@@ -65,10 +72,11 @@ describe('Plista', () => {
         });
 
         it('should load plista component immediately when adblock in use', done => {
-            jest.setMock('lib/detect', {
-                getBreakpoint: jest.fn(() => 'desktop'),
-                adblockInUse: Promise.resolve(true),
-            });
+            if (document.body) {
+                document.body.innerHTML +=
+                    '<div id="dfp-ad--merchandising-high"></div>';
+            }
+            detect.adblockInUse.mockReturnValue(true);
             plista.init().then(() => {
                 expect(loadSpy).toHaveBeenCalled();
                 done();
