@@ -27,6 +27,10 @@ const insertBefore = (
     }
 };
 
+export const elementsFromSelector = (selector: string): Array<Element> => [
+    ...document.querySelectorAll(selector),
+];
+
 export const wrappedElementsFromString = (
     tagName: string,
     html: string
