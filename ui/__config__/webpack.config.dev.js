@@ -55,7 +55,7 @@ module.exports = env => {
             output: {
                 path: path.join(ui, 'dist'),
             },
-            devtool: 'inline-source-map',
+            devtool: 'eval-cheap-module-source-map',
             plugins: [new webpack.HotModuleReplacementPlugin()],
             devServer: {
                 publicPath: '/assets/javascripts/',
