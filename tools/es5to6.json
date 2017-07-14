@@ -41,7 +41,6 @@
     "projects/common/modules/component.js"
   ],
   "Calum Campbell": [
-    "lib/detect.js",
     "lib/picturefill.js",
     "lib/proximity-loader.js",
     "projects/common/modules/video/metadata.js"
