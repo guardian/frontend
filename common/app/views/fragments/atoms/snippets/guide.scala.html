@@ -25,7 +25,7 @@
         @item.title.map { t =>
           <div class="explainer-snippet__heading"><b>@t</b></div>
         }
-        @item.body
+        @Html(item.body)
       </div>
     }
   }
