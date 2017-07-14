@@ -2,7 +2,7 @@
 import { commercialFeatures } from 'commercial/modules/commercial-features';
 import config from 'lib/config';
 import userPrefs from 'common/modules/user-prefs';
-import detect from 'lib/detect';
+import { getBreakpoint, adblockInUse } from 'lib/detect';
 import identity from 'common/modules/identity/api';
 import {
     isPayingMember as isPayingMember_,
@@ -33,10 +33,19 @@ jest.mock('commercial/modules/user-features', () => ({
     isAdFreeUser: jest.fn(),
 }));
 
-jest.mock('lib/detect', () => ({
-    getBreakpoint: jest.fn(),
-    adblockInUse: Promise.resolve(false),
-}));
+jest.mock('lib/detect', () => {
+    let adblockInUseMock = false;
+
+    return {
+        getBreakpoint: jest.fn(),
+        adblockInUse: {
+            then: fn => Promise.resolve(fn(adblockInUseMock)),
+            mockReturnValue: value => {
+                adblockInUseMock = value;
+            },
+        },
+    };
+});
 
 jest.mock('common/modules/identity/api', () => ({
     isUserLoggedIn: jest.fn(),
@@ -72,15 +81,11 @@ describe('Commercial features', () => {
 
         userPrefs.removeSwitch('adverts');
 
-        detect.getBreakpoint.mockReturnValue('desktop');
-
-        detect.adblockInUse = Promise.resolve(false);
-
+        getBreakpoint.mockReturnValue('desktop');
         isPayingMember.mockReturnValue(false);
         isRecentContributor.mockReturnValue(false);
         shouldSeeReaderRevenue.mockReturnValue(true);
         isAdFreeUser.mockReturnValue(false);
-
         identity.isUserLoggedIn.mockReturnValue(true);
 
         expect.hasAssertions();
@@ -423,13 +428,13 @@ describe('Commercial features', () => {
             });
 
             it('Appears if page is wide', () => {
-                detect.getBreakpoint.mockReturnValue('wide');
+                getBreakpoint.mockReturnValue('wide');
                 const features = new CommercialFeatures();
                 expect(features.commentAdverts).toBe(true);
             });
 
             it('Does not appear if page is not wide', () => {
-                detect.getBreakpoint.mockReturnValue('desktop');
+                getBreakpoint.mockReturnValue('desktop');
                 const features = new CommercialFeatures();
                 expect(features.commentAdverts).toBe(false);
             });
@@ -472,13 +477,13 @@ describe('Commercial features', () => {
             });
 
             it('Does not appear if page is wide', () => {
-                detect.getBreakpoint.mockReturnValue('wide');
+                getBreakpoint.mockReturnValue('wide');
                 const features = new CommercialFeatures();
                 expect(features.commentAdverts).toBe(false);
             });
 
             it('Does not appear if page is not wide', () => {
-                detect.getBreakpoint.mockReturnValue('desktop');
+                getBreakpoint.mockReturnValue('desktop');
                 const features = new CommercialFeatures();
                 expect(features.commentAdverts).toBe(false);
             });
@@ -498,7 +503,7 @@ describe('Commercial features', () => {
 
         it('Does not display messages when adBlock is enabled', () => {
             // i.e. we want to show the adblock message instead
-            detect.adblockInUse = Promise.resolve(true);
+            adblockInUse.mockReturnValue(true);
             const features = new CommercialFeatures();
             return features.asynchronous.canDisplayMembershipEngagementBanner.then(
                 flag => {
