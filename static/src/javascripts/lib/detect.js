@@ -2,12 +2,17 @@
 
 import mediator from 'lib/mediator';
 
+declare class MediaQueryListEvent extends Event {
+    matches: boolean,
+    media: string,
+}
+
 type MediaQueryList = {
     matches: boolean,
     media: string,
-    onchange: (callback: (event: Event) => void) => void,
-    addListener: (callback: (event: Event) => void) => void,
-    removeListener: (callback: (event: Event) => void) => void,
+    onchange: (callback: (event: MediaQueryListEvent) => void) => void,
+    addListener: (callback: (event: MediaQueryListEvent) => void) => void,
+    removeListener: (callback: (event: MediaQueryListEvent) => void) => void,
 };
 
 type BreakpointName =
@@ -109,7 +114,9 @@ const updateBreakpoint = (breakpoint: Breakpoint): void => {
 };
 
 // this function has a Breakpoint as context, so we can't use fat arrows
-const onMatchingBreakpoint = function(mql) {
+const onMatchingBreakpoint = function(
+    mql: MediaQueryListEvent | MediaQueryList
+): void {
     if (mql && mql.matches) {
         updateBreakpoint(this);
     }
@@ -148,7 +155,9 @@ const initMediaQueryListeners = (): void => {
             bp.mql.addListener(bp.listener);
         }
 
-        bp.listener(bp.mql);
+        if (bp.mql && bp.listener) {
+            bp.listener(bp.mql);
+        }
     });
 };
 
