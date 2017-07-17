@@ -6,32 +6,32 @@
         "flow"
     ],
     "plugins": [
-        "transform-object-rest-spread",
-        ["transform-react-jsx", {
+        "babel-plugin-transform-object-rest-spread",
+        ["babel-plugin-transform-react-jsx", {
             "pragma": "h"
         }]
     ],
     "env": {
         "development": {
             "plugins": [
-                ["provide-modules", {
+                ["babel-plugin-preact-require", {
                     "lib/h.jsx": "h"
                 }]
             ]
         },
         "production": {
             "plugins": [
-                ["provide-modules", {
+                ["babel-plugin-preact-require", {
                     "lib/h.jsx": "h"
                 }]
             ]
         },
         "test": {
             "plugins": [
-                ["provide-modules", {
+                ["babel-plugin-preact-require", {
                     "lib/h.jsx": "h"
                 }],
-                "transform-es2015-modules-commonjs"
+                "babel-plugin-transform-es2015-modules-commonjs"
             ]
         }
     }

@@ -35,7 +35,6 @@
         "styletron-server": "^2.5.7"
     },
     "devDependencies": {
-        "babel-plugin-preact-require": "^1.0.0",
         "babel-plugin-provide-modules": "^1.0.3",
         "babel-plugin-transform-es2015-modules-commonjs": "^6.24.1",
         "babel-plugin-transform-object-rest-spread": "^6.23.0",
@@ -44,7 +43,6 @@
         "check-node-version": "^2.1.0",
         "concurrently": "^3.5.0",
         "coveralls": "^2.13.0",
-        "eslint-plugin-jest": "^20.0.3",
         "gzip-size-cli": "^2.0.0",
         "sass-loader": "^6.0.6",
         "styletron-loader": "^0.6.0",
