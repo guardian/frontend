@@ -15,7 +15,7 @@ jest.mock('lib/load-script', () => ({ loadScript: jest.fn() }));
 jest.mock('./outbrain-load', () => ({ load: jest.fn() }));
 
 describe('Outbrain', () => {
-    beforeEach(done => {
+    beforeEach(() => {
         if (document.body) {
             document.body.innerHTML = `
                 <div id="dfp-ad--merchandising-high"></div>
@@ -33,7 +33,7 @@ describe('Outbrain', () => {
             commentable: true,
         };
 
-        done();
+        expect.hasAssertions();
     });
 
     afterEach(() => {

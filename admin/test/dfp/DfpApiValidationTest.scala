@@ -1,7 +1,7 @@
 package dfp
 
 import common.dfp.{GuAdUnit, GuLineItem, GuTargeting}
-import com.google.api.ads.dfp.axis.v201705._
+import com.google.api.ads.dfp.axis.v201608._
 import org.joda.time.DateTime
 import org.scalatest._
 

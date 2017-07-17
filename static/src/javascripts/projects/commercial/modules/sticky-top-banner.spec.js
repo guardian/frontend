@@ -49,6 +49,7 @@ describe('Sticky ad banner', () => {
         }
         header = document.getElementById('header');
         stickyBanner = document.getElementById('top-banner-parent');
+        expect.hasAssertions();
     });
 
     afterEach(() => {

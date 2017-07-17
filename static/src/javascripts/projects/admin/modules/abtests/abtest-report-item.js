@@ -1,5 +1,5 @@
 // @flow
-/* global google*/
+
 /*
  Module: abtest-item.js
  Description: Displays information about a single test

@@ -1,5 +1,5 @@
 // @flow
-/* global $, Epoch*/
+
 import config from 'lib/config';
 import fetchJson from 'lib/fetch-json';
 import template from 'lodash/utilities/template';
