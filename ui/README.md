@@ -4,6 +4,8 @@ An investigation into the future architecture of theguardian.com.
 
 Slack channel: [#dotcom-future](https://theguardian.slack.com/messages/C0JES5PEV)
 
+_n.b. all commands below should be run from the project root (`/frontend`)…_
+
 ## Dev
 
 1. start the `article` play application.
