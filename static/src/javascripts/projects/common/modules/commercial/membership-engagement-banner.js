@@ -179,7 +179,7 @@ const showBanner = params => {
     mediator.emit('banner-message:complete');
 };
 
-const init = () =>
+const membershipEngagementBannerInit = () =>
     get().then(location => {
         const bannerParams = deriveBannerParams(location);
 
@@ -208,4 +208,4 @@ const init = () =>
         }
     });
 
-export { init, messageCode };
+export { membershipEngagementBannerInit, messageCode };
