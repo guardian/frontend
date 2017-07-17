@@ -4,13 +4,13 @@ const { ui } = require('../__config__/paths');
 
 module.exports = {
     parser: 'babel-eslint',
-    env: { browser: true, node: true, es6: true, 'jest/globals': true },
+    env: { browser: true, node: true, es6: true },
     extends: [
         'plugin:flowtype/recommended',
         'prettier/flowtype',
         'prettier/react',
     ],
-    plugins: ['flow-header', 'flowtype', 'jest', 'prettier'],
+    plugins: ['flow-header', 'flowtype', 'prettier'],
     parserOptions: { ecmaVersion: '2017' },
     settings: {
         react: { pragma: 'h' },
