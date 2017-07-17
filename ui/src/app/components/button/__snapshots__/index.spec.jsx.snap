@@ -1,14 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Button generates the correct object 1`] = `
-VNode {
-  "attributes": undefined,
-  "children": Array [
-    "test button",
-  ],
-  "key": undefined,
-  "nodeName": Object {
-    "default": [Function],
-  },
+exports[`Button generates the expected markup 1`] = `
+Object {
+  "css": "<style class=\\"_styletron_hydrate_\\">.a{background-color:hotpink}</style>",
+  "html": "<button class=\\"a\\">test button alex</button>",
 }
 `;
