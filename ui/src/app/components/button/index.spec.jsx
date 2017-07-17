@@ -1,18 +1,14 @@
 // @flow
 
+import test from 'lib/test-render';
+import Button from '.';
+
 jest.mock('./style.scss', () => ({
     button: {
         backgroundColor: 'hotpink',
     },
 }));
 
-const Button = require('.');
-const style = require('./style.scss');
-
-console.log(style.button);
-
 describe('Button', () => {
-    it('generates the correct object', () => {
-        expect(<Button>test button</Button>).toMatchSnapshot();
-    });
+    test(<Button>test button</Button>);
 });
