@@ -77,13 +77,10 @@
                                placeholder="search"
                                data-link-name="nav2 : search">
 
-                        <input type="hidden"
-                               name="as_sitesearch"
-                               value="www.theguardian.com">
-
                        <label class="menu-search__glass"
                               for="google-search">
                            @fragments.inlineSvg("search-36", "icon", List("main-menu__icon", "main-menu__icon--search"))
+                           <span class="u-h">What term do you want to search?</span>
                        </label>
 
                         @* Button that shows itself on form focus *@
@@ -92,12 +89,13 @@
                                 for="submit-google-search"
                                 type="submit">
                             <i class="right-arrow__icon"></i>
+                            <span class="u-h">Submit your search</span>
                         </button>
 
-                        <label for="q"
-                               class="u-h">
-                            What term do you want to search?
-                        </label>
+                        @* Google sitesearch fields *@
+                        <input type="hidden"
+                               name="as_sitesearch"
+                               value="www.theguardian.com">
                     </form>
                 </div>
             }
