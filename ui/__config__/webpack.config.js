@@ -1,3 +1,6 @@
+// this is the main way in for webpack config.
+// pass env.server or env.browser for specific envs.
+
 const path = require('path');
 const webpack = require('webpack');
 const webpackMerge = require('webpack-merge');
@@ -45,7 +48,7 @@ const config = {
     watchOptions: { ignored: /node_modules/ },
 };
 
-module.exports = env => {
+module.exports = (env = { server: true }) => {
     if (env.server) {
         return webpackMerge.smart(config, {
             entry: {
