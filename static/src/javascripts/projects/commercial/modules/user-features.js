@@ -124,26 +124,6 @@ const shouldSeeReaderRevenue = (): boolean =>
 
 const isAdFreeUser = (): boolean => adFreeDataIsPresent() && !adFreeDataIsOld();
 
-const toDate = (dateStr: string): Date => {
-    const parts = Array.from(dateStr.split('-'), s => parseInt(s, 10));
-
-    return new Date(parts[0], parts[1] - 1, parts[2]);
-};
-
-const isInBrexitCohort = (): boolean => {
-    if (identity.isUserLoggedIn()) {
-        const start = toDate('2016-06-23');
-        const end = toDate('2016-07-31');
-
-        const cookie = getCookie(JOIN_DATE_COOKIE);
-        if (cookie) {
-            const joinDate = toDate(cookie.toString());
-            return joinDate && joinDate - start >= 0 && end - joinDate >= 0;
-        }
-    }
-    return false;
-};
-
 export {
     isAdFreeUser,
     isPayingMember,
@@ -151,5 +131,4 @@ export {
     isRecentContributor,
     shouldSeeReaderRevenue,
     refresh,
-    isInBrexitCohort,
 };

@@ -3,12 +3,7 @@
 import { addCookie, removeCookie, getCookie } from 'lib/cookies';
 import fetchJson from 'lib/fetch-json';
 import identity from 'common/modules/identity/api';
-import {
-    refresh,
-    isAdFreeUser,
-    isPayingMember,
-    isInBrexitCohort,
-} from './user-features.js';
+import { refresh, isAdFreeUser, isPayingMember } from './user-features.js';
 
 jest.mock('projects/common/modules/identity/api', () => ({
     isUserLoggedIn: jest.fn(),
@@ -188,41 +183,6 @@ describe('The isPayingMember getter', () => {
             // If we don't know, we err on the side of caution, rather than annoy paying users
             removeCookie(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE);
             expect(isPayingMember()).toBe(true);
-        });
-    });
-});
-
-describe('The isInBrexitCohort getter', () => {
-    it('Is false if the user is logged out', () => {
-        jest.resetAllMocks();
-        isUserLoggedIn.mockReturnValue(false);
-        expect(isInBrexitCohort()).toBe(false);
-    });
-
-    describe('When the user is logged in', () => {
-        beforeEach(() => {
-            jest.resetAllMocks();
-            isUserLoggedIn.mockReturnValue(true);
-        });
-
-        it('Is true for a user who joined on referendum day', () => {
-            addCookie(PERSISTENCE_KEYS.JOIN_DATE_COOKIE, '2016-06-23');
-            expect(isInBrexitCohort()).toBe(true);
-        });
-
-        it('Is false when the user joined before referendum day', () => {
-            addCookie(PERSISTENCE_KEYS.JOIN_DATE_COOKIE, '2016-01-01');
-            expect(isInBrexitCohort()).toBe(false);
-        });
-
-        it('Is false when the user joined after end of cohort', () => {
-            addCookie(PERSISTENCE_KEYS.JOIN_DATE_COOKIE, '2016-08-01');
-            expect(isInBrexitCohort()).toBe(false);
-        });
-
-        it('Is false when the user has no join date cookie', () => {
-            removeCookie(PERSISTENCE_KEYS.JOIN_DATE_COOKIE);
-            expect(isInBrexitCohort()).toBe(false);
         });
     });
 });
