@@ -8,8 +8,6 @@ import { commercialFeatures } from 'commercial/modules/commercial-features';
 import mediator from 'lib/mediator';
 import { testCanBeRun } from 'common/modules/experiments/test-can-run-checks';
 import MembershipEngagementBannerTests from 'common/modules/experiments/tests/membership-engagement-banner-tests';
-import assign from 'lodash/objects/assign';
-import find from 'lodash/collections/find';
 import { inlineSvg } from 'common/views/svgs';
 import { isInTest, variantFor } from 'common/modules/experiments/segment-util';
 import { epicEngagementBannerTests } from 'common/modules/experiments/acquisition-test-selector';
@@ -30,8 +28,7 @@ const getUserTest = () => {
         epicEngagementBannerTests
     );
 
-    return find(
-        engagementBannerTests,
+    return engagementBannerTests.find(
         test => testCanBeRun(test) && isInTest(test)
     );
 };
@@ -106,7 +103,7 @@ const deriveBannerParams = location => {
         return DO_NOT_RENDER_ENGAGEMENT_BANNER;
     }
 
-    return assign(
+    return Object.assign(
         {},
         defaultParams,
         getUserVariantParams(userVariant, campaignId, defaultParams.offering)
@@ -133,7 +130,6 @@ const paypalAndCreditCardImage =
         config.images.acquisitions &&
         config.images.acquisitions['paypal-and-credit-card']) ||
     '';
-
 
 const selectSequentiallyFrom = array =>
     array[local.get('gu.alreadyVisited') % array.length];
@@ -212,7 +208,4 @@ const init = () =>
         }
     });
 
-export default {
-    init,
-    messageCode,
-};
+export { init, messageCode };
