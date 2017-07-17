@@ -73,10 +73,6 @@ Twitter: @intuitio
 From: Poznan, Poland
 Location: London, England
 
-Developer: Lydia Shepherd
-From: Leeds, UK
-Location: London, UK
-
 Developer: Sam Desborough
 Twitter: @samdesborough
 
@@ -296,3 +292,7 @@ Twitter: @grantklopper
 User Experience Architect: Alastair Jardine
 Twitter: @aj_ux
 From: London, UK
+
+Developer: Lydia Shepherd
+From: Leeds, UK
+
