@@ -39,7 +39,6 @@
         "babel-plugin-transform-es2015-modules-commonjs": "^6.24.1",
         "babel-plugin-transform-object-rest-spread": "^6.23.0",
         "babel-plugin-transform-react-jsx": "^6.24.1",
-        "babel-preset-flow": "^6.23.0",
         "check-node-version": "^2.1.0",
         "concurrently": "^3.5.0",
         "coveralls": "^2.13.0",
