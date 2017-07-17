@@ -27,7 +27,7 @@
         "yarn": "0.27.5"
     },
     "dependencies": {
-        "preact": "^8.2.0",
+        "preact": "^8.2.1",
         "preact-render-to-string": "^3.6.0",
         "styletron": "^2.5.7",
         "styletron-client": "^2.5.7",
@@ -54,26 +54,25 @@
         "eslint-config-prettier": "^2.3.0",
         "eslint-import-resolver-webpack": "^0.8.3",
         "eslint-plugin-flow-header": "^0.1.1",
-        "eslint-plugin-flowtype": "^2.34.1",
-        "eslint-plugin-html": "^3.0.0",
+        "eslint-plugin-flowtype": "^2.35.0",
         "eslint-plugin-import": "^2.6.1",
         "eslint-plugin-jest": "^20.0.3",
         "eslint-plugin-jsx-a11y": "^5.1.1",
         "eslint-plugin-prettier": "^2.1.2",
         "eslint-plugin-react": "^7.1.0",
         "express": "^4.15.3",
-        "flow-bin": "^0.49.1",
+        "flow-bin": "^0.50.0",
         "gzip-size-cli": "^2.0.0",
         "jest": "^20.0.4",
         "nashorn-babel-polyfill": "^0.2.7",
         "node-sass": "^4.5.3",
         "prepend-webpack-plugin": "^1.0.2",
-        "prettier": "^1.5.2",
+        "prettier": "^1.5.3",
         "sass-loader": "^6.0.6",
         "sass-mq": "^3.3.2",
         "styletron-loader": "^0.6.0",
-        "webpack": "^3.2.0",
-        "webpack-bundle-analyzer": "^2.8.2",
+        "webpack": "^3.3.0",
+        "webpack-bundle-analyzer": "^2.8.3",
         "webpack-dev-middleware": "^1.10.2",
         "webpack-dev-server": "^2.5.1",
         "webpack-hot-middleware": "^2.18.2",
@@ -86,8 +85,8 @@
             "node_modules"
         ],
         "globals": {
-          "BROWSER": false,
-          "SERVER": true
+            "BROWSER": false,
+            "SERVER": true
         }
     }
 }
