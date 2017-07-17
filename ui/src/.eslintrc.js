@@ -16,11 +16,7 @@ module.exports = {
         react: { pragma: 'h' },
         'import/resolver': {
             webpack: {
-                config: path.resolve(
-                    ui,
-                    '__config__',
-                    'webpack.config.common.js'
-                ),
+                config: path.resolve(ui, '__config__', 'webpack.config.js'),
             },
         },
     },
