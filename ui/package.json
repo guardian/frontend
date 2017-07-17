@@ -29,25 +29,34 @@
     "dependencies": {
         "preact": "^8.2.1",
         "preact-render-to-string": "^3.6.0",
+        "sass-mq": "^3.3.2",
         "styletron": "^2.5.7",
         "styletron-client": "^2.5.7",
         "styletron-preact": "^2.5.7",
         "styletron-server": "^2.5.7"
     },
     "devDependencies": {
+        "babel-core": "^6.25.0",
+        "babel-loader": "^7.1.1",
+        "babel-plugin-preact-require": "^1.0.0",
         "babel-plugin-provide-modules": "^1.0.3",
         "babel-plugin-transform-es2015-modules-commonjs": "^6.24.1",
         "babel-plugin-transform-object-rest-spread": "^6.23.0",
         "babel-plugin-transform-react-jsx": "^6.24.1",
+        "babel-preset-env": "^1.6.0",
+        "babel-preset-flow": "^6.23.0",
         "check-node-version": "^2.1.0",
         "concurrently": "^3.5.0",
         "coveralls": "^2.13.0",
         "gzip-size-cli": "^2.0.0",
+        "node-sass": "^4.5.3",
         "sass-loader": "^6.0.6",
         "styletron-loader": "^0.6.0",
         "webpack": "^3.3.0",
+        "webpack-bundle-analyzer": "^2.8.3",
         "webpack-dev-server": "^2.5.1",
-        "webpack-hot-middleware": "^2.18.2"
+        "webpack-hot-middleware": "^2.18.2",
+        "webpack-merge": "^4.1.0"
     },
     "jest": {
         "moduleDirectories": [

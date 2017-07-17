@@ -1,9 +1,9 @@
 {
     "presets": [
-        ["env", {
+        ["babel-preset-env", {
             "modules": false
         }],
-        "flow"
+        "babel-preset-flow"
     ],
     "plugins": [
         "babel-plugin-transform-object-rest-spread",
