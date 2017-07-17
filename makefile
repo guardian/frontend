@@ -130,6 +130,9 @@ es6: install
 
 # *********************** UI ***********************
 
+ui-reinstall:
+	@cd ui && rm -rf node_modules && yarn install -s
+
 ui-bundle:
 	@cd ui && yarn bundle -s
 
