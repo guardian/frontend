@@ -25,25 +25,58 @@ type TimeData = {
 
 const getLiveblogEntryTimeData = (el: Element): Promise<TimeData> =>
     fastdom.read(() => {
-        const $timeEl = $('time', el);
+        const timeEl = el.querySelector('time');
+        const absoluteTimeEl = el.querySelector('.block-time__absolute');
 
-        return {
-            datetime: $timeEl.attr('datetime'),
-            title: $timeEl.attr('title'),
-            date: $timeEl.text(),
-            time: $('.block-time__absolute', el).text(),
-        };
+        if (timeEl && absoluteTimeEl) {
+            return {
+                datetime: timeEl.getAttribute('datetime'),
+                title: timeEl.getAttribute('title'),
+                date: timeEl.innerHTML,
+                time: absoluteTimeEl.innerHTML,
+            };
+        }
+    });
+
+const getBlocksToInsertEpicAfter = (): Promise<Array<Element>> =>
+    fastdom.read(() => {
+        const blocks = document.getElementsByClassName('block');
+        const blocksToInsertManualEpicAfter = document.getElementsByClassName(
+            INSERT_EPIC_AFTER_CLASS
+        );
+        const epicsAlreadyOnPage = document.getElementsByClassName('is-epic');
+
+        const isLiveblogLongEnoughYet = blocks.length > 4;
+
+        if (
+            blocksToInsertManualEpicAfter.length ||
+            epicsAlreadyOnPage.length ||
+            !isLiveblogLongEnoughYet
+        ) {
+            return [...blocksToInsertManualEpicAfter];
+        }
+
+        const autoBlockNum = Math.floor(Math.random() * 3) + 1;
+        const blockToInsertAutoEpicAfter = blocks[autoBlockNum];
+
+        return [...blocksToInsertManualEpicAfter].concat(
+            blockToInsertAutoEpicAfter
+        );
     });
 
 const setEpicLiveblogEntryTimeData = (
     el: Element,
     timeData: TimeData
 ): void => {
-    const $epicTimeEl = $('time', el);
-    $epicTimeEl.attr('datetime', timeData.datetime);
-    $epicTimeEl.attr('title', timeData.title);
-    $epicTimeEl.text(timeData.date);
-    $('.block-time__absolute', el).text(timeData.time);
+    const epicTimeEl = el.querySelector('time');
+    const epicAbsoluteTimeEl = el.querySelector('.block-time__absolute');
+
+    if (epicTimeEl && epicAbsoluteTimeEl) {
+        epicTimeEl.setAttribute('datetime', timeData.datetime);
+        epicTimeEl.setAttribute('title', timeData.title);
+        epicTimeEl.innerHTML = timeData.date;
+        epicAbsoluteTimeEl.innerHTML = timeData.time;
+    }
 };
 
 const setupViewTracking = (el: Element, test: ContributionsABTest): void => {
@@ -62,21 +95,19 @@ const addEpicToBlocks = (
     epicHtml: string,
     test: ContributionsABTest
 ): Promise<void> =>
-    fastdom
-        .read(() => $(`.${INSERT_EPIC_AFTER_CLASS}`))
-        .then($blocksToInsertEpicAfter => {
-            $blocksToInsertEpicAfter.each(el => {
-                getLiveblogEntryTimeData(el).then((timeData: TimeData) => {
-                    fastdom.write(() => {
-                        const $epic = $.create(epicHtml);
-                        $epic.insertAfter(el);
-                        $(el).removeClass(INSERT_EPIC_AFTER_CLASS);
-                        setEpicLiveblogEntryTimeData($epic[0], timeData);
-                        setupViewTracking(el, test);
-                    });
+    getBlocksToInsertEpicAfter().then(blocksToInsertEpicAfter => {
+        blocksToInsertEpicAfter.forEach(el => {
+            getLiveblogEntryTimeData(el).then((timeData: TimeData) => {
+                fastdom.write(() => {
+                    const $epic = $.create(epicHtml);
+                    $epic.insertAfter(el);
+                    $(el).removeClass(INSERT_EPIC_AFTER_CLASS);
+                    setEpicLiveblogEntryTimeData($epic[0], timeData);
+                    setupViewTracking(el, test);
                 });
             });
         });
+    });
 
 export const acquisitionsEpicLiveblog: ContributionsABTest = makeABTest({
     id: 'AcquisitionsEpicLiveblog',
@@ -105,11 +136,6 @@ export const acquisitionsEpicLiveblog: ContributionsABTest = makeABTest({
         {
             id: 'control',
             isUnlimited: true,
-
-            insertAtSelector: `.${INSERT_EPIC_AFTER_CLASS}`,
-            insertAfter: true,
-            insertMultiple: true,
-            successOnView: true,
 
             template(variant) {
                 return template(liveblogEpicTemplate, {
