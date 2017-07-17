@@ -7,7 +7,7 @@ const { normalise, resize } = _;
 const foolFlow = (mockFn: any) => ((mockFn: any): JestMockT);
 
 describe('Cross-frame messenger: resize', () => {
-    beforeEach(done => {
+    beforeEach(() => {
         if (document.body) {
             document.body.innerHTML = `
               <div id="slot01" class="js-ad-slot"><div id="iframe01" class="iframe" data-unit="ch"></div></div>
@@ -21,7 +21,7 @@ describe('Cross-frame messenger: resize', () => {
               <div id="slot09" class="js-ad-slot"><div id="iframe09" class="iframe" data-unit="ex"></div></div>
               </div>`;
         }
-        done();
+        expect.hasAssertions();
     });
 
     afterEach(() => {
@@ -63,21 +63,18 @@ describe('Cross-frame messenger: resize', () => {
             expect(result).toBeNull();
         });
 
-        it('should set width and height of the ad slot', done => {
+        it('should set width and height of the ad slot', () => {
             const fallback = document.createElement('div');
             const fakeIframe = document.getElementById('iframe01') || fallback;
             const fakeAdSlot = document.getElementById('slot01') || fallback;
-            foolFlow(
+            return foolFlow(
                 resize({ width: '20', height: '10' }, fakeIframe, fakeAdSlot)
-            )
-                .then(() => {
-                    expect(fakeIframe.style.height).toBe('10px');
-                    expect(fakeIframe.style.width).toBe('20px');
-                    expect(fakeAdSlot.style.height).toBe('10px');
-                    expect(fakeAdSlot.style.width).toBe('20px');
-                })
-                .then(done)
-                .catch(done.fail);
+            ).then(() => {
+                expect(fakeIframe.style.height).toBe('10px');
+                expect(fakeIframe.style.width).toBe('20px');
+                expect(fakeAdSlot.style.height).toBe('10px');
+                expect(fakeAdSlot.style.width).toBe('20px');
+            });
         });
     });
 });

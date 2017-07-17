@@ -140,6 +140,10 @@
     <meta property="og:image" content="@Html(imageUrl)" />
 }
 
+@Configuration.facebook.pages.authorisedIdsForLinkEdits.map { id =>
+    <meta property="fb:pages" content="@id" />
+}
+
 @page.metadata.pagination.map{ pagination =>
     @pagination.next.map{ next => <link rel="next" href="@LinkTo(page.metadata.url+"?page="+next)" /> }
     @pagination.previous.map{ prev => <link rel="prev" href="@LinkTo(page.metadata.url+(if(prev != 1){"?page="+prev}else{""}))" /> }

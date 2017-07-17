@@ -114,6 +114,11 @@ const isContributor = (): boolean => !!lastContributionDate;
 // in last six months
 const isRecentContributor = (): boolean => daysSinceLastContribution <= 180;
 
+/*
+    Whenever the checks are updated, please make sure to update
+    applyRenderConditions.scala.js too, where the global CSS class, indicating
+    the user should not see the revenue messages, is added to the body
+*/
 const shouldSeeReaderRevenue = (): boolean =>
     !isPayingMember() && !isRecentContributor();
 

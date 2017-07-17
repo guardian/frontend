@@ -49,7 +49,7 @@ class FeedReader(wsClient: WSClient) extends Logging {
             Try(parse(body)) match {
               case Success(parsedBody) => parsedBody
               case Failure(throwable) =>
-                log.error(s"Could not parse body: $throwable (Body: $body)")
+                log.error(s"Could not parse body: (Body: $body)", throwable)
                 throw throwable
             }
 
@@ -61,7 +61,7 @@ class FeedReader(wsClient: WSClient) extends Logging {
 
       contents onFailure {
         case NonFatal(e) =>
-          log.error(s"NonFatal exception: $e")
+          log.error(s"Failed to fetch feed contents.", e)
           recordLoad(-1)
       }
 
@@ -72,7 +72,7 @@ class FeedReader(wsClient: WSClient) extends Logging {
 
     initializedSwitch.onComplete {
       case Success(switch) => log.info(s"Successfully initialized ${switch.name} (isSwitchedOn: ${switch.isSwitchedOn})")
-      case Failure(throwable) => log.info(s"Failed to initialize switch: $throwable")
+      case Failure(throwable) => log.info(s"Failed to initialize switch.", throwable)
     }
 
     initializedSwitch flatMap { switch =>
@@ -92,7 +92,7 @@ class FeedReader(wsClient: WSClient) extends Logging {
 
     contents onFailure {
       case e: FeedSwitchOffException => log.warn(e.getMessage)
-      case NonFatal(e) => log.error(e.getMessage)
+      case NonFatal(e) => log.error(s"Failed to read feed ${request.feedName} with URL ${request.url}", e)
     }
 
     contents
