@@ -211,35 +211,6 @@ const isIOS = (): boolean =>
 
 const isAndroid = (): boolean => /Android/i.test(navigator.userAgent);
 
-const isFacebookApp = (): boolean => navigator.userAgent.includes('FBAN/');
-
-const isTwitterApp = (): boolean =>
-    navigator.userAgent.includes('Twitter for iPhone');
-
-const isTwitterReferral = (): boolean => /\.t\.co/.test(document.referrer);
-
-const isFacebookReferral = (): boolean =>
-    /\.facebook\.com/.test(document.referrer);
-
-const isGuardianReferral = (): boolean =>
-    /\.theguardian\.com/.test(document.referrer);
-
-const socialContext = (): ?string => {
-    const override = /socialContext=(facebook|twitter)/.exec(
-        window.location.hash
-    );
-
-    if (override !== null) {
-        return override[1];
-    } else if (isFacebookApp() || isFacebookReferral()) {
-        return 'facebook';
-    } else if (isTwitterApp() || isTwitterReferral()) {
-        return 'twitter';
-    }
-
-    return null;
-};
-
 const hasTouchScreen = (): boolean =>
     'ontouchstart' in window ||
     (window.DocumentTouch && document instanceof window.DocumentTouch);
@@ -261,36 +232,6 @@ const hasPushStateSupport = (): boolean => {
 
     return supportsPushState;
 };
-
-const getVideoFormatSupport = (): ?{
-    mp4: string,
-    ogg: string,
-    webm: string,
-} => {
-    const elem = document.createElement('video');
-    const types = {};
-
-    try {
-        if (elem.canPlayType) {
-            types.mp4 = elem
-                .canPlayType('video/mp4; codecs="avc1.42E01E"')
-                .replace(/^no$/, '');
-            types.ogg = elem
-                .canPlayType('video/ogg; codecs="theora"')
-                .replace(/^no$/, '');
-            types.webm = elem
-                .canPlayType('video/webm; codecs="vp8, vorbis"')
-                .replace(/^no$/, '');
-        }
-    } catch (e) {
-        /* ... */
-    }
-
-    return types;
-};
-
-const getOrientation = (): 'portrait' | 'landscape' =>
-    window.innerHeight > window.innerWidth ? 'portrait' : 'landscape';
 
 const initPageVisibility = (): void => {
     const onchange = (evt: Event = window.event) => {
@@ -330,8 +271,6 @@ const initPageVisibility = (): void => {
 };
 
 const pageVisible = (): boolean => pageVisibility === 'visible';
-
-const hasWebSocket = (): boolean => 'WebSocket' in window;
 
 const isEnhanced = (): boolean => window.guardian.isEnhanced;
 
@@ -395,25 +334,16 @@ initBreakpoints();
 
 export {
     hasCrossedBreakpoint,
-    getVideoFormatSupport,
     hasTouchScreen,
     hasPushStateSupport,
-    getOrientation,
     getBreakpoint,
     getUserAgent,
     getViewport,
     isIOS,
     isAndroid,
-    isFacebookApp,
-    isTwitterApp,
-    isFacebookReferral,
-    isTwitterReferral,
-    isGuardianReferral,
-    socialContext,
     isBreakpoint,
     initPageVisibility,
     pageVisible,
-    hasWebSocket,
     breakpoints,
     isEnhanced,
     adblockInUse,
