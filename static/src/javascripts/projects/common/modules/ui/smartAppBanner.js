@@ -2,13 +2,7 @@
 import fastdom from 'fastdom';
 import $ from 'lib/$';
 import { getCookie, addCookie } from 'lib/cookies';
-import {
-    isIOS,
-    isAndroid,
-    isFireFoxOSApp,
-    getBreakpoint,
-    getUserAgent,
-} from 'lib/detect';
+import { isIOS, isAndroid, getBreakpoint, getUserAgent } from 'lib/detect';
 import template from 'lodash/utilities/template';
 import { loadCssPromise } from 'lib/load-css-promise';
 import Message from 'common/modules/ui/message';
@@ -50,7 +44,7 @@ const tmp =
 const tablet =
     '<img src="<%=SCREENSHOTS%>" class="app__screenshots" alt="screenshots" />';
 
-const isDevice = (): boolean => (isIOS() || isAndroid()) && !isFireFoxOSApp();
+const isDevice = (): boolean => isIOS() || isAndroid();
 
 const canShow = (): boolean => impressions < 4;
 

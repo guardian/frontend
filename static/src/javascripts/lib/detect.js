@@ -99,16 +99,16 @@ const findBreakpoint = (tweakpoint: BreakpointName): BreakpointName => {
 };
 
 const updateBreakpoint = (breakpoint: Breakpoint): void => {
+    currentTweakpoint = breakpoint.name;
+
     if (breakpoint.isTweakpoint) {
-        currentTweakpoint = breakpoint.name;
         currentBreakpoint = findBreakpoint(currentTweakpoint);
     } else {
-        currentTweakpoint = breakpoint.name;
         currentBreakpoint = currentTweakpoint;
     }
 };
 
-// this function has a Breakpoint as context
+// this function has a Breakpoint as context, so we can't use fat arrows
 const onMatchingBreakpoint = function(mql) {
     if (mql && mql.matches) {
         updateBreakpoint(this);
@@ -206,23 +206,25 @@ const hasCrossedBreakpoint = (includeTweakpoint: boolean): Function => {
     };
 };
 
-const isIOS = () => /(iPad|iPhone|iPod touch)/i.test(navigator.userAgent);
+const isIOS = (): boolean =>
+    /(iPad|iPhone|iPod touch)/i.test(navigator.userAgent);
 
-const isAndroid = () => /Android/i.test(navigator.userAgent);
+const isAndroid = (): boolean => /Android/i.test(navigator.userAgent);
 
-const isFireFoxOSApp = () => navigator.mozApps && !window.locationbar.visible;
+const isFacebookApp = (): boolean => navigator.userAgent.includes('FBAN/');
 
-const isFacebookApp = () => navigator.userAgent.includes('FBAN/');
+const isTwitterApp = (): boolean =>
+    navigator.userAgent.includes('Twitter for iPhone');
 
-const isTwitterApp = () => navigator.userAgent.includes('Twitter for iPhone');
+const isTwitterReferral = (): boolean => /\.t\.co/.test(document.referrer);
 
-const isTwitterReferral = () => /\.t\.co/.test(document.referrer);
+const isFacebookReferral = (): boolean =>
+    /\.facebook\.com/.test(document.referrer);
 
-const isFacebookReferral = () => /\.facebook\.com/.test(document.referrer);
+const isGuardianReferral = (): boolean =>
+    /\.theguardian\.com/.test(document.referrer);
 
-const isGuardianReferral = () => /\.theguardian\.com/.test(document.referrer);
-
-const socialContext = () => {
+const socialContext = (): ?string => {
     const override = /socialContext=(facebook|twitter)/.exec(
         window.location.hash
     );
@@ -238,11 +240,11 @@ const socialContext = () => {
     return null;
 };
 
-const hasTouchScreen = () =>
+const hasTouchScreen = (): boolean =>
     'ontouchstart' in window ||
     (window.DocumentTouch && document instanceof window.DocumentTouch);
 
-const hasPushStateSupport = () => {
+const hasPushStateSupport = (): boolean => {
     if (supportsPushState !== undefined) {
         return supportsPushState;
     }
@@ -260,7 +262,11 @@ const hasPushStateSupport = () => {
     return supportsPushState;
 };
 
-const getVideoFormatSupport = () => {
+const getVideoFormatSupport = (): ?{
+    mp4: string,
+    ogg: string,
+    webm: string,
+} => {
     const elem = document.createElement('video');
     const types = {};
 
@@ -398,7 +404,6 @@ export {
     getViewport,
     isIOS,
     isAndroid,
-    isFireFoxOSApp,
     isFacebookApp,
     isTwitterApp,
     isFacebookReferral,
