@@ -1,9 +1,11 @@
 // @flow
 import config from 'lib/config';
-import detect from 'lib/detect';
+import { adblockInUse as adblockInUse_ } from 'lib/detect';
 import plista from 'commercial/modules/third-party-tags/plista';
 import { commercialFeatures } from 'commercial/modules/commercial-features';
 import trackAdRender from 'commercial/modules/dfp/track-ad-render';
+
+const adblockInUse: any = adblockInUse_;
 
 jest.mock('commercial/modules/dfp/track-ad-render', () => jest.fn());
 
@@ -15,13 +17,14 @@ jest.mock('commercial/modules/commercial-features', () => ({
 }));
 
 jest.mock('lib/detect', () => {
-    let adblockInUse = false;
+    let adblockInUseMock = false;
+
     return {
         getBreakpoint: jest.fn(() => 'desktop'),
         adblockInUse: {
-            then: fn => Promise.resolve(fn(adblockInUse)),
+            then: fn => Promise.resolve(fn(adblockInUseMock)),
             mockReturnValue: value => {
-                adblockInUse = value;
+                adblockInUseMock = value;
             },
         },
     };
@@ -54,7 +57,7 @@ describe('Plista', () => {
             `;
         }
         loadSpy = jest.spyOn(plista, 'load');
-        detect.adblockInUse.mockReturnValue(false);
+        adblockInUse.mockReturnValue(false);
         expect.hasAssertions();
     });
 
@@ -76,7 +79,7 @@ describe('Plista', () => {
                 document.body.innerHTML +=
                     '<div id="dfp-ad--merchandising-high"></div>';
             }
-            detect.adblockInUse.mockReturnValue(true);
+            adblockInUse.mockReturnValue(true);
             plista.init().then(() => {
                 expect(loadSpy).toHaveBeenCalled();
                 done();

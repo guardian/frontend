@@ -1,7 +1,9 @@
 // @flow
 
 import { _ as testExports } from 'commercial/modules/messenger/viewport';
-import detect from 'lib/detect';
+import { getViewport as getViewport_ } from 'lib/detect';
+
+const getViewport: any = getViewport_;
 
 const addResizeListener: any = testExports.addResizeListener;
 const reset = testExports.reset;
@@ -54,7 +56,7 @@ describe('Cross-frame messenger: viewport', () => {
             width: 800,
             height: 600,
         };
-        detect.getViewport.mockReturnValue(size);
+        getViewport.mockReturnValue(size);
         return addResizeListener(iframe, respond).then(() => {
             expect(respond).toHaveBeenCalledWith(null, size);
         });
@@ -65,7 +67,7 @@ describe('Cross-frame messenger: viewport', () => {
             width: 1024,
             height: 768,
         };
-        detect.getViewport.mockReturnValue(size);
+        getViewport.mockReturnValue(size);
         return addResizeListener(iframe, respond)
             .then(() => onResize && onResize())
             .then(() => {

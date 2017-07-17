@@ -1,6 +1,6 @@
 // @flow
 import config from 'lib/config';
-import detect from 'lib/detect';
+import { isBreakpoint, getBreakpoint, getViewport } from 'lib/detect';
 import fastdom from 'lib/fastdom-promise';
 import { spaceFiller } from 'common/modules/article/space-filler';
 import adSizes from 'commercial/modules/ad-sizes';
@@ -100,7 +100,7 @@ const getRules = (): Object => {
     return {
         bodySelector: '.js-article__body',
         slotSelector: ' > p',
-        minAbove: detect.isBreakpoint({
+        minAbove: isBreakpoint({
             max: 'tablet',
         })
             ? 300
@@ -108,7 +108,7 @@ const getRules = (): Object => {
         minBelow: 300,
         selectors: {
             ' > h2': {
-                minAbove: detect.getBreakpoint() === 'mobile' ? 100 : 0,
+                minAbove: getBreakpoint() === 'mobile' ? 100 : 0,
                 minBelow: 250,
             },
             ' .ad-slot': adSlotClassSelectorSizes,
@@ -133,7 +133,7 @@ const getRules = (): Object => {
 
 const getLongArticleRules = (): Object => {
     const longArticleRules: Object = getRules();
-    const viewportHeight: number = detect.getViewport().height;
+    const viewportHeight: number = getViewport().height;
     longArticleRules.selectors[' .ad-slot'].minAbove = viewportHeight;
     longArticleRules.selectors[' .ad-slot'].minBelow = viewportHeight;
     return longArticleRules;
@@ -179,7 +179,7 @@ const articleBodyAdvertsInit = (): Promise<boolean> => {
     }
 
     bodyAds = 0;
-    replaceTopSlot = detect.isBreakpoint({
+    replaceTopSlot = isBreakpoint({
         max: 'phablet',
     });
     getSlotName = replaceTopSlot ? getSlotNameForMobile : getSlotNameForDesktop;

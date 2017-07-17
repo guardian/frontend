@@ -9,7 +9,6 @@
   "Richard Nguyen": [],
   "Kate Whalen": [],
   "sndrs": [
-    "lib/detect.js",
     "bootstraps/enhanced/accessibility.js",
     "bootstraps/enhanced/common.js",
     "bootstraps/enhanced/crosswords.js",
@@ -41,7 +40,6 @@
     "projects/common/modules/component.js"
   ],
   "Calum Campbell": [
-    "lib/detect.js",
     "lib/picturefill.js",
     "lib/proximity-loader.js",
     "projects/common/modules/video/metadata.js"

@@ -1,10 +1,12 @@
 // @flow
 import config from 'lib/config';
 import $ from 'lib/$';
-import detect from 'lib/detect';
+import { getBreakpoint as getBreakpoint_ } from 'lib/detect';
 import { loadScript } from 'lib/load-script';
 import { tracking } from './outbrain-tracking';
 import { load } from './outbrain-load';
+
+const getBreakpoint: any = getBreakpoint_;
 
 jest.mock('ophan/ng', () => ({ record: () => undefined }));
 jest.mock('lib/detect', () => ({
@@ -14,7 +16,7 @@ jest.mock('lib/detect', () => ({
 jest.mock('lib/load-script', () => ({ loadScript: jest.fn() }));
 jest.mock('./outbrain-tracking', () => ({ tracking: jest.fn() }));
 
-detect.getBreakpoint.mockReturnValue('desktop');
+getBreakpoint.mockReturnValue('desktop');
 
 describe('Outbrain Load', () => {
     beforeEach(() => {
@@ -40,7 +42,7 @@ describe('Outbrain Load', () => {
 
     describe('desktop', () => {
         beforeEach(() => {
-            detect.getBreakpoint.mockReturnValueOnce('desktop');
+            getBreakpoint.mockReturnValueOnce('desktop');
         });
 
         // compliant news
@@ -108,7 +110,7 @@ describe('Outbrain Load', () => {
 
     describe('tablet', () => {
         beforeEach(() => {
-            detect.getBreakpoint.mockReturnValueOnce('tablet');
+            getBreakpoint.mockReturnValueOnce('tablet');
         });
 
         // compliant news
@@ -170,7 +172,7 @@ describe('Outbrain Load', () => {
 
     describe('mobile', () => {
         beforeEach(() => {
-            detect.getBreakpoint.mockReturnValueOnce('mobile');
+            getBreakpoint.mockReturnValueOnce('mobile');
         });
 
         // compliant news

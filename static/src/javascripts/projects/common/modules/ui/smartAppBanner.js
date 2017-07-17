@@ -2,7 +2,7 @@
 import fastdom from 'fastdom';
 import $ from 'lib/$';
 import { getCookie, addCookie } from 'lib/cookies';
-import detect from 'lib/detect';
+import { isIOS, isAndroid, getBreakpoint, getUserAgent } from 'lib/detect';
 import template from 'lodash/utilities/template';
 import { loadCssPromise } from 'lib/load-css-promise';
 import Message from 'common/modules/ui/message';
@@ -44,22 +44,20 @@ const tmp =
 const tablet =
     '<img src="<%=SCREENSHOTS%>" class="app__screenshots" alt="screenshots" />';
 
-const isDevice = (): boolean =>
-    (detect.isIOS() || detect.isAndroid()) && !detect.isFireFoxOSApp();
+const isDevice = (): boolean => isIOS() || isAndroid();
 
 const canShow = (): boolean => impressions < 4;
 
 const canUseSmartBanner = (): boolean =>
     config.switches.smartAppBanner &&
-    detect.getUserAgent.browser === 'Safari' &&
-    detect.isIOS();
+    getUserAgent.browser === 'Safari' &&
+    isIOS();
 
 const showMessage = (): void => {
     loadCssPromise.then(() => {
-        const platform = detect.isIOS() ? 'ios' : 'android';
+        const platform = isIOS() ? 'ios' : 'android';
         const msg = new Message(platform);
-        const fullTemplate =
-            tmp + (detect.getBreakpoint() === 'mobile' ? '' : tablet);
+        const fullTemplate = tmp + (getBreakpoint() === 'mobile' ? '' : tablet);
 
         msg.show(template(fullTemplate, DATA[platform.toUpperCase()]));
 

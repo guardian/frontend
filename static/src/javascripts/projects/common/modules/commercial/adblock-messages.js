@@ -1,12 +1,10 @@
 // @flow
 import config from 'lib/config';
-import detect from 'lib/detect';
+import { adblockInUse, getBreakpoint } from 'lib/detect';
 import { local } from 'lib/storage';
 import { isPayingMember } from 'commercial/modules/user-features';
 
-const adblockInUse = (): Promise<boolean> => detect.adblockInUse;
-
-const notMobile = (): boolean => detect.getBreakpoint() !== 'mobile';
+const notMobile = (): boolean => getBreakpoint() !== 'mobile';
 
 const visitedMoreThanOnce = (): boolean => {
     const alreadyVisited = local.get('gu.alreadyVisited') || 0;
@@ -16,12 +14,12 @@ const visitedMoreThanOnce = (): boolean => {
 
 const isAdblockSwitchOn = (): boolean => config.switches.adblock;
 
-const showAdblockMsg = (): Promise<boolean> =>
+const showAdblockMsg = (): Promise<?boolean> =>
     isAdblockSwitchOn() &&
     !isPayingMember() &&
     visitedMoreThanOnce() &&
     notMobile()
-        ? adblockInUse()
+        ? adblockInUse
         : Promise.resolve(false);
 
 export { showAdblockMsg };

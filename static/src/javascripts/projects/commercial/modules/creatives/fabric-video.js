@@ -2,7 +2,7 @@
 import qwery from 'qwery';
 import { addEventListener } from 'lib/events';
 import fastdom from 'lib/fastdom-promise';
-import detect from 'lib/detect';
+import { isIOS, isAndroid, isBreakpoint, getViewport } from 'lib/detect';
 import template from 'lodash/utilities/template';
 import { addTrackingPixel } from 'commercial/modules/creatives/add-tracking-pixel';
 import addViewabilityTracker from 'commercial/modules/creatives/add-viewability-tracker';
@@ -18,16 +18,12 @@ class FabricVideo {
     inView: boolean;
 
     constructor(adSlot: HTMLElement, params: Object) {
-        const isSmallScreen = detect.isBreakpoint({
+        const isSmallScreen = isBreakpoint({
             max: 'phablet',
         });
 
         this.isUpdating = false;
-        this.hasVideo = !(
-            detect.isIOS() ||
-            detect.isAndroid() ||
-            isSmallScreen
-        );
+        this.hasVideo = !(isIOS() || isAndroid() || isSmallScreen);
         this.inView = false;
         this.adSlot = adSlot;
         this.params = params;
@@ -59,7 +55,7 @@ class FabricVideo {
     }
 
     onScroll() {
-        const viewportHeight = detect.getViewport().height;
+        const viewportHeight = getViewport().height;
         const rect = this.adSlot.getBoundingClientRect();
         this.inView = rect.top >= 0 && rect.bottom < viewportHeight;
         if (!this.isUpdating) {

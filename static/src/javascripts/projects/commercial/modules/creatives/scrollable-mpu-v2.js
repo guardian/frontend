@@ -1,7 +1,7 @@
 // @flow
 import fastdom from 'fastdom';
 import $ from 'lib/$';
-import detect from 'lib/detect';
+import { isAndroid } from 'lib/detect';
 import mediator from 'lib/mediator';
 import { addTrackingPixel } from 'commercial/modules/creatives/add-tracking-pixel';
 import addViewabilityTracker from 'commercial/modules/creatives/add-viewability-tracker';
@@ -11,7 +11,7 @@ import type { bonzo } from 'bonzo';
  * TODO: rather blunt instrument this, due to the fact *most* mobile devices don't have a fixed
  * background-attachment - need to make this more granular
  */
-const hasScrollEnabled = !detect.isAndroid();
+const hasScrollEnabled = !isAndroid();
 
 /**
  * https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10026567

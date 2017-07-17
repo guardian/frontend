@@ -1,5 +1,5 @@
 // @flow
-import detect from 'lib/detect';
+import { isBreakpoint } from 'lib/detect';
 import fastdom from 'fastdom';
 import deferToAnalytics from 'lib/defer-to-analytics';
 import reportError from 'lib/report-error';
@@ -10,7 +10,7 @@ import { initHostedYoutube } from 'commercial/modules/hosted/youtube';
 import nextVideoAutoplay from 'commercial/modules/hosted/next-video-autoplay';
 import loadingTmpl from 'raw-loader!common/views/ui/loading.html';
 
-const isDesktop = (): boolean => detect.isBreakpoint({ min: 'desktop' });
+const isDesktop = (): boolean => isBreakpoint({ min: 'desktop' });
 
 const initLoadingSpinner = (player: Object, loadingTemplate: string): void => {
     player.loadingSpinner.contentEl().innerHTML = loadingTemplate;

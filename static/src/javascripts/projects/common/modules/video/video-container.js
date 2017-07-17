@@ -5,7 +5,7 @@ import $ from 'lib/$';
 import ElementInview from 'lib/element-inview';
 import { videojs } from 'bootstraps/enhanced/media/video-player';
 import { onVideoContainerNavigation } from 'common/modules/atoms/youtube';
-import detect from 'lib/detect';
+import { isBreakpoint } from 'lib/detect';
 
 type State = {
     position: number,
@@ -75,7 +75,7 @@ const reducers = {
     INIT: function init(previousState: State): State {
         const makeYouTubeNonPlayableAtSmallBreakpoint = state => {
             if (
-                detect.isBreakpoint({
+                isBreakpoint({
                     max: 'desktop',
                 })
             ) {

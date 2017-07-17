@@ -1,6 +1,6 @@
 // @flow
 import fastdom from 'lib/fastdom-promise';
-import detect from 'lib/detect';
+import { isEnhanced, isAndroid, getUserAgent, getViewport } from 'lib/detect';
 import template from 'lodash/utilities/template';
 import mediator from 'lib/mediator';
 import { addTrackingPixel } from 'commercial/modules/creatives/add-tracking-pixel';
@@ -9,11 +9,11 @@ import fabricV1Html from 'raw-loader!commercial/views/creatives/fabric-v1.html';
 import iframeVideoStr from 'raw-loader!commercial/views/creatives/iframe-video.html';
 import scrollBgStr from 'raw-loader!commercial/views/creatives/scrollbg.html';
 
-const hasBackgroundFixedSupport = !detect.isAndroid();
-const isEnhanced = detect.isEnhanced();
+const hasBackgroundFixedSupport = !isAndroid();
 const isIE10OrLess =
-    detect.getUserAgent.browser === 'MSIE' &&
-    parseInt(detect.getUserAgent.version, 10) <= 10;
+    typeof getUserAgent === 'object' &&
+    getUserAgent.browser === 'MSIE' &&
+    parseInt(getUserAgent.version, 10) <= 10;
 
 let fabricV1Tpl;
 let iframeVideoTpl;
@@ -61,7 +61,7 @@ class FabricV1 {
                 this.params.layerTwoBGPosition &&
                 (!this.params.layerTwoAnimation ||
                     this.params.layerTwoAnimation === 'disabled' ||
-                    (!isEnhanced &&
+                    (!isEnhanced() &&
                         this.params.layerTwoAnimation === 'enabled'))
                     ? this.params.layerTwoBGPosition
                     : '0% 0%',
@@ -116,7 +116,7 @@ class FabricV1 {
             if (
                 this.params.layerTwoAnimation === 'enabled' &&
                 this.layer2 &&
-                isEnhanced &&
+                isEnhanced() &&
                 !isIE10OrLess
             ) {
                 this.layer2.style.backgroundPosition = '';
@@ -191,12 +191,11 @@ class FabricV1 {
         let inViewB;
         if (
             this.params.layerTwoAnimation === 'enabled' &&
-            isEnhanced &&
+            isEnhanced() &&
             !isIE10OrLess
         ) {
             inViewB =
-                detect.getViewport().height >
-                this.adSlot.getBoundingClientRect().top;
+                getViewport().height > this.adSlot.getBoundingClientRect().top;
             fastdom.write(() => {
                 if (this.layer2) {
                     this.layer2.classList.add(
