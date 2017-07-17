@@ -18,7 +18,7 @@ const getSectionToggleMenuItem = (section: HTMLElement): ?HTMLElement => {
     return children.find(child => child.classList.contains('menu-item__title'));
 };
 
-const closeSidebarSection = (section: HTMLElement): void => {
+const closeMenuSection = (section: HTMLElement): void => {
     const toggle = getSectionToggleMenuItem(section);
 
     if (toggle) {
@@ -26,20 +26,17 @@ const closeSidebarSection = (section: HTMLElement): void => {
     }
 };
 
-const closeAllSidebarSections = (exclude?: Node): void => {
+const closeAllMenuSections = (exclude?: Node): void => {
     const sections = [...document.querySelectorAll('.js-navigation-item')];
 
     sections.forEach(section => {
         if (section !== exclude) {
-            closeSidebarSection(section);
+            closeMenuSection(section);
         }
     });
 };
 
-const openSidebarSection = (
-    section: HTMLElement,
-    options?: Object = {}
-): void => {
+const openMenuSection = (section: HTMLElement, options?: Object = {}): void => {
     const toggle = getSectionToggleMenuItem(section);
 
     if (toggle) {
@@ -51,10 +48,10 @@ const openSidebarSection = (
     }
 
     // the sections should behave like an accordion
-    closeAllSidebarSections(section);
+    closeAllMenuSections(section);
 };
 
-const isSidebarSectionClosed = (section: HTMLElement): boolean => {
+const isMenuSectionClosed = (section: HTMLElement): boolean => {
     const toggle = getSectionToggleMenuItem(section);
 
     if (toggle) {
@@ -64,15 +61,15 @@ const isSidebarSectionClosed = (section: HTMLElement): boolean => {
     return true;
 };
 
-const toggleSidebarSection = (section: HTMLElement): void => {
-    if (isSidebarSectionClosed(section)) {
-        openSidebarSection(section);
+const toggleMenuSection = (section: HTMLElement): void => {
+    if (isMenuSectionClosed(section)) {
+        openMenuSection(section);
     } else {
-        closeSidebarSection(section);
+        closeMenuSection(section);
     }
 };
 
-const toggleSidebar = (): void => {
+const toggleMenu = (): void => {
     const documentElement = document.documentElement;
     const openClass = 'new-header--open';
     const globalOpenClass = 'nav-is-open';
@@ -95,7 +92,7 @@ const toggleSidebar = (): void => {
         });
     };
 
-    const focusFirstSidebarSection = (): void => {
+    const focusFirstMenuSection = (): void => {
         const firstSection = document.querySelector('.js-navigation-button');
 
         if (firstSection) {
@@ -174,9 +171,9 @@ const toggleSidebar = (): void => {
 
         if (isOpen) {
             resetItemOrder();
-            closeAllSidebarSections();
+            closeAllMenuSections();
         } else {
-            focusFirstSidebarSection();
+            focusFirstMenuSection();
 
             if (!avatarIsEnhanced) {
                 enhanceAvatar();
@@ -200,7 +197,7 @@ const enhanceCheckbox = (checkbox: HTMLElement): void => {
                 button.setAttribute('class', checkboxClassAttr);
             }
 
-            button.addEventListener('click', () => toggleSidebar());
+            button.addEventListener('click', () => toggleMenu());
             button.setAttribute('id', checkboxId);
             button.setAttribute('aria-expanded', 'false');
             button.setAttribute('data-link-name', 'nav2 : toggle');
@@ -220,7 +217,7 @@ const enhanceCheckbox = (checkbox: HTMLElement): void => {
     });
 };
 
-const enhanceSidebarToggle = (): void => {
+const enhanceMenuToggle = (): void => {
     const checkbox = document.getElementById('main-menu-toggle');
 
     if (!checkbox) {
@@ -239,7 +236,7 @@ const enhanceSidebarToggle = (): void => {
     }
 };
 
-const toggleSidebarWithOpenSection = () => {
+const toggleMenuWithOpenSection = () => {
     const menu = getMenu();
     const subnav = document.querySelector('.subnav__list');
     const pillarTitle = (subnav && subnav.dataset.pillarTitle) || '';
@@ -247,10 +244,10 @@ const toggleSidebarWithOpenSection = () => {
     const section = menu && menu.querySelector(targetSelector);
 
     if (section) {
-        openSidebarSection(section, { scrollIntoView: true });
+        openMenuSection(section, { scrollIntoView: true });
     }
 
-    toggleSidebar();
+    toggleMenu();
 };
 
 const addEventHandler = (): void => {
@@ -269,7 +266,7 @@ const addEventHandler = (): void => {
 
                 if (parent) {
                     event.preventDefault();
-                    toggleSidebarSection(parent);
+                    toggleMenuSection(parent);
                 }
             }
         });
@@ -277,14 +274,14 @@ const addEventHandler = (): void => {
 
     if (toggleWithMoreButton) {
         toggleWithMoreButton.addEventListener('click', () => {
-            toggleSidebarWithOpenSection();
+            toggleMenuWithOpenSection();
         });
     }
 };
 
 export const newHeaderInit = (): void => {
-    enhanceSidebarToggle();
+    enhanceMenuToggle();
     addEventHandler();
     showMyAccountIfNecessary();
-    closeAllSidebarSections();
+    closeAllMenuSections();
 };
