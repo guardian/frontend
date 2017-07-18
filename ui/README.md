@@ -9,12 +9,12 @@ _n.b. all commands below should be run from the project root (`/frontend`)…_
 ## Dev
 
 1. start the `article` play application.
-2. run `make ui-dev`.
+2. run `make ui-watch`.
 3. browse to http://localhost:3000/render/js.
 
 ## Prod
 
-1. run `make ui-bundle`.
+1. run `make ui-compile`.
 
 This will create the following files:
 
