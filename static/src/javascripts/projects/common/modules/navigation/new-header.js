@@ -1,13 +1,16 @@
 // @flow
 
 import debounce from 'lodash/functions/debounce';
-import detect from 'lib/detect';
+import ophan from 'ophan/ng';
+import { isBreakpoint } from 'lib/detect';
 import fastdom from 'lib/fastdom-promise';
+import { local } from 'lib/storage';
 import { scrollToElement } from 'lib/scroller';
 import { addEventListener } from 'lib/events';
 import { showMyAccountIfNecessary, enhanceAvatar } from './user-account';
 
 const enhanced = {};
+const SEARCH_STORAGE_KEY = 'gu.recent.search';
 let avatarIsEnhanced = false;
 
 const getMenu = (): ?HTMLElement =>
@@ -104,7 +107,7 @@ const toggleMenu = (): void => {
         const expandedAttr = isOpen ? 'false' : 'true';
         const hiddenAttr = isOpen ? 'true' : 'false';
         const haveToCalcTogglePosition = (): boolean =>
-            detect.isBreakpoint({
+            isBreakpoint({
                 min: 'tablet',
                 max: 'desktop',
             });
@@ -250,8 +253,28 @@ const toggleMenuWithOpenSection = () => {
     toggleMenu();
 };
 
+const getRecentSearch = (): ?string => local.get(SEARCH_STORAGE_KEY);
+
+const clearRecentSearch = (): void => local.remove(SEARCH_STORAGE_KEY);
+
+const trackRecentSearch = (): void => {
+    const recent = getRecentSearch();
+
+    if (recent) {
+        ophan.record({
+            component: 'new-header-search',
+            value: recent,
+        });
+
+        clearRecentSearch();
+    }
+};
+
+const saveSearchTerm = (term: string) => local.set(SEARCH_STORAGE_KEY, term);
+
 const addEventHandler = (): void => {
     const menu = getMenu();
+    const search = menu && menu.querySelector('.js-menu-search');
     const toggleWithMoreButton = document.querySelector(
         '.js-toggle-nav-section'
     );
@@ -272,6 +295,19 @@ const addEventHandler = (): void => {
         });
     }
 
+    if (search) {
+        search.addEventListener('submit', (event: Event) => {
+            const target = (event.target: any).querySelector(
+                '.js-menu-search-term'
+            );
+
+            if (target) {
+                const term = target.value;
+                saveSearchTerm(term);
+            }
+        });
+    }
+
     if (toggleWithMoreButton) {
         toggleWithMoreButton.addEventListener('click', () => {
             toggleMenuWithOpenSection();
@@ -284,4 +320,5 @@ export const newHeaderInit = (): void => {
     addEventHandler();
     showMyAccountIfNecessary();
     closeAllMenuSections();
+    trackRecentSearch();
 };

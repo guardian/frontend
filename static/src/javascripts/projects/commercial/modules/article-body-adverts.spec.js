@@ -6,7 +6,15 @@ import {
 import config from 'lib/config';
 import { spaceFiller } from 'common/modules/article/space-filler';
 import { commercialFeatures } from 'commercial/modules/commercial-features';
-import detect from 'lib/detect';
+import {
+    getViewport as getViewport_,
+    getBreakpoint as getBreakpoint_,
+    isBreakpoint as isBreakpoint_,
+} from 'lib/detect';
+
+const getViewport: any = getViewport_;
+const getBreakpoint: any = getBreakpoint_;
+const isBreakpoint: any = isBreakpoint_;
 
 jest.mock('commercial/modules/dfp/track-ad-render', () => (id: string) => {
     const ads = {
@@ -44,7 +52,7 @@ describe('Article Body Adverts', () => {
         jest.resetAllMocks();
         commercialFeatures.articleBodyAdverts = true;
         spaceFillerStub.mockImplementation(() => Promise.resolve(2));
-        detect.getViewport.mockReturnValue({ height: 1300 });
+        getViewport.mockReturnValue({ height: 1300 });
         expect.hasAssertions();
     });
 
@@ -76,8 +84,8 @@ describe('Article Body Adverts', () => {
 
     describe('When merchandising components enabled', () => {
         beforeEach(() => {
-            detect.getBreakpoint.mockReturnValue('mobile');
-            detect.isBreakpoint.mockReturnValue(true);
+            getBreakpoint.mockReturnValue('mobile');
+            isBreakpoint.mockReturnValue(true);
             config.page.hasInlineMerchandise = true;
         });
 
@@ -111,7 +119,7 @@ describe('Article Body Adverts', () => {
             // The 8 is for addInlineAds again, adding adverts using getLongArticleRules().
             spaceFillerStub.mockReturnValueOnce(Promise.resolve(8));
 
-            detect.getBreakpoint.mockReturnValue('tablet');
+            getBreakpoint.mockReturnValue('tablet');
 
             jest.setMock(
                 'commercial/modules/dfp/track-ad-render',
@@ -152,7 +160,7 @@ describe('Article Body Adverts', () => {
                 articleBodyAdvertsInit().then(() => {
                     expect(spaceFillerStub).toHaveBeenCalledTimes(2);
                     const longArticleInsertCalls = spaceFillerStub.mock.calls.slice(
-                        1
+                        2
                     );
                     const longArticleInsertRules = longArticleInsertCalls.map(
                         call => call[0]
@@ -192,8 +200,8 @@ describe('Article Body Adverts', () => {
                 }));
 
             it('includes rules for mobile phones', () => {
-                detect.getBreakpoint.mockReturnValue('mobile');
-                detect.isBreakpoint.mockReturnValue(true);
+                getBreakpoint.mockReturnValue('mobile');
+                isBreakpoint.mockReturnValue(true);
 
                 return getFirstRulesUsed().then(rules => {
                     // adverts can appear higher up the page
@@ -205,9 +213,9 @@ describe('Article Body Adverts', () => {
             });
 
             it('includes rules for tablet devices', () => {
-                detect.getBreakpoint.mockReturnValue('tablet');
+                getBreakpoint.mockReturnValue('tablet');
                 // fudge check for max:tablet
-                detect.isBreakpoint.mockReturnValue(true);
+                isBreakpoint.mockReturnValue(true);
 
                 return getFirstRulesUsed().then(rules => {
                     // adverts can appear higher up the page
@@ -219,9 +227,9 @@ describe('Article Body Adverts', () => {
             });
 
             it('includes rules for larger screens', () => {
-                detect.getBreakpoint.mockReturnValue('desktop');
+                getBreakpoint.mockReturnValue('desktop');
                 // fudge check for max:tablet
-                detect.isBreakpoint.mockReturnValue(false);
+                isBreakpoint.mockReturnValue(false);
 
                 return getFirstRulesUsed().then(rules => {
                     // adverts give the top of the page more clearance

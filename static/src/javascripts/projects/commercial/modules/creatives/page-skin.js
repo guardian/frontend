@@ -1,6 +1,6 @@
 // @flow
 import config from 'lib/config';
-import detect from 'lib/detect';
+import { isBreakpoint, hasCrossedBreakpoint } from 'lib/detect';
 import mediator from 'lib/mediator';
 import fastdom from 'fastdom';
 
@@ -13,14 +13,14 @@ const pageSkin = (): void => {
             fastdom.write(() => {
                 bodyEl.classList.toggle(
                     'has-active-pageskin',
-                    detect.isBreakpoint({ min: 'wide' })
+                    isBreakpoint({ min: 'wide' })
                 );
             });
         }
     };
 
     const togglePageSkin = (): void => {
-        if (hasPageSkin && detect.hasCrossedBreakpoint(true)) {
+        if (hasPageSkin && hasCrossedBreakpoint(true)) {
             togglePageSkinActiveClass();
         }
     };

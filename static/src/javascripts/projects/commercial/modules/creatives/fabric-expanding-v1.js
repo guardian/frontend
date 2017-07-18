@@ -2,7 +2,7 @@
 import bean from 'bean';
 import fastdom from 'lib/fastdom-promise';
 import $ from 'lib/$';
-import detect from 'lib/detect';
+import { getViewport, isBreakpoint, isIOS, isAndroid } from 'lib/detect';
 import mediator from 'lib/mediator';
 import { local } from 'lib/storage';
 import template from 'lodash/utilities/template';
@@ -41,7 +41,7 @@ class FabricExpandingV1 {
     }
 
     updateBgPosition() {
-        const viewportHeight = detect.getViewport().height;
+        const viewportHeight = getViewport().height;
         const adSlotTop = this.adSlot.getBoundingClientRect().top;
 
         const adHeight = this.isClosed ? this.closedHeight : this.openedHeight;
@@ -112,7 +112,7 @@ class FabricExpandingV1 {
     listener() {
         if (
             !this.initialExpandCounter &&
-            detect.getViewport().height >
+            getViewport().height >
                 this.adSlot.getBoundingClientRect().top + this.openedHeight
         ) {
             const itemId = $('.ad-slot__content', this.adSlot).attr('id');
@@ -148,7 +148,7 @@ class FabricExpandingV1 {
 
     buildVideo(customClass: string) {
         const videoAspectRatio = 16 / 9;
-        const videoHeight = detect.isBreakpoint({
+        const videoHeight = isBreakpoint({
             max: 'phablet',
         })
             ? 125
@@ -184,7 +184,7 @@ class FabricExpandingV1 {
     }
 
     stopVideo(delay: number = 0) {
-        const videoSelector = detect.isBreakpoint({
+        const videoSelector = isBreakpoint({
             min: 'tablet',
         })
             ? '.js-fabric-video--desktop'
@@ -332,6 +332,6 @@ class FabricExpandingV1 {
     }
 }
 
-FabricExpandingV1.hasScrollEnabled = !detect.isIOS() && !detect.isAndroid();
+FabricExpandingV1.hasScrollEnabled = !isIOS() && !isAndroid();
 
 export default FabricExpandingV1;

@@ -1,6 +1,6 @@
 // @flow
 import { addEventListener } from 'lib/events';
-import detect from 'lib/detect';
+import { getViewport } from 'lib/detect';
 import fastdom from 'lib/fastdom-promise';
 import type { RegisterListeners } from 'commercial/modules/messenger';
 
@@ -67,7 +67,7 @@ const onIntersect = changes => {
 
 const onScroll = (): ?Promise<any> => {
     if (!taskQueued) {
-        const viewport = detect.getViewport();
+        const viewport = getViewport();
         taskQueued = true;
 
         return fastdom.read(() => {

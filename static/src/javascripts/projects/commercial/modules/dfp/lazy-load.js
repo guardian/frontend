@@ -2,7 +2,7 @@
 
 /* eslint no-use-before-define: "off" */
 
-import detect from 'lib/detect';
+import { getViewport } from 'lib/detect';
 import { getCurrentTime } from 'lib/user-timing';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 import loadAdvert from 'commercial/modules/dfp/load-advert';
@@ -24,7 +24,7 @@ const displayAd = (advertId: string): void => {
 };
 
 const onScroll = (): void => {
-    const viewportHeight: number = detect.getViewport().height;
+    const viewportHeight: number = getViewport().height;
 
     const lazyLoadAds: Array<string> = dfpEnv.advertsToLoad
         .filter(advert => {

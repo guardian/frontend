@@ -4,7 +4,7 @@ import mediator from 'lib/mediator';
 import reportError from 'lib/report-error';
 import $ from 'lib/$';
 import config from 'lib/config';
-import detect from 'lib/detect';
+import { isBreakpoint } from 'lib/detect';
 import { isRevisit } from 'common/modules/onward/history';
 import throttle from 'lodash/functions/throttle';
 import forOwn from 'lodash/objects/forOwn';
@@ -18,7 +18,7 @@ import ophan from 'ophan/ng';
 /* global require */
 declare function Krux(eventType: string, ident: string, data: Object): void;
 
-const isDesktop = detect.isBreakpoint({
+const isDesktop = isBreakpoint({
     min: 'desktop',
 });
 const isEmbed = !!window.guardian.isEmbed;

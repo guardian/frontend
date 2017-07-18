@@ -2,7 +2,7 @@
 import bonzo from 'bonzo';
 import relativeDates from 'common/modules/ui/relativedates';
 import $ from 'lib/$';
-import detect from 'lib/detect';
+import { getViewport } from 'lib/detect';
 import fastdomPromise from 'lib/fastdom-promise';
 import fetchJson from 'lib/fetch-json';
 import mediator from 'lib/mediator';
@@ -21,7 +21,7 @@ let refreshMaxTimes = 5;
 const selector = '.js-liveblog-blocks';
 const articleIdAttribute = 'data-article-id';
 const sessionStorageKey = 'gu.liveblog.block-dates';
-const viewportHeightPx = detect.getViewport().height;
+const viewportHeightPx = getViewport().height;
 
 type Block = {
     id: string,

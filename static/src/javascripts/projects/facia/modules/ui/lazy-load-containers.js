@@ -1,11 +1,11 @@
 // @flow
 import fastdom from 'fastdom';
 import qwery from 'qwery';
-import detect from 'lib/detect';
+import { getViewport } from 'lib/detect';
 import mediator from 'lib/mediator';
 import throttle from 'lodash/functions/throttle';
 
-const distanceBeforeLoad = detect.getViewport().height;
+const distanceBeforeLoad = getViewport().height;
 
 // Checks whether the element is within one screenful above or below the viewport
 const withinRange = (container: Element): boolean => {

@@ -1,10 +1,12 @@
 // @flow
 
 import { isPayingMember } from 'commercial/modules/user-features';
-import detect from 'lib/detect';
+import { getBreakpoint as getBreakpoint_ } from 'lib/detect';
 import config from 'lib/config';
 import { local } from 'lib/storage';
 import { showAdblockMsg } from './adblock-messages';
+
+const getBreakpoint: any = getBreakpoint_;
 
 jest.mock('commercial/modules/user-features', () => ({
     isPayingMember: jest.fn(),
@@ -54,7 +56,7 @@ describe('Adblock messages/banners rules', () => {
         local.get.mockReturnValueOnce(settings[counter].alreadyVisited);
         mockBreakpoint = settings[counter].mockBreakpoint;
 
-        detect.getBreakpoint.mockReturnValueOnce(mockBreakpoint);
+        getBreakpoint.mockReturnValueOnce(mockBreakpoint);
 
         done();
     });

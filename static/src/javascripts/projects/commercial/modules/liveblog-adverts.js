@@ -1,6 +1,6 @@
 // @flow
 import fastdom from 'lib/fastdom-promise';
-import detect from 'lib/detect';
+import { getBreakpoint } from 'lib/detect';
 import mediator from 'lib/mediator';
 import { addSlot } from 'commercial/modules/dfp/add-slot';
 import { commercialFeatures } from 'commercial/modules/commercial-features';
@@ -89,7 +89,7 @@ const getSlotName = (isMobile: boolean, slotCounter: number): string => {
 };
 
 const insertAds = (slots: Element[]): void => {
-    const isMobile = detect.getBreakpoint() === 'mobile';
+    const isMobile = getBreakpoint() === 'mobile';
 
     for (let i = 0; i < slots.length && SLOTCOUNTER < MAX_ADS; i += 1) {
         const slotName = getSlotName(isMobile, SLOTCOUNTER);

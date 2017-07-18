@@ -15,9 +15,4 @@ POST       /commercial-report               controllers.DiagnosticsController.co
 OPTIONS    /commercial-report               controllers.DiagnosticsController.commercialOptions
 GET        /commercial-reports/:dateTime    controllers.DiagnosticsController.commercialReports(dateTime)
 
-GET        /quiz/results/:quizId            controllers.QuizzesController.results(quizId)
-OPTIONS    /quiz/results/:quizId            controllers.QuizzesController.resultsOptions(quizId)
-POST       /quiz/update                     controllers.QuizzesController.update()
-OPTIONS    /quiz/update                     controllers.QuizzesController.updateOptions
-
 GET        /esi/ad-call                     controllers.CommercialPreflightController.adCall()
