@@ -19,8 +19,6 @@ GET            /assets/*path                                                    
 
 # Diagnostics
 GET            /count/$prefix<.+>.gif                                                                                            controllers.DiagnosticsController.analytics(prefix)
-POST           /csp-report                                                                                                       controllers.DiagnosticsController.csp
-OPTIONS        /csp-report                                                                                                       controllers.DiagnosticsController.cspOptions
 POST           /commercial-report                                                                                                controllers.DiagnosticsController.commercialReport
 OPTIONS        /commercial-report                                                                                                controllers.DiagnosticsController.commercialOptions
 GET            /commercial-reports/:dateTime                                                                                     controllers.DiagnosticsController.commercialReports(dateTime)
