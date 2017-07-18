@@ -9,7 +9,7 @@ const contentCN = 'dropdown__content';
 const updateAria = (container: Element): void => {
     const v: boolean = container.classList.contains('dropdown--active');
     const content = [...container.getElementsByClassName(contentCN)];
-    const button = [...container.getElementsByClassName(buttonCN)];
+    const button = container.getElementsByClassName(buttonCN);
 
     content.forEach((c: Element) => {
         c.setAttribute('aria-hidden', v ? 'false' : 'true');
