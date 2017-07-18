@@ -246,16 +246,6 @@ trait FeatureSwitches {
     exposeClientSide = false
   )
 
-  val FootballFeedRecorderSwitch = Switch(
-    SwitchGroup.Feature,
-    "football-feed-recorder",
-    "If switched on then football matchday feeds will be recorded every minute",
-    owners = Seq(Owner.withGithub("johnduffell")),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = false
-  )
-
   val CrosswordSvgThumbnailsSwitch = Switch(
     SwitchGroup.Feature,
     "crossword-svg-thumbnails",
