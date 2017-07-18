@@ -3,13 +3,13 @@ import bean from 'bean';
 import fastdom from 'fastdom';
 
 const containerSelector = '.dropdown';
-const buttonSelector = '.dropdown__button';
-const contentSelector = '.dropdown__content';
+const buttonCN = 'dropdown__button';
+const contentCN = 'dropdown__content';
 
 const updateAria = (container: Element): void => {
     const v: boolean = container.classList.contains('dropdown--active');
-    const content = [...container.querySelectorAll(contentSelector)];
-    const button = [...container.querySelectorAll(buttonSelector)];
+    const content = [...container.getElementsByClassName(contentCN)];
+    const button = [...container.getElementsByClassName(buttonCN)];
 
     content.forEach((c: Element) => {
         c.setAttribute('aria-hidden', v ? 'false' : 'true');
@@ -21,7 +21,7 @@ const updateAria = (container: Element): void => {
 };
 
 const init = (): void => {
-    bean.on(document.body, 'click', buttonSelector, (e: Event) => {
+    bean.on(document.body, 'click', `.${buttonCN}`, (e: Event) => {
         const container = (e.currentTarget: any).closest(containerSelector);
         if (container) {
             fastdom.write(() => {
