@@ -1,30 +1,35 @@
-import $ from 'lib/$';
-import bonzo from 'bonzo';
+// @flow
 import bean from 'bean';
-var s = {
-    container: '.dropdown',
-    button: '.dropdown__button',
-    content: '.dropdown__content'
+import fastdom from 'fastdom';
+
+const containerSelector = '.dropdown';
+const buttonSelector = '.dropdown__button';
+const contentSelector = '.dropdown__content';
+
+const updateAria = (container: Element): void => {
+    const v: boolean = container.classList.contains('dropdown--active');
+    const content = [...container.querySelectorAll(contentSelector)];
+    const button = [...container.querySelectorAll(buttonSelector)];
+
+    content.forEach((c: Element) => {
+        c.setAttribute('aria-hidden', v ? 'false' : 'true');
+    });
+
+    [...content, ...button].forEach((c: Element) => {
+        c.setAttribute('aria-expanded', v ? 'true' : 'false');
+    });
 };
 
-function init() {
-    bean.on(document.body, 'click', s.button, function(e) {
-        var $container = bonzo($.ancestor(e.currentTarget, s.container.substring(1)));
-        $container.toggleClass('dropdown--active');
-        updateAria($container);
+const init = (): void => {
+    bean.on(document.body, 'click', buttonSelector, (e: Event) => {
+        const container = (e.currentTarget: any).closest(containerSelector);
+        if (container) {
+            fastdom.write(() => {
+                container.classList.toggle('dropdown--active');
+                updateAria(container);
+            });
+        }
     });
-}
-
-function updateAria($container) {
-    $container.each(function(d) {
-        var v = bonzo(d).hasClass('dropdown--active');
-        $(s.content, d).attr('aria-hidden', !v);
-        $(s.button, d).attr('aria-expanded', v);
-        $(s.content, d).attr('aria-expanded', v);
-    });
-}
-
-export default {
-    init: init,
-    updateAria: updateAria
 };
+
+export { init };
