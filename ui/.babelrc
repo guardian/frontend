@@ -14,21 +14,21 @@
     "env": {
         "development": {
             "plugins": [
-                ["babel-plugin-preact-require", {
+                ["babel-plugin-provide-modules", {
                     "lib/h.jsx": "h"
                 }]
             ]
         },
         "production": {
             "plugins": [
-                ["babel-plugin-preact-require", {
+                ["babel-plugin-provide-modules", {
                     "lib/h.jsx": "h"
                 }]
             ]
         },
         "test": {
             "plugins": [
-                ["babel-plugin-preact-require", {
+                ["babel-plugin-provide-modules", {
                     "lib/h.jsx": "h"
                 }],
                 "babel-plugin-transform-es2015-modules-commonjs"
