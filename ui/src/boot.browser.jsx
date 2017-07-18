@@ -22,9 +22,6 @@ const renderApp = () => {
                 <Body {...props} />
             </StyletronProvider>,
             container.parentElement,
-            // preact uses react's flowtype definition for `render`, which is weird,
-            // given https://preactjs.com/guide/differences-to-react#what-s-different-
-            // $FlowFixMe
             container
         );
     }
