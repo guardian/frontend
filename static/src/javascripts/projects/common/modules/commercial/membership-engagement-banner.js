@@ -175,8 +175,6 @@ const showBanner = params => {
 
         mediator.emit('membership-message:display');
     }
-
-    mediator.emit('banner-message:complete');
 };
 
 const membershipEngagementBannerInit = () =>
@@ -195,13 +193,9 @@ const membershipEngagementBannerInit = () =>
                             breakingShown => {
                                 if (!breakingShown) {
                                     showBanner(bannerParams);
-                                } else {
-                                    mediator.emit('banner-message:complete');
                                 }
                             }
                         );
-                    } else {
-                        mediator.emit('banner-message:complete');
                     }
                 }
             );
