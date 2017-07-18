@@ -1,7 +1,7 @@
 // @flow
 
 import Button from 'components/button';
-import styles from './article.scss';
+import styles from './style.scss';
 
 export default (props: Object) =>
     <header style={styles['.header']}>
