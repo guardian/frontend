@@ -1,36 +1,30 @@
-define([
-    'lib/$',
-    'bonzo',
-    'bean'
-], function (
-    $,
-    bonzo,
-    bean
-) {
-    var s = {
-        container: '.dropdown',
-        button: '.dropdown__button',
-        content: '.dropdown__content'
-    };
-    function init() {
-        bean.on(document.body, 'click', s.button, function (e) {
-            var $container = bonzo($.ancestor(e.currentTarget, s.container.substring(1)));
-            $container.toggleClass('dropdown--active');
-            updateAria($container);
-        });
-    }
+import $ from 'lib/$';
+import bonzo from 'bonzo';
+import bean from 'bean';
+var s = {
+    container: '.dropdown',
+    button: '.dropdown__button',
+    content: '.dropdown__content'
+};
 
-    function updateAria($container) {
-        $container.each(function (d) {
-            var v = bonzo(d).hasClass('dropdown--active');
-            $(s.content, d).attr('aria-hidden', !v);
-            $(s.button, d).attr('aria-expanded', v);
-            $(s.content, d).attr('aria-expanded', v);
-        });
-    }
+function init() {
+    bean.on(document.body, 'click', s.button, function(e) {
+        var $container = bonzo($.ancestor(e.currentTarget, s.container.substring(1)));
+        $container.toggleClass('dropdown--active');
+        updateAria($container);
+    });
+}
 
-    return {
-        init: init,
-        updateAria: updateAria
-    };
-});
+function updateAria($container) {
+    $container.each(function(d) {
+        var v = bonzo(d).hasClass('dropdown--active');
+        $(s.content, d).attr('aria-hidden', !v);
+        $(s.button, d).attr('aria-expanded', v);
+        $(s.content, d).attr('aria-expanded', v);
+    });
+}
+
+export default {
+    init: init,
+    updateAria: updateAria
+};
