@@ -79,22 +79,26 @@ const reducers = {
                     max: 'desktop',
                 })
             ) {
-                const youTubeIframes = state.container.querySelectorAll(
-                    '.youtube-media-atom iframe'
-                );
+                const youTubeIframes = [
+                    ...state.container.querySelectorAll(
+                        '.youtube-media-atom iframe'
+                    ),
+                ];
                 youTubeIframes.forEach(el => {
                     el.remove();
                 });
-                const overlayLinks = state.container.querySelectorAll(
-                    '.video-container-overlay-link'
-                );
+                const overlayLinks = [
+                    ...state.container.querySelectorAll(
+                        '.video-container-overlay-link'
+                    ),
+                ];
                 overlayLinks.forEach(el => {
                     el.classList.add('u-faux-block-link__overlay');
                 });
 
-                const atomWrapper = state.container.querySelectorAll(
-                    '.youtube-media-atom'
-                );
+                const atomWrapper = [
+                    ...state.container.querySelectorAll('.youtube-media-atom'),
+                ];
                 atomWrapper.forEach(el => {
                     el.classList.add('no-player');
                 });
