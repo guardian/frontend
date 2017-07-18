@@ -40,7 +40,6 @@ const config = {
     resolve: {
         modules: [
             path.resolve(ui, 'src'),
-            path.resolve(ui, 'src', 'app'),
             'node_modules', // default location, but we're overiding above, so it needs to be explicit
         ],
         extensions: ['.js', '.jsx'],
