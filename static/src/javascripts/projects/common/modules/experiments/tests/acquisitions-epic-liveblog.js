@@ -2,7 +2,7 @@
 import { makeABTest } from 'common/modules/commercial/contributions-utilities';
 import { logView } from 'common/modules/commercial/acquisitions-view-log';
 import template from 'lodash/utilities/template';
-import $ from 'lib/$';
+import { elementFromString, insert } from 'lib/dom';
 import config from 'lib/config';
 import mediator from 'lib/mediator';
 import ElementInView from 'lib/element-inview';
@@ -99,11 +99,14 @@ const addEpicToBlocks = (
         blocksToInsertEpicAfter.forEach(el => {
             getLiveblogEntryTimeData(el).then((timeData: TimeData) => {
                 fastdom.write(() => {
-                    const $epic = $.create(epicHtml);
-                    $epic.insertAfter(el);
-                    $(el).removeClass(INSERT_EPIC_AFTER_CLASS);
-                    setEpicLiveblogEntryTimeData($epic[0], timeData);
-                    setupViewTracking(el, test);
+                    const epic = elementFromString(epicHtml);
+
+                    if (epic) {
+                        insert(epic).after(el);
+                        el.classList.remove(INSERT_EPIC_AFTER_CLASS);
+                        setEpicLiveblogEntryTimeData(epic, timeData);
+                        setupViewTracking(el, test);
+                    }
                 });
             });
         });
