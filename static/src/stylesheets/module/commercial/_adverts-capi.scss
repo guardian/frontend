@@ -392,6 +392,11 @@
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+        // IE 11 hates shorthand flex CSS, and does something different to the
+        // other browsers, so we have to list the props out in this way
+        flex-grow: 1;
+        flex-shrink: 1;
+        flex-basis: auto;
         @include mq(mobileLandscape, tablet) {
             flex-direction: row;
         }
