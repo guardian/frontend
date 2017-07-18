@@ -18,12 +18,11 @@ import { get } from 'lib/geolocation';
 import { constructQuery } from 'lib/url';
 
 // change messageCode to force redisplay of the message to users who already closed it.
-// messageCode is also consumed by .../test/javascripts/spec/common/commercial/membership-engagement-banner.spec.js
 const messageCode = 'engagement-banner-2017-07-05';
 
 const DO_NOT_RENDER_ENGAGEMENT_BANNER = 'do no render engagement banner';
 
-const getUserTest = () => {
+const getUserTest = (): ?ContributionsABTest => {
     const engagementBannerTests = MembershipEngagementBannerTests.concat(
         epicEngagementBannerTests
     );
@@ -33,9 +32,14 @@ const getUserTest = () => {
     );
 };
 
-const getUserVariant = test => (test ? variantFor(test) : undefined);
+const getUserVariant = (test: ?ABTest): ?Variant =>
+    test ? variantFor(test) : undefined;
 
-const buildCampaignCode = (offering, campaignId, variantId) => {
+const buildCampaignCode = (
+    offering: string,
+    campaignId: string,
+    variantId: string
+): string => {
     let prefix = '';
     const offerings = membershipEngagementBannerUtils.offerings;
 
@@ -49,12 +53,17 @@ const buildCampaignCode = (offering, campaignId, variantId) => {
     return `${prefix + campaignId}_${variantId}`;
 };
 
-const getUserVariantParams = (userVariant, campaignId, defaultOffering) => {
-    if (userVariant && userVariant.engagementBannerParams) {
-        const userVariantParams = userVariant.engagementBannerParams;
+const getUserVariantParams = (
+    userVariant: ?Variant,
+    campaignId: ?string,
+    defaultOffering: string
+): Object => {
+    if (campaignId && userVariant && userVariant.engagementBannerParams) {
+        const userVariantParams: any = userVariant.engagementBannerParams;
 
         if (!userVariantParams.campaignCode) {
-            const offering = userVariantParams.offering || defaultOffering;
+            const offering: string =
+                userVariantParams.offering || defaultOffering;
             userVariantParams.campaignCode = buildCampaignCode(
                 offering,
                 campaignId,
@@ -91,7 +100,7 @@ const getUserVariantParams = (userVariant, campaignId, defaultOffering) => {
  *  }
  *
  */
-const deriveBannerParams = location => {
+const deriveBannerParams = (location: string): Object | string => {
     const defaultParams = membershipEngagementBannerUtils.defaultParams(
         location
     );
@@ -111,7 +120,7 @@ const deriveBannerParams = location => {
 };
 
 // Used to send an interaction if the engagement banner is shown.
-const recordInteraction = interaction => {
+const recordInteraction = (interaction: Object): void => {
     if (interaction) {
         const component = interaction.component;
         const value = interaction.value;
@@ -131,10 +140,10 @@ const paypalAndCreditCardImage =
         config.images.acquisitions['paypal-and-credit-card']) ||
     '';
 
-const selectSequentiallyFrom = array =>
+const selectSequentiallyFrom = (array: Array<any>): any =>
     array[local.get('gu.alreadyVisited') % array.length];
 
-const showBanner = params => {
+const showBanner = (params: Object): void => {
     if (params === DO_NOT_RENDER_ENGAGEMENT_BANNER || isBlocked()) {
         return;
     }
@@ -171,18 +180,19 @@ const showBanner = params => {
     }).show(renderedBanner);
 
     if (messageShown) {
-        recordInteraction(params.interactionOnMessageShown);
+        recordInteraction(params.interactionOnMessageShow);
 
         mediator.emit('membership-message:display');
     }
 };
 
-const membershipEngagementBannerInit = () =>
+const membershipEngagementBannerInit = (): Promise<void> =>
     get().then(location => {
         const bannerParams = deriveBannerParams(location);
 
         if (
             bannerParams &&
+            typeof bannerParams !== 'string' &&
             (local.get('gu.alreadyVisited') || 0) >= bannerParams.minArticles
         ) {
             return commercialFeatures.asynchronous.canDisplayMembershipEngagementBanner.then(
