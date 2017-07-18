@@ -208,4 +208,4 @@ const membershipEngagementBannerInit = () =>
         }
     });
 
-export { membershipEngagementBannerInit, messageCode };
+export { membershipEngagementBannerInit };
