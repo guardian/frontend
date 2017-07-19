@@ -14,5 +14,6 @@ export default (
     ...children: Array<any>
 ) => {
     const { style, ...otherAttributes } = attributes || {};
-    return preact_h(styled(nodeName, style), otherAttributes, children);
+    if (style) return preact_h(styled(nodeName, style), otherAttributes, children);
+    return preact_h(nodeName, otherAttributes, children);
 };
