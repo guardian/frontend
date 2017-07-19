@@ -11,6 +11,9 @@ object CustomTargetingKeyValueJob {
 
   def run(): Future[Unit] = Future {
     val customTargeting = CustomTargetingAgent.get.data.values
-    Store.putDfpCustomTargetingKeyValues(Json.stringify(Json.toJson(customTargeting)))
+
+    if (customTargeting.nonEmpty) {
+      Store.putDfpCustomTargetingKeyValues(Json.stringify(Json.toJson(customTargeting)))
+    }
   }
 }
