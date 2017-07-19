@@ -32,7 +32,7 @@ object CustomTargetingAgent extends DataAgent[Long, GuCustomTargeting] with Logg
           }
 
           keyId -> GuCustomTargeting(
-              id = key.getId.longValue,
+              keyId = keyId,
               name = key.getName,
               displayName = key.getDisplayName,
               values = guValues)

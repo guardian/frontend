@@ -11,7 +11,7 @@ import play.api.libs.json._
 import scala.language.postfixOps
 
 case class GuCustomTargeting(
-                              id: Long,
+                              keyId: Long,
                               name: String,
                               displayName: String,
                               values: Seq[GuCustomTargetingValue]
