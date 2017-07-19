@@ -50,8 +50,7 @@
     "projects/common/modules/discussion/comment-box.js"
   ],
   "Gustav Pursche": [
-    "lib/element-inview.js",
-    "lib/page.js"
+    "lib/element-inview.js"
   ],
   "NataliaLKB": [
     "projects/common/modules/article/rich-links.js",

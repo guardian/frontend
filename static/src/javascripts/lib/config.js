@@ -29,8 +29,10 @@ const referenceOfType = (name: string): string => referencesOfType(name)[0];
 // the date nicely formatted and padded for use as part of a url
 // looks like    2012/04/31
 const webPublicationDateAsUrlPart = (): ?string => {
-    if (config.page.webPublicationDate) {
-        const pubDate = new Date(config.page.webPublicationDate);
+    const webPublicationDate = config.page.webPublicationDate;
+
+    if (webPublicationDate) {
+        const pubDate = new Date(webPublicationDate);
         return `${pubDate.getFullYear()}/${(pubDate.getMonth() + 1)
             .toString()
             .padStart(2, '0')}/${pubDate
