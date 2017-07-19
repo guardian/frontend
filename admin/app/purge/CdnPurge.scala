@@ -17,13 +17,21 @@ class CdnPurge(wsClient: WSClient) extends ExecutionContexts with Dates with Log
     // under normal circumstances we only ever want this called from PROD.
     // Don't want too much decaching going on.
     if (environment.isProd) {
-      val purgeRequest = wsClient.url(s"https://api.fastly.com/service/$serviceId/purge/$key")
-        .withHeaders("Fastly-Key" -> fastly.key,
-                     "Fastly-Soft-Purge" -> "1")
+      wsClient.url(s"https://api.fastly.com/service/$serviceId/purge/$key")
+        .withHeaders(
+          "Fastly-Key" -> fastly.key,
+          "Fastly-Soft-Purge" -> "1"
+        )
         .post("")
-
-      purgeRequest.onSuccess { case r => log.info(s"purge $key from Fastly with response ${r.statusText}") }
-      purgeRequest
+        .map { response =>
+          response.status match {
+            case responseCode if (200 to 299) contains responseCode =>
+              log.info(s"purge $key from Fastly with response ${response.statusText}")
+              response
+            case _ =>
+              throw new RuntimeException(s"Purge request to Fastly failed with response ${response.status} ${response.statusText}")
+          }
+        }
     } else {
       Future.failed(new RuntimeException("Purging is disabled in non-production environment"))
     }
