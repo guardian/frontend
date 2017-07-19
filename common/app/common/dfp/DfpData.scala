@@ -10,6 +10,29 @@ import play.api.libs.json._
 
 import scala.language.postfixOps
 
+case class GuCustomTargeting(
+                              id: Long,
+                              name: String,
+                              displayName: String,
+                              values: Seq[GuCustomTargetingValue]
+                            ) {
+  val readableValues: Seq[GuCustomTargetingValue] = values.filter( _.displayName.nonEmpty)
+}
+
+case class GuCustomTargetingValue(
+                                   id: Long,
+                                   name: String,
+                                   displayName: String
+                                 )
+
+object GuCustomTargetingValue {
+  implicit val format = Json.format[GuCustomTargetingValue]
+}
+
+object GuCustomTargeting {
+  implicit val format = Json.format[GuCustomTargeting]
+}
+
 case class CustomTarget(name: String, op: String, values: Seq[String]) {
 
   def isPositive(targetName: String): Boolean = name == targetName && op == "IS"

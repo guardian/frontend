@@ -6,7 +6,9 @@ import dfp.DfpApi.DfpLineItems
 import org.joda.time.DateTime
 import play.api.libs.json.Json.{toJson, _}
 import tools.Store
+
 import scala.concurrent.Future
+import scala.util.{Failure, Success}
 
 object DfpDataCacheJob extends ExecutionContexts with Logging {
 
@@ -28,11 +30,11 @@ object DfpDataCacheJob extends ExecutionContexts with Logging {
   so would be used for first read and for emergency data update.
   */
   def refreshAllDfpData(): Unit = {
+
     for {
       _ <- AdUnitAgent.refresh()
       _ <- CustomFieldAgent.refresh()
-      _ <- CustomTargetingKeyAgent.refresh()
-      _ <- CustomTargetingValueAgent.refresh()
+      _ <- CustomTargetingAgent.refresh()
       _ <- PlacementAgent.refresh()
     } {
       loadLineItems()

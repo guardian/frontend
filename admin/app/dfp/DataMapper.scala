@@ -56,9 +56,9 @@ object DataMapper {
       def toCustomTargetSet(criteria: CustomCriteriaSet): CustomTargetSet = {
 
         def toCustomTarget(criterion: CustomCriteria) = CustomTarget(
-          CustomTargetingKeyService.targetingKey(session)(criterion.getKeyId),
+          CustomTargetingService.targetingKey(session)(criterion.getKeyId),
           criterion.getOperator.getValue,
-          criterion.getValueIds map CustomTargetingValueService.targetingValue(session)
+          criterion.getValueIds map (valueId => CustomTargetingService.targetingValue(session)(criterion.getKeyId, valueId))
         )
 
         val targets = criteria.getChildren collect {
