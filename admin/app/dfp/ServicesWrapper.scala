@@ -1,7 +1,7 @@
 package dfp
 
 import com.google.api.ads.dfp.axis.factory.DfpServices
-import com.google.api.ads.dfp.axis.v201608._
+import com.google.api.ads.dfp.axis.v201705._
 import com.google.api.ads.dfp.lib.client.DfpSession
 
 private[dfp] class ServicesWrapper(session: DfpSession) {
