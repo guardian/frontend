@@ -55,7 +55,10 @@ module.exports = (env = { server: true }) => {
     if (env.server) {
         return webpackMerge.smart(config, {
             entry: {
-                'ui.bundle.server': [path.join(ui, 'src', 'boot.server.jsx')],
+                'ui.bundle.server': [
+                    'core-js/shim',
+                    path.join(ui, 'src', 'boot.server.jsx'),
+                ],
             },
             output: {
                 library: 'frontend',
