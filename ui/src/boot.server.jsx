@@ -1,5 +1,6 @@
 // @flow
 /* eslint-disable global-require */
+import 'core-js';
 import { render as renderToString } from 'preact-render-to-string';
 import { StyletronProvider } from 'styletron-preact';
 import StyletronServer from 'styletron-server';
