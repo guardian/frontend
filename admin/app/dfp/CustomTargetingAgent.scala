@@ -13,13 +13,11 @@ object CustomTargetingAgent extends DataAgent[Long, GuCustomTargeting] with Logg
     val maybeData = for (session <- SessionWrapper()) yield {
 
       val keys: Map[Long, CustomTargetingKey] = session.customTargetingKeys(new StatementBuilder()).map{ key => key.getId.longValue -> key}.toMap
-      log.info(s"#> ${keys.size} have been retrieved")
 
       val statementWithIds = new StatementBuilder()
         .where(s"customTargetingKeyId IN (${keys.keys.mkString(",")})")
 
       val valuesByKey: Map[Long, Seq[CustomTargetingValue]] = session.customTargetingValues(statementWithIds).groupBy{_.getCustomTargetingKeyId.longValue}
-      log.info(s"#> ${valuesByKey.values.flatten.size} values have been retrieved")
 
       valuesByKey flatMap { case (keyId: Long, values: Seq[CustomTargetingValue]) =>
         keys.get(keyId) map { key =>
