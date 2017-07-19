@@ -12,11 +12,11 @@ const updateAria = (container: Element): void => {
     const button = container.getElementsByClassName(buttonCN);
 
     content.forEach((c: Element) => {
-        c.setAttribute('aria-hidden', v ? 'false' : 'true');
+        c.setAttribute('aria-hidden', (!v).toString());
     });
 
     [...content, ...button].forEach((c: Element) => {
-        c.setAttribute('aria-expanded', v ? 'true' : 'false');
+        c.setAttribute('aria-expanded', v.toString());
     });
 };
 
