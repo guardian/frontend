@@ -56,7 +56,10 @@ module.exports = env => {
                 path: path.join(ui, 'dist'),
             },
             devtool: 'eval-cheap-module-source-map',
-            plugins: [new webpack.HotModuleReplacementPlugin()],
+            plugins: [
+                new webpack.HotModuleReplacementPlugin(),
+                new webpack.NamedModulesPlugin(),
+            ],
             devServer: {
                 publicPath: '/assets/javascripts/',
                 compress: true,
