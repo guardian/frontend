@@ -37,11 +37,15 @@ const isMatch = (yes: yesable, no: noable): boolean => {
         date: config.webPublicationDateAsUrlPart(),
         teams,
         isLive: config.page.isLive,
-        pageType: pageTypes.find(type => type[1] === true)[0],
+        pageType: pageTypes.find(type => type[1] === true),
     });
 
+    if (Array.isArray(match.pageType)) {
+        match.pageType = match.pageType[0];
+    }
+
     return isit(
-        match.id || (match.pageType && match.teams.length === 2),
+        match.id || (match.pageType[0] && match.teams.length === 2),
         yes,
         no,
         match
