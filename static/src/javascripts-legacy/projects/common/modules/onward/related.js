@@ -4,8 +4,9 @@ define([
     'lib/$',
     'lib/config',
     'lib/mediator',
+    'lib/fetch-json',
+    'lib/fastdom-promise',
     'common/modules/analytics/register',
-    'common/modules/lazyload',
     'common/modules/ui/expandable',
     'lodash/arrays/intersection',
     'lodash/collections/map'
@@ -15,8 +16,9 @@ define([
     $,
     config,
     mediator,
+    fetchJSON,
+    fastdom,
     register,
-    lazyload,
     Expandable,
     intersection,
     map
@@ -67,7 +69,7 @@ define([
 
             container = document.body.querySelector('.js-related');
 
-            if (container) {
+            if (container && !container.classList.contains('lazyloaded')) {
                 popularInTag = this.popularInTagOverride();
                 componentName = popularInTag ? 'related-popular-in-tag' : 'related-content';
                 register.begin(componentName);
@@ -82,22 +84,27 @@ define([
                         }).join('&');
                 }
 
-                lazyload.lazyload(relatedUrl, container, {
-                    finally: function () {
-                        var relatedContainer = container.querySelector('.related-content');
+                fetchJSON(relatedUrl, { mode: 'cors' })
+                  .then(function(resp) {
+                      return fastdom.write(function() {
+                          container.innerHTML = resp.html;
+                          container.classList.add('lazyloaded');
+                      });
+                  })
+                  .then(function () {
+                      var relatedContainer = container.querySelector('.related-content');
 
-                        new Expandable({dom: relatedContainer, expanded: false, showCount: false}).init();
-                        // upgrade images
-                        mediator.emit('modules:related:loaded', container);
-                        mediator.emit('page:new-content', container);
-                        mediator.emit('ui:images:upgradePictures', container);
-                        register.end(componentName);
-                    },
-                    catch: function () {
-                        bonzo(container).remove();
-                        register.error(componentName);
-                    },
-                });
+                      new Expandable({dom: relatedContainer, expanded: false, showCount: false}).init();
+                      // upgrade images
+                      mediator.emit('modules:related:loaded', container);
+                      mediator.emit('page:new-content', container);
+                      mediator.emit('ui:images:upgradePictures', container);
+                      register.end(componentName);
+                  })
+                  .catch(function () {
+                      bonzo(container).remove();
+                      register.error(componentName);
+                  });
             }
         } else {
             $('.js-related').addClass('u-h');
