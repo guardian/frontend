@@ -1,9 +1,7 @@
 // @flow
 import config from 'lib/config';
 import { local } from 'lib/storage';
-import template from 'lodash/utilities/template';
 import Message from 'common/modules/ui/message';
-import messageTemplate from 'raw-loader!common/views/membership-message.html';
 import { commercialFeatures } from 'commercial/modules/commercial-features';
 import mediator from 'lib/mediator';
 import { testCanBeRun } from 'common/modules/experiments/test-can-run-checks';
@@ -19,7 +17,6 @@ import { constructQuery } from 'lib/url';
 
 // change messageCode to force redisplay of the message to users who already closed it.
 const messageCode = 'engagement-banner-2017-07-05';
-
 const DO_NOT_RENDER_ENGAGEMENT_BANNER = 'do no render engagement banner';
 
 const getUserTest = (): ?ContributionsABTest => {
@@ -149,26 +146,27 @@ const showBanner = (params: Object): void => {
     }
 
     const colourClass = params.colourStrategy();
-
     const messageText = Array.isArray(params.messageText)
         ? selectSequentiallyFrom(params.messageText)
         : params.messageText;
-
     const urlParameters = {
         REFPVID: params.pageviewId,
         INTCMP: params.campaignCode,
     };
-
     const linkUrl = `${params.linkUrl}?${constructQuery(urlParameters)}`;
-
-    const renderedBanner = template(messageTemplate, {
-        linkHref: linkUrl,
-        messageText,
-        buttonCaption: params.buttonCaption,
-        colourClass,
-        arrowWhiteRight: inlineSvg('arrowWhiteRight'),
-        paypalLogoSrc: paypalAndCreditCardImage,
-    });
+    const buttonCaption = params.buttonCaption;
+    const buttonSvg = inlineSvg('arrowWhiteRight');
+    const renderedBanner = `
+    <div id="site-message__message">
+        <div class="site-message__message site-message__message--membership">
+            <span class = "membership__message-text">${messageText}</span>
+            <span class="membership__paypal-container">
+                <img class="membership__paypal-logo" src="${paypalAndCreditCardImage}" alt="Paypal and credit card">
+                <span class="membership__support-button"><a class="message-button-rounded__cta ${colourClass}" href="${linkUrl}">${buttonCaption}${buttonSvg}</a></span>
+            </span>
+        </div>
+        <a class="u-faux-block-link__overlay js-engagement-message-link" target="_blank" href="${linkUrl}" data-link-name="Read more link"></a>
+    </div>`;
 
     const messageShown = new Message(messageCode, {
         pinOnHide: false,

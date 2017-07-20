@@ -1,5 +1,4 @@
 // @flow
-import fakeTemplate from 'lodash/utilities/template';
 import FakeMessage from 'common/modules/ui/message';
 import fakeMediator from 'lib/mediator';
 import { commercialFeatures } from 'commercial/modules/commercial-features';
@@ -71,7 +70,6 @@ jest.mock(
     })
 );
 jest.mock('common/modules/ui/message', () => class Message {});
-jest.mock('lodash/utilities/template', () => jest.fn());
 jest.mock('ophan/ng', () => ({
     record: jest.fn(),
 }));
@@ -108,14 +106,8 @@ describe('Membership engagement banner', () => {
 
         it('has not shown, should show the membership engagement banner', () =>
             membershipEngagementBannerInit().then(() => {
-                const fakeRenderedBanner = '<div></div>';
-
-                fakeTemplate.mockReturnValueOnce(fakeRenderedBanner);
-
                 fakeMediator.emit('modules:onwards:breaking-news:ready', false);
-                expect(FakeMessage.prototype.show).toHaveBeenCalledWith(
-                    fakeRenderedBanner
-                );
+                expect(FakeMessage.prototype.show).toHaveBeenCalledTimes(1);
             }));
     });
 
