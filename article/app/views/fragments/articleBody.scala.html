@@ -72,6 +72,8 @@
 
                         @fragments.contentMeta(article, model, amp = amp)
 
+                        @fragments.commercial.carrot()
+
                         @if(article.tags.isNews && !article.elements.hasMainEmbed && article.elements.elements("main").isEmpty) {
                             <hr class="content__hr hide-until-leftcol" />
                         }
