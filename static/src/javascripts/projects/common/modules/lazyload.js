@@ -1,45 +1,39 @@
-define([
-    'lib/fetch-json',
-    'lib/fastdom-promise',
-    'bonzo',
-    'lodash/objects/merge'
-], function (
-    fetchJSON,
-    fastdom,
-    bonzo,
-    merge
-) {
-    function identity(x) {
-        return x;
-    }
+import fetchJSON from 'lib/fetch-json';
+import fastdom from 'lib/fastdom-promise';
+import bonzo from 'bonzo';
+import merge from 'lodash/objects/merge';
 
-    function lazyload(url, options) {
-        /*
-            Accepts these options:
+function identity(x) {
+    return x;
+}
 
-            url               - string
-            container         - element object
-            beforeInsert      - function applied to response html before inserting it into container, optional
-            success           - callback function, optional
-            error             - callback function, optional
-            force             - boolean, default false. Reload an already-populated container
-        */
+function lazyload(url, options) {
+    /*
+        Accepts these options:
 
-        options = merge({
-            beforeInsert: identity,
-            force: false,
-            finally: identity,
-            catch: identity,
-        }, options);
+        url               - string
+        container         - element object
+        beforeInsert      - function applied to response html before inserting it into container, optional
+        success           - callback function, optional
+        error             - callback function, optional
+        force             - boolean, default false. Reload an already-populated container
+    */
 
-        if (url && options.container) {
-            var $container = bonzo(options.container);
+    options = merge({
+        beforeInsert: identity,
+        force: false,
+        finally: identity,
+        catch: identity,
+    }, options);
 
-            if (options.force || !$container.hasClass('lazyloaded')) {
-                return fetchJSON(url, {
+    if (url && options.container) {
+        var $container = bonzo(options.container);
+
+        if (options.force || !$container.hasClass('lazyloaded')) {
+            return fetchJSON(url, {
                     mode: 'cors',
                 })
-                .then(function (resp) {
+                .then(function(resp) {
                     return fastdom.write(function() {
                         $container
                             .html(options.beforeInsert(resp.html))
@@ -50,9 +44,8 @@ define([
                 })
                 .then(options.finally)
                 .catch(options.catch);
-            }
         }
     }
+}
 
-    return lazyload;
-});
+export default lazyload;
