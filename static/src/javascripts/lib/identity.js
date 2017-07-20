@@ -1,5 +1,5 @@
 // @flow
 
-const identity = (x: any): any => x;
+const identity = <A>(x: A): A => x;
 
 export { identity };
