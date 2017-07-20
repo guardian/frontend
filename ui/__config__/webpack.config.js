@@ -58,7 +58,7 @@ module.exports = (env = { server: true }) => {
             entry: {
                 'ui.bundle.server': [
                     'core-js/es6',
-                    path.join(ui, 'src', 'boot.server.jsx'),
+                    path.join(ui, 'src', 'index.server.jsx'),
                 ],
             },
             output: {
@@ -74,7 +74,9 @@ module.exports = (env = { server: true }) => {
     if (env.browser) {
         return webpackMerge.smart(config, {
             entry: {
-                'ui.bundle.browser': [path.join(ui, 'src', 'boot.browser.jsx')],
+                'ui.bundle.browser': [
+                    path.join(ui, 'src', 'index.browser.jsx'),
+                ],
             },
             output: {
                 publicPath: '/assets/javascripts/',

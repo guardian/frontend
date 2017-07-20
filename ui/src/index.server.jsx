@@ -4,8 +4,11 @@ import { render as renderToString } from 'preact-render-to-string';
 import { StyletronProvider } from 'styletron-preact';
 import StyletronServer from 'styletron-server';
 
-import head from 'layouts/head';
-import Body from 'layouts/body';
+import head from 'components/head';
+import Body from 'components/body';
+
+// this should be managed by a route somehow
+import Application from 'views/404';
 
 const styletron = new StyletronServer();
 
@@ -14,7 +17,9 @@ const styletron = new StyletronServer();
 export const render = (props: Object) => {
     const body = renderToString(
         <StyletronProvider styletron={styletron}>
-            <Body {...props} />
+            <Body {...props}>
+                <Application {...props} />
+            </Body>
         </StyletronProvider>
     );
 

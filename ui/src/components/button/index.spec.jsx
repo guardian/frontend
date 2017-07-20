@@ -1,6 +1,6 @@
 // @flow
 
-import test from 'lib/test-render';
+import test from 'utils/test-render';
 import Button from '.';
 
 jest.mock('./style.scss', () => ({

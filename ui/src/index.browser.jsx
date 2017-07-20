@@ -4,7 +4,10 @@ import { render } from 'preact';
 import { StyletronProvider } from 'styletron-preact';
 import StyletronClient from 'styletron-client';
 
-import Body from 'layouts/body';
+import Body from 'components/body';
+
+// this should be managed by a route somehow
+import Application from 'views/404';
 
 const container: ?Element = document.body;
 
@@ -20,7 +23,9 @@ const renderApp = () => {
                     )
                 }
             >
-                <Body {...props} />
+                <Body {...props}>
+                    <Application {...props} />
+                </Body>
             </StyletronProvider>,
             container.parentElement,
             container
