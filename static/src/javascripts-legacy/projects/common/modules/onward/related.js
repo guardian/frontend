@@ -82,8 +82,7 @@ define([
                         }).join('&');
                 }
 
-                lazyload(relatedUrl, {
-                    container: container,
+                lazyload.lazyload(relatedUrl, container, {
                     finally: function () {
                         var relatedContainer = container.querySelector('.related-content');
 

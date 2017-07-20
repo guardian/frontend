@@ -1,13 +1,13 @@
+// @flow
 import fetchJSON from 'lib/fetch-json';
 import fastdom from 'lib/fastdom-promise';
-import bonzo from 'bonzo';
-import merge from 'lodash/objects/merge';
+import { identity } from 'lib/identity';
 
-function identity(x) {
-    return x;
-}
-
-function lazyload(url, options) {
+const lazyload = (
+    url: string,
+    container: Element,
+    _options?: Object
+): Promise<any> => {
     /*
         Accepts these options:
 
@@ -19,33 +19,34 @@ function lazyload(url, options) {
         force             - boolean, default false. Reload an already-populated container
     */
 
-    options = merge({
-        beforeInsert: identity,
-        force: false,
-        finally: identity,
-        catch: identity,
-    }, options);
+    const options = Object.freeze(
+        Object.assign(
+            {
+                beforeInsert: identity,
+                finally: identity,
+                catch: identity,
+                force: false,
+            },
+            _options || {}
+        )
+    );
 
-    if (url && options.container) {
-        var $container = bonzo(options.container);
-
-        if (options.force || !$container.hasClass('lazyloaded')) {
-            return fetchJSON(url, {
-                    mode: 'cors',
-                })
-                .then(function(resp) {
-                    return fastdom.write(function() {
-                        $container
-                            .html(options.beforeInsert(resp.html))
-                            .addClass('lazyloaded');
-
-                        return resp;
-                    });
-                })
-                .then(options.finally)
-                .catch(options.catch);
-        }
+    if (!options.force && container.classList.contains('lazyloaded')) {
+        return Promise.resolve();
     }
-}
 
-export default lazyload;
+    return fetchJSON(url, {
+        mode: 'cors',
+    })
+        .then((resp: { html: string }) =>
+            fastdom.write(() => {
+                container.innerHTML = options.beforeInsert(resp.html);
+                container.classList.add('lazyloaded');
+                return resp;
+            })
+        )
+        .then(options.finally)
+        .catch(options.catch);
+};
+
+export { lazyload };
