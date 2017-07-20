@@ -16,7 +16,7 @@ const config = {
         rules: [
             {
                 test: /\.svg$/,
-                use: ['babel-loader', 'lib/svg-loader'],
+                use: ['babel-loader', 'svg-loader'],
             },
             {
                 test: /\.(js|jsx)$/,
@@ -48,7 +48,7 @@ const config = {
         ],
         extensions: ['.js', '.jsx'],
     },
-    resolveLoader: { modules: [path.resolve(ui, 'src'), 'node_modules'] },
+    resolveLoader: { modules: [path.resolve(ui, '__tools__'), 'node_modules'] },
     watchOptions: { ignored: /node_modules/ },
 };
 
