@@ -13,7 +13,7 @@
     "bootstraps/enhanced/crosswords.js",
     "bootstraps/enhanced/facia.js",
     "bootstraps/enhanced/football.js",
-    "projects/common/modules/video/onward-container.js",
+    "projects/common/modules/preferences/main.js",
     "bootstraps/enhanced/gallery.js"
   ],
   "Simon Adcock": [
@@ -49,6 +49,11 @@
     "projects/common/modules/discussion/comment-box.js"
   ],
   "Gustav Pursche": [
+    "projects/common/modules/onward/onward-content.js",
+    "projects/common/modules/onward/popular.js",
+    "projects/common/modules/onward/related.js",
+    "projects/common/modules/onward/tech-feedback.js",
+    "projects/common/modules/video/onward-container.js",
     "lib/element-inview.js",
     "lib/page.js"
   ],
@@ -127,12 +132,7 @@
     "projects/common/modules/navigation/profile.js"
   ],
   "jfsoul": [
-    "projects/common/modules/navigation/search.js",
-    "projects/common/modules/onward/onward-content.js",
-    "projects/common/modules/onward/popular.js",
-    "projects/common/modules/onward/related.js",
-    "projects/common/modules/onward/tech-feedback.js",
-    "projects/common/modules/preferences/main.js"
+    "projects/common/modules/navigation/search.js"
   ],
   "Joseph Smith": [
     "projects/common/modules/experiments/tests/contributions-epic-always-ask-strategy.js",
