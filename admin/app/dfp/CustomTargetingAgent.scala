@@ -22,8 +22,8 @@ object CustomTargetingAgent extends DataAgent[Long, GuCustomTargeting] with Logg
       valuesByKey flatMap { case (keyId: Long, values: Seq[CustomTargetingValue]) =>
         keys.get(keyId) map { key =>
 
-          val guValues: Seq[GuCustomTargetingValue] = values map {
-            value => GuCustomTargetingValue(
+          val guValues: Seq[GuCustomTargetingValue] = values map { value =>
+            GuCustomTargetingValue(
               id = value.getId.longValue,
               name = value.getName,
               displayName = value.getDisplayName)
