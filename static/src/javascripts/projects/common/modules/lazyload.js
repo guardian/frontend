@@ -9,13 +9,11 @@ const lazyload = (
     _options?: Object
 ): Promise<any> => {
     /*
-        Accepts these options:
+        Options:
 
-        url               - string
-        container         - element object
         beforeInsert      - function applied to response html before inserting it into container, optional
-        success           - callback function, optional
-        error             - callback function, optional
+        finally           - callback function, optional
+        catch             - callback function, optional
         force             - boolean, default false. Reload an already-populated container
     */
 
