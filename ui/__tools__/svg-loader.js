@@ -1,4 +1,3 @@
-// @flow
 const HTMLtoJSX = require('htmltojsx');
 const SVGO = require('svgo');
 
