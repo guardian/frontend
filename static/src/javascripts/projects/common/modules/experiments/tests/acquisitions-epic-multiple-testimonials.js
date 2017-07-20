@@ -34,7 +34,7 @@ export const acquisitionsEpicMultipleTestimonials: ContributionsABTest = makeABT
         campaignId: 'epic_multiple_testimonials',
 
         audienceCriteria: 'All',
-        audience: 0.8,
+        audience: 0.68,
         audienceOffset: 0.1,
 
         variants: [
