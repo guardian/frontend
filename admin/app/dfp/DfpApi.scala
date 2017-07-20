@@ -1,7 +1,7 @@
 package dfp
 
-import com.google.api.ads.dfp.axis.utils.v201608.StatementBuilder
-import com.google.api.ads.dfp.axis.v201608._
+import com.google.api.ads.dfp.axis.utils.v201705.StatementBuilder
+import com.google.api.ads.dfp.axis.v201705._
 import common.Logging
 import common.dfp._
 import dfp.DataMapper.{toGuAdUnit, toGuCreativeTemplate, toGuCustomField, toGuLineItem, toGuTemplateCreative, toGuAdvertiser, toGuOrder}
