@@ -12,6 +12,7 @@ class CommercialFeatures {
     stickyTopBannerAd: any;
     articleBodyAdverts: any;
     articleAsideAdverts: any;
+    carrotSlot: any;
     videoPreRolls: any;
     highMerch: any;
     thirdPartyTags: any;
@@ -69,6 +70,8 @@ class CommercialFeatures {
             !isLiveBlog &&
             !isHosted &&
             !newRecipeDesign;
+
+        this.carrotSlot = this.articleBodyAdverts;
 
         this.articleAsideAdverts =
             this.dfpAdvertising &&

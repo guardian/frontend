@@ -63,7 +63,7 @@ const adSlotDefinitions = {
         },
     },
     carrot: {
-        level: false,
+        label: false,
         refresh: false,
         name: 'carrot',
         sizeMappings: {
