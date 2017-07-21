@@ -13,8 +13,8 @@ const carrotSlotInit = () => {
 
         return fastdom
             .write(() => {
-                if (anchor && anchor.parentNode) {
-                    anchor.parentNode.insertBefore(slot, anchor.nextSibling);
+                if (anchor) {
+                    anchor.insertAdjacentElement('beforebegin', slot);
                 }
             })
             .then(() => {
