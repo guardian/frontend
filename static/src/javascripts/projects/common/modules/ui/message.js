@@ -196,4 +196,4 @@ class Message {
     }
 }
 
-export default Message;
+export { Message };

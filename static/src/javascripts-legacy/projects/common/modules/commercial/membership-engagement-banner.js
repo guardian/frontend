@@ -167,8 +167,8 @@ define([
                 REFPVID : params.pageviewId,
                 INTCMP:  params.campaignCode
             };
-            
-                     
+
+
             var linkUrl = params.linkUrl + '?' + url.constructQuery(urlParameters);
 
             var renderedBanner = template(messageTemplate, {
@@ -180,7 +180,7 @@ define([
                 paypalLogoSrc: paypalAndCreditCardImage
             });
 
-            var messageShown = new Message(
+            var messageShown = new Message.Message(
                 messageCode, {
                     pinOnHide: false,
                     siteMessageLinkName: 'membership message',
