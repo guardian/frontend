@@ -46,7 +46,7 @@ export const liveblog = (
     membershipUrl: string,
     contributionsUrl: string
 ): AcquisitionsEpicTemplateCopy => ({
-    p1: controlP1,
+    p1: `Since you’re here ${controlP1}`,
     p2: `${controlP2} You can give to the Guardian by <a href="${membershipUrl}" target="_blank" class="u-underline">becoming a monthly supporter</a> or by making a <a href="${contributionsUrl}" target="_blank" class="u-underline">one-off contribution</a>. - Guardian HQ`,
 });
 
