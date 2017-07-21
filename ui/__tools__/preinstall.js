@@ -1,11 +1,6 @@
 /* eslint-disable flow-header, no-console, global-require, import/no-extraneous-dependencies */
 
-if (
-    process &&
-    process.env &&
-    process.env.npm_execpath &&
-    process.env.npm_execpath.indexOf('yarn') === -1
-) {
+if (process.env.npm_execpath.indexOf('yarn') === -1) {
     console.log(`
         Use Yarn to install, not NPM.
 
