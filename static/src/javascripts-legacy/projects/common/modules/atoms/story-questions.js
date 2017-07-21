@@ -5,7 +5,9 @@ define([
     'lib/fetch',
     'bean',
     'lib/config',
-    'ophan/ng'
+    'ophan/ng',
+    'common/modules/identity/api',
+    'fastdom'
 ], function (
     mediator,
     detect,
@@ -13,7 +15,9 @@ define([
     fetch,
     bean,
     config,
-    ophan
+    ophan,
+    Id,
+    fastdom
 ) {
 
     function askQuestion(event, isEmailSubmissionReady) {
@@ -115,6 +119,20 @@ define([
 
             answersEmailSignupForms.each(function (el) {
                 bean.on(el, 'submit', submitSignUpForm);
+            });
+
+
+            Id.getUserFromApi(function (userFromId) {
+                if (userFromId && userFromId.primaryEmailAddress) {
+                    fastdom.write(function () {
+                        $('.js-storyquestion-email-signup-form').each(function(form) {
+                            $('.js-storyquestion-email-signup-button', form).removeClass('button--with-input');
+                            $('.js-storyquestion-email-signup-input-container', form).addClass('is-hidden');
+                            $('.js-storyquestion-email-signup-input', form).val(userFromId.primaryEmailAddress);
+                            $('.inline-envelope', form).addClass('storyquestion-email-signup-button-envelope');
+                        });
+                    });
+                }
             });
 
 

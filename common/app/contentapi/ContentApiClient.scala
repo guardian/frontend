@@ -202,8 +202,8 @@ class ContentApiClient(httpClient: HttpClient) extends ApiQueryDefaults {
 
 // The Admin server uses this PreviewContentApi to check the preview environment.
 // The Preview server uses the standard ContentApiClient object, configured with preview settings.
-class PreviewContentApi(httpClient: HttpClient) {
-  val client = CircuitBreakingContentApiClient(
+class PreviewContentApi(httpClient: HttpClient) extends ContentApiClient(httpClient) {
+  override val thriftClient = CircuitBreakingContentApiClient(
     httpClient = httpClient,
     targetUrl = Configuration.contentApi.previewHost,
     apiKey = contentApi.key.getOrElse("")

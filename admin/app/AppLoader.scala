@@ -11,7 +11,6 @@ import akka.actor.ActorSystem
 import contentapi.{CapiHttpClient, ContentApiClient, HttpClient}
 import http.{AdminFilters, AdminHttpErrorHandler, CommonGzipFilter}
 import dev.DevAssetsController
-import football.feed.MatchDayRecorder
 import jobs._
 import model.{AdminLifecycle, ApplicationIdentity}
 import services.ophan.SurgingContentAgentLifecycle
@@ -43,7 +42,6 @@ trait AdminServices extends I18nComponents  {
   lazy val redirects = wire[RedirectService]
   lazy val r2PagePressJob = wire[R2PagePressJob]
   lazy val videoEncodingsJob = wire[VideoEncodingsJob]
-  lazy val matchDayRecorder = wire[MatchDayRecorder]
   lazy val analyticsSanityCheckJob = wire[AnalyticsSanityCheckJob]
   lazy val rebuildIndexJob = wire[RebuildIndexJob]
 }

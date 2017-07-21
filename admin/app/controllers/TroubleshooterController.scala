@@ -1,14 +1,23 @@
 package controllers.admin
 
-import contentapi.{CapiHttpClient, PreviewContentApi}
+import contentapi.{CapiHttpClient, ContentApiClient, PreviewContentApi}
 import play.api.mvc.{Action, Controller}
 import common.{ExecutionContexts, Logging}
 import model.{ApplicationContext, NoCache}
 import play.api.libs.ws.WSClient
 import tools.LoadBalancer
-
+import com.amazonaws.regions.{Region, Regions}
+import com.amazonaws.services.ec2.AmazonEC2Client
+import com.amazonaws.services.ec2.model.{DescribeInstancesRequest, Filter}
+import scala.collection.JavaConverters._
+import scala.collection.JavaConversions._
 import scala.concurrent.Future
 import scala.concurrent.duration._
+import conf.Configuration.aws.credentials
+import play.api.Mode
+
+import scala.util.Random
+
 
 case class EndpointStatus(name: String, isOk: Boolean, messages: String*)
 
@@ -19,9 +28,18 @@ object TestFailed{
   def apply(name: String, messages: String*) = EndpointStatus(name, false, messages:_*)
 }
 
-class TroubleshooterController(wsClient: WSClient)(implicit context: ApplicationContext) extends Controller with Logging with ExecutionContexts {
+class TroubleshooterController(wsClient: WSClient)(implicit appContext: ApplicationContext) extends Controller with Logging with ExecutionContexts {
 
-  val previewContentApi = new PreviewContentApi(new CapiHttpClient(wsClient))
+  private val capiHttpClient = new CapiHttpClient(wsClient)
+  val contentApi = new ContentApiClient(capiHttpClient)
+  val previewContentApi = new PreviewContentApi(capiHttpClient)
+
+  private lazy val awsEc2Client: Option[AmazonEC2Client] = credentials.map { credentials =>
+    val client = new AmazonEC2Client(credentials)
+    client.setRegion(Region.getRegion(Regions.EU_WEST_1))
+    client
+  }
+
 
   def index() = Action{ implicit request =>
     NoCache(Ok(views.html.troubleshooter(LoadBalancer.all.filter(_.testPath.isDefined))))
@@ -46,12 +64,14 @@ class TroubleshooterController(wsClient: WSClient)(implicit context: Application
     // NOTE - the order of these is important, they are ordered so that the first failure is furthest 'back'
     // in the stack
     Future.sequence(
-      Seq(directToContentApi,
+      Seq(
+        directToContentApi,
         directToLoadBalancer,
         directToRouter,
         viaWebsite,
         directToPreviewContentApi,
-        viaPreviewWebsite)
+        viaPreviewWebsite
+      )
     ).map { results =>
       NoCache(Ok(views.html.troubleshooterResults(thisLoadBalancer, results)))
     }
@@ -71,8 +91,33 @@ class TroubleshooterController(wsClient: WSClient)(implicit context: Application
       }
     }
 
-    LoadBalancer("frontend-router")
-      .flatMap(_.url)
+
+    val routerUrl = if(appContext.environment.mode == Mode.Prod) {
+      // Workaround in PROD:
+      // Getting the private dns of one of the router instances because
+      // the Router ELB can only be accessed via its public IP/DNS from Fastly or Guardian VPN/office, not from an Admin instance
+      // However Admin instances can access router instances via private IPs
+      // This is of course not very fast since it has to make a call to AWS API before to fetch the url
+      // but the troubleshooter is an admin only tool
+      val tagsAsFilters = Map(
+        "Stack" -> "frontend",
+        "App" -> "router",
+        "Stage" -> "PROD"
+      ).map {
+        case(name, value) => new Filter("tag:" + name).withValues(value)
+      }.asJavaCollection
+      val instancesDnsName: Seq[String] = awsEc2Client.map(
+        _.describeInstances(new DescribeInstancesRequest().withFilters(tagsAsFilters))
+          .getReservations
+          .flatMap(_.getInstances)
+          .map(_.getPrivateDnsName)
+      ).toSeq.flatten
+      Random.shuffle(instancesDnsName).headOption
+    } else {
+      LoadBalancer("frontend-router").flatMap(_.url)
+    }
+
+    routerUrl
       .map(fetchWithRouterUrl)
       .getOrElse(Future.successful(TestFailed("Can get Frontend router url")))
 
@@ -86,8 +131,8 @@ class TroubleshooterController(wsClient: WSClient)(implicit context: Application
 
   private def testOnContentApi(testPath: String, id: String): Future[EndpointStatus] = {
     val testName = "Can fetch directly from Content API"
-    val request = previewContentApi.client.item(testPath, "UK").showFields("all")
-    previewContentApi.client.getResponse(request).map {
+    val request = contentApi.item(testPath, "UK").showFields("all")
+    contentApi.getResponse(request).map {
       response =>
         if (response.status == "ok") {
           TestPassed(testName)
@@ -101,8 +146,8 @@ class TroubleshooterController(wsClient: WSClient)(implicit context: Application
 
   private def testOnPreviewContentApi(testPath: String, id: String): Future[EndpointStatus] = {
     val testName = "Can fetch directly from Preview Content API"
-    val request = previewContentApi.client.item(testPath, "UK").showFields("all")
-    previewContentApi.client.getResponse(request).map {
+    val request = previewContentApi.item(testPath, "UK").showFields("all")
+    previewContentApi.getResponse(request).map {
       response =>
         if (response.status == "ok") {
           TestPassed(testName)
@@ -119,20 +164,25 @@ class TroubleshooterController(wsClient: WSClient)(implicit context: Application
   }
 
   private def testOnPreviewSite(testPath: String, id: String): Future[EndpointStatus] = {
-    httpGet("Can fetch from preview.gutools.co.uk", s"https://preview.gutools.co.uk$testPath")
+    httpGet("Can fetch from preview.gutools.co.uk", s"https://preview.gutools.co.uk$testPath", Some("preview.gutools.co.uk"))
   }
 
-  private def httpGet(testName: String, url: String) =  {
-    wsClient.url(url).withVirtualHost("www.theguardian.com").withRequestTimeout(5.seconds).get().map {
-      response =>
+  private def httpGet(testName: String, url: String, virtualHost: Option[String] = Some("www.theguardian.com")) =  {
+    wsClient
+      .url(url)
+      .withVirtualHost(virtualHost.getOrElse(""))
+      .withRequestTimeout(5.seconds)
+      .get()
+      .map { response =>
         if (response.status == 200) {
           TestPassed(testName)
         } else {
           TestFailed(testName, s"Status: ${response.status}", url)
         }
-    }.recoverWith {
-      case t: Throwable => Future.successful(TestFailed(testName, t.getMessage, url))
-    }
+      }
+      .recoverWith {
+        case t: Throwable => Future.successful(TestFailed(testName, t.getMessage, url))
+      }
   }
 }
 

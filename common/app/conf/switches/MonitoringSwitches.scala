@@ -45,16 +45,6 @@ trait MonitoringSwitches {
     exposeClientSide = true
   )
 
-  val CspReporting = Switch(
-    SwitchGroup.Monitoring,
-    "csp-reporting",
-    "Enables logging of CSP violations",
-    owners = Seq(Owner.withGithub("desbo")),
-    safeState = Off,
-    never,
-    exposeClientSide = false
-  )
-
   val ThirdPartyEmbedTracking = Switch(
     SwitchGroup.Monitoring,
     "third-party-embed-tracking",

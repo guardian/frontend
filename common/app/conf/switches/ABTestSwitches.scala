@@ -115,7 +115,7 @@ trait ABTestSwitches {
     "Test pricing options for digital subs from epic",
     owners = Seq(Owner.withGithub("justinpinner")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 7, 20),  // Thursday 20th July
+    sellByDate = new LocalDate(2017, 7, 27),  // Thursday 27th July
     exposeClientSide = true
   )
 
@@ -125,7 +125,7 @@ trait ABTestSwitches {
     "Test pricing options for digital subs from thrasher",
     owners = Seq(Owner.withGithub("justinpinner")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 7, 20),  // Thursday 20th July
+    sellByDate = new LocalDate(2017, 7, 27),  // Thursday 27th July
     exposeClientSide = true
   )
 
@@ -156,16 +156,6 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("Mullefa")),
     safeState = On,
     sellByDate = new LocalDate(2017, 8, 1),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-epic-for-brexit-cohort",
-    "Displays an epic for supports who joined just after Brexit",
-    owners = Seq(Owner.withGithub("lmath")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 7, 31),
     exposeClientSide = true
   )
 

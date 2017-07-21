@@ -15,7 +15,6 @@ import acquisitionsEpicAlwaysAskElection from 'common/modules/experiments/tests/
 import { acquisitionsEpicMultipleTestimonials } from 'common/modules/experiments/tests/acquisitions-epic-multiple-testimonials';
 import acquisitionsEpicThankYou from 'common/modules/experiments/tests/acquisitions-epic-thank-you';
 import acquisitionsThisLandSeries from 'common/modules/experiments/tests/acquisitions-this-land-series';
-import epicForBrexitCohort from 'common/modules/experiments/tests/epic-for-brexit-cohort';
 import { acquisitionsEpicRebaselineSupportProposition } from 'common/modules/experiments/tests/acquisitions-epic-rebaseline-support-proposition';
 
 /**
@@ -25,7 +24,6 @@ const tests = [
     alwaysAsk,
     acquisitionsThisLandSeries,
     bundlePriceTest1,
-    epicForBrexitCohort,
     acquisitionsEpicRebaselineSupportProposition,
     acquisitionsEpicMultipleTestimonials,
     askFourEarning,

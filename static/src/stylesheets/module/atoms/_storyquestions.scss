@@ -134,11 +134,12 @@
 
 .storyquestion-email-signup-form.form {
     margin: 0;
+    margin-bottom: $gs-baseline;
 
     .form-field {
         float: left;
         width: 50%;
-        margin-bottom: $gs-baseline;
+        margin-bottom: 0;
     }
 
     .text-input {
@@ -149,8 +150,14 @@
 
     .button--primary {
         height: $gs-baseline * 3;
+    }
+
+    .button--with-input {
         border-bottom-left-radius: 0;
         border-top-left-radius: 0;
     }
 
+    .storyquestion-email-signup-button-envelope {
+        display: inline;
+    }
 }

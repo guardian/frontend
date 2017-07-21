@@ -10,6 +10,14 @@
 @import 'base/_helpers';
 @import 'module/_submeta';
 
+@import 'base/_type';
+@import 'base/_inline-svgs';
+@import 'base/_normalize';
+@import 'pasteup/buttons/_styles';
+@import 'pasteup/forms/_styles';
+@import 'module/email-signup/_vars';
+@import 'module/email-signup/_form';
+
 @font-face {
     font-family: 'Guardian Text Egyptian Web';
     font-weight: bold;
