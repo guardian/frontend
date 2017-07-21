@@ -22,7 +22,6 @@ type Interaction = {
 
 // change messageCode to force redisplay of the message to users who already closed it.
 const messageCode = 'engagement-banner-2017-07-05';
-const DO_NOT_RENDER_ENGAGEMENT_BANNER = 'do no render engagement banner';
 
 const getUserTest = (): ?ContributionsABTest => {
     const engagementBannerTests = MembershipEngagementBannerTests.concat(
@@ -102,7 +101,7 @@ const getUserVariantParams = (
  *  }
  *
  */
-const deriveBannerParams = (location: string): Object | string => {
+const deriveBannerParams = (location: string): ?Object => {
     const defaultParams = membershipEngagementBannerUtils.defaultParams(
         location
     );
@@ -111,7 +110,7 @@ const deriveBannerParams = (location: string): Object | string => {
     const userVariant = getUserVariant(userTest);
 
     if (userVariant && userVariant.blockEngagementBanner) {
-        return DO_NOT_RENDER_ENGAGEMENT_BANNER;
+        return;
     }
 
     return Object.assign(
@@ -147,7 +146,7 @@ const selectSequentiallyFrom = (array: Array<string>): string =>
     array[local.get('gu.alreadyVisited') % array.length];
 
 const showBanner = (params: Object): void => {
-    if (params === DO_NOT_RENDER_ENGAGEMENT_BANNER || isBlocked()) {
+    if (isBlocked()) {
         return;
     }
 
@@ -196,7 +195,6 @@ const membershipEngagementBannerInit = (): Promise<void> =>
 
         if (
             bannerParams &&
-            typeof bannerParams !== 'string' &&
             (local.get('gu.alreadyVisited') || 0) >= bannerParams.minArticles
         ) {
             return commercialFeatures.asynchronous.canDisplayMembershipEngagementBanner.then(
