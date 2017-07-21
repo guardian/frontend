@@ -73,7 +73,9 @@ jest.mock('common/modules/ui/message', () => class Message {});
 jest.mock('ophan/ng', () => ({
     record: jest.fn(),
 }));
-jest.mock('lib/config', () => ({}));
+jest.mock('lib/config', () => ({
+    get: jest.fn(() => ''),
+}));
 
 beforeEach(() => {
     if (document.body) {
