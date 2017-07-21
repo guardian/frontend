@@ -283,10 +283,7 @@ const makeABTestVariant = (
                                     component.insertBefore(targets);
                                 }
 
-                                mediator.emit(
-                                    parentTest.insertEvent,
-                                    component
-                                );
+                                mediator.emit(parentTest.insertEvent);
                                 onInsert(component);
 
                                 component.each(element => {
