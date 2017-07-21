@@ -48,7 +48,7 @@ const keepTimestampsCurrent = (): void => {
 };
 
 const initStoryquestions = (): void => {
-    if (document.getElementsByTagName('js-ask-question-link').length) {
+    if (document.getElementsByClassName('js-ask-question-link').length) {
         storyQuestions.init();
     } else {
         mediator.once('modules:autoupdate:updates', initStoryquestions);
