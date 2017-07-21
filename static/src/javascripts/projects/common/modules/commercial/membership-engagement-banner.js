@@ -143,7 +143,7 @@ const paypalAndCreditCardImage =
         config.images.acquisitions['paypal-and-credit-card']) ||
     '';
 
-const selectSequentiallyFrom = (array: Array<any>): any =>
+const selectSequentiallyFrom = (array: Array<string>): string =>
     array[local.get('gu.alreadyVisited') % array.length];
 
 const showBanner = (params: Object): void => {
