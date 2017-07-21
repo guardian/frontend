@@ -134,7 +134,6 @@
     "projects/common/modules/navigation/search.js"
   ],
   "Joseph Smith": [
-    "projects/common/modules/experiments/tests/contributions-epic-always-ask-strategy.js",
     "projects/common/modules/experiments/tests/contributions-epic-ask-four-earning.js",
     "projects/common/modules/experiments/tests/epic-to-support-landing-page.js",
     "projects/common/modules/experiments/tests/membership-engagement-banner-tests.js",
