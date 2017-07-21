@@ -15,6 +15,11 @@ import ophan from 'ophan/ng';
 import { get } from 'lib/geolocation';
 import { constructQuery } from 'lib/url';
 
+type Interaction = {
+    component: 'string',
+    value: 'string',
+};
+
 // change messageCode to force redisplay of the message to users who already closed it.
 const messageCode = 'engagement-banner-2017-07-05';
 const DO_NOT_RENDER_ENGAGEMENT_BANNER = 'do no render engagement banner';
@@ -117,10 +122,11 @@ const deriveBannerParams = (location: string): Object | string => {
 };
 
 // Used to send an interaction if the engagement banner is shown.
-const recordInteraction = (interaction: Object): void => {
+// #? A lot of null checking here, but it's hard to reason about the possible values
+//    `interaction` could take. Perhaps we can simplify when we have more Flow coverage
+const recordInteraction = (interaction: ?Interaction): void => {
     if (interaction) {
-        const component = interaction.component;
-        const value = interaction.value;
+        const { component, value } = interaction;
 
         if (component && value) {
             ophan.record({
