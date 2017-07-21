@@ -4,6 +4,7 @@ import fakeMediator from 'lib/mediator';
 import { commercialFeatures } from 'commercial/modules/commercial-features';
 import { membershipEngagementBannerInit } from 'common/modules/commercial/membership-engagement-banner';
 
+jest.mock('lib/mediator');
 jest.mock('lib/storage', () => ({
     local: {
         get: jest.fn(() => 10), // gu.alreadyVisited
@@ -17,23 +18,6 @@ jest.mock('lib/url', () => ({
 jest.mock('lib/geolocation', () => ({
     get: jest.fn(() => Promise.resolve('GB')),
 }));
-jest.mock('lib/mediator', () => {
-    let events = {};
-
-    return {
-        on(eventName, callback) {
-            events[eventName] = callback;
-        },
-        emit(eventName, params) {
-            if (events[eventName]) {
-                events[eventName](params);
-            }
-        },
-        removeAllListeners() {
-            events = {};
-        },
-    };
-});
 jest.mock(
     'common/modules/experiments/tests/membership-engagement-banner-tests',
     () => []
