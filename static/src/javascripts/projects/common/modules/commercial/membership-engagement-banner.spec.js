@@ -13,10 +13,13 @@ jest.mock('lib/storage', () => ({
     },
 }));
 jest.mock('lib/url', () => ({
-    constructQuery: jest.fn(),
+    constructQuery: jest.fn(() => 'fake-query-parameters'),
 }));
 jest.mock('lib/geolocation', () => ({
     get: jest.fn(() => Promise.resolve('GB')),
+}));
+jest.mock('common/views/svgs', () => ({
+    inlineSvg: jest.fn(() => 'fake-button-svg'),
 }));
 jest.mock(
     'common/modules/experiments/tests/membership-engagement-banner-tests',
@@ -28,7 +31,10 @@ jest.mock(
     () => ({
         defaultParams: jest.fn(() => ({
             minArticles: 1,
-            colourStrategy: jest.fn(() => 'foo'),
+            colourStrategy: jest.fn(() => 'fake-colour-class'),
+            messageText: 'fake-message-text',
+            linkUrl: 'fake-link-url',
+            buttonCaption: 'fake-button-caption',
         })),
         offerings: {},
     })
@@ -58,7 +64,7 @@ jest.mock('ophan/ng', () => ({
     record: jest.fn(),
 }));
 jest.mock('lib/config', () => ({
-    get: jest.fn(() => ''),
+    get: jest.fn(() => 'fake-paypal-and-credit-card-image'),
 }));
 
 beforeEach(() => {
@@ -114,6 +120,53 @@ describe('Membership engagement banner', () => {
             membershipEngagementBannerInit().then(() => {
                 fakeMediator.emit('modules:onwards:breaking-news:ready', false);
                 expect(FakeMessage.prototype.show).not.toHaveBeenCalled();
+            }));
+    });
+
+    describe('renders message with', () => {
+        let showBanner;
+
+        beforeEach(() => {
+            showBanner = membershipEngagementBannerInit().then(() => {
+                fakeMediator.emit('modules:onwards:breaking-news:ready', false);
+            });
+        });
+
+        it('message text', () =>
+            showBanner.then(() => {
+                expect(FakeMessage.prototype.show.mock.calls[0][0]).toMatch(
+                    /fake-message-text/
+                );
+            }));
+        it('paypal and credit card image', () =>
+            showBanner.then(() => {
+                expect(FakeMessage.prototype.show.mock.calls[0][0]).toMatch(
+                    /fake-paypal-and-credit-card-image/
+                );
+            }));
+        it('colour class', () =>
+            showBanner.then(() => {
+                expect(FakeMessage.prototype.show.mock.calls[0][0]).toMatch(
+                    /fake-colour-class/
+                );
+            }));
+        it('link URL', () =>
+            showBanner.then(() => {
+                expect(FakeMessage.prototype.show.mock.calls[0][0]).toMatch(
+                    /fake-link-url\?fake-query-parameters/
+                );
+            }));
+        it('button caption', () =>
+            showBanner.then(() => {
+                expect(FakeMessage.prototype.show.mock.calls[0][0]).toMatch(
+                    /fake-button-caption/
+                );
+            }));
+        it('button SVG', () =>
+            showBanner.then(() => {
+                expect(FakeMessage.prototype.show.mock.calls[0][0]).toMatch(
+                    /fake-button-svg/
+                );
             }));
     });
 });
