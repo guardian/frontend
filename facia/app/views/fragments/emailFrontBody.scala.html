@@ -2,13 +2,14 @@
 @import layout.EmailLayouts
 @import layout.{EmailContentContainer, LiveIntentMarquee, LiveIntentMPU, LiveIntentSafeRTB}
 @(page: model.PressedPage)(implicit request: RequestHeader)
+
 @import com.gu.facia.client.models.Branded
 @import com.gu.commercial.branding.Branding
 @import implicits.ItemKickerImplicits._
 @import layout.ContentCard
 @import model.EmailAddons.EmailContentType
 @import model.pressed.{ExternalLink, Feature}
-@import views.support.EmailHelpers.{icon, imgFromCard, imgForFront, brandingFromCard}
+@import views.support.EmailHelpers.{icon, imgFromCard, imgForFront, classesForCard}
 @import views.support.RemoveOuterParaHtml
 @import views.support.TrailCssClasses.toneClassFromStyle
 @import fragments.email._
@@ -73,7 +74,7 @@
 
 
 @faciaCardWithTrailText(card: ContentCard, withImage: Boolean, largeHeadline: Boolean, isBranded: Boolean) = {
-    @faciaCard(Seq(toneClassFromStyle(card.cardStyle)) ++ (if (withImage) Seq("fc--large") else Seq()) ++ (if (isBranded) Seq("tone-branded")  else Seq()), isBranded) {
+    @faciaCard(classesForCard(card, withImage), isBranded) {
         @if(withImage) {
             @row(Seq("no-pad")){@imgFromCard(card)}
         }
@@ -87,12 +88,12 @@
 }
 
 @faciaCardWithoutTrailText(card: ContentCard, withImage: Boolean, largeHeadline: Boolean, isBranded: Boolean) = {
-    @imgFromCard(card, 5).filter(i => withImage).fold {
-        @faciaCard(Seq(toneClassFromStyle(card.cardStyle)) ++ (if (isBranded) Seq("tone-branded") else Seq()), isBranded) {
-            @headline(card, largeHeadline, isLast = true)
-        }
+    @imgFromCard(card, 5).filter(_ => withImage).fold {
+        @faciaCard(classesForCard(card), isBranded) {
+                @headline(card, largeHeadline, isLast = true)
+            }
     } { img =>
-        @faciaCard(Seq(toneClassFromStyle(card.cardStyle)) ++ (if (isBranded) Seq("tone-branded") else Seq()), isBranded) {
+        @faciaCard(classesForCard(card), isBranded) {
             <tr valign="top">
                 <td class="left-col"><table>@headline(card, isLast = true)</table></td>
                 <td class="right-col no-pad">@img</td>
@@ -147,7 +148,7 @@
 }
 
 @renderContentContainer(collection: EmailContentContainer, collectionIndex: Int) = {
-    @containerTitle((if(collectionIndex > 0) Seq("ct--not-top") else Seq()) ++ (if (collection.branding.isDefined) Seq("ct-branded") else Seq())) {
+    @containerTitle((if(collectionIndex > 0) Seq("ct--not-top") else Nil) ++ (if (collection.branding.isDefined) Seq("ct-branded") else Nil)) {
         @collection.displayName
     }
 
