@@ -48,12 +48,12 @@ const buildCampaignCode = (
 
     // mem and cont chosen to be consistent with default campaign code prefixes.
     if (offering === offerings.membership) {
-        prefix = 'mem_';
+        prefix = 'mem';
     } else if (offering === offerings.contributions) {
-        prefix = 'cont_';
+        prefix = 'cont';
     }
 
-    return `${prefix + campaignId}_${variantId}`;
+    return `${prefix}_${campaignId}_${variantId}`;
 };
 
 const getUserVariantParams = (
@@ -67,6 +67,7 @@ const getUserVariantParams = (
         if (!userVariantParams.campaignCode) {
             const offering: string =
                 userVariantParams.offering || defaultOffering;
+
             userVariantParams.campaignCode = buildCampaignCode(
                 offering,
                 campaignId,
