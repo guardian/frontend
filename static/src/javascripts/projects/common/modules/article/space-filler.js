@@ -40,7 +40,9 @@ class SpaceFiller {
         const insertNextContent = () =>
             findSpace(rules, options).then(onSpacesFound, onNoSpacesFound);
 
-        return (this.queue = this.queue.then(insertNextContent).catch(onError));
+        this.queue = this.queue.then(insertNextContent).catch(onError);
+
+        return this.queue;
     }
 }
 
