@@ -52,7 +52,7 @@ class Message {
         this.$footerMessage = $('.js-footer-message');
     }
 
-    show(message: string) {
+    show(message: string): boolean {
         const siteMessage = $('.js-site-message');
 
         if (this.pinOnHide) {
@@ -128,7 +128,7 @@ class Message {
         return true;
     }
 
-    bindModalListeners() {
+    bindModalListeners(): void {
         bean.on(document, 'click', '.js-site-message-inner', e => {
             // Suppress same-level and parent handling, but allow default click behaviour.
             // This handler must come first.
@@ -143,7 +143,7 @@ class Message {
         );
     }
 
-    hide() {
+    hide(): void {
         $('#header').removeClass('js-site-message');
         $('.js-site-message').addClass('is-hidden');
         if (this.pinOnHide) {
@@ -151,23 +151,23 @@ class Message {
         }
     }
 
-    hasSeen() {
+    hasSeen(): boolean {
         const messageStates = userPrefs.get(this.prefs);
         return messageStates && messageStates.indexOf(this.id) > -1;
     }
 
-    remember() {
+    remember(): void {
         const messageStates = userPrefs.get(this.prefs) || [];
         messageStates.push(this.id);
         userPrefs.set(this.prefs, uniq(messageStates));
     }
 
-    acknowledge() {
+    acknowledge(): void {
         this.remember();
         this.hide();
     }
 
-    updateMessageOnWidth() {
+    updateMessageOnWidth(): void {
         const narrowDataAttr = 'site-message-narrow';
         const wideDataAttr = 'site-message-wide';
 
@@ -186,7 +186,7 @@ class Message {
         }
     }
 
-    updateMessageFromData(dataAttr: string) {
+    updateMessageFromData(dataAttr: string): void {
         if (this.$siteMessage) {
             const message = this.$siteMessage.data(dataAttr);
             if (message && this.$siteMessage) {
