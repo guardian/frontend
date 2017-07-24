@@ -167,7 +167,7 @@ define([
 
                     // match stats
                     if (resp.hasStarted && $nav) {
-                        var statsUrl = $('.tab--stats a', $nav).attr('href').replace(/^.*\/\/[^\/]+/, '');
+                        var statsUrl = $('.tab--stats a', $nav).attr('href').replace(/^.*\/\/[^/]+/, '');
 
                         $.create('<div class="match-stats__container"></div>').each(function (container) {
                             football.statsFor(statsUrl).fetch(container).then(function () {
