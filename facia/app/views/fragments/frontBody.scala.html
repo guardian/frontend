@@ -24,7 +24,7 @@
                 @fragments.guBand()
             }
 
-                @defining(layout.Front.fromPressedPage(faciaPage, Edition(request)).containers) { collections =>
+                @defining(layout.Front.fromPressedPage(faciaPage, Edition(request), adFree = request.headers.keys.exists(_ equalsIgnoreCase "X-Gu-Commercial-Ad-Free")).containers) { collections =>
 
                     @collections.map { containerDefinition =>
                         @fragments.containers.facia_cards.container(

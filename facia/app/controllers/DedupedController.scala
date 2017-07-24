@@ -11,7 +11,7 @@ class DedupedController(frontJsonFapi: FrontJsonFapiLive) extends Controller wit
   def getDedupedForPath(path: String) = Action.async { request =>
     frontJsonFapi.get(path).map {
       case Some(pressedFront) =>
-        val dedupedFrontResult = Front.fromPressedPageWithDeduped(pressedFront, Edition(request)).deduped
+        val dedupedFrontResult = Front.fromPressedPageWithDeduped(pressedFront, Edition(request), adFree = request.headers.keys.exists(_ equalsIgnoreCase "X-Gu-Commercial-Ad-Free")).deduped
         Ok(Json.toJson(dedupedFrontResult))
       case None => NotFound
     }

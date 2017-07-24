@@ -11,7 +11,7 @@
 @* TODO Consolidate this with the master container template to get rid of repetition *@
 
 @defining(page.webTitle) { case (webTitle) =>
-    <section class="@GetClasses.forTagContainer(webTitle.nonEmpty)"
+    <section class="@GetClasses.forTagContainer(webTitle.nonEmpty, adFree = request.headers.keys.exists(_ equalsIgnoreCase "X-Gu-Commercial-Ad-Free"))"
         data-link-name="all index"
         data-component="all index">
         <div class="fc-container__inner">
