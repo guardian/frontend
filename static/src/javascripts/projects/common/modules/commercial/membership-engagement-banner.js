@@ -22,8 +22,6 @@ type Interaction = {
 
 // change messageCode to force redisplay of the message to users who already closed it.
 const messageCode = 'engagement-banner-2017-07-05';
-const paypalAndCreditCardImage =
-    config.get('images.acquisitions.paypal-and-credit-card') || '';
 
 const getUserTest = (): ?ContributionsABTest => {
     const engagementBannerTests = MembershipEngagementBannerTests.concat(
@@ -147,6 +145,8 @@ const showBanner = (params: Object): void => {
         return;
     }
 
+    const paypalAndCreditCardImage =
+        config.get('images.acquisitions.paypal-and-credit-card') || '';
     const colourClass = params.colourStrategy();
     const messageText = Array.isArray(params.messageText)
         ? selectSequentiallyFrom(params.messageText)
