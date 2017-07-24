@@ -175,6 +175,68 @@ $email-tones: (
     border-top: 1px solid #46bcdf;
 }
 
+.ct-branded {
+    padding: 13px 0 12px;
+
+    .ct__margin {
+        padding: 12px 0 0;
+        background-color: #ffffff;
+    }
+
+    .ct__inner {
+        border-top-color: #69d1ca;
+        background-color: #dadada;
+    }
+}
+
+.branded-banner {
+    background-color: #dadada;
+    width: 100%;
+}
+
+.bb__inner {
+    padding-bottom: 6px;
+    height: 70px;
+}
+
+.bb__padding {
+    width: 60%;
+}
+
+.bb__label {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 12px;
+    width: 15%;
+    color: #757575;
+}
+
+.bb__logo {
+    max-height: 70px;
+    padding: 0 6px 6px;
+
+    img {
+        max-height: 70px;
+    }
+}
+
+.fc__margin--branded {
+    // background-color: #dadada;
+    padding-top: 0;
+}
+
+.tone-branded {
+    border-top-color: #69d1ca;
+    background-color: #f6f6f6;
+
+    .trail-text a {
+        color: #333333;
+    }
+
+    .headline a {
+        color: #333333;
+    }
+}
+
 @each $email, $tone-color in $email-tones {
     .#{$email} {
         .ct--not-top {

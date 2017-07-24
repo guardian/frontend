@@ -524,7 +524,7 @@ object CardStyleFormat extends Format[CardStyle] {
     case Review => JsObject(Seq("type" -> JsString("Review")))
     case Letters => JsObject(Seq("type" -> JsString("Letters")))
     case ExternalLink => JsObject(Seq("type" -> JsString("ExternalLink")))
-    case DefaultCardstyle => JsObject(Seq("type" -> JsString("DefaultCardstyle")))
+    case _ => JsObject(Seq("type" -> JsString("DefaultCardstyle")))
   }
 }
 

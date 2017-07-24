@@ -4,7 +4,9 @@ import conf.switches.Switches
 import model.PressedPage
 import model.facia.PressedCollection
 import model.pressed.{CollectionConfig, PressedContent}
+import com.gu.commercial.branding.ContainerBranding
 import commercial.campaigns.EmailAdvertisements._
+import common.Edition
 
 import PartialFunction.condOpt
 
@@ -13,7 +15,7 @@ sealed trait EmailContainer
 case class LiveIntentMarquee(newsletterId: String, ids: (String, String, String, String, String)) extends EmailContainer
 case class LiveIntentMPU(newsletterId: String, ids: (String, String, String, String, String)) extends EmailContainer
 case class LiveIntentSafeRTB(newsletterId: String, ids: List[String]) extends EmailContainer
-case class EmailContentContainer(displayName: String, cards: List[ContentCard], config: CollectionConfig, collectionType: String) extends EmailContainer
+case class EmailContentContainer(displayName: String, cards: List[ContentCard], config: CollectionConfig, collectionType: String, branding: Option[ContainerBranding]) extends EmailContainer
 
 object EmailContentContainer {
 
@@ -42,7 +44,8 @@ object EmailContentContainer {
       displayName = collection.displayName,
       cards = cards,
       config = collection.config,
-      collectionType = collection.collectionType
+      collectionType = collection.collectionType,
+      branding = collection.branding(Edition.defaultEdition)
     )
 
   private def contentCard(content: PressedContent, config: CollectionConfig): Option[ContentCard] = {
