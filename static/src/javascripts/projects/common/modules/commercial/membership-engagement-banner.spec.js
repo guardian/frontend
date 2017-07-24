@@ -135,7 +135,7 @@ describe('Membership engagement banner', () => {
             }));
     });
 
-    describe('creates message with', () => {
+    describe('renders message with', () => {
         let showBanner;
 
         beforeEach(() => {
@@ -146,22 +146,16 @@ describe('Membership engagement banner', () => {
 
         it('correct campaign code', () =>
             showBanner.then(() => {
-                fakeMediator.emit('modules:onwards:breaking-news:ready', false);
                 expect(
                     FakeMessage.mock.calls[0][1].siteMessageComponentName
                 ).toBe('mem_fake-campaign-id_fake-user-variant-id');
             }));
-    });
-
-    describe('renders message with', () => {
-        let showBanner;
-
-        beforeEach(() => {
-            showBanner = membershipEngagementBannerInit().then(() => {
-                fakeMediator.emit('modules:onwards:breaking-news:ready', false);
-            });
-        });
-
+        it('correct CSS modifier class', () =>
+            showBanner.then(() => {
+                expect(FakeMessage.mock.calls[0][1].cssModifierClass).toBe(
+                    'fake-colour-class'
+                );
+            }));
         it('message text', () =>
             showBanner.then(() => {
                 expect(FakeMessage.prototype.show.mock.calls[0][0]).toMatch(
