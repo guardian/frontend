@@ -23,7 +23,11 @@ jest.mock('common/views/svgs', () => ({
 }));
 jest.mock(
     'common/modules/experiments/tests/membership-engagement-banner-tests',
-    () => []
+    () => [
+        {
+            campaignId: 'fake-campaign-id',
+        },
+    ]
 );
 jest.mock('common/modules/experiments/acquisition-test-selector', () => []);
 jest.mock(
@@ -35,8 +39,12 @@ jest.mock(
             messageText: 'fake-message-text',
             linkUrl: 'fake-link-url',
             buttonCaption: 'fake-button-caption',
+            offering: 'fake-membership-offering',
         })),
-        offerings: {},
+        offerings: {
+            membership: 'fake-membership-offering',
+            contributions: 'fake-contributions-offering',
+        },
     })
 );
 jest.mock('common/modules/experiments/test-can-run-checks', () => ({
@@ -44,7 +52,10 @@ jest.mock('common/modules/experiments/test-can-run-checks', () => ({
 }));
 jest.mock('common/modules/experiments/segment-util', () => ({
     isInTest: jest.fn(() => true),
-    variantFor: jest.fn(() => {}),
+    variantFor: jest.fn(() => ({
+        id: 'fake-user-variant-id',
+        engagementBannerParams: {},
+    })),
 }));
 jest.mock('commercial/modules/commercial-features', () => ({
     commercialFeatures: {
@@ -59,7 +70,7 @@ jest.mock(
         isBlocked: jest.fn(() => false),
     })
 );
-jest.mock('common/modules/ui/message', () => class Message {});
+jest.mock('common/modules/ui/message', () => jest.fn());
 jest.mock('ophan/ng', () => ({
     record: jest.fn(),
 }));
@@ -81,6 +92,7 @@ beforeEach(() => {
         `;
     }
 
+    FakeMessage.mockReset();
     FakeMessage.prototype.show = jest.fn();
 });
 afterEach(() => {
@@ -120,6 +132,24 @@ describe('Membership engagement banner', () => {
             membershipEngagementBannerInit().then(() => {
                 fakeMediator.emit('modules:onwards:breaking-news:ready', false);
                 expect(FakeMessage.prototype.show).not.toHaveBeenCalled();
+            }));
+    });
+
+    describe('creates message with', () => {
+        let showBanner;
+
+        beforeEach(() => {
+            showBanner = membershipEngagementBannerInit().then(() => {
+                fakeMediator.emit('modules:onwards:breaking-news:ready', false);
+            });
+        });
+
+        it('correct campaign code', () =>
+            showBanner.then(() => {
+                fakeMediator.emit('modules:onwards:breaking-news:ready', false);
+                expect(
+                    FakeMessage.mock.calls[0][1].siteMessageComponentName
+                ).toBe('mem_fake-campaign-id_fake-user-variant-id');
             }));
     });
 
