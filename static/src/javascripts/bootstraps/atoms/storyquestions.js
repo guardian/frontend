@@ -13,6 +13,18 @@ import { send } from 'commercial/modules/messenger/send';
 // eslint-disable-next-line camelcase,no-undef
 __webpack_public_path__ = `${config.page.assetsPath}javascripts/`;
 
+const updateHeight = () => {
+    fastdom
+        .read(
+            () =>
+                document.documentElement &&
+                document.documentElement.getBoundingClientRect().height
+        )
+        .then(height => {
+            send('resize', { height });
+        });
+};
+
 Promise.all([
     window.guardian.polyfilled
         ? Promise.resolve()
@@ -23,13 +35,15 @@ Promise.all([
     new Promise(comready),
 ]).then(() => {
     init();
-    fastdom
-        .read(
-            () =>
-                document.documentElement &&
-                document.documentElement.getBoundingClientRect().height
-        )
-        .then(height => {
-            send('resize', { height });
+    updateHeight();
+
+    // Brittle but will work
+    [...document.getElementsByClassName('user__question')]
+        .slice(0, 1)
+        .forEach((sq: Element) => {
+            new MutationObserver(updateHeight).observe(sq, {
+                childList: true,
+                subtree: true,
+            });
         });
 });

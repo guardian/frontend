@@ -2,7 +2,7 @@
 /* eslint-disable no-new*/
 import qwery from 'qwery';
 import $ from 'lib/$';
-import detect from 'lib/detect';
+import { isBreakpoint } from 'lib/detect';
 import mediator from 'lib/mediator';
 import { getUrlVars } from 'lib/url';
 import richLinks from 'common/modules/article/rich-links';
@@ -33,7 +33,7 @@ const modules = {
         if (
             mainColumn[0] &&
             mainColumn[0].offsetHeight > 1150 &&
-            detect.isBreakpoint({
+            isBreakpoint({
                 min: 'desktop',
             })
         ) {

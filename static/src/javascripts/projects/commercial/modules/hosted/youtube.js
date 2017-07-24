@@ -2,14 +2,14 @@
 import nextVideoAutoplay from 'commercial/modules/hosted/next-video-autoplay';
 import { initYoutubePlayer } from 'common/modules/atoms/youtube-player';
 import tracking from 'common/modules/atoms/youtube-tracking';
-import detect from 'lib/detect';
+import { isBreakpoint } from 'lib/detect';
 import mediator from 'lib/mediator';
 
 type videoPlayerComponent = { getCurrentTime: () => number };
 
 const EVENTSFIRED = [];
 
-const isDesktop = (): boolean => detect.isBreakpoint({ min: 'desktop' });
+const isDesktop = (): boolean => isBreakpoint({ min: 'desktop' });
 
 const sendPercentageCompleteEvents = (
     atomId: string,

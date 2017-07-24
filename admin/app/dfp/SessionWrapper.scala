@@ -2,8 +2,8 @@ package dfp
 
 import com.google.api.ads.common.lib.auth.OfflineCredentials
 import com.google.api.ads.common.lib.auth.OfflineCredentials.Api
-import com.google.api.ads.dfp.axis.utils.v201608.StatementBuilder
-import com.google.api.ads.dfp.axis.v201608._
+import com.google.api.ads.dfp.axis.utils.v201705.StatementBuilder
+import com.google.api.ads.dfp.axis.v201705._
 import com.google.api.ads.dfp.lib.client.DfpSession
 import common.Logging
 import conf.{AdminConfiguration, Configuration}
@@ -180,7 +180,7 @@ object SessionWrapper extends Logging {
       }
     } catch {
       case NonFatal(e) =>
-        log.error(s"Building DFP session failed: ${e.getMessage}")
+        log.error(s"Building DFP session failed.", e)
         None
     }
 

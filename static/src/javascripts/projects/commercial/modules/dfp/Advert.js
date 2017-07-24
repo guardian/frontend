@@ -1,7 +1,7 @@
 // @flow
 import type { AdSize, AdSizes } from 'commercial/types';
 
-import detect from 'lib/detect';
+import { breakpoints } from 'lib/detect';
 import { getCurrentTime } from 'lib/user-timing';
 import { defineSlot } from 'commercial/modules/dfp/define-slot';
 import { updateAdvertMetric } from 'commercial/modules/dfp/performance-logging';
@@ -23,7 +23,7 @@ const createSizeMapping = (attr: string): Array<AdSize> =>
         );
 
 const getAdBreakpointSizes = (advertNode: HTMLElement): AdSizes =>
-    detect.breakpoints.reduce((sizes, breakpoint) => {
+    breakpoints.reduce((sizes, breakpoint) => {
         const data = advertNode.getAttribute(
             `data-${breakpointNameToAttribute(breakpoint.name)}`
         );

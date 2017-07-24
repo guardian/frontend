@@ -1,5 +1,5 @@
 // @flow
-import detect from 'lib/detect';
+import { adblockInUse } from 'lib/detect';
 import { waitForCheck } from 'common/modules/check-mediator';
 import { load } from './outbrain-load';
 
@@ -10,10 +10,8 @@ import { load } from './outbrain-load';
  make the call instantly when we detect adBlock in use.
 */
 const canLoadInstantly = () =>
-    detect.adblockInUse.then(
-        adblockInUse =>
-            !document.getElementById('dfp-ad--merchandising-high') ||
-            adblockInUse
+    adblockInUse.then(
+        isUse => !document.getElementById('dfp-ad--merchandising-high') || isUse
     );
 
 const onIsStoryQuestionsOnPage = isStoryQuestionsOnPage => {

@@ -16,30 +16,6 @@ import conf.switches.Switches.ServerSideTests
 //    val tests = List(ExampleTest)
 // }
 
-object CommercialGalleryBannerAdsVariant extends TestDefinition(
-  name = "ab-commercial-gallery-banner-ads-variant",
-  description = "Users in this test will see banner ads in galleries",
-  owners = Seq(Owner.withGithub("JonNorman")),
-  sellByDate = new LocalDate(2017, 7, 18)
-) {
-
-  def participationGroup(implicit request: RequestHeader): Option[String] = request.headers.get("X-GU-ab-commercial-gallery-banner-ads")
-
-  def canRun(implicit request: RequestHeader): Boolean = participationGroup.contains("variant")
-}
-
-object CommercialGalleryBannerAdsControl extends TestDefinition(
-  name = "ab-commercial-gallery-banner-ads-control",
-  description = "Users in this test will not see banner ads in galleries, as a control.",
-  owners = Seq(Owner.withGithub("JonNorman")),
-  sellByDate = new LocalDate(2017, 7, 18)
-) {
-
-  def participationGroup(implicit request: RequestHeader): Option[String] = request.headers.get("X-GU-ab-commercial-gallery-banner-ads")
-
-  def canRun(implicit request: RequestHeader): Boolean = participationGroup.contains("control")
-}
-
 object CommercialClientLoggingVariant extends TestDefinition(
   name = "commercial-client-logging",
   description = "A slice of the audience who will post their commercial js performance data",
@@ -56,7 +32,7 @@ object ABNewDesktopHeaderVariant extends TestDefinition(
   name = "ab-new-desktop-header-variant",
   description = "Users in this test will see the new desktop design.",
   owners = Seq(Owner.withGithub("natalialkb"), Owner.withGithub("gustavpursche")),
-  sellByDate = new LocalDate(2017, 7, 18)
+  sellByDate = new LocalDate(2017, 7, 25)
 ) {
 
   def participationGroup(implicit request: RequestHeader): Option[String] = request.headers.get("X-GU-ab-new-desktop-header")
@@ -68,7 +44,7 @@ object ABNewDesktopHeaderControl extends TestDefinition(
   name = "ab-new-desktop-header-control",
   description = "Users in this test will not see the new desktop design, but act as a control group",
   owners = Seq(Owner.withGithub("natalialkb"), Owner.withGithub("gustavpursche")),
-  sellByDate = new LocalDate(2017, 7, 18)
+  sellByDate = new LocalDate(2017, 7, 25)
 ) {
 
   def participationGroup(implicit request: RequestHeader): Option[String] = request.headers.get("X-GU-ab-new-desktop-header")
@@ -100,8 +76,6 @@ trait ServerSideABTests {
 object ActiveTests extends ServerSideABTests {
   val tests: Seq[TestDefinition] = List(
     CommercialClientLoggingVariant,
-    CommercialGalleryBannerAdsVariant,
-    CommercialGalleryBannerAdsControl,
     ABNewDesktopHeaderVariant,
     ABNewDesktopHeaderControl
   )

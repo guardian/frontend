@@ -5,7 +5,7 @@ import $ from 'lib/$';
 import ElementInview from 'lib/element-inview';
 import { videojs } from 'bootstraps/enhanced/media/video-player';
 import { onVideoContainerNavigation } from 'common/modules/atoms/youtube';
-import detect from 'lib/detect';
+import { isBreakpoint } from 'lib/detect';
 
 type State = {
     position: number,
@@ -75,26 +75,30 @@ const reducers = {
     INIT: function init(previousState: State): State {
         const makeYouTubeNonPlayableAtSmallBreakpoint = state => {
             if (
-                detect.isBreakpoint({
+                isBreakpoint({
                     max: 'desktop',
                 })
             ) {
-                const youTubeIframes = state.container.querySelectorAll(
-                    '.youtube-media-atom iframe'
-                );
+                const youTubeIframes = [
+                    ...state.container.querySelectorAll(
+                        '.youtube-media-atom iframe'
+                    ),
+                ];
                 youTubeIframes.forEach(el => {
                     el.remove();
                 });
-                const overlayLinks = state.container.querySelectorAll(
-                    '.video-container-overlay-link'
-                );
+                const overlayLinks = [
+                    ...state.container.querySelectorAll(
+                        '.video-container-overlay-link'
+                    ),
+                ];
                 overlayLinks.forEach(el => {
                     el.classList.add('u-faux-block-link__overlay');
                 });
 
-                const atomWrapper = state.container.querySelectorAll(
-                    '.youtube-media-atom'
-                );
+                const atomWrapper = [
+                    ...state.container.querySelectorAll('.youtube-media-atom'),
+                ];
                 atomWrapper.forEach(el => {
                     el.classList.add('no-player');
                 });

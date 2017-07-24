@@ -34,7 +34,7 @@ export const acquisitionsEpicMultipleTestimonials: ContributionsABTest = makeABT
         campaignId: 'epic_multiple_testimonials',
 
         audienceCriteria: 'All',
-        audience: 0.8,
+        audience: 0.68,
         audienceOffset: 0.1,
 
         variants: [
@@ -62,7 +62,7 @@ export const acquisitionsEpicMultipleTestimonials: ContributionsABTest = makeABT
                     {
                         message:
                             'I appreciate there not being a paywall: it is more democratic for the media to be available for all',
-                        name: 'Thomasine F-R',
+                        name: 'Thomasine F-R, Sweden',
                     },
                 ]),
             },
@@ -82,7 +82,7 @@ export const acquisitionsEpicMultipleTestimonials: ContributionsABTest = makeABT
                     {
                         message:
                             'I appreciate there not being a paywall: it is more democratic for the media to be available for all and not a commodity to be purchased by a few. I’m happy to make a contribution so others with less means still have access to information.',
-                        name: 'Thomasine F-R',
+                        name: 'Thomasine F-R, Sweden',
                     },
                 ]),
             },

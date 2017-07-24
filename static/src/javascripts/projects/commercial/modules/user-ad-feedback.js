@@ -2,7 +2,7 @@
 import fastdom from 'fastdom';
 import fetch from 'lib/fetch';
 import config from 'lib/config';
-import detect from 'lib/detect';
+import { getUserAgent, getBreakpoint } from 'lib/detect';
 
 const onComplete = adSlotId => {
     // we're complete - update the UI
@@ -26,8 +26,8 @@ const recordUserAdFeedback = function(
     const feedbackUrl =
         'https://j2cy9stt59.execute-api.eu-west-1.amazonaws.com/prod/adFeedback';
     const stage = config.page.isProd ? 'PROD' : 'CODE';
-    const ua = detect.getUserAgent;
-    const breakPoint = detect.getBreakpoint();
+    const ua = getUserAgent;
+    const breakPoint = getBreakpoint();
 
     const data = {
         stage,
@@ -36,7 +36,10 @@ const recordUserAdFeedback = function(
         creativeId: slotRenderEvent.sourceAgnosticCreativeId.toString(),
         lineId: slotRenderEvent.sourceAgnosticLineItemId.toString(),
         feedback: feedbackType,
-        browser: ua.browser.toString() + ua.version.toString(),
+        browser:
+            typeof ua === 'object'
+                ? ua.browser.toString() + ua.version.toString()
+                : undefined,
         breakPoint,
     };
 

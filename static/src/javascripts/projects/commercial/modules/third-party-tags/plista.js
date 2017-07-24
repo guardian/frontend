@@ -1,11 +1,14 @@
 // @flow
+
 import fastdom from 'fastdom';
 import $ from 'lib/$';
 import config from 'lib/config';
-import detect from 'lib/detect';
+import { adblockInUse as adblockInUse_ } from 'lib/detect';
 import trackAdRender from 'commercial/modules/dfp/track-ad-render';
 import { commercialFeatures } from 'commercial/modules/commercial-features';
 import { loadScript } from 'lib/load-script';
+
+const adblockInUse: any = adblockInUse_;
 
 const plistaTpl = ({ widgetName }) => `
     <div class="PLISTA" data-ob-template="guardian">
@@ -20,10 +23,8 @@ const selectors = {
 const module = {};
 
 const loadInstantly = function() {
-    return detect.adblockInUse.then(
-        adblockInUse =>
-            !document.getElementById('dfp-ad--merchandising-high') ||
-            adblockInUse
+    return adblockInUse.then(
+        inUse => !document.getElementById('dfp-ad--merchandising-high') || inUse
     );
 };
 
@@ -70,8 +71,8 @@ module.load = function() {
 
 module.init = function() {
     if (commercialFeatures.outbrain) {
-        return loadInstantly().then(adBlockInUse => {
-            if (adBlockInUse) {
+        return loadInstantly().then(inUse => {
+            if (inUse) {
                 module.load();
             } else {
                 return trackAdRender(
@@ -84,6 +85,7 @@ module.init = function() {
             }
         });
     }
+
     return Promise.resolve(false);
 };
 

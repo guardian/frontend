@@ -1,7 +1,7 @@
 // @flow
 import config from 'lib/config';
 import { getCookie, removeCookie } from 'lib/cookies';
-import detect from 'lib/detect';
+import { getReferrer as detectGetReferrer, getBreakpoint } from 'lib/detect';
 import { local } from 'lib/storage';
 import { getUrlVars } from 'lib/url';
 import { getKruxSegments } from 'commercial/modules/third-party-tags/krux';
@@ -101,8 +101,7 @@ const getReferrer = (): ?string => {
 
     const matchedRef: MatchType =
         referrerTypes.filter(
-            referrerType =>
-                detect.getReferrer().indexOf(referrerType.match) > -1
+            referrerType => detectGetReferrer().indexOf(referrerType.match) > -1
         )[0] || {};
 
     return matchedRef.id;
@@ -132,7 +131,7 @@ const buildPageTargeting = once((adFree: ?boolean): Object => {
         {
             x: getKruxSegments(),
             pv: config.ophan.pageViewId,
-            bp: detect.getBreakpoint(),
+            bp: getBreakpoint(),
             at: adtestParams(),
             si: identity.isUserLoggedIn() ? 't' : 'f',
             gdncrm: getUserSegments(),

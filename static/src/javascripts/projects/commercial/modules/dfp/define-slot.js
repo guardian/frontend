@@ -1,7 +1,7 @@
 // @flow
 import { getUrlVars } from 'lib/url';
 import config from 'lib/config';
-import detect from 'lib/detect';
+import { breakpoints } from 'lib/detect';
 import uniq from 'lodash/arrays/uniq';
 import flatten from 'lodash/arrays/flatten';
 import once from 'lodash/functions/once';
@@ -29,7 +29,7 @@ type SizeMappingArray = Array<Object>;
 const buildSizeMapping = (sizes: Object): SizeMappingArray => {
     const mapping = window.googletag.sizeMapping();
 
-    detect.breakpoints.filter(_ => _.name in sizes).forEach(_ => {
+    breakpoints.filter(_ => _.name in sizes).forEach(_ => {
         mapping.addSize([_.width, 0], sizes[_.name]);
     });
 

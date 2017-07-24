@@ -1,7 +1,7 @@
 package dfp
 
 import app.LifecycleComponent
-import common.dfp.{GuAdUnit, GuCreativeTemplate, GuCustomField}
+import common.dfp.{GuAdUnit, GuCreativeTemplate, GuCustomField, GuCustomTargeting}
 import common._
 import play.api.inject.ApplicationLifecycle
 
@@ -38,16 +38,10 @@ class DfpDataCacheLifecycle(
       def run() = CustomFieldAgent.refresh()
     },
 
-    new Job[DataCache[Long, String]] {
-      val name = "DFP-TargetingKeys-Update"
+    new Job[DataCache[Long, GuCustomTargeting]] {
+      val name = "DFP-CustomTargeting-Update"
       val interval = 30
-      def run() = CustomTargetingKeyAgent.refresh()
-    },
-
-    new Job[DataCache[Long, String]] {
-      val name = "DFP-TargetingValues-Update"
-      val interval = 30
-      def run() = CustomTargetingValueAgent.refresh()
+      def run() = CustomTargetingAgent.refresh()
     },
 
     new Job[Unit] {

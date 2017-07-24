@@ -1,21 +1,34 @@
 // @flow
 import config from 'lib/config';
 import { initCheckMediator, resolveCheck } from 'common/modules/check-mediator';
-import detect from 'lib/detect';
+import { adblockInUse as adblockInUse_ } from 'lib/detect';
 import { load } from './outbrain-load';
 import { initOutbrain } from './outbrain';
 import { getSection } from './outbrain-sections';
 
+const adblockInUse: any = adblockInUse_;
+
 jest.mock('ophan/ng', () => ({ record: () => undefined }));
-jest.mock('lib/detect', () => ({
-    adblockInUse: Promise.resolve(false),
-    getBreakpoint: jest.fn(),
-}));
+
+jest.mock('lib/detect', () => {
+    let adblockInUseMock = false;
+
+    return {
+        getBreakpoint: jest.fn(() => 'desktop'),
+        adblockInUse: {
+            then: fn => Promise.resolve(fn(adblockInUseMock)),
+            mockReturnValue: value => {
+                adblockInUseMock = value;
+            },
+        },
+    };
+});
+
 jest.mock('lib/load-script', () => ({ loadScript: jest.fn() }));
 jest.mock('./outbrain-load', () => ({ load: jest.fn() }));
 
 describe('Outbrain', () => {
-    beforeEach(done => {
+    beforeEach(() => {
         if (document.body) {
             document.body.innerHTML = `
                 <div id="dfp-ad--merchandising-high"></div>
@@ -33,7 +46,7 @@ describe('Outbrain', () => {
             commentable: true,
         };
 
-        done();
+        expect.hasAssertions();
     });
 
     afterEach(() => {
@@ -55,18 +68,17 @@ describe('Outbrain', () => {
             jest.resetModules();
         });
 
-        it('should not load if outbrain disabled', done => {
+        it('should not load if outbrain disabled', () => {
             // isOutbrainDisabled check
             resolveCheck('isOutbrainDisabled', true);
 
-            initOutbrain().then(() => {
+            return initOutbrain().then(() => {
                 expect(load).not.toHaveBeenCalled();
-                done();
             });
         });
 
-        it('should load instantly when ad block is in use', done => {
-            detect.adblockInUse = Promise.resolve(true);
+        it('should load instantly when ad block is in use', () => {
+            adblockInUse.mockReturnValue(true);
             // isOutbrainDisabled check
             resolveCheck('isOutbrainDisabled', false);
             // make outbrain compliant
@@ -74,39 +86,36 @@ describe('Outbrain', () => {
             resolveCheck('isUserInEmailAbTestAndEmailCanRun', false);
             resolveCheck('isStoryQuestionsOnPage', false);
 
-            initOutbrain().then(() => {
+            return initOutbrain().then(() => {
                 expect(load).toHaveBeenCalled();
-                detect.adblockInUse = Promise.resolve(false);
-                done();
+                adblockInUse.mockReturnValue(false);
             });
         });
 
-        it('should not load if both merch components are loaded', done => {
+        it('should not load if both merch components are loaded', () => {
             // isOutbrainDisabled check
             resolveCheck('isOutbrainDisabled', false);
             // isOutbrainBlockedByAds checks
             resolveCheck('isOutbrainBlockedByAds', true);
 
-            initOutbrain().then(() => {
+            return initOutbrain().then(() => {
                 expect(load).not.toHaveBeenCalled();
-                done();
             });
         });
 
-        it('should load in the low-priority merch component', done => {
+        it('should load in the low-priority merch component', () => {
             // isOutbrainDisabled check
             resolveCheck('isOutbrainDisabled', false);
             // isOutbrainBlockedByAds and isOutbrainMerchandiseCompliant checks
             resolveCheck('isOutbrainBlockedByAds', false);
             resolveCheck('isOutbrainMerchandiseCompliant', true);
 
-            initOutbrain().then(() => {
+            return initOutbrain().then(() => {
                 expect(load).toHaveBeenCalledWith('merchandising');
-                done();
             });
         });
 
-        it('should load a non compliant component if user in contributions AB test', done => {
+        it('should load a non compliant component if user in contributions AB test', () => {
             // isOutbrainDisabled check
             resolveCheck('isOutbrainDisabled', false);
             // isOutbrainBlockedByAds and isOutbrainMerchandiseCompliant checks
@@ -114,13 +123,12 @@ describe('Outbrain', () => {
             resolveCheck('isOutbrainMerchandiseCompliant', false);
             resolveCheck('isUserInContributionsAbTest', true);
 
-            initOutbrain().then(() => {
+            return initOutbrain().then(() => {
                 expect(load).toHaveBeenCalledWith('nonCompliant');
-                done();
             });
         });
 
-        it('should load a non compliant component if user in Email AB test and Email can run', done => {
+        it('should load a non compliant component if user in Email AB test and Email can run', () => {
             // isOutbrainDisabled check
             resolveCheck('isOutbrainDisabled', false);
             // isOutbrainBlockedByAds and isOutbrainMerchandiseCompliant checks
@@ -129,13 +137,12 @@ describe('Outbrain', () => {
             resolveCheck('isUserInContributionsAbTest', false);
             resolveCheck('isUserInEmailAbTestAndEmailCanRun', true);
 
-            initOutbrain().then(() => {
+            return initOutbrain().then(() => {
                 expect(load).toHaveBeenCalledWith('nonCompliant');
-                done();
             });
         });
 
-        it('should load a non compliant component if story questions on page', done => {
+        it('should load a non compliant component if story questions on page', () => {
             // isOutbrainDisabled check
             resolveCheck('isOutbrainDisabled', false);
             // isOutbrainBlockedByAds and isOutbrainMerchandiseCompliant checks
@@ -145,13 +152,12 @@ describe('Outbrain', () => {
             resolveCheck('isUserInEmailAbTestAndEmailCanRun', false);
             resolveCheck('isStoryQuestionsOnPage', true);
 
-            initOutbrain().then(() => {
+            return initOutbrain().then(() => {
                 expect(load).toHaveBeenCalledWith('nonCompliant');
-                done();
             });
         });
 
-        it('should load a compliant component', done => {
+        it('should load a compliant component', () => {
             // isOutbrainDisabled check
             resolveCheck('isOutbrainDisabled', false);
             // isOutbrainBlockedByAds and isOutbrainMerchandiseCompliant checks
@@ -161,9 +167,8 @@ describe('Outbrain', () => {
             resolveCheck('isUserInEmailAbTestAndEmailCanRun', false);
             resolveCheck('isStoryQuestionsOnPage', false);
 
-            initOutbrain().then(() => {
+            return initOutbrain().then(() => {
                 expect(load).toHaveBeenCalled();
-                done();
             });
         });
     });

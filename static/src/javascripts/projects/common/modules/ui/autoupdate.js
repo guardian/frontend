@@ -7,7 +7,7 @@ import qwery from 'qwery';
 import $ from 'lib/$';
 import fastdom from 'lib/fastdom-promise';
 import fetchJSON from 'lib/fetch-json';
-import detect from 'lib/detect';
+import { isBreakpoint, pageVisible, initPageVisibility } from 'lib/detect';
 import mediator from 'lib/mediator';
 import twitter from 'common/modules/article/twitter';
 import { Sticky } from 'common/modules/ui/sticky';
@@ -27,8 +27,7 @@ const autoUpdate = (opts?: autoUpdateOptions): void => {
     const options = Object.assign(
         {
             toastOffsetTop: 12,
-            minUpdateDelay:
-                (detect.isBreakpoint({ min: 'desktop' }) ? 10 : 30) * 1000,
+            minUpdateDelay: (isBreakpoint({ min: 'desktop' }) ? 10 : 30) * 1000,
             maxUpdateDelay: 20 * 60 * 1000, // 20 mins
             backoffMultiplier: 0.75, // increase or decrease the back off rate by modifying this
         },
@@ -48,7 +47,7 @@ const autoUpdate = (opts?: autoUpdateOptions): void => {
     const updateDelay = (delay: number): void => {
         let newDelay;
 
-        if (detect.pageVisible()) {
+        if (pageVisible()) {
             newDelay = options.minUpdateDelay;
         } else {
             newDelay = Math.min(delay * 1.5, options.maxUpdateDelay);
@@ -109,7 +108,7 @@ const autoUpdate = (opts?: autoUpdateOptions): void => {
     };
 
     const displayNewBlocks = (): void => {
-        if (detect.pageVisible()) {
+        if (pageVisible()) {
             revealInjectedElements();
         }
 
@@ -229,7 +228,7 @@ const autoUpdate = (opts?: autoUpdateOptions): void => {
     }).init();
 
     checkForUpdates();
-    detect.initPageVisibility();
+    initPageVisibility();
     setUpListeners();
 
     fastdom.write(() => {

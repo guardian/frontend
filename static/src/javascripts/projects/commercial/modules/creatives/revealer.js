@@ -1,7 +1,7 @@
 // @flow
 import fastdom from 'lib/fastdom-promise';
 import template from 'lodash/utilities/template';
-import detect from 'lib/detect';
+import { getViewport } from 'lib/detect';
 import { addTrackingPixel } from 'commercial/modules/creatives/add-tracking-pixel';
 import addViewabilityTracker from 'commercial/modules/creatives/add-viewability-tracker';
 import revealerStr from 'raw-loader!commercial/views/creatives/revealer.html';
@@ -50,7 +50,7 @@ class Revealer {
                     );
                 }
             })
-            .then(() => fastdom.read(detect.getViewport))
+            .then(() => fastdom.read(getViewport))
             .then(viewport =>
                 fastdom.write(() => {
                     const background = this.adSlot.getElementsByClassName(

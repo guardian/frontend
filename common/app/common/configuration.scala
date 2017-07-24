@@ -65,7 +65,7 @@ object GuardianConfiguration extends Logging {
   lazy val configuration = {
     // This is version number of the config file we read from s3,
     // increment this if you publish a new version of config
-    val s3ConfigVersion = 35
+    val s3ConfigVersion = 41
 
     lazy val userPrivate = FileConfigurationSource(s"${System.getProperty("user.home")}/.gu/frontend.conf")
     lazy val runtimeOnly = FileConfigurationSource("/etc/gu/frontend.conf")
@@ -226,7 +226,7 @@ class GuardianConfiguration extends Logging {
   }
 
   object sonobi {
-    lazy val jsLocation = configuration.getStringProperty("sonobi.js.location").getOrElse("//api.nextgen.guardianapps.co.uk/morpheus.theguardian.12914.js")
+    lazy val jsLocation = configuration.getStringProperty("sonobi.js.location").getOrElse("//api.nextgen.guardianapps.co.uk/morpheus.theguardian.12916.js")
   }
 
   object switch {
@@ -349,6 +349,9 @@ class GuardianConfiguration extends Logging {
 
   object facebook {
     lazy val appId = configuration.getMandatoryStringProperty("guardian.page.fbAppId")
+    object pages {
+      lazy val authorisedIdsForLinkEdits = configuration.getStringPropertiesSplitByComma("facebook.pages.authorisedIdsForLinkEdits")
+    }
     object graphApi {
       lazy val version = configuration.getStringProperty("facebook.graphApi.version").getOrElse("2.8")
       lazy val accessToken = configuration.getMandatoryStringProperty("facebook.graphApi.accessToken")

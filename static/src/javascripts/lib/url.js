@@ -1,8 +1,8 @@
 // @flow
 
-import detect from 'lib/detect';
+import { hasPushStateSupport } from 'lib/detect';
 
-const supportsPushState = detect.hasPushStateSupport();
+const supportsPushState = hasPushStateSupport();
 
 // returns "foo=bar&fizz=buzz" (eg. no ? symbol)
 const getCurrentQueryString = (): string =>
