@@ -25,6 +25,16 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
+  val CarrotSlotSwitch = Switch(
+    SwitchGroup.Commercial,
+    "carrot-slot",
+    "Allows the serving of a new type of slot: the carrot",
+    owners = Seq(Owner.withGithub("JonNorman")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 8, 23),
+    exposeClientSide = true
+  )
+
   val SurveySwitch = Switch(
     SwitchGroup.Commercial,
     "surveys",
