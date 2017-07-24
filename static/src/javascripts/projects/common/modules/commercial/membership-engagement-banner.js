@@ -1,7 +1,7 @@
 // @flow
 import config from 'lib/config';
 import { local } from 'lib/storage';
-import Message from 'common/modules/ui/message';
+import { Message } from 'common/modules/ui/message';
 import { commercialFeatures } from 'commercial/modules/commercial-features';
 import mediator from 'lib/mediator';
 import { testCanBeRun } from 'common/modules/experiments/test-can-run-checks';
