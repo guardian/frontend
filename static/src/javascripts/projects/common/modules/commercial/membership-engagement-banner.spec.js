@@ -75,19 +75,6 @@ const fakeConstructQuery: any = require('lib/url').constructQuery;
 const fakeInlineSvg: any = require('common/views/svgs').inlineSvg;
 
 beforeEach(() => {
-    if (document.body) {
-        document.body.innerHTML = `
-            <div id="header" class="l-header"></div>
-            <div class="js-site-message is-hidden">
-                <div class="js-site-message-copy">...</div>
-                <button class="site-message__close"></button>
-            </div>
-            <div class="site-message--footer is-hidden js-footer-message">
-                <div class="site-message__copy js-footer-site-message-copy u-cf"></div>
-            </div>
-        `;
-    }
-
     FakeMessage.mockReset();
     FakeMessage.prototype.show = jest.fn();
 });
