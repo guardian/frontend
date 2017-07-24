@@ -45,11 +45,19 @@ class JavascriptRenderer(javascriptFilePath: String) {
         |var global = global || this, self = self || this, window = window || this;
         |
         |var console = {};
-        |console.debug = print
-        |console.warn = print
-        |console.error = print
-        |console.log = print
-        |console.trace = print
+        |
+        |var logger = function(type) {
+        |  return function () {
+        |    for (var i = 0, len = arguments.length; i < len; i++) {
+        |      __play_webpack_logger[type](arguments[i]);
+        |    }
+        |  }
+        |};
+        |console.debug = logger("debug");
+        |console.warn = logger("warn");
+        |console.error = logger("error");
+        |console.log = logger("info");
+        |console.trace = logger("trace");
         |
         |global.setTimeout = function(fn, delay) {
         |  return __play_webpack_setTimeout.apply(fn, delay || 0);

@@ -3,7 +3,7 @@ package uiComponent.core
 import java.io.Reader
 import javax.script._
 
-import jdk.nashorn.api.scripting.JSObject
+import jdk.nashorn.api.scripting.{JSObject, NashornScriptEngineFactory}
 
 import scala.util.Try
 
@@ -11,7 +11,7 @@ object JavascriptEngine {
 
   type EvalResult = JSObject
 
-  private val shared: ScriptEngine = new ScriptEngineManager(null).getEngineByName("nashorn")
+  private val shared: ScriptEngine = new NashornScriptEngineFactory().getScriptEngine()
 
   def put(name: String, value: Object)(implicit context: SimpleScriptContext): Try[Unit] =
     Try(context.getBindings(ScriptContext.ENGINE_SCOPE).put(name, value))

@@ -4,6 +4,7 @@ import { catchErrorsWithContext } from 'lib/robust';
 import { markTime } from 'lib/user-timing';
 import reportError from 'lib/report-error';
 import highMerch from 'commercial/modules/high-merch';
+import { carrotSlotInit } from 'commercial/modules/carrot-slot';
 import { articleAsideAdvertsInit } from 'commercial/modules/article-aside-adverts';
 import { articleBodyAdvertsInit } from 'commercial/modules/article-body-adverts';
 import { closeDisabledSlots } from 'commercial/modules/close-disabled-slots';
@@ -44,6 +45,7 @@ if (!commercialFeatures.adFree) {
         ['cm-prepare-sonobi-tag', prepareSonobiTag.init, true],
         ['cm-prepare-switch-tag', prepareSwitchTag.init, true],
         ['cm-articleAsideAdverts', articleAsideAdvertsInit, true],
+        ['cm-carrotSlot', carrotSlotInit, true],
         ['cm-articleBodyAdverts', articleBodyAdvertsInit],
         ['cm-liveblogAdverts', initLiveblogAdverts, true],
         ['cm-stickyTopBanner', initStickyTopBanner]

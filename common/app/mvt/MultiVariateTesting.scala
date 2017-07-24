@@ -32,7 +32,7 @@ object ABNewDesktopHeaderVariant extends TestDefinition(
   name = "ab-new-desktop-header-variant",
   description = "Users in this test will see the new desktop design.",
   owners = Seq(Owner.withGithub("natalialkb"), Owner.withGithub("gustavpursche")),
-  sellByDate = new LocalDate(2017, 7, 25)
+  sellByDate = new LocalDate(2017, 8, 24)
 ) {
 
   def participationGroup(implicit request: RequestHeader): Option[String] = request.headers.get("X-GU-ab-new-desktop-header")
@@ -44,7 +44,7 @@ object ABNewDesktopHeaderControl extends TestDefinition(
   name = "ab-new-desktop-header-control",
   description = "Users in this test will not see the new desktop design, but act as a control group",
   owners = Seq(Owner.withGithub("natalialkb"), Owner.withGithub("gustavpursche")),
-  sellByDate = new LocalDate(2017, 7, 25)
+  sellByDate = new LocalDate(2017, 8, 24)
 ) {
 
   def participationGroup(implicit request: RequestHeader): Option[String] = request.headers.get("X-GU-ab-new-desktop-header")

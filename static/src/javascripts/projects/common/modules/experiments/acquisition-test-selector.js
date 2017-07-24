@@ -6,7 +6,7 @@ import {
 } from 'common/modules/experiments/utils';
 import { testCanBeRun } from 'common/modules/experiments/test-can-run-checks';
 import { viewsInPreviousDays } from 'common/modules/commercial/acquisitions-view-log';
-import alwaysAsk from 'common/modules/experiments/tests/contributions-epic-always-ask-strategy';
+import { alwaysAsk } from 'common/modules/experiments/tests/contributions-epic-always-ask-strategy';
 import bundlePriceTest1 from 'common/modules/experiments/tests/bundle-digital-sub-price-test-1';
 import askFourEarning from 'common/modules/experiments/tests/contributions-epic-ask-four-earning';
 import { acquisitionsEpicLiveblog } from 'common/modules/experiments/tests/acquisitions-epic-liveblog';
