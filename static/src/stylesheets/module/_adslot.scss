@@ -414,11 +414,6 @@
     padding: 0;
     margin: 0;
 
-    &.ad-slot--carrot {
-        min-height: 0;
-        margin-bottom: 16px;
-    }
-
     &:not(.ad-slot--im) {
         width: auto;
     }
@@ -441,6 +436,12 @@
             margin-right: -$gs-gutter;
         }
     }
+}
+
+.ad-slot--carrot {
+    min-height: 0;
+    padding: 0;
+    margin-bottom: 16px
 }
 
 .ad-slot--fabric-v1 {
