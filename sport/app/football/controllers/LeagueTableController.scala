@@ -36,6 +36,7 @@ class LeagueTableController(val competitionsService: CompetitionsService)(implic
         "Champions League qualifying",
         "Europa League",
         "Champions League",
+        "Women's Euro 2017",
         "FA Cup",
         "EFL Cup",
         "Community Shield",
