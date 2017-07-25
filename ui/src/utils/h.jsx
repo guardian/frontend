@@ -13,7 +13,17 @@ export default (
     attributes: ?Object,
     ...children: Array<any>
 ) => {
-    const { style, ...otherAttributes } = attributes || {};
-    if (style) return preact_h(styled(nodeName, style), otherAttributes, children);
+    const { style, 'style-root': styleRoot, ...otherAttributes } =
+        attributes || {};
+
+    if (styleRoot) {
+        otherAttributes.className = [otherAttributes.className, 'reset']
+            .filter(Boolean)
+            .join(' ');
+    }
+
+    if (style) {
+        return preact_h(styled(nodeName, style), otherAttributes, children);
+    }
     return preact_h(nodeName, otherAttributes, children);
 };
