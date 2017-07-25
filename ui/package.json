@@ -81,9 +81,6 @@
             "<rootDir>/src/app",
             "node_modules"
         ],
-        "moduleNameMapper": {
-          "^(.*)\\.scss$": "<rootDir>/__mocks__/scss.js"
-        },
         "globals": {
             "BROWSER": false,
             "SERVER": true
