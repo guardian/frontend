@@ -42,8 +42,6 @@ class FixturesAndResults(competitions: Competitions) extends Football {
 
   def makeContainer(tagId: String)(implicit request: RequestHeader, context: ApplicationContext) = {
 
-    lazy val adFree = request.isAdFree
-
     (for {
       teamId <- TeamMap.findTeamIdByUrlName(tagId)
       teamName <- teamNameBuilder.withId(teamId)
@@ -110,7 +108,7 @@ class FixturesAndResults(competitions: Competitions) extends Football {
           containerLayout = Some(layout),
           showDateHeader = false,
           showLatestUpdate = false,
-          commercialOptions = ContainerCommercialOptions(omitMPU = false, adFree = adFree),
+          commercialOptions = ContainerCommercialOptions(omitMPU = false, adFree = request.isAdFree),
           customHeader = None,
           customClasses = Some(Seq("fc-container--tag")),
           hideToggle = true,
