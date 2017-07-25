@@ -1,0 +1,81 @@
+/* reset browser defaults */
+
+a,abbr,acronym,address,applet,article,aside,audio,b,big,blockquote,body,canvas,caption,center,cite,code,dd,del,details,dfn,div,dl,dt,em,embed,fieldset,figcaption,figure,footer,form,h1,h2,h3,h4,h5,h6,header,hgroup,html,i,iframe,img,ins,kbd,label,legend,li,main,mark,menu,nav,object,ol,output,p,pre,q,ruby,s,samp,section,small,span,strike,strong,sub,summary,sup,table,tbody,td,tfoot,th,thead,time,tr,tt,u,ul,var,video {
+    border: 0;
+    font: inherit;
+    margin: 0;
+    padding: 0;
+    vertical-align: baseline;
+}
+article,aside,details,figcaption,figure,footer,header,hgroup,main,menu,nav,section {
+    display: block;
+}
+body {
+    line-height: 1;
+}
+ol,ul {
+    list-style: none;
+}
+blockquote,q {
+    quotes: none;
+}
+blockquote:after,blockquote:before,q:after,q:before {
+    content: '';
+    content: none;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+html {
+    box-sizing: border-box;
+}
+*,:after,:before {
+    box-sizing: inherit;
+}
+
+/* utility class to reset all inheritable properties */
+
+.reset {
+    azimuth: center;
+    border-collapse: initial;
+    border-spacing: separate;
+    caption-side: top;
+    color: #333;
+    cursor: auto;
+    direction: ltr;
+    elevation: level;
+    empty-cells: show;
+    font: Georgia, serif;
+    font-family: Georgia, serif;
+    font-size: 1rem;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: normal;
+    letter-spacing: normal;
+    line-height: normal;
+    list-style: none;
+    list-style-image: none;
+    list-style-position: outside;
+    list-style-type: disc;
+    orphans: 2;
+    pitch: medium;
+    pitch-range: 50;
+    quotes: initial;
+    richness: 50;
+    speak: normal;
+    speak-header: once;
+    speak-numeral: continuous;
+    speak-punctuation: none;
+    speech-rate: medium;
+    stress: 50;
+    text-align: left;
+    text-indent: 0;
+    text-transform: none;
+    visibility: visible;
+    voice-family: initial;
+    volume: medium;
+    white-space: normal;
+    widows: 2;
+    word-spacing: normal;
+}
