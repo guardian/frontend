@@ -62,6 +62,14 @@ const adSlotDefinitions = {
             ],
         },
     },
+    carrot: {
+        label: false,
+        refresh: false,
+        name: 'carrot',
+        sizeMappings: {
+            mobile: [adSizes.fluid],
+        },
+    },
     inline: inlineDefinition,
     mostpop: inlineDefinition,
     comments: inlineDefinition,

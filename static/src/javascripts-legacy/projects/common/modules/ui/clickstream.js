@@ -26,7 +26,7 @@ define([
                     host;
 
                 url = url || '';
-                urlHost = url.match(/:\/\/(.[^\/]+)/);
+                urlHost = url.match(/:\/\/(.[^/]+)/);
 
                 if (urlHost) {
                     urlHost = urlHost[1];

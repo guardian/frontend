@@ -5,7 +5,7 @@ import { getCookie, addCookie } from 'lib/cookies';
 import { isIOS, isAndroid, getBreakpoint, getUserAgent } from 'lib/detect';
 import template from 'lodash/utilities/template';
 import { loadCssPromise } from 'lib/load-css-promise';
-import Message from 'common/modules/ui/message';
+import { Message } from 'common/modules/ui/message';
 import config from 'lib/config';
 
 /**

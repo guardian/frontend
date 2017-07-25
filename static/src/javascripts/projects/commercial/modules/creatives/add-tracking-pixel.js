@@ -1,4 +1,6 @@
 // @flow
-const addTrackingPixel = (url: string): string => (new Image().src = url);
+const addTrackingPixel = (url: string): void => {
+    new Image().src = url;
+};
 
 export { addTrackingPixel };
