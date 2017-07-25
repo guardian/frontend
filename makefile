@@ -17,7 +17,7 @@ list: # PRIVATE
 
 # Install all 3rd party dependencies.
 install: check-node check-yarn
-	@yarn install -s
+	@yarn install
 
 # Remove all 3rd party dependencies.
 uninstall: # PRIVATE
@@ -125,13 +125,3 @@ screenshots: install
 
 es6: install
 	@node ./tools/es5to6.js ${file}
-
-
-
-# *********************** UI ***********************
-
-ui-compile:
-	@cd ui && yarn compile -s
-
-ui-watch:
-	@cd ui && yarn watch -s
