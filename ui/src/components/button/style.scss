@@ -1,0 +1,8 @@
+button {
+    font-size: 15px;
+    background-color: lighten(green, 20%);
+
+    @include mq($from: mobile, $until: tablet) {
+        background: red;
+    }
+}
