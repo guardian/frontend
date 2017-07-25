@@ -13,6 +13,7 @@ import common.Seqs._
 import org.joda.time.LocalDate
 import football.views.html.matchList.matchesComponent
 import football.views.html.tablesList.tablesComponent
+import implicits.Requests._
 
 class CompetitionAndGroupFinder(competitions: Competitions) {
   def windowed(group: Group, teamId: String) = {
@@ -107,7 +108,7 @@ class FixturesAndResults(competitions: Competitions) extends Football {
           containerLayout = Some(layout),
           showDateHeader = false,
           showLatestUpdate = false,
-          commercialOptions = ContainerCommercialOptions(omitMPU = false),
+          commercialOptions = ContainerCommercialOptions(omitMPU = false, adFree = request.isAdFree),
           customHeader = None,
           customClasses = Some(Seq("fc-container--tag")),
           hideToggle = true,
