@@ -17,9 +17,10 @@ export default (
         attributes || {};
 
     if (styleRoot) {
-        otherAttributes.className = [otherAttributes.className, 'reset']
-            .filter(Boolean)
-            .join(' ');
+        otherAttributes.className = [
+            otherAttributes.className || '',
+            'reset',
+        ].join(' ');
     }
 
     if (style) {
