@@ -1,8 +1,14 @@
 // @flow
 
 import test from 'utils/test-render';
-import fourOhFour from '.';
+import FourOhFour from './index';
+
+jest.mock('./style.scss', () => ({
+    message: {
+        color: 'hotpink',
+    },
+}));
 
 describe('404', () => {
-    test(<fourOhFour />);
+    test(<FourOhFour />);
 });
