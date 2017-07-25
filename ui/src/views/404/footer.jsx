@@ -1,7 +1,9 @@
 // @flow
 
+import styles from './style.scss';
+
 export default () =>
-    <div className="footer zone-border zone-border-medium margin-top">
+    <div style={styles.footer}>
         <ul className="inline with-separators">
             <li><a href="/help">Help</a></li>
             <li><a href="/help/contact-us">Contact us</a></li>
