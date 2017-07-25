@@ -134,10 +134,10 @@ describe('history', () => {
     it('should increment a count in the summary, for the 1st value from each of various page metadata', () => {
         logSummary(pageConfig);
 
-        /* eslint-disable dot-notation*/
+        /* eslint-disable dot-notation */
         expect(_.getSummary().tags['foobar'][0]).toEqual('Foobar Section');
         expect(_.getSummary().tags['foobar'][1][0][1]).toEqual(1);
-        /* eslint-enable dot-notation*/
+        /* eslint-enable dot-notation */
 
         expect(_.getSummary().tags['foo/bar'][0]).toEqual('Foobar Tag');
         expect(_.getSummary().tags['foo/bar'][1][0][1]).toEqual(1);
@@ -159,14 +159,14 @@ describe('history', () => {
         logSummary(pageConfig);
         logSummary(pageConfig);
 
-        /* eslint-disable dot-notation*/
+        /* eslint-disable dot-notation */
         expect(_.getSummary().tags['foobar'][0]).toEqual('Foobar Section');
         expect(_.getSummary().tags['foobar'][1][0][1]).toEqual(3);
-        /* eslint-enable dot-notation*/
+        /* eslint-enable dot-notation */
     });
 
     it('should age the data points in the the summary', () => {
-        /* eslint-disable dot-notation*/
+        /* eslint-disable dot-notation */
         expect(
             _.pruneSummary({
                 periodEnd: today,
@@ -180,18 +180,18 @@ describe('history', () => {
                 tags: { foo: ['Foo', [[0, 1]]] },
             }).tags['foo'][1][0][0]
         ).toEqual(5);
-        /* eslint-enable dot-notation*/
+        /* eslint-enable dot-notation */
     });
 
     it('should drop the obsoleted data points from the summary', () => {
-        /* eslint-disable dot-notation*/
+        /* eslint-disable dot-notation */
         expect(
             _.pruneSummary({
                 periodEnd: today - 500,
                 tags: { foo: ['Foo', [[0, 1]]] },
             }).tags['foo']
         ).toBeUndefined();
-        /* eslint-enable dot-notation*/
+        /* eslint-enable dot-notation */
     });
 
     it('should return equally visited items in last-in-first-out order', () => {
