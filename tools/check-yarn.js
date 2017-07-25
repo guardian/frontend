@@ -18,7 +18,7 @@ new Promise(resolve => {
         resolve();
     } catch (e) {
         childProcess
-            .spawn('npm', ['i', 'semver'], {
+            .spawn('npm', ['i', 'semver', '--no-save'], {
                 stdio: 'inherit',
             })
             .on('close', code => {
