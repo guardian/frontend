@@ -74,7 +74,6 @@ class CommercialFeatures {
 
         this.carrotSlot =
             this.articleBodyAdverts &&
-            switches.carrotSlot &&
             getTestVariantId('CarrotSlot') === 'opt-in';
 
         this.articleAsideAdverts =
