@@ -1,3 +1,5 @@
+// returns pasteup.js a set of sass vars
+
 const path = require('path');
 const { ui } = require('../__config__/paths');
 
@@ -15,7 +17,7 @@ require('babel-register')({
 });
 
 // eslint-disable-next-line import/no-dynamic-require
-const pasteUpSass = require(path.resolve(ui, 'src', 'pasteup'));
+const pasteup = require(path.resolve(ui, 'src', 'pasteup'));
 
 const toSass = (vars, prefix = false) =>
     Object.keys(vars).reduce((sass, key) => {
@@ -26,4 +28,4 @@ const toSass = (vars, prefix = false) =>
         return `${sass} $${varName}: ${vars[key]};`.trim();
     }, '');
 
-module.exports = toSass(pasteUpSass);
+module.exports = toSass(pasteup);
