@@ -86,11 +86,17 @@ class Advert {
 
         this.whenLoaded = new Promise(resolve => {
             this.whenLoadedResolver = resolve;
-        }).then((isLoaded: boolean) => (this.isLoaded = isLoaded));
+        }).then((isLoaded: boolean): boolean => {
+            this.isLoaded = isLoaded;
+            return isLoaded;
+        });
 
         this.whenRendered = new Promise(resolve => {
             this.whenRenderedResolver = resolve;
-        }).then((isRendered: boolean) => (this.isRendered = isRendered));
+        }).then((isRendered: boolean): boolean => {
+            this.isRendered = isRendered;
+            return isRendered;
+        });
 
         updateAdvertMetric(this, 'createTime', getCurrentTime());
     }
