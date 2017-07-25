@@ -62,6 +62,7 @@
         "flow-bin": "^0.50.0",
         "gzip-size-cli": "^2.0.0",
         "htmltojsx": "^0.2.6",
+        "jest": "^20.0.4",
         "node-sass": "^4.5.3",
         "preact-svg-loader": "^0.2.0",
         "prettier": "^1.5.3",
@@ -80,6 +81,9 @@
             "<rootDir>/src/app",
             "node_modules"
         ],
+        "moduleNameMapper": {
+          "^(.*)\\.scss$": "<rootDir>/__mocks__/scss.js"
+        },
         "globals": {
             "BROWSER": false,
             "SERVER": true
