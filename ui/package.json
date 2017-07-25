@@ -81,6 +81,9 @@
             "<rootDir>/src/app",
             "node_modules"
         ],
+        "moduleNameMapper": {
+          "^(.*)\\.svg$": "<rootDir>/__mocks__/svg.js"
+        },
         "globals": {
             "BROWSER": false,
             "SERVER": true
