@@ -1,4 +1,8 @@
 // @flow
+
+// these are also available in sass as sass-like variables:
+// e.g. a.b.c => $a-b-c
+
 export const font = {
     size: {
         small: '12px',
