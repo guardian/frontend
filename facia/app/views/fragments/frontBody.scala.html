@@ -2,6 +2,7 @@
 @import common.commercial.ContainerModel
 @import views.support.RenderClasses
 @import views.support.Commercial.container.isFirstNonThrasherContainer
+@import implicits.Requests._
 
 @(faciaPage: model.PressedPage)(implicit request: RequestHeader, context: model.ApplicationContext)
 
@@ -24,7 +25,7 @@
                 @fragments.guBand()
             }
 
-                @defining(layout.Front.fromPressedPage(faciaPage, Edition(request), adFree = request.headers.keys.exists(_ equalsIgnoreCase "X-Gu-Commercial-Ad-Free")).containers) { collections =>
+                @defining(layout.Front.fromPressedPage(faciaPage, Edition(request), adFree = request.isAdFree).containers) { collections =>
 
                     @collections.map { containerDefinition =>
                         @fragments.containers.facia_cards.container(

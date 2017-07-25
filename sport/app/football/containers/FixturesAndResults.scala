@@ -13,6 +13,7 @@ import common.Seqs._
 import org.joda.time.LocalDate
 import football.views.html.matchList.matchesComponent
 import football.views.html.tablesList.tablesComponent
+import implicits.Requests._
 
 class CompetitionAndGroupFinder(competitions: Competitions) {
   def windowed(group: Group, teamId: String) = {
@@ -41,7 +42,7 @@ class FixturesAndResults(competitions: Competitions) extends Football {
 
   def makeContainer(tagId: String)(implicit request: RequestHeader, context: ApplicationContext) = {
 
-    lazy val adFree = request.headers.keys.exists(_ equalsIgnoreCase "X-Gu-Commercial-Ad-Free")
+    lazy val adFree = request.isAdFree
 
     (for {
       teamId <- TeamMap.findTeamIdByUrlName(tagId)
