@@ -2,10 +2,10 @@
 import fakeMediator from 'lib/mediator';
 import fakeConfig from 'lib/config';
 import fakeOphan from 'ophan/ng';
-import { commercialFeatures } from 'commercial/modules/commercial-features';
-import { membershipEngagementBannerInit } from 'common/modules/commercial/membership-engagement-banner';
+import { commercialFeatures as fakeCommercialFeatures } from 'commercial/modules/commercial-features';
 import fakeMembershipEngagementParameters from 'common/modules/commercial/membership-engagement-banner-parameters';
 import fakeMembershipEngagementTests from 'common/modules/experiments/tests/membership-engagement-banner-tests';
+import { membershipEngagementBannerInit } from 'common/modules/commercial/membership-engagement-banner';
 
 jest.mock('lib/mediator');
 jest.mock('lib/storage', () => ({
@@ -137,13 +137,13 @@ describe('Membership engagement banner', () => {
 
     describe('If user already member', () => {
         beforeEach(() => {
-            commercialFeatures.asynchronous.canDisplayMembershipEngagementBanner = Promise.resolve(
+            fakeCommercialFeatures.asynchronous.canDisplayMembershipEngagementBanner = Promise.resolve(
                 false
             );
         });
 
         afterEach(() => {
-            commercialFeatures.asynchronous.canDisplayMembershipEngagementBanner = Promise.resolve(
+            fakeCommercialFeatures.asynchronous.canDisplayMembershipEngagementBanner = Promise.resolve(
                 true
             );
         });
