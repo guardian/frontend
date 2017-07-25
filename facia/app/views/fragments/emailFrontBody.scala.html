@@ -3,7 +3,6 @@
 @import layout.{EmailContentContainer, LiveIntentMarquee, LiveIntentMPU, LiveIntentSafeRTB}
 @(page: model.PressedPage)(implicit request: RequestHeader)
 
-@import com.gu.facia.client.models.Branded
 @import com.gu.commercial.branding.Branding
 @import implicits.ItemKickerImplicits._
 @import layout.ContentCard
@@ -11,7 +10,6 @@
 @import model.pressed.{ExternalLink, Feature}
 @import views.support.EmailHelpers.{icon, imgFromCard, imgForFront, classesForCard}
 @import views.support.RemoveOuterParaHtml
-@import views.support.TrailCssClasses.toneClassFromStyle
 @import fragments.email._
 
 @headline(card: ContentCard, isLarge: Boolean = false, isLast: Boolean) = {
@@ -90,8 +88,8 @@
 @faciaCardWithoutTrailText(card: ContentCard, withImage: Boolean, largeHeadline: Boolean, isBranded: Boolean) = {
     @imgFromCard(card, 5).filter(_ => withImage).fold {
         @faciaCard(classesForCard(card), isBranded) {
-                @headline(card, largeHeadline, isLast = true)
-            }
+            @headline(card, largeHeadline, isLast = true)
+        }
     } { img =>
         @faciaCard(classesForCard(card), isBranded) {
             <tr valign="top">

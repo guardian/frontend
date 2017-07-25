@@ -175,6 +175,8 @@ $email-tones: (
     border-top: 1px solid #46bcdf;
 }
 
+
+// branded containers for PaidFor content
 .ct-branded {
     padding: 13px 0 12px;
 
@@ -189,6 +191,11 @@ $email-tones: (
     }
 }
 
+.fc__margin--branded {
+    padding-top: 0;
+}
+
+// branded banner for PaidFor content
 .branded-banner {
     background-color: #dadada;
     width: 100%;
@@ -219,11 +226,7 @@ $email-tones: (
     }
 }
 
-.fc__margin--branded {
-    // background-color: #dadada;
-    padding-top: 0;
-}
-
+// tone overrides for PaidFor content
 .tone-branded {
     border-top-color: #69d1ca;
     background-color: #f6f6f6;
