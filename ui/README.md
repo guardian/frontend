@@ -25,6 +25,18 @@ This will create the following files:
 
 ## Howtos
 
+### Reset the style for a component
+
+If your component should ignore it's parent's styling – for example, a generic button component – you can add a `style-root` attribute to any JSX element to prevent all inheritable CSS properties being passed down to it (and thus its children).
+
+```jsx
+<p style={{ color: 'red', cursor: 'progress' }}>
+    some red text with an hourglass cursor
+    <span style-root>default colour text with default cursor</span>
+</p>
+
+```
+
 ### Use an SVG
 
 Import the SVG as normal.
