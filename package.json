@@ -53,6 +53,7 @@
     "chokidar": "^1.7.0",
     "cp-file": "^4.2.0",
     "cpy": "^5.0.0",
+    "css-loader": "^0.28.4",
     "cssstats": "^3.0.0",
     "eslint": "^4.3.0",
     "eslint-config-airbnb": "^15.1.0",
