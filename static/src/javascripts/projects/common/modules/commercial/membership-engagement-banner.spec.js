@@ -1,6 +1,7 @@
 // @flow
 import fakeMediator from 'lib/mediator';
 import fakeConfig from 'lib/config';
+import fakeOphan from 'ophan/ng';
 import { commercialFeatures } from 'commercial/modules/commercial-features';
 import { membershipEngagementBannerInit } from 'common/modules/commercial/membership-engagement-banner';
 import fakeMembershipEngagementParameters from 'common/modules/commercial/membership-engagement-banner-parameters';
@@ -76,25 +77,61 @@ const fakeInlineSvg: any = require('common/views/svgs').inlineSvg;
 
 beforeEach(() => {
     FakeMessage.mockReset();
-    FakeMessage.prototype.show = jest.fn();
+    FakeMessage.prototype.show = jest.fn(() => true);
 });
 afterEach(() => {
     FakeMessage.prototype.show.mockRestore();
     fakeMediator.removeAllListeners();
+    fakeOphan.record.mockReset();
 });
 
 describe('Membership engagement banner', () => {
-    describe('If breaking news banner', () => {
-        it('has shown, should not show the membership engagement banner', () =>
+    describe('If breaking news banner has show', () => {
+        it('should not show the membership engagement banner', () =>
             membershipEngagementBannerInit().then(() => {
                 fakeMediator.emit('modules:onwards:breaking-news:ready', true);
                 expect(FakeMessage.prototype.show).not.toHaveBeenCalled();
             }));
+    });
 
-        it('has not shown, should show the membership engagement banner', () =>
-            membershipEngagementBannerInit().then(() => {
+    describe('If breaking news banner has not shown', () => {
+        const fakeInteraction = {
+            component: 'fake-interaction-component',
+            value: 'fake-interaction-value',
+        };
+        let showBanner;
+        let emitSpy;
+
+        beforeEach(() => {
+            fakeMembershipEngagementParameters.defaultParams.mockImplementationOnce(
+                () => ({
+                    minArticles: 1,
+                    colourStrategy: jest.fn(() => 'fake-colour-class'),
+                    interactionOnMessageShow: fakeInteraction,
+                })
+            );
+            emitSpy = jest.spyOn(fakeMediator, 'emit');
+            showBanner = membershipEngagementBannerInit().then(() => {
                 fakeMediator.emit('modules:onwards:breaking-news:ready', false);
+            });
+        });
+        afterEach(() => {
+            emitSpy.mockRestore();
+        });
+
+        it('should show the membership engagement banner', () =>
+            showBanner.then(() => {
                 expect(FakeMessage.prototype.show).toHaveBeenCalledTimes(1);
+            }));
+        it('should emit a display event', () =>
+            showBanner.then(() => {
+                expect(emitSpy).toHaveBeenCalledWith(
+                    'membership-message:display'
+                );
+            }));
+        it('should record the interaction in ophan', () =>
+            showBanner.then(() => {
+                expect(fakeOphan.record).toHaveBeenCalledWith(fakeInteraction);
             }));
     });
 
