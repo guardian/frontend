@@ -29,7 +29,7 @@ import scala.util.{Failure, Success, Try}
 
   "Sending rendering message" should "return a string" in {
     val component = new UIComponent {
-      override def asJson: Option[JsValue] = Some(Json.obj("title" -> "my title"))
+      override def props: Option[JsValue] = Some(Json.obj("title" -> "my title"))
     }
     val f = (actor ? Rendering(component, testContext)).mapTo[Try[String]]
     Await.result(f, timeout.duration) match {

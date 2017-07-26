@@ -15,7 +15,7 @@ class RenderingActor extends Actor with JavascriptRendering {
 
   override def receive: Receive = {
     case Rendering(component, appContext) =>
-      sender ! render(component.asJson)(appContext)
+      sender ! render(component.props)(appContext)
     case  _ =>
       sender ! Try(throw new RenderingException("RenderingActor received an unknown message"))
   }
