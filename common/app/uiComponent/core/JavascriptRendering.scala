@@ -17,7 +17,7 @@ trait JavascriptRendering extends Logging {
   def javascriptFile: String
 
   private implicit val scriptContext = createContext()
-  private lazy val memoizedJs: Try[EvalResult] = loadJavascript()
+  private val memoizedJs: Try[EvalResult] = loadJavascript()
 
   def render(props: Option[JsValue] = None)(implicit ac: ApplicationContext): Try[String] = for {
     propsObject <- encodeProps(props)
