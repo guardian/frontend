@@ -181,23 +181,24 @@ $email-tones: (
     padding: 13px 0 12px;
 
     .ct__margin {
-        padding: 12px 0 0;
+        padding-bottom: 0;
         background-color: #ffffff;
     }
 
     .ct__inner {
-        border-top-color: #69d1ca;
-        background-color: #dadada;
+        border-top-color: $paid-article-brand;
+        background-color: $paid-article;
     }
 }
 
 .fc__margin--branded {
     padding-top: 0;
+    background-color: $paid-article;
 }
 
 // branded banner for PaidFor content
 .branded-banner {
-    background-color: #dadada;
+    background-color: $paid-article;
     width: 100%;
 }
 
@@ -206,15 +207,12 @@ $email-tones: (
     height: 70px;
 }
 
-.bb__padding {
-    width: 60%;
-}
-
 .bb__label {
     font-family: Helvetica, Arial, sans-serif;
     font-size: 12px;
     width: 15%;
-    color: #757575;
+    color: $paid-card-kicker;
+    text-align: right;
 }
 
 .bb__logo {
@@ -222,21 +220,25 @@ $email-tones: (
     padding: 0 6px 6px;
 
     img {
+        margin-left: auto;
+        margin-right: 0;
         max-height: 70px;
     }
 }
 
 // tone overrides for PaidFor content
 .tone-branded {
-    border-top-color: #69d1ca;
-    background-color: #f6f6f6;
+    border-top-color: $paid-article-brand;
+    background-color: $paid-article-card-bg;
 
     .trail-text a {
-        color: #333333;
+        color: $neutral-1;
+        font-family: Helvetica, Arial, sans-serif;
     }
 
     .headline a {
-        color: #333333;
+        color: $neutral-1;
+        font-family: Helvetica, Arial, sans-serif;
     }
 }
 
