@@ -50,6 +50,7 @@
         "concurrently": "^3.5.0",
         "core-js": "^2.4.1",
         "coveralls": "^2.13.0",
+        "css-loader": "^0.28.4",
         "eslint": "^4.3.0",
         "eslint-config-airbnb": "^15.1.0",
         "eslint-config-prettier": "^2.3.0",
@@ -82,7 +83,7 @@
             "node_modules"
         ],
         "moduleNameMapper": {
-          "^(.*)\\.svg$": "<rootDir>/__mocks__/svg.js"
+            "^(.*)\\.svg$": "<rootDir>/__mocks__/svg.js"
         },
         "globals": {
             "BROWSER": false,
