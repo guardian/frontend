@@ -1,7 +1,7 @@
-package uiComponent
+package rendering
 
 import play.api.libs.json.JsValue
 
-object TestComponent extends UIComponent {
+object TestComponent extends Renderable {
   override def props: Option[JsValue] = None
 }

@@ -1,4 +1,4 @@
-package uiComponent.core
+package rendering.core
 
 import akka.actor.{ActorSystem, Props}
 import akka.pattern.ask
@@ -7,7 +7,7 @@ import helpers.ExceptionMatcher
 import org.scalatest.{DoNotDiscover, FlatSpec, Matchers}
 import play.api.libs.json.{JsValue, Json}
 import test.{ConfiguredTestSuite, WithTestContext}
-import uiComponent.UIComponent
+import rendering.Renderable
 
 import scala.concurrent.Await
 import scala.concurrent.duration._
@@ -30,7 +30,7 @@ import scala.util.{Failure, Success, Try}
   lazy val actor = actorSystem.actorOf(Props(new TestRenderingActor))
 
   "Sending rendering message" should "return a string" in {
-    val component = new UIComponent {
+    val component = new Renderable {
       override def props: Option[JsValue] = Some(Json.obj("title" -> "my title"))
     }
     val f = (actor ? Rendering(component, testContext)).mapTo[Try[String]]

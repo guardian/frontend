@@ -1,8 +1,8 @@
-package uiComponent
+package rendering
 
 import play.api.libs.json.JsValue
 
-trait UIComponent {
+trait Renderable {
   def props: Option[JsValue]
 }
 

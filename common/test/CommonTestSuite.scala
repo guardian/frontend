@@ -2,7 +2,7 @@ package test
 
 import conf.CachedHealthCheckTest
 import org.scalatest.Suites
-import uiComponent.core.RenderingActorTest
+import rendering.core.RenderingActorTest
 
 class CommonTestSuite extends Suites (
   new CachedHealthCheckTest,

@@ -1,4 +1,4 @@
-package uiComponent.core
+package rendering.core
 
 import java.io._
 import java.nio.charset.StandardCharsets
@@ -8,7 +8,7 @@ import common.Logging
 import model.ApplicationContext
 import play.api.Mode
 import play.api.libs.json.{JsValue, Json}
-import uiComponent.core.JavascriptEngine.EvalResult
+import rendering.core.JavascriptEngine.EvalResult
 
 import scala.util.{Failure, Success, Try}
 

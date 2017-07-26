@@ -15,7 +15,7 @@ import play.api.mvc.EssentialFilter
 import play.api.routing.Router
 import services.{ArchiveMetrics, RedirectService}
 import router.Routes
-import uiComponent.core.Renderer
+import rendering.core.Renderer
 
 class AppLoader extends FrontendApplicationLoader {
   override def buildComponents(context: Context): FrontendComponents = new BuiltInComponentsFromContext(context) with AppComponents

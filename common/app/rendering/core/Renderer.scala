@@ -1,10 +1,10 @@
-package uiComponent.core
+package rendering.core
 
 import akka.actor.{ActorSystem, Props}
 import model.ApplicationContext
 import play.api.mvc.Result
 import play.api.mvc.Results._
-import uiComponent.UIComponent
+import rendering.Renderable
 import akka.pattern.ask
 import akka.util.Timeout
 import common.Logging
@@ -21,8 +21,8 @@ class Renderer(implicit actorSystem: ActorSystem, executionContext: ExecutionCon
   val timeoutValue: Int = if(ac.environment.mode == Mode.Dev) 10 else 1
   implicit val timeout = Timeout(timeoutValue.seconds)
 
-  def render[C <: UIComponent](component: C): Future[Result] = {
-    (actor ? Rendering(component, ac))
+  def render[R <: Renderable](renderable: R): Future[Result] = {
+    (actor ? Rendering(renderable, ac))
       .mapTo[Try[String]]
       .recover { case t => Try(throw t)}
       .map {
