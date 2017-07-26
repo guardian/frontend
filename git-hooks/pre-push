@@ -70,11 +70,17 @@ getCurrentBranchName().then(branch =>
         if (branches.includes(branch)) {
             // remote branch exists, validate files that have changed locally
             // compared to remote feature branch
-            return diffAgainstRemote(branch).then(validate);
+            return diffAgainstRemote(branch).then(validate).catch(e => {
+                                                                   console.log(`\n${e}\n`);
+                                                                   process.exit(1);
+                                                               });
         } else {
             // remote branch doesn't exist, validate files that have changed
             // compared to local master branch
-            return diffAgainstMaster().then(validate);
+            return diffAgainstMaster().then(validate).catch(e => {
+                                                             console.log(`\n${e}\n`);
+                                                             process.exit(1);
+                                                         });
         }
     }).catch(e => {
         console.log(`\n${e}\n`);
