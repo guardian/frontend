@@ -69,9 +69,9 @@
         "sass-loader": "^6.0.6",
         "styletron-loader": "^0.6.0",
         "svgo": "^0.7.2",
-        "webpack": "^3.3.0",
+        "webpack": "^3.4.1",
         "webpack-bundle-analyzer": "^2.8.3",
-        "webpack-dev-server": "^2.5.1",
+        "webpack-dev-server": "^2.6.1",
         "webpack-hot-middleware": "^2.18.2",
         "webpack-merge": "^4.1.0"
     },
