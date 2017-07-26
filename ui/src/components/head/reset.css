@@ -34,7 +34,7 @@ html {
     box-sizing: inherit;
 }
 
-/* utility class to reset all inheritable properties */
+/* reset all inheritable properties */
 
 .reset {
     azimuth: center;
