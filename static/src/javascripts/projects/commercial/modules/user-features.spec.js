@@ -34,11 +34,13 @@ const setAllFeaturesData = opts => {
     const expiryDate = opts.isExpired
         ? new Date(currentTime - msInOneDay)
         : new Date(currentTime + msInOneDay);
-
+    const adFreeExpiryDate = opts.isExpired
+        ? new Date(currentTime - msInOneDay * 2)
+        : new Date(currentTime + msInOneDay * 2);
     addCookie(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE, 'true');
     addCookie(
         PERSISTENCE_KEYS.AD_FREE_USER_COOKIE,
-        expiryDate.getTime().toString()
+        adFreeExpiryDate.getTime().toString()
     );
     addCookie(
         PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE,
@@ -49,7 +51,7 @@ const setAllFeaturesData = opts => {
 const setExpiredAdFreeData = () => {
     const currentTime = new Date().getTime();
     const msInOneDay = 24 * 60 * 60 * 1000;
-    const expiryDate = new Date(currentTime - msInOneDay);
+    const expiryDate = new Date(currentTime - msInOneDay * 2);
     addCookie(
         PERSISTENCE_KEYS.AD_FREE_USER_COOKIE,
         expiryDate.getTime().toString()
@@ -222,6 +224,14 @@ describe('Storing new feature data', () => {
             expect(
                 getCookie(PERSISTENCE_KEYS.AD_FREE_USER_COOKIE)
             ).toBeTruthy();
+            expect(
+                isNaN(
+                    parseInt(
+                        getCookie(PERSISTENCE_KEYS.AD_FREE_USER_COOKIE),
+                        10
+                    )
+                )
+            ).toBe(false);
         });
     });
 
