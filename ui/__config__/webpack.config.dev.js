@@ -66,7 +66,7 @@ module.exports = env => {
                 port: 3000,
                 overlay: true,
                 proxy: {
-                    '/render/js': 'http://localhost:9000',
+                    '*': 'http://localhost:9000',
                 },
                 hot: true,
                 stats,
