@@ -137,8 +137,10 @@ const recordInteraction = (interaction: ?Interaction): void => {
     }
 };
 
+const getVisitCount = (): number => local.get('gu.alreadyVisited') || 0;
+
 const selectSequentiallyFrom = (array: Array<string>): string =>
-    array[local.get('gu.alreadyVisited') % array.length];
+    array[getVisitCount() % array.length];
 
 const showBanner = (params: Object): void => {
     if (isBlocked()) {
@@ -190,10 +192,7 @@ const membershipEngagementBannerInit = (): Promise<void> =>
     getGeoLocation().then(location => {
         const bannerParams = deriveBannerParams(location);
 
-        if (
-            bannerParams &&
-            (local.get('gu.alreadyVisited') || 0) >= bannerParams.minArticles
-        ) {
+        if (bannerParams && getVisitCount() >= bannerParams.minArticles) {
             return commercialFeatures.asynchronous.canDisplayMembershipEngagementBanner.then(
                 canShow => {
                     if (canShow) {
