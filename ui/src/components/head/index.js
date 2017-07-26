@@ -10,8 +10,7 @@ export default (props: any, css: string) =>
     `<head lang="en" data-page-path="/uk">
         <meta charset="utf-8"/>
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title>${props.page.headline} | ${props.page
-        .section} | The Guardian</title>
+        <title>Page not found | The Guardian</title>
         <meta name="description" content="">
         <meta name="format-detection" content="telephone=no"/>
         <meta name="HandheldFriendly" content="True"/>
