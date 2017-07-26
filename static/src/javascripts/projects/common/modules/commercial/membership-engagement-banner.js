@@ -16,8 +16,8 @@ import { get as getGeoLocation } from 'lib/geolocation';
 import { constructQuery } from 'lib/url';
 
 type Interaction = {
-    component: 'string',
-    value: 'string',
+    component: string,
+    value: string,
 };
 
 // change messageCode to force redisplay of the message to users who already closed it.
