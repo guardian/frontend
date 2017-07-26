@@ -73,6 +73,11 @@ class CommercialFeatures {
 
         this.carrotSlot =
             this.articleBodyAdverts &&
+            config.hasTone('Features') &&
+            !config.page.isPaidContent &&
+            ['sport', 'lifeandstyle', 'fashion', 'food', 'travel'].includes(
+                config.page.section
+            ) &&
             getTestVariantId('CarrotSlot') === 'opt-in';
 
         this.videoPreRolls = this.dfpAdvertising && !this.adFree;

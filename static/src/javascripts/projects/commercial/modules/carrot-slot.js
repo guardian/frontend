@@ -6,15 +6,15 @@ import { commercialFeatures } from 'commercial/modules/commercial-features';
 
 const carrotSlotInit = () => {
     if (commercialFeatures.carrotSlot) {
-        const anchorSelector = '.js-carrot';
-        const anchor = document.querySelector(anchorSelector);
+        const secondArticleParagraph = '.js-article__body p:nth-of-type(2)';
+        const anchor = document.querySelector(secondArticleParagraph);
 
         const slot = createSlot('carrot');
 
         return fastdom
             .write(() => {
                 if (anchor) {
-                    anchor.insertAdjacentElement('beforebegin', slot);
+                    anchor.insertAdjacentElement('beforeend', slot);
                 }
             })
             .then(() => {
