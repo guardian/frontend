@@ -121,7 +121,7 @@
     "stream-to-observable": "^0.2.0",
     "svgo": "^0.7.2",
     "uglify-js": "^2.7.4",
-    "webpack": "^3.3.0",
+    "webpack": "^3.4.1",
     "webpack-bundle-analyzer": "^2.8.2",
     "webpack-merge": "^4.1.0",
     "webpack-visualizer-plugin": "^0.1.11",
