@@ -12,7 +12,6 @@ import askFourEarning from 'common/modules/experiments/tests/contributions-epic-
 import { acquisitionsEpicLiveblog } from 'common/modules/experiments/tests/acquisitions-epic-liveblog';
 import acquisitionsEpicAlwaysAskIfTagged from 'common/modules/experiments/tests/acquisitions-epic-always-ask-if-tagged';
 import acquisitionsEpicAlwaysAskElection from 'common/modules/experiments/tests/acquisitions-epic-always-ask-election';
-import { acquisitionsEpicMultipleTestimonials } from 'common/modules/experiments/tests/acquisitions-epic-multiple-testimonials';
 import acquisitionsEpicThankYou from 'common/modules/experiments/tests/acquisitions-epic-thank-you';
 import acquisitionsThisLandSeries from 'common/modules/experiments/tests/acquisitions-this-land-series';
 import { acquisitionsEpicRebaselineSupportProposition } from 'common/modules/experiments/tests/acquisitions-epic-rebaseline-support-proposition';
@@ -25,7 +24,6 @@ const tests = [
     acquisitionsThisLandSeries,
     bundlePriceTest1,
     acquisitionsEpicRebaselineSupportProposition,
-    acquisitionsEpicMultipleTestimonials,
     askFourEarning,
     acquisitionsEpicAlwaysAskIfTagged,
     acquisitionsEpicLiveblog,
