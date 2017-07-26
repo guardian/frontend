@@ -43,6 +43,8 @@ trait Requests {
     lazy val isCrosswordFront: Boolean = r.path.endsWith("/crosswords")
 
     lazy val campaignCode: Option[String] = r.getQueryString("CMP")
+
+    lazy val isAdFree: Boolean = r.headers.keys.exists(_ equalsIgnoreCase "X-Gu-Commercial-Ad-Free")
   }
 }
 

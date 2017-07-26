@@ -2,16 +2,21 @@ package uiComponent.core
 
 import java.io._
 import java.nio.charset.StandardCharsets
-import javax.script.SimpleScriptContext
+import javax.script.{CompiledScript, SimpleScriptContext}
+
+import common.Logging
 import model.ApplicationContext
 import play.api.Mode
 import play.api.libs.json.{JsValue, Json}
 import uiComponent.core.JavascriptEngine.EvalResult
+
 import scala.util.{Failure, Success, Try}
 
-class JavascriptRenderer(javascriptFilePath: String) {
+trait JavascriptRendering extends Logging {
 
-  private implicit lazy val scriptContext = new SimpleScriptContext()
+  def javascriptFile: String
+
+  private implicit val scriptContext = createContext()
   private lazy val memoizedJs: Try[EvalResult] = loadJavascript()
 
   def render(props: Option[JsValue] = None)(implicit ac: ApplicationContext): Try[String] = for {
@@ -19,6 +24,13 @@ class JavascriptRenderer(javascriptFilePath: String) {
     js <- if(ac.environment.mode == Mode.Dev) loadJavascript() else memoizedJs
     rendering <- JavascriptEngine.invoke(js, "render", propsObject)
   } yield rendering
+
+
+  private def createContext(): SimpleScriptContext = {
+    val context = new SimpleScriptContext()
+    JavascriptEngine.put("__play_webpack_logger", log.logger)(context) // Binding webpack logger to scala logger
+    context
+  }
 
   private def encodeProps(props: Option[JsValue] = None): Try[EvalResult] = {
     val propsId = "props"
@@ -29,10 +41,14 @@ class JavascriptRenderer(javascriptFilePath: String) {
     } yield propsObject
   }
 
+  private def compile(inputStream: InputStream): Try[CompiledScript] = {
+    val fullScript = new InputStreamReader(new SequenceInputStream(prescript, inputStream))
+    JavascriptEngine.compile(fullScript)
+  }
+
   private def loadJavascript(): Try[EvalResult] = for {
-    file <- loadFile(javascriptFilePath)
-    fullScript = new InputStreamReader(new SequenceInputStream(prescript, file))
-    cs <- JavascriptEngine.compile(fullScript)
+    file <- loadFile(javascriptFile)
+    cs <- compile(file)
     js <- JavascriptEngine.eval(cs)
   } yield js
 

@@ -12,5 +12,4 @@ trait ArticleControllers {
   lazy val bookSectionAgent: NewspaperBookSectionTagAgent = wire[NewspaperBookSectionTagAgent]
   lazy val publicationController = wire[PublicationController]
   lazy val articleController = wire[ArticleController]
-  lazy val nashornController = wire[NashornController]
 }

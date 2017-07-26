@@ -5,5 +5,7 @@
 
 GET        /_healthcheck                            controllers.HealthCheck.healthCheck()
 
+GET        /dev/ui                                  controllers.DevComponentController.renderComponent()
+
 # 404
 GET        /404$path</.*>                           controllers.ArchiveController.lookup(path)
