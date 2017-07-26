@@ -12,7 +12,7 @@ import { epicEngagementBannerTests } from 'common/modules/experiments/acquisitio
 import membershipEngagementBannerUtils from 'common/modules/commercial/membership-engagement-banner-parameters';
 import { isBlocked } from 'common/modules/commercial/membership-engagement-banner-block';
 import ophan from 'ophan/ng';
-import { get } from 'lib/geolocation';
+import { get as getGeoLocation } from 'lib/geolocation';
 import { constructQuery } from 'lib/url';
 
 type Interaction = {
@@ -187,7 +187,7 @@ const showBanner = (params: Object): void => {
 };
 
 const membershipEngagementBannerInit = (): Promise<void> =>
-    get().then(location => {
+    getGeoLocation().then(location => {
         const bannerParams = deriveBannerParams(location);
 
         if (
