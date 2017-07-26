@@ -6,7 +6,7 @@ import {
 } from 'common/modules/experiments/utils';
 import { testCanBeRun } from 'common/modules/experiments/test-can-run-checks';
 import { viewsInPreviousDays } from 'common/modules/commercial/acquisitions-view-log';
-import alwaysAsk from 'common/modules/experiments/tests/contributions-epic-always-ask-strategy';
+import { alwaysAsk } from 'common/modules/experiments/tests/contributions-epic-always-ask-strategy';
 import bundlePriceTest1 from 'common/modules/experiments/tests/bundle-digital-sub-price-test-1';
 import askFourEarning from 'common/modules/experiments/tests/contributions-epic-ask-four-earning';
 import { acquisitionsEpicLiveblog } from 'common/modules/experiments/tests/acquisitions-epic-liveblog';
@@ -15,7 +15,6 @@ import acquisitionsEpicAlwaysAskElection from 'common/modules/experiments/tests/
 import { acquisitionsEpicMultipleTestimonials } from 'common/modules/experiments/tests/acquisitions-epic-multiple-testimonials';
 import acquisitionsEpicThankYou from 'common/modules/experiments/tests/acquisitions-epic-thank-you';
 import acquisitionsThisLandSeries from 'common/modules/experiments/tests/acquisitions-this-land-series';
-import epicForBrexitCohort from 'common/modules/experiments/tests/epic-for-brexit-cohort';
 import { acquisitionsEpicRebaselineSupportProposition } from 'common/modules/experiments/tests/acquisitions-epic-rebaseline-support-proposition';
 
 /**
@@ -25,7 +24,6 @@ const tests = [
     alwaysAsk,
     acquisitionsThisLandSeries,
     bundlePriceTest1,
-    epicForBrexitCohort,
     acquisitionsEpicRebaselineSupportProposition,
     acquisitionsEpicMultipleTestimonials,
     askFourEarning,

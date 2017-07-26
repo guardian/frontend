@@ -2,9 +2,9 @@
   "Francis Carr": [],
   "Jon Norman": [],
   "Regis Kuckaertz": [
-    "projects/common/modules/ui/dropdowns.js",
-    "projects/common/modules/lazyload.js",
-    "projects/common/modules/ui/message.js"
+    "projects/common/modules/discussion/comment-count.js",
+    "projects/common/modules/discussion/comments.js",
+    "projects/common/modules/discussion/discussion-frontend.js"    
   ],
   "Richard Nguyen": [],
   "Kate Whalen": [],
@@ -14,7 +14,7 @@
     "bootstraps/enhanced/crosswords.js",
     "bootstraps/enhanced/facia.js",
     "bootstraps/enhanced/football.js",
-    "projects/common/modules/video/onward-container.js",
+    "projects/common/modules/preferences/main.js",
     "bootstraps/enhanced/gallery.js"
   ],
   "Simon Adcock": [
@@ -50,6 +50,11 @@
     "projects/common/modules/discussion/comment-box.js"
   ],
   "Gustav Pursche": [
+    "projects/common/modules/onward/onward-content.js",
+    "projects/common/modules/onward/popular.js",
+    "projects/common/modules/onward/related.js",
+    "projects/common/modules/onward/tech-feedback.js",
+    "projects/common/modules/video/onward-container.js",
     "lib/element-inview.js",
     "lib/page.js"
   ],
@@ -81,9 +86,6 @@
     "projects/common/modules/crosswords/main.js",
     "projects/common/modules/crosswords/persistence.js",
     "projects/common/modules/crosswords/series.js",
-    "projects/common/modules/discussion/comment-count.js",
-    "projects/common/modules/discussion/comments.js",
-    "projects/common/modules/discussion/discussion-frontend.js",
     "projects/common/modules/discussion/loader.js"
   ],
   "dominickendrick": [
@@ -128,15 +130,9 @@
     "projects/common/modules/navigation/profile.js"
   ],
   "jfsoul": [
-    "projects/common/modules/navigation/search.js",
-    "projects/common/modules/onward/onward-content.js",
-    "projects/common/modules/onward/popular.js",
-    "projects/common/modules/onward/related.js",
-    "projects/common/modules/onward/tech-feedback.js",
-    "projects/common/modules/preferences/main.js"
+    "projects/common/modules/navigation/search.js"
   ],
   "Joseph Smith": [
-    "projects/common/modules/experiments/tests/contributions-epic-always-ask-strategy.js",
     "projects/common/modules/experiments/tests/contributions-epic-ask-four-earning.js",
     "projects/common/modules/experiments/tests/epic-to-support-landing-page.js",
     "projects/common/modules/experiments/tests/membership-engagement-banner-tests.js",

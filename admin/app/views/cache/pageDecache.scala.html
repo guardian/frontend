@@ -1,4 +1,4 @@
-@(maybeTestResult: Option[controllers.cache.PrePurgeTestResult] = None, message: String = "")(implicit request: RequestHeader, context: model.ApplicationContext)
+@(message: String = "")(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @admin_main("Purge Cache", isAuthed = true) {
 
@@ -9,7 +9,6 @@
         <li>This tool performs a <strong><i>soft</i></strong> purge of the cached content on www.theguardian.com. This will <strong>immediately attempt to refresh the cached content</strong>.</li>
         <li>If the backend service that provides the content is not healthy, <strong>stale content will continue to be served.</strong></li>
         <li>If you are trying to resolve an issue and have not already done so, please use the <a href="@controllers.admin.routes.TroubleshooterController.index()">Troubleshoot Tool</a></li>
-        <li>If the initial test below is unsuccessful, continuing with the purge should only be done in the case of takedowns.</li>
     </ul>
 
     <h3>Usage:</h3>
@@ -24,7 +23,10 @@
     </ol>
     <hr/>
 
-    @fragments.pageDecacheForm(maybeTestResult)
+    <form method="POST">
+        <input class="img-url form-control" name="url" type="text" value="" placeholder="https://www.theguardian.com/books/xxxxx"/>
+        <button class="btn btn-default" type="submit">Purge</button>
+    </form>
 
     @if(!message.isEmpty) { <p class="bg-info purge-message">@message</p> }
 }

@@ -68,17 +68,17 @@ object GetClasses {
         slices.Container.customClasses(containerDefinition.container),
       disableHide = containerDefinition.hideToggle,
       lazyLoad = containerDefinition.shouldLazyLoad,
-      dynamicSlowMpu = containerDefinition.container == Dynamic(DynamicSlowMPU(omitMPU = false))
+      dynamicSlowMpu = containerDefinition.container == Dynamic(DynamicSlowMPU(omitMPU = false, adFree = false))
     )
 
   /** TODO get rid of this when we consolidate 'all' logic with index logic */
-  def forTagContainer(hasTitle: Boolean): String = forContainer(
+  def forTagContainer(hasTitle: Boolean, adFree: Boolean = false): String = forContainer(
     showLatestUpdate = false,
     isFirst = true,
     hasTitle,
     isHeadlines = false,
     isVideo = false,
-    commercialOptions = ContainerCommercialOptions(omitMPU = false),
+    commercialOptions = ContainerCommercialOptions(omitMPU = false, adFree = adFree),
     hasDesktopShowMore = false,
     container = None,
     extraClasses = Nil,

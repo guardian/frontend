@@ -21,7 +21,7 @@ trait CommercialSwitches {
     "Deactivates the sizecallback for videos (620x1) that hides the slot.",
     owners = Seq(Owner.withGithub("JonNorman")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 7, 26),
+    sellByDate = new LocalDate(2017, 8, 23),
     exposeClientSide = true
   )
 
@@ -261,7 +261,7 @@ trait CommercialSwitches {
     description = "Solicit feedback for ad impressions",
     owners = Owner.group(SwitchGroup.Commercial),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 7, 26),
+    sellByDate = new LocalDate(2017, 8, 2),
     exposeClientSide = true
   )
 

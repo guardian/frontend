@@ -7,7 +7,7 @@ import $ from 'lib/$';
     videojs plugins can't use arrow functions
     as 'this' needs to be available as it 
     represents an instance of the videojs player
-**/
+* */
 const skipAd = function skipAd(mediaType: string, skipTimeout: number): void {
     let intervalId;
 

@@ -1,5 +1,5 @@
 // @flow
-/* eslint-disable no-new*/
+/* eslint-disable no-new */
 import qwery from 'qwery';
 import mediator from 'lib/mediator';
 import { noop } from 'lib/noop';

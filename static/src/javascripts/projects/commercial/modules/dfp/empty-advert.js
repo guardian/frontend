@@ -12,7 +12,9 @@ const removeFromDfpEnv = advert => {
     dfpEnv.advertsToRefresh = removeAdvert(dfpEnv.advertsToRefresh);
     dfpEnv.advertsToLoad = removeAdvert(dfpEnv.advertsToLoad);
     dfpEnv.advertIds = {};
-    dfpEnv.adverts.forEach((ad, i) => (dfpEnv.advertIds[ad.id] = i));
+    dfpEnv.adverts.forEach((ad, i) => {
+        dfpEnv.advertIds[ad.id] = i;
+    });
 };
 
 const emptyAdvert = (advert: Advert): void => {

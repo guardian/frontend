@@ -389,7 +389,7 @@
     }
 
     .fc-item__content {
-        display: flex;
+        display: flex !important;
         flex-direction: column;
         justify-content: space-between;
         // IE 11 hates shorthand flex CSS, and does something different to the
@@ -397,7 +397,7 @@
         flex-grow: 1;
         flex-shrink: 1;
         flex-basis: auto;
-        @include mq(mobileLandscape, tablet) {
+        @include mq(phablet, tablet) {
             flex-direction: row;
         }
     }
@@ -412,35 +412,29 @@
         justify-content: flex-end;
         pointer-events: none;
         flex-shrink: 0;
-        padding-left: $gs-gutter;
-        @include mq(mobileLandscape) {
-            flex-direction: column;
+        flex-direction: column;
+        align-items: flex-end;
+        margin-left: $gs-gutter / 2;
+        @include mq($until: phablet) {
+            flex-direction: row;
         }
     }
+
     .badge__label {
         color: #757575;
         text-align: center;
         align-self: center;
-    }
-    &.fc-item--list-media-tablet {
-        @include mq(tablet) {
-            .badge__link {
-                margin-left: $gs-gutter;
-            }
-            .badge {
-                flex-direction: row;
-                margin-top: 0;
-            }
+        @include mq($until: phablet) {
+            padding-right: $gs-gutter / 2;
         }
     }
+
     .badge__link {
-        @include mq($until: mobileLandscape) {
-            margin-left: $gs-gutter;
-        }
         @include mq($until: tablet) {
             width: $gs-gutter * 3;
         }
     }
+
     .badge__logo {
         max-width: 100%;
         margin-left: 0;

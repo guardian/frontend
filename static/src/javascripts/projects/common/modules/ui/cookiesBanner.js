@@ -1,6 +1,6 @@
 // @flow
 import { getCookie, addCookie } from 'lib/cookies';
-import Message from 'common/modules/ui/message';
+import { Message } from 'common/modules/ui/message';
 /**
  * Rules:
  *
