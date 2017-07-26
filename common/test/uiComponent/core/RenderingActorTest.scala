@@ -3,6 +3,7 @@ package uiComponent.core
 import akka.actor.{ActorSystem, Props}
 import akka.pattern.ask
 import akka.util.Timeout
+import helpers.ExceptionMatcher
 import org.scalatest.{DoNotDiscover, FlatSpec, Matchers}
 import play.api.libs.json.{JsValue, Json}
 import test.{ConfiguredTestSuite, WithTestContext}
@@ -16,7 +17,8 @@ import scala.util.{Failure, Success, Try}
   extends FlatSpec
   with ConfiguredTestSuite
   with WithTestContext
-  with Matchers {
+  with Matchers
+  with ExceptionMatcher {
 
   lazy val actorSystem: ActorSystem = app.actorSystem
   implicit lazy val timeout = new Timeout(2.seconds)
@@ -40,10 +42,7 @@ import scala.util.{Failure, Success, Try}
 
   "Sending unknown message" should "return a rendering exception" in {
     val f = (actor ? "unknown message").mapTo[Try[String]]
-    Await.result(f, timeout.duration) match {
-      case Success(s) => fail("Exception should have been returned")
-      case Failure(e) => e should be(an[RenderingException])
-    }
+    Await.result(f, timeout.duration) should failAs(classOf[RenderingException])
   }
 
 }
