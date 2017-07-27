@@ -13,14 +13,7 @@ export default (
     attributes: ?Object,
     ...children: Array<any>
 ) => {
-    const { style, 'style-root': styleRoot, ...otherAttributes } =
-        attributes || {};
-
-    if (styleRoot) {
-        otherAttributes.className = [otherAttributes.className, 'reset']
-            .join(' ')
-            .trim();
-    }
+    const { style, ...otherAttributes } = attributes || {};
 
     return preact_h(
         style ? styled(nodeName, style) : nodeName,
