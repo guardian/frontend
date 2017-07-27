@@ -8,11 +8,11 @@ const buildButtonTemplate = ({ supportUrl }) =>
         url: supportUrl,
     });
 
-export const acquisitionsEpicRebaselineSupportProposition = makeABTest({
-    id: 'AcquisitionsEpicRebaselineSupportProposition',
-    campaignId: 'sandc_epic_rebaseline_support_proposition',
+export const acquisitionsEpicRebaselineSupportPropositionTwo = makeABTest({
+    id: 'AcquisitionsEpicRebaselineSupportPropositionTwo',
+    campaignId: 'sandc_epic_rebaseline_support_proposition_two',
 
-    start: '2017-07-07',
+    start: '2017-07-26',
     expiry: '2017-08-15',
 
     author: 'Ap0c',
@@ -23,9 +23,9 @@ export const acquisitionsEpicRebaselineSupportProposition = makeABTest({
         'We get a baseline for conversion of the bundles landing page',
 
     audienceCriteria: 'UK all devices',
-    audience: 0.22,
+    audience: 0.58,
     locations: ['GB'],
-    audienceOffset: 0.78,
+    audienceOffset: 0.2,
 
     variants: [
         {

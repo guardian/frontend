@@ -171,6 +171,16 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-acquisitions-epic-rebaseline-support-proposition-two",
+    "Re-baseline the new support proposition against the old",
+    owners = Seq(Owner.withGithub("Ap0c")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 8, 15),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
     "ab-carrot-slot",
     "Displays a new ad slot at the top of articles to drive traffic to GLabs content",
     owners = Seq(Owner.withGithub("JonNorman")),
