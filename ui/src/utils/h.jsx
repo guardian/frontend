@@ -17,14 +17,15 @@ export default (
         attributes || {};
 
     if (styleRoot) {
-        otherAttributes.className = [
-            otherAttributes.className || '',
-            'reset',
-        ].join(' ');
+        otherAttributes.className = [otherAttributes.className, 'reset']
+            .join(' ')
+            .trim();
     }
 
     if (style) {
         return preact_h(styled(nodeName, style), otherAttributes, children);
     }
-    return preact_h(nodeName, otherAttributes, children);
+    const node = style ? styled(nodeName, style) : nodeName;
+
+    return preact_h(node, otherAttributes, children);
 };
