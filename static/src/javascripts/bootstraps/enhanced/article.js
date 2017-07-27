@@ -1,5 +1,6 @@
 // @flow
 /* eslint-disable no-new */
+import config from 'lib/config';
 import qwery from 'qwery';
 import $ from 'lib/$';
 import { isBreakpoint } from 'lib/detect';
@@ -31,6 +32,7 @@ const modules = {
         const mainColumn = qwery('.js-content-main-column');
         // only render when we have >1000px or more (enough space for ad + most popular)
         if (
+            !config.hasTone('Match reports') &&
             mainColumn[0] &&
             mainColumn[0].offsetHeight > 1150 &&
             isBreakpoint({
