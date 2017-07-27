@@ -2,10 +2,13 @@
 // pass env.server or env.browser for specific envs.
 
 const path = require('path');
+
 const webpack = require('webpack');
 const webpackMerge = require('webpack-merge');
 
 const { ui } = require('./paths');
+
+const pasteupSass = require('../__tools__/pasteup-sass');
 
 const config = {
     output: {
@@ -34,7 +37,14 @@ const config = {
                             // prepended to all sass files
                             data: `
                                 @import '~sass-mq/_mq';
+                                @import 'pasteup';
                             `,
+                            importer: [
+                                url =>
+                                    url === 'pasteup'
+                                        ? { contents: pasteupSass }
+                                        : null,
+                            ],
                         },
                     },
                 ],

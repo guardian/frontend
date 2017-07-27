@@ -45,6 +45,7 @@
     "babel-polyfill": "^6.23.0",
     "babel-preset-env": "^1.6.0",
     "babel-preset-flow": "^6.23.0",
+    "babel-register": "^6.24.1",
     "browser-sync": "^2.18.12",
     "bs-fullscreen-message": "^1.1.0",
     "btoa": "1.1.2",
