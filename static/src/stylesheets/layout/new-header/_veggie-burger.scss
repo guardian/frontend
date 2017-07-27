@@ -30,7 +30,9 @@
     }
 
     @include mq(leftCol) {
+        height: $veggie-burger-large;
         right: $gutter-xxlarge;
+        width: $veggie-burger-large;
     }
 
 
@@ -81,13 +83,15 @@
 
 .veggie-burger__label {
     @include fs-textSans(5);
-    bottom: -24px;
-    color: $neutral-3;
-    font-size: 16px;
+    bottom: -22px;
+    color: #ffffff;
+    font-size: 18px;
     left: 50%;
     position: absolute;
+    text-align: center;
     text-transform: lowercase;
     transform: translateX(-50%);
+    width: gs-span(2);
 
     @include mq($until: 'desktop') {
         @include u-h();
@@ -116,14 +120,27 @@
         left: 0;
         position: absolute;
         width: $gs-gutter;
+
+        @include mq(mobileMedium) {
+            height: $gs-baseline / 4;
+            width: 26px;
+        }
     }
 
     &:before {
         top: -$gs-gutter / 4;
+
+        @include mq(mobileMedium) {
+            top: -7px;
+        }
     }
 
     &:after {
         bottom: -$gs-gutter / 4;
+
+        @include mq(mobileMedium) {
+            bottom: -7px;
+        }
     }
 
     // transform burger into cross

@@ -100,6 +100,7 @@ from scrolling */
 
     @include mq(mobileMedium) {
         height: calc(3 / 16 * 225px);
+        margin-bottom: 0;
         width: 225px;
     }
 
@@ -111,12 +112,13 @@ from scrolling */
 
     @include mq(tablet) {
         height: calc(3 / 16 * 345px);
-        margin-bottom: $gs-baseline / 4;
+        margin-bottom: -5px;
         width: 345px;
     }
 
     @include mq(leftCol) {
         height: calc(3 / 16 * 385px);
+        margin-bottom: -1px;
         width: 385px;
     }
 
