@@ -1,4 +1,4 @@
-package uiComponent.core
+package rendering.core
 
 import java.io.Reader
 import javax.script._

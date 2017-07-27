@@ -1,4 +1,4 @@
-package uiComponent.core
+package rendering.core
 
 import java.io._
 import java.nio.charset.StandardCharsets
@@ -8,7 +8,7 @@ import common.Logging
 import model.ApplicationContext
 import play.api.Mode
 import play.api.libs.json.{JsValue, Json}
-import uiComponent.core.JavascriptEngine.EvalResult
+import rendering.core.JavascriptEngine.EvalResult
 
 import scala.util.{Failure, Success, Try}
 
@@ -21,7 +21,7 @@ trait JavascriptRendering extends Logging {
 
   def render(props: Option[JsValue] = None)(implicit ac: ApplicationContext): Try[String] = for {
     propsObject <- encodeProps(props)
-    js <- if(ac.environment.mode == Mode.Dev) loadJavascript() else memoizedJs
+    js <- if(ac.environment.mode == Mode.Dev) loadJavascript() else memoizedJs // Reloading the javascript bundle every time when in dev mode
     rendering <- JavascriptEngine.invoke(js, "render", propsObject)
   } yield rendering
 
