@@ -108,8 +108,9 @@
         }
         ga('@{trackerName}.set', 'dimension43', getExperienceValue()); @* 'Experience' dimension, for short-lived experiment values. *@
 
-        if(document.cookies.contain('GU_FB')) {
+        if(document.location.hash === '#fbLogin') {
             ga('@{trackerName}.set', 'referrer', null);
+            document.location.hash = '';
         }
     }
 
