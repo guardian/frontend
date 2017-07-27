@@ -22,10 +22,9 @@ export default (
             .trim();
     }
 
-    if (style) {
-        return preact_h(styled(nodeName, style), otherAttributes, children);
-    }
-    const node = style ? styled(nodeName, style) : nodeName;
-
-    return preact_h(node, otherAttributes, children);
+    return preact_h(
+        style ? styled(nodeName, style) : nodeName,
+        otherAttributes,
+        children
+    );
 };
