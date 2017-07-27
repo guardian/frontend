@@ -1,0 +1,8 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`404 generates the expected markup 1`] = `
+Object {
+  "css": "<style class=\\"_styletron_hydrate_\\">.a{color:hotpink}</style>",
+  "html": "<div class=\\"a\\">404</div>",
+}
+`;
