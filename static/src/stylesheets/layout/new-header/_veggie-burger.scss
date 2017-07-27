@@ -125,6 +125,11 @@
             height: $gs-baseline / 4;
             width: 26px;
         }
+
+        @include mq(leftCol) {
+            height: 4px;
+            width: 30px;
+        }
     }
 
     &:before {
@@ -133,6 +138,10 @@
         @include mq(mobileMedium) {
             top: -7px;
         }
+
+        @include mq(leftCol) {
+            top: -8px;
+        }
     }
 
     &:after {
@@ -140,6 +149,10 @@
 
         @include mq(mobileMedium) {
             bottom: -7px;
+        }
+
+        @include mq(leftCol) {
+            bottom: -8px;
         }
     }
 

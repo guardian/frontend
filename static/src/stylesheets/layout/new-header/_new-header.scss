@@ -100,12 +100,12 @@ from scrolling */
 
     @include mq(mobileMedium) {
         height: calc(3 / 16 * 225px);
-        margin-bottom: 0;
         width: 225px;
     }
 
     @include mq(mobileLandscape) {
         height: calc(3 / 16 * 260px);
+        margin-bottom: 0;
         margin-right: $gs-gutter;
         width: 260px;
     }
