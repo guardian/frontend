@@ -135,6 +135,7 @@
     &:before {
         top: -$gs-gutter / 4;
 
+        // TODO: If larger sizes are kept, consider svg solution to minimize magic numbers/mqs
         @include mq(mobileMedium) {
             top: -7px;
         }
