@@ -23,12 +23,12 @@ module.exports = function loadSVG(source) {
                 const svg = ${converter.convert(result.data)};
 
                 function setStyles(node) {
-                    const style = props.styles[node.attributes['data-block']];
+                    const style = props['block-styles'][node.attributes['data-block']];
                     if (style) node.attributes.style = Object.assign({}, node.attributes.style, style);
                     node.children.forEach(setStyles);
                 }
 
-                if (props.styles) setStyles(svg);
+                if (props['block-styles']) setStyles(svg);
 
                 return svg;
             }

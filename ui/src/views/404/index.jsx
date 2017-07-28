@@ -1,4 +1,5 @@
 // @flow
+import { colour } from 'pasteup';
 import Logo from 'assets/images/guardian-logo-320.svg';
 import Navigation from './Navigation';
 import Footer from './Footer';
@@ -7,7 +8,6 @@ import {
     heading,
     fluidWrap,
     topbar,
-    guardian,
     subHeadingContainer,
     subHeading,
     para,
@@ -18,7 +18,7 @@ export default () =>
         <div style={topbar}>
             <a href="/">Home</a>
         </div>
-        <Logo styles={{ guardian }} />
+        <Logo block-styles={{ guardian: { fill: colour.brandBlueDark } }} />
         <h1 style={heading}>
             Sorry - we haven’t been able to serve the page you asked for.
         </h1>

@@ -51,10 +51,10 @@ export default () => <div><MySVG /></div>
 
 ```
 #### Styling the SVG
-It will also respond to an object on a `styles` prop:
+It will also respond to an object on a `block-styles` prop:
 
 ```jsx
-<MySVG styles={{}} />
+<MySVG block-styles={{}} />
 ```
 If a node in the original SVG has a `data-block` attribute, the loader will look for a key in the `styles` object that matches the value of `data-block`, and apply the styles inline:
 
@@ -70,7 +70,7 @@ const styles = {
 	'red': { color: 'red' }
 }
 
-export default () => <MySVG styles={styles} />
+export default () => <MySVG block-styles={styles} />
 
 // <svg><path data-block="red" style="color: red" /></svg>
 
@@ -86,16 +86,16 @@ You can use Sass in a similar way to non-SVG components:
 ```scss
 // styles.scss
 red {
-    color: 'red'
+    fill: 'red'
 }
 ```
 
 ```jsx
 import MySVG from './my-svg.svg';
-import styles from './styles.scss';
+import styles from './styles.js.scss';
 
-export default () => <MySVG styles={styles} />
+export default () => <MySVG block-styles={styles} />
 
-// <svg><path data-block="red" style="color: red" /></svg>
+// <svg><path data-block="red" style="fill: red" /></svg>
 
 ```
