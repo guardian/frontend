@@ -52,7 +52,7 @@ define([
 
         it('should get discussion id\'s from the DOM', function () {
             var data = '/p/3gh4n,/p/3ghv5,/p/3ghx3';
-            expect(commentCount.getContentIds(commentCount.getElementsIndexedById())).toEqual(data);
+            expect(commentCount.getContentIds(commentCount.getElementsIndexedById(document))).toEqual(data);
         });
 
         it('should get comment counts from ajax end-point', function (done) {
