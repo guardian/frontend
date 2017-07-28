@@ -140,10 +140,6 @@ Twitter: @aycenne
 From: Cork, Ireland
 Location: London, UK
 
-Software Engineer in Test: Gideon Goldberg
-Twitter: @gidsg
-From: London, UK, Earth, the Universe
-
 Software Architect/Hacker: Phil Wills
 Twitter: @philwills
 
@@ -296,3 +292,6 @@ From: London, UK
 Developer: Lydia Shepherd
 From: Leeds, UK
 
+Developer: Gideon Goldberg
+Twitter: @gidsg
+From: London, UK, Earth, the Universe
