@@ -22,9 +22,9 @@ const sassLoader = {
     options: {
         // prepended to all sass files
         data: `
-        @import '~sass-mq/_mq';
-        @import 'pasteup';
-    `,
+            @import '~sass-mq/_mq';
+            @import 'pasteup';
+        `,
         importer: [
             url => (url === 'pasteup' ? { contents: pasteupSass } : null),
         ],
