@@ -19,9 +19,9 @@ This will create the following files:
 
 ### Dev
 
-1. run `make ui-watch`.
-2. start the `article` play application.
-3. browse to http://localhost:3000/render/js.
+1. run `make ui-watch` and wait for it to settle.
+2. start the `archive` play application.
+3. browse to http://localhost:3000/dev/ui.
 
 ## Howtos
 
