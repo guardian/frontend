@@ -14,7 +14,6 @@ export default (
     ...children: Array<any>
 ) => {
     const { style, ...otherAttributes } = attributes || {};
-        attributes || {};
 
     return preact_h(
         style ? styled(nodeName, style) : nodeName,
