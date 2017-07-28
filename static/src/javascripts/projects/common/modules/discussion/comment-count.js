@@ -20,101 +20,67 @@ const templates = {
 };
 const defaultTemplate = commentCountTemplate;
 
-const getElementsIndexedById = (
-    context: Element | Document
-): Map<string, Element[]> => {
+const getElementsIndexedById = (): Map<string, Element> => {
     const elements: Element[] = Array.from(
-        context.querySelectorAll(`[${attributeName}]`)
+        document.querySelectorAll(`[${attributeName}]`)
     );
 
     return elements.reduce((acc, el) => {
         const key = el.getAttribute(attributeName);
         if (!key) return acc;
-        return Object.freeze(
-            Object.assign(
-                {},
-                acc,
-                acc[key] ? { [key]: acc[key].concat(el) } : { [key]: [el] }
-            )
-        );
+        return Object.freeze(Object.assign({}, acc, { [key]: el }));
     }, {});
 };
 
-const getContentIds = (indexedElements: Map<string, Element[]>): string =>
+const getContentIds = (indexedElements: Map<string, Element>): string =>
     Object.keys(indexedElements).sort().join(',');
 
 const getContentUrl = (node: Element): string =>
-    Array.from(node.getElementsByTagName('a'))
+    `${Array.from(node.getElementsByTagName('a'))
         .slice(0, 1)
-        .map(a => `${a ? a.pathname : ''}#comments`)
-        .join('');
+        .map(a => a.pathname)
+        .join('')}#comments`;
+
+const updateCommentCount = (node: Element, count: number): Promise<void> => {
+    const url = node.getAttribute('data-discussion-url') || getContentUrl(node);
+
+    if (node.getAttribute('data-discussion-closed') === 'true' && count === 0) {
+        // Discussion is closed and had no comments, we don't want to show a comment count
+        return Promise.resolve();
+    }
+
+    const format = node.getAttribute('data-commentcount-format');
+    const html = template((format && templates[format]) || defaultTemplate, {
+        url,
+        icon: addClassesAndTitle(commentCount16icon.markup, [
+            'inline-tone-fill',
+        ]),
+        count: integerCommas(count),
+    });
+
+    const meta = node.querySelector('.js-item__meta');
+    const container = meta || node;
+
+    return fastdom.write(() => {
+        container.insertAdjacentHTML('beforeend', html);
+        node.removeAttribute(attributeName);
+        node.classList.remove('u-h');
+    });
+};
 
 const renderCounts = (
     counts: { id: string, count: number }[],
-    indexedElements: Map<string, Element[]>
+    indexedElements: Map<string, Element>
 ) => {
     Promise.all(
-        counts.map(
-            c =>
-                indexedElements[c.id]
-                    ? Promise.all(
-                          indexedElements[c.id].map((node: Element): Promise<
-                              void
-                          > => {
-                              const url =
-                                  node.getAttribute('data-discussion-url') ||
-                                  getContentUrl(node);
-
-                              if (
-                                  node.getAttribute(
-                                      'data-discussion-closed'
-                                  ) === 'true' &&
-                                  c.count === 0
-                              ) {
-                                  // Discussion is closed and had no comments, we don't want to show a comment count
-                                  return Promise.resolve();
-                              }
-
-                              const format = node.getAttribute(
-                                  'data-commentcount-format'
-                              );
-                              const html = template(
-                                  (format && templates[format]) ||
-                                      defaultTemplate,
-                                  {
-                                      url,
-                                      icon: addClassesAndTitle(
-                                          commentCount16icon.markup,
-                                          ['inline-tone-fill']
-                                      ),
-                                      count: integerCommas(c.count),
-                                  }
-                              );
-
-                              const meta = node.querySelector('.js-item__meta');
-                              const container = meta || node;
-
-                              return fastdom.write(() => {
-                                  container.insertAdjacentHTML(
-                                      'beforeend',
-                                      html
-                                  );
-                                  node.removeAttribute(attributeName);
-                                  node.classList.remove('u-h');
-                              });
-                          })
-                      )
-                    : Promise.resolve()
-        )
+        counts.map(c => updateCommentCount(indexedElements[c.id], c.count))
     ).then(() => {
         mediator.emit('modules:commentcount:loaded', counts);
     });
 };
 
-const getCommentCounts = (context: Element | Document = document): void => {
-    const indexedElements: Map<string, Element[]> = getElementsIndexedById(
-        context
-    );
+const getCommentCounts = (): void => {
+    const indexedElements: Map<string, Element> = getElementsIndexedById();
     const endpoint: string = countUrl + getContentIds(indexedElements);
 
     fetchJSON(endpoint, {
