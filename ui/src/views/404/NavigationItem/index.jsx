@@ -1,5 +1,5 @@
 // @flow
-import styles from './style.scss';
+import styles from './style.js.scss';
 
 export default ({ zone = 'news', path, newWindow = false, children }: Object) =>
     <li style={styles.nav_item}>
