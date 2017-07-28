@@ -3,7 +3,6 @@ import $ from 'lib/$';
 import config from 'lib/config';
 import mediator from 'lib/mediator';
 import fastdom from 'lib/fastdom-promise';
-import { commercialFeatures } from 'commercial/modules/commercial-features';
 
 import type { bonzo } from 'bonzo';
 
@@ -21,14 +20,8 @@ const articleAsideAdvertsInit = (
 
     const $col: bonzo = $('.js-secondary-column');
 
-    // are article aside ads disabled, or secondary column hidden?
-    if (
-        !(
-            commercialFeatures.articleAsideAdverts &&
-            $col.length &&
-            $col.css('display') !== 'none'
-        )
-    ) {
+    // article aside ads are added server-side if the container doesn't exist then stop.
+    if (!$col.length || $col.css('display') === 'none') {
         stop();
         return Promise.resolve(false);
     }

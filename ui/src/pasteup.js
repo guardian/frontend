@@ -15,10 +15,10 @@ export const colour = {
     brandBlueDark: '#00456e',
     features: {
         main1: '#7d0068',
-        featuresMain2: '#b82266',
-        featuresSupport1: '#951c55',
-        featuresSupport2: '#4e0375',
-        featuresSupport3: '#fdadba',
-        featuresSupport4: '#dc2a7d',
+        main2: '#b82266',
+        support1: '#951c55',
+        support2: '#4e0375',
+        support3: '#fdadba',
+        support4: '#dc2a7d',
     },
 };

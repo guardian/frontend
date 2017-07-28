@@ -1,4 +1,5 @@
-// returns pasteup.js a set of sass vars
+// returns pasteup.js as a set of sass vars
+// e.g. a.b.c => $a-b-c
 
 const path = require('path');
 const { ui } = require('../__config__/paths');
