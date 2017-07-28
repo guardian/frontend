@@ -2,9 +2,8 @@
   "Francis Carr": [],
   "Jon Norman": [],
   "Regis Kuckaertz": [
-    "projects/common/modules/discussion/comment-count.js",
     "projects/common/modules/discussion/comments.js",
-    "projects/common/modules/discussion/discussion-frontend.js"    
+    "projects/common/modules/discussion/discussion-frontend.js"
   ],
   "Richard Nguyen": [],
   "Kate Whalen": [],
