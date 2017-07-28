@@ -10,6 +10,27 @@ const { ui } = require('./paths');
 
 const pasteupSass = require('../__tools__/pasteup-sass');
 
+const cssLoader = {
+    loader: 'css-loader',
+    options: {
+        minimize: true,
+    },
+};
+
+const sassLoader = {
+    loader: 'sass-loader',
+    options: {
+        // prepended to all sass files
+        data: `
+        @import '~sass-mq/_mq';
+        @import 'pasteup';
+    `,
+        importer: [
+            url => (url === 'pasteup' ? { contents: pasteupSass } : null),
+        ],
+    },
+};
+
 const config = {
     output: {
         filename: '[name].js',
@@ -29,35 +50,19 @@ const config = {
             {
                 test: /\.css$/,
                 exclude: /node_modules/,
-                use: [
-                    {
-                        loader: 'css-loader',
-                        options: {
-                            minimize: true,
-                        },
-                    },
-                ],
+                use: ['to-string-loader', cssLoader],
             },
             {
                 test: /\.scss$/,
-                exclude: /node_modules/,
-                use: [
-                    { loader: 'styletron-loader' },
+                oneOf: [
                     {
-                        loader: 'sass-loader',
-                        options: {
-                            // prepended to all sass files
-                            data: `
-                                @import '~sass-mq/_mq';
-                                @import 'pasteup';
-                            `,
-                            importer: [
-                                url =>
-                                    url === 'pasteup'
-                                        ? { contents: pasteupSass }
-                                        : null,
-                            ],
-                        },
+                        test: /\.js\.scss$/,
+                        exclude: /node_modules/,
+                        use: [{ loader: 'styletron-loader' }, sassLoader],
+                    },
+                    {
+                        exclude: /node_modules/,
+                        use: ['to-string-loader', cssLoader, sassLoader],
                     },
                 ],
             },
