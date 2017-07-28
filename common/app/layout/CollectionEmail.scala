@@ -15,7 +15,7 @@ sealed trait EmailContainer
 case class LiveIntentMarquee(newsletterId: String, ids: (String, String, String, String, String)) extends EmailContainer
 case class LiveIntentMPU(newsletterId: String, ids: (String, String, String, String, String)) extends EmailContainer
 case class LiveIntentSafeRTB(newsletterId: String, ids: List[String]) extends EmailContainer
-case class EmailContentContainer(displayName: String, cards: List[ContentCard], config: CollectionConfig, collectionType: String, branding: Option[ContainerBranding]) extends EmailContainer
+case class EmailContentContainer(displayName: String, href: Option[String], cards: List[ContentCard], config: CollectionConfig, collectionType: String, branding: Option[ContainerBranding]) extends EmailContainer
 
 object EmailContentContainer {
 
@@ -42,6 +42,7 @@ object EmailContentContainer {
   private def fromCollectionAndCards(collection: PressedCollection, cards: List[ContentCard]) =
     EmailContentContainer(
       displayName = collection.displayName,
+      href = collection.href,
       cards = cards,
       config = collection.config,
       collectionType = collection.collectionType,

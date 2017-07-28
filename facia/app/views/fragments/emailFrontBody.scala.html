@@ -147,8 +147,14 @@
 
 @renderContentContainer(collection: EmailContentContainer, collectionIndex: Int) = {
     @containerTitle((if(collectionIndex > 0) Seq("ct--not-top") else Nil) ++ (if (collection.branding.isDefined) Seq("ct-branded") else Nil)) {
-        @collection.displayName
-    }
+
+        @for(containerHref <- collection.href) { @containerHref match {
+            case href: String => {
+                <a class="fc-link" href="@collection.href">@collection.displayName</a>
+            }
+            case _ => {@collection.displayName}
+        }
+    }}
 
     @for(containerBranding <- collection.branding) { @containerBranding match {
         case branding: Branding => {
