@@ -4,7 +4,7 @@
 // - https://meyerweb.com/eric/tools/css/reset
 // - https://css-tricks.com/inheriting-box-sizing-probably-slightly-better-best-practice
 
-import reset from './reset.css';
+import resetCSS from './reset.css';
 
 export default (props: any, css: string) =>
     `<head lang="en" data-page-path="/uk">
@@ -15,7 +15,7 @@ export default (props: any, css: string) =>
         <meta name="format-detection" content="telephone=no"/>
         <meta name="HandheldFriendly" content="True"/>
         <meta name="viewport" content="width=device-width,initial-scale=1">
-        <style>${reset.toString()}</style>
+        <style>${resetCSS}</style>
         ${css}
         <script>window.guardian = ${JSON.stringify(props)};</script>
         <script src="/assets/javascripts/ui.bundle.browser.js" async defer></script>
