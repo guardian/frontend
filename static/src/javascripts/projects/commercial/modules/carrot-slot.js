@@ -3,6 +3,7 @@ import fastdom from 'lib/fastdom-promise';
 import { addSlot } from 'commercial/modules/dfp/add-slot';
 import createSlot from 'commercial/modules/dfp/create-slot';
 import { commercialFeatures } from 'commercial/modules/commercial-features';
+import { spaceFiller } from 'common/modules/article/space-filler';
 
 /*
  The heuristic for adding a carrot slot into an article is as follows:
@@ -12,38 +13,42 @@ import { commercialFeatures } from 'commercial/modules/commercial-features';
  This is to prevent it appearing after single word paragraphs that are encountered
  at the top of some article. It still isn't perfect, but it is good enough for a test.
  */
-const findSuitableCarrotPosition = (
-    paragraphs: Array<HTMLElement>
-): ?HTMLElement => {
-    let runningWordCount = 0;
-    let index = 0;
 
-    while (index < paragraphs.length) {
-        runningWordCount += paragraphs[index].textContent.split(' ').length;
+let runningWordCount = 0;
 
-        if (runningWordCount >= 100 && index >= 1) return paragraphs[index];
+const wordCount = (element: Element): number =>
+    element.textContent.split(' ').length;
 
-        index += 1;
-    }
+const rules = {
+    bodySelector: '.js-article__body',
+    slotSelector: ' > p',
+    minAbove: 0,
+    minBelow: 0,
+    clearContentMeta: 0,
+    selectors: null,
+    filter: (slot: Object, index: number) => {
+        runningWordCount += wordCount(slot.element);
+        return index >= 2 && runningWordCount >= 100;
+    },
+};
+
+const insertCarrotSlot = (paras: Element[]): Promise<any> => {
+    const slot = createSlot('carrot');
+    return fastdom
+        .write(() => paras[0].insertAdjacentElement('beforeend', slot))
+        .then(() => addSlot(slot, true));
 };
 
 const carrotSlotInit = () => {
-    if (commercialFeatures.carrotSlot) {
-        const paragraphs = Array.from(
-            document.querySelectorAll('.js-article__body p')
-        );
-        const anchor: ?HTMLElement = findSuitableCarrotPosition(paragraphs);
-
-        if (anchor) {
-            const slot = createSlot('carrot');
-
-            return fastdom
-                .write(() => anchor.insertAdjacentElement('beforeend', slot))
-                .then(() => addSlot(slot, true));
-        }
+    if (!commercialFeatures.carrotSlot) {
+        return Promise.resolve();
     }
 
-    return Promise.resolve();
+    return spaceFiller.fillSpace(rules, insertCarrotSlot, {
+        waitForImages: false,
+        waitForLinks: false,
+        waitForInteractives: false,
+    });
 };
 
 export { carrotSlotInit };
