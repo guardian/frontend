@@ -10,7 +10,8 @@ const doubleClickRandom = (): string => {
 };
 
 export const doubleClickAdFree: ThirdPartyTag = {
-    shouldRun: commercialFeatures.adFree,
+    shouldRun:
+        commercialFeatures.adFree && config.switches.doubleclickYoutubeAdFree,
     useImage: true,
     url: `//pubads.g.doubleclick.net/activity;dc_iu=/${config.page
         .dfpAccountId}/;ord=${doubleClickRandom()};af=T;dc_seg=482549580?`,
