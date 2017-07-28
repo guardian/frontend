@@ -1,9 +1,19 @@
 // @flow
 
-import styles from './style.scss';
+// This is an example of styles that are defined inline
+const style = {
+    borderTopWidth: '3px',
+    borderColor: '#0061A6',
+    borderTopStyle: 'solid',
+    paddingTop: '2px',
+    fontSize: '11px',
+    lineHeight: '14px',
+    margin: '15px 0',
+    clear: 'both'
+};
 
 export default () =>
-    <div style={styles.footer}>
+    <div style={style}>
         <ul className="inline with-separators">
             <li><a href="/help">Help</a></li>
             <li><a href="/help/contact-us">Contact us</a></li>

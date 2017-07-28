@@ -1,0 +1,24 @@
+nav_item {
+    display: block;
+    float: left;
+    width: 40%;
+    padding: 10px 2.5%;
+    margin: 0 2.5%;
+    border-bottom: 1px solid #F4F4EE;
+}
+
+$zones: (
+    news: #D61D00,
+    sport: #008000,
+    culture: #D1008B,
+    business: #3246AB,
+    comment: #0061A6,
+    lifeandstyle: #AD532F,
+    environment: #4A7801
+);
+
+@each $zone, $color in $zones {
+    zone_#{$zone} {
+        color: $color;
+    }
+}

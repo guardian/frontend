@@ -2,7 +2,7 @@ guardian {
     fill: $colour-brandBlueDark;
 }
 
-fluid_wrap {
+fluidWrap {
     max-width: 940px;
     margin: 0 auto;
     padding: 0 10px;
@@ -24,14 +24,14 @@ heading {
     margin: 0;
 }
 
-sub_heading {
+subHeading {
     line-height: 20px;
     font-size: 18px;
     font-weight: normal;
     margin: 0;
 }
 
-sub_heading_container {
+subHeadingContainer {
     border-top-width: 3px;
     border-color: #0061A6;
     border-top-style: solid;
@@ -41,55 +41,7 @@ sub_heading_container {
     clear: both;
 }
 
-footer {
-    border-top-width: 3px;
-    border-color: #0061A6;
-    border-top-style: solid;
-    padding-top: 2px;
-    font-size: 11px;
-    line-height: 14px;
-    margin: 15px 0;
-    clear: both;
-}
-
 
 para {
     margin: 0 0 10px;
-}
-
-nav_item {
-    display: block;
-    float: left;
-    width: 40%;
-    padding: 10px 2.5%;
-    margin: 0 2.5%;
-    border-bottom: 1px solid #F4F4EE;
-}
-
-zone_news {
-    color: #D61D00;
-}
-
-zone_sport {
-    color: #008000;
-}
-
-zone_culture {
-    color: #D1008B;
-}
-
-zone_business {
-    color: #3246AB;
-}
-
-zone_comment {
-    color: #0061A6;
-}
-
-zone_lifeandstyle {
-    color: #AD532F;
-}
-
-zone_environment {
-    color: #4A7801;
 }
