@@ -24,6 +24,18 @@ const config = {
                 loader: 'babel-loader',
             },
             {
+                test: /\.css$/,
+                exclude: /node_modules/,
+                use: [
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            minimize: true,
+                        },
+                    },
+                ],
+            },
+            {
                 test: /\.scss$/,
                 exclude: /node_modules/,
                 use: [
