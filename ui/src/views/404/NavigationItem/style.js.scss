@@ -1,10 +1,15 @@
 nav_item {
     display: block;
-    float: left;
-    width: 40%;
     padding: 10px 2.5%;
     margin: 0 2.5%;
     border-bottom: 1px solid #f4f4ee;
+    font-family: 'arial';
+    font-size: 12px;
+
+    @include mq(tablet) {
+        float: left;
+        width: 40%;
+    }
 }
 
 $zones: (
@@ -20,5 +25,6 @@ $zones: (
 @each $zone, $color in $zones {
     zone_#{$zone} {
         color: $color;
+        text-decoration: none;
     }
 }

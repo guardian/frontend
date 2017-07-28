@@ -12,31 +12,42 @@ const style = {
     clear: 'both',
 };
 
+const item = ({ text, ...props }) =>
+    <li
+        style={{
+            display: 'inline',
+            ':after': {
+                content: '" | "',
+            },
+        }}>
+        <a
+            {...props}
+            style={{
+                color: '#005689',
+                textDecoration: 'none',
+            }}>
+            {text}
+        </a>
+    </li>;
+
+const items = [
+    { href: '/help', text: 'Help' },
+    { href: '/help/contact-us', text: 'Contact us' },
+    {
+        href: 'https://www.surveymonkey.com/s/theguardian-beta-feedback',
+        text: 'Feedback',
+        target: '_blank',
+    },
+    { href: '/help/terms-of-service', text: 'Terms &amp; conditions' },
+    { href: '/help/privacy-policy', text: 'Privacy policy' },
+];
+
 export default () =>
     <div style={style}>
-        <ul className="inline with-separators">
-            <li>
-                <a href="/help">Help</a>
-            </li>
-            <li>
-                <a href="/help/contact-us">Contact us</a>
-            </li>
-            <li>
-                <a
-                    target="_blank"
-                    href="https://www.surveymonkey.com/s/theguardian-beta-feedback"
-                >
-                    Feedback
-                </a>
-            </li>
-            <li>
-                <a href="/help/terms-of-service">Terms &amp; conditions</a>
-            </li>
-            <li>
-                <a href="/help/privacy-policy">Privacy policy</a>
-            </li>
+        <ul style={{ fontFamily: 'arial' }}>
+            {items.map(item)}
         </ul>
-        <p>
+        <p style={{ fontFamily: 'arial' }}>
             <small>
                 &copy; Guardian News and Media Limited or its affiliated
                 companies. All rights reserved. Registered in England and Wales.

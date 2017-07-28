@@ -16,13 +16,26 @@ import {
 export default () =>
     <div style={fluidWrap}>
         <div style={topbar}>
-            <a href="/">Home</a>
+            <a
+                href="/"
+                style={{
+                    color: '#005689',
+                    textDecoration: 'none',
+                    fontFamily: 'arial',
+                    padding: '8px 10px 7px',
+                    display: 'block',
+                }}>
+                Home
+            </a>
         </div>
-        <Logo block-styles={{ guardian: { fill: colour.brandBlueDark } }} />
+        <Logo
+            block-styles={{ guardian: { fill: colour.brandBlueDark } }}
+            width={250}
+        />
         <h1 style={heading}>
             Sorry - we haven’t been able to serve the page you asked for.
         </h1>
-        <div>
+        <div style={{ marginTop: '20px' }}>
             <div style={subHeadingContainer}>
                 <h2 style={subHeading}>404</h2>
             </div>

@@ -10,6 +10,7 @@ topbar {
     font-size: 12px;
     margin-bottom: 20px;
     width: 100%;
+    border-bottom: 1px solid #c6c6c6;
 }
 
 heading {
@@ -17,7 +18,7 @@ heading {
     line-height: 30px;
     font-weight: normal;
     font-family: georgia, serif;
-    margin: 0;
+    margin: 10px 0 0;
 }
 
 subHeading {
@@ -39,4 +40,6 @@ subHeadingContainer {
 
 para {
     margin: 0 0 10px;
+    font-family: arial;
+    font-size: 12px;
 }
