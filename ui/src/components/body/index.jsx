@@ -1,6 +1,6 @@
 // @flow
 
-import { body, side } from './style.scss';
+import { body, side } from './style.js.scss';
 
 export default (props: Object) =>
     <body style={body}>
