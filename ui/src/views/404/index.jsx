@@ -3,7 +3,7 @@ import Logo from 'assets/images/guardian-logo-320.svg';
 import Navigation from './Navigation';
 import Footer from './Footer';
 
-import {heading, fluidWrap, topbar, guardian, subHeadingContainer, subHeading, para } from './style.scss';
+import {heading, fluidWrap, topbar, guardian, subHeadingContainer, subHeading, para } from './style.js.scss';
 
 export default () =>
     <div style={fluidWrap}>
