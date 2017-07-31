@@ -1,7 +1,8 @@
 package views.support
 
 import java.util.concurrent.TimeUnit
-import model.pressed.CuratedContent
+
+import model.pressed.{CuratedContent, PressedStory}
 import org.joda.time.DateTime
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichCapiDateTime
 
@@ -9,6 +10,10 @@ object ContentOldAgeDescriber extends ContentOldAgeDescriber
 
 class ContentOldAgeDescriber {
   def apply(content: model.Content): String = {
+    message(Some(content.trail.webPublicationDate))
+  }
+
+  def apply(content: PressedStory): String = {
     message(Some(content.trail.webPublicationDate))
   }
 

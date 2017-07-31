@@ -10,10 +10,11 @@ import com.sun.syndication.feed.module.mediarss.types.{Credit, MediaContent, Met
 import com.sun.syndication.feed.synd._
 import com.sun.syndication.io.SyndFeedOutput
 import model._
+import model.pressed.PressedStory
 import org.joda.time.DateTime
 import org.jsoup.Jsoup
 import play.api.mvc.RequestHeader
-import views.support.{Profile, Item140, Item460}
+import views.support.{Item140, Item460, Profile}
 
 import scala.collection.JavaConversions._
 import scala.collection.JavaConverters._
@@ -133,7 +134,7 @@ object TrailsToRss extends implicits.Collections {
   }
 
   def fromPressedPage(pressedPage: PressedPage)(implicit request: RequestHeader): String = {
-    val faciaContentList: List[ContentType] =
+    val faciaContentList: List[PressedStory] =
       pressedPage.collections
         .filterNot(_.config.excludeFromRss)
         .flatMap(_.curatedPlusBackfillDeduplicated)
@@ -153,7 +154,7 @@ object TrailsToRss extends implicits.Collections {
     fromFaciaContent(webTitle, faciaContentList, pressedPage.metadata.url, pressedPage.metadata.description)
   }
 
-  def fromFaciaContent(webTitle: String, faciaContentList: Seq[ContentType], url: String, description: Option[String] = None)(implicit request: RequestHeader): String = {
+  def fromFaciaContent(webTitle: String, faciaContentList: Seq[PressedStory], url: String, description: Option[String] = None)(implicit request: RequestHeader): String = {
 
     // Feed
     val feed = new SyndFeedImpl
