@@ -54,15 +54,6 @@ object NewNavigation {
     case "life" => Life
   }
 
-  case object MostPopular extends EditionalisedNavigationSection {
-    val name = "news"
-
-    val uk = NavLinkLists(List(headlines, ukNews, world, business, environment, tech, football))
-    val au = NavLinkLists(List(headlines, australiaNews, world, auPolitics, environment, football))
-    val us = NavLinkLists(List(headlines, usNews, world, usPolitics, business, environment, soccer))
-    val int = NavLinkLists(List(headlines, world, ukNews, business, science, globalDevelopment, football))
-  }
-
   case object News extends EditionalisedNavigationSection {
     val name = "news"
 
@@ -292,10 +283,10 @@ object NewNavigation {
 
     val sectionLinks = List(
 
-      SectionsLink("uk", headlines, MostPopular),
-      SectionsLink("us", headlines, MostPopular),
-      SectionsLink("au", headlines, MostPopular),
-      SectionsLink("international", headlines, MostPopular),
+      SectionsLink("uk", headlines, News),
+      SectionsLink("us", headlines, News),
+      SectionsLink("au", headlines, News),
+      SectionsLink("international", headlines, News),
       SectionsLink("uk-news", ukNews, News),
       SectionsLink("world", world, News),
       SectionsLink("world/europe-news", europe, News),
