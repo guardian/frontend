@@ -3,7 +3,7 @@
 import NavigationItem from '../NavigationItem';
 import navItems from './nav-items';
 
-export default () =>
+const NavigationItems = () =>
     <ul role="navigation">
         {navItems.map(({ link, ...props }) =>
             <NavigationItem {...props}>
@@ -11,3 +11,5 @@ export default () =>
             </NavigationItem>
         )}
     </ul>;
+
+export default NavigationItems;

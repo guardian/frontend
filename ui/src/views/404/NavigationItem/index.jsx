@@ -1,7 +1,12 @@
 // @flow
 import styles from './style.js.scss';
 
-export default ({ zone = 'news', path, newWindow = false, children }: Object) =>
+const NavigationItem = ({
+    zone = 'news',
+    path,
+    newWindow = false,
+    children,
+}: Object) =>
     <li style={styles.nav_item}>
         <a
             href={path}
@@ -10,3 +15,5 @@ export default ({ zone = 'news', path, newWindow = false, children }: Object) =>
             {children}
         </a>
     </li>;
+
+export default NavigationItem;

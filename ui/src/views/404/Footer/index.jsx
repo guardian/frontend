@@ -42,7 +42,7 @@ const items = [
     { href: '/help/privacy-policy', text: 'Privacy policy' },
 ];
 
-export default () =>
+const Footer = () =>
     <div style={style}>
         <ul style={{ fontFamily: 'arial' }}>
             {items.map(item)}
@@ -56,3 +56,5 @@ export default () =>
             </small>
         </p>
     </div>;
+
+export default Footer;

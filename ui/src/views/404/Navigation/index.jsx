@@ -2,7 +2,9 @@
 
 import NavigationItems from '../NavigationItems';
 
-export default () =>
+const Navigation = () =>
     <nav>
         <NavigationItems />
     </nav>;
+
+export default Navigation;
