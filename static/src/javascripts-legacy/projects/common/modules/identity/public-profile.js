@@ -29,7 +29,7 @@ define([
 
             opts.page = url.getUrlVars().page || 1;
 
-            (activityStream = new ActivityStream(opts)).fetch(el).then(function () {
+            (activityStream = new ActivityStream.ActivityStream(opts)).fetch(el).then(function () {
                 bonzo(el).removeClass('activity-stream--loading');
             });
         }).addClass('activity-stream--loading');
