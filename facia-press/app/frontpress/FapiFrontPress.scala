@@ -130,8 +130,9 @@ trait FapiFrontPress extends Logging with ExecutionContexts {
 
     pressFuture.onComplete {
       case Success(_) =>
-        log.info(s"Successfully pressed $path in ${stopWatch.elapsed} ms")
-        FaciaPressMetrics.AllFrontsPressLatencyMetric.recordDuration(stopWatch.elapsed)
+        val pressDuration: Long = stopWatch.elapsed
+        log.info(s"Successfully pressed $path in $pressDuration ms")
+        FaciaPressMetrics.AllFrontsPressLatencyMetric.recordDuration(pressDuration)
         /** We record separate metrics for each of the editions' network fronts */
         val metricsByPath = Map(
           "uk" -> FaciaPressMetrics.UkPressLatencyMetric,
@@ -140,7 +141,7 @@ trait FapiFrontPress extends Logging with ExecutionContexts {
         )
         if (Edition.all.map(_.id.toLowerCase).contains(path)) {
           metricsByPath.get(path).foreach { metric =>
-            metric.recordDuration(stopWatch.elapsed)
+            metric.recordDuration(pressDuration)
           }
         }
       case Failure(error) =>
