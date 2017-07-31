@@ -60,11 +60,10 @@ const getUserVariantParams = (
     defaultOffering: string
 ): Object => {
     if (campaignId && userVariant && userVariant.engagementBannerParams) {
-        const userVariantParams: any = userVariant.engagementBannerParams;
+        const userVariantParams = userVariant.engagementBannerParams;
 
         if (!userVariantParams.campaignCode) {
-            const offering: string =
-                userVariantParams.offering || defaultOffering;
+            const offering = userVariantParams.offering || defaultOffering;
 
             userVariantParams.campaignCode = buildCampaignCode(
                 offering,
