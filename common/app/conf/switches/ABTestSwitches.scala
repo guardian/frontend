@@ -71,16 +71,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-acquisitions-this-land-series-epic",
-    "This places a custom Epic at the ehnd of This Land Is Your Land articles",
-    owners = Seq(Owner.withGithub("desbo")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 8, 1),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-tailor-survey",
     "Integrate Tailor with ab tests",
     owners = Seq(Owner.withGithub("oilnam"), Owner.withGithub("mike-ruane")),
@@ -145,7 +135,7 @@ trait ABTestSwitches {
     "Bootstrap the AB test framework to use the Epic to thank readers who have already supported the Guardian",
     owners = Seq(Owner.withGithub("Mullefa")),
     safeState = On,
-    sellByDate = new LocalDate(2017, 8, 1),
+    sellByDate = new LocalDate(2017, 9, 5),
     exposeClientSide = true
   )
 
