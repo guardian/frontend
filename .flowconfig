@@ -1,13 +1,13 @@
 [ignore]
 .*/node_modules/fbjs/.*
 .*/node_modules/weinre/.*
+<PROJECT_ROOT>/ui/.*
 
 [include]
 
 [libs]
 dev/flow-typed
 dev/flow-typed-guardian-frontend
-
 
 [options]
 module.name_mapper='^admin' -> 'projects/admin'
