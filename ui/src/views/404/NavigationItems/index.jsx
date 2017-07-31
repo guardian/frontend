@@ -1,7 +1,7 @@
 // @flow
 
 import NavigationItem from '../NavigationItem';
-import navItems from './nav-items.json';
+import navItems from './nav-items';
 
 export default () =>
     <ul role="navigation">
