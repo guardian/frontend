@@ -45,7 +45,7 @@ You can use the JSXified SVG as a normal JSX import:
 ```jsx
 import MySVG from './my-svg.svg';
 
-export default () => <div><MySVG /></div>
+export default () => <div><MySVG /></div>;
 
 // <div><svg width="320" height="60"><path ... /></svg></div>
 
@@ -54,7 +54,7 @@ export default () => <div><MySVG /></div>
 It will also respond to an object on a `block-styles` prop:
 
 ```jsx
-<MySVG block-styles={{}} />
+<MySVG block-styles={{ red: { fill: "red" } }} />;
 ```
 If a node in the original SVG has a `data-block` attribute, the loader will look for a key in the `styles` object that matches the value of `data-block`, and apply the styles inline:
 
@@ -67,7 +67,7 @@ If a node in the original SVG has a `data-block` attribute, the loader will look
 import MySVG from './my-svg.svg';
 
 const styles = {
-	'red': { color: 'red' }
+	red: { color: 'red' }
 }
 
 export default () => <MySVG block-styles={styles} />
