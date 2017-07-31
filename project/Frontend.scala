@@ -53,7 +53,8 @@ object Frontend extends Build with Prototypes {
       targetingClient,
       scanamo,
       scalaUri,
-      commercialShared
+      commercialShared,
+      jenkins
     )
   ).settings(
       mappings in TestAssets ~= filterAssets
