@@ -84,7 +84,7 @@ You can use Sass in a similar way to non-SVG components:
 ```
 
 ```scss
-// styles.scss
+// styles.js.scss
 red {
     fill: 'red'
 }
