@@ -6,6 +6,7 @@ import play.api.mvc.Result
 import play.api.mvc.Results._
 import rendering.Renderable
 import akka.pattern.ask
+import akka.routing.RoundRobinPool
 import akka.util.Timeout
 import common.Logging
 import play.api.Mode
@@ -16,7 +17,8 @@ import scala.util.{Failure, Success, Try}
 
 class Renderer(implicit actorSystem: ActorSystem, executionContext: ExecutionContext, ac: ApplicationContext) extends Logging {
 
-  val actor = actorSystem.actorOf(Props[RenderingActor]) //TODO: initialize several actors
+  val renderingActorCount = 3
+  val actor = actorSystem.actorOf(Props[RenderingActor].withRouter(RoundRobinPool(renderingActorCount)))
 
   val timeoutValue: Int = if(ac.environment.mode == Mode.Dev) 10 else 1
   implicit val timeout = Timeout(timeoutValue.seconds)
