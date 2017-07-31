@@ -1,0 +1,7 @@
+@import com.gu.contentatom.thrift.Atom
+@import com.gu.contentatom.thrift.atom.storyquestions.StoryQuestionsAtom
+@import jenkins.ArticleAtomRenderer
+
+@(atom: Atom)
+
+@Html(ArticleAtomRenderer(atom)._1)
