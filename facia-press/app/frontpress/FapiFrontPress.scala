@@ -17,13 +17,18 @@ import services.fronts.FrontsApi
 import model._
 import model.facia.PressedCollection
 import model.pressed._
+import org.joda.time.DateTime
 import play.api.libs.json._
 import play.api.libs.ws.WSClient
 import services.{ConfigAgent, S3FrontsApi}
 
 import scala.concurrent.Future
+import scala.util.{Failure, Success}
 
 class LiveFapiFrontPress(val wsClient: WSClient, val capiClientForFrontsSeo: ContentApiClient) extends FapiFrontPress {
+
+  override def putPressedJson(path: String, json: String): Unit = S3FrontsApi.putLiveFapiPressedJson(path, json)
+  override def isLiveContent: Boolean = true
 
   override implicit val capiClient: ContentApiClientLogic = CircuitBreakingContentApiClient(
     httpClient = new CapiHttpClient(wsClient),
@@ -33,16 +38,7 @@ class LiveFapiFrontPress(val wsClient: WSClient, val capiClientForFrontsSeo: Con
 
   implicit val fapiClient: ApiClient = FrontsApi.crossAccountClient
 
-  def pressByPathId(path: String): Future[Unit] =
-    getPressedFrontForPath(path)
-      .map { pressedFront => S3FrontsApi.putLiveFapiPressedJson(path, Json.stringify(Json.toJson(pressedFront)))}
-      .asFuture.map(_.fold(
-        e => {
-          StatusNotification.notifyFailedJob(path, isLive = true, e)
-          throw new RuntimeException(s"${e.cause} ${e.message}")},
-        _ => StatusNotification.notifyCompleteJob(path, isLive = true)))
-
-  def collectionContentWithSnaps(
+  override def collectionContentWithSnaps(
     collection: Collection,
     adjustSearchQuery: AdjustSearchQuery = identity,
     adjustSnapItemQuery: AdjustItemQuery = identity) =
@@ -59,17 +55,10 @@ class DraftFapiFrontPress(val wsClient: WSClient, val capiClientForFrontsSeo: Co
 
   implicit val fapiClient: ApiClient = FrontsApi.crossAccountClient
 
-  def pressByPathId(path: String): Future[Unit] =
-    getPressedFrontForPath(path)
-      .map { pressedFront => S3FrontsApi.putDraftFapiPressedJson(path, Json.stringify(Json.toJson(pressedFront)))}
-      .asFuture.map(_.fold(
-        e => {
-          StatusNotification.notifyFailedJob(path, isLive = false, e)
-          throw new RuntimeException(s"${e.cause} ${e.message}")
-        },
-        _ => StatusNotification.notifyCompleteJob(path, isLive = false)))
+  override def putPressedJson(path: String, json: String): Unit = S3FrontsApi.putDraftFapiPressedJson(path, json)
+  override def isLiveContent: Boolean = false
 
-  def collectionContentWithSnaps(
+  override def collectionContentWithSnaps(
     collection: Collection,
     adjustSearchQuery: AdjustSearchQuery = identity,
     adjustSnapItemQuery: AdjustItemQuery = identity) =
@@ -91,7 +80,8 @@ trait FapiFrontPress extends Logging with ExecutionContexts {
   implicit def fapiClient: ApiClient
   val capiClientForFrontsSeo: ContentApiClient
   val wsClient: WSClient
-  def pressByPathId(path: String): Future[Unit]
+  def putPressedJson(path: String, json: String): Unit
+  def isLiveContent: Boolean
 
   def collectionContentWithSnaps(
     collection: Collection,
@@ -116,6 +106,49 @@ trait FapiFrontPress extends Logging with ExecutionContexts {
       .showTags("all")
       .showReferences(QueryDefaults.references)
       .showAtoms("media")
+
+  def pressByPathId(path: String): Future[Unit] = {
+
+    val stopWatch: StopWatch = new StopWatch
+
+    val pressFuture = getPressedFrontForPath(path)
+      .map { pressedFront =>
+        val json: String = Json.stringify(Json.toJson(pressedFront))
+        FaciaPressMetrics.FrontPressContentSize.recordSample(json.getBytes.length, new DateTime())
+        putPressedJson(path, json)
+      }
+      .asFuture
+      .map(
+        _.fold(
+          e => {
+            StatusNotification.notifyFailedJob(path, isLive = isLiveContent, e)
+            throw new RuntimeException(s"${e.cause} ${e.message}")
+          },
+          _ => StatusNotification.notifyCompleteJob(path, isLive = isLiveContent))
+      )
+
+
+    pressFuture.onComplete {
+      case Success(_) =>
+        log.info(s"Succesfully pressed $path in ${stopWatch.elapsed} ms")
+        FaciaPressMetrics.AllFrontsPressLatencyMetric.recordDuration(stopWatch.elapsed)
+        /** We record separate metrics for each of the editions' network fronts */
+        val metricsByPath = Map(
+          "uk" -> FaciaPressMetrics.UkPressLatencyMetric,
+          "us" -> FaciaPressMetrics.UsPressLatencyMetric,
+          "au" -> FaciaPressMetrics.AuPressLatencyMetric
+        )
+        if (Edition.all.map(_.id.toLowerCase).contains(path)) {
+          metricsByPath.get(path).foreach { metric =>
+            metric.recordDuration(stopWatch.elapsed)
+          }
+        }
+      case Failure(error) =>
+        log.warn(s"Failed to press '$path':", error)
+    }
+
+    pressFuture
+  }
 
   def generateCollectionJsonFromFapiClient(collectionId: String): Response[PressedCollection] =
     for {
