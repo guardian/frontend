@@ -46,12 +46,20 @@ declare type ContributionsABTest = ABTest & {
     viewEvent: string,
 };
 
+declare type Interaction = {
+    component: string,
+    value: string,
+};
+
 declare type EngagementBannerParams = {
+    minArticles: number,
     campaignCode: string,
     buttonCaption: string,
     linkUrl: string,
     messageText: string,
     pageviewId: string,
+    interactionOnMessageShow: Interaction,
+    colourStrategy: () => string,
     offering?: string,
     paypalClass?: string,
 };

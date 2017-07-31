@@ -164,6 +164,7 @@ describe('Membership engagement banner', () => {
                     minArticles: 1,
                     colourStrategy: jest.fn(() => 'fake-colour-class'),
                     offering: 'fake-membership-offering',
+                    interactionOnMessageShow: {},
                 })
             );
             fakeMembershipEngagementTests.push({
@@ -212,6 +213,7 @@ describe('Membership engagement banner', () => {
                     messageText: 'fake-message-text',
                     linkUrl: 'fake-link-url',
                     buttonCaption: 'fake-button-caption',
+                    interactionOnMessageShow: {},
                 })
             );
             fakeConfig.get.mockImplementationOnce(
