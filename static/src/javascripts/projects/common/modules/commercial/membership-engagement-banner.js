@@ -121,18 +121,16 @@ const deriveBannerParams = (location: string): ?Object => {
 };
 
 // Used to send an interaction if the engagement banner is shown.
-// #? A lot of null checking here, but it's hard to reason about the possible values
-//    `interaction` could take. Perhaps we can simplify when we have more Flow coverage
+// #? It's hard to reason about the possible values `interaction` could take. Ideally this
+// param would not be nullable. Perhaps we can improve when we have more Flow coverage
 const recordInteraction = (interaction: ?Interaction): void => {
     if (interaction) {
         const { component, value } = interaction;
 
-        if (component && value) {
-            ophan.record({
-                component,
-                value,
-            });
-        }
+        ophan.record({
+            component,
+            value,
+        });
     }
 };
 
