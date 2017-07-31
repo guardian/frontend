@@ -156,20 +156,9 @@
         }
     }}
 
-    @for(containerBranding <- collection.branding) { @containerBranding match {
+    @for(collectionBranding <- collection.branding) { @collectionBranding match {
         case branding: Branding => {
-            <table class="ct__inner branded-banner">
-                <tr class="bb__inner">
-                    <td class="left-col">
-                    </td>
-                    <td class="bb__label">
-                        Paid for by
-                    </td>
-                    <td class="bb__logo">
-                        <img border="0" src="@branding.logo.src">
-                    </td>
-                </tr>
-            </table>
+            @containerBranding(collection.href, branding)
         }
         case _ => { }
     }}

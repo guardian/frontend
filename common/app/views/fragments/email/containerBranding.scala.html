@@ -1,0 +1,28 @@
+@import com.gu.commercial.branding.Branding
+@import layout.EmailContentContainer
+
+@(href: Option[String], branding: Branding)
+
+@labelAndLogo(branding: Branding) = {
+    <table class="ct__inner branded-banner">
+        <tr class="bb__inner">
+            <td class="left-col">
+            </td>
+            <td class="bb__label">
+                @branding.logo.label
+            </td>
+            <td class="bb__logo">
+                <img border="0" src="@branding.logo.src">
+            </td>
+        </tr>
+    </table>
+}
+
+@for(containerHref <- href) { @containerHref match {
+    case href: String => {
+        <a class="fc-link" href="@href">
+            @labelAndLogo(branding)
+        </a>
+    }
+    case _ => {@labelAndLogo(branding)}
+}}
