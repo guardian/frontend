@@ -23,7 +23,7 @@ define([
         });
 
         var listeners = [];
-        var mqRegex = /min\-width:(\d+)/;
+        var mqRegex = /min-width:(\d+)/;
         var mockWindow = {
             matchMedia: function (mq) {
                 var matches = mq.match(mqRegex);

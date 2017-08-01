@@ -21,7 +21,7 @@ trait FeatureSwitches {
     "If this switch is on, Explore template will be applied to explore articles. This template is part of a Membership Explore test",
     owners = Seq(Owner.withGithub("NataliaLKB"), Owner.withGithub("blongden73")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 7, 25),
+    sellByDate = new LocalDate(2017, 8, 24),
     exposeClientSide = true
   )
 
@@ -242,16 +242,6 @@ trait FeatureSwitches {
     "If switched on, any user registrations from a known tor exit node will be logged",
     owners = Seq(Owner.withGithub("johnduffell")),
     safeState = On,
-    sellByDate = never,
-    exposeClientSide = false
-  )
-
-  val FootballFeedRecorderSwitch = Switch(
-    SwitchGroup.Feature,
-    "football-feed-recorder",
-    "If switched on then football matchday feeds will be recorded every minute",
-    owners = Seq(Owner.withGithub("johnduffell")),
-    safeState = Off,
     sellByDate = never,
     exposeClientSide = false
   )

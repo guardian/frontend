@@ -236,10 +236,10 @@ object EmailNewsletters {
 
   val documentaries = EmailNewsletter(
     name = "Guardian Documentaries",
-    theme = "feature",
+    theme = "features",
     teaser = "Find out about our new films and get background on our film-makers and the subjects that they cover",
     description = "Be the first to find out about our new documentary films, created by top international filmmakers and following unseen global stories. Discover our latest documentaries, get background on our film-makers and the subjects that they cover, and find out about live documentary screenings",
-    frequency = "Every four weeks",
+    frequency = "Whenever a new film is available",
     listId = 3745,
     tone = Some("media"),
     signupPage = Some("/info/2016/sep/02/sign-up-for-the-guardian-documentaries-update"),
@@ -248,7 +248,7 @@ object EmailNewsletters {
 
   val weekendReading = EmailNewsletter(
     name = "Weekend Reading",
-    theme = "feature",
+    theme = "features",
     teaser = "The best stuff you didn't have time to read during the week - from features and news analysis to lifestyle and culture",
     description = "The best stuff you didn't have time to read during the week - from features and news analysis to lifestyle and culture",
     frequency = "Every Saturday",
@@ -260,14 +260,27 @@ object EmailNewsletters {
 
   val theLongRead = EmailNewsletter(
     name = "The Long Read",
-    theme = "feature",
+    theme = "features",
     teaser = "Get lost in a great story; the Guardian’s award-winning long reads bring you the biggest ideas and the arguments that matter",
     description = "Get lost in a great story. From politics to fashion, international investigations to new thinking, culture to crime - we’ll bring you the biggest ideas and the arguments that matter. Sign up to have the Guardian’s award-winning long reads emailed to you every Saturday morning",
     frequency = "Every Saturday",
-    listId = 3890,
-    aliases = List(3322),
+    listId = 3322,
+    aliases = List(3890),
     tone = Some("feature"),
-    signupPage = Some("/news/2015/jul/20/sign-up-to-the-long-read-email")
+    signupPage = Some("/news/2015/jul/20/sign-up-to-the-long-read-email"),
+    exampleUrl = Some("/email/the-long-read")
+  )
+
+  val outsideInAmerica = EmailNewsletter(
+    name = "Outside in America",
+    theme = "features",
+    teaser = "Keep up with our Investigation of the homeless crisis in western US, focusing on those frontline and enabling readers to take action",
+    description = "Keep up with our year-long investigation of the homeless crisis in western US, focusing on those frontline and enabling readers to take action. Editor Alastair Gee rounds up the latest developments and provides a catch-up on the most compelling stories, both from the Guardian and around the web",
+    frequency = "Monthly",
+    listId = 3833,
+    tone = Some("feature"),
+    signupPage = Some("/us-news/2017/feb/16/outside-in-america-homeless-project"),
+    exampleUrl = Some("/us-news/series/outside-in-america-newsletter/latest/email")
   )
 
   val sleeveNotes = EmailNewsletter(
@@ -487,7 +500,8 @@ object EmailNewsletters {
   val featureEmails = List(
     documentaries,
     weekendReading,
-    theLongRead
+    theLongRead,
+    outsideInAmerica
   )
 
   val cultureEmails = List(

@@ -107,6 +107,11 @@
           ga('@{trackerName}.set', 'dimension42', '@brandingType.name');
         }
         ga('@{trackerName}.set', 'dimension43', getExperienceValue()); @* 'Experience' dimension, for short-lived experiment values. *@
+
+        if(document.location.hash === '#fbLogin') {
+            ga('@{trackerName}.set', 'referrer', null);
+            document.location.hash = '';
+        }
     }
 
     @defining(GoogleAnalyticsAccount.editorialTracker(context).trackerName) { trackerName =>

@@ -26,7 +26,7 @@ export const dfpEnv: DfpEnv = {
     /* adSlotSelector: string. A CSS selector to query ad slots in the DOM */
     adSlotSelector: '.js-ad-slot',
 
-    /* sonobiEnabled: boolean. Set to true if sonobi real-time-bidding is enabled*/
+    /* sonobiEnabled: boolean. Set to true if sonobi real-time-bidding is enabled */
     sonobiEnabled:
         (config.switches.sonobiHeaderBidding || getUrlVars().sonobi) &&
         !(config.switches.preflightAdCall && !!window.esi),

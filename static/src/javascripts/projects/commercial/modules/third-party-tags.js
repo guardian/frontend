@@ -17,6 +17,7 @@ import { simpleReach } from 'commercial/modules/third-party-tags/simple-reach';
 import { tourismAustralia } from 'commercial/modules/third-party-tags/tourism-australia';
 import { krux } from 'commercial/modules/third-party-tags/krux';
 import { initOutbrain } from 'commercial/modules/third-party-tags/outbrain';
+import { doubleClickAdFree } from 'commercial/modules/third-party-tags/doubleclick-ad-free';
 import plista from 'commercial/modules/third-party-tags/plista';
 
 const isLuckyBastard = (): boolean =>
@@ -85,6 +86,7 @@ const loadOther = (): void => {
         simpleReach,
         tourismAustralia,
         krux,
+        doubleClickAdFree,
     ].filter(_ => _.shouldRun);
 
     if (services.length) {

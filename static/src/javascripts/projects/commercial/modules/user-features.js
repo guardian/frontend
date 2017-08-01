@@ -9,14 +9,12 @@ import { daysSince } from 'lib/time-utils';
 const USER_FEATURES_EXPIRY_COOKIE = 'gu_user_features_expiry';
 const PAYING_MEMBER_COOKIE = 'gu_paying_member';
 const AD_FREE_USER_COOKIE = 'GU_AF1';
-const JOIN_DATE_COOKIE = 'gu_join_date';
 
 const userHasData = (): boolean => {
     const cookie =
         getCookie(USER_FEATURES_EXPIRY_COOKIE) ||
         getCookie(PAYING_MEMBER_COOKIE) ||
-        getCookie(AD_FREE_USER_COOKIE) ||
-        getCookie(JOIN_DATE_COOKIE);
+        getCookie(AD_FREE_USER_COOKIE);
     return !!cookie;
 };
 
@@ -35,12 +33,6 @@ const persistResponse = (JsonResponse: () => void) => {
     if (switches.adFreeSubscriptionTrial && JsonResponse.adFree) {
         addCookie(AD_FREE_USER_COOKIE, expiryDate.getTime().toString());
     }
-
-    if (JsonResponse.membershipJoinDate) {
-        addCookie(JOIN_DATE_COOKIE, JsonResponse.membershipJoinDate);
-    } else {
-        removeCookie(JOIN_DATE_COOKIE);
-    }
 };
 
 const deleteOldData = (): void => {
@@ -48,7 +40,6 @@ const deleteOldData = (): void => {
     removeCookie(USER_FEATURES_EXPIRY_COOKIE);
     removeCookie(PAYING_MEMBER_COOKIE);
     removeCookie(AD_FREE_USER_COOKIE);
-    removeCookie(JOIN_DATE_COOKIE);
 };
 
 const requestNewData = (): Promise<void> =>
@@ -124,26 +115,6 @@ const shouldSeeReaderRevenue = (): boolean =>
 
 const isAdFreeUser = (): boolean => adFreeDataIsPresent() && !adFreeDataIsOld();
 
-const toDate = (dateStr: string): Date => {
-    const parts = Array.from(dateStr.split('-'), s => parseInt(s, 10));
-
-    return new Date(parts[0], parts[1] - 1, parts[2]);
-};
-
-const isInBrexitCohort = (): boolean => {
-    if (identity.isUserLoggedIn()) {
-        const start = toDate('2016-06-23');
-        const end = toDate('2016-07-31');
-
-        const cookie = getCookie(JOIN_DATE_COOKIE);
-        if (cookie) {
-            const joinDate = toDate(cookie.toString());
-            return joinDate && joinDate - start >= 0 && end - joinDate >= 0;
-        }
-    }
-    return false;
-};
-
 export {
     isAdFreeUser,
     isPayingMember,
@@ -151,5 +122,4 @@ export {
     isRecentContributor,
     shouldSeeReaderRevenue,
     refresh,
-    isInBrexitCohort,
 };
