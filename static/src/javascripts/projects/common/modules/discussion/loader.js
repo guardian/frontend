@@ -439,7 +439,6 @@ class Loader extends Component {
 
     gotoComment(id: string, fromRequest?: boolean): void {
         const comment = $(`#comment-${id}`, this.elem);
-        const thisLoader = this;
 
         if (comment.length > 0) {
             const commentsAreHidden =
@@ -448,21 +447,21 @@ class Loader extends Component {
             if (commentsAreHidden) {
                 fastdom
                     .write(() => {
-                        thisLoader.comments.showHiddenComments();
-                        thisLoader.removeState('truncated');
+                        this.comments.showHiddenComments();
+                        this.removeState('truncated');
 
                         $('.d-discussion__show-all-comments').addClass('u-h');
                     })
                     .then(() => {
-                        thisLoader.setCommentHash(id);
+                        this.setCommentHash(id);
                     });
             } else {
                 // If comments aren't hidden we can go straight to the comment
-                thisLoader.setCommentHash(id);
+                this.setCommentHash(id);
             }
         } else if (!fromRequest) {
             // If the comment isn't on the page, then we need to load the comment thread
-            thisLoader.loadComments({ comment: id });
+            this.loadComments({ comment: id });
         } else {
             // The comment didn't exist in the response
 
