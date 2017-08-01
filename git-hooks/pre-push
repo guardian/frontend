@@ -1,7 +1,7 @@
 #!/usr/bin/env node
+/* eslint-disable no-console */
 
 const execa = require('execa');
-const chalk = require('chalk');
 
 const getCurrentBranchName = () =>
     execa.stdout('git', ['symbolic-ref', '--short', 'HEAD']);
@@ -63,26 +63,26 @@ const validate = diffs => {
             );
         });
     }
-}
 
-getCurrentBranchName()
-    .then(branch =>
-        getRemoteBranches()
-            .then(branches => {
-                if (branches.includes(branch)) {
-                    // remote branch exists, validate files that have changed locally
-                    // compared to remote feature branch
-                    return diffAgainstRemote(branch).then(validate).catch(e => {
-                        console.log(`\n${e}\n`);
-                        process.exit(1);
-                    });
-                }
+    return Promise.resolve();
+};
 
-                // remote branch doesn't exist, validate files that have changed
-                // compared to local master branch
-                return diffAgainstMaster().then(validate).catch(e => {
-                    console.log(`\n${e}\n`);
-                    process.exit(1);
-                });
-            })
-    );
+getCurrentBranchName().then(branch =>
+    getRemoteBranches().then(branches => {
+        if (branches.includes(branch)) {
+            // remote branch exists, validate files that have changed locally
+            // compared to remote feature branch
+            return diffAgainstRemote(branch).then(validate).catch(e => {
+                console.log(`\n${e}\n`);
+                process.exit(1);
+            });
+        }
+
+        // remote branch doesn't exist, validate files that have changed
+        // compared to local master branch
+        return diffAgainstMaster().then(validate).catch(e => {
+            console.log(`\n${e}\n`);
+            process.exit(1);
+        });
+    })
+);
