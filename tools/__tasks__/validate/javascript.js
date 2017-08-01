@@ -1,4 +1,5 @@
 const chalk = require('chalk');
+const exec = require('../lib/exec-observable');
 
 const config = '--quiet --color';
 
@@ -32,6 +33,14 @@ module.exports = {
         {
             description: 'Lint static/src',
             task: `eslint static/src/**/*.js ${config}`,
+            onError: error,
+        },
+        {
+            description: 'Lint ui/src',
+            task: () =>
+                exec('eslint', ['ui/src/**/*.js', 'ui/src/**/*.jsx'], {
+                    cwd: 'ui',
+                }),
             onError: error,
         },
         {
