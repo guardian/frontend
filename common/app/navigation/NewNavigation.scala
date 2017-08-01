@@ -537,6 +537,7 @@ object NewNavigation {
     )
 
     def getSectionOrTagId(page: Page): String = {
+      println(page.metadata.contentType);
       val tags = Navigation.getTagsFromPage(page)
       val commonKeywords = tags.keywordIds.intersect(tagPages).sortWith(tags.keywordIds.indexOf(_) < tags.keywordIds.indexOf(_))
       val isTagPage = (page.metadata.isFront || frontLikePages.contains(page.metadata.id)) && tagPages.contains(page.metadata.id)
