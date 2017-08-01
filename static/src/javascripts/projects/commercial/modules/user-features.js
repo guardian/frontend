@@ -127,7 +127,9 @@ const isContributor = (): boolean => !!lastContributionDate;
 const isRecentContributor = (): boolean => daysSinceLastContribution <= 180;
 
 const isRecurringContributor = (): boolean =>
-    getCookie(RECURRING_CONTRIBUTOR_COOKIE) === 'true';
+    // If the user is logged in, but has no cookie yet, play it safe and assume they're a contributor
+    identity.isUserLoggedIn() &&
+    getCookie(RECURRING_CONTRIBUTOR_COOKIE) !== 'false';
 
 /*
     Whenever the checks are updated, please make sure to update
