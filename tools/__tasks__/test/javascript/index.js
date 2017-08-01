@@ -34,8 +34,12 @@ module.exports = {
             description: 'Run tests',
             task: [
                 {
-                    description: 'JS tests',
+                    description: 'JS tests in static/',
                     task: () => exec('jest'),
+                },
+                {
+                    description: 'JS tests in ui/',
+                    task: () => exec('jest', { cwd: 'ui' }),
                 },
                 ...legacyTests,
             ],
