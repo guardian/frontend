@@ -6,55 +6,50 @@ const fs = require('fs');
 const execa = require('execa');
 const chalk = require('chalk');
 
-const fixAndStage = (jsFiles) =>
+const fixAndStage = jsFiles =>
     execa('eslint', ['--fix', ...jsFiles], {
         stdio: 'inherit',
-    })
-    .then(() =>
+    }).then(() =>
         execa('git', ['add', ...jsFiles], {
             stdio: 'inherit',
         })
     );
 
-const fixStagedInStatic = staged => {
-    const jsFiles = staged
-        .filter(
-            file =>
-                file.startsWith('static') && file.endsWith('.js')
-        )
-        .filter(file => fs.existsSync(file));
+const changeDir = dir => (dir === '.' ? Promise.resolve() : execa('cd', [dir]));
 
-    if (jsFiles.length) {
-        return fixAndStage(jsFiles)
-            .then(() => staged);
-    }
-
-    return Promise.resolve(staged);
-};
-
-const fixStagedInUi = staged => {
-    const jsFiles = staged
-        .filter(
-            file =>
+const fixStagedIn = (stagedFiles, location) => {
+    const locations = {
+        static: {
+            filter: file => file.startsWith('static') && file.endsWith('.js'),
+            dir: '.',
+        },
+        ui: {
+            filter: file =>
                 file.startsWith('ui') &&
-                    (file.endsWith('.js') || file.endsWith('.jsx'))
-        )
+                (file.endsWith('.js') || file.endsWith('.jsx')),
+            dir: 'ui',
+        },
+    };
+    const jsFiles = stagedFiles
+        .filter(locations[location].filter)
         .filter(file => fs.existsSync(file));
 
     if (jsFiles.length) {
-        return execa('cd', ['ui'])
+        return changeDir(locations[location].dir)
             .then(() => fixAndStage(jsFiles))
-            .then(() => staged);
+            .then(() => stagedFiles);
     }
 
-    return Promise.resolve(staged);
+    return Promise.resolve(stagedFiles);
 };
 
 execa
     .stdout('git', ['diff', '--name-only', '--cached', '--diff-filter=AM'])
     .then(staged => staged.split('\n'))
     // lint and commit any lint fixes
-    .then(staged => fixStagedInStatic(staged).then(fixStagedInUi))
+    .then(staged =>
+        fixStagedIn(staged, 'static').then(() => fixStagedIn(staged, 'ui'))
+    )
     // make sure yarn.lock is committed
     .then(staged => {
         if (
