@@ -21,8 +21,7 @@ const renderApp = () => {
                     new StyletronClient(
                         document.getElementsByClassName('_styletron_hydrate_')
                     )
-                }
-            >
+                }>
                 <Body {...props}>
                     <Application {...props} />
                 </Body>
