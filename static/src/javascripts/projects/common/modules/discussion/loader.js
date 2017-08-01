@@ -545,7 +545,7 @@ class Loader extends Component {
     }
 
     renderCommentBox(elem: HTMLElement): void {
-        return new CommentBox({
+        new CommentBox({
             discussionId: this.getDiscussionId(),
             premod: this.user.privateFields.isPremoderated,
             newCommenter: !this.user.privateFields.hasCommented,
