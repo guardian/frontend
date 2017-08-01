@@ -49,7 +49,6 @@
   ],
   "Gustav Pursche": [
     "projects/common/modules/onward/onward-content.js",
-    "projects/common/modules/onward/popular.js",
     "projects/common/modules/onward/related.js",
     "projects/common/modules/onward/tech-feedback.js",
     "projects/common/modules/video/onward-container.js",

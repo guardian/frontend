@@ -53,7 +53,7 @@ define([
     function initPopular() {
         if (!config.page.isFront) {
             insertOrProximity('.js-popular-trails', function () {
-                new Popular().init();
+                new Popular.MostPopular().init();
             });
         }
     }
