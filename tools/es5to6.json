@@ -18,7 +18,6 @@
     "bootstraps/enhanced/gallery.js"
   ],
   "Simon Adcock": [
-    "projects/common/modules/discussion/upvote.js",
     "projects/common/modules/discussion/user-avatars.js",
     "projects/common/modules/discussion/whole-discussion.js",
     "projects/common/modules/experiments/tests/bookmarks-email-variants-2.js",
