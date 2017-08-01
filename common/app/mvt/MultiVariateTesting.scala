@@ -35,7 +35,7 @@ object ABNewDesktopHeaderVariant extends TestDefinition(
   sellByDate = new LocalDate(2017, 8, 24)
 ) {
 
-  def participationGroup(implicit request: RequestHeader): Option[String] = request.headers.get("X-GU-ab-new-desktop-header")
+  def participationGroup(implicit request: RequestHeader): Option[String] = request.headers.get("X-GU-ab-new-desktop-header-v2")
 
   def canRun(implicit request: RequestHeader): Boolean = participationGroup.contains("variant")
 }
@@ -47,7 +47,7 @@ object ABNewDesktopHeaderControl extends TestDefinition(
   sellByDate = new LocalDate(2017, 8, 24)
 ) {
 
-  def participationGroup(implicit request: RequestHeader): Option[String] = request.headers.get("X-GU-ab-new-desktop-header")
+  def participationGroup(implicit request: RequestHeader): Option[String] = request.headers.get("X-GU-ab-new-desktop-header-v2")
 
   def canRun(implicit request: RequestHeader): Boolean = participationGroup.contains("control")
 }
