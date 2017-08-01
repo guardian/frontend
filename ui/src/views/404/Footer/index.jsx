@@ -1,18 +1,20 @@
 // @flow
 
-// This is an example of styles that are defined inline
-const style = {
-    borderTopWidth: '3px',
-    borderColor: '#0061A6',
-    borderTopStyle: 'solid',
-    paddingTop: '2px',
-    fontSize: '11px',
-    lineHeight: '14px',
-    margin: '15px 0',
-    clear: 'both',
-};
+// this component is an example of passing style rules inline
 
-const item = ({ text, ...props }) =>
+const footerLinks = [
+    { href: '/help', text: 'Help' },
+    { href: '/help/contact-us', text: 'Contact us' },
+    {
+        href: 'https://www.surveymonkey.com/s/theguardian-beta-feedback',
+        text: 'Feedback',
+        target: '_blank',
+    },
+    { href: '/help/terms-of-service', text: 'Terms &amp; conditions' },
+    { href: '/help/privacy-policy', text: 'Privacy policy' },
+];
+
+const FooterLink = ({ text, ...props }) =>
     <li
         style={{
             display: 'inline',
@@ -30,22 +32,20 @@ const item = ({ text, ...props }) =>
         </a>
     </li>;
 
-const items = [
-    { href: '/help', text: 'Help' },
-    { href: '/help/contact-us', text: 'Contact us' },
-    {
-        href: 'https://www.surveymonkey.com/s/theguardian-beta-feedback',
-        text: 'Feedback',
-        target: '_blank',
-    },
-    { href: '/help/terms-of-service', text: 'Terms &amp; conditions' },
-    { href: '/help/privacy-policy', text: 'Privacy policy' },
-];
-
 const Footer = () =>
-    <div style={style}>
+    <div
+        style={{
+            borderTopWidth: '3px',
+            borderColor: '#0061A6',
+            borderTopStyle: 'solid',
+            paddingTop: '2px',
+            fontSize: '11px',
+            lineHeight: '14px',
+            margin: '15px 0',
+            clear: 'both',
+        }}>
         <ul style={{ fontFamily: 'arial' }}>
-            {items.map(item)}
+            {footerLinks.map(FooterLink)}
         </ul>
         <p style={{ fontFamily: 'arial' }}>
             <small>

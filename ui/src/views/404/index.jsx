@@ -7,7 +7,8 @@ import Footer from './Footer';
 import {
     heading,
     fluidWrap,
-    topbar,
+    topBar,
+    topBarLink,
     subHeadingContainer,
     subHeading,
     para,
@@ -15,16 +16,8 @@ import {
 
 export default () =>
     <div style={fluidWrap}>
-        <div style={topbar}>
-            <a
-                href="/"
-                style={{
-                    color: '#005689',
-                    textDecoration: 'none',
-                    fontFamily: 'arial',
-                    padding: '8px 10px 7px',
-                    display: 'block',
-                }}>
+        <div style={topBar}>
+            <a href="/" style={topBarLink}>
                 Home
             </a>
         </div>
