@@ -7,24 +7,23 @@ side {
         right: 0;
     }
 
-    &:before, &:after {
+    &:before,
+    &:after {
+        background: rgba(51, 51, 51, 0.05);
         content: '';
+        height: 100%;
         position: absolute;
-        z-index: 1;
-        background: rgba(51,51,51,0.05);
         top: 0;
-        height: 100%;
         width: calc((100% - 46.25rem) / 2);
-        position: relative;
-        height: 100%;
+        z-index: 1;
     }
 }
 
 body {
     background-color: #fff;
-    text-rendering: optimizeLegibility;
+    color: #333;
     font-feature-settings: kern;
     font-kerning: normal;
     line-height: 1.5;
-    color: #333;
-};
+    text-rendering: optimizeLegibility;
+}
