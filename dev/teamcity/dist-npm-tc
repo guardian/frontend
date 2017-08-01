@@ -6,3 +6,4 @@ set -o errexit
 
 echo "Install dependencies"
 make install
+make ui-install
