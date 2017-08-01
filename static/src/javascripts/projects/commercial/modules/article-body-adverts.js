@@ -70,7 +70,8 @@ const addArticleAds = (count: number, rules: Object): Promise<number> => {
                     para,
                     getSlotName(),
                     getSlotType(),
-                    'inline'
+                    `inline${bodyAds > 1 ? ' offset-right' : ''}`,
+                    bodyAds > 1 ? { desktop: [adSizes.halfPage] } : null
                 );
             });
 

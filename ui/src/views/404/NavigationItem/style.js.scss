@@ -1,10 +1,10 @@
 nav_item {
-    display: block;
-    padding: 10px 2.5%;
-    margin: 0 2.5%;
     border-bottom: 1px solid #f4f4ee;
+    display: block;
     font-family: 'arial';
     font-size: 12px;
+    margin: 0 2.5%;
+    padding: 10px 2.5%;
 
     @include mq(tablet) {
         float: left;

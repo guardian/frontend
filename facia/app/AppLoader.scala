@@ -52,6 +52,10 @@ trait AppComponents extends FrontendComponents with FaciaControllers with FapiSe
 
   lazy val appIdentity = ApplicationIdentity("facia")
 
+  override lazy val appMetrics = ApplicationMetrics(
+    FaciaPressMetrics.FrontDecodingLatency
+  )
+
   override lazy val httpFilters: Seq[EssentialFilter] = wire[CommonFilters].filters
   override lazy val httpRequestHandler: HttpRequestHandler = wire[DevParametersHttpRequestHandler]
 }

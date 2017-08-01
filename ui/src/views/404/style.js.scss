@@ -1,53 +1,53 @@
 fluidWrap {
-    max-width: 940px;
     margin: 0 auto;
-        padding: 0 10px;
+    max-width: 940px;
+    padding: 0 10px;
 }
 
 topBar {
     background: #ededed;
+    border-bottom: 1px solid #c6c6c6;
     float: left;
     font-size: 12px;
     margin-bottom: 20px;
     width: 100%;
-    border-bottom: 1px solid #c6c6c6;
 }
 
 topBarLink {
     color: #005689;
-    text-decoration: none;
+    display: block;
     font-family: arial;
     padding: 8px 10px 7px;
-    display: block;
+    text-decoration: none;
 }
 
 heading {
-    font-size: 24px;
-    line-height: 30px;
-    font-weight: normal;
     font-family: georgia, serif;
+    font-size: 24px;
+    font-weight: normal;
+    line-height: 30px;
     margin: 10px 0 0;
 }
 
 subHeading {
-    line-height: 20px;
     font-size: 18px;
     font-weight: normal;
+    line-height: 20px;
     margin: 0;
 }
 
 subHeadingContainer {
-    border-top-width: 3px;
+    background-color: #ededed;
     border-color: #0061a6;
     border-top-style: solid;
-    background-color: #ededed;
-    padding: 4px 5px 14px;
-    margin-bottom: 10px;
+    border-top-width: 3px;
     clear: both;
+    margin-bottom: 10px;
+    padding: 4px 5px 14px;
 }
 
 para {
-    margin: 0 0 10px;
     font-family: arial;
     font-size: 12px;
+    margin: 0 0 10px;
 }
