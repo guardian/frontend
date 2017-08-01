@@ -15,7 +15,7 @@ type User = {
     apiUrl: string,
     avatar: string,
     secureAvatarUrl: string,
-    badge: Array<string>,
+    badge: Array<?string>,
     details: {
         gender: string,
     },
@@ -80,10 +80,10 @@ const setRecommended = (target: Element): Promise<void> =>
     });
 
 const handle = (
-    target: Element,
-    container: Element,
-    user: User
-): ?Promise<void> => {
+    target: ?Element,
+    container: ?Element,
+    user: ?User
+): Promise<void> => {
     if (!config.switches.discussionAllowAnonymousRecommendsSwitch && !user) {
         target.setAttribute('data-link-name', 'Recommend comment anonymous');
         return showSignInTooltip(target);
@@ -106,6 +106,8 @@ const handle = (
                 })
             );
     }
+
+    return Promise.resolve();
 };
 
 const closeTooltip = (): Promise<void> =>
