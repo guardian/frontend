@@ -6,28 +6,27 @@ const fs = require('fs');
 const execa = require('execa');
 const chalk = require('chalk');
 
-const fixAndStage = jsFiles =>
+const fixAndStage = (jsFiles, localDir) =>
     execa('eslint', ['--fix', ...jsFiles], {
         stdio: 'inherit',
+        localDir,
     }).then(() =>
         execa('git', ['add', ...jsFiles], {
             stdio: 'inherit',
         })
     );
 
-const changeDir = dir => (dir === '.' ? Promise.resolve() : execa('cd', [dir]));
-
 const fixStagedIn = (stagedFiles, location) => {
     const locations = {
         static: {
             filter: file => file.startsWith('static') && file.endsWith('.js'),
-            dir: '.',
+            localDir: process.cwd(),
         },
         ui: {
             filter: file =>
                 file.startsWith('ui') &&
                 (file.endsWith('.js') || file.endsWith('.jsx')),
-            dir: 'ui',
+            localDir: 'ui',
         },
     };
     const jsFiles = stagedFiles
@@ -35,9 +34,9 @@ const fixStagedIn = (stagedFiles, location) => {
         .filter(file => fs.existsSync(file));
 
     if (jsFiles.length) {
-        return changeDir(locations[location].dir)
-            .then(() => fixAndStage(jsFiles))
-            .then(() => stagedFiles);
+        return fixAndStage(jsFiles, locations[location].localDir).then(
+            () => stagedFiles
+        );
     }
 
     return Promise.resolve(stagedFiles);
