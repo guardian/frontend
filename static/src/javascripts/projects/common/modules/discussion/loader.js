@@ -21,7 +21,6 @@ import discussionFrontend from 'common/modules/discussion/discussion-frontend';
 import upvote from 'common/modules/discussion/upvote';
 import Id from 'common/modules/identity/api';
 import userPrefs from 'common/modules/user-prefs';
-import isNumber from 'lodash/objects/isNumber';
 
 class Loader extends Component {
     constructor(): void {
@@ -337,7 +336,7 @@ class Loader extends Component {
                 const userPageSize = userPrefs.get('discussion.pagesize');
                 let pageSize = defaultPagesize;
 
-                if (isNumber(userPageSize)) {
+                if (typeof userPageSize === 'number') {
                     pageSize = userPageSize;
                 } else if (userPageSize === 'All') {
                     pageSize = config.switches.discussionAllPageSize
