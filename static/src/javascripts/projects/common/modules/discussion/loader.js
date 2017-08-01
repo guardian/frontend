@@ -212,11 +212,11 @@ class Loader extends Component {
 
         if (config.page.section === 'crosswords') {
             const $timestampsLabel = $('.js-timestamps');
-            const updateLabelText = prefValue => {
+            const updateLabelText = (prefValue?: boolean) => {
                 $timestampsLabel.text(prefValue ? 'Relative' : 'Absolute');
             };
 
-            updateLabelText(undefined);
+            updateLabelText();
 
             const PREF_RELATIVE_TIMESTAMPS =
                 'discussion.enableRelativeTimestamps';
