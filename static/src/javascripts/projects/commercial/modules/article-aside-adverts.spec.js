@@ -1,10 +1,9 @@
 // @flow
-/* eslint-disable no-new*/
+/* eslint-disable no-new */
 import qwery from 'qwery';
 import mediator from 'lib/mediator';
 import { noop } from 'lib/noop';
 import { articleAsideAdvertsInit } from 'commercial/modules/article-aside-adverts';
-import { commercialFeatures } from 'commercial/modules/commercial-features';
 import fastdom from 'lib/fastdom-promise';
 
 jest.mock('commercial/modules/commercial-features', () => ({
@@ -113,13 +112,5 @@ describe('Article Aside Adverts', () => {
             done();
         });
         articleAsideAdvertsInit(noop, noop);
-    });
-
-    it('should not do anything if disabled in commercial-feature-switches', done => {
-        commercialFeatures.articleAsideAdverts = false;
-        articleAsideAdvertsInit(noop, noop).then(returned => {
-            expect(returned).toBe(false);
-            done();
-        });
     });
 });

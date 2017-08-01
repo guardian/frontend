@@ -5,6 +5,7 @@ import { isAdFreeUser } from 'commercial/modules/user-features';
 import identityApi from 'common/modules/identity/api';
 import userPrefs from 'common/modules/user-prefs';
 import { shouldShowReaderRevenue } from 'common/modules/commercial/contributions-utilities';
+import { getTestVariantId } from 'common/modules/experiments/utils';
 
 // Having a constructor means we can easily re-instantiate the object in a test
 class CommercialFeatures {
@@ -12,6 +13,7 @@ class CommercialFeatures {
     stickyTopBannerAd: any;
     articleBodyAdverts: any;
     articleAsideAdverts: any;
+    carrotSlot: any;
     videoPreRolls: any;
     highMerch: any;
     thirdPartyTags: any;
@@ -35,7 +37,6 @@ class CommercialFeatures {
         const isInteractive = config.page.contentType === 'Interactive';
         const isLiveBlog = config.page.isLiveBlog;
         const isHosted = config.page.isHosted;
-        const isMatchReport = config.hasTone('Match reports');
         const isIdentityPage =
             config.page.contentType === 'Identity' ||
             config.page.section === 'identity'; // needed for pages under profile.* subdomain
@@ -70,13 +71,9 @@ class CommercialFeatures {
             !isHosted &&
             !newRecipeDesign;
 
-        this.articleAsideAdverts =
-            this.dfpAdvertising &&
-            !this.adFree &&
-            !isMinuteArticle &&
-            !isMatchReport &&
-            !!(isArticle || isLiveBlog) &&
-            !newRecipeDesign;
+        this.carrotSlot =
+            this.articleBodyAdverts &&
+            getTestVariantId('CarrotSlot') === 'opt-in';
 
         this.videoPreRolls = this.dfpAdvertising && !this.adFree;
 

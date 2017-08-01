@@ -6,8 +6,7 @@ import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 import { commercialFeatures } from 'commercial/modules/commercial-features';
 
 const shouldDisableAdSlot = adSlot =>
-    window.getComputedStyle(adSlot).display === 'none' ||
-    (!commercialFeatures.articleAsideAdverts && adSlot.id === 'dfp-ad--right');
+    window.getComputedStyle(adSlot).display === 'none';
 
 const closeDisabledSlots = once((): Promise<void> => {
     // Get all ad slots

@@ -5,13 +5,14 @@
 @import org.joda.time.{DateTime, DateTimeZone}
 @import views.html.fragments.containers.facia_cards.{date, slice}
 @import views.support.{GetClasses, PreviousAndNext}
+@import implicits.Requests._
 
 @(trails: Seq[PressedContent], containerLayout: ContainerLayout, containerIndex: Int, actualDate: DateTime, page: MetaData, nav: PreviousAndNext, tzOverride: Option[DateTimeZone] = None)(implicit request: RequestHeader, config: CollectionConfig)
 
 @* TODO Consolidate this with the master container template to get rid of repetition *@
 
 @defining(page.webTitle) { case (webTitle) =>
-    <section class="@GetClasses.forTagContainer(webTitle.nonEmpty)"
+    <section class="@GetClasses.forTagContainer(webTitle.nonEmpty, adFree = request.isAdFree)"
         data-link-name="all index"
         data-component="all index">
         <div class="fc-container__inner">

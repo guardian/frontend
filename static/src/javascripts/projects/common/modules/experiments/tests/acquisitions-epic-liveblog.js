@@ -153,6 +153,7 @@ export const acquisitionsEpicLiveblog: ContributionsABTest = makeABTest({
             test(renderFn, variant, test) {
                 const epicHtml = variant.options.template(variant);
                 addEpicToBlocks(epicHtml, test);
+                mediator.emit(test.insertEvent);
 
                 if (!isAutoUpdateHandlerBound) {
                     mediator.on('modules:autoupdate:updates', () => {

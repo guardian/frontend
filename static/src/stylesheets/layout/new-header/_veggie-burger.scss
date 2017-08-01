@@ -30,7 +30,9 @@
     }
 
     @include mq(leftCol) {
+        height: $veggie-burger-large;
         right: $gutter-xxlarge;
+        width: $veggie-burger-large;
     }
 
 
@@ -81,13 +83,15 @@
 
 .veggie-burger__label {
     @include fs-textSans(5);
-    bottom: -24px;
-    color: $neutral-3;
-    font-size: 16px;
+    bottom: -22px;
+    color: #ffffff;
+    font-size: 18px;
     left: 50%;
     position: absolute;
+    text-align: center;
     text-transform: lowercase;
     transform: translateX(-50%);
+    width: gs-span(2);
 
     @include mq($until: 'desktop') {
         @include u-h();
@@ -116,14 +120,41 @@
         left: 0;
         position: absolute;
         width: $gs-gutter;
+
+        @include mq(mobileMedium) {
+            height: $gs-baseline / 4;
+            width: 26px;
+        }
+
+        @include mq(leftCol) {
+            height: 4px;
+            width: 30px;
+        }
     }
 
     &:before {
         top: -$gs-gutter / 4;
+
+        // TODO: If larger sizes are kept, consider svg solution to minimize magic numbers/mqs
+        @include mq(mobileMedium) {
+            top: -7px;
+        }
+
+        @include mq(leftCol) {
+            top: -8px;
+        }
     }
 
     &:after {
         bottom: -$gs-gutter / 4;
+
+        @include mq(mobileMedium) {
+            bottom: -7px;
+        }
+
+        @include mq(leftCol) {
+            bottom: -8px;
+        }
     }
 
     // transform burger into cross

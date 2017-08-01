@@ -81,7 +81,9 @@ describe('A/B Ophan analytics', () => {
         /**
          * impression events are only registered if every variant has an `impression` function
          */
-        dummy.variants.forEach(v => (v.impression = () => undefined));
+        dummy.variants.forEach(v => {
+            v.impression = () => undefined;
+        });
 
         const controlSpy = jest.spyOn(dummy.variants[0], 'impression');
         const variantSpy = jest.spyOn(dummy.variants[1], 'impression');

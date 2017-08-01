@@ -40,11 +40,13 @@ const killProgressTracker = (atomId: string): void => {
     }
 };
 
-const setProgressTracker = (atomId: string): number =>
-    (players[atomId].progressTracker = setInterval(
+const setProgressTracker = (atomId: string): number => {
+    players[atomId].progressTracker = setInterval(
         recordPlayerProgress.bind(null, atomId),
         1000
-    ));
+    );
+    return players[atomId].progressTracker;
+};
 
 const onPlayerPlaying = (atomId: string): void => {
     const player = players[atomId];
