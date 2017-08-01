@@ -32,7 +32,7 @@ const timeInDaysFromNow = (daysFromNow: number): string => {
 const persistResponse = (JsonResponse: () => void) => {
     const switches = config.switches;
     addCookie(USER_FEATURES_EXPIRY_COOKIE, timeInDaysFromNow(1));
-    addCookie(PAYING_MEMBER_COOKIE, !JsonResponse.adblockMessage);
+    addCookie(PAYING_MEMBER_COOKIE, JsonResponse.contentAccess.paidMember);
 
     if (adFreeDataIsPresent() && !JsonResponse.adFree) {
         removeCookie(AD_FREE_USER_COOKIE);
@@ -51,7 +51,7 @@ const deleteOldData = (): void => {
 };
 
 const requestNewData = (): Promise<void> =>
-    fetchJson(`${config.page.userAttributesApiUrl}/me/features`, {
+    fetchJson(`${config.page.userAttributesApiUrl}/me`, {
         mode: 'cors',
         credentials: 'include',
     })
