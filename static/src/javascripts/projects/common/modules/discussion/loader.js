@@ -565,8 +565,8 @@ class Loader extends Component {
         }
     }
 
-    renderCommentCount() {
-        return discussionFrontend.load(this, {
+    renderCommentCount(): void {
+        discussionFrontend.load(this, {
             apiHost: config.page.discussionApiUrl,
             avatarImagesHost: config.page.avatarImagesUrl,
             closed: this.getDiscussionClosed(),
