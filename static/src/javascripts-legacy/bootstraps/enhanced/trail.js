@@ -95,7 +95,7 @@ define([
         if (config.switches.commentsVisibleOnArticle && config.page.commentable) {
             var el = qwery('.discussion')[0];
             if (el) {
-                new DiscussionLoader().attachTo(el);
+                new DiscussionLoader.Loader().attachTo(el);
             }
         }
     }
