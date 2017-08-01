@@ -16,40 +16,10 @@ class PopStateEvent extends Event {
     state: Object;
 }
 
-const pagination = (activityStream): void => {
-    bean.on(
-        activityStream.elem,
-        'click',
-        '.js-activity-stream-page-change',
-        (e: Event) => {
-            const target: HTMLElement = (e.currentTarget: any);
-            const page: ?string = target.getAttribute('data-page');
-            e.preventDefault();
-
-            activityStream.change({
-                page,
-            });
-        }
-    );
-};
-
-const selectTab = (type: string): void => {
-    // Blur so that when pressing forward/back the focus is not retained on
-    // the old tab Note, without the focus first, the blur doesn't seem to
-    // work for some reason
-    $('.js-activity-stream-change').focus().blur();
-
-    $('.tabs__tab--selected').removeClass('tabs__tab--selected');
-    bonzo($(`a[data-stream-type=${type}]`))
-        .parent()
-        .addClass('tabs__tab--selected');
-};
-
 class ActivityStream extends Component {
     constructor(opts: Object): void {
         super();
 
-        this.setOptions(opts);
         this.endpoint =
             '/discussion/profile/:userId/:streamType.json?page=:page';
         this.componentClass = 'activity-stream';
@@ -58,9 +28,24 @@ class ActivityStream extends Component {
             streamType: 'discussions',
             userId: null,
         };
+
+        this.setOptions(opts);
     }
 
     applyState(html: string, streamType: string): void {
+        const selectTab = (type: string): void => {
+            // Blur so that when pressing forward/back the focus is not retained on
+            // the old tab Note, without the focus first, the blur doesn't seem to
+            // work for some reason
+            $('.js-activity-stream-change').focus().blur();
+
+            $('.tabs__tab--selected').removeClass('tabs__tab--selected');
+
+            bonzo($(`a[data-stream-type=${type}]`))
+                .parent()
+                .addClass('tabs__tab--selected');
+        };
+
         // update display
         const $el = bonzo(this.elem).empty();
 
@@ -88,14 +73,32 @@ class ActivityStream extends Component {
         return this._fetch();
     }
 
-    fetched(resp: Object) {
+    fetched(resp: Object): void {
         this.applyState(resp.html, this.options.streamType);
         this.updateHistory(resp);
     }
 
     ready(): void {
+        const pagination = (activityStream: ActivityStream): void => {
+            bean.on(
+                activityStream.elem,
+                'click',
+                '.js-activity-stream-page-change',
+                (e: Event) => {
+                    const target: HTMLElement = (e.currentTarget: any);
+                    const page: ?string = target.getAttribute('data-page');
+                    e.preventDefault();
+
+                    activityStream.change({
+                        page,
+                    });
+                }
+            );
+        };
+
         this.removeState('loading');
         this.on('click', '.js-disc-recommend-comment', this.recommendComment);
+
         $('.js-disc-recommend-comment').addClass(
             'disc-comment__recommend--open'
         );
