@@ -33,11 +33,6 @@ const upgradeEvent = el => {
     }
 };
 
-const upgradeEvents = () => {
+export const upgradeMembershipEvents = () => {
     $(`.${ELEMENT_INITIAL_CLASS}`).each(upgradeEvent);
-};
-
-export default {
-    upgradeEvent,
-    upgradeEvents,
 };
