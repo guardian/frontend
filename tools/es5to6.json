@@ -4,7 +4,7 @@
   "Regis Kuckaertz": [
     "projects/common/modules/discussion/comment-count.js",
     "projects/common/modules/discussion/comments.js",
-    "projects/common/modules/discussion/discussion-frontend.js"    
+    "projects/common/modules/discussion/discussion-frontend.js"
   ],
   "Richard Nguyen": [],
   "Kate Whalen": [],
@@ -50,7 +50,6 @@
     "projects/common/modules/discussion/comment-box.js"
   ],
   "Gustav Pursche": [
-    "projects/common/modules/onward/onward-content.js",
     "projects/common/modules/onward/popular.js",
     "projects/common/modules/onward/related.js",
     "projects/common/modules/onward/tech-feedback.js",

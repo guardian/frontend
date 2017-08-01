@@ -82,7 +82,7 @@ define([
     function initOnwardContent() {
         insertOrProximity('.js-onward', function () {
             if ((config.page.seriesId || config.page.blogIds) && config.page.showRelatedContent) {
-                new Onward(qwery('.js-onward'));
+                new Onward.OnwardContent(qwery('.js-onward'));
             } else if (config.page.tones !== '') {
                 $('.js-onward').each(function (c) {
                     new TonalComponent.TonalComponent().fetch(c, 'html');
