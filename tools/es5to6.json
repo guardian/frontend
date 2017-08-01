@@ -49,9 +49,7 @@
   "Gustav Pursche": [
     "projects/common/modules/onward/related.js",
     "projects/common/modules/onward/tech-feedback.js",
-    "projects/common/modules/video/onward-container.js",
-    "lib/element-inview.js",
-    "lib/page.js"
+    "projects/common/modules/video/onward-container.js"
   ],
   "NataliaLKB": [
     "projects/common/modules/article/rich-links.js",
