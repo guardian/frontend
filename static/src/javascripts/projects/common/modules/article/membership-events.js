@@ -7,7 +7,7 @@ import reportError from 'lib/report-error';
 const ELEMENT_INITIAL_CLASS = 'element-membership--not-upgraded';
 const ELEMENT_UPGRADED_CLASS = 'element-membership--upgraded';
 
-const upgradeEvent = el => {
+const upgradeEvent = (el: Node): void => {
     const href = $('a', el).attr('href');
     const matches = href.match(/https:\/\/membership.theguardian.com/);
 
@@ -33,6 +33,6 @@ const upgradeEvent = el => {
     }
 };
 
-export const upgradeMembershipEvents = () => {
+export const upgradeMembershipEvents = (): void => {
     $(`.${ELEMENT_INITIAL_CLASS}`).each(upgradeEvent);
 };
