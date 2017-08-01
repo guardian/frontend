@@ -1,40 +1,43 @@
+// @flow
 import fastdom from 'fastdom';
 import $ from 'lib/$';
 import fetchJson from 'lib/fetch-json';
 import reportError from 'lib/report-error';
 
-var ELEMENT_INITIAL_CLASS = 'element-membership--not-upgraded',
-    ELEMENT_UPGRADED_CLASS = 'element-membership--upgraded';
+const ELEMENT_INITIAL_CLASS = 'element-membership--not-upgraded';
+const ELEMENT_UPGRADED_CLASS = 'element-membership--upgraded';
 
-function upgradeEvent(el) {
-    var href = $('a', el).attr('href'),
-        matches = href.match(/https:\/\/membership.theguardian.com/);
+const upgradeEvent = el => {
+    const href = $('a', el).attr('href');
+    const matches = href.match(/https:\/\/membership.theguardian.com/);
 
     if (matches) {
-        fetchJson(href + '/card', {
-                mode: 'cors'
-            }).then(function(resp) {
+        fetchJson(`${href}/card`, {
+            mode: 'cors',
+        })
+            .then(resp => {
                 if (resp.html) {
-                    fastdom.write(function() {
-                        $(el).html(resp.html)
+                    fastdom.write(() => {
+                        $(el)
+                            .html(resp.html)
                             .removeClass(ELEMENT_INITIAL_CLASS)
                             .addClass(ELEMENT_UPGRADED_CLASS);
                     });
                 }
             })
-            .catch(function(ex) {
+            .catch(ex => {
                 reportError(ex, {
-                    feature: 'membership-events'
+                    feature: 'membership-events',
                 });
             });
     }
-}
+};
 
-function upgradeEvents() {
-    $('.' + ELEMENT_INITIAL_CLASS).each(upgradeEvent);
-}
+const upgradeEvents = () => {
+    $(`.${ELEMENT_INITIAL_CLASS}`).each(upgradeEvent);
+};
 
 export default {
-    upgradeEvent: upgradeEvent,
-    upgradeEvents: upgradeEvents
+    upgradeEvent,
+    upgradeEvents,
 };
