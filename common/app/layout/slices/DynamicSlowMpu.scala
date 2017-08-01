@@ -1,6 +1,6 @@
 package layout.slices
 
-case class DynamicSlowMPU(omitMPU: Boolean) extends DynamicContainer {
+case class DynamicSlowMPU(omitMPU: Boolean, adFree: Boolean) extends DynamicContainer {
   override protected def optionalFirstSlice(stories: Seq[Story]): Option[(Slice, Seq[Story])] = {
     val BigsAndStandards(bigs, _) = bigsAndStandards(stories)
     val isFirstBoosted = stories.headOption.exists(_.isBoosted)
@@ -21,9 +21,9 @@ case class DynamicSlowMPU(omitMPU: Boolean) extends DynamicContainer {
 
   override protected def standardSlices(stories: Seq[Story], firstSlice: Option[Slice]): Seq[Slice] =
     firstSlice match {
-      case Some(_) if omitMPU => Seq(Hl3QuarterQuarter)
+      case Some(_) if omitMPU || adFree => Seq(Hl3QuarterQuarter)
       case Some(_) => Seq(Hl3Mpu)
-      case None if omitMPU => Seq(QuarterQuarterQuarterQuarter)
+      case None if omitMPU || adFree => Seq(QuarterQuarterQuarterQuarter)
       case None    => Seq(TTlMpu)
     }
 }

@@ -4,7 +4,7 @@
   "Regis Kuckaertz": [
     "projects/common/modules/discussion/comment-count.js",
     "projects/common/modules/discussion/comments.js",
-    "projects/common/modules/discussion/discussion-frontend.js"    
+    "projects/common/modules/discussion/discussion-frontend.js"
   ],
   "Richard Nguyen": [],
   "Kate Whalen": [],
@@ -18,7 +18,6 @@
     "bootstraps/enhanced/gallery.js"
   ],
   "Simon Adcock": [
-    "projects/common/modules/commercial/membership-engagement-banner.js",
     "projects/common/modules/article/membership-events.js",
     "projects/common/modules/discussion/upvote.js",
     "projects/common/modules/discussion/user-avatars.js",
@@ -45,7 +44,6 @@
     "projects/common/modules/video/metadata.js"
   ],
   "GHaberis": [
-    "projects/common/modules/discussion/activity-stream.js",
     "projects/common/modules/discussion/api.js",
     "projects/common/modules/discussion/comment-box.js"
   ],

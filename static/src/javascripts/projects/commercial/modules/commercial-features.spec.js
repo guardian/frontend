@@ -160,67 +160,6 @@ describe('Commercial features', () => {
         });
     });
 
-    describe('Article aside adverts', () => {
-        it('Runs by default in articles', () => {
-            config.page.contentType = 'Article';
-            const features = new CommercialFeatures();
-            expect(features.articleAsideAdverts).toBe(true);
-        });
-
-        it('Runs by default in liveblogs', () => {
-            config.page.contentType = 'LiveBlog';
-            config.page.isLiveBlog = true;
-            const features = new CommercialFeatures();
-            expect(features.articleAsideAdverts).toBe(true);
-        });
-
-        it('Doesn`t run in minute articles', () => {
-            config.page.isMinuteArticle = true;
-            const features = new CommercialFeatures();
-            expect(features.articleAsideAdverts).toBe(false);
-        });
-
-        it('Doesn`t run in non-article non-liveblog pages', () => {
-            config.page.contentType = 'Network Front';
-            config.page.isLiveBlog = false;
-            const features = new CommercialFeatures();
-            expect(features.articleAsideAdverts).toBe(false);
-        });
-    });
-
-    describe('Article aside adverts under ad-free', () => {
-        beforeEach(() => {
-            config.switches.adFreeSubscriptionTrial = true;
-            isAdFreeUser.mockReturnValue(true);
-        });
-
-        it('are disabled in articles', () => {
-            config.page.contentType = 'Article';
-            const features = new CommercialFeatures();
-            expect(features.articleAsideAdverts).toBe(false);
-        });
-
-        it('are disabled in liveblogs', () => {
-            config.page.contentType = 'LiveBlog';
-            config.page.isLiveBlog = true;
-            const features = new CommercialFeatures();
-            expect(features.articleAsideAdverts).toBe(false);
-        });
-
-        it('are disabled in minute articles', () => {
-            config.page.isMinuteArticle = true;
-            const features = new CommercialFeatures();
-            expect(features.articleAsideAdverts).toBe(false);
-        });
-
-        it('are disabled in non-article non-liveblog pages (e.g. network front)', () => {
-            config.page.contentType = 'Network Front';
-            config.page.isLiveBlog = false;
-            const features = new CommercialFeatures();
-            expect(features.articleAsideAdverts).toBe(false);
-        });
-    });
-
     describe('Video prerolls', () => {
         it('Runs by default', () => {
             const features = new CommercialFeatures();

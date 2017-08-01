@@ -85,6 +85,16 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
+  val DoubleClickYouTubeAdFree = Switch(
+    SwitchGroup.Commercial,
+    "doubleclick-youtube-ad-free",
+    "Enable DoubleClick Segment for YouTube for Ad Free Users",
+    owners = Seq(Owner.withName("commercial team")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
   val RemarketingSwitch = Switch(
     SwitchGroup.Commercial,
     "remarketing",
@@ -261,7 +271,7 @@ trait CommercialSwitches {
     description = "Solicit feedback for ad impressions",
     owners = Owner.group(SwitchGroup.Commercial),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 7, 26),
+    sellByDate = new LocalDate(2017, 8, 2),
     exposeClientSide = true
   )
 

@@ -284,7 +284,7 @@ define([
 
             membershipEngagementBanner: function() {
                 if (config.switches.membershipEngagementBanner) {
-                    membershipEngagementBanner.init();
+                    membershipEngagementBanner.membershipEngagementBannerInit();
                 }
             },
 
