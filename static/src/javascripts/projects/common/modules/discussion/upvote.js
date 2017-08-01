@@ -1,12 +1,25 @@
 // @flow
+import config from 'lib/config';
 import fastdom from 'lib/fastdom-promise';
 import reportError from 'lib/report-error';
 import { getUrlVars, constructQuery } from 'lib/url';
 import discussionApi from 'common/modules/discussion/api';
-import config from 'lib/config';
 
 const RECOMMENDATION_CLASS = 'js-recommend-comment';
 const TOOLTIP_CLASS = 'js-rec-tooltip';
+
+type User = {
+    userId: string,
+    displayName: string,
+    webUrl: string,
+    apiUrl: string,
+    avatar: string,
+    secureAvatarUrl: string,
+    badge: Array<string>,
+    details: {
+        gender: string,
+    },
+};
 
 const updateReturnUrl = (
     links: NodeList<HTMLElement>,
@@ -65,19 +78,6 @@ const setRecommended = (target: Element): Promise<void> =>
     fastdom.write(() => {
         target.classList.add('d-comment__recommend--recommended');
     });
-
-type User = {
-    userId: string,
-    displayName: string,
-    webUrl: string,
-    apiUrl: string,
-    avatar: string,
-    secureAvatarUrl: string,
-    badge: Array<string>,
-    details: {
-        gender: string,
-    },
-};
 
 const handle = (
     target: Element,
