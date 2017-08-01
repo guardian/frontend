@@ -8,6 +8,7 @@ declare type Variant = {
     impression?: ListenerFunction,
     success?: ListenerFunction,
     options?: Object,
+    engagementBannerParams?: EngagementBannerParams,
 };
 
 declare type ABTest = {
@@ -43,6 +44,24 @@ declare type ContributionsABTest = ABTest & {
     useTargetingTool: boolean,
     insertEvent: string,
     viewEvent: string,
+};
+
+declare type Interaction = {
+    component: string,
+    value: string,
+};
+
+declare type EngagementBannerParams = {
+    minArticles: number,
+    campaignCode: string,
+    buttonCaption: string,
+    linkUrl: string,
+    messageText: string,
+    pageviewId: string,
+    interactionOnMessageShow: Interaction,
+    colourStrategy: () => string,
+    offering?: string,
+    paypalClass?: string,
 };
 
 /**
