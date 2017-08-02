@@ -121,7 +121,6 @@ class CommercialFeatures {
         };
 
         this.adFeedback =
-            config.switches.adFeedback &&
             ['artanddesign', 'society', 'tv-and-radio'].indexOf(
                 config.page.section
             ) > -1;
