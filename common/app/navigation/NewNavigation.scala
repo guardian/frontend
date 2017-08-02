@@ -1,8 +1,6 @@
 package common
 
-import conf.Configuration
 import NavLinks._
-import model.Page
 
 case class NavLink(title: String, url: String, uniqueSection: String = "", longTitle: String = "", iconName: String = "")
 case class SectionsLink(pageId: String, navLink: NavLink, parentSection: NewNavigation.EditionalisedNavigationSection)
@@ -13,15 +11,6 @@ object NewNavigation {
 
   val PrimaryLinks = List(headlines, opinion, sport, culture, lifestyle)
   val topLevelSections = List(News, Opinion, Sport, Arts, Life)
-
-  def getMembershipLinks(edition: Edition): NavLinkLists = {
-    val editionId = edition.id.toLowerCase()
-
-    NavLinkLists(List(
-      NavLink("become a supporter", s"${Configuration.id.membershipUrl}/${editionId}/supporter?INTCMP=mem_${editionId}_web_newheader"),
-      NavLink("subscribe", s"${Configuration.id.digitalPackUrl}/${editionId}?INTCMP=NGW_NEWHEADER_${editionId}_GU_SUBSCRIBE")
-    ))
-  }
 
   trait EditionalisedNavigationSection {
     def name: String
@@ -288,130 +277,6 @@ object NewNavigation {
     ))
   }
 
-  object SectionLinks {
-
-    val sectionLinks = List(
-
-      SectionsLink("uk", headlines, MostPopular),
-      SectionsLink("us", headlines, MostPopular),
-      SectionsLink("au", headlines, MostPopular),
-      SectionsLink("international", headlines, MostPopular),
-      SectionsLink("uk-news", ukNews, News),
-      SectionsLink("world", world, News),
-      SectionsLink("world/europe-news", europe, News),
-      SectionsLink("politics", politics, News),
-      SectionsLink("environment", environment, News),
-      SectionsLink("business", business, News),
-      SectionsLink("technology", tech, News),
-      SectionsLink("science", science, News),
-      SectionsLink("money", money, News),
-      SectionsLink("australia-news", australiaNews, News),
-      SectionsLink("media", media, News),
-      SectionsLink("us-news", usNews, News),
-      SectionsLink("cities", cities, News),
-      SectionsLink("inequality", inequality, News),
-      SectionsLink("global-development", globalDevelopment, News),
-      SectionsLink("sustainable-business", sustainableBusiness, News),
-      SectionsLink("law", law, News),
-      SectionsLink("technology/games", games, News),
-      SectionsLink("us-news/us-politics", usPolitics, News),
-      SectionsLink("australia-news/australian-politics", auPolitics, News),
-      SectionsLink("australia-news/australian-immigration-and-asylum", auImmigration, News),
-      SectionsLink("australia-news/indigenous-australians", indigenousAustralia, News),
-
-      SectionsLink("commentisfree", opinion, Opinion),
-      SectionsLink("cartoons/archive", cartoons, Opinion),
-      SectionsLink("type/cartoon", cartoons, Opinion),
-      SectionsLink("au/index/contributors", auColumnists, Opinion),
-      SectionsLink("index/contributors", columnists, Opinion),
-      SectionsLink("commentisfree/series/comment-is-free-weekly", inMyOpinion, Opinion),
-      SectionsLink("profile/editorial", theGuardianView, Opinion),
-
-      SectionsLink("sport", sport, Sport),
-      SectionsLink("football", football, Sport),
-      SectionsLink("sport/rugby-union", rugbyUnion, Sport),
-      SectionsLink("sport/cricket", cricket, Sport),
-      SectionsLink("sport/tennis", tennis, Sport),
-      SectionsLink("sport/golf", golf, Sport),
-      SectionsLink("sport/us-sport", usSports, Sport),
-      SectionsLink("sport/horse-racing", racing, Sport),
-      SectionsLink("sport/rugbyleague", rugbyLeague, Sport),
-      SectionsLink("sport/boxing", boxing, Sport),
-      SectionsLink("sport/formulaone", formulaOne, Sport),
-      SectionsLink("sport/nfl", NFL, Sport),
-      SectionsLink("sport/mlb", MLB, Sport),
-      SectionsLink("football/mls", MLS, Sport),
-      SectionsLink("sport/nba", NBA, Sport),
-      SectionsLink("sport/nhl", NHL, Sport),
-      SectionsLink("sport/afl", AFL, Sport),
-      SectionsLink("football/a-league", aLeague, Sport),
-      SectionsLink("sport/nrl", NRL, Sport),
-      SectionsLink("sport/australia-sport", australiaSport, Sport),
-
-      SectionsLink("culture", culture, Arts),
-      SectionsLink("film", film, Arts),
-      SectionsLink("tv-and-radio", tvAndRadio, Arts),
-      SectionsLink("music", music, Arts),
-      SectionsLink("books", books, Arts),
-      SectionsLink("artanddesign", artAndDesign, Arts),
-      SectionsLink("stage", stage, Arts),
-      SectionsLink("music/classicalmusicandopera", classical, Arts),
-
-      SectionsLink("lifeandstyle", lifestyle, Life),
-      SectionsLink("fashion", fashion, Life),
-      SectionsLink("travel", travel, Life),
-      SectionsLink("society", society, Life),
-      SectionsLink("lifeandstyle/food-and-drink", food, Life),
-      SectionsLink("tone/recipes", recipes, Life),
-      SectionsLink("lifeandstyle/women", women, Life),
-      SectionsLink("lifeandstyle/health-and-wellbeing", health, Life),
-      SectionsLink("lifeandstyle/family", family, Life),
-      SectionsLink("lifeandstyle/love-and-sex", loveAndSex, Life),
-      SectionsLink("au/lifeandstyle/fashion", fashionAu, Life),
-      SectionsLink("au/lifeandstyle/food-and-drink", foodAu, Life),
-      SectionsLink("au/lifeandstyle/relationships", relationshipsAu, Life),
-      SectionsLink("au/lifeandstyle/health-and-wellbeing", healthAu, Life)
-    )
-
-    def getSectionLinks(sectionName: String, edition: Edition): Tuple2[Seq[NavLink], Seq[NavLink]] = {
-      val sectionList = sectionLinks.filter { item =>
-        item.pageId == sectionName
-      }
-
-      if (sectionList.isEmpty) {
-        val mostPopular = News.getEditionalisedSubSectionLinks(edition).mostPopular.drop(1)
-        val leastPopular = News.getEditionalisedSubSectionLinks(edition).leastPopular
-
-        (mostPopular, leastPopular)
-      } else {
-        val section = sectionList.head
-        val mostPopular = section.parentSection.getEditionalisedSubSectionLinks(edition).mostPopular.drop(1)
-        val leastPopular = section.parentSection.getEditionalisedSubSectionLinks(edition).leastPopular
-
-        if (mostPopular.contains(section.navLink) || NewNavigation.PrimaryLinks.contains(section.navLink)) {
-          (mostPopular, leastPopular)
-        } else {
-          (Seq(section.navLink) ++ mostPopular, leastPopular.filter(_.title != section.navLink.title))
-        }
-      }
-    }
-
-    def getPillarName(id: String): String = {
-      getSectionLink(id).getOrElse("News")
-    }
-
-    def getActivePillar(page: Page): Tuple2[String, String] = {
-      val sectionOrTagId = SubSectionLinks.getSectionOrTagId(page)
-      val activeSectionLink = getSectionLink(sectionOrTagId)
-
-      (sectionOrTagId, activeSectionLink.getOrElse(""))
-    }
-
-    private def getSectionLink(id: String): Option[String] = {
-      sectionLinks.find(_.pageId == id).map(_.parentSection.name)
-    }
-  }
-
   object SubSectionLinks {
 
     val ukNewsSubNav = NavLinkLists(
@@ -519,108 +384,5 @@ object NewNavigation {
       SubSectionLink("observer", theObserverSubNav),
       SubSectionLink("crosswords", crosswordsSubNav)
     )
-
-    def isEditionalistedSubSection(sectionId: String): Boolean = {
-      editionalisedSubSectionLinks.exists(_.pageId == sectionId)
-    }
-
-    val frontLikePages = List(
-      "theguardian",
-      "observer",
-      "football/live",
-      "football/tables",
-      "football/competitions",
-      "football/results",
-      "football/fixtures",
-      "type/cartoon",
-      "cartoons/archive"
-    )
-
-    def getSectionOrTagId(page: Page): String = {
-      println(page.metadata.contentType);
-      val tags = Navigation.getTagsFromPage(page)
-      val commonKeywords = tags.keywordIds.intersect(tagPages).sortWith(tags.keywordIds.indexOf(_) < tags.keywordIds.indexOf(_))
-      val isTagPage = (page.metadata.isFront || frontLikePages.contains(page.metadata.id)) && tagPages.contains(page.metadata.id)
-      val isArticleInTagPageSection = commonKeywords.nonEmpty
-
-      // opinion pieces should always clearly be opinion pieces, regardless of other keywords
-      if (page.metadata.sectionId == "commentisfree") {
-        page.metadata.sectionId
-      } else if (isTagPage) {
-        simplifySectionId(page.metadata.id)
-      } else if (isArticleInTagPageSection) {
-        simplifySectionId(commonKeywords.head)
-      } else {
-        simplifySectionId(page.metadata.sectionId)
-      }
-    }
-
-    def simplifySectionId(sectionId: String): String = {
-      val sectionMap = Map(
-        "money/property" -> "money",
-        "money/pensions" -> "money",
-        "money/savings" -> "money",
-        "money/debt" -> "money",
-        "money/work-and-careers" -> "money",
-        "world/europe-news" -> "world",
-        "world/americas" -> "world",
-        "world/asia" -> "world",
-        "education" -> "uk-news",
-        "media" -> "uk-news",
-        "society" -> "uk-news",
-        "law" -> "uk-news",
-        "scotland" -> "uk-news",
-        "business/economics" -> "business",
-        "business/banking" -> "business",
-        "business/retail" -> "business",
-        "business/stock-markets" -> "business",
-        "business/eurozone" -> "business",
-        "us/sustainable-business" -> "business",
-        "business/us-small-business" -> "business",
-        "environment/climate-change" -> "environment",
-        "environment/wildlife" -> "environment",
-        "environment/energy" -> "environment",
-        "environment/pollution" -> "environment",
-        "travel/uk" -> "travel",
-        "travel/europe" -> "travel",
-        "travel/usa" -> "travel",
-        "travel/skiing" -> "travel",
-        "travel/australasia" -> "travel",
-        "travel/asia" -> "travel"
-      )
-
-      sectionMap.getOrElse(sectionId, sectionId)
-    }
-
-    def simplifyFootball(sectionId: String): String = {
-      val sectionMap = Map(
-        "football/live" -> "football",
-        "football/tables" -> "football",
-        "football/competitions" -> "football",
-        "football/results" -> "football",
-        "football/fixtures" -> "football"
-      )
-
-      sectionMap.getOrElse(sectionId, sectionId)
-    }
-
-    def getSubSectionNavLinks(id: String, edition: Edition, isFront: Boolean): Tuple2[Seq[NavLink], Seq[NavLink]] = {
-      if (isEditionalistedSubSection(id)) {
-        val subNav = editionalisedSubSectionLinks.filter(_.pageId == id).head.parentSection
-
-        (subNav.getEditionalisedSubSectionLinks(edition).mostPopular,
-        subNav.getEditionalisedSubSectionLinks(edition).leastPopular)
-      } else {
-        val subSectionList = subSectionLinks.filter(_.pageId == simplifyFootball(id))
-
-        if (subSectionList.isEmpty) {
-          NewNavigation.SectionLinks.getSectionLinks(id, edition)
-        } else {
-          (subSectionList.head.parentSection.mostPopular,
-            subSectionList.head.parentSection.leastPopular)
-
-        }
-      }
-    }
   }
 }
