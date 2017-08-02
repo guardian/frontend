@@ -181,7 +181,7 @@ const renderAdvert = (advert: Advert, slotRenderEvent: any) => {
                     : Promise.resolve();
 
             const addFeedbackDropdownToggle = () =>
-                config.switches.adFeedback && isRendered
+                isRendered
                     ? fastdom.write(() => {
                           if (
                               !advert.node.classList.contains('js-toggle-ready')
@@ -194,7 +194,7 @@ const renderAdvert = (advert: Advert, slotRenderEvent: any) => {
 
             const applyFeedbackOnClickListeners = slotRender => {
                 const readyClass = 'js-onclick-ready';
-                return config.switches.adFeedback && isRendered
+                return isRendered
                     ? fastdom.write(() => {
                           qwery(
                               '.js-ad-feedback-option:not(.js-onclick-ready)'
