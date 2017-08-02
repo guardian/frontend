@@ -120,10 +120,7 @@ class CommercialFeatures {
             ),
         };
 
-        this.adFeedback =
-            ['artanddesign', 'society', 'tv-and-radio'].indexOf(
-                config.page.section
-            ) > -1;
+        this.adFeedback = false;
     }
 }
 
