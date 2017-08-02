@@ -59,8 +59,8 @@ const showSignInTooltip = (target: Element): Promise<void> => {
     });
 };
 
-const isOpenForRecommendations = (element: Element): boolean =>
-    !!element.querySelector('.d-discussion--recommendations-open');
+const isOpenForRecommendations = (element: ?Element): boolean =>
+    !!element && !!element.querySelector('.d-discussion--recommendations-open');
 
 const setClicked = (target: Element): Promise<void> =>
     fastdom.write(() => {
@@ -80,7 +80,7 @@ const setRecommended = (target: Element): Promise<void> =>
     });
 
 const handle = (
-    target: ?Element,
+    target: Element,
     container: ?Element,
     user: ?User
 ): Promise<void> => {
