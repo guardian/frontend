@@ -21,15 +21,9 @@
                 <span class="kicker-separator">/</span>
             }
 
-            @if(card.branding.isDefined) {
-                @if(card.header.isGallery) { @icon("gallery-labs", isLarge) }
-                @if(card.header.isAudio) { @icon("podcast-labs", isLarge) }
-                @if(card.header.isVideo) { @icon("video-labs", isLarge) }
-            } else {
-                @if(card.header.isGallery) { @icon("gallery", isLarge) }
-                @if(card.header.isAudio) { @icon("podcast", isLarge) }
-                @if(card.header.isVideo) { @icon("video", isLarge) }
-            }
+            @if(card.header.isGallery) { @icon("gallery", isLarge) }
+            @if(card.header.isAudio) { @icon("podcast", isLarge) }
+            @if(card.header.isVideo) { @icon("video", isLarge) }
 
             @if(card.header.quoted) {
                 @card.cardStyle match {
@@ -148,17 +142,16 @@
 @renderContentContainer(collection: EmailContentContainer, collectionIndex: Int) = {
     @containerTitle((if(collectionIndex > 0) Seq("ct--not-top") else Nil) ++ (if (collection.branding.isDefined) Seq("ct-branded") else Nil)) {
 
-        @for(containerHref <- collection.href) { @containerHref match {
-            case href: String => {
-                <a class="fc-link" href="@collection.href">@collection.displayName</a>
-            }
-            case _ => {@collection.displayName}
+        @if(collection.href.isDefined) {
+            <a class="fc-link" href="@collection.href">@collection.displayName</a>
+        } else {
+            @collection.displayName
         }
-    }}
+    }
 
     @for(collectionBranding <- collection.branding) { @collectionBranding match {
         case branding: Branding => {
-            @containerBranding(collection.href, branding)
+            @containerBranding(branding, collection.href)
         }
         case _ => { }
     }}

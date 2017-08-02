@@ -190,6 +190,11 @@ $email-tones: (
         border-top-color: $paid-article-brand;
         background-color: $paid-article;
     }
+
+    .ct__padding {
+        font-family: Helvetica, Arial, sans-serif;
+        font-weight: 900;
+    }
 }
 
 .fc__margin--branded {
