@@ -193,15 +193,16 @@ class CommentBox extends Component {
     error(type: string, message?: string): void {
         let errorMessage = message;
         const errorClass = this.getClass('error', true);
+
+        if (!errorMessage) {
+            errorMessage = this.errorMessages[type];
+        }
+
         const errorMarkup = `
             <div class="d-discussion__error ${errorClass}">
                 <i class="i i-alert"></i>
                 <span class="d-discussion__error-text">${errorMessage}</span>
             </div>`;
-
-        if (!errorMessage) {
-            errorMessage = this.errorMessages[type];
-        }
 
         this.setState('invalid');
         this.getElem('messages').appendChild(bonzo.create(errorMarkup)[0]);
