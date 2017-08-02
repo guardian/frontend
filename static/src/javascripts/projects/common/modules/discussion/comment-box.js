@@ -110,7 +110,6 @@ class CommentBox extends Component {
         }
     }
 
-    /* TODO: remove the replace, get the Scala to be better */
     getDiscussionId(): string {
         return (
             this.options.discussionId ||
@@ -121,12 +120,10 @@ class CommentBox extends Component {
     }
 
     setFormState(disabled?: boolean): void {
-        const isDisabled = typeof disabled === 'boolean' ? disabled : false;
-
         const commentBody = this.getElem('body');
         const submitButton = this.getElem('submit');
 
-        if (isDisabled || commentBody.value.length === 0) {
+        if (!!disabled || commentBody.value.length === 0) {
             submitButton.setAttribute('disabled', 'disabled');
         } else {
             submitButton.removeAttribute('disabled');
@@ -142,7 +139,6 @@ class CommentBox extends Component {
         return IdentityApi.getUserFromCookie();
     }
 
-    /* TODO (jamesgorrie); Make this more robust */
     fail(xhr: Object): void {
         let response;
 
@@ -194,7 +190,6 @@ class CommentBox extends Component {
         this.setState('preview-visible');
     }
 
-    /* TODO (jamesgorrie): Perhaps change error states to use bit operators */
     error(type: string, message?: string): void {
         let errorMessage = message;
 
@@ -339,8 +334,6 @@ class CommentBox extends Component {
         const commentBody = this.getElem('body');
 
         this.setFormState();
-
-        // TODO (jamesgorrie): Could definitely use the this.on and make the default context this
 
         if (this.options.newCommenter) {
             bean.on(
