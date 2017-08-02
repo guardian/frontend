@@ -7,7 +7,7 @@ import { isBreakpoint } from 'lib/detect';
 import mediator from 'lib/mediator';
 import { getUrlVars } from 'lib/url';
 import richLinks from 'common/modules/article/rich-links';
-import membershipEvents from 'common/modules/article/membership-events';
+import { upgradeMembershipEvents } from 'common/modules/article/membership-events';
 import { geoMostPopular } from 'common/modules/onward/geo-most-popular';
 import quiz from 'common/modules/atoms/quiz';
 import storyQuestions from 'common/modules/atoms/story-questions';
@@ -59,7 +59,7 @@ const init = () => {
     modules.initQuizListeners();
     richLinks.upgradeRichLinks();
     richLinks.insertTagRichLink();
-    membershipEvents.upgradeEvents();
+    upgradeMembershipEvents();
     mediator.emit('page:article:ready');
     quiz.handleCompletion();
     storyQuestions.init();

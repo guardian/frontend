@@ -7,29 +7,37 @@ a,abbr,acronym,address,applet,article,aside,audio,b,big,blockquote,body,canvas,c
     padding: 0;
     vertical-align: baseline;
 }
+
 article,aside,details,figcaption,figure,footer,header,hgroup,main,menu,nav,section {
     display: block;
 }
+
 body {
     line-height: 1;
 }
+
 ol,ul {
     list-style: none;
 }
+
 blockquote,q {
     quotes: none;
 }
+
 blockquote:after,blockquote:before,q:after,q:before {
     content: '';
     content: none;
 }
+
 table {
     border-collapse: collapse;
     border-spacing: 0;
 }
+
 html {
     box-sizing: border-box;
 }
+
 *,:after,:before {
     box-sizing: inherit;
 }

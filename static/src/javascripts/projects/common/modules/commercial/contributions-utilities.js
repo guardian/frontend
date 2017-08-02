@@ -11,7 +11,7 @@ import { logView } from 'common/modules/commercial/acquisitions-view-log';
 import { isRegular } from 'common/modules/tailor/tailor';
 import $ from 'lib/$';
 import config from 'lib/config';
-import ElementInView from 'lib/element-inview';
+import { elementInView } from 'lib/element-inview';
 import fastdom from 'lib/fastdom-promise';
 import mediator from 'lib/mediator';
 import { getSync as geolocationGetSync } from 'lib/geolocation';
@@ -288,7 +288,7 @@ const makeABTestVariant = (
 
                                 component.each(element => {
                                     // top offset of 18 ensures view only counts when half of element is on screen
-                                    const elementInView = ElementInView(
+                                    const inView = elementInView(
                                         element,
                                         window,
                                         {
@@ -296,7 +296,7 @@ const makeABTestVariant = (
                                         }
                                     );
 
-                                    elementInView.on('firstview', () => {
+                                    inView.on('firstview', () => {
                                         logView(parentTest.id);
                                         mediator.emit(parentTest.viewEvent);
                                         mediator.emit(

@@ -148,32 +148,17 @@ object S3FrontsApi extends S3 {
   val namespace = "frontsapi"
   lazy val location = s"$stage/$namespace"
 
-  def getLivePressedKeyForPath(path: String): String =
-    s"$location/pressed/live/$path/pressed.json"
-
-  def getDraftPressedKeyForPath(path: String): String =
-    s"$location/pressed/draft/$path/pressed.json"
-
   def getLiveFapiPressedKeyForPath(path: String): String =
     s"$location/pressed/live/$path/fapi/pressed.json"
 
   def getDraftFapiPressedKeyForPath(path: String): String =
     s"$location/pressed/draft/$path/fapi/pressed.json"
 
-  def putLivePressedJson(path: String, json: String): Unit =
-    putPrivateGzipped(getLivePressedKeyForPath(path), json, "application/json")
-
-  def putDraftPressedJson(path: String, json: String): Unit =
-    putPrivateGzipped(getDraftPressedKeyForPath(path), json, "application/json")
-
   def putLiveFapiPressedJson(path: String, json: String): Unit =
     putPrivateGzipped(getLiveFapiPressedKeyForPath(path), json, "application/json")
 
   def putDraftFapiPressedJson(path: String, json: String): Unit =
     putPrivateGzipped(getDraftFapiPressedKeyForPath(path), json, "application/json")
-
-  def getPressedLastModified(path: String): Option[String] =
-    getLastModified(getLiveFapiPressedKeyForPath(path)).map(_.toString)
 }
 
 class SecureS3Request(wsClient: WSClient) extends implicits.Dates with Logging {
