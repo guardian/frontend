@@ -142,7 +142,7 @@ const setupVideo = (
                     nextVideoAutoplay.triggerAutoplay.bind(
                         this,
                         player.currentTime.bind(player),
-                        parseInt(video.getAttribute('data-duration'), 10)
+                        parseInt(player.duration(), 10)
                     )
                 );
             } else {
