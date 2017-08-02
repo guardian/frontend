@@ -52,6 +52,30 @@ object ABNewDesktopHeaderControl extends TestDefinition(
   def canRun(implicit request: RequestHeader): Boolean = participationGroup.contains("control")
 }
 
+object ABJavascriptRenderingVariant extends TestDefinition(
+  name = "ab-javascript-rendering-variant",
+  description = "Users in this test will see pages rendered by the javascript renderer.",
+  owners = Seq(Owner.withName("dotcom.platform")),
+  sellByDate = new LocalDate(2017, 8, 29)
+) {
+
+  def participationGroup(implicit request: RequestHeader): Option[String] = request.headers.get("X-GU-ab-javascript-rendering")
+
+  def canRun(implicit request: RequestHeader): Boolean = participationGroup.contains("variant")
+}
+
+object ABJavascriptRenderingControl extends TestDefinition(
+  name = "ab-javascript-rendering-control",
+  description = "Users in this test will see pages rendered via twirl.",
+  owners = Seq(Owner.withName("dotcom.platform")),
+  sellByDate = new LocalDate(2017, 8, 29)
+) {
+
+  def participationGroup(implicit request: RequestHeader): Option[String] = request.headers.get("X-GU-ab-javascript-rendering")
+
+  def canRun(implicit request: RequestHeader): Boolean = participationGroup.contains("control")
+}
+
 trait ServerSideABTests {
   val tests: Seq[TestDefinition]
 
@@ -77,7 +101,9 @@ object ActiveTests extends ServerSideABTests {
   val tests: Seq[TestDefinition] = List(
     CommercialClientLoggingVariant,
     ABNewDesktopHeaderVariant,
-    ABNewDesktopHeaderControl
+    ABNewDesktopHeaderControl,
+    ABJavascriptRenderingVariant,
+    ABJavascriptRenderingControl
   )
 }
 
