@@ -1,13 +1,14 @@
 package model.pressed
 
 import com.gu.commercial.branding.Branding
-import com.gu.contentapi.client.model.v1.ElementType
+import com.gu.contentapi.client.model.v1.{Content, ElementType}
 import com.gu.facia.api.utils.FaciaContentUtils
 import com.gu.facia.api.{models => fapi, utils => fapiutils}
 import com.gu.facia.client.models.{Backfill, CollectionConfigJson, Metadata}
-import common.Edition
+import common.{Edition, HTML}
 import common.commercial.EditionBranding
-import model.{ContentType, SupportedUrl}
+import model.content.{Atoms, MediaAtom}
+import model.{Commercial, Elements, Fields, ImageMedia, MetaData, SupportedUrl, Tags, Trail, VideoElement}
 import org.joda.time.DateTime
 
 object DisplayHints {
@@ -111,6 +112,65 @@ case object Gallery extends MediaType
 case object Video extends MediaType
 case object Audio extends MediaType
 
+final case class PressedFields(
+                                main: String,
+                                body: String,
+                                standfirst: Option[String]
+                              )
+final case class PressedTrail(
+                               trailPicture: Option[ImageMedia],
+                               byline: Option[String],
+                               thumbnailPath: Option[String],
+                               webPublicationDate: DateTime
+                             )
+final case class PressedMetadata(id: String, webTitle: String, webUrl: String)
+final case class PressedElements(mainVideo: Option[VideoElement], mediaAtoms: Seq[MediaAtom])
+final case class PressedStory(
+                               trail: PressedTrail,
+                               metadata: PressedMetadata,
+                               fields: PressedFields,
+                               elements: PressedElements,
+                               tags: Tags
+                             )
+object PressedStory {
+
+  def apply(apiContent: Content): PressedStory = {
+
+    val fields: Fields = Fields.make(apiContent)
+    val metadata = MetaData.make(fields, apiContent)
+    val elements = Elements.make(apiContent)
+    val tags = Tags.make(apiContent)
+    val commercial = Commercial.make(tags, apiContent)
+    val trail = Trail.make(tags, fields, commercial, elements, metadata, apiContent)
+    val atoms = Atoms.make(apiContent)
+
+    new PressedStory(
+      PressedTrail(
+        trail.trailPicture,
+        trail.byline,
+        trail.thumbnailPath,
+        trail.webPublicationDate
+      ),
+      PressedMetadata(
+        metadata.id,
+        metadata.webTitle,
+        metadata.webUrl
+      ),
+      PressedFields(
+        fields.main,
+        HTML.takeFirstNElements(fields.body, 2),
+        fields.standfirst
+      ),
+      PressedElements(
+        elements.mainVideo,
+        atoms.fold(Seq.empty[MediaAtom])(_.media)
+      ),
+      tags
+    )
+  }
+
+}
+
 object PressedProperties {
   def make(content: fapi.FaciaContent): PressedProperties = {
     val contentProperties = getProperties(content)
@@ -122,7 +182,7 @@ object PressedProperties {
       showKickerTag = contentProperties.showKickerTag,
       showByline = contentProperties.showByline,
       imageSlideshowReplace = contentProperties.imageSlideshowReplace,
-      maybeContent = capiContent.map(model.Content(_)),
+      maybeContent = capiContent.map(PressedStory(_)),
       maybeContentId = FaciaContentUtils.maybeContentId(content),
       isLiveBlog = FaciaContentUtils.isLiveBlog(content),
       isCrossword = FaciaContentUtils.isCrossword(content),
@@ -160,7 +220,7 @@ final case class PressedProperties(
   showKickerTag: Boolean,
   showByline: Boolean,
   imageSlideshowReplace: Boolean,
-  maybeContent: Option[ContentType],
+  maybeContent: Option[PressedStory],
   maybeContentId: Option[String],
   isLiveBlog: Boolean,
   isCrossword: Boolean,
