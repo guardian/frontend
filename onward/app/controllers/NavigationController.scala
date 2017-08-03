@@ -1,7 +1,7 @@
 package controllers
 
 import common.{Edition, JsonComponent, LinkTo, NavItem, SectionLink}
-import navigation.{NavLink, NewNavigation, NavigationHelpers}
+import navigation.{NavLink, NavLink2, Pillar, NewNavigation, NavigationHelpers, GlobalNavigation}
 import model.Cached
 import model.Cached.RevalidatableResult
 import play.api.libs.json.{Json, Writes}
@@ -12,8 +12,9 @@ class NavigationController extends Controller {
   private case class SectionLinkAndEdition(link: SectionLink, edition: Edition)
   private case class NavItemAndEdition(link: NavItem, edition: Edition)
 
-  private case class topLevelNavItems(editionalisedSection: NewNavigation.EditionalisedNavigationSection)
-  private case class navSectionLink(navLink: NavLink)
+  private case class topLevelNavItems(pillar: Pillar)
+  private case class navSectionLink(navLink: NavLink2)
+  private case class membershipSectionLink(navLink: NavLink)
 
   def nav() = Action { implicit request =>
     Cached(500) {
@@ -42,11 +43,18 @@ class NavigationController extends Controller {
   def renderAmpNav = Action { implicit request =>
     val edition = Edition(request)
     val navSecondarySections = List.concat(
-      NewNavigation.BrandExtensions.getAllEditionalisedNavLinks(edition).map(section => navSectionLink(section)),
-      NewNavigation.OtherLinks.getAllEditionalisedNavLinks(edition).map(section => navSectionLink(section))
+      NewNavigation.BrandExtensions.getAllEditionalisedNavLinks(edition).map(section => membershipSectionLink(section)),
+      NewNavigation.OtherLinks.getAllEditionalisedNavLinks(edition).map(section => membershipSectionLink(section))
     )
 
     Cached(900) {
+
+      implicit val membershipLinkAndTitleWrites = new Writes[membershipSectionLink] {
+        def writes(item: membershipSectionLink) = Json.obj(
+          "title" -> item.navLink.title,
+          "url" -> LinkTo(item.navLink.url)
+        )
+      }
 
       implicit val sectionLinkAndTitleWrites = new Writes[navSectionLink] {
         def writes(item: navSectionLink) = Json.obj(
@@ -57,16 +65,17 @@ class NavigationController extends Controller {
 
       implicit val topLevelSectionWrites = new Writes[topLevelNavItems] {
         def writes(item: topLevelNavItems) = Json.obj(
-          "title" -> item.editionalisedSection.name,
-          "subSections" -> item.editionalisedSection.getAllEditionalisedNavLinks(edition).map(subsection => navSectionLink(subsection))
+          "title" -> item.pillar.title,
+          "longDisplayName" -> item.pillar.longDisplayName,
+          "subSections" -> item.pillar.children.getEditionalisedList(edition).map( navLink => navSectionLink(navLink))
         )
       }
 
       JsonComponent(
         "items" -> Json.arr(
           Json.obj(
-            "topLevelSections" -> NewNavigation.topLevelSections.map( section => topLevelNavItems(section) ),
-            "membershipLinks" -> NavigationHelpers.getMembershipLinks(edition).mostPopular.map( section => navSectionLink(section)),
+            "topLevelSections" -> GlobalNavigation.pillars.map( section => topLevelNavItems(section) ),
+            "membershipLinks" -> NavigationHelpers.getMembershipLinks(edition).map( section => membershipSectionLink(section)),
             "secondarySections" -> navSecondarySections
           )
         )
