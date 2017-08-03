@@ -143,13 +143,6 @@ import scala.concurrent.Await
     faciaController.alternativeEndpoints("uk/business/stock-markets") should be (List("business", "uk"))
   }
 
-  it should "render fronts with content that has been pre-fetched from facia-press" in {
-    // make sure you switch on facia inline-embeds switch before you press to make this pass
-    val request = FakeRequest("GET", "/inline-embeds").from(Uk)
-    val future = faciaController.renderFront("inline-embeds")(request)
-    contentAsString(future) should include ("""<div class="keep-it-in-the-ground__wrapper""")
-  }
-
   it should "render correct amount of fronts in mf2 format (no section or edition provided)" in {
     val count = 3
     val request = FakeRequest("GET", s"/container/count/$count/offset/0/mf2.json")

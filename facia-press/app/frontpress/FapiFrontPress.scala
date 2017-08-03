@@ -157,12 +157,14 @@ trait FapiFrontPress extends Logging with ExecutionContexts {
       curatedCollection <- getCurated(collection)
       backfill <- getBackfill(collection)
       treats <- getTreats(collection)
-    } yield
+    } yield {
       PressedCollection.fromCollectionWithCuratedAndBackfill(
         collection,
-        curatedCollection.map(slimContent),
-        backfill.map(slimContent),
-        treats.map(slimContent))
+        curatedCollection,
+        backfill,
+        treats
+      )
+    }
 
   private def getCurated(collection: Collection): Response[List[PressedContent]] = {
     // Map initial PressedContent to enhanced content which contains pre-fetched embed content.
@@ -333,45 +335,6 @@ trait FapiFrontPress extends Logging with ExecutionContexts {
     }
 
     contentApiResponse.map(Option(_)).fallbackTo(Future.successful(None))
-  }
-
-  def slimContent(pressedContent: PressedContent): PressedContent = {
-    val slimMaybeContent = pressedContent.properties.maybeContent.map { content =>
-
-      // Discard all elements except the main video.
-      // It is safe to do so because the trail picture is held in trailPicture in the Trail class.
-      val slimElements = Elements.apply(content.elements.mainVideo.toList)
-      val slimFields = content.fields.copy(body = HTML.takeFirstNElements(content.fields.body, 2), blocks = None)
-      val slimAtoms = content.atoms
-
-      // Clear the config fields, because they are not used by facia. That is, the config of
-      // an individual card is not used to render a facia front page.
-      val slimMetadata = content.metadata.copy(
-        javascriptConfigOverrides = Map(),
-        opengraphPropertiesOverrides = Map(),
-        twitterPropertiesOverrides = Map())
-
-      val slimContent = content.content.copy(metadata = slimMetadata, elements = slimElements, fields = slimFields, atoms = slimAtoms)
-
-      content match {
-        case article: Article => article.copy(content = slimContent)
-        case video: Video => video.copy(content = slimContent)
-        case audio: Audio => audio.copy(content = slimContent)
-        case interactive: Interactive => interactive.copy(content = slimContent)
-        case image: ImageContent => image.copy(content = slimContent)
-        case gallery: Gallery => gallery.copy(content = slimContent)
-        case generic: GenericContent => generic.copy(content = slimContent)
-        case crossword: CrosswordContent => crossword.copy(content = slimContent)
-      }
-    }
-    val slimProperties = pressedContent.properties.copy(maybeContent = slimMaybeContent)
-
-    pressedContent match {
-      case curatedContent: CuratedContent => curatedContent.copy(properties = slimProperties)
-      case supporting: SupportingCuratedContent => supporting.copy(properties = slimProperties)
-      case linkSnap: LinkSnap => linkSnap.copy(properties = slimProperties)
-      case latestSnap: LatestSnap => latestSnap.copy(properties = slimProperties)
-    }
   }
 
 }

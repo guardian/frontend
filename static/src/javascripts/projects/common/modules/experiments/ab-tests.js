@@ -10,8 +10,6 @@ import { tailorSurvey } from 'common/modules/experiments/tests/tailor-survey';
 import AcquisitionsEpicElectionInteractiveEnd from 'common/modules/experiments/tests/acquisitions-epic-election-interactive-end';
 import AcquisitionsEpicElectionInteractiveSlice from 'common/modules/experiments/tests/acquisitions-epic-election-interactive-slice';
 
-import BundleDigitalSubPriceTest1Thrasher from 'common/modules/experiments/tests/bundle-digital-sub-price-test-1-thrasher';
-
 export const TESTS: Array<ABTest> = [
     PaidContentVsOutbrain2,
     getAcquisitionTest(),
@@ -19,7 +17,6 @@ export const TESTS: Array<ABTest> = [
     carrotSlot,
     AcquisitionsEpicElectionInteractiveEnd,
     AcquisitionsEpicElectionInteractiveSlice,
-    new BundleDigitalSubPriceTest1Thrasher(),
 ]
     .concat(MembershipEngagementBannerTests)
     .filter(Boolean);

@@ -11,7 +11,7 @@ let adblockBeingUsed = false;
 
 const sentryOptions = {
     whitelistUrls: [
-        // loaclhost will not log errors, but call `shouldSendCallback`
+        // localhost will not log errors, but call `shouldSendCallback`
         /localhost/,
         /assets\.guim\.co\.uk/,
         /ophan\.co\.uk/,
@@ -22,6 +22,11 @@ const sentryOptions = {
         contentType: config.page.contentType,
         revisionNumber: config.page.revisionNumber,
     },
+
+    ignoreErrors: [
+        "Can't execute code from a freed script",
+        'There is no space left matching rules from .js-article__body',
+    ],
 
     dataCallback(data: Object): Object {
         const { culprit = false } = data;

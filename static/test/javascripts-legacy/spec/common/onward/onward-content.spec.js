@@ -11,7 +11,7 @@ define([
 
         beforeEach(function (done) {
             injector.require(['common/modules/onward/onward-content', 'lib/config', 'lib/mediator'], function () {
-                OnwardContent = arguments[0];
+                OnwardContent = arguments[0].OnwardContent;
                 config = arguments[1];
                 mediator = arguments[2];
 

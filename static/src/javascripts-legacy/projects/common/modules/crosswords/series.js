@@ -14,7 +14,7 @@ define([
         if (el.length > 0) {
             proximityLoader.add(el[0], 1500, function () {
                 if (config.page.seriesId && config.page.showRelatedContent) {
-                    new Series(document.getElementsByClassName('js-onward'));
+                    new Series.OnwardContent(document.getElementsByClassName('js-onward'));
                 }
             });
         }

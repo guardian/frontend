@@ -383,7 +383,7 @@ Comments.prototype.replyToComment = function(e) {
         $replyToComment = bonzo(replyToComment),
         replyToBody = qwery(this.getClass('commentBody'), replyToComment)[0].innerHTML,
         replyToTimestamp = qwery(this.getClass('commentTimestampJs'), replyToComment)[0].innerHTML,
-        commentBox = new CommentBox({
+        commentBox = new CommentBox.CommentBox({
             discussionId: this.options.discussionId,
             premod: this.user.privateFields.isPremoderated,
             state: 'response',
