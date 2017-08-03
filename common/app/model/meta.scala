@@ -420,19 +420,6 @@ case class MediaAtomPage(
   )
 }
 
-case class StoryQuestionsAtomPage(
-  override val atom: StoryQuestionsAtom,
-  override val withJavaScript: Boolean
-)(implicit request: RequestHeader) extends AtomPage {
-  override val atomType = "storyquestions"
-  override val body = views.html.fragments.atoms.storyquestions(atom, isAmp = false)
-  override val metadata = MetaData.make(
-    id = atom.id,
-    webTitle = atom.atom.title.getOrElse("Story questions"),
-    section = None
-  )
-}
-
 case class GuideAtomPage(
   override val atom: GuideAtom,
   override val withJavaScript: Boolean

@@ -10,7 +10,6 @@ import richLinks from 'common/modules/article/rich-links';
 import { upgradeMembershipEvents } from 'common/modules/article/membership-events';
 import { geoMostPopular } from 'common/modules/onward/geo-most-popular';
 import quiz from 'common/modules/atoms/quiz';
-import storyQuestions from 'common/modules/atoms/story-questions';
 import { init as initLiveblogCommon } from 'bootstraps/enhanced/article-liveblog-common';
 import trail from 'bootstraps/enhanced/trail';
 import ophan from 'ophan/ng';
@@ -62,7 +61,6 @@ const init = () => {
     upgradeMembershipEvents();
     mediator.emit('page:article:ready');
     quiz.handleCompletion();
-    storyQuestions.init();
     initStoryQuiz();
     SnippetFeedback();
 };
