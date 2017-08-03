@@ -4,7 +4,7 @@
 
 ## Does this affect other platforms - Amp, Apps, etc?
 
-## Does this affect GLabs Paid Content Pages?
+## Does this affect GLabs Paid Content Pages? Should it have support for Paid Content?
 
 ## Screenshots
 
