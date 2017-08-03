@@ -1,7 +1,7 @@
 // @flow
 
 import config from 'lib/config';
-import { isMatch, isClockwatch, isLiveClockwatch } from './page';
+import { isMatch, isClockwatch, isLiveClockwatch, keywordExists } from './page';
 
 jest.mock('lib/config', () => {
     const defaultConfig = {
@@ -143,5 +143,19 @@ describe('isLiveClockwatch', () => {
         isLiveClockwatch(yesable);
 
         expect(yesable).toHaveBeenCalled();
+    });
+});
+
+describe('keywordExists', () => {
+    it('should identify that given keywords are in config', () => {
+        config.page.keywords = 'foo,bar';
+
+        expect(keywordExists(['foo'])).toBe(true);
+    });
+
+    it('should return false when no given keywords are in config', () => {
+        config.page.keywords = undefined;
+
+        expect(keywordExists(['foo'])).toBe(false);
     });
 });
