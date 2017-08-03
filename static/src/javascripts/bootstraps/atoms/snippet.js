@@ -13,6 +13,18 @@ import { SnippetFeedback } from 'journalism/snippet-feedback';
 // eslint-disable-next-line camelcase,no-undef
 __webpack_public_path__ = `${config.page.assetsPath}javascripts/`;
 
+const updateHeight = () => {
+    fastdom
+        .read(
+            () =>
+                document.documentElement &&
+                document.documentElement.getBoundingClientRect().height
+        )
+        .then(height => {
+            send('resize', { height });
+        });
+};
+
 Promise.all([
     window.guardian.polyfilled
         ? Promise.resolve()
@@ -23,22 +35,12 @@ Promise.all([
     new Promise(comready),
 ]).then(() => {
     SnippetFeedback({ scroll: false });
+    updateHeight();
     [...document.getElementsByTagName('details')]
         .slice(0, 1)
         .forEach(details => {
-            new MutationObserver((changes: MutationRecord[]) => {
-                changes.forEach((change: MutationRecord) => {
-                    if (change.attributeName !== 'open') return;
-                    fastdom
-                        .read(
-                            () =>
-                                (document.documentElement &&
-                                    document.documentElement.getBoundingClientRect()
-                                        .height) ||
-                                0
-                        )
-                        .then(height => send('resize', { height }));
-                });
-            }).observe(details, { attributes: true });
+            new MutationObserver(updateHeight).observe(details, {
+                attributes: true,
+            });
         });
 });

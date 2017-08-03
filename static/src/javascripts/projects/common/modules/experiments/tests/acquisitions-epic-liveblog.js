@@ -5,7 +5,7 @@ import template from 'lodash/utilities/template';
 import $ from 'lib/$';
 import config from 'lib/config';
 import mediator from 'lib/mediator';
-import ElementInView from 'lib/element-inview';
+import { elementInView } from 'lib/element-inview';
 import fastdom from 'lib/fastdom-promise';
 import liveblogEpicTemplate from 'raw-loader!common/views/acquisitions-epic-liveblog.html';
 import { liveblog as liveblogCopy } from 'common/modules/commercial/acquisitions-copy';
@@ -38,7 +38,7 @@ const getLiveblogEntryTimeData = (el: Element): Promise<TimeData> =>
         }
     });
 
-const getBlocksToInsertEpicAfter = (): Promise<Array<Element>> =>
+const getBlocksToInsertEpicAfter = (): Promise<Array<HTMLElement>> =>
     fastdom.read(() => {
         const blocks = document.getElementsByClassName('block');
         const blocksToInsertManualEpicAfter = document.getElementsByClassName(
@@ -79,13 +79,16 @@ const setEpicLiveblogEntryTimeData = (
     }
 };
 
-const setupViewTracking = (el: Element, test: ContributionsABTest): void => {
+const setupViewTracking = (
+    el: HTMLElement,
+    test: ContributionsABTest
+): void => {
     // top offset of 18 ensures view only counts when half of element is on screen
-    const elementInView = ElementInView(el, window, {
+    const inView = elementInView(el, window, {
         top: 18,
     });
 
-    elementInView.on('firstview', () => {
+    inView.on('firstview', () => {
         logView(test.id);
         mediator.emit(test.viewEvent);
     });

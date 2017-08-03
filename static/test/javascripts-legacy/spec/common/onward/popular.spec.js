@@ -34,7 +34,7 @@ define([
                 'lib/mediator',
                 'lib/detect'
             ], function () {
-                Popular = arguments[0];
+                Popular = arguments[0].MostPopular;
                 config = arguments[1];
                 mediator = arguments[2];
                 detect = arguments[3];

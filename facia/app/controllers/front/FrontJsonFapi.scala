@@ -1,6 +1,6 @@
 package controllers.front
 
-import common.{ExecutionContexts, Logging}
+import common.{ExecutionContexts, FaciaPressMetrics, Logging, StopWatch}
 import conf.Configuration
 import model.PressedPage
 import play.api.libs.json._
@@ -16,16 +16,21 @@ trait FrontJsonFapi extends Logging with ExecutionContexts {
   val wsClient: WSClient
   val secureS3Request = new SecureS3Request(wsClient)
 
-  private def getAddressForPath(path: String): String = s"$bucketLocation/${path.replaceAll("""\+""","%2B")}/fapi/pressed.json"
+  private def getAddressForPath(path: String): String = s"$bucketLocation/${path.replaceAll("""\+""","%2B")}/fapi/pressed.v2.json"
 
-  private def parsePressedJson(j: String): Option[PressedPage] = {
-    val json = Json.parse(j)
-    json.validate[PressedPage] match {
+  private def parsePressedJson(json: String): Option[PressedPage] = {
+    val stopWatch: StopWatch = new StopWatch
+
+    val pressedPage = Json
+      .parse(json)
+      .validate[PressedPage] match {
       case JsSuccess(page, _) => Option(page)
       case JsError(errors) =>
         log.warn("Could not parse JSON in FrontJson")
         None
     }
+    FaciaPressMetrics.FrontDecodingLatency.recordDuration(stopWatch.elapsed)
+    pressedPage
   }
 
   def getRaw(path: String): Future[Option[String]] = {

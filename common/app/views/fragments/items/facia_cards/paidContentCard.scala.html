@@ -9,7 +9,8 @@
     <div class="fc-item__container">
         @item.paidImage.map(image => itemImage(
             image,
-            inlineImage = containerIndex == 0 && index < 4
+            inlineImage = containerIndex == 0 && index < 4,
+            widthsByBreakpoint = Some(item.mediaWidthsByBreakpoint)
         ))
         <div class="fc-item__content">
             <div class="fc-item__header">

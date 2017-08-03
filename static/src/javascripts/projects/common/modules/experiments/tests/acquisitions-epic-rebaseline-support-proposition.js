@@ -18,7 +18,7 @@ export const acquisitionsEpicRebaselineSupportProposition = makeABTest({
     author: 'Ap0c',
     description:
         'This creates a single-button version of the epic that links off to the new support frontend bundles landing page',
-    successMeasure: 'Conversion rate',
+    successMeasure: 'Annualised value',
     idealOutcome:
         'We get a baseline for conversion of the bundles landing page',
 

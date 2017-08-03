@@ -76,7 +76,7 @@ define([
         beforeEach(function () {
             server = sinon.fakeServer.create();
             fixtures.render(fixture);
-            commentBox = new CommentBox({
+            commentBox = new CommentBox.CommentBox({
                 discussionId: discussionId,
                 maxLength: maxCommentLength,
                 switches: {}
@@ -106,30 +106,6 @@ define([
         afterEach(function () {
             server.restore();
             fixtures.clean(fixturesId);
-        });
-
-        describe('urlify', function () {
-            it('should convert unlinked urls to urls', function () {
-                var post =
-                    '<a href="http://example.com/existinglink">http://example.com/existinglink</a> ' +
-                    'www.example.com<a href="http://example.com/existinglink">http://example.com/existinglink</a> ' +
-                    'www.example.com/test?test#test ' +
-                    'https://example.com ' +
-                    'http://example.com ' +
-                    'asfdahttp://example.com www.example.com ' +
-                    '<a href="http://example.com/existinglink">http://example.com/existinglink</a>';
-                var expected =
-                    '<a href="http://example.com/existinglink">http://example.com/existinglink</a> ' +
-                    '<a href="http://www.example.com">www.example.com</a><a href="http://example.com/existinglink">http://example.com/existinglink</a> ' +
-                    '<a href="http://www.example.com/test?test#test">www.example.com/test?test#test</a> ' +
-                    '<a href="https://example.com">https://example.com</a> ' +
-                    '<a href="http://example.com">http://example.com</a> ' +
-                    'asfdahttp://example.com <a href="http://www.example.com">www.example.com</a> ' +
-                    '<a href="http://example.com/existinglink">http://example.com/existinglink</a>';
-
-                var urlified = commentBox.urlify(post);
-                expect(urlified).toBe(expected);
-            });
         });
 
         describe('Post comment', function () {

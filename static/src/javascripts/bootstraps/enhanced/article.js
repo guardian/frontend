@@ -1,12 +1,13 @@
 // @flow
 /* eslint-disable no-new */
+import config from 'lib/config';
 import qwery from 'qwery';
 import $ from 'lib/$';
 import { isBreakpoint } from 'lib/detect';
 import mediator from 'lib/mediator';
 import { getUrlVars } from 'lib/url';
 import richLinks from 'common/modules/article/rich-links';
-import membershipEvents from 'common/modules/article/membership-events';
+import { upgradeMembershipEvents } from 'common/modules/article/membership-events';
 import { geoMostPopular } from 'common/modules/onward/geo-most-popular';
 import quiz from 'common/modules/atoms/quiz';
 import storyQuestions from 'common/modules/atoms/story-questions';
@@ -31,6 +32,7 @@ const modules = {
         const mainColumn = qwery('.js-content-main-column');
         // only render when we have >1000px or more (enough space for ad + most popular)
         if (
+            !config.hasTone('Match reports') &&
             mainColumn[0] &&
             mainColumn[0].offsetHeight > 1150 &&
             isBreakpoint({
@@ -57,7 +59,7 @@ const init = () => {
     modules.initQuizListeners();
     richLinks.upgradeRichLinks();
     richLinks.insertTagRichLink();
-    membershipEvents.upgradeEvents();
+    upgradeMembershipEvents();
     mediator.emit('page:article:ready');
     quiz.handleCompletion();
     storyQuestions.init();

@@ -37,7 +37,6 @@ class CommercialFeatures {
         const isInteractive = config.page.contentType === 'Interactive';
         const isLiveBlog = config.page.isLiveBlog;
         const isHosted = config.page.isHosted;
-        const isMatchReport = config.hasTone('Match reports');
         const isIdentityPage =
             config.page.contentType === 'Identity' ||
             config.page.section === 'identity'; // needed for pages under profile.* subdomain
@@ -75,14 +74,6 @@ class CommercialFeatures {
         this.carrotSlot =
             this.articleBodyAdverts &&
             getTestVariantId('CarrotSlot') === 'opt-in';
-
-        this.articleAsideAdverts =
-            this.dfpAdvertising &&
-            !this.adFree &&
-            !isMinuteArticle &&
-            !isMatchReport &&
-            !!(isArticle || isLiveBlog) &&
-            !newRecipeDesign;
 
         this.videoPreRolls = this.dfpAdvertising && !this.adFree;
 
@@ -129,11 +120,7 @@ class CommercialFeatures {
             ),
         };
 
-        this.adFeedback =
-            config.switches.adFeedback &&
-            ['artanddesign', 'society', 'tv-and-radio'].indexOf(
-                config.page.section
-            ) > -1;
+        this.adFeedback = false;
     }
 }
 

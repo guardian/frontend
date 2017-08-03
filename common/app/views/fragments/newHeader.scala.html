@@ -1,33 +1,19 @@
 @(page: model.Page)(implicit request: RequestHeader)
 
 @import conf.Configuration
-@import common.{LinkTo, NewNavigation, Edition}
+@import common.{LinkTo, Edition}
 @import views.support.RenderClasses
-
-@jobsUrl(edition: String) = {
-    @if(edition == "au") {
-        https://jobs.theguardian.com/landingpage/2868291/jobs-australia-html/?INTCMP=jobs_au_web_newheader
-    } else {
-        https://jobs.theguardian.com?INTCMP=jobs_@{edition}_web_newheader
-    }
-}
-
-@ContributionOrSupporterUrl(edition: String) = {
-    @if(edition == "us") {
-        https://contribute.theguardian.com/us?INTCMP=gdnwb_copts_co_dotcom_header
-    } else {
-        @{Configuration.id.membershipUrl}/@{edition}/supporter?INTCMP=mem_@{edition}_web_newheader
-    }
-}
+@import navigation.{NewNavigation, NavigationHelpers}
+@import navigation.UrlHelpers._
 
 <header class="@RenderClasses(Map(
             "new-header--mvt-desktop" -> mvt.ABNewDesktopHeaderVariant.isParticipating,
             "new-header--slim" -> page.metadata.hasSlimHeader
         ), "new-header")"
         role="banner">
-    @defining(NewNavigation.SubSectionLinks.getSectionOrTagId(page)) { id =>
+    @defining(NavigationHelpers.getSectionOrPageId(page)) { id =>
         @defining(
-            NewNavigation.SectionLinks.getPillarName(id)
+            NavigationHelpers.getPillarName(id)
         ) { case (currentTopLevelSection) =>
             <nav class="new-header__inner gs-container"
                  data-component="nav2"
@@ -49,7 +35,7 @@
                             <a class="header-cta-item header-cta-item--primary"
                               data-link-name="nav2 : supporter-cta"
                               data-edition="@{editionId}"
-                              href="@ContributionOrSupporterUrl(editionId)">
+                              href="@getContributionOrSupporterUrl(editionId)">
                               <span class="header-cta-item__label">
                                   @if(editionId == "us") {
                                       make a <span class="header-cta-item__new-line">contribution</span>
@@ -71,7 +57,7 @@
                             <a class="header-cta-item hide-until-tablet header-cta-item--secondary"
                                 data-link-name="nav2 : job-cta"
                                 data-edition="@{editionId}"
-                                href="@jobsUrl(editionId)">
+                                href="@getJobUrl(editionId)">
                                 <span class="header-cta-item__label">
                                     <span class="hide-until-tablet">find a job</span>
                                     <span class="hide-from-tablet">jobs</span>
@@ -107,7 +93,7 @@
                     <span class="veggie-burger__icon"></span>
                     <span class="@RenderClasses(Map(
                             "u-h" -> page.metadata.hasSlimHeader
-                        ), "veggie-burger__label")">Menu</span>
+                        ), "veggie-burger__label")">All sections</span>
                 </label>
 
                 @fragments.nav.newHeaderMenu()

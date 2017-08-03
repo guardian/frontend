@@ -3,6 +3,7 @@ jspm_packages
 node_modules
 flow-typed*
 !.eslintrc.js
+!.stylelintrc.js
 
 # main app
 static/src/stylesheets

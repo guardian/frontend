@@ -41,16 +41,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-acquisitions-epic-multiple-testimonials",
-    "This tests two variants with multiple testimonials against the control epic which has one testimonial",
-    owners = Seq(Owner.withGithub("joelochlann")),
-    safeState = Off,
-    sellByDate = new LocalDate(2018, 8, 16),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-acquisitions-epic-liveblog",
     "This places the epic below those blocks on liveblogs which have been marked for displaying the epic in Composer",
     owners = Seq(Owner.withGithub("joelochlann")),
@@ -81,16 +71,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-acquisitions-this-land-series-epic",
-    "This places a custom Epic at the ehnd of This Land Is Your Land articles",
-    owners = Seq(Owner.withGithub("desbo")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 8, 1),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-tailor-survey",
     "Integrate Tailor with ab tests",
     owners = Seq(Owner.withGithub("oilnam"), Owner.withGithub("mike-ruane")),
@@ -106,26 +86,6 @@ trait ABTestSwitches {
     owners = Seq(Owner.withName("commercial team")),
     safeState = Off,
     sellByDate = new LocalDate(2018, 1, 8),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-bundle-digital-sub-price-test-1-m-e",
-    "Test pricing options for digital subs from epic",
-    owners = Seq(Owner.withGithub("justinpinner")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 7, 27),  // Thursday 27th July
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-bundle-digital-sub-price-test-1-m-t",
-    "Test pricing options for digital subs from thrasher",
-    owners = Seq(Owner.withGithub("justinpinner")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 7, 27),  // Thursday 27th July
     exposeClientSide = true
   )
 
@@ -155,7 +115,7 @@ trait ABTestSwitches {
     "Bootstrap the AB test framework to use the Epic to thank readers who have already supported the Guardian",
     owners = Seq(Owner.withGithub("Mullefa")),
     safeState = On,
-    sellByDate = new LocalDate(2017, 8, 1),
+    sellByDate = new LocalDate(2017, 9, 5),
     exposeClientSide = true
   )
 
@@ -172,6 +132,16 @@ trait ABTestSwitches {
   Switch(
     ABTests,
     "ab-acquisitions-epic-rebaseline-support-proposition",
+    "Re-baseline the new support proposition against the old",
+    owners = Seq(Owner.withGithub("Ap0c")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 8, 15),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-epic-rebaseline-support-proposition-two",
     "Re-baseline the new support proposition against the old",
     owners = Seq(Owner.withGithub("Ap0c")),
     safeState = Off,
