@@ -72,6 +72,8 @@ sizeCallbacks[adSizes.fluid] = (renderSlotEvent: any, advert: Advert) =>
 sizeCallbacks[adSizes.mpu] = (_, advert) => {
     if (advert.node.classList.contains('js-sticky-mpu')) {
         stickyMpu(advert.node);
+    } else {
+        return addFluid(['ad-slot--revealer'])(_, advert);
     }
 };
 
