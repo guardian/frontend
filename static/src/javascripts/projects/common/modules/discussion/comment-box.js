@@ -9,22 +9,12 @@ import DiscussionApi from 'common/modules/discussion/api';
 import IdentityApi from 'common/modules/identity/api';
 import UserAvatars from 'common/modules/discussion/user-avatars';
 import ValidationEmail from 'common/modules/identity/validation-email';
+import { urlify } from './urlify';
 
 type commentType = {
     body: string,
     id?: number,
     replyTo?: Object,
-};
-
-const urlify = (str: string): string => {
-    const reOutsideTags = '(?![^<]*>|[^<>]*</)';
-    const reUrl = '\\b((https?://|www.)\\S+)\\b';
-    const regexp = new RegExp(reUrl + reOutsideTags, 'g');
-
-    return str.replace(regexp, (match, url, protocol) => {
-        const fullUrl = protocol === 'www.' ? `http://${url}` : url;
-        return `<a href="${fullUrl}">${url}</a>`;
-    });
 };
 
 class CommentBox extends Component {
@@ -640,4 +630,4 @@ class CommentBox extends Component {
     }
 }
 
-export { CommentBox, urlify };
+export { CommentBox };
