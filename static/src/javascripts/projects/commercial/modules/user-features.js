@@ -34,6 +34,10 @@ const persistResponse = (JsonResponse: () => void) => {
     addCookie(USER_FEATURES_EXPIRY_COOKIE, timeInDaysFromNow(1));
     addCookie(PAYING_MEMBER_COOKIE, !JsonResponse.adblockMessage);
 
+    if (adFreeDataIsPresent() && !JsonResponse.adFree) {
+        removeCookie(AD_FREE_USER_COOKIE);
+    }
+
     if (switches.adFreeSubscriptionTrial && JsonResponse.adFree) {
         addCookie(AD_FREE_USER_COOKIE, timeInDaysFromNow(2));
     }
@@ -67,7 +71,13 @@ const featuresDataIsMissing = (): boolean =>
 const featuresDataIsOld = (): boolean =>
     datedCookieIsOld(USER_FEATURES_EXPIRY_COOKIE);
 
-const adFreeDataIsOld = (): boolean => datedCookieIsOld(AD_FREE_USER_COOKIE);
+const adFreeDataIsOld = (): boolean => {
+    const switches = config.switches;
+    return (
+        switches.adFreeStrictExpiryEnforcement &&
+        datedCookieIsOld(AD_FREE_USER_COOKIE)
+    );
+};
 
 const userNeedsNewFeatureData = (): boolean =>
     featuresDataIsMissing() ||

@@ -13,6 +13,7 @@ jest.mock('lib/fetch-json', () => jest.fn(() => Promise.resolve()));
 jest.mock('lib/config', () => ({
     switches: {
         adFreeSubscriptionTrial: true,
+        adFreeStrictExpiryEnforcement: true,
     },
     page: {
         userAttributesApiUrl: '',
@@ -113,7 +114,11 @@ describe('Refreshing the features data', () => {
             expect(fetchJsonSpy).toHaveBeenCalledTimes(1);
         });
 
-        it('Performs an update if the ad-free state is stale', () => {
+        it('Performs an update if the ad-free state is stale and strict expiry enforcement is enabled', () => {
+            // This is a slightly synthetic setup - the ad-free cookie is rewritten with every
+            // refresh that happens as a result of expired features data, but we want to check
+            // that a refresh could be triggered based on ad-free state alone if the strict
+            // expiry enforcement switch is ON.
             // Set everything except the ad-free cookie
             setAllFeaturesData({ isExpired: false });
             setExpiredAdFreeData();
