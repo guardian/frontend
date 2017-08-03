@@ -30,24 +30,15 @@ const isMatch = (yes: yesable, no: noable): boolean => {
         ['report', config.hasTone('Match reports')],
         ['preview', config.hasSeries('Match previews')],
         ['stats', match.id],
-        [null, true], // default
     ];
+    const pageType = pageTypes.find(type => type[1] === true) || [[null, true]];
 
     Object.assign(match, {
         date: config.webPublicationDateAsUrlPart(),
         teams,
         isLive: config.page.isLive,
-        pageType: pageTypes.find(type => type[1] === true),
+        pageType: pageType[0],
     });
-
-    /* if you think about this long enough, you will come to the conclusion:
-       match.pageType can't be anything different than an array (because there
-       is a fallback in pageTypes). Unfortunately flow isn't clever enough and
-       forces us to add this check and re-assign the value.
-    */
-    if (Array.isArray(match.pageType)) {
-        match.pageType = match.pageType[0];
-    }
 
     return isit(
         match.id || (match.pageType && match.teams.length === 2),
