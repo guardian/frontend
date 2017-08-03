@@ -13,7 +13,7 @@ import reportError from 'lib/report-error';
 import { constructQuery } from 'lib/url';
 import Component from 'common/modules/component';
 import DiscussionApi from 'common/modules/discussion/api';
-import CommentBox from 'common/modules/discussion/comment-box';
+import { CommentBox } from 'common/modules/discussion/comment-box';
 import WholeDiscussion from 'common/modules/discussion/whole-discussion';
 import relativedates from 'common/modules/ui/relativedates';
 import userPrefs from 'common/modules/user-prefs';
