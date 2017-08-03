@@ -31,7 +31,7 @@ const isMatch = (yes: yesable, no: noable): boolean => {
         ['preview', config.hasSeries('Match previews')],
         ['stats', match.id],
     ];
-    const pageType = pageTypes.find(type => type[1] === true) || [[null, true]];
+    const pageType = pageTypes.find(type => type[1] === true) || [null, true];
 
     Object.assign(match, {
         date: config.webPublicationDateAsUrlPart(),
