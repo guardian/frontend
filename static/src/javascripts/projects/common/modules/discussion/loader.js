@@ -18,7 +18,10 @@ import DiscussionApi from 'common/modules/discussion/api';
 import CommentBox from 'common/modules/discussion/comment-box';
 import Comments from 'common/modules/discussion/comments';
 import discussionFrontend from 'common/modules/discussion/discussion-frontend';
-import upvote from 'common/modules/discussion/upvote';
+import {
+    handle as upvoteHandle,
+    closeTooltip as upvoteCloseTooltip,
+} from 'common/modules/discussion/upvote';
 import Id from 'common/modules/identity/api';
 import userPrefs from 'common/modules/user-prefs';
 
@@ -151,17 +154,12 @@ class Loader extends Component {
 
     initRecommend(): void {
         this.on('click', '.js-recommend-comment', (e: Event) => {
-            upvote.handle(
-                e.currentTarget,
-                this.elem,
-                this.user,
-                DiscussionApi,
-                config.switches.discussionAllowAnonymousRecommendsSwitch
-            );
+            const target: HTMLElement = (e.currentTarget: any);
+            upvoteHandle(target, this.elem, this.user);
         });
 
         this.on('click', '.js-rec-tooltip-close', () => {
-            upvote.closeTooltip();
+            upvoteCloseTooltip();
         });
     }
 
