@@ -29,20 +29,20 @@ import scala.concurrent.Await
   }
 
   lazy val faciaController = new FaciaControllerImpl(new TestFrontJsonFapi(wsClient))
-  val articleUrl = "music"
+  val frontPath = "music"
 
   it should "Include organisation metadata" in {
-    val result = faciaController.renderFront(articleUrl)(TestRequest())
+    val result = faciaController.renderFront(frontPath)(TestRequest())
     MetaDataMatcher.ensureOrganisation(result)
   }
 
   it should "Include webpage metadata" in {
-    val result = faciaController.renderFront(articleUrl)(TestRequest(articleUrl))
-    MetaDataMatcher.ensureWebPage(result, articleUrl)
+    val result = faciaController.renderFront(frontPath)(TestRequest(frontPath))
+    MetaDataMatcher.ensureWebPage(result, frontPath)
   }
 
   it should "Include item list metadata" in {
-    val result = faciaController.renderFront(articleUrl)(TestRequest(articleUrl))
+    val result = faciaController.renderFront(frontPath)(TestRequest(frontPath))
     val body = Jsoup.parseBodyFragment(contentAsString(result))
     status(result) should be(200)
 
@@ -52,12 +52,12 @@ import scala.concurrent.Await
     val itemList: JsValue = Json.parse(script.first().html())
 
     val containers = (itemList \ "itemListElement").as[JsArray].value
-    containers.size should be(14)
+    containers.size should be(16)
 
     val topContainer = (containers(0) \ "item" \ "itemListElement").as[JsArray].value
-    topContainer.size should be (17)
+    topContainer.size should be (45)
 
-    (topContainer(0) \ "url").as[JsString].value should be ("/music/musicblog/2015/may/27/stone-roses-spike-island-the-reality")
+    (topContainer(0) \ "url").as[JsString].value should be ("/music/2017/jul/29/sza-record-company-took-my-hard-drive-beyonce-kendrick-lamar")
 
   }
 

@@ -16,7 +16,7 @@ trait FrontJsonFapi extends Logging with ExecutionContexts {
   val wsClient: WSClient
   val secureS3Request = new SecureS3Request(wsClient)
 
-  private def getAddressForPath(path: String): String = s"$bucketLocation/${path.replaceAll("""\+""","%2B")}/fapi/pressed.json"
+  private def getAddressForPath(path: String): String = s"$bucketLocation/${path.replaceAll("""\+""","%2B")}/fapi/pressed.v2.json"
 
   private def parsePressedJson(json: String): Option[PressedPage] = {
     val stopWatch: StopWatch = new StopWatch

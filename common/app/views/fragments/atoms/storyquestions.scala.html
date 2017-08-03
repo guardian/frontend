@@ -1,6 +1,14 @@
 @(storyquestions: model.content.StoryQuestionsAtom, isAmp: Boolean)(implicit request: RequestHeader)
 
-@if(!isAmp) {
+@import org.joda.time.{DateTime, DateTimeZone}
+
+@isClosed() = @{
+    storyquestions.data.closeDate.exists { closeDate =>
+        closeDate < DateTime.now(DateTimeZone.UTC).getMillis
+    }
+}
+
+@if(!isAmp && !isClosed) {
     <div class="js-view-tracking-component submeta user__question">
         <span class="js-storyquestion-atom-id is-hidden" id="@storyquestions.id"></span>
 
