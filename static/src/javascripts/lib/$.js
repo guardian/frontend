@@ -24,11 +24,9 @@ $.ancestor = (el: ?Node, className: string): ?Node => {
     ) {
         return null;
     }
-
     if (!el.parentNode || bonzo(el.parentNode).hasClass(className)) {
         return el.parentNode;
     }
-
     return $.ancestor(el.parentNode, className);
 };
 
