@@ -1,6 +1,7 @@
 package controllers
 
-import common.{Edition, JsonComponent, LinkTo, NavItem, NavLink, NewNavigation, NavigationHelpers, SectionLink}
+import common.{Edition, JsonComponent, LinkTo, NavItem, SectionLink}
+import navigation.{NavLink, NewNavigation, NavigationHelpers}
 import model.Cached
 import model.Cached.RevalidatableResult
 import play.api.libs.json.{Json, Writes}
