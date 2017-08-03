@@ -121,16 +121,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-membership-engagement-banner-digipack-price-test",
-    "Find the optimal price point for the digipack",
-    owners = Seq(Owner.withGithub("jranks123")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 8, 3),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-acquisitions-epic-rebaseline-support-proposition",
     "Re-baseline the new support proposition against the old",
     owners = Seq(Owner.withGithub("Ap0c")),
