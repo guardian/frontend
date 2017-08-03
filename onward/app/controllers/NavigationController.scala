@@ -1,6 +1,6 @@
 package controllers
 
-import common.{Edition, JsonComponent, LinkTo, NavItem, NavLink, NewNavigation, SectionLink}
+import common.{Edition, JsonComponent, LinkTo, NavItem, NavLink, NewNavigation, NavigationHelpers, SectionLink}
 import model.Cached
 import model.Cached.RevalidatableResult
 import play.api.libs.json.{Json, Writes}
@@ -65,7 +65,7 @@ class NavigationController extends Controller {
         "items" -> Json.arr(
           Json.obj(
             "topLevelSections" -> NewNavigation.topLevelSections.map( section => topLevelNavItems(section) ),
-            "membershipLinks" -> NewNavigation.getMembershipLinks(edition).mostPopular.map( section => navSectionLink(section)),
+            "membershipLinks" -> NavigationHelpers.getMembershipLinks(edition).mostPopular.map( section => navSectionLink(section)),
             "secondarySections" -> navSecondarySections
           )
         )
