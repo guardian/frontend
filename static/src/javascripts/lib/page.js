@@ -81,7 +81,7 @@ const belowArticleVisible = (yes: yesable, no: noable): boolean => {
 };
 
 const keywordExists = (keywordArr: Array<string>): boolean => {
-    const keywords = config.get('page.keywords', []).split(',');
+    const keywords = config.get('page.keywords', '').split(',');
     return keywordArr.some(kw => keywords.includes(kw));
 };
 
