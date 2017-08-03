@@ -110,10 +110,11 @@ class CommentBox extends Component {
     }
 
     setFormState(disabled?: boolean): void {
+        const isDisabled = typeof disabled === 'boolean' ? disabled : false;
         const commentBody = this.getElem('body');
         const submitButton = this.getElem('submit');
 
-        if (!!disabled || commentBody.value.length === 0) {
+        if (isDisabled || commentBody.value.length === 0) {
             submitButton.setAttribute('disabled', 'disabled');
         } else {
             submitButton.removeAttribute('disabled');
