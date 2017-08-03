@@ -54,7 +54,7 @@ object Frontend extends Build with Prototypes {
       scanamo,
       scalaUri,
       commercialShared,
-      jenkins
+      atomRenderer
     )
   ).settings(
       mappings in TestAssets ~= filterAssets
