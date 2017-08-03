@@ -4,4 +4,7 @@
 
 @(atom: Atom)
 
-@Html(ArticleAtomRenderer(atom)._1)
+@defining(ArticleAtomRenderer(atom)) { case (html: String, css: Option[String], js: Option[String]) =>
+  @Html(html)
+  @css.map { css => <style>@Html(css)</style> }
+}
