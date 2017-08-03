@@ -40,8 +40,7 @@ Promise.all([
         .slice(0, 1)
         .forEach(details => {
             new MutationObserver(updateHeight).observe(details, {
-                childList: true,
-                subtree: true,
+                attributes: true,
             });
         });
 });
