@@ -18,11 +18,10 @@
     "bootstraps/enhanced/gallery.js"
   ],
   "Simon Adcock": [
-    "projects/common/modules/discussion/user-avatars.js",
-    "projects/common/modules/discussion/whole-discussion.js",
+    "projects/common/modules/ui/clickstream.js",
     "projects/common/modules/experiments/tests/bookmarks-email-variants-2.js",
-    "projects/common/modules/ui/blockSharing.js",
-    "projects/common/modules/ui/clickstream.js"
+    "projects/common/modules/discussion/user-avatars.js",
+    "projects/common/modules/discussion/whole-discussion.js"
   ],
   "Nicolas Long": [
     "projects/common/modules/ui/selection-sharing.js",
