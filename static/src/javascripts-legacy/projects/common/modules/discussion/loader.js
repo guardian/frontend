@@ -249,7 +249,7 @@ Loader.prototype.initToolbar = function() {
 
 Loader.prototype.initRecommend = function() {
     this.on('click', '.js-recommend-comment', function(e) {
-        upvote.handle(e.currentTarget, this.elem, this.user, DiscussionApi, config.switches.discussionAllowAnonymousRecommendsSwitch);
+        upvote.handle(e.currentTarget, this.elem, this.user);
     });
     this.on('click', '.js-rec-tooltip-close', function() {
         upvote.closeTooltip();
