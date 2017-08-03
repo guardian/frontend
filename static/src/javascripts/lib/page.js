@@ -31,13 +31,13 @@ const isMatch = (yes: yesable, no: noable): boolean => {
         ['preview', config.hasSeries('Match previews')],
         ['stats', match.id],
     ];
-    const pageType = pageTypes.find(type => type[1] === true) || [null, true];
+    const pageType = pageTypes.find(type => type[1] === true);
 
     Object.assign(match, {
         date: config.webPublicationDateAsUrlPart(),
         teams,
         isLive: config.page.isLive,
-        pageType: pageType[0],
+        pageType: pageType && pageType[0],
     });
 
     return isit(
