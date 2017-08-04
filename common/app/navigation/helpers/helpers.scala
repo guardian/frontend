@@ -1,5 +1,6 @@
-package common
+package navigation
 
+import common.{Edition, Navigation}
 import conf.Configuration
 import model.Page
 import SectionLinks._

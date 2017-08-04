@@ -13,6 +13,7 @@ jest.mock('lib/fetch-json', () => jest.fn(() => Promise.resolve()));
 jest.mock('lib/config', () => ({
     switches: {
         adFreeSubscriptionTrial: true,
+        adFreeStrictExpiryEnforcement: true,
     },
     page: {
         userAttributesApiUrl: '',
@@ -34,11 +35,13 @@ const setAllFeaturesData = opts => {
     const expiryDate = opts.isExpired
         ? new Date(currentTime - msInOneDay)
         : new Date(currentTime + msInOneDay);
-
+    const adFreeExpiryDate = opts.isExpired
+        ? new Date(currentTime - msInOneDay * 2)
+        : new Date(currentTime + msInOneDay * 2);
     addCookie(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE, 'true');
     addCookie(
         PERSISTENCE_KEYS.AD_FREE_USER_COOKIE,
-        expiryDate.getTime().toString()
+        adFreeExpiryDate.getTime().toString()
     );
     addCookie(
         PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE,
@@ -49,7 +52,7 @@ const setAllFeaturesData = opts => {
 const setExpiredAdFreeData = () => {
     const currentTime = new Date().getTime();
     const msInOneDay = 24 * 60 * 60 * 1000;
-    const expiryDate = new Date(currentTime - msInOneDay);
+    const expiryDate = new Date(currentTime - msInOneDay * 2);
     addCookie(
         PERSISTENCE_KEYS.AD_FREE_USER_COOKIE,
         expiryDate.getTime().toString()
@@ -111,7 +114,11 @@ describe('Refreshing the features data', () => {
             expect(fetchJsonSpy).toHaveBeenCalledTimes(1);
         });
 
-        it('Performs an update if the ad-free state is stale', () => {
+        it('Performs an update if the ad-free state is stale and strict expiry enforcement is enabled', () => {
+            // This is a slightly synthetic setup - the ad-free cookie is rewritten with every
+            // refresh that happens as a result of expired features data, but we want to check
+            // that a refresh could be triggered based on ad-free state alone if the strict
+            // expiry enforcement switch is ON.
             // Set everything except the ad-free cookie
             setAllFeaturesData({ isExpired: false });
             setExpiredAdFreeData();
@@ -222,6 +229,14 @@ describe('Storing new feature data', () => {
             expect(
                 getCookie(PERSISTENCE_KEYS.AD_FREE_USER_COOKIE)
             ).toBeTruthy();
+            expect(
+                isNaN(
+                    parseInt(
+                        getCookie(PERSISTENCE_KEYS.AD_FREE_USER_COOKIE),
+                        10
+                    )
+                )
+            ).toBe(false);
         });
     });
 

@@ -98,7 +98,7 @@ trait JavascriptRendering extends Logging {
   private def loadFile(fileName: String): Try[InputStream] = {
     Option(getClass.getClassLoader.getResourceAsStream(fileName)) match {
       case Some(stream) => Success(stream)
-      case None => Failure(new FileNotFoundException(s"${this.getClass.getSimpleName}: Cannot find file '$fileName'"))
+      case None => Failure(new FileNotFoundException(s"${this.getClass.getSimpleName}: Cannot find file '$fileName'. Have you run `make ui-compile`?"))
     }
   }
 

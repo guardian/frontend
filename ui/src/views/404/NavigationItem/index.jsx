@@ -2,7 +2,7 @@
 import styles from './style.js.scss';
 
 const NavigationItem = ({
-    zone = 'news',
+    zone = 'default',
     path,
     newWindow = false,
     children,

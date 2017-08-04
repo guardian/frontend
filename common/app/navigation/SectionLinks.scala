@@ -1,4 +1,4 @@
-package common
+package navigation
 
 import NavLinks._
 import NewNavigation._

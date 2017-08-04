@@ -8,8 +8,9 @@
 @defining((
     page.item.elements.hasMainEmbed,
     page.item.fields.main.nonEmpty,
-    page.item.elements.hasMainVideo
-)) { case (hasEmbed, hasMainMedia, hasVideo) =>
+    page.item.elements.hasMainVideo,
+    page.item.tags.isPaidContent
+)) { case (hasEmbed, hasMainMedia, hasVideo, isPaidContent) =>
   <style>
     @Html(common.Assets.css.inlinePhotoEssay)
   </style>
@@ -60,7 +61,7 @@
               <div class="gs-container">
                 <div class="content__main-column">
                     @fragments.meta.metaInline(page.item)
-                    <h1 class="@if(hasMainMedia){content__headline--immersive--with-main-media} content__headline content__headline--immersive content__headline--immersive-article">
+                    <h1 class="@if(hasMainMedia){content__headline--immersive--with-main-media} @if(isPaidContent){content__headline--advertisement} content__headline content__headline--immersive content__headline--immersive-article">
                         @Html(page.item.trail.headline)
                     </h1>
                     @if(page.item.fields.standfirst.isDefined) {

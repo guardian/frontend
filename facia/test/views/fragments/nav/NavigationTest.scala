@@ -18,7 +18,7 @@ import scala.collection.JavaConversions._
       section = Some(SectionSummary.fromId("football"))
     ))
 
-    val tpl = views.html.fragments.nav.navigation(page)(FakeRequest("GET", "/bla-bla"))
+    val tpl = views.html.fragments.nav.mainNavigation(page)(FakeRequest("GET", "/bla-bla"))
 
     val currentSection = Jsoup.parseBodyFragment(tpl.toString).getElementsByClass("top-navigation__item--current")
 
@@ -37,7 +37,7 @@ import scala.collection.JavaConversions._
       section = Some(SectionSummary.fromId("football"))
     ))
 
-    val tpl = views.html.fragments.nav.navigation(page)(FakeRequest("GET", "/bla-bla?_edition=US"))
+    val tpl = views.html.fragments.nav.mainNavigation(page)(FakeRequest("GET", "/bla-bla?_edition=US"))
 
     val currentSection = Jsoup.parseBodyFragment(tpl.toString).getElementsByClass("top-navigation__item--current")
 

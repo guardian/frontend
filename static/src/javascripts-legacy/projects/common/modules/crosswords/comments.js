@@ -11,7 +11,7 @@ define([
         if (config.switches.commentsVisibleOnArticle && config.page.commentable) {
             var el = qwery('.discussion')[0];
             if (el) {
-                new DiscussionLoader.Loader().attachTo(el);
+                new DiscussionLoader().attachTo(el);
             }
         }
     };
