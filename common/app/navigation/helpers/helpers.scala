@@ -57,18 +57,29 @@ object NavigationHelpers {
     subNav
   }
 
+  def getSubNavSections(item: NavLink2, edition: Edition): List[NavLink2] = {
+    item.children.map(tertiary =>
+      tertiary.getEditionalisedList(edition)
+    )
+    .getOrElse(
+      item.parent.map( secondary =>
+        secondary.children.map( children =>
+
+          List(item) ++ children.getEditionalisedList(edition)
+
+        )
+        .getOrElse(item.pillar.children.getEditionalisedList(edition))
+      )
+      .getOrElse(item.pillar.children.getEditionalisedList(edition))
+    )
+  }
+
   def getSectionsToDisplay(item: NavLink2, edition: Edition): List[NavLink2] = {
-    val useChildSections = item.children.isDefined
-    val useParentSections = item.parent.isDefined && item.parent.get.children.isDefined
 
-    if (useChildSections) {
-      lazy val sectionList = item.children.get.getEditionalisedList(edition)
-
-      List(item) ++ sectionList
-    } else if (useParentSections) {
-        item.parent.get.children.get.getEditionalisedList(edition)
+    if(item.title == "headlines") {
+      item.children.get.getEditionalisedList(edition)
     } else {
-      item.pillar.children.getEditionalisedList(edition)
+      getSubNavSections(item, edition)
     }
   }
 
