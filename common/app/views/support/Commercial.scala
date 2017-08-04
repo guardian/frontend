@@ -225,10 +225,10 @@ object Commercial {
     }
 
     def mkInteractionTrackingCode(containerIndex: Int, cardIndex: Int, card: ContentCard, containerDisplayName: Option[String])(implicit request: RequestHeader): String = Seq(
-      containerDisplayName.getOrElse("unknown container"),
       Edition(request).id,
-      card.branding.map(_.sponsorName) getOrElse "unknown",
       s"container-${containerIndex + 1}",
+      containerDisplayName.getOrElse("unknown container"),
+      card.branding.map(_.sponsorName) getOrElse "unknown",
       s"card-${ cardIndex + 1 }",
       card.header.headline
     ).mkString(" | ")
