@@ -224,8 +224,11 @@ object Commercial {
       ) mkString " | "
     }
 
-    def mkInteractionTrackingCode(containerIndex: Int, cardIndex: Int, card: ContentCard): String = Seq(
+    def mkInteractionTrackingCode(containerIndex: Int, cardIndex: Int, card: ContentCard, containerDisplayName: Option[String])(implicit request: RequestHeader): String = Seq(
+      containerDisplayName.getOrElse("unknown container"),
+      Edition(request).id,
       card.branding.map(_.sponsorName) getOrElse "unknown",
+      s"container-${containerIndex + 1}",
       s"card-${ cardIndex + 1 }",
       card.header.headline
     ).mkString(" | ")
