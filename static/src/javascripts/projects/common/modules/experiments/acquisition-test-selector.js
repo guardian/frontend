@@ -14,12 +14,15 @@ import { acquisitionsEpicAlwaysAskIfTagged } from 'common/modules/experiments/te
 import { acquisitionsEpicAlwaysAskElection } from 'common/modules/experiments/tests/acquisitions-epic-always-ask-election';
 import { acquisitionsEpicThankYou } from 'common/modules/experiments/tests/acquisitions-epic-thank-you';
 
+import { acquisitionsEpicRecurringContributionUkSupportProposition } from 'common/modules/experiments/tests/acquisitions-epic-recurring-contribution-uk-support-proposition';
+
 /**
  * acquisition tests in priority order (highest to lowest)
  */
 const tests = [
     alwaysAsk,
     payInEpic,
+    acquisitionsEpicRecurringContributionUkSupportProposition,
     askFourEarning,
     acquisitionsEpicAlwaysAskIfTagged,
     acquisitionsEpicLiveblog,
