@@ -3,17 +3,40 @@ import fastdom from 'lib/fastdom-promise';
 import fetchJSON from 'lib/fetch-json';
 import { integerCommas } from 'lib/formatters';
 import mediator from 'lib/mediator';
-import template from 'lodash/utilities/template';
 import { addClassesAndTitle } from 'common/views/svg';
 import commentCount16icon from 'svgs/icon/comment-16.svg';
-import commentCountTemplate from 'raw-loader!common/views/discussion/comment-count.html';
-import commentCountContentTemplate from 'raw-loader!common/views/discussion/comment-count--content.html';
-import commentCountContentImmersiveTemplate from 'raw-loader!common/views/discussion/comment-count--content-immersive.html';
 
 type Map<K, V> = { [k: K]: V };
 
 const attributeName = 'data-discussion-id';
 const countUrl = '/discussion/comment-counts.json?shortUrls=';
+
+const commentCountTemplate = (
+    url: string,
+    icon: string,
+    count: string
+): string =>
+    `<a class="fc-trail__count fc-trail__count--commentcount" href="${url}" data-link-name="Comment count">${icon} ${count}</a>`;
+
+const commentCountContentTemplate = (
+    url: string,
+    icon: string,
+    count: string
+): string =>
+    `<a href="${url}" data-link-name="Comment count" class="commentcount2 tone-colour">
+        <h3 class="commentcount2__heading">${icon} <span class ="commentcount2__text u-h">Comments</span></h3>
+        <span class="commentcount2__value tone-colour js_commentcount_actualvalue">${count}</span>
+    </a>`;
+
+const commentCountContentImmersiveTemplate = (
+    url: string,
+    icon: string,
+    count: string
+): string =>
+    `<a href="${url}" data-link-name="Comment count" class="commentcount2 tone-colour">
+        ${icon}<span class="commentcount__value">${count}</span> Comments
+    </a>`;
+
 const templates = {
     content: commentCountContentTemplate,
     contentImmersive: commentCountContentImmersiveTemplate,
@@ -50,13 +73,11 @@ const updateCommentCount = (node: Element, count: number): Promise<void> => {
     }
 
     const format = node.getAttribute('data-commentcount-format');
-    const html = template((format && templates[format]) || defaultTemplate, {
+    const html = ((format && templates[format]) || defaultTemplate)(
         url,
-        icon: addClassesAndTitle(commentCount16icon.markup, [
-            'inline-tone-fill',
-        ]),
-        count: integerCommas(count),
-    });
+        addClassesAndTitle(commentCount16icon.markup, ['inline-tone-fill']),
+        integerCommas(count) || ''
+    );
 
     const meta = node.querySelector('.js-item__meta');
     const container = meta || node;
