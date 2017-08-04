@@ -1,12 +1,9 @@
 // @flow
-import contributionsUtilities from 'common/modules/commercial/contributions-utilities';
-import $ from 'lib/$';
-import geolocation from 'lib/geolocation';
+import { makeABTest } from 'common/modules/commercial/contributions-utilities';
 import template from 'lodash/utilities/template';
-import config from 'lib/config';
 import epicSlice from 'raw-loader!common/views/acquisitions-epic-slice.html';
 
-export default contributionsUtilities.makeABTest({
+export default makeABTest({
     id: 'AcquisitionsElectionInteractiveSlice',
     campaignId: 'epic_ge2017_interactive_slice',
 

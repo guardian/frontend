@@ -1,27 +1,27 @@
 // @flow
 import template from 'lodash/utilities/template';
-import userFeatures from 'commercial/modules/user-features';
-import contributionsUtilities from 'common/modules/commercial/contributions-utilities';
+import {
+    isRecentContributor,
+    isPayingMember,
+} from 'commercial/modules/user-features';
+import {
+    makeABTest,
+    addTrackingCodesToUrl,
+} from 'common/modules/commercial/contributions-utilities';
 import config from 'lib/config';
 import acquisitionsEpicThankYouTemplate from 'raw-loader!common/views/acquisitions-epic-thank-you.html';
 
-function isTargetReader() {
-    return userFeatures.isPayingMember() || userFeatures.isRecentContributor();
-}
+const isTargetReader = () => isPayingMember() || isRecentContributor();
 
-function worksWellWithPageTemplate() {
-    return (
-        config.page.contentType === 'Article' &&
-        !config.page.isMinuteArticle &&
-        !(config.page.isImmersive === true)
-    );
-}
+const worksWellWithPageTemplate = () =>
+    config.page.contentType === 'Article' &&
+    !config.page.isMinuteArticle &&
+    !(config.page.isImmersive === true);
 
-function isTargetPage() {
-    return worksWellWithPageTemplate() && !config.page.shouldHideReaderRevenue;
-}
+const isTargetPage = () =>
+    worksWellWithPageTemplate() && !config.page.shouldHideReaderRevenue;
 
-export default contributionsUtilities.makeABTest({
+export default makeABTest({
     id: 'AcquisitionsEpicThankYou',
     campaignId: 'epic_thank_you',
 
@@ -58,7 +58,7 @@ export default contributionsUtilities.makeABTest({
             template(variant) {
                 return template(acquisitionsEpicThankYouTemplate, {
                     componentName: variant.options.componentName,
-                    membershipUrl: contributionsUtilities.addTrackingCodesToUrl(
+                    membershipUrl: addTrackingCodesToUrl(
                         'https://www.theguardian.com/membership',
                         variant.options.campaignCode
                     ),

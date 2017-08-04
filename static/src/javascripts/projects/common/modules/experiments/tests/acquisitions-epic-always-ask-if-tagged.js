@@ -1,7 +1,7 @@
 // @flow
-import contributionsUtilities from 'common/modules/commercial/contributions-utilities';
+import { makeABTest } from 'common/modules/commercial/contributions-utilities';
 
-export default contributionsUtilities.makeABTest({
+export default makeABTest({
     id: 'AcquisitionsEpicAlwaysAskIfTagged',
     campaignId: 'epic_always_ask_if_tagged',
 

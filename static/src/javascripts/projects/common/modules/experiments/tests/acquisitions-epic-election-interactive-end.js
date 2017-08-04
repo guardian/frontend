@@ -1,13 +1,13 @@
 // @flow
-import contributionsUtilities from 'common/modules/commercial/contributions-utilities';
-import $ from 'lib/$';
-import geolocation from 'lib/geolocation';
+import {
+    makeABTest,
+    defaultButtonTemplate,
+} from 'common/modules/commercial/contributions-utilities';
 import template from 'lodash/utilities/template';
-import config from 'lib/config';
 import epicControlTemplate from 'raw-loader!common/views/acquisitions-epic-control.html';
-import acquisitionsCopy from 'common/modules/commercial/acquisitions-copy';
+import { control } from 'common/modules/commercial/acquisitions-copy';
 
-export default contributionsUtilities.makeABTest({
+export default makeABTest({
     id: 'AcquisitionsInteractiveEnd',
     campaignId: 'epic_interactive_end',
 
@@ -48,15 +48,13 @@ export default contributionsUtilities.makeABTest({
 
             template: function makeControlTemplate(variant) {
                 return template(epicControlTemplate, {
-                    copy: acquisitionsCopy.control,
+                    copy: control,
                     componentName: variant.options.componentName,
-                    buttonTemplate: contributionsUtilities.defaultButtonTemplate(
-                        {
-                            membershipUrl: variant.options.membershipURL,
-                            contributeUrl: variant.options.contributeURL,
-                            supportUrl: variant.options.supportURL,
-                        }
-                    ),
+                    buttonTemplate: defaultButtonTemplate({
+                        membershipUrl: variant.options.membershipURL,
+                        contributeUrl: variant.options.contributeURL,
+                        supportUrl: variant.options.supportURL,
+                    }),
                     testimonialBlock: variant.options.testimonialBlock,
                     epicClass: 'contributions__epic--interactive gs-container',
                     wrapperClass: 'contributions__epic-interactive-wrapper',
