@@ -34,19 +34,27 @@ export const alwaysAsk: ContributionsABTest = makeABTest({
     variants: [
         {
             id: 'control',
-            test() {},
-            isUnlimited: true,
+            products: ['ONE_OFF_CONTRIBUTION', 'MEMBERSHIP_SUPPORTER'],
+
+            options: {
+                test() {},
+                isUnlimited: true,
+            },
         },
 
         {
             id: 'alwaysAsk',
-            test(render, variant, parentTest) {
-                if (defaultCanEpicBeDisplayed(parentTest)) {
-                    render();
-                }
+            products: ['ONE_OFF_CONTRIBUTION', 'MEMBERSHIP_SUPPORTER'],
+
+            options: {
+                test(render, variant, parentTest) {
+                    if (defaultCanEpicBeDisplayed(parentTest)) {
+                        render();
+                    }
+                },
+                isUnlimited: true,
+                successOnView: true,
             },
-            isUnlimited: true,
-            successOnView: true,
         },
     ],
 });

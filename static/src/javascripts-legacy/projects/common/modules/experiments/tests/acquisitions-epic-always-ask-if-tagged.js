@@ -26,9 +26,13 @@ define([
         variants: [
             {
                 id: 'control',
-                isUnlimited : true,
-                successOnView: true,
-                useTailoredCopyForRegulars: true
+                products: ['ONE_OFF_CONTRIBUTION', 'MEMBERSHIP_SUPPORTER'],
+
+                options: {
+                    isUnlimited: true,
+                    successOnView: true,
+                    useTailoredCopyForRegulars: true
+                }
             }
         ]
     });

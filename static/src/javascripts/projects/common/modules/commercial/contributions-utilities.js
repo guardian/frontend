@@ -176,6 +176,8 @@ const registerIframeListener = (iframeId: string) => {
 };
 
 const makeABTestVariant = (
+    id: string,
+    products: OphanProduct[],
     options: Object,
     parentTest: ContributionsABTest
 ): Variant => {
@@ -190,10 +192,8 @@ const makeABTestVariant = (
     );
     const iframeId = `${parentTest.campaignId}_iframe`;
 
+    // defaults for options
     const {
-        id,
-
-        // optional params
         maxViews = defaultMaxViews,
         isUnlimited = false,
         contributeURL = addTrackingCodesToUrl(
@@ -220,12 +220,12 @@ const makeABTestVariant = (
         test = noop,
         impression = submitABTestImpression =>
             mediator.once(parentTest.insertEvent, () => {
-                submitEpicInsertEvent();
+                submitEpicInsertEvent(products, campaignCode);
                 submitABTestImpression();
             }),
         success = submitABTestComplete =>
             mediator.once(parentTest.viewEvent, () => {
-                submitEpicViewEvent();
+                submitEpicViewEvent(products, campaignCode);
                 submitABTestComplete();
             }),
     } = options;
@@ -377,7 +377,7 @@ const makeABTest = ({
     showToContributorsAndSupporters = false,
     canRun = () => true,
     pageCheck = defaultPageCheck,
-}: Object): ContributionsABTest => {
+}: InitContributionsABTest): ContributionsABTest => {
     const test = {
         // this is true because we use the reader revenue flag rather than sensitive
         // to disable contributions asks for a particular piece of content
@@ -395,6 +395,8 @@ const makeABTest = ({
         insertEvent: makeEvent(id, 'insert'),
         viewEvent: makeEvent(id, 'view'),
 
+        variants: [],
+
         id,
         start,
         expiry,
@@ -406,7 +408,6 @@ const makeABTest = ({
         audienceCriteria,
         idealOutcome,
         dataLinkNames,
-        variants,
         isEngagementBannerTest,
         epic,
         campaignId,
@@ -421,8 +422,8 @@ const makeABTest = ({
         useTargetingTool,
     };
 
-    test.variants = test.variants.map(variant =>
-        makeABTestVariant(variant, test)
+    test.variants = variants.map(variant =>
+        makeABTestVariant(variant.id, variant.products, variant.options, test)
     );
 
     return test;

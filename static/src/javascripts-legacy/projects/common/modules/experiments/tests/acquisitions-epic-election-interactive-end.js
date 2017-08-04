@@ -43,24 +43,28 @@ define([
         variants: [
             {
                 id: 'control',
-                isUnlimited: true,
+                products: ['ONE_OFF_CONTRIBUTION', 'MEMBERSHIP_SUPPORTER'],
 
-                insertAtSelector: '.content-footer',
-                successOnView: true,
+                options: {
+                    isUnlimited: true,
 
-                template: function makeControlTemplate(variant) {
-                    return template(epicControlTemplate, {
-                        copy: acquisitionsCopy.control,
-                        componentName: variant.options.componentName,
-                        buttonTemplate: contributionsUtilities.defaultButtonTemplate({
-                            membershipUrl: variant.options.membershipURL,
-                            contributeUrl: variant.options.contributeURL,
-                            supportUrl: variant.options.supportURL,
-                        }),
-                        testimonialBlock: variant.options.testimonialBlock,
-                        epicClass: 'contributions__epic--interactive gs-container',
-                        wrapperClass: 'contributions__epic-interactive-wrapper'
-                    });
+                    insertAtSelector: '.content-footer',
+                    successOnView: true,
+
+                    template: function makeControlTemplate(variant) {
+                        return template(epicControlTemplate, {
+                            copy: acquisitionsCopy.control,
+                            componentName: variant.options.componentName,
+                            buttonTemplate: contributionsUtilities.defaultButtonTemplate({
+                                membershipUrl: variant.options.membershipURL,
+                                contributeUrl: variant.options.contributeURL,
+                                supportUrl: variant.options.supportURL,
+                            }),
+                            testimonialBlock: variant.options.testimonialBlock,
+                            epicClass: 'contributions__epic--interactive gs-container',
+                            wrapperClass: 'contributions__epic-interactive-wrapper'
+                        });
+                    }
                 }
             }
         ]

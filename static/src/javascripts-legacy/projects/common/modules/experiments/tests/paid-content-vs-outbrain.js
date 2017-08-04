@@ -24,12 +24,20 @@ define([
         variants: [
             {
                 id: 'paid-content',
-                test: function () {
+                // TODO: ask someone about this
+                products: [],
+
+                options: {
+                    test: function () {}
                 }
             },
             {
                 id: 'outbrain',
-                test: function () {
+                // TODO: ask someone about this
+                products: [],
+
+                options: {
+                    test: function () {}
                 }
             }
         ]

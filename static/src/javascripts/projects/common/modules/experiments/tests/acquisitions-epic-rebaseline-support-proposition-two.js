@@ -30,12 +30,22 @@ export const acquisitionsEpicRebaselineSupportPropositionTwo = makeABTest({
     variants: [
         {
             id: 'control',
-            useTailoredCopyForRegulars: true,
+            // TODO: ask S&C!
+            products: [],
+
+            options: {
+                useTailoredCopyForRegulars: true,
+            },
         },
         {
             id: 'support_proposition',
-            buttonTemplate: buildButtonTemplate,
-            useTailoredCopyForRegulars: true,
+            // TODO: ask S&C!
+            products: [],
+
+            options: {
+                buttonTemplate: buildButtonTemplate,
+                useTailoredCopyForRegulars: true,
+            },
         },
     ],
 });

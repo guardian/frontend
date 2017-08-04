@@ -3,9 +3,6 @@ define([
 ], function (
     contributionsUtilities
 ) {
-
-
-
     return contributionsUtilities.makeABTest({
         id: 'AcquisitionsEpicAlwaysAskElection',
         campaignId: 'epic_always_ask_election',
@@ -26,8 +23,12 @@ define([
         variants: [
             {
                 id: 'control',
-                isUnlimited : true,
-                useTailoredCopyForRegulars: true
+                products: ['ONE_OFF_CONTRIBUTION', 'MEMBERSHIP_SUPPORTER'],
+
+                options: {
+                    isUnlimited: true,
+                    useTailoredCopyForRegulars: true
+                }
             }
         ]
     });

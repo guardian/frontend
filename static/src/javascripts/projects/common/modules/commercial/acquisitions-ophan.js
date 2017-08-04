@@ -1,33 +1,37 @@
 // @flow
 import ophan from 'ophan/ng';
 
-type OphanComponentType =
-    | 'READERS_QUESTIONS_ATOM'
-    | 'QANDA_ATOM'
-    | 'PROFILE_ATOM'
-    | 'GUIDE_ATOM'
-    | 'TIMELINE_ATOM'
-    | 'NEWSLETTER_SUBSCRIPTION'
-    | 'SURVEYS_QUESTIONS'
-    | 'ACQUISITIONS_EPIC'
-    | 'ACQUISITIONS_ENGAGEMENT_BANNER';
-
-type OphanComponentEvent = {
-    component: {
-        type: OphanComponentType,
-    },
+const submitComponentEvent = (componentEvent: OphanComponentEvent) => {
+    ophan.record({ componentEvent });
 };
 
-export const submitEpicInsertEvent = () => {
-    const event: OphanComponentEvent = {
+// Hmmm, what about where the campaign code is different for each button?
+export const submitEpicInsertEvent = (
+    products: OphanProduct[],
+    campaignCode: string
+) => {
+    submitComponentEvent({
         component: {
             type: 'ACQUISITIONS_EPIC',
+            labels: [],
+            products,
+            campaignCode,
         },
-    };
-
-    ophan.record({
-        componentEvent: event,
+        action: 'INSERT',
     });
 };
 
-export const submitEpicViewEvent = () => {};
+export const submitEpicViewEvent = (
+    products: OphanProduct[],
+    campaignCode: string
+) => {
+    submitComponentEvent({
+        component: {
+            type: 'ACQUISITIONS_EPIC',
+            labels: [],
+            products,
+            campaignCode,
+        },
+        action: 'VIEW',
+    });
+};

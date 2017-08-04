@@ -52,21 +52,25 @@ define([
         variants: [
             {
                 id: 'control',
+                products: ['ONE_OFF_CONTRIBUTION', 'MEMBERSHIP_SUPPORTER'],
 
-                maxViews: {
-                  days: 365, // Arbitrarily high number - reader should only see the thank-you for one 'cycle'.
-                  count: 1,
-                  minDaysBetweenViews: 0
-                },
+                options: {
 
-                template: function(variant) {
-                    return template(acquisitionsEpicThankYouTemplate, {
-                        componentName: variant.options.componentName,
-                        membershipUrl: contributionsUtilities.addTrackingCodesToUrl(
-                            "https://www.theguardian.com/membership",
-                            variant.options.campaignCode
-                        )
-                    })
+                    maxViews: {
+                        days: 365, // Arbitrarily high number - reader should only see the thank-you for one 'cycle'.
+                        count: 1,
+                        minDaysBetweenViews: 0
+                    },
+
+                    template: function (variant) {
+                        return template(acquisitionsEpicThankYouTemplate, {
+                            componentName: variant.options.componentName,
+                            membershipUrl: contributionsUtilities.addTrackingCodesToUrl(
+                                "https://www.theguardian.com/membership",
+                                variant.options.campaignCode
+                            )
+                        })
+                    }
                 }
             }
         ]
