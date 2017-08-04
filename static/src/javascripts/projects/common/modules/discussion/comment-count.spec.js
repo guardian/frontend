@@ -1,18 +1,16 @@
 // @flow
 import mediator from 'lib/mediator';
-import fastdom from 'lib/fastdom-promise';
 import {
     init,
     getContentIds,
     getElementsIndexedById,
 } from 'common/modules/discussion/comment-count';
 
-const setHTML = (h: string): Promise<void> =>
-    fastdom.write(() => {
-        if (document.body) {
-            document.body.innerHTML = h;
-        }
-    });
+const setHTML = (h: string): void => {
+    if (document.body) {
+        document.body.innerHTML = h;
+    }
+};
 
 jest.mock(
     'raw-loader!common/views/discussion/comment-count.html',
