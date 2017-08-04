@@ -9,7 +9,7 @@ class FakeGeolocationController extends Controller {
   implicit val jf: Format[FakeGeolocation] = Json.format[FakeGeolocation]
 
   def geolocation = Action {
-    val fake = FakeGeolocation("GB")
+    val fake = FakeGeolocation("US")
     Ok(Json.toJson(fake))
   }
 }
