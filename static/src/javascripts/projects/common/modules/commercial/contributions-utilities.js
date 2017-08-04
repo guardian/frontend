@@ -8,6 +8,10 @@ import type { AcquisitionsEpicTemplateCopy } from 'common/modules/commercial/acq
 import { control as acquisitionsTestimonialParametersControl } from 'common/modules/commercial/acquisitions-epic-testimonial-parameters';
 import type { AcquisitionsEpicTestimonialTemplateParameters } from 'common/modules/commercial/acquisitions-epic-testimonial-parameters';
 import { logView } from 'common/modules/commercial/acquisitions-view-log';
+import {
+    submitEpicInsertEvent,
+    submitEpicViewEvent,
+} from 'common/modules/commercial/acquisitions-ophan';
 import { isRegular } from 'common/modules/tailor/tailor';
 import $ from 'lib/$';
 import config from 'lib/config';
@@ -214,10 +218,16 @@ const makeABTestVariant = (
         insertMultiple = false,
         insertAfter = false,
         test = noop,
-        impression = submitImpression =>
-            mediator.once(parentTest.insertEvent, submitImpression),
-        success = submitSuccess =>
-            mediator.once(parentTest.viewEvent, submitSuccess),
+        impression = submitABTestImpression =>
+            mediator.once(parentTest.insertEvent, () => {
+                submitEpicInsertEvent();
+                submitABTestImpression();
+            }),
+        success = submitABTestComplete =>
+            mediator.once(parentTest.viewEvent, () => {
+                submitEpicViewEvent();
+                submitABTestComplete();
+            }),
     } = options;
 
     if (usesIframe) {
