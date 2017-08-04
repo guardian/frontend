@@ -485,7 +485,7 @@ class GuardianConfiguration extends Logging {
 
   object facia {
     lazy val stage = configuration.getStringProperty("facia.stage").getOrElse(environment.stage)
-    lazy val collectionCap: Int = 35
+    lazy val collectionCap: Int = 20
   }
 
   object faciatool {
