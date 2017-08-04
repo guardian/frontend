@@ -1,3 +1,4 @@
+// @flow
 import template from 'lodash/utilities/template';
 import userFeatures from 'commercial/modules/user-features';
 import contributionsUtilities from 'common/modules/commercial/contributions-utilities';
@@ -5,17 +6,19 @@ import config from 'lib/config';
 import acquisitionsEpicThankYouTemplate from 'raw-loader!common/views/acquisitions-epic-thank-you.html';
 
 function isTargetReader() {
-    return userFeatures.isPayingMember() || userFeatures.isRecentContributor()
+    return userFeatures.isPayingMember() || userFeatures.isRecentContributor();
 }
 
 function worksWellWithPageTemplate() {
-    return config.page.contentType === 'Article' &&
+    return (
+        config.page.contentType === 'Article' &&
         !config.page.isMinuteArticle &&
         !(config.page.isImmersive === true)
+    );
 }
 
 function isTargetPage() {
-    return worksWellWithPageTemplate() && !config.page.shouldHideReaderRevenue
+    return worksWellWithPageTemplate() && !config.page.shouldHideReaderRevenue;
 }
 
 export default contributionsUtilities.makeABTest({
@@ -26,7 +29,8 @@ export default contributionsUtilities.makeABTest({
     expiry: '2017-09-05',
 
     author: 'Guy Dawson',
-    description: 'Bootstrap the AB test framework to use the Epic to thank readers who have already supported the Guardian',
+    description:
+        'Bootstrap the AB test framework to use the Epic to thank readers who have already supported the Guardian',
     successMeasure: 'N/A',
     idealOutcome: 'N/A',
     audienceCriteria: 'Readers who have supported the Guardian',
@@ -35,29 +39,31 @@ export default contributionsUtilities.makeABTest({
 
     overrideCanRun: true,
 
-    canRun: function() {
+    canRun() {
         return isTargetReader() && isTargetPage();
     },
 
     useLocalViewLog: true,
 
-    variants: [{
-        id: 'control',
+    variants: [
+        {
+            id: 'control',
 
-        maxViews: {
-            days: 365, // Arbitrarily high number - reader should only see the thank-you for one 'cycle'.
-            count: 1,
-            minDaysBetweenViews: 0
+            maxViews: {
+                days: 365, // Arbitrarily high number - reader should only see the thank-you for one 'cycle'.
+                count: 1,
+                minDaysBetweenViews: 0,
+            },
+
+            template(variant) {
+                return template(acquisitionsEpicThankYouTemplate, {
+                    componentName: variant.options.componentName,
+                    membershipUrl: contributionsUtilities.addTrackingCodesToUrl(
+                        'https://www.theguardian.com/membership',
+                        variant.options.campaignCode
+                    ),
+                });
+            },
         },
-
-        template: function(variant) {
-            return template(acquisitionsEpicThankYouTemplate, {
-                componentName: variant.options.componentName,
-                membershipUrl: contributionsUtilities.addTrackingCodesToUrl(
-                    "https://www.theguardian.com/membership",
-                    variant.options.campaignCode
-                )
-            })
-        }
-    }]
+    ],
 });

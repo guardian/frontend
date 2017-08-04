@@ -1,3 +1,4 @@
+// @flow
 import contributionsUtilities from 'common/modules/commercial/contributions-utilities';
 import $ from 'lib/$';
 import geolocation from 'lib/geolocation';
@@ -16,42 +17,51 @@ export default contributionsUtilities.makeABTest({
     author: 'Sam Desborough',
     description: 'This places the epic underneath certain interactives',
     successMeasure: 'Member acquisition and contributions',
-    idealOutcome: 'Our wonderful readers will support The Guardian in this time of need!',
+    idealOutcome:
+        'Our wonderful readers will support The Guardian in this time of need!',
 
     audienceCriteria: 'All',
     audience: 1,
     audienceOffset: 0,
 
-    pageCheck: function(page) {
-        var isElection = page.keywordIds &&
+    pageCheck(page) {
+        const isElection =
+            page.keywordIds &&
             page.keywordIds.includes('general-election-2017') &&
             page.contentType === 'Interactive';
 
-        var isFootball = page.pageId.indexOf('transfer-window-2017-every-deal-in-europes-top-five-leagues') > -1;
+        const isFootball =
+            page.pageId.indexOf(
+                'transfer-window-2017-every-deal-in-europes-top-five-leagues'
+            ) > -1;
 
         return isElection || isFootball;
     },
 
-    variants: [{
-        id: 'control',
-        isUnlimited: true,
+    variants: [
+        {
+            id: 'control',
+            isUnlimited: true,
 
-        insertAtSelector: '.content-footer',
-        successOnView: true,
+            insertAtSelector: '.content-footer',
+            successOnView: true,
 
-        template: function makeControlTemplate(variant) {
-            return template(epicControlTemplate, {
-                copy: acquisitionsCopy.control,
-                componentName: variant.options.componentName,
-                buttonTemplate: contributionsUtilities.defaultButtonTemplate({
-                    membershipUrl: variant.options.membershipURL,
-                    contributeUrl: variant.options.contributeURL,
-                    supportUrl: variant.options.supportURL,
-                }),
-                testimonialBlock: variant.options.testimonialBlock,
-                epicClass: 'contributions__epic--interactive gs-container',
-                wrapperClass: 'contributions__epic-interactive-wrapper'
-            });
-        }
-    }]
+            template: function makeControlTemplate(variant) {
+                return template(epicControlTemplate, {
+                    copy: acquisitionsCopy.control,
+                    componentName: variant.options.componentName,
+                    buttonTemplate: contributionsUtilities.defaultButtonTemplate(
+                        {
+                            membershipUrl: variant.options.membershipURL,
+                            contributeUrl: variant.options.contributeURL,
+                            supportUrl: variant.options.supportURL,
+                        }
+                    ),
+                    testimonialBlock: variant.options.testimonialBlock,
+                    epicClass: 'contributions__epic--interactive gs-container',
+                    wrapperClass: 'contributions__epic-interactive-wrapper',
+                });
+            },
+        },
+    ],
 });

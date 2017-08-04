@@ -1,9 +1,11 @@
+// @flow
 import contributionsUtilities from 'common/modules/commercial/contributions-utilities';
 import $ from 'lib/$';
 import geolocation from 'lib/geolocation';
 import template from 'lodash/utilities/template';
 import config from 'lib/config';
 import epicSlice from 'raw-loader!common/views/acquisitions-epic-slice.html';
+
 export default contributionsUtilities.makeABTest({
     id: 'AcquisitionsElectionInteractiveSlice',
     campaignId: 'epic_ge2017_interactive_slice',
@@ -12,39 +14,45 @@ export default contributionsUtilities.makeABTest({
     expiry: '2017-07-03',
 
     author: 'Sam Desborough',
-    description: 'This places the epic (slice design) in the middle of UK election-related interactives',
+    description:
+        'This places the epic (slice design) in the middle of UK election-related interactives',
     successMeasure: 'Member acquisition and contributions',
-    idealOutcome: 'Our wonderful readers will support The Guardian in this time of need!',
+    idealOutcome:
+        'Our wonderful readers will support The Guardian in this time of need!',
 
     audienceCriteria: 'All',
     audience: 1,
     audienceOffset: 0,
 
-    pageCheck: function(page) {
-        return page.keywordIds &&
+    pageCheck(page) {
+        return (
+            page.keywordIds &&
             page.keywordIds.includes('general-election-2017') &&
-            page.contentType === 'Interactive';
+            page.contentType === 'Interactive'
+        );
     },
 
-    variants: [{
-        id: 'control',
-        isUnlimited: true,
+    variants: [
+        {
+            id: 'control',
+            isUnlimited: true,
 
-        insertAtSelector: '#js-interactive-epic',
-        successOnView: true,
+            insertAtSelector: '#js-interactive-epic',
+            successOnView: true,
 
-        test: function(render) {
-            var article = document.getElementById('article');
-            if (article) article.style['overflow-x'] = 'hidden';
-            render();
+            test(render) {
+                const article = document.getElementById('article');
+                if (article) article.style['overflow-x'] = 'hidden';
+                render();
+            },
+
+            template: function makeSliceTemplate(variant) {
+                return template(epicSlice, {
+                    membershipUrl: variant.options.membershipURL,
+                    contributionUrl: variant.options.contributeURL,
+                    componentName: variant.options.componentName,
+                });
+            },
         },
-
-        template: function makeSliceTemplate(variant) {
-            return template(epicSlice, {
-                membershipUrl: variant.options.membershipURL,
-                contributionUrl: variant.options.contributeURL,
-                componentName: variant.options.componentName,
-            });
-        }
-    }]
+    ],
 });

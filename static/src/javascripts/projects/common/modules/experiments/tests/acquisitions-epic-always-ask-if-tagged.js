@@ -1,3 +1,4 @@
+// @flow
 import contributionsUtilities from 'common/modules/commercial/contributions-utilities';
 
 export default contributionsUtilities.makeABTest({
@@ -8,19 +9,22 @@ export default contributionsUtilities.makeABTest({
     expiry: '2018-07-19',
 
     author: 'Jonathan Rankin',
-    description: 'This guarantees that any on any article that is tagged with a tag that is on the allowed list of tags as set by the tagging tool, the epic will be displayed',
+    description:
+        'This guarantees that any on any article that is tagged with a tag that is on the allowed list of tags as set by the tagging tool, the epic will be displayed',
     successMeasure: 'Conversion rate',
-    idealOutcome: 'We can always show the epic on articles with a pre selected tag',
+    idealOutcome:
+        'We can always show the epic on articles with a pre selected tag',
     audienceCriteria: 'All',
     audience: 1,
     audienceOffset: 0,
     useTargetingTool: true,
 
-
-    variants: [{
-        id: 'control',
-        isUnlimited: true,
-        successOnView: true,
-        useTailoredCopyForRegulars: true
-    }]
+    variants: [
+        {
+            id: 'control',
+            isUnlimited: true,
+            successOnView: true,
+            useTailoredCopyForRegulars: true,
+        },
+    ],
 });
