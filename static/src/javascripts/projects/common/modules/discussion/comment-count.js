@@ -92,7 +92,7 @@ const updateCommentCount = (node: Element, count: number): Promise<void> => {
 const renderCounts = (
     counts: { id: string, count: number }[],
     indexedElements: Map<string, Element>
-) => {
+): void => {
     Promise.all(
         counts.map(c => updateCommentCount(indexedElements[c.id], c.count))
     ).then(() => {
@@ -113,7 +113,7 @@ const getCommentCounts = (): void => {
     });
 };
 
-const init = () => {
+const init = (): void => {
     if (document.querySelector('[data-discussion-id]')) {
         getCommentCounts();
     }
