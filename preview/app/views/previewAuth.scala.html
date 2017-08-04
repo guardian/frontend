@@ -12,6 +12,16 @@
 
         <link href="/assets/internal/javascripts/components/bootstrap.css/css/bootstrap.css" rel="stylesheet">
         <link href="/assets/internal/css/style.css" rel="stylesheet">
+        <script type="text/javascript">
+            var navigator = window.navigator;
+            if (navigator && navigator.serviceWorker) {
+                navigator.serviceWorker.getRegistrations().then(function(registrations) {
+                    registrations.forEach(function (registration) {
+                        registration.unregister();
+                    });
+                });
+            }
+        </script>
     </head>
     <body>
         <header>
