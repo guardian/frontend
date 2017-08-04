@@ -3,7 +3,7 @@ import { makeABTest } from 'common/modules/commercial/contributions-utilities';
 import template from 'lodash/utilities/template';
 import epicSlice from 'raw-loader!common/views/acquisitions-epic-slice.html';
 
-export default makeABTest({
+export const acquisitionsEpicElectionInteractiveSlice = makeABTest({
     id: 'AcquisitionsElectionInteractiveSlice',
     campaignId: 'epic_ge2017_interactive_slice',
 

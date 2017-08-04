@@ -7,16 +7,16 @@ import PaidContentVsOutbrain2 from 'common/modules/experiments/tests/paid-conten
 import { carrotSlot } from 'common/modules/experiments/tests/carrot-slot';
 import { tailorSurvey } from 'common/modules/experiments/tests/tailor-survey';
 
-import AcquisitionsEpicElectionInteractiveEnd from 'common/modules/experiments/tests/acquisitions-epic-election-interactive-end';
-import AcquisitionsEpicElectionInteractiveSlice from 'common/modules/experiments/tests/acquisitions-epic-election-interactive-slice';
+import { acquisitionsEpicElectionInteractiveEnd } from 'common/modules/experiments/tests/acquisitions-epic-election-interactive-end';
+import { acquisitionsEpicElectionInteractiveSlice } from 'common/modules/experiments/tests/acquisitions-epic-election-interactive-slice';
 
 export const TESTS: Array<ABTest> = [
     PaidContentVsOutbrain2,
     getAcquisitionTest(),
     tailorSurvey,
     carrotSlot,
-    AcquisitionsEpicElectionInteractiveEnd,
-    AcquisitionsEpicElectionInteractiveSlice,
+    acquisitionsEpicElectionInteractiveEnd,
+    acquisitionsEpicElectionInteractiveSlice,
 ]
     .concat(MembershipEngagementBannerTests)
     .filter(Boolean);

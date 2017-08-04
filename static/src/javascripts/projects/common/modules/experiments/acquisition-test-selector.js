@@ -9,9 +9,9 @@ import { viewsInPreviousDays } from 'common/modules/commercial/acquisitions-view
 import { alwaysAsk } from 'common/modules/experiments/tests/contributions-epic-always-ask-strategy';
 import askFourEarning from 'common/modules/experiments/tests/contributions-epic-ask-four-earning';
 import { acquisitionsEpicLiveblog } from 'common/modules/experiments/tests/acquisitions-epic-liveblog';
-import acquisitionsEpicAlwaysAskIfTagged from 'common/modules/experiments/tests/acquisitions-epic-always-ask-if-tagged';
-import acquisitionsEpicAlwaysAskElection from 'common/modules/experiments/tests/acquisitions-epic-always-ask-election';
-import acquisitionsEpicThankYou from 'common/modules/experiments/tests/acquisitions-epic-thank-you';
+import { acquisitionsEpicAlwaysAskIfTagged } from 'common/modules/experiments/tests/acquisitions-epic-always-ask-if-tagged';
+import { acquisitionsEpicAlwaysAskElection } from 'common/modules/experiments/tests/acquisitions-epic-always-ask-election';
+import { acquisitionsEpicThankYou } from 'common/modules/experiments/tests/acquisitions-epic-thank-you';
 import { acquisitionsEpicRebaselineSupportProposition } from 'common/modules/experiments/tests/acquisitions-epic-rebaseline-support-proposition';
 import { acquisitionsEpicRebaselineSupportPropositionTwo } from 'common/modules/experiments/tests/acquisitions-epic-rebaseline-support-proposition-two';
 

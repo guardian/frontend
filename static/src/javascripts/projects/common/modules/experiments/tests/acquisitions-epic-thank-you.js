@@ -21,7 +21,7 @@ const worksWellWithPageTemplate = () =>
 const isTargetPage = () =>
     worksWellWithPageTemplate() && !config.page.shouldHideReaderRevenue;
 
-export default makeABTest({
+export const acquisitionsEpicThankYou = makeABTest({
     id: 'AcquisitionsEpicThankYou',
     campaignId: 'epic_thank_you',
 

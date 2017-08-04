@@ -7,7 +7,7 @@ import template from 'lodash/utilities/template';
 import epicControlTemplate from 'raw-loader!common/views/acquisitions-epic-control.html';
 import { control } from 'common/modules/commercial/acquisitions-copy';
 
-export default makeABTest({
+export const acquisitionsEpicElectionInteractiveEnd = makeABTest({
     id: 'AcquisitionsInteractiveEnd',
     campaignId: 'epic_interactive_end',
 
