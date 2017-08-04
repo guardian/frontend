@@ -6,8 +6,12 @@
     "scripts": {
         "preinstall": "node ./__tools__/preinstall.js && yarn check:env -s",
         "check:env": "check-node-version --package",
-        "lint": "yarn install -s && eslint .",
-        "lint:fix": "yarn lint -- --fix",
+        "lint:scss": "stylelint 'src/**/*.*css'",
+        "lint:scss:fix": "stylelint 'src/**/*.*css' --fix",
+        "lint:js": "eslint .",
+        "lint:js:fix": "eslint . --fix",
+        "lint": "yarn install -s && yarn lint:js -s && yarn lint:scss -s",
+        "lint:fix": "yarn install -s && yarn lint:js:fix -s && yarn lint:scss:fix -s",
         "flow": "flow",
         "test": "yarn install -s && jest",
         "test:watch": "yarn install -s && yarn test -- --watch",
@@ -26,6 +30,7 @@
         "preact": "^8.2.1",
         "preact-render-to-string": "^3.6.0",
         "sass-mq": "^3.3.2",
+        "stylelint": "^8.0.0",
         "styletron": "^2.5.7",
         "styletron-client": "^2.5.7",
         "styletron-preact": "^2.5.7",
@@ -34,6 +39,7 @@
     "devDependencies": {
         "babel-core": "^6.25.0",
         "babel-loader": "^7.1.1",
+        "babel-plugin-add-react-displayname": "^0.0.4",
         "babel-plugin-provide-modules": "^1.0.3",
         "babel-plugin-transform-es2015-modules-commonjs": "^6.24.1",
         "babel-plugin-transform-object-rest-spread": "^6.23.0",
@@ -45,6 +51,7 @@
         "concurrently": "^3.5.0",
         "core-js": "^2.4.1",
         "coveralls": "^2.13.0",
+        "css-loader": "^0.28.4",
         "eslint": "^4.3.0",
         "eslint-config-airbnb": "^15.1.0",
         "eslint-config-prettier": "^2.3.0",
@@ -54,7 +61,7 @@
         "eslint-plugin-jsx-a11y": "^5.1.1",
         "eslint-plugin-prettier": "^2.1.2",
         "eslint-plugin-react": "^7.1.0",
-        "flow-bin": "^0.50.0",
+        "flow-bin": "^0.51.1",
         "gzip-size-cli": "^2.0.0",
         "htmltojsx": "^0.2.6",
         "jest": "^20.0.4",
@@ -62,8 +69,12 @@
         "preact-svg-loader": "^0.2.0",
         "prettier": "^1.5.3",
         "sass-loader": "^6.0.6",
+        "stylelint-config-standard": "^17.0.0",
+        "stylelint-order": "^0.6.0",
+        "stylelint-scss": "^2.0.0",
         "styletron-loader": "^0.6.0",
         "svgo": "^0.7.2",
+        "to-string-loader": "^1.1.5",
         "webpack": "^3.4.1",
         "webpack-bundle-analyzer": "^2.8.3",
         "webpack-dev-server": "^2.6.1",
@@ -76,6 +87,9 @@
             "<rootDir>/src/app",
             "node_modules"
         ],
+        "moduleNameMapper": {
+            "^(.*)\\.svg$": "<rootDir>/__mocks__/svg.js"
+        },
         "globals": {
             "BROWSER": false,
             "SERVER": true

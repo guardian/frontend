@@ -19,9 +19,9 @@ This will create the following files:
 
 ### Dev
 
-1. run `make ui-watch`.
-2. start the `article` play application.
-3. browse to http://localhost:3000/render/js.
+1. run `make ui-watch` and wait for it to settle.
+2. start the `archive` play application.
+3. browse to http://localhost:3000/dev/ui.
 
 ## Howtos
 
@@ -45,16 +45,16 @@ You can use the JSXified SVG as a normal JSX import:
 ```jsx
 import MySVG from './my-svg.svg';
 
-export default () => <div><MySVG /></div>
+export default () => <div><MySVG /></div>;
 
 // <div><svg width="320" height="60"><path ... /></svg></div>
 
 ```
 #### Styling the SVG
-It will also respond to an object on a `styles` prop:
+It will also respond to an object on a `block-styles` prop:
 
 ```jsx
-<MySVG styles={{}} />
+<MySVG block-styles={{ red: { fill: "red" } }} />;
 ```
 If a node in the original SVG has a `data-block` attribute, the loader will look for a key in the `styles` object that matches the value of `data-block`, and apply the styles inline:
 
@@ -67,10 +67,10 @@ If a node in the original SVG has a `data-block` attribute, the loader will look
 import MySVG from './my-svg.svg';
 
 const styles = {
-	'red': { color: 'red' }
+	red: { color: 'red' }
 }
 
-export default () => <MySVG styles={styles} />
+export default () => <MySVG block-styles={styles} />
 
 // <svg><path data-block="red" style="color: red" /></svg>
 
@@ -84,18 +84,18 @@ You can use Sass in a similar way to non-SVG components:
 ```
 
 ```scss
-// styles.scss
+// styles.js.scss
 red {
-    color: 'red'
+    fill: 'red'
 }
 ```
 
 ```jsx
 import MySVG from './my-svg.svg';
-import styles from './styles.scss';
+import styles from './styles.js.scss';
 
-export default () => <MySVG styles={styles} />
+export default () => <MySVG block-styles={styles} />
 
-// <svg><path data-block="red" style="color: red" /></svg>
+// <svg><path data-block="red" style="fill: red" /></svg>
 
 ```

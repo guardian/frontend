@@ -1,6 +1,6 @@
 @()(implicit request: RequestHeader)
 
-@import common.{ NewNavigation, LinkTo, Edition, NavLink }
+@import common.{ NewNavigation, NavigationHelpers, LinkTo, Edition, NavLink }
 @import conf.switches.Switches.SearchSwitch
 @import views.support.RenderClasses
 
@@ -102,7 +102,7 @@
 
             <ul class="menu-group menu-group--membership"
                 role="menubar">
-                @NewNavigation.getMembershipLinks(edition).mostPopular.map { item =>
+                @NavigationHelpers.getMembershipLinks(edition).mostPopular.map { item =>
                     <li class="menu-item hide-on-desktop"
                         data-edition="@{edition.id.toLowerCase}"
                         role="menuitem">

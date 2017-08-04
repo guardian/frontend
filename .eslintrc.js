@@ -28,7 +28,7 @@ module.exports = {
                 singleQuote: true,
                 bracketSpacing: true,
                 tabWidth: 4,
-                jsxBracketSameLine: false,
+                jsxBracketSameLine: true,
             },
         ],
         'no-extend-native': 'error',

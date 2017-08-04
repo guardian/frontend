@@ -24,9 +24,10 @@ export const render = (props: Object) => {
     );
 
     return `
+        <!DOCTYPE html>
         <html lang="en">
             ${head(props, styletron.getStylesheetsHtml())}
             ${body}
         </html>
-    `;
+    `.trim();
 };

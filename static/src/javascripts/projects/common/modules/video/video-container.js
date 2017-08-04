@@ -2,7 +2,7 @@
 import bean from 'bean';
 import fastdom from 'lib/fastdom-promise';
 import $ from 'lib/$';
-import ElementInview from 'lib/element-inview';
+import { elementInView } from 'lib/element-inview';
 import { videojs } from 'bootstraps/enhanced/media/video-player';
 import { onVideoContainerNavigation } from 'common/modules/atoms/youtube';
 import { isBreakpoint } from 'lib/detect';
@@ -109,7 +109,7 @@ const reducers = {
         fastdom.read(() => {
             // Lazy load images on scroll for mobile
             $('.js-video-playlist-image', previousState.container).each(el => {
-                const elementInview = ElementInview(
+                const inview = elementInView(
                     el,
                     $('.js-video-playlist-inner', previousState.container).get(
                         0
@@ -120,7 +120,7 @@ const reducers = {
                     }
                 );
 
-                elementInview.on('firstview', elem => {
+                inview.on('firstview', elem => {
                     fastdom.write(() => {
                         const dataSrc = elem.getAttribute('data-src');
                         const src = elem.getAttribute('src');
