@@ -39,7 +39,7 @@ export const acquisitionsEpicElectionInteractiveSlice = makeABTest({
 
             test(render) {
                 const article = document.getElementById('article');
-                if (article) article.style['overflow-x'] = 'hidden';
+                if (article) article.style.overflowX = 'hidden';
                 render();
             },
 
