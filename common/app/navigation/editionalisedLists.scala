@@ -1,7 +1,7 @@
 package navigation
 
 import NavLinks2._
-import GlobalNavigation._
+import Pillars._
 
 object NewsSections extends EditionalisedNavList {
   lazy val au = List(australiaNews, world, auPolitics, environment, indigenousAustralia, auImmigration, media)

@@ -1,6 +1,6 @@
 package navigation
 
-object GlobalNavigation {
+object Pillars {
 
   val newsPillar = Pillar(
     "network front",
@@ -42,5 +42,5 @@ object GlobalNavigation {
     LifeSections
   )
 
-  val pillars = List(newsPillar, opinionPillar, sportPillar, artsPillar, lifePillar)
+  val all = List(newsPillar, opinionPillar, sportPillar, artsPillar, lifePillar)
 }

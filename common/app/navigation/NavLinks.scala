@@ -1,6 +1,6 @@
 package navigation
 
-import GlobalNavigation._
+import Pillars._
 
 object NavLinks2 {
 

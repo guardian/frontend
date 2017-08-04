@@ -1,7 +1,7 @@
 @()(implicit request: RequestHeader)
 
 @import common.{ LinkTo, Edition }
-@import navigation.{ NewNavigation, NavigationHelpers, NavLink, GlobalNavigation, Pillar}
+@import navigation.{ NewNavigation, NavigationHelpers, NavLink, Pillars, Pillar}
 @import conf.switches.Switches.SearchSwitch
 @import views.support.RenderClasses
 
@@ -71,7 +71,7 @@
         <div class="menu__inner gs-container">
             <ul class="menu-group menu-group--primary"
                 role="menubar">
-                @GlobalNavigation.pillars.map { section =>
+                @Pillars.all.map { section =>
                     @sectionList(section, edition)
                 }
             </ul>
