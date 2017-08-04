@@ -3,7 +3,7 @@ import mediator from 'lib/mediator';
 import fastdom from 'lib/fastdom-promise';
 import {
     init,
-    getSortedKeys,
+    getContentIds,
     getElementsIndexedById,
 } from 'common/modules/discussion/comment-count';
 
@@ -43,7 +43,7 @@ afterEach(() => setHTML(''));
 
 test("should get discussion id's from the DOM", () => {
     const data = '/p/3gh4n,/p/3ghv5,/p/3ghx3';
-    expect(getSortedKeys(getElementsIndexedById())).toEqual(data);
+    expect(getContentIds(getElementsIndexedById())).toEqual(data);
 });
 
 test('should get comment counts from ajax end-point', done => {
