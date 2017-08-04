@@ -1,6 +1,7 @@
 @(page: model.Page, isFooter: Boolean = false)(implicit request: RequestHeader)
 
-@import common.{NewNavigation, NavLink, Edition, LinkTo}
+@import common.{ Edition, LinkTo }
+@import navigation.{ NavigationHelpers, NavLink }
 @import views.support.RenderClasses
 
 
@@ -24,12 +25,12 @@
 <div class="subnav">
     <div class="gs-container">
 
-        @defining(NewNavigation.SectionLinks.getActivePillar(page)) { case (id, activePillarName) =>
+        @defining(NavigationHelpers.getActivePillar(page)) { case (id, activePillarName) =>
             <ul class="subnav__list"
                 data-pillar-title="@activePillarName">
 
                 @defining(
-                    NewNavigation.SubSectionLinks.getSubSectionNavLinks(id, Edition(request), page.metadata.isFront)
+                    NavigationHelpers.getSubSectionNavLinks(id, Edition(request), page.metadata.isFront)
                 ) { case (mostPopular, leastPopular) =>
                     @mostPopular.map { link => @subNavItem(link, id, false)}
                     @leastPopular.map { link => @subNavItem(link, id, true)}

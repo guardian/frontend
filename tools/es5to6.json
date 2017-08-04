@@ -18,11 +18,15 @@
     "bootstraps/enhanced/gallery.js"
   ],
   "Simon Adcock": [
+    "projects/common/modules/experiments/tests/acquisitions-epic-always-ask-election.js",
+    "projects/common/modules/experiments/tests/acquisitions-epic-always-ask-if-tagged.js",
+    "projects/common/modules/experiments/tests/acquisitions-epic-election-interactive-end.js",
+    "projects/common/modules/experiments/tests/acquisitions-epic-election-interactive-slice.js",
+    "projects/common/modules/experiments/tests/acquisitions-epic-thank-you.js",
+    "projects/common/modules/experiments/tests/paid-content-vs-outbrain.js",
+    "projects/common/modules/ui/clickstream.js",
     "projects/common/modules/discussion/user-avatars.js",
-    "projects/common/modules/discussion/whole-discussion.js",
-    "projects/common/modules/experiments/tests/bookmarks-email-variants-2.js",
-    "projects/common/modules/ui/blockSharing.js",
-    "projects/common/modules/ui/clickstream.js"
+    "projects/common/modules/discussion/whole-discussion.js"
   ],
   "Nicolas Long": [
     "projects/common/modules/ui/selection-sharing.js",
@@ -88,20 +92,8 @@
     "projects/common/modules/ui/full-height.js",
     "projects/common/modules/experiments/affix.js"
   ],
-  "davidfurey": [
-    "projects/common/modules/experiments/tests/editorial-email-variants.js",
-    "projects/common/modules/experiments/tests/fashion-statement-email-variants.js",
-    "projects/common/modules/experiments/tests/film-today-email-variants.js",
-    "projects/common/modules/experiments/tests/generic-email-variants.js",
-    "projects/common/modules/experiments/tests/opinion-email-variants.js",
-    "projects/common/modules/experiments/tests/paid-card-logo.js"
-  ],
+  "davidfurey": [],
   "jranks123": [
-    "projects/common/modules/experiments/tests/paid-commenting.js",
-    "projects/common/modules/experiments/tests/simple-reach.js",
-    "projects/common/modules/experiments/tests/sleeve-notes-legacy-email-variant.js",
-    "projects/common/modules/experiments/tests/sleeve-notes-new-email-variant.js",
-    "projects/common/modules/experiments/tests/the-long-read-email-variants.js",
     "projects/common/modules/gallery/lightbox.js",
     "projects/common/modules/identity/account-profile.js",
     "projects/common/modules/identity/api.js",
@@ -124,8 +116,6 @@
     "projects/common/modules/navigation/search.js"
   ],
   "Joseph Smith": [
-    "projects/common/modules/experiments/tests/contributions-epic-ask-four-earning.js",
-    "projects/common/modules/experiments/tests/epic-to-support-landing-page.js",
     "projects/common/modules/experiments/tests/membership-engagement-banner-tests.js",
     "projects/common/modules/commercial/acquisitions-view-log.js",
     "projects/common/modules/experiments/ab-test-clash.js",

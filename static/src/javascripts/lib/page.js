@@ -30,22 +30,18 @@ const isMatch = (yes: yesable, no: noable): boolean => {
         ['report', config.hasTone('Match reports')],
         ['preview', config.hasSeries('Match previews')],
         ['stats', match.id],
-        [null, true], // default
     ];
+    const pageType = pageTypes.find(type => type[1] === true);
 
     Object.assign(match, {
         date: config.webPublicationDateAsUrlPart(),
         teams,
         isLive: config.page.isLive,
-        pageType: pageTypes.find(type => type[1] === true),
+        pageType: pageType && pageType[0],
     });
 
-    if (Array.isArray(match.pageType)) {
-        match.pageType = match.pageType[0];
-    }
-
     return isit(
-        match.id || (match.pageType[0] && match.teams.length === 2),
+        match.id || (match.pageType && match.teams.length === 2),
         yes,
         no,
         match
@@ -81,7 +77,7 @@ const belowArticleVisible = (yes: yesable, no: noable): boolean => {
 };
 
 const keywordExists = (keywordArr: Array<string>): boolean => {
-    const keywords = config.get('page.keywords', []).split(',');
+    const keywords = config.get('page.keywords', '').split(',');
     return keywordArr.some(kw => keywords.includes(kw));
 };
 

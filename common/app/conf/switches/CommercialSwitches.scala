@@ -48,7 +48,17 @@ trait CommercialSwitches {
   val AdFreeTrialSwitch = Switch(
     SwitchGroup.Commercial,
     "ad-free-subscription-trial",
-    "Master switch for trialling ad-free subscription perk",
+    "Master switch for trialling ad-free subscription",
+    owners = Seq(Owner.withGithub("JustinPinner")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
+  val AdFreeStrictExpiryEnforcement = Switch(
+    SwitchGroup.Commercial,
+    "ad-free-strict-expiry-enforcement",
+    "When ON, the ad-free cookie is valid for max. 48 hours. OFF doesn't enforce expiry check.",
     owners = Seq(Owner.withGithub("JustinPinner")),
     safeState = Off,
     sellByDate = never,
