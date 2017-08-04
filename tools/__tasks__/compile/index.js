@@ -4,8 +4,7 @@ module.exports = {
         require('./conf/clean'),
         require('./css'),
         require('./javascript'),
-        // not quite yet...
-        // require('./ui'),
+        require('./ui'),
         require('./fonts'),
         require('./hash'),
         require('./conf'),
