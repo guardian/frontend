@@ -32,8 +32,8 @@ const getElementsIndexedById = (): Map<string, Element> => {
     }, {});
 };
 
-const getContentIds = (indexedElements: Map<string, Element>): string =>
-    Object.keys(indexedElements).sort().join(',');
+const getContentIds = <A>(m: Map<string, A>): string =>
+    Object.keys(m).sort().join(',');
 
 const getContentUrl = (node: Element): string =>
     `${Array.from(node.getElementsByTagName('a'))

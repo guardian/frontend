@@ -3,7 +3,7 @@ import mediator from 'lib/mediator';
 import fastdom from 'lib/fastdom-promise';
 import {
     init,
-    getContentIds,
+    getSortedKeys,
     getElementsIndexedById,
 } from 'common/modules/discussion/comment-count';
 
@@ -13,6 +13,11 @@ const setHTML = (h: string): Promise<void> =>
             document.body.innerHTML = h;
         }
     });
+
+jest.mock(
+    'raw-loader!common/views/discussion/comment-count.html',
+    () => '<a class="fc-trail__count--commentcount"></a>'
+);
 
 jest.mock('lib/fetch-json', () => () =>
     Promise.resolve({
@@ -38,7 +43,7 @@ afterEach(() => setHTML(''));
 
 test("should get discussion id's from the DOM", () => {
     const data = '/p/3gh4n,/p/3ghv5,/p/3ghx3';
-    expect(getContentIds(getElementsIndexedById())).toEqual(data);
+    expect(getSortedKeys(getElementsIndexedById())).toEqual(data);
 });
 
 test('should get comment counts from ajax end-point', done => {
