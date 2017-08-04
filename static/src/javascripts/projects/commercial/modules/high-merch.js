@@ -7,11 +7,11 @@ import { addSlot } from 'commercial/modules/dfp/add-slot';
 import createSlot from 'commercial/modules/dfp/create-slot';
 import trackAdRender from 'commercial/modules/dfp/track-ad-render';
 import { commercialFeatures } from 'commercial/modules/commercial-features';
-import PaidContentVsOutbrain2 from 'common/modules/experiments/tests/paid-content-vs-outbrain';
+import { paidContentVsOutbrain2 } from 'common/modules/experiments/tests/paid-content-vs-outbrain';
 
 const isLuckyBastard = () =>
-    testCanBeRun(PaidContentVsOutbrain2) &&
-    getTestVariantId(PaidContentVsOutbrain2.id) === 'paid-content';
+    testCanBeRun(paidContentVsOutbrain2) &&
+    getTestVariantId(paidContentVsOutbrain2.id) === 'paid-content';
 
 const insertAlternativeSlot = isHiResLoaded => {
     if (isHiResLoaded) {
