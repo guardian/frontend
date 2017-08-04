@@ -4,11 +4,7 @@ import { local } from 'lib/storage';
 import { Message } from 'common/modules/ui/message';
 import { commercialFeatures } from 'commercial/modules/commercial-features';
 import mediator from 'lib/mediator';
-import { testCanBeRun } from 'common/modules/experiments/test-can-run-checks';
-import MembershipEngagementBannerTests from 'common/modules/experiments/tests/membership-engagement-banner-tests';
 import { inlineSvg } from 'common/views/svgs';
-import { isInTest, variantFor } from 'common/modules/experiments/segment-util';
-import { epicEngagementBannerTests } from 'common/modules/experiments/acquisition-test-selector';
 import membershipEngagementBannerUtils from 'common/modules/commercial/membership-engagement-banner-parameters';
 import { isBlocked } from 'common/modules/commercial/membership-engagement-banner-block';
 import ophan from 'ophan/ng';
@@ -17,103 +13,6 @@ import { constructQuery } from 'lib/url';
 
 // change messageCode to force redisplay of the message to users who already closed it.
 const messageCode = 'engagement-banner-2017-07-05';
-
-const getUserTest = (): ?ContributionsABTest => {
-    const engagementBannerTests = MembershipEngagementBannerTests.concat(
-        epicEngagementBannerTests
-    );
-
-    return engagementBannerTests.find(
-        test => testCanBeRun(test) && isInTest(test)
-    );
-};
-
-const getUserVariant = (test: ?ABTest): ?Variant =>
-    test ? variantFor(test) : undefined;
-
-const buildCampaignCode = (
-    offering: string,
-    campaignId: string,
-    variantId: string
-): string => {
-    let prefix = '';
-    const offerings = membershipEngagementBannerUtils.offerings;
-
-    // mem and cont chosen to be consistent with default campaign code prefixes.
-    if (offering === offerings.membership) {
-        prefix = 'mem';
-    } else if (offering === offerings.contributions) {
-        prefix = 'cont';
-    }
-
-    return `${prefix}_${campaignId}_${variantId}`;
-};
-
-const getUserVariantParams = (
-    userVariant: ?Variant,
-    campaignId: ?string,
-    defaultOffering: string
-): EngagementBannerParams | {} => {
-    if (campaignId && userVariant && userVariant.engagementBannerParams) {
-        const userVariantParams = userVariant.engagementBannerParams;
-
-        if (!userVariantParams.campaignCode) {
-            const offering = userVariantParams.offering || defaultOffering;
-
-            userVariantParams.campaignCode = buildCampaignCode(
-                offering,
-                campaignId,
-                userVariant.id
-            );
-        }
-
-        return userVariantParams;
-    }
-    return {};
-};
-
-/*
- * Params for the banner are overlaid in this order, earliest taking precedence:
- *
- *  * Variant (if the user is in an A/B testing variant)
- *  * Edition
- *  * Offering ('membership' or 'contributions')
- *  * Default
- *
- * The 'offering' in use comes from either:
- *
- *  * Variant (if the user is in an A/B testing variant)
- *  * Edition (only one offering can be the default for a given Edition)
- *
- * Returns either 'null' if no banner is available for this edition,
- * otherwise a populated params object that looks like this:
- *
- *  {
- *    minArticles: 5, // how many articles should the user see before they get the engagement banner?
- *    messageText: "..."
- *    colourStrategy: // a function to determine what css class to use for the banner's colour
- *    buttonCaption: "Become a Supporter"
- *  }
- *
- */
-const deriveBannerParams = (location: string): ?EngagementBannerParams => {
-    const defaultParams = membershipEngagementBannerUtils.defaultParams(
-        location
-    );
-    const userTest = getUserTest();
-    const campaignId = userTest ? userTest.campaignId : undefined;
-    const userVariant = getUserVariant(userTest);
-
-    if (userVariant && userVariant.blockEngagementBanner) {
-        return;
-    }
-
-    return Object.assign(
-        {},
-        defaultParams,
-        getUserVariantParams(userVariant, campaignId, defaultParams.offering)
-    );
-};
 
 // Used to send an interaction if the engagement banner is shown.
 const recordInteraction = (interaction: Interaction): void => {
@@ -178,7 +77,9 @@ const showBanner = (params: EngagementBannerParams): void => {
 
 const membershipEngagementBannerInit = (): Promise<void> =>
     getGeoLocation().then(location => {
-        const bannerParams = deriveBannerParams(location);
+        const bannerParams = membershipEngagementBannerUtils.defaultParams(
+            location
+        );
 
         if (bannerParams && getVisitCount() >= bannerParams.minArticles) {
             return commercialFeatures.asynchronous.canDisplayMembershipEngagementBanner.then(
