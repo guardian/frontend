@@ -1,8 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`404 generates the expected markup 1`] = `
-Object {
-  "css": "<style class=\\"_styletron_hydrate_\\"></style>",
-  "html": "<div><svg><text>test svg</text></svg><h1>Sorry - we haven’t been able to serve the page you asked for.</h1><p>You may have followed a broken or outdated link, or there may be an error on our site.</p><p>Please follow one of the links below to continue exploring.</p></div>",
-}
-`;

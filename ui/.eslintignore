@@ -1,7 +1,0 @@
-# generic
-node_modules
-flow-type*
-!.eslintrc.js
-coverage
-__snapshots__
-dist
