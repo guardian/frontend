@@ -90,7 +90,7 @@ const init = (): Promise<void> => {
                                 currentPaneTarget
                             );
 
-                            if (currentPane) {
+                            if (currentPane && target !== currentTab) {
                                 hidePane(currentTab, currentPane);
                             }
                         }
