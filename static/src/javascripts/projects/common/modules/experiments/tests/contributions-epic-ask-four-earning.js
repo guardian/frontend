@@ -21,7 +21,7 @@ export const askFourEarning: ContributionsABTest = makeABTest({
     variants: [
         {
             id: 'control',
-            products: ['ONE_OFF_CONTRIBUTION', 'MEMBERSHIP_SUPPORTER'],
+            products: ['OneOffContribution', 'MembershipSupporter'],
 
             options: {
                 maxViews: {

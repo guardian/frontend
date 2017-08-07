@@ -12,12 +12,12 @@ export const submitEpicInsertEvent = (
 ) => {
     submitComponentEvent({
         component: {
-            type: 'ACQUISITIONS_EPIC',
+            type: 'AcquisitionsEpic',
             labels: [],
             products,
             campaignCode,
         },
-        action: 'INSERT',
+        action: 'Insert',
     });
 };
 
@@ -27,11 +27,11 @@ export const submitEpicViewEvent = (
 ) => {
     submitComponentEvent({
         component: {
-            type: 'ACQUISITIONS_EPIC',
+            type: 'AcquisitionsEpic',
             labels: [],
             products,
             campaignCode,
         },
-        action: 'VIEW',
+        action: 'View',
     });
 };

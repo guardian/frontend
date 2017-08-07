@@ -17,33 +17,33 @@ declare type OphanABPayload = {
 };
 
 declare type OphanProduct =
-    | 'ONE_OFF_CONTRIBUTION'
-    | 'RECURRING_CONTRIBUTION'
-    | 'MEMBERSHIP_SUPPORTER'
-    | 'DIGITAL_SUBSCRIPTION'
-    | 'PAPER_SUBSCRIPTION';
+    | 'OneOffContribution'
+    | 'RecurringContribution'
+    | 'MembershipSupporter'
+    | 'DigitalSubscription'
+    | 'PaperSubscription';
 
 declare type OphanAction =
-    | 'INSERT'
-    | 'VIEW'
-    | 'EXPAND'
-    | 'LIKE'
-    | 'DISLIKE'
-    | 'SUBSCRIBE'
-    | 'ANSWER'
-    | 'VOTE'
-    | 'CLICK';
+    | 'Insert'
+    | 'View'
+    | 'Expand'
+    | 'Like'
+    | 'Dislike'
+    | 'Subscribe'
+    | 'Answer'
+    | 'Vote'
+    | 'Click';
 
 declare type OphanComponentType =
-    | 'READERS_QUESTIONS_ATOM'
-    | 'QANDA_ATOM'
-    | 'PROFILE_ATOM'
-    | 'GUIDE_ATOM'
-    | 'TIMELINE_ATOM'
-    | 'NEWSLETTER_SUBSCRIPTION'
-    | 'SURVEYS_QUESTIONS'
-    | 'ACQUISITIONS_EPIC'
-    | 'ACQUISITIONS_ENGAGEMENT_BANNER';
+    | 'ReadersQuestionsAtom'
+    | 'QandaAtom'
+    | 'ProfileAtom'
+    | 'GuideAtom'
+    | 'TimelineAtom'
+    | 'NewsletterSubscription'
+    | 'SurveysQuestions'
+    | 'AcquisitionsEpic'
+    | 'AcquisitionsEngagementBanner';
 
 declare type OphanComponent = {|
     type: OphanComponentType,
