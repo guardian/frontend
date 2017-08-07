@@ -11,6 +11,7 @@
 @import views.support.EmailHelpers.{icon, imgFromCard, imgForFront, classesForCard}
 @import views.support.RemoveOuterParaHtml
 @import fragments.email._
+@import common.LinkTo
 
 @headline(card: ContentCard, isLarge: Boolean = false, isLast: Boolean) = {
 
@@ -142,9 +143,9 @@
 @renderContentContainer(collection: EmailContentContainer, collectionIndex: Int) = {
     @containerTitle((if(collectionIndex > 0) Seq("ct--not-top") else Nil) ++ (if (collection.branding.isDefined) Seq("ct-branded") else Nil)) {
 
-        @if(collection.href.isDefined) {
-            <a class="ct-link" href="@collection.href">@collection.displayName</a>
-        } else {
+        @collection.href.map { href =>
+            <a class="ct-link" href="@LinkTo {/@Html(href)}">@collection.displayName</a>
+        }.getOrElse {
             @collection.displayName
         }
     }
