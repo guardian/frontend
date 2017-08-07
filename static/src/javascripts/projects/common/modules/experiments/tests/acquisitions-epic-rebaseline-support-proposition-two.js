@@ -30,8 +30,7 @@ export const acquisitionsEpicRebaselineSupportPropositionTwo = makeABTest({
     variants: [
         {
             id: 'control',
-            // TODO: ask S&C!
-            products: [],
+            products: ['ONE_OFF_CONTRIBUTION', 'MEMBERSHIP_SUPPORTER'],
 
             options: {
                 useTailoredCopyForRegulars: true,
@@ -39,8 +38,12 @@ export const acquisitionsEpicRebaselineSupportPropositionTwo = makeABTest({
         },
         {
             id: 'support_proposition',
-            // TODO: ask S&C!
-            products: [],
+            products: [
+                'ONE_OFF_CONTRIBUTION',
+                'RECURRING_CONTRIBUTION',
+                'DIGITAL_SUBSCRIPTION',
+                'PAPER_SUBSCRIPTION',
+            ],
 
             options: {
                 buttonTemplate: buildButtonTemplate,
