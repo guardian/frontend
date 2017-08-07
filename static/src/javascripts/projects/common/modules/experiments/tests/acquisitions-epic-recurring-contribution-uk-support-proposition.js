@@ -26,6 +26,10 @@ export const acquisitionsEpicRecurringContributionUkSupportProposition = makeABT
         variants: [
             {
                 id: 'control',
+                useTailoredCopyForRegulars: true,
+            },
+            {
+                id: 'variant',
 
                 buttonTemplate({ supportUrl }) {
                     template(singleButtonTemplate, {
