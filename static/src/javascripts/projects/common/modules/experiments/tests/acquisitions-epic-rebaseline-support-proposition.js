@@ -30,7 +30,7 @@ export const acquisitionsEpicRebaselineSupportProposition = makeABTest({
     variants: [
         {
             id: 'control',
-            products: ['OneOffContribution', 'MembershipSupporter'],
+            products: ['ONE_OFF_CONTRIBUTION', 'MEMBERSHIP_SUPPORTER'],
 
             options: {
                 useTailoredCopyForRegulars: true,
@@ -39,10 +39,10 @@ export const acquisitionsEpicRebaselineSupportProposition = makeABTest({
         {
             id: 'support_proposition',
             products: [
-                'OneOffContribution',
-                'RecurringContribution',
-                'DigitalSubscription',
-                'PaperSubscription',
+                'ONE_OFF_CONTRIBUTION',
+                'RECURRING_CONTRIBUTION',
+                'DIGITAL_SUBSCRIPTION',
+                'PAPER_SUBSCRIPTION',
             ],
 
             options: {

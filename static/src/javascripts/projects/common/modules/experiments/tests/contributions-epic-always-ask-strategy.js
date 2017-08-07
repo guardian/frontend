@@ -34,7 +34,7 @@ export const alwaysAsk: ContributionsABTest = makeABTest({
     variants: [
         {
             id: 'control',
-            products: ['OneOffContribution', 'MembershipSupporter'],
+            products: ['ONE_OFF_CONTRIBUTION', 'MEMBERSHIP_SUPPORTER'],
 
             options: {
                 test() {},
@@ -44,7 +44,7 @@ export const alwaysAsk: ContributionsABTest = makeABTest({
 
         {
             id: 'alwaysAsk',
-            products: ['OneOffContribution', 'MembershipSupporter'],
+            products: ['ONE_OFF_CONTRIBUTION', 'MEMBERSHIP_SUPPORTER'],
 
             options: {
                 test(render, variant, parentTest) {

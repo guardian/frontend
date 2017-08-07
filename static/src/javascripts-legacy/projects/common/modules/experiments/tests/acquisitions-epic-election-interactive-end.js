@@ -43,7 +43,7 @@ define([
         variants: [
             {
                 id: 'control',
-                products: ['OneOffContribution', 'MembershipSupporter'],
+                products: ['ONE_OFF_CONTRIBUTION', 'MEMBERSHIP_SUPPORTER'],
 
                 options: {
                     isUnlimited: true,
