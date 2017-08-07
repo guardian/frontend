@@ -23,15 +23,23 @@ const adFreeDataIsPresent = (): boolean => {
     return !isNaN(parseInt(cookieVal, 10));
 };
 
+const timeInDaysFromNow = (daysFromNow: number): string => {
+    const tmpDate = new Date();
+    tmpDate.setDate(tmpDate.getDate() + daysFromNow);
+    return tmpDate.getTime().toString();
+};
+
 const persistResponse = (JsonResponse: () => void) => {
     const switches = config.switches;
-    const expiryDate = new Date();
-    expiryDate.setDate(expiryDate.getDate() + 1);
-    addCookie(USER_FEATURES_EXPIRY_COOKIE, expiryDate.getTime().toString());
+    addCookie(USER_FEATURES_EXPIRY_COOKIE, timeInDaysFromNow(1));
     addCookie(PAYING_MEMBER_COOKIE, !JsonResponse.adblockMessage);
 
+    if (adFreeDataIsPresent() && !JsonResponse.adFree) {
+        removeCookie(AD_FREE_USER_COOKIE);
+    }
+
     if (switches.adFreeSubscriptionTrial && JsonResponse.adFree) {
-        addCookie(AD_FREE_USER_COOKIE, expiryDate.getTime().toString());
+        addCookie(AD_FREE_USER_COOKIE, timeInDaysFromNow(2));
     }
 };
 
@@ -63,7 +71,13 @@ const featuresDataIsMissing = (): boolean =>
 const featuresDataIsOld = (): boolean =>
     datedCookieIsOld(USER_FEATURES_EXPIRY_COOKIE);
 
-const adFreeDataIsOld = (): boolean => datedCookieIsOld(AD_FREE_USER_COOKIE);
+const adFreeDataIsOld = (): boolean => {
+    const switches = config.switches;
+    return (
+        switches.adFreeStrictExpiryEnforcement &&
+        datedCookieIsOld(AD_FREE_USER_COOKIE)
+    );
+};
 
 const userNeedsNewFeatureData = (): boolean =>
     featuresDataIsMissing() ||

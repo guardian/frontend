@@ -19,8 +19,7 @@
     <div class="@RenderClasses(Map(
             "content--minute-article" -> isTheMinuteArticle,
             "content--immersive-article-without-main-media" -> !hasMainMedia,
-            "immersive-main-media" -> hasMainMedia,
-            "immersive-main-media__advertisment" -> isPaidContent
+            "immersive-main-media" -> hasMainMedia
         ),
         "content", "content--immersive", "content--immersive-article", "tonal", s"tonal--${toneClass(page.item)}")
     ">

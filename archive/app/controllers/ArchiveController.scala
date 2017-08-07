@@ -9,12 +9,15 @@ import java.net.URLDecoder
 import javax.ws.rs.core.UriBuilder
 
 import model.{CacheTime, Cached}
+import mvt.ABJavascriptRenderingVariant
 import org.apache.http.HttpStatus
+import play.twirl.api.Html
+import rendering.core.Renderer
 import services.RedirectService.{ArchiveRedirect, Destination, PermanentRedirect}
 
 import scala.concurrent.Future
 
-class ArchiveController(redirects: RedirectService) extends Controller with Logging with ExecutionContexts {
+class ArchiveController(redirects: RedirectService, renderer: Renderer) extends Controller with Logging with ExecutionContexts {
 
   private val R1ArtifactUrl = """^/(.*)/[0|1]?,[\d]*,(-?\d+),[\d]*(.*)""".r
   private val ShortUrl = """^(/p/[\w\d]+).*$""".r
@@ -30,33 +33,26 @@ class ArchiveController(redirects: RedirectService) extends Controller with Logg
 
   def lookup(path: String) = Action.async{ implicit request =>
 
-    val cachedArchiveRedirect = Cached(CacheTime.ArchiveRedirect) _
-
-    // lookup the path to see if we have a location for it in the database
-    lookupPath(path).map(_.map(cachedArchiveRedirect).getOrElse {
-
-      // if we do not have a location in the database then follow these rules
-      path match {
-        case Gallery(gallery)      => redirectTo(gallery)
-        case Century(century)      => redirectTo(century)
-        case Guardian(endOfUrl)    => redirectTo(endOfUrl)
-        case Lowercase(lower)      => redirectTo(lower)
-
-        // Googlebot hits a bunch of really old combiners and combiner RSS
-        // bounce these to the section
-        case CombinerSectionRss(section)                => redirectTo(s"$section/rss")
-        case CombinerSection(section)                   => redirectTo(section)
-        case Combiner(combiner)                         => redirectTo(combiner)
-        case DatedSpecialIndexPage(section, rest, _)    => redirectTo(section, rest, "all")
-        case SectionSpecialIndex(section, _)            => redirectTo(section, "all")
-        case NewspaperPage(paper, date, book)           => redirectTo(paper, book, date, "all")
-
-        case _ =>
-          log404(request)
-          // short cache time as we might just be waiting for the content api to index
-          Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound(views.html.notFound())))
+    lookupPath(path)
+      .map { _
+        .map(Cached(CacheTime.ArchiveRedirect))
+        .orElse(redirectForPath(path))
       }
-    })
+      .flatMap { _
+        .map(Future.successful)
+        .getOrElse {
+          log404(request)
+          def notFoundResponse(html: Html): Result = Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound(html)))
+          if (ABJavascriptRenderingVariant.isParticipating) {
+            renderer
+              .render(ui.NotFound)
+              .map(notFoundResponse)
+          } else {
+            Future.successful(notFoundResponse(views.html.notFound()))
+          }
+        }
+      }
+
   }
 
   // Our redirects are 'normalised' Vignette URLs, Ie. path/to/0,<n>,123,<n>.html -> path/to/0,,123,.html
@@ -148,7 +144,24 @@ class ArchiveController(redirects: RedirectService) extends Controller with Logg
     }
   }
 
-  private def lookupPath(path: String)(implicit request: RequestHeader) = destinationFor(path).map{ _.flatMap(processLookupDestination(path).lift) }
+  private def lookupPath(path: String)(implicit request: RequestHeader): Future[Option[CacheableResult]] = destinationFor(path).map{ _.flatMap(processLookupDestination(path).lift) }
+
+  private def redirectForPath(path: String)(implicit request: RequestHeader): Option[Result] = path match {
+      case Gallery(gallery)      => Some(redirectTo(gallery))
+      case Century(century)      => Some(redirectTo(century))
+      case Guardian(endOfUrl)    => Some(redirectTo(endOfUrl))
+      case Lowercase(lower)      => Some(redirectTo(lower))
+
+      // Googlebot hits a bunch of really old combiners and combiner RSS
+      // bounce these to the section
+      case CombinerSectionRss(section)                => Some(redirectTo(s"$section/rss"))
+      case CombinerSection(section)                   => Some(redirectTo(section))
+      case Combiner(combiner)                         => Some(redirectTo(combiner))
+      case DatedSpecialIndexPage(section, rest, _)    => Some(redirectTo(section, rest, "all"))
+      case SectionSpecialIndex(section, _)            => Some(redirectTo(section, "all"))
+      case NewspaperPage(paper, date, book)           => Some(redirectTo(paper, book, date, "all"))
+      case _ => None
+  }
 
   def processLookupDestination(path: String)(implicit request: RequestHeader) : PartialFunction[Destination, CacheableResult] = {
       case PermanentRedirect(_, location) if !linksToItself(path, location) =>

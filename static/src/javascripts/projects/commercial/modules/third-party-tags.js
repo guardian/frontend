@@ -8,7 +8,7 @@ import template from 'lodash/utilities/template';
 import { testCanBeRun } from 'common/modules/experiments/test-can-run-checks';
 import { getTestVariantId } from 'common/modules/experiments/utils';
 import { commercialFeatures } from 'commercial/modules/commercial-features';
-import PaidContentVsOutbrain2 from 'common/modules/experiments/tests/paid-content-vs-outbrain';
+import { paidContentVsOutbrain2 } from 'common/modules/experiments/tests/paid-content-vs-outbrain';
 import externalContentContainerStr from 'raw-loader!common/views/commercial/external-content.html';
 import { imrWorldwide } from 'commercial/modules/third-party-tags/imr-worldwide';
 import { imrWorldwideLegacy } from 'commercial/modules/third-party-tags/imr-worldwide-legacy';
@@ -21,8 +21,8 @@ import { doubleClickAdFree } from 'commercial/modules/third-party-tags/doublecli
 import plista from 'commercial/modules/third-party-tags/plista';
 
 const isLuckyBastard = (): boolean =>
-    testCanBeRun(PaidContentVsOutbrain2) &&
-    getTestVariantId(PaidContentVsOutbrain2.id) === 'paid-content';
+    testCanBeRun(paidContentVsOutbrain2) &&
+    getTestVariantId(paidContentVsOutbrain2.id) === 'paid-content';
 
 const loadExternalContentWidget = (): void => {
     const externalTpl = template(externalContentContainerStr);

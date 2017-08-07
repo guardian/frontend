@@ -166,6 +166,17 @@ object EmailNewsletters {
     exampleUrl = Some("/us-news/series/the-campaign-minute-2016/latest/email")
   )
 
+  val theResistanceNow = EmailNewsletter(
+    name = "The Resistance Now",
+    theme = "news",
+    teaser = "Grassroots activism is one of the defining stories of Trump's America. Get updates on the emerging campaigns, from climate change to reproductive rights",
+    description = "Grassroots activism is becoming one of the defining news stories of America's Trump era. Get updates on the emerging campaigns on climate change, reproductive rights, equality, immigration, racial justice and more",
+    frequency = "Weekly",
+    listId = 3830,
+    signupPage = Some("/us-news/2017/mar/07/the-resistance-now-email-sign-up-weekly-updates"),
+    exampleUrl = Some("/us-news/series/the-resistance-now-newsletter/latest/email")
+  )
+
   val australianPolitics = EmailNewsletter(
     name = "Australian Politics",
     theme = "news",
@@ -479,14 +490,15 @@ object EmailNewsletters {
   )
 
   val newsEmails = List(
-    businessToday,
-    mediaBriefing,
-    greenLight,
-    labNotes,
     globalDispatch,
     brexitBriefing,
     usPoliticsMinute,
-    australianPolitics
+    theResistanceNow,
+    australianPolitics,
+    businessToday,
+    mediaBriefing,
+    greenLight,
+    labNotes
   )
 
   val sportEmails = List(
