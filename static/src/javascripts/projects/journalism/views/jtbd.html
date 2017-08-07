@@ -1,0 +1,20 @@
+<form id="js-jtbd-survey__form">
+    <fieldset aria-labelledby="jtbd__label" aria-describedby="jtbd__descr">
+        <legend id="jtbd__label"><%= question %></legend>
+        <p id="jtbd__descr">Your feedback is valuable in helping us improve the Guardian experience for readers everywhere. It just takes a minute.</p>
+        <ol>
+            <li><label><input type="radio" name="q" value="0"></label></li>
+            <li><label><input type="radio" name="q" value="1"></label></li>
+            <li><label><input type="radio" name="q" value="2"></label></li>
+            <li><label><input type="radio" name="q" value="3"></label></li>
+            <li><label><input type="radio" name="q" value="4"></label></li>
+        </ol>
+    </fieldset>
+    <div>
+        <label for="jtbd__why">Why do you say that?</label>
+        <textarea id="jtbd_why" name="why"></textarea>
+    </div>
+    <div>
+        <button type="submit">Send feedback now</button>
+    </div>
+</form>
