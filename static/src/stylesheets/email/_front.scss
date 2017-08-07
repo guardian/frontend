@@ -91,6 +91,12 @@ $container-color: #ffffff;
     color: inherit;
 }
 
+.bb-link,
+.ct-link {
+    text-decoration: none;
+    color: $neutral-1;
+}
+
 // td
 .left-col {
     width: 60%;
@@ -226,8 +232,6 @@ $email-tones: (
     padding: 0 6px 6px;
 
     img {
-        margin-left: auto;
-        margin-right: 0;
         max-height: 70px;
     }
 }

@@ -143,7 +143,7 @@
     @containerTitle((if(collectionIndex > 0) Seq("ct--not-top") else Nil) ++ (if (collection.branding.isDefined) Seq("ct-branded") else Nil)) {
 
         @if(collection.href.isDefined) {
-            <a class="fc-link" href="@collection.href">@collection.displayName</a>
+            <a class="ct-link" href="@collection.href">@collection.displayName</a>
         } else {
             @collection.displayName
         }

@@ -1,27 +1,27 @@
 @import com.gu.commercial.branding.Branding
-@import layout.EmailContentContainer
 
 @(branding: Branding, href: Option[String])
 
-@labelAndLogo(branding: Branding) = {
-    <table class="ct__inner branded-banner">
-        <tr class="bb__inner">
-            <td class="left-col">
-            </td>
-            <td class="bb__label">
+@* Verbose to avoid wrapping block level elements with anchor tags, since this breaks things on some email clients *@
+<table class="ct__inner branded-banner">
+    <tr class="bb__inner">
+        <td class="left-col">
+        </td>
+        <td class="bb__label">
+            @if(href.isDefined) {
+                <a class="bb-link" href="@href">@branding.logo.label</a>
+            } else {
                 @branding.logo.label
-            </td>
-            <td class="bb__logo">
+            }
+        </td>
+        <td class="bb__logo">
+            @if(href.isDefined) {
+            <a class="bb-link" href="@href">
                 <img border="0" src="@branding.logo.src">
-            </td>
-        </tr>
-    </table>
-}
-
-@if(href.isDefined) {
-    <a class="fc-link" href="@href">
-        @labelAndLogo(branding)
-    </a>
-} else {
-    @labelAndLogo(branding)
-}
+            </a>
+            } else {
+            <img border="0" src="@branding.logo.src">
+            }
+        </td>
+    </tr>
+</table>
