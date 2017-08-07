@@ -2,6 +2,10 @@
 # yarn lockfile v1
 
 
+"@guardian/guui@^0.1.0-alpha.7":
+  version "0.1.0-alpha.7"
+  resolved "https://registry.yarnpkg.com/@guardian/guui/-/guui-0.1.0-alpha.7.tgz#2e919087d5e3648aa67ea819563ff52a9807f3f4"
+
 abab@^1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/abab/-/abab-1.0.3.tgz#b81de5f7274ec4e756d797cd834f303642724e5d"

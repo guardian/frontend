@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@guardian/guui": "^0.1.0-alpha.7",
     "bean": "~1.0.14",
     "bonzo": "~2.0.0",
     "circular-dependency-plugin": "3.0.0",
