@@ -201,7 +201,11 @@ const makeABTestVariant = (
             campaignCode
         ),
         membershipURL = addTrackingCodesToUrl(membershipBaseURL, campaignCode),
-        supportURL = addTrackingCodesToUrl(supportBaseURL, campaignCode),
+        supportCustomURL = null,
+        supportURL = addTrackingCodesToUrl(
+            supportCustomURL || supportBaseURL,
+            campaignCode
+        ),
         template = controlTemplate,
         buttonTemplate = defaultButtonTemplate,
         testimonialBlock = getTestimonialBlock(

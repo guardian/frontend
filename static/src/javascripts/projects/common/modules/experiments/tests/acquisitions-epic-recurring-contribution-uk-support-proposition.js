@@ -3,6 +3,11 @@ import { makeABTest } from 'common/modules/commercial/contributions-utilities';
 import template from 'lodash/utilities/template';
 import singleButtonTemplate from 'raw-loader!common/views/acquisitions-epic-single-button.html';
 
+const buildButtonTemplate = ({ supportUrl }) =>
+    template(singleButtonTemplate, {
+        url: supportUrl,
+    });
+
 export const acquisitionsEpicRecurringContributionUkSupportProposition = makeABTest(
     {
         id: 'AcquisitionsEpicRecurringContributionUkSupportProposition',
@@ -19,8 +24,8 @@ export const acquisitionsEpicRecurringContributionUkSupportProposition = makeABT
             'We see an uplift in annualised value when recurring contributions are available.',
 
         audienceCriteria: 'UK all devices',
-        audience: 0.58, // TODO: Needs definition
-        audienceOffset: 0.2, // TODO: Needs definition
+        audience: 1,
+        audienceOffset: 0,
         locations: ['GB'],
 
         variants: [
@@ -30,12 +35,9 @@ export const acquisitionsEpicRecurringContributionUkSupportProposition = makeABT
             },
             {
                 id: 'variant',
-
-                buttonTemplate({ supportUrl }) {
-                    template(singleButtonTemplate, {
-                        url: supportUrl,
-                    });
-                },
+                buttonTemplate: buildButtonTemplate,
+                supportCustomURL:
+                    'https://support.theguardian.com/uk/contribute',
                 useTailoredCopyForRegulars: true,
             },
         ],
