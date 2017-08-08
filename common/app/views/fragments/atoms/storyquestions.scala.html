@@ -9,52 +9,63 @@
 }
 
 @if(!isAmp && !isClosed) {
-    <div class="js-view-tracking-component submeta user__question" data-atom-id="@storyquestions.id">
+    <div class="js-view-tracking-component submeta user__question">
+        <span class="js-storyquestion-atom-id is-hidden" id="@storyquestions.id"></span>
 
         @defining("test/test" == storyquestions.data.relatedStoryId && storyquestions.atom.labels.exists(_.length == 4)) { isEmailSubmissionReady =>
             <span class="is-hidden" id="js-storyquestion-is-email-submission-ready" data-is-email-submission-ready="@isEmailSubmissionReady"></span>
         }
 
-        <h2 class="user__question-title">
-            Ask us a question
-            <span class="user__question-title--secondary">We will answer the most popular question later today.</span>
-        </h2>
-
+        <h2 class="user__question-title">Need something explained?<span class="user__question-title--secondary">Let us know which of these questions we can answer for you.</span></h2>
         @for(questions <- storyquestions.data.editorialQuestions) {
             @for(qs <- questions) {
-                <div class="user__question-section">
+                <p>
+                    <div class="user__question-section"></div>
                     @for(question <- qs.questions) {
                         <div class="user__question-container">
-                            <label><input type="checkbox" name="checkbox" value="@question.questionId">@question.questionText</label>
+                            <div class="user__questions-text--wrapper js-ask-question-link">
+                                <div class="user__question-text">
+                                    <meta class="notranslate" name="js-notranslate-@question.questionId" content="@question.questionText">
+                                    <span class="user__questions-text--inner">
+                                    @question.questionText
+                                    </span>
+                                </div>
+                                <button id="btn-ask-question-@question.questionId" class="user__question-upvote" data-question-id="@question.questionId">
+                                    Ask
+                                </button>
+                                <span id="js-final-thankyou-message-@question.questionId" class="user__question-response submeta__label is-hidden">
+                                    Thanks, we&rsquo;ll send you the answer soon.
+                                </span>
+                                <span id="js-thankyou-message-no-submission-@question.questionId" class="user__question-response submeta__label is-hidden">
+                                    Thanks, we&rsquo;ve registered your vote.
+                                </span>
+                            </div>
+                            <div class="storyquestion-submission-container js-storyquestion-submission-container">
+                                <span id="js-question-thankyou-@question.questionId" class="user__question-response is-hidden">
+                                    Thank you, we&rsquo;ve registered your vote. Sign up and we will email you an answer.
+                                </span>
+                                @*********************
+                                * This workaround enables us to run a test for demand of receiving the answers commissioned to questions by email.
+
+                                * If the story questions atom belongs to the test/test tag and has a label 4 characters long (an email list id) then
+                                * show the form allowing a user to submit their email address and receive an answer.
+                                *********************@
+
+                                @if("test/test" == storyquestions.data.relatedStoryId) {
+                                    @storyquestions.atom.labels.find(_.length == 4).map { listId =>
+                                        <form id="js-storyquestion-email-signup-form-@question.questionId" class="is-hidden storyquestion-email-signup-form js-storyquestion-email-signup-form form" data-question-id="@question.questionId">
+                                            <div class="form-field js-storyquestion-email-signup-input-container">
+                                                <input class="text-input js-storyquestion-email-signup-input" type="email" name="email" placeholder="Email address" required />
+                                            </div>
+                                            <input class="" type="hidden" name="listId" value="@listId" />
+                                            <button type="submit" class="js-storyquestion-email-signup-button button button--primary button--with-input">@fragments.inlineSvg("envelope", "icon", Seq("submit-input__icon"))Sign up</button>
+                                        </form>
+                                    }
+                                }
+                            </div>
                         </div>
                     }
-                </div>
-
-                <button type="submit" class="js-storyquestion-vote-button storyquestion-vote-button button button--primary">Vote</button>
-
-                @storyquestions.atom.labels.find(_.length == 4).map { listId =>
-
-                    <div class="is-hidden js-storyquestion-email-question storyquestion-email-question">We're working on the answer. Would you like to receive an email when we answer the most popular question?</div>
-
-                    <label for="#email-input-@listId" class="is-hidden js-storyquestion-email-enter storyquestion-email-enter">Enter your email</label>
-
-                    <div class="is-hidden js-storyquestion-email-done storyquestion-email-done">We will email you the answer to the most popular question as soon as it's ready.</div>
-
-                    <a href="#email-input-@listId" class="is-hidden js-storyquestion-email-question-button storyquestion-email-question-button button button--primary">Email me</a>
-
-                    <form action="#" class="is-hidden storyquestion-email-signup-form js-storyquestion-email-signup-form form">
-                        <div class="form-field js-storyquestion-email-signup-input-container">
-                            <input id="email-input-@listId" aria-describedby="no-spam-@qs.questionSetId" class="text-input js-storyquestion-email-signup-input" type="email" name="email" placeholder="Email address" required />
-                        </div>
-                        <input class="" type="hidden" name="listId" value="@listId" />
-                        <button type="submit" class="js-storyquestion-email-signup-button button button--primary button--with-input">
-                            @fragments.inlineSvg("envelope", "icon", Seq("submit-input__icon"))
-                            Sign up
-                        </button>
-                    </form>
-                }
-
-                <div id="no-spam-@qs.questionSetId" class="is-hidden js-storyquestion-email-nospam">No spam, just one email</div>
+                </p>
             }
     </div>
 }
