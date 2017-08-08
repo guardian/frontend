@@ -12,16 +12,12 @@ import { acquisitionsEpicLiveblog } from 'common/modules/experiments/tests/acqui
 import acquisitionsEpicAlwaysAskIfTagged from 'common/modules/experiments/tests/acquisitions-epic-always-ask-if-tagged';
 import acquisitionsEpicAlwaysAskElection from 'common/modules/experiments/tests/acquisitions-epic-always-ask-election';
 import acquisitionsEpicThankYou from 'common/modules/experiments/tests/acquisitions-epic-thank-you';
-import { acquisitionsEpicRebaselineSupportProposition } from 'common/modules/experiments/tests/acquisitions-epic-rebaseline-support-proposition';
-import { acquisitionsEpicRebaselineSupportPropositionTwo } from 'common/modules/experiments/tests/acquisitions-epic-rebaseline-support-proposition-two';
 
 /**
  * acquisition tests in priority order (highest to lowest)
  */
 const tests = [
     alwaysAsk,
-    acquisitionsEpicRebaselineSupportProposition,
-    acquisitionsEpicRebaselineSupportPropositionTwo,
     askFourEarning,
     acquisitionsEpicAlwaysAskIfTagged,
     acquisitionsEpicLiveblog,

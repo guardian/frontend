@@ -343,7 +343,7 @@ Loader.prototype.commentPosted = function () {
 };
 
 Loader.prototype.renderCommentBox = function(elem) {
-    return new CommentBox.CommentBox({
+    return new CommentBox({
         discussionId: this.getDiscussionId(),
         premod: this.user.privateFields.isPremoderated,
         newCommenter: !this.user.privateFields.hasCommented,

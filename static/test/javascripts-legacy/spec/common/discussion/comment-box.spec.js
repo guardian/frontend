@@ -76,7 +76,7 @@ define([
         beforeEach(function () {
             server = sinon.fakeServer.create();
             fixtures.render(fixture);
-            commentBox = new CommentBox.CommentBox({
+            commentBox = new CommentBox({
                 discussionId: discussionId,
                 maxLength: maxCommentLength,
                 switches: {}

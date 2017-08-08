@@ -23,7 +23,6 @@
     "projects/common/modules/experiments/tests/acquisitions-epic-election-interactive-end.js",
     "projects/common/modules/experiments/tests/acquisitions-epic-election-interactive-slice.js",
     "projects/common/modules/experiments/tests/acquisitions-epic-thank-you.js",
-    "projects/common/modules/experiments/tests/paid-content-vs-outbrain.js",
     "projects/common/modules/ui/clickstream.js",
     "projects/common/modules/discussion/user-avatars.js",
     "projects/common/modules/discussion/whole-discussion.js"
@@ -46,9 +45,12 @@
     "projects/common/modules/video/metadata.js"
   ],
   "GHaberis": [
-    "projects/common/modules/discussion/api.js"
+    "projects/common/modules/discussion/activity-stream.js",
+    "projects/common/modules/discussion/api.js",
+    "projects/common/modules/discussion/comment-box.js"
   ],
   "Gustav Pursche": [
+    "projects/common/modules/discussion/comment-box.js",
     "projects/common/modules/onward/related.js",
     "projects/common/modules/onward/tech-feedback.js",
     "projects/common/modules/video/onward-container.js"

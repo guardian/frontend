@@ -3,7 +3,7 @@ import { isExpired } from 'common/modules/experiments/test-can-run-checks';
 import { removeParticipation } from 'common/modules/experiments/utils';
 import { getTest as getAcquisitionTest } from 'common/modules/experiments/acquisition-test-selector';
 import MembershipEngagementBannerTests from 'common/modules/experiments/tests/membership-engagement-banner-tests';
-import PaidContentVsOutbrain2 from 'common/modules/experiments/tests/paid-content-vs-outbrain';
+import { paidContentVsOutbrain2 } from 'common/modules/experiments/tests/paid-content-vs-outbrain';
 import { carrotSlot } from 'common/modules/experiments/tests/carrot-slot';
 import { tailorSurvey } from 'common/modules/experiments/tests/tailor-survey';
 
@@ -11,7 +11,7 @@ import AcquisitionsEpicElectionInteractiveEnd from 'common/modules/experiments/t
 import AcquisitionsEpicElectionInteractiveSlice from 'common/modules/experiments/tests/acquisitions-epic-election-interactive-slice';
 
 export const TESTS: Array<ABTest> = [
-    PaidContentVsOutbrain2,
+    paidContentVsOutbrain2,
     getAcquisitionTest(),
     tailorSurvey,
     carrotSlot,
