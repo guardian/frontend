@@ -101,35 +101,26 @@ define([
                 bean.one(el, 'submit', submitSignUpForm);
             });
 
-            if (window.location.hostname.includes("api.nextgen.guardianapps.co.uk")) {
-                //User details not available
-                $('.js-storyquestion-vote-button').each(function (el) {
-                    bean.on(el, 'click', function (event) {
-                        vote(event, false);
-                    });
-                });
-            } else {
-                Id.getUserFromApi(function (userFromId) {
-                    var signedIn = (userFromId && userFromId.primaryEmailAddress) != null;
+            Id.getUserFromApi(function (userFromId) {
+                var signedIn = (userFromId && userFromId.primaryEmailAddress) != null;
 
-                    if (signedIn) {
-                        fastdom.write(function () {
-                            $('.js-storyquestion-email-signup-form').each(function (form) {
-                                $('.button--with-input', form).removeClass('button--with-input');
-                                $('.js-storyquestion-email-signup-input-container', form).addClass('is-hidden');
-                                $('.js-storyquestion-email-signup-input', form).val(userFromId.primaryEmailAddress);
-                                $('.inline-envelope', form).addClass('storyquestion-email-signup-button-envelope');
-                            });
-                        });
-                    }
-
-                    $('.js-storyquestion-vote-button').each(function (el) {
-                        bean.on(el, 'click', function (event) {
-                            vote(event, signedIn);
+                if (signedIn) {
+                    fastdom.write(function () {
+                        $('.js-storyquestion-email-signup-form').each(function(form) {
+                            $('.button--with-input', form).removeClass('button--with-input');
+                            $('.js-storyquestion-email-signup-input-container', form).addClass('is-hidden');
+                            $('.js-storyquestion-email-signup-input', form).val(userFromId.primaryEmailAddress);
+                            $('.inline-envelope', form).addClass('storyquestion-email-signup-button-envelope');
                         });
                     });
+                }
+
+                $('.js-storyquestion-vote-button').each(function(el) {
+                    bean.on(el, 'click', function(event) {
+                        vote(event, signedIn);
+                    });
                 });
-            }
+            });
 
 
             var storyQuestionsComponent = document.querySelector('.js-view-tracking-component');
