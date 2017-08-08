@@ -22,8 +22,12 @@ export const acquisitionsEpicAlwaysAskElection = makeABTest({
     variants: [
         {
             id: 'control',
-            isUnlimited: true,
-            useTailoredCopyForRegulars: true,
+            products: ['ONE_OFF_CONTRIBUTION', 'MEMBERSHIP_SUPPORTER'],
+
+            options: {
+                isUnlimited: true,
+                useTailoredCopyForRegulars: true,
+            },
         },
     ],
 });

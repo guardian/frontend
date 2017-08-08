@@ -220,12 +220,20 @@ const makeABTestVariant = (
         test = noop,
         impression = submitABTestImpression =>
             mediator.once(parentTest.insertEvent, () => {
-                submitEpicInsertEvent(products, campaignCode);
+                submitEpicInsertEvent(
+                    products,
+                    campaignCode,
+                    parentTest.componentType
+                );
                 submitABTestImpression();
             }),
         success = submitABTestComplete =>
             mediator.once(parentTest.viewEvent, () => {
-                submitEpicViewEvent(products, campaignCode);
+                submitEpicViewEvent(
+                    products,
+                    campaignCode,
+                    parentTest.componentType
+                );
                 submitABTestComplete();
             }),
     } = options;
@@ -364,6 +372,7 @@ const makeABTest = ({
 
     // optional params
     epic = true,
+    componentType = 'ACQUISITIONS_EPIC',
     // locations is a filter where empty is taken to mean 'all'
     locations = [],
     locationCheck = () => true,
@@ -410,6 +419,7 @@ const makeABTest = ({
         dataLinkNames,
         isEngagementBannerTest,
         epic,
+        componentType,
         campaignId,
         campaignPrefix,
         campaignSuffix,

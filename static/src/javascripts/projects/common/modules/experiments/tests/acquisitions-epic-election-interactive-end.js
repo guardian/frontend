@@ -41,24 +41,29 @@ export const acquisitionsEpicElectionInteractiveEnd = makeABTest({
     variants: [
         {
             id: 'control',
-            isUnlimited: true,
+            products: ['ONE_OFF_CONTRIBUTION', 'MEMBERSHIP_SUPPORTER'],
 
-            insertAtSelector: '.content-footer',
-            successOnView: true,
+            options: {
+                isUnlimited: true,
 
-            template: function makeControlTemplate(variant) {
-                return template(epicControlTemplate, {
-                    copy: control,
-                    componentName: variant.options.componentName,
-                    buttonTemplate: defaultButtonTemplate({
-                        membershipUrl: variant.options.membershipURL,
-                        contributeUrl: variant.options.contributeURL,
-                        supportUrl: variant.options.supportURL,
-                    }),
-                    testimonialBlock: variant.options.testimonialBlock,
-                    epicClass: 'contributions__epic--interactive gs-container',
-                    wrapperClass: 'contributions__epic-interactive-wrapper',
-                });
+                insertAtSelector: '.content-footer',
+                successOnView: true,
+
+                template: function makeControlTemplate(variant) {
+                    return template(epicControlTemplate, {
+                        copy: control,
+                        componentName: variant.options.componentName,
+                        buttonTemplate: defaultButtonTemplate({
+                            membershipUrl: variant.options.membershipURL,
+                            contributeUrl: variant.options.contributeURL,
+                            supportUrl: variant.options.supportURL,
+                        }),
+                        testimonialBlock: variant.options.testimonialBlock,
+                        epicClass:
+                            'contributions__epic--interactive gs-container',
+                        wrapperClass: 'contributions__epic-interactive-wrapper',
+                    });
+                },
             },
         },
     ],

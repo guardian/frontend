@@ -24,6 +24,7 @@ const isTargetPage = () =>
 export const acquisitionsEpicThankYou = makeABTest({
     id: 'AcquisitionsEpicThankYou',
     campaignId: 'epic_thank_you',
+    componentType: 'THANK_YOU_EPIC',
 
     start: '2017-06-01',
     expiry: '2017-09-05',
@@ -48,21 +49,24 @@ export const acquisitionsEpicThankYou = makeABTest({
     variants: [
         {
             id: 'control',
+            products: ['ONE_OFF_CONTRIBUTION', 'MEMBERSHIP_SUPPORTER'],
 
-            maxViews: {
-                days: 365, // Arbitrarily high number - reader should only see the thank-you for one 'cycle'.
-                count: 1,
-                minDaysBetweenViews: 0,
-            },
+            options: {
+                maxViews: {
+                    days: 365, // Arbitrarily high number - reader should only see the thank-you for one 'cycle'.
+                    count: 1,
+                    minDaysBetweenViews: 0,
+                },
 
-            template(variant) {
-                return template(acquisitionsEpicThankYouTemplate, {
-                    componentName: variant.options.componentName,
-                    membershipUrl: addTrackingCodesToUrl(
-                        'https://www.theguardian.com/membership',
-                        variant.options.campaignCode
-                    ),
-                });
+                template(variant) {
+                    return template(acquisitionsEpicThankYouTemplate, {
+                        componentName: variant.options.componentName,
+                        membershipUrl: addTrackingCodesToUrl(
+                            'https://www.theguardian.com/membership',
+                            variant.options.campaignCode
+                        ),
+                    });
+                },
             },
         },
     ],
