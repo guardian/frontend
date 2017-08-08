@@ -1,5 +1,6 @@
 // @flow
-import { local as localStorage } from 'lib/storage';
+import { local as localStorage, session as sessionStorage } from 'lib/storage';
+import config from 'lib/config';
 import fastdom from 'lib/fastdom-promise';
 import template from 'lodash/utilities/template';
 import ophan from 'ophan/ng';
@@ -17,8 +18,8 @@ const survey: Object => string = template(surveyT);
 const allQuestions: string[] = [
     'How are you?',
     'Any plans today?',
-    "What colour is St Jame's cathedral?",
-    'How many is are there is Srivini?',
+    "What colour is St James's cathedral?",
+    'How many as are there in Srinivasa Ramanujan?',
 ];
 
 class BusinessError extends Error {}
@@ -137,6 +138,13 @@ const recordAnswer = ({ qs, as, q, a, why }) => {
 };
 
 const init = (): void => {
+    // Should I stay or should I go?
+    if (config.page.isProd && sessionStorage.get('gu.jtbd.seen') === true) {
+        return;
+    }
+
+    sessionStorage.set('gu.jtbd.seen', true);
+
     // - readers are assigned a set of 3 random questions out of a pool of 15
     // lift them into the promise applicative functor; we will use Promise as
     // a coproduct and use resolve as the happy path, reject for business logic
