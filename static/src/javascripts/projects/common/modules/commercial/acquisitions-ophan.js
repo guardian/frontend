@@ -5,7 +5,6 @@ const submitComponentEvent = (componentEvent: OphanComponentEvent) => {
     ophan.record({ componentEvent });
 };
 
-// Hmmm, what about where the campaign code is different for each button?
 export const submitEpicInsertEvent = (
     products: OphanProduct[],
     campaignCode: string
