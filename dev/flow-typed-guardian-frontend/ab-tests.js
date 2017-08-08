@@ -32,6 +32,7 @@ declare type ABTest = {
 
 declare type ContributionsABTest = ABTest & {
     epic: boolean,
+    componentType: OphanComponentType,
     campaignId: string,
     campaignPrefix: string,
     campaignSuffix: string,
@@ -67,6 +68,7 @@ declare type InitContributionsABTest = {
     variants: InitContributionsABTestVariant[],
 
     epic?: boolean,
+    componentType?: OphanComponentType,
     // locations is a filter where empty is taken to mean 'all'
     locations?: string[],
     locationCheck?: () => boolean,

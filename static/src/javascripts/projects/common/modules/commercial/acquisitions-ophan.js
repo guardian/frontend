@@ -7,11 +7,12 @@ const submitComponentEvent = (componentEvent: OphanComponentEvent) => {
 
 export const submitEpicInsertEvent = (
     products: OphanProduct[],
-    campaignCode: string
+    campaignCode: string,
+    type: OphanComponentType = 'ACQUISITIONS_EPIC'
 ) => {
     submitComponentEvent({
         component: {
-            type: 'ACQUISITIONS_EPIC',
+            type,
             labels: [],
             products,
             campaignCode,
@@ -22,11 +23,12 @@ export const submitEpicInsertEvent = (
 
 export const submitEpicViewEvent = (
     products: OphanProduct[],
-    campaignCode: string
+    campaignCode: string,
+    type: OphanComponentType = 'ACQUISITIONS_EPIC'
 ) => {
     submitComponentEvent({
         component: {
-            type: 'ACQUISITIONS_EPIC',
+            type,
             labels: [],
             products,
             campaignCode,
