@@ -6,7 +6,10 @@ import template from 'lodash/utilities/template';
 import ophan from 'ophan/ng';
 import surveyT from 'raw-loader!./views/jtbd.html';
 
+// Flow doesn't recognize this standard DOM type
+// https://developer.mozilla.org/en/docs/Web/API/RadioNodeList
 type RadioNodeList = { value: string };
+
 type Answer = number;
 type Question = number;
 
@@ -22,16 +25,18 @@ const allQuestions: string[] = [
     'How many as are there in Srinivasa Ramanujan?',
 ];
 
+const askWhy: boolean = true;
+
 class BusinessError extends Error {}
 
 const range = (from: number, to: number): number[] => {
-    const res: number[] = [];
-    let i = from;
-    while (i < to) {
-        res[i - from] = i;
-        i += 1;
-    }
-    return res;
+    const rangerec = (n: number, acc: number[]): number[] => {
+        if (n >= to) {
+            return acc;
+        }
+        return rangerec(n + 1, acc.concat(n));
+    };
+    return rangerec(from, []);
 };
 
 const draw = (): number[] => {
@@ -66,6 +71,7 @@ const getAnswers = (qs: Question[]) => ({
 });
 
 const selectQuestion = ({ qs, as }: { qs: Question[], as: Answer[] }) => {
+    // open questions
     const oqs = as.reduce((acc, a, i) => (a === -1 ? acc.concat(i) : acc), []);
 
     if (!oqs.length) {
@@ -91,6 +97,7 @@ const ask = ({ qs, as, q }) => {
                 'beforeend',
                 survey({
                     question: allQuestions[qs[q]],
+                    askWhy,
                 })
             );
             return hook;
@@ -102,7 +109,10 @@ const respond = ({ as, qs, q }): Promise<Object> => {
     const form: ?HTMLFormElement = (document.getElementById(
         'js-jtbd-survey__form'
     ): any);
-    if (!form) {
+    const feedback: ?HTMLFormElement = (document.getElementById(
+        'js-jtbd-survey__feedback'
+    ): any);
+    if (!form || !feedback) {
         throw new Error('Hmm, the JTBD survey should contain ... a survey');
     }
 
@@ -113,7 +123,7 @@ const respond = ({ as, qs, q }): Promise<Object> => {
             const why: ?HTMLTextAreaElement = (form.elements.namedItem(
                 'why'
             ): any);
-            if (!answer) return;
+            if (!answer || !answer.value) return;
             form.removeEventListener('submit', onSubmit);
             resolve({
                 qs,
@@ -123,12 +133,18 @@ const respond = ({ as, qs, q }): Promise<Object> => {
                 why: (why && why.value) || null,
             });
         });
-    });
+    }).then(result =>
+        fastdom.write(() => {
+            form.classList.add('is-hidden');
+            feedback.classList.remove('is-hidden');
+            return result;
+        })
+    );
 };
 
 const recordAnswer = ({ qs, as, q, a, why }) => {
     as[q] = a;
-    localStorage.set('gu.jtbd.answers', as);
+    localStorage.set('gu.jtbd.answers', as, { expires: endOfTest });
     ophan.record({
         component: 'jtbd-survey',
         qs,
