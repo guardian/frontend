@@ -20,67 +20,35 @@
 }
 
 .user__question-title--secondary {
-    color: $neutral-1;
     display: block;
-    font-size: 18px;
-    font-weight: 400;
+    font-size: 1.125rem;
+    line-height: 1.375rem;
+    margin-bottom: $gs-baseline/2;
+    color: $neutral-2;
+    font-weight: normal;
 }
 
-.user__questions-text--wrapper {
-    position: relative;
-    overflow: hidden;
-    background-color: $neutral-8;
-    margin-bottom: 0;
-    padding-top: $gs-baseline / 2;
-    padding-bottom: $gs-baseline;
-    padding-left: 8px;
-
-    &.is-clicked {
-        background-color: $news-support-5;
-        padding-bottom: 0;
-    }
-
-    &.is-clicked + .storyquestion-submission-container {
-        background-color: $news-support-5;
-    }
-
-    &:hover {
-        background-color: $news-support-5;
-
-        .user__question-upvote {
-            background-color: $news-main-1;
-            color: #ffffff;
-        }
-        cursor: pointer;
-    }
+.storyquestion-email-question, .storyquestion-email-done, .storyquestion-email-enter {
+    display: block;
+    font-weight: bold;
+    padding-bottom: 1rem;
+    padding-top: 1rem;
 }
 
 .user__question-section {
-    border-top: 1px dotted $neutral-6;
     margin-top: $gs-baseline * 2;
+    font-size: 1.25rem;
+    font-weight: bold;
 
     h3 {
         @include fs-textSans(2);
         color: $neutral-2;
         font-weight: 200;
     }
-}
 
-.user__question-text {
-    @include fs-headline(2);
-    font-weight: 900;
-    display: block;
-    //used to avoid fixed width across multiple break points.
-    max-width: 77%;
-    color: $news-main-1;
-    position: relative;
-    margin-bottom: $gs-baseline;
-
-    @include mq($from: tablet) {
-        @include fs-headline(3);
-        line-height: $gs-baseline * 2;
-        max-width: 80%;
-        font-weight: 900;
+    input {
+        margin-left: 0;
+        margin-right: $gs-baseline;
     }
 }
 
@@ -88,48 +56,17 @@
     margin-bottom: 12px;
 }
 
-.user__question-response {
-    @include fs-textSans(3);
-    clear: both;
-    margin-top: $gs-baseline;
-    margin-bottom: $gs-baseline;
-    font-size: 14px;
-    line-height: 18px;
-    width: 90%;
-    display: block;
-    color: $neutral-1;
-
-    @include mq($from: tablet) {
-        clear: none;
-        margin-top: 0;
-        font-size: 16px;
-        line-height: 20px;
-    }
+.storyquestion-vote-button, .storyquestion-email-question-button {
+    font-size: 1.125rem;
+    padding: 0 1rem;
+    height: 2.25rem;
 }
 
-.user__question-upvote {
-    @include fs-textSans(3);
-    right: $gs-gutter - 2;
-    bottom: $gs-gutter;
-    position: absolute;
-    color: $news-main-1;
-    font-weight: 900;
-    border: 1px solid $news-main-1;
-    padding-top: $gs-baseline / 3;
-    float: right;
-    outline: 0;
-    padding-left: $gs-baseline;
-    padding-right: $gs-baseline;
-    border-radius: $gs-gutter * 2;
-    background-color: transparent;
-
-    &:hover {
-        text-decoration: none;
-    }
-}
-.storyquestion-submission-container {
-    overflow: hidden;
-    padding-left: 8px;
+.storyquestion-email-question-button {
+    color: #ffffff;
+    text-decoration: inherit;
+    display: inline-flex;
+    align-items: center;
 }
 
 .storyquestion-email-signup-form.form {
@@ -160,4 +97,10 @@
     .storyquestion-email-signup-button-envelope {
         display: inline;
     }
+}
+
+.js-storyquestion-email-nospam {
+    font-size: .875rem;
+    font-weight: bold;
+    padding-top: .5rem;
 }
