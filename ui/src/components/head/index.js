@@ -17,6 +17,4 @@ export default (props: any, css: string) =>
         <meta name="viewport" content="width=device-width,initial-scale=1">
         <style>${resetCSS}</style>
         ${css}
-        <script>window.guardian = ${JSON.stringify(props)};</script>
-        <script src="/assets/javascripts/ui.bundle.browser.js" async defer></script>
     </head>`;

@@ -46,6 +46,42 @@ declare type ContributionsABTest = ABTest & {
     viewEvent: string,
 };
 
+declare type InitContributionsABTestVariant = {
+    id: string,
+    products: OphanProduct[],
+    options: Object
+};
+
+declare type InitContributionsABTest = {
+    id: string,
+    start: string,
+    expiry: string,
+    author: string,
+    description: string,
+    audience: number,
+    audienceOffset: number,
+    successMeasure: string,
+    audienceCriteria: string,
+    idealOutcome: string,
+    campaignId: string,
+    variants: InitContributionsABTestVariant[],
+
+    epic?: boolean,
+    // locations is a filter where empty is taken to mean 'all'
+    locations?: string[],
+    locationCheck?: () => boolean,
+    dataLinkNames?: string,
+    campaignPrefix?: string,
+    campaignSuffix?: string,
+    isEngagementBannerTest?: boolean,
+    useLocalViewLog?: boolean,
+    overrideCanRun?: boolean,
+    useTargetingTool?: boolean,
+    showToContributorsAndSupporters?: boolean,
+    canRun?: () => boolean,
+    pageCheck?: (page: Object) => boolean,
+}
+
 declare type Interaction = {
     component: string,
     value: string,
@@ -71,20 +107,4 @@ declare type Participations = {
     [testId: string]: {
         variant: string,
     },
-};
-
-/**
- * an individual A/B test, structured for Ophan
- */
-declare type OphanABEvent = {
-    variantName: string,
-    complete: string | boolean,
-    campaignCodes?: Array<string>,
-};
-
-/**
- * the actual payload we send to Ophan: an object of OphanABEvents with test IDs as keys
- */
-declare type OphanABPayload = {
-    [testId: string]: OphanABEvent,
 };

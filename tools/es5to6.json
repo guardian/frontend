@@ -41,9 +41,12 @@
     "projects/common/modules/video/metadata.js"
   ],
   "GHaberis": [
-    "projects/common/modules/discussion/api.js"
+    "projects/common/modules/discussion/activity-stream.js",
+    "projects/common/modules/discussion/api.js",
+    "projects/common/modules/discussion/comment-box.js"
   ],
   "Gustav Pursche": [
+    "projects/common/modules/discussion/comment-box.js",
     "projects/common/modules/onward/related.js",
     "projects/common/modules/onward/tech-feedback.js",
     "projects/common/modules/video/onward-container.js"
@@ -111,7 +114,6 @@
     "projects/common/modules/navigation/search.js"
   ],
   "Joseph Smith": [
-    "projects/common/modules/experiments/tests/contributions-epic-ask-four-earning.js",
     "projects/common/modules/experiments/tests/membership-engagement-banner-tests.js",
     "projects/common/modules/commercial/acquisitions-view-log.js",
     "projects/common/modules/experiments/ab-test-clash.js",

@@ -154,17 +154,20 @@ trait FapiFrontPress extends Logging with ExecutionContexts {
   def generateCollectionJsonFromFapiClient(collectionId: String): Response[PressedCollection] =
     for {
       collection <- FAPI.getCollection(collectionId)
-      curatedCollection <- getCurated(collection)
+      curated <- getCurated(collection)
       backfill <- getBackfill(collection)
       treats <- getTreats(collection)
     } yield {
+      val trimmedCurated = curated.take(Configuration.facia.collectionCap)
+      val trimmedBackfill = backfill.take(Configuration.facia.collectionCap - trimmedCurated.length)
       PressedCollection.fromCollectionWithCuratedAndBackfill(
         collection,
-        curatedCollection,
-        backfill,
+        trimmedCurated,
+        trimmedBackfill,
         treats
       )
     }
+
 
   private def getCurated(collection: Collection): Response[List[PressedContent]] = {
     // Map initial PressedContent to enhanced content which contains pre-fetched embed content.

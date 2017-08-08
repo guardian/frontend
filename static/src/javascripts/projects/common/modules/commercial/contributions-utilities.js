@@ -8,6 +8,10 @@ import type { AcquisitionsEpicTemplateCopy } from 'common/modules/commercial/acq
 import { control as acquisitionsTestimonialParametersControl } from 'common/modules/commercial/acquisitions-epic-testimonial-parameters';
 import type { AcquisitionsEpicTestimonialTemplateParameters } from 'common/modules/commercial/acquisitions-epic-testimonial-parameters';
 import { logView } from 'common/modules/commercial/acquisitions-view-log';
+import {
+    submitEpicInsertEvent,
+    submitEpicViewEvent,
+} from 'common/modules/commercial/acquisitions-ophan';
 import { isRegular } from 'common/modules/tailor/tailor';
 import $ from 'lib/$';
 import config from 'lib/config';
@@ -172,6 +176,8 @@ const registerIframeListener = (iframeId: string) => {
 };
 
 const makeABTestVariant = (
+    id: string,
+    products: OphanProduct[],
     options: Object,
     parentTest: ContributionsABTest
 ): Variant => {
@@ -181,15 +187,13 @@ const makeABTestVariant = (
     const campaignCode = getCampaignCode(
         parentTest.campaignPrefix,
         parentTest.campaignId,
-        options.id,
+        id,
         parentTest.campaignSuffix
     );
     const iframeId = `${parentTest.campaignId}_iframe`;
 
+    // defaults for options
     const {
-        id,
-
-        // optional params
         maxViews = defaultMaxViews,
         isUnlimited = false,
         contributeURL = addTrackingCodesToUrl(
@@ -214,10 +218,16 @@ const makeABTestVariant = (
         insertMultiple = false,
         insertAfter = false,
         test = noop,
-        impression = submitImpression =>
-            mediator.once(parentTest.insertEvent, submitImpression),
-        success = submitSuccess =>
-            mediator.once(parentTest.viewEvent, submitSuccess),
+        impression = submitABTestImpression =>
+            mediator.once(parentTest.insertEvent, () => {
+                submitEpicInsertEvent(products, campaignCode);
+                submitABTestImpression();
+            }),
+        success = submitABTestComplete =>
+            mediator.once(parentTest.viewEvent, () => {
+                submitEpicViewEvent(products, campaignCode);
+                submitABTestComplete();
+            }),
     } = options;
 
     if (usesIframe) {
@@ -367,7 +377,7 @@ const makeABTest = ({
     showToContributorsAndSupporters = false,
     canRun = () => true,
     pageCheck = defaultPageCheck,
-}: Object): ContributionsABTest => {
+}: InitContributionsABTest): ContributionsABTest => {
     const test = {
         // this is true because we use the reader revenue flag rather than sensitive
         // to disable contributions asks for a particular piece of content
@@ -385,6 +395,8 @@ const makeABTest = ({
         insertEvent: makeEvent(id, 'insert'),
         viewEvent: makeEvent(id, 'view'),
 
+        variants: [],
+
         id,
         start,
         expiry,
@@ -396,7 +408,6 @@ const makeABTest = ({
         audienceCriteria,
         idealOutcome,
         dataLinkNames,
-        variants,
         isEngagementBannerTest,
         epic,
         campaignId,
@@ -411,8 +422,8 @@ const makeABTest = ({
         useTargetingTool,
     };
 
-    test.variants = test.variants.map(variant =>
-        makeABTestVariant(variant, test)
+    test.variants = variants.map(variant =>
+        makeABTestVariant(variant.id, variant.products, variant.options, test)
     );
 
     return test;

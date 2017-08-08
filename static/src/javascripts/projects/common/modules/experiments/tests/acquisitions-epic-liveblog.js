@@ -138,29 +138,33 @@ export const acquisitionsEpicLiveblog: ContributionsABTest = makeABTest({
     variants: [
         {
             id: 'control',
-            isUnlimited: true,
+            products: ['ONE_OFF_CONTRIBUTION', 'MEMBERSHIP_SUPPORTER'],
 
-            template(variant) {
-                return template(liveblogEpicTemplate, {
-                    copy: liveblogCopy(
-                        variant.options.membershipURL,
-                        variant.options.contributeURL
-                    ),
-                    componentName: variant.options.componentName,
-                });
-            },
+            options: {
+                isUnlimited: true,
 
-            test(renderFn, variant, test) {
-                const epicHtml = variant.options.template(variant);
-                addEpicToBlocks(epicHtml, test);
-                mediator.emit(test.insertEvent);
-
-                if (!isAutoUpdateHandlerBound) {
-                    mediator.on('modules:autoupdate:updates', () => {
-                        addEpicToBlocks(epicHtml, test);
+                template(variant) {
+                    return template(liveblogEpicTemplate, {
+                        copy: liveblogCopy(
+                            variant.options.membershipURL,
+                            variant.options.contributeURL
+                        ),
+                        componentName: variant.options.componentName,
                     });
-                    isAutoUpdateHandlerBound = true;
-                }
+                },
+
+                test(renderFn, variant, test) {
+                    const epicHtml = variant.options.template(variant);
+                    addEpicToBlocks(epicHtml, test);
+                    mediator.emit(test.insertEvent);
+
+                    if (!isAutoUpdateHandlerBound) {
+                        mediator.on('modules:autoupdate:updates', () => {
+                            addEpicToBlocks(epicHtml, test);
+                        });
+                        isAutoUpdateHandlerBound = true;
+                    }
+                },
             },
         },
     ],

@@ -454,14 +454,14 @@ trait FeatureSwitches {
     exposeClientSide = true
   )
 
-  // Owner: David Furey
+  // Owner: Richard Nguyen
   val guTodayEmailAds = Switch(
     SwitchGroup.Feature,
     "guardian-today-email-ads",
     "When ON, the Guardian Today US Email will contain Live Intent advertisements",
-    owners = Seq(Owner.withGithub("davidfurey")),
+    owners = Seq(Owner.withGithub("rich-nguyen")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 8, 8),
+    sellByDate = new LocalDate(2017, 8, 31),
     exposeClientSide = false
   )
 
