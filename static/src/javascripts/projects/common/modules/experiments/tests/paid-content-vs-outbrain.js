@@ -4,6 +4,7 @@ import { makeABTest } from 'common/modules/commercial/contributions-utilities';
 
 export const paidContentVsOutbrain2 = makeABTest({
     id: 'PaidContentVsOutbrain2',
+    campaignId: 'paid_content_vs_outbrain',
     start: '2017-04-24',
     expiry: '2018-01-08',
     author: 'Regis Kuckaertz / Lydia Shepherd',
@@ -26,11 +27,19 @@ export const paidContentVsOutbrain2 = makeABTest({
     variants: [
         {
             id: 'paid-content',
-            test() {},
+            products: [],
+
+            options: {
+                test() {},
+            },
         },
         {
             id: 'outbrain',
-            test() {},
+            products: [],
+
+            options: {
+                test() {},
+            },
         },
     ],
 });

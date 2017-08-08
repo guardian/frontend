@@ -38,23 +38,27 @@ define([
         variants: [
             {
                 id: 'control',
-                isUnlimited: true,
+                products: ['ONE_OFF_CONTRIBUTION', 'MEMBERSHIP_SUPPORTER'],
 
-                insertAtSelector: '#js-interactive-epic',
-                successOnView: true,
+                options: {
+                    isUnlimited: true,
 
-                test: function(render) {
-                    var article = document.getElementById('article');
-                    if (article) article.style['overflow-x'] = 'hidden';
-                    render();
-                },
+                    insertAtSelector: '#js-interactive-epic',
+                    successOnView: true,
 
-                template: function makeSliceTemplate(variant) {
-                    return template(epicSlice, {
-                        membershipUrl: variant.options.membershipURL,
-                        contributionUrl: variant.options.contributeURL,
-                        componentName: variant.options.componentName,
-                    });
+                    test: function (render) {
+                        var article = document.getElementById('article');
+                        if (article) article.style['overflow-x'] = 'hidden';
+                        render();
+                    },
+
+                    template: function makeSliceTemplate(variant) {
+                        return template(epicSlice, {
+                            membershipUrl: variant.options.membershipURL,
+                            contributionUrl: variant.options.contributeURL,
+                            componentName: variant.options.componentName,
+                        });
+                    }
                 }
             }
         ]
