@@ -187,7 +187,7 @@ const makeABTestVariant = (
     const campaignCode = getCampaignCode(
         parentTest.campaignPrefix,
         parentTest.campaignId,
-        options.id,
+        id,
         parentTest.campaignSuffix
     );
     const iframeId = `${parentTest.campaignId}_iframe`;
