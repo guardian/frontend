@@ -1,33 +1,22 @@
 // @flow
-import { local as localStorage, session as sessionStorage } from 'lib/storage';
-import config from 'lib/config';
-import fastdom from 'lib/fastdom-promise';
-import template from 'lodash/utilities/template';
 import ophan from 'ophan/ng';
-import surveyT from 'raw-loader!./views/jtbd.html';
-
-// Flow doesn't recognize this standard DOM type
-// https://developer.mozilla.org/en/docs/Web/API/RadioNodeList
-type RadioNodeList = { value: string };
+import { session as sessionStorage, local as localStorage } from 'lib/storage';
+import { init as initSurvey, BusinessError } from './survey';
 
 type Answer = number;
 type Question = number;
 
+// campaign settings: most of it will come from the targeting tool
 // const campaignId: string = 'abcd';
 const startOfTest: Date = new Date();
 const endOfTest: number = startOfTest.setMonth(startOfTest.getMonth() + 1);
-const survey: Object => string = template(surveyT);
-
 const allQuestions: string[] = [
     'How are you?',
     'Any plans today?',
     "What colour is St James's cathedral?",
     'How many as are there in Srinivasa Ramanujan?',
 ];
-
 const askWhy: boolean = true;
-
-class BusinessError extends Error {}
 
 const range = (from: number, to: number): number[] => {
     const rangerec = (n: number, acc: number[]): number[] => {
@@ -58,96 +47,31 @@ const draw = (): number[] => {
     return [q1, q2, q3];
 };
 
-const setQuestions = (qs: Question[]) => {
-    localStorage.setIfNotExists('gu.jtbd.questions', qs, {
-        expires: endOfTest,
-    });
-    return qs;
-};
-
-const getAnswers = (qs: Question[]) => ({
-    qs,
-    as: localStorage.get('gu.jtbd.answers') || qs.map(() => -1),
-});
-
-const selectQuestion = ({ qs, as }: { qs: Question[], as: Answer[] }) => {
+const selectQuestion = (qs: Question[], as: Answer[]): number => {
     // open questions
     const oqs = as.reduce((acc, a, i) => (a === -1 ? acc.concat(i) : acc), []);
 
     if (!oqs.length) {
-        throw new BusinessError();
+        return -1;
     }
 
-    return {
-        qs,
-        as,
-        q: oqs[Math.floor(Math.random() * oqs.length)],
-    };
+    return oqs[Math.floor(Math.random() * oqs.length)];
 };
 
-const ask = ({ qs, as, q }) => {
-    const hook: ?Element = document.querySelector('.js-article__body');
-    if (!hook) {
-        throw new BusinessError();
-    }
-
-    return fastdom
-        .write(() => {
-            hook.insertAdjacentHTML(
-                'beforeend',
-                survey({
-                    question: allQuestions[qs[q]],
-                    askWhy,
-                })
-            );
-            return hook;
-        })
-        .then(() => ({ as, qs, q }));
-};
-
-const respond = ({ as, qs, q }): Promise<Object> => {
-    const form: ?HTMLFormElement = (document.getElementById(
-        'js-jtbd-survey__form'
-    ): any);
-    const feedback: ?HTMLFormElement = (document.getElementById(
-        'js-jtbd-survey__feedback'
-    ): any);
-    if (!form || !feedback) {
-        throw new Error('Hmm, the JTBD survey should contain ... a survey');
-    }
-
-    return new Promise(resolve => {
-        form.addEventListener('submit', function onSubmit(evt) {
-            evt.preventDefault();
-            const answer: ?RadioNodeList = (form.elements.namedItem('q'): any);
-            const why: ?HTMLTextAreaElement = (form.elements.namedItem(
-                'why'
-            ): any);
-            if (!answer || !answer.value) return;
-            form.removeEventListener('submit', onSubmit);
-            resolve({
-                qs,
-                as,
-                q,
-                a: parseInt(answer.value, 10),
-                why: (why && why.value) || null,
-            });
-        });
-    }).then(result =>
-        fastdom.write(() => {
-            form.classList.add('is-hidden');
-            feedback.classList.remove('is-hidden');
-            return result;
-        })
-    );
-};
-
-const recordAnswer = ({ qs, as, q, a, why }) => {
+const save = (
+    qs: Question[],
+    as: Answer[],
+    q: Question,
+    answer: Answer,
+    why: ?string
+) => {
     const hasSnippet: boolean = !!document.getElementsByClassName(
         'explainer-snippet'
     ).length;
-    as[q] = a;
+
+    as[q] = answer;
     localStorage.set('gu.jtbd.answers', as, { expires: endOfTest });
+
     ophan.record({
         component: 'jtbd-survey',
         hasSnippet,
@@ -159,29 +83,26 @@ const recordAnswer = ({ qs, as, q, a, why }) => {
 
 const init = (): void => {
     // Should I stay or should I go?
-    if (config.page.isProd && sessionStorage.get('gu.jtbd.seen') === true) {
+    if (sessionStorage.get('gu.jtbd.seen') === true) {
         return;
     }
 
     sessionStorage.set('gu.jtbd.seen', true);
 
-    // - readers are assigned a set of 3 random questions out of a pool of 15
-    // lift them into the promise applicative functor; we will use Promise as
-    // a coproduct and use resolve as the happy path, reject for business logic
-    // errors ʕ•ᴥ•ʔ
-    Promise.resolve(localStorage.get('gu.jtbd.questions') || draw())
-        // - store these questions in the browser's local storage if needed
-        .then(setQuestions)
-        // - get answers to these questions
-        .then(getAnswers)
-        // - select a random question out of those that haven't been answered yet
-        .then(selectQuestion)
-        // - then ask
-        .then(ask)
-        // - and wait for the answer
-        .then(respond)
-        // - report to Ophan
-        .then(recordAnswer)
+    const qs = localStorage.get('gu.jtbd.questions') || draw();
+    const as = localStorage.get('gu.jtbd.answers') || qs.map(() => -1);
+    const q = selectQuestion(qs, as);
+
+    if (q === -1) {
+        return;
+    }
+
+    localStorage.setIfNotExists('gu.jtbd.questions', qs, {
+        expires: endOfTest,
+    });
+
+    initSurvey(allQuestions[qs[q]], askWhy)
+        .then(({ answer, why }) => save(qs, as, q, answer, why))
         .catch((reason: Error) => {
             if (reason instanceof BusinessError) {
                 return;
