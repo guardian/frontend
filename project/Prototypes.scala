@@ -36,8 +36,7 @@ trait Prototypes {
     cleanAll := Def.taskDyn {
       val allProjects = ScopeFilter(inAnyProject)
       clean.all(allProjects)
-    }.value,
-    unmanagedResourceDirectories in Compile += file("ui/dist")
+    }.value
   )
 
   val frontendIntegrationTestsSettings = Seq (
@@ -139,6 +138,9 @@ trait Prototypes {
     .settings(libraryDependencies ++= Seq(macwire, commonsIo))
     .settings(packageName in Universal := applicationName)
     .settingSets(settingSetsOrder)
+    .settings(
+      mappings in Universal ++= (file("ui/dist") ** "*").get.map { f => f.getAbsoluteFile -> f.toString }
+    )
   }
 
   def library(applicationName: String): Project = {
