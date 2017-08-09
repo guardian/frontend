@@ -117,7 +117,7 @@ export const payInEpic = makeABTest({
     campaignId: 'epic_pay_in_epic',
 
     start: '2017-08-09',
-    expiry: '2018-09-09',
+    expiry: '2018-09-11',
 
     author: 'Guy Dawson & Sam Desborough',
     description:
