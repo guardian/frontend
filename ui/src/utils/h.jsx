@@ -5,7 +5,6 @@
 // on `attributes.style` to styletron, then hands off to `preact#h`
 
 import { styled } from 'styletron-preact';
-// $FlowFixMe - no idea why flow cannot find preact...
 import { h as preact_h } from 'preact';
 
 export default (

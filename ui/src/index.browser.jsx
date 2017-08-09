@@ -1,5 +1,4 @@
 // @flow
-// $FlowFixMe - no idea why flow cannot find preact...
 import { render } from 'preact';
 import { StyletronProvider } from 'styletron-preact';
 import StyletronClient from 'styletron-client';
@@ -36,6 +35,7 @@ if (module.hot) {
     // chillout flow
     // $FlowFixMe
     module.hot.accept();
+
     require('preact/devtools'); // eslint-disable-line
 }
 
