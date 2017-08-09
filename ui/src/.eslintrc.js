@@ -1,7 +1,4 @@
 // @flow
-const path = require('path');
-const { ui } = require('../__config__/paths');
-
 module.exports = {
     parser: 'babel-eslint',
     env: { browser: true, node: true, es6: true },
@@ -16,7 +13,7 @@ module.exports = {
         react: { pragma: 'h' },
         'import/resolver': {
             webpack: {
-                config: path.resolve(ui, '__config__', 'webpack.config.js'),
+                config: '__config__/webpack.config.js',
             },
         },
     },
