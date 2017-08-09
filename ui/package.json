@@ -16,6 +16,7 @@
         "test": "yarn install -s && jest",
         "test:watch": "yarn install -s && yarn test -- --watch",
         "test:ci": "yarn test -- --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
+        "flow": "cd src && flow",
         "clean": "rm -rf ./dist",
         "compile": "BABEL_ENV=production yarn install -s && yarn run clean -s && webpack --config ./__config__/webpack.config.prod.js --progress && echo 'Client bundle size:' && gzip-size ../static/target/javascripts/ui.bundle.browser.js",
         "watch": "yarn install -s && yarn run clean -s && concurrently --kill-others -n \"BRSR,SRVR\" -c \"blue,green\" \"yarn watch:browser\" \"yarn watch:server\"",
