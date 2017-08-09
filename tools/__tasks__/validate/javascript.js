@@ -41,7 +41,7 @@ module.exports = {
         },
         {
             description: 'Run Flowtype checks on static/src/javascripts/',
-            task: `flow`,
+            task: `cd static/src/javascripts && flow`,
             onError: flowError,
         },
     ],
