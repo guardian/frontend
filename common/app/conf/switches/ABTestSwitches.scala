@@ -135,7 +135,7 @@ trait ABTestSwitches {
     "Test whether allowing readers to pay in-Epic increases the conversion rate.",
     owners = Seq(Owner.withGithub("Mullefa"), Owner.withGithub("desbo")),
     safeState = On,
-    sellByDate = new LocalDate(2017, 8, 1),
+    sellByDate = new LocalDate(2017, 9, 9),
     exposeClientSide = true
   )
 
