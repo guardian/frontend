@@ -6,22 +6,20 @@ import {
 } from 'common/modules/experiments/utils';
 import { testCanBeRun } from 'common/modules/experiments/test-can-run-checks';
 import { viewsInPreviousDays } from 'common/modules/commercial/acquisitions-view-log';
+import { payInEpic } from 'common/modules/experiments/tests/acquisitions-epic-paypal-pay-in-epic';
 import { alwaysAsk } from 'common/modules/experiments/tests/contributions-epic-always-ask-strategy';
 import { askFourEarning } from 'common/modules/experiments/tests/contributions-epic-ask-four-earning';
 import { acquisitionsEpicLiveblog } from 'common/modules/experiments/tests/acquisitions-epic-liveblog';
-import acquisitionsEpicAlwaysAskIfTagged from 'common/modules/experiments/tests/acquisitions-epic-always-ask-if-tagged';
-import acquisitionsEpicAlwaysAskElection from 'common/modules/experiments/tests/acquisitions-epic-always-ask-election';
-import acquisitionsEpicThankYou from 'common/modules/experiments/tests/acquisitions-epic-thank-you';
-import { acquisitionsEpicRebaselineSupportProposition } from 'common/modules/experiments/tests/acquisitions-epic-rebaseline-support-proposition';
-import { acquisitionsEpicRebaselineSupportPropositionTwo } from 'common/modules/experiments/tests/acquisitions-epic-rebaseline-support-proposition-two';
+import { acquisitionsEpicAlwaysAskIfTagged } from 'common/modules/experiments/tests/acquisitions-epic-always-ask-if-tagged';
+import { acquisitionsEpicAlwaysAskElection } from 'common/modules/experiments/tests/acquisitions-epic-always-ask-election';
+import { acquisitionsEpicThankYou } from 'common/modules/experiments/tests/acquisitions-epic-thank-you';
 
 /**
  * acquisition tests in priority order (highest to lowest)
  */
 const tests = [
     alwaysAsk,
-    acquisitionsEpicRebaselineSupportProposition,
-    acquisitionsEpicRebaselineSupportPropositionTwo,
+    payInEpic,
     askFourEarning,
     acquisitionsEpicAlwaysAskIfTagged,
     acquisitionsEpicLiveblog,

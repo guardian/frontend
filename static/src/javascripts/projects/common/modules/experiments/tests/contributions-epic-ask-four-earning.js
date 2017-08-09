@@ -21,15 +21,19 @@ export const askFourEarning: ContributionsABTest = makeABTest({
     variants: [
         {
             id: 'control',
-            maxViews: {
-                days: 30,
-                count: 4,
-                minDaysBetweenViews: 0,
-            },
+            products: ['ONE_OFF_CONTRIBUTION', 'MEMBERSHIP_SUPPORTER'],
 
-            useTailoredCopyForRegulars: true,
-            insertAtSelector: '.submeta',
-            successOnView: true,
+            options: {
+                maxViews: {
+                    days: 30,
+                    count: 4,
+                    minDaysBetweenViews: 0,
+                },
+
+                useTailoredCopyForRegulars: true,
+                insertAtSelector: '.submeta',
+                successOnView: true,
+            },
         },
     ],
 });
