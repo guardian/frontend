@@ -47,10 +47,6 @@ const pageContext = (campaignCode, amounts) => {
     };
 };
 
-const iframeUrl = `${config.page && config.page.isDev
-    ? 'https://contribute.thegulocal.com'
-    : 'https://contribute.theguardian.com'}/components/epic/inline-payment`;
-
 const createVariant = (id, amounts) => ({
     id,
 
@@ -63,7 +59,8 @@ const createVariant = (id, amounts) => ({
             return template(iframeTemplate, {
                 componentName: variant.options.componentName,
                 id: variant.options.iframeId,
-                iframeUrl,
+                iframeUrl:
+                    'https://contribute.theguardian.com/components/epic/inline-payment',
             });
         },
 
