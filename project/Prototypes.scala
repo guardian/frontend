@@ -81,7 +81,7 @@ trait Prototypes {
     testOptions in Test := Nil,
     concurrentRestrictions in Global := List(Tags.limit(Tags.Test, 4)),
 
-    checkScalastyle := org.scalastyle.sbt.ScalastylePlugin.scalastyle.in(Test).toTask("").value,
+    checkScalastyle := org.scalastyle.sbt.ScalastylePlugin.autoImport.scalastyle.in(Test).toTask("").value,
     (test in Test) := (test in Test).dependsOn(checkScalastyle).value,
 
     // Copy unit test resources https://groups.google.com/d/topic/play-framework/XD3X6R-s5Mc/discussion
