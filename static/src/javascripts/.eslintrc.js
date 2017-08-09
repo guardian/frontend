@@ -4,11 +4,7 @@ module.exports = {
     settings: {
         'import/resolver': 'webpack',
     },
-    extends: [
-        'plugin:flowtype/recommended',
-        'prettier/flowtype',
-        'prettier/react',
-    ],
+    extends: ['plugin:flowtype/recommended', 'prettier/flowtype'],
     plugins: ['flowtype', 'flow-header'],
     rules: {
         // require-specific overrides

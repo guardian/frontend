@@ -29,6 +29,7 @@ module.exports = {
                 bracketSpacing: true,
                 tabWidth: 4,
                 jsxBracketSameLine: true,
+                parser: 'flow',
             },
         ],
         'no-extend-native': 'error',

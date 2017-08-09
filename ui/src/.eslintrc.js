@@ -1,14 +1,6 @@
 // @flow
 module.exports = {
     parser: 'babel-eslint',
-    env: { browser: true, node: true, es6: true },
-    extends: [
-        'plugin:flowtype/recommended',
-        'prettier/flowtype',
-        'prettier/react',
-    ],
-    plugins: ['flow-header', 'flowtype', 'prettier'],
-    parserOptions: { ecmaVersion: '2017' },
     settings: {
         react: { pragma: 'h' },
         'import/resolver': {
@@ -17,7 +9,20 @@ module.exports = {
             },
         },
     },
+    extends: [
+        'plugin:flowtype/recommended',
+        'prettier/flowtype',
+        'prettier/react',
+    ],
+    plugins: ['flow-header', 'flowtype'],
     rules: {
+        'flow-header/flow-header': 'error',
+        // flow should take care of our return values
+        'consistent-return': 'off',
+        // react API stuff
+        'react/react-in-jsx-scope': 'off',
+        'react/prop-types': 'off',
+        // these exentions never need to be supplied for imports
         'import/extensions': [
             'error',
             'always',
@@ -26,9 +31,6 @@ module.exports = {
                 jsx: 'never',
             },
         ],
-        'flow-header/flow-header': 'error',
-        'react/react-in-jsx-scope': 'off',
-        'react/prop-types': 'off',
     },
     globals: {
         BROWSER: true,
