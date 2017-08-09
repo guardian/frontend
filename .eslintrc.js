@@ -1,23 +1,6 @@
 module.exports = {
-    env: {
-        browser: true,
-        commonjs: true,
-        es6: true,
-        node: true,
-        jest: true,
-    },
-    // eslint-config-prettier disables formatting rules from other configs (i.e. airbnb)
     extends: ['airbnb', 'prettier'],
-
-    // eslint-plugin-prettier switches prettier on
     plugins: ['guardian-frontend', 'prettier'],
-    parserOptions: {
-        sourceType: 'module',
-        ecmaVersion: 6,
-        ecmaFeatures: {
-            jsx: true,
-        },
-    },
     rules: {
         'import/no-extraneous-dependencies': 'off',
         // prettier settings

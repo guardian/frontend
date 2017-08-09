@@ -1,6 +1,14 @@
 // @flow
 module.exports = {
+    env: {
+        browser: true,
+        jest: true,
+    },
     parser: 'babel-eslint',
+    parserOptions: {
+        sourceType: 'module',
+        ecmaVersion: 6,
+    },
     settings: {
         'import/resolver': 'webpack',
     },
