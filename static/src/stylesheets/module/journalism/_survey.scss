@@ -15,7 +15,7 @@
 
     line {
         stroke-width: 1px;
-        stroke-dasharray: .05%,.05%;
+        stroke-dasharray: .05%, .05%;
         stroke: $neutral-3;
     }
 
@@ -37,8 +37,16 @@
         transition: transform .2s ease-in-out;
     }
 
-    [type="radio"] {
+    label {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    [type='radio'] {
         display: none;
+        float: none;
+        margin: 0;
 
         &:checked + svg .inner-circle {
             transform: scale(1);
@@ -66,17 +74,6 @@
 
     > li {
         flex: 1;
-    }
-
-    label {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-
-    [type="radio"] {
-        float: none;
-        margin: 0;
     }
 }
 
