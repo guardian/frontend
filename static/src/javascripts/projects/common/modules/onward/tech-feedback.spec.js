@@ -24,36 +24,40 @@ describe('Tech-feedback', () => {
     it('Should place the extra information into the form', () => {
         initTechFeedback();
 
-        expect(
-            document.querySelectorAll('#feedback__form input[name=extra]')[0]
-                .value
-        ).toContain('browser');
+        const extra: HTMLInputElement = (document.querySelector(
+            '#feedback__form input[name=extra]'
+        ): any);
+
+        expect(extra.value).toContain('browser');
     });
 
     it('Should start off with the inputs disabled', () => {
         initTechFeedback();
 
-        expect(
-            document.querySelectorAll('#feedback__form input[name=extra]')[0]
-                .disabled
-        ).toBeTruthy();
+        const extra: HTMLInputElement = (document.querySelector(
+            '#feedback__form input[name=extra]'
+        ): any);
+
+        expect(extra.disabled).toBeTruthy();
     });
 
     it('Should enable inputs after we choose something from the category select', () => {
         initTechFeedback();
 
-        document
-            .getElementById('testoption')
-            .setAttribute('selected', 'selected');
-        document.getElementById('feedback-category').value =
-            'feedback-form-website';
-        document
-            .getElementById('feedback-category')
-            .dispatchEvent(new Event('change'));
+        const extra: HTMLInputElement = (document.querySelector(
+            '#feedback__form input[name=extra]'
+        ): any);
+        const feedback: HTMLInputElement = (document.getElementById(
+            'feedback-category'
+        ): any);
+        const testoption: HTMLElement = (document.getElementById(
+            'testoption'
+        ): any);
 
-        expect(
-            document.querySelectorAll('#feedback__form input[name=extra]')[0]
-                .disabled
-        ).toBeFalsy();
+        testoption.setAttribute('selected', 'selected');
+        feedback.value = 'feedback-form-website';
+        feedback.dispatchEvent(new Event('change'));
+
+        expect(extra.disabled).toBeFalsy();
     });
 });
