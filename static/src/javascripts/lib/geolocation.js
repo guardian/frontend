@@ -136,7 +136,6 @@ const isInEurope = (): boolean => {
     return europeCountryCodes.includes(countryCode) || countryCode === 'GB';
 };
 
-// Exposed for unit testing
 export {
     get,
     getSupporterPaymentRegion,
