@@ -1,13 +1,15 @@
 [ignore]
 .*/node_modules/fbjs/.*
 .*/node_modules/weinre/.*
-<PROJECT_ROOT>/ui/.*
 
 [include]
+../javascripts-legacy
+../../vendor/javascripts
+../../../node_modules
 
 [libs]
-dev/flow-typed
-dev/flow-typed-guardian-frontend
+__flow__/flow-typed
+__flow__/types
 
 [options]
 module.name_mapper='^admin' -> 'projects/admin'
@@ -22,15 +24,15 @@ module.name_mapper='^raven' -> 'raven-js'
 module.name_mapper='^EventEmitter' -> 'wolfy87-eventemitter'
 module.name_mapper='^videojs' -> 'video.js'
 module.name_mapper='^stripe' -> 'stripe/stripe.min'
-module.name_mapper='^svgs' -> '<PROJECT_ROOT>/static/src/inline-svgs'
+module.name_mapper='^svgs' -> '../inline-svgs'
 module.name_mapper='^ophan/ng' -> 'ophan-tracker-js'
 module.name_mapper='^ophan/embed' -> 'ophan-tracker-js/build/ophan.embed'
-module.name_mapper='^raw-loader!.*$' -> '<PROJECT_ROOT>/dev/flow-asset-stub'
-module.name_mapper.extension='svg' -> '<PROJECT_ROOT>/dev/flow-svg-stub'
+module.name_mapper='^raw-loader!.*$' -> 'stubs/raw'
+module.name_mapper.extension='svg' -> 'stubs/svg'
 
 module.file_ext=.js
 
-module.system.node.resolve_dirname=static/src/javascripts
-module.system.node.resolve_dirname=static/src/javascripts-legacy
-module.system.node.resolve_dirname=static/vendor/javascripts
+module.system.node.resolve_dirname=javascripts
+module.system.node.resolve_dirname=javascripts-legacy
+module.system.node.resolve_dirname=__flow__
 module.system.node.resolve_dirname=node_modules
