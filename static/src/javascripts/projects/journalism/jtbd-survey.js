@@ -143,10 +143,14 @@ const respond = ({ as, qs, q }): Promise<Object> => {
 };
 
 const recordAnswer = ({ qs, as, q, a, why }) => {
+    const hasSnippet: boolean = !!document.getElementsByClassName(
+        'explainer-snippet'
+    ).length;
     as[q] = a;
     localStorage.set('gu.jtbd.answers', as, { expires: endOfTest });
     ophan.record({
         component: 'jtbd-survey',
+        hasSnippet,
         qs,
         as,
         why,
