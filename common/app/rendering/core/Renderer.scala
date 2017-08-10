@@ -23,7 +23,8 @@ class Renderer(implicit actorSystem: ActorSystem, executionContext: ExecutionCon
   implicit val timeout = Timeout(timeoutValue.seconds)
 
   def render[R <: Renderable](renderable: R): Future[Html] = {
-    (actor ? Rendering(renderable, ac))
+    val forceReload = ac.environment.mode == Mode.Dev
+    (actor ? Rendering(renderable, forceReload))
       .mapTo[Try[String]]
       .recover { case t => Try(throw t)}
       .map {
