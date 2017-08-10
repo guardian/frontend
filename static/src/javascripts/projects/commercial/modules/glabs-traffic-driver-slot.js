@@ -7,11 +7,12 @@ import { spaceFiller } from 'common/modules/article/space-filler';
 
 /*
  The heuristic for adding a glabs traffic driver slot into an article is as follows:
- 1) it must be after the second paragraph and
- 2) it must be after the 100th word in the article
 
- This is to prevent it appearing after single word paragraphs that are encountered
- at the top of some article. It still isn't perfect, but it is good enough for a test.
+ 1) it must be before the penultimate paragraph and
+ 2) it must be more than 100 words from the bottom of the article
+
+ This is a rough heuristic for ensuring that the slot isn't added to above
+ two very small paragraphs, which would look jarring.
  */
 
 let runningWordCount = 0;
@@ -26,42 +27,45 @@ const rules = {
     minBelow: 0,
     clearContentMeta: 0,
     selectors: null,
-    filter: (slot: Object, index: number) => {
+    filter: (slot: Object, index: number): boolean => {
         runningWordCount += wordCount(slot.element);
         return index >= 2 && runningWordCount >= 100;
     },
+    fromBottom: true,
 };
 
-const insertInlineSlot = (paras: Element[]): Promise<any> => {
+const insertInlineSlot = (paras: Element[]): Promise<void> => {
     const slot = createSlot('glabs-inline');
     return fastdom
         .write(() => paras[0].insertAdjacentElement('afterend', slot))
         .then(() => addSlot(slot, true));
 };
 
-const insertLeftSlot = (paras: Element[]): Promise<any> => {
+const insertLeftSlot = (paras: Element[]): Promise<void> => {
     const slot = createSlot('glabs-left');
     return fastdom
         .write(() => paras[0].insertAdjacentElement('afterend', slot))
         .then(() => addSlot(slot, true));
 };
 
-const glabsTrafficDriverSlotInit = () => {
+const glabsTrafficDriverSlotInit = (): Promise<void> => {
+    let insertSlot;
+
     if (commercialFeatures.glabsTrafficDriverInlineSlot) {
-        return spaceFiller.fillSpace(rules, insertInlineSlot, {
-            waitForImages: false,
-            waitForLinks: false,
-            waitForInteractives: false,
-        });
+        insertSlot = insertInlineSlot;
     } else if (commercialFeatures.glabsTrafficDriverLeftSlot) {
-        return spaceFiller.fillSpace(rules, insertLeftSlot, {
-            waitForImages: false,
-            waitForLinks: false,
-            waitForInteractives: false,
-        });
+        insertSlot = insertLeftSlot;
     }
 
-    return Promise.resolve();
+    if (!insertSlot) {
+        return Promise.resolve();
+    }
+
+    return spaceFiller.fillSpace(rules, insertSlot, {
+        waitForImages: false,
+        waitForLinks: false,
+        waitForInteractives: false,
+    });
 };
 
 export { glabsTrafficDriverSlotInit };
