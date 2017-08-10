@@ -16,7 +16,7 @@ class RenderingActor extends Actor with JavascriptRendering {
   override def preStart: Unit = {
     // Warming up the script engine
     val stopWatch = new StopWatch
-    (1 to 25).foreach(_ => render(None))
+    (1 to 100).foreach(_ => render(None))
     log.info(s"Warming up rendering actor completed in ${stopWatch.elapsed}s")
 
     super.preStart()
