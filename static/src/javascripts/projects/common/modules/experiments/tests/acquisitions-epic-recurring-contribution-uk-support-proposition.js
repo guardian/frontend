@@ -31,14 +31,20 @@ export const acquisitionsEpicRecurringContributionUkSupportProposition = makeABT
         variants: [
             {
                 id: 'control',
-                useTailoredCopyForRegulars: true,
+                products: ['ONE_OFF_CONTRIBUTION', 'MEMBERSHIP_SUPPORTER'],
+                options: {
+                    useTailoredCopyForRegulars: true,
+                },
             },
             {
                 id: 'variant',
-                buttonTemplate: buildButtonTemplate,
-                supportCustomURL:
-                    'https://support.theguardian.com/uk/contribute',
-                useTailoredCopyForRegulars: true,
+                products: ['ONE_OFF_CONTRIBUTION', 'RECURRING_CONTRIBUTION'],
+                options: {
+                    buttonTemplate: buildButtonTemplate,
+                    supportCustomURL:
+                        'https://support.theguardian.com/uk/contribute',
+                    useTailoredCopyForRegulars: true,
+                },
             },
         ],
     }
