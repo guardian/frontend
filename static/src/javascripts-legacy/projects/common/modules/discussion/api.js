@@ -26,22 +26,26 @@ define([
      * @return {Reqwest} a promise
      */
     Api.send = function (endpoint, method, data) {
-        data = data || {};
+        if (config.switches.enableDiscussionSwitch) {
+            data = data || {};
 
-        var request = ajax.ajax({
-            url: Api.root + endpoint,
-            type: (method === 'get') ? 'jsonp' : 'json',
-            method: method,
-            crossOrigin: true,
-            data: data,
-            headers: {
-                'D2-X-UID': Api.d2Uid,
-                'GU-Client': Api.clientHeader
-            },
-            withCredentials: true
-        });
+            var request = ajax.ajax({
+                url: Api.root + endpoint,
+                type: (method === 'get') ? 'jsonp' : 'json',
+                method: method,
+                crossOrigin: true,
+                data: data,
+                headers: {
+                    'D2-X-UID': Api.d2Uid,
+                    'GU-Client': Api.clientHeader
+                },
+                withCredentials: true
+            });
 
-        return request;
+            return request;
+        } else {
+            throw new Error('Discussion features have been disabled');
+        }
     };
 
     /**

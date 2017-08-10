@@ -78,7 +78,7 @@ describe('Commercial features', () => {
         config.switches = {
             outbrain: true,
             commercial: true,
-            commentsVisibleOnArticle: true,
+            enableDiscussionSwitch: true,
             adFreeSubscriptionTrial: false,
         };
 
