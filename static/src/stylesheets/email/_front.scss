@@ -90,6 +90,12 @@ $container-color: #ffffff;
     text-decoration: none;
 }
 
+.bb-link,
+.ct-link {
+    text-decoration: none;
+    color: $neutral-1;
+}
+
 // td
 .left-col {
     width: 60%;
@@ -173,6 +179,76 @@ $email-tones: (
 // table
 .tone-external {
     border-top: 1px solid #46bcdf;
+}
+
+
+// branded containers for PaidFor content
+.ct-branded {
+    padding: 13px 0 12px;
+
+    .ct__margin {
+        padding-bottom: 0;
+        background-color: #ffffff;
+    }
+
+    .ct__inner {
+        border-top-color: $paid-article-brand;
+        background-color: $paid-article;
+    }
+
+    .ct__padding {
+        font-family: Helvetica, Arial, sans-serif;
+        font-weight: 900;
+    }
+}
+
+.fc__margin--branded {
+    padding-top: 0;
+    background-color: $paid-article;
+}
+
+// branded banner for PaidFor content
+.branded-banner {
+    background-color: $paid-article;
+    width: 100%;
+}
+
+.bb__inner {
+    padding-bottom: 6px;
+    height: 70px;
+}
+
+.bb__label {
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 12px;
+    width: 15%;
+    color: $paid-card-kicker;
+    text-align: right;
+}
+
+.bb__logo {
+    max-height: 70px;
+    padding: 0 6px 6px;
+
+    img {
+        max-height: 70px;
+    }
+}
+
+// tone overrides for PaidFor content
+.tone-branded {
+    border-top-color: $paid-article-brand;
+    background-color: $paid-article-card-bg;
+
+    .trail-text a {
+        color: $neutral-1;
+        font-family: Helvetica, Arial, sans-serif;
+    }
+
+    .headline a {
+        color: $neutral-1;
+        font-family: Helvetica, Arial, sans-serif;
+    }
 }
 
 @each $email, $tone-color in $email-tones {
