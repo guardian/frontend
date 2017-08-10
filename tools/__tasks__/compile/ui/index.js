@@ -1,6 +1,18 @@
-const execa = require('execa');
+const path = require('path');
+const cpy = require('cpy');
+const { target } = require('../../config').paths;
+
+const guuiPath = path.dirname(require.resolve('@guardian/guui'));
 
 module.exports = {
-    description: 'Compile UI',
-    task: () => execa('make', ['ui-compile']),
+    description: 'Copy UI',
+    task: () =>
+        Promise.all([
+            cpy(['ui.bundle.browser.*'], path.resolve(target, 'javascripts'), {
+                cwd: guuiPath,
+            }),
+            cpy(['ui.bundle.server.*'], path.resolve('ui', 'dist'), {
+                cwd: guuiPath,
+            }),
+        ]),
 };
