@@ -485,7 +485,7 @@ class Loader extends Component {
 
     loadComments(
         options?: {
-            comment?: string | number,
+            comment?: ?(string | number),
             shouldTruncate?: boolean,
             page?: number,
         } = {}
