@@ -1,50 +1,88 @@
-#!/bin/sh
-#
-# Pre-push hooks
+#!/usr/bin/env node
+/* eslint-disable no-console */
 
-branch=$(git symbolic-ref --short HEAD)
+const execa = require('execa');
 
+const getCurrentBranchName = () =>
+    execa.stdout('git', ['symbolic-ref', '--short', 'HEAD']);
 
-conditionallyValidate() {
+const getRemoteBranches = () => execa.stdout('git', ['branch', '-r']);
 
-    # check that remote branch exists
-    git branch -r | if grep -q "origin/$branch$"
-    then
+const diffAgainstRemote = branch =>
+    execa
+        .stdout('git', ['diff', '--cached', '--name-only', `origin/${branch}`])
+        .then(diffs => diffs.split('\n'));
 
-        # if remote-tracking branch exists,
-        # run task if relevant file-types are different
-        git diff --cached --name-only "origin/$branch" | if grep $1
-        then
-            $2 && $3
-        fi
+const diffAgainstMaster = () =>
+    execa
+        .stdout('git', ['diff', '--name-only', 'origin/master...'])
+        .then(diffs => diffs.split('\n'));
 
-    else
+const install = () => execa.stdout('make', ['install']);
 
-        # if remote branch doesn't exist,
-        # run task if symmetric difference from remote master contains relevant file-types
-        git diff --name-only "origin/master..." | if grep $1
-        then
-            $2 && $3
-        fi
+const validateSass = () =>
+    execa.stdout('node', ['./tools/task-runner/runner', 'validate/sass'], {
+        stdio: 'inherit',
+    });
 
-    fi
-}
+const validateJs = () =>
+    execa.stdout(
+        'node',
+        ['./tools/task-runner/runner', 'validate/javascript'],
+        {
+            stdio: 'inherit',
+        }
+    );
 
-# Validate CSS
-CSS_SRC_PATTERN="\.scss$"
-conditionallyValidate "$CSS_SRC_PATTERN" "make install" "./tools/task-runner/runner validate/sass"
-cssValidateResult=$?
+const testJs = () =>
+    execa.stdout('node', ['./tools/task-runner/runner', 'test/javascript'], {
+        stdio: 'inherit',
+    });
 
-# Validate JS
-JS_SRC_PATTERN="\.js$"
-conditionallyValidate "$JS_SRC_PATTERN" "make install" "./tools/task-runner/runner validate/javascript"
-jsValidateResult=$?
+const validate = diffs => {
+    const css = diffs.filter(filename => filename.endsWith('.scss'));
+    const js = diffs.filter(
+        filename => filename.endsWith('.js') || filename.endsWith('.jsx')
+    );
 
-# Test JS
-conditionallyValidate "[^/]\+/\(app\|test\)/assets/javascripts/.*$JS_SRC_PATTERN" "make install" "./tools/task-runner/runner test/javascript"
-jsTestResult=$?
+    if (css.length || js.length) {
+        return install().then(() => {
+            const promises = [];
 
-# Exit code 1 means don't commit and 0 means do commit
-[ $cssValidateResult -ne 0 ] || [ $jsValidateResult -ne 0 ] || [ $jsTestResult -ne 0 ] && exit 1
+            if (css.length) {
+                promises.push(validateSass);
+            }
+            if (js.length) {
+                promises.push(validateJs);
+                promises.push(testJs);
+            }
 
-exit 0
+            return promises.reduce(
+                (prev, curr) => prev.then(curr),
+                Promise.resolve()
+            );
+        });
+    }
+
+    return Promise.resolve();
+};
+
+getCurrentBranchName().then(branch =>
+    getRemoteBranches().then(branches => {
+        if (branches.includes(branch)) {
+            // remote branch exists, validate files that have changed locally
+            // compared to remote feature branch
+            return diffAgainstRemote(branch).then(validate).catch(e => {
+                console.log(`\n${e}\n`);
+                process.exit(1);
+            });
+        }
+
+        // remote branch doesn't exist, validate files that have changed
+        // compared to local master branch
+        return diffAgainstMaster().then(validate).catch(e => {
+            console.log(`\n${e}\n`);
+            process.exit(1);
+        });
+    })
+);

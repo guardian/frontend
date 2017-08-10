@@ -130,6 +130,9 @@ es6: install
 
 # *********************** UI ***********************
 
+ui-install:
+	@cd ui && yarn install -s
+
 ui-compile:
 	@cd ui && yarn compile -s
 
