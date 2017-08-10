@@ -5,7 +5,8 @@
     isList: Boolean = false,
     colSpan: Int = 1,
     frontProperties: Option[FrontProperties] = None,
-    containerDisplayName: Option[String] = None)(implicit request: RequestHeader)
+    containerDisplayName: Option[String] = None,
+    frontId: Option[String] = None)(implicit request: RequestHeader)
 
 @import layout.{ContentCard, HtmlBlob, PaidCard}
 @import views.html.fragments.items.facia_cards.contentCard
@@ -29,7 +30,7 @@
         case paidContentOnEditorialPage: ContentCard if paidContentOnEditorialPage.branding.exists(_.isPaid) && !frontProperties.exists(_.isPaidContent) => {
             @paidContentCard(
                 item = paidContentOnEditorialPage,
-                omnitureId = mkInteractionTrackingCode(containerIndex, index, paidContentOnEditorialPage, containerDisplayName),
+                omnitureId = mkInteractionTrackingCode(containerIndex, index, paidContentOnEditorialPage, containerDisplayName, frontId),
                 containerIndex,
                 index,
                 isFirstContainer

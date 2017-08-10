@@ -118,7 +118,7 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2017, 9, 5),
     exposeClientSide = true
   )
-
+  
   Switch(
     ABTests,
     "ab-glabs-traffic-driver-slot",
@@ -126,6 +126,16 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("JonNorman")),
     safeState = Off,
     sellByDate = new LocalDate(2017, 8, 23),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-epic-paypal-pay-in-epic",
+    "Test whether allowing readers to pay in-Epic increases the conversion rate.",
+    owners = Seq(Owner.withGithub("Mullefa"), Owner.withGithub("desbo")),
+    safeState = On,
+    sellByDate = new LocalDate(2017, 9, 11),
     exposeClientSide = true
   )
 

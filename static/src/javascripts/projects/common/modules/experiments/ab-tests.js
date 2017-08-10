@@ -7,16 +7,16 @@ import { paidContentVsOutbrain2 } from 'common/modules/experiments/tests/paid-co
 import { glabsTrafficDriverSlot } from 'common/modules/experiments/tests/glabs-traffic-driver-slot';
 import { tailorSurvey } from 'common/modules/experiments/tests/tailor-survey';
 
-import AcquisitionsEpicElectionInteractiveEnd from 'common/modules/experiments/tests/acquisitions-epic-election-interactive-end';
-import AcquisitionsEpicElectionInteractiveSlice from 'common/modules/experiments/tests/acquisitions-epic-election-interactive-slice';
+import { acquisitionsEpicElectionInteractiveEnd } from 'common/modules/experiments/tests/acquisitions-epic-election-interactive-end';
+import { acquisitionsEpicElectionInteractiveSlice } from 'common/modules/experiments/tests/acquisitions-epic-election-interactive-slice';
 
 export const TESTS: Array<ABTest> = [
     paidContentVsOutbrain2,
     getAcquisitionTest(),
     tailorSurvey,
     glabsTrafficDriverSlot,
-    AcquisitionsEpicElectionInteractiveEnd,
-    AcquisitionsEpicElectionInteractiveSlice,
+    acquisitionsEpicElectionInteractiveEnd,
+    acquisitionsEpicElectionInteractiveSlice,
 ]
     .concat(MembershipEngagementBannerTests)
     .filter(Boolean);

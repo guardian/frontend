@@ -20,6 +20,7 @@ import play.api.libs.json._
 import views.support._
 import scala.collection.JavaConversions._
 import scala.util.Try
+import implicits.Booleans._
 
 sealed trait ContentType {
   def content: Content
@@ -63,7 +64,7 @@ final case class Content(
   wordCount: Int,
   showByline: Boolean,
   hasStoryPackage: Boolean,
-  rawOpenGraphImage: String
+  rawOpenGraphImage: Option[ImageAsset]
 ) {
 
   lazy val isBlog: Boolean = tags.blogs.nonEmpty
@@ -106,21 +107,31 @@ final case class Content(
   lazy val showCircularBylinePicAtSide: Boolean =
     cardStyle == Feature || tags.isReview && tags.hasLargeContributorImage && tags.contributors.length == 1 && !tags.isInteractive
 
+  lazy val openGraphImageOrFallbackUrl: String =
+    rawOpenGraphImage
+      .flatMap(_.url)
+      .getOrElse(Configuration.images.fallbackLogo)
+
   // read this before modifying: https://developers.facebook.com/docs/opengraph/howtos/maximizing-distribution-media-content#images
-  lazy val openGraphImage: String = {
-    if (isPaidContent && FacebookShareImageLogoOverlay.isSwitchedOn) {
-      ImgSrc(rawOpenGraphImage, Item700)
-    } else {
-      ImgSrc(rawOpenGraphImage, FacebookOpenGraphImage)
-    }
-  }
+  private lazy val openGraphImageProfile: ElementProfile =
+    if (isPaidContent && FacebookShareImageLogoOverlay.isSwitchedOn) Item700
+    else FacebookOpenGraphImage
+
+  lazy val openGraphImage: String = ImgSrc(openGraphImageOrFallbackUrl, openGraphImageProfile)
+  // These dimensions are just an educated guess (e.g. we don't take into account image-resizer being turned off)
+  lazy val openGraphImageWidth: Option[Int] = openGraphImageProfile.width
+  lazy val openGraphImageHeight: Option[Int] =
+    for {
+      img <- rawOpenGraphImage
+      width <- openGraphImageWidth
+    } yield Math.round(width / img.ratioDouble).toInt // Assume image resizing maintains aspect ratio to calculate height
 
   // URL of image to use in the twitter card. Image must be less than 1MB in size: https://dev.twitter.com/cards/overview
   lazy val twitterCardImage: String = {
     if (isPaidContent && TwitterShareImageLogoOverlay.isSwitchedOn) {
-      ImgSrc(rawOpenGraphImage, Item700)
+      ImgSrc(openGraphImageOrFallbackUrl, Item700)
     } else {
-      ImgSrc(rawOpenGraphImage, TwitterImage)
+      ImgSrc(openGraphImageOrFallbackUrl, TwitterImage)
     }
   }
 
@@ -290,7 +301,8 @@ final case class Content(
     "og:title" -> metadata.webTitle,
     "og:description" -> fields.trailText.map(StripHtmlTagsAndUnescapeEntities(_)).getOrElse(""),
     "og:image" -> openGraphImage
-  )
+  ) ++ openGraphImageWidth.map("og:image:width" -> _.toString).toMap ++
+    openGraphImageHeight.map("og:image:height" -> _.toString).toMap
 
   val twitterProperties = Map(
     "twitter:app:url:googleplay" -> metadata.webUrl.replaceFirst("^[a-zA-Z]*://", "guardian://"), //replace current scheme with guardian mobile app scheme
@@ -364,17 +376,12 @@ object Content {
       wordCount = Jsoup.clean(fields.body, Whitelist.none()).split("\\s+").length,
       showByline = fapiutils.ResolvedMetaData.fromContentAndTrailMetaData(apiContent, TrailMetaData.empty, cardStyle).showByline,
       hasStoryPackage = apifields.flatMap(_.hasStoryPackage).getOrElse(false),
-      rawOpenGraphImage = {
-        val bestOpenGraphImage = if (FacebookShareUseTrailPicFirstSwitch.isSwitchedOn) {
-          trail.trailPicture.flatMap(_.largestImageUrl)
-        } else {
-          None
-        }
-        bestOpenGraphImage
-          .orElse(elements.mainPicture.flatMap(_.images.largestImageUrl))
-          .orElse(trail.trailPicture.flatMap(_.largestImageUrl))
-          .getOrElse(Configuration.images.fallbackLogo)
-      }
+      rawOpenGraphImage =
+        FacebookShareUseTrailPicFirstSwitch.isSwitchedOn
+          .toOption(trail.trailPicture.flatMap(_.largestImage))
+          .flatten
+          .orElse(elements.mainPicture.flatMap(_.images.largestImage))
+          .orElse(trail.trailPicture.flatMap(_.largestImage))
     )
   }
 }
@@ -687,17 +694,11 @@ object Gallery {
     val contentOverrides = content.copy(
       metadata = metadata,
       trail = trail,
-      rawOpenGraphImage = {
-        val bestOpenGraphImage = if (FacebookShareUseTrailPicFirstSwitch.isSwitchedOn) {
-          trail.trailPicture.flatMap(_.largestImageUrl)
-        } else {
-          None
-        }
-
-        bestOpenGraphImage
-          .orElse(lightbox.galleryImages.headOption.flatMap(_.images.largestImage.flatMap(_.url)))
-          .getOrElse(conf.Configuration.images.fallbackLogo)
-      }
+      rawOpenGraphImage =
+        FacebookShareUseTrailPicFirstSwitch.isSwitchedOn
+          .toOption(trail.trailPicture.flatMap(_.largestImage))
+          .flatten
+          .orElse(lightbox.galleryImages.headOption.flatMap(_.images.largestImage))
     )
 
     Gallery(contentOverrides, lightboxProperties)

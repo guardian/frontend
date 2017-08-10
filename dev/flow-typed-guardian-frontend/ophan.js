@@ -43,7 +43,8 @@ declare type OphanComponentType =
     | 'NEWSLETTER_SUBSCRIPTION'
     | 'SURVEYS_QUESTIONS'
     | 'ACQUISITIONS_EPIC'
-    | 'ACQUISITIONS_ENGAGEMENT_BANNER';
+    | 'ACQUISITIONS_ENGAGEMENT_BANNER'
+    | 'THANK_YOU_EPIC';
 
 declare type OphanComponent = {|
     type: OphanComponentType,

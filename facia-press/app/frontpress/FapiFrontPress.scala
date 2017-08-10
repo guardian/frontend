@@ -21,6 +21,7 @@ import org.joda.time.DateTime
 import play.api.libs.json._
 import play.api.libs.ws.WSClient
 import services.{ConfigAgent, S3FrontsApi}
+import implicits.Booleans._
 
 import scala.concurrent.Future
 import scala.util.{Failure, Success}
@@ -158,8 +159,13 @@ trait FapiFrontPress extends Logging with ExecutionContexts {
       backfill <- getBackfill(collection)
       treats <- getTreats(collection)
     } yield {
-      val trimmedCurated = curated.take(Configuration.facia.collectionCap)
-      val trimmedBackfill = backfill.take(Configuration.facia.collectionCap - trimmedCurated.length)
+      val doNotTrimContainerOfTypes = Seq("nav/list")
+      val maxStories: Int = doNotTrimContainerOfTypes
+        .contains(collection.collectionConfig.collectionType)
+        .toOption(curated.length + backfill.length)
+        .getOrElse(Configuration.facia.collectionCap)
+      val trimmedCurated = curated.take(maxStories)
+      val trimmedBackfill = backfill.take(maxStories - trimmedCurated.length)
       PressedCollection.fromCollectionWithCuratedAndBackfill(
         collection,
         trimmedCurated,
