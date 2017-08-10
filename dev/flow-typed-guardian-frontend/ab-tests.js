@@ -32,8 +32,8 @@ declare type ABTest = {
 
 declare type ContributionsABTest = ABTest & {
     epic: boolean,
-    componentType: OphanComponentType,
     campaignId: string,
+    componentType: OphanComponentType,
     campaignPrefix: string,
     campaignSuffix: string,
     useLocalViewLog: boolean,

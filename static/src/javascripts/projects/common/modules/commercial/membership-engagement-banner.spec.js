@@ -4,7 +4,7 @@ import fakeConfig from 'lib/config';
 import fakeOphan from 'ophan/ng';
 import { commercialFeatures as fakeCommercialFeatures } from 'commercial/modules/commercial-features';
 import fakeMembershipEngagementParameters from 'common/modules/commercial/membership-engagement-banner-parameters';
-import fakeMembershipEngagementTests from 'common/modules/experiments/tests/membership-engagement-banner-tests';
+import { MembershipEngagementBannerTests as fakeMembershipEngagementTests } from 'common/modules/experiments/tests/membership-engagement-banner-tests';
 import { membershipEngagementBannerInit } from 'common/modules/commercial/membership-engagement-banner';
 
 jest.mock('lib/mediator');
@@ -169,6 +169,30 @@ describe('Membership engagement banner', () => {
             );
             fakeMembershipEngagementTests.push({
                 campaignId: 'fake-campaign-id',
+                id: 'fake-id',
+                start: '2017-01-01',
+                expiry: '2027-01-01',
+                author: 'fake-author',
+                description: 'fake-description',
+                audience: 1,
+                audienceOffset: 0,
+                successMeasure: 'fake success measure',
+                audienceCriteria: 'fake audience criteria',
+                variants: [],
+                canRun: () => true,
+                epic: false,
+                componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
+                campaignPrefix: '',
+                campaignSuffix: '',
+                useLocalViewLog: false,
+                overrideCanRun: false,
+                showToContributorsAndSupporters: false,
+                pageCheck: () => true,
+                locations: [],
+                locationCheck: () => true,
+                useTargetingTool: false,
+                insertEvent: '',
+                viewEvent: '',
             });
             fakeMembershipEngagementParameters.offerings = {
                 membership: 'fake-membership-offering',

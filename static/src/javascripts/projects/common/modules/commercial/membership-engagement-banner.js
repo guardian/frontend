@@ -5,7 +5,7 @@ import { Message } from 'common/modules/ui/message';
 import { commercialFeatures } from 'commercial/modules/commercial-features';
 import mediator from 'lib/mediator';
 import { testCanBeRun } from 'common/modules/experiments/test-can-run-checks';
-import MembershipEngagementBannerTests from 'common/modules/experiments/tests/membership-engagement-banner-tests';
+import { MembershipEngagementBannerTests } from 'common/modules/experiments/tests/membership-engagement-banner-tests';
 import { inlineSvg } from 'common/views/svgs';
 import { isInTest, variantFor } from 'common/modules/experiments/segment-util';
 import { epicEngagementBannerTests } from 'common/modules/experiments/acquisition-test-selector';
@@ -19,7 +19,7 @@ import { constructQuery } from 'lib/url';
 const messageCode = 'engagement-banner-2017-07-05';
 
 const getUserTest = (): ?ContributionsABTest => {
-    const engagementBannerTests = MembershipEngagementBannerTests.concat(
+    const engagementBannerTests: ContributionsABTest[] = MembershipEngagementBannerTests.concat(
         epicEngagementBannerTests
     );
 
