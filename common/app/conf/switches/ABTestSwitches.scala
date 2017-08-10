@@ -139,4 +139,13 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
+  Switch(
+    ABTests,
+    "ab-acquisitions-epic-recurring-contribution-uk-support-proposition",
+    "Add recurring contribution uk for support proposition",
+    owners = Seq(Owner.withGithub("svillafe")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 9, 13),
+    exposeClientSide = true
+  )
 }
