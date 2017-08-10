@@ -6,12 +6,10 @@ import java.nio.file.{Files, Paths}
 import javax.script.{CompiledScript, SimpleScriptContext}
 
 import common.Logging
-import model.ApplicationContext
-import play.api.Mode
 import play.api.libs.json.{JsValue, Json}
 import rendering.core.JavascriptEngine.EvalResult
 
-import scala.util.{Failure, Success, Try}
+import scala.util.{Failure, Try}
 
 trait JavascriptRendering extends Logging {
 
@@ -20,12 +18,11 @@ trait JavascriptRendering extends Logging {
   private implicit val scriptContext = createContext()
   private val memoizedJs: Try[EvalResult] = loadJavascript()
 
-  def render(props: Option[JsValue] = None)(implicit ac: ApplicationContext): Try[String] = for {
+  def render(props: Option[JsValue] = None, forceReload: Boolean = false): Try[String] = for {
     propsObject <- encodeProps(props)
-    js <- if(ac.environment.mode == Mode.Dev) loadJavascript() else memoizedJs // Reloading the javascript bundle every time when in dev mode
+    js <- if(forceReload) loadJavascript() else memoizedJs
     rendering <- JavascriptEngine.invoke(js, "render", propsObject)
   } yield rendering
-
 
   private def createContext(): SimpleScriptContext = {
     val context = new SimpleScriptContext()
