@@ -11,7 +11,7 @@ case class RenderingException(error: String) extends RuntimeException(error)
 
 class RenderingActor extends Actor with JavascriptRendering {
 
-  override def javascriptFile: String = "ui.bundle.server.js"
+  override def javascriptFile: String = "ui/dist/ui.bundle.server.js"
 
   override def receive: Receive = {
     case Rendering(renderable, appContext) =>
