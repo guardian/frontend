@@ -135,9 +135,11 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("Mullefa"), Owner.withGithub("desbo")),
     safeState = On,
     sellByDate = new LocalDate(2017, 9, 11),
+    exposeClientSide = true
   )
 
   Switch(
+    ABTests,
     "ab-acquisitions-epic-recurring-contribution-uk-support-proposition",
     "Add recurring contribution uk for support proposition",
     owners = Seq(Owner.withGithub("svillafe")),
