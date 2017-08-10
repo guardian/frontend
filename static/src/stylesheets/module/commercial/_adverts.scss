@@ -9,7 +9,7 @@
     background: $colour;
 }
 
-.adverts {
+.dumathoin {
     padding: 0 $gs-gutter / 2;
     position: relative;
 
@@ -34,13 +34,13 @@
     }
 }
 
-.adverts--legacy {
+.dumathoin--legacy {
     @include mq($until: tablet) {
         padding: 0;
     }
 
     @include mq(mobileLandscape, leftCol) {
-        > .adverts__header {
+        > .dumathoin__header {
             flex-direction: row;
             justify-content: space-between;
         }
@@ -49,7 +49,7 @@
     @include mq(leftCol) {
         display: flex;
 
-        > .adverts__header {
+        > .dumathoin__header {
             box-sizing: border-box;
             padding: $gs-baseline $gs-gutter / 5 * 2;
             width: 160px;
@@ -65,7 +65,7 @@
             &::before,
             &::after,
             > .adverts__body,
-            > .adverts__header {
+            > .dumathoin__header {
                 display: table-cell;
                 vertical-align: top;
             }
@@ -73,13 +73,13 @@
     }
 
     @include mq(wide) {
-        > .adverts__header {
+        > .dumathoin__header {
             padding: $gs-baseline $gs-gutter;
             width: 240px;
         }
     }
 
-    > .adverts__header {
+    > .dumathoin__header {
         @include mq($until: mobileLandscape) {
             padding: $gs-baseline / 2 $gs-gutter / 2;
         }
@@ -133,7 +133,7 @@
         max-width: 100%; /* [1] */
     }
 
-    .adverts__row {
+    .dumathoin__row {
         padding: $gs-baseline / 2 0;
         display: flex;
 
@@ -209,7 +209,7 @@
 
     }
 
-    .adverts__row--wrap {
+    .dumathoin__row--wrap {
         position: relative;
         padding-top: 0;
         flex-wrap: wrap;
@@ -252,7 +252,7 @@
     }
 }
 
-.adverts--legacy-single {
+.dumathoin--legacy-single {
     .advert {
         flex-basis: calc(100% - #{$gs-gutter});
     }
@@ -268,16 +268,16 @@
             margin-right: 0;
         }
 
-        .adverts__row > .advert::after {
+        .dumathoin__row > .advert::after {
             @include separator($neutral-4, 100%, $gs-gutter / 2);
         }
 
-        .adverts__row > .button {
+        .dumathoin__row > .button {
             flex-basis: auto;
             flex-grow: 1;
         }
 
-        .adverts__row > .button::before {
+        .dumathoin__row > .button::before {
             content: none;
         }
     }
@@ -293,7 +293,7 @@
     }
 }
 
-.adverts__header {
+.dumathoin__header {
     display: flex;
     flex-direction: column;
 
@@ -323,7 +323,7 @@
     position: relative;
 }
 
-.adverts__row {
+.dumathoin__row {
     @include mq($until: tablet) {
         /* http://alistapart.com/article/axiomatic-css-and-lobotomized-owls */
         > * + * {
@@ -342,7 +342,7 @@
 
 }
 
-.adverts__row--wrap {
+.dumathoin__row--wrap {
     @include mq(tablet) {
         flex-wrap: wrap;
     }
@@ -362,7 +362,7 @@
         margin-top: $gs-baseline;
     }
 
-    .has-no-flex .adverts--legacy & {
+    .has-no-flex .dumathoin--legacy & {
         > * {
             float: left;
             width: calc(50% - #{$gs-gutter / 2});
@@ -388,7 +388,7 @@
         margin-top: $gs-baseline;
     }
 
-    .has-no-flex .adverts--legacy & {
+    .has-no-flex .dumathoin--legacy & {
         > * {
             float: left;
             width: calc(33.33% - #{$gs-gutter});
@@ -401,9 +401,9 @@
 }
 
 @include mq(tablet) {
-    .adverts__row--2x1x1 > :nth-child(1),
-    .adverts__row--1x2x1 > :nth-child(2),
-    .adverts__row--1x1x2 > :nth-child(3) {
+    .dumathoin__row--2x1x1 > :nth-child(1),
+    .dumathoin__row--1x2x1 > :nth-child(2),
+    .dumathoin__row--1x1x2 > :nth-child(3) {
         flex-basis: calc(50% - #{$gs-gutter} - 1px);
         flex-grow: 0;
 
@@ -412,8 +412,8 @@
         }
     }
 
-    .adverts__row--3x1 > :nth-child(1),
-    .adverts__row--1x3 > :nth-child(2) {
+    .dumathoin__row--3x1 > :nth-child(1),
+    .dumathoin__row--1x3 > :nth-child(2) {
         flex-basis: calc(75% - #{$gs-gutter});
         flex-grow: 0;
 
@@ -473,10 +473,10 @@
 
 
 /* Theming */
-.adverts--legacy {
+.dumathoin--legacy {
     background: #eaeaea;
 
-    > .adverts__header .button {
+    > .dumathoin__header .button {
         color: #ffffff;
     }
 

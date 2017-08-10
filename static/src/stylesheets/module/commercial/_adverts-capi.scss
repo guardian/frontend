@@ -25,7 +25,7 @@
     }
 }
 
-.adverts--capi {
+.dumathoin--capi {
     .adverts__title {
         font-size: get-font-size(headline, 3);
     }
@@ -34,7 +34,7 @@
         padding-bottom: $gs-baseline;
     }
 
-    .adverts__row {
+    .dumathoin__row {
         @include mq($until: tablet) {
             flex-direction: column;
 
@@ -95,7 +95,7 @@
     }
 }
 
-.adverts--paidfor {
+.dumathoin--paidfor {
     @include mq($until: tablet) {
         .adverts__stamp {
             position: absolute;
@@ -109,8 +109,8 @@
         }
     }
 
-    @include mq(mobileLandscape, desktop) {
-        > .adverts__header {
+    @include mq(mobileLandscape, leftCol) {
+        .dumathoin__header {
             flex-wrap: wrap;
         }
 
@@ -120,11 +120,11 @@
     }
 }
 
-.adverts--tone-paidfor {
+.dumathoin--tone-paidfor {
     background-color: $neutral-6;
     position: relative;
 
-    .adverts__header {
+    .dumathoin__header {
         background: $paidfor-background;
     }
 
@@ -144,8 +144,8 @@
         text-align: right;
     }
 
-    .adverts__row > * + *::before,
-    .adverts__row--legacy > .advert::after,
+    .dumathoin__row > * + *::before,
+    .dumathoin__row--legacy > .advert::after,
     .adverts__2cols::after,
     .adverts__3cols::before,
     .adverts__3cols::after {
@@ -315,7 +315,7 @@
         }
     }
 
-    .adverts--legacy-single & {
+    .dumathoin--legacy-single & {
         background: none;
         border-top: 0;
 
