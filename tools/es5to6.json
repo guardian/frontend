@@ -77,8 +77,7 @@
     "projects/common/modules/crosswords/keycodes.js",
     "projects/common/modules/crosswords/main.js",
     "projects/common/modules/crosswords/persistence.js",
-    "projects/common/modules/crosswords/series.js",
-    "projects/common/modules/discussion/loader.js"
+    "projects/common/modules/crosswords/series.js"
   ],
   "dominickendrick": [
     "projects/common/modules/email/email-article.js",
