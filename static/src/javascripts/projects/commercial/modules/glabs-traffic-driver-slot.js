@@ -29,7 +29,7 @@ const rules = {
     selectors: null,
     filter: (slot: Object, index: number): boolean => {
         runningWordCount += wordCount(slot.element);
-        return index >= 2 && runningWordCount >= 100;
+        return index >= 2 && runningWordCount >= 200;
     },
     fromBottom: true,
 };
