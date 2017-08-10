@@ -30,10 +30,6 @@
         font-size: get-font-size(headline, 3);
     }
 
-    .adverts__body {
-        padding-bottom: $gs-baseline;
-    }
-
     .dumathoin__row {
         @include mq($until: tablet) {
             flex-direction: column;
@@ -132,10 +128,6 @@
         fill: $paid-article-brand;
     }
 
-    .adverts__title {
-        @include f-headlineSans;
-    }
-
     .adverts__logo {
         color: #ffffff;
     }
@@ -150,6 +142,16 @@
     .adverts__3cols::before,
     .adverts__3cols::after {
         background: $paid-article-subheader-bg;
+    }
+
+    .button {
+        @include button-colour($paid-article-brand, null);
+
+        &:hover,
+        &:focus,
+        &:active {
+            @include button-colour(darken($paid-article-brand, 5%), null);
+        }
     }
 
     .adverts__more > summary {
@@ -174,16 +176,6 @@
         background: none;
         border-color: $neutral-4;
         color: $neutral-1;
-    }
-
-    .button {
-        @include button-colour($paid-article-brand, null);
-
-        &:hover,
-        &:focus,
-        &:active {
-            @include button-colour(darken($paid-article-brand, 5%), null);
-        }
     }
 }
 
@@ -229,13 +221,6 @@
     border-top: 1px solid;
     transition: background .1s;
 
-    &:hover,
-    &:focus {
-        .advert__title {
-            text-decoration: none;
-        }
-    }
-
     .advert__title,
     .advert__meta,
     .advert__standfirst {
@@ -251,6 +236,11 @@
         @include f-headlineSans;
         font-weight: 400;
         margin-bottom: .5em;
+
+        &:hover,
+        &:focus {
+            text-decoration: none;
+        }
 
         .inline-icon__svg {
             width: 1.1em;

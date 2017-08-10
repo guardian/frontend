@@ -34,30 +34,91 @@
     }
 }
 
+.dumathoin__header {
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    padding: $gs-baseline / 2 $gs-gutter / 2;
+    width: 100%;
+
+    @include mq(mobileLandscape, leftCol) {
+        flex-direction: row;
+        justify-content: space-between;
+        padding: $gs-baseline / 2 $gs-gutter;
+    }
+
+    @include mq(leftCol) {
+        padding: $gs-baseline $gs-gutter / 5 * 2;
+        width: 160px;
+    }
+
+    @include mq(tablet, desktop) {
+        padding: 0 $gs-gutter;
+    }
+
+    @include mq(wide) {
+        padding: $gs-baseline $gs-gutter;
+        width: 240px;
+    }
+
+    .button {
+        color: #ffffff;
+    }
+}
+
+.adverts__title {
+    @include f-headlineSans;
+}
+
+.adverts__body {
+    position: relative;
+    padding-bottom: $gs-baseline;
+
+    @include mq(mobileLandscape) {
+        box-sizing: border-box;
+        max-width: gs-span(8) + ($gs-gutter * 2);
+    }
+    @include mq(tablet) {
+        max-width: gs-span(9) + ($gs-gutter * 2);
+        padding-bottom: $gs-baseline;
+    }
+    @include mq(desktop) {
+        max-width: gs-span(12) + ($gs-gutter * 2);
+    }
+    @include mq(leftCol) {
+        flex: 1;
+    }
+    @include mq($until: tablet) {
+        margin: auto;
+    }
+}
+
 .dumathoin--legacy {
+    background: $neutral-6;
+
     @include mq($until: tablet) {
         padding: 0;
     }
 
-    @include mq(mobileLandscape, leftCol) {
-        > .dumathoin__header {
-            flex-direction: row;
-            justify-content: space-between;
+    .adverts__blurb {
+        @include fs-headline(1);
+        color: #ffffff;
+
+        @include mq($until: leftCol) {
+            display: none;
         }
+
+        @include mq(leftCol) {
+            @include fs-headline(2);
+        }
+    }
+
+    .button {
+        margin-right: 0;
     }
 
     @include mq(leftCol) {
         display: flex;
-
-        > .dumathoin__header {
-            box-sizing: border-box;
-            padding: $gs-baseline $gs-gutter / 5 * 2;
-            width: 160px;
-        }
-
-        > .adverts__body {
-            flex: 1;
-        }
 
         .has-no-flex & {
             display: table;
@@ -69,37 +130,6 @@
                 display: table-cell;
                 vertical-align: top;
             }
-        }
-    }
-
-    @include mq(wide) {
-        > .dumathoin__header {
-            padding: $gs-baseline $gs-gutter;
-            width: 240px;
-        }
-    }
-
-    > .dumathoin__header {
-        @include mq($until: mobileLandscape) {
-            padding: $gs-baseline / 2 $gs-gutter / 2;
-        }
-
-        @include mq(mobileLandscape, leftCol) {
-            padding: $gs-baseline / 2 $gs-gutter;
-        }
-    }
-
-    > .adverts__body {
-        @include mq(mobileLandscape) {
-            box-sizing: border-box;
-            max-width: gs-span(8) + ($gs-gutter * 2);
-        }
-        @include mq(tablet) {
-            max-width: gs-span(9) + ($gs-gutter * 2);
-            padding-bottom: $gs-baseline;
-        }
-        @include mq(desktop) {
-            max-width: gs-span(12) + ($gs-gutter * 2);
         }
     }
 
@@ -293,15 +323,6 @@
     }
 }
 
-.dumathoin__header {
-    display: flex;
-    flex-direction: column;
-
-    @include mq(tablet) {
-        padding: 0 $gs-gutter;
-    }
-}
-
 .adverts__kicker {
     .paidfor-meta__label {
         padding-left: 0;
@@ -317,10 +338,6 @@
 
 .adverts__stamp {
     margin-top: auto;
-}
-
-.adverts__body {
-    position: relative;
 }
 
 .dumathoin__row {
@@ -468,33 +485,6 @@
     .has-no-flex & {
         clear: both;
         padding-top: $gs-baseline;
-    }
-}
-
-
-/* Theming */
-.dumathoin--legacy {
-    background: #eaeaea;
-
-    > .dumathoin__header .button {
-        color: #ffffff;
-    }
-
-    .adverts__blurb {
-        @include fs-headline(1);
-        color: #ffffff;
-
-        @include mq($until: leftCol) {
-            display: none;
-        }
-
-        @include mq(leftCol) {
-            @include fs-headline(2);
-        }
-    }
-
-    .button {
-        margin-right: 0;
     }
 }
 
