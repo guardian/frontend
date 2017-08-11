@@ -38,6 +38,7 @@
                 .addParams(List(
                 "enablejsapi" -> 1,
                 "rel" -> 0,
+                "showinfo" -> 0,
                 "origin" -> (if(mediaWrapper.contains(EmbedPage)) Some(Media.externalEmbedHost) else if(!host.isEmpty) Some(host) else None)
                 )).toString
                 }") { embedUri: String  =>

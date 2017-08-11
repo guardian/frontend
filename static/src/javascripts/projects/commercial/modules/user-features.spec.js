@@ -3,17 +3,22 @@
 import { addCookie, removeCookie, getCookie } from 'lib/cookies';
 import fetchJson from 'lib/fetch-json';
 import identity from 'common/modules/identity/api';
-import {
-    refresh,
-    isAdFreeUser,
-    isPayingMember,
-    isInBrexitCohort,
-} from './user-features.js';
+import { refresh, isAdFreeUser, isPayingMember } from './user-features.js';
 
 jest.mock('projects/common/modules/identity/api', () => ({
     isUserLoggedIn: jest.fn(),
 }));
 jest.mock('lib/fetch-json', () => jest.fn(() => Promise.resolve()));
+
+jest.mock('lib/config', () => ({
+    switches: {
+        adFreeSubscriptionTrial: true,
+        adFreeStrictExpiryEnforcement: true,
+    },
+    page: {
+        userAttributesApiUrl: '',
+    },
+}));
 
 const fetchJsonSpy: any = fetchJson;
 const isUserLoggedIn: any = identity.isUserLoggedIn;
@@ -21,8 +26,7 @@ const isUserLoggedIn: any = identity.isUserLoggedIn;
 const PERSISTENCE_KEYS = {
     USER_FEATURES_EXPIRY_COOKIE: 'gu_user_features_expiry',
     PAYING_MEMBER_COOKIE: 'gu_paying_member',
-    AD_FREE_USER_COOKIE: 'GU_AFU',
-    JOIN_DATE_COOKIE: 'gu_join_date',
+    AD_FREE_USER_COOKIE: 'GU_AF1',
 };
 
 const setAllFeaturesData = opts => {
@@ -31,11 +35,26 @@ const setAllFeaturesData = opts => {
     const expiryDate = opts.isExpired
         ? new Date(currentTime - msInOneDay)
         : new Date(currentTime + msInOneDay);
-
+    const adFreeExpiryDate = opts.isExpired
+        ? new Date(currentTime - msInOneDay * 2)
+        : new Date(currentTime + msInOneDay * 2);
     addCookie(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE, 'true');
-    addCookie(PERSISTENCE_KEYS.AD_FREE_USER_COOKIE, 'false');
+    addCookie(
+        PERSISTENCE_KEYS.AD_FREE_USER_COOKIE,
+        adFreeExpiryDate.getTime().toString()
+    );
     addCookie(
         PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE,
+        expiryDate.getTime().toString()
+    );
+};
+
+const setExpiredAdFreeData = () => {
+    const currentTime = new Date().getTime();
+    const msInOneDay = 24 * 60 * 60 * 1000;
+    const expiryDate = new Date(currentTime - msInOneDay * 2);
+    addCookie(
+        PERSISTENCE_KEYS.AD_FREE_USER_COOKIE,
         expiryDate.getTime().toString()
     );
 };
@@ -44,7 +63,6 @@ const deleteAllFeaturesData = () => {
     removeCookie(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE);
     removeCookie(PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE);
     removeCookie(PERSISTENCE_KEYS.AD_FREE_USER_COOKIE);
-    removeCookie(PERSISTENCE_KEYS.JOIN_DATE_COOKIE);
 };
 
 describe('Refreshing the features data', () => {
@@ -76,8 +94,8 @@ describe('Refreshing the features data', () => {
             expect(
                 getCookie(PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE)
             ).toEqual(expect.stringMatching(/\d{13}/));
-            expect(getCookie(PERSISTENCE_KEYS.AD_FREE_USER_COOKIE)).toBe(
-                'false'
+            expect(getCookie(PERSISTENCE_KEYS.AD_FREE_USER_COOKIE)).toEqual(
+                expect.stringMatching(/\d{13}/)
             );
         });
 
@@ -96,10 +114,14 @@ describe('Refreshing the features data', () => {
             expect(fetchJsonSpy).toHaveBeenCalledTimes(1);
         });
 
-        it('Performs an update if the ad-free state is missing', () => {
+        it('Performs an update if the ad-free state is stale and strict expiry enforcement is enabled', () => {
+            // This is a slightly synthetic setup - the ad-free cookie is rewritten with every
+            // refresh that happens as a result of expired features data, but we want to check
+            // that a refresh could be triggered based on ad-free state alone if the strict
+            // expiry enforcement switch is ON.
             // Set everything except the ad-free cookie
-            setAllFeaturesData({ isExpired: true });
-            removeCookie(PERSISTENCE_KEYS.AD_FREE_USER_COOKIE);
+            setAllFeaturesData({ isExpired: false });
+            setExpiredAdFreeData();
 
             refresh();
             expect(fetchJsonSpy).toHaveBeenCalledTimes(1);
@@ -143,7 +165,7 @@ describe('The isPayingMember getter', () => {
     it('Is false when the user is logged out', () => {
         jest.resetAllMocks();
         isUserLoggedIn.mockReturnValue(false);
-        expect(isAdFreeUser()).toBe(false);
+        expect(isPayingMember()).toBe(false);
     });
 
     describe('When the user is logged in', () => {
@@ -170,41 +192,6 @@ describe('The isPayingMember getter', () => {
     });
 });
 
-describe('The isInBrexitCohort getter', () => {
-    it('Is false if the user is logged out', () => {
-        jest.resetAllMocks();
-        isUserLoggedIn.mockReturnValue(false);
-        expect(isAdFreeUser()).toBe(false);
-    });
-
-    describe('When the user is logged in', () => {
-        beforeEach(() => {
-            jest.resetAllMocks();
-            isUserLoggedIn.mockReturnValue(true);
-        });
-
-        it('Is true for a user who joined on referendum day', () => {
-            addCookie(PERSISTENCE_KEYS.JOIN_DATE_COOKIE, '2016-06-23');
-            expect(isInBrexitCohort()).toBe(true);
-        });
-
-        it('Is false when the user joined before referendum day', () => {
-            addCookie(PERSISTENCE_KEYS.JOIN_DATE_COOKIE, '2016-01-01');
-            expect(isInBrexitCohort()).toBe(false);
-        });
-
-        it('Is false when the user joined after end of cohort', () => {
-            addCookie(PERSISTENCE_KEYS.JOIN_DATE_COOKIE, '2016-08-01');
-            expect(isInBrexitCohort()).toBe(false);
-        });
-
-        it('Is false when the user has no join date cookie', () => {
-            removeCookie(PERSISTENCE_KEYS.JOIN_DATE_COOKIE);
-            expect(isInBrexitCohort()).toBe(false);
-        });
-    });
-});
-
 describe('Storing new feature data', () => {
     beforeEach(() => {
         jest.resetAllMocks();
@@ -220,13 +207,11 @@ describe('Storing new feature data', () => {
                 adFree: false,
             })
         );
-        refresh().then(() => {
+        return refresh().then(() => {
             expect(getCookie(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE)).toBe(
                 'false'
             );
-            expect(getCookie(PERSISTENCE_KEYS.AD_FREE_USER_COOKIE)).toBe(
-                'false'
-            );
+            expect(getCookie(PERSISTENCE_KEYS.AD_FREE_USER_COOKIE)).toBeNull();
         });
     });
 
@@ -237,27 +222,34 @@ describe('Storing new feature data', () => {
                 adFree: true,
             })
         );
-        refresh().then(() => {
+        return refresh().then(() => {
             expect(getCookie(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE)).toBe(
                 'true'
             );
-            expect(getCookie(PERSISTENCE_KEYS.AD_FREE_USER_COOKIE)).toBe(
-                'true'
-            );
+            expect(
+                getCookie(PERSISTENCE_KEYS.AD_FREE_USER_COOKIE)
+            ).toBeTruthy();
+            expect(
+                isNaN(
+                    parseInt(
+                        getCookie(PERSISTENCE_KEYS.AD_FREE_USER_COOKIE),
+                        10
+                    )
+                )
+            ).toBe(false);
         });
     });
 
-    it('Puts an expiry date in an accompanying cookie', () => {
+    it('Puts an expiry date in an accompanying cookie', () =>
         refresh().then(() => {
             const expiryDate = getCookie(
                 PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE
             );
-            expect(expiryDate).not.toBeNull();
-            expect(isNaN(expiryDate)).toBe(false);
-        });
-    });
+            expect(expiryDate).toBeTruthy();
+            expect(isNaN(parseInt(expiryDate, 10))).toBe(false);
+        }));
 
-    it('The expiry date is in the future', () => {
+    it('The expiry date is in the future', () =>
         refresh().then(() => {
             const expiryDateString = getCookie(
                 PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE
@@ -265,25 +257,5 @@ describe('Storing new feature data', () => {
             const expiryDateEpoch = parseInt(expiryDateString, 10);
             const currentTimeEpoch = new Date().getTime();
             expect(currentTimeEpoch < expiryDateEpoch).toBe(true);
-        });
-    });
-
-    it('Puts the membershipJoinDate in an appropriate cookie', () => {
-        fetchJsonSpy.mockReturnValueOnce(
-            Promise.resolve({
-                membershipJoinDate: '2016-06-30',
-            })
-        );
-        refresh().then(() => {
-            expect(getCookie(PERSISTENCE_KEYS.JOIN_DATE_COOKIE)).toBe(
-                '2016-06-30'
-            );
-        });
-    });
-
-    it('Saves no join date cookie if no join date', () => {
-        refresh().then(() => {
-            expect(getCookie(PERSISTENCE_KEYS.JOIN_DATE_COOKIE)).toBeNull();
-        });
-    });
+        }));
 });

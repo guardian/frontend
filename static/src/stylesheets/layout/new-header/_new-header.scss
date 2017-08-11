@@ -5,6 +5,11 @@ from scrolling */
         overflow: hidden;
         width: 100%;
     }
+
+    // Prevents horizontal scrollbar https://codepen.io/tigt/post/bust-elements-out-of-containers-with-one-line-of-css#oh-no-a-horizontal-scrollbar-6
+    @include mq(desktop) {
+        overflow-x: hidden;
+    }
 }
 
 .new-header {
@@ -100,18 +105,20 @@ from scrolling */
 
     @include mq(mobileLandscape) {
         height: calc(3 / 16 * 260px);
+        margin-bottom: 0;
         margin-right: $gs-gutter;
         width: 260px;
     }
 
     @include mq(tablet) {
-        height: calc(3 / 16 * 385px);
-        width: 385px;
+        height: calc(3 / 16 * 345px);
+        margin-bottom: -5px;
+        width: 345px;
     }
 
-    @include mq(desktop) {
+    @include mq(leftCol) {
         height: calc(3 / 16 * 385px);
-        margin-bottom: $gs-baseline / 4;
+        margin-bottom: -1px;
         width: 385px;
     }
 

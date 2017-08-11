@@ -1,7 +1,6 @@
 /*global escape:true */
 define([
     'lib/ajax',
-    'lib/atob',
     'lib/config',
     'lib/cookies',
     'lib/mediator',
@@ -9,7 +8,6 @@ define([
     'common/modules/asyncCallMerger'
 ], function (
     ajax,
-    utilAtob,
     config,
     cookies,
     mediator,
@@ -170,7 +168,7 @@ define([
      * @return {string}
      */
     Id.decodeBase64 = function (str) {
-        return decodeURIComponent(escape(utilAtob(str.replace(/-/g, '+').replace(/_/g, '/').replace(/,/g, '='))));
+        return decodeURIComponent(escape(window.atob(str.replace(/-/g, '+').replace(/_/g, '/').replace(/,/g, '='))));
     };
 
     /**

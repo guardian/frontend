@@ -5,9 +5,7 @@ import java.util.TimeZone
 import app.LifecycleComponent
 import common._
 import conf.Configuration
-import conf.Configuration.environment
 import conf.switches.Switches._
-import football.feed.MatchDayRecorder
 import jobs._
 import play.api.inject.ApplicationLifecycle
 import services.EmailService
@@ -23,7 +21,6 @@ class AdminLifecycle(appLifecycle: ApplicationLifecycle,
                      fastlyCloudwatchLoadJob: FastlyCloudwatchLoadJob,
                      r2PagePressJob: R2PagePressJob,
                      videoEncodingsJob: VideoEncodingsJob,
-                     matchDayRecorder: MatchDayRecorder,
                      analyticsSanityCheckJob: AnalyticsSanityCheckJob,
                      rebuildIndexJob: RebuildIndexJob)(implicit ec: ExecutionContext) extends LifecycleComponent with Logging {
 
@@ -84,11 +81,6 @@ class AdminLifecycle(appLifecycle: ApplicationLifecycle,
       rebuildIndexJob.run()
     }
 
-    // every minute, 22 seconds past the minute (e.g 13:01:22, 13:02:22)
-    jobs.schedule("MatchDayRecorderJob", "22 * * * * ?") {
-      matchDayRecorder.record()
-    }
-
     val londonTime = TimeZone.getTimeZone("Europe/London")
     jobs.scheduleWeekdayJob("ExpiringSwitchesEmailJob", 48, 8, londonTime) {
       log.info("Starting ExpiringSwitchesEmailJob")
@@ -118,10 +110,7 @@ class AdminLifecycle(appLifecycle: ApplicationLifecycle,
     jobs.deschedule("FastlyCloudwatchLoadJob")
     jobs.deschedule("R2PagePressJob")
     jobs.deschedule("AnalyticsSanityCheckJob")
-    jobs.deschedule("FrontPressJob")
     jobs.deschedule("RebuildIndexJob")
-    jobs.deschedule("MatchDayRecorderJob")
-    jobs.deschedule("SentryReportJob")
     jobs.deschedule("FrontPressJobHighFrequency")
     jobs.deschedule("FrontPressJobStandardFrequency")
     jobs.deschedule("FrontPressJobLowFrequency")

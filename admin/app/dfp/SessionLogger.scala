@@ -1,7 +1,7 @@
 package dfp
 
-import com.google.api.ads.dfp.axis.utils.v201608.StatementBuilder
-import com.google.api.ads.dfp.axis.v201608._
+import com.google.api.ads.dfp.axis.utils.v201705.StatementBuilder
+import com.google.api.ads.dfp.axis.v201705._
 import common.Logging
 
 import scala.util.control.NonFatal
@@ -45,7 +45,7 @@ private[dfp] object SessionLogger extends Logging {
         log.error(
           s"$baseMessage failed: API exception in field '$path', " +
           s"caused by an invalid value '$trigger', " +
-          s"with the error message $msg"
+          s"with the error message $msg", e
         )
       }
     }
@@ -82,7 +82,7 @@ private[dfp] object SessionLogger extends Logging {
         logApiException(e, msgPrefix)
         None
       case NonFatal(e) =>
-        log.error(s"$msgPrefix failed: ${e.getMessage}")
+        log.error(s"$msgPrefix failed", e)
         None
     }
   }

@@ -5,7 +5,7 @@
 
 @if(IdentityProfileNavigationSwitch.isSwitchedOn) {
     <li class="menu-item js-navigation-sign-in">
-        <a href="@Configuration.id.url/signin?INTCMP=DOTCOM_HEADER_SIGNIN"
+        <a href="@Configuration.id.url/signin?INTCMP=DOTCOM_NEWHEADER_SIGNIN"
            data-link-name="nav2 : sign in"
            class="menu-item__title">
             Sign in/up
@@ -17,7 +17,7 @@
             @fragments.inlineSvg("profile", "icon", List("menu-user__avatar-fallback", "js-navigation-account-avatar-fallback"))
 
             <img src=""
-                 class="menu-user__avatar u-h js-navigation-account-avatar" />
+                 class="menu-user__avatar u-h js-navigation-account-avatar" alt="user avatar"/>
 
             <p class="menu-user__name js-navigation-account-username"></p>
         </div>

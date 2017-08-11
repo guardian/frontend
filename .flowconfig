@@ -1,6 +1,7 @@
 [ignore]
 .*/node_modules/fbjs/.*
 .*/node_modules/weinre/.*
+<PROJECT_ROOT>/ui/.*
 
 [include]
 
@@ -8,13 +9,13 @@
 dev/flow-typed
 dev/flow-typed-guardian-frontend
 
-
 [options]
 module.name_mapper='^admin' -> 'projects/admin'
 module.name_mapper='^common' -> 'projects/common'
 module.name_mapper='^facia' -> 'projects/facia'
 module.name_mapper='^membership' -> 'projects/membership'
 module.name_mapper='^commercial' -> 'projects/commercial'
+module.name_mapper='^journalism' -> 'projects/journalism'
 module.name_mapper='^lodash\(.*\)$' -> 'lodash-amd/compat\1'
 module.name_mapper='^picturefill' -> 'projects/common/utils/picturefill'
 module.name_mapper='^raven' -> 'raven-js'

@@ -1,11 +1,11 @@
 // @flow
 import fastdom from 'lib/fastdom-promise';
-import detect from 'lib/detect';
+import { getBreakpoint } from 'lib/detect';
 import mediator from 'lib/mediator';
 import { addSlot } from 'commercial/modules/dfp/add-slot';
 import { commercialFeatures } from 'commercial/modules/commercial-features';
 import createSlot from 'commercial/modules/dfp/create-slot';
-import spaceFiller from 'common/modules/article/space-filler';
+import { spaceFiller } from 'common/modules/article/space-filler';
 
 const INTERVAL = 5; // number of posts between ads
 const OFFSET = 1.5; // ratio of the screen height from which ads are loaded
@@ -88,8 +88,8 @@ const getSlotName = (isMobile: boolean, slotCounter: number): string => {
     return `inline${slotCounter + 1}`;
 };
 
-const insertAds = (slots: HTMLCollection<HTMLElement>): void => {
-    const isMobile = detect.getBreakpoint() === 'mobile';
+const insertAds = (slots: Element[]): void => {
+    const isMobile = getBreakpoint() === 'mobile';
 
     for (let i = 0; i < slots.length && SLOTCOUNTER < MAX_ADS; i += 1) {
         const slotName = getSlotName(isMobile, SLOTCOUNTER);
@@ -106,7 +106,7 @@ const insertAds = (slots: HTMLCollection<HTMLElement>): void => {
     }
 };
 
-const fill = (rules: spaceFillerRules): void =>
+const fill = (rules: spaceFillerRules): Promise<void> =>
     spaceFiller.fillSpace(rules, insertAds).then(result => {
         if (result && SLOTCOUNTER < MAX_ADS) {
             const el = document.querySelector(
@@ -136,7 +136,10 @@ export const initLiveblogAdverts = (
     }
 
     fastdom
-        .read(() => (WINDOWHEIGHT = getWindowHeight()))
+        .read(() => {
+            WINDOWHEIGHT = getWindowHeight();
+            return WINDOWHEIGHT;
+        })
         .then(getSpaceFillerRules)
         .then(fill)
         .then(stop);

@@ -4,6 +4,7 @@ import { catchErrorsWithContext } from 'lib/robust';
 import { markTime } from 'lib/user-timing';
 import reportError from 'lib/report-error';
 import highMerch from 'commercial/modules/high-merch';
+import { glabsTrafficDriverSlotInit } from 'commercial/modules/glabs-traffic-driver-slot';
 import { articleAsideAdvertsInit } from 'commercial/modules/article-aside-adverts';
 import { articleBodyAdvertsInit } from 'commercial/modules/article-body-adverts';
 import { closeDisabledSlots } from 'commercial/modules/close-disabled-slots';
@@ -16,9 +17,9 @@ import hostedGallery from 'commercial/modules/hosted/gallery';
 import { initHostedCarousel } from 'commercial/modules/hosted/onward-journey-carousel';
 import { loadOnwardComponent } from 'commercial/modules/hosted/onward';
 import { initLiveblogAdverts } from 'commercial/modules/liveblog-adverts';
-import stickyTopBanner from 'commercial/modules/sticky-top-banner';
-import thirdPartyTags from 'commercial/modules/third-party-tags';
-import paidforBand from 'commercial/modules/paidfor-band';
+import { initStickyTopBanner } from 'commercial/modules/sticky-top-banner';
+import { initThirdPartyTags } from 'commercial/modules/third-party-tags';
+import { initPaidForBand } from 'commercial/modules/paidfor-band';
 import { paidContainers } from 'commercial/modules/paid-containers';
 import {
     defer,
@@ -32,11 +33,11 @@ import { commercialFeatures } from 'commercial/modules/commercial-features';
 
 const commercialModules: Array<Array<any>> = [
     ['cm-highMerch', highMerch.init],
-    ['cm-thirdPartyTags', thirdPartyTags.init],
+    ['cm-thirdPartyTags', initThirdPartyTags],
     ['cm-prepare-googletag', prepareGoogletag.init, true],
     ['cm-closeDisabledSlots', closeDisabledSlots],
     ['cm-paidContainers', paidContainers],
-    ['cm-paidforBand', paidforBand.init],
+    ['cm-paidforBand', initPaidForBand],
 ];
 
 if (!commercialFeatures.adFree) {
@@ -44,9 +45,10 @@ if (!commercialFeatures.adFree) {
         ['cm-prepare-sonobi-tag', prepareSonobiTag.init, true],
         ['cm-prepare-switch-tag', prepareSwitchTag.init, true],
         ['cm-articleAsideAdverts', articleAsideAdvertsInit, true],
+        ['cm-glabsTrafficDriverSlot', glabsTrafficDriverSlotInit, true],
         ['cm-articleBodyAdverts', articleBodyAdvertsInit],
         ['cm-liveblogAdverts', initLiveblogAdverts, true],
-        ['cm-stickyTopBanner', stickyTopBanner.init]
+        ['cm-stickyTopBanner', initStickyTopBanner]
     );
 }
 

@@ -17,23 +17,24 @@ import play.filters.csrf._
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.libs.json._
 
-class EmailController(returnUrlVerifier: ReturnUrlVerifier,
-                      conf: IdentityConfiguration,
-                      api: IdApiClient,
-                      idRequestParser: IdRequestParser,
-                      idUrlBuilder: IdentityUrlBuilder,
-                      authenticatedActions: AuthenticatedActions,
-                      val messagesApi: MessagesApi,
-                      csrfCheck: CSRFCheck,
-                      csrfAddToken: CSRFAddToken)(implicit context: ApplicationContext)
-  extends Controller with ExecutionContexts with SafeLogging with I18nSupport {
-    import EmailPrefsData._
+class EmailController(
+    returnUrlVerifier: ReturnUrlVerifier,
+    conf: IdentityConfiguration,
+    api: IdApiClient,
+    idRequestParser: IdRequestParser,
+    idUrlBuilder: IdentityUrlBuilder,
+    authenticatedActions: AuthenticatedActions,
+    val messagesApi: MessagesApi,
+    csrfCheck: CSRFCheck,
+    csrfAddToken: CSRFAddToken)(implicit context: ApplicationContext)
+    extends Controller with ExecutionContexts with SafeLogging with I18nSupport {
+
+  import EmailPrefsData._
   import authenticatedActions.authAction
 
   val page = IdentityPage("/email-prefs", "Email preferences")
-  protected def formActionUrl(idUrlBuilder: IdentityUrlBuilder, idRequest: IdentityRequest): String = idUrlBuilder.buildUrl("/email-prefs", idRequest)
 
-  def preferences = csrfAddToken {
+  def preferences: Action[AnyContent] = csrfAddToken {
     authAction.async { implicit request =>
       val idRequest = idRequestParser(request)
       val userId = request.user.getId()
@@ -61,12 +62,19 @@ class EmailController(returnUrlVerifier: ReturnUrlVerifier,
           }
         }
       }).map{ form =>
-        Ok(views.html.profile.emailPrefs(page, form, formActionUrl(idUrlBuilder, idRequest), getEmailSubscriptions(form).toList, EmailNewsletters.all))
+        Ok(views.html.profile.emailPrefs(
+            page,
+            form,
+            getEmailSubscriptions(form).toList, EmailNewsletters.all,
+            idRequest,
+            idUrlBuilder
+          )
+        )
       }
     }
   }
 
-  def savePreferences = csrfCheck {
+  def savePreferences: Action[AnyContent] = csrfCheck {
     authAction.async { implicit request =>
 
       val idRequest = idRequestParser(request)

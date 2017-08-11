@@ -12,33 +12,29 @@ const adSpec = {
 };
 
 describe('Cross-frame messenger: setBackground', () => {
-    beforeEach(done => {
+    beforeEach(() => {
         if (document.body) {
             document.body.innerHTML = `
               <div>
                   <div id="slot01"><div id="iframe01" class="iframe"></div></div>
               </div>`;
         }
-        done();
+        expect.hasAssertions();
     });
 
-    it('should create new elements if there are specs', done => {
+    it('should create new elements if there are specs', () => {
         const fallback = document.createElement('div');
         const fakeAdSlot = document.getElementById('slot01') || fallback;
 
-        setBackground(adSpec, fakeAdSlot)
-            .then(() => {
-                const creative: Object =
-                    document.querySelector('.creative__background') || {};
-                const parent: Object =
-                    document.querySelector('.creative__background-parent') ||
-                    {};
-                expect(creative.toString()).toEqual('[object HTMLDivElement]');
-                expect(parent.toString()).toEqual('[object HTMLDivElement]');
-                expect(creative.className).toMatch(/background--fixed/);
-            })
-            .then(done)
-            .catch(done.fail);
+        return setBackground(adSpec, fakeAdSlot).then(() => {
+            const creative: Object =
+                document.querySelector('.creative__background') || {};
+            const parent: Object =
+                document.querySelector('.creative__background-parent') || {};
+            expect(creative.toString()).toEqual('[object HTMLDivElement]');
+            expect(parent.toString()).toEqual('[object HTMLDivElement]');
+            expect(creative.className).toMatch(/background--fixed/);
+        });
     });
 });
 

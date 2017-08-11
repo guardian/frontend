@@ -8,35 +8,38 @@ import { daysSince } from 'lib/time-utils';
 // Persistence keys
 const USER_FEATURES_EXPIRY_COOKIE = 'gu_user_features_expiry';
 const PAYING_MEMBER_COOKIE = 'gu_paying_member';
-const AD_FREE_USER_COOKIE = 'GU_AFU';
-const JOIN_DATE_COOKIE = 'gu_join_date';
+const AD_FREE_USER_COOKIE = 'GU_AF1';
 
 const userHasData = (): boolean => {
     const cookie =
         getCookie(USER_FEATURES_EXPIRY_COOKIE) ||
         getCookie(PAYING_MEMBER_COOKIE) ||
-        getCookie(AD_FREE_USER_COOKIE) ||
-        getCookie(JOIN_DATE_COOKIE);
+        getCookie(AD_FREE_USER_COOKIE);
     return !!cookie;
 };
 
-const adFreeDataIsPresent = (): boolean => !!getCookie(AD_FREE_USER_COOKIE);
+const adFreeDataIsPresent = (): boolean => {
+    const cookieVal = getCookie(AD_FREE_USER_COOKIE);
+    return !isNaN(parseInt(cookieVal, 10));
+};
+
+const timeInDaysFromNow = (daysFromNow: number): string => {
+    const tmpDate = new Date();
+    tmpDate.setDate(tmpDate.getDate() + daysFromNow);
+    return tmpDate.getTime().toString();
+};
 
 const persistResponse = (JsonResponse: () => void) => {
-    const expiryDate = new Date();
-    expiryDate.setDate(expiryDate.getDate() + 1);
-    addCookie(USER_FEATURES_EXPIRY_COOKIE, expiryDate.getTime().toString());
+    const switches = config.switches;
+    addCookie(USER_FEATURES_EXPIRY_COOKIE, timeInDaysFromNow(1));
     addCookie(PAYING_MEMBER_COOKIE, !JsonResponse.adblockMessage);
-    if (JsonResponse.adFree) {
-        addCookie(AD_FREE_USER_COOKIE, expiryDate.getTime().toString());
-    } else if (adFreeDataIsPresent()) {
+
+    if (adFreeDataIsPresent() && !JsonResponse.adFree) {
         removeCookie(AD_FREE_USER_COOKIE);
     }
 
-    if (JsonResponse.membershipJoinDate) {
-        addCookie(JOIN_DATE_COOKIE, JsonResponse.membershipJoinDate);
-    } else {
-        removeCookie(JOIN_DATE_COOKIE);
+    if (switches.adFreeSubscriptionTrial && JsonResponse.adFree) {
+        addCookie(AD_FREE_USER_COOKIE, timeInDaysFromNow(2));
     }
 };
 
@@ -45,7 +48,6 @@ const deleteOldData = (): void => {
     removeCookie(USER_FEATURES_EXPIRY_COOKIE);
     removeCookie(PAYING_MEMBER_COOKIE);
     removeCookie(AD_FREE_USER_COOKIE);
-    removeCookie(JOIN_DATE_COOKIE);
 };
 
 const requestNewData = (): Promise<void> =>
@@ -69,7 +71,13 @@ const featuresDataIsMissing = (): boolean =>
 const featuresDataIsOld = (): boolean =>
     datedCookieIsOld(USER_FEATURES_EXPIRY_COOKIE);
 
-const adFreeDataIsOld = (): boolean => datedCookieIsOld(AD_FREE_USER_COOKIE);
+const adFreeDataIsOld = (): boolean => {
+    const switches = config.switches;
+    return (
+        switches.adFreeStrictExpiryEnforcement &&
+        datedCookieIsOld(AD_FREE_USER_COOKIE)
+    );
+};
 
 const userNeedsNewFeatureData = (): boolean =>
     featuresDataIsMissing() ||
@@ -111,30 +119,15 @@ const isContributor = (): boolean => !!lastContributionDate;
 // in last six months
 const isRecentContributor = (): boolean => daysSinceLastContribution <= 180;
 
+/*
+    Whenever the checks are updated, please make sure to update
+    applyRenderConditions.scala.js too, where the global CSS class, indicating
+    the user should not see the revenue messages, is added to the body
+*/
 const shouldSeeReaderRevenue = (): boolean =>
     !isPayingMember() && !isRecentContributor();
 
 const isAdFreeUser = (): boolean => adFreeDataIsPresent() && !adFreeDataIsOld();
-
-const toDate = (dateStr: string): Date => {
-    const parts = Array.from(dateStr.split('-'), s => parseInt(s, 10));
-
-    return new Date(parts[0], parts[1] - 1, parts[2]);
-};
-
-const isInBrexitCohort = (): boolean => {
-    if (identity.isUserLoggedIn()) {
-        const start = toDate('2016-06-23');
-        const end = toDate('2016-07-31');
-
-        const cookie = getCookie(JOIN_DATE_COOKIE);
-        if (cookie) {
-            const joinDate = toDate(cookie.toString());
-            return joinDate && joinDate - start >= 0 && end - joinDate >= 0;
-        }
-    }
-    return false;
-};
 
 export {
     isAdFreeUser,
@@ -143,5 +136,4 @@ export {
     isRecentContributor,
     shouldSeeReaderRevenue,
     refresh,
-    isInBrexitCohort,
 };

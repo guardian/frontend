@@ -53,6 +53,7 @@ module.exports = {
             facia: 'projects/facia',
             membership: 'projects/membership',
             commercial: 'projects/commercial',
+            journalism: 'projects/journalism',
 
             // #wp-rjs weird old aliasing from requirejs
             lodash: 'lodash-amd/compat',

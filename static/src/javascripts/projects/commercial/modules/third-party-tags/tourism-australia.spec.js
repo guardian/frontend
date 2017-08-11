@@ -1,5 +1,7 @@
 // @flow
-import { shouldRun, url, useImage } from './tourism-australia';
+import { tourismAustralia } from './tourism-australia';
+
+const { shouldRun, url, useImage } = tourismAustralia;
 
 jest.mock('lib/config', () => ({
     switches: {

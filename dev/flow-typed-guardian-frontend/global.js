@@ -11,4 +11,9 @@ declare var require: {
     void,
 };
 
-declare var NOLCMB: Object // This is needed for the Nielsen NetRatings tag. Also known as IMR worldwide.
+declare type ThirdPartyTag = {
+    shouldRun: boolean,
+    url: string,
+    onLoad?: () => any,
+    useImage?: boolean,
+};

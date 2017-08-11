@@ -1,7 +1,7 @@
 // @flow
 import config from 'lib/config';
 import { getCookie, removeCookie } from 'lib/cookies';
-import detect from 'lib/detect';
+import { getReferrer as detectGetReferrer, getBreakpoint } from 'lib/detect';
 import { local } from 'lib/storage';
 import { getUrlVars } from 'lib/url';
 import { getKruxSegments } from 'commercial/modules/third-party-tags/krux';
@@ -19,25 +19,25 @@ const formatTarget = (target: ?string): ?string =>
     target ? format(target).replace(/&/g, 'and').replace(/'/g, '') : null;
 
 const abParam = (): Array<string> => {
-    const cmRegex: RegExp = /^(cm|commercial)/;
     const abParticipations: Object = getParticipations();
     const abParams: Array<string> = [];
 
-    Object.keys(abParticipations).forEach((testKey: string): void => {
-        const testValue: { variant: string } = abParticipations[testKey];
-        if (testValue.variant && testValue.variant !== 'notintest') {
-            const testData: string = `${testKey}-${testValue.variant}`;
+    const pushAbParams = (testName: string, testValue: mixed): void => {
+        if (typeof testValue === 'string' && testValue !== 'notintest') {
+            const testData: string = `${testName}-${testValue}`;
             // DFP key-value pairs accept value strings up to 40 characters long
             abParams.push(testData.substring(0, 40));
         }
+    };
+
+    Object.keys(abParticipations).forEach((testKey: string): void => {
+        const testValue: { variant: string } = abParticipations[testKey];
+        pushAbParams(testKey, testValue.variant);
     });
 
     if (config.tests) {
-        Object.keys(config.tests).forEach((testKey: string) => {
-            const testValue: string = config.tests[testKey];
-            if (typeof testValue === 'string' && cmRegex.test(testValue)) {
-                abParams.push(testValue);
-            }
+        Object.entries(config.tests).forEach(([testName, testValue]) => {
+            pushAbParams(testName, testValue);
         });
     }
 
@@ -101,8 +101,7 @@ const getReferrer = (): ?string => {
 
     const matchedRef: MatchType =
         referrerTypes.filter(
-            referrerType =>
-                detect.getReferrer().indexOf(referrerType.match) > -1
+            referrerType => detectGetReferrer().indexOf(referrerType.match) > -1
         )[0] || {};
 
     return matchedRef.id;
@@ -132,7 +131,7 @@ const buildPageTargeting = once((adFree: ?boolean): Object => {
         {
             x: getKruxSegments(),
             pv: config.ophan.pageViewId,
-            bp: detect.getBreakpoint(),
+            bp: getBreakpoint(),
             at: adtestParams(),
             si: identity.isUserLoggedIn() ? 't' : 'f',
             gdncrm: getUserSegments(),

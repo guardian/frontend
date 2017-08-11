@@ -71,26 +71,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-acquisitions-this-land-series-epic",
-    "This places a custom Epic at the ehnd of This Land Is Your Land articles",
-    owners = Seq(Owner.withGithub("desbo")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 8, 1),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-acquisitions-epic-liveblog-design-test",
-    "This tests some different designs of the liveblog epic",
-    owners = Seq(Owner.withGithub("joelochlann")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 7, 10),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-tailor-survey",
     "Integrate Tailor with ab tests",
     owners = Seq(Owner.withGithub("oilnam"), Owner.withGithub("mike-ruane")),
@@ -106,26 +86,6 @@ trait ABTestSwitches {
     owners = Seq(Owner.withName("commercial team")),
     safeState = Off,
     sellByDate = new LocalDate(2018, 1, 8),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-bundle-digital-sub-price-test-1-m-e",
-    "Test pricing options for digital subs from epic",
-    owners = Seq(Owner.withGithub("justinpinner")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 7, 6),  // Thursday 6th July
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-bundle-digital-sub-price-test-1-m-t",
-    "Test pricing options for digital subs from thrasher",
-    owners = Seq(Owner.withGithub("justinpinner")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 7, 6),  // Thursday 6th July
     exposeClientSide = true
   )
 
@@ -155,17 +115,37 @@ trait ABTestSwitches {
     "Bootstrap the AB test framework to use the Epic to thank readers who have already supported the Guardian",
     owners = Seq(Owner.withGithub("Mullefa")),
     safeState = On,
-    sellByDate = new LocalDate(2017, 8, 1),
+    sellByDate = new LocalDate(2017, 9, 5),
+    exposeClientSide = true
+  )
+  
+  Switch(
+    ABTests,
+    "ab-glabs-traffic-driver-slot",
+    "Displays a new ad slot to drive traffic to GLabs content",
+    owners = Seq(Owner.withGithub("JonNorman")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 8, 23),
     exposeClientSide = true
   )
 
   Switch(
     ABTests,
-    "ab-epic-for-brexit-cohort",
-    "Displays an epic for supports who joined just after Brexit",
-    owners = Seq(Owner.withGithub("lmath")),
+    "ab-acquisitions-epic-paypal-pay-in-epic",
+    "Test whether allowing readers to pay in-Epic increases the conversion rate.",
+    owners = Seq(Owner.withGithub("Mullefa"), Owner.withGithub("desbo")),
+    safeState = On,
+    sellByDate = new LocalDate(2017, 9, 11),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-epic-recurring-contribution-uk-support-proposition",
+    "Add recurring contribution uk for support proposition",
+    owners = Seq(Owner.withGithub("svillafe")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 7, 31),
+    sellByDate = new LocalDate(2017, 9, 13),
     exposeClientSide = true
   )
 }

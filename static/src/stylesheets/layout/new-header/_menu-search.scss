@@ -146,7 +146,8 @@
 
     // Reveals search button & retains visibility of search button when form loses focus
     .menu-search__search-box:focus ~ &,
-    &:focus {
+    &:focus,
+    &:active {
         opacity: 1;
         outline: none;
         pointer-events: all;

@@ -20,16 +20,48 @@
     </a>
 }
 
+@jobsUrl(edition: String) = {
+    @if(mvt.ABNewDesktopHeaderControl.isParticipating) {
+        https://jobs.theguardian.com/?INTCMP=jobs_@{edition}_web_newheader_control
+    } else {
+        https://jobs.theguardian.com/?INTCMP=NGW_TOPNAV_@{edition.toUpperCase}_GU_JOBS
+    }
+}
+
+@soulmatesUrl(edition: String) = {
+    @if(mvt.ABNewDesktopHeaderControl.isParticipating) {
+        https://soulmates.theguardian.com/?INTCMP=soulmates_@{edition}_web_newheader_control
+    } else {
+        https://soulmates.theguardian.com/?INTCMP=NGW_TOPNAV_@{edition.toUpperCase}_GU_SOULMATES
+    }
+}
+
+@holidaysUrl = {
+    @if(mvt.ABNewDesktopHeaderControl.isParticipating) {
+        https://holidays.theguardian.com/?INTCMP=holidays_uk_web_newheader_control
+    } else {
+        https://holidays.theguardian.com/?utm_source=theguardian&utm_medium=guardian-links&utm_campaign=topnav&INTCMP=topnav
+    }
+}
+
+@masterclassesUrl = {
+    @if(mvt.ABNewDesktopHeaderControl.isParticipating) {
+        https://www.theguardian.com/guardian-masterclasses?INTCMP=masterclasses_uk_web_newheader_control
+    } else {
+        https://www.theguardian.com/guardian-masterclasses?INTCMP=NGW_TOPNAV_UK_GU_MASTERCLASSES
+    }
+}
+
 <div class="brand-bar__item--right"
      data-component="guardian-services">
     @if(Edition(request) == Uk){
         <div class="brand-bar__item brand-bar__item--jobs hide-until-tablet hide-on-slim-header">
             <a class="brand-bar__item--action" data-link-name="uk : topNav : jobs"
-               href="https://jobs.theguardian.com/?INTCMP=NGW_TOPNAV_UK_GU_JOBS">jobs</a>
+               href="@jobsUrl("uk")">jobs</a>
         </div>
         <div class="brand-bar__item brand-bar__item--soulmates hide-until-desktop hide-on-slim-header">
             <a class="brand-bar__item--action" data-link-name="uk : topNav : soulmates"
-               href="https://soulmates.theguardian.com/?INTCMP=NGW_TOPNAV_UK_GU_SOULMATES">dating</a>
+               href="@soulmatesUrl("uk")">dating</a>
         </div>
         <div class="brand-bar__item has-popup brand-bar__item--has-control brand-bar__item--more">
             @ellipsis()
@@ -38,11 +70,11 @@
                 <ul class="popup__group">
                     <li class="popup__item brand-bar__popup--soulmates hide-on-desktop show-on-slim-header">
                         <a class="brand-bar__item--action" data-link-name="uk : topNav : soulmates"
-                           href="https://soulmates.theguardian.com/?INTCMP=NGW_TOPNAV_UK_GU_SOULMATES">dating</a>
+                           href="@soulmatesUrl("uk")">dating</a>
                     </li>
                     <li class="popup__item">
                         <a class="brand-bar__item--action" data-link-name="uk : topNav : masterclasses"
-                           href="https://www.theguardian.com/guardian-masterclasses?INTCMP=NGW_TOPNAV_UK_GU_MASTERCLASSES">masterclasses</a>
+                           href="@masterclassesUrl">masterclasses</a>
                     </li>
                     <li class="popup__item">
                         <a class="brand-bar__item--action" data-link-name="uk : topNav : courses"
@@ -50,7 +82,7 @@
                     </li>
                     <li class="popup__item">
                         <a class="brand-bar__item--action" data-link-name="uk : topNav : holidays"
-                        href="https://holidays.theguardian.com/?utm_source=theguardian&utm_medium=guardian-links&utm_campaign=topnav&INTCMP=topnav">holidays</a>
+                        href="@holidaysUrl">holidays</a>
                     </li>
                 </ul>
                 <div class="brand-bar__popup--membership hide-on-desktop show-on-slim-header">
@@ -73,7 +105,7 @@
     @if(Edition(request) == Us){
         <div class="brand-bar__item brand-bar__item--jobs hide-until-tablet hide-on-slim-header">
             <a class="brand-bar__item--action" data-link-name="us : topNav : jobs"
-               href="https://jobs.theguardian.com/?INTCMP=NGW_TOPNAV_US_GU_JOBS">jobs</a>
+               href="@jobsUrl("us")">jobs</a>
         </div>
     }
     @if(Edition(request) == Au){
@@ -85,11 +117,11 @@
     @if(Edition(request) == International){
         <div class="brand-bar__item brand-bar__item--jobs hide-until-tablet hide-on-slim-header">
             <a class="brand-bar__item--action" data-link-name="uk : topNav : jobs"
-            href="https://jobs.theguardian.com/?INTCMP=NGW_TOPNAV_INT_GU_JOBS">jobs</a>
+            href="@jobsUrl("int")">jobs</a>
         </div>
         <div class="brand-bar__item brand-bar__item--soulmates hide-until-desktop hide-on-slim-header">
             <a class="brand-bar__item--action" data-link-name="int : topNav : soulmates"
-               href="https://soulmates.theguardian.com/?INTCMP=NGW_TOPNAV_INT_GU_SOULMATES">dating</a>
+               href="@soulmatesUrl("int")">dating</a>
         </div>
         <div class="brand-bar__item has-popup brand-bar__item--has-control brand-bar__item--more">
             @ellipsis()
@@ -98,11 +130,11 @@
                 <ul class="popup__group">
                     <li class="popup__item brand-bar__popup--soulmates hide-on-desktop show-on-slim-header">
                         <a class="brand-bar__item--action" data-link-name="int : topNav : soulmates"
-                           href="https://soulmates.theguardian.com/?INTCMP=NGW_TOPNAV_INT_GU_SOULMATES">dating</a>
+                           href="@soulmatesUrl("int")">dating</a>
                     </li>
                     <li class="popup__item brand-bar__popup--jobs">
                         <a class="brand-bar__item--action" data-link-name="int: topNav : jobs"
-                        href="https://jobs.theguardian.com/?INTCMP=NGW_TOPNAV_INT_GU_JOBS">jobs</a>
+                        href="@jobsUrl("int")">jobs</a>
                     </li>
                 </ul>
                 @editionMenu()

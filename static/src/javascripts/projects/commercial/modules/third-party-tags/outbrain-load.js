@@ -3,7 +3,7 @@
 import $ from 'lib/$';
 import config from 'lib/config';
 import fastdom from 'lib/fastdom-promise';
-import detect from 'lib/detect';
+import { getBreakpoint } from 'lib/detect';
 import { loadScript } from 'lib/load-script';
 import { getCode } from './outbrain-codes';
 import { tracking } from './outbrain-tracking';
@@ -47,7 +47,7 @@ const load = (target?: string): Promise<void> => {
     const slot = target && target in selectors ? target : 'defaults';
     const $outbrain = $(selectors.outbrain.widget);
     const $container = $(selectors.outbrain.container, $outbrain[0]);
-    const breakpoint = detect.getBreakpoint();
+    const breakpoint = getBreakpoint();
 
     const widgetCodes = getCode({
         slot,

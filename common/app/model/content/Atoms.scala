@@ -12,9 +12,11 @@ import org.joda.time.{DateTime, DateTimeZone, Duration}
 import play.api.libs.json.{JsError, JsSuccess, Json}
 import quiz._
 import views.support.{GoogleStructuredData, ImgSrc}
+import conf.switches.Switches
 
 final case class Atoms(
   quizzes: Seq[Quiz],
+  storyQuizzes: Seq[StoryQuiz],
   media: Seq[MediaAtom],
   interactives: Seq[InteractiveAtom],
   recipes: Seq[RecipeAtom],
@@ -26,7 +28,7 @@ final case class Atoms(
   profiles: Seq[ProfileAtom],
   timelines: Seq[TimelineAtom]
 ) {
-  val all: Seq[Atom] = quizzes ++ media ++ interactives ++ recipes ++ reviews ++ storyquestions ++ explainers ++ qandas ++ guides ++ profiles ++ timelines
+  val all: Seq[Atom] = quizzes ++ storyQuizzes ++ media ++ interactives ++ recipes ++ reviews ++ storyquestions ++ explainers ++ qandas ++ guides ++ profiles ++ timelines
 }
 
 sealed trait Atom {
@@ -106,6 +108,17 @@ final case class Quiz(
   revealAtEnd: Boolean
 ) extends Atom
 
+final case class StoryQuiz(
+  override val id: String,
+  title: String,
+  description: Option[String],
+  image: Option[String],
+  path: String,
+  questions: Seq[Question],
+  answers: Array[Int],
+  results: Seq[ResultGroup]
+) extends Atom
+
 final case class InteractiveAtom(
   override val id: String,
   `type`: String,
@@ -144,19 +157,22 @@ final case class ExplainerAtom(
 final case class QandaAtom(
   override val id: String,
   atom: AtomApiAtom,
-  data: atomapi.qanda.QAndAAtom
+  data: atomapi.qanda.QAndAAtom,
+  image: Option[ImageMedia]
 ) extends Atom
 
 final case class GuideAtom(
   override val id: String,
   atom: AtomApiAtom,
-  data: atomapi.guide.GuideAtom
+  data: atomapi.guide.GuideAtom,
+  image: Option[ImageMedia]
 ) extends Atom
 
 final case class ProfileAtom(
   override val id: String,
   atom: AtomApiAtom,
-  data: atomapi.profile.ProfileAtom
+  data: atomapi.profile.ProfileAtom,
+  image: Option[ImageMedia]
 ) extends Atom
 
 final case class TimelineAtom(
@@ -185,7 +201,28 @@ object Atoms extends common.Logging {
 
   def make(content: contentapi.Content): Option[Atoms] = {
     content.atoms.map { atoms =>
-      val quizzes = extract(atoms.quizzes, atom => { Quiz.make(content.id, atom) })
+      // <!-- This is a temporary hack for the duration of the test where story quizzes
+      //      are displayed at the bottom of an article. We reuse the quiz atom, even
+      //      though its model doesn't comply perfectly with the domain model of our
+      //      intended purpose. We will rely on the convention that quizzes created for
+      //      the purpose of this test will have a special character in the title (|)
+      val quizzes = if (Switches.StoryQuizzes.isSwitchedOn) {
+        extract(
+          atoms.quizzes.map { quizzes => quizzes.filterNot(_.data.asInstanceOf[AtomData.Quiz].quiz.title.contains("|")) },
+          atom => { Quiz.make(content.id, atom) }
+        )
+      } else {
+        extract(atoms.quizzes, atom => { Quiz.make(content.id, atom) })
+      }
+
+      val storyQuizzes = if (Switches.StoryQuizzes.isSwitchedOn) {
+        extract(
+          atoms.quizzes.map { quizzes => quizzes.filter(_.data.asInstanceOf[AtomData.Quiz].quiz.title.contains("|")) },
+          atom => { StoryQuiz.make(content.id, atom) }
+        )
+      } else
+        Nil
+      // -->
 
       val media = extract(atoms.media, atom => {
         val endSlatePath = EndSlateComponents(
@@ -216,6 +253,7 @@ object Atoms extends common.Logging {
 
       Atoms(
         quizzes = quizzes,
+        storyQuizzes = storyQuizzes,
         media = media,
         interactives = interactives,
         recipes = recipes,
@@ -228,6 +266,24 @@ object Atoms extends common.Logging {
         timelines = timelines
       )
     }
+  }
+
+  def atomImageToImageMedia(atomImage: com.gu.contentatom.thrift.Image): ImageMedia = {
+    val imageAssets: Seq[ImageAsset] = atomImage.assets.flatMap { asset =>
+      asset.dimensions.map { dims =>
+        ImageAsset(
+          fields = Map(
+            "width" -> dims.width.toString,
+            "height" -> dims.height.toString
+          ),
+          mediaType = "image",
+          mimeType = asset.mimeType,
+          url = Some(asset.file)
+        )
+      }
+    }
+
+    ImageMedia(imageAssets)
   }
 }
 
@@ -316,12 +372,8 @@ object Quiz extends common.Logging {
     }
   }
 
-
-
-  def make(path: String, atom: AtomApiAtom): Quiz = {
-
-    val quiz = atom.data.asInstanceOf[AtomData.Quiz].quiz
-    val questions = quiz.content.questions.map { question =>
+  def extractQuestions(quiz: atomapi.quiz.QuizAtom): Seq[Question] =
+    quiz.content.questions.map { question =>
       val answers = question.answers.map { answer =>
         Answer(
           id = answer.id,
@@ -339,18 +391,21 @@ object Quiz extends common.Logging {
         imageMedia = transformAssets(question.assets.headOption))
     }
 
-    val content = QuizContent(
+  def extractResultGroups(resultGroups: Option[com.gu.contentatom.thrift.atom.quiz.ResultGroups]): Seq[ResultGroup] =
+    resultGroups.map(_.groups.map { resultGroup =>
+        ResultGroup(
+          id = resultGroup.id,
+          title = resultGroup.title,
+          shareText = resultGroup.share,
+          minScore = resultGroup.minScore
+        )
+      }
+    ).getOrElse(Nil)
+
+  def extractContent(questions: Seq[Question], quiz: atomapi.quiz.QuizAtom): QuizContent =
+    QuizContent(
       questions = questions,
-      resultGroups = quiz.content.resultGroups.map(resultGroups => {
-        resultGroups.groups.map(resultGroup => {
-          ResultGroup(
-            id = resultGroup.id,
-            title = resultGroup.title,
-            shareText = resultGroup.share,
-            minScore = resultGroup.minScore
-          )
-        })
-      }).getOrElse(Nil),
+      resultGroups = extractResultGroups(quiz.content.resultGroups),
       resultBuckets = quiz.content.resultBuckets.map(resultBuckets =>{
         resultBuckets.buckets.map(resultBucket => {
           ResultBucket(
@@ -363,6 +418,12 @@ object Quiz extends common.Logging {
       }).getOrElse(Nil)
     )
 
+  def make(path: String, atom: AtomApiAtom): Quiz = {
+
+    val quiz = atom.data.asInstanceOf[AtomData.Quiz].quiz
+    val questions = extractQuestions(quiz)
+    val content = extractContent(questions, quiz)
+
     Quiz(
       id = quiz.id,
       path = path,
@@ -370,6 +431,39 @@ object Quiz extends common.Logging {
       quizType = quiz.quizType,
       content = content,
       revealAtEnd = quiz.revealAtEnd
+    )
+  }
+}
+
+object StoryQuiz {
+  def extractImage(quiz: atomapi.quiz.QuizAtom): Option[String] = for {
+    firstQuestion <- quiz.content.questions.headOption
+    firstAsset <- firstQuestion.assets.headOption
+    json = Json.parse(firstAsset.data)
+    assets = json \ "assets"
+    widths = (assets \\ "width").map(_.as[Int])
+    width140 = widths.indexWhere(_ == 140)
+    url <- (assets(width140) \ "secureUrl").asOpt[String]
+  } yield url
+
+  def make(path: String, atom: AtomApiAtom) = {
+    val split: Array[String] = atom.data.asInstanceOf[AtomData.Quiz].quiz.title.split('|')
+    val (title, description) = (split(0), split(1))
+    val quiz = atom.data.asInstanceOf[AtomData.Quiz].quiz
+    val questions = Quiz.extractQuestions(quiz)
+    val answers = questions map (_.answers.indexWhere(_.weight == 1))
+    val results = Quiz.extractResultGroups(quiz.content.resultGroups)
+    val image = extractImage(quiz)
+
+    StoryQuiz(
+      id = quiz.id,
+      path = path,
+      title = title,
+      description = Some(description),
+      image = image,
+      questions = questions,
+      answers = answers.toArray,
+      results = results
     )
   }
 }
@@ -472,15 +566,24 @@ object ExplainerAtom {
 }
 
 object QandaAtom {
-  def make(atom: AtomApiAtom): QandaAtom = QandaAtom(atom.id, atom, atom.data.asInstanceOf[AtomData.Qanda].qanda)
+  def make(atom: AtomApiAtom): QandaAtom = {
+    val qanda = atom.data.asInstanceOf[AtomData.Qanda].qanda
+    QandaAtom(atom.id, atom, qanda, qanda.eventImage.map(Atoms.atomImageToImageMedia))
+  }
 }
 
 object GuideAtom {
-  def make(atom: AtomApiAtom): GuideAtom = GuideAtom(atom.id, atom, atom.data.asInstanceOf[AtomData.Guide].guide)
+  def make(atom: AtomApiAtom): GuideAtom = {
+    val guide = atom.data.asInstanceOf[AtomData.Guide].guide
+    GuideAtom(atom.id, atom, guide, guide.guideImage.map(Atoms.atomImageToImageMedia))
+  }
 }
 
 object ProfileAtom {
-  def make(atom: AtomApiAtom): ProfileAtom = ProfileAtom(atom.id, atom, atom.data.asInstanceOf[AtomData.Profile].profile)
+  def make(atom: AtomApiAtom): ProfileAtom = {
+    val profile = atom.data.asInstanceOf[AtomData.Profile].profile
+    ProfileAtom(atom.id, atom, profile, profile.headshot.map(Atoms.atomImageToImageMedia))
+  }
 }
 
 object TimelineAtom {

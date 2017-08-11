@@ -373,27 +373,37 @@
         background-color: $paid-article-card-bg;
         &:hover,
         &.u-faux-block-link--hover {
-            background: darken($paid-article-subheader, 7%);
+            background-color: $neutral-6;
         }
     }
     .fc-item__container:before {
-        background-color: $paid-article-brand;
+        background-color: $paid-article-brand !important;
     }
     .inline-icon__svg {
-        fill: $paid-article-brand;
+        fill: $paid-article-brand !important;
     }
     .fc-item__title {
-        @include f-headlineSans;
+        @include f-textSans;
+        font-weight: 600;
+        color: $neutral-1;
     }
 
     .fc-item__content {
-        display: flex;
+        display: flex !important;
         flex-direction: column;
         justify-content: space-between;
-        flex: 1;
-        @include mq(mobileLandscape, tablet) {
+        // IE 11 hates shorthand flex CSS, and does something different to the
+        // other browsers, so we have to list the props out in this way
+        flex-grow: 1;
+        flex-shrink: 1;
+        flex-basis: auto;
+        @include mq(phablet, tablet) {
             flex-direction: row;
         }
+    }
+
+    .fc-item__standfirst {
+        color: $neutral-1;
     }
 
     .badge {
@@ -402,34 +412,29 @@
         justify-content: flex-end;
         pointer-events: none;
         flex-shrink: 0;
-        padding-left: $gs-gutter;
-        @include mq(mobileLandscape) {
-            flex-direction: column;
+        flex-direction: column;
+        align-items: flex-end;
+        margin-left: $gs-gutter / 2;
+        @include mq($until: phablet) {
+            flex-direction: row;
         }
     }
+
     .badge__label {
+        color: #757575;
         text-align: center;
         align-self: center;
-    }
-    &.fc-item--list-media-tablet {
-        @include mq(tablet) {
-            .badge__link {
-                margin-left: $gs-gutter;
-            }
-            .badge {
-                flex-direction: row;
-                margin-top: 0;
-            }
+        @include mq($until: phablet) {
+            padding-right: $gs-gutter / 2;
         }
     }
+
     .badge__link {
-        @include mq($until: mobileLandscape) {
-            margin-left: $gs-gutter;
-        }
         @include mq($until: tablet) {
             width: $gs-gutter * 3;
         }
     }
+
     .badge__logo {
         max-width: 100%;
         margin-left: 0;
@@ -439,6 +444,11 @@
         margin-bottom: $gs-baseline/2;
     }
 
+    .badge__sponsor-name {
+        @include f-textSans;
+        color: $neutral-1;
+    }
+
     .inline-icon__svg {
         width: 1.1em;
         height: .75em;
@@ -446,4 +456,3 @@
     }
 
 }
-

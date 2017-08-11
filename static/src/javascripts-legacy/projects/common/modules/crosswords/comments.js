@@ -8,7 +8,7 @@ define([
     qwery
 ) {
     return function () {
-        if (config.switches.discussion && config.page.commentable) {
+        if (config.switches.commentsVisibleOnArticle && config.page.commentable) {
             var el = qwery('.discussion')[0];
             if (el) {
                 new DiscussionLoader().attachTo(el);

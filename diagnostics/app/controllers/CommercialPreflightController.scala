@@ -106,7 +106,7 @@ class CommercialPreflightController(wsClient: WSClient) extends Controller with 
     } {
       val adHubRequest = Json.toJson(AdRequest(
         load_id = pageViewId,
-        zone_ids = List(229, 228),
+        zone_ids = List(229, 228, 228),
         /*  id    sizes
             229   970x250, 728x90
             228   300x250

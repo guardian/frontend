@@ -128,6 +128,10 @@
             & + .element-pullquote.element--halfWidth {
                 margin-top: 0;
             }
+
+            & + .element-image:not(.element--halfWidth) {
+                clear: left;
+            }
         }
         &.element--halfWidth.half-width-odd {
             margin-right: 2%;
@@ -165,6 +169,19 @@
 
 .content__series-label--photo-essay .content__series-label__link {
     color: #ffffff;
+}
+
+.content__section-label--advertisement {
+    @include f-textSans;
+    font-size: 20px;
+    line-height: 24px;
+    font-weight: 900;
+    margin: 0;
+    padding-top: $gs-baseline / 2;
+
+    .content__section-label__link--advertisement {
+        color: $paid-article-brand;
+    }
 }
 
 .from-content-api ul {

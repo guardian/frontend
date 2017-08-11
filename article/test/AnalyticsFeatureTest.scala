@@ -11,7 +11,7 @@ import conf.Configuration
   feature("Analytics") {
 
 
-    conf.switches.Switches.DiscussionSwitch.switchOff()
+    conf.switches.Switches.CommentsVisibleOnArticleSwitch.switchOff()
     // Feature
 
     info("In order understand how people are using the website and provide data for auditing")

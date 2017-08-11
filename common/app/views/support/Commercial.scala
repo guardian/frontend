@@ -3,6 +3,7 @@ package views.support
 import com.gu.commercial.branding._
 import common.Edition
 import common.commercial._
+import conf.switches.Switches
 import layout.{ColumnAndCards, ContentCard, FaciaContainer, PaidCard}
 import model.{Page, PressedPage}
 import org.apache.commons.lang.StringEscapeUtils._
@@ -11,8 +12,12 @@ import play.api.mvc.RequestHeader
 
 object Commercial {
   def isAdFree(request: RequestHeader): Boolean = {
-    request.headers.get("X-GU-Commercial-Ad-Free").exists(_.toLowerCase == "true") ||
-      request.cookies.get("GU_AFU").exists(_.value.toLowerCase == "true")
+    try {
+      request.headers.get("X-GU-Commercial-Ad-Free").exists(_.toLowerCase == "true") ||
+        request.cookies.get("GU_AF1").exists(_.value.toInt > 0)
+    } catch {
+       case e: Exception => false   // in case the cookie value can't be converted toInt
+    }
   }
 
   def shouldShowAds(page: Page): Boolean = page match {
@@ -219,7 +224,11 @@ object Commercial {
       ) mkString " | "
     }
 
-    def mkInteractionTrackingCode(containerIndex: Int, cardIndex: Int, card: ContentCard): String = Seq(
+    def mkInteractionTrackingCode(containerIndex: Int, cardIndex: Int, card: ContentCard, containerDisplayName: Option[String], frontId: Option[String])(implicit request: RequestHeader): String = Seq(
+      Edition(request).id,
+      frontId.getOrElse("unknown front id"),
+      s"container-${containerIndex + 1}",
+      containerDisplayName.getOrElse("unknown container"),
       card.branding.map(_.sponsorName) getOrElse "unknown",
       s"card-${ cardIndex + 1 }",
       card.header.headline

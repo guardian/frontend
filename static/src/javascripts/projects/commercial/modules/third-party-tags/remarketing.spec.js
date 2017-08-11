@@ -1,10 +1,9 @@
 // @flow
 
-import {
-    shouldRun,
-    url,
-    onLoad,
-} from 'commercial/modules/third-party-tags/remarketing';
+import { remarketing } from 'commercial/modules/third-party-tags/remarketing';
+
+const { shouldRun, url } = remarketing;
+const onLoad: any = remarketing.onLoad;
 
 jest.mock('lib/config', () => ({
     switches: {

@@ -65,7 +65,7 @@ object GuardianConfiguration extends Logging {
   lazy val configuration = {
     // This is version number of the config file we read from s3,
     // increment this if you publish a new version of config
-    val s3ConfigVersion = 34
+    val s3ConfigVersion = 41
 
     lazy val userPrivate = FileConfigurationSource(s"${System.getProperty("user.home")}/.gu/frontend.conf")
     lazy val runtimeOnly = FileConfigurationSource("/etc/gu/frontend.conf")
@@ -226,7 +226,7 @@ class GuardianConfiguration extends Logging {
   }
 
   object sonobi {
-    lazy val jsLocation = configuration.getStringProperty("sonobi.js.location").getOrElse("//api.nextgen.guardianapps.co.uk/morpheus.theguardian.12914.js")
+    lazy val jsLocation = configuration.getStringProperty("sonobi.js.location").getOrElse("//api.nextgen.guardianapps.co.uk/morpheus.theguardian.12917.js")
   }
 
   object switch {
@@ -349,6 +349,9 @@ class GuardianConfiguration extends Logging {
 
   object facebook {
     lazy val appId = configuration.getMandatoryStringProperty("guardian.page.fbAppId")
+    object pages {
+      lazy val authorisedIdsForLinkEdits = configuration.getStringPropertiesSplitByComma("facebook.pages.authorisedIdsForLinkEdits")
+    }
     object graphApi {
       lazy val version = configuration.getStringProperty("facebook.graphApi.version").getOrElse("2.8")
       lazy val accessToken = configuration.getMandatoryStringProperty("facebook.graphApi.accessToken")
@@ -440,10 +443,6 @@ class GuardianConfiguration extends Logging {
     lazy val expiredPaidContentUrl = s"${site.host}/info/2015/feb/06/paid-content-removal-policy"
   }
 
-  object open {
-    lazy val ctaApiRoot = configuration.getMandatoryStringProperty("open.cta.apiRoot")
-  }
-
   object interactive {
     lazy val cdnPath = "https://interactive.guim.co.uk"
     lazy val url = s"$cdnPath/next-gen/"
@@ -486,7 +485,7 @@ class GuardianConfiguration extends Logging {
 
   object facia {
     lazy val stage = configuration.getStringProperty("facia.stage").getOrElse(environment.stage)
-    lazy val collectionCap: Int = 35
+    lazy val collectionCap: Int = 20
   }
 
   object faciatool {

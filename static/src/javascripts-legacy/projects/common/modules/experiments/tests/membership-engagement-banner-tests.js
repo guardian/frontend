@@ -5,7 +5,7 @@ define([
     'lib/storage',
     'lodash/utilities/template',
     'common/modules/commercial/contributions-utilities',
-    'lib/mediator'
+    'lib/mediator',
 ], function (
     bean,
     qwery,
@@ -74,6 +74,7 @@ define([
 
         return this.addMessageVariant(variantId, {contributions: variantParams});
     };
-
+    
     return []
+
 });

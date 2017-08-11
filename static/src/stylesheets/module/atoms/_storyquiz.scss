@@ -1,0 +1,175 @@
+.storyquiz:not(.is-enabled) {
+    display: none;
+}
+
+.storyquiz__image {
+    position: absolute;
+    top: -1 * ($gs-baseline / 2);
+    right: $gs-gutter / 4;
+    shape-outside: circle();
+    shape-margin: $gs-baseline / 2;
+    border-radius: 100%;
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+}
+
+.storyquiz__card--question {
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+.storyquiz__card:not(.is-active) {
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.storyquiz__answers {
+    list-style: none;
+
+    &.storyquiz__answers {
+        margin-top: $gs-baseline;
+    }
+
+    label {
+        border-top: 1px dotted $neutral-3;
+        margin: 0 $gs-gutter / -4;
+        padding: $gs-baseline / 2 $gs-gutter / 4 $gs-baseline;
+        display: block;
+        font-weight: bold;
+        cursor: pointer;
+        &:hover, &:active {
+            background-color: $neutral-4;
+        }
+    }
+
+    input[type=radio] {
+        margin: 5px;
+    }
+}
+
+.storyquiz__next {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    .button + .button {
+        margin-top: $gs-baseline / 2;
+    }
+}
+
+.storyquiz__card--question:not(.is-answered) .storyquiz__question-result,
+.storyquiz__card--question.is-answered .storyquiz__question,
+.storyquiz__question-comment:not(.is-answer),
+.storyquiz__result:not(.is-result) {
+    display: none;
+}
+
+.explainer-snippet--storyquiz {
+    border-top: 1px solid $news-main-2;
+
+    .button--show-more {
+        margin: 24px 0px 12px;
+        font-size: 14px;
+        padding-left: 15px;
+        padding-right: 7px;
+        .inline-icon__svg {
+            height: 35px;
+            width: 30px;
+            position: static;
+        }
+    }
+
+    .explainer-snippet__header {
+        font-family: $f-serif-headline;
+    }
+
+    .explainer-snippet__label {
+        font-weight: 900;
+        font-size: 20px;
+        line-height: 24px;
+
+    }
+
+    .explainer-snippet__body {
+        font-family: $f-serif-text;
+        overflow: visible;
+    }
+
+    .storyquiz__start {
+        font-family: $f-sans-serif-text;
+        font-size: 14px;
+        border-radius: 18px;
+    }
+
+    .explainer-snippet__headline svg {
+        display: none;
+        margin-left: 10px;
+        height: 21px;
+    }
+
+    .inline-tick-green {
+        fill: #87be27;
+    }
+
+    .inline-cross-red {
+        fill: #cc2b12;
+    }
+
+    .is-correct .explainer-snippet__headline .inline-tick-green__svg,
+    .is-wrong .explainer-snippet__headline .inline-cross-red__svg {
+        display: inline-block;
+    }
+
+    .storyquiz__score {
+        font: normal 36px/40px $f-serif-text;
+    }
+
+    .storyquiz__next {
+        button {
+            color: $news-main-1;
+            border-color: $news-main-1;
+            svg {
+                fill: $news-main-1;
+            }
+        }
+
+        a {
+            color: #ffffff;
+        }
+    }
+
+
+}
+
+/** Card transitions **/
+
+.storyquiz__scene {
+    position: relative;
+    overflow: hidden;
+    transition: height .35s ease-in-out;
+}
+
+.storyquiz__card {
+    // set up card positioning
+    position: absolute;
+    width: 100%;
+
+    // set up initial animation state
+    transition: all .15s;
+    transform: translate(50px, 0);
+    opacity: 0;
+}
+
+.ease-out {
+    transform: translate(-50px, 0);
+    transition-timing-function: ease-out;
+    opacity: 0;
+}
+
+.ease-in {
+    transform: translate(0, 0);
+    transition-timing-function: ease-in;
+    opacity: 1;
+}

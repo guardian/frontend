@@ -2,10 +2,10 @@
 import bean from 'bean';
 import fastdom from 'lib/fastdom-promise';
 import $ from 'lib/$';
-import ElementInview from 'lib/element-inview';
+import { elementInView } from 'lib/element-inview';
 import { videojs } from 'bootstraps/enhanced/media/video-player';
 import { onVideoContainerNavigation } from 'common/modules/atoms/youtube';
-import detect from 'lib/detect';
+import { isBreakpoint } from 'lib/detect';
 
 type State = {
     position: number,
@@ -75,26 +75,30 @@ const reducers = {
     INIT: function init(previousState: State): State {
         const makeYouTubeNonPlayableAtSmallBreakpoint = state => {
             if (
-                detect.isBreakpoint({
+                isBreakpoint({
                     max: 'desktop',
                 })
             ) {
-                const youTubeIframes = state.container.querySelectorAll(
-                    '.youtube-media-atom iframe'
-                );
+                const youTubeIframes = [
+                    ...state.container.querySelectorAll(
+                        '.youtube-media-atom iframe'
+                    ),
+                ];
                 youTubeIframes.forEach(el => {
                     el.remove();
                 });
-                const overlayLinks = state.container.querySelectorAll(
-                    '.video-container-overlay-link'
-                );
+                const overlayLinks = [
+                    ...state.container.querySelectorAll(
+                        '.video-container-overlay-link'
+                    ),
+                ];
                 overlayLinks.forEach(el => {
                     el.classList.add('u-faux-block-link__overlay');
                 });
 
-                const atomWrapper = state.container.querySelectorAll(
-                    '.youtube-media-atom'
-                );
+                const atomWrapper = [
+                    ...state.container.querySelectorAll('.youtube-media-atom'),
+                ];
                 atomWrapper.forEach(el => {
                     el.classList.add('no-player');
                 });
@@ -105,7 +109,7 @@ const reducers = {
         fastdom.read(() => {
             // Lazy load images on scroll for mobile
             $('.js-video-playlist-image', previousState.container).each(el => {
-                const elementInview = ElementInview(
+                const inview = elementInView(
                     el,
                     $('.js-video-playlist-inner', previousState.container).get(
                         0
@@ -116,7 +120,7 @@ const reducers = {
                     }
                 );
 
-                elementInview.on('firstview', elem => {
+                inview.on('firstview', elem => {
                     fastdom.write(() => {
                         const dataSrc = elem.getAttribute('data-src');
                         const src = elem.getAttribute('src');

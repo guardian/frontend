@@ -69,6 +69,7 @@ CommentBox.prototype.errorMessages = {
     EMPTY_COMMENT_BODY: 'Please write a comment.',
     COMMENT_TOO_LONG: 'Your comment must be fewer than 5000 characters long.',
     USER_BANNED: 'Commenting has been disabled for this account (<a href="/community-faqs#321a">why?</a>).',
+    IP_THROTTLED: 'Commenting has been temporarily blocked for this IP address (<a href="/community-faqs">why?</a>).',
     DISCUSSION_CLOSED: 'Sorry your comment can not be published as the discussion is now closed for comments.',
     PARENT_COMMENT_MODERATED: 'Sorry the comment can not be published as the comment you replied to has been moderated since.',
     COMMENT_RATE_LIMIT_EXCEEDED: 'You can only post one comment every minute. Please try again in a moment.',
@@ -374,7 +375,9 @@ CommentBox.prototype.fail = function(xhr) {
         this.error('API_CORS_BLOCKED');
     } else if (response.errorCode === 'EMAIL_NOT_VALIDATED') {
         this.invalidEmailError();
-    } else if (this.errorMessages[response.errorCode]) {
+    } else if (response.errorCode === 'IP_ADDRESS_BLOCKED'){
+        this.error('IP_THROTTLED')
+    }else if (this.errorMessages[response.errorCode]) {
         this.error(response.errorCode);
     } else {
         this.error('API_ERROR', this.errorMessages.API_ERROR + xhr.status);// templating would be ideal here

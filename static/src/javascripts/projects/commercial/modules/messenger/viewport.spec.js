@@ -1,7 +1,9 @@
 // @flow
 
 import { _ as testExports } from 'commercial/modules/messenger/viewport';
-import detect from 'lib/detect';
+import { getViewport as getViewport_ } from 'lib/detect';
+
+const getViewport: any = getViewport_;
 
 const addResizeListener: any = testExports.addResizeListener;
 const reset = testExports.reset;
@@ -32,13 +34,13 @@ describe('Cross-frame messenger: viewport', () => {
         },
     };
 
-    beforeEach(done => {
+    beforeEach(() => {
         if (document.body) {
             document.body.innerHTML = domSnippet;
         }
         iframe = document.getElementById('iframe1');
         reset(mockWindow);
-        done();
+        expect.hasAssertions();
     });
 
     afterEach(() => {
@@ -49,32 +51,27 @@ describe('Cross-frame messenger: viewport', () => {
         }
     });
 
-    it('should send viewport dimensions as soon as the iframe starts listening', done => {
+    it('should send viewport dimensions as soon as the iframe starts listening', () => {
         const size = {
             width: 800,
             height: 600,
         };
-        detect.getViewport.mockReturnValue(size);
-        addResizeListener(iframe, respond)
-            .then(() => {
-                expect(respond).toHaveBeenCalledWith(null, size);
-            })
-            .then(done)
-            .catch(done.fail);
+        getViewport.mockReturnValue(size);
+        return addResizeListener(iframe, respond).then(() => {
+            expect(respond).toHaveBeenCalledWith(null, size);
+        });
     });
 
-    it('should send viewport dimensions when the window gets resized', done => {
+    it('should send viewport dimensions when the window gets resized', () => {
         const size = {
             width: 1024,
             height: 768,
         };
-        detect.getViewport.mockReturnValue(size);
-        addResizeListener(iframe, respond)
+        getViewport.mockReturnValue(size);
+        return addResizeListener(iframe, respond)
             .then(() => onResize && onResize())
             .then(() => {
                 expect(respond).toHaveBeenCalledWith(null, size);
-            })
-            .then(done)
-            .catch(done.fail);
+            });
     });
 });

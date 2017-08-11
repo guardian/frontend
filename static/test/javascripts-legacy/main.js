@@ -15,6 +15,7 @@ requirejs.config({
         facia:        'projects/facia',
         membership:   'projects/membership',
         commercial:   'projects/commercial',
+        journalism:   'projects/journalism',
 
         bean:         '/base/node_modules/bean/bean',
         bonzo:        '/base/node_modules/bonzo/bonzo',

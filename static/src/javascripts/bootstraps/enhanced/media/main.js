@@ -6,7 +6,7 @@ import raven from 'lib/raven';
 import $ from 'lib/$';
 import config from 'lib/config';
 import deferToAnalytics from 'lib/defer-to-analytics';
-import detect from 'lib/detect';
+import { isBreakpoint } from 'lib/detect';
 import mediator from 'lib/mediator';
 import videoAdUrl from 'common/modules/commercial/video-ad-url';
 import { commercialFeatures } from 'commercial/modules/commercial-features';
@@ -185,7 +185,7 @@ const enhanceVideo = (
                 } else {
                     blockVideoAds =
                         videoInfo.shouldHideAdverts ||
-                        (config.switches.adFreeMembershipTrial &&
+                        (config.switches.adFreeSubscriptionTrial &&
                             isAdFreeUser());
 
                     withPreroll = shouldPreroll && !blockVideoAds;
@@ -226,7 +226,7 @@ const enhanceVideo = (
 
                                 if (
                                     showEndSlate &&
-                                    detect.isBreakpoint({
+                                    isBreakpoint({
                                         min: 'desktop',
                                     })
                                 ) {

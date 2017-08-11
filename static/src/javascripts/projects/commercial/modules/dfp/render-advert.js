@@ -6,7 +6,7 @@ import fastdom from 'lib/fastdom-promise';
 import mediator from 'lib/mediator';
 import { Advert } from 'commercial/modules/dfp/Advert';
 import adSizes from 'commercial/modules/ad-sizes';
-import stickyMpu from 'commercial/modules/sticky-mpu';
+import { stickyMpu } from 'commercial/modules/sticky-mpu';
 import { applyCreativeTemplate } from 'commercial/modules/dfp/apply-creative-template';
 import renderAdvertLabel from 'commercial/modules/dfp/render-advert-label';
 import { geoMostPopular } from 'common/modules/onward/geo-most-popular';
@@ -23,7 +23,7 @@ import config from 'lib/config';
  *
  */
 
-const addClassIfHasClass = newClassNames =>
+const addClassIfHasClass = (newClassNames: Array<string>) =>
     function hasClass(classNames) {
         return function onAdvertRendered(_, advert) {
             if (
@@ -37,18 +37,34 @@ const addClassIfHasClass = newClassNames =>
                     });
                 });
             }
+            return Promise.resolve();
         };
     };
 
 const addFluid250 = addClassIfHasClass(['ad-slot--fluid250']);
 const addFluid = addClassIfHasClass(['ad-slot--fluid']);
 
+const removeStyleFromAdIframe = (advert: Advert, style: string) => {
+    const adIframe: ?HTMLElement = advert.node.querySelector('iframe');
+
+    fastdom.write(() => {
+        if (adIframe) {
+            adIframe.style.removeProperty(style);
+        }
+    });
+};
+
 const sizeCallbacks = {};
 
 /**
  * DFP fluid ads should use existing fluid-250 styles in the top banner position
+ * The vertical-align property found on DFP iframes affects the smoothness of
+ * CSS transitions when expanding/collapsing various native style formats.
  */
-sizeCallbacks[adSizes.fluid] = addFluid(['ad-slot']);
+sizeCallbacks[adSizes.fluid] = (renderSlotEvent: any, advert: Advert) =>
+    addFluid(['ad-slot'])(renderSlotEvent, advert).then(() =>
+        removeStyleFromAdIframe(advert, 'vertical-align')
+    );
 
 /**
  * Trigger sticky scrolling for MPUs in the right-hand article column
@@ -56,8 +72,6 @@ sizeCallbacks[adSizes.fluid] = addFluid(['ad-slot']);
 sizeCallbacks[adSizes.mpu] = (_, advert) => {
     if (advert.node.classList.contains('js-sticky-mpu')) {
         stickyMpu(advert.node);
-    } else {
-        return addFluid(['ad-slot--revealer'])(_, advert);
     }
 };
 
@@ -68,11 +82,13 @@ sizeCallbacks[adSizes.halfPage] = () => {
     mediator.emit('page:commercial:sticky-mpu');
 };
 
-sizeCallbacks[adSizes.video] = (_, advert) => {
-    fastdom.write(() => {
-        advert.node.classList.add('u-h');
-    });
-};
+if (!config.switches.keepVideoAdSlotsOpen) {
+    sizeCallbacks[adSizes.video] = (_, advert) => {
+        fastdom.write(() => {
+            advert.node.classList.add('u-h');
+        });
+    };
+}
 
 sizeCallbacks[adSizes.video2] = (_, advert) => {
     fastdom.write(() => {
@@ -163,7 +179,7 @@ const renderAdvert = (advert: Advert, slotRenderEvent: any) => {
                     : Promise.resolve();
 
             const addFeedbackDropdownToggle = () =>
-                config.switches.adFeedback && isRendered
+                isRendered
                     ? fastdom.write(() => {
                           if (
                               !advert.node.classList.contains('js-toggle-ready')
@@ -176,7 +192,7 @@ const renderAdvert = (advert: Advert, slotRenderEvent: any) => {
 
             const applyFeedbackOnClickListeners = slotRender => {
                 const readyClass = 'js-onclick-ready';
-                return config.switches.adFeedback && isRendered
+                return isRendered
                     ? fastdom.write(() => {
                           qwery(
                               '.js-ad-feedback-option:not(.js-onclick-ready)'

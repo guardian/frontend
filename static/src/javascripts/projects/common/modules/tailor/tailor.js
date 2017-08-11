@@ -5,7 +5,7 @@ import { fetchData } from 'common/modules/tailor/fetch-data';
  * Given a response from tailor, if there are surveys to show we randomly pick one to display
  */
 const getSurvey = (queryParams: Object): Promise<any> =>
-    fetchData('surveys', false, queryParams).then(response => {
+    fetchData('surveys', true, queryParams).then(response => {
         if (response) {
             return response[Math.floor(Math.random() * response.length)];
         }

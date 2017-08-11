@@ -55,7 +55,7 @@ const initABTests = (): void => {
                  #? textContent is a property of Node
                  flow won't allow typecasting of EventTarget
                  so typecasting as any
-            **/
+            * */
             const target = (e.target: any);
 
             if (target.textContent === 'show') {

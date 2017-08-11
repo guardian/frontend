@@ -1,8 +1,8 @@
 // @flow
 import config from 'lib/config';
-import detect from 'lib/detect';
+import { isBreakpoint, getBreakpoint, getViewport } from 'lib/detect';
 import fastdom from 'lib/fastdom-promise';
-import spaceFiller from 'common/modules/article/space-filler';
+import { spaceFiller } from 'common/modules/article/space-filler';
 import adSizes from 'commercial/modules/ad-sizes';
 import { addSlot } from 'commercial/modules/dfp/add-slot';
 import trackAdRender from 'commercial/modules/dfp/track-ad-render';
@@ -61,7 +61,7 @@ const insertAdAtPara = (
 
 // Add new ads while there is still space
 const addArticleAds = (count: number, rules: Object): Promise<number> => {
-    const insertInlineAds = (paras: Array<Node>): Promise<number> => {
+    const insertInlineAds = (paras: Element[]): Promise<number> => {
         const slots: Array<Promise<void>> = paras
             .slice(0, Math.min(paras.length, count))
             .map((para: Node) => {
@@ -70,7 +70,8 @@ const addArticleAds = (count: number, rules: Object): Promise<number> => {
                     para,
                     getSlotName(),
                     getSlotType(),
-                    'inline'
+                    `inline${bodyAds > 1 ? ' offset-right' : ''}`,
+                    bodyAds > 1 ? { desktop: [adSizes.halfPage] } : null
                 );
             });
 
@@ -100,7 +101,7 @@ const getRules = (): Object => {
     return {
         bodySelector: '.js-article__body',
         slotSelector: ' > p',
-        minAbove: detect.isBreakpoint({
+        minAbove: isBreakpoint({
             max: 'tablet',
         })
             ? 300
@@ -108,7 +109,7 @@ const getRules = (): Object => {
         minBelow: 300,
         selectors: {
             ' > h2': {
-                minAbove: detect.getBreakpoint() === 'mobile' ? 100 : 0,
+                minAbove: getBreakpoint() === 'mobile' ? 100 : 0,
                 minBelow: 250,
             },
             ' .ad-slot': adSlotClassSelectorSizes,
@@ -133,7 +134,7 @@ const getRules = (): Object => {
 
 const getLongArticleRules = (): Object => {
     const longArticleRules: Object = getRules();
-    const viewportHeight: number = detect.getViewport().height;
+    const viewportHeight: number = getViewport().height;
     longArticleRules.selectors[' .ad-slot'].minAbove = viewportHeight;
     longArticleRules.selectors[' .ad-slot'].minBelow = viewportHeight;
     return longArticleRules;
@@ -179,7 +180,7 @@ const articleBodyAdvertsInit = (): Promise<boolean> => {
     }
 
     bodyAds = 0;
-    replaceTopSlot = detect.isBreakpoint({
+    replaceTopSlot = isBreakpoint({
         max: 'phablet',
     });
     getSlotName = replaceTopSlot ? getSlotNameForMobile : getSlotNameForDesktop;

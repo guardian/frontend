@@ -28,23 +28,16 @@ object FaciaContentFrontendHelpers {
     def mainYouTubeMediaAtom: Option[MediaAtom] =
       for {
        main <- faciaContent.properties.maybeContent.map(_.fields.main)
-       atoms <-  faciaContent.properties.maybeContent.flatMap(_.atoms)
+       mediaAtoms <-  faciaContent.properties.maybeContent.map(_.elements.mediaAtoms)
        document <- Some(Jsoup.parse(main))
        atomContainer <- Option(document.getElementsByClass("element-atom").first())
        bodyElement <- Some(atomContainer.getElementsByTag("gu-atom"))
        atomId <- Some(bodyElement.attr("data-atom-id"))
-       mainMediaAtom <- atoms.media.find(ma => (ma.id == atomId && !ma.expired.getOrElse(false)) && ma.assets.exists(_.platform == MediaAssetPlatform.Youtube))
+       mainMediaAtom <- mediaAtoms.find(ma => (ma.id == atomId && !ma.expired.getOrElse(false)) && ma.assets.exists(_.platform == MediaAssetPlatform.Youtube))
      } yield mainMediaAtom
 
 
-    def mainVideo: Option[VideoElement] = {
-      val elements: Seq[Element] = faciaContent.properties.maybeContent.map(_.elements.elements).getOrElse(Nil)
-      val videos: Seq[VideoElement] = elements.flatMap {
-        case video: VideoElement => Some(video)
-        case _ => None
-      }
-      videos.find(_.properties.isMain)
-    }
+    def mainVideo: Option[VideoElement] = faciaContent.properties.maybeContent.flatMap(_.elements.mainVideo)
 
     lazy val shouldHidePublicationDate: Boolean = {
       faciaContent.branding(defaultEdition).exists(_.isPaid) &&

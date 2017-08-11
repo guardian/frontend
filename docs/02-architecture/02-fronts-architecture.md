@@ -76,7 +76,7 @@ A treat is a link that can be shown on the website in the bottom left corner of 
 
 This is an additional request to CAPI to fetch SEO and other metadata for the front page.
 
-6. Finally aggregate all the data fetched in the previous steps and store the result in its json form in S3 (`s3://aws-frontend-store/STAGE/frontsapi/pressed/live/FRONTS/fapi/pressed.json in Frontend account`)
+6. Finally aggregate all the data fetched in the previous steps and store the result in its json form in S3 (`s3://aws-frontend-store/STAGE/frontsapi/pressed/live/FRONTS/fapi/pressed.v2.json in Frontend account`)
 
 Note:
 
@@ -88,7 +88,7 @@ Two versions of a fronts data are being pressed: Live and Draft
 
 As mentioned above, when Facia receives a request for a front, it:
 
-1. fetches the "pressed" data from S3 (`s3://aws-frontend-store/STAGE/frontsapi/pressed/live/FRONTS/fapi/pressed.json in Frontend account`)
+1. fetches the "pressed" data from S3 (`s3://aws-frontend-store/STAGE/frontsapi/pressed/live/FRONTS/fapi/pressed.v2.json in Frontend account`)
 
 2. renders the front.
 

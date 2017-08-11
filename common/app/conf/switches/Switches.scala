@@ -32,6 +32,7 @@ object SwitchGroup {
   val Performance = SwitchGroup("Performance")
   val ServerSideABTests = SwitchGroup("Server-side A/B Tests")
   val Membership = SwitchGroup("Membership")
+  val Journalism = SwitchGroup("Journalism")
 }
 
 
@@ -159,7 +160,8 @@ with ABTestSwitches
 with CommercialSwitches
 with DiscussionSwitches
 with PerformanceSwitches
-with MonitoringSwitches {
+with MonitoringSwitches
+with JournalismSwitches {
 
   def all: Seq[Switch] = Switch.allSwitches
 

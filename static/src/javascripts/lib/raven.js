@@ -2,7 +2,7 @@
 
 import raven from 'raven';
 import config from 'lib/config';
-import detect from 'lib/detect';
+import { adblockInUse } from 'lib/detect';
 
 const { sentryPublicApiKey, sentryHost } = config.page;
 const sentryUrl = `https://${sentryPublicApiKey}@${sentryHost}`;
@@ -11,7 +11,7 @@ let adblockBeingUsed = false;
 
 const sentryOptions = {
     whitelistUrls: [
-        // loaclhost will not log errors, but call `shouldSendCallback`
+        // localhost will not log errors, but call `shouldSendCallback`
         /localhost/,
         /assets\.guim\.co\.uk/,
         /ophan\.co\.uk/,
@@ -22,6 +22,11 @@ const sentryOptions = {
         contentType: config.page.contentType,
         revisionNumber: config.page.revisionNumber,
     },
+
+    ignoreErrors: [
+        "Can't execute code from a freed script",
+        'There is no space left matching rules from .js-article__body',
+    ],
 
     dataCallback(data: Object): Object {
         const { culprit = false } = data;
@@ -61,8 +66,8 @@ const sentryOptions = {
     },
 };
 
-detect.adblockInUse.then(adblockInUse => {
-    adblockBeingUsed = adblockInUse;
+adblockInUse.then(isUse => {
+    adblockBeingUsed = isUse;
 });
 
 export default raven.config(sentryUrl, sentryOptions).install();

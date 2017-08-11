@@ -17,13 +17,19 @@ import services.fronts.FrontsApi
 import model._
 import model.facia.PressedCollection
 import model.pressed._
+import org.joda.time.DateTime
 import play.api.libs.json._
 import play.api.libs.ws.WSClient
 import services.{ConfigAgent, S3FrontsApi}
+import implicits.Booleans._
 
 import scala.concurrent.Future
+import scala.util.{Failure, Success}
 
 class LiveFapiFrontPress(val wsClient: WSClient, val capiClientForFrontsSeo: ContentApiClient) extends FapiFrontPress {
+
+  override def putPressedJson(path: String, json: String): Unit = S3FrontsApi.putLiveFapiPressedJson(path, json)
+  override def isLiveContent: Boolean = true
 
   override implicit val capiClient: ContentApiClientLogic = CircuitBreakingContentApiClient(
     httpClient = new CapiHttpClient(wsClient),
@@ -33,16 +39,7 @@ class LiveFapiFrontPress(val wsClient: WSClient, val capiClientForFrontsSeo: Con
 
   implicit val fapiClient: ApiClient = FrontsApi.crossAccountClient
 
-  def pressByPathId(path: String): Future[Unit] =
-    getPressedFrontForPath(path)
-      .map { pressedFront => S3FrontsApi.putLiveFapiPressedJson(path, Json.stringify(Json.toJson(pressedFront)))}
-      .asFuture.map(_.fold(
-        e => {
-          StatusNotification.notifyFailedJob(path, isLive = true, e)
-          throw new RuntimeException(s"${e.cause} ${e.message}")},
-        _ => StatusNotification.notifyCompleteJob(path, isLive = true)))
-
-  def collectionContentWithSnaps(
+  override def collectionContentWithSnaps(
     collection: Collection,
     adjustSearchQuery: AdjustSearchQuery = identity,
     adjustSnapItemQuery: AdjustItemQuery = identity) =
@@ -59,17 +56,10 @@ class DraftFapiFrontPress(val wsClient: WSClient, val capiClientForFrontsSeo: Co
 
   implicit val fapiClient: ApiClient = FrontsApi.crossAccountClient
 
-  def pressByPathId(path: String): Future[Unit] =
-    getPressedFrontForPath(path)
-      .map { pressedFront => S3FrontsApi.putDraftFapiPressedJson(path, Json.stringify(Json.toJson(pressedFront)))}
-      .asFuture.map(_.fold(
-        e => {
-          StatusNotification.notifyFailedJob(path, isLive = false, e)
-          throw new RuntimeException(s"${e.cause} ${e.message}")
-        },
-        _ => StatusNotification.notifyCompleteJob(path, isLive = false)))
+  override def putPressedJson(path: String, json: String): Unit = S3FrontsApi.putDraftFapiPressedJson(path, json)
+  override def isLiveContent: Boolean = false
 
-  def collectionContentWithSnaps(
+  override def collectionContentWithSnaps(
     collection: Collection,
     adjustSearchQuery: AdjustSearchQuery = identity,
     adjustSnapItemQuery: AdjustItemQuery = identity) =
@@ -91,7 +81,8 @@ trait FapiFrontPress extends Logging with ExecutionContexts {
   implicit def fapiClient: ApiClient
   val capiClientForFrontsSeo: ContentApiClient
   val wsClient: WSClient
-  def pressByPathId(path: String): Future[Unit]
+  def putPressedJson(path: String, json: String): Unit
+  def isLiveContent: Boolean
 
   def collectionContentWithSnaps(
     collection: Collection,
@@ -117,18 +108,72 @@ trait FapiFrontPress extends Logging with ExecutionContexts {
       .showReferences(QueryDefaults.references)
       .showAtoms("media")
 
+  def pressByPathId(path: String): Future[Unit] = {
+
+    val stopWatch: StopWatch = new StopWatch
+
+    val pressFuture = getPressedFrontForPath(path)
+      .map { pressedFront =>
+        val json: String = Json.stringify(Json.toJson(pressedFront))
+        FaciaPressMetrics.FrontPressContentSize.recordSample(json.getBytes.length, new DateTime())
+        putPressedJson(path, json)
+      }
+      .asFuture
+      .map(
+        _.fold(
+          e => {
+            StatusNotification.notifyFailedJob(path, isLive = isLiveContent, e)
+            throw new RuntimeException(s"${e.cause} ${e.message}")
+          },
+          _ => StatusNotification.notifyCompleteJob(path, isLive = isLiveContent))
+      )
+
+
+    pressFuture.onComplete {
+      case Success(_) =>
+        val pressDuration: Long = stopWatch.elapsed
+        log.info(s"Successfully pressed $path in $pressDuration ms")
+        FaciaPressMetrics.AllFrontsPressLatencyMetric.recordDuration(pressDuration)
+        /** We record separate metrics for each of the editions' network fronts */
+        val metricsByPath = Map(
+          "uk" -> FaciaPressMetrics.UkPressLatencyMetric,
+          "us" -> FaciaPressMetrics.UsPressLatencyMetric,
+          "au" -> FaciaPressMetrics.AuPressLatencyMetric
+        )
+        if (Edition.all.map(_.id.toLowerCase).contains(path)) {
+          metricsByPath.get(path).foreach { metric =>
+            metric.recordDuration(pressDuration)
+          }
+        }
+      case Failure(error) =>
+        log.warn(s"Failed to press '$path':", error)
+    }
+
+    pressFuture
+  }
+
   def generateCollectionJsonFromFapiClient(collectionId: String): Response[PressedCollection] =
     for {
       collection <- FAPI.getCollection(collectionId)
-      curatedCollection <- getCurated(collection)
+      curated <- getCurated(collection)
       backfill <- getBackfill(collection)
       treats <- getTreats(collection)
-    } yield
+    } yield {
+      val doNotTrimContainerOfTypes = Seq("nav/list")
+      val maxStories: Int = doNotTrimContainerOfTypes
+        .contains(collection.collectionConfig.collectionType)
+        .toOption(curated.length + backfill.length)
+        .getOrElse(Configuration.facia.collectionCap)
+      val trimmedCurated = curated.take(maxStories)
+      val trimmedBackfill = backfill.take(maxStories - trimmedCurated.length)
       PressedCollection.fromCollectionWithCuratedAndBackfill(
         collection,
-        curatedCollection.map(slimContent),
-        backfill.map(slimContent),
-        treats.map(slimContent))
+        trimmedCurated,
+        trimmedBackfill,
+        treats
+      )
+    }
+
 
   private def getCurated(collection: Collection): Response[List[PressedContent]] = {
     // Map initial PressedContent to enhanced content which contains pre-fetched embed content.
@@ -299,45 +344,6 @@ trait FapiFrontPress extends Logging with ExecutionContexts {
     }
 
     contentApiResponse.map(Option(_)).fallbackTo(Future.successful(None))
-  }
-
-  def slimContent(pressedContent: PressedContent): PressedContent = {
-    val slimMaybeContent = pressedContent.properties.maybeContent.map { content =>
-
-      // Discard all elements except the main video.
-      // It is safe to do so because the trail picture is held in trailPicture in the Trail class.
-      val slimElements = Elements.apply(content.elements.mainVideo.toList)
-      val slimFields = content.fields.copy(body = HTML.takeFirstNElements(content.fields.body, 2), blocks = None)
-      val slimAtoms = content.atoms
-
-      // Clear the config fields, because they are not used by facia. That is, the config of
-      // an individual card is not used to render a facia front page.
-      val slimMetadata = content.metadata.copy(
-        javascriptConfigOverrides = Map(),
-        opengraphPropertiesOverrides = Map(),
-        twitterPropertiesOverrides = Map())
-
-      val slimContent = content.content.copy(metadata = slimMetadata, elements = slimElements, fields = slimFields, atoms = slimAtoms)
-
-      content match {
-        case article: Article => article.copy(content = slimContent)
-        case video: Video => video.copy(content = slimContent)
-        case audio: Audio => audio.copy(content = slimContent)
-        case interactive: Interactive => interactive.copy(content = slimContent)
-        case image: ImageContent => image.copy(content = slimContent)
-        case gallery: Gallery => gallery.copy(content = slimContent)
-        case generic: GenericContent => generic.copy(content = slimContent)
-        case crossword: CrosswordContent => crossword.copy(content = slimContent)
-      }
-    }
-    val slimProperties = pressedContent.properties.copy(maybeContent = slimMaybeContent)
-
-    pressedContent match {
-      case curatedContent: CuratedContent => curatedContent.copy(properties = slimProperties)
-      case supporting: SupportingCuratedContent => supporting.copy(properties = slimProperties)
-      case linkSnap: LinkSnap => linkSnap.copy(properties = slimProperties)
-      case latestSnap: LatestSnap => latestSnap.copy(properties = slimProperties)
-    }
   }
 
 }

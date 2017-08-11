@@ -4,12 +4,9 @@ import com.amazonaws.regions.{Region, Regions}
 import com.amazonaws.services.sqs.AmazonSQSAsyncClient
 import common._
 import conf.Configuration
-import FaciaPressMetrics._
-import org.joda.time.DateTime
 import services._
 
 import scala.concurrent.Future
-import scala.util.{Failure, Success}
 
 class ToolPressQueueWorker(liveFapiFrontPress: LiveFapiFrontPress, draftFapiFrontPress: DraftFapiFrontPress) extends JsonQueueWorker[PressJob] with Logging {
   override lazy val queue = (Configuration.faciatool.frontPressToolQueue map { queueUrl =>
@@ -22,13 +19,6 @@ class ToolPressQueueWorker(liveFapiFrontPress: LiveFapiFrontPress, draftFapiFron
   }) getOrElse {
     throw new RuntimeException("Required property 'frontpress.sqs.tool_queue_url' not set")
   }
-
-  /** We record separate metrics for each of the editions' network fronts */
-  val metricsByPath = Map(
-    "uk" -> UkPressLatencyMetric,
-    "us" -> UsPressLatencyMetric,
-    "au" -> AuPressLatencyMetric
-  )
 
   override def process(message: Message[PressJob]): Future[Unit] = {
     val PressJob(FrontPath(path), pressType, creationTime, forceConfigUpdate) = message.get
@@ -45,32 +35,10 @@ class ToolPressQueueWorker(liveFapiFrontPress: LiveFapiFrontPress, draftFapiFron
       else
         Future.successful(Unit)
 
-    val pressFutureWithConfigUpdate = for {
+    for {
       _ <- forceConfigUpdateFuture
-      _ <- pressFuture
-    } yield Unit
+      press <- pressFuture
+    } yield press
 
-    pressFutureWithConfigUpdate onComplete {
-      case Success(_) =>
-
-        val millisToPress: Long = DateTime.now.getMillis - creationTime.getMillis
-
-        if (millisToPress < 0) {
-          log.error(s"Tachyons messing up our pressing! (pressed in ${millisToPress}ms)")
-        } else {
-          AllFrontsPressLatencyMetric.recordDuration(millisToPress)
-
-          metricsByPath.get(path) foreach { metric =>
-            metric.recordDuration(millisToPress)
-          }
-        }
-
-        log.info(s"Successfully pressed $path on $pressType after $millisToPress ms")
-
-      case Failure(error) =>
-        log.error(s"Failed to press $path on $pressType", error)
-    }
-
-    pressFuture.map(_ => ())
   }
 }

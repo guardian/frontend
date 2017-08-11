@@ -8,7 +8,7 @@ import mediator from 'lib/mediator';
 import tailorSurveyHtml from 'raw-loader!common/views/experiments/tailor-survey.html';
 import ophan from 'ophan/ng';
 import template from 'lodash/utilities/template';
-import fillSpace from 'common/modules/article/space-filler';
+import { spaceFiller } from 'common/modules/article/space-filler';
 import { getSurvey } from 'common/modules/tailor/tailor';
 
 // Every time we show a survey to a user, we cannot show it again to that user for a specified number of days.
@@ -90,7 +90,7 @@ const spacefinderRules = {
 
 // we can write a survey into a spare space using spaceFiller
 const inArticleWriter = (survey, surveyId) =>
-    fillSpace.fillSpace(spacefinderRules, paras => {
+    spaceFiller.fillSpace(spacefinderRules, paras => {
         const componentName = `data_tailor_survey_${surveyId}`;
 
         mediator.emit('register:begin', componentName);

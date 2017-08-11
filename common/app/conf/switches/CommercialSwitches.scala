@@ -15,6 +15,16 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
+  val VideoSlotsSwitch = Switch(
+    SwitchGroup.Commercial,
+    "keep-video-ad-slots-open",
+    "Deactivates the sizecallback for videos (620x1) that hides the slot.",
+    owners = Seq(Owner.withGithub("JonNorman")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 8, 23),
+    exposeClientSide = true
+  )
+
   val SurveySwitch = Switch(
     SwitchGroup.Commercial,
     "surveys",
@@ -37,8 +47,18 @@ trait CommercialSwitches {
 
   val AdFreeTrialSwitch = Switch(
     SwitchGroup.Commercial,
-    "ad-free-membership-trial",
-    "Master switch for trialling ad-free membership perk",
+    "ad-free-subscription-trial",
+    "Master switch for trialling ad-free subscription",
+    owners = Seq(Owner.withGithub("JustinPinner")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
+  val AdFreeStrictExpiryEnforcement = Switch(
+    SwitchGroup.Commercial,
+    "ad-free-strict-expiry-enforcement",
+    "When ON, the ad-free cookie is valid for max. 48 hours. OFF doesn't enforce expiry check.",
     owners = Seq(Owner.withGithub("JustinPinner")),
     safeState = Off,
     sellByDate = never,
@@ -49,16 +69,6 @@ trait CommercialSwitches {
     SwitchGroup.Commercial,
     "tourism-australia",
     "If this switch is on, the Tourism Australia pixel is added to the Ashes Australia travel section.",
-    owners = Seq(Owner.withName("commercial team")),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
-  val AudienceScienceGatewaySwitch = Switch(
-    SwitchGroup.Commercial,
-    "audience-science-gateway",
-    "If this switch is on, Audience Science Gateway segments will be used to target ads.",
     owners = Seq(Owner.withName("commercial team")),
     safeState = Off,
     sellByDate = never,
@@ -79,6 +89,16 @@ trait CommercialSwitches {
     SwitchGroup.Commercial,
     "krux",
     "Enable Krux Control Tag",
+    owners = Seq(Owner.withName("commercial team")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
+  val DoubleClickYouTubeAdFree = Switch(
+    SwitchGroup.Commercial,
+    "doubleclick-youtube-ad-free",
+    "Enable DoubleClick Segment for YouTube for Ad Free Users",
     owners = Seq(Owner.withName("commercial team")),
     safeState = Off,
     sellByDate = never,
@@ -252,16 +272,6 @@ trait CommercialSwitches {
     owners = Seq(Owner.withGithub("rich-nguyen"), Owner.withGithub("janua")),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = true
-  )
-
-  val adFeedbackSwitch: Switch = Switch(
-    group = SwitchGroup.Commercial,
-    name = "ad-feedback",
-    description = "Solicit feedback for ad impressions",
-    owners = Owner.group(SwitchGroup.Commercial),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 7, 12),
     exposeClientSide = true
   )
 

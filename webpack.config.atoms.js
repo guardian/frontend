@@ -16,6 +16,15 @@ config.entry = {
         'atoms',
         'storyquestions.js'
     ),
+    snippet: path.join(
+        __dirname,
+        'static',
+        'src',
+        'javascripts',
+        'bootstraps',
+        'atoms',
+        'snippet.js'
+    ),
 };
 
 module.exports = webpackMerge.smart(config, {

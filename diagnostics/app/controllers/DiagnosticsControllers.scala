@@ -7,6 +7,5 @@ trait DiagnosticsControllers {
   def wsClient: WSClient
 
   lazy val diagnosticsController = wire[DiagnosticsController]
-  lazy val quizzesController = wire[QuizzesController]
   lazy val commercialPreflightController = wire[CommercialPreflightController]
 }

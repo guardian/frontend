@@ -1,5 +1,8 @@
 // @flow
-import { shouldRun, url, onLoad } from './imr-worldwide';
+import { imrWorldwide } from './imr-worldwide';
+
+const { shouldRun, url } = imrWorldwide;
+const onLoad: any = imrWorldwide.onLoad;
 
 jest.mock('lib/config', () => ({
     switches: {

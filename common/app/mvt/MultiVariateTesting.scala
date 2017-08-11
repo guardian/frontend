@@ -16,18 +16,6 @@ import conf.switches.Switches.ServerSideTests
 //    val tests = List(ExampleTest)
 // }
 
-object CommercialGalleryBannerAds extends TestDefinition(
-  name = "commercial-gallery-banner-ads",
-  description = "Users in the test will see banner ads instead of MPUs in galleries",
-  owners = Seq(Owner.withGithub("JonNorman")),
-  sellByDate = new LocalDate(2017, 7, 11)
-) {
-
-  def participationGroup(implicit request: RequestHeader): Option[String] = request.headers.get("X-GU-commercial-gallery-banner-ads")
-
-  def canRun(implicit request: RequestHeader): Boolean = participationGroup.contains("variant")
-}
-
 object CommercialClientLoggingVariant extends TestDefinition(
   name = "commercial-client-logging",
   description = "A slice of the audience who will post their commercial js performance data",
@@ -44,10 +32,10 @@ object ABNewDesktopHeaderVariant extends TestDefinition(
   name = "ab-new-desktop-header-variant",
   description = "Users in this test will see the new desktop design.",
   owners = Seq(Owner.withGithub("natalialkb"), Owner.withGithub("gustavpursche")),
-  sellByDate = new LocalDate(2017, 7, 18)
+  sellByDate = new LocalDate(2017, 8, 24)
 ) {
 
-  def participationGroup(implicit request: RequestHeader): Option[String] = request.headers.get("X-GU-ab-new-desktop-header")
+  def participationGroup(implicit request: RequestHeader): Option[String] = request.headers.get("X-GU-ab-new-desktop-header-v2")
 
   def canRun(implicit request: RequestHeader): Boolean = participationGroup.contains("variant")
 }
@@ -56,10 +44,34 @@ object ABNewDesktopHeaderControl extends TestDefinition(
   name = "ab-new-desktop-header-control",
   description = "Users in this test will not see the new desktop design, but act as a control group",
   owners = Seq(Owner.withGithub("natalialkb"), Owner.withGithub("gustavpursche")),
-  sellByDate = new LocalDate(2017, 7, 18)
+  sellByDate = new LocalDate(2017, 8, 24)
 ) {
 
-  def participationGroup(implicit request: RequestHeader): Option[String] = request.headers.get("X-GU-ab-new-desktop-header")
+  def participationGroup(implicit request: RequestHeader): Option[String] = request.headers.get("X-GU-ab-new-desktop-header-v2")
+
+  def canRun(implicit request: RequestHeader): Boolean = participationGroup.contains("control")
+}
+
+object ABJavascriptRenderingVariant extends TestDefinition(
+  name = "ab-javascript-rendering-variant",
+  description = "Users in this test will see pages rendered by the javascript renderer.",
+  owners = Seq(Owner.withName("dotcom.platform")),
+  sellByDate = new LocalDate(2017, 8, 29)
+) {
+
+  def participationGroup(implicit request: RequestHeader): Option[String] = request.headers.get("X-GU-ab-javascript-rendering")
+
+  def canRun(implicit request: RequestHeader): Boolean = participationGroup.contains("variant")
+}
+
+object ABJavascriptRenderingControl extends TestDefinition(
+  name = "ab-javascript-rendering-control",
+  description = "Users in this test will see pages rendered via twirl.",
+  owners = Seq(Owner.withName("dotcom.platform")),
+  sellByDate = new LocalDate(2017, 8, 29)
+) {
+
+  def participationGroup(implicit request: RequestHeader): Option[String] = request.headers.get("X-GU-ab-javascript-rendering")
 
   def canRun(implicit request: RequestHeader): Boolean = participationGroup.contains("control")
 }
@@ -88,9 +100,10 @@ trait ServerSideABTests {
 object ActiveTests extends ServerSideABTests {
   val tests: Seq[TestDefinition] = List(
     CommercialClientLoggingVariant,
-    CommercialGalleryBannerAds,
     ABNewDesktopHeaderVariant,
-    ABNewDesktopHeaderControl
+    ABNewDesktopHeaderControl,
+    ABJavascriptRenderingVariant,
+    ABJavascriptRenderingControl
   )
 }
 

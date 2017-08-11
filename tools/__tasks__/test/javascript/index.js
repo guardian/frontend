@@ -14,7 +14,7 @@ const exec = (cmd, args) => {
     ).filter(Boolean);
 };
 
-const legacyTests = ['commercial', 'common', 'facia'].map(set => ({
+const legacyTests = ['common', 'facia'].map(set => ({
     description: `Run ${set} tests (legacy)`,
     task: () =>
         exec('karma', [

@@ -248,8 +248,7 @@ object FaciaCard {
         useShortByline = false,
         faciaContent.card.group,
         branding = faciaContent.branding(defaultEdition),
-        properties = Some(faciaContent.properties),
-        capiContent = faciaContent.properties.maybeContent
+        properties = Some(faciaContent.properties)
       )
   }
 }
@@ -278,14 +277,15 @@ case class ContentCard(
   useShortByline: Boolean,
   group: String,
   branding: Option[Branding],
-  capiContent: Option[ContentType] ,
   properties: Option[PressedProperties]
 ) extends FaciaCard {
 
+  private lazy val storyContent: Option[PressedStory] = properties.flatMap(_.maybeContent)
+
   def paidImage: Option[ImageMedia] = {
-    lazy val videoImageMedia = capiContent flatMap (_.elements.mainVideo.map(_.images))
+    lazy val videoImageMedia = storyContent.flatMap(_.elements.mainVideo.map(_.images))
     lazy val imageOverride: Option[ImageMedia] = properties.flatMap(_.image flatMap ImageOverride.createImageMedia)
-    lazy val defaultTrailPicture = capiContent flatMap (_.trail.trailPicture)
+    lazy val defaultTrailPicture = storyContent.flatMap(_.trail.trailPicture)
     imageOverride.orElse(videoImageMedia).orElse(defaultTrailPicture)
   }
 

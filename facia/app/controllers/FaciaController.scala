@@ -191,7 +191,7 @@ trait FaciaController extends Controller with Logging with ExecutionContexts wit
   def renderShowMore(path: String, collectionId: String) = Action.async { implicit request =>
     frontJsonFapi.get(path).flatMap {
       case Some(pressedPage) =>
-        val containers = Front.fromPressedPage(pressedPage, Edition(request)).containers
+        val containers = Front.fromPressedPage(pressedPage, Edition(request), adFree = request.isAdFree).containers
         val maybeResponse =
           for {
             (container, index) <- containers.zipWithIndex.find(_._1.dataId == collectionId)

@@ -24,13 +24,23 @@ import { init as initMessenger } from 'commercial/modules/messenger';
 
 import { init as type } from 'commercial/modules/messenger/type';
 import { init as getStyles } from 'commercial/modules/messenger/get-stylesheet';
+import { init as hide } from 'commercial/modules/messenger/hide';
 import { init as resize } from 'commercial/modules/messenger/resize';
 import { init as scroll } from 'commercial/modules/messenger/scroll';
 import { init as viewport } from 'commercial/modules/messenger/viewport';
 import { init as sendClick } from 'commercial/modules/messenger/click';
 import { init as background } from 'commercial/modules/messenger/background';
 
-initMessenger(type, getStyles, resize, scroll, viewport, sendClick, background);
+initMessenger(
+    type,
+    getStyles,
+    resize,
+    hide,
+    scroll,
+    viewport,
+    sendClick,
+    background
+);
 
 const setDfpListeners = (): void => {
     setListeners(window.googletag);

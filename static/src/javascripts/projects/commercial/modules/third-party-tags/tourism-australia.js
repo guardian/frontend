@@ -21,7 +21,11 @@ const getUrl = location => {
 const shouldRun: boolean =
     config.page.section === 'ashes-australia-travel' &&
     config.switches.tourismAustralia;
-const url: string = getUrl(window.location);
-const useImage: boolean = true;
 
-export { shouldRun, url, useImage };
+const url: string = getUrl(window.location);
+
+export const tourismAustralia: ThirdPartyTag = {
+    shouldRun,
+    url,
+    useImage: true,
+};

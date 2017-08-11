@@ -1,11 +1,16 @@
 package test
 
+import akka.actor.ActorSystem
+import common.ExecutionContexts
 import controllers.ArchiveController
+import model.{ApplicationContext, ApplicationIdentity}
 import play.api.mvc.Result
 import play.api.test.Helpers._
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
+import play.api.Environment
+import rendering.core.Renderer
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 import services.RedirectService
 import services.RedirectService.{ArchiveRedirect, PermanentRedirect}
 
@@ -13,9 +18,13 @@ import services.RedirectService.{ArchiveRedirect, PermanentRedirect}
   extends FlatSpec
   with Matchers
   with ConfiguredTestSuite
+  with ExecutionContexts
   with BeforeAndAfterAll {
 
-  lazy val archiveController = new ArchiveController(mockRedirects)
+  implicit lazy val appContext: ApplicationContext = ApplicationContext(Environment.simple(), ApplicationIdentity("archive"))
+  implicit lazy val actorSystem: ActorSystem = app.actorSystem
+  lazy val renderer = new Renderer
+  lazy val archiveController = new ArchiveController(mockRedirects, renderer)
   lazy val mockRedirects = new RedirectService {
     override def destinationFor(source: String) = Future.successful(None)
   }

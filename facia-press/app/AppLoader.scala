@@ -54,6 +54,8 @@ trait AppComponents extends FrontendComponents {
     FaciaPressMetrics.UkPressLatencyMetric,
     FaciaPressMetrics.UsPressLatencyMetric,
     FaciaPressMetrics.AuPressLatencyMetric,
-    FaciaPressMetrics.AllFrontsPressLatencyMetric
+    FaciaPressMetrics.AllFrontsPressLatencyMetric,
+    FaciaPressMetrics.FrontPressContentSize,
+    FaciaPressMetrics.FrontDecodingLatency
   )
 }

@@ -5,7 +5,7 @@ import $ from 'lib/$';
 import qwery from 'qwery';
 import config from 'lib/config';
 import { pushUrl } from 'lib/url';
-import detect from 'lib/detect';
+import { getBreakpoint, hasTouchScreen } from 'lib/detect';
 import FiniteStateMachine from 'lib/fsm';
 import mediator from 'lib/mediator';
 import throttle from 'lodash/functions/throttle';
@@ -42,9 +42,9 @@ class HostedGallery {
     states: Object;
     constructor() {
         // CONFIG
-        const breakpoint = detect.getBreakpoint();
+        const breakpoint = getBreakpoint();
         this.useSwipe =
-            detect.hasTouchScreen() &&
+            hasTouchScreen() &&
             (breakpoint === 'mobile' || breakpoint === 'tablet');
         this.swipeThreshold = 0.05;
         this.index = this.index || 1;

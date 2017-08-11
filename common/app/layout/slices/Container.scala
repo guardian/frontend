@@ -12,7 +12,7 @@ object Container extends Logging {
     ("dynamic/fast", Dynamic(DynamicFast)),
     ("dynamic/slow", Dynamic(DynamicSlow)),
     ("dynamic/package", Dynamic(DynamicPackage)),
-    ("dynamic/slow-mpu", Dynamic(DynamicSlowMPU(omitMPU = false))),
+    ("dynamic/slow-mpu", Dynamic(DynamicSlowMPU(omitMPU = false, adFree = false))),
     ("fixed/video", Video),
     ("nav/list", NavList),
     ("nav/media-list", NavMediaList),
@@ -31,13 +31,13 @@ object Container extends Logging {
   def fromConfig(collectionConfig: CollectionConfig): Container =
     resolve(collectionConfig.collectionType)
 
-  def fromPressedCollection(pressedCollection: PressedCollection, omitMPU: Boolean): Container = {
+  def fromPressedCollection(pressedCollection: PressedCollection, omitMPU: Boolean, adFree: Boolean): Container = {
     val container = resolve(pressedCollection.collectionType)
     container match {
-      case Fixed(definition) if omitMPU =>
+      case Fixed(definition) if omitMPU || adFree =>
         Fixed(definition.copy(slices = definition.slicesWithoutMPU))
-      case Dynamic(DynamicSlowMPU(_)) if omitMPU =>
-        Dynamic(DynamicSlowMPU(omitMPU = true))
+      case Dynamic(DynamicSlowMPU(_,_)) if omitMPU || adFree =>
+        Dynamic(DynamicSlowMPU(omitMPU, adFree))
       case _ => container
     }
   }

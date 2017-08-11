@@ -8,10 +8,14 @@ import type { AcquisitionsEpicTemplateCopy } from 'common/modules/commercial/acq
 import { control as acquisitionsTestimonialParametersControl } from 'common/modules/commercial/acquisitions-epic-testimonial-parameters';
 import type { AcquisitionsEpicTestimonialTemplateParameters } from 'common/modules/commercial/acquisitions-epic-testimonial-parameters';
 import { logView } from 'common/modules/commercial/acquisitions-view-log';
+import {
+    submitEpicInsertEvent,
+    submitEpicViewEvent,
+} from 'common/modules/commercial/acquisitions-ophan';
 import { isRegular } from 'common/modules/tailor/tailor';
 import $ from 'lib/$';
 import config from 'lib/config';
-import ElementInView from 'lib/element-inview';
+import { elementInView } from 'lib/element-inview';
 import fastdom from 'lib/fastdom-promise';
 import mediator from 'lib/mediator';
 import { getSync as geolocationGetSync } from 'lib/geolocation';
@@ -19,30 +23,22 @@ import { constructQuery as constructURLQuery } from 'lib/url';
 import { noop } from 'lib/noop';
 import lodashTemplate from 'lodash/utilities/template';
 import toArray from 'lodash/collections/toArray';
+import acquisitionsEpicButtons from 'raw-loader!common/views/acquisitions-epic-buttons.html';
 import acquisitionsEpicControlTemplate from 'raw-loader!common/views/acquisitions-epic-control.html';
 import acquisitionsTestimonialBlockTemplate from 'raw-loader!common/views/acquisitions-epic-testimonial-block.html';
 import { shouldSeeReaderRevenue as userShouldSeeReaderRevenue } from 'commercial/modules/user-features';
 
-type ContributionsABTest = ABTest & {
-    epic: boolean,
-    campaignId: string,
-    campaignPrefix: string,
-    campaignSuffix: string,
-    useLocalViewLog: boolean,
-    overrideCanRun: boolean,
-    showToContributorsAndSupporters: boolean,
-    pageCheck: (page: Object) => boolean,
-    locations: Array<string>,
-    locationCheck: (location: string) => boolean,
-    useTargetingTool: boolean,
-    insertEvent: string,
-    viewEvent: string,
-};
-
 type EpicTemplate = (Variant, AcquisitionsEpicTemplateCopy) => string;
+
+type CtaUrls = {
+    membershipUrl?: string,
+    contributeUrl?: string,
+    supportUrl?: string,
+};
 
 const membershipBaseURL = 'https://membership.theguardian.com/supporter';
 const contributionsBaseURL = 'https://contribute.theguardian.com';
+const supportBaseURL = 'https://support.theguardian.com/uk';
 
 // How many times the user can see the Epic,
 // e.g. 6 times within 7 days with minimum of 1 day in between views.
@@ -56,13 +52,19 @@ const defaultMaxViews: {
     minDaysBetweenViews: 0,
 };
 
+const defaultButtonTemplate = (urls: CtaUrls) =>
+    lodashTemplate(acquisitionsEpicButtons, urls);
+
 const controlTemplate: EpicTemplate = ({ options = {} }, copy) =>
     lodashTemplate(acquisitionsEpicControlTemplate, {
         copy,
-        membershipUrl: options.membershipURL,
-        contributionUrl: options.contributeURL,
         componentName: options.componentName,
         testimonialBlock: options.testimonialBlock,
+        buttonTemplate: options.buttonTemplate({
+            membershipUrl: options.membershipURL,
+            contributeUrl: options.contributeURL,
+            supportUrl: options.supportURL,
+        }),
     });
 
 const doTagsMatch = (test: ContributionsABTest): boolean =>
@@ -174,6 +176,8 @@ const registerIframeListener = (iframeId: string) => {
 };
 
 const makeABTestVariant = (
+    id: string,
+    products: OphanProduct[],
     options: Object,
     parentTest: ContributionsABTest
 ): Variant => {
@@ -183,15 +187,13 @@ const makeABTestVariant = (
     const campaignCode = getCampaignCode(
         parentTest.campaignPrefix,
         parentTest.campaignId,
-        options.id,
+        id,
         parentTest.campaignSuffix
     );
     const iframeId = `${parentTest.campaignId}_iframe`;
 
+    // defaults for options
     const {
-        id,
-
-        // optional params
         maxViews = defaultMaxViews,
         isUnlimited = false,
         contributeURL = addTrackingCodesToUrl(
@@ -199,7 +201,13 @@ const makeABTestVariant = (
             campaignCode
         ),
         membershipURL = addTrackingCodesToUrl(membershipBaseURL, campaignCode),
+        supportCustomURL = null,
+        supportURL = addTrackingCodesToUrl(
+            supportCustomURL || supportBaseURL,
+            campaignCode
+        ),
         template = controlTemplate,
+        buttonTemplate = defaultButtonTemplate,
         testimonialBlock = getTestimonialBlock(
             acquisitionsTestimonialParametersControl
         ),
@@ -214,10 +222,24 @@ const makeABTestVariant = (
         insertMultiple = false,
         insertAfter = false,
         test = noop,
-        impression = submitImpression =>
-            mediator.once(parentTest.insertEvent, submitImpression),
-        success = submitSuccess =>
-            mediator.once(parentTest.viewEvent, submitSuccess),
+        impression = submitABTestImpression =>
+            mediator.once(parentTest.insertEvent, () => {
+                submitEpicInsertEvent(
+                    products,
+                    campaignCode,
+                    parentTest.componentType
+                );
+                submitABTestImpression();
+            }),
+        success = submitABTestComplete =>
+            mediator.once(parentTest.viewEvent, () => {
+                submitEpicViewEvent(
+                    products,
+                    campaignCode,
+                    parentTest.componentType
+                );
+                submitABTestComplete();
+            }),
     } = options;
 
     if (usesIframe) {
@@ -236,7 +258,9 @@ const makeABTestVariant = (
             campaignCode,
             contributeURL,
             membershipURL,
+            supportURL,
             template,
+            buttonTemplate,
             testimonialBlock,
             blockEngagementBanner,
             engagementBannerParams,
@@ -281,15 +305,12 @@ const makeABTestVariant = (
                                     component.insertBefore(targets);
                                 }
 
-                                mediator.emit(
-                                    parentTest.insertEvent,
-                                    component
-                                );
+                                mediator.emit(parentTest.insertEvent);
                                 onInsert(component);
 
                                 component.each(element => {
                                     // top offset of 18 ensures view only counts when half of element is on screen
-                                    const elementInView = ElementInView(
+                                    const inView = elementInView(
                                         element,
                                         window,
                                         {
@@ -297,7 +318,7 @@ const makeABTestVariant = (
                                         }
                                     );
 
-                                    elementInView.on('firstview', () => {
+                                    inView.on('firstview', () => {
                                         logView(parentTest.id);
                                         mediator.emit(parentTest.viewEvent);
                                         mediator.emit(
@@ -355,6 +376,7 @@ const makeABTest = ({
 
     // optional params
     epic = true,
+    componentType = 'ACQUISITIONS_EPIC',
     // locations is a filter where empty is taken to mean 'all'
     locations = [],
     locationCheck = () => true,
@@ -368,7 +390,7 @@ const makeABTest = ({
     showToContributorsAndSupporters = false,
     canRun = () => true,
     pageCheck = defaultPageCheck,
-}: Object): ContributionsABTest => {
+}: InitContributionsABTest): ContributionsABTest => {
     const test = {
         // this is true because we use the reader revenue flag rather than sensitive
         // to disable contributions asks for a particular piece of content
@@ -386,6 +408,8 @@ const makeABTest = ({
         insertEvent: makeEvent(id, 'insert'),
         viewEvent: makeEvent(id, 'view'),
 
+        variants: [],
+
         id,
         start,
         expiry,
@@ -397,9 +421,9 @@ const makeABTest = ({
         audienceCriteria,
         idealOutcome,
         dataLinkNames,
-        variants,
         isEngagementBannerTest,
         epic,
+        componentType,
         campaignId,
         campaignPrefix,
         campaignSuffix,
@@ -412,8 +436,8 @@ const makeABTest = ({
         useTargetingTool,
     };
 
-    test.variants = test.variants.map(variant =>
-        makeABTestVariant(variant, test)
+    test.variants = variants.map(variant =>
+        makeABTestVariant(variant.id, variant.products, variant.options, test)
     );
 
     return test;
@@ -425,4 +449,5 @@ export {
     getTestimonialBlock,
     addTrackingCodesToUrl,
     makeABTest,
+    defaultButtonTemplate,
 };

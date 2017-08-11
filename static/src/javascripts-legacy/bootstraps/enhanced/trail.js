@@ -33,7 +33,7 @@ define([
     identityApi,
     Onward,
     Popular,
-    Related,
+    related,
     TonalComponent,
     shareCount
 ) {
@@ -53,7 +53,7 @@ define([
     function initPopular() {
         if (!config.page.isFront) {
             insertOrProximity('.js-popular-trails', function () {
-                new Popular().init();
+                new Popular.MostPopular().init();
             });
         }
     }
@@ -74,7 +74,8 @@ define([
                     contains(['video', 'interactive'], config.page.contentType.toLowerCase())) {
                     opts.excludeTags.push('guardian-professional/guardian-professional');
                 }
-                new Related(opts).renderRelatedComponent();
+
+                related.related(opts);
             });
         }
     }
@@ -82,7 +83,7 @@ define([
     function initOnwardContent() {
         insertOrProximity('.js-onward', function () {
             if ((config.page.seriesId || config.page.blogIds) && config.page.showRelatedContent) {
-                new Onward(qwery('.js-onward'));
+                new Onward.OnwardContent(qwery('.js-onward'));
             } else if (config.page.tones !== '') {
                 $('.js-onward').each(function (c) {
                     new TonalComponent.TonalComponent().fetch(c, 'html');
@@ -92,7 +93,7 @@ define([
     }
 
     function initDiscussion() {
-        if (config.switches.discussion && config.page.commentable) {
+        if (config.switches.commentsVisibleOnArticle && config.page.commentable) {
             var el = qwery('.discussion')[0];
             if (el) {
                 new DiscussionLoader().attachTo(el);

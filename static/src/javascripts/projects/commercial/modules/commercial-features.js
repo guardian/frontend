@@ -1,10 +1,11 @@
 // @flow
 import config from 'lib/config';
-import detect from 'lib/detect';
+import { getBreakpoint, adblockInUse } from 'lib/detect';
 import { isAdFreeUser } from 'commercial/modules/user-features';
 import identityApi from 'common/modules/identity/api';
 import userPrefs from 'common/modules/user-prefs';
 import { shouldShowReaderRevenue } from 'common/modules/commercial/contributions-utilities';
+import { getTestVariantId } from 'common/modules/experiments/utils';
 
 // Having a constructor means we can easily re-instantiate the object in a test
 class CommercialFeatures {
@@ -12,6 +13,8 @@ class CommercialFeatures {
     stickyTopBannerAd: any;
     articleBodyAdverts: any;
     articleAsideAdverts: any;
+    glabsTrafficDriverInlineSlot: any;
+    glabsTrafficDriverLeftSlot: any;
     videoPreRolls: any;
     highMerch: any;
     thirdPartyTags: any;
@@ -35,22 +38,27 @@ class CommercialFeatures {
         const isInteractive = config.page.contentType === 'Interactive';
         const isLiveBlog = config.page.isLiveBlog;
         const isHosted = config.page.isHosted;
-        const isMatchReport = config.hasTone('Match reports');
         const isIdentityPage =
             config.page.contentType === 'Identity' ||
             config.page.section === 'identity'; // needed for pages under profile.* subdomain
         const switches = config.switches;
-        const isWidePage = detect.getBreakpoint() === 'wide';
+        const isWidePage = getBreakpoint() === 'wide';
         const supportsSticky =
             document.documentElement &&
             document.documentElement.classList.contains('has-sticky');
         const newRecipeDesign =
             config.page.showNewRecipeDesign && config.tests.abNewRecipeDesign;
+        const glabsTrafficDriverSlot =
+            config.hasTone('Features') &&
+            !config.page.isPaidContent &&
+            ['sport', 'lifeandstyle', 'fashion', 'food', 'travel'].includes(
+                config.page.section
+            );
 
         // Feature switches
         this.adFree =
             switches.commercial &&
-            switches.adFreeMembershipTrial &&
+            switches.adFreeSubscriptionTrial &&
             isAdFreeUser();
 
         this.dfpAdvertising =
@@ -70,13 +78,15 @@ class CommercialFeatures {
             !isHosted &&
             !newRecipeDesign;
 
-        this.articleAsideAdverts =
-            this.dfpAdvertising &&
-            !this.adFree &&
-            !isMinuteArticle &&
-            !isMatchReport &&
-            !!(isArticle || isLiveBlog) &&
-            !newRecipeDesign;
+        this.glabsTrafficDriverInlineSlot =
+            this.articleBodyAdverts &&
+            glabsTrafficDriverSlot &&
+            getTestVariantId('GlabsTrafficDriverSlot') === 'opt-in-inline';
+
+        this.glabsTrafficDriverLeftSlot =
+            this.articleBodyAdverts &&
+            glabsTrafficDriverSlot &&
+            getTestVariantId('GlabsTrafficDriverSlot') === 'opt-in-left';
 
         this.videoPreRolls = this.dfpAdvertising && !this.adFree;
 
@@ -104,7 +114,7 @@ class CommercialFeatures {
             this.dfpAdvertising &&
             !this.adFree &&
             !isMinuteArticle &&
-            config.switches.discussion &&
+            config.switches.commentsVisibleOnArticle &&
             config.page.commentable &&
             identityApi.isUserLoggedIn() &&
             (!isLiveBlog || isWidePage);
@@ -118,16 +128,12 @@ class CommercialFeatures {
             !supportsSticky;
 
         this.asynchronous = {
-            canDisplayMembershipEngagementBanner: detect.adblockInUse.then(
+            canDisplayMembershipEngagementBanner: adblockInUse.then(
                 adblockUsed => !adblockUsed && shouldShowReaderRevenue()
             ),
         };
 
-        this.adFeedback =
-            config.switches.adFeedback &&
-            ['artanddesign', 'society', 'tv-and-radio'].indexOf(
-                config.page.section
-            ) > -1;
+        this.adFeedback = false;
     }
 }
 

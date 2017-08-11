@@ -5,7 +5,7 @@ import tracking from 'common/modules/atoms/youtube-tracking';
 import Component from 'common/modules/component';
 import $ from 'lib/$';
 import config from 'lib/config';
-import detect from 'lib/detect';
+import { isIOS, isAndroid, isBreakpoint } from 'lib/detect';
 import debounce from 'lodash/functions/debounce';
 
 const players = {};
@@ -40,11 +40,13 @@ const killProgressTracker = (atomId: string): void => {
     }
 };
 
-const setProgressTracker = (atomId: string): number =>
-    (players[atomId].progressTracker = setInterval(
+const setProgressTracker = (atomId: string): number => {
+    players[atomId].progressTracker = setInterval(
         recordPlayerProgress.bind(null, atomId),
         1000
-    ));
+    );
+    return players[atomId].progressTracker;
+};
 
 const onPlayerPlaying = (atomId: string): void => {
     const player = players[atomId];
@@ -98,8 +100,7 @@ const checkState = (atomId, state, status): void => {
 };
 
 const shouldAutoplay = (atomId: string): boolean => {
-    const isAutoplayBlockingPlatform = () =>
-        detect.isIOS() || detect.isAndroid();
+    const isAutoplayBlockingPlatform = () => isIOS() || isAndroid();
 
     const isInternalReferrer = () => {
         if (config.page.isDev) {
@@ -169,7 +170,7 @@ const onPlayerReady = (atomId, overlay, iframe, event): void => {
 
         if (
             !!config.page.section &&
-            detect.isBreakpoint({
+            isBreakpoint({
                 min: 'desktop',
             })
         ) {

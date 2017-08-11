@@ -1,6 +1,7 @@
 package common.commercial.hosted
 
 import com.gu.contentapi.client.model.v1.{Content, TagType}
+import common.commercial.CommercialProperties
 import conf.Configuration.site
 import model.{MetaData, SectionSummary}
 import play.api.libs.json.{JsBoolean, JsString}
@@ -30,6 +31,7 @@ object HostedMetadata {
       contentType = contentType,
       iosType = Some(contentType),
       isHosted = true,
+      commercial = Some(CommercialProperties.fromContent(item)),
       javascriptConfigOverrides = Map(
         "isHosted" -> JsBoolean(true),
         "toneIds" -> JsString(toneIds),
