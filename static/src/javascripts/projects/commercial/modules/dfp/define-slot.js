@@ -6,6 +6,7 @@ import uniq from 'lodash/arrays/uniq';
 import flatten from 'lodash/arrays/flatten';
 import once from 'lodash/functions/once';
 import prepareSwitchTag from 'commercial/modules/dfp/prepare-switch-tag';
+import { getOutbrainComplianceTargeting } from 'commercial/modules/third-party-tags/outbrain';
 
 const adUnit = once(() => {
     const urlVars = getUrlVars();
@@ -50,6 +51,30 @@ const getSizeOpts = (sizesByBreakpoint: Object): Object => {
     };
 };
 
+// The high-merch slot targeting requires Promise-based data about the page.
+const setHighMerchSlotTargeting = (
+    slot: any,
+    slotTarget: string
+): Promise<any> => {
+    if (['merchandising-high', 'merchandising'].indexOf(slotTarget) === -1) {
+        return Promise.resolve();
+    }
+
+    return getOutbrainComplianceTargeting().then(keyValues => {
+        keyValues.forEach((value, key) => {
+            console.log(
+                'setting targets',
+                slotTarget,
+                'val',
+                value,
+                'key',
+                key
+            );
+            slot.setTargeting(key, value);
+        });
+    });
+};
+
 const defineSlot = (adSlotNode: Element, sizes: Object): Object => {
     const slotTarget = adSlotNode.getAttribute('data-name');
     const sizeOpts = getSizeOpts(sizes);
@@ -66,7 +91,10 @@ const defineSlot = (adSlotNode: Element, sizes: Object): Object => {
         slot = window.googletag
             .defineSlot(adUnit(), sizeOpts.sizes, id)
             .defineSizeMapping(sizeOpts.sizeMapping);
-        slotReady = prepareSwitchTag.maybePushAdUnit(id, sizeOpts);
+        slotReady = Promise.all([
+            setHighMerchSlotTargeting(slot, slotTarget),
+            prepareSwitchTag.maybePushAdUnit(id, sizeOpts),
+        ]);
     }
 
     if (slotTarget === 'im' && config.page.isbn) {
