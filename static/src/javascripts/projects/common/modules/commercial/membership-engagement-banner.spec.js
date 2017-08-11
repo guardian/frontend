@@ -4,7 +4,7 @@ import fakeConfig from 'lib/config';
 import fakeOphan from 'ophan/ng';
 import { commercialFeatures as fakeCommercialFeatures } from 'commercial/modules/commercial-features';
 import fakeMembershipEngagementParameters from 'common/modules/commercial/membership-engagement-banner-parameters';
-import { MembershipEngagementBannerTests as fakeMembershipEngagementTests } from 'common/modules/experiments/tests/membership-engagement-banner-tests';
+import { membershipEngagementBannerTests as fakeMembershipEngagementTests } from 'common/modules/experiments/tests/membership-engagement-banner-tests';
 import { membershipEngagementBannerInit } from 'common/modules/commercial/membership-engagement-banner';
 
 jest.mock('lib/mediator');
@@ -24,10 +24,6 @@ jest.mock('lib/geolocation', () => ({
 jest.mock('common/views/svgs', () => ({
     inlineSvg: jest.fn(() => ''),
 }));
-jest.mock(
-    'common/modules/experiments/tests/membership-engagement-banner-tests',
-    () => []
-);
 jest.mock('common/modules/experiments/acquisition-test-selector', () => []);
 jest.mock(
     'common/modules/commercial/membership-engagement-banner-parameters',

@@ -1,3 +1,3 @@
 // @flow
 
-export const MembershipEngagementBannerTests: ContributionsABTest[] = [];
+export const membershipEngagementBannerTests: ContributionsABTest[] = [];
