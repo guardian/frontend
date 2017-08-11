@@ -64,86 +64,12 @@ const getOutbrainPageConditions = (): Promise<OutbrainPageConditions> =>
         })
     );
 
-const canLoadInstantly = () =>
-    // Loading Outbrain is dependent on successful return of high relevance component
-    // from DFP. AdBlock is blocking DFP calls so we are not getting any response and thus
-    // not loading Outbrain. As Outbrain is being partially loaded behind the adblock we can
-    // make the call instantly when we detect adBlock in use.
-    adblockInUse.then(
-        isUse => !document.getElementById('dfp-ad--merchandising-high') || isUse
-    );
-
-const onIsStoryQuestionsOnPage = isStoryQuestionsOnPage => {
-    if (isStoryQuestionsOnPage) {
-        load('nonCompliant');
-    } else {
-        load();
-    }
-
-    return Promise.resolve();
-};
-
-const onIsUserInEmailAbTestAndEmailCanRun = userInEmailAbTestAndEmailCanRun => {
-    if (userInEmailAbTestAndEmailCanRun) {
-        load('nonCompliant');
-        return Promise.resolve();
-    }
-
-    return waitForCheck('isStoryQuestionsOnPage').then(
-        onIsStoryQuestionsOnPage
-    );
-};
-
-const onIsUserInContributionsAbTest = userInContributionsAbTest => {
-    if (userInContributionsAbTest) {
-        load('nonCompliant');
-        return Promise.resolve();
-    }
-
-    return waitForCheck('isUserInEmailAbTestAndEmailCanRun').then(
-        onIsUserInEmailAbTestAndEmailCanRun
-    );
-};
-
-const onIsOutbrainMerchandiseCompliant = outbrainMerchandiseCompliant => {
-    if (outbrainMerchandiseCompliant) {
-        load('merchandising');
-        return Promise.resolve();
-    }
-
-    return waitForCheck('isUserInContributionsAbTest').then(
-        onIsUserInContributionsAbTest
-    );
-};
-
-const onIsOutbrainBlockedByAds = outbrainBlockedByAds => {
-    if (outbrainBlockedByAds) {
-        return Promise.resolve();
-    }
-
-    return waitForCheck('isOutbrainMerchandiseCompliant').then(
-        onIsOutbrainMerchandiseCompliant
-    );
-};
-
-const onCanLoadInstantly = loadInstantly => {
-    if (loadInstantly) {
-        return waitForCheck('isUserInContributionsAbTest').then(
-            onIsUserInContributionsAbTest
-        );
-    }
-
-    return waitForCheck('isOutbrainBlockedByAds').then(
-        onIsOutbrainBlockedByAds
-    );
-};
-
 const getOutbrainDfpConditions = (): Promise<OutbrainDfpConditions> =>
     Promise.all([
         waitForCheck('isOutbrainBlockedByAds'),
         waitForCheck('isOutbrainMerchandiseCompliant'),
     ]).then(([blockedByAds, merchandiseCompliant]) => ({
-        blockedByAds: blockedByAds,
+        blockedByAds,
         useMerchandiseAdSlot: merchandiseCompliant,
     }));
 
@@ -167,19 +93,21 @@ export const getOutbrainComplianceTargeting = (): Promise<
 export const initOutbrain = () =>
     Promise.all([
         getOutbrainDfpConditions(),
-        getOutbrainPageConditions()
-    ]).then( ([dfpConditions, pageConditions]) => {
-        if (!pageConditions.outbrainEnabled ||
-            dfpConditions.blockedByAds
-        ) {
+        getOutbrainPageConditions(),
+    ]).then(([dfpConditions, pageConditions]) => {
+        if (!pageConditions.outbrainEnabled || dfpConditions.blockedByAds) {
             return;
         }
 
-        const editorialTests = pageConditions.contributionsTestVisible ||
+        const editorialTests =
+            pageConditions.contributionsTestVisible ||
             pageConditions.emailTestVisible ||
             pageConditions.storyQuestionsVisible;
 
-        if (pageConditions.useMerchandiseAdSlot && !pageConditions.noMerchSlotsExpected) {
+        if (
+            pageConditions.useMerchandiseAdSlot &&
+            !pageConditions.noMerchSlotsExpected
+        ) {
             load('merchandising');
         } else if (editorialTests) {
             load('nonCompliant');
@@ -187,4 +115,3 @@ export const initOutbrain = () =>
             load();
         }
     });
-
