@@ -24,19 +24,19 @@ import { load } from './outbrain-load';
 */
 
 type OutbrainPageConditions = {
-    'outbrain-enabled': boolean,
-    'empty-merch-slots-expected': boolean,
-    'contributions-test-visible': boolean,
-    'email-test-visible': boolean,
-    'story-questions-visible': boolean,
+    outbrainEnabled: boolean,
+    noMerchSlotsExpected: boolean,
+    contributionsTestVisible: boolean,
+    emailTestVisible: boolean,
+    storyQuestionsVisible: boolean,
 };
 
 type OutbrainDfpConditions = {
-    'blocked-by-ads': boolean,
-    'use-merchandise-ad-slot': boolean,
+    blockedByAds: boolean,
+    useMerchandiseAdSlot: boolean,
 };
 
-const emptyMerchSlotsExpected = (): Promise<boolean> =>
+const noMerchSlotsExpected = (): Promise<boolean> =>
     // Loading Outbrain is dependent on successful return of high relevance component
     // from DFP. AdBlock is blocking DFP calls so we are not getting any response and thus
     // not loading Outbrain. As Outbrain is being partially loaded behind the adblock we can
@@ -50,17 +50,17 @@ const emptyMerchSlotsExpected = (): Promise<boolean> =>
 const getOutbrainPageConditions = (): Promise<OutbrainPageConditions> =>
     Promise.all([
         waitForCheck('isOutbrainDisabled'),
-        emptyMerchSlotsExpected(),
+        noMerchSlotsExpected(),
         waitForCheck('isUserInContributionsAbTest'),
         waitForCheck('isUserInEmailAbTestAndEmailCanRun'),
         waitForCheck('isStoryQuestionsOnPage'),
     ]).then(
-        ([outbrainDisabled, emptyMerchSlots, contributions, email, story]) => ({
-            'outbrain-enabled': !outbrainDisabled,
-            'empty-merch-slots-expected': emptyMerchSlots,
-            'contributions-test-visible': contributions,
-            'email-test-visible': email,
-            'story-questions-visible': story,
+        ([outbrainDisabled, noMerchSlots, contributions, email, story]) => ({
+            outbrainEnabled: !outbrainDisabled,
+            noMerchSlotsExpected: noMerchSlots,
+            contributionsTestVisible: contributions,
+            emailTestVisible: email,
+            storyQuestionsVisible: story,
         })
     );
 
@@ -138,21 +138,13 @@ const onCanLoadInstantly = loadInstantly => {
     );
 };
 
-const onIsOutbrainDisabled = outbrainDisabled => {
-    if (outbrainDisabled) {
-        return Promise.resolve();
-    }
-
-    return canLoadInstantly().then(onCanLoadInstantly);
-};
-
-export const getOutbrainDfpConditions = (): Promise<OutbrainDfpConditions> =>
+const getOutbrainDfpConditions = (): Promise<OutbrainDfpConditions> =>
     Promise.all([
         waitForCheck('isOutbrainBlockedByAds'),
         waitForCheck('isOutbrainMerchandiseCompliant'),
     ]).then(([blockedByAds, merchandiseCompliant]) => ({
-        'blocked-by-ads': blockedByAds,
-        'use-merchandise-ad-slot': merchandiseCompliant,
+        blockedByAds: blockedByAds,
+        useMerchandiseAdSlot: merchandiseCompliant,
     }));
 
 export const getOutbrainComplianceTargeting = (): Promise<
@@ -160,15 +152,39 @@ export const getOutbrainComplianceTargeting = (): Promise<
 > =>
     getOutbrainPageConditions().then(pageConditions => {
         if (
-            pageConditions['contributions-test-visible'] ||
-            pageConditions['email-test-visible'] ||
-            pageConditions['story-questions-visible'] ||
-            !pageConditions['outbrain-enabled']
+            pageConditions.contributionsTestVisible ||
+            pageConditions.emailTestVisible ||
+            pageConditions.storyQuestionsVisible ||
+            !pageConditions.outbrainEnabled
         ) {
+            // This key value should be read as "the outbrain load cannot be compliant"
+            // (it could be non-compliant, or not loaded at all).
             return new Map([['outbrain-compliant', 'false']]);
         }
         return new Map();
     });
 
 export const initOutbrain = () =>
-    waitForCheck('isOutbrainDisabled').then(onIsOutbrainDisabled);
+    Promise.all([
+        getOutbrainDfpConditions(),
+        getOutbrainPageConditions()
+    ]).then( ([dfpConditions, pageConditions]) => {
+        if (!pageConditions.outbrainEnabled ||
+            dfpConditions.blockedByAds
+        ) {
+            return;
+        }
+
+        const editorialTests = pageConditions.contributionsTestVisible ||
+            pageConditions.emailTestVisible ||
+            pageConditions.storyQuestionsVisible;
+
+        if (pageConditions.useMerchandiseAdSlot && !pageConditions.noMerchSlotsExpected) {
+            load('merchandising');
+        } else if (editorialTests) {
+            load('nonCompliant');
+        } else {
+            load();
+        }
+    });
+
