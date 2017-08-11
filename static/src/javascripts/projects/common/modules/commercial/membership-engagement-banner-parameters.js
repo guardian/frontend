@@ -1,121 +1,113 @@
-define([
-        'lib/config',
-        'lib/storage',
-        'lodash/objects/assign',
-        'lib/geolocation'
-    ], function(
-        config,
-        storage,
-        assign,
-        geolocation
-    ) {
+import config from 'lib/config';
+import storage from 'lib/storage';
+import assign from 'lodash/objects/assign';
+import geolocation from 'lib/geolocation';
 
-    var offerings = {
-        membership: 'membership',
-        contributions: 'contributions'
-    };
+var offerings = {
+    membership: 'membership',
+    contributions: 'contributions'
+};
 
-    var baseParams = {
-        minArticles: 3,
-        colourStrategy: function() {
-            return 'membership-prominent yellow'
-        },
-        campaignCode: 'gdnwb_copts_memco_banner',
-        // Used for tracking the new implementation by querying the interactions field.
-        interactionOnMessageShow: {
-            component: 'engagement_banner',
-            value: 'default_paypal_and_paywall'
-        }
-    };
-
-    function engagementBannerCopy(cta) {
-        return 'Unlike many others, we haven\'t put up a paywall &ndash; we want to keep our journalism as open as we can. ' + cta
+var baseParams = {
+    minArticles: 3,
+    colourStrategy: function() {
+        return 'membership-prominent yellow'
+    },
+    campaignCode: 'gdnwb_copts_memco_banner',
+    // Used for tracking the new implementation by querying the interactions field.
+    interactionOnMessageShow: {
+        component: 'engagement_banner',
+        value: 'default_paypal_and_paywall'
     }
+};
 
-    // Prices taken from https://membership.theguardian.com/<region>/supporter
-    function monthlySupporterCost(location) {
+function engagementBannerCopy(cta) {
+    return 'Unlike many others, we haven\'t put up a paywall &ndash; we want to keep our journalism as open as we can. ' + cta
+}
 
-        var region = geolocation.getSupporterPaymentRegion(location);
+// Prices taken from https://membership.theguardian.com/<region>/supporter
+function monthlySupporterCost(location) {
 
-        if (region === 'EU') {
+    var region = geolocation.getSupporterPaymentRegion(location);
 
-            // Format either 4.99 € or €4.99 depending on country
-            // See https://en.wikipedia.org/wiki/Linguistic_issues_concerning_the_euro
-            var euro = '€';
-            var amount = '4.99';
-            var euroAfterCountryCodes = [
-                'BG',
-                'HR',
-                'CZ',
-                'EE',
-                'FI',
-                'FR',
-                'DE',
-                'GR',
-                'HU',
-                'IS',
-                'IT',
-                'LV',
-                'LT',
-                'PL',
-                'PT',
-                'RO',
-                'SK',
-                'SI',
-                'ES',
-                'SE'
-            ];
+    if (region === 'EU') {
 
-            return euroAfterCountryCodes.includes(location) ? amount + ' ' + euro : euro + amount;
+        // Format either 4.99 € or €4.99 depending on country
+        // See https://en.wikipedia.org/wiki/Linguistic_issues_concerning_the_euro
+        var euro = '€';
+        var amount = '4.99';
+        var euroAfterCountryCodes = [
+            'BG',
+            'HR',
+            'CZ',
+            'EE',
+            'FI',
+            'FR',
+            'DE',
+            'GR',
+            'HU',
+            'IS',
+            'IT',
+            'LV',
+            'LT',
+            'PL',
+            'PT',
+            'RO',
+            'SK',
+            'SI',
+            'ES',
+            'SE'
+        ];
 
-        } else {
+        return euroAfterCountryCodes.includes(location) ? amount + ' ' + euro : euro + amount;
 
-            var payment = {
-                GB:  '£5',
-                US:  '$6.99',
-                AU:  '$10',
-                CA:  '$6.99',
-                INT: '$6.99'
-            }[region];
+    } else {
 
-            return payment || '£5'
-        }
+        var payment = {
+            GB: '£5',
+            US: '$6.99',
+            AU: '$10',
+            CA: '$6.99',
+            INT: '$6.99'
+        }[region];
+
+        return payment || '£5'
     }
+}
 
-    function supporterEngagementBannerCopy(location) {
-        return engagementBannerCopy('Support us for ' + monthlySupporterCost(location) + ' per month.')
-    }
+function supporterEngagementBannerCopy(location) {
+    return engagementBannerCopy('Support us for ' + monthlySupporterCost(location) + ' per month.')
+}
 
-    function contributionEngagementBannerCopy() {
-        return engagementBannerCopy('Support us with a one-off contribution')
-    }
+function contributionEngagementBannerCopy() {
+    return engagementBannerCopy('Support us with a one-off contribution')
+}
 
-    function supporterParams(location) {
-        return assign({}, baseParams, {
-            buttonCaption: 'Become a Supporter',
-            linkUrl: 'https://membership.theguardian.com/supporter',
-            offering: offerings.membership,
-            messageText: supporterEngagementBannerCopy(location),
-            pageviewId: (config.ophan && config.ophan.pageViewId) || 'not_found'
-        })
-    }
+function supporterParams(location) {
+    return assign({}, baseParams, {
+        buttonCaption: 'Become a Supporter',
+        linkUrl: 'https://membership.theguardian.com/supporter',
+        offering: offerings.membership,
+        messageText: supporterEngagementBannerCopy(location),
+        pageviewId: (config.ophan && config.ophan.pageViewId) || 'not_found'
+    })
+}
 
-    function contributionParams() {
-        return assign({}, baseParams, {
-            buttonCaption: 'Make a Contribution',
-            linkUrl: 'https://contribute.theguardian.com',
-            offering: offerings.contributions,
-            messageText: contributionEngagementBannerCopy(),
-            pageviewId: (config.ophan && config.ophan.pageViewId) || 'not_found'
-        });
-    }
+function contributionParams() {
+    return assign({}, baseParams, {
+        buttonCaption: 'Make a Contribution',
+        linkUrl: 'https://contribute.theguardian.com',
+        offering: offerings.contributions,
+        messageText: contributionEngagementBannerCopy(),
+        pageviewId: (config.ophan && config.ophan.pageViewId) || 'not_found'
+    });
+}
 
-    function engagementBannerParams(location) {
-        return location === 'US' ? contributionParams() : supporterParams(location);
-    }
+function engagementBannerParams(location) {
+    return location === 'US' ? contributionParams() : supporterParams(location);
+}
 
-    return {
-        defaultParams: engagementBannerParams,
-        offerings: offerings
-    }
-});
+export default {
+    defaultParams: engagementBannerParams,
+    offerings: offerings
+}
