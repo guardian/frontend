@@ -165,6 +165,17 @@ describe('Membership engagement banner', () => {
             );
             fakeMembershipEngagementTests.push({
                 campaignId: 'fake-campaign-id',
+                id: 'fake-id',
+                start: '2017-01-01',
+                expiry: '2027-01-01',
+                author: 'fake-author',
+                description: 'fake-description',
+                audience: 1,
+                audienceOffset: 0,
+                successMeasure: 'fake success measure',
+                audienceCriteria: 'fake audience criteria',
+                variants: [],
+                canRun: () => true,
                 componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
             });
             fakeMembershipEngagementParameters.offerings = {
