@@ -1,14 +1,18 @@
 // @flow
 module.exports = {
+    env: {
+        browser: true,
+        jest: true,
+    },
     parser: 'babel-eslint',
+    parserOptions: {
+        sourceType: 'module',
+        ecmaVersion: 6,
+    },
     settings: {
         'import/resolver': 'webpack',
     },
-    extends: [
-        'plugin:flowtype/recommended',
-        'prettier/flowtype',
-        'prettier/react',
-    ],
+    extends: ['plugin:flowtype/recommended', 'prettier/flowtype'],
     plugins: ['flowtype', 'flow-header'],
     rules: {
         // require-specific overrides

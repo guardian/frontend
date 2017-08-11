@@ -1,17 +1,46 @@
-# generic
-jspm_packages
+# for perf reasons, exclude all files by default
+/*
+
+# since we'll opting their parents back in, we need to explicitly exclude these
 node_modules
 __flow__
+__mocks__
+__snapshots__
+dist
+coverage
+
+# generic options
 !.eslintrc.js
 !.stylelintrc.js
 
-# main app
-static/src/stylesheets
-static/transpiled
-static/vendor/javascripts
-static/src/javascripts-legacy/lib/atob.js
-static/src/javascripts-legacy/lib/picturefill.js
+# files cannot be opted in if their parents are opted out, therefore
+# we need to explicitly opt each parent back in, then ignore all
+# children again except what we want.
+# see https://git-scm.com/docs/gitignore
 
-# tests #karma-jest
-static/test/javascripts-legacy/components
-static/test/javascripts-legacy/helpers/raw-loader.js
+# include static
+!/static
+/static/*
+
+# main app
+!/static/src
+/static/src/*
+!/static/src/javascripts*
+/static/src/javascripts-legacy/lib/atob.js
+/static/src/javascripts-legacy/lib/picturefill.js
+
+# legacy tests #karma-jest
+!/static/test
+/static/test/*
+!/static/test/javascripts-legacy
+/static/test/javascripts-legacy/components
+/static/test/javascripts-legacy/helpers/raw-loader.js
+
+# guui
+!/ui
+
+# dev
+!/dev
+
+# tools
+!/tools
