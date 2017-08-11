@@ -27,7 +27,10 @@
 
 /* New adverts component */
 @import '_advert';
-@import '_adverts';
+
+/* Labs containers and content cards */
+@import '_labs';
+@import '_labs-capi';
 
 /* Guardian frame */
 @import '_frame';
