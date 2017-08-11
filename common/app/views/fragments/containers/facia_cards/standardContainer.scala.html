@@ -8,7 +8,8 @@
 @(containerDefinition: layout.FaciaContainer,
   frontProperties: model.FrontProperties,
   maybeContainerModel: Option[ContainerModel],
-  showFrontBranding: Boolean)(implicit request: RequestHeader)
+  showFrontBranding: Boolean,
+  frontId: Option[String])(implicit request: RequestHeader)
 
 @containerHeader(containerDefinition, frontProperties)
 
@@ -39,7 +40,7 @@
          data-id="@containerDefinition.dataId">
 
         @for(sliceWithCards <- containerLayout.slices) {
-            @slice(sliceWithCards, containerDefinition.index, frontProperties = Some(frontProperties), containerDefinition.displayName)
+            @slice(sliceWithCards, containerDefinition.index, frontProperties = Some(frontProperties), containerDefinition.displayName, frontId)
         }
 
         @if(containerDefinition.hasShowMore && containerDefinition.hasShowMoreEnabled) {

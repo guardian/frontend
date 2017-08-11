@@ -6,18 +6,22 @@ import {
 } from 'common/modules/experiments/utils';
 import { testCanBeRun } from 'common/modules/experiments/test-can-run-checks';
 import { viewsInPreviousDays } from 'common/modules/commercial/acquisitions-view-log';
+import { payInEpic } from 'common/modules/experiments/tests/acquisitions-epic-paypal-pay-in-epic';
 import { alwaysAsk } from 'common/modules/experiments/tests/contributions-epic-always-ask-strategy';
 import { askFourEarning } from 'common/modules/experiments/tests/contributions-epic-ask-four-earning';
 import { acquisitionsEpicLiveblog } from 'common/modules/experiments/tests/acquisitions-epic-liveblog';
 import { acquisitionsEpicAlwaysAskIfTagged } from 'common/modules/experiments/tests/acquisitions-epic-always-ask-if-tagged';
 import { acquisitionsEpicAlwaysAskElection } from 'common/modules/experiments/tests/acquisitions-epic-always-ask-election';
 import { acquisitionsEpicThankYou } from 'common/modules/experiments/tests/acquisitions-epic-thank-you';
+import { acquisitionsEpicRecurringContributionUkSupportProposition } from 'common/modules/experiments/tests/acquisitions-epic-recurring-contribution-uk-support-proposition';
 
 /**
  * acquisition tests in priority order (highest to lowest)
  */
 const tests = [
     alwaysAsk,
+    payInEpic,
+    acquisitionsEpicRecurringContributionUkSupportProposition,
     askFourEarning,
     acquisitionsEpicAlwaysAskIfTagged,
     acquisitionsEpicLiveblog,

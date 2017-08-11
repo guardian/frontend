@@ -24,7 +24,7 @@ import scala.util.{Failure, Success, Try}
   implicit lazy val timeout = new Timeout(2.seconds)
 
   class TestRenderingActor extends RenderingActor {
-    override def javascriptFile: String = "components/TestButtonComponent.js"
+    override def javascriptFile: String = "common/test/resources/components/TestButtonComponent.js"
   }
 
   lazy val actor = actorSystem.actorOf(Props(new TestRenderingActor))
@@ -33,10 +33,10 @@ import scala.util.{Failure, Success, Try}
     val component = new Renderable {
       override def props: Option[JsValue] = Some(Json.obj("title" -> "my title"))
     }
-    val f = (actor ? Rendering(component, testContext)).mapTo[Try[String]]
+    val f = (actor ? Rendering(component)).mapTo[Try[String]]
     Await.result(f, timeout.duration) match {
       case Success(s) => s should not be(empty)
-      case Failure(e) => fail("A string should have been returned")
+      case Failure(e) => fail(s"A string should have been returned. Error: $e")
     }
   }
 

@@ -14,7 +14,7 @@ Examples:
 
 - [https://www.theguardian.com/uk]()
 
-- [http://www.theguardian.com/politics]()
+- [https://www.theguardian.com/politics]()
 
 - [https://www.theguardian.com/uk/culture]()
 
@@ -79,7 +79,7 @@ Discussion app is responsible to serve all content related to article comments:
 [All supported routes](https://github.com/guardian/frontend/blob/master/discussion/conf/routes)
 
 # Commercial
-Commercial app serves all commercial components (Travel offers, Masterclassses, Soulmates, Money, Book, Live events or Hosted content).
+Commercial app serves all commercial components (Travel offers, Masterclasses, Soulmates, Money, Book, Live events or Hosted content).
 
 [All supported routes](https://github.com/guardian/frontend/blob/master/commercial/conf/routes)
 
@@ -100,9 +100,9 @@ It is also possible to run a pressing task by manually sending a request to one 
 [Architectural diagram](02-fronts-architecture.md)
 
 # Identity
-Identity app is responsible for all account related endpoints (signin, register, account edit, email prefs, saved for later).
+Identity app is responsible for all account related endpoints (sign-in, register, account edit, email prefs, saved for later).
 
-Parts of identity, including sign in and registration are now served by a separate stack in: [identity-frontend](https://github.com/guardian/identity-frontend). Old sign-in and registration pages are still within this repo, to be deprecated.
+Parts of Identity, including sign-in and registration are now served by a separate stack in: [identity-frontend](https://github.com/guardian/identity-frontend). Old sign-in and registration pages are still within this repo, to be deprecated.
 
 [All supported routes](https://github.com/guardian/frontend/blob/master/identity/conf/routes)
 
