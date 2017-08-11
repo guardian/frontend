@@ -153,26 +153,28 @@
             @include button-colour(darken($paid-article-brand, 5%), null);
         }
     }
+}
 
-    .adverts__more > summary {
-        background: $paidfor-background;
-        border-color: $paidfor-background;
+.dumathoin-more__button {
+    background: $paidfor-background;
+    border-color: $paidfor-background;
 
-        .inline-icon__svg {
-            fill: $neutral-2;
-        }
-
-        @include mq(desktop) {
-            float: left;
-            margin-bottom: $gs-baseline;
-
-            & + * {
-                clear: left;
-            }
-        }
+    .inline-icon__svg {
+        fill: $neutral-2;
     }
 
-    .adverts__more[open] > summary {
+    @include mq(desktop) {
+        float: left;
+
+        & + * {
+            clear: left;
+        }
+    }
+}
+
+.dumathoin-more[open] {
+
+    .dumathoin-more__button {
         background: none;
         border-color: $neutral-4;
         color: $neutral-1;
@@ -444,5 +446,4 @@
         height: .75em;
         margin-right: .3em;
     }
-
 }

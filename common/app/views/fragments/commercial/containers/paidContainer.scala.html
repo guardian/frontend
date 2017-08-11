@@ -39,8 +39,8 @@
         }
 
         @if(containerModel.content.showMoreCards.nonEmpty){
-            <details class="adverts__more">
-                <summary class="button button--medium button--primary button--show-more" data-text="@containerModel.content.title">
+            <details class="dumathoin-more">
+                <summary class="button button--medium button--primary button--show-more dumathoin-more__button" data-text="@containerModel.content.title">
                     @fragments.inlineSvg("plus", "icon")
                     @fragments.inlineSvg("minus", "icon")
                     <span class="js-button__label">More @containerModel.content.title</span>

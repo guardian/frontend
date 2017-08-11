@@ -451,26 +451,9 @@
     }
 }
 
-.adverts__more {
+.dumathoin-more {
     @include mq(tablet) {
         margin: $gs-baseline 0;
-    }
-
-    > summary {
-        cursor: pointer;
-        display: block;
-        margin: 0 $gs-gutter / 2;
-        outline: none;
-        width: max-content;
-        border-radius: 1000px;
-
-        &::-webkit-details-marker {
-            display: none;
-        }
-
-        @include mq(mobileLandscape) {
-            margin: 0 $gs-gutter;
-        }
     }
 
     &:not([open]) .inline-minus,
@@ -485,6 +468,24 @@
     .has-no-flex & {
         clear: both;
         padding-top: $gs-baseline;
+    }
+}
+
+.dumathoin-more__button {
+    cursor: pointer;
+    display: block;
+    margin: 0 0 $gs-baseline $gs-gutter / 2;
+    margin-bottom: $gs-baseline;
+    outline: none;
+    width: max-content;
+    border-radius: 1000px;
+
+    &::-webkit-details-marker {
+        display: none;
+    }
+
+    @include mq(tablet) {
+        margin-left: $gs-gutter;
     }
 }
 
