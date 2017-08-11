@@ -3,9 +3,11 @@ import fakeMediator from 'lib/mediator';
 import fakeConfig from 'lib/config';
 import fakeOphan from 'ophan/ng';
 import { commercialFeatures as fakeCommercialFeatures } from 'commercial/modules/commercial-features';
-import fakeMembershipEngagementParameters from 'common/modules/commercial/membership-engagement-banner-parameters';
+import { engagementBannerParams as engagementBannerParams_ } from 'common/modules/commercial/membership-engagement-banner-parameters';
 import { membershipEngagementBannerTests as fakeMembershipEngagementTests } from 'common/modules/experiments/tests/membership-engagement-banner-tests';
 import { membershipEngagementBannerInit } from 'common/modules/commercial/membership-engagement-banner';
+
+const engagementBannerParams: any = engagementBannerParams_;
 
 jest.mock('lib/mediator');
 jest.mock('lib/storage', () => ({
@@ -28,11 +30,10 @@ jest.mock('common/modules/experiments/acquisition-test-selector', () => []);
 jest.mock(
     'common/modules/commercial/membership-engagement-banner-parameters',
     () => ({
-        defaultParams: jest.fn(() => ({
+        engagementBannerParams: jest.fn(() => ({
             minArticles: 1,
             colourStrategy: jest.fn(() => ''),
         })),
-        offerings: {},
     })
 );
 jest.mock('common/modules/experiments/test-can-run-checks', () => ({
@@ -99,13 +100,11 @@ describe('Membership engagement banner', () => {
         let emitSpy;
 
         beforeEach(() => {
-            fakeMembershipEngagementParameters.defaultParams.mockImplementationOnce(
-                () => ({
-                    minArticles: 1,
-                    colourStrategy: jest.fn(() => 'fake-colour-class'),
-                    interactionOnMessageShow: fakeInteraction,
-                })
-            );
+            engagementBannerParams.mockImplementationOnce(() => ({
+                minArticles: 1,
+                colourStrategy: jest.fn(() => 'fake-colour-class'),
+                interactionOnMessageShow: fakeInteraction,
+            }));
             emitSpy = jest.spyOn(fakeMediator, 'emit');
             showBanner = membershipEngagementBannerInit().then(() => {
                 fakeMediator.emit('modules:onwards:breaking-news:ready', false);
@@ -155,14 +154,11 @@ describe('Membership engagement banner', () => {
         let showBanner;
 
         beforeEach(() => {
-            fakeMembershipEngagementParameters.defaultParams.mockImplementationOnce(
-                () => ({
-                    minArticles: 1,
-                    colourStrategy: jest.fn(() => 'fake-colour-class'),
-                    offering: 'fake-membership-offering',
-                    interactionOnMessageShow: {},
-                })
-            );
+            engagementBannerParams.mockImplementationOnce(() => ({
+                minArticles: 1,
+                colourStrategy: jest.fn(() => 'fake-colour-class'),
+                interactionOnMessageShow: {},
+            }));
             fakeMembershipEngagementTests.push({
                 campaignId: 'fake-campaign-id',
                 id: 'fake-id',
@@ -178,10 +174,6 @@ describe('Membership engagement banner', () => {
                 canRun: () => true,
                 componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
             });
-            fakeMembershipEngagementParameters.offerings = {
-                membership: 'fake-membership-offering',
-                contributions: 'fake-contributions-offering',
-            };
             fakeVariantFor.mockImplementationOnce(() => ({
                 id: 'fake-user-variant-id',
                 engagementBannerParams: {},
@@ -192,7 +184,6 @@ describe('Membership engagement banner', () => {
         });
 
         afterEach(() => {
-            fakeMembershipEngagementParameters.offerings = {};
             fakeMembershipEngagementTests.pop();
         });
 
@@ -200,7 +191,7 @@ describe('Membership engagement banner', () => {
             showBanner.then(() => {
                 expect(
                     FakeMessage.mock.calls[0][1].siteMessageComponentName
-                ).toBe('mem_fake-campaign-id_fake-user-variant-id');
+                ).toBe('fake-campaign-id_fake-user-variant-id');
             }));
         it('correct CSS modifier class', () =>
             showBanner.then(() => {
@@ -214,16 +205,14 @@ describe('Membership engagement banner', () => {
         let showBanner;
 
         beforeEach(() => {
-            fakeMembershipEngagementParameters.defaultParams.mockImplementationOnce(
-                () => ({
-                    minArticles: 1,
-                    colourStrategy: jest.fn(() => 'fake-colour-class'),
-                    messageText: 'fake-message-text',
-                    linkUrl: 'fake-link-url',
-                    buttonCaption: 'fake-button-caption',
-                    interactionOnMessageShow: {},
-                })
-            );
+            engagementBannerParams.mockImplementationOnce(() => ({
+                minArticles: 1,
+                colourStrategy: jest.fn(() => 'fake-colour-class'),
+                messageText: 'fake-message-text',
+                linkUrl: 'fake-link-url',
+                buttonCaption: 'fake-button-caption',
+                interactionOnMessageShow: {},
+            }));
             fakeConfig.get.mockImplementationOnce(
                 () => 'fake-paypal-and-credit-card-image'
             );
