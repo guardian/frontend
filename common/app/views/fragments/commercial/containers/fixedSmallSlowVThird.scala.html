@@ -15,7 +15,7 @@
                             optAdvertClassNames = Some(Seq("paidfor")),
                             minimiseOnMobile = true,
                             useCardBranding = !containerModel.isSingleSponsorContainer))
-    <div class="adverts__column hide-until-tablet">
+    <div class="dumathoin__column hide-until-tablet">
         @containerModel.content.initialCards.slice(2, 5).map(card => views.html.fragments.commercial.cards.itemLargeCard(
             card,
             optAdvertClassNames = Some(Seq("inverse", "thumbnail", "paidfor")),

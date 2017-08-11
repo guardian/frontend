@@ -26,7 +26,7 @@
 }
 
 .dumathoin--capi {
-    .adverts__title {
+    .dumathoin__title {
         font-size: get-font-size(headline, 3);
     }
 
@@ -93,7 +93,7 @@
 
 .dumathoin--paidfor {
     @include mq($until: tablet) {
-        .adverts__stamp {
+        .dumathoin__stamp {
             position: absolute;
             top: $gs-baseline / 2;
             right: $gs-gutter / 2;
@@ -132,15 +132,15 @@
         color: #ffffff;
     }
 
-    .adverts__stamp {
+    .dumathoin__stamp {
         text-align: right;
     }
 
     .dumathoin__row > * + *::before,
     .dumathoin__row--legacy > .advert::after,
-    .adverts__2cols::after,
-    .adverts__3cols::before,
-    .adverts__3cols::after {
+    .dumathoin__2cols::after,
+    .dumathoin__3cols::before,
+    .dumathoin__3cols::after {
         background: $paid-article-subheader-bg;
     }
 

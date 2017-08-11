@@ -15,7 +15,7 @@
                             optAdvertClassNames = Some(Seq("paidfor")),
                             minimiseOnMobile = true,
                             useCardBranding = !containerModel.isSingleSponsorContainer))
-    <div class="adverts__column adverts__2cols">
+    <div class="dumathoin__column dumathoin__2cols">
         @containerModel.content.initialCards.slice(2, 8).map(card => views.html.fragments.commercial.cards.itemSmallCard(
                                 card,
                                 omnitureId = mkInteractionTrackingCode(frontId, containerIndex, containerModel, card),

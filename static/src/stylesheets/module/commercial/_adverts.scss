@@ -66,11 +66,24 @@
     }
 }
 
-.adverts__title {
+.dumathoin__title {
     @include f-headlineSans;
 }
 
-.adverts__body {
+.dumathoin__blurb {
+    @include fs-headline(1);
+    color: #ffffff;
+
+    @include mq($until: leftCol) {
+        display: none;
+    }
+
+    @include mq(leftCol) {
+        @include fs-headline(2);
+    }
+}
+
+.dumathoin__body {
     position: relative;
     padding-bottom: $gs-baseline;
 
@@ -100,19 +113,6 @@
         padding: 0;
     }
 
-    .adverts__blurb {
-        @include fs-headline(1);
-        color: #ffffff;
-
-        @include mq($until: leftCol) {
-            display: none;
-        }
-
-        @include mq(leftCol) {
-            @include fs-headline(2);
-        }
-    }
-
     .button {
         margin-right: 0;
     }
@@ -125,7 +125,7 @@
 
             &::before,
             &::after,
-            > .adverts__body,
+            > .dumathoin__body,
             > .dumathoin__header {
                 display: table-cell;
                 vertical-align: top;
@@ -133,7 +133,7 @@
         }
     }
 
-    .adverts__title {
+    .dumathoin__title {
         @include fs-header(2);
         color: #ffffff;
     }
@@ -251,7 +251,7 @@
         }
     }
 
-    .adverts__2cols {
+    .dumathoin__2cols {
         @include mq(tablet) {
             > * {
                 position: relative;
@@ -264,7 +264,7 @@
         }
     }
 
-    .adverts__3cols {
+    .dumathoin__3cols {
         @include mq(tablet) {
             > * {
                 position: relative;
@@ -332,11 +332,11 @@
     }
 }
 
-.adverts__title {
+.dumathoin__title {
     @include fs-headline(4, true);
 }
 
-.adverts__stamp {
+.dumathoin__stamp {
     margin-top: auto;
 }
 
@@ -365,7 +365,7 @@
     }
 }
 
-.adverts__2cols {
+.dumathoin__2cols {
     > * {
         flex-basis: calc(50% - #{$gs-gutter / 2});
         flex-grow: 0;
@@ -395,7 +395,7 @@
     }
 }
 
-.adverts__3cols {
+.dumathoin__3cols {
     > * {
         flex-basis: calc(33.33% - #{$gs-gutter});
         flex-grow: 0;
@@ -440,11 +440,11 @@
     }
 }
 
-.adverts__column {
+.dumathoin__column {
     display: flex;
     flex-direction: column;
 
-    &:not(.adverts__2cols) {
+    &:not(.dumathoin__2cols) {
         > * + * {
             margin-top: $gs-baseline;
         }
@@ -475,7 +475,6 @@
     cursor: pointer;
     display: block;
     margin: 0 0 $gs-baseline $gs-gutter / 2;
-    margin-bottom: $gs-baseline;
     outline: none;
     width: max-content;
     border-radius: 1000px;
