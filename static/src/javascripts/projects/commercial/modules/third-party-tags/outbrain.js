@@ -15,12 +15,12 @@ import { load } from './outbrain-load';
   true              true                n/a               n/a              true          n/a        n/a       non-compliant
   true              true                n/a               n/a              false         true       n/a       non-compliant
   true              true                n/a               n/a              false         false      true      non-compliant
-  true              false               false             false            false         false      false     compliant
   true              false               true              true             n/a           n/a        n/a       no-outbrain
   true              false               true              false            n/a           n/a        n/a       merchandising
-  true              false               false             true             true          n/a        n/a       non-compliant
-  true              false               false             true             false         true       n/a       non-compliant
-  true              false               false             true             false         false      true      non-compliant
+  true              false               false             n/a              true          n/a        n/a       non-compliant
+  true              false               false             n/a              false         true       n/a       non-compliant
+  true              false               false             n/a              false         false      true      non-compliant
+  true              false               false             n/a              false         false      false     compliant
 */
 
 const canLoadInstantly = () =>
