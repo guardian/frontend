@@ -113,7 +113,7 @@
     "projects/common/modules/navigation/search.js"
   ],
   "Joseph Smith": [
-    "projects/common/modules/experiments/tests/membership-engagement-banner-parameters.js",
+    "projects/common/modules/commercial/membership-engagement-banner-parameters.js",
     "projects/common/modules/experiments/ab-test-clash.js",
     "projects/common/modules/experiments/affix.js",
     "projects/common/modules/ui/notification-counter.js",
