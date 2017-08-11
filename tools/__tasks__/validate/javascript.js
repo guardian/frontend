@@ -29,28 +29,30 @@ const dirs = p =>
 module.exports = {
     description: 'Lint JS',
     task: [
+        ...dirs('static/src/javascripts')
+            .filter(dir => !['__flow__'].includes(dir))
+            .map(dir => ({
+                description: `App ${chalk.dim(dir)}`,
+                task: `eslint static/src/javascripts/${dir} ${config}`,
+                onError: error,
+            })),
         {
-            description: 'Lint legacy tests',
-            task: `eslint static/test/javascripts-legacy ${config}`,
-            onError: error,
-        },
-        ...dirs('static/src/javascripts').map(dir => ({
-            description: `Lint app ${chalk.dim(dir)}`,
-            task: `eslint static/src/javascripts/${dir} ${config}`,
-            onError: error,
-        })),
-        {
-            description: `Lint app ${chalk.dim('legacy')}`,
+            description: `App ${chalk.dim('legacy')}`,
             task: `eslint static/src/javascripts-legacy ${config}`,
             onError: error,
         },
         {
-            description: 'Lint guui',
+            description: 'UI',
             task: `eslint ui ${config}`,
             onError: error,
         },
         {
-            description: 'Lint tools etc.',
+            description: `Tests ${chalk.dim('legacy')}`,
+            task: `eslint static/test/javascripts-legacy ${config}`,
+            onError: error,
+        },
+        {
+            description: 'Tools etc.',
             task: `eslint --ignore-pattern /static/test/javascripts-legacy --ignore-pattern /static/src --ignore-pattern /ui . ${config}`,
             onError: error,
         },
