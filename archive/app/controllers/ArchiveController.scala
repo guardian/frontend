@@ -42,14 +42,9 @@ class ArchiveController(redirects: RedirectService, renderer: Renderer) extends 
         .map(Future.successful)
         .getOrElse {
           log404(request)
-          def notFoundResponse(html: Html): Result = Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound(html)))
-          if (ABJavascriptRenderingVariant.isParticipating) {
-            renderer
-              .render(ui.NotFound)
-              .map(notFoundResponse)
-          } else {
-            Future.successful(notFoundResponse(views.html.notFound()))
-          }
+          renderer
+            .render(ui.NotFound)
+            .map(html => Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound(html))))
         }
       }
 
