@@ -5,10 +5,9 @@ import { Message } from 'common/modules/ui/message';
 import { commercialFeatures } from 'commercial/modules/commercial-features';
 import mediator from 'lib/mediator';
 import { testCanBeRun } from 'common/modules/experiments/test-can-run-checks';
-import MembershipEngagementBannerTests from 'common/modules/experiments/tests/membership-engagement-banner-tests';
+import { membershipEngagementBannerTests } from 'common/modules/experiments/tests/membership-engagement-banner-tests';
 import { inlineSvg } from 'common/views/svgs';
 import { isInTest, variantFor } from 'common/modules/experiments/segment-util';
-import { epicEngagementBannerTests } from 'common/modules/experiments/acquisition-test-selector';
 import membershipEngagementBannerUtils from 'common/modules/commercial/membership-engagement-banner-parameters';
 import { isBlocked } from 'common/modules/commercial/membership-engagement-banner-block';
 import ophan from 'ophan/ng';
@@ -18,15 +17,10 @@ import { constructQuery } from 'lib/url';
 // change messageCode to force redisplay of the message to users who already closed it.
 const messageCode = 'engagement-banner-2017-07-05';
 
-const getUserTest = (): ?ContributionsABTest => {
-    const engagementBannerTests = MembershipEngagementBannerTests.concat(
-        epicEngagementBannerTests
-    );
-
-    return engagementBannerTests.find(
+const getUserTest = (): ?AcquisitionsABTest =>
+    membershipEngagementBannerTests.find(
         test => testCanBeRun(test) && isInTest(test)
     );
-};
 
 const getUserVariant = (test: ?ABTest): ?Variant =>
     test ? variantFor(test) : undefined;
