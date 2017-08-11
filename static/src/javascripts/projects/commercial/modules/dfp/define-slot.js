@@ -59,14 +59,6 @@ const setHighMerchSlotTargeting = (slot, slotTarget): Promise<any> => {
 
     return getOutbrainComplianceTargeting().then(keyValues => {
         keyValues.forEach((value, key) => {
-            console.log(
-                'setting targets',
-                slotTarget,
-                'val',
-                value,
-                'key',
-                key
-            );
             slot.setTargeting(key, value);
         });
     });
