@@ -1,4 +1,5 @@
 const chalk = require('chalk');
+const execa = require('execa');
 
 const config = '--quiet --color';
 
@@ -41,7 +42,7 @@ module.exports = {
         },
         {
             description: 'Run Flowtype checks on static/src/javascripts/',
-            task: `cd static/src/javascripts && flow`,
+            task: () => execa('flow', { cwd: 'static/src/javascripts' }),
             onError: flowError,
         },
     ],
