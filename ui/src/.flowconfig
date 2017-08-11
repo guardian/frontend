@@ -10,7 +10,6 @@ __flow__/flow-typed
 __flow__/types
 
 [options]
-
 module.file_ext=.js
 module.file_ext=.jsx
 
