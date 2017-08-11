@@ -6,7 +6,7 @@ import {
 import 'lib/config';
 import 'lib/cookies';
 
-export const alwaysAsk: ContributionsABTest = makeABTest({
+export const alwaysAsk: EpicABTest = makeABTest({
     id: 'ContributionsEpicAlwaysAskStrategy',
     campaignId: 'epic_always_ask_strategy',
 

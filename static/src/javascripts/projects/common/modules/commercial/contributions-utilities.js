@@ -67,7 +67,7 @@ const controlTemplate: EpicTemplate = ({ options = {} }, copy) =>
         }),
     });
 
-const doTagsMatch = (test: ContributionsABTest): boolean =>
+const doTagsMatch = (test: EpicABTest): boolean =>
     test.useTargetingTool ? targetingTool.isAbTestTargeted(test) : true;
 
 // Returns an array containing:
@@ -106,7 +106,7 @@ const shouldShowReaderRevenue = (
     (userShouldSeeReaderRevenue() || showToContributorsAndSupporters) &&
     !config.page.shouldHideReaderRevenue;
 
-const defaultCanEpicBeDisplayed = (test: ContributionsABTest): boolean => {
+const defaultCanEpicBeDisplayed = (test: EpicABTest): boolean => {
     const worksWellWithPageTemplate = test.pageCheck(config.page);
 
     const storedGeolocation = geolocationGetSync();
@@ -179,11 +179,9 @@ const makeABTestVariant = (
     id: string,
     products: OphanProduct[],
     options: Object,
-    parentTest: ContributionsABTest
+    parentTest: EpicABTest
 ): Variant => {
-    const trackingCampaignId = parentTest.epic
-        ? `epic_${parentTest.campaignId}`
-        : parentTest.campaignId;
+    const trackingCampaignId = `epic_${parentTest.campaignId}`;
     const campaignCode = getCampaignCode(
         parentTest.campaignPrefix,
         parentTest.campaignId,
@@ -371,7 +369,6 @@ const makeABTest = ({
     variants,
 
     // optional params
-    epic = true,
     componentType = 'ACQUISITIONS_EPIC',
     // locations is a filter where empty is taken to mean 'all'
     locations = [],
@@ -379,14 +376,13 @@ const makeABTest = ({
     dataLinkNames = '',
     campaignPrefix = 'gdnwb_copts_memco',
     campaignSuffix = '',
-    isEngagementBannerTest = false,
     useLocalViewLog = false,
     overrideCanRun = false,
     useTargetingTool = false,
     showToContributorsAndSupporters = false,
     canRun = () => true,
     pageCheck = defaultPageCheck,
-}: InitContributionsABTest): ContributionsABTest => {
+}: InitEpicABTest): EpicABTest => {
     const test = {
         // this is true because we use the reader revenue flag rather than sensitive
         // to disable contributions asks for a particular piece of content
@@ -417,8 +413,6 @@ const makeABTest = ({
         audienceCriteria,
         idealOutcome,
         dataLinkNames,
-        isEngagementBannerTest,
-        epic,
         componentType,
         campaignId,
         campaignPrefix,

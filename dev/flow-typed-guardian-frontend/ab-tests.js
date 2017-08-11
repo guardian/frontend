@@ -27,13 +27,14 @@ declare type ABTest = {
     variants: Array<Variant>,
     canRun: () => boolean,
     notInTest?: () => void,
-    isEngagementBannerTest?: boolean,
 };
 
-declare type ContributionsABTest = ABTest & {
-    epic: boolean,
-    componentType: OphanComponentType,
+declare type AcquisitionsABTest = ABTest & {
     campaignId: string,
+    componentType: OphanComponentType,
+};
+
+declare type EpicABTest = AcquisitionsABTest & {
     campaignPrefix: string,
     campaignSuffix: string,
     useLocalViewLog: boolean,
@@ -47,13 +48,13 @@ declare type ContributionsABTest = ABTest & {
     viewEvent: string,
 };
 
-declare type InitContributionsABTestVariant = {
+declare type InitEpicABTestVariant = {
     id: string,
     products: OphanProduct[],
     options: Object
 };
 
-declare type InitContributionsABTest = {
+declare type InitEpicABTest = {
     id: string,
     start: string,
     expiry: string,
@@ -65,9 +66,8 @@ declare type InitContributionsABTest = {
     audienceCriteria: string,
     idealOutcome: string,
     campaignId: string,
-    variants: InitContributionsABTestVariant[],
+    variants: InitEpicABTestVariant[],
 
-    epic?: boolean,
     componentType?: OphanComponentType,
     // locations is a filter where empty is taken to mean 'all'
     locations?: string[],
@@ -75,7 +75,6 @@ declare type InitContributionsABTest = {
     dataLinkNames?: string,
     campaignPrefix?: string,
     campaignSuffix?: string,
-    isEngagementBannerTest?: boolean,
     useLocalViewLog?: boolean,
     overrideCanRun?: boolean,
     useTargetingTool?: boolean,
