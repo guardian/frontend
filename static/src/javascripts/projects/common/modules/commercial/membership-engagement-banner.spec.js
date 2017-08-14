@@ -4,7 +4,6 @@ import fakeConfig from 'lib/config';
 import fakeOphan from 'ophan/ng';
 import { commercialFeatures as fakeCommercialFeatures } from 'commercial/modules/commercial-features';
 import { engagementBannerParams as engagementBannerParams_ } from 'common/modules/commercial/membership-engagement-banner-parameters';
-import { membershipEngagementBannerTests as fakeMembershipEngagementTests } from 'common/modules/experiments/tests/membership-engagement-banner-tests';
 import { membershipEngagementBannerInit } from 'common/modules/commercial/membership-engagement-banner';
 
 const engagementBannerParams: any = engagementBannerParams_;
@@ -27,6 +26,28 @@ jest.mock('common/views/svgs', () => ({
     inlineSvg: jest.fn(() => ''),
 }));
 jest.mock('common/modules/experiments/acquisition-test-selector', () => []);
+jest.mock(
+    'common/modules/experiments/tests/membership-engagement-banner-tests',
+    () => ({
+        membershipEngagementBannerTests: [
+            {
+                campaignId: 'fake-campaign-id',
+                id: 'fake-id',
+                start: '2017-01-01',
+                expiry: '2027-01-01',
+                author: 'fake-author',
+                description: 'fake-description',
+                audience: 1,
+                audienceOffset: 0,
+                successMeasure: 'fake success measure',
+                audienceCriteria: 'fake audience criteria',
+                variants: [],
+                canRun: () => true,
+                componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
+            },
+        ],
+    })
+);
 jest.mock(
     'common/modules/commercial/membership-engagement-banner-parameters',
     () => ({
@@ -159,21 +180,6 @@ describe('Membership engagement banner', () => {
                 colourStrategy: jest.fn(() => 'fake-colour-class'),
                 interactionOnMessageShow: {},
             }));
-            fakeMembershipEngagementTests.push({
-                campaignId: 'fake-campaign-id',
-                id: 'fake-id',
-                start: '2017-01-01',
-                expiry: '2027-01-01',
-                author: 'fake-author',
-                description: 'fake-description',
-                audience: 1,
-                audienceOffset: 0,
-                successMeasure: 'fake success measure',
-                audienceCriteria: 'fake audience criteria',
-                variants: [],
-                canRun: () => true,
-                componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
-            });
             fakeVariantFor.mockImplementationOnce(() => ({
                 id: 'fake-user-variant-id',
                 engagementBannerParams: {},
@@ -181,10 +187,6 @@ describe('Membership engagement banner', () => {
             showBanner = membershipEngagementBannerInit().then(() => {
                 fakeMediator.emit('modules:onwards:breaking-news:ready', false);
             });
-        });
-
-        afterEach(() => {
-            fakeMembershipEngagementTests.pop();
         });
 
         it('correct campaign code', () =>

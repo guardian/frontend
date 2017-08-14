@@ -18,7 +18,7 @@ import { acquisitionsEpicRecurringContributionUkSupportProposition } from 'commo
 /**
  * acquisition tests in priority order (highest to lowest)
  */
-const tests: AcquisitionsABTest[] = [
+const tests: $ReadOnlyArray<AcquisitionsABTest> = [
     alwaysAsk,
     payInEpic,
     acquisitionsEpicRecurringContributionUkSupportProposition,

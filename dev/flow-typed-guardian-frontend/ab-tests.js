@@ -24,7 +24,7 @@ declare type ABTest = {
     showForSensitive?: boolean,
     idealOutcome?: string,
     dataLinkNames?: string,
-    variants: Array<Variant>,
+    variants: $ReadOnlyArray<Variant>,
     canRun: () => boolean,
     notInTest?: () => void,
 };
@@ -41,7 +41,7 @@ declare type EpicABTest = AcquisitionsABTest & {
     overrideCanRun: boolean,
     showToContributorsAndSupporters: boolean,
     pageCheck: (page: Object) => boolean,
-    locations: Array<string>,
+    locations: $ReadOnlyArray<string>,
     locationCheck: (location: string) => boolean,
     useTargetingTool: boolean,
     insertEvent: string,
@@ -50,7 +50,7 @@ declare type EpicABTest = AcquisitionsABTest & {
 
 declare type InitEpicABTestVariant = {
     id: string,
-    products: OphanProduct[],
+    products: $ReadOnlyArray<OphanProduct>,
     options: Object
 };
 
@@ -66,7 +66,7 @@ declare type InitEpicABTest = {
     audienceCriteria: string,
     idealOutcome: string,
     campaignId: string,
-    variants: InitEpicABTestVariant[],
+    variants: $ReadOnlyArray<InitEpicABTestVariant>,
 
     componentType?: OphanComponentType,
     // locations is a filter where empty is taken to mean 'all'

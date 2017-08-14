@@ -6,7 +6,7 @@
 declare type OphanABEvent = {
     variantName: string,
     complete: string | boolean,
-    campaignCodes?: Array<string>,
+    campaignCodes?: $ReadOnlyArray<string>,
 };
 
 /**
@@ -49,9 +49,9 @@ declare type OphanComponentType =
 declare type OphanComponent = {|
     type: OphanComponentType,
     id?: string,
-    products: OphanProduct[],
+    products: $ReadOnlyArray<OphanProduct>,
     campaignCode?: string,
-    labels: string[]
+    labels: $ReadOnlyArray<string>
 |};
 
 declare type OphanComponentEvent = {|

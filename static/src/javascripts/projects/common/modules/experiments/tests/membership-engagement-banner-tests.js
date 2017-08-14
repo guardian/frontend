@@ -1,3 +1,5 @@
 // @flow
 
-export const membershipEngagementBannerTests: AcquisitionsABTest[] = [];
+export const membershipEngagementBannerTests: $ReadOnlyArray<
+    AcquisitionsABTest
+> = [];

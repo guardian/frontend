@@ -91,10 +91,10 @@ const registerCompleteEvent = (complete: boolean) => (test: ABTest): void => {
     }
 };
 
-export const registerCompleteEvents = (tests: Array<ABTest>): void =>
+export const registerCompleteEvents = (tests: $ReadOnlyArray<ABTest>): void =>
     tests.forEach(registerCompleteEvent(true));
 
-export const registerImpressionEvents = (tests: Array<ABTest>): void =>
+export const registerImpressionEvents = (tests: $ReadOnlyArray<ABTest>): void =>
     tests.filter(defersImpression).forEach(registerCompleteEvent(false));
 
 export const buildOphanPayload = (): OphanABPayload => {
