@@ -9,6 +9,7 @@ import getAdverts from 'commercial/modules/dfp/get-adverts';
 import getCreativeIDs from 'commercial/modules/dfp/get-creative-ids';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 import { commercialFeatures } from 'commercial/modules/commercial-features';
+import loadAdvert from 'commercial/modules/dfp/load-advert';
 
 const getBreakpoint: any = getBreakpoint_;
 
@@ -75,6 +76,10 @@ jest.mock('commercial/modules/sticky-mpu', () => jest.fn());
 jest.mock('common/modules/onward/geo-most-popular', () => ({
     geoMostPopular: { render: jest.fn() },
 }));
+jest.mock('commercial/modules/third-party-tags/outbrain', () => ({
+    getOutbrainComplianceTargeting: () => Promise.resolve(),
+}));
+jest.mock('commercial/modules/dfp/load-advert', () => jest.fn());
 
 let $style;
 const makeFakeEvent = (creativeId, id) => ({
@@ -313,10 +318,7 @@ describe('DFP', () => {
                 window.googletag.pubads().collapseEmptyDivs
             ).toHaveBeenCalled();
             expect(window.googletag.enableServices).toHaveBeenCalled();
-            expect(window.googletag.display).toHaveBeenCalledTimes(1);
-            expect(window.googletag.display).toHaveBeenCalledWith(
-                'dfp-ad-html-slot'
-            );
+            expect(loadAdvert).toHaveBeenCalled();
         });
     });
 
