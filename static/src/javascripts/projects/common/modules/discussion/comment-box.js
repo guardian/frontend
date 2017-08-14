@@ -17,12 +17,10 @@ type commentType = {
     replyTo?: Object,
 };
 
-const getUserData = () => IdentityApi.getUserFromCookie();
-
 const refreshUsernameHtml = (): void => {
     IdentityApi.reset();
 
-    const displayName = getUserData().displayName;
+    const displayName = this.getUserData().displayName;
     const menuHeaderUsername = $('.js-profile-info')[0];
     const discussionHeaderUsername = $('._author_tywwu_16')[0];
 
@@ -139,14 +137,12 @@ class CommentBox extends Component {
         this.setState('expanded');
     }
 
-    clearErrors(): void {
-        this.getElem('messages').innerHTML = '';
-        this.errors = [];
-        this.removeState('invalid');
+    // eslint-disable-next-line class-methods-use-this
+    getUserData() {
+        return IdentityApi.getUserFromCookie();
     }
 
     previewCommentSuccess(comment: commentType, resp: Object): void {
-        console.log('preview callback', this);
         this.getElem('preview-body').innerHTML = resp.commentBody;
         this.setState('preview-visible');
     }
@@ -279,9 +275,9 @@ class CommentBox extends Component {
             }
         };
 
-        if (!getUserData().emailVerified) {
+        if (!this.getUserData().emailVerified) {
             // Cookie could be stale so lets refresh and check from the api
-            const createdDate = new Date(getUserData().accountCreatedDate);
+            const createdDate = new Date(this.getUserData().accountCreatedDate);
 
             if (createdDate > this.options.priorToVerificationDate) {
                 IdentityApi.getUserFromApiWithRefreshedCookie().then(
@@ -397,7 +393,7 @@ class CommentBox extends Component {
         } else {
             this.getElem(
                 'onboarding-author'
-            ).innerHTML = getUserData().displayName;
+            ).innerHTML = this.getUserData().displayName;
 
             this.setState('onboarding-visible');
             this.previewComment(this.onboardingPreviewSuccess);
@@ -415,7 +411,7 @@ class CommentBox extends Component {
             );
         }
 
-        const userData = getUserData();
+        const userData = this.getUserData();
 
         this.getElem('author').innerHTML = userData.displayName;
 
