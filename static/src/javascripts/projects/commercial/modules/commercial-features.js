@@ -81,12 +81,12 @@ class CommercialFeatures {
         this.glabsTrafficDriverInlineSlot =
             this.articleBodyAdverts &&
             glabsTrafficDriverSlots &&
-            getTestVariantId('GLabsTrafficDriverSlots') === 'inline';
+            getTestVariantId('GlabsTrafficDriverSlots') === 'inline';
 
         this.glabsTrafficDriverLeftSlot =
             this.articleBodyAdverts &&
             glabsTrafficDriverSlots &&
-            getTestVariantId('GLabsTrafficDriverSlots') === 'left';
+            getTestVariantId('GlabsTrafficDriverSlots') === 'left';
 
         this.videoPreRolls = this.dfpAdvertising && !this.adFree;
 
