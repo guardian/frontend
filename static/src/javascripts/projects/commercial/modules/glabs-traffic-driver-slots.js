@@ -77,7 +77,7 @@ const insertLeftSlot = (paras: Element[]): Promise<void> => {
         .then(() => addSlot(slot, true));
 };
 
-const glabsTrafficDriverSlotInit = (): Promise<void> => {
+const glabsTrafficDriverSlotsInit = (): Promise<void> => {
     let insertSlot;
 
     if (commercialFeatures.glabsTrafficDriverInlineSlot) {
@@ -97,4 +97,4 @@ const glabsTrafficDriverSlotInit = (): Promise<void> => {
     });
 };
 
-export { glabsTrafficDriverSlotInit };
+export { glabsTrafficDriverSlotsInit };

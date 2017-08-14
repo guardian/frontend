@@ -48,7 +48,7 @@ class CommercialFeatures {
             document.documentElement.classList.contains('has-sticky');
         const newRecipeDesign =
             config.page.showNewRecipeDesign && config.tests.abNewRecipeDesign;
-        const glabsTrafficDriverSlot =
+        const glabsTrafficDriverSlots =
             config.hasTone('Features') &&
             !config.page.isPaidContent &&
             ['sport', 'lifeandstyle', 'fashion', 'football', 'travel'].includes(
@@ -80,13 +80,13 @@ class CommercialFeatures {
 
         this.glabsTrafficDriverInlineSlot =
             this.articleBodyAdverts &&
-            glabsTrafficDriverSlot &&
-            getTestVariantId('GlabsTrafficDriverSlot') === 'opt-in-inline';
+            glabsTrafficDriverSlots &&
+            getTestVariantId('GlabsTrafficDriverSlots') === 'inline';
 
         this.glabsTrafficDriverLeftSlot =
             this.articleBodyAdverts &&
-            glabsTrafficDriverSlot &&
-            getTestVariantId('GlabsTrafficDriverSlot') === 'opt-in-left';
+            glabsTrafficDriverSlots &&
+            getTestVariantId('GlabsTrafficDriverSlots') === 'left';
 
         this.videoPreRolls = this.dfpAdvertising && !this.adFree;
 
