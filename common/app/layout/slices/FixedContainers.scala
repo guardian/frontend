@@ -74,7 +74,7 @@ object FixedContainers {
 
   val footballTeamFixtures = slices(TTT)
 
-  val thrasher = slices(Fluid).copy(customCssClasses = Set("fc-container--thrasher"))
+  val thrasher = slices(Fluid).copy(customCssClasses = Set("fc-container--thrasher", "flashing-image"))
 
   val all: Map[String, ContainerDefinition] = Map(
     ("fixed/small/slow-I", slices(FullMedia75)),
