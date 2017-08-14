@@ -23,6 +23,7 @@ import { videojs } from 'bootstraps/enhanced/media/video-player';
 import loadingTmpl from 'raw-loader!common/views/ui/loading.html';
 import { isAdFreeUser } from 'commercial/modules/user-features';
 import { loadScript } from 'lib/load-script';
+import accessibility from 'common/modules/accessibility/main';
 
 const initLoadingSpinner = (player: any): void => {
     player.loadingSpinner.contentEl().innerHTML = loadingTmpl;
@@ -293,7 +294,10 @@ const enhanceVideo = (
                     });
 
                     playerSetupComplete.then(() => {
-                        if (autoplay) {
+                        if (
+                            autoplay &&
+                            accessibility.isOn('flashing-elements')
+                        ) {
                             player.play();
                         }
                     });

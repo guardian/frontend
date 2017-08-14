@@ -7,6 +7,7 @@ import $ from 'lib/$';
 import config from 'lib/config';
 import { isIOS, isAndroid, isBreakpoint } from 'lib/detect';
 import debounce from 'lodash/functions/debounce';
+import accessibility from 'common/modules/accessibility/main';
 
 const players = {};
 
@@ -116,11 +117,15 @@ const shouldAutoplay = (atomId: string): boolean => {
             )) ||
         false;
 
+    const flashingElementsAllowed = () =>
+        accessibility.isOn('flashing-elements');
+
     return (
         config.page.contentType === 'Video' &&
         isInternalReferrer() &&
         !isAutoplayBlockingPlatform() &&
-        isMainVideo()
+        isMainVideo() &&
+        flashingElementsAllowed()
     );
 };
 
