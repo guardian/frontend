@@ -8,6 +8,7 @@ import play.api.mvc.Results.{InternalServerError, NotFound}
 sealed abstract class DiscussionApiException(msg: String) extends RuntimeException(msg)
 case class NotFoundException(msg: String) extends DiscussionApiException(msg)
 case class OtherException(msg: String) extends DiscussionApiException(msg)
+case class ServiceUnavailableException(msg:String) extends DiscussionApiException(msg)
 
 object DiscussionApiException {
 

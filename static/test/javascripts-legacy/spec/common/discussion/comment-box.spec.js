@@ -7,7 +7,8 @@ define([
     'fixtures/discussion/api-post-comment-valid',
     'fixtures/discussion/api-post-comment-error-discussion-closed',
     'fixtures/discussion/api-post-comment-error-read-only-mode',
-    'common/modules/discussion/comment-box'
+    'common/modules/discussion/comment-box',
+    'lib/config'
 ], function (
     Id,
     bean,
@@ -17,7 +18,8 @@ define([
     apiPostValidCommentResp,
     apiPostValidCommentButDiscussionClosed,
     apiPostValidCommentButReadOnlyMode,
-    CommentBox
+    CommentBox,
+    config
 ) {
     describe('Comment box', function () {
         var server,
@@ -161,6 +163,7 @@ define([
 
             it('should error on discussion closed', function () {
                 expect(commentBox.getElem('error')).toBeUndefined();
+                config.switches.enableDiscussionSwitch = true;
                 commentBox.getElem('body').value = validCommentText;
                 server.respondWith('POST', /.*/, [409, { 'Content-Type': 'text/html', 'Content-Length': apiPostValidCommentButDiscussionClosed.length }, apiPostValidCommentButDiscussionClosed]);
                 bean.fire(commentBox.elem, 'submit');

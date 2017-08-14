@@ -114,7 +114,7 @@ class CommercialFeatures {
             this.dfpAdvertising &&
             !this.adFree &&
             !isMinuteArticle &&
-            config.switches.commentsVisibleOnArticle &&
+            config.switches.enableDiscussionSwitch &&
             config.page.commentable &&
             identityApi.isUserLoggedIn() &&
             (!isLiveBlog || isWidePage);

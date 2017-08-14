@@ -225,7 +225,7 @@ define([
             },
 
             initDiscussion: function () {
-                if (config.switches.commentsVisibleOnArticle) {
+                if (config.switches.enableDiscussionSwitch) {
                     CommentCount.init();
                 }
             },
