@@ -51,7 +51,6 @@
             "timingEvents": []
         },
         "libs": {
-            "foresee": "@Static("javascripts/vendor/foresee/20150703/foresee-trigger.js")",
             "googletag": "@{Configuration.javascript.config("googletagJsUrl")}",
             "sonobi": "@{Configuration.javascript.config("sonobiHeaderBiddingJsUrl")}",
             "switch": "@{Configuration.javascript.config("switchPreFlightJsUrl")}"

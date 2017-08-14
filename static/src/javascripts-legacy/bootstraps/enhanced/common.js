@@ -13,7 +13,6 @@ define([
     'lib/url',
     'lib/robust',
     'lib/storage',
-    'common/modules/analytics/foresee-survey',
     'common/modules/analytics/media-listener',
     'common/modules/analytics/interaction-tracking',
     'common/modules/analytics/register',
@@ -62,7 +61,6 @@ define([
     url,
     robust,
     storage,
-    Foresee,
     mediaListener,
     interactionTracking,
     register,
@@ -211,12 +209,6 @@ define([
             checkIframe: function () {
                 if (window.self !== window.top) {
                     $('html').addClass('iframed');
-                }
-            },
-
-            runForseeSurvey: function () {
-                if (config.switches.foresee) {
-                    Foresee.load();
                 }
             },
 
