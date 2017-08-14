@@ -26,7 +26,7 @@ const onOpenClick = (event: EventHandler) => {
 };
 
 const paidContainers = (): Promise<void> => {
-    const showMores = qwery('.adverts__more > summary');
+    const showMores = qwery('.dumathoin-more > summary');
     bean.on(document, 'click', showMores, onOpenClick);
     bean.on(document, 'click', showMores, onKeyPress(onOpenClick));
 

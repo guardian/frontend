@@ -39,13 +39,13 @@
         }
 
         @if(containerModel.content.showMoreCards.nonEmpty){
-            <details class="adverts__more">
-                <summary class="button button--medium button--primary button--show-more" data-text="@containerModel.content.title">
+            <details class="dumathoin-more">
+                <summary class="button button--medium button--primary button--show-more dumathoin-more__button" data-text="@containerModel.content.title">
                     @fragments.inlineSvg("plus", "icon")
                     @fragments.inlineSvg("minus", "icon")
                     <span class="js-button__label">More @containerModel.content.title</span>
                 </summary>
-                <div class="adverts__row adverts__row--wrap adverts__3cols">
+                <div class="dumathoin__row dumathoin__row--wrap dumathoin__3cols">
                     @containerModel.content.showMoreCards.map(card => views.html.fragments.commercial.cards.itemSmallCard(
                                             card,
                                             optAdvertClassNames = Some(Seq("paidfor")),
