@@ -90,11 +90,8 @@ export const getOutbrainComplianceTargeting = (): Promise<
   true              false               false             n/a              false         false      false     compliant
 */
 export const initOutbrain = () =>
-    Promise.all([
-        getOutbrainDfpConditions(),
-        getOutbrainPageConditions(),
-    ]).then(([dfpConditions, pageConditions]) => {
-        if (!pageConditions.outbrainEnabled || dfpConditions.blockedByAds) {
+    getOutbrainPageConditions().then(pageConditions => {
+        if (!pageConditions.outbrainEnabled) {
             return;
         }
 
@@ -103,14 +100,26 @@ export const initOutbrain = () =>
             pageConditions.emailTestVisible ||
             pageConditions.storyQuestionsVisible;
 
-        if (
-            pageConditions.useMerchandiseAdSlot &&
-            !pageConditions.noMerchSlotsExpected
-        ) {
-            load('merchandising');
-        } else if (editorialTests) {
-            load('nonCompliant');
+        if (pageConditions.noMerchSlotsExpected) {
+            if (editorialTests) {
+                load('nonCompliant');
+            } else {
+                load();
+            }
         } else {
-            load();
+            // only wait for dfp conditions if we really have to.
+            getOutbrainDfpConditions().then(dfpConditions => {
+                if (dfpConditions.blockedByAds) {
+                    return;
+                }
+
+                if (dfpConditions.useMerchandiseAdSlot) {
+                    load('merchandising');
+                } else if (editorialTests) {
+                    load('nonCompliant');
+                } else {
+                    load();
+                }
+            });
         }
     });
