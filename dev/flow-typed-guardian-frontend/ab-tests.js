@@ -27,12 +27,14 @@ declare type ABTest = {
     variants: Array<Variant>,
     canRun: () => boolean,
     notInTest?: () => void,
-    isEngagementBannerTest?: boolean,
 };
 
-declare type ContributionsABTest = ABTest & {
-    epic: boolean,
+declare type AcquisitionsABTest = ABTest & {
     campaignId: string,
+    componentType: OphanComponentType,
+};
+
+declare type EpicABTest = AcquisitionsABTest & {
     campaignPrefix: string,
     campaignSuffix: string,
     useLocalViewLog: boolean,
@@ -45,6 +47,41 @@ declare type ContributionsABTest = ABTest & {
     insertEvent: string,
     viewEvent: string,
 };
+
+declare type InitEpicABTestVariant = {
+    id: string,
+    products: OphanProduct[],
+    options: Object
+};
+
+declare type InitEpicABTest = {
+    id: string,
+    start: string,
+    expiry: string,
+    author: string,
+    description: string,
+    audience: number,
+    audienceOffset: number,
+    successMeasure: string,
+    audienceCriteria: string,
+    idealOutcome: string,
+    campaignId: string,
+    variants: InitEpicABTestVariant[],
+
+    componentType?: OphanComponentType,
+    // locations is a filter where empty is taken to mean 'all'
+    locations?: string[],
+    locationCheck?: () => boolean,
+    dataLinkNames?: string,
+    campaignPrefix?: string,
+    campaignSuffix?: string,
+    useLocalViewLog?: boolean,
+    overrideCanRun?: boolean,
+    useTargetingTool?: boolean,
+    showToContributorsAndSupporters?: boolean,
+    canRun?: () => boolean,
+    pageCheck?: (page: Object) => boolean,
+}
 
 declare type Interaction = {
     component: string,
@@ -60,7 +97,7 @@ declare type EngagementBannerParams = {
     pageviewId: string,
     interactionOnMessageShow: Interaction,
     colourStrategy: () => string,
-    offering?: string,
+    products: OphanProduct[],
     paypalClass?: string,
 };
 
@@ -71,20 +108,4 @@ declare type Participations = {
     [testId: string]: {
         variant: string,
     },
-};
-
-/**
- * an individual A/B test, structured for Ophan
- */
-declare type OphanABEvent = {
-    variantName: string,
-    complete: string | boolean,
-    campaignCodes?: Array<string>,
-};
-
-/**
- * the actual payload we send to Ophan: an object of OphanABEvents with test IDs as keys
- */
-declare type OphanABPayload = {
-    [testId: string]: OphanABEvent,
 };

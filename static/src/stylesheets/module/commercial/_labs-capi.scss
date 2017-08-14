@@ -25,16 +25,12 @@
     }
 }
 
-.adverts--capi {
-    .adverts__title {
+.dumathoin--capi {
+    .dumathoin__title {
         font-size: get-font-size(headline, 3);
     }
 
-    .adverts__body {
-        padding-bottom: $gs-baseline;
-    }
-
-    .adverts__row {
+    .dumathoin__row {
         @include mq($until: tablet) {
             flex-direction: column;
 
@@ -95,9 +91,9 @@
     }
 }
 
-.adverts--paidfor {
+.dumathoin--paidfor {
     @include mq($until: tablet) {
-        .adverts__stamp {
+        .dumathoin__stamp {
             position: absolute;
             top: $gs-baseline / 2;
             right: $gs-gutter / 2;
@@ -109,8 +105,8 @@
         }
     }
 
-    @include mq(mobileLandscape, desktop) {
-        > .adverts__header {
+    @include mq(mobileLandscape, leftCol) {
+        .dumathoin__header {
             flex-wrap: wrap;
         }
 
@@ -120,11 +116,11 @@
     }
 }
 
-.adverts--tone-paidfor {
+.dumathoin--tone-paidfor {
     background-color: $neutral-6;
     position: relative;
 
-    .adverts__header {
+    .dumathoin__header {
         background: $paidfor-background;
     }
 
@@ -132,48 +128,20 @@
         fill: $paid-article-brand;
     }
 
-    .adverts__title {
-        @include f-headlineSans;
-    }
-
     .adverts__logo {
         color: #ffffff;
     }
 
-    .adverts__stamp {
+    .dumathoin__stamp {
         text-align: right;
     }
 
-    .adverts__row > * + *::before,
-    .adverts__row--legacy > .advert::after,
-    .adverts__2cols::after,
-    .adverts__3cols::before,
-    .adverts__3cols::after {
+    .dumathoin__row > * + *::before,
+    .dumathoin__row--legacy > .advert::after,
+    .dumathoin__2cols::after,
+    .dumathoin__3cols::before,
+    .dumathoin__3cols::after {
         background: $paid-article-subheader-bg;
-    }
-
-    .adverts__more > summary {
-        background: $paidfor-background;
-        border-color: $paidfor-background;
-
-        .inline-icon__svg {
-            fill: $neutral-2;
-        }
-
-        @include mq(desktop) {
-            float: left;
-            margin-bottom: $gs-baseline;
-
-            & + * {
-                clear: left;
-            }
-        }
-    }
-
-    .adverts__more[open] > summary {
-        background: none;
-        border-color: $neutral-4;
-        color: $neutral-1;
     }
 
     .button {
@@ -184,6 +152,32 @@
         &:active {
             @include button-colour(darken($paid-article-brand, 5%), null);
         }
+    }
+}
+
+.dumathoin-more__button {
+    background: $paidfor-background;
+    border-color: $paidfor-background;
+
+    .inline-icon__svg {
+        fill: $neutral-2;
+    }
+
+    @include mq(desktop) {
+        float: left;
+
+        & + * {
+            clear: left;
+        }
+    }
+}
+
+.dumathoin-more[open] {
+
+    .dumathoin-more__button {
+        background: none;
+        border-color: $neutral-4;
+        color: $neutral-1;
     }
 }
 
@@ -229,13 +223,6 @@
     border-top: 1px solid;
     transition: background .1s;
 
-    &:hover,
-    &:focus {
-        .advert__title {
-            text-decoration: none;
-        }
-    }
-
     .advert__title,
     .advert__meta,
     .advert__standfirst {
@@ -251,6 +238,11 @@
         @include f-headlineSans;
         font-weight: 400;
         margin-bottom: .5em;
+
+        &:hover,
+        &:focus {
+            text-decoration: none;
+        }
 
         .inline-icon__svg {
             width: 1.1em;
@@ -315,7 +307,7 @@
         }
     }
 
-    .adverts--legacy-single & {
+    .dumathoin--legacy-single & {
         background: none;
         border-top: 0;
 
@@ -454,5 +446,4 @@
         height: .75em;
         margin-right: .3em;
     }
-
 }

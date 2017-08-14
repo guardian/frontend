@@ -9,7 +9,14 @@
     background: $colour;
 }
 
-.adverts {
+// What on earth is dumathoin?
+// This class used to be `adverts` which is curently a hugely overloaded word in
+// frontend, without even counting the seperate `advert` class and derivatives.
+// Also, these styles apply to the glabs containers and content, NOT adverts.
+// However, codewords are cool, and `labs` and `paidfor` are fairly generic.
+// Using the string `dumathoin` gives zero chance of classname collisions, so
+// changing/rotating these classnames becomes as straightforward as possible.
+.dumathoin {
     padding: 0 $gs-gutter / 2;
     position: relative;
 
@@ -34,76 +41,106 @@
     }
 }
 
-.adverts--legacy {
+.dumathoin__header {
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    padding: $gs-baseline / 2 $gs-gutter / 2;
+    width: 100%;
+
+    @include mq(mobileLandscape, leftCol) {
+        flex-direction: row;
+        justify-content: space-between;
+        padding: $gs-baseline / 2 $gs-gutter;
+    }
+
+    @include mq(leftCol) {
+        padding: $gs-baseline $gs-gutter / 5 * 2;
+        width: 160px;
+    }
+
+    @include mq(tablet, desktop) {
+        padding: 0 $gs-gutter;
+    }
+
+    @include mq(wide) {
+        padding: $gs-baseline $gs-gutter;
+        width: 240px;
+    }
+
+    .button {
+        color: #ffffff;
+    }
+}
+
+.dumathoin__title {
+    @include f-headlineSans;
+}
+
+.dumathoin__blurb {
+    @include fs-headline(1);
+    color: #ffffff;
+
+    @include mq($until: leftCol) {
+        display: none;
+    }
+
+    @include mq(leftCol) {
+        @include fs-headline(2);
+    }
+}
+
+.dumathoin__body {
+    position: relative;
+    padding-bottom: $gs-baseline;
+
+    @include mq(mobileLandscape) {
+        box-sizing: border-box;
+        max-width: gs-span(8) + ($gs-gutter * 2);
+    }
+    @include mq(tablet) {
+        max-width: gs-span(9) + ($gs-gutter * 2);
+        padding-bottom: $gs-baseline;
+    }
+    @include mq(desktop) {
+        max-width: gs-span(12) + ($gs-gutter * 2);
+    }
+    @include mq(leftCol) {
+        flex: 1;
+    }
+    @include mq($until: tablet) {
+        margin: auto;
+    }
+}
+
+.dumathoin--legacy {
+    background: $neutral-6;
+
     @include mq($until: tablet) {
         padding: 0;
     }
 
-    @include mq(mobileLandscape, leftCol) {
-        > .adverts__header {
-            flex-direction: row;
-            justify-content: space-between;
-        }
+    .button {
+        margin-right: 0;
     }
 
     @include mq(leftCol) {
         display: flex;
-
-        > .adverts__header {
-            box-sizing: border-box;
-            padding: $gs-baseline $gs-gutter / 5 * 2;
-            width: 160px;
-        }
-
-        > .adverts__body {
-            flex: 1;
-        }
 
         .has-no-flex & {
             display: table;
 
             &::before,
             &::after,
-            > .adverts__body,
-            > .adverts__header {
+            > .dumathoin__body,
+            > .dumathoin__header {
                 display: table-cell;
                 vertical-align: top;
             }
         }
     }
 
-    @include mq(wide) {
-        > .adverts__header {
-            padding: $gs-baseline $gs-gutter;
-            width: 240px;
-        }
-    }
-
-    > .adverts__header {
-        @include mq($until: mobileLandscape) {
-            padding: $gs-baseline / 2 $gs-gutter / 2;
-        }
-
-        @include mq(mobileLandscape, leftCol) {
-            padding: $gs-baseline / 2 $gs-gutter;
-        }
-    }
-
-    > .adverts__body {
-        @include mq(mobileLandscape) {
-            box-sizing: border-box;
-            max-width: gs-span(8) + ($gs-gutter * 2);
-        }
-        @include mq(tablet) {
-            max-width: gs-span(9) + ($gs-gutter * 2);
-            padding-bottom: $gs-baseline;
-        }
-        @include mq(desktop) {
-            max-width: gs-span(12) + ($gs-gutter * 2);
-        }
-    }
-
-    .adverts__title {
+    .dumathoin__title {
         @include fs-header(2);
         color: #ffffff;
     }
@@ -133,7 +170,7 @@
         max-width: 100%; /* [1] */
     }
 
-    .adverts__row {
+    .dumathoin__row {
         padding: $gs-baseline / 2 0;
         display: flex;
 
@@ -209,7 +246,7 @@
 
     }
 
-    .adverts__row--wrap {
+    .dumathoin__row--wrap {
         position: relative;
         padding-top: 0;
         flex-wrap: wrap;
@@ -221,7 +258,7 @@
         }
     }
 
-    .adverts__2cols {
+    .dumathoin__2cols {
         @include mq(tablet) {
             > * {
                 position: relative;
@@ -234,7 +271,7 @@
         }
     }
 
-    .adverts__3cols {
+    .dumathoin__3cols {
         @include mq(tablet) {
             > * {
                 position: relative;
@@ -252,7 +289,7 @@
     }
 }
 
-.adverts--legacy-single {
+.dumathoin--legacy-single {
     .advert {
         flex-basis: calc(100% - #{$gs-gutter});
     }
@@ -268,16 +305,16 @@
             margin-right: 0;
         }
 
-        .adverts__row > .advert::after {
+        .dumathoin__row > .advert::after {
             @include separator($neutral-4, 100%, $gs-gutter / 2);
         }
 
-        .adverts__row > .button {
+        .dumathoin__row > .button {
             flex-basis: auto;
             flex-grow: 1;
         }
 
-        .adverts__row > .button::before {
+        .dumathoin__row > .button::before {
             content: none;
         }
     }
@@ -293,15 +330,6 @@
     }
 }
 
-.adverts__header {
-    display: flex;
-    flex-direction: column;
-
-    @include mq(tablet) {
-        padding: 0 $gs-gutter;
-    }
-}
-
 .adverts__kicker {
     .paidfor-meta__label {
         padding-left: 0;
@@ -311,19 +339,15 @@
     }
 }
 
-.adverts__title {
+.dumathoin__title {
     @include fs-headline(4, true);
 }
 
-.adverts__stamp {
+.dumathoin__stamp {
     margin-top: auto;
 }
 
-.adverts__body {
-    position: relative;
-}
-
-.adverts__row {
+.dumathoin__row {
     @include mq($until: tablet) {
         /* http://alistapart.com/article/axiomatic-css-and-lobotomized-owls */
         > * + * {
@@ -342,13 +366,13 @@
 
 }
 
-.adverts__row--wrap {
+.dumathoin__row--wrap {
     @include mq(tablet) {
         flex-wrap: wrap;
     }
 }
 
-.adverts__2cols {
+.dumathoin__2cols {
     > * {
         flex-basis: calc(50% - #{$gs-gutter / 2});
         flex-grow: 0;
@@ -362,7 +386,7 @@
         margin-top: $gs-baseline;
     }
 
-    .has-no-flex .adverts--legacy & {
+    .has-no-flex .dumathoin--legacy & {
         > * {
             float: left;
             width: calc(50% - #{$gs-gutter / 2});
@@ -378,7 +402,7 @@
     }
 }
 
-.adverts__3cols {
+.dumathoin__3cols {
     > * {
         flex-basis: calc(33.33% - #{$gs-gutter});
         flex-grow: 0;
@@ -388,7 +412,7 @@
         margin-top: $gs-baseline;
     }
 
-    .has-no-flex .adverts--legacy & {
+    .has-no-flex .dumathoin--legacy & {
         > * {
             float: left;
             width: calc(33.33% - #{$gs-gutter});
@@ -401,9 +425,9 @@
 }
 
 @include mq(tablet) {
-    .adverts__row--2x1x1 > :nth-child(1),
-    .adverts__row--1x2x1 > :nth-child(2),
-    .adverts__row--1x1x2 > :nth-child(3) {
+    .dumathoin__row--2x1x1 > :nth-child(1),
+    .dumathoin__row--1x2x1 > :nth-child(2),
+    .dumathoin__row--1x1x2 > :nth-child(3) {
         flex-basis: calc(50% - #{$gs-gutter} - 1px);
         flex-grow: 0;
 
@@ -412,8 +436,8 @@
         }
     }
 
-    .adverts__row--3x1 > :nth-child(1),
-    .adverts__row--1x3 > :nth-child(2) {
+    .dumathoin__row--3x1 > :nth-child(1),
+    .dumathoin__row--1x3 > :nth-child(2) {
         flex-basis: calc(75% - #{$gs-gutter});
         flex-grow: 0;
 
@@ -423,37 +447,20 @@
     }
 }
 
-.adverts__column {
+.dumathoin__column {
     display: flex;
     flex-direction: column;
 
-    &:not(.adverts__2cols) {
+    &:not(.dumathoin__2cols) {
         > * + * {
             margin-top: $gs-baseline;
         }
     }
 }
 
-.adverts__more {
+.dumathoin-more {
     @include mq(tablet) {
         margin: $gs-baseline 0;
-    }
-
-    > summary {
-        cursor: pointer;
-        display: block;
-        margin: 0 $gs-gutter / 2;
-        outline: none;
-        width: max-content;
-        border-radius: 1000px;
-
-        &::-webkit-details-marker {
-            display: none;
-        }
-
-        @include mq(mobileLandscape) {
-            margin: 0 $gs-gutter;
-        }
     }
 
     &:not([open]) .inline-minus,
@@ -471,31 +478,19 @@
     }
 }
 
+.dumathoin-more__button {
+    cursor: pointer;
+    display: block;
+    margin: 0 0 $gs-baseline $gs-gutter / 2;
+    outline: none;
+    width: max-content;
+    border-radius: 1000px;
 
-/* Theming */
-.adverts--legacy {
-    background: #eaeaea;
-
-    > .adverts__header .button {
-        color: #ffffff;
+    &::-webkit-details-marker {
+        display: none;
     }
 
-    .adverts__blurb {
-        @include fs-headline(1);
-        color: #ffffff;
-
-        @include mq($until: leftCol) {
-            display: none;
-        }
-
-        @include mq(leftCol) {
-            @include fs-headline(2);
-        }
-    }
-
-    .button {
-        margin-right: 0;
+    @include mq(tablet) {
+        margin-left: $gs-gutter;
     }
 }
-
-@import '_adverts-capi';

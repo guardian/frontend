@@ -118,35 +118,34 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2017, 9, 5),
     exposeClientSide = true
   )
-
+  
   Switch(
     ABTests,
-    "ab-acquisitions-epic-rebaseline-support-proposition",
-    "Re-baseline the new support proposition against the old",
-    owners = Seq(Owner.withGithub("Ap0c")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 8, 15),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-acquisitions-epic-rebaseline-support-proposition-two",
-    "Re-baseline the new support proposition against the old",
-    owners = Seq(Owner.withGithub("Ap0c")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 8, 15),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-carrot-slot",
-    "Displays a new ad slot at the top of articles to drive traffic to GLabs content",
+    "ab-glabs-traffic-driver-slot",
+    "Displays a new ad slot to drive traffic to GLabs content",
     owners = Seq(Owner.withGithub("JonNorman")),
     safeState = Off,
     sellByDate = new LocalDate(2017, 8, 23),
     exposeClientSide = true
   )
 
+  Switch(
+    ABTests,
+    "ab-acquisitions-epic-paypal-pay-in-epic",
+    "Test whether allowing readers to pay in-Epic increases the conversion rate.",
+    owners = Seq(Owner.withGithub("Mullefa"), Owner.withGithub("desbo")),
+    safeState = On,
+    sellByDate = new LocalDate(2017, 9, 11),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-epic-recurring-contribution-uk-support-proposition",
+    "Add recurring contribution uk for support proposition",
+    owners = Seq(Owner.withGithub("svillafe")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 9, 13),
+    exposeClientSide = true
+  )
 }

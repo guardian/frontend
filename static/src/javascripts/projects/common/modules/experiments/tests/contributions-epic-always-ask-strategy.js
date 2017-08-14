@@ -6,7 +6,7 @@ import {
 import 'lib/config';
 import 'lib/cookies';
 
-export const alwaysAsk: ContributionsABTest = makeABTest({
+export const alwaysAsk: EpicABTest = makeABTest({
     id: 'ContributionsEpicAlwaysAskStrategy',
     campaignId: 'epic_always_ask_strategy',
 
@@ -34,19 +34,27 @@ export const alwaysAsk: ContributionsABTest = makeABTest({
     variants: [
         {
             id: 'control',
-            test() {},
-            isUnlimited: true,
+            products: ['ONE_OFF_CONTRIBUTION', 'MEMBERSHIP_SUPPORTER'],
+
+            options: {
+                test() {},
+                isUnlimited: true,
+            },
         },
 
         {
             id: 'alwaysAsk',
-            test(render, variant, parentTest) {
-                if (defaultCanEpicBeDisplayed(parentTest)) {
-                    render();
-                }
+            products: ['ONE_OFF_CONTRIBUTION', 'MEMBERSHIP_SUPPORTER'],
+
+            options: {
+                test(render, variant, parentTest) {
+                    if (defaultCanEpicBeDisplayed(parentTest)) {
+                        render();
+                    }
+                },
+                isUnlimited: true,
+                successOnView: true,
             },
-            isUnlimited: true,
-            successOnView: true,
         },
     ],
 });

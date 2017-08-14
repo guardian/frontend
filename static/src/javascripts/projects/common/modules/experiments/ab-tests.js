@@ -2,23 +2,23 @@
 import { isExpired } from 'common/modules/experiments/test-can-run-checks';
 import { removeParticipation } from 'common/modules/experiments/utils';
 import { getTest as getAcquisitionTest } from 'common/modules/experiments/acquisition-test-selector';
-import MembershipEngagementBannerTests from 'common/modules/experiments/tests/membership-engagement-banner-tests';
+import { membershipEngagementBannerTests } from 'common/modules/experiments/tests/membership-engagement-banner-tests';
 import { paidContentVsOutbrain2 } from 'common/modules/experiments/tests/paid-content-vs-outbrain';
-import { carrotSlot } from 'common/modules/experiments/tests/carrot-slot';
+import { glabsTrafficDriverSlot } from 'common/modules/experiments/tests/glabs-traffic-driver-slot';
 import { tailorSurvey } from 'common/modules/experiments/tests/tailor-survey';
 
-import AcquisitionsEpicElectionInteractiveEnd from 'common/modules/experiments/tests/acquisitions-epic-election-interactive-end';
-import AcquisitionsEpicElectionInteractiveSlice from 'common/modules/experiments/tests/acquisitions-epic-election-interactive-slice';
+import { acquisitionsEpicElectionInteractiveEnd } from 'common/modules/experiments/tests/acquisitions-epic-election-interactive-end';
+import { acquisitionsEpicElectionInteractiveSlice } from 'common/modules/experiments/tests/acquisitions-epic-election-interactive-slice';
 
 export const TESTS: Array<ABTest> = [
     paidContentVsOutbrain2,
     getAcquisitionTest(),
     tailorSurvey,
-    carrotSlot,
-    AcquisitionsEpicElectionInteractiveEnd,
-    AcquisitionsEpicElectionInteractiveSlice,
+    glabsTrafficDriverSlot,
+    acquisitionsEpicElectionInteractiveEnd,
+    acquisitionsEpicElectionInteractiveSlice,
 ]
-    .concat(MembershipEngagementBannerTests)
+    .concat(membershipEngagementBannerTests)
     .filter(Boolean);
 
 export const getActiveTests = (): Array<ABTest> =>

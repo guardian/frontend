@@ -6,22 +6,22 @@ import {
 } from 'common/modules/experiments/utils';
 import { testCanBeRun } from 'common/modules/experiments/test-can-run-checks';
 import { viewsInPreviousDays } from 'common/modules/commercial/acquisitions-view-log';
+import { payInEpic } from 'common/modules/experiments/tests/acquisitions-epic-paypal-pay-in-epic';
 import { alwaysAsk } from 'common/modules/experiments/tests/contributions-epic-always-ask-strategy';
 import { askFourEarning } from 'common/modules/experiments/tests/contributions-epic-ask-four-earning';
 import { acquisitionsEpicLiveblog } from 'common/modules/experiments/tests/acquisitions-epic-liveblog';
-import acquisitionsEpicAlwaysAskIfTagged from 'common/modules/experiments/tests/acquisitions-epic-always-ask-if-tagged';
-import acquisitionsEpicAlwaysAskElection from 'common/modules/experiments/tests/acquisitions-epic-always-ask-election';
-import acquisitionsEpicThankYou from 'common/modules/experiments/tests/acquisitions-epic-thank-you';
-import { acquisitionsEpicRebaselineSupportProposition } from 'common/modules/experiments/tests/acquisitions-epic-rebaseline-support-proposition';
-import { acquisitionsEpicRebaselineSupportPropositionTwo } from 'common/modules/experiments/tests/acquisitions-epic-rebaseline-support-proposition-two';
+import { acquisitionsEpicAlwaysAskIfTagged } from 'common/modules/experiments/tests/acquisitions-epic-always-ask-if-tagged';
+import { acquisitionsEpicAlwaysAskElection } from 'common/modules/experiments/tests/acquisitions-epic-always-ask-election';
+import { acquisitionsEpicThankYou } from 'common/modules/experiments/tests/acquisitions-epic-thank-you';
+import { acquisitionsEpicRecurringContributionUkSupportProposition } from 'common/modules/experiments/tests/acquisitions-epic-recurring-contribution-uk-support-proposition';
 
 /**
  * acquisition tests in priority order (highest to lowest)
  */
-const tests = [
+const tests: AcquisitionsABTest[] = [
     alwaysAsk,
-    acquisitionsEpicRebaselineSupportProposition,
-    acquisitionsEpicRebaselineSupportPropositionTwo,
+    payInEpic,
+    acquisitionsEpicRecurringContributionUkSupportProposition,
     askFourEarning,
     acquisitionsEpicAlwaysAskIfTagged,
     acquisitionsEpicLiveblog,
@@ -47,9 +47,6 @@ const isViewable = (v: Variant, t: ABTest): boolean => {
         viewsInPreviousDays(minViewDays, testId) === 0;
     return (withinViewLimit && enoughDaysBetweenViews) || isUnlimited;
 };
-
-export const epicEngagementBannerTests = () =>
-    tests.filter(t => t.isEngagementBannerTest);
 
 export const abTestClashData = tests;
 

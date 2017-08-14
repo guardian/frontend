@@ -9,20 +9,20 @@
   optBadge: Option[Html] = None
  )(title: Html)(innards: Html)
 
-<aside class="adverts @classNames.map(c => s"adverts--$c").mkString(" ")"
+<aside class="dumathoin @classNames.map(c => s"dumathoin--$c").mkString(" ")"
     @for(dln <- dataLinkName){data-link-name="@dln"}
     >
-    <header class="adverts__header">
+    <header class="dumathoin__header">
         @for(kicker   <- optKicker)  {<div class="adverts__kicker">@kicker</div>}
-        <h1 class="adverts__title">@title</h1>
+        <h1 class="dumathoin__title">@title</h1>
         @if(badgeInHeader) {
             @for(badge        <- optBadge)   {<div class="badge badge--alt">@badge</div>}
         }
-        @for(blurb    <- optBlurb)   {<div class="adverts__blurb">@blurb</div>}
-        @for(actions  <- optActions) {<div class="adverts__ctas">@actions</div>}
-        @for(stamp    <- optStamp)   {<div class="adverts__stamp">@stamp</div>}
+        @for(blurb    <- optBlurb)   {<div class="dumathoin__blurb">@blurb</div>}
+        @for(actions  <- optActions) {<div class="dumathoin__ctas">@actions</div>}
+        @for(stamp    <- optStamp)   {<div class="dumathoin__stamp">@stamp</div>}
     </header>
-    <div class="adverts__body">
+    <div class="dumathoin__body">
         @innards
         @if(!badgeInHeader) {
             @for(badge        <- optBadge)   {<div class="badge">@badge</div>}

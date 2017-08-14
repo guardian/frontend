@@ -79,10 +79,7 @@ const setEpicLiveblogEntryTimeData = (
     }
 };
 
-const setupViewTracking = (
-    el: HTMLElement,
-    test: ContributionsABTest
-): void => {
+const setupViewTracking = (el: HTMLElement, test: EpicABTest): void => {
     // top offset of 18 ensures view only counts when half of element is on screen
     const inView = elementInView(el, window, {
         top: 18,
@@ -94,10 +91,7 @@ const setupViewTracking = (
     });
 };
 
-const addEpicToBlocks = (
-    epicHtml: string,
-    test: ContributionsABTest
-): Promise<void> =>
+const addEpicToBlocks = (epicHtml: string, test: EpicABTest): Promise<void> =>
     getBlocksToInsertEpicAfter().then(blocksToInsertEpicAfter => {
         blocksToInsertEpicAfter.forEach(el => {
             getLiveblogEntryTimeData(el).then((timeData: TimeData) => {
@@ -112,7 +106,7 @@ const addEpicToBlocks = (
         });
     });
 
-export const acquisitionsEpicLiveblog: ContributionsABTest = makeABTest({
+export const acquisitionsEpicLiveblog: EpicABTest = makeABTest({
     id: 'AcquisitionsEpicLiveblog',
     campaignId: 'epic_liveblog',
     campaignSuffix: pageId.replace(/-/g, '_').replace(/\//g, '__'),
@@ -138,29 +132,33 @@ export const acquisitionsEpicLiveblog: ContributionsABTest = makeABTest({
     variants: [
         {
             id: 'control',
-            isUnlimited: true,
+            products: ['ONE_OFF_CONTRIBUTION', 'MEMBERSHIP_SUPPORTER'],
 
-            template(variant) {
-                return template(liveblogEpicTemplate, {
-                    copy: liveblogCopy(
-                        variant.options.membershipURL,
-                        variant.options.contributeURL
-                    ),
-                    componentName: variant.options.componentName,
-                });
-            },
+            options: {
+                isUnlimited: true,
 
-            test(renderFn, variant, test) {
-                const epicHtml = variant.options.template(variant);
-                addEpicToBlocks(epicHtml, test);
-                mediator.emit(test.insertEvent);
-
-                if (!isAutoUpdateHandlerBound) {
-                    mediator.on('modules:autoupdate:updates', () => {
-                        addEpicToBlocks(epicHtml, test);
+                template(variant) {
+                    return template(liveblogEpicTemplate, {
+                        copy: liveblogCopy(
+                            variant.options.membershipURL,
+                            variant.options.contributeURL
+                        ),
+                        componentName: variant.options.componentName,
                     });
-                    isAutoUpdateHandlerBound = true;
-                }
+                },
+
+                test(renderFn, variant, test) {
+                    const epicHtml = variant.options.template(variant);
+                    addEpicToBlocks(epicHtml, test);
+                    mediator.emit(test.insertEvent);
+
+                    if (!isAutoUpdateHandlerBound) {
+                        mediator.on('modules:autoupdate:updates', () => {
+                            addEpicToBlocks(epicHtml, test);
+                        });
+                        isAutoUpdateHandlerBound = true;
+                    }
+                },
             },
         },
     ],

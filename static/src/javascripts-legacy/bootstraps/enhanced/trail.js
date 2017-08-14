@@ -33,7 +33,7 @@ define([
     identityApi,
     Onward,
     Popular,
-    Related,
+    related,
     TonalComponent,
     shareCount
 ) {
@@ -74,7 +74,8 @@ define([
                     contains(['video', 'interactive'], config.page.contentType.toLowerCase())) {
                     opts.excludeTags.push('guardian-professional/guardian-professional');
                 }
-                new Related(opts).renderRelatedComponent();
+
+                related.related(opts);
             });
         }
     }
@@ -92,7 +93,7 @@ define([
     }
 
     function initDiscussion() {
-        if (config.switches.commentsVisibleOnArticle && config.page.commentable) {
+        if (config.switches.enableDiscussionSwitch && config.page.commentable) {
             var el = qwery('.discussion')[0];
             if (el) {
                 new DiscussionLoader().attachTo(el);

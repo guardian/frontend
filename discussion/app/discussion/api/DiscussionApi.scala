@@ -12,6 +12,7 @@ import play.api.libs.json.{JsNull, JsNumber, JsObject}
 import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.mvc.{Cookie, Headers, RequestHeader}
 import scala.concurrent.duration._
+import conf.switches.Switches._
 
 import scala.concurrent.Future
 
@@ -182,7 +183,7 @@ trait DiscussionApiLike extends Http with ExecutionContexts with Logging {
   }
 
   override protected def getJsonOrError(url: String, onError: (WSResponse) => String, headers: (String, String)*) = {
-    super.getJsonOrError(url, onError, headers :+ guClientHeader: _*)
+    failIfDisabled.flatMap(_ => super.getJsonOrError(url, onError, headers :+ guClientHeader: _*))
   }
 
   private def guClientHeader = ("GU-Client", clientHeaderValue)
@@ -198,8 +199,14 @@ trait DiscussionApiLike extends Http with ExecutionContexts with Logging {
     val url = s"${apiRoot}/comment/${abuseReport.commentId}/reportAbuse"
     val headers = Seq("D2-X-UID" -> conf.Configuration.discussion.d2Uid, guClientHeader)
     if (cookie.isDefined) { headers :+  ("Cookie"->s"SC_GU_U=${cookie.get}") }
-    wsClient.url(url).withHeaders(headers: _*).withRequestTimeout(2.seconds).post(abuseReportToMap(abuseReport))
+    failIfDisabled.flatMap(_ => wsClient.url(url).withHeaders(headers: _*).withRequestTimeout(2.seconds).post(abuseReportToMap(abuseReport)))
+  }
 
+  private def failIfDisabled: Future[Unit] = {
+    if(EnableDiscussionSwitch.isSwitchedOn)
+      Future.successful(())
+    else
+      Future.failed(ServiceUnavailableException("DAPI is currently unavailable from Frontend"))
   }
 }
 

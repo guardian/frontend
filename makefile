@@ -18,6 +18,7 @@ list: # PRIVATE
 # Install all 3rd party dependencies.
 install: check-node check-yarn
 	@yarn install -s
+	@make ui-install
 
 # Remove all 3rd party dependencies.
 uninstall: # PRIVATE
@@ -135,3 +136,6 @@ ui-compile:
 
 ui-watch:
 	@cd ui && yarn watch -s
+
+ui-install:
+	@cd ui && yarn install -s

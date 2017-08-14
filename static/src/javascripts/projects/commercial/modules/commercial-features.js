@@ -13,7 +13,8 @@ class CommercialFeatures {
     stickyTopBannerAd: any;
     articleBodyAdverts: any;
     articleAsideAdverts: any;
-    carrotSlot: any;
+    glabsTrafficDriverInlineSlot: any;
+    glabsTrafficDriverLeftSlot: any;
     videoPreRolls: any;
     highMerch: any;
     thirdPartyTags: any;
@@ -47,6 +48,12 @@ class CommercialFeatures {
             document.documentElement.classList.contains('has-sticky');
         const newRecipeDesign =
             config.page.showNewRecipeDesign && config.tests.abNewRecipeDesign;
+        const glabsTrafficDriverSlot =
+            config.hasTone('Features') &&
+            !config.page.isPaidContent &&
+            ['sport', 'lifeandstyle', 'fashion', 'football', 'travel'].includes(
+                config.page.section
+            );
 
         // Feature switches
         this.adFree =
@@ -71,9 +78,15 @@ class CommercialFeatures {
             !isHosted &&
             !newRecipeDesign;
 
-        this.carrotSlot =
+        this.glabsTrafficDriverInlineSlot =
             this.articleBodyAdverts &&
-            getTestVariantId('CarrotSlot') === 'opt-in';
+            glabsTrafficDriverSlot &&
+            getTestVariantId('GlabsTrafficDriverSlot') === 'opt-in-inline';
+
+        this.glabsTrafficDriverLeftSlot =
+            this.articleBodyAdverts &&
+            glabsTrafficDriverSlot &&
+            getTestVariantId('GlabsTrafficDriverSlot') === 'opt-in-left';
 
         this.videoPreRolls = this.dfpAdvertising && !this.adFree;
 
@@ -101,7 +114,7 @@ class CommercialFeatures {
             this.dfpAdvertising &&
             !this.adFree &&
             !isMinuteArticle &&
-            config.switches.commentsVisibleOnArticle &&
+            config.switches.enableDiscussionSwitch &&
             config.page.commentable &&
             identityApi.isUserLoggedIn() &&
             (!isLiveBlog || isWidePage);
