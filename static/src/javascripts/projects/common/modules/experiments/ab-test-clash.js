@@ -9,7 +9,9 @@ const potentiallyClashingTests: Object[] = contributionsTests.concat(
     emailTests
 );
 
-const testABClash = (f, tests: Object[]): boolean =>
+export { emailTests, contributionsTests };
+
+export const testABClash = (f, tests: Object[]): boolean =>
     tests.some(test =>
         test.variants
             .filter(variant => {
@@ -21,8 +23,6 @@ const testABClash = (f, tests: Object[]): boolean =>
             })
             .some(variant => f(test, variant))
     );
-
-export { emailTests, contributionsTests };
 
 export const userIsInAClashingAbTest = (
     tests: Object[] = potentiallyClashingTests
