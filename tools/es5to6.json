@@ -113,7 +113,6 @@
     "projects/common/modules/navigation/search.js"
   ],
   "Joseph Smith": [
-    "projects/common/modules/experiments/ab-test-clash.js",
     "projects/common/modules/experiments/affix.js",
     "projects/common/modules/ui/notification-counter.js",
     "projects/common/modules/ui/relativedates.js"
