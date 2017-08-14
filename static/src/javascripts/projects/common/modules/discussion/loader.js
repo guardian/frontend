@@ -495,11 +495,7 @@ class Loader extends Component {
         this.setState('loading');
 
         // If the caller specified truncation, do not load all comments.
-        if (
-            opts &&
-            opts.shouldTruncate &&
-            this.comments.isAllPageSizeActive()
-        ) {
+        if (opts.shouldTruncate && this.comments.isAllPageSizeActive()) {
             opts.pageSize = 10;
         }
 
@@ -509,7 +505,7 @@ class Loader extends Component {
         return this.comments.fetchComments(opts).then(() => {
             this.removeState('loading');
 
-            if (opts && opts.shouldTruncate) {
+            if (opts.shouldTruncate) {
                 this.setState('truncated');
             } else {
                 // do not call removeTruncation because it could invoke another fetch.
