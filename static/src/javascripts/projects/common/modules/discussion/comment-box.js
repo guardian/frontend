@@ -126,6 +126,12 @@ class CommentBox extends Component {
         return IdentityApi.getUserFromCookie();
     }
 
+    clearErrors() {
+        this.getElem('messages').innerHTML = '';
+        this.errors = [];
+        this.removeState('invalid');
+    }
+
     refreshUsernameHtml(): void {
         IdentityApi.reset();
 
