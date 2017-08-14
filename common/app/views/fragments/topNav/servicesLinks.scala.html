@@ -5,6 +5,7 @@
 @import common.editions._
 @import views.support.RenderClasses
 @import views.html.fragments.topNav.editionMenu
+@import navigation.UrlHelpers.oldNav._
 
 @ellipsis() = {
     <a class="brand-bar__item--action popup__toggle"
@@ -18,38 +19,6 @@
         </span>
         <span class="control__info" data-test-id="sign-in-name">more</span>
     </a>
-}
-
-@jobsUrl(edition: String) = {
-    @if(mvt.ABNewDesktopHeaderControl.isParticipating) {
-        https://jobs.theguardian.com/?INTCMP=jobs_@{edition}_web_newheader_control
-    } else {
-        https://jobs.theguardian.com/?INTCMP=NGW_TOPNAV_@{edition.toUpperCase}_GU_JOBS
-    }
-}
-
-@soulmatesUrl(edition: String) = {
-    @if(mvt.ABNewDesktopHeaderControl.isParticipating) {
-        https://soulmates.theguardian.com/?INTCMP=soulmates_@{edition}_web_newheader_control
-    } else {
-        https://soulmates.theguardian.com/?INTCMP=NGW_TOPNAV_@{edition.toUpperCase}_GU_SOULMATES
-    }
-}
-
-@holidaysUrl = {
-    @if(mvt.ABNewDesktopHeaderControl.isParticipating) {
-        https://holidays.theguardian.com/?INTCMP=holidays_uk_web_newheader_control
-    } else {
-        https://holidays.theguardian.com/?utm_source=theguardian&utm_medium=guardian-links&utm_campaign=topnav&INTCMP=topnav
-    }
-}
-
-@masterclassesUrl = {
-    @if(mvt.ABNewDesktopHeaderControl.isParticipating) {
-        https://www.theguardian.com/guardian-masterclasses?INTCMP=masterclasses_uk_web_newheader_control
-    } else {
-        https://www.theguardian.com/guardian-masterclasses?INTCMP=NGW_TOPNAV_UK_GU_MASTERCLASSES
-    }
 }
 
 <div class="brand-bar__item--right"
