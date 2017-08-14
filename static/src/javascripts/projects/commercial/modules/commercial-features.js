@@ -51,7 +51,7 @@ class CommercialFeatures {
         const glabsTrafficDriverSlot =
             config.hasTone('Features') &&
             !config.page.isPaidContent &&
-            ['sport', 'lifeandstyle', 'fashion', 'food', 'travel'].includes(
+            ['sport', 'lifeandstyle', 'fashion', 'football', 'travel'].includes(
                 config.page.section
             );
 
