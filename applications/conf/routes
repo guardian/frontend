@@ -15,8 +15,6 @@ GET        /email-newsletters                                                   
 GET        /survey/:formName/show                                               controllers.SurveyPageController.renderFormStackSurvey(formName)
 GET        /survey/thankyou                                                     controllers.SurveyPageController.thankYou()
 
-GET        /surveys/*file                                                       controllers.Assets.at(path="/public/surveys", file)
-
 # NOTE: Leave this as it is, otherwise we don't render /crosswords/series/prize, for example.
 GET        /crosswords/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|special|genius|speedy|weekend>/:id.svg       controllers.CrosswordPageController.thumbnail(crosswordType: String, id: Int)
 GET        /crosswords/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|special|genius|speedy|weekend>/:id           controllers.CrosswordPageController.crossword(crosswordType: String, id: Int)

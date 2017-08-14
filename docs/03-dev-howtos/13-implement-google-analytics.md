@@ -104,12 +104,6 @@ Most discussion events can be tracked with click events so the only GA custom ev
 
 The custom category for tracking a user scrolling to the comments is *element view* with an action of *onpage item* and a label of *scroll to comments*.
 
-### Forsee
-
-This also has a GA tracking event
-
-[analytics/foresee-survey.js](https://github.com/guardian/frontend/blob/master/static/src/javascripts/projects/common/modules/analytics/foresee-survey.js)
-
 ### 404 pages
 
 Check [chris's PR](https://github.com/guardian/frontend/pull/14114) for implementation details
