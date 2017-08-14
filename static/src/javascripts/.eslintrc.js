@@ -62,6 +62,7 @@ module.exports = {
                     'lodash/objects/isArray',
                     'lodash/arrays/indexOf',
                     'lodash/arrays/compact',
+                    'lodash/arrays/intersection',
                     'Promise',
                 ],
                 patterns: ['!lodash/*'],
