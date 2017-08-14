@@ -10,7 +10,7 @@ import { tailorSurvey } from 'common/modules/experiments/tests/tailor-survey';
 import { acquisitionsEpicElectionInteractiveEnd } from 'common/modules/experiments/tests/acquisitions-epic-election-interactive-end';
 import { acquisitionsEpicElectionInteractiveSlice } from 'common/modules/experiments/tests/acquisitions-epic-election-interactive-slice';
 
-export const TESTS: Array<ABTest> = [
+export const TESTS: $ReadOnlyArray<ABTest> = [
     paidContentVsOutbrain2,
     getAcquisitionTest(),
     tailorSurvey,
@@ -21,7 +21,7 @@ export const TESTS: Array<ABTest> = [
     .concat(membershipEngagementBannerTests)
     .filter(Boolean);
 
-export const getActiveTests = (): Array<ABTest> =>
+export const getActiveTests = (): $ReadOnlyArray<ABTest> =>
     TESTS.filter(test => {
         if (isExpired(test.expiry)) {
             removeParticipation(test);
@@ -30,7 +30,7 @@ export const getActiveTests = (): Array<ABTest> =>
         return true;
     });
 
-export const getExpiredTests = (): Array<ABTest> =>
+export const getExpiredTests = (): $ReadOnlyArray<ABTest> =>
     TESTS.filter(test => isExpired(test.expiry));
 
 export const getTest = (id: string): ?ABTest => {

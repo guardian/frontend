@@ -177,7 +177,7 @@ const registerIframeListener = (iframeId: string) => {
 
 const makeABTestVariant = (
     id: string,
-    products: OphanProduct[],
+    products: $ReadOnlyArray<OphanProduct>,
     options: Object,
     parentTest: EpicABTest
 ): Variant => {
