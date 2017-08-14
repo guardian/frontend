@@ -108,7 +108,7 @@ export const initOutbrain = () =>
             }
         } else {
             // only wait for dfp conditions if we really have to.
-            getOutbrainDfpConditions().then(dfpConditions => {
+            return getOutbrainDfpConditions().then(dfpConditions => {
                 if (dfpConditions.blockedByAds) {
                     return;
                 }
