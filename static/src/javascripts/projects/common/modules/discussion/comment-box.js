@@ -496,7 +496,9 @@ class CommentBox extends Component {
         if (this.errors.length === 0) {
             DiscussionApi.previewComment(comment)
                 .then((resp: Object) => {
-                    callback.call(this, comment, resp);
+                    if (callback) {
+                        callback.call(this, comment, resp);
+                    }
                 })
                 .catch((err: Object) => {
                     this.fail.call(this, err);
