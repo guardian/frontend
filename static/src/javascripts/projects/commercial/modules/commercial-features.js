@@ -49,6 +49,7 @@ class CommercialFeatures {
         const newRecipeDesign =
             config.page.showNewRecipeDesign && config.tests.abNewRecipeDesign;
         const glabsTrafficDriverSlots =
+            switches.abGlabsTrafficDriverSlots &&
             config.hasTone('Features') &&
             !config.page.isPaidContent &&
             ['sport', 'lifeandstyle', 'fashion', 'football', 'travel'].includes(
