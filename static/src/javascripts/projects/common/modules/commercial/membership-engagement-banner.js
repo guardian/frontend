@@ -8,7 +8,7 @@ import { testCanBeRun } from 'common/modules/experiments/test-can-run-checks';
 import { membershipEngagementBannerTests } from 'common/modules/experiments/tests/membership-engagement-banner-tests';
 import { inlineSvg } from 'common/views/svgs';
 import { isInTest, variantFor } from 'common/modules/experiments/segment-util';
-import membershipEngagementBannerUtils from 'common/modules/commercial/membership-engagement-banner-parameters';
+import { engagementBannerParams } from 'common/modules/commercial/membership-engagement-banner-parameters';
 import { isBlocked } from 'common/modules/commercial/membership-engagement-banner-block';
 import ophan from 'ophan/ng';
 import { get as getGeoLocation } from 'lib/geolocation';
@@ -25,37 +25,18 @@ const getUserTest = (): ?AcquisitionsABTest =>
 const getUserVariant = (test: ?ABTest): ?Variant =>
     test ? variantFor(test) : undefined;
 
-const buildCampaignCode = (
-    offering: string,
-    campaignId: string,
-    variantId: string
-): string => {
-    let prefix = '';
-    const offerings = membershipEngagementBannerUtils.offerings;
-
-    // mem and cont chosen to be consistent with default campaign code prefixes.
-    if (offering === offerings.membership) {
-        prefix = 'mem';
-    } else if (offering === offerings.contributions) {
-        prefix = 'cont';
-    }
-
-    return `${prefix}_${campaignId}_${variantId}`;
-};
+const buildCampaignCode = (campaignId: string, variantId: string): string =>
+    `${campaignId}_${variantId}`;
 
 const getUserVariantParams = (
     userVariant: ?Variant,
-    campaignId: ?string,
-    defaultOffering: string
+    campaignId: ?string
 ): EngagementBannerParams | {} => {
     if (campaignId && userVariant && userVariant.engagementBannerParams) {
         const userVariantParams = userVariant.engagementBannerParams;
 
         if (!userVariantParams.campaignCode) {
-            const offering = userVariantParams.offering || defaultOffering;
-
             userVariantParams.campaignCode = buildCampaignCode(
-                offering,
                 campaignId,
                 userVariant.id
             );
@@ -91,9 +72,7 @@ const getUserVariantParams = (
  *
  */
 const deriveBannerParams = (location: string): ?EngagementBannerParams => {
-    const defaultParams = membershipEngagementBannerUtils.defaultParams(
-        location
-    );
+    const defaultParams = engagementBannerParams(location);
     const userTest = getUserTest();
     const campaignId = userTest ? userTest.campaignId : undefined;
     const userVariant = getUserVariant(userTest);
@@ -105,7 +84,7 @@ const deriveBannerParams = (location: string): ?EngagementBannerParams => {
     return Object.assign(
         {},
         defaultParams,
-        getUserVariantParams(userVariant, campaignId, defaultParams.offering)
+        getUserVariantParams(userVariant, campaignId)
     );
 };
 
