@@ -15,11 +15,11 @@ const baseParams = {
     },
 };
 
-const engagementBannerCopy = cta =>
+const engagementBannerCopy = (cta: string): string =>
     `Unlike many others, we haven't put up a paywall &ndash; we want to keep our journalism as open as we can. ${cta}`;
 
 // Prices taken from https://membership.theguardian.com/<region>/supporter
-const monthlySupporterCost = location => {
+const monthlySupporterCost = (location: string): string => {
     const region = getSupporterPaymentRegion(location);
 
     if (region === 'EU') {
@@ -66,15 +66,15 @@ const monthlySupporterCost = location => {
     return payment || '£5';
 };
 
-const supporterEngagementBannerCopy = location =>
+const supporterEngagementBannerCopy = (location: string): string =>
     engagementBannerCopy(
         `Support us for ${monthlySupporterCost(location)} per month.`
     );
 
-const contributionEngagementBannerCopy = () =>
+const contributionEngagementBannerCopy = (): string =>
     engagementBannerCopy('Support us with a one-off contribution');
 
-const supporterParams = (location): EngagementBannerParams =>
+const supporterParams = (location: string): EngagementBannerParams =>
     Object.assign({}, baseParams, {
         buttonCaption: 'Become a Supporter',
         linkUrl: 'https://membership.theguardian.com/supporter',
