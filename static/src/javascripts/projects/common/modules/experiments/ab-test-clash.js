@@ -1,35 +1,29 @@
-import some from 'lodash/collections/some';
-import abUtils from 'common/modules/experiments/utils';
-import acquisitionTestSelector from 'common/modules/experiments/acquisition-test-selector';
+// @flow
+import { isInVariant } from 'common/modules/experiments/utils';
+import { abTestClashData as acquisitionsAbTestClashData } from 'common/modules/experiments/acquisition-test-selector';
 
-var emailTests = [];
-var contributionsTests = acquisitionTestSelector.abTestClashData;
-var clashingTests = contributionsTests.concat(emailTests);
+const emailTests: Object[] = [];
+const contributionsTests: Object[] = acquisitionsAbTestClashData;
 
-function userIsInAClashingAbTest(tests) {
-    tests = tests || clashingTests;
+const potentiallyClashingTests: Object[] = contributionsTests.concat(
+    emailTests
+);
 
-    return _testABClash(abUtils.isInVariant, tests);
-}
-
-function _testABClash(f, clashingTests) {
-    if (clashingTests.length > 0) {
-        return some(clashingTests, function(test) {
-            return test.variants.filter(function(variant) {
-                var compliant = variant && variant.options && variant.options.isOutbrainCompliant;
+const testABClash = (f, tests: Object[]): boolean =>
+    tests.some(test =>
+        test.variants
+            .filter(variant => {
+                const compliant =
+                    variant &&
+                    variant.options &&
+                    variant.options.isOutbrainCompliant;
                 return !compliant;
-            }).some(function(variant) {
-                return f(test, variant);
-            });
-        });
-    } else {
-        return false;
-    }
-}
+            })
+            .some(variant => f(test, variant))
+    );
 
-export default {
-    userIsInAClashingAbTest: userIsInAClashingAbTest,
-    contributionsTests: contributionsTests,
-    emailTests: emailTests,
-    _testABClash: _testABClash // exposed for unit testing
-};
+export { emailTests, contributionsTests };
+
+export const userIsInAClashingAbTest = (
+    tests: Object[] = potentiallyClashingTests
+) => testABClash(isInVariant, tests);
