@@ -17,22 +17,6 @@ type commentType = {
     replyTo?: Object,
 };
 
-const refreshUsernameHtml = (): void => {
-    IdentityApi.reset();
-
-    const displayName = this.getUserData().displayName;
-    const menuHeaderUsername = $('.js-profile-info')[0];
-    const discussionHeaderUsername = $('._author_tywwu_16')[0];
-
-    if (menuHeaderUsername && displayName) {
-        menuHeaderUsername.innerHTML = displayName;
-    }
-
-    if (discussionHeaderUsername && displayName) {
-        discussionHeaderUsername.innerHTML = displayName;
-    }
-};
-
 class CommentBox extends Component {
     constructor(options: Object): void {
         super();
@@ -142,6 +126,22 @@ class CommentBox extends Component {
         return IdentityApi.getUserFromCookie();
     }
 
+    refreshUsernameHtml(): void {
+        IdentityApi.reset();
+
+        const displayName = this.getUserData().displayName;
+        const menuHeaderUsername = $('.js-profile-info')[0];
+        const discussionHeaderUsername = $('._author_tywwu_16')[0];
+
+        if (menuHeaderUsername && displayName) {
+            menuHeaderUsername.innerHTML = displayName;
+        }
+
+        if (discussionHeaderUsername && displayName) {
+            discussionHeaderUsername.innerHTML = displayName;
+        }
+    }
+
     previewCommentSuccess(comment: commentType, resp: Object): void {
         this.getElem('preview-body').innerHTML = resp.commentBody;
         this.setState('preview-visible');
@@ -175,7 +175,7 @@ class CommentBox extends Component {
 
     postCommentSuccess(comment: commentType, resp: Object): void {
         if (this.options.newCommenter) {
-            refreshUsernameHtml();
+            this.refreshUsernameHtml();
             this.options.newCommenter = false;
         }
 
