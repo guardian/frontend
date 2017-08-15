@@ -20,8 +20,8 @@
     "projects/common/modules/crosswords/clues.js",
     "projects/common/modules/crosswords/comments.js",
     "projects/common/modules/crosswords/confirm-button.js",
-    "projects/common/modules/discussion/activity-stream.js",
-    "projects/common/modules/discussion/api.js"
+    "projects/common/modules/crosswords/hidden-input.js",
+    "projects/common/modules/crosswords/keycodes.js"
   ],
   "Simon Adcock": [
     "bootstraps/enhanced/recipe-article.js",
@@ -31,21 +31,21 @@
     "projects/common/modules/crosswords/crossword.js",
     "projects/common/modules/crosswords/grid.js",
     "projects/common/modules/crosswords/helpers.js",
-    "projects/common/modules/discussion/discussion-frontend.js",
+    "projects/common/modules/crosswords/series.js",
     "projects/common/modules/email/email.js",
     "projects/common/modules/email/run-checks.js"
   ],
   "Gustav Pursche": [
+    "projects/common/modules/discussion/user-avatars.js",
+    "projects/common/modules/discussion/whole-discussion.js",
+    "projects/common/modules/discussion/activity-stream.js",
+    "projects/common/modules/discussion/api.js",
+    "projects/common/modules/discussion/discussion-frontend.js",
     "bootstraps/enhanced/sport.js",
     "bootstraps/enhanced/trail.js",
     "bootstraps/enhanced/youtube.js",
-    "projects/common/modules/crosswords/hidden-input.js",
-    "projects/common/modules/crosswords/keycodes.js",
     "projects/common/modules/crosswords/main.js",
-    "projects/common/modules/crosswords/persistence.js",
-    "projects/common/modules/crosswords/series.js",
-    "projects/common/modules/discussion/user-avatars.js",
-    "projects/common/modules/discussion/whole-discussion.js"
+    "projects/common/modules/crosswords/persistence.js"
   ],
   "Sam Desborough": [
     "projects/common/modules/experiments/affix.js",
@@ -53,7 +53,7 @@
   ],
   "Akash A": [
     "projects/common/modules/video/metadata.js",
-    "projects/common/modules/video/onward-container.js"
+    "projects/common/modules/atoms/story-questions.js"
   ],
   "jfsoul": [
     "bootstraps/video-embed.js",
@@ -90,7 +90,6 @@
   "Calum Campbell": [],
   "GHaberis": [],
   "Unassigned": [
-    "projects/common/modules/atoms/story-questions.js",
     "projects/common/modules/atoms/youtube-tracking.js",
     "projects/common/modules/component.js",
     "projects/common/modules/discussion/comment-count.js",
