@@ -1,4 +1,10 @@
 // @flow
+import trackAdRender from 'commercial/modules/dfp/track-ad-render';
+
+const success = advertId => complete => trackAdRender(advertId).then(complete);
+
+const successLeft = success('dfp-ad--glabs-left');
+const successInline = success('dfp-ad--glabs-inline');
 
 export const glabsTrafficDriverSlots: ABTest = {
     id: 'GlabsTrafficDriverSlots',
@@ -20,10 +26,12 @@ export const glabsTrafficDriverSlots: ABTest = {
         {
             id: 'inline',
             test: () => {},
+            success: successInline,
         },
         {
             id: 'left',
             test: () => {},
+            success: successLeft,
         },
         {
             id: 'control',
