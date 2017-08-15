@@ -7,17 +7,13 @@ const chalk = require('chalk');
 
 const diff = () =>
     execa
-        .stdout('git', [
-            'diff',
-            '--name-only',
-            '--cached',
-            '--diff-filter=AM',
-        ])
+        .stdout('git', ['diff', '--name-only', '--cached', '--diff-filter=AM'])
         .then(staged => staged.split('\n'));
 
 const validate = () =>
-    execa
-        .stdout('./tools/task-runner/runner', ['validate-head/index'], { stdio: 'inherit' });
+    execa('./tools/task-runner/runner', ['validate-head/index'], {
+        stdio: 'inherit',
+    });
 
 const checkYarnLock = staged => {
     if (
