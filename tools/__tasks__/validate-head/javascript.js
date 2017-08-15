@@ -14,17 +14,24 @@ module.exports = {
                             file.endsWith('.js') ||
                             file === 'git-hooks/pre-push'
                     );
-                    const config = ['--quiet', '--color'];
 
-                    return execa('eslint', jsFiles.concat(config)).catch(e => {
-                        e.stdout += `\n${chalk.red(
-                            `✋ Linting failed. You can attempt to fix lint errors by running ${chalk.underline(
-                                'make fix-commits'
-                            )}.\nYour changes have not been pushed`
-                        )}`;
+                    return Promise.all(
+                        jsFiles.map(filePath =>
+                            execa
+                                .shell(
+                                    `git show HEAD:${filePath} | eslint --stdin --stdin-filename ${filePath}`
+                                )
+                                .catch(e => {
+                                    e.stdout += `\n${chalk.red(
+                                        `✋ Linting failed. You can attempt to fix lint errors by running ${chalk.underline(
+                                            'make fix-commits'
+                                        )}.\nYour changes have not been pushed`
+                                    )}`;
 
-                        return Promise.reject(e);
-                    });
+                                    return Promise.reject(e);
+                                })
+                        )
+                    );
                 }),
         },
         {
