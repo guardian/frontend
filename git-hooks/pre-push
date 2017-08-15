@@ -1,50 +1,68 @@
-#!/bin/sh
-#
-# Pre-push hooks
+#!/usr/bin/env node
+/* eslint-disable no-console */
 
-branch=$(git symbolic-ref --short HEAD)
+const path = require('path');
+const execa = require('execa');
+const chalk = require('chalk');
 
+const diff = () =>
+    execa.stdout('git', [
+        'diff',
+        '--name-only',
+        '--cached',
+        '--diff-filter=AM',
+    ]);
 
-conditionallyValidate() {
+const validate = () =>
+    execa
+        .stdout('make', ['validate-head'], { stdio: 'inherit' })
+        .catch(() =>
+            Promise.reject(
+                `${chalk.red(
+                    `✋ Linting failed, your changes have not been pushed. You can attempt to fix lint errors by running ${chalk.underline(
+                        'make fix-head'
+                    )}`
+                )}`
+            )
+        );
 
-    # check that remote branch exists
-    git branch -r | if grep -q "origin/$branch$"
-    then
-
-        # if remote-tracking branch exists,
-        # run task if relevant file-types are different
-        git diff --cached --name-only "origin/$branch" | if grep $1
-        then
-            $2 && $3
-        fi
-
-    else
-
-        # if remote branch doesn't exist,
-        # run task if symmetric difference from remote master contains relevant file-types
-        git diff --name-only "origin/master..." | if grep $1
-        then
-            $2 && $3
-        fi
-
-    fi
-}
-
-# Validate CSS
-CSS_SRC_PATTERN="\.scss$"
-conditionallyValidate "$CSS_SRC_PATTERN" "make install" "./tools/task-runner/runner validate/sass"
-cssValidateResult=$?
-
-# Validate JS
-JS_SRC_PATTERN="\.js$"
-conditionallyValidate "$JS_SRC_PATTERN" "make install" "./tools/task-runner/runner validate/javascript"
-jsValidateResult=$?
-
-# Test JS
-conditionallyValidate "[^/]\+/\(app\|test\)/assets/javascripts/.*$JS_SRC_PATTERN" "make install" "./tools/task-runner/runner test/javascript"
-jsTestResult=$?
-
-# Exit code 1 means don't commit and 0 means do commit
-[ $cssValidateResult -ne 0 ] || [ $jsValidateResult -ne 0 ] || [ $jsTestResult -ne 0 ] && exit 1
-
-exit 0
+validate()
+    // make sure yarn.lock is commited
+    .then(diff)
+    .then(staged => staged.split('\n'))
+    .then(staged => {
+        if (
+            staged.some(file => file === 'package.json') &&
+            !staged.some(file => file === 'yarn.lock')
+        ) {
+            return Promise.reject(
+                `${chalk.red(
+                    `${chalk.underline(
+                        'package.json'
+                    )} has changed but ${chalk.underline(
+                        'yarn.lock'
+                    )} is not included in this commit.`
+                )}\n${chalk.dim(
+                    `If this is intentional, commit this change with --no-verify.`
+                )}`
+            );
+        }
+        return staged;
+    })
+    // make sure docs TOC stays up to date
+    .then(staged => {
+        if (staged.some(file => file.includes('docs/'))) {
+            const docs = path.resolve('docs');
+            const readme = path.resolve(docs, 'README.md');
+            return execa(path.resolve(docs, 'generate-toc.sh'), ['>', readme], {
+                stdio: 'inherit',
+            })
+                .then(() => execa.sync('git', ['add', readme]))
+                .then(() => staged);
+        }
+        return staged;
+    })
+    .catch(e => {
+        console.log(`\n${e}\n`);
+        process.exit(1);
+    });
