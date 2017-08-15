@@ -132,7 +132,7 @@ define([
                     accentedText: 'reads'
                 },
                 headline: 'Here’s the real story',
-                description: 'Look a little deeper with The Long Read. Sign up to our weekly email for inside stories, murder, politics, and much more. Great writing, worth reading.',
+                description: 'Lose yourself in a great story. From politics to psychology, food to technology, culture to crime – the best stories, the biggest ideas, the arguments that matter.',
                 successHeadline: 'Thank you for signing up to The Long Read',
                 successDescription: 'You’ll receive an email every weekend.',
                 insertMethod: insertBottomOfArticle

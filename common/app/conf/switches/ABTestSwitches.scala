@@ -118,10 +118,10 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2017, 9, 5),
     exposeClientSide = true
   )
-  
+
   Switch(
     ABTests,
-    "ab-glabs-traffic-driver-slot",
+    "ab-glabs-traffic-driver-slots",
     "Displays a new ad slot to drive traffic to GLabs content",
     owners = Seq(Owner.withGithub("JonNorman")),
     safeState = Off,

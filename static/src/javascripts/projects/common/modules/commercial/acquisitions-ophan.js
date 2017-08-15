@@ -6,7 +6,7 @@ const submitComponentEvent = (componentEvent: OphanComponentEvent) => {
 };
 
 export const submitEpicInsertEvent = (
-    products: OphanProduct[],
+    products: $ReadOnlyArray<OphanProduct>,
     campaignCode: string,
     type: OphanComponentType = 'ACQUISITIONS_EPIC'
 ) => {
@@ -22,7 +22,7 @@ export const submitEpicInsertEvent = (
 };
 
 export const submitEpicViewEvent = (
-    products: OphanProduct[],
+    products: $ReadOnlyArray<OphanProduct>,
     campaignCode: string,
     type: OphanComponentType = 'ACQUISITIONS_EPIC'
 ) => {

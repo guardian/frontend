@@ -48,10 +48,11 @@ class CommercialFeatures {
             document.documentElement.classList.contains('has-sticky');
         const newRecipeDesign =
             config.page.showNewRecipeDesign && config.tests.abNewRecipeDesign;
-        const glabsTrafficDriverSlot =
+        const glabsTrafficDriverSlots =
+            switches.abGlabsTrafficDriverSlots &&
             config.hasTone('Features') &&
             !config.page.isPaidContent &&
-            ['sport', 'lifeandstyle', 'fashion', 'food', 'travel'].includes(
+            ['sport', 'lifeandstyle', 'fashion', 'football', 'travel'].includes(
                 config.page.section
             );
 
@@ -80,13 +81,13 @@ class CommercialFeatures {
 
         this.glabsTrafficDriverInlineSlot =
             this.articleBodyAdverts &&
-            glabsTrafficDriverSlot &&
-            getTestVariantId('GlabsTrafficDriverSlot') === 'opt-in-inline';
+            glabsTrafficDriverSlots &&
+            getTestVariantId('GlabsTrafficDriverSlots') === 'inline';
 
         this.glabsTrafficDriverLeftSlot =
             this.articleBodyAdverts &&
-            glabsTrafficDriverSlot &&
-            getTestVariantId('GlabsTrafficDriverSlot') === 'opt-in-left';
+            glabsTrafficDriverSlots &&
+            getTestVariantId('GlabsTrafficDriverSlots') === 'left';
 
         this.videoPreRolls = this.dfpAdvertising && !this.adFree;
 
@@ -114,7 +115,7 @@ class CommercialFeatures {
             this.dfpAdvertising &&
             !this.adFree &&
             !isMinuteArticle &&
-            config.switches.commentsVisibleOnArticle &&
+            config.switches.enableDiscussionSwitch &&
             config.page.commentable &&
             identityApi.isUserLoggedIn() &&
             (!isLiveBlog || isWidePage);

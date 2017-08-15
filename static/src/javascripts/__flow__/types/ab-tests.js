@@ -24,36 +24,37 @@ declare type ABTest = {
     showForSensitive?: boolean,
     idealOutcome?: string,
     dataLinkNames?: string,
-    variants: Array<Variant>,
+    variants: $ReadOnlyArray<Variant>,
     canRun: () => boolean,
     notInTest?: () => void,
-    isEngagementBannerTest?: boolean,
 };
 
-declare type ContributionsABTest = ABTest & {
-    epic: boolean,
-    componentType: OphanComponentType,
+declare type AcquisitionsABTest = ABTest & {
     campaignId: string,
+    componentType: OphanComponentType,
+};
+
+declare type EpicABTest = AcquisitionsABTest & {
     campaignPrefix: string,
     campaignSuffix: string,
     useLocalViewLog: boolean,
     overrideCanRun: boolean,
     showToContributorsAndSupporters: boolean,
     pageCheck: (page: Object) => boolean,
-    locations: Array<string>,
+    locations: $ReadOnlyArray<string>,
     locationCheck: (location: string) => boolean,
     useTargetingTool: boolean,
     insertEvent: string,
     viewEvent: string,
 };
 
-declare type InitContributionsABTestVariant = {
+declare type InitEpicABTestVariant = {
     id: string,
-    products: OphanProduct[],
+    products: $ReadOnlyArray<OphanProduct>,
     options: Object
 };
 
-declare type InitContributionsABTest = {
+declare type InitEpicABTest = {
     id: string,
     start: string,
     expiry: string,
@@ -65,9 +66,8 @@ declare type InitContributionsABTest = {
     audienceCriteria: string,
     idealOutcome: string,
     campaignId: string,
-    variants: InitContributionsABTestVariant[],
+    variants: $ReadOnlyArray<InitEpicABTestVariant>,
 
-    epic?: boolean,
     componentType?: OphanComponentType,
     // locations is a filter where empty is taken to mean 'all'
     locations?: string[],
@@ -75,7 +75,6 @@ declare type InitContributionsABTest = {
     dataLinkNames?: string,
     campaignPrefix?: string,
     campaignSuffix?: string,
-    isEngagementBannerTest?: boolean,
     useLocalViewLog?: boolean,
     overrideCanRun?: boolean,
     useTargetingTool?: boolean,
@@ -98,7 +97,7 @@ declare type EngagementBannerParams = {
     pageviewId: string,
     interactionOnMessageShow: Interaction,
     colourStrategy: () => string,
-    offering?: string,
+    products: OphanProduct[],
     paypalClass?: string,
 };
 

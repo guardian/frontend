@@ -26,7 +26,36 @@ const rules = {
     minAbove: 0,
     minBelow: 0,
     clearContentMeta: 0,
-    selectors: null,
+    selectors: {
+        ' .element-rich-link': {
+            minAbove: 200,
+            minBelow: 200,
+        },
+        ' .element-image': {
+            minAbove: 50,
+            minBelow: 50,
+        },
+        ' .player': {
+            minAbove: 0,
+            minBelow: 0,
+        },
+        ' > h1': {
+            minAbove: 0,
+            minBelow: 0,
+        },
+        ' > h2': {
+            minAbove: 0,
+            minBelow: 0,
+        },
+        ' > *:not(p):not(h2):not(blockquote)': {
+            minAbove: 0,
+            minBelow: 0,
+        },
+        ' .ad-slot': {
+            minAbove: 100,
+            minBelow: 100,
+        },
+    },
     filter: (slot: Object, index: number): boolean => {
         runningWordCount += wordCount(slot.element);
         return index >= 2 && runningWordCount >= 200;
@@ -48,7 +77,7 @@ const insertLeftSlot = (paras: Element[]): Promise<void> => {
         .then(() => addSlot(slot, true));
 };
 
-const glabsTrafficDriverSlotInit = (): Promise<void> => {
+const glabsTrafficDriverSlotsInit = (): Promise<void> => {
     let insertSlot;
 
     if (commercialFeatures.glabsTrafficDriverInlineSlot) {
@@ -68,4 +97,4 @@ const glabsTrafficDriverSlotInit = (): Promise<void> => {
     });
 };
 
-export { glabsTrafficDriverSlotInit };
+export { glabsTrafficDriverSlotsInit };

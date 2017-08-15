@@ -2,26 +2,26 @@
 import { isExpired } from 'common/modules/experiments/test-can-run-checks';
 import { removeParticipation } from 'common/modules/experiments/utils';
 import { getTest as getAcquisitionTest } from 'common/modules/experiments/acquisition-test-selector';
-import MembershipEngagementBannerTests from 'common/modules/experiments/tests/membership-engagement-banner-tests';
+import { membershipEngagementBannerTests } from 'common/modules/experiments/tests/membership-engagement-banner-tests';
 import { paidContentVsOutbrain2 } from 'common/modules/experiments/tests/paid-content-vs-outbrain';
-import { glabsTrafficDriverSlot } from 'common/modules/experiments/tests/glabs-traffic-driver-slot';
+import { glabsTrafficDriverSlots } from 'common/modules/experiments/tests/glabs-traffic-driver-slots';
 import { tailorSurvey } from 'common/modules/experiments/tests/tailor-survey';
 
 import { acquisitionsEpicElectionInteractiveEnd } from 'common/modules/experiments/tests/acquisitions-epic-election-interactive-end';
 import { acquisitionsEpicElectionInteractiveSlice } from 'common/modules/experiments/tests/acquisitions-epic-election-interactive-slice';
 
-export const TESTS: Array<ABTest> = [
+export const TESTS: $ReadOnlyArray<ABTest> = [
     paidContentVsOutbrain2,
     getAcquisitionTest(),
     tailorSurvey,
-    glabsTrafficDriverSlot,
+    glabsTrafficDriverSlots,
     acquisitionsEpicElectionInteractiveEnd,
     acquisitionsEpicElectionInteractiveSlice,
 ]
-    .concat(MembershipEngagementBannerTests)
+    .concat(membershipEngagementBannerTests)
     .filter(Boolean);
 
-export const getActiveTests = (): Array<ABTest> =>
+export const getActiveTests = (): $ReadOnlyArray<ABTest> =>
     TESTS.filter(test => {
         if (isExpired(test.expiry)) {
             removeParticipation(test);
@@ -30,7 +30,7 @@ export const getActiveTests = (): Array<ABTest> =>
         return true;
     });
 
-export const getExpiredTests = (): Array<ABTest> =>
+export const getExpiredTests = (): $ReadOnlyArray<ABTest> =>
     TESTS.filter(test => isExpired(test.expiry));
 
 export const getTest = (id: string): ?ABTest => {

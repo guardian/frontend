@@ -53,8 +53,6 @@ const createVariant = (id, amounts) => ({
     products: ['ONE_OFF_CONTRIBUTION'],
 
     options: {
-        isUnlimited: true,
-
         template(variant) {
             return template(iframeTemplate, {
                 componentName: variant.options.componentName,
@@ -101,8 +99,6 @@ const createControl = () => ({
     products: ['ONE_OFF_CONTRIBUTION'],
 
     options: {
-        isUnlimited: true,
-
         template(variant) {
             return template(paypalPayInEpicControlTemplate, {
                 contributionUrl: `${variant.options
@@ -125,8 +121,8 @@ export const payInEpic = makeABTest({
     successMeasure: 'Conversion rate',
     idealOutcome: 'The pay in-Epic variant smashes the control out of the park',
     audienceCriteria: 'All',
-    audience: 0.2,
-    audienceOffset: 0.1,
+    audience: 0.5,
+    audienceOffset: 0,
 
     variants: [
         createControl(),

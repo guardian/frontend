@@ -13,7 +13,6 @@ define([
     'lib/url',
     'lib/robust',
     'lib/storage',
-    'common/modules/analytics/foresee-survey',
     'common/modules/analytics/media-listener',
     'common/modules/analytics/interaction-tracking',
     'common/modules/analytics/register',
@@ -62,7 +61,6 @@ define([
     url,
     robust,
     storage,
-    Foresee,
     mediaListener,
     interactionTracking,
     register,
@@ -214,18 +212,12 @@ define([
                 }
             },
 
-            runForseeSurvey: function () {
-                if (config.switches.foresee) {
-                    Foresee.load();
-                }
-            },
-
             startRegister: function () {
                 register.initialise();
             },
 
             initDiscussion: function () {
-                if (config.switches.commentsVisibleOnArticle) {
+                if (config.switches.enableDiscussionSwitch) {
                     CommentCount.init();
                 }
             },

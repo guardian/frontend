@@ -13,7 +13,7 @@ export const acquisitionsEpicRecurringContributionUkSupportProposition = makeABT
         id: 'AcquisitionsEpicRecurringContributionUkSupportProposition',
         campaignId: 'sandc_epic_recurring_contribution_uk_support_proposition',
 
-        start: '2017-08-07',
+        start: '2017-08-14',
         expiry: '2017-09-13',
 
         author: 'svillafe',
@@ -21,7 +21,7 @@ export const acquisitionsEpicRecurringContributionUkSupportProposition = makeABT
             'This creates a two button version of the epic that links off to the new support frontend contribution landing page',
         successMeasure: 'Annualised value',
         idealOutcome:
-            'We see an uplift in annualised value when recurring contributions are available.',
+            'We are going to test if the new  stacks correcntly handle the different flows.',
 
         audienceCriteria: 'UK all devices',
         audience: 1,
@@ -31,13 +31,6 @@ export const acquisitionsEpicRecurringContributionUkSupportProposition = makeABT
         variants: [
             {
                 id: 'control',
-                products: ['ONE_OFF_CONTRIBUTION', 'MEMBERSHIP_SUPPORTER'],
-                options: {
-                    useTailoredCopyForRegulars: true,
-                },
-            },
-            {
-                id: 'variant',
                 products: ['ONE_OFF_CONTRIBUTION', 'RECURRING_CONTRIBUTION'],
                 options: {
                     buttonTemplate: buildButtonTemplate,

@@ -71,6 +71,10 @@ describe('Outbrain', () => {
         it('should not load if outbrain disabled', () => {
             // isOutbrainDisabled check
             resolveCheck('isOutbrainDisabled', true);
+            // make outbrain compliant
+            resolveCheck('isUserInContributionsAbTest', false);
+            resolveCheck('isUserInEmailAbTestAndEmailCanRun', false);
+            resolveCheck('isStoryQuestionsOnPage', false);
 
             return initOutbrain().then(() => {
                 expect(load).not.toHaveBeenCalled();
@@ -95,8 +99,13 @@ describe('Outbrain', () => {
         it('should not load if both merch components are loaded', () => {
             // isOutbrainDisabled check
             resolveCheck('isOutbrainDisabled', false);
+            // make outbrain compliant
+            resolveCheck('isUserInContributionsAbTest', false);
+            resolveCheck('isUserInEmailAbTestAndEmailCanRun', false);
+            resolveCheck('isStoryQuestionsOnPage', false);
             // isOutbrainBlockedByAds checks
             resolveCheck('isOutbrainBlockedByAds', true);
+            resolveCheck('isOutbrainMerchandiseCompliant', false);
 
             return initOutbrain().then(() => {
                 expect(load).not.toHaveBeenCalled();
@@ -106,6 +115,10 @@ describe('Outbrain', () => {
         it('should load in the low-priority merch component', () => {
             // isOutbrainDisabled check
             resolveCheck('isOutbrainDisabled', false);
+            // make outbrain compliant
+            resolveCheck('isUserInContributionsAbTest', false);
+            resolveCheck('isUserInEmailAbTestAndEmailCanRun', false);
+            resolveCheck('isStoryQuestionsOnPage', false);
             // isOutbrainBlockedByAds and isOutbrainMerchandiseCompliant checks
             resolveCheck('isOutbrainBlockedByAds', false);
             resolveCheck('isOutbrainMerchandiseCompliant', true);
@@ -121,7 +134,10 @@ describe('Outbrain', () => {
             // isOutbrainBlockedByAds and isOutbrainMerchandiseCompliant checks
             resolveCheck('isOutbrainBlockedByAds', false);
             resolveCheck('isOutbrainMerchandiseCompliant', false);
+            // editorial tests
             resolveCheck('isUserInContributionsAbTest', true);
+            resolveCheck('isUserInEmailAbTestAndEmailCanRun', false);
+            resolveCheck('isStoryQuestionsOnPage', false);
 
             return initOutbrain().then(() => {
                 expect(load).toHaveBeenCalledWith('nonCompliant');
@@ -134,8 +150,10 @@ describe('Outbrain', () => {
             // isOutbrainBlockedByAds and isOutbrainMerchandiseCompliant checks
             resolveCheck('isOutbrainBlockedByAds', false);
             resolveCheck('isOutbrainMerchandiseCompliant', false);
+            // editorial tests
             resolveCheck('isUserInContributionsAbTest', false);
             resolveCheck('isUserInEmailAbTestAndEmailCanRun', true);
+            resolveCheck('isStoryQuestionsOnPage', false);
 
             return initOutbrain().then(() => {
                 expect(load).toHaveBeenCalledWith('nonCompliant');
@@ -148,6 +166,7 @@ describe('Outbrain', () => {
             // isOutbrainBlockedByAds and isOutbrainMerchandiseCompliant checks
             resolveCheck('isOutbrainBlockedByAds', false);
             resolveCheck('isOutbrainMerchandiseCompliant', false);
+            // editorial tests
             resolveCheck('isUserInContributionsAbTest', false);
             resolveCheck('isUserInEmailAbTestAndEmailCanRun', false);
             resolveCheck('isStoryQuestionsOnPage', true);
@@ -163,6 +182,7 @@ describe('Outbrain', () => {
             // isOutbrainBlockedByAds and isOutbrainMerchandiseCompliant checks
             resolveCheck('isOutbrainBlockedByAds', false);
             resolveCheck('isOutbrainMerchandiseCompliant', false);
+            // editorial tests
             resolveCheck('isUserInContributionsAbTest', false);
             resolveCheck('isUserInEmailAbTestAndEmailCanRun', false);
             resolveCheck('isStoryQuestionsOnPage', false);
