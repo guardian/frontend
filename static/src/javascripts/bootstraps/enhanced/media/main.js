@@ -16,7 +16,7 @@ import videoMetadata from 'common/modules/video/metadata';
 import { fullscreener } from 'common/modules/media/videojs-plugins/fullscreener';
 import { skipAd } from 'common/modules/media/videojs-plugins/skip-ad';
 import { videoContainerInit } from 'common/modules/video/video-container';
-import onwardContainer from 'common/modules/video/onward-container';
+import { onwardVideo } from 'common/modules/video/onward-container';
 import { moreInSeriesContainerInit } from 'common/modules/video/more-in-series-container';
 import videojsOptions from 'common/modules/video/videojs-options';
 import { videojs } from 'bootstraps/enhanced/media/video-player';
@@ -388,7 +388,7 @@ const initOnwardContainer = (): void => {
     );
 
     els.each(el => {
-        onwardContainer.init(el, mediaType);
+        onwardVideo(el, mediaType);
     });
 };
 
