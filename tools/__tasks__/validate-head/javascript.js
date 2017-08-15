@@ -20,7 +20,19 @@ module.exports = {
         },
         {
             description: 'Run Flowtype checks on static/src/javascripts/',
-            task: `flow`,
+            task: () =>
+                getChangedFiles().then(files => {
+                    const jsFiles = files.filter(
+                        file =>
+                            file.endsWith('.js') && file.startsWith('static')
+                    );
+
+                    if (jsFiles.length) {
+                        return execa('flow');
+                    }
+
+                    return Promise.resolve();
+                }),
         },
     ],
     concurrent: true,
