@@ -5,7 +5,7 @@ import { getTestVariantId } from 'common/modules/experiments/utils';
 import { testCanBeRun } from 'common/modules/experiments/test-can-run-checks';
 import { addSlot } from 'commercial/modules/dfp/add-slot';
 import createSlot from 'commercial/modules/dfp/create-slot';
-import trackAdRender from 'commercial/modules/dfp/track-ad-render';
+import { trackAdRender } from 'commercial/modules/dfp/track-ad-render';
 import { commercialFeatures } from 'commercial/modules/commercial-features';
 import { paidContentVsOutbrain2 } from 'common/modules/experiments/tests/paid-content-vs-outbrain';
 

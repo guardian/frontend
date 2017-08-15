@@ -1,5 +1,5 @@
 // @flow
-import trackAdRender from 'commercial/modules/dfp/track-ad-render';
+import { trackAdRender } from 'commercial/modules/dfp/track-ad-render';
 
 const success = advertId => complete => trackAdRender(advertId).then(complete);
 

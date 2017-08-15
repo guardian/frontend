@@ -7,7 +7,7 @@ import {
     contributionsTests,
     userIsInAClashingAbTest,
 } from 'common/modules/experiments/ab-test-clash';
-import trackAdRender from 'commercial/modules/dfp/track-ad-render';
+import { trackAdRender } from 'commercial/modules/dfp/track-ad-render';
 import { commercialFeatures } from 'commercial/modules/commercial-features';
 import { checks } from './check-mediator-checks';
 import { resolveCheck, waitForCheck } from './check-mediator';
