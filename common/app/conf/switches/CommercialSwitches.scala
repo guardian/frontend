@@ -85,6 +85,16 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
+  val AdomikSwitch = Switch(
+    SwitchGroup.Commercial,
+    "adomik",
+    "Enable Adomik traffic splitting.",
+    owners = Seq(Owner.withName("commercial team")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 8, 30),
+    exposeClientSide = true
+  )
+
   val KruxSwitch = Switch(
     SwitchGroup.Commercial,
     "krux",
