@@ -13,7 +13,7 @@ import { acquisitionsEpicLiveblog } from 'common/modules/experiments/tests/acqui
 import { acquisitionsEpicAlwaysAskIfTagged } from 'common/modules/experiments/tests/acquisitions-epic-always-ask-if-tagged';
 import { acquisitionsEpicAlwaysAskElection } from 'common/modules/experiments/tests/acquisitions-epic-always-ask-election';
 import { acquisitionsEpicThankYou } from 'common/modules/experiments/tests/acquisitions-epic-thank-you';
-import { acquisitionsEpicRecurringContributionUkSupportProposition } from 'common/modules/experiments/tests/acquisitions-epic-recurring-contribution-uk-support-proposition';
+import { acquisitionsSupportBaseline } from 'common/modules/experiments/tests/acquisitions-support-baseline';
 
 /**
  * acquisition tests in priority order (highest to lowest)
@@ -21,7 +21,7 @@ import { acquisitionsEpicRecurringContributionUkSupportProposition } from 'commo
 const tests: $ReadOnlyArray<AcquisitionsABTest> = [
     alwaysAsk,
     payInEpic,
-    acquisitionsEpicRecurringContributionUkSupportProposition,
+    acquisitionsSupportBaseline,
     askFourEarning,
     acquisitionsEpicAlwaysAskIfTagged,
     acquisitionsEpicLiveblog,
