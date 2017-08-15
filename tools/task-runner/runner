@@ -169,7 +169,7 @@ listrify(taskModules).run({
     stdouts: [],
 }).catch((e) => {
     // something went wrong, so log whatever we have
-    if (!e.stderr && !e.stdout) console.log(e.message);
+    if (!e.stderr && !e.stdout) console.log(e);
     if (e.stderr) console.error(`\n${e.stderr.trim()}`);
     if (e.stdout) console.log(`\n${e.stdout.trim()}`);
     return Object.assign(e.context, { error: true });
