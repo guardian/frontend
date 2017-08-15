@@ -1,5 +1,5 @@
 // @flow
-import fastdom from 'fastdom';
+import fastdom from 'lib/fastdom-promise';
 import qwery from 'qwery';
 import raven from 'lib/raven';
 import $ from 'lib/$';
@@ -178,24 +178,24 @@ const bootEnhanced = (): void => {
         );
     }
 
-    fastdom.read(() => {
-        if (
-            (config.isMedia ||
-                qwery('video, audio, .youtube-media-atom').length) &&
-            !config.page.isHosted
-        ) {
-            require.ensure(
-                [],
-                require => {
-                    bootstrapContext(
-                        'media',
-                        require('bootstraps/enhanced/media/main').init
+    if (!config.page.isHosted) {
+        fastdom
+            .read(() => qwery('video, audio, .youtube-media-atom'))
+            .then(els => {
+                if (config.isMedia || els.length) {
+                    require.ensure(
+                        [],
+                        require => {
+                            bootstrapContext(
+                                'media',
+                                require('bootstraps/enhanced/media/main').init
+                            );
+                        },
+                        'media'
                     );
-                },
-                'media'
-            );
-        }
-    });
+                }
+            });
+    }
 
     if (config.page.contentType === 'Gallery') {
         require.ensure(
