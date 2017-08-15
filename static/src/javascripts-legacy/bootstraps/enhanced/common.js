@@ -326,7 +326,6 @@ define([
                 ['c-history', modules.updateHistory],
                 ['c-id-cookie-refresh', modules.idCookieRefresh],
                 ['c-history-nav', modules.showHistoryInMegaNav],
-                ['c-forsee', modules.runForseeSurvey],
                 ['c-start-register', modules.startRegister],
                 ['c-smart-banner', customSmartAppBanner.init],
                 ['c-adblock', modules.showAdblockMessage],
