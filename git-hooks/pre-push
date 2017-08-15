@@ -19,9 +19,9 @@ const validate = () =>
         .catch(() =>
             Promise.reject(
                 `${chalk.red(
-                    `✋ Linting failed, your changes have not been pushed. You can attempt to fix lint errors by running ${chalk.underline(
+                    `✋ Linting failed. You can attempt to fix lint errors by running ${chalk.underline(
                         'make fix-head'
-                    )}`
+                    )}.\nYour changes have not been pushed`
                 )}`
             )
         );
