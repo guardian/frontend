@@ -32,8 +32,13 @@ const getUserVariantParams = (
     userVariant: ?Variant,
     campaignId: ?string
 ): EngagementBannerParams | {} => {
-    if (campaignId && userVariant && userVariant.engagementBannerParams) {
-        const userVariantParams = userVariant.engagementBannerParams;
+    if (
+        campaignId &&
+        userVariant &&
+        userVariant.options &&
+        userVariant.options.engagementBannerParams
+    ) {
+        const userVariantParams = userVariant.options.engagementBannerParams;
 
         if (!userVariantParams.campaignCode) {
             userVariantParams.campaignCode = buildCampaignCode(

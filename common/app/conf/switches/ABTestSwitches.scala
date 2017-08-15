@@ -139,4 +139,13 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
+  Switch(
+    ABTests,
+    "ab-acquisitions-support-baseline",
+    "Test new S&C proposition against current membership/contribution offering across all channels",
+    owners = Seq(Owner.withGithub("svillafe")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 10, 13),
+    exposeClientSide = true
+  )
 }
