@@ -2,7 +2,7 @@ const execa = require('execa');
 const getChangedFiles = require('../lib/get-changed-files');
 
 module.exports = {
-    description: 'Fix changed JS linting errors',
+    description: 'Fix committed linting errors',
     task: [
         {
             description: 'Fix changed JS linting errors',

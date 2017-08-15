@@ -1,8 +1,5 @@
 module.exports = {
-    description: 'Lint changed assets',
-    task: [
-        require('./javascript'),
-        // require('./sass'),
-    ],
+    description: 'Validate commits',
+    task: [require('./javascript')],
     concurrent: true,
 };

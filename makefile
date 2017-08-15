@@ -109,8 +109,8 @@ validate-javascript: install # PRIVATE
 fix: install
 	@./tools/task-runner/runner validate/javascript-fix
 
-# Fix changed JS linting errors.
-fix-head: install
+# Fix committed JS linting errors.
+fix-commits: install
 	@./tools/task-runner/runner validate-head/javascript-fix
 
 
