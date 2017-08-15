@@ -542,7 +542,7 @@ class Loader extends Component {
             shouldRenderMainAvatar: false,
         })
             .render(elem)
-            .on('post:success', this.commentPosted);
+            .on('post:success', comment => this.commentPosted(comment));
     }
 
     renderCommentBar(): void {
