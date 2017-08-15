@@ -64,7 +64,7 @@ const setHighMerchSlotTargeting = (slot, slotTarget): Promise<any> => {
     });
 };
 
-const adomikClassify = () => {
+const adomikClassify = (): string => {
     const rand = Math.random();
 
     switch (true) {
