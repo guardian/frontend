@@ -3,13 +3,14 @@
 
 # since we'll opting their parents back in, we need to explicitly exclude these
 node_modules
-flow-*
+__flow__
+flow-type*
 __mocks__
 __snapshots__
 dist
 coverage
 
-# generic optins
+# generic options
 !.eslintrc.js
 !.stylelintrc.js
 
