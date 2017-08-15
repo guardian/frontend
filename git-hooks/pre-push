@@ -6,12 +6,14 @@ const execa = require('execa');
 const chalk = require('chalk');
 
 const diff = () =>
-    execa.stdout('git', [
-        'diff',
-        '--name-only',
-        '--cached',
-        '--diff-filter=AM',
-    ]);
+    execa
+        .stdout('git', [
+            'diff',
+            '--name-only',
+            '--cached',
+            '--diff-filter=AM',
+        ])
+        .then(staged => staged.split('\n'));
 
 const validate = () =>
     execa
@@ -26,29 +28,29 @@ const validate = () =>
             )
         );
 
+const checkYarnLock = staged => {
+    if (
+        staged.some(file => file === 'package.json') &&
+        !staged.some(file => file === 'yarn.lock')
+    ) {
+        return Promise.reject(
+            `${chalk.red(
+                `${chalk.underline(
+                    'package.json'
+                )} has changed but ${chalk.underline(
+                    'yarn.lock'
+                )} is not included in this commit.`
+            )}\n${chalk.dim(
+                `If this is intentional, commit this change with --no-verify.`
+            )}`
+        );
+    }
+    return staged;
+};
+
 validate()
-    // make sure yarn.lock is commited
     .then(diff)
-    .then(staged => staged.split('\n'))
-    .then(staged => {
-        if (
-            staged.some(file => file === 'package.json') &&
-            !staged.some(file => file === 'yarn.lock')
-        ) {
-            return Promise.reject(
-                `${chalk.red(
-                    `${chalk.underline(
-                        'package.json'
-                    )} has changed but ${chalk.underline(
-                        'yarn.lock'
-                    )} is not included in this commit.`
-                )}\n${chalk.dim(
-                    `If this is intentional, commit this change with --no-verify.`
-                )}`
-            );
-        }
-        return staged;
-    })
+    .then(checkYarnLock)
     // make sure docs TOC stays up to date
     .then(staged => {
         if (staged.some(file => file.includes('docs/'))) {
