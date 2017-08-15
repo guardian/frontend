@@ -17,6 +17,6 @@ object CardStylePicker {
 
   private def extractCampaigns(content: contentapi.Content): List[Campaign] = {
     CampaignAgent.getCampaignsForTags(content.tags.map(_.id))
-      .filter(_.fields == ReportFields)
+      .filter(_.fields.isInstanceOf[ReportFields])
   }
 }
