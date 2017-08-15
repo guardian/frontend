@@ -1,9 +1,9 @@
 {
   "Regis Kuckaertz": [
+    "projects/common/modules/atoms/quiz.js",
     "bootstraps/enhanced/accessibility.js",
     "bootstraps/enhanced/common.js",
     "bootstraps/enhanced/crosswords.js",
-    "lib/atob.js",
     "projects/common/modules/article/rich-links.js",
     "projects/common/modules/article/twitter.js",
     "projects/common/modules/asyncCallMerger.js",
@@ -90,7 +90,6 @@
   "Calum Campbell": [],
   "GHaberis": [],
   "Unassigned": [
-    "projects/common/modules/atoms/quiz.js",
     "projects/common/modules/atoms/story-questions.js",
     "projects/common/modules/atoms/youtube-tracking.js",
     "projects/common/modules/component.js",
