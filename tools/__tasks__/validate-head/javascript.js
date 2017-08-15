@@ -1,4 +1,5 @@
 const execa = require('execa');
+const chalk = require('chalk');
 const getChangedFiles = require('../lib/get-changed-files');
 
 module.exports = {
@@ -15,7 +16,17 @@ module.exports = {
                     );
                     const config = ['--quiet', '--color'];
 
-                    return execa('eslint', jsFiles.concat(config));
+                    return execa('eslint', jsFiles.concat(config)).catch(() =>
+                        Promise.reject(
+                            new Error(
+                                `${chalk.red(
+                                    `✋ Linting failed. You can attempt to fix lint errors by running ${chalk.underline(
+                                        'make fix-head'
+                                    )}.\nYour changes have not been pushed`
+                                )}`
+                            )
+                        )
+                    );
                 }),
         },
         {
