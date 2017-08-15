@@ -8,8 +8,7 @@ module.exports = {
             const jsFiles = files.filter(
                 file => file.endsWith('.js') || file === 'git-hooks/pre-push'
             );
-            const config = ['--quiet', '--color', '--fix'];
 
-            return execa('eslint', jsFiles.concat(config));
+            return execa('eslint', [...jsFiles, '--quiet', '--color', '--fix']);
         }),
 };
