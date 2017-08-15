@@ -18,6 +18,10 @@ module.exports = {
                     return execa('eslint', jsFiles.concat(config));
                 }),
         },
+        {
+            description: 'Run Flowtype checks on static/src/javascripts/',
+            task: `flow`,
+        },
     ],
     concurrent: true,
 };
