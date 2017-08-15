@@ -1,102 +1,100 @@
 {
-  "Francis Carr": [],
-  "Jon Norman": [],
   "Regis Kuckaertz": [
-    "projects/common/modules/discussion/comment-count.js",
-    "projects/common/modules/discussion/comments.js",
-    "projects/common/modules/discussion/discussion-frontend.js"
-  ],
-  "Richard Nguyen": [],
-  "Kate Whalen": [],
-  "sndrs": [
     "bootstraps/enhanced/accessibility.js",
     "bootstraps/enhanced/common.js",
     "bootstraps/enhanced/crosswords.js",
-    "bootstraps/enhanced/facia.js",
-    "bootstraps/enhanced/football.js",
-    "projects/common/modules/preferences/main.js",
-    "bootstraps/enhanced/gallery.js"
-  ],
-  "Simon Adcock": [
-    "projects/common/modules/experiments/tests/paid-content-vs-outbrain.js",
-    "projects/common/modules/ui/clickstream.js",
-    "projects/common/modules/discussion/user-avatars.js",
-    "projects/common/modules/discussion/whole-discussion.js"
-  ],
-  "Nicolas Long": [
-    "projects/common/modules/ui/selection-sharing.js",
-    "bootstraps/enhanced/profile.js",
-    "bootstraps/enhanced/recipe-article.js",
-    "bootstraps/enhanced/sport.js",
-    "bootstraps/enhanced/trail.js",
-    "bootstraps/enhanced/youtube.js",
-    "bootstraps/video-embed.js",
-    "bootstraps/youtube-embed.js",
     "lib/atob.js",
-    "projects/common/modules/component.js"
-  ],
-  "Calum Campbell": [
-    "lib/picturefill.js",
-    "lib/proximity-loader.js",
-    "projects/common/modules/video/metadata.js"
-  ],
-  "GHaberis": [
-    "projects/common/modules/discussion/activity-stream.js",
-    "projects/common/modules/discussion/api.js",
-    "projects/common/modules/discussion/comment-box.js"
-  ],
-  "Gustav Pursche": [
-    "projects/common/modules/discussion/comment-box.js"
-  ],
-  "NataliaLKB": [
     "projects/common/modules/article/rich-links.js",
     "projects/common/modules/article/twitter.js",
     "projects/common/modules/asyncCallMerger.js",
-    "projects/common/modules/atoms/quiz.js",
-    "projects/common/modules/atoms/story-questions.js",
-    "projects/common/modules/atoms/youtube-tracking.js"
+    "projects/common/modules/ui/clickstream.js",
+    "projects/common/modules/ui/expandable.js",
+    "projects/common/modules/ui/faux-block-link.js"
   ],
-  "Gideon Goldberg": [],
-  "Matthew Walls": [
+  "sndrs": [
+    "bootstraps/enhanced/facia.js",
+    "bootstraps/enhanced/football.js",
+    "bootstraps/enhanced/gallery.js",
     "projects/common/modules/crosswords/cell.js",
     "projects/common/modules/crosswords/classNames.js",
     "projects/common/modules/crosswords/clues.js",
     "projects/common/modules/crosswords/comments.js",
     "projects/common/modules/crosswords/confirm-button.js",
+    "projects/common/modules/discussion/activity-stream.js",
+    "projects/common/modules/discussion/api.js"
+  ],
+  "Simon Adcock": [
+    "bootstraps/enhanced/recipe-article.js",
+    "lib/picturefill.js",
     "projects/common/modules/crosswords/constants.js",
     "projects/common/modules/crosswords/controls.js",
     "projects/common/modules/crosswords/crossword.js",
     "projects/common/modules/crosswords/grid.js",
-    "projects/common/modules/crosswords/helpers.js"
+    "projects/common/modules/crosswords/helpers.js",
+    "projects/common/modules/discussion/discussion-frontend.js",
+    "projects/common/modules/email/email.js",
+    "projects/common/modules/email/run-checks.js"
   ],
-  "Sam Desborough": [],
-  "Akash A": [
+  "Gustav Pursche": [
+    "bootstraps/enhanced/sport.js",
+    "bootstraps/enhanced/trail.js",
+    "bootstraps/enhanced/youtube.js",
     "projects/common/modules/crosswords/hidden-input.js",
     "projects/common/modules/crosswords/keycodes.js",
     "projects/common/modules/crosswords/main.js",
     "projects/common/modules/crosswords/persistence.js",
-    "projects/common/modules/crosswords/series.js"
+    "projects/common/modules/crosswords/series.js",
+    "projects/common/modules/discussion/user-avatars.js",
+    "projects/common/modules/discussion/whole-discussion.js"
   ],
-  "dominickendrick": [
-    "projects/common/modules/email/email-article.js",
-    "projects/common/modules/email/email.js",
-    "projects/common/modules/email/run-checks.js",
-    "projects/common/modules/ui/expandable.js",
-    "projects/common/modules/ui/faux-block-link.js",
-    "projects/common/modules/ui/full-height.js",
-    "projects/common/modules/experiments/affix.js"
+  "Sam Desborough": [
+    "projects/common/modules/experiments/affix.js",
+    "projects/common/modules/experiments/tests/paid-content-vs-outbrain.js"
   ],
-  "davidfurey": [],
-  "jranks123": [
+  "Akash A": [
+    "projects/common/modules/video/metadata.js",
+    "projects/common/modules/video/onward-container.js"
+  ],
+  "jfsoul": [
+    "bootstraps/video-embed.js",
+    "bootstraps/youtube-embed.js"
+  ],
+  "Philip Wills": [
     "projects/common/modules/gallery/lightbox.js",
-    "projects/common/modules/identity/account-profile.js",
-    "projects/common/modules/identity/api.js",
-    "projects/common/modules/identity/cookierefresh.js",
-    "projects/common/modules/identity/email-preferences.js",
-    "bootstraps/enhanced/notifications.js"
+    "projects/common/modules/identity/account-profile.js"
   ],
-  "shaundillon": [
-    "projects/common/modules/identity/forms.js",
+  "Santiago Villa Fernandez": [
+    "projects/common/modules/identity/api.js",
+    "projects/common/modules/identity/cookierefresh.js"
+  ],
+  "Richard Nguyen": [
+    "projects/common/modules/identity/email-preferences.js",
+    "projects/common/modules/identity/forms.js"
+  ],
+  "NataliaLKB": [
+    "lib/proximity-loader.js",
+    "projects/common/modules/email/email-article.js"
+  ],
+  "Jamie Byers": [],
+  "Francis Carr": [],
+  "Jon Norman": [],
+  "Kate Whalen": [],
+  "dominickendrick": [],
+  "davidfurey": [],
+  "jranks123": [],
+  "shaundillon": [],
+  "Joseph Smith": [],
+  "Gideon Goldberg": [],
+  "Matthew Walls": [],
+  "Nicolas Long": [],
+  "Calum Campbell": [],
+  "GHaberis": [],
+  "Unassigned": [
+    "projects/common/modules/atoms/quiz.js",
+    "projects/common/modules/atoms/story-questions.js",
+    "projects/common/modules/atoms/youtube-tracking.js",
+    "projects/common/modules/component.js",
+    "projects/common/modules/discussion/comment-count.js",
     "projects/common/modules/identity/formstack-iframe-embed.js",
     "projects/common/modules/identity/formstack-iframe.js",
     "projects/common/modules/identity/formstack.js",
@@ -104,17 +102,12 @@
     "projects/common/modules/identity/validation-email.js",
     "projects/common/modules/navigation/membership.js",
     "projects/common/modules/navigation/navigation.js",
-    "projects/common/modules/navigation/profile.js"
-  ],
-  "jfsoul": [
-    "projects/common/modules/navigation/search.js"
-  ],
-  "Joseph Smith": [
-    "projects/common/modules/experiments/affix.js",
+    "projects/common/modules/navigation/profile.js",
+    "projects/common/modules/navigation/search.js",
+    "projects/common/modules/preferences/main.js",
+    "projects/common/modules/ui/full-height.js",
     "projects/common/modules/ui/notification-counter.js",
-    "projects/common/modules/ui/relativedates.js"
-  ],
-  "Philip Wills": [],
-  "Santiago Villa Fernandez": [],
-  "Jamie Byers": []
+    "projects/common/modules/ui/relativedates.js",
+    "projects/common/modules/ui/selection-sharing.js"
+  ]
 }
