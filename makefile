@@ -97,10 +97,6 @@ coverage: install
 validate: install
 	@./tools/task-runner/runner validate --verbose
 
-# Validate changed assets.
-validate-head: install
-	@./tools/task-runner/runner validate-head
-
 # Validate all SCSS.
 validate-sass: install # PRIVATE
 	@./tools/task-runner/runner validate/sass --verbose
