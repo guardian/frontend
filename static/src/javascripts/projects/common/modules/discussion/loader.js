@@ -15,7 +15,7 @@ import DiscussionAnalytics from 'common/modules/analytics/discussion';
 import register from 'common/modules/analytics/register';
 import Component from 'common/modules/component';
 import DiscussionApi from 'common/modules/discussion/api';
-import { CommentBox } from 'common/modules/discussion/comment-box';
+import CommentBox from 'common/modules/discussion/comment-box';
 import Comments from 'common/modules/discussion/comments';
 import discussionFrontend from 'common/modules/discussion/discussion-frontend';
 import {
@@ -77,9 +77,9 @@ class Loader extends Component {
         window.location.replace(`#comment-${id}`);
     }
 
-    commentPosted(...args: Array<mixed>): void {
+    commentPosted(comment: Object): void {
         this.removeState('truncated');
-        this.comments.addComment(...args);
+        this.comments.addComment(comment);
     }
 
     initState(): void {
@@ -134,17 +134,17 @@ class Loader extends Component {
             mediator.emit('discussion:seen:comment-permalink');
         }
 
-        mediator.on(
-            'discussion:commentbox:post:success',
-            this.removeState.bind(this, 'empty')
+        mediator.on('discussion:commentbox:post:success', () =>
+            this.removeState('empty')
         );
 
         mediator.on('module:clickstream:click', clickspec => {
-            if (
+            const shouldRemoveTruncation =
                 clickspec &&
                 'hash' in clickspec.target &&
-                clickspec.target.hash === '#comments'
-            ) {
+                clickspec.target.hash === '#comments';
+
+            if (shouldRemoveTruncation) {
                 this.removeTruncation();
             }
         });
@@ -249,7 +249,7 @@ class Loader extends Component {
         }
     }
 
-    initPageSizeDropdown(pageSize: number | string) {
+    initPageSizeDropdown(pageSize: number | string): void {
         const $pagesizeLabel = $('.js-comment-pagesize');
 
         $pagesizeLabel.text(pageSize);
@@ -542,7 +542,7 @@ class Loader extends Component {
             shouldRenderMainAvatar: false,
         })
             .render(elem)
-            .on('post:success', this.commentPosted.bind(this));
+            .on('post:success', this.commentPosted);
     }
 
     renderCommentBar(): void {
