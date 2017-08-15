@@ -403,7 +403,7 @@ class Loader extends Component {
             .catch(() => this.logError('Top comments'));
     }
 
-    logError(commentType: string, error?: Error) {
+    logError(commentType: string, error?: Error): void {
         let reportMsg = `${commentType} failed to load: `;
 
         if (error && error.message) {
