@@ -97,6 +97,10 @@ coverage: install
 validate: install
 	@./tools/task-runner/runner validate --verbose
 
+# Validate changed assets.
+validate-head: install
+	@./tools/task-runner/runner validate-head
+
 # Validate all SCSS.
 validate-sass: install # PRIVATE
 	@./tools/task-runner/runner validate/sass --verbose
@@ -105,9 +109,14 @@ validate-sass: install # PRIVATE
 validate-javascript: install # PRIVATE
 	@./tools/task-runner/runner validate/javascript
 
-# Validate all assets.
+# Fix JS linting errors.
 fix: install
 	@./tools/task-runner/runner validate/javascript-fix
+
+# Fix changed JS linting errors.
+fix-head: install
+	@./tools/task-runner/runner validate-head/javascript-fix
+
 
 validate-amp: install # PRIVATE
 	@cd tools/amp-validation && npm install && NODE_ENV=dev node index.js
