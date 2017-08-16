@@ -74,7 +74,10 @@
 }
 
 .dumathoin__title {
+    @include fs-headline(4, true);
     @include f-headlineSans;
+    color: #ffffff;
+    font-size: get-font-size(headline, 3);
 }
 
 .dumathoin__blurb {
@@ -138,11 +141,6 @@
                 vertical-align: top;
             }
         }
-    }
-
-    .dumathoin__title {
-        @include fs-header(2);
-        color: #ffffff;
     }
 
     .adverts__logo {
@@ -337,10 +335,6 @@
     .paidfor-label .popup__toggle {
         border: 0;
     }
-}
-
-.dumathoin__title {
-    @include fs-headline(4, true);
 }
 
 .dumathoin__stamp {
