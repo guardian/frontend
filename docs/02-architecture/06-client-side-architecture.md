@@ -312,10 +312,6 @@ There are five projects in the Javascript architecture:
 - [Facia](https://github.com/guardian/frontend/tree/master/static/src/javascripts/projects/facia) - Contains JS modules and views for the weather, snaps and fronts containers
 - [Membership](https://github.com/guardian/frontend/tree/master/static/src/javascripts/projects/membership) - Contains the formatters, payment and stripe javascripts
 
-### Components
-
-[Here be 3rd-party JS](https://github.com/guardian/frontend/tree/master/static/vendor/javascripts/components) such as bean, bonzo and fastdom.
-
 ### Vendor
 
-Contains [vendor JS](https://github.com/guardian/frontend/tree/master/static/vendor/javascripts) from the likes of forsee, formstack and stripe.
+Contains [vendor JS](https://github.com/guardian/frontend/tree/master/static/vendor/javascripts) from the likes of formstack and the polyfill.io fallback.
