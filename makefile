@@ -106,9 +106,14 @@ validate-sass: install # PRIVATE
 validate-javascript: install # PRIVATE
 	@./tools/task-runner/runner validate/javascript
 
-# Validate all assets.
+# Fix JS linting errors.
 fix: install
 	@./tools/task-runner/runner validate/javascript-fix
+
+# Fix committed JS linting errors.
+fix-commits: install
+	@./tools/task-runner/runner validate-head/javascript-fix
+
 
 validate-amp: install # PRIVATE
 	@cd tools/amp-validation && npm install && NODE_ENV=dev node index.js
