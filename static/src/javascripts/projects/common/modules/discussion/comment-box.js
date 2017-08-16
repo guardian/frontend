@@ -1,6 +1,5 @@
 // @flow
 
-import $ from 'lib/$';
 import bean from 'bean';
 import bonzo from 'bonzo';
 import mediator from 'lib/mediator';
@@ -134,8 +133,10 @@ class CommentBox extends Component {
         IdentityApi.reset();
 
         const displayName = this.getUserData().displayName;
-        const menuHeaderUsername = $('.js-profile-info')[0];
-        const discussionHeaderUsername = $('._author_tywwu_16')[0];
+        const menuHeaderUsername = document.querySelector('.js-profile-info');
+        const discussionHeaderUsername = document.querySelector(
+            '._author_tywwu_16'
+        );
 
         if (menuHeaderUsername && displayName) {
             menuHeaderUsername.innerHTML = displayName;
