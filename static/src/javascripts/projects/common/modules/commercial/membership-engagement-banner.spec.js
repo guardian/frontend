@@ -182,7 +182,9 @@ describe('Membership engagement banner', () => {
             }));
             fakeVariantFor.mockImplementationOnce(() => ({
                 id: 'fake-user-variant-id',
-                engagementBannerParams: {},
+                options: {
+                    engagementBannerParams: {},
+                },
             }));
             showBanner = membershipEngagementBannerInit().then(() => {
                 fakeMediator.emit('modules:onwards:breaking-news:ready', false);
