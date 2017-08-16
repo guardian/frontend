@@ -354,7 +354,7 @@ class CommentBox extends Component {
             this.resetPreviewComment()
         );
         this.on('click', this.getClass('preview'), () =>
-            this.previewComment(this.previewCommentSuccess)
+            this.previewComment('previewCommentSuccess')
         );
         this.on('click', this.getClass('hide-preview'), () =>
             this.resetPreviewComment()
@@ -404,7 +404,7 @@ class CommentBox extends Component {
             ).innerHTML = this.getUserData().displayName;
 
             this.setState('onboarding-visible');
-            this.previewComment(this.onboardingPreviewSuccess);
+            this.previewComment('onboardingPreviewSuccess');
 
             if (this.options.hasUsername) {
                 this.getElem('onboarding-username').classList.add('is-hidden');
@@ -473,12 +473,11 @@ class CommentBox extends Component {
         this.error('EMAIL_VERIFIED_FAIL');
     }
 
-    previewComment(
-        callback?: (comment: commentType, res: Object) => void
-    ): void {
-        const comment = {
+    previewComment(methodName: string): void {
+        const comment: commentType = {
             body: this.getElem('body').value,
         };
+        const callback = this[methodName].bind(this);
 
         this.clearErrors();
 
@@ -499,14 +498,8 @@ class CommentBox extends Component {
 
         if (this.errors.length === 0) {
             DiscussionApi.previewComment(comment)
-                .then((resp: Object) => {
-                    if (callback) {
-                        callback.call(this, comment, resp);
-                    }
-                })
-                .catch((err: Object) => {
-                    this.fail.call(this, err);
-                });
+                .then((resp: Object) => callback(comment, resp))
+                .catch((err: Object) => this.fail(err));
         }
     }
 
