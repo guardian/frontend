@@ -21,7 +21,7 @@ export const acquisitionsEpicRecurringContributionUkSupportProposition = makeABT
             'This creates a two button version of the epic that links off to the new support frontend contribution landing page',
         successMeasure: 'Annualised value',
         idealOutcome:
-            'We are going to test if the new  stacks correcntly handle the different flows.',
+            'We are going to test if the new  tech stack correctly handle the different flows.',
 
         audienceCriteria: 'UK all devices',
         audience: 1,
