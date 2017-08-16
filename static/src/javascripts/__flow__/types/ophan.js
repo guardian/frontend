@@ -44,7 +44,7 @@ declare type OphanComponentType =
     | 'SURVEYS_QUESTIONS'
     | 'ACQUISITIONS_EPIC'
     | 'ACQUISITIONS_ENGAGEMENT_BANNER'
-    | 'THANK_YOU_EPIC';
+    | 'ACQUISITIONS_THANK_YOU_EPIC';
 
 declare type OphanComponent = {|
     type: OphanComponentType,
