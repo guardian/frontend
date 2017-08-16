@@ -5,6 +5,7 @@
 process.env.FORCE_COLOR = true;
 
 const path = require('path');
+const os = require('os');
 
 const yargs = require('yargs');
 const Listr = require('listr');
@@ -86,6 +87,8 @@ const exec = (task, onError, ctx) => {
         });
 };
 
+const getCpuCount = () => os.cpus().length;
+
 // turn a list of our tasks into objects listr can use
 function listrify(steps, { concurrent = false } = {}) {
     const listrTasks = steps
@@ -104,7 +107,7 @@ function listrify(steps, { concurrent = false } = {}) {
                         if (_task.task) return _task;
                         if (typeof _task === 'string') return { title, task: ctx => exec(_task, onError, ctx), skip };
                         return { title, task: _task, skip };
-                    }), { concurrent: VERBOSE ? false : isConcurrent }),
+                    }), { concurrent: VERBOSE ? false : (isConcurrent ? getCpuCount() : false) }),
                     skip,
                 };
             }
@@ -133,7 +136,11 @@ function listrify(steps, { concurrent = false } = {}) {
     if (IS_TEAMCITY) renderer = require('./run-task-tc-formater');
     if (IS_VERBOSE) renderer = require('./run-task-verbose-formater');
 
-    return new Listr(listrTasks, { concurrent, collapse: true, renderer });
+    return new Listr(listrTasks, {
+        concurrent: concurrent ? getCpuCount() : false,
+        collapse: true,
+        renderer,
+    });
 }
 
 // resolve the tasks from yargs to actual files
