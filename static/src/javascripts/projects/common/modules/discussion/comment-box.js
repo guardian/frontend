@@ -487,13 +487,13 @@ class CommentBox extends Component {
         }
 
         if (comment.body.length > this.options.maxLength) {
-            this.error(
-                'COMMENT_TOO_LONG',
-                `<b>Comments must be shorter than ${this.options
-                    .maxLength} characters.</b>` +
-                    `Yours is currently ${comment.body.length -
-                        this.options.maxLength} characters too long.`
-            );
+            const charDiff = comment.body.length - this.options.maxLength;
+            const errorMessage = `
+                <b>Comments must be shorter than
+                ${this.options.maxLength} characters</b>. Yours is currently
+                ${charDiff} characters too long.`;
+
+            this.error('COMMENT_TOO_LONG', errorMessage);
         }
 
         if (this.errors.length === 0) {
