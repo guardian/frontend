@@ -104,13 +104,11 @@ class CommentBox extends Component {
         );
     }
 
-    setFormState(disabled?: boolean): void {
-        const isDisabled = typeof disabled === 'boolean' ? disabled : false;
-
+    setFormState(disabled?: boolean = false): void {
         const commentBody = this.getElem('body');
         const submitButton = this.getElem('submit');
 
-        if (isDisabled || commentBody.value.length === 0) {
+        if (disabled || commentBody.value.length === 0) {
             submitButton.setAttribute('disabled', 'disabled');
         } else {
             submitButton.removeAttribute('disabled');
@@ -245,6 +243,8 @@ class CommentBox extends Component {
             usernameField.classList.add(
                 'd-comment-box__onboarding-username-error-border'
             );
+
+            // TODO: this should be wrapped into a try-catch block
             errorMessage.innerHTML = JSON.parse(
                 errorResponse.responseText
             ).errors[0].description;
