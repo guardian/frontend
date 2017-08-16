@@ -323,7 +323,6 @@ class Comments extends Component {
             $commentElem.addClass(this.getClass('commentStaff', true));
         }
 
-        // Stupid hack. Will rearchitect.
         if (!parent) {
             $(this.getClass('newComments'), this.elem).prepend(commentElem);
         } else {
@@ -401,7 +400,6 @@ class Comments extends Component {
 
         commentBox.render(parentCommentEl);
 
-        // TODO (jamesgorrie): Remove Hack hack hack
         commentBox.on('post:success', comment => {
             let responses = qwery('.d-thread--responses', parentCommentEl)[0];
 
