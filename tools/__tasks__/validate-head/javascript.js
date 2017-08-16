@@ -44,7 +44,7 @@ module.exports = {
                     );
 
                     if (jsFiles.length) {
-                        return execa('yarn flow');
+                        return execa('yarn', ['flow']);
                     }
 
                     return Promise.resolve();
