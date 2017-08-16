@@ -30,7 +30,7 @@ class RenderingActor(ac: ApplicationContext) extends Actor with JavascriptRender
 
   override def receive: Receive = {
     case Rendering(renderable) =>
-      sender ! render(renderable.props, isRunningInProd)
+      sender ! render(renderable.props, !isRunningInProd)
     case  _ =>
       sender ! Try(throw new RenderingException("RenderingActor received an unknown message"))
   }
