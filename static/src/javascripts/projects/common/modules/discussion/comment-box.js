@@ -350,7 +350,9 @@ class CommentBox extends Component {
 
         bean.on(commentBody, 'focus', () => this.setExpanded());
 
-        this.on('change', '.d-comment-box__body', this.resetPreviewComment);
+        this.on('change', '.d-comment-box__body', () =>
+            this.resetPreviewComment()
+        );
         this.on('click', this.getClass('preview'), () =>
             this.previewComment(this.previewCommentSuccess)
         );
