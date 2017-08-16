@@ -38,7 +38,6 @@
   "Gustav Pursche": [
     "projects/common/modules/discussion/user-avatars.js",
     "projects/common/modules/discussion/whole-discussion.js",
-    "projects/common/modules/discussion/activity-stream.js",
     "projects/common/modules/discussion/api.js",
     "projects/common/modules/discussion/discussion-frontend.js",
     "bootstraps/enhanced/sport.js",
