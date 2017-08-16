@@ -225,7 +225,7 @@ const makeABTestVariant = (
                 submitInsertEvent(
                     parentTest.componentType,
                     products,
-                    campaignCode,
+                    campaignCode
                 );
                 submitABTestImpression();
             }),
@@ -234,7 +234,7 @@ const makeABTestVariant = (
                 submitViewEvent(
                     parentTest.componentType,
                     products,
-                    campaignCode,
+                    campaignCode
                 );
                 submitABTestComplete();
             }),

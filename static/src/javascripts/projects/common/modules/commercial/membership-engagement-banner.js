@@ -136,10 +136,18 @@ const showBanner = (params: EngagementBannerParams): void => {
     }).show(renderedBanner);
 
     if (messageShown) {
-        submitInsertEvent('ACQUISITIONS_ENGAGEMENT_BANNER', params.products, params.campaignCode);
+        submitInsertEvent(
+            'ACQUISITIONS_ENGAGEMENT_BANNER',
+            params.products,
+            params.campaignCode
+        );
 
         // TODO: QUESTION: for things which are automatically in view on insert, should we fire both events?
-        submitViewEvent('ACQUISITIONS_ENGAGEMENT_BANNER', params.products, params.campaignCode);
+        submitViewEvent(
+            'ACQUISITIONS_ENGAGEMENT_BANNER',
+            params.products,
+            params.campaignCode
+        );
 
         mediator.emit('membership-message:display');
     }
