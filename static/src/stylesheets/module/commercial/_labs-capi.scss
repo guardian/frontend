@@ -54,8 +54,10 @@
     }
 }
 
+/* [1] Prevents brand logos floating out the bounds if the cards are hidden */
 .paidfor-container {
     margin: 0 $gs-gutter / 2;
+    min-height: 80px; /* [1] */
 
     @include mq($until: tablet) {
 
