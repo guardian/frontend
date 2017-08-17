@@ -1,13 +1,15 @@
 [ignore]
 .*node_modules.*/stylelint.*
 .*/node_modules/fbjs/.*
+.*/node_modules/preact/.*
 
 [include]
 ../node_modules
 
 [libs]
 __flow__/flow-typed
-__flow__/types
+__flow__/types.js
+__flow__/preact.js
 
 [options]
 module.file_ext=.js
