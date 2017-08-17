@@ -36,6 +36,7 @@ if (module.hot) {
     // $FlowFixMe
     module.hot.accept();
 
+    // $FlowFixMe
     require('preact/devtools'); // eslint-disable-line
 }
 
