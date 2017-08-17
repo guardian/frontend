@@ -1,12 +1,16 @@
 // @flow
 import { makeABTest } from 'common/modules/commercial/contributions-utilities';
-import template from 'lodash/utilities/template';
-import singleButtonTemplate from 'raw-loader!common/views/acquisitions-epic-single-button.html';
 
 const buildButtonTemplate = ({ supportUrl }) =>
-    template(singleButtonTemplate, {
-        url: supportUrl,
-    });
+    `<div class="contributions__amount-field">
+        <div>
+            <a class="contributions__option-button contributions__contribute contributions__contribute--epic contributions__contribute--epic-member contributions__contribute--epic-single-button"
+               href="${supportUrl}"
+               target="_blank">
+                Support the Guardian
+            </a>
+        </div>
+    </div>`;
 
 const campaignCode = 'gdnwb_copts_memco_sandc_support_baseline';
 
