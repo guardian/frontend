@@ -17,11 +17,12 @@ declare type OphanABPayload = {
 };
 
 declare type OphanProduct =
-    | 'ONE_OFF_CONTRIBUTION'
+    | 'CONTRIBUTION'
     | 'RECURRING_CONTRIBUTION'
     | 'MEMBERSHIP_SUPPORTER'
-    | 'DIGITAL_SUBSCRIPTION'
-    | 'PAPER_SUBSCRIPTION';
+    | 'MEMBERSHIP_PATRON'
+    | 'MEMBERSHIP_PARTNER'
+    | 'DIGITAL_SUBSCRIPTION';
 
 declare type OphanAction =
     | 'INSERT'
@@ -44,10 +45,10 @@ declare type OphanComponentType =
     | 'SURVEYS_QUESTIONS'
     | 'ACQUISITIONS_EPIC'
     | 'ACQUISITIONS_ENGAGEMENT_BANNER'
-    | 'THANK_YOU_EPIC';
+    | 'ACQUISITIONS_THANK_YOU_EPIC';
 
 declare type OphanComponent = {|
-    type: OphanComponentType,
+    componentType: OphanComponentType,
     id?: string,
     products: $ReadOnlyArray<OphanProduct>,
     campaignCode?: string,
@@ -57,5 +58,6 @@ declare type OphanComponent = {|
 declare type OphanComponentEvent = {|
     component: OphanComponent,
     action: OphanAction,
-    value?: string
+    value?: string,
+    id?: string
 |};
