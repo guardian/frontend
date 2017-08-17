@@ -21,7 +21,7 @@ export const askFourEarning: EpicABTest = makeABTest({
     variants: [
         {
             id: 'control',
-            products: ['ONE_OFF_CONTRIBUTION', 'MEMBERSHIP_SUPPORTER'],
+            products: ['CONTRIBUTION', 'MEMBERSHIP_SUPPORTER'],
 
             options: {
                 maxViews: {

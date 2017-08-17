@@ -31,7 +31,7 @@ export const acquisitionsEpicRecurringContributionUkSupportProposition = makeABT
         variants: [
             {
                 id: 'control',
-                products: ['ONE_OFF_CONTRIBUTION', 'RECURRING_CONTRIBUTION'],
+                products: ['CONTRIBUTION', 'RECURRING_CONTRIBUTION'],
                 options: {
                     buttonTemplate: buildButtonTemplate,
                     supportCustomURL:
