@@ -2,6 +2,7 @@ package test
 
 import java.io.File
 
+import akka.actor.ActorSystem
 import akka.stream.Materializer
 import com.gargoylesoftware.htmlunit.html.HtmlPage
 import com.gargoylesoftware.htmlunit.{BrowserVersion, Page, WebClient, WebResponse}
@@ -18,8 +19,8 @@ import play.api.libs.ws.ahc.AhcWSClient
 import play.api.test._
 import play.filters.csrf.{CSRFAddToken, CSRFCheck, CSRFConfig}
 import recorder.ContentApiHttpRecorder
-
-import scala.concurrent.Future
+import rendering.core.Renderer
+import scala.concurrent.{ExecutionContext, Future}
 import scala.util.{Failure, Success, Try}
 
 trait ConfiguredTestSuite extends ConfiguredServer with ConfiguredBrowser with ExecutionContexts {
@@ -148,4 +149,12 @@ trait WithTestCSRF {
   lazy val csrfConfig: CSRFConfig = CSRFConfig.fromConfiguration(app.configuration)
   lazy val csrfAddToken = new CSRFAddToken(csrfConfig, app.injector.instanceOf[CSRFTokenSigner])
   lazy val csrfCheck = new CSRFCheck(csrfConfig, app.injector.instanceOf[CSRFTokenSigner])
+}
+
+trait WithTestRenderer {
+  def app: Application
+  def appContext: ApplicationContext
+  def executionContext: ExecutionContext
+
+  lazy val testRenderer: Renderer = new Renderer()(app.actorSystem, executionContext, appContext)
 }
