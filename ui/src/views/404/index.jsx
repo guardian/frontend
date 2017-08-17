@@ -14,7 +14,7 @@ import {
     para,
 } from './style.js.scss';
 
-export default (props) =>
+export default ({ beaconUrl }: { beaconUrl: string }) =>
     <div style={fluidWrap}>
         <div style={topBar}>
             <a href="/" style={topBarLink}>
@@ -74,7 +74,7 @@ export default (props) =>
             }}
         />
         <img
-            src={props.beaconUrl + "/count/40x.gif"}
+            src={`${beaconUrl}/count/40x.gif`}
             alt=""
             style={{ display: 'none' }}
             rel="nofollow"
