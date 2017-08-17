@@ -12,7 +12,7 @@ import clone from 'lodash/objects/clone';
  *   Perhaps in the create method somewhere.
  * @constructor
  */
-var Component = function() {};
+const Component = () => {};
 
 /** @type {boolean} */
 Component.prototype.useBem = false;
@@ -92,10 +92,10 @@ Component.prototype.attachTo = function(elem) {
  */
 Component.prototype.render = function(parent) {
     this.checkAttached();
-    var template = this.template;
+    let template = this.template;
 
     if (!template && this.templateName) {
-        var templateEl = document.getElementById('tmpl-' + this.templateName);
+        const templateEl = document.getElementById('tmpl-' + this.templateName);
 
         if (templateEl) {
             template = templateEl.innerHTML;
@@ -130,7 +130,7 @@ Component.prototype.fetch = function(parent, key) {
     this.checkAttached();
 
     this.responseDataKey = key || this.responseDataKey;
-    var self = this;
+    const self = this;
 
     return this._fetch()
         .then(function render(resp) {
@@ -149,9 +149,9 @@ Component.prototype.fetch = function(parent, key) {
  * @return Promise
  */
 Component.prototype._fetch = function() {
-    var endpoint = (typeof this.endpoint === 'function') ? this.endpoint() : this.endpoint,
-        self = this,
-        opt;
+    let endpoint = (typeof this.endpoint === 'function') ? this.endpoint() : this.endpoint;
+    const self = this;
+    let opt;
 
     for (opt in this.options) {
         endpoint = endpoint.replace(':' + opt, this.options[opt]);
@@ -160,7 +160,7 @@ Component.prototype._fetch = function() {
     return fetchJSON(endpoint, {
         mode: 'cors',
         body: this.fetchData
-    }).then(function(resp) {
+    }).then(resp => {
         self.fetched(resp);
         return resp;
     });
@@ -189,21 +189,21 @@ Component.prototype._prerender = function() {
  * Check if we should auto update, if so, do so
  */
 Component.prototype._autoupdate = function() {
-    var self = this;
-    var setAutoUpdate = function() {
+    const self = this;
+    const setAutoUpdate = () => {
         self.t = setTimeout(update, self.updateEvery * 1000);
     };
 
     function update() {
         self._fetch()
-            .then(function(resp) {
+            .then(resp => {
                 self.autoupdate(bonzo.create(resp[self.responseDataKey])[0]);
 
                 if (self.autoupdated) {
                     setAutoUpdate();
                 }
             })
-            .catch(function() {
+            .catch(() => {
                 setAutoUpdate();
             });
     }
@@ -218,33 +218,33 @@ Component.prototype._autoupdate = function() {
  * This will help with the rendering performance that
  * we would lose if rendered then manipulated
  */
-Component.prototype.prerender = function() {};
+Component.prototype.prerender = () => {};
 
 /**
  * Once the render / decorate methods have been called
  * This is where you could do your event binding
  * This function is made to be overridden
  */
-Component.prototype.ready = function() {};
+Component.prototype.ready = () => {};
 
 /**
  * Once the render / decorate methods have been called
  * This is where you could do your error event binding
  * This function is made to be overridden
  */
-Component.prototype.error = function() {};
+Component.prototype.error = () => {};
 
 /**
  * This is called whenever a fetch occurs. This includes
  * explicit fetch calls and autoupdate.
  */
-Component.prototype.fetched = function() {};
+Component.prototype.fetched = () => {};
 
 /**
  * @param {Element} elem new element
  */
 Component.prototype.autoupdate = function(elem) {
-    var oldElem = this.elem;
+    const oldElem = this.elem;
     this.elem = elem;
 
     this._prerender();
@@ -254,7 +254,7 @@ Component.prototype.autoupdate = function(elem) {
 /**
  * Once we're done with it, remove event bindings etc
  */
-Component.prototype.dispose = function() {};
+Component.prototype.dispose = () => {};
 
 /**
  * @param {string} eventName
@@ -289,7 +289,7 @@ Component.prototype.getElem = function(elemName) {
         return this.elems[elemName];
     }
 
-    var elem = qwery(this.getClass(elemName), this.elem)[0];
+    const elem = qwery(this.getClass(elemName), this.elem)[0];
     this.elems[elemName] = elem;
 
     return elem;
@@ -301,7 +301,7 @@ Component.prototype.getElem = function(elemName) {
  * @return {string}
  */
 Component.prototype.getClass = function(elemName, sansDot) {
-    var className = this.useBem ? this.componentClass + '__' + elemName : this.classes[elemName];
+    const className = this.useBem ? this.componentClass + '__' + elemName : this.classes[elemName];
 
     return (sansDot ? '' : '.') + className;
 };
@@ -311,7 +311,7 @@ Component.prototype.getClass = function(elemName, sansDot) {
  * @param {string|null} elemName
  */
 Component.prototype.setState = function(state, elemName) {
-    var elem = elemName ? this.getElem(elemName) : this.elem;
+    const elem = elemName ? this.getElem(elemName) : this.elem;
     bonzo(elem).addClass(this.componentClass + (elemName ? '__' + elemName : '') + '--' + state);
 };
 
@@ -321,7 +321,7 @@ Component.prototype.setState = function(state, elemName) {
  * return {Boolean}
  */
 Component.prototype.removeState = function(state, elemName) {
-    var elem = elemName ? this.getElem(elemName) : this.elem;
+    const elem = elemName ? this.getElem(elemName) : this.elem;
     return bonzo(elem).removeClass(this.componentClass + (elemName ? '__' + elemName : '') + '--' + state);
 };
 
@@ -330,7 +330,7 @@ Component.prototype.removeState = function(state, elemName) {
  * @param {string|null} elemName
  */
 Component.prototype.toggleState = function(state, elemName) {
-    var elem = elemName ? this.getElem(elemName) : this.elem;
+    const elem = elemName ? this.getElem(elemName) : this.elem;
     bonzo(elem).toggleClass(this.componentClass + (elemName ? '__' + elemName : '') + '--' + state);
 };
 
@@ -340,7 +340,7 @@ Component.prototype.toggleState = function(state, elemName) {
  * return {Boolean}
  */
 Component.prototype.hasState = function(state, elemName) {
-    var elem = elemName ? this.getElem(elemName) : this.elem;
+    const elem = elemName ? this.getElem(elemName) : this.elem;
     return bonzo(elem).hasClass(this.componentClass + (elemName ? '__' + elemName : '') + '--' + state);
 };
 
@@ -379,7 +379,7 @@ Component.prototype.destroy = function() {
 /**
  * @param {Function} child
  */
-Component.define = function(child) {
+Component.define = child => {
     function Tmp() {}
     Tmp.prototype = Component.prototype;
     child.prototype = new Tmp();
