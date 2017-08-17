@@ -1,4 +1,4 @@
-.advert--branded {
+.vergadain--branded {
     padding-bottom: $gs-baseline * 8;
 }
 
@@ -38,8 +38,8 @@
                 margin-top: $gs-baseline;
             }
 
-            & > * + .advert,
-            & > * + * > .advert {
+            & > * + .vergadain,
+            & > * + * > .vergadain {
                 padding-top: $gs-baseline / 2;
             }
 
@@ -49,7 +49,7 @@
         }
     }
 
-    .advert > :last-child {
+    .vergadain > :last-child {
         margin-bottom: 0;
     }
 }
@@ -63,7 +63,7 @@
             min-height: $gs-row-height;
         }
 
-        &:first-child > .advert {
+        &:first-child > .vergadain {
             padding-bottom: $gs-baseline / 2;
         }
 
@@ -73,7 +73,7 @@
             max-width: 520px;
         }
 
-        &:not(:first-child) > .advert {
+        &:not(:first-child) > .vergadain {
             padding-right: 80px;
             padding-bottom: 0;
             min-height: 80px;
@@ -215,7 +215,7 @@
     }
 }
 
-.advert--capi {
+.vergadain--capi {
     border-top: 1px solid;
     transition: background .1s;
 
@@ -247,7 +247,7 @@
         }
     }
 
-    &:not(.advert--landscape) {
+    &:not(.vergadain--landscape) {
         > .advert__image-container {
             width: 100%;
         }
@@ -265,7 +265,7 @@
         }
     }
 
-    .has-page-skin &:not(.advert--landscape) {
+    .has-page-skin &:not(.vergadain--landscape) {
         .advert__image {
             @include mq(desktop) {
                 min-height: 0;
@@ -277,7 +277,7 @@
         height: auto;
     }
 
-    .has-no-flex &:not(.advert--small):not(.advert--landscape) {
+    .has-no-flex &:not(.vergadain--small):not(.vergadain--landscape) {
         padding-top: 0;
 
         > :first-child {
@@ -286,7 +286,7 @@
     }
 }
 
-.advert--paidfor {
+.vergadain--paidfor {
     @include f-textSans;
     background: $paid-article-card-bg;
     border-top-color: $paid-article-brand;
@@ -317,8 +317,8 @@
     }
 }
 
-.advert--supported {
-    &.advert--text {
+.vergadain--supported {
+    &.vergadain--text {
         border-top-color: $news-main-2;
         background: $neutral-8;
 
@@ -328,7 +328,7 @@
         }
     }
 
-    &.advert--media {
+    &.vergadain--media {
         border-top-color: $multimedia-main-2;
         background: $multimedia-main-1;
         color: #ffffff;
