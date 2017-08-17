@@ -17,14 +17,13 @@ import scala.util.{Failure, Success, Try}
 class Renderer(implicit actorSystem: ActorSystem, executionContext: ExecutionContext, ac: ApplicationContext) extends Logging {
 
   val renderingActorCount = 3
-  val actor = actorSystem.actorOf(Props[RenderingActor].withRouter(RoundRobinPool(renderingActorCount)))
+  val actor = actorSystem.actorOf(Props(classOf[RenderingActor], ac).withRouter(RoundRobinPool(renderingActorCount)))
 
-  val timeoutValue: Int = if(ac.environment.mode == Mode.Dev) 10 else 1
+  val timeoutValue: Int = if(ac.environment.mode == Mode.Prod) 1 else 30
   implicit val timeout = Timeout(timeoutValue.seconds)
 
   def render[R <: Renderable](renderable: R): Future[Html] = {
-    val forceReload = ac.environment.mode == Mode.Dev
-    (actor ? Rendering(renderable, forceReload))
+    (actor ? Rendering(renderable))
       .mapTo[Try[String]]
       .recover { case t => Try(throw t)}
       .map {
