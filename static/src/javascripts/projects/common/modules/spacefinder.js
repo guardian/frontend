@@ -6,7 +6,7 @@ import qwery from 'qwery';
 import bean from 'bean';
 import fastdom from 'lib/fastdom-promise';
 import mediator from 'lib/mediator';
-import trackAdRender from 'commercial/modules/dfp/track-ad-render';
+import { trackAdRender } from 'commercial/modules/dfp/track-ad-render';
 import memoize from 'lodash/functions/memoize';
 
 type SpacefinderOptions = {

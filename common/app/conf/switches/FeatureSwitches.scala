@@ -75,16 +75,6 @@ trait FeatureSwitches {
     exposeClientSide = true
   )
 
-  val ForeseeSwitch = Switch(
-    SwitchGroup.Feature,
-    "foresee",
-    "Enable Foresee surveys for a sample of our audience",
-    owners = Seq(Owner.withGithub("rich-nguyen")),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
   val GeoMostPopular = Switch(
     SwitchGroup.Feature,
     "geo-most-popular",

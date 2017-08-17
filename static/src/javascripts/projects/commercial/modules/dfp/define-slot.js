@@ -6,6 +6,7 @@ import uniq from 'lodash/arrays/uniq';
 import flatten from 'lodash/arrays/flatten';
 import once from 'lodash/functions/once';
 import prepareSwitchTag from 'commercial/modules/dfp/prepare-switch-tag';
+import { getOutbrainComplianceTargeting } from 'commercial/modules/third-party-tags/outbrain';
 
 const adUnit = once(() => {
     const urlVars = getUrlVars();
@@ -50,6 +51,32 @@ const getSizeOpts = (sizesByBreakpoint: Object): Object => {
     };
 };
 
+// The high-merch slot targeting requires Promise-based data about the page.
+const setHighMerchSlotTargeting = (slot, slotTarget): Promise<any> => {
+    if (!['merchandising-high', 'merchandising'].includes(slotTarget)) {
+        return Promise.resolve();
+    }
+
+    return getOutbrainComplianceTargeting().then(keyValues => {
+        keyValues.forEach((value, key) => {
+            slot.setTargeting(key, value);
+        });
+    });
+};
+
+const adomikClassify = (): string => {
+    const rand = Math.random();
+
+    switch (true) {
+        case rand < 0.09:
+            return `ad_ex${Math.floor(100 * rand)}`;
+        case rand < 0.1:
+            return 'ad_bc';
+        default:
+            return 'ad_opt';
+    }
+};
+
 const defineSlot = (adSlotNode: Element, sizes: Object): Object => {
     const slotTarget = adSlotNode.getAttribute('data-name');
     const sizeOpts = getSizeOpts(sizes);
@@ -66,7 +93,10 @@ const defineSlot = (adSlotNode: Element, sizes: Object): Object => {
         slot = window.googletag
             .defineSlot(adUnit(), sizeOpts.sizes, id)
             .defineSizeMapping(sizeOpts.sizeMapping);
-        slotReady = prepareSwitchTag.maybePushAdUnit(id, sizeOpts);
+        slotReady = Promise.all([
+            setHighMerchSlotTargeting(slot, slotTarget),
+            prepareSwitchTag.maybePushAdUnit(id, sizeOpts),
+        ]);
     }
 
     if (slotTarget === 'im' && config.page.isbn) {
@@ -81,6 +111,11 @@ const defineSlot = (adSlotNode: Element, sizes: Object): Object => {
 
     if (fabricKeyValues.has(slotTarget)) {
         slot.setTargeting('slot-fabric', fabricKeyValues.get(slotTarget));
+    }
+
+    if (config.switches.adomik) {
+        slot.setTargeting('ad_group', adomikClassify());
+        slot.setTargeting('ad_h', new Date().getUTCHours().toString());
     }
 
     slot.addService(window.googletag.pubads()).setTargeting('slot', slotTarget);

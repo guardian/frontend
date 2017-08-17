@@ -37,7 +37,7 @@ define([
                 };
                 var clashingTests = [test];
 
-                expect(Clash._testABClash(f, clashingTests)).toBeFalsy();
+                expect(Clash.testABClash(f, clashingTests)).toBeFalsy();
                 expect(f).not.toHaveBeenCalled();
             });
 
@@ -59,7 +59,7 @@ define([
                 };
                 var clashingTests = [test];
 
-                expect(Clash._testABClash(f, clashingTests)).toBeTruthy();
+                expect(Clash.testABClash(f, clashingTests)).toBeTruthy();
                 expect(f).toHaveBeenCalledOnce();
                 expect(f).toHaveBeenCalledWith(test, test.variants[1]);
 
@@ -83,7 +83,7 @@ define([
                 };
                 var clashingTests = [test];
 
-                expect(Clash._testABClash(f, clashingTests)).toBeFalsy();
+                expect(Clash.testABClash(f, clashingTests)).toBeFalsy();
                 expect(f).toHaveBeenCalledOnce();
                 expect(f).toHaveBeenCalledWith(test, test.variants[1]);
             });

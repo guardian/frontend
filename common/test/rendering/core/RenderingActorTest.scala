@@ -22,7 +22,7 @@ import scala.util.{Failure, Success, Try}
   with ExceptionMatcher {
 
   lazy val actorSystem: ActorSystem = app.actorSystem
-  implicit lazy val timeout = new Timeout(2.seconds)
+  implicit lazy val timeout = new Timeout(10.seconds)
 
   class TestRenderingActor extends RenderingActor(testContext) {
     override def javascriptFile: String = "common/test/resources/components/TestButtonComponent.js"

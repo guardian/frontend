@@ -16,6 +16,7 @@ abstract class Edition(
     val editionalisedSections: Seq[String] = Seq(
       "", // network front
       "business",
+      "business-to-business",
       "commentisfree",
       "culture",
       "money",

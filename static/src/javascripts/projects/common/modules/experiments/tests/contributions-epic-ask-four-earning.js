@@ -1,7 +1,7 @@
 // @flow
 import { makeABTest } from 'common/modules/commercial/contributions-utilities';
 
-export const askFourEarning: ContributionsABTest = makeABTest({
+export const askFourEarning: EpicABTest = makeABTest({
     id: 'ContributionsEpicAskFourEarning',
     campaignId: 'kr1_epic_ask_four_earning',
 

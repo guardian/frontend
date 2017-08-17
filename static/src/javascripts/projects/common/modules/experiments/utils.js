@@ -25,7 +25,7 @@ export const removeParticipation = (toRemove: { id: string }): void => {
 
 // Removes any tests from localstorage that have been
 // renamed/deleted from the backend
-export const cleanParticipations = (tests: Array<ABTest>): void =>
+export const cleanParticipations = (tests: $ReadOnlyArray<ABTest>): void =>
     Object.keys(getParticipations()).forEach(k => {
         if (typeof config.switches[`ab${k}`] === 'undefined') {
             removeParticipation({ id: k });

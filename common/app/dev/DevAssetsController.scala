@@ -68,6 +68,4 @@ class DevAssetsController(val environment: Environment) extends Controller with 
     }
   }
 
-  def surveys(file: String): Action[AnyContent] =
-    controllers.Assets.at(path = "/public/surveys", file, aggressiveCaching = false)
 }

@@ -55,7 +55,7 @@ export const shouldRunTest = (testId: string, variantName: string) => {
     );
 };
 
-export const segment = (tests: Array<ABTest>) =>
+export const segment = (tests: $ReadOnlyArray<ABTest>) =>
     tests.forEach(allocateUserToTest);
 
 export const forceSegment = (testId: string, variantName: string) => {
@@ -98,4 +98,4 @@ export const segmentUser = () => {
     cleanParticipations(TESTS);
 };
 
-export const run = (tests: Array<ABTest>) => tests.forEach(runTest);
+export const run = (tests: $ReadOnlyArray<ABTest>) => tests.forEach(runTest);

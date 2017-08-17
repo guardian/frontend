@@ -1,0 +1,28 @@
+@import com.gu.commercial.branding.Branding
+@import common.LinkTo
+
+@(branding: Branding, collectionHref: Option[String])(implicit request: RequestHeader)
+
+@* Verbose to avoid wrapping block level elements with anchor tags, since this breaks things on some email clients *@
+<table class="ct__inner branded-banner">
+    <tr class="bb__inner">
+        <td class="left-col">
+        </td>
+        <td class="bb__label">
+            @collectionHref.map { href =>
+                <a href="@LinkTo {/@Html(href)}" class="bb-link">@branding.logo.label</a>
+            }.getOrElse {
+                @branding.logo.label
+            }
+        </td>
+        <td class="bb__logo">
+            @collectionHref.map { href =>
+                <a class="bb-link" href="@LinkTo {/@Html(href)}">
+                    <img border="0" src="@branding.logo.src">
+                </a>
+            }.getOrElse {
+                <img border="0" src="@branding.logo.src">
+            }
+        </td>
+    </tr>
+</table>

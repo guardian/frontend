@@ -13,7 +13,6 @@ define([
     'lib/url',
     'lib/robust',
     'lib/storage',
-    'common/modules/analytics/foresee-survey',
     'common/modules/analytics/media-listener',
     'common/modules/analytics/interaction-tracking',
     'common/modules/analytics/register',
@@ -62,7 +61,6 @@ define([
     url,
     robust,
     storage,
-    Foresee,
     mediaListener,
     interactionTracking,
     register,
@@ -214,18 +212,12 @@ define([
                 }
             },
 
-            runForseeSurvey: function () {
-                if (config.switches.foresee) {
-                    Foresee.load();
-                }
-            },
-
             startRegister: function () {
                 register.initialise();
             },
 
             initDiscussion: function () {
-                if (config.switches.commentsVisibleOnArticle) {
+                if (config.switches.enableDiscussionSwitch) {
                     CommentCount.init();
                 }
             },
@@ -334,7 +326,6 @@ define([
                 ['c-history', modules.updateHistory],
                 ['c-id-cookie-refresh', modules.idCookieRefresh],
                 ['c-history-nav', modules.showHistoryInMegaNav],
-                ['c-forsee', modules.runForseeSurvey],
                 ['c-start-register', modules.startRegister],
                 ['c-smart-banner', customSmartAppBanner.init],
                 ['c-adblock', modules.showAdblockMessage],
@@ -342,7 +333,7 @@ define([
                 ['c-localStorage', modules.cleanupLocalStorage],
                 ['c-overlay', modules.initOpenOverlayOnClick],
                 ['c-public-api', modules.initPublicApi],
-                ['c-tech-feedback', techFeedback],
+                ['c-tech-feedback', techFeedback.initTechFeedback],
                 ['c-media-listeners', mediaListener],
                 ['c-accessibility-prefs', accessibilityPrefs.initAccessibilityPreferences],
                 ['c-pinterest', modules.initPinterest],

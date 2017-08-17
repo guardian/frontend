@@ -1,0 +1,490 @@
+@mixin separator($colour, $left, $margin-left: 0) {
+    content: '';
+    position: absolute;
+    left: $left;
+    top: 0;
+    bottom: 0;
+    margin-left: $margin-left;
+    width: 1px;
+    background: $colour;
+}
+
+// What on earth is dumathoin?
+// This class used to be `adverts` which is curently a hugely overloaded word in
+// frontend, without even counting the seperate `advert` class and derivatives.
+// Also, these styles apply to the glabs containers and content, NOT adverts.
+// However, codewords are cool, and `labs` and `paidfor` are fairly generic.
+// Using the string `dumathoin` gives zero chance of classname collisions, so
+// changing/rotating these classnames becomes as straightforward as possible.
+.dumathoin {
+    padding: 0 $gs-gutter / 2;
+    position: relative;
+
+    @include mq(tablet) {
+        padding: 0 calc(50% - 370px);
+    }
+
+    @include mq(desktop) {
+        padding: 0 calc(50% - 490px);
+    }
+
+    @include mq(leftCol) {
+        padding: 0 calc(50% - 570px);
+    }
+
+    @include mq(wide) {
+        padding: 0 calc(50% - 650px);
+    }
+
+    .button {
+        transition: border-color .1s, background-color .1s;
+    }
+}
+
+.dumathoin__header {
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    padding: $gs-baseline / 2 $gs-gutter / 2;
+    width: 100%;
+
+    @include mq(mobileLandscape, leftCol) {
+        flex-direction: row;
+        justify-content: space-between;
+        padding: $gs-baseline / 2 $gs-gutter;
+    }
+
+    @include mq(leftCol) {
+        padding: $gs-baseline $gs-gutter / 5 * 2;
+        width: 160px;
+    }
+
+    @include mq(tablet, desktop) {
+        padding: 0 $gs-gutter;
+    }
+
+    @include mq(wide) {
+        padding: $gs-baseline $gs-gutter;
+        width: 240px;
+    }
+
+    .button {
+        color: #ffffff;
+    }
+}
+
+.dumathoin__title {
+    @include fs-headline(4, true);
+    @include f-headlineSans;
+    color: #ffffff;
+    font-size: get-font-size(headline, 3);
+}
+
+.dumathoin__blurb {
+    @include fs-headline(1);
+    color: #ffffff;
+
+    @include mq($until: leftCol) {
+        display: none;
+    }
+
+    @include mq(leftCol) {
+        @include fs-headline(2);
+    }
+}
+
+.dumathoin__body {
+    position: relative;
+    padding-bottom: $gs-baseline;
+
+    @include mq(mobileLandscape) {
+        box-sizing: border-box;
+        max-width: gs-span(8) + ($gs-gutter * 2);
+    }
+    @include mq(tablet) {
+        max-width: gs-span(9) + ($gs-gutter * 2);
+        padding-bottom: $gs-baseline;
+    }
+    @include mq(desktop) {
+        max-width: gs-span(12) + ($gs-gutter * 2);
+    }
+    @include mq(leftCol) {
+        flex: 1;
+    }
+    @include mq($until: tablet) {
+        margin: auto;
+    }
+}
+
+.dumathoin--legacy {
+    background: $neutral-6;
+
+    @include mq($until: tablet) {
+        padding: 0;
+    }
+
+    .button {
+        margin-right: 0;
+    }
+
+    @include mq(leftCol) {
+        display: flex;
+
+        .has-no-flex & {
+            display: table;
+
+            &::before,
+            &::after,
+            > .dumathoin__body,
+            > .dumathoin__header {
+                display: table-cell;
+                vertical-align: top;
+            }
+        }
+    }
+
+    .adverts__logo {
+        color: #ffffff;
+        display: flex;
+
+        @include mq($until: leftCol) {
+            align-items: center;
+        }
+
+        @include mq(leftCol) {
+            flex-direction: column;
+
+            /* http://alistapart.com/article/axiomatic-css-and-lobotomized-owls */
+            > * + * {
+                margin-top: $gs-baseline / 2;
+            }
+        }
+    }
+
+    /* [1] Forces text wrap in IE11 */
+    .advert__title,
+    .advert__standfirst,
+    .advert__meta {
+        max-width: 100%; /* [1] */
+    }
+
+    .dumathoin__row {
+        padding: $gs-baseline / 2 0;
+        display: flex;
+
+        > * {
+            margin: 0 $gs-gutter / 2;
+            position: relative;
+
+            /* In Firefox, flex items have a min-width: auto, which prevents
+               them from shrinking when they have an image larger than the
+               size the item would normally fill. The only workaround to
+               solve this is to overwrite min-width on the flex item.
+               Additionnally, we put a max-width constraint on the container
+               otherwise it will overflow.
+               See https://bugzilla.mozilla.org/show_bug.cgi?id=1139931 */
+            min-width: 0;
+            .advert__image-container {
+                max-width: 100%;
+            }
+        }
+
+        @include mq($until: tablet) {
+            > * {
+                flex-basis: calc(50% - #{$gs-gutter});
+            }
+
+            > :nth-child(2) ~ * {
+                margin-top: $gs-baseline;
+            }
+
+            > * + * {
+                position: relative;
+
+                &:nth-child(even)::before {
+                    @include separator($neutral-4, $gs-gutter / -2);
+                }
+            }
+        }
+
+        @include mq(tablet) {
+            padding: $gs-baseline $gs-gutter / 2;
+
+            > * + * {
+                position: relative;
+
+                &::before {
+                    @include separator($neutral-4, $gs-gutter / -2);
+                }
+            }
+        }
+
+        @include mq(desktop) {
+            padding-bottom: 0;
+
+            .has-no-flex & {
+                clear: both;
+                max-width: 980px;
+
+                > * {
+                    float: left;
+                    width: calc(25% - #{$gs-gutter});
+                }
+
+                > :only-child {
+                    width: calc(100% - #{$gs-gutter});
+                }
+
+                > :first-child:nth-last-child(2),
+                > :nth-child(2):last-child {
+                    width: calc(50% - #{$gs-gutter});
+                }
+            }
+        }
+
+    }
+
+    .dumathoin__row--wrap {
+        position: relative;
+        padding-top: 0;
+        flex-wrap: wrap;
+
+        @include mq(mobileLandscape) {
+            > *::before {
+                content: none;
+            }
+        }
+    }
+
+    .dumathoin__2cols {
+        @include mq(tablet) {
+            > * {
+                position: relative;
+                z-index: 1;
+            }
+
+            &::after {
+                @include separator($neutral-4, calc((100% - #{$gs-gutter}) / 2), $gs-gutter / 2);
+            }
+        }
+    }
+
+    .dumathoin__3cols {
+        @include mq(tablet) {
+            > * {
+                position: relative;
+                z-index: 1;
+            }
+
+            &::before {
+                @include separator($neutral-4, calc((100% - #{$gs-gutter}) / 3), $gs-gutter / 2);
+            }
+
+            &::after {
+                @include separator($neutral-4, calc((100% - #{$gs-gutter}) / 3 * 2), $gs-gutter / 2);
+            }
+        }
+    }
+}
+
+.dumathoin--legacy-single {
+    .advert {
+        flex-basis: calc(100% - #{$gs-gutter});
+    }
+
+    @include mq(mobileLandscape) {
+        .advert {
+            flex-basis: calc(75% - #{$gs-gutter});
+            flex-grow: 0;
+        }
+
+        .advert--inverse > .advert__image-container {
+            flex-basis: calc(33.33% - #{$gs-gutter / 2});
+            margin-right: 0;
+        }
+
+        .dumathoin__row > .advert::after {
+            @include separator($neutral-4, 100%, $gs-gutter / 2);
+        }
+
+        .dumathoin__row > .button {
+            flex-basis: auto;
+            flex-grow: 1;
+        }
+
+        .dumathoin__row > .button::before {
+            content: none;
+        }
+    }
+
+    .has-no-flex & {
+        .advert {
+            width: calc(75% - #{$gs-gutter});
+        }
+
+        .advert--landscape > .advert__image-container {
+            width: calc(33.33% - #{$gs-gutter / 2});
+        }
+    }
+}
+
+.adverts__kicker {
+    .paidfor-meta__label {
+        padding-left: 0;
+    }
+    .paidfor-label .popup__toggle {
+        border: 0;
+    }
+}
+
+.dumathoin__stamp {
+    margin-top: auto;
+}
+
+.dumathoin__row {
+    @include mq($until: tablet) {
+        /* http://alistapart.com/article/axiomatic-css-and-lobotomized-owls */
+        > * + * {
+            margin-top: $gs-baseline;
+        }
+    }
+
+    @include mq(tablet) {
+        display: flex;
+        padding: $gs-baseline $gs-gutter / 2 0;
+
+        > * {
+            flex: 1;
+        }
+    }
+
+}
+
+.dumathoin__row--wrap {
+    @include mq(tablet) {
+        flex-wrap: wrap;
+    }
+}
+
+.dumathoin__2cols {
+    > * {
+        flex-basis: calc(50% - #{$gs-gutter / 2});
+        flex-grow: 0;
+    }
+
+    > :nth-child(even) {
+        margin-left: $gs-gutter;
+    }
+
+    > :nth-child(2) ~ * {
+        margin-top: $gs-baseline;
+    }
+
+    .has-no-flex .dumathoin--legacy & {
+        > * {
+            float: left;
+            width: calc(50% - #{$gs-gutter / 2});
+        }
+
+        > :nth-child(even) {
+            margin-left: $gs-gutter - 5px;
+        }
+
+        > :nth-child(odd) {
+            clear: left;
+        }
+    }
+}
+
+.dumathoin__3cols {
+    > * {
+        flex-basis: calc(33.33% - #{$gs-gutter});
+        flex-grow: 0;
+    }
+
+    > :nth-child(3) ~ * {
+        margin-top: $gs-baseline;
+    }
+
+    .has-no-flex .dumathoin--legacy & {
+        > * {
+            float: left;
+            width: calc(33.33% - #{$gs-gutter});
+        }
+
+        > :nth-child(3n+1) {
+            clear: left;
+        }
+    }
+}
+
+@include mq(tablet) {
+    .dumathoin__row--2x1x1 > :nth-child(1),
+    .dumathoin__row--1x2x1 > :nth-child(2),
+    .dumathoin__row--1x1x2 > :nth-child(3) {
+        flex-basis: calc(50% - #{$gs-gutter} - 1px);
+        flex-grow: 0;
+
+        .has-no-flex & {
+            width: calc(50% - #{$gs-gutter} - 1px);
+        }
+    }
+
+    .dumathoin__row--3x1 > :nth-child(1),
+    .dumathoin__row--1x3 > :nth-child(2) {
+        flex-basis: calc(75% - #{$gs-gutter});
+        flex-grow: 0;
+
+        .has-no-flex & {
+            width: calc(75% - #{$gs-gutter});
+        }
+    }
+}
+
+.dumathoin__column {
+    display: flex;
+    flex-direction: column;
+
+    &:not(.dumathoin__2cols) {
+        > * + * {
+            margin-top: $gs-baseline;
+        }
+    }
+}
+
+.dumathoin-more {
+    @include mq(tablet) {
+        margin: $gs-baseline 0;
+    }
+
+    &:not([open]) .inline-minus,
+    &[open] .inline-plus {
+        display: none;
+    }
+
+    &:not([open]) > *:not(summary) {
+        display: none;
+    }
+
+    .has-no-flex & {
+        clear: both;
+        padding-top: $gs-baseline;
+    }
+}
+
+.dumathoin-more__button {
+    cursor: pointer;
+    display: block;
+    margin: 0 0 $gs-baseline $gs-gutter / 2;
+    outline: none;
+    width: max-content;
+    border-radius: 1000px;
+
+    &::-webkit-details-marker {
+        display: none;
+    }
+
+    @include mq(tablet) {
+        margin-left: $gs-gutter;
+    }
+}

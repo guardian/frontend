@@ -1,26 +1,38 @@
 // @flow
-const path = require('path');
-const { ui } = require('../__config__/paths');
-
 module.exports = {
     parser: 'babel-eslint',
-    env: { browser: true, node: true, es6: true },
+    parserOptions: {
+        ecmaVersion: '2017',
+        sourceType: 'module',
+        ecmaFeatures: {
+            jsx: true,
+        },
+    },
+    settings: {
+        react: { pragma: 'h' },
+        'import/resolver': {
+            webpack: {
+                config: '__config__/webpack.config.js',
+            },
+        },
+    },
     extends: [
         'plugin:flowtype/recommended',
         'prettier/flowtype',
         'prettier/react',
     ],
-    plugins: ['flow-header', 'flowtype', 'prettier'],
-    parserOptions: { ecmaVersion: '2017' },
-    settings: {
-        react: { pragma: 'h' },
-        'import/resolver': {
-            webpack: {
-                config: path.resolve(ui, '__config__', 'webpack.config.js'),
-            },
-        },
-    },
+    plugins: ['flow-header', 'flowtype'],
     rules: {
+        'flow-header/flow-header': 'error',
+
+        // flow should take care of our return values
+        'consistent-return': 'off',
+
+        // react API stuff
+        'react/react-in-jsx-scope': 'off',
+        'react/prop-types': 'off',
+
+        // these exentions never need to be supplied for imports
         'import/extensions': [
             'error',
             'always',
@@ -29,9 +41,6 @@ module.exports = {
                 jsx: 'never',
             },
         ],
-        'flow-header/flow-header': 'error',
-        'react/react-in-jsx-scope': 'off',
-        'react/prop-types': 'off',
     },
     globals: {
         BROWSER: true,
