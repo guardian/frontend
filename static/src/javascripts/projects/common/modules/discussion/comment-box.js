@@ -119,11 +119,11 @@ class CommentBox extends Component {
     }
 
     // eslint-disable-next-line class-methods-use-this
-    getUserData() {
+    getUserData(): Object {
         return IdentityApi.getUserFromCookie();
     }
 
-    clearErrors() {
+    clearErrors(): void {
         this.getElem('messages').innerHTML = '';
         this.errors = [];
         this.removeState('invalid');
@@ -214,7 +214,7 @@ class CommentBox extends Component {
 
         this.clearErrors();
 
-        const postCommentToDAPI = () => {
+        const postCommentToDAPI = (): void => {
             this.removeState('onboarding-visible');
             comment.body = urlify(comment.body);
             this.setFormState(true);
@@ -252,7 +252,7 @@ class CommentBox extends Component {
             errorMessage.classList.remove('is-hidden');
         };
 
-        const validEmailCommentSubmission = () => {
+        const validEmailCommentSubmission = (): void => {
             if (comment.body === '') {
                 this.error('EMPTY_COMMENT_BODY');
             }
@@ -384,7 +384,7 @@ class CommentBox extends Component {
         }
     }
 
-    hideOnboarding(e: Event) {
+    hideOnboarding(e: Event): void {
         e.preventDefault();
         this.removeState('onboarding-visible');
     }
@@ -520,7 +520,7 @@ class CommentBox extends Component {
         this.getElem('preview-body').innerHTML = '';
     }
 
-    formatComment(formatStyle: string) {
+    formatComment(formatStyle: string): void {
         const commentBody = this.getElem('body');
         const cursorPositionStart = commentBody.selectionStart;
         let selectedText = commentBody.value.substring(
