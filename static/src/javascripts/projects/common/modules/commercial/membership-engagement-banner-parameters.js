@@ -8,11 +8,6 @@ const baseParams = {
         return 'membership-prominent yellow';
     },
     campaignCode: 'gdnwb_copts_memco_banner',
-    // Used for tracking the new implementation by querying the interactions field.
-    interactionOnMessageShow: {
-        component: 'engagement_banner',
-        value: 'default_paypal_and_paywall',
-    },
 };
 
 const engagementBannerCopy = (cta: string): string =>

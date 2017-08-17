@@ -94,7 +94,6 @@ declare type EngagementBannerParams = {
     linkUrl: string,
     messageText: string,
     pageviewId: string,
-    interactionOnMessageShow: Interaction,
     colourStrategy: () => string,
     products: OphanProduct[],
     paypalClass?: string,
