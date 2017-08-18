@@ -106,6 +106,21 @@ const addEpicToBlocks = (epicHtml: string, test: EpicABTest): Promise<void> =>
         });
     });
 
+export const setupEpicInLiveblog = (
+    epicHtml: string,
+    test: EpicABTest
+): void => {
+    addEpicToBlocks(epicHtml, test);
+    mediator.emit(test.insertEvent);
+
+    if (!isAutoUpdateHandlerBound) {
+        mediator.on('modules:autoupdate:updates', () => {
+            addEpicToBlocks(epicHtml, test);
+        });
+        isAutoUpdateHandlerBound = true;
+    }
+};
+
 export const acquisitionsEpicLiveblog: EpicABTest = makeABTest({
     id: 'AcquisitionsEpicLiveblog',
     campaignId: 'epic_liveblog',
@@ -149,15 +164,7 @@ export const acquisitionsEpicLiveblog: EpicABTest = makeABTest({
 
                 test(renderFn, variant, test) {
                     const epicHtml = variant.options.template(variant);
-                    addEpicToBlocks(epicHtml, test);
-                    mediator.emit(test.insertEvent);
-
-                    if (!isAutoUpdateHandlerBound) {
-                        mediator.on('modules:autoupdate:updates', () => {
-                            addEpicToBlocks(epicHtml, test);
-                        });
-                        isAutoUpdateHandlerBound = true;
-                    }
+                    setupEpicInLiveblog(epicHtml, test);
                 },
             },
         },

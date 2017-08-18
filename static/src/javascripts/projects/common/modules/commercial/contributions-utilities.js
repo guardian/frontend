@@ -440,6 +440,7 @@ const makeABTest = ({
 export {
     shouldShowReaderRevenue,
     defaultCanEpicBeDisplayed,
+    defaultPageCheck,
     getTestimonialBlock,
     addTrackingCodesToUrl,
     makeABTest,

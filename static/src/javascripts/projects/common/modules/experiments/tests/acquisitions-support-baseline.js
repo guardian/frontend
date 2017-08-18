@@ -1,5 +1,17 @@
 // @flow
-import { makeABTest } from 'common/modules/commercial/contributions-utilities';
+import {
+    makeABTest,
+    defaultPageCheck as isEpicCompatibleWithPage,
+} from 'common/modules/commercial/contributions-utilities';
+import { setupEpicInLiveblog } from 'common/modules/experiments/tests/acquisitions-epic-liveblog';
+import { viewsInPreviousDays } from 'common/modules/commercial/acquisitions-view-log';
+
+import config from 'lib/config';
+
+const baseCampaignCode = 'gdnwb_copts_memco_sandc_support_baseline';
+
+const makeSupportURL = (campaignCode: string): string =>
+    `https://support.theguardian.com/uk?INTCMP=${campaignCode}`;
 
 const buildButtonTemplate = ({ supportUrl }) =>
     `<div class="contributions__amount-field">
@@ -12,11 +24,56 @@ const buildButtonTemplate = ({ supportUrl }) =>
         </div>
     </div>`;
 
-const campaignCode = 'gdnwb_copts_memco_sandc_support_baseline';
+const liveblogEpicTemplate = (ctaSentence: string) =>
+    `<div class="block block--content is-epic" data-component="<%=componentName%>">
+        <p class="block-time published-time">
+            <a href="#" itemprop="url" class="block-time__link">
+                <time data-relativeformat="med" itemprop="datePublished" class="js-timestamp"></time>
+                <span class="block-time__absolute"></span>
+            </a>
+        </p>
+        <div class="block-elements block-elements--no-byline">
+            <p>
+                <em>
+                    Since you’re here &hellip; we have a small favour to ask. More people are reading the Guardian than ever but advertising revenues across the media are falling fast. And <span class="contributions__highlight">unlike many news organisations, we haven’t put up a paywall &ndash; we want to keep our journalism as open as we can</span>. So you can see why we need to ask for your help. The Guardian’s independent, investigative journalism takes a lot of time, money and hard work to produce. But we do it because we believe our perspective matters &ndash; because it might well be your perspective, too.
+                </em>
+            </p>
+            <p>
+                <em>
+                    If everyone who reads our reporting, who likes it, helps to support it, our future would be much more secure.
+                    ${ctaSentence}
+                </em>
+            </p>
+        </div>
+    </div>`;
 
-// TODO: is it OK to hard-code straight to UK? given that this is a UK-only test...
-const membershipSupporterUrl =
-    'https://membership.theguardian.com/uk/supporter';
+const setHeaderLink = (href: string, innerHTML?: string) => {
+    [...document.getElementsByClassName('js-become-member')].forEach(el => {
+        if (el instanceof HTMLAnchorElement) {
+            if (innerHTML) {
+                el.innerHTML = innerHTML;
+            }
+
+            el.href = href;
+        }
+    });
+};
+
+const isEpicWithinViewLimit = (test: EpicABTest): boolean => {
+    const days = 30;
+    const count = 4;
+    const minDaysBetweenViews = 0;
+
+    const testId = test.useLocalViewLog ? test.id : undefined;
+
+    const withinViewLimit = viewsInPreviousDays(days, testId) < count;
+    const enoughDaysBetweenViews =
+        viewsInPreviousDays(minDaysBetweenViews, testId) === 0;
+    return withinViewLimit && enoughDaysBetweenViews;
+};
+
+const shouldDisplayEpic = (test: EpicABTest): boolean =>
+    isEpicWithinViewLimit(test) && isEpicCompatibleWithPage(config.get('page'));
 
 // gdnwb_copts_memco_sandc_support_baseline_support_epic
 
@@ -40,27 +97,44 @@ export const acquisitionsSupportBaseline = makeABTest({
 
     campaignSuffix: 'epic',
 
+    // TODO: What do we do about pages marked hideReaderRevenue?
+    // (epic & banner will not display. but what about header?
+    pageCheck: () => true,
+
     variants: [
         {
             id: 'control',
             products: ['ONE_OFF_CONTRIBUTION', 'MEMBERSHIP_SUPPORTER'],
             options: {
                 useTailoredCopyForRegulars: true,
-                test(render) {
-                    render();
+                test(renderArticleEpic, variant, test) {
+                    if (config.get('page.contentType') === 'LiveBlog') {
+                        const membershipURL = variant.membershipURLBuilder(
+                            campaignCode => `${campaignCode}_liveblog`
+                        );
+                        const contributionsURL = variant.contributionsURLBuilder(
+                            campaignCode => `${campaignCode}_liveblog`
+                        );
+                        const ctaSentence = `You can give to the Guardian by <a href="${membershipURL}" target="_blank" class="u-underline">becoming a monthly supporter</a> or by making a <a href="${contributionsURL}" target="_blank" class="u-underline">one-off contribution</a>`;
+                        const epicHtml = liveblogEpicTemplate(ctaSentence);
 
-                    [
-                        ...document.getElementsByClassName('js-become-member'),
-                    ].forEach(el => {
-                        if (el instanceof HTMLAnchorElement) {
-                            el.href = `${membershipSupporterUrl}?INTCMP=${campaignCode}_control_header`;
-                        }
-                    });
+                        setupEpicInLiveblog(epicHtml, test);
+                    } else if (shouldDisplayEpic(test)) {
+                        renderArticleEpic();
+                    }
+
+                    setHeaderLink(
+                        variant.membershipURLBuilder(
+                            campaignCode => `${campaignCode}_header`
+                        )
+                    );
                 },
 
                 engagementBannerParams: {
-                    campaignCode: `${campaignCode}_control_banner`,
+                    campaignCode: `${baseCampaignCode}_control_banner`,
                 },
+
+                isUnlimited: true,
             },
         },
         {
@@ -78,25 +152,35 @@ export const acquisitionsSupportBaseline = makeABTest({
                 supportCustomURL: 'https://support.theguardian.com/uk',
                 useTailoredCopyForRegulars: true,
 
-                test(render) {
-                    render();
+                test(renderArticleEpic, variant, test) {
+                    if (config.get('page.contentType') === 'LiveBlog') {
+                        const url = makeSupportURL(
+                            `${baseCampaignCode}_support_liveblog`
+                        );
+                        // TODO: confirm copy
+                        const ctaSentence = `You can give to the Guardian by <a href="${url}" target="_blank" class="u-underline">becoming a supporter</a>`;
+                        const epicHtml = liveblogEpicTemplate(ctaSentence);
 
-                    // HEADER
-                    [
-                        ...document.getElementsByClassName('js-become-member'),
-                    ].forEach(el => {
-                        if (el instanceof HTMLAnchorElement) {
-                            el.innerHTML = 'Support the Guardian';
-                            el.href = `https://support.theguardian.com/uk?INTCMP=${campaignCode}_support_header`;
-                        }
-                    });
+                        setupEpicInLiveblog(epicHtml, test);
+                    } else if (shouldDisplayEpic(test)) {
+                        renderArticleEpic();
+                    }
+
+                    setHeaderLink(
+                        makeSupportURL(`${baseCampaignCode}_support_header`),
+                        'support the Guardian'
+                    );
                 },
 
                 // ENGAGEMENT BANNER
                 engagementBannerParams: {
                     buttonCaption: 'Support the Guardian',
-                    linkUrl: `https://support.theguardian.com/uk?INTCMP=${campaignCode}_support_banner`,
+                    linkUrl: makeSupportURL(
+                        `${baseCampaignCode}_support_banner`
+                    ),
                 },
+
+                isUnlimited: true,
             },
         },
     ],
