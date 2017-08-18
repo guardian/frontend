@@ -34,7 +34,7 @@ export const alwaysAsk: EpicABTest = makeABTest({
     variants: [
         {
             id: 'control',
-            products: ['ONE_OFF_CONTRIBUTION', 'MEMBERSHIP_SUPPORTER'],
+            products: ['CONTRIBUTION', 'MEMBERSHIP_SUPPORTER'],
 
             options: {
                 test() {},
@@ -44,7 +44,7 @@ export const alwaysAsk: EpicABTest = makeABTest({
 
         {
             id: 'alwaysAsk',
-            products: ['ONE_OFF_CONTRIBUTION', 'MEMBERSHIP_SUPPORTER'],
+            products: ['CONTRIBUTION', 'MEMBERSHIP_SUPPORTER'],
 
             options: {
                 test(render, variant, parentTest) {

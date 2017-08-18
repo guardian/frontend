@@ -333,7 +333,7 @@ define([
                 ['c-localStorage', modules.cleanupLocalStorage],
                 ['c-overlay', modules.initOpenOverlayOnClick],
                 ['c-public-api', modules.initPublicApi],
-                ['c-tech-feedback', techFeedback],
+                ['c-tech-feedback', techFeedback.initTechFeedback],
                 ['c-media-listeners', mediaListener],
                 ['c-accessibility-prefs', accessibilityPrefs.initAccessibilityPreferences],
                 ['c-pinterest', modules.initPinterest],

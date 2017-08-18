@@ -104,7 +104,7 @@ export const acquisitionsSupportBaseline = makeABTest({
     variants: [
         {
             id: 'control',
-            products: ['ONE_OFF_CONTRIBUTION', 'MEMBERSHIP_SUPPORTER'],
+            products: ['CONTRIBUTION', 'MEMBERSHIP_SUPPORTER'],
             options: {
                 useTailoredCopyForRegulars: true,
                 test(renderArticleEpic, variant, test) {
@@ -140,10 +140,9 @@ export const acquisitionsSupportBaseline = makeABTest({
         {
             id: 'support',
             products: [
-                'ONE_OFF_CONTRIBUTION',
+                'CONTRIBUTION',
                 'RECURRING_CONTRIBUTION',
                 'DIGITAL_SUBSCRIPTION',
-                'PAPER_SUBSCRIPTION',
             ],
 
             // EPIC
@@ -175,9 +174,8 @@ export const acquisitionsSupportBaseline = makeABTest({
                 // ENGAGEMENT BANNER
                 engagementBannerParams: {
                     buttonCaption: 'Support the Guardian',
-                    linkUrl: makeSupportURL(
-                        `${baseCampaignCode}_support_banner`
-                    ),
+                    campaignCode: `${baseCampaignCode}_support_banner`,
+                    linkUrl: `https://support.theguardian.com/uk`,
                 },
 
                 isUnlimited: true,

@@ -17,7 +17,7 @@ import views.support._
 import scala.Function.const
 
 object EditionalisedLink {
-  def fromFaciaContent(faciaContent: PressedContent) =
+  def fromFaciaContent(faciaContent: PressedContent): EditionalisedLink =
     EditionalisedLink(SupportedUrl.fromFaciaContent(faciaContent))
 }
 
@@ -56,7 +56,7 @@ case class Sublink(
 )
 
 object DiscussionSettings {
-  def fromTrail(faciaContent: PressedContent) = DiscussionSettings(
+  def fromTrail(faciaContent: PressedContent): DiscussionSettings = DiscussionSettings(
     faciaContent.discussion.isCommentable,
     faciaContent.discussion.isClosedForComments,
     faciaContent.discussion.discussionId
@@ -90,7 +90,7 @@ case class Byline(
 }
 
 object DisplaySettings {
-  def fromTrail(faciaContent: PressedContent) = DisplaySettings(
+  def fromTrail(faciaContent: PressedContent): DisplaySettings = DisplaySettings(
     faciaContent.display.isBoosted,
     faciaContent.display.showBoostedHeadline,
     faciaContent.display.showQuotedHeadline,
@@ -152,7 +152,7 @@ object FaciaCardHeader {
     config
   )
 
-  def fromTrailAndKicker(faciaContent: PressedContent, itemKicker: Option[ItemKicker], config: Option[CollectionConfig]) = FaciaCardHeader(
+  def fromTrailAndKicker(faciaContent: PressedContent, itemKicker: Option[ItemKicker], config: Option[CollectionConfig]): FaciaCardHeader = FaciaCardHeader(
     faciaContent.display.showQuotedHeadline,
     faciaContent.card.cardStyle == ExternalLink,
     faciaContent.header.isVideo,

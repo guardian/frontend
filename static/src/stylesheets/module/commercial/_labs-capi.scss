@@ -26,10 +26,6 @@
 }
 
 .dumathoin--capi {
-    .dumathoin__title {
-        font-size: get-font-size(headline, 3);
-    }
-
     .dumathoin__row {
         @include mq($until: tablet) {
             flex-direction: column;

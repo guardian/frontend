@@ -23,7 +23,7 @@ const wordCount = (element: Element): number =>
 const rules = {
     bodySelector: '.js-article__body',
     slotSelector: ' > p',
-    minAbove: 0,
+    minAbove: 500,
     minBelow: 0,
     clearContentMeta: 0,
     selectors: {
