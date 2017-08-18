@@ -154,7 +154,9 @@ describe('Membership engagement banner', () => {
             }));
         it('should record the component event in ophan', () =>
             showBanner.then(() => {
-                expect(fakeOphan.record).toHaveBeenCalledWith({componentEvent: fakeComponentEvent});
+                expect(fakeOphan.record).toHaveBeenCalledWith({
+                    componentEvent: fakeComponentEvent,
+                });
             }));
     });
 
