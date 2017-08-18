@@ -94,7 +94,8 @@ export const acquisitionsSupportBaseline = makeABTest({
                 // ENGAGEMENT BANNER
                 engagementBannerParams: {
                     buttonCaption: 'Support the Guardian',
-                    linkUrl: `https://support.theguardian.com/uk?INTCMP=${campaignCode}_support_banner`,
+                    campaignCode: `${campaignCode}_support_banner`,
+                    linkUrl: `https://support.theguardian.com/uk`,
                 },
             },
         },
