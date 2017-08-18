@@ -43,7 +43,7 @@ export const acquisitionsSupportBaseline = makeABTest({
     variants: [
         {
             id: 'control',
-            products: ['ONE_OFF_CONTRIBUTION', 'MEMBERSHIP_SUPPORTER'],
+            products: ['CONTRIBUTION', 'MEMBERSHIP_SUPPORTER'],
             options: {
                 useTailoredCopyForRegulars: true,
                 test(render) {
@@ -66,10 +66,9 @@ export const acquisitionsSupportBaseline = makeABTest({
         {
             id: 'support',
             products: [
-                'ONE_OFF_CONTRIBUTION',
+                'CONTRIBUTION',
                 'RECURRING_CONTRIBUTION',
                 'DIGITAL_SUBSCRIPTION',
-                'PAPER_SUBSCRIPTION',
             ],
 
             // EPIC

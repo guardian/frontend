@@ -15,7 +15,6 @@ import { acquisitionsEpicAlwaysAskElection } from 'common/modules/experiments/te
 import { acquisitionsEpicThankYou } from 'common/modules/experiments/tests/acquisitions-epic-thank-you';
 import { acquisitionsSupportBaseline } from 'common/modules/experiments/tests/acquisitions-support-baseline';
 
-
 /**
  * acquisition tests in priority order (highest to lowest)
  */
