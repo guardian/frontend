@@ -2,7 +2,6 @@
 import { isExpired } from 'common/modules/experiments/test-can-run-checks';
 import { removeParticipation } from 'common/modules/experiments/utils';
 import { getTest as getAcquisitionTest } from 'common/modules/experiments/acquisition-test-selector';
-import { membershipEngagementBannerTests } from 'common/modules/experiments/tests/membership-engagement-banner-tests';
 import { paidContentVsOutbrain2 } from 'common/modules/experiments/tests/paid-content-vs-outbrain';
 import { glabsTrafficDriverSlots } from 'common/modules/experiments/tests/glabs-traffic-driver-slots';
 import { tailorSurvey } from 'common/modules/experiments/tests/tailor-survey';
@@ -17,9 +16,7 @@ export const TESTS: $ReadOnlyArray<ABTest> = [
     glabsTrafficDriverSlots,
     acquisitionsEpicElectionInteractiveEnd,
     acquisitionsEpicElectionInteractiveSlice,
-]
-    .concat(membershipEngagementBannerTests)
-    .filter(Boolean);
+].filter(Boolean);
 
 export const getActiveTests = (): $ReadOnlyArray<ABTest> =>
     TESTS.filter(test => {
