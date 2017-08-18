@@ -142,7 +142,6 @@ const showBanner = (params: EngagementBannerParams): void => {
             params.campaignCode
         );
 
-        // TODO: QUESTION: for things which are automatically in view on insert, should we fire both events?
         submitViewEvent(
             'ACQUISITIONS_ENGAGEMENT_BANNER',
             params.products,
