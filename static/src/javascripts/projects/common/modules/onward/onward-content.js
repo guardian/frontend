@@ -3,7 +3,7 @@
 import config from 'lib/config';
 import mediator from 'lib/mediator';
 import register from 'common/modules/analytics/register';
-import Component from 'common/modules/component';
+import { Component } from 'common/modules/component';
 
 const getTag = (): string =>
     [

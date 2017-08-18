@@ -13,7 +13,7 @@ import fastdom from 'lib/fastdom-promise';
 import fetchJson from 'lib/fetch-json';
 import DiscussionAnalytics from 'common/modules/analytics/discussion';
 import register from 'common/modules/analytics/register';
-import Component from 'common/modules/component';
+import { Component } from 'common/modules/component';
 import DiscussionApi from 'common/modules/discussion/api';
 import { CommentBox } from 'common/modules/discussion/comment-box';
 import { Comments } from 'common/modules/discussion/comments';

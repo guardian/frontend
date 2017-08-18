@@ -1,5 +1,5 @@
 // @flow
-import Component from 'common/modules/component';
+import { Component } from 'common/modules/component';
 import mediator from 'lib/mediator';
 import { checkElemsForVideos } from 'common/modules/atoms/youtube';
 

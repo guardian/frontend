@@ -8,7 +8,7 @@ import $ from 'lib/$';
 import config from 'lib/config';
 import mediator from 'lib/mediator';
 import register from 'common/modules/analytics/register';
-import Component from 'common/modules/component';
+import { Component } from 'common/modules/component';
 
 const hideTabs = (parent: Element): void => {
     $('.js-tabs-content', parent).addClass('tabs__content--no-border');

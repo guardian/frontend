@@ -2,7 +2,7 @@
 import fastdom from 'fastdom';
 import { initYoutubePlayer } from 'common/modules/atoms/youtube-player';
 import tracking from 'common/modules/atoms/youtube-tracking';
-import Component from 'common/modules/component';
+import { Component } from 'common/modules/component';
 import $ from 'lib/$';
 import config from 'lib/config';
 import { isIOS, isAndroid, isBreakpoint } from 'lib/detect';

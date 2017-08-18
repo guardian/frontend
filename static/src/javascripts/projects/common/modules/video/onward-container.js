@@ -2,7 +2,7 @@
 
 import bean from 'bean';
 import config from 'lib/config';
-import Component from 'common/modules/component';
+import { Component } from 'common/modules/component';
 
 const getEndpoint = (mediaType: string): string => {
     const isInSeries = Boolean(config.page.seriesTags);

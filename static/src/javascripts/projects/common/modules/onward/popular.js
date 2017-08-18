@@ -2,7 +2,7 @@
 
 import qwery from 'qwery';
 import config from 'lib/config';
-import Component from 'common/modules/component';
+import { Component } from 'common/modules/component';
 import mediator from 'lib/mediator';
 
 class MostPopular extends Component {

@@ -1,4 +1,5 @@
 // @flow
+/* eslint no-underscore-dangle: 0 */
 
 import bean from 'bean';
 import bonzo from 'bonzo';
@@ -32,7 +33,7 @@ class Component {
     templateName: ?string;
     updateEvery: number;
     useBem: boolean;
-    
+
     constructor() {
         this.useBem = false;
         this.templateName = null;
@@ -53,6 +54,26 @@ class Component {
         this.t = null;
         this.fetchData = null;
         this.manipulationType = 'append';
+    }
+
+    // eslint-disable-next-line class-methods-use-this, no-unused-vars
+    error(err: Error): void {
+        /* noop */
+    }
+
+    // eslint-disable-next-line class-methods-use-this, no-unused-vars
+    fetched(res: string): void {
+        /* noop */
+    }
+
+    // eslint-disable-next-line class-methods-use-this, no-unused-vars
+    prerender(): void {
+        /* noop */
+    }
+
+    // eslint-disable-next-line class-methods-use-this, no-unused-vars
+    ready(elem: ?HTMLElement): void {
+        /* noop */
     }
 
     attachTo(elem: HTMLElement): void {
@@ -104,13 +125,6 @@ class Component {
         }
     }
 
-    define(child: Class<any>): void {
-        class Tmp {}
-        Tmp.prototype = this.prototype;
-        //child.prototype = new Tmp();
-        //child.prototype.constructor = child;
-    }
-
     destroy(): void {
         if (this.elem) {
             bonzo(this.elem).remove();
@@ -134,21 +148,16 @@ class Component {
         bean.fire(this.elem, eventName, args);
     }
 
-    error(err: Error): void {
-        /* noop */
-    }
-
     _fetch(): Promise<void> {
         let endpoint =
             typeof this.endpoint === 'function'
                 ? this.endpoint()
                 : this.endpoint;
-        let opt;
 
         if (endpoint) {
-            for (opt in this.options) {
+            Object.keys(this.options).forEach(opt => {
                 endpoint = endpoint.replace(`:${opt}`, this.options[opt]);
-            }
+            });
 
             return fetchJSON(endpoint, {
                 mode: 'cors',
@@ -181,10 +190,6 @@ class Component {
                 }
             })
             .catch(this.error);
-    }
-
-    fetched(res: string): void {
-        /* noop */
     }
 
     getClass(elemName: string, sansDot?: boolean): string {
@@ -238,20 +243,12 @@ class Component {
         this.prerender();
     }
 
-    prerender(): void {
-        /* noop */
-    }
-
     _ready(elem: ?HTMLElement): void {
         if (!this.destroyed) {
             this.rendered = true;
             this._autoupdate();
             this.ready(elem);
         }
-    }
-
-    ready(elem: ?HTMLElement): void {
-        /* noop */
     }
 
     removeState(state: string, elemName: string): bonzo {

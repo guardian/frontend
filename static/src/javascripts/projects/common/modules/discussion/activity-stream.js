@@ -9,7 +9,7 @@ import {
     replaceQueryString,
     pushQueryString,
 } from 'lib/url';
-import Component from 'common/modules/component';
+import { Component } from 'common/modules/component';
 import discussionApi from 'common/modules/discussion/api';
 
 declare class PopStateEvent extends Event {
