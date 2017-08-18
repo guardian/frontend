@@ -1,4 +1,4 @@
-.advert {
+.vergadain {
     box-sizing: border-box;
     display: block;
     display: flex;
@@ -22,13 +22,13 @@
         color: inherit;
     }
 
-    .has-no-flex &:not(.advert--small):not(.advert--landscape) {
+    .has-no-flex &:not(.vergadain--small):not(.vergadain--landscape) {
         padding-top: 11 * $gs-baseline;
         position: relative;
     }
 }
 
-.advert--landscape {
+.vergadain--landscape {
     .has-no-flex & {
         overflow: hidden;
 
@@ -48,7 +48,7 @@
     }
 }
 
-.advert--inverse {
+.vergadain--inverse {
     .has-no-flex & {
         > .advert__image-container {
             float: left;
@@ -60,13 +60,13 @@
     }
 }
 
-.advert--manual {
+.vergadain--manual {
     .advert__image-container {
         height: auto;
     }
 }
 
-.advert--single {
+.vergadain--single {
     @include mq(375px, $until: mobileLandscape) {
         flex-direction: row;
 
@@ -170,12 +170,12 @@
     margin-top: $gs-baseline / 2;
 }
 
-.advert--small > .advert__title {
+.vergadain--small > .advert__title {
     padding-top: $gs-baseline / 2;
 }
 
 @include mq(tablet) {
-    .advert--large {
+    .vergadain--large {
         flex-direction: row;
         align-items: stretch;
         padding-bottom: 0;
@@ -207,7 +207,7 @@
         }
     }
 
-    .advert--inverse {
+    .vergadain--inverse {
         flex-direction: row-reverse;
 
         .advert__text {
@@ -220,7 +220,7 @@
         }
     }
 
-    .advert--thumbnail {
+    .vergadain--thumbnail {
         .advert__image-container {
             $line-height: 20px;
             $image-height: $line-height * 4 + $gs-baseline;
@@ -233,28 +233,28 @@
         }
     }
 
-    .advert--large--1x3 > .advert__image-container {
+    .vergadain--large--1x3 > .advert__image-container {
         flex-basis: calc(75% - #{$gs-gutter / 2});
     }
 
-    .advert--large--1x2 > .advert__image-container {
+    .vergadain--large--1x2 > .advert__image-container {
         flex-basis: calc(66.67% - #{$gs-gutter / 2});
     }
 
     .has-no-flex {
-        .advert--large--1x3 > .advert__image-container {
+        .vergadain--large--1x3 > .advert__image-container {
             width:  calc(75% - #{$gs-gutter / 2});
         }
 
-        .advert--large--1x2 > .advert__image-container {
+        .vergadain--large--1x2 > .advert__image-container {
             width:  calc(66.67% - #{$gs-gutter / 2});
         }
 
-        .advert--large--1x3 > .advert__text {
+        .vergadain--large--1x3 > .advert__text {
             width:  calc(25% - #{$gs-gutter / 2});
         }
 
-        .advert--large--1x2 > .advert__text {
+        .vergadain--large--1x2 > .advert__text {
             width:  calc(33.33% - #{$gs-gutter / 2});
         }
     }
