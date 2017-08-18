@@ -10,7 +10,6 @@ define([
     'lodash/utilities/template',
     'lib/url',
     'common/modules/component',
-    'common/modules/ui/images',
     'common/views/svgs',
     'raw-loader!common/views/content/block-sharing.html',
     'raw-loader!common/views/content/button.html',
@@ -33,7 +32,6 @@ define([
     template,
     url,
     Component,
-    imagesModule,
     svgs,
     blockSharingTpl,
     buttonTpl,
@@ -231,8 +229,8 @@ define([
     GalleryLightbox.prototype.loadSurroundingImages = function (index, count) {
         var imageContent, $img;
 
-        [-1, 0, 1].map(function (i) { 
-            return index + i === 0 ? count - 1 : (index - 1 + i) % count; 
+        [-1, 0, 1].map(function (i) {
+            return index + i === 0 ? count - 1 : (index - 1 + i) % count;
         }).forEach(function (i) {
             imageContent = this.images[i];
             $img = bonzo(this.$images[i]);
@@ -287,7 +285,7 @@ define([
                     this.images = json.images;
                     this.$countEl.text(this.images.length);
 
-                    var imagesHtml = this.images.map(function (img, i) { 
+                    var imagesHtml = this.images.map(function (img, i) {
                         return this.generateImgHTML(img, i + 1);
                     }.bind(this)).join('');
 
@@ -333,8 +331,6 @@ define([
 
                 // meta
                 this.$indexEl.text(this.index);
-
-                imagesModule.upgradePictures();
             },
             leave: function () {
                 bean.off(this.$swipeContainer[0], 'click', this.toggleInfo);
