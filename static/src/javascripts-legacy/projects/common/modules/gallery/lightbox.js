@@ -450,7 +450,6 @@ define([
                 $body.scrollTop(this.bodyScrollPosition);
             }
             this.$lightboxEl.removeClass('gallery-lightbox--open');
-            imagesModule.upgradePictures();
             mediator.emit('ui:images:vh');
         }.bind(this), 1);
     };
