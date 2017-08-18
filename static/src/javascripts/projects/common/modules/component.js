@@ -1,394 +1,315 @@
+// @flow
+
 import bean from 'bean';
 import bonzo from 'bonzo';
 import qwery from 'qwery';
 import fetchJSON from 'lib/fetch-json';
-import assign from 'lodash/objects/assign';
-import clone from 'lodash/objects/clone';
 
-/**
- * TODO (jamesgorrie):
- * * ERROR HANDLING!
- * * Find a way to run the Component constructor manually,
- *   Perhaps in the create method somewhere.
- * @constructor
- */
-const Component = () => {};
+class Component {
+    autoupdated: boolean;
+    classes: ?Object;
+    componentClass: ?string;
+    defaultOptions: Object;
+    destroyed: boolean;
+    edition: string;
+    elem: ?(HTMLElement | HTMLLinkElement);
+    elems: ?Object;
+    endpoint: ?string;
+    fetchData: ?Object;
+    isInternational: boolean;
+    isNetworkFront: boolean;
+    isVideoFront: boolean;
+    manipulationType: string;
+    model: ?(Object | string);
+    options: ?Object;
+    parent: bonzo;
+    placeholder: HTMLElement;
+    rendered: boolean;
+    responseDataKey: string;
+    t: ?number;
+    tab: qwery;
+    template: ?(Object | string);
+    templateName: ?string;
+    updateEvery: number;
+    useBem: boolean;
+    
+    constructor() {
+        this.useBem = false;
+        this.templateName = null;
+        this.componentClass = null;
+        this.endpoint = null;
+        this.classes = null;
+        this.elem = null;
+        this.model = null;
+        this.template = null;
+        this.rendered = false;
+        this.destroyed = false;
+        this.elems = null;
+        this.options = null;
+        this.defaultOptions = {};
+        this.responseDataKey = 'html';
+        this.autoupdated = false;
+        this.updateEvery = 60;
+        this.t = null;
+        this.fetchData = null;
+        this.manipulationType = 'append';
+    }
 
-/** @type {boolean} */
-Component.prototype.useBem = false;
-
-/** @type {string} */
-Component.prototype.templateName = null;
-
-/** @type {string} */
-Component.prototype.componentClass = null;
-
-/** @type {string} */
-Component.prototype.endpoint = null;
-
-/** @type {Object.<string.string>} */
-Component.prototype.classes = null;
-
-/** @type {Element|null} */
-Component.prototype.elem = null;
-
-/** @type {Object|string|null} */
-Component.prototype.model = null;
-
-/** @type {Object|string|null} */
-Component.prototype.template = null;
-
-/** @type {boolean} */
-Component.prototype.rendered = false;
-
-/** @type {boolean} */
-Component.prototype.destroyed = false;
-
-/** @type {Object.<string.Element>} */
-Component.prototype.elems = null;
-
-/** @type {Object.<string.*>} */
-Component.prototype.options = null;
-
-/** @type {Object.<string.*>} */
-Component.prototype.defaultOptions = {};
-
-/** @type {String} */
-Component.prototype.responseDataKey = 'html';
-
-/** @type {Boolean} */
-Component.prototype.autoupdated = false;
-
-/** @type {Number} in seconds */
-Component.prototype.updateEvery = 60;
-
-/** @type {Number} id of autoupdate timer */
-Component.prototype.t = null;
-
-/** @type {Object.<string.*>} data to send with fetch */
-Component.prototype.fetchData = null;
-
-/** @type {String} */
-Component.prototype.manipulationType = 'append';
-
-/**
- * Uses the this.componentClass
- * TODO (jamesgorrie): accept strings etc Also what to do with multiple objects?
- * @param {Element|string=} elem (optional)
- */
-Component.prototype.attachTo = function(elem) {
-    this.checkAttached();
-    if (!elem) {
-        throw new ComponentError('Need element to attach to');
-    } else {
+    attachTo(elem: HTMLElement): void {
+        this.checkAttached();
         this.elem = elem;
         this._prerender();
         this._ready();
     }
-};
 
-/**
- * @param {Element=} parent (optional)
- */
-Component.prototype.render = function(parent) {
-    this.checkAttached();
-    let template = this.template;
+    _autoupdate() {
+        const setAutoUpdate = () => {
+            const update = () => {
+                this._fetch()
+                    .then(resp => {
+                        const markup = resp && resp[this.responseDataKey];
 
-    if (!template && this.templateName) {
-        const templateEl = document.getElementById('tmpl-' + this.templateName);
+                        if (markup) {
+                            this.autoupdate(bonzo.create(markup)[0]);
 
-        if (templateEl) {
-            template = templateEl.innerHTML;
+                            if (this.autoupdated) {
+                                setAutoUpdate();
+                            }
+                        }
+                    })
+                    .catch(() => {
+                        setAutoUpdate();
+                    });
+            };
+
+            this.t = setTimeout(update, this.updateEvery * 1000);
+        };
+
+        if (this.autoupdated) {
+            setAutoUpdate();
         }
     }
 
-    if (template) {
-        this.elem = bonzo.create(template)[0];
+    autoupdate(elem: HTMLElement) {
+        const oldElem = this.elem;
+        this.elem = elem;
+
         this._prerender();
-        bonzo(parent || document.body)[this.manipulationType](this.elem);
+        bonzo(oldElem).replaceWith(this.elem);
     }
 
-    this._ready();
-    return this;
-};
-
-/**
- * Throws an error if this is already attached to the DOM
- */
-Component.prototype.checkAttached = function() {
-    if (this.rendered) {
-        throw new ComponentError('Already rendered');
+    checkAttached(): void {
+        if (this.rendered) {
+            throw new Error('Component already rendered');
+        }
     }
-};
 
-/**
- * @param {Element} parent
- * @param {String} key
- * @return {Promise}
- */
-Component.prototype.fetch = function(parent, key) {
-    this.checkAttached();
+    define(child: Class<any>): void {
+        class Tmp {}
+        Tmp.prototype = this.prototype;
+        //child.prototype = new Tmp();
+        //child.prototype.constructor = child;
+    }
 
-    this.responseDataKey = key || this.responseDataKey;
-    const self = this;
+    destroy(): void {
+        if (this.elem) {
+            bonzo(this.elem).remove();
+            delete this.elem;
+        }
 
-    return this._fetch()
-        .then(function render(resp) {
-            self.elem = bonzo.create(resp[self.responseDataKey])[0];
-            self._prerender();
+        clearTimeout(this.t);
+        this.t = null;
+        this.autoupdated = false;
 
-            if (!self.destroyed) {
-                bonzo(parent)[self.manipulationType](self.elem);
-                self._ready(self.elem);
+        this.detach();
+        this.destroyed = true;
+        this.rendered = false;
+    }
+
+    detach(): void {
+        bean.off(this.elem);
+    }
+
+    emit(eventName: string, args: Object) {
+        bean.fire(this.elem, eventName, args);
+    }
+
+    error(err: Error): void {
+        /* noop */
+    }
+
+    _fetch(): Promise<void> {
+        let endpoint =
+            typeof this.endpoint === 'function'
+                ? this.endpoint()
+                : this.endpoint;
+        let opt;
+
+        if (endpoint) {
+            for (opt in this.options) {
+                endpoint = endpoint.replace(`:${opt}`, this.options[opt]);
             }
-        })
-        .catch(self.error);
-};
 
-/**
- * @return Promise
- */
-Component.prototype._fetch = function() {
-    let endpoint = (typeof this.endpoint === 'function') ? this.endpoint() : this.endpoint;
-    const self = this;
-    let opt;
+            return fetchJSON(endpoint, {
+                mode: 'cors',
+                body: this.fetchData,
+            }).then(resp => {
+                this.fetched(resp);
+                return resp;
+            });
+        }
 
-    for (opt in this.options) {
-        endpoint = endpoint.replace(':' + opt, this.options[opt]);
+        return Promise.reject();
     }
 
-    return fetchJSON(endpoint, {
-        mode: 'cors',
-        body: this.fetchData
-    }).then(resp => {
-        self.fetched(resp);
-        return resp;
-    });
-};
+    fetch(parent: HTMLElement, key?: string): Promise<void> {
+        this.checkAttached();
+        this.responseDataKey = key || this.responseDataKey;
 
-/**
- * This is just used to set up the component internally
- */
-Component.prototype._ready = function(elem) {
-    if (!this.destroyed) {
-        this.rendered = true;
-        this._autoupdate();
-        this.ready(elem);
-    }
-};
-
-/**
- * Used as we need for pre-prerendering
- */
-Component.prototype._prerender = function() {
-    this.elems = {};
-    this.prerender();
-};
-
-/**
- * Check if we should auto update, if so, do so
- */
-Component.prototype._autoupdate = function() {
-    const self = this;
-    const setAutoUpdate = () => {
-        self.t = setTimeout(update, self.updateEvery * 1000);
-    };
-
-    function update() {
-        self._fetch()
+        return this._fetch()
             .then(resp => {
-                self.autoupdate(bonzo.create(resp[self.responseDataKey])[0]);
+                const markup = resp && resp[this.responseDataKey];
 
-                if (self.autoupdated) {
-                    setAutoUpdate();
+                if (markup) {
+                    this.elem = bonzo.create(markup)[0];
+                    this._prerender();
+
+                    if (!this.destroyed) {
+                        bonzo(parent)[this.manipulationType](this.elem);
+                        this._ready(this.elem);
+                    }
                 }
             })
-            .catch(() => {
-                setAutoUpdate();
-            });
+            .catch(this.error);
     }
 
-    if (this.autoupdated) {
-        setAutoUpdate();
-    }
-};
-
-/**
- * This is user to edit this.elem before it's rendered
- * This will help with the rendering performance that
- * we would lose if rendered then manipulated
- */
-Component.prototype.prerender = () => {};
-
-/**
- * Once the render / decorate methods have been called
- * This is where you could do your event binding
- * This function is made to be overridden
- */
-Component.prototype.ready = () => {};
-
-/**
- * Once the render / decorate methods have been called
- * This is where you could do your error event binding
- * This function is made to be overridden
- */
-Component.prototype.error = () => {};
-
-/**
- * This is called whenever a fetch occurs. This includes
- * explicit fetch calls and autoupdate.
- */
-Component.prototype.fetched = () => {};
-
-/**
- * @param {Element} elem new element
- */
-Component.prototype.autoupdate = function(elem) {
-    const oldElem = this.elem;
-    this.elem = elem;
-
-    this._prerender();
-    bonzo(oldElem).replaceWith(this.elem);
-};
-
-/**
- * Once we're done with it, remove event bindings etc
- */
-Component.prototype.dispose = () => {};
-
-/**
- * @param {string} eventName
- * @param {Element|Function} elem if ommited which is also handler
- * @param {Function} handler
- */
-Component.prototype.on = function(eventName, elem, handler) {
-    if (typeof elem === 'function') {
-        handler = elem;
-        bean.on(this.elem, eventName, handler.bind(this));
-    } else {
-        elem = !elem.length ? [elem] : elem;
-        bean.on(this.elem, eventName, elem, handler.bind(this));
-    }
-    return this;
-};
-
-/**
- * @param {string} eventName
- * @param {Object=} args (optional)
- */
-Component.prototype.emit = function(eventName, args) {
-    bean.fire(this.elem, eventName, args);
-};
-
-/**
- * TODO: After working on comments, wondering if this should support NodeLists
- * @param {string} elemName this corresponds to this.classes
- */
-Component.prototype.getElem = function(elemName) {
-    if (this.elems[elemName]) {
-        return this.elems[elemName];
+    fetched(res: string): void {
+        /* noop */
     }
 
-    const elem = qwery(this.getClass(elemName), this.elem)[0];
-    this.elems[elemName] = elem;
+    getClass(elemName: string, sansDot?: boolean): string {
+        const mappedClasses = this.classes && this.classes[elemName];
+        const className = this.useBem
+            ? `${this.componentClass}__${elemName}`
+            : mappedClasses || '';
 
-    return elem;
-};
-
-/**
- * @param {string} eventName
- * @param {boolean} sansDot
- * @return {string}
- */
-Component.prototype.getClass = function(elemName, sansDot) {
-    const className = this.useBem ? this.componentClass + '__' + elemName : this.classes[elemName];
-
-    return (sansDot ? '' : '.') + className;
-};
-
-/**
- * @param {string} state
- * @param {string|null} elemName
- */
-Component.prototype.setState = function(state, elemName) {
-    const elem = elemName ? this.getElem(elemName) : this.elem;
-    bonzo(elem).addClass(this.componentClass + (elemName ? '__' + elemName : '') + '--' + state);
-};
-
-/**
- * @param {string|null} state
- * @param {string|null} elemName
- * return {Boolean}
- */
-Component.prototype.removeState = function(state, elemName) {
-    const elem = elemName ? this.getElem(elemName) : this.elem;
-    return bonzo(elem).removeClass(this.componentClass + (elemName ? '__' + elemName : '') + '--' + state);
-};
-
-/**
- * @param {string} state
- * @param {string|null} elemName
- */
-Component.prototype.toggleState = function(state, elemName) {
-    const elem = elemName ? this.getElem(elemName) : this.elem;
-    bonzo(elem).toggleClass(this.componentClass + (elemName ? '__' + elemName : '') + '--' + state);
-};
-
-/**
- * @param {string|null} state
- * @param {string|null} elemName
- * return {Boolean}
- */
-Component.prototype.hasState = function(state, elemName) {
-    const elem = elemName ? this.getElem(elemName) : this.elem;
-    return bonzo(elem).hasClass(this.componentClass + (elemName ? '__' + elemName : '') + '--' + state);
-};
-
-/**
- * @param {Object} options
- */
-Component.prototype.setOptions = function(options) {
-    this.options = assign(clone(this.defaultOptions), this.options || {}, options);
-};
-
-/**
- * Removes the event handling, leave the DOM
- */
-Component.prototype.detach = function() {
-    bean.off(this.elem);
-};
-
-/**
- * Removes all event listeners and removes the DOM elem
- */
-Component.prototype.destroy = function() {
-    if (this.elem) {
-        bonzo(this.elem).remove();
-        delete this.elem;
+        return (sansDot ? '' : '.') + className;
     }
 
-    clearTimeout(this.t);
-    this.t = null;
-    this.autoupdated = false;
+    getElem(elemName: string): HTMLLinkElement {
+        let elem: HTMLLinkElement = (this.elemens && this.elems[elemName]: any);
 
-    this.detach();
-    this.destroyed = true;
-    this.rendered = false;
-};
+        if (elem) {
+            return elem;
+        }
 
-/**
- * @param {Function} child
- */
-Component.define = child => {
-    function Tmp() {}
-    Tmp.prototype = Component.prototype;
-    child.prototype = new Tmp();
-    child.prototype.constructor = child;
-};
+        elem = qwery(this.getClass(elemName), this.elem)[0];
+        this.elems[elemName] = elem;
 
-/** @contructor */
-function ComponentError(message) {
-    return new Error('Component: ' + message);
+        return elem;
+    }
+
+    hasState(state: string, elemName: string): boolean {
+        const elem = elemName ? this.getElem(elemName) : this.elem;
+        return bonzo(elem).hasClass(
+            `${this.componentClass +
+                (elemName ? `__${elemName}` : '')}--${state}`
+        );
+    }
+
+    on(
+        eventType: string,
+        elem: string | ((event: Event) => void),
+        handler?: (event: Event) => void
+    ): Component {
+        if (typeof elem === 'function') {
+            const eventHandler = elem;
+            bean.on(this.elem, eventType, eventHandler.bind(this));
+        } else if (typeof handler === 'function') {
+            const selector = !elem.length ? [elem] : elem;
+            bean.on(this.elem, eventType, selector, handler.bind(this));
+        }
+
+        return this;
+    }
+
+    _prerender(): void {
+        this.elems = {};
+        this.prerender();
+    }
+
+    prerender(): void {
+        /* noop */
+    }
+
+    _ready(elem: ?HTMLElement): void {
+        if (!this.destroyed) {
+            this.rendered = true;
+            this._autoupdate();
+            this.ready(elem);
+        }
+    }
+
+    ready(elem: ?HTMLElement): void {
+        /* noop */
+    }
+
+    removeState(state: string, elemName: string): bonzo {
+        const elem = elemName ? this.getElem(elemName) : this.elem;
+        return bonzo(elem).removeClass(
+            `${this.componentClass +
+                (elemName ? `__${elemName}` : '')}--${state}`
+        );
+    }
+
+    render(parent?: ?HTMLElement): Component {
+        this.checkAttached();
+        let template = this.template;
+
+        if (!template && this.templateName) {
+            const templateEl = document.getElementById(
+                `tmpl-${this.templateName}`
+            );
+
+            if (templateEl) {
+                template = templateEl.innerHTML;
+            }
+        }
+
+        if (template) {
+            this.elem = bonzo.create(template)[0];
+            this._prerender();
+            bonzo(parent || document.body)[this.manipulationType](this.elem);
+        }
+
+        this._ready();
+        return this;
+    }
+
+    setOptions(options: Object) {
+        this.options = Object.assign(
+            {},
+            this.defaultOptions,
+            this.options || {},
+            options
+        );
+    }
+
+    setState(state: string, elemName?: string) {
+        const elem = elemName ? this.getElem(elemName) : this.elem;
+        bonzo(elem).addClass(
+            `${this.componentClass +
+                (elemName ? `__${elemName}` : '')}--${state}`
+        );
+    }
+
+    toggleState(state: string, elemName: string): bonzo {
+        const elem = elemName ? this.getElem(elemName) : this.elem;
+        bonzo(elem).toggleClass(
+            `${this.componentClass +
+                (elemName ? `__${elemName}` : '')}--${state}`
+        );
+    }
 }
 
-export default Component;
+export { Component };
