@@ -167,7 +167,7 @@ export const acquisitionsSupportBaseline = makeABTest({
 
                     setHeaderLink(
                         makeSupportURL(`${baseCampaignCode}_support_header`),
-                        'support the Guardian'
+                        'support the guardian'
                     );
                 },
 
