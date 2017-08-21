@@ -47,15 +47,23 @@ const liveblogEpicTemplate = (ctaSentence: string) =>
         </div>
     </div>`;
 
-const setHeaderLink = (href: string, innerHTML?: string) => {
+const setHeaderLink = (href: string, innerText?: string) => {
     [...document.getElementsByClassName('js-become-member')].forEach(el => {
         if (el instanceof HTMLAnchorElement) {
-            if (innerHTML) {
-                el.innerHTML = innerHTML;
+            if (innerText) {
+                const span = el.firstElementChild;
+                if(span) {
+                    span.innerText = innerText;
+                }
             }
-
             el.href = href;
         }
+    });
+};
+
+const hideSubscribeLink = () => {
+    [...document.getElementsByClassName('js-subscribe')].forEach(el => {
+        el.classList.add('is-hidden');
     });
 };
 
@@ -169,6 +177,8 @@ export const acquisitionsSupportBaseline = makeABTest({
                         makeSupportURL(`${baseCampaignCode}_support_header`),
                         'support the guardian'
                     );
+
+                    hideSubscribeLink();
                 },
 
                 // ENGAGEMENT BANNER
