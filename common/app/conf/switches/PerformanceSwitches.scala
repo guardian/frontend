@@ -25,16 +25,6 @@ trait PerformanceSwitches {
     exposeClientSide = true
   )
 
-  val TagPageSizeSwitch = Switch(
-    SwitchGroup.Performance,
-    "tag-page-size",
-    "If this switch is on then we will request more items for larger tag pages",
-    owners = Seq(Owner.withGithub("johnduffell")),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = false
-  )
-
   val LongCacheSwitch = Switch(
     SwitchGroup.Performance,
     "long-cache-switch",
