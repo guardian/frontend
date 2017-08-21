@@ -47,26 +47,6 @@ const liveblogEpicTemplate = (ctaSentence: string) =>
         </div>
     </div>`;
 
-const setHeaderLink = (href: string, innerText?: string) => {
-    [...document.getElementsByClassName('js-become-member')].forEach(el => {
-        if (el instanceof HTMLAnchorElement) {
-            if (innerText) {
-                const span = el.firstElementChild;
-                if (span) {
-                    span.innerText = innerText;
-                }
-            }
-            el.href = href;
-        }
-    });
-};
-
-const hideSubscribeLink = () => {
-    [...document.getElementsByClassName('js-subscribe')].forEach(el => {
-        el.classList.add('is-hidden');
-    });
-};
-
 const isEpicWithinViewLimit = (test: EpicABTest): boolean => {
     const days = 30;
     const count = 4;
@@ -106,7 +86,7 @@ export const acquisitionsSupportBaseline = makeABTest({
     campaignSuffix: 'epic',
 
     // TODO: What do we do about pages marked hideReaderRevenue?
-    // (epic & banner will not display. but what about header?
+    // (epic & banner will not display.
     pageCheck: () => true,
 
     variants: [
@@ -130,12 +110,6 @@ export const acquisitionsSupportBaseline = makeABTest({
                     } else if (shouldDisplayEpic(test)) {
                         renderArticleEpic();
                     }
-
-                    setHeaderLink(
-                        variant.membershipURLBuilder(
-                            campaignCode => `${campaignCode}_header`
-                        )
-                    );
                 },
 
                 engagementBannerParams: {
@@ -172,13 +146,6 @@ export const acquisitionsSupportBaseline = makeABTest({
                     } else if (shouldDisplayEpic(test)) {
                         renderArticleEpic();
                     }
-
-                    setHeaderLink(
-                        makeSupportURL(`${baseCampaignCode}_support_header`),
-                        'support the guardian'
-                    );
-
-                    hideSubscribeLink();
                 },
 
                 // ENGAGEMENT BANNER
