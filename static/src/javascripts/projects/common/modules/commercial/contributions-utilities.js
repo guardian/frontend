@@ -104,6 +104,9 @@ const shouldShowReaderRevenue = (
     showToContributorsAndSupporters: boolean = false
 ): boolean =>
     (userShouldSeeReaderRevenue() || showToContributorsAndSupporters) &&
+    !config.page.keywordIds.includes(
+        'guardian-masterclasses/guardian-masterclasses'
+    ) &&
     !config.page.shouldHideReaderRevenue;
 
 const defaultCanEpicBeDisplayed = (test: EpicABTest): boolean => {
