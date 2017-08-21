@@ -52,7 +52,7 @@ const setHeaderLink = (href: string, innerText?: string) => {
         if (el instanceof HTMLAnchorElement) {
             if (innerText) {
                 const span = el.firstElementChild;
-                if(span) {
+                if (span) {
                     span.innerText = innerText;
                 }
             }
