@@ -85,7 +85,6 @@ export const acquisitionsSupportBaseline = makeABTest({
 
     campaignSuffix: 'epic',
 
-    // TODO: What do we do about pages marked hideReaderRevenue?
     // (epic & banner will not display.
     pageCheck: () => true,
 
@@ -142,7 +141,7 @@ export const acquisitionsSupportBaseline = makeABTest({
                         const url = makeSupportURL(
                             `${baseCampaignCode}_support_liveblog`
                         );
-                        // TODO: confirm copy
+
                         const ctaSentence = `You can give to the Guardian by <a href="${url}" target="_blank" class="u-underline">becoming a supporter</a>`;
                         const epicHtml = liveblogEpicTemplate(ctaSentence);
 
