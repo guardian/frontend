@@ -210,7 +210,7 @@ class Comments extends Component {
             );
         }
 
-        return promise.then(this.renderComments.bind(this));
+        return promise.then(resp => this.renderComments(resp));
     }
 
     handlePickClick(e: Event): void {
@@ -221,11 +221,11 @@ class Comments extends Component {
         const $thisButton = $(target);
         const promise =
             $thisButton[0].getAttribute('data-comment-highlighted') === 'true'
-                ? this.unPickComment.bind(this)
-                : this.pickComment.bind(this);
+                ? this.unPickComment
+                : this.pickComment;
 
         if (commentId) {
-            promise(commentId, $thisButton).catch(resp => {
+            promise.call(this, commentId, $thisButton).catch(resp => {
                 const responseText =
                     resp.response.length > 0
                         ? JSON.parse(resp.response).message
