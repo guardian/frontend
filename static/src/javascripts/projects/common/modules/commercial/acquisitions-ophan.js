@@ -8,12 +8,13 @@ const submitComponentEvent = (componentEvent: OphanComponentEvent) => {
 export const submitInsertEvent = (
     componentType: OphanComponentType,
     products: $ReadOnlyArray<OphanProduct>,
-    campaignCode: string
+    campaignCode: string,
+    labels: $ReadOnlyArray<string> = []
 ) => {
     submitComponentEvent({
         component: {
             componentType,
-            labels: [],
+            labels,
             products,
             campaignCode,
         },
@@ -24,12 +25,13 @@ export const submitInsertEvent = (
 export const submitViewEvent = (
     componentType: OphanComponentType,
     products: $ReadOnlyArray<OphanProduct>,
-    campaignCode: string
+    campaignCode: string,
+    labels: $ReadOnlyArray<string> = []
 ) => {
     submitComponentEvent({
         component: {
             componentType,
-            labels: [],
+            labels,
             products,
             campaignCode,
         },
