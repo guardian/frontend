@@ -125,7 +125,7 @@ trait ABTestSwitches {
     "Displays a new ad slot to drive traffic to GLabs content",
     owners = Seq(Owner.withGithub("JonNorman")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 8, 23),
+    sellByDate = new LocalDate(2017, 8, 25),
     exposeClientSide = true
   )
 
