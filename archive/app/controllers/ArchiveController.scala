@@ -9,9 +9,7 @@ import java.net.URLDecoder
 import javax.ws.rs.core.UriBuilder
 
 import model.{CacheTime, Cached}
-import mvt.ABJavascriptRenderingVariant
 import org.apache.http.HttpStatus
-import play.twirl.api.Html
 import rendering.core.Renderer
 import services.RedirectService.{ArchiveRedirect, Destination, PermanentRedirect}
 
@@ -42,14 +40,9 @@ class ArchiveController(redirects: RedirectService, renderer: Renderer) extends 
         .map(Future.successful)
         .getOrElse {
           log404(request)
-          def notFoundResponse(html: Html): Result = Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound(html)))
-          if (ABJavascriptRenderingVariant.isParticipating) {
-            renderer
-              .render(ui.NotFound)
-              .map(notFoundResponse)
-          } else {
-            Future.successful(notFoundResponse(views.html.notFound()))
-          }
+          renderer
+            .render(ui.NotFound)
+            .map(html => Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound(html))))
         }
       }
 

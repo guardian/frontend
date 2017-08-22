@@ -160,12 +160,12 @@ object Commercial {
       useCardBranding: Boolean
     ): String = {
       val classes: Seq[String] = Seq(
-        "advert",
+        "vergadain",
         sizeClass getOrElse "",
-        "advert--capi",
-        cardContent.icon map (_ => "advert--media") getOrElse "advert--text",
-        adClasses.map(_.map(c => s"advert--$c").mkString(" ")).getOrElse(""),
-        if (useCardBranding) "advert--branded" else ""
+        "vergadain--capi",
+        cardContent.icon map (_ => "vergadain--media") getOrElse "vergadain--text",
+        adClasses.map(_.map(c => s"vergadain--$c").mkString(" ")).getOrElse(""),
+        if (useCardBranding) "vergadain--branded" else ""
       )
       classes mkString " "
     }
@@ -183,7 +183,7 @@ object Commercial {
       adClasses: Option[Seq[String]],
       useCardBranding: Boolean
     ): String = {
-      cardLink(cardContent, adClasses, sizeClass = Some("advert--small"), useCardBranding)
+      cardLink(cardContent, adClasses, sizeClass = Some("vergadain--small"), useCardBranding)
     }
 
     def linkFromLargeCard(
@@ -191,7 +191,7 @@ object Commercial {
       adClasses: Option[Seq[String]],
       useCardBranding: Boolean
     ): String = {
-      cardLink(cardContent, adClasses, sizeClass = Some("advert--large"), useCardBranding)
+      cardLink(cardContent, adClasses, sizeClass = Some("vergadain--large"), useCardBranding)
     }
 
     def paidForContainer(otherClasses: Option[Seq[String]]): String =

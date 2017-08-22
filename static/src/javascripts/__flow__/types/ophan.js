@@ -59,7 +59,7 @@ declare type OphanComponentType =
     | 'ACQUISITIONS_EDITORIAL_LINK';
 
 declare type OphanComponent = {|
-    type: OphanComponentType,
+    componentType: OphanComponentType,
     id?: string,
     products: $ReadOnlyArray<OphanProduct>,
     campaignCode?: string,
@@ -69,5 +69,6 @@ declare type OphanComponent = {|
 declare type OphanComponentEvent = {|
     component: OphanComponent,
     action: OphanAction,
-    value?: string
+    value?: string,
+    id?: string
 |};

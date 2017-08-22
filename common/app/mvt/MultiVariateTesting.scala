@@ -56,7 +56,7 @@ object ABJavascriptRenderingVariant extends TestDefinition(
   name = "ab-javascript-rendering-variant",
   description = "Users in this test will see pages rendered by the javascript renderer.",
   owners = Seq(Owner.withName("dotcom.platform")),
-  sellByDate = new LocalDate(2017, 8, 29)
+  sellByDate = new LocalDate(2017, 9, 27)
 ) {
 
   def participationGroup(implicit request: RequestHeader): Option[String] = request.headers.get("X-GU-ab-javascript-rendering")
@@ -68,7 +68,7 @@ object ABJavascriptRenderingControl extends TestDefinition(
   name = "ab-javascript-rendering-control",
   description = "Users in this test will see pages rendered via twirl.",
   owners = Seq(Owner.withName("dotcom.platform")),
-  sellByDate = new LocalDate(2017, 8, 29)
+  sellByDate = new LocalDate(2017, 9, 27)
 ) {
 
   def participationGroup(implicit request: RequestHeader): Option[String] = request.headers.get("X-GU-ab-javascript-rendering")

@@ -50,7 +50,7 @@ const pageContext = (campaignCode, amounts) => {
 const createVariant = (id, amounts) => ({
     id,
 
-    products: ['ONE_OFF_CONTRIBUTION'],
+    products: ['CONTRIBUTION'],
 
     options: {
         template(variant) {
@@ -96,7 +96,7 @@ const createVariant = (id, amounts) => ({
 const createControl = () => ({
     id: 'control',
 
-    products: ['ONE_OFF_CONTRIBUTION'],
+    products: ['CONTRIBUTION'],
 
     options: {
         template(variant) {

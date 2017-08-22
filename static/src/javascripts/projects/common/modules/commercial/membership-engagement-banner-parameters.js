@@ -82,7 +82,7 @@ const contributionParams = (): EngagementBannerParams =>
     Object.assign({}, baseParams, {
         buttonCaption: 'Make a Contribution',
         linkUrl: 'https://contribute.theguardian.com',
-        products: ['ONE_OFF_CONTRIBUTION'],
+        products: ['CONTRIBUTION'],
         messageText: contributionEngagementBannerCopy(),
         pageviewId: (config.ophan && config.ophan.pageViewId) || 'not_found',
     });

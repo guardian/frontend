@@ -391,7 +391,7 @@ object EmailNewsletters {
     theme = "lifestyle",
     teaser = "A weekly hit of style with substance. The best of the week’s fashion brought to you with expertise, humour and irreverence",
     description = "A weekly hit of style with substance. Smart fashion writing and chic shopping galleries delivered straight to your inbox. Sign up for our Friday email for the best of the week’s fashion brought to you with expertise, humour and irreverence",
-    frequency = "Every Monday",
+    frequency = "Every Friday",
     listId = 3947,
     aliases = List(105),
     tone = Some("feature"),
