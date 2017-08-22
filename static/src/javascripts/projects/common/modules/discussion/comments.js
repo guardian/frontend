@@ -94,7 +94,9 @@ class Comments extends Component {
         })
             .then(resp => {
                 const comment = bonzo.create(resp.html);
-                const replies = qwery(this.getClass('reply'), comment).slice(this.options.showRepliesCount);
+                const replies = qwery(this.getClass('reply'), comment).slice(
+                    this.options.showRepliesCount
+                );
 
                 bonzo(qwery('.d-thread--responses', source)).append(replies);
                 bonzo(li).addClass('u-h');
