@@ -125,6 +125,10 @@ export const acquisitionsSupportBaseline = makeABTest({
                 'CONTRIBUTION',
                 'RECURRING_CONTRIBUTION',
                 'DIGITAL_SUBSCRIPTION',
+                'PAPER_SUBSCRIPTION_EVERYDAY',
+                'PAPER_SUBSCRIPTION_SIXDAY',
+                'PAPER_SUBSCRIPTION_WEEKEND',
+                'PAPER_SUBSCRIPTION_SUNDAY',
             ],
 
             // EPIC
