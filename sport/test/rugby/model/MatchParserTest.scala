@@ -6,7 +6,7 @@ import test.ConfiguredTestSuite
 
 import scala.io.Source
 
-@DoNotDiscover class MatchParserTest extends FreeSpec with ShouldMatchers with ConfiguredTestSuite {
+@DoNotDiscover class MatchParserTest extends FreeSpec with Matchers with ConfiguredTestSuite {
 
   "Parser" - {
     "should parse rugby live scores correctly" in {

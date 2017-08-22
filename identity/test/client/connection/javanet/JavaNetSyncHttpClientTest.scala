@@ -2,7 +2,7 @@ package client.connection.javanet
 
 import org.scalatest.path
 import org.scalatest.Matchers
-import org.scalatest.mock.MockitoSugar
+import org.scalatest.mockito.MockitoSugar
 import java.net.{MalformedURLException, HttpURLConnection}
 import org.mockito.Mockito._
 

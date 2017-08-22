@@ -1,11 +1,11 @@
 package controllers
 
 import org.scalatest._
-import org.scalatest.mock.MockitoSugar
+import org.scalatest.mockito.MockitoSugar
 import services.{IdRequestParser, IdentityUrlBuilder}
 import idapiclient._
 import org.mockito.Mockito._
-import org.mockito.Matchers
+import org.mockito.{Matchers => MockitoMatchers}
 import play.api.mvc.RequestHeader
 import play.api.test.Helpers._
 import com.gu.identity.model.{PublicFields, User, UserDates}
@@ -18,7 +18,7 @@ import scala.util.Left
 import client.Auth
 
 class PublicProfileControllerTest extends path.FreeSpec
-  with ShouldMatchers
+  with Matchers
   with WithTestContext
   with MockitoSugar {
   val idUrlBuilder = mock[IdentityUrlBuilder]
@@ -41,13 +41,13 @@ class PublicProfileControllerTest extends path.FreeSpec
     )
   )
 
-  when(idRequestParser.apply(Matchers.any[RequestHeader])) thenReturn idRequest
+  when(idRequestParser.apply(MockitoMatchers.any[RequestHeader])) thenReturn idRequest
 
   val controller = new PublicProfileController(idUrlBuilder, api, idRequestParser)
   val request = TestRequest()
 
   "Given renderProfileFromId is called" - Fake {
-    when(api.user(Matchers.anyString, Matchers.any[Auth])) thenReturn Future.successful(Left(Nil))
+    when(api.user(MockitoMatchers.anyString, MockitoMatchers.any[Auth])) thenReturn Future.successful(Left(Nil))
     when(api.user(userId)) thenReturn Future.successful(Right(user))
 
     "with valid user Id" - {
@@ -76,7 +76,7 @@ class PublicProfileControllerTest extends path.FreeSpec
   }
 
   "Given renderProfileFromVanityUrl is called" - Fake {
-    when(api.userFromVanityUrl(Matchers.anyString, Matchers.any[Auth])) thenReturn Future.successful(Left(Nil))
+    when(api.userFromVanityUrl(MockitoMatchers.anyString, MockitoMatchers.any[Auth])) thenReturn Future.successful(Left(Nil))
     when(api.userFromVanityUrl(vanityUrl)) thenReturn Future.successful(Right(user))
 
     "with valid user Id" - {
@@ -105,7 +105,7 @@ class PublicProfileControllerTest extends path.FreeSpec
 
     "with no display name for the specified user" - {
       val guestUser = user.copy(publicFields = user.publicFields.copy(displayName = None))
-      when(api.userFromVanityUrl(Matchers.anyString, Matchers.any[Auth])) thenReturn Future.successful(Left(Nil))
+      when(api.userFromVanityUrl(MockitoMatchers.anyString, MockitoMatchers.any[Auth])) thenReturn Future.successful(Left(Nil))
       when(api.userFromVanityUrl(vanityUrl)) thenReturn Future.successful(Right(guestUser))
       val result = controller.renderProfileFromVanityUrl(vanityUrl, "discussions")(request)
 

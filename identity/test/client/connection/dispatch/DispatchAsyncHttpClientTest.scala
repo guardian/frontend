@@ -2,7 +2,7 @@ package client.connection.dispatch
 
 import org.scalatest.path
 import org.scalatest.Matchers
-import org.scalatest.mock.MockitoSugar
+import org.scalatest.mockito.MockitoSugar
 import org.mockito.Mockito._
 import common.ExecutionContexts
 import client.connection.HttpResponse

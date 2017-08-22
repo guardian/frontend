@@ -8,10 +8,10 @@ import akka.pattern.ask
 import akka.util.Timeout
 import models.{NewsAlertNotification, NewsAlertTypes}
 import org.joda.time.DateTime
-import org.mockito.Matchers._
+import org.mockito.{Matchers => MockitoMatchers}
 import org.mockito.Mockito._
 import org.scalatest.concurrent.ScalaFutures
-import org.scalatest.mock.MockitoSugar
+import org.scalatest.mockito.MockitoSugar
 import org.scalatest.time.{Seconds, Span}
 import org.scalatest.{DoNotDiscover, Matchers, WordSpec}
 import play.api.libs.json.{JsResultException, JsValue, Json}
@@ -126,7 +126,7 @@ import scala.concurrent.duration._
                 "throw an exception" in {
                   val (actor, mockBreakingNewsApi) = newActorAndMockApi
                   when(mockBreakingNewsApi.getBreakingNews) thenReturn Some(emptyBreakingNewsJson)
-                  when(mockBreakingNewsApi.putBreakingNews(any[JsValue])) thenThrow  new Exception()
+                  when(mockBreakingNewsApi.putBreakingNews(MockitoMatchers.any[JsValue])) thenThrow  new Exception()
 
                   val f = (actor ? NewNotificationRequest(notification)).mapTo[NewsAlertNotification]
                   whenReady(f.failed) { e => e shouldBe an[Exception] }
@@ -136,7 +136,7 @@ import scala.concurrent.duration._
                 "return a notification" in {
                   val (actor, mockBreakingNewsApi) = newActorAndMockApi
                   when(mockBreakingNewsApi.getBreakingNews) thenReturn Some(emptyBreakingNewsJson)
-                  when(mockBreakingNewsApi.putBreakingNews(any[JsValue])) thenReturn true
+                  when(mockBreakingNewsApi.putBreakingNews(MockitoMatchers.any[JsValue])) thenReturn true
 
                   val f = (actor ? NewNotificationRequest(notification)).mapTo[NewsAlertNotification]
                   whenReady(f) { result =>

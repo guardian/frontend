@@ -8,7 +8,7 @@ import org.scalatest._
 @DoNotDiscover class FixturesControllerTest
   extends FreeSpec
   with ConfiguredTestSuite
-  with ShouldMatchers
+  with Matchers
   with FootballTestData
   with WithTestFootballClient
   with WithMaterializer

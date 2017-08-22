@@ -9,7 +9,7 @@ import org.scalatest.time.{Millis, Span}
 
 @DoNotDiscover class CrosswordDataTest
   extends FreeSpec
-  with ShouldMatchers
+  with Matchers
   with ConfiguredTestSuite
   with ScalaFutures
   with BeforeAndAfterAll

@@ -141,9 +141,6 @@ object Frontend extends Build with Prototypes {
   )
 
   val commercial = application("commercial").dependsOn(commonWithTests).aggregate(common)
-      .settings(
-        libraryDependencies ++= List(shadeMemcached)
-      )
 
   val onward = application("onward").dependsOn(commonWithTests).aggregate(common)
 

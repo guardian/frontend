@@ -10,8 +10,9 @@ import common.{ExecutionContexts, Lazy}
 import contentapi.{CapiHttpClient, ContentApiClient, HttpClient, Response}
 import model.{ApplicationContext, ApplicationIdentity}
 import org.openqa.selenium.htmlunit.HtmlUnitDriver
-import org.scalatest.BeforeAndAfterAll
+import org.scalatest.{BeforeAndAfterAll, TestSuite}
 import org.scalatestplus.play._
+import org.scalatestplus.play.guice.GuiceOneServerPerSuite
 import play.api._
 import play.api.libs.crypto.{CSRFTokenSigner, CryptoConfig}
 import play.api.libs.ws.WSClient
@@ -20,11 +21,11 @@ import play.api.test._
 import play.filters.csrf.{CSRFAddToken, CSRFCheck, CSRFConfig}
 import recorder.ContentApiHttpRecorder
 import rendering.core.Renderer
+
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.{Failure, Success, Try}
 
-trait ConfiguredTestSuite extends ConfiguredServer with ConfiguredBrowser with ExecutionContexts {
-  this: ConfiguredTestSuite with org.scalatest.Suite =>
+trait ConfiguredTestSuite extends TestSuite with ConfiguredServer with ConfiguredBrowser with ExecutionContexts {
 
   lazy val webClient = new WebClient(BrowserVersion.CHROME)
   lazy val host = s"http://localhost:$port"
@@ -69,8 +70,7 @@ trait ConfiguredTestSuite extends ConfiguredServer with ConfiguredBrowser with E
 
 }
 
-trait SingleServerSuite extends OneServerPerSuite with OneBrowserPerSuite with HtmlUnitFactory {
-  this: SingleServerSuite with org.scalatest.Suite =>
+trait SingleServerSuite extends TestSuite with GuiceOneServerPerSuite with OneBrowserPerSuite with HtmlUnitFactory {
 
   BrowserVersion.setDefault(BrowserVersion.CHROME)
 

@@ -1,9 +1,9 @@
 package business
 
 import common.ResourcesHelper
-import org.scalatest.{ShouldMatchers, FlatSpec}
+import org.scalatest.{Matchers, FlatSpec}
 
-class ModelsTest extends FlatSpec with ShouldMatchers with ResourcesHelper {
+class ModelsTest extends FlatSpec with Matchers with ResourcesHelper {
   "models" should "correctly deserialize" in {
     val json = slurpJsonOrDie[Indices]("business-indices.json")
 
