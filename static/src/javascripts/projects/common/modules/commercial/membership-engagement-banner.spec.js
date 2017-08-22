@@ -53,7 +53,7 @@ jest.mock(
     () => ({
         engagementBannerParams: jest.fn(() => ({
             minArticles: 1,
-            products: ['ONE_OFF_CONTRIBUTION'],
+            products: ['CONTRIBUTION'],
             colourStrategy: jest.fn(() => ''),
         })),
     })
@@ -116,8 +116,8 @@ describe('Membership engagement banner', () => {
     describe('If breaking news banner has not shown', () => {
         const fakeComponentEvent: OphanComponentEvent = {
             component: {
-                type: 'ACQUISITIONS_ENGAGEMENT_BANNER',
-                products: ['ONE_OFF_CONTRIBUTION'],
+                componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
+                products: ['CONTRIBUTION'],
                 campaignCode: 'fake-campaign-code',
                 labels: [],
             },
@@ -129,7 +129,7 @@ describe('Membership engagement banner', () => {
         beforeEach(() => {
             engagementBannerParams.mockImplementationOnce(() => ({
                 minArticles: 1,
-                products: ['ONE_OFF_CONTRIBUTION'],
+                products: ['CONTRIBUTION'],
                 colourStrategy: jest.fn(() => 'fake-colour-class'),
                 campaignCode: 'fake-campaign-code',
             }));
