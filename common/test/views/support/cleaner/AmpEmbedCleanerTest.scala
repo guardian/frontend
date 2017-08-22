@@ -1,17 +1,12 @@
 package views.support.cleaner
 
-import java.io.UnsupportedEncodingException
-import java.net.URLDecoder
-
 import com.gu.contentapi.client.model.v1.{Content => ApiContent}
 import model.{Article, Content}
 import org.jsoup.Jsoup
-import org.jsoup.nodes.{Element, Document}
+import org.jsoup.nodes.Document
 import org.scalatest.{FlatSpec, Matchers}
 import org.apache.commons.lang.StringEscapeUtils
-
-import scala.collection.JavaConversions._
-
+import StringCleaner._
 
 class AmpEmbedCleanerTest extends FlatSpec with Matchers {
 
@@ -31,29 +26,25 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
   val commentAvatarWidth = "40"
   val commentAvatarAlt = "User avatar for fooBar"
 
-
-  val contentApi = ApiContent(
-    id = "foo/2012/jan/07/bar",
-    webTitle = "Some article",
-    webUrl = "http://www.guardian.co.uk/foo/2012/jan/07/bar",
-    apiUrl = "http://content.guardianapis.com/foo/2012/jan/07/bar"
-  )
-
-
-  private def clean(document: Document): Document = {
-    val cleaner = AmpEmbedCleaner(article())
-    cleaner.clean(document)
-    document
+  lazy val embedCleaner = {
+    val contentApi = ApiContent(
+      id = "foo/2012/jan/07/bar",
+      webTitle = "Some article",
+      webUrl = "http://www.guardian.co.uk/foo/2012/jan/07/bar",
+      apiUrl = "http://content.guardianapis.com/foo/2012/jan/07/bar"
+    )
+    val article = {
+      val contentApiItem = contentApi
+      val content = Content.make(contentApiItem)
+      Article.make(content)
+    }
+    AmpEmbedCleaner(article)
   }
 
-  private def article() = {
-    val contentApiItem = contentApi
-    val content = Content.make(contentApiItem)
-    Article.make(content)
-  }
+  private def clean(s: String): Document = s.cleanWith(embedCleaner)
 
   private def cleanDocumentWithVideos(videoUrls: String*): Document = {
-    val doc = <html>
+    val html = <html>
                   <body>
                      {
                         videoUrls.map { url: String => <figure class="element-video" data-canonical-url={url}>
@@ -63,8 +54,7 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
                      }
                   </body>
               </html>.toString()
-    val document: Document = parseTestData(doc)
-    clean(document)
+    clean(html)
   }
 
 
@@ -83,15 +73,14 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
     val frameBorderString = if(frameborder.nonEmpty) s"frameborder='$frameborder' " else ""
     val iframe = s"""<iframe ${srcString + widthString + heightString + frameBorderString}></iframe>"""
 
-    val doc = <html>
+    val html = <html>
       <body>
         <figure class={elementType}>
           {iframe}
         </figure>
       </body>
     </html>.toString()
-    val document: Document = parseTestData(doc)
-    clean(document)
+    clean(html)
   }
 
 
@@ -103,7 +92,7 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
     val altString = if(alt.nonEmpty) s"alt='$alt' " else ""
     val avatarImage = "<img " + classString + srcString + heightString + widthString + altString + ">"
 
-    val doc = <html>
+    val html = <html>
       <body>
        <figure class="element element-comment" data-canonical-url="https://discussion.theguardian.com/comment-permalink/88222201">
         <div class="d2-comment-embedded" itemtype="http://schema.org/Comment">
@@ -116,8 +105,7 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
        </figure>
       </body>
     </html>.toString()
-    val document: Document = parseTestData(doc)
-    clean(document)
+    clean(html)
   }
 
 
@@ -253,7 +241,7 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
                                                     </figure>
                                                   </body>
                                                </html>.toString()
-    val result = clean(Jsoup.parse(interactiveValidUrlPlusiFrameWrapper))
+    val result = clean(interactiveValidUrlPlusiFrameWrapper)
     result.getElementsByTag("amp-iframe").size should be(1)
   }
 
@@ -267,7 +255,7 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
                                         </figure>
                                   </body>
                                   </html>.text
-    val result = clean(Jsoup.parse(interactiveSansUrl))
+    val result = clean(interactiveSansUrl)
     result.getElementsByTag("amp-iframe").size should be(0)
   }
 
@@ -282,7 +270,7 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
                                             </figure>
                                           </body>
                                         </html>.toString()
-    val result = clean(Jsoup.parse(interactiveSansiFrameWrapper))
+    val result = clean(interactiveSansiFrameWrapper)
     result.getElementsByTag("amp-iframe").size should be(0)
   }
 
@@ -359,13 +347,12 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
   }
 
   "AmpEmbedCleaner" should "not add an amp-soundcloud or amp-iframe element if an audio element does not contain an iframe at all" in {
-    val doc = <html>
+    val html = <html>
       <body>
         <figure class="element-audio"></figure>
       </body>
     </html>.toString()
-    val document: Document = parseTestData(doc)
-    val cleanDoc: Document = clean(document)
+    val cleanDoc: Document = clean(html)
     val result = (cleanDoc.getElementsByTag("amp-iframe").size, cleanDoc.getElementsByTag("amp-soundcloud").size)
     result should be ((0,0))
   }
@@ -402,13 +389,12 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
   }
 
   "AmpEmbedCleaner" should "not add an amp-soundcloud element if an audio element does not contain an iframe" in {
-    val doc = <html>
+    val html = <html>
                   <body>
                     <figure class="element-audio"></figure>
                   </body>
               </html>.toString()
-    val document: Document = parseTestData(doc)
-    val result: Document = clean(document)
+    val result: Document = clean(html)
     result.getElementsByTag("amp-soundcloud").size should be(0)
   }
 
@@ -419,39 +405,36 @@ class AmpEmbedCleanerTest extends FlatSpec with Matchers {
   */
 
   "AmpEmbedCleaner" should "replace an iframe in an map element with an amp-iframe element" in {
-    val doc = <html>
+    val html = <html>
                   <body>
                     <figure class="element-map">
                       <iframe src={googleMapsUrl}></iframe>
                     </figure>
                   </body>
               </html>.toString()
-    val document: Document = parseTestData(doc)
-    val result: Document = clean(document)
+    val result: Document = clean(html)
     result.getElementsByTag("amp-iframe").size should be(1)
   }
 
   "AmpEmbedCleaner" should "not add an amp-iframe element if an map element does not contain an iframe" in {
-    val doc = <html>
+    val html = <html>
                   <body>
                     <figure class="element-map"></figure>
                   </body>
               </html>.toString()
-    val document: Document = parseTestData(doc)
-    val result: Document = clean(document)
+    val result: Document = clean(html)
     result.getElementsByTag("amp-iframe").size should be(0)
   }
 
   "AmpEmbedCleaner" should "create an amp-iframe element with an iframe from the iframe src" in {
-    val doc = <html>
+    val html = <html>
                   <body>
                     <figure class="element-map">
                       <iframe src={googleMapsUrl}></iframe>
                     </figure>
                   </body>
               </html>.toString()
-    val document: Document = parseTestData(doc)
-    val result: Document = clean(document)
+    val result: Document = clean(html)
     result.getElementsByTag("amp-iframe").first.attr("src") should be(googleMapsUrl)
   }
 

@@ -18,13 +18,7 @@ import scala.Function.const
 import scala.annotation.tailrec
 
 object IndexPagePagination {
-  def pageSize: Int = if (Switches.TagPageSizeSwitch.isSwitchedOn) {
-    35
-  } else {
-    20
-  }
-
-  def rssPageSize: Int = 20
+  def pageSize: Int = 20
 }
 
 case class MpuState(injected: Boolean)
