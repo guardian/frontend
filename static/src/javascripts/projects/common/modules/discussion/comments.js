@@ -74,7 +74,7 @@ class Comments extends Component {
         this.setOptions(options);
     }
 
-    getMoreReplies(event: Event) {
+    getMoreReplies(event: Event): void {
         event.preventDefault();
 
         const target: HTMLElement = (event.target: any);
@@ -237,11 +237,10 @@ class Comments extends Component {
     }
 
     pickComment(commentId: string, $thisButton: bonzo): Promise<void> {
-        const self = this;
         const comment = qwery(`#comment-${commentId}`, this.elem);
 
         return DiscussionApi.pickComment(commentId).then(() => {
-            $(self.getClass('commentPick'), comment).removeClass('u-h');
+            $(this.getClass('commentPick'), comment).removeClass('u-h');
             $thisButton.text('Unpick');
             comment.setAttribute('data-comment-highlighted', true);
         });
@@ -295,11 +294,10 @@ class Comments extends Component {
     }
 
     unPickComment(commentId: string, $thisButton: bonzo): Promise<void> {
-        const self = this;
         const comment = qwery(`#comment-${commentId}`);
 
         return DiscussionApi.unPickComment(commentId).then(() => {
-            $(self.getClass('commentPick'), comment).addClass('u-h');
+            $(this.getClass('commentPick'), comment).addClass('u-h');
             $thisButton.text('Pick');
             comment.setAttribute('data-comment-highlighted', false);
         });
@@ -309,7 +307,7 @@ class Comments extends Component {
         return this.elem.getAttribute('data-read-only') === 'true';
     }
 
-    addComment(comment: commentType, parent: HTMLElement) {
+    addComment(comment: commentType, parent: HTMLElement): void {
         const commentElem = bonzo.create(this.postedCommentEl)[0];
         const $commentElem = bonzo(commentElem);
         const map: Object = {
@@ -369,7 +367,6 @@ class Comments extends Component {
 
         const replyLink: HTMLElement = (e.currentTarget: any);
         const replyToId = replyLink.getAttribute('data-comment-id') || '';
-        const self = this;
         const replyTo = document.getElementById(`reply-to-${replyToId}`);
 
         // There is already a comment box for this on the page
@@ -431,16 +428,18 @@ class Comments extends Component {
 
         commentBox.render(parentCommentEl);
 
-        commentBox.on('post:success', comment => {
+        commentBox.on('post:success', (comment: commentType) => {
             let responses = qwery('.d-thread--responses', parentCommentEl)[0];
+
             if (!responses) {
                 responses = bonzo.create(
                     '<ul class="d-thread d-thread--responses"></ul>'
                 )[0];
                 bonzo(parentCommentEl).append(responses);
             }
+
             this.destroy();
-            self.addComment(comment, responses);
+            this.addComment(comment, responses);
         });
     }
 
