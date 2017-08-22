@@ -77,6 +77,7 @@ class Comments extends Component {
     getMoreReplies(event: Event) {
         event.preventDefault();
 
+        const target: HTMLElement = (event.target: any);
         const currentTarget: HTMLElement = (event.currentTarget: any);
         const li = $.ancestor(
             currentTarget,
@@ -87,8 +88,8 @@ class Comments extends Component {
             li.innerHTML = 'Loading…';
         }
 
-        const source = bonzo(event.target).data('source-comment');
-        const commentId = event.currentTarget.getAttribute('data-comment-id');
+        const source = target.getAttribute('data-source-comment');
+        const commentId = currentTarget.getAttribute('data-comment-id') || '';
         const endpoint = `/discussion/comment/${commentId}.json?displayThreaded=true`;
 
         fetchJson(endpoint, {
@@ -311,14 +312,14 @@ class Comments extends Component {
     addComment(comment: commentType, parent: HTMLElement) {
         const commentElem = bonzo.create(this.postedCommentEl)[0];
         const $commentElem = bonzo(commentElem);
-        const map = {
+        const map: Object = {
             username: 'd-comment__author',
             timestamp: 'js-timestamp',
             body: 'd-comment__body',
             report: 'd-comment__action--report',
             avatar: 'd-comment__avatar',
         };
-        const vals = {
+        const vals: Object = {
             username: this.user.displayName,
             timestamp: 'Just now',
             body: `<p>${comment.body.replace(/\n+/g, '</p><p>')}</p>`,
@@ -366,8 +367,8 @@ class Comments extends Component {
     replyToComment(e: Event): void {
         e.preventDefault();
 
-        const replyLink = e.currentTarget;
-        const replyToId = replyLink.getAttribute('data-comment-id');
+        const replyLink: HTMLElement = (e.currentTarget: any);
+        const replyToId = replyLink.getAttribute('data-comment-id') || '';
         const self = this;
         const replyTo = document.getElementById(`reply-to-${replyToId}`);
 
@@ -446,9 +447,8 @@ class Comments extends Component {
     reportComment(e: Event): void {
         e.preventDefault();
 
-        const self = this;
-        const currentTarget: string = (e.currentTarget: any);
-        const commentId: string = currentTarget.getAttribute('data-comment-id');
+        const currentTarget: HTMLElement = (e.currentTarget: any);
+        const commentId = currentTarget.getAttribute('data-comment-id') || '';
         const reportContainer = $(
             `#comment-${commentId} .js-report-comment-container`
         ).first();
@@ -458,18 +458,25 @@ class Comments extends Component {
 
             bean.one(form, 'submit', (submitEvent: Event) => {
                 submitEvent.preventDefault();
-                const category = form.elements.category;
-                const comment = form.elements.comment.value;
+                const category: HTMLInputElement = (form.querySelector(
+                    '[name="category"]'
+                ): any);
+                const comment: HTMLInputElement = (form.querySelector(
+                    '[name="comment"]'
+                ): any);
 
                 if (category.value !== '0') {
+                    const email: HTMLInputElement = (form.querySelector(
+                        '[name="email"]'
+                    ): any);
+
                     DiscussionApi.reportComment(commentId, {
-                        emailAddress: form.elements.email.value,
+                        emailAddress: email.value,
                         categoryId: category.value,
-                        reason: comment,
-                    }).then(
-                        self.reportCommentSuccess.bind(self, form),
-                        self.reportCommentFailure.bind(self)
-                    );
+                        reason: comment.value,
+                    })
+                        .then(() => this.reportCommentSuccess(form))
+                        .catch(() => this.reportCommentFailure());
                 }
             });
         };
