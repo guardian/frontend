@@ -14,7 +14,7 @@ import {
     para,
 } from './style.js.scss';
 
-export default ({ beaconUrl }: { beaconUrl: string }) =>
+export default ({ beaconUrl }: Object) =>
     <div style={fluidWrap}>
         <div style={topBar}>
             <a href="/" style={topBarLink}>
