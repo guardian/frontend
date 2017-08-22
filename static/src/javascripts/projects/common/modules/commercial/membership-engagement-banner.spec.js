@@ -53,6 +53,7 @@ jest.mock(
     () => ({
         engagementBannerParams: jest.fn(() => ({
             minArticles: 1,
+            products: ['CONTRIBUTION'],
             colourStrategy: jest.fn(() => ''),
         })),
     })
@@ -113,9 +114,14 @@ describe('Membership engagement banner', () => {
     });
 
     describe('If breaking news banner has not shown', () => {
-        const fakeInteraction = {
-            component: 'fake-interaction-component',
-            value: 'fake-interaction-value',
+        const fakeComponentEvent: OphanComponentEvent = {
+            component: {
+                componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
+                products: ['CONTRIBUTION'],
+                campaignCode: 'fake-campaign-code',
+                labels: [],
+            },
+            action: 'INSERT',
         };
         let showBanner;
         let emitSpy;
@@ -123,8 +129,9 @@ describe('Membership engagement banner', () => {
         beforeEach(() => {
             engagementBannerParams.mockImplementationOnce(() => ({
                 minArticles: 1,
+                products: ['CONTRIBUTION'],
                 colourStrategy: jest.fn(() => 'fake-colour-class'),
-                interactionOnMessageShow: fakeInteraction,
+                campaignCode: 'fake-campaign-code',
             }));
             emitSpy = jest.spyOn(fakeMediator, 'emit');
             showBanner = membershipEngagementBannerInit().then(() => {
@@ -145,9 +152,11 @@ describe('Membership engagement banner', () => {
                     'membership-message:display'
                 );
             }));
-        it('should record the interaction in ophan', () =>
+        it('should record the component event in ophan', () =>
             showBanner.then(() => {
-                expect(fakeOphan.record).toHaveBeenCalledWith(fakeInteraction);
+                expect(fakeOphan.record).toHaveBeenCalledWith({
+                    componentEvent: fakeComponentEvent,
+                });
             }));
     });
 
@@ -178,7 +187,6 @@ describe('Membership engagement banner', () => {
             engagementBannerParams.mockImplementationOnce(() => ({
                 minArticles: 1,
                 colourStrategy: jest.fn(() => 'fake-colour-class'),
-                interactionOnMessageShow: {},
             }));
             fakeVariantFor.mockImplementationOnce(() => ({
                 id: 'fake-user-variant-id',
@@ -215,7 +223,6 @@ describe('Membership engagement banner', () => {
                 messageText: 'fake-message-text',
                 linkUrl: 'fake-link-url',
                 buttonCaption: 'fake-button-caption',
-                interactionOnMessageShow: {},
             }));
             fakeConfig.get.mockImplementationOnce(
                 () => 'fake-paypal-and-credit-card-image'

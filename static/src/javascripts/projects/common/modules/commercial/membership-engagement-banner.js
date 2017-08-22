@@ -10,9 +10,12 @@ import { inlineSvg } from 'common/views/svgs';
 import { isInTest, variantFor } from 'common/modules/experiments/segment-util';
 import { engagementBannerParams } from 'common/modules/commercial/membership-engagement-banner-parameters';
 import { isBlocked } from 'common/modules/commercial/membership-engagement-banner-block';
-import ophan from 'ophan/ng';
 import { get as getGeoLocation } from 'lib/geolocation';
 import { constructQuery } from 'lib/url';
+import {
+    submitInsertEvent,
+    submitViewEvent,
+} from 'common/modules/commercial/acquisitions-ophan';
 
 // change messageCode to force redisplay of the message to users who already closed it.
 const messageCode = 'engagement-banner-2017-07-05';
@@ -93,16 +96,6 @@ const deriveBannerParams = (location: string): ?EngagementBannerParams => {
     );
 };
 
-// Used to send an interaction if the engagement banner is shown.
-const recordInteraction = (interaction: Interaction): void => {
-    const { component, value } = interaction;
-
-    ophan.record({
-        component,
-        value,
-    });
-};
-
 const getVisitCount = (): number => local.get('gu.alreadyVisited') || 0;
 
 const selectSequentiallyFrom = (array: Array<string>): string =>
@@ -148,7 +141,17 @@ const showBanner = (params: EngagementBannerParams): void => {
     }).show(renderedBanner);
 
     if (messageShown) {
-        recordInteraction(params.interactionOnMessageShow);
+        submitInsertEvent(
+            'ACQUISITIONS_ENGAGEMENT_BANNER',
+            params.products,
+            params.campaignCode
+        );
+
+        submitViewEvent(
+            'ACQUISITIONS_ENGAGEMENT_BANNER',
+            params.products,
+            params.campaignCode
+        );
 
         mediator.emit('membership-message:display');
     }
