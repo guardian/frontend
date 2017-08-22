@@ -25,7 +25,7 @@ const buildButtonTemplate = ({ supportUrl }) =>
     </div>`;
 
 const liveblogEpicTemplate = (ctaSentence: string) =>
-    `<div class="block block--content is-epic" data-component="<%=componentName%>">
+    `<div class="block block--content is-epic">
         <p class="block-time published-time">
             <a href="#" itemprop="url" class="block-time__link">
                 <time data-relativeformat="med" itemprop="datePublished" class="js-timestamp"></time>
