@@ -11,7 +11,7 @@ import reportError from 'lib/report-error';
 import { constructQuery } from 'lib/url';
 import Component from 'common/modules/component';
 import DiscussionApi from 'common/modules/discussion/api';
-import CommentBox from 'common/modules/discussion/comment-box';
+import { CommentBox } from 'common/modules/discussion/comment-box';
 import WholeDiscussion from 'common/modules/discussion/whole-discussion';
 import relativedates from 'common/modules/ui/relativedates';
 import userPrefs from 'common/modules/user-prefs';
@@ -79,10 +79,7 @@ class Comments extends Component {
 
         const target: HTMLElement = (event.target: any);
         const currentTarget: HTMLElement = (event.currentTarget: any);
-        const li = $.ancestor(
-            currentTarget,
-            this.getClass('showReplies').slice(1)
-        );
+        const li = currentTarget.closest(this.getClass('showReplies'));
 
         if (li) {
             li.innerHTML = 'Loading…';
@@ -97,9 +94,7 @@ class Comments extends Component {
         })
             .then(resp => {
                 const comment = bonzo.create(resp.html);
-                let replies = qwery(this.getClass('reply'), comment);
-
-                replies = replies.slice(this.options.showRepliesCount);
+                const replies = qwery(this.getClass('reply'), comment).slice(this.options.showRepliesCount);
 
                 bonzo(qwery('.d-thread--responses', source)).append(replies);
                 bonzo(li).addClass('u-h');
@@ -393,7 +388,7 @@ class Comments extends Component {
             this.getClass('commentTimestampJs'),
             replyToComment
         )[0].innerHTML;
-        const commentBox = new CommentBox.CommentBox({
+        const commentBox = new CommentBox({
             discussionId: this.options.discussionId,
             premod: this.user.privateFields.isPremoderated,
             state: 'response',
