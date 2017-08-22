@@ -68,7 +68,6 @@ declare type InitEpicABTest = {
     campaignId: string,
     variants: $ReadOnlyArray<InitEpicABTestVariant>,
 
-    componentType?: OphanComponentType,
     // locations is a filter where empty is taken to mean 'all'
     locations?: string[],
     locationCheck?: () => boolean,
@@ -95,7 +94,6 @@ declare type EngagementBannerParams = {
     linkUrl: string,
     messageText: string,
     pageviewId: string,
-    interactionOnMessageShow: Interaction,
     colourStrategy: () => string,
     products: OphanProduct[],
     paypalClass?: string,
