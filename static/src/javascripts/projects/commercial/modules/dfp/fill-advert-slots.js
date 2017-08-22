@@ -7,9 +7,6 @@ import queueAdvert from 'commercial/modules/dfp/queue-advert';
 import { displayLazyAds } from 'commercial/modules/dfp/display-lazy-ads';
 import { displayAds } from 'commercial/modules/dfp/display-ads';
 import { setupSonobi } from 'commercial/modules/dfp/prepare-sonobi-tag';
-import prepareSwitchTag, {
-    setupSwitch,
-} from 'commercial/modules/dfp/prepare-switch-tag';
 import { closeDisabledSlots } from 'commercial/modules/close-disabled-slots';
 
 // Pre-rendered ad slots that were rendered on the page by the server are collected here.
@@ -24,7 +21,6 @@ const fillAdvertSlots = (): Promise<void> => {
     // initiates these dependencies, to speed up the init process. Bootstrap also captures the module performance.
     const dependencies: Promise<void>[] = [
         setupSonobi(),
-        setupSwitch(),
         closeDisabledSlots(),
     ];
 
@@ -39,9 +35,6 @@ const fillAdvertSlots = (): Promise<void> => {
             dfpEnv.advertIds[advert.id] = currentLength + index;
         });
         adverts.forEach(queueAdvert);
-
-        // Once Advert constructors are called, Switch can be called, if needed.
-        prepareSwitchTag.maybeCallSwitch();
 
         if (dfpEnv.shouldLazyLoad()) {
             displayLazyAds();

@@ -5,7 +5,6 @@ import { breakpoints } from 'lib/detect';
 import uniq from 'lodash/arrays/uniq';
 import flatten from 'lodash/arrays/flatten';
 import once from 'lodash/functions/once';
-import prepareSwitchTag from 'commercial/modules/dfp/prepare-switch-tag';
 import { getOutbrainComplianceTargeting } from 'commercial/modules/third-party-tags/outbrain';
 
 const adUnit = once(() => {
@@ -94,8 +93,7 @@ const defineSlot = (adSlotNode: Element, sizes: Object): Object => {
             .defineSlot(adUnit(), sizeOpts.sizes, id)
             .defineSizeMapping(sizeOpts.sizeMapping);
         slotReady = Promise.all([
-            setHighMerchSlotTargeting(slot, slotTarget),
-            prepareSwitchTag.maybePushAdUnit(id, sizeOpts),
+            setHighMerchSlotTargeting(slot, slotTarget)
         ]);
     }
 
