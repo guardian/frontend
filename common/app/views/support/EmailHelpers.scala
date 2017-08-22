@@ -5,6 +5,7 @@ import layout.ContentCard
 import model._
 import play.twirl.api.Html
 import play.api.mvc._
+import views.support.TrailCssClasses.toneClassFromStyle
 
 object EmailHelpers {
   def imageUrlFromCard(contentCard: ContentCard, width: Int): Option[String] = {
@@ -22,6 +23,12 @@ object EmailHelpers {
   def introFromPage(page: Page): Option[String] = page match {
     case c: ContentPage => c.item.trail.byline
     case p: PressedPage => p.frontProperties.onPageDescription
+  }
+
+  def classesForCard(card: ContentCard, withImage: Boolean = false): Seq[String] = {
+    Seq(toneClassFromStyle(card.cardStyle)) ++
+      (if(withImage) Seq("fc--large") else Nil) ++
+      (if(card.branding.exists(_.isPaid)) Seq("tone-branded") else Nil)
   }
 
   def icon(name: String, largeHeadline: Boolean = false) = Html {

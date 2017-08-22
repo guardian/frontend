@@ -1,4 +1,7 @@
+const fs = require('fs');
+
 const chalk = require('chalk');
+const execa = require('execa');
 
 const config = '--quiet --color';
 
@@ -20,28 +23,42 @@ const flowError = ctx => {
         )}`
     );
 };
+const dirs = p =>
+    fs.readdirSync(p).filter(f => fs.statSync(`${p}/${f}`).isDirectory());
 
 module.exports = {
     description: 'Lint JS',
     task: [
+        ...dirs('static/src/javascripts')
+            .filter(dir => !['__flow__'].includes(dir))
+            .map(dir => ({
+                description: `App ${chalk.dim(dir)}`,
+                task: `eslint static/src/javascripts/${dir} ${config}`,
+                onError: error,
+            })),
         {
-            description: 'Lint static/test/javascripts-legacy',
-            task: `eslint static/test/javascripts-legacy/**/*.js ${config}`,
+            description: `App ${chalk.dim('legacy')}`,
+            task: `eslint static/src/javascripts-legacy ${config}`,
             onError: error,
         },
         {
-            description: 'Lint static/src',
-            task: `eslint static/src/**/*.js ${config}`,
+            description: 'UI',
+            task: `eslint ui ${config}`,
             onError: error,
         },
         {
-            description: 'Lint everything else',
-            task: `eslint *.js tools/**/*.js dev/**/*.js ${config}`,
+            description: `Tests ${chalk.dim('legacy')}`,
+            task: `eslint static/test/javascripts-legacy ${config}`,
             onError: error,
         },
         {
-            description: 'Run Flowtype checks on static/src/javascripts/',
-            task: `flow`,
+            description: 'Tools etc.',
+            task: `eslint --ignore-pattern /static/test/javascripts-legacy --ignore-pattern /static/src --ignore-pattern /ui . ${config}`,
+            onError: error,
+        },
+        {
+            description: `Flow ${chalk.dim('app')}`,
+            task: () => execa('flow', { cwd: 'static/src/javascripts' }),
             onError: flowError,
         },
     ],

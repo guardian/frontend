@@ -43,4 +43,14 @@ trait DiscussionSwitches {
     exposeClientSide = true
   )
 
+  val EnableDiscussionSwitch = Switch(
+    SwitchGroup.Discussion,
+    "enable-discussion-switch",
+    "When OFF, no requests will be possible from dotcom to DAPI and the comment UI will be removed",
+    owners = Seq(Owner.withGithub("Calum-Campbell")),
+    safeState = On,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
 }

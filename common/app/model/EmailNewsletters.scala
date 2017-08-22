@@ -276,7 +276,6 @@ object EmailNewsletters {
     description = "Get lost in a great story. From politics to fashion, international investigations to new thinking, culture to crime - we’ll bring you the biggest ideas and the arguments that matter. Sign up to have the Guardian’s award-winning long reads emailed to you every Saturday morning",
     frequency = "Every Saturday",
     listId = 3322,
-    aliases = List(3890),
     tone = Some("feature"),
     signupPage = Some("/news/2015/jul/20/sign-up-to-the-long-read-email"),
     exampleUrl = Some("/email/the-long-read")
@@ -392,8 +391,9 @@ object EmailNewsletters {
     theme = "lifestyle",
     teaser = "A weekly hit of style with substance. The best of the week’s fashion brought to you with expertise, humour and irreverence",
     description = "A weekly hit of style with substance. Smart fashion writing and chic shopping galleries delivered straight to your inbox. Sign up for our Friday email for the best of the week’s fashion brought to you with expertise, humour and irreverence",
-    frequency = "Every Monday",
-    listId = 105,
+    frequency = "Every Friday",
+    listId = 3947,
+    aliases = List(105),
     tone = Some("feature"),
     signupPage = Some("/fashion/2016/aug/18/sign-up-for-the-guardians-fashion-email")
   )

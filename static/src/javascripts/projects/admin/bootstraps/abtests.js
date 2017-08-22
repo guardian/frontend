@@ -7,7 +7,7 @@ import { ABTestReportItem as ReportItem } from 'admin/modules/abtests/abtest-rep
 import { Audience } from 'admin/modules/abtests/audience';
 
 const renderTests = (
-    tests: Array<any>,
+    tests: $ReadOnlyArray<ABTest>,
     active: boolean,
     elem: ?Element
 ): Array<any> => {

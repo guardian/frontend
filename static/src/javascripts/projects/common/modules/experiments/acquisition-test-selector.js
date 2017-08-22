@@ -17,7 +17,7 @@ import { acquisitionsEpicThankYou } from 'common/modules/experiments/tests/acqui
 /**
  * acquisition tests in priority order (highest to lowest)
  */
-const tests = [
+const tests: $ReadOnlyArray<AcquisitionsABTest> = [
     alwaysAsk,
     payInEpic,
     askFourEarning,
@@ -45,9 +45,6 @@ const isViewable = (v: Variant, t: ABTest): boolean => {
         viewsInPreviousDays(minViewDays, testId) === 0;
     return (withinViewLimit && enoughDaysBetweenViews) || isUnlimited;
 };
-
-export const epicEngagementBannerTests = () =>
-    tests.filter(t => t.isEngagementBannerTest);
 
 export const abTestClashData = tests;
 

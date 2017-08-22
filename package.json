@@ -105,7 +105,7 @@
     "pify": "^3.0.0",
     "postcss": "^6.0.1",
     "postcss-pxtorem": "^4.0.1",
-    "prettier": "^1.5.2",
+    "prettier": "^1.5.3",
     "prettysize": "^0.1.0",
     "raw-loader": "^0.5.1",
     "request": "^2.81.0",
@@ -165,7 +165,7 @@
     "amdtoes6": "amdtoes6 --beautify",
     "lebab": "lebab --transform arrow,let,arg-rest,arg-spread,obj-method,obj-shorthand,no-strict,class,default-param --replace",
     "eslint-fix": "eslint --color --fix",
-    "flow": "flow",
+    "flow": "cd static/src/javascripts && flow",
     "test": "jest"
   }
 }

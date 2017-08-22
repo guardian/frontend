@@ -3,14 +3,15 @@
 @import layout.{EmailContentContainer, LiveIntentMarquee, LiveIntentMPU, LiveIntentSafeRTB}
 @(page: model.PressedPage)(implicit request: RequestHeader)
 
+@import com.gu.commercial.branding.Branding
 @import implicits.ItemKickerImplicits._
 @import layout.ContentCard
 @import model.EmailAddons.EmailContentType
 @import model.pressed.{ExternalLink, Feature}
-@import views.support.EmailHelpers.{icon, imgFromCard, imgForFront}
+@import views.support.EmailHelpers.{icon, imgFromCard, imgForFront, classesForCard}
 @import views.support.RemoveOuterParaHtml
-@import views.support.TrailCssClasses.toneClassFromStyle
 @import fragments.email._
+@import common.LinkTo
 
 @headline(card: ContentCard, isLarge: Boolean = false, isLast: Boolean) = {
 
@@ -65,8 +66,8 @@
 }
 
 
-@faciaCardWithTrailText(card: ContentCard, withImage: Boolean, largeHeadline: Boolean) = {
-    @faciaCard(Seq(toneClassFromStyle(card.cardStyle)) ++ (if (withImage) Seq("fc--large") else Seq())) {
+@faciaCardWithTrailText(card: ContentCard, withImage: Boolean, largeHeadline: Boolean, isBranded: Boolean) = {
+    @faciaCard(classesForCard(card, withImage), isBranded) {
         @if(withImage) {
             @row(Seq("no-pad")){@imgFromCard(card)}
         }
@@ -79,13 +80,13 @@
     }
 }
 
-@faciaCardWithoutTrailText(card: ContentCard, withImage: Boolean, largeHeadline: Boolean) = {
-    @imgFromCard(card, 5).filter(i => withImage).fold {
-        @faciaCard(Seq(toneClassFromStyle(card.cardStyle))) {
+@faciaCardWithoutTrailText(card: ContentCard, withImage: Boolean, largeHeadline: Boolean, isBranded: Boolean) = {
+    @imgFromCard(card, 5).filter(_ => withImage).fold {
+        @faciaCard(classesForCard(card), isBranded) {
             @headline(card, largeHeadline, isLast = true)
         }
     } { img =>
-        @faciaCard(Seq(toneClassFromStyle(card.cardStyle))) {
+        @faciaCard(classesForCard(card), isBranded) {
             <tr valign="top">
                 <td class="left-col"><table>@headline(card, isLast = true)</table></td>
                 <td class="right-col no-pad">@img</td>
@@ -98,7 +99,7 @@
     @fullRow(Seq("free-text"))(Html(text))
 }
 
-@renderCard(card: ContentCard, cardStyle: EmailCardStyle) = {
+@renderCard(card: ContentCard, cardStyle: EmailCardStyle, isBranded: Boolean) = {
     @cardStyle match {
         case EmailHidden => { }
         case EmailFreeText => { @freeText(card.header.headline) }
@@ -108,7 +109,8 @@
                     @faciaCardWithoutTrailText(
                         card = card,
                         withImage = false,
-                        largeHeadline = false
+                        largeHeadline = false,
+                        isBranded = isBranded
                     )
                 }
                 case _ => {
@@ -116,13 +118,15 @@
                         @faciaCardWithTrailText(
                             card = card,
                             withImage = layoutStyle.image,
-                            largeHeadline = layoutStyle.largeHeadline
+                            largeHeadline = layoutStyle.largeHeadline,
+                            isBranded = isBranded
                         )
                     } else {
                         @faciaCardWithoutTrailText(
                             card = card,
                             withImage = layoutStyle.image,
-                            largeHeadline = layoutStyle.largeHeadline
+                            largeHeadline = layoutStyle.largeHeadline,
+                            isBranded = isBranded
                         )
                     }
                 }
@@ -137,15 +141,27 @@
 }
 
 @renderContentContainer(collection: EmailContentContainer, collectionIndex: Int) = {
-    @containerTitle(if(collectionIndex > 0) Seq("ct--not-top") else Seq()) {
-        @collection.displayName
+    @containerTitle((if(collectionIndex > 0) Seq("ct--not-top") else Nil) ++ (if (collection.branding.isDefined) Seq("ct-branded") else Nil)) {
+
+        @collection.href.map { href =>
+            <a class="ct-link" href="@LinkTo {/@Html(href)}">@collection.displayName</a>
+        }.getOrElse {
+            @collection.displayName
+        }
     }
+
+    @for(collectionBranding <- collection.branding) { @collectionBranding match {
+        case branding: Branding => {
+            @containerBranding(branding, collection.href)
+        }
+        case _ => { }
+    }}
 
     @collection.cards.zipWithIndex.map { case (card, cardIndex) =>
         @if(cardIndex == 0) {
-            @renderCard(card, EmailLayouts.layoutByName(collection.collectionType).firstCard)
+            @renderCard(card, EmailLayouts.layoutByName(collection.collectionType).firstCard, collection.branding.isDefined)
         } else {
-            @renderCard(card, EmailLayouts.layoutByName(collection.collectionType).otherCards)
+            @renderCard(card, EmailLayouts.layoutByName(collection.collectionType).otherCards, collection.branding.isDefined)
         }
     }
 }

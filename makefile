@@ -18,6 +18,7 @@ list: # PRIVATE
 # Install all 3rd party dependencies.
 install: check-node check-yarn
 	@yarn install -s
+	@make ui-install
 
 # Remove all 3rd party dependencies.
 uninstall: # PRIVATE
@@ -105,9 +106,14 @@ validate-sass: install # PRIVATE
 validate-javascript: install # PRIVATE
 	@./tools/task-runner/runner validate/javascript
 
-# Validate all assets.
+# Fix JS linting errors.
 fix: install
 	@./tools/task-runner/runner validate/javascript-fix
+
+# Fix committed JS linting errors.
+fix-commits: install
+	@./tools/task-runner/runner validate-head/javascript-fix
+
 
 validate-amp: install # PRIVATE
 	@cd tools/amp-validation && npm install && NODE_ENV=dev node index.js
@@ -135,3 +141,6 @@ ui-compile:
 
 ui-watch:
 	@cd ui && yarn watch -s
+
+ui-install:
+	@cd ui && yarn install -s

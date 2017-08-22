@@ -25,16 +25,6 @@ trait PerformanceSwitches {
     exposeClientSide = true
   )
 
-  val TagPageSizeSwitch = Switch(
-    SwitchGroup.Performance,
-    "tag-page-size",
-    "If this switch is on then we will request more items for larger tag pages",
-    owners = Seq(Owner.withGithub("johnduffell")),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = false
-  )
-
   val LongCacheSwitch = Switch(
     SwitchGroup.Performance,
     "long-cache-switch",
@@ -146,15 +136,6 @@ trait PerformanceSwitches {
     exposeClientSide = true
   )
 
-  val CommentsVisibleOnArticleSwitch = Switch(
-    SwitchGroup.Performance,
-    "comments-visible-on-article",
-    "If this switch is on, comments are displayed on articles on dotcom. This switch only show/hides the UI from dotcom and does not disable any underlying services/endpoints etc.",
-    owners = Seq(Owner.withGithub("Calum-Campbell")),
-    safeState = On,
-    sellByDate = never,
-    exposeClientSide = true
-  )
 
   val DiscussionPageSizeSwitch = Switch(
     SwitchGroup.Performance,

@@ -6,7 +6,6 @@ import fetchJSON from 'lib/fetch-json';
 import fastdom from 'lib/fastdom-promise';
 import register from 'common/modules/analytics/register';
 import Expandable from 'common/modules/ui/expandable';
-import intersection from 'lodash/arrays/intersection';
 
 const buildExpandable = (el: HTMLElement): void => {
     new Expandable({
@@ -55,11 +54,13 @@ const popularInTagOverride = (): ?string | false => {
         'football/liverpool',
     ];
 
+    const intersect = (a: Array<string>, b: Array<string>): Array<string> =>
+        [...new Set(a)].filter(_ => new Set(b).has(_));
     const pageTags = config.page.keywordIds.split(',');
     // if this is an advertisement feature, use the page's keyword (there'll only be one)
     const popularInTags = config.page.isPaidContent
         ? pageTags
-        : intersection(whitelistedTags, pageTags);
+        : intersect(whitelistedTags, pageTags);
 
     if (popularInTags.length) {
         return `/popular-in-tag/${popularInTags[0]}.json`;

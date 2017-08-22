@@ -342,8 +342,7 @@ object Content {
     val atoms = Atoms.make(apiContent)
     val apifields = apiContent.fields
     val references: Map[String,String] = apiContent.references.map(ref => (ref.`type`, Reference.split(ref.id)._2)).toMap
-    val cardStyle: fapiutils.CardStyle = fapiutils.CardStyle(apiContent, TrailMetaData.empty)
-
+    val cardStyle: fapiutils.CardStyle = CardStylePicker(apiContent, TrailMetaData.empty)
 
     Content(
       trail = trail,
@@ -453,7 +452,7 @@ object Article {
       javascriptConfigOverrides = javascriptConfig,
       opengraphPropertiesOverrides = opengraphProperties,
       shouldHideHeaderAndTopAds = (content.tags.isTheMinuteArticle || (content.isImmersive && (content.elements.hasMainMedia || content.fields.main.nonEmpty))) && content.tags.isArticle,
-      contentWithSlimHeader = (content.isImmersive && content.tags.isArticle)
+      contentWithSlimHeader = content.isImmersive && content.tags.isArticle
     )
   }
 

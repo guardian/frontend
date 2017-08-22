@@ -1,0 +1,447 @@
+.vergadain--branded {
+    padding-bottom: $gs-baseline * 8;
+}
+
+// general BASIC styles for all the branded badges
+.paidfor-container {
+    .badge--branded {
+        padding-right: 0;
+        max-width: 100%;
+    }
+
+    .badge__link {
+        /* [1] Prevents IE11 bug where the height would go ballooney */
+        height: 100%;
+    }
+
+    .badge__label {
+        text-align: center;
+        width: 100%;
+    }
+
+    .badge__logo {
+        max-width: 100%;
+        margin-left: 0;
+    }
+}
+
+.dumathoin--capi {
+    .dumathoin__row {
+        @include mq($until: tablet) {
+            flex-direction: column;
+
+            & > * {
+                flex-basis: auto;
+            }
+
+            & > * + * {
+                margin-top: $gs-baseline;
+            }
+
+            & > * + .vergadain,
+            & > * + * > .vergadain {
+                padding-top: $gs-baseline / 2;
+            }
+
+            & > * + :nth-child(even)::before {
+                content: none;
+            }
+        }
+    }
+
+    .vergadain > :last-child {
+        margin-bottom: 0;
+    }
+}
+
+/* [1] Prevents brand logos floating out the bounds if the cards are hidden */
+.paidfor-container {
+    margin: 0 $gs-gutter / 2;
+    min-height: 80px; /* [1] */
+
+    @include mq($until: tablet) {
+
+        .advert__standfirst {
+            min-height: $gs-row-height;
+        }
+
+        &:first-child > .vergadain {
+            padding-bottom: $gs-baseline / 2;
+        }
+
+        &:first-child .advert__title,
+        &:first-child .advert__standfirst {
+            padding-right: 80px;
+            max-width: 520px;
+        }
+
+        &:not(:first-child) > .vergadain {
+            padding-right: 80px;
+            padding-bottom: 0;
+            min-height: 80px;
+        }
+
+        .badge {
+            display: flex;
+            flex-direction: column;
+            width: 60px;
+        }
+    }
+}
+
+.dumathoin--paidfor {
+    @include mq($until: tablet) {
+        .dumathoin__stamp {
+            position: absolute;
+            top: $gs-baseline / 2;
+            right: $gs-gutter / 2;
+        }
+
+        .inline-glabs-logo > svg {
+            width: 75px;
+            height: 31px;
+        }
+    }
+
+    @include mq(mobileLandscape, leftCol) {
+        .dumathoin__header {
+            flex-wrap: wrap;
+        }
+
+        .adverts__kicker {
+            flex-basis: 100%;
+        }
+    }
+}
+
+.dumathoin--tone-paidfor {
+    background-color: $neutral-6;
+    position: relative;
+
+    .dumathoin__header {
+        background: $paidfor-background;
+    }
+
+    .inline-icon__svg {
+        fill: $paid-article-brand;
+    }
+
+    .adverts__logo {
+        color: #ffffff;
+    }
+
+    .dumathoin__stamp {
+        text-align: right;
+    }
+
+    .dumathoin__row > * + *::before,
+    .dumathoin__row--legacy > .advert::after,
+    .dumathoin__2cols::after,
+    .dumathoin__3cols::before,
+    .dumathoin__3cols::after {
+        background: $paid-article-subheader-bg;
+    }
+
+    .button {
+        @include button-colour($paid-article-brand, null);
+
+        &:hover,
+        &:focus,
+        &:active {
+            @include button-colour(darken($paid-article-brand, 5%), null);
+        }
+    }
+}
+
+.dumathoin-more__button {
+    background: $paidfor-background;
+    border-color: $paidfor-background;
+
+    .inline-icon__svg {
+        fill: $neutral-2;
+    }
+
+    @include mq(desktop) {
+        float: left;
+
+        & + * {
+            clear: left;
+        }
+    }
+}
+
+.dumathoin-more[open] {
+
+    .dumathoin-more__button {
+        background: none;
+        border-color: $neutral-4;
+        color: $neutral-1;
+    }
+}
+
+.adverts--tone-supported {
+    background: none;
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 50%;
+        right: 0;
+        transform: translate(-50%, 0);
+        border-top: 1px solid $news-main-2;
+
+        @include mq(tablet) {
+            width: 740px;
+        }
+
+        @include mq(desktop) {
+            width: 980px;
+        }
+
+        @include mq(leftCol) {
+            width: 1140px;
+        }
+
+        @include mq(wide) {
+            width: 1300px;
+        }
+    }
+
+    .adverts__logo {
+        color: $guardian-brand-dark;
+    }
+
+    .badge__help {
+        color: $neutral-2-contrasted;
+    }
+}
+
+.vergadain--capi {
+    border-top: 1px solid;
+    transition: background .1s;
+
+    .advert__title,
+    .advert__meta,
+    .advert__standfirst {
+        padding: 0 ($gs-gutter / 4);
+    }
+
+    .advert__meta {
+        margin-top: auto;
+        margin-bottom: $gs-baseline / 4;
+    }
+
+    .advert__title {
+        @include f-headlineSans;
+        font-weight: 400;
+        margin-bottom: .5em;
+
+        &:hover,
+        &:focus {
+            text-decoration: none;
+        }
+
+        .inline-icon__svg {
+            width: 1.1em;
+            height: .75em;
+            margin-right: .3em;
+        }
+    }
+
+    &:not(.vergadain--landscape) {
+        > .advert__image-container {
+            width: 100%;
+        }
+
+        .advert__image {
+            width: 100%;
+
+            @include mq(desktop) {
+                min-height: $gs-baseline * 11;
+            }
+        }
+
+        .advert__standfirst:not(:last-child) {
+            margin-bottom: $gs-baseline / 2;
+        }
+    }
+
+    .has-page-skin &:not(.vergadain--landscape) {
+        .advert__image {
+            @include mq(desktop) {
+                min-height: 0;
+            }
+        }
+    }
+
+    .advert__image-container {
+        height: auto;
+    }
+
+    .has-no-flex &:not(.vergadain--small):not(.vergadain--landscape) {
+        padding-top: 0;
+
+        > :first-child {
+            padding-top: 66%;
+        }
+    }
+}
+
+.vergadain--paidfor {
+    @include f-textSans;
+    background: $paid-article-card-bg;
+    border-top-color: $paid-article-brand;
+    width: 100%;
+
+    &:hover,
+    &:focus {
+        background: darken($paid-article-subheader, 7%);
+    }
+
+    .advert__title {
+        .inline-icon__svg {
+            fill: $paid-article-icon;
+        }
+    }
+
+    .dumathoin--legacy-single & {
+        background: none;
+        border-top: 0;
+
+        &::after {
+            background-color: $paid-article-icon;
+        }
+
+        .advert__image-container {
+            border-top: 0;
+        }
+    }
+}
+
+.vergadain--supported {
+    &.vergadain--text {
+        border-top-color: $news-main-2;
+        background: $neutral-8;
+
+        &:hover,
+        &:focus {
+            background: $neutral-6;
+        }
+    }
+
+    &.vergadain--media {
+        border-top-color: $multimedia-main-2;
+        background: $multimedia-main-1;
+        color: #ffffff;
+
+        &:hover,
+        &:focus {
+            background: darken($media-background, 7.5%);
+        }
+
+        .advert__title {
+            > .inline-icon .inline-icon__svg {
+                fill: $multimedia-main-2;
+            }
+        }
+    }
+
+    > .advert__title {
+        @include mq(desktop) {
+            @include font-size(get-font-size(headline, 3), get-line-height(headline, 3));
+        }
+    }
+
+    > .advert__standfirst {
+        display: none;
+    }
+}
+
+.adverts--within-unbranded {
+    .fc-item__container {
+        background-color: $paid-article-card-bg;
+        &:hover,
+        &.u-faux-block-link--hover {
+            background-color: $neutral-6;
+        }
+    }
+    .fc-item__container:before {
+        background-color: $paid-article-brand !important;
+    }
+    .inline-icon__svg {
+        fill: $paid-article-brand !important;
+    }
+    .fc-item__title {
+        @include f-textSans;
+        font-weight: 600;
+        color: $neutral-1;
+    }
+
+    .fc-item__content {
+        display: flex !important;
+        flex-direction: column;
+        justify-content: space-between;
+        // IE 11 hates shorthand flex CSS, and does something different to the
+        // other browsers, so we have to list the props out in this way
+        flex-grow: 1;
+        flex-shrink: 1;
+        flex-basis: auto;
+        @include mq(phablet, tablet) {
+            flex-direction: row;
+        }
+    }
+
+    .fc-item__standfirst {
+        color: $neutral-1;
+    }
+
+    .badge {
+        display: flex;
+        align-self: flex-end;
+        justify-content: flex-end;
+        pointer-events: none;
+        flex-shrink: 0;
+        flex-direction: column;
+        align-items: flex-end;
+        margin-left: $gs-gutter / 2;
+        @include mq($until: phablet) {
+            flex-direction: row;
+        }
+    }
+
+    .badge__label {
+        color: #757575;
+        text-align: center;
+        align-self: center;
+        @include mq($until: phablet) {
+            padding-right: $gs-gutter / 2;
+        }
+    }
+
+    .badge__link {
+        @include mq($until: tablet) {
+            width: $gs-gutter * 3;
+        }
+    }
+
+    .badge__logo {
+        max-width: 100%;
+        margin-left: 0;
+    }
+
+    .badge--no-image {
+        margin-bottom: $gs-baseline/2;
+    }
+
+    .badge__sponsor-name {
+        @include f-textSans;
+        color: $neutral-1;
+    }
+
+    .inline-icon__svg {
+        width: 1.1em;
+        height: .75em;
+        margin-right: .3em;
+    }
+}

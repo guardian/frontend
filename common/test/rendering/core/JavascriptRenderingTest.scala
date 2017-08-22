@@ -19,8 +19,10 @@ class JavascriptRenderingTest
     override def javascriptFile = jsFile
   }
 
+  val baseDir = "common/test/resources/components"
+
   "Rendering" should "return correct HTML string" in {
-    val renderer = new TestJavascriptRendering("components/TestButtonComponent.js")
+    val renderer = new TestJavascriptRendering(s"$baseDir/TestButtonComponent.js")
     val state: Option[JsObject] = Some(JsObject(Seq("title" -> JsString("my title"))))
     renderer.render(state) should be (Try("<button type='button'>my title</button>"))
   }

@@ -2,8 +2,12 @@
 import config from 'lib/config';
 import { allEmailCanRun, listCanRun } from 'common/modules/email/run-checks';
 import emailArticle from 'common/modules/email/email-article';
-import clash from 'common/modules/experiments/ab-test-clash';
-import trackAdRender from 'commercial/modules/dfp/track-ad-render';
+import {
+    emailTests,
+    contributionsTests,
+    userIsInAClashingAbTest,
+} from 'common/modules/experiments/ab-test-clash';
+import { trackAdRender } from 'commercial/modules/dfp/track-ad-render';
 import { commercialFeatures } from 'commercial/modules/commercial-features';
 import { checks } from './check-mediator-checks';
 import { resolveCheck, waitForCheck } from './check-mediator';
@@ -26,9 +30,7 @@ const checksToDispatch = {
     },
 
     isUserInContributionsAbTest(): Promise<boolean> {
-        return Promise.resolve(
-            clash.userIsInAClashingAbTest(clash.contributionsTests)
-        );
+        return Promise.resolve(userIsInAClashingAbTest(contributionsTests));
     },
 
     isUserNotInContributionsAbTest(): Promise<boolean> {
@@ -38,7 +40,7 @@ const checksToDispatch = {
     },
 
     isUserInEmailAbTest(): Promise<boolean> {
-        return Promise.resolve(clash.userIsInAClashingAbTest(clash.emailTests));
+        return Promise.resolve(userIsInAClashingAbTest(emailTests));
     },
 
     emailCanRunPreCheck(): Promise<boolean> {

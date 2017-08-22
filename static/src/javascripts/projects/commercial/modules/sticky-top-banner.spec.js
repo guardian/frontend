@@ -12,9 +12,9 @@ jest.mock('lib/detect', () => ({
 jest.mock('commercial/modules/messenger', () => ({
     register: jest.fn(),
 }));
-jest.mock('commercial/modules/dfp/track-ad-render', () => () =>
-    Promise.resolve(true)
-);
+jest.mock('commercial/modules/dfp/track-ad-render', () => ({
+    trackAdRender: () => Promise.resolve(true),
+}));
 jest.mock('lib/events', () => ({
     addEventListener: jest.fn(),
 }));

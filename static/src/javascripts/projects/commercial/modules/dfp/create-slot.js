@@ -62,10 +62,18 @@ const adSlotDefinitions = {
             ],
         },
     },
-    carrot: {
+    'glabs-inline': {
         label: false,
         refresh: false,
-        name: 'carrot',
+        name: 'glabs-inline',
+        sizeMappings: {
+            mobile: [adSizes.fluid],
+        },
+    },
+    'glabs-left': {
+        label: false,
+        refresh: false,
+        name: 'glabs-left',
         sizeMappings: {
             mobile: [adSizes.fluid],
         },

@@ -24,7 +24,7 @@ const isTargetPage = () =>
 export const acquisitionsEpicThankYou = makeABTest({
     id: 'AcquisitionsEpicThankYou',
     campaignId: 'epic_thank_you',
-    componentType: 'THANK_YOU_EPIC',
+    componentType: 'ACQUISITIONS_THANK_YOU_EPIC',
 
     start: '2017-06-01',
     expiry: '2017-09-05',
@@ -49,7 +49,7 @@ export const acquisitionsEpicThankYou = makeABTest({
     variants: [
         {
             id: 'control',
-            products: ['ONE_OFF_CONTRIBUTION', 'MEMBERSHIP_SUPPORTER'],
+            products: ['CONTRIBUTION', 'MEMBERSHIP_SUPPORTER'],
 
             options: {
                 maxViews: {

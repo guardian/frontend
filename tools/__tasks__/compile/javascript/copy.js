@@ -1,7 +1,7 @@
 const path = require('path');
 const cpy = require('cpy');
 
-const { src, vendor, target, hash, transpiled } = require('../../config').paths;
+const { src, vendor, target, transpiled } = require('../../config').paths;
 
 module.exports = {
     description: 'Copy 3rd JS party libraries',
@@ -15,20 +15,10 @@ module.exports = {
                     'stripe/**/*',
                     'react/**/*',
                     'ophan/**/*',
-                    'foresee/**/*',
                 ],
                 path.resolve(target, 'javascripts', 'vendor'),
                 {
                     cwd: path.resolve(vendor, 'javascripts'),
-                    parents: true,
-                    nodir: true,
-                }
-            ),
-            cpy(
-                ['**/*'],
-                path.resolve(hash, 'javascripts', 'vendor', 'foresee'),
-                {
-                    cwd: path.resolve(vendor, 'javascripts', 'foresee'),
                     parents: true,
                     nodir: true,
                 }
