@@ -1,38 +1,18 @@
 package views.support.cleaner
 
-import org.jsoup.Jsoup
-import org.jsoup.nodes.Document
 import org.scalatest.{FlatSpec, Matchers}
+import StringCleaner._
 
-import org.apache.commons.lang.StringEscapeUtils
 import views.support.CommercialMPUForFronts
 
 class CommercialMPUForFrontsTest extends FlatSpec with Matchers {
-
-/*
- * The format we are using for the test data is treated as XML when toString()
- * is run on it. To parse it into a JSoup element, it is necessary to remove
- * all the XML character encodings that have been introduced.
- */
-  private def parseTestData(doc: String): Document = {
-    Jsoup.parse(StringEscapeUtils.unescapeXml(doc))
-  }
-
-  private def clean(document: Document): Document = {
-    val cleaner = CommercialMPUForFronts(true)
-    cleaner.clean(document)
-    document
-  }
 
   def getFileContent(filePath: String): String = {
     val source = scala.io.Source.fromInputStream(getClass.getResourceAsStream(filePath))
     try source.mkString finally source.close()
   }
 
-  val htmlFile = getFileContent("fixtures/CommercialMPUForFronts.html")
-
-  val htmlContent = parseTestData(htmlFile)
-  val body = clean(htmlContent)
+  val body = getFileContent("fixtures/CommercialMPUForFronts.html").cleanWith(CommercialMPUForFronts(true))
 
   it should "insert MPUs into applicable slices, and give them unique IDs" in {
     val desktopMPUs = body.getElementsByClass("fc-slice__item--mpu-candidate")
