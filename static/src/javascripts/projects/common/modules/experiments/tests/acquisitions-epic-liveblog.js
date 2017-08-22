@@ -31,14 +31,15 @@ const getLiveblogEntryTimeData = (el: Element): Promise<TimeData> =>
 
         if (timeEl && absoluteTimeEl) {
             const link = timeEl.parentNode;
-            const blockHref = (link instanceof HTMLAnchorElement) ? link.href : '';
+            const blockHref =
+                link instanceof HTMLAnchorElement ? link.href : '';
 
             return {
                 datetime: timeEl.getAttribute('datetime'),
                 title: timeEl.getAttribute('title'),
                 date: timeEl.innerHTML,
                 time: absoluteTimeEl.innerHTML,
-                blockHref
+                blockHref,
             };
         }
     });
