@@ -1,54 +1,56 @@
 @(page: model.Page, isFooter: Boolean = false)(implicit request: RequestHeader)
 
 @import common.{ Edition, LinkTo }
-@import navigation.{ NavigationHelpers, NavLink }
+@import navigation.{ NavigationHelpers, NavLink2 }
 @import views.support.RenderClasses
 
-
-@subNavItem(link: NavLink, id: String, shouldHideUntilDesktop: Boolean) = {
+@subNavItem(link: NavLink2, index: Int, id: String) = {
     <li class="@RenderClasses(Map(
-            "hide-until-desktop" -> shouldHideUntilDesktop
-        ), "subnav__item")">
+        "hide-until-desktop" -> (index > 4)
+    ),"subnav__item")">
         <a class="@RenderClasses(Map(
                 "subnav-link" -> true,
-                "subnav-link--current-section" -> (id == link.uniqueSection)
+                "subnav-link--current-section" -> (id == link.id)
             ))"
             href="@LinkTo(link.url)"
-            data-link-name="nav2 : subnav : @{if(link.longTitle.isEmpty) link.title else link.longTitle}">
+            data-link-name="nav2 : subnav : @{link.title}">
 
             @link.title
         </a>
     </li>
 }
 
+@defining(NavigationHelpers.getSubNav(page)) { maybeNavItem =>
+    @maybeNavItem.map { navItem =>
 
-<div class="subnav">
-    <div class="gs-container">
+        <div class="subnav">
+            <div class="gs-container">
+                <ul class="subnav__list"
+                    data-pillar-title="@navItem.pillar.title">
 
-        @defining(NavigationHelpers.getActivePillar(page)) { case (id, activePillarName) =>
-            <ul class="subnav__list"
-                data-pillar-title="@activePillarName">
+                    @defining(
+                        NavigationHelpers.getSectionsToDisplay(navItem, Edition(request))
+                    ) { sections =>
+                        @sections.zipWithIndex.map { case (link, index) =>
+                            @subNavItem(link, index, navItem.id)
+                        }
+                    }
 
-                @defining(
-                    NavigationHelpers.getSubSectionNavLinks(id, Edition(request), page.metadata.isFront)
-                ) { case (mostPopular, leastPopular) =>
-                    @mostPopular.map { link => @subNavItem(link, id, false)}
-                    @leastPopular.map { link => @subNavItem(link, id, true)}
+                @* Hiding the 'more' link on the homepage and footer *@
+                @if(!(navItem.id == "uk" ||  navItem.id == "us" ||  navItem.id == "au" ||  navItem.id == "international" || isFooter)) {
+                    <li class="subnav__item js-visible hide-on-desktop">
+                        <button class="
+                            subnav-link
+                            subnav-link--toggle-more
+                            js-toggle-nav-section"
+                            data-link-name="nav2 : subnav-toggle">
+                            more
+                        </button>
+                    </li>
                 }
+                </ul>
 
-            @* Hiding the 'more' link on the homepage and footer *@
-            @if(!(id == "uk" ||  id == "us" ||  id == "au" ||  id == "international" || isFooter)) {
-                <li class="subnav__item js-visible hide-on-desktop">
-                    <button class="
-                        subnav-link
-                        subnav-link--toggle-more
-                        js-toggle-nav-section"
-                        data-link-name="nav2 : subnav-toggle">
-                        more
-                    </button>
-                </li>
-            }
-    	    </ul>
-        }
-    </div>
-</div>
+            </div>
+        </div>
+    }
+}

@@ -2,7 +2,7 @@
 
 @import conf.Configuration
 @import common.LinkTo
-@import navigation.NewNavigation
+@import navigation.{NewNavigation, Pillars}
 
 <header class="header"
         role="banner">
@@ -28,7 +28,7 @@
         </a>
 
         <ul class="pillars">
-            @NewNavigation.PrimaryLinks.map { link =>
+            @Pillars.all.map { link =>
                 <li class="pillars__item">
                     <a class="pillar-link"
                         href="@LinkTo(link.url)"

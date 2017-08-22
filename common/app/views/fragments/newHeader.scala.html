@@ -3,7 +3,7 @@
 @import conf.Configuration
 @import common.{LinkTo, Edition}
 @import views.support.RenderClasses
-@import navigation.{NewNavigation, NavigationHelpers}
+@import navigation.{Pillars, NavigationHelpers}
 @import navigation.UrlHelpers._
 
 <header class="@RenderClasses(Map(
@@ -73,7 +73,7 @@
                        aria-controls="main-menu">
 
                 <ul class="pillars">
-                    @NewNavigation.PrimaryLinks.map { link =>
+                    @Pillars.all.map { link =>
                         <li class="pillars__item">
                             <a class="@RenderClasses(Map(
                                 "pillar-link" -> true,

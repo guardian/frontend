@@ -7,7 +7,6 @@
 
     @include mq(mobile) {
         max-height: $gs-baseline * 3.5;
-        max-height: 13vw;
     }
 
     @include mq(mobileLandscape) {

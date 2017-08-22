@@ -4,19 +4,17 @@ import common.{Edition, Navigation}
 import conf.Configuration
 import model.Page
 import SectionLinks._
-import NewNavigation._
-import SubSectionLinks._
 import NavLinks._
 
 object NavigationHelpers {
 
-  def getMembershipLinks(edition: Edition): NavLinkLists = {
+  def getMembershipLinks(edition: Edition): List[NavLink] = {
     val editionId = edition.id.toLowerCase()
 
-    NavLinkLists(List(
+    List(
       NavLink("become a supporter", s"${Configuration.id.membershipUrl}/${editionId}/supporter?INTCMP=mem_${editionId}_web_newheader"),
       NavLink("subscribe", s"${Configuration.id.digitalPackUrl}/${editionId}?INTCMP=NGW_NEWHEADER_${editionId}_GU_SUBSCRIBE")
-    ))
+    )
   }
 
   def getSectionOrPageId(page: Page): String = {
@@ -48,42 +46,41 @@ object NavigationHelpers {
     }
   }
 
-  def getSectionLinks(sectionName: String, edition: Edition): Tuple2[Seq[NavLink], Seq[NavLink]] = {
-    val sectionList = sectionLinks.filter { item =>
-      item.pageId == sectionName
-    }
-
-    if (sectionList.isEmpty) {
-      val mostPopular = News.getEditionalisedSubSectionLinks(edition).mostPopular.drop(1)
-      val leastPopular = News.getEditionalisedSubSectionLinks(edition).leastPopular
-
-      (mostPopular, leastPopular)
-    } else {
-      val section = sectionList.head
-      val mostPopular = section.parentSection.getEditionalisedSubSectionLinks(edition).mostPopular.drop(1)
-      val leastPopular = section.parentSection.getEditionalisedSubSectionLinks(edition).leastPopular
-
-      if (mostPopular.contains(section.navLink) || NewNavigation.PrimaryLinks.contains(section.navLink)) {
-        (mostPopular, leastPopular)
-      } else {
-        (Seq(section.navLink) ++ mostPopular, leastPopular.filter(_.title != section.navLink.title))
-      }
-    }
-  }
-
   def getPillarName(id: String): String = {
-    getSectionLink(id).getOrElse("News")
+    sectionLinks.find(_.id == id).map(_.pillar.title).getOrElse("")
   }
 
-  def getActivePillar(page: Page): Tuple2[String, String] = {
+  def getSubNav(page: Page): Option[NavLink2] = {
     val sectionOrTagId = NavigationHelpers.getSectionOrPageId(page)
-    val activeSectionLink = getSectionLink(sectionOrTagId)
+    val subNav = sectionLinks.find(_.id == sectionOrTagId)
 
-    (sectionOrTagId, activeSectionLink.getOrElse(""))
+    subNav
   }
 
-  private def getSectionLink(id: String): Option[String] = {
-    sectionLinks.find(_.pageId == id).map(_.parentSection.name)
+  def getSubNavSections(item: NavLink2, edition: Edition): List[NavLink2] = {
+    item.children.map(tertiary =>
+      tertiary.getEditionalisedList(edition)
+    )
+    .getOrElse(
+      item.parent.map( secondary =>
+        secondary.children.map( children =>
+
+          List(item) ++ children.getEditionalisedList(edition)
+
+        )
+        .getOrElse(item.pillar.children.getEditionalisedList(edition))
+      )
+      .getOrElse(item.pillar.children.getEditionalisedList(edition))
+    )
+  }
+
+  def getSectionsToDisplay(item: NavLink2, edition: Edition): List[NavLink2] = {
+
+    if(item.title == "headlines") {
+      item.children.get.getEditionalisedList(edition)
+    } else {
+      getSubNavSections(item, edition)
+    }
   }
 
   def simplifySectionId(sectionId: String): String = {
@@ -133,28 +130,5 @@ object NavigationHelpers {
     )
 
     sectionMap.getOrElse(sectionId, sectionId)
-  }
-
-  def getSubSectionNavLinks(id: String, edition: Edition, isFront: Boolean): Tuple2[Seq[NavLink], Seq[NavLink]] = {
-    if (isEditionalistedSubSection(id)) {
-      val subNav = editionalisedSubSectionLinks.filter(_.pageId == id).head.parentSection
-
-      (subNav.getEditionalisedSubSectionLinks(edition).mostPopular,
-        subNav.getEditionalisedSubSectionLinks(edition).leastPopular)
-    } else {
-      val subSectionList = subSectionLinks.filter(_.pageId == simplifyFootball(id))
-
-      if (subSectionList.isEmpty) {
-        NavigationHelpers.getSectionLinks(id, edition)
-      } else {
-        (subSectionList.head.parentSection.mostPopular,
-          subSectionList.head.parentSection.leastPopular)
-
-      }
-    }
-  }
-
-  def isEditionalistedSubSection(sectionId: String): Boolean = {
-    editionalisedSubSectionLinks.exists(_.pageId == sectionId)
   }
 }
