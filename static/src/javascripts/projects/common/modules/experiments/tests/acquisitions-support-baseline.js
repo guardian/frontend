@@ -41,7 +41,7 @@ const liveblogEpicTemplate = (ctaSentence: string) =>
             <p>
                 <em>
                     If everyone who reads our reporting, who likes it, helps to support it, our future would be much more secure.
-                    ${ctaSentence}
+                    ${ctaSentence}. - Guardian HQ
                 </em>
             </p>
         </div>
