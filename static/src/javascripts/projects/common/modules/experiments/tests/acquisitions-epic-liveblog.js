@@ -98,6 +98,7 @@ const addEpicToBlocks = (epicHtml: string, test: EpicABTest): Promise<void> =>
                 fastdom.write(() => {
                     const $epic = $.create(epicHtml);
                     $epic.insertAfter(el);
+                    mediator.emit(test.insertEvent);
                     $(el).removeClass(INSERT_EPIC_AFTER_CLASS);
                     setEpicLiveblogEntryTimeData($epic[0], timeData);
                     setupViewTracking(el, test);
@@ -111,7 +112,6 @@ export const setupEpicInLiveblog = (
     test: EpicABTest
 ): void => {
     addEpicToBlocks(epicHtml, test);
-    mediator.emit(test.insertEvent);
 
     if (!isAutoUpdateHandlerBound) {
         mediator.on('modules:autoupdate:updates', () => {
