@@ -53,6 +53,4 @@ const handleCompletion = (): void => {
     });
 };
 
-export {
-    handleCompletion
-};
+export { handleCompletion };
