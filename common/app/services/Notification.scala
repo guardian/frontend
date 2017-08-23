@@ -1,8 +1,8 @@
 package services
 
-import com.amazonaws.services.sns.AmazonSNSAsyncClient
+import com.amazonaws.services.sns.{AmazonSNSAsync, AmazonSNSAsyncClient}
 import com.amazonaws.services.sns.model.PublishRequest
-import common.{ExecutionContexts, AkkaAsync, Logging}
+import common.{AkkaAsync, ExecutionContexts, Logging}
 import conf.Configuration
 import awswrappers.sns._
 
@@ -12,10 +12,12 @@ trait Notification extends Logging with ExecutionContexts {
 
   val topic: String
 
-  lazy val sns: Option[AmazonSNSAsyncClient] = Configuration.aws.credentials.map{ credentials =>
-    val client = new AmazonSNSAsyncClient(credentials)
-    client.setEndpoint(AwsEndpoints.sns)
-    client
+  lazy val sns: Option[AmazonSNSAsync] = Configuration.aws.credentials.map { credentials =>
+    AmazonSNSAsyncClient
+    .asyncBuilder()
+    .withCredentials(credentials)
+    .withRegion(conf.Configuration.aws.region)
+    .build()
   }
 
   def send(akkaAsync: AkkaAsync)(subject: String, message: String) {

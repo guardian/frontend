@@ -3,7 +3,6 @@ package tools
 import common.{Logging, AkkaAgent}
 import com.amazonaws.services.elasticloadbalancing.AmazonElasticLoadBalancingClient
 import scala.collection.JavaConversions._
-import services.AwsEndpoints
 
 case class LoadBalancer(id: String,
                         name: String,
@@ -39,8 +38,11 @@ object LoadBalancer extends Logging {
   def refresh() {
     log.info("starting refresh LoadBalancer ELB DNS names")
     credentials.foreach{ credentials =>
-      val client = new AmazonElasticLoadBalancingClient(credentials)
-      client.setEndpoint(AwsEndpoints.elb)
+      val client = AmazonElasticLoadBalancingClient
+        .builder()
+        .withCredentials(credentials)
+        .withRegion(conf.Configuration.aws.region)
+        .build()
       val elbs = client.describeLoadBalancers().getLoadBalancerDescriptions
       client.shutdown()
       val newLoadBalancers = loadBalancers.map{ lb =>

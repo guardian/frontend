@@ -3,8 +3,7 @@ package frontpress
 import java.nio.ByteBuffer
 
 import com.amazonaws.handlers.AsyncHandler
-import com.amazonaws.regions.{Region, Regions}
-import com.amazonaws.services.kinesis.AmazonKinesisAsyncClient
+import com.amazonaws.services.kinesis.{AmazonKinesisAsync, AmazonKinesisAsyncClient}
 import com.amazonaws.services.kinesis.model.{PutRecordRequest, PutRecordResult}
 import com.gu.facia.api.ApiError
 import conf.Configuration
@@ -33,10 +32,12 @@ object StatusNotification {
       Logger.info(s"Kinesis status notification sent to stream:${request.getStreamName}")}
   }
 
-  lazy val client: AmazonKinesisAsyncClient = {
-    val c = new AmazonKinesisAsyncClient(Configuration.aws.mandatoryCredentials)
-    c.setRegion(Region.getRegion(Regions.fromName(Configuration.aws.region)))
-    c
+  lazy val client: AmazonKinesisAsync = {
+    AmazonKinesisAsyncClient
+      .asyncBuilder()
+      .withCredentials(Configuration.aws.mandatoryCredentials)
+      .withRegion(conf.Configuration.aws.region)
+      .build()
   }
 
 

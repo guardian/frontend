@@ -6,7 +6,7 @@ import javax.crypto.Mac
 import javax.crypto.spec.SecretKeySpec
 
 import com.amazonaws.auth.AWSSessionCredentials
-import com.amazonaws.services.s3.AmazonS3Client
+import com.amazonaws.services.s3.{AmazonS3, AmazonS3Client}
 import com.amazonaws.services.s3.model.CannedAccessControlList.{Private, PublicRead}
 import com.amazonaws.services.s3.model._
 import com.amazonaws.util.StringInputStream
@@ -22,10 +22,12 @@ trait S3 extends Logging {
 
   lazy val bucket = Configuration.aws.bucket
 
-  lazy val client: Option[AmazonS3Client] = Configuration.aws.credentials.map{ credentials =>
-    val client = new AmazonS3Client(credentials)
-    client.setEndpoint(AwsEndpoints.s3)
-    client
+  lazy val client: Option[AmazonS3] = Configuration.aws.credentials.map{ credentials =>
+    AmazonS3Client
+      .builder
+      .withCredentials(credentials)
+      .withRegion(conf.Configuration.aws.region)
+      .build()
   }
 
   private def withS3Result[T](key: String)(action: S3Object => T): Option[T] = client.flatMap { client =>
