@@ -19,7 +19,6 @@ const makeBecomeSupporterURL = (campaignCode: string): string =>
 const makeSubscribeURL = (campaignCode: string): string =>
     `https://subscribe.theguardian.com/uk?INTCMP=${campaignCode}`;
 
-
 const buildButtonTemplate = ({ supportUrl }) =>
     `<div class="contributions__amount-field">
         <div>
@@ -85,7 +84,6 @@ const changeHeaderLinks = (
     changeLinks('js-become-member-new-header', becomeSupporterLink);
     changeLinks('js-subscribe-new-header', subscribeLink);
 };
-
 
 const shouldDisplayEpic = (test: EpicABTest): boolean =>
     isEpicWithinViewLimit(test) && isEpicCompatibleWithPage(config.get('page'));
