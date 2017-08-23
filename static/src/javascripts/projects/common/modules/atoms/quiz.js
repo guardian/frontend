@@ -4,28 +4,28 @@ import fastdom from 'lib/fastdom-promise';
 import toArray from 'lodash/collections/toArray';
 export default {
     // find a bucket message to show once you finish a quiz
-    handleCompletion: function() {
+    handleCompletion() {
         // we're only handling completion in browsers who can validate forms natively
         // others do a round trip to the server
         if (HTMLFormElement.prototype.checkValidity) {
             // quizzes can be set to only show answers at the end, in which case we do a round trip.
             // we'll run this code only if it's an instant-reveal quiz
-            var $quizzes = $('.js-atom-quiz--instant-reveal');
+            const $quizzes = $('.js-atom-quiz--instant-reveal');
 
             if ($quizzes.length > 0) {
-                bean.on(document, 'click', toArray($quizzes), function(e) {
-                    var quiz = e.currentTarget,
-                        total = $(':checked + .atom-quiz__answer__item--is-correct', quiz).length;
+                bean.on(document, 'click', toArray($quizzes), e => {
+                    const quiz = e.currentTarget;
+                    let total = $(':checked + .atom-quiz__answer__item--is-correct', quiz).length;
 
                     if (quiz.checkValidity()) { // the form (quiz) is complete
-                        var $bucket__message = null;
+                        let $bucket__message = null;
                         do {
                             // try and find a .bucket__message for your total
                             $bucket__message = $('.js-atom-quiz__bucket-message--' + total, quiz);
 
                             // if we find a message for your total show it, and exit
                             if ($bucket__message.length > 0) {
-                                fastdom.write(function() {
+                                fastdom.write(() => {
                                     $bucket__message.css({
                                         'display': 'block'
                                     });
