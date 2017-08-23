@@ -35,6 +35,7 @@ const allQuestions: Object[] = [
     },
 ];
 
+/* Generate a [from .. to[ range */
 const range = (from: number, to: number): number[] => {
     const rangerec = (n: number, acc: number[]): number[] => {
         if (n >= to) {
@@ -45,8 +46,9 @@ const range = (from: number, to: number): number[] => {
     return rangerec(from, []);
 };
 
+/* Draw a random sample of 3 questions */
 const draw = (): number[] => {
-    const lottery = range(0, allQuestions.length);
+    const lottery: number[] = range(0, allQuestions.length);
     let i;
 
     i = Math.floor(Math.random() * lottery.length);
@@ -65,7 +67,7 @@ const draw = (): number[] => {
 };
 
 const selectQuestion = (qs: Question[], as: Answer[]): number => {
-    // open questions
+    // indices of open questions
     const oqs = as.reduce((acc, a, i) => (a === -1 ? acc.concat(i) : acc), []);
 
     if (!oqs.length) {
