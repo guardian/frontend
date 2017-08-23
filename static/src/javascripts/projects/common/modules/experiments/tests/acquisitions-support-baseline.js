@@ -78,11 +78,8 @@ const changeHeaderLinks = (
     becomeSupporterLink: string,
     subscribeLink: string
 ) => {
-    changeLinks('js-become-member', becomeSupporterLink);
-    changeLinks('js-subscribe', subscribeLink);
-
-    changeLinks('js-become-member-new-header', becomeSupporterLink);
-    changeLinks('js-subscribe-new-header', subscribeLink);
+    changeLinks('js-change-become-member-link', becomeSupporterLink);
+    changeLinks('js-change-subscribe-link', subscribeLink);
 };
 
 const shouldDisplayEpic = (test: EpicABTest): boolean =>
