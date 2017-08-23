@@ -152,9 +152,13 @@ trait WithTestCSRF {
 }
 
 trait WithTestRenderer {
-  def app: Application
-  def appContext: ApplicationContext
   def executionContext: ExecutionContext
 
-  lazy val testRenderer: Renderer = new Renderer()(app.actorSystem, executionContext, appContext)
+  val testRenderer: Renderer = {
+    new Renderer()(
+      ActorSystem("TestRenderer"),
+      executionContext,
+      ApplicationContext(Environment.simple(), ApplicationIdentity("TestRenderer"))
+    )
+  }
 }
