@@ -9,8 +9,8 @@ import { control as acquisitionsTestimonialParametersControl } from 'common/modu
 import type { AcquisitionsEpicTestimonialTemplateParameters } from 'common/modules/commercial/acquisitions-epic-testimonial-parameters';
 import { logView } from 'common/modules/commercial/acquisitions-view-log';
 import {
-    submitEpicInsertEvent,
-    submitEpicViewEvent,
+    submitInsertEvent,
+    submitViewEvent,
 } from 'common/modules/commercial/acquisitions-ophan';
 import { isRegular } from 'common/modules/tailor/tailor';
 import $ from 'lib/$';
@@ -102,9 +102,20 @@ const defaultPageCheck = (page: Object): boolean =>
 
 const shouldShowReaderRevenue = (
     showToContributorsAndSupporters: boolean = false
-): boolean =>
-    (userShouldSeeReaderRevenue() || showToContributorsAndSupporters) &&
-    !config.page.shouldHideReaderRevenue;
+): boolean => {
+    const isMasterclassesPage =
+        config.page &&
+        config.page.keywordIds &&
+        config.page.keywordIds.includes(
+            'guardian-masterclasses/guardian-masterclasses'
+        );
+
+    return (
+        (userShouldSeeReaderRevenue() || showToContributorsAndSupporters) &&
+        !isMasterclassesPage &&
+        !config.page.shouldHideReaderRevenue
+    );
+};
 
 const defaultCanEpicBeDisplayed = (test: EpicABTest): boolean => {
     const worksWellWithPageTemplate = test.pageCheck(config.page);
@@ -222,19 +233,19 @@ const makeABTestVariant = (
         test = noop,
         impression = submitABTestImpression =>
             mediator.once(parentTest.insertEvent, () => {
-                submitEpicInsertEvent(
+                submitInsertEvent(
+                    parentTest.componentType,
                     products,
-                    campaignCode,
-                    parentTest.componentType
+                    campaignCode
                 );
                 submitABTestImpression();
             }),
         success = submitABTestComplete =>
             mediator.once(parentTest.viewEvent, () => {
-                submitEpicViewEvent(
+                submitViewEvent(
+                    parentTest.componentType,
                     products,
-                    campaignCode,
-                    parentTest.componentType
+                    campaignCode
                 );
                 submitABTestComplete();
             }),
@@ -373,7 +384,6 @@ const makeABTest = ({
     variants,
 
     // optional params
-    componentType = 'ACQUISITIONS_EPIC',
     // locations is a filter where empty is taken to mean 'all'
     locations = [],
     locationCheck = () => true,
@@ -401,6 +411,7 @@ const makeABTest = ({
 
             return testCanRun && canEpicBeDisplayed;
         },
+        componentType: 'ACQUISITIONS_EPIC',
         insertEvent: makeEvent(id, 'insert'),
         viewEvent: makeEvent(id, 'view'),
 
@@ -417,7 +428,6 @@ const makeABTest = ({
         audienceCriteria,
         idealOutcome,
         dataLinkNames,
-        componentType,
         campaignId,
         campaignPrefix,
         campaignSuffix,

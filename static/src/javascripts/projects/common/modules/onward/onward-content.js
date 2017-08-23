@@ -36,7 +36,6 @@ class OnwardContent extends Component {
         register.end('series-content');
         mediator.emit('modules:onward:loaded');
         mediator.emit('page:new-content');
-        mediator.emit('ui:images:upgradePictures');
     }
 }
 

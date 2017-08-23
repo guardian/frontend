@@ -5,15 +5,16 @@ const submitComponentEvent = (componentEvent: OphanComponentEvent) => {
     ophan.record({ componentEvent });
 };
 
-export const submitEpicInsertEvent = (
+export const submitInsertEvent = (
+    componentType: OphanComponentType,
     products: $ReadOnlyArray<OphanProduct>,
     campaignCode: string,
-    componentType: OphanComponentType = 'ACQUISITIONS_EPIC'
+    labels: $ReadOnlyArray<string> = []
 ) => {
     submitComponentEvent({
         component: {
             componentType,
-            labels: [],
+            labels,
             products,
             campaignCode,
         },
@@ -21,15 +22,16 @@ export const submitEpicInsertEvent = (
     });
 };
 
-export const submitEpicViewEvent = (
+export const submitViewEvent = (
+    componentType: OphanComponentType,
     products: $ReadOnlyArray<OphanProduct>,
     campaignCode: string,
-    componentType: OphanComponentType = 'ACQUISITIONS_EPIC'
+    labels: $ReadOnlyArray<string> = []
 ) => {
     submitComponentEvent({
         component: {
             componentType,
-            labels: [],
+            labels,
             products,
             campaignCode,
         },

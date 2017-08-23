@@ -9,7 +9,7 @@ import { getUrlVars } from 'lib/url';
 import richLinks from 'common/modules/article/rich-links';
 import { upgradeMembershipEvents } from 'common/modules/article/membership-events';
 import { geoMostPopular } from 'common/modules/onward/geo-most-popular';
-import quiz from 'common/modules/atoms/quiz';
+import { handleCompletion as handleQuizCompletion } from 'common/modules/atoms/quiz';
 import storyQuestions from 'common/modules/atoms/story-questions';
 import { init as initLiveblogCommon } from 'bootstraps/enhanced/article-liveblog-common';
 import trail from 'bootstraps/enhanced/trail';
@@ -62,7 +62,7 @@ const init = () => {
     richLinks.insertTagRichLink();
     upgradeMembershipEvents();
     mediator.emit('page:article:ready');
-    quiz.handleCompletion();
+    handleQuizCompletion();
     storyQuestions.init();
     initStoryQuiz();
     SnippetFeedback();

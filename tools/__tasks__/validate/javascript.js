@@ -61,6 +61,11 @@ module.exports = {
             task: () => execa('flow', { cwd: 'static/src/javascripts' }),
             onError: flowError,
         },
+        {
+            description: `Flow ${chalk.dim('UI')}`,
+            task: () => execa('flow', { cwd: 'ui/src' }),
+            onError: flowError,
+        },
     ],
     concurrent: true,
 };

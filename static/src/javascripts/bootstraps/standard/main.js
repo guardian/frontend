@@ -18,7 +18,6 @@
 import fastdom from 'fastdom';
 import raven from 'lib/raven';
 import userPrefs from 'common/modules/user-prefs';
-import { upgradePictures, listen } from 'common/modules/ui/images';
 import { local as storage } from 'lib/storage';
 import fetchJSON from 'lib/fetch-json';
 import mediator from 'lib/mediator';
@@ -184,10 +183,6 @@ const bootStandard = (): void => {
     if (!config.switches.adFreeSubscriptionTrial) {
         removeCookie('GU_AF1');
     }
-
-    // Images
-    upgradePictures();
-    listen();
 
     // set local storage: gu.alreadyVisited
     if (window.guardian.isEnhanced) {
