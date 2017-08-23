@@ -1,11 +1,11 @@
 package football.model
 
-import org.scalatest.{DoNotDiscover, FreeSpec, ShouldMatchers}
+import org.scalatest.{DoNotDiscover, FreeSpec, Matchers}
 import model.TeamColours
 import pa.{Official, LineUpTeam}
 import test.ConfiguredTestSuite
 
-@DoNotDiscover class TeamColoursTest extends FreeSpec with ShouldMatchers with ConfiguredTestSuite {
+@DoNotDiscover class TeamColoursTest extends FreeSpec with Matchers with ConfiguredTestSuite {
   "home team colour" - {
     "should be darkened from white" in {
       TeamColours(fakeTeam("#FFFFFF"), fakeTeam("#333333")).home should equal("#eeeeee")

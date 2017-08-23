@@ -9,7 +9,7 @@ import test._
 
 @DoNotDiscover class CompetitionStageTest
   extends FreeSpec
-    with ShouldMatchers
+    with Matchers
     with OptionValues
     with CompetitionTestData
     with Collections

@@ -8,10 +8,10 @@ import conf.FrontendIdentityCookieDecoder
 import conf.switches.Switches
 import formstack.{FormstackApi, FormstackForm}
 import idapiclient.{IdApiClient, ScGuU, TrackingData}
-import org.mockito.Matchers
+import org.mockito.{Matchers => MockitoMatchers}
 import org.mockito.Mockito._
-import org.scalatest.mock.MockitoSugar
-import org.scalatest.{ShouldMatchers, path}
+import org.scalatest.mockito.MockitoSugar
+import org.scalatest.{Matchers, path}
 import play.api.mvc.RequestHeader
 import play.api.test.Helpers._
 import services.{IdentityRequest, _}
@@ -21,7 +21,7 @@ import scala.concurrent.Future
 
 
 class FormstackControllerTest extends path.FreeSpec
-  with ShouldMatchers
+  with Matchers
   with WithTestContext
   with MockitoSugar {
   val returnUrlVerifier = mock[ReturnUrlVerifier]
@@ -38,9 +38,9 @@ class FormstackControllerTest extends path.FreeSpec
   val user = User("test@example.com", userId, statusFields = StatusFields(receive3rdPartyMarketing = Some(true), receiveGnmMarketing = Some(true)))
   val authenticatedActions = new AuthenticatedActions(authService, mock[IdApiClient], mock[IdentityUrlBuilder])
 
-  when(authService.authenticatedUserFor(Matchers.any[RequestHeader])) thenReturn Some(AuthenticatedUser(user, ScGuU("abc", GuUCookieData(user, 0, None))))
+  when(authService.authenticatedUserFor(MockitoMatchers.any[RequestHeader])) thenReturn Some(AuthenticatedUser(user, ScGuU("abc", GuUCookieData(user, 0, None))))
 
-  when(requestParser.apply(Matchers.any[RequestHeader])) thenReturn idRequest
+  when(requestParser.apply(MockitoMatchers.any[RequestHeader])) thenReturn idRequest
   when(idRequest.trackingData) thenReturn trackingData
 
   val controller = new FormstackController(returnUrlVerifier, requestParser, idUrlBuilder, authenticatedActions, formstackApi)
@@ -58,7 +58,7 @@ class FormstackControllerTest extends path.FreeSpec
     Switches.IdentityFormstackSwitch.switchOn()
 
     "if the form is valid" - {
-      when(formstackApi.checkForm(Matchers.any[FormstackForm])) thenReturn Future.successful(Right(FormstackForm("test-reference", "view-id", None)))
+      when(formstackApi.checkForm(MockitoMatchers.any[FormstackForm])) thenReturn Future.successful(Right(FormstackForm("test-reference", "view-id", None)))
 
       "the formstack page is displayed" in Fake {
         val result = controller.formstackForm("test-reference", false)(TestRequest())
@@ -67,7 +67,7 @@ class FormstackControllerTest extends path.FreeSpec
     }
 
     "when the form is not valid" - {
-      when(formstackApi.checkForm(Matchers.any[FormstackForm])) thenReturn Future.successful(Left(List(Error("Test message", "Test description", 404))))
+      when(formstackApi.checkForm(MockitoMatchers.any[FormstackForm])) thenReturn Future.successful(Left(List(Error("Test message", "Test description", 404))))
 
       "the formstack page should not be shown and passes status code from errors" in Fake {
         val result = controller.formstackForm("test-reference", false)(TestRequest())

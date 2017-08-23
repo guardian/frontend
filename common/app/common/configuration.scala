@@ -546,10 +546,6 @@ class GuardianConfiguration extends Logging {
     lazy val fallbackCachebustId = configuration.getStringProperty("admin.r2.press.fallback.cachebust.id").getOrElse("")
   }
 
-  object memcached {
-    lazy val host = configuration.getStringProperty("memcached.host")
-  }
-
   object redis {
     lazy val endpoint = configuration.getStringProperty("redis.host")
   }

@@ -4,9 +4,9 @@ import org.fluentlenium.core.domain.{FluentWebElement, FluentList}
 import org.openqa.selenium.interactions.Actions
 import play.api.test.TestBrowser
 import collection.JavaConversions._
-import org.scalatest.ShouldMatchers
+import org.scalatest.Matchers
 
-trait MatchListFeatureTools extends ShouldMatchers {
+trait MatchListFeatureTools extends Matchers {
   protected def assertTeamWithScore(matches: FluentList[FluentWebElement], team: String, score: String): Unit = {
     val matchesStr = matches.map(matchEl => matchEl.find(".football-team__name").getText + " - " + matchEl.find(".football-team__score").getText)
     assert(

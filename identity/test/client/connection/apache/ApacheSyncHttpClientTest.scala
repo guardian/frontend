@@ -1,7 +1,7 @@
 package client.connection.apache
 
 import org.scalatest.path
-import org.scalatest.mock.MockitoSugar
+import org.scalatest.mockito.MockitoSugar
 import org.scalatest.Matchers
 import org.apache.commons.httpclient.{NameValuePair, HttpException, HttpMethod, HttpClient}
 import org.mockito.Mockito._

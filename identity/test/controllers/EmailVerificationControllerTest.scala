@@ -1,22 +1,22 @@
 package controllers
 
-import org.scalatest.{ShouldMatchers, path}
+import org.scalatest.{Matchers, path}
 import services._
 import idapiclient.IdApiClient
-import org.scalatest.mock.MockitoSugar
+import org.scalatest.mockito.MockitoSugar
 import test.{Fake, TestRequest, WithTestContext}
 import play.api.mvc.{Request, RequestHeader}
 
 import scala.concurrent.Future
 import org.mockito.Mockito._
-import org.mockito.Matchers
+import org.mockito.{Matchers => MockitoMatchers}
 import play.api.test.Helpers._
 import idapiclient.TrackingData
 import client.Error
 import actions.AuthenticatedActions
 
 class EmailVerificationControllerTest extends path.FreeSpec
-  with ShouldMatchers
+  with Matchers
   with WithTestContext
   with MockitoSugar {
   val api = mock[IdApiClient]
@@ -30,10 +30,10 @@ class EmailVerificationControllerTest extends path.FreeSpec
 
   val EmailValidatedMessage = "Your email address has been validated."
 
-  when(idRequestParser.apply(Matchers.any[RequestHeader])) thenReturn idRequest
+  when(idRequestParser.apply(MockitoMatchers.any[RequestHeader])) thenReturn idRequest
   when(idRequest.trackingData) thenReturn trackingData
-  when(authenticationService.requestPresentsAuthenticationCredentials(Matchers.any[Request[_]])) thenReturn true
-  when(returnUrlVerifier.getVerifiedReturnUrl(Matchers.any[Request[_]])).thenReturn(Some("http://www.theguardian.com/football"))
+  when(authenticationService.requestPresentsAuthenticationCredentials(MockitoMatchers.any[Request[_]])) thenReturn true
+  when(returnUrlVerifier.getVerifiedReturnUrl(MockitoMatchers.any[Request[_]])).thenReturn(Some("http://www.theguardian.com/football"))
 
   val controller = new EmailVerificationController(api, authenticatedActions, authenticationService, idRequestParser, idUrlBuilder, returnUrlVerifier)
 

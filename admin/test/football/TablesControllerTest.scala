@@ -3,7 +3,7 @@ package football
 import common.ExecutionContexts
 import _root_.controllers.admin.TablesController
 import football.model.PA
-import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FreeSpec, ShouldMatchers}
+import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FreeSpec, Matchers}
 import play.api.mvc.AnyContentAsFormUrlEncoded
 import play.api.test._
 import play.api.test.Helpers._
@@ -16,7 +16,7 @@ import scala.language.postfixOps
 @DoNotDiscover class TablesControllerTest
   extends FreeSpec
     with ExecutionContexts
-    with ShouldMatchers
+    with Matchers
     with ConfiguredTestSuite
     with BeforeAndAfterAll
     with WithTestWsClient
