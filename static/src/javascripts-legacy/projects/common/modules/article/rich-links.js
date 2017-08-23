@@ -10,7 +10,6 @@ define([
     'lodash/utilities/template',
     'lib/fastdom-promise',
     'common/modules/article/space-filler',
-    'common/modules/ui/images',
     'raw-loader!common/views/content/richLinkTag.html',
     'lodash/collections/contains',
     'common/modules/experiments/ab'
@@ -26,7 +25,6 @@ define([
     template,
     fastdomPromise,
     spaceFiller,
-    imagesModule,
     richLinkTagTmpl,
     contains
 ) {
@@ -49,7 +47,6 @@ define([
                     $(el).html(resp.html)
                         .removeClass('element-rich-link--not-upgraded')
                         .addClass('element-rich-link--upgraded');
-                    imagesModule.upgradePictures(el);
                     $('.submeta-container--break').removeClass('submeta-container--break');
                     mediator.emit('rich-link:loaded', el);
                 });
