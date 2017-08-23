@@ -22,7 +22,7 @@ export default {
         }
 
         bean.on(document, 'click', quizzes, function onClick(e: Event): void {
-            const quiz: Element = (e.currentTarget: any);
+            const quiz: HTMLFormElement = (e.currentTarget: any);
             let total: number = quiz.querySelectorAll(
                 ':checked + .atom-quiz__answer__item--is-correct'
             ).length;
@@ -34,9 +34,9 @@ export default {
 
             do {
                 // try and find a .bucket__message for your total
-                const bucketMessage: ?Element = quiz.querySelector(
+                const bucketMessage: ?HTMLElement = (quiz.querySelector(
                     `.js-atom-quiz__bucket-message--${total}`
-                );
+                ): ?any);
 
                 // if we find a message for your total show it, and exit
                 if (bucketMessage) {
