@@ -6,34 +6,25 @@ import { init as initSurvey, BusinessError } from './survey';
 
 type Answer = number;
 type Question = number;
+type CampaignQuestion = {
+    question: string,
+    askWhy: boolean,
+};
+type CampaignField = {
+    campaignId: string,
+    questions: CampaignQuestion[],
+};
+type Campaign = {
+    fields: CampaignField[],
+};
 
 // campaign settings: most of it will come from the targeting tool
-const campaignId: string = 'audience-jtbd-survey';
+const campaignId: string = 'test-survey';
 // survey starts on Aug 23, 2017
-const startOfSurvey: Date = new Date('2017-07-23'); 
-const endOfSurvey: number = startOfSurvey.setMonth(startOfSurvey.getMonth() + 1);
-const allQuestions: Object[] = [
-    {
-        question:
-            'I came to The Guardian just now for in-depth coverage of this topic.',
-        ask: false,
-    },
-    {
-        question:
-            'I came to The Guardian just now because I have a few minutes to spare.',
-        ask: false,
-    },
-    {
-        question:
-            'I came to The Guardian just now to see what’s going on in the world.',
-        ask: false,
-    },
-    {
-        question:
-            'I came to The Guardian just now to answer a specific question.',
-        ask: false,
-    },
-];
+const startOfSurvey: Date = new Date('2017-07-23');
+const endOfSurvey: number = startOfSurvey.setMonth(
+    startOfSurvey.getMonth() + 1
+);
 
 /* Generate a [from .. to[ range */
 const range = (from: number, to: number): number[] => {
@@ -47,8 +38,8 @@ const range = (from: number, to: number): number[] => {
 };
 
 /* Draw a random sample of 3 questions */
-const draw = (): number[] => {
-    const lottery: number[] = range(0, allQuestions.length);
+const draw = (questions: Object[]): number[] => {
+    const lottery: number[] = range(0, questions.length);
     let i;
 
     i = Math.floor(Math.random() * lottery.length);
@@ -66,6 +57,7 @@ const draw = (): number[] => {
     return [q1, q2, q3];
 };
 
+/* Choose a question out of the remaingin pool for this session */
 const selectQuestion = (qs: Question[], as: Answer[]): number => {
     // indices of open questions
     const oqs = as.reduce((acc, a, i) => (a === -1 ? acc.concat(i) : acc), []);
@@ -77,6 +69,7 @@ const selectQuestion = (qs: Question[], as: Answer[]): number => {
     return oqs[Math.floor(Math.random() * oqs.length)];
 };
 
+/* Record answer and send data to Ophan */
 const save = (
     qs: Question[],
     as: Answer[],
@@ -111,14 +104,20 @@ const shouldIGo = (): boolean => {
 };
 
 const init = (): void => {
+    const campaigns = campaignsFor(campaignId);
+    const campaign: ?Campaign = campaigns.find(
+        c => c.fields.campaignId === campaignId
+    );
+
     // Should I stay or should I go?
-    if (shouldIGo()) {
+    if (!campaign || shouldIGo()) {
         return;
     }
 
     sessionStorage.set('gu.jtbd.seen', true);
 
-    const qs = localStorage.get('gu.jtbd.questions') || draw();
+    const allQuestions = campaign.fields.questions;
+    const qs = localStorage.get('gu.jtbd.questions') || draw(allQuestions);
     const as = localStorage.get('gu.jtbd.answers') || qs.map(() => -1);
     const q = selectQuestion(qs, as);
 
