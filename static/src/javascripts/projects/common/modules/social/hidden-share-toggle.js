@@ -46,13 +46,13 @@ const hiddenShareToggle = (): void => {
 
             if (targetIsMore || targetIsClose) {
                 event.preventDefault();
-            }
 
-            toggleSecondaryMethods(share, targetIsMore);
+                toggleSecondaryMethods(share, targetIsMore);
 
-            // the top social element requires some extra treatment
-            if (share.classList.contains('social--top')) {
-                share.classList.toggle('social--expanded-top', targetIsMore);
+                // the top social element requires some extra treatment
+                if (share.classList.contains('social--top')) {
+                    share.classList.toggle('social--expanded-top', targetIsMore);
+                }
             }
         };
 
