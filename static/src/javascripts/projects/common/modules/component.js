@@ -62,7 +62,7 @@ class Component {
     }
 
     // eslint-disable-next-line class-methods-use-this, no-unused-vars
-    fetched(res: string): void {
+    fetched(res: Object): void {
         /* noop */
     }
 
@@ -144,7 +144,7 @@ class Component {
         bean.off(this.elem);
     }
 
-    emit(eventName: string, args: Object) {
+    emit(eventName: string, args?: Object) {
         bean.fire(this.elem, eventName, args);
     }
 
@@ -251,7 +251,7 @@ class Component {
         }
     }
 
-    removeState(state: string, elemName: string): bonzo {
+    removeState(state: string, elemName?: string): bonzo {
         const elem = elemName ? this.getElem(elemName) : this.elem;
         return bonzo(elem).removeClass(
             `${this.componentClass +

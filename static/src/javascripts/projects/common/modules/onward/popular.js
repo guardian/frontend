@@ -26,6 +26,8 @@ class MostPopular extends Component {
             : ''}.json`;
     }
 
+    hasSection: boolean;
+
     init(): void {
         this.fetch(qwery('.js-popular-trails'), 'html');
     }

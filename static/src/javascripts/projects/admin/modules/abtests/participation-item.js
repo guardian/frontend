@@ -23,6 +23,8 @@ class ParticipationItem extends Component {
         );
     }
 
+    config: Object;
+
     prerender(): void {
         const origin = /gutools.co.uk$/.test(document.location.origin)
             ? 'http://www.theguardian.com'

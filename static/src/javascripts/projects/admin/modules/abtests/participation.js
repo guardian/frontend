@@ -21,6 +21,8 @@ class Participation extends Component {
         );
     }
 
+    config: Object;
+
     prerender(): void {
         const test = this.config.test;
         const origin = /gutools.co.uk$/.test(document.location.origin)

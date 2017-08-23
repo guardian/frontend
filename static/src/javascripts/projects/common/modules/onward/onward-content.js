@@ -26,6 +26,8 @@ class OnwardContent extends Component {
         this.fetch(this.context, 'html');
     }
 
+    context: HTMLElement;
+
     // eslint-disable-next-line class-methods-use-this
     error(): void {
         register.error('series-content');

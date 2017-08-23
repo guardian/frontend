@@ -46,6 +46,8 @@ class ScoreBoard extends Component {
         }
     }
 
+    pageType: string;
+
     prerender(): void {
         const scoreLoadingPlaceholder = $(
             '.score__loading',

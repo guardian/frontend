@@ -21,6 +21,8 @@ class Audience extends Component {
         );
     }
 
+    config: Object;
+
     prerender(): void {
         const testsContainer = this.getElem('tests');
 

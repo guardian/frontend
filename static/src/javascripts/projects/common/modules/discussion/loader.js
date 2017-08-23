@@ -77,6 +77,12 @@ class Loader extends Component {
         window.location.replace(`#comment-${id}`);
     }
 
+    $topCommentsContainer: bonzo;
+    comments: Comments;
+    topCommentCount: number;
+    user: ?Object;
+    username: ?string;
+
     commentPosted(comment: Object): void {
         this.removeState('truncated');
         this.comments.addComment(comment);
