@@ -1,15 +1,17 @@
 // @flow
 import ophan from 'ophan/ng';
 import { session as sessionStorage, local as localStorage } from 'lib/storage';
+import { campaignsFor } from 'common/modules/commercial/targeting-tool';
 import { init as initSurvey, BusinessError } from './survey';
 
 type Answer = number;
 type Question = number;
 
 // campaign settings: most of it will come from the targeting tool
-// const campaignId: string = 'abcd';
-const startOfTest: Date = new Date();
-const endOfTest: number = startOfTest.setMonth(startOfTest.getMonth() + 1);
+const campaignId: string = 'audience-jtbd-survey';
+// survey starts on Aug 23, 2017
+const startOfSurvey: Date = new Date('2017-07-23'); 
+const endOfSurvey: number = startOfSurvey.setMonth(startOfSurvey.getMonth() + 1);
 const allQuestions: Object[] = [
     {
         question:
@@ -85,7 +87,7 @@ const save = (
     ).length;
 
     as[q] = answer;
-    localStorage.set('gu.jtbd.answers', as, { expires: endOfTest });
+    localStorage.set('gu.jtbd.answers', as, { expires: endOfSurvey });
 
     ophan.record({
         component: 'jtbd-survey',
@@ -123,7 +125,7 @@ const init = (): void => {
     }
 
     localStorage.setIfNotExists('gu.jtbd.questions', qs, {
-        expires: endOfTest,
+        expires: endOfSurvey,
     });
 
     initSurvey(allQuestions[qs[q]].question, allQuestions[qs[q]].ask)
