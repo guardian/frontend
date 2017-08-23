@@ -11,10 +11,26 @@ type Question = number;
 const startOfTest: Date = new Date();
 const endOfTest: number = startOfTest.setMonth(startOfTest.getMonth() + 1);
 const allQuestions: Object[] = [
-    { question: 'I came to The Guardian just now for in-depth coverage of this topic.', ask: false },
-    { question: 'I came to The Guardian just now because I have a few minutes to spare.', ask: false },
-    { question: 'I came to The Guardian just now to see what’s going on in the world.', ask: false },
-    { question: 'I came to The Guardian just now to answer a specific question.', ask: false },
+    {
+        question:
+            'I came to The Guardian just now for in-depth coverage of this topic.',
+        ask: false,
+    },
+    {
+        question:
+            'I came to The Guardian just now because I have a few minutes to spare.',
+        ask: false,
+    },
+    {
+        question:
+            'I came to The Guardian just now to see what’s going on in the world.',
+        ask: false,
+    },
+    {
+        question:
+            'I came to The Guardian just now to answer a specific question.',
+        ask: false,
+    },
 ];
 
 const range = (from: number, to: number): number[] => {
@@ -83,16 +99,15 @@ const save = (
 const shouldIGo = (): boolean => {
     const now = new Date().getHours();
     const rand = Math.random() * 100;
-    return false;
     return !(
-        (15 <= now || 17 < now) &&
+        (now >= 15 || now > 17) &&
         rand < 1.5 &&
         sessionStorage.get('gu.jtbd.seen') !== true
     );
-}
+};
 
 const init = (): void => {
-     // Should I stay or should I go?
+    // Should I stay or should I go?
     if (shouldIGo()) {
         return;
     }
