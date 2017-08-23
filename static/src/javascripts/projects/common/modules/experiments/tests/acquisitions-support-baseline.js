@@ -69,7 +69,9 @@ const isEpicWithinViewLimit = (test: EpicABTest): boolean => {
 
 const changeLinks = (cssClass: string, link: string) => {
     [...document.getElementsByClassName(cssClass)].forEach(el => {
-        el.href = link;
+        if (el instanceof HTMLAnchorElement) {
+            el.href = link;
+        }
     });
 };
 
@@ -77,14 +79,12 @@ const changeHeaderLinks = (
     becomeSupporterLink: string,
     subscribeLink: string
 ) => {
-
     changeLinks('js-become-member', becomeSupporterLink);
     changeLinks('js-subscribe', subscribeLink);
 
     changeLinks('js-become-member-new-header', becomeSupporterLink);
     changeLinks('js-subscribe-new-header', subscribeLink);
 };
-
 
 
 const shouldDisplayEpic = (test: EpicABTest): boolean =>
