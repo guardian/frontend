@@ -51,7 +51,10 @@ const hiddenShareToggle = (): void => {
 
                 // the top social element requires some extra treatment
                 if (share.classList.contains('social--top')) {
-                    share.classList.toggle('social--expanded-top', targetIsMore);
+                    share.classList.toggle(
+                        'social--expanded-top',
+                        targetIsMore
+                    );
                 }
             }
         };
