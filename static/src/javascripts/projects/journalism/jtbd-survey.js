@@ -10,12 +10,12 @@ type CampaignQuestion = {
     question: string,
     askWhy: boolean,
 };
-type CampaignField = {
+type CampaignFields = {
     campaignId: string,
     questions: CampaignQuestion[],
 };
 type Campaign = {
-    fields: CampaignField[],
+    fields: CampaignFields,
 };
 
 // campaign settings: most of it will come from the targeting tool
@@ -104,7 +104,7 @@ const shouldIGo = (): boolean => {
 };
 
 const init = (): void => {
-    const campaigns = campaignsFor(campaignId);
+    const campaigns: Campaign[] = campaignsFor(campaignId);
     const campaign: ?Campaign = campaigns.find(
         c => c.fields.campaignId === campaignId
     );
@@ -129,7 +129,7 @@ const init = (): void => {
         expires: endOfSurvey,
     });
 
-    initSurvey(allQuestions[qs[q]].question, allQuestions[qs[q]].ask)
+    initSurvey(allQuestions[qs[q]].question, allQuestions[qs[q]].askWhy)
         .then(({ answer, why }) => save(qs, as, q, answer, why))
         .catch((reason: Error) => {
             if (reason instanceof BusinessError) {

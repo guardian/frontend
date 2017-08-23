@@ -17,7 +17,6 @@ import ophan from 'ophan/ng';
 import { SnippetFeedback } from 'journalism/snippet-feedback';
 import { init as initStoryQuiz } from 'journalism/storyquiz';
 import { init as initJTBD } from 'journalism/jtbd-survey';
-// import { init as initFeedback } from 'journalism/feedback-survey';
 
 const modules = {
     initCmpParam() {
@@ -68,7 +67,6 @@ const init = () => {
     initStoryQuiz();
     SnippetFeedback();
     initJTBD();
-    // initFeedback();
 };
 
 export { init };
