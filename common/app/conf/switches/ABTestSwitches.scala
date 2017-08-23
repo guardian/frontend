@@ -121,16 +121,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-glabs-traffic-driver-slots",
-    "Displays a new ad slot to drive traffic to GLabs content",
-    owners = Seq(Owner.withGithub("JonNorman")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 8, 25),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-acquisitions-epic-paypal-pay-in-epic",
     "Test whether allowing readers to pay in-Epic increases the conversion rate.",
     owners = Seq(Owner.withGithub("Mullefa"), Owner.withGithub("desbo")),
