@@ -16,8 +16,8 @@ import trail from 'bootstraps/enhanced/trail';
 import ophan from 'ophan/ng';
 import { SnippetFeedback } from 'journalism/snippet-feedback';
 import { init as initStoryQuiz } from 'journalism/storyquiz';
-// import { init as initJTBD } from 'journalism/jtbd-survey';
-import { init as initFeedback } from 'journalism/feedback-survey';
+import { init as initJTBD } from 'journalism/jtbd-survey';
+// import { init as initFeedback } from 'journalism/feedback-survey';
 
 const modules = {
     initCmpParam() {
@@ -67,8 +67,8 @@ const init = () => {
     storyQuestions.init();
     initStoryQuiz();
     SnippetFeedback();
-    // initJTBD();
-    initFeedback();
+    initJTBD();
+    // initFeedback();
 };
 
 export { init };

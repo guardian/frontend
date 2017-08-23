@@ -10,13 +10,12 @@ type Question = number;
 // const campaignId: string = 'abcd';
 const startOfTest: Date = new Date();
 const endOfTest: number = startOfTest.setMonth(startOfTest.getMonth() + 1);
-const allQuestions: string[] = [
-    'How are you?',
-    'Any plans today?',
-    "What colour is St James's cathedral?",
-    'How many as are there in Srinivasa Ramanujan?',
+const allQuestions: Object[] = [
+    { question: 'I came to The Guardian just now for in-depth coverage of this topic.', ask: false },
+    { question: 'I came to The Guardian just now because I have a few minutes to spare.', ask: false },
+    { question: 'I came to The Guardian just now to see what’s going on in the world.', ask: false },
+    { question: 'I came to The Guardian just now to answer a specific question.', ask: false },
 ];
-const askWhy: boolean = true;
 
 const range = (from: number, to: number): number[] => {
     const rangerec = (n: number, acc: number[]): number[] => {
@@ -81,9 +80,20 @@ const save = (
     });
 };
 
+const shouldIGo = (): boolean => {
+    const now = new Date().getHours();
+    const rand = Math.random() * 100;
+    return false;
+    return !(
+        (15 <= now || 17 < now) &&
+        rand < 1.5 &&
+        sessionStorage.get('gu.jtbd.seen') !== true
+    );
+}
+
 const init = (): void => {
-    // Should I stay or should I go?
-    if (sessionStorage.get('gu.jtbd.seen') === true) {
+     // Should I stay or should I go?
+    if (shouldIGo()) {
         return;
     }
 
@@ -101,7 +111,7 @@ const init = (): void => {
         expires: endOfTest,
     });
 
-    initSurvey(allQuestions[qs[q]], askWhy)
+    initSurvey(allQuestions[qs[q]].question, allQuestions[qs[q]].ask)
         .then(({ answer, why }) => save(qs, as, q, answer, why))
         .catch((reason: Error) => {
             if (reason instanceof BusinessError) {
