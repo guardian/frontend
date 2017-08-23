@@ -19,8 +19,6 @@ import services.RedirectService.{ArchiveRedirect, PermanentRedirect}
   with BeforeAndAfterAll
   with WithTestRenderer {
 
-  override val appContext: ApplicationContext = ApplicationContext(Environment.simple(), ApplicationIdentity("archive"))
-
   lazy val mockRedirects = new RedirectService {
     override def destinationFor(source: String) = Future.successful(None)
   }

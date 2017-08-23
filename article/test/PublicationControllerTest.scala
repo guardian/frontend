@@ -3,7 +3,7 @@ package test
 import contentapi.ContentApiClient
 import controllers.{ArticleController, PublicationController}
 import model.TagDefinition
-import org.scalatest.mock.MockitoSugar
+import org.scalatest.mockito.MockitoSugar
 import org.mockito.Mockito._
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 import play.api.test.Helpers._

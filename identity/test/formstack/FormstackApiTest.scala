@@ -1,17 +1,14 @@
 package formstack
 
-import org.scalatest.{EitherValues, ShouldMatchers, FunSuite, path}
-import org.scalatest.mock.MockitoSugar
-import idapiclient.IdDispatchAsyncHttpClient
+import org.scalatest.{Matchers, path}
+import org.scalatest.mockito.MockitoSugar
 import org.mockito.Mockito._
-import org.mockito.Matchers.any
-import client.Parameters
-import client.connection.HttpResponse
+import org.mockito.{Matchers => MockitoMatchers}
 import scala.concurrent.Future
 import common.ExecutionContexts
 
 
-class FormstackApiTest extends path.FreeSpec with ShouldMatchers with MockitoSugar with ExecutionContexts {
+class FormstackApiTest extends path.FreeSpec with Matchers with MockitoSugar with ExecutionContexts {
   val httpClient = mock[WsFormstackHttp]
   val formstackApi = new FormstackApi(httpClient)
 
@@ -22,7 +19,7 @@ class FormstackApiTest extends path.FreeSpec with ShouldMatchers with MockitoSug
     "returns the validated form if the API says it is ok" in {
       val formstackForm = FormstackForm("123456", "abcdef", None)
       val response = FormstackHttpResponse(validBody, 200, "ok")
-      when(httpClient.GET(any[String], any())) thenReturn Future.successful(response)
+      when(httpClient.GET(MockitoMatchers.any[String], MockitoMatchers.any())) thenReturn Future.successful(response)
 
       formstackApi.checkForm(formstackForm).map {
         case Left(errors) => fail(s"expected Right, got errors, $errors")
@@ -33,7 +30,7 @@ class FormstackApiTest extends path.FreeSpec with ShouldMatchers with MockitoSug
     "returns an error if the form is not active" in {
       val formstackForm = FormstackForm("123456", "abcdef", None)
       val response = FormstackHttpResponse(inactiveBody, 200, "ok")
-      when(httpClient.GET(any[String], any())) thenReturn Future.successful(response)
+      when(httpClient.GET(MockitoMatchers.any[String], MockitoMatchers.any())) thenReturn Future.successful(response)
 
       formstackApi.checkForm(formstackForm).map {
         case Right(f) => fail(s"expected Left, got Right")
@@ -44,7 +41,7 @@ class FormstackApiTest extends path.FreeSpec with ShouldMatchers with MockitoSug
     "returns an error if the API responds poorly" in {
       val formstackForm = FormstackForm("123456", "abcdef", None)
       val response = FormstackHttpResponse("", 405, "Method not allowed")
-      when(httpClient.GET(any[String], any())) thenReturn Future.successful(response)
+      when(httpClient.GET(MockitoMatchers.any[String], MockitoMatchers.any())) thenReturn Future.successful(response)
 
       formstackApi.checkForm(formstackForm).map {
         case Right(f) => fail(s"expected Left, got Right")

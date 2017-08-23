@@ -1,7 +1,7 @@
 package football
 
 import common.ExecutionContexts
-import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FreeSpec, ShouldMatchers}
+import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FreeSpec, Matchers}
 import play.api.libs.json.{JsObject, JsString}
 import play.api.mvc.AnyContentAsFormUrlEncoded
 import play.api.test._
@@ -11,7 +11,7 @@ import test.{ConfiguredTestSuite, WithMaterializer, WithTestWsClient}
 
 @DoNotDiscover class PlayerControllerTest
   extends FreeSpec
-  with ShouldMatchers
+  with Matchers
   with ExecutionContexts
   with ConfiguredTestSuite
   with BeforeAndAfterAll
