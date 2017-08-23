@@ -1,0 +1,14 @@
+@import com.gu.contentatom.thrift.Atom
+@import com.gu.contentatom.thrift.atom.storyquestions.StoryQuestionsAtom
+@import jenkins.ArticleAtomRenderer
+
+@(atom: Atom)
+
+@defining(ArticleAtomRenderer(atom)) { case (html: String, css: Option[String], js: Option[String]) =>
+  @Html(html)
+  @css.map { css => <style>@Html(css)</style> }
+  @js.map  { js  => <script>(function(atoms) {
+    @Html(js)
+    (atoms.services)
+  }(window.guardian.atoms))</script> }
+}

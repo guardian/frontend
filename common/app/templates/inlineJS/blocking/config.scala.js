@@ -26,7 +26,15 @@ window.guardian = {
         active: undefined,
         onDetect: []
     },
-    config: @JavaScript(templates.js.javaScriptConfig(page).body)
+    config: @JavaScript(templates.js.javaScriptConfig(page).body),
+    atoms: {
+      services: {
+        ophan: function(obj) {
+          console.log("Heydo! You've just used the frontend-specific implementation of the Ophan service. How does it feel?");
+          console.dir(obj);
+        }
+      }
+    }
 };
 
 // Check if a pre-made view id has been constructed through an esi.
