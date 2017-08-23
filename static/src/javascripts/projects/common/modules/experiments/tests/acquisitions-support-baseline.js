@@ -13,6 +13,13 @@ const baseCampaignCode = 'gdnwb_copts_memco_sandc_support_baseline';
 const makeSupportURL = (campaignCode: string): string =>
     `https://support.theguardian.com/uk?INTCMP=${campaignCode}`;
 
+const makeBecomeSupporterURL = (campaignCode: string): string =>
+    `https://membership.theguardian.com/uk/supporter?INTCMP=${campaignCode}`;
+
+const makeSubscribeURL = (campaignCode: string): string =>
+    `https://subscribe.theguardian.com/uk?INTCMP=${campaignCode}`;
+
+
 const buildButtonTemplate = ({ supportUrl }) =>
     `<div class="contributions__amount-field">
         <div>
@@ -59,6 +66,26 @@ const isEpicWithinViewLimit = (test: EpicABTest): boolean => {
         viewsInPreviousDays(minDaysBetweenViews, testId) === 0;
     return withinViewLimit && enoughDaysBetweenViews;
 };
+
+const changeLinks = (cssClass: string, link: string) => {
+    [...document.getElementsByClassName(cssClass)].forEach(el => {
+        el.href = link;
+    });
+};
+
+const changeHeaderLinks = (
+    becomeSupporterLink: string,
+    subscribeLink: string
+) => {
+
+    changeLinks('js-become-member', becomeSupporterLink);
+    changeLinks('js-subscribe', subscribeLink);
+
+    changeLinks('js-become-member-new-header', becomeSupporterLink);
+    changeLinks('js-subscribe-new-header', subscribeLink);
+};
+
+
 
 const shouldDisplayEpic = (test: EpicABTest): boolean =>
     isEpicWithinViewLimit(test) && isEpicCompatibleWithPage(config.get('page'));
@@ -109,6 +136,15 @@ export const acquisitionsSupportBaseline = makeABTest({
                     } else if (shouldDisplayEpic(test)) {
                         renderArticleEpic();
                     }
+
+                    changeHeaderLinks(
+                        makeBecomeSupporterURL(
+                            `${baseCampaignCode}_control_header_become_supporter`
+                        ),
+                        makeSubscribeURL(
+                            `${baseCampaignCode}_control_header_subscribe`
+                        )
+                    );
                 },
 
                 engagementBannerParams: {
@@ -149,6 +185,15 @@ export const acquisitionsSupportBaseline = makeABTest({
                     } else if (shouldDisplayEpic(test)) {
                         renderArticleEpic();
                     }
+
+                    changeHeaderLinks(
+                        makeSupportURL(
+                            `${baseCampaignCode}_support_header_become_supporter`
+                        ),
+                        makeSupportURL(
+                            `${baseCampaignCode}_support_header_subscribe`
+                        )
+                    );
                 },
 
                 // ENGAGEMENT BANNER
