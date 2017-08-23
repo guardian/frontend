@@ -96,8 +96,8 @@ const save = (
 const shouldIGo = (): boolean => {
     const now = new Date().getHours();
     const rand = Math.random() * 100;
-    return !(
-        // between 3pm and 4pm
+    return !// between 3pm and 4pm
+    (
         now === 15 &&
         // on a 1.5% sample of PVs
         rand < 1.5 &&
