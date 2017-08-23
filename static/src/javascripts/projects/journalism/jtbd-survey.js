@@ -75,7 +75,7 @@ const save = (
     as: Answer[],
     q: Question,
     answer: Answer,
-    why: ?string
+    why: ?boolean
 ) => {
     const hasSnippet: boolean = !!document.getElementsByClassName(
         'explainer-snippet'
@@ -89,7 +89,7 @@ const save = (
         hasSnippet,
         qs,
         as,
-        why,
+        why: !!why,
     });
 };
 
@@ -97,8 +97,11 @@ const shouldIGo = (): boolean => {
     const now = new Date().getHours();
     const rand = Math.random() * 100;
     return !(
-        (now >= 15 || now > 17) &&
+        // between 3pm and 4pm
+        now === 15 &&
+        // on a 1.5% sample of PVs
         rand < 1.5 &&
+        // if the user hasn't already seen the survey
         sessionStorage.get('gu.jtbd.seen') !== true
     );
 };
