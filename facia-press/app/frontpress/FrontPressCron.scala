@@ -1,6 +1,5 @@
 package frontpress
 
-import com.amazonaws.regions.{Region, Regions}
 import com.amazonaws.services.sqs.AmazonSQSAsyncClient
 import common.FaciaPressMetrics.FrontPressCronSuccess
 import common.{JsonMessageQueue, SNSNotification}
@@ -17,7 +16,7 @@ class FrontPressCron(liveFapiFrontPress: LiveFapiFrontPress, toolPressQueueWorke
     val credentials = Configuration.aws.mandatoryCredentials
 
     JsonMessageQueue[SNSNotification](
-      new AmazonSQSAsyncClient(credentials).withRegion(Region.getRegion(Regions.EU_WEST_1)),
+      AmazonSQSAsyncClient.asyncBuilder.withCredentials(credentials).withRegion(conf.Configuration.aws.region).build(),
       queueUrl
     )
   }) getOrElse {

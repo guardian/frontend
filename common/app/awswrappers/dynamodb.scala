@@ -1,12 +1,12 @@
 package awswrappers
 
-import com.amazonaws.services.dynamodbv2.AmazonDynamoDBAsyncClient
+import com.amazonaws.services.dynamodbv2.AmazonDynamoDBAsync
 import com.amazonaws.services.dynamodbv2.model._
 
 import scala.concurrent.Future
 
 object dynamodb {
-  implicit class RichDynamoDbClient(dynamoDbClient: AmazonDynamoDBAsyncClient) {
+  implicit class RichDynamoDbClient(dynamoDbClient: AmazonDynamoDBAsync) {
     def updateItemFuture(updateItemRequest: UpdateItemRequest): Future[UpdateItemResult] =
       asFuture[UpdateItemRequest, UpdateItemResult](dynamoDbClient.updateItemAsync(updateItemRequest, _))
 

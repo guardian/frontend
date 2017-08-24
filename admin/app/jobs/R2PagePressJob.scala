@@ -1,6 +1,5 @@
 package jobs
 
-import com.amazonaws.regions.{Region, Regions}
 import com.amazonaws.services.sqs.AmazonSQSAsyncClient
 import com.amazonaws.services.sqs.model.ReceiveMessageRequest
 import common._
@@ -22,6 +21,7 @@ class R2PagePressJob(wsClient: WSClient, redirects: RedirectService) extends Exe
   private lazy val waitTimeSeconds = Configuration.r2Press.pressQueueWaitTimeInSeconds
   private lazy val maxMessages = Configuration.r2Press.pressQueueMaxMessages
   private lazy val credentials = Configuration.aws.mandatoryCredentials
+  private lazy val sqsClient = AmazonSQSAsyncClient.asyncBuilder.withCredentials(credentials).withRegion(conf.Configuration.aws.region).build()
 
   def run() = {
     if (R2PagePressServiceSwitch.isSwitchedOn) {
@@ -50,7 +50,7 @@ class R2PagePressJob(wsClient: WSClient, redirects: RedirectService) extends Exe
 
   private lazy val queue: JsonMessageQueue[SNSNotification] = (Configuration.r2Press.sqsQueueUrl map { queueUrl =>
     JsonMessageQueue[SNSNotification](
-      new AmazonSQSAsyncClient(credentials).withRegion(Region.getRegion(Regions.EU_WEST_1)),
+      sqsClient,
       queueUrl
     )
   }) getOrElse {
@@ -59,7 +59,7 @@ class R2PagePressJob(wsClient: WSClient, redirects: RedirectService) extends Exe
 
   private lazy val takedownQueue: TextMessageQueue[SNSNotification] = (Configuration.r2Press.sqsTakedownQueueUrl map { queueUrl =>
     TextMessageQueue[SNSNotification](
-      new AmazonSQSAsyncClient(credentials).withRegion(Region.getRegion(Regions.EU_WEST_1)),
+      sqsClient,
       queueUrl
     )
   }) getOrElse {

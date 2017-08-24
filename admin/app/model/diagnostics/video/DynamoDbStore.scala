@@ -1,12 +1,10 @@
 package model.diagnostics.video
 
 import common.{ExecutionContexts, Logging}
-import com.amazonaws.services.dynamodbv2.{model, AmazonDynamoDBAsyncClient}
-import com.amazonaws.regions.{Region, Regions}
+import com.amazonaws.services.dynamodbv2.model
 import com.amazonaws.services.dynamodbv2.model.{GetItemRequest, AttributeValue, UpdateItemRequest}
 import scala.collection.JavaConverters._
 import awswrappers.dynamodb._
-import conf.Configuration
 
 import scala.concurrent.Future
 

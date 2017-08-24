@@ -3,8 +3,7 @@ package common
 import java.util.concurrent.{Future => JavaFuture}
 
 import com.amazonaws.handlers.AsyncHandler
-import com.amazonaws.regions.{Region => AwsRegion}
-import com.amazonaws.services.sqs.AmazonSQSAsyncClient
+import com.amazonaws.services.sqs.AmazonSQSAsync
 import com.amazonaws.services.sqs.model.{Message => AWSMessage, _}
 import play.api.libs.json.{Json, Reads, Writes}
 
@@ -14,7 +13,7 @@ import scala.concurrent.{ExecutionContext, Future, Promise}
 import scala.util.{Failure, Success}
 
 object SQSQueues {
-  implicit class RichAmazonSQSAsyncClient(client: AmazonSQSAsyncClient) {
+  implicit class RichAmazonSQSAsyncClient(client: AmazonSQSAsync) {
     private def createHandler[A <: com.amazonaws.AmazonWebServiceRequest, B]() = {
       val promise = Promise[B]()
 
@@ -41,11 +40,6 @@ object SQSQueues {
 
     def sendMessageFuture(request: SendMessageRequest): Future[SendMessageResult] =
       asFuture[SendMessageRequest, SendMessageResult](client.sendMessageAsync(request, _))
-
-    def withRegion(region: AwsRegion): AmazonSQSAsyncClient = {
-      client.setRegion(region)
-      client
-    }
   }
 }
 
@@ -53,7 +47,7 @@ case class MessageId(get: String) extends AnyVal
 case class ReceiptHandle(get: String) extends AnyVal
 case class Message[A](id: MessageId, get: A, handle: ReceiptHandle)
 
-class MessageQueue[A](client: AmazonSQSAsyncClient, queueUrl: String)(implicit executionContext: ExecutionContext) {
+class MessageQueue[A](client: AmazonSQSAsync, queueUrl: String)(implicit executionContext: ExecutionContext) {
 
   import SQSQueues._
 
@@ -77,7 +71,7 @@ class MessageQueue[A](client: AmazonSQSAsyncClient, queueUrl: String)(implicit e
 }
 
 /** Utility class for SQS queues that pass simple string messages */
-case class TextMessageQueue[A](client: AmazonSQSAsyncClient, queueUrl: String)(implicit executionContext: ExecutionContext)
+case class TextMessageQueue[A](client: AmazonSQSAsync, queueUrl: String)(implicit executionContext: ExecutionContext)
   extends MessageQueue[A](client, queueUrl)(executionContext) {
 
   def receive(request: ReceiveMessageRequest): Future[Seq[Message[String]]] = {
@@ -107,7 +101,7 @@ case class TextMessageQueue[A](client: AmazonSQSAsyncClient, queueUrl: String)(i
 }
 
 /** Utility class for SQS queues that use JSON to serialize their messages */
-case class JsonMessageQueue[A](client: AmazonSQSAsyncClient, queueUrl: String)(implicit executionContext: ExecutionContext)
+case class JsonMessageQueue[A](client: AmazonSQSAsync, queueUrl: String)(implicit executionContext: ExecutionContext)
                                       extends MessageQueue[A](client, queueUrl)(executionContext) {
 
   def send(a: A)(implicit writes: Writes[A]): Future[SendMessageResult] =

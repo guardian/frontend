@@ -521,7 +521,7 @@ class GuardianConfiguration extends Logging {
     lazy val crossAccountCredentials: Option[AWSCredentialsProvider] = faciatool.stsRoleToAssume.flatMap { role =>
       val provider = new AWSCredentialsProviderChain(
         new ProfileCredentialsProvider("cmsFronts"),
-        new STSAssumeRoleSessionCredentialsProvider(role, "frontend")
+        new STSAssumeRoleSessionCredentialsProvider.Builder(role, "frontend").build()
       )
 
       // this is a bit of a convoluted way to check whether we actually have credentials.

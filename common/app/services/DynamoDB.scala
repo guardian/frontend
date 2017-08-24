@@ -1,24 +1,22 @@
 package services
 
-import com.amazonaws.AmazonWebServiceClient
-import com.amazonaws.auth.AWSCredentialsProvider
 import com.amazonaws.regions.{Region, Regions}
-import com.amazonaws.services.dynamodbv2.{AmazonDynamoDBAsyncClient, AmazonDynamoDBClient}
+import com.amazonaws.services.dynamodbv2.{AmazonDynamoDB, AmazonDynamoDBAsync, AmazonDynamoDBAsyncClient, AmazonDynamoDBClient}
 import conf.Configuration
-
 
 object DynamoDB {
   private lazy val credentials = Configuration.aws.mandatoryCredentials
   private lazy val region = Region.getRegion(Regions.fromName(Configuration.aws.region))
 
-  lazy val asyncClient = createClient(classOf[AmazonDynamoDBAsyncClient])
-  lazy val syncClient = createClient(classOf[AmazonDynamoDBClient])
+  lazy val asyncClient: AmazonDynamoDBAsync = AmazonDynamoDBAsyncClient
+    .asyncBuilder()
+    .withCredentials(credentials)
+    .withRegion(conf.Configuration.aws.region)
+    .build()
 
-  private def createClient[T <: AmazonWebServiceClient](serviceClass: Class[T]): T = {
-    val client = serviceClass
-      .getConstructor(classOf[AWSCredentialsProvider])
-      .newInstance(credentials)
-    client.setRegion(region)
-    client
-  }
+  lazy val syncClient: AmazonDynamoDB = AmazonDynamoDBClient
+    .builder()
+    .withCredentials(credentials)
+    .withRegion(conf.Configuration.aws.region)
+    .build()
 }

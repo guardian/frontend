@@ -6,9 +6,9 @@ import common.{ExecutionContexts, Logging}
 import model.{ApplicationContext, NoCache}
 import play.api.libs.ws.WSClient
 import tools.LoadBalancer
-import com.amazonaws.regions.{Region, Regions}
-import com.amazonaws.services.ec2.AmazonEC2Client
+import com.amazonaws.services.ec2.{AmazonEC2, AmazonEC2ClientBuilder}
 import com.amazonaws.services.ec2.model.{DescribeInstancesRequest, Filter}
+
 import scala.collection.JavaConverters._
 import scala.collection.JavaConversions._
 import scala.concurrent.Future
@@ -34,10 +34,12 @@ class TroubleshooterController(wsClient: WSClient)(implicit appContext: Applicat
   val contentApi = new ContentApiClient(capiHttpClient)
   val previewContentApi = new PreviewContentApi(capiHttpClient)
 
-  private lazy val awsEc2Client: Option[AmazonEC2Client] = credentials.map { credentials =>
-    val client = new AmazonEC2Client(credentials)
-    client.setRegion(Region.getRegion(Regions.EU_WEST_1))
-    client
+  private lazy val awsEc2Client: Option[AmazonEC2] = credentials.map { credentials =>
+    AmazonEC2ClientBuilder
+      .standard()
+      .withCredentials(credentials)
+      .withRegion(conf.Configuration.aws.region)
+      .build()
   }
 
 
