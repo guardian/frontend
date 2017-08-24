@@ -150,11 +150,11 @@ class Component {
 
     _fetch(): Promise<void> {
         let endpoint =
-            typeof this.endpoint === 'function'
+            (typeof this.endpoint === 'function'
                 ? this.endpoint()
-                : this.endpoint;
+                : this.endpoint) || '';
 
-        if (endpoint) {
+        if (this.options) {
             Object.keys(this.options).forEach(opt => {
                 const replacement = (this.options && this.options[opt]) || '';
                 endpoint = endpoint.replace(`:${opt}`, replacement);
