@@ -1,0 +1,73 @@
+<div class="jtbd-survey">
+    <form id="js-jtbd-survey__form" class="jtbd-survey__form">
+        <fieldset class="jtbd-survey__question form-field" aria-labelledby="jtbd__label" aria-describedby="jtbd__descr">
+            <legend class="jtbd-survey__heading" id="jtbd__label"><%= question %></legend>
+            <p id="jtbd__descr">Your feedback is valuable in helping us improve the Guardian experience for readers everywhere. It just takes a minute.</p>
+            <svg class="jtbd-survey__choice-bg" aria-hidden="true">
+                <svg x="10%" width="80%" viewBox="0 0 4 50" preserveAspectRatio="none">
+                    <line class="jtbd-survey__dotted-line" x1="0" y1="25" x2="100%" y2="25" />
+                </svg>
+            </svg>
+            <ol class="jtbd-survey__question-choice">
+                <li><label>
+                    <input type="radio" name="q" value="1">
+                    <svg aria-hidden="true" viewBox="0 0 60 60">
+                        <ellipse class="outer-stroke" cx="30" cy="30" rx="30" ry="30" />
+                        <ellipse cx="30" cy="30" rx="20" ry="20" />
+                        <ellipse class="inner-circle" cx="30" cy="30" rx="15" ry="15" />
+                    </svg>
+                    <span>Strongly Agree</span>
+                </label></li>
+                <li><label>
+                    <input type="radio" name="q" value="2">
+                    <svg aria-hidden="true" viewBox="0 0 60 60">
+                        <ellipse class="outer-stroke" cx="30" cy="30" rx="30" ry="30" />
+                        <ellipse cx="30" cy="30" rx="20" ry="20" />
+                        <ellipse class="inner-circle" cx="30" cy="30" rx="15" ry="15" />
+                    </svg>
+                    <span>Agree</span>
+                </label></li>
+                <li><label>
+                    <input type="radio" name="q" value="3">
+                    <svg aria-hidden="true" viewBox="0 0 60 60">
+                        <ellipse class="outer-stroke" cx="30" cy="30" rx="30" ry="30" />
+                        <ellipse cx="30" cy="30" rx="20" ry="20" />
+                        <ellipse class="inner-circle" cx="30" cy="30" rx="15" ry="15" />
+                    </svg>
+                    <span>Neither Agree nor Disagree</span>
+                </label></li>
+                <li><label>
+                    <input type="radio" name="q" value="4">
+                    <svg aria-hidden="true" viewBox="0 0 60 60">
+                        <ellipse class="outer-stroke" cx="30" cy="30" rx="30" ry="30" />
+                        <ellipse cx="30" cy="30" rx="20" ry="20" />
+                        <ellipse class="inner-circle" cx="30" cy="30" rx="15" ry="15" />
+                    </svg>
+                    <span>Disagree</span>
+                </label></li>
+                <li><label>
+                    <input type="radio" name="q" value="5">
+                    <svg aria-hidden="true" viewBox="0 0 60 60">
+                        <ellipse class="outer-stroke" cx="30" cy="30" rx="30" ry="30" />
+                        <ellipse cx="30" cy="30" rx="20" ry="20" />
+                        <ellipse class="inner-circle" cx="30" cy="30" rx="15" ry="15" />
+                    </svg>
+                    <span>Strongly Disagree</span>
+                </label></li>
+            </ol>
+        </fieldset>
+        <% if (askWhy) { %>
+        <div class="jtbd-survey__why form-field">
+            <label for="jtbd__why">Why do you say that?</label>
+            <textarea id="jtbd_why" class="textarea" name="why"></textarea>
+        </div>
+        <% } %>
+        <div class="jtbd-survey__actions">
+            <button type="submit" class="button button--primary">Send feedback now</button>
+        </div>
+    </form>
+    <div id="js-jtbd-survey__feedback" class="jtbd-survey__feedback is-hidden">
+        <p class="jtbd-survey__heading">Thank you for your feedback</p>
+        <p id="jtbd__descr">Your feedback is valuable in helping us improve the Guardian experience for readers everywhere.</p>
+    </div>
+</div>

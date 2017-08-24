@@ -79,6 +79,24 @@ class Storage {
         );
     }
 
+    setIfNotExists(key: string, value: any, options: Object = {}): any {
+        if (!this.available) {
+            return;
+        }
+
+        if (this.storage.getItem(key) !== null) {
+            return;
+        }
+
+        return this.storage.setItem(
+            key,
+            JSON.stringify({
+                value,
+                expires: options.expires,
+            })
+        );
+    }
+
     getRaw(key: string): ?string {
         if (this.available) {
             return this.storage.getItem(key);

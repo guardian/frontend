@@ -34,6 +34,7 @@ define([
     }
 
     return {
-        isAbTestTargeted: isAbTestTargeted
+        isAbTestTargeted: isAbTestTargeted,
+        campaignsFor: campaignsFor
     };
 });
