@@ -9,6 +9,7 @@ type OutbrainPageConditions = {
     contributionsTestVisible: boolean,
     emailTestVisible: boolean,
     storyQuestionsVisible: boolean,
+    jtbdSurveyVisible: boolean,
 };
 
 type OutbrainDfpConditions = {
@@ -34,13 +35,15 @@ const getOutbrainPageConditions = (): Promise<OutbrainPageConditions> =>
         waitForCheck('isUserInContributionsAbTest'),
         waitForCheck('isUserInEmailAbTestAndEmailCanRun'),
         waitForCheck('isStoryQuestionsOnPage'),
+        waitForCheck('isJTBDSurveyOnPage'),
     ]).then(
-        ([outbrainDisabled, noMerchSlots, contributions, email, story]) => ({
+        ([outbrainDisabled, noMerchSlots, contributions, email, story, jtbd]) => ({
             outbrainEnabled: !outbrainDisabled,
             noMerchSlotsExpected: noMerchSlots,
             contributionsTestVisible: contributions,
             emailTestVisible: email,
             storyQuestionsVisible: story,
+            jtbdSurveyVisible: jtbd,
         })
     );
 
@@ -61,6 +64,7 @@ export const getOutbrainComplianceTargeting = (): Promise<
             pageConditions.contributionsTestVisible ||
             pageConditions.emailTestVisible ||
             pageConditions.storyQuestionsVisible ||
+            pageConditions.jtbdSurveyVisible ||
             !pageConditions.outbrainEnabled
         ) {
             // This key value should be read as "the outbrain load cannot be compliant"
@@ -98,7 +102,8 @@ export const initOutbrain = () =>
         const editorialTests =
             pageConditions.contributionsTestVisible ||
             pageConditions.emailTestVisible ||
-            pageConditions.storyQuestionsVisible;
+            pageConditions.storyQuestionsVisible ||
+            pageConditions.jtbdSurveyVisible;
 
         if (pageConditions.noMerchSlotsExpected) {
             if (editorialTests) {

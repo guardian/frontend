@@ -1,4 +1,5 @@
 // @flow
+import mediator from 'lib/mediator';
 import { session as sessionStorage, local as localStorage } from 'lib/storage';
 import { submitComponentEvent } from 'common/modules/commercial/acquisitions-ophan';
 import { campaignsFor } from 'common/modules/commercial/targeting-tool';
@@ -120,6 +121,7 @@ const init = (): void => {
 
     // Should I stay or should I go?
     if (!campaign || shouldIGo()) {
+        mediator.emit('journalism:modules:jtbd', false);
         return;
     }
 
@@ -131,9 +133,12 @@ const init = (): void => {
     const q = selectQuestion(qs, as);
 
     if (q === -1) {
+        mediator.emit('journalism:modules:jtbd', false);
         return;
     }
 
+    mediator.emit('journalism:modules:jtbd', true);
+    
     localStorage.setIfNotExists('gu.jtbd.questions', qs, {
         expires: endOfSurvey,
     });
