@@ -5,11 +5,13 @@ const submitComponentEvent = (componentEvent: OphanComponentEvent) => {
     ophan.record({ componentEvent });
 };
 
-export const submitInsertEvent = (
+export const submitEvent = (
+    actionType: OphanAction,
     componentType: OphanComponentType,
     products: $ReadOnlyArray<OphanProduct>,
     campaignCode: string,
-    labels: $ReadOnlyArray<string> = []
+    labels: $ReadOnlyArray<string> = [],
+    value?: string,
 ) => {
     submitComponentEvent({
         component: {
@@ -18,23 +20,12 @@ export const submitInsertEvent = (
             products,
             campaignCode,
         },
-        action: 'INSERT',
-    });
-};
+        action: actionType,
+        value
+    });    
+}
 
-export const submitViewEvent = (
-    componentType: OphanComponentType,
-    products: $ReadOnlyArray<OphanProduct>,
-    campaignCode: string,
-    labels: $ReadOnlyArray<string> = []
-) => {
-    submitComponentEvent({
-        component: {
-            componentType,
-            labels,
-            products,
-            campaignCode,
-        },
-        action: 'VIEW',
-    });
-};
+export const submitInsertEvent = submitEvent.bind(null, 'INSERT');
+
+export const submitViewEvent = submitEvent.bind(null, 'VIEW');
+

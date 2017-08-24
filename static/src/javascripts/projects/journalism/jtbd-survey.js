@@ -1,6 +1,6 @@
 // @flow
-import ophan from 'ophan/ng';
 import { session as sessionStorage, local as localStorage } from 'lib/storage';
+import { submitEvent as submitOphanEvent } from 'common/modules/commercial/acquisitions-ophan';
 import { campaignsFor } from 'common/modules/commercial/targeting-tool';
 import { init as initSurvey, BusinessError } from './survey';
 
@@ -75,7 +75,7 @@ const save = (
     as: Answer[],
     q: Question,
     answer: Answer,
-    why: ?boolean
+    why: ?string
 ) => {
     const hasSnippet: boolean = !!document.getElementsByClassName(
         'explainer-snippet'
@@ -84,12 +84,18 @@ const save = (
     as[q] = answer;
     localStorage.set('gu.jtbd.answers', as, { expires: endOfSurvey });
 
-    ophan.record({
-        component: 'jtbd-survey',
-        hasSnippet,
-        qs,
-        as,
-        why: !!why,
+    submitOphanEvent(
+        'VOTE',
+        'SURVEYS_QUESTIONS',
+        [],
+        campaignId,
+        [],
+        JSON.stringify({
+            hasSnippet,
+            qs,
+            as,
+            why
+        }),
     });
 };
 
