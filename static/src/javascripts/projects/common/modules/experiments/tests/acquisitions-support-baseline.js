@@ -5,6 +5,11 @@ import {
 } from 'common/modules/commercial/contributions-utilities';
 import { setupEpicInLiveblog } from 'common/modules/experiments/tests/acquisitions-epic-liveblog';
 import { viewsInPreviousDays } from 'common/modules/commercial/acquisitions-view-log';
+import {
+    submitInsertEvent,
+    submitViewEvent,
+} from 'common/modules/commercial/acquisitions-ophan';
+import mediator from 'lib/mediator';
 
 import config from 'lib/config';
 
@@ -93,6 +98,21 @@ const shouldDisplayEpic = (test: EpicABTest): boolean =>
 
 // gdnwb_copts_memco_sandc_support_baseline_support_epic
 
+const bindEpicInsertAndViewHandlers = (
+    test: EpicABTest,
+    products: $ReadOnlyArray<OphanProduct>,
+    campaignCode: string
+) => {
+    // These should get fired when the epic is inserted & viewed
+    mediator.once(test.insertEvent, () => {
+        submitInsertEvent(test.componentType, products, campaignCode);
+    });
+
+    mediator.once(test.viewEvent, () => {
+        submitViewEvent(test.componentType, products, campaignCode);
+    });
+};
+
 export const acquisitionsSupportBaseline = makeABTest({
     id: 'AcquisitionsSupportBaseline',
     campaignId: 'sandc_support_baseline',
@@ -121,8 +141,19 @@ export const acquisitionsSupportBaseline = makeABTest({
             id: 'control',
             products: ['CONTRIBUTION', 'MEMBERSHIP_SUPPORTER'],
             options: {
+                // These should get fired after the test runs, regardless of
+                // whether we display the epic, banner, or just header
+                impression: submitABTestImpression => submitABTestImpression(),
+                success: submitABTestComplete => submitABTestComplete(),
+
                 useTailoredCopyForRegulars: true,
                 test(renderArticleEpic, variant, test) {
+                    bindEpicInsertAndViewHandlers(
+                        test,
+                        variant.options.products,
+                        variant.options.campaignCode
+                    );
+
                     if (config.get('page.contentType') === 'LiveBlog') {
                         const membershipURL = variant.membershipURLBuilder(
                             campaignCode => `${campaignCode}_liveblog`
@@ -169,11 +200,20 @@ export const acquisitionsSupportBaseline = makeABTest({
 
             // EPIC
             options: {
+                impression: submitABTestImpression => submitABTestImpression(),
+                success: submitABTestComplete => submitABTestComplete(),
+
                 buttonTemplate: buildButtonTemplate,
                 supportCustomURL: 'https://support.theguardian.com/uk',
                 useTailoredCopyForRegulars: true,
 
                 test(renderArticleEpic, variant, test) {
+                    bindEpicInsertAndViewHandlers(
+                        test,
+                        variant.options.products,
+                        variant.options.campaignCode
+                    );
+
                     if (config.get('page.contentType') === 'LiveBlog') {
                         const url = makeSupportURL(
                             `${baseCampaignCode}_support_liveblog`
