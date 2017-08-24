@@ -7,21 +7,6 @@ import { engagementBannerParams as engagementBannerParams_ } from 'common/module
 import { membershipEngagementBannerInit } from 'common/modules/commercial/membership-engagement-banner';
 
 const engagementBannerParams: any = engagementBannerParams_;
-const mockTest = {
-    campaignId: 'fake-campaign-id',
-    id: 'fake-id',
-    start: '2017-01-01',
-    expiry: '2027-01-01',
-    author: 'fake-author',
-    description: 'fake-description',
-    audience: 1,
-    audienceOffset: 0,
-    successMeasure: 'fake success measure',
-    audienceCriteria: 'fake audience criteria',
-    variants: [],
-    canRun: () => true,
-    componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
-};
 
 jest.mock('lib/mediator');
 jest.mock('lib/storage', () => ({
