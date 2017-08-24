@@ -318,7 +318,7 @@ const makeABTestVariant = (
                                 mediator.emit(parentTest.insertEvent, {
                                     componentType: parentTest.componentType,
                                     products,
-                                    campaignCode
+                                    campaignCode,
                                 });
                                 onInsert(component);
 
@@ -335,9 +335,10 @@ const makeABTestVariant = (
                                     inView.on('firstview', () => {
                                         logView(parentTest.id);
                                         mediator.emit(parentTest.viewEvent, {
-                                            componentType: parentTest.componentType,
+                                            componentType:
+                                                parentTest.componentType,
                                             products,
-                                            campaignCode
+                                            campaignCode,
                                         });
                                         mediator.emit(
                                             'register:end',

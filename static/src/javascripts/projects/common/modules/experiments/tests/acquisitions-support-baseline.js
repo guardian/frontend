@@ -92,22 +92,18 @@ const shouldDisplayEpic = (test: EpicABTest): boolean =>
 
 // gdnwb_copts_memco_sandc_support_baseline_support_epic
 
-const bindEpicInsertAndViewHandlers = (test: EpicABTest, products: $ReadOnlyArray<OphanProduct>, campaignCode: string) => {
+const bindEpicInsertAndViewHandlers = (
+    test: EpicABTest,
+    products: $ReadOnlyArray<OphanProduct>,
+    campaignCode: string
+) => {
     // These should get fired when the epic is inserted & viewed
     mediator.once(test.insertEvent, () => {
-        submitInsertEvent(
-            test.componentType,
-            products,
-            campaignCode
-        );
+        submitInsertEvent(test.componentType, products, campaignCode);
     });
 
     mediator.once(test.viewEvent, () => {
-        submitViewEvent(
-            test.componentType,
-            products,
-            campaignCode
-        );
+        submitViewEvent(test.componentType, products, campaignCode);
     });
 };
 
@@ -146,7 +142,11 @@ export const acquisitionsSupportBaseline = makeABTest({
 
                 useTailoredCopyForRegulars: true,
                 test(renderArticleEpic, variant, test) {
-                    bindEpicInsertAndViewHandlers(test, variant.options.products, variant.options.campaignCode);
+                    bindEpicInsertAndViewHandlers(
+                        test,
+                        variant.options.products,
+                        variant.options.campaignCode
+                    );
 
                     if (config.get('page.contentType') === 'LiveBlog') {
                         const membershipURL = variant.membershipURLBuilder(
@@ -202,7 +202,11 @@ export const acquisitionsSupportBaseline = makeABTest({
                 useTailoredCopyForRegulars: true,
 
                 test(renderArticleEpic, variant, test) {
-                    bindEpicInsertAndViewHandlers(test, variant.options.products, variant.options.campaignCode);
+                    bindEpicInsertAndViewHandlers(
+                        test,
+                        variant.options.products,
+                        variant.options.campaignCode
+                    );
 
                     if (config.get('page.contentType') === 'LiveBlog') {
                         const url = makeSupportURL(
