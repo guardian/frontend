@@ -21,7 +21,7 @@ type Campaign = {
 // campaign settings: most of it will come from the targeting tool
 const campaignId: string = 'test-survey';
 // survey starts on Aug 23, 2017
-const startOfSurvey: Date = new Date('2017-07-23');
+const startOfSurvey: Date = new Date('2017-08-23');
 const endOfSurvey: number = startOfSurvey.setMonth(
     startOfSurvey.getMonth() + 1
 );
