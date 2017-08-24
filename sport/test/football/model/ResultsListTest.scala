@@ -6,7 +6,7 @@ import pa.{FootballMatch, Result, MatchDay}
 import model.Competition
 import test.ConfiguredTestSuite
 
-@DoNotDiscover class ResultsListTest extends FreeSpec with ShouldMatchers with MatchTestData with Football with OptionValues with ConfiguredTestSuite {
+@DoNotDiscover class ResultsListTest extends FreeSpec with Matchers with MatchTestData with Football with OptionValues with ConfiguredTestSuite {
   "the all results list" - {
     "for today" - {
       val results = ResultsList(today, competitions.competitions)

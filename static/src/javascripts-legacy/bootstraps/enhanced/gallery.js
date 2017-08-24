@@ -25,8 +25,6 @@ define([
         ready = function () {
             trail();
 
-            mediator.emit('ui:images:upgradePictures');
-
             mediator.emit('page:gallery:ready');
             if (config.page.showRelatedContent) {
                 transcludeMostPopular();

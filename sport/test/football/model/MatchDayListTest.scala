@@ -5,7 +5,7 @@ import implicits.Football
 import test.ConfiguredTestSuite
 
 
-@DoNotDiscover class MatchDayListTest extends FreeSpec with ShouldMatchers with MatchTestData with Football with OptionValues with ConfiguredTestSuite {
+@DoNotDiscover class MatchDayListTest extends FreeSpec with Matchers with MatchTestData with Football with OptionValues with ConfiguredTestSuite {
   "the live matches list" - {
     "for today" - {
       val matches = MatchDayList(competitions.competitions, today)

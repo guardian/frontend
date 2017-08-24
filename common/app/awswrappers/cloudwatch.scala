@@ -1,6 +1,6 @@
 package awswrappers
 
-import com.amazonaws.services.cloudwatch.AmazonCloudWatchAsyncClient
+import com.amazonaws.services.cloudwatch.AmazonCloudWatchAsync
 import com.amazonaws.services.cloudwatch.model._
 
 import scala.concurrent.Future
@@ -12,7 +12,7 @@ import scala.concurrent.Future
   * Then we can delete these manually written wrappers.
   */
 object cloudwatch {
-  implicit class RichAsyncCloudWatchClient(client: AmazonCloudWatchAsyncClient) {
+  implicit class RichAsyncCloudWatchClient(client: AmazonCloudWatchAsync) {
     def putMetricDataFuture(request: PutMetricDataRequest): Future[PutMetricDataResult] =
       asFuture[PutMetricDataRequest, PutMetricDataResult](client.putMetricDataAsync(request, _))
 

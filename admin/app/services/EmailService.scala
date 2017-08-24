@@ -3,8 +3,6 @@ package services
 import java.util.concurrent.TimeoutException
 
 import com.amazonaws.handlers.AsyncHandler
-import com.amazonaws.regions.Region.getRegion
-import com.amazonaws.regions.Regions.EU_WEST_1
 import com.amazonaws.services.simpleemail._
 import com.amazonaws.services.simpleemail.model.{Destination => EmailDestination, _}
 import common.{AkkaAsync, ExecutionContexts, Logging}
@@ -18,11 +16,12 @@ import scala.util.{Failure, Success}
 
 class EmailService(akkaAsync: AkkaAsync) extends ExecutionContexts with Logging {
 
-  private lazy val client = {
-    val cl = new AmazonSimpleEmailServiceAsyncClient(mandatoryCredentials)
-    cl.setRegion(getRegion(EU_WEST_1))
-    cl
-  }
+  private lazy val client: AmazonSimpleEmailServiceAsync = AmazonSimpleEmailServiceAsyncClient
+    .asyncBuilder()
+    .withCredentials(mandatoryCredentials)
+    .withRegion(conf.Configuration.aws.region)
+    .build()
+
   val sendAsync = client.sendAsyncEmail(akkaAsync)_
 
   def shutdown(): Unit = client.shutdown()
@@ -73,7 +72,7 @@ class EmailService(akkaAsync: AkkaAsync) extends ExecutionContexts with Logging 
   }
 
 
-  private implicit class RichEmailClient(client: AmazonSimpleEmailServiceAsyncClient) {
+  private implicit class RichEmailClient(client: AmazonSimpleEmailServiceAsync) {
 
     def sendAsyncEmail(akkaAsync: AkkaAsync)(request: SendEmailRequest): Future[SendEmailResult] = {
       val promise = Promise[SendEmailResult]()

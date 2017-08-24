@@ -7,8 +7,8 @@ object Dependencies {
   val identityLibVersion = "3.78"
   val seleniumVersion = "2.44.0"
   val slf4jVersion = "1.7.5"
-  val awsVersion = "1.11.7"
-  val faciaVersion = "2.1.3"
+  val awsVersion = "1.11.181"
+  val faciaVersion = "2.2"
   val capiVersion = "11.23"
   val dispatchVersion = "0.11.3"
   val configurationMagicVersion = "1.2.2"
@@ -50,7 +50,7 @@ object Dependencies {
   val liftJson = "net.liftweb" %% "lift-json" % "2.6-RC2"
   val json4s = "org.json4s" %% "json4s-native" % "3.4.0"
   val macwire = "com.softwaremill.macwire" %% "macros" % "2.2.3" % "provided"
-  val mockito = "org.mockito" % "mockito-all" % "1.9.5" % Test
+  val mockito = "org.mockito" % "mockito-all" % "1.10.19" % Test
   val nScalaTime = "com.github.nscala-time" %% "nscala-time" % "1.2.0"
   val paClient = "com.gu" %% "pa-client" % "6.0.2"
   val playGoogleAuth = "com.gu" %% "play-googleauth" % "0.6.0"
@@ -58,13 +58,12 @@ object Dependencies {
   val redisClient = "net.debasishg" %% "redisclient" % "3.1"
   val rome = "rome" % "rome" % romeVersion
   val romeModules = "org.rometools" % "rome-modules" % romeVersion
-  val scalaCheck = "org.scalacheck" %% "scalacheck" % "1.11.5" % "test"
+  val scalaCheck = "org.scalacheck" %% "scalacheck" % "1.13.5" % Test
   val scalajTime = "org.scalaj" % "scalaj-time_2.10.2" % "0.7"
-  val scalaTest = "org.scalatest" %% "scalatest" % "2.2.6" % Test
-  val scalaTestPlus = "org.scalatestplus.play" %% "scalatestplus-play" % "1.5.1" % Test
+  val scalaTest = "org.scalatest" %% "scalatest" % "3.0.4" % Test
+  val scalaTestPlus = "org.scalatestplus.play" %% "scalatestplus-play" % "2.0.1" % Test
   val scalaUri = "com.netaporter" %% "scala-uri" % "0.4.16"
   val seleniumJava = "org.seleniumhq.selenium" % "selenium-java" % seleniumVersion
-  val shadeMemcached = "com.bionicspirit" %% "shade" % "1.6.0"
   val slf4jExt = "org.slf4j" % "slf4j-ext" % slf4jVersion
   val uaDetectorResources = "net.sf.uadetector" % "uadetector-resources" % "2013.04"
   val jerseyCore = "com.sun.jersey" % "jersey-core" % jerseyVersion

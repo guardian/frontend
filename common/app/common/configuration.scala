@@ -521,7 +521,7 @@ class GuardianConfiguration extends Logging {
     lazy val crossAccountCredentials: Option[AWSCredentialsProvider] = faciatool.stsRoleToAssume.flatMap { role =>
       val provider = new AWSCredentialsProviderChain(
         new ProfileCredentialsProvider("cmsFronts"),
-        new STSAssumeRoleSessionCredentialsProvider(role, "frontend")
+        new STSAssumeRoleSessionCredentialsProvider.Builder(role, "frontend").build()
       )
 
       // this is a bit of a convoluted way to check whether we actually have credentials.
@@ -544,10 +544,6 @@ class GuardianConfiguration extends Logging {
     lazy val pressQueueWaitTimeInSeconds = configuration.getIntegerProperty("admin.r2.press.queue.wait.seconds").getOrElse(10)
     lazy val pressQueueMaxMessages = configuration.getIntegerProperty("admin.r2.press.queue.max.messages").getOrElse(10)
     lazy val fallbackCachebustId = configuration.getStringProperty("admin.r2.press.fallback.cachebust.id").getOrElse("")
-  }
-
-  object memcached {
-    lazy val host = configuration.getStringProperty("memcached.host")
   }
 
   object redis {

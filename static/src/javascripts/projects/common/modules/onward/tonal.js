@@ -38,7 +38,6 @@ class TonalComponent extends Component {
             }
         }
 
-        mediator.emit('ui:images:upgradePictures');
         mediator.emit('modules:tonal:loaded');
         register.end('tonal-content');
     }

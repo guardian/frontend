@@ -1,11 +1,10 @@
 package services
 
-import com.amazonaws.services.cloudwatch.AmazonCloudWatchAsyncClient
+import com.amazonaws.services.cloudwatch.{AmazonCloudWatchAsync, AmazonCloudWatchAsyncClient}
 import com.amazonaws.services.cloudwatch.model._
 import common.{ExecutionContexts, Logging}
 import conf.Configuration
 import conf.Configuration.environment
-import controllers.HealthCheck
 import org.joda.time.DateTime
 import awswrappers.cloudwatch._
 
@@ -14,10 +13,12 @@ import scala.concurrent.Future
 object CloudWatchStats extends Logging with ExecutionContexts {
   val stage = new Dimension().withName("Stage").withValue(environment.stage)
 
-  lazy val cloudwatch = {
-    val client = new AmazonCloudWatchAsyncClient(Configuration.aws.mandatoryCredentials)
-    client.setEndpoint(AwsEndpoints.monitoring)
-    client
+  lazy val cloudwatch: AmazonCloudWatchAsync = {
+    AmazonCloudWatchAsyncClient
+      .asyncBuilder()
+      .withCredentials(Configuration.aws.mandatoryCredentials)
+      .withRegion(conf.Configuration.aws.region)
+      .build()
   }
 
   private def sanityData(metric: String) = {
