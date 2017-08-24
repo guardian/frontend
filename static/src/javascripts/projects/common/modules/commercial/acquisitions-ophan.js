@@ -11,7 +11,7 @@ export const submitEvent = (
     products: $ReadOnlyArray<OphanProduct>,
     campaignCode: string,
     labels: $ReadOnlyArray<string> = [],
-    value?: string,
+    value?: string
 ) => {
     submitComponentEvent({
         component: {
@@ -21,11 +21,10 @@ export const submitEvent = (
             campaignCode,
         },
         action: actionType,
-        value
-    });    
-}
+        value,
+    });
+};
 
 export const submitInsertEvent = submitEvent.bind(null, 'INSERT');
 
 export const submitViewEvent = submitEvent.bind(null, 'VIEW');
-

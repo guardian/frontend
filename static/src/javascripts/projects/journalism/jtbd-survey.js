@@ -96,7 +96,7 @@ const save = (
             as,
             why
         }),
-    });
+    );
 };
 
 const shouldIGo = (): boolean => {
