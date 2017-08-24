@@ -21,8 +21,7 @@ import {
 const messageCode = 'engagement-banner-2017-07-05';
 
 // This piece of code should be reverted when we remove this test.
-const getUserTest = (): ?AcquisitionsABTest =>
-    membershipEngagementBannerTests.find(test => getAcquisitionTest() === test);
+const getUserTest = (): ?AcquisitionsABTest => membershipEngagementBannerTests.find(test => getAcquisitionTest().id === test.id);
 
 const getUserVariant = (test: ?ABTest): ?Variant =>
     test ? variantFor(test) : undefined;
