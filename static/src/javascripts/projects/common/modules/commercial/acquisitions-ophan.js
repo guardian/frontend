@@ -1,11 +1,11 @@
 // @flow
 import ophan from 'ophan/ng';
 
-const submitComponentEvent = (componentEvent: OphanComponentEvent) => {
+const record = (componentEvent: OphanComponentEvent) => {
     ophan.record({ componentEvent });
 };
 
-export const submitEvent = (
+export const submitComponentEvent = (
     actionType: OphanAction,
     componentType: OphanComponentType,
     products: $ReadOnlyArray<OphanProduct>,
@@ -13,7 +13,7 @@ export const submitEvent = (
     labels: $ReadOnlyArray<string> = [],
     value?: string
 ) => {
-    submitComponentEvent({
+    record({
         component: {
             componentType,
             labels,
@@ -25,6 +25,6 @@ export const submitEvent = (
     });
 };
 
-export const submitInsertEvent = submitEvent.bind(null, 'INSERT');
+export const submitInsertEvent = submitComponentEvent.bind(null, 'INSERT');
 
-export const submitViewEvent = submitEvent.bind(null, 'VIEW');
+export const submitViewEvent = submitComponentEvent.bind(null, 'VIEW');

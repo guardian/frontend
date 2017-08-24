@@ -1,6 +1,6 @@
 // @flow
 import { session as sessionStorage, local as localStorage } from 'lib/storage';
-import { submitEvent as submitOphanEvent } from 'common/modules/commercial/acquisitions-ophan';
+import { submitComponentEvent } from 'common/modules/commercial/acquisitions-ophan';
 import { campaignsFor } from 'common/modules/commercial/targeting-tool';
 import { init as initSurvey, BusinessError } from './survey';
 
@@ -84,7 +84,7 @@ const save = (
     as[q] = answer;
     localStorage.set('gu.jtbd.answers', as, { expires: endOfSurvey });
 
-    submitOphanEvent(
+    submitComponentEvent(
         'VOTE',
         'SURVEYS_QUESTIONS',
         [],
