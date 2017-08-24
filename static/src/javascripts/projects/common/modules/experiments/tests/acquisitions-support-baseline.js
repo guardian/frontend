@@ -10,14 +10,20 @@ import config from 'lib/config';
 
 const baseCampaignCode = 'gdnwb_copts_memco_sandc_support_baseline';
 
+const getREFPVID = (): string =>
+    (config.ophan && config.ophan.pageViewId) || 'not_found';
+
+const buildURL = (url: string, campaignCode: string): string =>
+    `${url}?INTCMP=${campaignCode}&REFPVID=${getREFPVID()}`;
+
 const makeSupportURL = (campaignCode: string): string =>
-    `https://support.theguardian.com/uk?INTCMP=${campaignCode}`;
+    buildURL('https://support.theguardian.com/uk', campaignCode);
 
 const makeBecomeSupporterURL = (campaignCode: string): string =>
-    `https://membership.theguardian.com/uk/supporter?INTCMP=${campaignCode}`;
+    buildURL('https://membership.theguardian.com/uk/supporter', campaignCode);
 
 const makeSubscribeURL = (campaignCode: string): string =>
-    `https://subscribe.theguardian.com/offersUK?INTCMP=${campaignCode}`;
+    buildURL('https://subscribe.theguardian.com/offersUK', campaignCode);
 
 const buildButtonTemplate = ({ supportUrl }) =>
     `<div class="contributions__amount-field">
