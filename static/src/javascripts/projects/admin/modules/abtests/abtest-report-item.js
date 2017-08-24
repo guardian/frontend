@@ -58,9 +58,15 @@ class ABTestReportItem extends Component {
             (daysTillExpiry === 1 ? ' day' : ' days');
         const audienceOffset = `${test.audienceOffset * 100}%`;
 
-        if (this.elem && this.elem instanceof HTMLElement) {
+        if (this.elem) {
             this.elem.setAttribute('data-abtest-name', test.id);
+        }
+
+        if (this.elem) {
             this.elem.classList.add(switchClass);
+        }
+
+        if (this.elem) {
             this.elem.classList.add(activeClass);
         }
 
