@@ -156,7 +156,7 @@ class Component {
 
         if (endpoint) {
             Object.keys(this.options).forEach(opt => {
-                const replacement = this.options[opt];
+                const replacement = (this.options && this.options[opt]) || '';
                 endpoint = endpoint.replace(`:${opt}`, replacement);
             });
 
@@ -203,7 +203,7 @@ class Component {
     }
 
     getElem(elemName: string): HTMLLinkElement {
-        let elem: HTMLLinkElement = (this.elemens && this.elems[elemName]: any);
+        let elem: HTMLLinkElement = (this.elems && this.elems[elemName]: any);
 
         if (elem) {
             return elem;
