@@ -94,8 +94,8 @@ const save = (
             hasSnippet,
             qs,
             as,
-            why
-        }),
+            why,
+        })
     );
 };
 
