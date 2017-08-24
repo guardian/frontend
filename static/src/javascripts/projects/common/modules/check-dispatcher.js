@@ -99,11 +99,12 @@ const checksToDispatch = {
     },
 
     isJTBDSurveyOnPage(): Promise<boolean> {
-        return config.page.contentType === 'Article' && !config.page.isMinuteArticle ?
-            new Promise((resolve) => {
-                mediator.on('journalism:modules:jtbd', resolve);
-            }) :
-            Promise.resolve(false);
+        return config.page.contentType === 'Article' &&
+        !config.page.isMinuteArticle
+            ? new Promise(resolve => {
+                  mediator.on('journalism:modules:jtbd', resolve);
+              })
+            : Promise.resolve(false);
     },
 
     isOutbrainBlockedByAds(): Promise<boolean> {

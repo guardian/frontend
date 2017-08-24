@@ -138,7 +138,7 @@ const init = (): void => {
     }
 
     mediator.emit('journalism:modules:jtbd', true);
-    
+
     localStorage.setIfNotExists('gu.jtbd.questions', qs, {
         expires: endOfSurvey,
     });

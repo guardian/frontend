@@ -37,7 +37,9 @@ const getOutbrainPageConditions = (): Promise<OutbrainPageConditions> =>
         waitForCheck('isStoryQuestionsOnPage'),
         waitForCheck('isJTBDSurveyOnPage'),
     ]).then(
-        ([outbrainDisabled, noMerchSlots, contributions, email, story, jtbd]) => ({
+        (
+            [outbrainDisabled, noMerchSlots, contributions, email, story, jtbd]
+        ) => ({
             outbrainEnabled: !outbrainDisabled,
             noMerchSlotsExpected: noMerchSlots,
             contributionsTestVisible: contributions,
