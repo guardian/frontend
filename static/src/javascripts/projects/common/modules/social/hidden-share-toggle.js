@@ -36,7 +36,7 @@ const toggleSecondaryMethods = (
 };
 
 const hiddenShareToggle = (): void => {
-    const initShare = (share: HTMLElement) => {
+    const initShare = (share: HTMLElement): void => {
         const more = share.querySelector(MORE_SELECTOR);
         const toggleVisibility = (event: Event): void => {
             const target: HTMLElement = (event.target: any);
