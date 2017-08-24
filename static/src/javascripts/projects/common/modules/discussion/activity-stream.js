@@ -64,6 +64,10 @@ class ActivityStream extends Component {
         }
 
         // update opts
+        if (!this.options) {
+            this.options = {};
+        }
+
         this.options.streamType = streamType;
     }
 
@@ -74,7 +78,10 @@ class ActivityStream extends Component {
     }
 
     fetched(resp: Object): void {
-        this.applyState(resp.html, this.options.streamType);
+        this.applyState(
+            resp.html,
+            (this.options && this.options.streamType) || ''
+        );
         this.updateHistory(resp);
     }
 
@@ -123,16 +130,18 @@ class ActivityStream extends Component {
     }
 
     updateHistory(resp: Object): void {
-        const page = this.options.page;
+        const { userId, page, streamType } = this.options || {};
         const pageParam = getUrlVars().page;
-        const streamType =
-            this.options.streamType !== 'discussions'
-                ? `/${this.options.streamType}`
-                : '';
-        const qs = `/user/id/${this.options
-            .userId}${streamType}?${constructQuery({ page })}`;
-        const state = { resp, streamType: this.options.streamType };
-        const params = { querystring: qs, state };
+        const qsStreamType =
+            streamType !== 'discussions' ? `/${streamType}` : '';
+        const state = { resp, streamType };
+        const query = constructQuery({
+            page,
+        });
+        const params = {
+            querystring: `/user/id/${userId}${qsStreamType}?${query}`,
+            state,
+        };
 
         if (typeof pageParam === 'undefined') {
             // If first load and without page param, add it and overwrite history

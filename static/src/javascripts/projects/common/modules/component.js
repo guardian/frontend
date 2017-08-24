@@ -9,7 +9,7 @@ import fetchJSON from 'lib/fetch-json';
 class Component {
     autoupdated: boolean;
     classes: ?Object;
-    componentClass: ?string;
+    componentClass: string;
     defaultOptions: Object;
     destroyed: boolean;
     edition: string;
@@ -37,7 +37,7 @@ class Component {
     constructor() {
         this.useBem = false;
         this.templateName = null;
-        this.componentClass = null;
+        this.componentClass = '';
         this.endpoint = null;
         this.classes = null;
         this.elem = null;
@@ -156,7 +156,8 @@ class Component {
 
         if (endpoint) {
             Object.keys(this.options).forEach(opt => {
-                endpoint = endpoint.replace(`:${opt}`, this.options[opt]);
+                const replacement = this.options[opt];
+                endpoint = endpoint.replace(`:${opt}`, replacement);
             });
 
             return fetchJSON(endpoint, {
@@ -209,6 +210,11 @@ class Component {
         }
 
         elem = qwery(this.getClass(elemName), this.elem)[0];
+
+        if (!this.elems) {
+            this.elems = {};
+        }
+
         this.elems[elemName] = elem;
 
         return elem;

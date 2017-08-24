@@ -49,7 +49,7 @@ class ABTestReportItem extends Component {
             ? 'abtest-item--switched-on'
             : 'abtest-item--switched-off';
 
-        if (this.elem) {
+        if (this.elem && this.elem instanceof HTMLElement) {
             this.elem.setAttribute('data-abtest-name', this.config.test.id);
             this.elem.classList.add(switchClass);
             this.elem.classList.add(activeClass);
