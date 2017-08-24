@@ -119,8 +119,10 @@ const defineSlot = (adSlotNode: Element, sizes: Object): Object => {
         slot.setTargeting('ad_h', new Date().getUTCHours().toString());
     }
 
-    if (getTestVariantId('OutstreamFrequencyCap') === 'frequency-cap' &&
-        id === 'dfp-ad--inline1') {
+    if (
+        getTestVariantId('OutstreamFrequencyCap') === 'frequency-cap' &&
+        id === 'dfp-ad--inline1'
+    ) {
         slot.setTargeting('outstream', 'cap');
     }
 

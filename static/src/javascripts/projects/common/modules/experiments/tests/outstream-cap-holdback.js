@@ -3,15 +3,17 @@ import { trackAdRender } from 'commercial/modules/dfp/track-ad-render';
 import { getAdvertById } from 'commercial/modules/dfp/get-advert-by-id';
 import { Advert } from 'commercial/modules/dfp/Advert';
 
-const videoInlineimpression = (complete) => {
+const videoInlineimpression = complete => {
     const advertId = 'dfp-ad--inline1';
 
-    trackAdRender(advertId).then( () => {
-        const inlineAdvert : Advert = getAdvertById(advertId);
+    trackAdRender(advertId).then(() => {
+        const inlineAdvert: Advert = getAdvertById(advertId);
         if (inlineAdvert) {
             const loadedSize = inlineAdvert.size;
-            if ( (loadedSize[0] === 620 && loadedSize[1] === 350) ||
-                 (loadedSize[0] === 620 && loadedSize[1] === 1)) {
+            if (
+                (loadedSize[0] === 620 && loadedSize[1] === 350) ||
+                (loadedSize[0] === 620 && loadedSize[1] === 1)
+            ) {
                 // Notify ab-ophan module that a video impression was completed.
                 // Teads and outstream formats can be either 620x350 or 620x1 size.
                 complete();
