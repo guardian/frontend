@@ -29,8 +29,11 @@ class Participation extends Component {
             ? 'http://www.theguardian.com'
             : document.location.origin;
         const examplePath = `${test.examplePath || '/uk'}#ab-${test.id}`;
+        const optOut = this.getElem('opt-out');
 
-        this.getElem('opt-out').href = `${origin}${examplePath}=notintest`;
+        if (optOut instanceof HTMLLinkElement) {
+            optOut.href = `${origin}${examplePath}=notintest`;
+        }
 
         const linksContainer = this.getElem('links');
 

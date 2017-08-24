@@ -202,7 +202,7 @@ class Component {
         return (sansDot ? '' : '.') + className;
     }
 
-    getElem(elemName: string): HTMLLinkElement {
+    getElem(elemName: string): HTMLLinkElement | HTMLInputElement {
         let elem: HTMLLinkElement = (this.elems && this.elems[elemName]: any);
 
         if (elem) {
@@ -220,7 +220,7 @@ class Component {
         return elem;
     }
 
-    hasState(state: string, elemName: string): boolean {
+    hasState(state: string, elemName?: string): boolean {
         const elem = elemName ? this.getElem(elemName) : this.elem;
         return bonzo(elem).hasClass(
             `${this.componentClass +
