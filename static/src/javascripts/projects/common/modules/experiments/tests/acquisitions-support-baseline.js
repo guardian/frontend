@@ -17,7 +17,7 @@ const makeBecomeSupporterURL = (campaignCode: string): string =>
     `https://membership.theguardian.com/uk/supporter?INTCMP=${campaignCode}`;
 
 const makeSubscribeURL = (campaignCode: string): string =>
-    `https://subscribe.theguardian.com/uk?INTCMP=${campaignCode}`;
+    `https://subscribe.theguardian.com/offersUK?INTCMP=${campaignCode}`;
 
 const buildButtonTemplate = ({ supportUrl }) =>
     `<div class="contributions__amount-field">
