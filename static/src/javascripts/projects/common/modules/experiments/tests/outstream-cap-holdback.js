@@ -7,9 +7,9 @@ const videoInlineimpression = complete => {
     const advertId = 'dfp-ad--inline1';
 
     trackAdRender(advertId).then(() => {
-        const inlineAdvert: Advert = getAdvertById(advertId);
+        const inlineAdvert: ?Advert = getAdvertById(advertId);
         if (inlineAdvert) {
-            const loadedSize = inlineAdvert.size;
+            const loadedSize = inlineAdvert.size || [];
             if (
                 (loadedSize[0] === 620 && loadedSize[1] === 350) ||
                 (loadedSize[0] === 620 && loadedSize[1] === 1)
