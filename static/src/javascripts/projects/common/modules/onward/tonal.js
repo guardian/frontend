@@ -52,18 +52,9 @@ class TonalComponent extends Component {
         register.begin('tonal-content');
 
         this.edition = config.page.edition.toLowerCase();
-
-        // Ensures we only fetch supported tones.
-        if (this.isSupported()) {
-            this.endpoint = this.getEndpoint();
-        } else {
-            this.fetch = noop;
-        }
-    }
-
-    getEndpoint(): string {
-        const endpoint = tones[this.edition][TonalComponent.getTone()];
-        return `/container/${endpoint}.json`;
+        this.endpoint = this.isSupported()
+            ? `/container/${tones[this.edition][TonalComponent.getTone()]}.json`
+            : undefined;
     }
 
     isSupported(): boolean {
