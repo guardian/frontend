@@ -42,50 +42,41 @@ class ABTestReportItem extends Component {
     }
 
     prerender(): void {
-        const activeClass = this.config.active
+        const { active, test } = this.config;
+        const activeClass = active
             ? ' abtest-item--active'
             : ' abtest-item--expired';
-        const switchClass = window.abSwitches[`ab${this.config.test.id}`]
+        const switchClass = window.abSwitches[`ab${test.id}`]
             ? 'abtest-item--switched-on'
             : 'abtest-item--switched-off';
+        const daysTillExpiry =
+            (Date.parse(test.expiry) - new Date()) / (1000 * 60 * 60 * 24);
+        const tableauLink = `<a href="https://tableau-datascience.gutools.co.uk/views/AutomatedMVTDashboard-MkII/MainMVTDashboard?:embed=y&id=${test.id}">view</a>`;
+        const ophanLink = `<a href="https://dashboard.ophan.co.uk/graph/breakdown?ab=${test.id}">graph</a>`;
+        const expiry =
+            Math.floor(daysTillExpiry).toString() +
+            (daysTillExpiry === 1 ? ' day' : ' days');
+        const audienceOffset = `${test.audienceOffset * 100}%`;
 
         if (this.elem && this.elem instanceof HTMLElement) {
-            this.elem.setAttribute('data-abtest-name', this.config.test.id);
+            this.elem.setAttribute('data-abtest-name', test.id);
             this.elem.classList.add(switchClass);
             this.elem.classList.add(activeClass);
         }
 
-        this.getElem('description').textContent = this.config.test.description;
+        this.getElem('description').textContent = test.description;
+        this.getElem('name').textContent = test.id;
+        this.getElem('expiry').textContent = expiry;
+        this.getElem('expiry').setAttribute('title', test.expiry);
+        this.getElem('audience').textContent = `${test.audience * 100}%`;
+        this.getElem('audience-offset').textContent = audienceOffset;
+        this.getElem('tableau').innerHTML = tableauLink;
+        this.getElem('ophan').innerHTML = ophanLink;
+        this.getElem('hypothesis').textContent = test.hypothesis || '';
 
-        this.getElem('name').textContent = this.config.test.id;
-        const daysTillExpiry =
-            (Date.parse(this.config.test.expiry) - new Date()) /
-            (1000 * 60 * 60 * 24);
-        this.getElem('expiry').textContent =
-            Math.floor(daysTillExpiry).toString() +
-            (daysTillExpiry === 1 ? ' day' : ' days');
-        this.getElem('expiry').setAttribute('title', this.config.test.expiry);
-
-        this.getElem('audience').textContent = `${this.config.test.audience *
-            100}%`;
-        this.getElem('audience-offset').textContent = `${this.config.test
-            .audienceOffset * 100}%`;
-
-        const tableauUrl = `https://tableau-datascience.gutools.co.uk/views/AutomatedMVTDashboard-MkII/MainMVTDashboard?:embed=y&id=${this
-            .config.test.id}`;
-        this.getElem('tableau').innerHTML = `<a href="${tableauUrl}">view</a>`;
-
-        const ophanUrl = `https://dashboard.ophan.co.uk/graph/breakdown?ab=${this
-            .config.test.id}`;
-        this.getElem('ophan').innerHTML = `<a href="${ophanUrl}">graph</a>`;
-
-        this.getElem('hypothesis').textContent =
-            this.config.test.hypothesis || '';
-
-        const participation = new Participation({
-            test: this.config.test,
-        });
-        participation.render(this.getElem('participation'));
+        new Participation({
+            test,
+        }).render(this.getElem('participation'));
     }
 
     renderChart(): void {
