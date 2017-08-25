@@ -7,12 +7,18 @@ const getRemoteBranches = () => execa.stdout('git', ['branch', '-r']);
 
 const diffAgainstRemote = branch =>
     execa
-        .stdout('git', ['diff', '--name-only', 'head', `origin/${branch}`])
+        .stdout('git', [
+            'diff',
+            '--name-only',
+            'HEAD',
+            `origin/${branch}`,
+            '^origin/master', // excluding changes already in origin/master
+        ])
         .then(diffs => diffs.split('\n'));
 
 const diffAgainstMaster = () =>
     execa
-        .stdout('git', ['diff', '--name-only', 'head', 'origin/master...'])
+        .stdout('git', ['diff', '--name-only', 'HEAD', 'origin/master'])
         .then(diffs => diffs.split('\n'));
 
 const getChangedFiles = () =>
