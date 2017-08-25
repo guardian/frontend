@@ -11,7 +11,7 @@ export const forgottenEmail = (): void => {
         if (form) {
             hashEmail = window.location.hash.match('email=([^&#]*)');
             input = form.querySelector('.js-reset-email');
-            if (hashEmail && input) {
+            if (hashEmail && input && input instanceof HTMLInputElement) {
                 input.value = hashEmail[1];
             }
         }
