@@ -440,6 +440,7 @@ class Comments extends Component {
         });
     }
 
+    // eslint-disable-next-line class-methods-use-this
     reportComment(e: Event): void {
         e.preventDefault();
 
@@ -460,6 +461,27 @@ class Comments extends Component {
                 const comment: HTMLInputElement = (form.querySelector(
                     '[name="comment"]'
                 ): any);
+                const reportCommentSuccess = (formEL: HTMLElement): void => {
+                    formEL.setAttribute('hidden', '');
+                };
+                const reportCommentFailure = (): void => {
+                    const commentClose = document.querySelector(
+                        '.d-report-comment__close'
+                    );
+                    const commentError = document.querySelector(
+                        '.js-discussion__report-comment-error'
+                    );
+
+                    if (commentError) {
+                        commentError.removeAttribute('hidden');
+                    }
+
+                    if (commentClose) {
+                        commentClose.classList.add(
+                            'd-report-comment__close--error'
+                        );
+                    }
+                };
 
                 if (category.value !== '0') {
                     const email: HTMLInputElement = (form.querySelector(
@@ -471,8 +493,8 @@ class Comments extends Component {
                         categoryId: category.value,
                         reason: comment.value,
                     })
-                        .then(() => this.reportCommentSuccess(form))
-                        .catch(() => this.reportCommentFailure());
+                        .then(() => reportCommentSuccess(form))
+                        .catch(() => reportCommentFailure());
                 }
             });
         };
@@ -481,27 +503,6 @@ class Comments extends Component {
             .first()
             .each(submitHandler)
             .appendTo(reportContainer);
-    }
-
-    // eslint-disable-next-line class-methods-use-this
-    reportCommentSuccess(form: HTMLElement): void {
-        form.setAttribute('hidden', '');
-    }
-
-    // eslint-disable-next-line class-methods-use-this
-    reportCommentFailure(): void {
-        const commentClose = document.querySelector('.d-report-comment__close');
-        const commentError = document.querySelector(
-            '.js-discussion__report-comment-error'
-        );
-
-        if (commentError) {
-            commentError.removeAttribute('hidden');
-        }
-
-        if (commentClose) {
-            commentClose.classList.add('d-report-comment__close--error');
-        }
     }
 
     addUser(user: userType): void {
