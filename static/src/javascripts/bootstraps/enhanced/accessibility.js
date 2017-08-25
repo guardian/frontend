@@ -4,6 +4,10 @@ import accessibility from 'common/modules/accessibility/main';
 
 const DOM_ID: string = 'js-accessibility-preferences';
 
+type AccessibilityState = {
+    'flashing-elements': boolean,
+};
+
 const BinaryToggle = React.createClass({
     render() {
         return React.DOM.div(
@@ -43,7 +47,7 @@ const BinaryToggle = React.createClass({
 });
 
 const Accessibility = React.createClass({
-    getInitialState() {
+    getInitialState(): AccessibilityState {
         return {
             'flashing-elements': accessibility.isOn('flashing-elements'),
         };
