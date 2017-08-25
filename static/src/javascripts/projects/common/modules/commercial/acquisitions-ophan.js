@@ -1,40 +1,30 @@
 // @flow
 import ophan from 'ophan/ng';
 
-const submitComponentEvent = (componentEvent: OphanComponentEvent) => {
+const record = (componentEvent: OphanComponentEvent) => {
     ophan.record({ componentEvent });
 };
 
-export const submitInsertEvent = (
+export const submitComponentEvent = (
+    actionType: OphanAction,
     componentType: OphanComponentType,
     products: $ReadOnlyArray<OphanProduct>,
     campaignCode: string,
-    labels: $ReadOnlyArray<string> = []
+    labels: $ReadOnlyArray<string> = [],
+    value?: string
 ) => {
-    submitComponentEvent({
+    record({
         component: {
             componentType,
             labels,
             products,
             campaignCode,
         },
-        action: 'INSERT',
+        action: actionType,
+        value,
     });
 };
 
-export const submitViewEvent = (
-    componentType: OphanComponentType,
-    products: $ReadOnlyArray<OphanProduct>,
-    campaignCode: string,
-    labels: $ReadOnlyArray<string> = []
-) => {
-    submitComponentEvent({
-        component: {
-            componentType,
-            labels,
-            products,
-            campaignCode,
-        },
-        action: 'VIEW',
-    });
-};
+export const submitInsertEvent = submitComponentEvent.bind(null, 'INSERT');
+
+export const submitViewEvent = submitComponentEvent.bind(null, 'VIEW');

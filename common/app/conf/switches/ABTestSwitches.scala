@@ -131,6 +131,16 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-outstream-frequency-cap",
+    "Test adds a hold-back variant which keeps a frequency cap on outstream video format ads.",
+    owners = Seq(Owner.withGithub("rich-nguyen")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 11, 1),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
     "ab-acquisitions-support-baseline",
     "Test new S&C proposition against current membership/contribution offering across all channels",
     owners = Seq(Owner.withGithub("svillafe")),

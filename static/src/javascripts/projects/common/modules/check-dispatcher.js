@@ -1,5 +1,6 @@
 // @flow
 import config from 'lib/config';
+import mediator from 'lib/mediator';
 import { allEmailCanRun, listCanRun } from 'common/modules/email/run-checks';
 import emailArticle from 'common/modules/email/email-article';
 import {
@@ -95,6 +96,15 @@ const checksToDispatch = {
         return Promise.resolve(
             document.querySelectorAll('.js-ask-question-link').length > 0
         );
+    },
+
+    isJTBDSurveyOnPage(): Promise<boolean> {
+        return config.page.contentType === 'Article' &&
+        !config.page.isMinuteArticle
+            ? new Promise(resolve => {
+                  mediator.on('journalism:modules:jtbd', resolve);
+              })
+            : Promise.resolve(false);
     },
 
     isOutbrainBlockedByAds(): Promise<boolean> {

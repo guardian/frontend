@@ -1,0 +1,88 @@
+.jtbd-survey {
+    background: $neutral-7;
+    padding: $gs-baseline $gs-gutter;
+}
+
+.jtbd-survey__question {
+    border: 0;
+    margin: 0;
+    padding: 0;
+
+    svg {
+        width: 100%;
+        height: 30px;
+    }
+
+    line {
+        stroke-width: 1px;
+        stroke-dasharray: .05%, .05%;
+        stroke: $neutral-3;
+    }
+
+    ellipse {
+        fill: #ffffff;
+        stroke-width: 2px;
+        stroke: $neutral-3;
+    }
+
+    .outer-stroke {
+        fill: $neutral-7;
+        stroke-width: 0;
+    }
+
+    .inner-circle {
+        fill: $guardian-brand;
+        transform: scale(0);
+        transform-origin: 30px 30px;
+        transition: transform .2s ease-in-out;
+    }
+
+    label {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    [type='radio'] {
+        display: none;
+        float: none;
+        margin: 0;
+
+        &:checked + svg .inner-circle {
+            transform: scale(1);
+        }
+    }
+}
+
+.jtbd-survey__choice-bg {
+    display: block;
+    margin-bottom: -30px;
+}
+
+.jtbd-survey__heading {
+    @include fs-headline(6);
+    color: $guardian-brand;
+    font-weight: bold;
+    margin-bottom: $gs-baseline;
+}
+
+.jtbd-survey__question-choice {
+    @include fs-textSans(1);
+    display: flex;
+    justify-content: space-between;
+    list-style: none;
+
+    > li {
+        flex: 1;
+    }
+}
+
+.jtbd-survey__why {
+    display: flex;
+    flex-direction: column;
+
+    textarea {
+        height: $gs-baseline * 8;
+    }
+}
+
