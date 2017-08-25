@@ -86,32 +86,38 @@ class Comments extends Component {
         }
 
         const source = target.getAttribute('data-source-comment');
-        const commentId = currentTarget.getAttribute('data-comment-id') || '';
-        const endpoint = `/discussion/comment/${commentId}.json?displayThreaded=true`;
+        const commentId = currentTarget.getAttribute('data-comment-id');
 
-        fetchJson(endpoint, {
-            mode: 'cors',
-        })
-            .then(resp => {
-                const comment = bonzo.create(resp.html);
-                const replies = qwery(this.getClass('reply'), comment).slice(
-                    this.options.showRepliesCount
-                );
+        if (commentId) {
+            const endpoint = `/discussion/comment/${commentId}.json?displayThreaded=true`;
 
-                bonzo(qwery('.d-thread--responses', source)).append(replies);
-                bonzo(li).addClass('u-h');
-
-                this.emit('untruncate-thread');
-
-                if (shouldMakeTimestampsRelative()) {
-                    this.relativeDates();
-                }
+            fetchJson(endpoint, {
+                mode: 'cors',
             })
-            .catch(ex => {
-                reportError(ex, {
-                    feature: 'comments-more-replies',
+                .then(resp => {
+                    const comment = bonzo.create(resp.html);
+                    const replies = qwery(
+                        this.getClass('reply'),
+                        comment
+                    ).slice(this.options.showRepliesCount);
+
+                    bonzo(qwery('.d-thread--responses', source)).append(
+                        replies
+                    );
+                    bonzo(li).addClass('u-h');
+
+                    this.emit('untruncate-thread');
+
+                    if (shouldMakeTimestampsRelative()) {
+                        this.relativeDates();
+                    }
+                })
+                .catch(ex => {
+                    reportError(ex, {
+                        feature: 'comments-more-replies',
+                    });
                 });
-            });
+        }
     }
 
     addMoreRepliesButtons(comms: Array<HTMLElement>): void {
