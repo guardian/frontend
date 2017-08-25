@@ -143,7 +143,7 @@ object PressedStory {
     val tags = Tags.make(apiContent)
     val commercial = Commercial.make(tags, apiContent)
     val trail = Trail.make(tags, fields, commercial, elements, metadata, apiContent)
-    val atoms = Atoms.make(apiContent)
+    val atoms = Atoms.make(apiContent, maybePageShares = None)
 
     new PressedStory(
       PressedTrail(
