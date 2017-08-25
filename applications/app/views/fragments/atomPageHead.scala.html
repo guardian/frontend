@@ -17,6 +17,11 @@
 
 <style>
   @Html(common.Assets.css.inlineAtom(page.atomType))
+  @if(page.withVerticalScrollbar) {
+    body {
+        overflow-y: scroll !important;
+    }
+  }
 </style>
 
 @if(page.withJavaScript) {

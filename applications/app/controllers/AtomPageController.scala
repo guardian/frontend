@@ -75,20 +75,20 @@ class AtomPageController(contentApiClient: ContentApiClient, wsClient: WSClient)
       })
   }
 
-  def render(atomType: String, id: String, isJsEnabled: Boolean) = Action.async { implicit request =>
+  def render(atomType: String, id: String, isJsEnabled: Boolean, hasVerticalScrollbar: Boolean) = Action.async { implicit request =>
     lookup(s"atom/$atomType/$id") map {
       case Left(model: MediaAtom) =>
-        renderAtom(MediaAtomPage(model, withJavaScript = isJsEnabled))
+        renderAtom(MediaAtomPage(model, withJavaScript = isJsEnabled, withVerticalScrollbar = hasVerticalScrollbar))
       case Left(model: StoryQuestionsAtom) =>
-        renderAtom(StoryQuestionsAtomPage(model, withJavaScript = isJsEnabled))
+        renderAtom(StoryQuestionsAtomPage(model, withJavaScript = isJsEnabled, withVerticalScrollbar = hasVerticalScrollbar))
       case Left(model: GuideAtom) =>
-        renderAtom(GuideAtomPage(model, withJavaScript = isJsEnabled))
+        renderAtom(GuideAtomPage(model, withJavaScript = isJsEnabled, withVerticalScrollbar = hasVerticalScrollbar))
       case Left(model: ProfileAtom) =>
-        renderAtom(ProfileAtomPage(model, withJavaScript = isJsEnabled))
+        renderAtom(ProfileAtomPage(model, withJavaScript = isJsEnabled, withVerticalScrollbar = hasVerticalScrollbar))
       case Left(model: QandaAtom) =>
-        renderAtom(QandaAtomPage(model, withJavaScript = isJsEnabled))
+        renderAtom(QandaAtomPage(model, withJavaScript = isJsEnabled, withVerticalScrollbar = hasVerticalScrollbar))
       case Left(model: TimelineAtom) =>
-        renderAtom(TimelineAtomPage(model, withJavaScript = isJsEnabled))
+        renderAtom(TimelineAtomPage(model, withJavaScript = isJsEnabled, withVerticalScrollbar = hasVerticalScrollbar))
       case Left(_) =>
         renderOther(NotFound)
       case Right(other) =>
