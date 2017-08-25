@@ -58,11 +58,6 @@ define([
                 forms.forgottenEmail(config);
             });
         },
-        forgottenPassword: function () {
-            mediator.on('page:identity:ready', function (config) {
-                forms.forgottenPassword(config);
-            });
-        },
         passwordToggle: function () {
             mediator.on('page:identity:ready', function (config) {
                 forms.passwordToggle(config);
@@ -109,7 +104,6 @@ define([
         init: function (config) {
             modules.initFormstack();
             modules.forgottenEmail();
-            modules.forgottenPassword();
             modules.passwordToggle();
             modules.userAvatars();
             modules.validationEmail();

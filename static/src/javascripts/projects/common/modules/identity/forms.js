@@ -18,34 +18,6 @@ export const forgottenEmail = (): void => {
     }
 };
 
-export const forgottenPassword = (): void => {
-    let email;
-    let link;
-    let href;
-
-    if (document.body) {
-        const form = document.body.querySelector('.js-signin-form');
-        if (form) {
-            email = form.querySelector('.js-signin-email');
-            link = form.querySelector('.js-forgotten-password');
-
-            if (email && link) {
-                href = link.getAttribute('href');
-
-                bean.add(link, 'click', () => {
-                    const emailAddress = email.value;
-                    if (emailAddress !== '') {
-                        link.setAttribute(
-                            'href',
-                            `${href}#email=${emailAddress}`
-                        );
-                    }
-                });
-            }
-        }
-    }
-};
-
 export const passwordToggle = (): void => {
     let password;
     let toggleClass;
