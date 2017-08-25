@@ -674,7 +674,9 @@ object MembershipEventCleaner extends HtmlCleaner {
     }
 }
 
-case class AtomsCleaner(atoms: Option[Atoms], shouldFence: Boolean = true, amp: Boolean = false, mediaWrapper: Option[MediaWrapper] = None)(implicit val request: RequestHeader, context: ApplicationContext) extends HtmlCleaner {
+case class AtomsCleaner(content: Content, shouldFence: Boolean = true, amp: Boolean = false, mediaWrapper: Option[MediaWrapper] = None)(implicit val request: RequestHeader, context: ApplicationContext) extends HtmlCleaner {
+  private val atoms = content.atoms
+
   private def findAtom(id: String): Option[Atom] = {
     atoms.flatMap(_.all.find(_.id == id))
   }
@@ -693,7 +695,7 @@ case class AtomsCleaner(atoms: Option[Atoms], shouldFence: Boolean = true, amp: 
         if(atomData.isInstanceOf[MediaAtom]){
           atomContainer.addClass("element-atom--media")
         }
-        val html = views.html.fragments.atoms.atom(atomData, shouldFence, amp, mediaWrapper).toString()
+        val html = views.html.fragments.atoms.atom(content.sharelinks, atomData, shouldFence, amp, mediaWrapper).toString()
         bodyElement.remove()
         atomContainer.append(html)
       }

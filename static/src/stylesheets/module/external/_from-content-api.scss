@@ -147,7 +147,7 @@
     color: transparent;
 }
 
-.from-content-api ul,
+.from-content-api ul:not(.social),
 .content__standfirst ul {
     list-style: none;
 

@@ -30,7 +30,7 @@ object MainCleaner {
         if (amp) AmpEmbedCleaner(article) else VideoEmbedCleaner(article),
         PictureCleaner(article, amp),
         MainFigCaptionCleaner,
-        AtomsCleaner(atoms = article.content.atoms, amp = amp, mediaWrapper = Some(MediaWrapper.MainMedia))
+        AtomsCleaner(content = article.content, amp = amp, mediaWrapper = Some(MediaWrapper.MainMedia))
       )
   }
 }
@@ -52,7 +52,7 @@ object BodyCleaner {
       TableEmbedComplimentaryToP,
       R2VideoCleaner,
       PictureCleaner(article, amp),
-      AtomsCleaner(atoms = article.content.atoms, shouldFence = true, amp = amp),
+      AtomsCleaner(content = article.content, shouldFence = true, amp = amp),
       DropCaps(article.tags.isComment || article.tags.isFeature, article.isImmersive),
       ImmersiveHeaders(article.isImmersive),
       FigCaptionCleaner,
