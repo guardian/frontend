@@ -445,11 +445,7 @@ class Comments extends Component {
         e.preventDefault();
 
         const currentTarget: HTMLElement = (e.currentTarget: any);
-        const commentId = currentTarget.getAttribute('data-comment-id') || '';
-        const reportContainer = $(
-            `#comment-${commentId} .js-report-comment-container`
-        ).first();
-
+        const commentId = currentTarget.getAttribute('data-comment-id');
         const submitHandler = (form: HTMLFormElement) => {
             form.removeAttribute('hidden');
 
@@ -499,10 +495,16 @@ class Comments extends Component {
             });
         };
 
-        $('.js-report-comment-form')
-            .first()
-            .each(submitHandler)
-            .appendTo(reportContainer);
+        if (commentId) {
+            const reportContainer = document.querySelector(
+                `#comment-${commentId} .js-report-comment-container`
+            );
+
+            $('.js-report-comment-form')
+                .first()
+                .each(submitHandler)
+                .appendTo(reportContainer);
+        }
     }
 
     addUser(user: userType): void {
