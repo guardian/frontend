@@ -1,6 +1,9 @@
 const execa = require('execa');
 const chalk = require('chalk');
+const os = require('os');
 const getChangedFiles = require('../lib/get-changed-files');
+
+const getCpuCount = () => os.cpus().length;
 
 module.exports = {
     description: 'Validate committed JS',
@@ -44,7 +47,7 @@ module.exports = {
                         return arr.reduce(batchFold, []);
                     };
 
-                    return batch(jsFiles, 10)
+                    return batch(jsFiles, getCpuCount())
                         .reduce(lint, Promise.resolve())
                         .then(() => {
                             if (errors.length) {
