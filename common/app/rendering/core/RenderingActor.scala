@@ -10,8 +10,6 @@ import scala.util.Try
 
 case class Rendering(renderable: Renderable)
 
-case class RenderingException(error: String) extends RuntimeException(error)
-
 class RenderingActor(ac: ApplicationContext) extends Actor with JavascriptRendering {
 
   override def javascriptFile: String = "ui/dist/ui.bundle.server.js"
