@@ -217,8 +217,8 @@ class CommentBox extends Component {
     }
 
     postComment(): void {
-        const body: string =
-            (this.elem && this.elem.body && this.elem.body.value: any) || '';
+        const commentBody = this.elem && this.elem.body;
+        const body: string = (commentBody && commentBody.value: any) || '';
         const comment: commentType = { body };
 
         this.clearErrors();
@@ -381,7 +381,7 @@ class CommentBox extends Component {
             this.resetPreviewComment()
         );
         this.on('click', this.getClass('preview'), () =>
-            this.previewComment('previewCommentSuccess')
+            this.previewComment(this.previewCommentSuccess)
         );
         this.on('click', this.getClass('hide-preview'), () =>
             this.resetPreviewComment()
@@ -421,7 +421,10 @@ class CommentBox extends Component {
         e.preventDefault();
 
         // Check if new commenter as they may have already commented on this article
-        if (this.hasState('onboarding-visible') || (this.options && !this.options.newCommenter)) {
+        if (
+            this.hasState('onboarding-visible') ||
+            (this.options && !this.options.newCommenter)
+        ) {
             if (this.options && this.options.hasUsername) {
                 this.removeState('onboarding-visible');
             }
@@ -433,7 +436,7 @@ class CommentBox extends Component {
             ).innerHTML = this.getUserData().displayName;
 
             this.setState('onboarding-visible');
-            this.previewComment('onboardingPreviewSuccess');
+            this.previewComment(this.onboardingPreviewSuccess);
 
             if (this.options && this.options.hasUsername) {
                 this.getElem('onboarding-username').classList.add('is-hidden');
@@ -508,7 +511,9 @@ class CommentBox extends Component {
         this.error('EMAIL_VERIFIED_FAIL');
     }
 
-    previewComment(methodName: string): void {
+    previewComment(
+        callbackRef: (comment: commentType, resp: Object) => void
+    ): void {
         const commentBody = this.getElem('body');
         const comment: commentType = {
             body:
@@ -516,7 +521,7 @@ class CommentBox extends Component {
                     ? commentBody.value
                     : '',
         };
-        const callback = this[methodName].bind(this);
+        const callback = callbackRef.bind(this);
 
         this.clearErrors();
 
