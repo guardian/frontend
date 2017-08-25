@@ -264,6 +264,7 @@ const makeABTestVariant = (
 
             maxViews,
             isUnlimited,
+            products,
             campaignCode,
             contributeURL,
             membershipURL,
@@ -314,7 +315,11 @@ const makeABTestVariant = (
                                     component.insertBefore(targets);
                                 }
 
-                                mediator.emit(parentTest.insertEvent);
+                                mediator.emit(parentTest.insertEvent, {
+                                    componentType: parentTest.componentType,
+                                    products,
+                                    campaignCode,
+                                });
                                 onInsert(component);
 
                                 component.each(element => {
@@ -329,7 +334,12 @@ const makeABTestVariant = (
 
                                     inView.on('firstview', () => {
                                         logView(parentTest.id);
-                                        mediator.emit(parentTest.viewEvent);
+                                        mediator.emit(parentTest.viewEvent, {
+                                            componentType:
+                                                parentTest.componentType,
+                                            products,
+                                            campaignCode,
+                                        });
                                         mediator.emit(
                                             'register:end',
                                             trackingCampaignId
@@ -450,6 +460,7 @@ const makeABTest = ({
 export {
     shouldShowReaderRevenue,
     defaultCanEpicBeDisplayed,
+    defaultPageCheck,
     getTestimonialBlock,
     addTrackingCodesToUrl,
     makeABTest,

@@ -4,14 +4,14 @@ import { local } from 'lib/storage';
 import { Message } from 'common/modules/ui/message';
 import { commercialFeatures } from 'commercial/modules/commercial-features';
 import mediator from 'lib/mediator';
-import { testCanBeRun } from 'common/modules/experiments/test-can-run-checks';
 import { membershipEngagementBannerTests } from 'common/modules/experiments/tests/membership-engagement-banner-tests';
 import { inlineSvg } from 'common/views/svgs';
-import { isInTest, variantFor } from 'common/modules/experiments/segment-util';
+import { variantFor } from 'common/modules/experiments/segment-util';
 import { engagementBannerParams } from 'common/modules/commercial/membership-engagement-banner-parameters';
 import { isBlocked } from 'common/modules/commercial/membership-engagement-banner-block';
 import { get as getGeoLocation } from 'lib/geolocation';
 import { constructQuery } from 'lib/url';
+import { getTest as getAcquisitionTest } from 'common/modules/experiments/acquisition-test-selector';
 import {
     submitInsertEvent,
     submitViewEvent,
@@ -20,10 +20,17 @@ import {
 // change messageCode to force redisplay of the message to users who already closed it.
 const messageCode = 'engagement-banner-2017-07-05';
 
+// This piece of code should be reverted when we remove this test.
 const getUserTest = (): ?AcquisitionsABTest =>
-    membershipEngagementBannerTests.find(
-        test => testCanBeRun(test) && isInTest(test)
-    );
+    membershipEngagementBannerTests.find(test => {
+        const acquisitionTest = getAcquisitionTest();
+        let response = false;
+        if (acquisitionTest) {
+            response = acquisitionTest.id === test.id;
+        }
+
+        return response;
+    });
 
 const getUserVariant = (test: ?ABTest): ?Variant =>
     test ? variantFor(test) : undefined;
@@ -35,8 +42,13 @@ const getUserVariantParams = (
     userVariant: ?Variant,
     campaignId: ?string
 ): EngagementBannerParams | {} => {
-    if (campaignId && userVariant && userVariant.engagementBannerParams) {
-        const userVariantParams = userVariant.engagementBannerParams;
+    if (
+        campaignId &&
+        userVariant &&
+        userVariant.options &&
+        userVariant.options.engagementBannerParams
+    ) {
+        const userVariantParams = userVariant.options.engagementBannerParams;
 
         if (!userVariantParams.campaignCode) {
             userVariantParams.campaignCode = buildCampaignCode(
