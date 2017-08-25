@@ -1,10 +1,10 @@
-import init from 'common/modules/crosswords/main';
+// @flow
+import initCrosswords from 'common/modules/crosswords/main';
 import initComments from 'common/modules/crosswords/comments';
 import initSeries from 'common/modules/crosswords/series';
-export default {
-    init() {
-        init();
-        initComments();
-        initSeries();
-    }
+
+export const init = (): void => {
+    initCrosswords();
+    initComments();
+    initSeries();
 };
