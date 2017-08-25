@@ -25,7 +25,7 @@ define([
     Id,
     AccountProfile,
     PublicProfile,
-    EmailPreferences,
+    emailPreferences,
     DeleteAccount,
     UserAvatars,
     mediator,
@@ -94,7 +94,7 @@ define([
 
         emailPreferences: function () {
             mediator.on('page:identity:ready', function () {
-                EmailPreferences.init();
+                emailPreferences.enhanceEmailPreferences();
             });
         },
 
