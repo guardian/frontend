@@ -3,8 +3,7 @@ package model
 import com.gu.contentapi.client.model.v1.{CrosswordEntry, Crossword}
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichCapiDateTime
 import crosswords.CrosswordGridColumnNotation
-import org.joda.time.{DateTimeZone, DateTime}
-import org.joda.time.format.ISODateTimeFormat
+import org.joda.time.DateTime
 import play.api.libs.json._
 
 case class CrosswordPosition(x: Int, y: Int)

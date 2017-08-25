@@ -1,5 +1,7 @@
 package common.Assets
 
+import java.nio.charset.Charset
+
 import common.{Logging, RelativePathEscaper}
 import conf.Configuration
 import model.ApplicationContext
@@ -140,7 +142,7 @@ object LoadFromClasspath {
       case Some(s) => Success(s)
       case None => Failure(AssetNotFoundException(assetPath))
     }).flatMap { url =>
-      Try(IOUtils.toString(url))
+      Try(IOUtils.toString(url, Charset.defaultCharset()))
     }
   }
 }
