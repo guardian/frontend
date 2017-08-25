@@ -46,20 +46,19 @@ import { init as initIdentity } from 'bootstraps/enhanced/identity-common';
 import ophan from 'ophan/ng';
 
 const initialiseTopNavItems = (): void => {
-    let profile;
-    const search = new Search();
-    const header = document.getElementById('header');
+    const search: Search = new Search();
+    const header: ?HTMLElement = document.getElementById('header');
 
     if (header) {
         if (config.switches.idProfileNavigation) {
-            profile = new Profile({
+            const profile: Profile = new Profile({
                 url: config.page.idUrl,
             });
             profile.init();
         }
     }
 
-    search.init(header);
+    search.init();
 };
 
 const initialiseNavigation = (): void => {
@@ -71,22 +70,19 @@ const showTabs = (): void => {
         'modules:popular:loaded',
         'modules:geomostpopular:ready',
     ].forEach(event => {
-        mediator.on(event, () => {
-            initTabs();
-        });
+        mediator.on(event, initTabs);
     });
 };
 
 const showToggles = (): void => {
-    const toggles = new Toggles();
+    const toggles: Toggles = new Toggles();
     toggles.init();
     toggles.reset();
     initDropdowns();
 };
 
 const showRelativeDates = (): void => {
-    const dates = RelativeDates;
-    dates.init();
+    RelativeDates.init();
 };
 
 const initClickstream = (): void => {
@@ -162,7 +158,10 @@ const idCookieRefresh = (): void => {
 
 const windowEventListeners = (): void => {
     ['orientationchange'].forEach(event => {
-        bean.on(window, event, mediator.emit.bind(mediator, `window:${event}`));
+        window.addEventListener(
+            event,
+            mediator.emit.bind(mediator, `window:${event}`)
+        );
     });
 };
 
