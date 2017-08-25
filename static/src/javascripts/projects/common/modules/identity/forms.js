@@ -38,19 +38,19 @@ export const passwordToggle = (): void => {
 
             $toggle.previous().addClass('form-field__note--left');
 
-            if (password) {
-                bean.add($toggle[0], `.${toggleClass}`, 'click', e => {
-                    e.preventDefault();
-                    const link = e.target;
-                    const inputType =
-                        password.getAttribute('type') === 'password'
-                            ? 'text'
-                            : 'password';
-                    const label = link.getAttribute(`data-${inputType}-label`);
+            bean.add($toggle[0], `.${toggleClass}`, 'click', e => {
+                e.preventDefault();
+                const link = e.target;
+                const inputType =
+                    password && password.getAttribute('type') === 'password'
+                        ? 'text'
+                        : 'password';
+                const label = link.getAttribute(`data-${inputType}-label`);
+                if (password) {
                     password.setAttribute('type', inputType);
-                    bonzo(link).text(label);
-                });
-            }
+                }
+                bonzo(link).text(label);
+            });
         }
     }
 };
