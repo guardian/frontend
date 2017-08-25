@@ -28,6 +28,10 @@ module.exports = function loadSVG(source) {
                     node.children.forEach(setStyles);
                 }
 
+                if (props.width) {
+                    svg.attributes.style = Object.assign({}, svg.attributes.style, { width: props.width + 'px'});
+                }
+           
                 if (props['block-styles']) setStyles(svg);
 
                 return svg;
