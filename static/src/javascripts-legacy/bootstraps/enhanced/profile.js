@@ -17,7 +17,7 @@ define([
 ], function (
     $,
     qwery,
-    Identity,
+    forms,
     Formstack,
     FormstackIframe,
     FormstackEmbedIframe,
@@ -55,17 +55,17 @@ define([
         },
         forgottenEmail: function () {
             mediator.on('page:identity:ready', function (config) {
-                Identity.forgottenEmail(config);
+                forms.forgottenEmail(config);
             });
         },
         forgottenPassword: function () {
             mediator.on('page:identity:ready', function (config) {
-                Identity.forgottenPassword(config);
+                forms.forgottenPassword(config);
             });
         },
         passwordToggle: function () {
             mediator.on('page:identity:ready', function (config) {
-                Identity.passwordToggle(config);
+                forms.passwordToggle(config);
             });
         },
         userAvatars: function () {
