@@ -1,6 +1,5 @@
 {
   "Regis Kuckaertz": [
-    "bootstraps/enhanced/common.js",
     "bootstraps/enhanced/crosswords.js",
     "projects/common/modules/article/rich-links.js",
     "projects/common/modules/article/twitter.js",
