@@ -1,68 +1,91 @@
+// @flow
+
 import bonzo from 'bonzo';
 import fastdom from 'fastdom';
-import qwery from 'qwery';
-import $ from 'lib/$';
 import fetchJSON from 'lib/fetch-json';
-import formatters from 'lib/formatters';
+import { integerCommas } from 'lib/formatters';
 import mediator from 'lib/mediator';
-import template from 'lodash/utilities/template';
-import svgs from 'common/views/svgs';
-import commentCountTemplate from 'raw-loader!common/views/discussion/comment-count.html';
-import commentCountContentTemplate from 'raw-loader!common/views/discussion/comment-count--content.html';
-import commentCountContentImmersiveTemplate from 'raw-loader!common/views/discussion/comment-count--content-immersive.html';
-import groupBy from 'lodash/collections/groupBy';
-import forEach from 'lodash/collections/forEach';
-const attributeName = 'data-discussion-id',
-      countUrl = '/discussion/comment-counts.json?shortUrls=',
-      templates = {
-          content: commentCountContentTemplate,
-          contentImmersive: commentCountContentImmersiveTemplate
-      },
-      defaultTemplate = commentCountTemplate;
+import { inlineSvg } from 'common/views/svgs';
 
-function getElementsIndexedById(context) {
-    const elements = qwery('[' + attributeName + ']', context);
+const ATTRIBUTE_NAME: string = 'data-discussion-id';
+const COUNT_URL: string = '/discussion/comment-counts.json?shortUrls=';
 
-    return groupBy(elements, el => bonzo(el).attr(attributeName));
-}
+const getTemplate = (
+    vals: { url: string, icon: string, count: string },
+    type: string
+): string => {
+    const { url, icon, count } = vals;
 
-function getContentIds(indexedElements) {
-    return Object.keys(indexedElements).sort().join(',');
-}
+    switch (type) {
+        case 'content':
+            return `<a href="${url}" data-link-name="Comment count" class="commentcount2 tone-colour">
+                        <h3 class="commentcount2__heading">${icon} <span class ="commentcount2__text u-h">Comments</span></h3>
+                        <span class="commentcount2__value tone-colour js_commentcount_actualvalue">${count}</span>
+                    </a>`;
+        case 'contentImmersive':
+            return `<a href="${url}" data-link-name="Comment count" class="commentcount2 tone-colour">
+                        ${icon}<span class="commentcount__value">${count}</span> Comments
+                    </a>`;
+        default:
+            return `<a class="fc-trail__count fc-trail__count--commentcount" href="${url}" data-link-name="Comment count">${icon} ${count}</a>`;
+    }
+};
 
-function getContentUrl(node) {
-    const a = node.getElementsByTagName('a')[0];
-    return (a ? a.pathname : '') + '#comments';
-}
+const getElementsIndexedById = (context: HTMLElement): Object => {
+    const elements = context.querySelectorAll(`[${ATTRIBUTE_NAME}]`);
 
-function renderCounts(counts, indexedElements) {
+    return [
+        ...elements,
+    ].reduce((groupedVals: Object, el: HTMLElement): Object => {
+        const attrVal = el.getAttribute(ATTRIBUTE_NAME);
+
+        if (!groupedVals[attrVal]) {
+            groupedVals[attrVal] = [];
+        }
+
+        groupedVals[attrVal].push(el);
+
+        return groupedVals;
+    }, {});
+};
+
+const getContentIds = (indexedElements: Object): string =>
+    Object.keys(indexedElements).sort().join(',');
+
+const getContentUrl = (el: HTMLElement): string => {
+    const a = el.getElementsByTagName('a')[0];
+
+    return `${a ? a.pathname : ''}#comments`;
+};
+
+const renderCounts = (
+    counts: Array<{ id: string, count: number }>,
+    indexedElements: Object
+): void => {
     counts.forEach(c => {
-        forEach(indexedElements[c.id], node => {
-            let format;
-            const $node = bonzo(node);
-            const url = $node.attr('data-discussion-url') || getContentUrl(node);
-            let $container;
-            let meta;
-            let html;
+        indexedElements[c.id].forEach(el => {
+            const url = el.dataset.discussionUrl || getContentUrl(el);
 
-            if ($node.attr('data-discussion-closed') === 'true' && c.count === 0) {
+            if (el.dataset.discussionClosed === 'true' && c.count === 0) {
                 return; // Discussion is closed and had no comments, we don't want to show a comment count
             }
 
-            format = $node.data('commentcount-format');
-            html = template(templates[format] || defaultTemplate, {
-                url,
-                icon: svgs.inlineSvg('commentCount16icon', ['inline-tone-fill']),
-                count: formatters.integerCommas(c.count)
-            });
-
-            meta = qwery('.js-item__meta', node);
-            $container = meta.length ? bonzo(meta) : $node;
+            const format = el.dataset.commentcountFormat || '';
+            const html = getTemplate(
+                {
+                    url,
+                    icon: inlineSvg('commentCount16icon', ['inline-tone-fill']),
+                    count: integerCommas(c.count) || '',
+                },
+                format
+            );
+            const meta = el.getElementsByClassName('js-item__meta');
+            const container = meta.length ? bonzo(meta) : el;
 
             fastdom.write(() => {
-                $container.append(html);
-                $node.removeAttr(attributeName);
-                $node.removeClass('u-h');
+                container.append(html);
+                el.removeAttribute(ATTRIBUTE_NAME);
+                el.classList.remove('u-h');
             });
         });
     });
@@ -72,12 +95,14 @@ function renderCounts(counts, indexedElements) {
     fastdom.write(() => {
         mediator.emit('modules:commentcount:loaded', counts);
     });
-}
+};
 
-function getCommentCounts(context) {
+const getCommentCounts = (context: HTMLElement): void => {
     fastdom.read(() => {
-        const indexedElements = getElementsIndexedById(context || document.body);
-        const endpoint = countUrl + getContentIds(indexedElements);
+        const indexedElements = getElementsIndexedById(
+            context || document.body
+        );
+        const endpoint = `${COUNT_URL}${getContentIds(indexedElements)}`;
 
         fetchJSON(endpoint, {
             mode: 'cors',
@@ -87,20 +112,17 @@ function getCommentCounts(context) {
             }
         });
     });
-}
+};
 
-function init() {
-    if (document.body.querySelector('[data-discussion-id]')) {
+const init = (): void => {
+    if (document.body && document.body.querySelector('[data-discussion-id]')) {
         getCommentCounts(document.body);
     }
 
-    //Load new counts when more trails are loaded
+    // Load new counts when more trails are loaded
     mediator.on('modules:related:loaded', getCommentCounts);
-}
+};
 
 export default {
     init,
-    getCommentCounts,
-    getContentIds,
-    getElementsIndexedById
 };
