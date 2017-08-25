@@ -57,7 +57,7 @@ class Component {
     }
 
     // eslint-disable-next-line class-methods-use-this, no-unused-vars
-    error(err: Error): void {
+    error(type: string, message?: string): void {
         /* noop */
     }
 

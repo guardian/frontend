@@ -95,16 +95,17 @@ class CommentBox extends Component {
     }
 
     getDiscussionId(): string {
+        const discussionKey =
+            (this.elem && this.elem.getAttribute('data-discussion-key')) || '';
+
         return (
-            this.options.discussionId ||
-            this.elem
-                .getAttribute('data-discussion-key')
-                .replace('discussion', '')
+            (this.options && this.options.discussionId) ||
+            discussionKey.replace('discussion', '')
         );
     }
 
     setFormState(disabled?: boolean = false): void {
-        const commentBody = this.getElem('body');
+        const commentBody: HTMLInputElement = (this.getElem('body'): any);
         const submitButton = this.getElem('submit');
 
         if (disabled || commentBody.value.length === 0) {
@@ -269,13 +270,14 @@ class CommentBox extends Component {
                 this.error('EMPTY_COMMENT_BODY');
             }
 
-            if (comment.body.length > this.options.maxLength) {
+            if (this.options && comment.body.length > this.options.maxLength) {
+                const maxLength = this.options.maxLength || 0;
+                const diff = comment.body.length - maxLength;
+
                 this.error(
                     'COMMENT_TOO_LONG',
-                    `<b>Comments must be shorter than ${this.options
-                        .maxLength} characters.</b>` +
-                        `Yours is currently ${comment.body.length -
-                            this.options.maxLength} character(s) too long.`
+                    `<b>Comments must be shorter than ${maxLength} characters.</b>
+                    Yours is currently ${diff} character(s) too long.`
                 );
             }
 
@@ -308,8 +310,8 @@ class CommentBox extends Component {
             const createdDate = new Date(this.getUserData().accountCreatedDate);
 
             if (
-                createdDate >
-                (this.options && this.options.priorToVerificationDate)
+                this.options &&
+                createdDate > this.options.priorToVerificationDate
             ) {
                 IdentityApi.getUserFromApiWithRefreshedCookie().then(
                     response => {
@@ -419,7 +421,7 @@ class CommentBox extends Component {
         e.preventDefault();
 
         // Check if new commenter as they may have already commented on this article
-        if (this.hasState('onboarding-visible') || !this.options.newCommenter) {
+        if (this.hasState('onboarding-visible') || (this.options && !this.options.newCommenter)) {
             if (this.options && this.options.hasUsername) {
                 this.removeState('onboarding-visible');
             }
@@ -470,10 +472,12 @@ class CommentBox extends Component {
         }
 
         if (this.options && this.options.replyTo) {
+            const { author, timestamp } = this.options && this.options.replyTo;
             const replyToAuthor = this.getElem('reply-to-author');
-            replyToAuthor.innerHTML = this.options.replyTo.author;
-            this.getElem('parent-comment-author').innerHTML = `${this.options
-                .replyTo.author} @ ${this.options.replyTo.timestamp} said:`;
+            replyToAuthor.innerHTML = author;
+            this.getElem(
+                'parent-comment-author'
+            ).innerHTML = `${author} @ ${timestamp} said:`;
 
             this.getElem('parent-comment-body').innerHTML =
                 (this.options &&
@@ -521,7 +525,7 @@ class CommentBox extends Component {
             this.error('EMPTY_COMMENT_BODY');
         }
 
-        if (comment.body.length > this.options.maxLength) {
+        if (this.options && comment.body.length > this.options.maxLength) {
             const charDiff =
                 comment.body.length -
                 ((this.options && this.options.maxLength) || 0);
