@@ -121,7 +121,8 @@ const defineSlot = (adSlotNode: Element, sizes: Object): Object => {
 
     if (
         getTestVariantId('OutstreamFrequencyCap') === 'frequency-cap' &&
-        id === 'dfp-ad--inline1'
+        id === 'dfp-ad--inline1' &&
+        config.switches.abOutstreamFrequencyCap
     ) {
         slot.setTargeting('outstream', 'cap');
     }
