@@ -14,22 +14,22 @@ import contains from 'lodash/collections/contains';
 import 'common/modules/experiments/ab';
 
 function elementIsBelowViewport(el) {
-    return fastdomPromise.read(function() {
-        var rect = el.getBoundingClientRect();
+    return fastdomPromise.read(() => {
+        const rect = el.getBoundingClientRect();
         return rect.top > (window.innerHeight || document.documentElement.clientHeight);
     });
 }
 
 function upgradeRichLink(el) {
-    var href = $('a', el).attr('href');
-    var matches = href.match(/(?:^https?:\/\/(?:www\.|m\.code\.dev-)theguardian\.com)?(\/.*)/);
-    var isOnMobile = detect.isBreakpoint({
+    const href = $('a', el).attr('href');
+    const matches = href.match(/(?:^https?:\/\/(?:www\.|m\.code\.dev-)theguardian\.com)?(\/.*)/);
+    const isOnMobile = detect.isBreakpoint({
         max: 'mobileLandscape'
     });
 
     function doUpgrade(shouldUpgrade, resp) {
         if (shouldUpgrade) {
-            return fastdom.write(function() {
+            return fastdom.write(() => {
                 $(el).html(resp.html)
                     .removeClass('element-rich-link--not-upgraded')
                     .addClass('element-rich-link--upgraded');
@@ -42,12 +42,12 @@ function upgradeRichLink(el) {
     if (matches && matches[1]) {
         return fetchJson('/embed/card' + matches[1] + '.json', {
                 mode: 'cors'
-            }).then(function(resp) {
+            }).then(resp => {
                 if (resp.html) {
 
                     // Fastdom read the viewport height before upgrading if on mobile
                     if (isOnMobile) {
-                        elementIsBelowViewport(el).then(function(shouldUpgrade) {
+                        elementIsBelowViewport(el).then(shouldUpgrade => {
                             doUpgrade(shouldUpgrade, resp);
                         });
                     } else {
@@ -55,7 +55,7 @@ function upgradeRichLink(el) {
                     }
                 }
             })
-            .catch(function(ex) {
+            .catch(ex => {
                 reportError(ex, {
                     feature: 'rich-links'
                 });
@@ -95,24 +95,23 @@ function getSpacefinderRules() {
 }
 
 function insertTagRichLink() {
-    var $insertedEl,
-        richLinkHrefs = $('.element-rich-link a')
-        .map(function(el) {
-            return $(el).attr('href');
-        }),
-        testIfDuplicate = function(richLinkHref) {
-            // Tag-targeted rich links can be absolute
-            return contains(config.page.richLink, richLinkHref);
-        },
-        isDuplicate = richLinkHrefs.some(testIfDuplicate),
-        isSensitive = config.page.shouldHideAdverts || !config.page.showRelatedContent;
+    let $insertedEl;
+
+    const richLinkHrefs = $('.element-rich-link a')
+    .map(el => $(el).attr('href'));
+
+    const testIfDuplicate = richLinkHref => // Tag-targeted rich links can be absolute
+    contains(config.page.richLink, richLinkHref);
+
+    const isDuplicate = richLinkHrefs.some(testIfDuplicate);
+    const isSensitive = config.page.shouldHideAdverts || !config.page.showRelatedContent;
 
     if (config.page.richLink &&
         config.page.richLink.indexOf(config.page.pageId) === -1 &&
         !isSensitive &&
         !isDuplicate
     ) {
-        return spaceFiller.spaceFiller.fillSpace(getSpacefinderRules(), function(paras) {
+        return spaceFiller.spaceFiller.fillSpace(getSpacefinderRules(), paras => {
             $insertedEl = $.create(template(richLinkTagTmpl, {
                 href: config.page.richLink
             }));
@@ -120,7 +119,7 @@ function insertTagRichLink() {
             return $insertedEl[0];
         }, {
             waitForAds: true
-        }).then(function(didInsert) {
+        }).then(didInsert => {
             if (didInsert) {
                 return Promise.resolve(upgradeRichLink($insertedEl[0]));
             } else {
@@ -137,7 +136,7 @@ function upgradeRichLinks() {
 }
 
 export default {
-    upgradeRichLinks: upgradeRichLinks,
-    insertTagRichLink: insertTagRichLink,
-    getSpacefinderRules: getSpacefinderRules
+    upgradeRichLinks,
+    insertTagRichLink,
+    getSpacefinderRules
 };
