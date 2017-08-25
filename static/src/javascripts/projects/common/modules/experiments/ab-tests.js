@@ -5,7 +5,7 @@ import { getTest as getAcquisitionTest } from 'common/modules/experiments/acquis
 import { membershipEngagementBannerTests } from 'common/modules/experiments/tests/membership-engagement-banner-tests';
 import { paidContentVsOutbrain2 } from 'common/modules/experiments/tests/paid-content-vs-outbrain';
 import { tailorSurvey } from 'common/modules/experiments/tests/tailor-survey';
-
+import { outstreamFrequencyCapHoldback } from 'common/modules/experiments/tests/outstream-cap-holdback';
 import { acquisitionsEpicElectionInteractiveEnd } from 'common/modules/experiments/tests/acquisitions-epic-election-interactive-end';
 import { acquisitionsEpicElectionInteractiveSlice } from 'common/modules/experiments/tests/acquisitions-epic-election-interactive-slice';
 
@@ -15,6 +15,7 @@ export const TESTS: $ReadOnlyArray<ABTest> = [
     tailorSurvey,
     acquisitionsEpicElectionInteractiveEnd,
     acquisitionsEpicElectionInteractiveSlice,
+    outstreamFrequencyCapHoldback,
 ]
     .concat(membershipEngagementBannerTests)
     .filter(Boolean);
