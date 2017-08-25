@@ -12,20 +12,18 @@ import commentCountContentTemplate from 'raw-loader!common/views/discussion/comm
 import commentCountContentImmersiveTemplate from 'raw-loader!common/views/discussion/comment-count--content-immersive.html';
 import groupBy from 'lodash/collections/groupBy';
 import forEach from 'lodash/collections/forEach';
-var attributeName = 'data-discussion-id',
-    countUrl = '/discussion/comment-counts.json?shortUrls=',
-    templates = {
-        content: commentCountContentTemplate,
-        contentImmersive: commentCountContentImmersiveTemplate
-    },
-    defaultTemplate = commentCountTemplate;
+const attributeName = 'data-discussion-id',
+      countUrl = '/discussion/comment-counts.json?shortUrls=',
+      templates = {
+          content: commentCountContentTemplate,
+          contentImmersive: commentCountContentImmersiveTemplate
+      },
+      defaultTemplate = commentCountTemplate;
 
 function getElementsIndexedById(context) {
-    var elements = qwery('[' + attributeName + ']', context);
+    const elements = qwery('[' + attributeName + ']', context);
 
-    return groupBy(elements, function(el) {
-        return bonzo(el).attr(attributeName);
-    });
+    return groupBy(elements, el => bonzo(el).attr(attributeName));
 }
 
 function getContentIds(indexedElements) {
@@ -33,19 +31,19 @@ function getContentIds(indexedElements) {
 }
 
 function getContentUrl(node) {
-    var a = node.getElementsByTagName('a')[0];
+    const a = node.getElementsByTagName('a')[0];
     return (a ? a.pathname : '') + '#comments';
 }
 
 function renderCounts(counts, indexedElements) {
-    counts.forEach(function(c) {
-        forEach(indexedElements[c.id], function(node) {
-            var format,
-                $node = bonzo(node),
-                url = $node.attr('data-discussion-url') || getContentUrl(node),
-                $container,
-                meta,
-                html;
+    counts.forEach(c => {
+        forEach(indexedElements[c.id], node => {
+            let format;
+            const $node = bonzo(node);
+            const url = $node.attr('data-discussion-url') || getContentUrl(node);
+            let $container;
+            let meta;
+            let html;
 
             if ($node.attr('data-discussion-closed') === 'true' && c.count === 0) {
                 return; // Discussion is closed and had no comments, we don't want to show a comment count
@@ -53,7 +51,7 @@ function renderCounts(counts, indexedElements) {
 
             format = $node.data('commentcount-format');
             html = template(templates[format] || defaultTemplate, {
-                url: url,
+                url,
                 icon: svgs.inlineSvg('commentCount16icon', ['inline-tone-fill']),
                 count: formatters.integerCommas(c.count)
             });
@@ -61,7 +59,7 @@ function renderCounts(counts, indexedElements) {
             meta = qwery('.js-item__meta', node);
             $container = meta.length ? bonzo(meta) : $node;
 
-            fastdom.write(function() {
+            fastdom.write(() => {
                 $container.append(html);
                 $node.removeAttr(attributeName);
                 $node.removeClass('u-h');
@@ -71,19 +69,19 @@ function renderCounts(counts, indexedElements) {
 
     // This is the only way to ensure that this event is fired after all the comment counts have been rendered to
     // the DOM.
-    fastdom.write(function() {
+    fastdom.write(() => {
         mediator.emit('modules:commentcount:loaded', counts);
     });
 }
 
 function getCommentCounts(context) {
-    fastdom.read(function() {
-        var indexedElements = getElementsIndexedById(context || document.body);
-        var endpoint = countUrl + getContentIds(indexedElements);
+    fastdom.read(() => {
+        const indexedElements = getElementsIndexedById(context || document.body);
+        const endpoint = countUrl + getContentIds(indexedElements);
 
         fetchJSON(endpoint, {
             mode: 'cors',
-        }).then(function(response) {
+        }).then(response => {
             if (response && response.counts) {
                 renderCounts(response.counts, indexedElements);
             }
@@ -101,8 +99,8 @@ function init() {
 }
 
 export default {
-    init: init,
-    getCommentCounts: getCommentCounts,
-    getContentIds: getContentIds,
-    getElementsIndexedById: getElementsIndexedById
+    init,
+    getCommentCounts,
+    getContentIds,
+    getElementsIndexedById
 };
