@@ -28,14 +28,20 @@ export const forgottenPassword = (): void => {
         if (form) {
             email = form.querySelector('.js-signin-email');
             link = form.querySelector('.js-forgotten-password');
-            href = link.getAttribute('href');
 
-            bean.add(link, 'click', () => {
-                const emailAddress = email.value;
-                if (emailAddress !== '') {
-                    link.setAttribute('href', `${href}#email=${emailAddress}`);
-                }
-            });
+            if (email && link) {
+                href = link.getAttribute('href');
+
+                bean.add(link, 'click', () => {
+                    const emailAddress = email.value;
+                    if (emailAddress !== '') {
+                        link.setAttribute(
+                            'href',
+                            `${href}#email=${emailAddress}`
+                        );
+                    }
+                });
+            }
         }
     }
 };
@@ -59,17 +65,20 @@ export const passwordToggle = (): void => {
             $toggle = bonzo(bonzo.create(toggleTmpl)).insertBefore(password);
 
             $toggle.previous().addClass('form-field__note--left');
-            bean.add($toggle[0], `.${toggleClass}`, 'click', e => {
-                e.preventDefault();
-                const link = e.target;
-                const inputType =
-                    password.getAttribute('type') === 'password'
-                        ? 'text'
-                        : 'password';
-                const label = link.getAttribute(`data-${inputType}-label`);
-                password.setAttribute('type', inputType);
-                bonzo(link).text(label);
-            });
+
+            if (password) {
+                bean.add($toggle[0], `.${toggleClass}`, 'click', e => {
+                    e.preventDefault();
+                    const link = e.target;
+                    const inputType =
+                        password.getAttribute('type') === 'password'
+                            ? 'text'
+                            : 'password';
+                    const label = link.getAttribute(`data-${inputType}-label`);
+                    password.setAttribute('type', inputType);
+                    bonzo(link).text(label);
+                });
+            }
         }
     }
 };
