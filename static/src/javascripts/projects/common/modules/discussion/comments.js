@@ -562,12 +562,11 @@ class Comments extends Component {
         );
     }
 
-    renderComments(resp: Object): void {
-        // The resp object received has a collection of rendered html fragments, ready for DOM insertion.
-        // - commentsHtml - the main comments content.
-        // - paginationHtml - the discussion's pagination based on user page size and number of comments.
-        // - postedCommentHtml - an empty comment for when the user successfully posts a comment.
-
+    renderComments(resp: {
+        commentsHtml: string,
+        paginationHtml: string,
+        postedCommentHtml: string,
+    }): void {
         const contentEl = bonzo.create(resp.commentsHtml);
         const comments = qwery(this.getClass('comment'), contentEl);
 
