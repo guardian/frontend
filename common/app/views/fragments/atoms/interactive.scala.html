@@ -1,6 +1,7 @@
 @import common.InlineJs
 @import model.content.InteractiveAtom
 @import templates.inlineJS.nonBlocking.js.{interactiveFonts, interactiveResize}
+@import play.twirl.api.HtmlFormat
 
 @(interactive: InteractiveAtom, shouldFence: Boolean)(implicit context: model.ApplicationContext)
 
