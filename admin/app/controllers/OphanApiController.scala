@@ -5,7 +5,7 @@ import play.api.mvc._
 import services.OphanApi
 import model.NoCache
 
-class OphanApiController(ophanApi: OphanApi) extends Controller with ExecutionContexts {
+class OphanApiController(ophanApi: OphanApi, val controllerComponents: ControllerComponents) extends BaseController with ExecutionContexts {
 
   def pageViews(path: String) = Action.async { request =>
     ophanApi.getBreakdown(path) map (body => NoCache(Ok(body) as "application/json"))

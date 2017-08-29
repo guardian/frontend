@@ -20,7 +20,7 @@ trait RendersItemResponse {
 
 }
 
-class ItemResponseController(contentApiClient: ContentApiClient, val controllers: RendersItemResponse*) extends Controller with ExecutionContexts {
+class ItemResponseController(contentApiClient: ContentApiClient, val controllerComponents: ControllerComponents, val controllers: RendersItemResponse*) extends BaseController with ExecutionContexts {
 
   def render(path: String): Action[AnyContent] = Action.async{ implicit request =>
     val itemRequest = contentApiClient.item(path, Edition(request))

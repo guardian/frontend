@@ -14,24 +14,23 @@ import play.api.data.validation.Constraints
 import play.api.data.Form
 import play.api.data.Forms._
 import play.api.i18n.I18nSupport
-import play.api.libs.crypto.CryptoConfig
 import play.api.i18n.MessagesApi
 import scala.concurrent.Future
 
 class AccountDeletionController(
-    idApiClient: IdApiClient,
-    authenticatedActions: AuthenticatedActions,
-    authenticationService: AuthenticationService,
-    idRequestParser: IdRequestParser,
-    idUrlBuilder: IdentityUrlBuilder,
-    val messagesApi: MessagesApi,
-    csrfCheck: CSRFCheck,
-    csrfAddToken: CSRFAddToken,
-    val cryptoConfig: CryptoConfig,
-    http: IdDispatchAsyncHttpClient,
-    signInService : PlaySigninService,
-    conf: IdentityConfiguration)(implicit context: ApplicationContext)
-  extends Controller
+  idApiClient: IdApiClient,
+  authenticatedActions: AuthenticatedActions,
+  authenticationService: AuthenticationService,
+  idRequestParser: IdRequestParser,
+  idUrlBuilder: IdentityUrlBuilder,
+  csrfCheck: CSRFCheck,
+  csrfAddToken: CSRFAddToken,
+  http: IdDispatchAsyncHttpClient,
+  signInService : PlaySigninService,
+  conf: IdentityConfiguration,
+  val controllerComponents: ControllerComponents
+)(implicit context: ApplicationContext)
+  extends BaseController
     with ExecutionContexts
     with SafeLogging
     with Mappings

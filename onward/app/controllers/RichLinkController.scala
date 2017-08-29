@@ -4,11 +4,11 @@ import common.{ExecutionContexts, Logging}
 import contentapi.ContentApiClient
 import implicits.Requests
 import model.{ApplicationContext, Content, ContentType}
-import play.api.mvc.{Action, RequestHeader}
+import play.api.mvc.{ControllerComponents, RequestHeader}
 
 import scala.concurrent.Future
 
-class RichLinkController(contentApiClient: ContentApiClient)(implicit context: ApplicationContext) extends OnwardContentCardController(contentApiClient) with Paging with Logging with ExecutionContexts with Requests   {
+class RichLinkController(contentApiClient: ContentApiClient, controllerComponents: ControllerComponents)(implicit context: ApplicationContext) extends OnwardContentCardController(contentApiClient, controllerComponents) with Paging with Logging with ExecutionContexts with Requests   {
 
   def render(path: String) = Action.async { implicit request =>
     contentType(path) map {

@@ -10,7 +10,7 @@ import test.{ConfiguredTestSuite, DiscussionApiStub, WithMaterializer, WithTestW
   val userId = "10000001"
 
   "CommenterActivity" should "return profile discussions component" in {
-    val action = new ProfileActivityController(new DiscussionApiStub(wsClient)).profileDiscussions(userId)
+    val action = new ProfileActivityController(new DiscussionApiStub(wsClient), play.api.test.Helpers.stubControllerComponents()).profileDiscussions(userId)
     val fakeRequest = FakeRequest(GET, "/discussion/profile/"+ userId +"/discussions.json").withHeaders("host" -> "localhost:9000")
     val result = action(fakeRequest)
 

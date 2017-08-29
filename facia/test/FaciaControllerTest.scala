@@ -24,7 +24,7 @@ import scala.concurrent.Await
   with WithTestContext
   with WithTestWsClient {
 
-  lazy val faciaController = new FaciaControllerImpl(new TestFrontJsonFapi(wsClient))
+  lazy val faciaController = new FaciaControllerImpl(new TestFrontJsonFapi(wsClient), play.api.test.Helpers.stubControllerComponents())
   val articleUrl = "/environment/2012/feb/22/capitalise-low-carbon-future"
   val callbackName = "aFunction"
   val frontJson = FrontJson(Nil, None, None, None, None, None, None, None, None, None, None, None, None, None)

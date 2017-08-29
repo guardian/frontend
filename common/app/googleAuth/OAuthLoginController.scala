@@ -11,7 +11,7 @@ import play.api.mvc._
 
 import scala.concurrent.Future
 
-trait OAuthLoginController extends Controller with ExecutionContexts with implicits.Requests {
+trait OAuthLoginController extends BaseController with ExecutionContexts with implicits.Requests {
 
   implicit def wsClient: WSClient
   def login: Action[AnyContent]

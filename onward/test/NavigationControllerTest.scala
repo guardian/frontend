@@ -15,7 +15,7 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
     with WithTestContentApiClient
     with WithTestContext {
 
-  lazy val navigationController = new NavigationController()
+  lazy val navigationController = new NavigationController(play.api.test.Helpers.stubControllerComponents())
   val testRoute = "/editionalised-nav.json"
 
   "Navigation Controller" should "serve JSON" in {

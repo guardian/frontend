@@ -2,7 +2,8 @@ package controllers
 
 import conf.{AllGoodCachedHealthCheck, NeverExpiresSingleHealthCheck}
 import play.api.libs.ws.WSClient
+import play.api.mvc.ControllerComponents
 
-class HealthCheck(wsClient: WSClient) extends AllGoodCachedHealthCheck(
+class HealthCheck(wsClient: WSClient, val controllerComponents: ControllerComponents) extends AllGoodCachedHealthCheck(
   NeverExpiresSingleHealthCheck("/discussion/p/37v3a")
 )(wsClient)

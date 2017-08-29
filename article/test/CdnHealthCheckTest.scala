@@ -16,7 +16,7 @@ import org.scalatest.concurrent.ScalaFutures
 
   "CDN health check" should "mimic the instance health check" in {
     val testPort: Int = port
-    val controller = new HealthCheck(wsClient) { override val port = testPort }
+    val controller = new HealthCheck(wsClient, play.api.test.Helpers.stubControllerComponents()) { override val port = testPort }
 
     // Cache internal healthCheck results before to test endpoints
     whenReady(controller.runChecks) { _ =>

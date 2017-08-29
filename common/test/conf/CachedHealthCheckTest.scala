@@ -3,8 +3,8 @@ package conf
 import common.ExecutionContexts
 import org.joda.time.DateTime
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, Matchers, WordSpec}
-import play.api.mvc.Result
-import play.api.test.FakeRequest
+import play.api.mvc.{ControllerComponents, Result}
+import play.api.test.{FakeRequest, Helpers}
 import play.api.test.Helpers._
 import test.{ConfiguredTestSuite, WithMaterializer, WithTestWsClient}
 import org.scalatest.concurrent.ScalaFutures
@@ -41,6 +41,7 @@ import scala.util.Random
     // Create a CachedHealthCheck controller with mock results
     val mockHealthChecks: Seq[SingleHealthCheck] = mockResults.map(result => ExpiringSingleHealthCheck(result.url))
     val controller = new CachedHealthCheck(policy, precondition)(mockHealthChecks:_*)(wsClient) {
+      override val controllerComponents: ControllerComponents = Helpers.stubControllerComponents()
       override val cache = new HealthCheckCache(precondition)(wsClient) {
         var remainingMockResults = mockResults
         override def fetchResult(baseUrl: String, healthCheck: SingleHealthCheck): Future[HealthCheckResult] = {

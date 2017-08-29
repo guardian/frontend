@@ -7,7 +7,7 @@ import play.api.mvc._
 import play.api.libs.ws.WSClient
 import model.NoCache
 
-class Api(wsClient: WSClient) extends Controller with Logging with ExecutionContexts with Strings {
+class Api(wsClient: WSClient, val controllerComponents: ControllerComponents) extends BaseController with Logging with ExecutionContexts with Strings {
 
   def proxy(path: String, callback: String) = Action.async { request =>
     val queryString = request.queryString.map { p =>

@@ -139,13 +139,16 @@ case class HealthCheckPrecondition(test: () => Boolean, errorMessage: String) {
 }
 
 
-trait HealthCheckController extends Controller {
+trait HealthCheckController extends BaseController {
   def healthCheck(): Action[AnyContent]
 }
-class CachedHealthCheck(policy: HealthCheckPolicy, preconditionMaybe: Option[HealthCheckPrecondition])
+
+abstract class CachedHealthCheck(policy: HealthCheckPolicy, preconditionMaybe: Option[HealthCheckPrecondition])
                        (healthChecks: SingleHealthCheck*)
                        (implicit wsClient: WSClient)
   extends HealthCheckController with Results with ExecutionContexts with Logging {
+
+  val controllerComponents: ControllerComponents
 
   private[conf] val port: Int = 9000
 
@@ -170,10 +173,10 @@ class CachedHealthCheck(policy: HealthCheckPolicy, preconditionMaybe: Option[Hea
   def runChecks(): Future[List[HealthCheckResult]] = cache.refresh(port, healthChecks:_*)
 }
 
-case class AllGoodCachedHealthCheck(healthChecks: SingleHealthCheck*)(implicit wsClient: WSClient)
+abstract case class AllGoodCachedHealthCheck(healthChecks: SingleHealthCheck*)(implicit wsClient: WSClient)
   extends CachedHealthCheck(policy = HealthCheckPolicy.All, preconditionMaybe = None)(healthChecks:_*)
 
-case class AnyGoodCachedHealthCheck(healthChecks: SingleHealthCheck*)(implicit wsClient: WSClient)
+abstract case class AnyGoodCachedHealthCheck(healthChecks: SingleHealthCheck*)(implicit wsClient: WSClient)
   extends CachedHealthCheck(policy = HealthCheckPolicy.Any, preconditionMaybe = None)(healthChecks:_*)
 
 class CachedHealthCheckLifeCycle(

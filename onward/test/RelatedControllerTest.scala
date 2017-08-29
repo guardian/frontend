@@ -21,7 +21,11 @@ import services.OphanApi
   val badArticle = "i/am/not/here"
   val articleWithoutRelated = "childrens-books-site/2016/may/17/picasso-ed-vere"
 
-  lazy val relatedController = new RelatedController(testContentApiClient, new MostReadAgent(new OphanApi(wsClient)))
+  lazy val relatedController = new RelatedController(
+    testContentApiClient,
+    new MostReadAgent(new OphanApi(wsClient)),
+    play.api.test.Helpers.stubControllerComponents()
+  )
 
   it should "serve JSON when .json format is supplied" in {
     val fakeRequest = FakeRequest(GET, s"/related/$article.json")

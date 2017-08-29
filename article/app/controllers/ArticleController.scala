@@ -20,7 +20,7 @@ import scala.concurrent.Future
 case class ArticlePage(article: Article, related: RelatedContent) extends PageWithStoryPackage
 case class MinutePage(article: Article, related: RelatedContent) extends PageWithStoryPackage
 
-class ArticleController(contentApiClient: ContentApiClient)(implicit context: ApplicationContext) extends Controller
+class ArticleController(contentApiClient: ContentApiClient, val controllerComponents: ControllerComponents)(implicit context: ApplicationContext) extends BaseController
     with RendersItemResponse with Logging with ExecutionContexts {
 
   private def isSupported(c: ApiContent) = c.isArticle || c.isLiveBlog || c.isSudoku

@@ -22,7 +22,7 @@ import scala.collection.JavaConversions._
   val liveBlogUrl = "global/middle-east-live/2013/sep/09/syria-crisis-russia-kerry-us-live"
   val sudokuUrl = "lifeandstyle/2013/sep/09/sudoku-2599-easy"
 
-  lazy val articleController = new ArticleController(testContentApiClient)
+  lazy val articleController = new ArticleController(testContentApiClient, play.api.test.Helpers.stubControllerComponents())
 
   "Article Controller" should "200 when content type is article" in {
     val result = articleController.renderArticle(articleUrl)(TestRequest(articleUrl))

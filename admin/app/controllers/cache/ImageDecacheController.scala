@@ -9,16 +9,20 @@ import controllers.admin.AuthActions
 import model.{ApplicationContext, NoCache}
 import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.mvc.Security.AuthenticatedRequest
-import play.api.mvc.{Action, AnyContent, Controller}
+import play.api.mvc._
 
 import scala.concurrent.Future
 import scala.concurrent.Future.successful
 
-class ImageDecacheController(wsClient: WSClient)(implicit context: ApplicationContext) extends Controller with Logging with ExecutionContexts {
+class ImageDecacheController(
+  wsClient: WSClient,
+  val controllerComponents: ControllerComponents
+)(implicit context: ApplicationContext)
+  extends BaseController with Logging with ExecutionContexts {
     import ImageDecacheController._
 
   val imageServices = new ImageServices(wsClient)
-  val authActions = new AuthActions(wsClient)
+  val authActions = new AuthActions(wsClient, controllerComponents)
 
   private val iGuim = """i.guim.co.uk/img/(static|media|uploads)(/.*)""".r
   private val Origin = """(static|media).guim.co.uk/.*""".r

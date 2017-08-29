@@ -16,7 +16,9 @@ import services.breakingnews._
 
 import scala.concurrent.duration._
 
-class NewsAlertController(breakingNewsApi: BreakingNewsApi)(actorSystem: ActorSystem) extends Controller with AuthenticationSupport with ExecutionContexts {
+class NewsAlertController(breakingNewsApi: BreakingNewsApi)
+  (actorSystem: ActorSystem, val controllerComponents: ControllerComponents )
+  extends BaseController with AuthenticationSupport with ExecutionContexts {
 
   lazy val apiKey: String = Configuration.NewsAlert.apiKey.getOrElse(
     throw new RuntimeException("News Alert API Key not set")

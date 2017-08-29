@@ -43,7 +43,12 @@ class PublicProfileControllerTest extends path.FreeSpec
 
   when(idRequestParser.apply(MockitoMatchers.any[RequestHeader])) thenReturn idRequest
 
-  val controller = new PublicProfileController(idUrlBuilder, api, idRequestParser)
+  val controller = new PublicProfileController(
+    idUrlBuilder,
+    api,
+    idRequestParser,
+    play.api.test.Helpers.stubControllerComponents()
+  )
   val request = TestRequest()
 
   "Given renderProfileFromId is called" - Fake {

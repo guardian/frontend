@@ -63,7 +63,7 @@ import org.scalatest._
     }
 
     scenario("Should redirect when no competition table data found") {
-      val leagueTableController = new LeagueTableController(testCompetitionsService)
+      val leagueTableController = new LeagueTableController(testCompetitionsService, play.api.test.Helpers.stubControllerComponents())
       val result = leagueTableController.renderCompetition("sfgsfgsfg")(FakeRequest())
       status(result) should be(303)
     }

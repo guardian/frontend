@@ -24,6 +24,9 @@ class FormstackControllerTest extends path.FreeSpec
   with Matchers
   with WithTestContext
   with MockitoSugar {
+
+  private val controllerComponents = play.api.test.Helpers.stubControllerComponents()
+
   val returnUrlVerifier = mock[ReturnUrlVerifier]
   val requestParser = mock[IdRequestParser]
   val idUrlBuilder = mock[IdentityUrlBuilder]
@@ -36,14 +39,14 @@ class FormstackControllerTest extends path.FreeSpec
 
   val userId = "123"
   val user = User("test@example.com", userId, statusFields = StatusFields(receive3rdPartyMarketing = Some(true), receiveGnmMarketing = Some(true)))
-  val authenticatedActions = new AuthenticatedActions(authService, mock[IdApiClient], mock[IdentityUrlBuilder])
+  val authenticatedActions = new AuthenticatedActions(authService, mock[IdApiClient], mock[IdentityUrlBuilder], controllerComponents)
 
   when(authService.authenticatedUserFor(MockitoMatchers.any[RequestHeader])) thenReturn Some(AuthenticatedUser(user, ScGuU("abc", GuUCookieData(user, 0, None))))
 
   when(requestParser.apply(MockitoMatchers.any[RequestHeader])) thenReturn idRequest
   when(idRequest.trackingData) thenReturn trackingData
 
-  val controller = new FormstackController(returnUrlVerifier, requestParser, idUrlBuilder, authenticatedActions, formstackApi)
+  val controller = new FormstackController(returnUrlVerifier, requestParser, idUrlBuilder, authenticatedActions, formstackApi, controllerComponents)
 
   "when switched off" - {
     Switches.IdentityFormstackSwitch.switchOff()

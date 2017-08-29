@@ -13,13 +13,14 @@ import play.api.libs.json.{JsArray, Json}
 import play.api.mvc._
 
 class Multi(bestsellersAgent: BestsellersAgent,
-            masterclassAgent: MasterclassAgent,
-            travelOffersAgent: TravelOffersAgent,
-            jobsAgent: JobsAgent)
-  extends Controller
-  with ExecutionContexts
-  with implicits.Collections
-  with implicits.Requests {
+  masterclassAgent: MasterclassAgent,
+  travelOffersAgent: TravelOffersAgent,
+  jobsAgent: JobsAgent,
+  val controllerComponents: ControllerComponents
+) extends BaseController
+    with ExecutionContexts
+    with implicits.Collections
+    with implicits.Requests {
 
   private def multiSample(offerTypes: Seq[String], offerIds: Seq[Option[String]], segment: Segment): Seq[Merchandise] = {
     val components: Seq[(String, Option[String])] = offerTypes zip offerIds

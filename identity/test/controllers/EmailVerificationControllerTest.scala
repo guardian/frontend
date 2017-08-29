@@ -35,7 +35,15 @@ class EmailVerificationControllerTest extends path.FreeSpec
   when(authenticationService.requestPresentsAuthenticationCredentials(MockitoMatchers.any[Request[_]])) thenReturn true
   when(returnUrlVerifier.getVerifiedReturnUrl(MockitoMatchers.any[Request[_]])).thenReturn(Some("http://www.theguardian.com/football"))
 
-  val controller = new EmailVerificationController(api, authenticatedActions, authenticationService, idRequestParser, idUrlBuilder, returnUrlVerifier)
+  val controller = new EmailVerificationController(
+    api,
+    authenticatedActions,
+    authenticationService,
+    idRequestParser,
+    idUrlBuilder,
+    returnUrlVerifier,
+    play.api.test.Helpers.stubControllerComponents()
+  )
 
   "Given the verify method is called" - Fake {
     val testRequest = TestRequest()

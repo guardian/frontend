@@ -17,15 +17,16 @@ import utils.SafeLogging
 import scala.concurrent.Future
 
 
-class ReauthenticationController(returnUrlVerifier: ReturnUrlVerifier,
-                                 api: IdApiClient,
-                                 idRequestParser: IdRequestParser,
-                                 idUrlBuilder: IdentityUrlBuilder,
-                                 authenticatedActions: AuthenticatedActions,
-                                 signInService : PlaySigninService,
-                                 val messagesApi: MessagesApi,
-                                 val cryptoConfig: CryptoConfig)(implicit context: ApplicationContext)
-  extends Controller with ExecutionContexts with SafeLogging with Mappings with Forms {
+class ReauthenticationController(
+  returnUrlVerifier: ReturnUrlVerifier,
+  api: IdApiClient,
+  idRequestParser: IdRequestParser,
+  idUrlBuilder: IdentityUrlBuilder,
+  authenticatedActions: AuthenticatedActions,
+  signInService : PlaySigninService,
+  val controllerComponents: ControllerComponents
+)(implicit context: ApplicationContext)
+  extends BaseController with ExecutionContexts with SafeLogging with Mappings with Forms {
 
   val page = IdentityPage("/reauthenticate", "Re-authenticate")
 

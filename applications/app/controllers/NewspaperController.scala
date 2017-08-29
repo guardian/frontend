@@ -5,10 +5,14 @@ import contentapi.ContentApiClient
 import layout.FaciaContainer
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model.{ApplicationContext, Cached, MetaData, SectionSummary, SimplePage}
-import play.api.mvc.{Action, Controller}
+import play.api.mvc.{BaseController, ControllerComponents}
 import services.NewspaperQuery
 
-class NewspaperController(contentApiClient: ContentApiClient)(implicit context: ApplicationContext) extends Controller with Logging with ExecutionContexts {
+class NewspaperController(
+  contentApiClient: ContentApiClient,
+  val controllerComponents: ControllerComponents
+)(implicit context: ApplicationContext)
+  extends BaseController with Logging with ExecutionContexts {
 
   private val newspaperQuery = new NewspaperQuery(contentApiClient)
 

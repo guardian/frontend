@@ -17,7 +17,7 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 
   val articleUrl = "environment/2012/feb/22/capitalise-low-carbon-future"
 
-  lazy val articleController = new ArticleController(testContentApiClient)
+  lazy val articleController = new ArticleController(testContentApiClient, play.api.test.Helpers.stubControllerComponents())
 
   it should "Include organisation metadata" in {
     val result = articleController.renderArticle(articleUrl)(TestRequest(articleUrl))

@@ -5,8 +5,8 @@ import model.Cached
 import commercial.model.merchandise.events.LiveEventAgent
 import play.api.mvc._
 
-class LiveEventsController(liveEventAgent: LiveEventAgent)
-  extends Controller
+class LiveEventsController(liveEventAgent: LiveEventAgent, val controllerComponents: ControllerComponents)
+  extends BaseController
   with ExecutionContexts
   with implicits.Requests {
 

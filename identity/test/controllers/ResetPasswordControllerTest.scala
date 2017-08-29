@@ -34,8 +34,8 @@ class ResetPasswordControllerTest
     requestParser,
     idUrlBuilder,
     authenticationService,
-    I18NTestComponents.messagesApi,
-    testCryptoConfig)
+    play.api.test.Helpers.stubControllerComponents()
+  )
 
   when(requestParser.apply(MockitoMatchers.anyObject())).thenReturn(identityRequest)
 

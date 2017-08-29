@@ -11,12 +11,13 @@ import play.api.libs.ws.WSClient
 import exacttarget.SubscriptionDef
 
 class ExactTargetController(
-                           conf: IdentityConfiguration,
-                           returnUrlVerifier: ReturnUrlVerifier,
-                           idRequestParser: IdRequestParser,
-                           authenticatedActions: AuthenticatedActions,
-                           wsClient: WSClient)
-  extends Controller with ExecutionContexts with SafeLogging {
+  conf: IdentityConfiguration,
+  returnUrlVerifier: ReturnUrlVerifier,
+  idRequestParser: IdRequestParser,
+  authenticatedActions: AuthenticatedActions,
+  wsClient: WSClient,
+  val controllerComponents: ControllerComponents
+) extends BaseController with ExecutionContexts with SafeLogging {
 
   import authenticatedActions.authAction
 

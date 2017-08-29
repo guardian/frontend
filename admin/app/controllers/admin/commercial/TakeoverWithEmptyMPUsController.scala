@@ -3,9 +3,10 @@ package controllers.admin.commercial
 import common.dfp.TakeoverWithEmptyMPUs
 import model.{ApplicationContext, NoCache}
 import play.api.i18n.Messages
-import play.api.mvc.{Action, Controller}
+import play.api.mvc.{BaseController, ControllerComponents}
 
-class TakeoverWithEmptyMPUsController(implicit val messages: Messages, context: ApplicationContext) extends Controller {
+class TakeoverWithEmptyMPUsController(val controllerComponents: ControllerComponents)(implicit val messages: Messages, context: ApplicationContext)
+  extends BaseController {
 
   def viewList() = Action { implicit request =>
     NoCache(Ok(views.html.commercial.takeoverWithEmptyMPUs(TakeoverWithEmptyMPUs.fetchSorted())))

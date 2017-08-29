@@ -16,7 +16,7 @@ import services.{IndexPage, IndexPageItem}
 import scala.concurrent.Future
 import scala.concurrent.duration._
 
-trait CrosswordController extends Controller with Logging with ExecutionContexts {
+trait CrosswordController extends BaseController with Logging with ExecutionContexts {
 
   def contentApiClient: ContentApiClient
 
@@ -49,7 +49,7 @@ trait CrosswordController extends Controller with Logging with ExecutionContexts
   }
 }
 
-class CrosswordPageController(val contentApiClient: ContentApiClient)(implicit context: ApplicationContext) extends CrosswordController {
+class CrosswordPageController(val contentApiClient: ContentApiClient, val controllerComponents: ControllerComponents)(implicit context: ApplicationContext) extends CrosswordController {
 
   def noResults()(implicit request: RequestHeader) = Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound))
 
@@ -92,7 +92,11 @@ class CrosswordPageController(val contentApiClient: ContentApiClient)(implicit c
   }
 }
 
-class CrosswordSearchController(val contentApiClient: ContentApiClient)(implicit context: ApplicationContext) extends CrosswordController {
+class CrosswordSearchController(
+  val contentApiClient: ContentApiClient,
+  val controllerComponents: ControllerComponents
+)(implicit context: ApplicationContext)
+  extends CrosswordController {
     val searchForm = Form(
     mapping(
       "crossword_type" -> nonEmptyText,

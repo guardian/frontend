@@ -8,10 +8,10 @@ import java.io.File
 import model.{Cached, NoCache}
 import model.Cached.WithoutRevalidationResult
 import play.api.{Environment, Mode}
-import play.api.http.{DefaultFileMimeTypesProvider, HttpConfiguration, HttpEntity, MimeTypes}
+import play.api.http.HttpEntity
 import play.api.mvc._
 
-class DevAssetsController(val environment: Environment, httpConfiguration: HttpConfiguration) extends Controller with ExecutionContexts {
+class DevAssetsController(val environment: Environment, val controllerComponents: ControllerComponents) extends BaseController with ExecutionContexts {
 
   // This allows:
   //  - unbuilt javascript to be loaded from src or public folders.
@@ -45,12 +45,11 @@ class DevAssetsController(val environment: Environment, httpConfiguration: HttpC
         throw AssetNotFoundException(path)
       }
 
-    val fileMimeTypes = new DefaultFileMimeTypesProvider(httpConfiguration.fileMimeTypes).get
-
-    val contentType = fileMimeTypes.forFileName(path) map { mime =>
-      // Add charset for text types
-      if (mime.startsWith("text/")) s"$mime; charset=utf-8" else mime
-    } getOrElse BINARY
+    val contentType = controllerComponents
+      .fileMimeTypes
+      .forFileName(path)
+      .map { mime => if (mime.startsWith("text/")) s"$mime; charset=utf-8" else mime } // Add charset for text types
+      .getOrElse(BINARY)
 
       val result = Result(
         ResponseHeader(OK, Map(CONTENT_TYPE -> contentType)),

@@ -6,7 +6,7 @@ import play.api.ApplicationLoader.Context
 import play.api._
 import play.api.http.HttpFilters
 import play.api.libs.ws.ahc.AhcWSComponents
-import play.api.mvc.EssentialFilter
+import play.api.mvc.{ControllerComponents, EssentialFilter}
 import play.api.routing.Router
 import play.filters.csrf.CSRFComponents
 
@@ -49,6 +49,7 @@ trait FrontendComponents
   implicit def appContext = ApplicationContext(environment, appIdentity)
   def lifecycleComponents: List[LifecycleComponent]
   def router: Router
+  def controllerComponents: ControllerComponents
 }
 
 trait LifecycleComponent {

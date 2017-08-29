@@ -17,7 +17,7 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
   with WithTestWsClient {
 
   val url = "/football/competitionsService"
-  lazy val competitionListController = new CompetitionListController(testCompetitionsService)
+  lazy val competitionListController = new CompetitionListController(testCompetitionsService, play.api.test.Helpers.stubControllerComponents())
 
   "Competition List Controller" should "200 when content type is competition list" in {
     val result = competitionListController.renderCompetitionList()(TestRequest())

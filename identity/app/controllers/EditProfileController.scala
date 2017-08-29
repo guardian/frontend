@@ -9,7 +9,7 @@ import idapiclient.IdApiClient
 import model._
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi}
-import play.api.mvc.{AnyContent, Controller, Request}
+import play.api.mvc._
 import play.filters.csrf.{CSRFAddToken, CSRFCheck}
 import services._
 import utils.SafeLogging
@@ -22,15 +22,15 @@ case object AccountEditProfilePage extends EditProfilePage
 case object PrivacyEditProfilePage extends EditProfilePage
 
 class EditProfileController(idUrlBuilder: IdentityUrlBuilder,
-                            authenticatedActions: AuthenticatedActions,
-                            identityApiClient: IdApiClient,
-                            idRequestParser: IdRequestParser,
-                            val messagesApi: MessagesApi,
-                            csrfCheck: CSRFCheck,
-                            csrfAddToken: CSRFAddToken,
-                            implicit val profileFormsMapping: ProfileFormsMapping)
-                           (implicit context: ApplicationContext)
-  extends Controller with ExecutionContexts with SafeLogging with I18nSupport {
+  authenticatedActions: AuthenticatedActions,
+  identityApiClient: IdApiClient,
+  idRequestParser: IdRequestParser,
+  csrfCheck: CSRFCheck,
+  csrfAddToken: CSRFAddToken,
+  implicit val profileFormsMapping: ProfileFormsMapping,
+  val controllerComponents: ControllerComponents)
+  (implicit context: ApplicationContext)
+  extends BaseController with ExecutionContexts with SafeLogging with I18nSupport {
 
   import authenticatedActions._
 

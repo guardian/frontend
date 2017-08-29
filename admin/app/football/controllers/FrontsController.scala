@@ -1,7 +1,7 @@
 package controllers.admin
 
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
-import play.api.mvc.{Action, Controller, RequestHeader, Result => PlayResult}
+import play.api.mvc.{Action, BaseController, Controller, ControllerComponents, RequestHeader, Result => PlayResult}
 import play.api.libs.ws.WSClient
 import play.twirl.api.Html
 import common.{ExecutionContexts, Logging}
@@ -19,7 +19,11 @@ import pa.Season
 import pa.Fixture
 import pa.LiveMatch
 
-class FrontsController(val wsClient: WSClient)(implicit val context: ApplicationContext) extends Controller with ExecutionContexts with PaFootballClient with Logging {
+class FrontsController(
+  val wsClient: WSClient,
+  val controllerComponents: ControllerComponents
+)(implicit val context: ApplicationContext)
+  extends BaseController with ExecutionContexts with PaFootballClient with Logging {
 
   val SNAP_TYPE = "json.html"
   val SNAP_CSS = "football"

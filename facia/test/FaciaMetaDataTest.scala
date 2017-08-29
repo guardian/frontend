@@ -28,7 +28,7 @@ import scala.concurrent.Await
     Await.result(refresh, 3.seconds)
   }
 
-  lazy val faciaController = new FaciaControllerImpl(new TestFrontJsonFapi(wsClient))
+  lazy val faciaController = new FaciaControllerImpl(new TestFrontJsonFapi(wsClient), play.api.test.Helpers.stubControllerComponents())
   val frontPath = "music"
 
   it should "Include organisation metadata" in {

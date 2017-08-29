@@ -10,7 +10,7 @@ import model._
 import org.joda.time.format.DateTimeFormat
 import pa.{FootballMatch, LineUp, LineUpTeam}
 import play.api.libs.json._
-import play.api.mvc.{Action, Controller}
+import play.api.mvc.{Action, BaseController, Controller, ControllerComponents}
 
 import scala.concurrent.Future
 
@@ -45,7 +45,11 @@ case class MatchPage(theMatch: FootballMatch, lineUp: LineUp) extends Standalone
   )
 }
 
-class MatchController(competitionsService: CompetitionsService)(implicit context: ApplicationContext) extends Controller with Football with Requests with Logging with ExecutionContexts {
+class MatchController(
+  competitionsService: CompetitionsService,
+  val controllerComponents: ControllerComponents
+)(implicit context: ApplicationContext)
+  extends BaseController with Football with Requests with Logging with ExecutionContexts {
 
   private val dateFormat = DateTimeFormat.forPattern("yyyyMMMdd")
 

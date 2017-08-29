@@ -10,13 +10,19 @@ import model._
 import play.api.data.Forms._
 import play.api.data._
 import play.api.data.validation._
-import play.api.mvc.{Action, RequestHeader, Result}
+import play.api.mvc.{Action, ControllerComponents, RequestHeader, Result}
 import play.filters.csrf.{CSRFAddToken, CSRFCheck}
 
 import scala.concurrent.Future
 import scala.util.control.NonFatal
 
-class CommentsController(val discussionApi: DiscussionApiLike, csrfCheck: CSRFCheck, csrfAddToken: CSRFAddToken)(implicit context: ApplicationContext) extends DiscussionController with ExecutionContexts {
+class CommentsController(
+  val discussionApi: DiscussionApiLike,
+  csrfCheck: CSRFCheck,
+  csrfAddToken: CSRFAddToken,
+  val controllerComponents: ControllerComponents
+)(implicit context: ApplicationContext)
+  extends DiscussionController with ExecutionContexts {
 
   val userForm = Form(
     Forms.mapping(

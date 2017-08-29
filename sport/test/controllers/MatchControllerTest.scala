@@ -15,7 +15,7 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
   with WithTestContext
   with FootballTestData {
 
-  lazy val matchController = new MatchController(testCompetitionsService)
+  lazy val matchController = new MatchController(testCompetitionsService, play.api.test.Helpers.stubControllerComponents())
 
   "MatchController" should "redirect to results when match is not found" in {
     val result = matchController.renderMatchId("12345")(TestRequest())

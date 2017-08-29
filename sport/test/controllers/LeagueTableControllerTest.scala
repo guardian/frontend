@@ -16,7 +16,7 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
   with WithTestContext
   with WithTestWsClient {
 
-  lazy val leagueTableController = new LeagueTableController(testCompetitionsService)
+  lazy val leagueTableController = new LeagueTableController(testCompetitionsService, play.api.test.Helpers.stubControllerComponents())
 
   "League Table Controller" should "200 when content type is table" in {
     val result = leagueTableController.renderLeagueTable()(TestRequest())

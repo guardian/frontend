@@ -17,7 +17,7 @@ import test.{ConfiguredTestSuite, TestRequest, WithMaterializer, WithTestContent
   with WithTestContentApiClient {
 
   lazy val sectionsLookUp = new SectionsLookUp(testContentApiClient)
-  lazy val indexController = new IndexController(testContentApiClient, sectionsLookUp)
+  lazy val indexController = new IndexController(testContentApiClient, sectionsLookUp, play.api.test.Helpers.stubControllerComponents())
 
   "Combiner" should "404 when there is no content for 2 tags" in {
     val result = indexController.renderCombiner("profile/grant-klopper", "tone/reviews")(TestRequest())

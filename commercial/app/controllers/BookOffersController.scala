@@ -10,8 +10,8 @@ import play.api.mvc._
 
 import scala.concurrent.duration._
 
-class BookOffersController(bookFinder: BookFinder, bestsellersAgent: BestsellersAgent)
-  extends Controller
+class BookOffersController(bookFinder: BookFinder, bestsellersAgent: BestsellersAgent, val controllerComponents: ControllerComponents)
+  extends BaseController
   with ExecutionContexts
   with Logging
   with implicits.Collections

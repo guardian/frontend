@@ -11,23 +11,23 @@ import form.Mappings
 import idapiclient.IdApiClient
 import play.filters.csrf.{CSRFAddToken, CSRFCheck}
 import actions.AuthenticatedActions
-import play.api.i18n.{I18nSupport, Messages, MessagesApi}
-import play.api.libs.crypto.CryptoConfig
+import play.api.i18n.{I18nSupport, Messages}
 import scala.concurrent.Future
 import idapiclient.requests.PasswordUpdate
 
-class ChangePasswordController( api: IdApiClient,
-                                authenticatedActions: AuthenticatedActions,
-                                authenticationService: AuthenticationService,
-                                idRequestParser: IdRequestParser,
-                                idUrlBuilder: IdentityUrlBuilder,
-                                val messagesApi: MessagesApi,
-                                csrfCheck: CSRFCheck,
-                                csrfAddToken: CSRFAddToken,
-                                val cryptoConfig: CryptoConfig)(implicit context: ApplicationContext)
-  extends Controller with ExecutionContexts with SafeLogging with Mappings with implicits.Forms with I18nSupport{
+class ChangePasswordController(
+  api: IdApiClient,
+  authenticatedActions: AuthenticatedActions,
+  authenticationService: AuthenticationService,
+  idRequestParser: IdRequestParser,
+  idUrlBuilder: IdentityUrlBuilder,
+  csrfCheck: CSRFCheck,
+  csrfAddToken: CSRFAddToken,
+  val controllerComponents: ControllerComponents
+)(implicit context: ApplicationContext)
+  extends BaseController with ExecutionContexts with SafeLogging with Mappings with implicits.Forms with I18nSupport{
 
-    import authenticatedActions.authAction
+  import authenticatedActions.authAction
 
   val page = IdentityPage("/password/change", "Change Password")
 

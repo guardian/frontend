@@ -2,7 +2,7 @@ package controllers.admin
 
 import java.io.File
 
-import play.api.mvc.{Action, Controller}
+import play.api.mvc.{BaseController, ControllerComponents}
 import common.Logging
 import model.ApplicationContext
 import play.api.data._
@@ -13,7 +13,11 @@ import services.RedirectService
 case class PageRedirect(from: String, to: String) {
   lazy val trim = this.copy(from = from.trim, to = to.trim)
 }
-class RedirectController(redirects: RedirectService)(implicit context: ApplicationContext) extends Controller with Logging {
+class RedirectController(
+  redirects: RedirectService,
+  val controllerComponents: ControllerComponents
+)(implicit context: ApplicationContext)
+  extends BaseController with Logging {
 
   val redirectForm = Form(mapping("from" -> text, "to" -> text)(PageRedirect.apply)(PageRedirect.unapply))
 

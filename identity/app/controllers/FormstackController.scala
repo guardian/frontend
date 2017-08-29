@@ -11,13 +11,15 @@ import scala.concurrent.Future
 import formstack.{FormstackApi, FormstackForm}
 import conf.switches.Switches
 
-class FormstackController(returnUrlVerifier: ReturnUrlVerifier,
-                          idRequestParser: IdRequestParser,
-                          idUrlBuilder: IdentityUrlBuilder,
-                          authenticatedActions: AuthenticatedActions,
-                          formStackApi: FormstackApi)
-                         (implicit context: ApplicationContext)
-  extends Controller with ExecutionContexts with SafeLogging {
+class FormstackController(
+  returnUrlVerifier: ReturnUrlVerifier,
+  idRequestParser: IdRequestParser,
+  idUrlBuilder: IdentityUrlBuilder,
+  authenticatedActions: AuthenticatedActions,
+  formStackApi: FormstackApi,
+  val controllerComponents: ControllerComponents
+)(implicit context: ApplicationContext)
+  extends BaseController with ExecutionContexts with SafeLogging {
 
   import authenticatedActions.authAction
 

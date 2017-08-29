@@ -6,9 +6,11 @@ import model.deploys._
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, Matchers, WordSpec}
 import play.api.libs.json.JsArray
 import play.api.libs.ws.WSClient
-import play.api.test.FakeRequest
+import play.api.mvc.ControllerComponents
+import play.api.test.{FakeRequest, Helpers}
 import play.api.test.Helpers._
 import test.{ConfiguredTestSuite, WithMaterializer, WithTestWsClient}
+
 import scala.concurrent.duration._
 
 @DoNotDiscover class DeploysControllerTest
@@ -37,6 +39,7 @@ import scala.concurrent.duration._
   }
 
   class DeploysControllerStub extends DeploysController {
+    override val controllerComponents: ControllerComponents = Helpers.stubControllerComponents()
     private val httpClient = new TestHttpClient(wsClient)
     override val riffRaff = new RiffRaffService(httpClient)
   }

@@ -4,7 +4,7 @@ import common.Edition
 import model.NoCache
 import play.api.mvc._
 
-class ChangeEditionController extends Controller with PreferenceController {
+class ChangeEditionController(val controllerComponents: ControllerComponents) extends BaseController with PreferenceController {
   def render(editionId: String) = Action { implicit request =>
     NoCache(Edition.byId(editionId).map{ edition =>
       val home = edition.homePagePath
@@ -18,4 +18,3 @@ class ChangeEditionController extends Controller with PreferenceController {
   }
 }
 
-object ChangeEditionController extends ChangeEditionController

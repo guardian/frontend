@@ -18,8 +18,11 @@ import views.html.hosted._
 import scala.concurrent.Future
 import scala.util.control.NonFatal
 
-class HostedContentController(contentApiClient: ContentApiClient)(implicit context: ApplicationContext)
-  extends Controller with ExecutionContexts with Logging with implicits.Requests {
+class HostedContentController(
+  contentApiClient: ContentApiClient,
+  val controllerComponents: ControllerComponents
+)(implicit context: ApplicationContext)
+  extends BaseController with ExecutionContexts with Logging with implicits.Requests {
 
   private def cacheDuration: Int = 60
 

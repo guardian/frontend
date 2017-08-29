@@ -1,4 +1,6 @@
 package controllers.admin
 
-class UncachedAssets extends controllers.PublicAssets
-class UncachedWebAssets extends controllers.PublicAssets
+import play.api.mvc.ControllerComponents
+
+class UncachedAssets(val controllerComponents: ControllerComponents) extends controllers.PublicAssets
+class UncachedWebAssets(val controllerComponents: ControllerComponents) extends controllers.PublicAssets
