@@ -22,13 +22,18 @@ module.exports = function loadSVG(source) {
             `export default props => {
                 const svg = ${converter.convert(result.data)};
 
-                function setStyles(node) {
-                    const style = props['block-styles'][node.attributes['data-block']];
-                    if (style) node.attributes.style = Object.assign({}, node.attributes.style, style);
-                    node.children.forEach(setStyles);
+                function setStyle(node, style) {
+                    node.attributes.style = Object.assign({}, node.attributes.style, style);
                 }
 
-                if (props['block-styles']) setStyles(svg);
+                function setBlockStyles(node) {
+                    const style = props['block-styles'][node.attributes['data-block']];
+                    if (style) setStyle(node, style);
+                    node.children.forEach(setBlockStyles);
+                }
+
+                if (props['svg-styles']) setStyle(svg, props['svg-styles']);
+                if (props['block-styles']) setBlockStyles(svg);
 
                 return svg;
             }
