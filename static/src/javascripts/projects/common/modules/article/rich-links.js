@@ -10,7 +10,7 @@ import mediator from 'lib/mediator';
 import reportError from 'lib/report-error';
 import { spaceFiller } from 'common/modules/article/space-filler';
 
-const richLinkTag = ({ href }: { href: string }): string => 
+const richLinkTag = ({ href }: { href: string }): string =>
     `<aside class=" element element-rich-link element-rich-link--tag 
                     element--thumbnail element-rich-link--not-upgraded" 
             data-component="rich-link-tag" 
