@@ -16,7 +16,7 @@ import register from 'common/modules/analytics/register';
 import Component from 'common/modules/component';
 import DiscussionApi from 'common/modules/discussion/api';
 import { CommentBox } from 'common/modules/discussion/comment-box';
-import { Comments } from 'common/modules/discussion/comments';
+import Comments from 'common/modules/discussion/comments';
 import discussionFrontend from 'common/modules/discussion/discussion-frontend';
 import {
     handle as upvoteHandle,
