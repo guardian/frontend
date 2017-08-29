@@ -1,5 +1,5 @@
 // @flow
-import fastdom from 'fastdom';
+import fastdom from 'lib/fastdom-promise';
 import fetchJSON from 'lib/fetch-json';
 import { integerCommas } from 'lib/formatters';
 import mediator from 'lib/mediator';
@@ -32,22 +32,22 @@ const getTemplate = (
     return `<a class="fc-trail__count fc-trail__count--commentcount" href="${url}" data-link-name="Comment count">${icon} ${count}</a>`;
 };
 
-const getElementsIndexedById = (context: HTMLElement): IndexedElements => {
-    const elements = context.querySelectorAll(`[${ATTRIBUTE_NAME}]`);
+const getElementsIndexedById = (context: HTMLElement): Promise<IndexedElements> => {
+    return fastdom.read(() => context.querySelectorAll(`[${ATTRIBUTE_NAME}]`)).then(elements => {
+        return [
+            ...elements,
+        ].reduce((groupedVals: Object, el: HTMLElement): Object => {
+            const attrVal = el.getAttribute(ATTRIBUTE_NAME);
 
-    return [
-        ...elements,
-    ].reduce((groupedVals: Object, el: HTMLElement): Object => {
-        const attrVal = el.getAttribute(ATTRIBUTE_NAME);
+            if (!groupedVals[attrVal]) {
+                groupedVals[attrVal] = [];
+            }
 
-        if (!groupedVals[attrVal]) {
-            groupedVals[attrVal] = [];
-        }
+            groupedVals[attrVal].push(el);
 
-        groupedVals[attrVal].push(el);
-
-        return groupedVals;
-    }, {});
+            return groupedVals;
+        }, {});
+    });
 };
 
 const getContentIds = (indexedElements: Object): string =>
@@ -59,9 +59,7 @@ const getContentUrl = (el: HTMLElement): string => {
     return `${a ? a.pathname : ''}#comments`;
 };
 
-const updateElement = (el: HTMLElement, count: number): Function => (): Promise<
-    void
-> => {
+const updateElement = (el: HTMLElement, count: number): Promise<void> => {
     const url = el.getAttribute('data-discussion-url') || getContentUrl(el);
 
     if (el.getAttribute('data-discussion-closed') === 'true' && count === 0) {
@@ -93,47 +91,44 @@ const updateElement = (el: HTMLElement, count: number): Function => (): Promise<
 const renderCounts = (
     counts: Array<{ id: string, count: number }>,
     indexedElements: IndexedElements
-): void => {
-    const elementUpdatesGrouped = counts.map(c =>
-        indexedElements[c.id].map(el => updateElement(el, c.count))
+): Promise<void> => {
+
+    const elementUpdates = counts.map(c =>
+        indexedElements[c.id].map(el => {
+            return updateElement(el, c.count)    
+        })
     );
 
-    const elementUpdatesFlattened = elementUpdatesGrouped.reduce(
-        (a, b) => a.concat(b),
-        []
-    );
-
-    Promise.all(
-        elementUpdatesFlattened.map(elementUpdate => elementUpdate())
+    return Promise.all(
+        elementUpdates
     ).then(() => {
         mediator.emit('modules:commentcount:loaded', counts);
     });
 };
 
-const getCommentCounts = (context: HTMLElement): void => {
-    fastdom.read(() => {
-        const indexedElements = getElementsIndexedById(
-            context || document.body
-        );
+const getCommentCounts = (context: HTMLElement): Promise<void> => {
+    return getElementsIndexedById(context || document.body).then(indexedElements => {
         const endpoint = `${COUNT_URL}${getContentIds(indexedElements)}`;
 
-        fetchJSON(endpoint, {
+        return fetchJSON(endpoint, {
             mode: 'cors',
         }).then(response => {
             if (response && response.counts) {
-                renderCounts(response.counts, indexedElements);
+                return renderCounts(response.counts, indexedElements);
             }
         });
     });
 };
 
-const init = (): void => {
+const init = (): Promise<void> => {
     if (document.body && document.body.querySelector('[data-discussion-id]')) {
-        getCommentCounts(document.body);
+        return getCommentCounts(document.body);
     }
 
     // Load new counts when more trails are loaded
     mediator.on('modules:related:loaded', getCommentCounts);
+
+    return Promise.resolve();
 };
 
 export default {
