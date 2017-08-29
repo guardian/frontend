@@ -1,5 +1,7 @@
 // @flow
 
+/* global twttr: false */
+
 import fastdom from 'fastdom';
 import config from 'lib/config';
 import { getBreakpoint, getViewport } from 'lib/detect';
