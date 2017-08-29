@@ -1,11 +1,11 @@
 // @flow
-
-import bonzo from 'bonzo';
 import fastdom from 'fastdom';
 import fetchJSON from 'lib/fetch-json';
 import { integerCommas } from 'lib/formatters';
 import mediator from 'lib/mediator';
 import { inlineSvg } from 'common/views/svgs';
+
+type IndexedElements = { string: HTMLElement } | {};
 
 const ATTRIBUTE_NAME: string = 'data-discussion-id';
 const COUNT_URL: string = '/discussion/comment-counts.json?shortUrls=';
@@ -16,22 +16,23 @@ const getTemplate = (
 ): string => {
     const { url, icon, count } = vals;
 
-    switch (type) {
-        case 'content':
-            return `<a href="${url}" data-link-name="Comment count" class="commentcount2 tone-colour">
-                        <h3 class="commentcount2__heading">${icon} <span class ="commentcount2__text u-h">Comments</span></h3>
-                        <span class="commentcount2__value tone-colour js_commentcount_actualvalue">${count}</span>
-                    </a>`;
-        case 'contentImmersive':
-            return `<a href="${url}" data-link-name="Comment count" class="commentcount2 tone-colour">
-                        ${icon}<span class="commentcount__value">${count}</span> Comments
-                    </a>`;
-        default:
-            return `<a class="fc-trail__count fc-trail__count--commentcount" href="${url}" data-link-name="Comment count">${icon} ${count}</a>`;
+    if (type === 'content') {
+        return `<a href="${url}" data-link-name="Comment count" class="commentcount2 tone-colour">
+                    <h3 class="commentcount2__heading">${icon} <span class ="commentcount2__text u-h">Comments</span></h3>
+                    <span class="commentcount2__value tone-colour js_commentcount_actualvalue">${count}</span>
+                </a>`;
     }
+
+    if (type === 'contentImmersive') {
+        return `<a href="${url}" data-link-name="Comment count" class="commentcount2 tone-colour">
+                    ${icon}<span class="commentcount__value">${count}</span> Comments
+                </a>`;
+    }
+
+    return `<a class="fc-trail__count fc-trail__count--commentcount" href="${url}" data-link-name="Comment count">${icon} ${count}</a>`;
 };
 
-const getElementsIndexedById = (context: HTMLElement): Object => {
+const getElementsIndexedById = (context: HTMLElement): IndexedElements => {
     const elements = context.querySelectorAll(`[${ATTRIBUTE_NAME}]`);
 
     return [
@@ -58,41 +59,53 @@ const getContentUrl = (el: HTMLElement): string => {
     return `${a ? a.pathname : ''}#comments`;
 };
 
+const updateElement = (el: HTMLElement, count: number): Function => (): Promise<
+    void
+> => {
+    const url = el.getAttribute('data-discussion-url') || getContentUrl(el);
+
+    if (el.getAttribute('data-discussion-closed') === 'true' && count === 0) {
+        // Discussion is closed and had no comments, we don't want to show a comment count
+        return Promise.resolve();
+    }
+
+    const format = el.getAttribute('data-commentcount-format') || '';
+    const html = getTemplate(
+        {
+            url,
+            icon: inlineSvg('commentCount16icon', ['inline-tone-fill']),
+            count: integerCommas(count) || '',
+        },
+        format
+    );
+    const meta = el.getElementsByClassName('js-item__meta');
+    const containers = meta.length ? [...meta] : [el];
+
+    return fastdom.write(() => {
+        containers.forEach(container => {
+            container.insertAdjacentHTML('beforeend', html);
+        });
+        el.removeAttribute(ATTRIBUTE_NAME);
+        el.classList.remove('u-h');
+    });
+};
+
 const renderCounts = (
     counts: Array<{ id: string, count: number }>,
-    indexedElements: Object
+    indexedElements: IndexedElements
 ): void => {
-    counts.forEach(c => {
-        indexedElements[c.id].forEach(el => {
-            const url = el.dataset.discussionUrl || getContentUrl(el);
+    const elementUpdatesGrouped = counts.map(c =>
+        indexedElements[c.id].map(el => updateElement(el, c.count))
+    );
 
-            if (el.dataset.discussionClosed === 'true' && c.count === 0) {
-                return; // Discussion is closed and had no comments, we don't want to show a comment count
-            }
+    const elementUpdatesFlattened = elementUpdatesGrouped.reduce(
+        (a, b) => a.concat(b),
+        []
+    );
 
-            const format = el.dataset.commentcountFormat || '';
-            const html = getTemplate(
-                {
-                    url,
-                    icon: inlineSvg('commentCount16icon', ['inline-tone-fill']),
-                    count: integerCommas(c.count) || '',
-                },
-                format
-            );
-            const meta = el.getElementsByClassName('js-item__meta');
-            const container = meta.length ? bonzo(meta) : el;
-
-            fastdom.write(() => {
-                container.append(html);
-                el.removeAttribute(ATTRIBUTE_NAME);
-                el.classList.remove('u-h');
-            });
-        });
-    });
-
-    // This is the only way to ensure that this event is fired after all the comment counts have been rendered to
-    // the DOM.
-    fastdom.write(() => {
+    Promise.all(
+        elementUpdatesFlattened.map(elementUpdate => elementUpdate())
+    ).then(() => {
         mediator.emit('modules:commentcount:loaded', counts);
     });
 };
