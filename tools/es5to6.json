@@ -1,6 +1,5 @@
 {
   "Regis Kuckaertz": [
-    "projects/common/modules/asyncCallMerger.js",
     "projects/common/modules/ui/clickstream.js",
     "projects/common/modules/ui/expandable.js",
     "projects/common/modules/ui/faux-block-link.js"
@@ -84,7 +83,7 @@
   "Francis Carr": [],
   "Jon Norman": [],
   "Kate Whalen": [
-      "projects/common/modules/preferences/main.js"
+    "projects/common/modules/preferences/main.js"
   ],
   "dominickendrick": [],
   "davidfurey": [],
