@@ -1,59 +1,72 @@
-/*global twttr:false */
+// @flow
+/* global twttr:false */
 
-import bonzo from 'bonzo';
-import qwery from 'qwery';
 import fastdom from 'fastdom';
-import $ from 'lib/$';
 import config from 'lib/config';
-import detect from 'lib/detect';
+import { getBreakpoint, getViewport } from 'lib/detect';
 import mediator from 'lib/mediator';
 import debounce from 'lodash/functions/debounce';
-const body = qwery('.js-liveblog-body, .js-article__body, .js-article__body--minute-article');
 
-function bootstrap() {
-    mediator.on('window:throttledScroll', debounce(enhanceTweets, 200));
-}
+const body: ?Element = document.querySelector(
+    '.js-liveblog-body, .js-article__body, .js-article__body--minute-article'
+);
 
-function enhanceTweets() {
-    if ((detect.getBreakpoint() === 'mobile' && !config.page.isMinuteArticle) || !config.switches.enhanceTweets) {
+const renderTweets = (): void => {
+    const nativeTweetElements: Element[] = Array.from(
+        document.querySelectorAll('blockquote.twitter-tweet')
+    );
+    const widgetScript: ?Element = document.getElementById('twitter-widget');
+
+    if (nativeTweetElements.length) {
+        if (!widgetScript) {
+            const scriptElement = document.createElement('script');
+            scriptElement.id = 'twitter-widget';
+            scriptElement.async = true;
+            scriptElement.src = '//platform.twitter.com/widgets.js';
+            document.scripts[0].insertAdjacentElement(
+                'beforebegin',
+                scriptElement
+            );
+        }
+
+        if (
+            typeof twttr !== 'undefined' &&
+            'widgets' in twttr &&
+            'load' in twttr.widgets
+        ) {
+            twttr.widgets.load(body);
+        }
+    }
+};
+
+const enhanceTweets = (): void => {
+    if (
+        (getBreakpoint() === 'mobile' && !config.page.isMinuteArticle) ||
+        !config.switches.enhanceTweets
+    ) {
         return;
     }
 
-    const tweetElements = qwery('blockquote.js-tweet'), viewportHeight = bonzo.viewport().height, scrollTop = window.pageYOffset;
+    const tweetElements: Element[] = Array.from(
+        document.querySelectorAll('blockquote.js-tweet')
+    );
+    const viewportHeight: number = getViewport().height;
 
     tweetElements.forEach(element => {
-        const $el = bonzo(element), elOffset = $el.offset();
-        if (((scrollTop + (viewportHeight * 2.5)) > elOffset.top) && (scrollTop < (elOffset.top + elOffset.height))) {
+        const rect = element.getBoundingClientRect();
+        if (viewportHeight * 2.5 > rect.top && rect.top + rect.height > 0) {
             fastdom.write(() => {
-                $(element).removeClass('js-tweet').addClass('twitter-tweet');
+                element.classList.remove('js-tweet');
+                element.classList.add('twitter-tweet');
                 // We only want to render tweets once the class has been added
                 renderTweets();
             });
         }
     });
-}
-
-function renderTweets() {
-    let scriptElement;
-    const nativeTweetElements = qwery('blockquote.twitter-tweet');
-    const widgetScript = qwery('#twitter-widget');
-
-    if (nativeTweetElements.length > 0) {
-        if (widgetScript.length === 0) {
-            scriptElement = document.createElement('script');
-            scriptElement.id = 'twitter-widget';
-            scriptElement.async = true;
-            scriptElement.src = '//platform.twitter.com/widgets.js';
-            $(document.body).append(scriptElement);
-        }
-
-        if (typeof twttr !== 'undefined' && 'widgets' in twttr && 'load' in twttr.widgets) {
-            twttr.widgets.load(body);
-        }
-    }
-}
-
-export default {
-    init: bootstrap,
-    enhanceTweets
 };
+
+const init = (): void => {
+    mediator.on('window:throttledScroll', debounce(enhanceTweets, 200));
+};
+
+export { init, enhanceTweets };
