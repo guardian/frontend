@@ -54,7 +54,6 @@ trait AppComponents extends FrontendComponents with CommercialControllers with C
 
   lazy val devAssetsController = wire[DevAssetsController]
   lazy val healthCheck = wire[HealthCheck]
-  lazy val assets = wire[Assets]
 
   override lazy val lifecycleComponents = List(
     wire[LogstashLifecycle],

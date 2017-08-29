@@ -3,14 +3,13 @@ package app
 import common._
 import model.{ApplicationContext, ApplicationIdentity}
 import play.api.ApplicationLoader.Context
-import play.api._
 import play.api.http.HttpFilters
 import play.api.libs.ws.ahc.AhcWSComponents
 import play.api.mvc.{ControllerComponents, EssentialFilter}
 import play.api.routing.Router
 import play.filters.csrf.CSRFComponents
-
-import scala.concurrent.ExecutionContext
+import controllers.AssetsComponents
+import play.api.{Application, ApplicationLoader, BuiltInComponents, LoggerConfigurator}
 
 trait FrontendApplicationLoader extends ApplicationLoader {
 
@@ -31,7 +30,8 @@ trait FrontendComponents
   with HttpFiltersComponent
   with BuiltInComponents
   with AhcWSComponents
-  with CSRFComponents {
+  with CSRFComponents
+  with AssetsComponents {
   self: BuiltInComponents =>
 
   lazy val prefix = "/"

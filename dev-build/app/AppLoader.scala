@@ -51,7 +51,6 @@ trait Controllers
   self: BuiltInComponents =>
   lazy val accessTokenGenerator = wire[AccessTokenGenerator]
   lazy val apiSandbox = wire[ApiSandbox]
-  lazy val assets = wire[Assets]
   lazy val devAssetsController = wire[DevAssetsController]
   lazy val emailSignupController = wire[EmailSignupController]
   lazy val surveyPageController = wire[SurveyPageController]

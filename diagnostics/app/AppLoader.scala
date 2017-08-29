@@ -22,7 +22,6 @@ trait Controllers extends DiagnosticsControllers {
   self: BuiltInComponents =>
   def wsClient: WSClient
   lazy val healthCheck = wire[HealthCheck]
-  lazy val assets = wire[Assets]
 }
 
 trait AppLifecycleComponents {

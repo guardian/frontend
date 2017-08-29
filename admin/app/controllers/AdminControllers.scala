@@ -7,11 +7,9 @@ import controllers.admin.commercial.{DfpDataController, SlotController, Takeover
 import controllers.cache.{ImageDecacheController, PageDecacheController}
 import jobs.VideoEncodingsJob
 import model.ApplicationContext
-import play.api.{Configuration, Environment}
-import play.api.http.{HttpConfiguration, HttpErrorHandler}
+import play.api.http.HttpConfiguration
 import play.api.libs.ws.WSClient
 import play.api.i18n.Messages
-import play.api.inject.ApplicationLifecycle
 import play.api.mvc.ControllerComponents
 import services.{OphanApi, RedirectService}
 
@@ -25,10 +23,7 @@ trait AdminControllers {
   implicit val messages: Messages
   def httpConfiguration: HttpConfiguration
   def controllerComponents: ControllerComponents
-  def applicationLifecycle: ApplicationLifecycle
-  def httpErrorHandler: HttpErrorHandler
-  def environment: Environment
-  def configuration: Configuration
+  def assets: Assets
   lazy val oAuthLoginController = wire[OAuthLoginAdminController]
   lazy val uncachedWebAssets = wire[UncachedWebAssets]
   lazy val uncachedAssets = wire[UncachedAssets]
