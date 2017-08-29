@@ -13,6 +13,7 @@ import conf.IdentityConfiguration
 import play.api.data.validation.Constraints
 import play.api.data.Form
 import play.api.data.Forms._
+import play.api.http.HttpConfiguration
 import play.api.i18n.I18nSupport
 import play.api.i18n.MessagesApi
 import scala.concurrent.Future
@@ -28,7 +29,8 @@ class AccountDeletionController(
   http: IdDispatchAsyncHttpClient,
   signInService : PlaySigninService,
   conf: IdentityConfiguration,
-  val controllerComponents: ControllerComponents
+  val controllerComponents: ControllerComponents,
+  val httpConfiguration: HttpConfiguration
 )(implicit context: ApplicationContext)
   extends BaseController
     with ExecutionContexts

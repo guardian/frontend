@@ -11,7 +11,7 @@ import play.api.data.validation._
 import play.api.data.Forms._
 import play.api.data.format.Formats._
 import form.Mappings
-import play.api.libs.crypto.CryptoConfig
+import play.api.http.HttpConfiguration
 import utils.SafeLogging
 
 import scala.concurrent.Future
@@ -21,7 +21,8 @@ class ResetPasswordController(
   idRequestParser: IdRequestParser,
   idUrlBuilder: IdentityUrlBuilder,
   authenticationService: AuthenticationService,
-  val controllerComponents: ControllerComponents
+  val controllerComponents: ControllerComponents,
+  val httpConfiguration: HttpConfiguration
 )(implicit context: ApplicationContext)
   extends BaseController with ExecutionContexts with SafeLogging with Mappings with implicits.Forms {
 

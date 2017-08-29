@@ -6,21 +6,21 @@ import org.scalatest.mockito.MockitoSugar
 import org.mockito.{Matchers => MockitoMatchers}
 import org.mockito.Mockito._
 import idapiclient.{IdApiClient, TrackingData}
-import test.{Fake, I18NTestComponents, WithTestContext, WithTestCryptoConfig}
+import test.{Fake, WithTestContext}
 import play.api.test._
 import play.api.test.Helpers._
 import client.Error
 
 import scala.concurrent.Future
 import com.gu.identity.model.User
+import play.api.http.HttpConfiguration
 import services.{AuthenticationService, IdRequestParser, IdentityRequest, IdentityUrlBuilder}
 
 class ResetPasswordControllerTest
   extends path.FreeSpec
   with Matchers
   with MockitoSugar
-  with WithTestContext
-  with WithTestCryptoConfig {
+  with WithTestContext {
 
   val api = mock[IdApiClient]
   val requestParser = mock[IdRequestParser]
@@ -34,7 +34,8 @@ class ResetPasswordControllerTest
     requestParser,
     idUrlBuilder,
     authenticationService,
-    play.api.test.Helpers.stubControllerComponents()
+    play.api.test.Helpers.stubControllerComponents(),
+    HttpConfiguration.createWithDefaults()
   )
 
   when(requestParser.apply(MockitoMatchers.anyObject())).thenReturn(identityRequest)

@@ -19,6 +19,7 @@ class EmailVerificationControllerTest extends path.FreeSpec
   with Matchers
   with WithTestContext
   with MockitoSugar {
+
   val api = mock[IdApiClient]
   val idRequestParser = mock[IdRequestParser]
   val authenticatedActions = mock[AuthenticatedActions]

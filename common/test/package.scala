@@ -14,7 +14,8 @@ import org.scalatest.{BeforeAndAfterAll, TestSuite}
 import org.scalatestplus.play._
 import org.scalatestplus.play.guice.GuiceOneServerPerSuite
 import play.api._
-import play.api.libs.crypto.{CSRFTokenSigner, CryptoConfig}
+import play.api.http.HttpConfiguration
+import play.api.libs.crypto.{CSRFTokenSigner, CSRFTokenSignerProvider, CookieSigner, CookieSignerProvider}
 import play.api.libs.ws.WSClient
 import play.api.libs.ws.ahc.AhcWSClient
 import play.api.test._
@@ -94,6 +95,7 @@ trait SingleServerSuite extends TestSuite with GuiceOneServerPerSuite with OneBr
     )
     ApplicationLoader.apply(context).load(context)
   }
+
 }
 
 object TestRequest {
@@ -140,15 +142,14 @@ trait WithTestContentApiClient {
   lazy val testContentApiClient = new ContentApiClient(recorderHttpClient)
 }
 
-trait WithTestCryptoConfig {
-  val testCryptoConfig = CryptoConfig(secret = "this is the test secret")
-}
-
 trait WithTestCSRF {
   def app: Application
+  val httpConfiguration: HttpConfiguration = HttpConfiguration.createWithDefaults()
+  lazy val cookieSigner: CookieSigner = new CookieSignerProvider(httpConfiguration.secret).get
+  lazy val csrfTokenSigner: CSRFTokenSigner = new CSRFTokenSignerProvider(cookieSigner).get
   lazy val csrfConfig: CSRFConfig = CSRFConfig.fromConfiguration(app.configuration)
-  lazy val csrfAddToken = new CSRFAddToken(csrfConfig, app.injector.instanceOf[CSRFTokenSigner])
-  lazy val csrfCheck = new CSRFCheck(csrfConfig, app.injector.instanceOf[CSRFTokenSigner])
+  lazy val csrfAddToken = new CSRFAddToken(csrfConfig, csrfTokenSigner, httpConfiguration.session)
+  lazy val csrfCheck = new CSRFCheck(csrfConfig, csrfTokenSigner, httpConfiguration.session)
 }
 
 trait WithTestRenderer {

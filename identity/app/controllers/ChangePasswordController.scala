@@ -14,6 +14,7 @@ import actions.AuthenticatedActions
 import play.api.i18n.{I18nSupport, Messages}
 import scala.concurrent.Future
 import idapiclient.requests.PasswordUpdate
+import play.api.http.HttpConfiguration
 
 class ChangePasswordController(
   api: IdApiClient,
@@ -23,7 +24,8 @@ class ChangePasswordController(
   idUrlBuilder: IdentityUrlBuilder,
   csrfCheck: CSRFCheck,
   csrfAddToken: CSRFAddToken,
-  val controllerComponents: ControllerComponents
+  val controllerComponents: ControllerComponents,
+  val httpConfiguration: HttpConfiguration
 )(implicit context: ApplicationContext)
   extends BaseController with ExecutionContexts with SafeLogging with Mappings with implicits.Forms with I18nSupport{
 
