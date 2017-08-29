@@ -25,7 +25,7 @@ object Logstash extends ExecutionContexts {
 
   def customFields(playConfig: PlayConfiguration) = Map(
     "stack" -> "frontend",
-    "app" -> playConfig.getString("guardian.projectName").getOrElse("frontend"),
+    "app" -> playConfig.getOptional[String]("guardian.projectName").getOrElse("frontend"),
     "stage" -> Configuration.environment.stage.toUpperCase,
     "build" -> ManifestData.build,
     "revision" -> ManifestData.revision,
