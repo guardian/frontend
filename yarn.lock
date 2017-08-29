@@ -2522,7 +2522,7 @@ eslint-plugin-flowtype@^2.35.0:
     lodash "^4.15.0"
 
 "eslint-plugin-guardian-frontend@file:dev/eslint-plugin-guardian-frontend":
-  version "4.0.0"
+  version "5.0.0"
 
 eslint-plugin-import@^2.7.0:
   version "2.7.0"
