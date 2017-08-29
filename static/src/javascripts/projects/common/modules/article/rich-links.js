@@ -16,7 +16,7 @@ const richLinkTag = ({ href }: { href: string }): string =>
             data-component="rich-link-tag" 
             data-link-name="rich-link-tag"
             >
-        <p><a href="<%=href%>"><%=href%></a></p>
+        <p><a href="${href}">${href}</a></p>
     </aside>`;
 
 const elementIsBelowViewport = (el: Element): Promise<boolean> =>
