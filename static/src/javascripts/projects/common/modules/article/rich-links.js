@@ -162,4 +162,9 @@ const upgradeRichLinks = (): void => {
     ).forEach(upgradeRichLink);
 };
 
-export { richLinkTag, upgradeRichLinks, insertTagRichLink, getSpacefinderRules };
+export {
+    richLinkTag,
+    upgradeRichLinks,
+    insertTagRichLink,
+    getSpacefinderRules,
+};
