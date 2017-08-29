@@ -1,15 +1,11 @@
 define([
     'helpers/injector',
     'helpers/fixtures',
-    'lib/$',
-    'lodash/utilities/template',
-    'raw-loader!common/views/content/richLinkTag.html'
+    'lib/$'
 ], function (
     Injector,
     fixtures,
-    $,
-    template,
-    richLinkTagTmpl
+    $
 ) {
     describe('richLinks', function () {
         var articleBodyConf = {
@@ -80,8 +76,8 @@ define([
                     richLinks.insertTagRichLink().then(function () {
                         var richLinkElements = getRichLinkElements();
                         expect(richLinkElements.length).toBe(1);
-                        expect(richLinkElements[0].outerHTML)
-                            .toBe(template(richLinkTagTmpl, { href: config.page.richLink }).trim());
+                        expect(richLinkElements[0].outerHTML.replace(/\s/g, ''))
+                            .toBe(richLinks.richLinkTag({ href: config.page.richLink }).replace(/\s/g, ''));
 
                         done();
                     });
@@ -124,7 +120,7 @@ define([
                 describe('given an existing rich link with the same URL', function () {
                     // No need to clean because the parent element is reset after each
                     beforeEach(function () {
-                        var existingRichLinkElement = $.create(template(richLinkTagTmpl, { href: config.page.richLink }));
+                        var existingRichLinkElement = $.create(richLinks.richLinkTag({ href: config.page.richLink }));
 
                         articleBodyFixtureElement.append(existingRichLinkElement);
                     });
