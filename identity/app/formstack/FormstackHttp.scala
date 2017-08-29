@@ -17,7 +17,7 @@ class WsFormstackHttp(wsClient: WSClient) extends FormstackHttp with ExecutionCo
   override def GET(url: String, parameters: Seq[(String, String)] = Nil): Future[FormstackHttpResponse] = {
     wsClient.url(url)
       .withRequestTimeout(2.seconds)
-      .withQueryString(parameters:_*)
+      .withQueryStringParameters(parameters:_*)
       .get()
       .map(response => FormstackHttpResponse(response.body, response.status, response.statusText))
       .recover{

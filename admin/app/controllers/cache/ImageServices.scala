@@ -54,7 +54,7 @@ class ImageServices(wsClient: WSClient) extends ExecutionContexts {
       // This works because the "path" is set as a Surrogate Key for images in i.guim.co.uk
       // https://www.fastly.com/blog/surrogate-keys-part-1/
       wsClient.url(s"https://api.fastly.com/service/$serviceId/purge/${originUri.getPath}")
-        .withHeaders("Fastly-Key" -> fastly.key)
+        .withHttpHeaders("Fastly-Key" -> fastly.key)
         .post("")
     }
   }

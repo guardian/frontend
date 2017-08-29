@@ -199,7 +199,7 @@ trait DiscussionApiLike extends Http with ExecutionContexts with Logging {
     val url = s"${apiRoot}/comment/${abuseReport.commentId}/reportAbuse"
     val headers = Seq("D2-X-UID" -> conf.Configuration.discussion.d2Uid, guClientHeader)
     if (cookie.isDefined) { headers :+  ("Cookie"->s"SC_GU_U=${cookie.get}") }
-    failIfDisabled.flatMap(_ => wsClient.url(url).withHeaders(headers: _*).withRequestTimeout(2.seconds).post(abuseReportToMap(abuseReport)))
+    failIfDisabled.flatMap(_ => wsClient.url(url).withHttpHeaders(headers: _*).withRequestTimeout(2.seconds).post(abuseReportToMap(abuseReport)))
   }
 
   private def failIfDisabled: Future[Unit] = {

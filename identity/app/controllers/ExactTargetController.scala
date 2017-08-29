@@ -39,10 +39,13 @@ class ExactTargetController(
             val triggeredEmailRequest =
               exactTargetFactory.createRequest(emailAddress, parameters, "Create", dataExtId.businessUnitId, dataExtId.customerKey)
 
-            wsClient.url(exactTargetFactory.endPoint.toString).withHeaders(
-              "Content-Type" -> "text/xml; charset=utf-8",
-              "SOAPAction" -> triggeredEmailRequest.getSoapAction
-            ).post(triggeredEmailRequest.getSoapEnvelopeString).onSuccess {
+            wsClient
+              .url(exactTargetFactory.endPoint.toString)
+              .withHttpHeaders(
+                "Content-Type" -> "text/xml; charset=utf-8",
+                "SOAPAction" -> triggeredEmailRequest.getSoapAction
+              )
+              .post(triggeredEmailRequest.getSoapEnvelopeString).onSuccess {
               case resp =>
                 (resp.xml \\ "CreateResponse" \ "Results") map {
                   subscriberNode =>

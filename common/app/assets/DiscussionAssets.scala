@@ -51,7 +51,7 @@ class DiscussionExternalAssetsLifecycle (config: GuardianConfiguration, wsClient
 
   private def fetchAssetsMap(url: String, wsClient: WSClient): Future[WSResponse] = {
     wsClient.url(url)
-      .withHeaders("User-Agent" -> "GU-ExternalAssets")
+      .withHttpHeaders("User-Agent" -> "GU-ExternalAssets")
       .withRequestTimeout(4.seconds)
       .get()
   }

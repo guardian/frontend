@@ -30,7 +30,7 @@ class InteractiveController(contentApiClient: ContentApiClient, wsClient: WSClie
       Cached (365.days) {
         response.status match {
           case 200 =>
-            val contentType = response.allHeaders("Content-Type").mkString(",")
+            val contentType = response.headers("Content-Type").mkString(",")
             RevalidatableResult(Ok(response.body).as(contentType), response.body)
           case otherStatus => WithoutRevalidationResult(new Status(otherStatus))
         }

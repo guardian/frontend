@@ -27,7 +27,11 @@ import scala.concurrent.duration._
       import implicits.Strings.string2encodings
       val urlWithParams = url + "?" + queryString.updated("key", "").toList.sortBy(_._1).map(kv=> kv._1 + "=" + kv._2).mkString("&").encodeURIComponent
       DeploysTestHttpRecorder.load(urlWithParams, headers) {
-        wsClient.url(url).withQueryString(queryString.toSeq: _*).withHeaders(headers.toSeq: _*).withRequestTimeout(10.seconds).get()
+        wsClient.url(url)
+          .withQueryStringParameters(queryString.toSeq: _*)
+          .withHttpHeaders(headers.toSeq: _*)
+          .withRequestTimeout(10.seconds)
+          .get()
       }
     }
   }

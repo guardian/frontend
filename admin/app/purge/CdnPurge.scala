@@ -18,7 +18,7 @@ class CdnPurge(wsClient: WSClient) extends ExecutionContexts with Dates with Log
     // Don't want too much decaching going on.
     if (environment.isProd) {
       wsClient.url(s"https://api.fastly.com/service/$serviceId/purge/$key")
-        .withHeaders(
+        .withHttpHeaders(
           "Fastly-Key" -> fastly.key,
           "Fastly-Soft-Purge" -> "1"
         )

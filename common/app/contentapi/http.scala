@@ -32,7 +32,7 @@ class CapiHttpClient(wsClient: WSClient)
 
     val baseRequest = wsClient.url(urlWithDebugInfo)
     val request = previewAuth.fold(baseRequest)(auth => baseRequest.withAuth(auth.user, auth.password, WSAuthScheme.BASIC))
-    val response = request.withHeaders(headers.toSeq: _*).withRequestTimeout(contentApiTimeout).get()
+    val response = request.withHttpHeaders(headers.toSeq: _*).withRequestTimeout(contentApiTimeout).get()
 
     // record metrics
     response.onSuccess {

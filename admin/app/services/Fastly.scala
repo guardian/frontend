@@ -40,7 +40,7 @@ class FastlyStatisticService(wsClient: WSClient) extends ExecutionContexts with 
     val futureResponses: Future[List[String]] = Future.sequence{
       regions map { region =>
         val request = wsClient.url(s"https://api.fastly.com/stats/service/${fastly.serviceId}?by=minute&from=45+minutes+ago&to=15+minutes+ago&region=$region")
-          .withHeaders("Fastly-Key" -> fastly.key)
+          .withHttpHeaders("Fastly-Key" -> fastly.key)
           .withRequestTimeout(20.seconds)
 
         val response: Future[Option[String]] = request.get().map { resp => Some(resp.body) }.recover {

@@ -31,7 +31,11 @@ trait Http extends Logging with ExecutionContexts {
   }
 
   protected def GET(url: String, headers: (String, String)*): Future[WSResponse] = {
-    wsClient.url(url).withHeaders(headers: _*).withRequestTimeout(2.seconds).get()
+    wsClient
+      .url(url)
+      .withHttpHeaders(headers: _*)
+      .withRequestTimeout(2.seconds)
+      .get()
   }
 
 }

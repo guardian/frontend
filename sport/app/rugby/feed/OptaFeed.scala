@@ -38,8 +38,8 @@ class OptaFeed(wsClient: WSClient) extends ExecutionContexts with Logging {
       val queryParams = List(competition,  season, apiKey, apiUser, feedType) ++ gameParameter
 
       wsClient.url(s"$endpoint$path")
-        .withHeaders(xmlContentType)
-        .withQueryString(queryParams: _*)
+        .withHttpHeaders(xmlContentType)
+        .withQueryStringParameters(queryParams: _*)
         .get
         .map { response =>
         response.status match {

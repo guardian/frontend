@@ -23,7 +23,7 @@ class FacebookGraphApiClient(wsClient: WSClient) extends implicits.WSRequests wi
   def GET(endpoint: Option[String], timeout: Duration, queryString: (String, String)*) =
     wsClient
       .url(apiRootUrl + endpoint.getOrElse(""))
-      .withQueryString(addAccessToken(queryString): _*)
+      .withQueryStringParameters(addAccessToken(queryString): _*)
       .withRequestTimeout(timeout)
       .getOKResponse()
       .recoverWith { case e: Exception =>

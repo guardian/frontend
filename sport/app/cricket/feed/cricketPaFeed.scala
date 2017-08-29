@@ -26,7 +26,7 @@ class PaFeed(wsClient: WSClient, actorSystem: ActorSystem) extends ExecutionCont
     credentials.map ( header => ThrottledTask {
       val endpoint = s"$paEndpoint/$apiMethod"
       wsClient.url(endpoint)
-        .withHeaders(header, xmlContentType)
+        .withHttpHeaders(header, xmlContentType)
         .get
         .map { response =>
           response.status match {
@@ -68,8 +68,8 @@ class PaFeed(wsClient: WSClient, actorSystem: ActorSystem) extends ExecutionCont
       val endpoint = s"$paEndpoint/team/${team.paId}/$matchType"
 
       wsClient.url(endpoint)
-        .withHeaders(header, xmlContentType)
-        .withQueryString(("startDate", start),("endDate", end))
+        .withHttpHeaders(header, xmlContentType)
+        .withQueryStringParameters(("startDate", start),("endDate", end))
         .get
         .map { response =>
 
