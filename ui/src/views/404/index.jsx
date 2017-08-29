@@ -12,6 +12,7 @@ import {
     subHeadingContainer,
     subHeading,
     para,
+    logo,
 } from './style.js.scss';
 
 export default ({ beaconUrl }: Object) =>
@@ -23,7 +24,7 @@ export default ({ beaconUrl }: Object) =>
         </div>
         <Logo
             block-styles={{ guardian: { fill: colour.brandBlueDark } }}
-            width={250}
+            svg-styles={logo}
         />
         <h1 style={heading}>
             Sorry - we haven’t been able to serve the page you asked for.

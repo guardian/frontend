@@ -1,4 +1,5 @@
 // @flow
+/* eslint-env browser */
 import { render } from 'preact';
 import { StyletronProvider } from 'styletron-preact';
 import StyletronClient from 'styletron-client';
