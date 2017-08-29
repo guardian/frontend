@@ -13,9 +13,6 @@ type TargetCallback = (f: Callback) => void;
 
 /**
  * Creates a function that will merge calls to the supplied target function
- * @param {function} function to be merged, the function takes one argument, a callback that will
- * be called with the result of the async request
- * @return {?Date} the current date
  */
 const mergeCalls = (targetFunction: TargetCallback): TargetCallback => {
     let callbacks: Callback[];
