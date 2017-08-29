@@ -2,7 +2,7 @@ declare var __webpack_public_path__:string;
 
 declare var twttr: {
     widgets?: {
-        load?: (Element) => void
+        load?: (?Element) => void
     }
 };
 

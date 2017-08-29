@@ -32,7 +32,7 @@ const renderTweets = (): void => {
 
         if (
             typeof twttr !== 'undefined' &&
-            'widgets' in twttr &&
+            twttr.widgets &&
             'load' in twttr.widgets
         ) {
             twttr.widgets.load(body);
