@@ -9,7 +9,7 @@ import { Audience } from 'admin/modules/abtests/audience';
 const renderTests = (
     tests: $ReadOnlyArray<ABTest>,
     active: boolean,
-    elem: ?Element
+    elem: ?HTMLElement
 ): Array<any> => {
     const items = tests.map(
         test =>

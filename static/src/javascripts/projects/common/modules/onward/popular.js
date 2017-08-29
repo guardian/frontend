@@ -2,7 +2,7 @@
 
 import qwery from 'qwery';
 import config from 'lib/config';
-import Component from 'common/modules/component';
+import { Component } from 'common/modules/component';
 import mediator from 'lib/mediator';
 
 class MostPopular extends Component {
@@ -25,6 +25,8 @@ class MostPopular extends Component {
             ? `/${config.page.section}`
             : ''}.json`;
     }
+
+    hasSection: boolean;
 
     init(): void {
         this.fetch(qwery('.js-popular-trails'), 'html');

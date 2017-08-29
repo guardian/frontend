@@ -3,7 +3,7 @@
 import bean from 'bean';
 import bonzo from 'bonzo';
 import mediator from 'lib/mediator';
-import Component from 'common/modules/component';
+import { Component } from 'common/modules/component';
 import DiscussionApi from 'common/modules/discussion/api';
 import IdentityApi from 'common/modules/identity/api';
 import UserAvatars from 'common/modules/discussion/user-avatars';
@@ -95,16 +95,17 @@ class CommentBox extends Component {
     }
 
     getDiscussionId(): string {
+        const discussionKey =
+            (this.elem && this.elem.getAttribute('data-discussion-key')) || '';
+
         return (
-            this.options.discussionId ||
-            this.elem
-                .getAttribute('data-discussion-key')
-                .replace('discussion', '')
+            (this.options && this.options.discussionId) ||
+            discussionKey.replace('discussion', '')
         );
     }
 
     setFormState(disabled?: boolean = false): void {
-        const commentBody = this.getElem('body');
+        const commentBody: HTMLInputElement = (this.getElem('body'): any);
         const submitButton = this.getElem('submit');
 
         if (disabled || commentBody.value.length === 0) {
@@ -122,6 +123,9 @@ class CommentBox extends Component {
     getUserData(): Object {
         return IdentityApi.getUserFromCookie();
     }
+
+    errorMessages: Object;
+    errors: Array<string>;
 
     clearErrors(): void {
         this.getElem('messages').innerHTML = '';
@@ -179,13 +183,18 @@ class CommentBox extends Component {
     }
 
     postCommentSuccess(comment: commentType, resp: Object): void {
-        if (this.options.newCommenter) {
+        if (this.options && this.options.newCommenter) {
             this.refreshUsernameHtml();
-            this.options.newCommenter = false;
+
+            if (this.options) {
+                this.options.newCommenter = false;
+            }
         }
 
+        const commentBody: HTMLInputElement = (this.getElem('body'): any);
+
         comment.id = parseInt(resp.message, 10);
-        this.getElem('body').value = '';
+        commentBody.value = '';
         this.resetPreviewComment();
         this.setFormState();
 
@@ -208,9 +217,9 @@ class CommentBox extends Component {
     }
 
     postComment(): void {
-        const comment: commentType = {
-            body: this.elem.body.value,
-        };
+        const commentBody = this.elem && this.elem.body;
+        const body: string = (commentBody && commentBody.value: any) || '';
+        const comment: commentType = { body };
 
         this.clearErrors();
 
@@ -228,7 +237,11 @@ class CommentBox extends Component {
                 'user:username:updated',
                 resp.user.publicFields.username
             );
-            this.options.hasUsername = true;
+
+            if (this.options) {
+                this.options.hasUsername = true;
+            }
+
             this.getElem('onboarding-username').classList.add('is-hidden');
             postCommentToDAPI();
         };
@@ -257,25 +270,35 @@ class CommentBox extends Component {
                 this.error('EMPTY_COMMENT_BODY');
             }
 
-            if (comment.body.length > this.options.maxLength) {
+            if (this.options && comment.body.length > this.options.maxLength) {
+                const maxLength = this.options.maxLength || 0;
+                const diff = comment.body.length - maxLength;
+
                 this.error(
                     'COMMENT_TOO_LONG',
-                    `<b>Comments must be shorter than ${this.options
-                        .maxLength} characters.</b>` +
-                        `Yours is currently ${comment.body.length -
-                            this.options.maxLength} character(s) too long.`
+                    `<b>Comments must be shorter than ${maxLength} characters.</b>
+                    Yours is currently ${diff} character(s) too long.`
                 );
             }
 
-            if (this.options.replyTo) {
+            if (this.options && this.options.replyTo) {
                 comment.replyTo = this.options.replyTo;
             }
 
             if (this.errors.length === 0) {
-                if (this.options.newCommenter && !this.options.hasUsername) {
-                    IdentityApi.updateUsername(
-                        this.getElem('onboarding-username-input').value
-                    ).then(updateUsernameSuccess, updateUsernameFailure);
+                if (
+                    this.options &&
+                    this.options.newCommenter &&
+                    !this.options.hasUsername
+                ) {
+                    const onboardingInp: HTMLInputElement = (this.getElem(
+                        'onboarding-username-input'
+                    ): any);
+
+                    IdentityApi.updateUsername(onboardingInp.value).then(
+                        updateUsernameSuccess,
+                        updateUsernameFailure
+                    );
                 } else {
                     postCommentToDAPI();
                 }
@@ -286,7 +309,10 @@ class CommentBox extends Component {
             // Cookie could be stale so lets refresh and check from the api
             const createdDate = new Date(this.getUserData().accountCreatedDate);
 
-            if (createdDate > this.options.priorToVerificationDate) {
+            if (
+                this.options &&
+                createdDate > this.options.priorToVerificationDate
+            ) {
                 IdentityApi.getUserFromApiWithRefreshedCookie().then(
                     response => {
                         if (
@@ -329,7 +355,7 @@ class CommentBox extends Component {
 
         this.setFormState();
 
-        if (this.options.newCommenter) {
+        if (this.options && this.options.newCommenter) {
             bean.on(document.body, 'submit', [this.elem], (event: Event) =>
                 this.showOnboarding(event)
             );
@@ -355,7 +381,7 @@ class CommentBox extends Component {
             this.resetPreviewComment()
         );
         this.on('click', this.getClass('preview'), () =>
-            this.previewComment('previewCommentSuccess')
+            this.previewComment(this.previewCommentSuccess)
         );
         this.on('click', this.getClass('hide-preview'), () =>
             this.resetPreviewComment()
@@ -363,10 +389,10 @@ class CommentBox extends Component {
 
         this.on('click', this.getClass('cancel'), () => this.cancelComment());
         this.on('click', this.getClass('show-parent'), () =>
-            this.setState('parent-visible', false)
+            this.setState('parent-visible')
         );
         this.on('click', this.getClass('hide-parent'), () =>
-            this.removeState('parent-visible', false)
+            this.removeState('parent-visible')
         );
 
         ['bold', 'italic', 'quote', 'link'].forEach(format => {
@@ -375,9 +401,11 @@ class CommentBox extends Component {
             this.on('click', selector, () => this.formatComment(format));
         });
 
-        this.setState(this.options.state);
+        if (this.options && this.options.state) {
+            this.setState(this.options.state);
+        }
 
-        if (this.options.focus) {
+        if (this.options && this.options.focus) {
             window.setTimeout(() => {
                 this.getElem('body').focus();
             }, 0);
@@ -393,8 +421,11 @@ class CommentBox extends Component {
         e.preventDefault();
 
         // Check if new commenter as they may have already commented on this article
-        if (this.hasState('onboarding-visible') || !this.options.newCommenter) {
-            if (this.options.hasUsername) {
+        if (
+            this.hasState('onboarding-visible') ||
+            (this.options && !this.options.newCommenter)
+        ) {
+            if (this.options && this.options.hasUsername) {
                 this.removeState('onboarding-visible');
             }
 
@@ -405,28 +436,30 @@ class CommentBox extends Component {
             ).innerHTML = this.getUserData().displayName;
 
             this.setState('onboarding-visible');
-            this.previewComment('onboardingPreviewSuccess');
+            this.previewComment(this.onboardingPreviewSuccess);
 
-            if (this.options.hasUsername) {
+            if (this.options && this.options.hasUsername) {
                 this.getElem('onboarding-username').classList.add('is-hidden');
             }
         }
     }
 
     prerender(): void {
-        if (!this.options.premod) {
-            this.getElem('premod').parentNode.removeChild(
-                this.getElem('premod')
-            );
+        if (this.options && !this.options.premod) {
+            const premod = this.getElem('premod');
+
+            if (premod && premod.parentNode) {
+                premod.parentNode.removeChild(premod);
+            }
         }
 
         const userData = this.getUserData();
 
         this.getElem('author').innerHTML = userData.displayName;
 
-        if (this.options.state === 'response') {
+        if (this.options && this.options.state === 'response') {
             this.getElem('submit').innerHTML = 'Post reply';
-        } else if (this.options.shouldRenderMainAvatar) {
+        } else if (this.options && this.options.shouldRenderMainAvatar) {
             const avatar = this.getElem('avatar-wrapper');
             avatar.setAttribute('userid', userData.id);
             avatar.setAttribute('data-userid', userData.id);
@@ -441,15 +474,19 @@ class CommentBox extends Component {
             }
         }
 
-        if (this.options.replyTo) {
+        if (this.options && this.options.replyTo) {
+            const { author, timestamp } = this.options && this.options.replyTo;
             const replyToAuthor = this.getElem('reply-to-author');
-            replyToAuthor.innerHTML = this.options.replyTo.author;
-            this.getElem('parent-comment-author').innerHTML = `${this.options
-                .replyTo.author} @ ${this.options.replyTo.timestamp} said:`;
-
+            replyToAuthor.innerHTML = author;
             this.getElem(
-                'parent-comment-body'
-            ).innerHTML = this.options.replyTo.body;
+                'parent-comment-author'
+            ).innerHTML = `${author} @ ${timestamp} said:`;
+
+            this.getElem('parent-comment-body').innerHTML =
+                (this.options &&
+                    this.options.replyTo &&
+                    this.options.replyTo.body) ||
+                '';
 
             const setSpoutMargin = () => {
                 const spoutOffset =
@@ -474,11 +511,17 @@ class CommentBox extends Component {
         this.error('EMAIL_VERIFIED_FAIL');
     }
 
-    previewComment(methodName: string): void {
+    previewComment(
+        callbackRef: (comment: commentType, resp: Object) => void
+    ): void {
+        const commentBody = this.getElem('body');
         const comment: commentType = {
-            body: this.getElem('body').value,
+            body:
+                commentBody instanceof HTMLInputElement
+                    ? commentBody.value
+                    : '',
         };
-        const callback = this[methodName].bind(this);
+        const callback = callbackRef.bind(this);
 
         this.clearErrors();
 
@@ -487,12 +530,14 @@ class CommentBox extends Component {
             this.error('EMPTY_COMMENT_BODY');
         }
 
-        if (comment.body.length > this.options.maxLength) {
-            const charDiff = comment.body.length - this.options.maxLength;
+        if (this.options && comment.body.length > this.options.maxLength) {
+            const charDiff =
+                comment.body.length -
+                ((this.options && this.options.maxLength) || 0);
+            const maxLength = (this.options && this.options.maxLength) || '';
             const errorMessage = `
-                <b>Comments must be shorter than
-                ${this.options.maxLength} characters</b>. Yours is currently
-                ${charDiff} characters too long.`;
+                <b>Comments must be shorter than ${maxLength} characters</b>.
+                Yours is currently ${charDiff} characters too long.`;
 
             this.error('COMMENT_TOO_LONG', errorMessage);
         }
@@ -505,11 +550,17 @@ class CommentBox extends Component {
     }
 
     cancelComment(): void {
-        if (this.options.state === 'response') {
+        if (this.options && this.options.state === 'response') {
             this.destroy();
         } else {
             this.resetPreviewComment();
-            this.getElem('body').value = '';
+
+            const commentBody = this.getElem('body');
+
+            if (commentBody instanceof HTMLInputElement) {
+                commentBody.value = '';
+            }
+
             this.setFormState();
             this.removeState('expanded');
         }
@@ -522,6 +573,11 @@ class CommentBox extends Component {
 
     formatComment(formatStyle: string): void {
         const commentBody = this.getElem('body');
+
+        if (!(commentBody instanceof HTMLInputElement)) {
+            return;
+        }
+
         const cursorPositionStart = commentBody.selectionStart;
         let selectedText = commentBody.value.substring(
             commentBody.selectionStart,

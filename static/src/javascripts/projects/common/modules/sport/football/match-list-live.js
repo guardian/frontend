@@ -2,7 +2,7 @@
 
 import $ from 'lib/$';
 import bonzo from 'bonzo';
-import Component from 'common/modules/component';
+import { Component } from 'common/modules/component';
 
 class MatchListLive extends Component {
     constructor(
@@ -21,7 +21,7 @@ class MatchListLive extends Component {
         this.endpoint = `/${slug}.json`;
     }
 
-    elem: HTMLElement;
+    elem: ?HTMLElement;
 
     autoupdate(elem: HTMLElement): void {
         const updated = $('.football-match', elem);

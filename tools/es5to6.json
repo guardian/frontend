@@ -40,7 +40,6 @@
     "projects/common/modules/crosswords/persistence.js"
   ],
   "GHaberis": [
-    "projects/common/modules/component.js",
     "projects/common/modules/discussion/comment-count.js",
     "projects/common/modules/identity/formstack-iframe-embed.js",
     "projects/common/modules/identity/formstack-iframe.js",

@@ -13,7 +13,7 @@ import fastdom from 'lib/fastdom-promise';
 import fetchJson from 'lib/fetch-json';
 import DiscussionAnalytics from 'common/modules/analytics/discussion';
 import register from 'common/modules/analytics/register';
-import Component from 'common/modules/component';
+import { Component } from 'common/modules/component';
 import DiscussionApi from 'common/modules/discussion/api';
 import { CommentBox } from 'common/modules/discussion/comment-box';
 import { Comments } from 'common/modules/discussion/comments';
@@ -57,11 +57,15 @@ class Loader extends Component {
     }
 
     getDiscussionId(): ?string {
-        return this.elem.getAttribute('data-discussion-key');
+        return this.elem && this.elem.getAttribute('data-discussion-key');
     }
 
     getDiscussionClosed(): boolean {
-        return this.elem.getAttribute('data-discussion-closed') === 'true';
+        return (
+            (this.elem &&
+                this.elem.getAttribute('data-discussion-closed') === 'true') ||
+            false
+        );
     }
 
     // eslint-disable-next-line class-methods-use-this
@@ -76,6 +80,12 @@ class Loader extends Component {
     setCommentHash(id: string): void {
         window.location.replace(`#comment-${id}`);
     }
+
+    $topCommentsContainer: bonzo;
+    comments: Comments;
+    topCommentCount: number;
+    user: ?Object;
+    username: ?string;
 
     commentPosted(comment: Object): void {
         this.removeState('truncated');
@@ -108,10 +118,12 @@ class Loader extends Component {
             this.user &&
             this.user.privateFields &&
             this.user.privateFields.canPostComment;
+
         return (
-            userCanPost &&
-            !this.comments.isReadOnly() &&
-            !this.getDiscussionClosed()
+            (userCanPost &&
+                !this.comments.isReadOnly() &&
+                !this.getDiscussionClosed()) ||
+            false
         );
     }
 
@@ -348,7 +360,7 @@ class Loader extends Component {
                     this.comments.options.pagesize = pageSize;
                 }
 
-                if (this.user.isStaff) {
+                if (this.user && this.user.isStaff) {
                     this.removeState('not-staff');
                     this.setState('is-staff');
                 }
@@ -536,8 +548,14 @@ class Loader extends Component {
     renderCommentBox(elem: HTMLElement): void {
         new CommentBox({
             discussionId: this.getDiscussionId(),
-            premod: this.user.privateFields.isPremoderated,
-            newCommenter: !this.user.privateFields.hasCommented,
+            premod:
+                this.user &&
+                this.user.privateFields &&
+                this.user.privateFields.isPremoderated,
+            newCommenter:
+                this.user &&
+                this.user.privateFields &&
+                !this.user.privateFields.hasCommented,
             hasUsername: this.username !== null,
             shouldRenderMainAvatar: false,
         })

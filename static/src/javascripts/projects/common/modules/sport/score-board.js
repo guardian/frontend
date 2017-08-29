@@ -1,7 +1,7 @@
 // @flow
 
 import bonzo from 'bonzo';
-import Component from 'common/modules/component';
+import { Component } from 'common/modules/component';
 import { isBreakpoint } from 'lib/detect';
 import $ from 'lib/$';
 
@@ -45,6 +45,8 @@ class ScoreBoard extends Component {
             context.parent.addClass('u-h').before(this.placeholder);
         }
     }
+
+    pageType: string;
 
     prerender(): void {
         const scoreLoadingPlaceholder = $(
