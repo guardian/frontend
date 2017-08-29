@@ -34,11 +34,15 @@ const getTemplate = (
 
 const getElementsIndexedById = (
     context: HTMLElement
-): Promise<IndexedElements> =>
+): Promise<IndexedElements> | Promise<void> =>
     fastdom
         .read(() => context.querySelectorAll(`[${ATTRIBUTE_NAME}]`))
-        .then(elements =>
-            [
+        .then(elements => {
+            if (elements.length === 0) {
+                return Promise.resolve();
+            }
+
+            return [
                 ...elements,
             ].reduce((groupedVals: Object, el: HTMLElement): Object => {
                 const attrVal = el.getAttribute(ATTRIBUTE_NAME);
@@ -50,8 +54,8 @@ const getElementsIndexedById = (
                 groupedVals[attrVal].push(el);
 
                 return groupedVals;
-            }, {})
-        );
+            }, {});
+        });
 
 const getContentIds = (indexedElements: Object): string =>
     Object.keys(indexedElements).sort().join(',');
@@ -104,8 +108,12 @@ const renderCounts = (
     });
 };
 
-const getCommentCounts = (context: HTMLElement): Promise<void> =>
+const getCommentCounts = (context?: HTMLElement): Promise<void> =>
     getElementsIndexedById(context || document.body).then(indexedElements => {
+        if (!indexedElements) {
+            return Promise.resolve();
+        }
+
         const endpoint = `${COUNT_URL}${getContentIds(indexedElements)}`;
 
         return fetchJSON(endpoint, {
@@ -118,14 +126,9 @@ const getCommentCounts = (context: HTMLElement): Promise<void> =>
     });
 
 const init = (): Promise<void> => {
-    if (document.body && document.body.querySelector('[data-discussion-id]')) {
-        return getCommentCounts(document.body);
-    }
-
-    // Load new counts when more trails are loaded
     mediator.on('modules:related:loaded', getCommentCounts);
 
-    return Promise.resolve();
+    return getCommentCounts();
 };
 
 export default {
