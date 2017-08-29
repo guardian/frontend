@@ -98,22 +98,20 @@ const changeSideMenuLinks = (
     subscribeLink: string
 ) => {
     const cssClass = 'js-change-membership-item';
-    debugger;
+
     [...document.getElementsByClassName(cssClass)].forEach(el => {
         if (el instanceof HTMLAnchorElement) {
-            if(el.innerText.trim() === 'become a supporter') {
+            if (el.innerText && el.innerText.trim() === 'become a supporter') {
                 el.href = becomeSupporterLink;
-            }else if(el.innerText.trim() === 'subscribe') {
+            } else if (el.innerText && el.innerText.trim() === 'subscribe') {
                 el.href = subscribeLink;
             }
         }
     });
-}
+};
 
 const shouldDisplayEpic = (test: EpicABTest): boolean =>
     isEpicWithinViewLimit(test) && isEpicCompatibleWithPage(config.get('page'));
-
-// gdnwb_copts_memco_sandc_support_baseline_support_epic
 
 const bindEpicInsertAndViewHandlers = (
     test: EpicABTest,
