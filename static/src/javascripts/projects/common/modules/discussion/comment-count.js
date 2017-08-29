@@ -32,9 +32,7 @@ const getTemplate = (
     return `<a class="fc-trail__count fc-trail__count--commentcount" href="${url}" data-link-name="Comment count">${icon} ${count}</a>`;
 };
 
-const getElementsIndexedById = (
-    context: HTMLElement
-): Promise<any> =>
+const getElementsIndexedById = (context: HTMLElement): Promise<any> =>
     fastdom
         .read(() => context.querySelectorAll(`[${ATTRIBUTE_NAME}]`))
         .then(elements => {
@@ -130,8 +128,8 @@ const getCommentCounts = (context?: HTMLElement): Promise<void> => {
     }
 
     return Promise.resolve();
-}
-    
+};
+
 const init = (): Promise<void> => {
     mediator.on('modules:related:loaded', getCommentCounts);
 
