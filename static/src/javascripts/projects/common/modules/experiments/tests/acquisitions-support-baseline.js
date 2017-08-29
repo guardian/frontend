@@ -10,6 +10,7 @@ import {
     submitViewEvent,
 } from 'common/modules/commercial/acquisitions-ophan';
 import mediator from 'lib/mediator';
+import fastdom from 'lib/fastdom-promise';
 
 import config from 'lib/config';
 
@@ -98,16 +99,25 @@ const changeSideMenuLinks = (
     subscribeLink: string
 ) => {
     const cssClass = 'js-change-membership-item';
-
-    [...document.getElementsByClassName(cssClass)].forEach(el => {
-        if (el instanceof HTMLAnchorElement) {
-            if (el.innerText && el.innerText.trim() === 'become a supporter') {
-                el.href = becomeSupporterLink;
-            } else if (el.innerText && el.innerText.trim() === 'subscribe') {
-                el.href = subscribeLink;
-            }
-        }
-    });
+    fastdom.read(() => document.getElementsByClassName(cssClass)).then(els =>
+        fastdom.write(() => {
+            [...els].forEach(el => {
+                if (el instanceof HTMLAnchorElement) {
+                    if (
+                        el.innerText &&
+                        el.innerText.trim() === 'become a supporter'
+                    ) {
+                        el.href = becomeSupporterLink;
+                    } else if (
+                        el.innerText &&
+                        el.innerText.trim() === 'subscribe'
+                    ) {
+                        el.href = subscribeLink;
+                    }
+                }
+            });
+        })
+    );
 };
 
 const shouldDisplayEpic = (test: EpicABTest): boolean =>
