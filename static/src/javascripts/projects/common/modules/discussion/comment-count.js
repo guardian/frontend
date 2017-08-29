@@ -34,7 +34,7 @@ const getTemplate = (
 
 const getElementsIndexedById = (
     context: HTMLElement
-): Promise<IndexedElements> | Promise<void> =>
+): Promise<any> =>
     fastdom
         .read(() => context.querySelectorAll(`[${ATTRIBUTE_NAME}]`))
         .then(elements => {
@@ -108,23 +108,30 @@ const renderCounts = (
     });
 };
 
-const getCommentCounts = (context?: HTMLElement): Promise<void> =>
-    getElementsIndexedById(context || document.body).then(indexedElements => {
-        if (!indexedElements) {
-            return Promise.resolve();
-        }
+const getCommentCounts = (context?: HTMLElement): Promise<void> => {
+    const queryContext: ?HTMLElement = context || document.body;
 
-        const endpoint = `${COUNT_URL}${getContentIds(indexedElements)}`;
-
-        return fetchJSON(endpoint, {
-            mode: 'cors',
-        }).then(response => {
-            if (response && response.counts) {
-                return renderCounts(response.counts, indexedElements);
+    if (queryContext) {
+        return getElementsIndexedById(queryContext).then(indexedElements => {
+            if (!indexedElements) {
+                return Promise.resolve();
             }
-        });
-    });
 
+            const endpoint = `${COUNT_URL}${getContentIds(indexedElements)}`;
+
+            return fetchJSON(endpoint, {
+                mode: 'cors',
+            }).then(response => {
+                if (response && response.counts) {
+                    return renderCounts(response.counts, indexedElements);
+                }
+            });
+        });
+    }
+
+    return Promise.resolve();
+}
+    
 const init = (): Promise<void> => {
     mediator.on('modules:related:loaded', getCommentCounts);
 
