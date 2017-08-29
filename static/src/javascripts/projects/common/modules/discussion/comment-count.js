@@ -32,23 +32,26 @@ const getTemplate = (
     return `<a class="fc-trail__count fc-trail__count--commentcount" href="${url}" data-link-name="Comment count">${icon} ${count}</a>`;
 };
 
-const getElementsIndexedById = (context: HTMLElement): Promise<IndexedElements> => {
-    return fastdom.read(() => context.querySelectorAll(`[${ATTRIBUTE_NAME}]`)).then(elements => {
-        return [
-            ...elements,
-        ].reduce((groupedVals: Object, el: HTMLElement): Object => {
-            const attrVal = el.getAttribute(ATTRIBUTE_NAME);
+const getElementsIndexedById = (
+    context: HTMLElement
+): Promise<IndexedElements> =>
+    fastdom
+        .read(() => context.querySelectorAll(`[${ATTRIBUTE_NAME}]`))
+        .then(elements =>
+            [
+                ...elements,
+            ].reduce((groupedVals: Object, el: HTMLElement): Object => {
+                const attrVal = el.getAttribute(ATTRIBUTE_NAME);
 
-            if (!groupedVals[attrVal]) {
-                groupedVals[attrVal] = [];
-            }
+                if (!groupedVals[attrVal]) {
+                    groupedVals[attrVal] = [];
+                }
 
-            groupedVals[attrVal].push(el);
+                groupedVals[attrVal].push(el);
 
-            return groupedVals;
-        }, {});
-    });
-};
+                return groupedVals;
+            }, {})
+        );
 
 const getContentIds = (indexedElements: Object): string =>
     Object.keys(indexedElements).sort().join(',');
@@ -92,22 +95,17 @@ const renderCounts = (
     counts: Array<{ id: string, count: number }>,
     indexedElements: IndexedElements
 ): Promise<void> => {
-
     const elementUpdates = counts.map(c =>
-        indexedElements[c.id].map(el => {
-            return updateElement(el, c.count)    
-        })
+        indexedElements[c.id].map(el => updateElement(el, c.count))
     );
 
-    return Promise.all(
-        elementUpdates
-    ).then(() => {
+    return Promise.all(elementUpdates).then(() => {
         mediator.emit('modules:commentcount:loaded', counts);
     });
 };
 
-const getCommentCounts = (context: HTMLElement): Promise<void> => {
-    return getElementsIndexedById(context || document.body).then(indexedElements => {
+const getCommentCounts = (context: HTMLElement): Promise<void> =>
+    getElementsIndexedById(context || document.body).then(indexedElements => {
         const endpoint = `${COUNT_URL}${getContentIds(indexedElements)}`;
 
         return fetchJSON(endpoint, {
@@ -118,7 +116,6 @@ const getCommentCounts = (context: HTMLElement): Promise<void> => {
             }
         });
     });
-};
 
 const init = (): Promise<void> => {
     if (document.body && document.body.querySelector('[data-discussion-id]')) {

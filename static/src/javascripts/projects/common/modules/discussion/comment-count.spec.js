@@ -45,27 +45,25 @@ describe('Comment Count', () => {
         );
     });
 
-    test('should append comment counts to DOM for open discussions only', () => {
-        return commentCount.init().then(() => {
+    test('should append comment counts to DOM for open discussions only', () =>
+        commentCount.init().then(() => {
             expect(
                 document.querySelectorAll(
                     '.fc-trail__count--commentcount, .commentcount2'
                 ).length
             ).toBe(6);
-        });
-    });
+        }));
 
-    test('should append "default" format comment counts to DOM', () => {
-        return commentCount.init().then(() => {
+    test('should append "default" format comment counts to DOM', () =>
+        commentCount.init().then(() => {
             expect(
                 document.getElementsByClassName('fc-trail__count--commentcount')
                     .length
             ).toBe(4);
-        });
-    });
+        }));
 
-    test('should append "content" format comment counts to DOM', () => {
-        return commentCount.init().then(() => {
+    test('should append "content" format comment counts to DOM', () =>
+        commentCount.init().then(() => {
             const contentCommentCounts = document.getElementsByClassName(
                 'commentcount2__value'
             );
@@ -73,11 +71,10 @@ describe('Comment Count', () => {
             expect(contentCommentCounts.length).toBe(1);
 
             expect(contentCommentCounts[0].innerHTML).toBe('400');
-        });
-    });
+        }));
 
-    test('should append "content immersive" format comment counts to DOM', () => {
-        return commentCount.init().then(() => {
+    test('should append "content immersive" format comment counts to DOM', () =>
+        commentCount.init().then(() => {
             const contentImmersiveCommentCounts = document.getElementsByClassName(
                 'commentcount__value'
             );
@@ -85,6 +82,5 @@ describe('Comment Count', () => {
             expect(contentImmersiveCommentCounts.length).toBe(1);
 
             expect(contentImmersiveCommentCounts[0].innerHTML).toBe('400');
-        })
-    });
+        }));
 });
