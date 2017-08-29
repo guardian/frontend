@@ -37,7 +37,7 @@ define([
                 spaceFiller = arguments[2];
 
                 spaceFiller.spaceFiller.fillSpace = function (rules, writer) {
-                    var space = $('#article-body p').first();
+                    var space = $('#article-body p').first()[0];
                     writer([space]);
                     return Promise.resolve(true);
                 };
