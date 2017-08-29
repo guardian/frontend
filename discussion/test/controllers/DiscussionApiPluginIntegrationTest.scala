@@ -9,7 +9,7 @@ import test.{ConfiguredTestSuite, WithMaterializer, WithTestWsClient}
 import scala.concurrent.{Await, Future}
 import scala.language.postfixOps
 import scala.concurrent.duration._
-import play.api.libs.ws.{WS, WSClient}
+import play.api.libs.ws.WSClient
 
 @DoNotDiscover class DiscussionApiPluginIntegrationTest extends FlatSpecLike with Matchers with BeforeAndAfterAll with ConfiguredTestSuite with WithMaterializer with WithTestWsClient {
 
