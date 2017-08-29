@@ -93,6 +93,23 @@ const changeHeaderLinks = (
     changeLinks('js-change-subscribe-link', subscribeLink);
 };
 
+const changeSideMenuLinks = (
+    becomeSupporterLink: string,
+    subscribeLink: string
+) => {
+    const cssClass = 'js-change-membership-item';
+    debugger;
+    [...document.getElementsByClassName(cssClass)].forEach(el => {
+        if (el instanceof HTMLAnchorElement) {
+            if(el.innerText.trim() === 'become a supporter') {
+                el.href = becomeSupporterLink;
+            }else if(el.innerText.trim() === 'subscribe') {
+                el.href = subscribeLink;
+            }
+        }
+    });
+}
+
 const shouldDisplayEpic = (test: EpicABTest): boolean =>
     isEpicWithinViewLimit(test) && isEpicCompatibleWithPage(config.get('page'));
 
@@ -177,6 +194,15 @@ export const acquisitionsSupportBaseline = makeABTest({
                             `${baseCampaignCode}_control_header_subscribe`
                         )
                     );
+
+                    changeSideMenuLinks(
+                        makeBecomeSupporterURL(
+                            `${baseCampaignCode}_control_side_menu_become_supporter`
+                        ),
+                        makeSubscribeURL(
+                            `${baseCampaignCode}_control_side_menu_subscribe`
+                        )
+                    );
                 },
 
                 engagementBannerParams: {
@@ -233,6 +259,15 @@ export const acquisitionsSupportBaseline = makeABTest({
                         ),
                         makeSupportURL(
                             `${baseCampaignCode}_support_header_subscribe`
+                        )
+                    );
+
+                    changeSideMenuLinks(
+                        makeSupportURL(
+                            `${baseCampaignCode}_support_side_menu_become_supporter`
+                        ),
+                        makeSupportURL(
+                            `${baseCampaignCode}_support_side_menu_subscribe`
                         )
                     );
                 },
