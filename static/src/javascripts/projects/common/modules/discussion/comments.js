@@ -18,6 +18,7 @@ import userPrefs from 'common/modules/user-prefs';
 import { inlineSvg } from 'common/views/svgs';
 
 type userType = {
+    avatar: string,
     badge: Array<{
         name: string,
     }>,
@@ -119,6 +120,19 @@ class Comments extends Component {
                 });
         }
     }
+
+    comments: ?bonzo;
+    options: ?{
+        discussionId: string,
+        order: string,
+        pagesize: string,
+        showRepliesCount: boolean,
+        threading: string,
+    };
+    postedCommentEl: string;
+    topLevelComments: bonzo;
+    user: ?userType;
+    wholeDiscussionErrors: boolean;
 
     addMoreRepliesButtons(comms: Array<HTMLElement>): void {
         const comments = comms || this.topLevelComments;
