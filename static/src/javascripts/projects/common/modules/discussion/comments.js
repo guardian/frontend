@@ -9,7 +9,7 @@ import fetchJson from 'lib/fetch-json';
 import mediator from 'lib/mediator';
 import reportError from 'lib/report-error';
 import { constructQuery } from 'lib/url';
-import Component from 'common/modules/component';
+import { Component } from 'common/modules/component';
 import DiscussionApi from 'common/modules/discussion/api';
 import { CommentBox } from 'common/modules/discussion/comment-box';
 import WholeDiscussion from 'common/modules/discussion/whole-discussion';
