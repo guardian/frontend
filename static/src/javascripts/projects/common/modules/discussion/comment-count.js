@@ -5,7 +5,7 @@ import { integerCommas } from 'lib/formatters';
 import mediator from 'lib/mediator';
 import { inlineSvg } from 'common/views/svgs';
 
-type IndexedElements = { string: HTMLElement } | {};
+type IndexedElements = { string: HTMLElement };
 
 const ATTRIBUTE_NAME: string = 'data-discussion-id';
 const COUNT_URL: string = '/discussion/comment-counts.json?shortUrls=';
@@ -55,7 +55,7 @@ const getElementsIndexedById = (context: HTMLElement): Promise<any> =>
             }, {});
         });
 
-const getContentIds = (indexedElements: Object): string =>
+const getContentIds = (indexedElements: IndexedElements): string =>
     Object.keys(indexedElements).sort().join(',');
 
 const getContentUrl = (el: HTMLElement): string => {
