@@ -28,7 +28,6 @@ trait FrontendApplicationLoader extends ApplicationLoader {
 
 trait FrontendComponents
   extends LifecycleComponents
-  with ExecutionContextComponent
   with HttpFiltersComponent
   with BuiltInComponents
   with AhcWSComponents
@@ -59,11 +58,6 @@ trait LifecycleComponent {
 trait LifecycleComponents {
   def lifecycleComponents: List[LifecycleComponent]
   def startLifecycleComponents(): Unit = lifecycleComponents.foreach(_.start())
-}
-
-trait ExecutionContextComponent {
-  self: BuiltInComponents =>
-  implicit lazy val executionContext: ExecutionContext = actorSystem.dispatcher
 }
 
 trait HttpFiltersComponent {
