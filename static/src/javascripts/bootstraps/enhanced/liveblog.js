@@ -2,7 +2,7 @@
 import config from 'lib/config';
 import { isBreakpoint } from 'lib/detect';
 import mediator from 'lib/mediator';
-import richLinks from 'common/modules/article/rich-links';
+import { upgradeRichLinks } from 'common/modules/article/rich-links';
 import Affix from 'common/modules/experiments/affix';
 import { autoUpdate } from 'common/modules/ui/autoupdate';
 import RelativeDates from 'common/modules/ui/relativedates';
@@ -60,7 +60,7 @@ const init = (): void => {
         ['lb-autoupdate', createAutoUpdate],
         ['lb-timeline', affixTimeline],
         ['lb-timestamp', keepTimestampsCurrent],
-        ['lb-richlinks', richLinks.upgradeRichLinks],
+        ['lb-richlinks', upgradeRichLinks],
         ['lb-storyquestions', initStoryquestions],
     ]);
 
