@@ -8,11 +8,16 @@ import { isBreakpoint, getBreakpoint } from 'lib/detect';
 import fetchJson from 'lib/fetch-json';
 import mediator from 'lib/mediator';
 import reportError from 'lib/report-error';
-import template from 'lodash/utilities/template';
 import { spaceFiller } from 'common/modules/article/space-filler';
-import richLinkTagTmpl from 'raw-loader!common/views/content/richLinkTag.html';
 
-const richLinkTag = template(richLinkTagTmpl);
+const richLinkTag = ({ href }: { href: string }): string => 
+    `<aside class=" element element-rich-link element-rich-link--tag 
+                    element--thumbnail element-rich-link--not-upgraded" 
+            data-component="rich-link-tag" 
+            data-link-name="rich-link-tag"
+            >
+        <p><a href="<%=href%>"><%=href%></a></p>
+    </aside>`;
 
 const elementIsBelowViewport = (el: Element): Promise<boolean> =>
     fastdom.read(() => {
