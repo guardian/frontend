@@ -10,6 +10,7 @@ object Dependencies {
   val dispatchVersion = "0.11.3"
   val romeVersion = "1.0"
   val jerseyVersion = "1.19.4"
+  val playJsonVersion = "2.6.3"
 
   val akkaAgent = "com.typesafe.akka" %% "akka-agent" % "2.3.4"
   val akkaContrib = "com.typesafe.akka" %% "akka-contrib" % "2.3.16"
@@ -69,6 +70,8 @@ object Dependencies {
   val scanamo = "com.gu" %% "scanamo" % "0.9.5"
   val enumeratumPlayJson = "com.beachape" %% "enumeratum-play-json" % "1.5.11"
   val commercialShared = "com.gu" %% "commercial-shared" % "6.0.0"
+  val playJson = "com.typesafe.play" %% "play-json" % playJsonVersion
+  val playJsonJoda = "com.typesafe.play" %% "play-json-joda" % playJsonVersion
 
   // Web jars
   val bootstrap = "org.webjars" % "bootstrap" % "3.3.7"

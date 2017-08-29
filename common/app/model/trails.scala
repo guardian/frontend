@@ -7,6 +7,8 @@ import org.joda.time.DateTime
 import org.scala_tools.time.Imports._
 import play.api.libs.json.{JsBoolean, JsString, JsValue, Json}
 import play.api.mvc.RequestHeader
+import play.api.libs.json.JodaReads._
+import play.api.libs.json.JodaWrites._
 import views.support.{ImgSrc, Naked}
 
 /**

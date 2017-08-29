@@ -2,6 +2,8 @@ package services
 
 import org.joda.time.DateTime
 import play.api.libs.json._
+import play.api.libs.json.JodaReads._
+import play.api.libs.json.JodaWrites._
 
 object PressType {
   implicit val jsonFormat = new Format[PressType] {

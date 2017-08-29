@@ -5,6 +5,8 @@ import model.content._
 import model.facia.PressedCollection
 import model.pressed._
 import play.api.libs.json._
+import play.api.libs.json.JodaReads._
+import play.api.libs.json.JodaWrites._
 
 object GenericThriftAtomFormat extends Format[com.gu.contentatom.thrift.Atom] {
  def reads(json: JsValue) = JsError("Converting from Json is not supported by intent!")

@@ -52,7 +52,10 @@ object Frontend extends Build with Prototypes {
       targetingClient,
       scanamo,
       scalaUri,
-      commercialShared
+      commercialShared,
+      playJson,
+      playJsonJoda,
+      jodaForms
     )
   ).settings(
       mappings in TestAssets ~= filterAssets
