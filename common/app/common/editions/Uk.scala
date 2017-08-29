@@ -68,7 +68,8 @@ object Uk extends Edition(
     banking,
     retail,
     markets,
-    eurozone
+    eurozone,
+    businessToBusiness
   )
 
   val environmentLocalNav = Seq(
