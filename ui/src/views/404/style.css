@@ -1,69 +1,76 @@
-.heading {
-    display: flex;
-    font-family: "Guardian Egyptian Web", "Guardian Text Egyptian Web", Georgia, serif;
-    font-size: 24px;
-    font-weight: normal;
-    line-height: 30px;
-    margin: 10px 0 0;
+body:before {
+    content: '';
+    background: #005689;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
 }
 
-.logo {
-    width: 250px;
+wrapper {
+    margin: 0 auto;
+    width: 320px;
 
-    & .guardian {
-        @supports (fill: hotpink) {
-            fill: var(--colour-brand-blue);
+    @include mq(tablet) {
+        width: 940px;
+    }
 
-            /* example of a width media query range */
-            @media (--from-tablet) and (--until-desktop) {
-                fill: var(--colour-brand-blue);
-            }
+     @include mq(wide) {
+         width: 1200px;
+     }
+}
+
+logo {
+    display: block;
+    margin: 6px 0 48px auto;
+    width: 384px;
+
+    &:hover svg #guardian {
+        #i, #a2 {
+            transform: translateX(-2px);
+        }
+
+        #n {
+            transform: translateX(-84px);
+        }
+
+        #d {
+            transform: translateX(76px);
+        }
+
+        #u {
+            transform: translateX(49px);
+        }
+
+        #a {
+            transform: translateX(-12px);
+        }
+
+        #r {
+            transform: translateX(-64px);
         }
     }
 }
 
-.fluidWrap {
-    margin: 0 auto;
-    max-width: 940px;
-    padding: 0 10px;
+contentBlock {
+    margin-left: 400px;
+    width: 540px;
 }
 
-.topBar {
-    background: #ededed;
-    border-bottom: 1px solid #c6c6c6;
-    float: left;
-    font-size: 12px;
-    margin-bottom: 20px;
-    width: 100%;
+heading {
+    color: #FFFFFF;
+    font-size: 36px;
 }
 
-.topBarLink {
-    color: #005689;
-    display: block;
-    font-family: arial;
-    padding: 8px 10px 7px;
-    text-decoration: none;
+bodyCopy {
+    color: #AAD8F1;
+    font-size: 15px;
+    margin-bottom: 12px;
+    padding-right: 140px;
 }
 
-.subHeading {
-    font-size: 18px;
-    font-weight: normal;
-    line-height: 20px;
-    margin: 0;
-}
-
-.subHeadingContainer {
-    background-color: #ededed;
-    border-color: #0061a6;
-    border-top-style: solid;
-    border-top-width: 3px;
-    clear: both;
-    margin-bottom: 10px;
-    padding: 4px 5px 14px;
-}
-
-.para {
-    font-family: arial;
-    font-size: 12px;
-    margin: 0 0 10px;
+link {
+    color: #FFFFFF;
 }

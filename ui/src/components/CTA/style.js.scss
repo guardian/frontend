@@ -1,0 +1,20 @@
+CTA {
+    background: green;
+    border-radius: 9999px;
+    display: inline-block;
+    font-family: sans-serif;
+    font-size: 16px;
+    line-height: 42px;
+    padding: 0 20px;
+    text-decoration: none;
+    transition: background-color .3s;
+}
+
+brightBlue {
+    background: #4bc6df;
+    color: #00456E;
+
+    &:hover {
+        background-color: #74E7FF;
+    }
+}
