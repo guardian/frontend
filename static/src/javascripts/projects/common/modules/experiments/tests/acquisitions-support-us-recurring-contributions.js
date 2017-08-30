@@ -17,7 +17,7 @@ import config from 'lib/config';
 const baseCampaignCode = 'gdnwb_copts_memco_sandc_support_baseline';
 
 const getREFPVID = (): string =>
-(config.ophan && config.ophan.pageViewId) || 'not_found';
+    (config.ophan && config.ophan.pageViewId) || 'not_found';
 
 const buildURL = (url: string, campaignCode: string): string =>
     `${url}?INTCMP=${campaignCode}&REFPVID=${getREFPVID()}`;
@@ -106,7 +106,7 @@ const changeSideMenuLinks = (becomeSupporterLink: string) => {
 };
 
 const shouldDisplayEpic = (test: EpicABTest): boolean =>
-isEpicWithinViewLimit(test) && isEpicCompatibleWithPage(config.get('page'));
+    isEpicWithinViewLimit(test) && isEpicCompatibleWithPage(config.get('page'));
 
 const bindEpicInsertAndViewHandlers = (
     test: EpicABTest,
@@ -131,7 +131,8 @@ export const acquisitionsSupportUSRecurringContribution = makeABTest({
     expiry: '2017-10-19',
 
     author: 'justinpinner',
-    description: 'Test demmand for recurrin contributions in the US offering across all channels',
+    description:
+        'Test the demand for recurring contributions in the US offering across all channels',
     successMeasure: 'Annualised value',
     idealOutcome:
         'The new proposition delivers the same or greater annualised value',
@@ -201,10 +202,7 @@ export const acquisitionsSupportUSRecurringContribution = makeABTest({
         },
         {
             id: 'support',
-            products: [
-                'CONTRIBUTION',
-                'RECURRING_CONTRIBUTION',
-            ],
+            products: ['CONTRIBUTION', 'RECURRING_CONTRIBUTION'],
 
             // EPIC
             options: {
@@ -212,7 +210,8 @@ export const acquisitionsSupportUSRecurringContribution = makeABTest({
                 success: submitABTestComplete => submitABTestComplete(),
 
                 buttonTemplate: buildButtonTemplate,
-                supportCustomURL: 'https://support.theguardian.com/us/contribute',
+                supportCustomURL:
+                    'https://support.theguardian.com/us/contribute',
                 useTailoredCopyForRegulars: true,
 
                 test(renderArticleEpic, variant, test) {
