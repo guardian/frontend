@@ -101,9 +101,7 @@ const renderCounts = (
         indexedElements[c.id].map(el => updateElement(el, c.count))
     );
 
-    return Promise.all(elementUpdates).then(() => {
-        mediator.emit('modules:commentcount:loaded', counts);
-    });
+    return Promise.all(elementUpdates);
 };
 
 const getCommentCounts = (context?: HTMLElement): Promise<void> => {
