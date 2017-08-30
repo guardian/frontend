@@ -46,7 +46,9 @@ describe('Comment Count', () => {
             const data = {
                 discussionClosed: trail.getAttribute('data-discussion-closed'),
                 discussionId: trail.getAttribute('data-discussion-id'),
-                commentcountFormat: trail.getAttribute('data-commentcount-format'),
+                commentcountFormat: trail.getAttribute(
+                    'data-commentcount-format'
+                ),
             };
 
             Object.keys(data).forEach(key => {
