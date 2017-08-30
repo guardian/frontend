@@ -6,14 +6,16 @@ import java.nio.ByteBuffer
 import java.nio.charset.Charset
 import java.nio.file.{Files, Paths}
 import java.util
+
 import common.ExecutionContexts
 import conf.Configuration
-import io.netty.handler.codec.http.HttpHeaders
-import org.asynchttpclient.{Response => AHCResponse}
-import org.asynchttpclient.uri.Uri
 import org.apache.commons.codec.digest.DigestUtils
 import play.api.libs.ws.WSResponse
-import play.api.libs.ws.ahc.AhcWSResponse
+import play.api.libs.ws.ahc.{AhcWSResponse, StandaloneAhcWSResponse}
+import play.shaded.ahc.org.asynchttpclient.{Response => ACHResponse}
+import play.shaded.ahc.io.netty.handler.codec.http.HttpHeaders
+import play.shaded.ahc.org.asynchttpclient.uri.Uri
+
 import scala.concurrent.Future
 import scala.io.Codec.UTF8
 
@@ -92,9 +94,9 @@ trait DefaultHttpRecorder extends HttpRecorder[WSResponse] {
   override def toResponse(b: Array[Byte]): AhcWSResponse = {
     val str = new String(b, UTF8.charSet)
     if (str.startsWith(errorPrefix)) {
-      AhcWSResponse(Response("", str.replace(errorPrefix, "").toInt))
+      AhcWSResponse(StandaloneAhcWSResponse(Response("", str.replace(errorPrefix, "").toInt)))
     } else {
-      AhcWSResponse(Response(str, 200))
+      AhcWSResponse(StandaloneAhcWSResponse(Response(str, 200)))
     }
   }
 
@@ -107,7 +109,7 @@ trait DefaultHttpRecorder extends HttpRecorder[WSResponse] {
     strResponse.getBytes(UTF8.charSet)
   }
 
-  private case class Response(getResponseBody: String, status: Int) extends AHCResponse {
+  private case class Response(getResponseBody: String, status: Int) extends ACHResponse {
     def getContentType: String = "application/json"
     def getResponseBody(charset: Charset): String = getResponseBody
     def getStatusCode: Int = status
