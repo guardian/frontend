@@ -21,7 +21,7 @@ trait CommercialSwitches {
     "Deactivates the sizecallback for videos (620x1) that hides the slot.",
     owners = Seq(Owner.withGithub("JonNorman")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 8, 30),
+    sellByDate = new LocalDate(2017, 9, 20),
     exposeClientSide = true
   )
 
