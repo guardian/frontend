@@ -29,8 +29,8 @@ class CommentsController(
       "categoryId" -> Forms.number.verifying(ReportAbuseFormValidation.validCategoryConstraint),
       "commentId" -> Forms.number,
       "reason" -> optional(Forms.text.verifying("Reason must be 250 characters or fewer", input => Constraints.maxLength(250)(input) == Valid)),
-      "email" -> optional(Forms.text.verifying("Please enter a valid email address", input => Constraints.emailAddress(input) == Valid))
-    )(DiscussionAbuseReport.apply)(DiscussionAbuseReport.unapply)
+      "email" -> optional(Forms.text.verifying("Please enter a valid email address", input => Constraints.emailAddress == Valid))
+    )(DiscussionAbuseReport.apply)(DiscussionAbuseReport.unapply _)
   )
 
   // Used for jump to comment, comment hash location.
