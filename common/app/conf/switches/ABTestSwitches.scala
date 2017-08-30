@@ -149,4 +149,14 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
+  Switch(
+    ABTests,
+    "ab-acquisitions-support-us-recurring-contribution",
+    "Test demmand for recurrin contributions in the US offering across all channels",
+    owners = Seq(Owner.withGithub("justinpinner")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 10, 19),
+    exposeClientSide = true
+  )
+
 }
