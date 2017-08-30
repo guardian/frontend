@@ -24,7 +24,7 @@ class PageDecacheController(wsClient: WSClient, val controllerComponents: Contro
       Future(NoCache(Ok(views.html.cache.pageDecache())))
   }
 
-  def decache() = authActions.AuthActionTest.async { implicit request =>
+  def decache() = authActions.async { implicit request =>
     getSubmittedUrl(request).map(new URI(_)).map{ urlToDecache =>
       new CdnPurge(wsClient)
         .soft(SurrogateKey(urlToDecache.getPath))

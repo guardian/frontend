@@ -31,7 +31,7 @@ class ImageDecacheController(
     NoCache(Ok(views.html.cache.imageDecache()))
   }
 
-  def decache() = authActions.AuthActionTest.async { implicit request =>
+  def decache(): Action[AnyContent] = authActions.async { implicit request =>
     getSubmittedImage(request).map(new URI(_)).map{ image =>
 
       val originUrl: String = s"${image.getHost}${image.getPath}" match {
