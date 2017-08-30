@@ -96,7 +96,7 @@ const updateElement = (el: HTMLElement, count: number): Promise<void> => {
 const renderCounts = (
     counts: Array<{ id: string, count: number }>,
     indexedElements: IndexedElements
-): Promise<void> => {
+): Promise<any> => {
     const elementUpdates = counts.map(c =>
         indexedElements[c.id].map(el => updateElement(el, c.count))
     );
