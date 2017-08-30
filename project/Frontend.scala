@@ -113,7 +113,8 @@ object Frontend extends Build with Prototypes {
       d3,
       awsElasticloadbalancing,
       awsSes,
-      scalaUri
+      scalaUri,
+      playIteratees
     ),
     RoutesKeys.routesImport += "bindables._",
     RoutesKeys.routesImport += "org.joda.time.LocalDate"

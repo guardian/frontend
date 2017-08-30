@@ -72,6 +72,7 @@ object Dependencies {
   val commercialShared = "com.gu" %% "commercial-shared" % "6.0.0"
   val playJson = "com.typesafe.play" %% "play-json" % playJsonVersion
   val playJsonJoda = "com.typesafe.play" %% "play-json-joda" % playJsonVersion
+  val playIteratees = "com.typesafe.play" %% "play-iteratees" % "2.6.1"
 
   // Web jars
   val bootstrap = "org.webjars" % "bootstrap" % "3.3.7"
