@@ -5,7 +5,7 @@ import { integerCommas } from 'lib/formatters';
 import mediator from 'lib/mediator';
 import { inlineSvg } from 'common/views/svgs';
 
-type IndexedElements = { string: HTMLElement };
+type IndexedElements = { string: Array<HTMLElement> };
 
 const ATTRIBUTE_NAME: string = 'data-discussion-id';
 const COUNT_URL: string = '/discussion/comment-counts.json?shortUrls=';
