@@ -27,7 +27,7 @@ import org.scalatest._
 
         Then("I should see the 4 few entries of each table")
 
-        val teams = $(".team-name__long").getTexts
+        val teams = $(".team-name__long").texts
         teams should contain("Arsenal")
         teams should contain("Man U")
         teams should contain("Man C")
@@ -39,9 +39,9 @@ import org.scalatest._
 
         Then("The <h1> Should be tables")
         val h2 = $("h2")
-        $("h1").getTexts should contain("tables")
-        h2.getTexts should contain("Premier League")
-        h2.getTexts should contain("Champions League")
+        $("h1").texts should contain("tables")
+        h2.texts should contain("Premier League")
+        h2.texts should contain("Champions League")
       }
     }
 
@@ -52,13 +52,13 @@ import org.scalatest._
         import browser._
 
         Then("I should see all the teams in this league")
-        val teams = $(".team-name__long").getTexts
+        val teams = $(".team-name__long").texts
         teams should contain("Arsenal")
         teams should contain ("Wigan") // I can now see all items
 
         And("I should see a nice SEO h1 el on the page, describing the current competition")
-        $("h1").getTexts should contain("Premier League")
-        $("h1").getTexts should not contain "Championship League"
+        $("h1").texts should contain("Premier League")
+        $("h1").texts should not contain "Championship League"
       }
     }
 

@@ -14,9 +14,9 @@ import scala.io.Codec.UTF8
 object `package` {
 
   implicit class WebElement2rich(element: FluentWebElement) {
-    lazy val href = element.getAttribute("href")
+    lazy val href = element.attribute("href")
 
-    def hasAttribute(name: String) = element.getAttribute(name) != null
+    def hasAttribute(name: String) = element.attribute(name) != null
   }
 
   // need a front api that stores S3 locally so it can run without deps in the unit tests

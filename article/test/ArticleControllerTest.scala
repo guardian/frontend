@@ -124,6 +124,6 @@ import scala.collection.JavaConversions._
 
   "Interactive articles" should "provide a boot.js script element as a main embed" in goTo("/sport/2015/sep/11/how-women-in-tennis-achieved-equal-pay-us-open") { browser =>
     import browser._
-    $(".media-primary > .element-interactive").getAttributes("data-interactive").head should endWith ("boot.js")
+    $(".media-primary > .element-interactive").attributes("data-interactive").head should endWith ("boot.js")
   }
 }
