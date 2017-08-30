@@ -5,6 +5,7 @@ import common.editions.Us
 import org.joda.time.DateTime
 import play.api.libs.json.Json
 import org.joda.time.format.ISODateTimeFormat
+import play.api.libs.json.JodaWrites._
 
 import scala.util.Try
 

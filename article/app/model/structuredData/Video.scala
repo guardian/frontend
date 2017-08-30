@@ -4,6 +4,7 @@ import model.{Article, EndSlateComponents, VideoElement, VideoPlayer}
 import play.api.libs.json.{JsValue, Json}
 import play.twirl.api.Html
 import views.support.Video640
+import play.api.libs.json.JodaWrites._
 
 object Video {
 

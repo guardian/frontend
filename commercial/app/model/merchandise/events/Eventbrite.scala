@@ -49,7 +49,7 @@ object Eventbrite extends ExecutionContexts with Logging {
 
 
   implicit val jodaDateTimeFormats: Format[DateTime] =
-    Format(Reads.jodaDateReads("yyyy-MM-dd'T'HH:mm:ssZ"), Writes.jodaDateWrites("dd MMM yyyy"))
+    Format(JodaReads.jodaDateReads("yyyy-MM-dd'T'HH:mm:ssZ"), JodaWrites.jodaDateWrites("dd MMM yyyy"))
 
   implicit val ticketReads: Reads[Ticket] = (
     (JsPath \ "hidden").read[Boolean] and

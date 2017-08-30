@@ -15,7 +15,7 @@ object LiveEventMembershipInfo {
     override def reads(json: JsValue): JsResult[Seq[LiveEventMembershipInfo]] = {
       json match {
         case JsArray(jsValues) => JsSuccess(jsValues.flatMap(_.asOpt[LiveEventMembershipInfo]))
-        case _ => JsError(Seq(JsPath() -> Seq(ValidationError("error.expected.jsarray containing LiveEventMembershipInfo"))))
+        case _ => JsError(JsonValidationError("error.expected.jsarray containing LiveEventMembershipInfo"))
       }
     }
   }
