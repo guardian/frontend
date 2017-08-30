@@ -20,6 +20,9 @@ jest.mock('lib/fetch-json', () =>
 
 const fetchJsonSpy: any = fetchJson;
 
+// Not yet implemented, see https://github.com/tmpvar/jsdom/issues/961
+HTMLElement.prototype.dataset = {};
+
 describe('Comment Count', () => {
     beforeEach(() => {
         if (document.body) {
@@ -33,6 +36,25 @@ describe('Comment Count', () => {
                 <div class="trail" data-commentcount-format="contentImmersive" data-discussion-id="/p/3ghNp"><a href="/article/4">4</a></div>
             </div>`;
         }
+
+        // Workaround to support dataset lookups
+        const trails = document.getElementsByClassName('trail');
+
+        [...trails].forEach(trail => {
+            trail.dataset = {};
+
+            const data = {
+                discussionClosed: trail.getAttribute('data-discussion-closed'),
+                discussionId: trail.getAttribute('data-discussion-id'),
+                commentcountFormat: trail.getAttribute('data-commentcount-format'),
+            };
+
+            Object.keys(data).forEach(key => {
+                if (data[key]) {
+                    trail.dataset[key] = data[key];
+                }
+            });
+        });
     });
 
     afterEach(() => {

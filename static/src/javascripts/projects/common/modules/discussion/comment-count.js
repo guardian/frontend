@@ -65,14 +65,14 @@ const getContentUrl = (el: HTMLElement): string => {
 };
 
 const updateElement = (el: HTMLElement, count: number): Promise<void> => {
-    const url = el.getAttribute('data-discussion-url') || getContentUrl(el);
+    const url = el.dataset.discussionUrl || getContentUrl(el);
 
-    if (el.getAttribute('data-discussion-closed') === 'true' && count === 0) {
+    if (el.dataset.discussionClosed === 'true' && count === 0) {
         // Discussion is closed and had no comments, we don't want to show a comment count
         return Promise.resolve();
     }
 
-    const format = el.getAttribute('data-commentcount-format') || '';
+    const format = el.dataset.commentcountFormat || '';
     const html = getTemplate(
         {
             url,
