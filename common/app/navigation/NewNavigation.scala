@@ -3,6 +3,7 @@ package navigation
 import NavLinks._
 import common.Edition
 import common.editions
+import conf.switches.Switches.BusinessToBusinessNavLink
 
 case class NavLink(title: String, url: String, uniqueSection: String = "", longTitle: String = "", iconName: String = "")
 case class SectionsLink(pageId: String, navLink: NavLink, parentSection: NewNavigation.EditionalisedNavigationSection)
@@ -347,7 +348,7 @@ object NewNavigation {
     case object businessSubNav extends EditionalisedNavigationSection {
       val name = ""
 
-      val uk = NavLinkLists(List(business, economics, banking, money, markets, eurozone))
+      val uk = NavLinkLists(List(business, economics, banking, money, markets, eurozone) ++ (if(BusinessToBusinessNavLink.isSwitchedOn) List(businessToBusiness) else Nil))
       val us = NavLinkLists(List(business, economics, sustainableBusiness, diversityEquality, smallBusiness))
       val au = NavLinkLists(List(business, markets, money))
       val int = uk
