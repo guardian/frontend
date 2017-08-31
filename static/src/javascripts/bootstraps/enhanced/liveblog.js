@@ -12,12 +12,14 @@ import { catchErrorsWithContext } from 'lib/robust';
 import storyQuestions from 'common/modules/atoms/story-questions';
 
 const affixTimeline = (): void => {
+    const keywordIds = config.get('page.keywordIds', '');
+
     if (
         isBreakpoint({
             min: 'desktop',
         }) &&
-        !config.page.keywordIds.includes('football/football') &&
-        !config.page.keywordIds.includes('sport/rugby-union')
+        !keywordIds.includes('football/football') &&
+        !keywordIds.includes('sport/rugby-union')
     ) {
         // eslint-disable-next-line no-new
         new Affix({
@@ -34,7 +36,7 @@ const affixTimeline = (): void => {
 };
 
 const createAutoUpdate = (): void => {
-    if (config.page.isLive) {
+    if (config.get('page.isLive')) {
         autoUpdate();
     }
 };
