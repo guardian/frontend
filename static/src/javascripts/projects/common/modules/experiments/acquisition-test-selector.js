@@ -22,8 +22,8 @@ import { acquisitionsSupportUSRecurringContribution } from 'common/modules/exper
 const tests: $ReadOnlyArray<AcquisitionsABTest> = [
     alwaysAsk,
     payInEpic,
-    acquisitionsSupportBaseline,
     acquisitionsSupportUSRecurringContribution,
+    acquisitionsSupportBaseline,
     askFourEarning,
     acquisitionsEpicAlwaysAskIfTagged,
     acquisitionsEpicLiveblog,
