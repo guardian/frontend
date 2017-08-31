@@ -124,7 +124,7 @@ const bindEpicInsertAndViewHandlers = (
 };
 
 export const acquisitionsSupportUSRecurringContribution = makeABTest({
-    id: 'AcquisitionsSupportUSRecurringContribution',
+    id: 'AcquisitionsSupportUsRecurringContribution',
     campaignId: 'sandc_support_us_recurring_contribution',
 
     start: '2017-08-31',
@@ -132,7 +132,7 @@ export const acquisitionsSupportUSRecurringContribution = makeABTest({
 
     author: 'justinpinner',
     description:
-        'Test the demand for recurring contributions in the US offering across all channels',
+        'Test demand for recurring contributions in the US across all channels',
     successMeasure: 'Annualised value',
     idealOutcome:
         'The new proposition delivers the same or greater annualised value',
