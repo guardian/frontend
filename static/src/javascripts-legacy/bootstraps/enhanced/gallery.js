@@ -23,7 +23,7 @@ define([
             mostViewed.fetch(container, 'html');
         },
         ready = function () {
-            trail();
+            trail.initTrails();
 
             mediator.emit('page:gallery:ready');
             if (config.page.showRelatedContent) {

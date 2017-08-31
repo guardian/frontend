@@ -15,7 +15,7 @@ import { geoMostPopular } from 'common/modules/onward/geo-most-popular';
 import { handleCompletion as handleQuizCompletion } from 'common/modules/atoms/quiz';
 import storyQuestions from 'common/modules/atoms/story-questions';
 import { init as initLiveblogCommon } from 'bootstraps/enhanced/article-liveblog-common';
-import trail from 'bootstraps/enhanced/trail';
+import { initTrails } from 'bootstraps/enhanced/trail';
 import ophan from 'ophan/ng';
 import { SnippetFeedback } from 'journalism/snippet-feedback';
 import { init as initStoryQuiz } from 'journalism/storyquiz';
@@ -56,7 +56,7 @@ const modules = {
 };
 
 const init = () => {
-    trail();
+    initTrails();
     initLiveblogCommon();
     modules.initRightHandComponent();
     modules.initCmpParam();
