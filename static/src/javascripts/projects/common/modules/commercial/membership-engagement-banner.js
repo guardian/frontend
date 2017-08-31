@@ -123,7 +123,9 @@ const showBanner = (params: EngagementBannerParams): void => {
         REFPVID: params.pageviewId,
         INTCMP: params.campaignCode,
     };
-    const linkUrl = `${params.linkUrl}${params.linkUrl.indexOf('?') > 0 ? '&' : '?'}${constructQuery(urlParameters)}`;
+    const linkUrl = `${params.linkUrl}${params.linkUrl.indexOf('?') > 0
+        ? '&'
+        : '?'}${constructQuery(urlParameters)}`;
     const buttonCaption = params.buttonCaption;
     const buttonSvg = inlineSvg('arrowWhiteRight');
     const renderedBanner = `

@@ -20,10 +20,20 @@ const getREFPVID = (): string =>
     (config.ophan && config.ophan.pageViewId) || 'not_found';
 
 const buildURL = (url: string, campaignCode: string): string =>
-    `${url}${url.indexOf('?') > 0 ? '&' : '?'}INTCMP=${campaignCode}&REFPVID=${getREFPVID()}`;
+    `${url}${url.indexOf('?') > 0
+        ? '&'
+        : '?'}INTCMP=${campaignCode}&REFPVID=${getREFPVID()}`;
 
-const makeSupportURL = (campaignCode: string, context: Boolean = false): string =>
-    buildURL(`https://support.theguardian.com/us/contribute${context ? '?context=true' : ''}`, campaignCode);
+const makeSupportURL = (
+    campaignCode: string,
+    context: boolean = false
+): string =>
+    buildURL(
+        `https://support.theguardian.com/us/contribute${context
+            ? '?context=true'
+            : ''}`,
+        campaignCode
+    );
 
 const makeBecomeSupporterURL = (campaignCode: string): string =>
     buildURL('https://membership.theguardian.com/us/supporter', campaignCode);
@@ -239,13 +249,15 @@ export const acquisitionsSupportUsRecurringContribution = makeABTest({
 
                     changeHeaderLinks(
                         makeSupportURL(
-                            `${baseCampaignCode}_support_header_become_supporter`, true
+                            `${baseCampaignCode}_support_header_become_supporter`,
+                            true
                         )
                     );
 
                     changeSideMenuLinks(
                         makeSupportURL(
-                            `${baseCampaignCode}_support_side_menu_become_supporter`, true
+                            `${baseCampaignCode}_support_side_menu_become_supporter`,
+                            true
                         )
                     );
                 },
