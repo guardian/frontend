@@ -14,10 +14,7 @@
         ))
         <div class="fc-item__content">
             <div class="fc-item__header">
-                <div class="fc-item__title">
-                    @item.paidIcon.map(icon => fragments.inlineSvg(icon, "icon"))
-                    @item.header.headline
-                </div>
+                @title(item.header, index, containerIndex, snapType = item.snapStuff.map(_.snapType))
             </div>
 
             @item.trailText.filter(const(item.showStandfirst)).map { text =>
