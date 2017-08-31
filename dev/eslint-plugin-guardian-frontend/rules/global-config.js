@@ -8,12 +8,7 @@ module.exports = {
         return {
             Identifier: node => {
                 if (node.name === 'config') {
-                    const [
-                        dot1,
-                        parent,
-                        dot2,
-                        grandparent,
-                    ] = context
+                    const [dot1, parent, dot2, grandparent] = context
                         .getSourceCode()
                         .getTokensBefore(node, 4)
                         .reverse();

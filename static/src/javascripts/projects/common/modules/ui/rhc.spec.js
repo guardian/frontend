@@ -31,7 +31,11 @@ describe('rhc', () => {
         setFixture('<div class="js-components-container"></div>');
         addComponent(content, importance);
 
-        expect($(selector).first().data('importance')).toEqual(importance);
+        expect(
+            $(selector)
+                .first()
+                .data('importance')
+        ).toEqual(importance);
     });
 
     test('prepends component in non-empty rhc container before inferior components', () => {
@@ -58,7 +62,15 @@ describe('rhc', () => {
         `);
         addComponent(content, importance);
 
-        expect($(selector).first().get(0).id).toEqual(id);
-        expect($(selector).last().get(0).id).toEqual(inferiorId);
+        expect(
+            $(selector)
+                .first()
+                .get(0).id
+        ).toEqual(id);
+        expect(
+            $(selector)
+                .last()
+                .get(0).id
+        ).toEqual(inferiorId);
     });
 });

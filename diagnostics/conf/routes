@@ -11,5 +11,3 @@ GET        /robots.txt                      controllers.Assets.at(path="/public"
 POST       /commercial-report               controllers.DiagnosticsController.commercialReport
 OPTIONS    /commercial-report               controllers.DiagnosticsController.commercialOptions
 GET        /commercial-reports/:dateTime    controllers.DiagnosticsController.commercialReports(dateTime)
-
-GET        /esi/ad-call                     controllers.CommercialPreflightController.adCall()

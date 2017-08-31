@@ -16,7 +16,11 @@ const format = (keyword: string): string =>
     keyword.replace(/[+\s]+/g, '-').toLowerCase();
 
 const formatTarget = (target: ?string): ?string =>
-    target ? format(target).replace(/&/g, 'and').replace(/'/g, '') : null;
+    target
+        ? format(target)
+              .replace(/&/g, 'and')
+              .replace(/'/g, '')
+        : null;
 
 const abParam = (): Array<string> => {
     const abParticipations: Object = getParticipations();

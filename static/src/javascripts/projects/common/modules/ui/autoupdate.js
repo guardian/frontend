@@ -9,7 +9,7 @@ import fastdom from 'lib/fastdom-promise';
 import fetchJSON from 'lib/fetch-json';
 import { isBreakpoint, pageVisible, initPageVisibility } from 'lib/detect';
 import mediator from 'lib/mediator';
-import twitter from 'common/modules/article/twitter';
+import { enhanceTweets } from 'common/modules/article/twitter';
 import { Sticky } from 'common/modules/ui/sticky';
 import { scrollToElement } from 'lib/scroller';
 import RelativeDates from 'common/modules/ui/relativedates';
@@ -102,7 +102,7 @@ const autoUpdate = (opts?: autoUpdateOptions): void => {
             mediator.emit('modules:autoupdate:updates', elementsToAdd.length);
 
             RelativeDates.init();
-            twitter.enhanceTweets();
+            enhanceTweets();
             checkElemsForVideos(elementsToAdd);
         });
     };

@@ -51,7 +51,10 @@ const addToShareCount = (val: number): void => {
         icon: shareSvg,
     });
 
-    $shareCountEls.removeClass('u-h').html(html).css('display', '');
+    $shareCountEls
+        .removeClass('u-h')
+        .html(html)
+        .css('display', '');
 
     $shortValueEls = $('.sharecount__value--short', $shareCountEls[0]);
     $fullValueEls = $('.sharecount__value--full', $shareCountEls[0]);

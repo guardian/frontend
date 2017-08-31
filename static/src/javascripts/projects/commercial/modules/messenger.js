@@ -25,7 +25,8 @@ type Event = {
 type StandardMessage = {
     id: string,
     type: string,
-    iframeId: string,
+    iframeId: ?string,
+    slotId: ?string,
     value: {
         height: number,
         width: number,
@@ -38,7 +39,8 @@ type StandardMessage = {
 type ProgrammaticMessage = {
     type: string,
     value: {
-        id: string,
+        id: ?string,
+        slotId: ?string,
         height: number,
         width: number,
     },
@@ -48,13 +50,14 @@ const isProgrammaticMessage = (
     payload: ProgrammaticMessage | StandardMessage
 ): boolean =>
     payload.type === 'set-ad-height' &&
-    'id' in payload.value &&
+    ('id' in payload.value || 'slotId' in payload.value) &&
     'height' in payload.value;
 
 const toStandardMessage = (payload: ProgrammaticMessage): StandardMessage => ({
     id: 'aaaa0000-bb11-cc22-dd33-eeeeee444444',
     type: 'resize',
     iframeId: payload.value.id,
+    slotId: payload.value.slotId,
     value: {
         height: +payload.value.height,
         width: +payload.value.width,
@@ -63,8 +66,17 @@ const toStandardMessage = (payload: ProgrammaticMessage): StandardMessage => ({
 
 // Incoming messages contain the ID of the iframe into which the
 // source window is embedded.
-const getIframe = (data: StandardMessage): ?HTMLElement =>
-    document.getElementById(data.iframeId);
+const getIframe = (data: StandardMessage): ?HTMLElement => {
+    if (data.slotId) {
+        const container = document.getElementById(`dfp-ad--${data.slotId}`);
+        const iframes = container
+            ? container.getElementsByTagName('iframe')
+            : null;
+        return iframes && iframes.length ? iframes[0] : null;
+    } else if (data.iframeId) {
+        return document.getElementById(data.iframeId);
+    }
+};
 
 // Until DFP provides a way for us to identify with 100% certainty our
 // in-house creatives, we are left with doing some basic tests

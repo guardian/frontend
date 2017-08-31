@@ -50,10 +50,16 @@ describe('Outbrain Load', () => {
             config.page.section = 'uk-news';
 
             load('compliant').then(() => {
-                expect($('.OUTBRAIN').first().data('widgetId')).toEqual(
-                    'AR_12'
-                );
-                expect($('.OUTBRAIN').last().data('widgetId')).toEqual('AR_14');
+                expect(
+                    $('.OUTBRAIN')
+                        .first()
+                        .data('widgetId')
+                ).toEqual('AR_12');
+                expect(
+                    $('.OUTBRAIN')
+                        .last()
+                        .data('widgetId')
+                ).toEqual('AR_14');
                 expect(tracking).toHaveBeenCalledWith({
                     widgetId: 'AR_12',
                 });
@@ -66,10 +72,16 @@ describe('Outbrain Load', () => {
             config.page.section = 'football';
 
             load('compliant').then(() => {
-                expect($('.OUTBRAIN').first().data('widgetId')).toEqual(
-                    'AR_13'
-                );
-                expect($('.OUTBRAIN').last().data('widgetId')).toEqual('AR_15');
+                expect(
+                    $('.OUTBRAIN')
+                        .first()
+                        .data('widgetId')
+                ).toEqual('AR_13');
+                expect(
+                    $('.OUTBRAIN')
+                        .last()
+                        .data('widgetId')
+                ).toEqual('AR_15');
                 expect(tracking).toHaveBeenCalledWith({
                     widgetId: 'AR_13',
                 });
@@ -82,9 +94,11 @@ describe('Outbrain Load', () => {
             config.page.edition = 'AU';
 
             load('merchandising').then(() => {
-                expect($('.OUTBRAIN').first().data('widgetId')).toEqual(
-                    'AR_28'
-                );
+                expect(
+                    $('.OUTBRAIN')
+                        .first()
+                        .data('widgetId')
+                ).toEqual('AR_28');
                 expect(tracking).toHaveBeenCalledWith({
                     widgetId: 'AR_28',
                 });
@@ -97,9 +111,11 @@ describe('Outbrain Load', () => {
             config.page.edition = 'AU';
 
             load('nonCompliant').then(() => {
-                expect($('.OUTBRAIN').first().data('widgetId')).toEqual(
-                    'AR_28'
-                );
+                expect(
+                    $('.OUTBRAIN')
+                        .first()
+                        .data('widgetId')
+                ).toEqual('AR_28');
                 expect(tracking).toHaveBeenCalledWith({
                     widgetId: 'AR_28',
                 });
@@ -118,8 +134,16 @@ describe('Outbrain Load', () => {
             config.page.section = 'uk-news';
 
             load('compliant').then(() => {
-                expect($('.OUTBRAIN').first().data('widgetId')).toEqual('MB_6');
-                expect($('.OUTBRAIN').last().data('widgetId')).toEqual('MB_8');
+                expect(
+                    $('.OUTBRAIN')
+                        .first()
+                        .data('widgetId')
+                ).toEqual('MB_6');
+                expect(
+                    $('.OUTBRAIN')
+                        .last()
+                        .data('widgetId')
+                ).toEqual('MB_8');
                 expect(tracking).toHaveBeenCalledWith({
                     widgetId: 'MB_6',
                 });
@@ -132,8 +156,16 @@ describe('Outbrain Load', () => {
             config.page.section = 'football';
 
             load('compliant').then(() => {
-                expect($('.OUTBRAIN').first().data('widgetId')).toEqual('MB_7');
-                expect($('.OUTBRAIN').last().data('widgetId')).toEqual('MB_9');
+                expect(
+                    $('.OUTBRAIN')
+                        .first()
+                        .data('widgetId')
+                ).toEqual('MB_7');
+                expect(
+                    $('.OUTBRAIN')
+                        .last()
+                        .data('widgetId')
+                ).toEqual('MB_9');
                 expect(tracking).toHaveBeenCalledWith({
                     widgetId: 'MB_7',
                 });
@@ -146,9 +178,11 @@ describe('Outbrain Load', () => {
             config.page.edition = 'AU';
 
             load('merchandising').then(() => {
-                expect($('.OUTBRAIN').first().data('widgetId')).toEqual(
-                    'MB_11'
-                );
+                expect(
+                    $('.OUTBRAIN')
+                        .first()
+                        .data('widgetId')
+                ).toEqual('MB_11');
                 expect(tracking).toHaveBeenCalledWith({
                     widgetId: 'MB_11',
                 });
@@ -159,9 +193,11 @@ describe('Outbrain Load', () => {
         // non-compliant
         it('should create one container for tablet with correct IDs for nonCompliant', done => {
             load('nonCompliant').then(() => {
-                expect($('.OUTBRAIN').first().data('widgetId')).toEqual(
-                    'MB_11'
-                );
+                expect(
+                    $('.OUTBRAIN')
+                        .first()
+                        .data('widgetId')
+                ).toEqual('MB_11');
                 expect(tracking).toHaveBeenCalledWith({
                     widgetId: 'MB_11',
                 });
@@ -180,7 +216,11 @@ describe('Outbrain Load', () => {
             config.page.section = 'uk-news';
 
             load('compliant').then(() => {
-                expect($('.OUTBRAIN').first().data('widgetId')).toEqual('MB_4');
+                expect(
+                    $('.OUTBRAIN')
+                        .first()
+                        .data('widgetId')
+                ).toEqual('MB_4');
                 expect(tracking).toHaveBeenCalledWith({
                     widgetId: 'MB_4',
                 });
@@ -193,7 +233,11 @@ describe('Outbrain Load', () => {
             config.page.section = 'football';
 
             load('compliant').then(() => {
-                expect($('.OUTBRAIN').first().data('widgetId')).toEqual('MB_5');
+                expect(
+                    $('.OUTBRAIN')
+                        .first()
+                        .data('widgetId')
+                ).toEqual('MB_5');
                 expect(tracking).toHaveBeenCalledWith({
                     widgetId: 'MB_5',
                 });
@@ -206,9 +250,11 @@ describe('Outbrain Load', () => {
             config.page.edition = 'AU';
 
             load('merchandising').then(() => {
-                expect($('.OUTBRAIN').first().data('widgetId')).toEqual(
-                    'MB_10'
-                );
+                expect(
+                    $('.OUTBRAIN')
+                        .first()
+                        .data('widgetId')
+                ).toEqual('MB_10');
                 expect(tracking).toHaveBeenCalledWith({
                     widgetId: 'MB_10',
                 });
@@ -219,9 +265,11 @@ describe('Outbrain Load', () => {
         // non-compliant
         it('should create one container for mobile with correct IDs for nonCompliant', done => {
             load('nonCompliant').then(() => {
-                expect($('.OUTBRAIN').first().data('widgetId')).toEqual(
-                    'MB_10'
-                );
+                expect(
+                    $('.OUTBRAIN')
+                        .first()
+                        .data('widgetId')
+                ).toEqual('MB_10');
                 expect(tracking).toHaveBeenCalledWith({
                     widgetId: 'MB_10',
                 });

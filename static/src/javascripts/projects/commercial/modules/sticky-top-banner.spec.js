@@ -144,15 +144,17 @@ describe('Sticky ad banner', () => {
             topSlot.style.paddingBottom = `${paddingBottom}px`;
         }
 
-        return initStickyTopBanner().then(() => update(height)).then(() => {
-            if (!stickyBanner) {
-                throw Error('missing sticky banner element');
-            } else {
-                expect(stickyBanner.style.height).toBe(
-                    `${height + padingTop + paddingBottom}px`
-                );
-            }
-        });
+        return initStickyTopBanner()
+            .then(() => update(height))
+            .then(() => {
+                if (!stickyBanner) {
+                    throw Error('missing sticky banner element');
+                } else {
+                    expect(stickyBanner.style.height).toBe(
+                        `${height + padingTop + paddingBottom}px`
+                    );
+                }
+            });
     });
 
     it('should reset the banner position and top styles at the top of the page', () =>
@@ -168,13 +170,15 @@ describe('Sticky ad banner', () => {
     it('should position the banner absolutely past the header', () => {
         window.pageYOffset = 501;
 
-        return initStickyTopBanner().then(onScroll).then(() => {
-            if (!stickyBanner) {
-                throw Error('missing header or sticky banner element');
-            } else {
-                expect(stickyBanner.style.position).toBe('absolute');
-                expect(stickyBanner.style.top).toBe('500px');
-            }
-        });
+        return initStickyTopBanner()
+            .then(onScroll)
+            .then(() => {
+                if (!stickyBanner) {
+                    throw Error('missing header or sticky banner element');
+                } else {
+                    expect(stickyBanner.style.position).toBe('absolute');
+                    expect(stickyBanner.style.top).toBe('500px');
+                }
+            });
     });
 });

@@ -62,8 +62,16 @@ const createVideoPlayer = (el: HTMLElement, options: Object): any => {
         player.guAutoplay = $(el).attr('data-auto-play') === 'true';
 
         // need to explicitly set the dimensions for the ima plugin.
-        player.height(bonzo(player.el()).parent().dim().height);
-        player.width(bonzo(player.el()).parent().dim().width);
+        player.height(
+            bonzo(player.el())
+                .parent()
+                .dim().height
+        );
+        player.width(
+            bonzo(player.el())
+                .parent()
+                .dim().width
+        );
     });
 
     return player;
@@ -316,7 +324,9 @@ const initPlayButtons = (root: ?HTMLElement): void => {
         $('.js-video-play-button', root).each(el => {
             const $el = bonzo(el);
             bean.on(el, 'click', () => {
-                const container = bonzo(el).parent().parent();
+                const container = bonzo(el)
+                    .parent()
+                    .parent();
                 const placeholder = $('.js-video-placeholder', container);
                 const player = $('.js-video-player', container);
 

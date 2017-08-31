@@ -1,7 +1,6 @@
 @(page: model.Page, projectName: Option[String] = None, head: Html)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @import model.Page.getContent
-@import conf.switches.Switches.{preflightServerSideAdCallSwitch}
 @import conf.Static
 @import implicits.Strings.String2Uri
 @import views.support.JavaScriptPage.getMap
@@ -27,14 +26,6 @@ Example: http://output.jsbin.com/jodureg/1
 <script>
     window.console = window.console || undefined;
 </script>
-
-@if(preflightServerSideAdCallSwitch.isSwitchedOn) {
-    @defining(getMap(page)
-        .filter( { case (key: String, _) => key == "sharedAdTargeting"} )
-        .map( { case (key, value) => (key, value.toString)}) ) { (params: Map[String, String]) =>
-        <!--esi <esi:include src="@{"/esi/ad-call".appendQueryParams(params)}" /> -->
-    }
-}
 
 @* inline JS - blocking *@
 @fragments.inlineJSBlocking(page)
