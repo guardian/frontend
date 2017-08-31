@@ -2,11 +2,9 @@ package controllers.admin
 
 import implicits.Requests
 import play.api.mvc.{BaseController, ControllerComponents}
-import common.Logging
+import common.{ExecutionContexts, Logging}
 import tools.CloudWatch
-import play.api.libs.ws.{WSAuthScheme, WSClient}
-import play.api.libs.concurrent.Execution.Implicits._
-import play.api.libs.json.Json
+import play.api.libs.ws.WSClient
 import conf.Configuration
 import model.{ApplicationContext, NoCache}
 import conf.switches.{Switch, Switches}
@@ -18,7 +16,7 @@ class RadiatorController(
   wsClient: WSClient,
   val controllerComponents: ControllerComponents
 )(implicit context: ApplicationContext)
-  extends BaseController with Logging with Requests{
+  extends BaseController with Logging with Requests with ExecutionContexts {
 
   // if you are reading this you are probably being rate limited...
   // you can read about github rate limiting here http://developer.github.com/v3/#rate-limiting

@@ -1,15 +1,14 @@
 package controllers.admin
 
-import common.Logging
+import common.{ExecutionContexts, Logging}
 import implicits.Requests
 import model.NoCache
 import model.deploys.{ApiResults, RiffRaffService}
 import play.api.mvc._
-import play.api.libs.concurrent.Execution.Implicits._
 import model.deploys._
 import play.api.libs.ws.WSClient
 
-trait DeploysController extends BaseController with Logging with Requests {
+trait DeploysController extends BaseController with Logging with Requests with ExecutionContexts {
 
   val riffRaff: RiffRaffService
 
