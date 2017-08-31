@@ -19,22 +19,17 @@ export const forgottenEmail = (): void => {
 };
 
 export const passwordToggle = (): void => {
-    let password;
-    let toggleClass;
-    let toggleTmpl;
-    let $toggle;
-
     if (document.body) {
         const form = document.body.querySelector('.js-register-form');
         if (form) {
-            password = form.querySelector('.js-register-password');
-            toggleClass = 'js-toggle-password';
-            toggleTmpl =
-                `${'<div class="form-field__note form-field__note--right mobile-only">' +
-                    '<a href="#toggle-password" class="'}${toggleClass}" data-password-label="Show password"` +
-                ` data-text-label="Hide password" data-link-name="Toggle password field">Show password</a>` +
-                `</div>`;
-            $toggle = bonzo(bonzo.create(toggleTmpl)).insertBefore(password);
+            const password = form.querySelector('.js-register-password');
+            const toggleClass = 'js-toggle-password';
+            const toggleTmpl =
+                `<div class="form-field__note form-field__note--right mobile-only"> 
+                    <a href="#toggle-password" class="'${toggleClass}" data-password-label="Show password"
+                    data-text-label="Hide password" data-link-name="Toggle password field">Show password</a>
+                </div>`;
+            const $toggle = bonzo(bonzo.create(toggleTmpl)).insertBefore(password);
 
             $toggle.previous().addClass('form-field__note--left');
 
