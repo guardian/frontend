@@ -20,6 +20,7 @@ module.exports = {
         'import/extensions': 'off',
         'import/no-webpack-loader-syntax': 'off', // used for require plugins still
         'import/no-namespace': 2,
+        'import/prefer-default-export': 'off', // we explicitly warn against default export below
 
         // these are bad habits in react that we're already abusing.
         // if we go more [p]react we should look at them.
@@ -78,7 +79,7 @@ module.exports = {
         'guardian-frontend/global-config': 'error',
         'guardian-frontend/no-multiple-classlist-parameters': 'error',
         'guardian-frontend/no-default-export': 'warn',
-        'import/prefer-default-export': 'off',
+        'guardian-frontend/no-direct-access-config': 'warn',
 
         // flow should take care of our return values
         'consistent-return': 'off',
