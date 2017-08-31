@@ -109,6 +109,7 @@ const addEpicToBlocks = (epicHtml: string, test: EpicABTest): Promise<void> =>
                 fastdom.write(() => {
                     const $epic = $.create(epicHtml);
                     $epic.insertAfter(el);
+                    mediator.emit(test.insertEvent);
                     $(el).removeClass(INSERT_EPIC_AFTER_CLASS);
                     setEpicLiveblogEntryTimeData($epic[0], timeData);
                     setupViewTracking(el, test);
@@ -116,6 +117,20 @@ const addEpicToBlocks = (epicHtml: string, test: EpicABTest): Promise<void> =>
             });
         });
     });
+
+export const setupEpicInLiveblog = (
+    epicHtml: string,
+    test: EpicABTest
+): void => {
+    addEpicToBlocks(epicHtml, test);
+
+    if (!isAutoUpdateHandlerBound) {
+        mediator.on('modules:autoupdate:updates', () => {
+            addEpicToBlocks(epicHtml, test);
+        });
+        isAutoUpdateHandlerBound = true;
+    }
+};
 
 export const acquisitionsEpicLiveblog: EpicABTest = makeABTest({
     id: 'AcquisitionsEpicLiveblog',
@@ -160,15 +175,7 @@ export const acquisitionsEpicLiveblog: EpicABTest = makeABTest({
 
                 test(renderFn, variant, test) {
                     const epicHtml = variant.options.template(variant);
-                    addEpicToBlocks(epicHtml, test);
-                    mediator.emit(test.insertEvent);
-
-                    if (!isAutoUpdateHandlerBound) {
-                        mediator.on('modules:autoupdate:updates', () => {
-                            addEpicToBlocks(epicHtml, test);
-                        });
-                        isAutoUpdateHandlerBound = true;
-                    }
+                    setupEpicInLiveblog(epicHtml, test);
                 },
             },
         },

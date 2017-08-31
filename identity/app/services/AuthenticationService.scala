@@ -6,7 +6,7 @@ import conf.FrontendIdentityCookieDecoder
 import idapiclient.ScGuU
 import play.api.mvc.{RequestHeader, Results}
 import scala.language.implicitConversions
-import com.github.nscala_time.time.Imports._
+import org.joda.time.Minutes
 
 object AuthenticatedUser {
   implicit def authUserToUser(authUser: AuthenticatedUser) = authUser.user
@@ -29,7 +29,7 @@ class AuthenticationService(cookieDecoder: FrontendIdentityCookieDecoder,
   def recentlyAuthenticated(request: RequestHeader): Boolean = (for {
     authedUser <- authenticatedUserFor(request)
     scGuLa <- request.cookies.get("SC_GU_LA")
-  } yield cookieDecoder.userHasRecentScGuLaCookie(authedUser, scGuLa.value, 20.minutes)).getOrElse(false)
+  } yield cookieDecoder.userHasRecentScGuLaCookie(authedUser, scGuLa.value, Minutes.minutes(20).toStandardDuration)).getOrElse(false)
 
   def requestPresentsAuthenticationCredentials(request: RequestHeader) = authenticatedUserFor(request).isDefined
 

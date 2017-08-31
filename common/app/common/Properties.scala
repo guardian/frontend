@@ -1,10 +1,14 @@
 package common
 
-import org.apache.commons.io.IOUtils
-import java.io.{FileInputStream, File, InputStream}
+import java.io.{File, FileInputStream, InputStream}
+
 import scala.collection.JavaConversions._
 import java.net.URL
+import java.nio.charset.Charset
+
 import implicits.AutomaticResourceManagement
+import org.apache.commons.io.IOUtils
+
 import scala.language.reflectiveCalls
 
 object Properties extends AutomaticResourceManagement {
@@ -14,7 +18,7 @@ object Properties extends AutomaticResourceManagement {
     properties.toMap
   }
 
-  def apply(text: String): Map[String, String] = apply(IOUtils.toInputStream(text))
+  def apply(text: String): Map[String, String] = apply(IOUtils.toInputStream(text, Charset.defaultCharset()))
   def apply(file: File): Map[String, String] = apply(new FileInputStream(file))
   def apply(url: URL): Map[String, String] = apply(url.openStream)
 }

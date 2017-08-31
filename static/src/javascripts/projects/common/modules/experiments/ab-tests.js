@@ -2,7 +2,6 @@
 import { isExpired } from 'common/modules/experiments/test-can-run-checks';
 import { removeParticipation } from 'common/modules/experiments/utils';
 import { getTest as getAcquisitionTest } from 'common/modules/experiments/acquisition-test-selector';
-import { membershipEngagementBannerTests } from 'common/modules/experiments/tests/membership-engagement-banner-tests';
 import { paidContentVsOutbrain2 } from 'common/modules/experiments/tests/paid-content-vs-outbrain';
 import { tailorSurvey } from 'common/modules/experiments/tests/tailor-survey';
 import { outstreamFrequencyCapHoldback } from 'common/modules/experiments/tests/outstream-cap-holdback';
@@ -16,9 +15,7 @@ export const TESTS: $ReadOnlyArray<ABTest> = [
     acquisitionsEpicElectionInteractiveEnd,
     acquisitionsEpicElectionInteractiveSlice,
     outstreamFrequencyCapHoldback,
-]
-    .concat(membershipEngagementBannerTests)
-    .filter(Boolean);
+].filter(Boolean);
 
 export const getActiveTests = (): $ReadOnlyArray<ABTest> =>
     TESTS.filter(test => {

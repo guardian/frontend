@@ -1,16 +1,18 @@
 package common
 
 import java.io.{File, FileInputStream}
+import java.nio.charset.Charset
 import java.util.Map.Entry
 
 import com.amazonaws.AmazonClientException
 import com.amazonaws.auth._
 import com.amazonaws.auth.profile.ProfileCredentialsProvider
-import com.gu.cm.{ClassPathConfigurationSource, FileConfigurationSource, PlayDefaultLogger, _}
+import com.gu.cm._
 import com.typesafe.config.ConfigException
 import conf.switches.Switches
 import conf.{Configuration, Static}
 import org.apache.commons.io.IOUtils
+
 import scala.collection.JavaConversions._
 import scala.concurrent.duration._
 import scala.util.{Failure, Success, Try}
@@ -20,7 +22,7 @@ class BadConfigurationException(msg: String) extends RuntimeException(msg)
 object InstallVars {
 
   val installVars = new File("/etc/gu/install_vars") match {
-      case f if f.exists => IOUtils.toString(new FileInputStream(f))
+      case f if f.exists => IOUtils.toString(new FileInputStream(f), Charset.defaultCharset())
       case _ => ""
     }
 
@@ -71,11 +73,11 @@ object GuardianConfiguration extends Logging {
     lazy val runtimeOnly = FileConfigurationSource("/etc/gu/frontend.conf")
     lazy val identity = AwsApplication(stack, app, stage, awsRegion)
     lazy val commonS3Config = S3ConfigurationSource(identity, configBucket, Configuration.aws.mandatoryCredentials, Some(s3ConfigVersion))
-    lazy val config = new CM(List(userPrivate, runtimeOnly, commonS3Config), PlayDefaultLogger).load.resolve
+    lazy val config = new CM(List(userPrivate, runtimeOnly, commonS3Config), SysOutLogger).load.resolve
 
     // test mode is self contained and won't need to use anything secret
     lazy val test = ClassPathConfigurationSource("env/DEVINFRA.properties")
-    lazy val testConfig = new CM(List(test), PlayDefaultLogger).load.resolve
+    lazy val testConfig = new CM(List(test), SysOutLogger).load.resolve
 
     val appConfig =
       if (stage == "DEVINFRA") testConfig
