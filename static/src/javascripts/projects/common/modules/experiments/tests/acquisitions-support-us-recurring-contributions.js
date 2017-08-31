@@ -96,8 +96,12 @@ const changeLinks = (cssClass: string, link: string) => {
     });
 };
 
-const changeHeaderLinks = (becomeSupporterLink: string) => {
-    changeLinks('js-change-become-member-link', becomeSupporterLink);
+const changeHeaderLinks = (
+    becomeSupporterLinkDesktop: string,
+    makeContributionLinkMobile: string
+) => {
+    changeLinks('js-change-become-member-link', makeContributionLinkMobile);
+    changeLinks('js-become-member', becomeSupporterLinkDesktop);
 };
 
 const changeSideMenuLinks = (becomeSupporterLink: string) => {
@@ -194,6 +198,9 @@ export const acquisitionsSupportUsRecurringContribution = makeABTest({
                     }
 
                     changeHeaderLinks(
+                        makeBecomeSupporterURL(
+                            `${baseCampaignCode}_control_header_become_supporter`
+                        ),
                         makeContributionURL(
                             `${baseCampaignCode}_control_header_become_supporter`
                         )
@@ -248,6 +255,10 @@ export const acquisitionsSupportUsRecurringContribution = makeABTest({
                     }
 
                     changeHeaderLinks(
+                        makeSupportURL(
+                            `${baseCampaignCode}_support_header_become_supporter`,
+                            true
+                        ),
                         makeSupportURL(
                             `${baseCampaignCode}_support_header_become_supporter`,
                             true
