@@ -1,6 +1,5 @@
 package frontpress
 
-import com.amazonaws.regions.{Region, Regions}
 import com.amazonaws.services.sqs.AmazonSQSAsyncClient
 import common._
 import conf.Configuration
@@ -13,7 +12,7 @@ class ToolPressQueueWorker(liveFapiFrontPress: LiveFapiFrontPress, draftFapiFron
     val credentials = Configuration.aws.mandatoryCredentials
 
     JsonMessageQueue[PressJob](
-      new AmazonSQSAsyncClient(credentials).withRegion(Region.getRegion(Regions.EU_WEST_1)),
+      AmazonSQSAsyncClient.asyncBuilder.withCredentials(credentials).withRegion(conf.Configuration.aws.region).build(),
       queueUrl
     )
   }) getOrElse {

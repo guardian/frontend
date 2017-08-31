@@ -6,16 +6,20 @@ import $ from 'lib/$';
 import { isBreakpoint } from 'lib/detect';
 import mediator from 'lib/mediator';
 import { getUrlVars } from 'lib/url';
-import richLinks from 'common/modules/article/rich-links';
+import {
+    insertTagRichLink,
+    upgradeRichLinks,
+} from 'common/modules/article/rich-links';
 import { upgradeMembershipEvents } from 'common/modules/article/membership-events';
 import { geoMostPopular } from 'common/modules/onward/geo-most-popular';
-import quiz from 'common/modules/atoms/quiz';
+import { handleCompletion as handleQuizCompletion } from 'common/modules/atoms/quiz';
 import storyQuestions from 'common/modules/atoms/story-questions';
 import { init as initLiveblogCommon } from 'bootstraps/enhanced/article-liveblog-common';
 import trail from 'bootstraps/enhanced/trail';
 import ophan from 'ophan/ng';
 import { SnippetFeedback } from 'journalism/snippet-feedback';
 import { init as initStoryQuiz } from 'journalism/storyquiz';
+import { init as initJTBD } from 'journalism/jtbd-survey';
 
 const modules = {
     initCmpParam() {
@@ -57,14 +61,15 @@ const init = () => {
     modules.initRightHandComponent();
     modules.initCmpParam();
     modules.initQuizListeners();
-    richLinks.upgradeRichLinks();
-    richLinks.insertTagRichLink();
+    upgradeRichLinks();
+    insertTagRichLink();
     upgradeMembershipEvents();
     mediator.emit('page:article:ready');
-    quiz.handleCompletion();
+    handleQuizCompletion();
     storyQuestions.init();
     initStoryQuiz();
     SnippetFeedback();
+    initJTBD();
 };
 
 export { init };

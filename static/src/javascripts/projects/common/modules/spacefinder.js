@@ -27,7 +27,7 @@ type SpacefinderExclusion = {
     minBelow: number,
 };
 
-type SpacefinderRules = {
+export type SpacefinderRules = {
     bodySelector: string,
     body?: Node,
     slotSelector: string,

@@ -1,13 +1,12 @@
 package model.diagnostics
 
 import com.amazonaws.handlers.AsyncHandler
-import com.amazonaws.services.cloudwatch.AmazonCloudWatchAsyncClient
+import com.amazonaws.services.cloudwatch.{AmazonCloudWatchAsync, AmazonCloudWatchAsyncClient}
 import com.amazonaws.services.cloudwatch.model._
 import common.Logging
 import conf.Configuration
 import conf.Configuration._
-import metrics.{FrontendStatisticSet, FrontendMetric}
-import services.AwsEndpoints
+import metrics.{FrontendMetric, FrontendStatisticSet}
 
 import scala.collection.JavaConversions._
 
@@ -15,10 +14,12 @@ trait CloudWatch extends Logging {
 
   lazy val stageDimension = new Dimension().withName("Stage").withValue(environment.stage)
 
-  lazy val cloudwatch: Option[AmazonCloudWatchAsyncClient] = Configuration.aws.credentials.map{ credentials =>
-    val client = new AmazonCloudWatchAsyncClient(credentials)
-    client.setEndpoint(AwsEndpoints.monitoring)
-    client
+  lazy val cloudwatch: Option[AmazonCloudWatchAsync] = Configuration.aws.credentials.map{ credentials =>
+    AmazonCloudWatchAsyncClient
+      .asyncBuilder()
+      .withCredentials(credentials)
+      .withRegion(conf.Configuration.aws.region)
+      .build()
   }
 
   trait LoggingAsyncHandler extends AsyncHandler[PutMetricDataRequest, PutMetricDataResult] with Logging

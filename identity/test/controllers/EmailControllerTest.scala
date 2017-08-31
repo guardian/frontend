@@ -2,21 +2,18 @@ package controllers
 
 import actions.AuthenticatedActions.AuthRequest
 import com.gu.identity.cookie.GuUCookieData
-import org.mockito.Matchers
-import org.scalatest.{DoNotDiscover, ShouldMatchers, WordSpec}
-import play.api.libs.crypto.CSRFTokenSigner
-import play.filters.csrf.{CSRFAddToken, CSRFCheck, CSRFConfig}
+import org.scalatest.{DoNotDiscover, Matchers, WordSpec}
 import services._
 import services.{ReturnUrlVerifier, IdRequestParser, IdentityUrlBuilder}
 import idapiclient.{ScGuU, IdApiClient}
 import conf.{FrontendIdentityCookieDecoder, IdentityConfiguration}
-import org.scalatest.mock.MockitoSugar
+import org.scalatest.mockito.MockitoSugar
 import test._
 import play.api.mvc.RequestHeader
 import scala.concurrent.Future
 import com.gu.identity.model.User
 import org.mockito.Mockito._
-import org.mockito.Matchers.{any, anyString}
+import org.mockito.{Matchers => MockitoMatchers}
 import play.api.test.Helpers._
 import com.gu.identity.model.Subscriber
 import services.IdentityRequest
@@ -25,7 +22,7 @@ import idapiclient.TrackingData
 import actions.AuthenticatedActions
 
 @DoNotDiscover class EmailControllerTest extends WordSpec
-  with ShouldMatchers
+  with Matchers
   with MockitoSugar
   with WithTestContext
   with WithTestCSRF
@@ -50,12 +47,12 @@ import actions.AuthenticatedActions
 
   val authenticatedActions  = new AuthenticatedActions(authService, api, mock[IdentityUrlBuilder])
 
-  when(authService.authenticatedUserFor(Matchers.any[RequestHeader])) thenReturn Some(AuthenticatedUser(user, testAuth))
+  when(authService.authenticatedUserFor(MockitoMatchers.any[RequestHeader])) thenReturn Some(AuthenticatedUser(user, testAuth))
 
-  when(idRequestParser.apply(any[RequestHeader])) thenReturn idRequest
+  when(idRequestParser.apply(MockitoMatchers.any[RequestHeader])) thenReturn idRequest
   when(idRequest.trackingData) thenReturn trackingData
 
-  when(idUrlBuilder.buildUrl(any[String], any[IdentityRequest], any[(String, String)])) thenReturn "/email-prefs"
+  when(idUrlBuilder.buildUrl(MockitoMatchers.any[String], MockitoMatchers.any[IdentityRequest], MockitoMatchers.any[(String, String)])) thenReturn "/email-prefs"
   lazy val emailController = new EmailController(returnUrlVerifier, conf, api, idRequestParser, idUrlBuilder, authenticatedActions, I18NTestComponents.messagesApi, csrfCheck, csrfAddToken)
 
   "The preferences method" when {
@@ -64,7 +61,7 @@ import actions.AuthenticatedActions
 
     "the api calls succeed" should {
       val subscriber = Subscriber("Text", Nil)
-      when(api.userEmails(anyString(), any[TrackingData])) thenReturn Future.successful(Right(subscriber))
+      when(api.userEmails(MockitoMatchers.anyString(), MockitoMatchers.any[TrackingData])) thenReturn Future.successful(Right(subscriber))
 
       "display form" in {
         val result = emailController.preferences()(authRequest)
@@ -75,7 +72,7 @@ import actions.AuthenticatedActions
     }
 
     "the API calls fail" should {
-      when(api.userEmails(anyString(), any[TrackingData])) thenReturn Future.successful(Left(List(error)))
+      when(api.userEmails(MockitoMatchers.anyString(), MockitoMatchers.any[TrackingData])) thenReturn Future.successful(Left(List(error)))
 
       "include the error message on the page" in {
         val result = emailController.preferences()(authRequest)
@@ -93,7 +90,7 @@ import actions.AuthenticatedActions
 
       "api call is successful" should {
         // Crazy Unit return type!
-        when(api.updateUserEmails(anyString(), any[Subscriber], any[Auth], any[TrackingData])) thenReturn Future.successful(Right(()))
+        when(api.updateUserEmails(MockitoMatchers.anyString(), MockitoMatchers.any[Subscriber], MockitoMatchers.any[Auth], MockitoMatchers.any[TrackingData])) thenReturn Future.successful(Right(()))
 
         "call updateUser and updateUserEmails" in {
           emailController.savePreferences()(authRequest)
@@ -102,7 +99,7 @@ import actions.AuthenticatedActions
       }
 
       "user email API call failed" should {
-        when(api.updateUserEmails(anyString(), any[Subscriber], any[Auth], any[TrackingData])) thenReturn Future.successful(Left(errors))
+        when(api.updateUserEmails(MockitoMatchers.anyString(), MockitoMatchers.any[Subscriber], MockitoMatchers.any[Auth], MockitoMatchers.any[TrackingData])) thenReturn Future.successful(Left(errors))
 
         "include the error message on the page" in {
           val result = emailController.savePreferences()(authRequest)

@@ -6,6 +6,7 @@ import uniq from 'lodash/arrays/uniq';
 import flatten from 'lodash/arrays/flatten';
 import once from 'lodash/functions/once';
 import { getOutbrainComplianceTargeting } from 'commercial/modules/third-party-tags/outbrain';
+import { getTestVariantId } from 'common/modules/experiments/utils';
 
 const adUnit = once(() => {
     const urlVars = getUrlVars();
@@ -112,6 +113,14 @@ const defineSlot = (adSlotNode: Element, sizes: Object): Object => {
     if (config.switches.adomik) {
         slot.setTargeting('ad_group', adomikClassify());
         slot.setTargeting('ad_h', new Date().getUTCHours().toString());
+    }
+
+    if (
+        getTestVariantId('OutstreamFrequencyCap') === 'frequency-cap' &&
+        id === 'dfp-ad--inline1' &&
+        config.switches.abOutstreamFrequencyCap
+    ) {
+        slot.setTargeting('outstream', 'cap');
     }
 
     slot.addService(window.googletag.pubads()).setTargeting('slot', slotTarget);

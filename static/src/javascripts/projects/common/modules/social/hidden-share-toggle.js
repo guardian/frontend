@@ -1,46 +1,74 @@
 // @flow
 
-import $ from 'lib/$';
-import bean from 'bean';
-import fastdom from 'fastdom';
+import fastdom from 'lib/fastdom-promise';
 
-const toggleDisplay = (event?: Event): void => {
-    if (event) {
-        event.preventDefault();
-    }
+const MORE_SELECTOR = '.js-social__item--more';
+const CLOSE_SELECTOR = '.js-social__tray-close';
+const HIDDEN_CLASS = 'social--hidden';
 
-    $('.js-social__secondary').each(icon => {
+const getSecondaryShareMethods = (scope: HTMLElement): HTMLElement[] => [
+    ...scope.getElementsByClassName('js-social__secondary'),
+];
+
+const toggleSecondaryMethods = (
+    scope: HTMLElement,
+    force: boolean = false
+): void => {
+    const hiddenMethods = getSecondaryShareMethods(scope);
+    const more = scope.querySelector(MORE_SELECTOR);
+    const close = scope.querySelector(CLOSE_SELECTOR);
+
+    hiddenMethods.forEach(method => {
         fastdom.write(() => {
-            $(icon).toggleClass('social--hidden');
+            method.classList.toggle(HIDDEN_CLASS, !force);
         });
     });
 
-    $('.js-social--top').each(topSocial => {
-        fastdom.write(() => {
-            $(topSocial).toggleClass('social--expanded-top');
-        });
+    fastdom.write(() => {
+        if (more) {
+            more.classList.toggle(HIDDEN_CLASS, force);
+        }
+
+        if (close) {
+            close.classList.toggle(HIDDEN_CLASS, !force);
+        }
     });
 };
 
 const hiddenShareToggle = (): void => {
-    $('.js-social__item--more, .js-social__tray-close').each(toggle => {
-        bean.on(toggle, 'click', toggleDisplay);
-    });
+    const initShare = (share: HTMLElement): void => {
+        const more = share.querySelector(MORE_SELECTOR);
+        const toggleVisibility = (event: Event): void => {
+            const target: HTMLElement = (event.target: any);
+            const listItem: HTMLElement = (target.parentNode: any);
+            const targetIsMore = listItem.matches(MORE_SELECTOR);
+            const targetIsClose = listItem.matches(CLOSE_SELECTOR);
 
-    bean.on(document.body, 'click', e => {
-        if (
-            $.ancestor(e.target, 'js-social--top') ||
-            !$('.js-social--top').hasClass('social--expanded-top')
-        ) {
-            return;
+            if (targetIsMore || targetIsClose) {
+                event.preventDefault();
+
+                toggleSecondaryMethods(share, targetIsMore);
+
+                // the top social element requires some extra treatment
+                if (share.classList.contains('social--top')) {
+                    share.classList.toggle(
+                        'social--expanded-top',
+                        targetIsMore
+                    );
+                }
+            }
+        };
+
+        share.addEventListener('click', toggleVisibility);
+
+        if (more) {
+            more.classList.remove(HIDDEN_CLASS);
         }
+    };
 
-        toggleDisplay();
-    });
-
-    fastdom.write(() => {
-        $('.js-social__item--more').toggleClass('social--hidden');
-    });
+    fastdom
+        .read(() => document.getElementsByClassName('social'))
+        .then(shares => [...shares].forEach(initShare));
 };
 
 export { hiddenShareToggle };

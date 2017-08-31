@@ -71,3 +71,4 @@ static/src/stylesheets/pasteup/.npmrc
 # SSL certificates
 *.crt
 *.key
+.vscode/settings.json

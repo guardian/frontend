@@ -403,12 +403,14 @@ trait AtomPage extends Page {
   def atomType: String
   def body: Html
   def withJavaScript: Boolean
+  def withVerticalScrollbar: Boolean 
   def javascriptModule: String = atomType
 }
 
 case class MediaAtomPage(
   override val atom: MediaAtom,
-  override val withJavaScript: Boolean
+  override val withJavaScript: Boolean,
+  override val withVerticalScrollbar: Boolean
 )(implicit request: RequestHeader) extends AtomPage {
   override val atomType = "media"
   override val body = views.html.fragments.atoms.media(atom, displayCaption = false, mediaWrapper = Some(MediaWrapper.EmbedPage))
@@ -422,7 +424,8 @@ case class MediaAtomPage(
 
 case class StoryQuestionsAtomPage(
   override val atom: StoryQuestionsAtom,
-  override val withJavaScript: Boolean
+  override val withJavaScript: Boolean,
+  override val withVerticalScrollbar: Boolean
 )(implicit request: RequestHeader) extends AtomPage {
   override val atomType = "storyquestions"
   override val body = views.html.fragments.atoms.storyquestions(atom, isAmp = false)
@@ -435,7 +438,8 @@ case class StoryQuestionsAtomPage(
 
 case class GuideAtomPage(
   override val atom: GuideAtom,
-  override val withJavaScript: Boolean
+  override val withJavaScript: Boolean,
+  override val withVerticalScrollbar: Boolean
 )(implicit request: RequestHeader) extends AtomPage {
   override val atomType = "guide"
   override val body = views.html.fragments.atoms.snippets.guide(atom, isAmp = false)
@@ -449,7 +453,8 @@ case class GuideAtomPage(
 
 case class ProfileAtomPage(
   override val atom: ProfileAtom,
-  override val withJavaScript: Boolean
+  override val withJavaScript: Boolean,
+  override val withVerticalScrollbar: Boolean
 )(implicit request: RequestHeader) extends AtomPage {
   override val atomType = "profile"
   override val body = views.html.fragments.atoms.snippets.profile(atom, isAmp = false)
@@ -463,7 +468,8 @@ case class ProfileAtomPage(
 
 case class QandaAtomPage(
 override val atom: QandaAtom,
-override val withJavaScript: Boolean
+override val withJavaScript: Boolean,
+override val withVerticalScrollbar: Boolean
 )(implicit request: RequestHeader) extends AtomPage {
   override val atomType = "qanda"
   override val body = views.html.fragments.atoms.snippets.qanda(atom, isAmp = false)
@@ -477,7 +483,8 @@ override val withJavaScript: Boolean
 
 case class TimelineAtomPage(
 override val atom: TimelineAtom,
-override val withJavaScript: Boolean
+override val withJavaScript: Boolean,
+override val withVerticalScrollbar: Boolean
 )(implicit request: RequestHeader) extends AtomPage {
   override val atomType = "timeline"
   override val body = views.html.fragments.atoms.snippets.timeline(atom, isAmp = false)

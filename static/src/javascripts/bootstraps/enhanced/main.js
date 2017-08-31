@@ -13,7 +13,7 @@ import {
     registerCompleteEvents,
     trackABTests,
 } from 'common/modules/experiments/ab-ophan';
-import common from 'bootstraps/enhanced/common';
+import { init as initCommon } from 'bootstraps/enhanced/common';
 import sport from 'bootstraps/enhanced/sport';
 import { trackPerformance } from 'common/modules/analytics/google';
 import { init as geolocationInit } from 'lib/geolocation';
@@ -82,7 +82,7 @@ const bootEnhanced = (): void => {
         ],
     ]);
 
-    bootstrapContext('common', common.init);
+    bootstrapContext('common', initCommon);
 
     // geolocation
     catchErrorsWithContext([['geolocation', geolocationInit]]);

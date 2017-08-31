@@ -27,7 +27,6 @@ object Frontend extends Build with Prototypes {
       filters,
       commonsLang,
       configMagic,
-      configMagicPlay,
       jodaConvert,
       jodaTime,
       jSoup,
@@ -94,7 +93,6 @@ object Frontend extends Build with Prototypes {
 
   val diagnostics = application("diagnostics").dependsOn(commonWithTests).aggregate(common).settings(
     libraryDependencies ++= Seq(
-      uaDetectorResources,
       redisClient
     )
   )
@@ -134,16 +132,12 @@ object Frontend extends Build with Prototypes {
       commonsHttpClient,
       slf4jExt,
       exactTargetClient,
-      nScalaTime,
       dispatch,
       libPhoneNumber
     )
   )
 
   val commercial = application("commercial").dependsOn(commonWithTests).aggregate(common)
-      .settings(
-        libraryDependencies ++= List(shadeMemcached)
-      )
 
   val onward = application("onward").dependsOn(commonWithTests).aggregate(common)
 

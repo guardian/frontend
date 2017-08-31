@@ -21,7 +21,7 @@ trait CommercialSwitches {
     "Deactivates the sizecallback for videos (620x1) that hides the slot.",
     owners = Seq(Owner.withGithub("JonNorman")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 8, 23),
+    sellByDate = new LocalDate(2017, 9, 20),
     exposeClientSide = true
   )
 
@@ -292,6 +292,16 @@ trait CommercialSwitches {
     owners = Owner.group(SwitchGroup.Commercial),
     safeState = Off,
     sellByDate = new LocalDate(2017, 9, 6),
+    exposeClientSide = false
+  )
+
+  val guTodayEmailAds = Switch(
+    SwitchGroup.Commercial,
+    "guardian-today-email-ads",
+    "When ON, the Guardian Today US Email will contain Live Intent advertisements",
+    owners = Seq(Owner.withGithub("rich-nguyen")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 9, 29),
     exposeClientSide = false
   )
 }

@@ -102,12 +102,20 @@ const defaultPageCheck = (page: Object): boolean =>
 
 const shouldShowReaderRevenue = (
     showToContributorsAndSupporters: boolean = false
-): boolean =>
-    (userShouldSeeReaderRevenue() || showToContributorsAndSupporters) &&
-    !config.page.keywordIds.includes(
-        'guardian-masterclasses/guardian-masterclasses'
-    ) &&
-    !config.page.shouldHideReaderRevenue;
+): boolean => {
+    const isMasterclassesPage =
+        config.page &&
+        config.page.keywordIds &&
+        config.page.keywordIds.includes(
+            'guardian-masterclasses/guardian-masterclasses'
+        );
+
+    return (
+        (userShouldSeeReaderRevenue() || showToContributorsAndSupporters) &&
+        !isMasterclassesPage &&
+        !config.page.shouldHideReaderRevenue
+    );
+};
 
 const defaultCanEpicBeDisplayed = (test: EpicABTest): boolean => {
     const worksWellWithPageTemplate = test.pageCheck(config.page);
@@ -256,6 +264,7 @@ const makeABTestVariant = (
 
             maxViews,
             isUnlimited,
+            products,
             campaignCode,
             contributeURL,
             membershipURL,
@@ -306,7 +315,11 @@ const makeABTestVariant = (
                                     component.insertBefore(targets);
                                 }
 
-                                mediator.emit(parentTest.insertEvent);
+                                mediator.emit(parentTest.insertEvent, {
+                                    componentType: parentTest.componentType,
+                                    products,
+                                    campaignCode,
+                                });
                                 onInsert(component);
 
                                 component.each(element => {
@@ -321,7 +334,12 @@ const makeABTestVariant = (
 
                                     inView.on('firstview', () => {
                                         logView(parentTest.id);
-                                        mediator.emit(parentTest.viewEvent);
+                                        mediator.emit(parentTest.viewEvent, {
+                                            componentType:
+                                                parentTest.componentType,
+                                            products,
+                                            campaignCode,
+                                        });
                                         mediator.emit(
                                             'register:end',
                                             trackingCampaignId
@@ -442,6 +460,7 @@ const makeABTest = ({
 export {
     shouldShowReaderRevenue,
     defaultCanEpicBeDisplayed,
+    defaultPageCheck,
     getTestimonialBlock,
     addTrackingCodesToUrl,
     makeABTest,

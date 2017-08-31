@@ -1,8 +1,8 @@
 package model
 
-import org.scalatest.{ShouldMatchers, FlatSpec}
+import org.scalatest.{Matchers, FlatSpec}
 
-class PhoneNumbersTest extends FlatSpec with ShouldMatchers {
+class PhoneNumbersTest extends FlatSpec with Matchers {
 
   behavior of "PhoneNumbers"
 

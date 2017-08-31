@@ -25,7 +25,25 @@ jest.mock('lib/geolocation', () => ({
 jest.mock('common/views/svgs', () => ({
     inlineSvg: jest.fn(() => ''),
 }));
-jest.mock('common/modules/experiments/acquisition-test-selector', () => []);
+
+jest.mock('common/modules/experiments/acquisition-test-selector', () => ({
+    getTest: jest.fn(() => ({
+        campaignId: 'fake-campaign-id',
+        id: 'fake-id',
+        start: '2017-01-01',
+        expiry: '2027-01-01',
+        author: 'fake-author',
+        description: 'fake-description',
+        audience: 1,
+        audienceOffset: 0,
+        successMeasure: 'fake success measure',
+        audienceCriteria: 'fake audience criteria',
+        variants: [],
+        canRun: () => true,
+        componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
+    })),
+}));
+
 jest.mock(
     'common/modules/experiments/tests/membership-engagement-banner-tests',
     () => ({
@@ -48,6 +66,7 @@ jest.mock(
         ],
     })
 );
+
 jest.mock(
     'common/modules/commercial/membership-engagement-banner-parameters',
     () => ({
@@ -190,7 +209,9 @@ describe('Membership engagement banner', () => {
             }));
             fakeVariantFor.mockImplementationOnce(() => ({
                 id: 'fake-user-variant-id',
-                engagementBannerParams: {},
+                options: {
+                    engagementBannerParams: {},
+                },
             }));
             showBanner = membershipEngagementBannerInit().then(() => {
                 fakeMediator.emit('modules:onwards:breaking-news:ready', false);

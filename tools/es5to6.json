@@ -1,12 +1,5 @@
 {
   "Regis Kuckaertz": [
-    "projects/common/modules/atoms/quiz.js",
-    "bootstraps/enhanced/accessibility.js",
-    "bootstraps/enhanced/common.js",
-    "bootstraps/enhanced/crosswords.js",
-    "projects/common/modules/article/rich-links.js",
-    "projects/common/modules/article/twitter.js",
-    "projects/common/modules/asyncCallMerger.js",
     "projects/common/modules/ui/clickstream.js",
     "projects/common/modules/ui/expandable.js",
     "projects/common/modules/ui/faux-block-link.js"
@@ -25,7 +18,6 @@
   ],
   "Simon Adcock": [
     "bootstraps/enhanced/recipe-article.js",
-    "lib/picturefill.js",
     "projects/common/modules/crosswords/constants.js",
     "projects/common/modules/crosswords/controls.js",
     "projects/common/modules/crosswords/helpers.js",
@@ -79,10 +71,7 @@
     "projects/common/modules/identity/api.js",
     "projects/common/modules/identity/cookierefresh.js"
   ],
-  "Richard Nguyen": [
-    "projects/common/modules/identity/email-preferences.js",
-    "projects/common/modules/identity/forms.js"
-  ],
+  "Richard Nguyen": [],
   "NataliaLKB": [
     "lib/proximity-loader.js",
     "projects/common/modules/email/email-article.js"
@@ -90,7 +79,9 @@
   "Jamie Byers": [],
   "Francis Carr": [],
   "Jon Norman": [],
-  "Kate Whalen": [],
+  "Kate Whalen": [
+    "projects/common/modules/preferences/main.js"
+  ],
   "dominickendrick": [],
   "davidfurey": [],
   "jranks123": [],
@@ -102,7 +93,6 @@
   "Calum Campbell": [],
   "Unassigned": [
     "projects/common/modules/navigation/search.js",
-    "projects/common/modules/preferences/main.js",
     "projects/common/modules/ui/full-height.js",
     "projects/common/modules/ui/notification-counter.js",
     "projects/common/modules/ui/relativedates.js",

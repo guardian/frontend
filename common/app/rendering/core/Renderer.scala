@@ -14,6 +14,8 @@ import scala.concurrent.{ExecutionContext, Future}
 import scala.concurrent.duration._
 import scala.util.{Failure, Success, Try}
 
+case class RenderingException(error: String) extends RuntimeException(error)
+
 class Renderer(implicit actorSystem: ActorSystem, executionContext: ExecutionContext, ac: ApplicationContext) extends Logging {
 
   val renderingActorCount = 3
@@ -30,8 +32,9 @@ class Renderer(implicit actorSystem: ActorSystem, executionContext: ExecutionCon
         _ match {
           case Success(s) => Html(s)
           case Failure(f) =>
-            log.error(f.getLocalizedMessage)
-            throw f
+            val errorMessage = f.getLocalizedMessage.replaceAll("\u001B\\[[0-9]*m", "") // stripping terminal colors
+            log.error(errorMessage)
+            throw new RenderingException(errorMessage)
         }
       }
 

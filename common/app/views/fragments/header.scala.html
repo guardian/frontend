@@ -82,14 +82,14 @@
                             @fragments.inlineSvg("marque-36", "icon", List("rounded-icon", "control__icon-wrapper"))
                             <a href="@MembershipLink(request, Edition(request))"
                             data-link-name="Register link"
-                            class="brand-bar__item--action brand-bar__item--split--first js-become-member">
+                            class="brand-bar__item--action brand-bar__item--split--first js-become-member js-change-become-member-link">
                                 <span class="control__info js-control-info control__info--supporting">
                                     become a supporter
                                 </span>
                             </a>
 
                             <a href="@SubscribeLink(request, Edition(request))"
-                               class="brand-bar__item--action brand-bar__item--split--last js-subscribe"
+                               class="brand-bar__item--action brand-bar__item--split--last js-subscribe js-change-subscribe-link"
                                data-link-name="@Edition(request).id.toLowerCase : topNav : subscribe">
                                 <span class="control__info js-control-info">subscribe</span>
                             </a>

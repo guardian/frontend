@@ -12,9 +12,10 @@ import {
     subHeadingContainer,
     subHeading,
     para,
+    logo,
 } from './style.js.scss';
 
-export default ({ beaconUrl }: { beaconUrl: string }) =>
+export default ({ beaconUrl }: Object) =>
     <div style={fluidWrap}>
         <div style={topBar}>
             <a href="/" style={topBarLink}>
@@ -23,7 +24,7 @@ export default ({ beaconUrl }: { beaconUrl: string }) =>
         </div>
         <Logo
             block-styles={{ guardian: { fill: colour.brandBlueDark } }}
-            width={250}
+            svg-styles={logo}
         />
         <h1 style={heading}>
             Sorry - we haven’t been able to serve the page you asked for.

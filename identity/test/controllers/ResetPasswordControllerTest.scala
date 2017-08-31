@@ -1,24 +1,23 @@
 package controllers
 
 import org.scalatest.path
-import org.scalatest.{Matchers => ShouldMatchers}
-import org.scalatest.mock.MockitoSugar
-import org.mockito.Matchers._
+import org.scalatest.Matchers
+import org.scalatest.mockito.MockitoSugar
+import org.mockito.{Matchers => MockitoMatchers}
 import org.mockito.Mockito._
 import idapiclient.{IdApiClient, TrackingData}
-import test.{Fake, I18NTestComponents, TestRequest, WithTestContext, WithTestCryptoConfig}
+import test.{Fake, I18NTestComponents, WithTestContext, WithTestCryptoConfig}
 import play.api.test._
 import play.api.test.Helpers._
 import client.Error
 
 import scala.concurrent.Future
 import com.gu.identity.model.User
-import org.mockito.{ArgumentMatcher, Matchers}
 import services.{AuthenticationService, IdRequestParser, IdentityRequest, IdentityUrlBuilder}
 
 class ResetPasswordControllerTest
   extends path.FreeSpec
-  with ShouldMatchers
+  with Matchers
   with MockitoSugar
   with WithTestContext
   with WithTestCryptoConfig {
@@ -38,7 +37,7 @@ class ResetPasswordControllerTest
     I18NTestComponents.messagesApi,
     testCryptoConfig)
 
-  when(requestParser.apply(anyObject())).thenReturn(identityRequest)
+  when(requestParser.apply(MockitoMatchers.anyObject())).thenReturn(identityRequest)
 
   val userNotFound = List(Error("Not found", "Resource not found", 404))
   val tokenExpired = List(Error("Token expired", "The password reset token is longer valid"))
@@ -50,10 +49,10 @@ class ResetPasswordControllerTest
   "the handle render method" - {
     val fakeRequest = FakeRequest(GET, "/c/1234")
     "when the token provided is valid" - {
-       when(api.userForToken(Matchers.any[String])).thenReturn(Future.successful(Right(user)))
+       when(api.userForToken(MockitoMatchers.any[String])).thenReturn(Future.successful(Right(user)))
        "should pass the token param to to the api" in Fake {
          resetPasswordController.processUpdatePasswordToken("1234")(fakeRequest)
-         verify(api).userForToken(Matchers.eq("1234"))
+         verify(api).userForToken(MockitoMatchers.eq("1234"))
        }
 
        "should render the reset password form when the user token has not expired" in Fake {
@@ -77,10 +76,10 @@ class ResetPasswordControllerTest
 
     val fakeRequest = FakeRequest(POST, "/reset_password" ).withFormUrlEncodedBody("password" -> "newpassword", "password-confirm" -> "newpassword", "email-address" -> "test@somewhere.com")
     "when the token provided is valid" - {
-      when(api.resetPassword(Matchers.any[String], Matchers.any[String])).thenReturn(Future.successful(Right(())))
+      when(api.resetPassword(MockitoMatchers.any[String], MockitoMatchers.any[String])).thenReturn(Future.successful(Right(())))
       "should call the api the password with the provided new password and token" in Fake {
          resetPasswordController.resetPassword("1234")(fakeRequest)
-         verify(api).resetPassword(Matchers.eq("1234"), Matchers.eq("newpassword"))
+         verify(api).resetPassword(MockitoMatchers.eq("1234"), MockitoMatchers.eq("newpassword"))
       }
       "should return password confirmation view in" in Fake {
          val result = resetPasswordController.resetPassword("1234")(fakeRequest)

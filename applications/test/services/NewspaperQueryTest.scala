@@ -6,7 +6,7 @@ import test.{ConfiguredTestSuite, WithMaterializer, WithTestContentApiClient, Wi
 
 @DoNotDiscover class NewspaperQueryTest
   extends FreeSpec
-  with ShouldMatchers
+  with Matchers
   with ConfiguredTestSuite
   with implicits.Dates
   with BeforeAndAfterAll

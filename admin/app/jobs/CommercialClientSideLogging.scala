@@ -1,6 +1,7 @@
 package jobs
 
 import java.io.File
+import java.nio.charset.Charset
 
 import app.LifecycleComponent
 import common._
@@ -104,8 +105,8 @@ class CommercialClientSideLoggingLifecycle(
             Seconds.secondsBetween(logDate, date).isLessThan(uploadJobFrequency.toStandardSeconds.multipliedBy(2))
           })
         } {
-          val fileContents = FileUtils.readFileToString(logFile)
-          FileUtils.write(outputFile, fileContents, true)
+          val fileContents = FileUtils.readFileToString(logFile, Charset.defaultCharset())
+          FileUtils.write(outputFile, fileContents, Charset.defaultCharset(), true)
         }
 
         S3CommercialReports.putPublic(s"date=${date.toString("yyyy-MM-dd")}/$formattedDate", outputFile, "text/plain")
