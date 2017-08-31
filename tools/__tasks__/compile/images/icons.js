@@ -101,7 +101,12 @@ module.exports = {
 
             return Promise.all(iconPaths.map(getSVG))
                 .then(sortSVGs)
-                .then(svgs => svgs.map(generateSassForSVG).join('').trim())
+                .then(svgs =>
+                    svgs
+                        .map(generateSassForSVG)
+                        .join('')
+                        .trim()
+                )
                 .then(sass => saveSass(sass, destPath, fileName));
         },
     })),

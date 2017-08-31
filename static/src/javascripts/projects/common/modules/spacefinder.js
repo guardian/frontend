@@ -169,7 +169,9 @@ const onInteractivesLoaded = memoize((rules: SpacefinderRules): Promise<
 const onAdsLoaded = memoize(
     (rules: SpacefinderRules): Promise<boolean[]> =>
         Promise.all(
-            qwery('.js-ad-slot', rules.body).map(ad => ad.id).map(trackAdRender)
+            qwery('.js-ad-slot', rules.body)
+                .map(ad => ad.id)
+                .map(trackAdRender)
         ),
     getFuncId
 );

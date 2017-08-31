@@ -226,7 +226,9 @@ describe('DFP', () => {
     });
 
     it('should not get hidden ad slots', () => {
-        $('.js-ad-slot').first().css('display', 'none');
+        $('.js-ad-slot')
+            .first()
+            .css('display', 'none');
         return new Promise(resolve => {
             prepareGoogletag.init(noop, resolve);
         }).then(() => {
@@ -323,7 +325,9 @@ describe('DFP', () => {
     });
 
     it('should be able to create "out of page" ad slot', () => {
-        $('.js-ad-slot').first().attr('data-out-of-page', true);
+        $('.js-ad-slot')
+            .first()
+            .attr('data-out-of-page', true);
         return new Promise(resolve => {
             prepareGoogletag.init(noop, resolve);
         }).then(() => {

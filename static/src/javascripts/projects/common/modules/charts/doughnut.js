@@ -127,12 +127,14 @@ const Doughnut = (data: Object, o: Object): bonzo => {
             inner.end.y,
             'Z',
         ];
-        $g = svgEl('g').attr('class', 'chart__arc').append(
-            svgEl('path').attr({
-                d: d.join(' '),
-                fill: datum.color,
-            })
-        );
+        $g = svgEl('g')
+            .attr('class', 'chart__arc')
+            .append(
+                svgEl('path').attr({
+                    d: d.join(' '),
+                    fill: datum.color,
+                })
+            );
 
         // labels
         $t = svgEl('text').attr('class', 'chart__label');
@@ -174,10 +176,13 @@ const Doughnut = (data: Object, o: Object): bonzo => {
 
     // Unit of measurement
     return $svg.append(
-        svgEl('text').attr('class', 'chart__unit').text(obj.unit).attr({
-            transform: translate(c),
-            dy: '0.4em',
-        })
+        svgEl('text')
+            .attr('class', 'chart__unit')
+            .text(obj.unit)
+            .attr({
+                transform: translate(c),
+                dy: '0.4em',
+            })
     );
 };
 
