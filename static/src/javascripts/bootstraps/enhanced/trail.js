@@ -85,7 +85,10 @@ const initOnwardContent = () => {
 };
 
 const initDiscussion = () => {
-    if (config.get('switches.enableDiscussionSwitch') && config.get('page.commentable')) {
+    if (
+        config.get('switches.enableDiscussionSwitch') &&
+        config.get('page.commentable')
+    ) {
         fastdom.read(() => document.querySelector('.discussion')).then(el => {
             if (el) {
                 new DiscussionLoader().attachTo(el);
