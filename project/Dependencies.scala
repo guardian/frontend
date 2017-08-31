@@ -56,7 +56,7 @@ object Dependencies {
   val scalaCheck = "org.scalacheck" %% "scalacheck" % "1.13.5" % Test
   val scalajTime = "org.scalaj" % "scalaj-time_2.10.2" % "0.7"
   val scalaTest = "org.scalatest" %% "scalatest" % "3.0.4" % Test
-  val scalaTestPlus = "org.scalatestplus.play" %% "scalatestplus-play" % "2.0.1" % Test
+  val scalaTestPlus = "org.scalatestplus.play" %% "scalatestplus-play" % "3.1.1" % Test
   val scalaUri = "com.netaporter" %% "scala-uri" % "0.4.16"
   val seleniumJava = "org.seleniumhq.selenium" % "selenium-java" % "2.44.0"
   val slf4jExt = "org.slf4j" % "slf4j-ext" % "1.7.25"

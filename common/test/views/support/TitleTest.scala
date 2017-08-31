@@ -6,10 +6,10 @@ import common.Pagination
 import model._
 import org.joda.time.DateTime
 import org.scalatest.{FlatSpec, Matchers}
-import org.scalatestplus.play.OneAppPerSuite
+import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.test.FakeRequest
 
-class TitleTest extends FlatSpec with Matchers with OneAppPerSuite {
+class TitleTest extends FlatSpec with Matchers with GuiceOneAppPerSuite {
 
   implicit val request = FakeRequest()
 
