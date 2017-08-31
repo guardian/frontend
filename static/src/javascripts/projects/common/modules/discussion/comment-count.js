@@ -37,7 +37,7 @@ const getElementsIndexedById = (context: HTMLElement): Promise<any> =>
         .read(() => context.querySelectorAll(`[${ATTRIBUTE_NAME}]`))
         .then(elements => {
             if (elements.length === 0) {
-                return Promise.resolve();
+                return;
             }
 
             return [
@@ -110,7 +110,7 @@ const getCommentCounts = (context?: HTMLElement): Promise<void> => {
     if (queryContext) {
         return getElementsIndexedById(queryContext).then(indexedElements => {
             if (!indexedElements) {
-                return Promise.resolve();
+                return;
             }
 
             const endpoint = `${COUNT_URL}${getContentIds(indexedElements)}`;
