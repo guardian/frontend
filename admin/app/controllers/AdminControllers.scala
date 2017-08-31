@@ -20,7 +20,6 @@ trait AdminControllers {
   def ophanApi: OphanApi
   implicit def appContext: ApplicationContext
   def redirects: RedirectService
-  implicit val messages: Messages
   def httpConfiguration: HttpConfiguration
   def controllerComponents: ControllerComponents
   def assets: Assets

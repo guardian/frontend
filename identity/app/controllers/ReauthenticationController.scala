@@ -97,7 +97,7 @@ class ReauthenticationController(
     boundForm.fold[Future[Result]](onError, onSuccess)
   }
 
-  def redirectToSigninPage(formWithErrors: Form[String], returnUrl: Option[String]): Result = {
+  def redirectToSigninPage(formWithErrors: Form[String], returnUrl: Option[String])(implicit messagesProvider: MessagesProvider): Result = {
     NoCache(SeeOther(routes.ReauthenticationController.renderForm(returnUrl).url).flashing(clearPassword(formWithErrors).toFlash))
   }
 

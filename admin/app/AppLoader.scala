@@ -32,7 +32,6 @@ trait AdminServices extends I18nComponents  {
   def wsClient: WSClient
   def akkaAsync: AkkaAsync
   def actorSystem: ActorSystem
-  lazy val messages: Messages = Messages(Lang.defaultLang, messagesApi)
   lazy val capiHttpClient: HttpClient = wire[CapiHttpClient]
   lazy val contentApiClient = wire[ContentApiClient]
   lazy val ophanApi = wire[OphanApi]

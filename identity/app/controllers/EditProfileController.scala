@@ -8,7 +8,7 @@ import form._
 import idapiclient.IdApiClient
 import model._
 import play.api.data.Form
-import play.api.i18n.{I18nSupport, MessagesApi}
+import play.api.i18n.{I18nSupport, MessagesApi, MessagesProvider}
 import play.api.mvc._
 import play.filters.csrf.{CSRFAddToken, CSRFCheck}
 import services._
@@ -115,7 +115,7 @@ case class ProfileForms(
       } getOrElse boundForm
   }
 
-  def bindForms(user: User): ProfileForms = {
+  def bindForms(user: User)(implicit messagesProvider: MessagesProvider): ProfileForms = {
     copy(
       publicForm = profileFormsMapping.profileMapping.bindForm(user),
       accountForm = profileFormsMapping.accountDetailsMapping.bindForm(user),
@@ -151,7 +151,7 @@ case class ProfileForms(
 
 object ProfileForms {
 
-  def apply(user: User, activePage: EditProfilePage)(implicit profileFormsMapping: ProfileFormsMapping): ProfileForms = ProfileForms(
+  def apply(user: User, activePage: EditProfilePage)(implicit profileFormsMapping: ProfileFormsMapping, messagesProvider: MessagesProvider): ProfileForms = ProfileForms(
     publicForm = profileFormsMapping.profileMapping.bindForm(user),
     accountForm = profileFormsMapping.accountDetailsMapping.bindForm(user),
     privacyForm = profileFormsMapping.privacyMapping.bindForm(user),

@@ -15,7 +15,7 @@ import play.api.data.Form
 import play.api.data.Forms._
 import play.api.http.HttpConfiguration
 import play.api.i18n.I18nSupport
-import play.api.i18n.MessagesApi
+
 import scala.concurrent.Future
 
 class AccountDeletionController(

@@ -5,7 +5,7 @@ import play.api.data.{Form, FormError}
 import play.api.http.HttpConfiguration
 import play.api.libs.json._
 import play.api.mvc.{Flash, RequestHeader}
-import play.api.i18n.I18nSupport
+import play.api.i18n.{I18nSupport, MessagesProvider}
 
 trait Forms extends I18nSupport {
 
@@ -33,7 +33,7 @@ trait Forms extends I18nSupport {
       }
     }
 
-    def toFlash: Flash = {
+    def toFlash(implicit messagesProvider: MessagesProvider): Flash = {
       val formJson: String = JsObject(form.data.toSeq.map { case (k, v) => k -> JsString(v)}).toString()
       Flash(Map(
         formKey -> Crypto.encryptAES(formJson, httpConfiguration.secret.secret),

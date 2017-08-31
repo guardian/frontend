@@ -49,11 +49,10 @@ import scala.concurrent.Future
 
     val authenticatedActions = new AuthenticatedActions(authService, api, mock[IdentityUrlBuilder], controllerComponent)
 
-    val messagesApi = I18NTestComponents.messagesApi
     val profileFormsMapping = ProfileFormsMapping(
-      new AccountDetailsMapping(messagesApi),
-      new PrivacyMapping(messagesApi),
-      new ProfileMapping(messagesApi)
+      new AccountDetailsMapping,
+      new PrivacyMapping,
+      new ProfileMapping
     )
 
     when(authService.authenticatedUserFor(MockitoMatchers.any[RequestHeader])) thenReturn Some(authenticatedUser)

@@ -11,7 +11,8 @@ import form.Mappings
 import idapiclient.IdApiClient
 import play.filters.csrf.{CSRFAddToken, CSRFCheck}
 import actions.AuthenticatedActions
-import play.api.i18n.{I18nSupport, Messages}
+import play.api.i18n.{Messages, MessagesProvider}
+
 import scala.concurrent.Future
 import idapiclient.requests.PasswordUpdate
 import play.api.http.HttpConfiguration
@@ -27,13 +28,13 @@ class ChangePasswordController(
   val controllerComponents: ControllerComponents,
   val httpConfiguration: HttpConfiguration
 )(implicit context: ApplicationContext)
-  extends BaseController with ExecutionContexts with SafeLogging with Mappings with implicits.Forms with I18nSupport{
+  extends BaseController with ExecutionContexts with SafeLogging with Mappings with implicits.Forms {
 
   import authenticatedActions.authAction
 
   val page = IdentityPage("/password/change", "Change Password")
 
-  val passwordForm = Form(
+  private val passwordForm = Form(
     mapping(
       ("oldPassword", optional(Forms.text)),
       ("newPassword1", Forms.text),
@@ -41,7 +42,7 @@ class ChangePasswordController(
     )(PasswordFormData.apply)(PasswordFormData.unapply)
   )
 
-  val passwordFormWithConstraints = Form(
+  private def passwordFormWithConstraints(implicit messagesProvider: MessagesProvider): Form[PasswordFormData] = Form(
     mapping(
       ("oldPassword", optional(idPassword)),
       ("newPassword1", idPassword),
