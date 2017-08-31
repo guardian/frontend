@@ -92,7 +92,7 @@ const defineSlot = (adSlotNode: Element, sizes: Object): Object => {
         slot = window.googletag
             .defineSlot(adUnit(), sizeOpts.sizes, id)
             .defineSizeMapping(sizeOpts.sizeMapping);
-        slotReady = Promise.all([setHighMerchSlotTargeting(slot, slotTarget)]);
+        slotReady = setHighMerchSlotTargeting(slot, slotTarget);
     }
 
     if (slotTarget === 'im' && config.page.isbn) {
