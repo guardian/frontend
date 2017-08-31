@@ -71,10 +71,7 @@
     "projects/common/modules/identity/api.js",
     "projects/common/modules/identity/cookierefresh.js"
   ],
-  "Richard Nguyen": [
-    "projects/common/modules/identity/email-preferences.js",
-    "projects/common/modules/identity/forms.js"
-  ],
+  "Richard Nguyen": [],
   "NataliaLKB": [
     "lib/proximity-loader.js",
     "projects/common/modules/email/email-article.js"

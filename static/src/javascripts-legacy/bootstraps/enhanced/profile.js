@@ -17,7 +17,7 @@ define([
 ], function (
     $,
     qwery,
-    Identity,
+    forms,
     Formstack,
     FormstackIframe,
     FormstackEmbedIframe,
@@ -25,7 +25,7 @@ define([
     Id,
     AccountProfile,
     PublicProfile,
-    EmailPreferences,
+    emailPreferences,
     DeleteAccount,
     UserAvatars,
     mediator,
@@ -55,17 +55,12 @@ define([
         },
         forgottenEmail: function () {
             mediator.on('page:identity:ready', function (config) {
-                Identity.forgottenEmail(config);
-            });
-        },
-        forgottenPassword: function () {
-            mediator.on('page:identity:ready', function (config) {
-                Identity.forgottenPassword(config);
+                forms.forgottenEmail(config);
             });
         },
         passwordToggle: function () {
             mediator.on('page:identity:ready', function (config) {
-                Identity.passwordToggle(config);
+                forms.passwordToggle(config);
             });
         },
         userAvatars: function () {
@@ -94,7 +89,7 @@ define([
 
         emailPreferences: function () {
             mediator.on('page:identity:ready', function () {
-                EmailPreferences.init();
+                emailPreferences.enhanceEmailPreferences();
             });
         },
 
@@ -109,7 +104,6 @@ define([
         init: function (config) {
             modules.initFormstack();
             modules.forgottenEmail();
-            modules.forgottenPassword();
             modules.passwordToggle();
             modules.userAvatars();
             modules.validationEmail();
