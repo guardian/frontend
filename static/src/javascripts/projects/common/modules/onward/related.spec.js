@@ -4,23 +4,12 @@ import config from 'lib/config';
 import Expandable from 'common/modules/ui/expandable';
 import { related } from './related';
 
-jest.mock('lib/config', () => ({
-    page: {
-        hasStoryPackage: false,
-        showRelatedContent: true,
-    },
-    switches: {
-        relatedContent: true,
-        ajaxRelatedContent: true,
-    },
-}));
-
+jest.mock('lib/config');
 jest.mock('common/modules/ui/expandable', () => {
     const Exp: any = (jest.fn(): any);
     Exp.prototype.init = jest.fn();
     return Exp;
 });
-
 jest.mock('common/modules/analytics/register', () => ({
     begin() {},
     end() {},
@@ -36,6 +25,14 @@ describe('onward/related', () => {
             `;
         }
 
+        config.page = {
+            hasStoryPackage: false,
+            showRelatedContent: true,
+        };
+        config.switches = {
+            relatedContent: true,
+            ajaxRelatedContent: true,
+        };
         jest.resetAllMocks();
         jest.resetModules();
     });
@@ -44,6 +41,7 @@ describe('onward/related', () => {
         const container: HTMLElement = (document.querySelector(
             '.js-related'
         ): any);
+
         config.switches.relatedContent = false;
 
         related({});
