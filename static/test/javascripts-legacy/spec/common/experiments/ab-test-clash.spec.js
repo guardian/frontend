@@ -9,8 +9,18 @@ define([
 
             beforeEach(function (done) {
                 var injector = new Injector();
+                var fakeIsInVariant = {
+                    isInVariant: function() {
+                        return true;
+                    },
+                };
+                var fakeAcquisitionData = {
+                    abTestClashData: []
+                };
 
                 sandbox = sinon.sandbox.create();
+                injector.mock('common/modules/experiments/utils', fakeIsInVariant)
+                injector.mock('common/modules/experiments/acquisition-test-selector', fakeAcquisitionData)
                 injector.require([
                     'common/modules/experiments/ab-test-clash'
                 ], function (sut) {
