@@ -14,7 +14,7 @@ import fastdom from 'lib/fastdom-promise';
 
 import config from 'lib/config';
 
-const baseCampaignCode = 'gdnwb_copts_memco_sandc_support_baseline';
+const baseCampaignCode = 'gdnwb_copts_memco_sandc_us_rec_cont';
 
 const getREFPVID = (): string =>
     (config.ophan && config.ophan.pageViewId) || 'not_found';
@@ -26,7 +26,7 @@ const makeSupportURL = (campaignCode: string): string =>
     buildURL('https://support.theguardian.com/us/contribute', campaignCode);
 
 const makeBecomeSupporterURL = (campaignCode: string): string =>
-    buildURL('https://membership.theguardian.com/uk/supporter', campaignCode);
+    buildURL('https://membership.theguardian.com/us/supporter', campaignCode);
 
 const buildButtonTemplate = ({ supportUrl }) =>
     `<div class="contributions__amount-field">
@@ -125,7 +125,7 @@ const bindEpicInsertAndViewHandlers = (
 
 export const acquisitionsSupportUsRecurringContribution = makeABTest({
     id: 'AcquisitionsSupportUsRecurringContribution',
-    campaignId: 'sandc_support_us_recurring_contribution',
+    campaignId: 'sandc_support_us_rec_cont',
 
     start: '2017-08-31',
     expiry: '2017-10-19',
@@ -138,7 +138,7 @@ export const acquisitionsSupportUsRecurringContribution = makeABTest({
         'The new proposition delivers the same or greater annualised value',
 
     audienceCriteria: 'US all devices',
-    audience: 1,
+    audience: 0.5,
     audienceOffset: 0,
     locations: ['US'],
 
