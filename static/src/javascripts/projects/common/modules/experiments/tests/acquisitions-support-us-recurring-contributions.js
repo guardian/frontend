@@ -155,7 +155,7 @@ export const acquisitionsSupportUsRecurringContribution = makeABTest({
         'The new proposition delivers the same or greater annualised value',
 
     audienceCriteria: 'US all devices',
-    audience: 0.5,
+    audience: 1,
     audienceOffset: 0,
     locations: ['US'],
 
