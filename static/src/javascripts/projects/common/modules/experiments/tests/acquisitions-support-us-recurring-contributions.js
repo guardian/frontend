@@ -123,7 +123,7 @@ const bindEpicInsertAndViewHandlers = (
     });
 };
 
-export const acquisitionsSupportUSRecurringContribution = makeABTest({
+export const acquisitionsSupportUsRecurringContribution = makeABTest({
     id: 'AcquisitionsSupportUsRecurringContribution',
     campaignId: 'sandc_support_us_recurring_contribution',
 
