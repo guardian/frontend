@@ -21,11 +21,11 @@ const insertOrProximity = (selector, insert) => {
     if (window.location.hash) {
         insert();
     } else {
-        const el = qwery(selector)[0];
-
-        if (el) {
-            proximityLoader.add(el, 1500, insert);
-        }
+        fastdom.read(() => document.querySelector(selector)).then(el => {
+            if (el) {
+                proximityLoader.add(el, 1500, insert);
+            }
+        });
     }
 };
 
