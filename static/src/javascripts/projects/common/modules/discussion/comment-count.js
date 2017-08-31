@@ -56,7 +56,9 @@ const getElementsIndexedById = (context: HTMLElement): Promise<any> =>
         });
 
 const getContentIds = (indexedElements: IndexedElements): string =>
-    Object.keys(indexedElements).sort().join(',');
+    Object.keys(indexedElements)
+        .sort()
+        .join(',');
 
 const getContentUrl = (el: HTMLElement): string => {
     const a = el.getElementsByTagName('a')[0];
