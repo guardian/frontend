@@ -202,7 +202,7 @@ export const acquisitionsSupportUsRecurringContribution = makeABTest({
                             `${baseCampaignCode}_control_header_become_supporter`
                         ),
                         makeContributionURL(
-                            `${baseCampaignCode}_control_header_become_supporter`
+                            `${baseCampaignCode}_control_header_make_contribution`
                         )
                     );
 
@@ -260,7 +260,7 @@ export const acquisitionsSupportUsRecurringContribution = makeABTest({
                             true
                         ),
                         makeSupportURL(
-                            `${baseCampaignCode}_support_header_become_supporter`,
+                            `${baseCampaignCode}_support_header_make_contribution`,
                             true
                         )
                     );
