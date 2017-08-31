@@ -1,4 +1,5 @@
 // @flow
+
 import { handle, closeTooltip } from 'common/modules/discussion/upvote';
 import fakeDiscussionApi from 'common/modules/discussion/api';
 import fakeConfig from 'lib/config';
@@ -13,17 +14,29 @@ jest.mock('lib/config', () => ({
     },
 }));
 
-const fakeUser = {
-    userId: 'fakeUserId',
-    displayName: 'fakeDisplayName',
-    webUrl: 'fakeWebUrl',
+const fakeUser: DiscussionProfile = {
     apiUrl: 'fakeApiUrl',
     avatar: 'fakeAvatar',
-    secureAvatarUrl: 'fakeSecureAvatarUrl',
     badge: [],
+    displayName: 'fakeDisplayName',
     details: {
+        about: 'fakeAbout',
+        age: 'fakeAge',
         gender: 'fakeGender',
+        interests: 'fakeInterests',
+        location: 'fakeLocation',
+        realName: 'fakeRealName',
+        webPage: 'fakeWebPage',
     },
+    isStaff: false,
+    privateFields: {
+        canPostComment: false,
+        hasCommented: false,
+        isPremoderated: false,
+    },
+    secureAvatarUrl: 'fakeSecureAvatarUrl',
+    userId: 'fakeUserId',
+    webUrl: 'fakeWebUrl',
 };
 
 describe('Recommendations of comments', () => {

@@ -10,12 +10,6 @@ import UserAvatars from 'common/modules/discussion/user-avatars';
 import ValidationEmail from 'common/modules/identity/validation-email';
 import { urlify } from './urlify';
 
-type commentType = {
-    body: string,
-    id?: number,
-    replyTo?: Object,
-};
-
 class CommentBox extends Component {
     constructor(options: Object): void {
         super();
@@ -90,7 +84,7 @@ class CommentBox extends Component {
         );
     }
 
-    onboardingPreviewSuccess(comment: commentType, resp: Object): void {
+    onboardingPreviewSuccess(comment: Comment, resp: Object): void {
         this.getElem('onboarding-preview-body').innerHTML = resp.commentBody;
     }
 
@@ -151,7 +145,7 @@ class CommentBox extends Component {
         }
     }
 
-    previewCommentSuccess(comment: commentType, resp: Object): void {
+    previewCommentSuccess(comment: Comment, resp: Object): void {
         this.getElem('preview-body').innerHTML = resp.commentBody;
         this.setState('preview-visible');
     }
@@ -182,7 +176,7 @@ class CommentBox extends Component {
         }
     }
 
-    postCommentSuccess(comment: commentType, resp: Object): void {
+    postCommentSuccess(comment: Comment, resp: Object): void {
         if (this.options && this.options.newCommenter) {
             this.refreshUsernameHtml();
 
@@ -219,7 +213,7 @@ class CommentBox extends Component {
     postComment(): void {
         const commentBody = this.elem && this.elem.body;
         const body: string = (commentBody && commentBody.value: any) || '';
-        const comment: commentType = { body };
+        const comment: Comment = { body };
 
         this.clearErrors();
 
@@ -512,10 +506,10 @@ class CommentBox extends Component {
     }
 
     previewComment(
-        callbackRef: (comment: commentType, resp: Object) => void
+        callbackRef: (comment: Comment, resp: Object) => void
     ): void {
         const commentBody = this.getElem('body');
-        const comment: commentType = {
+        const comment: Comment = {
             body:
                 commentBody instanceof HTMLInputElement
                     ? commentBody.value

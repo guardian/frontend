@@ -17,23 +17,6 @@ import relativedates from 'common/modules/ui/relativedates';
 import userPrefs from 'common/modules/user-prefs';
 import { inlineSvg } from 'common/views/svgs';
 
-type userType = {
-    avatar: string,
-    badge: Array<{
-        name: string,
-    }>,
-    displayName: string,
-    isStaff?: boolean,
-    privateFields: {
-        canPostComment: boolean,
-    },
-};
-
-type commentType = {
-    id: string,
-    body: string,
-};
-
 const PREF_RELATIVE_TIMESTAMPS: string = 'discussion.enableRelativeTimestamps';
 
 const shouldMakeTimestampsRelative = (): boolean =>
@@ -100,7 +83,7 @@ class Comments extends Component {
                     const replies = qwery(
                         this.getClass('reply'),
                         comment
-                    ).slice(this.options.showRepliesCount);
+                    ).slice(this.options && this.options.showRepliesCount);
 
                     bonzo(qwery('.d-thread--responses', source)).append(
                         replies
@@ -125,13 +108,13 @@ class Comments extends Component {
     options: ?{
         discussionId: string,
         order: string,
-        pagesize: string,
+        pagesize: number | 'All',
         showRepliesCount: boolean,
         threading: string,
     };
     postedCommentEl: string;
     topLevelComments: bonzo;
-    user: ?userType;
+    user: ?DiscussionProfile;
     wholeDiscussionErrors: boolean;
 
     addMoreRepliesButtons(comms: Array<HTMLElement>): void {
@@ -183,8 +166,10 @@ class Comments extends Component {
 
         const queryParams: Object = {
             orderBy,
-            pageSize: options.pagesize || this.options.pagesize,
-            displayThreaded: this.options.threading !== 'unthreaded',
+            pageSize:
+                options.pagesize || (this.options && this.options.pagesize),
+            displayThreaded:
+                this.options && this.options.threading !== 'unthreaded',
             commentsClosed: options.commentsClosed,
         };
 
@@ -192,13 +177,17 @@ class Comments extends Component {
             queryParams.page = options.page;
         }
 
-        if (!options.comment && this.options.threading === 'collapsed') {
+        if (
+            !options.comment &&
+            this.options &&
+            this.options.threading === 'collapsed'
+        ) {
             queryParams.maxResponses = 3;
         }
 
         if (this.isAllPageSizeActive()) {
             promise = new WholeDiscussion({
-                discussionId: this.options.discussionId,
+                discussionId: this.options && this.options.discussionId,
                 orderBy: queryParams.orderBy,
                 displayThreaded: queryParams.displayThreaded,
                 maxResponses: queryParams.maxResponses,
@@ -321,10 +310,10 @@ class Comments extends Component {
     }
 
     isReadOnly(): boolean {
-        return this.elem.getAttribute('data-read-only') === 'true';
+        return (this.elem && this.elem.getAttribute('data-read-only') === 'true') || true;
     }
 
-    addComment(comment: commentType, parent: HTMLElement): void {
+    addComment(comment: Comment, parent?: HTMLElement): void {
         const commentElem = bonzo.create(this.postedCommentEl)[0];
         const $commentElem = bonzo(commentElem);
         const map: Object = {
@@ -335,14 +324,14 @@ class Comments extends Component {
             avatar: 'd-comment__avatar',
         };
         const vals: Object = {
-            username: this.user.displayName,
+            username: this.user && this.user.displayName,
             timestamp: 'Just now',
             body: `<p>${comment.body.replace(/\n+/g, '</p><p>')}</p>`,
             report: {
                 href: `http://discussion.theguardian.com/components/report-abuse/${comment.id}`,
             },
             avatar: {
-                src: this.user.avatar,
+                src: this.user && this.user.avatar,
             },
         };
 
@@ -411,8 +400,8 @@ class Comments extends Component {
             replyToComment
         )[0].innerHTML;
         const commentBox = new CommentBox({
-            discussionId: this.options.discussionId,
-            premod: this.user.privateFields.isPremoderated,
+            discussionId: this.options && this.options.discussionId,
+            premod: this.user && this.user.privateFields && this.user.privateFields.isPremoderated,
             state: 'response',
             replyTo: {
                 commentId: replyToId,
@@ -445,7 +434,7 @@ class Comments extends Component {
 
         commentBox.render(parentCommentEl);
 
-        commentBox.on('post:success', (comment: commentType) => {
+        commentBox.on('post:success', (comment: Comment) => {
             let responses = qwery('.d-thread--responses', parentCommentEl)[0];
 
             if (!responses) {
@@ -527,12 +516,15 @@ class Comments extends Component {
         }
     }
 
-    addUser(user: userType): void {
+    addUser(user: DiscussionProfile): void {
         this.user = user;
 
         // Determine user staff status
         if (this.user && this.user.badge) {
-            this.user.isStaff = this.user.badge.some(e => e.name === 'Staff');
+            this.user.isStaff =
+                this.user &&
+                this.user.badge &&
+                this.user.badge.some(e => e.name === 'Staff');
         }
 
         if (!this.isReadOnly()) {
@@ -570,9 +562,11 @@ class Comments extends Component {
 
     isAllPageSizeActive(): boolean {
         return (
-            config.switches.discussionAllPageSize &&
-            this.options.pagesize === 'All' &&
-            !this.wholeDiscussionErrors
+            (config.switches.discussionAllPageSize &&
+                this.options &&
+                this.options.pagesize === 'All' &&
+                !this.wholeDiscussionErrors) ||
+            false
         );
     }
 
@@ -580,9 +574,10 @@ class Comments extends Component {
     shouldShowPageSizeMessage(): boolean {
         return (
             config.switches.discussionAllPageSize &&
+            this.options &&
             this.options.pagesize === 'All' &&
             this.wholeDiscussionErrors
-        );
+        ) || false;
     }
 
     renderComments(resp: {
