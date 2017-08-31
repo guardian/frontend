@@ -72,7 +72,7 @@ const initOnwardContent = () => {
             config.get('page.showRelatedContent')
         ) {
             new OnwardContent(qwery('.js-onward'));
-        } else if (config.get('page.tones') !== '') {
+        } else if (config.get('page.tones', '') !== '') {
             fastdom
                 .read(() => document.querySelectorAll('.js-onward'))
                 .then(els => {
@@ -85,7 +85,7 @@ const initOnwardContent = () => {
 };
 
 const initDiscussion = () => {
-    if (config.switches.enableDiscussionSwitch && config.page.commentable) {
+    if (config.get('switches.enableDiscussionSwitch') && config.get('page.commentable')) {
         fastdom.read(() => document.querySelector('.discussion')).then(el => {
             if (el) {
                 new DiscussionLoader().attachTo(el);
