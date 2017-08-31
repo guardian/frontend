@@ -47,21 +47,28 @@ const AnagramHelper = React.createClass({
             .sort();
 
         return shuffle(
-            word.trim().split('').sort().reduce((acc, letter) => {
-                const [head, ...tail] = acc.entries;
-                const entered = head === letter.toLowerCase();
+            word
+                .trim()
+                .split('')
+                .sort()
+                .reduce(
+                    (acc, letter) => {
+                        const [head, ...tail] = acc.entries;
+                        const entered = head === letter.toLowerCase();
 
-                return {
-                    letters: acc.letters.concat({
-                        value: letter,
-                        entered,
-                    }),
-                    entries: entered ? tail : acc.entries,
-                };
-            }, {
-                letters: [],
-                entries: wordEntries,
-            }).letters
+                        return {
+                            letters: acc.letters.concat({
+                                value: letter,
+                                entered,
+                            }),
+                            entries: entered ? tail : acc.entries,
+                        };
+                    },
+                    {
+                        letters: [],
+                        entries: wordEntries,
+                    }
+                ).letters
         );
     },
 

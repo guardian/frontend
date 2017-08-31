@@ -104,7 +104,9 @@ const init = (start: () => void, stop: () => void): Promise<void> => {
 
     if (commercialFeatures.dfpAdvertising) {
         if (commercialFeatures.adFree) {
-            setupAdvertising().then(adFreeSlotRemove).catch(removeAdSlots);
+            setupAdvertising()
+                .then(adFreeSlotRemove)
+                .catch(removeAdSlots);
             return Promise.resolve();
         }
         // A promise error here, from a failed module load,
