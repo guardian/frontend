@@ -20,13 +20,16 @@ const getREFPVID = (): string =>
     (config.ophan && config.ophan.pageViewId) || 'not_found';
 
 const buildURL = (url: string, campaignCode: string): string =>
-    `${url}?INTCMP=${campaignCode}&REFPVID=${getREFPVID()}`;
+    `${url}${url.indexOf('?') > 0 ? '&' : '?'}INTCMP=${campaignCode}&REFPVID=${getREFPVID()}`;
 
-const makeSupportURL = (campaignCode: string): string =>
-    buildURL('https://support.theguardian.com/us/contribute', campaignCode);
+const makeSupportURL = (campaignCode: string, context: Boolean = false): string =>
+    buildURL(`https://support.theguardian.com/us/contribute${context ? '?context=true' : ''}`, campaignCode);
 
 const makeBecomeSupporterURL = (campaignCode: string): string =>
     buildURL('https://membership.theguardian.com/us/supporter', campaignCode);
+
+const makeContributionURL = (campaignCode: string): string =>
+    buildURL('https://contribute.theguardian.com/us', campaignCode);
 
 const buildButtonTemplate = ({ supportUrl }) =>
     `<div class="contributions__amount-field">
@@ -181,7 +184,7 @@ export const acquisitionsSupportUsRecurringContribution = makeABTest({
                     }
 
                     changeHeaderLinks(
-                        makeBecomeSupporterURL(
+                        makeContributionURL(
                             `${baseCampaignCode}_control_header_become_supporter`
                         )
                     );
@@ -236,13 +239,13 @@ export const acquisitionsSupportUsRecurringContribution = makeABTest({
 
                     changeHeaderLinks(
                         makeSupportURL(
-                            `${baseCampaignCode}_support_header_become_supporter`
+                            `${baseCampaignCode}_support_header_become_supporter`, true
                         )
                     );
 
                     changeSideMenuLinks(
                         makeSupportURL(
-                            `${baseCampaignCode}_support_side_menu_become_supporter`
+                            `${baseCampaignCode}_support_side_menu_become_supporter`, true
                         )
                     );
                 },
@@ -251,7 +254,7 @@ export const acquisitionsSupportUsRecurringContribution = makeABTest({
                 engagementBannerParams: {
                     buttonCaption: 'Support the Guardian',
                     campaignCode: `${baseCampaignCode}_support_banner`,
-                    linkUrl: `https://support.theguardian.com/us/contribute`,
+                    linkUrl: `https://support.theguardian.com/us/contribute?context=true`,
                 },
 
                 isUnlimited: true,
