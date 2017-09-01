@@ -65,7 +65,7 @@ define([
         },
         userAvatars: function () {
             mediator.on('page:identity:ready', function () {
-                UserAvatars.init();
+                UserAvatars.initUserAvatars();
             });
         },
         validationEmail: function () {
