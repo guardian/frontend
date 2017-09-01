@@ -3,7 +3,6 @@ import { isExpired } from 'common/modules/experiments/test-can-run-checks';
 import { removeParticipation } from 'common/modules/experiments/utils';
 import { getTest as getAcquisitionTest } from 'common/modules/experiments/acquisition-test-selector';
 import { paidContentVsOutbrain2 } from 'common/modules/experiments/tests/paid-content-vs-outbrain';
-import { tailorSurvey } from 'common/modules/experiments/tests/tailor-survey';
 import { outstreamFrequencyCapHoldback } from 'common/modules/experiments/tests/outstream-cap-holdback';
 import { acquisitionsEpicElectionInteractiveEnd } from 'common/modules/experiments/tests/acquisitions-epic-election-interactive-end';
 import { acquisitionsEpicElectionInteractiveSlice } from 'common/modules/experiments/tests/acquisitions-epic-election-interactive-slice';
@@ -11,7 +10,6 @@ import { acquisitionsEpicElectionInteractiveSlice } from 'common/modules/experim
 export const TESTS: $ReadOnlyArray<ABTest> = [
     paidContentVsOutbrain2,
     getAcquisitionTest(),
-    tailorSurvey,
     acquisitionsEpicElectionInteractiveEnd,
     acquisitionsEpicElectionInteractiveSlice,
     outstreamFrequencyCapHoldback,
