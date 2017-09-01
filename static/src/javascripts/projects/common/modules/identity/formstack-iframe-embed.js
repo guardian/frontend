@@ -20,9 +20,7 @@ import assign from 'lodash/objects/assign';
 
 function Formstack(el, formstackId, config) {
 
-    var self = this,
-        dom = {},
-        formId = formstackId.split('-')[0];
+    const self = this, dom = {}, formId = formstackId.split('-')[0];
 
     config = assign({
         idClasses: {
@@ -69,9 +67,9 @@ function Formstack(el, formstackId, config) {
         }
     }, config);
 
-    self.init = function() {
+    self.init = () => {
         // User object required to populate fields
-        var user = idApi.getUserOrSignIn();
+        const user = idApi.getUserOrSignIn();
 
         self.dom(user);
         $(el).removeClass(config.idClasses.hide);
@@ -81,8 +79,8 @@ function Formstack(el, formstackId, config) {
         self.sendHeight();
     };
 
-    self.dom = function(user) {
-        var selector, $userId, $email, html;
+    self.dom = user => {
+        let selector, $userId, $email, html;
 
         // Formstack generates some awful HTML, so we'll remove the CSS links,
         // loop their selectors and add our own classes instead
@@ -108,18 +106,18 @@ function Formstack(el, formstackId, config) {
 
         // Listen for message from top window,
         // only message we are listening for is the iframe position..
-        window.addEventListener('message', function(event) {
-            var message = JSON.parse(event.data);
+        window.addEventListener('message', event => {
+            const message = JSON.parse(event.data);
             if (message.iframeTop) {
                 self.scrollToTopOfIframe(message.iframeTop);
             }
         }, false);
     };
 
-    self.submit = function(event) {
+    self.submit = event => {
         event.preventDefault();
 
-        setTimeout(function() {
+        setTimeout(() => {
             // Remove any existing errors
             $('.' + config.idClasses.formError).removeClass(config.idClasses.formError);
             $('.' + config.idClasses.fieldError).removeClass(config.idClasses.fieldError);
@@ -129,7 +127,7 @@ function Formstack(el, formstackId, config) {
             $(config.fsSelectors.fieldError, dom.$form).addClass(config.idClasses.fieldError);
 
             // Update character count absolute positions
-            $(config.fsSelectors.textArea, el).each(function(textarea) {
+            $(config.fsSelectors.textArea, el).each(textarea => {
                 bean.fire(textarea, 'keyup');
             });
 
@@ -143,29 +141,29 @@ function Formstack(el, formstackId, config) {
         }, 100);
     };
 
-    self.scrollToTopOfIframe = function(top) {
+    self.scrollToTopOfIframe = top => {
         self.postMessage('scroll-to', 'scroll-to', 0, top);
     };
 
-    self.unload = function() {
+    self.unload = () => {
         // Listen for navigation to success page
         self.sendHeight(true);
     };
 
-    self.sendHeight = function() {
-        var body = document.body,
-            html = document.documentElement,
-            height = Math.max(body.scrollHeight, body.offsetHeight,
-                html.clientHeight, html.scrollHeight, html.offsetHeight);
+    self.sendHeight = () => {
+        const body = document.body,
+              html = document.documentElement,
+              height = Math.max(body.scrollHeight, body.offsetHeight,
+                  html.clientHeight, html.scrollHeight, html.offsetHeight);
 
         self.postMessage('set-height', height);
     };
 
-    self.postMessage = function(type, value, x, y) {
+    self.postMessage = (type, value, x, y) => {
 
-        var message = {
-            type: type,
-            value: value,
+        const message = {
+            type,
+            value,
             href: window.location.href
         };
 
