@@ -1,109 +1,95 @@
+// @flow
 /*
     Module: expandable.js
     Description: Used to make a list of items expand and contract
 */
-import $ from 'lib/$';
-import bean from 'bean';
-import bonzo from 'bonzo';
-/*
-    @param {Object} options hash of configuration options:
-        dom           : DOM element to convert
-        expanded      : {Boolean} Whether the component should init in an expanded state
-        showCount     : {Boolean} Whether to display the count in the CTA
-        buttonAfterEl : {Element} Element to add the button after (defaults to last child of dom)
-*/
-const Expandable = options => {
-    const opts = options || {};
 
-    const // root element of the trailblock
-    dom = $(opts.dom);
-
-    let // true = open, false = closed
-    expanded = (opts.expanded === false) ? false : true;
-
-    const cta = document.createElement('button');
-    const showCount = (opts.showCount === false) ? false : true;
-
-    const renderState = () => {
-        if (expanded) {
-            dom.removeClass('shut');
-        } else {
-            dom.addClass('shut');
-        }
-    };
-
-    const getCount = () => parseInt(dom.attr('data-count'), 10);
-
-    const updateCallToAction = () => {
-        let text = 'Show ';
-        if (showCount) {
-            text += getCount() + ' ';
-        }
-        text += (expanded) ? 'fewer' : 'more';
-        cta.innerHTML = text;
-        cta.setAttribute('data-link-name', 'Show ' + ((expanded) ? 'more' : 'fewer'));
-        cta.setAttribute('data-is-ajax', '1');
-    };
-
-    const // Model
-    model = {
-
-        toggleExpanded() {
-            expanded = (expanded) ? false : true;
-            renderState();
-            updateCallToAction();
-        },
-
-        getCount,
-
-        isOpen() {
-            return (dom.hasClass('shut')) ? false : true;
-        }
-    };
-
-    const // View
-    view = {
-
-        updateCallToAction,
-
-        renderState,
-
-        renderCallToAction() {
-            bean.add(cta, 'click', () => {
-                model.toggleExpanded();
-            });
-            cta.className = 'cta';
-            if (opts.buttonAfterEl) {
-                bonzo(opts.buttonAfterEl).after(cta);
-            } else {
-                dom[0].appendChild(cta);
-            }
-            view.updateCallToAction();
-        },
-
-        scrollToCallToAction() {
-            // feels a bit hacky but need to give the transition time to finish before scrolling
-            if (!expanded) {
-                window.setTimeout(() => {
-                    cta.scrollIntoView();
-                }, 550);
-            }
-        }
-    };
-
-    return {
-        init() {
-
-            if (dom.hasClass('expandable-initialised') || !dom.html() || model.getCount() < 3) {
-                return false;
-            }
-            dom.addClass('expandable-initialised');
-
-            view.renderCallToAction();
-            view.renderState();
-        },
-        toggle: model.toggleExpanded
-    };
+type Options = {
+    dom: Element,
+    expanded: boolean,
+    showCount: boolean,
+    buttonAfterEl?: Element
 };
 
-export default Expandable;
+class Expandable {
+    opts: Options;
+    dom: Element;
+    cta: Element;
+    expanded: boolean;
+    showCount: boolean;
+
+    constructor(options: Options) {
+        this.opts = options;
+        this.dom = options.dom;
+        this.expanded = (options.expanded === false) ? false : true;
+        this.cta = document.createElement('button');
+        this.showCount = (options.showCount === false) ? false : true;
+    }
+
+    renderState(): void {
+        if (this.expanded) {
+            this.dom.classList.remove('shut');
+        } else {
+            this.dom.classList.add('shut');
+        }
+    }
+
+    getCount(): number {
+        return parseInt(this.dom.getAttribute('data-count') || '0', 10);
+    }
+
+    updateCallToAction(): void {
+        const text = `Show ${this.showCount ? `${this.getCount()} ` : ''}${this.expanded ? 'fewer' : 'more'}`;
+        this.cta.innerHTML = text;
+        this.cta.setAttribute('data-link-name', `Show ${this.expanded ? 'more' : 'fewer'}`);
+        this.cta.setAttribute('data-is-ajax', '1');
+    }
+
+    toggleExpanded(): void {
+        this.expanded = !this.expanded;
+        this.renderState();
+        this.updateCallToAction();
+    }
+
+    isOpen(): boolean {
+        return !this.dom.classList.contains('shut');
+    }
+
+    renderCallToAction(): void {
+        this.cta.addEventListener('click', () => {
+            this.toggleExpanded();
+        });
+        this.cta.className = 'cta';
+        if (this.opts.buttonAfterEl) {
+            this.opts.buttonAfterEl.insertAdjacentElement('afterend', this.cta);
+        } else {
+            this.dom.appendChild(this.cta);
+        }
+        this.updateCallToAction();
+    }
+
+    scrollToCallToAction(): void {
+        // feels a bit hacky but need to give the transition time to finish before scrolling
+        if (!this.expanded) {
+            window.setTimeout(() => {
+                this.cta.scrollIntoView();
+            }, 550);
+        }
+    }
+
+    init(): void {
+        if (this.dom.classList.contains('expandable-initialised') || !this.dom.innerHTML || this.getCount() < 3) {
+            return;
+        }
+        this.dom.classList.add('expandable-initialised');
+
+        this.renderCallToAction();
+        this.renderState();
+    }
+
+    toggle(): void {
+        this.toggleExpanded();
+    }
+};
+
+export { Expandable };
