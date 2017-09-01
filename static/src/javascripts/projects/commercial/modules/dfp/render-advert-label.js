@@ -14,7 +14,7 @@ const shouldRenderLabel = adSlotNode =>
         adSlotNode.getElementsByClassName('ad-slot__label').length
     );
 
-const renderAdvertLabel = (adSlotNode: any) => {
+const renderAdvertLabel = (adSlotNode: any): Promise<null> => {
     if (shouldRenderLabel(adSlotNode)) {
         let feedbackPopup = '';
         let feedbackThanksMessage = '';
@@ -37,6 +37,7 @@ const renderAdvertLabel = (adSlotNode: any) => {
             adSlotNode.insertAdjacentHTML('afterbegin', labelDiv);
         });
     }
+
     return Promise.resolve(null);
 };
 

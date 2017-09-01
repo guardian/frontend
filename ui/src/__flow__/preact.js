@@ -3,7 +3,7 @@
 // temporarily commit preact libdef,
 // pending https://github.com/developit/preact/pull/782
 
-import react from 'react';
+import * as react from 'react';
 import { render } from 'react-dom';
 
 declare module "preact" {
