@@ -43,7 +43,7 @@ const setupSonobi: () => Promise<void> = once(() => {
     return Promise.resolve();
 });
 
-const init = (start: () => void, stop: () => void) => {
+const init = (start: () => void, stop: () => void): Promise<void> => {
     start();
     setupSonobi().then(stop);
 
