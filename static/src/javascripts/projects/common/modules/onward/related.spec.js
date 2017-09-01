@@ -1,25 +1,19 @@
 // @flow
 
 import config from 'lib/config';
-// import * as Expandable from 'common/modules/ui/expandable';
 import { related } from './related';
 
 jest.mock('lib/config');
-// jest.mock('common/modules/ui/expandable');
-// const myMock = jest.fn();
-// Expandable.Expandable.mockImplementation(() => {
-//     return {
-//         Expandable: class {
-//             constructor: myMock
-//             init: myMock
-//         }
-//     };
-// });
+jest.mock('common/modules/ui/expandable', () => ({
+    Expandable: jest.fn()
+}));
 jest.mock('common/modules/analytics/register', () => ({
     begin() {},
     end() {},
     error() {},
 }));
+
+const FakeExp: any = require('common/modules/ui/expandable').Expandable;
 
 describe('onward/related', () => {
     beforeEach(() => {
@@ -38,8 +32,16 @@ describe('onward/related', () => {
             relatedContent: true,
             ajaxRelatedContent: true,
         };
+
+        FakeExp.mockReset();
+        FakeExp.prototype.init = jest.fn();
+    
         jest.resetAllMocks();
         jest.resetModules();
+    });
+
+    afterEach(() => {
+        FakeExp.prototype.init.mockRestore();
     });
 
     it("should hide if there's no story package and related can't be fetched", () => {
@@ -54,15 +56,15 @@ describe('onward/related', () => {
         expect(container.classList.contains('u-h')).toBe(true);
     });
 
-    // it('should create expandable if page has story package', () => {
-    //     config.page.hasStoryPackage = true;
+    it('should create expandable if page has story package', () => {
+        config.page.hasStoryPackage = true;
 
-    //     related({});
+        related({});
 
-    //     expect(Expandable.Expandable).toHaveBeenCalledWith({
-    //         dom: document.querySelector('.related-trails'),
-    //         expanded: false,
-    //         showCount: false,
-    //     });
-    // });
+        expect(FakeExp).toHaveBeenCalledWith({
+            dom: document.querySelector('.related-trails'),
+            expanded: false,
+            showCount: false,
+        });
+    });
 });
