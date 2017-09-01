@@ -72,7 +72,7 @@ export const initYoutubePlayer = (
     el: HTMLElement,
     handlers: Handlers,
     videoId: string
-) => {
+): Promise<void> => {
     loadYoutubeJs();
 
     return promise.then(() => {

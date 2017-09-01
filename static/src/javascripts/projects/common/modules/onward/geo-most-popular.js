@@ -8,7 +8,7 @@ import Component from 'common/modules/component';
 import mediator from 'lib/mediator';
 import once from 'lodash/functions/once';
 
-const promise = new Promise((resolve, reject) => {
+const promise: Promise<void> = new Promise((resolve, reject) => {
     mediator.on('modules:onward:geo-most-popular:ready', resolve);
     mediator.on('modules:onward:geo-most-popular:cancel', resolve);
     mediator.on('modules:onward:geo-most-popular:error', reject);

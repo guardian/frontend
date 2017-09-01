@@ -122,8 +122,10 @@ sizeCallbacks[adSizes.portrait] = () => {
     // remove geo most popular
     geoMostPopular.whenRendered.then(popular =>
         fastdom.write(() => {
-            popular.elem.remove();
-            popular.elem = null;
+            if (popular && popular.elem) {
+                popular.elem.remove();
+                popular.elem = null;
+            }
         })
     );
 };
@@ -150,7 +152,10 @@ const addContentClass = adSlotNode => {
  * @param slotRenderEvent - GPT slotRenderEndedEvent
  * @returns {Promise} - resolves once all necessary rendering is queued up
  */
-const renderAdvert = (advert: Advert, slotRenderEvent: any) => {
+const renderAdvert = (
+    advert: Advert,
+    slotRenderEvent: any
+): Promise<boolean> => {
     addContentClass(advert.node);
 
     return applyCreativeTemplate(advert.node)
