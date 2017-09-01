@@ -2,12 +2,12 @@ package services
 
 import java.net.URLEncoder
 
-import common.{BadConfigurationException, ExecutionContexts, Logging}
+import common.{BadConfigurationException, Logging}
 import conf.Configuration._
 import play.api.libs.json._
 import play.api.libs.ws.WSClient
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 import scala.concurrent.duration.DurationInt
 
 object MostReadItem {
@@ -16,7 +16,7 @@ object MostReadItem {
 
 case class MostReadItem(url: String, count: Int)
 
-class OphanApi(wsClient: WSClient) extends ExecutionContexts with Logging with implicits.WSRequests {
+class OphanApi(wsClient: WSClient)(implicit executionContext: ExecutionContext) extends Logging with implicits.WSRequests {
 
   private def getBody(path: String)(params: Map[String, String] = Map.empty): Future[JsValue] = {
     val maybeJson = for {

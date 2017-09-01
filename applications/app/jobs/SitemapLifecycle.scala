@@ -14,16 +14,16 @@ class SiteMapLifecycle(jobs: JobScheduler,
   override def start(): Unit = {
     jobs.deschedule("SiteMap")
     jobs.schedule("SiteMap", "0 0/2 * * * ?") {
-      siteMapJob.update()
+      siteMapJob.update
     }
 
     akkaAsync.after1s {
-      siteMapJob.update()
+      siteMapJob.update
     }
   }
 }
 
-class SiteMapJob(contentApiClient: ContentApiClient) extends ExecutionContexts with Logging {
+class SiteMapJob(contentApiClient: ContentApiClient) extends Logging {
   case class SiteMapContent(
     news: xml.NodeSeq,
     video: xml.NodeSeq)
@@ -32,7 +32,7 @@ class SiteMapJob(contentApiClient: ContentApiClient) extends ExecutionContexts w
   private val videoSiteMap = new VideoSiteMap(contentApiClient)
   private val siteMapContent = AkkaAgent[Option[SiteMapContent]](None)
 
-  def update(): Unit = {
+  def update(implicit executionContext: ExecutionContext): Unit = {
     for {
       newsSiteMap <- newsSiteMap.getLatestContent
       videoSiteMap <- videoSiteMap.getLatestContent

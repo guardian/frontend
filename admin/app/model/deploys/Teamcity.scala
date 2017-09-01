@@ -1,10 +1,11 @@
 package model.deploys
 
-import common.ExecutionContexts
+
 import conf.Configuration
 import play.api.libs.json._
 import play.api.libs.functional.syntax._
-import scala.concurrent.Future
+
+import scala.concurrent.{ExecutionContext, Future}
 import scala.language.postfixOps
 
 case class Commit(sha: String, username: String, message: String)
@@ -58,9 +59,9 @@ object TeamCityBuilds {
 }
 
 
-class TeamcityService(httpClient: HttpLike) extends ExecutionContexts {
+class TeamcityService(httpClient: HttpLike) {
 
-  private def GET[T](path: String, queryString: Map[String, String])(implicit r:Reads[T]): Future[T] = {
+  private def GET[T](path: String, queryString: Map[String, String])(implicit r:Reads[T], executionContext: ExecutionContext): Future[T] = {
     val apiPath = "guestAuth/app/rest"
     val url = s"${Configuration.teamcity.internalHost}/$apiPath/$path"
 
@@ -77,7 +78,7 @@ class TeamcityService(httpClient: HttpLike) extends ExecutionContexts {
       }
   }
 
-  def getBuilds(project: String, branch: Option[String] = Some("master"), count: Int = 10): Future[Seq[TeamCityBuild]] = {
+  def getBuilds(project: String, branch: Option[String] = Some("master"), count: Int = 10)(implicit executionContext: ExecutionContext): Future[Seq[TeamCityBuild]] = {
 
     val buildFields = Seq("id", "number", "branchName", "buildType(name,projectName)", "status",
       "revisions(revision(version))", "changes(change(username,comment,version))",

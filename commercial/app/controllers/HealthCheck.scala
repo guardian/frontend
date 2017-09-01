@@ -4,8 +4,10 @@ import conf.{AnyGoodCachedHealthCheck, NeverExpiresSingleHealthCheck}
 import play.api.libs.ws.WSClient
 import play.api.mvc.ControllerComponents
 
-class HealthCheck(wsClient: WSClient, val controllerComponents: ControllerComponents) extends AnyGoodCachedHealthCheck(
+import scala.concurrent.ExecutionContext
+
+class HealthCheck(wsClient: WSClient, val controllerComponents: ControllerComponents)(implicit executionContext: ExecutionContext) extends AnyGoodCachedHealthCheck(
   NeverExpiresSingleHealthCheck("/commercial/travel/api/offers.json"),
   NeverExpiresSingleHealthCheck("/commercial/jobs/api/jobs.json"),
   NeverExpiresSingleHealthCheck("/commercial/books/api/books.json")
-)(wsClient)
+)(wsClient, executionContext)

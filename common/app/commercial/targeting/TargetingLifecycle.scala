@@ -21,11 +21,11 @@ class TargetingLifecycle(
   override def start(): Unit = {
     jobs.deschedule("TargetingCampaignRefreshJob")
     jobs.scheduleEvery("TargetingCampaignRefreshJob", 1.minutes) {
-      CampaignAgent.refresh()
+      CampaignAgent.refresh
     }
 
     akkaAsync.after1s {
-      CampaignAgent.refresh()
+      CampaignAgent.refresh
     }
   }
 }

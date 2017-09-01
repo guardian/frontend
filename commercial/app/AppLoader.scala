@@ -25,6 +25,8 @@ import play.api.mvc.EssentialFilter
 import play.api.routing.Router
 import router.Routes
 
+import scala.concurrent.ExecutionContext
+
 class AppLoader extends FrontendApplicationLoader {
   override def buildComponents(context: Context): FrontendComponents = new BuiltInComponentsFromContext(context) with AppComponents
 }
@@ -32,6 +34,7 @@ class AppLoader extends FrontendApplicationLoader {
 trait CommercialServices {
   def wsClient: WSClient
   def actorSystem: ActorSystem
+  implicit val executionContext: ExecutionContext
 
   lazy val magentoService = wire[MagentoService]
   lazy val capiHttpClient: HttpClient = wire[CapiHttpClient]

@@ -25,7 +25,7 @@ import actions.AuthenticatedActions
 @DoNotDiscover class EmailControllerTest extends WordSpec
   with Matchers
   with MockitoSugar
-  with WithTestContext
+  with WithTestApplicationContext
   with WithTestCSRF
   with ConfiguredTestSuite {
 

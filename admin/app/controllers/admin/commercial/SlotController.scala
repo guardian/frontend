@@ -3,7 +3,7 @@ package controllers.admin.commercial
 import common.dfp.LineItemReport
 import model.ApplicationContext
 import play.api.libs.json.Json
-import play.api.mvc.{Action, BaseController, Controller, ControllerComponents}
+import play.api.mvc.{Action, BaseController, ControllerComponents}
 import tools.Store
 
 class SlotController(val controllerComponents: ControllerComponents)(implicit context: ApplicationContext)

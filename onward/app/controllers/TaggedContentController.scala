@@ -15,7 +15,7 @@ class TaggedContentController(
   val contentApiClient: ContentApiClient,
   val mostReadAgent: MostReadAgent,
   val controllerComponents: ControllerComponents
-) extends BaseController with Related with Logging with ExecutionContexts {
+) extends BaseController with Related with Logging with ImplicitControllerExecutionContext {
 
   def renderJson(tag: String) = Action.async { implicit request =>
     tagWhitelist.find(_ == tag).map { tag =>

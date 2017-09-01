@@ -7,7 +7,13 @@ import model.ApplicationContext
 import play.api.http.{HttpConfiguration, HttpFilters}
 import play.api.mvc.EssentialFilter
 
-class AdminFilters(httpConfiguration: HttpConfiguration)(implicit mat: Materializer, context: ApplicationContext) extends HttpFilters {
+import scala.concurrent.ExecutionContext
+
+class AdminFilters(httpConfiguration: HttpConfiguration)(
+  implicit mat: Materializer,
+  applicationContext: ApplicationContext,
+  executionContext: ExecutionContext
+) extends HttpFilters {
 
   val filterExemptions = FilterExemptions(
     "/deploys", //not authenticated so it can be accessed by Prout to determine which builds have been deployed
@@ -15,7 +21,7 @@ class AdminFilters(httpConfiguration: HttpConfiguration)(implicit mat: Materiali
   )
   val adminAuthFilter = new AuthFilterWithExemptions(
     filterExemptions.loginExemption,
-    filterExemptions.exemptions)(mat, context, httpConfiguration)
+    filterExemptions.exemptions)(mat, applicationContext, httpConfiguration)
 
   val filters: List[EssentialFilter] = adminAuthFilter :: Filters.common
 }

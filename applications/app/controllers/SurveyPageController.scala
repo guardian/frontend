@@ -1,6 +1,6 @@
 package controllers
 
-import common.ExecutionContexts
+import common.ImplicitControllerExecutionContext
 import conf.Configuration
 import model.{ApplicationContext, Cached, NoCache}
 import model.Cached.RevalidatableResult
@@ -14,7 +14,7 @@ class SurveyPageController(
   wsClient: WSClient,
   val controllerComponents: ControllerComponents
 )(implicit context: ApplicationContext)
-  extends BaseController with ExecutionContexts {
+  extends BaseController with ImplicitControllerExecutionContext {
 
   val defaultCacheDuration: Duration = 15.minutes
 

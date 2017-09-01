@@ -18,7 +18,8 @@ import scala.concurrent.Future
     with WithTestFootballClient
     with WithMaterializer
     with BeforeAndAfterAll
-    with WithTestContext
+    with WithTestApplicationContext
+    with WithTestExecutionContext
     with WithTestWsClient {
 
   val resultsController = new ResultsController(testCompetitionsService, play.api.test.Helpers.stubControllerComponents())

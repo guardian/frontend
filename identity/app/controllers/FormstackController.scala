@@ -3,7 +3,7 @@ package controllers
 import actions.AuthenticatedActions
 import play.api.mvc._
 import model.{ApplicationContext, IdentityPage}
-import common.ExecutionContexts
+import common.ImplicitControllerExecutionContext
 import services.{IdRequestParser, IdentityUrlBuilder, ReturnUrlVerifier}
 import utils.SafeLogging
 
@@ -19,7 +19,7 @@ class FormstackController(
   formStackApi: FormstackApi,
   val controllerComponents: ControllerComponents
 )(implicit context: ApplicationContext)
-  extends BaseController with ExecutionContexts with SafeLogging {
+  extends BaseController with ImplicitControllerExecutionContext with SafeLogging {
 
   import authenticatedActions.authAction
 

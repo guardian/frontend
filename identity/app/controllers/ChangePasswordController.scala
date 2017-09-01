@@ -1,6 +1,6 @@
 package controllers
 
-import common.ExecutionContexts
+import common.ImplicitControllerExecutionContext
 import model.{ApplicationContext, IdentityPage, NoCache}
 import play.api.mvc._
 import play.api.data.{Form, Forms}
@@ -28,7 +28,7 @@ class ChangePasswordController(
   val controllerComponents: ControllerComponents,
   val httpConfiguration: HttpConfiguration
 )(implicit context: ApplicationContext)
-  extends BaseController with ExecutionContexts with SafeLogging with Mappings with implicits.Forms {
+  extends BaseController with ImplicitControllerExecutionContext with SafeLogging with Mappings with implicits.Forms {
 
   import authenticatedActions.authAction
 

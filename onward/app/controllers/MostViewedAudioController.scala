@@ -13,7 +13,7 @@ class MostViewedAudioController(
   mostViewedAudioAgent: MostViewedAudioAgent,
   val controllerComponents: ControllerComponents
 )(implicit context: ApplicationContext)
-  extends BaseController with Logging with ExecutionContexts {
+  extends BaseController with Logging with ImplicitControllerExecutionContext {
 
   def renderMostViewed() = Action { implicit request =>
     getMostViewedAudio match {

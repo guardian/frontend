@@ -24,6 +24,8 @@ import play.api.libs.ws.WSClient
 import services._
 import router.Routes
 
+import scala.concurrent.ExecutionContext
+
 class AppLoader extends FrontendApplicationLoader {
   override def buildComponents(context: Context): FrontendComponents = new BuiltInComponentsFromContext(context) with AppComponents
 }
@@ -32,6 +34,7 @@ trait AdminServices extends I18nComponents  {
   def wsClient: WSClient
   def akkaAsync: AkkaAsync
   def actorSystem: ActorSystem
+  implicit val executionContext: ExecutionContext
   lazy val capiHttpClient: HttpClient = wire[CapiHttpClient]
   lazy val contentApiClient = wire[ContentApiClient]
   lazy val ophanApi = wire[OphanApi]

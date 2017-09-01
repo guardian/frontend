@@ -13,14 +13,14 @@ import org.scalatest.{DoNotDiscover, BeforeAndAfterAll, Matchers, FlatSpec}
   with ConfiguredTestSuite
   with WithMaterializer
   with WithTestWsClient
-  with WithTestContext
+  with WithTestApplicationContext
   with WithTestContentApiClient {
 
   val section = "books"
   lazy val sectionsLookUp = new SectionsLookUp(testContentApiClient)
 
   override def beforeAll(): Unit = {
-    sectionsLookUp.refresh()
+    sectionsLookUp.refresh
   }
 
   lazy val indexController = new IndexController(

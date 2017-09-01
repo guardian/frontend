@@ -1,6 +1,6 @@
 package authentication
 
-import common.ExecutionContexts
+
 import play.api.mvc._
 
 import scala.concurrent.{ExecutionContext, Future}

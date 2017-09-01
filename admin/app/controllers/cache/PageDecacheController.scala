@@ -4,7 +4,7 @@ import java.net.URI
 
 import cache.SurrogateKey
 import com.gu.googleauth.UserIdentity
-import common.{ExecutionContexts, Logging}
+import common.{ImplicitControllerExecutionContext, Logging}
 import controllers.admin.AdminAuthController
 import model.{ApplicationContext, NoCache}
 import play.api.libs.ws.WSClient
@@ -18,7 +18,7 @@ import scala.concurrent.Future.successful
 case class PrePurgeTestResult(url: String, passed: Boolean)
 
 class PageDecacheController(wsClient: WSClient, val controllerComponents: ControllerComponents)(implicit context: ApplicationContext)
-  extends BaseController with Logging with ExecutionContexts with AdminAuthController {
+  extends BaseController with Logging with ImplicitControllerExecutionContext with AdminAuthController {
 
   def renderPageDecache() = Action.async { implicit request =>
       Future(NoCache(Ok(views.html.cache.pageDecache())))

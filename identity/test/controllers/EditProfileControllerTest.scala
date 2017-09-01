@@ -27,7 +27,7 @@ import scala.concurrent.Future
   with Matchers
   with MockitoSugar
   with OptionValues
-  with WithTestContext
+  with WithTestApplicationContext
   with WithTestCSRF
   with ConfiguredServer {
 

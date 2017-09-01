@@ -2,14 +2,13 @@ package controllers.cache
 
 import java.net.URI
 
-import common.ExecutionContexts
 import conf.AdminConfiguration.{fastly, imgix}
 import play.api.libs.json.{JsObject, JsString}
 import play.api.libs.ws.{WSAuthScheme, WSClient}
 import views.support.ImgSrc.tokenFor
 import views.support.ImageUrlSigner.sign
 
-class ImageServices(wsClient: WSClient) extends ExecutionContexts {
+class ImageServices(wsClient: WSClient) {
 
   // none of the stuff here is a state secret.
   // it is all authenticated

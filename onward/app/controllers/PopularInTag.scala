@@ -13,7 +13,7 @@ class PopularInTag(
   val mostReadAgent: MostReadAgent,
   val controllerComponents: ControllerComponents
 )(implicit context: ApplicationContext)
-  extends BaseController with Related with Containers with Logging with ExecutionContexts {
+  extends BaseController with Related with Containers with Logging with ImplicitControllerExecutionContext {
 
   def render(tag: String) = Action.async { implicit request =>
     val edition = Edition(request)

@@ -30,7 +30,7 @@ class SeriesController(
   contentApiClient: ContentApiClient,
   val controllerComponents: ControllerComponents
 )(implicit context: ApplicationContext)
-  extends BaseController with Logging with Paging with ExecutionContexts with Requests {
+  extends BaseController with Logging with Paging with ImplicitControllerExecutionContext with Requests {
 
   def renderSeriesStories(seriesId: String) = Action.async { implicit request =>
     lookup(Edition(request), seriesId) map { series =>

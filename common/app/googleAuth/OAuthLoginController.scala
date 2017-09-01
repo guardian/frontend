@@ -1,7 +1,7 @@
 package googleAuth
 
 import com.gu.googleauth.{GoogleAuth, GoogleAuthConfig, UserIdentity}
-import common.{Crypto, ExecutionContexts, Logging}
+import common.{Crypto, ImplicitControllerExecutionContext, Logging}
 import conf.Configuration
 import org.joda.time.DateTime
 import play.api.http.HttpConfiguration
@@ -11,7 +11,7 @@ import play.api.mvc._
 
 import scala.concurrent.Future
 
-trait OAuthLoginController extends BaseController with ExecutionContexts with implicits.Requests {
+trait OAuthLoginController extends BaseController with ImplicitControllerExecutionContext with implicits.Requests {
 
   implicit def wsClient: WSClient
   def login: Action[AnyContent]

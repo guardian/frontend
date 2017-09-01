@@ -1,6 +1,6 @@
 package controllers
 
-import common.{ExecutionContexts, Logging}
+import common.{ImplicitControllerExecutionContext, Logging}
 import contentapi.ContentApiClient
 import layout.FaciaContainer
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
@@ -12,7 +12,7 @@ class NewspaperController(
   contentApiClient: ContentApiClient,
   val controllerComponents: ControllerComponents
 )(implicit context: ApplicationContext)
-  extends BaseController with Logging with ExecutionContexts {
+  extends BaseController with Logging with ImplicitControllerExecutionContext {
 
   private val newspaperQuery = new NewspaperQuery(contentApiClient)
 

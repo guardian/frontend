@@ -13,7 +13,7 @@ class MostViewedGalleryController(
   mostViewedGalleryAgent: MostViewedGalleryAgent,
   val controllerComponents: ControllerComponents
 )(implicit context: ApplicationContext)
-  extends BaseController with Logging with ExecutionContexts {
+  extends BaseController with Logging with ImplicitControllerExecutionContext {
 
   private val page = SimplePage(MetaData.make(
     "more galleries",

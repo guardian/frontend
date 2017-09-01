@@ -4,7 +4,7 @@ import java.net.URLEncoder
 
 import actions.AuthenticatedActions.AuthRequest
 import client.Logging
-import common.ExecutionContexts
+
 import idapiclient.IdApiClient
 import play.api.mvc.Security.{AuthenticatedBuilder, AuthenticatedRequest}
 import play.api.mvc._
@@ -46,8 +46,8 @@ class AuthenticatedActions(
 
   def agreeAction(unAuthorizedCallback: (RequestHeader) => Result) = new AuthenticatedBuilder(authService.authenticatedUserFor, anyContentParser, unAuthorizedCallback)
 
-  def apiVerifiedUserRefiner(implicit ec: ExecutionContext) = new ActionRefiner[AuthRequest, AuthRequest] {
-    override val executionContext = ExecutionContexts.executionContext
+  def apiVerifiedUserRefiner = new ActionRefiner[AuthRequest, AuthRequest] {
+    override val executionContext = ec
     def refine[A](request: AuthRequest[A]) = for (meResponse <- identityApiClient.me(request.user.auth)) yield {
       meResponse.left.map {
         errors =>
@@ -61,8 +61,8 @@ class AuthenticatedActions(
     }
   }
 
-  def recentlyAuthenticatedRefiner() = new ActionRefiner[AuthRequest, AuthRequest] {
-    override val executionContext = ExecutionContexts.executionContext
+  def recentlyAuthenticatedRefiner = new ActionRefiner[AuthRequest, AuthRequest] {
+    override val executionContext = ec
     def refine[A](request: AuthRequest[A]) = Future.successful {
       if (authService.recentlyAuthenticated(request)) Right(request) else Left(sendUserToReauthenticate(request))
     }

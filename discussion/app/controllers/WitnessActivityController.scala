@@ -2,14 +2,14 @@ package controllers
 
 import play.api.mvc._
 import model.Cached
-import common.{ExecutionContexts, JsonComponent}
+import common.{ImplicitControllerExecutionContext, JsonComponent}
 import discussion.model._
 import discussion.api.WitnessApi
 import discussion.api.DiscussionApiException._
 import conf.Configuration
 import play.api.libs.ws.WSClient
 
-trait WitnessActivityController extends WitnessApi with BaseController with ExecutionContexts with implicits.Requests {
+trait WitnessActivityController extends WitnessApi with BaseController with ImplicitControllerExecutionContext with implicits.Requests {
 
   def witnessActivity(userId: String): Action[AnyContent] = Action.async {
     implicit request => {

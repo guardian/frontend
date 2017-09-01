@@ -16,7 +16,7 @@ class MostPopularController(contentApiClient: ContentApiClient,
   dayMostPopularAgent: DayMostPopularAgent,
   mostPopularAgent: MostPopularAgent,
   val controllerComponents: ControllerComponents)
-  (implicit context: ApplicationContext) extends BaseController with Logging with ExecutionContexts {
+  (implicit context: ApplicationContext) extends BaseController with Logging with ImplicitControllerExecutionContext {
     val page = SimplePage(MetaData.make(
     "most-read",
     Some(SectionSummary.fromId("most-read")),

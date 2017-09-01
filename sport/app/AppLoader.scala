@@ -29,6 +29,8 @@ import rugby.feed.{CapiFeed, OptaFeed}
 import rugby.jobs.RugbyStatsJob
 import services.OphanApi
 
+import scala.concurrent.ExecutionContext
+
 class AppLoader extends FrontendApplicationLoader {
   override def buildComponents(context: Context): FrontendComponents = new BuiltInComponentsFromContext(context) with AppComponents
 }
@@ -36,6 +38,8 @@ class AppLoader extends FrontendApplicationLoader {
 trait SportServices {
   def wsClient: WSClient
   def actorSystem: ActorSystem
+  implicit val executionContext: ExecutionContext
+
   lazy val capiHttpClient: HttpClient = wire[CapiHttpClient]
   lazy val contentApiClient = wire[ContentApiClient]
   lazy val footballClient = wire[FootballClient]

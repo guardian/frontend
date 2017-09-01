@@ -7,7 +7,6 @@ import java.nio.charset.Charset
 import java.nio.file.{Files, Paths}
 import java.util
 
-import common.ExecutionContexts
 import conf.Configuration
 import org.apache.commons.codec.digest.DigestUtils
 import play.api.libs.ws.WSResponse
@@ -16,19 +15,23 @@ import play.shaded.ahc.org.asynchttpclient.{Response => ACHResponse}
 import play.shaded.ahc.io.netty.handler.codec.http.HttpHeaders
 import play.shaded.ahc.org.asynchttpclient.uri.Uri
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 import scala.io.Codec.UTF8
 
-trait HttpRecorder[A] extends ExecutionContexts {
+trait HttpRecorder[A] {
 
   def baseDir: File
 
-  final def load(url: String, headers: Map[String, String] = Map.empty)(fetch: => Future[A]): Future[A] =
+  final def load(url: String, headers: Map[String, String] = Map.empty )
+    (fetch: => Future[A])
+    (implicit executionContext: ExecutionContext): Future[A] =
     loadFile(url, headers)(fetch).map(file => toResponse(contentFromFile(file)))
 
 
   // loads api call from disk. if it cannot be found on disk go get it and save to disk
-  final def loadFile(url: String, headers: Map[String, String] = Map.empty)(fetch: => Future[A]): Future[File] = {
+  final def loadFile(url: String, headers: Map[String, String] = Map.empty)
+    (fetch: => Future[A])
+    (implicit executionContext: ExecutionContext): Future[File] = {
 
     val (fileName, components) = name(url, headers)
 

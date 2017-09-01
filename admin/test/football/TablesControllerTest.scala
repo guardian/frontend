@@ -1,6 +1,6 @@
 package football
 
-import common.ExecutionContexts
+
 import _root_.controllers.admin.TablesController
 import football.model.PA
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FreeSpec, Matchers}
@@ -8,20 +8,19 @@ import play.api.mvc.AnyContentAsFormUrlEncoded
 import play.api.test._
 import play.api.test.Helpers._
 import play.twirl.api.HtmlFormat
-import test.{ConfiguredTestSuite, WithMaterializer, WithTestContext, WithTestWsClient}
+import test.{ConfiguredTestSuite, WithMaterializer, WithTestApplicationContext, WithTestWsClient}
 
 import scala.annotation.tailrec
 import scala.language.postfixOps
 
 @DoNotDiscover class TablesControllerTest
   extends FreeSpec
-    with ExecutionContexts
     with Matchers
     with ConfiguredTestSuite
     with BeforeAndAfterAll
     with WithTestWsClient
     with WithMaterializer
-    with WithTestContext {
+    with WithTestApplicationContext {
 
   "test tables index page loads with leagues" in {
     val Some(result) = route(app, FakeRequest(GET, "/admin/football/tables"))

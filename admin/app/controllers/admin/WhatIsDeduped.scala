@@ -1,20 +1,20 @@
 package controllers.admin
 
-import common.{ExecutionContexts, Logging}
+import common.{ImplicitControllerExecutionContext, Logging}
 import conf.Configuration
 import layout.DedupedFrontResult
 import model.Cached.RevalidatableResult
 import model.{ApplicationContext, Cached, NoCache}
 import play.api.libs.json.{JsError, JsSuccess}
 import play.api.libs.ws.WSClient
-import play.api.mvc.{Action, BaseController, Controller, ControllerComponents}
+import play.api.mvc.{BaseController, ControllerComponents}
 import services.ConfigAgent
 
 class WhatIsDeduped(
   wsClient: WSClient,
   val controllerComponents: ControllerComponents
 )(implicit context: ApplicationContext)
-  extends BaseController with Logging with ExecutionContexts {
+  extends BaseController with Logging with ImplicitControllerExecutionContext {
 
    def index() = Action { implicit request =>
      val paths: List[String] = ConfigAgent.getPathIds.sorted

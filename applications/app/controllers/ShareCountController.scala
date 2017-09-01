@@ -1,6 +1,6 @@
 package controllers
 
-import common.{ExecutionContexts, JsonComponent, Logging}
+import common.{ImplicitControllerExecutionContext, JsonComponent, Logging}
 import model.{ApplicationContext, CacheTime, Cached}
 import play.api.mvc.{BaseController, ControllerComponents}
 import services.FacebookGraphApi
@@ -10,7 +10,7 @@ class ShareCountController(
   facebookGraphAPI: FacebookGraphApi,
   val controllerComponents: ControllerComponents
 )(implicit context: ApplicationContext)
-  extends BaseController with Logging with ExecutionContexts {
+  extends BaseController with Logging with ImplicitControllerExecutionContext {
 
   def fetch(path: String) = Action.async { implicit request =>
     facebookGraphAPI.shareCount(path).map { shareCount =>

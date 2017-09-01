@@ -5,18 +5,24 @@ import discussion.model.DiscussionKey
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FreeSpec}
 import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.mvc.Headers
-import test.{ConfiguredTestSuite, WithMaterializer, WithTestWsClient}
+import test.{ConfiguredTestSuite, WithMaterializer, WithTestExecutionContext, WithTestWsClient}
 
 import scala.concurrent._
 import scala.concurrent.duration._
 import scala.language.postfixOps
 
-@DoNotDiscover class DiscussionApiTest extends FreeSpec with ConfiguredTestSuite with BeforeAndAfterAll with WithMaterializer with WithTestWsClient {
+@DoNotDiscover class DiscussionApiTest
+  extends FreeSpec
+  with ConfiguredTestSuite
+  with BeforeAndAfterAll
+  with WithMaterializer
+  with WithTestExecutionContext
+  with WithTestWsClient {
 
   class UrlValidatorDiscussionAPI(expectedUrl: String, val wsClient: WSClient = wsClient) extends DiscussionApiLike {
-    override protected def GET(url: String, headers: (String, String)*): Future[WSResponse] = {
+    override protected def GET(url: String, headers: (String, String)*)(implicit executionContext: ExecutionContext): Future[WSResponse] = {
       assert(expectedUrl === url)
-      Future {null} // Don't care what is returned for this test
+      Future(null)(executionContext) // Don't care what is returned for this test
     }
     protected val clientHeaderValue: String = ""
     protected val apiRoot: String = ""

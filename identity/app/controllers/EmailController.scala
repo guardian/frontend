@@ -4,7 +4,7 @@ import actions.AuthenticatedActions
 import services.{IdRequestParser, IdentityUrlBuilder, ReturnUrlVerifier}
 import conf.IdentityConfiguration
 import idapiclient.IdApiClient
-import common.ExecutionContexts
+import common.ImplicitControllerExecutionContext
 import utils.SafeLogging
 import play.api.mvc._
 
@@ -28,7 +28,7 @@ class EmailController(
   csrfAddToken: CSRFAddToken,
   val controllerComponents: ControllerComponents
 )(implicit context: ApplicationContext)
-  extends BaseController with ExecutionContexts with SafeLogging with I18nSupport {
+  extends BaseController with ImplicitControllerExecutionContext with SafeLogging with I18nSupport {
 
   import EmailPrefsData._
   import authenticatedActions.authAction

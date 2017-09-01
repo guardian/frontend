@@ -11,7 +11,7 @@ import play.api.test.Helpers._
   with BeforeAndAfterAll
   with WithMaterializer
   with WithTestWsClient
-  with WithTestContext
+  with WithTestApplicationContext
   with WithTestContentApiClient {
 
   val article = "/world/2014/nov/18/hereford-hospital-patient-tested-for-ebola"

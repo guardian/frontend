@@ -15,7 +15,7 @@ class TopStoriesController(
   contentApiClient: ContentApiClient,
   val controllerComponents: ControllerComponents
 )(implicit context: ApplicationContext)
-  extends BaseController with Logging with Paging with ExecutionContexts {
+  extends BaseController with Logging with Paging with ImplicitControllerExecutionContext {
 
   def renderTopStoriesHtml = renderTopStories()
   def renderTopStories() = Action.async { implicit request =>

@@ -10,7 +10,7 @@ import discussion.model.DiscussionKey
   with ConfiguredTestSuite
   with BeforeAndAfterAll
   with WithMaterializer
-  with WithTestContext
+  with WithTestApplicationContext
   with WithTestCSRF
   with WithTestWsClient {
 

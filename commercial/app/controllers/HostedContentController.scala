@@ -5,7 +5,7 @@ import com.gu.contentapi.client.model.ItemQuery
 import com.gu.contentapi.client.model.v1.ContentType.Video
 import commercial.model.hosted.HostedTrails
 import common.commercial.hosted._
-import common.{Edition, ExecutionContexts, JsonComponent, JsonNotFound, Logging}
+import common.{Edition, ImplicitControllerExecutionContext, JsonComponent, JsonNotFound, Logging}
 import contentapi.ContentApiClient
 import model.Cached.RevalidatableResult
 import model.{ApplicationContext, Cached, NoCache}
@@ -22,7 +22,7 @@ class HostedContentController(
   contentApiClient: ContentApiClient,
   val controllerComponents: ControllerComponents
 )(implicit context: ApplicationContext)
-  extends BaseController with ExecutionContexts with Logging with implicits.Requests {
+  extends BaseController with ImplicitControllerExecutionContext with Logging with implicits.Requests {
 
   private def cacheDuration: Int = 60
 

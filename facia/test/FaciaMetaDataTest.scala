@@ -15,7 +15,7 @@ import scala.concurrent.Await
   with Matchers
   with ConfiguredTestSuite
   with BeforeAndAfterAll
-  with WithTestContext
+  with WithTestApplicationContext
   with WithMaterializer
   with WithTestWsClient {
 

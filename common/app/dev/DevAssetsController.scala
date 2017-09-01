@@ -2,7 +2,7 @@ package dev
 
 import akka.stream.scaladsl.StreamConverters
 import common.Assets.AssetNotFoundException
-import common.ExecutionContexts
+import common.ImplicitControllerExecutionContext
 import java.io.File
 
 import model.{Cached, NoCache}
@@ -11,7 +11,7 @@ import play.api.{Environment, Mode}
 import play.api.http.HttpEntity
 import play.api.mvc._
 
-class DevAssetsController(val environment: Environment, val controllerComponents: ControllerComponents) extends BaseController with ExecutionContexts {
+class DevAssetsController(val environment: Environment, val controllerComponents: ControllerComponents) extends BaseController with ImplicitControllerExecutionContext {
 
   // This allows:
   //  - unbuilt javascript to be loaded from src or public folders.

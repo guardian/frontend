@@ -15,14 +15,15 @@ import org.scalatest.{Matchers, path}
 import play.api.mvc.RequestHeader
 import play.api.test.Helpers._
 import services.{IdentityRequest, _}
-import test.{Fake, TestRequest, WithTestContext}
+import test.{Fake, TestRequest, WithTestApplicationContext, WithTestExecutionContext}
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 
 class FormstackControllerTest extends path.FreeSpec
   with Matchers
-  with WithTestContext
+  with WithTestApplicationContext
+  with WithTestExecutionContext
   with MockitoSugar {
 
   private val controllerComponents = play.api.test.Helpers.stubControllerComponents()
@@ -58,10 +59,10 @@ class FormstackControllerTest extends path.FreeSpec
   }
 
   "when switched on" - {
-    Switches.IdentityFormstackSwitch.switchOn()
+      Switches.IdentityFormstackSwitch.switchOn()
 
     "if the form is valid" - {
-      when(formstackApi.checkForm(MockitoMatchers.any[FormstackForm])) thenReturn Future.successful(Right(FormstackForm("test-reference", "view-id", None)))
+      when(formstackApi.checkForm(MockitoMatchers.any[FormstackForm])(MockitoMatchers.any[ExecutionContext])) thenReturn Future.successful(Right(FormstackForm("test-reference", "view-id", None)))
 
       "the formstack page is displayed" in Fake {
         val result = controller.formstackForm("test-reference", false)(TestRequest())
@@ -70,7 +71,7 @@ class FormstackControllerTest extends path.FreeSpec
     }
 
     "when the form is not valid" - {
-      when(formstackApi.checkForm(MockitoMatchers.any[FormstackForm])) thenReturn Future.successful(Left(List(Error("Test message", "Test description", 404))))
+      when(formstackApi.checkForm(MockitoMatchers.any[FormstackForm])(MockitoMatchers.any[ExecutionContext])) thenReturn Future.successful(Left(List(Error("Test message", "Test description", 404))))
 
       "the formstack page should not be shown and passes status code from errors" in Fake {
         val result = controller.formstackForm("test-reference", false)(TestRequest())

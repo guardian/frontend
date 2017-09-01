@@ -5,7 +5,7 @@ import model.{ApplicationContext, Cached, PreferencesMetaData}
 import play.api.mvc.{BaseController, ControllerComponents}
 
 class PreferencesController(val controllerComponents: ControllerComponents)(implicit context: ApplicationContext)
-  extends BaseController with common.ExecutionContexts {
+  extends BaseController with common.ImplicitControllerExecutionContext {
 
   def indexPrefs() = Action { implicit request =>
     Cached(300) {

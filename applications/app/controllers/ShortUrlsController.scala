@@ -1,6 +1,6 @@
 package controllers
 
-import common.{ExecutionContexts, LinkTo, Logging}
+import common.{ImplicitControllerExecutionContext, LinkTo, Logging}
 import common.`package`._
 import _root_.commercial.campaigns.ShortCampaignCodes
 import contentapi.ContentApiClient
@@ -11,7 +11,7 @@ class ShortUrlsController(
   contentApiClient: ContentApiClient,
   val controllerComponents: ControllerComponents
 )(implicit context: ApplicationContext)
-  extends BaseController with Logging with ExecutionContexts {
+  extends BaseController with Logging with ImplicitControllerExecutionContext {
 
   def redirectShortUrl(shortUrl: String) = Action.async { implicit request =>
     redirectUrl(shortUrl, request.queryString)

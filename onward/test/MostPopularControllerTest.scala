@@ -14,7 +14,7 @@ import services.OphanApi
   with BeforeAndAfterAll
   with WithMaterializer
   with WithTestWsClient
-  with WithTestContext
+  with WithTestApplicationContext
   with WithTestContentApiClient {
 
   val tag = "technology"

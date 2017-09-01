@@ -44,7 +44,7 @@ class QuizController(
   contentApiClient: ContentApiClient,
   val controllerComponents: ControllerComponents
 )(implicit context: ApplicationContext)
-  extends BaseController with ExecutionContexts with Logging {
+  extends BaseController with ImplicitControllerExecutionContext with Logging {
 
   def submit(quizId: String, path: String) = Action.async { implicit request =>
     form.playForm.bindFromRequest.fold(

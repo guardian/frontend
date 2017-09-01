@@ -6,7 +6,7 @@ import akka.actor.ActorSystem
 import akka.stream.Materializer
 import com.gargoylesoftware.htmlunit.html.HtmlPage
 import com.gargoylesoftware.htmlunit.{BrowserVersion, Page, WebClient, WebResponse}
-import common.{ExecutionContexts, Lazy}
+import common.{Lazy}
 import contentapi.{CapiHttpClient, ContentApiClient, HttpClient, Response}
 import model.{ApplicationContext, ApplicationIdentity}
 import org.openqa.selenium.htmlunit.HtmlUnitDriver
@@ -26,7 +26,7 @@ import rendering.core.Renderer
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.{Failure, Success, Try}
 
-trait ConfiguredTestSuite extends TestSuite with ConfiguredServer with ConfiguredBrowser with ExecutionContexts {
+trait ConfiguredTestSuite extends TestSuite with ConfiguredServer with ConfiguredBrowser {
 
   lazy val webClient = new WebClient(BrowserVersion.CHROME)
   lazy val host = s"http://localhost:$port"
@@ -105,8 +105,12 @@ object TestRequest {
   }
 }
 
-trait WithTestContext {
-  implicit val testContext = ApplicationContext(Environment.simple(), ApplicationIdentity("tests"))
+trait WithTestExecutionContext {
+  implicit val testExecutionContext: ExecutionContext = scala.concurrent.ExecutionContext.Implicits.global
+}
+
+trait WithTestApplicationContext {
+  implicit val testApplicationContext = ApplicationContext(Environment.simple(), ApplicationIdentity("tests"))
 }
 
 trait WithMaterializer {
@@ -123,7 +127,7 @@ trait WithTestWsClient {
   override def afterAll(): Unit = if(lazyWsClient.isDefined) lazyWsClient.close
 }
 
-trait WithTestContentApiClient {
+trait WithTestContentApiClient extends WithTestExecutionContext {
   def wsClient: WSClient
 
   val httpRecorder = new ContentApiHttpRecorder {
@@ -153,12 +157,12 @@ trait WithTestCSRF {
 }
 
 trait WithTestRenderer {
-  def executionContext: ExecutionContext
+  def testExecutionContext: ExecutionContext
 
   val testRenderer: Renderer = {
     new Renderer()(
       ActorSystem("TestRenderer"),
-      executionContext,
+      testExecutionContext,
       ApplicationContext(Environment.simple(), ApplicationIdentity("TestRenderer"))
     )
   }

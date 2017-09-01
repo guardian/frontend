@@ -1,6 +1,6 @@
 package controllers.admin
 
-import common.ExecutionContexts
+
 import controllers.Helpers.DeploysTestHttpRecorder
 import model.deploys._
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, Matchers, WordSpec}
@@ -9,7 +9,7 @@ import play.api.libs.ws.WSClient
 import play.api.mvc.ControllerComponents
 import play.api.test.{FakeRequest, Helpers}
 import play.api.test.Helpers._
-import test.{ConfiguredTestSuite, WithMaterializer, WithTestWsClient}
+import test.{ConfiguredTestSuite, WithMaterializer, WithTestExecutionContext, WithTestWsClient}
 
 import scala.concurrent.duration._
 
@@ -17,9 +17,9 @@ import scala.concurrent.duration._
   extends WordSpec
     with Matchers
     with ConfiguredTestSuite
-    with ExecutionContexts
     with BeforeAndAfterAll
     with WithMaterializer
+    with WithTestExecutionContext
     with WithTestWsClient {
 
   val existingBuild = "3123"
@@ -38,13 +38,12 @@ import scala.concurrent.duration._
     }
   }
 
-  class DeploysControllerStub extends DeploysController {
-    override val controllerComponents: ControllerComponents = Helpers.stubControllerComponents()
+  class DeploysControllerStub(val controllerComponents: ControllerComponents) extends DeploysController {
     private val httpClient = new TestHttpClient(wsClient)
     override val riffRaff = new RiffRaffService(httpClient)
   }
 
-  lazy val controller = new DeploysControllerStub()
+  lazy val controller = new DeploysControllerStub(Helpers.stubControllerComponents())
 
   "GET /deploys" should {
     val getDeploysRequest = FakeRequest(method = "GET", path = "/deploys")

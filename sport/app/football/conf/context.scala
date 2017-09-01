@@ -35,15 +35,15 @@ class FootballLifecycle(
     }
 
     jobs.schedule("MatchDayAgentRefreshJob", "0 0/5 * * * ?") {
-      competitionsService.refreshMatchDay()
+      competitionsService.refreshMatchDay
     }
 
     jobs.schedule("CompetitionRefreshJob", "0 0/10 * * * ?") {
-      competitionsService.refreshCompetitionData()
+      competitionsService.refreshCompetitionData
     }
 
     jobs.schedule("TeamMapRefreshJob", "0 0/10 * * * ?") {
-      TeamMap.refresh()(contentApiClient)
+      TeamMap.refresh()(contentApiClient, ec)
     }
   }
 
@@ -62,15 +62,15 @@ class FootballLifecycle(
     scheduleJobs()
 
     akkaAsync.after1s {
-      val competitionUpdate = competitionsService.refreshCompetitionData()
+      val competitionUpdate = competitionsService.refreshCompetitionData
       competitionUpdate.onSuccess { case _ => competitionsService.competitionIds.foreach(competitionsService.refreshCompetitionAgent) }
-      competitionsService.refreshMatchDay()
-      TeamMap.refresh()(contentApiClient)
+      competitionsService.refreshMatchDay
+      TeamMap.refresh()(contentApiClient, ec)
     }
   }
 }
 
-class FootballClient(wsClient: WSClient) extends PaClient with Http with Logging with ExecutionContexts {
+class FootballClient(wsClient: WSClient)(implicit executionContext: ExecutionContext) extends PaClient with Http with Logging {
 
   // Runs the API calls via a CDN
   override lazy val base: String = "http://football-api.gu-web.net/v1.5"

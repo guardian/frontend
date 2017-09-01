@@ -3,7 +3,7 @@ package controllers
 import actions.AuthenticatedActions
 import actions.AuthenticatedActions.AuthRequest
 import com.gu.identity.model.User
-import common.ExecutionContexts
+import common.ImplicitControllerExecutionContext
 import form._
 import idapiclient.IdApiClient
 import model._
@@ -30,7 +30,7 @@ class EditProfileController(idUrlBuilder: IdentityUrlBuilder,
   implicit val profileFormsMapping: ProfileFormsMapping,
   val controllerComponents: ControllerComponents)
   (implicit context: ApplicationContext)
-  extends BaseController with ExecutionContexts with SafeLogging with I18nSupport {
+  extends BaseController with ImplicitControllerExecutionContext with SafeLogging with I18nSupport {
 
   import authenticatedActions._
 

@@ -10,11 +10,11 @@ import services.OphanApi
 
 import scala.concurrent.{ExecutionContext, Future}
 
-object SurgingContentAgent extends SurgeLookupService with Logging with ExecutionContexts {
+object SurgingContentAgent extends SurgeLookupService with Logging {
 
   private val agent = AkkaAgent[SurgingContent](SurgingContent())
 
-  def update(implicit ophanApi: OphanApi): Unit = {
+  def update(implicit ophanApi: OphanApi, executionContext: ExecutionContext): Unit = {
     log.info("Refreshing surging content.")
     val ophanQuery = ophanApi.getSurgingContent()
     ophanQuery.map { ophanResults =>
@@ -60,11 +60,11 @@ class SurgingContentAgentLifecycle(
 
     // update every 30 min, on the 51st second past the minute (e.g 13:09:51, 13:39:51)
     jobs.schedule("SurgingContentAgentRefreshJob", "51 9/30 * * * ?") {
-      SurgingContentAgent.update(ophanApi)
+      SurgingContentAgent.update(ophanApi, ec)
     }
 
     akkaAsync.after1s {
-      SurgingContentAgent.update(ophanApi)
+      SurgingContentAgent.update(ophanApi, ec)
     }
   }
 }

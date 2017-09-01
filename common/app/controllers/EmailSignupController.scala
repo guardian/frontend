@@ -1,7 +1,7 @@
 package controllers
 
 import common.EmailSubsciptionMetrics._
-import common.{ExecutionContexts, LinkTo, Logging}
+import common.{ImplicitControllerExecutionContext, LinkTo, Logging}
 import conf.Configuration
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model._
@@ -60,7 +60,7 @@ class EmailFormService(wsClient: WSClient) {
   }
 }
 
-class EmailSignupController(wsClient: WSClient, val controllerComponents: ControllerComponents)(implicit context: ApplicationContext) extends BaseController with ExecutionContexts with Logging {
+class EmailSignupController(wsClient: WSClient, val controllerComponents: ControllerComponents)(implicit context: ApplicationContext) extends BaseController with ImplicitControllerExecutionContext with Logging {
     val emailFormService = new EmailFormService(wsClient)
   val emailForm: Form[EmailForm] = Form(
     mapping(

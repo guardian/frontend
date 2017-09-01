@@ -11,10 +11,11 @@ import org.scalatest._
   with Matchers
   with ConfiguredTestSuite
   with FootballTestData
+  with WithTestExecutionContext
   with WithTestFootballClient
   with BeforeAndAfterAll
   with WithMaterializer
-  with WithTestContext
+  with WithTestApplicationContext
   with WithTestWsClient {
 
   feature("League Tables") {

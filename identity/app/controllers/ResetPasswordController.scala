@@ -1,6 +1,6 @@
 package controllers
 
-import common.ExecutionContexts
+import common.ImplicitControllerExecutionContext
 import model.{ApplicationContext, IdentityPage, NoCache}
 import play.api.data.{Form, Forms}
 import play.api.mvc._
@@ -24,7 +24,7 @@ class ResetPasswordController(
   val controllerComponents: ControllerComponents,
   val httpConfiguration: HttpConfiguration
 )(implicit context: ApplicationContext)
-  extends BaseController with ExecutionContexts with SafeLogging with Mappings with implicits.Forms {
+  extends BaseController with ImplicitControllerExecutionContext with SafeLogging with Mappings with implicits.Forms {
 
   private val page = IdentityPage("/reset-password", "Reset Password")
 

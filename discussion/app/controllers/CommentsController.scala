@@ -1,6 +1,6 @@
 package controllers
 
-import common.{ExecutionContexts, JsonComponent}
+import common.{ImplicitControllerExecutionContext, JsonComponent}
 import discussion.api.DiscussionApiException._
 import discussion.api.{DiscussionApiLike, DiscussionParams}
 import discussion.model.{BlankComment, DiscussionAbuseReport, DiscussionKey}
@@ -22,7 +22,7 @@ class CommentsController(
   csrfAddToken: CSRFAddToken,
   val controllerComponents: ControllerComponents
 )(implicit context: ApplicationContext)
-  extends DiscussionController with ExecutionContexts {
+  extends DiscussionController with ImplicitControllerExecutionContext {
 
   val userForm = Form(
     Forms.mapping(

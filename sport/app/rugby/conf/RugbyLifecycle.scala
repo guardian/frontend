@@ -22,12 +22,12 @@ class RugbyLifecycle(
   override def start(): Unit = {
     jobs.deschedule("FixturesAndResults")
     jobs.schedule("FixturesAndResults", "5 0/30 * * * ?") {
-      rugbyStatsJob.fetchFixturesAndResults()
+      rugbyStatsJob.fetchFixturesAndResults
     }
 
     jobs.deschedule("GroupTables")
     jobs.schedule("GroupTables", "10 0/30 * * * ?") {
-      rugbyStatsJob.fetchGroupTables()
+      rugbyStatsJob.fetchGroupTables
     }
 
 
@@ -49,8 +49,8 @@ class RugbyLifecycle(
     }
 
     akkaAsync.after1s {
-      rugbyStatsJob.fetchFixturesAndResults()
-      rugbyStatsJob.fetchGroupTables()
+      rugbyStatsJob.fetchFixturesAndResults
+      rugbyStatsJob.fetchGroupTables
     }
 
     //delay to allow previous jobs to complete

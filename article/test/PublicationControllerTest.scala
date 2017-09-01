@@ -17,7 +17,7 @@ import services.{NewspaperBookSectionTagAgent, NewspaperBookTagAgent}
   with BeforeAndAfterAll
   with WithMaterializer
   with WithTestWsClient
-  with WithTestContext
+  with WithTestApplicationContext
   with WithTestContentApiClient {
 
   private val PermanentRedirect = 301

@@ -17,7 +17,7 @@ class RelatedController(
   val contentApiClient: ContentApiClient,
   val mostReadAgent: MostReadAgent, val controllerComponents: ControllerComponents
 )(implicit context: ApplicationContext)
-  extends BaseController with Related with Containers with Logging with ExecutionContexts {
+  extends BaseController with Related with Containers with Logging with ImplicitControllerExecutionContext {
 
   private val RelatedLabel : String = "Related stories"
 

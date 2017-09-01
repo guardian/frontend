@@ -1,13 +1,13 @@
 package services
 
-import common.{ Logging, ExecutionContexts }
+import common.Logging
 import conf.AdminConfiguration.fastly
-import com.amazonaws.services.cloudwatch.model.{ Dimension, MetricDatum }
+import com.amazonaws.services.cloudwatch.model.{Dimension, MetricDatum}
 import org.joda.time.DateTime
 import play.api.libs.ws.WSClient
 import play.api.libs.json.{JsValue, Json}
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 import scala.concurrent.duration._
 
 case class FastlyStatistic(service: String, region: String, timestamp: Long, name: String, value: String) {
@@ -21,7 +21,7 @@ case class FastlyStatistic(service: String, region: String, timestamp: Long, nam
     withValue(value.toDouble)
 }
 
-class FastlyStatisticService(wsClient: WSClient) extends ExecutionContexts with Logging {
+class FastlyStatisticService(wsClient: WSClient) extends Logging {
 
   private case class FastlyApiStat(
     hits: Int,
@@ -35,7 +35,7 @@ class FastlyStatisticService(wsClient: WSClient) extends ExecutionContexts with 
 
   private val regions = List("usa", "europe", "ausnz")
 
-  def fetch(): Future[List[FastlyStatistic]] = {
+  def fetch(implicit executionContext: ExecutionContext): Future[List[FastlyStatistic]] = {
 
     val futureResponses: Future[List[String]] = Future.sequence{
       regions map { region =>

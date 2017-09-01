@@ -2,7 +2,7 @@ package controllers
 
 import actions.AuthenticatedActions
 import play.api.mvc._
-import common.ExecutionContexts
+import common.ImplicitControllerExecutionContext
 import services.{IdRequestParser, ReturnUrlVerifier}
 import utils.SafeLogging
 import scala.collection.convert.wrapAsJava._
@@ -17,7 +17,7 @@ class ExactTargetController(
   authenticatedActions: AuthenticatedActions,
   wsClient: WSClient,
   val controllerComponents: ControllerComponents
-) extends BaseController with ExecutionContexts with SafeLogging {
+) extends BaseController with ImplicitControllerExecutionContext with SafeLogging {
 
   import authenticatedActions.authAction
 

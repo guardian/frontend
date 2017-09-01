@@ -1,6 +1,6 @@
 package controllers
 
-import common.ExecutionContexts
+import common.ImplicitControllerExecutionContext
 import model.{ApplicationContext, Cached}
 import model.Cached.RevalidatableResult
 import play.api.libs.ws.WSClient
@@ -13,7 +13,7 @@ class SignupPageController(
   wsClient: WSClient,
   val controllerComponents: ControllerComponents
 )(implicit context: ApplicationContext)
-  extends BaseController with ExecutionContexts {
+  extends BaseController with ImplicitControllerExecutionContext {
 
   val defaultCacheDuration: Duration = 15.minutes
 

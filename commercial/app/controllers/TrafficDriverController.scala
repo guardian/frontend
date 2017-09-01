@@ -2,7 +2,7 @@ package commercial.controllers
 
 import commercial.model.capi.CapiAgent
 import commercial.model.merchandise.TrafficDriver
-import common.{Edition, ExecutionContexts, JsonComponent, Logging}
+import common.{Edition, ImplicitControllerExecutionContext, JsonComponent, Logging}
 import contentapi.ContentApiClient
 import model.{Cached, ContentType}
 import play.api.mvc._
@@ -16,7 +16,7 @@ class TrafficDriverController(
   capiAgent: CapiAgent,
   val controllerComponents: ControllerComponents
 ) extends BaseController
-  with ExecutionContexts
+  with ImplicitControllerExecutionContext
   with implicits.Requests
   with Logging {
 

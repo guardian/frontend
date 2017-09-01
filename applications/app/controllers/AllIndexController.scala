@@ -3,7 +3,7 @@ package controllers
 import com.gu.contentapi.client.GuardianContentApiError
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichCapiDateTime
 import common.Edition.defaultEdition
-import common.{Edition, ExecutionContexts, Logging}
+import common.{Edition, ImplicitControllerExecutionContext, Logging}
 import contentapi.{ContentApiClient, SectionsLookUp}
 import implicits.{Dates, ItemResponses}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
@@ -21,7 +21,7 @@ class AllIndexController(
   sectionsLookUp: SectionsLookUp,
   val controllerComponents: ControllerComponents
 )(implicit context: ApplicationContext)
-  extends BaseController with ExecutionContexts with ItemResponses with Dates with Logging {
+  extends BaseController with ImplicitControllerExecutionContext with ItemResponses with Dates with Logging {
 
   private val indexController = new IndexController(contentApiClient, sectionsLookUp, controllerComponents)
 

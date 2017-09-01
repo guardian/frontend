@@ -22,7 +22,7 @@ case class ArticlePage(article: Article, related: RelatedContent) extends PageWi
 case class MinutePage(article: Article, related: RelatedContent) extends PageWithStoryPackage
 
 class ArticleController(contentApiClient: ContentApiClient, val controllerComponents: ControllerComponents)(implicit context: ApplicationContext) extends BaseController
-    with RendersItemResponse with Logging with ExecutionContexts {
+    with RendersItemResponse with Logging with ImplicitControllerExecutionContext {
 
   private def isSupported(c: ApiContent) = c.isArticle || c.isLiveBlog || c.isSudoku
   override def canRender(i: ItemResponse): Boolean = i.content.exists(isSupported)

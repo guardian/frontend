@@ -19,7 +19,7 @@ class ImageContentController(
   val contentApiClient: ContentApiClient,
   val controllerComponents: ControllerComponents
 )(implicit context: ApplicationContext)
-  extends BaseController with RendersItemResponse with ImageQuery with Logging with ExecutionContexts {
+  extends BaseController with RendersItemResponse with ImageQuery with Logging with ImplicitControllerExecutionContext {
 
   def renderJson(path: String) = render(path)
 

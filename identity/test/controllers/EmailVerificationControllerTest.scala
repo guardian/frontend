@@ -4,7 +4,7 @@ import org.scalatest.{Matchers, path}
 import services._
 import idapiclient.IdApiClient
 import org.scalatest.mockito.MockitoSugar
-import test.{Fake, TestRequest, WithTestContext}
+import test.{Fake, TestRequest, WithTestApplicationContext}
 import play.api.mvc.{Request, RequestHeader}
 
 import scala.concurrent.Future
@@ -17,7 +17,7 @@ import actions.AuthenticatedActions
 
 class EmailVerificationControllerTest extends path.FreeSpec
   with Matchers
-  with WithTestContext
+  with WithTestApplicationContext
   with MockitoSugar {
 
   val api = mock[IdApiClient]

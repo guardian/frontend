@@ -1,6 +1,6 @@
 package test
 
-import common.ExecutionContexts
+
 import controllers.ArchiveController
 import model.{ApplicationContext, ApplicationIdentity}
 import play.api.mvc.Result
@@ -15,7 +15,7 @@ import services.RedirectService.{ArchiveRedirect, PermanentRedirect}
   extends FlatSpec
   with Matchers
   with ConfiguredTestSuite
-  with ExecutionContexts
+  with WithTestExecutionContext
   with BeforeAndAfterAll
   with WithTestRenderer {
 

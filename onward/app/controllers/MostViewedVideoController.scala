@@ -3,14 +3,14 @@ package controllers
 import common._
 import feed.MostViewedVideoAgent
 import model.{Cached, Content, Video}
-import play.api.mvc.{Action, BaseController, Controller, ControllerComponents}
+import play.api.mvc.{Action, BaseController, ControllerComponents}
 import contentapi.ContentApiClient
 
 class MostViewedVideoController(
   contentApiClient: ContentApiClient,
   mostViewedVideoAgent: MostViewedVideoAgent,
   val controllerComponents: ControllerComponents
-) extends BaseController with Logging with ExecutionContexts {
+) extends BaseController with Logging with ImplicitControllerExecutionContext {
 
   // Move this out of here if the test is successful
   def renderInSeries(series: String) = Action.async { implicit request =>

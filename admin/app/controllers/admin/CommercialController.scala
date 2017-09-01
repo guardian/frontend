@@ -1,7 +1,7 @@
 package controllers.admin
 
 import common.dfp.{GuCreativeTemplate, GuCustomField, GuLineItem}
-import common.{ExecutionContexts, JsonComponent, Logging}
+import common.{ImplicitControllerExecutionContext, JsonComponent, Logging}
 import conf.Configuration
 import dfp.{AdvertiserAgent, CreativeTemplateAgent, CustomFieldAgent, DfpApi, DfpDataExtractor, OrderAgent}
 import model._
@@ -24,7 +24,7 @@ case class CommercialPage() extends StandalonePage {
 }
 
 class CommercialController(val controllerComponents: ControllerComponents)(implicit context: ApplicationContext)
-  extends BaseController with Logging with ExecutionContexts {
+  extends BaseController with Logging with ImplicitControllerExecutionContext {
 
   def renderCommercialMenu() = Action { implicit request =>
     NoCache(Ok(views.html.commercial.commercialMenu()))

@@ -12,7 +12,7 @@ import play.api.test.Helpers._
   with WithMaterializer
   with WithTestWsClient
   with WithTestContentApiClient
-  with WithTestContext {
+  with WithTestApplicationContext {
 
   var series = "news/series/pass-notes"
   lazy val seriesController = new SeriesController(testContentApiClient, play.api.test.Helpers.stubControllerComponents())

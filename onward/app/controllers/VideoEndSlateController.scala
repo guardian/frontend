@@ -14,7 +14,7 @@ class VideoEndSlateController(
   contentApiClient: ContentApiClient,
   val controllerComponents: ControllerComponents
 )(implicit context: ApplicationContext)
-  extends BaseController with Logging with Paging with ExecutionContexts with Requests {
+  extends BaseController with Logging with Paging with ImplicitControllerExecutionContext with Requests {
 
   def renderSection(sectionId: String) = Action.async { implicit request =>
     val response = lookupSection(Edition(request), sectionId) map { seriesItems =>

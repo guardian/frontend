@@ -15,7 +15,7 @@ import JsonComponent.withRefreshStatus
 class CardController(
   wsClient: WSClient,
   val controllerComponents: ControllerComponents
-) extends BaseController with Logging with ExecutionContexts {
+) extends BaseController with Logging with ImplicitControllerExecutionContext {
 
   def opengraph(resource: String) = Action.async { implicit request =>
     val myUri = new URI(resource)

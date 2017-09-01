@@ -10,7 +10,7 @@ class CompetitionListController(
   val competitionsService: CompetitionsService,
   val controllerComponents: ControllerComponents
 )(implicit context: ApplicationContext)
-  extends BaseController with CompetitionListFilters with Logging with ExecutionContexts {
+  extends BaseController with CompetitionListFilters with Logging with ImplicitControllerExecutionContext {
 
   val page = new FootballPage("football/competitions", "football", "Leagues & competitions")
 

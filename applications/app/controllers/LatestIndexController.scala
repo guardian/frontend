@@ -14,7 +14,7 @@ import scala.concurrent.Future
 class LatestIndexController(
   contentApiClient: ContentApiClient,
   val controllerComponents: ControllerComponents)
-  extends BaseController with ExecutionContexts with implicits.ItemResponses with Logging {
+  extends BaseController with ImplicitControllerExecutionContext with implicits.ItemResponses with Logging {
 
   def latest(path: String) = Action.async { implicit request =>
     loadLatest(path).map { _.map { index =>

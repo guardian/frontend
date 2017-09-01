@@ -4,7 +4,9 @@ import conf.{AllGoodCachedHealthCheck, NeverExpiresSingleHealthCheck}
 import play.api.libs.ws.WSClient
 import play.api.mvc.ControllerComponents
 
-class HealthCheck(wsClient: WSClient, val controllerComponents: ControllerComponents) extends AllGoodCachedHealthCheck(
+import scala.concurrent.ExecutionContext
+
+class HealthCheck(wsClient: WSClient, val controllerComponents: ControllerComponents)(implicit executionContext: ExecutionContext) extends AllGoodCachedHealthCheck(
   NeverExpiresSingleHealthCheck("/football/live"),
   NeverExpiresSingleHealthCheck("/football/premierleague/results")
-)(wsClient)
+)(wsClient, executionContext)

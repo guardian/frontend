@@ -15,7 +15,7 @@ class DfpAgentLifecycle(
     jobs.deschedule("DfpDataRefreshJob")
   }}
 
-  def refreshDfpAgent(): Unit = DfpAgent.refresh()
+  def refreshDfpAgent(): Unit = DfpAgent.refresh
 
   override def start(): Unit = {
     jobs.deschedule("DfpDataRefreshJob")
@@ -36,7 +36,7 @@ class FaciaDfpAgentLifecycle(
   akkaAsync: AkkaAsync)(implicit ec: ExecutionContext) extends DfpAgentLifecycle(appLifeCycle, jobs, akkaAsync) {
 
   override def refreshDfpAgent(): Unit = {
-    DfpAgent.refresh()
-    DfpAgent.refreshFaciaSpecificData()
+    DfpAgent.refresh
+    DfpAgent.refreshFaciaSpecificData
   }
 }

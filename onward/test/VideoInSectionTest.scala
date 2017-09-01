@@ -12,7 +12,7 @@ import play.api.test.Helpers._
   with WithMaterializer
   with WithTestWsClient
   with WithTestContentApiClient
-  with WithTestContext {
+  with WithTestApplicationContext {
 
   lazy val mediaInSectionController = new MediaInSectionController(testContentApiClient, play.api.test.Helpers.stubControllerComponents())
 

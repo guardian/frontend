@@ -8,7 +8,7 @@ import org.scalatest.Suites
 import play.api.libs.ws.WSClient
 import recorder.HttpRecorder
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 import scala.io.Codec.UTF8
 
 object `package` {
@@ -22,7 +22,7 @@ object `package` {
   // need a front api that stores S3 locally so it can run without deps in the unit tests
   class TestFrontJsonFapi(override val wsClient: WSClient) extends FrontJsonFapiLive(wsClient) {
 
-    override def getRaw(path: String): Future[Option[String]] = {
+    override def getRaw(path: String)(implicit executionContext: ExecutionContext): Future[Option[String]] = {
       recorder.load(path, Map()) {
         super.getRaw(path)
       }

@@ -12,7 +12,8 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
   with WithMaterializer
   with WithTestWsClient
   with WithTestFootballClient
-  with WithTestContext
+  with WithTestApplicationContext
+  with WithTestExecutionContext
   with FootballTestData {
 
   lazy val matchController = new MatchController(testCompetitionsService, play.api.test.Helpers.stubControllerComponents())

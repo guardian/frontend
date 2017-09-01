@@ -7,7 +7,7 @@ import commercial.model.merchandise.jobs.JobsAgent
 import commercial.model.merchandise.soulmates.SoulmatesAgent
 import commercial.model.merchandise.travel.TravelOffersAgent
 import commercial.model.merchandise.{MemberPair, Merchandise}
-import common.{ExecutionContexts, JsonComponent}
+import common.{JsonComponent}
 import model.Cached
 import play.api.libs.json.{JsArray, Json}
 import play.api.mvc._
@@ -18,7 +18,6 @@ class Multi(bestsellersAgent: BestsellersAgent,
   jobsAgent: JobsAgent,
   val controllerComponents: ControllerComponents
 ) extends BaseController
-    with ExecutionContexts
     with implicits.Collections
     with implicits.Requests {
 

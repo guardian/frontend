@@ -13,7 +13,8 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
   with WithTestFootballClient
   with WithMaterializer
   with BeforeAndAfterAll
-  with WithTestContext
+  with WithTestApplicationContext
+  with WithTestExecutionContext
   with WithTestWsClient {
 
   lazy val leagueTableController = new LeagueTableController(testCompetitionsService, play.api.test.Helpers.stubControllerComponents())

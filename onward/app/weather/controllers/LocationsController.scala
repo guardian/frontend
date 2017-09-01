@@ -11,7 +11,7 @@ import scala.language.postfixOps
 import scala.concurrent.duration._
 import scala.concurrent.Future
 
-class LocationsController(weatherApi: WeatherApi, val controllerComponents: ControllerComponents) extends BaseController with ExecutionContexts with Logging {
+class LocationsController(weatherApi: WeatherApi, val controllerComponents: ControllerComponents) extends BaseController with ImplicitControllerExecutionContext with Logging {
 
   def findCity(query: String) = Action.async { implicit request =>
     weatherApi.searchForLocations(query) map { locations =>

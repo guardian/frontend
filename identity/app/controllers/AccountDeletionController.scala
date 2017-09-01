@@ -1,6 +1,6 @@
 package controllers
 
-import common.ExecutionContexts
+import common.ImplicitControllerExecutionContext
 import model.{ApplicationContext, IdentityPage, NoCache}
 import play.api.mvc._
 import services._
@@ -33,7 +33,7 @@ class AccountDeletionController(
   val httpConfiguration: HttpConfiguration
 )(implicit context: ApplicationContext)
   extends BaseController
-    with ExecutionContexts
+    with ImplicitControllerExecutionContext
     with SafeLogging
     with Mappings
     with implicits.Forms

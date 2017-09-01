@@ -1,8 +1,8 @@
 package controllers.admin
 
-import common.{ExecutionContexts, Logging}
+import common.{ImplicitControllerExecutionContext, Logging}
 import play.api.libs.ws.WSClient
-import play.api.mvc.{Action, BaseController, Controller, ControllerComponents}
+import play.api.mvc.{Action, BaseController, ControllerComponents}
 import tools._
 import model.{ApplicationContext, NoCache}
 import conf.{Configuration, Static}
@@ -13,7 +13,7 @@ class MetricsController(
   wsClient: WSClient,
   val controllerComponents: ControllerComponents
 )(implicit context: ApplicationContext)
-  extends BaseController with Logging with ExecutionContexts {
+  extends BaseController with Logging with ImplicitControllerExecutionContext {
     // We only do PROD metrics
 
   lazy val stage = Configuration.environment.stage.toUpperCase

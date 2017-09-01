@@ -1,7 +1,7 @@
 package controllers
 
 import actions.AuthenticatedActions
-import common.ExecutionContexts
+import common.ImplicitControllerExecutionContext
 import form.Mappings
 import idapiclient.{EmailPassword, IdApiClient, ScGuU}
 import implicits.Forms
@@ -27,7 +27,7 @@ class ReauthenticationController(
   val controllerComponents: ControllerComponents,
   val httpConfiguration: HttpConfiguration
 )(implicit context: ApplicationContext)
-  extends BaseController with ExecutionContexts with SafeLogging with Mappings with Forms {
+  extends BaseController with ImplicitControllerExecutionContext with SafeLogging with Mappings with Forms {
 
   val page = IdentityPage("/reauthenticate", "Re-authenticate")
 

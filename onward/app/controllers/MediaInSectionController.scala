@@ -18,7 +18,7 @@ class MediaInSectionController(
   contentApiClient: ContentApiClient,
   val controllerComponents: ControllerComponents
 )(implicit context: ApplicationContext)
-  extends BaseController with Logging with Paging with ExecutionContexts with Requests {
+  extends BaseController with Logging with Paging with ImplicitControllerExecutionContext with Requests {
   // These exist to work around the absence of default values in Play routing.
   def renderSectionMediaWithSeries(mediaType: String, sectionId: String, seriesId: String) =
     renderMedia(mediaType, sectionId, Some(seriesId))

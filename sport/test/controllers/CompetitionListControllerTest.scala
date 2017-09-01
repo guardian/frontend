@@ -10,9 +10,10 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
   with ConfiguredTestSuite
   with Matchers
   with FootballTestData
+  with WithTestExecutionContext
   with WithTestFootballClient
   with WithMaterializer
-  with WithTestContext
+  with WithTestApplicationContext
   with BeforeAndAfterAll
   with WithTestWsClient {
 
