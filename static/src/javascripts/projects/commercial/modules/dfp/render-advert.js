@@ -152,7 +152,10 @@ const addContentClass = adSlotNode => {
  * @param slotRenderEvent - GPT slotRenderEndedEvent
  * @returns {Promise} - resolves once all necessary rendering is queued up
  */
-const renderAdvert = (advert: Advert, slotRenderEvent: any): Promise<boolean> => {
+const renderAdvert = (
+    advert: Advert,
+    slotRenderEvent: any
+): Promise<boolean> => {
     addContentClass(advert.node);
 
     return applyCreativeTemplate(advert.node)
