@@ -75,7 +75,7 @@ trait ABTestSwitches {
     "Integrate Tailor with ab tests",
     owners = Seq(Owner.withGithub("oilnam"), Owner.withGithub("mike-ruane")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 8, 31),
+    sellByDate = new LocalDate(2017, 9, 5),
     exposeClientSide = true
   )
 
