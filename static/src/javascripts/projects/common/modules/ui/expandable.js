@@ -8,7 +8,7 @@ type Options = {
     dom: Element,
     expanded: boolean,
     showCount: boolean,
-    buttonAfterEl?: Element
+    buttonAfterEl?: Element,
 };
 
 class Expandable {
@@ -21,9 +21,9 @@ class Expandable {
     constructor(options: Options) {
         this.opts = options;
         this.dom = options.dom;
-        this.expanded = (options.expanded === false) ? false : true;
+        this.expanded = options.expanded !== false;
         this.cta = document.createElement('button');
-        this.showCount = (options.showCount === false) ? false : true;
+        this.showCount = options.showCount !== false;
     }
 
     renderState(): void {
@@ -39,9 +39,15 @@ class Expandable {
     }
 
     updateCallToAction(): void {
-        const text = `Show ${this.showCount ? `${this.getCount()} ` : ''}${this.expanded ? 'fewer' : 'more'}`;
+        const text = `Show ${this.showCount ? `${this.getCount()} ` : ''}${this
+            .expanded
+            ? 'fewer'
+            : 'more'}`;
         this.cta.innerHTML = text;
-        this.cta.setAttribute('data-link-name', `Show ${this.expanded ? 'more' : 'fewer'}`);
+        this.cta.setAttribute(
+            'data-link-name',
+            `Show ${this.expanded ? 'more' : 'fewer'}`
+        );
         this.cta.setAttribute('data-is-ajax', '1');
     }
 
@@ -78,7 +84,11 @@ class Expandable {
     }
 
     init(): void {
-        if (this.dom.classList.contains('expandable-initialised') || !this.dom.innerHTML || this.getCount() < 3) {
+        if (
+            this.dom.classList.contains('expandable-initialised') ||
+            !this.dom.innerHTML ||
+            this.getCount() < 3
+        ) {
             return;
         }
         this.dom.classList.add('expandable-initialised');
@@ -90,6 +100,6 @@ class Expandable {
     toggle(): void {
         this.toggleExpanded();
     }
-};
+}
 
 export { Expandable };
