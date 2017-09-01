@@ -5,7 +5,7 @@ import { related } from './related';
 
 jest.mock('lib/config');
 jest.mock('common/modules/ui/expandable', () => ({
-    Expandable: jest.fn()
+    Expandable: jest.fn(),
 }));
 jest.mock('common/modules/analytics/register', () => ({
     begin() {},
@@ -35,7 +35,7 @@ describe('onward/related', () => {
 
         FakeExp.mockReset();
         FakeExp.prototype.init = jest.fn();
-    
+
         jest.resetAllMocks();
         jest.resetModules();
     });
