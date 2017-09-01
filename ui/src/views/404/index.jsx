@@ -3,6 +3,8 @@ import { colour } from 'pasteup';
 import Logo from 'assets/images/guardian-logo-320.svg';
 import Navigation from './Navigation';
 import Footer from './Footer';
+import Timer from 'components/timer';
+
 
 import {
     heading,
@@ -29,6 +31,7 @@ export default ({ beaconUrl }: Object) => (
         <h1 style={heading}>
             Sorry - we haven’t been able to serve the page you asked for.
         </h1>
+        <Timer></Timer>
         <div style={{ marginTop: '20px' }}>
             <div style={subHeadingContainer}>
                 <h2 style={subHeading}>404</h2>

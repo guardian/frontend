@@ -19,4 +19,6 @@ export default (props: any, css: string) =>
         <style>${resetCSS}</style>
         <style>${fontsCSS}</style>
         ${css}
+        <script>window.guardian = ${JSON.stringify(props)};</script>        
+        <script src="/assets/javascripts/ui.bundle.browser.js" async defer></script>
     </head>`;
