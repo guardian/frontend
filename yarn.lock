@@ -1934,7 +1934,7 @@ cp-file@^4.2.0:
     pify "^2.3.0"
     safe-buffer "^5.0.1"
 
-cpy@^5.10:
+cpy@^5.1.0:
   version "5.1.0"
   resolved "https://registry.yarnpkg.com/cpy/-/cpy-5.1.0.tgz#248982bf209b0a4507830e72a45d284d4583a16a"
   dependencies:
