@@ -5,7 +5,7 @@ import com.gu.contentatom.thrift.AtomData
 import common.Logging
 import common.commercial.hosted.ContentUtils.thumbnailUrl
 import common.commercial.hosted.LoggingUtils.getAndLog
-import model.MetaData
+import model.{Encoding, EncodingOrdering, MetaData}
 
 case class HostedVideoPage(
   override val id: String,
@@ -23,6 +23,7 @@ case class HostedVideoPage(
 }
 
 object HostedVideoPage extends Logging {
+  private implicit val ordering = EncodingOrdering
 
   def fromContent(content: Content): Option[HostedVideoPage] = {
     log.info(s"Building hosted video ${content.id} ...")
@@ -52,7 +53,7 @@ object HostedVideoPage extends Logging {
           duration = video.duration.map(_.toInt) getOrElse 0,
           posterUrl = video.posterUrl getOrElse "",
           youtubeId = videoVariants.find(_.platform.toString.contains("Youtube")).map(_.id),
-          sources = videoVariants.flatMap(asset => asset.mimeType map (mimeType => VideoSource(mimeType, asset.id)))
+          sources = videoVariants.flatMap(asset => asset.mimeType map (mimeType => Encoding(asset.id, mimeType))).sorted
         ),
         cta = HostedCallToAction.fromAtom(ctaAtom),
         socialShareText = content.fields.flatMap(_.socialShareText),
@@ -74,7 +75,5 @@ case class HostedVideo(
   duration: Int,
   posterUrl: String,
   youtubeId: Option[String] = None,
-  sources: Seq[VideoSource]
+  sources: Seq[Encoding]
 )
-
-case class VideoSource(mimeType: String, url: String)

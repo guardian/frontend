@@ -75,7 +75,7 @@
                         poster="@{page.video.posterUrl}"
                         class="vjs-hosted__video hosted__video gu-media--video vjs vjs-paused vjs-controls-enabled vjs_video_1-dimensions vjs-user-active">
                             @for(source <- page.video.sources) {
-                                <source type="@source.mimeType" src="@source.url">
+                                <source type="@source.format" src="@source.url">
                             }
                         </video>
                     }
