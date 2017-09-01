@@ -41,8 +41,12 @@ const hiddenShareToggle = (): void => {
         const toggleVisibility = (event: Event): void => {
             const target: HTMLElement = (event.target: any);
             const listItem: HTMLElement = (target.parentNode: any);
-            const targetIsMore = listItem.matches(MORE_SELECTOR);
-            const targetIsClose = listItem.matches(CLOSE_SELECTOR);
+            const targetIsMore =
+                listItem.matches(MORE_SELECTOR) ||
+                !!listItem.closest(MORE_SELECTOR);
+            const targetIsClose =
+                listItem.matches(CLOSE_SELECTOR) ||
+                !!listItem.closest(CLOSE_SELECTOR);
 
             if (targetIsMore || targetIsClose) {
                 event.preventDefault();
