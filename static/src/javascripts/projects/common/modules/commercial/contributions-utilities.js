@@ -103,22 +103,19 @@ const defaultPageCheck = (page: Object): boolean =>
 const shouldShowReaderRevenue = (
     showToContributorsAndSupporters: boolean = false
 ): boolean => {
-    const isMasterclassesPage =
-        config.page &&
-        config.page.keywordIds &&
-        config.page.keywordIds.includes(
-            'guardian-masterclasses/guardian-masterclasses'
-        );
+    const isMasterclassesPage = config
+        .get('page.keywordIds', '')
+        .includes('guardian-masterclasses/guardian-masterclasses');
 
     return (
         (userShouldSeeReaderRevenue() || showToContributorsAndSupporters) &&
         !isMasterclassesPage &&
-        !config.page.shouldHideReaderRevenue
+        !config.get('page.shouldHideReaderRevenue')
     );
 };
 
 const defaultCanEpicBeDisplayed = (test: EpicABTest): boolean => {
-    const worksWellWithPageTemplate = test.pageCheck(config.page);
+    const worksWellWithPageTemplate = test.pageCheck(config.get('page'));
 
     const storedGeolocation = geolocationGetSync();
     const inCompatibleLocation = test.locations.length
@@ -159,7 +156,7 @@ const getCampaignCode = (
 
 const addTrackingCodesToUrl = (base: string, campaignCode: string) => {
     const params = {
-        REFPVID: (config.ophan && config.ophan.pageViewId) || 'not_found',
+        REFPVID: config.get('ophan.pageViewId') || 'not_found',
         INTCMP: campaignCode,
     };
 
