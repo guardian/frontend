@@ -69,7 +69,7 @@ module.load = function() {
     });
 };
 
-module.init = function() {
+module.init = function(): Promise<false> {
     if (commercialFeatures.outbrain) {
         return loadInstantly().then(inUse => {
             if (inUse) {
