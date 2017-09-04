@@ -17,28 +17,60 @@
 
 import idApi from 'common/modules/identity/api';
 
-class Formstack {
-    static postMessage(type, value, x, y): void {
-        const message = {
-            type,
-            value,
-            href: window.location.href,
-        };
+const postMessage = (
+    type: string,
+    value: string | number,
+    x?: number,
+    y?: number
+): void => {
+    const message: {
+        type: string,
+        value: string | number,
+        href: string,
+        x?: number,
+        y?: number,
+    } = {
+        type,
+        value,
+        href: window.location.href,
+    };
 
-        if (x) {
-            message.x = x;
-        }
-
-        if (y) {
-            message.y = y;
-        }
-
-        window.top.postMessage(JSON.stringify(message), '*');
+    if (x) {
+        message.x = x;
     }
 
-    constructor(el, formstackId, config): void {
+    if (y) {
+        message.y = y;
+    }
+
+    window.top.postMessage(JSON.stringify(message), '*');
+};
+
+const sendHeight = (): void => {
+    const body = document.body;
+    const html = document.documentElement;
+
+    if (body && html) {
+        const height = Math.max(
+            body.scrollHeight,
+            body.offsetHeight,
+            html.clientHeight,
+            html.scrollHeight,
+            html.offsetHeight
+        );
+
+        postMessage('set-height', height);
+    }
+};
+
+class Formstack {
+    el: HTMLElement;
+    form: HTMLFormElement;
+    formId: string;
+    config: Object;
+
+    constructor(el: HTMLElement, formstackId: string, config: Object): void {
         this.el = el;
-        this.dom = {};
         this.formId = formstackId.split('-')[0];
 
         const defaultConfig = {
@@ -97,24 +129,29 @@ class Formstack {
         this.dom(user);
 
         this.el.classList.remove(this.config.idClasses.hide);
-        document.documentElement.classList.add('iframed--overflow-hidden');
+
+        if (document.documentElement) {
+            document.documentElement.classList.add('iframed--overflow-hidden');
+        }
 
         // Update iframe height
-        this.sendHeight();
+        sendHeight();
     }
 
-    dom(user): void {
-        const form = document.getElementById(this.config.fsSelectors.form);
+    dom(user: Object): void {
+        const form: HTMLFormElement = (document.getElementById(
+            this.config.fsSelectors.form
+        ): any);
 
-        if (!form) {
+        this.form = form;
+
+        if (!this.form) {
             return;
         }
 
-        this.dom.form = form;
-
         // Formstack generates some awful HTML, so we'll remove the CSS links,
         // loop their selectors and add our own classes instead
-        this.dom.form.classList.add(this.config.idClasses.form);
+        this.form.classList.add(this.config.idClasses.form);
 
         const links = this.el.getElementsByTagName('link');
 
@@ -124,7 +161,7 @@ class Formstack {
 
         Object.keys(this.config.fsSelectors).forEach(key => {
             const selector = this.config.fsSelectors[key];
-            const elems = this.dom.form.querySelectorAll(selector);
+            const elems = this.form.querySelectorAll(selector);
             const classNames = this.config.idClasses[key].split(' ');
 
             [...elems].forEach(elem => {
@@ -136,38 +173,42 @@ class Formstack {
 
         // Formstack also don't have capturable hidden fields,
         // so we remove ID text inputs and append hidden equivalents
-        const userId = this.dom.form.querySelector(
+        const userId = this.form.querySelector(
             this.config.hiddenSelectors.userId
         );
 
-        if (userId) {
-            userId.remove();
+        if (!userId) {
+            return;
         }
 
-        const email = this.dom.form.querySelector(
+        userId.remove();
+
+        const email = this.form.querySelector(
             this.config.hiddenSelectors.email
         );
 
-        if (email) {
-            email.remove();
+        if (!email) {
+            return;
         }
 
-        const html = `<input type="hidden" name="${userId.getAttribute(
-            'name'
-        )}" value="${user.id}">
-                        <input type="hidden" name="${email.getAttribute(
-                            'name'
-                        )}" value="${user.primaryEmailAddress}">`;
+        email.remove();
 
-        this.dom.form.insertAdjacentHTML(html);
+        const userName = userId.getAttribute('name') || '';
+
+        const emailName = email.getAttribute('name') || '';
+
+        const html = `<input type="hidden" name="${userName}" value="${user.id}">
+                        <input type="hidden" name="${emailName}" value="${user.primaryEmailAddress}">`;
+
+        this.form.insertAdjacentHTML('beforeend', html);
 
         // Events
         window.addEventListener('unload', () => {
             // Listen for navigation to success page
-            this.sendHeight(true);
+            sendHeight();
         });
 
-        this.dom.form.addEventListener('submit', event => {
+        this.form.addEventListener('submit', event => {
             this.submit(event);
         });
 
@@ -179,19 +220,14 @@ class Formstack {
                 const message = JSON.parse(event.data);
 
                 if (message.iframeTop) {
-                    this.postMessage(
-                        'scroll-to',
-                        'scroll-to',
-                        0,
-                        message.iframeTop
-                    );
+                    postMessage('scroll-to', 'scroll-to', 0, message.iframeTop);
                 }
             },
             false
         );
     }
 
-    submit(event): void {
+    submit(event: Event): void {
         const triggerKeyUp = el => {
             const e = document.createEvent('HTMLEvents');
             e.initEvent('keyup', false, true);
@@ -220,7 +256,7 @@ class Formstack {
 
             // Handle new errors
             const fsFormErrorClass = this.config.fsSelectors.formError;
-            const fsFormErrors = this.dom.form.getElementsByClassName(
+            const fsFormErrors = this.form.getElementsByClassName(
                 fsFormErrorClass
             );
 
@@ -229,7 +265,7 @@ class Formstack {
             });
 
             const fsFieldErrorClass = this.config.fsSelectors.fieldError;
-            const fsFieldErrors = this.dom.form.getElementsByClassName(
+            const fsFieldErrors = this.form.getElementsByClassName(
                 fsFieldErrorClass
             );
 
@@ -246,32 +282,13 @@ class Formstack {
                 triggerKeyUp(textArea);
             });
 
-            this.postMessage('get-position', 'get-position');
+            postMessage('get-position', 'get-position');
 
             // if no errors, submit form
             if (fsFormErrors.length === 0) {
-                this.dom.form.submit();
+                this.form.submit();
             }
         }, 100);
-    }
-
-    sendHeight(): void {
-        const body = document.body;
-
-        if (!document.body) {
-            return;
-        }
-
-        const html = document.documentElement;
-        const height = Math.max(
-            body.scrollHeight,
-            body.offsetHeight,
-            html.clientHeight,
-            html.scrollHeight,
-            html.offsetHeight
-        );
-
-        this.postMessage('set-height', height);
     }
 }
 
