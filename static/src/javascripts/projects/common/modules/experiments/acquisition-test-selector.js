@@ -14,6 +14,7 @@ import { acquisitionsEpicAlwaysAskIfTagged } from 'common/modules/experiments/te
 import { acquisitionsEpicAlwaysAskElection } from 'common/modules/experiments/tests/acquisitions-epic-always-ask-election';
 import { acquisitionsEpicThankYou } from 'common/modules/experiments/tests/acquisitions-epic-thank-you';
 import { acquisitionsSupportBaseline } from 'common/modules/experiments/tests/acquisitions-support-baseline';
+import { acquisitionsSupportUsRecurringContribution } from 'common/modules/experiments/tests/acquisitions-support-us-recurring-contributions';
 
 /**
  * acquisition tests in priority order (highest to lowest)
@@ -21,6 +22,7 @@ import { acquisitionsSupportBaseline } from 'common/modules/experiments/tests/ac
 const tests: $ReadOnlyArray<AcquisitionsABTest> = [
     alwaysAsk,
     payInEpic,
+    acquisitionsSupportUsRecurringContribution,
     acquisitionsSupportBaseline,
     askFourEarning,
     acquisitionsEpicAlwaysAskIfTagged,
