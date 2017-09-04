@@ -295,16 +295,6 @@ trait CommercialSwitches {
     exposeClientSide = false
   )
 
-  val BusinessToBusinessNavLink: Switch = Switch(
-    group = SwitchGroup.Commercial,
-    name = "business-to-business-navlink",
-    description = "If this switch is on, the UK Edition will show a B2B link in the nav, under the Business section",
-    owners = Owner.group(SwitchGroup.Commercial),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 9, 13),
-    exposeClientSide = true
-  )
-
   val guTodayEmailAds = Switch(
     SwitchGroup.Commercial,
     "guardian-today-email-ads",

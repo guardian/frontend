@@ -5,7 +5,6 @@ import java.util.Locale
 import common._
 import common.editions.International.weekendSectionLink
 import org.joda.time.DateTimeZone
-import conf.switches.Switches.BusinessToBusinessNavLink
 
 object Uk extends Edition(
   id = "UK",
@@ -64,13 +63,14 @@ object Uk extends Edition(
     globalDevelopment
   )
 
-  lazy val businessLocalNav: Seq[SectionLink] = Seq(
-      economics,
-      banking,
-      retail,
-      markets,
-      eurozone
-    ) ++ (if (BusinessToBusinessNavLink.isSwitchedOn) Seq(businessToBusiness) else Nil)
+  val businessLocalNav: Seq[SectionLink] = Seq(
+    economics,
+    banking,
+    retail,
+    markets,
+    eurozone,
+    businessToBusiness
+  )
 
   val environmentLocalNav = Seq(
     climateChange,
@@ -93,7 +93,7 @@ object Uk extends Edition(
     weekendSectionLink
   )
 
-  override lazy val navigation: Seq[NavItem] = {
+  override val navigation: Seq[NavItem] = {
     Seq(
       NavItem(home),
       NavItem(uk, ukLocalNav),
