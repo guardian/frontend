@@ -1,7 +1,6 @@
 {
   "Regis Kuckaertz": [
-    "projects/common/modules/ui/clickstream.js",
-    "projects/common/modules/ui/faux-block-link.js"
+    "projects/common/modules/ui/clickstream.js"
   ],
   "sndrs": [
     "bootstraps/enhanced/facia.js",
@@ -36,7 +35,6 @@
   ],
   "GHaberis": [
     "projects/common/modules/component.js",
-    "projects/common/modules/identity/formstack-iframe-embed.js",
     "projects/common/modules/identity/formstack-iframe.js",
     "projects/common/modules/identity/formstack.js",
     "projects/common/modules/identity/public-profile.js",
