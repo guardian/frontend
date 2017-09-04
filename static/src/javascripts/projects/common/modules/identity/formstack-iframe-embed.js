@@ -3,8 +3,7 @@
 /**
     Formstack - composer integration
 
-    This script runs INSIDE a formstack iframe and is initialised by the NGW
-    requireJs setup
+    This script runs INSIDE a formstack iframe.
 
     It is set up to send messages to the parent script in window.top to allow
     the cross domain adjustment of height for variable content from formstack.
@@ -63,7 +62,7 @@ const sendHeight = (): void => {
     }
 };
 
-class Formstack {
+class FormstackEmbedIframe {
     el: HTMLElement;
     form: HTMLFormElement;
     formId: string;
@@ -292,4 +291,4 @@ class Formstack {
     }
 }
 
-export default Formstack;
+export { FormstackEmbedIframe };
