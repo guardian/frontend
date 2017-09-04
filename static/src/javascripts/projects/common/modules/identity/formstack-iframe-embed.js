@@ -143,11 +143,11 @@ class Formstack {
             this.config.fsSelectors.form
         ): any);
 
-        this.form = form;
-
-        if (!this.form) {
+        if (!form) {
             return;
         }
+
+        this.form = form;
 
         // Formstack generates some awful HTML, so we'll remove the CSS links,
         // loop their selectors and add our own classes instead
