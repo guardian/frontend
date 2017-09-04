@@ -32,7 +32,13 @@ module.exports = function loadSVG(source) {
                     node.children.forEach(setBlockStyles);
                 }
 
-                if (props['svg-styles']) setStyle(svg, props['svg-styles']);
+                if (props.className) {
+                    if (svg.attributes['class']) {
+                        svg.attributes['class'] += props.className;
+                    } else {
+                        svg.attributes['class'] = props.className;
+                    }
+                }
                 if (props['block-styles']) setBlockStyles(svg);
 
                 return svg;
