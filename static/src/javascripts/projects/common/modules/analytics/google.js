@@ -23,9 +23,20 @@ const trackSamePageLinkClick = (target: HTMLElement, tag: string): void => {
 };
 
 const trackExternalLinkClick = (target: HTMLElement, tag: string): void => {
-    window.ga(send, 'event', 'click', 'external', tag, {
+    const data: {
+        dimension13: string,
+        dimension48?: string
+    } = {
         dimension13: getTextContent(target),
-    });
+    };
+
+    const targetURL = target.getAttribute('href');
+
+    if (targetURL) {
+        data.dimension48 = targetURL;
+    }
+
+    window.ga(send, 'event', 'click', 'external', tag, data);
 };
 
 const trackSponsorLogoLinkClick = (target: Object): void => {
