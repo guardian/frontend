@@ -40,7 +40,7 @@ define([
                         isEmbed = el.className.match(/\bformstack-embed\b/);
 
                     if (isEmbed) {
-                        new FormstackEmbedIframe(el, id, config).init();
+                        new FormstackEmbedIframe.FormstackEmbedIframe(el, id, config).init();
                     } else {
                         new Formstack(el, id, config).init();
                     }
