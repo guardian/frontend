@@ -93,7 +93,7 @@ class ScrollableMpu {
         }
     }
 
-    create() {
+    create(): Promise<?boolean> {
         const templateOptions = {
             id: `scrollable-mpu-${Math.floor(Math.random() * 10000).toString(
                 16

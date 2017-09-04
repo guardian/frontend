@@ -1,7 +1,6 @@
 {
   "Regis Kuckaertz": [
     "projects/common/modules/ui/clickstream.js",
-    "projects/common/modules/ui/expandable.js",
     "projects/common/modules/ui/faux-block-link.js"
   ],
   "sndrs": [
@@ -28,7 +27,6 @@
     "projects/common/modules/atoms/youtube-tracking.js"
   ],
   "Gustav Pursche": [
-    "projects/common/modules/discussion/user-avatars.js",
     "projects/common/modules/discussion/whole-discussion.js",
     "projects/common/modules/discussion/api.js",
     "projects/common/modules/discussion/discussion-frontend.js",

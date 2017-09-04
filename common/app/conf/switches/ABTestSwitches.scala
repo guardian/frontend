@@ -71,16 +71,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-tailor-survey",
-    "Integrate Tailor with ab tests",
-    owners = Seq(Owner.withGithub("oilnam"), Owner.withGithub("mike-ruane")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 8, 31),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-paid-content-vs-outbrain-2",
     "Displays a paid content widget instead of Outbrain",
     owners = Seq(Owner.withName("commercial team")),

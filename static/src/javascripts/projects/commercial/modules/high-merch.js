@@ -36,7 +36,7 @@ const insertAlternativeSlot = isHiResLoaded => {
         });
 };
 
-const init = () => {
+const init = (): Promise<void> => {
     if (commercialFeatures.highMerch) {
         const anchorSelector = config.page.commentable
             ? '#comments + *'

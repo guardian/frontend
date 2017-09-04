@@ -5,6 +5,7 @@ const webpackMerge = require('webpack-merge');
 const Visualizer = require('webpack-visualizer-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
     .BundleAnalyzerPlugin;
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 
 const config = require('./webpack.config.js');
 
@@ -31,7 +32,8 @@ module.exports = webpackMerge.smart(config, {
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify('production'),
         }),
-        new webpack.optimize.UglifyJsPlugin({
+        new UglifyJSPlugin({
+            parallel: true,
             sourceMap: true,
         }),
     ],
