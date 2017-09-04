@@ -40,6 +40,7 @@ object NavLinks {
   val retail = NavLink("retail", "/business/retail", "business/retail")
   val markets = NavLink("markets", "/business/stock-markets", "business/stock-markets")
   val eurozone = NavLink("eurozone", "/business/eurozone", "business/eurozone")
+  val businessToBusiness = NavLink("b2b", "/business-to-business", "/business-to-business")
   val sustainableBusiness = NavLink("sustainable business", "/us/sustainable-business", "us/sustainable-business")
   val diversityEquality = NavLink("diversity & equality in business", "/business/diversity-and-equality", "business/diversity-and-equality")
   val smallBusiness = NavLink("small business", "/business/us-small-business", "business/us-small-business")

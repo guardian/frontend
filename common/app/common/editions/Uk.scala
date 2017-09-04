@@ -63,12 +63,13 @@ object Uk extends Edition(
     globalDevelopment
   )
 
-  val businessLocalNav = Seq(
+  val businessLocalNav: Seq[SectionLink] = Seq(
     economics,
     banking,
     retail,
     markets,
-    eurozone
+    eurozone,
+    businessToBusiness
   )
 
   val environmentLocalNav = Seq(
