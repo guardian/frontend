@@ -111,16 +111,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-acquisitions-epic-paypal-pay-in-epic",
-    "Test whether allowing readers to pay in-Epic increases the conversion rate.",
-    owners = Seq(Owner.withGithub("Mullefa"), Owner.withGithub("desbo")),
-    safeState = On,
-    sellByDate = new LocalDate(2017, 9, 11),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-outstream-frequency-cap",
     "Test adds a hold-back variant which keeps a frequency cap on outstream video format ads.",
     owners = Seq(Owner.withGithub("rich-nguyen")),
