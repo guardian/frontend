@@ -67,22 +67,22 @@ function ($, Expandable, fixtures) {
 
         it('should be able to operate multiple exapandables on a single page', function () {
 
-            new Expandable({ dom: document.querySelector('#trail-a') }).init();
-            new Expandable({ dom: document.querySelector('#trail-b') }).init();
+            new Expandable.Expandable({ dom: document.querySelector('#trail-a') }).init();
+            new Expandable.Expandable({ dom: document.querySelector('#trail-b') }).init();
 
             expect($('#trail-a .cta')[0].innerHTML).toContain('5');
             expect($('#trail-b .cta')[0].innerHTML).toContain('3');
         });
 
         it('should correctly render the default shut state', function () {
-            new Expandable({ dom: document.querySelector('#trail-c'), expanded: false }).init();
+            new Expandable.Expandable({ dom: document.querySelector('#trail-c'), expanded: false }).init();
 
             expect($('#trail-c')[0].className).toContain('shut');
             expect($('#trail-c .cta').text()).toBe('Show 3 more');
         });
 
         it('should expand and contract a panel', function () {
-            var x = new Expandable({ dom: document.querySelector('#trail-d') });
+            var x = new Expandable.Expandable({ dom: document.querySelector('#trail-d') });
             x.init();
 
             // shut
@@ -96,17 +96,17 @@ function ($, Expandable, fixtures) {
         });
 
         it('should visually represent the number of items in the panel', function () {
-            new Expandable({ dom: document.querySelector('#trail-e') }).init();
+            new Expandable.Expandable({ dom: document.querySelector('#trail-e') }).init();
             expect($('#trail-e .cta')[0].innerHTML).toContain('3');
         });
 
         it('should not enable expandables where there are less than three hidden trails', function () {
-            new Expandable({ dom: document.querySelector('#trail-g') }).init();
+            new Expandable.Expandable({ dom: document.querySelector('#trail-g') }).init();
             expect($('#trail-g .cta').length).toBe(0);
         });
 
         it('should be able to turn off the trail count', function () {
-            new Expandable({ dom: document.querySelector('#trail-h'), showCount: false }).init();
+            new Expandable.Expandable({ dom: document.querySelector('#trail-h'), showCount: false }).init();
             expect($('#trail-h .cta')[0].innerHTML).not.toContain('3');
         });
 

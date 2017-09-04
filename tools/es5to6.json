@@ -1,7 +1,6 @@
 {
   "Regis Kuckaertz": [
     "projects/common/modules/ui/clickstream.js",
-    "projects/common/modules/ui/expandable.js",
     "projects/common/modules/ui/faux-block-link.js"
   ],
   "sndrs": [

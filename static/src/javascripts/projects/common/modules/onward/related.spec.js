@@ -1,20 +1,19 @@
 // @flow
 
 import config from 'lib/config';
-import Expandable from 'common/modules/ui/expandable';
 import { related } from './related';
 
 jest.mock('lib/config');
-jest.mock('common/modules/ui/expandable', () => {
-    const Exp: any = (jest.fn(): any);
-    Exp.prototype.init = jest.fn();
-    return Exp;
-});
+jest.mock('common/modules/ui/expandable', () => ({
+    Expandable: jest.fn(),
+}));
 jest.mock('common/modules/analytics/register', () => ({
     begin() {},
     end() {},
     error() {},
 }));
+
+const FakeExp: any = require('common/modules/ui/expandable').Expandable;
 
 describe('onward/related', () => {
     beforeEach(() => {
@@ -33,8 +32,16 @@ describe('onward/related', () => {
             relatedContent: true,
             ajaxRelatedContent: true,
         };
+
+        FakeExp.mockReset();
+        FakeExp.prototype.init = jest.fn();
+
         jest.resetAllMocks();
         jest.resetModules();
+    });
+
+    afterEach(() => {
+        FakeExp.prototype.init.mockRestore();
     });
 
     it("should hide if there's no story package and related can't be fetched", () => {
@@ -54,7 +61,7 @@ describe('onward/related', () => {
 
         related({});
 
-        expect(Expandable).toHaveBeenCalledWith({
+        expect(FakeExp).toHaveBeenCalledWith({
             dom: document.querySelector('.related-trails'),
             expanded: false,
             showCount: false,

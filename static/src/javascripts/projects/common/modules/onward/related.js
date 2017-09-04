@@ -5,7 +5,7 @@ import mediator from 'lib/mediator';
 import fetchJSON from 'lib/fetch-json';
 import fastdom from 'lib/fastdom-promise';
 import register from 'common/modules/analytics/register';
-import Expandable from 'common/modules/ui/expandable';
+import { Expandable } from 'common/modules/ui/expandable';
 
 const buildExpandable = (el: HTMLElement): void => {
     new Expandable({
