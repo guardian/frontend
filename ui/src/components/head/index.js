@@ -19,8 +19,9 @@ export default (props: any, css: string) =>
         <style>${resetCSS}</style>
         <style>${fontsCSS}</style>
         ${css}
-        <script>window.guardian = ${JSON.stringify(props)};</script>
         <script>
+            window.guardian = ${JSON.stringify(props)};
+            
             // the app is bundled without any polyfills. babel transpiles the syntax
             // to es5 but we do not provide any polyfills for missing methods.
             // for that, we use polyfill.io.
