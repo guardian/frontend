@@ -122,7 +122,8 @@ const init = (): void => {
     sessionStorage.set('gu.jtbd-updated.seen', true);
 
     const allQuestions = campaign.fields.questions;
-    const qs = localStorage.get('gu.jtbd-updated.questions') || draw(allQuestions);
+    const qs =
+        localStorage.get('gu.jtbd-updated.questions') || draw(allQuestions);
     const as = localStorage.get('gu.jtbd-updated.answers') || qs.map(() => -1);
     const q = selectQuestion(qs, as);
 
