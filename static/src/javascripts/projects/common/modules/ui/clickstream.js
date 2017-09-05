@@ -1,5 +1,5 @@
 // @flow
-
+// #? Clean up unused `data-` attributes
 import bean from 'bean';
 import mediator from 'lib/mediator';
 
