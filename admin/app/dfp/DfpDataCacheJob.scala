@@ -16,7 +16,7 @@ object DfpDataCacheJob extends Logging {
     validLineItems: Seq[GuLineItem],
     invalidLineItems: Seq[GuLineItem])
 
-  def run(implicit executionContext: ExecutionContext): Future[Unit] = Future {
+  def run()(implicit executionContext: ExecutionContext): Future[Unit] = Future {
     log.info("Refreshing data cache")
     val start = System.currentTimeMillis
     val data = loadLineItems()
@@ -29,13 +29,13 @@ object DfpDataCacheJob extends Logging {
   for initialization and total refresh of data,
   so would be used for first read and for emergency data update.
   */
-  def refreshAllDfpData(implicit executionContext: ExecutionContext): Unit = {
+  def refreshAllDfpData()(implicit executionContext: ExecutionContext): Unit = {
 
     for {
-      _ <- AdUnitAgent.refresh
-      _ <- CustomFieldAgent.refresh
-      _ <- CustomTargetingAgent.refresh
-      _ <- PlacementAgent.refresh
+      _ <- AdUnitAgent.refresh()
+      _ <- CustomFieldAgent.refresh()
+      _ <- CustomTargetingAgent.refresh()
+      _ <- PlacementAgent.refresh()
     } {
       loadLineItems()
     }

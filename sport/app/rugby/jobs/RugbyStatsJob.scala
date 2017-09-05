@@ -20,8 +20,8 @@ class RugbyStatsJob(optaFeed: OptaFeed) extends Logging {
 
   val dateFormat: DateTimeFormatter = DateTimeFormat.forPattern("yyyy/MM/dd")
 
-  def fetchFixturesAndResults(implicit executionContext: ExecutionContext): Future[Any] = {
-    optaFeed.getFixturesAndResults.flatMap { matches =>
+  def fetchFixturesAndResults()(implicit executionContext: ExecutionContext): Future[Any] = {
+    optaFeed.getFixturesAndResults().flatMap { matches =>
       Future.sequence(matches.map { aMatch =>
         fixturesAndResultsMatches.alter {_ +  (aMatch.key -> aMatch)}
       })
@@ -31,8 +31,8 @@ class RugbyStatsJob(optaFeed: OptaFeed) extends Logging {
     }
   }
 
-  def fetchGroupTables(implicit executionContext: ExecutionContext): Future[Any] = {
-    optaFeed.getGroupTables.map { data =>
+  def fetchGroupTables()(implicit executionContext: ExecutionContext): Future[Any] = {
+    optaFeed.getGroupTables().map { data =>
       groupTables.alter { data }
     }.recover {
       case optaFeedException: RugbyOptaFeedException => log.warn(s"RugbyStatsJob encountered errors: ${optaFeedException.message}")
@@ -40,7 +40,7 @@ class RugbyStatsJob(optaFeed: OptaFeed) extends Logging {
     }
   }
 
-  def fetchPastScoreEvents(implicit executionContext: ExecutionContext): Unit = {
+  def fetchPastScoreEvents()(implicit executionContext: ExecutionContext): Unit = {
     val pastMatches = fixturesAndResultsMatches.get().values.filter(_.date.isBeforeNow).toList
 
     fetchScoreEvents(pastMatches).map { scoreEventsForMatchesMap =>
@@ -64,7 +64,7 @@ class RugbyStatsJob(optaFeed: OptaFeed) extends Logging {
     scoresEventsForMatchesFuture.map(_.toMap)
   }
 
-  def fetchPastMatchesStat(implicit executionContext: ExecutionContext): Unit = {
+  def fetchPastMatchesStat()(implicit executionContext: ExecutionContext): Unit = {
     val pastMatches = fixturesAndResultsMatches.get().values.filter(_.date.isBeforeNow).toList
 
     fetchMatchesStat(pastMatches).map { statForMatches =>

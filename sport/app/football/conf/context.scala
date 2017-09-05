@@ -35,11 +35,11 @@ class FootballLifecycle(
     }
 
     jobs.schedule("MatchDayAgentRefreshJob", "0 0/5 * * * ?") {
-      competitionsService.refreshMatchDay
+      competitionsService.refreshMatchDay()
     }
 
     jobs.schedule("CompetitionRefreshJob", "0 0/10 * * * ?") {
-      competitionsService.refreshCompetitionData
+      competitionsService.refreshCompetitionData()
     }
 
     jobs.schedule("TeamMapRefreshJob", "0 0/10 * * * ?") {
@@ -62,9 +62,9 @@ class FootballLifecycle(
     scheduleJobs()
 
     akkaAsync.after1s {
-      val competitionUpdate = competitionsService.refreshCompetitionData
+      val competitionUpdate = competitionsService.refreshCompetitionData()
       competitionUpdate.onSuccess { case _ => competitionsService.competitionIds.foreach(competitionsService.refreshCompetitionAgent) }
-      competitionsService.refreshMatchDay
+      competitionsService.refreshMatchDay()
       TeamMap.refresh()(contentApiClient, ec)
     }
   }

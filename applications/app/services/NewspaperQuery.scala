@@ -26,12 +26,12 @@ class NewspaperQuery(contentApiClient: ContentApiClient) extends Dates with Logg
   val FRONT_PAGE_DISPLAY_NAME = "front page"
   val pathToTag = Map("theguardian" -> "theguardian/mainsection", "theobserver" -> "theobserver/news")
 
-  def fetchLatestGuardianNewspaper(implicit executionContext: ExecutionContext): Future[List[FaciaContainer]] = {
+  def fetchLatestGuardianNewspaper()(implicit executionContext: ExecutionContext): Future[List[FaciaContainer]] = {
     val now = DateTime.now(DateTimeZone.UTC)
     bookSectionContainers("theguardian/mainsection", getLatestGuardianPageFor(now), "theguardian")
   }
 
-  def fetchLatestObserverNewspaper(implicit executionContext: ExecutionContext): Future[List[FaciaContainer]] = {
+  def fetchLatestObserverNewspaper()(implicit executionContext: ExecutionContext): Future[List[FaciaContainer]] = {
     val now = DateTime.now(DateTimeZone.UTC)
     bookSectionContainers("theobserver/news", getPastSundayDateFor(now), "theobserver")
   }

@@ -44,7 +44,7 @@ class Industries(contentApiClient: ContentApiClient) {
   private lazy val industryKeywordIds = AkkaAgent(Map.empty[Int, Seq[String]])
 
 
-  def refresh(implicit executionContext: ExecutionContext): Future[Iterable[Map[Int, Seq[String]]]] = Future.sequence {
+  def refresh()(implicit executionContext: ExecutionContext): Future[Iterable[Map[Int, Seq[String]]]] = Future.sequence {
     Industries.sectorIdIndustryMap map {
       case (id, name) =>
         lookup.keyword(name) flatMap {

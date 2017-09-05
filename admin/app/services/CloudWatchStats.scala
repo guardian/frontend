@@ -39,9 +39,7 @@ object CloudWatchStats extends Logging {
     ftr
   }
 
-  def rawPageViews(implicit executionContext: ExecutionContext): Future[GetMetricStatisticsResult] = sanityData("kpis-page-views")
+  def rawPageViews()(implicit executionContext: ExecutionContext): Future[GetMetricStatisticsResult] = sanityData("kpis-page-views")
 
-  def googleAnalyticsPageViews(implicit executionContext: ExecutionContext): Future[GetMetricStatisticsResult] = sanityData("kpis-analytics-page-views-google")
-
-  def pageViewsHavingAnAd(implicit executionContext: ExecutionContext): Future[GetMetricStatisticsResult] = sanityData("first-ad-rendered")
+  def googleAnalyticsPageViews()(implicit executionContext: ExecutionContext): Future[GetMetricStatisticsResult] = sanityData("kpis-analytics-page-views-google")
 }

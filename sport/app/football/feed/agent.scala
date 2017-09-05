@@ -29,7 +29,7 @@ trait LiveMatches extends Logging {
   def footballClient: FootballClient
   def teamNameBuilder: TeamNameBuilder
 
-  def getLiveMatches(implicit executionContext: ExecutionContext): Future[Map[String, Seq[MatchDay]]] =
+  def getLiveMatches()(implicit executionContext: ExecutionContext): Future[Map[String, Seq[MatchDay]]] =
     footballClient.matchDay(LocalDate.now)
       .map { todaysMatches: List[MatchDay] =>
 
@@ -110,11 +110,11 @@ class CompetitionAgent(val footballClient: FootballClient, val teamNameBuilder: 
 
   def update(competition: Competition) = agent.send(competition)
 
-  def refreshFixtures(implicit executionContext: ExecutionContext) = getFixtures(competition) foreach addMatches
+  def refreshFixtures()(implicit executionContext: ExecutionContext) = getFixtures(competition) foreach addMatches
 
-  def refreshResults(implicit executionContext: ExecutionContext) = getResults(competition) foreach addMatches
+  def refreshResults()(implicit executionContext: ExecutionContext) = getResults(competition) foreach addMatches
 
-  def refreshLeagueTable(implicit executionContext: ExecutionContext) = getLeagueTable(competition) foreach { entries =>
+  def refreshLeagueTable()(implicit executionContext: ExecutionContext) = getLeagueTable(competition) foreach { entries =>
     agent.send{ _.copy(leagueTable = entries) }
   }
 
@@ -138,9 +138,9 @@ class CompetitionAgent(val footballClient: FootballClient, val teamNameBuilder: 
     comp.copy(matches = (newMatches ++ comp.matches).sorted(MatchStatusOrdering).distinctBy(_.id).sortByDate)
   }
 
-  def refresh(implicit executionContext: ExecutionContext) {
-    refreshFixtures
-    refreshResults
-    refreshLeagueTable
+  def refresh()(implicit executionContext: ExecutionContext) {
+    refreshFixtures()
+    refreshResults()
+    refreshLeagueTable()
   }
 }

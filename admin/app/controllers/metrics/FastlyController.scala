@@ -9,8 +9,8 @@ class FastlyController(val controllerComponents: ControllerComponents)(implicit 
   extends BaseController with Logging with ImplicitControllerExecutionContext {
     def renderFastly() = Action.async { implicit request =>
     for {
-      errors <- CloudWatch.fastlyErrors
-      statistics <- CloudWatch.fastlyHitMissStatistics
+      errors <- CloudWatch.fastlyErrors()
+      statistics <- CloudWatch.fastlyHitMissStatistics()
     } yield Ok(views.html.lineCharts(errors ++ statistics))
   }
 }

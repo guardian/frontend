@@ -99,7 +99,7 @@ class CommercialController(val controllerComponents: ControllerComponents)(impli
   }
 
   def renderCommercialRadiator() = Action.async { implicit request =>
-    for (adResponseConfidenceGraph <- CloudWatch.eventualAdResponseConfidenceGraph) yield {
+    for (adResponseConfidenceGraph <- CloudWatch.eventualAdResponseConfidenceGraph()) yield {
       Ok(views.html.commercial.commercialRadiator(adResponseConfidenceGraph))
     }
   }

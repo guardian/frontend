@@ -35,11 +35,11 @@ object AssetMetrics {
       .withMetricName(metric.getMetricName)
       .withDimensions(dimension)))
 
-  private def allMetrics(implicit executionContext: ExecutionContext): Future[ListMetricsResult] =
+  private def allMetrics()(implicit executionContext: ExecutionContext): Future[ListMetricsResult] =
     withErrorLogging(euWestClient.listMetricsFuture(new ListMetricsRequest().withNamespace("Assets")))
 
   private def metricResults(dimension: Dimension)(implicit executionContext: ExecutionContext): Future[List[GetMetricStatisticsResult]] =
-    allMetrics.flatMap { metricsList =>
+    allMetrics().flatMap { metricsList =>
       Future.sequence {
         metricsList.getMetrics
           .filter(_.getDimensions.contains(dimension))
@@ -59,7 +59,7 @@ object AssetMetrics {
 
   // Public methods
 
-  def sizeMetrics(implicit executionContext: ExecutionContext): Future[List[AssetMetric]] = metrics(dimension = gzipped, yLabel = "Size").map(_.sortBy(m => (-m.change, m.name)))
+  def sizeMetrics()(implicit executionContext: ExecutionContext): Future[List[AssetMetric]] = metrics(dimension = gzipped, yLabel = "Size").map(_.sortBy(m => (-m.change, m.name)))
 }
 
 
@@ -74,8 +74,8 @@ object AssetMetricsCache extends Logging {
 
   private def getReport(reportType: ReportType): Option[List[AssetMetric]] = cache().get(reportType)
 
-  def run(implicit executionContext: ExecutionContext): Future[Unit] = {
-    AssetMetrics.sizeMetrics.map { metrics =>
+  def run()(implicit executionContext: ExecutionContext): Future[Unit] = {
+    AssetMetrics.sizeMetrics().map { metrics =>
       log.info("Successfully refreshed Asset Metrics data")
       cache.send(cache.get + (ReportTypes.sizeOfFiles -> metrics))
     }

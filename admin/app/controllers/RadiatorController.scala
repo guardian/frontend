@@ -54,11 +54,11 @@ class RadiatorController(
 
     for {
       ciBuilds <- mostRecentBuild(buildProject("dotcom_frontend", Some("master")), buildProject("dotcom_ampValidation"))
-      router50x <- CloudWatch.routerBackend50x
-      latencyGraphs <- CloudWatch.shortStackLatency
-      fastlyErrors <- CloudWatch.fastlyErrors
-      fastlyHitMiss <- CloudWatch.fastlyHitMissStatistics
-      cost <- CloudWatch.cost
+      router50x <- CloudWatch.routerBackend50x()
+      latencyGraphs <- CloudWatch.shortStackLatency()
+      fastlyErrors <- CloudWatch.fastlyErrors()
+      fastlyHitMiss <- CloudWatch.fastlyHitMissStatistics()
+      cost <- CloudWatch.cost()
     } yield {
       val errorGraphs = Seq(router50x)
       val fastlyGraphs = fastlyErrors ++ fastlyHitMiss

@@ -9,7 +9,7 @@ object AdvertiserAgent {
 
   private lazy val cache = AkkaAgent(Seq.empty[GuAdvertiser])
 
-  def refresh(implicit executionContext: ExecutionContext): Future[Seq[GuAdvertiser]] = {
+  def refresh()(implicit executionContext: ExecutionContext): Future[Seq[GuAdvertiser]] = {
     cache alterOff { oldData =>
       val freshData = DfpApi.getAllAdvertisers
       if (freshData.nonEmpty) freshData else oldData

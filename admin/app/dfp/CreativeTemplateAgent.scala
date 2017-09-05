@@ -9,7 +9,7 @@ object CreativeTemplateAgent {
 
   private lazy val cache = AkkaAgent(Seq.empty[GuCreativeTemplate])
 
-  def refresh(implicit executionContext: ExecutionContext): Future[Seq[GuCreativeTemplate]] = {
+  def refresh()(implicit executionContext: ExecutionContext): Future[Seq[GuCreativeTemplate]] = {
     cache alterOff { oldData =>
       val freshData = DfpApi.readActiveCreativeTemplates()
       if (freshData.nonEmpty) freshData else oldData

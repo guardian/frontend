@@ -19,7 +19,7 @@ class SectionsLookUpLifecycle(
 
   private def scheduleJobs() {
     jobs.schedule("SectionsLookUpJob", "0 * * * * ?") {
-      sectionsLookUp.refresh
+      sectionsLookUp.refresh()
     }
   }
 
@@ -32,7 +32,7 @@ class SectionsLookUpLifecycle(
     scheduleJobs()
 
     akkaAsync.after1s {
-      sectionsLookUp.refresh
+      sectionsLookUp.refresh()
     }
   }
 }

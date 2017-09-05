@@ -9,8 +9,8 @@ class AnalyticsConfidenceController(val controllerComponents: ControllerComponen
   extends BaseController with Logging with ImplicitControllerExecutionContext {
     def renderConfidence() = Action.async { implicit request =>
     for {
-      ophan <- CloudWatch.ophanConfidence
-      google <- CloudWatch.googleConfidence
+      ophan <- CloudWatch.ophanConfidence()
+      google <- CloudWatch.googleConfidence()
     } yield {
       val ophanAverage = ophan.dataset.flatMap(_.values.headOption).sum / ophan.dataset.length
       val googleAverage = google.dataset.flatMap(_.values.headOption).sum / google.dataset.length

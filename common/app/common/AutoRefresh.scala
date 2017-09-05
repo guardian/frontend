@@ -14,20 +14,20 @@ abstract class AutoRefresh[A](initialDelay: FiniteDuration, interval: FiniteDura
 
   @volatile private var subscription: Option[Cancellable] = None
 
-  protected def refresh(implicit executionContext: ExecutionContext): Future[A]
+  protected def refresh()(implicit executionContext: ExecutionContext): Future[A]
 
   def get: Option[A] = agent.get()
 
-  def getOrRefresh(implicit executionContext: ExecutionContext): Future[A] = (for {
+  def getOrRefresh()(implicit executionContext: ExecutionContext): Future[A] = (for {
     _ <- subscription
     a <- get
-  } yield Future.successful(a)).getOrElse(refresh)
+  } yield Future.successful(a)).getOrElse(refresh())
 
   final def start()(implicit actorSystem: ActorSystem, executionContext: ExecutionContext): Unit = {
     log.info(s"Starting refresh cycle after $initialDelay repeatedly over $interval delay")
 
     subscription = Some(actorSystem.scheduler.schedule(initialDelay, interval) {
-      refresh onComplete {
+      refresh() onComplete {
         case Success(a) =>
           log.debug(s"Updated AutoRefresh: $a")
           agent.send(Some(a))

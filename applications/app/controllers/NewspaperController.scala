@@ -23,7 +23,7 @@ class NewspaperController(
       Some(SectionSummary.fromId("todayspaper")),
       "Main section | News | The Guardian"
     ))
-    val todaysPaper = newspaperQuery.fetchLatestGuardianNewspaper.map(p => TodayNewspaper(guardianPage, p))
+    val todaysPaper = newspaperQuery.fetchLatestGuardianNewspaper().map(p => TodayNewspaper(guardianPage, p))
 
     for( tp <- todaysPaper) yield Cached(300)(RevalidatableResult.Ok(views.html.newspaperPage(tp)))
 
@@ -36,7 +36,7 @@ class NewspaperController(
       "Main section | From the Observer | The Guardian"
     ))
 
-    val todaysPaper = newspaperQuery.fetchLatestObserverNewspaper.map(p => TodayNewspaper(observerPage, p))
+    val todaysPaper = newspaperQuery.fetchLatestObserverNewspaper().map(p => TodayNewspaper(observerPage, p))
 
     for( tp <- todaysPaper) yield Cached(300)(RevalidatableResult.Ok(views.html.newspaperPage(tp)))
 

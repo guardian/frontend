@@ -20,7 +20,7 @@ import org.scalatest.{DoNotDiscover, BeforeAndAfterAll, Matchers, FlatSpec}
   lazy val sectionsLookUp = new SectionsLookUp(testContentApiClient)
 
   override def beforeAll(): Unit = {
-    sectionsLookUp.refresh
+    sectionsLookUp.refresh()
   }
 
   lazy val indexController = new IndexController(

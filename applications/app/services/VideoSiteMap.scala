@@ -51,7 +51,7 @@ class VideoSiteMap(contentApiClient: ContentApiClient) {
     }
   }
 
-  def getLatestContent(implicit executionContext: ExecutionContext): Future[NodeSeq] = {
+  def getLatestContent()(implicit executionContext: ExecutionContext): Future[NodeSeq] = {
 
     val query = contentApiClient.search(Edition.defaultEdition)
       .pageSize(200)

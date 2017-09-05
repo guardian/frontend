@@ -59,14 +59,14 @@ class OptaFeed(wsClient: WSClient) extends Logging {
     }.getOrElse(Future.failed(RugbyOptaFeedException("No endpoint for rugby found")))
   }
 
-  def getLiveScores(implicit executionContext: ExecutionContext): Future[Seq[Match]] = {
+  def getLiveScores()(implicit executionContext: ExecutionContext): Future[Seq[Match]] = {
     val scores = events.map { event =>
       getResponse(event, "/competition.php", "ru5").map(Parser.parseLiveScores(_, event))
     }
     Future.sequence(scores).map(_.flatten)
   }
 
-  def getFixturesAndResults(implicit executionContext: ExecutionContext): Future[Seq[Match]] = {
+  def getFixturesAndResults()(implicit executionContext: ExecutionContext): Future[Seq[Match]] = {
     val fixtures = events.map { event =>
       getResponse(event, "/competition.php", "ru1").map(Parser.parseFixturesAndResults(_, event))
     }
@@ -85,7 +85,7 @@ class OptaFeed(wsClient: WSClient) extends Logging {
     }
   }
 
-  def getGroupTables(implicit executionContext: ExecutionContext): Future[Map[OptaEvent, Seq[GroupTable]]] = {
+  def getGroupTables()(implicit executionContext: ExecutionContext): Future[Map[OptaEvent, Seq[GroupTable]]] = {
     val tables = events.map { event =>
       getResponse(event, "/competition.php", "ru2").map(Parser.parseGroupTables)
     }

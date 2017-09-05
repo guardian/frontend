@@ -43,7 +43,7 @@ import org.joda.time.{DateTime, DateTimeUtils, LocalDate}
   "CompetitionAgentTest" should "load fixtures" in {
 
     val comps = testCompetitionsService(Competition("100", "/football/premierleague", "Premier League", "Premier League", "English", showInTeamsList = true))
-    comps.competitionAgents.foreach(_.refreshFixtures)
+    comps.competitionAgents.foreach(_.refreshFixtures())
 
     eventually(
       comps.matches.filter(_.isFixture).map(_.id) should contain ("3925232")
@@ -53,7 +53,7 @@ import org.joda.time.{DateTime, DateTimeUtils, LocalDate}
   it should "load results" in {
 
     val comps = testCompetitionsService(Competition("100", "/football/premierleague", "Premier League", "Premier League", "English", showInTeamsList = true, startDate = seasonStart))
-    comps.competitionAgents.foreach(_.refreshResults)
+    comps.competitionAgents.foreach(_.refreshResults())
 
     eventually(
       comps.matches.filter(_.isResult).map(_.id) should contain ("3528302")
@@ -63,7 +63,7 @@ import org.joda.time.{DateTime, DateTimeUtils, LocalDate}
   it should "load live matches" in {
 
     val comps = testCompetitionsService(Competition("101", "/football/championship", "Championship", "Championship", "English", showInTeamsList = true))
-    whenReady(comps.refreshMatchDay) { _ =>
+    whenReady(comps.refreshMatchDay()) { _ =>
       comps.matches.filter(_.isLive).map(_.id) should be(List())// well, it's off season now...
     }
 

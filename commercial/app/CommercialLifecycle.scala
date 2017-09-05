@@ -134,7 +134,7 @@ class CommercialLifecycle(
 
     akkaAsync.after1s {
 
-      industries.refresh onFailure {
+      industries.refresh() onFailure {
         case NonFatal(e) => log.warn(s"Failed to refresh job industries: ${e.getMessage}")
       }
 

@@ -13,7 +13,7 @@ class DfpDataController(val controllerComponents: ControllerComponents)(implicit
   }
 
   def flushCache(): Action[AnyContent] = Action { implicit request =>
-    DfpDataCacheJob.refreshAllDfpData
+    DfpDataCacheJob.refreshAllDfpData()
     NoCache(Redirect(routes.DfpDataController.renderCacheFlushPage()))
       .flashing("triggered" -> "true")
   }

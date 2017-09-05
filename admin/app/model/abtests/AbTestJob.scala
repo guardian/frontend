@@ -8,11 +8,11 @@ import scala.collection.JavaConverters._
 import scala.concurrent.ExecutionContext
 
 object AbTestJob extends Logging {
-  def run(implicit executionContext: ExecutionContext) {
+  def run()(implicit executionContext: ExecutionContext) {
 
     log.info("Downloading abtests info from CloudWatch")
 
-    CloudWatch.AbMetricNames map { result =>
+    CloudWatch.AbMetricNames() map { result =>
       // Group variant names by test name
       val tests = result.getMetrics.asScala.map(_.getMetricName.split("-").toList).collect {
                     case test :: variant => (test, variant.mkString("-")) }.groupBy(_._1)

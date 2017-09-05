@@ -35,7 +35,7 @@ class FastlyStatisticService(wsClient: WSClient) extends Logging {
 
   private val regions = List("usa", "europe", "ausnz")
 
-  def fetch(implicit executionContext: ExecutionContext): Future[List[FastlyStatistic]] = {
+  def fetch()(implicit executionContext: ExecutionContext): Future[List[FastlyStatistic]] = {
 
     val futureResponses: Future[List[String]] = Future.sequence{
       regions map { region =>

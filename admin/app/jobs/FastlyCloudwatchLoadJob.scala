@@ -45,9 +45,9 @@ class FastlyCloudwatchLoadJob(fastlyStatisticService: FastlyStatisticService) ex
   }
 
 
-  def run(implicit executionContext: ExecutionContext) {
+  def run()(implicit executionContext: ExecutionContext) {
     log.info("Loading statistics from Fastly to CloudWatch.")
-    fastlyStatisticService.fetch.map { statistics =>
+    fastlyStatisticService.fetch().map { statistics =>
 
       val fresh: List[FastlyStatistic] = statistics filter { statistic =>
         latestTimestampsSent(statistic.key) < statistic.timestamp

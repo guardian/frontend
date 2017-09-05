@@ -36,11 +36,11 @@ class AnalyticsSanityCheckJob(ophanApi: OphanApi) extends Logging {
     }
   )
 
-  def run(implicit executionContext: ExecutionContext) {
+  def run()(implicit executionContext: ExecutionContext) {
 
-    val fRawPageViews: Future[GetMetricStatisticsResult] = CloudWatchStats.rawPageViews
-    val fGooglePageViews = CloudWatchStats.googleAnalyticsPageViews
-    val fOphanViews = ophanViews
+    val fRawPageViews: Future[GetMetricStatisticsResult] = CloudWatchStats.rawPageViews()
+    val fGooglePageViews = CloudWatchStats.googleAnalyticsPageViews()
+    val fOphanViews = ophanViews()
     for {
       rawPageViewsStats <- fRawPageViews
       googlePageViewsStats <- fGooglePageViews
@@ -58,7 +58,7 @@ class AnalyticsSanityCheckJob(ophanApi: OphanApi) extends Logging {
 
   }
 
-  private def ophanViews(implicit executionContext: ExecutionContext): Future[Long] = {
+  private def ophanViews()(implicit executionContext: ExecutionContext): Future[Long] = {
     val now = new DateTime().minusMinutes(15).getMillis
     ophanApi.getBreakdown("next-gen", hours = 1).map { json =>
       (json \\ "data").flatMap {

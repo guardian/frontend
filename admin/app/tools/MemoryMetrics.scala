@@ -10,7 +10,7 @@ import scala.concurrent.{ExecutionContext, Future}
 object MemoryMetrics {
   private def jvmLoadBalancers = loadBalancers.diff(List(LoadBalancer("frontend-router"), LoadBalancer("frontend-image")).flatten)
 
-  def memory(implicit executionContext: ExecutionContext) = withErrorLogging(Future.traverse(jvmLoadBalancers) { loadBalancer =>
+  def memory()(implicit executionContext: ExecutionContext) = withErrorLogging(Future.traverse(jvmLoadBalancers) { loadBalancer =>
     val applicationName: Dimension = new Dimension().withName("ApplicationName").withValue(loadBalancer.project)
     for {
       usedHeapMemory <- euWestClient.getMetricStatisticsFuture(new GetMetricStatisticsRequest()

@@ -12,7 +12,7 @@ trait DataAgent[K, V] extends Logging with implicits.Strings {
 
   def loadFreshData(): Try[Map[K, V]]
 
-  def refresh(implicit executionContext: ExecutionContext): Future[DataCache[K, V]] = {
+  def refresh()(implicit executionContext: ExecutionContext): Future[DataCache[K, V]] = {
     log.info("Refreshing data cache")
     val start = System.currentTimeMillis
     cache alterOff { oldCache =>

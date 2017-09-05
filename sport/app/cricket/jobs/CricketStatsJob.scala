@@ -31,7 +31,7 @@ class CricketStatsJob(paFeed: PaFeed) extends Logging {
     matchObjects.flatten.headOption
   }
 
-  def run(implicit executionContext: ExecutionContext): Unit = {
+  def run()(implicit executionContext: ExecutionContext): Unit = {
 
     cricketStatsAgents.foreach { case (team, agent) =>
 

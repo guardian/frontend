@@ -9,7 +9,7 @@ import scala.util.{Failure, Success}
 class SectionsLookUp(contentApiClient: ContentApiClient) extends Logging {
   private val sections = AkkaAgent[Option[Map[String, Section]]](None)
 
-  def refresh(implicit executionContext: ExecutionContext): Unit = {
+  def refresh()(implicit executionContext: ExecutionContext): Unit = {
     contentApiClient.getResponse(contentApiClient.sections) onComplete {
       case Success(response) =>
         log.info("Refreshed sections from Content API")

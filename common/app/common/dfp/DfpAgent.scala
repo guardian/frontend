@@ -39,7 +39,7 @@ object DfpAgent
     }
   }
 
-  def refresh(implicit executionContext: ExecutionContext) {
+  def refresh()(implicit executionContext: ExecutionContext) {
 
     def grabPageSkinSponsorshipsFromStore(key: String): Seq[PageSkinSponsorship] = {
       val reportOption: Option[PageSkinSponsorshipReport] = for {
@@ -87,7 +87,7 @@ object DfpAgent
 
   }
 
-  def refreshFaciaSpecificData(implicit executionContext: ExecutionContext): Unit = {
+  def refreshFaciaSpecificData()(implicit executionContext: ExecutionContext): Unit = {
 
     def updateLineItems(slot:AdSlot,key: String): Unit = {
 

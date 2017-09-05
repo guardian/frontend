@@ -10,7 +10,7 @@ import scala.concurrent.{ExecutionContext, Future}
 
 object DfpTemplateCreativeCacheJob {
 
-  def run(implicit executionContext: ExecutionContext): Future[Unit] = Future {
+  def run()(implicit executionContext: ExecutionContext): Future[Unit] = Future {
     val cached = Store.getDfpTemplateCreatives
     val threshold = GuCreative.lastModified(cached) getOrElse now.minusMonths(1)
     val recentlyModified = DfpApi.readTemplateCreativesModifiedSince(threshold)

@@ -32,7 +32,7 @@ trait NewspaperTags {
 
 class NewspaperBookTagAgent extends AutoRefresh[TagIndexListings](0 seconds, 5 minutes) with NewspaperTags {
   override val source = "newspaper_books"
-  override protected def refresh(implicit executionContext: ExecutionContext): Future[TagIndexListings] = Future {
+  override protected def refresh()(implicit executionContext: ExecutionContext): Future[TagIndexListings] = Future {
     blocking {
       TagIndexesS3.getListingOrDie(source)
     }
@@ -41,7 +41,7 @@ class NewspaperBookTagAgent extends AutoRefresh[TagIndexListings](0 seconds, 5 m
 
 class NewspaperBookSectionTagAgent extends AutoRefresh[TagIndexListings](0 seconds, 5 minutes) with NewspaperTags {
   override val source = "newspaper_book_sections"
-  override protected def refresh(implicit executionContext: ExecutionContext): Future[TagIndexListings] = Future {
+  override protected def refresh()(implicit executionContext: ExecutionContext): Future[TagIndexListings] = Future {
     blocking {
       TagIndexesS3.getListingOrDie(source)
     }

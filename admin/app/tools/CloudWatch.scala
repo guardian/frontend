@@ -122,8 +122,8 @@ object CloudWatch extends Logging {
     }
   }
 
-  def shortStackLatency(implicit executionContext: ExecutionContext): Future[Seq[AwsLineChart]] = latency(primaryLoadBalancers)
-  def fullStackLatency(implicit executionContext: ExecutionContext): Future[Seq[AwsLineChart]] = latency(primaryLoadBalancers ++ secondaryLoadBalancers)
+  def shortStackLatency()(implicit executionContext: ExecutionContext): Future[Seq[AwsLineChart]] = latency(primaryLoadBalancers)
+  def fullStackLatency()(implicit executionContext: ExecutionContext): Future[Seq[AwsLineChart]] = latency(primaryLoadBalancers ++ secondaryLoadBalancers)
 
   def fetchOkMetric(loadBalancer: LoadBalancer)(implicit executionContext: ExecutionContext): Future[GetMetricStatisticsResult] =
     withErrorLogging(euWestClient.getMetricStatisticsFuture(new GetMetricStatisticsRequest()
@@ -148,7 +148,7 @@ object CloudWatch extends Logging {
     }
   }
 
-  def dualOkLatencyFullStack(implicit executionContext: ExecutionContext): Future[Seq[AwsDualYLineChart]] = dualOkLatency(primaryLoadBalancers ++ secondaryLoadBalancers)
+  def dualOkLatencyFullStack()(implicit executionContext: ExecutionContext): Future[Seq[AwsDualYLineChart]] = dualOkLatency(primaryLoadBalancers ++ secondaryLoadBalancers)
 
   def fetchHealthyHostMetric(loadBalancer: LoadBalancer)(implicit executionContext: ExecutionContext): Future[GetMetricStatisticsResult] =
     withErrorLogging(euWestClient.getMetricStatisticsFuture(new GetMetricStatisticsRequest()
@@ -160,7 +160,7 @@ object CloudWatch extends Logging {
       .withMetricName("HealthyHostCount")
       .withDimensions(new Dimension().withName("LoadBalancerName").withValue(loadBalancer.id))))
 
-  def fastlyErrors(implicit executionContext: ExecutionContext) = Future.traverse(fastlyMetrics) { case (graphTitle, metric) =>
+  def fastlyErrors()(implicit executionContext: ExecutionContext) = Future.traverse(fastlyMetrics) { case (graphTitle, metric) =>
     withErrorLogging(euWestClient.getMetricStatisticsFuture(new GetMetricStatisticsRequest()
       .withStartTime(new DateTime().minusHours(6).toDate)
       .withEndTime(new DateTime().toDate)
@@ -173,7 +173,7 @@ object CloudWatch extends Logging {
     }
   }
 
-  def cost(implicit executionContext: ExecutionContext) = withErrorLogging(defaultClient.getMetricStatisticsFuture(new GetMetricStatisticsRequest()
+  def cost()(implicit executionContext: ExecutionContext) = withErrorLogging(defaultClient.getMetricStatisticsFuture(new GetMetricStatisticsRequest()
     .withNamespace("AWS/Billing")
     .withMetricName("EstimatedCharges")
     .withStartTime(new DateTime().toLocalDate.toDate)
@@ -182,7 +182,7 @@ object CloudWatch extends Logging {
     .withPeriod(60 * 60 * 24)
     .withDimensions(new Dimension().withName("Currency").withValue("USD")))).map(MaximumMetric.apply)
 
-  def fastlyHitMissStatistics(implicit executionContext: ExecutionContext) = Future.traverse(fastlyHitMissMetrics) { case (graphTitle, region) =>
+  def fastlyHitMissStatistics()(implicit executionContext: ExecutionContext) = Future.traverse(fastlyHitMissMetrics) { case (graphTitle, region) =>
     for {
       hits <- withErrorLogging(euWestClient.getMetricStatisticsFuture(new GetMetricStatisticsRequest()
         .withStartTime(new DateTime().minusHours(6).toDate)
@@ -217,11 +217,11 @@ object CloudWatch extends Logging {
       .withDimensions(stage)))
   } yield new AwsLineChart(metricName, Seq("Time", "%"), ChartFormat.SingleLineBlue, percentConversion)
 
-  def ophanConfidence(implicit executionContext: ExecutionContext): Future[AwsLineChart] = confidenceGraph("ophan-percent-conversion")
+  def ophanConfidence()(implicit executionContext: ExecutionContext): Future[AwsLineChart] = confidenceGraph("ophan-percent-conversion")
 
-  def googleConfidence(implicit executionContext: ExecutionContext): Future[AwsLineChart] = confidenceGraph("google-percent-conversion")
+  def googleConfidence()(implicit executionContext: ExecutionContext): Future[AwsLineChart] = confidenceGraph("google-percent-conversion")
 
-  def routerBackend50x(implicit executionContext: ExecutionContext): Future[AwsLineChart] = {
+  def routerBackend50x()(implicit executionContext: ExecutionContext): Future[AwsLineChart] = {
     val dimension = new Dimension()
       .withName("LoadBalancerName")
       .withValue(LoadBalancer("frontend-router").fold("unknown")(_.id))
@@ -250,7 +250,7 @@ object CloudWatch extends Logging {
         .withDimensions(stage)
       )
 
-    def control(implicit executionContext: ExecutionContext): Future[AwsLineChart] = withErrorLogging(
+    def control()(implicit executionContext: ExecutionContext): Future[AwsLineChart] = withErrorLogging(
       for {
         viewed <- get("headlines-control-seen")
         clicked <- get("headlines-control-clicked")
@@ -263,7 +263,7 @@ object CloudWatch extends Logging {
       )
     )
 
-    def variant(implicit executionContext: ExecutionContext): Future[AwsLineChart] = withErrorLogging(
+    def variant()(implicit executionContext: ExecutionContext): Future[AwsLineChart] = withErrorLogging(
       for {
         viewed <- get("headlines-variant-seen")
         clicked <- get("headlines-variant-clicked")
@@ -277,14 +277,14 @@ object CloudWatch extends Logging {
     )
   }
 
-  def AbMetricNames(implicit executionContext: ExecutionContext) = {
+  def AbMetricNames()(implicit executionContext: ExecutionContext) = {
     withErrorLogging(euWestClient.listMetricsFuture(new ListMetricsRequest()
       .withNamespace("AbTests")
       .withDimensions(stageFilter)
     ))
   }
 
-  def eventualAdResponseConfidenceGraph(implicit executionContext: ExecutionContext): Future[AwsLineChart] = {
+  def eventualAdResponseConfidenceGraph()(implicit executionContext: ExecutionContext): Future[AwsLineChart] = {
 
     def getMetric(metricName: String): Future[GetMetricStatisticsResult] = {
       val now = DateTime.now()

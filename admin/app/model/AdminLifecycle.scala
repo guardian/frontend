@@ -40,7 +40,7 @@ class AdminLifecycle(appLifecycle: ApplicationLifecycle,
 
     //every 0, 30 seconds past the minute
     jobs.schedule("AdminLoadJob", "0/30 * * * * ?") {
-      model.abtests.AbTestJob.run
+      model.abtests.AbTestJob.run()
     }
 
     //every 4, 19, 34, 49 minutes past the hour, on the 2nd second past the minute (e.g 13:04:02, 13:19:02)
@@ -50,7 +50,7 @@ class AdminLifecycle(appLifecycle: ApplicationLifecycle,
 
     //every 2 minutes starting 5 seconds past the minute (e.g  13:02:05, 13:04:05)
     jobs.schedule("FastlyCloudwatchLoadJob", "5 0/2 * * * ?") {
-      fastlyCloudwatchLoadJob.run
+      fastlyCloudwatchLoadJob.run()
     }
 
     jobs.scheduleEvery("R2PagePressJob", r2PagePressRateInSeconds.seconds) {
@@ -59,7 +59,7 @@ class AdminLifecycle(appLifecycle: ApplicationLifecycle,
 
     //every 2, 17, 32, 47 minutes past the hour, on the 12th second past the minute (e.g 13:02:12, 13:17:12)
     jobs.schedule("AnalyticsSanityCheckJob", "12 2/15 * * * ?") {
-      analyticsSanityCheckJob.run
+      analyticsSanityCheckJob.run()
     }
 
     jobs.scheduleEveryNMinutes("FrontPressJobHighFrequency", adminPressJobHighPushRateInMinutes) {
@@ -84,12 +84,12 @@ class AdminLifecycle(appLifecycle: ApplicationLifecycle,
     val londonTime = TimeZone.getTimeZone("Europe/London")
     jobs.scheduleWeekdayJob("ExpiringSwitchesEmailJob", 48, 8, londonTime) {
       log.info("Starting ExpiringSwitchesEmailJob")
-      ExpiringSwitchesEmailJob(emailService).run
+      ExpiringSwitchesEmailJob(emailService).run()
     }
 
     jobs.scheduleWeekdayJob("ExpiringSwitchesAfternoonEmailJob", 48, 15, londonTime) {
       log.info("Starting ExpiringSwitchesAfternoonEmailJob")
-      ExpiringSwitchesEmailJob(emailService).runReminder
+      ExpiringSwitchesEmailJob(emailService).runReminder()
     }
 
     //every 7, 22, 37, 52 minutes past the hour, 28 seconds past the minute (e.g 13:07:28, 13:22:28)
@@ -99,7 +99,7 @@ class AdminLifecycle(appLifecycle: ApplicationLifecycle,
     }
 
     jobs.scheduleEveryNMinutes("AssetMetricsCache", 60 * 6) {
-      AssetMetricsCache.run
+      AssetMetricsCache.run()
     }
 
   }
@@ -127,7 +127,7 @@ class AdminLifecycle(appLifecycle: ApplicationLifecycle,
     akkaAsync.after1s {
       rebuildIndexJob.run()
       videoEncodingsJob.run(akkaAsync)
-      AssetMetricsCache.run
+      AssetMetricsCache.run()
       LoadBalancer.refresh()
     }
   }

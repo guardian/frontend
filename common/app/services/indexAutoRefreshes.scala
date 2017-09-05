@@ -18,7 +18,7 @@ class IndexListingsLifecycle(implicit actorSystem: ActorSystem, executionContext
 }
 
 object KeywordSectionIndexAutoRefresh extends AutoRefresh[TagIndexListings](0 seconds, 5 minutes) {
-  override protected def refresh(implicit executionContext: ExecutionContext): Future[TagIndexListings] = Future {
+  override protected def refresh()(implicit executionContext: ExecutionContext): Future[TagIndexListings] = Future {
     blocking {
       TagIndexesS3.getListingOrDie("keywords_by_section")
     }
@@ -26,7 +26,7 @@ object KeywordSectionIndexAutoRefresh extends AutoRefresh[TagIndexListings](0 se
 }
 
 object KeywordAlphaIndexAutoRefresh extends AutoRefresh[TagIndexListings](0 seconds, 5 minutes) {
-  override protected def refresh(implicit executionContext: ExecutionContext): Future[TagIndexListings] = Future {
+  override protected def refresh()(implicit executionContext: ExecutionContext): Future[TagIndexListings] = Future {
     blocking {
       TagIndexesS3.getListingOrDie("keywords")
     }
@@ -34,7 +34,7 @@ object KeywordAlphaIndexAutoRefresh extends AutoRefresh[TagIndexListings](0 seco
 }
 
 object ContributorAlphaIndexAutoRefresh extends AutoRefresh[TagIndexListings](0 seconds, 5 minutes) {
-  override protected def refresh(implicit executionContext: ExecutionContext): Future[TagIndexListings] = Future {
+  override protected def refresh()(implicit executionContext: ExecutionContext): Future[TagIndexListings] = Future {
     blocking {
       TagIndexesS3.getListingOrDie("contributors")
     }

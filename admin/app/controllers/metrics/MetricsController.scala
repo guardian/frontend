@@ -20,38 +20,38 @@ class MetricsController(
 
   def renderLoadBalancers() = Action.async { implicit request =>
     for {
-      graphs <- CloudWatch.dualOkLatencyFullStack
+      graphs <- CloudWatch.dualOkLatencyFullStack()
     } yield NoCache(Ok(views.html.lineCharts(graphs)))
   }
 
   def renderErrors() = Action.async { implicit request =>
     for {
-      errors4xx <- HttpErrors.global4XX
-      errors5xx <- HttpErrors.global5XX
+      errors4xx <- HttpErrors.global4XX()
+      errors5xx <- HttpErrors.global5XX()
     } yield NoCache(Ok(views.html.lineCharts(Seq(errors4xx, errors5xx))))
   }
 
   def render4XX() = Action.async { implicit request =>
     for {
-      notFound <- HttpErrors.notFound
+      notFound <- HttpErrors.notFound()
     } yield NoCache(Ok(views.html.lineCharts(notFound)))
   }
 
   def render5XX() = Action.async { implicit request =>
     for {
-      httpErrors <- HttpErrors.errors
+      httpErrors <- HttpErrors.errors()
     } yield NoCache(Ok(views.html.lineCharts(httpErrors)))
   }
 
   def renderGooglebot404s() = Action.async { implicit request =>
     for {
-      googleBot404s <- HttpErrors.googlebot404s
+      googleBot404s <- HttpErrors.googlebot404s()
     } yield NoCache(Ok(views.html.lineCharts(googleBot404s, Some("GoogleBot 404s"))))
   }
 
   def renderMemory() = Action.async { implicit request =>
     for {
-      metrics <- MemoryMetrics.memory
+      metrics <- MemoryMetrics.memory()
     } yield NoCache(Ok(views.html.lineCharts(metrics)))
   }
 
