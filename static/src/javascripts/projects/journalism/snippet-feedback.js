@@ -3,16 +3,27 @@ import fastdom from 'lib/fastdom-promise';
 import mediator from 'lib/mediator';
 import ophan from 'ophan/ng';
 import { getViewport } from 'lib/detect';
+import { SnippetFourVariants } from 'common/modules/experiments/tests/snippet-a-a1-b-b1';
+import { getAssignedVariant } from 'common/modules/experiments/utils';
 
 const SnippetFeedback = (options: { scroll: boolean } = { scroll: true }) => {
     let snippets = [...document.querySelectorAll('.explainer-snippet--new')];
+    const variant = getAssignedVariant(SnippetFourVariants);
 
     snippets.forEach(snippet => {
         const { snippetId, snippetType } = snippet.dataset;
         if (!snippetId || !snippetType) {
             return;
         }
-        const component = `snippet_${snippetType}`;
+        const component = `snippet_${snippetType}${variant
+            ? `_${variant.id}`
+            : ''}`;
+
+        if (variant) {
+            variant.id.split('').forEach(c => {
+                snippet.classList.add(`snippet--${c}`);
+            });
+        }
 
         // Callback for like/dislike
         const onFeedback = (e: Event) => {
