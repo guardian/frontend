@@ -27,7 +27,7 @@ const tests: $ReadOnlyArray<AcquisitionsABTest> = [
     acquisitionsEpicThankYou,
 ];
 
-const isViewable = (v: Variant, t: ABTest): boolean => {
+export const isViewable = (v: Variant, t: ABTest): boolean => {
     if (!v.options || !v.options.maxViews) return false;
 
     const {

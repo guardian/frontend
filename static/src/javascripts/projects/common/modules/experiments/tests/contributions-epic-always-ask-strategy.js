@@ -39,6 +39,7 @@ export const alwaysAsk: EpicABTest = makeABTest({
             options: {
                 test() {},
                 isUnlimited: true,
+                isOutbrainCompliant: true,
             },
         },
 
