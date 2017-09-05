@@ -15,7 +15,9 @@ const SnippetFeedback = (options: { scroll: boolean } = { scroll: true }) => {
         if (!snippetId || !snippetType) {
             return;
         }
-        const component = `snippet_${snippetType}${variant ? `_${variant.id}` : ''}`;
+        const component = `snippet_${snippetType}${variant
+            ? `_${variant.id}`
+            : ''}`;
 
         if (variant) {
             variant.id.split('').forEach(c => {
