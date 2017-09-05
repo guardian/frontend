@@ -1,0 +1,33 @@
+CTA {
+    background: #4bc6df;
+    border-radius: 9999px;
+    box-sizing: border-box;
+    color: #00456E;
+    display: inline-block;
+    font-family: "Guardian Text Sans Web", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    font-size: 16px;
+    line-height: 42px;
+    padding: 0 50px 0 20px;
+    position: relative;
+    text-decoration: none;
+    transition: background-color .3s;
+
+    @include mq(tablet) {
+        font-size: 18px;
+        line-height: 54px;
+    }
+
+    &:hover {
+        background-color: #74E7FF;
+    }
+}
+
+icon {
+    fill: currentColor;
+    height: 40px;
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+}
