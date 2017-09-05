@@ -74,6 +74,10 @@ const config = {
             'node_modules', // default location, but we're overiding above, so it needs to be explicit
         ],
         extensions: ['.js', '.jsx'],
+        alias: {
+            // some libs expect react, this stops them bundling it
+            react: 'preact',
+        },
     },
     resolveLoader: { modules: [path.resolve(ui, '__tools__'), 'node_modules'] },
     watchOptions: { ignored: /node_modules/ },
