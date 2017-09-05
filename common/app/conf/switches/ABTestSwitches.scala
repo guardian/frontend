@@ -21,6 +21,16 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-snippet-four-variants",
+    "Measure snippet open rate based on snippet design",
+    owners = Seq(Owner.withGithub("regiskuckaertz")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 10, 6),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
     "ab-contributions-epic-always-ask-strategy",
     "Test to assess the effects of always asking readers to contribute via the Epic over a prolonged period",
     owners = Seq(Owner.withGithub("Mullefa")),
