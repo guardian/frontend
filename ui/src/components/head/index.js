@@ -20,5 +20,5 @@ export default (props: any, css: string) =>
         <style>${fontsCSS}</style>
         ${css}
         <script>window.guardian = ${JSON.stringify(props)};</script>        
-        <script src="$(props.bundleUrl)" async defer></script>
+        <script src="${props.bundleUrl}" async defer></script>
     </head>`;
