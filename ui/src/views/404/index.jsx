@@ -15,17 +15,21 @@ import {
     logo,
 } from './style.js.scss';
 
-export default ({ beaconUrl }: Object) => (
+export default ({ beaconUrl }: Object) =>
     <div style={fluidWrap}>
         <div style={topBar}>
             <a href="/" style={topBarLink}>
                 Home
             </a>
         </div>
-        <Logo
-            block-styles={{ guardian: { fill: colour.brandBlueDark } }}
-            style={logo}
-        />
+        <div>
+            <Logo style={logo} />
+            <style jsx>{`
+                div :global(.guardian) {
+                    fill: ${colour.brandBlueDark};
+                }
+            `}</style>
+        </div>
         <h1 style={heading}>
             Sorry - we haven’t been able to serve the page you asked for.
         </h1>
@@ -80,5 +84,4 @@ export default ({ beaconUrl }: Object) => (
             style={{ display: 'none' }}
             rel="nofollow"
         />
-    </div>
-);
+    </div>;
