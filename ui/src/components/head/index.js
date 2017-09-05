@@ -16,7 +16,6 @@ export default (props: any, css: string) =>
         <meta name="format-detection" content="telephone=no"/>
         <meta name="HandheldFriendly" content="True"/>
         <meta name="viewport" content="width=device-width,initial-scale=1">
-        <link rel="stylesheet" href="${props.fontsUrl}">
         <style>${resetCSS}</style>
         <style>${fontsCSS}</style>
         ${css}
