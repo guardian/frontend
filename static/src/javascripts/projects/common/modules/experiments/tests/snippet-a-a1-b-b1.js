@@ -7,7 +7,7 @@ export const SnippetFourVariants = {
     expiry: '2018-10-06',
     author: 'Regis Kuckaertz',
     description: 'Measure open rate based on snippet design',
-    audience: .4,
+    audience: 0.4,
     audienceOffset: 0,
     successMeasure: 'We measure open rates across the four variants',
     audienceCriteria: '',
