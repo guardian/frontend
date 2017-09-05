@@ -6,7 +6,6 @@
 
 import resetCSS from './reset.css';
 import fontsCSS from './fonts.css';
-import loadApp from 'raw-loader!./loadApp.js';
 
 export default (props: any, css: string) =>
     `<head lang="en" data-page-path="/uk">
