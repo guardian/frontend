@@ -55,7 +55,8 @@ object Frontend extends Build with Prototypes {
       commercialShared,
       playJson,
       playJsonJoda,
-      jodaForms
+      jodaForms,
+      jacksonDataFormat
     )
   ).settings(
       mappings in TestAssets ~= filterAssets

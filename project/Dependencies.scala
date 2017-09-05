@@ -74,6 +74,14 @@ object Dependencies {
   val playJsonJoda = "com.typesafe.play" %% "play-json-joda" % playJsonVersion
   val playIteratees = "com.typesafe.play" %% "play-iteratees" % "2.6.1"
 
+  // Fixing transient dependency issue
+  // AWS SDK (1.11.181), which kinesis-logback-appender depends on, brings com.fasterxml.jackson.core and com.fasterxml.jackson.dataformat libs in version 2.6.9
+  // play-json comes with com.fasterxml.core 2.8.9 (without jackson.dataformat) which will evict jackson.core 2.6.9
+  // This lead to incompatible version of jackson.core and jackson.dataformat to be present in the class path
+  // This forces jackson.dataformat to the same version as the one brough by play-json
+  // This line could be remove as soon as the AWS SDK is updated to use the same version coming with play-json
+  val jacksonDataFormat = "com.fasterxml.jackson.dataformat" % "jackson-dataformat-cbor" % "2.8.9"
+
   // Web jars
   val bootstrap = "org.webjars" % "bootstrap" % "3.3.7"
   val jquery = "org.webjars" % "jquery" % "3.2.1"
