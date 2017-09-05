@@ -65,7 +65,7 @@ object Dependencies {
   val w3cSac = "org.w3c.css" % "sac" % "1.3"
   val libPhoneNumber = "com.googlecode.libphonenumber" % "libphonenumber" % "7.2.4"
   val logback = "net.logstash.logback" % "logstash-logback-encoder" % "4.6"
-  val kinesisLogbackAppender = "com.gu" % "kinesis-logback-appender" % "1.3.0"
+  val kinesisLogbackAppender = "com.gu" % "kinesis-logback-appender" % "1.4.0"
   val targetingClient = "com.gu" %% "targeting-client" % "0.14.0"
   val scanamo = "com.gu" %% "scanamo" % "0.9.5"
   val enumeratumPlayJson = "com.beachape" %% "enumeratum-play-json" % "1.5.11"
