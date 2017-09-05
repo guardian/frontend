@@ -11,7 +11,7 @@ import conf.Configuration
 import org.apache.commons.codec.digest.DigestUtils
 import play.api.libs.ws.WSResponse
 import play.api.libs.ws.ahc.{AhcWSResponse, StandaloneAhcWSResponse}
-import play.shaded.ahc.org.asynchttpclient.{Response => ACHResponse}
+import play.shaded.ahc.org.asynchttpclient.{Response => AHCResponse}
 import play.shaded.ahc.io.netty.handler.codec.http.HttpHeaders
 import play.shaded.ahc.org.asynchttpclient.uri.Uri
 
@@ -112,7 +112,7 @@ trait DefaultHttpRecorder extends HttpRecorder[WSResponse] {
     strResponse.getBytes(UTF8.charSet)
   }
 
-  private case class Response(getResponseBody: String, status: Int) extends ACHResponse {
+  private case class Response(getResponseBody: String, status: Int) extends AHCResponse {
     def getContentType: String = "application/json"
     def getResponseBody(charset: Charset): String = getResponseBody
     def getStatusCode: Int = status
