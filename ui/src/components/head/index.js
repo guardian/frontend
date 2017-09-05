@@ -7,7 +7,7 @@
 import resetCSS from './reset.css';
 import fontsCSS from './fonts.css';
 
-export default (props: any, css: string) =>
+export default (props: any, css: Array<string>) =>
     `<head lang="en" data-page-path="/uk">
         <meta charset="utf-8"/>
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -19,5 +19,5 @@ export default (props: any, css: string) =>
         <link rel="stylesheet" href="${props.fontsUrl}">
         <style>${resetCSS}</style>
         <style>${fontsCSS}</style>
-        ${css}
+        ${css.join('\n')}
     </head>`;
