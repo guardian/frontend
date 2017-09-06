@@ -17,15 +17,8 @@ const normalise = (length: string): string => {
     return matches[1] + (matches[2] === undefined ? defaultUnit : matches[2]);
 };
 
-const resize = (
-    specs: Specs,
-    iframe: HTMLElement
-): ?Promise<any> => {
-    if (
-        !specs ||
-        !('height' in specs || 'width' in specs) ||
-        !iframe
-    ) {
+const resize = (specs: Specs, iframe: HTMLElement): ?Promise<any> => {
+    if (!specs || !('height' in specs || 'width' in specs) || !iframe) {
         return null;
     }
 
