@@ -5,8 +5,16 @@
     <span class="explainer-snippet__label">@label</span>
     <h4 class="explainer-snippet__headline">@headline</h4>
     <button class="button button--large explainer-snippet__handle" aria-hidden="true">
-      <span>@fragments.inlineSvg("plus", "icon") Show</span>
-      <span>@fragments.inlineSvg("minus", "icon") Hide</span>
+      <span>
+        @fragments.inlineSvg("plus", "icon", Seq("is-control")) 
+        @fragments.inlineSvg("arrow-down", "icon", Seq("is-variant1"))
+        Show
+      </span>
+      <span>
+        @fragments.inlineSvg("minus", "icon", Seq("is-control")) 
+        @fragments.inlineSvg("arrow-up", "icon", Seq("is-variant1"))
+        Hide
+      </span>
     </button>
   </summary>
   <div class="explainer-snippet__body">
