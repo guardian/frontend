@@ -54,7 +54,8 @@ const config = {
                                 loader: 'babel-loader',
                                 options: {
                                     comments: false,
-                                    babelrc: false,                                },
+                                    babelrc: false,
+                                },
                             },
                         ],
                     },
