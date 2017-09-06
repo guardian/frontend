@@ -57,23 +57,19 @@ describe('Cross-frame messenger: resize', () => {
 
     describe('resize function', () => {
         it('should resolve if the specs are empty', () => {
-            const fakeAdSlot = document.createElement('div');
             const fakeIframe = document.createElement('iframe');
-            const result = resize({}, fakeIframe, fakeAdSlot);
+            const result = resize({}, fakeIframe);
             expect(result).toBeNull();
         });
 
         it('should set width and height of the ad slot', () => {
             const fallback = document.createElement('div');
             const fakeIframe = document.getElementById('iframe01') || fallback;
-            const fakeAdSlot = document.getElementById('slot01') || fallback;
             return foolFlow(
-                resize({ width: '20', height: '10' }, fakeIframe, fakeAdSlot)
+                resize({ width: '20', height: '10' }, fakeIframe)
             ).then(() => {
                 expect(fakeIframe.style.height).toBe('10px');
                 expect(fakeIframe.style.width).toBe('20px');
-                expect(fakeAdSlot.style.height).toBe('10px');
-                expect(fakeAdSlot.style.width).toBe('20px');
             });
         });
     });
