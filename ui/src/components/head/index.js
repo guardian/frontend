@@ -4,14 +4,12 @@
 // - https://meyerweb.com/eric/tools/css/reset
 // - https://css-tricks.com/inheriting-box-sizing-probably-slightly-better-best-practice
 
+import loadApp from './inline/loadApp';
 import resetCSS from './reset.css';
 import fontsCSS from './fonts.css';
-import loadApp from '!!raw-loader!./loadApp.js';
 
-export default (props: any, css: string) => {
-
-    
-    return `<head lang="en" data-page-path="/uk">
+export default (props: any, css: string) =>
+    `<head lang="en" data-page-path="/uk">
         <meta charset="utf-8"/>
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <title>Page not found | The Guardian</title>
@@ -28,4 +26,3 @@ export default (props: any, css: string) => {
             ${loadApp}
         </script>
     </head>`;
-}

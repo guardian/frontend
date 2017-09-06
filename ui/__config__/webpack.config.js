@@ -44,8 +44,25 @@ const config = {
             },
             {
                 test: /\.(js|jsx)$/,
-                exclude: /(node_modules)/,
-                loader: 'babel-loader',
+                oneOf: [
+                    {
+                        test: /(\/inline)/,
+                        exclude: /node_modules/,
+                        use: [
+                            {
+                                loader: 'babel-loader',
+                                options: {
+                                    babelrc: false,
+                                },
+                            },
+                            'raw-loader',
+                        ],
+                    },
+                    {
+                        exclude: /node_modules/,
+                        use: [{ loader: 'babel-loader' }],
+                    },
+                ],
             },
             {
                 test: /\.css$/,
