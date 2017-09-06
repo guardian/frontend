@@ -67,5 +67,6 @@ declare type OphanComponentEvent = {|
     component: OphanComponent,
     action: OphanAction,
     value?: string,
-    id?: string
+    id?: string,
+    abTest?: Ophan
 |};
