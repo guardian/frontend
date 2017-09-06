@@ -49,13 +49,17 @@ const config = {
                         test: /(\/inline)/,
                         exclude: /node_modules/,
                         use: [
+                            'raw-loader',
                             {
                                 loader: 'babel-loader',
                                 options: {
+                                    comments: false,
                                     babelrc: false,
+                                    presets: [
+                                        "babel-preset-flow"
+                                    ],
                                 },
                             },
-                            'raw-loader',
                         ],
                     },
                     {
