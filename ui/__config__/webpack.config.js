@@ -54,11 +54,7 @@ const config = {
                                 loader: 'babel-loader',
                                 options: {
                                     comments: false,
-                                    babelrc: false,
-                                    presets: [
-                                        "babel-preset-flow"
-                                    ],
-                                },
+                                    babelrc: false,                                },
                             },
                         ],
                     },

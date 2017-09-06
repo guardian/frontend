@@ -1,5 +1,3 @@
-// @flow
-
 // the app is bundled without any polyfills. babel transpiles the syntax
 // to es5 but we do not provide any polyfills for missing methods.
 // for that, we use polyfill.io.
@@ -14,7 +12,7 @@
 // the file is still parsed
 // this is a global that's called at the bottom of the pf.io response,
 // once the polyfills have run. This may be useful for debugging.
-function guardianPolyfilled(): void {
+function guardianPolyfilled() {
     try {
         window.guardian.polyfilled = true;
     } catch (e) {};
