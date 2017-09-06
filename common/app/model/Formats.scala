@@ -6,7 +6,6 @@ import model.facia.PressedCollection
 import model.pressed._
 import play.api.libs.json._
 import play.api.libs.json.JodaReads._
-import play.api.libs.json.JodaWrites._
 
 object GenericThriftAtomFormat extends Format[com.gu.contentatom.thrift.Atom] {
  def reads(json: JsValue) = JsError("Converting from Json is not supported by intent!")
@@ -147,6 +146,7 @@ object PressedContentFormat {
     }
   }
 
+  implicit val dateToTimestampWrites = play.api.libs.json.JodaWrites.JodaDateTimeNumberWrites
   implicit val paginationFormat = Json.format[Pagination]
   implicit val podcastFormat = Json.format[Podcast]
   implicit val referenceFormat = Json.format[Reference]
@@ -250,6 +250,7 @@ object FaciaImageFormat {
 }
 
 object PressedCollectionFormat {
+  implicit val dateToTimestampWrites = play.api.libs.json.JodaWrites.JodaDateTimeNumberWrites
   implicit val displayHintsFormat = Json.format[DisplayHints]
   implicit val collectionConfigFormat = Json.format[CollectionConfig]
   implicit val pressedContentFormat = PressedContentFormat.format
@@ -257,6 +258,7 @@ object PressedCollectionFormat {
 }
 
 object PressedPageFormat {
+  implicit val dateToTimestampWrites = play.api.libs.json.JodaWrites.JodaDateTimeNumberWrites
   implicit val pressedCollection = PressedCollectionFormat.format
   val format = Json.format[PressedPage]
 }

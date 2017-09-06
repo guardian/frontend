@@ -15,7 +15,6 @@ import pa.FootballMatch
 import play.api.libs.json._
 import play.api.mvc._
 import play.twirl.api.Html
-import play.api.libs.json.JodaWrites._
 
 import scala.concurrent.Future
 
@@ -143,6 +142,7 @@ class MoreOnMatchController(
           lazy val competition = competitionsService.competitionForMatch(theMatch.id)
           lazy val homeTeamResults = competition.map(_.teamResults(theMatch.homeTeam.id).take(5))
 
+          implicit val dateToTimestampWrites = play.api.libs.json.JodaWrites.JodaDateTimeNumberWrites
           JsonComponent(
             "items" -> Json.arr(
               Json.obj(

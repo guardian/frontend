@@ -5,8 +5,6 @@ import com.gu.contentapi.client.utils.CapiModelEnrichment.RichCapiDateTime
 import crosswords.CrosswordGridColumnNotation
 import org.joda.time.DateTime
 import play.api.libs.json._
-import play.api.libs.json.JodaReads._
-import play.api.libs.json.JodaWrites._
 
 case class CrosswordPosition(x: Int, y: Int)
 
@@ -76,6 +74,8 @@ case class CrosswordDimensions(
 )
 
 object CrosswordData {
+
+  implicit val dateToTimestampWrites = play.api.libs.json.JodaWrites.JodaDateTimeNumberWrites
 
   implicit val creatorWrites = Json.writes[CrosswordCreator]
 
