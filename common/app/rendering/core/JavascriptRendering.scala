@@ -56,7 +56,7 @@ trait JavascriptRendering extends Logging {
   private def prescript: ByteArrayInputStream = {
     val pre =
       """
-        |var global = global || this, self = self || this, window = window || this;
+        |var global = global || this, self = self || this;
         |
         |var console = {};
         |
