@@ -10,7 +10,6 @@
         ["babel-plugin-transform-runtime", {
             "polyfill": false
         }],
-        "styled-jsx/babel",
         ["babel-plugin-transform-react-jsx", {
             "pragma": "h"
         }]

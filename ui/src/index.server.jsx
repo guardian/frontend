@@ -3,7 +3,6 @@
 import { render as renderToString } from 'preact-render-to-string';
 import { StyletronProvider } from 'styletron-preact';
 import StyletronServer from 'styletron-server';
-import { flushToHTML as getStyledJSXStylesheetsHtml } from 'styled-jsx/server';
 
 import head from 'components/head';
 import Body from 'components/body';
@@ -27,10 +26,7 @@ export const render = (props: Object) => {
     return `
         <!DOCTYPE html>
         <html lang="en">
-            ${head(props, [
-                styletron.getStylesheetsHtml(),
-                getStyledJSXStylesheetsHtml(),
-            ])}
+            ${head(props, [styletron.getStylesheetsHtml()])}
             ${body}
         </html>
     `.trim();

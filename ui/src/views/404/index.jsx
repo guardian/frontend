@@ -24,11 +24,6 @@ export default ({ beaconUrl }: Object) =>
         </div>
         <div>
             <Logo style={logo} />
-            <style jsx>{`
-                div :global(.guardian) {
-                    fill: ${colour.brandBlueDark};
-                }
-            `}</style>
         </div>
         <h1 style={heading}>
             Sorry - we haven’t been able to serve the page you asked for.
