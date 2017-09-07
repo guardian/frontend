@@ -172,7 +172,9 @@ export const acquisitionsSupportUsRecurringContribution = makeABTest({
                 impression: submitABTestImpression => submitABTestImpression(),
                 success: submitABTestComplete => submitABTestComplete(),
 
-                isOutbrainCompliant: config.get('page.contentType') === 'LiveBlog' || !shouldDisplayEpic(),
+                isOutbrainCompliant:
+                    config.get('page.contentType') === 'LiveBlog' ||
+                    !shouldDisplayEpic(),
 
                 useTailoredCopyForRegulars: true,
                 test(renderArticleEpic, variant, test) {
@@ -229,7 +231,9 @@ export const acquisitionsSupportUsRecurringContribution = makeABTest({
                 impression: submitABTestImpression => submitABTestImpression(),
                 success: submitABTestComplete => submitABTestComplete(),
 
-                isOutbrainCompliant: config.get('page.contentType') === 'LiveBlog' || !shouldDisplayEpic(),
+                isOutbrainCompliant:
+                    config.get('page.contentType') === 'LiveBlog' ||
+                    !shouldDisplayEpic(),
 
                 buttonTemplate: buildButtonTemplate,
                 supportCustomURL:
