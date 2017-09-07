@@ -3,6 +3,7 @@
 import $ from 'lib/$';
 import Component from 'common/modules/component';
 import config from 'lib/config';
+import fastdom from 'lib/fastdom-promise';
 import { isBreakpoint } from 'lib/detect';
 import { TableDoughnut } from 'common/modules/charts/table-doughnut';
 import { belowArticleVisible } from 'lib/page';
@@ -43,15 +44,15 @@ const renderExtras = (extras: Array<Extra>) => {
 const cricket = (): void => {
     const matchDate = config.get('page.cricketMatchDate');
     const team = config.get('page.cricketTeam');
-    let cricketScore;
-    let parentEl;
 
     if (matchDate && team) {
-        cricketScore = new Component();
-        parentEl = $('.js-cricket-score')[0];
-
+        const cricketScore = new Component();
         cricketScore.endpoint = `/sport/cricket/match/${matchDate}/${team}.json`;
-        cricketScore.fetch(parentEl, 'summary');
+
+        fastdom.read(() => document.querySelector('.js-cricket-score'))
+            .then(parentEl => {
+                cricketScore.fetch(parentEl, 'summary');
+            });
     }
 };
 
@@ -77,7 +78,10 @@ const rugby = (): void => {
 
         // Rugby score returns the match nav too, to optimise calls.
         scoreBoard.fetched = (resp: Object) => {
-            $('.content--liveblog').addClass('content--liveblog--rugby');
+            fastdom.read(() => document.querySelector('.content--liveblog'))
+                .then(liveblog => {
+                    liveblog.classList.add('content--liveblog--rugby');
+                });
 
             $.create(resp.nav)
                 .first()
@@ -104,6 +108,7 @@ const rugby = (): void => {
                 }
 
                 $scoreEventsMobile.addClass('dropdown--active');
+
                 $('.js-after-article').append($scoreEventsMobile);
             } else {
                 const $scoreEventsTabletUp = $.create(contentString);
@@ -115,6 +120,7 @@ const rugby = (): void => {
             }
 
             $('.js-match-stats').remove();
+
             $.create(
                 `<div class="match-stats__container js-match-stats">${resp.matchStat}</div>`
             ).each(container => {
@@ -133,6 +139,7 @@ const rugby = (): void => {
             });
 
             $('.js-football-table').remove();
+
             $.create(
                 `<div class="js-football-table" data-link-name="football-table-embed">${resp.groupTable}</div>`
             ).each(container => {
