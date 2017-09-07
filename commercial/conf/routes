@@ -44,3 +44,6 @@ GET         /rockabox/rockabox_buster.html                                  cont
 # Off-platform ads
 GET         /amp/remote.html                                                controllers.Assets.at(path="/public", file="amp_remote.html")
 GET         /facebook-ia/remote.html                                        controllers.Assets.at(path="/public", file="facebook_ia_remote.html")
+
+# ADS.TXT Standard
+GET         /ads.txt                                                        controllers.Assets.at(path="/public", file="ads.txt")

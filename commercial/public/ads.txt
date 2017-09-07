@@ -1,0 +1,21 @@
+# ads.txt file for www.theguardian.com
+
+indexexchange.com, 184842, DIRECT
+indexexchange.com, 185406, DIRECT
+
+openx.com, 538907167, DIRECT
+teads.tv, 2167, DIRECT
+google.com, pub-2012933198307164, DIRECT
+google.com, ca-pub-7526622147976638, DIRECT
+google.com, ca-pub-4979300716531995, DIRECT
+google.com, pub-5107472231497753, DIRECT
+go.sonobi.com, d089631d2d, DIRECT
+appnexus.com, 2888, DIRECT
+trustx.org, 27, DIRECT
+triplelift.com, 2885, DIRECT
+yieldmo.com, 1452927761628117365, DIRECT
+liveintent.com, 5956, DIRECT
+teads.tv, 8260, DIRECT, 15a9c44f6d26cbe1
+teads.tv, 8095, DIRECT, 15a9c44f6d26cbe1
+google.com, pub-3746578658400510, DIRECT, f08c47fec0942fa0
+synapsys.us, 174167, DIRECT
