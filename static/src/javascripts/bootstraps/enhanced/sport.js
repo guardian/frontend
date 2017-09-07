@@ -49,7 +49,8 @@ const cricket = (): void => {
         const cricketScore = new Component();
         cricketScore.endpoint = `/sport/cricket/match/${matchDate}/${team}.json`;
 
-        fastdom.read(() => document.querySelector('.js-cricket-score'))
+        fastdom
+            .read(() => document.querySelector('.js-cricket-score'))
             .then(parentEl => {
                 cricketScore.fetch(parentEl, 'summary');
             });
@@ -78,7 +79,8 @@ const rugby = (): void => {
 
         // Rugby score returns the match nav too, to optimise calls.
         scoreBoard.fetched = (resp: Object) => {
-            fastdom.read(() => document.querySelector('.content--liveblog'))
+            fastdom
+                .read(() => document.querySelector('.content--liveblog'))
                 .then(liveblog => {
                     liveblog.classList.add('content--liveblog--rugby');
                 });

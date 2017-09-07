@@ -27,7 +27,6 @@
     "projects/common/modules/discussion/whole-discussion.js",
     "projects/common/modules/discussion/api.js",
     "projects/common/modules/discussion/discussion-frontend.js",
-    "bootstraps/enhanced/sport.js",
     "projects/common/modules/crosswords/main.js",
     "projects/common/modules/crosswords/persistence.js"
   ],
