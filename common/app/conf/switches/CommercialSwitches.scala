@@ -285,16 +285,6 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
-  val sponsoredFootballFeedPages = Switch(
-    group = SwitchGroup.Commercial,
-    name = "sponsored-football-pages",
-    description = "Show a hardcoded sponsor's logo on football pages.",
-    owners = Owner.group(SwitchGroup.Commercial),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 9, 6),
-    exposeClientSide = false
-  )
-
   val guTodayEmailAds = Switch(
     SwitchGroup.Commercial,
     "guardian-today-email-ads",

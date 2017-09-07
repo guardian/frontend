@@ -3,7 +3,6 @@ package football.controllers
 import com.gu.commercial.branding._
 import common.commercial.{CommercialProperties, EditionAdTargeting, EditionBranding}
 import common.{Edition, Pagination}
-import conf.switches.Switches.sponsoredFootballFeedPages
 import implicits.Football
 import model._
 import org.joda.time.LocalDate
@@ -40,29 +39,7 @@ class FootballPage(
    *
    * Has to be 'def' to pick up current switch state.
    */
-  private def brandings: Set[EditionBranding] =
-    if (sponsoredFootballFeedPages.isSwitchedOn) {
-      for (edition <- Edition.all.toSet[Edition])
-        yield
-          EditionBranding(
-            edition = edition,
-            branding = Some(
-              Branding(
-                brandingType = Sponsored,
-                sponsorName = "Virgin Media",
-                logo = Logo(
-                  src =
-                    "https://static.theguardian.com/commercial/sponsor/28/Apr/2017/8e3b5ea3-3fed-44ae-8e70-b8811ec4f874-Virgin_logo.png",
-                  dimensions = Some(Dimensions(width = 140, height = 90)),
-                  link = "http://www.virginmedia.com/shop/tv/virgin-media-football.html",
-                  label = "Supported by"
-                ),
-                logoForDarkBackground = None,
-                aboutThisLink = "https://www.theguardian.com/info/2016/jan/25/content-funding",
-                hostedCampaignColour = None
-              ))
-          )
-    } else Set.empty
+  private def brandings: Set[EditionBranding] = Set.empty
 
   // Has to be 'def' to pick up current switch state
   override def metadata = MetaData
