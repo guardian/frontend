@@ -4,8 +4,8 @@ import $ from 'lib/$';
 import config from 'lib/config';
 import { getBreakpoint } from 'lib/detect';
 
-type yesable = ?(arg: boolean | string) => boolean;
-type noable = ?() => boolean;
+type yesable = ?(arg: boolean | string) => boolean | void;
+type noable = ?() => boolean | void;
 
 const isit = (
     isTrue: ?(string | boolean),
@@ -14,10 +14,10 @@ const isit = (
     arg: any
 ): boolean => {
     if (isTrue) {
-        return yes ? yes(arg || isTrue) : arg || !!isTrue;
+        return yes ? !!yes(arg || isTrue) : arg || !!isTrue;
     }
 
-    return no ? no() : false;
+    return no ? !!no() : false;
 };
 
 const isMatch = (yes: yesable, no: noable): boolean => {
