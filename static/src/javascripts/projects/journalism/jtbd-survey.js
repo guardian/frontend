@@ -70,7 +70,7 @@ const save = (
     as: Answer[],
     q: Question,
     answer: Answer,
-    why?: string
+    why: ?string
 ) => {
     const hasSnippet: boolean = !!document.getElementsByClassName(
         'explainer-snippet'
