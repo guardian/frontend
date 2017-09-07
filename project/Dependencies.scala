@@ -5,7 +5,7 @@ import sbt._
 object Dependencies {
   val identityLibVersion = "3.78"
   val awsVersion = "1.11.181"
-  val faciaVersion = "2.2"
+  val faciaVersion = "2.3"
   val capiVersion = "11.23"
   val dispatchVersion = "0.11.3"
   val romeVersion = "1.0"
@@ -35,7 +35,7 @@ object Dependencies {
   val dispatch = "net.databinder.dispatch" %% "dispatch-core" % dispatchVersion
   val dispatchTest = "net.databinder.dispatch" %% "dispatch-core" % dispatchVersion % Test
   val exactTargetClient = "com.gu" %% "exact-target-client" % "2.24"
-  val faciaFapiScalaClient = "com.gu" %% "fapi-client-play25" % faciaVersion
+  val faciaFapiScalaClient = "com.gu" %% "fapi-client-play26" % faciaVersion
   val configMagic = "com.gu" %% "configuration-magic-core" %  "1.3.0"
   val identityCookie = "com.gu.identity" %% "identity-cookie" % identityLibVersion
   val identityModel = "com.gu.identity" %% "identity-model" % identityLibVersion
