@@ -48,16 +48,7 @@ const config = {
                     {
                         test: /(\/inline)/,
                         exclude: /node_modules/,
-                        use: [
-                            'raw-loader',
-                            {
-                                loader: 'babel-loader',
-                                options: {
-                                    comments: false,
-                                    babelrc: false,
-                                },
-                            },
-                        ],
+                        use: ['raw-loader', { loader: 'babel-loader' }],
                     },
                     {
                         exclude: /node_modules/,

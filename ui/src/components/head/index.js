@@ -8,6 +8,9 @@ import loadApp from './inline/loadApp';
 import resetCSS from './reset.css';
 import fontsCSS from './fonts.css';
 
+//  Having to typecast loadApp to a string here to appease flow
+const loadAppStr: string = (loadApp: any);
+
 export default (props: any, css: string) =>
     `<head lang="en" data-page-path="/uk">
         <meta charset="utf-8"/>
@@ -23,6 +26,6 @@ export default (props: any, css: string) =>
         <script>
             window.guardian = ${JSON.stringify(props)};
 
-            ${loadApp}
+            ${loadAppStr}
         </script>
     </head>`;
