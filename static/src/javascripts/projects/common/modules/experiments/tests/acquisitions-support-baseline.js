@@ -65,16 +65,14 @@ const liveblogEpicTemplate = (ctaSentence: string) =>
         </div>
     </div>`;
 
-const isEpicWithinViewLimit = (test: EpicABTest): boolean => {
+const isEpicWithinViewLimit = (): boolean => {
     const days = 30;
     const count = 4;
     const minDaysBetweenViews = 0;
 
-    const testId = test.useLocalViewLog ? test.id : undefined;
-
-    const withinViewLimit = viewsInPreviousDays(days, testId) < count;
+    const withinViewLimit = viewsInPreviousDays(days, undefined) < count;
     const enoughDaysBetweenViews =
-        viewsInPreviousDays(minDaysBetweenViews, testId) === 0;
+        viewsInPreviousDays(minDaysBetweenViews, undefined) === 0;
     return withinViewLimit && enoughDaysBetweenViews;
 };
 
@@ -120,8 +118,8 @@ const changeSideMenuLinks = (
     );
 };
 
-const shouldDisplayEpic = (test: EpicABTest): boolean =>
-    isEpicWithinViewLimit(test) && isEpicCompatibleWithPage(config.get('page'));
+const shouldDisplayEpic = (): boolean =>
+    isEpicWithinViewLimit() && isEpicCompatibleWithPage(config.get('page'));
 
 const bindEpicInsertAndViewHandlers = (
     test: EpicABTest,
@@ -171,6 +169,8 @@ export const acquisitionsSupportBaseline = makeABTest({
                 impression: submitABTestImpression => submitABTestImpression(),
                 success: submitABTestComplete => submitABTestComplete(),
 
+                isOutbrainCompliant: config.get('page.contentType') === 'LiveBlog' || !shouldDisplayEpic(),
+
                 useTailoredCopyForRegulars: true,
                 test(renderArticleEpic, variant, test) {
                     bindEpicInsertAndViewHandlers(
@@ -190,7 +190,7 @@ export const acquisitionsSupportBaseline = makeABTest({
                         const epicHtml = liveblogEpicTemplate(ctaSentence);
 
                         setupEpicInLiveblog(epicHtml, test);
-                    } else if (shouldDisplayEpic(test)) {
+                    } else if (shouldDisplayEpic()) {
                         renderArticleEpic();
                     }
 
@@ -234,6 +234,8 @@ export const acquisitionsSupportBaseline = makeABTest({
                 impression: submitABTestImpression => submitABTestImpression(),
                 success: submitABTestComplete => submitABTestComplete(),
 
+                isOutbrainCompliant: config.get('page.contentType') === 'LiveBlog' || !shouldDisplayEpic(),
+
                 buttonTemplate: buildButtonTemplate,
                 supportCustomURL: 'https://support.theguardian.com/uk',
                 useTailoredCopyForRegulars: true,
@@ -254,7 +256,7 @@ export const acquisitionsSupportBaseline = makeABTest({
                         const epicHtml = liveblogEpicTemplate(ctaSentence);
 
                         setupEpicInLiveblog(epicHtml, test);
-                    } else if (shouldDisplayEpic(test)) {
+                    } else if (shouldDisplayEpic()) {
                         renderArticleEpic();
                     }
 
