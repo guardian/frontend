@@ -6,7 +6,7 @@ import mediator from 'lib/mediator';
 import Component from 'common/modules/component';
 import DiscussionApi from 'common/modules/discussion/api';
 import IdentityApi from 'common/modules/identity/api';
-import UserAvatars from 'common/modules/discussion/user-avatars';
+import { avatarify } from 'common/modules/discussion/user-avatars';
 import ValidationEmail from 'common/modules/identity/validation-email';
 import { urlify } from './urlify';
 
@@ -430,7 +430,7 @@ class CommentBox extends Component {
             const avatar = this.getElem('avatar-wrapper');
             avatar.setAttribute('userid', userData.id);
             avatar.setAttribute('data-userid', userData.id);
-            UserAvatars.avatarify(avatar);
+            avatarify(avatar);
         } else {
             const container = document.getElementsByClassName(
                 'd-comment-box__meta'

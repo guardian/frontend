@@ -10,10 +10,7 @@ module.exports = {
         return {
             Identifier: node => {
                 if (node.name === 'add') {
-                    const [
-                        dot,
-                        parent,
-                    ] = context
+                    const [dot, parent] = context
                         .getSourceCode()
                         .getTokensBefore(node, 2)
                         .reverse();

@@ -97,7 +97,7 @@ const initForms = (): void => {
 
     // insert hidden extra data into forms
     $.forEachElement('#feedback__form input[name=extra]', elem => {
-        elem.value = JSON.stringify(getExtraDataInformation());
+        elem.value = JSON.stringify(getExtraDataInformation(), null, '  ');
     });
 };
 

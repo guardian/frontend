@@ -120,7 +120,7 @@ const getAdvertIframe = (adSlot: Element): Promise<HTMLIFrameElement> =>
  * Not all adverts render themselves - some just provide data for templates that we implement in commercial.js.
  * This looks for any such data and, if we find it, renders the appropriate component.
  */
-const applyCreativeTemplate = (adSlot: Element) =>
+const applyCreativeTemplate = (adSlot: Element): Promise<boolean> =>
     getAdvertIframe(adSlot).then((iframe: HTMLIFrameElement) =>
         renderCreativeTemplate(adSlot, iframe)
     );

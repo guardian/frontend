@@ -5,7 +5,6 @@ import { breakpoints } from 'lib/detect';
 import uniq from 'lodash/arrays/uniq';
 import flatten from 'lodash/arrays/flatten';
 import once from 'lodash/functions/once';
-import prepareSwitchTag from 'commercial/modules/dfp/prepare-switch-tag';
 import { getOutbrainComplianceTargeting } from 'commercial/modules/third-party-tags/outbrain';
 import { getTestVariantId } from 'common/modules/experiments/utils';
 
@@ -94,10 +93,7 @@ const defineSlot = (adSlotNode: Element, sizes: Object): Object => {
         slot = window.googletag
             .defineSlot(adUnit(), sizeOpts.sizes, id)
             .defineSizeMapping(sizeOpts.sizeMapping);
-        slotReady = Promise.all([
-            setHighMerchSlotTargeting(slot, slotTarget),
-            prepareSwitchTag.maybePushAdUnit(id, sizeOpts),
-        ]);
+        slotReady = setHighMerchSlotTargeting(slot, slotTarget);
     }
 
     if (slotTarget === 'im' && config.page.isbn) {

@@ -5,7 +5,7 @@ import mediator from 'lib/mediator';
 import fetchJSON from 'lib/fetch-json';
 import fastdom from 'lib/fastdom-promise';
 import register from 'common/modules/analytics/register';
-import Expandable from 'common/modules/ui/expandable';
+import { Expandable } from 'common/modules/ui/expandable';
 
 const buildExpandable = (el: HTMLElement): void => {
     new Expandable({
@@ -18,7 +18,7 @@ const buildExpandable = (el: HTMLElement): void => {
 const popularInTagOverride = (): ?string | false => {
     /* whitelist of tags to override related story component with a
        popular-in-tag component */
-    if (!config.page.keywordIds) {
+    if (!config.get('page.keywordIds')) {
         return false;
     }
 
@@ -56,9 +56,9 @@ const popularInTagOverride = (): ?string | false => {
 
     const intersect = (a: Array<string>, b: Array<string>): Array<string> =>
         [...new Set(a)].filter(_ => new Set(b).has(_));
-    const pageTags = config.page.keywordIds.split(',');
+    const pageTags = config.get('page.keywordIds', '').split(',');
     // if this is an advertisement feature, use the page's keyword (there'll only be one)
-    const popularInTags = config.page.isPaidContent
+    const popularInTags = config.get('page.isPaidContent')
         ? pageTags
         : intersect(whitelistedTags, pageTags);
 
@@ -72,7 +72,7 @@ const related = (opts: Object): void => {
     let popularInTag;
     let componentName;
 
-    if (config.page && config.page.hasStoryPackage) {
+    if (config.get('page.hasStoryPackage')) {
         const expandable =
             document.body && document.body.querySelector('.related-trails');
 
@@ -80,8 +80,8 @@ const related = (opts: Object): void => {
             buildExpandable(expandable);
         }
     } else if (
-        config.switches.relatedContent &&
-        config.page.showRelatedContent
+        config.get('switches.relatedContent') &&
+        config.get('page.showRelatedContent')
     ) {
         const container =
             document.body && document.body.querySelector('.js-related');
@@ -94,7 +94,8 @@ const related = (opts: Object): void => {
 
             register.begin(componentName);
             container.setAttribute('data-component', componentName);
-            relatedUrl = popularInTag || `/related/${config.page.pageId}.json`;
+            relatedUrl =
+                popularInTag || `/related/${config.get('page.pageId')}.json`;
             const queryParams = opts.excludeTags.map(
                 tag => `exclude-tag=${tag}`
             );

@@ -73,7 +73,9 @@ const showSignupForm = (buttonEl: HTMLButtonElement): void => {
     const form = buttonEl.form;
     const meta = $.ancestor(buttonEl, 'js-newsletter-meta');
     fastdom.write(() => {
-        $(`.${classes.textInput}`, form).removeClass('is-hidden').focus();
+        $(`.${classes.textInput}`, form)
+            .removeClass('is-hidden')
+            .focus();
         $(`.${classes.signupButton}`, form).addClass(classes.styleSignup);
         $(`.${classes.previewButton}`, meta).addClass('is-hidden');
         subscribeToEmail(buttonEl);

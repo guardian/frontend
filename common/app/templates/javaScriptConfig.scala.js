@@ -52,8 +52,7 @@
         },
         "libs": {
             "googletag": "@{Configuration.javascript.config("googletagJsUrl")}",
-            "sonobi": "@{Configuration.javascript.config("sonobiHeaderBiddingJsUrl")}",
-            "switch": "@{Configuration.javascript.config("switchPreFlightJsUrl")}"
+            "sonobi": "@{Configuration.javascript.config("sonobiHeaderBiddingJsUrl")}"
         }
     }
 }

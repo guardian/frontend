@@ -347,7 +347,7 @@ object NewNavigation {
     case object businessSubNav extends EditionalisedNavigationSection {
       val name = ""
 
-      val uk = NavLinkLists(List(business, economics, banking, money, markets, eurozone))
+      val uk = NavLinkLists(List(business, economics, banking, money, markets, eurozone, businessToBusiness))
       val us = NavLinkLists(List(business, economics, sustainableBusiness, diversityEquality, smallBusiness))
       val au = NavLinkLists(List(business, markets, money))
       val int = uk

@@ -21,7 +21,7 @@ trait CommercialSwitches {
     "Deactivates the sizecallback for videos (620x1) that hides the slot.",
     owners = Seq(Owner.withGithub("JonNorman")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 8, 30),
+    sellByDate = new LocalDate(2017, 9, 20),
     exposeClientSide = true
   )
 
@@ -285,23 +285,13 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
-  val preflightServerSideAdCallSwitch: Switch = Switch(
-    group = SwitchGroup.Commercial,
-    name = "preflight-ad-call",
-    description = "A test feature to evaluate Switch Concepts' server-to-server preflight ad call",
-    owners = Owner.group(SwitchGroup.Commercial),
+  val guTodayEmailAds = Switch(
+    SwitchGroup.Commercial,
+    "guardian-today-email-ads",
+    "When ON, the Guardian Today US Email will contain Live Intent advertisements",
+    owners = Seq(Owner.withGithub("rich-nguyen")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 8, 31),
-    exposeClientSide = true
-  )
-
-  val sponsoredFootballFeedPages = Switch(
-    group = SwitchGroup.Commercial,
-    name = "sponsored-football-pages",
-    description = "Show a hardcoded sponsor's logo on football pages.",
-    owners = Owner.group(SwitchGroup.Commercial),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 9, 6),
+    sellByDate = new LocalDate(2017, 9, 29),
     exposeClientSide = false
   )
 }

@@ -5,6 +5,7 @@
 // - https://css-tricks.com/inheriting-box-sizing-probably-slightly-better-best-practice
 
 import resetCSS from './reset.css';
+import fontsCSS from './fonts.css';
 
 export default (props: any, css: string) =>
     `<head lang="en" data-page-path="/uk">
@@ -16,5 +17,6 @@ export default (props: any, css: string) =>
         <meta name="HandheldFriendly" content="True"/>
         <meta name="viewport" content="width=device-width,initial-scale=1">
         <style>${resetCSS}</style>
+        <style>${fontsCSS}</style>
         ${css}
     </head>`;

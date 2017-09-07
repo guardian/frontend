@@ -28,9 +28,9 @@ import {
 } from 'common/modules/onward/history';
 import { initTechFeedback } from 'common/modules/onward/tech-feedback';
 import { initAccessibilityPreferences } from 'common/modules/ui/accessibility-prefs';
-import Clickstream from 'common/modules/ui/clickstream';
+import { Clickstream } from 'common/modules/ui/clickstream';
 import { init as initDropdowns } from 'common/modules/ui/dropdowns';
-import fauxBlockLink from 'common/modules/ui/faux-block-link';
+import { fauxBlockLink } from 'common/modules/ui/faux-block-link';
 import cookiesBanner from 'common/modules/ui/cookiesBanner';
 import RelativeDates from 'common/modules/ui/relativedates';
 import { init as initCustomSmartAppBanner } from 'common/modules/ui/smartAppBanner';

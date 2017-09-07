@@ -67,7 +67,7 @@ define(['common/modules/ui/clickstream', 'bean', 'lib/mediator', 'helpers/fixtur
 
         it('should report the ancestor \'clickable\' element, not the element that actually received the click', function (done) {
 
-            new Clickstream({ filter: ['a'], withEvent: false });
+            new Clickstream.Clickstream({ filter: ['a'] });
 
             var object = { method: function (p) {
                     clickSpec.target = p.target;
@@ -81,6 +81,7 @@ define(['common/modules/ui/clickstream', 'bean', 'lib/mediator', 'helpers/fixtur
                     sameHost: true,
                     validTarget: true,
                     tag: 'outer div | the ancestor | the descendant',
+                    tags: ['outer div','the ancestor','the descendant'],
                     customEventProperties: {}
                 };
 
@@ -91,7 +92,7 @@ define(['common/modules/ui/clickstream', 'bean', 'lib/mediator', 'helpers/fixtur
 
         it('should return clickspec with false validTarget when clicked element is *not* in the filter list of given element sources', function (done) {
 
-            new Clickstream({ filter: ['a'], withEvent: false }); // only log events on [a]nchor elements
+            new Clickstream.Clickstream({ filter: ['a'] }); // only log events on [a]nchor elements
 
             var object = { method: function (p) {
                     clickSpec.target = p.target;
@@ -102,6 +103,7 @@ define(['common/modules/ui/clickstream', 'bean', 'lib/mediator', 'helpers/fixtur
                 clickSpec = {
                     validTarget: false,
                     tag: 'outer div',
+                    tags: ['outer div'],
                     customEventProperties: {}
                 };
 
@@ -112,7 +114,7 @@ define(['common/modules/ui/clickstream', 'bean', 'lib/mediator', 'helpers/fixtur
 
         it('should indicate if a click emanates from a internal anchor', function (done) {
 
-            new Clickstream({ filter: ['p'], withEvent: false });
+            new Clickstream.Clickstream({ filter: ['p'] });
 
             var object = { method: function (p) {
                     clickSpec.target = p.target;
@@ -126,6 +128,7 @@ define(['common/modules/ui/clickstream', 'bean', 'lib/mediator', 'helpers/fixtur
                     sameHost: true,
                     validTarget: true,
                     tag: 'outer div | paragraph',
+                    tags: ['outer div','paragraph'],
                     customEventProperties: {}
                 };
 
@@ -136,7 +139,7 @@ define(['common/modules/ui/clickstream', 'bean', 'lib/mediator', 'helpers/fixtur
 
         it('should indicate if a click emanates from a same-host link', function (done) {
 
-            new Clickstream({ filter: ['a'], withEvent: false });
+            new Clickstream.Clickstream({ filter: ['a'] });
 
             var object = { method: function (p) {
                     clickSpec.target = p.target;
@@ -150,6 +153,7 @@ define(['common/modules/ui/clickstream', 'bean', 'lib/mediator', 'helpers/fixtur
                     sameHost: true,
                     validTarget: true,
                     tag: 'outer div | internal link',
+                    tags: ['outer div', 'internal link'],
                     customEventProperties: {}
                 };
 
@@ -160,7 +164,7 @@ define(['common/modules/ui/clickstream', 'bean', 'lib/mediator', 'helpers/fixtur
 
         it('should indicate if a click emanates from an absolute same-host HTTP link when the current page is on HTTPS', function (done) {
 
-            new Clickstream({ filter: ['a'], withEvent: false, location: { protocol: 'https:', hostname: 'www.theguardian.com' } });
+            new Clickstream.Clickstream({ filter: ['a'], location: { protocol: 'https:', hostname: 'www.theguardian.com' } });
 
             var object = { method: function (p) {
                     clickSpec.target = p.target;
@@ -174,6 +178,7 @@ define(['common/modules/ui/clickstream', 'bean', 'lib/mediator', 'helpers/fixtur
                     sameHost: true,
                     validTarget: true,
                     tag: 'outer div | internal link (HTTP)',
+                    tags: ['outer div', 'internal link (HTTP)'],
                     customEventProperties: {}
                 };
 
@@ -184,7 +189,7 @@ define(['common/modules/ui/clickstream', 'bean', 'lib/mediator', 'helpers/fixtur
 
         it('should indicate if a click emanates from an absolute same-host HTTPS link when the current page is on HTTP', function (done) {
 
-            new Clickstream({ filter: ['a'], withEvent: false, location: { protocol: 'http:', hostname: 'www.theguardian.com' } });
+            new Clickstream.Clickstream({ filter: ['a'], location: { protocol: 'http:', hostname: 'www.theguardian.com' } });
 
             var object = { method: function (p) {
                     clickSpec.target = p.target;
@@ -198,6 +203,7 @@ define(['common/modules/ui/clickstream', 'bean', 'lib/mediator', 'helpers/fixtur
                     sameHost: true,
                     validTarget: true,
                     tag: 'outer div | internal link (HTTPS)',
+                    tags: ['outer div', 'internal link (HTTPS)'],
                     customEventProperties: {}
                 };
 
@@ -208,7 +214,7 @@ define(['common/modules/ui/clickstream', 'bean', 'lib/mediator', 'helpers/fixtur
 
         it('should indicate if a click emanates from an other-host link', function (done) {
 
-            new Clickstream({ filter: ['a'], withEvent: false });
+            new Clickstream.Clickstream({ filter: ['a'] });
 
             var object = { method: function (p) {
                     clickSpec.target = p.target;
@@ -222,6 +228,7 @@ define(['common/modules/ui/clickstream', 'bean', 'lib/mediator', 'helpers/fixtur
                     sameHost: false,
                     validTarget: true,
                     tag: 'outer div | external link',
+                    tags: ['outer div', 'external link'],
                     customEventProperties: {}
                 };
 
@@ -232,7 +239,7 @@ define(['common/modules/ui/clickstream', 'bean', 'lib/mediator', 'helpers/fixtur
 
         it('should not fire clicks when instantiated without the listener', function () {
 
-            new Clickstream({ filter: ['a'], addListener: false, withEvent: false }); // disable the listener on the body
+            new Clickstream.Clickstream({ filter: ['a'], addListener: false }); // disable the listener on the body
 
             var object = { method: function () {} },
                 spy = sinon.spy(object, 'method');
@@ -247,7 +254,7 @@ define(['common/modules/ui/clickstream', 'bean', 'lib/mediator', 'helpers/fixtur
 
         it('should pick up the closest data-link-context attribute (only)', function (done) {
 
-            new Clickstream({ filter: ['button'], withEvent: false });
+            new Clickstream.Clickstream({ filter: ['button'] });
 
             var object = { method: function (p) {
                     clickSpec.target = p.target;
@@ -261,6 +268,7 @@ define(['common/modules/ui/clickstream', 'bean', 'lib/mediator', 'helpers/fixtur
                     sameHost: true,
                     validTarget: true,
                     tag: 'outer div | the contextual link',
+                    tags: ['outer div', 'the contextual link'],
                     linkContextPath: 'the inner context path',
                     linkContextName: 'the inner context name',
                     customEventProperties: {}
@@ -272,11 +280,12 @@ define(['common/modules/ui/clickstream', 'bean', 'lib/mediator', 'helpers/fixtur
         });
 
         it('should get custom event properties recursively', function (done) {
-            new Clickstream({ filter: ['button'], withEvent: false });
+            new Clickstream.Clickstream({ filter: ['button'] });
 
             var spy = sinon.spy({ method: function (p) {
                 var clickSpec = {
                     tag: 'outer div',
+                    tags: ['outer div'],
                     samePage: true,
                     sameHost: true,
                     validTarget: true,

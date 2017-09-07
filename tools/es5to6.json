@@ -1,11 +1,5 @@
 {
-  "Regis Kuckaertz": [
-    "projects/common/modules/article/twitter.js",
-    "projects/common/modules/asyncCallMerger.js",
-    "projects/common/modules/ui/clickstream.js",
-    "projects/common/modules/ui/expandable.js",
-    "projects/common/modules/ui/faux-block-link.js"
-  ],
+  "Regis Kuckaertz": [],
   "sndrs": [
     "bootstraps/enhanced/facia.js",
     "bootstraps/enhanced/football.js",
@@ -30,20 +24,15 @@
     "projects/common/modules/atoms/youtube-tracking.js"
   ],
   "Gustav Pursche": [
-    "projects/common/modules/discussion/user-avatars.js",
     "projects/common/modules/discussion/whole-discussion.js",
     "projects/common/modules/discussion/api.js",
     "projects/common/modules/discussion/discussion-frontend.js",
     "bootstraps/enhanced/sport.js",
-    "bootstraps/enhanced/trail.js",
-    "bootstraps/enhanced/youtube.js",
     "projects/common/modules/crosswords/main.js",
     "projects/common/modules/crosswords/persistence.js"
   ],
   "GHaberis": [
     "projects/common/modules/component.js",
-    "projects/common/modules/discussion/comment-count.js",
-    "projects/common/modules/identity/formstack-iframe-embed.js",
     "projects/common/modules/identity/formstack-iframe.js",
     "projects/common/modules/identity/formstack.js",
     "projects/common/modules/identity/public-profile.js",
@@ -73,10 +62,7 @@
     "projects/common/modules/identity/api.js",
     "projects/common/modules/identity/cookierefresh.js"
   ],
-  "Richard Nguyen": [
-    "projects/common/modules/identity/email-preferences.js",
-    "projects/common/modules/identity/forms.js"
-  ],
+  "Richard Nguyen": [],
   "NataliaLKB": [
     "lib/proximity-loader.js",
     "projects/common/modules/email/email-article.js"

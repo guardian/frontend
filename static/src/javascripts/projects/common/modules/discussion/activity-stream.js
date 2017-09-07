@@ -37,7 +37,9 @@ class ActivityStream extends Component {
             // Blur so that when pressing forward/back the focus is not retained on
             // the old tab Note, without the focus first, the blur doesn't seem to
             // work for some reason
-            $('.js-activity-stream-change').focus().blur();
+            $('.js-activity-stream-change')
+                .focus()
+                .blur();
 
             $('.tabs__tab--selected').removeClass('tabs__tab--selected');
 

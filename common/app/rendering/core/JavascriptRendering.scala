@@ -63,6 +63,7 @@ trait JavascriptRendering extends Logging {
         |var logger = function(type) {
         |  return function () {
         |    for (var i = 0, len = arguments.length; i < len; i++) {
+        |      print(arguments[i]);
         |      __play_webpack_logger[type](arguments[i]);
         |    }
         |  }

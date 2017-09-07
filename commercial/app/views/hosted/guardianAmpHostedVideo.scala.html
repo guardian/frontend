@@ -65,7 +65,7 @@
                             Please <a href="http://whatbrowser.org/">upgrade</a> to a modern browser and try again.
                         </div>
                         @for(source <- page.video.sources) {
-                            <source type="@source.mimeType" src="@source.url">
+                            <source type="@source.format" src="@source.url">
                         }
                     </amp-video>
                 }

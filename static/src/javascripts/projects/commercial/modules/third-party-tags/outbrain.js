@@ -95,7 +95,7 @@ export const getOutbrainComplianceTargeting = (): Promise<
   true              false               false             n/a              false         false      true      non-compliant
   true              false               false             n/a              false         false      false     compliant
 */
-export const initOutbrain = () =>
+export const initOutbrain = (): Promise<void> =>
     getOutbrainPageConditions().then(pageConditions => {
         if (!pageConditions.outbrainEnabled) {
             return;

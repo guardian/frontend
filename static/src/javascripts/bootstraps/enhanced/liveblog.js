@@ -7,17 +7,19 @@ import Affix from 'common/modules/experiments/affix';
 import { autoUpdate } from 'common/modules/ui/autoupdate';
 import RelativeDates from 'common/modules/ui/relativedates';
 import { init as initLiveblogCommon } from 'bootstraps/enhanced/article-liveblog-common';
-import trail from 'bootstraps/enhanced/trail';
+import { initTrails } from 'bootstraps/enhanced/trail';
 import { catchErrorsWithContext } from 'lib/robust';
 import storyQuestions from 'common/modules/atoms/story-questions';
 
 const affixTimeline = (): void => {
+    const keywordIds = config.get('page.keywordIds', '');
+
     if (
         isBreakpoint({
             min: 'desktop',
         }) &&
-        !config.page.keywordIds.includes('football/football') &&
-        !config.page.keywordIds.includes('sport/rugby-union')
+        !keywordIds.includes('football/football') &&
+        !keywordIds.includes('sport/rugby-union')
     ) {
         // eslint-disable-next-line no-new
         new Affix({
@@ -34,7 +36,7 @@ const affixTimeline = (): void => {
 };
 
 const createAutoUpdate = (): void => {
-    if (config.page.isLive) {
+    if (config.get('page.isLive')) {
         autoUpdate();
     }
 };
@@ -64,7 +66,7 @@ const init = (): void => {
         ['lb-storyquestions', initStoryquestions],
     ]);
 
-    trail();
+    initTrails();
     initLiveblogCommon();
 
     catchErrorsWithContext([

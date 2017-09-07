@@ -8,7 +8,6 @@ export type DfpEnv = {
     renderStartTime: number,
     adSlotSelector: string,
     sonobiEnabled: boolean,
-    preFlightAdCallEnabled: boolean,
     lazyLoadEnabled: boolean,
     lazyLoadObserve: boolean,
     creativeIDs: Array<number>,
@@ -27,12 +26,7 @@ export const dfpEnv: DfpEnv = {
     adSlotSelector: '.js-ad-slot',
 
     /* sonobiEnabled: boolean. Set to true if sonobi real-time-bidding is enabled */
-    sonobiEnabled:
-        (config.switches.sonobiHeaderBidding || getUrlVars().sonobi) &&
-        !(config.switches.preflightAdCall && !!window.esi),
-
-    /* preFlightAdCallEnabled: boolean. Set to true if real-time bidding should be performed through pre-flight ad call */
-    preFlightAdCallEnabled: config.switches.preflightAdCall && !!window.esi,
+    sonobiEnabled: config.switches.sonobiHeaderBidding || getUrlVars().sonobi,
 
     /* lazyLoadEnabled: boolean. Set to true when adverts are lazy-loaded */
     lazyLoadEnabled: false,

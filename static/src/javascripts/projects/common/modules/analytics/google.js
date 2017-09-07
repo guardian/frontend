@@ -3,7 +3,8 @@
 import config from 'lib/config';
 import mediator from 'lib/mediator';
 
-const trackerName = config.googleAnalytics.trackers.editorial;
+const trackerName = config.get('googleAnalytics.trackers.editorial');
+
 const send = `${trackerName}.send`;
 
 const getTextContent = (el: HTMLElement): string =>
@@ -23,9 +24,20 @@ const trackSamePageLinkClick = (target: HTMLElement, tag: string): void => {
 };
 
 const trackExternalLinkClick = (target: HTMLElement, tag: string): void => {
-    window.ga(send, 'event', 'click', 'external', tag, {
+    const data: {
+        dimension13: string,
+        dimension48?: string,
+    } = {
         dimension13: getTextContent(target),
-    });
+    };
+
+    const targetURL = target.getAttribute('href');
+
+    if (targetURL) {
+        data.dimension48 = targetURL;
+    }
+
+    window.ga(send, 'event', 'click', 'external', tag, data);
 };
 
 const trackSponsorLogoLinkClick = (target: Object): void => {
@@ -66,7 +78,7 @@ const sendPerformanceEvent = (event: Object): void => {
        send performance events as normal events too,
        so we can avoid the 0.1% sampling that affects timing events
     */
-    if (config.switches.boostGaUserTimingFidelity) {
+    if (config.get('switches.boostGaUserTimingFidelity')) {
         // these are our own metrics that map to our timing events
         const metric = boostGaUserTimingFidelityMetrics[event.timingVar];
 
@@ -117,7 +129,7 @@ const trackPerformance = (
             sendPerformanceEvent(event);
         } else {
             mediator.on('modules:ga:ready', sendDeferredEventQueue);
-            config.googleAnalytics.timingEvents.push(event);
+            config.get('googleAnalytics.timingEvents').push(event);
         }
     }
 };

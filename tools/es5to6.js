@@ -59,7 +59,10 @@ git
         const unique = `${Date.now()}`.slice(-4);
         const es5Module = path.join(legacyPath, moduleId);
         const es6Module = path.join('static', 'src', 'javascripts', moduleId);
-        const es6Name = moduleId.split(path.sep).join('_').replace('.js', '');
+        const es6Name = moduleId
+            .split(path.sep)
+            .join('_')
+            .replace('.js', '');
         const branchName = `es6-${es6Name}`;
 
         const steps = {

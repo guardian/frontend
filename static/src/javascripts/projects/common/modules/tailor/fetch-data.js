@@ -67,10 +67,12 @@ const fetchData = (
         return Promise.resolve(tailorData[url]);
     }
 
-    return fetchJson(url).then(data => handleResponse(url, data)).catch(err => {
-        handleError(url, err);
-        return Promise.resolve({});
-    });
+    return fetchJson(url)
+        .then(data => handleResponse(url, data))
+        .catch(err => {
+            handleError(url, err);
+            return Promise.resolve({});
+        });
 };
 
 export { fetchData };

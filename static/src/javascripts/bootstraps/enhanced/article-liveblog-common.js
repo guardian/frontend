@@ -4,7 +4,7 @@ import fence from 'fence';
 import $ from 'lib/$';
 import { catchErrorsWithContext } from 'lib/robust';
 import { shouldHideFlashingElements } from 'common/modules/accessibility/helpers';
-import twitter from 'common/modules/article/twitter';
+import { init as initT, enhanceTweets } from 'common/modules/article/twitter';
 import lastModified from 'common/modules/ui/last-modified';
 import selectionSharing from 'common/modules/ui/selection-sharing';
 
@@ -13,8 +13,8 @@ const initFence = (): void => {
 };
 
 const initTwitter = (): void => {
-    twitter.init();
-    twitter.enhanceTweets();
+    initT();
+    enhanceTweets();
 };
 
 const init = (): void => {

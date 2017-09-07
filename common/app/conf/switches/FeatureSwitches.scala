@@ -363,7 +363,7 @@ trait FeatureSwitches {
     "When ON, articles specified in the badges file will have visual elements added",
     owners = Seq(Owner.withGithub("superfrank")),
     safeState = On,
-    sellByDate = new LocalDate(2017, 8, 31),
+    sellByDate = new LocalDate(2018, 1, 16),
     exposeClientSide = false
   )
 
@@ -442,17 +442,6 @@ trait FeatureSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true
-  )
-
-  // Owner: Richard Nguyen
-  val guTodayEmailAds = Switch(
-    SwitchGroup.Feature,
-    "guardian-today-email-ads",
-    "When ON, the Guardian Today US Email will contain Live Intent advertisements",
-    owners = Seq(Owner.withGithub("rich-nguyen")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 8, 31),
-    exposeClientSide = false
   )
 
   // Owner: George Haberis / Lindsey Dew

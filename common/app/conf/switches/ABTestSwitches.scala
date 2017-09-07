@@ -21,6 +21,16 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-snippet-four-variants",
+    "Measure snippet open rate based on snippet design",
+    owners = Seq(Owner.withGithub("regiskuckaertz")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 10, 6),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
     "ab-contributions-epic-always-ask-strategy",
     "Test to assess the effects of always asking readers to contribute via the Epic over a prolonged period",
     owners = Seq(Owner.withGithub("Mullefa")),
@@ -71,16 +81,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-tailor-survey",
-    "Integrate Tailor with ab tests",
-    owners = Seq(Owner.withGithub("oilnam"), Owner.withGithub("mike-ruane")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 8, 31),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-paid-content-vs-outbrain-2",
     "Displays a paid content widget instead of Outbrain",
     owners = Seq(Owner.withName("commercial team")),
@@ -115,7 +115,7 @@ trait ABTestSwitches {
     "Bootstrap the AB test framework to use the Epic to thank readers who have already supported the Guardian",
     owners = Seq(Owner.withGithub("Mullefa")),
     safeState = On,
-    sellByDate = new LocalDate(2017, 9, 5),
+    sellByDate = new LocalDate(2018, 9, 5),
     exposeClientSide = true
   )
 
@@ -146,6 +146,16 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("svillafe")),
     safeState = Off,
     sellByDate = new LocalDate(2017, 10, 13),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-support-us-recurring-contribution",
+    "Test demand for recurring contributions in the US across all channels",
+    owners = Seq(Owner.withGithub("justinpinner")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 10, 19),
     exposeClientSide = true
   )
 
