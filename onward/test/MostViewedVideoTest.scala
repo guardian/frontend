@@ -17,8 +17,7 @@ import services.OphanApi
 
   lazy val mostViewedVideoController = new MostViewedVideoController(
     testContentApiClient,
-    new MostViewedVideoAgent(testContentApiClient, new OphanApi(wsClient)),
-    play.api.test.Helpers.stubControllerComponents()
+    new MostViewedVideoAgent(testContentApiClient, new OphanApi(wsClient))
   )
 
   "Most Viewed Video Controller" should "200 when content type is tag" in {

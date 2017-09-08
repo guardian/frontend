@@ -1,15 +1,15 @@
 package dfp
 
-import common.{AkkaAsync, Logging}
+import common.{AkkaAsync, ExecutionContexts, Logging}
 import conf.Configuration
 import tools.Store
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
 
-class DfpAdUnitCacher(val rootAdUnit: Any, val filename: String) extends Logging {
+class DfpAdUnitCacher(val rootAdUnit: Any, val filename: String) extends ExecutionContexts with Logging {
 
-  def run(akkaAsync: AkkaAsync)(implicit executionContext: ExecutionContext): Future[Unit] = Future {
+  def run(akkaAsync: AkkaAsync): Future[Unit] = Future {
     akkaAsync {
       val adUnits = DfpApi.readActiveAdUnits(rootAdUnit.toString)
       if (adUnits.nonEmpty) {

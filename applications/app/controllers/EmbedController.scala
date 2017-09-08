@@ -8,7 +8,7 @@ import play.api.mvc._
 import scala.concurrent.Future
 import contentapi.ContentApiClient
 
-class EmbedController(contentApiClient: ContentApiClient, val controllerComponents: ControllerComponents)(implicit context: ApplicationContext) extends BaseController with Logging with ImplicitControllerExecutionContext {
+class EmbedController(contentApiClient: ContentApiClient)(implicit context: ApplicationContext) extends Controller with Logging with ExecutionContexts {
 
   def render(path: String) = Action.async { implicit request =>
     lookup(path) map {

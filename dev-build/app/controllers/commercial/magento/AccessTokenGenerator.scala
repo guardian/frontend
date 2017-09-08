@@ -3,13 +3,13 @@ package controllers.commercial.magento
 import conf.Configuration
 import model.NoCache
 import play.api.libs.oauth._
-import play.api.mvc._
+import play.api.mvc.{Action, Controller, Result}
 
 /**
  * For one-off generation of Magento access tokens.
  * The bookshop is a Magento service.
  */
-class AccessTokenGenerator(val controllerComponents: ControllerComponents) extends BaseController {
+class AccessTokenGenerator extends Controller {
 
   private lazy val authService = for {
     domain <- Configuration.commercial.magento.domain
@@ -66,3 +66,5 @@ class AccessTokenGenerator(val controllerComponents: ControllerComponents) exten
     NoCache(result)
   }
 }
+
+object AccessTokenGenerator extends AccessTokenGenerator

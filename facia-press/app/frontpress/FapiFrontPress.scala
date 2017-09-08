@@ -23,10 +23,10 @@ import play.api.libs.ws.WSClient
 import services.{ConfigAgent, S3FrontsApi}
 import implicits.Booleans._
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 import scala.util.{Failure, Success}
 
-class LiveFapiFrontPress(val wsClient: WSClient, val capiClientForFrontsSeo: ContentApiClient)(implicit ec: ExecutionContext) extends FapiFrontPress {
+class LiveFapiFrontPress(val wsClient: WSClient, val capiClientForFrontsSeo: ContentApiClient) extends FapiFrontPress {
 
   override def putPressedJson(path: String, json: String): Unit = S3FrontsApi.putLiveFapiPressedJson(path, json)
   override def isLiveContent: Boolean = true
@@ -46,7 +46,7 @@ class LiveFapiFrontPress(val wsClient: WSClient, val capiClientForFrontsSeo: Con
     FAPI.liveCollectionContentWithSnaps(collection, adjustSearchQuery, adjustSnapItemQuery).map(_.map(PressedContent.make))
 }
 
-class DraftFapiFrontPress(val wsClient: WSClient, val capiClientForFrontsSeo: ContentApiClient)(implicit ec: ExecutionContext) extends FapiFrontPress {
+class DraftFapiFrontPress(val wsClient: WSClient, val capiClientForFrontsSeo: ContentApiClient) extends FapiFrontPress {
 
   override implicit val capiClient: ContentApiClientLogic = CircuitBreakingContentApiClient(
     httpClient = new CapiHttpClient(wsClient),
@@ -75,7 +75,7 @@ object EmbedJsonHtml {
   implicit val format = Json.format[EmbedJsonHtml]
 }
 
-trait FapiFrontPress extends Logging {
+trait FapiFrontPress extends Logging with ExecutionContexts {
 
   implicit val capiClient: ContentApiClientLogic
   implicit def fapiClient: ApiClient
@@ -108,7 +108,7 @@ trait FapiFrontPress extends Logging {
       .showReferences(QueryDefaults.references)
       .showAtoms("media")
 
-  def pressByPathId(path: String)(implicit executionContext: ExecutionContext): Future[Unit] = {
+  def pressByPathId(path: String): Future[Unit] = {
 
     val stopWatch: StopWatch = new StopWatch
 
@@ -152,7 +152,7 @@ trait FapiFrontPress extends Logging {
     pressFuture
   }
 
-  def generateCollectionJsonFromFapiClient(collectionId: String)(implicit executionContext: ExecutionContext): Response[PressedCollection] =
+  def generateCollectionJsonFromFapiClient(collectionId: String): Response[PressedCollection] =
     for {
       collection <- FAPI.getCollection(collectionId)
       curated <- getCurated(collection)
@@ -175,7 +175,7 @@ trait FapiFrontPress extends Logging {
     }
 
 
-  private def getCurated(collection: Collection)(implicit executionContext: ExecutionContext): Response[List[PressedContent]] = {
+  private def getCurated(collection: Collection): Response[List[PressedContent]] = {
     // Map initial PressedContent to enhanced content which contains pre-fetched embed content.
     val initialContent = collectionContentWithSnaps(collection, searchApiQuery, itemApiQuery)
     initialContent.flatMap { content =>
@@ -191,7 +191,7 @@ trait FapiFrontPress extends Logging {
     }
   }
 
-  private def enrichContent(collection: Collection, content: PressedContent, enriched: Option[EnrichedContent])(implicit executionContext: ExecutionContext): Response[EnrichedContent] = {
+  private def enrichContent(collection: Collection, content: PressedContent, enriched: Option[EnrichedContent]): Response[EnrichedContent] = {
 
       val beforeEnrichment = enriched.getOrElse(EnrichedContent.empty)
 
@@ -220,11 +220,11 @@ trait FapiFrontPress extends Logging {
       afterEnrichment.getOrElse(Response.Right(beforeEnrichment))
   }
 
-  private def getTreats(collection: Collection)(implicit executionContext: ExecutionContext): Response[List[PressedContent]] = {
+  private def getTreats(collection: Collection): Response[List[PressedContent]] = {
     FAPI.getTreatsForCollection(collection, searchApiQuery, itemApiQuery).map(_.map(PressedContent.make))
   }
 
-  private def getBackfill(collection: Collection)(implicit executionContext: ExecutionContext): Response[List[PressedContent]] = {
+  private def getBackfill(collection: Collection): Response[List[PressedContent]] = {
     FAPI.backfillFromConfig(collection.collectionConfig, searchApiQuery, itemApiQuery)
       .map(_.map(PressedContent.make))
   }
@@ -255,7 +255,7 @@ trait FapiFrontPress extends Logging {
       case _ => collections
     }
 
-  private def getCollectionIdsForPath(path: String)(implicit executionContext: ExecutionContext): Response[List[String]] =
+  private def getCollectionIdsForPath(path: String): Response[List[String]] =
     Response.Async.Right(fapiClient.config) map { config =>
       Front.frontsFromConfig(config)
         .find(_.id == path)
@@ -267,7 +267,7 @@ trait FapiFrontPress extends Logging {
       }
     }
 
-  def getPressedFrontForPath(path: String)(implicit executionContext: ExecutionContext): Response[PressedPage] = {
+  def getPressedFrontForPath(path: String): Response[PressedPage] = {
     val collectionIds = getCollectionIdsForPath(path)
     collectionIds
       .flatMap(c => Response.traverse(c.map(generateCollectionJsonFromFapiClient)))
@@ -277,7 +277,7 @@ trait FapiFrontPress extends Logging {
         }))
   }
 
-  private def getFrontSeoAndProperties(path: String)(implicit executionContext: ExecutionContext): Future[(SeoData, FrontProperties)] =
+  private def getFrontSeoAndProperties(path: String): Future[(SeoData, FrontProperties)] =
     for {
       itemResp <- getCapiItemResponseForPath(path)
     } yield {
@@ -329,7 +329,7 @@ trait FapiFrontPress extends Logging {
     case _ => sectionId
   }
 
-  private def getCapiItemResponseForPath(id: String)(implicit executionContext: ExecutionContext): Future[Option[ItemResponse]] = {
+  private def getCapiItemResponseForPath(id: String): Future[Option[ItemResponse]] = {
     val contentApiResponse:Future[ItemResponse] = capiClientForFrontsSeo.getResponse(
       capiClientForFrontsSeo.item(id, Edition.defaultEdition)
       .showEditorsPicks(false)

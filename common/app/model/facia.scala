@@ -2,7 +2,7 @@ package model
 
 import com.gu.commercial.branding.Branding
 import common.commercial.{CommercialProperties, EditionBranding}
-import common.{Edition, Logging}
+import common.{Edition, ExecutionContexts, Logging}
 import play.api.libs.json.Json
 
 case class SeoDataJson(
@@ -19,7 +19,7 @@ case class SeoData(
   title: Option[String],
   description: Option[String])
 
-object SeoData extends Logging {
+object SeoData extends ExecutionContexts with Logging {
   implicit val seoFormatter = Json.format[SeoData]
 
   val editions = Edition.all.map(_.id.toLowerCase)

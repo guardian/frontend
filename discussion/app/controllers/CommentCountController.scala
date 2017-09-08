@@ -5,9 +5,9 @@ import common.JsonComponent
 import discussion.api.DiscussionApiLike
 import discussion.api.DiscussionApiException._
 import play.api.libs.json.{JsArray, JsObject}
-import play.api.mvc.{Action, ControllerComponents}
+import play.api.mvc.Action
 
-class CommentCountController(val discussionApi: DiscussionApiLike, val controllerComponents: ControllerComponents) extends DiscussionController {
+class CommentCountController(val discussionApi: DiscussionApiLike) extends DiscussionController {
 
   def commentCountJson(shortUrls: String) = commentCount(shortUrls)
 

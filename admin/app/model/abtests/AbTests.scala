@@ -1,14 +1,13 @@
 package model.abtests
 
-
-import tools.{ABDataChart, ChartFormat, CloudWatch}
+import common.ExecutionContexts
+import tools.{ChartFormat, CloudWatch, ABDataChart}
 import com.amazonaws.services.cloudwatch.model.GetMetricStatisticsRequest
 import org.joda.time.DateTime
-
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 import awswrappers.cloudwatch._
 
-object AbTests {
+object AbTests extends ExecutionContexts {
   private val abTests = common.AkkaAgent[Map[String, Seq[String]]](Map.empty)
 
   def getTests(): Map[String, Seq[String]] = {
@@ -21,7 +20,7 @@ object AbTests {
 
   case class AbChart(testId: String, variants: Seq[String])
 
-  def getAbCharts()(implicit executionContext: ExecutionContext): Future[Seq[ABDataChart]] = {
+  def getAbCharts(): Future[Seq[ABDataChart]] = {
     Future.traverse(getTests().keys.toSeq) { abTest =>
       val variants: Seq[String] = getTests()(abTest)
 

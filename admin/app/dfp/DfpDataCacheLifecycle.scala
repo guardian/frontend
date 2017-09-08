@@ -10,7 +10,7 @@ import scala.concurrent.{ExecutionContext, Future}
 class DfpDataCacheLifecycle(
   appLifecycle: ApplicationLifecycle,
   jobScheduler: JobScheduler,
-  akkaAsync: AkkaAsync)(implicit ec: ExecutionContext) extends LifecycleComponent {
+  akkaAsync: AkkaAsync)(implicit ec: ExecutionContext) extends LifecycleComponent with ExecutionContexts {
 
   appLifecycle.addStopHook { () => Future {
     jobs foreach { job =>

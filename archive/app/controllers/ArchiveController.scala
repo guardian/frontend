@@ -15,7 +15,7 @@ import services.RedirectService.{ArchiveRedirect, Destination, PermanentRedirect
 
 import scala.concurrent.Future
 
-class ArchiveController(redirects: RedirectService, renderer: Renderer, val controllerComponents: ControllerComponents) extends BaseController with Logging with ImplicitControllerExecutionContext {
+class ArchiveController(redirects: RedirectService, renderer: Renderer) extends Controller with Logging with ExecutionContexts {
 
   private val R1ArtifactUrl = """^/(.*)/[0|1]?,[\d]*,(-?\d+),[\d]*(.*)""".r
   private val ShortUrl = """^(/p/[\w\d]+).*$""".r

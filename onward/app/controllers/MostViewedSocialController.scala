@@ -1,24 +1,19 @@
 package controllers
 
 import common.`package`._
-import common.{Edition, ImplicitControllerExecutionContext, JsonNotFound}
+import common.{Edition, ExecutionContexts, JsonNotFound}
 import contentapi.ContentApiClient
 import feed.MostPopularSocialAutoRefresh
 import layout.{CollectionEssentials, FaciaContainer}
 import model.{ApplicationContext, Cached, FrontProperties}
 import model.pressed.CollectionConfig
-import play.api.mvc.{BaseController, ControllerComponents}
+import play.api.mvc.{Action, Controller}
 import services.{CollectionConfigWithId, FaciaContentConvert}
 import layout.slices.Fixed
 
 import scala.concurrent.Future.{successful => unit}
 
-class MostViewedSocialController(
-  contentApiClient: ContentApiClient,
-  mostPopularSocialAutoRefresh: MostPopularSocialAutoRefresh,
-  val controllerComponents: ControllerComponents
-)(implicit context: ApplicationContext)
-  extends BaseController with ImplicitControllerExecutionContext {
+class MostViewedSocialController(contentApiClient: ContentApiClient, mostPopularSocialAutoRefresh: MostPopularSocialAutoRefresh)(implicit context: ApplicationContext) extends Controller with ExecutionContexts {
   def renderMostViewed(socialContext: String) = Action.async { implicit request =>
     val mostPopularSocial = mostPopularSocialAutoRefresh.get
 

@@ -1,10 +1,10 @@
 package controllers.admin
 
-import play.api.mvc.{BaseController, ControllerComponents}
+import play.api.mvc.{Action, Controller}
 import common.Logging
 import model.{ApplicationContext, NoCache}
 
-class SportTroubleshooterController(val controllerComponents: ControllerComponents)(implicit context: ApplicationContext) extends BaseController with Logging {
+class SportTroubleshooterController (implicit context: ApplicationContext) extends Controller with Logging {
 
   def renderFootballTroubleshooter() = Action { implicit request =>
     NoCache(Ok(views.html.footballTroubleshooter()))

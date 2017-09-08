@@ -1,16 +1,15 @@
 package http
 
 import akka.stream.Materializer
+import common.ExecutionContexts
 import implicits.Requests
 import model.ApplicationContext
 import play.api.http.HttpFilters
 import play.api.mvc.{EssentialAction, EssentialFilter, RequestHeader}
 
-import scala.concurrent.ExecutionContext
-
 // obviously this is only for devbuild and should never end up in one of our
 // prod projects
-class DevCacheWarningFilter(implicit executionContext: ExecutionContext) extends EssentialFilter {
+class DevCacheWarningFilter extends EssentialFilter with ExecutionContexts {
   def apply(next: EssentialAction) = new EssentialAction {
     def apply(rh: RequestHeader) = {
       next(rh).map{ result =>
@@ -35,7 +34,7 @@ class DevCacheWarningFilter(implicit executionContext: ExecutionContext) extends
 
 // obviously this is only for devbuild and should never end up in one of our
 // prod projects
-class DevJsonExtensionFilter extends EssentialFilter with Requests {
+class DevJsonExtensionFilter extends EssentialFilter with ExecutionContexts with Requests {
   def apply(next: EssentialAction) = new EssentialAction {
     def apply(rh: RequestHeader) = {
       if (rh.isJson && !rh.path.endsWith(".json") && !rh.path.endsWith(".js")) {
@@ -50,6 +49,6 @@ class DevJsonExtensionFilter extends EssentialFilter with Requests {
   }
 }
 
-class DevFilters(implicit val mat: Materializer, applicationContext: ApplicationContext, executionContext: ExecutionContext) extends HttpFilters {
+class DevFilters(implicit val mat: Materializer, context: ApplicationContext) extends HttpFilters {
   override def filters: Seq[EssentialFilter] = new DevJsonExtensionFilter :: new DevCacheWarningFilter :: Filters.common
 }

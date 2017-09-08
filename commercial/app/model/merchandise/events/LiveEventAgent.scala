@@ -3,23 +3,27 @@ package commercial.model.merchandise.events
 import java.lang.System._
 
 import commercial.model.feeds._
-import common.{AkkaAgent, Logging}
+import common.{AkkaAgent, ExecutionContexts, Logging}
 import conf.Configuration
 import commercial.model.merchandise.LiveEvent
 import play.api.libs.json.JsValue
 import play.api.libs.ws.{WSClient, WSResponse}
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 import scala.concurrent.duration._
 import scala.util.control.NonFatal
 
-class LiveEventAgent(wsClient: WSClient) extends Logging {
+class LiveEventAgent(wsClient: WSClient) extends ExecutionContexts with Logging {
 
   private lazy val liveEventAgent = AkkaAgent[Seq[LiveEvent]](Seq.empty)
 
-  def specificLiveEvent(eventBriteId: String): Option[LiveEvent] = liveEventAgent.get.find(_.eventId == eventBriteId)
+  def availableLiveEvents: Seq[LiveEvent] = liveEventAgent.get
 
-  private def updateAvailableMerchandise(freshMerchandise: Seq[LiveEvent])(implicit executionContext: ExecutionContext): Future[Seq[LiveEvent]] = {
+  def specificLiveEvents(eventIds: Seq[String]): Seq[LiveEvent] = availableLiveEvents filter (eventIds contains _.eventId)
+
+  def specificLiveEvent(eventBriteId: String): Option[LiveEvent] = availableLiveEvents find (_.eventId == eventBriteId)
+
+  def updateAvailableMerchandise(freshMerchandise: Seq[LiveEvent]): Future[Seq[LiveEvent]] = {
     liveEventAgent.alter { oldMerchandise =>
       if (freshMerchandise.nonEmpty) {
         freshMerchandise
@@ -30,7 +34,7 @@ class LiveEventAgent(wsClient: WSClient) extends Logging {
     }
   }
 
-  def refresh(feedMetaData: FeedMetaData, feedContent: => Option[String])(implicit executionContext: ExecutionContext): Future[ParsedFeed[LiveEvent]] = {
+  def refresh(feedMetaData: FeedMetaData, feedContent: => Option[String]): Future[ParsedFeed[LiveEvent]] = {
 
     def fetchAndParseLiveEventsMembershipInfo: Future[Seq[LiveEventMembershipInfo]] = {
 

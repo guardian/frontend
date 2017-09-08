@@ -1,14 +1,7 @@
 package controllers
 
-import common.ImplicitControllerExecutionContext
-import play.api.mvc.BaseController
-
-trait PublicAssets extends BaseController with ImplicitControllerExecutionContext {
-
-  def assets: Assets
-
+trait PublicAssets extends play.api.mvc.Controller {
   def at(file: String, relativePath: String = "") = model.NoCache {
-    assets.at("/public", relativePath + file)
+    controllers.Assets.at("/public", relativePath + file)
   }
-
 }

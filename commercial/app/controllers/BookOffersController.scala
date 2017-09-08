@@ -3,16 +3,16 @@ package commercial.controllers
 import commercial.model.Segment
 import commercial.model.merchandise.Book
 import commercial.model.merchandise.books.{BestsellersAgent, BookFinder}
-import common.{ImplicitControllerExecutionContext, JsonComponent, JsonNotFound, Logging}
+import common.{ExecutionContexts, JsonComponent, JsonNotFound, Logging}
 import model.Cached
 import play.api.libs.json.{JsNull, JsValue, Json}
 import play.api.mvc._
 
 import scala.concurrent.duration._
 
-class BookOffersController(bookFinder: BookFinder, bestsellersAgent: BestsellersAgent, val controllerComponents: ControllerComponents)
-  extends BaseController
-  with ImplicitControllerExecutionContext
+class BookOffersController(bookFinder: BookFinder, bestsellersAgent: BestsellersAgent)
+  extends Controller
+  with ExecutionContexts
   with Logging
   with implicits.Collections
   with implicits.Requests {

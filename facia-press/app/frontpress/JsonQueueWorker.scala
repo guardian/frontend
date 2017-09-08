@@ -3,11 +3,11 @@ package frontpress
 import java.util.concurrent.atomic.AtomicInteger
 
 import com.amazonaws.services.sqs.model.ReceiveMessageRequest
-import common.{JsonMessageQueue, Logging, Message}
+import common.{ExecutionContexts, Message, Logging, JsonMessageQueue}
 import org.joda.time.DateTime
 import play.api.libs.json.Reads
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 import scala.util.{Failure, Success}
 
 object ConsecutiveErrorsRecorder {
@@ -58,7 +58,7 @@ object JsonQueueWorker {
   *
   * @tparam A The job
   */
-abstract class JsonQueueWorker[A: Reads]()(implicit executionContext: ExecutionContext) extends Logging {
+abstract class JsonQueueWorker[A: Reads] extends Logging with ExecutionContexts {
   import JsonQueueWorker._
 
   val queue: JsonMessageQueue[A]
@@ -112,7 +112,7 @@ abstract class JsonQueueWorker[A: Reads]()(implicit executionContext: ExecutionC
 
     getRequest.map(_ => ())
   }
-
+  
   final private def next() {
     getAndProcess onComplete {
       case _ if started => next()

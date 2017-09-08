@@ -1,46 +1,45 @@
 package controllers
 
-import common.ImplicitControllerExecutionContext
+import common.ExecutionContexts
 import model.{ApplicationContext, IdentityPage, NoCache}
 import play.api.data.{Form, Forms}
 import play.api.mvc._
 import idapiclient.IdApiClient
 import services.{AuthenticationService, IdRequestParser, IdentityUrlBuilder}
-import play.api.i18n.{Messages, MessagesProvider}
+import play.api.i18n.{Messages, MessagesApi}
 import play.api.data.validation._
 import play.api.data.Forms._
 import play.api.data.format.Formats._
 import form.Mappings
-import play.api.http.HttpConfiguration
+import play.api.libs.crypto.CryptoConfig
 import utils.SafeLogging
 
 import scala.concurrent.Future
 
-class ResetPasswordController(
-  api : IdApiClient,
-  idRequestParser: IdRequestParser,
-  idUrlBuilder: IdentityUrlBuilder,
-  authenticationService: AuthenticationService,
-  val controllerComponents: ControllerComponents,
-  val httpConfiguration: HttpConfiguration
-)(implicit context: ApplicationContext)
-  extends BaseController with ImplicitControllerExecutionContext with SafeLogging with Mappings with implicits.Forms {
+class ResetPasswordController(api : IdApiClient,
+                              idRequestParser: IdRequestParser,
+                              idUrlBuilder: IdentityUrlBuilder,
+                              authenticationService: AuthenticationService,
+                              val messagesApi: MessagesApi,
+                              val cryptoConfig: CryptoConfig)
+                             (implicit context: ApplicationContext)
+  extends Controller with ExecutionContexts with SafeLogging with Mappings with implicits.Forms {
 
-  private val page = IdentityPage("/reset-password", "Reset Password")
+  val page = IdentityPage("/reset-password", "Reset Password")
 
-  private val requestPasswordResetForm = Form(
+  val requestPasswordResetForm = Form(
     Forms.single(
       "email-address" -> Forms.text
     )
   )
 
-  private val requestPasswordResetFormWithConstraints = Form(
+  val requestPasswordResetFormWithConstraints = Form(
     Forms.single(
       "email-address" -> of[String].verifying(Constraints.nonEmpty)
     )
   )
 
-  private val passwordResetForm = Form(
+  val passwordResetForm = Form(
     Forms.tuple (
       "password" -> Forms.text,
       "password-confirm" ->  Forms.text,
@@ -48,7 +47,7 @@ class ResetPasswordController(
     )
   )
 
-  private def passwordResetFormWithConstraints(implicit messagesProvider: MessagesProvider) = Form(
+  val passwordResetFormWithConstraints = Form(
     Forms.tuple (
       "password" ->  idPassword
         .verifying(Constraints.nonEmpty),

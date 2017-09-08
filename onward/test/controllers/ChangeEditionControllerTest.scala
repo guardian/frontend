@@ -10,16 +10,15 @@ import test.{ConfiguredTestSuite, TestRequest}
   val callbackName = "aFunction"
   val oneYearInSeconds = 31536000
 
-  lazy val changeEditionController = new ChangeEditionController(play.api.test.Helpers.stubControllerComponents())
 
   "ChangeEditionController" should "redirect to correct page" in {
-    val result = changeEditionController.render("uk")(TestRequest())
+    val result = controllers.ChangeEditionController.render("uk")(TestRequest())
     status(result) should be(302)
     header("Location", result) should be (Some("/uk?INTCMP=CE_UK"))
   }
 
   it should "set a preference cookie" in {
-    val result = changeEditionController.render("au")(TestRequest())
+    val result = controllers.ChangeEditionController.render("au")(TestRequest())
     val GU_EDITION = playCookies(result).apply("GU_EDITION")
 
     GU_EDITION.maxAge.getOrElse(0) should be (oneYearInSeconds +- 1)
@@ -28,7 +27,7 @@ import test.{ConfiguredTestSuite, TestRequest}
 
   it should "set the international cookie if enabled" in {
 
-    val result = changeEditionController.render("int")(TestRequest())
+    val result = controllers.ChangeEditionController.render("int")(TestRequest())
     val GU_EDITION = playCookies(result).apply("GU_EDITION")
 
     GU_EDITION.maxAge.getOrElse(0) should be (oneYearInSeconds +- 1)
@@ -38,14 +37,14 @@ import test.{ConfiguredTestSuite, TestRequest}
   }
 
   it should "not cache" in {
-    val result = changeEditionController.render("us")(TestRequest())
+    val result = controllers.ChangeEditionController.render("us")(TestRequest())
 
     header("Cache-Control", result) should be (Some("no-cache"))
     header("Pragma", result) should be (Some("no-cache"))
   }
 
   it should "not redirect to unknown editions" in {
-    val result = changeEditionController.render("za")(TestRequest())
+    val result = controllers.ChangeEditionController.render("za")(TestRequest())
     status(result) should be (404)
   }
 }

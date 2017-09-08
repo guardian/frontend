@@ -12,12 +12,7 @@ trait HttpLike {
 class HttpClient(wsClient: WSClient) extends HttpLike {
 
   override def GET(url: String, queryString: Map[String, String] = Map.empty, headers: Map[String, String] = Map.empty): Future[WSResponse] = {
-    wsClient
-      .url(url)
-      .withQueryStringParameters(queryString.toSeq: _*)
-      .withHttpHeaders(headers.toSeq: _*)
-      .withRequestTimeout(10.seconds)
-      .get()
+    wsClient.url(url).withQueryString(queryString.toSeq: _*).withHeaders(headers.toSeq: _*).withRequestTimeout(10.seconds).get()
   }
 
 }

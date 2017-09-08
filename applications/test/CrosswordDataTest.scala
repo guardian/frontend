@@ -15,12 +15,12 @@ import org.scalatest.time.{Millis, Span}
   with BeforeAndAfterAll
   with WithMaterializer
   with WithTestWsClient
-  with WithTestApplicationContext
+  with WithTestContext
   with WithTestContentApiClient {
 
   "CrosswordData" - {
 
-    lazy val crosswordPageController = new CrosswordPageController(testContentApiClient, play.api.test.Helpers.stubControllerComponents())
+    lazy val crosswordPageController = new CrosswordPageController(testContentApiClient)
 
     "fromCrossword should normalize separators for grouped entries" in {
 

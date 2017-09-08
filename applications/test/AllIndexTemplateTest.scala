@@ -8,14 +8,14 @@ import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
     import browser._
 
     url() should endWith("/world/2014/oct/02/all")
-    el("[rel=next]").attribute("href") should endWith ("/world/2014/oct/03/altdate")
-    el("[rel=next]").click()
+    $("[rel=next]").first.getAttribute("href") should endWith ("/world/2014/oct/03/altdate")
+    $("[rel=next]").first.click()
     url() should endWith("/world/2014/oct/03/all")
 
-    el("[rel=prev]").click()
+    $("[rel=prev]").first.click()
     url() should endWith("/world/2014/oct/02/all")
 
-    el("[rel=prev]").click()
+    $("[rel=prev]").first.click()
     url() should endWith("/world/2014/oct/01/all")
   }
 }

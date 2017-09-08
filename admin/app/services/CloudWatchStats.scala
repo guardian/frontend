@@ -2,15 +2,15 @@ package services
 
 import com.amazonaws.services.cloudwatch.{AmazonCloudWatchAsync, AmazonCloudWatchAsyncClient}
 import com.amazonaws.services.cloudwatch.model._
-import common.Logging
+import common.{ExecutionContexts, Logging}
 import conf.Configuration
 import conf.Configuration.environment
 import org.joda.time.DateTime
 import awswrappers.cloudwatch._
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
-object CloudWatchStats extends Logging {
+object CloudWatchStats extends Logging with ExecutionContexts {
   val stage = new Dimension().withName("Stage").withValue(environment.stage)
 
   lazy val cloudwatch: AmazonCloudWatchAsync = {
@@ -21,7 +21,7 @@ object CloudWatchStats extends Logging {
       .build()
   }
 
-  private def sanityData(metric: String)(implicit executionContext: ExecutionContext): Future[GetMetricStatisticsResult] = {
+  private def sanityData(metric: String) = {
     val ftr = cloudwatch.getMetricStatisticsFuture(new GetMetricStatisticsRequest()
       .withStartTime(new DateTime().minusMinutes(15).toDate)
       .withEndTime(new DateTime().toDate)
@@ -39,7 +39,9 @@ object CloudWatchStats extends Logging {
     ftr
   }
 
-  def rawPageViews()(implicit executionContext: ExecutionContext): Future[GetMetricStatisticsResult] = sanityData("kpis-page-views")
+  def rawPageViews: Future[GetMetricStatisticsResult] = sanityData("kpis-page-views")
 
-  def googleAnalyticsPageViews()(implicit executionContext: ExecutionContext): Future[GetMetricStatisticsResult] = sanityData("kpis-analytics-page-views-google")
+  def googleAnalyticsPageViews: Future[GetMetricStatisticsResult] = sanityData("kpis-analytics-page-views-google")
+
+  def pageViewsHavingAnAd: Future[GetMetricStatisticsResult] = sanityData("first-ad-rendered")
 }

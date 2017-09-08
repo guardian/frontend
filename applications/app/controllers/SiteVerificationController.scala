@@ -1,11 +1,10 @@
 package controllers
 
-import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
-import play.api.mvc.{BaseController, ControllerComponents}
-
+import model.Cached.{WithoutRevalidationResult, RevalidatableResult}
+import play.api.mvc.{Action, Controller}
 import scala.concurrent.duration._
 
-class SiteVerificationController(val controllerComponents: ControllerComponents) extends BaseController {
+class SiteVerificationController extends Controller {
 
   // A list of accepted accounts.
   private val acceptedGoogleAccounts = List(

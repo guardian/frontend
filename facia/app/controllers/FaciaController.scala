@@ -19,7 +19,7 @@ import conf.switches.Switches.InlineEmailStyles
 import scala.concurrent.Future
 import scala.concurrent.Future.successful
 
-trait FaciaController extends BaseController with Logging with ImplicitControllerExecutionContext with implicits.Collections with implicits.Requests {
+trait FaciaController extends Controller with Logging with ExecutionContexts with implicits.Collections with implicits.Requests {
 
   val frontJsonFapi: FrontJsonFapi
 
@@ -249,9 +249,5 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
   }
 }
 
-class FaciaControllerImpl(
-  val frontJsonFapi: FrontJsonFapiLive,
-  val controllerComponents: ControllerComponents
-)(implicit val context: ApplicationContext)
-  extends FaciaController
+class FaciaControllerImpl(val frontJsonFapi: FrontJsonFapiLive)(implicit val context: ApplicationContext) extends FaciaController
 

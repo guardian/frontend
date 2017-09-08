@@ -2,20 +2,21 @@ package tools
 
 import CloudWatch._
 import com.amazonaws.services.cloudwatch.model.{Dimension, GetMetricStatisticsRequest}
+import common.ExecutionContexts
 import org.joda.time.DateTime
 import awswrappers.cloudwatch._
 import conf.Configuration._
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
-object HttpErrors {
-  def global4XX()(implicit executionContext: ExecutionContext): Future[AwsLineChart] = euWestClient.getMetricStatisticsFuture(metric("HTTPCode_Backend_4XX")) map { metric =>
+object HttpErrors extends ExecutionContexts {
+  def global4XX = euWestClient.getMetricStatisticsFuture(metric("HTTPCode_Backend_4XX")) map { metric =>
     new AwsLineChart("Global 4XX", Seq("Time", "4xx/min"), ChartFormat.SingleLineBlue, metric)
   }
 
   private val stage = new Dimension().withName("Stage").withValue(environment.stage)
 
-  def googlebot404s()(implicit executionContext: ExecutionContext): Future[Seq[AwsLineChart]] = withErrorLogging(Future.sequence(Seq(
+  def googlebot404s = withErrorLogging(Future.sequence(Seq(
     euWestClient.getMetricStatisticsFuture(
       metric("googlebot-404s").withStartTime(new DateTime().minusHours(12).toDate)
         .withNamespace("ArchiveMetrics").withDimensions(stage)
@@ -31,13 +32,13 @@ object HttpErrors {
     }
   )))
 
-  def global5XX()(implicit executionContext: ExecutionContext): Future[AwsLineChart] = withErrorLogging(euWestClient.getMetricStatisticsFuture(
+  def global5XX = withErrorLogging(euWestClient.getMetricStatisticsFuture(
     metric("HTTPCode_Backend_5XX")
   ) map { metric =>
     new AwsLineChart("Global 5XX", Seq("Time", "5XX/ min"), ChartFormat.SingleLineRed, metric)
   })
 
-  def notFound()(implicit executionContext: ExecutionContext): Future[Seq[AwsLineChart]] = withErrorLogging(Future.traverse(primaryLoadBalancers ++ secondaryLoadBalancers) { loadBalancer =>
+  def notFound = withErrorLogging(Future.traverse(primaryLoadBalancers ++ secondaryLoadBalancers) { loadBalancer =>
     euWestClient.getMetricStatisticsFuture(
       metric("HTTPCode_Backend_4XX", Some(loadBalancer.id))
     ) map { metric =>
@@ -45,7 +46,7 @@ object HttpErrors {
     }
   })
 
-  def errors()(implicit executionContext: ExecutionContext): Future[Seq[AwsLineChart]] = withErrorLogging(Future.traverse(primaryLoadBalancers ++ secondaryLoadBalancers) { loadBalancer =>
+  def errors = withErrorLogging(Future.traverse(primaryLoadBalancers ++ secondaryLoadBalancers) { loadBalancer =>
     euWestClient.getMetricStatisticsFuture(
       metric("HTTPCode_Backend_5XX", Some(loadBalancer.id))
     ) map { metric =>
@@ -53,7 +54,7 @@ object HttpErrors {
     }
   })
 
-  def metric(metricName: String, loadBalancer: Option[String] = None)(implicit executionContext: ExecutionContext): GetMetricStatisticsRequest = {
+  def metric(metricName: String, loadBalancer: Option[String] = None) = {
     val metric = new GetMetricStatisticsRequest()
       .withStartTime(new DateTime().minusHours(2).toDate)
       .withEndTime(new DateTime().toDate)

@@ -4,19 +4,14 @@ import org.scalatest.path
 import org.scalatest.Matchers
 import org.scalatest.mockito.MockitoSugar
 import org.mockito.Mockito._
+import common.ExecutionContexts
 import client.connection.HttpResponse
 import dispatch.Req
-import test.WithTestExecutionContext
-
-import scala.concurrent.ExecutionContext
 
 
-class DispatchAsyncHttpClientTest extends path.FreeSpec with Matchers with MockitoSugar with WithTestExecutionContext {
+class DispatchAsyncHttpClientTest extends path.FreeSpec with Matchers with MockitoSugar {
   val client = mock[dispatch.Http]
-
-  object TestDispatchAsyncHttpClient extends DispatchAsyncHttpClient {
-    override implicit def executionContext: ExecutionContext = testExecutionContext
-  }
+  object TestDispatchAsyncHttpClient extends DispatchAsyncHttpClient with ExecutionContexts
 
   "the buildRequest method" - {
 

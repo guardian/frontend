@@ -4,13 +4,13 @@ import common._
 import com.gu.targeting.client.{Campaign, CampaignCache}
 import conf.Configuration
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 import conf.switches.Switches.Targeting
 
-object CampaignAgent extends Logging {
+object CampaignAgent extends Logging with ExecutionContexts {
   private val agent = AkkaAgent[CampaignCache](CampaignCache(Nil, None))
 
-  def refresh()(implicit executionContext: ExecutionContext): Future[Unit] = {
+  def refresh(): Future[Unit] = {
     // The maximum number of campaigns which will be fetched. If there are too many campaigns additional campaigns will be truncated.
     // Which campaigns make it through is undefined
     val campaignLimit = 100

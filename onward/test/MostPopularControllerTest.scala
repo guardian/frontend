@@ -14,7 +14,7 @@ import services.OphanApi
   with BeforeAndAfterAll
   with WithMaterializer
   with WithTestWsClient
-  with WithTestApplicationContext
+  with WithTestContext
   with WithTestContentApiClient {
 
   val tag = "technology"
@@ -24,8 +24,7 @@ import services.OphanApi
     testContentApiClient,
     new GeoMostPopularAgent(testContentApiClient, ophanApi),
     new DayMostPopularAgent(testContentApiClient, ophanApi),
-    new MostPopularAgent(testContentApiClient),
-    play.api.test.Helpers.stubControllerComponents()
+    new MostPopularAgent(testContentApiClient)
   )
 
   "Most Popular Controller" should "200 when content type is tag" in {

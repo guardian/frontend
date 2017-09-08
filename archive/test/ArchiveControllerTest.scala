@@ -1,6 +1,6 @@
 package test
 
-
+import common.ExecutionContexts
 import controllers.ArchiveController
 import model.{ApplicationContext, ApplicationIdentity}
 import play.api.mvc.Result
@@ -15,14 +15,14 @@ import services.RedirectService.{ArchiveRedirect, PermanentRedirect}
   extends FlatSpec
   with Matchers
   with ConfiguredTestSuite
-  with WithTestExecutionContext
+  with ExecutionContexts
   with BeforeAndAfterAll
   with WithTestRenderer {
 
   lazy val mockRedirects = new RedirectService {
     override def destinationFor(source: String) = Future.successful(None)
   }
-  lazy val archiveController = new ArchiveController(mockRedirects, testRenderer, play.api.test.Helpers.stubControllerComponents())
+  lazy val archiveController = new ArchiveController(mockRedirects, testRenderer)
 
   it should "return a normalised r1 path" in {
     val tests = List(

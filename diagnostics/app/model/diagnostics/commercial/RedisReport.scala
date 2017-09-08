@@ -1,12 +1,12 @@
 package model.diagnostics.commercial
 
-import common.{Logging}
+import common.{ExecutionContexts, Logging}
 import common.commercial.ClientSideLogging
 import org.joda.time.DateTime
 import play.api.libs.json.Json
 
 // RedisReport writes commercial performance beacons into Redis as key-values.
-object RedisReport extends Logging {
+object RedisReport extends Logging with ExecutionContexts {
 
   // The time to keep the data associated with a page view. 20 minutes.
   private val PAGE_VIEW_DATA_EXPIRY = 1200L

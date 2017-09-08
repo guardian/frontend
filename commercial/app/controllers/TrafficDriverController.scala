@@ -2,21 +2,20 @@ package commercial.controllers
 
 import commercial.model.capi.CapiAgent
 import commercial.model.merchandise.TrafficDriver
-import common.{Edition, ImplicitControllerExecutionContext, JsonComponent, Logging}
+import common.{Edition, ExecutionContexts, JsonComponent, Logging}
 import contentapi.ContentApiClient
 import model.{Cached, ContentType}
-import play.api.mvc._
+import play.api.mvc.{Action, AnyContent, Controller, Request}
 
 import scala.concurrent.Future
 import scala.concurrent.duration.DurationInt
 import scala.util.control.NonFatal
 
 class TrafficDriverController(
-  contentApiClient: ContentApiClient,
-  capiAgent: CapiAgent,
-  val controllerComponents: ControllerComponents
-) extends BaseController
-  with ImplicitControllerExecutionContext
+    contentApiClient: ContentApiClient,
+    capiAgent: CapiAgent)
+  extends Controller
+  with ExecutionContexts
   with implicits.Requests
   with Logging {
 

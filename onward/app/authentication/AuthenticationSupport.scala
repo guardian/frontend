@@ -1,15 +1,14 @@
 package authentication
 
+import play.api.mvc.{ActionBuilder, Request, Result, Results}
 
-import play.api.mvc._
-
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
 trait AuthenticationSupport {
 
   def validApiKey(apiKey: String): Boolean
 
-  class AuthenticatedAction[C](val parser: BodyParser[C], val executionContext: ExecutionContext) extends ActionBuilder[Request, C] with Results {
+  object AuthenticatedAction extends ActionBuilder[Request] with Results {
     override def invokeBlock[A](request: Request[A], block: (Request[A]) => Future[Result]): Future[Result] = {
       request.headers.get("X-Gu-Api-Key") match {
         case Some(apiKey) if validApiKey(apiKey) => block(request)

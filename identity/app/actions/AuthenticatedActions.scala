@@ -4,12 +4,11 @@ import java.net.URLEncoder
 
 import actions.AuthenticatedActions.AuthRequest
 import client.Logging
-
+import common.ExecutionContexts
 import idapiclient.IdApiClient
 import play.api.mvc.Security.{AuthenticatedBuilder, AuthenticatedRequest}
-import play.api.mvc._
+import play.api.mvc.{ActionRefiner, RequestHeader, Result, Results}
 import services.{AuthenticatedUser, AuthenticationService, IdentityUrlBuilder}
-
 import scala.concurrent.ExecutionContext
 import scala.concurrent.Future
 
@@ -17,16 +16,7 @@ object AuthenticatedActions {
   type AuthRequest[A] = AuthenticatedRequest[A, AuthenticatedUser]
 }
 
-class AuthenticatedActions(
-  authService: AuthenticationService,
-  identityApiClient: IdApiClient,
-  identityUrlBuilder: IdentityUrlBuilder,
-  controllerComponents: ControllerComponents
-) extends Logging
-  with Results {
-
-  private val anyContentParser: BodyParser[AnyContent] = controllerComponents.parsers.anyContent
-  private implicit val ec: ExecutionContext = controllerComponents.executionContext
+class AuthenticatedActions(authService: AuthenticationService, identityApiClient: IdApiClient, identityUrlBuilder: IdentityUrlBuilder) extends Logging with Results with ExecutionContexts {
 
   def redirectWithReturn(request: RequestHeader, path: String) = {
     val returnUrl = URLEncoder.encode(identityUrlBuilder.buildUrl(request.uri), "UTF-8")
@@ -42,12 +32,11 @@ class AuthenticatedActions(
 
   def sendUserToReauthenticate(request: RequestHeader) = redirectWithReturn(request, "/reauthenticate")
 
-  def authAction = new AuthenticatedBuilder(authService.authenticatedUserFor, anyContentParser, sendUserToSignin)
+  def authAction = new AuthenticatedBuilder(authService.authenticatedUserFor, sendUserToSignin)
 
-  def agreeAction(unAuthorizedCallback: (RequestHeader) => Result) = new AuthenticatedBuilder(authService.authenticatedUserFor, anyContentParser, unAuthorizedCallback)
+  def agreeAction(unAuthorizedCallback: (RequestHeader) => Result) = new AuthenticatedBuilder(authService.authenticatedUserFor, unAuthorizedCallback)
 
-  def apiVerifiedUserRefiner = new ActionRefiner[AuthRequest, AuthRequest] {
-    override val executionContext = ec
+  def apiVerifiedUserRefiner(implicit ec: ExecutionContext) = new ActionRefiner[AuthRequest, AuthRequest] {
     def refine[A](request: AuthRequest[A]) = for (meResponse <- identityApiClient.me(request.user.auth)) yield {
       meResponse.left.map {
         errors =>
@@ -61,8 +50,7 @@ class AuthenticatedActions(
     }
   }
 
-  def recentlyAuthenticatedRefiner = new ActionRefiner[AuthRequest, AuthRequest] {
-    override val executionContext = ec
+  def recentlyAuthenticatedRefiner() = new ActionRefiner[AuthRequest, AuthRequest] {
     def refine[A](request: AuthRequest[A]) = Future.successful {
       if (authService.recentlyAuthenticated(request)) Right(request) else Left(sendUserToReauthenticate(request))
     }

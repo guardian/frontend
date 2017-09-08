@@ -4,7 +4,6 @@ import com.softwaremill.macwire._
 import discussion.api.DiscussionApi
 import model.ApplicationContext
 import play.api.libs.ws.WSClient
-import play.api.mvc.ControllerComponents
 import play.filters.csrf.{CSRFAddToken, CSRFCheck}
 
 trait DiscussionControllers {
@@ -12,7 +11,6 @@ trait DiscussionControllers {
   def discussionApi: DiscussionApi
   def csrfCheck: CSRFCheck
   def csrfAddToken: CSRFAddToken
-  def controllerComponents: ControllerComponents
   implicit def appContext: ApplicationContext
   lazy val commentCountController = wire[CommentCountController]
   lazy val commentsController = wire[CommentsController]

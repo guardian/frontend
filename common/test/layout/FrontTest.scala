@@ -8,11 +8,11 @@ import contentapi.FixtureTemplates.emptyApiContent
 import model.pressed.{LatestSnap, PressedContent}
 import org.joda.time.DateTime
 import org.scalatest.{FlatSpec, Matchers}
-import org.scalatestplus.play.guice.GuiceOneAppPerSuite
+import org.scalatestplus.play.OneAppPerSuite
 import services.FaciaContentConvert
 import slices._
 
-class FrontTest extends FlatSpec with Matchers with GuiceOneAppPerSuite {
+class FrontTest extends FlatSpec with Matchers with OneAppPerSuite {
   def trailWithUrl(theUrl: String): PressedContent = {
     FaciaContentConvert.contentToFaciaContent(emptyApiContent.copy(id = theUrl, webUrl = theUrl))
   }

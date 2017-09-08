@@ -43,7 +43,7 @@ class FootballLifecycle(
     }
 
     jobs.schedule("TeamMapRefreshJob", "0 0/10 * * * ?") {
-      TeamMap.refresh()(contentApiClient, ec)
+      TeamMap.refresh()(contentApiClient)
     }
   }
 
@@ -65,12 +65,12 @@ class FootballLifecycle(
       val competitionUpdate = competitionsService.refreshCompetitionData()
       competitionUpdate.onSuccess { case _ => competitionsService.competitionIds.foreach(competitionsService.refreshCompetitionAgent) }
       competitionsService.refreshMatchDay()
-      TeamMap.refresh()(contentApiClient, ec)
+      TeamMap.refresh()(contentApiClient)
     }
   }
 }
 
-class FootballClient(wsClient: WSClient)(implicit executionContext: ExecutionContext) extends PaClient with Http with Logging {
+class FootballClient(wsClient: WSClient) extends PaClient with Http with Logging with ExecutionContexts {
 
   // Runs the API calls via a CDN
   override lazy val base: String = "http://football-api.gu-web.net/v1.5"

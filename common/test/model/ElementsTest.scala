@@ -5,9 +5,9 @@ import com.gu.contentapi.client.utils.CapiModelEnrichment.RichJodaDateTime
 import contentapi.FixtureTemplates
 import org.joda.time.DateTime
 import org.scalatest.{FlatSpec, Matchers}
-import org.scalatestplus.play.guice.GuiceOneAppPerSuite
+import org.scalatestplus.play.OneAppPerSuite
 
-class ElementsTest extends FlatSpec with Matchers with GuiceOneAppPerSuite {
+class ElementsTest extends FlatSpec with Matchers with OneAppPerSuite {
 
   "Elements" should "find the biggest crop of the main picture" in {
     val images: Elements = Content(

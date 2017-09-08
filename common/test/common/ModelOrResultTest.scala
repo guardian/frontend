@@ -1,18 +1,18 @@
 package common
 
-import com.gu.contentapi.client.model.v1.{Content, ItemResponse, Section, Tag, TagType}
+import com.gu.contentapi.client.model.v1.{Content, Section, Tag, TagType, ItemResponse}
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichJodaDateTime
 import org.joda.time.DateTime
 import org.scalatest.{FlatSpec, Matchers}
 import play.api.mvc.RequestHeader
 import play.api.test.Helpers._
-import test.{TestRequest, WithTestExecutionContext}
+import test.TestRequest
 
 import scala.concurrent.Future
 
 private object TestModel
 
-class ModelOrResultTest extends FlatSpec with Matchers with WithTestExecutionContext {
+class ModelOrResultTest extends FlatSpec with Matchers with ExecutionContexts {
 
   implicit val request: RequestHeader = TestRequest()
 

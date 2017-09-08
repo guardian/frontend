@@ -22,8 +22,6 @@ import services.OphanApi
 import services.breakingnews.{BreakingNewsApi, S3BreakingNews}
 import weather.WeatherApi
 
-import scala.concurrent.ExecutionContext
-
 class AppLoader extends FrontendApplicationLoader {
   override def buildComponents(context: Context): FrontendComponents = new BuiltInComponentsFromContext(context) with AppComponents
 }
@@ -32,7 +30,6 @@ trait OnwardServices {
   def wsClient: WSClient
   def environment: Environment
   implicit def appContext: ApplicationContext
-  implicit val executionContext: ExecutionContext
   lazy val capiHttpClient: HttpClient = wire[CapiHttpClient]
   lazy val contentApiClient = wire[ContentApiClient]
   lazy val ophanApi = wire[OphanApi]

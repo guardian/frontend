@@ -1,12 +1,11 @@
 package controllers.commercial.magento
 
-
-import common.ImplicitControllerExecutionContext
+import common.ExecutionContexts
 import conf.Configuration.commercial.magento
 import model.NoCache
 import play.api.libs.oauth.{ConsumerKey, OAuthCalculator, RequestToken}
 import play.api.libs.ws.WSClient
-import play.api.mvc.{BaseController, ControllerComponents}
+import play.api.mvc.{Action, Controller}
 
 /**
  * This allows us to check the content of protected Magento endpoints.
@@ -15,7 +14,7 @@ import play.api.mvc.{BaseController, ControllerComponents}
  * http://www.magentocommerce.com/api/rest/Resources/resources.html
  * http://www.magentocommerce.com/api/rest/get_filters.html
  */
-class ApiSandbox(wsClient: WSClient, val controllerComponents: ControllerComponents) extends BaseController with ImplicitControllerExecutionContext {
+class ApiSandbox(wsClient: WSClient) extends Controller with ExecutionContexts {
 
   private val domain = magento.domain.getOrElse(throw new RuntimeException("Unable to get [magento.domain] property. Is it set in the configuration?"))
   private val oauth = {

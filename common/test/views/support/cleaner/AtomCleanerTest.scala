@@ -6,7 +6,7 @@ import model.content._
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.scalatest.{FlatSpec, Matchers}
-import test.{TestRequest, WithTestApplicationContext}
+import test.{TestRequest, WithTestContext}
 import views.support.AtomsCleaner
 import conf.switches.Switches
 import model.{ImageAsset, ImageMedia}
@@ -15,7 +15,7 @@ import scala.collection.JavaConverters._
 
 class AtomCleanerTest extends FlatSpec
   with Matchers
-  with WithTestApplicationContext
+  with WithTestContext
   with FakeRequests {
 
   val asset: Asset = Asset(
@@ -64,7 +64,7 @@ class AtomCleanerTest extends FlatSpec
 
 
  private def clean(document: Document, atom:Option[Atoms], amp: Boolean): Document = {
-    val cleaner = AtomsCleaner(youTubeAtom, amp = amp)(TestRequest(), testApplicationContext)
+    val cleaner = AtomsCleaner(youTubeAtom, amp = amp)(TestRequest(), testContext)
     cleaner.clean(document)
     document
   }

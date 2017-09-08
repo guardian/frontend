@@ -1,16 +1,14 @@
 package controllers
 
-import common.ImplicitControllerExecutionContext
+import common.ExecutionContexts
 import conf.switches.Switches
 import model.ApplicationContext
-import play.api.mvc.{BaseController, ControllerComponents}
+import play.api.mvc.{Action, Controller}
 import sudoku.{SudokuApi, SudokuPage}
 import views.html.sudoku
-
 import scala.concurrent.Future
 
-class SudokusController(val controllerComponents: ControllerComponents)(implicit context: ApplicationContext)
-  extends BaseController with ImplicitControllerExecutionContext {
+class SudokusController (implicit context: ApplicationContext) extends Controller with ExecutionContexts {
     def render(id: String) = Action.async { implicit request =>
     if (Switches.SudokuSwitch.isSwitchedOn) {
       SudokuApi.getData(id) map {

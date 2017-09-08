@@ -12,10 +12,10 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
   with BeforeAndAfterAll
   with WithMaterializer
   with WithTestWsClient
-  with WithTestApplicationContext
+  with WithTestContext
   with WithTestContentApiClient {
 
-  lazy val topStoriesController = new TopStoriesController(testContentApiClient, play.api.test.Helpers.stubControllerComponents())
+  lazy val topStoriesController = new TopStoriesController(testContentApiClient)
 
   "Top Stories" should "should return 200" in {
     val result = topStoriesController.renderTopStories()(TestRequest())

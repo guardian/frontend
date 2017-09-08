@@ -1,15 +1,15 @@
 package controllers
 
-import play.api.mvc._
+import play.api.mvc.{Action, AnyContent, Controller}
 import model.Cached
-import common.{ImplicitControllerExecutionContext, JsonComponent}
+import common.{ExecutionContexts, JsonComponent}
 import discussion.model._
 import discussion.api.WitnessApi
 import discussion.api.DiscussionApiException._
 import conf.Configuration
 import play.api.libs.ws.WSClient
 
-trait WitnessActivityController extends WitnessApi with BaseController with ImplicitControllerExecutionContext with implicits.Requests {
+trait WitnessActivityController extends WitnessApi with Controller with ExecutionContexts with implicits.Requests {
 
   def witnessActivity(userId: String): Action[AnyContent] = Action.async {
     implicit request => {
@@ -19,6 +19,6 @@ trait WitnessActivityController extends WitnessApi with BaseController with Impl
   }
 }
 
-class WitnessActivityControllerImpl(val wsClient: WSClient, val controllerComponents: ControllerComponents) extends WitnessActivityController {
+class WitnessActivityControllerImpl(val wsClient: WSClient) extends WitnessActivityController {
   protected lazy val witnessApiRoot: String = Configuration.witness.witnessApiRoot
 }

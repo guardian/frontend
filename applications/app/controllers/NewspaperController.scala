@@ -1,18 +1,14 @@
 package controllers
 
-import common.{ImplicitControllerExecutionContext, Logging}
+import common.{ExecutionContexts, Logging}
 import contentapi.ContentApiClient
 import layout.FaciaContainer
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model.{ApplicationContext, Cached, MetaData, SectionSummary, SimplePage}
-import play.api.mvc.{BaseController, ControllerComponents}
+import play.api.mvc.{Action, Controller}
 import services.NewspaperQuery
 
-class NewspaperController(
-  contentApiClient: ContentApiClient,
-  val controllerComponents: ControllerComponents
-)(implicit context: ApplicationContext)
-  extends BaseController with Logging with ImplicitControllerExecutionContext {
+class NewspaperController(contentApiClient: ContentApiClient)(implicit context: ApplicationContext) extends Controller with Logging with ExecutionContexts {
 
   private val newspaperQuery = new NewspaperQuery(contentApiClient)
 
@@ -23,7 +19,7 @@ class NewspaperController(
       Some(SectionSummary.fromId("todayspaper")),
       "Main section | News | The Guardian"
     ))
-    val todaysPaper = newspaperQuery.fetchLatestGuardianNewspaper().map(p => TodayNewspaper(guardianPage, p))
+    val todaysPaper = newspaperQuery.fetchLatestGuardianNewspaper.map(p => TodayNewspaper(guardianPage, p))
 
     for( tp <- todaysPaper) yield Cached(300)(RevalidatableResult.Ok(views.html.newspaperPage(tp)))
 
@@ -36,7 +32,7 @@ class NewspaperController(
       "Main section | From the Observer | The Guardian"
     ))
 
-    val todaysPaper = newspaperQuery.fetchLatestObserverNewspaper().map(p => TodayNewspaper(observerPage, p))
+    val todaysPaper = newspaperQuery.fetchLatestObserverNewspaper.map(p => TodayNewspaper(observerPage, p))
 
     for( tp <- todaysPaper) yield Cached(300)(RevalidatableResult.Ok(views.html.newspaperPage(tp)))
 

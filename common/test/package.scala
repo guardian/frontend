@@ -6,7 +6,7 @@ import akka.actor.ActorSystem
 import akka.stream.Materializer
 import com.gargoylesoftware.htmlunit.html.HtmlPage
 import com.gargoylesoftware.htmlunit.{BrowserVersion, Page, WebClient, WebResponse}
-import common.{Lazy}
+import common.{ExecutionContexts, Lazy}
 import contentapi.{CapiHttpClient, ContentApiClient, HttpClient, Response}
 import model.{ApplicationContext, ApplicationIdentity}
 import org.openqa.selenium.htmlunit.HtmlUnitDriver
@@ -14,8 +14,7 @@ import org.scalatest.{BeforeAndAfterAll, TestSuite}
 import org.scalatestplus.play._
 import org.scalatestplus.play.guice.GuiceOneServerPerSuite
 import play.api._
-import play.api.http.HttpConfiguration
-import play.api.libs.crypto.{CSRFTokenSigner, CSRFTokenSignerProvider, CookieSigner, CookieSignerProvider}
+import play.api.libs.crypto.{CSRFTokenSigner, CryptoConfig}
 import play.api.libs.ws.WSClient
 import play.api.libs.ws.ahc.AhcWSClient
 import play.api.test._
@@ -26,7 +25,7 @@ import rendering.core.Renderer
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.{Failure, Success, Try}
 
-trait ConfiguredTestSuite extends TestSuite with ConfiguredServer with ConfiguredBrowser {
+trait ConfiguredTestSuite extends TestSuite with ConfiguredServer with ConfiguredBrowser with ExecutionContexts {
 
   lazy val webClient = new WebClient(BrowserVersion.CHROME)
   lazy val host = s"http://localhost:$port"
@@ -95,7 +94,6 @@ trait SingleServerSuite extends TestSuite with GuiceOneServerPerSuite with OneBr
     )
     ApplicationLoader.apply(context).load(context)
   }
-
 }
 
 object TestRequest {
@@ -105,12 +103,8 @@ object TestRequest {
   }
 }
 
-trait WithTestExecutionContext {
-  implicit val testExecutionContext: ExecutionContext = scala.concurrent.ExecutionContext.Implicits.global
-}
-
-trait WithTestApplicationContext {
-  implicit val testApplicationContext = ApplicationContext(Environment.simple(), ApplicationIdentity("tests"))
+trait WithTestContext {
+  implicit val testContext = ApplicationContext(Environment.simple(), ApplicationIdentity("tests"))
 }
 
 trait WithMaterializer {
@@ -127,7 +121,7 @@ trait WithTestWsClient {
   override def afterAll(): Unit = if(lazyWsClient.isDefined) lazyWsClient.close
 }
 
-trait WithTestContentApiClient extends WithTestExecutionContext {
+trait WithTestContentApiClient {
   def wsClient: WSClient
 
   val httpRecorder = new ContentApiHttpRecorder {
@@ -146,23 +140,24 @@ trait WithTestContentApiClient extends WithTestExecutionContext {
   lazy val testContentApiClient = new ContentApiClient(recorderHttpClient)
 }
 
+trait WithTestCryptoConfig {
+  val testCryptoConfig = CryptoConfig(secret = "this is the test secret")
+}
+
 trait WithTestCSRF {
   def app: Application
-  val httpConfiguration: HttpConfiguration = HttpConfiguration.createWithDefaults()
-  lazy val cookieSigner: CookieSigner = new CookieSignerProvider(httpConfiguration.secret).get
-  lazy val csrfTokenSigner: CSRFTokenSigner = new CSRFTokenSignerProvider(cookieSigner).get
   lazy val csrfConfig: CSRFConfig = CSRFConfig.fromConfiguration(app.configuration)
-  lazy val csrfAddToken = new CSRFAddToken(csrfConfig, csrfTokenSigner, httpConfiguration.session)
-  lazy val csrfCheck = new CSRFCheck(csrfConfig, csrfTokenSigner, httpConfiguration.session)
+  lazy val csrfAddToken = new CSRFAddToken(csrfConfig, app.injector.instanceOf[CSRFTokenSigner])
+  lazy val csrfCheck = new CSRFCheck(csrfConfig, app.injector.instanceOf[CSRFTokenSigner])
 }
 
 trait WithTestRenderer {
-  def testExecutionContext: ExecutionContext
+  def executionContext: ExecutionContext
 
   val testRenderer: Renderer = {
     new Renderer()(
       ActorSystem("TestRenderer"),
-      testExecutionContext,
+      executionContext,
       ApplicationContext(Environment.simple(), ApplicationIdentity("TestRenderer"))
     )
   }

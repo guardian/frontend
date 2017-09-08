@@ -15,18 +15,14 @@ import play.api.test.Helpers._
   with BeforeAndAfterAll
   with WithMaterializer
   with WithTestWsClient
-  with WithTestApplicationContext
+  with WithTestContext
   with WithTestContentApiClient {
 
   val articleUrl = "money/pensions"
   val crosswordsUrl = "crosswords"
 
   lazy val sectionsLookUp = new SectionsLookUp(testContentApiClient)
-  lazy val indexController = new IndexController(
-    testContentApiClient,
-    sectionsLookUp,
-    play.api.test.Helpers.stubControllerComponents()
-  )
+  lazy val indexController = new IndexController(testContentApiClient, sectionsLookUp)
 
   it should "Include organisation metadata" in {
     val result = indexController.render(articleUrl)(TestRequest(articleUrl))

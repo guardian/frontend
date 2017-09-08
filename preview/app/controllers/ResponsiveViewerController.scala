@@ -1,9 +1,9 @@
 package controllers
 
-import play.api.mvc.{BaseController, ControllerComponents}
+import play.api.mvc.{Action, Controller}
 
 
-class ResponsiveViewerController(val controllerComponents: ControllerComponents) extends BaseController {
+class ResponsiveViewerController extends Controller {
 
   def preview(path: String) = Action{ Ok(views.html.responsive_viewer(path)) }
 

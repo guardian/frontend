@@ -2,12 +2,11 @@ package tools
 
 import awswrappers.cloudwatch._
 import com.amazonaws.services.cloudwatch.model._
-import common.{AkkaAgent, Logging}
+import common.{AkkaAgent, ExecutionContexts, Logging}
 import org.joda.time.DateTime
 import tools.CloudWatch._
-
 import scala.collection.JavaConversions._
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 import scala.math.BigDecimal
 import scala.util.control.NonFatal
 
@@ -25,45 +24,39 @@ object AssetMetrics {
   private val rules = new Dimension().withName("Metric").withValue("Rules")
   private val selectors = new Dimension().withName("Metric").withValue("Total Selectors")
 
-  private def fetchMetric(metric: Metric, dimension: Dimension)(implicit executionContext: ExecutionContext): Future[GetMetricStatisticsResult] =
-    withErrorLogging(euWestClient.getMetricStatisticsFuture(new GetMetricStatisticsRequest()
-      .withStartTime(new DateTime().minusDays(timePeriodInDays).toDate)
-      .withEndTime(new DateTime().toDate)
-      .withPeriod(86400) //One day
-      .withStatistics("Average")
-      .withNamespace("Assets")
-      .withMetricName(metric.getMetricName)
-      .withDimensions(dimension)))
+  private def fetchMetric(metric: Metric, dimension: Dimension) = withErrorLogging(euWestClient.getMetricStatisticsFuture(new GetMetricStatisticsRequest()
+    .withStartTime(new DateTime().minusDays(timePeriodInDays).toDate)
+    .withEndTime(new DateTime().toDate)
+    .withPeriod(86400) //One day
+    .withStatistics("Average")
+    .withNamespace("Assets")
+    .withMetricName(metric.getMetricName)
+    .withDimensions(dimension)))
 
-  private def allMetrics()(implicit executionContext: ExecutionContext): Future[ListMetricsResult] =
-    withErrorLogging(euWestClient.listMetricsFuture(new ListMetricsRequest().withNamespace("Assets")))
+  private def allMetrics = withErrorLogging(euWestClient.listMetricsFuture(new ListMetricsRequest().withNamespace("Assets")))
 
-  private def metricResults(dimension: Dimension)(implicit executionContext: ExecutionContext): Future[List[GetMetricStatisticsResult]] =
-    allMetrics().flatMap { metricsList =>
-      Future.sequence {
-        metricsList.getMetrics
-          .filter(_.getDimensions.contains(dimension))
-          .toList
-          .map { metric =>
-            fetchMetric(metric, dimension)
-          }
-      }
+  private def metricResults(dimension: Dimension) = allMetrics.flatMap { metricsList =>
+    Future.sequence {
+      metricsList.getMetrics
+        .filter(_.getDimensions.contains(dimension))
+        .toList
+        .map { metric =>
+          fetchMetric(metric, dimension)
+        }
     }
+  }
 
-  private def metrics(dimension: Dimension, yLabel: String = "")(implicit executionContext: ExecutionContext): Future[List[AssetMetric]] =
-    metricResults(dimension).map(
-      _.map { result =>
-        AssetMetric(result.getLabel, result, yLabel)
-      }
-    )
+  private def metrics(dimension: Dimension, yLabel: String = "") = metricResults(dimension).map(_.map { result =>
+    AssetMetric(result.getLabel, result, yLabel)
+  })
 
   // Public methods
 
-  def sizeMetrics()(implicit executionContext: ExecutionContext): Future[List[AssetMetric]] = metrics(dimension = gzipped, yLabel = "Size").map(_.sortBy(m => (-m.change, m.name)))
+  def sizeMetrics = metrics(dimension = gzipped, yLabel = "Size").map(_.sortBy(m => (-m.change, m.name)))
 }
 
 
-object AssetMetricsCache extends Logging {
+object AssetMetricsCache extends ExecutionContexts with Logging {
 
   sealed trait ReportType
   object ReportTypes {
@@ -74,8 +67,8 @@ object AssetMetricsCache extends Logging {
 
   private def getReport(reportType: ReportType): Option[List[AssetMetric]] = cache().get(reportType)
 
-  def run()(implicit executionContext: ExecutionContext): Future[Unit] = {
-    AssetMetrics.sizeMetrics().map { metrics =>
+  def run(): Future[Unit] = {
+    AssetMetrics.sizeMetrics.map { metrics =>
       log.info("Successfully refreshed Asset Metrics data")
       cache.send(cache.get + (ReportTypes.sizeOfFiles -> metrics))
     }

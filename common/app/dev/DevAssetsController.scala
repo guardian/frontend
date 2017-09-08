@@ -2,16 +2,17 @@ package dev
 
 import akka.stream.scaladsl.StreamConverters
 import common.Assets.AssetNotFoundException
-import common.ImplicitControllerExecutionContext
+import common.ExecutionContexts
 import java.io.File
 
 import model.{Cached, NoCache}
 import model.Cached.WithoutRevalidationResult
 import play.api.{Environment, Mode}
 import play.api.http.HttpEntity
+import play.api.libs.MimeTypes
 import play.api.mvc._
 
-class DevAssetsController(val environment: Environment, val controllerComponents: ControllerComponents) extends BaseController with ImplicitControllerExecutionContext {
+class DevAssetsController(val environment: Environment) extends Controller with ExecutionContexts {
 
   // This allows:
   //  - unbuilt javascript to be loaded from src or public folders.
@@ -45,11 +46,10 @@ class DevAssetsController(val environment: Environment, val controllerComponents
         throw AssetNotFoundException(path)
       }
 
-    val contentType = controllerComponents
-      .fileMimeTypes
-      .forFileName(path)
-      .map { mime => if (mime.startsWith("text/")) s"$mime; charset=utf-8" else mime } // Add charset for text types
-      .getOrElse(BINARY)
+    val contentType = MimeTypes.forFileName(path) map { mime =>
+      // Add charset for text types
+      if (MimeTypes.isText(mime)) s"$mime; charset=utf-8" else mime
+    } getOrElse BINARY
 
       val result = Result(
         ResponseHeader(OK, Map(CONTENT_TYPE -> contentType)),

@@ -17,7 +17,7 @@ import play.api.test.FakeRequest
   with WithTestWsClient
   with WithTestContentApiClient {
 
-  lazy val moreOnMatchController = new MoreOnMatchController(testCompetitionsService, testContentApiClient, play.api.test.Helpers.stubControllerComponents())
+  lazy val moreOnMatchController = new MoreOnMatchController(testCompetitionsService, testContentApiClient)
 
   feature("Match Nav") {
 

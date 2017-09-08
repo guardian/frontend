@@ -5,14 +5,14 @@ import java.io.FileNotFoundException
 import helpers.ExceptionMatcher
 import org.scalatest.{FlatSpec, Matchers}
 import play.api.libs.json.{JsObject, JsString}
-import test.WithTestApplicationContext
+import test.WithTestContext
 
 import scala.util.Try
 
 class JavascriptRenderingTest
   extends FlatSpec
   with Matchers
-  with WithTestApplicationContext
+  with WithTestContext
   with ExceptionMatcher {
 
   case class TestJavascriptRendering(jsFile: String) extends JavascriptRendering {

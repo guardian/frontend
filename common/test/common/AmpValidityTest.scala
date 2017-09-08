@@ -18,7 +18,6 @@ trait AmpValidityTest
   with BeforeAndAfterAll
   with WithMaterializer
   with WithTestWsClient
-  with WithTestExecutionContext
   with ScalaFutures {
 
   val validatorUri = "https://cdn.ampproject.org/v0/validator.js"

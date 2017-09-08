@@ -21,7 +21,6 @@ object Video {
       path = blog.content.mainVideoCanonicalPath
     )
 
-    implicit val dateToTimestampWrites = play.api.libs.json.JodaWrites.JodaDateTimeNumberWrites
     Json.obj(
       "associatedMedia" -> Json.obj(
         "@type" -> "VideoObject",
