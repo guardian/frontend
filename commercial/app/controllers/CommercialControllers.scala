@@ -8,7 +8,6 @@ import commercial.model.merchandise.jobs.JobsAgent
 import commercial.model.merchandise.travel.TravelOffersAgent
 import contentapi.ContentApiClient
 import model.ApplicationContext
-import play.api.mvc.ControllerComponents
 
 trait CommercialControllers {
   def contentApiClient: ContentApiClient
@@ -19,7 +18,6 @@ trait CommercialControllers {
   def masterclassAgent: MasterclassAgent
   def travelOffersAgent: TravelOffersAgent
   def jobsAgent: JobsAgent
-  def controllerComponents: ControllerComponents
   implicit def appContext: ApplicationContext
   lazy val bookOffersController = wire[BookOffersController]
   lazy val contentApiOffersController = wire[ContentApiOffersController]

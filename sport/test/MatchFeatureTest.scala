@@ -1,14 +1,9 @@
 package test
 
-import org.scalatest.{DoNotDiscover, FeatureSpec, GivenWhenThen, Matchers}
-
+import org.scalatest.{DoNotDiscover, Matchers, GivenWhenThen, FeatureSpec}
 import scala.collection.JavaConversions._
 
-@DoNotDiscover class MatchFeatureTest
-  extends FeatureSpec
-  with GivenWhenThen
-  with Matchers
-  with ConfiguredTestSuite {
+@DoNotDiscover class MatchFeatureTest extends FeatureSpec with GivenWhenThen with Matchers with ConfiguredTestSuite {
 
   feature("MatchPage") {
 
@@ -19,42 +14,41 @@ import scala.collection.JavaConversions._
       goTo("/football/match/3834132") { browser =>
         import browser._
 
-        val teamsAndScore = $("h2").texts.map(_.replaceAll("\n", " "))
         Then("I should see the home team score")
-        teamsAndScore should contain("Stoke 1")
+        $("h2").getTexts should contain("Stoke 1")
 
         And("I should see the away team score")
-        teamsAndScore should contain("Villa 1")
+        $("h2").getTexts should contain("Villa 1")
 
         And("I should see the home possession")
-        el("[data-chart-class=chart--football-possession]").el(".bar-fight__bar--home").text should be("57")
+        findFirst("[data-chart-class=chart--football-possession]").findFirst(".bar-fight__bar--home").getText should be("57")
 
         And("I should see the away possession")
-        el("[data-chart-class=chart--football-possession]").el(".bar-fight__bar--away").text should be("43")
+        findFirst("[data-chart-class=chart--football-possession]").findFirst(".bar-fight__bar--away").getText should be("43")
 
         And("I should see the home corners")
-        el("[data-stat-type='corners'][class*='--home']").text should be("11")
+        findFirst("[data-stat-type='corners'][class*='--home']").getText should be("11")
 
         And("I should see the away corners")
-        el("[data-stat-type='corners'][class*='--away']").text should be("0")
+        findFirst("[data-stat-type='corners'][class*='--away']").getText should be("0")
 
         And("I should see the home fouls")
-        el("[data-stat-type='fouls'][class*='--home']").text should be("7")
+        findFirst("[data-stat-type='fouls'][class*='--home']").getText should be("7")
 
         And("I should see the away fouls")
-        el("[data-stat-type='fouls'][class*='--away']").text should be("15")
+        findFirst("[data-stat-type='fouls'][class*='--away']").getText should be("15")
 
         And("I should see the home offsides")
-        el("[data-stat-type='offsides'][class*='--home']").text should be("2")
+        findFirst("[data-stat-type='offsides'][class*='--home']").getText should be("2")
 
         And("I should see the away offsides")
-        el("[data-stat-type='offsides'][class*='--away']").text should be("2")
+        findFirst("[data-stat-type='offsides'][class*='--away']").getText should be("2")
 
         And("I should see the home team lineup")
-        el(".team-list").text should include("Mame Diouf")
+        findFirst(".team-list").getText should include("Mame Diouf")
 
         And("I should see the away team lineup")
-        $(".team-list")(1).text should include("Gabriel Agbonlahor")
+        $(".team-list")(1).getText should include("Gabriel Agbonlahor")
       }
     }
   }

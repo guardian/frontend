@@ -1,11 +1,11 @@
 package controllers
 
-import common.{ImplicitControllerExecutionContext, Logging}
+import common.{ExecutionContexts, Logging}
 import implicits.{Dates, ItemResponses}
 import model.ApplicationContext
 import org.joda.time.format.DateTimeFormat
 import org.joda.time.{DateTime, DateTimeZone}
-import play.api.mvc.{Action, BaseController, ControllerComponents}
+import play.api.mvc.{Action, Controller}
 import services._
 
 import scala.concurrent.Future
@@ -13,11 +13,9 @@ import scala.concurrent.Future
 class PublicationController(
   bookAgent: NewspaperBookTagAgent,
   bookSectionAgent: NewspaperBookSectionTagAgent,
-  articleController: ArticleController,
-  val controllerComponents: ControllerComponents
-)(implicit context: ApplicationContext)
-  extends BaseController
-  with ImplicitControllerExecutionContext
+  articleController: ArticleController
+  )(implicit context: ApplicationContext) extends Controller
+  with ExecutionContexts
   with ItemResponses
   with Dates
   with Logging {

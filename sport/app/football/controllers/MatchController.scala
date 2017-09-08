@@ -1,6 +1,7 @@
 package football.controllers
 
 import common._
+import conf._
 import feed.CompetitionsService
 import implicits.{Football, Requests}
 import model.Cached.WithoutRevalidationResult
@@ -9,11 +10,11 @@ import model._
 import org.joda.time.format.DateTimeFormat
 import pa.{FootballMatch, LineUp, LineUpTeam}
 import play.api.libs.json._
-import play.api.mvc.{BaseController, ControllerComponents}
+import play.api.mvc.{Action, Controller}
 
 import scala.concurrent.Future
 
-case class MatchPage(theMatch: FootballMatch, lineUp: LineUp) extends StandalonePage with Football {
+case class MatchPage(theMatch: FootballMatch, lineUp: LineUp) extends StandalonePage with Football with ExecutionContexts {
   lazy val matchStarted = theMatch.isLive || theMatch.isResult
   lazy val hasLineUp = lineUp.awayTeam.players.nonEmpty && lineUp.homeTeam.players.nonEmpty
 
@@ -44,11 +45,7 @@ case class MatchPage(theMatch: FootballMatch, lineUp: LineUp) extends Standalone
   )
 }
 
-class MatchController(
-  competitionsService: CompetitionsService,
-  val controllerComponents: ControllerComponents
-)(implicit context: ApplicationContext)
-  extends BaseController with Football with Requests with Logging with ImplicitControllerExecutionContext {
+class MatchController(competitionsService: CompetitionsService)(implicit context: ApplicationContext) extends Controller with Football with Requests with Logging with ExecutionContexts {
 
   private val dateFormat = DateTimeFormat.forPattern("yyyyMMMdd")
 

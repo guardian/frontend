@@ -1,15 +1,19 @@
 package common
 
 import akka.agent.Agent
-
 import scala.concurrent.duration._
-import play.api.{Environment, Mode}
-
+import play.api.{Mode, Environment}
 import scala.concurrent.ExecutionContext
 import akka.actor.ActorSystem
 
-object AkkaAgent {
-  implicit lazy val executionContext: ExecutionContext = scala.concurrent.ExecutionContext.Implicits.global //TODO
+object ExecutionContexts extends ExecutionContexts
+
+trait ExecutionContexts {
+  //https://www.playframework.com/documentation/2.6.x/Migration26#execution
+  implicit lazy val executionContext: ExecutionContext = play.api.libs.concurrent.Execution.Implicits.defaultContext
+}
+
+object AkkaAgent extends ExecutionContexts {
   def apply[T](value: T): Agent[T] = Agent(value)
 }
 

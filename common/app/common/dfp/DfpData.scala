@@ -7,7 +7,6 @@ import org.joda.time.DateTime.now
 import org.joda.time.format.ISODateTimeFormat
 import play.api.libs.functional.syntax._
 import play.api.libs.json._
-import play.api.libs.json.JodaReads._
 
 import scala.language.postfixOps
 
@@ -345,7 +344,6 @@ object GuCreative {
     (mapById(old) ++ mapById(recent)).values.toSeq
   }
 
-  implicit val dateToTimestampWrites = play.api.libs.json.JodaWrites.JodaDateTimeNumberWrites
   implicit val guCreativeFormats: Format[GuCreative] = Json.format[GuCreative]
 }
 

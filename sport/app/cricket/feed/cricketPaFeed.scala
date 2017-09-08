@@ -1,13 +1,12 @@
 package conf.cricketPa
 
 import akka.actor.ActorSystem
-import common.Logging
+import common.{ExecutionContexts, Logging}
 import cricket.feed.{CricketThrottler, ThrottledTask}
 import org.joda.time.LocalDate
-import org.joda.time.format.{DateTimeFormat, DateTimeFormatter}
+import org.joda.time.format.{DateTimeFormatter, DateTimeFormat}
 import play.api.libs.ws.WSClient
-
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 import scala.xml.XML
 
 case class CricketFeedException(message: String) extends RuntimeException(message)
@@ -16,18 +15,18 @@ object PaFeed {
   val dateFormat: DateTimeFormatter = DateTimeFormat.forPattern("yyyy-MM-dd")
 }
 
-class PaFeed(wsClient: WSClient, actorSystem: ActorSystem) extends Logging {
+class PaFeed(wsClient: WSClient, actorSystem: ActorSystem) extends ExecutionContexts with Logging {
 
   private val paEndpoint = "http://cricket.api.press.net/v1"
   private val credentials = conf.SportConfiguration.pa.cricketKey.map { ("Apikey", _) }
   private val xmlContentType = ("Accept","application/xml")
   private implicit val throttler = new CricketThrottler(actorSystem)
 
-  private def getMatchPaResponse(apiMethod: String)(implicit executionContext: ExecutionContext): Future[String] = {
+  private def getMatchPaResponse(apiMethod: String) : Future[String] = {
     credentials.map ( header => ThrottledTask {
       val endpoint = s"$paEndpoint/$apiMethod"
       wsClient.url(endpoint)
-        .withHttpHeaders(header, xmlContentType)
+        .withHeaders(header, xmlContentType)
         .get
         .map { response =>
           response.status match {
@@ -41,7 +40,7 @@ class PaFeed(wsClient: WSClient, actorSystem: ActorSystem) extends Logging {
     }).getOrElse(Future.failed(CricketFeedException("No cricket api key found")))
   }
 
-  def getMatch(matchId: String)(implicit executionContext: ExecutionContext): Future[cricketModel.Match] = {
+  def getMatch(matchId: String): Future[cricketModel.Match] = {
     for {
       lineups: String  <- getMatchPaResponse(s"match/$matchId/line-ups")
       details: String <- getMatchPaResponse(s"match/$matchId")
@@ -51,7 +50,7 @@ class PaFeed(wsClient: WSClient, actorSystem: ActorSystem) extends Logging {
     }
   }
 
-  def getMatchIds(team: CricketTeam)(implicit executionContext: ExecutionContext): Future[Seq[String]] = {
+  def getMatchIds(team: CricketTeam): Future[Seq[String]] = {
 
     // Get fixtures for England for today.
     val fixtures = getTeamMatches(team, "fixtures", LocalDate.now, LocalDate.now)
@@ -62,15 +61,15 @@ class PaFeed(wsClient: WSClient, actorSystem: ActorSystem) extends Logging {
     Future.sequence(Seq(fixtures, results)).map(_.flatten)
   }
 
-  private def getTeamMatches(team: CricketTeam, matchType: String, startDate: LocalDate, endDate: LocalDate)(implicit executionContext: ExecutionContext): Future[Seq[String]] =
+  private def getTeamMatches(team: CricketTeam, matchType: String, startDate: LocalDate, endDate: LocalDate): Future[Seq[String]] =
     credentials.map ( header => ThrottledTask {
       val start = PaFeed.dateFormat.print(startDate)
       val end = PaFeed.dateFormat.print(endDate)
       val endpoint = s"$paEndpoint/team/${team.paId}/$matchType"
 
       wsClient.url(endpoint)
-        .withHttpHeaders(header, xmlContentType)
-        .withQueryStringParameters(("startDate", start),("endDate", end))
+        .withHeaders(header, xmlContentType)
+        .withQueryString(("startDate", start),("endDate", end))
         .get
         .map { response =>
 

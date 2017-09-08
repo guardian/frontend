@@ -1,6 +1,6 @@
 package controllers
 
-import common.ImplicitControllerExecutionContext
+import common.ExecutionContexts
 import model.{ApplicationContext, IdentityPage, NoCache}
 import play.api.mvc._
 import play.api.data.{Form, Forms}
@@ -11,30 +11,27 @@ import form.Mappings
 import idapiclient.IdApiClient
 import play.filters.csrf.{CSRFAddToken, CSRFCheck}
 import actions.AuthenticatedActions
-import play.api.i18n.{Messages, MessagesProvider}
-
+import play.api.i18n.{I18nSupport, Messages, MessagesApi}
+import play.api.libs.crypto.CryptoConfig
 import scala.concurrent.Future
 import idapiclient.requests.PasswordUpdate
-import play.api.http.HttpConfiguration
 
-class ChangePasswordController(
-  api: IdApiClient,
-  authenticatedActions: AuthenticatedActions,
-  authenticationService: AuthenticationService,
-  idRequestParser: IdRequestParser,
-  idUrlBuilder: IdentityUrlBuilder,
-  csrfCheck: CSRFCheck,
-  csrfAddToken: CSRFAddToken,
-  val controllerComponents: ControllerComponents,
-  val httpConfiguration: HttpConfiguration
-)(implicit context: ApplicationContext)
-  extends BaseController with ImplicitControllerExecutionContext with SafeLogging with Mappings with implicits.Forms {
+class ChangePasswordController( api: IdApiClient,
+                                authenticatedActions: AuthenticatedActions,
+                                authenticationService: AuthenticationService,
+                                idRequestParser: IdRequestParser,
+                                idUrlBuilder: IdentityUrlBuilder,
+                                val messagesApi: MessagesApi,
+                                csrfCheck: CSRFCheck,
+                                csrfAddToken: CSRFAddToken,
+                                val cryptoConfig: CryptoConfig)(implicit context: ApplicationContext)
+  extends Controller with ExecutionContexts with SafeLogging with Mappings with implicits.Forms with I18nSupport{
 
-  import authenticatedActions.authAction
+    import authenticatedActions.authAction
 
   val page = IdentityPage("/password/change", "Change Password")
 
-  private val passwordForm = Form(
+  val passwordForm = Form(
     mapping(
       ("oldPassword", optional(Forms.text)),
       ("newPassword1", Forms.text),
@@ -42,7 +39,7 @@ class ChangePasswordController(
     )(PasswordFormData.apply)(PasswordFormData.unapply)
   )
 
-  private def passwordFormWithConstraints(implicit messagesProvider: MessagesProvider): Form[PasswordFormData] = Form(
+  val passwordFormWithConstraints = Form(
     mapping(
       ("oldPassword", optional(idPassword)),
       ("newPassword1", idPassword),

@@ -1,19 +1,20 @@
 package form
 
-import play.api.data.{Form, Mapping}
+import play.api.data.{Mapping, Form}
 import com.gu.identity.model.User
 import idapiclient.UserUpdate
-import play.api.i18n.MessagesProvider
 
-trait UserFormMapping[T <: UserFormData] extends Mappings {
+trait UserFormMapping[T <: UserFormData] extends Mappings{
 
-  private def form(implicit messagesProvider: MessagesProvider): Form[T] = Form(formMapping)
+  lazy val form: Form[T] = Form(formMapping)
 
-  def bindForm(user: User)(implicit messagesProvider: MessagesProvider): Form[T] = form fill fromUser(user)
+  def bindFromRequest()(implicit request: play.api.mvc.Request[_]): Form[T] = form.bindFromRequest()
+
+  def bindForm(user: User): Form[T] = form fill fromUser(user)
 
   def mapContext(context: String): String = contextMap.getOrElse(context, context)
 
-  protected def formMapping(implicit messagesProvider: MessagesProvider): Mapping[T]
+  protected def formMapping: Mapping[T]
 
   protected def fromUser(user: User): T
 

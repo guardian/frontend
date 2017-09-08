@@ -3,19 +3,19 @@ package tools
 import awswrappers.cloudwatch._
 import com.amazonaws.services.cloudwatch.{AmazonCloudWatchAsync, AmazonCloudWatchAsyncClient, AmazonCloudWatchAsyncClientBuilder}
 import com.amazonaws.services.cloudwatch.model._
-import common.Logging
+import common.{ExecutionContexts, Logging}
 import conf.Configuration
 import conf.Configuration._
 import org.joda.time.DateTime
 
 import scala.collection.JavaConversions._
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
 case class MaximumMetric(metric: GetMetricStatisticsResult) {
   lazy val max: Double = metric.getDatapoints.headOption.map(_.getMaximum.doubleValue()).getOrElse(0.0)
 }
 
-object CloudWatch extends Logging {
+object CloudWatch extends Logging with ExecutionContexts {
   def shutdown(): Unit = {
     euWestClient.shutdown()
     defaultClient.shutdown()
@@ -94,7 +94,7 @@ object CloudWatch extends Logging {
     "head.index.css"
   )
 
-  def withErrorLogging[A](future: Future[A])(implicit executionContext: ExecutionContext): Future[A] = {
+  def withErrorLogging[A](future: Future[A]): Future[A] = {
     future onFailure {
       case exception: Exception =>
         log.error(s"CloudWatch error: ${exception.getMessage}", exception)
@@ -102,8 +102,7 @@ object CloudWatch extends Logging {
     future
   }
 
-  def fetchLatencyMetric(loadBalancer: LoadBalancer)(implicit executionContext: ExecutionContext): Future[GetMetricStatisticsResult] =
-    withErrorLogging(euWestClient.getMetricStatisticsFuture(new GetMetricStatisticsRequest()
+  def fetchLatencyMetric(loadBalancer: LoadBalancer): Future[GetMetricStatisticsResult] = withErrorLogging(euWestClient.getMetricStatisticsFuture(new GetMetricStatisticsRequest()
       .withStartTime(new DateTime().minusHours(2).toDate)
       .withEndTime(new DateTime().toDate)
       .withPeriod(60)
@@ -114,7 +113,7 @@ object CloudWatch extends Logging {
       .withDimensions(new Dimension().withName("LoadBalancerName").withValue(loadBalancer.id))
     ))
 
-  private def latency(loadBalancers: Seq[LoadBalancer])(implicit executionContext: ExecutionContext): Future[Seq[AwsLineChart]] = {
+  private def latency(loadBalancers: Seq[LoadBalancer]): Future[Seq[AwsLineChart]] = {
     Future.traverse(loadBalancers) { loadBalancer =>
       fetchLatencyMetric(loadBalancer).map { metricsResult =>
         new AwsLineChart(loadBalancer.name, Seq("Time", "latency (ms)"), chartColours(loadBalancer.project), metricsResult)
@@ -122,20 +121,19 @@ object CloudWatch extends Logging {
     }
   }
 
-  def shortStackLatency()(implicit executionContext: ExecutionContext): Future[Seq[AwsLineChart]] = latency(primaryLoadBalancers)
-  def fullStackLatency()(implicit executionContext: ExecutionContext): Future[Seq[AwsLineChart]] = latency(primaryLoadBalancers ++ secondaryLoadBalancers)
+  def shortStackLatency: Future[Seq[AwsLineChart]] = latency(primaryLoadBalancers)
+  def fullStackLatency: Future[Seq[AwsLineChart]] = latency(primaryLoadBalancers ++ secondaryLoadBalancers)
 
-  def fetchOkMetric(loadBalancer: LoadBalancer)(implicit executionContext: ExecutionContext): Future[GetMetricStatisticsResult] =
-    withErrorLogging(euWestClient.getMetricStatisticsFuture(new GetMetricStatisticsRequest()
-      .withStartTime(new DateTime().minusHours(2).toDate)
-      .withEndTime(new DateTime().toDate)
-      .withPeriod(60)
-      .withStatistics("Sum")
-      .withNamespace("AWS/ELB")
-      .withMetricName("HTTPCode_Backend_2XX")
-      .withDimensions(new Dimension().withName("LoadBalancerName").withValue(loadBalancer.id))))
+  def fetchOkMetric(loadBalancer: LoadBalancer): Future[GetMetricStatisticsResult] = withErrorLogging(euWestClient.getMetricStatisticsFuture(new GetMetricStatisticsRequest()
+    .withStartTime(new DateTime().minusHours(2).toDate)
+    .withEndTime(new DateTime().toDate)
+    .withPeriod(60)
+    .withStatistics("Sum")
+    .withNamespace("AWS/ELB")
+    .withMetricName("HTTPCode_Backend_2XX")
+    .withDimensions(new Dimension().withName("LoadBalancerName").withValue(loadBalancer.id))))
 
-  def dualOkLatency(loadBalancers: Seq[LoadBalancer])(implicit executionContext: ExecutionContext): Future[Seq[AwsDualYLineChart]] = {
+  def dualOkLatency(loadBalancers: Seq[LoadBalancer]): Future[Seq[AwsDualYLineChart]] = {
     Future.traverse(loadBalancers) { loadBalancer =>
       for {
         oks <- fetchOkMetric(loadBalancer)
@@ -148,19 +146,18 @@ object CloudWatch extends Logging {
     }
   }
 
-  def dualOkLatencyFullStack()(implicit executionContext: ExecutionContext): Future[Seq[AwsDualYLineChart]] = dualOkLatency(primaryLoadBalancers ++ secondaryLoadBalancers)
+  def dualOkLatencyFullStack: Future[Seq[AwsDualYLineChart]] = dualOkLatency(primaryLoadBalancers ++ secondaryLoadBalancers)
 
-  def fetchHealthyHostMetric(loadBalancer: LoadBalancer)(implicit executionContext: ExecutionContext): Future[GetMetricStatisticsResult] =
-    withErrorLogging(euWestClient.getMetricStatisticsFuture(new GetMetricStatisticsRequest()
-      .withStartTime(new DateTime().minusHours(2).toDate)
-      .withEndTime(new DateTime().toDate)
-      .withPeriod(60)
-      .withStatistics("Maximum")
-      .withNamespace("AWS/ELB")
-      .withMetricName("HealthyHostCount")
-      .withDimensions(new Dimension().withName("LoadBalancerName").withValue(loadBalancer.id))))
+  def fetchHealthyHostMetric(loadBalancer: LoadBalancer): Future[GetMetricStatisticsResult] = withErrorLogging(euWestClient.getMetricStatisticsFuture(new GetMetricStatisticsRequest()
+    .withStartTime(new DateTime().minusHours(2).toDate)
+    .withEndTime(new DateTime().toDate)
+    .withPeriod(60)
+    .withStatistics("Maximum")
+    .withNamespace("AWS/ELB")
+    .withMetricName("HealthyHostCount")
+    .withDimensions(new Dimension().withName("LoadBalancerName").withValue(loadBalancer.id))))
 
-  def fastlyErrors()(implicit executionContext: ExecutionContext) = Future.traverse(fastlyMetrics) { case (graphTitle, metric) =>
+  def fastlyErrors = Future.traverse(fastlyMetrics) { case (graphTitle, metric) =>
     withErrorLogging(euWestClient.getMetricStatisticsFuture(new GetMetricStatisticsRequest()
       .withStartTime(new DateTime().minusHours(6).toDate)
       .withEndTime(new DateTime().toDate)
@@ -173,7 +170,7 @@ object CloudWatch extends Logging {
     }
   }
 
-  def cost()(implicit executionContext: ExecutionContext) = withErrorLogging(defaultClient.getMetricStatisticsFuture(new GetMetricStatisticsRequest()
+  def cost = withErrorLogging(defaultClient.getMetricStatisticsFuture(new GetMetricStatisticsRequest()
     .withNamespace("AWS/Billing")
     .withMetricName("EstimatedCharges")
     .withStartTime(new DateTime().toLocalDate.toDate)
@@ -182,7 +179,7 @@ object CloudWatch extends Logging {
     .withPeriod(60 * 60 * 24)
     .withDimensions(new Dimension().withName("Currency").withValue("USD")))).map(MaximumMetric.apply)
 
-  def fastlyHitMissStatistics()(implicit executionContext: ExecutionContext) = Future.traverse(fastlyHitMissMetrics) { case (graphTitle, region) =>
+  def fastlyHitMissStatistics = Future.traverse(fastlyHitMissMetrics) { case (graphTitle, region) =>
     for {
       hits <- withErrorLogging(euWestClient.getMetricStatisticsFuture(new GetMetricStatisticsRequest()
         .withStartTime(new DateTime().minusHours(6).toDate)
@@ -206,7 +203,7 @@ object CloudWatch extends Logging {
     } yield new AwsLineChart(graphTitle, Seq("Time", "Hits", "Misses"), ChartFormat(Colour.success, Colour.error), hits, misses)
   }
 
-  def confidenceGraph(metricName: String)(implicit executionContext: ExecutionContext): Future[AwsLineChart] = for {
+  def confidenceGraph(metricName: String): Future[AwsLineChart] = for {
     percentConversion <- withErrorLogging(euWestClient.getMetricStatisticsFuture(new GetMetricStatisticsRequest()
       .withStartTime(new DateTime().minusWeeks(2).toDate)
       .withEndTime(new DateTime().toDate)
@@ -217,11 +214,11 @@ object CloudWatch extends Logging {
       .withDimensions(stage)))
   } yield new AwsLineChart(metricName, Seq("Time", "%"), ChartFormat.SingleLineBlue, percentConversion)
 
-  def ophanConfidence()(implicit executionContext: ExecutionContext): Future[AwsLineChart] = confidenceGraph("ophan-percent-conversion")
+  def ophanConfidence: Future[AwsLineChart] = confidenceGraph("ophan-percent-conversion")
 
-  def googleConfidence()(implicit executionContext: ExecutionContext): Future[AwsLineChart] = confidenceGraph("google-percent-conversion")
+  def googleConfidence: Future[AwsLineChart] = confidenceGraph("google-percent-conversion")
 
-  def routerBackend50x()(implicit executionContext: ExecutionContext): Future[AwsLineChart] = {
+  def routerBackend50x = {
     val dimension = new Dimension()
       .withName("LoadBalancerName")
       .withValue(LoadBalancer("frontend-router").fold("unknown")(_.id))
@@ -239,18 +236,17 @@ object CloudWatch extends Logging {
 
   object headlineTests {
 
-    private def get(metricName: String)(implicit executionContext: ExecutionContext): Future[GetMetricStatisticsResult] =
-      euWestClient.getMetricStatisticsFuture(new GetMetricStatisticsRequest()
-        .withStartTime(new DateTime().minusHours(6).toDate)
-        .withEndTime(new DateTime().toDate)
-        .withPeriod(60)
-        .withStatistics("Sum")
-        .withNamespace("Diagnostics")
-        .withMetricName(metricName)
-        .withDimensions(stage)
-      )
+    private def get(metricName: String) = euWestClient.getMetricStatisticsFuture(new GetMetricStatisticsRequest()
+      .withStartTime(new DateTime().minusHours(6).toDate)
+      .withEndTime(new DateTime().toDate)
+      .withPeriod(60)
+      .withStatistics("Sum")
+      .withNamespace("Diagnostics")
+      .withMetricName(metricName)
+      .withDimensions(stage)
+    )
 
-    def control()(implicit executionContext: ExecutionContext): Future[AwsLineChart] = withErrorLogging(
+    def control = withErrorLogging(
       for {
         viewed <- get("headlines-control-seen")
         clicked <- get("headlines-control-clicked")
@@ -263,7 +259,7 @@ object CloudWatch extends Logging {
       )
     )
 
-    def variant()(implicit executionContext: ExecutionContext): Future[AwsLineChart] = withErrorLogging(
+    def variant = withErrorLogging(
       for {
         viewed <- get("headlines-variant-seen")
         clicked <- get("headlines-variant-clicked")
@@ -277,14 +273,14 @@ object CloudWatch extends Logging {
     )
   }
 
-  def AbMetricNames()(implicit executionContext: ExecutionContext) = {
+  def AbMetricNames() = {
     withErrorLogging(euWestClient.listMetricsFuture(new ListMetricsRequest()
       .withNamespace("AbTests")
       .withDimensions(stageFilter)
     ))
   }
 
-  def eventualAdResponseConfidenceGraph()(implicit executionContext: ExecutionContext): Future[AwsLineChart] = {
+  def eventualAdResponseConfidenceGraph: Future[AwsLineChart] = {
 
     def getMetric(metricName: String): Future[GetMetricStatisticsResult] = {
       val now = DateTime.now()

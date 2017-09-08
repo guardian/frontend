@@ -1,9 +1,7 @@
 package idapiclient
 
-
+import common.ExecutionContexts
 import conf.IdentityConfiguration
 
-import scala.concurrent.ExecutionContext
-
-class IdApiClient(http: IdDispatchAsyncHttpClient, jsonParser: IdApiJsonBodyParser, conf: IdentityConfiguration)(implicit val executionContext: ExecutionContext)
-  extends IdApi(http, jsonParser, conf)
+class IdApiClient(http: IdDispatchAsyncHttpClient, jsonParser: IdApiJsonBodyParser, conf: IdentityConfiguration)
+  extends IdApi(http, jsonParser, conf) with ExecutionContexts

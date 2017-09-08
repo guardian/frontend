@@ -2,24 +2,22 @@ package form
 
 import com.google.i18n.phonenumbers.PhoneNumberUtil
 import com.gu.identity.model.TelephoneNumber
-
 import scala.util._
 import play.api.data.Forms._
-import play.api.data.Mapping
-
 import scala.util.Success
 import scala.util.Failure
-import play.api.i18n.{Messages, MessagesProvider}
+import play.api.i18n.{Messages, I18nSupport}
 
-trait TelephoneNumberMapping {
+trait TelephoneNumberMapping extends I18nSupport {
 
-  def telephoneNumberMapping(implicit messagesProvider: MessagesProvider): Mapping[TelephoneNumberFormData] = mapping(
+  val telephoneNumberMapping = mapping(
     "countryCode" -> optional(text),
     "localNumber" -> optional(text)
   )(TelephoneNumberFormData.apply)(TelephoneNumberFormData.unapply) verifying (
     Messages("error.telephoneNumber"),
-    data => data.isValid
-  )
+    {
+      data => data.isValid }
+    )
 
 }
 

@@ -15,17 +15,13 @@ import services.OphanApi
   with WithMaterializer
   with WithTestWsClient
   with WithTestContentApiClient
-  with WithTestApplicationContext {
+  with WithTestContext {
 
   val article = "uk/2012/aug/07/woman-torture-burglary-waterboard-surrey"
   val badArticle = "i/am/not/here"
   val articleWithoutRelated = "childrens-books-site/2016/may/17/picasso-ed-vere"
 
-  lazy val relatedController = new RelatedController(
-    testContentApiClient,
-    new MostReadAgent(new OphanApi(wsClient)),
-    play.api.test.Helpers.stubControllerComponents()
-  )
+  lazy val relatedController = new RelatedController(testContentApiClient, new MostReadAgent(new OphanApi(wsClient)))
 
   it should "serve JSON when .json format is supplied" in {
     val fakeRequest = FakeRequest(GET, s"/related/$article.json")

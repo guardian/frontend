@@ -6,53 +6,48 @@ import org.joda.time.LocalDate
 import common._
 import model.{Competition, TeamNameBuilder}
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
 
-trait Lineups extends Logging {
+trait Lineups extends ExecutionContexts with Logging {
   def footballClient: FootballClient
   def competitions: Competitions
   def teamNameBuilder = new TeamNameBuilder(competitions)
-  def getLineup(theMatch: FootballMatch)(implicit executionContext: ExecutionContext): Future[LineUp] =
-    footballClient
-      .lineUp(theMatch.id)
-      .map { m =>
-        val homeTeam = m.homeTeam.copy(name = teamNameBuilder.withTeam(m.homeTeam))
-        val awayTeam = m.awayTeam.copy(name = teamNameBuilder.withTeam(m.awayTeam))
-        LineUp(homeTeam, awayTeam, m.homeTeamPossession)
-      }
-      .recover(footballClient.logErrors)
+  def getLineup(theMatch: FootballMatch) = footballClient.lineUp(theMatch.id).map{ m =>
+    val homeTeam = m.homeTeam.copy(name = teamNameBuilder.withTeam(m.homeTeam))
+    val awayTeam = m.awayTeam.copy(name = teamNameBuilder.withTeam(m.awayTeam))
+    LineUp(homeTeam, awayTeam, m.homeTeamPossession)
+  }
+    .recover(footballClient.logErrors)
 }
 
-trait LiveMatches extends Logging {
+trait LiveMatches extends ExecutionContexts with Logging {
 
   def footballClient: FootballClient
   def teamNameBuilder: TeamNameBuilder
 
-  def getLiveMatches()(implicit executionContext: ExecutionContext): Future[Map[String, Seq[MatchDay]]] =
-    footballClient.matchDay(LocalDate.now)
-      .map { todaysMatches: List[MatchDay] =>
+  def getLiveMatches: Future[Map[String, Seq[MatchDay]]] = footballClient.matchDay(LocalDate.now).map{ todaysMatches: List[MatchDay] =>
 
-        val matchesWithCompetitions = todaysMatches.filter(_.competition.isDefined)
+    val matchesWithCompetitions = todaysMatches.filter(_.competition.isDefined)
 
-        val matchesWithCleanedTeams = matchesWithCompetitions.map{ m =>
-          val homeTeam = m.homeTeam.copy(name = teamNameBuilder.withTeam(m.homeTeam))
-          val awayTeam = m.awayTeam.copy(name = teamNameBuilder.withTeam(m.awayTeam))
-          m.copy(homeTeam = homeTeam, awayTeam = awayTeam)
-        }
+    val matchesWithCleanedTeams = matchesWithCompetitions.map{ m =>
+      val homeTeam = m.homeTeam.copy(name = teamNameBuilder.withTeam(m.homeTeam))
+      val awayTeam = m.awayTeam.copy(name = teamNameBuilder.withTeam(m.awayTeam))
+      m.copy(homeTeam = homeTeam, awayTeam = awayTeam)
+    }
 
-        // we have checked above that the competition does exist for these matches
-        matchesWithCleanedTeams.groupBy(_.competition.head.id)
-      }
-      .recover(footballClient.logErrors)
+    // we have checked above that the competition does exist for these matches
+    matchesWithCleanedTeams.groupBy(_.competition.head.id)
+  }
+    .recover(footballClient.logErrors)
 }
 
-trait LeagueTables extends Logging {
+trait LeagueTables extends ExecutionContexts with Logging {
 
   def footballClient: FootballClient
   def teamNameBuilder: TeamNameBuilder
 
-  def getLeagueTable(competition: Competition)(implicit executionContext: ExecutionContext): Future[List[LeagueTableEntry]] = {
+  def getLeagueTable(competition: Competition) = {
     log.info(s"refreshing table for ${competition.id}")
     footballClient.leagueTable(competition.id, new LocalDate).map {
       _.map { t =>
@@ -64,12 +59,12 @@ trait LeagueTables extends Logging {
   }
 }
 
-trait Fixtures extends Logging {
+trait Fixtures extends ExecutionContexts with Logging {
 
   def footballClient: FootballClient
   def teamNameBuilder: TeamNameBuilder
 
-  def getFixtures(competition: Competition)(implicit executionContext: ExecutionContext): Future[List[Fixture]] = {
+  def getFixtures(competition: Competition) = {
     log.info(s"refreshing fixtures for ${competition.id}")
     footballClient.fixtures(competition.id).map {
       _.map { f =>
@@ -82,12 +77,12 @@ trait Fixtures extends Logging {
   }
 }
 
-trait Results extends Logging with implicits.Collections {
+trait Results extends ExecutionContexts with Logging with implicits.Collections {
 
   def footballClient: FootballClient
   def teamNameBuilder: TeamNameBuilder
 
-  def getResults(competition: Competition)(implicit executionContext: ExecutionContext): Future[List[Result]] = {
+  def getResults(competition: Competition) = {
     log.info(s"refreshing results for ${competition.id} with startDate: ${competition.startDate}")
     //it is possible that we do not know the startdate of the competition yet (concurrency)
     //in that case just get the last 30 days results, the start date will catch up soon enough
@@ -110,11 +105,11 @@ class CompetitionAgent(val footballClient: FootballClient, val teamNameBuilder: 
 
   def update(competition: Competition) = agent.send(competition)
 
-  def refreshFixtures()(implicit executionContext: ExecutionContext) = getFixtures(competition) foreach addMatches
+  def refreshFixtures() = getFixtures(competition) foreach addMatches
 
-  def refreshResults()(implicit executionContext: ExecutionContext) = getResults(competition) foreach addMatches
+  def refreshResults() = getResults(competition) foreach addMatches
 
-  def refreshLeagueTable()(implicit executionContext: ExecutionContext) = getLeagueTable(competition) foreach { entries =>
+  def refreshLeagueTable() = getLeagueTable(competition) foreach { entries =>
     agent.send{ _.copy(leagueTable = entries) }
   }
 
@@ -138,7 +133,7 @@ class CompetitionAgent(val footballClient: FootballClient, val teamNameBuilder: 
     comp.copy(matches = (newMatches ++ comp.matches).sorted(MatchStatusOrdering).distinctBy(_.id).sortByDate)
   }
 
-  def refresh()(implicit executionContext: ExecutionContext) {
+  def refresh() {
     refreshFixtures()
     refreshResults()
     refreshLeagueTable()

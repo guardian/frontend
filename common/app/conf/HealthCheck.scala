@@ -7,7 +7,7 @@ import org.joda.time.DateTime
 import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.mvc._
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 import scala.concurrent.duration._
 import scala.util.control.NonFatal
 
@@ -62,14 +62,14 @@ private[conf] case class HealthCheckResult(url: String,
     .getOrElse("Never expires")
 }
 
-private[conf] trait HealthCheckFetcher extends Logging {
+private[conf] trait HealthCheckFetcher extends ExecutionContexts with Logging {
 
   val wsClient: WSClient
 
-  private[conf] def fetchResult(baseUrl: String, healthCheck: SingleHealthCheck)(implicit executionContext: ExecutionContext): Future[HealthCheckResult] = {
+  private[conf] def fetchResult(baseUrl: String, healthCheck: SingleHealthCheck): Future[HealthCheckResult] = {
 
     wsClient.url(s"$baseUrl${healthCheck.path}")
-      .withHttpHeaders("User-Agent" -> "GU-HealthChecker", "X-Gu-Management-Healthcheck" -> "true")
+      .withHeaders("User-Agent" -> "GU-HealthChecker", "X-Gu-Management-Healthcheck" -> "true")
       .withRequestTimeout(4.seconds).get()
       .map {
         response: WSResponse =>
@@ -87,11 +87,9 @@ private[conf] trait HealthCheckFetcher extends Logging {
 
   }
 
-  protected def fetchResults(
-    port: Int,
-    preconditionMaybe: Option[HealthCheckPrecondition],
-    healthChecks: SingleHealthCheck*
-  )(implicit executionContext: ExecutionContext): Future[Seq[HealthCheckResult]] = {
+  protected def fetchResults(port: Int,
+                             preconditionMaybe: Option[HealthCheckPrecondition],
+                             healthChecks: SingleHealthCheck*): Future[Seq[HealthCheckResult]] = {
 
     val precondition  = preconditionMaybe.getOrElse(HealthCheckPrecondition( () => true, "Precondition is always true")) //No precondition is equivalent to a precondition that's always true
 
@@ -113,7 +111,6 @@ private[conf] trait HealthCheckFetcher extends Logging {
 
 private[conf] class HealthCheckCache(preconditionMaybe: Option[HealthCheckPrecondition])
                                     (val wsClient: WSClient)
-                                    (implicit executionContext: ExecutionContext)
                                     extends HealthCheckFetcher {
 
   protected val cache: Agent[List[HealthCheckResult]] = AkkaAgent[List[HealthCheckResult]](List[HealthCheckResult]())
@@ -142,16 +139,13 @@ case class HealthCheckPrecondition(test: () => Boolean, errorMessage: String) {
 }
 
 
-trait HealthCheckController extends BaseController {
+trait HealthCheckController extends Controller {
   def healthCheck(): Action[AnyContent]
 }
-
-abstract class CachedHealthCheck(policy: HealthCheckPolicy, preconditionMaybe: Option[HealthCheckPrecondition])
+class CachedHealthCheck(policy: HealthCheckPolicy, preconditionMaybe: Option[HealthCheckPrecondition])
                        (healthChecks: SingleHealthCheck*)
                        (implicit wsClient: WSClient)
-  extends HealthCheckController with Results with ImplicitControllerExecutionContext with Logging {
-
-  val controllerComponents: ControllerComponents
+  extends HealthCheckController with Results with ExecutionContexts with Logging {
 
   private[conf] val port: Int = 9000
 
@@ -176,17 +170,16 @@ abstract class CachedHealthCheck(policy: HealthCheckPolicy, preconditionMaybe: O
   def runChecks(): Future[List[HealthCheckResult]] = cache.refresh(port, healthChecks:_*)
 }
 
-abstract case class AllGoodCachedHealthCheck(healthChecks: SingleHealthCheck*)(implicit wsClient: WSClient, executionContext: ExecutionContext)
+case class AllGoodCachedHealthCheck(healthChecks: SingleHealthCheck*)(implicit wsClient: WSClient)
   extends CachedHealthCheck(policy = HealthCheckPolicy.All, preconditionMaybe = None)(healthChecks:_*)
 
-abstract case class AnyGoodCachedHealthCheck(healthChecks: SingleHealthCheck*)(implicit wsClient: WSClient, executionContext: ExecutionContext)
+case class AnyGoodCachedHealthCheck(healthChecks: SingleHealthCheck*)(implicit wsClient: WSClient)
   extends CachedHealthCheck(policy = HealthCheckPolicy.Any, preconditionMaybe = None)(healthChecks:_*)
 
 class CachedHealthCheckLifeCycle(
   healthCheckController: CachedHealthCheck,
   jobs: JobScheduler,
-  akkaAsync: AkkaAsync
-)(implicit executionContext: ExecutionContext) extends LifecycleComponent {
+  akkaAsync: AkkaAsync) extends LifecycleComponent with ExecutionContexts {
 
   private lazy val healthCheckRequestFrequencyInSec = Configuration.healthcheck.updateIntervalInSecs
 

@@ -6,9 +6,9 @@ import common.{JsonMessageQueue, SNSNotification}
 import conf.switches.Switches.FrontPressJobSwitch
 import conf.Configuration
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
-class FrontPressCron(liveFapiFrontPress: LiveFapiFrontPress, toolPressQueueWorker: ToolPressQueueWorker)(implicit executionContext: ExecutionContext) extends JsonQueueWorker[SNSNotification] {
+class FrontPressCron(liveFapiFrontPress: LiveFapiFrontPress, toolPressQueueWorker: ToolPressQueueWorker) extends JsonQueueWorker[SNSNotification] {
   lazy val queueUrl: Option[String] = Configuration.faciatool.frontPressCronQueue
   override val deleteOnFailure: Boolean = true
 

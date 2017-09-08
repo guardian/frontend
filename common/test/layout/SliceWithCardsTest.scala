@@ -8,11 +8,11 @@ import org.joda.time.DateTime
 import org.scala_tools.time.Imports
 import org.scalatest.prop.GeneratorDrivenPropertyChecks
 import org.scalatest.{FlatSpec, Matchers}
-import org.scalatestplus.play.guice.GuiceOneAppPerSuite
+import org.scalatestplus.play.OneAppPerSuite
 import services.FaciaContentConvert
 import slices.DesktopBehaviour
 
-class SliceWithCardsTest extends FlatSpec with Matchers with GeneratorDrivenPropertyChecks with GuiceOneAppPerSuite {
+class SliceWithCardsTest extends FlatSpec with Matchers with GeneratorDrivenPropertyChecks with OneAppPerSuite {
   val NumberOfFixtures = 40
 
   def nthApiContent(n: Int): ApiContent = ApiContent(

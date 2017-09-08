@@ -3,12 +3,11 @@ package form
 import com.gu.identity.model.User
 import idapiclient.UserUpdate
 import play.api.data.Forms._
-import play.api.data.Mapping
-import play.api.i18n.{MessagesApi, MessagesProvider}
+import play.api.i18n.MessagesApi
 
-class PrivacyMapping extends UserFormMapping[PrivacyFormData] {
+class PrivacyMapping(val messagesApi: MessagesApi) extends UserFormMapping[PrivacyFormData] {
 
-  protected def formMapping(implicit messagesProvider: MessagesProvider): Mapping[PrivacyFormData] = mapping(
+  protected lazy val formMapping = mapping(
     "receiveGnmMarketing" -> boolean,
     "receive3rdPartyMarketing" -> boolean,
     "allowThirdPartyProfiling" -> boolean

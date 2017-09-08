@@ -9,8 +9,7 @@ import org.joda.time.{DateTimeComparator, LocalDate}
 import org.scala_tools.time.Imports._
 import pa._
 
-import scala.collection.immutable
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
 
 trait Competitions extends implicits.Football {
@@ -153,14 +152,14 @@ class CompetitionsService(val footballClient: FootballClient, competitionDefinit
 
   override def competitions: Seq[Competition] = competitionAgents.map(_.competition)
 
-  def refreshCompetitionAgent(id: String)(implicit executionContext: ExecutionContext): Unit = competitionAgents
+  def refreshCompetitionAgent(id: String): Unit = competitionAgents
     .find { _.competition.id == id }
     .foreach { c =>
       c.refresh()
       log.info(s"Completed refresh of competition '${c.competition.fullName}': currently ${c.competition.matches.length} matches")
     }
 
-  def refreshCompetitionData()(implicit executionContext: ExecutionContext): Future[Unit] = {
+  def refreshCompetitionData() = {
     log.info("Refreshing competition data")
     footballClient.competitions.map { allComps =>
       oldestRelevantCompetitionSeasons(allComps).foreach { season =>
@@ -179,9 +178,9 @@ class CompetitionsService(val footballClient: FootballClient, competitionDefinit
     }.recover(footballClient.logErrors)
   }
 
-  def refreshMatchDay()(implicit executionContext: ExecutionContext): Future[immutable.Iterable[Competition]] = {
+  def refreshMatchDay() = {
     log.info("Refreshing match day data")
-    val result = getLiveMatches().map(_.map{ case (compId, newMatches) =>
+    val result = getLiveMatches.map(_.map{ case (compId, newMatches) =>
       competitionAgents.find(_.competition.id == compId).map { agent =>
         agent.addMatches(newMatches)
       }

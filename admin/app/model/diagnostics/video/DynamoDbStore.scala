@@ -1,19 +1,18 @@
 package model.diagnostics.video
 
-import common.Logging
+import common.{ExecutionContexts, Logging}
 import com.amazonaws.services.dynamodbv2.model
-import com.amazonaws.services.dynamodbv2.model.{AttributeValue, GetItemRequest, UpdateItemRequest}
-
+import com.amazonaws.services.dynamodbv2.model.{GetItemRequest, AttributeValue, UpdateItemRequest}
 import scala.collection.JavaConverters._
 import awswrappers.dynamodb._
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
-object DynamoDbStore extends Logging {
+object DynamoDbStore extends Logging with ExecutionContexts {
   val tableName = "missingVideoEncodings"
   private val client = services.DynamoDB.asyncClient
 
-  def storeMissingEncoding(videoSrc: String, webUrl: String)(implicit executionContext: ExecutionContext): Unit = {
+  def storeMissingEncoding(videoSrc: String, webUrl: String): Unit = {
 
     val updateItemRequest = new UpdateItemRequest()
       .withTableName(tableName)
@@ -29,7 +28,7 @@ object DynamoDbStore extends Logging {
     }
   }
 
-  def haveSeenMissingEncoding(videoSrc: String, webUrl: String)(implicit executionContext: ExecutionContext): Future[Boolean] = {
+  def haveSeenMissingEncoding(videoSrc: String, webUrl: String): Future[Boolean] = {
 
     val getItemRequest = new GetItemRequest()
       .withTableName(tableName)

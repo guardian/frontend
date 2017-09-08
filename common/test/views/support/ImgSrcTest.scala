@@ -7,9 +7,9 @@ import conf.switches.Switches.ImageServerSwitch
 import model.{ImageMedia, ImageAsset}
 import org.joda.time.DateTime
 import org.scalatest.{FlatSpec, Matchers}
-import org.scalatestplus.play.guice.GuiceOneAppPerSuite
+import org.scalatestplus.play.OneAppPerSuite
 
-class ImgSrcTest extends FlatSpec with Matchers with GuiceOneAppPerSuite {
+class ImgSrcTest extends FlatSpec with Matchers with OneAppPerSuite {
 
   lazy val imageHost = Configuration.images.path
 

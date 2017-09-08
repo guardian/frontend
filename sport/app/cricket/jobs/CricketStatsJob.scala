@@ -1,14 +1,12 @@
 package jobs
 
-import common.{AkkaAgent, Logging}
-import conf.cricketPa.{CricketFeedException, CricketTeam, CricketTeams, PaFeed}
+import common.{AkkaAgent, ExecutionContexts, Logging}
+import conf.cricketPa.{CricketTeams, CricketTeam, CricketFeedException, PaFeed}
 import cricketModel.Match
-import org.joda.time.{DateTimeZone, Days, LocalDate}
+import org.joda.time.{Days, DateTimeZone, LocalDate}
 import org.joda.time.format.DateTimeFormat
 
-import scala.concurrent.ExecutionContext
-
-class CricketStatsJob(paFeed: PaFeed) extends Logging {
+class CricketStatsJob(paFeed: PaFeed) extends ExecutionContexts with Logging {
 
   private val cricketStatsAgents = CricketTeams.teams.map(Team => (Team, AkkaAgent[Map[String, Match]](Map.empty)))
 
@@ -31,7 +29,7 @@ class CricketStatsJob(paFeed: PaFeed) extends Logging {
     matchObjects.flatten.headOption
   }
 
-  def run()(implicit executionContext: ExecutionContext): Unit = {
+  def run(): Unit = {
 
     cricketStatsAgents.foreach { case (team, agent) =>
 

@@ -3,10 +3,10 @@ package controllers
 import jobs.SiteMapJob
 import model.Cached
 import model.Cached.RevalidatableResult
-import play.api.mvc.{BaseController, ControllerComponents}
+import play.api.mvc.{Action, Controller}
 
 // This controller may return 5xx to allow fastly to serve stale when the agent has no data.
-class SiteMapController(siteMapJob: SiteMapJob, val controllerComponents: ControllerComponents) extends BaseController {
+class SiteMapController(siteMapJob: SiteMapJob) extends Controller {
 
   def renderNewsSiteMap() = Action { implicit request =>
     siteMapJob.siteMaps().map { sitemap =>

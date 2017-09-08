@@ -1,11 +1,11 @@
 package controllers.admin
 
-import common.ImplicitControllerExecutionContext
+import common.ExecutionContexts
 import model.{ApplicationContext, Cached}
 import model.Cached.RevalidatableResult
 import play.api.mvc._
 
-class SiteController(val controllerComponents: ControllerComponents)(implicit context: ApplicationContext) extends BaseController with ImplicitControllerExecutionContext {
+class SiteController (implicit context: ApplicationContext) extends Controller with ExecutionContexts {
 
   def index = Action { implicit request =>
     Cached(60)(RevalidatableResult.Ok(views.html.football.index()))

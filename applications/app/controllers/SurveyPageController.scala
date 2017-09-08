@@ -1,20 +1,15 @@
 package controllers
 
-import common.ImplicitControllerExecutionContext
+import common.ExecutionContexts
 import conf.Configuration
 import model.{ApplicationContext, Cached, NoCache}
 import model.Cached.RevalidatableResult
 import play.api.libs.ws.WSClient
-import play.api.mvc.{BaseController, ControllerComponents}
+import play.api.mvc.{Action, Controller}
 import staticpages.StaticPages
-
 import scala.concurrent.duration._
 
-class SurveyPageController(
-  wsClient: WSClient,
-  val controllerComponents: ControllerComponents
-)(implicit context: ApplicationContext)
-  extends BaseController with ImplicitControllerExecutionContext {
+class SurveyPageController(wsClient: WSClient)(implicit context: ApplicationContext) extends Controller with ExecutionContexts {
 
   val defaultCacheDuration: Duration = 15.minutes
 

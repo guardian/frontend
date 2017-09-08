@@ -8,14 +8,14 @@ import java.io.File
 
 import scala.util.{Failure, Success}
 import play.Logger
-import common.{Logging}
+import common.{ExecutionContexts, Logging}
 import pa.{Http, PaClient, PaClientErrorsException, Response, Season, Team}
 import conf.AdminConfiguration
 import football.model.PA
 import model.ApplicationContext
 
 
-trait Client extends PaClient with Http {
+trait Client extends PaClient with Http with ExecutionContexts {
 
   def apiKey: String
 
@@ -24,7 +24,7 @@ trait Client extends PaClient with Http {
   override def get(suffix: String)(implicit context: ExecutionContext): Future[String] = super.get(suffix)(context)
 }
 
-private case class RealClient(wsClient: WSClient)(implicit context: ExecutionContext) extends Client {
+private case class RealClient(wsClient: WSClient) extends Client {
 
   override def apiKey: String = AdminConfiguration.pa.footballApiKey
 

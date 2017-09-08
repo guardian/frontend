@@ -3,7 +3,7 @@ package football.controllers
 import common._
 import conf.switches.Switches
 import feed.CompetitionsService
-import play.api.mvc.{Action, BaseController, ControllerComponents}
+import play.api.mvc.{Action, Controller}
 import model._
 import model.Page
 
@@ -16,10 +16,7 @@ case class TablesPage(
   lazy val singleCompetition = tables.size == 1
 }
 
-class LeagueTableController(
-  val competitionsService: CompetitionsService,
-  val controllerComponents: ControllerComponents
-)(implicit context: ApplicationContext) extends BaseController with Logging with CompetitionTableFilters with ImplicitControllerExecutionContext {
+class LeagueTableController(val competitionsService: CompetitionsService)(implicit context: ApplicationContext) extends Controller with Logging with CompetitionTableFilters with ExecutionContexts {
 
     val tableOrder = Seq(
         "Premier League",

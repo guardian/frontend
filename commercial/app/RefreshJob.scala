@@ -3,8 +3,6 @@ package commercial
 import common.{JobScheduler, Logging}
 import commercial.model.merchandise.jobs.Industries
 
-import scala.concurrent.ExecutionContext
-
 trait RefreshJob extends Logging {
 
   def name: String
@@ -26,7 +24,7 @@ trait RefreshJob extends Logging {
   }
 }
 
-class IndustriesRefresh(industries: Industries, val jobs: JobScheduler)(implicit executionContext: ExecutionContext) extends RefreshJob {
+class IndustriesRefresh(industries: Industries, val jobs: JobScheduler) extends RefreshJob {
 
   val name: String = "Industries"
 

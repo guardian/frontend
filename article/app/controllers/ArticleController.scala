@@ -20,8 +20,8 @@ import scala.concurrent.Future
 case class ArticlePage(article: Article, related: RelatedContent) extends PageWithStoryPackage
 case class MinutePage(article: Article, related: RelatedContent) extends PageWithStoryPackage
 
-class ArticleController(contentApiClient: ContentApiClient, val controllerComponents: ControllerComponents)(implicit context: ApplicationContext) extends BaseController
-    with RendersItemResponse with Logging with ImplicitControllerExecutionContext {
+class ArticleController(contentApiClient: ContentApiClient)(implicit context: ApplicationContext) extends Controller
+    with RendersItemResponse with Logging with ExecutionContexts {
 
   private def isSupported(c: ApiContent) = c.isArticle || c.isLiveBlog || c.isSudoku
   override def canRender(i: ItemResponse): Boolean = i.content.exists(isSupported)
@@ -49,7 +49,6 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
     Cached(page)(JsonComponent(allPagesJson ++ livePageJson ++ mostRecent: _*))
   }
 
-  implicit val dateToTimestampWrites = play.api.libs.json.JodaWrites.JodaDateTimeNumberWrites
   case class TextBlock(
     id: String,
     title: Option[String],

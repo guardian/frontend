@@ -3,11 +3,11 @@ package assets
 import java.net.URI
 
 import app.LifecycleComponent
-import common.{AkkaAgent, GuardianConfiguration, JobScheduler, Logging}
+import common.{AkkaAgent, ExecutionContexts, GuardianConfiguration, JobScheduler, Logging}
 import conf.switches.Switches
 import play.api.libs.ws.{WSClient, WSResponse}
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 import scala.concurrent.duration._
 import scala.util.{Failure, Success, Try}
 
@@ -22,12 +22,8 @@ import scala.util.{Failure, Success, Try}
   * }
   * The path in the object value is relative to the assets map
   */
-class DiscussionExternalAssetsLifecycle(
-  config: GuardianConfiguration,
-  wsClient: WSClient,
-  jobs: JobScheduler
-)(implicit executionContext: ExecutionContext)
-  extends LifecycleComponent with Logging {
+class DiscussionExternalAssetsLifecycle (config: GuardianConfiguration, wsClient: WSClient, jobs: JobScheduler)
+  extends LifecycleComponent with ExecutionContexts with Logging {
 
   def refresh(): Future[Map[String, String]] = {
     config.discussion.frontendAssetsMap match {
@@ -55,7 +51,7 @@ class DiscussionExternalAssetsLifecycle(
 
   private def fetchAssetsMap(url: String, wsClient: WSClient): Future[WSResponse] = {
     wsClient.url(url)
-      .withHttpHeaders("User-Agent" -> "GU-ExternalAssets")
+      .withHeaders("User-Agent" -> "GU-ExternalAssets")
       .withRequestTimeout(4.seconds)
       .get()
   }

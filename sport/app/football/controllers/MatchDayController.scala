@@ -1,17 +1,13 @@
 package football.controllers
 
 import feed.CompetitionsService
-import play.api.mvc.{Action, AnyContent, ControllerComponents}
+import play.api.mvc.{Action, AnyContent}
 import org.joda.time.LocalDate
 import model._
 import football.model._
 import common.{Edition, JsonComponent}
 
-class MatchDayController(
-  val competitionsService: CompetitionsService,
-  val controllerComponents: ControllerComponents
-)(implicit context: ApplicationContext)
-  extends MatchListController with CompetitionLiveFilters {
+class MatchDayController(val competitionsService: CompetitionsService)(implicit context: ApplicationContext) extends MatchListController with CompetitionLiveFilters {
 
   def liveMatchesJson() = liveMatches()
   def liveMatches(): Action[AnyContent] =

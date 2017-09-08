@@ -1,9 +1,9 @@
 package jobs
 
-import common.{AkkaAgent, Logging}
+import common.{AkkaAgent, Logging, ExecutionContexts}
 import services.S3Infosec
 
-object BlockedEmailDomainList extends Logging {
+object BlockedEmailDomainList extends ExecutionContexts with Logging {
 
   private val blockedDomainAgent = AkkaAgent[Set[String]](Set.empty)
 

@@ -7,12 +7,11 @@ import test._
   extends FlatSpec
   with Matchers
   with ConfiguredTestSuite
-  with WithTestApplicationContext
+  with WithTestContext
   with BeforeAndAfterAll
   with WithMaterializer
   with WithTestWsClient
   with FootballTestData
-  with WithTestExecutionContext
   with WithTestFootballClient {
 
   lazy val fixturesAndResults = new FixturesAndResults(testCompetitionsService.competitionsWithTodaysMatchesAndFutureFixtures)

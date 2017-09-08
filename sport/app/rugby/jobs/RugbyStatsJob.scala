@@ -1,17 +1,15 @@
 package rugby.jobs
 
-import common.{AkkaAgent, Logging}
+import common.{AkkaAgent, ExecutionContexts, Logging}
 import org.joda.time.format.{DateTimeFormat, DateTimeFormatter}
 import rugby.model._
-import rugby.feed.{MatchNavigation, OptaEvent, OptaFeed, RugbyOptaFeedException}
-
-import scala.collection.immutable
-import scala.concurrent.{ExecutionContext, Future}
+import rugby.feed.{MatchNavigation, OptaFeed, OptaEvent, RugbyOptaFeedException}
+import scala.concurrent.Future
 import scala.util.Failure
 import scala.util.Success
 
 
-class RugbyStatsJob(optaFeed: OptaFeed) extends Logging {
+class RugbyStatsJob(optaFeed: OptaFeed) extends ExecutionContexts with Logging {
   protected val fixturesAndResultsMatches = AkkaAgent[Map[String, Match]](Map.empty)
   protected val matchNavContent = AkkaAgent[Map[String, MatchNavigation]](Map.empty)
   protected val pastScoreEvents = AkkaAgent[Map[String, Seq[ScoreEvent]]](Map.empty)
@@ -20,8 +18,8 @@ class RugbyStatsJob(optaFeed: OptaFeed) extends Logging {
 
   val dateFormat: DateTimeFormatter = DateTimeFormat.forPattern("yyyy/MM/dd")
 
-  def fetchFixturesAndResults()(implicit executionContext: ExecutionContext): Future[Any] = {
-    optaFeed.getFixturesAndResults().flatMap { matches =>
+  def fetchFixturesAndResults() : Future[Any] = {
+    optaFeed.getFixturesAndResults.flatMap { matches =>
       Future.sequence(matches.map { aMatch =>
         fixturesAndResultsMatches.alter {_ +  (aMatch.key -> aMatch)}
       })
@@ -31,8 +29,8 @@ class RugbyStatsJob(optaFeed: OptaFeed) extends Logging {
     }
   }
 
-  def fetchGroupTables()(implicit executionContext: ExecutionContext): Future[Any] = {
-    optaFeed.getGroupTables().map { data =>
+  def fetchGroupTables() : Future[Any] = {
+    optaFeed.getGroupTables.map { data =>
       groupTables.alter { data }
     }.recover {
       case optaFeedException: RugbyOptaFeedException => log.warn(s"RugbyStatsJob encountered errors: ${optaFeedException.message}")
@@ -40,7 +38,7 @@ class RugbyStatsJob(optaFeed: OptaFeed) extends Logging {
     }
   }
 
-  def fetchPastScoreEvents()(implicit executionContext: ExecutionContext): Unit = {
+  def fetchPastScoreEvents {
     val pastMatches = fixturesAndResultsMatches.get().values.filter(_.date.isBeforeNow).toList
 
     fetchScoreEvents(pastMatches).map { scoreEventsForMatchesMap =>
@@ -50,7 +48,7 @@ class RugbyStatsJob(optaFeed: OptaFeed) extends Logging {
     }
   }
 
-  private def fetchScoreEvents(matches: List[Match])(implicit executionContext: ExecutionContext): Future[Map[Match, List[ScoreEvent]]] = {
+  private def fetchScoreEvents(matches: List[Match]): Future[Map[Match, List[ScoreEvent]]] = {
     val scoresEventsForMatchesFuture: Future[List[(Match, List[ScoreEvent])]] = Future.sequence {
       matches.map(rugbyMatch =>
         optaFeed.getScoreEvents(rugbyMatch).map(scoreEvents => rugbyMatch -> scoreEvents.toList)
@@ -64,7 +62,7 @@ class RugbyStatsJob(optaFeed: OptaFeed) extends Logging {
     scoresEventsForMatchesFuture.map(_.toMap)
   }
 
-  def fetchPastMatchesStat()(implicit executionContext: ExecutionContext): Unit = {
+  def fetchPastMatchesStat {
     val pastMatches = fixturesAndResultsMatches.get().values.filter(_.date.isBeforeNow).toList
 
     fetchMatchesStat(pastMatches).map { statForMatches =>
@@ -74,7 +72,7 @@ class RugbyStatsJob(optaFeed: OptaFeed) extends Logging {
     }
   }
 
-  private def fetchMatchesStat(matches: List[Match])(implicit executionContext: ExecutionContext): Future[Map[Match, MatchStat]] = {
+  private def fetchMatchesStat(matches: List[Match]): Future[Map[Match, MatchStat]] = {
     val statForMatchesFuture = Future.sequence {
       matches.map(rugbyMatch =>
         optaFeed.getMatchStat(rugbyMatch).map(matchStat => rugbyMatch -> matchStat)
@@ -88,7 +86,7 @@ class RugbyStatsJob(optaFeed: OptaFeed) extends Logging {
     statForMatchesFuture.map(_.toMap)
   }
 
-  def sendMatchArticles(navigationArticles: Future[Map[String, MatchNavigation]])(implicit executionContext: ExecutionContext): Future[immutable.Iterable[Map[String, MatchNavigation]]] = {
+  def sendMatchArticles(navigationArticles: Future[Map[String, MatchNavigation]]) = {
     navigationArticles.flatMap { matches =>
       Future.sequence(matches.map { matchItem =>
         matchNavContent.alter { _ + matchItem }

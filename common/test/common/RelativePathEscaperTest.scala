@@ -2,9 +2,9 @@ package common
 
 import conf.Static
 import org.scalatest.{Matchers, FlatSpec}
-import org.scalatestplus.play.guice.GuiceOneAppPerSuite
+import org.scalatestplus.play.OneAppPerSuite
 
-class RelativePathEscaperTest extends FlatSpec with Matchers with GuiceOneAppPerSuite {
+class RelativePathEscaperTest extends FlatSpec with Matchers with OneAppPerSuite {
   "RelativePathEscaper" should "escape javascript paths in Static.js.curl" in {
     val curlJs = common.Assets.js.curl
     val escapedCurlJs = RelativePathEscaper.escapeLeadingDotPaths(curlJs)

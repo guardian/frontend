@@ -1,11 +1,9 @@
 package jobs
 
 import com.gu.facia.api.models.{CommercialPriority, EditorialPriority, EmailPriority, TrainingPriority}
-import common.{AkkaAsync, Logging}
+import common.{AkkaAsync, ExecutionContexts, Logging}
 import conf.Configuration
 import services.{ConfigAgent, FrontPressNotification}
-
-import scala.concurrent.ExecutionContext
 
 sealed trait FrontType
 
@@ -18,7 +16,7 @@ object HighFrequency extends FrontType {
 
 case class CronUpdate(path: String, frontType: FrontType)
 
-object RefreshFrontsJob extends Logging {
+object RefreshFrontsJob extends Logging with ExecutionContexts {
   def getAllCronUpdates: Seq[CronUpdate] = {
     ConfigAgent.getPathIds.map(path => CronUpdate(path, getFrontType(path)))
   }
@@ -36,7 +34,7 @@ object RefreshFrontsJob extends Logging {
       }
   }
 
-  def runFrequency(akkaAsync: AkkaAsync)(frontType: FrontType)(implicit executionContext: ExecutionContext): Boolean = {
+  def runFrequency(akkaAsync: AkkaAsync)(frontType: FrontType): Boolean = {
     if (Configuration.aws.frontPressSns.exists(_.nonEmpty)) {
       log.info(s"Putting press jobs on Facia Cron $frontType")
       for (update <- getAllCronUpdates.filter(_.frontType == frontType)) {
@@ -52,7 +50,7 @@ object RefreshFrontsJob extends Logging {
 
   //This is used by a route in admin to push ALL paths to the facia-press SQS queue.
   //The facia-press boxes will start to pick these off one by one, so there is no direct overloading of these boxes
-  def runAll(akkaAsync: AkkaAsync)(implicit executionContext: ExecutionContext): Option[Seq[Unit]] = {
+  def runAll(akkaAsync: AkkaAsync): Option[Seq[Unit]] = {
     Configuration.aws.frontPressSns.map(Function.const {
       log.info("Putting press jobs on Facia Cron (MANUAL REQUEST)")
       for (update <- getAllCronUpdates)

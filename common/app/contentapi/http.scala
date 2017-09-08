@@ -4,12 +4,11 @@ import java.net.InetAddress
 import java.util.concurrent.TimeoutException
 
 import common.ContentApiMetrics.{ContentApi404Metric, ContentApiErrorMetric}
-import common.{ContentApiMetrics, Logging}
+import common.{ContentApiMetrics, ExecutionContexts, Logging}
 import conf.Configuration
 import conf.Configuration.contentApi.previewAuth
 import play.api.libs.ws.{WSAuthScheme, WSClient}
-
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 import scala.util.{Failure, Success, Try}
 
 case class Response(body: Array[Byte], status: Int, statusText: String)
@@ -18,8 +17,8 @@ trait HttpClient {
   def GET(url: String, headers: Iterable[(String, String)]): Future[Response]
 }
 
-class CapiHttpClient(wsClient: WSClient)(implicit executionContext: ExecutionContext)
-  extends HttpClient with Logging {
+class CapiHttpClient(wsClient: WSClient)
+  extends HttpClient with ExecutionContexts with Logging {
 
   import java.lang.System.currentTimeMillis
 
@@ -33,7 +32,7 @@ class CapiHttpClient(wsClient: WSClient)(implicit executionContext: ExecutionCon
 
     val baseRequest = wsClient.url(urlWithDebugInfo)
     val request = previewAuth.fold(baseRequest)(auth => baseRequest.withAuth(auth.user, auth.password, WSAuthScheme.BASIC))
-    val response = request.withHttpHeaders(headers.toSeq: _*).withRequestTimeout(contentApiTimeout).get()
+    val response = request.withHeaders(headers.toSeq: _*).withRequestTimeout(contentApiTimeout).get()
 
     // record metrics
     response.onSuccess {

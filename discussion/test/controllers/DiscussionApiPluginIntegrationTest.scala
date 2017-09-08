@@ -4,25 +4,18 @@ import conf.Configuration
 import discussion.api.DiscussionApiLike
 import discussion.model.Comment
 import org.scalatest._
-import test.{ConfiguredTestSuite, WithMaterializer, WithTestExecutionContext, WithTestWsClient}
+import test.{ConfiguredTestSuite, WithMaterializer, WithTestWsClient}
 
-import scala.concurrent.{Await, ExecutionContext, Future}
+import scala.concurrent.{Await, Future}
 import scala.language.postfixOps
 import scala.concurrent.duration._
-import play.api.libs.ws.WSClient
+import play.api.libs.ws.{WS, WSClient}
 
-@DoNotDiscover class DiscussionApiPluginIntegrationTest
-  extends FlatSpecLike
-  with Matchers
-  with BeforeAndAfterAll
-  with ConfiguredTestSuite
-  with WithMaterializer
-  with WithTestExecutionContext
-  with WithTestWsClient {
+@DoNotDiscover class DiscussionApiPluginIntegrationTest extends FlatSpecLike with Matchers with BeforeAndAfterAll with ConfiguredTestSuite with WithMaterializer with WithTestWsClient {
 
   class TestPlugin(val wsClient: WSClient) extends DiscussionApiLike {
 
-    override def GET(url: String, headers: (String, String)*)(implicit executionContext: ExecutionContext) = {
+    override def GET(url: String, headers: (String, String)*) = {
       headersReceived = Map(headers:_*)
       wsClient.url(testUrl).withRequestTimeout(1.millisecond).get()
     }

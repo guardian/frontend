@@ -1,16 +1,16 @@
 package dfp
 
-
+import common.ExecutionContexts
 import common.dfp.GuCreative
 import org.joda.time.DateTime.now
 import play.api.libs.json.Json
 import tools.Store
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
-object DfpTemplateCreativeCacheJob {
+object DfpTemplateCreativeCacheJob extends ExecutionContexts {
 
-  def run()(implicit executionContext: ExecutionContext): Future[Unit] = Future {
+  def run(): Future[Unit] = Future {
     val cached = Store.getDfpTemplateCreatives
     val threshold = GuCreative.lastModified(cached) getOrElse now.minusMonths(1)
     val recentlyModified = DfpApi.readTemplateCreativesModifiedSince(threshold)

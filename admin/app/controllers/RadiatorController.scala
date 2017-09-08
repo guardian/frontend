@@ -1,10 +1,12 @@
 package controllers.admin
 
 import implicits.Requests
-import play.api.mvc.{BaseController, ControllerComponents}
-import common.{ImplicitControllerExecutionContext, Logging}
+import play.api.mvc.{Action, Controller}
+import common.Logging
 import tools.CloudWatch
-import play.api.libs.ws.WSClient
+import play.api.libs.ws.{WSAuthScheme, WSClient}
+import play.api.libs.concurrent.Execution.Implicits._
+import play.api.libs.json.Json
 import conf.Configuration
 import model.{ApplicationContext, NoCache}
 import conf.switches.{Switch, Switches}
@@ -12,11 +14,7 @@ import model.deploys.{HttpClient, TeamCityBuild, TeamcityService}
 
 import scala.concurrent.Future
 
-class RadiatorController(
-  wsClient: WSClient,
-  val controllerComponents: ControllerComponents
-)(implicit context: ApplicationContext)
-  extends BaseController with Logging with Requests with ImplicitControllerExecutionContext {
+class RadiatorController(wsClient: WSClient)(implicit context: ApplicationContext) extends Controller with Logging with Requests{
 
   // if you are reading this you are probably being rate limited...
   // you can read about github rate limiting here http://developer.github.com/v3/#rate-limiting
@@ -54,11 +52,11 @@ class RadiatorController(
 
     for {
       ciBuilds <- mostRecentBuild(buildProject("dotcom_frontend", Some("master")), buildProject("dotcom_ampValidation"))
-      router50x <- CloudWatch.routerBackend50x()
-      latencyGraphs <- CloudWatch.shortStackLatency()
-      fastlyErrors <- CloudWatch.fastlyErrors()
-      fastlyHitMiss <- CloudWatch.fastlyHitMissStatistics()
-      cost <- CloudWatch.cost()
+      router50x <- CloudWatch.routerBackend50x
+      latencyGraphs <- CloudWatch.shortStackLatency
+      fastlyErrors <- CloudWatch.fastlyErrors
+      fastlyHitMiss <- CloudWatch.fastlyHitMissStatistics
+      cost <- CloudWatch.cost
     } yield {
       val errorGraphs = Seq(router50x)
       val fastlyGraphs = fastlyErrors ++ fastlyHitMiss

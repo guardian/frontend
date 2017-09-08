@@ -5,16 +5,10 @@ import containers.Containers
 import contentapi.ContentApiClient
 import feed.MostReadAgent
 import model._
-import play.api.mvc.{BaseController, ControllerComponents, RequestHeader}
+import play.api.mvc.{Action, Controller, RequestHeader}
 import services._
 
-class PopularInTag(
-  val contentApiClient: ContentApiClient,
-  val mostReadAgent: MostReadAgent,
-  val controllerComponents: ControllerComponents
-)(implicit context: ApplicationContext)
-  extends BaseController with Related with Containers with Logging with ImplicitControllerExecutionContext {
-
+class PopularInTag(val contentApiClient: ContentApiClient, val mostReadAgent: MostReadAgent)(implicit context: ApplicationContext) extends Controller with Related with Containers with Logging with ExecutionContexts {
   def render(tag: String) = Action.async { implicit request =>
     val edition = Edition(request)
     val excludeTags = request.queryString.getOrElse("exclude-tag", Nil)

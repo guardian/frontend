@@ -4,13 +4,12 @@ import actions.AuthenticatedActions.AuthRequest
 import com.gu.identity.cookie.GuUCookieData
 import org.scalatest.{DoNotDiscover, Matchers, WordSpec}
 import services._
-import services.{IdRequestParser, IdentityUrlBuilder, ReturnUrlVerifier}
-import idapiclient.{IdApiClient, ScGuU}
+import services.{ReturnUrlVerifier, IdRequestParser, IdentityUrlBuilder}
+import idapiclient.{ScGuU, IdApiClient}
 import conf.{FrontendIdentityCookieDecoder, IdentityConfiguration}
 import org.scalatest.mockito.MockitoSugar
 import test._
 import play.api.mvc.RequestHeader
-
 import scala.concurrent.Future
 import com.gu.identity.model.User
 import org.mockito.Mockito._
@@ -25,11 +24,9 @@ import actions.AuthenticatedActions
 @DoNotDiscover class EmailControllerTest extends WordSpec
   with Matchers
   with MockitoSugar
-  with WithTestApplicationContext
+  with WithTestContext
   with WithTestCSRF
   with ConfiguredTestSuite {
-
-  val controllerComponents = play.api.test.Helpers.stubControllerComponents()
 
   val returnUrlVerifier = mock[ReturnUrlVerifier]
   val conf = mock[IdentityConfiguration]
@@ -48,7 +45,7 @@ import actions.AuthenticatedActions
   val error = Error("Test message", "Test description", 500)
   val errors = List(error)
 
-  val authenticatedActions  = new AuthenticatedActions(authService, api, mock[IdentityUrlBuilder], controllerComponents)
+  val authenticatedActions  = new AuthenticatedActions(authService, api, mock[IdentityUrlBuilder])
 
   when(authService.authenticatedUserFor(MockitoMatchers.any[RequestHeader])) thenReturn Some(AuthenticatedUser(user, testAuth))
 
@@ -56,17 +53,7 @@ import actions.AuthenticatedActions
   when(idRequest.trackingData) thenReturn trackingData
 
   when(idUrlBuilder.buildUrl(MockitoMatchers.any[String], MockitoMatchers.any[IdentityRequest], MockitoMatchers.any[(String, String)])) thenReturn "/email-prefs"
-  lazy val emailController = new EmailController(
-    returnUrlVerifier,
-    conf,
-    api,
-    idRequestParser,
-    idUrlBuilder,
-    authenticatedActions,
-    csrfCheck,
-    csrfAddToken,
-    controllerComponents
-  )
+  lazy val emailController = new EmailController(returnUrlVerifier, conf, api, idRequestParser, idUrlBuilder, authenticatedActions, I18NTestComponents.messagesApi, csrfCheck, csrfAddToken)
 
   "The preferences method" when {
     val testRequest = TestRequest()

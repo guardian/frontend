@@ -20,7 +20,7 @@ import scala.concurrent.Future
   with WithMaterializer
   with WithTestWsClient
   with WithTestContentApiClient
-  with WithTestApplicationContext
+  with WithTestContext
   with ScalaFutures {
 
   private val pageSize = 10

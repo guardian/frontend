@@ -1,19 +1,19 @@
 package jobs
 
-import common.Logging
-import conf.Configuration.frontend.{dotcomPlatformEmail, webEngineersEmail}
+import common.{ExecutionContexts, Logging}
+import conf.Configuration.frontend.{webEngineersEmail, dotcomPlatformEmail}
 import conf.switches.{Switch, Switches}
 import services.EmailService
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 import scala.util.control.NonFatal
 
-case class ExpiringSwitchesEmailJob(emailService: EmailService) extends Logging {
+case class ExpiringSwitchesEmailJob(emailService: EmailService) extends ExecutionContexts with Logging {
 
-  def run()(implicit executionContext: ExecutionContext): Future[Unit] = runJob(webEngineersEmail)
-  def runReminder()(implicit executionContext: ExecutionContext): Future[Unit] = runJob(dotcomPlatformEmail)
+  def run = runJob(webEngineersEmail)
+  def runReminder = runJob(dotcomPlatformEmail)
 
-  private def runJob(baseRecipientEmail: Option[String])(implicit executionContext: ExecutionContext): Future[Unit] = {
+  def runJob(baseRecipientEmail: Option[String]): () => Future[Unit] = () => {
     (for (baseRecipients <- baseRecipientEmail) yield {
       val expiringSwitches = Switches.all.filter(Switch.expiry(_).expiresSoon)
 

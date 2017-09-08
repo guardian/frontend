@@ -1,6 +1,6 @@
 package football
 
-
+import common.ExecutionContexts
 import _root_.controllers.admin.TablesController
 import football.model.PA
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FreeSpec, Matchers}
@@ -8,19 +8,20 @@ import play.api.mvc.AnyContentAsFormUrlEncoded
 import play.api.test._
 import play.api.test.Helpers._
 import play.twirl.api.HtmlFormat
-import test.{ConfiguredTestSuite, WithMaterializer, WithTestApplicationContext, WithTestWsClient}
+import test.{ConfiguredTestSuite, WithMaterializer, WithTestContext, WithTestWsClient}
 
 import scala.annotation.tailrec
 import scala.language.postfixOps
 
 @DoNotDiscover class TablesControllerTest
   extends FreeSpec
+    with ExecutionContexts
     with Matchers
     with ConfiguredTestSuite
     with BeforeAndAfterAll
     with WithTestWsClient
     with WithMaterializer
-    with WithTestApplicationContext {
+    with WithTestContext {
 
   "test tables index page loads with leagues" in {
     val Some(result) = route(app, FakeRequest(GET, "/admin/football/tables"))
@@ -76,7 +77,7 @@ import scala.language.postfixOps
   }
 
   "the internal surroundingItems function should work OK" in {
-    val tablesController = new TablesController(wsClient, play.api.test.Helpers.stubControllerComponents())
+    val tablesController = new TablesController(wsClient)
     tablesController.surroundingItems[Int](1, List(1, 2, 3, 4, 5, 6), 4 ==) should equal(List(3, 4, 5))
     tablesController.surroundingItems[Int](2, List(1, 2, 3, 4, 5, 6), 4 ==) should equal(List(2, 3, 4, 5, 6))
     tablesController.surroundingItems[Int](3, List(1, 2, 3, 4, 5, 6), 4 ==) should equal(List(1, 2, 3, 4, 5, 6))

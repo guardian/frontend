@@ -1,13 +1,13 @@
 package controllers
 
-import play.api.mvc.BaseController
-import common.{ImplicitControllerExecutionContext, Logging}
+import play.api.mvc.Controller
+import common.{ExecutionContexts, Logging}
 import discussion.api.DiscussionApiLike
 
 trait DiscussionController
-  extends BaseController
+  extends Controller
   with Logging
-  with ImplicitControllerExecutionContext
+  with ExecutionContexts
   with implicits.Requests {
 
   val discussionApi: DiscussionApiLike

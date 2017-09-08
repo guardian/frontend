@@ -8,7 +8,6 @@ import contentapi.ContentApiClient
 import feed._
 import model.ApplicationContext
 import play.api.libs.ws.WSClient
-import play.api.mvc.ControllerComponents
 import services.breakingnews.BreakingNewsApi
 import weather.WeatherApi
 
@@ -29,7 +28,6 @@ trait OnwardControllers {
   def mostViewedAudioAgent: MostViewedAudioAgent
   def breakingNewsApi: BreakingNewsApi
   def actorSystem: ActorSystem
-  def controllerComponents: ControllerComponents
 
   lazy val navigationController = wire[NavigationController]
   lazy val weatherController = wire[WeatherController]

@@ -1,24 +1,22 @@
 package controllers
 
-import play.api.mvc.{Action, BaseController, ControllerComponents}
+import play.api.mvc.{Action, Controller}
 import idapiclient.IdApiClient
 import services.{AuthenticationService, IdRequestParser, IdentityUrlBuilder, ReturnUrlVerifier}
-import common.ImplicitControllerExecutionContext
+import common.ExecutionContexts
 import utils.SafeLogging
 import model.{ApplicationContext, IdentityPage}
 import actions.AuthenticatedActions
 
 class EmailVerificationController(api: IdApiClient,
-  authenticatedActions: AuthenticatedActions,
-  authenticationService: AuthenticationService,
-  idRequestParser: IdRequestParser,
-  idUrlBuilder: IdentityUrlBuilder,
-  returnUrlVerifier: ReturnUrlVerifier,
-  val controllerComponents: ControllerComponents
-)(implicit context: ApplicationContext)
-  extends BaseController with ImplicitControllerExecutionContext with SafeLogging {
-
-  import ValidationState._
+                                  authenticatedActions: AuthenticatedActions,
+                                  authenticationService: AuthenticationService,
+                                  idRequestParser: IdRequestParser,
+                                  idUrlBuilder: IdentityUrlBuilder,
+                                  returnUrlVerifier: ReturnUrlVerifier)
+                                 (implicit context: ApplicationContext)
+  extends Controller with ExecutionContexts with SafeLogging {
+    import ValidationState._
   import authenticatedActions.authActionWithUser
 
   val page = IdentityPage("/verify-email", "Verify Email")

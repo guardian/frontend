@@ -2,7 +2,6 @@ package services
 
 import org.joda.time.DateTime
 import play.api.libs.json._
-import play.api.libs.json.JodaReads._
 
 object PressType {
   implicit val jsonFormat = new Format[PressType] {
@@ -43,7 +42,6 @@ object FrontPath {
 case class FrontPath(get: String) extends AnyVal
 
 object PressJob {
-  implicit val dateToTimestampWrites = play.api.libs.json.JodaWrites.JodaDateTimeNumberWrites
   implicit val jsonFormat = Json.format[PressJob]
 }
 

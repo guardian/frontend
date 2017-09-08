@@ -3,11 +3,12 @@ package commercial.model.merchandise.jobs
 import commercial.model.Segment
 import commercial.model.capi.Keyword
 import commercial.model.feeds.{FeedMetaData, ParsedFeed}
+import common.ExecutionContexts
 import commercial.model.merchandise.{Job, MerchandiseAgent}
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
-class JobsAgent(allIndustries: Industries) extends MerchandiseAgent[Job] {
+class JobsAgent(allIndustries: Industries) extends MerchandiseAgent[Job] with ExecutionContexts {
 
   def jobsTargetedAt(segment: Segment): Seq[Job] = {
     def defaultJobs = available filter (_.industries.contains("Media"))
@@ -21,7 +22,7 @@ class JobsAgent(allIndustries: Industries) extends MerchandiseAgent[Job] {
     available filter (job => jobIds contains job.id)
   }
 
-  def refresh(feedMetaData: FeedMetaData, feedContent: => Option[String])(implicit executionContext: ExecutionContext): Future[ParsedFeed[Job]] = {
+  def refresh(feedMetaData: FeedMetaData, feedContent: => Option[String]): Future[ParsedFeed[Job]] = {
 
     def withKeywords(parsedFeed: Future[ParsedFeed[Job]]): Future[ParsedFeed[Job]] = {
       parsedFeed map { feed =>
