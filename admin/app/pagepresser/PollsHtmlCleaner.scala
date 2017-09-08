@@ -3,8 +3,9 @@ package pagepresser
 import org.jsoup.nodes.Document
 import play.api.libs.json.Json
 import play.api.libs.ws.WSClient
+
 import scala.collection.JavaConversions._
-import scala.concurrent.Await
+import scala.concurrent.{Await, ExecutionContext}
 import scala.concurrent.duration._
 
 object PollDeserializer {
@@ -17,7 +18,7 @@ case class Poll(pollId: String, questions: List[Question])
 case class Question(id: Int, count: Double, answers: List[Answer])
 case class Answer(id: Int, question: Int, count: Double)
 
-class PollsHtmlCleaner(wsClient: WSClient) extends HtmlCleaner with implicits.WSRequests {
+class PollsHtmlCleaner(wsClient: WSClient)(implicit executionContext: ExecutionContext) extends HtmlCleaner with implicits.WSRequests {
 
   override def canClean(document: Document): Boolean = {
     document.getElementsByAttribute("data-poll-url").nonEmpty

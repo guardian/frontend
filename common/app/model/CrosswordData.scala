@@ -75,6 +75,8 @@ case class CrosswordDimensions(
 
 object CrosswordData {
 
+  implicit val dateToTimestampWrites = play.api.libs.json.JodaWrites.JodaDateTimeNumberWrites
+
   implicit val creatorWrites = Json.writes[CrosswordCreator]
 
   implicit val dimensionsWrites = Json.writes[CrosswordDimensions]

@@ -1,6 +1,6 @@
 package controllers.admin
 
-import common.{ExecutionContexts, Logging}
+import common.{ImplicitControllerExecutionContext, Logging}
 import football.model.PA
 import football.services.PaFootballClient
 import model.Cached.RevalidatableResult
@@ -12,7 +12,7 @@ import play.api.libs.ws.WSClient
 
 import scala.concurrent.Future
 
-class TablesController(val wsClient: WSClient)(implicit val context: ApplicationContext) extends Controller with ExecutionContexts with PaFootballClient with Logging {
+class TablesController(val wsClient: WSClient, val controllerComponents: ControllerComponents)(implicit val context: ApplicationContext) extends BaseController with ImplicitControllerExecutionContext with PaFootballClient with Logging {
 
   def tablesIndex = Action.async { implicit request =>
     for {

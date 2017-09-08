@@ -6,7 +6,7 @@ import implicits.FakeRequests
 import play.api.libs.json.JsArray
 import play.api.test._
 import play.api.test.Helpers._
-import common.ExecutionContexts
+
 import services.ConfigAgent
 import org.scalatest._
 import controllers.FaciaControllerImpl
@@ -15,16 +15,15 @@ import scala.concurrent.Await
 
 @DoNotDiscover class FaciaControllerTest extends FlatSpec
   with Matchers
-  with ExecutionContexts
   with ConfiguredTestSuite
   with BeforeAndAfterAll
   with FakeRequests
   with BeforeAndAfterEach
   with WithMaterializer
-  with WithTestContext
+  with WithTestApplicationContext
   with WithTestWsClient {
 
-  lazy val faciaController = new FaciaControllerImpl(new TestFrontJsonFapi(wsClient))
+  lazy val faciaController = new FaciaControllerImpl(new TestFrontJsonFapi(wsClient), play.api.test.Helpers.stubControllerComponents())
   val articleUrl = "/environment/2012/feb/22/capitalise-low-carbon-future"
   val callbackName = "aFunction"
   val frontJson = FrontJson(Nil, None, None, None, None, None, None, None, None, None, None, None, None, None)

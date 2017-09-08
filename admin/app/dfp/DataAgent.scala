@@ -1,20 +1,18 @@
 package dfp
 
-import common.{AkkaAgent, ExecutionContexts, Logging}
-import conf.switches.Switches._
+import common.{AkkaAgent, Logging}
 
-import org.apache.commons.lang.exception.ExceptionUtils
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 import scala.util.{Failure, Success, Try}
 
-trait DataAgent[K, V] extends ExecutionContexts with Logging with implicits.Strings {
+trait DataAgent[K, V] extends Logging with implicits.Strings {
 
   private val initialCache: DataCache[K, V] = DataCache(Map.empty[K, V])
   private lazy val cache = AkkaAgent(initialCache)
 
   def loadFreshData(): Try[Map[K, V]]
 
-  def refresh(): Future[DataCache[K, V]] = {
+  def refresh()(implicit executionContext: ExecutionContext): Future[DataCache[K, V]] = {
     log.info("Refreshing data cache")
     val start = System.currentTimeMillis
     cache alterOff { oldCache =>

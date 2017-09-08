@@ -44,7 +44,7 @@ object CommercialClientSideLogging extends Logging {
 class CommercialClientSideLoggingLifecycle(
   appLifecycle: ApplicationLifecycle,
   jobs: JobScheduler,
-  akkaAsync: AkkaAsync)(implicit ec: ExecutionContext) extends LifecycleComponent with ExecutionContexts with Logging {
+  akkaAsync: AkkaAsync)(implicit ec: ExecutionContext) extends LifecycleComponent with Logging {
 
   appLifecycle.addStopHook { () => Future {
     jobs.deschedule("CommercialClientSideLoggingJob")

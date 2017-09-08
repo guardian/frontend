@@ -28,7 +28,6 @@ trait Controllers extends IdentityControllers {
   def wsClient: WSClient
   lazy val healthCheck = wire[HealthCheck]
   lazy val devAssetsController = wire[DevAssetsController]
-  lazy val assets = wire[Assets]
 }
 
 trait AppLifecycleComponents {
@@ -55,8 +54,4 @@ trait AppComponents
   lazy val appIdentity = ApplicationIdentity("identity")
   override lazy val httpFilters: Seq[EssentialFilter] = wire[IdentityFilters].filters
   override lazy val httpErrorHandler: HttpErrorHandler = wire[IdentityHttpErrorHandler]
-
-  // this is a workaround while waiting for https://github.com/playframework/playframework/pull/6325/files to be merged and release as a play-2.5.x version
-  lazy val csrfCheck: CSRFCheck = new CSRFCheck(csrfConfig, csrfTokenSigner)
-  lazy val csrfAddToken: CSRFAddToken = new CSRFAddToken(csrfConfig, csrfTokenSigner)
 }

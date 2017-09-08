@@ -1,15 +1,15 @@
 package conf
 
-import common.ExecutionContexts
+
 import org.joda.time.DateTime
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, Matchers, WordSpec}
-import play.api.mvc.Result
-import play.api.test.FakeRequest
+import play.api.mvc.{ControllerComponents, Result}
+import play.api.test.{FakeRequest, Helpers}
 import play.api.test.Helpers._
-import test.{ConfiguredTestSuite, WithMaterializer, WithTestWsClient}
+import test.{ConfiguredTestSuite, WithMaterializer, WithTestExecutionContext, WithTestWsClient}
 import org.scalatest.concurrent.ScalaFutures
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 import scala.concurrent.duration._
 import scala.util.Random
 
@@ -18,7 +18,6 @@ import scala.util.Random
     with Matchers
     with ConfiguredTestSuite
     with ScalaFutures
-    with ExecutionContexts
     with BeforeAndAfterAll
     with WithMaterializer
     with WithTestWsClient {
@@ -40,16 +39,19 @@ import scala.util.Random
 
     // Create a CachedHealthCheck controller with mock results
     val mockHealthChecks: Seq[SingleHealthCheck] = mockResults.map(result => ExpiringSingleHealthCheck(result.url))
-    val controller = new CachedHealthCheck(policy, precondition)(mockHealthChecks:_*)(wsClient) {
+
+    class MockController(val controllerComponents: ControllerComponents) extends CachedHealthCheck(policy, precondition)(mockHealthChecks:_*)(wsClient) {
       override val cache = new HealthCheckCache(precondition)(wsClient) {
         var remainingMockResults = mockResults
-        override def fetchResult(baseUrl: String, healthCheck: SingleHealthCheck): Future[HealthCheckResult] = {
+        override def fetchResult(baseUrl: String, healthCheck: SingleHealthCheck)(implicit executionContext: ExecutionContext): Future[HealthCheckResult] = {
           val result = remainingMockResults.head
           remainingMockResults = remainingMockResults.tail
           Future.successful(result)
         }
       }
     }
+
+    val controller =  new MockController(Helpers.stubControllerComponents())
 
     // Populate the cache and wait for it to finish
     whenReady(controller.runChecks) { _ =>

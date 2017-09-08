@@ -1,7 +1,7 @@
 package commercial.controllers
 
 import commercial.model.capi.{CapiAgent, CapiMultiple, CapiSingle, Lookup}
-import common.{Edition, ExecutionContexts, JsonComponent, Logging}
+import common.{Edition, ImplicitControllerExecutionContext, JsonComponent, Logging}
 import contentapi.ContentApiClient
 import layout.PaidCard
 import model.{Cached, ContentType, NoCache}
@@ -15,7 +15,7 @@ sealed abstract class SponsorType(val className: String)
 case object PaidFor extends SponsorType("paidfor")
 case object Supported extends SponsorType("supported")
 
-class ContentApiOffersController(contentApiClient: ContentApiClient, capiAgent: CapiAgent) extends Controller with ExecutionContexts with implicits.Requests with Logging {
+class ContentApiOffersController(contentApiClient: ContentApiClient, capiAgent: CapiAgent, val controllerComponents: ControllerComponents) extends BaseController with ImplicitControllerExecutionContext with implicits.Requests with Logging {
 
   private val lookup = new Lookup(contentApiClient)
 

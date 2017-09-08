@@ -6,7 +6,7 @@ import common._
 import org.joda.time.{DateTime, DateTimeZone, Days, LocalDate}
 
 import scala.concurrent.duration._
-import scala.concurrent.{Future, Promise}
+import scala.concurrent.{ExecutionContext, Future, Promise}
 
 sealed trait SwitchState
 case object On extends SwitchState
@@ -36,7 +36,7 @@ object SwitchGroup {
 }
 
 
-trait Initializable[T] extends ExecutionContexts with Logging {
+trait Initializable[T] extends Logging {
 
   private val initialized = Promise[T]()
 
@@ -78,7 +78,7 @@ case class Switch(
    * If the switchboard hasn't been read yet, the "safe state" is returned instead of the real switch value.
    * This makes sure the switchboard has been read before returning the switch state.
    */
-  def isGuaranteedSwitchedOn: Future[Boolean] = onInitialized map { _ => isSwitchedOn }
+  def isGuaranteedSwitchedOn(implicit executionContext: ExecutionContext): Future[Boolean] = onInitialized map { _ => isSwitchedOn }
 
   def switchOn(): Unit = {
     if (isSwitchedOff) {

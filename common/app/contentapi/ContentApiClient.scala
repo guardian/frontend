@@ -50,28 +50,6 @@ object QueryDefaults extends implicits.Collections {
 
   val leadContentMaxAge = 1.day
 
-  object EditorsPicsOrLeadContentAndLatest extends ExecutionContexts {
-    def apply(result: Future[ItemResponse]): Future[Seq[Trail]] =
-      result.map { r =>
-        val leadContentCutOff = DateTime.now.toLocalDate - leadContentMaxAge
-
-        val results = r.results.getOrElse(Nil).map(Content(_))
-        val editorsPicks = r.editorsPicks.getOrElse(Nil).map(Content(_))
-
-        val leadContent = if (editorsPicks.isEmpty)
-            r.leadContent.getOrElse(Nil).filter(content => {
-              content.webPublicationDate
-                .map(date => date.toJodaDateTime)
-                .map(_ >= leadContentCutOff.toDateTimeAtStartOfDay)
-                .exists(identity)
-            }).take(1).map(Content(_))
-          else
-            Nil
-
-        (editorsPicks ++ leadContent ++ results).distinctBy(_.metadata.id).map(_.trail)
-      }
-  }
-
   object FaciaDefaults {
     val tag = "tag=type/gallery|type/article|type/video|type/sudoku"
     val editorsPicks = "show-editors-picks=true"
@@ -137,7 +115,8 @@ final case class CircuitBreakingContentApiClient(
   override val httpClient: HttpClient,
   override val targetUrl: String,
   apiKey: String
-) extends MonitoredContentApiClientLogic with ExecutionContexts {
+)(implicit executionContext: ExecutionContext)
+  extends MonitoredContentApiClientLogic {
 
   private val circuitBreakerActorSystem = ActorSystem("content-api-client-circuit-breaker")
 
@@ -170,7 +149,7 @@ final case class CircuitBreakingContentApiClient(
   }
 }
 
-class ContentApiClient(httpClient: HttpClient) extends ApiQueryDefaults {
+class ContentApiClient(httpClient: HttpClient)(implicit executionContext: ExecutionContext) extends ApiQueryDefaults {
 
   // Public val for test.
   val thriftClient = CircuitBreakingContentApiClient(
@@ -189,20 +168,20 @@ class ContentApiClient(httpClient: HttpClient) extends ApiQueryDefaults {
   def sections: SectionsQuery = getClient.sections
   def editions: EditionsQuery = getClient.editions
 
-  def getResponse(itemQuery: ItemQuery)(implicit context: ExecutionContext): Future[ItemResponse] = getClient.getResponse(itemQuery)
+  def getResponse(itemQuery: ItemQuery): Future[ItemResponse] = getClient.getResponse(itemQuery)
 
-  def getResponse(searchQuery: SearchQuery)(implicit context: ExecutionContext): Future[SearchResponse] = getClient.getResponse(searchQuery)
+  def getResponse(searchQuery: SearchQuery): Future[SearchResponse] = getClient.getResponse(searchQuery)
 
-  def getResponse(tagsQuery: TagsQuery)(implicit context: ExecutionContext): Future[TagsResponse] = getClient.getResponse(tagsQuery)
+  def getResponse(tagsQuery: TagsQuery): Future[TagsResponse] = getClient.getResponse(tagsQuery)
 
-  def getResponse(sectionsQuery: SectionsQuery)(implicit context: ExecutionContext): Future[SectionsResponse] = getClient.getResponse(sectionsQuery)
+  def getResponse(sectionsQuery: SectionsQuery): Future[SectionsResponse] = getClient.getResponse(sectionsQuery)
 
-  def getResponse(editionsQuery: EditionsQuery)(implicit context: ExecutionContext): Future[EditionsResponse] = getClient.getResponse(editionsQuery)
+  def getResponse(editionsQuery: EditionsQuery): Future[EditionsResponse] = getClient.getResponse(editionsQuery)
 }
 
 // The Admin server uses this PreviewContentApi to check the preview environment.
 // The Preview server uses the standard ContentApiClient object, configured with preview settings.
-class PreviewContentApi(httpClient: HttpClient) extends ContentApiClient(httpClient) {
+class PreviewContentApi(httpClient: HttpClient)(implicit executionContext: ExecutionContext) extends ContentApiClient(httpClient) {
   override val thriftClient = CircuitBreakingContentApiClient(
     httpClient = httpClient,
     targetUrl = Configuration.contentApi.previewHost,

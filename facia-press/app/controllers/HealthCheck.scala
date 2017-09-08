@@ -1,13 +1,17 @@
 package controllers
 
-import play.api.mvc.{Action, Results}
+import play.api.mvc.{ControllerComponents, Results}
 import conf.HealthCheckController
 import frontpress.ToolPressQueueWorker
 import org.joda.time.DateTime
 
 import scala.concurrent.Future.successful
 
-class HealthCheck(toolPressQueueWorker: ToolPressQueueWorker) extends HealthCheckController with Results {
+class HealthCheck(
+  toolPressQueueWorker: ToolPressQueueWorker,
+  val controllerComponents: ControllerComponents
+)
+  extends HealthCheckController with Results {
   val ConsecutiveProcessingErrorsThreshold = 5
   override def healthCheck() = Action.async{
     if (!toolPressQueueWorker.lastReceipt.exists(_.plusMinutes(1).isAfter(DateTime.now))) {

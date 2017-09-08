@@ -2,11 +2,11 @@ package controllers
 
 import model.Cached
 import model.Cached.WithoutRevalidationResult
-import play.api.mvc.{Action, AnyContent, Controller, Cookie, DiscardingCookie, Result}
+import play.api.mvc._
 
 import scala.concurrent.duration._
 
-trait OptFeature extends Controller {
+trait OptFeature extends BaseController {
   val cookieName: String
   val lifetime: Int = 90.days.toSeconds.toInt
   def opt(choice: String): Result = choice match {
@@ -19,13 +19,13 @@ trait OptFeature extends Controller {
   def optDelete(): Result = SeeOther("/").discardingCookies(DiscardingCookie(cookieName))
 }
 
-case class HttpsOptFeature(cookieName: String) extends OptFeature {
+case class HttpsOptFeature(cookieName: String, val controllerComponents: ControllerComponents) extends OptFeature {
   override def optOut(): Result = SeeOther("/").withCookies(Cookie(cookieName, "false", maxAge = Some(lifetime)))
 }
 
-case class OptInFeature(cookieName: String) extends OptFeature
+case class OptInFeature(cookieName: String, val controllerComponents: ControllerComponents) extends OptFeature
 
-class OptInController extends Controller {
+class OptInController(val controllerComponents: ControllerComponents) extends BaseController {
 
   def handle(feature: String, choice: String): Action[AnyContent] = Action { implicit request =>
     Cached(60)(WithoutRevalidationResult(feature match {
@@ -35,5 +35,5 @@ class OptInController extends Controller {
   }
 
   //cookies should correspond with those checked by fastly-edge-cache
-  val newDesktopHeader = OptInFeature("new_desktop_header")
+  val newDesktopHeader = OptInFeature("new_desktop_header", controllerComponents)
 }

@@ -1,10 +1,10 @@
 package controllers
 
 import actions.AuthenticatedActions
-import services.{IdRequestParser, IdentityRequest, IdentityUrlBuilder, ReturnUrlVerifier}
+import services.{IdRequestParser, IdentityUrlBuilder, ReturnUrlVerifier}
 import conf.IdentityConfiguration
 import idapiclient.IdApiClient
-import common.ExecutionContexts
+import common.ImplicitControllerExecutionContext
 import utils.SafeLogging
 import play.api.mvc._
 
@@ -14,20 +14,21 @@ import play.api.data._
 import client.Error
 import com.gu.identity.model.{EmailList, Subscriber}
 import play.filters.csrf._
-import play.api.i18n.{I18nSupport, MessagesApi}
+import play.api.i18n.I18nSupport
 import play.api.libs.json._
 
 class EmailController(
-    returnUrlVerifier: ReturnUrlVerifier,
-    conf: IdentityConfiguration,
-    api: IdApiClient,
-    idRequestParser: IdRequestParser,
-    idUrlBuilder: IdentityUrlBuilder,
-    authenticatedActions: AuthenticatedActions,
-    val messagesApi: MessagesApi,
-    csrfCheck: CSRFCheck,
-    csrfAddToken: CSRFAddToken)(implicit context: ApplicationContext)
-    extends Controller with ExecutionContexts with SafeLogging with I18nSupport {
+  returnUrlVerifier: ReturnUrlVerifier,
+  conf: IdentityConfiguration,
+  api: IdApiClient,
+  idRequestParser: IdRequestParser,
+  idUrlBuilder: IdentityUrlBuilder,
+  authenticatedActions: AuthenticatedActions,
+  csrfCheck: CSRFCheck,
+  csrfAddToken: CSRFAddToken,
+  val controllerComponents: ControllerComponents
+)(implicit context: ApplicationContext)
+  extends BaseController with ImplicitControllerExecutionContext with SafeLogging with I18nSupport {
 
   import EmailPrefsData._
   import authenticatedActions.authAction

@@ -1,17 +1,20 @@
 package indexes
 
-import com.gu.contentapi.client.model.v1.{Tag => ApiTag, TagType}
+import com.gu.contentapi.client.model.v1.{TagType, Tag => ApiTag}
 import model.{TagDefinition, TagIndexPage}
 import org.scalatest.concurrent.PatienceConfiguration.Timeout
 import org.scalatest.concurrent.ScalaFutures
-import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
+import org.scalatest.{DoNotDiscover, FlatSpec, Matchers}
 import play.api.libs.iteratee.Enumerator
-import TagPages._
+import test.WithTestExecutionContext
 
 import scala.language.postfixOps
 import scala.concurrent.duration._
 
-@DoNotDiscover class TagPagesTest extends FlatSpec with Matchers with ScalaFutures {
+@DoNotDiscover class TagPagesTest extends FlatSpec with Matchers with WithTestExecutionContext with ScalaFutures {
+
+  val tagPages = new TagPages
+
   "alphaIndexKey" should "return the downcased first character of an ASCII string" in {
     val words = Seq(
       "monads" -> "m",
@@ -23,7 +26,7 @@ import scala.concurrent.duration._
     )
 
     for ((word, char) <- words) {
-      alphaIndexKey(word) shouldEqual char
+      tagPages.alphaIndexKey(word) shouldEqual char
     }
   }
 
@@ -39,7 +42,7 @@ import scala.concurrent.duration._
     )
 
     for ((unicode, ascii) <- words) {
-      alphaIndexKey(unicode) shouldEqual ascii
+      tagPages.alphaIndexKey(unicode) shouldEqual ascii
     }
   }
 
@@ -51,7 +54,7 @@ import scala.concurrent.duration._
     )
 
     for (fixture <- fixtures) {
-      alphaIndexKey(fixture) shouldEqual "1-9"
+      tagPages.alphaIndexKey(fixture) shouldEqual "1-9"
     }
   }
 
@@ -73,13 +76,13 @@ import scala.concurrent.duration._
     val advertisingTag = tagFixture("Advertising")
     val otherDigitalSolutionsTag = tagFixture("Other digital solutions")
 
-    toPages(Enumerator(
+    tagPages.toPages(Enumerator(
       activateTag,
       archivedSpeakersTag,
       blogTag,
       advertisingTag,
       otherDigitalSolutionsTag
-    ).run(byWebTitle).futureValue(Timeout(1 second)))(_.toUpperCase, asciiLowerWebTitle) shouldEqual Seq(
+    ).run(tagPages.byWebTitle).futureValue(Timeout(1 second)))(_.toUpperCase, tagPages.asciiLowerWebTitle) shouldEqual Seq(
       TagIndexPage(
         "a",
         "A",

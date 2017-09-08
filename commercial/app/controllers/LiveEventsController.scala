@@ -1,13 +1,13 @@
 package commercial.controllers
 
-import common.{ExecutionContexts, JsonComponent}
+import common.{ImplicitControllerExecutionContext, JsonComponent}
 import model.Cached
 import commercial.model.merchandise.events.LiveEventAgent
 import play.api.mvc._
 
-class LiveEventsController(liveEventAgent: LiveEventAgent)
-  extends Controller
-  with ExecutionContexts
+class LiveEventsController(liveEventAgent: LiveEventAgent, val controllerComponents: ControllerComponents)
+  extends BaseController
+  with ImplicitControllerExecutionContext
   with implicits.Requests {
 
   def getLiveEvent = Action { implicit request =>

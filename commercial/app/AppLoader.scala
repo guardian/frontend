@@ -14,7 +14,6 @@ import common.Logback.LogstashLifecycle
 import conf.switches.SwitchboardLifecycle
 import conf.CachedHealthCheckLifeCycle
 import contentapi.{CapiHttpClient, ContentApiClient, HttpClient}
-import controllers.Assets
 import dev.{DevAssetsController, DevParametersHttpRequestHandler}
 import http.{CommonFilters, CorsHttpErrorHandler}
 import model.ApplicationIdentity
@@ -26,6 +25,8 @@ import play.api.mvc.EssentialFilter
 import play.api.routing.Router
 import router.Routes
 
+import scala.concurrent.ExecutionContext
+
 class AppLoader extends FrontendApplicationLoader {
   override def buildComponents(context: Context): FrontendComponents = new BuiltInComponentsFromContext(context) with AppComponents
 }
@@ -33,6 +34,7 @@ class AppLoader extends FrontendApplicationLoader {
 trait CommercialServices {
   def wsClient: WSClient
   def actorSystem: ActorSystem
+  implicit val executionContext: ExecutionContext
 
   lazy val magentoService = wire[MagentoService]
   lazy val capiHttpClient: HttpClient = wire[CapiHttpClient]
@@ -55,7 +57,6 @@ trait AppComponents extends FrontendComponents with CommercialControllers with C
 
   lazy val devAssetsController = wire[DevAssetsController]
   lazy val healthCheck = wire[HealthCheck]
-  lazy val assets = wire[Assets]
 
   override lazy val lifecycleComponents = List(
     wire[LogstashLifecycle],

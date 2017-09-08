@@ -34,6 +34,6 @@ import conf.Configuration
 
   }
 
-  private def hasNoLinkName(e: FluentWebElement) = e.getAttribute("data-link-name") == null
+  private def hasNoLinkName(e: FluentWebElement) = e.attribute("data-link-name") == null
 
 }

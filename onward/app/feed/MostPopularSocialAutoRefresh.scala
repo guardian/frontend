@@ -13,7 +13,7 @@ case class MostReadSocial(twitter: Seq[MostReadItem], facebook: Seq[MostReadItem
 class MostPopularSocialAutoRefresh(ophanApi: OphanApi) extends AutoRefresh[MostReadSocial](0.seconds, 3.minutes) {
   val Hours = 3
 
-  override protected def refresh(): Future[MostReadSocial] = {
+  override protected def refresh()(implicit executionContext: ExecutionContext): Future[MostReadSocial] = {
     for {
       facebookMostRead <- ophanApi.getMostReadFacebook(Hours)
       twitterMostRead <- ophanApi.getMostReadTwitter(Hours)

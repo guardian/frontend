@@ -1,23 +1,25 @@
 package controllers.admin
 
-import common.ExecutionContexts
+
 import controllers.Helpers.DeploysTestHttpRecorder
 import model.deploys._
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, Matchers, WordSpec}
 import play.api.libs.json.JsArray
 import play.api.libs.ws.WSClient
-import play.api.test.FakeRequest
+import play.api.mvc.ControllerComponents
+import play.api.test.{FakeRequest, Helpers}
 import play.api.test.Helpers._
-import test.{ConfiguredTestSuite, WithMaterializer, WithTestWsClient}
+import test.{ConfiguredTestSuite, WithMaterializer, WithTestExecutionContext, WithTestWsClient}
+
 import scala.concurrent.duration._
 
 @DoNotDiscover class DeploysControllerTest
   extends WordSpec
     with Matchers
     with ConfiguredTestSuite
-    with ExecutionContexts
     with BeforeAndAfterAll
     with WithMaterializer
+    with WithTestExecutionContext
     with WithTestWsClient {
 
   val existingBuild = "3123"
@@ -27,17 +29,21 @@ import scala.concurrent.duration._
       import implicits.Strings.string2encodings
       val urlWithParams = url + "?" + queryString.updated("key", "").toList.sortBy(_._1).map(kv=> kv._1 + "=" + kv._2).mkString("&").encodeURIComponent
       DeploysTestHttpRecorder.load(urlWithParams, headers) {
-        wsClient.url(url).withQueryString(queryString.toSeq: _*).withHeaders(headers.toSeq: _*).withRequestTimeout(10.seconds).get()
+        wsClient.url(url)
+          .withQueryStringParameters(queryString.toSeq: _*)
+          .withHttpHeaders(headers.toSeq: _*)
+          .withRequestTimeout(10.seconds)
+          .get()
       }
     }
   }
 
-  class DeploysControllerStub extends DeploysController {
+  class DeploysControllerStub(val controllerComponents: ControllerComponents) extends DeploysController {
     private val httpClient = new TestHttpClient(wsClient)
     override val riffRaff = new RiffRaffService(httpClient)
   }
 
-  lazy val controller = new DeploysControllerStub()
+  lazy val controller = new DeploysControllerStub(Helpers.stubControllerComponents())
 
   "GET /deploys" should {
     val getDeploysRequest = FakeRequest(method = "GET", path = "/deploys")

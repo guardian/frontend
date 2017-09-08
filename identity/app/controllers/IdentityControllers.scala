@@ -6,8 +6,8 @@ import form.FormComponents
 import formstack.FormStackComponents
 import idapiclient.IdApiComponents
 import model.ApplicationContext
-import play.api.libs.crypto.CryptoConfig
 import play.api.libs.ws.WSClient
+import play.api.mvc.ControllerComponents
 import play.filters.csrf.{CSRFAddToken, CSRFCheck}
 import services.IdentityServices
 
@@ -16,11 +16,11 @@ trait IdentityControllers extends IdApiComponents
   with FormStackComponents
   with FormComponents {
   def wsClient: WSClient
+  def controllerComponents: ControllerComponents
   implicit def appContext: ApplicationContext
 
   def csrfCheck: CSRFCheck
   def csrfAddToken: CSRFAddToken
-  def cryptoConfig: CryptoConfig
 
   lazy val authenticatedActions = wire[AuthenticatedActions]
   lazy val changePasswordController = wire[ChangePasswordController]

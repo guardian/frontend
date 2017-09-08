@@ -4,15 +4,15 @@ import java.lang.System._
 
 import commercial.model.OptString
 import commercial.model.feeds._
-import common.{ExecutionContexts, Logging}
+import common.Logging
 import commercial.model.merchandise.Book
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 import scala.concurrent.duration._
 import scala.util.control.NonFatal
 import scala.xml.{Elem, XML}
 
-object MagentoBestsellersFeed extends ExecutionContexts with Logging {
+object MagentoBestsellersFeed extends Logging {
 
   def parse(xml: Elem): Seq[Book] = {
     xml \ "Entry" map {
@@ -38,7 +38,7 @@ object MagentoBestsellersFeed extends ExecutionContexts with Logging {
     }
   }
 
-  def loadBestsellers(feedMetaData: FeedMetaData, feedContent: => Option[String]): Future[ParsedFeed[Book]] = {
+  def loadBestsellers(feedMetaData: FeedMetaData, feedContent: => Option[String])(implicit executionContext: ExecutionContext): Future[ParsedFeed[Book]] = {
 
     val feedName = feedMetaData.name
 

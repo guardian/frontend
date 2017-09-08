@@ -8,13 +8,13 @@ import org.joda.time.DateTime
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.scalatest.{FlatSpec, Matchers}
-import org.scalatestplus.play.OneAppPerSuite
+import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.test.FakeRequest
 import views.support.TagLinker
 
 import scala.collection.JavaConversions._
 
-class TagLinkerTest extends FlatSpec with Matchers with OneAppPerSuite {
+class TagLinkerTest extends FlatSpec with Matchers with GuiceOneAppPerSuite {
 
   implicit val edition = Uk
   implicit val request = FakeRequest("GET", "/")

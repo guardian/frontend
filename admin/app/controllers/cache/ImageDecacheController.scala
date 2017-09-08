@@ -4,21 +4,24 @@ import java.net.URI
 import java.util.UUID
 
 import com.gu.googleauth.UserIdentity
-import common.{ExecutionContexts, Logging}
-import controllers.admin.AuthActions
+import common.{ImplicitControllerExecutionContext, Logging}
+import controllers.admin.AdminAuthController
 import model.{ApplicationContext, NoCache}
 import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.mvc.Security.AuthenticatedRequest
-import play.api.mvc.{Action, AnyContent, Controller}
+import play.api.mvc._
 
 import scala.concurrent.Future
 import scala.concurrent.Future.successful
 
-class ImageDecacheController(wsClient: WSClient)(implicit context: ApplicationContext) extends Controller with Logging with ExecutionContexts {
+class ImageDecacheController(
+  wsClient: WSClient,
+  val controllerComponents: ControllerComponents
+)(implicit context: ApplicationContext)
+  extends BaseController with Logging with ImplicitControllerExecutionContext with AdminAuthController {
     import ImageDecacheController._
 
   val imageServices = new ImageServices(wsClient)
-  val authActions = new AuthActions(wsClient)
 
   private val iGuim = """i.guim.co.uk/img/(static|media|uploads)(/.*)""".r
   private val Origin = """(static|media).guim.co.uk/.*""".r
@@ -27,7 +30,7 @@ class ImageDecacheController(wsClient: WSClient)(implicit context: ApplicationCo
     NoCache(Ok(views.html.cache.imageDecache()))
   }
 
-  def decache() = authActions.AuthActionTest.async { implicit request =>
+  def decache(): Action[AnyContent] = AdminAuthAction.async { implicit request =>
     getSubmittedImage(request).map(new URI(_)).map{ image =>
 
       val originUrl: String = s"${image.getHost}${image.getPath}" match {

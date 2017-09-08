@@ -1,15 +1,16 @@
 package services
 
-import common.{ExecutionContexts, Edition}
+import common.Edition
 import conf.Configuration
 import contentapi.ContentApiClient
 import model.Content
-import org.joda.time.{DateTimeZone, DateTime}
+import org.joda.time.{DateTime, DateTimeZone}
 import implicits.Dates.DateTime2ToCommonDateFormats
-import scala.concurrent.Future
+
+import scala.concurrent.{ExecutionContext, Future}
 import scala.xml.NodeSeq
 
-class NewsSiteMap(contentApiClient: ContentApiClient) extends ExecutionContexts {
+class NewsSiteMap(contentApiClient: ContentApiClient) {
   private case class UrlSet(urls: Seq[Url]){
     def xml() = {
       <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
@@ -49,7 +50,7 @@ class NewsSiteMap(contentApiClient: ContentApiClient) extends ExecutionContexts 
     }
   }
 
-  def getLatestContent: Future[NodeSeq] = {
+  def getLatestContent()(implicit executionContext: ExecutionContext): Future[NodeSeq] = {
 
     val query = contentApiClient.search(Edition.defaultEdition)
       .pageSize(200)

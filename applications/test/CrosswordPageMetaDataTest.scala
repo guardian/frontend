@@ -11,11 +11,11 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
   with BeforeAndAfterAll
   with WithMaterializer
   with WithTestWsClient
-  with WithTestContext
+  with WithTestApplicationContext
   with WithTestContentApiClient {
 
   val crosswordUrl = "crosswords/cryptic/26697"
-  lazy val crosswordPageController = new CrosswordPageController(testContentApiClient)
+  lazy val crosswordPageController = new CrosswordPageController(testContentApiClient, play.api.test.Helpers.stubControllerComponents())
 
   it should "not include the ios deep link" in {
     val result = crosswordPageController.crossword("cryptic", 26697)(TestRequest(crosswordUrl))
