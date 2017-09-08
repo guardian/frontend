@@ -46,7 +46,7 @@ const config = {
                 test: /\.(js|jsx)$/,
                 oneOf: [
                     {
-                        test: /(\/inline)/,
+                        test: /(\/__inline__)/,
                         exclude: /node_modules/,
                         use: ['raw-loader', { loader: 'babel-loader' }],
                     },

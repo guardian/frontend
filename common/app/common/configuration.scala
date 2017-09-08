@@ -127,6 +127,13 @@ class GuardianConfiguration extends Logging {
   case class OAuthCredentials(oauthClientId: String, oauthSecret: String, oauthCallback: String)
   case class OAuthCredentialsWithMultipleCallbacks(oauthClientId: String, oauthSecret: String, authorizedOauthCallbacks: List[String])
 
+  object scripts {
+    lazy val polyfillioUrl =
+      if (conf.switches.Switches.PolyfillIO.isSwitchedOn) common.Assets.js.polyfillioUrl
+      else Static("javascripts/vendor/polyfillio.fallback.js")
+    lazy val bundleUrl: String = Static("javascripts/ui.bundle.browser.js")
+  }
+
   object business {
     lazy val stocksEndpoint = configuration.getMandatoryStringProperty("business_data.url")
   }

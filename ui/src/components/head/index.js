@@ -4,7 +4,7 @@
 // - https://meyerweb.com/eric/tools/css/reset
 // - https://css-tricks.com/inheriting-box-sizing-probably-slightly-better-best-practice
 
-import loadApp from './inline/loadApp';
+import loadApp from './__inline__/loadApp';
 import resetCSS from './reset.css';
 import fontsCSS from './fonts.css';
 
