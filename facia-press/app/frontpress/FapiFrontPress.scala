@@ -200,7 +200,7 @@ trait FapiFrontPress extends Logging {
         embedUri <- content.properties.embedUri
       } yield {
         val maybeUpdate = wsClient.url(embedUri).get().map { response =>
-          Json.parse(response.body).validate[EmbedJsonHtml] match {
+          Json.fromJson[EmbedJsonHtml](response.json) match {
             case JsSuccess(embed, _) => {
               beforeEnrichment.copy(embedHtml = Some(embed.html))
             }

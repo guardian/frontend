@@ -37,13 +37,13 @@ class FastlyStatisticService(wsClient: WSClient) extends Logging {
 
   def fetch()(implicit executionContext: ExecutionContext): Future[List[FastlyStatistic]] = {
 
-    val futureResponses: Future[List[String]] = Future.sequence{
+    val futureResponses: Future[List[JsValue]] = Future.sequence{
       regions map { region =>
         val request = wsClient.url(s"https://api.fastly.com/stats/service/${fastly.serviceId}?by=minute&from=45+minutes+ago&to=15+minutes+ago&region=$region")
           .withHttpHeaders("Fastly-Key" -> fastly.key)
           .withRequestTimeout(20.seconds)
 
-        val response: Future[Option[String]] = request.get().map { resp => Some(resp.body) }.recover {
+        val response: Future[Option[JsValue]] = request.get().map { resp => Some(resp.json) }.recover {
           case e: Throwable =>
             log.error(s"Error with request to api.fastly.com: ${e.getMessage}")
             None
@@ -55,8 +55,7 @@ class FastlyStatisticService(wsClient: WSClient) extends Logging {
 
     futureResponses map { responses =>
 
-      responses flatMap { body =>
-        val json: JsValue = Json.parse(body)
+      responses flatMap { json =>
         val samples: List[FastlyApiStat] = (json \ "data").validate[List[FastlyApiStat]].getOrElse(Nil)
         val region: String = (json \ "meta" \ "region").as[String]
 

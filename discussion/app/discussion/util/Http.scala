@@ -21,7 +21,7 @@ trait Http extends Logging {
             val dapiLatency = stopWatch.elapsed
             val customFields: List[LogField] = List("dapi.response.latency.millis" -> dapiLatency.toInt)
             logInfoWithCustomFields(s"DAPI responded successfully in ${dapiLatency} ms for url: ${url}", customFields)
-            Json.parse(response.body)
+            response.json
           case otherStatus =>
             val errorMessage = onError(response)
             log.error(errorMessage)

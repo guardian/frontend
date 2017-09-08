@@ -16,28 +16,14 @@ trait FrontJsonFapi extends Logging {
   val wsClient: WSClient
   val secureS3Request = new SecureS3Request(wsClient)
 
-  private def getAddressForPath(path: String): String = s"$bucketLocation/${path.replaceAll("""\+""","%2B")}/fapi/pressed.v2.json"
+  private def getAddressForPath(path: String): String = s"$bucketLocation/${path.replaceAll("""\+""", "%2B")}/fapi/pressed.v2.json"
 
-  private def parsePressedJson(json: String): Option[PressedPage] = {
-    val stopWatch: StopWatch = new StopWatch
-
-    val pressedPage = Json
-      .parse(json)
-      .validate[PressedPage] match {
-      case JsSuccess(page, _) => Option(page)
-      case JsError(errors) =>
-        log.warn("Could not parse JSON in FrontJson")
-        None
-    }
-    FaciaPressMetrics.FrontDecodingLatency.recordDuration(stopWatch.elapsed)
-    pressedPage
-  }
-
-  def getRaw(path: String)(implicit executionContext: ExecutionContext): Future[Option[String]] = {
+  def getRaw(path: String)(implicit executionContext: ExecutionContext): Future[Option[JsValue]] = {
     val response = secureS3Request.urlGet(getAddressForPath(path)).get()
     response.map { r =>
       r.status match {
-        case 200 => Some(r.body)
+        case 200 =>
+          Some(r.json)
         case 403 =>
           log.warn(s"Got 403 trying to load path: $path")
           None
@@ -51,13 +37,22 @@ trait FrontJsonFapi extends Logging {
     }
   }
 
-  def get(path: String)(implicit executionContext: ExecutionContext): Future[Option[PressedPage]] = {
-    getRaw(path).map {
-      _.flatMap {
-        body => parsePressedJson(body)
+  def get(path: String)(implicit executionContext: ExecutionContext): Future[Option[PressedPage]] =
+    getRaw(path)
+      .map {
+        _.flatMap { json =>
+          val stopWatch: StopWatch = new StopWatch
+          val pressedPage = Json.fromJson[PressedPage](json) match {
+            case JsSuccess(page, _) =>
+              Option(page)
+            case JsError(errors) =>
+              log.warn("Could not parse JSON in FrontJson")
+              None
+          }
+          FaciaPressMetrics.FrontDecodingLatency.recordDuration(stopWatch.elapsed)
+          pressedPage
+        }
       }
-    }
-  }
 }
 
 class FrontJsonFapiLive(val wsClient: WSClient) extends FrontJsonFapi {
