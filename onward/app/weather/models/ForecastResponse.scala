@@ -3,13 +3,11 @@ package weather.models
 import common.Edition
 import common.editions.Us
 import org.joda.time.DateTime
-import play.api.libs.json.Json
 import org.joda.time.format.ISODateTimeFormat
 
 import scala.util.Try
 
 object ForecastResponse {
-  implicit val jsonWrites = Json.writes[ForecastResponse]
 
   def fromAccuweather(forecastResponse: accuweather.ForecastResponse): ForecastResponse = {
     val dateTime = Try(

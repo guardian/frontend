@@ -1,18 +1,18 @@
 package jobs
 
-import common.{ExecutionContexts, Logging, StopWatch}
+import common.{Logging, StopWatch}
 import contentapi.ContentApiClient
-import indexes.ContentApiTagsEnumerator
-import indexes.TagPages._
+import indexes.{ContentApiTagsEnumerator, TagPages}
 import model.{TagIndexListings, TagIndexPage}
 import play.api.libs.iteratee.Enumeratee
 import services.TagIndexesS3
 
-import scala.concurrent.{Future, blocking}
+import scala.concurrent.{ExecutionContext, Future, blocking}
 
-class RebuildIndexJob(contentApiClient: ContentApiClient) extends ExecutionContexts with Logging {
+class RebuildIndexJob(contentApiClient: ContentApiClient)(implicit executionContext: ExecutionContext) extends Logging {
 
   val contentApiTagsEnumerator = new ContentApiTagsEnumerator(contentApiClient)
+  val tagPages = new TagPages
 
   def saveToS3(parentKey: String, tagPages: Seq[TagIndexPage]) {
     val s3StopWatch = new StopWatch
@@ -43,34 +43,34 @@ class RebuildIndexJob(contentApiClient: ContentApiClient) extends ExecutionConte
     val series = contentApiTagsEnumerator.enumerateTagTypeFiltered("series")
 
     /** Subjects are indexed both alphabetically and by their parent section */
-    (keywords andThen series).run(Enumeratee.zip(bySection, byWebTitle)) map { case (sectionMap, alphaMap) =>
+    (keywords andThen series).run(Enumeratee.zip(tagPages.bySection, tagPages.byWebTitle)) map { case (sectionMap, alphaMap) =>
       blocking {
-        saveToS3("keywords", toPages(alphaMap)(alphaTitle, asciiLowerWebTitle))
-        saveToS3("keywords_by_section", toPages(sectionMap)(ValidSections(_), asciiLowerWebTitle))
+        saveToS3("keywords", tagPages.toPages(alphaMap)(alphaTitle, tagPages.asciiLowerWebTitle))
+        saveToS3("keywords_by_section", tagPages.toPages(sectionMap)(TagPages.validSections(_), tagPages.asciiLowerWebTitle))
       }
     }
   }
 
   def rebuildNewspaperBooks() = {
-    contentApiTagsEnumerator.enumerateTagTypeFiltered("newspaper-book").run(byPublication) map { booksMap =>
+    contentApiTagsEnumerator.enumerateTagTypeFiltered("newspaper-book").run(tagPages.byPublication) map { booksMap =>
       blocking {
-        saveToS3("newspaper_books", toPages(booksMap)(alphaTitle, asciiLowerWebTitle))
+        saveToS3("newspaper_books", tagPages.toPages(booksMap)(alphaTitle, tagPages.asciiLowerWebTitle))
       }
     }
   }
 
   def rebuildNewspaperBookSections() = {
-    contentApiTagsEnumerator.enumerateTagTypeFiltered("newspaper-book-section").run(byPublication) map { bookSectionMap =>
+    contentApiTagsEnumerator.enumerateTagTypeFiltered("newspaper-book-section").run(tagPages.byPublication) map { bookSectionMap =>
       blocking {
-        saveToS3("newspaper_book_sections", toPages(bookSectionMap)(alphaTitle, asciiLowerWebTitle))
+        saveToS3("newspaper_book_sections", tagPages.toPages(bookSectionMap)(alphaTitle, tagPages.asciiLowerWebTitle))
       }
     }
   }
 
   def rebuildContributorIndex() = {
-    contentApiTagsEnumerator.enumerateTagTypeFiltered("contributor").run(byContributorNameOrder) map { alphaMap =>
+    contentApiTagsEnumerator.enumerateTagTypeFiltered("contributor").run(tagPages.byContributorNameOrder) map { alphaMap =>
       blocking {
-        saveToS3("contributors", toPages(alphaMap)(alphaTitle, nameOrder))
+        saveToS3("contributors", tagPages.toPages(alphaMap)(alphaTitle, tagPages.nameOrder))
       }
     }
   }

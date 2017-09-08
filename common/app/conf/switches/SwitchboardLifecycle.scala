@@ -8,7 +8,7 @@ import scala.concurrent.duration._
 import scala.concurrent.{Future, ExecutionContext}
 
 class SwitchboardLifecycle(appLifecycle: ApplicationLifecycle, jobs: JobScheduler, akkaAsync: AkkaAsync)
-  (implicit ec: ExecutionContext) extends LifecycleComponent with ExecutionContexts with Logging {
+  (implicit ec: ExecutionContext) extends LifecycleComponent with Logging {
 
   appLifecycle.addStopHook { () => Future {
     jobs.deschedule("SwitchBoardRefreshJob")

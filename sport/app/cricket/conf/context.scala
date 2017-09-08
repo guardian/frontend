@@ -20,7 +20,7 @@ class CricketLifecycle(
 
   private def scheduleJobs() {
     jobs.schedule("CricketAgentRefreshJob", "0 * * * * ?") {
-      cricketStatsJob.run()
+      cricketStatsJob.run
     }
   }
 
@@ -33,7 +33,7 @@ class CricketLifecycle(
     scheduleJobs()
 
     akkaAsync.after1s {
-      cricketStatsJob.run()
+      cricketStatsJob.run
     }
   }
 }

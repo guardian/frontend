@@ -12,9 +12,9 @@ import play.api.test.Helpers._
   with WithMaterializer
   with WithTestWsClient
   with WithTestContentApiClient
-  with WithTestContext {
+  with WithTestApplicationContext {
 
-  lazy val mediaInSectionController = new MediaInSectionController(testContentApiClient)
+  lazy val mediaInSectionController = new MediaInSectionController(testContentApiClient, play.api.test.Helpers.stubControllerComponents())
 
   "Video In Section controller" should "provide a tag combiner link" in {
     val result = mediaInSectionController.renderSectionMedia("video", "football")(TestRequest())

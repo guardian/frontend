@@ -2,14 +2,14 @@ package implicits
 
 import common.Crypto
 import play.api.data.{Form, FormError}
+import play.api.http.HttpConfiguration
 import play.api.libs.json._
 import play.api.mvc.{Flash, RequestHeader}
-import play.api.i18n.I18nSupport
-import play.api.libs.crypto.CryptoConfig
+import play.api.i18n.{I18nSupport, MessagesProvider}
 
 trait Forms extends I18nSupport {
 
-  val cryptoConfig: CryptoConfig
+  val httpConfiguration: HttpConfiguration
   private val formKey = "form-data"
 
   private implicit val errorReads = new Reads[Seq[FormError]]{
@@ -23,21 +23,21 @@ trait Forms extends I18nSupport {
     def bindFromFlash(implicit request: RequestHeader): Option[Form[A]] = {
 
       val errors = request.flash.get(s"$formKey-errors")
-        .map(encryptedValue => Crypto.decryptAES(encryptedValue, cryptoConfig.secret))
+        .map(encryptedValue => Crypto.decryptAES(encryptedValue, httpConfiguration.secret.secret))
         .map(Json.parse)
         .map(_.as[Seq[FormError]])
         .getOrElse(Nil)
 
-      request.flash.get(formKey).map(encryptedValue => Crypto.decryptAES(encryptedValue, cryptoConfig.secret)).map(Json.parse).map { data =>
+      request.flash.get(formKey).map(encryptedValue => Crypto.decryptAES(encryptedValue, httpConfiguration.secret.secret)).map(Json.parse).map { data =>
         errors.foldLeft(form.bind(data)) { (formFold, error) => formFold.withError(error) }
       }
     }
 
-    def toFlash: Flash = {
+    def toFlash(implicit messagesProvider: MessagesProvider): Flash = {
       val formJson: String = JsObject(form.data.toSeq.map { case (k, v) => k -> JsString(v)}).toString()
       Flash(Map(
-        formKey -> Crypto.encryptAES(formJson, cryptoConfig.secret),
-        s"$formKey-errors" -> Crypto.encryptAES(form.errorsAsJson.toString(), cryptoConfig.secret)
+        formKey -> Crypto.encryptAES(formJson, httpConfiguration.secret.secret),
+        s"$formKey-errors" -> Crypto.encryptAES(form.errorsAsJson.toString(), httpConfiguration.secret.secret)
       ))
     }
 

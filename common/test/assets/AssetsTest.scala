@@ -2,9 +2,9 @@ package common.Assets
 
 import org.scalatest.FlatSpec
 import org.scalatest.Matchers
-import org.scalatestplus.play.OneAppPerSuite
+import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 
-class AssetsTest extends FlatSpec with Matchers with OneAppPerSuite {
+class AssetsTest extends FlatSpec with Matchers with GuiceOneAppPerSuite {
   "Static" should "collect asset maps" in {
     val static = new Assets("simon says", "assets/testassets.map", true)
 

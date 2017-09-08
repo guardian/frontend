@@ -9,7 +9,7 @@ import discussion.util.Http
 trait WitnessApi extends Http {
   protected val witnessApiRoot: String
 
-  def getWitnessActivity(userId: String): Future[List[WitnessActivity]] = {
+  def getWitnessActivity(userId: String)(implicit executionContext: ExecutionContext): Future[List[WitnessActivity]] = {
     val witnessUrl: String = s"$witnessApiRoot/search?noticeboardOwnedBy=guardianwitness&partnerUser=guardian.co.uk:$userId"
     def onError(r: WSResponse) = s"Error loading WitnessActivity, status: ${r.status}, message: ${r.statusText}, response: ${r.body}"
     def getWitnessActivity(json: JsValue): List[WitnessActivity] = {

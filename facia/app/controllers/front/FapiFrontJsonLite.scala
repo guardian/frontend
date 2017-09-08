@@ -1,12 +1,12 @@
 package controllers.front
 
-import common.ExecutionContexts
+
 import model.PressedPage
 import model.facia.PressedCollection
 import model.pressed._
 import play.api.libs.json._
 
-trait FapiFrontJsonLite extends ExecutionContexts{
+trait FapiFrontJsonLite {
   def get(pressedPage: PressedPage): JsObject = {
     Json.obj(
       "webTitle" -> pressedPage.seoData.webTitle,

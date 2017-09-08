@@ -1,16 +1,18 @@
 package indexes
 
-import common.{ExecutionContexts, Logging}
+import common.Logging
 import common.Maps._
 import com.gu.contentapi.client.model.v1.Tag
 import model.{TagDefinition, TagIndexPage}
 import common.StringEncodings.asAscii
 import play.api.libs.iteratee.{Enumeratee, Iteratee}
+
+import scala.concurrent.ExecutionContext
 import scala.util.Try
 
-object TagPages extends Logging with ExecutionContexts {
+object TagPages {
   /** To be curated by Peter Martin */
-  val ValidSections = Map(
+  val validSections = Map(
     ("artanddesign", "Art and design"),
     ("better-business", "Better Business"),
     ("books", "Books"),
@@ -76,10 +78,13 @@ object TagPages extends Logging with ExecutionContexts {
     ("world", "World news")
   )
 
-  val Publications = Map(
+  val publications = Map(
     ("theguardian", "The Guardian"),
     ("theobserver", "The Observer")
   )
+}
+
+class TagPages(implicit executionContext: ExecutionContext) extends Logging {
 
   def alphaIndexKey(s: String) = {
     val badCharacters = """[^a-z0-9]+""".r
@@ -118,8 +123,8 @@ object TagPages extends Logging with ExecutionContexts {
       )
     }
 
-  val invalidSectionsFilter = Enumeratee.filter[Tag](_.sectionId.exists(ValidSections.contains))
-  val publicationsFilter = Enumeratee.filter[Tag](t => tagHeadKey(t.id).exists(Publications.contains))
+  val invalidSectionsFilter = Enumeratee.filter[Tag](_.sectionId.exists(TagPages.validSections.contains))
+  val publicationsFilter = Enumeratee.filter[Tag](t => tagHeadKey(t.id).exists(TagPages.publications.contains))
 
   val byWebTitle = mappedByKey(tag => alphaIndexKey(tag.webTitle))
 

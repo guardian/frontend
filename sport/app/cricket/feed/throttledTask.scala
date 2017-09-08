@@ -2,10 +2,11 @@ package cricket.feed
 
 import akka.actor.{Actor, ActorSystem, Props}
 import akka.pattern.{ask, pipe}
-import akka.contrib.throttle.{Throttler => AkkaThrottler, TimerBasedThrottler}
+import akka.contrib.throttle.{TimerBasedThrottler, Throttler => AkkaThrottler}
 import akka.contrib.throttle.Throttler._
 import akka.util.Timeout
-import scala.concurrent.Future
+
+import scala.concurrent.{ExecutionContext, Future}
 import scala.concurrent.duration._
 import scala.reflect.ClassTag
 
@@ -18,19 +19,21 @@ class CricketThrottler(actorSystem: ActorSystem) {
 }
 
 // ThrottledTask receives code blocks and executes them at a controlled rate, eg a maximum of 1 execution per second.
-object ThrottledTask extends common.ExecutionContexts {
+object ThrottledTask {
 
   // This can be big because the rate limit is so low for Pa.
   implicit val timeout = Timeout(30.seconds)
 
   private case class ExecuteTask(task: () => Future[Any])
 
-  def apply[T](task: => Future[T])(implicit tag: ClassTag[T], throttler: CricketThrottler): Future[T] = {
+  def apply[T](task: => Future[T])(implicit tag: ClassTag[T], throttler: CricketThrottler, executionContext: ExecutionContext): Future[T] = {
     (throttler.actor ? ExecuteTask(() => task)).mapTo[T]
   }
 }
 
-class ThrottledTask extends Actor with common.ExecutionContexts {
+class ThrottledTask extends Actor {
+
+  import context.dispatcher
 
   override def receive = {
     case exec: ThrottledTask.ExecuteTask =>

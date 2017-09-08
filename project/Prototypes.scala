@@ -7,7 +7,7 @@ import sbt.Keys._
 import com.gu.riffraff.artifact.RiffRaffArtifact
 import com.gu.riffraff.artifact.RiffRaffArtifact.autoImport._
 import Dependencies._
-import play.sbt.PlayScala
+import play.sbt.{PlayAkkaHttpServer, PlayNettyServer, PlayScala}
 import com.typesafe.sbt.SbtNativePackager.Universal
 import com.typesafe.sbt.packager.Keys.packageName
 
@@ -125,32 +125,38 @@ trait Prototypes {
     }).value
   )
 
-  def root(): Project = Project("root", base = file(".")).enablePlugins(PlayScala, RiffRaffArtifact)
+  def root(): Project = Project("root", base = file("."))
+    .enablePlugins(PlayScala, RiffRaffArtifact, PlayNettyServer)
+    .disablePlugins(PlayAkkaHttpServer)
     .settings(frontendCompilationSettings)
     .settings(frontendRootSettings)
 
   def application(applicationName: String): Project = {
-    Project(applicationName, file(applicationName)).enablePlugins(PlayScala, UniversalPlugin)
-    .settings(frontendDependencyManagementSettings)
-    .settings(frontendCompilationSettings)
-    .settings(frontendTestSettings)
-    .settings(VersionInfo.settings)
-    .settings(libraryDependencies ++= Seq(macwire, commonsIo))
-    .settings(packageName in Universal := applicationName)
-    .settingSets(settingSetsOrder)
-    .settings(
-      mappings in Universal ++= (file("ui/dist") ** "*").get.map { f => f.getAbsoluteFile -> f.toString }
-    )
+    Project(applicationName, file(applicationName))
+      .enablePlugins(PlayScala, PlayNettyServer, UniversalPlugin)
+      .disablePlugins(PlayAkkaHttpServer)
+      .settings(frontendDependencyManagementSettings)
+      .settings(frontendCompilationSettings)
+      .settings(frontendTestSettings)
+      .settings(VersionInfo.settings)
+      .settings(libraryDependencies ++= Seq(macwire, commonsIo))
+      .settings(packageName in Universal := applicationName)
+      .settingSets(settingSetsOrder)
+      .settings(
+        mappings in Universal ++= (file("ui/dist") ** "*").get.map { f => f.getAbsoluteFile -> f.toString }
+      )
   }
 
   def library(applicationName: String): Project = {
-    Project(applicationName, file(applicationName)).enablePlugins(PlayScala)
-    .settings(frontendDependencyManagementSettings)
-    .settings(frontendCompilationSettings)
-    .settings(frontendTestSettings)
-    .settings(VersionInfo.settings)
-    .settings(libraryDependencies ++= Seq(commonsIo))
-    .settingSets(settingSetsOrder)
+    Project(applicationName, file(applicationName))
+      .enablePlugins(PlayScala, PlayNettyServer)
+      .disablePlugins(PlayAkkaHttpServer)
+      .settings(frontendDependencyManagementSettings)
+      .settings(frontendCompilationSettings)
+      .settings(frontendTestSettings)
+      .settings(VersionInfo.settings)
+      .settings(libraryDependencies ++= Seq(commonsIo))
+      .settingSets(settingSetsOrder)
   }
 
   /**

@@ -6,12 +6,16 @@ import contentapi.Paths
 import model.Cached.WithoutRevalidationResult
 import model._
 import org.joda.time.DateTime
-import play.api.mvc.{Action, Controller, RequestHeader}
+import play.api.mvc._
 import services.{IndexPage, IndexPageItem}
 
 import scala.concurrent.Future
 
-class LatestIndexController(contentApiClient: ContentApiClient) extends Controller with ExecutionContexts with implicits.ItemResponses with Logging {
+class LatestIndexController(
+  contentApiClient: ContentApiClient,
+  val controllerComponents: ControllerComponents)
+  extends BaseController with ImplicitControllerExecutionContext with implicits.ItemResponses with Logging {
+
   def latest(path: String) = Action.async { implicit request =>
     loadLatest(path).map { _.map { index =>
       index.page match {

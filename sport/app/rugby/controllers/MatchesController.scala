@@ -3,7 +3,7 @@ package rugby.controllers
 import common._
 import model.Cached.RevalidatableResult
 import model.{ApplicationContext, Cached, MetaData, SectionSummary, StandalonePage}
-import play.api.mvc.{Action, Controller}
+import play.api.mvc.{BaseController, ControllerComponents}
 import play.twirl.api.Html
 import rugby.jobs.RugbyStatsJob
 import rugby.model.Match
@@ -15,7 +15,11 @@ case class MatchPage(liveScore: Match) extends StandalonePage {
     webTitle = s"${liveScore.homeTeam.name} v ${liveScore.awayTeam.name}")
 }
 
-class MatchesController(rugbyStatsJob: RugbyStatsJob)(implicit context: ApplicationContext) extends Controller with Logging with ExecutionContexts {
+class MatchesController(
+  rugbyStatsJob: RugbyStatsJob,
+  val controllerComponents: ControllerComponents
+)(implicit context: ApplicationContext)
+  extends BaseController with Logging with ImplicitControllerExecutionContext {
 
   def scoreJson(year: String, month: String, day: String, homeTeamId: String, awayTeamId: String) = score(year, month, day, homeTeamId, awayTeamId)
 

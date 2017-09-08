@@ -18,7 +18,7 @@ import play.api.data.validation.Constraints._
 import play.api.libs.json.{JsNull, JsObject, Json}
 import play.api.libs.ws.{WSClient, WSResponse}
 
-class AtomPageController(contentApiClient: ContentApiClient, wsClient: WSClient)(implicit context: ApplicationContext) extends Controller with Logging with ExecutionContexts {
+class AtomPageController(contentApiClient: ContentApiClient, wsClient: WSClient, val controllerComponents: ControllerComponents)(implicit context: ApplicationContext) extends BaseController with Logging with ImplicitControllerExecutionContext {
 
   case class AnswersSignupForm(
                         email: String,

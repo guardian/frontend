@@ -8,21 +8,21 @@ import org.scalatest.Suites
 import play.api.libs.ws.WSClient
 import recorder.HttpRecorder
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 import scala.io.Codec.UTF8
 
 object `package` {
 
   implicit class WebElement2rich(element: FluentWebElement) {
-    lazy val href = element.getAttribute("href")
+    lazy val href = element.attribute("href")
 
-    def hasAttribute(name: String) = element.getAttribute(name) != null
+    def hasAttribute(name: String) = element.attribute(name) != null
   }
 
   // need a front api that stores S3 locally so it can run without deps in the unit tests
   class TestFrontJsonFapi(override val wsClient: WSClient) extends FrontJsonFapiLive(wsClient) {
 
-    override def getRaw(path: String): Future[Option[String]] = {
+    override def getRaw(path: String)(implicit executionContext: ExecutionContext): Future[Option[String]] = {
       recorder.load(path, Map()) {
         super.getRaw(path)
       }

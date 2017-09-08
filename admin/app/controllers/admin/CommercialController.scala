@@ -1,13 +1,13 @@
 package controllers.admin
 
 import common.dfp.{GuCreativeTemplate, GuCustomField, GuLineItem}
-import common.{ExecutionContexts, JsonComponent, Logging}
+import common.{ImplicitControllerExecutionContext, JsonComponent, Logging}
 import conf.Configuration
 import dfp.{AdvertiserAgent, CreativeTemplateAgent, CustomFieldAgent, DfpApi, DfpDataExtractor, OrderAgent}
 import model._
 import services.ophan.SurgingContentAgent
-import play.api.libs.json.{Format, JsString, JsValue, Json}
-import play.api.mvc.{Action, Controller, RequestHeader}
+import play.api.libs.json.{JsString, Json}
+import play.api.mvc._
 import tools._
 
 import scala.concurrent.duration._
@@ -23,7 +23,8 @@ case class CommercialPage() extends StandalonePage {
       "adUnit" -> JsString("/59666047/theguardian.com/global-development/ng")))
 }
 
-class CommercialController(implicit context: ApplicationContext) extends Controller with Logging with ExecutionContexts {
+class CommercialController(val controllerComponents: ControllerComponents)(implicit context: ApplicationContext)
+  extends BaseController with Logging with ImplicitControllerExecutionContext {
 
   def renderCommercialMenu() = Action { implicit request =>
     NoCache(Ok(views.html.commercial.commercialMenu()))
@@ -98,7 +99,7 @@ class CommercialController(implicit context: ApplicationContext) extends Control
   }
 
   def renderCommercialRadiator() = Action.async { implicit request =>
-    for (adResponseConfidenceGraph <- CloudWatch.eventualAdResponseConfidenceGraph) yield {
+    for (adResponseConfidenceGraph <- CloudWatch.eventualAdResponseConfidenceGraph()) yield {
       Ok(views.html.commercial.commercialRadiator(adResponseConfidenceGraph))
     }
   }

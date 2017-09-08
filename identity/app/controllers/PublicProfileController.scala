@@ -2,7 +2,7 @@ package controllers
 
 import model.Cached.RevalidatableResult
 import play.api.mvc._
-import common.ExecutionContexts
+import common.ImplicitControllerExecutionContext
 import services.{IdRequestParser, IdentityUrlBuilder}
 import utils.SafeLogging
 import model.{ApplicationContext, Cached, IdentityPage}
@@ -12,14 +12,15 @@ import scala.concurrent.Future
 import com.gu.identity.model.User
 import client.Response
 
-class PublicProfileController(idUrlBuilder: IdentityUrlBuilder,
-                              identityApiClient: IdApiClient,
-                              idRequestParser: IdRequestParser)
-                             (implicit context: ApplicationContext)
-  extends Controller
-  with ExecutionContexts
-  with SafeLogging{
-
+class PublicProfileController(
+  idUrlBuilder: IdentityUrlBuilder,
+  identityApiClient: IdApiClient,
+  idRequestParser: IdRequestParser,
+  val controllerComponents: ControllerComponents
+)(implicit context: ApplicationContext)
+  extends BaseController
+    with ImplicitControllerExecutionContext
+    with SafeLogging{
 
   def page(url: String, username: String) = IdentityPage(url,  s"$username's public profile")
 

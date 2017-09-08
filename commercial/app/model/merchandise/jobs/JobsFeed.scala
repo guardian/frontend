@@ -4,16 +4,16 @@ import java.lang.System.currentTimeMillis
 import java.util.concurrent.TimeUnit.MILLISECONDS
 
 import commercial.model.feeds.{FeedMetaData, MissingFeedException, ParsedFeed, SwitchOffException}
-import common.{ExecutionContexts, Logging}
+import common.Logging
 import conf.switches.Switches.JobsFeedParseSwitch
 import commercial.model.merchandise.Job
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 import scala.concurrent.duration.Duration
 import scala.util.control.NonFatal
 import scala.xml.{Elem, XML}
 
-object JobsFeed extends ExecutionContexts with Logging {
+object JobsFeed extends Logging {
 
   def parse(xml: Elem): Seq[Job] = for {
     jobXml <- xml \\ "Job"
@@ -21,7 +21,7 @@ object JobsFeed extends ExecutionContexts with Logging {
     if (jobXml \ "RecruiterName").text != "THE GUARDIAN MASTERCLASSES"
   } yield Job.fromXml(jobXml)
 
-  def parsedJobs(feedMetaData: FeedMetaData, feedContent: => Option[String]): Future[ParsedFeed[Job]] = {
+  def parsedJobs(feedMetaData: FeedMetaData, feedContent: => Option[String])(implicit executionContext: ExecutionContext): Future[ParsedFeed[Job]] = {
     JobsFeedParseSwitch.isGuaranteedSwitchedOn flatMap { switchedOn =>
       if (switchedOn) {
         val start = currentTimeMillis

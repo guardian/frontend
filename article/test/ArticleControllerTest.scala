@@ -15,14 +15,14 @@ import scala.collection.JavaConversions._
   with BeforeAndAfterAll
   with WithMaterializer
   with WithTestWsClient
-  with WithTestContext
+  with WithTestApplicationContext
   with WithTestContentApiClient {
 
   val articleUrl = "environment/2012/feb/22/capitalise-low-carbon-future"
   val liveBlogUrl = "global/middle-east-live/2013/sep/09/syria-crisis-russia-kerry-us-live"
   val sudokuUrl = "lifeandstyle/2013/sep/09/sudoku-2599-easy"
 
-  lazy val articleController = new ArticleController(testContentApiClient)
+  lazy val articleController = new ArticleController(testContentApiClient, play.api.test.Helpers.stubControllerComponents())
 
   "Article Controller" should "200 when content type is article" in {
     val result = articleController.renderArticle(articleUrl)(TestRequest(articleUrl))
@@ -124,6 +124,6 @@ import scala.collection.JavaConversions._
 
   "Interactive articles" should "provide a boot.js script element as a main embed" in goTo("/sport/2015/sep/11/how-women-in-tennis-achieved-equal-pay-us-open") { browser =>
     import browser._
-    $(".media-primary > .element-interactive").getAttributes("data-interactive").head should endWith ("boot.js")
+    $(".media-primary > .element-interactive").attributes("data-interactive").head should endWith ("boot.js")
   }
 }

@@ -1,6 +1,6 @@
 package controllers
 
-import common.ExecutionContexts
+import common.ImplicitControllerExecutionContext
 import model.{ApplicationContext, IdentityPage, NoCache}
 import play.api.mvc._
 import services._
@@ -13,26 +13,27 @@ import conf.IdentityConfiguration
 import play.api.data.validation.Constraints
 import play.api.data.Form
 import play.api.data.Forms._
+import play.api.http.HttpConfiguration
 import play.api.i18n.I18nSupport
-import play.api.libs.crypto.CryptoConfig
-import play.api.i18n.MessagesApi
+
 import scala.concurrent.Future
 
 class AccountDeletionController(
-    idApiClient: IdApiClient,
-    authenticatedActions: AuthenticatedActions,
-    authenticationService: AuthenticationService,
-    idRequestParser: IdRequestParser,
-    idUrlBuilder: IdentityUrlBuilder,
-    val messagesApi: MessagesApi,
-    csrfCheck: CSRFCheck,
-    csrfAddToken: CSRFAddToken,
-    val cryptoConfig: CryptoConfig,
-    http: IdDispatchAsyncHttpClient,
-    signInService : PlaySigninService,
-    conf: IdentityConfiguration)(implicit context: ApplicationContext)
-  extends Controller
-    with ExecutionContexts
+  idApiClient: IdApiClient,
+  authenticatedActions: AuthenticatedActions,
+  authenticationService: AuthenticationService,
+  idRequestParser: IdRequestParser,
+  idUrlBuilder: IdentityUrlBuilder,
+  csrfCheck: CSRFCheck,
+  csrfAddToken: CSRFAddToken,
+  http: IdDispatchAsyncHttpClient,
+  signInService : PlaySigninService,
+  conf: IdentityConfiguration,
+  val controllerComponents: ControllerComponents,
+  val httpConfiguration: HttpConfiguration
+)(implicit context: ApplicationContext)
+  extends BaseController
+    with ImplicitControllerExecutionContext
     with SafeLogging
     with Mappings
     with implicits.Forms

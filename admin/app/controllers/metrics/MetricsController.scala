@@ -1,53 +1,57 @@
 package controllers.admin
 
-import common.{ExecutionContexts, Logging}
+import common.{ImplicitControllerExecutionContext, Logging}
 import play.api.libs.ws.WSClient
-import play.api.mvc.Controller
-import play.api.mvc.Action
+import play.api.mvc.{Action, BaseController, ControllerComponents}
 import tools._
 import model.{ApplicationContext, NoCache}
-import conf.{Static, Configuration}
+import conf.{Configuration, Static}
+
 import scala.concurrent.Future
 
-class MetricsController(wsClient: WSClient)(implicit context: ApplicationContext) extends Controller with Logging with ExecutionContexts {
+class MetricsController(
+  wsClient: WSClient,
+  val controllerComponents: ControllerComponents
+)(implicit context: ApplicationContext)
+  extends BaseController with Logging with ImplicitControllerExecutionContext {
     // We only do PROD metrics
 
   lazy val stage = Configuration.environment.stage.toUpperCase
 
   def renderLoadBalancers() = Action.async { implicit request =>
     for {
-      graphs <- CloudWatch.dualOkLatencyFullStack
+      graphs <- CloudWatch.dualOkLatencyFullStack()
     } yield NoCache(Ok(views.html.lineCharts(graphs)))
   }
 
   def renderErrors() = Action.async { implicit request =>
     for {
-      errors4xx <- HttpErrors.global4XX
-      errors5xx <- HttpErrors.global5XX
+      errors4xx <- HttpErrors.global4XX()
+      errors5xx <- HttpErrors.global5XX()
     } yield NoCache(Ok(views.html.lineCharts(Seq(errors4xx, errors5xx))))
   }
 
   def render4XX() = Action.async { implicit request =>
     for {
-      notFound <- HttpErrors.notFound
+      notFound <- HttpErrors.notFound()
     } yield NoCache(Ok(views.html.lineCharts(notFound)))
   }
 
   def render5XX() = Action.async { implicit request =>
     for {
-      httpErrors <- HttpErrors.errors
+      httpErrors <- HttpErrors.errors()
     } yield NoCache(Ok(views.html.lineCharts(httpErrors)))
   }
 
   def renderGooglebot404s() = Action.async { implicit request =>
     for {
-      googleBot404s <- HttpErrors.googlebot404s
+      googleBot404s <- HttpErrors.googlebot404s()
     } yield NoCache(Ok(views.html.lineCharts(googleBot404s, Some("GoogleBot 404s"))))
   }
 
   def renderMemory() = Action.async { implicit request =>
     for {
-      metrics <- MemoryMetrics.memory
+      metrics <- MemoryMetrics.memory()
     } yield NoCache(Ok(views.html.lineCharts(metrics)))
   }
 

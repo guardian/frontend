@@ -1,15 +1,14 @@
 package controllers.admin
 
-import common.Logging
+import common.{ImplicitControllerExecutionContext, Logging}
 import implicits.Requests
 import model.NoCache
 import model.deploys.{ApiResults, RiffRaffService}
 import play.api.mvc._
-import play.api.libs.concurrent.Execution.Implicits._
 import model.deploys._
 import play.api.libs.ws.WSClient
 
-trait DeploysController extends Controller with Logging with Requests {
+trait DeploysController extends BaseController with Logging with Requests with ImplicitControllerExecutionContext {
 
   val riffRaff: RiffRaffService
 
@@ -25,7 +24,7 @@ trait DeploysController extends Controller with Logging with Requests {
 
 }
 
-class DeploysControllerImpl(wsClient: WSClient) extends DeploysController {
+class DeploysControllerImpl(wsClient: WSClient, val controllerComponents: ControllerComponents) extends DeploysController {
   val httpClient = new HttpClient(wsClient)
   override val riffRaff = new RiffRaffService(httpClient)
 }

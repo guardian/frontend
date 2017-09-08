@@ -1,13 +1,13 @@
 package controllers
 
-import common.{Edition, ExecutionContexts, JsonComponent, Logging}
+import common.{Edition, ImplicitControllerExecutionContext, JsonComponent, Logging}
 import contentapi.ContentApiClient
 import implicits.Requests
 import model.{ApplicationContext, Cached, NoCache}
 import play.api.mvc._
 import play.twirl.api.HtmlFormat
 
-abstract class OnwardContentCardController(contentApiClient: ContentApiClient)(implicit context: ApplicationContext) extends Controller with Paging with Logging with ExecutionContexts with Requests {
+abstract class OnwardContentCardController(contentApiClient: ContentApiClient, val controllerComponents: ControllerComponents)(implicit context: ApplicationContext) extends BaseController with Paging with Logging with ImplicitControllerExecutionContext with Requests {
 
   def render(path: String): Action[AnyContent]
 
