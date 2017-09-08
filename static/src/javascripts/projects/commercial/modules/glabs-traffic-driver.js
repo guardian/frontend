@@ -76,7 +76,6 @@ const glabsTrafficDriverInit = (): Promise<void> => {
             waitForInteractives: false,
         });
     }
-
     return Promise.resolve();
 };
 
