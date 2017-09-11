@@ -5,4 +5,5 @@ set -o nounset
 set -o errexit
 
 echo "Install dependencies"
+nvm install
 make install
