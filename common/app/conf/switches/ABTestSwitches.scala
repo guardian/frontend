@@ -15,7 +15,7 @@ trait ABTestSwitches {
     s"Test effectiveness of engagement banners in the $edition edition for driving Membership & Contributions.",
     owners = Seq(Owner.withGithub("rtyley")),
     safeState = On,
-    sellByDate = new LocalDate(2017, 9, 8), // we'll be doing AB tests on this for a long time, don't want to break the build
+    sellByDate = new LocalDate(2017, 9, 12), // we'll be doing AB tests on this for a long time, don't want to break the build
     exposeClientSide = true
   )
 
