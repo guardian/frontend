@@ -4,4 +4,4 @@ import { acquisitionsSupportUsRecurringContribution } from 'common/modules/exper
 
 export const membershipEngagementBannerTests: $ReadOnlyArray<
     AcquisitionsABTest
-> = [acquisitionsSupportBaseline, acquisitionsSupportUsRecurringContribution];
+> = [acquisitionsSupportUsRecurringContribution];
