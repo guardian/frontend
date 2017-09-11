@@ -5,5 +5,8 @@ set -o nounset
 set -o errexit
 
 echo "Install dependencies"
+
+. ~/.profile
 nvm install
+
 make install
