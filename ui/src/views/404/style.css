@@ -10,67 +10,159 @@ body:before {
 }
 
 wrapper {
+    box-sizing: border-box;
     margin: 0 auto;
-    width: 320px;
+    padding: 0 10px;
+    width: 100%;
 
     @include mq(tablet) {
-        width: 940px;
+        padding: 0;
+        width: 740px;
+    }
+
+    @include mq(desktop) {
+        width: 980px;
+    }
+
+    @include mq(leftCol) {
+        width: 1140px;
     }
 
      @include mq(wide) {
-         width: 1200px;
+         width: 1300px;
      }
+}
+
+logoWrapper {
+    display: block;
+    margin: 6px 0 24px auto;
+    max-width: 384px;
+    width: 65%;
+
+    @include mq(tablet) {
+        width: 384px;
+    }
+
+    @include mq(desktop) {
+        margin-bottom: -60px;
+    }
+
+    &:hover svg .guardian {
+        .u {
+            transform: translateX(49px);
+        }
+
+        .a {
+            transform: translateX(-12px);
+        }
+
+        .r {
+            transform: translateX(-64px);
+        }
+
+        .d {
+            transform: translateX(76px);
+        }
+
+        .i, .a2 {
+            transform: translateX(-2px);
+        }
+
+        .n {
+            transform: translateX(-84px);
+        }
+    }
 }
 
 logo {
     display: block;
-    margin: 6px 0 48px auto;
-    width: 384px;
+    height: auto;
+    width: 100%;
+}
 
-    &:hover svg #guardian {
-        #i, #a2 {
-            transform: translateX(-2px);
-        }
-
-        #n {
-            transform: translateX(-84px);
-        }
-
-        #d {
-            transform: translateX(76px);
-        }
-
-        #u {
-            transform: translateX(49px);
-        }
-
-        #a {
-            transform: translateX(-12px);
-        }
-
-        #r {
-            transform: translateX(-64px);
-        }
-    }
+visuallyHidden {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
 }
 
 contentBlock {
-    margin-left: 400px;
-    width: 540px;
+    @include mq(tablet) {
+        margin-left: 160px;
+    }
+
+    @include mq(desktop) {
+        margin-left: 320px;
+    }
+
+    @include mq(leftCol) {
+        margin-left: 480px;
+    }
+}
+
+fourOhFour {
+    display: block;
+    height: 80%;
+    margin-left: auto;
+    max-width: 350px;
+    width: 91%;
+
+    @include mq(tablet) {
+        margin-left: 0;
+        height: auto;
+        max-width: 100%;
+        width: 350px;
+    }
+
+    @include mq(desktop) {
+        width: 378px;
+    }
+
+    @include mq(leftCol) {
+        width: 567px;
+    }
 }
 
 heading {
-    color: #FFFFFF;
-    font-size: 36px;
+    color: #AAD8F1;
+    font-family: "Guardian Egyptian Web", "Guardian Text Egyptian Web", Georgia, serif;
+    font-size: 28px;
+    font-weight: 200;
+    line-height: 1.15;
+    margin-bottom: 12px;
+    max-width: 380px;
+
+    @include mq(tablet) {
+        font-size: 42px;
+        max-width: 540px;
+    }
 }
 
 bodyCopy {
-    color: #AAD8F1;
+    color: #FFFFFF;
+    font-family: "Guardian Text Egyptian Web", Georgia, serif;
     font-size: 15px;
-    margin-bottom: 12px;
-    padding-right: 140px;
+    margin-bottom: 24px;
+    max-width: 300px;
+
+    @include mq(tablet) {
+        font-size: 18px;
+    }
 }
 
 link {
+    border-bottom: 2px solid #337EA5;
     color: #FFFFFF;
+    padding-bottom: 3px;
+    text-decoration: none;
+    transition: border-color .3s;
+
+    &:hover {
+        border-color: #74E7FF;
+    }
 }

@@ -7,18 +7,17 @@ CTA {
     font-family: "Guardian Text Sans Web", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
     font-size: 16px;
     line-height: 42px;
-    padding: 0 50px 0 20px;
+    padding: 0 45px 0 20px;
     position: relative;
     text-decoration: none;
     transition: background-color .3s;
 
-    @include mq(tablet) {
-        font-size: 18px;
-        line-height: 54px;
-    }
-
     &:hover {
         background-color: #74E7FF;
+
+        & > svg {
+            transform: translate(5px, -50%);
+        }
     }
 }
 
@@ -28,6 +27,7 @@ icon {
     position: absolute;
     right: 5px;
     top: 50%;
-    transform: translateY(-50%);
+    transform: translate(0, -50%);
+    transition: transform .3s;
     width: 40px;
 }

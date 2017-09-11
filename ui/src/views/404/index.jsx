@@ -1,12 +1,17 @@
 // @follow
 import Logo from 'assets/images/guardian-logo-320.svg';
+import ArrowRight from 'assets/images/arrow-right.svg';
 import FourOhFour from 'assets/images/404.svg';
-import CTA from 'components/CTA';
+import CTA from './CTA';
 
 import {
     body,
     wrapper,
+    header,
+    logoWrapper,
     logo,
+    visuallyHidden,
+    fourOhFour,
     contentBlock,
     heading,
     bodyCopy,
@@ -18,22 +23,24 @@ export default ({ beaconUrl }: { beaconUrl: string }) =>
     <div style={wrapper}>
         <a
             href="https://www.theguardian.com/"
-            style={logo}
+            style={logoWrapper}
         >
-            <Logo/>
+            <Logo style={logo}/>
+            <span style={visuallyHidden}>
+                the Guardian
+            </span>
         </a>
-        <FourOhFour/>
+        <FourOhFour style={fourOhFour}/>
         <div style={contentBlock}>
             <h1 style={heading}>
                 Sorry — the page you have requested does not exist
             </h1>
             <p style={bodyCopy}>
-                You may have followed an outdated link, or have mistyped a URL. If you believe this to be an error, please <a href="" style={link}>report it</a>.
+                You may have followed an outdated link, or have mistyped a URL. If you believe this to be an error, please <a href="https://www.theguardian.com/info/tech-feedback" style={link}>report it</a>.
             </p>
             <CTA
                 href="https://www.theguardian.com/"
-                color="brightBlue"
-                icon="./assets/images/arrow-right.svg"
+                icon={ArrowRight}
             >
                 Go to the Guardian home page
             </CTA>

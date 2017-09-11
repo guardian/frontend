@@ -7,7 +7,7 @@ export default (props: Object) => {
     return <a href={props.href} style={CTA}>
         {props.children}
         <props.icon
-            svg-styles={icon}
+            style={icon}
         />
     </a>
 }
