@@ -5,9 +5,7 @@ import assign from 'lodash/objects/assign';
 
 function Formstack(el, formstackId, config) {
 
-    var self = this,
-        dom = {},
-        formId = formstackId.split('-')[0];
+    const self = this, dom = {}, formId = formstackId.split('-')[0];
 
     config = assign({
         idClasses: {
@@ -54,9 +52,9 @@ function Formstack(el, formstackId, config) {
         }
     }, config);
 
-    self.init = function() {
+    self.init = () => {
         // User object required to populate fields
-        var user = idApi.getUserOrSignIn();
+        const user = idApi.getUserOrSignIn();
 
         self.dom(user);
         $(el).removeClass(config.idClasses.hide);
@@ -66,8 +64,8 @@ function Formstack(el, formstackId, config) {
         self.postMessage('ready');
     };
 
-    self.dom = function(user) {
-        var selector, $userId, $email, html;
+    self.dom = user => {
+        let selector, $userId, $email, html;
 
         // Formstack generates some awful HTML, so we'll remove the CSS links,
         // loop their selectors and add our own classes instead
@@ -92,9 +90,9 @@ function Formstack(el, formstackId, config) {
         bean.on(dom.$form[0], 'submit', self.submit);
     };
 
-    self.submit = function() {
+    self.submit = () => {
         // TODO: FML
-        setTimeout(function() {
+        setTimeout(() => {
             // Remove any existing errors
             $('.' + config.idClasses.formError).removeClass(config.idClasses.formError);
             $('.' + config.idClasses.fieldError).removeClass(config.idClasses.fieldError);
@@ -104,7 +102,7 @@ function Formstack(el, formstackId, config) {
             $(config.fsSelectors.fieldError, dom.$form).addClass(config.idClasses.fieldError);
 
             // Update character count absolute positions
-            $(config.fsSelectors.textArea, el).each(function(textarea) {
+            $(config.fsSelectors.textArea, el).each(textarea => {
                 bean.fire(textarea, 'keyup');
             });
 
@@ -112,13 +110,13 @@ function Formstack(el, formstackId, config) {
         }, 100);
     };
 
-    self.unload = function() {
+    self.unload = () => {
         // Listen for navigation to success page
         self.postMessage('unload');
     };
 
-    self.postMessage = function(message) {
-        var domain = config.page.idUrl;
+    self.postMessage = message => {
+        const domain = config.page.idUrl;
         window.top.postMessage(message, domain);
     };
 
