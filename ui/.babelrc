@@ -7,6 +7,7 @@
     ],
     "plugins": [
         "babel-plugin-transform-object-rest-spread",
+        "babel-plugin-emotion",
         ["babel-plugin-transform-runtime", {
             "polyfill": false
         }],
