@@ -103,7 +103,7 @@ class LeagueTableController(
     table.map { table =>
 
       val page = new FootballPage(
-        "football/tables",
+        s"football/$competition/table",
         "football",
         s"${table.competition.fullName} table"
       )
@@ -132,7 +132,7 @@ class LeagueTableController(
       }
     } yield {
       val page = new FootballPage(
-        "football/tables",
+        s"football/$competition/$groupReference/table",
         "football",
         s"${table.competition.fullName} table"
       )
