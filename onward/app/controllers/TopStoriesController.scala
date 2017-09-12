@@ -6,12 +6,16 @@ import contentapi.ContentApiClient
 import model.Cached.RevalidatableResult
 import model._
 import model.pressed.PressedContent
-import play.api.mvc.{Action, Controller, RequestHeader}
+import play.api.mvc._
 import play.twirl.api.Html
 
 import scala.concurrent.Future
 
-class TopStoriesController(contentApiClient: ContentApiClient)(implicit context: ApplicationContext) extends Controller with Logging with Paging with ExecutionContexts {
+class TopStoriesController(
+  contentApiClient: ContentApiClient,
+  val controllerComponents: ControllerComponents
+)(implicit context: ApplicationContext)
+  extends BaseController with Logging with Paging with ImplicitControllerExecutionContext {
 
   def renderTopStoriesHtml = renderTopStories()
   def renderTopStories() = Action.async { implicit request =>

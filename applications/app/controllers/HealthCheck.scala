@@ -3,8 +3,9 @@ package controllers
 import conf.{CachedHealthCheck, HealthCheckPolicy, HealthCheckPrecondition, NeverExpiresSingleHealthCheck}
 import contentapi.SectionsLookUp
 import play.api.libs.ws.WSClient
+import play.api.mvc.ControllerComponents
 
-class HealthCheck(wsClient: WSClient, sectionsLookUp: SectionsLookUp) extends CachedHealthCheck(
+class HealthCheck(wsClient: WSClient, sectionsLookUp: SectionsLookUp, val controllerComponents: ControllerComponents) extends CachedHealthCheck(
   policy = HealthCheckPolicy.All,
   preconditionMaybe = Some(HealthCheckPrecondition(sectionsLookUp.isLoaded, "Sections lookup service has not been loaded yet"))
 )(

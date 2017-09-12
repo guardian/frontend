@@ -1,5 +1,6 @@
 @import football.controllers.CompetitionFilter
 @import common.LinkTo
+@import play.twirl.api.HtmlFormat
 
 @(competitions: Map[String, Seq[CompetitionFilter]], page: model.Page, competitionList: List[String])(implicit request: RequestHeader)
 <div class="l-side-margins">

@@ -1,22 +1,21 @@
 package rugby.feed
 
-import common.{Edition, Logging, ExecutionContexts}
+import common.{Edition, Logging}
 import contentapi.ContentApiClient
 import model.{Content, ContentType}
 import org.joda.time.DateTimeZone
-import rugby.jobs.RugbyStatsJob
 import rugby.model.Match
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 case class MatchNavigation(
   matchReport: ContentType,
   minByMin: ContentType
 )
 
-class CapiFeed(contentApiClient: ContentApiClient) extends ExecutionContexts with Logging {
+class CapiFeed(contentApiClient: ContentApiClient) extends Logging {
 
-  def getMatchArticles(matches: Seq[Match]) : Future[Map[String, MatchNavigation]] = {
+  def getMatchArticles(matches: Seq[Match])(implicit executionContext: ExecutionContext) : Future[Map[String, MatchNavigation]] = {
     Future.sequence(
       matches.map { rugbyMatch =>
         loadNavigation(rugbyMatch).map( _.map( (rugbyMatch.key, _) ) )
@@ -24,7 +23,7 @@ class CapiFeed(contentApiClient: ContentApiClient) extends ExecutionContexts wit
     ).map(_.flatten.toMap)
   }
 
-  private def loadNavigation(rugbyMatch: Match): Future[Option[MatchNavigation]] = {
+  private def loadNavigation(rugbyMatch: Match)(implicit executionContext: ExecutionContext): Future[Option[MatchNavigation]] = {
     val matchDate = rugbyMatch.date.toLocalDate
     val teamTags = rugbyMatch.teamTags.mkString(",")
     val searchTags = s"(tone/matchreports,sport/rugby-union,$teamTags) | (tone/minutebyminute,sport/rugby-union,$teamTags)"

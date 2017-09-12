@@ -2,12 +2,16 @@ package football.controllers
 
 import feed.CompetitionsService
 import model.Cached.RevalidatableResult
-import play.api.mvc.{Action, Controller}
-import common.{ExecutionContexts, Logging}
+import play.api.mvc.{BaseController, ControllerComponents}
+import common.{ImplicitControllerExecutionContext, Logging}
 import model.{ApplicationContext, Cached}
 import football.model.CompetitionStage
 
-class WallchartController(competitionsService: CompetitionsService)(implicit context: ApplicationContext) extends Controller with Logging with ExecutionContexts {
+class WallchartController(
+  competitionsService: CompetitionsService,
+  val controllerComponents: ControllerComponents
+)(implicit context: ApplicationContext)
+  extends BaseController with Logging with ImplicitControllerExecutionContext {
 
   def renderWallchartEmbed(competitionTag: String) = renderWallchart(competitionTag, true)
   def renderWallchart(competitionTag: String, embed: Boolean = false) = Action { implicit request =>

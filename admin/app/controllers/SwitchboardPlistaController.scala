@@ -9,7 +9,7 @@ import services.SwitchNotification
 import tools.Store
 import model.{ApplicationContext, NoCache}
 
-class SwitchboardPlistaController(akkaAsync: AkkaAsync)(implicit context: ApplicationContext) extends Controller with Logging with ExecutionContexts {
+class SwitchboardPlistaController(akkaAsync: AkkaAsync, val controllerComponents: ControllerComponents)(implicit context: ApplicationContext) extends BaseController with Logging with ImplicitControllerExecutionContext {
 
   def renderSwitchboard() = Action { implicit request =>
     log.info("loaded plista Switchboard")

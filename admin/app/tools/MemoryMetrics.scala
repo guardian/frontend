@@ -2,16 +2,15 @@ package tools
 
 import tools.CloudWatch._
 import com.amazonaws.services.cloudwatch.model.{Dimension, GetMetricStatisticsRequest}
-import common.ExecutionContexts
 import org.joda.time.DateTime
 import awswrappers.cloudwatch._
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
-object MemoryMetrics extends ExecutionContexts {
+object MemoryMetrics {
   private def jvmLoadBalancers = loadBalancers.diff(List(LoadBalancer("frontend-router"), LoadBalancer("frontend-image")).flatten)
 
-  def memory = withErrorLogging(Future.traverse(jvmLoadBalancers) { loadBalancer =>
+  def memory()(implicit executionContext: ExecutionContext) = withErrorLogging(Future.traverse(jvmLoadBalancers) { loadBalancer =>
     val applicationName: Dimension = new Dimension().withName("ApplicationName").withValue(loadBalancer.project)
     for {
       usedHeapMemory <- euWestClient.getMetricStatisticsFuture(new GetMetricStatisticsRequest()

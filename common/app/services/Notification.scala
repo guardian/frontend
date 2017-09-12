@@ -2,13 +2,14 @@ package services
 
 import com.amazonaws.services.sns.{AmazonSNSAsync, AmazonSNSAsyncClient}
 import com.amazonaws.services.sns.model.PublishRequest
-import common.{AkkaAsync, ExecutionContexts, Logging}
+import common.{AkkaAsync, Logging}
 import conf.Configuration
 import awswrappers.sns._
 
+import scala.concurrent.ExecutionContext
 import scala.util.{Failure, Success}
 
-trait Notification extends Logging with ExecutionContexts {
+trait Notification extends Logging {
 
   val topic: String
 
@@ -20,7 +21,7 @@ trait Notification extends Logging with ExecutionContexts {
     .build()
   }
 
-  def send(akkaAsync: AkkaAsync)(subject: String, message: String) {
+  def send(akkaAsync: AkkaAsync)(subject: String, message: String)(implicit executionContext: ExecutionContext): Unit = {
     val request = new PublishRequest()
       .withTopicArn(topic)
       .withSubject(subject)
@@ -29,7 +30,7 @@ trait Notification extends Logging with ExecutionContexts {
     sendAsync(akkaAsync)(request)
   }
 
-  def sendWithoutSubject(akkaAsync: AkkaAsync)(message: String) {
+  def sendWithoutSubject(akkaAsync: AkkaAsync)(message: String)(implicit executionContext: ExecutionContext): Unit = {
     val request = new PublishRequest()
       .withTopicArn(topic)
       .withMessage(message)
@@ -37,7 +38,7 @@ trait Notification extends Logging with ExecutionContexts {
     sendAsync(akkaAsync)(request)
   }
 
-  private def sendAsync(akkaSync: AkkaAsync)(request: PublishRequest) = akkaSync.after1s {
+  private def sendAsync(akkaSync: AkkaAsync)(request: PublishRequest)(implicit executionContext: ExecutionContext): Unit = akkaSync.after1s {
     sns match {
       case Some(client) =>
           log.info(s"Issuing SNS notification: ${request.getSubject}:${request.getMessage}")
@@ -57,7 +58,9 @@ trait Notification extends Logging with ExecutionContexts {
 object SwitchNotification extends Notification {
   lazy val topic: String = Configuration.aws.notificationSns
 
-  def onSwitchChanges(akkaAsync: AkkaAsync)(requester: String, stage: String, changes: Seq[String]) {
+  def onSwitchChanges(akkaAsync: AkkaAsync)
+    (requester: String, stage: String, changes: Seq[String])
+    (implicit executionContext: ExecutionContext): Unit = {
     val subject = s"${stage.toUpperCase}: Switch changes by $requester"
     val message =
       s"""
@@ -86,7 +89,9 @@ object R2PressedPageTakedownNotification extends Notification {
 object MissingVideoEncodings extends Notification {
   lazy val topic: String = "arn:aws:sns:eu-west-1:642631414762:frontend-missingVideoEncodingsNotificationTopic"
 
-  def sendMessage(akkaAsync: AkkaAsync)(encoding: String, url: String, webTitle: String): Unit = {
+  def sendMessage(akkaAsync: AkkaAsync)
+    (encoding: String, url: String, webTitle: String)
+    (implicit executionContext: ExecutionContext): Unit = {
     val subject = "Missing video encoding found"
     val message =
         s"""

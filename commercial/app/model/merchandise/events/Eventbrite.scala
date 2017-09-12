@@ -3,17 +3,17 @@ package commercial.model.merchandise.events
 import java.lang.System._
 
 import commercial.model.feeds.{FeedMetaData, MissingFeedException, ParsedFeed, SwitchOffException}
-import common.{ExecutionContexts, Logging}
+import common.Logging
 import org.joda.time.DateTime
 import play.api.libs.functional.syntax._
 import play.api.libs.json._
 import commercial.model.readsSeq
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 import scala.concurrent.duration._
 import scala.util.control.NonFatal
 
-object Eventbrite extends ExecutionContexts with Logging {
+object Eventbrite extends Logging {
 
   case class Response(pagination: Pagination, events: Seq[Event])
 
@@ -49,7 +49,7 @@ object Eventbrite extends ExecutionContexts with Logging {
 
 
   implicit val jodaDateTimeFormats: Format[DateTime] =
-    Format(Reads.jodaDateReads("yyyy-MM-dd'T'HH:mm:ssZ"), Writes.jodaDateWrites("dd MMM yyyy"))
+    Format(JodaReads.jodaDateReads("yyyy-MM-dd'T'HH:mm:ssZ"), JodaWrites.jodaDateWrites("dd MMM yyyy"))
 
   implicit val ticketReads: Reads[Ticket] = (
     (JsPath \ "hidden").read[Boolean] and
@@ -103,7 +103,7 @@ object Eventbrite extends ExecutionContexts with Logging {
 
   def buildEventWithImageSrc(event: Event, src: String) = event.copy(imageUrl = Some(src))
 
-  def parsePagesOfEvents(feedMetaData: FeedMetaData, feedContent: => Option[String]): Future[ParsedFeed[Event]] = {
+  def parsePagesOfEvents(feedMetaData: FeedMetaData, feedContent: => Option[String])(implicit executionContext: ExecutionContext): Future[ParsedFeed[Event]] = {
 
     feedMetaData.parseSwitch.isGuaranteedSwitchedOn flatMap { switchedOn =>
       if (switchedOn) {

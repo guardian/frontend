@@ -11,7 +11,7 @@ import views.support.RenderOtherStatus
 import scala.concurrent.Future
 import scala.concurrent.Future.successful
 
-trait IndexControllerCommon extends Controller with Index with RendersItemResponse with Logging with Paging with ExecutionContexts {
+trait IndexControllerCommon extends BaseController with Index with RendersItemResponse with Logging with Paging with ImplicitControllerExecutionContext {
   private val TagPattern = """^([\w\d-]+)/([\w\d-]+)$""".r
 
   implicit val context: ApplicationContext

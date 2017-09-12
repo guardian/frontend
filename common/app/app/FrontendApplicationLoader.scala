@@ -3,14 +3,13 @@ package app
 import common._
 import model.{ApplicationContext, ApplicationIdentity}
 import play.api.ApplicationLoader.Context
-import play.api._
 import play.api.http.HttpFilters
 import play.api.libs.ws.ahc.AhcWSComponents
-import play.api.mvc.EssentialFilter
+import play.api.mvc.{ControllerComponents, EssentialFilter}
 import play.api.routing.Router
 import play.filters.csrf.CSRFComponents
-
-import scala.concurrent.ExecutionContext
+import controllers.AssetsComponents
+import play.api.{Application, ApplicationLoader, BuiltInComponents, LoggerConfigurator}
 
 trait FrontendApplicationLoader extends ApplicationLoader {
 
@@ -18,7 +17,7 @@ trait FrontendApplicationLoader extends ApplicationLoader {
 
   override def load(context: Context): Application = {
     LoggerConfigurator(context.environment.classLoader).foreach {
-      _.configure(context.environment)
+      _.configure(context.environment, context.initialConfiguration, Map.empty)
     }
     val components = buildComponents(context)
     components.startLifecycleComponents()
@@ -28,11 +27,11 @@ trait FrontendApplicationLoader extends ApplicationLoader {
 
 trait FrontendComponents
   extends LifecycleComponents
-  with ExecutionContextComponent
   with HttpFiltersComponent
   with BuiltInComponents
   with AhcWSComponents
-  with CSRFComponents {
+  with CSRFComponents
+  with AssetsComponents {
   self: BuiltInComponents =>
 
   lazy val prefix = "/"
@@ -50,6 +49,7 @@ trait FrontendComponents
   implicit def appContext = ApplicationContext(environment, appIdentity)
   def lifecycleComponents: List[LifecycleComponent]
   def router: Router
+  def controllerComponents: ControllerComponents
 }
 
 trait LifecycleComponent {
@@ -59,11 +59,6 @@ trait LifecycleComponent {
 trait LifecycleComponents {
   def lifecycleComponents: List[LifecycleComponent]
   def startLifecycleComponents(): Unit = lifecycleComponents.foreach(_.start())
-}
-
-trait ExecutionContextComponent {
-  self: BuiltInComponents =>
-  implicit lazy val executionContext: ExecutionContext = actorSystem.dispatcher
 }
 
 trait HttpFiltersComponent {

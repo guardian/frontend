@@ -15,9 +15,9 @@ import implicits.R2PressNotification.pressMessageFormatter
 import org.jsoup.nodes.Document
 import services.RedirectService.ArchiveRedirect
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
-class R2PagePressJob(wsClient: WSClient, redirects: RedirectService) extends ExecutionContexts with Logging {
+class R2PagePressJob(wsClient: WSClient, redirects: RedirectService)(implicit executionContext: ExecutionContext) extends Logging {
   private lazy val waitTimeSeconds = Configuration.r2Press.pressQueueWaitTimeInSeconds
   private lazy val maxMessages = Configuration.r2Press.pressQueueMaxMessages
   private lazy val credentials = Configuration.aws.mandatoryCredentials

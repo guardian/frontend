@@ -4,7 +4,7 @@ import common._
 import common.Logback.LogstashLifecycle
 import conf.switches.SwitchboardLifecycle
 import conf.CachedHealthCheckLifeCycle
-import controllers.{Assets, DiagnosticsControllers, HealthCheck}
+import controllers.{Assets, AssetsComponents, DiagnosticsControllers, HealthCheck}
 import model.ApplicationIdentity
 import play.api.ApplicationLoader.Context
 import play.api.mvc.EssentialFilter
@@ -22,7 +22,6 @@ trait Controllers extends DiagnosticsControllers {
   self: BuiltInComponents =>
   def wsClient: WSClient
   lazy val healthCheck = wire[HealthCheck]
-  lazy val assets = wire[Assets]
 }
 
 trait AppLifecycleComponents {

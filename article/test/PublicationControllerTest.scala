@@ -17,7 +17,7 @@ import services.{NewspaperBookSectionTagAgent, NewspaperBookTagAgent}
   with BeforeAndAfterAll
   with WithMaterializer
   with WithTestWsClient
-  with WithTestContext
+  with WithTestApplicationContext
   with WithTestContentApiClient {
 
   private val PermanentRedirect = 301
@@ -27,8 +27,9 @@ import services.{NewspaperBookSectionTagAgent, NewspaperBookTagAgent}
   val emptySeq: Seq[TagDefinition] = Seq.empty
   val bookAgent = mock[NewspaperBookTagAgent]
   val bookSectionAgent = mock[NewspaperBookSectionTagAgent]
-  lazy val articleController = new ArticleController(testContentApiClient)
-  lazy val publicationController = new PublicationController(bookAgent, bookSectionAgent, articleController)
+  lazy val controllerComponents = play.api.test.Helpers.stubControllerComponents()
+  lazy val articleController = new ArticleController(testContentApiClient, controllerComponents)
+  lazy val publicationController = new PublicationController(bookAgent, bookSectionAgent, articleController, controllerComponents)
 
   "Publication Controller" should "redirect to an /all page when an observer dated book url is requested" in {
     when(bookAgent.getTags("theobserver")).thenReturn(Seq(new TagDefinition("Observer Magazine","theobserver/magazine",None,false)))

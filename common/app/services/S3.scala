@@ -191,7 +191,7 @@ class SecureS3Request(wsClient: WSClient) extends implicits.Dates with Logging {
 
 
 
-    wsClient.url(s"$frontendStore/$id").withHeaders(headers:_*)
+    wsClient.url(s"$frontendStore/$id").withHttpHeaders(headers:_*)
   }
 
   //Other HTTP verbs may need other information such as Content-MD5 and Content-Type

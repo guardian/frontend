@@ -4,16 +4,16 @@ import commercial.model.Segment
 import commercial.model.capi.{Keyword, Lookup}
 import commercial.model.feeds.{FeedMetaData, ParsedFeed}
 import commercial.model.merchandise.{Masterclass, MerchandiseAgent}
-import common.{ExecutionContexts, Logging}
+import common.Logging
 import contentapi.ContentApiClient
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
-class MasterclassAgent(contentApiClient: ContentApiClient) extends MerchandiseAgent[Masterclass] with ExecutionContexts with Logging {
+class MasterclassAgent(contentApiClient: ContentApiClient) extends MerchandiseAgent[Masterclass] with Logging {
 
   private val lookup = new Lookup(contentApiClient)
 
-  def refresh(feedMetaData: FeedMetaData, feedContent: => Option[String]): Future[ParsedFeed[Masterclass]] = {
+  def refresh(feedMetaData: FeedMetaData, feedContent: => Option[String])(implicit executionContext: ExecutionContext): Future[ParsedFeed[Masterclass]] = {
 
     def fetchKeywords(name: String): Future[Seq[String]] = for(tags <- lookup.keyword(name)) yield tags.map(_.id)
 

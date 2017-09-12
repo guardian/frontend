@@ -1,13 +1,13 @@
 package controllers
 
 import common.{Edition, JsonComponent, LinkTo, NavItem, SectionLink}
-import navigation.{NavLink, NewNavigation, NavigationHelpers}
+import navigation.{NavLink, NavigationHelpers, NewNavigation}
 import model.Cached
 import model.Cached.RevalidatableResult
 import play.api.libs.json.{Json, Writes}
-import play.api.mvc.{Action, Controller}
+import play.api.mvc.{BaseController, ControllerComponents}
 
-class NavigationController extends Controller {
+class NavigationController(val controllerComponents: ControllerComponents) extends BaseController {
 
   private case class SectionLinkAndEdition(link: SectionLink, edition: Edition)
   private case class NavItemAndEdition(link: NavItem, edition: Edition)

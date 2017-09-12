@@ -7,13 +7,17 @@ import feed.MostReadAgent
 import model.Cached.RevalidatableResult
 import model._
 import play.api.libs.json._
-import play.api.mvc.{Action, Controller, RequestHeader}
+import play.api.mvc._
 import services._
 import views.support.FaciaToMicroFormat2Helpers.isCuratedContent
 
 import scala.concurrent.duration._
 
-class RelatedController(val contentApiClient: ContentApiClient, val mostReadAgent: MostReadAgent)(implicit context: ApplicationContext) extends Controller with Related with Containers with Logging with ExecutionContexts {
+class RelatedController(
+  val contentApiClient: ContentApiClient,
+  val mostReadAgent: MostReadAgent, val controllerComponents: ControllerComponents
+)(implicit context: ApplicationContext)
+  extends BaseController with Related with Containers with Logging with ImplicitControllerExecutionContext {
 
   private val RelatedLabel : String = "Related stories"
 

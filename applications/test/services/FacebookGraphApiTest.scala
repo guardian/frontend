@@ -3,7 +3,7 @@ package services
 import helpers.FacebookGraphApiTestClient
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
-import test.{ConfiguredTestSuite, WithMaterializer, WithTestWsClient}
+import test.{ConfiguredTestSuite, WithMaterializer, WithTestExecutionContext, WithTestWsClient}
 
 @DoNotDiscover class FacebookGraphApiTest
   extends FlatSpec
@@ -12,6 +12,7 @@ import test.{ConfiguredTestSuite, WithMaterializer, WithTestWsClient}
   with BeforeAndAfterAll
   with WithMaterializer
   with WithTestWsClient
+  with WithTestExecutionContext
   with ScalaFutures {
 
   lazy val facebookGraphApiClient = new FacebookGraphApiTestClient(wsClient)

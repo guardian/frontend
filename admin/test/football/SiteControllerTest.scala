@@ -1,6 +1,6 @@
 package football
 
-import common.ExecutionContexts
+
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FreeSpec, Matchers}
 import play.api.test._
 import play.api.test.Helpers._
@@ -9,7 +9,6 @@ import test.{ConfiguredTestSuite, WithMaterializer, WithTestWsClient}
 @DoNotDiscover class SiteControllerTest
   extends FreeSpec
   with ConfiguredTestSuite
-  with ExecutionContexts
   with Matchers
   with WithMaterializer
   with BeforeAndAfterAll
