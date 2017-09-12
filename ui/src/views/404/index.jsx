@@ -22,9 +22,14 @@ export default ({ beaconUrl }: Object) =>
                 Home
             </a>
         </div>
-        <div>
-            <Logo style={logo} />
-        </div>
+        <Logo
+            style={logo}
+            css={`
+                & .guardian {
+                    fill: ${colour.brandBlue};
+                }
+            `}
+        />
         <h1 style={heading}>
             Sorry - we haven’t been able to serve the page you asked for.
         </h1>
