@@ -53,18 +53,9 @@ const config = {
                 use: ['to-string-loader', cssLoader],
             },
             {
-                test: /\.scss$/,
-                oneOf: [
-                    {
-                        test: /\.js\.scss$/,
-                        exclude: /node_modules/,
-                        use: [{ loader: 'styletron-loader' }, sassLoader],
-                    },
-                    {
-                        exclude: /node_modules/,
-                        use: ['to-string-loader', cssLoader, sassLoader],
-                    },
-                ],
+                test: /\.js\.scss$/,
+                exclude: /node_modules/,
+                use: [{ loader: 'styletron-loader' }, sassLoader],
             },
         ],
     },
