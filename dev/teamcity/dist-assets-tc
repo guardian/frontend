@@ -28,9 +28,10 @@ set +x
 echo "##teamcity[progressFinish 'asset dist']"
 set -x
 
-cd ../../static/src/javascripts
-flow stop
+# cd ../../static/src/javascripts
+# flow stop
 
 set +x
+echo "$PWD"
 echo "Stop flow server"
 set -x
