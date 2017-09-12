@@ -2,7 +2,6 @@
 
 indexexchange.com, 184842, DIRECT
 indexexchange.com, 185406, DIRECT
-
 openx.com, 538907167, DIRECT
 teads.tv, 2167, DIRECT
 google.com, pub-2012933198307164, DIRECT
@@ -11,6 +10,7 @@ google.com, ca-pub-4979300716531995, DIRECT
 google.com, pub-5107472231497753, DIRECT
 go.sonobi.com, d089631d2d, DIRECT
 appnexus.com, 2888, DIRECT
+appnexus.com, 7012, DIRECT
 trustx.org, 27, DIRECT
 triplelift.com, 2885, DIRECT
 yieldmo.com, 1452927761628117365, DIRECT
