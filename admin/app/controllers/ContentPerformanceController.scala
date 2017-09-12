@@ -1,13 +1,13 @@
 package controllers.admin
 
-import common.{ExecutionContexts, Logging}
+import common.{ImplicitControllerExecutionContext, Logging}
 import jobs.VideoEncodingsJob
 import model.{ApplicationContext, NoCache}
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
 import play.api.mvc._
 
-class ContentPerformanceController(videoEncodingsJob: VideoEncodingsJob)(implicit context: ApplicationContext) extends Controller with Logging with ExecutionContexts {
+class ContentPerformanceController(videoEncodingsJob: VideoEncodingsJob, val controllerComponents: ControllerComponents)(implicit context: ApplicationContext) extends BaseController with Logging with ImplicitControllerExecutionContext {
 
   val missingVideoEncodingDateTimeFormat = DateTimeFormat.forPattern("hh:mm::ss")
 

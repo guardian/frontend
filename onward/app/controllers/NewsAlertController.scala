@@ -4,19 +4,25 @@ import akka.actor.ActorSystem
 import akka.pattern.ask
 import akka.util.Timeout
 import authentication.AuthenticationSupport
-import common.ExecutionContexts
+import common.ImplicitControllerExecutionContext
 import conf.Configuration
 import model.Cached.RevalidatableResult
 import model.{Cached, Cors}
 import models.NewsAlertNotification
 import play.api.libs.json.{JsValue, Json}
-import play.api.mvc.BodyParsers.parse.{json => BodyJson}
 import play.api.mvc._
 import services.breakingnews._
 
+import scala.concurrent.ExecutionContext
 import scala.concurrent.duration._
 
-class NewsAlertController(breakingNewsApi: BreakingNewsApi)(actorSystem: ActorSystem) extends Controller with AuthenticationSupport with ExecutionContexts {
+class NewsAlertController(breakingNewsApi: BreakingNewsApi)
+  (actorSystem: ActorSystem, val controllerComponents: ControllerComponents)
+  extends BaseController
+    with AuthenticationSupport {
+
+  private val authenticatedAction = new AuthenticatedAction(controllerComponents.parsers.json[NewsAlertNotification], controllerComponents.executionContext)
+  private implicit val ec: ExecutionContext = controllerComponents.executionContext
 
   lazy val apiKey: String = Configuration.NewsAlert.apiKey.getOrElse(
     throw new RuntimeException("News Alert API Key not set")
@@ -44,7 +50,7 @@ class NewsAlertController(breakingNewsApi: BreakingNewsApi)(actorSystem: ActorSy
     }
   }
 
-  def create() : Action[NewsAlertNotification] = AuthenticatedAction.async(BodyJson[NewsAlertNotification]) { request =>
+  def create() : Action[NewsAlertNotification] = authenticatedAction.async { request =>
     val receivedNotification : NewsAlertNotification = request.body
     val result = breakingNewsUpdater ? NewNotificationRequest(receivedNotification)
     result.mapTo[NewsAlertNotification].map {

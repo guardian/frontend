@@ -33,12 +33,12 @@ class RugbyLifecycle(
 
     jobs.deschedule("PastEventScores")
     jobs.schedule("PastEventScores", "20 0/30 * * * ?") {
-      rugbyStatsJob.fetchPastScoreEvents
+      rugbyStatsJob.fetchPastScoreEvents()
     }
 
     jobs.deschedule("PastMatchesStat")
     jobs.schedule("PastMatchesStat", "30 0/30 * * * ?") {
-      rugbyStatsJob.fetchPastMatchesStat
+      rugbyStatsJob.fetchPastMatchesStat()
     }
 
 
@@ -55,8 +55,8 @@ class RugbyLifecycle(
 
     //delay to allow previous jobs to complete
     akkaAsync.after(initializationTimeout) {
-      rugbyStatsJob.fetchPastScoreEvents
-      rugbyStatsJob.fetchPastMatchesStat
+      rugbyStatsJob.fetchPastScoreEvents()
+      rugbyStatsJob.fetchPastMatchesStat()
 
       val refreshedNavContent = capiFeed.getMatchArticles(rugbyStatsJob.getAllResults())
       rugbyStatsJob.sendMatchArticles(refreshedNavContent)

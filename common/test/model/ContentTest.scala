@@ -2,13 +2,12 @@ package model
 
 import com.gu.contentapi.client.model.v1.{Content => ApiContent, Element => ApiElement, Tag => ApiTag, _}
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichJodaDateTime
-import common.Edition
 import model.content.MediaAtom
 import org.joda.time.DateTime
 import org.scalatest.{FlatSpec, Matchers}
-import org.scalatestplus.play.OneAppPerSuite
+import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 
-class ContentTest extends FlatSpec with Matchers with OneAppPerSuite with implicits.Dates {
+class ContentTest extends FlatSpec with Matchers with GuiceOneAppPerSuite with implicits.Dates {
   "Trail" should "be populated properly" in {
     val imageElement = ApiElement(
       "test-picture",

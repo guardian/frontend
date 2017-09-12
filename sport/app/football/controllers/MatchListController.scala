@@ -9,10 +9,10 @@ import model.{ApplicationContext, Cached, Competition, TeamMap}
 import org.joda.time.LocalDate
 import org.joda.time.format.DateTimeFormat
 import pa.FootballTeam
-import play.api.mvc.{Controller, RequestHeader}
+import play.api.mvc.{BaseController, RequestHeader}
 import play.twirl.api.Html
 
-trait MatchListController extends Controller with Requests {
+trait MatchListController extends BaseController with Requests {
   def competitionsService: Competitions
   protected val datePattern = DateTimeFormat.forPattern("yyyyMMMdd").withZone(Edition.defaultEdition.timezone)
   protected def createDate(year: String, month: String, day: String): LocalDate =

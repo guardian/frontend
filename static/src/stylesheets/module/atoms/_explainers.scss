@@ -33,12 +33,12 @@
 }
 
 .explainer-snippet__label {
-    @include font-size(14, 18);
+    @include font-size(21, 24);
     display: block;
 }
 
 .explainer-snippet__headline {
-    @include font-size(20, 22);
+    @include font-size(21, 24);
 }
 
 .explainer-snippet__handle {

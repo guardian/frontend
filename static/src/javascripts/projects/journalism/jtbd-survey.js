@@ -19,13 +19,7 @@ type Campaign = {
     fields: CampaignFields,
 };
 
-// campaign settings: most of it will come from the targeting tool
 const campaignId: string = 'test-survey';
-// survey starts on Aug 23, 2017
-const startOfSurvey: Date = new Date('2017-08-23');
-const endOfSurvey: number = startOfSurvey.setMonth(
-    startOfSurvey.getMonth() + 1
-);
 
 /* Generate a [from .. to[ range */
 const range = (from: number, to: number): number[] => {
@@ -83,7 +77,7 @@ const save = (
     ).length;
 
     as[q] = answer;
-    localStorage.set('gu.jtbd.answers', as, { expires: endOfSurvey });
+    localStorage.set('gu.jtbd-updated.answers', as);
 
     submitComponentEvent(
         'VOTE',
@@ -109,7 +103,7 @@ const shouldIGo = (): boolean => {
         // on a 1.5% sample of PVs
         rand < 1.5 &&
         // if the user hasn't already seen the survey
-        sessionStorage.get('gu.jtbd.seen') !== true
+        sessionStorage.get('gu.jtbd-updated.seen') !== true
     );
 };
 
@@ -125,11 +119,12 @@ const init = (): void => {
         return;
     }
 
-    sessionStorage.set('gu.jtbd.seen', true);
+    sessionStorage.set('gu.jtbd-updated.seen', true);
 
     const allQuestions = campaign.fields.questions;
-    const qs = localStorage.get('gu.jtbd.questions') || draw(allQuestions);
-    const as = localStorage.get('gu.jtbd.answers') || qs.map(() => -1);
+    const qs =
+        localStorage.get('gu.jtbd-updated.questions') || draw(allQuestions);
+    const as = localStorage.get('gu.jtbd-updated.answers') || qs.map(() => -1);
     const q = selectQuestion(qs, as);
 
     if (q === -1) {
@@ -139,9 +134,7 @@ const init = (): void => {
 
     mediator.emit('journalism:modules:jtbd', true);
 
-    localStorage.setIfNotExists('gu.jtbd.questions', qs, {
-        expires: endOfSurvey,
-    });
+    localStorage.setIfNotExists('gu.jtbd-updated.questions', qs);
 
     initSurvey(allQuestions[qs[q]].question, allQuestions[qs[q]].askWhy)
         .then(({ answer, why }) => save(qs, as, q, answer, why))

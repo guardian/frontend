@@ -14,9 +14,9 @@ class FaciaPressLifecycle(appLifecycle: ApplicationLifecycle, frontPressCron: Fr
   }}
 
   override def start(): Unit = {
-    toolPressQueueWorker.start()
+    toolPressQueueWorker.start
     if (Configuration.faciatool.frontPressCronQueue.isDefined) {
-      frontPressCron.start()
+      frontPressCron.start
     }
   }
 }

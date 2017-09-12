@@ -10,18 +10,20 @@ import models.{NewsAlertNotification, NewsAlertTypes}
 import org.joda.time.DateTime
 import org.scalatest.{DoNotDiscover, Matchers, WordSpec}
 import play.api.libs.json.Json
+import play.api.mvc.ControllerComponents
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import services.breakingnews.{BreakingNewsApi, S3BreakingNews}
-import test.{ConfiguredTestSuite, WithTestContext}
+import test.{ConfiguredTestSuite, WithTestApplicationContext}
 
 @DoNotDiscover class NewsAlertControllerTest
   extends WordSpec
     with Matchers
     with ConfiguredTestSuite
-    with WithTestContext {
+    with WithTestApplicationContext {
 
-  implicit lazy val mat: Materializer = app.materializer
+  implicit lazy val materializer: Materializer = app.materializer
+  lazy val controllerComponents: ControllerComponents = play.api.test.Helpers.stubControllerComponents(playBodyParsers = stubPlayBodyParsers(materializer))
 
   val testApiKey = "test-api-key"
 
@@ -36,8 +38,8 @@ import test.{ConfiguredTestSuite, WithTestContext}
 
   def controllerWithActorReponse(mockResponse: Any) = {
     val updaterActor = actorSystem.actorOf(MockUpdaterActor.props(mockResponse))
-    val fakeApi = new BreakingNewsApi(new S3BreakingNews(testContext.environment)) // Doesn't matter, it is not used just passed to the NewsAlertController constructor
-    new NewsAlertController(fakeApi)(actorSystem) {
+    val fakeApi = new BreakingNewsApi(new S3BreakingNews(testApplicationContext.environment)) // Doesn't matter, it is not used just passed to the NewsAlertController constructor
+    new NewsAlertController(fakeApi)(actorSystem, controllerComponents) {
       override lazy val breakingNewsUpdater = updaterActor
       override lazy val apiKey = testApiKey
     }

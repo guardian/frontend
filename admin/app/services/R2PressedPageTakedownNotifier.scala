@@ -2,9 +2,11 @@ package services
 
 import common.{AkkaAsync, Logging}
 
+import scala.concurrent.ExecutionContext
+
 object R2PressedPageTakedownNotifier extends Logging {
 
-  def enqueue(akkaAsync: AkkaAsync)(path: String): String = {
+  def enqueue(akkaAsync: AkkaAsync)(path: String)(implicit executionContext: ExecutionContext): String = {
     try {
       R2PressedPageTakedownNotification.sendWithoutSubject(akkaAsync)(path)
       val msg = s"Queued for takedown: $path"

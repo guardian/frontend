@@ -11,7 +11,6 @@ import template from 'lodash/utilities/template';
 import blockTemplate from 'raw-loader!facia/views/liveblog-block.html';
 import isUndefined from 'lodash/objects/isUndefined';
 import debounce from 'lodash/functions/debounce';
-import isEmpty from 'lodash/objects/isEmpty';
 
 const animateDelayMs = 2000;
 const animateAfterScrollDelayMs = 500;
@@ -189,7 +188,7 @@ const showUpdatesFromLiveBlog = (): Promise<void> =>
         .then(elementsById => {
             let oldBlockDates;
 
-            if (!isEmpty(elementsById)) {
+            if (elementsById.size) {
                 oldBlockDates = session.get(sessionStorageKey) || {};
 
                 elementsById.forEach((elements, articleId) => {

@@ -1,17 +1,17 @@
 package controllers
 
-import common.ExecutionContexts
+import common.ImplicitControllerExecutionContext
 import conf.Configuration
 import conf.switches.Switches.FaciaPressOnDemand
 import frontpress.{DraftFapiFrontPress, LiveFapiFrontPress}
 import model.NoCache
 import play.api.libs.json.Json
-import play.api.mvc.{Action, Controller, Result}
+import play.api.mvc._
 import services.ConfigAgent
 
 import scala.concurrent.Future
 
-class Application(liveFapiFrontPress: LiveFapiFrontPress, draftFapiFrontPress: DraftFapiFrontPress) extends Controller with ExecutionContexts {
+class Application(liveFapiFrontPress: LiveFapiFrontPress, draftFapiFrontPress: DraftFapiFrontPress, val controllerComponents: ControllerComponents) extends BaseController with ImplicitControllerExecutionContext {
 
   def index = Action {
     NoCache(Ok("Hello, I am the Facia Press."))

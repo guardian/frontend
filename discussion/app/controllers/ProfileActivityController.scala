@@ -5,9 +5,9 @@ import discussion.api.DiscussionApiLike
 import discussion.api.DiscussionApiException._
 import discussion.model.Profile
 import model.{Cached, MetaData, SectionSummary, SimplePage}
-import play.api.mvc.Action
+import play.api.mvc.{Action, ControllerComponents}
 
-class ProfileActivityController(val discussionApi: DiscussionApiLike) extends DiscussionController {
+class ProfileActivityController(val discussionApi: DiscussionApiLike, val controllerComponents: ControllerComponents) extends DiscussionController {
   def profilePage(profile: Profile, pageType: String) = SimplePage(
     metadata = MetaData.make(
       id = s"discussion/profile/${profile.userId}/$pageType",

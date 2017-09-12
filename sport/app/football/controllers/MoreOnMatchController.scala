@@ -13,7 +13,7 @@ import org.joda.time.format.DateTimeFormat
 import org.scala_tools.time.Imports._
 import pa.FootballMatch
 import play.api.libs.json._
-import play.api.mvc.{Action, Controller, RequestHeader, Result}
+import play.api.mvc._
 import play.twirl.api.Html
 
 import scala.concurrent.Future
@@ -35,7 +35,11 @@ case class MatchNav(
   lazy val hasPreview = preview.isDefined
 }
 
-class MoreOnMatchController(val competitionsService: CompetitionsService, contentApiClient: ContentApiClient) extends Controller with Football with Requests with Logging with ExecutionContexts with implicits.Dates {
+class MoreOnMatchController(
+  val competitionsService: CompetitionsService,
+  contentApiClient: ContentApiClient,
+  val controllerComponents: ControllerComponents)
+  extends BaseController with Football with Requests with Logging with ImplicitControllerExecutionContext with implicits.Dates {
   def interval(contentDate: LocalDate) = new Interval(contentDate.toDateTimeAtStartOfDay - 2.days, contentDate.toDateTimeAtStartOfDay + 3.days)
 
   private val dateFormat = DateTimeFormat.forPattern("yyyyMMdd").withZone(DateTimeZone.forID("Europe/London"))
@@ -138,6 +142,7 @@ class MoreOnMatchController(val competitionsService: CompetitionsService, conten
           lazy val competition = competitionsService.competitionForMatch(theMatch.id)
           lazy val homeTeamResults = competition.map(_.teamResults(theMatch.homeTeam.id).take(5))
 
+          implicit val dateToTimestampWrites = play.api.libs.json.JodaWrites.JodaDateTimeNumberWrites
           JsonComponent(
             "items" -> Json.arr(
               Json.obj(

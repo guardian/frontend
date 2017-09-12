@@ -1,22 +1,22 @@
 package dfp
 
 import common.dfp._
-import common.{ExecutionContexts, Logging}
+import common.Logging
 import dfp.DfpApi.DfpLineItems
 import org.joda.time.DateTime
 import play.api.libs.json.Json.{toJson, _}
 import tools.Store
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 import scala.util.{Failure, Success}
 
-object DfpDataCacheJob extends ExecutionContexts with Logging {
+object DfpDataCacheJob extends Logging {
 
   case class LineItemLoadSummary(
     validLineItems: Seq[GuLineItem],
     invalidLineItems: Seq[GuLineItem])
 
-  def run(): Future[Unit] = Future {
+  def run()(implicit executionContext: ExecutionContext): Future[Unit] = Future {
     log.info("Refreshing data cache")
     val start = System.currentTimeMillis
     val data = loadLineItems()
@@ -29,7 +29,7 @@ object DfpDataCacheJob extends ExecutionContexts with Logging {
   for initialization and total refresh of data,
   so would be used for first read and for emergency data update.
   */
-  def refreshAllDfpData(): Unit = {
+  def refreshAllDfpData()(implicit executionContext: ExecutionContext): Unit = {
 
     for {
       _ <- AdUnitAgent.refresh()

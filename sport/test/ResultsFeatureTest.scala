@@ -35,7 +35,7 @@ import tools.MatchListFeatureTools
         $(".football-team__form").size() should be(0)
 
         Then("I should see match comments")
-        $(".football-match__comments").getTexts.exists(_.contains("Bolton win 4-2 on penalties")) should equal(true)
+        $(".football-match__comments").texts.exists(_.contains("Bolton win 4-2 on penalties")) should equal(true)
       }
     }
 
@@ -62,7 +62,7 @@ import tools.MatchListFeatureTools
 
         When("I click the filter to premier league link")
 
-        findFirst("[data-link-name='view Premier League matches']").click()
+        el("[data-link-name='view Premier League matches']").click()
         browser.await()
 
         Then("I should navigate to the premier league results page")
@@ -82,8 +82,8 @@ import tools.MatchListFeatureTools
       goTo("/football/results") { browser =>
         import browser._
         Then("any links I click should be tracked")
-        $("a").filter(link => Option(link.getAttribute("data-link-name")).isEmpty).foreach { link =>
-          fail(s"Link with text ${link.getText} has no data-link-name")
+        $("a").filter(link => Option(link.attribute("data-link-name")).isEmpty).foreach { link =>
+          fail(s"Link with text ${link.text} has no data-link-name")
         }
       }
     }

@@ -2,7 +2,7 @@ package weather
 
 import java.net.{URI, URLEncoder}
 
-import common.{ExecutionContexts, Logging, ResourcesHelper}
+import common.{Logging, ResourcesHelper}
 import conf.Configuration
 import play.api.libs.json.{JsValue, Json}
 import play.api.libs.ws.WSClient
@@ -16,7 +16,7 @@ import model.ApplicationContext
 import scala.concurrent.duration._
 import play.api.Mode
 
-class WeatherApi(wsClient: WSClient, context: ApplicationContext) extends ExecutionContexts with ResourcesHelper with Logging {
+class WeatherApi(wsClient: WSClient, context: ApplicationContext) extends ResourcesHelper with Logging {
   lazy val weatherApiKey: String = Configuration.weather.apiKey.getOrElse(
     throw new RuntimeException("Weather API Key not set")
   )

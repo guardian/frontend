@@ -1,11 +1,13 @@
 package jobs
 
-import common.{AkkaAgent, AkkaAsync, Edition, ExecutionContexts, Logging}
+import common.{AkkaAgent, AkkaAsync, Edition, Logging}
 import conf.switches.Switches
 import model.{Content, Video}
+
 import scala.language.postfixOps
 import contentapi.ContentApiClient
-import scala.concurrent.Future
+
+import scala.concurrent.{ExecutionContext, Future}
 import scala.concurrent.duration._
 import akka.util.Timeout
 import play.api.libs.ws.WSClient
@@ -13,26 +15,26 @@ import services.MissingVideoEncodings
 import model.diagnostics.video.DynamoDbStore
 
 
-class VideoEncodingsJob(contentApiClient: ContentApiClient, wsClient: WSClient) extends ExecutionContexts with Logging  {
+class VideoEncodingsJob(contentApiClient: ContentApiClient, wsClient: WSClient) extends Logging  {
 
   private val videoEncodingsAgent = AkkaAgent[Map[String, List[MissingEncoding]]](Map.empty)
   implicit val timeout = Timeout(5 seconds)
 
   def getReport(report: String): Option[List[MissingEncoding]] = videoEncodingsAgent().get(report)
 
-  def doesEncodingExist(encodingUrl: String) : Future[Boolean]= {
+  def doesEncodingExist(encodingUrl: String)(implicit executionContext: ExecutionContext) : Future[Boolean]= {
      val sanitizedUrl = encodingUrl.filter( _ != '\n')    //For octopus
      val response = wsClient.url(sanitizedUrl).head()
      response.map { r => r.status == 404 || r.status == 500}
   }
 
-  def run(akkaAsync: AkkaAsync) {
+  def run(akkaAsync: AkkaAsync)(implicit executionContext: ExecutionContext): Unit = {
       if( Switches.MissingVideoEndcodingsJobSwitch.isSwitchedOn ) {
           checkForMissingEncodings(akkaAsync)
       }
   }
 
-  private def checkForMissingEncodings(akkaAsync: AkkaAsync) {
+  private def checkForMissingEncodings(akkaAsync: AkkaAsync)(implicit executionContext: ExecutionContext) {
      log.info("Checking for missing video encodings")
 
      val apiVideoResponse = contentApiClient.getResponse(contentApiClient.search(Edition.defaultEdition)

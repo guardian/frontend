@@ -22,12 +22,15 @@ import play.api.routing.Router
 import services._
 import router.Routes
 
+import scala.concurrent.ExecutionContext
+
 class AppLoader extends FrontendApplicationLoader {
   override def buildComponents(context: Context): FrontendComponents = new BuiltInComponentsFromContext(context) with AppComponents
 }
 
 trait ApplicationsServices {
   def wsClient: WSClient
+  implicit val executionContext: ExecutionContext
   lazy val capiHttpClient: HttpClient = wire[CapiHttpClient]
   lazy val contentApiClient = wire[ContentApiClient]
   lazy val siteMapJob = wire[SiteMapJob]
@@ -41,7 +44,6 @@ trait AppComponents extends FrontendComponents with ApplicationsControllers with
 
   lazy val devAssetsController = wire[DevAssetsController]
   lazy val healthCheck = wire[HealthCheck]
-  lazy val assets = wire[Assets]
   lazy val emailSignupController = wire[EmailSignupController]
   lazy val surveyPageController = wire[SurveyPageController]
   lazy val signupPageController = wire[SignupPageController]

@@ -10,7 +10,7 @@ import play.api.mvc._
 
 import scala.concurrent.duration._
 
-class TravelOffersController(travelOffersAgent: TravelOffersAgent) extends Controller with implicits.Requests {
+class TravelOffersController(travelOffersAgent: TravelOffersAgent, val controllerComponents: ControllerComponents) extends BaseController with implicits.Requests {
 
   private def travelSample(specificIds: Seq[String], segment: Segment): Seq[TravelOffer] =
     (travelOffersAgent.specificTravelOffers(specificIds) ++ travelOffersAgent.offersTargetedAt(segment)).distinct

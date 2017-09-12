@@ -2,7 +2,7 @@ package common
 
 import play.api.mvc.{RequestHeader, Result}
 import common.LoggingField._
-import play.api.routing.Router.Tags
+import play.api.routing.Router
 
 import scala.util.{Random, Try}
 
@@ -56,9 +56,10 @@ case class RequestLoggerFields(request: Option[RequestHeader], response: Option[
     }.getOrElse(Nil)
 
     val actionInfo: List[LogField] = request.map { r: RequestHeader =>
+      val handlerDefOpt = r.attrs.get(Router.Attrs.HandlerDef)
       List[LogField](
-        "action.controller" -> Try(r.tags(Tags.RouteController)).getOrElse("unknown"),
-        "action.method" -> Try(r.tags(Tags.RouteActionMethod)).getOrElse("unknown")
+        "action.controller" -> handlerDefOpt.map(_.controller).getOrElse("unknown"),
+        "action.method" -> handlerDefOpt.map(_.method).getOrElse("unknown")
       )
     }.getOrElse(Nil)
 

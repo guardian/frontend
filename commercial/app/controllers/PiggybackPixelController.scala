@@ -1,11 +1,11 @@
 package commercial.controllers
 
-import common.{ExecutionContexts, Logging}
+import common.{ImplicitControllerExecutionContext, Logging}
 import model.Cached
 import model.Cached.RevalidatableResult
 import play.api.mvc._
 
-class PiggybackPixelController extends Controller with ExecutionContexts with implicits.Requests with Logging {
+class PiggybackPixelController(val controllerComponents: ControllerComponents) extends BaseController with ImplicitControllerExecutionContext with implicits.Requests with Logging {
 
   def resize() = Action { implicit request =>
     val maybeJs = for {

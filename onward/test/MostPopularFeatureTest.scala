@@ -25,7 +25,7 @@ import scala.collection.JavaConversions._
       goTo("/most-read/world") { browser =>
         import browser._
         Then("I should see a list of 'world' content")
-        findFirst(".zone-world").findFirst("h2").getText should be("Most viewed in world news")
+        $(".zone-world").$("h2").text should be("Most viewed in world news")
         And("it should contain world news")
         $(".zone-world li").size should be > 0
 
