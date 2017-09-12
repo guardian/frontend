@@ -7,7 +7,6 @@ import {
     showInMegaNavEnable,
     showInMegaNavEnabled,
 } from 'common/modules/onward/history';
-import isEmpty from 'lodash/objects/isEmpty';
 
 const init = (): void => {
     const placeholder: ?HTMLElement = document.getElementById(
@@ -29,8 +28,6 @@ const init = (): void => {
                 showInMegaNav();
             },
             render() {
-                const self = this;
-
                 const tags: Object = this.state.popular.reduce((obj, tag) => {
                     obj[tag[0]] = React.DOM.span(
                         {
@@ -39,7 +36,7 @@ const init = (): void => {
                         },
                         React.DOM.button(
                             {
-                                onClick: self.handleRemove.bind(self, tag[0]),
+                                onClick: this.handleRemove.bind(this, tag[0]),
                                 'data-link-name': `remove | ${tag[1]}`,
                             },
                             'X'
@@ -56,7 +53,7 @@ const init = (): void => {
 
                 let helperText;
 
-                if (isEmpty(tags)) {
+                if (!tags || !Object.keys(tags).length) {
                     helperText =
                         "(You don't have any recently visited topics.)";
                 } else {
