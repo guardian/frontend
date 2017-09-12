@@ -1,5 +1,4 @@
 // @flow
-import { isBreakpoint } from 'lib/detect';
 import fastdom from 'fastdom';
 import deferToAnalytics from 'lib/defer-to-analytics';
 import reportError from 'lib/report-error';
@@ -9,8 +8,6 @@ import { fullscreener } from 'common/modules/media/videojs-plugins/fullscreener'
 import { initHostedYoutube } from 'commercial/modules/hosted/youtube';
 import nextVideoAutoplay from 'commercial/modules/hosted/next-video-autoplay';
 import loadingTmpl from 'raw-loader!common/views/ui/loading.html';
-
-const isDesktop = (): boolean => isBreakpoint({ min: 'desktop' });
 
 const initLoadingSpinner = (player: Object, loadingTemplate: string): void => {
     player.loadingSpinner.contentEl().innerHTML = loadingTemplate;
@@ -134,20 +131,7 @@ const setupVideo = (
 
     nextVideoAutoplay.init().then(() => {
         if (nextVideoAutoplay.canAutoplay()) {
-            // on desktop show the next video link 10 second before the end of the currently watching video
-            if (isDesktop()) {
-                nextVideoAutoplay.addCancelListener();
-                player.one(
-                    'timeupdate',
-                    nextVideoAutoplay.triggerAutoplay.bind(
-                        this,
-                        player.currentTime.bind(player),
-                        parseInt(player.duration(), 10)
-                    )
-                );
-            } else {
-                player.one('ended', nextVideoAutoplay.triggerEndSlate);
-            }
+            player.one('ended', nextVideoAutoplay.triggerEndSlate);
         }
     });
 };
