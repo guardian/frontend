@@ -48,11 +48,11 @@ const config = {
                     {
                         test: /(\/__inline__)/,
                         exclude: /node_modules/,
-                        use: ['raw-loader', { loader: 'babel-loader' }],
+                        use: ['raw-loader', 'babel-loader'],
                     },
                     {
                         exclude: /node_modules/,
-                        use: [{ loader: 'babel-loader' }],
+                        use: ['babel-loader'],
                     },
                 ],
             },

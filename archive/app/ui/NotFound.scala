@@ -7,9 +7,7 @@ import rendering.Renderable
 object NotFound extends Renderable {
   override def props: Option[JsValue] = Some(
     Json.obj(
-      "beaconUrl" -> Configuration.debug.beaconUrl,
-      "bundleUrl" -> Configuration.scripts.bundleUrl,
-      "polyfillioUrl" -> Configuration.scripts.polyfillioUrl
+      "beaconUrl" -> Configuration.debug.beaconUrl
     )
   )
 }
