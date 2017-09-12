@@ -1,125 +1,219 @@
-import bean from 'bean';
-import $ from 'lib/$';
+// @flow
+
 import idApi from 'common/modules/identity/api';
-import assign from 'lodash/objects/assign';
 
-function Formstack(el, formstackId, config) {
+class Formstack {
+    el: HTMLElement;
+    form: HTMLFormElement;
+    formId: string;
+    config: Object;
 
-    const self = this, dom = {}, formId = formstackId.split('-')[0];
+    constructor(el: HTMLElement, formstackId: string, config: Object): void {
+        this.el = el;
+        this.formId = formstackId.split('-')[0];
 
-    config = assign({
-        idClasses: {
-            form: 'form',
-            field: 'form-field',
-            note: 'form-field__note form-field__note--below',
-            label: 'label',
-            checkboxLabel: 'check-label',
-            textInput: 'text-input',
-            textArea: 'textarea textarea--no-resize',
-            submit: 'submit-input',
-            fieldError: 'form-field--error',
-            formError: 'form__error',
-            fieldset: 'formstack-fieldset',
-            required: 'formstack-required',
-            sectionHeader: 'formstack-heading',
-            sectionHeaderFirst: 'formstack-heading--first',
-            sectionText: 'formstack-section',
-            characterCount: 'formstack-count',
-            hide: 'is-hidden'
-        },
-        fsSelectors: {
-            form: '#fsForm' + formId,
-            field: '.fsRow',
-            note: '.fsSupporting, .showMobile',
-            label: '.fsLabel',
-            checkboxLabel: '.fsOptionLabel',
-            textInput: '.fsField[type="text"], .fsField[type="email"], .fsField[type="number"], .fsField[type="tel"]',
-            textArea: 'textarea.fsField',
-            submit: '.fsSubmitButton',
-            fieldError: '.fsValidationError',
-            formError: '.fsError',
-            fieldset: 'fieldset',
-            required: '.fsRequiredMarker',
-            sectionHeader: '.fsSectionHeading',
-            sectionHeaderFirst: '.fsSection:first-child .fsSectionHeading',
-            sectionText: '.fsSectionText',
-            characterCount: '.fsCounter',
-            hide: '.hidden, .fsHidden, .ui-datepicker-trigger'
-        },
-        hiddenSelectors: {
-            userId: '[type="number"]',
-            email: '[type="email"]'
-        }
-    }, config);
+        const defaultConfig = {
+            idClasses: {
+                form: 'form',
+                field: 'form-field',
+                note: 'form-field__note form-field__note--below',
+                label: 'label',
+                checkboxLabel: 'check-label',
+                textInput: 'text-input',
+                textArea: 'textarea textarea--no-resize',
+                submit: 'submit-input',
+                fieldError: 'form-field--error',
+                formError: 'form__error',
+                fieldset: 'formstack-fieldset',
+                required: 'formstack-required',
+                sectionHeader: 'formstack-heading',
+                sectionHeaderFirst: 'formstack-heading--first',
+                sectionText: 'formstack-section',
+                characterCount: 'formstack-count',
+                hide: 'is-hidden',
+            },
+            fsSelectors: {
+                form: `#fsForm${this.formId}`,
+                field: '.fsRow',
+                note: '.fsSupporting, .showMobile',
+                label: '.fsLabel',
+                checkboxLabel: '.fsOptionLabel',
+                textInput:
+                    '.fsField[type="text"], .fsField[type="email"], .fsField[type="number"], .fsField[type="tel"]',
+                textArea: 'textarea.fsField',
+                submit: '.fsSubmitButton',
+                fieldError: '.fsValidationError',
+                formError: '.fsError',
+                fieldset: 'fieldset',
+                required: '.fsRequiredMarker',
+                sectionHeader: '.fsSectionHeading',
+                sectionHeaderFirst: '.fsSection:first-child .fsSectionHeading',
+                sectionText: '.fsSectionText',
+                characterCount: '.fsCounter',
+                hide: '.hidden, .fsHidden, .ui-datepicker-trigger',
+            },
+            hiddenSelectors: {
+                userId: '[type="number"]',
+                email: '[type="email"]',
+            },
+        };
 
-    self.init = () => {
+        this.config = Object.assign({}, defaultConfig, config);
+    }
+
+    postMessage(message: string): void {
+        const domain = this.config.page.idUrl;
+
+        window.top.postMessage(message, domain);
+    }
+
+    init(): void {
         // User object required to populate fields
         const user = idApi.getUserOrSignIn();
 
-        self.dom(user);
-        $(el).removeClass(config.idClasses.hide);
-        $('html').addClass('iframed--overflow-hidden');
+        this.dom(user);
 
-        // Update iframe height, see "modules/identity/formstack-iframe"
-        self.postMessage('ready');
-    };
+        this.el.classList.remove(this.config.idClasses.hide);
 
-    self.dom = user => {
-        let selector, $userId, $email, html;
+        if (document.documentElement) {
+            document.documentElement.classList.add('iframed--overflow-hidden');
+        }
+
+        // Update iframe height
+        this.postMessage('ready');
+    }
+
+    dom(user: Object): void {
+        const form: HTMLFormElement = (document.getElementById(
+            this.config.fsSelectors.form
+        ): any);
+
+        if (!form) {
+            return;
+        }
+
+        this.form = form;
 
         // Formstack generates some awful HTML, so we'll remove the CSS links,
         // loop their selectors and add our own classes instead
-        dom.$form = $(config.fsSelectors.form).addClass(config.idClasses.form);
-        $('link', el).remove();
+        this.form.classList.add(this.config.idClasses.form);
 
-        for (selector in config.fsSelectors) {
-            $(config.fsSelectors[selector], dom.$form).addClass(config.idClasses[selector]);
-        }
+        const links = this.el.getElementsByTagName('link');
+
+        [...links].forEach(link => {
+            link.remove();
+        });
+
+        Object.keys(this.config.fsSelectors).forEach(key => {
+            const selector = this.config.fsSelectors[key];
+            const elems = this.form.querySelectorAll(selector);
+            const classNames = this.config.idClasses[key].split(' ');
+
+            [...elems].forEach(elem => {
+                classNames.forEach(className => {
+                    elem.classList.add(className);
+                });
+            });
+        });
 
         // Formstack also don't have capturable hidden fields,
         // so we remove ID text inputs and append hidden equivalents
-        $userId = $(config.hiddenSelectors.userId, dom.$form).remove();
-        $email = $(config.hiddenSelectors.email, dom.$form).remove();
+        const userId = this.form.querySelector(
+            this.config.hiddenSelectors.userId
+        );
 
-        html = '<input type="hidden" name="' + $userId.attr('name') + '" value="' + user.id + '">' + '<input type="hidden" name="' + $email.attr('name') + '" value="' + user.primaryEmailAddress + '">';
+        if (!userId) {
+            return;
+        }
 
-        dom.$form.append(html);
+        userId.remove();
+
+        const email = this.form.querySelector(
+            this.config.hiddenSelectors.email
+        );
+
+        if (!email) {
+            return;
+        }
+
+        email.remove();
+
+        const userName = userId.getAttribute('name') || '';
+
+        const emailName = email.getAttribute('name') || '';
+
+        const html = `<input type="hidden" name="${userName}" value="${user.id}">
+                        <input type="hidden" name="${emailName}" value="${user.primaryEmailAddress}">`;
+
+        this.form.insertAdjacentHTML('beforeend', html);
 
         // Events
-        bean.on(window, 'unload', self.unload);
-        bean.on(dom.$form[0], 'submit', self.submit);
-    };
+        window.addEventListener('unload', () => {
+            // Listen for navigation to success page
+            this.postMessage('unload');
+        });
 
-    self.submit = () => {
-        // TODO: FML
+        this.form.addEventListener('submit', () => {
+            this.submit();
+        });
+    }
+
+    submit(): void {
+        const triggerKeyUp = el => {
+            const e = document.createEvent('HTMLEvents');
+            e.initEvent('keyup', false, true);
+            el.dispatchEvent(e);
+        };
+
         setTimeout(() => {
             // Remove any existing errors
-            $('.' + config.idClasses.formError).removeClass(config.idClasses.formError);
-            $('.' + config.idClasses.fieldError).removeClass(config.idClasses.fieldError);
+            const formErrorClass = this.config.idClasses.formError;
+            const formErrors = document.getElementsByClassName(formErrorClass);
 
-            // Handle new errors
-            $(config.fsSelectors.formError, dom.$form).addClass(config.idClasses.formError);
-            $(config.fsSelectors.fieldError, dom.$form).addClass(config.idClasses.fieldError);
-
-            // Update character count absolute positions
-            $(config.fsSelectors.textArea, el).each(textarea => {
-                bean.fire(textarea, 'keyup');
+            [...formErrors].forEach(formError => {
+                formError.classList.remove(formErrorClass);
             });
 
-            self.postMessage('refreshHeight');
+            const fieldErrorClass = this.config.idClasses.fieldError;
+            const fieldErrors = document.getElementsByClassName(
+                fieldErrorClass
+            );
+
+            [...fieldErrors].forEach(fieldError => {
+                fieldError.classList.remove(fieldErrorClass);
+            });
+
+            // Handle new errors
+            const fsFormErrorClass = this.config.fsSelectors.formError;
+            const fsFormErrors = this.form.getElementsByClassName(
+                fsFormErrorClass
+            );
+
+            [...fsFormErrors].forEach(fsFormError => {
+                fsFormError.classList.add(formErrorClass);
+            });
+
+            const fsFieldErrorClass = this.config.fsSelectors.fieldError;
+            const fsFieldErrors = this.form.getElementsByClassName(
+                fsFieldErrorClass
+            );
+
+            [...fsFieldErrors].forEach(fsFieldError => {
+                fsFieldError.classList.add(fieldErrorClass);
+            });
+
+            // Update character count absolute positions
+            const textAreas = this.el.querySelectorAll(
+                this.config.fsSelectors.textArea
+            );
+
+            [...textAreas].forEach(textArea => {
+                triggerKeyUp(textArea);
+            });
+
+            this.postMessage('refreshHeight');
         }, 100);
-    };
-
-    self.unload = () => {
-        // Listen for navigation to success page
-        self.postMessage('unload');
-    };
-
-    self.postMessage = message => {
-        const domain = config.page.idUrl;
-        window.top.postMessage(message, domain);
-    };
-
+    }
 }
 
-export default Formstack;
+export { Formstack };
