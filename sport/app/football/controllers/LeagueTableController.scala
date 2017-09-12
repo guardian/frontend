@@ -53,8 +53,8 @@ class LeagueTableController(
 
   private def loadTables: Seq[Table] = sortedCompetitions.filter(_.hasLeagueTable).map { Table(_) }
 
-  def renderLeagueTableJson() = renderLeagueTable()
-  def renderLeagueTable() = Action { implicit request =>
+  def renderLeaguesTableJson() = renderLeagueTables()
+  def renderLeagueTables() = Action { implicit request =>
 
     val page = new FootballPage(
       "football/tables",
