@@ -6,7 +6,7 @@
 
 @{
     model match {
-        case quiz: Quiz => views.html.fragments.atoms.quiz(quiz, maybeResults = None, showResults = false, quiz.shareLinks.getOrElse(ShareLinkMeta(Nil, Nil)))
+        case quiz: Quiz => views.html.fragments.atoms.quiz(quiz, maybeResults = None, showResults = false, sharelinks = quiz.shareLinks)
         case quiz: StoryQuiz => views.html.fragments.atoms.storyQuiz(quiz)
         case media: MediaAtom => views.html.fragments.atoms.media(media = media, amp = amp, displayCaption = true, displayEndSlate = mediaWrapper.contains(MediaWrapper.MainMedia), mediaWrapper = mediaWrapper)
         case interactive: InteractiveAtom => views.html.fragments.atoms.interactive(interactive, shouldFence)

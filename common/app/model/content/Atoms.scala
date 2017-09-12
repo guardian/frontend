@@ -106,7 +106,7 @@ final case class Quiz(
   quizType: String,
   content: QuizContent,
   revealAtEnd: Boolean,
-  shareLinks: Option[ShareLinkMeta]
+  shareLinks: ShareLinkMeta
 ) extends Atom
 
 final case class StoryQuiz(
@@ -200,21 +200,20 @@ object Atoms extends common.Logging {
     }
   }
 
-  def make(content: contentapi.Content, maybePageShares: Option[ShareLinkMeta]): Option[Atoms] = {
+  def make(content: contentapi.Content, pageShares: ShareLinkMeta = ShareLinkMeta(Nil, Nil)): Option[Atoms] = {
     content.atoms.map { atoms =>
       // <!-- This is a temporary hack for the duration of the test where story quizzes
       //      are displayed at the bottom of an article. We reuse the quiz atom, even
       //      though its model doesn't comply perfectly with the domain model of our
       //      intended purpose. We will rely on the convention that quizzes created for
       //      the purpose of this test will have a special character in the title (|)
-
       val quizzes = if (Switches.StoryQuizzes.isSwitchedOn) {
         extract(
           atoms.quizzes.map { quizzes => quizzes.filterNot(_.data.asInstanceOf[AtomData.Quiz].quiz.title.contains("|")) },
-          atom => { Quiz.make(content.id, atom, maybePageShares) }
+          atom => { Quiz.make(content.id, atom, pageShares) }
         )
       } else {
-        extract(atoms.quizzes, atom => { Quiz.make(content.id, atom, maybePageShares) })
+        extract(atoms.quizzes, atom => { Quiz.make(content.id, atom, pageShares) })
       }
 
       val storyQuizzes = if (Switches.StoryQuizzes.isSwitchedOn) {
@@ -420,7 +419,7 @@ object Quiz extends common.Logging {
       }).getOrElse(Nil)
     )
 
-  def make(path: String, atom: AtomApiAtom, maybeShareLinks: Option[ShareLinkMeta]): Quiz = {
+  def make(path: String, atom: AtomApiAtom, shareLinks: ShareLinkMeta): Quiz = {
 
     val quiz = atom.data.asInstanceOf[AtomData.Quiz].quiz
     val questions = extractQuestions(quiz)
@@ -433,7 +432,7 @@ object Quiz extends common.Logging {
       quizType = quiz.quizType,
       content = content,
       revealAtEnd = quiz.revealAtEnd,
-      shareLinks = maybeShareLinks
+      shareLinks = shareLinks
     )
   }
 }

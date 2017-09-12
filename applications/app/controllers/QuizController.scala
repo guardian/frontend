@@ -66,7 +66,7 @@ class QuizController(
     val result = contentApiClient.getResponse(capiQuery) map { itemResponse =>
       val maybePage: Option[QuizAnswersPage] = itemResponse.content.flatMap { content =>
 
-        val quiz = Atoms.make(content, maybePageShares = None).flatMap(_.quizzes.find(_.id == quizId))
+        val quiz = Atoms.make(content).flatMap(_.quizzes.find(_.id == quizId))
         quiz.map(QuizAnswersPage(answers, s"${Configuration.site.host}/$path", _))
       }
 
