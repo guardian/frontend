@@ -305,6 +305,22 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
       })
   }
 
+  def cleanAmpImg(document: Document): Unit = {
+    document
+      .getElementsByTag("img")
+      .tagName("amp-img") // rename <img> into <amp-img>
+      .foreach { img =>
+        img.attr("layout", "responsive")
+        // Setting img size
+        Seq("width", "height").foreach { attr =>
+          val value = Option(img.attr(attr))
+            .filter(_.nonEmpty)
+            .getOrElse("1") // Since layout is set to responsive any non empty/zero size would result in the image width being 100% of its container's width (keeping the same ratio)
+          img.attr(attr, value)
+        }
+      }
+  }
+
 
   private def getVideoAssets(id:String): Seq[VideoAsset] = article.elements.bodyVideos.filter(_.properties.id == id).flatMap(_.videos.videoAssets)
 
@@ -317,6 +333,7 @@ case class AmpEmbedCleaner(article: Article) extends HtmlCleaner {
     cleanAmpInstagram(document)
     cleanAmpInteractives(document)
     cleanAmpComments(document)
+    cleanAmpImg(document)
     //run cleanAmpEmbed last as it has a generic action and can remove some embed types that are actioned by the other objects
     cleanAmpEmbed(document)
 
