@@ -1,6 +1,6 @@
 package weather.models
 
-import common.{ExecutionContexts, Edition}
+import common.{Edition}
 import common.editions.{Au, Us, Uk}
 
 case class City(name: String) extends AnyVal

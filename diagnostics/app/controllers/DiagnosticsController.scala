@@ -1,13 +1,13 @@
 package controllers
 
 import common._
-import play.api.mvc._
+import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 import model.diagnostics.analytics.Analytics
 import model.diagnostics.commercial.UserReport
 import model.TinyResponse
 import org.joda.time.format.ISODateTimeFormat
 
-class DiagnosticsController extends Controller with Logging {
+class DiagnosticsController(val controllerComponents: ControllerComponents) extends BaseController  with Logging {
   val r = scala.util.Random
 
   def analytics(prefix: String) = Action { implicit request =>

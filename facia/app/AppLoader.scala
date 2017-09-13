@@ -34,7 +34,6 @@ trait AppComponents extends FrontendComponents with FaciaControllers with FapiSe
 
   lazy val healthCheck = wire[HealthCheck]
   lazy val devAssetsController = wire[DevAssetsController]
-  lazy val assets = wire[Assets]
   lazy val ophanApi = wire[OphanApi]
 
   override lazy val lifecycleComponents = List(

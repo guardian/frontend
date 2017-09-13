@@ -12,12 +12,12 @@ import play.api.test._
   with BeforeAndAfterAll
   with WithMaterializer
   with WithTestWsClient
-  with WithTestContext
+  with WithTestApplicationContext
   with WithTestContentApiClient {
 
   val article = "/world/2014/nov/18/hereford-hospital-patient-tested-for-ebola"
 
-  lazy val richLinkController = new RichLinkController(testContentApiClient)
+  lazy val richLinkController = new RichLinkController(testContentApiClient, play.api.test.Helpers.stubControllerComponents())
 
   "An OnwardContentController" should "return JSON when .json format is supplied" in {
     val fakeRequest = FakeRequest(GET, s"/embed/card/$article.json")

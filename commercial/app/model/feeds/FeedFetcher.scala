@@ -28,7 +28,7 @@ trait FeedFetcher {
     val start = currentTimeMillis()
 
     val futureResponse = wsClient.url(feedMetaData.url)
-      .withQueryString(feedMetaData.parameters.toSeq: _*)
+      .withQueryStringParameters(feedMetaData.parameters.toSeq: _*)
       .withRequestTimeout(feedMetaData.timeout)
       .get()
 

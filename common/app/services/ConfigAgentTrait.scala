@@ -19,15 +19,15 @@ import scala.util.{Failure, Success}
 
 case class CollectionConfigWithId(id: String, config: CollectionConfig)
 
-trait ConfigAgentTrait extends ExecutionContexts with Logging {
+object ConfigAgent extends Logging {
   implicit lazy val alterTimeout: Timeout = Configuration.faciatool.configBeforePressTimeout.millis
   private lazy val configAgent = AkkaAgent[Option[ConfigJson]](None)
 
   def isLoaded(): Boolean = configAgent.get().isDefined
 
-  def getClient: ApiClient = FrontsApi.crossAccountClient
+  def getClient(implicit ec: ExecutionContext): ApiClient = FrontsApi.crossAccountClient
 
-  def refresh(): Future[Unit] = {
+  def refresh(implicit ec: ExecutionContext): Future[Unit] = {
     val futureConfig = getClient.config
     futureConfig.onComplete {
       case Success(_) => log.info(s"Successfully got config")
@@ -40,7 +40,7 @@ trait ConfigAgentTrait extends ExecutionContexts with Logging {
     configAgent.alter(Option(config))
   }
 
-  def refreshAndReturn(): Future[Option[ConfigJson]] =
+  def refreshAndReturn(implicit ec: ExecutionContext): Future[Option[ConfigJson]] =
     getClient.config
       .flatMap(config => configAgent.alter{_ => Option(config)})
       .fallbackTo{
@@ -79,7 +79,7 @@ trait ConfigAgentTrait extends ExecutionContexts with Logging {
 
   def getConfig(id: String): Option[CollectionConfig] = configAgent.get().flatMap(_.collections.get(id).map(CollectionConfig.make))
 
-  def getConfigAfterUpdates(id: String): Future[Option[CollectionConfig]] =
+  def getConfigAfterUpdates(id: String)(implicit ec: ExecutionContext): Future[Option[CollectionConfig]] =
     configAgent.future()
       .map(_.flatMap(_.collections.get(id)).map(CollectionConfig.make))
 
@@ -146,8 +146,6 @@ trait ConfigAgentTrait extends ExecutionContexts with Logging {
         .keys.toSeq).filter(_.nonEmpty)
 }
 
-object ConfigAgent extends ConfigAgentTrait
-
 class ConfigAgentLifecycle(
   appLifecycle: ApplicationLifecycle,
   jobs: JobScheduler,
@@ -161,11 +159,11 @@ class ConfigAgentLifecycle(
   override def start(): Unit = {
     jobs.deschedule("ConfigAgentJob")
     jobs.schedule("ConfigAgentJob", "18 * * * * ?") {
-      ConfigAgent.refresh()
+      ConfigAgent.refresh
     }
 
     akkaAsync.after1s {
-      ConfigAgent.refresh()
+      ConfigAgent.refresh
     }
   }
 }

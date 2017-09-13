@@ -12,10 +12,10 @@ import play.api.test.Helpers._
   with WithMaterializer
   with WithTestWsClient
   with WithTestContentApiClient
-  with WithTestContext {
+  with WithTestApplicationContext {
 
   var series = "news/series/pass-notes"
-  lazy val seriesController = new SeriesController(testContentApiClient)
+  lazy val seriesController = new SeriesController(testContentApiClient, play.api.test.Helpers.stubControllerComponents())
 
   "Series Controller" should "200 when content type is a tag" in {
     val result = seriesController.renderSeriesStories(series)(TestRequest())

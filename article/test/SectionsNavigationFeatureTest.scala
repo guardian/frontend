@@ -24,7 +24,7 @@ import conf.Configuration
         sections.length should be > 0
 
         And("a button to activate that list")
-        browser.findFirst(".navigation-toggle").getAttribute("href") should include("australia-mining-boom-end#footer-nav")
+        browser.$(".navigation-toggle").attribute("href") should include("australia-mining-boom-end#footer-nav")
       }
     }
 
@@ -34,9 +34,9 @@ import conf.Configuration
 
         Then("I should see a link to the US edition")
 
-        val editionLink = browser.findFirst("[data-link-name='switch to US edition']")
+        val editionLink = browser.el("[data-link-name='switch to US edition']")
 
-        editionLink.getAttribute("href") should be(s"http://localhost:${port}/preference/edition/us")
+        editionLink.attribute("href") should be(s"http://localhost:${port}/preference/edition/us")
       }
     }
 
@@ -46,9 +46,9 @@ import conf.Configuration
 
         Then("I should see a link to the UK edition")
 
-        val editionLink = browser.findFirst("[data-link-name='switch to UK edition']")
+        val editionLink = browser.el("[data-link-name='switch to UK edition']")
 
-        editionLink.getAttribute("href") should be(s"http://localhost:${port}/preference/edition/uk")
+        editionLink.attribute("href") should be(s"http://localhost:${port}/preference/edition/uk")
       }
     }
 

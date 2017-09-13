@@ -1,24 +1,24 @@
 package googleAuth
 
 import com.gu.googleauth.{GoogleAuth, GoogleAuthConfig, UserIdentity}
-import common.{Crypto, ExecutionContexts, Logging}
+import common.{Crypto, ImplicitControllerExecutionContext, Logging}
 import conf.Configuration
 import org.joda.time.DateTime
-import play.api.libs.crypto.CryptoConfig
+import play.api.http.HttpConfiguration
 import play.api.libs.json.Json
 import play.api.libs.ws.WSClient
 import play.api.mvc._
 
 import scala.concurrent.Future
 
-trait OAuthLoginController extends Controller with ExecutionContexts with implicits.Requests {
+trait OAuthLoginController extends BaseController with ImplicitControllerExecutionContext with implicits.Requests {
 
   implicit def wsClient: WSClient
   def login: Action[AnyContent]
   def googleAuthConfig(request: Request[AnyContent]): Option[GoogleAuthConfig]
-  def cryptoConfig: CryptoConfig
+  def httpConfiguration: HttpConfiguration
 
-  val authCookie = new AuthCookie(cryptoConfig)
+  val authCookie = new AuthCookie(httpConfiguration)
 
   val LOGIN_ORIGIN_KEY = "loginOriginUrl"
   val ANTI_FORGERY_KEY = "antiForgeryToken"
@@ -97,20 +97,20 @@ trait OAuthLoginController extends Controller with ExecutionContexts with implic
   }
 }
 
-class AuthCookie(cryptoConfig: CryptoConfig) extends Logging {
+class AuthCookie(httpConfiguration: HttpConfiguration) extends Logging {
 
   private val cookieName = "GU_PV_AUTH"
   private val oneDayInSeconds: Int = 86400
 
   def from(id: UserIdentity): Option[Cookie] = {
     val idWith30DayExpiry = id.copy(exp = (System.currentTimeMillis() / 1000) + oneDayInSeconds )
-    Some(Cookie(cookieName,  Crypto.encryptAES(Json.toJson(idWith30DayExpiry).toString, cryptoConfig.secret), Some(oneDayInSeconds)))
+    Some(Cookie(cookieName,  Crypto.encryptAES(Json.toJson(idWith30DayExpiry).toString, httpConfiguration.secret.secret), Some(oneDayInSeconds)))
   }
 
   def toUserIdentity(request: RequestHeader): Option[UserIdentity] = {
     try {
       request.cookies.get(cookieName).flatMap{ cookie =>
-        UserIdentity.fromJson(Json.parse(Crypto.decryptAES(cookie.value, cryptoConfig.secret)))
+        UserIdentity.fromJson(Json.parse(Crypto.decryptAES(cookie.value, httpConfiguration.secret.secret)))
       }
     } catch { case e: Exception =>
       log.error("Could not parse Auth Cookie", e)

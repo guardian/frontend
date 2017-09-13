@@ -4,7 +4,7 @@ import org.scalatest.{Matchers, path}
 import services._
 import idapiclient.IdApiClient
 import org.scalatest.mockito.MockitoSugar
-import test.{Fake, TestRequest, WithTestContext}
+import test.{Fake, TestRequest, WithTestApplicationContext}
 import play.api.mvc.{Request, RequestHeader}
 
 import scala.concurrent.Future
@@ -17,8 +17,9 @@ import actions.AuthenticatedActions
 
 class EmailVerificationControllerTest extends path.FreeSpec
   with Matchers
-  with WithTestContext
+  with WithTestApplicationContext
   with MockitoSugar {
+
   val api = mock[IdApiClient]
   val idRequestParser = mock[IdRequestParser]
   val authenticatedActions = mock[AuthenticatedActions]
@@ -35,7 +36,15 @@ class EmailVerificationControllerTest extends path.FreeSpec
   when(authenticationService.requestPresentsAuthenticationCredentials(MockitoMatchers.any[Request[_]])) thenReturn true
   when(returnUrlVerifier.getVerifiedReturnUrl(MockitoMatchers.any[Request[_]])).thenReturn(Some("http://www.theguardian.com/football"))
 
-  val controller = new EmailVerificationController(api, authenticatedActions, authenticationService, idRequestParser, idUrlBuilder, returnUrlVerifier)
+  val controller = new EmailVerificationController(
+    api,
+    authenticatedActions,
+    authenticationService,
+    idRequestParser,
+    idUrlBuilder,
+    returnUrlVerifier,
+    play.api.test.Helpers.stubControllerComponents()
+  )
 
   "Given the verify method is called" - Fake {
     val testRequest = TestRequest()

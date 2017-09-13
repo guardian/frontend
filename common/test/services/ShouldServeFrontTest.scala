@@ -5,14 +5,14 @@ import model.{ApplicationContext, ApplicationIdentity}
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.{BeforeAndAfterAll, FlatSpec, Matchers}
 import play.api.Environment
-import test.WithTestContext
+import test.WithTestApplicationContext
 import scala.concurrent.duration._
 import scala.concurrent.Await
 
 class ShouldServeFrontTest
   extends FlatSpec
   with Matchers
-  with WithTestContext
+  with WithTestApplicationContext
   with ScalaFutures
   with BeforeAndAfterAll {
 

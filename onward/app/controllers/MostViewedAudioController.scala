@@ -5,11 +5,16 @@ import feed.MostViewedAudioAgent
 import layout.{CollectionEssentials, FaciaContainer}
 import model.pressed.CollectionConfig
 import model.{ApplicationContext, Cached, FrontProperties, RelatedContentItem}
-import play.api.mvc.{Action, Controller, RequestHeader}
+import play.api.mvc._
 import services.CollectionConfigWithId
 import layout.slices.{Fixed, FixedContainers}
 
-class MostViewedAudioController(mostViewedAudioAgent: MostViewedAudioAgent)(implicit context: ApplicationContext) extends Controller with Logging with ExecutionContexts {
+class MostViewedAudioController(
+  mostViewedAudioAgent: MostViewedAudioAgent,
+  val controllerComponents: ControllerComponents
+)(implicit context: ApplicationContext)
+  extends BaseController with Logging with ImplicitControllerExecutionContext {
+
   def renderMostViewed() = Action { implicit request =>
     getMostViewedAudio match {
       case Nil => Cached(60) { JsonNotFound() }

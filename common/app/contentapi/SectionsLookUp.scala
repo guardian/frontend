@@ -1,14 +1,15 @@
 package contentapi
 
 import com.gu.contentapi.client.model.v1.Section
-import common.{AkkaAgent, ExecutionContexts, Logging}
+import common.{AkkaAgent, Logging}
 
+import scala.concurrent.ExecutionContext
 import scala.util.{Failure, Success}
 
-class SectionsLookUp(contentApiClient: ContentApiClient) extends Logging with ExecutionContexts {
+class SectionsLookUp(contentApiClient: ContentApiClient) extends Logging {
   private val sections = AkkaAgent[Option[Map[String, Section]]](None)
 
-  def refresh(): Unit = {
+  def refresh()(implicit executionContext: ExecutionContext): Unit = {
     contentApiClient.getResponse(contentApiClient.sections) onComplete {
       case Success(response) =>
         log.info("Refreshed sections from Content API")

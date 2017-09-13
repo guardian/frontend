@@ -4,9 +4,9 @@ import com.gu.contentapi.client.model.v1.{Content => ApiContent, Tag => ApiTag, 
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichJodaDateTime
 import org.joda.time.DateTime
 import org.scalatest.{FlatSpec, Matchers}
-import org.scalatestplus.play.OneAppPerSuite
+import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 
-class UrlsTest extends FlatSpec with Matchers with OneAppPerSuite {
+class UrlsTest extends FlatSpec with Matchers with GuiceOneAppPerSuite {
 
   "Urls" should "be created relative for articles" in {
 

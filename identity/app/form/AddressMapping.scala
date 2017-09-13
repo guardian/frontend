@@ -2,17 +2,18 @@ package form
 
 import model.Countries
 import play.api.data.Forms._
-import play.api.i18n.Messages
+import play.api.data.Mapping
+import play.api.i18n.{Messages, MessagesProvider}
 
-trait AddressMapping extends Mappings{
+trait AddressMapping extends Mappings {
 
   private val AddressLinePattern = """[^\w\s'#,./-]""".r
-  private val idAddressLine = textField verifying (
+  private def idAddressLine(implicit messagesProvider: MessagesProvider): Mapping[String] = textField verifying (
     Messages("error.address"),
     { value => value.isEmpty || AddressLinePattern.findFirstIn(value).isEmpty }
   )
 
-  val idAddress = mapping(
+  def idAddress(implicit messagesProvider: MessagesProvider): Mapping[AddressFormData] = mapping(
     ("line1", idAddressLine),
     ("line2", idAddressLine),
     ("line3", idAddressLine),

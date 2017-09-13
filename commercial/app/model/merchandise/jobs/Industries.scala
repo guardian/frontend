@@ -1,10 +1,10 @@
 package commercial.model.merchandise.jobs
 
 import commercial.model.capi.Lookup
-import common.{AkkaAgent, ExecutionContexts}
+import common.AkkaAgent
 import contentapi.ContentApiClient
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 object Industries {
 
@@ -38,13 +38,13 @@ object Industries {
   )
 }
 
-class Industries(contentApiClient: ContentApiClient) extends ExecutionContexts {
+class Industries(contentApiClient: ContentApiClient) {
 
   private val lookup = new Lookup(contentApiClient)
   private lazy val industryKeywordIds = AkkaAgent(Map.empty[Int, Seq[String]])
 
 
-  def refresh(): Future[Iterable[Map[Int, Seq[String]]]] = Future.sequence {
+  def refresh()(implicit executionContext: ExecutionContext): Future[Iterable[Map[Int, Seq[String]]]] = Future.sequence {
     Industries.sectorIdIndustryMap map {
       case (id, name) =>
         lookup.keyword(name) flatMap {

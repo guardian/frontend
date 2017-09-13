@@ -11,7 +11,7 @@ import model.Cached.WithoutRevalidationResult
 import model._
 import model.pressed.CollectionConfig
 import play.api.libs.json.{JsArray, Json}
-import play.api.mvc.{Action, Controller, RequestHeader}
+import play.api.mvc._
 import services.CollectionConfigWithId
 import layout.slices.Fixed
 import views.support.FaciaToMicroFormat2Helpers._
@@ -26,7 +26,12 @@ case class Series(id: String, tag: Tag, trails: RelatedContent) {
  }
 }
 
-class SeriesController(contentApiClient: ContentApiClient)(implicit context: ApplicationContext) extends Controller with Logging with Paging with ExecutionContexts with Requests {
+class SeriesController(
+  contentApiClient: ContentApiClient,
+  val controllerComponents: ControllerComponents
+)(implicit context: ApplicationContext)
+  extends BaseController with Logging with Paging with ImplicitControllerExecutionContext with Requests {
+
   def renderSeriesStories(seriesId: String) = Action.async { implicit request =>
     lookup(Edition(request), seriesId) map { series =>
       series.map(renderSeriesTrails).getOrElse(NotFound)

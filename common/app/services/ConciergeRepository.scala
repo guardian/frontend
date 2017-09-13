@@ -1,11 +1,12 @@
 package services
 
 import com.gu.contentapi.client.GuardianContentApiError
-import common.{ExecutionContexts, Logging}
+import common.Logging
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
-trait ConciergeRepository extends ExecutionContexts with Logging {
+trait ConciergeRepository extends Logging {
+  implicit val executionContext: ExecutionContext
   implicit class future2RecoverApi404With[T](response: Future[T]) {
     def recoverApi404With(t: T): Future[T] = response.recover {
       case GuardianContentApiError(404, message, _) =>

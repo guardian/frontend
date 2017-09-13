@@ -2,14 +2,18 @@ package football.controllers
 
 import common.Edition
 import feed.CompetitionsService
-import play.api.mvc.{Action, AnyContent, Result}
+import play.api.mvc.{Action, AnyContent, ControllerComponents, Result}
 import org.joda.time.LocalDate
 import model._
 import football.model._
 import pa.FootballTeam
 import model.Competition
 
-class ResultsController(val competitionsService: CompetitionsService)(implicit context: ApplicationContext) extends MatchListController with CompetitionResultFilters {
+class ResultsController(
+  val competitionsService: CompetitionsService,
+  val controllerComponents: ControllerComponents
+)(implicit context: ApplicationContext)
+  extends MatchListController with CompetitionResultFilters {
 
   private def competitionOrTeam(tag: String): Option[Either[Competition, FootballTeam]] = {
     lookupCompetition(tag).map(Left(_))

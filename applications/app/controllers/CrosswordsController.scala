@@ -1,7 +1,7 @@
 package controllers
 
 import com.gu.contentapi.client.model.v1.{Crossword, ItemResponse, Content => ApiContent, Section => ApiSection}
-import common.{Edition, ExecutionContexts, Logging}
+import common.{Edition, ImplicitControllerExecutionContext, Logging}
 import conf.Static
 import contentapi.ContentApiClient
 import crosswords.{AccessibleCrosswordRows, CrosswordPage, CrosswordSearchPage, CrosswordSvg}
@@ -10,13 +10,13 @@ import model._
 import org.joda.time.{DateTime, LocalDate}
 import play.api.data.Forms._
 import play.api.data._
-import play.api.mvc.{Action, Controller, RequestHeader, Result, _}
+import play.api.mvc.{Action, RequestHeader, Result, _}
 import services.{IndexPage, IndexPageItem}
 
 import scala.concurrent.Future
 import scala.concurrent.duration._
 
-trait CrosswordController extends Controller with Logging with ExecutionContexts {
+trait CrosswordController extends BaseController with Logging with ImplicitControllerExecutionContext {
 
   def contentApiClient: ContentApiClient
 
@@ -49,7 +49,7 @@ trait CrosswordController extends Controller with Logging with ExecutionContexts
   }
 }
 
-class CrosswordPageController(val contentApiClient: ContentApiClient)(implicit context: ApplicationContext) extends CrosswordController {
+class CrosswordPageController(val contentApiClient: ContentApiClient, val controllerComponents: ControllerComponents)(implicit context: ApplicationContext) extends CrosswordController {
 
   def noResults()(implicit request: RequestHeader) = Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound))
 
@@ -92,7 +92,11 @@ class CrosswordPageController(val contentApiClient: ContentApiClient)(implicit c
   }
 }
 
-class CrosswordSearchController(val contentApiClient: ContentApiClient)(implicit context: ApplicationContext) extends CrosswordController {
+class CrosswordSearchController(
+  val contentApiClient: ContentApiClient,
+  val controllerComponents: ControllerComponents
+)(implicit context: ApplicationContext)
+  extends CrosswordController {
     val searchForm = Form(
     mapping(
       "crossword_type" -> nonEmptyText,

@@ -4,8 +4,12 @@
 // - https://meyerweb.com/eric/tools/css/reset
 // - https://css-tricks.com/inheriting-box-sizing-probably-slightly-better-best-practice
 
+import loadApp from './__inline__/loadApp';
 import resetCSS from './reset.css';
 import fontsCSS from './fonts.css';
+
+//  Having to typecast loadApp to a string here to appease flow
+const loadAppStr: string = (loadApp: any);
 
 export default (props: any, css: Array<string>) =>
     `<head lang="en" data-page-path="/uk">
@@ -19,4 +23,9 @@ export default (props: any, css: Array<string>) =>
         <style>${resetCSS}</style>
         <style>${fontsCSS}</style>
         ${css.join('\n')}
+        <script>
+            window.guardian = ${JSON.stringify(props)};
+
+            ${loadAppStr}
+        </script>
     </head>`;

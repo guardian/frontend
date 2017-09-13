@@ -5,13 +5,15 @@ import contentapi.ContentApiClient
 import _root_.feed.Competitions
 import pa._
 
+import scala.concurrent.ExecutionContext
+
 case class Team(team: FootballTeam, tag: Option[Tag], shortName: Option[String]) extends FootballTeam {
   lazy val url = tag.map(_.metadata.url)
   override lazy val name = shortName.getOrElse(team.name)
   override lazy val id = team.id
 }
 
-object TeamMap extends ExecutionContexts with Logging {
+object TeamMap extends Logging {
 
   val teamAgent = AkkaAgent(Map.empty[String, Tag])
 
@@ -104,7 +106,7 @@ object TeamMap extends ExecutionContexts with Logging {
 
   def findUrlNameFor(teamId: String): Option[String] = teamAgent().get(teamId).map(_.metadata.url.replace("/football/", ""))
 
-  def refresh(page: Int = 1)(implicit contentApiClient: ContentApiClient) { //pages are 1 based
+  def refresh(page: Int = 1)(implicit contentApiClient: ContentApiClient, executionContext: ExecutionContext): Unit = { //pages are 1 based
     log.info(s"Refreshing team tag mappings - page $page")
     contentApiClient.getResponse(contentApiClient.tags
       .page(page)

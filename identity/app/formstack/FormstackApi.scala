@@ -3,13 +3,13 @@ package formstack
 import client.parser.JodaJsonSerializer
 import client.{Error, Response}
 import com.gu.identity.model.LiftJsonConfig
-import common.ExecutionContexts
 import conf.Configuration
 import net.liftweb.json._
 import utils.SafeLogging
-import scala.concurrent.Future
 
-class FormstackApi(httpClient: WsFormstackHttp) extends ExecutionContexts with SafeLogging {
+import scala.concurrent.{ExecutionContext, Future}
+
+class FormstackApi(httpClient: WsFormstackHttp) extends SafeLogging {
 
   implicit val formats = LiftJsonConfig.formats + new JodaJsonSerializer
 
@@ -18,7 +18,7 @@ class FormstackApi(httpClient: WsFormstackHttp) extends ExecutionContexts with S
     s"$formstackUrl/form/$formId.json"
   }
 
-  def checkForm(formstackForm: FormstackForm): Future[Response[FormstackForm]] = {
+  def checkForm(formstackForm: FormstackForm)(implicit executionContext: ExecutionContext): Future[Response[FormstackForm]] = {
 
     httpClient.GET(formstackUrl(formstackForm.formId), Seq("oauth_token" -> Configuration.formstack.oAuthToken)) map {
       case FormstackHttpResponse(body, statusCode, _) => {

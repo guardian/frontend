@@ -35,9 +35,9 @@ import collection.JavaConversions._
         Then("I should see the headline of the article")
 
         And("The article is marked up with the correct schema")
-        val article = findFirst("article[itemtype='http://schema.org/NewsArticle']")
+        val article = el("article[itemtype='http://schema.org/NewsArticle']")
 
-        article.findFirst("[itemprop=headline]").getText should
+        article.el("[itemprop=headline]").text should
           be("Liu Xiang pulls up in opening race at second consecutive Olympics")
       }
     }
@@ -49,7 +49,7 @@ import collection.JavaConversions._
         import browser._
 
         Then("I should see a short description of the article")
-        findFirst("[itemprop=description]").getAttribute("content") should
+        el("[itemprop=description]").attribute("content") should
           be("George Monbiot: Payments for 'ecosystem services' look like the prelude to the greatest privatisation since enclosure")
       }
     }
@@ -57,7 +57,7 @@ import collection.JavaConversions._
     scenario("Have a meta description") {
       goTo("/sport/2012/jun/12/london-2012-olympic-opening-ceremony") { browser =>
         import browser._
-        findFirst("meta[name=description]").getAttribute("content") should be("Director Danny Boyle reveals plans for London 2012 Olympic opening ceremony, including village cricket, maypoles and rain")
+        el("meta[name=description]").attribute("content") should be("Director Danny Boyle reveals plans for London 2012 Olympic opening ceremony, including village cricket, maypoles and rain")
       }
     }
 
@@ -68,12 +68,12 @@ import collection.JavaConversions._
         import browser._
 
         Then("I should see the names of the authors")
-        $("[itemprop=author]")(0).getText should be("Ben Arnold")
-        $("[itemprop=author]").last.getText should be("Phelim O'Neill")
+        el("[itemprop=author]").text should be("Ben Arnold")
+        $("[itemprop=author]").last.text should be("Phelim O'Neill")
 
         And("I should see a link to the author's page")
-        $("[itemprop=author] a[itemprop='sameAs']")(0).getAttribute("href") should be(withHost("/profile/ben-arnold"))
-        $("[itemprop=author] a[itemprop='sameAs']").last.getAttribute("href") should be(withHost("/profile/phelimoneill"))
+        el("[itemprop=author] a[itemprop='sameAs']").attribute("href") should be(withHost("/profile/ben-arnold"))
+        $("[itemprop=author] a[itemprop='sameAs']").last.attribute("href") should be(withHost("/profile/phelimoneill"))
       }
     }
 
@@ -83,7 +83,7 @@ import collection.JavaConversions._
         import browser._
 
         Then("I should see a large byline image")
-        $(".byline-img img").getAttribute("src") should include("Pix/pictures/2014/3/13/1394733740842/JonathanFreedland.png")
+        $(".byline-img img").attribute("src") should include("Pix/pictures/2014/3/13/1394733740842/JonathanFreedland.png")
       }
     }
 
@@ -94,10 +94,10 @@ import collection.JavaConversions._
         import browser._
 
         Then("Keywords should be exposed")
-        findFirst("meta[name=keywords]").getAttribute("content") should be("Television,Television & radio,Culture,Proms 2012,Classical music,Proms,Music")
+        el("meta[name=keywords]").attribute("content") should be("Television,Television & radio,Culture,Proms 2012,Classical music,Proms,Music")
 
         And("News Keywords should be exposed")
-        findFirst("meta[name=news_keywords]").getAttribute("content") should be("Television,Television & radio,Culture,Proms 2012,Classical music,Proms,Music")
+        el("meta[name=news_keywords]").attribute("content") should be("Television,Television & radio,Culture,Proms 2012,Classical music,Proms,Music")
       }
     }
 
@@ -109,11 +109,11 @@ import collection.JavaConversions._
 
         Then("the authors should be exposed as meta data")
         val authors = $("meta[name=author]")
-        authors.first.getAttribute("content") should be("Ben Arnold")
-        authors.last.getAttribute("content") should be("Mark Jones")
+        authors.first.attribute("content") should be("Ben Arnold")
+        authors.last.attribute("content") should be("Mark Jones")
 
         And("it should handle escaping")
-        authors(4).getAttribute("content") should be("Phelim O'Neill")
+        authors(4).attribute("content") should be("Phelim O'Neill")
       }
     }
 
@@ -126,29 +126,29 @@ import collection.JavaConversions._
         ImageServerSwitch.switchOn()
 
         Then("I should see the article's image")
-        findFirst("[itemprop='contentUrl']").getAttribute("src") should
+        el("[itemprop='contentUrl']").attribute("src") should
           include("Gunnerside-village-Swaled")
 
         And("I should see the image caption")
-        findFirst("[itemprop='associatedMedia image'] [itemprop=description]").getText should
+        el("[itemprop='associatedMedia image'] [itemprop=description]").text should
           be("Our rivers and natural resources are to be valued and commodified, a move that will benefit only the rich, argues George Monbiot. Photograph: Alamy")
 
         And("I should see the image url")
-        findFirst("[itemprop='associatedMedia image'] [itemprop=url]").getAttribute("content") should
+        el("[itemprop='associatedMedia image'] [itemprop=url]").attribute("content") should
           include("/img/static/sys-images/Guardian/Pix/pictures/2012/8/6/1344274684805/Gunnerside-village-Swaled-009.jpg?w=700&q=55&auto=format&usm=12&fit=max&s=")
 
         And("I should see the image width")
-        findFirst("[itemprop='associatedMedia image'] [itemprop=width]").getAttribute("content") should be("460")
+        el("[itemprop='associatedMedia image'] [itemprop=width]").attribute("content") should be("460")
 
         And("I should see the image height")
-        findFirst("[itemprop='associatedMedia image'] [itemprop=height]").getAttribute("content") should be("276")
+        el("[itemprop='associatedMedia image'] [itemprop=height]").attribute("content") should be("276")
       }
     }
 
     // scenario("Poster image on embedded video", ArticleComponents) {
     //   goTo("/world/2013/sep/25/kenya-mall-attack-bodies") { browser =>
     //     import browser._
-    //     findFirst("video").getAttribute("poster") should endWith("Westgate-shopping-centre--016.jpg")
+    //     $("video").attribute("poster") should endWith("Westgate-shopping-centre--016.jpg")
     //   }
     // }
 
@@ -159,8 +159,8 @@ import collection.JavaConversions._
         import browser._
 
         Then("I should see the publication date of the article")
-        findFirst(".content__dateline-wpd").getText should be("Monday 6 August 2012 20.30 BST")
-        findFirst("time").getAttribute("datetime") should be("2012-08-06T20:30:00+0100")
+        $(".content__dateline-wpd").text should be("Monday 6 August 2012 20.30 BST")
+        $("time").attribute("datetime") should be("2012-08-06T20:30:00+0100")
       }
     }
 
@@ -171,7 +171,7 @@ import collection.JavaConversions._
       goTo("/world/2012/nov/08/syria-arms-embargo-rebel") { browser =>
         import browser._
         Then("the date should be 'Thursday 8 November 2012 00.01 GMT'")
-        findFirst(".content__dateline time").getText should be("Thursday 8 November 2012 00.01 GMT")
+        $(".content__dateline time").text should be("Thursday 8 November 2012 00.01 GMT")
       }
 
       Given("I am on an article published on '2012-11-08'")
@@ -179,7 +179,7 @@ import collection.JavaConversions._
       US("/world/2012/nov/08/syria-arms-embargo-rebel") { browser =>
         import browser._
         Then("the date should be 'Wednesday 7 November 2012 19.01 GMT'")
-        findFirst(".content__dateline time").getText should be("Wednesday 7 November 2012 19.01 EST")
+        $(".content__dateline time").text should be("Wednesday 7 November 2012 19.01 EST")
       }
 
       Given("I am on an article published on '2012-08-19'")
@@ -187,7 +187,7 @@ import collection.JavaConversions._
       goTo("/business/2012/aug/19/shell-spending-security-nigeria-leak") { browser =>
         import browser._
         Then("the date should be 'Sunday 19 August 2012 18.38 BST'")
-        findFirst(".content__dateline time").getText should be("Sunday 19 August 2012 18.38 BST")
+        $(".content__dateline time").text should be("Sunday 19 August 2012 18.38 BST")
       }
 
       Given("I am on an article published on '2012-08-19'")
@@ -195,7 +195,7 @@ import collection.JavaConversions._
       US("/business/2012/aug/19/shell-spending-security-nigeria-leak") { browser =>
         import browser._
         Then("the date should be 'Sunday 19 August 2012 13.38 BST'")
-        findFirst(".content__dateline time").getText should be("Sunday 19 August 2012 13.38 EDT")
+        $(".content__dateline time").text should be("Sunday 19 August 2012 13.38 EDT")
       }
 
     }
@@ -207,7 +207,7 @@ import collection.JavaConversions._
         import browser._
 
         Then("I should see the body of the article")
-        findFirst("[itemprop=articleBody]").getText should startWith("This week Lindisfarne celebrates its long and frequently bloody Viking heritage")
+        $("[itemprop=articleBody]").text should startWith("This week Lindisfarne celebrates its long and frequently bloody Viking heritage")
       }
     }
 
@@ -222,8 +222,8 @@ import collection.JavaConversions._
         val adSlotRight = $(".ad-slot--right")
 
         Then("The article-aside MPU should have the correct sizes")
-          adSlotRight.getId() should be("dfp-ad--right")
-          adSlotRight.getAttribute("data-mobile") should be("1,1|2,2|300,250|300,600|fluid")
+          adSlotRight.id should be("dfp-ad--right")
+          adSlotRight.attribute("data-mobile") should be("1,1|2,2|300,250|300,600|fluid")
       }
 
       Given("I am on an article entitled '10 of the best things to do in Tallinn'")
@@ -234,8 +234,8 @@ import collection.JavaConversions._
         val adSlotRight = $(".ad-slot--right")
 
         Then("The article-aside MPU should have the correct sizes")
-          adSlotRight.getId() should be("dfp-ad--right")
-          adSlotRight.getAttribute("data-mobile") should be("1,1|2,2|300,250|300,600|fluid|300,1050")
+          adSlotRight.id should be("dfp-ad--right")
+          adSlotRight.attribute("data-mobile") should be("1,1|2,2|300,250|300,600|fluid|300,1050")
       }
 
       Given("I am on an immersive article, entitled 'Health insurance woes helped elect Trump, but his cure may be more painful'")
@@ -245,8 +245,8 @@ import collection.JavaConversions._
         val adSlotRight = $(".ad-slot--right")
 
         Then("The article-aside MPU should not be sticky")
-          adSlotRight.getId() should be("dfp-ad--right")
-          adSlotRight.getAttribute("class") should not include("js-sticky-mpu")
+          adSlotRight.id should be("dfp-ad--right")
+          adSlotRight.attribute("class") should not include("js-sticky-mpu")
       }
     }
 
@@ -260,14 +260,14 @@ import collection.JavaConversions._
 
         $(".content__article-body .element-image").length should be(2)
 
-        val inBodyImage = findFirst(".content__article-body .element-image")
+        val inBodyImage = el(".content__article-body .element-image")
 
         ImageServerSwitch.switchOn()
-        inBodyImage.findFirst("[itemprop=contentUrl]").getAttribute("src") should
+        inBodyImage.$("[itemprop=contentUrl]").attribute("src") should
           include("sys-images/Travel/Late_offers/pictures/2012/10/11/1349951383662/Shops-in-Rainbow-Row-Char-001.jpg")
 
         And("I should see the image caption")
-        inBodyImage.findFirst("[itemprop=description]").getText should
+        inBodyImage.$("[itemprop=description]").text should
           be( """Shops in Rainbow Row, Charleston. Photograph: Getty Images""")
       }
     }
@@ -280,15 +280,15 @@ import collection.JavaConversions._
 
         Then("I should see the star rating of the festival")
         And("The review is marked up with the correct schema")
-        val review = findFirst("article[itemtype='http://schema.org/Review']")
+        val review = el("article[itemtype='http://schema.org/Review']")
 
-        review.findFirst("[itemprop=reviewRating]").getText should be("4 / 5 stars")
-        review.findFirst("[itemprop=ratingValue]").getText should be("4")
+        review.$("[itemprop=reviewRating]").text should be("4 / 5 stars")
+        review.$("[itemprop=ratingValue]").text should be("4")
 
-        val reviewed = review.findFirst("[itemprop=itemReviewed]")
+        val reviewed = review.el("[itemprop=itemReviewed]")
 
-        reviewed.getAttribute("itemtype") should be("http://schema.org/Movie")
-        reviewed.findFirst("[itemprop=sameAs]").getAttribute("href") should be("http://www.imdb.com/title/tt3205376/")
+        reviewed.attribute("itemtype") should be("http://schema.org/Movie")
+        reviewed.$("[itemprop=sameAs]").attribute("href") should be("http://www.imdb.com/title/tt3205376/")
       }
     }
 
@@ -299,7 +299,7 @@ import collection.JavaConversions._
         import browser._
 
         Then("It should be rendered as an article")
-        findFirst("[itemprop=headline]").getText should be("Birds of Britain | video")
+        $("[itemprop=headline]").text should be("Birds of Britain | video")
       }
     }
 
@@ -314,10 +314,10 @@ import collection.JavaConversions._
 
         taglinks.length should be(2)
 
-        taglinks(0).getText should be("GCHQ")
-        taglinks(0).getAttribute("href") should endWith("/uk/gchq")
+        taglinks(0).text should be("GCHQ")
+        taglinks(0).attribute("href") should endWith("/uk/gchq")
 
-        taglinks(1).getText should be("Pakistan")
+        taglinks(1).text should be("Pakistan")
       }
     }
 
@@ -330,7 +330,7 @@ import collection.JavaConversions._
         Then("It should automatically link to tags")
         val taglinks = $("a[data-link-name=auto-linked-tag]")
 
-        taglinks.map(_.getText) should not contain "Science"
+        taglinks.map(_.text) should not contain "Science"
       }
     }
 
@@ -346,8 +346,8 @@ import collection.JavaConversions._
 
         taglinks.length should be(1)
 
-        taglinks(0).getText should be("Northern Ireland")
-        taglinks(0).getAttribute("href") should endWith("/uk/northernireland")
+        taglinks(0).text should be("Northern Ireland")
+        taglinks(0).attribute("href") should endWith("/uk/northernireland")
       }
     }
 
@@ -362,7 +362,7 @@ import collection.JavaConversions._
         import browser._
 
         Then("I should see the star body")
-        findFirst("[itemprop=reviewBody]").getText should startWith("What's so funny?")
+        $("[itemprop=reviewBody]").text should startWith("What's so funny?")
       }
     }
 
@@ -379,15 +379,15 @@ import collection.JavaConversions._
         val adPlaceholder = $(".ad-slot--top-banner-ad")
 
         And("the placeholder has the correct data attributes")
-        adPlaceholder.getAttribute("data-name") should be("top-above-nav")
-        adPlaceholder.getAttribute("data-tablet") should be("1,1|2,2|728,90|88,71|fluid")
-        adPlaceholder.getAttribute("data-desktop") should be("1,1|2,2|728,90|940,230|900,250|970,250|88,71|fluid")
+        adPlaceholder.attribute("data-name") should be("top-above-nav")
+        adPlaceholder.attribute("data-tablet") should be("1,1|2,2|728,90|88,71|fluid")
+        adPlaceholder.attribute("data-desktop") should be("1,1|2,2|728,90|940,230|900,250|970,250|88,71|fluid")
 
         And("the placeholder has the correct class name")
-        adPlaceholder.getAttribute("class") should include("js-ad-slot ad-slot ad-slot--top-above-nav ad-slot--top-banner-ad ad-slot--top-banner-ad-desktop")
+        adPlaceholder.attribute("class") should include("js-ad-slot ad-slot ad-slot--top-above-nav ad-slot--top-banner-ad ad-slot--top-banner-ad-desktop")
 
         And("the placeholder has the correct analytics name")
-        adPlaceholder.getAttribute("data-link-name") should be("ad slot top-above-nav")
+        adPlaceholder.attribute("data-link-name") should be("ad slot top-above-nav")
       }
     }
 
@@ -399,14 +399,14 @@ import collection.JavaConversions._
         $(".media-primary video") should have size 1
 
         And("video meta name should be set")
-        findFirst("[itemprop='associatedMedia video'] [itemprop=name]").getAttribute("content") should be("Nigel Farage's LBC interview – the key moments")
+        $("[itemprop='associatedMedia video'] [itemprop=name]").attribute("content") should be("Nigel Farage's LBC interview – the key moments")
 
         And("video meta thumbnailUrl should be set")
-        findFirst("[itemprop='associatedMedia video'] [itemprop=thumbnailUrl]").getAttribute("content") should
+        $("[itemprop='associatedMedia video'] [itemprop=thumbnailUrl]").attribute("content") should
           include("img/static/sys-images/Guardian/Pix/audio/video/2014/5/16/1400240928538/Nigel-Farage-LBC-debate-i-014.jpg?w=640&h=360&q=55&auto=format&usm=12&fit=max&s=")
 
         And("video meta uploadDate should be set")
-        findFirst("[itemprop='associatedMedia video'] [itemprop=uploadDate]").getAttribute("content") should be("2014-05-16T16:09:34.000+01:00")
+        $("[itemprop='associatedMedia video'] [itemprop=uploadDate]").attribute("content") should be("2014-05-16T16:09:34.000+01:00")
       }
     }
 
@@ -416,7 +416,7 @@ import collection.JavaConversions._
         Then("the main picture should be hidden")
         $("[itemprop='associatedMedia primaryImageOfPage']") should have size 0
 
-        findFirst("meta[name=thumbnail]").getAttribute("content") should include("sys-images/Guardian/Pix/pictures/2013/3/26/1364302888446/Jeremy-Hunt-005.jpg")
+        $("meta[name=thumbnail]").attribute("content") should include("sys-images/Guardian/Pix/pictures/2013/3/26/1364302888446/Jeremy-Hunt-005.jpg")
       }
     }
 
@@ -445,7 +445,7 @@ import collection.JavaConversions._
         import browser._
 
         Then("I should see the first image of the tweet")
-        findFirst(".tweet").findFirst("img").getAttribute("src") should include ("://pbs.twimg.com/media/CNBYttRWIAAHueY.jpg")
+        el(".tweet").$("img").attribute("src") should include ("://pbs.twimg.com/media/CNBYttRWIAAHueY.jpg")
       }
     }
 
@@ -472,10 +472,10 @@ import collection.JavaConversions._
 
         Then("I should see buttons for my favourite social network")
 
-        findFirst(".social__item[data-link-name=email] .social__action").getAttribute("href") should be(mailShareUrl)
-        findFirst(".social__item[data-link-name=facebook] .social__action").getAttribute("href") should be(fbShareUrl)
-        findFirst(".social__item[data-link-name=twitter] .social__action").getAttribute("href") should be(twitterShareUrl)
-        findFirst(".social__item[data-link-name=gplus] .social__action").getAttribute("href") should be(gplusShareUrl)
+        $(".social__item[data-link-name=email] .social__action").attribute("href") should be(mailShareUrl)
+        $(".social__item[data-link-name=facebook] .social__action").attribute("href") should be(fbShareUrl)
+        $(".social__item[data-link-name=twitter] .social__action").attribute("href") should be(twitterShareUrl)
+        $(".social__item[data-link-name=gplus] .social__action").attribute("href") should be(gplusShareUrl)
       }
     }
 
@@ -490,15 +490,15 @@ import collection.JavaConversions._
         import browser._
 
         Then("I should see the main ARIA roles described")
-        findFirst(".related").getAttribute("role") should be("complementary")
-        findFirst("aside").getAttribute("role") should be("complementary")
-        findFirst("header").getAttribute("role") should be("banner")
-        findFirst(".l-footer__secondary").getAttribute("role") should be("contentinfo")
-        findFirst("nav").getAttribute("aria-label") should not be empty
-        browser.find("nav", 1).getAttribute("role") should be("navigation")
-        browser.find("nav", 1).getAttribute("aria-label") should not be empty
-        findFirst("#article").getAttribute("role") should be("main")
-        findFirst(".related").getAttribute("aria-labelledby") should be("related-content-head")
+        $(".related").attribute("role") should be("complementary")
+        $("aside").attribute("role") should be("complementary")
+        $("header").attribute("role") should be("banner")
+        $(".l-footer__secondary").attribute("role") should be("contentinfo")
+        $("nav").attribute("aria-label") should not be empty
+        browser.find("nav").index(1).attribute("role") should be("navigation")
+        browser.find("nav").index(1).attribute("aria-label") should not be empty
+        $("#article").attribute("role") should be("main")
+        $(".related").attribute("aria-labelledby") should be("related-content-head")
       }
     }
 
@@ -508,8 +508,8 @@ import collection.JavaConversions._
         import browser._
 
         Then("There should be a placeholder for related content")
-        val relatedLink = findFirst("[data-test-id=related-content]")
-        relatedLink.getText should be (empty)
+        val relatedLink = el("[data-test-id=related-content]")
+        relatedLink.text should be (empty)
       }
     }
 
@@ -562,10 +562,10 @@ import collection.JavaConversions._
       goTo("/world/2013/sep/15/obama-rouhani-united-nations-meeting") { browser =>
         import browser._
         Then("I should see twitter cards")
-        $("meta[name='twitter:site']").getAttributes("content").head should be("@guardian")
-        $("meta[name='twitter:card']").getAttributes("content").head should be("summary_large_image")
-        $("meta[name='twitter:app:url:googleplay']").getAttributes("content").head should startWith("guardian://www.theguardian.com/world")
-        $("meta[name='twitter:image']").getAttributes("content").head should include("2013/9/15/1379275549160/Irans-President-Hassan-Ro-010.jpg")
+        $("meta[name='twitter:site']").attributes("content").head should be("@guardian")
+        $("meta[name='twitter:card']").attributes("content").head should be("summary_large_image")
+        $("meta[name='twitter:app:url:googleplay']").attributes("content").head should startWith("guardian://www.theguardian.com/world")
+        $("meta[name='twitter:image']").attributes("content").head should include("2013/9/15/1379275549160/Irans-President-Hassan-Ro-010.jpg")
       }
     }
 
@@ -574,9 +574,9 @@ import collection.JavaConversions._
       goTo("/us-news/live/2016/nov/11/donald-trump-news-us-politics-live") { browser =>
         import browser._
         Then("I should still see a large image twitter card")
-        $("meta[name='twitter:site']").getAttributes("content").head should be("@guardian")
-        $("meta[name='twitter:card']").getAttributes("content").head should be("summary_large_image")
-        $("meta[name='twitter:app:url:googleplay']").getAttributes("content").head should startWith("guardian://www.theguardian.com/us-news")
+        $("meta[name='twitter:site']").attributes("content").head should be("@guardian")
+        $("meta[name='twitter:card']").attributes("content").head should be("summary_large_image")
+        $("meta[name='twitter:app:url:googleplay']").attributes("content").head should startWith("guardian://www.theguardian.com/us-news")
       }
     }
 
@@ -585,7 +585,7 @@ import collection.JavaConversions._
       goTo("/world/2013/sep/15/obama-rouhani-united-nations-meeting?view=mobile") { browser =>
         import browser._
         Then("There should be a canonical url")
-        findFirst("link[rel='canonical']").getAttribute("href") should endWith("/world/2013/sep/15/obama-rouhani-united-nations-meeting")
+        $("link[rel='canonical']").attribute("href") should endWith("/world/2013/sep/15/obama-rouhani-united-nations-meeting")
       }
     }
 
@@ -596,7 +596,7 @@ import collection.JavaConversions._
         import browser._
 
         Then("I should see the comment tonal treatmemt")
-        $(".content").getAttribute("class") should include("tone-comment")
+        $(".content").attribute("class") should include("tone-comment")
       }
     }
 

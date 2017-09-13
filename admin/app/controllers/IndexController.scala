@@ -1,25 +1,21 @@
 package controllers.admin
 
-import com.gu.googleauth.{Actions, GoogleAuthConfig, UserIdentity}
-import play.api.mvc.Security.AuthenticatedBuilder
-import play.api.mvc.{Action, Call, Controller}
+import com.gu.googleauth.AuthAction
+import play.api.mvc._
 import model.{ApplicationContext, NoCache}
-import play.api.libs.ws.WSClient
 
-class AuthActions(val wsClient: WSClient) extends Actions {
+trait AdminAuthController {
 
-  override def authConfig: GoogleAuthConfig = conf.GoogleAuth.getConfigOrDie
+  def controllerComponents: ControllerComponents
 
-  val loginTarget: Call = routes.OAuthLoginAdminController.login()
-  val defaultRedirectTarget: Call = routes.OAuthLoginAdminController.login()
-  val failureRedirectTarget: Call = routes.OAuthLoginAdminController.login()
-
-  object AuthActionTest extends AuthenticatedBuilder(r =>
-    UserIdentity.fromRequest(r), r => sendForAuth(r)
-  )
+  object AdminAuthAction extends AuthAction(
+    conf.GoogleAuth.getConfigOrDie,
+    routes.OAuthLoginAdminController.login(),
+    controllerComponents.parsers.default
+  )(controllerComponents.executionContext)
 }
 
-class AdminIndexController (implicit context: ApplicationContext) extends Controller {
+class AdminIndexController(val controllerComponents: ControllerComponents)(implicit context: ApplicationContext) extends BaseController {
 
   def index() = Action { Redirect("/admin") }
 

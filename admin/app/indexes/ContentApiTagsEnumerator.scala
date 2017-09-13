@@ -1,16 +1,16 @@
 package indexes
 
-import common.{ExecutionContexts, Logging}
+import common.Logging
 import common.StringEncodings.asAscii
 import contentapi.ContentApiClient
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 import com.gu.contentapi.client.model.v1.{Tag, TagsResponse}
 
 import scala.concurrent.duration._
 import play.api.libs.iteratee.{Enumeratee, Enumerator}
 
-class ContentApiTagsEnumerator(contentApiClient: ContentApiClient) extends Logging with ExecutionContexts {
+class ContentApiTagsEnumerator(contentApiClient: ContentApiClient)(implicit executionContext: ExecutionContext) extends Logging {
   val DelayBetweenRetries = 100.millis
   val MaxNumberRetries = 5
   val MaxPageSize = 1000

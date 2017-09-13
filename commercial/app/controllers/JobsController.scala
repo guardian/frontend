@@ -8,7 +8,7 @@ import model.Cached
 import play.api.mvc._
 import scala.concurrent.duration._
 
-class JobsController(jobsAgent: JobsAgent) extends Controller with implicits.Requests {
+class JobsController(jobsAgent: JobsAgent, val controllerComponents: ControllerComponents) extends BaseController with implicits.Requests {
 
   implicit val codec = Codec.utf_8
 

@@ -14,7 +14,7 @@ import play.api.test.Helpers._
   with WithMaterializer
   with WithTestWsClient
   with WithTestContentApiClient
-  with WithTestContext {
+  with WithTestApplicationContext {
 
   private val PermanentRedirect = 301
   private val TemporaryRedirect = 302
@@ -55,7 +55,7 @@ import play.api.test.Helpers._
   }
 
   lazy val sectionsLookUp = new SectionsLookUp(testContentApiClient)
-  lazy val allIndexController = new AllIndexController(testContentApiClient, sectionsLookUp)
+  lazy val allIndexController = new AllIndexController(testContentApiClient, sectionsLookUp, play.api.test.Helpers.stubControllerComponents())
 
   it should "redirect dated tag pages to the equivalent /all page" in {
     val result = allIndexController.on("football/series/thefiver/2014/jan/23")(TestRequest())

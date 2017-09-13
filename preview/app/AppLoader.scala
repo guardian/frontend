@@ -63,7 +63,6 @@ trait PreviewControllerComponents
   def wsClient: WSClient
   def frontJsonFapiDraft: FrontJsonFapiDraft
 
-  lazy val assets = wire[Assets]
   lazy val devAssetsController = wire[DevAssetsController]
   lazy val emailSignupController = wire[EmailSignupController]
   lazy val faciaDraftController = wire[FaciaDraftController]

@@ -6,7 +6,7 @@ import java.nio.file.{Files, Paths}
 import javax.script.{CompiledScript, SimpleScriptContext}
 
 import common.Logging
-import play.api.libs.json.{JsValue, Json}
+import play.api.libs.json.{JsValue, Json, JsObject}
 import rendering.core.JavascriptEngine.EvalResult
 
 import scala.util.{Failure, Try}
@@ -18,11 +18,21 @@ trait JavascriptRendering extends Logging {
   private implicit val scriptContext = createContext()
   private val memoizedJs: Try[EvalResult] = loadJavascript()
 
+  private def getCommonProps(props: Option[JsValue] = None): Option[JsValue] = {
+    val bundleUrl = conf.Static("javascripts/ui.bundle.browser.js")
+    val polyfillioUrl =
+      if (conf.switches.Switches.PolyfillIO.isSwitchedOn) common.Assets.js.polyfillioUrl
+      else conf.Static("javascripts/vendor/polyfillio.fallback.js")
+    val commonProps = Json.obj("bundleUrl" -> bundleUrl, "polyfillioUrl" -> polyfillioUrl)
+
+    props.map(_.as[JsObject] ++ commonProps)
+  }
+
   def render(props: Option[JsValue] = None, forceReload: Boolean = false): Try[String] = for {
-    propsObject <- encodeProps(props)
-    js <- if(forceReload) loadJavascript() else memoizedJs
-    rendering <- JavascriptEngine.invoke(js, "render", propsObject)
-  } yield rendering
+      propsObject <- encodeProps(getCommonProps(props))
+      js <- if(forceReload) loadJavascript() else memoizedJs
+      rendering <- JavascriptEngine.invoke(js, "render", propsObject)
+    } yield rendering
 
   private def createContext(): SimpleScriptContext = {
     val context = new SimpleScriptContext()
@@ -33,6 +43,7 @@ trait JavascriptRendering extends Logging {
   private def encodeProps(props: Option[JsValue] = None): Try[EvalResult] = {
     val propsId = "props"
     val emptyJson = Json.obj()
+
     for {
       _ <- JavascriptEngine.put(propsId, props.getOrElse(emptyJson))
       propsObject <- JavascriptEngine.eval(s"JSON.parse($propsId)")

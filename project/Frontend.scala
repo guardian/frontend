@@ -52,7 +52,11 @@ object Frontend extends Build with Prototypes {
       targetingClient,
       scanamo,
       scalaUri,
-      commercialShared
+      commercialShared,
+      playJson,
+      playJsonJoda,
+      jodaForms,
+      jacksonDataFormat
     )
   ).settings(
       mappings in TestAssets ~= filterAssets
@@ -110,7 +114,8 @@ object Frontend extends Build with Prototypes {
       d3,
       awsElasticloadbalancing,
       awsSes,
-      scalaUri
+      scalaUri,
+      playIteratees
     ),
     RoutesKeys.routesImport += "bindables._",
     RoutesKeys.routesImport += "org.joda.time.LocalDate"

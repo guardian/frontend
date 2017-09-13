@@ -2,15 +2,15 @@ package form
 
 import model.Titles
 import play.api.data.Forms._
-import com.gu.identity.model.{UserDates, PrivateFields, User}
+import com.gu.identity.model.{PrivateFields, User, UserDates}
 import idapiclient.UserUpdate
-import play.api.i18n.MessagesApi
+import play.api.i18n.MessagesProvider
 
-class AccountDetailsMapping(val messagesApi: MessagesApi) extends UserFormMapping[AccountFormData] with AddressMapping with DateMapping with TelephoneNumberMapping {
+class AccountDetailsMapping extends UserFormMapping[AccountFormData] with AddressMapping with DateMapping with TelephoneNumberMapping {
 
   private val genders = List("Male", "Female", "Transgender", "Other", "unknown", "")
 
-  protected lazy val formMapping = {
+  protected def formMapping(implicit messagesProvider: MessagesProvider) = {
     mapping(
       ("primaryEmailAddress", idEmail),
       ("title", comboList("" :: Titles.titles)),
@@ -22,7 +22,7 @@ class AccountDetailsMapping(val messagesApi: MessagesApi) extends UserFormMappin
       "billingAddress" -> optional(idAddress),
       "telephoneNumber" -> optional(telephoneNumberMapping),
       "deleteTelephoneNumber" -> default(boolean, false)
-    )(AccountFormData.apply)(AccountFormData.unapply)
+    )(AccountFormData.apply)(AccountFormData.unapply _)
   }
 
   protected def fromUser(user: User) = AccountFormData(user)

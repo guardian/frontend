@@ -1,11 +1,11 @@
 package jobs
 
-import common.{Logging, ExecutionContexts, AkkaAgent}
+import common.{Logging, AkkaAgent}
 import scala.collection.JavaConversions._
 import java.net.{URL, InetAddress}
 import scala.io.Source
 
-object TorExitNodeList extends ExecutionContexts with Logging {
+object TorExitNodeList extends Logging {
 
   private val torExitNodeAgent = AkkaAgent[Set[String]](Set.empty)
   private val torNodeListUrl = "https://check.torproject.org/cgi-bin/TorBulkExitList.py"
