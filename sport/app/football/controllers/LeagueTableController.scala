@@ -53,8 +53,8 @@ class LeagueTableController(
 
   private def loadTables: Seq[Table] = sortedCompetitions.filter(_.hasLeagueTable).map { Table(_) }
 
-  def renderLeagueTableJson() = renderLeagueTable()
-  def renderLeagueTable() = Action { implicit request =>
+  def renderLeagueTablesJson() = renderLeagueTables()
+  def renderLeagueTables() = Action { implicit request =>
 
     val page = new FootballPage(
       "football/tables",
@@ -103,7 +103,7 @@ class LeagueTableController(
     table.map { table =>
 
       val page = new FootballPage(
-        "football/tables",
+        s"football/$competition/table",
         "football",
         s"${table.competition.fullName} table"
       )
@@ -132,7 +132,7 @@ class LeagueTableController(
       }
     } yield {
       val page = new FootballPage(
-        "football/tables",
+        s"football/$competition/$groupReference/table",
         "football",
         s"${table.competition.fullName} table"
       )
