@@ -8,10 +8,7 @@ import type { AcquisitionsEpicTemplateCopy } from 'common/modules/commercial/acq
 import { control as acquisitionsTestimonialParametersControl } from 'common/modules/commercial/acquisitions-epic-testimonial-parameters';
 import type { AcquisitionsEpicTestimonialTemplateParameters } from 'common/modules/commercial/acquisitions-epic-testimonial-parameters';
 import { logView } from 'common/modules/commercial/acquisitions-view-log';
-import {
-    submitInsertEvent,
-    submitViewEvent,
-} from 'common/modules/commercial/acquisitions-ophan';
+import { submitComponentEvent } from 'common/modules/commercial/acquisitions-ophan';
 import { isRegular } from 'common/modules/tailor/tailor';
 import $ from 'lib/$';
 import config from 'lib/config';
@@ -183,6 +180,23 @@ const registerIframeListener = (iframeId: string) => {
     });
 };
 
+const sendOphanData = (test, variantName, componentEvent, submitABTestParticipation) => {
+    if (test.variants.length > 1) {
+        // Only send A/B test information if it's a genuine A/B test.
+        // (Many epic "tests" have just one variant)
+        submitComponentEvent(Object.assign({}, componentEvent, {
+            abTest: {
+                name: test.id,
+                variant: variantName
+            }
+        }));
+
+        submitABTestParticipation();
+    } else {
+        submitComponentEvent(componentEvent);
+    }
+};
+
 const makeABTestVariant = (
     id: string,
     products: $ReadOnlyArray<OphanProduct>,
@@ -230,21 +244,31 @@ const makeABTestVariant = (
         test = noop,
         impression = submitABTestImpression =>
             mediator.once(parentTest.insertEvent, () => {
-                submitInsertEvent(
-                    parentTest.componentType,
-                    products,
-                    campaignCode
-                );
-                submitABTestImpression();
+                const componentEvent: OphanComponentEvent = {
+                    component: {
+                        componentType: parentTest.componentType,
+                        products,
+                        campaignCode,
+                        labels: []
+                    },
+                    action: 'INSERT'
+                };
+
+                sendOphanData(parentTest, id, componentEvent, submitABTestImpression);
             }),
         success = submitABTestComplete =>
             mediator.once(parentTest.viewEvent, () => {
-                submitViewEvent(
-                    parentTest.componentType,
-                    products,
-                    campaignCode
-                );
-                submitABTestComplete();
+                const componentEvent: OphanComponentEvent = {
+                    component: {
+                        componentType: parentTest.componentType,
+                        products,
+                        campaignCode,
+                        labels: []
+                    },
+                    action: 'VIEW'
+                };
+
+                sendOphanData(parentTest, id, componentEvent, submitABTestComplete);
             }),
     } = options;
 

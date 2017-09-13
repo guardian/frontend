@@ -68,5 +68,8 @@ declare type OphanComponentEvent = {|
     action: OphanAction,
     value?: string,
     id?: string,
-    abTest?: Ophan
+    abTest?: {|
+        name: string,
+        variant: string
+    |}
 |};
