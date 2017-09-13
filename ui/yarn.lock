@@ -4544,14 +4544,6 @@ postcss@^6.0.9:
     source-map "^0.5.7"
     supports-color "^4.4.0"
 
-preact-emotion@^7.2.2:
-  version "7.2.2"
-  resolved "https://registry.yarnpkg.com/preact-emotion/-/preact-emotion-7.2.2.tgz#389fb03f09f2009525eeef725943f45a13b6a154"
-  dependencies:
-    babel-plugin-emotion "^7.2.2"
-    emotion "^7.2.2"
-    emotion-utils "^7.2.2"
-
 preact-render-to-string@^3.6.0:
   version "3.6.3"
   resolved "https://registry.yarnpkg.com/preact-render-to-string/-/preact-render-to-string-3.6.3.tgz#481d0d5bdac9192d3347557437d5cd00aa312043"

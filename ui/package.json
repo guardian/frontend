@@ -59,7 +59,6 @@
         "htmltojsx": "^0.2.6",
         "jest": "^20.0.4",
         "node-sass": "^4.5.3",
-        "preact-emotion": "^7.2.2",
         "preact-svg-loader": "^0.2.0",
         "prettier": "^1.5.3",
         "raw-loader": "^0.5.1",
