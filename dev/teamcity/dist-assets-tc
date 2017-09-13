@@ -34,7 +34,7 @@ set +x
 echo "Move to flow root directory $PWD"
 set -x
 
-$(npm bin)/flow --help
+$(npm bin)/flow stop
 
 set +x
 echo "Stop flow server"
