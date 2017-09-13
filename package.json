@@ -2,6 +2,10 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
+  "workspaces": [
+    "ui",
+    "dev/eslint-plugin-guardian-frontend"
+  ],
   "engines": {
     "yarn": "1.0.1"
   },
@@ -64,7 +68,6 @@
     "eslint-import-resolver-webpack": "^0.8.3",
     "eslint-plugin-flow-header": "^0.1.1",
     "eslint-plugin-flowtype": "^2.35.0",
-    "eslint-plugin-guardian-frontend": "file:dev/eslint-plugin-guardian-frontend",
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-jasmine": "^1.8.1",
     "eslint-plugin-jsx-a11y": "^5.1.1",
