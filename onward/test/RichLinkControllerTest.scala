@@ -11,13 +11,13 @@ import play.api.test.Helpers._
   with BeforeAndAfterAll
   with WithMaterializer
   with WithTestWsClient
-  with WithTestContext
+  with WithTestApplicationContext
   with WithTestContentApiClient {
 
   val article = "/world/2014/nov/18/hereford-hospital-patient-tested-for-ebola"
   val badPath = "/goes/absolutely-nowhere"
 
-  lazy val richLinkController = new RichLinkController(testContentApiClient)
+  lazy val richLinkController = new RichLinkController(testContentApiClient, play.api.test.Helpers.stubControllerComponents())
 
   "RichLinkController" should "200 when the content is found" in {
       val result = richLinkController.render(article)(TestRequest())

@@ -1,14 +1,15 @@
 package weather.controllers
 
-import common.{JsonComponent, ExecutionContexts}
+import common.{ImplicitControllerExecutionContext, JsonComponent}
 import model.Cached
-import play.api.mvc.{Action, Controller}
+import play.api.mvc.{BaseController, ControllerComponents}
 import weather.models.CityId
 import weather.WeatherApi
 import common.Seqs._
+
 import scala.concurrent.duration._
 
-class WeatherController(weatherApi: WeatherApi) extends Controller with ExecutionContexts {
+class WeatherController(weatherApi: WeatherApi, val controllerComponents: ControllerComponents) extends BaseController with ImplicitControllerExecutionContext {
   val MaximumForecastDays = 10
 
   def forCity(cityId: String) = Action.async{ implicit request =>

@@ -1,6 +1,6 @@
 package controllers
 
-import common.{ExecutionContexts, JsonComponent}
+import common.{ImplicitControllerExecutionContext, JsonComponent}
 import discussion.api.DiscussionApiException._
 import discussion.api.{DiscussionApiLike, DiscussionParams}
 import discussion.model.{BlankComment, DiscussionAbuseReport, DiscussionKey}
@@ -10,21 +10,27 @@ import model._
 import play.api.data.Forms._
 import play.api.data._
 import play.api.data.validation._
-import play.api.mvc.{Action, RequestHeader, Result}
+import play.api.mvc.{Action, ControllerComponents, RequestHeader, Result}
 import play.filters.csrf.{CSRFAddToken, CSRFCheck}
 
 import scala.concurrent.Future
 import scala.util.control.NonFatal
 
-class CommentsController(val discussionApi: DiscussionApiLike, csrfCheck: CSRFCheck, csrfAddToken: CSRFAddToken)(implicit context: ApplicationContext) extends DiscussionController with ExecutionContexts {
+class CommentsController(
+  val discussionApi: DiscussionApiLike,
+  csrfCheck: CSRFCheck,
+  csrfAddToken: CSRFAddToken,
+  val controllerComponents: ControllerComponents
+)(implicit context: ApplicationContext)
+  extends DiscussionController with ImplicitControllerExecutionContext {
 
   val userForm = Form(
     Forms.mapping(
       "categoryId" -> Forms.number.verifying(ReportAbuseFormValidation.validCategoryConstraint),
       "commentId" -> Forms.number,
       "reason" -> optional(Forms.text.verifying("Reason must be 250 characters or fewer", input => Constraints.maxLength(250)(input) == Valid)),
-      "email" -> optional(Forms.text.verifying("Please enter a valid email address", input => Constraints.emailAddress(input) == Valid))
-    )(DiscussionAbuseReport.apply)(DiscussionAbuseReport.unapply)
+      "email" -> optional(Forms.text.verifying("Please enter a valid email address", input => Constraints.emailAddress == Valid))
+    )(DiscussionAbuseReport.apply)(DiscussionAbuseReport.unapply _)
   )
 
   // Used for jump to comment, comment hash location.

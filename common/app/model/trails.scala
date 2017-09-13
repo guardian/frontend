@@ -7,6 +7,7 @@ import org.joda.time.DateTime
 import org.scala_tools.time.Imports._
 import play.api.libs.json.{JsBoolean, JsString, JsValue, Json}
 import play.api.mvc.RequestHeader
+import play.api.libs.json.JodaReads._
 import views.support.{ImgSrc, Naked}
 
 /**
@@ -109,6 +110,7 @@ final case class Trail (
     }
   }
 
+  implicit val dateToTimestampWrites = play.api.libs.json.JodaWrites.JodaDateTimeNumberWrites
   def javascriptConfig: Map[String, JsValue] = Map(
     ("sectionName", JsString(sectionName)),
     ("thumbnail", thumbnailPath.map(JsString.apply).getOrElse(JsBoolean(false))),

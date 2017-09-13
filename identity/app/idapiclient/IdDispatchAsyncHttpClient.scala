@@ -1,8 +1,9 @@
 package idapiclient
 
-import common.ExecutionContexts
+
 import client.connection.dispatch.DispatchAsyncHttpClient
 import utils.SafeLogging
 
+import scala.concurrent.ExecutionContext
 
-class IdDispatchAsyncHttpClient extends DispatchAsyncHttpClient with ExecutionContexts with SafeLogging
+class IdDispatchAsyncHttpClient(implicit val executionContext: ExecutionContext) extends DispatchAsyncHttpClient with SafeLogging

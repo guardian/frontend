@@ -1,6 +1,6 @@
 package services
 
-import common.{Edition, ExecutionContexts}
+import common.Edition
 import conf.Configuration
 import contentapi.ContentApiClient
 import implicits.Dates.DateTime2ToCommonDateFormats
@@ -8,10 +8,10 @@ import model.{Content, Video}
 import org.joda.time.{DateTime, DateTimeZone}
 import views.support.Naked
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 import scala.xml.NodeSeq
 
-class VideoSiteMap(contentApiClient: ContentApiClient) extends ExecutionContexts {
+class VideoSiteMap(contentApiClient: ContentApiClient) {
 
   private case class UrlSet(urls: Seq[Url]){
     def xml() = {
@@ -51,7 +51,7 @@ class VideoSiteMap(contentApiClient: ContentApiClient) extends ExecutionContexts
     }
   }
 
-  def getLatestContent: Future[NodeSeq] = {
+  def getLatestContent()(implicit executionContext: ExecutionContext): Future[NodeSeq] = {
 
     val query = contentApiClient.search(Edition.defaultEdition)
       .pageSize(200)

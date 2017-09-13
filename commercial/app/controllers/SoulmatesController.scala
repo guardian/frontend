@@ -9,7 +9,7 @@ import play.api.mvc._
 
 import scala.concurrent.duration._
 
-class SoulmatesController extends Controller with implicits.Requests {
+class SoulmatesController(val controllerComponents: ControllerComponents) extends BaseController with implicits.Requests {
 
   private def soulmatesSample(groupName: String): Seq[Member] = {
 

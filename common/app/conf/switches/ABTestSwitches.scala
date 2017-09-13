@@ -6,16 +6,13 @@ import org.joda.time.LocalDate
 
 trait ABTestSwitches {
 
-  for ((edition, testId) <- Map(
-    International -> "ab-membership-engagement-international-experiment-test12",
-    Au -> "ab-au-memb-engagement-msg-copy-test8"
-  )) Switch(
-    SwitchGroup.ABTests,
-    testId,
-    s"Test effectiveness of engagement banners in the $edition edition for driving Membership & Contributions.",
-    owners = Seq(Owner.withGithub("rtyley")),
-    safeState = On,
-    sellByDate = new LocalDate(2017, 9, 12), // we'll be doing AB tests on this for a long time, don't want to break the build
+  Switch(
+    ABTests,
+    "ab-glabs-traffic-driver",
+    "Displays an ad slot that will drive traffic to GLabs content",
+    owners = Seq(Owner.withGithub("JonNorman")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 9, 29),
     exposeClientSide = true
   )
 
@@ -121,31 +118,11 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-acquisitions-epic-paypal-pay-in-epic",
-    "Test whether allowing readers to pay in-Epic increases the conversion rate.",
-    owners = Seq(Owner.withGithub("Mullefa"), Owner.withGithub("desbo")),
-    safeState = On,
-    sellByDate = new LocalDate(2017, 9, 11),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-outstream-frequency-cap",
     "Test adds a hold-back variant which keeps a frequency cap on outstream video format ads.",
     owners = Seq(Owner.withGithub("rich-nguyen")),
     safeState = Off,
     sellByDate = new LocalDate(2017, 11, 1),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-acquisitions-support-baseline",
-    "Test new S&C proposition against current membership/contribution offering across all channels",
-    owners = Seq(Owner.withGithub("svillafe")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 10, 13),
     exposeClientSide = true
   )
 

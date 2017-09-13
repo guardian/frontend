@@ -8,13 +8,17 @@ import implicits.Requests
 import layout.{CollectionEssentials, FaciaContainer}
 import model._
 import model.pressed.CollectionConfig
-import play.api.mvc.{Action, Controller, RequestHeader}
+import play.api.mvc._
 import services.CollectionConfigWithId
 import layout.slices.{Fixed, FixedContainers}
 
 import scala.concurrent.Future
 
-class MediaInSectionController(contentApiClient: ContentApiClient)(implicit context: ApplicationContext) extends Controller with Logging with Paging with ExecutionContexts with Requests {
+class MediaInSectionController(
+  contentApiClient: ContentApiClient,
+  val controllerComponents: ControllerComponents
+)(implicit context: ApplicationContext)
+  extends BaseController with Logging with Paging with ImplicitControllerExecutionContext with Requests {
   // These exist to work around the absence of default values in Play routing.
   def renderSectionMediaWithSeries(mediaType: String, sectionId: String, seriesId: String) =
     renderMedia(mediaType, sectionId, Some(seriesId))

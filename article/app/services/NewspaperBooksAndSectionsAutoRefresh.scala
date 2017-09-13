@@ -4,12 +4,15 @@ import akka.actor.ActorSystem
 import app.LifecycleComponent
 import common.AutoRefresh
 import model.{TagDefinition, TagIndexListings}
+
 import scala.concurrent.duration._
-import scala.concurrent.{Future, blocking}
+import scala.concurrent.{ExecutionContext, Future, blocking}
 import scala.language.postfixOps
 
-class NewspaperBooksAndSectionsAutoRefresh(newspaperBookSectionTagAgent: NewspaperBookSectionTagAgent,
-                                           newspaperBookTagAgent: NewspaperBookTagAgent)(implicit actorSystem: ActorSystem)
+class NewspaperBooksAndSectionsAutoRefresh(
+  newspaperBookSectionTagAgent: NewspaperBookSectionTagAgent,
+  newspaperBookTagAgent: NewspaperBookTagAgent
+) (implicit actorSystem: ActorSystem, executionContext: ExecutionContext)
   extends LifecycleComponent {
   override def start(): Unit = {
     newspaperBookTagAgent.start()
@@ -29,7 +32,7 @@ trait NewspaperTags {
 
 class NewspaperBookTagAgent extends AutoRefresh[TagIndexListings](0 seconds, 5 minutes) with NewspaperTags {
   override val source = "newspaper_books"
-  override protected def refresh(): Future[TagIndexListings] = Future {
+  override protected def refresh()(implicit executionContext: ExecutionContext): Future[TagIndexListings] = Future {
     blocking {
       TagIndexesS3.getListingOrDie(source)
     }
@@ -38,7 +41,7 @@ class NewspaperBookTagAgent extends AutoRefresh[TagIndexListings](0 seconds, 5 m
 
 class NewspaperBookSectionTagAgent extends AutoRefresh[TagIndexListings](0 seconds, 5 minutes) with NewspaperTags {
   override val source = "newspaper_book_sections"
-  override protected def refresh(): Future[TagIndexListings] = Future {
+  override protected def refresh()(implicit executionContext: ExecutionContext): Future[TagIndexListings] = Future {
     blocking {
       TagIndexesS3.getListingOrDie(source)
     }

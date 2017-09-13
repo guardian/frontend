@@ -18,6 +18,7 @@ import test._
     with BeforeAndAfterAll
     with ConfiguredTestSuite
     with WithMaterializer
+    with WithTestExecutionContext
     with WithTestWsClient {
 
   lazy val competitionStage = new CompetitionStage(testCompetitionsService.competitions)

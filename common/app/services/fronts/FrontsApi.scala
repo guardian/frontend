@@ -2,12 +2,12 @@ package services.fronts
 
 import com.amazonaws.services.s3.{AmazonS3, AmazonS3Client}
 import com.gu.facia.client.{AmazonSdkS3Client, ApiClient}
-import common.ExecutionContexts
 import conf.Configuration
+import scala.concurrent.ExecutionContext
 
-object FrontsApi extends ExecutionContexts {
+object FrontsApi  {
 
-  def crossAccountClient: ApiClient = {
+  def crossAccountClient(implicit ec: ExecutionContext): ApiClient = {
     val client: AmazonS3 = AmazonS3Client
       .builder
       .withCredentials(Configuration.faciatool.crossAccountMandatoryCredentials)

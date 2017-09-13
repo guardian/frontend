@@ -1,7 +1,6 @@
 package model
 
-import common.ExecutionContexts
-import conf.switches.Switches._
+import conf.switches.Switches.LongCacheSwitch
 import org.joda.time.DateTime
 import org.scala_tools.time.Imports._
 import play.api.http.Writeable
@@ -152,12 +151,9 @@ object NoCache {
   def apply(result: Result): Result = result.withHeaders("Cache-Control" -> "no-cache", "Pragma" -> "no-cache")
 }
 
-case class NoCache[A](action: Action[A]) extends Action[A] {
-
-  implicit val ec: ExecutionContext = ExecutionContexts.executionContext
+case class NoCache[A](action: Action[A])(implicit val executionContext: ExecutionContext) extends Action[A] {
 
   override def apply(request: Request[A]): Future[Result] = {
-
     action(request) map { response =>
       response.withHeaders(
         ("Cache-Control", "no-cache, no-store, must-revalidate"),

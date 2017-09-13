@@ -3,26 +3,27 @@ package common
 import scala.concurrent.duration.FiniteDuration
 import akka.agent.Agent
 import akka.actor.{ActorSystem, Cancellable}
-import scala.concurrent.Future
+
+import scala.concurrent.{ExecutionContext, Future}
 import scala.util.{Failure, Success}
 
 /** Simple class for repeatedly updating a value on a schedule */
-abstract class AutoRefresh[A](initialDelay: FiniteDuration, interval: FiniteDuration)  extends Logging with ExecutionContexts {
+abstract class AutoRefresh[A](initialDelay: FiniteDuration, interval: FiniteDuration)  extends Logging {
 
-  private lazy val agent = Agent[Option[A]](None)
+  private lazy val agent = AkkaAgent[Option[A]](None)
 
   @volatile private var subscription: Option[Cancellable] = None
 
-  protected def refresh(): Future[A]
+  protected def refresh()(implicit executionContext: ExecutionContext): Future[A]
 
   def get: Option[A] = agent.get()
 
-  def getOrRefresh: Future[A] = (for {
+  def getOrRefresh()(implicit executionContext: ExecutionContext): Future[A] = (for {
     _ <- subscription
     a <- get
   } yield Future.successful(a)).getOrElse(refresh())
 
-  final def start()(implicit actorSystem: ActorSystem): Unit = {
+  final def start()(implicit actorSystem: ActorSystem, executionContext: ExecutionContext): Unit = {
     log.info(s"Starting refresh cycle after $initialDelay repeatedly over $interval delay")
 
     subscription = Some(actorSystem.scheduler.schedule(initialDelay, interval) {

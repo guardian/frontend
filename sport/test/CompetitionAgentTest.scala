@@ -19,6 +19,7 @@ import org.joda.time.{DateTime, DateTimeUtils, LocalDate}
   with WithTestWsClient
   with WithTestFootballClient
   with FootballTestData
+  with WithTestExecutionContext
   with ScalaFutures {
 
   override def beforeAll() = {
@@ -71,7 +72,7 @@ import org.joda.time.{DateTime, DateTimeUtils, LocalDate}
   it should "load league tables" in {
 
     val comps = testCompetitionsService(Competition("100", "/football/premierleague", "Premier League", "Premier League", "English", showInTeamsList = true))
-    comps.competitionAgents.foreach(_.refresh())
+    comps.competitionAgents.foreach(_.refresh)
 
     eventually(comps.competitions(0).leagueTable(0).team.id should be ("23"))
   }

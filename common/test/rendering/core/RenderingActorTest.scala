@@ -7,7 +7,7 @@ import helpers.ExceptionMatcher
 import model.ApplicationContext
 import org.scalatest.{DoNotDiscover, FlatSpec, Matchers}
 import play.api.libs.json.{JsValue, Json}
-import test.{ConfiguredTestSuite, WithTestContext}
+import test.{ConfiguredTestSuite, WithTestApplicationContext}
 import rendering.Renderable
 
 import scala.concurrent.Await
@@ -17,14 +17,14 @@ import scala.util.{Failure, Success, Try}
 @DoNotDiscover class RenderingActorTest
   extends FlatSpec
   with ConfiguredTestSuite
-  with WithTestContext
+  with WithTestApplicationContext
   with Matchers
   with ExceptionMatcher {
 
   lazy val actorSystem: ActorSystem = app.actorSystem
   implicit lazy val timeout = new Timeout(10.seconds)
 
-  class TestRenderingActor extends RenderingActor(testContext) {
+  class TestRenderingActor extends RenderingActor(testApplicationContext) {
     override def javascriptFile: String = "common/test/resources/components/TestButtonComponent.js"
   }
 

@@ -7,14 +7,14 @@ import conf.Configuration.environment
 import play.api.libs.json.Json
 import services.S3
 
+import scala.concurrent.ExecutionContext
 import scala.io.Codec.UTF8
 
 object DfpAgent
   extends PageskinAdAgent
   with InlineMerchandiseComponentAgent
   with HighMerchandiseComponentAgent
-  with AdSlotAgent
-  with ExecutionContexts {
+  with AdSlotAgent {
 
   override protected val environmentIsProd: Boolean = environment.isProd
 
@@ -39,7 +39,7 @@ object DfpAgent
     }
   }
 
-  def refresh() {
+  def refresh()(implicit executionContext: ExecutionContext) {
 
     def grabPageSkinSponsorshipsFromStore(key: String): Seq[PageSkinSponsorship] = {
       val reportOption: Option[PageSkinSponsorshipReport] = for {
@@ -87,7 +87,7 @@ object DfpAgent
 
   }
 
-  def refreshFaciaSpecificData(): Unit = {
+  def refreshFaciaSpecificData()(implicit executionContext: ExecutionContext): Unit = {
 
     def updateLineItems(slot:AdSlot,key: String): Unit = {
 

@@ -1,4 +1,4 @@
-import app.{FrontendComponents, FrontendApplicationLoader}
+import app.{FrontendApplicationLoader, FrontendComponents}
 import app.{FrontendApplicationLoader, FrontendComponents}
 import com.softwaremill.macwire._
 import common._
@@ -13,6 +13,7 @@ import play.api.ApplicationLoader.Context
 import play.api.routing.Router
 import play.api._
 import play.api.libs.ws.WSClient
+import play.api.mvc.EssentialFilter
 import services.ConfigAgentLifecycle
 import router.Routes
 
@@ -58,4 +59,6 @@ trait AppComponents extends FrontendComponents {
     FaciaPressMetrics.FrontPressContentSize,
     FaciaPressMetrics.FrontDecodingLatency
   )
+
+  override lazy val httpFilters: Seq[EssentialFilter] = Nil
 }

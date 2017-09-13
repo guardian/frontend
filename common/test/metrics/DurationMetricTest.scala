@@ -4,9 +4,9 @@ import com.amazonaws.services.cloudwatch.model.StandardUnit
 import org.scalatest.{FlatSpec, Matchers}
 import scala.concurrent.Await
 import scala.concurrent.duration._
-import common.ExecutionContexts
 
-class DurationMetricTest extends FlatSpec with Matchers with ExecutionContexts{
+
+class DurationMetricTest extends FlatSpec with Matchers{
 
   "DurationMetric" should "start off empty" in {
     val durationMetric: DurationMetric = DurationMetric("TestMetric", StandardUnit.Count)

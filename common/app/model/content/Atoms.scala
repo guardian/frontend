@@ -6,7 +6,7 @@ import com.gu.contentatom.thrift.atom.media.{Asset => AtomApiMediaAsset, MediaAt
 import com.gu.contentatom.thrift.atom.timeline.{TimelineItem => TimelineApiItem}
 import com.gu.contentatom.thrift.{AtomData, Atom => AtomApiAtom, Image => AtomApiImage, ImageAsset => AtomApiImageAsset, atom => atomapi}
 import enumeratum._
-import model.{EndSlateComponents, ImageAsset, ImageMedia}
+import model.{Content, EndSlateComponents, ImageAsset, ImageMedia, ShareLinkMeta}
 import org.apache.commons.lang3.time.DurationFormatUtils
 import org.joda.time.{DateTime, DateTimeZone, Duration}
 import play.api.libs.json.{JsError, JsSuccess, Json}
@@ -105,7 +105,8 @@ final case class Quiz(
   path: String,
   quizType: String,
   content: QuizContent,
-  revealAtEnd: Boolean
+  revealAtEnd: Boolean,
+  shareLinks: ShareLinkMeta
 ) extends Atom
 
 final case class StoryQuiz(
@@ -199,7 +200,7 @@ object Atoms extends common.Logging {
     }
   }
 
-  def make(content: contentapi.Content): Option[Atoms] = {
+  def make(content: contentapi.Content, pageShares: ShareLinkMeta = ShareLinkMeta(Nil, Nil)): Option[Atoms] = {
     content.atoms.map { atoms =>
       // <!-- This is a temporary hack for the duration of the test where story quizzes
       //      are displayed at the bottom of an article. We reuse the quiz atom, even
@@ -209,10 +210,10 @@ object Atoms extends common.Logging {
       val quizzes = if (Switches.StoryQuizzes.isSwitchedOn) {
         extract(
           atoms.quizzes.map { quizzes => quizzes.filterNot(_.data.asInstanceOf[AtomData.Quiz].quiz.title.contains("|")) },
-          atom => { Quiz.make(content.id, atom) }
+          atom => { Quiz.make(content.id, atom, pageShares) }
         )
       } else {
-        extract(atoms.quizzes, atom => { Quiz.make(content.id, atom) })
+        extract(atoms.quizzes, atom => { Quiz.make(content.id, atom, pageShares) })
       }
 
       val storyQuizzes = if (Switches.StoryQuizzes.isSwitchedOn) {
@@ -418,7 +419,7 @@ object Quiz extends common.Logging {
       }).getOrElse(Nil)
     )
 
-  def make(path: String, atom: AtomApiAtom): Quiz = {
+  def make(path: String, atom: AtomApiAtom, shareLinks: ShareLinkMeta): Quiz = {
 
     val quiz = atom.data.asInstanceOf[AtomData.Quiz].quiz
     val questions = extractQuestions(quiz)
@@ -430,7 +431,8 @@ object Quiz extends common.Logging {
       title = quiz.title,
       quizType = quiz.quizType,
       content = content,
-      revealAtEnd = quiz.revealAtEnd
+      revealAtEnd = quiz.revealAtEnd,
+      shareLinks = shareLinks
     )
   }
 }

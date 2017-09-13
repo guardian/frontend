@@ -5,9 +5,9 @@ import common._
 import conf.Configuration
 import services._
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
-class ToolPressQueueWorker(liveFapiFrontPress: LiveFapiFrontPress, draftFapiFrontPress: DraftFapiFrontPress) extends JsonQueueWorker[PressJob] with Logging {
+class ToolPressQueueWorker(liveFapiFrontPress: LiveFapiFrontPress, draftFapiFrontPress: DraftFapiFrontPress)(implicit executionContext: ExecutionContext) extends JsonQueueWorker[PressJob] with Logging {
   override lazy val queue = (Configuration.faciatool.frontPressToolQueue map { queueUrl =>
     val credentials = Configuration.aws.mandatoryCredentials
 
@@ -30,7 +30,7 @@ class ToolPressQueueWorker(liveFapiFrontPress: LiveFapiFrontPress, draftFapiFron
 
     lazy val forceConfigUpdateFuture: Future[_] =
       if (forceConfigUpdate.exists(identity)) {
-        ConfigAgent.refreshAndReturn()}
+        ConfigAgent.refreshAndReturn}
       else
         Future.successful(Unit)
 

@@ -147,7 +147,9 @@
     color: transparent;
 }
 
-.from-content-api ul,
+/* some atoms can contain share-items, which are wrappend into ul.social, and
+   therefore we have to exclude them from the default CAPI list styling */
+.from-content-api ul:not(.social),
 .content__standfirst ul {
     list-style: none;
 

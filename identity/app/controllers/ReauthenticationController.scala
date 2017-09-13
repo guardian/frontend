@@ -1,15 +1,15 @@
 package controllers
 
 import actions.AuthenticatedActions
-import common.ExecutionContexts
+import common.ImplicitControllerExecutionContext
 import form.Mappings
 import idapiclient.{EmailPassword, IdApiClient, ScGuU}
 import implicits.Forms
 import model.{ApplicationContext, IdentityPage, NoCache}
 import play.api.data._
 import play.api.data.validation.Constraints
-import play.api.i18n.{Messages, MessagesApi}
-import play.api.libs.crypto.CryptoConfig
+import play.api.http.HttpConfiguration
+import play.api.i18n.{Messages, MessagesProvider}
 import play.api.mvc._
 import services.{IdRequestParser, IdentityUrlBuilder, PlaySigninService, ReturnUrlVerifier}
 import utils.SafeLogging
@@ -17,15 +17,17 @@ import utils.SafeLogging
 import scala.concurrent.Future
 
 
-class ReauthenticationController(returnUrlVerifier: ReturnUrlVerifier,
-                                 api: IdApiClient,
-                                 idRequestParser: IdRequestParser,
-                                 idUrlBuilder: IdentityUrlBuilder,
-                                 authenticatedActions: AuthenticatedActions,
-                                 signInService : PlaySigninService,
-                                 val messagesApi: MessagesApi,
-                                 val cryptoConfig: CryptoConfig)(implicit context: ApplicationContext)
-  extends Controller with ExecutionContexts with SafeLogging with Mappings with Forms {
+class ReauthenticationController(
+  returnUrlVerifier: ReturnUrlVerifier,
+  api: IdApiClient,
+  idRequestParser: IdRequestParser,
+  idUrlBuilder: IdentityUrlBuilder,
+  authenticatedActions: AuthenticatedActions,
+  signInService : PlaySigninService,
+  val controllerComponents: ControllerComponents,
+  val httpConfiguration: HttpConfiguration
+)(implicit context: ApplicationContext)
+  extends BaseController with ImplicitControllerExecutionContext with SafeLogging with Mappings with Forms {
 
   val page = IdentityPage("/reauthenticate", "Re-authenticate")
 
@@ -95,7 +97,7 @@ class ReauthenticationController(returnUrlVerifier: ReturnUrlVerifier,
     boundForm.fold[Future[Result]](onError, onSuccess)
   }
 
-  def redirectToSigninPage(formWithErrors: Form[String], returnUrl: Option[String]): Result = {
+  def redirectToSigninPage(formWithErrors: Form[String], returnUrl: Option[String])(implicit messagesProvider: MessagesProvider): Result = {
     NoCache(SeeOther(routes.ReauthenticationController.renderForm(returnUrl).url).flashing(clearPassword(formWithErrors).toFlash))
   }
 

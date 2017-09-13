@@ -8,10 +8,11 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import play.api.libs.json.Json._
 import play.api.libs.json.{JsObject, Writes}
+import test.WithTestExecutionContext
 
 import scala.concurrent.Future
 
-class JsonComponentTest extends FlatSpec with Matchers with ExecutionContexts {
+class JsonComponentTest extends FlatSpec with Matchers with WithTestExecutionContext {
 
   "JsonComponent" should "build json output with standard name" in {
     AutoRefreshSwitch.switchOn()

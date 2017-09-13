@@ -76,6 +76,15 @@ const adSlotDefinitions = {
             ],
         },
     },
+
+    'glabs-left': {
+        label: false,
+        refresh: false,
+        name: 'glabs-left',
+        sizeMappings: {
+            mobile: [adSizes.fluid],
+        },
+    },
 };
 
 const createAdSlotElement = (

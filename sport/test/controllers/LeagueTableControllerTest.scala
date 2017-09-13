@@ -13,13 +13,14 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
   with WithTestFootballClient
   with WithMaterializer
   with BeforeAndAfterAll
-  with WithTestContext
+  with WithTestApplicationContext
+  with WithTestExecutionContext
   with WithTestWsClient {
 
-  lazy val leagueTableController = new LeagueTableController(testCompetitionsService)
+  lazy val leagueTableController = new LeagueTableController(testCompetitionsService, play.api.test.Helpers.stubControllerComponents())
 
   "League Table Controller" should "200 when content type is table" in {
-    val result = leagueTableController.renderLeagueTable()(TestRequest())
+    val result = leagueTableController.renderLeagueTables()(TestRequest())
     status(result) should be(200)
   }
 
@@ -28,7 +29,7 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
       .withHeaders("host" -> "localhost:9000")
       .withHeaders("Origin" -> "http://www.theorigin.com")
 
-    val result = leagueTableController.renderLeagueTableJson()(fakeRequest)
+    val result = leagueTableController.renderLeagueTablesJson()(fakeRequest)
     status(result) should be(200)
     contentType(result) shouldBe Some("application/json")
     contentAsString(result) should startWith("{\"config\"")

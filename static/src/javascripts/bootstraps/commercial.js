@@ -6,6 +6,7 @@ import reportError from 'lib/report-error';
 import highMerch from 'commercial/modules/high-merch';
 import { articleAsideAdvertsInit } from 'commercial/modules/article-aside-adverts';
 import { articleBodyAdvertsInit } from 'commercial/modules/article-body-adverts';
+import { glabsTrafficDriverInit } from 'commercial/modules/glabs-traffic-driver';
 import { closeDisabledSlots } from 'commercial/modules/close-disabled-slots';
 import prepareGoogletag from 'commercial/modules/dfp/prepare-googletag';
 import prepareSonobiTag from 'commercial/modules/dfp/prepare-sonobi-tag';
@@ -44,7 +45,8 @@ if (!commercialFeatures.adFree) {
         ['cm-articleAsideAdverts', articleAsideAdvertsInit, true],
         ['cm-articleBodyAdverts', articleBodyAdvertsInit],
         ['cm-liveblogAdverts', initLiveblogAdverts, true],
-        ['cm-stickyTopBanner', initStickyTopBanner]
+        ['cm-stickyTopBanner', initStickyTopBanner],
+        ['cm-glabsTrafficDriver', glabsTrafficDriverInit, true]
     );
 }
 
