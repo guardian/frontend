@@ -3,6 +3,7 @@ package model
 import com.gu.contentapi.client.model.v1.{Content => CapiContent}
 import com.gu.contentapi.client.model.{v1 => contentapi}
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichCapiDateTime
+import com.gu.contentatom.renderer.ArticleAtomRenderer
 import commercial.campaigns.PersonalInvestmentsCampaign
 import common.commercial.{AdUnitMaker, CommercialProperties}
 import common.dfp._
@@ -173,6 +174,23 @@ object MetaData {
     val sectionSummary: Option[SectionSummary] = apiContent.section map SectionSummary.fromCapiSection
     val sectionId = sectionSummary map (_.id) getOrElse ""
 
+    val atomTypes: Seq[String] = apiContent.atoms.flatMap { atoms => 
+      val ts = Seq(
+        atoms.guides.map(_ => "guide"),
+        atoms.qandas.map(_ => "qanda"),
+        atoms.profiles.map(_ => "profile"),
+        atoms.timelines.map(_ => "timeline")
+      ).collect { case Some(x) => x }
+      if (ts.isEmpty)
+        None
+      else
+        Some(ts)
+    }.getOrElse(Nil)
+
+    val atomsCSS: Seq[String] = ArticleAtomRenderer.getCSS(atomTypes)
+
+    val atomsJS: Seq[String] = ArticleAtomRenderer.getJS(atomTypes)
+
     MetaData(
       id = id,
       url = url,
@@ -189,7 +207,9 @@ object MetaData {
         else CacheTime.NotRecentlyUpdated
       },
       isHosted = apiContent.isHosted,
-      commercial = Some(CommercialProperties.fromContent(apiContent))
+      commercial = Some(CommercialProperties.fromContent(apiContent)),
+      atomsCSS = atomsCSS,
+      atomsJS = atomsJS
     )
   }
 }
@@ -224,7 +244,9 @@ final case class MetaData (
   twitterPropertiesOverrides: Map[String, String] = Map(),
   contentWithSlimHeader: Boolean = false,
   commercial: Option[CommercialProperties],
-  isNewRecipeDesign: Boolean = false
+  isNewRecipeDesign: Boolean = false,
+  atomsJS: Seq[String] = Nil,
+  atomsCSS: Seq[String] = Nil
 ){
   val sectionId = section map (_.id) getOrElse ""
 
