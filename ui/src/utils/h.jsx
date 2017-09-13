@@ -12,7 +12,7 @@ export default (
     attributes: ?Object,
     ...children: Array<any>
 ) => {
-    const { style, __expensiveStyle__, ...otherAttributes } = attributes || {};
+    const { style, ...otherAttributes } = attributes || {};
 
     return preact_h(
         style ? styled(component, style) : component,
