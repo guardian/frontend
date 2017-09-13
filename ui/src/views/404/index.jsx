@@ -1,6 +1,5 @@
 // @flow
 import { colour } from 'pasteup';
-import { css } from 'utils/expensively-styled';
 
 import Logo from 'assets/images/guardian-logo-320.svg';
 
@@ -25,7 +24,7 @@ export default ({ beaconUrl }: Object) =>
             </a>
         </div>
         <Logo
-            __expensiveStyle__={css`
+            css={`
                 width: 250px;
                 & .guardian {
                     @supports (fill: hotpink) {

@@ -14,15 +14,6 @@ export default (
 ) => {
     const { style, __expensiveStyle__, ...otherAttributes } = attributes || {};
 
-    if (typeof __expensiveStyle__ === 'string') {
-        otherAttributes.className = [
-            otherAttributes.className,
-            __expensiveStyle__,
-        ]
-            .join(' ')
-            .trim();
-    }
-
     return preact_h(
         style ? styled(component, style) : component,
         otherAttributes,
