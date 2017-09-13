@@ -30,9 +30,9 @@ set -x
 
 cd static/src/javascripts
 
-# set +x
-# echo "Move to flow root directory $PWD"
-# set -x
+set +x
+echo "Move to flow root directory $PWD"
+set -x
 
 $(npm bin)/flow --help
 
