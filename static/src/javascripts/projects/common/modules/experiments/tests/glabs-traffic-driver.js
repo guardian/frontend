@@ -5,8 +5,8 @@ const success = complete => trackAdRender('dfp-ad--glabs-left').then(complete);
 
 export const glabsTrafficDriver: ABTest = {
     id: 'GlabsTrafficDriver',
-    start: '2017-09-08',
-    expiry: '2017-09-25',
+    start: '2017-09-13',
+    expiry: '2017-09-28',
     author: 'Jon Norman',
     description:
         'Adds in a new ad slot to drive traffic to specific GLabs campaigns, served through DFP.',
