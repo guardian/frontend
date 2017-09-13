@@ -3,7 +3,6 @@ package controllers
 import akka.stream.Materializer
 import football.controllers.ResultsController
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, Matchers, WordSpec}
-import play.api.libs.json.JsValue
 import play.api.mvc.Result
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -19,10 +18,11 @@ import scala.concurrent.Future
     with WithTestFootballClient
     with WithMaterializer
     with BeforeAndAfterAll
-    with WithTestContext
+    with WithTestApplicationContext
+    with WithTestExecutionContext
     with WithTestWsClient {
 
-  val resultsController = new ResultsController(testCompetitionsService)
+  val resultsController = new ResultsController(testCompetitionsService, play.api.test.Helpers.stubControllerComponents())
 
   implicit lazy val mat: Materializer = app.materializer
 

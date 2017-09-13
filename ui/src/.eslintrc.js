@@ -46,4 +46,8 @@ module.exports = {
         BROWSER: true,
         SERVER: true,
     },
+    env: {
+        browser: true,
+        nashorn: true,
+    },
 };

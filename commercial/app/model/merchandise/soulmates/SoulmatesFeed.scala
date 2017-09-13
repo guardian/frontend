@@ -3,16 +3,16 @@ package commercial.model.merchandise.soulmates
 import java.lang.System._
 
 import commercial.model.feeds.{FeedMetaData, MissingFeedException, ParsedFeed, SwitchOffException}
-import common.{ExecutionContexts, Logging}
+import common.Logging
 import commercial.model.merchandise.Member
 import play.api.libs.json.{JsValue, Json}
 import commercial.model.readsSeq
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 import scala.concurrent.duration._
 import scala.util.control.NonFatal
 
-trait SoulmatesFeed extends ExecutionContexts with Logging {
+trait SoulmatesFeed extends Logging {
 
   def adTypeName: String
 
@@ -20,7 +20,7 @@ trait SoulmatesFeed extends ExecutionContexts with Logging {
 
   def parse(json: JsValue): Seq[Member] = json.as[Seq[Member]](readsSeq[Member])
 
-  def parsedMembers(feedMetaData: FeedMetaData, feedContent: => Option[String]): Future[ParsedFeed[Member]] = {
+  def parsedMembers(feedMetaData: FeedMetaData, feedContent: => Option[String])(implicit executionContext: ExecutionContext): Future[ParsedFeed[Member]] = {
     feedMetaData.parseSwitch.isGuaranteedSwitchedOn flatMap { switchedOn =>
       if (switchedOn) {
         val start = currentTimeMillis

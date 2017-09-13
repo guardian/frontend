@@ -11,7 +11,7 @@ import views.support.RenderOtherStatus
 
 import scala.concurrent.Future
 
-class GalleryController(contentApiClient: ContentApiClient)(implicit context: ApplicationContext) extends Controller with RendersItemResponse with Logging with ExecutionContexts {
+class GalleryController(contentApiClient: ContentApiClient, val controllerComponents: ControllerComponents)(implicit context: ApplicationContext) extends BaseController with RendersItemResponse with Logging with ImplicitControllerExecutionContext {
 
   def renderJson(path: String) = render(path)
   def render(path: String) = Action.async { implicit request => renderItem(path) }

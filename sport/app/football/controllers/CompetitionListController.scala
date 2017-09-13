@@ -4,9 +4,13 @@ import common._
 import conf.switches.Switches
 import feed.CompetitionsService
 import model.ApplicationContext
-import play.api.mvc.{Action, Controller}
+import play.api.mvc.{BaseController, ControllerComponents}
 
-class CompetitionListController(val competitionsService: CompetitionsService)(implicit context: ApplicationContext) extends Controller with CompetitionListFilters with Logging with ExecutionContexts {
+class CompetitionListController(
+  val competitionsService: CompetitionsService,
+  val controllerComponents: ControllerComponents
+)(implicit context: ApplicationContext)
+  extends BaseController with CompetitionListFilters with Logging with ImplicitControllerExecutionContext {
 
   val page = new FootballPage("football/competitions", "football", "Leagues & competitions")
 

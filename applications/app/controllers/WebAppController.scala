@@ -1,11 +1,12 @@
 package controllers
 
-import common.{ExecutionContexts, Logging}
+import common.{ImplicitControllerExecutionContext, Logging}
 import model.Cached.RevalidatableResult
 import model._
-import play.api.mvc.{Action, Controller}
+import play.api.mvc.{BaseController, ControllerComponents}
 
-class WebAppController(implicit context: ApplicationContext) extends Controller with ExecutionContexts with Logging {
+class WebAppController(val controllerComponents: ControllerComponents)(implicit context: ApplicationContext)
+  extends BaseController with ImplicitControllerExecutionContext with Logging {
 
   def serviceWorker() = Action { implicit request =>
     Cached(CacheTime.ServiceWorker) { RevalidatableResult.Ok(templates.js.serviceWorker()) }

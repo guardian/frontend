@@ -18,7 +18,7 @@ package object model {
     override def reads(json: JsValue): JsResult[Seq[A]] = {
       json match {
         case JsArray(jsValues) => JsSuccess(jsValues.flatMap(_.asOpt[A]))
-        case _ => JsError(Seq(JsPath() -> Seq(ValidationError(s"Expected JsArray but received: ${json}"))))
+        case _ => JsError(JsonValidationError(s"Expected JsArray but received: ${json}"))
       }
     }
   }

@@ -10,7 +10,7 @@ import play.api.mvc.RequestHeader
 import play.api.test.Helpers._
 import com.gu.identity.model.{PublicFields, User, UserDates}
 import services.IdentityRequest
-import test.{Fake, TestRequest, WithTestContext}
+import test.{Fake, TestRequest, WithTestApplicationContext}
 import org.joda.time.DateTime
 
 import scala.concurrent.Future
@@ -19,7 +19,7 @@ import client.Auth
 
 class PublicProfileControllerTest extends path.FreeSpec
   with Matchers
-  with WithTestContext
+  with WithTestApplicationContext
   with MockitoSugar {
   val idUrlBuilder = mock[IdentityUrlBuilder]
   val api = mock[IdApiClient]
@@ -43,7 +43,12 @@ class PublicProfileControllerTest extends path.FreeSpec
 
   when(idRequestParser.apply(MockitoMatchers.any[RequestHeader])) thenReturn idRequest
 
-  val controller = new PublicProfileController(idUrlBuilder, api, idRequestParser)
+  val controller = new PublicProfileController(
+    idUrlBuilder,
+    api,
+    idRequestParser,
+    play.api.test.Helpers.stubControllerComponents()
+  )
   val request = TestRequest()
 
   "Given renderProfileFromId is called" - Fake {

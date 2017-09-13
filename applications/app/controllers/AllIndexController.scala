@@ -3,22 +3,27 @@ package controllers
 import com.gu.contentapi.client.GuardianContentApiError
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichCapiDateTime
 import common.Edition.defaultEdition
-import common.{Edition, ExecutionContexts, Logging}
+import common.{Edition, ImplicitControllerExecutionContext, Logging}
 import contentapi.{ContentApiClient, SectionsLookUp}
 import implicits.{Dates, ItemResponses}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model._
 import org.joda.time.format.DateTimeFormat
 import org.joda.time.{DateTime, DateTimeZone}
-import play.api.mvc.{Action, Controller, RequestHeader, Result}
+import play.api.mvc._
 import services.{ConfigAgent, IndexPage, IndexPageItem}
 import views.support.PreviousAndNext
 
 import scala.concurrent.Future
 
-class AllIndexController(contentApiClient: ContentApiClient, sectionsLookUp: SectionsLookUp)(implicit context: ApplicationContext) extends Controller with ExecutionContexts with ItemResponses with Dates with Logging {
+class AllIndexController(
+  contentApiClient: ContentApiClient,
+  sectionsLookUp: SectionsLookUp,
+  val controllerComponents: ControllerComponents
+)(implicit context: ApplicationContext)
+  extends BaseController with ImplicitControllerExecutionContext with ItemResponses with Dates with Logging {
 
-  private val indexController = new IndexController(contentApiClient, sectionsLookUp)
+  private val indexController = new IndexController(contentApiClient, sectionsLookUp, controllerComponents)
 
   // no need to set the zone here, it gets it from the date.
   private val dateFormatUTC = DateTimeFormat.forPattern("yyyy/MMM/dd").withZone(DateTimeZone.UTC)

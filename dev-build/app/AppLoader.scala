@@ -51,7 +51,6 @@ trait Controllers
   self: BuiltInComponents =>
   lazy val accessTokenGenerator = wire[AccessTokenGenerator]
   lazy val apiSandbox = wire[ApiSandbox]
-  lazy val assets = wire[Assets]
   lazy val devAssetsController = wire[DevAssetsController]
   lazy val emailSignupController = wire[EmailSignupController]
   lazy val surveyPageController = wire[SurveyPageController]
@@ -101,8 +100,4 @@ trait AppComponents
   override lazy val httpFilters = wire[DevFilters].filters
   override lazy val httpRequestHandler = wire[DevBuildParametersHttpRequestHandler]
   override lazy val httpErrorHandler = wire[CorsHttpErrorHandler]
-
-  // this is a workaround while waiting for https://github.com/playframework/playframework/pull/6325/files to be merged and release as a play-2.5.x version
-  lazy val csrfCheck: CSRFCheck = new CSRFCheck(csrfConfig, csrfTokenSigner)
-  lazy val csrfAddToken: CSRFAddToken = new CSRFAddToken(csrfConfig, csrfTokenSigner)
 }

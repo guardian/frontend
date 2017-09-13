@@ -5,14 +5,13 @@ import commercial.model.merchandise.events.{LiveEventAgent, MasterclassAgent}
 import commercial.model.merchandise.jobs.JobsAgent
 import commercial.model.merchandise.soulmates.SoulmatesAgent
 import commercial.model.merchandise.travel.TravelOffersAgent
-import common.ExecutionContexts
 import conf.Configuration
 import commercial.model.merchandise.{Book, Job, LiveEvent, Masterclass, Member, TravelOffer}
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 import scala.concurrent.duration.Duration
 
-sealed trait FeedParser[+T] extends ExecutionContexts {
+sealed trait FeedParser[+T] {
 
   def feedMetaData: FeedMetaData
   def parse(feedContent: => Option[String]): Future[ParsedFeed[T]]
@@ -22,7 +21,7 @@ class FeedsParser(bestsellersAgent: BestsellersAgent,
                   liveEventAgent: LiveEventAgent,
                   masterclassAgent: MasterclassAgent,
                   travelOffersAgent: TravelOffersAgent,
-                  jobsAgent: JobsAgent) {
+                  jobsAgent: JobsAgent)(implicit executionContext: ExecutionContext) {
 
   private val jobs: Option[FeedParser[Job]] = {
     Configuration.commercial.jobsUrl map { url =>

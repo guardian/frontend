@@ -10,7 +10,7 @@ import services.SwitchNotification
 import tools.Store
 import model.{ApplicationContext, NoCache}
 
-class SwitchboardController(akkaAsync: AkkaAsync)(implicit context: ApplicationContext) extends Controller with Logging with ExecutionContexts {
+class SwitchboardController(akkaAsync: AkkaAsync, val controllerComponents: ControllerComponents)(implicit context: ApplicationContext) extends BaseController with Logging with ImplicitControllerExecutionContext {
 
   val SwitchPattern = """([a-z\d-]+)=(on|off)""".r
 

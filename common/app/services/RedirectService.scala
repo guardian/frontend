@@ -3,10 +3,10 @@ package services
 import com.gu.scanamo.error.MissingProperty
 import com.gu.scanamo.syntax._
 import com.gu.scanamo.{DynamoFormat, Scanamo, ScanamoAsync}
-import common.{ExecutionContexts, Logging}
+import common.Logging
 import conf.Configuration
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 
 object RedirectService {
@@ -35,7 +35,7 @@ object RedirectService {
 }
 
 
-class RedirectService extends Logging with ExecutionContexts {
+class RedirectService(implicit executionContext: ExecutionContext) extends Logging {
   import RedirectService._
 
   // protocol fixed to http so that lookups to dynamo find existing

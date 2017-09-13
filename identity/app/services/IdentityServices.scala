@@ -6,9 +6,13 @@ import contentapi.{CapiHttpClient, ContentApiClient, HttpClient}
 import idapiclient.IdApiComponents
 import play.api.libs.ws.WSClient
 
+import scala.concurrent.ExecutionContext
+
 trait IdentityServices extends IdentityConfigurationComponents with IdApiComponents {
 
   def wsClient: WSClient
+  implicit val executionContext: ExecutionContext
+
   lazy val capiHttpClient: HttpClient = wire[CapiHttpClient]
   lazy val contentApiClient = wire[ContentApiClient]
 

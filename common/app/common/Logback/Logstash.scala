@@ -3,10 +3,12 @@ package common.Logback
 import app.LifecycleComponent
 import com.amazonaws.auth.AWSCredentialsProvider
 import com.amazonaws.util.EC2MetadataUtils
-import common.{ExecutionContexts, ManifestData}
+import common.ManifestData
 import conf.switches.Switches
 import conf.Configuration
 import play.api.{Configuration => PlayConfiguration, Logger => PlayLogger}
+
+import scala.concurrent.ExecutionContext
 import scala.util.{Failure, Success}
 
 case class LogStashConf(enabled: Boolean,
@@ -15,17 +17,17 @@ case class LogStashConf(enabled: Boolean,
                         awsCredentialsProvider: AWSCredentialsProvider,
                         customFields: Map[String, String])
 
-class LogstashLifecycle(playConfig: PlayConfiguration) extends LifecycleComponent {
+class LogstashLifecycle(playConfig: PlayConfiguration)(implicit executionContext: ExecutionContext) extends LifecycleComponent {
   override def start(): Unit = {
     Logstash.init(playConfig)
   }
 }
 
-object Logstash extends ExecutionContexts {
+object Logstash {
 
   def customFields(playConfig: PlayConfiguration) = Map(
     "stack" -> "frontend",
-    "app" -> playConfig.getString("guardian.projectName").getOrElse("frontend"),
+    "app" -> playConfig.getOptional[String]("guardian.projectName").getOrElse("frontend"),
     "stage" -> Configuration.environment.stage.toUpperCase,
     "build" -> ManifestData.build,
     "revision" -> ManifestData.revision,
@@ -44,7 +46,7 @@ object Logstash extends ExecutionContexts {
     )
   }
 
-  def init(playConfig: PlayConfiguration): Unit = {
+  def init(playConfig: PlayConfiguration)(implicit executionContext: ExecutionContext): Unit = {
 
     Switches.LogstashLogging.isGuaranteedSwitchedOn.onComplete {
       case Success(isOn) =>

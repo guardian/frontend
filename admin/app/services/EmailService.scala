@@ -5,16 +5,16 @@ import java.util.concurrent.TimeoutException
 import com.amazonaws.handlers.AsyncHandler
 import com.amazonaws.services.simpleemail._
 import com.amazonaws.services.simpleemail.model.{Destination => EmailDestination, _}
-import common.{AkkaAsync, ExecutionContexts, Logging}
+import common.{AkkaAsync, Logging}
 import conf.Configuration.aws.mandatoryCredentials
 
 import scala.collection.JavaConversions._
 import scala.concurrent.duration._
-import scala.concurrent.{Future, Promise}
+import scala.concurrent.{ExecutionContext, Future, Promise}
 import scala.util.control.NonFatal
 import scala.util.{Failure, Success}
 
-class EmailService(akkaAsync: AkkaAsync) extends ExecutionContexts with Logging {
+class EmailService(akkaAsync: AkkaAsync) extends Logging {
 
   private lazy val client: AmazonSimpleEmailServiceAsync = AmazonSimpleEmailServiceAsyncClient
     .asyncBuilder()
@@ -26,12 +26,14 @@ class EmailService(akkaAsync: AkkaAsync) extends ExecutionContexts with Logging 
 
   def shutdown(): Unit = client.shutdown()
 
-  def send(from: String,
-           to: Seq[String],
-           cc: Seq[String] = Nil,
-           subject: String,
-           textBody: Option[String] = None,
-           htmlBody: Option[String] = None): Future[SendEmailResult] = {
+  def send(
+    from: String,
+    to: Seq[String],
+    cc: Seq[String] = Nil,
+    subject: String,
+    textBody: Option[String] = None,
+    htmlBody: Option[String] = None
+  )(implicit executionContext: ExecutionContext): Future[SendEmailResult] = {
 
     log.info(s"Sending email from $from to $to about $subject")
 

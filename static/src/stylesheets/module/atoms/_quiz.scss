@@ -338,7 +338,11 @@
     // highlight the correct answer and show the reveal text
     // .atom-quiz__answer__input[required]:valid
     :valid {
-        &, & + .atom-quiz__answer__item {
+        & {
+            user-select: none;
+        }
+
+        & + .atom-quiz__answer__item {
             pointer-events: none;
         }
 
