@@ -57,12 +57,20 @@ installIfNecessary('semver', 'chalk').then(([semver, chalk]) => {
                 })
                 .on('close', code => {
                     if (code !== 0) process.exit(code);
-                    console.log(`${chalk.green('✓')} Node ${nodeVersion}`);
-                    console.log(`${chalk.green('✓')} Yarn ${foundYarnVersion}`);
+                    console.log(
+                        chalk.dim(`${chalk.green('✔')} Node ${nodeVersion}`)
+                    );
+                    console.log(
+                        chalk.dim(
+                            `${chalk.green('✔')} Yarn ${foundYarnVersion}`
+                        )
+                    );
                 });
         } else {
-            console.log(`${chalk.green('✓')} Node ${nodeVersion}`);
-            console.log(`${chalk.green('✓')} Yarn ${foundYarnVersion}`);
+            console.log(chalk.dim(`${chalk.green('✔')} Node ${nodeVersion}`));
+            console.log(
+                chalk.dim(`${chalk.green('✔')} Yarn ${foundYarnVersion}`)
+            );
         }
     });
 });
