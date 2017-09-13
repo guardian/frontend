@@ -64,7 +64,7 @@ const config = {
             {
                 test: /\.js\.scss$/,
                 exclude: /node_modules/,
-                use: [{ loader: 'styletron-loader' }, sassLoader],
+                use: ['styletron-loader', sassLoader],
             },
         ],
     },
