@@ -19,7 +19,7 @@
         </div>
         <a href="@{trail.url}" class="hosted-next-autoplay__poster" data-link-name="Next Hosted Video Autoplay: @{trail.title}">
             <img class="hosted-next-autoplay__poster-img" src="@{trail.thumbnailUrl}">
-            <div class="hosted-next-autoplay__poster-timer hosted-tone-btn js-autoplay-timer" data-next-page="@{trail.url}">10s</div>
+            <div class="hosted-next-autoplay__poster-timer hosted-tone-btn js-autoplay-timer" data-next-page="@{trail.url}">@fragments.inlineSvg("arrow-right", "icon", List(""))</div>
         </a>
         <a href="@{trail.url}" class="hosted__next-video--mobile" data-link-name="Next Hosted Video @{trail.title}" target="_blank">
                             Watch now
