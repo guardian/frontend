@@ -16,7 +16,7 @@ list: # PRIVATE
 # *********************** SETUP ***********************
 
 # Install all 3rd party dependencies.
-install: check-node check-yarn
+install: check-node-env
 	@yarn install -s
 	@make ui-install
 
@@ -29,13 +29,9 @@ uninstall: # PRIVATE
 # The nuclear option if `make install` hasn't worked.
 reinstall: uninstall install
 
-# Make sure we running a recent-enough version of Node.
-check-node: # PRIVATE
-	@./tools/check-node-version.js
-
-# Make sure yarn is installed, at the right version.
-check-yarn: # PRIVATE
-	@./tools/check-yarn.js
+# Make sure the local node env is up to scratch.
+check-node-env: # PRIVATE
+	@./tools/check-node-env.js
 
 # *********************** DEVELOPMENT ***********************
 

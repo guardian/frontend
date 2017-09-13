@@ -2,6 +2,9 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "yarn": "1.0.1"
+  },
   "dependencies": {
     "bean": "~1.0.14",
     "bonzo": "~2.0.0",
