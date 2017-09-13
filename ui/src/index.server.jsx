@@ -27,10 +27,13 @@ export const render = (props: Object) => {
     return `
         <!DOCTYPE html>
         <html lang="en">
-            ${head(props, [
-                styletron.getStylesheetsHtml(),
-                `<style>${extractCritical(body).css}</style>`,
-            ])}
+            ${head(
+                props,
+                [
+                    styletron.getStylesheetsHtml(),
+                    `<style expensive-css>${extractCritical(body).css}</style>`,
+                ].join('\n')
+            )}
             ${body}
         </html>
     `.trim();
