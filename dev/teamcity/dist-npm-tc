@@ -4,5 +4,9 @@ set -o xtrace
 set -o nounset
 set -o errexit
 
+. ~/.nvm/nvm.sh
+nvm install
+
 echo "Install dependencies"
+
 make install

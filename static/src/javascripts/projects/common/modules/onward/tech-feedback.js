@@ -27,6 +27,7 @@ const summariseAbTests = (testParticipations: Participations): string => {
 
 const getExtraDataInformation = (): Object => ({
     browser: window.navigator.userAgent,
+    referrer: document.referrer,
     page: window.location,
     width: window.innerWidth,
     adBlock: adblockBeingUsed,

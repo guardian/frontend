@@ -4,14 +4,13 @@ import javax.inject.Inject
 
 import akka.stream.Materializer
 import cache.SurrogateKey
-import common.ExecutionContexts
 import implicits.Responses._
 import model.ApplicationContext
 import play.api.http.HttpFilters
 import play.api.mvc._
-import play.filters.gzip.{GzipFilterConfig, GzipFilter}
+import play.filters.gzip.{GzipFilter, GzipFilterConfig}
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 class GzipperConfig() extends GzipFilterConfig {
   // These paths are used as a whitelist that means the server's
@@ -26,7 +25,7 @@ class GzipperConfig() extends GzipFilterConfig {
 }
 class Gzipper(implicit val mat: Materializer) extends GzipFilter(new GzipperConfig)
 
-class JsonVaryHeadersFilter(implicit val mat: Materializer) extends Filter with ExecutionContexts with implicits.Requests {
+class JsonVaryHeadersFilter(implicit val mat: Materializer, executionContext: ExecutionContext) extends Filter with implicits.Requests {
 
   private val varyFields = List("Origin", "Accept")
   private val defaultVaryFields = varyFields.mkString(",")
@@ -48,7 +47,7 @@ class JsonVaryHeadersFilter(implicit val mat: Materializer) extends Filter with 
 }
 
 // this lets the CDN log the exact part of the backend this response came from
-class BackendHeaderFilter(implicit val mat: Materializer, context: ApplicationContext) extends Filter with ExecutionContexts {
+class BackendHeaderFilter(implicit val mat: Materializer, context: ApplicationContext, executionContext: ExecutionContext) extends Filter {
 
   private lazy val backendHeader = "X-Gu-Backend-App" -> context.applicationIdentity.name
 
@@ -58,7 +57,7 @@ class BackendHeaderFilter(implicit val mat: Materializer, context: ApplicationCo
 }
 
 // See https://www.fastly.com/blog/surrogate-keys-part-1/
-class SurrogateKeyFilter(implicit val mat: Materializer) extends Filter with ExecutionContexts {
+class SurrogateKeyFilter(implicit val mat: Materializer, executionContext: ExecutionContext) extends Filter {
 
   private val SurrogateKeyHeader = "Surrogate-Key"
 
@@ -72,12 +71,14 @@ class SurrogateKeyFilter(implicit val mat: Materializer) extends Filter with Exe
   }
 }
 
-
-
 object Filters {
   // NOTE - order is important here, Gzipper AFTER CorsVaryHeaders
   // which effectively means "JsonVaryHeaders goes around Gzipper"
-  def common(implicit materializer: Materializer, context: ApplicationContext): List[EssentialFilter] = List(
+  def common(
+    implicit materializer: Materializer,
+    applicationContext: ApplicationContext,
+    executionContext: ExecutionContext
+  ): List[EssentialFilter] = List(
     new RequestLoggingFilter,
     new JsonVaryHeadersFilter,
     new Gzipper,
@@ -88,7 +89,11 @@ object Filters {
   )
 }
 
-class CommonFilters(implicit mat: Materializer, context: ApplicationContext) extends HttpFilters {
+class CommonFilters(
+  implicit mat: Materializer,
+  applicationContext: ApplicationContext,
+  executionContext: ExecutionContext
+) extends HttpFilters {
   val filters = Filters.common
 }
 

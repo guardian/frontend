@@ -339,7 +339,7 @@ object Content {
     val commercial = Commercial.make(tags, apiContent)
     val trail = Trail.make(tags, fields, commercial, elements, metadata, apiContent)
     val sharelinks = ShareLinks(tags, fields, metadata)
-    val atoms = Atoms.make(apiContent)
+    val atoms = Atoms.make(apiContent, sharelinks.pageShares)
     val apifields = apiContent.fields
     val references: Map[String,String] = apiContent.references.map(ref => (ref.`type`, Reference.split(ref.id)._2)).toMap
     val cardStyle: fapiutils.CardStyle = CardStylePicker(apiContent, TrailMetaData.empty)

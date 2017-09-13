@@ -4,11 +4,15 @@ import common.JsonComponent
 import feed.CompetitionsService
 import football.containers.FixturesAndResults
 import model.{ApplicationContext, Cached}
-import play.api.mvc.{Action, Controller}
+import play.api.mvc.{BaseController, ControllerComponents}
 import play.twirl.api.Html
 import views.html.fragments.containers.facia_cards.{container => containerHtml}
 
-class FixturesAndResultsContainerController(competitionsService: CompetitionsService)(implicit context: ApplicationContext) extends Controller {
+class FixturesAndResultsContainerController(
+  competitionsService: CompetitionsService,
+  val controllerComponents: ControllerComponents
+)(implicit context: ApplicationContext)
+  extends BaseController {
 
   val fixturesAndResults = new FixturesAndResults(competitionsService)
 

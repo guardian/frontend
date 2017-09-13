@@ -2,7 +2,7 @@ package controllers
 
 import actions.AuthenticatedActions
 import play.api.mvc._
-import common.ExecutionContexts
+import common.ImplicitControllerExecutionContext
 import services.{IdRequestParser, ReturnUrlVerifier}
 import utils.SafeLogging
 import scala.collection.convert.wrapAsJava._
@@ -11,12 +11,13 @@ import play.api.libs.ws.WSClient
 import exacttarget.SubscriptionDef
 
 class ExactTargetController(
-                           conf: IdentityConfiguration,
-                           returnUrlVerifier: ReturnUrlVerifier,
-                           idRequestParser: IdRequestParser,
-                           authenticatedActions: AuthenticatedActions,
-                           wsClient: WSClient)
-  extends Controller with ExecutionContexts with SafeLogging {
+  conf: IdentityConfiguration,
+  returnUrlVerifier: ReturnUrlVerifier,
+  idRequestParser: IdRequestParser,
+  authenticatedActions: AuthenticatedActions,
+  wsClient: WSClient,
+  val controllerComponents: ControllerComponents
+) extends BaseController with ImplicitControllerExecutionContext with SafeLogging {
 
   import authenticatedActions.authAction
 
@@ -39,10 +40,13 @@ class ExactTargetController(
             val triggeredEmailRequest =
               exactTargetFactory.createRequest(emailAddress, parameters, "Create", dataExtId.businessUnitId, dataExtId.customerKey)
 
-            wsClient.url(exactTargetFactory.endPoint.toString).withHeaders(
-              "Content-Type" -> "text/xml; charset=utf-8",
-              "SOAPAction" -> triggeredEmailRequest.getSoapAction
-            ).post(triggeredEmailRequest.getSoapEnvelopeString).onSuccess {
+            wsClient
+              .url(exactTargetFactory.endPoint.toString)
+              .withHttpHeaders(
+                "Content-Type" -> "text/xml; charset=utf-8",
+                "SOAPAction" -> triggeredEmailRequest.getSoapAction
+              )
+              .post(triggeredEmailRequest.getSoapEnvelopeString).onSuccess {
               case resp =>
                 (resp.xml \\ "CreateResponse" \ "Results") map {
                   subscriberNode =>

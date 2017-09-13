@@ -268,7 +268,7 @@ const bootEnhanced = (): void => {
             require => {
                 bootstrapContext(
                     'preferences',
-                    require('common/modules/preferences/main').init
+                    require('bootstraps/enhanced/preferences').init
                 );
             },
             'preferences'

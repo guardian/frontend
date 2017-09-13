@@ -10,13 +10,13 @@ import play.api.test.Helpers._
   with BeforeAndAfterAll
   with WithMaterializer
   with WithTestWsClient
-  with WithTestContext
+  with WithTestApplicationContext
   with WithTestContentApiClient {
 
   val article = "/world/2014/nov/18/hereford-hospital-patient-tested-for-ebola"
   val badPath = "/goes/absolutely-nowhere"
 
-  lazy val contentCardController = new RecommendedContentCardController(testContentApiClient)
+  lazy val contentCardController = new RecommendedContentCardController(testContentApiClient, play.api.test.Helpers.stubControllerComponents())
 
   "Content Card Controller" should "200 when the content is found" in {
       val result = contentCardController.renderHtml(article)(TestRequest())

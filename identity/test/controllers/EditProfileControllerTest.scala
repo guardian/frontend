@@ -4,20 +4,22 @@ import actions.AuthenticatedActions
 import client.Auth
 import com.gu.identity.cookie.GuUCookieData
 import com.gu.identity.model._
-import form.{ProfileMapping, PrivacyMapping, AccountDetailsMapping, ProfileFormsMapping}
+import form.{AccountDetailsMapping, PrivacyMapping, ProfileFormsMapping, ProfileMapping}
 import idapiclient.{TrackingData, _}
-import model.{PhoneNumbers, Countries}
+import model.{Countries, PhoneNumbers}
 import org.mockito.Mockito._
-import org.mockito.{Matchers => MockitoMatchers, ArgumentCaptor}
-import org.scalatest.{DoNotDiscover, WordSpec, Matchers, OptionValues}
+import org.mockito.{ArgumentCaptor, Matchers => MockitoMatchers}
+import org.scalatest.{DoNotDiscover, Matchers, OptionValues, WordSpec}
 import org.scalatest.mockito.MockitoSugar
 import org.scalatestplus.play.ConfiguredServer
+import play.api.http.HttpConfiguration
 import play.api.libs.crypto.CSRFTokenSigner
 import play.api.mvc._
 import play.api.test.Helpers._
-import play.filters.csrf.{CSRFCheck, CSRFConfig, CSRFAddToken}
+import play.filters.csrf.{CSRFAddToken, CSRFCheck, CSRFConfig}
 import services._
 import test._
+
 import scala.concurrent.Future
 
 //TODO test form validation and population of form fields.
@@ -25,12 +27,13 @@ import scala.concurrent.Future
   with Matchers
   with MockitoSugar
   with OptionValues
-  with WithTestContext
+  with WithTestApplicationContext
   with WithTestCSRF
   with ConfiguredServer {
 
   trait EditProfileFixture {
 
+    val controllerComponent: ControllerComponents = play.api.test.Helpers.stubControllerComponents()
     val idUrlBuilder = mock[IdentityUrlBuilder]
     val api = mock[IdApiClient]
     val idRequestParser = mock[IdRequestParser]
@@ -44,13 +47,12 @@ import scala.concurrent.Future
     val authenticatedUser = AuthenticatedUser(user, testAuth)
     val phoneNumbers = PhoneNumbers
 
-    val authenticatedActions = new AuthenticatedActions(authService, api, mock[IdentityUrlBuilder])
+    val authenticatedActions = new AuthenticatedActions(authService, api, mock[IdentityUrlBuilder], controllerComponent)
 
-    val messagesApi = I18NTestComponents.messagesApi
     val profileFormsMapping = ProfileFormsMapping(
-      new AccountDetailsMapping(messagesApi),
-      new PrivacyMapping(messagesApi),
-      new ProfileMapping(messagesApi)
+      new AccountDetailsMapping,
+      new PrivacyMapping,
+      new ProfileMapping
     )
 
     when(authService.authenticatedUserFor(MockitoMatchers.any[RequestHeader])) thenReturn Some(authenticatedUser)
@@ -60,7 +62,16 @@ import scala.concurrent.Future
     when(idRequest.trackingData) thenReturn trackingData
     when(idRequest.returnUrl) thenReturn None
 
-    lazy val controller = new EditProfileController(idUrlBuilder, authenticatedActions, api, idRequestParser, messagesApi, csrfCheck, csrfAddToken, profileFormsMapping)
+    lazy val controller = new EditProfileController(
+      idUrlBuilder,
+      authenticatedActions,
+      api,
+      idRequestParser,
+      csrfCheck,
+      csrfAddToken,
+      profileFormsMapping,
+      controllerComponent
+    )
   }
 
   "EditProfileController" when {

@@ -23,7 +23,7 @@ declare type OphanProduct =
     | 'MEMBERSHIP_PATRON'
     | 'MEMBERSHIP_PARTNER'
     | 'DIGITAL_SUBSCRIPTION'
-    | 'PAPER_SUBSCRIPTION';
+    | 'PRINT_SUBSCRIPTION';
 
 declare type OphanAction =
     | 'INSERT'

@@ -17,7 +17,7 @@ case class InteractivePage (interactive: Interactive, related: RelatedContent) e
   override lazy val item = interactive
 }
 
-class InteractiveController(contentApiClient: ContentApiClient, wsClient: WSClient)(implicit context: ApplicationContext) extends Controller with RendersItemResponse with Logging with ExecutionContexts {
+class InteractiveController(contentApiClient: ContentApiClient, wsClient: WSClient, val controllerComponents: ControllerComponents)(implicit context: ApplicationContext) extends BaseController with RendersItemResponse with Logging with ImplicitControllerExecutionContext {
 
   def renderInteractiveJson(path: String): Action[AnyContent] = renderInteractive(path)
   def renderInteractive(path: String): Action[AnyContent] = Action.async { implicit request => renderItem(path) }
@@ -30,7 +30,7 @@ class InteractiveController(contentApiClient: ContentApiClient, wsClient: WSClie
       Cached (365.days) {
         response.status match {
           case 200 =>
-            val contentType = response.allHeaders("Content-Type").mkString(",")
+            val contentType = response.headers("Content-Type").mkString(",")
             RevalidatableResult(Ok(response.body).as(contentType), response.body)
           case otherStatus => WithoutRevalidationResult(new Status(otherStatus))
         }

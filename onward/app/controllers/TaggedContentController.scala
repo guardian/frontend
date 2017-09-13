@@ -6,12 +6,16 @@ import contentapi.ContentApiClient
 import feed.MostReadAgent
 import model._
 import play.api.libs.json.{JsArray, Json}
-import play.api.mvc.{Action, Controller, RequestHeader}
+import play.api.mvc._
 import services._
 
 import scala.concurrent.Future
 
-class TaggedContentController(val contentApiClient: ContentApiClient, val mostReadAgent: MostReadAgent) extends Controller with Related with Logging with ExecutionContexts {
+class TaggedContentController(
+  val contentApiClient: ContentApiClient,
+  val mostReadAgent: MostReadAgent,
+  val controllerComponents: ControllerComponents
+) extends BaseController with Related with Logging with ImplicitControllerExecutionContext {
 
   def renderJson(tag: String) = Action.async { implicit request =>
     tagWhitelist.find(_ == tag).map { tag =>

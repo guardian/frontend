@@ -1,11 +1,11 @@
 package services
 
-import common.{ExecutionContexts, Logging}
+import common.Logging
 import conf.Configuration
 import play.api.libs.json.Json
-import play.api.libs.ws.WSClient
+import play.api.libs.ws.{WSClient, WSResponse}
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 import scala.concurrent.duration.{Duration, DurationInt}
 
 
@@ -17,13 +17,13 @@ object URLResponseDeserializer {
 case class URLResponse(id: String, share: ShareObject)
 case class ShareObject(share_count: Int)
 
-class FacebookGraphApiClient(wsClient: WSClient) extends implicits.WSRequests with ExecutionContexts with Logging {
+class FacebookGraphApiClient(wsClient: WSClient) extends implicits.WSRequests with Logging {
   val apiRootUrl = s"https://graph.facebook.com/v${Configuration.facebook.graphApi.version}/"
 
-  def GET(endpoint: Option[String], timeout: Duration, queryString: (String, String)*) =
+  def GET(endpoint: Option[String], timeout: Duration, queryString: (String, String)*)(implicit executionContext: ExecutionContext): Future[WSResponse] =
     wsClient
       .url(apiRootUrl + endpoint.getOrElse(""))
-      .withQueryString(addAccessToken(queryString): _*)
+      .withQueryStringParameters(addAccessToken(queryString): _*)
       .withRequestTimeout(timeout)
       .getOKResponse()
       .recoverWith { case e: Exception =>
@@ -31,14 +31,14 @@ class FacebookGraphApiClient(wsClient: WSClient) extends implicits.WSRequests wi
         Future.failed(e)
       }
 
-  protected def makeUrl(endpoint: Option[String]) = apiRootUrl + endpoint.getOrElse("")
-  private def addAccessToken(queryString: Seq[(String, String)]) =
+  protected def makeUrl(endpoint: Option[String]): String = apiRootUrl + endpoint.getOrElse("")
+  private def addAccessToken(queryString: Seq[(String, String)]): Seq[(String, String)] =
     ("access_token", Configuration.facebook.graphApi.accessToken) +: queryString
 }
 
-class FacebookGraphApi(facebookGraphApiClient: FacebookGraphApiClient) extends ExecutionContexts {
+class FacebookGraphApi(facebookGraphApiClient: FacebookGraphApiClient) {
 
-  def shareCount(path: String): Future[Int] = {
+  def shareCount(path: String)(implicit executionContext: ExecutionContext): Future[Int] = {
     import URLResponseDeserializer._
 
     facebookGraphApiClient.GET(

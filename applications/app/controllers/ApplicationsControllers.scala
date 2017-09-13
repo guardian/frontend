@@ -5,6 +5,7 @@ import contentapi.{ContentApiClient, SectionsLookUp}
 import jobs.SiteMapJob
 import model.ApplicationContext
 import play.api.libs.ws.WSClient
+import play.api.mvc.ControllerComponents
 import services.FacebookGraphApi
 
 trait ApplicationsControllers {
@@ -14,6 +15,7 @@ trait ApplicationsControllers {
   def sectionsLookUp: SectionsLookUp
   def wsClient: WSClient
   def facebookGraphApi: FacebookGraphApi
+  def controllerComponents: ControllerComponents
   implicit def appContext: ApplicationContext
 
   lazy val siteMapController = wire[SiteMapController]

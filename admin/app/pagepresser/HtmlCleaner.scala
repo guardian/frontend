@@ -1,14 +1,14 @@
 package pagepresser
 
 import com.netaporter.uri.Uri.parse
-import common.{ExecutionContexts, Logging}
+import common.{Logging}
 import org.jsoup.Jsoup
 import org.jsoup.nodes.{Element, Document}
 import conf.Configuration
 
 import scala.collection.JavaConversions._
 
-abstract class HtmlCleaner extends Logging with ExecutionContexts {
+abstract class HtmlCleaner extends Logging {
   lazy val fallbackCacheBustId = Configuration.r2Press.fallbackCachebustId
   lazy val staticRegEx = """//static.guim.co.uk/static/(\w+)/(.+)(\.\w+)$""".r("cacheBustId", "paths", "extension")
   lazy val nonDigitRegEx = """\D+""".r

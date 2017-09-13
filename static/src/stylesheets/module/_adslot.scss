@@ -415,7 +415,7 @@
     padding: 0;
     margin: 0;
 
-    &:not(.ad-slot--im) {
+    &:not(.ad-slot--im .ad-slot--glabs-left) {
         width: auto;
     }
 
@@ -435,6 +435,37 @@
         @include mq(mobileLandscape, $until: tablet) {
             margin-left: -$gs-gutter;
             margin-right: -$gs-gutter;
+        }
+    }
+}
+.ad-slot--glabs-left {
+    min-height: 0;
+    padding: 0;
+    float: left;
+    margin: 5px $gs-gutter $gs-baseline 0;
+    clear: both;
+
+    @include mq($until: mobileLandscape) {
+        width: $gs-gutter * 6.5;
+        margin-bottom: $gs-baseline / 2;
+        margin-right: $gs-gutter / 2;
+    }
+
+    @include mq(mobileLandscape) {
+        width: gs-span(3);
+    }
+
+    @include mq(leftCol) {
+        margin-left: -1 * (gs-span(2) + $gs-gutter);
+        &.element--supporting {
+            width: gs-span(4);
+        }
+    }
+
+    @include mq(wide) {
+        margin-left: -1 * (gs-span(3) + $gs-gutter);
+        &.element--supporting {
+            width: gs-span(5);
         }
     }
 }

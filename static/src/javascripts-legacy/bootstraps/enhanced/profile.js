@@ -49,7 +49,7 @@ define([
 
                 // Load old js if necessary
                 $('.js-formstack-iframe').each(function (el) {
-                    new FormstackIframe(el, config).init();
+                    new FormstackIframe.FormstackIframe(el, config).init();
                 });
             });
         },

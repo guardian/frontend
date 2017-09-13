@@ -12,31 +12,31 @@ import org.joda.time.format.DateTimeFormat
 import org.joda.time.{DateTime, DateTimeConstants, DateTimeZone}
 import layout.slices.{ContainerDefinition, Fixed, FixedContainers, TTT}
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 case class BookSectionContent(tag: Tag, content: Seq[ApiContent])
 case class ContentByPage(page: Int, content: ApiContent)
 case class TagWithContent(tag: Tag, content: ApiContent)
 case class BookSectionContentByPage(page: Int, booksectionContent: BookSectionContent)
 
-class NewspaperQuery(contentApiClient: ContentApiClient) extends ExecutionContexts with Dates with Logging {
+class NewspaperQuery(contentApiClient: ContentApiClient) extends Dates with Logging {
 
   val dateForFrontPagePattern = DateTimeFormat.forPattern("EEEE d MMMM y")
   private val hrefFormat = DateTimeFormat.forPattern("yyyy/MMM/dd").withZone(DateTimeZone.UTC)
   val FRONT_PAGE_DISPLAY_NAME = "front page"
   val pathToTag = Map("theguardian" -> "theguardian/mainsection", "theobserver" -> "theobserver/news")
 
-  def fetchLatestGuardianNewspaper: Future[List[FaciaContainer]] = {
+  def fetchLatestGuardianNewspaper()(implicit executionContext: ExecutionContext): Future[List[FaciaContainer]] = {
     val now = DateTime.now(DateTimeZone.UTC)
     bookSectionContainers("theguardian/mainsection", getLatestGuardianPageFor(now), "theguardian")
   }
 
-  def fetchLatestObserverNewspaper: Future[List[FaciaContainer]] = {
+  def fetchLatestObserverNewspaper()(implicit executionContext: ExecutionContext): Future[List[FaciaContainer]] = {
     val now = DateTime.now(DateTimeZone.UTC)
     bookSectionContainers("theobserver/news", getPastSundayDateFor(now), "theobserver")
   }
 
-  def fetchNewspaperForDate(path: String, day: String, month: String, year: String): Future[List[FaciaContainer]] = {
+  def fetchNewspaperForDate(path: String, day: String, month: String, year: String)(implicit executionContext: ExecutionContext): Future[List[FaciaContainer]] = {
     val dateFormatUTC = DateTimeFormat.forPattern("yyyy/MMM/dd").withZone(DateTimeZone.UTC)
 
     val date = dateFormatUTC
@@ -47,7 +47,7 @@ class NewspaperQuery(contentApiClient: ContentApiClient) extends ExecutionContex
   }
 
 
-  private def bookSectionContainers(itemId: String, newspaperDate: DateTime, publication: String): Future[List[FaciaContainer]] = {
+  private def bookSectionContainers(itemId: String, newspaperDate: DateTime, publication: String)(implicit executionContext: ExecutionContext): Future[List[FaciaContainer]] = {
 
     val itemQuery = contentApiClient.item(itemId)
       .useDate("newspaper-edition")

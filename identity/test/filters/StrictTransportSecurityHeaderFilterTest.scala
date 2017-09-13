@@ -6,12 +6,17 @@ import org.scalatest.{DoNotDiscover, FunSuite, Matchers}
 import play.api.mvc.{RequestHeader, Result}
 import play.api.test.FakeRequest
 import play.api.mvc.Results._
-import test.ConfiguredTestSuite
+import test.{ConfiguredTestSuite, WithTestExecutionContext}
 
 import scala.concurrent.{Await, Future}
 import scala.concurrent.duration._
 
-@DoNotDiscover class StrictTransportSecurityHeaderFilterTest extends FunSuite with Matchers with ConfiguredTestSuite {
+@DoNotDiscover class StrictTransportSecurityHeaderFilterTest
+  extends FunSuite
+  with Matchers
+  with ConfiguredTestSuite
+  with WithTestExecutionContext {
+
   implicit lazy val mat: Materializer = app.materializer
 
   test("filter should add the strict-transport-security header") {

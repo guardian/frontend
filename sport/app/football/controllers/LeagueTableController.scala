@@ -3,7 +3,7 @@ package football.controllers
 import common._
 import conf.switches.Switches
 import feed.CompetitionsService
-import play.api.mvc.{Action, Controller}
+import play.api.mvc.{Action, BaseController, ControllerComponents}
 import model._
 import model.Page
 
@@ -16,7 +16,10 @@ case class TablesPage(
   lazy val singleCompetition = tables.size == 1
 }
 
-class LeagueTableController(val competitionsService: CompetitionsService)(implicit context: ApplicationContext) extends Controller with Logging with CompetitionTableFilters with ExecutionContexts {
+class LeagueTableController(
+  val competitionsService: CompetitionsService,
+  val controllerComponents: ControllerComponents
+)(implicit context: ApplicationContext) extends BaseController with Logging with CompetitionTableFilters with ImplicitControllerExecutionContext {
 
     val tableOrder = Seq(
         "Premier League",
@@ -50,8 +53,8 @@ class LeagueTableController(val competitionsService: CompetitionsService)(implic
 
   private def loadTables: Seq[Table] = sortedCompetitions.filter(_.hasLeagueTable).map { Table(_) }
 
-  def renderLeagueTableJson() = renderLeagueTable()
-  def renderLeagueTable() = Action { implicit request =>
+  def renderLeagueTablesJson() = renderLeagueTables()
+  def renderLeagueTables() = Action { implicit request =>
 
     val page = new FootballPage(
       "football/tables",
@@ -100,7 +103,7 @@ class LeagueTableController(val competitionsService: CompetitionsService)(implic
     table.map { table =>
 
       val page = new FootballPage(
-        "football/tables",
+        s"football/$competition/table",
         "football",
         s"${table.competition.fullName} table"
       )
@@ -129,7 +132,7 @@ class LeagueTableController(val competitionsService: CompetitionsService)(implic
       }
     } yield {
       val page = new FootballPage(
-        "football/tables",
+        s"football/$competition/$groupReference/table",
         "football",
         s"${table.competition.fullName} table"
       )

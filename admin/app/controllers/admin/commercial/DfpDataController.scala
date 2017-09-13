@@ -1,11 +1,12 @@
 package controllers.admin.commercial
 
-import common.ExecutionContexts
+import common.ImplicitControllerExecutionContext
 import dfp.DfpDataCacheJob
 import model.{ApplicationContext, NoCache}
-import play.api.mvc.{Action, AnyContent, Controller}
+import play.api.mvc._
 
-class DfpDataController (implicit context: ApplicationContext) extends Controller with ExecutionContexts {
+class DfpDataController(val controllerComponents: ControllerComponents)(implicit context: ApplicationContext)
+  extends BaseController with ImplicitControllerExecutionContext {
 
   def renderCacheFlushPage(): Action[AnyContent] = Action { implicit request =>
     NoCache(Ok(views.html.commercial.dfpFlush()))
