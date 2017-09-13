@@ -7,7 +7,7 @@ import sbt.Keys._
 import com.gu.riffraff.artifact.RiffRaffArtifact
 import com.gu.riffraff.artifact.RiffRaffArtifact.autoImport._
 import Dependencies._
-import play.sbt.{PlayAkkaHttpServer, PlayNettyServer, PlayScala}
+import play.sbt.{PlayAkkaHttpServer, PlayScala}
 import com.typesafe.sbt.SbtNativePackager.Universal
 import com.typesafe.sbt.packager.Keys.packageName
 
@@ -126,15 +126,13 @@ trait Prototypes {
   )
 
   def root(): Project = Project("root", base = file("."))
-    .enablePlugins(PlayScala, RiffRaffArtifact, PlayNettyServer)
-    .disablePlugins(PlayAkkaHttpServer)
+    .enablePlugins(PlayScala, RiffRaffArtifact)
     .settings(frontendCompilationSettings)
     .settings(frontendRootSettings)
 
   def application(applicationName: String): Project = {
     Project(applicationName, file(applicationName))
-      .enablePlugins(PlayScala, PlayNettyServer, UniversalPlugin)
-      .disablePlugins(PlayAkkaHttpServer)
+      .enablePlugins(PlayScala, UniversalPlugin)
       .settings(frontendDependencyManagementSettings)
       .settings(frontendCompilationSettings)
       .settings(frontendTestSettings)
@@ -149,8 +147,7 @@ trait Prototypes {
 
   def library(applicationName: String): Project = {
     Project(applicationName, file(applicationName))
-      .enablePlugins(PlayScala, PlayNettyServer)
-      .disablePlugins(PlayAkkaHttpServer)
+      .enablePlugins(PlayScala)
       .settings(frontendDependencyManagementSettings)
       .settings(frontendCompilationSettings)
       .settings(frontendTestSettings)
