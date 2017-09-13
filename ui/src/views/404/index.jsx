@@ -1,6 +1,9 @@
 // @flow
 import { colour } from 'pasteup';
+import { css } from 'utils/expensively-styled';
+
 import Logo from 'assets/images/guardian-logo-320.svg';
+
 import Navigation from './Navigation';
 import Footer from './Footer';
 
@@ -12,7 +15,6 @@ import {
     subHeadingContainer,
     subHeading,
     para,
-    logo,
 } from './style.js.scss';
 
 export default ({ beaconUrl }: Object) =>
@@ -23,10 +25,12 @@ export default ({ beaconUrl }: Object) =>
             </a>
         </div>
         <Logo
-            style={logo}
-            css={`
+            __expensiveStyle__={css`
+                width: 250px;
                 & .guardian {
-                    fill: ${colour.brandBlue};
+                    @supports (fill: hotpink) {
+                        fill: ${colour.brandBlue};
+                    }
                 }
             `}
         />
