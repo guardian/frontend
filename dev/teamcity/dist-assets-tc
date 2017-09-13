@@ -28,7 +28,7 @@ set +x
 echo "##teamcity[progressFinish 'asset dist']"
 set -x
 
-pushd static/src/javascripts
+cd static/src/javascripts
 
 set +x
 echo "Move to flow root directory static/src/javascripts"
@@ -40,7 +40,7 @@ set +x
 echo "Stop flow server"
 set -x
 
-popd
+cd -
 
 set +x
 echo "Return to directory $PWD"
