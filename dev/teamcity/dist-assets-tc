@@ -1,8 +1,8 @@
 #!/bin/bash
 
-set -o xtrace
-set -o nounset
-set -o errexit
+# set -o xtrace
+# set -o nounset
+# set -o errexit
 
 set +x
 . ~/.nvm/nvm.sh
@@ -30,19 +30,15 @@ set -x
 
 cd static/src/javascripts
 
-set +x
-echo "*** $PWD ***"
-set -x
-
-set +x
-echo "Move to flow root directory static/src/javascripts"
-set -x
-
-# flow stop
-
 # set +x
-# echo "Stop flow server"
+# echo "Move to flow root directory $PWD"
 # set -x
+
+$(npm bin)/flow --help
+
+set +x
+echo "Stop flow server"
+set -x
 
 cd -
 
