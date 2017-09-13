@@ -34,7 +34,7 @@
         .content__article-body {
             padding-right: gs-span(1) + $gs-gutter;
 
-            .ad-slot:not(.ad-slot--im) {
+            .ad-slot:not(.ad-slot--im .ad-slot--glabs-left) {
                 margin-right: -1 * (gs-span(1) + $gs-gutter);
             }
 
