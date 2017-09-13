@@ -128,16 +128,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-acquisitions-support-baseline",
-    "Test new S&C proposition against current membership/contribution offering across all channels",
-    owners = Seq(Owner.withGithub("svillafe")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 10, 13),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-acquisitions-support-us-recurring-contribution",
     "Test demand for recurring contributions in the US across all channels",
     owners = Seq(Owner.withGithub("justinpinner")),
