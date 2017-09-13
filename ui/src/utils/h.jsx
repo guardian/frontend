@@ -5,8 +5,7 @@
 // on `attributes.style` to styletron, then hands off to `preact#h`
 
 import { h as preact_h } from 'preact';
-import { styled as cheaplyStyled } from 'styletron-preact';
-import { expensivelyStyled } from 'utils/expensively-styled';
+import { styled } from 'styletron-preact';
 
 export default (
     component: string,
@@ -15,13 +14,18 @@ export default (
 ) => {
     const { style, __expensiveStyle__, ...otherAttributes } = attributes || {};
 
-    if (__expensiveStyle__) {
-        component = expensivelyStyled(component, __expensiveStyle__);
+    if (typeof __expensiveStyle__ === 'string') {
+        otherAttributes.className = [
+            otherAttributes.className,
+            __expensiveStyle__,
+        ]
+            .join(' ')
+            .trim();
     }
 
-    if (style) {
-        component = cheaplyStyled(component, style);
-    }
-
-    return preact_h(component, otherAttributes, children);
+    return preact_h(
+        style ? styled(component, style) : component,
+        otherAttributes,
+        children
+    );
 };
