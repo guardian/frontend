@@ -31,20 +31,24 @@ set -x
 cd static/src/javascripts
 
 set +x
-echo "Move to flow root directory static/src/javascripts"
+echo "*** $PWD ***"
 set -x
 
-flow stop
+# set +x
+# echo "Move to flow root directory static/src/javascripts"
+# set -x
 
-set +x
-echo "Stop flow server"
-set -x
+# flow stop
 
-cd -
+# set +x
+# echo "Stop flow server"
+# set -x
 
-set +x
-echo "Return to directory $PWD"
-set -x
+# cd -
+
+# set +x
+# echo "Return to directory $PWD"
+# set -x
 
 
 set +x
