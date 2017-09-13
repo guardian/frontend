@@ -2,6 +2,7 @@
 
 import idApi from 'common/modules/identity/api';
 
+// TODO: Remove repitition with common/modules/identity/formstack-iframe-embed
 class Formstack {
     el: HTMLElement;
     form: HTMLFormElement;
