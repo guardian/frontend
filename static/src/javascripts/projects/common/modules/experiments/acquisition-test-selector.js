@@ -5,7 +5,7 @@ import {
     getForcedVariant,
 } from 'common/modules/experiments/utils';
 import { testCanBeRun } from 'common/modules/experiments/test-can-run-checks';
-import { viewsInPreviousDays } from 'common/modules/commercial/acquisitions-view-log';
+import { isViewable } from 'common/modules/commercial/acquisitions-view-log';
 import { alwaysAsk } from 'common/modules/experiments/tests/contributions-epic-always-ask-strategy';
 import { askFourEarning } from 'common/modules/experiments/tests/contributions-epic-ask-four-earning';
 import { acquisitionsEpicLiveblog } from 'common/modules/experiments/tests/acquisitions-epic-liveblog';
@@ -26,25 +26,6 @@ const tests: $ReadOnlyArray<AcquisitionsABTest> = [
     acquisitionsEpicAlwaysAskElection,
     acquisitionsEpicThankYou,
 ];
-
-const isViewable = (v: Variant, t: ABTest): boolean => {
-    if (!v.options || !v.options.maxViews) return false;
-
-    const {
-        count: maxViewCount,
-        days: maxViewDays,
-        minDaysBetweenViews: minViewDays,
-    } = v.options.maxViews;
-
-    const isUnlimited = v.options.isUnlimited;
-    const testId = t.useLocalViewLog ? t.id : undefined;
-
-    const withinViewLimit =
-        viewsInPreviousDays(maxViewDays, testId) < maxViewCount;
-    const enoughDaysBetweenViews =
-        viewsInPreviousDays(minViewDays, testId) === 0;
-    return (withinViewLimit && enoughDaysBetweenViews) || isUnlimited;
-};
 
 export const abTestClashData = tests;
 

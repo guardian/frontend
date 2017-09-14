@@ -30,4 +30,33 @@ const viewsInPreviousDays = (days: number, testId: ?string): number => {
     ).length;
 };
 
-export { logView, viewsInPreviousDays };
+const isViewable = (v: Variant, t: ABTest): boolean => {
+    // if the variant is unlimited or doesn't specify
+    // any maxViews parameters, treat it as viewable
+    if (
+        (v.options && v.options.isUnlimited) ||
+        (!v.options || !v.options.maxViews)
+    )
+        return true;
+
+    const {
+        count: maxViewCount,
+        days: maxViewDays,
+        minDaysBetweenViews: minViewDays,
+    } = v.options.maxViews;
+
+    const testId = t.useLocalViewLog ? t.id : undefined;
+
+    const withinViewLimit =
+        viewsInPreviousDays(maxViewDays, testId) < maxViewCount;
+    const enoughDaysBetweenViews =
+        viewsInPreviousDays(minViewDays, testId) === 0;
+
+    return withinViewLimit && enoughDaysBetweenViews;
+};
+
+const clear = () => {
+    local.set(viewKey, []);
+};
+
+export { logView, viewsInPreviousDays, isViewable, clear };
