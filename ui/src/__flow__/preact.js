@@ -24,3 +24,8 @@ declare module "preact" {
     declare export var options: Object;
 
 }
+
+// because inject the h pragma, flow assumes our JS is react.
+// but because it's not and we're not providing it to the module,
+// it freaks out saying it's undeclared. this just makes it a global.
+declare var React: $Exports<'react'>;
