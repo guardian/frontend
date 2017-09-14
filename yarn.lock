@@ -147,7 +147,7 @@ amdefine@>=0.0.4:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/amdefine/-/amdefine-1.0.0.tgz#fd17474700cb5cc9c2b709f0be9d23ce3c198c33"
 
-amphtml-validator@^1.0.20:
+amphtml-validator@^1.0.10, amphtml-validator@^1.0.20:
   version "1.0.20"
   resolved "https://registry.yarnpkg.com/amphtml-validator/-/amphtml-validator-1.0.20.tgz#5f6a75ca1917844526e5d87f74c1334c0eccb514"
   dependencies:
@@ -7744,6 +7744,13 @@ promise-inflight@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/promise-inflight/-/promise-inflight-1.0.1.tgz#98472870bf228132fcbdd868129bad12c3c029e3"
 
+promise-retry@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/promise-retry/-/promise-retry-1.1.1.tgz#6739e968e3051da20ce6497fb2b50f6911df3d6d"
+  dependencies:
+    err-code "^1.0.0"
+    retry "^0.10.0"
+
 promise@7.1.1, promise@^7.0.3:
   version "7.1.1"
   resolved "https://registry.yarnpkg.com/promise/-/promise-7.1.1.tgz#489654c692616b8aa55b0724fa809bb7db49c5bf"
@@ -8180,7 +8187,7 @@ request-progress@~2.0.1:
   dependencies:
     throttleit "^1.0.0"
 
-request@2, request@2.81.0, "request@>= 2.44.0 < 3.0.0", request@^2.58.0, request@^2.67.0, request@^2.74.0, request@^2.79.0, request@^2.81.0:
+request@2, request@2.81.0, "request@>= 2.44.0 < 3.0.0", request@^2.58.0, request@^2.67.0, request@^2.74.0, request@^2.78.0, request@^2.79.0, request@^2.81.0:
   version "2.81.0"
   resolved "https://registry.yarnpkg.com/request/-/request-2.81.0.tgz#c6928946a0e06c5f8d6f8a9333469ffda46298a0"
   dependencies:

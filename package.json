@@ -4,7 +4,8 @@
   "private": true,
   "workspaces": [
     "ui",
-    "dev/eslint-plugin-guardian-frontend"
+    "dev/eslint-plugin-guardian-frontend",
+    "tools/amp-validation"
   ],
   "engines": {
     "yarn": "1.0.2"
