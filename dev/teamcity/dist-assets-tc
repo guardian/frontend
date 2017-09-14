@@ -4,8 +4,8 @@ set -o xtrace
 set -o nounset
 set -o errexit
 
-. ~/.nvm/nvm.sh
-nvm install > /dev/null
+. ~/.nvm/nvm.sh > /dev/null
+nvm install
 
 echo "Asset compilation"
 
