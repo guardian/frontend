@@ -1,11 +1,12 @@
 #!/bin/bash
 
+set -o xtrace
 set -o nounset
 set -o errexit
 
+set +x
 . ~/.nvm/nvm.sh
-
-set -o xtrace
+set -x
 
 nvm install
 
