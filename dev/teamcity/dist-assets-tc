@@ -6,9 +6,8 @@ set -o errexit
 
 set +x
 . ~/.nvm/nvm.sh
-set -x
-
 nvm install
+set -x
 
 echo "Asset compilation"
 
