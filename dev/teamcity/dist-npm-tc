@@ -9,4 +9,4 @@ nvm install
 
 echo "Install dependencies"
 
-make install
+make reinstall
