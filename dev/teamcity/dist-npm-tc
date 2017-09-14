@@ -1,10 +1,12 @@
 #!/bin/bash
 
-set -o xtrace
 set -o nounset
 set -o errexit
 
 . ~/.nvm/nvm.sh
+
+set -o xtrace
+
 nvm install
 
 echo "Install dependencies"
