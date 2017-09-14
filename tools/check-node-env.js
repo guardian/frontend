@@ -28,13 +28,21 @@ const installIfNecessary = (...packages) =>
     });
 
 installIfNecessary('semver', 'chalk').then(([semver, chalk]) => {
+    let foundYarnVersion;
+    let foundNodeVersion;
+
+    const reportGoodEnv = () => {
+        console.log(chalk.dim(`${chalk.green('✔')} Node ${foundNodeVersion}`));
+        console.log(chalk.dim(`${chalk.green('✔')} Yarn ${foundYarnVersion}`));
+    };
+
     // check the version of node we're in
-    const nodeVersion = process.version.match(/^v(\d+\.\d+\.\d+)/)[1];
+    foundNodeVersion = process.version.match(/^v(\d+\.\d+\.\d+)/)[1];
     const nvmrcVersion = fs
         .readFileSync(path.join(__dirname, '../', '.nvmrc'), 'utf8')
         .trim();
-    if (!semver.satisfies(nodeVersion, nvmrcVersion)) {
-        console.log(`${chalk.red('✗')} Node ${nodeVersion}`);
+    if (!semver.satisfies(foundNodeVersion, nvmrcVersion)) {
+        console.log(`${chalk.red('✗')} Node ${foundNodeVersion}`);
         console.log(
             chalk.dim(
                 `Frontend requires Node v${nvmrcVersion} or later.\n` +
@@ -45,7 +53,6 @@ installIfNecessary('semver', 'chalk').then(([semver, chalk]) => {
     }
 
     // We want to ensure a specific minimum version of yarn is installed.
-    let foundYarnVersion;
 
     const enginesYarnVersion = require('../package.json').engines.yarn;
     childProcess.exec('yarn --version', (e, version) => {
@@ -57,20 +64,10 @@ installIfNecessary('semver', 'chalk').then(([semver, chalk]) => {
                 })
                 .on('close', code => {
                     if (code !== 0) process.exit(code);
-                    console.log(
-                        chalk.dim(`${chalk.green('✔')} Node ${nodeVersion}`)
-                    );
-                    console.log(
-                        chalk.dim(
-                            `${chalk.green('✔')} Yarn ${foundYarnVersion}`
-                        )
-                    );
+                    reportGoodEnv();
                 });
         } else {
-            console.log(chalk.dim(`${chalk.green('✔')} Node ${nodeVersion}`));
-            console.log(
-                chalk.dim(`${chalk.green('✔')} Yarn ${foundYarnVersion}`)
-            );
+            reportGoodEnv();
         }
     });
 });
