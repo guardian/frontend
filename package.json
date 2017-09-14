@@ -7,7 +7,7 @@
     "dev/eslint-plugin-guardian-frontend"
   ],
   "engines": {
-    "yarn": "1.0.1"
+    "yarn": "1.0.2"
   },
   "dependencies": {
     "bean": "~1.0.14",
