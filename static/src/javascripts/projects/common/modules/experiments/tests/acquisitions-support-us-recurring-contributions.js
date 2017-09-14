@@ -6,8 +6,7 @@ import {
 import { setupEpicInLiveblog } from 'common/modules/experiments/tests/acquisitions-epic-liveblog';
 import { viewsInPreviousDays } from 'common/modules/commercial/acquisitions-view-log';
 import {
-    submitInsertEvent,
-    submitViewEvent,
+    submitComponentEvent,
 } from 'common/modules/commercial/acquisitions-ophan';
 import mediator from 'lib/mediator';
 import fastdom from 'lib/fastdom-promise';
@@ -125,16 +124,38 @@ const shouldDisplayEpic = (): boolean =>
 
 const bindEpicInsertAndViewHandlers = (
     test: EpicABTest,
-    products: $ReadOnlyArray<OphanProduct>,
-    campaignCode: string
+    variant: Variant,
+    products: $ReadOnlyArray<OphanProduct>
 ) => {
     // These should get fired when the epic is inserted & viewed
     mediator.once(test.insertEvent, () => {
-        submitInsertEvent(test.componentType, products, campaignCode);
+        submitComponentEvent({
+            component: {
+                componentType: test.componentType,
+                products,
+                labels: []
+            },
+            action: 'INSERT',
+            abTest: {
+                name: test.id,
+                variant: variant.id
+            }
+        });
     });
 
     mediator.once(test.viewEvent, () => {
-        submitViewEvent(test.componentType, products, campaignCode);
+        submitComponentEvent({
+            component: {
+                componentType: test.componentType,
+                products,
+                labels: []
+            },
+            action: 'VIEW',
+            abTest: {
+                name: test.id,
+                variant: variant.id
+            }
+        });
     });
 };
 
@@ -180,8 +201,8 @@ export const acquisitionsSupportUsRecurringContribution = makeABTest({
                 test(renderArticleEpic, variant, test) {
                     bindEpicInsertAndViewHandlers(
                         test,
-                        variant.options.products,
-                        variant.options.campaignCode
+                        variant,
+                        variant.options.products
                     );
 
                     if (config.get('page.contentType') === 'LiveBlog') {
@@ -243,8 +264,8 @@ export const acquisitionsSupportUsRecurringContribution = makeABTest({
                 test(renderArticleEpic, variant, test) {
                     bindEpicInsertAndViewHandlers(
                         test,
-                        variant.options.products,
-                        variant.options.campaignCode
+                        variant,
+                        variant.options.products
                     );
 
                     if (config.get('page.contentType') === 'LiveBlog') {
