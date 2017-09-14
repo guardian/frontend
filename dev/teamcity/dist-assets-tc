@@ -5,7 +5,7 @@ set -o nounset
 set -o errexit
 
 . ~/.nvm/nvm.sh
-nvm install
+nvm install > /dev/null
 
 echo "Asset compilation"
 
