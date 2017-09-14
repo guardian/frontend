@@ -12,9 +12,7 @@ import { isBlocked } from 'common/modules/commercial/membership-engagement-banne
 import { get as getGeoLocation } from 'lib/geolocation';
 import { constructQuery } from 'lib/url';
 import { getTest as getAcquisitionTest } from 'common/modules/experiments/acquisition-test-selector';
-import {
-    submitComponentEvent,
-} from 'common/modules/commercial/acquisitions-ophan';
+import { submitComponentEvent } from 'common/modules/commercial/acquisitions-ophan';
 
 // change messageCode to force redisplay of the message to users who already closed it.
 const messageCode = 'engagement-banner-2017-09-07';
@@ -158,15 +156,17 @@ const showBanner = (params: EngagementBannerParams): void => {
                 component: {
                     componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
                     products: params.products,
-                    labels: []
+                    labels: [],
                 },
                 action,
-                ...(test && variant) ? {
-                    abTest: {
-                        name: test.id,
-                        variant: variant.id
-                    }
-                } : {}
+                ...(test && variant
+                    ? {
+                          abTest: {
+                              name: test.id,
+                              variant: variant.id,
+                          },
+                      }
+                    : {}),
             });
         });
 

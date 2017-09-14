@@ -84,7 +84,7 @@ const save = (
             componentType: 'SURVEYS_QUESTIONS',
             products: [],
             labels: [],
-            campaignCode: campaignId
+            campaignCode: campaignId,
         },
         action: 'VOTE',
         value: JSON.stringify({
@@ -92,7 +92,7 @@ const save = (
             qs,
             as,
             why,
-        })
+        }),
     });
 };
 

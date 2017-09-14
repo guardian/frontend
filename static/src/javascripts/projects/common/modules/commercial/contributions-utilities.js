@@ -180,16 +180,23 @@ const registerIframeListener = (iframeId: string) => {
     });
 };
 
-const sendOphanData = (test, variantName, componentEvent, submitABTestParticipation) => {
+const sendOphanData = (
+    test,
+    variantName,
+    componentEvent,
+    submitABTestParticipation
+) => {
     if (test.variants.length > 1) {
         // Only send A/B test information if it's a genuine A/B test.
         // (Many epic "tests" have just one variant)
-        submitComponentEvent(Object.assign({}, componentEvent, {
-            abTest: {
-                name: test.id,
-                variant: variantName
-            }
-        }));
+        submitComponentEvent(
+            Object.assign({}, componentEvent, {
+                abTest: {
+                    name: test.id,
+                    variant: variantName,
+                },
+            })
+        );
 
         submitABTestParticipation();
     } else {
@@ -249,12 +256,17 @@ const makeABTestVariant = (
                         componentType: parentTest.componentType,
                         products,
                         campaignCode,
-                        labels: []
+                        labels: [],
                     },
-                    action: 'INSERT'
+                    action: 'INSERT',
                 };
 
-                sendOphanData(parentTest, id, componentEvent, submitABTestImpression);
+                sendOphanData(
+                    parentTest,
+                    id,
+                    componentEvent,
+                    submitABTestImpression
+                );
             }),
         success = submitABTestComplete =>
             mediator.once(parentTest.viewEvent, () => {
@@ -263,12 +275,17 @@ const makeABTestVariant = (
                         componentType: parentTest.componentType,
                         products,
                         campaignCode,
-                        labels: []
+                        labels: [],
                     },
-                    action: 'VIEW'
+                    action: 'VIEW',
                 };
 
-                sendOphanData(parentTest, id, componentEvent, submitABTestComplete);
+                sendOphanData(
+                    parentTest,
+                    id,
+                    componentEvent,
+                    submitABTestComplete
+                );
             }),
     } = options;
 

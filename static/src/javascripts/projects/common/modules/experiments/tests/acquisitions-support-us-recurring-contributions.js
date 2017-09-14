@@ -5,9 +5,7 @@ import {
 } from 'common/modules/commercial/contributions-utilities';
 import { setupEpicInLiveblog } from 'common/modules/experiments/tests/acquisitions-epic-liveblog';
 import { viewsInPreviousDays } from 'common/modules/commercial/acquisitions-view-log';
-import {
-    submitComponentEvent,
-} from 'common/modules/commercial/acquisitions-ophan';
+import { submitComponentEvent } from 'common/modules/commercial/acquisitions-ophan';
 import mediator from 'lib/mediator';
 import fastdom from 'lib/fastdom-promise';
 
@@ -133,13 +131,13 @@ const bindEpicInsertAndViewHandlers = (
             component: {
                 componentType: test.componentType,
                 products,
-                labels: []
+                labels: [],
             },
             action: 'INSERT',
             abTest: {
                 name: test.id,
-                variant: variant.id
-            }
+                variant: variant.id,
+            },
         });
     });
 
@@ -148,13 +146,13 @@ const bindEpicInsertAndViewHandlers = (
             component: {
                 componentType: test.componentType,
                 products,
-                labels: []
+                labels: [],
             },
             action: 'VIEW',
             abTest: {
                 name: test.id,
-                variant: variant.id
-            }
+                variant: variant.id,
+            },
         });
     });
 };
