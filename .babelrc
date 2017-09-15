@@ -2,6 +2,9 @@
     "presets": [
         "babel-preset-flow"
     ],
+    "plugins": [
+        "babel-plugin-transform-object-rest-spread"
+    ],
     "env": {
         "production": {
             "presets": [
