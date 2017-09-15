@@ -8,6 +8,16 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-glabs-traffic-driver",
+    "Displays an ad slot that will drive traffic to GLabs content",
+    owners = Seq(Owner.withGithub("JonNorman")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 9, 29),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
     "ab-snippet-four-variants",
     "Measure snippet open rate based on snippet design",
     owners = Seq(Owner.withGithub("regiskuckaertz")),
@@ -113,16 +123,6 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("rich-nguyen")),
     safeState = Off,
     sellByDate = new LocalDate(2017, 11, 1),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-acquisitions-support-baseline",
-    "Test new S&C proposition against current membership/contribution offering across all channels",
-    owners = Seq(Owner.withGithub("svillafe")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 10, 13),
     exposeClientSide = true
   )
 
