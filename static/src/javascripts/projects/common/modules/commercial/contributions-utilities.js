@@ -234,12 +234,12 @@ const makeABTestVariant = (
                     component: {
                         componentType: parentTest.componentType,
                         products,
-                        campaignCode
+                        campaignCode,
                     },
                     abTest: {
                         name: parentTest.id,
-                        variant: id
-                    }
+                        variant: id,
+                    },
                 });
 
                 submitABTestImpression();
@@ -250,12 +250,12 @@ const makeABTestVariant = (
                     component: {
                         componentType: parentTest.componentType,
                         products,
-                        campaignCode
+                        campaignCode,
                     },
                     abTest: {
                         name: parentTest.id,
-                        variant: id
-                    }
+                        variant: id,
+                    },
                 });
                 submitABTestComplete();
             }),

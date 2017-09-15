@@ -7,22 +7,24 @@ type ComponentEventWithoutAction = {
     id?: string,
     abTest?: {
         name: string,
-        variant: string
-    }
+        variant: string,
+    },
 };
 
 export const submitComponentEvent = (componentEvent: OphanComponentEvent) => {
     ophan.record({ componentEvent });
 };
 
-export const submitInsertEvent = (componentEvent: ComponentEventWithoutAction) =>
+export const submitInsertEvent = (
+    componentEvent: ComponentEventWithoutAction
+) =>
     submitComponentEvent({
         ...componentEvent,
-        action: 'INSERT'
+        action: 'INSERT',
     });
 
 export const submitViewEvent = (componentEvent: ComponentEventWithoutAction) =>
     submitComponentEvent({
         ...componentEvent,
-        action: 'VIEW'
+        action: 'VIEW',
     });
