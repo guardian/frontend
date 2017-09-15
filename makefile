@@ -142,4 +142,4 @@ ui-install:
 	@cd ui && yarn -s install
 
 ui-dev:
-	@cd ui && yarn dev -s
+	@cd ui && yarn -s dev

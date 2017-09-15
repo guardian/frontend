@@ -21,7 +21,7 @@
         "watch": "yarn -s install && yarn run -s clean:dist && concurrently --kill-others -n \"BRSR,SRVR\" -c \"blue,green\" \"yarn watch:browser\" \"yarn watch:server\"",
         "watch:browser": "webpack-dev-server --config ./__config__/webpack.config.dev.js --env.browser --watch",
         "watch:server": "webpack --config ./__config__/webpack.config.dev.js --env.server --watch",
-        "dev": "yarn install -s && yarn run clean -s && yarn compile:dev:server && concurrently --kill-others -n \"COMPILE-SRVR,SRVR\" -c \"blue,green\" \"yarn watch:server\" \"node --inspect src/dev-server.js\""
+        "dev": "yarn install -s && yarn run -s clean:dist -s && yarn compile:dev:server && concurrently --kill-others -n \"COMPILE-SRVR,SRVR\" -c \"blue,green\" \"yarn watch:server\" \"node --inspect src/dev-server.js\""
     },
     "dependencies": {
         "preact": "^8.2.1",
