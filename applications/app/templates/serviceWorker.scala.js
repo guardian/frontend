@@ -56,14 +56,38 @@ var isRequestForAsset = (function () {
 var handleAssetRequest = function (event) {
     // Default fetch behaviour
     // Cache first for all other requests
+
     event.respondWith(
         caches.match(event.request)
             .then(function (response) {
                 // Workaround Firefox bug which drops cookies
                 // https://github.com/guardian/frontend/issues/12012
-                return response || fetch(event.request, needCredentialsWorkaround(event.request.url) ? {
-                    credentials: 'include'
-                } : {});
+                if (response) {
+                    console.log('woooop ' + event.request.url + ' retrieved from cache :)');
+                    return response;
+                } else {
+                    console.log('booooo ' + event.request.url + ' not in cache :(');
+
+                    return fetch(event.request, needCredentialsWorkaround(event.request.url) ? {
+                        credentials: 'include'
+                    } : {}).then(function(response) {
+                        console.log('yeaaaaah ' + event.request.url + ' retrieved from network');
+
+                        // IMPORTANT: Clone the response. A response is a stream
+                        // and because we want the browser to consume the response
+                        // as well as the cache consuming the response, we need
+                        // to clone it so we have two streams.
+                        var responseToCache = response.clone();
+                       
+                        caches.open('graun').then(function(cache) {
+                            console.log('oooh yeaaaaah ' + event.request.url + ' cached');
+
+                            cache.put(event.request, responseToCache);
+                        });
+
+                        return response;
+                    });
+                }
             })
     );
 };
@@ -91,4 +115,16 @@ this.addEventListener('fetch', function (event) {
     } else if (blockIAS && isIASRequest(event.request)) {
         event.respondWith(forbidden);
     }
+});
+
+this.addEventListener('install', function() {
+    console.log('**** install ****');
+});
+
+this.addEventListener('activate', function() {
+    console.log('*** activate ***');
+
+    caches.delete('graun').then(function() { 
+        console.log('graun cache successfully deleted'); 
+    });
 });
