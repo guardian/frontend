@@ -2,6 +2,9 @@
 .*/node_modules/fbjs/.*
 .*node_modules.*/stylelint.*
 .*/node_modules/preact/.*
+.*/node_modules/emotion/.*
+.*/node_modules/emotion-utils/.*
+.*/node_modules/babel-plugin-emotion/.*
 
 [include]
 
