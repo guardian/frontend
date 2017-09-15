@@ -1,5 +1,3 @@
-// @flow
-
 /**
  * an individual A/B test, structured for Ophan
  */

@@ -22,7 +22,7 @@ install: check-node check-yarn
 
 # Remove all 3rd party dependencies.
 uninstall: # PRIVATE
-	@rm -rf node_modules
+	@rm -rf node_modules **/node_modules
 	@echo 'All 3rd party dependencies have been uninstalled.'
 
 # Reinstall all 3rd party dependencies from scratch.

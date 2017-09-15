@@ -1,5 +1,3 @@
-// @flow
-
 type ListenerFunction = (f: () => void) => void;
 
 declare type Variant = {
