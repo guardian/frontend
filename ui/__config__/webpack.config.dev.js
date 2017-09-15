@@ -42,7 +42,12 @@ module.exports = env => {
 
     if (env.server) {
         return webpackMerge.smart(config, {
-            watch: true,
+            output: {
+                library: 'frontend',
+                libraryTarget: 'commonjs',
+                path: path.join(ui, 'dist'),
+            },
+            devtool: 'cheap-module-eval-source-map',
             stats,
         });
     }
@@ -50,27 +55,17 @@ module.exports = env => {
     if (env.browser) {
         return webpackMerge.smart(config, {
             entry: {
-                'bundle.browser': ['webpack-hot-middleware/client?reload=true'],
+                'ui.bundle.browser': ['webpack-hot-middleware/client'],
             },
             output: {
                 path: path.join(ui, 'dist'),
+                publicPath: '/assets/javascripts/',
             },
-            devtool: 'eval-cheap-module-source-map',
+            devtool: 'cheap-module-eval-source-map',
             plugins: [
                 new webpack.HotModuleReplacementPlugin(),
                 new webpack.NamedModulesPlugin(),
             ],
-            devServer: {
-                publicPath: '/assets/javascripts/',
-                compress: true,
-                port: 3000,
-                overlay: true,
-                proxy: {
-                    '*': 'http://localhost:9000',
-                },
-                hot: true,
-                stats,
-            },
         });
     }
 
