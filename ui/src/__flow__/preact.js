@@ -25,7 +25,7 @@ declare module "preact" {
 
 }
 
-// because inject the h pragma, flow assumes our JS is react.
-// but because it's not and we're not providing it to the module,
-// it freaks out saying it's undeclared. this just makes it a global.
+// Because we inject the h pragma, flow assumes our jsx is React.
+// But because it's not and we're therefore not importing it,
+// it freaks out saying it's undeclared. This just makes it a global.
 declare var React: $Exports<'react'>;
