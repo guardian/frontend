@@ -140,3 +140,6 @@ ui-watch:
 
 ui-install:
 	@cd ui && yarn -s install
+
+ui-dev:
+	@cd ui && yarn dev -s
