@@ -123,7 +123,8 @@ const shouldDisplayEpic = (): boolean =>
 const bindEpicInsertAndViewHandlers = (
     test: EpicABTest,
     variant: Variant,
-    products: $ReadOnlyArray<OphanProduct>
+    products: $ReadOnlyArray<OphanProduct>,
+    campaignCode: string
 ) => {
     // These should get fired when the epic is inserted & viewed
     mediator.once(test.insertEvent, () => {
@@ -131,6 +132,7 @@ const bindEpicInsertAndViewHandlers = (
             component: {
                 componentType: test.componentType,
                 products,
+                campaignCode
             },
             action: 'INSERT',
             abTest: {
@@ -145,6 +147,7 @@ const bindEpicInsertAndViewHandlers = (
             component: {
                 componentType: test.componentType,
                 products,
+                campaignCode
             },
             action: 'VIEW',
             abTest: {
@@ -198,7 +201,8 @@ export const acquisitionsSupportUsRecurringContribution = makeABTest({
                     bindEpicInsertAndViewHandlers(
                         test,
                         variant,
-                        variant.options.products
+                        variant.options.products,
+                        variant.options.campaignCode
                     );
 
                     if (config.get('page.contentType') === 'LiveBlog') {
@@ -261,7 +265,8 @@ export const acquisitionsSupportUsRecurringContribution = makeABTest({
                     bindEpicInsertAndViewHandlers(
                         test,
                         variant,
-                        variant.options.products
+                        variant.options.products,
+                        variant.options.campaignCode
                     );
 
                     if (config.get('page.contentType') === 'LiveBlog') {
