@@ -16,11 +16,10 @@ app.use('/assets', express.static(path.resolve('../static/target')));
 app.use(
     webpackDevMiddleware(compiler, {
         publicPath: webpackConfig.output.publicPath,
+        noInfo: true,
     })
 );
-app.use(
-    webpackHotMiddleware(compiler)
-);
+app.use(webpackHotMiddleware(compiler));
 app.get('/', (req, res) => {
     delete require.cache[require.resolve('../dist/ui.bundle.server')];
 
@@ -31,7 +30,8 @@ app.get('/', (req, res) => {
         frontend.render({
             beaconUrl: '//beacon.gu-web.net',
             bundleUrl: '/assets/javascripts/ui.bundle.browser.js',
-            polyfillioUrl: 'https://assets.guim.co.uk/polyfill.io/v2/polyfill.min.js?rum=0&features=es6,es7,es2017,default-3.6,HTMLPictureElement&flags=gated&callback=guardianPolyfilled',
+            polyfillioUrl:
+                'https://assets.guim.co.uk/polyfill.io/v2/polyfill.min.js?rum=0&features=es6,es7,es2017,default-3.6,HTMLPictureElement&flags=gated&callback=guardianPolyfilled',
         })
     );
 });
