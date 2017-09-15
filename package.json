@@ -2,6 +2,14 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
+  "workspaces": [
+    "ui",
+    "dev/eslint-plugin-guardian-frontend",
+    "tools/amp-validation"
+  ],
+  "engines": {
+    "yarn": "1.0.2"
+  },
   "dependencies": {
     "bean": "~1.0.14",
     "bonzo": "~2.0.0",
@@ -62,7 +70,6 @@
     "eslint-import-resolver-webpack": "^0.8.3",
     "eslint-plugin-flow-header": "^0.1.1",
     "eslint-plugin-flowtype": "^2.35.0",
-    "eslint-plugin-guardian-frontend": "file:dev/eslint-plugin-guardian-frontend",
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-jasmine": "^1.8.1",
     "eslint-plugin-jsx-a11y": "^5.1.1",
@@ -163,7 +170,7 @@
     "setupTestFrameworkScriptFile": "<rootDir>/dev/jest.setupTestFrameworkScriptFile.js"
   },
   "scripts": {
-    "postinstall": "./tools/task-runner/runner githooks --verbose",
+    "postinstall": "./tools/sync-githooks.js",
     "amdtoes6": "amdtoes6 --beautify",
     "lebab": "lebab --transform arrow,let,arg-rest,arg-spread,obj-method,obj-shorthand,no-strict,class,default-param --replace",
     "eslint-fix": "eslint --color --fix",
