@@ -15,9 +15,13 @@
         "test:ci": "yarn -s test -- --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
         "clean:dist": "rm -rf ./dist",
         "compile": "BABEL_ENV=production yarn -s install && yarn -s clean:dist && webpack --config ./__config__/webpack.config.prod.js --progress && echo 'Client bundle size:' && gzip-size ../static/target/javascripts/ui.bundle.browser.js",
+        "compile:dev": "yarn compile:dev:server && yarn compile:dev:browser",
+        "compile:dev:server": "webpack --config ./__config__/webpack.config.dev.js --env.server",
+        "compile:dev:browser": "webpack --config ./__config__/webpack.config.dev.js --env.browser",
         "watch": "yarn -s install && yarn run -s clean:dist && concurrently --kill-others -n \"BRSR,SRVR\" -c \"blue,green\" \"yarn watch:browser\" \"yarn watch:server\"",
-        "watch:browser": "webpack-dev-server --config ./__config__/webpack.config.dev.js --env.browser",
-        "watch:server": "webpack --config ./__config__/webpack.config.dev.js --env.server"
+        "watch:browser": "webpack-dev-server --config ./__config__/webpack.config.dev.js --env.browser --watch",
+        "watch:server": "webpack --config ./__config__/webpack.config.dev.js --env.server --watch",
+        "dev": "yarn install -s && yarn run clean -s && yarn compile:dev:server && concurrently --kill-others -n \"COMPILE-SRVR,SRVR\" -c \"blue,green\" \"yarn watch:server\" \"node --inspect src/dev-server.js\""
     },
     "dependencies": {
         "preact": "^8.2.1",
@@ -47,6 +51,7 @@
         "coveralls": "^2.13.0",
         "css-loader": "^0.28.4",
         "emotion": "^7.2.2",
+        "express": "^4.15.4",
         "flow-bin": "^0.51.1",
         "gzip-size-cli": "^2.0.0",
         "htmltojsx": "^0.2.6",
@@ -64,8 +69,9 @@
         "to-string-loader": "^1.1.5",
         "webpack": "^3.4.1",
         "webpack-bundle-analyzer": "^2.8.3",
+        "webpack-dev-middleware": "^1.12.0",
         "webpack-dev-server": "^2.6.1",
-        "webpack-hot-middleware": "^2.18.2",
+        "webpack-hot-middleware": "^2.19.1",
         "webpack-merge": "^4.1.0"
     },
     "jest": {
