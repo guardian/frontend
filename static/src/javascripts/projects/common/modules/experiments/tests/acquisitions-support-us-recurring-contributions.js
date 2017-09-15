@@ -132,7 +132,7 @@ const bindEpicInsertAndViewHandlers = (
             component: {
                 componentType: test.componentType,
                 products,
-                campaignCode
+                campaignCode,
             },
             action: 'INSERT',
             abTest: {
@@ -147,7 +147,7 @@ const bindEpicInsertAndViewHandlers = (
             component: {
                 componentType: test.componentType,
                 products,
-                campaignCode
+                campaignCode,
             },
             action: 'VIEW',
             abTest: {
