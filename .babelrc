@@ -2,6 +2,9 @@
     "presets": [
         "babel-preset-flow"
     ],
+    "plugins": [
+        "babel-plugin-transform-object-rest-spread"
+    ],
     "env": {
         "production": {
             "presets": [
@@ -10,7 +13,6 @@
                 }]
             ],
             "plugins": [
-                "babel-plugin-transform-object-rest-spread",
                 ["babel-plugin-transform-runtime", {
                     "polyfill": false
                 }],
