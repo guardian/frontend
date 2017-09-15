@@ -1,6 +1,8 @@
 // @flow
 import { colour } from 'pasteup';
+
 import Logo from 'assets/images/guardian-logo-320.svg';
+
 import Navigation from './Navigation';
 import Footer from './Footer';
 
@@ -12,10 +14,9 @@ import {
     subHeadingContainer,
     subHeading,
     para,
-    logo,
 } from './style.js.scss';
 
-export default ({ beaconUrl }: Object) => (
+export default ({ beaconUrl }: Object) =>
     <div style={fluidWrap}>
         <div style={topBar}>
             <a href="/" style={topBarLink}>
@@ -23,8 +24,14 @@ export default ({ beaconUrl }: Object) => (
             </a>
         </div>
         <Logo
-            block-styles={{ guardian: { fill: colour.brandBlueDark } }}
-            style={logo}
+            css={`
+                width: 250px;
+                & .guardian {
+                    @supports (fill: hotpink) {
+                        fill: ${colour.brandBlue};
+                    }
+                }
+            `}
         />
         <h1 style={heading}>
             Sorry - we haven’t been able to serve the page you asked for.
@@ -80,5 +87,4 @@ export default ({ beaconUrl }: Object) => (
             style={{ display: 'none' }}
             rel="nofollow"
         />
-    </div>
-);
+    </div>;

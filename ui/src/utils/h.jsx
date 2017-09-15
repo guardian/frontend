@@ -4,18 +4,18 @@
 // bespoke wrapper around preact's `h` that passes any CSS data
 // on `attributes.style` to styletron, then hands off to `preact#h`
 
-import { styled } from 'styletron-preact';
 import { h as preact_h } from 'preact';
+import { styled } from 'styletron-preact';
 
 export default (
-    nodeName: string,
+    component: string,
     attributes: ?Object,
     ...children: Array<any>
 ) => {
     const { style, ...otherAttributes } = attributes || {};
 
     return preact_h(
-        style ? styled(nodeName, style) : nodeName,
+        style ? styled(component, style) : component,
         otherAttributes,
         children
     );

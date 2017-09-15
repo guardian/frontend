@@ -3,6 +3,7 @@
 import { render as renderToString } from 'preact-render-to-string';
 import { StyletronProvider } from 'styletron-preact';
 import StyletronServer from 'styletron-server';
+import { extractCritical } from 'emotion-server';
 
 import head from 'components/head';
 import Body from 'components/body';
@@ -26,7 +27,13 @@ export const render = (props: Object) => {
     return `
         <!DOCTYPE html>
         <html lang="en">
-            ${head(props, styletron.getStylesheetsHtml())}
+            ${head(
+                props,
+                [
+                    styletron.getStylesheetsHtml(),
+                    `<style expensive-css>${extractCritical(body).css}</style>`,
+                ].join('\n')
+            )}
             ${body}
         </html>
     `.trim();
