@@ -17,7 +17,7 @@ list: # PRIVATE
 
 # Install all 3rd party dependencies.
 install: check-node-env
-	@yarn install -s
+	@yarn -s install
 	@make ui-install
 
 # Remove all 3rd party dependencies.
@@ -133,10 +133,10 @@ es6: install
 # *********************** UI ***********************
 
 ui-compile:
-	@cd ui && yarn compile -s
+	@cd ui && yarn -s compile
 
 ui-watch:
-	@cd ui && yarn watch -s
+	@cd ui && yarn -s watch
 
 ui-install:
-	@cd ui && yarn install -s
+	@cd ui && yarn -s install
