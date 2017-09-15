@@ -7,13 +7,16 @@ declare var twttr: {
 };
 
 declare var require: {
-        (id: string): any,
-        ensure(
+    (id: string): any,
+    ensure(
         ids: Array<string>,
         callback?: { (require: typeof require): void },
-    chunk
-    ? : string):
-    void,
+        chunk
+        ? : string
+    ): void,
+    resolve: (id: string) => string,
+    cache: any,
+    main: typeof module,
 };
 
 declare type ThirdPartyTag = {
