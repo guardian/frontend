@@ -99,3 +99,25 @@ export default () => <MySVG block-styles={styles} />
 // <svg><path data-block="red" style="fill: red" /></svg>
 
 ```
+
+### Debug server rendering
+
+HTML is initially generated on the server. In production, server rendering JavaScript runs in 
+[Nashorn](http://www.oracle.com/technetwork/articles/java/jf14-nashorn-2126515.html), but Nashorn doesn't currently 
+provide a good debugging experience. 
+
+For this reason, we provide a dev server that runs server rendering in Node. It is then trivial to [connect Chrome's
+devtools to Node](https://medium.com/@paul_irish/debugging-node-js-nightlies-with-chrome-devtools-7c4a1b95ae27), add 
+breakpoints, step through code and inspect variables. It even supports source maps.
+
+#### Start the dev-server
+
+```bash
+$ yarn dev
+```
+
+#### Attach Chrome's devtools
+
+- Open [chrome://inspect](chrome://inspect) in Chrome
+- Click "Open dedicated DevTools for Node"
+- Debug as you would client side JavaScript
