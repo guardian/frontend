@@ -82,8 +82,6 @@ const save = (
     submitComponentEvent({
         component: {
             componentType: 'SURVEYS_QUESTIONS',
-            products: [],
-            labels: [],
             campaignCode: campaignId,
         },
         action: 'VOTE',

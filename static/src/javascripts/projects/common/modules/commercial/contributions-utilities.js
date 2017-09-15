@@ -256,7 +256,6 @@ const makeABTestVariant = (
                         componentType: parentTest.componentType,
                         products,
                         campaignCode,
-                        labels: [],
                     },
                     action: 'INSERT',
                 };
@@ -275,7 +274,6 @@ const makeABTestVariant = (
                         componentType: parentTest.componentType,
                         products,
                         campaignCode,
-                        labels: [],
                     },
                     action: 'VIEW',
                 };

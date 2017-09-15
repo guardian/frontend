@@ -58,9 +58,9 @@ declare type OphanComponentType =
 declare type OphanComponent = {|
     componentType: OphanComponentType,
     id?: string,
-    products: $ReadOnlyArray<OphanProduct>,
+    products?: $ReadOnlyArray<OphanProduct>,
     campaignCode?: string,
-    labels: $ReadOnlyArray<string>
+    labels?: $ReadOnlyArray<string>
 |};
 
 declare type OphanComponentEvent = {|
