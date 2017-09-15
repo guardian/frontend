@@ -12,7 +12,6 @@
         "lint:js:fix": "eslint . --fix",
         "lint": "yarn install -s && yarn lint:js -s && yarn lint:scss -s",
         "lint:fix": "yarn install -s && yarn lint:js:fix -s && yarn lint:scss:fix -s",
-        "flow": "cd src && flow",
         "test": "yarn install -s && jest",
         "test:watch": "yarn install -s && yarn test -- --watch",
         "test:ci": "yarn test -- --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
