@@ -1,10 +1,6 @@
 // @flow
 import ophan from 'ophan/ng';
 
-export const submitComponentEvent = (componentEvent: OphanComponentEvent) => {
-    ophan.record({ componentEvent });
-};
-
 type ComponentEventWithoutAction = {
     component: OphanComponent,
     value?: string,
@@ -13,6 +9,10 @@ type ComponentEventWithoutAction = {
         name: string,
         variant: string
     }
+};
+
+export const submitComponentEvent = (componentEvent: OphanComponentEvent) => {
+    ophan.record({ componentEvent });
 };
 
 export const submitInsertEvent = (componentEvent: ComponentEventWithoutAction) =>
