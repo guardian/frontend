@@ -23,7 +23,7 @@ define([
     'lodash/arrays/zip',
     'lodash/collections/forEach',
     'lodash/collections/find',
-    './crossword'
+    'common/modules/crosswords/crossword'
 ], function (
     React,
     bonzo,

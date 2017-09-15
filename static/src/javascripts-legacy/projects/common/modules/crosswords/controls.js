@@ -21,7 +21,7 @@ define([
             // GRID CONTROLS
             controls.grid.unshift(React.createElement(ConfirmButton, {
                 className: buttonClassName + ' ' + buttonGenericClassName,
-                onClick: this.props.onClearAll,
+                onClick: this.props.crossword.onClearAll.bind(this.props.crossword),
                 key: 'clear',
                 'data-link-name': 'Clear all',
                 text: 'Clear all'
@@ -30,14 +30,14 @@ define([
             if (hasSolutions) {
                 controls.grid.unshift(React.createElement(ConfirmButton, {
                     className: buttonClassName + ' ' + buttonGenericClassName,
-                    onClick: this.props.onSolution,
+                    onClick: this.props.crossword.onSolution.bind(this.props.crossword),
                     key: 'solution',
                     'data-link-name': 'Reveal all',
                     text: 'Reveal all'
                 }));
                 controls.grid.unshift(React.createElement(ConfirmButton, {
                     className: buttonClassName + ' ' + buttonGenericClassName,
-                    onClick: this.props.onCheckAll,
+                    onClick: this.props.crossword.onCheckAll.bind(this.props.crossword),
                     key: 'checkAll',
                     'data-link-name': 'Check all',
                     text: 'Check all'
@@ -48,7 +48,7 @@ define([
             if (hasFocus) {
                 controls.clue.unshift(React.createElement('button', {
                     className: buttonClassName + ' ' + buttonCurrentClassName,
-                    onClick: this.props.onClearSingle,
+                    onClick: this.props.crossword.onClearSingle.bind(this.props.crossword),
                     key: 'clear-single',
                     'data-link-name': 'Clear this'
                 }, 'Clear this'));
@@ -57,7 +57,7 @@ define([
                 controls.clue.push(React.createElement(
                     'button', {
                         className: buttonClassName + ' ' + buttonCurrentClassName,
-                        onClick: this.props.onToggleAnagramHelper,
+                        onClick: this.props.crossword.onToggleAnagramHelper.bind(this.props.crossword),
                         key: 'anagram',
                         'data-link-name': 'Show anagram helper'
                     },
@@ -68,7 +68,7 @@ define([
                     controls.clue.unshift(React.createElement(
                         'button', {
                             className: buttonClassName + ' ' + buttonCurrentClassName,
-                            onClick: this.props.onCheat,
+                            onClick: this.props.crossword.onCheat.bind(this.props.crossword),
                             key: 'cheat',
                             'data-link-name': 'Reveal this'
                         },
@@ -77,7 +77,7 @@ define([
                     controls.clue.unshift(React.createElement(
                         'button', {
                             className: buttonClassName + ' ' + buttonCurrentClassName,
-                            onClick: this.props.onCheck,
+                            onClick: this.props.crossword.onCheck.bind(this.props.crossword),
                             key: 'check',
                             'data-link-name': 'Check this'
                         },
