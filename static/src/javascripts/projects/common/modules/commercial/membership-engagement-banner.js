@@ -156,6 +156,7 @@ const showBanner = (params: EngagementBannerParams): void => {
                 component: {
                     componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
                     products: params.products,
+                    campaignCode: params.campaignCode
                 },
                 action,
                 ...(test && variant
