@@ -34,7 +34,7 @@ describe('Container Toggle', () => {
 
     beforeEach(() => {
         container = bonzo.create(
-            `<section class="fc-container js-container--toggle" data-id="${containerId}">` +
+            `<section class="fc-container js-container--toggle fc-container__will-have-toggle" data-id="${containerId}">` +
                 `<div class="fc-container__header js-container__header">` +
                 `<h2>A container</h2>` +
                 `</div>` +
@@ -59,6 +59,18 @@ describe('Container Toggle', () => {
 
         fastdom.defer(1, () => {
             expect($container.hasClass('js-container--toggle')).toBeFalsy();
+            done();
+        });
+    });
+
+    it('should remove "fc-container--will-have-toggle" class from container', done => {
+        const toggle = new ContainerToggle(container);
+        toggle.addToggle();
+
+        fastdom.defer(1, () => {
+            expect(
+                $container.hasClass('fc-container--will-have-toggle')
+            ).toBeFalsy();
             done();
         });
     });
