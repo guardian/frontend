@@ -116,7 +116,5 @@ this.addEventListener('fetch', function (event) {
 });
 
 this.addEventListener('activate', function() {
-    caches.delete('graun').then(function() { 
-        console.log('graun cache successfully deleted'); 
-    });
+    caches.delete('graun');
 });
