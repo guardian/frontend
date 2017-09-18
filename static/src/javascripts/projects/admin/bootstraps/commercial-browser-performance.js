@@ -43,8 +43,8 @@ const updateAverageStartTime = (startTimes: Array<number>): void => {
         0
     );
 
-    const averageStartTime: string = (sum /
-        commercialStartTimes.length).toFixed(2);
+    const averageStartTime: string = (sum / commercialStartTimes.length
+    ).toFixed(2);
 
     $('.graph__average-value').text(averageStartTime);
 };

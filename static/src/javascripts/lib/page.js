@@ -51,8 +51,10 @@ const isMatch = (yes: yesable, no: noable): boolean => {
 const isCompetition = (yes: yesable): boolean => {
     const notMobile = getBreakpoint() !== 'mobile';
     const competition = notMobile
-        ? ($('.js-football-competition').attr('data-link-name') || '')
-              .replace('keyword: football/', '')
+        ? ($('.js-football-competition').attr('data-link-name') || '').replace(
+              'keyword: football/',
+              ''
+          )
         : '';
 
     return isit(competition, yes);
