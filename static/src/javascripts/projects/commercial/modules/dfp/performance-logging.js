@@ -111,8 +111,9 @@ const reportTrackingData = (): void => {
             tags: performanceLog.tags,
             adverts: performanceLog.adverts,
             baselines: performanceLog.baselines,
-            modules: (performanceLog.modules || [])
-                .filter((module: Object) => !!module.duration),
+            modules: (performanceLog.modules || []).filter(
+                (module: Object) => !!module.duration
+            ),
         };
         beacon.postJson(
             '/commercial-report',
