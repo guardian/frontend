@@ -7,13 +7,12 @@ import $ from 'lib/$';
 
 type ScoreBoardContext = {
     autoupdated: boolean,
-    componentClass: string,
     pageType: 'minbymin' | 'preview' | 'report' | 'stats',
-    placeholder: HTMLElement,
+    placeholder?: HTMLElement,
     parent: bonzo,
     responseDataKey: string,
     endpoint: string,
-    updateEvery: number,
+    updateEvery?: number,
 };
 
 const getScoreContainerHtml = (context: Object): string => `
