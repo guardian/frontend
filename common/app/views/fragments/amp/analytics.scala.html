@@ -18,5 +18,11 @@ are used to generate the confidence graphs on the frontend dashboard.
 @fragments.amp.googleAnalytics(content)
 
 <amp-analytics id="comscore" type="comscore">
-    <script type="application/json">{ "vars": { "c2": "6035250" } }</script>
+    <script type="application/json">
+        {
+            "vars": { "c2": "6035250" },
+            "extraUrlParams": {"comscorekw": "amp"}
+        }
+
+    </script>
 </amp-analytics>
