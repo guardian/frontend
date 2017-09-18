@@ -52,7 +52,7 @@ git
                     'Please run this in a clean, up to date copy of master.'
                 )
             );
-            // process.exit(1);
+            process.exit(1);
         }
     })
     .then(() => {
