@@ -38,7 +38,7 @@ jest.mock('common/modules/experiments/acquisition-test-selector', () => ({
         audienceOffset: 0,
         successMeasure: 'fake success measure',
         audienceCriteria: 'fake audience criteria',
-        variants: [],
+        variants: [{id: 'fake-user-variant-id'}],
         canRun: () => true,
         componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
     })),
@@ -59,7 +59,12 @@ jest.mock(
                 audienceOffset: 0,
                 successMeasure: 'fake success measure',
                 audienceCriteria: 'fake audience criteria',
-                variants: [],
+                variants: [{
+                    id: 'fake-user-variant-id',
+                    options: {
+                        engagementBannerParams: {},
+                    },
+                }],
                 canRun: () => true,
                 componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
             },
@@ -82,7 +87,7 @@ jest.mock('common/modules/experiments/test-can-run-checks', () => ({
 }));
 jest.mock('common/modules/experiments/segment-util', () => ({
     isInTest: jest.fn(() => true),
-    variantFor: jest.fn(() => ({})),
+    variantFor: jest.fn(() => ({id: 'fake-user-variant-id'})),
 }));
 jest.mock('commercial/modules/commercial-features', () => ({
     commercialFeatures: {
