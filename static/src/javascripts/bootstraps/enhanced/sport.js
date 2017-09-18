@@ -18,7 +18,7 @@ declare type Extra = {
     ready: boolean,
 };
 
-const renderExtras = (extras: Array<Extra>) => {
+const renderExtras = (extras: Array<Extra>): void => {
     if (extras.filter(extra => extra && extra.ready === false).length === 0) {
         belowArticleVisible(
             () => {
@@ -78,7 +78,7 @@ const rugby = (): void => {
         });
 
         // Rugby score returns the match nav too, to optimise calls.
-        scoreBoard.fetched = (resp: Object) => {
+        scoreBoard.fetched = (resp: Object): void => {
             fastdom
                 .read(() => document.querySelector('.content--liveblog'))
                 .then(liveblog => {
