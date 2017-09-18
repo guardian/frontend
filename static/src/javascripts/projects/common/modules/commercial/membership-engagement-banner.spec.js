@@ -138,18 +138,6 @@ describe('Membership engagement banner', () => {
     });
 
     describe('If breaking news banner has not shown', () => {
-        const fakeComponentEvent: OphanComponentEvent = {
-            component: {
-                componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
-                products: ['CONTRIBUTION'],
-                campaignCode: 'fake-campaign-code',
-            },
-            action: 'INSERT',
-            abTest: {
-                name: 'fake-test-id',
-                variant: 'fake-variant-id'
-            }
-        };
         let showBanner;
         let emitSpy;
 
@@ -179,10 +167,21 @@ describe('Membership engagement banner', () => {
                     'membership-message:display'
                 );
             }));
-        it('should record the component event in ophan', () =>
+        it('should record the component event in ophan with a/b test info', () =>
             showBanner.then(() => {
                 expect(fakeOphan.record).toHaveBeenCalledWith({
-                    componentEvent: fakeComponentEvent,
+                    componentEvent: {
+                        component: {
+                            componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
+                            products: ['CONTRIBUTION'],
+                            campaignCode: 'fake-campaign-code',
+                        },
+                        action: 'INSERT',
+                        abTest: {
+                            name: 'fake-test-id',
+                            variant: 'fake-variant-id'
+                        }
+                    },
                 });
             }));
     });
@@ -218,6 +217,8 @@ describe('Membership engagement banner', () => {
             fakeVariantFor.mockImplementationOnce(() => ({
                 id: 'fake-variant-id',
                 options: {
+                    // This being empty is what lets the campaign
+                    // code default to the test campaignId plus variant id
                     engagementBannerParams: {},
                 },
             }));
