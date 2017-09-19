@@ -15,13 +15,10 @@
         "test:ci": "yarn -s test -- --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
         "clean:dist": "rm -rf ./dist",
         "compile": "BABEL_ENV=production yarn -s install && yarn -s clean:dist && webpack --config ./__config__/webpack.config.prod.js --progress && echo 'Client bundle size:' && gzip-size ../static/target/javascripts/ui.bundle.browser.js",
-        "compile:dev": "yarn compile:dev:server && yarn compile:dev:browser",
-        "compile:dev:server": "webpack --config ./__config__/webpack.config.dev.js --env.server",
-        "compile:dev:browser": "webpack --config ./__config__/webpack.config.dev.js --env.browser",
         "watch": "yarn -s install && yarn run -s clean:dist && concurrently --kill-others -n \"BRSR,SRVR\" -c \"blue,green\" \"yarn watch:browser\" \"yarn watch:server\"",
         "watch:browser": "webpack-dev-server --config ./__config__/webpack.config.dev.js --env.browser --watch",
         "watch:server": "webpack --config ./__config__/webpack.config.dev.js --env.server --watch",
-        "dev": "yarn install -s && yarn run -s clean:dist -s && yarn compile:dev:server && concurrently --kill-others -n \"COMPILE-SRVR,SRVR\" -c \"blue,green\" \"yarn watch:server\" \"node --inspect src/dev-server.js\""
+        "dev": "yarn install -s && yarn run -s clean:dist -s && concurrently --kill-others -n \"COMPILE-SRVR,SRVR\" -c \"blue,green\" \"yarn watch:server\" \"node --inspect src/dev-server.js\""
     },
     "dependencies": {
         "preact": "^8.2.1",
