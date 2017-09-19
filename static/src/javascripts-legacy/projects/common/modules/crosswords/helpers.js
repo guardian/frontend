@@ -1,5 +1,5 @@
 define([
-    './constants',
+    'common/modules/crosswords/constants',
     'lodash/arrays/findIndex',
     'lodash/collections/find',
     'lodash/collections/map',

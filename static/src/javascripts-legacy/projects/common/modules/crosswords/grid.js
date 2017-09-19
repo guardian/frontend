@@ -1,7 +1,7 @@
 define([
     'react/addons',
     './helpers',
-    './constants',
+    'common/modules/crosswords/constants',
     './cell',
     './classNames',
     'lodash/collections/forEach',
