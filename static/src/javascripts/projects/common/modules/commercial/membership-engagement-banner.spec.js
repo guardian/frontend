@@ -38,7 +38,7 @@ jest.mock('common/modules/experiments/acquisition-test-selector', () => ({
         audienceOffset: 0,
         successMeasure: 'fake success measure',
         audienceCriteria: 'fake audience criteria',
-        variants: [{id: 'fake-variant-id'}],
+        variants: [{ id: 'fake-variant-id' }],
         canRun: () => true,
         componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
     })),
@@ -59,12 +59,14 @@ jest.mock(
                 audienceOffset: 0,
                 successMeasure: 'fake success measure',
                 audienceCriteria: 'fake audience criteria',
-                variants: [{
-                    id: 'fake-variant-id',
-                    options: {
-                        engagementBannerParams: {},
+                variants: [
+                    {
+                        id: 'fake-variant-id',
+                        options: {
+                            engagementBannerParams: {},
+                        },
                     },
-                }],
+                ],
                 canRun: () => true,
                 componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
             },
@@ -87,7 +89,7 @@ jest.mock('common/modules/experiments/test-can-run-checks', () => ({
 }));
 jest.mock('common/modules/experiments/segment-util', () => ({
     isInTest: jest.fn(() => true),
-    variantFor: jest.fn(() => ({id: 'fake-variant-id'})),
+    variantFor: jest.fn(() => ({ id: 'fake-variant-id' })),
 }));
 jest.mock('commercial/modules/commercial-features', () => ({
     commercialFeatures: {
@@ -179,8 +181,8 @@ describe('Membership engagement banner', () => {
                         action: 'INSERT',
                         abTest: {
                             name: 'fake-test-id',
-                            variant: 'fake-variant-id'
-                        }
+                            variant: 'fake-variant-id',
+                        },
                     },
                 });
             }));
