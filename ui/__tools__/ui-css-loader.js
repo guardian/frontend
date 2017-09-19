@@ -66,6 +66,22 @@ const normaliseKeys = styles =>
         {}
     );
 
+// bloomin heck - replace 'float's that have been converted by postcss-js
+// to 'cssFloat' back to 'float'
+// https://github.com/rtsao/styletron/pull/54
+const reFloat = rules =>
+    Object.keys(rules).reduce((refloated, key) => {
+        if (key === 'cssFloat') {
+            return Object.assign({}, refloated, { float: rules[key] });
+        }
+        if (typeof rules[key] === 'object') {
+            return Object.assign({}, refloated, {
+                [key]: reFloat(rules[key]),
+            });
+        }
+        return Object.assign({}, refloated, { [key]: rules[key] });
+    }, {});
+
 // splits rules into cheap/expensive clusters where possible which
 // can then be handled appropriately
 const categoriseStyles = styles =>
@@ -105,7 +121,9 @@ const categoriseStyles = styles =>
 module.exports = function uiCSS(source) {
     const normalisedSource = normaliseCSS(source);
 
-    const { styles } = emotionParser(normalisedSource);
+    const { styles } = reFloat(
+        emotionParser(normalisedSource, false, this.resourcePath)
+    );
 
     const normalisedStyles = normaliseKeys(styles);
     const categorisedStyles = categoriseStyles(normalisedStyles);
