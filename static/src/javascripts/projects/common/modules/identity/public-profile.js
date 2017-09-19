@@ -1,69 +1,94 @@
+// @flow
 import bean from 'bean';
-import bonzo from 'bonzo';
-import $ from 'lib/$';
-import config from 'lib/config';
-import url from 'lib/url';
-import component from 'common/modules/component';
-import ActivityStream from 'common/modules/discussion/activity-stream';
-import mapValues from 'lodash/objects/mapValues';
+import { getUrlVars } from 'lib/url';
+import { ActivityStream } from 'common/modules/discussion/activity-stream';
 
-function getActivityStream(cb) {
-    let activityStream;
-
+const getActivityStream = (cb: Function): ?ActivityStream => {
     const dataOpts = {
         userId: 'data-user-id',
-        streamType: 'data-stream-type'
+        streamType: 'data-stream-type',
     };
 
-    $('.js-activity-stream').each(el => {
-        const opts = mapValues(dataOpts, key => el.getAttribute(key));
+    const streamElem = document.getElementsByClassName('js-activity-stream')[0];
 
-        opts.page = url.getUrlVars().page || 1;
+    if (!streamElem) {
+        return;
+    }
 
-        (activityStream = new ActivityStream.ActivityStream(opts)).fetch(el).then(() => {
-            bonzo(el).removeClass('activity-stream--loading');
+    const opts = Object.keys(dataOpts).reduce((acc, key) => {
+        acc[key] = streamElem.getAttribute(dataOpts[key]);
+
+        return acc;
+    }, {});
+
+    opts.page = getUrlVars().page || 1;
+
+    const activityStream = new ActivityStream(opts)
+        .fetch(streamElem)
+        .then(() => {
+            streamElem.classList.remove('activity-stream--loading');
         });
-    }).addClass('activity-stream--loading');
+
+    streamElem.classList.add('activity-stream--loading');
+
     cb(activityStream);
+
     return activityStream;
-}
+};
 
-function selectTab(el) {
-    $('.tabs__tab--selected').removeClass('tabs__tab--selected');
-    bonzo(el).parent().addClass('tabs__tab--selected');
-}
+const selectTab = (el: HTMLElement): void => {
+    const selectedTabs = document.getElementsByClassName('tabs__tab--selected');
 
-function setupActivityStreamChanger(activityStream) {
+    [...selectedTabs].forEach(selectedTab => {
+        selectedTab.classList.remove('tabs__tab--selected');
+    });
+
+    if (el.parentElement) {
+        el.parentElement.classList.add('tabs__tab--selected');
+    }
+};
+
+const setupActivityStreamChanger = (activityStream: ActivityStream): void => {
     bean.on(document.body, 'click', '.js-activity-stream-change', e => {
-        const el = e.currentTarget, streamType = el.getAttribute('data-stream-type');
+        const el: HTMLElement = (e.currentTarget: any);
+        const streamType = el.getAttribute('data-stream-type');
+
         e.preventDefault();
+
         selectTab(el);
 
         activityStream.change({
             page: 1,
-            streamType
+            streamType,
         });
     });
-}
+};
 
-function setupActivityStreamSearch(activityStream) {
+const setupActivityStreamSearch = (activityStream: ActivityStream): void => {
     bean.on(document.body, 'submit', '.js-activity-stream-search', e => {
         const q = e.currentTarget.elements.q.value;
+        const anchor = document.querySelector(
+            'a[data-stream-type="discussions"]'
+        );
+
         e.preventDefault();
-        selectTab($('a[data-stream-type="discussions"]'));
+
+        if (anchor) {
+            selectTab(anchor);
+        }
+
         activityStream.change({
-            streamType: q !== '' ? 'search/' + encodeURIComponent(q) : 'comments'
+            streamType:
+                q !== '' ? `search/${encodeURIComponent(q)}` : 'comments',
         });
     });
-}
+};
 
-function init() {
+const init = (): void => {
     getActivityStream(activityStream => {
         setupActivityStreamChanger(activityStream);
         setupActivityStreamSearch(activityStream);
     });
-}
-
-export default {
-    init
 };
+
+export { init };
