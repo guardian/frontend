@@ -135,11 +135,11 @@ es6: install
 ui-compile:
 	@cd ui && yarn -s compile
 
-ui-watch:
-	@cd ui && yarn -s watch
-
 ui-install:
 	@cd ui && yarn -s install
 
-ui-dev:
-	@cd ui && yarn -s dev
+ui-watch:
+	@cd ui && yarn -s watch
+
+ui-watch-nashorn:
+	@cd ui && yarn -s watch:nashorn

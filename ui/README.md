@@ -113,7 +113,7 @@ breakpoints, step through code and inspect variables. It even supports source ma
 #### Start the dev-server
 
 ```bash
-$ yarn dev
+$ make ui-watch
 ```
 
 #### Attach Chrome's devtools
