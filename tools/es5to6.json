@@ -33,7 +33,6 @@
   "GHaberis": [
     "projects/common/modules/component.js",
     "projects/common/modules/identity/formstack.js",
-    "projects/common/modules/identity/public-profile.js",
     "projects/common/modules/identity/validation-email.js",
     "projects/common/modules/navigation/membership.js",
     "projects/common/modules/navigation/navigation.js",
