@@ -3,7 +3,7 @@ import bean from 'bean';
 import { getUrlVars } from 'lib/url';
 import { ActivityStream } from 'common/modules/discussion/activity-stream';
 
-const getActivityStream = (cb: Function): ?ActivityStream => {
+const getActivityStream = (cb: Function): void => {
     const dataOpts = {
         userId: 'data-user-id',
         streamType: 'data-stream-type',
@@ -23,17 +23,15 @@ const getActivityStream = (cb: Function): ?ActivityStream => {
 
     opts.page = getUrlVars().page || 1;
 
-    const activityStream = new ActivityStream(opts)
-        .fetch(streamElem)
-        .then(() => {
-            streamElem.classList.remove('activity-stream--loading');
-        });
+    const activityStream = new ActivityStream(opts);
+
+    activityStream.fetch(streamElem).then(() => {
+        streamElem.classList.remove('activity-stream--loading');
+    });
 
     streamElem.classList.add('activity-stream--loading');
 
     cb(activityStream);
-
-    return activityStream;
 };
 
 const selectTab = (el: HTMLElement): void => {
@@ -86,6 +84,8 @@ const setupActivityStreamSearch = (activityStream: ActivityStream): void => {
 
 const init = (): void => {
     getActivityStream(activityStream => {
+        console.log('getActivityStream --->', activityStream);
+
         setupActivityStreamChanger(activityStream);
         setupActivityStreamSearch(activityStream);
     });
