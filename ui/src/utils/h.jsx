@@ -13,18 +13,26 @@ export default (
     attributes: ?Object,
     ...children: Array<any>
 ) => {
-    const { style, expensiveCSS, ...otherAttributes } = attributes || {};
+    const { style = {}, ...otherAttributes } = attributes || {};
 
-    if (typeof expensiveCSS !== 'undefined' && Object.keys(expensiveCSS).length)
-        otherAttributes.className = [
-            css(expensiveCSS),
-            otherAttributes.className,
-        ]
+    // cheapCSS and expensiveCSS are added by __tools__/ui-css-loader.js
+    // after it analyses the CSS that's being loaded
+    const { cheapCSS, expensiveCSS: emotionCSS, ...inlineStyles } = style;
+
+    // if the style prop has been used normally, use those styles too
+    // overriding what was imported cascade-style
+    const styletronCSS = Object.assign({}, cheapCSS, inlineStyles);
+
+    if (emotionCSS && Object.keys(emotionCSS).length) {
+        otherAttributes.className = [css(emotionCSS), otherAttributes.className]
             .join(' ')
             .trim();
+    }
 
     return preact_h(
-        style ? styled(component, style) : component,
+        Object.keys(styletronCSS).length
+            ? styled(component, styletronCSS)
+            : component,
         otherAttributes,
         children
     );

@@ -72,17 +72,17 @@ const categoriseStyles = styles =>
 
         const categorisedStyle = Object.keys(
             rule
-        ).reduce(({ style = {}, expensiveCSS = {} }, decl) => {
+        ).reduce(({ cheapCSS = {}, expensiveCSS = {} }, decl) => {
             if (typeof rule[decl] !== 'object') {
                 return {
                     expensiveCSS,
-                    style: Object.assign({}, style, {
+                    cheapCSS: Object.assign({}, cheapCSS, {
                         [decl]: rule[decl],
                     }),
                 };
             }
             return {
-                style,
+                cheapCSS,
                 expensiveCSS: Object.assign({}, expensiveCSS, {
                     [decl]: rule[decl],
                 }),

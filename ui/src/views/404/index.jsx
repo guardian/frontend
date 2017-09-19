@@ -7,25 +7,25 @@ import Footer from './Footer';
 import styles from './style.js.css';
 
 export default ({ beaconUrl }: Object) => (
-    <div {...styles.fluidWrap}>
-        <div {...styles.topBar}>
-            <a href="/" {...styles.topBarLink}>
+    <div style={styles.fluidWrap}>
+        <div style={styles.topBar}>
+            <a href="/" style={styles.topBarLink}>
                 Home
             </a>
         </div>
-        <Logo {...styles.logo} />
-        <h1 {...styles.heading}>
+        <Logo style={styles.logo} />
+        <h1 style={styles.heading}>
             Sorry - we haven’t been able to serve the page you asked for.
         </h1>
         <div {...{ marginTop: '20px' }}>
-            <div {...styles.subHeadingContainer}>
-                <h2 {...styles.subHeading}>404</h2>
+            <div style={styles.subHeadingContainer}>
+                <h2 style={styles.subHeading}>404</h2>
             </div>
-            <p {...styles.para}>
+            <p style={styles.para}>
                 You may have followed a broken or outdated link, or there may be
                 an error on our site.
             </p>
-            <p {...styles.para}>
+            <p style={styles.para}>
                 Please follow one of the links below to continue exploring.
             </p>
             <Navigation />
