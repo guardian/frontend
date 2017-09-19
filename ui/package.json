@@ -54,6 +54,7 @@
         "jest": "^20.0.4",
         "node-sass": "^4.5.3",
         "postcss": "^6.0.11",
+        "postcss-apply": "^0.8.0",
         "postcss-custom-media": "^6.0.0",
         "postcss-custom-properties": "^6.1.0",
         "preact-svg-loader": "^0.2.0",
