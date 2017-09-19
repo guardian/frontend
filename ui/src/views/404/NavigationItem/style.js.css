@@ -1,0 +1,49 @@
+.nav_item {
+    border-bottom: 1px solid #f4f4ee;
+    display: block;
+    font-family: 'arial';
+    font-size: 12px;
+    margin: 0 2.5%;
+    padding: 10px 2.5%;
+
+    @media (--from-tablet) {
+        float: left;
+        width: 40%;
+    }
+}
+
+.zone {
+    text-decoration: none;
+}
+
+.zone--default {
+    color: #005689;
+}
+
+.zone--news {
+    color: #d61d00;
+}
+
+.zone--sport {
+    color:  #008000;
+}
+
+.zone--culture {
+    color: #d1008b;
+}
+
+.zone--comment {
+    color: #0061a6;
+}
+
+.zone--lifeandstyle {
+    color: #ad532f;
+}
+
+.zone--environment {
+    color: #4a7801;
+}
+
+.zone--business {
+    color: #3246ab
+}
