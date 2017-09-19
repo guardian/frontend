@@ -24,6 +24,7 @@ app.get('/', (req, res) => {
     // eslint-disable-next-line global-require
     const { frontend } = require('../dist/ui.bundle.server');
 
+    // TODO: pass props from response to UI dev API endpoint
     res.send(
         frontend.render({
             beaconUrl: '//beacon.gu-web.net',
@@ -36,5 +37,5 @@ app.get('/', (req, res) => {
 
 app.listen(3000, () => {
     // eslint-disable-next-line no-console
-    console.log('Dev server listening on port 3000\n');
+    console.log('UI rendering dev server listening on port 3000\n');
 });
