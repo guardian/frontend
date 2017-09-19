@@ -145,11 +145,8 @@ class Crossword extends React.Component {
         const focussedClue = this.clueInFocus();
         let newDirection;
 
-        const isInsideFocussedClue = function isInsideFocussedClue() {
-            return focussedClue
-                ? helpers.entryHasCell(focussedClue, x, y)
-                : false;
-        };
+        const isInsideFocussedClue = (): boolean =>
+            focussedClue ? helpers.entryHasCell(focussedClue, x, y) : false;
 
         if (cellInFocus && cellInFocus.x === x && cellInFocus.y === y) {
             /** User has clicked again on the highlighted cell, meaning we ought to swap direction */
@@ -171,13 +168,10 @@ class Crossword extends React.Component {
                 y,
             };
 
-            const isStartOfClue = function isStartOfClue(sourceClue) {
-                return (
-                    sourceClue &&
-                    sourceClue.position.x === x &&
-                    sourceClue.position.y === y
-                );
-            };
+            const isStartOfClue = (sourceClue): boolean =>
+                sourceClue &&
+                sourceClue.position.x === x &&
+                sourceClue.position.y === y;
 
             /**
              * If the user clicks on the start of a down clue midway through an across clue, we should
