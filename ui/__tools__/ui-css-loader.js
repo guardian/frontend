@@ -4,6 +4,7 @@
 import postcss from 'postcss';
 import customProperties from 'postcss-custom-properties';
 import customMedia from 'postcss-custom-media';
+import apply from 'postcss-apply';
 import decamelize from 'decamelize';
 
 import { parseCSS as emotionParser } from 'babel-plugin-emotion/lib/parser';
@@ -51,6 +52,7 @@ const normaliseCSS = source =>
                 ),
             })
         )
+        .use(apply())
         .process(source).css;
 
 // turn class selectors into reasonable keys

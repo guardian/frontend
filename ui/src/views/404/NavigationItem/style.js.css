@@ -12,38 +12,48 @@
     }
 }
 
-.zone {
-    text-decoration: none;
+:root {
+    --zone: {
+        text-decoration: none;
+    };
 }
 
 .zone--default {
+    @apply --zone;
     color: #005689;
 }
 
 .zone--news {
+    @apply --zone;
     color: #d61d00;
 }
 
 .zone--sport {
-    color:  #008000;
+    @apply --zone;
+    color: #008000;
 }
 
 .zone--culture {
+    @apply --zone;
     color: #d1008b;
 }
 
 .zone--comment {
+    @apply --zone;
     color: #0061a6;
 }
 
 .zone--lifeandstyle {
+    @apply --zone;
     color: #ad532f;
 }
 
 .zone--environment {
+    @apply --zone;
     color: #4a7801;
 }
 
 .zone--business {
-    color: #3246ab
+    @apply --zone;
+    color: #3246ab;
 }
