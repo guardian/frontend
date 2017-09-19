@@ -6,6 +6,9 @@ declare var twttr: {
     }
 };
 
+// #? TODO: this type def conflates definitions for CommonJS require and Webpack's require
+// When we replace Webpack's require with dynamic imports, we can remove this type def
+// https://webpack.js.org/guides/code-splitting/#dynamic-imports
 declare var require: {
     (id: string): any,
     ensure(
