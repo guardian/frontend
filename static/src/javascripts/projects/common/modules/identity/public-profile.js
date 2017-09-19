@@ -25,11 +25,11 @@ const getActivityStream = (cb: Function): void => {
 
     const activityStream = new ActivityStream(opts);
 
+    streamElem.classList.add('activity-stream--loading');
+
     activityStream.fetch(streamElem).then(() => {
         streamElem.classList.remove('activity-stream--loading');
     });
-
-    streamElem.classList.add('activity-stream--loading');
 
     cb(activityStream);
 };
@@ -84,8 +84,6 @@ const setupActivityStreamSearch = (activityStream: ActivityStream): void => {
 
 const init = (): void => {
     getActivityStream(activityStream => {
-        console.log('getActivityStream --->', activityStream);
-
         setupActivityStreamChanger(activityStream);
         setupActivityStreamSearch(activityStream);
     });
