@@ -3,6 +3,7 @@
 
 import postcss from 'postcss';
 import customProperties from 'postcss-custom-properties';
+import customMedia from 'postcss-custom-media';
 import decamelize from 'decamelize';
 
 import { parseCSS as emotionParser } from 'babel-plugin-emotion/lib/parser';
@@ -32,6 +33,22 @@ const normaliseCSS = source =>
         .use(
             customProperties({
                 variables: toVars(pasteup),
+            })
+        )
+        .use(
+            customMedia({
+                extensions: Object.keys(pasteup.breakpoints).reduce(
+                    (breakpoints, breakpoint) =>
+                        Object.assign({}, breakpoints, {
+                            [`--from-${breakpoint}`]: `(min-width: ${pasteup
+                                .breakpoints[breakpoint] / 16}em)`,
+                            [`--until-${breakpoint}`]: `(max-width: ${(pasteup
+                                .breakpoints[breakpoint] -
+                                1) /
+                                16}em)`,
+                        }),
+                    {}
+                ),
             })
         )
         .process(source).css;

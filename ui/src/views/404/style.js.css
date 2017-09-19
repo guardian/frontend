@@ -10,10 +10,23 @@
 .logo {
     width: 250px;
 
+    & .the {
+        /* example of a width media query range */
+        @media (--from-tablet) and (--until-desktop) {
+            fill: red;
+        }
+    }
+
     & .guardian {
         @supports (fill: hotpink) {
             fill: var(--colour-brand-blue);
+
+            @media (--from-tablet) {
+                fill: red;
+            }
         }
+
+
     }
 }
 
