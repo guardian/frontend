@@ -24,7 +24,7 @@ define([
             if (this.props.number !== undefined) {
                 cellNumber = React.createElement('text', {
                     x: left + 1,
-                    y: top + constants.numberSize,
+                    y: top + constants.constants.numberSize,
                     key: 'number',
                     className: 'crossword__cell-number'
                 }, this.props.number);
@@ -33,8 +33,8 @@ define([
             var cellValue = null;
             if (this.props.value !== undefined) {
                 cellValue = React.createElement('text', {
-                    x: left + constants.cellSize * .5,
-                    y: top + constants.cellSize * .675,
+                    x: left + constants.constants.cellSize * .5,
+                    y: top + constants.constants.cellSize * .675,
                     key: 'entry',
                     className: classNames({
                         'crossword__cell-text': true,
@@ -50,8 +50,8 @@ define([
                 }, React.createElement('rect', {
                     x: left,
                     y: top,
-                    width: constants.cellSize,
-                    height: constants.cellSize,
+                    width: constants.constants.cellSize,
+                    height: constants.constants.cellSize,
                     className: classNames({
                         'crossword__cell': true,
                         'crossword__cell--focussed': this.props.isFocussed,

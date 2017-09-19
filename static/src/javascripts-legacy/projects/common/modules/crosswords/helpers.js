@@ -12,6 +12,7 @@ define([
     'lodash/arrays/range',
     'lodash/arrays/uniq',
     'lodash/collections/filter',
+    'lodash/collections/filter',
     'lodash/collections/some'
 ], function (
     constants,
@@ -305,7 +306,7 @@ define([
 
     /** Can be used for width or height, as the cell height == cell width */
     var gridSize = function (cells) {
-        return cells * (constants.cellSize + constants.borderSize) + constants.borderSize;
+        return cells * (constants.constants.cellSize + constants.constants.borderSize) + constants.constants.borderSize;
     };
 
     var mapGrid = function (grid, f) {
