@@ -8,26 +8,10 @@ const webpackMerge = require('webpack-merge');
 
 const { ui } = require('./paths');
 
-const pasteupSass = require('../__tools__/pasteup-sass');
-
 const cssLoader = {
     loader: 'css-loader',
     options: {
         minimize: true,
-    },
-};
-
-const sassLoader = {
-    loader: 'sass-loader',
-    options: {
-        // prepended to all sass files
-        data: `
-            @import '~sass-mq/_mq';
-            @import 'pasteup';
-        `,
-        importer: [
-            url => (url === 'pasteup' ? { contents: pasteupSass } : null),
-        ],
     },
 };
 
