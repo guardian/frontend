@@ -12,7 +12,6 @@ const webpackConfig = require('../__config__/webpack.config.dev')({
 const compiler = webpack(webpackConfig);
 const app = express();
 
-app.use('/assets', express.static(path.resolve('../static/target')));
 app.use(
     webpackDevMiddleware(compiler, {
         publicPath: webpackConfig.output.publicPath,
