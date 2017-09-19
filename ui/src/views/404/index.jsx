@@ -1,50 +1,31 @@
 // @flow
-import { colour } from 'pasteup';
-
 import Logo from 'assets/images/guardian-logo-320.svg';
 
 import Navigation from './Navigation';
 import Footer from './Footer';
 
-import {
-    heading,
-    fluidWrap,
-    topBar,
-    topBarLink,
-    subHeadingContainer,
-    subHeading,
-    para,
-} from './style.js.scss';
+import styles from './style.js.css';
 
-export default ({ beaconUrl }: Object) =>
-    <div style={fluidWrap}>
-        <div style={topBar}>
-            <a href="/" style={topBarLink}>
+export default ({ beaconUrl }: Object) => (
+    <div {...styles.fluidWrap}>
+        <div {...styles.topBar}>
+            <a href="/" {...styles.topBarLink}>
                 Home
             </a>
         </div>
-        <Logo
-            css={`
-                width: 250px;
-                & .guardian {
-                    @supports (fill: hotpink) {
-                        fill: ${colour.brandBlue};
-                    }
-                }
-            `}
-        />
-        <h1 style={heading}>
+        <Logo {...styles.logo} />
+        <h1 {...styles.heading}>
             Sorry - we haven’t been able to serve the page you asked for.
         </h1>
-        <div style={{ marginTop: '20px' }}>
-            <div style={subHeadingContainer}>
-                <h2 style={subHeading}>404</h2>
+        <div {...{ marginTop: '20px' }}>
+            <div {...styles.subHeadingContainer}>
+                <h2 {...styles.subHeading}>404</h2>
             </div>
-            <p style={para}>
+            <p {...styles.para}>
                 You may have followed a broken or outdated link, or there may be
                 an error on our site.
             </p>
-            <p style={para}>
+            <p {...styles.para}>
                 Please follow one of the links below to continue exploring.
             </p>
             <Navigation />
@@ -87,4 +68,5 @@ export default ({ beaconUrl }: Object) =>
             style={{ display: 'none' }}
             rel="nofollow"
         />
-    </div>;
+    </div>
+);

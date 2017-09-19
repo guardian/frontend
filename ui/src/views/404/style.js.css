@@ -1,10 +1,29 @@
-fluidWrap {
+.heading {
+    display: flex;
+    font-family: "Guardian Egyptian Web", "Guardian Text Egyptian Web", Georgia, serif;
+    font-size: 24px;
+    font-weight: normal;
+    line-height: 30px;
+    margin: 10px 0 0;
+}
+
+.logo {
+    width: 250px;
+
+    & .guardian {
+        @supports (fill: hotpink) {
+            fill: var(--colour-brand-blue);
+        }
+    }
+}
+
+.fluidWrap {
     margin: 0 auto;
     max-width: 940px;
     padding: 0 10px;
 }
 
-topBar {
+.topBar {
     background: #ededed;
     border-bottom: 1px solid #c6c6c6;
     float: left;
@@ -13,7 +32,7 @@ topBar {
     width: 100%;
 }
 
-topBarLink {
+.topBarLink {
     color: #005689;
     display: block;
     font-family: arial;
@@ -21,22 +40,14 @@ topBarLink {
     text-decoration: none;
 }
 
-heading {
-    font-family: "Guardian Egyptian Web", "Guardian Text Egyptian Web", Georgia, serif;
-    font-size: 24px;
-    font-weight: normal;
-    line-height: 30px;
-    margin: 10px 0 0;
-}
-
-subHeading {
+.subHeading {
     font-size: 18px;
     font-weight: normal;
     line-height: 20px;
     margin: 0;
 }
 
-subHeadingContainer {
+.subHeadingContainer {
     background-color: #ededed;
     border-color: #0061a6;
     border-top-style: solid;
@@ -46,7 +57,7 @@ subHeadingContainer {
     padding: 4px 5px 14px;
 }
 
-para {
+.para {
     font-family: arial;
     font-size: 12px;
     margin: 0 0 10px;
