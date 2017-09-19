@@ -12,7 +12,6 @@ define([
     'lodash/arrays/range',
     'lodash/arrays/uniq',
     'lodash/collections/filter',
-    'lodash/collections/filter',
     'lodash/collections/some'
 ], function (
     constants,
