@@ -75,7 +75,13 @@ const categoriseStyles = styles =>
         const categorisedStyle = Object.keys(
             rule
         ).reduce(({ cheapCSS = {}, expensiveCSS = {} }, decl) => {
-            if (typeof rule[decl] !== 'object') {
+            if (
+                typeof rule[decl] !== 'object' ||
+                (decl.startsWith('@media') &&
+                    Object.values(rule[decl]).every(
+                        mediaDeclValue => typeof mediaDeclValue !== 'object'
+                    ))
+            ) {
                 return {
                     expensiveCSS,
                     cheapCSS: Object.assign({}, cheapCSS, {
