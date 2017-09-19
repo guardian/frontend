@@ -154,10 +154,26 @@ const getCampaignCode = (
     return `${campaignCodePrefix}_${campaignID}_${id}${suffix}`;
 };
 
-const addTrackingCodesToUrl = (base: string, campaignCode: string) => {
+const addTrackingCodesToUrl = (
+    base: string,
+    componentType: OphanComponentType,
+    campaignCode: string,
+    abTest?: {name: string, variant: string}
+) => {
+    const acquisitionData = {
+        // TODO: do we need referrerUrl?
+        source: 'GUARDIAN_WEB',
+        componentId: campaignCode,
+        componentType: componentType,
+        referrerPageviewId: config.get('ophan.pageViewId') || undefined,
+        campaignCode,
+        abTest
+    };
+
     const params = {
         REFPVID: config.get('ophan.pageViewId') || 'not_found',
         INTCMP: campaignCode,
+        acquisitionData: JSON.stringify(acquisitionData)
     };
 
     return `${base}?${constructURLQuery(params)}`;
@@ -204,13 +220,31 @@ const makeABTestVariant = (
         isUnlimited = false,
         contributeURL = addTrackingCodesToUrl(
             contributionsBaseURL,
-            campaignCode
+            parentTest.componentType,
+            campaignCode,
+            {
+                name: parentTest.id,
+                variant: id
+            }
         ),
-        membershipURL = addTrackingCodesToUrl(membershipBaseURL, campaignCode),
+        membershipURL = addTrackingCodesToUrl(
+            membershipBaseURL,
+            parentTest.componentType,
+            campaignCode,
+            {
+                name: parentTest.id,
+                variant: id
+            }
+        ),
         supportCustomURL = null,
         supportURL = addTrackingCodesToUrl(
             supportCustomURL || supportBaseURL,
-            campaignCode
+            parentTest.componentType,
+            campaignCode,
+            {
+                name: parentTest.id,
+                variant: id
+            }
         ),
         template = controlTemplate,
         buttonTemplate = defaultButtonTemplate,
@@ -376,14 +410,24 @@ const makeABTestVariant = (
         contributionsURLBuilder(codeModifier) {
             return addTrackingCodesToUrl(
                 contributionsBaseURL,
-                codeModifier(campaignCode)
+                parentTest.componentType,
+                codeModifier(campaignCode),
+                {
+                    name: parentTest.id,
+                    variant: id
+                }
             );
         },
 
         membershipURLBuilder(codeModifier) {
             return addTrackingCodesToUrl(
                 membershipBaseURL,
-                codeModifier(campaignCode)
+                parentTest.componentType,
+                codeModifier(campaignCode),
+                {
+                    name: parentTest.id,
+                    variant: id
+                }
             );
         },
     };

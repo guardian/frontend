@@ -63,7 +63,12 @@ export const acquisitionsEpicThankYou = makeABTest({
                         componentName: variant.options.componentName,
                         membershipUrl: addTrackingCodesToUrl(
                             'https://www.theguardian.com/membership',
-                            variant.options.campaignCode
+                            'ACQUISITIONS_EPIC',
+                            variant.options.campaignCode,
+                            {
+                                name: 'AcquisitionsEpicThankYou',
+                                variant: variant.id
+                            }
                         ),
                     });
                 },
