@@ -79,19 +79,19 @@ const save = (
     as[q] = answer;
     localStorage.set('gu.jtbd-updated.answers', as);
 
-    submitComponentEvent(
-        'VOTE',
-        'SURVEYS_QUESTIONS',
-        [],
-        campaignId,
-        [],
-        JSON.stringify({
+    submitComponentEvent({
+        component: {
+            componentType: 'SURVEYS_QUESTIONS',
+            campaignCode: campaignId,
+        },
+        action: 'VOTE',
+        value: JSON.stringify({
             hasSnippet,
             qs,
             as,
             why,
-        })
-    );
+        }),
+    });
 };
 
 const shouldIGo = (): boolean => {

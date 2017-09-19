@@ -230,20 +230,33 @@ const makeABTestVariant = (
         test = noop,
         impression = submitABTestImpression =>
             mediator.once(parentTest.insertEvent, () => {
-                submitInsertEvent(
-                    parentTest.componentType,
-                    products,
-                    campaignCode
-                );
+                submitInsertEvent({
+                    component: {
+                        componentType: parentTest.componentType,
+                        products,
+                        campaignCode,
+                    },
+                    abTest: {
+                        name: parentTest.id,
+                        variant: id,
+                    },
+                });
+
                 submitABTestImpression();
             }),
         success = submitABTestComplete =>
             mediator.once(parentTest.viewEvent, () => {
-                submitViewEvent(
-                    parentTest.componentType,
-                    products,
-                    campaignCode
-                );
+                submitViewEvent({
+                    component: {
+                        componentType: parentTest.componentType,
+                        products,
+                        campaignCode,
+                    },
+                    abTest: {
+                        name: parentTest.id,
+                        variant: id,
+                    },
+                });
                 submitABTestComplete();
             }),
     } = options;

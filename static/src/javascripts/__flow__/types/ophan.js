@@ -53,17 +53,21 @@ declare type OphanComponentType =
     | 'ACQUISITIONS_THRASHER'
     | 'ACQUISITIONS_EDITORIAL_LINK';
 
-declare type OphanComponent = {|
+declare type OphanComponent = {
     componentType: OphanComponentType,
     id?: string,
-    products: $ReadOnlyArray<OphanProduct>,
+    products?: $ReadOnlyArray<OphanProduct>,
     campaignCode?: string,
-    labels: $ReadOnlyArray<string>
-|};
+    labels?: $ReadOnlyArray<string>
+};
 
-declare type OphanComponentEvent = {|
+declare type OphanComponentEvent = {
     component: OphanComponent,
     action: OphanAction,
     value?: string,
-    id?: string
-|};
+    id?: string,
+    abTest?: {
+        name: string,
+        variant: string
+    }
+};
