@@ -532,7 +532,7 @@ class Crossword extends React.Component {
         );
     }
 
-    clueIsInFocusGroup(clue: Object) {
+    clueIsInFocusGroup(clue: Object): boolean {
         if (this.state.cellInFocus) {
             const cluesForCell = helpers.cluesFor(
                 this.clueMap,
@@ -543,20 +543,21 @@ class Crossword extends React.Component {
                 clue.id
             );
         }
-        return null;
+        return false;
     }
 
     cluesData(): Array<Object> {
-        return this.props.data.entries.map(function(entry) {
+        return this.props.data.entries.map(entry => {
+            const hasAnswered = helpers.checkClueHasBeenAnswered(
+                this.state.grid,
+                entry
+            );
             return {
                 entry,
-                hasAnswered: helpers.checkClueHasBeenAnswered(
-                    this.state.grid,
-                    entry
-                ),
+                hasAnswered,
                 isSelected: this.clueIsInFocusGroup(entry),
             };
-        }, this);
+        });
     }
 
     save(): void {
@@ -660,7 +661,7 @@ class Crossword extends React.Component {
             : false;
     }
 
-    render() {
+    render(): Element {
         const focused = this.clueInFocus();
 
         const anagramHelper =
