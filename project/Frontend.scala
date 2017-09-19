@@ -144,7 +144,7 @@ object Frontend extends Build with Prototypes {
 
   val commercial = application("commercial").dependsOn(commonWithTests).aggregate(common)
 
-  val onward = application("onward").dependsOn(commonWithTests).aggregate(common)
+  val onward = applicationWithAkkaHttp("onward").dependsOn(commonWithTests).aggregate(common)
 
   val dev = application("dev-build")
     .dependsOn(

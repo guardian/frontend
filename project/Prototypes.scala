@@ -147,6 +147,22 @@ trait Prototypes {
       )
   }
 
+  // TODO: Temporary Project definition to test Akka Http as backend server
+  def applicationWithAkkaHttp(applicationName: String): Project = {
+    Project(applicationName, file(applicationName))
+      .enablePlugins(PlayScala, UniversalPlugin)
+      .settings(frontendDependencyManagementSettings)
+      .settings(frontendCompilationSettings)
+      .settings(frontendTestSettings)
+      .settings(VersionInfo.settings)
+      .settings(libraryDependencies ++= Seq(macwire, commonsIo))
+      .settings(packageName in Universal := applicationName)
+      .settingSets(settingSetsOrder)
+      .settings(
+        mappings in Universal ++= (file("ui/dist") ** "*").get.map { f => f.getAbsoluteFile -> f.toString }
+      )
+  }
+
   def library(applicationName: String): Project = {
     Project(applicationName, file(applicationName))
       .enablePlugins(PlayScala, PlayNettyServer)
