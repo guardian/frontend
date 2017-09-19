@@ -44,14 +44,13 @@ const config = {
             },
             {
                 test: /\.(js|jsx)$/,
+                exclude: /node_modules/,
                 oneOf: [
                     {
                         test: /(\/__inline__)/,
-                        exclude: /node_modules/,
                         use: ['raw-loader', 'babel-loader'],
                     },
                     {
-                        exclude: /node_modules/,
                         use: ['babel-loader'],
                     },
                 ],
@@ -59,7 +58,13 @@ const config = {
             {
                 test: /\.css$/,
                 exclude: /node_modules/,
-                use: ['to-string-loader', cssLoader],
+                oneOf: [
+                    {
+                        test: /\.js\.css$/,
+                        use: ['ui-css-loader'],
+                    },
+                    { use: ['to-string-loader', cssLoader] },
+                ],
             },
             {
                 test: /\.js\.scss$/,
