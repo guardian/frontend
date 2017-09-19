@@ -158,22 +158,22 @@ const addTrackingCodesToUrl = (
     base: string,
     componentType: OphanComponentType,
     campaignCode: string,
-    abTest?: {name: string, variant: string}
+    abTest?: { name: string, variant: string }
 ) => {
     const acquisitionData = {
         // TODO: do we need referrerUrl?
         source: 'GUARDIAN_WEB',
         componentId: campaignCode,
-        componentType: componentType,
+        componentType,
         referrerPageviewId: config.get('ophan.pageViewId') || undefined,
         campaignCode,
-        abTest
+        abTest,
     };
 
     const params = {
         REFPVID: config.get('ophan.pageViewId') || 'not_found',
         INTCMP: campaignCode,
-        acquisitionData: JSON.stringify(acquisitionData)
+        acquisitionData: JSON.stringify(acquisitionData),
     };
 
     return `${base}?${constructURLQuery(params)}`;
@@ -224,7 +224,7 @@ const makeABTestVariant = (
             campaignCode,
             {
                 name: parentTest.id,
-                variant: id
+                variant: id,
             }
         ),
         membershipURL = addTrackingCodesToUrl(
@@ -233,7 +233,7 @@ const makeABTestVariant = (
             campaignCode,
             {
                 name: parentTest.id,
-                variant: id
+                variant: id,
             }
         ),
         supportCustomURL = null,
@@ -243,7 +243,7 @@ const makeABTestVariant = (
             campaignCode,
             {
                 name: parentTest.id,
-                variant: id
+                variant: id,
             }
         ),
         template = controlTemplate,
@@ -414,7 +414,7 @@ const makeABTestVariant = (
                 codeModifier(campaignCode),
                 {
                     name: parentTest.id,
-                    variant: id
+                    variant: id,
                 }
             );
         },
@@ -426,7 +426,7 @@ const makeABTestVariant = (
                 codeModifier(campaignCode),
                 {
                     name: parentTest.id,
-                    variant: id
+                    variant: id,
                 }
             );
         },

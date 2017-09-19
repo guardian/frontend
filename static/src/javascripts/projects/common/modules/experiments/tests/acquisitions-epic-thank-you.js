@@ -67,7 +67,7 @@ export const acquisitionsEpicThankYou = makeABTest({
                             variant.options.campaignCode,
                             {
                                 name: 'AcquisitionsEpicThankYou',
-                                variant: variant.id
+                                variant: variant.id,
                             }
                         ),
                     });
