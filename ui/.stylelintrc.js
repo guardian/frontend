@@ -1,7 +1,7 @@
 // @flow
 module.exports = {
     extends: 'stylelint-config-standard',
-    plugins: ['stylelint-order', 'stylelint-scss'],
+    plugins: ['stylelint-order'],
     rules: {
         indentation: 4,
         'selector-type-case': null,

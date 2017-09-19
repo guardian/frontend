@@ -4,7 +4,7 @@ import Logo from 'assets/images/guardian-logo-320.svg';
 import Navigation from './Navigation';
 import Footer from './Footer';
 
-import styles from './style.js.css';
+import styles from './style.css';
 
 export default ({ beaconUrl }: Object) => (
     <div style={styles.fluidWrap}>

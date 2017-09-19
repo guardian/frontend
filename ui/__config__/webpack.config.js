@@ -56,20 +56,17 @@ const config = {
                 ],
             },
             {
-                test: /\.css$/,
+                test: /\.(css)$/,
                 exclude: /node_modules/,
                 oneOf: [
                     {
-                        test: /\.js\.css$/,
+                        test: /(\/__inline__)/,
+                        use: ['to-string-loader', cssLoader],
+                    },
+                    {
                         use: ['ui-css-loader'],
                     },
-                    { use: ['to-string-loader', cssLoader] },
                 ],
-            },
-            {
-                test: /\.js\.scss$/,
-                exclude: /node_modules/,
-                use: ['styletron-loader', sassLoader],
             },
         ],
     },

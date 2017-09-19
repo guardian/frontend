@@ -1,12 +1,12 @@
 // @flow
-import styles from './style.js.css';
+import styles from './style.css';
 
 const NavigationItem = ({
     zone = 'default',
     path,
     newWindow = false,
     children,
-}: Object) =>
+}: Object) => (
     <li style={styles.nav_item}>
         <a
             href={path}
@@ -14,6 +14,7 @@ const NavigationItem = ({
             target={newWindow ? '_blank' : '_self'}>
             {children}
         </a>
-    </li>;
+    </li>
+);
 
 export default NavigationItem;
