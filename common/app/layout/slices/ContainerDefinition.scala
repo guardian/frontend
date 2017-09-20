@@ -10,14 +10,14 @@ case class RestrictTo(items: Int) extends MobileShowMore
 object ContainerDefinition {
   val DefaultCards = 6
 
-  def ofSlices(slices: Slice*) = ContainerDefinition(
+  def ofSlices(slices: Slice*): ContainerDefinition = ContainerDefinition(
     slices,
     slicesWithoutMPU = slices,
     mobileShowMore = RestrictTo(6),
     customCssClasses = Set.empty
   )
 
-  def ofSlices(slices: Seq[Slice], slicesWithoutMpu: Seq[Slice]) = ContainerDefinition(
+  def ofSlices(slices: Seq[Slice], slicesWithoutMpu: Seq[Slice]): ContainerDefinition = ContainerDefinition(
     slices,
     slicesWithoutMpu,
     mobileShowMore = RestrictTo(6),

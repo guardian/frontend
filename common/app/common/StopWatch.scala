@@ -1,7 +1,7 @@
 package common
 
 object StopWatch {
-  def apply() = new StopWatch
+  def apply(): StopWatch = new StopWatch
 }
 
 class StopWatch {
@@ -9,5 +9,5 @@ class StopWatch {
 
   def elapsed: Long = System.currentTimeMillis - startTime
 
-  override def toString() = s"${elapsed}ms"
+  override def toString(): String = s"${elapsed}ms"
 }

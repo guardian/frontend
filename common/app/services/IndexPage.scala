@@ -233,7 +233,7 @@ case class IndexPage(
     case other => other.metadata.id
   }
 
-  def allPath = s"/$idWithoutEdition"
+  def allPath: String = s"/$idWithoutEdition"
 
   def branding(edition: Edition): Option[Branding] = page.metadata.commercial.flatMap(_.branding(edition))
 }

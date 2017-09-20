@@ -10,7 +10,7 @@ import scala.collection.JavaConversions._
 
 case class VideoEmbedCleaner(article: Article) extends HtmlCleaner {
   val facebookVideoEmbedUrl = "https://www.facebook.com/v2.3/plugins/video.php?href="
-  def facebookVideoEmbedUrlFor(url: String) = s"$facebookVideoEmbedUrl${URLEncoder.encode(url, "UTF-8")}"
+  def facebookVideoEmbedUrlFor(url: String): String = s"$facebookVideoEmbedUrl${URLEncoder.encode(url, "UTF-8")}"
 
   def addShareButtons(document: Document): Unit = {
     document.getElementsByClass("element-video").foreach(element => {
