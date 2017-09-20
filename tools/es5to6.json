@@ -73,7 +73,6 @@
   "Calum Campbell": [],
   "Unassigned": [
     "projects/common/modules/navigation/search.js",
-    "projects/common/modules/ui/full-height.js",
     "projects/common/modules/ui/relativedates.js",
     "projects/common/modules/ui/selection-sharing.js"
   ]
