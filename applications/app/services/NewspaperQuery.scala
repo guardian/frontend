@@ -132,16 +132,16 @@ class NewspaperQuery(contentApiClient: ContentApiClient) extends Dates with Logg
 
   private def getNewspaperPageNumber(content: ApiContent) = content.fields.flatMap(_.newspaperPageNumber)
 
-  def lowercaseDisplayName(s: String) = if(s.equals("UK news") || s.equals("US news")) s else s.toLowerCase()
+  def lowercaseDisplayName(s: String): String = if(s.equals("UK news") || s.equals("US news")) s else s.toLowerCase()
 
-  def getPastSundayDateFor(date: DateTime) = {
+  def getPastSundayDateFor(date: DateTime): DateTime = {
     if(date.getDayOfWeek != DateTimeConstants.SUNDAY) {
       val daysSinceSunday = DateTimeConstants.SUNDAY - date.getDayOfWeek - 7
       date.minusDays(Math.abs(daysSinceSunday))
     } else date
   }
 
-  def getLatestGuardianPageFor(date: DateTime) = if(date.getDayOfWeek == DateTimeConstants.SUNDAY) date.minusDays(1) else date
+  def getLatestGuardianPageFor(date: DateTime): DateTime = if(date.getDayOfWeek == DateTimeConstants.SUNDAY) date.minusDays(1) else date
 
 
   private def createSnap(date: DateTime, publication: String) = {

@@ -9,12 +9,12 @@ import org.joda.time.{DateTime, DateTimeZone}
 import views.support.Naked
 
 import scala.concurrent.{ExecutionContext, Future}
-import scala.xml.NodeSeq
+import scala.xml.{Elem, NodeSeq}
 
 class VideoSiteMap(contentApiClient: ContentApiClient) {
 
   private case class UrlSet(urls: Seq[Url]){
-    def xml() = {
+    def xml(): Elem = {
       <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
               xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
         { urls.map(_.xml()) }
@@ -33,7 +33,7 @@ class VideoSiteMap(contentApiClient: ContentApiClient) {
     tags: Seq[String],
     category: String) {
 
-    def xml() = {
+    def xml(): Elem = {
       <url>
         <loc>{location}</loc>
         <video:video>

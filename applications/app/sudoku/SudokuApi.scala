@@ -17,7 +17,7 @@ case class Sudoku(
 
 object SudokuApi {
 
-  def getData(id: String) = {
+  def getData(id: String): Future[Option[Sudoku]] = {
     /** Here's one I prepared earlier ...
       *
       * TODO: connect up with our actual Sudoku source of data.
