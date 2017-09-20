@@ -3,7 +3,12 @@
 import { addCookie, removeCookie, getCookie } from 'lib/cookies';
 import fetchJson from 'lib/fetch-json';
 import identity from 'common/modules/identity/api';
-import { refresh, isAdFreeUser, isPayingMember } from './user-features.js';
+import {
+    refresh,
+    isAdFreeUser,
+    isPayingMember,
+    isRecurringContributor,
+} from './user-features.js';
 
 jest.mock('projects/common/modules/identity/api', () => ({
     isUserLoggedIn: jest.fn(),
@@ -26,6 +31,7 @@ const isUserLoggedIn: any = identity.isUserLoggedIn;
 const PERSISTENCE_KEYS = {
     USER_FEATURES_EXPIRY_COOKIE: 'gu_user_features_expiry',
     PAYING_MEMBER_COOKIE: 'gu_paying_member',
+    RECURRING_CONTRIBUTOR_COOKIE: 'gu_recurring_contributor',
     AD_FREE_USER_COOKIE: 'GU_AF1',
 };
 
@@ -39,6 +45,7 @@ const setAllFeaturesData = opts => {
         ? new Date(currentTime - msInOneDay * 2)
         : new Date(currentTime + msInOneDay * 2);
     addCookie(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE, 'true');
+    addCookie(PERSISTENCE_KEYS.RECURRING_CONTRIBUTOR_COOKIE, 'true');
     addCookie(
         PERSISTENCE_KEYS.AD_FREE_USER_COOKIE,
         adFreeExpiryDate.getTime().toString()
@@ -61,6 +68,7 @@ const setExpiredAdFreeData = () => {
 
 const deleteAllFeaturesData = () => {
     removeCookie(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE);
+    removeCookie(PERSISTENCE_KEYS.RECURRING_CONTRIBUTOR_COOKIE);
     removeCookie(PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE);
     removeCookie(PERSISTENCE_KEYS.AD_FREE_USER_COOKIE);
 };
@@ -91,6 +99,9 @@ describe('Refreshing the features data', () => {
             expect(getCookie(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE)).toBe(
                 'true'
             );
+            expect(
+                getCookie(PERSISTENCE_KEYS.RECURRING_CONTRIBUTOR_COOKIE)
+            ).toBe('true');
             expect(
                 getCookie(PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE)
             ).toEqual(expect.stringMatching(/\d{13}/));
@@ -147,6 +158,9 @@ describe('Refreshing the features data', () => {
             expect(getCookie(PERSISTENCE_KEYS.AD_FREE_USER_COOKIE)).toBeNull();
             expect(getCookie(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE)).toBeNull();
             expect(
+                getCookie(PERSISTENCE_KEYS.RECURRING_CONTRIBUTOR_COOKIE)
+            ).toBeNull();
+            expect(
                 getCookie(PERSISTENCE_KEYS.USER_FEATURES_EXPIRY_COOKIE)
             ).toBeNull();
         });
@@ -192,6 +206,37 @@ describe('The isPayingMember getter', () => {
     });
 });
 
+describe('The isRecurringContributor getter', () => {
+    it('Is false when the user is logged out', () => {
+        jest.resetAllMocks();
+        isUserLoggedIn.mockReturnValue(false);
+        expect(isRecurringContributor()).toBe(false);
+    });
+
+    describe('When the user is logged in', () => {
+        beforeEach(() => {
+            jest.resetAllMocks();
+            isUserLoggedIn.mockReturnValue(true);
+        });
+
+        it('Is true when the user has a `true` recurring contributor cookie', () => {
+            addCookie(PERSISTENCE_KEYS.RECURRING_CONTRIBUTOR_COOKIE, 'true');
+            expect(isRecurringContributor()).toBe(true);
+        });
+
+        it('Is false when the user has a `false` recurring contributor cookie', () => {
+            addCookie(PERSISTENCE_KEYS.RECURRING_CONTRIBUTOR_COOKIE, 'false');
+            expect(isRecurringContributor()).toBe(false);
+        });
+
+        it('Is true when the user has no recurring contributor cookie', () => {
+            // If we don't know, we err on the side of caution, rather than annoy paying users
+            removeCookie(PERSISTENCE_KEYS.RECURRING_CONTRIBUTOR_COOKIE);
+            expect(isRecurringContributor()).toBe(true);
+        });
+    });
+});
+
 describe('Storing new feature data', () => {
     beforeEach(() => {
         jest.resetAllMocks();
@@ -203,7 +248,10 @@ describe('Storing new feature data', () => {
     it('Puts the paying-member state and ad-free state in appropriate cookie', () => {
         fetchJsonSpy.mockReturnValueOnce(
             Promise.resolve({
-                adblockMessage: true,
+                contentAccess: {
+                    paidMember: false,
+                    recurringContributor: false,
+                },
                 adFree: false,
             })
         );
@@ -211,6 +259,9 @@ describe('Storing new feature data', () => {
             expect(getCookie(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE)).toBe(
                 'false'
             );
+            expect(
+                getCookie(PERSISTENCE_KEYS.RECURRING_CONTRIBUTOR_COOKIE)
+            ).toBe('false');
             expect(getCookie(PERSISTENCE_KEYS.AD_FREE_USER_COOKIE)).toBeNull();
         });
     });
@@ -218,7 +269,10 @@ describe('Storing new feature data', () => {
     it('Puts the paying-member state and ad-free state in appropriate cookie', () => {
         fetchJsonSpy.mockReturnValueOnce(
             Promise.resolve({
-                adblockMessage: false,
+                contentAccess: {
+                    paidMember: true,
+                    recurringContributor: true,
+                },
                 adFree: true,
             })
         );
@@ -226,6 +280,9 @@ describe('Storing new feature data', () => {
             expect(getCookie(PERSISTENCE_KEYS.PAYING_MEMBER_COOKIE)).toBe(
                 'true'
             );
+            expect(
+                getCookie(PERSISTENCE_KEYS.RECURRING_CONTRIBUTOR_COOKIE)
+            ).toBe('true');
             expect(
                 getCookie(PERSISTENCE_KEYS.AD_FREE_USER_COOKIE)
             ).toBeTruthy();

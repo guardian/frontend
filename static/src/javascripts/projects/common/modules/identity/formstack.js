@@ -1,69 +1,9 @@
 // @flow
 
-/**
-    Formstack - composer integration
-
-    This script runs INSIDE a formstack iframe.
-
-    It is set up to send messages to the parent script in window.top to allow
-    the cross domain adjustment of height for variable content from formstack.
-
-    It also takes care of removing the formstack default styling and applying
-    Guardian styling via the NGW scss system.
-
-     - Chris Finch, CSD - Identity, March '14
-*/
-
 import idApi from 'common/modules/identity/api';
 
-const postMessage = (
-    type: string,
-    value: string | number,
-    x?: number,
-    y?: number
-): void => {
-    const message: {
-        type: string,
-        value: string | number,
-        href: string,
-        x?: number,
-        y?: number,
-    } = {
-        type,
-        value,
-        href: window.location.href,
-    };
-
-    if (x) {
-        message.x = x;
-    }
-
-    if (y) {
-        message.y = y;
-    }
-
-    window.top.postMessage(JSON.stringify(message), '*');
-};
-
-const sendHeight = (): void => {
-    const body = document.body;
-    const html = document.documentElement;
-
-    if (body && html) {
-        const height = Math.max(
-            body.scrollHeight,
-            body.offsetHeight,
-            html.clientHeight,
-            html.scrollHeight,
-            html.offsetHeight
-        );
-
-        postMessage('set-height', height);
-    }
-};
-
-// TODO: Remove repitition with common/modules/identity/formstack
-class FormstackEmbedIframe {
+// TODO: Remove repitition with common/modules/identity/formstack-iframe-embed
+class Formstack {
     el: HTMLElement;
     form: HTMLFormElement;
     formId: string;
@@ -122,6 +62,12 @@ class FormstackEmbedIframe {
         this.config = Object.assign({}, defaultConfig, config);
     }
 
+    postMessage(message: string): void {
+        const domain = this.config.page.idUrl;
+
+        window.top.postMessage(message, domain);
+    }
+
     init(): void {
         // User object required to populate fields
         const user = idApi.getUserOrSignIn();
@@ -135,7 +81,7 @@ class FormstackEmbedIframe {
         }
 
         // Update iframe height
-        sendHeight();
+        this.postMessage('ready');
     }
 
     dom(user: Object): void {
@@ -205,36 +151,20 @@ class FormstackEmbedIframe {
         // Events
         window.addEventListener('unload', () => {
             // Listen for navigation to success page
-            sendHeight();
+            this.postMessage('unload');
         });
 
-        this.form.addEventListener('submit', event => {
-            this.submit(event);
+        this.form.addEventListener('submit', () => {
+            this.submit();
         });
-
-        // Listen for message from top window,
-        // only message we are listening for is the iframe position..
-        window.addEventListener(
-            'message',
-            event => {
-                const message = JSON.parse(event.data);
-
-                if (message.iframeTop) {
-                    postMessage('scroll-to', 'scroll-to', 0, message.iframeTop);
-                }
-            },
-            false
-        );
     }
 
-    submit(event: Event): void {
+    submit(): void {
         const triggerKeyUp = el => {
             const e = document.createEvent('HTMLEvents');
             e.initEvent('keyup', false, true);
             el.dispatchEvent(e);
         };
-
-        event.preventDefault();
 
         setTimeout(() => {
             // Remove any existing errors
@@ -282,14 +212,9 @@ class FormstackEmbedIframe {
                 triggerKeyUp(textArea);
             });
 
-            postMessage('get-position', 'get-position');
-
-            // if no errors, submit form
-            if (fsFormErrors.length === 0) {
-                this.form.submit();
-            }
+            this.postMessage('refreshHeight');
         }, 100);
     }
 }
 
-export { FormstackEmbedIframe };
+export { Formstack };

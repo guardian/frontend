@@ -1,6 +1,7 @@
 {
   "name": "eslint-plugin-guardian-frontend",
   "main": "index.js",
+  "private": true,
   "version": "5.0.0",
   "scripts": {
     "test": "jest"
