@@ -3,15 +3,16 @@ package rugby.feed
 import org.joda.time.format.DateTimeFormat
 import rugby.model._
 import Status._
+import org.joda.time.DateTime
 
-import scala.xml.{NodeSeq, XML, MetaData, UnprefixedAttribute, Null}
+import scala.xml.{MetaData, NodeSeq, Null, UnprefixedAttribute, XML}
 
 object Parser {
 
   private object Date {
     private val dateTimeParser = DateTimeFormat.forPattern("yyyyMMdd HH:mm:ss")
 
-    def apply(date: String, time: String) = dateTimeParser.parseDateTime(s"$date $time")
+    def apply(date: String, time: String): DateTime = dateTimeParser.parseDateTime(s"$date $time")
   }
 
   def parseLiveScores(body: String, event: OptaEvent): Seq[Match] = {
