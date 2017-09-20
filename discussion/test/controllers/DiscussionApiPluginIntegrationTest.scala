@@ -9,7 +9,7 @@ import test.{ConfiguredTestSuite, WithMaterializer, WithTestExecutionContext, Wi
 import scala.concurrent.{Await, ExecutionContext, Future}
 import scala.language.postfixOps
 import scala.concurrent.duration._
-import play.api.libs.ws.WSClient
+import play.api.libs.ws.{WSClient, WSResponse}
 
 @DoNotDiscover class DiscussionApiPluginIntegrationTest
   extends FlatSpecLike
@@ -22,7 +22,7 @@ import play.api.libs.ws.WSClient
 
   class TestPlugin(val wsClient: WSClient) extends DiscussionApiLike {
 
-    override def GET(url: String, headers: (String, String)*)(implicit executionContext: ExecutionContext) = {
+    override def GET(url: String, headers: (String, String)*)(implicit executionContext: ExecutionContext): Future[WSResponse] = {
       headersReceived = Map(headers:_*)
       wsClient.url(testUrl).withRequestTimeout(1.millisecond).get()
     }

@@ -30,13 +30,13 @@ import test.{ConfiguredTestSuite, WithTestApplicationContext}
   lazy val actorSystem: ActorSystem = app.actorSystem
 
   class MockUpdaterActor(mockResponse: Any) extends Actor {
-    override def receive = { case _ => sender ! mockResponse }
+    override def receive: PartialFunction[Any, Unit] = { case _ => sender ! mockResponse }
   }
   object MockUpdaterActor {
     def props(mockResponse: Any): Props = Props(new MockUpdaterActor(mockResponse))
   }
 
-  def controllerWithActorReponse(mockResponse: Any) = {
+  def controllerWithActorReponse(mockResponse: Any): NewsAlertController = {
     val updaterActor = actorSystem.actorOf(MockUpdaterActor.props(mockResponse))
     val fakeApi = new BreakingNewsApi(new S3BreakingNews(testApplicationContext.environment)) // Doesn't matter, it is not used just passed to the NewsAlertController constructor
     new NewsAlertController(fakeApi)(actorSystem, controllerComponents) {

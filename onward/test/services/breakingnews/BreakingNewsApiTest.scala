@@ -18,9 +18,9 @@ import scala.io.Codec
     override def get(key: String)(implicit codec: Codec): Option[String] = None
     override def getWithLastModified(key: String): Option[(String, DateTime)] = None
     override def getLastModified(key: String): Option[DateTime] = None
-    override def putPublic(key: String, value: String, contentType: String) = Unit
-    override def putPrivate(key: String, value: String, contentType: String) = Unit
-    override def putPrivateGzipped(key: String, value: String, contentType: String) = Unit
+    override def putPublic(key: String, value: String, contentType: String): Unit = Unit
+    override def putPrivate(key: String, value: String, contentType: String): Unit = Unit
+    override def putPrivateGzipped(key: String, value: String, contentType: String): Unit = Unit
   }
 
   object MockS3DoNothing extends MockS3DoNothing
@@ -28,7 +28,7 @@ import scala.io.Codec
   class FakeS3Exception(message: String) extends Exception(message: String)
   object MockS3ThrowException extends MockS3DoNothing {
     override def get(key: String)(implicit codec: Codec): Option[String] = {throw new FakeS3Exception("get: Something bad happened")}
-    override def putPublic(key: String, value: String, contentType: String) = {throw new FakeS3Exception("put: Something bad happened")}
+    override def putPublic(key: String, value: String, contentType: String): Unit = {throw new FakeS3Exception("put: Something bad happened")}
   }
 
   "Fetching Breaking News json file" when {

@@ -107,7 +107,7 @@ class ApacheSyncHttpClientTest extends path.FreeSpec with Matchers with MockitoS
     val httpResponse = HttpResponse("Response body", 200, "OK")
     object TestApacheSyncHttpClient extends ApacheSyncHttpClient {
       override val httpClient = mockHttpClient
-      override def execute(method: HttpMethod, urlParameters: Parameters, headers: Parameters) = {
+      override def execute(method: HttpMethod, urlParameters: Parameters, headers: Parameters): Either[Nothing, HttpResponse] = {
         Right(httpResponse)
       }
     }
@@ -138,7 +138,7 @@ class ApacheSyncHttpClientTest extends path.FreeSpec with Matchers with MockitoS
     val httpResponse = HttpResponse("Response body", 200, "OK")
     object TestApacheSyncHttpClient extends ApacheSyncHttpClient {
       override val httpClient = mockHttpClient
-      override def execute(method: HttpMethod, urlParameters: Parameters, headers: Parameters) = {
+      override def execute(method: HttpMethod, urlParameters: Parameters, headers: Parameters): Either[Nothing, HttpResponse] = {
         Right(httpResponse)
       }
     }
@@ -169,7 +169,7 @@ class ApacheSyncHttpClientTest extends path.FreeSpec with Matchers with MockitoS
     val httpResponse = HttpResponse("Response body", 200, "OK")
     object TestApacheSyncHttpClient extends ApacheSyncHttpClient {
       override val httpClient = mockHttpClient
-      override def execute(method: HttpMethod, urlParameters: Parameters, headers: Parameters) = {
+      override def execute(method: HttpMethod, urlParameters: Parameters, headers: Parameters): Either[Nothing, HttpResponse] = {
         Right(httpResponse)
       }
     }

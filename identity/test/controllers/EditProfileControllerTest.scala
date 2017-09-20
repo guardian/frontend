@@ -15,6 +15,7 @@ import org.scalatestplus.play.ConfiguredServer
 import play.api.http.HttpConfiguration
 import play.api.libs.crypto.CSRFTokenSigner
 import play.api.mvc._
+import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import play.filters.csrf.{CSRFAddToken, CSRFCheck, CSRFConfig}
 import services._
@@ -179,7 +180,7 @@ import scala.concurrent.Future
 
       import FakeRequestAccountData._
 
-      def createFakeRequestWithoutBillingAddress = {
+      def createFakeRequestWithoutBillingAddress: FakeRequest[AnyContentAsFormUrlEncoded] = {
 
         import FakeRequestAccountData._
 
@@ -202,7 +203,7 @@ import scala.concurrent.Future
 
       }
 
-      def createFakeRequestWithoutTelephoneNumber = {
+      def createFakeRequestWithoutTelephoneNumber: FakeRequest[AnyContentAsFormUrlEncoded] = {
 
         import FakeRequestAccountData._
 
@@ -223,7 +224,7 @@ import scala.concurrent.Future
 
       }
 
-      def createFakeRequestDeleteTelephoneNumber = {
+      def createFakeRequestDeleteTelephoneNumber: FakeRequest[AnyContentAsFormUrlEncoded] = {
 
         import FakeRequestAccountData._
 
@@ -245,7 +246,7 @@ import scala.concurrent.Future
       }
 
 
-      def createFakeRequestWithBillingAddress = {
+      def createFakeRequestWithBillingAddress: FakeRequest[AnyContentAsFormUrlEncoded] = {
 
         import FakeRequestAccountData._
 
