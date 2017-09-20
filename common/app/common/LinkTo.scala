@@ -5,9 +5,9 @@ import conf.Configuration
 import layout.ContentCard
 import model.Trail
 import org.jsoup.Jsoup
+import play.api.libs.json.Json
 import play.api.mvc.{AnyContent, Request, RequestHeader, Result}
 import play.twirl.api.Html
-
 import scala.collection.JavaConversions._
 
 /*
@@ -114,12 +114,47 @@ object AnalyticsHost extends implicits.Requests {
   def apply(): String = "https://hits-secure.theguardian.com"
 }
 
-object MembershipLink {
+
+sealed trait ReaderRevenueLink {
+  case class ABTest(name: String, variant: String)
+
+  val baseUrl: String
+
+  def linkWithTrackingParams(componentType: String, campaignCode: String, abTest: Option[ABTest] = None): String = {
+    val acquisitionData = Json.obj(
+      // TODO: lock this down with a Flow type?
+      "source" -> "GUARDIAN_WEB",
+      "componentId" -> campaignCode,
+      "componentType" -> componentType,
+      // TODO: there's no way to get this serverside is there? replace clientside??
+      "referrerPageviewId" -> "",
+      "campaignCode" -> campaignCode
+    ) ++ abTest.fold(Json.obj())(ab => Json.obj(
+      "name" -> ab.name,
+      "variant" -> ab.variant
+    ))
+
+    baseUrl + "?INCTMP=" + campaignCode + "&acquisitionData=" + acquisitionData.toString
+  }
+}
+
+object MembershipLink extends ReaderRevenueLink {
+  val baseUrl = s"${Configuration.id.membershipUrl}/supporter"
+
   def apply(implicit request: RequestHeader, edition: Edition): String = {
     if(mvt.ABNewDesktopHeaderControl.isParticipating) {
-      s"${Configuration.id.membershipUrl}/supporter?INTCMP=mem_${edition.id}_web_newheader_control"
+      this.linkWithTrackingParams(
+        componentType = "ACQUISITIONS_HEADER",
+        campaignCode = s"mem_${edition.id}_web_newheader_control",
+        abTest = Some(ABTest("NewDesktopHeader", "variant"))
+      )
     } else {
-      s"${Configuration.id.membershipUrl}/supporter?countryGroup=${edition.id.toLowerCase}&INTCMP=DOTCOM_HEADER_BECOMEMEMBER_${edition.id}"
+      // TODO: I ditched countryGroup here, check that's OK
+      this.linkWithTrackingParams(
+        componentType = "ACQUISITIONS_HEADER",
+        campaignCode = s"DOTCOM_HEADER_BECOMEMEMBER_${edition.id}",
+        abTest = Some(ABTest("NewDesktopHeader", "control"))
+      )
     }
   }
 }
