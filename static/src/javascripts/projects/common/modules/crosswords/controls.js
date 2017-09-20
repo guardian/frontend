@@ -1,14 +1,14 @@
 import React from 'react/addons';
 import ConfirmButton from 'common/modules/crosswords/confirm-button';
-var buttonClassName = 'button button--primary';
-var buttonCurrentClassName = 'button--crossword--current';
-var buttonGenericClassName = 'button--secondary';
+const buttonClassName = 'button button--primary';
+const buttonCurrentClassName = 'button--crossword--current';
+const buttonGenericClassName = 'button--secondary';
 
-var Controls = React.createClass({
-    render: function() {
-        var hasSolutions = this.props.hasSolutions;
-        var hasFocus = this.props.clueInFocus;
-        var controls = {
+const Controls = React.createClass({
+    render() {
+        const hasSolutions = this.props.hasSolutions;
+        const hasFocus = this.props.clueInFocus;
+        const controls = {
             clue: [],
             grid: []
         };
