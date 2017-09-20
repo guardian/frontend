@@ -2,21 +2,16 @@
 
 import mediator from 'lib/mediator';
 
-const ORIGINAL_PAGETITLE = document.title;
-
-const setCount = (count: number): void => {
-    document.title =
-        count > 0 ? `(${count}) ${ORIGINAL_PAGETITLE}` : ORIGINAL_PAGETITLE;
+const setCount = (count: number, originalTitle: string): void => {
+    document.title = count > 0 ? `(${count}) ${originalTitle}` : originalTitle;
 };
 
 const initNotificationCounter = (): void => {
+    const ORIGINAL_PAGETITLE = document.title;
+
     mediator.on('modules:autoupdate:unread', count => {
-        setCount(count);
+        setCount(count, ORIGINAL_PAGETITLE);
     });
 };
 
-export { initNotificationCounter, setCount };
-
-export const _ = {
-    setCount,
-};
+export { initNotificationCounter };

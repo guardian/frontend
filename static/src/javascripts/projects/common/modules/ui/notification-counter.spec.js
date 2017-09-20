@@ -1,7 +1,7 @@
 // @flow
 
 import mediator from 'lib/mediator';
-import { initNotificationCounter, _ } from './notification-counter';
+import { initNotificationCounter } from './notification-counter';
 
 jest.mock('lib/mediator');
 
@@ -11,16 +11,6 @@ describe('notification-counter', () => {
     beforeEach(() => {
         document.title = ORIGINAL_PAGETITLE;
         initNotificationCounter();
-    });
-
-    it('should put a counter in the title bar', () => {
-        _.setCount(2);
-        expect(document.title).toContain('(2)');
-    });
-
-    it('should restore the title when counter set to 0', () => {
-        _.setCount(0);
-        expect(document.title).toBe(ORIGINAL_PAGETITLE);
     });
 
     it('should show an unread count when modules:autoupdate:unread is fired', () => {
