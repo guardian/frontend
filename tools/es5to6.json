@@ -13,8 +13,6 @@
     "projects/common/modules/crosswords/keycodes.js"
   ],
   "Simon Adcock": [
-    "bootstraps/enhanced/recipe-article.js",
-    "projects/common/modules/crosswords/constants.js",
     "projects/common/modules/crosswords/controls.js",
     "projects/common/modules/crosswords/helpers.js",
     "projects/common/modules/crosswords/series.js",
