@@ -161,7 +161,6 @@ const addTrackingCodesToUrl = (
     abTest?: { name: string, variant: string }
 ) => {
     const acquisitionData = {
-        // TODO: do we need referrerUrl?
         source: 'GUARDIAN_WEB',
         componentId: campaignCode,
         componentType,
