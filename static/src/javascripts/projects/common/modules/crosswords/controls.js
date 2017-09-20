@@ -1,12 +1,12 @@
 // @flow
-import React from 'react/addons';
+import { Component, createElement } from 'react/addons';
 import ConfirmButton from 'common/modules/crosswords/confirm-button';
 
 const buttonClassName = 'button button--primary';
 const buttonCurrentClassName = 'button--crossword--current';
 const buttonGenericClassName = 'button--secondary';
 
-const Controls = React.createClass({
+class Controls extends Component {
     render() {
         const hasSolutions = this.props.hasSolutions;
         const hasFocus = this.props.clueInFocus;
@@ -17,7 +17,7 @@ const Controls = React.createClass({
 
         // GRID CONTROLS
         controls.grid.unshift(
-            React.createElement(ConfirmButton, {
+            createElement(ConfirmButton, {
                 className: `${buttonClassName} ${buttonGenericClassName}`,
                 onClick: this.props.crossword.onClearAll.bind(this.props.crossword),
                 key: 'clear',
@@ -28,7 +28,7 @@ const Controls = React.createClass({
 
         if (hasSolutions) {
             controls.grid.unshift(
-                React.createElement(ConfirmButton, {
+                createElement(ConfirmButton, {
                     className: `${buttonClassName} ${buttonGenericClassName}`,
                     onClick: this.props.crossword.onSolution.bind(this.props.crossword),
                     key: 'solution',
@@ -37,7 +37,7 @@ const Controls = React.createClass({
                 })
             );
             controls.grid.unshift(
-                React.createElement(ConfirmButton, {
+                createElement(ConfirmButton, {
                     className: `${buttonClassName} ${buttonGenericClassName}`,
                     onClick: this.props.crossword.onCheckAll.bind(this.props.crossword),
                     key: 'checkAll',
@@ -50,7 +50,7 @@ const Controls = React.createClass({
         // HIGHLIGHTED CLUE CONTROLS  - published solution
         if (hasFocus) {
             controls.clue.unshift(
-                React.createElement(
+                createElement(
                     'button',
                     {
                         className: `${buttonClassName} ${buttonCurrentClassName}`,
@@ -64,7 +64,7 @@ const Controls = React.createClass({
 
             // anagram helper
             controls.clue.push(
-                React.createElement(
+                createElement(
                     'button',
                     {
                         className: `${buttonClassName} ${buttonCurrentClassName}`,
@@ -78,7 +78,7 @@ const Controls = React.createClass({
 
             if (hasSolutions) {
                 controls.clue.unshift(
-                    React.createElement(
+                    createElement(
                         'button',
                         {
                             className: `${buttonClassName} ${buttonCurrentClassName}`,
@@ -90,7 +90,7 @@ const Controls = React.createClass({
                     )
                 );
                 controls.clue.unshift(
-                    React.createElement(
+                    createElement(
                         'button',
                         {
                             className: `${buttonClassName} ${buttonCurrentClassName}`,
@@ -104,26 +104,26 @@ const Controls = React.createClass({
             }
         }
 
-        return React.createElement(
+        return createElement(
             'div',
             {
                 className: 'crossword__controls',
             },
-            React.createElement(
+            createElement(
                 'div',
                 {
                     className: 'crossword__controls__clue',
                 },
                 controls.clue
             ),
-            React.createElement(
+            createElement(
                 'div',
                 {
                     className: 'crossword__controls__grid',
                 },
                 controls.grid
             ),
-            React.createElement(
+            createElement(
                 'div',
                 {
                     className: 'crossword__controls_autosave_label',
@@ -131,7 +131,7 @@ const Controls = React.createClass({
                 'Crosswords are saved automatically'
             )
         );
-    },
-});
+    }
+}
 
 export { Controls };
