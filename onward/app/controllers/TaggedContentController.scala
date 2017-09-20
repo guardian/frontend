@@ -17,7 +17,7 @@ class TaggedContentController(
   val controllerComponents: ControllerComponents
 ) extends BaseController with Related with Logging with ImplicitControllerExecutionContext {
 
-  def renderJson(tag: String) = Action.async { implicit request =>
+  def renderJson(tag: String): Action[AnyContent] = Action.async { implicit request =>
     tagWhitelist.find(_ == tag).map { tag =>
       lookup(tag, Edition(request)) map {
         case Nil    => Cached(300) { JsonNotFound() }
@@ -28,7 +28,7 @@ class TaggedContentController(
     }
   }
 
-  private def render(trails: Seq[ContentType])(implicit request: RequestHeader) = Cached(300) {
+  private def render(trails: Seq[ContentType])(implicit request: RequestHeader): Result = Cached(300) {
     JsonComponent(
       "trails" -> JsArray(trails.map { trail =>
         Json.obj(

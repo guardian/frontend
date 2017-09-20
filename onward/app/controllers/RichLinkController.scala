@@ -4,13 +4,14 @@ import common.{ImplicitControllerExecutionContext, Logging}
 import contentapi.ContentApiClient
 import implicits.Requests
 import model.{ApplicationContext, Content, ContentType}
-import play.api.mvc.{ControllerComponents, RequestHeader}
+import play.api.mvc.{Action, AnyContent, ControllerComponents, RequestHeader}
+import play.twirl.api.Html
 
 import scala.concurrent.Future
 
 class RichLinkController(contentApiClient: ContentApiClient, controllerComponents: ControllerComponents)(implicit context: ApplicationContext) extends OnwardContentCardController(contentApiClient, controllerComponents) with Paging with Logging with ImplicitControllerExecutionContext with Requests   {
 
-  def render(path: String) = Action.async { implicit request =>
+  def render(path: String): Action[AnyContent] = Action.async { implicit request =>
     contentType(path) map {
         case Some(content) => renderContent(richLinkHtml(content), richLinkBodyHtml(content))
         case None => NotFound
@@ -23,7 +24,7 @@ class RichLinkController(contentApiClient: ContentApiClient, controllerComponent
     response map { _.content.map(Content(_)) }
   }
 
-  private def richLinkHtml(content: ContentType)(implicit request: RequestHeader, context: ApplicationContext) =
+  private def richLinkHtml(content: ContentType)(implicit request: RequestHeader, context: ApplicationContext): Html =
     views.html.richLink(content)(request, context)
 
   private def richLinkBodyHtml(content: ContentType)(implicit request: RequestHeader, context: ApplicationContext) =

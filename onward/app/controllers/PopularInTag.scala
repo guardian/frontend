@@ -5,7 +5,7 @@ import containers.Containers
 import contentapi.ContentApiClient
 import feed.MostReadAgent
 import model._
-import play.api.mvc.{BaseController, ControllerComponents, RequestHeader}
+import play.api.mvc._
 import services._
 
 class PopularInTag(
@@ -15,7 +15,7 @@ class PopularInTag(
 )(implicit context: ApplicationContext)
   extends BaseController with Related with Containers with Logging with ImplicitControllerExecutionContext {
 
-  def render(tag: String) = Action.async { implicit request =>
+  def render(tag: String): Action[AnyContent] = Action.async { implicit request =>
     val edition = Edition(request)
     val excludeTags = request.queryString.getOrElse("exclude-tag", Nil)
     getPopularInTag(edition, tag, excludeTags) map {
@@ -24,7 +24,7 @@ class PopularInTag(
     }
   }
 
-  private def renderPopularInTag(trails: RelatedContent)(implicit request: RequestHeader) = Cached(600) {
+  private def renderPopularInTag(trails: RelatedContent)(implicit request: RequestHeader): Result = Cached(600) {
     // Initially a fix for PaidFor related content (where this problem is more common), the decision to truncate is due
     // to aesthetic issues with the second slice when there are only 5 or 6 results in related content (7 looks fine).
     val numberOfCards = if (trails.faciaItems.length == 5 || trails.faciaItems.length == 6) 4 else 8

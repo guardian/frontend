@@ -7,7 +7,7 @@ import common._
 import contentapi.ContentApiClient
 import implicits.Requests
 import layout.{CollectionEssentials, DescriptionMetaHeader, FaciaContainer}
-import model.Cached.WithoutRevalidationResult
+import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model._
 import model.pressed.CollectionConfig
 import play.api.libs.json.{JsArray, Json}
@@ -32,13 +32,13 @@ class SeriesController(
 )(implicit context: ApplicationContext)
   extends BaseController with Logging with Paging with ImplicitControllerExecutionContext with Requests {
 
-  def renderSeriesStories(seriesId: String) = Action.async { implicit request =>
+  def renderSeriesStories(seriesId: String): Action[AnyContent] = Action.async { implicit request =>
     lookup(Edition(request), seriesId) map { series =>
       series.map(renderSeriesTrails).getOrElse(NotFound)
     }
   }
 
-  def renderMf2SeriesStories(seriesId:String) = Action.async { implicit request =>
+  def renderMf2SeriesStories(seriesId:String): Action[AnyContent] = Action.async { implicit request =>
     lookup(Edition(request), seriesId) map {
       _.map(series => Cached(15.minutes)(
         rendermf2Series(series)
@@ -69,7 +69,7 @@ class SeriesController(
       }
   }
 
-  private def rendermf2Series(series: Series)(implicit request: RequestHeader) = {
+  private def rendermf2Series(series: Series)(implicit request: RequestHeader): RevalidatableResult = {
     val displayName = Some(series.displayName)
     val seriesStories = series.trails.items take 4
     val description = series.tag.metadata.description.getOrElse("").replaceAll("<.*?>", "")
@@ -86,7 +86,7 @@ class SeriesController(
     )
   }
 
-  private def renderSeriesTrails(series: Series)(implicit request: RequestHeader) = {
+  private def renderSeriesTrails(series: Series)(implicit request: RequestHeader): Result = {
     val dataId = "series"
     val componentId = Some("series")
     val displayName = Some(series.displayName)
