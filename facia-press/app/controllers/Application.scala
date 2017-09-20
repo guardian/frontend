@@ -13,15 +13,15 @@ import scala.concurrent.Future
 
 class Application(liveFapiFrontPress: LiveFapiFrontPress, draftFapiFrontPress: DraftFapiFrontPress, val controllerComponents: ControllerComponents) extends BaseController with ImplicitControllerExecutionContext {
 
-  def index = Action {
+  def index: Action[AnyContent] = Action {
     NoCache(Ok("Hello, I am the Facia Press."))
   }
 
-  def showCurrentConfig = Action {
+  def showCurrentConfig: Action[AnyContent] = Action {
     NoCache(Ok(ConfigAgent.contentsAsJsonString).withHeaders("Content-Type" -> "application/json"))
   }
 
-  def generateLivePressedFor(path: String) = Action.async { request =>
+  def generateLivePressedFor(path: String): Action[AnyContent] = Action.async { request =>
     liveFapiFrontPress.getPressedFrontForPath(path)
       .map(Json.toJson(_))
       .map(Json.prettyPrint)
@@ -41,15 +41,15 @@ class Application(liveFapiFrontPress: LiveFapiFrontPress, draftFapiFrontPress: D
     else {
       Future.successful(NoCache(ServiceUnavailable(s"This service has been disabled by the switch: ${FaciaPressOnDemand.name}")))}
 
-  def pressLiveForPath(path: String) = Action.async {
+  def pressLiveForPath(path: String): Action[AnyContent] = Action.async {
     handlePressRequest(path, "live")(liveFapiFrontPress.pressByPathId)
   }
 
-  def pressDraftForPath(path: String) = Action.async {
+  def pressDraftForPath(path: String): Action[AnyContent] = Action.async {
     handlePressRequest(path, "draft")(draftFapiFrontPress.pressByPathId)
   }
 
-  def pressDraftForAll() = Action.async {
+  def pressDraftForAll(): Action[AnyContent] = Action.async {
     ConfigAgent.getPathIds.foldLeft(Future.successful(List[(String, Result)]())){ case (lastFuture, path) =>
       lastFuture
         .flatMap(resultList => handlePressRequest(path, "draft")(draftFapiFrontPress.pressByPathId)

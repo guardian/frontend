@@ -11,13 +11,13 @@ import scala.concurrent.{ExecutionContext, Future}
 import scala.util.{Failure, Success}
 
 object ConsecutiveErrorsRecorder {
-  def apply() = new ConsecutiveErrorsRecorder
+  def apply(): ConsecutiveErrorsRecorder = new ConsecutiveErrorsRecorder
 }
 
 final private[frontpress] class ConsecutiveErrorsRecorder {
   private val errorCount = new AtomicInteger()
 
-  def recordSuccess() = {
+  def recordSuccess(): Unit = {
     errorCount.set(0)
   }
 
@@ -25,11 +25,11 @@ final private[frontpress] class ConsecutiveErrorsRecorder {
     errorCount.addAndGet(1)
   }
 
-  def get = errorCount.get()
+  def get: Int = errorCount.get()
 }
 
 object DateTimeRecorder {
-  def apply() = new DateTimeRecorder
+  def apply(): DateTimeRecorder = new DateTimeRecorder
 }
 
 /** Used to record when last successfully performed some operation. If we don't expect certain operations to fail
@@ -42,7 +42,7 @@ final private[frontpress] class DateTimeRecorder {
     lastTime = Some(DateTime.now())
   }
 
-  def get = lastTime
+  def get: Option[DateTime] = lastTime
 }
 
 object JsonQueueWorker {
@@ -67,8 +67,8 @@ abstract class JsonQueueWorker[A: Reads]()(implicit executionContext: ExecutionC
   final private val lastSuccessfulReceipt = DateTimeRecorder()
   final private val consecutiveProcessingErrors = ConsecutiveErrorsRecorder()
 
-  final def lastReceipt = lastSuccessfulReceipt.get
-  final def consecutiveErrors = consecutiveProcessingErrors.get
+  final def lastReceipt: Option[DateTime] = lastSuccessfulReceipt.get
+  final def consecutiveErrors: Int = consecutiveProcessingErrors.get
 
   def process(message: Message[A]): Future[Unit]
 
