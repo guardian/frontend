@@ -18,11 +18,16 @@ list: # PRIVATE
 # Install all 3rd party dependencies.
 install: check-node-env
 	@yarn -s install
-	@make ui-install
+	@cd ui && yarn -s install
+	@cd dev/eslint-plugin-guardian-frontend && yarn -s install
+	@cd tools/amp-validation && yarn -s install
 
 # Remove all 3rd party dependencies.
 uninstall: # PRIVATE
-	@rm -rf node_modules **/node_modules
+	@rm -rf node_modules
+	@rm -rf ui/node_modules
+	@rm -rf dev/eslint-plugin-guardian-frontend/node_modules
+	@rm -rf tools/amp-validation/node_module
 	@echo 'All 3rd party dependencies have been uninstalled.'
 
 # Reinstall all 3rd party dependencies from scratch.
@@ -132,11 +137,11 @@ es6: install
 
 # *********************** UI ***********************
 
-ui-compile:
+ui-compile: install
 	@cd ui && yarn -s compile
 
-ui-watch:
-	@cd ui && yarn -s watch
+ui-watch-nashorn: install
+	@cd ui && yarn -s watch:nashorn
 
-ui-install:
-	@cd ui && yarn -s install
+ui-watch: install
+	@cd ui && yarn -s watch

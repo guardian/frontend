@@ -1,6 +1,6 @@
 // @flow
 import { handle, closeTooltip } from 'common/modules/discussion/upvote';
-import fakeDiscussionApi from 'common/modules/discussion/api';
+import { recommendComment as recommendComment_ } from 'common/modules/discussion/api';
 import fakeConfig from 'lib/config';
 
 jest.mock('common/modules/discussion/api', () => ({
@@ -12,6 +12,8 @@ jest.mock('lib/config', () => ({
         discussionAllowAnonymousRecommendsSwitch: false,
     },
 }));
+
+const recommendComment: any = recommendComment_;
 
 const fakeUser = {
     userId: 'fakeUserId',
@@ -44,7 +46,7 @@ describe('Recommendations of comments', () => {
             </div>`;
         }
 
-        fakeDiscussionApi.recommendComment.mockReset();
+        recommendComment.mockReset();
     });
 
     it('should send a request to discussion API if the user is logged in', () => {
@@ -54,9 +56,7 @@ describe('Recommendations of comments', () => {
             return Promise.reject('Error querying DOM');
         }
 
-        fakeDiscussionApi.recommendComment.mockImplementationOnce(() =>
-            Promise.resolve()
-        );
+        recommendComment.mockImplementationOnce(() => Promise.resolve());
         fakeConfig.switches.discussionAllowAnonymousRecommendsSwitch = false;
 
         return handle(
@@ -64,7 +64,7 @@ describe('Recommendations of comments', () => {
             document.querySelector('.recommendation-test'),
             fakeUser
         ).then(() => {
-            expect(fakeDiscussionApi.recommendComment).toHaveBeenCalled();
+            expect(recommendComment).toHaveBeenCalled();
             expect(
                 target.classList.contains('d-comment__recommend--recommended')
             ).toBe(true);
@@ -81,9 +81,7 @@ describe('Recommendations of comments', () => {
             return Promise.reject('Error querying DOM');
         }
 
-        fakeDiscussionApi.recommendComment.mockImplementationOnce(() =>
-            Promise.resolve()
-        );
+        recommendComment.mockImplementationOnce(() => Promise.resolve());
         fakeConfig.switches.discussionAllowAnonymousRecommendsSwitch = true;
 
         return handle(
@@ -91,7 +89,7 @@ describe('Recommendations of comments', () => {
             document.querySelector('.recommendation-test'),
             null
         ).then(() => {
-            expect(fakeDiscussionApi.recommendComment).toHaveBeenCalled();
+            expect(recommendComment).toHaveBeenCalled();
             expect(
                 target.classList.contains('d-comment__recommend--recommended')
             ).toBe(true);
@@ -108,7 +106,7 @@ describe('Recommendations of comments', () => {
             return Promise.reject('Error querying DOM');
         }
 
-        fakeDiscussionApi.recommendComment.mockImplementationOnce(() =>
+        recommendComment.mockImplementationOnce(() =>
             Promise.reject(new Error('discussion api error'))
         );
         fakeConfig.switches.discussionAllowAnonymousRecommendsSwitch = false;
@@ -118,7 +116,7 @@ describe('Recommendations of comments', () => {
             document.querySelector('.recommendation-test'),
             fakeUser
         ).catch(() => {
-            expect(fakeDiscussionApi.recommendComment).toHaveBeenCalled();
+            expect(recommendComment).toHaveBeenCalled();
             expect(
                 target.classList.contains('d-comment__recommend--recommended')
             ).toBe(false);
@@ -137,7 +135,7 @@ describe('Recommendations of comments', () => {
             return Promise.reject('Error querying DOM');
         }
 
-        fakeDiscussionApi.recommendComment.mockImplementationOnce(() =>
+        recommendComment.mockImplementationOnce(() =>
             Promise.reject(new Error('discussion api error'))
         );
         fakeConfig.switches.discussionAllowAnonymousRecommendsSwitch = false;
@@ -148,9 +146,7 @@ describe('Recommendations of comments', () => {
             null
         )
             .then(() => {
-                expect(
-                    fakeDiscussionApi.recommendComment
-                ).not.toHaveBeenCalled();
+                expect(recommendComment).not.toHaveBeenCalled();
                 expect(
                     target.classList.contains(
                         'd-comment__recommend--recommended'
