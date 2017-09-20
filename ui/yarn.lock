@@ -2106,7 +2106,7 @@ expand-range@^1.8.1:
   dependencies:
     fill-range "^2.1.0"
 
-express@^4.13.3, express@^4.15.2:
+express@^4.13.3, express@^4.15.2, express@^4.15.4:
   version "4.15.4"
   resolved "https://registry.yarnpkg.com/express/-/express-4.15.4.tgz#032e2253489cf8fce02666beca3d11ed7a2daed1"
   dependencies:
@@ -6022,7 +6022,7 @@ webpack-bundle-analyzer@^2.8.3:
     opener "^1.4.3"
     ws "^2.3.1"
 
-webpack-dev-middleware@^1.11.0:
+webpack-dev-middleware@^1.11.0, webpack-dev-middleware@^1.12.0:
   version "1.12.0"
   resolved "https://registry.yarnpkg.com/webpack-dev-middleware/-/webpack-dev-middleware-1.12.0.tgz#d34efefb2edda7e1d3b5dbe07289513219651709"
   dependencies:
@@ -6061,7 +6061,7 @@ webpack-dev-server@^2.6.1:
     webpack-dev-middleware "^1.11.0"
     yargs "^6.6.0"
 
-webpack-hot-middleware@^2.18.2:
+webpack-hot-middleware@^2.19.1:
   version "2.19.1"
   resolved "https://registry.yarnpkg.com/webpack-hot-middleware/-/webpack-hot-middleware-2.19.1.tgz#5db32c31c955c1ead114d37c7519ea554da0d405"
   dependencies:
