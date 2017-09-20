@@ -29,7 +29,7 @@ class ArchiveController(redirects: RedirectService, renderer: Renderer, val cont
 
   private val redirectHttpStatus = HttpStatus.SC_MOVED_PERMANENTLY
 
-  def lookup(path: String) = Action.async{ implicit request =>
+  def lookup(path: String): Action[AnyContent] = Action.async{ implicit request =>
 
     lookupPath(path)
       .map { _
