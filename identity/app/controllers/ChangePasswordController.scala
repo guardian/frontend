@@ -56,7 +56,7 @@ class ChangePasswordController(
       )
   )
 
-  def displayForm() = csrfAddToken {
+  def displayForm(): Action[AnyContent] = csrfAddToken {
     authAction.async {
       implicit request =>
 
@@ -71,13 +71,13 @@ class ChangePasswordController(
     }
   }
 
-  def renderPasswordConfirmation = Action{ implicit request =>
+  def renderPasswordConfirmation: Action[AnyContent] = Action{ implicit request =>
     val idRequest = idRequestParser(request)
     val userIsLoggedIn = authenticationService.requestPresentsAuthenticationCredentials(request)
     NoCache(Ok(views.html.password.passwordResetConfirmation(page, idRequest, idUrlBuilder, userIsLoggedIn)))
   }
 
-  def submitForm() = csrfCheck {
+  def submitForm(): Action[AnyContent] = csrfCheck {
     authAction.async {
       implicit request =>
         val idRequest = idRequestParser(request)

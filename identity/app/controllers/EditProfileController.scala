@@ -40,11 +40,11 @@ class EditProfileController(idUrlBuilder: IdentityUrlBuilder,
   private val digitalPackPage = IdentityPage("/digitalpack/edit", "Digital Pack")
   private val privacyPage = IdentityPage("/privacy/edit", "Privacy")
 
-  def displayPublicProfileForm = displayForm(publicPage)
-  def displayAccountForm = displayForm(accountPage)
-  def displayMembershipForm = displayForm(membershipPage)
-  def displayDigitalPackForm = displayForm(digitalPackPage)
-  def displayPrivacyForm = displayForm(privacyPage)
+  def displayPublicProfileForm: Action[AnyContent] = displayForm(publicPage)
+  def displayAccountForm: Action[AnyContent] = displayForm(accountPage)
+  def displayMembershipForm: Action[AnyContent] = displayForm(membershipPage)
+  def displayDigitalPackForm: Action[AnyContent] = displayForm(digitalPackPage)
+  def displayPrivacyForm: Action[AnyContent] = displayForm(privacyPage)
 
   private def displayForm(page: IdentityPage) = csrfAddToken {
     recentlyAuthenticated.async { implicit request =>
@@ -52,9 +52,9 @@ class EditProfileController(idUrlBuilder: IdentityUrlBuilder,
     }
   }
 
-  def submitPublicProfileForm() = submitForm(publicPage)
-  def submitAccountForm() = submitForm(accountPage)
-  def submitPrivacyForm() = submitForm(privacyPage)
+  def submitPublicProfileForm(): Action[AnyContent] = submitForm(publicPage)
+  def submitAccountForm(): Action[AnyContent] = submitForm(accountPage)
+  def submitPrivacyForm(): Action[AnyContent] = submitForm(privacyPage)
 
   def identifyActiveSubmittedForm(page: IdentityPage): EditProfilePage =
     page match {
@@ -63,7 +63,7 @@ class EditProfileController(idUrlBuilder: IdentityUrlBuilder,
       case _ => PrivacyEditProfilePage
     }
 
-  def submitForm(page: IdentityPage) = csrfCheck { authActionWithUser.async { implicit request =>
+  def submitForm(page: IdentityPage): Action[AnyContent] = csrfCheck { authActionWithUser.async { implicit request =>
       val activePage = identifyActiveSubmittedForm(page)
       val user = request.user
       val forms = ProfileForms(user, activePage).bindFromRequest(request)
@@ -105,7 +105,7 @@ case class ProfileForms(
     case PrivacyEditProfilePage => privacyForm
   }
 
-  def bindFromRequest(implicit request: Request[_]) = update {
+  def bindFromRequest(implicit request: Request[_]): ProfileForms = update {
     form =>
       // Hack to get the postcode error into the correct context.
       val boundForm = form.bindFromRequest()

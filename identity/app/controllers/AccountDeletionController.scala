@@ -51,14 +51,14 @@ class AccountDeletionController(
       "reason" -> optional(text)
   ))
 
-  def renderAccountDeletionForm = csrfAddToken {
+  def renderAccountDeletionForm: Action[AnyContent] = csrfAddToken {
     authActionWithUser.async { implicit request =>
       val form = accountDeletionForm.bindFromFlash.getOrElse(accountDeletionForm)
       Future(NoCache(Ok(views.html.profile.deletion.accountDeletion(page, idRequestParser(request), idUrlBuilder, form, Nil, request.user))))
     }
   }
 
-  def processAccountDeletionForm = csrfCheck {
+  def processAccountDeletionForm: Action[AnyContent] = csrfCheck {
     authActionWithUser.async { implicit request =>
       val boundForm = accountDeletionForm.bindFromRequest
 
@@ -69,7 +69,7 @@ class AccountDeletionController(
     }
   }
 
-  def renderAccountDeletionConfirmation(autoDeletion: Boolean) = Action.async { implicit request =>
+  def renderAccountDeletionConfirmation(autoDeletion: Boolean): Action[AnyContent] = Action.async { implicit request =>
     Future(NoCache(Ok(accountDeletionConfirm(pageConfirm, autoDeletion))))
   }
 

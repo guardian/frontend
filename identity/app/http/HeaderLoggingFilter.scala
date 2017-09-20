@@ -22,7 +22,7 @@ class HeaderLoggingFilter(implicit val mat: Materializer) extends Filter with Sa
     logger.debug(s"Request headers: $header")
   }
 
-  def apply(next: (RequestHeader) => Result)(rh: RequestHeader) = {
+  def apply(next: (RequestHeader) => Result)(rh: RequestHeader): Result = {
     if (logger.isDebugEnabled) { logHeaders(rh) }
     next(rh)
   }
