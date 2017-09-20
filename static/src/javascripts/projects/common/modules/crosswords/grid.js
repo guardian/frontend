@@ -7,49 +7,49 @@ import forEach from 'lodash/collections/forEach';
 import range from 'lodash/arrays/range';
 import map from 'lodash/collections/map';
 import assign from 'lodash/objects/assign';
-var Grid = React.createClass({
+const Grid = React.createClass({
 
-    getSeparators: function(x, y) {
+    getSeparators(x, y) {
         return this.props.separators[helpers.clueMapKey(x, y)];
     },
 
-    handleSelect: function(x, y) {
+    handleSelect(x, y) {
         this.props.crossword.onSelect(x, y);
     },
 
     // Position at end of previous cell
-    createWordSeparator: function(x, y, direction) {
-        var top = helpers.gridSize(y);
-        var left = helpers.gridSize(x);
-        var borderWidth = 1;
+    createWordSeparator(x, y, direction) {
+        const top = helpers.gridSize(y);
+        const left = helpers.gridSize(x);
+        const borderWidth = 1;
 
         if (direction === 'across') {
-            var width = 1;
+            const width = 1;
             return React.createElement('rect', {
                 x: left - borderWidth - width,
                 y: top,
                 key: ['sep', direction, x, y].join('_'),
-                width: width,
+                width,
                 height: constants.constants.cellSize
             });
         } else if (direction === 'down') {
-            var height = 1;
+            const height = 1;
             return React.createElement('rect', {
                 x: left,
                 y: top - borderWidth - height,
                 key: ['sep', direction, x, y].join('_'),
                 width: constants.constants.cellSize,
-                height: height
+                height
             });
         }
     },
 
     // Position in-between this and previous cells
-    createHyphenSeparator: function(x, y, direction) {
-        var top = helpers.gridSize(y);
-        var left = helpers.gridSize(x);
-        var borderWidth = 1;
-        var width, height;
+    createHyphenSeparator(x, y, direction) {
+        const top = helpers.gridSize(y);
+        const left = helpers.gridSize(x);
+        const borderWidth = 1;
+        let width, height;
 
         if (direction === 'across') {
             width = constants.constants.cellSize / 4;
@@ -57,8 +57,8 @@ var Grid = React.createClass({
             return React.createElement('rect', {
                 x: left - borderWidth / 2 - width / 2,
                 y: top + constants.constants.cellSize / 2 + height / 2,
-                width: width,
-                height: height
+                width,
+                height
             });
         } else if (direction === 'down') {
             width = 1;
@@ -66,13 +66,13 @@ var Grid = React.createClass({
             return React.createElement('rect', {
                 x: left + constants.constants.cellSize / 2 + width / 2,
                 y: top - borderWidth / 2 - height / 2,
-                width: width,
-                height: height
+                width,
+                height
             });
         }
     },
 
-    createSeparator: function(x, y, separator, direction) {
+    createSeparator(x, y, separator, direction) {
         if (separator === ',') {
             return this.createWordSeparator(x, y, direction);
         } else if (separator === '-') {
@@ -80,21 +80,21 @@ var Grid = React.createClass({
         }
     },
 
-    render: function() {
-        var width = helpers.gridSize(this.props.columns);
-        var height = helpers.gridSize(this.props.rows);
-        var cells = [];
-        var separators = [];
+    render() {
+        const width = helpers.gridSize(this.props.columns);
+        const height = helpers.gridSize(this.props.rows);
+        const cells = [];
+        let separators = [];
 
         forEach(range(this.props.rows), function(y) {
             map(range(this.props.columns), function(x) {
-                var cellProps = this.props.cells[x][y];
+                const cellProps = this.props.cells[x][y];
 
                 if (cellProps.isEditable) {
                     cells.push(React.createElement(Cell, assign({}, cellProps, {
                         handleSelect: this.handleSelect,
-                        x: x,
-                        y: y,
+                        x,
+                        y,
                         key: 'cell_' + x + '_' + y,
                         isHighlighted: this.props.crossword.isHighlighted(x, y),
                         isFocussed: this.props.focussedCell && x === this.props.focussedCell.x && y === this.props.focussedCell.y
@@ -118,8 +118,8 @@ var Grid = React.createClass({
             React.createElement('rect', {
                 x: 0,
                 y: 0,
-                width: width,
-                height: height,
+                width,
+                height,
                 className: 'crossword__grid-background'
             }),
             cells,
