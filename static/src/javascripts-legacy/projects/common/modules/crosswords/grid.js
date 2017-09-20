@@ -1,9 +1,9 @@
 define([
     'react/addons',
-    './helpers',
+    'common/modules/crosswords/helpers',
     'common/modules/crosswords/constants',
-    './cell',
-    './classNames',
+    'common/modules/crosswords/cell',
+    'common/modules/crosswords/classNames',
     'lodash/collections/forEach',
     'lodash/arrays/range',
     'lodash/collections/map',
@@ -26,7 +26,7 @@ define([
         },
 
         handleSelect: function (x, y) {
-            this.props.onSelect(x, y);
+            this.props.crossword.onSelect(x, y);
         },
 
         // Position at end of previous cell
@@ -108,7 +108,7 @@ define([
                             x: x,
                             y: y,
                             key: 'cell_' + x + '_' + y,
-                            isHighlighted: this.props.isHighlighted(x, y),
+                            isHighlighted: this.props.crossword.isHighlighted(x, y),
                             isFocussed: this.props.focussedCell && x === this.props.focussedCell.x && y === this.props.focussedCell.y
                         }, this)));
 

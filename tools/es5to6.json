@@ -23,10 +23,7 @@
   ],
   "Gustav Pursche": [
     "projects/common/modules/discussion/whole-discussion.js",
-    "projects/common/modules/discussion/api.js",
-    "projects/common/modules/discussion/discussion-frontend.js",
-    "projects/common/modules/crosswords/main.js",
-    "projects/common/modules/crosswords/persistence.js"
+    "projects/common/modules/discussion/discussion-frontend.js"
   ],
   "GHaberis": [
     "projects/common/modules/component.js",
@@ -48,7 +45,6 @@
     "bootstraps/youtube-embed.js"
   ],
   "Philip Wills": [
-    "projects/common/modules/crosswords/crossword.js",
     "projects/common/modules/crosswords/grid.js",
     "projects/common/modules/identity/account-profile.js"
   ],
@@ -76,7 +72,6 @@
   "Calum Campbell": [],
   "Unassigned": [
     "projects/common/modules/navigation/search.js",
-    "projects/common/modules/ui/full-height.js",
     "projects/common/modules/ui/relativedates.js",
     "projects/common/modules/ui/selection-sharing.js"
   ]
