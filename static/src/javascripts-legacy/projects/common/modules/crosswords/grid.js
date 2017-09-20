@@ -1,9 +1,9 @@
 define([
     'react/addons',
-    './helpers',
-    './constants',
-    './cell',
-    './classNames',
+    'common/modules/crosswords/helpers',
+    'common/modules/crosswords/constants',
+    'common/modules/crosswords/cell',
+    'common/modules/crosswords/classNames',
     'lodash/collections/forEach',
     'lodash/arrays/range',
     'lodash/collections/map',
@@ -42,7 +42,7 @@ define([
                     y: top,
                     key: ['sep', direction, x, y].join('_'),
                     width: width,
-                    height: constants.cellSize
+                    height: constants.constants.cellSize
                 });
             } else if (direction === 'down') {
                 var height = 1;
@@ -50,7 +50,7 @@ define([
                     x: left,
                     y: top - borderWidth - height,
                     key: ['sep', direction, x, y].join('_'),
-                    width: constants.cellSize,
+                    width: constants.constants.cellSize,
                     height: height
                 });
             }
@@ -64,19 +64,19 @@ define([
             var width, height;
 
             if (direction === 'across') {
-                width = constants.cellSize / 4;
+                width = constants.constants.cellSize / 4;
                 height = 1;
                 return React.createElement('rect', {
                     x: left - borderWidth / 2 - width / 2,
-                    y: top + constants.cellSize / 2 + height / 2,
+                    y: top + constants.constants.cellSize / 2 + height / 2,
                     width: width,
                     height: height
                 });
             } else if (direction === 'down') {
                 width = 1;
-                height = constants.cellSize / 4;
+                height = constants.constants.cellSize / 4;
                 return React.createElement('rect', {
-                    x: left + constants.cellSize / 2 + width / 2,
+                    x: left + constants.constants.cellSize / 2 + width / 2,
                     y: top - borderWidth / 2 - height / 2,
                     width: width,
                     height: height

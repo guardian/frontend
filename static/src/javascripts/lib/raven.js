@@ -26,6 +26,9 @@ const sentryOptions = {
     ignoreErrors: [
         "Can't execute code from a freed script",
         'There is no space left matching rules from .js-article__body',
+
+        // weatherapi/city.json frequently 404s and lib/fetch-json throws an error
+        'Fetch error while requesting https://api.nextgen.guardianapps.co.uk/weatherapi/city.json:',
     ],
 
     dataCallback(data: Object): Object {

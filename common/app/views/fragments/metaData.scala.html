@@ -124,6 +124,9 @@
     }
     case _ => {}
 }
+    
+@* https://dev.twitter.com/web/overview/privacy *@
+<meta name="twitter:dnt" content="on">
 
 @page.metadata.openGraphImages.map{ case (imageUrl) =>
     <meta property="og:image" content="@Html(imageUrl)" />

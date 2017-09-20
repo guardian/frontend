@@ -14,7 +14,10 @@ import HiddenInput from 'common/modules/crosswords/hidden-input';
 import Grid from 'common/modules/crosswords/grid';
 import helpers from 'common/modules/crosswords/helpers';
 import keycodes from 'common/modules/crosswords/keycodes';
-import persistence from 'common/modules/crosswords/persistence';
+import {
+    saveGridState,
+    loadGridState,
+} from 'common/modules/crosswords/persistence';
 import classNames from 'common/modules/crosswords/classNames';
 
 class Crossword extends React.Component {
@@ -31,7 +34,7 @@ class Crossword extends React.Component {
                 dimensions.rows,
                 dimensions.cols,
                 this.props.data.entries,
-                persistence.loadGridState(this.props.data.id)
+                loadGridState(this.props.data.id)
             ),
             cellInFocus: null,
             directionOfEntry: null,
@@ -555,7 +558,7 @@ class Crossword extends React.Component {
     }
 
     save(): void {
-        persistence.saveGridState(this.props.data.id, this.state.grid);
+        saveGridState(this.props.data.id, this.state.grid);
     }
 
     cheat(entry: Object): void {

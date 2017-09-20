@@ -29,7 +29,7 @@ jest.mock('common/views/svgs', () => ({
 jest.mock('common/modules/experiments/acquisition-test-selector', () => ({
     getTest: jest.fn(() => ({
         campaignId: 'fake-campaign-id',
-        id: 'fake-id',
+        id: 'fake-test-id',
         start: '2017-01-01',
         expiry: '2027-01-01',
         author: 'fake-author',
@@ -38,7 +38,7 @@ jest.mock('common/modules/experiments/acquisition-test-selector', () => ({
         audienceOffset: 0,
         successMeasure: 'fake success measure',
         audienceCriteria: 'fake audience criteria',
-        variants: [],
+        variants: [{ id: 'fake-variant-id' }],
         canRun: () => true,
         componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
     })),
@@ -50,7 +50,7 @@ jest.mock(
         membershipEngagementBannerTests: [
             {
                 campaignId: 'fake-campaign-id',
-                id: 'fake-id',
+                id: 'fake-test-id',
                 start: '2017-01-01',
                 expiry: '2027-01-01',
                 author: 'fake-author',
@@ -59,7 +59,14 @@ jest.mock(
                 audienceOffset: 0,
                 successMeasure: 'fake success measure',
                 audienceCriteria: 'fake audience criteria',
-                variants: [],
+                variants: [
+                    {
+                        id: 'fake-variant-id',
+                        options: {
+                            engagementBannerParams: {},
+                        },
+                    },
+                ],
                 canRun: () => true,
                 componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
             },
@@ -82,7 +89,7 @@ jest.mock('common/modules/experiments/test-can-run-checks', () => ({
 }));
 jest.mock('common/modules/experiments/segment-util', () => ({
     isInTest: jest.fn(() => true),
-    variantFor: jest.fn(() => ({})),
+    variantFor: jest.fn(() => ({ id: 'fake-variant-id' })),
 }));
 jest.mock('commercial/modules/commercial-features', () => ({
     commercialFeatures: {
@@ -133,15 +140,6 @@ describe('Membership engagement banner', () => {
     });
 
     describe('If breaking news banner has not shown', () => {
-        const fakeComponentEvent: OphanComponentEvent = {
-            component: {
-                componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
-                products: ['CONTRIBUTION'],
-                campaignCode: 'fake-campaign-code',
-                labels: [],
-            },
-            action: 'INSERT',
-        };
         let showBanner;
         let emitSpy;
 
@@ -171,10 +169,21 @@ describe('Membership engagement banner', () => {
                     'membership-message:display'
                 );
             }));
-        it('should record the component event in ophan', () =>
+        it('should record the component event in ophan with a/b test info', () =>
             showBanner.then(() => {
                 expect(fakeOphan.record).toHaveBeenCalledWith({
-                    componentEvent: fakeComponentEvent,
+                    componentEvent: {
+                        component: {
+                            componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
+                            products: ['CONTRIBUTION'],
+                            campaignCode: 'fake-campaign-code',
+                        },
+                        action: 'INSERT',
+                        abTest: {
+                            name: 'fake-test-id',
+                            variant: 'fake-variant-id',
+                        },
+                    },
                 });
             }));
     });
@@ -208,8 +217,10 @@ describe('Membership engagement banner', () => {
                 colourStrategy: jest.fn(() => 'fake-colour-class'),
             }));
             fakeVariantFor.mockImplementationOnce(() => ({
-                id: 'fake-user-variant-id',
+                id: 'fake-variant-id',
                 options: {
+                    // This being empty is what lets the campaign
+                    // code default to the test campaignId plus variant id
                     engagementBannerParams: {},
                 },
             }));
@@ -222,7 +233,7 @@ describe('Membership engagement banner', () => {
             showBanner.then(() => {
                 expect(
                     FakeMessage.mock.calls[0][1].siteMessageComponentName
-                ).toBe('fake-campaign-id_fake-user-variant-id');
+                ).toBe('fake-campaign-id_fake-variant-id');
             }));
         it('correct CSS modifier class', () =>
             showBanner.then(() => {
