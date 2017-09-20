@@ -1,9 +1,9 @@
 define([
     'react/addons',
-    './helpers',
+    'common/modules/crosswords/helpers',
     'common/modules/crosswords/constants',
-    './cell',
-    './classNames',
+    'common/modules/crosswords/cell',
+    'common/modules/crosswords/classNames',
     'lodash/collections/forEach',
     'lodash/arrays/range',
     'lodash/collections/map',

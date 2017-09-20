@@ -1,7 +1,7 @@
 define([
     'react/addons',
     'lodash/objects/assign',
-    './classNames'
+    'common/modules/crosswords/classNames'
 ], function (
     React,
     assign,

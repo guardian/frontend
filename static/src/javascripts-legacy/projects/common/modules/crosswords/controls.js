@@ -1,6 +1,6 @@
 define([
     'react/addons',
-    './confirm-button'
+    'common/modules/crosswords/confirm-button'
 ], function (
     React,
     ConfirmButton
