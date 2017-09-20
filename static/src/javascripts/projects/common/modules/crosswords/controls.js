@@ -134,4 +134,4 @@ const Controls = React.createClass({
     },
 });
 
-export default Controls;
+export { Controls };
