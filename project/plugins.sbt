@@ -13,7 +13,8 @@ resolvers ++= Seq(
   Resolver.typesafeRepo("releases"),
   Resolver.url("guardian sbt-plugins", new URL("https://dl.bintray.com/guardian/sbt-plugins/"))(Resolver.ivyStylePatterns),
   Resolver.url("sbt sbt-plugins", new URL("https://dl.bintray.com/sbt/sbt-plugin-releases/"))(Resolver.ivyStylePatterns),
-  Resolver.url("bintray-sbt-plugin-releases", url("https://dl.bintray.com/content/sbt/sbt-plugin-releases"))(Resolver.ivyStylePatterns)
+  Resolver.url("bintray-sbt-plugin-releases", url("https://dl.bintray.com/content/sbt/sbt-plugin-releases"))(Resolver.ivyStylePatterns),
+  Resolver.bintrayRepo("guardian", "ophan")
 )
 
 addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.6.3")
