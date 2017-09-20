@@ -2975,7 +2975,7 @@ fd-slicer@~1.0.1:
   dependencies:
     pend "~1.2.0"
 
-fence@guardian/fence.git#~0.2.11:
+fence@guardian/fence#0.2.11:
   version "0.2.11"
   resolved "https://codeload.github.com/guardian/fence/tar.gz/de184dfb10c625ed2575b594407db58fcd83c3f2"
 
@@ -8047,7 +8047,7 @@ videojs-contrib-ads@3.1.3, videojs-contrib-ads@~3.1.2:
   version "3.1.3"
   resolved "https://registry.yarnpkg.com/videojs-contrib-ads/-/videojs-contrib-ads-3.1.3.tgz#fced1b7727ea30f1ef52ce8a8c40132378bbafb7"
 
-videojs-embed@guardian/videojs-embed#0.3.3:
+videojs-embed@guardian/videojs-embed#v0.3.3:
   version "0.3.3"
   resolved "https://codeload.github.com/guardian/videojs-embed/tar.gz/8b56cc35e641dc3c3d34430f0e783fabeebcadae"
 
@@ -8072,7 +8072,7 @@ videojs-persistvolume@guardian/videojs-persistvolume#0.1.4:
   version "0.1.4"
   resolved "https://codeload.github.com/guardian/videojs-persistvolume/tar.gz/31ac2b0771b12d91b91af835958ba77eb6638533"
 
-videojs-playlist@guardian/videojs-playlist#v0.1.4:
+videojs-playlist@guardian/videojs-playlist#0.1.4:
   version "0.1.4"
   resolved "https://codeload.github.com/guardian/videojs-playlist/tar.gz/6ce6f623de6d2ff647ae7574a8937243a49400e0"
 
