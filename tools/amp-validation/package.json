@@ -1,6 +1,7 @@
 {
   "name": "amp-validation",
   "version": "0.0.1",
+  "private": true,
   "description": "Utility that uses the amphtml-validator to validate AMP endpoints",
   "license": "Apache-2.0",
   "scripts": {
