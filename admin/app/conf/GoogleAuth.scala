@@ -20,7 +20,7 @@ case class GoogleAuth(currentHost: Option[String]) {
     }
   }
 
-  def getConfigOrDie = config getOrElse {
+  def getConfigOrDie: GoogleAuthConfig = config getOrElse {
     throw new RuntimeException("You must set up credentials for Google Auth")
   }
 }

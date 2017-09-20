@@ -10,7 +10,7 @@ object NextGenInteractiveHtmlCleaner extends HtmlCleaner with implicits.WSReques
       document.getElementsByAttributeValue("rel","canonical").attr("href").toLowerCase.contains("/ng-interactive/")
   }
 
-  override def clean(document: Document, convertToHttps: Boolean) = {
+  override def clean(document: Document, convertToHttps: Boolean): Document = {
     universalClean(document)
     /*
     This cleaner currently leaves all of the page scripts intact so as not to break the functionality

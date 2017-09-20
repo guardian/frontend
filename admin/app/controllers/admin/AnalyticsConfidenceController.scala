@@ -2,12 +2,12 @@ package controllers.admin
 
 import common.{ImplicitControllerExecutionContext, Logging}
 import model.ApplicationContext
-import play.api.mvc.{BaseController, ControllerComponents}
+import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 import tools._
 
 class AnalyticsConfidenceController(val controllerComponents: ControllerComponents)(implicit context: ApplicationContext)
   extends BaseController with Logging with ImplicitControllerExecutionContext {
-    def renderConfidence() = Action.async { implicit request =>
+  def renderConfidence(): Action[AnyContent] = Action.async { implicit request =>
     for {
       ophan <- CloudWatch.ophanConfidence()
       google <- CloudWatch.googleConfidence()

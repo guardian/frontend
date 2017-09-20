@@ -2,7 +2,7 @@ package controllers.admin
 
 import java.io.File
 
-import play.api.mvc.{BaseController, ControllerComponents}
+import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 import common.Logging
 import model.ApplicationContext
 import play.api.data._
@@ -21,11 +21,11 @@ class RedirectController(
 
   val redirectForm = Form(mapping("from" -> text, "to" -> text)(PageRedirect.apply)(PageRedirect.unapply))
 
-  def redirect() = Action { implicit request =>
+  def redirect(): Action[AnyContent] = Action { implicit request =>
     Ok(views.html.redirects(redirectForm))
   }
 
-  def redirectPost() = Action { implicit request =>
+  def redirectPost(): Action[AnyContent] = Action { implicit request =>
     val failMessage = "Request failed, please ensure you have followed the instructions and try again."
 
     val message = redirectForm.bindFromRequest().get.trim match {
@@ -41,7 +41,7 @@ class RedirectController(
     Ok(views.html.redirects(redirectForm, urlMsgs = List(message)))
   }
 
-  def redirectBatchPost() = Action { implicit request =>
+  def redirectBatchPost(): Action[AnyContent] = Action { implicit request =>
 
     val body = request.body
     val uploadedFile = body.asMultipartFormData.flatMap { files =>

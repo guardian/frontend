@@ -1,7 +1,7 @@
 package controllers.admin
 
 import implicits.Requests
-import play.api.mvc.{BaseController, ControllerComponents}
+import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 import common.{ImplicitControllerExecutionContext, Logging}
 import tools.CloudWatch
 import play.api.libs.ws.WSClient
@@ -26,20 +26,20 @@ class RadiatorController(
   lazy val githubAccessToken = Configuration.github.token.map{ token => s"?access_token=$token" }.getOrElse("")
   lazy val teamcityService = new TeamcityService(new HttpClient(wsClient))
 
-  def switchesExpiringSoon = {
+  def switchesExpiringSoon: Seq[Switch] = {
     Switches.all.filter(Switch.expiry(_).hasExpired) ++ // already expired
     Switches.all.filter(Switch.expiry(_).daysToExpiry.exists(_ == 0)) ++ // expiring today
     Switches.all.filter(Switch.expiry(_).daysToExpiry.exists(_ == 1)) // expiring tomorrow
   }
 
   // proxy call to github so we do not leak the access key
-  def commitDetail(hash: String) = Action.async { implicit request =>
+  def commitDetail(hash: String): Action[AnyContent] = Action.async { implicit request =>
     val call = wsClient.url(s"https://api.github.com/repos/guardian/frontend/commits/$hash$githubAccessToken").get()
     call.map{ c =>
       NoCache(Ok(c.body).withHeaders("Content-Type" -> "application/json; charset=utf-8"))
     }
   }
-  def renderRadiator() = Action.async { implicit request =>
+  def renderRadiator(): Action[AnyContent] = Action.async { implicit request =>
     val apiKey = Configuration.riffraff.apiKey
 
     case class buildProject(name: String, branch: Option[String] = None)

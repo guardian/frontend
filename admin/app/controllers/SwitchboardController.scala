@@ -14,7 +14,7 @@ class SwitchboardController(akkaAsync: AkkaAsync, val controllerComponents: Cont
 
   val SwitchPattern = """([a-z\d-]+)=(on|off)""".r
 
-  def renderSwitchboard() = Action.async { implicit request =>
+  def renderSwitchboard(): Action[AnyContent] = Action.async { implicit request =>
     log.info("loaded Switchboard")
 
     Future { Store.getSwitchesWithLastModified } map { switchesWithLastModified =>
@@ -33,7 +33,7 @@ class SwitchboardController(akkaAsync: AkkaAsync, val controllerComponents: Cont
     }
   }
 
-  def save() = Action.async { implicit request =>
+  def save(): Action[AnyContent] = Action.async { implicit request =>
     val form = request.body.asFormUrlEncoded
 
     val localLastModified = form.get("lastModified").head.toLong
@@ -59,7 +59,7 @@ class SwitchboardController(akkaAsync: AkkaAsync, val controllerComponents: Cont
     }
   }
 
-  private def saveSwitchesOrError(requester: String, updates: Seq[String]) = try {
+  private def saveSwitchesOrError(requester: String, updates: Seq[String]): Result = try {
     val current =  Switches.all map { switch =>
       switch.name + "=" + (if (switch.isSwitchedOn) "on" else "off")
     }
