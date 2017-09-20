@@ -48,6 +48,7 @@
         "coveralls": "^2.13.0",
         "css-loader": "^0.28.4",
         "emotion": "^7.2.2",
+        "emotion-server": "^7.3.2",
         "express": "^4.15.4",
         "flow-bin": "^0.51.1",
         "gzip-size-cli": "^2.0.0",
