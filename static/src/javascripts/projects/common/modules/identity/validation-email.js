@@ -4,14 +4,13 @@ import mediator from 'lib/mediator';
 import IdentityApi from 'common/modules/identity/api';
 
 export default {
-    init: function() {
-
-        var $resendButton,
-            resendButton = document.body.querySelector('.js-id-send-validation-email');
+    init() {
+        let $resendButton;
+        const resendButton = document.body.querySelector('.js-id-send-validation-email');
 
         if (resendButton) {
             $resendButton = bonzo(resendButton);
-            bean.on(resendButton, 'click', function(event) {
+            bean.on(resendButton, 'click', event => {
                 event.preventDefault();
                 if (IdentityApi.isUserLoggedIn()) {
                     IdentityApi.sendValidationEmail().then(
