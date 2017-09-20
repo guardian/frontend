@@ -14,7 +14,7 @@ import {
     trackABTests,
 } from 'common/modules/experiments/ab-ophan';
 import { init as initCommon } from 'bootstraps/enhanced/common';
-import sport from 'bootstraps/enhanced/sport';
+import { initSport } from 'bootstraps/enhanced/sport';
 import { trackPerformance } from 'common/modules/analytics/google';
 import { init as geolocationInit } from 'lib/geolocation';
 import { initCheckDispatcher } from 'common/modules/check-dispatcher';
@@ -246,7 +246,7 @@ const bootEnhanced = (): void => {
 
     if (config.page.section === 'sport') {
         // Leaving this here for now as it's a tiny bootstrap.
-        bootstrapContext('sport', sport.init);
+        bootstrapContext('sport', initSport);
     }
 
     if (config.page.section === 'identity') {

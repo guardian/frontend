@@ -42,7 +42,7 @@ define([
                     if (isEmbed) {
                         new FormstackEmbedIframe.FormstackEmbedIframe(el, id, config).init();
                     } else {
-                        new Formstack(el, id, config).init();
+                        new Formstack.Formstack(el, id, config).init();
                     }
 
                 });

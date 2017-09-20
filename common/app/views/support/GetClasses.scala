@@ -101,6 +101,9 @@ object GetClasses {
     lazyLoad: Boolean,
     dynamicSlowMpu: Boolean
   ): String = {
+    // no toggle for Headlines container as it will be hosting the weather widget instead
+    val showToggle = !disableHide && !container.exists(!slices.Container.showToggle(_)) && !isFirst && hasTitle && !isHeadlines
+
     RenderClasses((Seq(
       ("fc-container", true),
       ("fc-container--first", isFirst),
@@ -110,9 +113,8 @@ object GetClasses {
       ("fc-container--lazy-load", lazyLoad),
       ("js-container--lazy-load", lazyLoad),
       ("fc-container--dynamic-slow-mpu", dynamicSlowMpu),
-      ("js-container--toggle",
-        // no toggle for Headlines container as it will be hosting the weather widget instead
-        !disableHide && !container.exists(!slices.Container.showToggle(_)) && !isFirst && hasTitle && !isHeadlines)
+      ("fc-container--will-have-toggle", showToggle),
+      ("js-container--toggle", showToggle)
     ) collect {
       case (kls, true) => kls
     }) ++ extraClasses: _*)
