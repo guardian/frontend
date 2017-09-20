@@ -27,7 +27,7 @@ class AccessTokenGenerator(val controllerComponents: ControllerComponents) exten
 
   private val unavailable: Result = ServiceUnavailable("Missing properties.")
 
-  def generate = Action { implicit request =>
+  def generate: Action[AnyContent] = Action { implicit request =>
 
     def genRequestToken(): Result = {
       authService.fold(unavailable) { auth =>
