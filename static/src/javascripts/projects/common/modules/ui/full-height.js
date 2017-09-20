@@ -25,7 +25,7 @@ const renderBlock = (state: Object): Promise<void> =>
         });
 
 const render = (state: Object): void => {
-    state.elements.each(element => {
+    state.elements.forEach(element => {
         renderBlock({ $el: $(element), isMobile: state.isMobile });
     });
 };
@@ -35,7 +35,10 @@ const getState = (): Promise<{
     isMobile: boolean,
 }> =>
     fastdom.read(() => {
-        const elements = $('.js-is-fixed-height');
+        const elements = [
+            ...document.getElementsByClassName('js-is-fixed-height'),
+        ];
+
         return { elements, isMobile: getBreakpoint() === 'mobile' };
     });
 
