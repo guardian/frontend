@@ -140,7 +140,7 @@ const AnagramHelper = React.createClass({
             React.createElement('button', {
                 className:
                     'button button--large button--tertiary crossword__anagram-helper-close',
-                onClick: this.props.close,
+                onClick: this.props.close.bind(this.props.crossword),
                 dangerouslySetInnerHTML: closeIcon,
                 'data-link-name': 'Close',
             }),
