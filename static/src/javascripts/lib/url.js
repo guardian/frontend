@@ -49,7 +49,7 @@ const replaceQueryString = (params: Object) =>
 const constructQuery = (query: Object): string =>
     Object.keys(query)
         .map(param => {
-            const value = query[param];
+            const value = encodeURIComponent(query[param]);
             const queryValue = Array.isArray(value) ? value.join(',') : value;
             return `${param}=${queryValue}`;
         })

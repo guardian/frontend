@@ -176,7 +176,7 @@ const addTrackingCodesToUrl = (
         acquisitionData: JSON.stringify(acquisitionData),
     };
 
-    return `${base}?${constructURLQuery(params)}`;
+    return `${base}${base.includes('?')?'&':'?'}${constructURLQuery(params)}`;
 };
 
 const makeEvent = (id: string, event: string): string => `${id}:${event}`;
