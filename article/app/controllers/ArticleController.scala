@@ -119,7 +119,7 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
       renderFormat(htmlResponse, jsonResponse, article, Switches.all)
   }
 
-  def renderLiveBlog(path: String, page: Option[String] = None, format: Option[String] = None) =
+  def renderLiveBlog(path: String, page: Option[String] = None, format: Option[String] = None): Action[AnyContent] =
     if (format.contains("email"))
       renderArticle(path)
     else
@@ -137,7 +137,7 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
         }
       }
 
-  def renderLiveBlogJson(path: String, lastUpdate: Option[String], rendered: Option[Boolean], isLivePage: Option[Boolean]) = {
+  def renderLiveBlogJson(path: String, lastUpdate: Option[String], rendered: Option[Boolean], isLivePage: Option[Boolean]): Action[AnyContent] = {
     Action.async { implicit request =>
 
       def renderWithRange(range: BlockRange) =
@@ -156,7 +156,7 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
     }
   }
 
-  def renderJson(path: String) = {
+  def renderJson(path: String): Action[AnyContent] = {
     Action.async { implicit request =>
       mapModel(path) {
         render(path, _)
@@ -164,7 +164,7 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
     }
   }
 
-  def renderArticle(path: String) = {
+  def renderArticle(path: String): Action[AnyContent] = {
     Action.async { implicit request =>
       mapModel(path, range = if (request.isEmail) Some(ArticleBlocks) else None) {
         render(path, _)
