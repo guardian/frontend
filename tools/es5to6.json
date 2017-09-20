@@ -24,8 +24,7 @@
   "Gustav Pursche": [
     "projects/common/modules/discussion/whole-discussion.js",
     "projects/common/modules/discussion/discussion-frontend.js",
-    "projects/common/modules/crosswords/main.js",
-    "projects/common/modules/crosswords/persistence.js"
+    "projects/common/modules/crosswords/main.js"
   ],
   "GHaberis": [
     "projects/common/modules/component.js",
