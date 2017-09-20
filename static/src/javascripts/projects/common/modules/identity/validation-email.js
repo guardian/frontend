@@ -1,35 +1,51 @@
-import bean from 'bean';
-import bonzo from 'bonzo';
+// @flow
+
 import mediator from 'lib/mediator';
 import IdentityApi from 'common/modules/identity/api';
 
-export default {
-    init() {
-        let $resendButton;
-        const resendButton = document.body.querySelector('.js-id-send-validation-email');
+const init = (): void => {
+    const resendButton = document.getElementsByClassName(
+        'js-id-send-validation-email'
+    )[0];
 
-        if (resendButton) {
-            $resendButton = bonzo(resendButton);
-            bean.on(resendButton, 'click', event => {
-                event.preventDefault();
-                if (IdentityApi.isUserLoggedIn()) {
-                    IdentityApi.sendValidationEmail().then(
-                        function success(resp) {
-                            if (resp.status === 'error') {
-                                mediator.emit('module:identity:validation-email:fail');
-                                $resendButton.innerHTML = 'An error occured, please click here to try again.';
-                            } else {
-                                mediator.emit('module:identity:validation-email:success');
-                                $resendButton.replaceWith('<p>Sent. Please check your email and follow the link.</p>');
+    if (resendButton) {
+        resendButton.addEventListener('click', (event: Event): void => {
+            event.preventDefault();
+
+            if (IdentityApi.isUserLoggedIn()) {
+                IdentityApi.sendValidationEmail().then(
+                    resp => {
+                        if (resp.status === 'error') {
+                            mediator.emit(
+                                'module:identity:validation-email:fail'
+                            );
+                            resendButton.innerHTML =
+                                'An error occured, please click here to try again.';
+                        } else {
+                            mediator.emit(
+                                'module:identity:validation-email:success'
+                            );
+                            const resendButtonParent = resendButton.parentNode;
+                            if (resendButtonParent) {
+                                const sentMsgEl = document.createElement('p');
+                                sentMsgEl.innerText =
+                                    'Sent. Please check your email and follow the link.';
+                                resendButtonParent.replaceChild(
+                                    sentMsgEl,
+                                    resendButton
+                                );
                             }
-                        },
-                        function fail() {
-                            mediator.emit('module:identity:validation-email:fail');
-                            $resendButton.innerHTML = 'An error occured, please click here to try again.';
                         }
-                    );
-                }
-            });
-        }
+                    },
+                    () => {
+                        mediator.emit('module:identity:validation-email:fail');
+                        resendButton.innerHTML =
+                            'An error occured, please click here to try again.';
+                    }
+                );
+            }
+        });
     }
-}; // define
+};
+
+export { init };
