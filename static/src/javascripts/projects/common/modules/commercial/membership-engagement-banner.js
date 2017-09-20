@@ -10,7 +10,6 @@ import { variantFor } from 'common/modules/experiments/segment-util';
 import { engagementBannerParams } from 'common/modules/commercial/membership-engagement-banner-parameters';
 import { isBlocked } from 'common/modules/commercial/membership-engagement-banner-block';
 import { get as getGeoLocation } from 'lib/geolocation';
-import { constructQuery } from 'lib/url';
 import { getTest as getAcquisitionTest } from 'common/modules/experiments/acquisition-test-selector';
 import { submitComponentEvent } from 'common/modules/commercial/acquisitions-ophan';
 import { addTrackingCodesToUrl } from 'common/modules/commercial/contributions-utilities';
@@ -125,7 +124,7 @@ const showBanner = (params: EngagementBannerParams): void => {
         params.linkUrl,
         'ACQUISITIONS_ENGAGEMENT_BANNER',
         params.campaignCode,
-        test && variant ? {name: test.id, variant: variant.id} : undefined,
+        test && variant ? { name: test.id, variant: variant.id } : undefined
     );
 
     const buttonCaption = params.buttonCaption;
