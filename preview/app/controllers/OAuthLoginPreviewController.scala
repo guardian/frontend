@@ -6,7 +6,7 @@ import googleAuth.OAuthLoginController
 import model.ApplicationContext
 import play.api.http.HttpConfiguration
 import play.api.libs.ws.WSClient
-import play.api.mvc.{AnyContent, ControllerComponents, Request}
+import play.api.mvc.{Action, AnyContent, ControllerComponents, Request}
 
 class OAuthLoginPreviewController(
   val wsClient: WSClient,
@@ -15,7 +15,7 @@ class OAuthLoginPreviewController(
 )(implicit context: ApplicationContext)
   extends OAuthLoginController {
 
-  override def login = Action { request =>
+  override def login: Action[AnyContent] = Action { request =>
     Ok(views.html.previewAuth(context.applicationIdentity.name, "Dev", UserIdentity.fromRequest(request)))
   }
   override def googleAuthConfig(request: Request[AnyContent]): Option[GoogleAuthConfig] = Configuration.standalone.oauthCredentials.map { cred =>
