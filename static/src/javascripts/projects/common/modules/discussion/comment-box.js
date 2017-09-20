@@ -4,7 +4,7 @@ import bean from 'bean';
 import bonzo from 'bonzo';
 import mediator from 'lib/mediator';
 import Component from 'common/modules/component';
-import DiscussionApi from 'common/modules/discussion/api';
+import { postComment, previewComment } from 'common/modules/discussion/api';
 import IdentityApi from 'common/modules/identity/api';
 import { avatarify } from 'common/modules/discussion/user-avatars';
 import ValidationEmail from 'common/modules/identity/validation-email';
@@ -218,7 +218,7 @@ class CommentBox extends Component {
             this.removeState('onboarding-visible');
             comment.body = urlify(comment.body);
             this.setFormState(true);
-            DiscussionApi.postComment(this.getDiscussionId(), comment)
+            postComment(this.getDiscussionId(), comment)
                 .then((resp: Object) => this.postCommentSuccess(comment, resp))
                 .catch((err: Object) => this.fail(err));
         };
@@ -498,7 +498,7 @@ class CommentBox extends Component {
         }
 
         if (this.errors.length === 0) {
-            DiscussionApi.previewComment(comment)
+            previewComment(comment)
                 .then((resp: Object) => callback(comment, resp))
                 .catch((err: Object) => this.fail(err));
         }
