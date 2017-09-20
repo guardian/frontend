@@ -7,7 +7,7 @@ import play.api.mvc._
 
 class PiggybackPixelController(val controllerComponents: ControllerComponents) extends BaseController with ImplicitControllerExecutionContext with implicits.Requests with Logging {
 
-  def resize() = Action { implicit request =>
+  def resize(): Action[AnyContent] = Action { implicit request =>
     val maybeJs = for {
       width <- request.getIntParameter("width")
       height <- request.getIntParameter("height")

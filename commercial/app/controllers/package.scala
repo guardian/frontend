@@ -16,7 +16,7 @@ package object controllers {
    */
   val componentNilMaxAge = 5.seconds
 
-  def segment(implicit request: RequestHeader) = {
+  def segment(implicit request: RequestHeader): Segment = {
     val params = request.queryString
     val section = params.get("s") map (_.head)
     val keywords = params getOrElse("k", Nil)
