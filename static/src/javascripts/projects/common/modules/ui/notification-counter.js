@@ -2,8 +2,8 @@
 
 import mediator from 'lib/mediator';
 
-const setCount = (count: number, originalTitle: string): void => {
-    document.title = count > 0 ? `(${count}) ${originalTitle}` : originalTitle;
+const setCount = (count: number, title: string): void => {
+    document.title = count > 0 ? `(${count}) ${title}` : title;
 };
 
 const initNotificationCounter = (): void => {
