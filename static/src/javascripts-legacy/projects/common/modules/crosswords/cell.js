@@ -1,8 +1,8 @@
 define([
     'react/addons',
-    './helpers',
+    'common/modules/crosswords/helpers',
     'common/modules/crosswords/constants',
-    './classNames'
+    'common/modules/crosswords/classNames'
 ], function (
     React,
     helpers,

@@ -2,7 +2,7 @@ define([
     'react/addons',
     'bean',
     'fastdom',
-    './classNames',
+    'common/modules/crosswords/classNames',
     'lib/detect',
     'lib/scroller'
 ], function (
