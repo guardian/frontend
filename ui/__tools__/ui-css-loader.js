@@ -1,15 +1,27 @@
 // This loader breaks the webpack rule of 'do one thing' because we use it internally
 // and it makes life easier than passing loads of stuff about, reparsing it per transform etc
 
-import postcss from 'postcss';
-import customProperties from 'postcss-custom-properties';
-import customMedia from 'postcss-custom-media';
-import apply from 'postcss-apply';
-import decamelize from 'decamelize';
+const postcss = require('postcss');
+const customProperties = require('postcss-custom-properties');
+const customMedia = require('postcss-custom-media');
+const apply = require('postcss-apply');
+const decamelize = require('decamelize');
 
-import { parseCSS as emotionParser } from 'babel-plugin-emotion/lib/parser';
+require('babel-register')({
+    babelrc: false,
+    presets: [
+        [
+            'babel-preset-env',
+            {
+                modules: 'commonjs',
+            },
+        ],
+        'babel-preset-flow',
+    ],
+});
 
-import * as pasteup from '../src/pasteup';
+const { parseCSS: emotionParser } = require('babel-plugin-emotion/lib/parser');
+const pasteup = require('../src/pasteup');
 
 // convert pasteup exports to css vars
 // e.g. a.b.c => --a-b-c
