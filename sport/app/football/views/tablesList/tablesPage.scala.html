@@ -1,6 +1,7 @@
 @import football.controllers.TablesPage
+@import common.Edition
+@import views.html.fragments.commercial.pageLogo
 @import views.support.`package`.Seq2zipWithRowInfo
-
 @(page: TablesPage)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @main(page.page, Some("football")){
@@ -29,7 +30,8 @@
                                                     striped = true,
                                                     responsiveFont = true,
                                                     heading = if(info.rowNum == 1) Option(table.competition.fullName) else None,
-                                                    linkToCompetition = info.isLast && !page.singleCompetition
+                                                    linkToCompetition = info.isLast && !page.singleCompetition,
+                                                    branding = page.branding(Edition(request))
                                                 )
                                             </div>
                                         }
@@ -38,7 +40,8 @@
                                             striped = true,
                                             responsiveFont = true,
                                             heading = Option(table.competition.fullName),
-                                            linkToCompetition = !page.singleCompetition
+                                            linkToCompetition = !page.singleCompetition,
+                                            branding = page.branding(Edition(request))
                                         )
                                     }
                                 }
