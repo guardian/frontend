@@ -64,7 +64,6 @@
   "jranks123": [],
   "shaundillon": [],
   "Joseph Smith": [
-      "projects/common/modules/commercial/targeting-tool.js",
       "projects/common/modules/commercial/donot-use-adblock.js",
       "projects/common/modules/commercial/video-ad-url.js"
   ],
