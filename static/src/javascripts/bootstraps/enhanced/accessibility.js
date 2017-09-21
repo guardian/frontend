@@ -1,6 +1,6 @@
 // @flow
 import React from 'react/addons';
-import accessibility from 'common/modules/accessibility/main';
+import { saveState, isOn } from 'common/modules/accessibility/main';
 
 const DOM_ID: string = 'js-accessibility-preferences';
 
@@ -49,7 +49,7 @@ const BinaryToggle = React.createClass({
 const Accessibility = React.createClass({
     getInitialState(): AccessibilityState {
         return {
-            'flashing-elements': accessibility.isOn('flashing-elements'),
+            'flashing-elements': isOn('flashing-elements'),
         };
     },
 
@@ -57,7 +57,7 @@ const Accessibility = React.createClass({
         const newState = {};
         newState[key] = !this.state[key];
         this.setState(newState, function() {
-            accessibility.saveState(this.state);
+            saveState(this.state);
         });
     },
 
