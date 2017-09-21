@@ -22,3 +22,14 @@ export const colour = {
         support4: '#dc2a7d',
     },
 };
+
+export const breakpoints = {
+    mobile: 320,
+    mobileMedium: 360,
+    mobileLandscape: 480,
+    phablet: 660,
+    tablet: 740,
+    desktop: 980,
+    leftCol: 1140,
+    wide: 1300,
+};
