@@ -11,8 +11,10 @@ import { engagementBannerParams } from 'common/modules/commercial/membership-eng
 import { isBlocked } from 'common/modules/commercial/membership-engagement-banner-block';
 import { get as getGeoLocation } from 'lib/geolocation';
 import { getTest as getAcquisitionTest } from 'common/modules/experiments/acquisition-test-selector';
-import { submitComponentEvent } from 'common/modules/commercial/acquisitions-ophan';
-import { addTrackingCodesToUrl } from 'common/modules/commercial/contributions-utilities';
+import {
+    submitComponentEvent,
+    addTrackingCodesToUrl,
+} from 'common/modules/commercial/acquisitions-ophan';
 
 // change messageCode to force redisplay of the message to users who already closed it.
 const messageCode = 'engagement-banner-2017-09-21';
