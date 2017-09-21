@@ -83,25 +83,25 @@ object Frontend extends Build with Prototypes {
     .dependsOn(commonWithTests)
     .aggregate(common)
 
-  val archive = application("archive").dependsOn(commonWithTests).aggregate(common).settings(
+  val archive = applicationWithAkkaHttp("archive").dependsOn(commonWithTests).aggregate(common).settings(
   )
 
-  val sport = application("sport").dependsOn(commonWithTests).aggregate(common).settings(
+  val sport = applicationWithAkkaHttp("sport").dependsOn(commonWithTests).aggregate(common).settings(
     libraryDependencies ++= Seq(
       paClient,
       akkaContrib
     )
   )
 
-  val discussion = application("discussion").dependsOn(commonWithTests).aggregate(common)
+  val discussion = applicationWithAkkaHttp("discussion").dependsOn(commonWithTests).aggregate(common)
 
-  val diagnostics = application("diagnostics").dependsOn(commonWithTests).aggregate(common).settings(
+  val diagnostics = applicationWithAkkaHttp("diagnostics").dependsOn(commonWithTests).aggregate(common).settings(
     libraryDependencies ++= Seq(
       redisClient
     )
   )
 
-  val admin = application("admin").dependsOn(commonWithTests).aggregate(common).settings(
+  val admin = applicationWithAkkaHttp("admin").dependsOn(commonWithTests).aggregate(common).settings(
     libraryDependencies ++= Seq(
       paClient,
       dfpAxis,
@@ -142,7 +142,7 @@ object Frontend extends Build with Prototypes {
     )
   )
 
-  val commercial = application("commercial").dependsOn(commonWithTests).aggregate(common)
+  val commercial = applicationWithAkkaHttp("commercial").dependsOn(commonWithTests).aggregate(common)
 
   val onward = applicationWithAkkaHttp("onward").dependsOn(commonWithTests).aggregate(common)
 
@@ -165,7 +165,7 @@ object Frontend extends Build with Prototypes {
       javaOptions in Runtime += "-Dconfig.file=dev-build/conf/dev-build.application.conf"
     )
 
-  val preview = application("preview").dependsOn(
+  val preview = applicationWithAkkaHttp("preview").dependsOn(
     commonWithTests,
     article,
     facia,
@@ -180,7 +180,7 @@ object Frontend extends Build with Prototypes {
     .settings(frontendCompilationSettings:_*)
     .settings(frontendIntegrationTestsSettings:_*)
 
-  val rss = application("rss")
+  val rss = applicationWithAkkaHttp("rss")
     .dependsOn(commonWithTests)
     .aggregate(common)
 

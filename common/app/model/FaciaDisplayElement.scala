@@ -55,7 +55,7 @@ case class InlineImage(imageMedia: ImageMedia) extends FaciaDisplayElement
 case class CrosswordSvg(id: String) extends FaciaDisplayElement {
   def persistenceId: String = id.stripPrefix("crosswords/")
 
-  def imageUrl = s"${Configuration.ajax.url}/$id.svg"
+  def imageUrl: String = s"${Configuration.ajax.url}/$id.svg"
 }
 
 object InlineSlideshow {

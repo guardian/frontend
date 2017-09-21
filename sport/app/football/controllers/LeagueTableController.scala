@@ -3,7 +3,7 @@ package football.controllers
 import common._
 import conf.switches.Switches
 import feed.CompetitionsService
-import play.api.mvc.{Action, BaseController, ControllerComponents}
+import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 import model._
 import model.Page
 
@@ -53,8 +53,8 @@ class LeagueTableController(
 
   private def loadTables: Seq[Table] = sortedCompetitions.filter(_.hasLeagueTable).map { Table(_) }
 
-  def renderLeagueTablesJson() = renderLeagueTables()
-  def renderLeagueTables() = Action { implicit request =>
+  def renderLeagueTablesJson(): Action[AnyContent] = renderLeagueTables()
+  def renderLeagueTables(): Action[AnyContent] = Action { implicit request =>
 
     val page = new FootballPage(
       "football/tables",
@@ -76,8 +76,8 @@ class LeagueTableController(
 
   }
 
-  def renderTeamlistJson() = renderTeamlist()
-  def renderTeamlist() = Action { implicit request =>
+  def renderTeamlistJson(): Action[AnyContent] = renderTeamlist()
+  def renderTeamlist(): Action[AnyContent] = Action { implicit request =>
 
     val page = new FootballPage(
       "football/teams",
@@ -97,8 +97,8 @@ class LeagueTableController(
 
   }
 
-  def renderCompetitionJson(competition: String) = renderCompetition(competition)
-  def renderCompetition(competition: String) = Action { implicit request =>
+  def renderCompetitionJson(competition: String): Action[AnyContent] = renderCompetition(competition)
+  def renderCompetition(competition: String): Action[AnyContent] = Action { implicit request =>
     val table = loadTables.find(_.competition.url.endsWith(s"/$competition")).orElse(loadTables.find(_.competition.id == competition))
     table.map { table =>
 
@@ -123,8 +123,8 @@ class LeagueTableController(
     )
   }
 
-  def renderCompetitionGroupJson(competition: String, groupReference: String) = renderCompetitionGroup(competition, groupReference)
-  def renderCompetitionGroup(competition: String, groupReference: String) = Action { implicit request =>
+  def renderCompetitionGroupJson(competition: String, groupReference: String): Action[AnyContent] = renderCompetitionGroup(competition, groupReference)
+  def renderCompetitionGroup(competition: String, groupReference: String): Action[AnyContent] = Action { implicit request =>
     val response = for {
       table <- loadTables.find(_.competition.url.endsWith(s"/$competition")).orElse(loadTables.find(_.competition.id == competition))
       group <- table.groups.find { group =>

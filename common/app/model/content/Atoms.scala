@@ -448,7 +448,7 @@ object StoryQuiz {
     url <- (assets(width140) \ "secureUrl").asOpt[String]
   } yield url
 
-  def make(path: String, atom: AtomApiAtom) = {
+  def make(path: String, atom: AtomApiAtom): StoryQuiz = {
     val split: Array[String] = atom.data.asInstanceOf[AtomData.Quiz].quiz.title.split('|')
     val (title, description) = (split(0), split(1))
     val quiz = atom.data.asInstanceOf[AtomData.Quiz].quiz

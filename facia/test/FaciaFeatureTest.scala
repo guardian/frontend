@@ -1,6 +1,6 @@
 package test
 
-import org.scalatest.{DoNotDiscover, Matchers, GivenWhenThen, FeatureSpec}
+import org.scalatest._
 import play.api.test.TestBrowser
 import org.fluentlenium.core.domain.FluentWebElement
 
@@ -10,7 +10,7 @@ import org.fluentlenium.core.domain.FluentWebElement
 
     feature("Sponsorships") {
 
-      def testFrontSponsorship(browser: TestBrowser, sponsorshipType: String) = {
+      def testFrontSponsorship(browser: TestBrowser, sponsorshipType: String): Assertion = {
         import browser._
 
         Then("the page should be styled differently")
@@ -21,7 +21,7 @@ import org.fluentlenium.core.domain.FluentWebElement
         $(s".facia-container--$sponsorshipType").attribute("data-sponsorship") should be (sponsorshipType)
       }
 
-      def testContainerSponsorship(browser: TestBrowser, sponsorshipType: String, sponsoredContainerIndex: Int) = {
+      def testContainerSponsorship(browser: TestBrowser, sponsorshipType: String, sponsoredContainerIndex: Int): Assertion = {
         import browser._
 
         val sponsoredContainer = $(".container").get(sponsoredContainerIndex)

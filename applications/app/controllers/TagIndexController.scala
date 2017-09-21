@@ -3,7 +3,7 @@ package controllers
 import common.{ImplicitControllerExecutionContext, Logging}
 import model.Cached.RevalidatableResult
 import model._
-import play.api.mvc.{BaseController, ControllerComponents}
+import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 import services._
 
 class TagIndexController(val controllerComponents: ControllerComponents)(implicit context: ApplicationContext)
@@ -11,7 +11,7 @@ class TagIndexController(val controllerComponents: ControllerComponents)(implici
 
     private val TagIndexCacheTime = 600
 
-  private def forTagType(keywordType: String, title: String, page: String, metadata: MetaData) = Action { implicit request =>
+  private def forTagType(keywordType: String, title: String, page: String, metadata: MetaData): Action[AnyContent] = Action { implicit request =>
     TagIndexesS3.getIndex(keywordType, page) match {
       case Left(TagIndexNotFound) =>
         log.error(s"404 error serving tag index page for $keywordType $page")
@@ -32,7 +32,7 @@ class TagIndexController(val controllerComponents: ControllerComponents)(implici
     }
   }
 
-  def keywords() = Action { implicit request =>
+  def keywords(): Action[AnyContent] = Action { implicit request =>
     (for {
       alphaListing <- KeywordAlphaIndexAutoRefresh.get
       sectionListing <- KeywordSectionIndexAutoRefresh.get
@@ -43,7 +43,7 @@ class TagIndexController(val controllerComponents: ControllerComponents)(implici
     }) getOrElse InternalServerError("Not yet loaded alpha and section index for keywords")
   }
 
-  def contributors() = Action { implicit request =>
+  def contributors(): Action[AnyContent] = Action { implicit request =>
     (for {
       alphaListing <- ContributorAlphaIndexAutoRefresh.get
     } yield {
@@ -53,8 +53,8 @@ class TagIndexController(val controllerComponents: ControllerComponents)(implici
     }) getOrElse InternalServerError("Not yet loaded contributor index listing")
   }
 
-  def keyword(page: String) = forTagType("keywords", "subjects", page, SubjectIndexPageMetaData.make(page))
+  def keyword(page: String): Action[AnyContent] = forTagType("keywords", "subjects", page, SubjectIndexPageMetaData.make(page))
 
-  def contributor(page: String) = forTagType("contributors", "contributors", page, ContributorsIndexPageMetaData.make(page))
+  def contributor(page: String): Action[AnyContent] = forTagType("contributors", "contributors", page, ContributorsIndexPageMetaData.make(page))
 }
 

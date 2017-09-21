@@ -14,7 +14,7 @@ class SwitchesTest extends FlatSpec with Matchers with AppendedClues {
 
   private val testSwitchGroup = new SwitchGroup("category")
 
-  def testSwitch = Switch(
+  def testSwitch: Switch = Switch(
     testSwitchGroup,
     "test-switch",
     "exciting switch",
@@ -24,7 +24,7 @@ class SwitchesTest extends FlatSpec with Matchers with AppendedClues {
     exposeClientSide = true
   )
 
-  def foreverSwitch = Switch(
+  def foreverSwitch: Switch = Switch(
     testSwitchGroup,
     "forever-switch",
     "exciting switch",
@@ -72,7 +72,7 @@ class SwitchesTest extends FlatSpec with Matchers with AppendedClues {
   }
 
   they should "have weekday expiry dates" in {
-    def isWeekend(date: LocalDate) = {
+    def isWeekend(date: LocalDate): Boolean = {
       val day = date.getDayOfWeek
       day == DateTimeConstants.SATURDAY || day == DateTimeConstants.SUNDAY
     }

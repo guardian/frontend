@@ -11,7 +11,7 @@ object Story {
 
   implicit val ordering = Ordering.by[Story, Int](_.group)
 
-  def unboosted(n: Int) = Story(n, isBoosted = false)
+  def unboosted(n: Int): Story = Story(n, isBoosted = false)
 
   private [slices] def segmentByGroup(stories: Seq[Story]): Map[Int, Seq[Story]] = {
     stories.foldLeft(Map.empty[Int, Seq[Story]]) { (acc, story) =>

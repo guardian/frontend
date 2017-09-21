@@ -20,11 +20,11 @@ case class PrePurgeTestResult(url: String, passed: Boolean)
 class PageDecacheController(wsClient: WSClient, val controllerComponents: ControllerComponents)(implicit context: ApplicationContext)
   extends BaseController with Logging with ImplicitControllerExecutionContext with AdminAuthController {
 
-  def renderPageDecache() = Action.async { implicit request =>
+  def renderPageDecache(): Action[AnyContent] = Action.async { implicit request =>
       Future(NoCache(Ok(views.html.cache.pageDecache())))
   }
 
-  def decache() = AdminAuthAction.async { implicit request =>
+  def decache(): Action[AnyContent] = AdminAuthAction.async { implicit request =>
     getSubmittedUrl(request).map(new URI(_)).map{ urlToDecache =>
       new CdnPurge(wsClient)
         .soft(SurrogateKey(urlToDecache.getPath))

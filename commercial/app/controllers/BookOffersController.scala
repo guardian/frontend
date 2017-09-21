@@ -22,7 +22,7 @@ class BookOffersController(bookFinder: BookFinder, bestsellersAgent: Bestsellers
 
   private def isValidIsbn(isbn: String): Boolean = (isbn forall (_.isDigit)) && (isbn.length == 10 || isbn.length == 13)
 
-  def getBook = Action { implicit request =>
+  def getBook: Action[AnyContent] = Action { implicit request =>
 
     lazy val failedLookupResult: Result = Cached(30.seconds)(JsonNotFound())(request)
     lazy val badRequestResponse: Result = Cached(1.day)(JsonComponent(JsNull))(request)
@@ -42,7 +42,7 @@ class BookOffersController(bookFinder: BookFinder, bestsellersAgent: Bestsellers
     }
   }
 
-  def getBooks = Action { implicit request =>
+  def getBooks: Action[AnyContent] = Action { implicit request =>
       val json: JsValue = Json.toJson(booksSample(specificIds, segment))
       Cached(60.seconds){
         JsonComponent(json)

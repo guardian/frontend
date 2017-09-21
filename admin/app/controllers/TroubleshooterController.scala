@@ -1,7 +1,7 @@
 package controllers.admin
 
 import contentapi.{CapiHttpClient, ContentApiClient, PreviewContentApi}
-import play.api.mvc.{BaseController, ControllerComponents}
+import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 import common.{ImplicitControllerExecutionContext, Logging}
 import model.{ApplicationContext, NoCache}
 import play.api.libs.ws.WSClient
@@ -22,10 +22,10 @@ import scala.util.Random
 case class EndpointStatus(name: String, isOk: Boolean, messages: String*)
 
 object TestPassed{
-  def apply(name: String) = EndpointStatus(name, true)
+  def apply(name: String): EndpointStatus = EndpointStatus(name, true)
 }
 object TestFailed{
-  def apply(name: String, messages: String*) = EndpointStatus(name, false, messages:_*)
+  def apply(name: String, messages: String*): EndpointStatus = EndpointStatus(name, false, messages:_*)
 }
 
 class TroubleshooterController(wsClient: WSClient, val controllerComponents: ControllerComponents)(implicit appContext: ApplicationContext) extends BaseController with Logging with ImplicitControllerExecutionContext {
@@ -43,11 +43,11 @@ class TroubleshooterController(wsClient: WSClient, val controllerComponents: Con
   }
 
 
-  def index() = Action{ implicit request =>
+  def index(): Action[AnyContent] = Action { implicit request =>
     NoCache(Ok(views.html.troubleshooter(LoadBalancer.all.filter(_.testPath.isDefined))))
   }
 
-  def test(id: String, testPath: String) = Action.async{ implicit request =>
+  def test(id: String, testPath: String): Action[AnyContent] = Action.async{ implicit request =>
 
     val pathToTest = if(testPath.startsWith("/")) testPath else s"/$testPath" // appending leading '/' if user forgot to include it
 

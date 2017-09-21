@@ -13,7 +13,7 @@ object InteractiveHtmlCleaner extends HtmlCleaner with implicits.WSRequests {
       !document.getElementsByAttributeValue("rel","canonical").attr("href").toLowerCase.contains("/ng-interactive/")
   }
 
-  override def clean(document: Document, convertToHttps: Boolean) = {
+  override def clean(document: Document, convertToHttps: Boolean): Document = {
     universalClean(document)
     removeScripts(document)
     removeByTagName(document, "noscript")

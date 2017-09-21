@@ -15,14 +15,14 @@ class MostViewedAudioController(
 )(implicit context: ApplicationContext)
   extends BaseController with Logging with ImplicitControllerExecutionContext {
 
-  def renderMostViewed() = Action { implicit request =>
+  def renderMostViewed(): Action[AnyContent] = Action { implicit request =>
     getMostViewedAudio match {
       case Nil => Cached(60) { JsonNotFound() }
       case audio => renderMostViewedAudio(audio, "audio")
     }
   }
 
-  def renderMostViewedPodcast() = Action { implicit request =>
+  def renderMostViewedPodcast(): Action[AnyContent] = Action { implicit request =>
     getMostViewedPodcast match {
       case Nil => Cached(60) { JsonNotFound() }
       case podcast => renderMostViewedAudio(podcast, "podcast")
@@ -39,7 +39,7 @@ class MostViewedAudioController(
     mostViewedAudioAgent.mostViewedPodcast().take(size).toList
   }
 
-  private def renderMostViewedAudio(audios: Seq[RelatedContentItem], mediaType: String)(implicit request: RequestHeader) = Cached(900) {
+  private def renderMostViewedAudio(audios: Seq[RelatedContentItem], mediaType: String)(implicit request: RequestHeader): Result = Cached(900) {
     val dataId = s"$mediaType/most-viewed"
     val displayName = Some(s"most viewed in $mediaType")
     val config = CollectionConfig.empty.copy(displayName = displayName)

@@ -51,7 +51,7 @@ class AtomPageController(contentApiClient: ContentApiClient, wsClient: WSClient,
     }
   }
 
-  def signup() = Action.async { implicit request =>
+  def signup(): Action[AnyContent] = Action.async { implicit request =>
     answersSignupForm.bindFromRequest.fold(
       formWithErrors => {
         log.info(s"Form has been submitted with errors: ${formWithErrors.errors}")
@@ -75,7 +75,7 @@ class AtomPageController(contentApiClient: ContentApiClient, wsClient: WSClient,
       })
   }
 
-  def render(atomType: String, id: String, isJsEnabled: Boolean, hasVerticalScrollbar: Boolean) = Action.async { implicit request =>
+  def render(atomType: String, id: String, isJsEnabled: Boolean, hasVerticalScrollbar: Boolean): Action[AnyContent] = Action.async { implicit request =>
     lookup(s"atom/$atomType/$id") map {
       case Left(model: MediaAtom) =>
         renderAtom(MediaAtomPage(model, withJavaScript = isJsEnabled, withVerticalScrollbar = hasVerticalScrollbar))
@@ -96,7 +96,7 @@ class AtomPageController(contentApiClient: ContentApiClient, wsClient: WSClient,
     }
   }
 
-  def options() = Action { implicit request =>
+  def options(): Action[AnyContent] = Action { implicit request =>
     TinyResponse.noContent(Some("POST, OPTIONS"))
   }
 

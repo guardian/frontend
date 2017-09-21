@@ -118,7 +118,7 @@ object LiveBlogDate {
 case class LiveBlogDate(fullDate: String, hhmm: String, ampm: String, gmt: String)
 
 object BlockAttributes {
-  def make(blockAttributes: ApiBlockAttributes) =
+  def make(blockAttributes: ApiBlockAttributes): BlockAttributes =
     new BlockAttributes(blockAttributes.keyEvent.getOrElse(false), blockAttributes.summary.getOrElse(false), blockAttributes.membershipPlaceholder)
 }
 

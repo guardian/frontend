@@ -31,7 +31,7 @@ object EmailHelpers {
       (if(card.branding.exists(_.isPaid)) Seq("tone-branded") else Nil)
   }
 
-  def icon(name: String, largeHeadline: Boolean = false) = Html {
+  def icon(name: String, largeHeadline: Boolean = false): Html = Html {
     val height = if(largeHeadline) 18 else 12
     s"""<img height="$height" src="${Static(s"images/email/icons/$name.png")}" class="icon icon-$name">"""
   }

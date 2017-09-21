@@ -25,7 +25,7 @@ class FormstackController(
 
   val page = IdentityPage("/form", "Form")
 
-  def formstackForm(formReference: String, composer: Boolean) = authAction.async { implicit request =>
+  def formstackForm(formReference: String, composer: Boolean): Action[AnyContent] = authAction.async { implicit request =>
     if (Switches.IdentityFormstackSwitch.isSwitchedOn) {
       FormstackForm.extractFromSlug(formReference).map { formstackForm =>
         formStackApi.checkForm(formstackForm).map {
@@ -51,7 +51,7 @@ class FormstackController(
     }
   }
 
-  def complete = Action { implicit request =>
+  def complete: Action[AnyContent] = Action { implicit request =>
     if (Switches.IdentityFormstackSwitch.isSwitchedOn) {
       Ok(views.html.formstack.formstackComplete(page))
     } else {

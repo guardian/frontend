@@ -16,7 +16,7 @@ case class Match(
   event: OptaEvent,
   stage: Stage.Value
 ) {
-  def hasTeam(teamId: String) = homeTeam.id == teamId || awayTeam.id == teamId
+  def hasTeam(teamId: String): Boolean = homeTeam.id == teamId || awayTeam.id == teamId
 
   lazy val hasGroupTable = event.hasGroupTable(stage)
 

@@ -9,7 +9,7 @@ import idapiclient.{IdApiClient, ScGuU}
 import conf.{FrontendIdentityCookieDecoder, IdentityConfiguration}
 import org.scalatest.mockito.MockitoSugar
 import test._
-import play.api.mvc.RequestHeader
+import play.api.mvc.{AnyContentAsFormUrlEncoded, RequestHeader, Security}
 
 import scala.concurrent.Future
 import com.gu.identity.model.User
@@ -21,6 +21,7 @@ import services.IdentityRequest
 import client.{Auth, Error}
 import idapiclient.TrackingData
 import actions.AuthenticatedActions
+import play.api.test.FakeRequest
 
 @DoNotDiscover class EmailControllerTest extends WordSpec
   with Matchers
@@ -97,9 +98,9 @@ import actions.AuthenticatedActions
   "The save preferences method" when {
     "the form submission is valid" when {
       val emailFormat = "Text"
-      def fakeRequest = FakeCSRFRequest(csrfAddToken,POST, "/email-prefs")
+      def fakeRequest: FakeRequest[AnyContentAsFormUrlEncoded] = FakeCSRFRequest(csrfAddToken,POST, "/email-prefs")
         .withFormUrlEncodedBody("htmlPreference" -> emailFormat, "csrfToken" -> "abc")
-      def authRequest = new AuthRequest(authenticatedUser, fakeRequest)
+      def authRequest: Security.AuthenticatedRequest[AnyContentAsFormUrlEncoded, AuthenticatedUser] = new AuthRequest(authenticatedUser, fakeRequest)
 
       "api call is successful" should {
         // Crazy Unit return type!

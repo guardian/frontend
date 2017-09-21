@@ -65,7 +65,9 @@
   "davidfurey": [],
   "jranks123": [],
   "shaundillon": [],
-  "Joseph Smith": [],
+  "Joseph Smith": [
+      "projects/common/modules/commercial/targeting-tool.js"
+  ],
   "Gideon Goldberg": [],
   "Matthew Walls": [],
   "Nicolas Long": [],

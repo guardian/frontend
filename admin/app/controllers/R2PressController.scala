@@ -13,11 +13,11 @@ class R2PressController(
 )(implicit context: ApplicationContext)
   extends BaseController with Logging with ImplicitControllerExecutionContext {
 
-  def pressForm(urlMsgs: List[String] = List.empty, fileMsgs: List[String] = List.empty) = Action { implicit request =>
+  def pressForm(urlMsgs: List[String] = List.empty, fileMsgs: List[String] = List.empty): Action[AnyContent] = Action { implicit request =>
     Ok(views.html.pressR2(urlMsgs, fileMsgs))
   }
 
-  def batchUpload() = Action { implicit request =>
+  def batchUpload(): Action[AnyContent] = Action { implicit request =>
     val body = request.body
     val uploadedFile = body.asMultipartFormData.flatMap { files =>
       files.file("r2urlfile").map { theFile =>
@@ -65,7 +65,7 @@ class R2PressController(
     }
   }
 
-  def press() = Action { implicit request =>
+  def press(): Action[AnyContent] = Action { implicit request =>
     val body = request.body
     val result = body.asFormUrlEncoded.map { form =>
       form("r2url").map { r2Url =>

@@ -11,7 +11,7 @@ import scala.concurrent.ExecutionContext
 // obviously this is only for devbuild and should never end up in one of our
 // prod projects
 class DevCacheWarningFilter(implicit executionContext: ExecutionContext) extends EssentialFilter {
-  def apply(next: EssentialAction) = new EssentialAction {
+  def apply(next: EssentialAction): EssentialAction = new EssentialAction {
     def apply(rh: RequestHeader) = {
       next(rh).map{ result =>
         val header = result.header
@@ -36,7 +36,7 @@ class DevCacheWarningFilter(implicit executionContext: ExecutionContext) extends
 // obviously this is only for devbuild and should never end up in one of our
 // prod projects
 class DevJsonExtensionFilter extends EssentialFilter with Requests {
-  def apply(next: EssentialAction) = new EssentialAction {
+  def apply(next: EssentialAction): EssentialAction = new EssentialAction {
     def apply(rh: RequestHeader) = {
       if (rh.isJson && !rh.path.endsWith(".json") && !rh.path.endsWith(".js")) {
         // makes it easy for devs to see what has happened

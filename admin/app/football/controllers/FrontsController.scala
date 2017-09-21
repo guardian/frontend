@@ -1,7 +1,7 @@
 package controllers.admin
 
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
-import play.api.mvc.{Action, BaseController, ControllerComponents, RequestHeader, Result => PlayResult}
+import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents, RequestHeader, Result => PlayResult}
 import play.api.libs.ws.WSClient
 import play.twirl.api.Html
 import common.{ImplicitControllerExecutionContext, Logging}
@@ -28,24 +28,24 @@ class FrontsController(
   val SNAP_TYPE = "json.html"
   val SNAP_CSS = "football"
 
-  def index = Action.async { implicit request =>
+  def index: Action[AnyContent] = Action.async { implicit request =>
     fetchCompetitionsAndTeams.map {
       case (competitions, teams) => Cached(3600)(RevalidatableResult.Ok(views.html.football.fronts.index(competitions, teams)))
     }
   }
 
-  def matchDay = Action.async { implicit request =>
+  def matchDay: Action[AnyContent] = Action.async { implicit request =>
     val snapFields = SnapFields(SNAP_TYPE, SNAP_CSS, s"$host/football/live.json", s"${Configuration.site.host}/football/live", "Live matches", "Today's matches")
     previewFrontsComponent(snapFields)
   }
 
-  def resultsRedirect = Action { implicit request =>
+  def resultsRedirect: Action[AnyContent] = Action { implicit request =>
     val submission = request.body.asFormUrlEncoded.get
     val competitionId = submission("competition").head
     Cached(60)(WithoutRevalidationResult(SeeOther(s"/admin/football/fronts/results/$competitionId")))
   }
 
-  def results(competitionId: String) = Action.async { implicit request =>
+  def results(competitionId: String): Action[AnyContent] = Action.async { implicit request =>
     val foResult =
       if ("all" == competitionId) {
         val snapFields = SnapFields(SNAP_TYPE, SNAP_CSS, s"$host/football/results.json", s"${Configuration.site.host}/football/results", "Results", "View the full results from today's matches")
@@ -61,13 +61,13 @@ class FrontsController(
     foResult.getOrElse(NoCache(NotFound(views.html.football.error(s"Competition $competitionId not found"))))
   }
 
-  def fixturesRedirect = Action { implicit request =>
+  def fixturesRedirect: Action[AnyContent] = Action { implicit request =>
     val submission = request.body.asFormUrlEncoded.get
     val competitionId = submission.get("competition").get.head
     Cached(60)(WithoutRevalidationResult(SeeOther(s"/admin/football/fronts/fixtures/$competitionId")))
   }
 
-  def fixtures(competitionId: String) = Action.async { implicit request =>
+  def fixtures(competitionId: String): Action[AnyContent] = Action.async { implicit request =>
     val foResult =
       if ("all" == competitionId) {
         val snapFields = SnapFields(SNAP_TYPE, SNAP_CSS, s"$host/football/fixtures.json", s"${Configuration.site.host}/football/fixtures", "Upcoming fixtures", "See which teams are up against each other")
@@ -83,7 +83,7 @@ class FrontsController(
     foResult.getOrElse(NoCache(NotFound(views.html.football.error(s"Competition $competitionId not found"))))
   }
 
-  def tablesRedirect = Action { implicit request =>
+  def tablesRedirect: Action[AnyContent] = Action { implicit request =>
     val submission = request.body.asFormUrlEncoded.get
     val competitionId = submission.get("competition").get.head
     val url = submission.get("group").flatMap(_.filterNot(_.isEmpty).headOption) match {
@@ -93,7 +93,7 @@ class FrontsController(
     NoCache(SeeOther(url))
   }
 
-  def tables(competitionId: String) = Action.async { implicit request =>
+  def tables(competitionId: String): Action[AnyContent] = Action.async { implicit request =>
     val foResult =
       for {
         season <- getCompetition(competitionId)
@@ -104,7 +104,7 @@ class FrontsController(
     foResult.getOrElse(NoCache(NotFound(views.html.football.error(s"Competition $competitionId not found"))))
   }
 
-  def groupTables(competitionId: String, group: String) = Action.async { implicit request =>
+  def groupTables(competitionId: String, group: String): Action[AnyContent] = Action.async { implicit request =>
     val fancyGroupName = group.replace('-', ' ')
     val foResult =
       for {
@@ -119,7 +119,7 @@ class FrontsController(
   /* Matches */
 
 
-  def matchesRedirect = Action { implicit request =>
+  def matchesRedirect: Action[AnyContent] = Action { implicit request =>
     val submission = request.body.asFormUrlEncoded.get
     val competitionId = submission.get("competition").get.head
     val url = (submission.get("team1").flatMap(_.filterNot(_.isEmpty).headOption), submission.get("team2").flatMap(_.filterNot(_.isEmpty).headOption)) match {
@@ -131,16 +131,16 @@ class FrontsController(
     Cached(60)(WithoutRevalidationResult(SeeOther(url)))
   }
 
-  def chooseMatchForComp(competitionId: String) = chooseMatch(competitionId, None, None)
-  def chooseMatchForCompAndTeam(competitionId: String, team1Id: String) = chooseMatch(competitionId, Some(team1Id), None)
-  def chooseMatchForCompAndTeams(competitionId: String, team1Id: String, team2Id: String) = chooseMatch(competitionId, Some(team1Id), Some(team2Id))
+  def chooseMatchForComp(competitionId: String): Action[AnyContent] = chooseMatch(competitionId, None, None)
+  def chooseMatchForCompAndTeam(competitionId: String, team1Id: String): Action[AnyContent] = chooseMatch(competitionId, Some(team1Id), None)
+  def chooseMatchForCompAndTeams(competitionId: String, team1Id: String, team2Id: String): Action[AnyContent] = chooseMatch(competitionId, Some(team1Id), Some(team2Id))
   private def chooseMatch(competitionId: String, team1IdOpt: Option[String], team2IdOpt: Option[String]) = Action.async { implicit request =>
     for {
       (liveMatches, fixtures, results) <- getMatchesFor(competitionId, team1IdOpt, team2IdOpt)
     } yield Cached(60)(RevalidatableResult.Ok(views.html.football.fronts.matchesList(liveMatches, fixtures, results)))
   }
 
-  def bigMatchSpecial(matchId: String) = Action.async { implicit request =>
+  def bigMatchSpecial(matchId: String): Action[AnyContent] = Action.async { implicit request =>
     for {
       matchInfo <- client.matchInfo(matchId)
       trailText = {

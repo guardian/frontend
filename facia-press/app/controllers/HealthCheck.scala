@@ -1,6 +1,6 @@
 package controllers
 
-import play.api.mvc.{ControllerComponents, Results}
+import play.api.mvc.{Action, AnyContent, ControllerComponents, Results}
 import conf.HealthCheckController
 import frontpress.ToolPressQueueWorker
 import org.joda.time.DateTime
@@ -13,7 +13,7 @@ class HealthCheck(
 )
   extends HealthCheckController with Results {
   val ConsecutiveProcessingErrorsThreshold = 5
-  override def healthCheck() = Action.async{
+  override def healthCheck(): Action[AnyContent] = Action.async{
     if (!toolPressQueueWorker.lastReceipt.exists(_.plusMinutes(1).isAfter(DateTime.now))) {
       successful(Results.InternalServerError("Have not been able to retrieve a message from the tool queue for at least a minute"))
     } else if (toolPressQueueWorker.consecutiveErrors >= ConsecutiveProcessingErrorsThreshold) {

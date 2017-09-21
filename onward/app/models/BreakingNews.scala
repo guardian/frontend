@@ -63,13 +63,13 @@ case class BreakingNews(alerts: Set[NewsAlertNotification]) {
     BreakingNewsCollection("International alerts", "international", alertsOfType(NewsAlertTypes.International))
   )
 
-  private def alertsOfType(newsAlertType: NewsAlertType) =
+  private def alertsOfType(newsAlertType: NewsAlertType): Set[NewsAlertNotification] =
     alerts.filter(_.isOfType(newsAlertType)).toList.sortWith(_.publicationDate isAfter  _.publicationDate).take(1).toSet //We are only interested by the most recent alert
 }
 
 object BreakingNews {
 
-  def apply(collections: Set[BreakingNewsCollection])(implicit d: DummyImplicit) = {
+  def apply(collections: Set[BreakingNewsCollection])(implicit d: DummyImplicit): BreakingNews = {
 
     val notifications = collections.flatMap { collection =>
       // Create copy of notifications with topic based on the collection they belonged to

@@ -33,20 +33,20 @@ class MostViewedGalleryController(
     ("Sport picture of the day", "/sport/series/sport-picture-of-the-day")
   )
 
-  def renderMostViewed() = Action { implicit request =>
+  def renderMostViewed(): Action[AnyContent] = Action { implicit request =>
     getMostViewedGallery match {
       case Nil => Cached(60) { JsonNotFound() }
       case galleries => renderMostViewedGallery(galleries)
     }
   }
-  def renderMostViewedHtml() = renderMostViewed()
+  def renderMostViewedHtml(): Action[AnyContent] = renderMostViewed()
 
   private def getMostViewedGallery()(implicit request: RequestHeader): List[RelatedContentItem] = {
     val size = request.getQueryString("size").getOrElse("6").toInt
     mostViewedGalleryAgent.mostViewedGalleries().take(size).toList
   }
 
-  private def renderMostViewedGallery(galleries: Seq[RelatedContentItem])(implicit request: RequestHeader) = {
+  private def renderMostViewedGallery(galleries: Seq[RelatedContentItem])(implicit request: RequestHeader): Result = {
     val html = views.html.fragments.containers.facia_cards.container(
       FaciaContainer(
         1,

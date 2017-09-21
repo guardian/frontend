@@ -4,7 +4,7 @@ import model._
 import org.joda.time.DateTime
 
 case class SvgDimensions(width: Int, height: Int) {
-  def styleString = s"width: $width; height: $height"
+  def styleString: String = s"width: $width; height: $height"
 }
 
 case class CrosswordPage(content: CrosswordContent) extends ContentPage {
@@ -14,12 +14,12 @@ case class CrosswordPage(content: CrosswordContent) extends ContentPage {
 
   import CrosswordSvg.{BorderSize, CellSize}
 
-  def fallbackDimensions = SvgDimensions(
+  def fallbackDimensions: SvgDimensions = SvgDimensions(
     crossword.dimensions.cols * (CellSize + BorderSize) + BorderSize,
     crossword.dimensions.rows * (CellSize + BorderSize) + BorderSize
   )
 
-  def hasGroupedClues = crossword.entries.exists(_.group.length > 1)
+  def hasGroupedClues: Boolean = crossword.entries.exists(_.group.length > 1)
 }
 
 object CrosswordSearchPage {

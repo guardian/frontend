@@ -3,7 +3,7 @@ package views.support
 import model.pressed.{PressedContent, CardStyle}
 
 object TrailCssClasses {
-  def toneClassFromStyle(cardStyle: CardStyle) =
+  def toneClassFromStyle(cardStyle: CardStyle): String =
     s"tone-${cardStyle.toneString}"
 
   def toneClass(content: model.Content): String = toneClassFromStyle(content.cardStyle)
