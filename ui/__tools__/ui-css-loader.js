@@ -14,6 +14,9 @@ require('babel-register')({
             'babel-preset-env',
             {
                 modules: 'commonjs',
+                targets: {
+                    node: 'current',
+                },
             },
         ],
         'babel-preset-flow',
@@ -94,8 +97,24 @@ const reFloat = rules =>
         return Object.assign({}, refloated, { [key]: rules[key] });
     }, {});
 
-// splits rules into cheap/expensive clusters where possible which
-// can then be handled appropriately
+// splits rules into cheap/expensive clusters which
+// can then be handled appropriately. which
+// basically means 'can styletron handle it?':
+// {
+//     color: 'red',
+//     '@supports (display: flex)': {
+//         display: 'flex',
+//     },
+// }
+// becomes
+// {
+//     cheapCSS: { color: 'red' },
+//     expensiveCSS: {
+//         '@supports (display: flex)': {
+//             display: 'flex',
+//         },
+//     },
+// }
 const categoriseStyles = styles =>
     Object.keys(styles).reduce((categorisedStyles, key) => {
         const rule = styles[key];
@@ -131,14 +150,19 @@ const categoriseStyles = styles =>
     }, {});
 
 module.exports = function uiCSS(source) {
+    // run all our own processing
     const normalisedSource = normaliseCSS(source);
 
     const { styles } = reFloat(
+        // have emotion parse it
         emotionParser(normalisedSource, false, this.resourcePath)
     );
 
-    const normalisedStyles = normaliseKeys(styles);
-    const categorisedStyles = categoriseStyles(normalisedStyles);
+    // turn '.key' keys into 'key'
+    const normalisedKeysStyles = normaliseKeys(styles);
+
+    // split out styles we can pass to styeltron
+    const categorisedStyles = categoriseStyles(normalisedKeysStyles);
 
     return `module.exports = ${JSON.stringify(categorisedStyles)};`;
 };
