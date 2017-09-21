@@ -12,9 +12,7 @@ function clean(string) {
  */
 function campaignsFor(id) {
     try {
-        return config.page.campaigns.filter(function(campaign) {
-            return campaign.fields && clean(campaign.fields.campaignId) === clean(id);
-        });
+        return config.page.campaigns.filter(campaign => campaign.fields && clean(campaign.fields.campaignId) === clean(id));
     } catch (e) {
         return [];
     }
@@ -31,6 +29,6 @@ function isAbTestTargeted(test) {
 }
 
 export default {
-    isAbTestTargeted: isAbTestTargeted,
-    campaignsFor: campaignsFor
+    isAbTestTargeted,
+    campaignsFor
 };
