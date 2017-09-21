@@ -5,7 +5,7 @@ import bean from 'bean';
 import userPrefs from 'common/modules/user-prefs';
 import mediator from 'lib/mediator';
 import { isBreakpoint } from 'lib/detect';
-import register from 'common/modules/analytics/register';
+import { begin } from 'common/modules/analytics/register';
 import uniq from 'lodash/arrays/uniq';
 
 /**
@@ -89,7 +89,7 @@ class Message {
         if (this.siteMessageComponentName) {
             siteMessage.attr('data-component', this.siteMessageComponentName);
             if (this.trackDisplay) {
-                register.begin(this.siteMessageComponentName);
+                begin(this.siteMessageComponentName);
             }
         }
         if (this.siteMessageLinkName) {

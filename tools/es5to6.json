@@ -81,7 +81,6 @@
     "projects/common/modules/analytics/discussion.js",
     "projects/common/modules/analytics/interaction-tracking.js",
     "projects/common/modules/analytics/media-listener.js",
-    "projects/common/modules/analytics/register.js",
     "projects/common/modules/analytics/scrollDepth.js",
     "projects/common/modules/identity/delete-account.js",
     "bootstraps/enhanced/profile.js"

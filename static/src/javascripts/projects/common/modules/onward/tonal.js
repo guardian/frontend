@@ -1,7 +1,7 @@
 // @flow
 import config from 'lib/config';
 import mediator from 'lib/mediator';
-import register from 'common/modules/analytics/register';
+import { begin, error, end } from 'common/modules/analytics/register';
 import Component from 'common/modules/component';
 import { noop } from 'lib/noop';
 
@@ -39,17 +39,17 @@ class TonalComponent extends Component {
         }
 
         mediator.emit('modules:tonal:loaded');
-        register.end('tonal-content');
+        end('tonal-content');
     }
 
     static error(): void {
-        register.error('tonal-content');
+        error('tonal-content');
     }
 
     constructor(): void {
         super();
 
-        register.begin('tonal-content');
+        begin('tonal-content');
 
         this.edition = config.page.edition.toLowerCase();
 
