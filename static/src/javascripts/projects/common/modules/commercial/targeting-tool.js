@@ -1,9 +1,9 @@
 // @flow
 import config from 'lib/config';
 
-const clean = (str: string) => str.trim().toLowerCase();
+const clean = (str: string): string => str.trim().toLowerCase();
 
-const campaignsFor = (id: string): Array<object> => {
+export const campaignsFor = (id: string): Array<Object> => {
     try {
         return config.page.campaigns.filter(
             campaign =>
@@ -15,10 +15,5 @@ const campaignsFor = (id: string): Array<object> => {
     }
 };
 
-const isAbTestTargeted = (test: ABTest): boolean =>
+export const isAbTestTargeted = (test: AcquisitionsABTest): boolean =>
     campaignsFor(test.campaignId).length > 0;
-
-export default {
-    isAbTestTargeted,
-    campaignsFor,
-};
