@@ -157,7 +157,7 @@ object FrontEmailImage extends Profile(width = Some(500), autoFormat = false) {
 }
 
 object SmallFrontEmailImage {
-  def apply(customWidth: Int) = new SmallFrontEmailImage(customWidth)
+  def apply(customWidth: Int): SmallFrontEmailImage = new SmallFrontEmailImage(customWidth)
 }
 class SmallFrontEmailImage(customWidth: Int) extends Profile(Some(customWidth), autoFormat = false) {
   override val qualityparam = "q=40"

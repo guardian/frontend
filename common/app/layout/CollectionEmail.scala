@@ -57,7 +57,7 @@ object EmailContentContainer {
 }
 
 object CollectionEmail {
-  def fromPressedPage(pressedPage: PressedPage) =
+  def fromPressedPage(pressedPage: PressedPage): CollectionEmail =
     CollectionEmail(pressedPage.id, EmailContentContainer.fromPressedCollections(pressedPage.collections))
 }
 

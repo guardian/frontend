@@ -1,7 +1,7 @@
 package controllers
 
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
-import play.api.mvc.{BaseController, ControllerComponents}
+import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 
 import scala.concurrent.duration._
 
@@ -20,7 +20,7 @@ class SiteVerificationController(val controllerComponents: ControllerComponents)
       // Science & technology channel - https://www.youtube.com/user/gdntech
   )
 
-  def googleSiteVerify(account: String) = Action { implicit request =>
+  def googleSiteVerify(account: String): Action[AnyContent] = Action { implicit request =>
       if (acceptedGoogleAccounts.contains(account)) {
         model.Cached(7.days)(RevalidatableResult.Ok(s"google-site-verification: google$account.html"))
       } else {

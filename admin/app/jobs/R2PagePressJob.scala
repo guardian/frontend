@@ -23,7 +23,7 @@ class R2PagePressJob(wsClient: WSClient, redirects: RedirectService)(implicit ex
   private lazy val credentials = Configuration.aws.mandatoryCredentials
   private lazy val sqsClient = AmazonSQSAsyncClient.asyncBuilder.withCredentials(credentials).withRegion(conf.Configuration.aws.region).build()
 
-  def run() = {
+  def run(): Future[Unit] = {
     if (R2PagePressServiceSwitch.isSwitchedOn) {
       log.info("R2PagePressJob starting")
       try {

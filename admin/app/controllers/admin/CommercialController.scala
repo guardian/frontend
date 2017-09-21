@@ -26,41 +26,41 @@ case class CommercialPage() extends StandalonePage {
 class CommercialController(val controllerComponents: ControllerComponents)(implicit context: ApplicationContext)
   extends BaseController with Logging with ImplicitControllerExecutionContext {
 
-  def renderCommercialMenu() = Action { implicit request =>
+  def renderCommercialMenu(): Action[AnyContent] = Action { implicit request =>
     NoCache(Ok(views.html.commercial.commercialMenu()))
   }
 
-  def renderFluidAds = Action { implicit request =>
+  def renderFluidAds: Action[AnyContent] = Action { implicit request =>
     NoCache(Ok(views.html.commercial.fluidAds()))
   }
 
-  def renderSpecialAdUnits = Action { implicit request =>
+  def renderSpecialAdUnits: Action[AnyContent] = Action { implicit request =>
     val specialAdUnits = DfpApi.readSpecialAdUnits(Configuration.commercial.dfpAdUnitGuRoot)
     Ok(views.html.commercial.specialAdUnits(specialAdUnits))
   }
 
-  def renderPageskins = Action { implicit request =>
+  def renderPageskins: Action[AnyContent] = Action { implicit request =>
     val pageskinnedAdUnits = Store.getDfpPageSkinnedAdUnits()
 
     NoCache(Ok(views.html.commercial.pageskins(pageskinnedAdUnits)))
   }
 
-  def renderSurgingContent = Action { implicit request =>
+  def renderSurgingContent: Action[AnyContent] = Action { implicit request =>
     val surging = SurgingContentAgent.getSurging
     NoCache(Ok(views.html.commercial.surgingpages(surging)))
   }
 
-  def renderInlineMerchandisingTargetedTags = Action { implicit request =>
+  def renderInlineMerchandisingTargetedTags: Action[AnyContent] = Action { implicit request =>
     val report = Store.getDfpInlineMerchandisingTargetedTagsReport()
     NoCache(Ok(views.html.commercial.inlineMerchandisingTargetedTags(report)))
   }
 
-  def renderHighMerchandisingTargetedTags = Action { implicit request =>
+  def renderHighMerchandisingTargetedTags: Action[AnyContent] = Action { implicit request =>
     val report = Store.getDfpHighMerchandisingTargetedTagsReport()
     NoCache(Ok(views.html.commercial.highMerchandisingTargetedTags(report)))
   }
 
-  def renderCreativeTemplates = Action { implicit request =>
+  def renderCreativeTemplates: Action[AnyContent] = Action { implicit request =>
     val emptyTemplates = CreativeTemplateAgent.get
     val creatives = Store.getDfpTemplateCreatives
     val templates = emptyTemplates.foldLeft(Seq.empty[GuCreativeTemplate]) { (soFar, template) =>
@@ -69,14 +69,14 @@ class CommercialController(val controllerComponents: ControllerComponents)(impli
     NoCache(Ok(views.html.commercial.templates(templates)))
   }
 
-  def renderCustomFields = Action { implicit request =>
+  def renderCustomFields: Action[AnyContent] = Action { implicit request =>
 
     val fields: Seq[GuCustomField] = CustomFieldAgent.get.data.values.toSeq
     NoCache(Ok(views.html.commercial.customFields(fields)))
 
   }
 
-  def renderAdTests = Action { implicit request =>
+  def renderAdTests: Action[AnyContent] = Action { implicit request =>
     val report = Store.getDfpLineItemsReport()
 
     val lineItemsByAdTest = report.lineItems
@@ -98,13 +98,13 @@ class CommercialController(val controllerComponents: ControllerComponents)(impli
     NoCache(Ok(views.html.commercial.adTests(report.timestamp, sortedGroups)))
   }
 
-  def renderCommercialRadiator() = Action.async { implicit request =>
+  def renderCommercialRadiator(): Action[AnyContent] = Action.async { implicit request =>
     for (adResponseConfidenceGraph <- CloudWatch.eventualAdResponseConfidenceGraph()) yield {
       Ok(views.html.commercial.commercialRadiator(adResponseConfidenceGraph))
     }
   }
 
-  def getLineItemsForOrder(orderId: String) = Action { implicit request =>
+  def getLineItemsForOrder(orderId: String): Action[AnyContent] = Action { implicit request =>
     val lineItems: Seq[GuLineItem] = Store.getDfpLineItemsReport().lineItems filter (_.orderId.toString == orderId)
 
     Cached(5.minutes){
@@ -112,7 +112,7 @@ class CommercialController(val controllerComponents: ControllerComponents)(impli
     }
   }
 
-  def getCreativesListing(lineitemId: String, section: String) = Action { implicit request: RequestHeader =>
+  def getCreativesListing(lineitemId: String, section: String): Action[AnyContent] = Action { implicit request: RequestHeader =>
 
     val validSections: List[String] = List("uk", "lifeandstyle", "sport", "science")
 
@@ -129,15 +129,15 @@ class CommercialController(val controllerComponents: ControllerComponents)(impli
     }
   }
 
-  def renderBrowserPerformanceDashboard() = Action { implicit request =>
+  def renderBrowserPerformanceDashboard(): Action[AnyContent] = Action { implicit request =>
     Ok(views.html.commercial.performance.browserDashboard())
   }
 
-  def renderKeyValues() = Action { implicit request =>
+  def renderKeyValues(): Action[AnyContent] = Action { implicit request =>
     Ok(views.html.commercial.customTargetingKeyValues(Store.getDfpCustomTargetingKeyValues))
   }
 
-  def renderKeyValuesCsv(key: String) = Action { implicit request =>
+  def renderKeyValuesCsv(key: String): Action[AnyContent] = Action { implicit request =>
     val csv: Option[String] = Store.getDfpCustomTargetingKeyValues.find(_.name == key).map { selectedKey =>
 
       selectedKey.values.map( targetValue => {
@@ -148,7 +148,7 @@ class CommercialController(val controllerComponents: ControllerComponents)(impli
     Ok(csv.getOrElse(s"No targeting found for key: $key"))
   }
 
-  def renderInvalidItems() = Action { implicit request =>
+  def renderInvalidItems(): Action[AnyContent] = Action { implicit request =>
     // If the invalid line items are run through the normal extractor, we can see if any of these
     // line items appear to be targeting Frontend.
     val invalidLineItems: Seq[GuLineItem] = Store.getDfpLineItemsReport().invalidLineItems

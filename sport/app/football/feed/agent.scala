@@ -12,7 +12,7 @@ import scala.concurrent.{ExecutionContext, Future}
 trait Lineups extends Logging {
   def footballClient: FootballClient
   def competitions: Competitions
-  def teamNameBuilder = new TeamNameBuilder(competitions)
+  def teamNameBuilder: TeamNameBuilder = new TeamNameBuilder(competitions)
   def getLineup(theMatch: FootballMatch)(implicit executionContext: ExecutionContext): Future[LineUp] =
     footballClient
       .lineUp(theMatch.id)
@@ -106,24 +106,24 @@ class CompetitionAgent(val footballClient: FootballClient, val teamNameBuilder: 
 
   private lazy val agent = AkkaAgent(_competition)
 
-  def competition = agent()
+  def competition: Competition = agent()
 
-  def update(competition: Competition) = agent.send(competition)
+  def update(competition: Competition): Unit = agent.send(competition)
 
-  def refreshFixtures()(implicit executionContext: ExecutionContext) = getFixtures(competition) foreach addMatches
+  def refreshFixtures()(implicit executionContext: ExecutionContext): Unit = getFixtures(competition) foreach addMatches
 
-  def refreshResults()(implicit executionContext: ExecutionContext) = getResults(competition) foreach addMatches
+  def refreshResults()(implicit executionContext: ExecutionContext): Unit = getResults(competition) foreach addMatches
 
-  def refreshLeagueTable()(implicit executionContext: ExecutionContext) = getLeagueTable(competition) foreach { entries =>
+  def refreshLeagueTable()(implicit executionContext: ExecutionContext): Unit = getLeagueTable(competition) foreach { entries =>
     agent.send{ _.copy(leagueTable = entries) }
   }
 
   object MatchStatusOrdering extends Ordering[FootballMatch] {
     private def statusValue(m: FootballMatch) = if (m.isResult) 1 else if (m.isLive) 2 else 3
-    def compare(a: FootballMatch, b: FootballMatch) = statusValue(a) - statusValue(b)
+    def compare(a: FootballMatch, b: FootballMatch): Int = statusValue(a) - statusValue(b)
   }
 
-  def addMatches(newMatches: Seq[FootballMatch]) = agent.alter{ comp =>
+  def addMatches(newMatches: Seq[FootballMatch]): Future[Competition] = agent.alter{ comp =>
 
     //log any changes to the status of the match
     newMatches.foreach{ newMatch =>
@@ -138,7 +138,7 @@ class CompetitionAgent(val footballClient: FootballClient, val teamNameBuilder: 
     comp.copy(matches = (newMatches ++ comp.matches).sorted(MatchStatusOrdering).distinctBy(_.id).sortByDate)
   }
 
-  def refresh()(implicit executionContext: ExecutionContext) {
+  def refresh()(implicit executionContext: ExecutionContext): Unit = {
     refreshFixtures()
     refreshResults()
     refreshLeagueTable()

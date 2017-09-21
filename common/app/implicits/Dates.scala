@@ -10,7 +10,7 @@ object Dates extends Dates
 
 trait Dates {
   implicit class RichDuration(duration: Duration) {
-    def toJoda = new JodaDuration(duration.toMillis)
+    def toJoda: JodaDuration = new JodaDuration(duration.toMillis)
   }
 
   object Epoch {

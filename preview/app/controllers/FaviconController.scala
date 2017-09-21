@@ -1,6 +1,6 @@
 package controllers
 
-import play.api.mvc.{BaseController, ControllerComponents}
+import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 
 /*
  * Pointless controller, only here to work around a bug in the Play routes compiler.
@@ -11,5 +11,5 @@ import play.api.mvc.{BaseController, ControllerComponents}
  * - unreachable code due to variable pattern 'file'
  */
 class FaviconController(assets: Assets, val controllerComponents: ControllerComponents) extends BaseController {
-  def favicon = assets.at(path="/public", file="favicon.ico")
+  def favicon: Action[AnyContent] = assets.at(path="/public", file="favicon.ico")
 }

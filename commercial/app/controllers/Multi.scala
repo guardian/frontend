@@ -67,7 +67,7 @@ class Multi(bestsellersAgent: BestsellersAgent,
     }
   }
 
-  def getMulti() = Action { implicit request =>
+  def getMulti(): Action[AnyContent] = Action { implicit request =>
     val offerTypes: Seq[String] = request.getParameters("offerTypes")
 
     val offerIds: Seq[Option[String]] = request.getParameters("offerIds") map { slotId => if (slotId.trim.isEmpty) None else Some(slotId) }

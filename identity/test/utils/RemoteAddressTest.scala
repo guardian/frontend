@@ -4,12 +4,13 @@ import org.scalatest.FunSuite
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import org.scalatest.Matchers
+import play.api.mvc.AnyContentAsEmpty
 
 class RemoteAddressTest extends FunSuite with Matchers {
   object TestRemoteAddress extends RemoteAddress
 
   val xFor = "X-Forwarded-For"
-  def fakeRequest(xForHeader: String) = FakeRequest(GET, "uri").withHeaders(xFor -> xForHeader)
+  def fakeRequest(xForHeader: String): FakeRequest[AnyContentAsEmpty.type] = FakeRequest(GET, "uri").withHeaders(xFor -> xForHeader)
 
   test("extract a simple IP address") {
     TestRemoteAddress.clientIp(fakeRequest("123.456.789.012")) should equal(Some("123.456.789.012"))

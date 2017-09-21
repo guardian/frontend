@@ -16,7 +16,7 @@ class VideoEndSlateController(
 )(implicit context: ApplicationContext)
   extends BaseController with Logging with Paging with ImplicitControllerExecutionContext with Requests {
 
-  def renderSection(sectionId: String) = Action.async { implicit request =>
+  def renderSection(sectionId: String): Action[AnyContent] = Action.async { implicit request =>
     val response = lookupSection(Edition(request), sectionId) map { seriesItems =>
       renderSectionTrails(seriesItems)
     }
@@ -49,13 +49,13 @@ class VideoEndSlateController(
       }
   }
 
-  private def renderSectionTrails(trails: Seq[Video])(implicit request: RequestHeader) = {
+  private def renderSectionTrails(trails: Seq[Video])(implicit request: RequestHeader): Result = {
     val sectionName = trails.headOption.map(t => t.trail.sectionName).getOrElse("")
     val response = () => views.html.fragments.videoEndSlate(trails.take(4), "section", s"More $sectionName videos")
     renderFormat(response, response, 900)
   }
 
-  def renderSeries(seriesId: String) = Action.async { implicit request =>
+  def renderSeries(seriesId: String): Action[AnyContent] = Action.async { implicit request =>
     val response = lookupSeries(Edition(request), seriesId) map { seriesItems =>
       renderSeriesTrails(seriesItems)
     }
@@ -87,7 +87,7 @@ class VideoEndSlateController(
     }
   }
 
-  private def renderSeriesTrails(trails: Seq[Video])(implicit request: RequestHeader) = {
+  private def renderSeriesTrails(trails: Seq[Video])(implicit request: RequestHeader): Result = {
     val response = () => views.html.fragments.videoEndSlate(trails.take(4), "series", "More from this series")
     renderFormat(response, response, 900)
   }

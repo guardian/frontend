@@ -22,17 +22,17 @@ class PublicProfileController(
     with ImplicitControllerExecutionContext
     with SafeLogging{
 
-  def page(url: String, username: String) = IdentityPage(url,  s"$username's public profile")
+  def page(url: String, username: String): IdentityPage = IdentityPage(url,  s"$username's public profile")
 
-  def renderProfileFromVanityUrl(vanityUrl: String, activityType: String) = renderPublicProfilePage(
+  def renderProfileFromVanityUrl(vanityUrl: String, activityType: String): Action[AnyContent] = renderPublicProfilePage(
     "/user/" + vanityUrl,
     activityType,
     identityApiClient.userFromVanityUrl(vanityUrl)
   )
 
-  def renderProfileFromId(id: String, activityType: String) = renderPublicProfilePage("/user/id/"+id, activityType, identityApiClient.user(id))
+  def renderProfileFromId(id: String, activityType: String): Action[AnyContent] = renderPublicProfilePage("/user/id/"+id, activityType, identityApiClient.user(id))
 
-  def renderPublicProfilePage(url: String, activityType: String, futureUser: => Future[Response[User]]) = Action.async {
+  def renderPublicProfilePage(url: String, activityType: String, futureUser: => Future[Response[User]]): Action[AnyContent] = Action.async {
     implicit request =>
       futureUser map {
         case Left(errors) =>

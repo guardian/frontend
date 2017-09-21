@@ -41,7 +41,7 @@ class NewsAlertController(breakingNewsApi: BreakingNewsApi)
   case class NewsAlertError(error: String)
   implicit private val ew = Json.writes[NewsAlertError]
 
-  def alerts() = Action.async { implicit request =>
+  def alerts(): Action[AnyContent] = Action.async { implicit request =>
     (breakingNewsUpdater ? GetAlertsRequest).mapTo[Option[JsValue]].map {
       case Some(json) => Cors(Cached(30)(RevalidatableResult.Ok(json)))
       case None => NoContent

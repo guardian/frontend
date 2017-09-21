@@ -5,7 +5,7 @@ import contentapi.ContentApiClient
 import layout.FaciaContainer
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model.{ApplicationContext, Cached, MetaData, SectionSummary, SimplePage}
-import play.api.mvc.{BaseController, ControllerComponents}
+import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 import services.NewspaperQuery
 
 class NewspaperController(
@@ -16,7 +16,7 @@ class NewspaperController(
 
   private val newspaperQuery = new NewspaperQuery(contentApiClient)
 
-  def latestGuardianNewspaper() = Action.async { implicit request =>
+  def latestGuardianNewspaper(): Action[AnyContent] = Action.async { implicit request =>
 
     val guardianPage = SimplePage(MetaData.make(
       "theguardian",
@@ -29,7 +29,7 @@ class NewspaperController(
 
   }
 
-  def latestObserverNewspaper() = Action.async { implicit request =>
+  def latestObserverNewspaper(): Action[AnyContent] = Action.async { implicit request =>
     val observerPage = SimplePage(MetaData.make(
       "theobserver",
       Some(SectionSummary.fromId("theobserver")),
@@ -42,7 +42,7 @@ class NewspaperController(
 
   }
 
-  def newspaperForDate(path: String, day: String, month: String, year: String) = Action.async { implicit request =>
+  def newspaperForDate(path: String, day: String, month: String, year: String): Action[AnyContent] = Action.async { implicit request =>
 
     val page = path match {
       case "theguardian" => SimplePage(MetaData.make(
@@ -70,7 +70,7 @@ class NewspaperController(
     frontContainer.flatMap(_.items).isEmpty && otherContainer.flatMap(_.items).isEmpty
   }
 
-  def allOn(path: String, day: String, month: String, year: String) = Action { implicit request =>
+  def allOn(path: String, day: String, month: String, year: String): Action[AnyContent] = Action { implicit request =>
     Cached(300)(WithoutRevalidationResult(MovedPermanently(s"/$path/$year/$month/$day")))
   }
 }

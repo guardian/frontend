@@ -101,7 +101,7 @@ class DfpDataCacheLifecycle(
     }
   )
 
-  override def start() = {
+  override def start(): Unit = {
     jobs foreach { job =>
       jobScheduler.deschedule(job.name)
       jobScheduler.scheduleEveryNMinutes(job.name, job.interval) {

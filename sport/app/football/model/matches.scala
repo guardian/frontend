@@ -6,6 +6,8 @@ import pa.{FootballMatch, Round}
 import implicits.Football
 import football.collections.RichList
 
+import scala.collection.immutable
+
 trait MatchesList extends Football with RichList with implicits.Collections {
 
   val competitions: Seq[Competition]
@@ -45,7 +47,7 @@ trait MatchesList extends Football with RichList with implicits.Collections {
     }
   }
   lazy val matchesGroupedByDate = relevantMatches.segmentBy(key = _._1.date.toLocalDate)
-  def matchesGroupedByDateAndCompetition = matchesGroupedByDate.map { case (d, ms) =>
+  def matchesGroupedByDateAndCompetition: Seq[(LocalDate, List[(Competition, List[FootballMatch])])] = matchesGroupedByDate.map { case (d, ms) =>
     val competitionsWithMatches = ms.groupBy(_._2).mapValues(_.map {
       case (matches, _) => matches
     }).toList.sortWith { case ((comp1, matches1), (comp2, matches2)) =>

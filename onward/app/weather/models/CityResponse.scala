@@ -1,15 +1,17 @@
 package weather.models
 
 import common.Edition
-import common.editions.{Au, Us, Uk}
+import common.editions.{Au, Uk, Us}
 import weather.models.accuweather.LocationResponse
 import play.api.libs.json.Json
+
+import scala.collection.immutable
 
 object CityResponse {
   implicit val jsonWrites = Json.writes[CityResponse]
 
-  def fromLocationResponses(locations: List[LocationResponse]) = {
-    def cityAndCountry(location: LocationResponse) =
+  def fromLocationResponses(locations: List[LocationResponse]): Seq[CityResponse] = {
+    def cityAndCountry(location: LocationResponse): (String, String) =
       (location.LocalizedName, location.Country.LocalizedName)
 
     val citiesWithSameNameByCountry = locations.foldLeft(Map.empty[(String, String), Int]) { (accumulation , location) =>
@@ -33,7 +35,7 @@ object CityResponse {
     }
   }
 
-  def fromLocationResponse(location: LocationResponse) = {
+  def fromLocationResponse(location: LocationResponse): CityResponse = {
     CityResponse(
       location.Key,
       location.LocalizedName,

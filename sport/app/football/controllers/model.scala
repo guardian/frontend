@@ -42,7 +42,7 @@ class FootballPage(
   private def brandings: Set[EditionBranding] = Set.empty
 
   // Has to be 'def' to pick up current switch state
-  override def metadata = MetaData
+  override def metadata: MetaData = MetaData
     .make(
       id = id,
       section = Some(SectionSummary.fromId(section)),

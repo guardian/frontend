@@ -16,7 +16,7 @@ class LatestIndexController(
   val controllerComponents: ControllerComponents)
   extends BaseController with ImplicitControllerExecutionContext with implicits.ItemResponses with Logging {
 
-  def latest(path: String) = Action.async { implicit request =>
+  def latest(path: String): Action[AnyContent] = Action.async { implicit request =>
     loadLatest(path).map { _.map { index =>
       index.page match {
         case tag: Tag if tag.isSeries || tag.isBlog => index.trails.headOption.map(latest => {

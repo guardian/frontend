@@ -30,5 +30,5 @@ class IndustriesRefresh(industries: Industries, val jobs: JobScheduler)(implicit
 
   val name: String = "Industries"
 
-  def refresh() = industries.refresh()
+  def refresh(): Unit = industries.refresh()
 }

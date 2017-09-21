@@ -67,7 +67,7 @@ trait ConfiguredTestSuite extends TestSuite with ConfiguredServer with Configure
     block(page.getWebResponse().getContentAsString)
   }
 
-  def withHost(path: String) = s"http://localhost:$port$path"
+  def withHost(path: String): String = s"http://localhost:$port$path"
 
 }
 

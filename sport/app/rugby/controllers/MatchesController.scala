@@ -3,7 +3,7 @@ package rugby.controllers
 import common._
 import model.Cached.RevalidatableResult
 import model.{ApplicationContext, Cached, MetaData, SectionSummary, StandalonePage}
-import play.api.mvc.{BaseController, ControllerComponents}
+import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 import play.twirl.api.Html
 import rugby.jobs.RugbyStatsJob
 import rugby.model.Match
@@ -21,9 +21,9 @@ class MatchesController(
 )(implicit context: ApplicationContext)
   extends BaseController with Logging with ImplicitControllerExecutionContext {
 
-  def scoreJson(year: String, month: String, day: String, homeTeamId: String, awayTeamId: String) = score(year, month, day, homeTeamId, awayTeamId)
+  def scoreJson(year: String, month: String, day: String, homeTeamId: String, awayTeamId: String): Action[AnyContent] = score(year, month, day, homeTeamId, awayTeamId)
 
-  def score(year: String, month: String, day: String, team1: String, team2: String) = Action { implicit request =>
+  def score(year: String, month: String, day: String, team1: String, team2: String): Action[AnyContent] = Action { implicit request =>
 
     val matchOpt = rugbyStatsJob.getFixturesAndResultScore(year, month, day, team1, team2)
 

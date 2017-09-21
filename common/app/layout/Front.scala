@@ -68,7 +68,7 @@ case class ContainerLayoutContext(
 object CollectionEssentials {
   /* FAPI Integration */
 
-  def fromPressedCollection(collection: PressedCollection) = CollectionEssentials(
+  def fromPressedCollection(collection: PressedCollection): CollectionEssentials = CollectionEssentials(
     collection.curatedPlusBackfillDeduplicated,
     collection.treats,
     Option(collection.displayName),
@@ -77,7 +77,7 @@ object CollectionEssentials {
     if (collection.curated.isEmpty) Some(9) else None
   )
 
-  def fromFaciaContent(trails: Seq[PressedContent]) = CollectionEssentials(
+  def fromFaciaContent(trails: Seq[PressedContent]): CollectionEssentials = CollectionEssentials(
     trails,
     Nil,
     None,
