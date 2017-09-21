@@ -1,5 +1,5 @@
 // @flow
-import fastdom from 'fastdom';
+import fastdom from 'fastdom-promise';
 import mediator from 'lib/mediator';
 import IdentityApi from 'common/modules/identity/api';
 
