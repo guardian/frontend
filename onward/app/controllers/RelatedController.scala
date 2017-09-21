@@ -27,9 +27,9 @@ class RelatedController(
     RelatedLabel)
   )
 
-  def renderHtml(path: String) = render(path)
-  def renderMf2(path: String) = render(path, true)
-  def render(path: String, isMf2: Boolean = false) = Action.async { implicit request =>
+  def renderHtml(path: String): Action[AnyContent] = render(path)
+  def renderMf2(path: String): Action[AnyContent] = render(path, true)
+  def render(path: String, isMf2: Boolean = false): Action[AnyContent] = Action.async { implicit request =>
     val edition = Edition(request)
     val excludeTags = request.queryString.getOrElse("exclude-tag", Nil)
 
@@ -40,7 +40,7 @@ class RelatedController(
     }
   }
 
-  private def renderRelated(trails: Seq[RelatedContentItem], containerTitle: String)(implicit request: RequestHeader) = Cached(30.minutes) {
+  private def renderRelated(trails: Seq[RelatedContentItem], containerTitle: String)(implicit request: RequestHeader): Result = Cached(30.minutes) {
     val relatedTrails = trails take 8
 
     if (request.isJson) {
@@ -54,7 +54,7 @@ class RelatedController(
     }
   }
 
-  private def renderRelatedMf2(trails: Seq[RelatedContentItem], title: String)(implicit request: RequestHeader) = Cached(30.minutes) {
+  private def renderRelatedMf2(trails: Seq[RelatedContentItem], title: String)(implicit request: RequestHeader): Result = Cached(30.minutes) {
     val relatedTrails = trails take 4
 
     JsonComponent(

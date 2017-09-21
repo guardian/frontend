@@ -7,7 +7,7 @@ import Component from 'common/modules/component';
 import { postComment, previewComment } from 'common/modules/discussion/api';
 import IdentityApi from 'common/modules/identity/api';
 import { avatarify } from 'common/modules/discussion/user-avatars';
-import ValidationEmail from 'common/modules/identity/validation-email';
+import { init as initValidationEmail } from 'common/modules/identity/validation-email';
 import { urlify } from './urlify';
 
 type commentType = {
@@ -310,7 +310,7 @@ class CommentBox extends Component {
     invalidEmailError(): void {
         this.removeState('onboarding-visible');
         this.error('EMAIL_NOT_VALIDATED');
-        ValidationEmail.init();
+        initValidationEmail();
     }
 
     submitPostComment(e: Event): void {

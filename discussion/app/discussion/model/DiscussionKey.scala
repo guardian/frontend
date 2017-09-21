@@ -10,7 +10,11 @@ case class DiscussionKey(val keyAsString: String) {
 
 // Used by the PlayFramework to bind DiscussionKey in the routes file
 object DiscussionKey {
-  implicit def pathBinder(implicit stringBinder: PathBindable[String]) = new PathBindable[DiscussionKey] {
+  implicit def pathBinder(implicit stringBinder: PathBindable[String]): PathBindable[DiscussionKey] {
+    def bind(key: String, value: String): Either[String, DiscussionKey]
+
+    def unbind(key: String, discussionKey: DiscussionKey): String
+  } = new PathBindable[DiscussionKey] {
     override def bind(key: String, value: String): Either[String, DiscussionKey] = {
       for {
         keyAsString <- stringBinder.bind(key, value).right

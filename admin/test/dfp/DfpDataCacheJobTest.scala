@@ -45,7 +45,7 @@ class DfpDataCacheJobTest
   private val allReadyOrDeliveringLineItems = DfpLineItems(Seq.empty, Seq.empty)
 
   "loadLineItems" should "dedupe line items that have changed in an unknown way" in {
-    def lineItemsModifiedSince(threshold: DateTime) = DfpLineItems(
+    def lineItemsModifiedSince(threshold: DateTime): DfpLineItems = DfpLineItems(
       validItems = Seq(
         lineItem(1, "a-fresh"),
         lineItem(2, "b-fresh"),
@@ -65,7 +65,7 @@ class DfpDataCacheJobTest
   }
 
   it should "dedupe line items that have changed in a known way" in {
-    def lineItemsModifiedSince(threshold: DateTime) = DfpLineItems(
+    def lineItemsModifiedSince(threshold: DateTime): DfpLineItems = DfpLineItems(
       validItems = Seq(
         lineItem(1, "d"),
         lineItem(2, "e"),
@@ -89,7 +89,7 @@ class DfpDataCacheJobTest
   }
 
   it should "omit line items whose state has changed to no longer be ready or delivering" in {
-    def lineItemsModifiedSince(threshold: DateTime) = DfpLineItems(
+    def lineItemsModifiedSince(threshold: DateTime): DfpLineItems = DfpLineItems(
       validItems = Seq(
         lineItem(1, "a", completed = true),
         lineItem(2, "e"),

@@ -59,7 +59,7 @@ class CompetitionStage(competitions: Seq[Competition]) {
 case class League(matches: List[FootballMatch], leagueTable: Seq[LeagueTableEntry], round: Round) extends CompetitionStageLike
 
 case class Groups(competitions: Seq[Competition], matches: List[FootballMatch], groupTables: List[(Round, Seq[LeagueTableEntry])]) extends CompetitionStageLike {
-  def matchesList(competition: Competition, round: Round) = CompetitionRoundMatchesList(competitions, competition, round)
+  def matchesList(competition: Competition, round: Round): CompetitionRoundMatchesList = CompetitionRoundMatchesList(competitions, competition, round)
 }
 
 trait Knockout extends CompetitionStageLike {
@@ -71,10 +71,10 @@ trait Knockout extends CompetitionStageLike {
   def isActiveRound(round: Round): Boolean = activeRound.contains(round)
 }
 case class KnockoutList(competitions: Seq[Competition], matches: List[FootballMatch], rounds: List[Round]) extends Knockout {
-  override def matchesList(competition: Competition, round: Round) = CompetitionRoundMatchesList(competitions, competition, round)
+  override def matchesList(competition: Competition, round: Round): CompetitionRoundMatchesList = CompetitionRoundMatchesList(competitions, competition, round)
 }
 case class KnockoutSpider(competitions: Seq[Competition], matches: List[FootballMatch], rounds: List[Round], matchDates: List[DateTime]) extends Knockout {
-  override def matchesList(competition: Competition, round: Round) = CompetitionRoundMatchesList(competitions, competition, round)
+  override def matchesList(competition: Competition, round: Round): CompetitionRoundMatchesList = CompetitionRoundMatchesList(competitions, competition, round)
 
   override def roundMatches(round: Round): List[FootballMatch] =
     super.roundMatches(round).sortWith(lt)

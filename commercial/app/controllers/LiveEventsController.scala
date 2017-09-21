@@ -10,7 +10,7 @@ class LiveEventsController(liveEventAgent: LiveEventAgent, val controllerCompone
   with ImplicitControllerExecutionContext
   with implicits.Requests {
 
-  def getLiveEvent = Action { implicit request =>
+  def getLiveEvent: Action[AnyContent] = Action { implicit request =>
     {
       for {
         id <- specificId

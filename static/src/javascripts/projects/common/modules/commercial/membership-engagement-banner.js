@@ -15,7 +15,7 @@ import { submitComponentEvent } from 'common/modules/commercial/acquisitions-oph
 import { addTrackingCodesToUrl } from 'common/modules/commercial/contributions-utilities';
 
 // change messageCode to force redisplay of the message to users who already closed it.
-const messageCode = 'engagement-banner-2017-09-07';
+const messageCode = 'engagement-banner-2017-09-21';
 
 // This piece of code should be reverted when we remove this test.
 const getUserTest = (): ?AcquisitionsABTest =>

@@ -9,7 +9,7 @@ case class CapiMultiple(articles: Seq[CapiSingle])
 
 object CapiMultiple {
 
-  def fromContent(articles: Seq[ContentType], edition: Edition) = {
+  def fromContent(articles: Seq[ContentType], edition: Edition): CapiMultiple = {
 
     CapiMultiple(articles.map(article => {
     	CapiSingle.fromContent(article, edition, articles.length)

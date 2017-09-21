@@ -62,6 +62,6 @@ class ContentApiOffersController(contentApiClient: ContentApiClient, capiAgent: 
 
   }
 
-  def nativeJson = renderNative(isMulti = false)
-  def nativeJsonMulti = renderNative(isMulti = true)
+  def nativeJson: Action[AnyContent] = renderNative(isMulti = false)
+  def nativeJsonMulti: Action[AnyContent] = renderNative(isMulti = true)
 }

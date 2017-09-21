@@ -51,13 +51,13 @@ trait CrosswordController extends BaseController with Logging with ImplicitContr
 
 class CrosswordPageController(val contentApiClient: ContentApiClient, val controllerComponents: ControllerComponents)(implicit context: ApplicationContext) extends CrosswordController {
 
-  def noResults()(implicit request: RequestHeader) = Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound))
+  def noResults()(implicit request: RequestHeader): Result = Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound))
 
-  def crossword(crosswordType: String, id: Int) = Action.async { implicit request =>
+  def crossword(crosswordType: String, id: Int): Action[AnyContent] = Action.async { implicit request =>
     renderCrosswordPage(crosswordType, id)
   }
 
-  def accessibleCrossword(crosswordType: String, id: Int) = Action.async { implicit request =>
+  def accessibleCrossword(crosswordType: String, id: Int): Action[AnyContent] = Action.async { implicit request =>
     withCrossword(crosswordType, id) { (crossword, content) =>
       Cached(60)(RevalidatableResult.Ok(views.html.accessibleCrossword(
         CrosswordPage(CrosswordContent.make(CrosswordData.fromCrossword(crossword), content)),
@@ -66,7 +66,7 @@ class CrosswordPageController(val contentApiClient: ContentApiClient, val contro
     }
   }
 
-  def printableCrossword(crosswordType: String, id: Int) = Action.async { implicit request =>
+  def printableCrossword(crosswordType: String, id: Int): Action[AnyContent] = Action.async { implicit request =>
     withCrossword(crosswordType, id) { (crossword, content) =>
       Cached(3.days)(RevalidatableResult.Ok(views.html.printableCrossword(
         CrosswordPage(CrosswordContent.make(CrosswordData.fromCrossword(crossword), content)),
@@ -76,7 +76,7 @@ class CrosswordPageController(val contentApiClient: ContentApiClient, val contro
     }
   }
 
-  def thumbnail(crosswordType: String, id: Int) = Action.async { implicit request =>
+  def thumbnail(crosswordType: String, id: Int): Action[AnyContent] = Action.async { implicit request =>
     withCrossword(crosswordType, id) { (crossword, _) =>
       val xml = CrosswordSvg(crossword, Some("100%"), Some("100%"), trim = true)
 
@@ -113,9 +113,9 @@ class CrosswordSearchController(
     )(CrosswordLookup.apply)(CrosswordLookup.unapply)
   )
 
-  def noResults()(implicit request: RequestHeader) = Cached(7.days)(RevalidatableResult.Ok(views.html.crosswordsNoResults(CrosswordSearchPage.make())))
+  def noResults()(implicit request: RequestHeader): Result = Cached(7.days)(RevalidatableResult.Ok(views.html.crosswordsNoResults(CrosswordSearchPage.make())))
 
-  def search() = Action.async { implicit request =>
+  def search(): Action[AnyContent] = Action.async { implicit request =>
     searchForm.bindFromRequest.fold(
       empty => Future.successful(Cached(7.days)(RevalidatableResult.Ok(views.html.crosswordSearch(CrosswordSearchPage.make())))),
 
@@ -150,7 +150,7 @@ class CrosswordSearchController(
     )
   }
 
-  def lookup() = Action.async { implicit request =>
+  def lookup(): Action[AnyContent] = Action.async { implicit request =>
     lookupForm.bindFromRequest.fold(
       formWithErrors => Future.successful(noResults),
       lookUpData => renderCrosswordPage(lookUpData.crosswordType, lookUpData.id)

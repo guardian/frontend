@@ -14,7 +14,7 @@ object Trend {
     }
   }
 
-  def fromDouble(n: Double) = n match {
+  def fromDouble(n: Double): Trend = n match {
     case 0 => Level
     case x if x > 0 => Positive
     case _ => Negative
@@ -47,7 +47,7 @@ object Stocks extends Logging {
   private def withoutCommas(s: String) =
     Commas.replaceAllIn(s, "")
 
-  def fromFingerpost(indices: Indices) = {
+  def fromFingerpost(indices: Indices): Stocks = {
     Stocks(indices.indices flatMap { index =>
       val maybePrice = Try { withoutCommas(index.value.price).toDouble }.toOption
 

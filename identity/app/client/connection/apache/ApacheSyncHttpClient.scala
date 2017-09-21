@@ -15,7 +15,7 @@ import scala.concurrent.{Future, Promise}
 class ApacheSyncHttpClient extends Http {
   // provide converter between our Iterable[(String,String)] and the ApacheClient's Array[KeyValuePair]
   implicit object IterStringTupleToArrayNameValuePairs extends (Parameters => Array[NameValuePair]) {
-    def apply(iterStringTuple: Parameters) = iterStringTuple.toArray.map { case (k, v) => new NameValuePair(k, v) }
+    def apply(iterStringTuple: Parameters): Array[NameValuePair] = iterStringTuple.toArray.map { case (k, v) => new NameValuePair(k, v) }
   }
   val proxy: Option[Proxy] = None
 

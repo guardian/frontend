@@ -44,7 +44,7 @@ class ResultsController(
   }
 
   private def renderWith(renderFunction:(FootballPage, Results, Map[String, Seq[CompetitionFilter]]) => Result)
-                        (date: LocalDate, tag: Option[String] = None) = {
+                        (date: LocalDate, tag: Option[String] = None): Result = {
     val result = for {
       p <- page(tag)
       r <- results(date, tag)
@@ -54,31 +54,31 @@ class ResultsController(
     result.getOrElse(NotFound("No results"))
   }
 
-  private def renderForDate(date: LocalDate, tag: Option[String] = None) = Action { implicit request =>
+  private def renderForDate(date: LocalDate, tag: Option[String] = None): Action[AnyContent] = Action { implicit request =>
     renderWith(renderMatchList)(date, tag)
   }
 
-  private def renderMoreForDate(date: LocalDate, tag: Option[String] = None) = Action { implicit request =>
+  private def renderMoreForDate(date: LocalDate, tag: Option[String] = None): Action[AnyContent] = Action { implicit request =>
     renderWith(renderMoreMatches)(date, tag)
   }
 
   /* Public methods */
 
   def allResults(): Action[AnyContent] = renderForDate(LocalDate.now(Edition.defaultEdition.timezone))
-  def allResultsJson() = allResults()
+  def allResultsJson(): Action[AnyContent] = allResults()
 
   def allResultsFor(year: String, month: String, day: String): Action[AnyContent] = renderForDate(createDate(year, month, day))
-  def allResultsForJson(year: String, month: String, day: String) = allResultsFor(year, month, day)
+  def allResultsForJson(year: String, month: String, day: String): Action[AnyContent] = allResultsFor(year, month, day)
 
   def moreResultsFor(year: String, month: String, day: String): Action[AnyContent] = renderMoreForDate(createDate(year, month, day))
-  def moreResultsForJson(year: String, month: String, day: String) = moreResultsFor(year, month, day)
+  def moreResultsForJson(year: String, month: String, day: String): Action[AnyContent] = moreResultsFor(year, month, day)
 
   def tagResults(tag: String): Action[AnyContent] = renderForDate(LocalDate.now(Edition.defaultEdition.timezone), Some(tag))
-  def tagResultsJson(tag: String) = tagResults(tag)
+  def tagResultsJson(tag: String): Action[AnyContent] = tagResults(tag)
 
   def tagResultsFor(year: String, month: String, day: String, tag: String): Action[AnyContent] = renderForDate(createDate(year, month, day), Some(tag))
-  def tagResultsForJson(year: String, month: String, day: String, tag: String) = tagResultsFor(year, month, day, tag)
+  def tagResultsForJson(year: String, month: String, day: String, tag: String): Action[AnyContent] = tagResultsFor(year, month, day, tag)
 
   def moreTagResultsFor(year: String, month: String, day: String, tag: String): Action[AnyContent] = renderMoreForDate(createDate(year, month, day), Some(tag))
-  def moreTagResultsForJson(year: String, month: String, day: String, tag: String) = moreTagResultsFor(year, month, day, tag)
+  def moreTagResultsForJson(year: String, month: String, day: String, tag: String): Action[AnyContent] = moreTagResultsFor(year, month, day, tag)
 }

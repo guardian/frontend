@@ -3,7 +3,9 @@ package implicits
 import language.reflectiveCalls
 
 trait AutomaticResourceManagement {
-  def withCloseable[T <: { def close() }](closeable: T) = new {
+  def withCloseable[T <: { def close() }](closeable: T): {
+    def apply[S](body: (T) => S): S
+  } = new {
     def apply[S](body: T => S): S = try {
       body(closeable)
     } finally {
@@ -11,7 +13,9 @@ trait AutomaticResourceManagement {
     }
   }
 
-  def withDisposable[T <: { def dispose() }](disposable: T) = new {
+  def withDisposable[T <: { def dispose() }](disposable: T): {
+    def apply[S](body: (T) => S): S
+  } = new {
     def apply[S](body: T => S): S = try {
       body(disposable)
     } finally {

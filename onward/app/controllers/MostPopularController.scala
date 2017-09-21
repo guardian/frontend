@@ -23,8 +23,8 @@ class MostPopularController(contentApiClient: ContentApiClient,
     "Most read"
   ))
 
-  def renderHtml(path: String) = render(path)
-  def render(path: String) = Action.async { implicit request =>
+  def renderHtml(path: String): Action[AnyContent] = render(path)
+  def render(path: String): Action[AnyContent] = Action.async { implicit request =>
     val edition = Edition(request)
     val globalPopular: Option[MostPopular] = {
       var globalPopularContent = mostPopularAgent.mostPopular(edition)
@@ -58,7 +58,7 @@ class MostPopularController(contentApiClient: ContentApiClient,
     "US" -> "US",
     "IN" -> "India")
 
-  def renderPopularGeo() = Action { implicit request =>
+  def renderPopularGeo(): Action[AnyContent] = Action { implicit request =>
 
     val headers = request.headers.toSimpleMap
     val countryCode = headers.getOrElse("X-GU-GeoLocation","country:row").replace("country:","")
@@ -74,7 +74,7 @@ class MostPopularController(contentApiClient: ContentApiClient,
     }
   }
 
-  def renderPopularDay(countryCode: String) = Action { implicit request =>
+  def renderPopularDay(countryCode: String): Action[AnyContent] = Action { implicit request =>
     Cached(900) {
       JsonComponent(
         "trails" -> JsArray(dayMostPopularAgent.mostPopular(countryCode).map{ trail =>
@@ -87,7 +87,7 @@ class MostPopularController(contentApiClient: ContentApiClient,
     }
   }
 
-  def renderPopularMicroformat2 = Action { implicit request =>
+  def renderPopularMicroformat2: Action[AnyContent] = Action { implicit request =>
     val edition = Edition(request)
     val mostPopular = mostPopularAgent.mostPopular(edition) take 5
 
@@ -104,7 +104,7 @@ class MostPopularController(contentApiClient: ContentApiClient,
     }
   }
 
-  private def lookup(edition: Edition, path: String)(implicit request: RequestHeader) = {
+  private def lookup(edition: Edition, path: String)(implicit request: RequestHeader): Future[Option[MostPopular]] = {
     log.info(s"Fetching most popular: $path for edition $edition")
     contentApiClient.getResponse(contentApiClient.item(path, edition)
       .tag(None)

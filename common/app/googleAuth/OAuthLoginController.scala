@@ -92,7 +92,7 @@ trait OAuthLoginController extends BaseController with ImplicitControllerExecuti
     }.getOrElse(Future.successful(forbiddenNoCredentials))
   }
 
-  def logout = Action { implicit request =>
+  def logout: Action[AnyContent] = Action { implicit request =>
     Redirect("/login").withNewSession
   }
 }

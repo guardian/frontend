@@ -13,7 +13,7 @@ class FormstackApi(httpClient: WsFormstackHttp) extends SafeLogging {
 
   implicit val formats = LiftJsonConfig.formats + new JodaJsonSerializer
 
-  def formstackUrl(formId: String) = {
+  def formstackUrl(formId: String): String = {
     val formstackUrl = Configuration.formstack.url
     s"$formstackUrl/form/$formId.json"
   }
