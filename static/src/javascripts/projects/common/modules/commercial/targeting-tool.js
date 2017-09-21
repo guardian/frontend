@@ -1,40 +1,36 @@
-define([
-    'lib/config',
-], function(
-    config
-) {
-    function clean(string) {
-        return string.trim().toLowerCase();
-    }
+import config from 'lib/config';
 
-    /**
-     * Get the campaigns for a test.
-     *
-     * @param test      an A/B test object (with an 'id' property)
-     * @return {Array}  campaigns associated with this test
-     */
-    function campaignsFor(id) {
-        try {
-            return config.page.campaigns.filter(function (campaign) {
-                return campaign.fields && clean(campaign.fields.campaignId) === clean(id);
-            });
-        } catch (e) {
-            return [];
-        }
-    }
+function clean(string) {
+    return string.trim().toLowerCase();
+}
 
-    /**
-     * Check if any of the active campaigns (from the targeting tool) apply to a given A/B test.
-     *
-     * @param test        an A/B test object (with an 'id' property)
-     * @return {Boolean}
-     */
-    function isAbTestTargeted(test) {
-        return campaignsFor(test.campaignId).length > 0;
+/**
+ * Get the campaigns for a test.
+ *
+ * @param test      an A/B test object (with an 'id' property)
+ * @return {Array}  campaigns associated with this test
+ */
+function campaignsFor(id) {
+    try {
+        return config.page.campaigns.filter(function(campaign) {
+            return campaign.fields && clean(campaign.fields.campaignId) === clean(id);
+        });
+    } catch (e) {
+        return [];
     }
+}
 
-    return {
-        isAbTestTargeted: isAbTestTargeted,
-        campaignsFor: campaignsFor
-    };
-});
+/**
+ * Check if any of the active campaigns (from the targeting tool) apply to a given A/B test.
+ *
+ * @param test        an A/B test object (with an 'id' property)
+ * @return {Boolean}
+ */
+function isAbTestTargeted(test) {
+    return campaignsFor(test.campaignId).length > 0;
+}
+
+export default {
+    isAbTestTargeted: isAbTestTargeted,
+    campaignsFor: campaignsFor
+};
