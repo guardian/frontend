@@ -18,6 +18,7 @@ static/src/javascripts/__flow__/types
 ui/src/__flow__/flow-typed
 ui/src/__flow__/types.js
 ui/src/__flow__/preact.js
+ui/src/__flow__/emotion.js
 
 [options]
 emoji=true
