@@ -26,7 +26,7 @@ object ProjectSettings {
     sources in (Compile,doc) := Seq.empty,
     doc in Compile := target.map(_ / "none").value,
     incOptions := incOptions.value.withNameHashing(true),
-    scalaVersion := "2.11.11",
+    scalaVersion := "2.12.4",
     initialize := {
       val _ = initialize.value
       assert(sys.props("java.specification.version") == "1.8",
