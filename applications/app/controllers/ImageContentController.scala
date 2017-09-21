@@ -21,9 +21,9 @@ class ImageContentController(
 )(implicit context: ApplicationContext)
   extends BaseController with RendersItemResponse with ImageQuery with Logging with ImplicitControllerExecutionContext {
 
-  def renderJson(path: String) = render(path)
+  def renderJson(path: String): Action[AnyContent] = render(path)
 
-  def render(path: String) = Action.async { implicit request => renderItem(path) }
+  def render(path: String): Action[AnyContent] = Action.async { implicit request => renderItem(path) }
 
   private def renderImageContent(page: ImageContentPage)(implicit request: RequestHeader): Result = {
     val htmlResponse = () => views.html.imageContent(page)

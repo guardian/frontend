@@ -48,7 +48,7 @@ class ResetPasswordController(
     )
   )
 
-  private def passwordResetFormWithConstraints(implicit messagesProvider: MessagesProvider) = Form(
+  private def passwordResetFormWithConstraints(implicit messagesProvider: MessagesProvider): Form[(String, String, String)] = Form(
     Forms.tuple (
       "password" ->  idPassword
         .verifying(Constraints.nonEmpty),
@@ -58,27 +58,27 @@ class ResetPasswordController(
     ) verifying(Messages("error.passwordsMustMatch"), { f => f._1 == f._2 }  )
   )
 
-  private def clearPasswords(form: Form[(String, String, String)]) = form.copy(
+  private def clearPasswords(form: Form[(String, String, String)]): Form[(String, String, String)] = form.copy(
     data = form.data + ("password" -> "", "password-confirm" -> "")
   )
 
-  def requestNewToken = Action { implicit request =>
+  def requestNewToken: Action[AnyContent] = Action { implicit request =>
     val idRequest = idRequestParser(request)
     Ok(views.html.password.resetPasswordRequestNewToken(page, idRequest, idUrlBuilder, requestPasswordResetForm))
   }
 
-  def renderEmailSentConfirmation = Action { implicit request =>
+  def renderEmailSentConfirmation: Action[AnyContent] = Action { implicit request =>
     val idRequest = idRequestParser(request)
     Ok(views.html.password.emailSent(page, idRequest, idUrlBuilder))
   }
 
-  def renderResetPassword(token: String) = Action{ implicit request =>
+  def renderResetPassword(token: String): Action[AnyContent] = Action{ implicit request =>
     val idRequest = idRequestParser(request)
     val boundForm = passwordResetForm.bindFromFlash.getOrElse(passwordResetForm)
     NoCache(Ok(views.html.password.resetPassword(page, idRequest, idUrlBuilder, boundForm, token)))
   }
 
-  def resetPassword(token : String) = Action.async { implicit request =>
+  def resetPassword(token : String): Action[AnyContent] = Action.async { implicit request =>
     val boundForm = passwordResetFormWithConstraints.bindFromRequest
 
     def onError(formWithErrors: Form[(String, String, String)]): Future[Result] = {
@@ -117,13 +117,13 @@ class ResetPasswordController(
     boundForm.fold[Future[Result]](onError, onSuccess)
   }
 
-  def renderPasswordResetConfirmation = Action{ implicit request =>
+  def renderPasswordResetConfirmation: Action[AnyContent] = Action{ implicit request =>
     val idRequest = idRequestParser(request)
     val userIsLoggedIn = authenticationService.requestPresentsAuthenticationCredentials(request)
     Ok(views.html.password.passwordResetConfirmation(page, idRequest, idUrlBuilder, userIsLoggedIn))
   }
 
-  def processUpdatePasswordToken( token : String) = Action.async { implicit request =>
+  def processUpdatePasswordToken( token : String): Action[AnyContent] = Action.async { implicit request =>
     val idRequest = idRequestParser(request)
     api.userForToken(token) map {
       case Left(errors) =>

@@ -1,6 +1,6 @@
 package controllers
 
-import play.api.mvc.{Action, BaseController, ControllerComponents}
+import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 import idapiclient.IdApiClient
 import services.{AuthenticationService, IdRequestParser, IdentityUrlBuilder, ReturnUrlVerifier}
 import common.ImplicitControllerExecutionContext
@@ -23,7 +23,7 @@ class EmailVerificationController(api: IdApiClient,
 
   val page = IdentityPage("/verify-email", "Verify Email")
 
-  def verify(token: String) = Action.async {
+  def verify(token: String): Action[AnyContent] = Action.async {
     implicit request =>
       val idRequest = idRequestParser(request)
 
@@ -47,7 +47,7 @@ class EmailVerificationController(api: IdApiClient,
       }
   }
 
-  def resendEmailValidationEmail() = authActionWithUser.async {
+  def resendEmailValidationEmail(): Action[AnyContent] = authActionWithUser.async {
     implicit request =>
       val idRequest = idRequestParser(request)
       api.resendEmailValidationEmail(request.user.auth, idRequest.trackingData).map { _ =>

@@ -21,7 +21,7 @@ define([
     Formstack,
     FormstackIframe,
     FormstackEmbedIframe,
-    ValidationEmail,
+    validationEmail,
     Id,
     AccountProfile,
     PublicProfile,
@@ -70,7 +70,7 @@ define([
         },
         validationEmail: function () {
             mediator.on('page:identity:ready', function () {
-                ValidationEmail.init();
+                validationEmail.init();
             });
         },
 

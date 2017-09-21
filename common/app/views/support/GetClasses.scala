@@ -36,7 +36,7 @@ object GetClasses {
     )
   }
 
-  def forSubLink(sublink: Sublink) = RenderClasses(Seq(
+  def forSubLink(sublink: Sublink): String = RenderClasses(Seq(
     Some("fc-sublink"),
     Some(TrailCssClasses.toneClassFromStyle(sublink.cardStyle) + "--sublink"),
     sublinkMediaTypeClass(sublink)
@@ -120,7 +120,7 @@ object GetClasses {
     }) ++ extraClasses: _*)
   }
 
-  def forFrontId(frontId: Option[String]) = RenderClasses(Seq(
+  def forFrontId(frontId: Option[String]): String = RenderClasses(Seq(
     "fc-container--video-no-fill-sides" -> frontId.contains("video")
   ) collect { case (kls, true) => kls }: _*)
 }

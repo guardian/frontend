@@ -26,7 +26,7 @@ class ImageDecacheController(
   private val iGuim = """i.guim.co.uk/img/(static|media|uploads)(/.*)""".r
   private val Origin = """(static|media).guim.co.uk/.*""".r
 
-  def renderImageDecacheForm() = Action { implicit request =>
+  def renderImageDecacheForm(): Action[AnyContent] = Action { implicit request =>
     NoCache(Ok(views.html.cache.imageDecache()))
   }
 

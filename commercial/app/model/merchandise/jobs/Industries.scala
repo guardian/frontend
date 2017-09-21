@@ -53,5 +53,5 @@ class Industries(contentApiClient: ContentApiClient) {
     }
   }
 
-  def forIndustry(id: Int) = industryKeywordIds().getOrElse(id, Nil)
+  def forIndustry(id: Int): Seq[String] = industryKeywordIds().getOrElse(id, Nil)
 }

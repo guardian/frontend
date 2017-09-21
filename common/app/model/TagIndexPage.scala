@@ -54,7 +54,7 @@ case class TagDefinition(
 object TagIndexListing {
   implicit val jsonFormat = Json.format[TagIndexListing]
 
-  def fromTagIndexPage(tagIndexPage: TagIndexPage) =
+  def fromTagIndexPage(tagIndexPage: TagIndexPage): TagIndexListing =
     TagIndexListing(tagIndexPage.id, tagIndexPage.title)
 }
 
@@ -66,7 +66,7 @@ case class TagIndexListing(
 object TagIndexListings {
   implicit val jsonFormat = Json.format[TagIndexListings]
 
-  def fromTagIndexPages(pages: Seq[TagIndexPage]) =
+  def fromTagIndexPages(pages: Seq[TagIndexPage]): TagIndexListings =
     TagIndexListings(pages.map(TagIndexListing.fromTagIndexPage).sortBy(_.title))
 }
 

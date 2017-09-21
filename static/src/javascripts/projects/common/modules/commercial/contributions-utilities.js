@@ -1,5 +1,5 @@
 // @flow
-import targetingTool from 'common/modules/commercial/targeting-tool';
+import { isAbTestTargeted } from 'common/modules/commercial/targeting-tool';
 import {
     regulars as acquisitionsCopyRegulars,
     control as acquisitionsCopyControl,
@@ -68,7 +68,7 @@ const controlTemplate: EpicTemplate = ({ options = {} }, copy) =>
     });
 
 const doTagsMatch = (test: EpicABTest): boolean =>
-    test.useTargetingTool ? targetingTool.isAbTestTargeted(test) : true;
+    test.useTargetingTool ? isAbTestTargeted(test) : true;
 
 // Returns an array containing:
 // - the first element matching insertAtSelector, if isMultiple is false or not supplied

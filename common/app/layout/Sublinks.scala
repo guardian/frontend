@@ -5,9 +5,9 @@ import implicits.FaciaContentFrontendHelpers.FaciaContentFrontendHelper
 import model.pressed.PressedContent
 
 object InclusiveRange {
-  def unit(n: Int) = InclusiveRange(n, n)
+  def unit(n: Int): InclusiveRange = InclusiveRange(n, n)
 
-  def fromZero(n: Int) = InclusiveRange(0, n)
+  def fromZero(n: Int): InclusiveRange = InclusiveRange(0, n)
 
   def constrain(range: InclusiveRange, n: Int): Int =
     (n max range.minimum) min range.maximum

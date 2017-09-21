@@ -8,11 +8,11 @@ import org.joda.time.{DateTime, DateTimeZone}
 import implicits.Dates.DateTime2ToCommonDateFormats
 
 import scala.concurrent.{ExecutionContext, Future}
-import scala.xml.NodeSeq
+import scala.xml.{Elem, NodeSeq}
 
 class NewsSiteMap(contentApiClient: ContentApiClient) {
   private case class UrlSet(urls: Seq[Url]){
-    def xml() = {
+    def xml(): Elem = {
       <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
               xmlns:news="http://www.google.com/schemas/sitemap-news/0.9"
               xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
@@ -29,7 +29,7 @@ class NewsSiteMap(contentApiClient: ContentApiClient) {
     webPublicationDate: DateTime,
     imageUrl: String) {
 
-    def xml() = {
+    def xml(): Elem = {
       <url>
         <loc>{location}</loc>
         <image:image>

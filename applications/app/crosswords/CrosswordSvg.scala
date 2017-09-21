@@ -1,13 +1,15 @@
 package crosswords
 
-import com.gu.contentapi.client.model.v1.{CrosswordDimensions, Crossword}
+import com.gu.contentapi.client.model.v1.{Crossword, CrosswordDimensions}
 import model.CrosswordPosition
+
+import scala.xml.Elem
 
 object CrosswordSvg extends CrosswordGridDataOrdering {
   val BorderSize = 1
   val CellSize = 31
 
-  def drawCell(x: Double, y: Double, cell: Cell) = {
+  def drawCell(x: Double, y: Double, cell: Cell): Elem = {
     val cellRect = <rect x={x.toString}
                      y={y.toString}
                      width={CellSize.toString}
@@ -22,7 +24,7 @@ object CrosswordSvg extends CrosswordGridDataOrdering {
     } getOrElse cellRect
   }
 
-  def apply(crossword: Crossword, boxWidth: Option[String], boxHeight: Option[String], trim: Boolean) = {
+  def apply(crossword: Crossword, boxWidth: Option[String], boxHeight: Option[String], trim: Boolean): Elem = {
     val CrosswordDimensions(columns, rows) = crossword.dimensions
 
     val width = columns * (BorderSize + CellSize) + BorderSize

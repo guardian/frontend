@@ -6,7 +6,7 @@ import conf.Configuration.commercial.magento
 import model.NoCache
 import play.api.libs.oauth.{ConsumerKey, OAuthCalculator, RequestToken}
 import play.api.libs.ws.WSClient
-import play.api.mvc.{BaseController, ControllerComponents}
+import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 
 /**
  * This allows us to check the content of protected Magento endpoints.
@@ -24,14 +24,14 @@ class ApiSandbox(wsClient: WSClient, val controllerComponents: ControllerCompone
     OAuthCalculator(key, accessToken)
   }
 
-  def getResource(path: String) = Action.async { implicit request =>
+  def getResource(path: String): Action[AnyContent] = Action.async { implicit request =>
     wsClient.url(s"http://$domain/$path")
       .sign(oauth)
       .get()
       .map(result => NoCache(Ok(result.body)))
   }
 
-  def getBooks(csvIsbns: String) = {
+  def getBooks(csvIsbns: String): Action[AnyContent] = {
     val isbns = csvIsbns split ","
     val path = isbns.zipWithIndex.foldLeft("api/rest/products?filter[1][attribute]=isbn") {
       case (soFar, (isbn, i)) => s"$soFar&filter[1][in][${i + 1}]=$isbn"

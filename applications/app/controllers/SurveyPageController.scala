@@ -5,7 +5,7 @@ import conf.Configuration
 import model.{ApplicationContext, Cached, NoCache}
 import model.Cached.RevalidatableResult
 import play.api.libs.ws.WSClient
-import play.api.mvc.{BaseController, ControllerComponents}
+import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 import staticpages.StaticPages
 
 import scala.concurrent.duration._
@@ -18,7 +18,7 @@ class SurveyPageController(
 
   val defaultCacheDuration: Duration = 15.minutes
 
-  def renderFormStackSurvey(formName: String) = Action.async { implicit request =>
+  def renderFormStackSurvey(formName: String): Action[AnyContent] = Action.async { implicit request =>
       wsClient.url(s"https://${Configuration.Survey.formStackAccountName}.formstack.com/forms/$formName")
         .head
         .map { headResponse =>
@@ -29,11 +29,11 @@ class SurveyPageController(
             case _ =>
               NoCache(NotFound)}}}
 
-  def thankYou() = Action { implicit request =>
+  def thankYou(): Action[AnyContent] = Action { implicit request =>
     Cached(defaultCacheDuration)(RevalidatableResult.Ok(views.html.survey.thankyou(StaticPages.simpleSurveyStaticPageForId(request.path))))
   }
 
-  def quickSurvey() = Action { implicit request =>
+  def quickSurvey(): Action[AnyContent] = Action { implicit request =>
     Cached(defaultCacheDuration)(RevalidatableResult.Ok(views.html.survey.quickSurvey(StaticPages.simpleSurveyStaticPageForId(request.path))))
   }
 }

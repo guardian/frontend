@@ -5,7 +5,7 @@ import navigation.{NavLink, NavigationHelpers, NewNavigation}
 import model.Cached
 import model.Cached.RevalidatableResult
 import play.api.libs.json.{Json, Writes}
-import play.api.mvc.{BaseController, ControllerComponents}
+import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 
 class NavigationController(val controllerComponents: ControllerComponents) extends BaseController {
 
@@ -15,7 +15,7 @@ class NavigationController(val controllerComponents: ControllerComponents) exten
   private case class topLevelNavItems(editionalisedSection: NewNavigation.EditionalisedNavigationSection)
   private case class navSectionLink(navLink: NavLink)
 
-  def nav() = Action { implicit request =>
+  def nav(): Action[AnyContent] = Action { implicit request =>
     Cached(500) {
 
       implicit val sectionLinkWrites = new Writes[SectionLinkAndEdition] {
@@ -39,7 +39,7 @@ class NavigationController(val controllerComponents: ControllerComponents) exten
   }
 
   //  This is to editionalise the menu on AMP
-  def renderAmpNav = Action { implicit request =>
+  def renderAmpNav: Action[AnyContent] = Action { implicit request =>
     val edition = Edition(request)
     val navSecondarySections = List.concat(
       NewNavigation.BrandExtensions.getAllEditionalisedNavLinks(edition).map(section => navSectionLink(section)),

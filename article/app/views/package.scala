@@ -6,6 +6,7 @@ import layout.ContentWidths.{Inline, LiveBlogMedia, MainMedia, Showcase}
 import model.content.MediaWrapper
 import model.{ApplicationContext, Article}
 import play.api.mvc.RequestHeader
+import play.twirl.api.Html
 import views.support._
 import views.support.cleaner._
 
@@ -24,7 +25,7 @@ object MainMediaWidths {
 }
 
 object MainCleaner {
- def apply(article: Article, html: String, amp: Boolean)(implicit request: RequestHeader, context: ApplicationContext) = {
+ def apply(article: Article, html: String, amp: Boolean)(implicit request: RequestHeader, context: ApplicationContext): Html = {
       implicit val edition = Edition(request)
       withJsoup(BulletCleaner(html))(
         if (amp) AmpEmbedCleaner(article) else VideoEmbedCleaner(article),
@@ -36,7 +37,7 @@ object MainCleaner {
 }
 
 object BodyCleaner {
-  def apply(article: Article, html: String, amp: Boolean)(implicit request: RequestHeader, context: ApplicationContext) = {
+  def apply(article: Article, html: String, amp: Boolean)(implicit request: RequestHeader, context: ApplicationContext): Html = {
     implicit val edition = Edition(request)
 
     val shouldShowAds = !article.content.shouldHideAdverts && article.metadata.sectionId != "childrens-books-site"

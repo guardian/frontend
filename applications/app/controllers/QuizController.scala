@@ -46,7 +46,7 @@ class QuizController(
 )(implicit context: ApplicationContext)
   extends BaseController with ImplicitControllerExecutionContext with Logging {
 
-  def submit(quizId: String, path: String) = Action.async { implicit request =>
+  def submit(quizId: String, path: String): Action[AnyContent] = Action.async { implicit request =>
     form.playForm.bindFromRequest.fold(
       hasErrors = errors => {
         val errorMessages = errors.errors.flatMap(_.messages.mkString(", ")).mkString(". ")

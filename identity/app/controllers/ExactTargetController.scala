@@ -21,7 +21,7 @@ class ExactTargetController(
 
   import authenticatedActions.authAction
 
-  def subscribe(subscriptionDefId: String, returnUrl: String) = authAction.apply {
+  def subscribe(subscriptionDefId: String, returnUrl: String): Action[AnyContent] = authAction.apply {
     implicit request =>
 
       idRequestParser(request).returnUrl match {

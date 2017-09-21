@@ -13,8 +13,8 @@ import scala.concurrent.Future
 
 class GalleryController(contentApiClient: ContentApiClient, val controllerComponents: ControllerComponents)(implicit context: ApplicationContext) extends BaseController with RendersItemResponse with Logging with ImplicitControllerExecutionContext {
 
-  def renderJson(path: String) = render(path)
-  def render(path: String) = Action.async { implicit request => renderItem(path) }
+  def renderJson(path: String): Action[AnyContent] = render(path)
+  def render(path: String): Action[AnyContent] = Action.async { implicit request => renderItem(path) }
 
   override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = {
     val index = request.getIntParameter("index") getOrElse 1
@@ -27,7 +27,7 @@ class GalleryController(contentApiClient: ContentApiClient, val controllerCompon
     }
   }
 
-  def lightboxJson(path: String) = Action.async { implicit request =>
+  def lightboxJson(path: String): Action[AnyContent] = Action.async { implicit request =>
     val index = request.getIntParameter("index") getOrElse 1
     lookup(path, index, isTrail=false) map {
       case Right(other) => RenderOtherStatus(other)

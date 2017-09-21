@@ -1,7 +1,7 @@
 package controllers
 
 import model.ApplicationContext
-import play.api.mvc.{BaseController, ControllerComponents}
+import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 import rendering.TestComponent
 import rendering.core.Renderer
 
@@ -13,7 +13,7 @@ class DevComponentController(
 )(implicit ac: ApplicationContext, ec: ExecutionContext)
   extends BaseController {
 
-  def renderComponent() = Action.async { implicit request =>
+  def renderComponent(): Action[AnyContent] = Action.async { implicit request =>
     renderer.render(TestComponent).map(Ok(_).withHeaders("Content-Type" -> "text/html"))
   }
 

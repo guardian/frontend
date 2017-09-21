@@ -34,12 +34,12 @@ class IdentityUrlBuilder(conf: IdConfig) {
   private def build(base: String, path: String, idRequest: Option[IdentityRequest], params: Seq[(String, String)] = Seq.empty) =
     appendQueryParams(base + path, mergeQueryParams(idRequest.map(queryParams).getOrElse(Nil), params.toList))
 
-  def buildUrl(path: String, idRequest: IdentityRequest, params: (String, String)*) =
+  def buildUrl(path: String, idRequest: IdentityRequest, params: (String, String)*): String =
     build(conf.url, path, Some(idRequest), params)
-  def buildUrl(path: String, params: (String, String)*) =
+  def buildUrl(path: String, params: (String, String)*): String =
     build(conf.url, path, None, params)
-  def buildOAuthUrl(path: String, idRequest: IdentityRequest, params: Seq[(String, String)]) =
+  def buildOAuthUrl(path: String, idRequest: IdentityRequest, params: Seq[(String, String)]): String =
     build(conf.oauthUrl, path, Some(idRequest), params)
-  def buildOAuthUrl(path: String, params: (String, String)*) =
+  def buildOAuthUrl(path: String, params: (String, String)*): String =
     build(conf.oauthUrl, path, None, params)
 }

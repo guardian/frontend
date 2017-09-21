@@ -17,7 +17,7 @@ object `package` {
   implicit class WebElement2rich(element: FluentWebElement) {
     lazy val href = element.attribute("href")
 
-    def hasAttribute(name: String) = element.attribute(name) != null
+    def hasAttribute(name: String): Boolean = element.attribute(name) != null
   }
 
   // need a front api that stores S3 locally so it can run without deps in the unit tests

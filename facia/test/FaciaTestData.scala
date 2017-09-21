@@ -30,7 +30,7 @@ object TestContent {
 
 class TestPageFront(val id: String, edition: Edition, faciaPage: PressedPage) {
   val query = null
-  def close() = {}
+  def close(): Unit = {}
   def apply(): Option[PressedPage] = Some(faciaPage)
 }
 

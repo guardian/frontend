@@ -21,8 +21,8 @@ app.use(webpackHotMiddleware(compiler));
 app.get('/', (req, res) => {
     delete require.cache[require.resolve('../dist/ui.bundle.server')];
 
-    // eslint-disable-next-line global-require
-    const { frontend } = require('../dist/ui.bundle.server');
+    // $FlowFixMe
+    const { frontend } = require('../dist/ui.bundle.server'); // eslint-disable-line global-require, import/no-unresolved
 
     // TODO: pass props from response to UI dev API endpoint
     res.send(

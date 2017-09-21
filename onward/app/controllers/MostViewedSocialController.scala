@@ -7,7 +7,7 @@ import feed.MostPopularSocialAutoRefresh
 import layout.{CollectionEssentials, FaciaContainer}
 import model.{ApplicationContext, Cached, FrontProperties}
 import model.pressed.CollectionConfig
-import play.api.mvc.{BaseController, ControllerComponents}
+import play.api.mvc._
 import services.{CollectionConfigWithId, FaciaContentConvert}
 import layout.slices.Fixed
 
@@ -19,7 +19,7 @@ class MostViewedSocialController(
   val controllerComponents: ControllerComponents
 )(implicit context: ApplicationContext)
   extends BaseController with ImplicitControllerExecutionContext {
-  def renderMostViewed(socialContext: String) = Action.async { implicit request =>
+  def renderMostViewed(socialContext: String): Action[AnyContent] = Action.async { implicit request =>
     val mostPopularSocial = mostPopularSocialAutoRefresh.get
 
     val articles = socialContext match {

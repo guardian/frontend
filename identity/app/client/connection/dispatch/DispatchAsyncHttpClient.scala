@@ -38,7 +38,7 @@ trait DispatchAsyncHttpClient extends Http {
   implicit def executionContext: ExecutionContext
 
   implicit object IterStringTupleToArrayNameValuePairs extends (Parameters => Map[String, Seq[String]]) {
-    def apply(iterStringTuple: Parameters) = iterStringTuple.toMap.groupBy(_._1).map {
+    def apply(iterStringTuple: Parameters): Map[String, Seq[String]] = iterStringTuple.toMap.groupBy(_._1).map {
       case (key, map) => (key, map.values.toSeq)
     }
   }
@@ -47,7 +47,7 @@ trait DispatchAsyncHttpClient extends Http {
     request.setQueryParameters(urlParameters).setHeaders(headers)
   }
 
-  def httpResponseHandler = new FunctionHandler(response =>
+  def httpResponseHandler: FunctionHandler[HttpResponse] = new FunctionHandler(response =>
     HttpResponse(response.getResponseBody("utf-8"), response.getStatusCode, response.getStatusText)
   )
 

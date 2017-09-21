@@ -17,9 +17,9 @@ trait AdminAuthController {
 
 class AdminIndexController(val controllerComponents: ControllerComponents)(implicit context: ApplicationContext) extends BaseController {
 
-  def index() = Action { Redirect("/admin") }
+  def index(): Action[AnyContent] = Action { Redirect("/admin") }
 
-  def admin() = Action { implicit request =>
+  def admin(): Action[AnyContent] = Action { implicit request =>
     NoCache(Ok(views.html.admin()))
   }
 }

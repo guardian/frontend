@@ -160,7 +160,7 @@ abstract class IdApi(http: Http, jsonBodyParser: JsonBodyParser, conf: IdConfig)
     post(urlJoin("user", "me", "group", groupCode), Some(auth)) map extractUnit
   }
 
-  def executeAccountDeletionStepFunction(userId: String, email: String, reason: Option[String], auth: Auth) = {
+  def executeAccountDeletionStepFunction(userId: String, email: String, reason: Option[String], auth: Auth): Future[Response[AccountDeletionResult]] = {
     case class DeletionBody(identityId: String, email: String, reason: Option[String])
     http.POST(
         s"${conf.accountDeletionApiRoot}/delete",
@@ -172,13 +172,13 @@ abstract class IdApi(http: Http, jsonBodyParser: JsonBodyParser, conf: IdConfig)
   def post(apiPath: String,
            auth: Option[Auth] = None,
            trackingParameters: Option[TrackingData] = None,
-           body: Option[String] = None) =
+           body: Option[String] = None): Future[Response[HttpResponse]] =
     http.POST(apiUrl(apiPath), body, buildParams(auth, trackingParameters), buildHeaders(auth))
 
   def delete(apiPath: String,
            auth: Option[Auth] = None,
            trackingParameters: Option[TrackingData] = None,
-           body: Option[String] = None) =
+           body: Option[String] = None): Future[Response[HttpResponse]] =
     http.DELETE(apiUrl(apiPath), body, buildParams(auth, trackingParameters), buildHeaders(auth))
 }
 

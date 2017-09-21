@@ -11,7 +11,7 @@ import model.{ApplicationContext, NoCache}
 
 class SwitchboardPlistaController(akkaAsync: AkkaAsync, val controllerComponents: ControllerComponents)(implicit context: ApplicationContext) extends BaseController with Logging with ImplicitControllerExecutionContext {
 
-  def renderSwitchboard() = Action { implicit request =>
+  def renderSwitchboard(): Action[AnyContent] = Action { implicit request =>
     log.info("loaded plista Switchboard")
 
     val switchesWithLastModified = Store.getSwitchesWithLastModified
@@ -26,7 +26,7 @@ class SwitchboardPlistaController(akkaAsync: AkkaAsync, val controllerComponents
     NoCache(Ok(views.html.switchboardPlista(Switches.PlistaForOutbrainAU, lastModified)))
   }
 
-  def save() = Action { implicit request =>
+  def save(): Action[AnyContent] = Action { implicit request =>
 
     def saveSwitchesOrError(updates: Seq[String], newState: String) = try {
 

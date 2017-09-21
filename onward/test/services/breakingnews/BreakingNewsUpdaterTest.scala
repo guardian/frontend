@@ -3,7 +3,7 @@ package services.breakingnews
 import java.net.URI
 import java.util.UUID
 
-import akka.actor.ActorSystem
+import akka.actor.{ActorRef, ActorSystem}
 import akka.pattern.ask
 import akka.util.Timeout
 import models.{NewsAlertNotification, NewsAlertTypes}
@@ -24,7 +24,7 @@ import scala.concurrent.duration._
   implicit val actorTimeout = Timeout(30.seconds)
   implicit override val patienceConfig = PatienceConfig(timeout = Span(5, Seconds), interval = Span(1, Seconds))
 
-  def newActorAndMockApi = {
+  def newActorAndMockApi: (ActorRef, BreakingNewsApi) = {
     val mockBreakingNewsApi = mock[BreakingNewsApi]
     val actorRef = actorSystem.actorOf(BreakingNewsUpdater.props(mockBreakingNewsApi))
     (actorRef, mockBreakingNewsApi)

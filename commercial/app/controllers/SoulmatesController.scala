@@ -28,7 +28,7 @@ class SoulmatesController(val controllerComponents: ControllerComponents) extend
     }
   }
 
-  def getSoulmates() = Action { implicit request =>
+  def getSoulmates(): Action[AnyContent] = Action { implicit request =>
     specificId match {
       case Some(feed) => Cached(60.seconds) { JsonComponent(soulmatesSample(feed)) }
       case None => Cached(componentNilMaxAge){ jsonFormat.nilResult }

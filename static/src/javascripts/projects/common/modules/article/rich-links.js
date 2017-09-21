@@ -49,9 +49,8 @@ const upgradeRichLink = (el: Element): Promise<void> => {
     if (!link) return Promise.resolve();
 
     const href: string = link.href;
-    const matches: ?(string[]) = href.match(
-        /(?:^https?:\/\/(?:www\.|m\.code\.dev-)theguardian\.com)?(\/.*)/
-    );
+    const host: string = config.get('page.host');
+    const matches: ?(string[]) = href.split(host);
     const isOnMobile: boolean = isBreakpoint({
         max: 'mobileLandscape',
     });

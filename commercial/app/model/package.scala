@@ -25,7 +25,7 @@ package object model {
 
   case class Context(section: Option[String], keywords: Seq[String]) {
 
-    def isInSection(name: String) = section exists (_ == name)
+    def isInSection(name: String): Boolean = section exists (_ == name)
   }
 
   case class Segment(context: Context, userSegments: Seq[String]) {

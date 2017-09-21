@@ -12,7 +12,7 @@ object ContainerDisplayConfig {
     false
   )
 
-  def withDefaults(collectionConfigWithId: CollectionConfigWithId) = ContainerDisplayConfig(
+  def withDefaults(collectionConfigWithId: CollectionConfigWithId): ContainerDisplayConfig = ContainerDisplayConfig(
     collectionConfigWithId,
     false
   )

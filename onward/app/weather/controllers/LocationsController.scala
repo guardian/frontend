@@ -4,7 +4,7 @@ import common._
 import weather.geo._
 import model.{CacheTime, Cached}
 import weather.models.CityResponse
-import play.api.mvc.{BaseController, ControllerComponents}
+import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 import weather.WeatherApi
 
 import scala.language.postfixOps
@@ -13,7 +13,7 @@ import scala.concurrent.Future
 
 class LocationsController(weatherApi: WeatherApi, val controllerComponents: ControllerComponents) extends BaseController with ImplicitControllerExecutionContext with Logging {
 
-  def findCity(query: String) = Action.async { implicit request =>
+  def findCity(query: String): Action[AnyContent] = Action.async { implicit request =>
     weatherApi.searchForLocations(query) map { locations =>
       Cached(7.days)(JsonComponent(CityResponse.fromLocationResponses(locations.toList)))
     }
@@ -23,7 +23,7 @@ class LocationsController(weatherApi: WeatherApi, val controllerComponents: Cont
   val RegionHeader: String = "X-GU-GeoRegion"
   val CountryHeader: String = "X-GU-GeoCountry"
 
-  def whatIsMyCity() = Action.async { implicit request =>
+  def whatIsMyCity(): Action[AnyContent] = Action.async { implicit request =>
 
     def cityFromRequestEdition = CityResponse.fromEdition(Edition(request))
 

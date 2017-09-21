@@ -1,7 +1,7 @@
-import layout.slices.FixedContainers
+import layout.slices.{ContainerDefinition, FixedContainers}
 
 package object controllers {
-  def visuallyPleasingContainerForStories(numberOfStories: Int) = numberOfStories match {
+  def visuallyPleasingContainerForStories(numberOfStories: Int): ContainerDefinition = numberOfStories match {
     case 1 => FixedContainers.fixedSmallSlowI
     case 2 => FixedContainers.fixedSmallSlowII
     case 3 => FixedContainers.slowSeriesIII

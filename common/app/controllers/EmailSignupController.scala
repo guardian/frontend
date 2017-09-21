@@ -71,14 +71,14 @@ class EmailSignupController(wsClient: WSClient, val controllerComponents: Contro
     )(EmailForm.apply)(EmailForm.unapply)
   )
 
-  def renderPage() = Action { implicit request =>
+  def renderPage(): Action[AnyContent] = Action { implicit request =>
     Cached(60)(RevalidatableResult.Ok(views.html.emailLanding(emailLandingPage)))
   }
 
-  def renderForm(emailType: String, listId: Int) = Action { implicit request =>
+  def renderForm(emailType: String, listId: Int): Action[AnyContent] = Action { implicit request =>
     Cached(1.day)(RevalidatableResult.Ok(views.html.emailFragment(emailLandingPage, emailType, listId)))}
 
-  def subscriptionResult(result: String) = Action { implicit request =>
+  def subscriptionResult(result: String): Action[AnyContent] = Action { implicit request =>
     Cached(7.days)(result match {
       case "success" => RevalidatableResult.Ok(views.html.emailSubscriptionResult(emailLandingPage, Subscribed))
       case "invalid" => RevalidatableResult.Ok(views.html.emailSubscriptionResult(emailLandingPage, InvalidEmail))
@@ -134,7 +134,7 @@ class EmailSignupController(wsClient: WSClient, val controllerComponents: Contro
         })
   }
 
-  def options() = Action { implicit request =>
+  def options(): Action[AnyContent] = Action { implicit request =>
     TinyResponse.noContent(Some("GET, POST, OPTIONS"))
   }
 }

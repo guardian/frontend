@@ -5,7 +5,7 @@ import model.NoCache
 import play.api.mvc._
 
 class ChangeEditionController(val controllerComponents: ControllerComponents) extends BaseController with PreferenceController {
-  def render(editionId: String) = Action { implicit request =>
+  def render(editionId: String): Action[AnyContent] = Action { implicit request =>
     NoCache(Edition.byId(editionId).map{ edition =>
       val home = edition.homePagePath
       // This INTCMP parameter is simply to cachebust the local cache of browsers
