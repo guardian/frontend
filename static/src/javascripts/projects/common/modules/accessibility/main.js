@@ -10,10 +10,8 @@ const saveState = (state: Object): void => {
     });
 };
 
-const getStoredValue = (key: string): boolean => {
-    const stored = userPrefs.get(`${KEY_PREFIX}.${key}`);
-    return stored !== false;
-};
+const getStoredValue = (key: string): boolean =>
+    userPrefs.get(`${KEY_PREFIX}.${key}`) !== false;
 
 const isOn = (key: string): boolean => getStoredValue(key) === true;
 
