@@ -33,10 +33,26 @@ define([
         },
 
         handleChange: function (event) {
-            this.props.onChange(event.target.value.toUpperCase());
+            this.props.crossword.insertCharacter(event.target.value.toUpperCase());
             this.setState({
                 value: ''
             });
+        },
+
+        onClick: function (event) {
+            this.props.crossword.onClickHiddenInput(event);
+        },
+
+        touchStart: function (event) {
+           this.props.crossword.onClickHiddenInput(event);
+        },
+
+        onKeyDown: function(event) {
+          this.props.crossword.onKeyDown(event);
+        },
+
+        onBlur: function(event) {
+          this.props.crossword.goToReturnPosition(event);
         },
 
         render: function () {
@@ -49,11 +65,11 @@ define([
                     type: 'text',
                     className: 'crossword__hidden-input',
                     maxLength: '1',
-                    onClick: this.props.onClick,
+                    onClick: this.onClick,
                     onChange: this.handleChange,
-                    onTouchStart: this.props.touchStart,
-                    onKeyDown: this.props.onKeyDown,
-                    onBlur: this.props.onBlur,
+                    onTouchStart: this.touchStart,
+                    onKeyDown: this.onKeyDown,
+                    onBlur: this.onBlur,
                     value: this.state.value,
                     autoComplete: 'off',
                     spellCheck: 'false',

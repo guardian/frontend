@@ -8,26 +8,10 @@ const webpackMerge = require('webpack-merge');
 
 const { ui } = require('./paths');
 
-const pasteupSass = require('../__tools__/pasteup-sass');
-
 const cssLoader = {
     loader: 'css-loader',
     options: {
         minimize: true,
-    },
-};
-
-const sassLoader = {
-    loader: 'sass-loader',
-    options: {
-        // prepended to all sass files
-        data: `
-            @import '~sass-mq/_mq';
-            @import 'pasteup';
-        `,
-        importer: [
-            url => (url === 'pasteup' ? { contents: pasteupSass } : null),
-        ],
     },
 };
 
@@ -44,14 +28,13 @@ const config = {
             },
             {
                 test: /\.(js|jsx)$/,
+                exclude: /node_modules/,
                 oneOf: [
                     {
                         test: /(\/__inline__)/,
-                        exclude: /node_modules/,
                         use: ['raw-loader', 'babel-loader'],
                     },
                     {
-                        exclude: /node_modules/,
                         use: ['babel-loader'],
                     },
                 ],
@@ -59,12 +42,15 @@ const config = {
             {
                 test: /\.css$/,
                 exclude: /node_modules/,
-                use: ['to-string-loader', cssLoader],
-            },
-            {
-                test: /\.js\.scss$/,
-                exclude: /node_modules/,
-                use: ['styletron-loader', sassLoader],
+                oneOf: [
+                    {
+                        test: /(\/__inline__)/,
+                        use: ['to-string-loader', cssLoader],
+                    },
+                    {
+                        use: ['ui-css-loader'],
+                    },
+                ],
             },
         ],
     },

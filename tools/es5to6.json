@@ -13,9 +13,6 @@
     "projects/common/modules/crosswords/keycodes.js"
   ],
   "Simon Adcock": [
-    "bootstraps/enhanced/recipe-article.js",
-    "projects/common/modules/crosswords/constants.js",
-    "projects/common/modules/crosswords/controls.js",
     "projects/common/modules/crosswords/helpers.js",
     "projects/common/modules/crosswords/series.js",
     "projects/common/modules/email/email.js",
@@ -25,16 +22,10 @@
   ],
   "Gustav Pursche": [
     "projects/common/modules/discussion/whole-discussion.js",
-    "projects/common/modules/discussion/api.js",
-    "projects/common/modules/discussion/discussion-frontend.js",
-    "projects/common/modules/crosswords/main.js",
-    "projects/common/modules/crosswords/persistence.js"
+    "projects/common/modules/discussion/discussion-frontend.js"
   ],
   "GHaberis": [
     "projects/common/modules/component.js",
-    "projects/common/modules/identity/formstack.js",
-    "projects/common/modules/identity/public-profile.js",
-    "projects/common/modules/identity/validation-email.js",
     "projects/common/modules/navigation/membership.js",
     "projects/common/modules/navigation/navigation.js",
     "projects/common/modules/navigation/profile.js"
@@ -52,7 +43,6 @@
     "bootstraps/youtube-embed.js"
   ],
   "Philip Wills": [
-    "projects/common/modules/crosswords/crossword.js",
     "projects/common/modules/crosswords/grid.js",
     "projects/common/modules/identity/account-profile.js"
   ],
@@ -73,16 +63,27 @@
   "davidfurey": [],
   "jranks123": [],
   "shaundillon": [],
-  "Joseph Smith": [],
+  "Joseph Smith": [
+      "projects/common/modules/commercial/donot-use-adblock.js",
+      "projects/common/modules/commercial/video-ad-url.js"
+  ],
   "Gideon Goldberg": [],
   "Matthew Walls": [],
   "Nicolas Long": [],
   "Calum Campbell": [],
   "Unassigned": [
     "projects/common/modules/navigation/search.js",
-    "projects/common/modules/ui/full-height.js",
-    "projects/common/modules/ui/notification-counter.js",
     "projects/common/modules/ui/relativedates.js",
-    "projects/common/modules/ui/selection-sharing.js"
+    "projects/common/modules/ui/selection-sharing.js",
+    "projects/common/modules/ui/last-modified.js",
+    "projects/common/modules/accessibility/main.js",
+    "projects/common/modules/analytics/beacon.js",
+    "projects/common/modules/analytics/discussion.js",
+    "projects/common/modules/analytics/interaction-tracking.js",
+    "projects/common/modules/analytics/media-listener.js",
+    "projects/common/modules/analytics/register.js",
+    "projects/common/modules/analytics/scrollDepth.js",
+    "projects/common/modules/identity/delete-account.js",
+    "bootstraps/enhanced/profile.js"
   ]
 }

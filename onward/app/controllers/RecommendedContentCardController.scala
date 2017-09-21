@@ -3,7 +3,7 @@ package controllers
 import contentapi.ContentApiClient
 import layout.ContentCard
 import model.ApplicationContext
-import play.api.mvc.{ControllerComponents, RequestHeader}
+import play.api.mvc.{Action, AnyContent, ControllerComponents, RequestHeader}
 
 import scala.concurrent.Future
 
@@ -12,7 +12,7 @@ class RecommendedContentCardController(
   controllerComponents: ControllerComponents
 )(implicit context: ApplicationContext) extends OnwardContentCardController(contentApiClient, controllerComponents) {
 
-  def render(path: String) = Action.async { implicit request =>
+  def render(path: String): Action[AnyContent] = Action.async { implicit request =>
     contentCard(path) map {
       case Some(card) => {
         val contentCardHtml = contentResponse(card)

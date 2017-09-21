@@ -62,6 +62,7 @@ const sendHeight = (): void => {
     }
 };
 
+// TODO: Remove repitition with common/modules/identity/formstack
 class FormstackEmbedIframe {
     el: HTMLElement;
     form: HTMLFormElement;

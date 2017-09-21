@@ -20,11 +20,11 @@ class MediaInSectionController(
 )(implicit context: ApplicationContext)
   extends BaseController with Logging with Paging with ImplicitControllerExecutionContext with Requests {
   // These exist to work around the absence of default values in Play routing.
-  def renderSectionMediaWithSeries(mediaType: String, sectionId: String, seriesId: String) =
+  def renderSectionMediaWithSeries(mediaType: String, sectionId: String, seriesId: String): Action[AnyContent] =
     renderMedia(mediaType, sectionId, Some(seriesId))
-  def renderSectionMedia(mediaType: String, sectionId: String) = renderMedia(mediaType, sectionId, None)
+  def renderSectionMedia(mediaType: String, sectionId: String): Action[AnyContent] = renderMedia(mediaType, sectionId, None)
 
-  private def renderMedia(mediaType: String, sectionId: String, seriesId: Option[String]) = Action.async { implicit request =>
+  private def renderMedia(mediaType: String, sectionId: String, seriesId: Option[String]): Action[AnyContent] = Action.async { implicit request =>
     val response = lookup(Edition(request), mediaType, sectionId, seriesId) map { seriesItems =>
       seriesItems map { trail => renderSectionTrails(mediaType, trail, sectionId) }
     }
@@ -62,7 +62,7 @@ class MediaInSectionController(
     }
   }
 
-  private def renderSectionTrails(mediaType: String, trails: Seq[RelatedContentItem], sectionId: String)(implicit request: RequestHeader) = {
+  private def renderSectionTrails(mediaType: String, trails: Seq[RelatedContentItem], sectionId: String)(implicit request: RequestHeader): Result = {
     val sectionName = trails.headOption.map(t => t.content.trail.sectionName.toLowerCase).getOrElse("")
 
     // Content API doesn't understand the alias 'uk-news'.

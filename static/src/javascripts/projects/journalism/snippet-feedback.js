@@ -5,10 +5,65 @@ import ophan from 'ophan/ng';
 import { getViewport } from 'lib/detect';
 import { SnippetFourVariants } from 'common/modules/experiments/tests/snippet-a-a1-b-b1';
 import { getAssignedVariant } from 'common/modules/experiments/utils';
+import { submitComponentEvent } from 'common/modules/commercial/acquisitions-ophan';
 
 const SnippetFeedback = (options: { scroll: boolean } = { scroll: true }) => {
     let snippets = [...document.querySelectorAll('.explainer-snippet--new')];
     const variant = getAssignedVariant(SnippetFourVariants);
+
+    const sendOldStyleInteraction = (snippetId, component, value) => {
+        ophan.record({
+            atomId: snippetId,
+            component,
+            value,
+        });
+    };
+
+    const snippetTypeToComponentType = (
+        snippetType: string
+    ): OphanComponentType => {
+        switch (snippetType) {
+            case 'guide':
+                return 'GUIDE_ATOM';
+            case 'timeline':
+                return 'TIMELINE_ATOM';
+            case 'qanda':
+                return 'QANDA_ATOM';
+            default:
+                return 'PROFILE_ATOM';
+        }
+    };
+
+    const sendNewStyleInteraction = (
+        snippetId: string,
+        snippetType: string,
+        action: OphanAction,
+        variantId?: string
+    ) => {
+        const componentType: OphanComponentType = snippetTypeToComponentType(
+            snippetType
+        );
+
+        const event = {
+            component: {
+                componentType,
+                id: snippetId,
+            },
+            action,
+        };
+
+        const withAbTest = variantId
+            ? {
+                  ...event,
+                  abTest: {
+                      name: 'snippet',
+                      variant: variantId,
+                  },
+              }
+            : event;
+
+        submitComponentEvent(withAbTest);
+    };
 
     snippets.forEach(snippet => {
         const { snippetId, snippetType } = snippet.dataset;
@@ -38,12 +93,19 @@ const SnippetFeedback = (options: { scroll: boolean } = { scroll: true }) => {
                 button && button instanceof HTMLButtonElement && button.value;
 
             if (value && ack) {
-                const data = {
-                    atomId: snippetId,
+                sendOldStyleInteraction(
+                    snippetId,
                     component,
-                    value: `${snippetType}_feedback_${value}`,
-                };
-                ophan.record(data);
+                    `${snippetType}_feedback_${value}`
+                );
+
+                sendNewStyleInteraction(
+                    snippetId,
+                    snippetType,
+                    value === 'like' ? 'LIKE' : 'DISLIKE',
+                    variant ? variant.id : undefined
+                );
+
                 fastdom.write(() => {
                     ack.hidden = false;
                     question.hidden = true;
@@ -65,12 +127,18 @@ const SnippetFeedback = (options: { scroll: boolean } = { scroll: true }) => {
         );
         if (handle) {
             handle.addEventListener('click', function onExpand(e: Event) {
-                const data = {
-                    atomId: snippetId,
+                sendOldStyleInteraction(
+                    snippetId,
                     component,
-                    value: `${snippetType}_expanded`,
-                };
-                ophan.record(data);
+                    `${snippetType}_expanded`
+                );
+
+                sendNewStyleInteraction(
+                    snippetId,
+                    snippetType,
+                    'EXPAND',
+                    variant ? variant.id : undefined
+                );
 
                 e.currentTarget.removeEventListener('click', onExpand);
             });
@@ -92,12 +160,13 @@ const SnippetFeedback = (options: { scroll: boolean } = { scroll: true }) => {
                     }
                     const component = `snippet_${snippetType}`;
 
-                    const data = {
-                        atomId: snippetId,
+                    sendOldStyleInteraction(
+                        snippetId,
                         component,
-                        value: `${snippetType}_component_in_view`,
-                    };
-                    ophan.record(data);
+                        `${snippetType}_component_in_view`
+                    );
+
+                    sendNewStyleInteraction(snippetId, snippetType, 'VIEW');
 
                     return false;
                 }

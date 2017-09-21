@@ -17,8 +17,8 @@ class TopStoriesController(
 )(implicit context: ApplicationContext)
   extends BaseController with Logging with Paging with ImplicitControllerExecutionContext {
 
-  def renderTopStoriesHtml = renderTopStories()
-  def renderTopStories() = Action.async { implicit request =>
+  def renderTopStoriesHtml: Action[AnyContent] = renderTopStories()
+  def renderTopStories(): Action[AnyContent] = Action.async { implicit request =>
     val response = lookup(Edition(request)) map { topStories =>
       topStories map { stories => renderTopStoriesPage(stories.faciaItems) }
     }
@@ -26,7 +26,7 @@ class TopStoriesController(
     response map { _ getOrElse NotFound }
   }
 
-  def renderTrails() = Action.async { implicit request =>
+  def renderTrails(): Action[AnyContent] = Action.async { implicit request =>
     val response = lookup(Edition(request)) map { topStories =>
       topStories map { stories => renderTopStoriesTrails(stories.faciaItems) }
     }
@@ -51,7 +51,7 @@ class TopStoriesController(
       }
   }
 
-  private def renderTopStoriesPage(trails: Seq[PressedContent])(implicit request: RequestHeader) = {
+  private def renderTopStoriesPage(trails: Seq[PressedContent])(implicit request: RequestHeader): Result = {
     val page = SimplePage( MetaData.make(
       "top-stories",
       Some(SectionSummary.fromId("top-stories")),
@@ -69,7 +69,7 @@ class TopStoriesController(
     }
   }
 
-  private def renderTopStoriesTrails(trails: Seq[PressedContent])(implicit request: RequestHeader) = {
+  private def renderTopStoriesTrails(trails: Seq[PressedContent])(implicit request: RequestHeader): Result = {
     val trailsLength = request.getQueryString("page-size").map{ _.toInt }.getOrElse(trails.size)
     val response = if (request.getQueryString("view").contains("link"))
       () => views.html.fragments.trailblocks.link(trails, trailsLength)

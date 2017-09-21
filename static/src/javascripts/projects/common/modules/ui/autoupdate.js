@@ -13,7 +13,7 @@ import { enhanceTweets } from 'common/modules/article/twitter';
 import { Sticky } from 'common/modules/ui/sticky';
 import { scrollToElement } from 'lib/scroller';
 import RelativeDates from 'common/modules/ui/relativedates';
-import NotificationCounter from 'common/modules/ui/notification-counter';
+import { initNotificationCounter } from 'common/modules/ui/notification-counter';
 import { checkElemsForVideos } from 'common/modules/atoms/youtube';
 
 type autoUpdateOptions = {
@@ -220,7 +220,8 @@ const autoUpdate = (opts?: autoUpdateOptions): void => {
     };
 
     // init
-    new NotificationCounter().init();
+    initNotificationCounter();
+
     new Sticky(toastContainer, {
         top: options.toastOffsetTop,
         emitMessage: true,

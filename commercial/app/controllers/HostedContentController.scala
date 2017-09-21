@@ -13,7 +13,7 @@ import play.api.libs.json.{JsArray, Json}
 import play.api.mvc._
 import play.twirl.api.Html
 import views.html.commercialExpired
-import views.html.hosted._
+import views.html.hosted.{hostedGalleryOnward, _}
 
 import scala.concurrent.Future
 import scala.util.control.NonFatal
@@ -61,7 +61,7 @@ class HostedContentController(
     .showAtoms("all")
 
 
-  def renderHostedPage(campaignName: String, pageName: String) = Action.async { implicit request =>
+  def renderHostedPage(campaignName: String, pageName: String): Action[AnyContent] = Action.async { implicit request =>
 
     val capiResponse = {
       val itemId = s"advertiser-content/$campaignName/$pageName"
@@ -79,7 +79,7 @@ class HostedContentController(
     renderPage(page)
   }
 
-  def renderOnwardComponent(campaignName: String, pageName: String, contentType: String) = Action.async {
+  def renderOnwardComponent(campaignName: String, pageName: String, contentType: String): Action[AnyContent] = Action.async {
     implicit request =>
 
       def onwardView(trails: Seq[HostedPage], defaultRowCount: Int, maxRowCount: Int): RevalidatableResult = {
@@ -154,7 +154,7 @@ class HostedContentController(
       }
   }
 
-  def renderAutoplayComponent(campaignName: String, pageName: String) = Action.async {
+  def renderAutoplayComponent(campaignName: String, pageName: String): Action[AnyContent] = Action.async {
     implicit request =>
 
       val capiResponse = {

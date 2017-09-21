@@ -1,16 +1,17 @@
 // @flow
-import targetingTool from 'common/modules/commercial/targeting-tool';
-import {
-    regulars as acquisitionsCopyRegulars,
-    control as acquisitionsCopyControl,
-} from 'common/modules/commercial/acquisitions-copy';
+import { isAbTestTargeted } from 'common/modules/commercial/targeting-tool';
 import type { AcquisitionsEpicTemplateCopy } from 'common/modules/commercial/acquisitions-copy';
-import { control as acquisitionsTestimonialParametersControl } from 'common/modules/commercial/acquisitions-epic-testimonial-parameters';
+import {
+    control as acquisitionsCopyControl,
+    regulars as acquisitionsCopyRegulars,
+} from 'common/modules/commercial/acquisitions-copy';
 import type { AcquisitionsEpicTestimonialTemplateParameters } from 'common/modules/commercial/acquisitions-epic-testimonial-parameters';
+import { control as acquisitionsTestimonialParametersControl } from 'common/modules/commercial/acquisitions-epic-testimonial-parameters';
 import { logView } from 'common/modules/commercial/acquisitions-view-log';
 import {
     submitInsertEvent,
     submitViewEvent,
+    addTrackingCodesToUrl,
 } from 'common/modules/commercial/acquisitions-ophan';
 import { isRegular } from 'common/modules/tailor/tailor';
 import $ from 'lib/$';
@@ -19,7 +20,6 @@ import { elementInView } from 'lib/element-inview';
 import fastdom from 'lib/fastdom-promise';
 import mediator from 'lib/mediator';
 import { getSync as geolocationGetSync } from 'lib/geolocation';
-import { constructQuery as constructURLQuery } from 'lib/url';
 import { noop } from 'lib/noop';
 import lodashTemplate from 'lodash/utilities/template';
 import toArray from 'lodash/collections/toArray';
@@ -68,7 +68,7 @@ const controlTemplate: EpicTemplate = ({ options = {} }, copy) =>
     });
 
 const doTagsMatch = (test: EpicABTest): boolean =>
-    test.useTargetingTool ? targetingTool.isAbTestTargeted(test) : true;
+    test.useTargetingTool ? isAbTestTargeted(test) : true;
 
 // Returns an array containing:
 // - the first element matching insertAtSelector, if isMultiple is false or not supplied
@@ -152,33 +152,6 @@ const getCampaignCode = (
 ) => {
     const suffix = campaignCodeSuffix ? `_${campaignCodeSuffix}` : '';
     return `${campaignCodePrefix}_${campaignID}_${id}${suffix}`;
-};
-
-const addTrackingCodesToUrl = (
-    base: string,
-    componentType: OphanComponentType,
-    campaignCode: string,
-    abTest?: { name: string, variant: string }
-) => {
-    const acquisitionData = {
-        // TODO: do we need referrerUrl?
-        source: 'GUARDIAN_WEB',
-        componentId: campaignCode,
-        componentType,
-        referrerPageviewId: config.get('ophan.pageViewId') || undefined,
-        campaignCode,
-        abTest,
-    };
-
-    const params = {
-        REFPVID: config.get('ophan.pageViewId') || 'not_found',
-        INTCMP: campaignCode,
-        acquisitionData: JSON.stringify(acquisitionData),
-    };
-
-    return `${base}${base.includes('?') ? '&' : '?'}${constructURLQuery(
-        params
-    )}`;
 };
 
 const makeEvent = (id: string, event: string): string => `${id}:${event}`;
@@ -518,7 +491,6 @@ export {
     defaultCanEpicBeDisplayed,
     defaultPageCheck,
     getTestimonialBlock,
-    addTrackingCodesToUrl,
     makeABTest,
     defaultButtonTemplate,
 };

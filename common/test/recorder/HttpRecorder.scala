@@ -13,6 +13,7 @@ import play.api.libs.ws.WSResponse
 import play.api.libs.ws.ahc.{AhcWSResponse, StandaloneAhcWSResponse}
 import play.shaded.ahc.org.asynchttpclient.{Response => AHCResponse}
 import play.shaded.ahc.io.netty.handler.codec.http.HttpHeaders
+import play.shaded.ahc.org.asynchttpclient.cookie.Cookie
 import play.shaded.ahc.org.asynchttpclient.uri.Uri
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -126,7 +127,7 @@ trait DefaultHttpRecorder extends HttpRecorder[WSResponse] {
     def getHeader(name: String): String = throw new NotImplementedError()
     def getHeaders(name: String): util.List[String] = throw new NotImplementedError()
     def isRedirected: Boolean = throw new NotImplementedError()
-    def getCookies = throw new NotImplementedError()
+    def getCookies: java.util.List[Cookie] = throw new NotImplementedError()
     def hasResponseStatus: Boolean = throw new NotImplementedError()
     def hasResponseHeaders: Boolean = throw new NotImplementedError()
     def hasResponseBody: Boolean = throw new NotImplementedError()

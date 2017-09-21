@@ -4,10 +4,8 @@ import {
     isRecentContributor,
     isPayingMember,
 } from 'commercial/modules/user-features';
-import {
-    makeABTest,
-    addTrackingCodesToUrl,
-} from 'common/modules/commercial/contributions-utilities';
+import { makeABTest } from 'common/modules/commercial/contributions-utilities';
+import { addTrackingCodesToUrl } from 'common/modules/commercial/acquisitions-ophan';
 import config from 'lib/config';
 import acquisitionsEpicThankYouTemplate from 'raw-loader!common/views/acquisitions-epic-thank-you.html';
 

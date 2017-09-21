@@ -38,7 +38,7 @@ object Parser {
   private object Date {
     private val dateTimeParser = DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ss")
 
-    def apply(dateTime: String) = dateTimeParser.parseDateTime(dateTime)
+    def apply(dateTime: String): DateTime = dateTimeParser.parseDateTime(dateTime)
   }
 
   private def inningsDescription(inningsOrder:Int, battingTeam: String): String =

@@ -64,12 +64,12 @@ class WeatherApi(wsClient: WSClient, context: ApplicationContext) extends Resour
     }
   }
 
-  def searchForLocations(query: String) =
+  def searchForLocations(query: String): Future[Seq[LocationResponse]] =
     getJson(autocompleteUrl(query)).map({ r =>
       Json.fromJson[Seq[LocationResponse]](r).get
     })
 
-  def getNearestCity(latitudeLongitude: LatitudeLongitude) =
+  def getNearestCity(latitudeLongitude: LatitudeLongitude): Future[LocationResponse] =
     getJson(latitudeLongitudeUrl(latitudeLongitude)).map({ r =>
       Json.fromJson[LocationResponse](r).get
     })

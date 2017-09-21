@@ -4,13 +4,13 @@ import implicits.FaciaContentFrontendHelpers.FaciaContentFrontendHelper
 import model.pressed._
 
 object EndSlateComponents {
-  def fromContent(content: Content) = EndSlateComponents(
+  def fromContent(content: Content): EndSlateComponents = EndSlateComponents(
     content.tags.series collectFirst { case tag: Tag => tag.metadata.id },
     content.metadata.sectionId,
     content.fields.shortUrl
   )
 
-  def fromFaciaContent(faciaContent: PressedContent) = EndSlateComponents(
+  def fromFaciaContent(faciaContent: PressedContent): EndSlateComponents = EndSlateComponents(
     faciaContent.series collectFirst { case tag:Tag => tag.metadata.id },
     faciaContent.properties.section,
     faciaContent.card.shortUrl

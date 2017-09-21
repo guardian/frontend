@@ -11,8 +11,7 @@ import play.sbt.{PlayAkkaHttpServer, PlayNettyServer, PlayScala}
 import com.typesafe.sbt.SbtNativePackager.Universal
 import com.typesafe.sbt.packager.Keys.packageName
 
-trait Prototypes {
-  val version = "1-SNAPSHOT"
+object ProjectSettings {
 
   val cleanAll = taskKey[Unit]("Cleans all projects in a build, regardless of dependencies")
   val checkScalastyle = taskKey[Unit]("check scalastyle compliance")
@@ -190,4 +189,12 @@ trait Prototypes {
 
     seq(autoPlugins, nonAutoPlugins, buildScalaFiles, userSettings, defaultSbtFiles)
   }
+
+  def filterAssets(testAssets: Seq[(File, String)]): Seq[(File, String)] =
+    testAssets.filterNot { case (_, fileName) =>
+      // built in sbt plugins did not like the bower files
+      fileName.endsWith("bower.json")
+    }
+
+  def withTests(project: Project): ClasspathDep[ProjectReference] = project % "test->test;compile->compile"
 }

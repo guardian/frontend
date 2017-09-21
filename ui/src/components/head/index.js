@@ -5,8 +5,8 @@
 // - https://css-tricks.com/inheriting-box-sizing-probably-slightly-better-best-practice
 
 import loadApp from './__inline__/loadApp';
-import resetCSS from './reset.css';
-import fontsCSS from './fonts.css';
+import resetCSS from './__inline__/reset.css';
+import fontsCSS from './__inline__/fonts.css';
 
 //  Having to typecast loadApp to a string here to appease flow
 const loadAppStr: string = (loadApp: any);

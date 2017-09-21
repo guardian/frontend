@@ -64,11 +64,11 @@ trait Chart {
   def name: String
   def labels: Seq[String]
   def dataset: Seq[ChartRow]
-  def hasData = dataset.nonEmpty
+  def hasData: Boolean = dataset.nonEmpty
   def format: ChartFormat
   def dualY: Boolean = false
 
-  def asDataset = s"[[$labelString], $dataString]"
+  def asDataset: String = s"[[$labelString], $dataString]"
 
   private def labelString = labels.map(l => s"'$l'").mkString(",")
   private def datapointString(point: ChartRow) = {
@@ -138,7 +138,7 @@ class AwsDailyLineChart(name: String, labels: Seq[String], format: ChartFormat, 
 }
 
 class AwsDualYLineChart(name: String, labels: (String, String, String), format: ChartFormat, chartOne: GetMetricStatisticsResult, chartTwo: GetMetricStatisticsResult) extends AwsLineChart(name, Seq(labels._1, labels._2, labels._3), format, chartOne, chartTwo) {
-  override def dualY = true
+  override def dualY: Boolean = true
 }
 
 class ABDataChart(name: String, ablabels: Seq[String], format: ChartFormat, charts: GetMetricStatisticsResult*) extends AwsLineChart(name, ablabels, format, charts:_*) {
@@ -193,5 +193,5 @@ case class FormattedChart(
   lazy val labels: Seq[String] = columns.map(_.label)
   lazy val lastValue: Option[String] = rows.lastOption.flatMap {_.c.lastOption.map(_.v.take(6)) }
 
-  def asJson() = Json.toJson(FormattedChart.DataTable(columns, rows))
+  def asJson(): JsValue = Json.toJson(FormattedChart.DataTable(columns, rows))
 }

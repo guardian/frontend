@@ -15,7 +15,7 @@ class JobsController(jobsAgent: JobsAgent, val controllerComponents: ControllerC
   private def jobSample(specificIds: Seq[String], segment: Segment): Seq[Job] =
     (jobsAgent.specificJobs(specificIds) ++ jobsAgent.jobsTargetedAt(segment)).distinct.take(2)
 
-  def getJobs = Action { implicit request =>
+  def getJobs: Action[AnyContent] = Action { implicit request =>
       Cached(60.seconds){
         JsonComponent(jobSample(specificIds, segment))
       }

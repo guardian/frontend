@@ -1,5 +1,5 @@
 define([
-    './constants',
+    'common/modules/crosswords/constants',
     'lodash/arrays/findIndex',
     'lodash/collections/find',
     'lodash/collections/map',
@@ -305,7 +305,7 @@ define([
 
     /** Can be used for width or height, as the cell height == cell width */
     var gridSize = function (cells) {
-        return cells * (constants.cellSize + constants.borderSize) + constants.borderSize;
+        return cells * (constants.constants.cellSize + constants.constants.borderSize) + constants.constants.borderSize;
     };
 
     var mapGrid = function (grid, f) {

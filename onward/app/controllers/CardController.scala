@@ -5,7 +5,7 @@ import model._
 import java.net.URI
 
 import org.jsoup.Jsoup
-import play.api.mvc.{BaseController, ControllerComponents}
+import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 import play.api.libs.ws.WSClient
 import play.api.libs.json.{JsObject, Json}
 
@@ -17,7 +17,7 @@ class CardController(
   val controllerComponents: ControllerComponents
 ) extends BaseController with Logging with ImplicitControllerExecutionContext {
 
-  def opengraph(resource: String) = Action.async { implicit request =>
+  def opengraph(resource: String): Action[AnyContent] = Action.async { implicit request =>
     val myUri = new URI(resource)
     val r = myUri.getPath
     val host = new URI(r).getHost

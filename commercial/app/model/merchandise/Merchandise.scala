@@ -114,7 +114,7 @@ case class Job(id: Int,
 
   val shortSalaryDescription = StringUtils.abbreviate(salaryDescription, 25).replace("...", "…")
 
-  def listingUrl = s"http://jobs.theguardian.com/job/$id"
+  def listingUrl: String = s"http://jobs.theguardian.com/job/$id"
 
   val industries: Seq[String] =
     Industries.sectorIdIndustryMap.filter { case (sectorId, name) => sectorIds.contains(sectorId)}.values.toSeq
@@ -128,7 +128,7 @@ sealed trait Gender {
 
 object Gender {
 
-  def fromName(name: String) = name match {
+  def fromName(name: String): Gender = name match {
     case Woman.name => Woman
     case _ => Man
   }

@@ -2,9 +2,9 @@ package services
 
 import java.util.UUID
 
-import model.Content
-import org.joda.time.{LocalDate, DateTimeZone, DateTime}
-import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
+import model.{Content, ContentType}
+import org.joda.time.{DateTime, DateTimeZone, LocalDate}
+import org.scalatest.{DoNotDiscover, FlatSpec, Matchers}
 import contentapi.FixtureTemplates.emptyApiContent
 import IndexPageGrouping.fromContent
 import common.JodaTime._
@@ -14,7 +14,7 @@ import com.gu.contentapi.client.utils.CapiModelEnrichment.RichJodaDateTime
 @DoNotDiscover class IndexPageGroupingTest extends FlatSpec with Matchers with ConfiguredTestSuite {
   val timeZone = DateTimeZone.forOffsetHours(0)
 
-  def makeFixture(dateTime: DateTime) = Content(
+  def makeFixture(dateTime: DateTime): ContentType = Content(
     emptyApiContent.copy(
       id = UUID.randomUUID().toString, webPublicationDate = Some(dateTime.toCapiDateTime)
     )

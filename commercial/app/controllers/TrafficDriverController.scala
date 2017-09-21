@@ -38,7 +38,7 @@ class TrafficDriverController(
   }
 
   // Build model from cAPI data and return as JSON, or empty if nothing found.
-  def renderJson() = Action.async { implicit request =>
+  def renderJson(): Action[AnyContent] = Action.async { implicit request =>
 
     retrieveContent().map {
       case None => Cached(componentNilMaxAge){ jsonFormat.nilResult }

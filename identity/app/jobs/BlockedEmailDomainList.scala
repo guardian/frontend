@@ -16,6 +16,6 @@ object BlockedEmailDomainList extends Logging {
     blockedDomainAgent.send(domains)
   }
 
-  def getBlockedDomains = blockedDomainAgent.get()
+  def getBlockedDomains: Set[String] = blockedDomainAgent.get()
 
 }

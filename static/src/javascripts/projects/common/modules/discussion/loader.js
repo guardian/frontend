@@ -14,7 +14,7 @@ import fetchJson from 'lib/fetch-json';
 import DiscussionAnalytics from 'common/modules/analytics/discussion';
 import register from 'common/modules/analytics/register';
 import Component from 'common/modules/component';
-import DiscussionApi from 'common/modules/discussion/api';
+import { getUser } from 'common/modules/discussion/api';
 import { CommentBox } from 'common/modules/discussion/comment-box';
 import Comments from 'common/modules/discussion/comments';
 import discussionFrontend from 'common/modules/discussion/discussion-frontend';
@@ -40,7 +40,7 @@ class Loader extends Component {
 
     getUser(): void {
         if (Id.getUserFromCookie()) {
-            DiscussionApi.getUser().then(resp => {
+            getUser().then(resp => {
                 this.user = resp.userProfile;
 
                 Id.getUserFromApi(user => {

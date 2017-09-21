@@ -3,7 +3,7 @@ import config from 'lib/config';
 import fastdom from 'lib/fastdom-promise';
 import reportError from 'lib/report-error';
 import { getUrlVars, constructQuery } from 'lib/url';
-import discussionApi from 'common/modules/discussion/api';
+import { recommendComment } from 'common/modules/discussion/api';
 
 const RECOMMENDATION_CLASS = 'js-recommend-comment';
 const TOOLTIP_CLASS = 'js-rec-tooltip';
@@ -93,10 +93,11 @@ const handle = (
     ) {
         const id = target.getAttribute('data-comment-id');
 
-        return Promise.all([
-            setClicked(target),
-            discussionApi.recommendComment(id),
-        ])
+        if (!id) {
+            return Promise.resolve();
+        }
+
+        return Promise.all([setClicked(target), recommendComment(id)])
             .then(() => setRecommended(target))
             .catch(ex =>
                 unsetClicked(target).then(() => {

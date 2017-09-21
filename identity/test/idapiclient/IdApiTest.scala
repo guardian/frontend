@@ -8,7 +8,7 @@ import org.mockito.{ArgumentMatcher, Matchers => MockitoMatchers}
 import client.connection.{Http, HttpResponse}
 import client.parser.{JodaJsonSerializer, JsonBodyParser}
 
-import scala.concurrent.{Await, ExecutionContext, Promise}
+import scala.concurrent.{Await, ExecutionContext, Future, Promise}
 import client.{Anonymous, Auth, Error, Parameters, Response}
 import org.hamcrest.Description
 import client.connection.util.ExecutionContexts
@@ -299,7 +299,7 @@ class IdApiTest extends path.FreeSpec with Matchers with MockitoSugar with WithT
   }
 
   "the password exists endpoint" - {
-    def validResponse(result: Boolean) = HttpResponse( s"""{"passwordExists": ${result}}""", 200, "OK")
+    def validResponse(result: Boolean): HttpResponse = HttpResponse( s"""{"passwordExists": ${result}}""", 200, "OK")
 
 
     "when receiving a valid 'true' response" - {
@@ -487,7 +487,7 @@ class IdApiTest extends path.FreeSpec with Matchers with MockitoSugar with WithT
     }
   }
 
-  def toFuture(response: Response[HttpResponse]) = Promise.successful(response).future
+  def toFuture(response: Response[HttpResponse]): Future[Response[HttpResponse]] = Promise.successful(response).future
 
   case class TestAuth(override val parameters: Parameters, override val headers: Parameters) extends Auth
 

@@ -10,14 +10,14 @@ import contentapi.ContentApiClient
 
 class EmbedController(contentApiClient: ContentApiClient, val controllerComponents: ControllerComponents)(implicit context: ApplicationContext) extends BaseController with Logging with ImplicitControllerExecutionContext {
 
-  def render(path: String) = Action.async { implicit request =>
+  def render(path: String): Action[AnyContent] = Action.async { implicit request =>
     lookup(path) map {
       case Left(model) => renderVideo(EmbedPage(model, model.trail.headline))
       case Right(other) => renderOther(other)
     }
   }
 
-  private def lookup(path: String)(implicit request: RequestHeader) = {
+  private def lookup(path: String)(implicit request: RequestHeader): Future[Either[Video, Result]] = {
     val edition = Edition(request)
 
     log.info(s"Fetching video: $path for edition $edition")
@@ -38,7 +38,7 @@ class EmbedController(contentApiClient: ContentApiClient, val controllerComponen
     result recover convertApiExceptions
   }
 
-  private def renderOther(result: Result)(implicit request: RequestHeader) = result.header.status match {
+  private def renderOther(result: Result)(implicit request: RequestHeader): Result = result.header.status match {
     case 404 => NoCache(NotFound)
     case 410 => Cached(60)(WithoutRevalidationResult(Gone(views.html.videoEmbedMissing())))
     case _ => result

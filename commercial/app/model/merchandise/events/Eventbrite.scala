@@ -101,7 +101,7 @@ object Eventbrite extends Logging {
     )(Response.apply _)
 
 
-  def buildEventWithImageSrc(event: Event, src: String) = event.copy(imageUrl = Some(src))
+  def buildEventWithImageSrc(event: Event, src: String): Event = event.copy(imageUrl = Some(src))
 
   def parsePagesOfEvents(feedMetaData: FeedMetaData, feedContent: => Option[String])(implicit executionContext: ExecutionContext): Future[ParsedFeed[Event]] = {
 

@@ -13,7 +13,7 @@ case object GetAlertsRequest extends BreakingNewsUpdaterMessage
 
 class BreakingNewsUpdater(breakingNewsApi: BreakingNewsApi) extends Actor with Logging {
 
-  def getAlerts() = {
+  def getAlerts(): Unit = {
     val origin = sender
     try {
       origin ! breakingNewsApi.getBreakingNews
@@ -54,7 +54,7 @@ class BreakingNewsUpdater(breakingNewsApi: BreakingNewsApi) extends Actor with L
 
   }
 
-  override def receive = {
+  override def receive: PartialFunction[Any, Unit] = {
     case GetAlertsRequest => getAlerts()
     case r: NewNotificationRequest => addNotification(r.notification)
     case _ @ unknown => log.error(s"Message unsupported (${unknown})")

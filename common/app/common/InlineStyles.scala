@@ -28,7 +28,7 @@ case class CSSRule(selector: String, styles: ListMap[String, String]) {
     Seq(ids, classes + attributes + pseudos, tags).map(_.toString).mkString.toInt
   }
 
-  override def toString() = s"$selector { ${CSSRule.styleStringFromMap(styles)} }"
+  override def toString(): String = s"$selector { ${CSSRule.styleStringFromMap(styles)} }"
 }
 
 object CSSRule {

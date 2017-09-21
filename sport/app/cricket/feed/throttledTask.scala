@@ -35,7 +35,7 @@ class ThrottledTask extends Actor {
 
   import context.dispatcher
 
-  override def receive = {
+  override def receive: PartialFunction[Any, Unit] = {
     case exec: ThrottledTask.ExecuteTask =>
       exec.task() pipeTo sender()
   }
