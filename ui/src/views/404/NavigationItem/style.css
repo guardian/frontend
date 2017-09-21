@@ -1,13 +1,13 @@
 .nav_item {
     border-bottom: 1px solid #f4f4ee;
-    display: block;
+    float: left;
     font-family: 'arial';
     font-size: 12px;
     margin: 0 2.5%;
     padding: 10px 2.5%;
+    width: 100%;
 
     @media (--from-tablet) {
-        float: left;
         width: 40%;
     }
 }
