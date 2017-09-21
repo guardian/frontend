@@ -12,9 +12,10 @@ const fire = (path: string): Image => {
 };
 
 const postJson = (path: string, jsonString: string): void => {
-    const url = config
-        .get('page.beaconUrl', '')
-        .replace(/^\/\//, `${window.location.protocol}//`) + path;
+    const url =
+        config
+            .get('page.beaconUrl', '')
+            .replace(/^\/\//, `${window.location.protocol}//`) + path;
 
     fetch(url, {
         method: 'post',
