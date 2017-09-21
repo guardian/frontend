@@ -10,9 +10,11 @@ import { variantFor } from 'common/modules/experiments/segment-util';
 import { engagementBannerParams } from 'common/modules/commercial/membership-engagement-banner-parameters';
 import { isBlocked } from 'common/modules/commercial/membership-engagement-banner-block';
 import { get as getGeoLocation } from 'lib/geolocation';
-import { constructQuery } from 'lib/url';
 import { getTest as getAcquisitionTest } from 'common/modules/experiments/acquisition-test-selector';
-import { submitComponentEvent } from 'common/modules/commercial/acquisitions-ophan';
+import {
+    submitComponentEvent,
+    addTrackingCodesToUrl,
+} from 'common/modules/commercial/acquisitions-ophan';
 
 // change messageCode to force redisplay of the message to users who already closed it.
 const messageCode = 'engagement-banner-2017-09-21';
@@ -110,20 +112,23 @@ const showBanner = (params: EngagementBannerParams): void => {
         return;
     }
 
+    const test = getUserTest();
+    const variant = getUserVariant(test);
+
     const paypalAndCreditCardImage =
         config.get('images.acquisitions.paypal-and-credit-card') || '';
     const colourClass = params.colourStrategy();
     const messageText = Array.isArray(params.messageText)
         ? selectSequentiallyFrom(params.messageText)
         : params.messageText;
-    const urlParameters = {
-        REFPVID: params.pageviewId,
-        INTCMP: params.campaignCode,
-    };
-    const linkUrl = `${params.linkUrl}${params.linkUrl &&
-    params.linkUrl.indexOf('?') > 0
-        ? '&'
-        : '?'}${constructQuery(urlParameters)}`;
+
+    const linkUrl = addTrackingCodesToUrl(
+        params.linkUrl,
+        'ACQUISITIONS_ENGAGEMENT_BANNER',
+        params.campaignCode,
+        test && variant ? { name: test.id, variant: variant.id } : undefined
+    );
+
     const buttonCaption = params.buttonCaption;
     const buttonSvg = inlineSvg('arrowWhiteRight');
     const renderedBanner = `
@@ -148,9 +153,6 @@ const showBanner = (params: EngagementBannerParams): void => {
     }).show(renderedBanner);
 
     if (messageShown) {
-        const test = getUserTest();
-        const variant = getUserVariant(test);
-
         ['INSERT', 'VIEW'].forEach(action => {
             submitComponentEvent({
                 component: {

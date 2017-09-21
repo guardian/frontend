@@ -1,16 +1,17 @@
 // @flow
 import { isAbTestTargeted } from 'common/modules/commercial/targeting-tool';
-import {
-    regulars as acquisitionsCopyRegulars,
-    control as acquisitionsCopyControl,
-} from 'common/modules/commercial/acquisitions-copy';
 import type { AcquisitionsEpicTemplateCopy } from 'common/modules/commercial/acquisitions-copy';
-import { control as acquisitionsTestimonialParametersControl } from 'common/modules/commercial/acquisitions-epic-testimonial-parameters';
+import {
+    control as acquisitionsCopyControl,
+    regulars as acquisitionsCopyRegulars,
+} from 'common/modules/commercial/acquisitions-copy';
 import type { AcquisitionsEpicTestimonialTemplateParameters } from 'common/modules/commercial/acquisitions-epic-testimonial-parameters';
+import { control as acquisitionsTestimonialParametersControl } from 'common/modules/commercial/acquisitions-epic-testimonial-parameters';
 import { logView } from 'common/modules/commercial/acquisitions-view-log';
 import {
     submitInsertEvent,
     submitViewEvent,
+    addTrackingCodesToUrl,
 } from 'common/modules/commercial/acquisitions-ophan';
 import { isRegular } from 'common/modules/tailor/tailor';
 import $ from 'lib/$';
@@ -19,7 +20,6 @@ import { elementInView } from 'lib/element-inview';
 import fastdom from 'lib/fastdom-promise';
 import mediator from 'lib/mediator';
 import { getSync as geolocationGetSync } from 'lib/geolocation';
-import { constructQuery as constructURLQuery } from 'lib/url';
 import { noop } from 'lib/noop';
 import lodashTemplate from 'lodash/utilities/template';
 import toArray from 'lodash/collections/toArray';
@@ -154,15 +154,6 @@ const getCampaignCode = (
     return `${campaignCodePrefix}_${campaignID}_${id}${suffix}`;
 };
 
-const addTrackingCodesToUrl = (base: string, campaignCode: string) => {
-    const params = {
-        REFPVID: config.get('ophan.pageViewId') || 'not_found',
-        INTCMP: campaignCode,
-    };
-
-    return `${base}?${constructURLQuery(params)}`;
-};
-
 const makeEvent = (id: string, event: string): string => `${id}:${event}`;
 
 const registerIframeListener = (iframeId: string) => {
@@ -204,13 +195,31 @@ const makeABTestVariant = (
         isUnlimited = false,
         contributeURL = addTrackingCodesToUrl(
             contributionsBaseURL,
-            campaignCode
+            parentTest.componentType,
+            campaignCode,
+            {
+                name: parentTest.id,
+                variant: id,
+            }
         ),
-        membershipURL = addTrackingCodesToUrl(membershipBaseURL, campaignCode),
+        membershipURL = addTrackingCodesToUrl(
+            membershipBaseURL,
+            parentTest.componentType,
+            campaignCode,
+            {
+                name: parentTest.id,
+                variant: id,
+            }
+        ),
         supportCustomURL = null,
         supportURL = addTrackingCodesToUrl(
             supportCustomURL || supportBaseURL,
-            campaignCode
+            parentTest.componentType,
+            campaignCode,
+            {
+                name: parentTest.id,
+                variant: id,
+            }
         ),
         template = controlTemplate,
         buttonTemplate = defaultButtonTemplate,
@@ -376,14 +385,24 @@ const makeABTestVariant = (
         contributionsURLBuilder(codeModifier) {
             return addTrackingCodesToUrl(
                 contributionsBaseURL,
-                codeModifier(campaignCode)
+                parentTest.componentType,
+                codeModifier(campaignCode),
+                {
+                    name: parentTest.id,
+                    variant: id,
+                }
             );
         },
 
         membershipURLBuilder(codeModifier) {
             return addTrackingCodesToUrl(
                 membershipBaseURL,
-                codeModifier(campaignCode)
+                parentTest.componentType,
+                codeModifier(campaignCode),
+                {
+                    name: parentTest.id,
+                    variant: id,
+                }
             );
         },
     };
@@ -472,7 +491,6 @@ export {
     defaultCanEpicBeDisplayed,
     defaultPageCheck,
     getTestimonialBlock,
-    addTrackingCodesToUrl,
     makeABTest,
     defaultButtonTemplate,
 };

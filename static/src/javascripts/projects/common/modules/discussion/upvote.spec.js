@@ -154,7 +154,7 @@ describe('Recommendations of comments', () => {
                 ).toBe(false);
                 expect(tooltip.hasAttribute('hidden')).toBe(false);
                 expect(link.getAttribute('href')).toBe(
-                    'http://theguardian.com/test/signin?keep=this&returnUrl=http://theguardian.com/comment-1'
+                    'http://theguardian.com/test/signin?keep=this&returnUrl=http%3A%2F%2Ftheguardian.com%2Fcomment-1'
                 );
 
                 return closeTooltip();

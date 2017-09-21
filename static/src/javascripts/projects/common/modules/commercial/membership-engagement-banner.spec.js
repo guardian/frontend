@@ -81,6 +81,7 @@ jest.mock(
             minArticles: 1,
             products: ['CONTRIBUTION'],
             colourStrategy: jest.fn(() => ''),
+            linkUrl: 'fake-link-url',
         })),
     })
 );
@@ -149,6 +150,7 @@ describe('Membership engagement banner', () => {
                 products: ['CONTRIBUTION'],
                 colourStrategy: jest.fn(() => 'fake-colour-class'),
                 campaignCode: 'fake-campaign-code',
+                linkUrl: 'fake-link-url',
             }));
             emitSpy = jest.spyOn(fakeMediator, 'emit');
             showBanner = membershipEngagementBannerInit().then(() => {
@@ -215,6 +217,7 @@ describe('Membership engagement banner', () => {
             engagementBannerParams.mockImplementationOnce(() => ({
                 minArticles: 1,
                 colourStrategy: jest.fn(() => 'fake-colour-class'),
+                linkUrl: 'fake-link-url',
             }));
             fakeVariantFor.mockImplementationOnce(() => ({
                 id: 'fake-variant-id',
