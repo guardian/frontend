@@ -1,0 +1,60 @@
+@(styles: html.Styles)
+
+@import conf.Static
+
+@* any images in head need to go here (or they'll be relative to the page)} *@
+<style class="js-loggable">
+    .svg .i,
+    .svg .caption:before,
+    .svg figcaption:before,
+    .svg blockquote.quoted:before {
+        background-image: none;
+    }
+    .is-updating {
+        background-image: url(@Static("images/auto-update-activity.gif"));
+    }
+    .is-updating--dark {
+        background-image: url(@Static("images/auto-update-activity-dark.gif"));
+    }
+    .tweet__user-name:before {
+        background-image: url(@Static("images/twitter/bird.svg"));
+    }
+
+    .no-svg .inline-guardian-logo-160 { background-image: url(@Static("images/logo/guardian-logo-160.png")); }
+    .no-svg .inline-guardian-logo-320 { background-image: url(@Static("images/logo/guardian-logo-320.png")); }
+    .no-svg .inline-observer-logo-160 { background-image: url(@Static("images/logo/observer-logo-160.png")); }
+    .no-svg .inline-observer-logo-320 { background-image: url(@Static("images/logo/observer-logo-320.png")); }
+</style>
+
+@*
+  - Include IE < 9 [(lt IE 9)]
+  - Exclude IE Mobile [&(!IEMobile)]
+*@
+<!--[if (lt IE 9)&(!IEMobile)]>
+@styles.oldIECriticalCss
+@styles.oldIELinkCss
+<![endif]-->
+
+@*
+  - Include IE 9 [(IE 9)]
+  - Exclude IE Mobile [&(!IEMobile)]
+*@
+<!--[if (IE 9)&(!IEMobile)]>
+@styles.IE9CriticalCss
+@styles.IE9LinkCss
+<![endif]-->
+
+@*
+  - Include all browsers [<!-->]
+  - Exclude IE < 10 [(gt IE 9)]
+  - Include IE Mobile [|(IEMobile)]
+*@
+<!--[if (gt IE 9)|(IEMobile)]><!-->
+@styles.criticalCss
+@styles.linkCss
+<!--<![endif]-->
+
+<link rel="stylesheet" media="print" type="text/css" href="@Static("stylesheets/print.css")" />
+
+@* placeholder <style>'s for font to go in *@
+@fragments.fontDefinitions()

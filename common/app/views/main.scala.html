@@ -1,4 +1,4 @@
-@(page: model.Page, projectName: Option[String] = None)(head: Html)(body: Html)(implicit request: RequestHeader, context: model.ApplicationContext)
+@(projectName: Option[String] = None)(head: Html)(body: Html)(implicit page: model.Page, request: RequestHeader, context: model.ApplicationContext)
 @import common.{Edition, Navigation, commercial}
 @import conf.switches.Switches.{BreakingNewsSwitch, SurveySwitch}
 @import model.Page.getContent
@@ -10,15 +10,15 @@
     @defining(showAdverts && !content.exists(_.tags.isTheMinuteArticle) && !Commercial.isAdFree(request)) { showTopSlot =>
       @if(content.exists(_.tags.hasSuperStickyBanner)) {
           @if(showTopSlot) {
-            @fragments.commercial.topBanner(page.metadata)
+            @fragments.commercial.topBanner()
           }
-          @fragments.header(page)
+          @fragments.header()
       } else {
           <div id="bannerandheader">
               @if(showTopSlot) {
-                @fragments.commercial.topBanner(page.metadata)
+                @fragments.commercial.topBanner()
               }
-              @fragments.header(page)
+              @fragments.header()
           </div>
       }
       <div id="maincontent" tabindex="0"></div>
@@ -29,7 +29,7 @@
 <!DOCTYPE html>
 <html id="js-context" class="js-off is-not-modern id--signed-out" lang="en" data-page-path="@request.path">
 <head>
-    @fragments.head(page, projectName, head)
+    @fragments.head(projectName, head)
 </head>
 
 @defining(getContent(page), Commercial.shouldShowAds(page), Edition(request)) { case (content, showAdverts, edition) =>
@@ -47,7 +47,7 @@
             ("is-immersive-interactive", content.exists(content => content.tags.isInteractive && content.content.isImmersive))))"
         itemscope itemtype="http://schema.org/WebPage">
 
-        @fragments.message(page.metadata)
+        @fragments.message()
 
         <a class="u-h skip" href="#maincontent" data-link-name="skip : main content">Skip to main content</a>
 
@@ -78,24 +78,24 @@
                     @fragments.exploreSeries(page)
                 </div>
             }
-            case page: model.ContentPage if (page.item.content.isPhotoEssay && !page.item.content.tags.isInteractive && !page.item.content.tags.isVideo) => {
+            case photoEssayPage: model.ContentPage if (photoEssayPage.item.content.isPhotoEssay && !photoEssayPage.item.content.tags.isInteractive && !photoEssayPage.item.content.tags.isVideo) => {
                 <div class="@RenderClasses(Map(
-                    ("immersive-header-container", page.item.fields.main.nonEmpty),
-                    ("immersive-header-container--photo-essay", page.item.content.isPhotoEssay)))">
+                    ("immersive-header-container", photoEssayPage.item.fields.main.nonEmpty),
+                    ("immersive-header-container--photo-essay", photoEssayPage.item.content.isPhotoEssay)))">
 
                     @if(mvt.ABNewDesktopHeaderVariant.isParticipating) {
-                        @fragments.header(page)
+                        @fragments.header()
                     }
 
-                    @fragments.photoEssay(page)
+                    @fragments.photoEssay(photoEssayPage)
                 </div>
             }
-            case page: model.ContentPage if (page.item.content.isImmersive && !page.item.content.tags.isInteractive && !page.item.content.tags.isVideo) => {
-                <div class="@if(page.item.fields.main.nonEmpty) { immersive-header-container }">
+            case immersivePage: model.ContentPage if (immersivePage.item.content.isImmersive && !immersivePage.item.content.tags.isInteractive && !immersivePage.item.content.tags.isVideo) => {
+                <div class="@if(immersivePage.item.fields.main.nonEmpty) { immersive-header-container }">
                     @if(mvt.ABNewDesktopHeaderVariant.isParticipating) {
-                        @fragments.header(page)
+                        @fragments.header()
                     }
-                    @fragments.immersiveMainMedia(page)
+                    @fragments.immersiveMainMedia(immersivePage)
                 </div>
             }
             case _: commercial.hosted.HostedPage => {}
@@ -129,11 +129,11 @@
             </script>
         }
 
-        @fragments.footer(page)
+        @fragments.footer()
 
-        @fragments.inlineJSNonBlocking(page)
+        @fragments.inlineJSNonBlocking()
 
-        @fragments.analytics.base(page)
+        @fragments.analytics.base()
     </body>
         @if(context.environment.mode == Dev) {
             <script>

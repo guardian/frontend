@@ -15,6 +15,7 @@ import layout.slices._
 import views.html.fragments.containers.facia_cards.container
 import views.support.FaciaToMicroFormat2Helpers.getCollection
 import conf.switches.Switches.InlineEmailStyles
+import pages.FrontHtmlPage
 
 import scala.concurrent.Future
 import scala.concurrent.Future.successful
@@ -127,7 +128,7 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
           }
           else {
             Cached(CacheTime.Facia) {
-              RevalidatableResult.Ok(views.html.front(faciaPage))
+                RevalidatableResult.Ok(FrontHtmlPage.html(faciaPage, request, context)) //TODO
             }
           }
         )

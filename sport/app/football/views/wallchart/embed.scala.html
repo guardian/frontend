@@ -3,13 +3,13 @@
 <html class="js-off is-not-modern id--signed-out" lang="en-GB">
     <head>
         <meta name="robots" content="noindex, nofollow" />
-        @fragments.head(page, Some("football"), Html(""))
+        @fragments.head(Some("football"), Html(""))(page, request, context)
         <script>guardian.config.page.isFootballWorldCup2014 = true;</script>
     </head>
     <body id="top" itemscope itemtype="http://schema.org/WebPage">
         <div id="js-context" class="football-wallchart-embed">
             @wallchart(competition, competitionStages)
-            @fragments.analytics.base(page)
+            @fragments.analytics.base()(page, request, context)
         </div>
     </body>
 </html>
