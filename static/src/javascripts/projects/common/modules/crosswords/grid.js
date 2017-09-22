@@ -5,9 +5,13 @@ import { constants } from 'common/modules/crosswords/constants';
 import Cell from 'common/modules/crosswords/cell';
 import classNames from 'common/modules/crosswords/classNames';
 
-class Grid extends React.Component {
+export class Grid extends React.Component {
     // Position at end of previous cell
-    static createWordSeparator(x, y, direction) {
+    static createWordSeparator(
+        x: number,
+        y: number,
+        direction: string
+    ): ?Element {
         const top = helpers.gridSize(y);
         const left = helpers.gridSize(x);
         const borderWidth = 1;
@@ -34,7 +38,11 @@ class Grid extends React.Component {
     }
 
     // Position in-between this and previous cells
-    static createHyphenSeparator(x, y, direction) {
+    static createHyphenSeparator(
+        x: number,
+        y: number,
+        direction: string
+    ): ?Element {
         const top = helpers.gridSize(y);
         const left = helpers.gridSize(x);
         const borderWidth = 1;
@@ -62,7 +70,11 @@ class Grid extends React.Component {
         }
     }
 
-    static createSeparator(x, y, separatorDescription) {
+    static createSeparator(
+        x: number,
+        y: number,
+        separatorDescription: ?Object
+    ): ?Element {
         if (separatorDescription) {
             if (separatorDescription.separator === ',') {
                 return Grid.createWordSeparator(
@@ -80,15 +92,15 @@ class Grid extends React.Component {
         }
     }
 
-    getSeparators(x, y) {
+    getSeparators(x: number, y: number): ?Object {
         return this.props.separators[helpers.clueMapKey(x, y)];
     }
 
-    handleSelect(x, y) {
+    handleSelect(x: number, y: number): void {
         this.props.crossword.onSelect(x, y);
     }
 
-    render() {
+    render(): Element {
         const width = helpers.gridSize(this.props.columns);
         const height = helpers.gridSize(this.props.rows);
         const cells = [];
@@ -162,5 +174,3 @@ class Grid extends React.Component {
         );
     }
 }
-
-export default Grid;
