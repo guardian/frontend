@@ -114,69 +114,6 @@ object AnalyticsHost extends implicits.Requests {
   def apply(): String = "https://hits-secure.theguardian.com"
 }
 
-
-sealed trait ReaderRevenueLink {
-  case class ABTest(name: String, variant: String)
-
-  val baseUrl: String
-
-  def linkWithTrackingParams(componentType: String, campaignCode: String, abTest: Option[ABTest] = None): String = {
-    val acquisitionData = Json.obj(
-      // TODO: lock this down with a Flow type?
-      "source" -> "GUARDIAN_WEB",
-      "componentId" -> campaignCode,
-      "componentType" -> componentType,
-      // TODO: there's no way to get this serverside is there? replace clientside??
-      "referrerPageviewId" -> "",
-      "campaignCode" -> campaignCode
-    ) ++ abTest.fold(Json.obj())(ab => Json.obj(
-      "name" -> ab.name,
-      "variant" -> ab.variant
-    ))
-
-    baseUrl + "?INCTMP=" + campaignCode + "&acquisitionData=" + acquisitionData.toString
-  }
-}
-
-object MembershipLink extends ReaderRevenueLink {
-  val baseUrl = s"${Configuration.id.membershipUrl}/supporter"
-
-  def apply(implicit request: RequestHeader, edition: Edition): String = {
-    if(mvt.ABNewDesktopHeaderControl.isParticipating) {
-      this.linkWithTrackingParams(
-        componentType = "ACQUISITIONS_HEADER",
-        campaignCode = s"mem_${edition.id}_web_newheader_control",
-        abTest = Some(ABTest("NewDesktopHeader", "variant"))
-      )
-    } else {
-      // TODO: I ditched countryGroup here, check that's OK
-      this.linkWithTrackingParams(
-        componentType = "ACQUISITIONS_HEADER",
-        campaignCode = s"DOTCOM_HEADER_BECOMEMEMBER_${edition.id}",
-        abTest = Some(ABTest("NewDesktopHeader", "control"))
-      )
-    }
-  }
-}
-
-object SubscribeLink {
-  private val subscribeEditions = Map(
-    Us -> "us",
-    Au -> "au",
-    International -> "int"
-  )
-
-  private def subscribeLink(edition: Edition) = subscribeEditions.getOrDefault(edition, "")
-
-  def apply(implicit request: RequestHeader, edition: Edition): String = {
-    if(mvt.ABNewDesktopHeaderControl.isParticipating) {
-      s"https://subscribe.theguardian.com/${subscribeLink(edition)}?INTCMP=subs_${edition.id}_web_newheader_control"
-    } else {
-      s"https://subscribe.theguardian.com/${subscribeLink(edition)}?INTCMP=NGW_HEADER_${edition.id}_GU_SUBSCRIBE"
-    }
-  }
-}
-
 trait AmpLinkTo extends LinkTo {
   override lazy val host = Configuration.amp.baseUrl
 

@@ -7,15 +7,17 @@ import SectionLinks._
 import NewNavigation._
 import SubSectionLinks._
 import NavLinks._
+import UrlHelpers.{Membership, SideMenu, Subscribe, getReaderRevenueUrl}
+import play.api.mvc.RequestHeader
 
 object NavigationHelpers {
 
-  def getMembershipLinks(edition: Edition): NavLinkLists = {
+  def getMembershipLinks(edition: Edition)(implicit request: RequestHeader): NavLinkLists = {
     val editionId = edition.id.toLowerCase()
 
     NavLinkLists(List(
-      NavLink("become a supporter", s"${Configuration.id.membershipUrl}/${editionId}/supporter?INTCMP=mem_${editionId}_web_newheader"),
-      NavLink("subscribe", s"${Configuration.id.subscribeUrl}/${editionId}?INTCMP=NGW_NEWHEADER_${editionId}_GU_SUBSCRIBE")
+      NavLink("become a supporter", getReaderRevenueUrl(Membership, SideMenu)),
+      NavLink("subscribe", getReaderRevenueUrl(Subscribe, SideMenu))
     ))
   }
 
