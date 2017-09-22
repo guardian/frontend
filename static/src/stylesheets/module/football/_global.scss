@@ -27,8 +27,9 @@
     border-top: 0 !important;
 
     @include mq(leftCol) {
+        float: left;
         margin-left: -1 * (gs-span(2) + $gs-gutter);
-        margin-top: $gs-baseline/-4;
+        margin-top: $gs-baseline/-4 + 50;
     }
     @include mq(wide) {
         margin-left: -1 * (gs-span(3) + $gs-gutter);
