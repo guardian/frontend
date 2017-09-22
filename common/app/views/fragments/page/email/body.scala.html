@@ -1,0 +1,25 @@
+@(content: Html)(implicit page: model.PressedPage, request: RequestHeader)
+@import model.EmailAddons.EmailContentType
+<body>
+    @fragments.email.ampScript(page)
+
+    <table class="body @page.bodyClass">
+        <tr>
+            <td class="center no-pad" align="center" valign="top">
+                <center class="center-element">
+                    <table align="center" class="container float-center">
+                        <tbody>
+                            <tr>
+                                <td class="no-pad">
+                                    @content
+                                    @fragments.email.footer(page)
+                                </td>
+                            </tr>
+                        </tbody>
+                </center>
+            </td>
+        </tr>
+    </table>
+    <!-- prevent Gmail on iOS font size manipulation -->
+    <div style="display:none; white-space:nowrap; font:15px courier; line-height:0;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </div>
+</body>
