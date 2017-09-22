@@ -1,24 +1,13 @@
+// @flow
 import React from 'react/addons';
 import helpers from 'common/modules/crosswords/helpers';
-import constants from 'common/modules/crosswords/constants';
+import { constants } from 'common/modules/crosswords/constants';
 import Cell from 'common/modules/crosswords/cell';
 import classNames from 'common/modules/crosswords/classNames';
-import forEach from 'lodash/collections/forEach';
-import range from 'lodash/arrays/range';
-import map from 'lodash/collections/map';
-import assign from 'lodash/objects/assign';
-const Grid = React.createClass({
 
-    getSeparators(x, y) {
-        return this.props.separators[helpers.clueMapKey(x, y)];
-    },
-
-    handleSelect(x, y) {
-        this.props.crossword.onSelect(x, y);
-    },
-
+class Grid extends React.Component {
     // Position at end of previous cell
-    createWordSeparator(x, y, direction) {
+    static createWordSeparator(x, y, direction) {
         const top = helpers.gridSize(y);
         const left = helpers.gridSize(x);
         const borderWidth = 1;
@@ -30,7 +19,7 @@ const Grid = React.createClass({
                 y: top,
                 key: ['sep', direction, x, y].join('_'),
                 width,
-                height: constants.constants.cellSize
+                height: constants.cellSize,
             });
         } else if (direction === 'down') {
             const height = 1;
@@ -38,47 +27,66 @@ const Grid = React.createClass({
                 x: left,
                 y: top - borderWidth - height,
                 key: ['sep', direction, x, y].join('_'),
-                width: constants.constants.cellSize,
-                height
+                width: constants.cellSize,
+                height,
             });
         }
-    },
+    }
 
     // Position in-between this and previous cells
-    createHyphenSeparator(x, y, direction) {
+    static createHyphenSeparator(x, y, direction) {
         const top = helpers.gridSize(y);
         const left = helpers.gridSize(x);
         const borderWidth = 1;
-        let width, height;
+        let width;
+        let height;
 
         if (direction === 'across') {
-            width = constants.constants.cellSize / 4;
+            width = constants.cellSize / 4;
             height = 1;
             return React.createElement('rect', {
                 x: left - borderWidth / 2 - width / 2,
-                y: top + constants.constants.cellSize / 2 + height / 2,
+                y: top + constants.cellSize / 2 + height / 2,
                 width,
-                height
+                height,
             });
         } else if (direction === 'down') {
             width = 1;
-            height = constants.constants.cellSize / 4;
+            height = constants.cellSize / 4;
             return React.createElement('rect', {
-                x: left + constants.constants.cellSize / 2 + width / 2,
+                x: left + constants.cellSize / 2 + width / 2,
                 y: top - borderWidth / 2 - height / 2,
                 width,
-                height
+                height,
             });
         }
-    },
+    }
 
-    createSeparator(x, y, separator, direction) {
-        if (separator === ',') {
-            return this.createWordSeparator(x, y, direction);
-        } else if (separator === '-') {
-            return this.createHyphenSeparator(x, y, direction);
+    static createSeparator(x, y, separatorDescription) {
+        if (separatorDescription) {
+            if (separatorDescription.separator === ',') {
+                return Grid.createWordSeparator(
+                    x,
+                    y,
+                    separatorDescription.direction
+                );
+            } else if (separatorDescription.separator === '-') {
+                return Grid.createHyphenSeparator(
+                    x,
+                    y,
+                    separatorDescription.direction
+                );
+            }
         }
-    },
+    }
+
+    getSeparators(x, y) {
+        return this.props.separators[helpers.clueMapKey(x, y)];
+    }
+
+    handleSelect(x, y) {
+        this.props.crossword.onSelect(x, y);
+    }
 
     render() {
         const width = helpers.gridSize(this.props.columns);
@@ -86,51 +94,73 @@ const Grid = React.createClass({
         const cells = [];
         let separators = [];
 
-        forEach(range(this.props.rows), function(y) {
-            map(range(this.props.columns), function(x) {
+        const range = n => Array.from({ length: n }, (value, key) => key);
+
+        const self = this;
+        range(this.props.rows).forEach(y =>
+            range(this.props.columns).forEach(x => {
                 const cellProps = this.props.cells[x][y];
 
                 if (cellProps.isEditable) {
-                    cells.push(React.createElement(Cell, assign({}, cellProps, {
-                        handleSelect: this.handleSelect,
+                    const isHighlighted = this.props.crossword.isHighlighted(
                         x,
-                        y,
-                        key: 'cell_' + x + '_' + y,
-                        isHighlighted: this.props.crossword.isHighlighted(x, y),
-                        isFocussed: this.props.focussedCell && x === this.props.focussedCell.x && y === this.props.focussedCell.y
-                    }, this)));
+                        y
+                    );
+                    cells.push(
+                        React.createElement(
+                            Cell,
+                            Object.assign(
+                                {},
+                                cellProps,
+                                {
+                                    handleSelect: this.handleSelect,
+                                    x,
+                                    y,
+                                    key: `cell_${x}_${y}`,
+                                    isHighlighted,
+                                    isFocussed:
+                                        this.props.focussedCell &&
+                                        x === this.props.focussedCell.x &&
+                                        y === this.props.focussedCell.y,
+                                },
+                                this
+                            )
+                        )
+                    );
 
-                    separators = separators.concat(map(this.getSeparators(x, y), function(separator, direction) {
-                        return this.createSeparator(x, y, separator, direction);
-                    }, this));
+                    separators = separators.concat(
+                        Grid.createSeparator(x, y, self.getSeparators(x, y))
+                    );
                 }
-            }, this);
-        }, this);
+            })
+        );
 
         return React.createElement(
-            'svg', {
-                viewBox: '0 0 ' + width + ' ' + height,
+            'svg',
+            {
+                viewBox: `0 0 ${width} ${height}`,
                 className: classNames({
-                    'crossword__grid': true,
-                    'crossword__grid--focussed': !!this.props.focussedCell
-                })
+                    crossword__grid: true,
+                    'crossword__grid--focussed': !!this.props.focussedCell,
+                }),
             },
             React.createElement('rect', {
                 x: 0,
                 y: 0,
                 width,
                 height,
-                className: 'crossword__grid-background'
+                className: 'crossword__grid-background',
             }),
             cells,
             React.createElement(
-                'g', {
-                    className: 'crossword__grid__separators'
+                'g',
+                {
+                    className: 'crossword__grid__separators',
                 },
                 separators
             )
         );
     }
-});
+}
 
 export default Grid;
