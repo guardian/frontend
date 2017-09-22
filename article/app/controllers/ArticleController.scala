@@ -100,7 +100,7 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
     case minute: MinutePage =>
       noAMP {
         val htmlResponse = () => {
-          if (request.isEmail) ArticleEmailHtmlPage.html(minute, request, context) //TODO: implicits
+          if (request.isEmail) ArticleEmailHtmlPage.html(minute)
           else                 views.html.minute(minute)
         }
 
@@ -110,7 +110,7 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
 
     case article: ArticlePage =>
       val htmlResponse = () => {
-        if (request.isEmail) ArticleEmailHtmlPage.html(article, request, context) //TODO: implicits
+        if (request.isEmail) ArticleEmailHtmlPage.html(article)
         else if (article.article.isExplore) views.html.articleExplore(article)
         else if (article.article.isImmersive) views.html.articleImmersive(article)
         else if (request.isAmp) views.html.articleAMP(article)

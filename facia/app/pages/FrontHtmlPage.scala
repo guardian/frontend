@@ -35,7 +35,8 @@ object FrontHtmlPage extends HtmlPage[PressedPage] {
     override def IE9CriticalCss: Html = stylesheetLink("stylesheets/ie9.content.css")
   }
 
-  def html(implicit page: PressedPage, request: RequestHeader, applicationContext: ApplicationContext): Html = {
+  def html(page: PressedPage)(implicit request: RequestHeader, applicationContext: ApplicationContext): Html = {
+    implicit val p: PressedPage = page
     htmlTag(
       headTag(
         titleTag(),

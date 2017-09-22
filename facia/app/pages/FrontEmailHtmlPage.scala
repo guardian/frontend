@@ -9,7 +9,8 @@ import views.html.fragments.page.email.{body, head, htmlTag}
 
 object FrontEmailHtmlPage extends HtmlPage[PressedPage] {
 
-  def html(implicit page: PressedPage, request: RequestHeader, applicationContext: ApplicationContext): Html = {
+  def html(page: PressedPage)(implicit request: RequestHeader, applicationContext: ApplicationContext): Html = {
+    implicit val p: PressedPage = page
     htmlTag(
       head(
         Html(common.Assets.css.emailFront)

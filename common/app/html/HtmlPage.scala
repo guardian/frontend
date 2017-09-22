@@ -19,7 +19,7 @@ trait HtmlPage[P <: model.Page] {
 
   import HtmlPageHelpers._
 
-  def html(implicit page: P, request: RequestHeader, applicationContext: ApplicationContext): Html
+  def html(page: P)(implicit request: RequestHeader, applicationContext: ApplicationContext): Html
 
   def guardianHeaderHtml()(implicit page: P, request: RequestHeader, applicationContext: ApplicationContext): Html = {
     val showTop = !page.metadata.shouldHideHeaderAndTopAds
