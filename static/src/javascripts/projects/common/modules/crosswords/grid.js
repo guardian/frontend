@@ -108,7 +108,6 @@ export class Grid extends React.Component {
 
         const range = n => Array.from({ length: n }, (value, key) => key);
 
-        const self = this;
         range(this.props.rows).forEach(y =>
             range(this.props.columns).forEach(x => {
                 const cellProps = this.props.cells[x][y];
@@ -141,7 +140,7 @@ export class Grid extends React.Component {
                     );
 
                     separators = separators.concat(
-                        Grid.createSeparator(x, y, self.getSeparators(x, y))
+                        Grid.createSeparator(x, y, this.getSeparators(x, y))
                     );
                 }
             })
