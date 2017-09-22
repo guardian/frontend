@@ -1,4 +1,4 @@
-@(content: Html)(implicit page: model.PressedPage, request: RequestHeader)
+@(content: Html)(implicit page: model.Page, request: RequestHeader)
 @import model.EmailAddons.EmailContentType
 <body>
     @fragments.email.ampScript(page)

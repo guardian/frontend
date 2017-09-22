@@ -128,7 +128,7 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
           }
           else {
             Cached(CacheTime.Facia) {
-                RevalidatableResult.Ok(FrontHtmlPage.html(faciaPage, request, context)) //TODO
+                RevalidatableResult.Ok(FrontHtmlPage.html(faciaPage, request, context)) //TODO: implicits
             }
           }
         )
