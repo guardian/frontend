@@ -1,5 +1,5 @@
 // @flow
-import {CTA, icon,} from './style.js.scss';
+import {CTA, icon,} from './style.css';
 
 export default (props: Object) => {
     // const Icon = import(props.icon)

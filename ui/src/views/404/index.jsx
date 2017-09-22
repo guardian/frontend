@@ -16,7 +16,7 @@ import {
     heading,
     bodyCopy,
     link,
-} from './style.js.scss';
+} from './style.css';
 
 export default ({ beaconUrl }: { beaconUrl: string }) =>
 <div style={body}>

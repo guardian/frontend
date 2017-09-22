@@ -1,12 +1,14 @@
-body:before {
-    content: '';
-    background: #005689;
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: -1;
+body {
+    &:before {
+        content: '';
+        background: #005689;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: -1;
+    }
 }
 
 wrapper {
@@ -15,20 +17,20 @@ wrapper {
     padding: 0 10px;
     width: 100%;
 
-    @include mq(tablet) {
+    @media (--from-tablet) {
         padding: 0;
         width: 740px;
     }
 
-    @include mq(desktop) {
+    @media (--from-desktop) {
         width: 980px;
     }
 
-    @include mq(leftCol) {
+    @media (--from-leftCol) {
         width: 1140px;
     }
 
-     @include mq(wide) {
+     @media (--from-wide) {
          width: 1300px;
      }
 }
@@ -39,36 +41,36 @@ logoWrapper {
     max-width: 384px;
     width: 65%;
 
-    @include mq(tablet) {
+    @media (--from-tablet) {
         width: 384px;
     }
 
-    @include mq(desktop) {
+    @media (--from-desktop) {
         margin-bottom: -60px;
     }
 
     &:hover svg .guardian {
-        .u {
+        & .letter-u {
             transform: translateX(49px);
         }
 
-        .a {
+        & .letter-a {
             transform: translateX(-12px);
         }
 
-        .r {
+        & .letter-r {
             transform: translateX(-64px);
         }
 
-        .d {
+        & .letter-d {
             transform: translateX(76px);
         }
 
-        .i, .a2 {
+        & .letter-i, & .letter-a2 {
             transform: translateX(-2px);
         }
 
-        .n {
+        & .letter-n {
             transform: translateX(-84px);
         }
     }
@@ -92,15 +94,15 @@ visuallyHidden {
 }
 
 contentBlock {
-    @include mq(tablet) {
+    @media (--from-tablet) {
         margin-left: 160px;
     }
 
-    @include mq(desktop) {
+    @media (--from-desktop) {
         margin-left: 320px;
     }
 
-    @include mq(leftCol) {
+    @media (--from-leftCol) {
         margin-left: 480px;
     }
 }
@@ -112,18 +114,18 @@ fourOhFour {
     max-width: 350px;
     width: 91%;
 
-    @include mq(tablet) {
+    @media (--from-tablet) {
         margin-left: 0;
         height: auto;
         max-width: 100%;
         width: 350px;
     }
 
-    @include mq(desktop) {
+    @media (--from-desktop) {
         width: 378px;
     }
 
-    @include mq(leftCol) {
+    @media (--from-leftCol) {
         width: 567px;
     }
 }
@@ -137,7 +139,7 @@ heading {
     margin-bottom: 12px;
     max-width: 380px;
 
-    @include mq(tablet) {
+    @media (--from-tablet) {
         font-size: 42px;
         max-width: 540px;
     }
@@ -150,7 +152,7 @@ bodyCopy {
     margin-bottom: 24px;
     max-width: 300px;
 
-    @include mq(tablet) {
+    @media (--from-tablet) {
         font-size: 18px;
     }
 }
