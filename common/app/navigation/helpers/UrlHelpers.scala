@@ -4,6 +4,8 @@ import conf.Configuration
 import play.api.libs.json.Json
 import play.api.mvc.RequestHeader
 import common.Edition
+import ophan.thrift.componentEvent.ComponentType
+import ophan.thrift.event.AcquisitionSource
 
 object UrlHelpers {
   sealed trait ReaderRevenueSite {
@@ -68,13 +70,12 @@ object UrlHelpers {
     }
 
     val acquisitionData = Json.obj(
-      // TODO: lock this down by importing the Thrift type?
-      "source" -> "GUARDIAN_WEB",
+      "source" -> AcquisitionSource.GuardianWeb.name,
       "componentId" -> campaignCode,
       "componentType" -> (position match {
-        case NewHeader | OldHeader | AmpHeader | SideMenu => "ACQUISITIONS_HEADER"
-        case Footer => "ACQUISITIONS_FOOTER"
-      }),
+        case NewHeader | OldHeader | AmpHeader | SideMenu => ComponentType.AcquisitionsHeader
+        case Footer => ComponentType.AcquisitionsFooter
+      }).name,
       // TODO: there's no way to get this serverside is there? replace clientside??
       "referrerPageviewId" -> ""
     ) ++ campaignCode.fold(Json.obj())(c => Json.obj(
