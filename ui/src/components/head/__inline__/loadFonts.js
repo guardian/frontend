@@ -1,3 +1,5 @@
+// @flow
+
 /*
 bypass normal browser font-loading to avoid the FOIT. works like this:
 
@@ -6,18 +8,18 @@ do you have fonts in localStorage?
     no  – did the localStorage check go ok?
         yes – ajax them in as JSON immediately, inject them and save them to localStorage
         no  – load font files async using @@font-face
-
 */
 
-(function (window, document) {
+((document: Document, window: any): void => {
     const ua = navigator.userAgent;
 
     // Determine what type of font-hinting we want.
-    const fontHinting = (() => {
+    const fontHinting = ((): String => {
         const windowsNT = /Windows NT (\d\.\d+)/.exec(ua);
         let hinting = 'Off';
 
-        try { // belt and braces
+        // belt and braces
+        try {
             if (windowsNT) {
                 const version = parseFloat(windowsNT[1], 10);
 
@@ -35,14 +37,17 @@ do you have fonts in localStorage?
         } catch (e) {
             // @if(context.environment.mode == Dev){throw(e)}
         }
+
         return hinting;
     })();
 
     // Load fonts from `localStorage`.
-    function loadFontsFromStorage() {
-        try { // localStorage can fail for many reasons
-            if ("localStorage" in window) {
-                const fontStorageKey = (fontName, fontHash = '') => `gu.fonts.${fontName}.${fontHash}`;
+    const loadFontsFromStorage = () => {
+        // localStorage can fail for many reasons
+        try {
+            if ('localStorage' in window) {
+                const fontStorageKey = (fontName, fontHash = '') =>
+                    `gu.fonts.${fontName}.${fontHash}`;
 
                 // detect which font format (ttf, woff, woff2 etc) we want
                 const fontFormat = (() => {
@@ -50,12 +55,16 @@ do you have fonts in localStorage?
 
                     let format = localStorage.getItem(formatStorageKey);
 
-                    function supportsWoff2() {
+                    const supportsWoff2 = () => {
                         // try feature detecting first
                         // https://github.com/filamentgroup/woff2-feature-test
-                        if ("FontFace" in window) {
+                        if ('FontFace' in window) {
                             try {
-                                const f = new window.FontFace('t', 'url("data:application/font-woff2,") format("woff2")', {});
+                                const f = new window.FontFace(
+                                    't',
+                                    'url("data:application/font-woff2,") format("woff2")',
+                                    {}
+                                );
 
                                 f.load().catch(() => {});
                                 if (f.status === 'loading') {
@@ -68,17 +77,24 @@ do you have fonts in localStorage?
 
                         // some browsers (e.g. FF40) support WOFF2 but not window.FontFace,
                         // so fall back to known support
-                        if (!/edge\/([0-9]+)/.test(ua.toLowerCase())) { // don't let edge tell you it's chrome when it's not
-                            const browser = /(chrome|firefox)\/([0-9]+)/.exec(ua.toLowerCase());
-                            const supportsWoff2 = {
-                                'chrome': 36,
-                                'firefox': 39
+                        if (!/edge\/([0-9]+)/.test(ua.toLowerCase())) {
+                            // don't let edge tell you it's chrome when it's not
+                            const browser = /(chrome|firefox)\/([0-9]+)/.exec(
+                                ua.toLowerCase()
+                            );
+                            const woff2Browsers = {
+                                chrome: 36,
+                                firefox: 39,
                             };
-                            return !!browser && supportsWoff2[browser[1]] < parseInt(browser[2], 10);
+                            return (
+                                !!browser &&
+                                woff2Browsers[browser[1]] <
+                                    parseInt(browser[2], 10)
+                            );
                         }
 
                         return false;
-                    }
+                    };
 
                     // flush out weird old json value
                     // no value to it and JSON.parse is pointless overhead
@@ -88,82 +104,84 @@ do you have fonts in localStorage?
                     }
 
                     if (!format) {
-                        format = supportsWoff2() ? 'woff2' : ua.indexOf('android') > -1 ? 'ttf' : 'woff';
+                        if (supportsWoff2()) {
+                            format = 'woff2';
+                        } else if (ua.indexOf('android') > -1) {
+                            format = 'ttf';
+                        } else {
+                            format = 'woff';
+                        }
+
                         localStorage.setItem(formatStorageKey, format);
                     }
 
                     return format;
                 })();
 
-                console.log('fontFormat ----->', fontFormat);
-
                 // use whatever font CSS we've now got
-                function useFont(el, css) {
-                    el.innerHTML = css;
-                }
-
-                // download font as json to store/use etc
-                function fetchFont(url, el, fontName, fontHash) {
-                    const xhr = new XMLHttpRequest();
-
-                    // JSONP callback
-                    // hangover from previous version
-                    // added to local scope to stop closurecompiler discarding it
-                    this['guFont'] = fontData => fontData.css;
-
-                    xhr.open("GET", url, true);
-                    xhr.onreadystatechange = () => {
-                        if (xhr.readyState === 4 && xhr.status === 200) {
-                            const css = eval(xhr.responseText);
-                            useFont(el, css);
-                            saveFont(fontName, fontHash, css);
-                        }
-                    };
-                    xhr.send();
-                }
+                const useFont = (el: HTMLElement, css: string): void => {
+                    el.innerHTML = css; // eslint-disable-line no-param-reassign
+                };
 
                 // save font css to localstorage
-                function saveFont(fontName, fontHash, css) {
-                    for (var i = 0, totalItems = localStorage.length; i < totalItems - 1; i++) {
-                        var key = localStorage.key(i);
+                const saveFont = (fontName, fontHash, css) => {
+                    let i;
+                    const totalItems = localStorage.length - 1;
+
+                    for (i = 0; i < totalItems; i + 1) {
+                        const key = localStorage.key(i);
                         if (key.indexOf(fontStorageKey(fontName)) !== -1) {
                             localStorage.removeItem(key);
                             break;
                         }
                     }
-                    localStorage.setItem(fontStorageKey(fontName, fontHash), JSON.stringify({value: css}));
-                }
+                    localStorage.setItem(
+                        fontStorageKey(fontName, fontHash),
+                        JSON.stringify({ value: css })
+                    );
+                };
+
+                // download font as json to store/use etc
+                const fetchFont = (url, el, fontName, fontHash) => {
+                    const xhr = new XMLHttpRequest();
+
+                    // JSONP callback
+                    // hangover from previous version
+                    // added to local scope to stop closurecompiler discarding it
+                    this.guFont = fontData => fontData.css;
+
+                    xhr.open('GET', url, true);
+                    xhr.onreadystatechange = () => {
+                        if (xhr.readyState === 4 && xhr.status === 200) {
+                            const css = eval(xhr.responseText); // eslint-disable-line no-eval
+                            useFont(el, css);
+                            saveFont(fontName, fontHash, css);
+                        }
+                    };
+                    xhr.send();
+                };
 
                 // down to business
                 // the target for each font and holders of all the necessary metadata
                 // are some style elements in the head, all identified by a .webfont class
                 const fonts = document.querySelectorAll('.webfont');
 
-                console.log('fonts ----->', fonts);
-
-                const hinting = fontHinting === 'Off' ? '' : `hinted-${fontHinting}-`;
+                const hinting =
+                    fontHinting === 'Off' ? '' : `hinted-${fontHinting}-`;
 
                 const urlAttribute = `data-cache-file-${hinting}${fontFormat}`;
 
-                console.log('urlAttribute ----->', urlAttribute);
-
-                for (let i = 0, j = fonts.length; i < j; ++i) {
+                for (let i = 0, j = fonts.length; i < j; i + 1) {
                     const font = fonts[i];
                     const fontURL = font.getAttribute(urlAttribute);
-                    const fontInfo = fontURL.match(/fonts\/([^/]*?)\/?([^/]*)\.(woff2|woff|ttf).json$/);
+                    const fontInfo = fontURL.match(
+                        /fonts\/([^/]*?)\/?([^/]*)\.(woff2|woff|ttf).json$/
+                    );
                     const fontName = fontInfo[2];
                     const fontHash = fontInfo[1];
-
-                    console.log('*************');
-
-                    console.log('fontURL ----->', fontURL);
-                    console.log('fontName ----->', fontName);
-                    console.log('fontHash ----->', fontHash);
-                    console.log('fontStorageKey ----->', fontStorageKey(fontName, fontHash));
-
-                    const fontData = localStorage.getItem(fontStorageKey(fontName, fontHash));
-
-                    console.log('fontData ----->', fontData);
+                    const fontData = localStorage.getItem(
+                        fontStorageKey(fontName, fontHash)
+                    );
 
                     if (fontData) {
                         useFont(font, JSON.parse(fontData).value);
@@ -176,11 +194,12 @@ do you have fonts in localStorage?
         } catch (e) {
             // @if(context.environment.mode == Dev){throw(e)}
         }
+
         return false;
-    }
+    };
 
     // Load fonts by injecting a `link` element.
-    function loadFontsAsynchronously() {
+    const loadFontsAsynchronously = () => {
         try {
             const scripts = document.getElementsByTagName('script');
             const thisScript = scripts[scripts.length - 1];
@@ -190,14 +209,17 @@ do you have fonts in localStorage?
             fonts.className = 'webfonts';
 
             // show cleartype-hinted for Windows XP-7 IE, autohinted for non-IE
-            fonts.href = window.guardian.config.stylesheets.fonts['hinting' + fontHinting].kerningOn;
-            window.setTimeout(function () {
+            fonts.href =
+                window.guardian.config.stylesheets.fonts[
+                    `hinting${fontHinting}`
+                ].kerningOn;
+            window.setTimeout(() => {
                 thisScript.parentNode.insertBefore(fonts, thisScript);
             });
         } catch (e) {
             // @if(context.environment.mode == Dev){throw(e)}
         }
-    }
+    };
 
     // Detect whether browser is smoothing its fonts.
     // Technique adapted from @@zoltandulac's clever hack:
@@ -206,19 +228,27 @@ do you have fonts in localStorage?
     // Because IE always uses clear-type (unless you've done some *major* hackery
     // http://stackoverflow.com/questions/5427315/disable-cleartype-text-anti-aliasing-in-ie9#tab-top),
     // we only test non-IE, and only on Windows. Everyone else we assume `true`.
-    function fontSmoothingEnabled() {
+    const fontSmoothingEnabled = () => {
         try {
             // If we've already run this test, return the result.
             // This can be force-overidden using a '#check-smoothing' hash fragment.
-            if (document.cookie.indexOf('GU_fonts_smoothing') !== -1 && window.location.hash !== '#check-smoothing') {
+            if (
+                document.cookie.indexOf('GU_fonts_smoothing') !== -1 &&
+                window.location.hash !== '#check-smoothing'
+            ) {
                 return document.cookie.indexOf('GU_fonts_smoothing=on') !== -1;
             }
 
             // Internal function to store font-smoothing state for 30 days
-            function saveFontSmoothing(state) {
-                state = state ? 'on' : 'off';
-                document.cookie = 'GU_fonts_smoothing= ' + state + '; domain=' + location.hostname + '; path=/; max-age=' + (60 * 60 * 24 * 30);
-            }
+            const saveFontSmoothing = state => {
+                // eslint-disable-next-line no-param-reassign
+                document.cookie = `GU_fonts_smoothing= '${state
+                    ? 'on'
+                    : 'off'}; domain=${location.hostname}; path=/; max-age=${60 *
+                    60 *
+                    24 *
+                    30}`;
+            };
 
             // If Windows desktop and not IE…
             if (/Windows NT (\d\.\d+)/.exec(ua) && !/MSIE|Trident/.exec(ua)) {
@@ -244,8 +274,8 @@ do you have fonts in localStorage?
 
                     // - no point in searching the whole thing, so keep it as short
                     // as possible.
-                    for (let x = 0; x <= 16; x++) {
-                        for (let y = 0; y <= 16; y++) {
+                    for (let x = 0; x <= 16; x + 1) {
+                        for (let y = 0; y <= 16; y + 1) {
                             const alpha = ctx.getImageData(x, y, 1, 1).data[3];
 
                             if (alpha > 0 && alpha < 255) {
@@ -264,34 +294,37 @@ do you have fonts in localStorage?
                 // false for safety's sake.
                 saveFontSmoothing(false);
                 return false;
-            } else {
-                // You're not on Windows or you're using IE, so we assume true
-                return true;
             }
+
+            // You're not on Windows or you're using IE, so we assume true
+            return true;
         } catch (e) {
             // @if(context.environment.mode == Dev){throw(e)}
         }
-    }
+    };
 
     // Check to see if you should get webfonts, and then try to load them from localStorage if so
     const fontCookie = `GU_fonts=off; domain=${location.hostname}; path=/`;
 
-    function disableFonts() {
-        document.cookie = `${fontCookie}; max-age=${(60 * 60 * 24 * 365)}`;
-    }
+    const disableFonts = () => {
+        document.cookie = `${fontCookie}; max-age=${60 * 60 * 24 * 365}`; // eslint-disable-line no-param-reassign
+    };
 
-    function enableFonts() {
-        document.cookie = `${fontCookie}; expires=Thu, 01 Jan 1970 00:00:00 GMT`;
-    }
+    const enableFonts = () => {
+        document.cookie = `${fontCookie}; expires=Thu, 01 Jan 1970 00:00:00 GMT`; // eslint-disable-line no-param-reassign
+    };
 
     // Make it possible to toggle fonts with `#fonts-off/on`.
-    function checkUserFontDisabling() {
+    const checkUserFontDisabling = () => {
         if (window.location.hash === '#fonts-off') {
             disableFonts();
-        } else if (window.location.hash === '#fonts-on' || window.location.hash === '#check-smoothing') {
+        } else if (
+            window.location.hash === '#fonts-on' ||
+            window.location.hash === '#check-smoothing'
+        ) {
             enableFonts();
         }
-    }
+    };
 
     const fontsEnabled = document.cookie.indexOf('GU_fonts=off') === -1;
 
@@ -299,16 +332,18 @@ do you have fonts in localStorage?
     // and then try and load them from storage. If that fails (i.e. likely lack of
     // support), inject a standard stylesheet `link` to load them.
     // If they won't render properly (no smoothing), disable them entirely.
-    function loadFonts() {
+    const loadFonts = () => {
         checkUserFontDisabling();
         if (fontsEnabled) {
             if (fontSmoothingEnabled()) {
-                loadFontsFromStorage() || loadFontsAsynchronously();
+                if (!loadFontsFromStorage()) {
+                    loadFontsAsynchronously();
+                }
             } else {
                 disableFonts();
             }
         }
-    }
+    };
 
     loadFonts();
-})(window, document);
+})(document, window);

@@ -19,7 +19,7 @@ const getFontDefinitions = (fontDefinitions: Array<Object>): string => {
     fontDefinitions.forEach(typeFace => {
         html += `<style class="webfont" data-cache-name="${typeFace.typeFace}"`;
 
-        typeFace.fileTypes.forEach(fileType => {            
+        typeFace.fileTypes.forEach(fileType => {
             html += ` data-cache-file-${fileType.fileType}="${fileType.endpoint}"`;
 
             fileType.hintTypes.forEach(hintType => {
