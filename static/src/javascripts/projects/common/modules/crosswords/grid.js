@@ -116,6 +116,7 @@ export const Grid = (props: GridProps): React.Element<*> => {
 
     const range = n => Array.from({ length: n }, (value, key) => key);
 
+    // This is needed to appease ESLint (https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-unused-prop-types.md#false-positives-sfc)
     const cellsIn = props.cells;
 
     range(props.rows).forEach(y =>
