@@ -24,6 +24,10 @@ object UrlHelpers {
   sealed trait Position
   case object NewHeader extends Position
   case object OldHeader extends Position
+  // SlimHeaderDropdown can only be seen on slim header content, e.g. interactives
+  // It's the icon with the three dots in the top left
+  case object SlimHeaderDropdown extends Position
+  // SideMenu is the full menu you get from clicking the hamburger icon on mobile
   case object SideMenu extends Position
   case object AmpHeader extends Position
   case object Footer extends Position
@@ -37,6 +41,7 @@ object UrlHelpers {
       case (Membership, OldHeader, true) => Some(s"mem_${editionId.toLowerCase}_web_newheader_control")
       case (Membership, OldHeader, false) => Some(s"DOTCOM_HEADER_BECOMEMEMBER_${editionId.toUpperCase}")
       case (Membership, AmpHeader, _) => Some("AMP_HEADER_GU_SUPPORTER")
+      case (Membership, SlimHeaderDropdown, _) => Some(s"NGW_TOPNAV_${editionId.toUpperCase}_GU_MEMBERSHIP")
 
       // TODO: double-check new & old header are the same for this one?
       case (Contribute, NewHeader | OldHeader, _) => Some("gdnwb_copts_co_dotcom_header")
@@ -46,6 +51,7 @@ object UrlHelpers {
       case (Subscribe, NewHeader, _) => Some(s"subs_${editionId}_web_newheader")
       case (Subscribe, OldHeader, true) => Some(s"subs_${editionId}_web_newheader_control")
       case (Subscribe, OldHeader, false) => Some(s"NGW_HEADER_${editionId}_GU_SUBSCRIBE")
+      case (Subscribe, SlimHeaderDropdown, _) => Some(s"NGW_TOPNAV_${editionId.toUpperCase}_GU_SUBSCRIBE")
 
       case (_, _, _) => None
     }
