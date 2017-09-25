@@ -26,26 +26,26 @@ object UrlHelpers {
   case object AmpHeader extends Position
   case object Footer extends Position
 
-  def getCampaignCode(implicit request: RequestHeader, destination: ReaderRevenueSite, position: Position): String = {
+  def getCampaignCode(implicit request: RequestHeader, destination: ReaderRevenueSite, position: Position): Option[String] = {
     val isInHeaderTestControlGroup = mvt.ABNewDesktopHeaderControl.isParticipating
     val editionId = Edition(request).id
 
     (destination, position, isInHeaderTestControlGroup) match {
-      case (Membership, NewHeader | SideMenu, _) => s"mem_${editionId.toLowerCase}_web_newheader"
-      case (Membership, OldHeader, true) => s"mem_${editionId.toLowerCase}_web_newheader_control"
-      case (Membership, OldHeader, false) => s"DOTCOM_HEADER_BECOMEMEMBER_${editionId.toUpperCase}"
-      case (Membership, AmpHeader, _) => "AMP_HEADER_GU_SUPPORTER"
+      case (Membership, NewHeader | SideMenu, _) => Some(s"mem_${editionId.toLowerCase}_web_newheader")
+      case (Membership, OldHeader, true) => Some(s"mem_${editionId.toLowerCase}_web_newheader_control")
+      case (Membership, OldHeader, false) => Some(s"DOTCOM_HEADER_BECOMEMEMBER_${editionId.toUpperCase}")
+      case (Membership, AmpHeader, _) => Some("AMP_HEADER_GU_SUPPORTER")
 
       // TODO: double-check new & old header are the same for this one?
-      case (Contribute, NewHeader | OldHeader, _) => "gdnwb_copts_co_dotcom_header"
-      case (Contribute, Footer, _) => "gdnwb_copts_memco_dotcom_footer"
+      case (Contribute, NewHeader | OldHeader, _) => Some("gdnwb_copts_co_dotcom_header")
+      case (Contribute, Footer, _) => Some("gdnwb_copts_memco_dotcom_footer")
 
-      case (Subscribe, SideMenu, _) => s"NGW_NEWHEADER_${editionId}_GU_SUBSCRIBE"
-      case (Subscribe, NewHeader, _) => s"subs_${editionId}_web_newheader"
-      case (Subscribe, OldHeader, true) => s"subs_${editionId}_web_newheader_control"
-      case (Subscribe, OldHeader, false) => s"NGW_HEADER_${editionId}_GU_SUBSCRIBE"
+      case (Subscribe, SideMenu, _) => Some(s"NGW_NEWHEADER_${editionId}_GU_SUBSCRIBE")
+      case (Subscribe, NewHeader, _) => Some(s"subs_${editionId}_web_newheader")
+      case (Subscribe, OldHeader, true) => Some(s"subs_${editionId}_web_newheader_control")
+      case (Subscribe, OldHeader, false) => Some(s"NGW_HEADER_${editionId}_GU_SUBSCRIBE")
 
-      case (_, _, _) => ""
+      case (_, _, _) => None
     }
   }
 
@@ -76,9 +76,10 @@ object UrlHelpers {
         case Footer => "ACQUISITIONS_FOOTER"
       }),
       // TODO: there's no way to get this serverside is there? replace clientside??
-      "referrerPageviewId" -> "",
-      "campaignCode" -> campaignCode
-    ) ++ abTest.fold(Json.obj())(ab => Json.obj(
+      "referrerPageviewId" -> ""
+    ) ++ campaignCode.fold(Json.obj())(c => Json.obj(
+      "campaignCode" -> c
+    )) ++ abTest.fold(Json.obj())(ab => Json.obj(
       "name" -> ab.name,
       "variant" -> ab.variant
     ))
