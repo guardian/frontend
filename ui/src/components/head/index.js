@@ -13,8 +13,24 @@ import fontsCSS from './__inline__/fonts.css';
 const loadAppStr: string = (loadApp: any);
 const loadFontsStr: string = (loadFonts: any);
 
-const getFontDefinitions = (): string => {
-    return '';
+const getFontDefinitions = (fontDefinitions: Array<Object>): string => {
+    let html = '';
+
+    fontDefinitions.forEach(typeFace => {
+        html += `<style class="webfont" data-cache-name="${typeFace.typeFace}"`;
+
+        typeFace.fileTypes.forEach(fileType => {            
+            html += ` data-cache-file-${fileType.fileType}="${fileType.endpoint}"`;
+
+            fileType.hintTypes.forEach(hintType => {
+                html += ` data-cache-file-hinted-${hintType.hintType}-${fileType.fileType}="${hintType.endpoint}"`;
+            });
+        });
+
+        html += '></style>';
+    });
+
+    return html;
 };
 
 export default (props: any, appCSS: string) =>
@@ -28,7 +44,7 @@ export default (props: any, appCSS: string) =>
         <meta name="viewport" content="width=device-width,initial-scale=1">
         <style>${resetCSS}</style>
         <style>${fontsCSS}</style>
-        ${getFontDefinitions()}
+        ${getFontDefinitions(props.fontDefinitions)}
         ${appCSS}
         <script>
             window.guardian = ${JSON.stringify(props)};

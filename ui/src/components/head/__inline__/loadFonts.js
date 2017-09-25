@@ -163,7 +163,7 @@ do you have fonts in localStorage?
 
                     const fontData = localStorage.getItem(fontStorageKey(fontName, fontHash));
 
-                    // console.log('fontData ----->', fontData);
+                    console.log('fontData ----->', fontData);
 
                     if (fontData) {
                         useFont(font, JSON.parse(fontData).value);
