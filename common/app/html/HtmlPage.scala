@@ -24,10 +24,8 @@ object HtmlPageHelpers {
     val showAds = Commercial.shouldShowAds(page) && !model.Page.getContent(page).exists(_.tags.isTheMinuteArticle) && !Commercial.isAdFree(request)
 
     val headerContent: Html = stacked(
-      Seq(
-        commercial.topBanner() when showTop && showAds,
-        header() when showTop
-      )
+      commercial.topBanner() when showTop && showAds,
+      header() when showTop
     )
     if(model.Page.getContent(page).exists(_.tags.hasSuperStickyBanner)) bannerAndHeaderDiv(headerContent) else headerContent
   }
