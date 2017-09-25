@@ -27,7 +27,7 @@ object HtmlPageHelpers {
       commercial.topBanner() when showTop && showAds,
       header() when showTop
     )
-    if(model.Page.getContent(page).exists(_.tags.hasSuperStickyBanner)) bannerAndHeaderDiv(headerContent) else headerContent
+    if(model.Page.getContent(page).exists(_.tags.hasSuperStickyBanner)) headerContent else bannerAndHeaderDiv(headerContent)
   }
 
   def defaultBodyClasses()(implicit page: model.Page, request: RequestHeader, applicationContext: ApplicationContext): Map[String, Boolean] = {
