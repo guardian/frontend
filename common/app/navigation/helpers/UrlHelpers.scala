@@ -80,8 +80,10 @@ object UrlHelpers {
     ) ++ campaignCode.fold(Json.obj())(c => Json.obj(
       "campaignCode" -> c
     )) ++ abTest.fold(Json.obj())(ab => Json.obj(
-      "name" -> ab.name,
-      "variant" -> ab.variant
+      "abTest" -> Json.obj(
+        "name" -> ab.name,
+        "variant" -> ab.variant
+      )
     ))
 
     import com.netaporter.uri.dsl._
