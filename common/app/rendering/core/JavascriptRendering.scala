@@ -6,12 +6,48 @@ import java.nio.file.{Files, Paths}
 import javax.script.{CompiledScript, SimpleScriptContext}
 
 import common.Logging
-import play.api.libs.json.{JsValue, Json, JsObject}
+import play.api.libs.json._
 import rendering.core.JavascriptEngine.EvalResult
 
 import scala.util.{Failure, Try}
 
 trait JavascriptRendering extends Logging {
+
+  case class TypeFace(typeFace: String, fileTypes: List[FileType])
+
+  object TypeFace {
+    implicit val typeFaceWriter: Writes[TypeFace] = Json.writes[TypeFace]
+  }
+
+  case class FileType(fileType: String, endpoint: String, hintTypes: List[HintType])
+
+  object FileType {
+    implicit val typeFaceWriter: Writes[FileType] = Json.writes[FileType]
+  }
+
+  case class HintType(hintType: String, endpoint: String)
+
+  object HintType {
+    implicit val typeFaceWriter: Writes[HintType] = Json.writes[HintType]
+  }
+
+  private def getFontDefinitions(): JsValue = {
+    val typeFaces = List("GuardianEgyptianWeb", "GuardianTextEgyptianWeb", "GuardianSansWeb", "GuardianTextSansWeb")
+    val fileTypes = List("woff2", "woff", "ttf")
+    val hintTypes = List("cleartype", "auto")
+
+    val fontDefinitions = typeFaces.map(typeFace => {
+      TypeFace(typeFace, fileTypes.map(fileType => {
+        val fileTypeEndpoint = conf.Static(s"fonts/${typeFace}.${fileType}.json")
+        FileType(fileType, fileTypeEndpoint, hintTypes.map(hintType => {
+          val hintTypeEndpoint = conf.Static(s"fonts/${typeFace}${hintType.capitalize}Hinted.${fileType}.json")
+          HintType(hintType, hintTypeEndpoint)
+        }))
+      }))
+    })
+
+    Json.toJson(fontDefinitions)
+  }
 
   def javascriptFile: String
 

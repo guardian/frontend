@@ -1,7 +1,3 @@
-@()(implicit context: model.ApplicationContext)
-
-@import play.api.Mode.Dev
-
 /*
 bypass normal browser font-loading to avoid the FOIT. works like this:
 
@@ -37,7 +33,7 @@ do you have fonts in localStorage?
                 }
             }
         } catch (e) {
-            @if(context.environment.mode == Dev){throw(e)}
+            // @if(context.environment.mode == Dev){throw(e)}
         }
         return hinting;
     })();
@@ -66,7 +62,7 @@ do you have fonts in localStorage?
                                     return true;
                                 }
                             } catch (e) {
-                                @if(context.environment.mode == Dev){throw(e)}
+                                // @if(context.environment.mode == Dev){throw(e)}
                             }
                         }
 
@@ -178,7 +174,7 @@ do you have fonts in localStorage?
                 return true;
             }
         } catch (e) {
-            @if(context.environment.mode == Dev){throw(e)}
+            // @if(context.environment.mode == Dev){throw(e)}
         }
         return false;
     }
@@ -199,7 +195,7 @@ do you have fonts in localStorage?
                 thisScript.parentNode.insertBefore(fonts, thisScript);
             });
         } catch (e) {
-            @if(context.environment.mode == Dev){throw(e)}
+            // @if(context.environment.mode == Dev){throw(e)}
         }
     }
 
@@ -261,7 +257,7 @@ do you have fonts in localStorage?
                         }
                     }
                 } catch (e) {
-                    @if(context.environment.mode == Dev){throw(e)}
+                    // @if(context.environment.mode == Dev){throw(e)}
                 }
                 // Didn't find any non-black pixels or something went wrong (for example,
                 // non-blink Opera cannot use the canvas fillText() method) so we assume
@@ -273,7 +269,7 @@ do you have fonts in localStorage?
                 return true;
             }
         } catch (e) {
-            @if(context.environment.mode == Dev){throw(e)}
+            // @if(context.environment.mode == Dev){throw(e)}
         }
     }
 
