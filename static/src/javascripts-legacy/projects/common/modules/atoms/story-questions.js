@@ -30,7 +30,7 @@ define([
         });
     }
 
-    function sendNewStyleInteraction(atomId, action, value) {
+    function sendNewStyleInteraction(atomId, action, value, eventId) {
         var event = {
             component: {
                 componentType: 'READERS_QUESTIONS_ATOM',
@@ -40,6 +40,8 @@ define([
         };
 
         if (value) event.value = value;
+        if (eventId) event.id = eventId;
+
 
         componentEvent.submitComponentEvent(event);
     }
@@ -83,7 +85,7 @@ define([
                     }
 
                     sendOldStyleInteraction(atomId.trim(), questionText.trim(), 'question_asked');
-                    sendNewStyleInteraction(atomId.trim(), 'VOTE', questionText.trim());
+                    sendNewStyleInteraction(atomId.trim(), 'VOTE', questionText.trim(), questionId);
                 }
             }
         }
@@ -96,6 +98,8 @@ define([
         var email = answersEmailSignupForm.elements['email'];
         var listId = answersEmailSignupForm.listId;
         var questionId = answersEmailSignupForm.dataset.questionId;
+        var atomIdElement = $('.js-storyquestion-atom-id');
+        var question = document.querySelector("meta[name=js-notranslate-" + questionId + "]");
 
         if (email && listId && questionId) {
 
@@ -115,6 +119,11 @@ define([
                     }
                 }
             });
+
+            var atomId = atomIdElement.attr('id');
+            var questionText = question.content;
+
+            sendNewStyleInteraction(atomId.trim(), 'SUBSCRIBE', questionText.trim(), questionId);
         }
     }
 
