@@ -2,19 +2,19 @@ package pages
 
 import common.Edition
 import conf.switches.Switches.SurveySwitch
-import html.Styles
 import html.HtmlPageHelpers._
+import html.Styles
 import model.{ApplicationContext, Page}
 import play.api.mvc.RequestHeader
 import play.twirl.api.Html
-import views.html.fragments.commercial.{pageSkin, survey}
-import views.html.fragments.page.body.{bodyTag, breakingNewsDiv, skipToMainContent, twentyFourSevenTraining}
-import views.html.fragments.page.head.{fixIEReferenceErrors, headTag, titleTag}
-import views.html.fragments.page.head.stylesheets.{criticalStyles, styles}
-import views.html.fragments.page._
 import views.html.fragments._
+import views.html.fragments.commercial.{pageSkin, survey}
+import views.html.fragments.page._
+import views.html.fragments.page.body.{bodyTag, breakingNewsDiv, skipToMainContent, twentyFourSevenTraining}
+import views.html.fragments.page.head.stylesheets.{criticalStyles, styles}
+import views.html.fragments.page.head.{fixIEReferenceErrors, headTag, titleTag}
 
-object ContentHtmlPage {
+object StoryHtmlPage {
 
   def allStyles(implicit applicationContext: ApplicationContext): Styles = new Styles {
     override def criticalCss: Html = criticalStyles()
@@ -25,12 +25,19 @@ object ContentHtmlPage {
     override def IE9CriticalCss: Html = stylesheetLink("stylesheets/ie9.content.css")
   }
 
-  def html(header: Html, content: Html)(implicit page: Page, request: RequestHeader, applicationContext: ApplicationContext): Html = {
+  def html(
+    header: Html,
+    content: Html,
+    maybeHeadContent: Option[Html] = None
+  )(implicit page: Page, request: RequestHeader, applicationContext: ApplicationContext): Html = {
+
+    val head: Html = maybeHeadContent.getOrElse(Html(""))
 
     htmlTag(
       headTag(
         titleTag(),
         metaData(),
+        head,
         styles(allStyles),
         fixIEReferenceErrors(),
         inlineJSBlocking()

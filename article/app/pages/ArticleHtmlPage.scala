@@ -20,7 +20,9 @@ object ArticleHtmlPage extends HtmlPage[ArticlePage] {
       case _ => (guardianHeaderHtml(), articleBody(page))
     }
 
-    ContentHtmlPage.html(header, content)
+    StoryHtmlPage.html(
+      header = header,
+      content = content
+    )
   }
 }
-

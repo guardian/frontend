@@ -10,7 +10,7 @@ import model._
 import LiveBlogHelpers._
 import model.liveblog._
 import org.joda.time.DateTime
-import pages.{ArticleEmailHtmlPage, ArticleHtmlPage}
+import pages.{ArticleEmailHtmlPage, ArticleHtmlPage, LiveBlogHtmlPage}
 import play.api.libs.functional.syntax._
 import play.api.libs.json.{Json, _}
 import play.api.mvc._
@@ -92,9 +92,9 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
     case blog: LiveBlogPage =>
       val htmlResponse = () => {
         if (request.isAmp) views.html.liveBlogAMP(blog)
-        else views.html.liveBlog(blog)
+        else LiveBlogHtmlPage.html(blog)
       }
-      val jsonResponse = () => views.html.liveblog.liveBlogBody (blog)
+      val jsonResponse = () => views.html.liveblog.liveBlogBody(blog)
       renderFormat(htmlResponse, jsonResponse, blog, Switches.all)
 
     case minute: MinutePage =>
