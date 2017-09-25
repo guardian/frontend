@@ -9,19 +9,17 @@ import views.html.fragments._
 import views.html.fragments.page.body._
 import views.support.Commercial
 
+trait HtmlPage[P <: model.Page] {
+  def html(page: P)(implicit request: RequestHeader, applicationContext: ApplicationContext): Html
+}
+
 object HtmlPageHelpers {
+
   implicit class WhenOps(private val html: Html) extends AnyVal {
     def when(condition: => Boolean): Html = if(condition) html else Html("")
   }
-}
 
-trait HtmlPage[P <: model.Page] {
-
-  import HtmlPageHelpers._
-
-  def html(page: P)(implicit request: RequestHeader, applicationContext: ApplicationContext): Html
-
-  def guardianHeaderHtml()(implicit page: P, request: RequestHeader, applicationContext: ApplicationContext): Html = {
+  def guardianHeaderHtml()(implicit page: model.Page, request: RequestHeader, applicationContext: ApplicationContext): Html = {
     val showTop = !page.metadata.shouldHideHeaderAndTopAds
     val showAds = Commercial.shouldShowAds(page) && !model.Page.getContent(page).exists(_.tags.isTheMinuteArticle) && !Commercial.isAdFree(request)
 
@@ -34,7 +32,7 @@ trait HtmlPage[P <: model.Page] {
     if(model.Page.getContent(page).exists(_.tags.hasSuperStickyBanner)) bannerAndHeaderDiv(headerContent) else headerContent
   }
 
-  def defaultBodyClasses()(implicit page: P, request: RequestHeader, applicationContext: ApplicationContext): Map[String, Boolean] = {
+  def defaultBodyClasses()(implicit page: model.Page, request: RequestHeader, applicationContext: ApplicationContext): Map[String, Boolean] = {
     val edition = Edition(request)
     Map(
       ("has-page-skin", page.metadata.hasPageSkin(edition)),
@@ -44,6 +42,5 @@ trait HtmlPage[P <: model.Page] {
       ("has-super-sticky-banner", model.Page.getContent(page).exists(_.tags.hasSuperStickyBanner))
     )
   }
-
 
 }
