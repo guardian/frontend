@@ -1,8 +1,8 @@
-body {
+wrapper {
     &:before {
         content: '';
         background: #005689;
-        position: absolute;
+        position: fixed;
         top: 0;
         right: 0;
         bottom: 0;
@@ -11,11 +11,11 @@ body {
     }
 }
 
-wrapper {
+mainContent {
     box-sizing: border-box;
     margin: 0 auto;
-    padding: 0 10px;
-    width: 100%;
+    padding: 0 10px 24px;
+    position: relative;
 
     @media (--from-tablet) {
         padding: 0;
@@ -37,9 +37,11 @@ wrapper {
 
 logoWrapper {
     display: block;
-    margin: 6px 0 24px auto;
+    margin: 6px 0 36px auto;
     max-width: 384px;
     width: 65%;
+    position: relative;
+    z-index: 1;
 
     @media (--from-tablet) {
         width: 384px;
@@ -49,29 +51,44 @@ logoWrapper {
         margin-bottom: -60px;
     }
 
+    & svg .guardian path {
+        transition: all 0s;
+        transform: translateX(0);
+    }
+
     &:hover svg .guardian {
         & .letter-u {
             transform: translateX(49px);
+            transition-delay: .1s;
         }
 
         & .letter-a {
             transform: translateX(-12px);
+            transition-delay: .14s;
         }
 
         & .letter-r {
             transform: translateX(-64px);
+            transition-delay: .06s;
         }
 
         & .letter-d {
             transform: translateX(76px);
+            transition-delay: .16s;
         }
 
         & .letter-i, & .letter-a2 {
             transform: translateX(-2px);
+            transition-delay: .17s;
+        }
+
+        .letter-a2 {
+            transition-delay: .09s;
         }
 
         & .letter-n {
             transform: translateX(-84px);
+            transition-delay: .11s;
         }
     }
 }
@@ -93,29 +110,13 @@ visuallyHidden {
     width: 1px;
 }
 
-contentBlock {
-    @media (--from-tablet) {
-        margin-left: 160px;
-    }
-
-    @media (--from-desktop) {
-        margin-left: 320px;
-    }
-
-    @media (--from-leftCol) {
-        margin-left: 480px;
-    }
-}
-
 fourOhFour {
     display: block;
     height: 80%;
-    margin-left: auto;
     max-width: 350px;
-    width: 91%;
+    width: 100%;
 
     @media (--from-tablet) {
-        margin-left: 0;
         height: auto;
         max-width: 100%;
         width: 350px;
@@ -130,6 +131,20 @@ fourOhFour {
     }
 }
 
+contentText {
+    @media (--from-tablet) {
+        margin-left: 160px;
+    }
+
+    @media (--from-desktop) {
+        margin-left: 320px;
+    }
+
+    @media (--from-leftCol) {
+        margin-left: 480px;
+    }
+}
+
 heading {
     color: #AAD8F1;
     font-family: "Guardian Egyptian Web", "Guardian Text Egyptian Web", Georgia, serif;
@@ -137,11 +152,10 @@ heading {
     font-weight: 200;
     line-height: 1.15;
     margin-bottom: 12px;
-    max-width: 380px;
+    max-width: 540px;
 
     @media (--from-tablet) {
         font-size: 42px;
-        max-width: 540px;
     }
 }
 
@@ -150,10 +164,11 @@ bodyCopy {
     font-family: "Guardian Text Egyptian Web", Georgia, serif;
     font-size: 15px;
     margin-bottom: 24px;
-    max-width: 300px;
+    max-width: 220px;
 
     @media (--from-tablet) {
         font-size: 18px;
+        max-width: 300px;
     }
 }
 

@@ -5,22 +5,21 @@ import FourOhFour from 'assets/images/404.svg';
 import CTA from './CTA';
 
 import {
-    body,
     wrapper,
-    header,
+    mainContent,
     logoWrapper,
     logo,
     visuallyHidden,
     fourOhFour,
-    contentBlock,
+    contentText,
     heading,
     bodyCopy,
     link,
 } from './style.css';
 
 export default ({ beaconUrl }: { beaconUrl: string }) =>
-<div style={body}>
-    <div style={wrapper}>
+<div style={wrapper}>
+    <div style={mainContent}>
         <a
             href="https://www.theguardian.com/"
             style={logoWrapper}
@@ -31,7 +30,7 @@ export default ({ beaconUrl }: { beaconUrl: string }) =>
             </span>
         </a>
         <FourOhFour style={fourOhFour}/>
-        <div style={contentBlock}>
+        <div style={contentText}>
             <h1 style={heading}>
                 Sorry — the page you have requested does not exist
             </h1>
@@ -46,6 +45,7 @@ export default ({ beaconUrl }: { beaconUrl: string }) =>
             </CTA>
         </div>
     </div>
+
     <script
         dangerouslySetInnerHTML={{
             __html: `
