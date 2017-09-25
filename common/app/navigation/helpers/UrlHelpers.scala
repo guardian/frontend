@@ -84,8 +84,10 @@ object UrlHelpers {
       "variant" -> ab.variant
     ))
 
+    import com.netaporter.uri.dsl._
+
     // TODO: I've ditched the linking direct to edition country. Double-check this is OK.
-    s"${destination.url}?INCTMP=$campaignCode&acquisitionData=${acquisitionData.toString}"
+    destination.url ? ("INTCMP" -> campaignCode) & ("acquisitionData" -> acquisitionData.toString)
   }
 
   def getJobUrl(editionId: String): String =
