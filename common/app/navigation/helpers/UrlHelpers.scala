@@ -26,7 +26,7 @@ object UrlHelpers {
   case object AmpHeader extends Position
   case object Footer extends Position
 
-  def getCampaignCode(implicit request: RequestHeader, destination: ReaderRevenueSite, position: Position): Option[String] = {
+  def getCampaignCode(destination: ReaderRevenueSite, position: Position)(implicit request: RequestHeader): Option[String] = {
     val isInHeaderTestControlGroup = mvt.ABNewDesktopHeaderControl.isParticipating
     val editionId = Edition(request).id
 
@@ -61,7 +61,7 @@ object UrlHelpers {
     }
 
   def getReaderRevenueUrl(destination: ReaderRevenueSite, position: Position)(implicit request: RequestHeader): String = {
-    val campaignCode = getCampaignCode(request, destination, position)
+    val campaignCode = getCampaignCode(destination, position)
     val abTest = position match {
       case NewHeader | OldHeader => getHeaderABTestInfo
       case _ => None
