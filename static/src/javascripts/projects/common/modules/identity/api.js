@@ -166,7 +166,7 @@ export const emailSignup = (listId: string) => {
         listId,
     };
     const request = ajax({
-        url:  (Id.idApiRoot || '') + endpoint,
+        url: (Id.idApiRoot || '') + endpoint,
         type: 'jsonp',
         crossOrigin: true,
         data: {
@@ -184,7 +184,7 @@ export const getUserEmailSignUps = (): Promise<any> => {
     if (user) {
         const endpoint = `/useremails/${user.id}`;
         const request = ajax({
-            url:  (Id.idApiRoot || '') + endpoint,
+            url: (Id.idApiRoot || '') + endpoint,
             type: 'jsonp',
             crossOrigin: true,
         });
