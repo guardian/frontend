@@ -32,6 +32,9 @@ object StoryHtmlPage {
   )(implicit page: Page, request: RequestHeader, applicationContext: ApplicationContext): Html = {
 
     val head: Html = maybeHeadContent.getOrElse(Html(""))
+    val bodyClasses: Map[String, Boolean] = defaultBodyClasses() ++ Map(
+      ("is-immersive", Page.getContent(page).exists(_.content.isImmersive))
+    )
 
     htmlTag(
       headTag(
@@ -42,7 +45,7 @@ object StoryHtmlPage {
         fixIEReferenceErrors(),
         inlineJSBlocking()
       ),
-      bodyTag(classes = defaultBodyClasses)(
+      bodyTag(classes = bodyClasses)(
         message(),
         skipToMainContent(),
         pageSkin() when page.metadata.hasPageSkinOrAdTestPageSkin(Edition(request)),
