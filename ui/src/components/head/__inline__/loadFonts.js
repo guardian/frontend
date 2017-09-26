@@ -35,7 +35,7 @@ do you have fonts in localStorage?
                 }
             }
         } catch (e) {
-            // @if(context.environment.mode == Dev){throw(e)}
+            // do nothing
         }
 
         return hinting;
@@ -73,7 +73,7 @@ do you have fonts in localStorage?
                                     return true;
                                 }
                             } catch (e) {
-                                // @if(context.environment.mode == Dev){throw(e)}
+                                // do nothing
                             }
                         }
 
@@ -131,10 +131,10 @@ do you have fonts in localStorage?
                     fontHash: string,
                     css: string
                 ): void => {
-                    let i;
+                    let i = 0;
                     const totalItems = localStorage.length - 1;
 
-                    for (i = 0; i < totalItems; i + 1) {
+                    for (; i < totalItems; i += 1) {
                         const key = localStorage.key(i);
                         if (
                             key &&
@@ -144,6 +144,7 @@ do you have fonts in localStorage?
                             break;
                         }
                     }
+
                     localStorage.setItem(
                         fontStorageKey(fontName, fontHash),
                         JSON.stringify({ value: css })
@@ -178,16 +179,16 @@ do you have fonts in localStorage?
                 // down to business
                 // the target for each font and holders of all the necessary metadata
                 // are some style elements in the head, all identified by a .webfont class
-                const fonts = document.querySelectorAll('.webfont');
+                const fonts = document.getElementsByClassName('webfont');
 
                 const hinting =
                     fontHinting === 'Off' ? '' : `hinted-${fontHinting}-`;
 
                 const urlAttribute = `data-cache-file-${hinting}${fontFormat}`;
 
-                for (let i = 0, j = fonts.length; i < j; i += 1) {
-                    const font = fonts[i];
+                [...fonts].forEach(font => {
                     const fontURL = font.getAttribute(urlAttribute);
+
                     if (fontURL) {
                         const fontInfo = fontURL.match(
                             /fonts\/([^/]*?)\/?([^/]*)\.(woff2|woff|ttf).json$/
@@ -205,11 +206,12 @@ do you have fonts in localStorage?
                             }
                         }
                     }
-                }
+                });
+
                 return true;
             }
         } catch (e) {
-            // @if(context.environment.mode == Dev){throw(e)}
+            // do nothing
         }
 
         return false;
@@ -237,7 +239,7 @@ do you have fonts in localStorage?
                 }
             });
         } catch (e) {
-            // @if(context.environment.mode == Dev){throw(e)}
+            // do nothing
         }
     };
 
@@ -310,7 +312,7 @@ do you have fonts in localStorage?
                         }
                     }
                 } catch (e) {
-                    // @if(context.environment.mode == Dev){throw(e)}
+                    // do nothing
                 }
 
                 // Didn't find any non-black pixels or something went wrong (for example,
@@ -324,7 +326,7 @@ do you have fonts in localStorage?
             // You're not on Windows or you're using IE, so we assume true
             return true;
         } catch (e) {
-            // @if(context.environment.mode == Dev){throw(e)}
+            // do nothing
         }
     };
 
