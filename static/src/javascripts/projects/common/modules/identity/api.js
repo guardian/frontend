@@ -147,9 +147,7 @@ export const shouldAutoSigninInUser = (): boolean => {
     const signedInUser = !!getCookieByName(Id.cookieName);
     const checkFacebook = !!local.get(Id.fbCheckKey);
     return (
-        !signedInUser &&
-        !checkFacebook &&
-        !hasUserSignedOutInTheLast24Hours()
+        !signedInUser && !checkFacebook && !hasUserSignedOutInTheLast24Hours()
     );
 };
 
