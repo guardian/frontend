@@ -23,9 +23,6 @@ export const init = () => {
     mediator.emit('module:identity:api:loaded');
 };
 
-/**
- * Handles unicode chars correctly
- */
 export const decodeBase64 = (str: string): string =>
     decodeURIComponent(
         escape(
@@ -76,9 +73,6 @@ export const getUserFromCookie = (): ?Object => {
 
 export const isUserLoggedIn = (): boolean => getUserFromCookie() !== null;
 
-/**
- * Gets the currently logged in user data from the identity api
- */
 export const getUserFromApi = mergeCalls(mergingCallback => {
     const apiRoot = Id.idApiRoot ? Id.idApiRoot : '';
 
@@ -99,22 +93,15 @@ export const getUserFromApi = mergeCalls(mergingCallback => {
     }
 });
 
-/**
- * Clears the caches and state, primarily for testing.
- */
 export const reset = () => {
     getUserFromApi.reset();
     userFromCookieCache = null;
 };
 
-export const getCookie = (): string => getCookieByName(Id.cookieName);
+export const getCookie = (): ?string => getCookieByName(Id.cookieName);
 
 export const getUrl = (): string => config.page.idUrl;
 
-/**
- * Gets the currently logged in user data from the identity api and
- * refreshes the users cookie at the same time.
- */
 export const getUserFromApiWithRefreshedCookie = () => {
     const endpoint = '/user/me';
     const request = ajax({
@@ -128,16 +115,10 @@ export const getUserFromApiWithRefreshedCookie = () => {
     return request;
 };
 
-/**
- * Wrap window.location.href so it can be spied in unit tests
- */
 export const redirectTo = (url: string): void => {
     window.location.href = url;
 };
 
-/**
- * Returns user object when signed in, otherwise redirects to sign in with configurable absolute returnUrl
- */
 export const getUserOrSignIn = (paramUrl: ?string): ?Object => {
     let returnUrl = paramUrl;
 
@@ -162,16 +143,13 @@ export const hasUserSignedOutInTheLast24Hours = (): boolean => {
     return false;
 };
 
-/**
- * Returns true if a there is no signed in user and the user has not signed in the last 24 hours
- */
 export const shouldAutoSigninInUser = (): boolean => {
     const signedInUser = !!getCookieByName(Id.cookieName);
     const checkFacebook = !!local.get(Id.fbCheckKey);
     return (
         !signedInUser &&
         !checkFacebook &&
-        !this.hasUserSignedOutInTheLast24Hours()
+        !hasUserSignedOutInTheLast24Hours()
     );
 };
 
