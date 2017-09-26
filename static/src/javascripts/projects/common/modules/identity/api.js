@@ -1,7 +1,9 @@
-/*global escape:true */
+// @flow
+
+/* global escape:true */
 import { ajax } from 'lib/ajax';
 import config from 'lib/config';
-import { getCookie } from 'lib/cookies';
+import { getCookie as getCookieByName } from 'lib/cookies';
 import mediator from 'lib/mediator';
 import { local } from 'lib/storage';
 import { mergeCalls } from 'common/modules/asyncCallMerger';
@@ -11,30 +13,38 @@ import { mergeCalls } from 'common/modules/asyncCallMerger';
  * We'll need to change this once there is some state change
  * TODO(jamesgorrie): Allow this to show policies too (not needed yet)
  */
-const Id = {};
 
 let userFromCookieCache = null;
 
-Id.cookieName = 'GU_U';
-Id.signOutCookieName = 'GU_SO';
-Id.fbCheckKey = 'gu.id.nextFbCheck';
-Id.lastRefreshKey = 'identity.lastRefresh';
-Id.idApiRoot = null;
-Id.idUrl = null;
+const Id = {
+    cookieName: 'GU_U',
+    signOutCookieName: 'GU_SO',
+    fbCheckKey: 'gu.id.nextFbCheck',
+    lastRefreshKey: 'identity.lastRefresh',
+    idApiRoot: null,
+};
 
-Id.init = () => {
+export const init = () => {
     Id.idApiRoot = config.page.idApiUrl;
-    Id.idUrl = config.page.idUrl;
     mediator.emit('module:identity:api:loaded');
 };
 
 /**
- * Clears the caches and state, primarily for testing.
+ * Handles unicode chars correctly
+ * @param {string} str
+ * @return {string}
  */
-Id.reset = () => {
-    Id.getUserFromApi.reset();
-    userFromCookieCache = null;
-};
+export const decodeBase64 = (str: string) =>
+    decodeURIComponent(
+        escape(
+            window.atob(
+                str
+                    .replace(/-/g, '+')
+                    .replace(/_/g, '/')
+                    .replace(/,/g, '=')
+            )
+        )
+    );
 
 /**
  * The object returned from the cookie has the keys:
@@ -50,13 +60,13 @@ Id.reset = () => {
  *
  * @return {?Object} the user information
  */
-Id.getUserFromCookie = () => {
+export const getUserFromCookie = (): ?Object => {
     if (userFromCookieCache === null) {
-        const cookieData = getCookie(Id.cookieName);
+        const cookieData = getCookieByName(Id.cookieName);
         let userData = null;
 
         if (cookieData) {
-            userData = JSON.parse(Id.decodeBase64(cookieData.split('.')[0]));
+            userData = JSON.parse(decodeBase64(cookieData.split('.')[0]));
         }
         if (userData) {
             const displayName = decodeURIComponent(userData[2]);
@@ -75,28 +85,20 @@ Id.getUserFromCookie = () => {
 };
 
 /**
- * @return {string}
- */
-Id.getCookie = () => getCookie(Id.cookieName);
-
-/**
  * @return {boolean}
  */
-Id.isUserLoggedIn = () => Id.getUserFromCookie() !== null;
-
-/**
- * @return {string}
- */
-Id.getUrl = () => Id.idUrl;
+export const isUserLoggedIn = () => getUserFromCookie() !== null;
 
 /**
  * Gets the currently logged in user data from the identity api
  * @param {function} callback
  */
-Id.getUserFromApi = mergeCalls(mergingCallback => {
-    if (Id.isUserLoggedIn()) {
+export const getUserFromApi = mergeCalls(mergingCallback => {
+    const apiRoot = Id.idApiRoot ? Id.idApiRoot : '';
+
+    if (isUserLoggedIn()) {
         ajax({
-            url: `${Id.idApiRoot}/user/me`,
+            url: `${apiRoot}/user/me`,
             type: 'jsonp',
             crossOrigin: true,
         }).then(response => {
@@ -112,13 +114,31 @@ Id.getUserFromApi = mergeCalls(mergingCallback => {
 });
 
 /**
+ * Clears the caches and state, primarily for testing.
+ */
+export const reset = () => {
+    getUserFromApi.reset();
+    userFromCookieCache = null;
+};
+
+/**
+ * @return {string}
+ */
+export const getCookie = () => getCookieByName(Id.cookieName);
+
+/**
+ * @return {string}
+ */
+export const getUrl = () => config.page.idUrl;
+
+/**
  * Gets the currently logged in user data from the identity api and
  * refreshes the users cookie at the same time.
  */
-Id.getUserFromApiWithRefreshedCookie = () => {
+export const getUserFromApiWithRefreshedCookie = () => {
     const endpoint = '/user/me';
     const request = ajax({
-        url: Id.idApiRoot + endpoint,
+        url: Id.idApiRoot ? Id.idApiRoot + endpoint : endpoint,
         type: 'jsonp',
         data: {
             refreshCookie: true,
@@ -129,52 +149,38 @@ Id.getUserFromApiWithRefreshedCookie = () => {
 };
 
 /**
- * Returns user object when signed in, otherwise redirects to sign in with configurable absolute returnUrl
- */
-Id.getUserOrSignIn = paramUrl => {
-    let returnUrl = paramUrl;
-
-    if (Id.isUserLoggedIn()) {
-        return Id.getUserFromCookie();
-    }
-
-    returnUrl = encodeURIComponent(returnUrl || document.location.href);
-    const url = `${Id.getUrl()}/signin?returnUrl=${returnUrl}`;
-    Id.redirectTo(url);
-};
-
-/**
  * Wrap window.location.href so it can be spied in unit tests
  */
-Id.redirectTo = url => {
+export const redirectTo = (url: string): void => {
     window.location.href = url;
 };
 
 /**
- * Handles unicode chars correctly
- * @param {string} str
- * @return {string}
+ * Returns user object when signed in, otherwise redirects to sign in with configurable absolute returnUrl
  */
-Id.decodeBase64 = str =>
-    decodeURIComponent(
-        escape(
-            window.atob(
-                str
-                    .replace(/-/g, '+')
-                    .replace(/_/g, '/')
-                    .replace(/,/g, '=')
-            )
-        )
-    );
+export const getUserOrSignIn = (paramUrl: ?string): ?Object => {
+    let returnUrl = paramUrl;
+
+    if (isUserLoggedIn()) {
+        return getUserFromCookie();
+    }
+
+    returnUrl = encodeURIComponent(returnUrl || document.location.href);
+    const url = `${getUrl() ? getUrl() : ''}/signin?returnUrl=${returnUrl}`;
+    redirectTo(url);
+};
 
 /**
  * @return {Boolean}
  */
-Id.hasUserSignedOutInTheLast24Hours = () => {
-    const cookieData = getCookie(Id.signOutCookieName);
+export const hasUserSignedOutInTheLast24Hours = () => {
+    const cookieData = getCookieByName(Id.signOutCookieName);
 
     if (cookieData) {
-        return ((Math.round(new Date().getTime() / 1000)) < (parseInt(cookieData, 10) + 86400));
+        return (
+            Math.round(new Date().getTime() / 1000) <
+            parseInt(cookieData, 10) + 86400
+        );
     }
     return false;
 };
@@ -182,8 +188,8 @@ Id.hasUserSignedOutInTheLast24Hours = () => {
 /**
  * Returns true if a there is no signed in user and the user has not signed in the last 24 hours
  */
-Id.shouldAutoSigninInUser = function() {
-    const signedInUser = !!getCookie(Id.cookieName);
+export const shouldAutoSigninInUser = function() {
+    const signedInUser = !!getCookieByName(Id.cookieName);
     const checkFacebook = !!local.get(Id.fbCheckKey);
     return (
         !signedInUser &&
@@ -192,17 +198,22 @@ Id.shouldAutoSigninInUser = function() {
     );
 };
 
-Id.setNextFbCheckTime = nextFbCheckDue => {
+export const setNextFbCheckTime = (nextFbCheckDue: string) => {
     local.set(Id.fbCheckKey, {}, { expires: nextFbCheckDue });
 };
 
-Id.emailSignup = listId => {
-    const endpoint = `/useremails/${Id.getUserFromCookie().id}/subscriptions`;
+export const emailSignup = (listId: string) => {
+    const user = getUserFromCookie();
+    if (!user) {
+        return;
+    }
+
+    const endpoint = `/useremails/${user.id}/subscriptions`;
     const data = {
         listId,
     };
-    const request = ajax.ajax({
-        url: Id.idApiRoot + endpoint,
+    const request = ajax({
+        url: Id.idApiRoot ? Id.idApiRoot + endpoint : endpoint,
         type: 'jsonp',
         crossOrigin: true,
         data: {
@@ -214,11 +225,13 @@ Id.emailSignup = listId => {
     return request;
 };
 
-Id.getUserEmailSignUps = () => {
-    if (Id.getUserFromCookie()) {
-        const endpoint = `/useremails/${Id.getUserFromCookie().id}`;
-        const request = ajax.ajax({
-            url: Id.idApiRoot + endpoint,
+export const getUserEmailSignUps = (): Promise<any> => {
+    const user = getUserFromCookie();
+
+    if (user) {
+        const endpoint = `/useremails/${user.id}`;
+        const request = ajax({
+            url: Id.idApiRoot ? Id.idApiRoot + endpoint : endpoint,
             type: 'jsonp',
             crossOrigin: true,
         });
@@ -229,10 +242,10 @@ Id.getUserEmailSignUps = () => {
     return Promise.resolve(null);
 };
 
-Id.sendValidationEmail = () => {
+export const sendValidationEmail = () => {
     const endpoint = '/user/send-validation-email';
-    const request = ajax.ajax({
-        url: Id.idApiRoot + endpoint,
+    const request = ajax({
+        url: Id.idApiRoot ? Id.idApiRoot + endpoint : endpoint,
         type: 'jsonp',
         crossOrigin: true,
         data: {
@@ -243,7 +256,7 @@ Id.sendValidationEmail = () => {
     return request;
 };
 
-Id.updateUsername = username => {
+export const updateUsername = (username: string) => {
     const endpoint = '/user/me';
     const data = {
         publicFields: {
@@ -251,8 +264,8 @@ Id.updateUsername = username => {
             displayName: username,
         },
     };
-    const request = ajax.ajax({
-        url: Id.idApiRoot + endpoint,
+    const request = ajax({
+        url: Id.idApiRoot ? Id.idApiRoot + endpoint : endpoint,
         type: 'json',
         crossOrigin: true,
         method: 'POST',
@@ -260,7 +273,8 @@ Id.updateUsername = username => {
         data: JSON.stringify(data),
         withCredentials: true,
         headers: {
-            'X-GU-ID-Client-Access-Token': `Bearer ${config.page.idApiJsClientToken}`
+            'X-GU-ID-Client-Access-Token': `Bearer ${config.page
+                .idApiJsClientToken}`,
         },
     });
 

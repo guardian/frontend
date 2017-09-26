@@ -1,6 +1,6 @@
 // @flow
 
-import idApi from 'common/modules/identity/api';
+import { getUserOrSignIn } from 'common/modules/identity/api';
 
 // TODO: Remove repitition with common/modules/identity/formstack-iframe-embed
 class Formstack {
@@ -70,7 +70,11 @@ class Formstack {
 
     init(): void {
         // User object required to populate fields
-        const user = idApi.getUserOrSignIn();
+        let user = getUserOrSignIn();
+
+        if (!user) {
+            user = {};
+        }
 
         this.dom(user);
 

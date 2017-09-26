@@ -2,7 +2,7 @@
 import { getCookie, removeCookie, addCookie } from 'lib/cookies';
 import config from 'lib/config';
 import fetchJson from 'lib/fetch-json';
-import identity from 'common/modules/identity/api';
+import { isUserLoggedIn } from 'common/modules/identity/api';
 import { daysSince } from 'lib/time-utils';
 
 // Persistence keys
@@ -92,14 +92,14 @@ const userNeedsNewFeatureData = (): boolean =>
     (adFreeDataIsPresent() && adFreeDataIsOld());
 
 const userHasDataAfterSignout = (): boolean =>
-    !identity.isUserLoggedIn() && userHasData();
+    !isUserLoggedIn() && userHasData();
 
 /**
  * Updates the user's data in a lazy fashion
  */
 
 const refresh = (): Promise<void> => {
-    if (identity.isUserLoggedIn() && userNeedsNewFeatureData()) {
+    if (isUserLoggedIn() && userNeedsNewFeatureData()) {
         return requestNewData();
     } else if (userHasDataAfterSignout()) {
         deleteOldData();
@@ -115,7 +115,7 @@ const refresh = (): Promise<void> => {
  */
 const isPayingMember = (): boolean =>
     // If the user is logged in, but has no cookie yet, play it safe and assume they're a paying user
-    identity.isUserLoggedIn() && getCookie(PAYING_MEMBER_COOKIE) !== 'false';
+    isUserLoggedIn() && getCookie(PAYING_MEMBER_COOKIE) !== 'false';
 
 const lastContributionDate = getCookie('gu.contributions.contrib-timestamp');
 
@@ -128,8 +128,7 @@ const isRecentContributor = (): boolean => daysSinceLastContribution <= 180;
 
 const isRecurringContributor = (): boolean =>
     // If the user is logged in, but has no cookie yet, play it safe and assume they're a contributor
-    identity.isUserLoggedIn() &&
-    getCookie(RECURRING_CONTRIBUTOR_COOKIE) !== 'false';
+    isUserLoggedIn() && getCookie(RECURRING_CONTRIBUTOR_COOKIE) !== 'false';
 
 /*
     Whenever the checks are updated, please make sure to update
