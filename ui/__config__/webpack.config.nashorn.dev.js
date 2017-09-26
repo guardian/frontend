@@ -37,7 +37,7 @@ const stats = {
     warnings: true,
 };
 
-module.exports = (env) => {
+module.exports = env => {
     const config = commonConfig(env);
 
     if (env.server) {
@@ -55,7 +55,9 @@ module.exports = (env) => {
     if (env.browser) {
         return webpackMerge.smart(config, {
             entry: {
-                'ui.bundle.browser': ['webpack-hot-middleware/client?reload=true'],
+                'ui.bundle.browser': [
+                    'webpack-hot-middleware/client?reload=true',
+                ],
             },
             output: {
                 path: path.join(ui, 'dist'),
@@ -66,16 +68,16 @@ module.exports = (env) => {
                 new webpack.HotModuleReplacementPlugin(),
                 new webpack.NamedModulesPlugin(),
             ],
-            devServer: {		
-                publicPath: '/assets/javascripts/',		
-                compress: true,		
-                port: 3000,		
-                overlay: true,		
-                proxy: {		
-                    '*': 'http://localhost:9000',		
-                },		
-                hot: true,		
-                stats,		
+            devServer: {
+                publicPath: '/assets/javascripts/',
+                compress: true,
+                port: 3000,
+                overlay: true,
+                proxy: {
+                    '*': 'http://localhost:9000',
+                },
+                hot: true,
+                stats,
             },
         });
     }
