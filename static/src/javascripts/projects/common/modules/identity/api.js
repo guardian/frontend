@@ -14,12 +14,21 @@ const Id = {
     cookieName: 'GU_U',
     signOutCookieName: 'GU_SO',
     fbCheckKey: 'gu.id.nextFbCheck',
-    lastRefreshKey: 'identity.lastRefresh',
     idApiRoot: null,
 };
 
-export const init = () => {
-    Id.idApiRoot = config.page.idApiUrl;
+type IdentityUser = {
+    id: number,
+    primaryEmailAddress: string,
+    displayName: string,
+    accountCreatedDate: string,
+    emailVerified: string,
+    rawResponse: ?string,
+};
+
+
+export const init = (): void => {
+    Id.idApiRoot = config.get('page.idApiUrl');
     mediator.emit('module:identity:api:loaded');
 };
 
@@ -35,19 +44,7 @@ export const decodeBase64 = (str: string): string =>
         )
     );
 
-/**
- * The object returned from the cookie has the keys:
- *
- * {
- *    id
- *    primaryEmailAddress
- *    displayName
- *    accountCreatedDate
- *    emailVerified
- *    rawResponse
- * };
- */
-export const getUserFromCookie = (): ?Object => {
+export const getUserFromCookie = (): ?IdentityUser => {
     if (userFromCookieCache === null) {
         const cookieData = getCookieByName(Id.cookieName);
         let userData = null;
@@ -93,14 +90,14 @@ export const getUserFromApi = mergeCalls(mergingCallback => {
     }
 });
 
-export const reset = () => {
+export const reset = (): void => {
     getUserFromApi.reset();
     userFromCookieCache = null;
 };
 
 export const getCookie = (): ?string => getCookieByName(Id.cookieName);
 
-export const getUrl = (): string => config.page.idUrl;
+export const getUrl = (): string => config.get('page.idUrl');
 
 export const getUserFromApiWithRefreshedCookie = () => {
     const endpoint = '/user/me';
@@ -168,7 +165,7 @@ export const getUserEmailSignUps = (): Promise<any> => {
     return Promise.resolve(null);
 };
 
-export const sendValidationEmail = () => {
+export const sendValidationEmail = (): any => {
     const endpoint = '/user/send-validation-email';
     const request = ajax({
         url: (Id.idApiRoot || '') + endpoint,
@@ -182,7 +179,7 @@ export const sendValidationEmail = () => {
     return request;
 };
 
-export const updateUsername = (username: string) => {
+export const updateUsername = (username: string): any => {
     const endpoint = '/user/me';
     const data = {
         publicFields: {
@@ -199,12 +196,9 @@ export const updateUsername = (username: string) => {
         data: JSON.stringify(data),
         withCredentials: true,
         headers: {
-            'X-GU-ID-Client-Access-Token': `Bearer ${config.page
-                .idApiJsClientToken}`,
+            'X-GU-ID-Client-Access-Token': `Bearer ${config.get('page.idApiJsClientToken')}`,
         },
     });
 
     return request;
 };
-
-export default Id;
