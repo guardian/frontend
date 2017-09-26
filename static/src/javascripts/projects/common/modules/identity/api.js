@@ -151,10 +151,6 @@ export const shouldAutoSigninInUser = (): boolean => {
     );
 };
 
-export const setNextFbCheckTime = (nextFbCheckDue: string) => {
-    local.set(Id.fbCheckKey, {}, { expires: nextFbCheckDue });
-};
-
 export const emailSignup = (listId: string) => {
     const user = getUserFromCookie();
     if (!user) {
