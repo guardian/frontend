@@ -6,7 +6,7 @@ import model.structuredData.{LiveBlogPosting, Organisation}
 import model.{ApplicationContext, LiveBlogHelpers, LiveBlogPage}
 import play.api.mvc.RequestHeader
 import play.twirl.api.Html
-import views.html.fragments.page.liveBlogHead
+import views.html.fragments.liveBlogHead
 import views.html.liveblog.liveBlogBody
 
 object LiveBlogHtmlPage extends HtmlPage[LiveBlogPage] {

@@ -5,7 +5,7 @@ import model.{ApplicationContext, PageWithStoryPackage}
 import play.api.mvc.RequestHeader
 import play.twirl.api.Html
 import views.html.fragments.page.email.{body, head, htmlTag}
-import views.html.fragments.page.email.{emailArticleBody, emailArticleCss}
+import views.html.fragments.email.{emailArticleBody, emailArticleCss}
 
 object ArticleEmailHtmlPage extends HtmlPage[PageWithStoryPackage] {
 

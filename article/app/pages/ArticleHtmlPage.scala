@@ -2,12 +2,11 @@ package pages
 
 import controllers.ArticlePage
 import html.HtmlPage
+import html.HtmlPageHelpers._
 import model.ApplicationContext
 import play.api.mvc.RequestHeader
 import play.twirl.api.Html
-import views.html.fragments.articleBody
-import views.html.fragments.page._
-import html.HtmlPageHelpers._
+import views.html.fragments._
 
 object ArticleHtmlPage extends HtmlPage[ArticlePage] {
   def html(page: ArticlePage)(implicit request: RequestHeader, applicationContext: ApplicationContext): Html = {
