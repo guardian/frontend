@@ -8,12 +8,6 @@ import mediator from 'lib/mediator';
 import { local } from 'lib/storage';
 import { mergeCalls } from 'common/modules/asyncCallMerger';
 
-/**
- * Left this as an object as there are only static methods
- * We'll need to change this once there is some state change
- * TODO(jamesgorrie): Allow this to show policies too (not needed yet)
- */
-
 let userFromCookieCache = null;
 
 const Id = {
@@ -31,10 +25,8 @@ export const init = () => {
 
 /**
  * Handles unicode chars correctly
- * @param {string} str
- * @return {string}
  */
-export const decodeBase64 = (str: string) =>
+export const decodeBase64 = (str: string): string =>
     decodeURIComponent(
         escape(
             window.atob(
@@ -57,8 +49,6 @@ export const decodeBase64 = (str: string) =>
  *    emailVerified
  *    rawResponse
  * };
- *
- * @return {?Object} the user information
  */
 export const getUserFromCookie = (): ?Object => {
     if (userFromCookieCache === null) {
@@ -84,14 +74,10 @@ export const getUserFromCookie = (): ?Object => {
     return userFromCookieCache;
 };
 
-/**
- * @return {boolean}
- */
-export const isUserLoggedIn = () => getUserFromCookie() !== null;
+export const isUserLoggedIn = (): boolean => getUserFromCookie() !== null;
 
 /**
  * Gets the currently logged in user data from the identity api
- * @param {function} callback
  */
 export const getUserFromApi = mergeCalls(mergingCallback => {
     const apiRoot = Id.idApiRoot ? Id.idApiRoot : '';
@@ -121,15 +107,9 @@ export const reset = () => {
     userFromCookieCache = null;
 };
 
-/**
- * @return {string}
- */
-export const getCookie = () => getCookieByName(Id.cookieName);
+export const getCookie = (): string => getCookieByName(Id.cookieName);
 
-/**
- * @return {string}
- */
-export const getUrl = () => config.page.idUrl;
+export const getUrl = (): string => config.page.idUrl;
 
 /**
  * Gets the currently logged in user data from the identity api and
@@ -170,10 +150,7 @@ export const getUserOrSignIn = (paramUrl: ?string): ?Object => {
     redirectTo(url);
 };
 
-/**
- * @return {Boolean}
- */
-export const hasUserSignedOutInTheLast24Hours = () => {
+export const hasUserSignedOutInTheLast24Hours = (): boolean => {
     const cookieData = getCookieByName(Id.signOutCookieName);
 
     if (cookieData) {
@@ -188,7 +165,7 @@ export const hasUserSignedOutInTheLast24Hours = () => {
 /**
  * Returns true if a there is no signed in user and the user has not signed in the last 24 hours
  */
-export const shouldAutoSigninInUser = function() {
+export const shouldAutoSigninInUser = (): boolean => {
     const signedInUser = !!getCookieByName(Id.cookieName);
     const checkFacebook = !!local.get(Id.fbCheckKey);
     return (
