@@ -60,14 +60,7 @@
         }
 
         @page match {
-            case page: model.ContentPage if (page.item.content.isGallery && !page.item.content.tags.isInteractive) => {
-                <div class="immersive-header-container">
-                    @headerAndTopAds(showAdverts, edition, content)
-
-                    @fragments.immersiveGalleryMainMedia(page)
-                </div>
-            }
-            case _: commercial.hosted.HostedPage => {}
+            case page: commercial.hosted.HostedPage => {}
             case _ => {
                 @headerAndTopAds(showAdverts, edition, content)
             }
