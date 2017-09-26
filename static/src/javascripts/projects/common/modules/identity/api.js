@@ -151,29 +151,6 @@ export const shouldAutoSigninInUser = (): boolean => {
     );
 };
 
-export const emailSignup = (listId: string) => {
-    const user = getUserFromCookie();
-    if (!user) {
-        return;
-    }
-
-    const endpoint = `/useremails/${user.id}/subscriptions`;
-    const data = {
-        listId,
-    };
-    const request = ajax({
-        url: (Id.idApiRoot || '') + endpoint,
-        type: 'jsonp',
-        crossOrigin: true,
-        data: {
-            body: JSON.stringify(data),
-            method: 'post',
-        },
-    });
-
-    return request;
-};
-
 export const getUserEmailSignUps = (): Promise<any> => {
     const user = getUserFromCookie();
 
