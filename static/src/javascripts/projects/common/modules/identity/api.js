@@ -121,7 +121,7 @@ export const getUserOrSignIn = (paramUrl: ?string): ?Object => {
     }
 
     returnUrl = encodeURIComponent(returnUrl || document.location.href);
-    const url = `${getUrl() ? getUrl() : ''}/signin?returnUrl=${returnUrl}`;
+    const url = `${getUrl() || ''}/signin?returnUrl=${returnUrl}`;
     redirectTo(url);
 };
 
