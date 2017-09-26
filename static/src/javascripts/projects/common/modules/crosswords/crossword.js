@@ -737,7 +737,7 @@ class Crossword extends React.Component {
                         className: 'crossword__container__grid-wrapper',
                         ref: 'gridWrapper',
                     },
-                    React.createElement(Grid, {
+                    Grid({
                         rows: this.rows,
                         columns: this.columns,
                         cells: this.state.grid,
@@ -745,8 +745,6 @@ class Crossword extends React.Component {
                             this.props.data.entries
                         ),
                         crossword: this,
-                        setCellValue: this.setCellValue,
-                        isHighlighted: this.isHighlighted,
                         focussedCell: this.state.cellInFocus,
                         ref: 'grid',
                     }),
