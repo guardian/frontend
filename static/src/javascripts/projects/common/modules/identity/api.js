@@ -10,12 +10,10 @@ import { mergeCalls } from 'common/modules/asyncCallMerger';
 
 let userFromCookieCache = null;
 
-const Id = {
-    cookieName: 'GU_U',
-    signOutCookieName: 'GU_SO',
-    fbCheckKey: 'gu.id.nextFbCheck',
-    idApiRoot: null,
-};
+const cookieName = 'GU_U';
+const signOutCookieName = 'GU_SO';
+const fbCheckKey = 'gu.id.nextFbCheck';
+let idApiRoot = null;
 
 type IdentityUser = {
     id: number,
@@ -26,9 +24,8 @@ type IdentityUser = {
     rawResponse: ?string,
 };
 
-
 export const init = (): void => {
-    Id.idApiRoot = config.get('page.idApiUrl');
+    idApiRoot = config.get('page.idApiUrl');
     mediator.emit('module:identity:api:loaded');
 };
 
@@ -46,7 +43,7 @@ export const decodeBase64 = (str: string): string =>
 
 export const getUserFromCookie = (): ?IdentityUser => {
     if (userFromCookieCache === null) {
-        const cookieData = getCookieByName(Id.cookieName);
+        const cookieData = getCookieByName(cookieName);
         let userData = null;
 
         if (cookieData) {
@@ -71,7 +68,7 @@ export const getUserFromCookie = (): ?IdentityUser => {
 export const isUserLoggedIn = (): boolean => getUserFromCookie() !== null;
 
 export const getUserFromApi = mergeCalls(mergingCallback => {
-    const apiRoot = Id.idApiRoot || '';
+    const apiRoot = idApiRoot || '';
 
     if (isUserLoggedIn()) {
         ajax({
@@ -95,14 +92,14 @@ export const reset = (): void => {
     userFromCookieCache = null;
 };
 
-export const getCookie = (): ?string => getCookieByName(Id.cookieName);
+export const getCookie = (): ?string => getCookieByName(cookieName);
 
 export const getUrl = (): string => config.get('page.idUrl');
 
 export const getUserFromApiWithRefreshedCookie = () => {
     const endpoint = '/user/me';
     const request = ajax({
-        url: (Id.idApiRoot || '') + endpoint,
+        url: (idApiRoot || '') + endpoint,
         type: 'jsonp',
         data: {
             refreshCookie: true,
@@ -129,7 +126,7 @@ export const getUserOrSignIn = (paramUrl: ?string): ?Object => {
 };
 
 export const hasUserSignedOutInTheLast24Hours = (): boolean => {
-    const cookieData = getCookieByName(Id.signOutCookieName);
+    const cookieData = getCookieByName(signOutCookieName);
 
     if (cookieData) {
         return (
@@ -141,8 +138,8 @@ export const hasUserSignedOutInTheLast24Hours = (): boolean => {
 };
 
 export const shouldAutoSigninInUser = (): boolean => {
-    const signedInUser = !!getCookieByName(Id.cookieName);
-    const checkFacebook = !!local.get(Id.fbCheckKey);
+    const signedInUser = !!getCookieByName(cookieName);
+    const checkFacebook = !!local.get(fbCheckKey);
     return (
         !signedInUser && !checkFacebook && !hasUserSignedOutInTheLast24Hours()
     );
@@ -154,7 +151,7 @@ export const getUserEmailSignUps = (): Promise<any> => {
     if (user) {
         const endpoint = `/useremails/${user.id}`;
         const request = ajax({
-            url: (Id.idApiRoot || '') + endpoint,
+            url: (idApiRoot || '') + endpoint,
             type: 'jsonp',
             crossOrigin: true,
         });
@@ -168,7 +165,7 @@ export const getUserEmailSignUps = (): Promise<any> => {
 export const sendValidationEmail = (): any => {
     const endpoint = '/user/send-validation-email';
     const request = ajax({
-        url: (Id.idApiRoot || '') + endpoint,
+        url: (idApiRoot || '') + endpoint,
         type: 'jsonp',
         crossOrigin: true,
         data: {
@@ -188,7 +185,7 @@ export const updateUsername = (username: string): any => {
         },
     };
     const request = ajax({
-        url: (Id.idApiRoot || '') + endpoint,
+        url: (idApiRoot || '') + endpoint,
         type: 'json',
         crossOrigin: true,
         method: 'POST',
@@ -196,7 +193,9 @@ export const updateUsername = (username: string): any => {
         data: JSON.stringify(data),
         withCredentials: true,
         headers: {
-            'X-GU-ID-Client-Access-Token': `Bearer ${config.get('page.idApiJsClientToken')}`,
+            'X-GU-ID-Client-Access-Token': `Bearer ${config.get(
+                'page.idApiJsClientToken'
+            )}`,
         },
     });
 
