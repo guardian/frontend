@@ -96,7 +96,7 @@ define([
             $(NOTIFICATION_CANCEL).removeClass(IS_HIDDEN_CLASSNAME);
             $(DIGITALPACK_DETAILS).addClass(IS_HIDDEN_CLASSNAME);
         } else if (userDetails.subscription.card) {
-            stripe.display(PAYMENT_FORM, userDetails.subscription.card);
+            stripe.display(PAYMENT_FORM, userDetails.subscription.card, userDetails.stripePublicKeyForUpdate);
         }
         $(DIG_INFO).removeClass(IS_HIDDEN_CLASSNAME);
     }
