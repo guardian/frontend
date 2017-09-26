@@ -46,8 +46,10 @@ do you have fonts in localStorage?
         // localStorage can fail for many reasons
         try {
             if ('localStorage' in window) {
-                const fontStorageKey = (fontName: string, fontHash: string = ''): string =>
-                    `gu.fonts.${fontName}.${fontHash}`;
+                const fontStorageKey = (
+                    fontName: string,
+                    fontHash: string = ''
+                ): string => `gu.fonts.${fontName}.${fontHash}`;
 
                 // detect which font format (ttf, woff, woff2 etc) we want
                 const fontFormat = ((): string => {
@@ -124,13 +126,20 @@ do you have fonts in localStorage?
                 };
 
                 // save font css to localstorage
-                const saveFont = (fontName: string, fontHash: string, css: string): void => {
+                const saveFont = (
+                    fontName: string,
+                    fontHash: string,
+                    css: string
+                ): void => {
                     let i;
                     const totalItems = localStorage.length - 1;
 
                     for (i = 0; i < totalItems; i + 1) {
                         const key = localStorage.key(i);
-                        if (key && key.indexOf(fontStorageKey(fontName)) !== -1) {
+                        if (
+                            key &&
+                            key.indexOf(fontStorageKey(fontName)) !== -1
+                        ) {
                             localStorage.removeItem(key);
                             break;
                         }
@@ -142,11 +151,16 @@ do you have fonts in localStorage?
                 };
 
                 // download font as json to store/use etc
-                const fetchFont = (url: string, el: HTMLElement, fontName: string, fontHash: string): void => {
+                const fetchFont = (
+                    url: string,
+                    el: HTMLElement,
+                    fontName: string,
+                    fontHash: string
+                ): void => {
                     const xhr = new XMLHttpRequest();
 
                     // JSONP callback
-                    window.guFont = fontData => fontData.css;
+                    window.guFont = fontData => fontData.css; // eslint-disable-line no-param-reassign
 
                     xhr.open('GET', url, true);
 
@@ -157,7 +171,7 @@ do you have fonts in localStorage?
                             saveFont(fontName, fontHash, css);
                         }
                     };
-                    
+
                     xhr.send();
                 };
 
@@ -171,27 +185,25 @@ do you have fonts in localStorage?
 
                 const urlAttribute = `data-cache-file-${hinting}${fontFormat}`;
 
-                for (let i = 0, j = fonts.length; i < j; i + 1) {
+                for (let i = 0, j = fonts.length; i < j; i += 1) {
                     const font = fonts[i];
                     const fontURL = font.getAttribute(urlAttribute);
-                    if (!fontURL) {
-                        continue;
-                    }
-                    const fontInfo = fontURL.match(
-                        /fonts\/([^/]*?)\/?([^/]*)\.(woff2|woff|ttf).json$/
-                    );
-                    if (!fontInfo || fontInfo.length < 3) {
-                        continue;
-                    }
-                    const fontName = fontInfo[2];
-                    const fontHash = fontInfo[1];
-                    const fontData = localStorage.getItem(
-                        fontStorageKey(fontName, fontHash)
-                    );
-                    if (fontData) {
-                        useFont(font, JSON.parse(fontData).value);
-                    } else {
-                        fetchFont(fontURL, font, fontName, fontHash);
+                    if (fontURL) {
+                        const fontInfo = fontURL.match(
+                            /fonts\/([^/]*?)\/?([^/]*)\.(woff2|woff|ttf).json$/
+                        );
+                        if (fontInfo && fontInfo.length >= 3) {
+                            const fontName = fontInfo[2];
+                            const fontHash = fontInfo[1];
+                            const fontData = localStorage.getItem(
+                                fontStorageKey(fontName, fontHash)
+                            );
+                            if (fontData) {
+                                useFont(font, JSON.parse(fontData).value);
+                            } else {
+                                fetchFont(fontURL, font, fontName, fontHash);
+                            }
+                        }
                     }
                 }
                 return true;
@@ -296,7 +308,7 @@ do you have fonts in localStorage?
                                 return true;
                             }
                         }
-                    }    
+                    }
                 } catch (e) {
                     // @if(context.environment.mode == Dev){throw(e)}
                 }
@@ -305,7 +317,7 @@ do you have fonts in localStorage?
                 // non-blink Opera cannot use the canvas fillText() method) so we assume
                 // false for safety's sake.
                 saveFontSmoothing(false);
-                
+
                 return false;
             }
 
