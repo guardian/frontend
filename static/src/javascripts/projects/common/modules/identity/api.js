@@ -74,7 +74,7 @@ export const getUserFromCookie = (): ?Object => {
 export const isUserLoggedIn = (): boolean => getUserFromCookie() !== null;
 
 export const getUserFromApi = mergeCalls(mergingCallback => {
-    const apiRoot = Id.idApiRoot ? Id.idApiRoot : '';
+    const apiRoot = Id.idApiRoot || '';
 
     if (isUserLoggedIn()) {
         ajax({
@@ -105,7 +105,7 @@ export const getUrl = (): string => config.page.idUrl;
 export const getUserFromApiWithRefreshedCookie = () => {
     const endpoint = '/user/me';
     const request = ajax({
-        url: Id.idApiRoot ? Id.idApiRoot + endpoint : endpoint,
+        url: (Id.idApiRoot || '') + endpoint,
         type: 'jsonp',
         data: {
             refreshCookie: true,
@@ -166,7 +166,7 @@ export const emailSignup = (listId: string) => {
         listId,
     };
     const request = ajax({
-        url: Id.idApiRoot ? Id.idApiRoot + endpoint : endpoint,
+        url:  (Id.idApiRoot || '') + endpoint,
         type: 'jsonp',
         crossOrigin: true,
         data: {
@@ -184,7 +184,7 @@ export const getUserEmailSignUps = (): Promise<any> => {
     if (user) {
         const endpoint = `/useremails/${user.id}`;
         const request = ajax({
-            url: Id.idApiRoot ? Id.idApiRoot + endpoint : endpoint,
+            url:  (Id.idApiRoot || '') + endpoint,
             type: 'jsonp',
             crossOrigin: true,
         });
@@ -198,7 +198,7 @@ export const getUserEmailSignUps = (): Promise<any> => {
 export const sendValidationEmail = () => {
     const endpoint = '/user/send-validation-email';
     const request = ajax({
-        url: Id.idApiRoot ? Id.idApiRoot + endpoint : endpoint,
+        url: (Id.idApiRoot || '') + endpoint,
         type: 'jsonp',
         crossOrigin: true,
         data: {
@@ -218,7 +218,7 @@ export const updateUsername = (username: string) => {
         },
     };
     const request = ajax({
-        url: Id.idApiRoot ? Id.idApiRoot + endpoint : endpoint,
+        url: (Id.idApiRoot || '') + endpoint,
         type: 'json',
         crossOrigin: true,
         method: 'POST',
