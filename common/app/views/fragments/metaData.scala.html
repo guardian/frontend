@@ -1,4 +1,4 @@
-@(page: model.Page, amp: Boolean = false)(implicit request: RequestHeader, context: model.ApplicationContext)
+@(amp: Boolean = false)(implicit page: model.Page, request: RequestHeader, context: model.ApplicationContext)
 
 @import common.{AnalyticsHost, _}
 @import conf.{Configuration, _}
@@ -8,6 +8,7 @@
 @import conf.switches.Switches.{ComscoreSwitch, SmartAppBanner}
 @import play.api.Mode.Dev
 
+<meta charset="utf-8">
 @* Critical meta data that have an impact on rendering speed *@
 <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
 <meta name="format-detection" content="telephone=no" />

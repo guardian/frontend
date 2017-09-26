@@ -4,5 +4,5 @@
 
 @if(page.withJavaScript) {
   @fragments.atomJSNonBlocking(page)
-  @fragments.analytics.base(page)
+  @fragments.analytics.base()(page, request, context)
 }

@@ -8,16 +8,15 @@
 <html id="js-context" class="js-off is-not-modern id--signed-out" data-page-path="@request.path">
 
     <head>
-        <meta charset="utf-8" />
         <title>@views.support.Title(surveyPage)</title>
 
-        @fragments.metaData(surveyPage)
+        @fragments.metaData()(surveyPage, request, context)
 
         @* get the stylesheets downloading ASAP *@
         @fragments.stylesheets(projectName=Option("survey"))
 
         @* polyfill, feature detect etc before we try and use the stylesheets *@
-        @fragments.inlineJSBlocking(surveyPage)
+        @fragments.inlineJSBlocking()(surveyPage, request, context)
 
         @* start trying to use the stylesheets *@
         <script>
@@ -29,13 +28,13 @@
     id="survey-laboratory"
     itemscope itemtype="http://schema.org/WebPage">
 
-        @fragments.header(surveyPage)
+        @fragments.header()(surveyPage, request)
 
         @body
 
-        @fragments.footer(surveyPage)
+        @fragments.footer()(surveyPage, request)
 
-        @fragments.inlineJSNonBlocking(surveyPage)
+        @fragments.inlineJSNonBlocking()(surveyPage, request, context)
 
     </body>
 </html>

@@ -3,7 +3,7 @@
 
 @(competitions: Map[String, Seq[CompetitionFilter]], page: Page, competitionList: List[String])(implicit request: RequestHeader, context: model.ApplicationContext)
 
-@main(page, Some("football")){
+@mainLegacy(page, Some("football")){
 }{
 
     @football.views.html.fragments.competitionsBody(competitions, page, competitionList)

@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        @fragments.head(crosswordPage, None, Html(""))
+        @fragments.head(None, Html(""))(crosswordPage, request, context)
     </head>
 
     <body class="printable-crossword">

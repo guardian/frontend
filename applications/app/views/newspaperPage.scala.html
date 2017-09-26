@@ -1,6 +1,6 @@
 @(paper: controllers.TodayNewspaper)(implicit request: RequestHeader, context: model.ApplicationContext)
 
-@main(paper.page) { } {
+@mainLegacy(paper.page) { } {
 
     @for(bookSection <- paper.bookSections) {
 

@@ -6,7 +6,7 @@
 
 @import common.LinkTo
 
-@main(model){
+@mainLegacy(model){
     @model.currentPage.pagination.flatMap(_.older).map(_.suffix).map { suffix =>
         <link rel="next" href="@LinkTo{ /@{model.article.content.metadata.id}@suffix }">
     }

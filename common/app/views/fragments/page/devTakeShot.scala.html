@@ -1,0 +1,10 @@
+@()(implicit context: model.ApplicationContext)
+@if(context.environment.mode == play.api.Mode.Dev) {
+    <script>
+        if (window.callPhantom) {
+            setTimeout(function() {
+                window.callPhantom('takeShot');
+            }, 10000); // Wait arbitrary 10 seconds before taking the screenshot to let things settled down
+        }
+    </script>
+}

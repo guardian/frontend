@@ -10,6 +10,7 @@ import model._
 import LiveBlogHelpers._
 import model.liveblog._
 import org.joda.time.DateTime
+import pages.ArticleEmailHtmlPage
 import play.api.libs.functional.syntax._
 import play.api.libs.json.{Json, _}
 import play.api.mvc._
@@ -99,7 +100,7 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
     case minute: MinutePage =>
       noAMP {
         val htmlResponse = () => {
-          if (request.isEmail) views.html.articleEmail(minute)
+          if (request.isEmail) ArticleEmailHtmlPage.html(minute)
           else                 views.html.minute(minute)
         }
 
@@ -109,7 +110,7 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
 
     case article: ArticlePage =>
       val htmlResponse = () => {
-        if (request.isEmail) views.html.articleEmail(article)
+        if (request.isEmail) ArticleEmailHtmlPage.html(article)
         else if (article.article.isExplore) views.html.articleExplore(article)
         else if (article.article.isImmersive) views.html.articleImmersive(article)
         else if (request.isAmp) views.html.articleAMP(article)

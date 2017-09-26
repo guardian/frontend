@@ -1,0 +1,11 @@
+@(name: Option[String] = None)(implicit context: model.ApplicationContext)
+
+@import conf.Static
+
+@if(context.environment.mode == play.api.Mode.Dev || !conf.switches.Switches.InlineCriticalCss.isSwitchedOn) {
+    <link rel="stylesheet" id="head-css" data-reload="head.@name.getOrElse("content")" type="text/css" href="@Static("stylesheets/head." + name.getOrElse("content") + ".css")" />
+} else {
+    <style class="js-loggable">
+        @Html(common.Assets.css.head(name))
+    </style>
+}
