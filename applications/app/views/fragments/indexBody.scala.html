@@ -33,6 +33,7 @@
                         @containers.map { containerDefinition =>
                             @container(containerDefinition,
                                 frontProperties = FrontProperties.fromBranding(Edition(request), branding),
+                                frontId = Some(index.idWithoutEdition),
                                 showFrontBranding = isFirstNonThrasherContainer(containerDefinition.index, containers))
                         }
                 }
