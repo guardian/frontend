@@ -52,7 +52,10 @@ describe('Identity API', () => {
     });
 
     it('gets user from cookie', () => {
-        expect(getUserFromCookie().displayName).toBe('Amélie Jôse');
+        const user = getUserFromCookie();
+        const displayName = user && user.displayName;
+
+        expect(displayName).toBe('Amélie Jôse');
     });
 
     it('decodes a base64 string', () => {
@@ -118,8 +121,9 @@ describe('Identity API', () => {
 
     it('should not redirect to sign in when user is already signed in', () => {
         const user = getUserOrSignIn();
+        const displayName = user && user.displayName;
 
-        expect(user.displayName).toBe('Amélie Jôse');
+        expect(displayName).toBe('Amélie Jôse');
     });
 
     it('should redirect with return URL when given', () => {
