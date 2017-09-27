@@ -24,7 +24,9 @@ are used to generate the confidence graphs on the frontend dashboard.
         {
             "vars":
                 {
-                    "c2": "6035250",
+                    "c2": "6035250"
+                },
+             "extraUrlParams": {
                     "comscorekw": @Html(Json.toJson(content.tags.keywords.map{ tag: Tag => tag.id}).toString)
                 }
         }
