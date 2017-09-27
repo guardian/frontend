@@ -1,4 +1,6 @@
 @import play.api.Mode
+@import model.Tag
+@import play.api.libs.json.Json
 @(content: model.Content)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @import conf.Configuration
@@ -18,5 +20,13 @@ are used to generate the confidence graphs on the frontend dashboard.
 @fragments.amp.googleAnalytics(content)
 
 <amp-analytics id="comscore" type="comscore">
-    <script type="application/json">{ "vars": { "c2": "6035250" } }</script>
+    <script type="application/json">
+        {
+            "vars":
+                {
+                    "c2": "6035250",
+                    "comscorekw": @Html(Json.toJson(content.tags.keywords.map{ tag: Tag => tag.id}).toString)
+                }
+        }
+    </script>
 </amp-analytics>
