@@ -3,9 +3,9 @@ package controllers
 import common.ImplicitControllerExecutionContext
 import conf.switches.Switches
 import model.ApplicationContext
+import pages.ContentHtmlPage
 import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 import sudoku.{SudokuApi, SudokuPage}
-import views.html.sudoku
 
 import scala.concurrent.Future
 
@@ -15,7 +15,7 @@ class SudokusController(val controllerComponents: ControllerComponents)(implicit
     if (Switches.SudokuSwitch.isSwitchedOn) {
       SudokuApi.getData(id) map {
         case Some(sudokuData) =>
-          Ok(sudoku(new SudokuPage(sudokuData)))
+          Ok(ContentHtmlPage.html(new SudokuPage(sudokuData)))
 
         case None => NotFound(s"No Sudoku with id $id")
       }
