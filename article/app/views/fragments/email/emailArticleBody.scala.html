@@ -9,6 +9,26 @@
 @import model.EmailAddons.EmailContentType
 @import model.content.{MediaAtom, MediaAssetPlatform}
 
+
+@richLinkDefault(title: String, href: String) = {
+    @row(Seq("padded")) {
+        <div class="padded rich-link__container">
+            <a class="rich-link__link" href="@href">
+                <h3 class="rich-link__header">@title</h3>
+            </a>
+
+            <div class="rich-link__read-more">
+                <a class="rich-link__link" href="@href">
+                    <p class="rich-link__read-more">
+                        Read more
+                    </p>
+                </a>
+            </div>
+        </div>
+    }
+}
+
+
 <table class="article-body">
 @defining(page.article) { article =>
     @row(Seq("no-pad")) {
@@ -76,9 +96,7 @@
                     }
 
                     case RichLinkBlockElement(Some(url), Some(text), _) => {
-                        @row(Seq("padded", "rich-link")) {
-                            <span class="rich-link__prefix">More:</span> <a href="@url">@text</a>
-                        }
+                        @richLinkDefault(text, url)
                     }
 
                     case EmbedBlockElement(Some(html), _, _) => {

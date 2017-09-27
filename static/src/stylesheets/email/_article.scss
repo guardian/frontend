@@ -141,4 +141,29 @@ blockquote {
     color: #005689;
 }
 
+.rich-link {
+
+}
+
+.rich-link__container {
+    background-color: #f6f6f6;
+    border-top: #4bc6df solid 1px;
+
+}
+
+.rich-link__header {
+    font-weight: bold;
+}
+
+.rich-link__link {
+    text-decoration: none;
+}
+.rich-link__read-more {
+    color: #005689;
+    font-weight: 900;
+    font-size: 14px;
+    margin: 0;
+    padding: 0;
+}
+
 @import '_media-query';
