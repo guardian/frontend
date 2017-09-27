@@ -1,9 +1,9 @@
-@(crosswordPage: crosswords.CrosswordPage)(implicit request: RequestHeader)
+@(crosswordPage: crosswords.CrosswordPageWithContent)(implicit request: RequestHeader)
 <div class="content-footer">
 
-    @fragments.discussionFooter(crosswordPage.content.content, crosswordPage.content.trail.isCommentable, crosswordPage.content.trail.isClosedForComments, crosswordPage.content.content.shortUrlId)
+    @fragments.discussionFooter(crosswordPage.item.content, crosswordPage.item.trail.isCommentable, crosswordPage.item.trail.isClosedForComments, crosswordPage.item.content.shortUrlId)
 
-    @if(crosswordPage.content.trail.isCommentable) {
+    @if(crosswordPage.item.trail.isCommentable) {
         <div class="js-repositioned-comments content__repositioned-comments"></div>
     }
 
