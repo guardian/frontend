@@ -190,7 +190,7 @@ object Atoms extends common.Logging {
 
   def make(content: contentapi.Content, pageShares: ShareLinkMeta = ShareLinkMeta(Nil, Nil)): Option[Atoms] = {
     content.atoms.map { atoms =>
-      val quizzes = extract(atoms.quizzes, atom => { Quiz.make(content.id, atom) })
+      val quizzes = extract(atoms.quizzes, atom => { Quiz.make(content.id, atom, pageShares) })
 
       val media = extract(atoms.media, atom => {
         val endSlatePath = EndSlateComponents(
