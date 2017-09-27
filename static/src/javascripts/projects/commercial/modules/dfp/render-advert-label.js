@@ -7,7 +7,6 @@ import { commercialFeatures } from 'commercial/modules/commercial-features';
 
 const shouldRenderLabel = adSlotNode =>
     !(
-        adSlotNode.classList.contains('ad-slot--fluid') ||
         adSlotNode.classList.contains('ad-slot--frame') ||
         adSlotNode.classList.contains('gu-style') ||
         adSlotNode.getAttribute('data-label') === 'false' ||

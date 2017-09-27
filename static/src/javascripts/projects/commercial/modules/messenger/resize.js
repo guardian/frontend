@@ -17,17 +17,8 @@ const normalise = (length: string): string => {
     return matches[1] + (matches[2] === undefined ? defaultUnit : matches[2]);
 };
 
-const resize = (
-    specs: Specs,
-    iframe: HTMLElement,
-    adSlot: HTMLElement
-): ?Promise<any> => {
-    if (
-        !specs ||
-        !('height' in specs || 'width' in specs) ||
-        !iframe ||
-        !adSlot
-    ) {
+const resize = (specs: Specs, iframe: HTMLElement): ?Promise<any> => {
+    if (!specs || !('height' in specs || 'width' in specs) || !iframe) {
         return null;
     }
 
@@ -42,7 +33,6 @@ const resize = (
     }
 
     return fastdom.write(() => {
-        Object.assign(adSlot.style, styles);
         Object.assign(iframe.style, styles);
     });
 };
@@ -50,8 +40,7 @@ const resize = (
 const init = (register: RegisterListeners) => {
     register('resize', (specs, ret, iframe) => {
         if (iframe && specs) {
-            const adSlot = iframe && iframe.closest('.js-ad-slot');
-            return resize(specs, iframe, adSlot);
+            return resize(specs, iframe);
         }
     });
 };
