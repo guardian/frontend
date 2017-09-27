@@ -42,9 +42,7 @@
     "bootstraps/video-embed.js",
     "bootstraps/youtube-embed.js"
   ],
-  "Philip Wills": [
-    "projects/common/modules/identity/account-profile.js"
-  ],
+  "Philip Wills": [],
   "Santiago Villa Fernandez": [
     "projects/common/modules/identity/api.js",
     "projects/common/modules/identity/cookierefresh.js"
@@ -63,8 +61,8 @@
   "jranks123": [],
   "shaundillon": [],
   "Joseph Smith": [
-      "projects/common/modules/commercial/donot-use-adblock.js",
-      "projects/common/modules/commercial/video-ad-url.js"
+    "projects/common/modules/commercial/donot-use-adblock.js",
+    "projects/common/modules/commercial/video-ad-url.js"
   ],
   "Gideon Goldberg": [],
   "Matthew Walls": [],
