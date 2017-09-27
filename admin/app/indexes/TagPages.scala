@@ -3,7 +3,7 @@ package indexes
 import common.Logging
 import common.Maps._
 import com.gu.contentapi.client.model.v1.Tag
-import model.{TagDefinition, TagIndexPage}
+import model.{TagDefinition, TagIndex}
 import common.StringEncodings.asAscii
 import play.api.libs.iteratee.{Enumeratee, Iteratee}
 
@@ -114,9 +114,9 @@ class TagPages(implicit executionContext: ExecutionContext) extends Logging {
     (tag.lastName, tag.firstName, tag.webTitle)
 
   def toPages[A: Ordering](tagsByKey: Map[String, Set[Tag]])
-                          (titleFromKey: String => String, sortKey: Tag => A): Seq[TagIndexPage] =
+                          (titleFromKey: String => String, sortKey: Tag => A): Seq[TagIndex] =
     tagsByKey.toSeq.sortBy(_._1) map { case (id, tagSet) =>
-      TagIndexPage(
+      TagIndex(
         id,
         titleFromKey(id),
         tagSet.toSeq.sortBy(sortKey).map(TagDefinition.fromContentApiTag)

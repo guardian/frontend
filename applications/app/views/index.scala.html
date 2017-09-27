@@ -3,5 +3,5 @@
 @mainLegacy(index.page, projectName = Option("facia")){
     @fragments.indexHead(index)
 }{
-    @views.IndexCleaner(index, fragments.indexBody(index).toString)
+    @views.IndexCleaner(index, fragments.indexBody(index))
 }
