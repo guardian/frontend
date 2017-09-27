@@ -4,7 +4,7 @@ import com.gu.contentapi.client.model.v1.{Crossword, ItemResponse, Content => Ap
 import common.{Edition, ImplicitControllerExecutionContext, Logging}
 import conf.Static
 import contentapi.ContentApiClient
-import pages.{CrosswordHtmlPage, PrintableCrosswordHtmlPage}
+import pages.{CrosswordHtmlPage, IndexHtmlPage, PrintableCrosswordHtmlPage}
 import crosswords.{AccessibleCrosswordPage, AccessibleCrosswordRows, CrosswordPageWithSvg, CrosswordSearchPageNoResult, CrosswordSearchPageWithResults, CrosswordSvg}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model._
@@ -170,7 +170,7 @@ class CrosswordSearchController(
                 tzOverride = None
               )
 
-              Cached(15.minutes)(RevalidatableResult.Ok(views.html.index(page)))
+              Cached(15.minutes)(RevalidatableResult.Ok(IndexHtmlPage.html(page)))
           }
         }
       }
