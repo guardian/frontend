@@ -3,7 +3,7 @@
 @import controllers.ValidationState._
 @import views.html.fragments.registrationFooter
 
-@main(page, projectName = Option("identity")){
+@mainLegacy(page, projectName = Option("identity")){
 }{
     <div class="identity-wrapper monocolumn-wrapper">
         @if(state.isValidated){

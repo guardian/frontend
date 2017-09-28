@@ -2,7 +2,7 @@
 
 @(page: Page, trails: Seq[model.pressed.PressedContent])(implicit request: RequestHeader, context: model.ApplicationContext)
 
-@main(page){
+@mainLegacy(page){
 }{
 
     @fragments.topStoriesBody(trails)

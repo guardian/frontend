@@ -403,7 +403,7 @@ trait AtomPage extends Page {
   def atomType: String
   def body: Html
   def withJavaScript: Boolean
-  def withVerticalScrollbar: Boolean 
+  def withVerticalScrollbar: Boolean
   def javascriptModule: String = atomType
 }
 

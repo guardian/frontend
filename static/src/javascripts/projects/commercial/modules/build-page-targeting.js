@@ -5,7 +5,7 @@ import { getReferrer as detectGetReferrer, getBreakpoint } from 'lib/detect';
 import { local } from 'lib/storage';
 import { getUrlVars } from 'lib/url';
 import { getKruxSegments } from 'commercial/modules/third-party-tags/krux';
-import identity from 'common/modules/identity/api';
+import { isUserLoggedIn } from 'common/modules/identity/api';
 import { getUserSegments } from 'commercial/modules/user-ad-targeting';
 import { getParticipations } from 'common/modules/experiments/utils';
 import flatten from 'lodash/arrays/flatten';
@@ -137,7 +137,7 @@ const buildPageTargeting = once((adFree: ?boolean): Object => {
             pv: config.ophan.pageViewId,
             bp: getBreakpoint(),
             at: adtestParams(),
-            si: identity.isUserLoggedIn() ? 't' : 'f',
+            si: isUserLoggedIn() ? 't' : 'f',
             gdncrm: getUserSegments(),
             ab: abParam(),
             ref: getReferrer(),

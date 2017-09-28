@@ -11,4 +11,9 @@ set -x
 
 echo "Install dependencies"
 
-make reinstall
+git diff HEAD~1 --name-only | if grep .nvmrc
+then
+    make reinstall
+else
+    make install
+fi

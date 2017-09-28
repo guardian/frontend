@@ -43,11 +43,9 @@
     "bootstraps/youtube-embed.js"
   ],
   "Philip Wills": [
-    "projects/common/modules/crosswords/grid.js",
     "projects/common/modules/identity/account-profile.js"
   ],
   "Santiago Villa Fernandez": [
-    "projects/common/modules/identity/api.js",
     "projects/common/modules/identity/cookierefresh.js"
   ],
   "Richard Nguyen": [],

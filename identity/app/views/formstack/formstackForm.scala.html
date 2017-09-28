@@ -10,7 +10,7 @@
     @fragments.stylesheets(Some(context.applicationIdentity.name))
 
     @* inline JS - blocking *@
-    @fragments.inlineJSBlocking(page)
+    @fragments.inlineJSBlocking()(page, request, context)
 </head>
 <body id="top">
 

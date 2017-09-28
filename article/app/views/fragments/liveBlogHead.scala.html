@@ -1,0 +1,14 @@
+@(next: Option[String], prev: Option[String], organisation: Html, posting: Html)
+
+@next.map { n =>
+    <link rel="next" href="@n">
+}
+@prev.map { p =>
+    <link rel="prev" href="@p">
+}
+<script type="application/ld+json">
+    @organisation
+</script>
+<script type="application/ld+json">
+    @posting
+</script>

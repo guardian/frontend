@@ -2,6 +2,6 @@
 
 @import fragments.tagIndexListingBody
 
-@main(page, projectName = Some("index")) { } {
+@mainLegacy(page, projectName = Some("index")) { } {
     @tagIndexListingBody("contributors", page.metadata.webTitle, listing)
 }

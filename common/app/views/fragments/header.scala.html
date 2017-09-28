@@ -1,5 +1,5 @@
-@(page: model.Page)(implicit request: RequestHeader)
-@import common.{Edition, LinkTo}
+@()(implicit page: model.Page, request: RequestHeader)
+@import common.{Edition, LinkTo, SubscribeLink, MembershipLink}
 @import conf.Configuration
 @import conf.switches.Switches._
 @import navigation.UrlHelpers.{Membership, OldHeader, Subscribe, getReaderRevenueUrl}

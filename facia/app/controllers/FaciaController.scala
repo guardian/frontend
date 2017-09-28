@@ -15,6 +15,7 @@ import layout.slices._
 import views.html.fragments.containers.facia_cards.container
 import views.support.FaciaToMicroFormat2Helpers.getCollection
 import conf.switches.Switches.InlineEmailStyles
+import pages.{FrontEmailHtmlPage, FrontHtmlPage}
 
 import scala.concurrent.Future
 import scala.concurrent.Future.successful
@@ -120,14 +121,14 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
           else if (request.isJson)
             Cached(CacheTime.Facia)(JsonFront(faciaPage))
           else if (request.isEmail || ConfigAgent.isEmailFront(path)) {
-            val htmlResponse = views.html.frontEmail(faciaPage)
+            val htmlResponse = FrontEmailHtmlPage.html(faciaPage)
             Cached(CacheTime.Facia) {
               RevalidatableResult.Ok(if (InlineEmailStyles.isSwitchedOn) InlineStyles(htmlResponse) else htmlResponse)
             }
           }
           else {
             Cached(CacheTime.Facia) {
-              RevalidatableResult.Ok(views.html.front(faciaPage))
+                RevalidatableResult.Ok(FrontHtmlPage.html(faciaPage))
             }
           }
         )

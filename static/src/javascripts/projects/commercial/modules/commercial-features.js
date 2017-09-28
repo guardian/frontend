@@ -2,7 +2,7 @@
 import config from 'lib/config';
 import { getBreakpoint, adblockInUse } from 'lib/detect';
 import { isAdFreeUser } from 'commercial/modules/user-features';
-import identityApi from 'common/modules/identity/api';
+import { isUserLoggedIn } from 'common/modules/identity/api';
 import userPrefs from 'common/modules/user-prefs';
 import { shouldShowReaderRevenue } from 'common/modules/commercial/contributions-utilities';
 import { getParticipations } from 'common/modules/experiments/utils';
@@ -101,7 +101,7 @@ class CommercialFeatures {
             isArticle &&
             !config.page.isPreview &&
             config.page.showRelatedContent &&
-            !(identityApi.isUserLoggedIn() && config.page.commentable);
+            !(isUserLoggedIn() && config.page.commentable);
 
         this.commentAdverts =
             this.dfpAdvertising &&
@@ -109,7 +109,7 @@ class CommercialFeatures {
             !isMinuteArticle &&
             config.switches.enableDiscussionSwitch &&
             config.page.commentable &&
-            identityApi.isUserLoggedIn() &&
+            isUserLoggedIn() &&
             (!isLiveBlog || isWidePage);
 
         this.liveblogAdverts =

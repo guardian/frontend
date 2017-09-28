@@ -71,25 +71,25 @@ val applications = application("applications")
   .dependsOn(commonWithTests)
   .aggregate(common)
 
-val archive = applicationWithAkkaHttp("archive").dependsOn(commonWithTests).aggregate(common).settings(
+val archive = application("archive").dependsOn(commonWithTests).aggregate(common).settings(
 )
 
-val sport = applicationWithAkkaHttp("sport").dependsOn(commonWithTests).aggregate(common).settings(
+val sport = application("sport").dependsOn(commonWithTests).aggregate(common).settings(
   libraryDependencies ++= Seq(
     paClient,
     akkaContrib
   )
 )
 
-val discussion = applicationWithAkkaHttp("discussion").dependsOn(commonWithTests).aggregate(common)
+val discussion = application("discussion").dependsOn(commonWithTests).aggregate(common)
 
-val diagnostics = applicationWithAkkaHttp("diagnostics").dependsOn(commonWithTests).aggregate(common).settings(
+val diagnostics = application("diagnostics").dependsOn(commonWithTests).aggregate(common).settings(
   libraryDependencies ++= Seq(
     redisClient
   )
 )
 
-val admin = applicationWithAkkaHttp("admin").dependsOn(commonWithTests).aggregate(common).settings(
+val admin = application("admin").dependsOn(commonWithTests).aggregate(common).settings(
   libraryDependencies ++= Seq(
     paClient,
     dfpAxis,
@@ -130,9 +130,9 @@ val identity = application("identity").dependsOn(commonWithTests).aggregate(comm
   )
 )
 
-val commercial = applicationWithAkkaHttp("commercial").dependsOn(commonWithTests).aggregate(common)
+val commercial = application("commercial").dependsOn(commonWithTests).aggregate(common)
 
-val onward = applicationWithAkkaHttp("onward").dependsOn(commonWithTests).aggregate(common)
+val onward = application("onward").dependsOn(commonWithTests).aggregate(common)
 
 val dev = application("dev-build")
   .dependsOn(
@@ -153,7 +153,7 @@ val dev = application("dev-build")
     javaOptions in Runtime += "-Dconfig.file=dev-build/conf/dev-build.application.conf"
   )
 
-val preview = applicationWithAkkaHttp("preview").dependsOn(
+val preview = application("preview").dependsOn(
   commonWithTests,
   article,
   facia,
@@ -168,7 +168,7 @@ val integrationTests = Project("integrated-tests", file("integrated-tests"))
   .settings(frontendCompilationSettings:_*)
   .settings(frontendIntegrationTestsSettings:_*)
 
-val rss = applicationWithAkkaHttp("rss")
+val rss = application("rss")
   .dependsOn(commonWithTests)
   .aggregate(common)
 
