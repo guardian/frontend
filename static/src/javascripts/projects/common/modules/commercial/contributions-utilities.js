@@ -23,7 +23,7 @@ import { getSync as geolocationGetSync } from 'lib/geolocation';
 import { noop } from 'lib/noop';
 import lodashTemplate from 'lodash/utilities/template';
 import toArray from 'lodash/collections/toArray';
-import acquisitionsEpicButtons from 'raw-loader!common/views/acquisitions-epic-buttons.html';
+import acquisitionsEpicButtons from 'common/modules/commercial/templates/acquisitions-epic-buttons';
 import acquisitionsEpicControlTemplate from 'raw-loader!common/views/acquisitions-epic-control.html';
 import acquisitionsTestimonialBlockTemplate from 'raw-loader!common/views/acquisitions-epic-testimonial-block.html';
 import { shouldSeeReaderRevenue as userShouldSeeReaderRevenue } from 'commercial/modules/user-features';
@@ -53,7 +53,7 @@ const defaultMaxViews: {
 };
 
 const defaultButtonTemplate = (urls: CtaUrls) =>
-    lodashTemplate(acquisitionsEpicButtons, urls);
+    acquisitionsEpicButtons(urls)
 
 const controlTemplate: EpicTemplate = ({ options = {} }, copy) =>
     lodashTemplate(acquisitionsEpicControlTemplate, {

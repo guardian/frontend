@@ -1,7 +1,9 @@
-<div class="contributions__amount-field">
+import type CtaUrls from 'common/modules/commercial/contributions-utilities';
+
+const epicButtonsTemplate = (urls:CtaUrls) => `<div class="contributions__amount-field">
   <div>
     <a class="contributions__option-button contributions__contribute contributions__contribute--epic contributions__contribute--epic-member contributions__contribute--epic-member-top"
-      href="<%=membershipUrl%>"
+      href="${urls.membershipUrl}"
       target="_blank">
       Become a supporter
     </a>
@@ -9,9 +11,11 @@
 
   <div>
     <a class="contributions__option-button contributions__contribute contributions__contribute--epic contributions__contribute--epic-member"
-     href="<%=contributeUrl%>"
+     href="${urls.contributeUrl}"
      target="_blank">
      Make a contribution
    </a>
   </div>
-</div>
+</div>`
+
+export default epicButtonsTemplate
