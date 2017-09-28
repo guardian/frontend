@@ -5,7 +5,7 @@ import raven from 'lib/raven';
 import config from 'lib/config';
 import fastdom from 'lib/fastdom-promise';
 import sha1 from 'lib/sha1';
-import identity from 'common/modules/identity/api';
+import { getUserFromCookie } from 'common/modules/identity/api';
 import { loadScript } from 'lib/load-script';
 import { commercialFeatures } from 'commercial/modules/commercial-features';
 import { buildPageTargeting } from 'commercial/modules/build-page-targeting';
@@ -72,7 +72,7 @@ const removeAdSlots = (): Promise<void> => {
 };
 
 const setPublisherProvidedId = (): void => {
-    const user: ?Object = identity.getUserFromCookie();
+    const user: ?Object = getUserFromCookie();
     if (user) {
         const hashedId = sha1.hash(user.id);
         window.googletag.pubads().setPublisherProvidedId(hashedId);

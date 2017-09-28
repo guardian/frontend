@@ -22,7 +22,7 @@ import {
     handle as upvoteHandle,
     closeTooltip as upvoteCloseTooltip,
 } from 'common/modules/discussion/upvote';
-import Id from 'common/modules/identity/api';
+import { getUserFromCookie, getUserFromApi } from 'common/modules/identity/api';
 import userPrefs from 'common/modules/user-prefs';
 
 class Loader extends Component {
@@ -39,11 +39,11 @@ class Loader extends Component {
     }
 
     getUser(): void {
-        if (Id.getUserFromCookie()) {
+        if (getUserFromCookie()) {
             getUser().then(resp => {
                 this.user = resp.userProfile;
 
-                Id.getUserFromApi(user => {
+                getUserFromApi(user => {
                     if (user && user.publicFields.username) {
                         this.username = user.publicFields.username;
                     }
@@ -87,7 +87,7 @@ class Loader extends Component {
             this.setState('closed');
         } else if (this.comments.isReadOnly()) {
             this.setState('readonly');
-        } else if (Id.getUserFromCookie()) {
+        } else if (getUserFromCookie()) {
             if (
                 this.user &&
                 this.user.privateFields &&
@@ -563,7 +563,7 @@ class Loader extends Component {
             element: document.getElementsByClassName(
                 'js-discussion-external-frontend'
             )[0],
-            userFromCookie: !!Id.getUserFromCookie(),
+            userFromCookie: !!getUserFromCookie(),
             profileUrl: config.page.idUrl,
             profileClientId: config.switches.registerWithPhone
                 ? 'comments'

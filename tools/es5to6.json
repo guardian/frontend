@@ -46,7 +46,6 @@
     "projects/common/modules/identity/account-profile.js"
   ],
   "Santiago Villa Fernandez": [
-    "projects/common/modules/identity/api.js",
     "projects/common/modules/identity/cookierefresh.js"
   ],
   "Richard Nguyen": [],

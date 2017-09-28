@@ -1,7 +1,10 @@
 // @flow
 import fastdom from 'lib/fastdom-promise';
 import mediator from 'lib/mediator';
-import IdentityApi from 'common/modules/identity/api';
+import {
+    isUserLoggedIn,
+    sendValidationEmail,
+} from 'common/modules/identity/api';
 
 const init = (): void => {
     fastdom
@@ -15,8 +18,8 @@ const init = (): void => {
                 resendButton.addEventListener('click', (event: Event): void => {
                     event.preventDefault();
 
-                    if (IdentityApi.isUserLoggedIn()) {
-                        IdentityApi.sendValidationEmail().then(
+                    if (isUserLoggedIn()) {
+                        sendValidationEmail().then(
                             resp => {
                                 if (resp.status === 'error') {
                                     mediator.emit(

@@ -2,7 +2,7 @@
 
 import { addCookie, removeCookie, getCookie } from 'lib/cookies';
 import fetchJson from 'lib/fetch-json';
-import identity from 'common/modules/identity/api';
+import { isUserLoggedIn as isUserLoggedIn_ } from 'common/modules/identity/api';
 import {
     refresh,
     isAdFreeUser,
@@ -26,7 +26,7 @@ jest.mock('lib/config', () => ({
 }));
 
 const fetchJsonSpy: any = fetchJson;
-const isUserLoggedIn: any = identity.isUserLoggedIn;
+const isUserLoggedIn: any = isUserLoggedIn_;
 
 const PERSISTENCE_KEYS = {
     USER_FEATURES_EXPIRY_COOKIE: 'gu_user_features_expiry',
