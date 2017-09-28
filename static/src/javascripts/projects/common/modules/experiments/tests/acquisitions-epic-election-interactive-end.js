@@ -3,8 +3,7 @@ import {
     makeABTest,
     defaultButtonTemplate,
 } from 'common/modules/commercial/contributions-utilities';
-import template from 'lodash/utilities/template';
-import epicControlTemplate from 'raw-loader!common/views/acquisitions-epic-control.html';
+import { acquisitionsEpicControlTemplate } from 'common/modules/commercial/templates/acquisitions-epic-control';
 import { control } from 'common/modules/commercial/acquisitions-copy';
 
 export const acquisitionsEpicElectionInteractiveEnd = makeABTest({
@@ -50,7 +49,7 @@ export const acquisitionsEpicElectionInteractiveEnd = makeABTest({
                 successOnView: true,
 
                 template: function makeControlTemplate(variant) {
-                    return template(epicControlTemplate, {
+                    return acquisitionsEpicControlTemplate({
                         copy: control,
                         componentName: variant.options.componentName,
                         buttonTemplate: defaultButtonTemplate({
