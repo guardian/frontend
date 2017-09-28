@@ -1,0 +1,27 @@
+#!/usr/bin/env node
+/* eslint-disable no-console */
+
+const execa = require('execa');
+const chalk = require('chalk');
+const fs = require('fs');
+
+execa.shell('git diff-tree -r --name-only --no-commit-id HEAD@{1} HEAD')
+    .then(result => {
+        const changedFiles = result.stdout.split(',');
+
+        if (changedFiles.includes('.nvmrc')) {
+            const nvmrcVersion = fs.readFileSync('.nvmrc');
+
+            console.log(`${chalk.red(`Frontend now requires Node v${nvmrcVersion}. Switch to the latest version using \`nvm install\` or download from nodejs.org. Then run \`make reinstall\`.`)}`);
+        } else if (changedFiles.includes('yarn.lock')) {
+            console.log(`${chalk.red('This application has new dependencies. Running \`make install\`...')}`);
+
+            return execa('make', ['install'], {
+                stdio: 'inherit',
+            });
+        }
+    })
+    .catch(e => {
+        console.log(`\n${e}\n`);
+        process.exit(1);
+    });
