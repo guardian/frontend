@@ -64,7 +64,10 @@
 
                 @defining(IndexPage.makeFront(index, Edition(request)).containers) { containers =>
                     @containers.map { containerDefinition =>
-                        @container(containerDefinition, empty)
+                        @container(
+                            containerDefinition = containerDefinition,
+                            frontId = Some(index.idWithoutEdition)
+                        )
                     }
                 }
 
