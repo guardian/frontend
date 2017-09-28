@@ -3,7 +3,7 @@ import type { AcquisitionsEpicTestimonialTemplateParameters } from 'common/modul
 
 export const acquisitionsTestimonialBlockTemplate = (
     params: AcquisitionsEpicTestimonialTemplateParameters
-) => 
+) =>
     `<div class="epic__testimonial-container epic__testimonial-container--subtle">
         <div class="epic__testimonial-quote epic__testimonial-quote--subtle">
             ${params.quoteSvg}

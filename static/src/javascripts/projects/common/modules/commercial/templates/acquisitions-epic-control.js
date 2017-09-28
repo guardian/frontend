@@ -1,6 +1,6 @@
 // @flow
 export const acquisitionsEpicControlTemplate = ({
-    copy,
+    copy: { heading = '', p1, p2 },
     componentName,
     buttonTemplate,
     testimonialBlock = '',
@@ -18,14 +18,14 @@ export const acquisitionsEpicControlTemplate = ({
         <div class="${wrapperClass}">
             <div>
                 <h2 class="contributions__title contributions__title--epic">
-                    ${copy.heading ? copy.heading : ''}
+                    ${heading}
                 </h2>
                 <p class="contributions__paragraph contributions__paragraph--epic">
-                    ${copy.p1}
+                    ${p1}
                 </p>
                 ${testimonialBlock}
                 <p class="contributions__paragraph contributions__paragraph--epic">
-                    ${copy.p2}
+                    ${p2}
                 </p>
             </div>
     
