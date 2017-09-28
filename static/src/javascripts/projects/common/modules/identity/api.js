@@ -192,11 +192,6 @@ export const updateUsername = (username: string): any => {
         contentType: 'application/json; charset=utf-8',
         data: JSON.stringify(data),
         withCredentials: true,
-        headers: {
-            'X-GU-ID-Client-Access-Token': `Bearer ${config.get(
-                'page.idApiJsClientToken'
-            )}`,
-        },
     });
 
     return request;
