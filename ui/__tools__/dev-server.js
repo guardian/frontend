@@ -10,12 +10,17 @@ const webpackConfig = require('../__config__/webpack.config.dev')({
 const compiler = webpack(webpackConfig);
 const app = express();
 
+const fontDefinitions = require('../__helpers__/fontDefinitions');
+
 app.use(
     webpackDevMiddleware(compiler, {
         publicPath: webpackConfig.output.publicPath,
         noInfo: true,
     })
 );
+
+app.use('/assets/fonts', express.static('../static/target/fonts'))
+
 app.use(webpackHotMiddleware(compiler));
 app.get('/', (req, res, next) => {
     delete require.cache[require.resolve('../dist/ui.bundle.server')];
