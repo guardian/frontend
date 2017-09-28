@@ -1,8 +1,11 @@
 // @flow
-const acquisitionsEpicThankYouTemplate = ({
+export const acquisitionsEpicThankYouTemplate = ({
     componentName,
     membershipUrl,
-}: Object) =>
+}: {
+    componentName: string,
+    membershipUrl: string,
+}) =>
     `<div class="contributions__epic" data-component="${componentName}">
         <div>
             <h2 class="contributions__title contributions__title--epic">
@@ -19,5 +22,3 @@ const acquisitionsEpicThankYouTemplate = ({
             <a href="${membershipUrl}" target="_blank" class="u-underline">You can learn more about how to get involved here.</a>
         </div>
     </div>`;
-
-export default acquisitionsEpicThankYouTemplate;

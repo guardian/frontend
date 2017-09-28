@@ -1,26 +1,25 @@
 // @flow
-const epicLiveBlogTemplate = ({
-    copy,
-    componentName,
-}: Object) => `<div class="block block--content is-epic" data-component="${componentName}">
-    <p class="block-time published-time">
-        <a href="#" itemprop="url" class="block-time__link">
-            <time data-relativeformat="med" itemprop="datePublished" class="js-timestamp"></time>
-            <span class="block-time__absolute"></span>
-        </a>
-    </p>
-    <div class="block-elements block-elements--no-byline">
-        <p>
-            <em>
-                ${copy.p1}
-            </em>
+export const epicLiveBlogTemplate = (params: {
+    copy: AcquisitionsEpicTemplateCopy,
+    componentName: string,
+}) =>
+    `<div class="block block--content is-epic" data-component="${params.componentName}">
+        <p class="block-time published-time">
+            <a href="#" itemprop="url" class="block-time__link">
+                <time data-relativeformat="med" itemprop="datePublished" class="js-timestamp"></time>
+                <span class="block-time__absolute"></span>
+            </a>
         </p>
-        <p>
-            <em>
-                ${copy.p2}
-            </em>
-        </p>
-    </div>
-</div>`;
-
-export default epicLiveBlogTemplate;
+        <div class="block-elements block-elements--no-byline">
+            <p>
+                <em>
+                    ${params.copy.p1}
+                </em>
+            </p>
+            <p>
+                <em>
+                    ${params.copy.p2}
+                </em>
+            </p>
+        </div>
+    </div>`;

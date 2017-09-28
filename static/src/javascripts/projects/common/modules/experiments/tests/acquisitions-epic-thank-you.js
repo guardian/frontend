@@ -6,7 +6,7 @@ import {
 import { makeABTest } from 'common/modules/commercial/contributions-utilities';
 import { addTrackingCodesToUrl } from 'common/modules/commercial/acquisitions-ophan';
 import config from 'lib/config';
-import acquisitionsEpicThankYouTemplate from 'common/modules/commercial/templates/acquisitions-epic-thank-you';
+import { acquisitionsEpicThankYouTemplate } from 'common/modules/commercial/templates/acquisitions-epic-thank-you';
 
 const isTargetReader = () => isPayingMember() || isRecentContributor();
 

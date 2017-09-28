@@ -1,20 +1,24 @@
 // @flow
-
-const acquisitionsEpicControlTemplate = ({
+export const acquisitionsEpicControlTemplate = ({
     copy,
     componentName,
     buttonTemplate,
-    testimonialBlock,
-    epicClass,
-    wrapperClass,
-}: Object) =>
-    `<div class="contributions__epic ${typeof epicClass !== 'undefined'
-        ? epicClass
-        : ''}" data-component="${componentName}">
-        <div class="${typeof wrapperClass !== 'undefined' ? wrapperClass : ''}">
+    testimonialBlock = '',
+    epicClass = '',
+    wrapperClass = '',
+}: {
+    copy: AcquisitionsEpicTemplateCopy,
+    componentName: string,
+    buttonTemplate: string,
+    testimonialBlock?: string,
+    epicClass?: string,
+    wrapperClass?: string,
+}) =>
+    `<div class="contributions__epic ${epicClass}" data-component="${componentName}">
+        <div class="${wrapperClass}">
             <div>
                 <h2 class="contributions__title contributions__title--epic">
-                    ${copy.heading}
+                    ${copy.heading ? copy.heading : ''}
                 </h2>
                 <p class="contributions__paragraph contributions__paragraph--epic">
                     ${copy.p1}
@@ -28,5 +32,3 @@ const acquisitionsEpicControlTemplate = ({
             ${buttonTemplate}
         </div>
     </div>`;
-
-export default acquisitionsEpicControlTemplate;

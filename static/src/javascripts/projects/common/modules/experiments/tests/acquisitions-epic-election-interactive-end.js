@@ -3,7 +3,7 @@ import {
     makeABTest,
     defaultButtonTemplate,
 } from 'common/modules/commercial/contributions-utilities';
-import acquisitionsEpicControlTemplate from 'common/modules/commercial/templates/acquisitions-epic-control.js';
+import { acquisitionsEpicControlTemplate } from 'common/modules/commercial/templates/acquisitions-epic-control';
 import { control } from 'common/modules/commercial/acquisitions-copy';
 
 export const acquisitionsEpicElectionInteractiveEnd = makeABTest({

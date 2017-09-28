@@ -6,7 +6,7 @@ import config from 'lib/config';
 import mediator from 'lib/mediator';
 import { elementInView } from 'lib/element-inview';
 import fastdom from 'lib/fastdom-promise';
-import epicLiveBlogTemplate from 'common/modules/commercial/templates/acquisitions-epic-liveblog';
+import { epicLiveBlogTemplate } from 'common/modules/commercial/templates/acquisitions-epic-liveblog';
 import { liveblog as liveblogCopy } from 'common/modules/commercial/acquisitions-copy';
 
 const pageId: string = config.get('page.pageId', '');

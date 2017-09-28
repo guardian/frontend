@@ -1,6 +1,5 @@
 // @flow
 import { isAbTestTargeted } from 'common/modules/commercial/targeting-tool';
-import type { AcquisitionsEpicTemplateCopy } from 'common/modules/commercial/acquisitions-copy';
 import {
     control as acquisitionsCopyControl,
     regulars as acquisitionsCopyRegulars,
@@ -22,9 +21,9 @@ import mediator from 'lib/mediator';
 import { getSync as geolocationGetSync } from 'lib/geolocation';
 import { noop } from 'lib/noop';
 import toArray from 'lodash/collections/toArray';
-import epicButtonsTemplate from 'common/modules/commercial/templates/acquisitions-epic-buttons';
-import acquisitionsEpicControlTemplate from 'common/modules/commercial/templates/acquisitions-epic-control';
-import acquisitionsTestimonialBlockTemplate from 'common/modules/commercial/templates/acquisitions-epic-testimonial-block';
+import { epicButtonsTemplate } from 'common/modules/commercial/templates/acquisitions-epic-buttons';
+import { acquisitionsEpicControlTemplate } from 'common/modules/commercial/templates/acquisitions-epic-control';
+import { acquisitionsTestimonialBlockTemplate } from 'common/modules/commercial/templates/acquisitions-epic-testimonial-block';
 import { shouldSeeReaderRevenue as userShouldSeeReaderRevenue } from 'commercial/modules/user-features';
 
 type EpicTemplate = (Variant, AcquisitionsEpicTemplateCopy) => string;
