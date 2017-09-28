@@ -8,6 +8,7 @@ define([
 ], function ($, bean, fetch, config, fastdom) {
 
     var checkoutHandler = StripeCheckout.configure({
+        key: config.page.stripePublicToken,
         locale: 'auto',
         name: 'The Guardian',
         allowRememberMe: false,
@@ -28,7 +29,7 @@ define([
         var $button = $('.js-manage-account-change-card', $parent);
         var $updating = $('.js-updating', $parent);
 
-        key = key || config.page.stripePublicToken
+        key = key || config.page.stripePublicToken;
         /*  show/hide
          *   once we've sent the token, we don't want to change the state of the dots until we redisplay
          * */
