@@ -1,10 +1,16 @@
 // @flow
 import { local } from 'lib/storage';
-import id from 'common/modules/identity/api';
+import {
+    getUserFromApi as getUserFromApi_,
+    getUserFromCookie as getUserFromCookie_,
+} from 'common/modules/identity/api';
 import {
     getUserSegments,
     requestUserSegmentsFromId,
 } from 'commercial/modules/user-ad-targeting';
+
+const getUserFromApi: any = getUserFromApi_;
+const getUserFromCookie: any = getUserFromCookie_;
 
 jest.mock('lib/storage');
 jest.mock('common/modules/identity/api', () => ({
@@ -16,7 +22,7 @@ const userSegmentsKey = 'gu.ads.userSegmentsData';
 describe('User Ad Targeting', () => {
     beforeEach(() => {
         jest.resetAllMocks();
-        id.getUserFromCookie.mockReturnValue({ id: 999900123 });
+        getUserFromCookie.mockReturnValue({ id: 999900123 });
     });
 
     it('should exist', () => {
@@ -42,7 +48,7 @@ describe('User Ad Targeting', () => {
     });
 
     it('should request user data from API and populate local storage', () => {
-        id.getUserFromApi.mockImplementation(fn =>
+        getUserFromApi.mockImplementation(fn =>
             fn({
                 id: 999900789,
                 adData: {

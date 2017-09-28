@@ -5,7 +5,12 @@ import bonzo from 'bonzo';
 import mediator from 'lib/mediator';
 import Component from 'common/modules/component';
 import { postComment, previewComment } from 'common/modules/discussion/api';
-import IdentityApi from 'common/modules/identity/api';
+import {
+    getUserFromCookie,
+    reset,
+    updateUsername,
+    getUserFromApiWithRefreshedCookie,
+} from 'common/modules/identity/api';
 import { avatarify } from 'common/modules/discussion/user-avatars';
 import { init as initValidationEmail } from 'common/modules/identity/validation-email';
 import { urlify } from './urlify';
@@ -120,7 +125,9 @@ class CommentBox extends Component {
 
     // eslint-disable-next-line class-methods-use-this
     getUserData(): Object {
-        return IdentityApi.getUserFromCookie();
+        // User will always exists at this point.
+        // $FlowFixMe
+        return getUserFromCookie();
     }
 
     clearErrors(): void {
@@ -130,7 +137,7 @@ class CommentBox extends Component {
     }
 
     refreshUsernameHtml(): void {
-        IdentityApi.reset();
+        reset();
 
         const displayName = this.getUserData().displayName;
         const menuHeaderUsername = document.querySelector('.js-profile-info');
@@ -273,7 +280,7 @@ class CommentBox extends Component {
 
             if (this.errors.length === 0) {
                 if (this.options.newCommenter && !this.options.hasUsername) {
-                    IdentityApi.updateUsername(
+                    updateUsername(
                         this.getElem('onboarding-username-input').value
                     ).then(updateUsernameSuccess, updateUsernameFailure);
                 } else {
@@ -287,18 +294,15 @@ class CommentBox extends Component {
             const createdDate = new Date(this.getUserData().accountCreatedDate);
 
             if (createdDate > this.options.priorToVerificationDate) {
-                IdentityApi.getUserFromApiWithRefreshedCookie().then(
-                    response => {
-                        if (
-                            response.user.statusFields.userEmailValidated ===
-                            true
-                        ) {
-                            validEmailCommentSubmission();
-                        } else {
-                            this.invalidEmailError();
-                        }
+                getUserFromApiWithRefreshedCookie().then(response => {
+                    if (
+                        response.user.statusFields.userEmailValidated === true
+                    ) {
+                        validEmailCommentSubmission();
+                    } else {
+                        this.invalidEmailError();
                     }
-                );
+                });
             } else {
                 validEmailCommentSubmission();
             }

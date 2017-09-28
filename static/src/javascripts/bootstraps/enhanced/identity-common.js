@@ -7,11 +7,11 @@
  * HUNT YOU DOWN.
  */
 import { catchErrorsWithContext } from 'lib/robust';
-import Id from 'common/modules/identity/api';
+import { isUserLoggedIn } from 'common/modules/identity/api';
 
 // Used to show elements that need signin. Use .sign-in-required
 const setCssClass = (): void => {
-    if (!Id.isUserLoggedIn() || !document.documentElement) {
+    if (!isUserLoggedIn() || !document.documentElement) {
         return;
     }
     const classList = document.documentElement.classList;
