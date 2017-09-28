@@ -79,7 +79,7 @@ object UrlHelpers {
       "source" -> AcquisitionSource.GuardianWeb.name,
       "componentId" -> campaignCode,
       "componentType" -> (position match {
-        case NewHeader | OldHeader | AmpHeader | SideMenu => ComponentType.AcquisitionsHeader
+        case NewHeader | OldHeader | AmpHeader | SideMenu | SlimHeaderDropdown => ComponentType.AcquisitionsHeader
         case Footer => ComponentType.AcquisitionsFooter
       }).name,
       // TODO: there's no way to get this serverside is there? replace clientside??
