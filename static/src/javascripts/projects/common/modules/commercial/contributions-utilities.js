@@ -183,34 +183,34 @@ const makeABTestVariant = (
     const {
         maxViews = defaultMaxViews,
         isUnlimited = false,
-        contributeURL = addTrackingCodesToUrl(
-            contributionsBaseURL,
-            parentTest.componentType,
-            campaignCode,
-            {
+        contributeURL = addTrackingCodesToUrl({
+            base: contributionsBaseURL,
+            componentType: parentTest.componentType,
+            componentId: campaignCode,
+            abTest: {
                 name: parentTest.id,
                 variant: id,
-            }
-        ),
-        membershipURL = addTrackingCodesToUrl(
-            membershipBaseURL,
-            parentTest.componentType,
-            campaignCode,
-            {
+            },
+        }),
+        membershipURL = addTrackingCodesToUrl({
+            base: membershipBaseURL,
+            componentType: parentTest.componentType,
+            componentId: campaignCode,
+            abTest: {
                 name: parentTest.id,
                 variant: id,
-            }
-        ),
+            },
+        }),
         supportCustomURL = null,
-        supportURL = addTrackingCodesToUrl(
-            supportCustomURL || supportBaseURL,
-            parentTest.componentType,
-            campaignCode,
-            {
+        supportURL = addTrackingCodesToUrl({
+            base: supportCustomURL || supportBaseURL,
+            componentType: parentTest.componentType,
+            componentId: campaignCode,
+            abTest: {
                 name: parentTest.id,
                 variant: id,
-            }
-        ),
+            },
+        }),
         template = controlTemplate,
         buttonTemplate = defaultButtonTemplate,
         testimonialBlock = getTestimonialBlock(
@@ -373,27 +373,27 @@ const makeABTestVariant = (
         success,
 
         contributionsURLBuilder(codeModifier) {
-            return addTrackingCodesToUrl(
-                contributionsBaseURL,
-                parentTest.componentType,
-                codeModifier(campaignCode),
-                {
+            return addTrackingCodesToUrl({
+                base: contributionsBaseURL,
+                componentType: parentTest.componentType,
+                componentId: codeModifier(campaignCode),
+                abTest: {
                     name: parentTest.id,
                     variant: id,
-                }
-            );
+                },
+            });
         },
 
         membershipURLBuilder(codeModifier) {
-            return addTrackingCodesToUrl(
-                membershipBaseURL,
-                parentTest.componentType,
-                codeModifier(campaignCode),
-                {
+            return addTrackingCodesToUrl({
+                base: membershipBaseURL,
+                componentType: parentTest.componentType,
+                componentId: codeModifier(campaignCode),
+                abTest: {
                     name: parentTest.id,
                     variant: id,
-                }
-            );
+                },
+            });
         },
     };
 };

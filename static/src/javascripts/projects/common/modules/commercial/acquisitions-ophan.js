@@ -31,15 +31,22 @@ export const submitViewEvent = (componentEvent: ComponentEventWithoutAction) =>
         action: 'VIEW',
     });
 
-export const addTrackingCodesToUrl = (
+export const addTrackingCodesToUrl = ({
+    base,
+    componentType,
+    componentId,
+    campaignCode = '',
+    abTest,
+}: {
     base: string,
     componentType: OphanComponentType,
-    campaignCode: string,
-    abTest?: { name: string, variant: string }
-) => {
+    componentId: string,
+    campaignCode?: string,
+    abTest?: { name: string, variant: string },
+}) => {
     const acquisitionData = {
         source: 'GUARDIAN_WEB',
-        componentId: campaignCode,
+        componentId,
         componentType,
         referrerPageviewId: config.get('ophan.pageViewId') || undefined,
         campaignCode,

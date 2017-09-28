@@ -58,15 +58,15 @@ export const acquisitionsEpicThankYou = makeABTest({
                 template(variant) {
                     return acquisitionsEpicThankYouTemplate({
                         componentName: variant.options.componentName,
-                        membershipUrl: addTrackingCodesToUrl(
-                            'https://www.theguardian.com/membership',
-                            'ACQUISITIONS_EPIC',
-                            variant.options.campaignCode,
-                            {
+                        membershipUrl: addTrackingCodesToUrl({
+                            base: 'https://www.theguardian.com/membership',
+                            componentType: 'ACQUISITIONS_EPIC',
+                            componentId: variant.options.campaignCode,
+                            abTest: {
                                 name: 'AcquisitionsEpicThankYou',
                                 variant: variant.id,
-                            }
-                        ),
+                            },
+                        }),
                     });
                 },
             },
