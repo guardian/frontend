@@ -25,7 +25,7 @@ import lodashTemplate from 'lodash/utilities/template';
 import toArray from 'lodash/collections/toArray';
 import acquisitionsEpicButtons from 'common/modules/commercial/templates/acquisitions-epic-buttons';
 import acquisitionsEpicControlTemplate from 'raw-loader!common/views/acquisitions-epic-control.html';
-import acquisitionsTestimonialBlockTemplate from 'raw-loader!common/views/acquisitions-epic-testimonial-block.html';
+import acquisitionsTestimonialBlockTemplate from 'common/modules/commercial/templates/acquisitions-epic-testimonial-block';
 import { shouldSeeReaderRevenue as userShouldSeeReaderRevenue } from 'commercial/modules/user-features';
 
 type EpicTemplate = (Variant, AcquisitionsEpicTemplateCopy) => string;
@@ -87,15 +87,8 @@ const getTargets = (insertAtSelector, isMultiple) => {
 };
 
 const getTestimonialBlock = (
-    testimonialParameters: AcquisitionsEpicTestimonialTemplateParameters,
-    citeImage: ?String
-) =>
-    lodashTemplate(acquisitionsTestimonialBlockTemplate, {
-        quoteSvg: testimonialParameters.quoteSvg,
-        testimonialMessage: testimonialParameters.testimonialMessage,
-        testimonialName: testimonialParameters.testimonialName,
-        citeImage,
-    });
+    testimonialParameters: AcquisitionsEpicTestimonialTemplateParameters
+) => acquisitionsTestimonialBlockTemplate(testimonialParameters);
 
 const defaultPageCheck = (page: Object): boolean =>
     page.contentType === 'Article' && !page.isMinuteArticle;
