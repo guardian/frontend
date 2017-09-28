@@ -19,7 +19,7 @@ app.use(
     })
 );
 
-app.use('/assets/fonts', express.static('../static/target/fonts'))
+app.use('/assets/fonts', express.static('../static/target/fonts'));
 
 app.use(webpackHotMiddleware(compiler));
 app.get('/', (req, res, next) => {
