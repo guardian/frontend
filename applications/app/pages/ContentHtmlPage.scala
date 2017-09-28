@@ -7,14 +7,13 @@ import html.{HtmlPage, Styles}
 import model.{ApplicationContext, Page}
 import play.api.mvc.RequestHeader
 import play.twirl.api.Html
-import sudoku.SudokuPage
 import views.html.fragments._
 import views.html.fragments.commercial.pageSkin
 import views.html.fragments.page.body.{bodyTag, breakingNewsDiv, skipToMainContent}
 import views.html.fragments.page.head.stylesheets.{criticalStyleInline, criticalStyleLink, styles}
 import views.html.fragments.page.head.{fixIEReferenceErrors, headTag, titleTag}
 import views.html.fragments.page.{devTakeShot, htmlTag}
-import views.html.{newspaperContent, quizAnswerContent, sudokuContent}
+import views.html.{newspaperContent, quizAnswerContent}
 
 object ContentHtmlPage extends HtmlPage[Page] {
 
@@ -39,7 +38,6 @@ object ContentHtmlPage extends HtmlPage[Page] {
       case p: MediaPage => mediaBody(p, displayCaption = false)
       case p: TodayNewspaper => newspaperContent(p)
       case p: QuizAnswersPage => quizAnswerContent(p)
-      case p: SudokuPage => sudokuContent(p)
       case unsupported => throw new RuntimeException(s"Type of content '${unsupported.getClass.getName}' is not supported by ${this.getClass.getName}")
     }
 
