@@ -2,8 +2,8 @@
 @import model.Article
 @import model.liveblog.{LiveBlogDate,BodyBlock}
 @import views.BodyCleaner
-
 @import model.DotcomContentType
+
 @(blocks: Seq[BodyBlock], article: Article, timezone: DateTimeZone, amp: Boolean = false)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @import common.LinkTo
@@ -13,6 +13,9 @@
         id="block-@block.id"
         data-sort-time="@block.publishedCreatedTimestamp()"
         class="block block--content@block.eventClass@block.attributes.membershipPlaceholder.map { _ => js-insert-epic-after}"
+        itemprop="liveBlogUpdate"
+        itemscope
+        itemtype="http://schema.org/BlogPosting"
     >
         <p class="block-time published-time">
             @if(amp){
@@ -25,6 +28,7 @@
                 </a>
             }
         </p>
+
         @block.title.map { title =>
             <h2 class="block-title" itemprop="headline">@title</h2>
         }
