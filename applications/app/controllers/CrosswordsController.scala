@@ -4,7 +4,8 @@ import com.gu.contentapi.client.model.v1.{Crossword, ItemResponse, Content => Ap
 import common.{Edition, ImplicitControllerExecutionContext, Logging}
 import conf.Static
 import contentapi.ContentApiClient
-import crosswords.{AccessibleCrosswordRows, CrosswordPage, CrosswordSearchPage, CrosswordSvg}
+import pages.{CrosswordHtmlPage, IndexHtmlPage, PrintableCrosswordHtmlPage}
+import crosswords.{AccessibleCrosswordPage, AccessibleCrosswordRows, CrosswordPageWithSvg, CrosswordSearchPageNoResult, CrosswordSearchPageWithResults, CrosswordSvg}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model._
 import org.joda.time.{DateTime, LocalDate}
@@ -41,10 +42,16 @@ trait CrosswordController extends BaseController with Logging with ImplicitContr
 
   def renderCrosswordPage(crosswordType: String, id: Int)(implicit request: RequestHeader, context: ApplicationContext): Future[Result] = {
     withCrossword(crosswordType, id) { (crossword, content) =>
-      Cached(60)(RevalidatableResult.Ok(views.html.crossword(
-        CrosswordPage(CrosswordContent.make(CrosswordData.fromCrossword(crossword), content)),
-         CrosswordSvg(crossword, None, None, false)
-      )))
+      Cached(60)(
+        RevalidatableResult.Ok(
+          CrosswordHtmlPage.html(
+            CrosswordPageWithSvg(
+              CrosswordContent.make(CrosswordData.fromCrossword(crossword), content),
+              CrosswordSvg(crossword, None, None, false)
+            )
+          )
+        )
+      )
     }
   }
 }
@@ -59,20 +66,31 @@ class CrosswordPageController(val contentApiClient: ContentApiClient, val contro
 
   def accessibleCrossword(crosswordType: String, id: Int): Action[AnyContent] = Action.async { implicit request =>
     withCrossword(crosswordType, id) { (crossword, content) =>
-      Cached(60)(RevalidatableResult.Ok(views.html.accessibleCrossword(
-        CrosswordPage(CrosswordContent.make(CrosswordData.fromCrossword(crossword), content)),
-        AccessibleCrosswordRows(crossword)
-      )))
+      Cached(60)(
+        RevalidatableResult.Ok(
+          CrosswordHtmlPage.html(
+            AccessibleCrosswordPage(
+              CrosswordContent.make(CrosswordData.fromCrossword(crossword), content),
+              AccessibleCrosswordRows(crossword)
+            )
+          )
+        )
+      )
     }
   }
 
   def printableCrossword(crosswordType: String, id: Int): Action[AnyContent] = Action.async { implicit request =>
     withCrossword(crosswordType, id) { (crossword, content) =>
-      Cached(3.days)(RevalidatableResult.Ok(views.html.printableCrossword(
-        CrosswordPage(CrosswordContent.make(CrosswordData.fromCrossword(crossword), content)),
-        CrosswordSvg(crossword, None, None, false),
-        new LocalDate().getYear
-      )))
+      Cached(3.days)(
+        RevalidatableResult.Ok(
+          PrintableCrosswordHtmlPage.html(
+            CrosswordPageWithSvg(
+              CrosswordContent.make(CrosswordData.fromCrossword(crossword), content),
+              CrosswordSvg(crossword, None, None, false)
+            )
+          )
+        )
+      )
     }
   }
 
@@ -113,12 +131,21 @@ class CrosswordSearchController(
     )(CrosswordLookup.apply)(CrosswordLookup.unapply)
   )
 
-  def noResults()(implicit request: RequestHeader): Result = Cached(7.days)(RevalidatableResult.Ok(views.html.crosswordsNoResults(CrosswordSearchPage.make())))
+  def noResults()(implicit request: RequestHeader): Result = Cached(7.days)(
+    RevalidatableResult.Ok(
+      CrosswordHtmlPage.html(new CrosswordSearchPageNoResult)
+    )
+  )
 
   def search(): Action[AnyContent] = Action.async { implicit request =>
     searchForm.bindFromRequest.fold(
-      empty => Future.successful(Cached(7.days)(RevalidatableResult.Ok(views.html.crosswordSearch(CrosswordSearchPage.make())))),
-
+      empty => Future.successful(
+        Cached(7.days)(
+          RevalidatableResult.Ok(
+            CrosswordHtmlPage.html(new CrosswordSearchPageWithResults)
+          )
+        )
+      ),
       params => {
         val withoutSetter = contentApiClient.item(s"crosswords/series/${params.crosswordType}")
           .stringParam("from-date", params.fromDate.toString("yyyy-MM-dd"))
@@ -143,7 +170,7 @@ class CrosswordSearchController(
                 tzOverride = None
               )
 
-              Cached(15.minutes)(RevalidatableResult.Ok(views.html.index(page)))
+              Cached(15.minutes)(RevalidatableResult.Ok(IndexHtmlPage.html(page)))
           }
         }
       }

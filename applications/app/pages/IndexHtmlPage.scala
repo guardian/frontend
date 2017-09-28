@@ -1,30 +1,22 @@
 package pages
 
 import common.Edition
-import html.{HtmlPage, Styles}
 import html.HtmlPageHelpers._
-import model.{ApplicationContext, PressedPage}
+import html.{HtmlPage, Styles}
+import model.ApplicationContext
 import play.api.mvc.RequestHeader
 import play.twirl.api.Html
-import views.html.fragments.commercial.pageSkin
+import services.IndexPage
+import views.IndexCleaner
+import views.html.all
 import views.html.fragments._
+import views.html.fragments.commercial.pageSkin
 import views.html.fragments.page.body.{bodyTag, breakingNewsDiv, skipToMainContent}
-import views.html.fragments.page.head.{fixIEReferenceErrors, headTag, titleTag}
 import views.html.fragments.page.head.stylesheets.{criticalStyleInline, criticalStyleLink, styles}
+import views.html.fragments.page.head.{fixIEReferenceErrors, headTag, titleTag}
 import views.html.fragments.page.{devTakeShot, htmlTag}
 
-object FrontHtmlPage extends HtmlPage[PressedPage] {
-
-  def cleanedFrontBody()(implicit page: PressedPage, request: RequestHeader, context: ApplicationContext): Html = {
-    import views.support.`package`.withJsoup
-    import views.support.{BulletCleaner, CommercialComponentHigh, CommercialMPUForFronts}
-    val html: Html = frontBody(page)
-    val edition = Edition(request)
-    withJsoup(BulletCleaner(html.toString))(
-      CommercialComponentHigh(page.frontProperties.isPaidContent, page.isNetworkFront, page.metadata.hasPageSkin(edition)),
-      CommercialMPUForFronts(page.isNetworkFront)
-    )
-  }
+object IndexHtml {
 
   def allStyles(implicit applicationContext: ApplicationContext): Styles = new Styles {
     override def criticalCssLink: Html = criticalStyleLink("facia")
@@ -36,13 +28,17 @@ object FrontHtmlPage extends HtmlPage[PressedPage] {
     override def IE9CriticalCss: Html = stylesheetLink("stylesheets/ie9.content.css")
   }
 
-  def html(page: PressedPage)(implicit request: RequestHeader, applicationContext: ApplicationContext): Html = {
-    implicit val p: PressedPage = page
+  def html( page: IndexPage)(
+    headContent: Html = Html(""),
+    bodyContent: Html = Html("")
+  )(implicit request: RequestHeader, applicationContext: ApplicationContext): Html = {
+    implicit val p: IndexPage = page
+
     htmlTag(
       headTag(
         titleTag(),
         metaData(),
-        frontMeta(),
+        headContent,
         styles(allStyles),
         fixIEReferenceErrors(),
         inlineJSBlocking()
@@ -53,7 +49,7 @@ object FrontHtmlPage extends HtmlPage[PressedPage] {
         pageSkin() when page.metadata.hasPageSkinOrAdTestPageSkin(Edition(request)),
         guardianHeaderHtml(),
         breakingNewsDiv(),
-        cleanedFrontBody(),
+        bodyContent,
         footer(),
         inlineJSNonBlocking(),
         analytics.base()
@@ -62,4 +58,19 @@ object FrontHtmlPage extends HtmlPage[PressedPage] {
     )
   }
 
+}
+
+object IndexHtmlPage extends HtmlPage[IndexPage] {
+  def html(page: IndexPage)(implicit request: RequestHeader, applicationContext: ApplicationContext): Html =
+    IndexHtml.html(page)(
+      headContent = indexHead(page),
+      bodyContent = IndexCleaner(page, indexBody(page))
+    )
+}
+
+object AllIndexHtmlPage extends HtmlPage[IndexPage] {
+  def html(page: IndexPage)(implicit request: RequestHeader, applicationContext: ApplicationContext): Html =
+    IndexHtml.html(page)(
+      bodyContent = all(page)
+    )
 }

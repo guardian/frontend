@@ -1,20 +1,21 @@
 package pages
 
 import common.Edition
-import conf.switches.Switches.SurveySwitch
+import controllers.{ImageContentPage, MediaPage, QuizAnswersPage, TodayNewspaper}
 import html.HtmlPageHelpers._
-import html.Styles
+import html.{HtmlPage, Styles}
 import model.{ApplicationContext, Page}
 import play.api.mvc.RequestHeader
 import play.twirl.api.Html
 import views.html.fragments._
-import views.html.fragments.commercial.{pageSkin, survey}
-import views.html.fragments.page._
-import views.html.fragments.page.body.{bodyTag, breakingNewsDiv, skipToMainContent, twentyFourSevenTraining}
+import views.html.fragments.commercial.pageSkin
+import views.html.fragments.page.body.{bodyTag, breakingNewsDiv, skipToMainContent}
 import views.html.fragments.page.head.stylesheets.{criticalStyleInline, criticalStyleLink, styles}
 import views.html.fragments.page.head.{fixIEReferenceErrors, headTag, titleTag}
+import views.html.fragments.page.{devTakeShot, htmlTag}
+import views.html.{newspaperContent, quizAnswerContent}
 
-object StoryHtmlPage {
+object ContentHtmlPage extends HtmlPage[Page] {
 
   def allStyles(implicit applicationContext: ApplicationContext): Styles = new Styles {
     override def criticalCssLink: Html = criticalStyleLink("content")
@@ -26,22 +27,24 @@ object StoryHtmlPage {
     override def IE9CriticalCss: Html = stylesheetLink("stylesheets/ie9.content.css")
   }
 
-  def html(
-    header: Html,
-    content: Html,
-    maybeHeadContent: Option[Html] = None
-  )(implicit page: Page, request: RequestHeader, applicationContext: ApplicationContext): Html = {
+  def html(page: Page)(implicit request: RequestHeader, applicationContext: ApplicationContext): Html = {
+    implicit val p: Page = page
 
-    val head: Html = maybeHeadContent.getOrElse(Html(""))
     val bodyClasses: Map[String, Boolean] = defaultBodyClasses() ++ Map(
       ("is-immersive", Page.getContent(page).exists(_.content.isImmersive))
     )
+    val content: Html = page match {
+      case p: ImageContentPage => imageContentBody(p)
+      case p: MediaPage => mediaBody(p, displayCaption = false)
+      case p: TodayNewspaper => newspaperContent(p)
+      case p: QuizAnswersPage => quizAnswerContent(p)
+      case unsupported => throw new RuntimeException(s"Type of content '${unsupported.getClass.getName}' is not supported by ${this.getClass.getName}")
+    }
 
     htmlTag(
       headTag(
         titleTag(),
         metaData(),
-        head,
         styles(allStyles),
         fixIEReferenceErrors(),
         inlineJSBlocking()
@@ -50,11 +53,9 @@ object StoryHtmlPage {
         message(),
         skipToMainContent(),
         pageSkin() when page.metadata.hasPageSkinOrAdTestPageSkin(Edition(request)),
-        survey() when SurveySwitch.isSwitchedOn,
-        header,
+        guardianHeaderHtml(),
         breakingNewsDiv(),
         content,
-        twentyFourSevenTraining(),
         footer(),
         inlineJSNonBlocking(),
         analytics.base()
@@ -64,4 +65,3 @@ object StoryHtmlPage {
   }
 
 }
-
