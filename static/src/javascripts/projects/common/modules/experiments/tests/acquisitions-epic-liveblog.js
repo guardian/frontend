@@ -1,13 +1,12 @@
 // @flow
 import { makeABTest } from 'common/modules/commercial/contributions-utilities';
 import { logView } from 'common/modules/commercial/acquisitions-view-log';
-import template from 'lodash/utilities/template';
 import $ from 'lib/$';
 import config from 'lib/config';
 import mediator from 'lib/mediator';
 import { elementInView } from 'lib/element-inview';
 import fastdom from 'lib/fastdom-promise';
-import liveblogEpicTemplate from 'raw-loader!common/views/acquisitions-epic-liveblog.html';
+import epicLiveBlogTemplate from 'common/modules/commercial/templates/acquisitions-epic-liveblog';
 import { liveblog as liveblogCopy } from 'common/modules/commercial/acquisitions-copy';
 
 const pageId: string = config.get('page.pageId', '');
@@ -164,7 +163,7 @@ export const acquisitionsEpicLiveblog: EpicABTest = makeABTest({
                 isUnlimited: true,
 
                 template(variant) {
-                    return template(liveblogEpicTemplate, {
+                    return epicLiveBlogTemplate({
                         copy: liveblogCopy(
                             variant.options.membershipURL,
                             variant.options.contributeURL

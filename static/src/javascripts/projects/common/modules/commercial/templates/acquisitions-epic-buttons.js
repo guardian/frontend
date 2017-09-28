@@ -1,3 +1,4 @@
+// @flow
 import type CtaUrls from 'common/modules/commercial/contributions-utilities';
 
 const epicButtonsTemplate = (urls:CtaUrls) => `<div class="contributions__amount-field">

@@ -1,3 +1,4 @@
+// @flow
 import type { AcquisitionsEpicTestimonialTemplateParameters } from 'common/modules/commercial/acquisitions-epic-testimonial-parameters';
 
 const acquisitionsTestimonialBlockTemplate = (params: AcquisitionsEpicTestimonialTemplateParameters) => `<div class="epic__testimonial-container epic__testimonial-container--subtle">
