@@ -1,4 +1,8 @@
-const epicLiveBlogTemplate = ({copy, componentName}) => `<div class="block block--content is-epic" data-component="${componentName}">
+// @flow
+const epicLiveBlogTemplate = ({
+    copy,
+    componentName,
+}: Object) => `<div class="block block--content is-epic" data-component="${componentName}">
     <p class="block-time published-time">
         <a href="#" itemprop="url" class="block-time__link">
             <time data-relativeformat="med" itemprop="datePublished" class="js-timestamp"></time>
@@ -17,6 +21,6 @@ const epicLiveBlogTemplate = ({copy, componentName}) => `<div class="block block
             </em>
         </p>
     </div>
-</div>`
+</div>`;
 
-export default epicLiveBlogTemplate
+export default epicLiveBlogTemplate;

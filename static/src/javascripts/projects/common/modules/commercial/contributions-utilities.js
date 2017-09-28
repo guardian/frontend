@@ -21,16 +21,15 @@ import fastdom from 'lib/fastdom-promise';
 import mediator from 'lib/mediator';
 import { getSync as geolocationGetSync } from 'lib/geolocation';
 import { noop } from 'lib/noop';
-import lodashTemplate from 'lodash/utilities/template';
 import toArray from 'lodash/collections/toArray';
-import acquisitionsEpicButtons from 'common/modules/commercial/templates/acquisitions-epic-buttons';
-import acquisitionsEpicControlTemplate from 'raw-loader!common/views/acquisitions-epic-control.html';
+import epicButtonsTemplate from 'common/modules/commercial/templates/acquisitions-epic-buttons';
+import acquisitionsEpicControlTemplate from 'common/modules/commercial/templates/acquisitions-epic-control';
 import acquisitionsTestimonialBlockTemplate from 'common/modules/commercial/templates/acquisitions-epic-testimonial-block';
 import { shouldSeeReaderRevenue as userShouldSeeReaderRevenue } from 'commercial/modules/user-features';
 
 type EpicTemplate = (Variant, AcquisitionsEpicTemplateCopy) => string;
 
-type CtaUrls = {
+export type CtaUrls = {
     membershipUrl?: string,
     contributeUrl?: string,
     supportUrl?: string,
@@ -52,11 +51,10 @@ const defaultMaxViews: {
     minDaysBetweenViews: 0,
 };
 
-const defaultButtonTemplate = (urls: CtaUrls) =>
-    acquisitionsEpicButtons(urls)
+const defaultButtonTemplate = (urls: CtaUrls) => epicButtonsTemplate(urls);
 
 const controlTemplate: EpicTemplate = ({ options = {} }, copy) =>
-    lodashTemplate(acquisitionsEpicControlTemplate, {
+    acquisitionsEpicControlTemplate({
         copy,
         componentName: options.componentName,
         testimonialBlock: options.testimonialBlock,

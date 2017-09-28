@@ -5,7 +5,6 @@ import { getTest as getAcquisitionTest } from 'common/modules/experiments/acquis
 import { paidContentVsOutbrain2 } from 'common/modules/experiments/tests/paid-content-vs-outbrain';
 import { outstreamFrequencyCapHoldback } from 'common/modules/experiments/tests/outstream-cap-holdback';
 import { acquisitionsEpicElectionInteractiveEnd } from 'common/modules/experiments/tests/acquisitions-epic-election-interactive-end';
-import { acquisitionsEpicElectionInteractiveSlice } from 'common/modules/experiments/tests/acquisitions-epic-election-interactive-slice';
 import { glabsTrafficDriver } from 'common/modules/experiments/tests/glabs-traffic-driver';
 import { SnippetFourVariants } from 'common/modules/experiments/tests/snippet-a-a1-b-b1';
 
@@ -13,7 +12,6 @@ export const TESTS: $ReadOnlyArray<ABTest> = [
     paidContentVsOutbrain2,
     getAcquisitionTest(),
     acquisitionsEpicElectionInteractiveEnd,
-    acquisitionsEpicElectionInteractiveSlice,
     outstreamFrequencyCapHoldback,
     SnippetFourVariants,
     glabsTrafficDriver,
