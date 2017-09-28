@@ -62,6 +62,7 @@ export const acquisitionsEpicThankYou = makeABTest({
                             base: 'https://www.theguardian.com/membership',
                             componentType: 'ACQUISITIONS_EPIC',
                             componentId: variant.options.campaignCode,
+                            campaignCode: variant.options.campaignCode,
                             abTest: {
                                 name: 'AcquisitionsEpicThankYou',
                                 variant: variant.id,

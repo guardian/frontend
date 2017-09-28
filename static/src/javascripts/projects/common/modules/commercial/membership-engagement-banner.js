@@ -126,6 +126,7 @@ const showBanner = (params: EngagementBannerParams): void => {
         base: params.linkUrl,
         componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
         componentId: params.campaignCode,
+        campaignCode: params.campaignCode,
         abTest:
             test && variant
                 ? { name: test.id, variant: variant.id }
@@ -162,6 +163,7 @@ const showBanner = (params: EngagementBannerParams): void => {
                     componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
                     products: params.products,
                     campaignCode: params.campaignCode,
+                    id: params.campaignCode,
                 },
                 action,
                 ...(test && variant

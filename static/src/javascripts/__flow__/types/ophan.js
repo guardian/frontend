@@ -71,3 +71,11 @@ declare type OphanComponentEvent = {
         variant: string
     }
 };
+
+declare type AcquisitionLinkParams = {
+    base: string,
+    componentType: OphanComponentType,
+    componentId: string,
+    campaignCode?: string,
+    abTest?: { name: string, variant: string}
+}

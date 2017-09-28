@@ -187,6 +187,7 @@ const makeABTestVariant = (
             base: contributionsBaseURL,
             componentType: parentTest.componentType,
             componentId: campaignCode,
+            campaignCode,
             abTest: {
                 name: parentTest.id,
                 variant: id,
@@ -196,6 +197,7 @@ const makeABTestVariant = (
             base: membershipBaseURL,
             componentType: parentTest.componentType,
             componentId: campaignCode,
+            campaignCode,
             abTest: {
                 name: parentTest.id,
                 variant: id,
@@ -206,6 +208,7 @@ const makeABTestVariant = (
             base: supportCustomURL || supportBaseURL,
             componentType: parentTest.componentType,
             componentId: campaignCode,
+            campaignCode,
             abTest: {
                 name: parentTest.id,
                 variant: id,
@@ -234,6 +237,7 @@ const makeABTestVariant = (
                         componentType: parentTest.componentType,
                         products,
                         campaignCode,
+                        id: campaignCode,
                     },
                     abTest: {
                         name: parentTest.id,
@@ -250,6 +254,7 @@ const makeABTestVariant = (
                         componentType: parentTest.componentType,
                         products,
                         campaignCode,
+                        id: campaignCode,
                     },
                     abTest: {
                         name: parentTest.id,
@@ -377,6 +382,7 @@ const makeABTestVariant = (
                 base: contributionsBaseURL,
                 componentType: parentTest.componentType,
                 componentId: codeModifier(campaignCode),
+                campaignCode: codeModifier(campaignCode),
                 abTest: {
                     name: parentTest.id,
                     variant: id,
@@ -389,6 +395,7 @@ const makeABTestVariant = (
                 base: membershipBaseURL,
                 componentType: parentTest.componentType,
                 componentId: codeModifier(campaignCode),
+                campaignCode: codeModifier(campaignCode),
                 abTest: {
                     name: parentTest.id,
                     variant: id,

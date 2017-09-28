@@ -35,15 +35,9 @@ export const addTrackingCodesToUrl = ({
     base,
     componentType,
     componentId,
-    campaignCode = '',
+    campaignCode,
     abTest,
-}: {
-    base: string,
-    componentType: OphanComponentType,
-    componentId: string,
-    campaignCode?: string,
-    abTest?: { name: string, variant: string },
-}) => {
+}: AcquisitionLinkParams) => {
     const acquisitionData = {
         source: 'GUARDIAN_WEB',
         componentId,
