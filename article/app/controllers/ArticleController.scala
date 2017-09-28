@@ -10,7 +10,7 @@ import model._
 import LiveBlogHelpers._
 import model.liveblog._
 import org.joda.time.DateTime
-import pages.ArticleEmailHtmlPage
+import pages.{ArticleEmailHtmlPage, ArticleHtmlPage, LiveBlogHtmlPage, MinuteHtmlPage}
 import play.api.libs.functional.syntax._
 import play.api.libs.json.{Json, _}
 import play.api.mvc._
@@ -92,16 +92,16 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
     case blog: LiveBlogPage =>
       val htmlResponse = () => {
         if (request.isAmp) views.html.liveBlogAMP(blog)
-        else views.html.liveBlog(blog)
+        else LiveBlogHtmlPage.html(blog)
       }
-      val jsonResponse = () => views.html.liveblog.liveBlogBody (blog)
+      val jsonResponse = () => views.html.liveblog.liveBlogBody(blog)
       renderFormat(htmlResponse, jsonResponse, blog, Switches.all)
 
     case minute: MinutePage =>
       noAMP {
         val htmlResponse = () => {
           if (request.isEmail) ArticleEmailHtmlPage.html(minute)
-          else                 views.html.minute(minute)
+          else MinuteHtmlPage.html(minute)
         }
 
         val jsonResponse = () => views.html.fragments.minuteBody(minute)
@@ -111,10 +111,8 @@ class ArticleController(contentApiClient: ContentApiClient, val controllerCompon
     case article: ArticlePage =>
       val htmlResponse = () => {
         if (request.isEmail) ArticleEmailHtmlPage.html(article)
-        else if (article.article.isExplore) views.html.articleExplore(article)
-        else if (article.article.isImmersive) views.html.articleImmersive(article)
         else if (request.isAmp) views.html.articleAMP(article)
-        else views.html.article(article)
+        else ArticleHtmlPage.html(article)
       }
       val jsonResponse = () => views.html.fragments.articleBody(article)
       renderFormat(htmlResponse, jsonResponse, article, Switches.all)
