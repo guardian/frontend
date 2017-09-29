@@ -85,6 +85,10 @@ object UrlHelpers {
         case Footer => ComponentType.AcquisitionsFooter
       }).name
     ) ++ campaignCode.fold(Json.obj())(c => Json.obj(
+      // Currently campaignCode is used to uniquely identify components that drove acquisition.
+      // This will eventually be the job of componentId, allowing us to re-purpose campaign code
+      // for high-level groupings that correspond to actual campaigns (e.g. UK election).
+      // But for now, we're duplicating this value across both fields.
       "componentId" -> c,
       "campaignCode" -> c
     )) ++ abTest.fold(Json.obj())(ab => Json.obj(
