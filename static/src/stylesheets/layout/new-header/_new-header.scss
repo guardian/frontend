@@ -50,21 +50,24 @@ from scrolling */
     }
 }
 
-.new-header__cta-container {
-    // -4 to normalize the padding-left
-    left: $gs-gutter / 4 - 4;
-    overflow: hidden;
-    /* necessary to make overflow-y work without cutting off
-    the transform */
-    padding-bottom: 10px;
-    padding-left: 4px;
-    padding-right: 6px;
+.new-header__edition-container {
     position: absolute;
     top: 0;
+    transform: translateX(100%);
 
-    @include mq(mobileLandscape) {
-        left: $gs-gutter / 2 - 4;
+    @include mq(tablet) {
+        right: 280px;
     }
+
+    @include mq(leftCol) {
+        right: 310px;
+    }
+}
+
+.new-header__top-bar {
+    left: 0;
+    position: absolute;
+    top: 0;
 }
 
 .new-header__logo {
@@ -113,6 +116,7 @@ from scrolling */
     @include mq(tablet) {
         height: calc(3 / 16 * 345px);
         margin-bottom: -5px;
+        margin-top: $gs-baseline;
         width: 345px;
     }
 

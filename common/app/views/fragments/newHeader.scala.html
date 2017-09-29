@@ -18,6 +18,18 @@
             <nav class="new-header__inner gs-container"
                  data-component="nav2"
                  aria-label="Guardian sections">
+
+                 @if(!page.metadata.hasSlimHeader) {
+                     <div class="new-header__edition-container hide-until-tablet">
+                         <a class="top-bar__item top-bar__item--dropdown"
+                             data-link-name=""
+                             data-edition=""
+                             href="">
+                                UK edition
+                         </a>
+                    </div>
+                }
+
                 <a href="@LinkTo{/}"
                    class="new-header__logo"
                    data-link-name="nav2 : logo">
@@ -27,41 +39,44 @@
                     ))
                 </a>
 
-                <div class="new-header__cta-container hide-until-mobile">
+                <div class="new-header__top-bar hide-until-mobile">
                     @defining(
                         Edition(request).id.toLowerCase()
                     ) { editionId =>
                       @if(!page.metadata.hasSlimHeader) {
-                            <a class="header-cta-item header-cta-item--primary"
+                            <a class="top-bar__item top-bar__item--cta js-change-become-member-link"
                               data-link-name="nav2 : supporter-cta"
                               data-edition="@{editionId}"
                               href="@getContributionOrSupporterUrl(editionId)">
-                              <span class="header-cta-item__label">
+                                <span>
                                   @if(editionId == "us") {
-                                      make a <span class="header-cta-item__new-line">contribution</span>
+                                     make a <br>contribution
                                   } else {
-                                      become a <span class="header-cta-item__new-line">supporter</span>
+                                      become a <br>supporter
                                   }
-                              </span>
+                                <span>
                             </a>
 
-                            <a class="header-cta-item hide-until-tablet header-cta-item--secondary js-change-subscribe-link"
+                            <a class="top-bar__item hide-until-tablet js-change-subscribe-link"
                                 data-link-name="nav2 : subscribe-cta"
                                 data-edition="@{editionId}"
                                 href="@getSupportOrSubscriptionUrl(NewHeader)">
-                                <span class="header-cta-item__label">
-                                    subscribe
-                                </span>
+                                subscribe
                             </a>
 
-                            <a class="header-cta-item hide-until-tablet header-cta-item--secondary"
+                            <a class="top-bar__item hide-until-tablet"
                                 data-link-name="nav2 : job-cta"
                                 data-edition="@{editionId}"
                                 href="@getJobUrl(editionId)">
-                                <span class="header-cta-item__label">
-                                    <span class="hide-until-tablet">find a job</span>
-                                    <span class="hide-from-tablet">jobs</span>
-                                </span>
+                                <span class="hide-until-tablet">find a job</span>
+                                <span class="hide-from-tablet">jobs</span>
+                            </a>
+
+                            <a class="top-bar__item top-bar__item--dropdown hide-until-tablet"
+                                data-link-name=""
+                                data-edition=""
+                                href="">
+                                sign in
                             </a>
                         }
                     }
