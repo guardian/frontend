@@ -34,24 +34,27 @@ object UrlHelpers {
 
   def getCampaignCode(destination: ReaderRevenueSite, position: Position)(implicit request: RequestHeader): Option[String] = {
     val isInHeaderTestControlGroup = mvt.ABNewDesktopHeaderControl.isParticipating
-    val editionId = Edition(request).id
+    val editionId = Edition(request).id.toUpperCase()
 
     (destination, position, isInHeaderTestControlGroup) match {
-      case (Membership, NewHeader | SideMenu, _) => Some(s"mem_${editionId.toLowerCase}_web_newheader")
-      case (Membership, OldHeader, true) => Some(s"mem_${editionId.toLowerCase}_web_newheader_control")
-      case (Membership, OldHeader, false) => Some(s"DOTCOM_HEADER_BECOMEMEMBER_${editionId.toUpperCase}")
+      case (Membership, NewHeader | SideMenu, _) => Some(s"mem_${editionId.toLowerCase()}_web_newheader")
+      case (Membership, OldHeader, true) => Some(s"mem_${editionId.toLowerCase()}_web_newheader_control")
+      case (Membership, OldHeader, false) => Some(s"DOTCOM_HEADER_BECOMEMEMBER_${editionId}")
       case (Membership, AmpHeader, _) => Some("AMP_HEADER_GU_SUPPORTER")
-      case (Membership, SlimHeaderDropdown, _) => Some(s"NGW_TOPNAV_${editionId.toUpperCase}_GU_MEMBERSHIP")
+      case (Membership, SlimHeaderDropdown, _) => Some(s"NGW_TOPNAV_${editionId}_GU_MEMBERSHIP")
+      case (Membership, Footer, _) => Some(s"NGW_FOOTER_${editionId}_GU_MEMBERSHIP")
 
-      // TODO: double-check new & old header are the same for this one?
       case (Contribute, NewHeader | OldHeader, _) => Some("gdnwb_copts_co_dotcom_header")
       case (Contribute, Footer, _) => Some("gdnwb_copts_memco_dotcom_footer")
 
-      case (Subscribe, SideMenu, _) => Some(s"NGW_NEWHEADER_${editionId}_GU_SUBSCRIBE")
-      case (Subscribe, NewHeader, _) => Some(s"subs_${editionId}_web_newheader")
+      // this editionId is lowercase even though the rest of the campaign code is uppercase
+      // this is for consistency with the existing campaign code
+      case (Subscribe, SideMenu, _) => Some(s"NGW_NEWHEADER_${editionId.toLowerCase()}_GU_SUBSCRIBE")
+      case (Subscribe, NewHeader, _) => Some(s"subs_${editionId.toLowerCase()}_web_newheader")
       case (Subscribe, OldHeader, true) => Some(s"subs_${editionId}_web_newheader_control")
       case (Subscribe, OldHeader, false) => Some(s"NGW_HEADER_${editionId}_GU_SUBSCRIBE")
-      case (Subscribe, SlimHeaderDropdown, _) => Some(s"NGW_TOPNAV_${editionId.toUpperCase}_GU_SUBSCRIBE")
+      case (Subscribe, SlimHeaderDropdown, _) => Some(s"NGW_TOPNAV_${editionId}_GU_SUBSCRIBE")
+      case (Subscribe, Footer, _) => Some(s"NGW_FOOTER_${editionId}_GU_SUBSCRIBE")
 
       case (_, _, _) => None
     }
@@ -77,14 +80,12 @@ object UrlHelpers {
 
     val acquisitionData = Json.obj(
       "source" -> AcquisitionSource.GuardianWeb.name,
-      "componentId" -> campaignCode,
       "componentType" -> (position match {
         case NewHeader | OldHeader | AmpHeader | SideMenu | SlimHeaderDropdown => ComponentType.AcquisitionsHeader
         case Footer => ComponentType.AcquisitionsFooter
-      }).name,
-      // TODO: there's no way to get this serverside is there? replace clientside??
-      "referrerPageviewId" -> ""
+      }).name
     ) ++ campaignCode.fold(Json.obj())(c => Json.obj(
+      "componentId" -> c,
       "campaignCode" -> c
     )) ++ abTest.fold(Json.obj())(ab => Json.obj(
       "abTest" -> Json.obj(
@@ -95,7 +96,6 @@ object UrlHelpers {
 
     import com.netaporter.uri.dsl._
 
-    // TODO: I've ditched the linking direct to edition country. Double-check this is OK.
     destination.url ? ("INTCMP" -> campaignCode) & ("acquisitionData" -> acquisitionData.toString)
   }
 
