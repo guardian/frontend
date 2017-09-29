@@ -3,7 +3,6 @@
 @import views.support.`package`.Seq2zipWithRowInfo
 
 @import common.LinkTo
-@import conf.Static
 
 @(signupPage: Page)(implicit request: RequestHeader, context: model.ApplicationContext)
 
@@ -91,37 +90,34 @@
     </div>
 }
 
-@mainLegacy(signupPage, projectName = Some("signup")) { } {
-  <div class="l-side-margins">
-    <div class="content">
-        <div class="gs-container">
-            <div class="newsletters-heading">newsletters</div>
+<div class="l-side-margins">
+<div class="content">
+    <div class="gs-container">
+        <div class="newsletters-heading">newsletters</div>
 
-            <div class="newsletters-category" name="news round ups">
-                @emailListCategoryList("news round ups", EmailNewsletters.newsRoundUpEmails)
-            </div>
-
-            <div class="newsletters-category" name="news by topic">
-                @emailListCategoryList("news by topic", EmailNewsletters.newsEmails)
-            </div>
-            <div class="newsletters-category" name="features">
-                @emailListCategoryList("features", EmailNewsletters.featureEmails)
-            </div>
-            <div class="newsletters-category" name="sport">
-                @emailListCategoryList("sport", EmailNewsletters.sportEmails)
-            </div>
-            <div class="newsletters-category" name="culture">
-                @emailListCategoryList("culture", EmailNewsletters.cultureEmails)
-            </div>
-            <div class="newsletters-category" name="lifestyle">
-                @emailListCategoryList("lifestyle", EmailNewsletters.lifestyleEmails)
-            </div>
-            <div class="newsletters-category" name="comment">
-                @emailListCategoryList("comment", EmailNewsletters.commentEmails)
-            </div>
-
+        <div class="newsletters-category" name="news round ups">
+            @emailListCategoryList("news round ups", EmailNewsletters.newsRoundUpEmails)
         </div>
-    </div>
-  </div>
 
-}
+        <div class="newsletters-category" name="news by topic">
+            @emailListCategoryList("news by topic", EmailNewsletters.newsEmails)
+        </div>
+        <div class="newsletters-category" name="features">
+            @emailListCategoryList("features", EmailNewsletters.featureEmails)
+        </div>
+        <div class="newsletters-category" name="sport">
+            @emailListCategoryList("sport", EmailNewsletters.sportEmails)
+        </div>
+        <div class="newsletters-category" name="culture">
+            @emailListCategoryList("culture", EmailNewsletters.cultureEmails)
+        </div>
+        <div class="newsletters-category" name="lifestyle">
+            @emailListCategoryList("lifestyle", EmailNewsletters.lifestyleEmails)
+        </div>
+        <div class="newsletters-category" name="comment">
+            @emailListCategoryList("comment", EmailNewsletters.commentEmails)
+        </div>
+
+    </div>
+</div>
+</div>

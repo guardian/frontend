@@ -2,6 +2,7 @@ package controllers
 
 import model.Cached.RevalidatableResult
 import model.{ApplicationContext, Cached, PreferencesMetaData}
+import pages.TagIndexHtmlPage
 import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 
 class PreferencesController(val controllerComponents: ControllerComponents)(implicit context: ApplicationContext)
@@ -9,7 +10,7 @@ class PreferencesController(val controllerComponents: ControllerComponents)(impl
 
   def indexPrefs(): Action[AnyContent] = Action { implicit request =>
     Cached(300) {
-      RevalidatableResult.Ok(views.html.preferences.index(new PreferencesMetaData()))
+      RevalidatableResult.Ok(TagIndexHtmlPage.html(new PreferencesMetaData()))
     }
   }
 }

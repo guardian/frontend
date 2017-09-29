@@ -5,6 +5,7 @@ import common._
 import conf.switches.Switches
 import contentapi.ContentApiClient
 import model._
+import pages.GalleryHtmlPage
 import play.api.mvc._
 import play.twirl.api.Html
 import views.support.RenderOtherStatus
@@ -52,7 +53,7 @@ class GalleryController(contentApiClient: ContentApiClient, val controllerCompon
 
   private def renderGallery(model: GalleryPage)(implicit request: RequestHeader) = {
     val htmlResponse: (() => Html) = () =>
-      views.html.gallery(model)
+      GalleryHtmlPage.html(model)
     val jsonResponse = () =>
       views.html.fragments.galleryBody(model)
     renderFormat(htmlResponse, jsonResponse, model, Switches.all)

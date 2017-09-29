@@ -5,6 +5,7 @@ import common._
 import conf.switches.Switches
 import contentapi.ContentApiClient
 import model._
+import pages.ContentHtmlPage
 import play.api.mvc._
 import services.ImageQuery
 import views.support.RenderOtherStatus
@@ -26,7 +27,7 @@ class ImageContentController(
   def render(path: String): Action[AnyContent] = Action.async { implicit request => renderItem(path) }
 
   private def renderImageContent(page: ImageContentPage)(implicit request: RequestHeader): Result = {
-    val htmlResponse = () => views.html.imageContent(page)
+    val htmlResponse = () => ContentHtmlPage.html(page)
     val jsonResponse = () => views.html.fragments.imageContentBody(page)
     renderFormat(htmlResponse, jsonResponse, page, Switches.all)
   }

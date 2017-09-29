@@ -4,6 +4,7 @@ import common._
 import contentapi.{ContentApiClient, SectionsLookUp}
 import model.Cached.RevalidatableResult
 import model._
+import pages.IndexHtmlPage
 import play.api.mvc.{ControllerComponents, RequestHeader, Result}
 import services.IndexPage
 
@@ -21,7 +22,7 @@ class IndexController(
       } else if (request.isJson) {
         JsonComponent(views.html.fragments.indexBody(model))
       } else {
-        RevalidatableResult.Ok(views.html.index(model))
+        RevalidatableResult.Ok(IndexHtmlPage.html(model))
       }
     }
   }

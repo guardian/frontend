@@ -3,10 +3,8 @@
 @import conf.switches.Switches._
 @import views.html.fragments.containers.facia_cards.containerScaffold
 
-@mainLegacy(metaData, projectName = Some("index")) { } {
-    @if(HistoryTags.isSwitchedOn) {
-        @containerScaffold("recently visited links", "preferences") {
-            <div id="preferences-history-tags">Loading&hellip;</div>
-        }
+@if(HistoryTags.isSwitchedOn) {
+    @containerScaffold("recently visited links", "preferences") {
+        <div id="preferences-history-tags">Loading&hellip;</div>
     }
 }

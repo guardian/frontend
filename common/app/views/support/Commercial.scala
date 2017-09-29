@@ -254,9 +254,8 @@ object Commercial {
 
       mkString(
         containerType =
-          if (frontId.isDefined) "Curated front container"
-          else if (isContentPage) "Onward container"
-          else "Automated front container",
+          if (isContentPage) "Onward container"
+          else "Front container",
         editionId = Edition(request).id,
         frontId =
           if (isContentPage) "none"

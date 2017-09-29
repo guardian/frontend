@@ -1,6 +1,5 @@
 // @flow
 import { isAbTestTargeted } from 'common/modules/commercial/targeting-tool';
-import type { AcquisitionsEpicTemplateCopy } from 'common/modules/commercial/acquisitions-copy';
 import {
     control as acquisitionsCopyControl,
     regulars as acquisitionsCopyRegulars,
@@ -21,16 +20,15 @@ import fastdom from 'lib/fastdom-promise';
 import mediator from 'lib/mediator';
 import { getSync as geolocationGetSync } from 'lib/geolocation';
 import { noop } from 'lib/noop';
-import lodashTemplate from 'lodash/utilities/template';
 import toArray from 'lodash/collections/toArray';
-import acquisitionsEpicButtons from 'raw-loader!common/views/acquisitions-epic-buttons.html';
-import acquisitionsEpicControlTemplate from 'raw-loader!common/views/acquisitions-epic-control.html';
-import acquisitionsTestimonialBlockTemplate from 'raw-loader!common/views/acquisitions-epic-testimonial-block.html';
+import { epicButtonsTemplate } from 'common/modules/commercial/templates/acquisitions-epic-buttons';
+import { acquisitionsEpicControlTemplate } from 'common/modules/commercial/templates/acquisitions-epic-control';
+import { acquisitionsTestimonialBlockTemplate } from 'common/modules/commercial/templates/acquisitions-epic-testimonial-block';
 import { shouldSeeReaderRevenue as userShouldSeeReaderRevenue } from 'commercial/modules/user-features';
 
 type EpicTemplate = (Variant, AcquisitionsEpicTemplateCopy) => string;
 
-type CtaUrls = {
+export type CtaUrls = {
     membershipUrl?: string,
     contributeUrl?: string,
     supportUrl?: string,
@@ -52,11 +50,10 @@ const defaultMaxViews: {
     minDaysBetweenViews: 0,
 };
 
-const defaultButtonTemplate = (urls: CtaUrls) =>
-    lodashTemplate(acquisitionsEpicButtons, urls);
+const defaultButtonTemplate = (urls: CtaUrls) => epicButtonsTemplate(urls);
 
 const controlTemplate: EpicTemplate = ({ options = {} }, copy) =>
-    lodashTemplate(acquisitionsEpicControlTemplate, {
+    acquisitionsEpicControlTemplate({
         copy,
         componentName: options.componentName,
         testimonialBlock: options.testimonialBlock,
@@ -87,15 +84,8 @@ const getTargets = (insertAtSelector, isMultiple) => {
 };
 
 const getTestimonialBlock = (
-    testimonialParameters: AcquisitionsEpicTestimonialTemplateParameters,
-    citeImage: ?String
-) =>
-    lodashTemplate(acquisitionsTestimonialBlockTemplate, {
-        quoteSvg: testimonialParameters.quoteSvg,
-        testimonialMessage: testimonialParameters.testimonialMessage,
-        testimonialName: testimonialParameters.testimonialName,
-        citeImage,
-    });
+    testimonialParameters: AcquisitionsEpicTestimonialTemplateParameters
+) => acquisitionsTestimonialBlockTemplate(testimonialParameters);
 
 const defaultPageCheck = (page: Object): boolean =>
     page.contentType === 'Article' && !page.isMinuteArticle;

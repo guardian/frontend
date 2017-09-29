@@ -1,4 +1,4 @@
-@(page: model.TagIndexPage, title: String)(implicit request: RequestHeader)
+@(page: model.TagIndexPage)(implicit request: RequestHeader)
 
 @import common.LinkTo
 
@@ -7,16 +7,16 @@
         <div class="fc-container__inner">
             <div class="fc-container__header">
                 <h2 class="fc-container__header__title">
-                    <span class="fc-container__header__description u-text-hyphenate">@title, @page.title.toLowerCase</span>
+                    <span class="fc-container__header__description u-text-hyphenate">@page.title, @page.tagIndex.title.toLowerCase</span>
                 </h2>
             </div>
 
             <div class="fc-container__body">
                 <ul class="linkslist">
-                @for(tag <- page.tags) {
+                @for(tag <- page.tagIndex.tags) {
                     <li class="linkslist__item">
                         <a href="@LinkTo(tag.indexPath)" class="linkslist__action tag-index__tag-link">
-                          @page.indexTitle(tag)
+                          @page.tagIndex.indexTitle(tag)
                         </a>
                     </li>
                 }

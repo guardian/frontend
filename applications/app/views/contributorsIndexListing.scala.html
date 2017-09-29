@@ -1,7 +1,0 @@
-@(page: model.ContributorsListing, listing: model.TagIndexListings)(implicit requestHeader: RequestHeader, context: model.ApplicationContext)
-
-@import fragments.tagIndexListingBody
-
-@mainLegacy(page, projectName = Some("index")) { } {
-    @tagIndexListingBody("contributors", page.metadata.webTitle, listing)
-}
