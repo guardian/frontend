@@ -79,11 +79,11 @@ object UrlHelpers {
     }
 
     val acquisitionData = Json.obj(
-      "source" -> AcquisitionSource.GuardianWeb.name,
+      "source" -> AcquisitionSource.GuardianWeb.originalName,
       "componentType" -> (position match {
-        case NewHeader | OldHeader | AmpHeader | SideMenu | SlimHeaderDropdown => ComponentType.AcquisitionsHeader
-        case Footer => ComponentType.AcquisitionsFooter
-      }).name
+        case NewHeader | OldHeader | AmpHeader | SideMenu | SlimHeaderDropdown => ComponentType.AcquisitionsHeader.originalName
+        case Footer => ComponentType.AcquisitionsFooter.originalName
+      })
     ) ++ campaignCode.fold(Json.obj())(c => Json.obj(
       // Currently campaignCode is used to uniquely identify components that drove acquisition.
       // This will eventually be the job of componentId, allowing us to re-purpose campaign code
