@@ -21,6 +21,18 @@ export const colour = {
         support3: '#fdadba',
         support4: '#dc2a7d',
     },
+    news: {
+        main1: '#005689',
+        main2: '#4bc6df',
+        support1: '#aad8f1',
+        support2: '#197caa',
+        support3: '#69d1ca',
+        support4: '#66a998',
+        support5: '#aad801',
+        support6: '#63717a',
+        support7: '#484f53',
+        support8: '#74e7ff',
+    }
 };
 
 export const breakpoints = {

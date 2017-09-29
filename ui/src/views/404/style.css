@@ -1,7 +1,7 @@
 wrapper {
     &:before {
         content: '';
-        background: #005689;
+        background: var(--colour-brand-blue);
         position: fixed;
         top: 0;
         right: 0;
@@ -18,7 +18,7 @@ mainContent {
     position: relative;
 
     @media (--from-tablet) {
-        padding: 0;
+        padding: 0 20px;
         width: 740px;
     }
 
@@ -51,12 +51,7 @@ logoWrapper {
         margin-bottom: -60px;
     }
 
-    & svg .guardian path {
-        transition: all 0s;
-        transform: translateX(0);
-    }
-
-    &:hover svg .guardian {
+    &:hover {
         & .letter-u {
             transform: translateX(49px);
             transition-delay: .1s;
@@ -146,7 +141,7 @@ contentText {
 }
 
 heading {
-    color: #AAD8F1;
+    color: var(--colour-news-support1);
     font-family: "Guardian Egyptian Web", "Guardian Text Egyptian Web", Georgia, serif;
     font-size: 28px;
     font-weight: 200;
@@ -160,7 +155,7 @@ heading {
 }
 
 bodyCopy {
-    color: #FFFFFF;
+    color: #ffffff;
     font-family: "Guardian Text Egyptian Web", Georgia, serif;
     font-size: 15px;
     margin-bottom: 24px;
@@ -173,13 +168,13 @@ bodyCopy {
 }
 
 link {
-    border-bottom: 2px solid #337EA5;
-    color: #FFFFFF;
+    border-bottom: 2px solid var(--colour-news-support2);
+    color: #ffffff;
     padding-bottom: 3px;
     text-decoration: none;
     transition: border-color .3s;
 
     &:hover {
-        border-color: #74E7FF;
+        border-color: var(--colour-news-support8);
     }
 }
