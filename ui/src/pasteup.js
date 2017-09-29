@@ -32,7 +32,7 @@ export const colour = {
         support6: '#63717a',
         support7: '#484f53',
         support8: '#74e7ff',
-    }
+    },
 };
 
 export const breakpoints = {
