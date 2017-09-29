@@ -3,6 +3,7 @@
 @import conf.Configuration
 @import common.LinkTo
 @import navigation.NewNavigation
+@import navigation.UrlHelpers.{getReaderRevenueUrl, AmpHeader, Membership}
 
 <header class="header"
         role="banner">
@@ -11,7 +12,7 @@
         <div class="header__cta-container">
             <a class="header-cta-item"
                data-link-name="amp : nav : supporter-cta"
-                href="@Configuration.id.membershipUrl/supporter?INTCMP=AMP_HEADER_GU_SUPPORTER">
+                href="@getReaderRevenueUrl(Membership, AmpHeader)">
                 <span class="header-cta-item__label">
                     become a <span class="header-cta-item__new-line">supporter</span>
                 </span>
