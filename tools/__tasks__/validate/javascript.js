@@ -43,7 +43,7 @@ module.exports = {
         },
         {
             description: 'UI',
-            task: `eslint ui ${config}`,
+            task: `eslint ui ${config} --ext .js,.jsx`,
             onError: error,
         },
         {
