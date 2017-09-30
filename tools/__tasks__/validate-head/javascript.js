@@ -76,12 +76,15 @@ module.exports = {
                 }),
         },
         {
-            description: 'Run Flowtype checks on static/src/javascripts/',
+            description: 'Run Flowtype checks',
             task: () =>
                 getChangedFiles().then(files => {
                     const jsFiles = files.filter(
                         file =>
-                            file.endsWith('.js') && file.startsWith('static')
+                            (file.endsWith('.js') &&
+                                file.startsWith('static')) ||
+                            ((file.endsWith('.js') || file.endsWith('.jsx')) &&
+                                file.startsWith('ui'))
                     );
 
                     if (jsFiles.length) {
