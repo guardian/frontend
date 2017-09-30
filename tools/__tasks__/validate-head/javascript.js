@@ -16,6 +16,7 @@ module.exports = {
                     const jsFiles = files.filter(
                         file =>
                             file.endsWith('.js') ||
+                            file.endsWith('.jsx') ||
                             file === 'git-hooks/pre-push' ||
                             file === 'git-hooks/post-merge'
                     );
