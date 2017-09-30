@@ -6,7 +6,7 @@ module.exports = {
     task: () =>
         getChangedFiles().then(files => {
             const jsFiles = files.filter(
-                file => file.endsWith('.js') || file === 'git-hooks/pre-push'
+                file => file.endsWith('.js') || file === 'git-hooks/pre-push' || file === 'git-hooks/post-merge'
             );
 
             return execa('eslint', [...jsFiles, '--quiet', '--color', '--fix']);
