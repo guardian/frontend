@@ -1,7 +1,6 @@
 const execa = require('execa');
 
 const config = ['--quiet', '--color', '--fix'];
-const uiConfig = config.concat(['--ext', '.js,.jsx']);
 
 const handleSuccess = ctx => {
     ctx.messages.push("Don't forget to commit any fixes...");
@@ -28,9 +27,9 @@ module.exports = {
         {
             description: 'Fix ui',
             task: ctx =>
-                execa('eslint', ['ui'].concat(uiConfig)).then(
-                    handleSuccess.bind(null, ctx)
-                ),
+                execa
+                    .shell('cd ui && yarn lint:js:fix')
+                    .then(handleSuccess.bind(null, ctx)),
         },
         {
             description: 'Fix everything else',

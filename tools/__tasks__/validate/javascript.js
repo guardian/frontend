@@ -43,7 +43,7 @@ module.exports = {
         },
         {
             description: 'UI',
-            task: `eslint ui ${config} --ext .js,.jsx`,
+            task: () => execa.shell('cd ui && yarn lint:js'),
             onError: error,
         },
         {
