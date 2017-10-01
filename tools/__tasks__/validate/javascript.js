@@ -57,9 +57,14 @@ module.exports = {
             onError: error,
         },
         {
-            description: `Flow`,
+            description: 'Flow',
             task: () => execa('flow'),
             onError: flowError,
+        },
+        {
+            description: 'Git hooks',
+            task: `eslint git-hooks/* ${config}`,
+            onError: error,
         },
     ],
     concurrent: true,

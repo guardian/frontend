@@ -17,8 +17,7 @@ module.exports = {
                         file =>
                             file.endsWith('.js') ||
                             file.endsWith('.jsx') ||
-                            file === 'git-hooks/pre-push' ||
-                            file === 'git-hooks/post-merge'
+                            file.startsWith('git-hooks')
                     );
                     const lint = (proc, batchedFiles) =>
                         proc.then(() =>
