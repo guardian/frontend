@@ -1,5 +1,5 @@
 // @flow
-import constants from 'common/modules/crosswords/constants';
+import { constants } from 'common/modules/crosswords/constants';
 import findIndex from 'lodash/arrays/findIndex';
 import flatten from 'lodash/arrays/flatten';
 import first from 'lodash/arrays/first';
@@ -225,8 +225,9 @@ const buildSeparatorMap = clues => {
     };
 
     return clues
-        .map(clue =>
-            Object.keys(clue.separatorLocations).map(separator => {
+        .map(clue => {
+            console.log('clue', clue);
+            const boop = Object.keys(clue.separatorLocations).map(separator => {
                 const locations = clue.separatorLocations[separator];
 
                 return locations.map(location => {
@@ -246,11 +247,17 @@ const buildSeparatorMap = clues => {
                         separator,
                     };
                 });
-            })
-        )
+            });
+
+            console.log('boop', boop);
+            return boop;
+        })
         .reduce(flattenReducer, [])
         .reduce((map, d) => {
             console.log(d);
+            if (!d) {
+                return map;
+            }
 
             if (map[d.key] === undefined) {
                 map[d.key] = {};
