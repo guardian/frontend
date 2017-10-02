@@ -1,0 +1,69 @@
+.heading {
+    display: flex;
+    font-family: "Guardian Egyptian Web", "Guardian Text Egyptian Web", Georgia, serif;
+    font-size: 24px;
+    font-weight: normal;
+    line-height: 30px;
+    margin: 10px 0 0;
+}
+
+.logo {
+    width: 250px;
+
+    & .guardian {
+        @supports (fill: hotpink) {
+            fill: var(--colour-brand-blue);
+
+            /* example of a width media query range */
+            @media (--from-tablet) and (--until-desktop) {
+                fill: var(--colour-brand-blue);
+            }
+        }
+    }
+}
+
+.fluidWrap {
+    margin: 0 auto;
+    max-width: 940px;
+    padding: 0 10px;
+}
+
+.topBar {
+    background: #ededed;
+    border-bottom: 1px solid #c6c6c6;
+    float: left;
+    font-size: 12px;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.topBarLink {
+    color: #005689;
+    display: block;
+    font-family: arial;
+    padding: 8px 10px 7px;
+    text-decoration: none;
+}
+
+.subHeading {
+    font-size: 18px;
+    font-weight: normal;
+    line-height: 20px;
+    margin: 0;
+}
+
+.subHeadingContainer {
+    background-color: #ededed;
+    border-color: #0061a6;
+    border-top-style: solid;
+    border-top-width: 3px;
+    clear: both;
+    margin-bottom: 10px;
+    padding: 4px 5px 14px;
+}
+
+.para {
+    font-family: arial;
+    font-size: 12px;
+    margin: 0 0 10px;
+}

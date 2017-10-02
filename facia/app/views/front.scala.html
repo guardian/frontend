@@ -1,7 +1,0 @@
-@(page: model.PressedPage)(implicit request: RequestHeader, context: model.ApplicationContext)
-
-@main(page, projectName = Option("facia")){
-    @fragments.frontHead(page)
-}{
-    @views.FrontsCleaner(page, fragments.frontBody(page).toString)
-}

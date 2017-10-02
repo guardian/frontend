@@ -4,7 +4,7 @@
 @import common.{LinkTo, Edition}
 @import views.support.RenderClasses
 @import navigation.{NewNavigation, NavigationHelpers}
-@import navigation.UrlHelpers._
+@import navigation.UrlHelpers.{getReaderRevenueUrl, getJobUrl, getContributionOrSupporterUrl, NewHeader, Subscribe}
 
 <header class="@RenderClasses(Map(
             "new-header--mvt-desktop" -> mvt.ABNewDesktopHeaderVariant.isParticipating,
@@ -48,7 +48,7 @@
                             <a class="header-cta-item hide-until-tablet header-cta-item--secondary js-change-subscribe-link"
                                 data-link-name="nav2 : subscribe-cta"
                                 data-edition="@{editionId}"
-                                href="@{Configuration.id.digitalPackUrl}/@{editionId}?INTCMP=subs_@{editionId}_web_newheader">
+                                href="@getReaderRevenueUrl(Subscribe, NewHeader)">
                                 <span class="header-cta-item__label">
                                     subscribe
                                 </span>

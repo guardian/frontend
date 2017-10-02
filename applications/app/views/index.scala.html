@@ -1,7 +1,0 @@
-@(index: services.IndexPage)(implicit request: RequestHeader, context: model.ApplicationContext)
-
-@main(index.page, projectName = Option("facia")){
-    @fragments.indexHead(index)
-}{
-    @views.IndexCleaner(index, fragments.indexBody(index).toString)
-}

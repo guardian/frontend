@@ -12,14 +12,15 @@ const updateCommentLink = (): void => {
 
     if (commentItem && commentLink) {
         const user = getUserFromCookie();
-
-        fastdom.write(() => {
-            commentItem.classList.remove('u-h');
-            commentLink.setAttribute(
-                'href',
-                `https://profile.theguardian.com/user/id/${user.id}`
-            );
-        });
+        if (user) {
+            fastdom.write(() => {
+                commentItem.classList.remove('u-h');
+                commentLink.setAttribute(
+                    'href',
+                    `https://profile.theguardian.com/user/id/${user.id}`
+                );
+            });
+        }
     }
 };
 

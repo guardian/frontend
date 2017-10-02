@@ -1,6 +1,6 @@
 // @flow
 import { local } from 'lib/storage';
-import id from 'common/modules/identity/api';
+import { getUserFromCookie, getUserFromApi } from 'common/modules/identity/api';
 
 const userSegmentsKey = 'gu.ads.userSegmentsData';
 
@@ -10,7 +10,7 @@ const getUserSegments = function(): Array<any> {
         const userSegmentsData = local.get(userSegmentsKey);
 
         if (userSegmentsData) {
-            userCookieData = id.getUserFromCookie();
+            userCookieData = getUserFromCookie();
 
             if (
                 userCookieData &&
@@ -29,9 +29,9 @@ const requestUserSegmentsFromId = function(): void {
     if (
         local.isAvailable() &&
         local.get(userSegmentsKey) === null &&
-        id.getUserFromCookie()
+        getUserFromCookie()
     ) {
-        id.getUserFromApi(user => {
+        getUserFromApi(user => {
             if (user && user.adData) {
                 const userSegments = [];
                 Object.keys(user.adData).forEach(key => {

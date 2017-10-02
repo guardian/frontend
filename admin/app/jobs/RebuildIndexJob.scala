@@ -3,7 +3,7 @@ package jobs
 import common.{Logging, StopWatch}
 import contentapi.ContentApiClient
 import indexes.{ContentApiTagsEnumerator, TagPages}
-import model.{TagIndexListings, TagIndexPage}
+import model.{TagIndexListings, TagIndex}
 import play.api.libs.iteratee.Enumeratee
 import services.TagIndexesS3
 
@@ -14,7 +14,7 @@ class RebuildIndexJob(contentApiClient: ContentApiClient)(implicit executionCont
   val contentApiTagsEnumerator = new ContentApiTagsEnumerator(contentApiClient)
   val tagPages = new TagPages
 
-  def saveToS3(parentKey: String, tagPages: Seq[TagIndexPage]) {
+  def saveToS3(parentKey: String, tagPages: Seq[TagIndex]) {
     val s3StopWatch = new StopWatch
 
     tagPages foreach { tagPage =>

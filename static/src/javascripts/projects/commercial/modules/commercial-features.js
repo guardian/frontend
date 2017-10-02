@@ -2,10 +2,9 @@
 import config from 'lib/config';
 import { getBreakpoint, adblockInUse } from 'lib/detect';
 import { isAdFreeUser } from 'commercial/modules/user-features';
-import identityApi from 'common/modules/identity/api';
+import { isUserLoggedIn } from 'common/modules/identity/api';
 import userPrefs from 'common/modules/user-prefs';
 import { shouldShowReaderRevenue } from 'common/modules/commercial/contributions-utilities';
-import { getParticipations } from 'common/modules/experiments/utils';
 
 // Having a constructor means we can easily re-instantiate the object in a test
 class CommercialFeatures {
@@ -13,7 +12,6 @@ class CommercialFeatures {
     stickyTopBannerAd: any;
     articleBodyAdverts: any;
     articleAsideAdverts: any;
-    glabsTrafficDriver: any;
     videoPreRolls: any;
     highMerch: any;
     thirdPartyTags: any;
@@ -71,16 +69,6 @@ class CommercialFeatures {
             !isHosted &&
             !newRecipeDesign;
 
-        this.glabsTrafficDriver =
-            this.articleBodyAdverts &&
-            switches.abGlabsTrafficDriver &&
-            config.hasTone('Features') &&
-            !config.page.isPaidContent &&
-            ['sport', 'lifeandstyle', 'fashion', 'football', 'travel'].includes(
-                config.page.section
-            ) &&
-            getParticipations().GlabsTrafficDriver !== undefined;
-
         this.videoPreRolls = this.dfpAdvertising && !this.adFree;
 
         this.highMerch =
@@ -101,7 +89,7 @@ class CommercialFeatures {
             isArticle &&
             !config.page.isPreview &&
             config.page.showRelatedContent &&
-            !(identityApi.isUserLoggedIn() && config.page.commentable);
+            !(isUserLoggedIn() && config.page.commentable);
 
         this.commentAdverts =
             this.dfpAdvertising &&
@@ -109,7 +97,7 @@ class CommercialFeatures {
             !isMinuteArticle &&
             config.switches.enableDiscussionSwitch &&
             config.page.commentable &&
-            identityApi.isUserLoggedIn() &&
+            isUserLoggedIn() &&
             (!isLiveBlog || isWidePage);
 
         this.liveblogAdverts =

@@ -1,14 +1,12 @@
-@(page: model.Page, projectName: Option[String] = None, head: Html)(implicit request: RequestHeader, context: model.ApplicationContext)
+@(projectName: Option[String] = None, head: Html)(implicit page: model.Page, request: RequestHeader, context: model.ApplicationContext)
 
 @import model.Page.getContent
-@import conf.Static
 @import implicits.Strings.String2Uri
 @import views.support.JavaScriptPage.getMap
 
-<meta charset="utf-8" />
 <title>@views.support.Title(page)</title>
 
-@fragments.metaData(page)
+@fragments.metaData()
 @head
 
 @* stylesheet <link>s - get the stylesheets downloading ASAP *@
@@ -28,4 +26,4 @@ Example: http://output.jsbin.com/jodureg/1
 </script>
 
 @* inline JS - blocking *@
-@fragments.inlineJSBlocking(page)
+@fragments.inlineJSBlocking()

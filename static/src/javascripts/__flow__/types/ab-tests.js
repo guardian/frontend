@@ -85,18 +85,6 @@ declare type Interaction = {
     value: string,
 };
 
-declare type EngagementBannerParams = {
-    minArticles: number,
-    campaignCode: string,
-    buttonCaption: string,
-    linkUrl: string,
-    messageText: string,
-    pageviewId: string,
-    colourStrategy: () => string,
-    products: OphanProduct[],
-    paypalClass?: string,
-};
-
 /**
  * the structure stored in localStorage
  */

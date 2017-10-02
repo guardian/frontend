@@ -67,7 +67,7 @@ object GuardianConfiguration extends Logging {
   lazy val configuration = {
     // This is version number of the config file we read from s3,
     // increment this if you publish a new version of config
-    val s3ConfigVersion = 42
+    val s3ConfigVersion = 43
 
     lazy val userPrivate = FileConfigurationSource(s"${System.getProperty("user.home")}/.gu/frontend.conf")
     lazy val runtimeOnly = FileConfigurationSource("/etc/gu/frontend.conf")
@@ -299,7 +299,8 @@ class GuardianConfiguration extends Logging {
     lazy val oauthUrl = configuration.getStringProperty("id.oauth.url").getOrElse("")
     lazy val membershipUrl = configuration.getStringProperty("id.membership.url").getOrElse("https://membership.theguardian.com")
     lazy val supportUrl = configuration.getStringProperty("id.support.url").getOrElse("https://support.theguardian.com")
-    lazy val digitalPackUrl = configuration.getStringProperty("id.digitalpack.url").getOrElse("https://subscribe.theguardian.com")
+    lazy val subscribeUrl = configuration.getStringProperty("id.digitalpack.url").getOrElse("https://subscribe.theguardian.com")
+    lazy val contributeUrl = configuration.getStringProperty("id.contribute.url").getOrElse("https://contribute.theguardian.com")
     lazy val membersDataApiUrl = configuration.getStringProperty("id.members-data-api.url").getOrElse("https://members-data-api.theguardian.com")
     lazy val stripePublicToken =  configuration.getStringProperty("id.membership.stripePublicToken").getOrElse("")
     lazy val accountDeletionApiKey = configuration.getStringProperty("id.accountDeletion.apiKey").getOrElse("")

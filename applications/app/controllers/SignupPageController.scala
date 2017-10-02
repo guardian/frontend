@@ -3,6 +3,7 @@ package controllers
 import common.ImplicitControllerExecutionContext
 import model.{ApplicationContext, Cached}
 import model.Cached.RevalidatableResult
+import pages.NewsletterHtmlPage
 import play.api.libs.ws.WSClient
 import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 import staticpages.StaticPages
@@ -18,7 +19,11 @@ class SignupPageController(
   val defaultCacheDuration: Duration = 15.minutes
 
   def renderNewslettersPage(): Action[AnyContent] = Action { implicit request =>
-      Cached(defaultCacheDuration)(RevalidatableResult.Ok(views.html.signup.newsletters(StaticPages.simpleNewslettersPage(request.path))))
+      Cached(defaultCacheDuration)(
+        RevalidatableResult.Ok(
+          NewsletterHtmlPage.html(StaticPages.simpleNewslettersPage(request.path))
+        )
+      )
    }
 
 }

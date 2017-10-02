@@ -1,6 +1,6 @@
 @(page: model.Page, isAutoDeletion: Boolean)(implicit request: RequestHeader, context: model.ApplicationContext)
 
-@main(page, projectName = Option("identity")){
+@mainLegacy(page, projectName = Option("identity")){
 }{
     <div class="identity-wrapper monocolumn-wrapper">
         @if(isAutoDeletion) {

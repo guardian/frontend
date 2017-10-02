@@ -9,6 +9,7 @@ import play.api.libs.json.{Format, JsObject, Json}
 import play.api.mvc._
 import views.support.RenderOtherStatus
 import JsonComponent.withRefreshStatus
+import pages.ContentHtmlPage
 
 import scala.concurrent.Future
 
@@ -50,7 +51,7 @@ class MediaController(contentApiClient: ContentApiClient, val controllerComponen
   }
 
   private def renderMedia(model: MediaPage)(implicit request: RequestHeader): Result = {
-    val htmlResponse = () => views.html.media(model)
+    val htmlResponse = () => ContentHtmlPage.html(model)
     val jsonResponse = () => views.html.fragments.mediaBody(model, displayCaption = false)
     renderFormat(htmlResponse, jsonResponse, model, Switches.all)
   }

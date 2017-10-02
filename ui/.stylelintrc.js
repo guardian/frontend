@@ -1,7 +1,7 @@
 // @flow
 module.exports = {
     extends: 'stylelint-config-standard',
-    plugins: ['stylelint-order', 'stylelint-scss'],
+    plugins: ['stylelint-order'],
     rules: {
         indentation: 4,
         'selector-type-case': null,
@@ -10,27 +10,15 @@ module.exports = {
         'order/properties-alphabetical-order': true,
 
         'at-rule-no-unknown': null,
-        'scss/at-rule-no-unknown': true,
 
         // styletron-specific
         'selector-pseudo-element-colon-notation': 'single',
         'declaration-no-important': true,
-        'selector-max-attribute': 0,
-        'selector-max-class': 0,
-        'selector-max-id': 0,
-        'selector-max-type': 1,
-        'selector-max-universal': 0,
-        'selector-max-compound-selectors': 1,
-        'selector-max-combinators': 0,
         'at-rule-blacklist': [
-            'media',
-            'supports',
             'keyframes',
             'import',
             'document',
             'page',
-            'font-face',
-            'viewport',
             'counter-style',
         ],
         'property-no-vendor-prefix': true,

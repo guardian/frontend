@@ -1,7 +1,7 @@
 package services
 
 import conf.Configuration
-import model.{TagIndexListings, TagIndexPage}
+import model.{TagIndexListings, TagIndex}
 import play.api.libs.json._
 
 sealed trait TagIndexError
@@ -27,9 +27,9 @@ object TagIndexesS3 extends S3 {
     "application/json"
   )
 
-  def putIndex(indexType: String, tagPage: TagIndexPage): Unit = putJson(
-    indexKey(indexType, tagPage.id),
-    tagPage
+  def putIndex(indexType: String, tagIndex: TagIndex): Unit = putJson(
+    indexKey(indexType, tagIndex.id),
+    tagIndex
   )
 
   def putListing(indexType: String, listing: TagIndexListings): Unit = putJson(
@@ -40,7 +40,7 @@ object TagIndexesS3 extends S3 {
   private def getAndRead[A: Reads](key: String): Either[TagIndexError, A] = get(key) match {
     case Some(jsonString) =>
       Json.fromJson[A](Json.parse(jsonString)) match {
-        case JsSuccess(tagPage, _) => Right(tagPage)
+        case JsSuccess(tagIndex, _) => Right(tagIndex)
         case error @ JsError(_) => Left(TagIndexReadError(error))
       }
 
@@ -48,8 +48,8 @@ object TagIndexesS3 extends S3 {
       Left(TagIndexNotFound)
   }
 
-  def getIndex(indexType: String, pageName: String): Either[TagIndexError, TagIndexPage] =
-    getAndRead[TagIndexPage](indexKey(indexType, pageName))
+  def getIndex(indexType: String, pageName: String): Either[TagIndexError, TagIndex] =
+    getAndRead[TagIndex](indexKey(indexType, pageName))
 
   def getListing(indexType: String): Either[TagIndexError, TagIndexListings] =
     getAndRead[TagIndexListings](indexKey(indexType, ListingKey))

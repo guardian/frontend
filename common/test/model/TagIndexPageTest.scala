@@ -4,7 +4,7 @@ import common.ResourcesHelper
 import org.scalatest.{Matchers, FlatSpec}
 
 class TagIndexPageTest extends FlatSpec with Matchers with ResourcesHelper {
-  val fixture = slurpJsonOrDie[TagIndexPage]("c.json")
+  val fixture = slurpJsonOrDie[TagIndex]("c.json")
 
   val cuba = TagDefinition(
     "Cuba",

@@ -43,11 +43,9 @@
     "bootstraps/youtube-embed.js"
   ],
   "Philip Wills": [
-    "projects/common/modules/crosswords/grid.js",
     "projects/common/modules/identity/account-profile.js"
   ],
   "Santiago Villa Fernandez": [
-    "projects/common/modules/identity/api.js",
     "projects/common/modules/identity/cookierefresh.js"
   ],
   "Richard Nguyen": [],
@@ -76,7 +74,6 @@
     "projects/common/modules/ui/relativedates.js",
     "projects/common/modules/ui/selection-sharing.js",
     "projects/common/modules/ui/last-modified.js",
-    "projects/common/modules/accessibility/main.js",
     "projects/common/modules/analytics/discussion.js",
     "projects/common/modules/analytics/interaction-tracking.js",
     "projects/common/modules/analytics/media-listener.js",

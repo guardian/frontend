@@ -7,7 +7,7 @@
 @import views.support.{GetClasses, PreviousAndNext}
 @import implicits.Requests._
 
-@(trails: Seq[PressedContent], containerLayout: ContainerLayout, containerIndex: Int, actualDate: DateTime, page: MetaData, nav: PreviousAndNext, tzOverride: Option[DateTimeZone] = None)(implicit request: RequestHeader, config: CollectionConfig)
+@(trails: Seq[PressedContent], containerLayout: ContainerLayout, containerIndex: Int, actualDate: DateTime, page: MetaData, nav: Option[PreviousAndNext], tzOverride: Option[DateTimeZone] = None)(implicit request: RequestHeader, config: CollectionConfig)
 
 @* TODO Consolidate this with the master container template to get rid of repetition *@
 
@@ -27,10 +27,10 @@
                     @slice(sliceWithCards, containerIndex)
                 }
 
-                @if(nav.isDefined) {
+                @nav.map { previousAndNext =>
                     <div class="pagination u-cf">
-                        @nav.prev.map{ prev => <a class="button button--medium button--tertiary pagination__action--static pagination__action--pushright" rel="prev" href="@LinkTo{@prev}"><i aria-hidden="true" class="i i-arrow-left-grey"></i>Older</a> }
-                        @nav.next.map{ next => <a class="button button--medium button--tertiary pagination__action--static pagination__action--pushleft" rel="next" href="@LinkTo{@next}">Newer<i aria-hidden="true" class="i i-arrow-right-grey"></i></a> }
+                        @previousAndNext.prev.map{ prev => <a class="button button--medium button--tertiary pagination__action--static pagination__action--pushright" rel="prev" href="@LinkTo{@prev}"><i aria-hidden="true" class="i i-arrow-left-grey"></i>Older</a> }
+                        @previousAndNext.next.map{ next => <a class="button button--medium button--tertiary pagination__action--static pagination__action--pushleft" rel="next" href="@LinkTo{@next}">Newer<i aria-hidden="true" class="i i-arrow-right-grey"></i></a> }
                     </div>
                 }
             </div>

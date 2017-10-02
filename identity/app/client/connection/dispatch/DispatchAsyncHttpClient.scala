@@ -63,10 +63,10 @@ trait DispatchAsyncHttpClient extends Http {
     val req = buildRequest(url(uri), urlParameters, headers)
     val futureResponse = new EnrichedFuture(client(req.toRequest, httpResponseHandler)).either
     futureResponse.onFailure{ case t: Throwable =>
-      logger.error("Exception GETing on %s, params: %s, headers: %s".format(uri, formatParams(urlParameters), formatParams(headers)), t)
+      logger.error("Exception GETing on %s, params: %s".format(uri, formatParams(urlParameters)), t)
     }
     futureResponse.onSuccess{ case Left(t) =>
-      logger.error("GET Error on %s, params: %s, headers: %s".format(uri, formatParams(urlParameters), formatParams(headers)), t)
+      logger.error("GET Error on %s, params: %s".format(uri, formatParams(urlParameters)), t)
     }
     futureResponse.map(mapFutureToResponse)
   }
@@ -78,10 +78,10 @@ trait DispatchAsyncHttpClient extends Http {
     val request = body.map(b => req.setBody(b.getBytes("UTF-8"))).getOrElse(req).toRequest
     val futureResponse = new EnrichedFuture(client(request, httpResponseHandler)).either
     futureResponse.onFailure{ case t: Throwable =>
-      logger.error("Exception POSTing on %s, params: %s, headers: %s".format(uri, formatParams(urlParameters), formatParams(headers)), t)
+      logger.error("Exception POSTing on %s, params: %s".format(uri, formatParams(urlParameters)), t)
     }
     futureResponse.onSuccess{ case Left(t) =>
-      logger.error("POST Error on %s, params: %s, headers: %s".format(uri, formatParams(urlParameters), formatParams(headers)), t)
+      logger.error("POST Error on %s, params: %s".format(uri, formatParams(urlParameters)), t)
     }
     futureResponse.map(mapFutureToResponse)
   }
@@ -93,10 +93,10 @@ trait DispatchAsyncHttpClient extends Http {
     val request = body.map(req.setBody).getOrElse(req).toRequest
     val futureResponse = new EnrichedFuture(client(request, httpResponseHandler)).either
     futureResponse.onFailure{ case t: Throwable =>
-      logger.error("Exception DELETEing on %s, params: %s, headers: %s".format(uri, formatParams(urlParameters), formatParams(headers)), t)
+      logger.error("Exception DELETEing on %s, params: %s".format(uri, formatParams(urlParameters)), t)
     }
     futureResponse.onSuccess{ case Left(t) =>
-      logger.error("DELETE Error on %s, params: %s, headers: %s".format(uri, formatParams(urlParameters), formatParams(headers)), t)
+      logger.error("DELETE Error on %s, params: %s".format(uri, formatParams(urlParameters)), t)
     }
     futureResponse.map(mapFutureToResponse)
   }

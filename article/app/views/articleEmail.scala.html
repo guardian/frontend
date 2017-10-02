@@ -1,7 +1,0 @@
-@import model.PageWithStoryPackage
-
-@(page: PageWithStoryPackage)(implicit request: RequestHeader, context: model.ApplicationContext)
-
-@mainEmail(page) {
-    @fragments.emailArticleBody(page)
-}

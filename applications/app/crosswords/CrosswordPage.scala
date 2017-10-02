@@ -3,16 +3,33 @@ package crosswords
 import model._
 import org.joda.time.DateTime
 
-case class SvgDimensions(width: Int, height: Int) {
-  def styleString: String = s"width: $width; height: $height"
-}
+import scala.xml.Elem
 
-case class CrosswordPage(content: CrosswordContent) extends ContentPage {
+sealed trait CrosswordPage extends Page
+
+final case class CrosswordPageWithSvg(
+  content: CrosswordContent,
+  svg: Elem
+) extends CrosswordPageWithContent(content) with CrosswordPage
+
+final case class AccessibleCrosswordPage(
+  content: CrosswordContent,
+  blankSquares: AccessibleCrosswordRows
+) extends CrosswordPageWithContent(content) with CrosswordPage
+
+final class CrosswordSearchPageNoResult extends CrosswordSearchPage with CrosswordPage
+final class CrosswordSearchPageWithResults extends CrosswordSearchPage with CrosswordPage
+
+class CrosswordPageWithContent(content: CrosswordContent) extends ContentPage {
 
   override lazy val item = content
   val crossword = content.crossword
 
   import CrosswordSvg.{BorderSize, CellSize}
+
+  case class SvgDimensions(width: Int, height: Int) {
+    def styleString: String = s"width: $width; height: $height"
+  }
 
   def fallbackDimensions: SvgDimensions = SvgDimensions(
     crossword.dimensions.cols * (CellSize + BorderSize) + BorderSize,
@@ -22,20 +39,13 @@ case class CrosswordPage(content: CrosswordContent) extends ContentPage {
   def hasGroupedClues: Boolean = crossword.entries.exists(_.group.length > 1)
 }
 
-object CrosswordSearchPage {
-  def make(): CrosswordSearchPage = {
+class CrosswordSearchPage extends StandalonePage {
 
-    val metadata = MetaData.make (
-      id = "crosswords/search",
-      section = Some(SectionSummary.fromId("crosswords")),
-      webTitle = "Crosswords search"
-    )
-
-    CrosswordSearchPage(metadata)
-  }
-}
-
-final case class CrosswordSearchPage(override val metadata: MetaData) extends StandalonePage {
+  val metadata = MetaData.make(
+    id = "crosswords/search",
+    section = Some(SectionSummary.fromId("crosswords")),
+    webTitle = "Crosswords search"
+  )
 
   val year = new DateTime().getYear
   val searchYears = 1999 to year

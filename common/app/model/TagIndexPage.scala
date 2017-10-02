@@ -54,8 +54,8 @@ case class TagDefinition(
 object TagIndexListing {
   implicit val jsonFormat = Json.format[TagIndexListing]
 
-  def fromTagIndexPage(tagIndexPage: TagIndexPage): TagIndexListing =
-    TagIndexListing(tagIndexPage.id, tagIndexPage.title)
+  def fromTagIndex(tagIndex: TagIndex): TagIndexListing =
+    TagIndexListing(tagIndex.id, tagIndex.title)
 }
 
 case class TagIndexListing(
@@ -66,17 +66,17 @@ case class TagIndexListing(
 object TagIndexListings {
   implicit val jsonFormat = Json.format[TagIndexListings]
 
-  def fromTagIndexPages(pages: Seq[TagIndexPage]): TagIndexListings =
-    TagIndexListings(pages.map(TagIndexListing.fromTagIndexPage).sortBy(_.title))
+  def fromTagIndexPages(pages: Seq[TagIndex]): TagIndexListings =
+    TagIndexListings(pages.map(TagIndexListing.fromTagIndex).sortBy(_.title))
 }
 
 case class TagIndexListings(pages: Seq[TagIndexListing])
 
-object TagIndexPage {
-  implicit val jsonFormat = Json.format[TagIndexPage]
+object TagIndex {
+  implicit val jsonFormat = Json.format[TagIndex]
 }
 
-case class TagIndexPage(
+case class TagIndex(
   id: String,
   title: String,
   tags: Seq[TagDefinition]
@@ -93,3 +93,9 @@ case class TagIndexPage(
       tagDefinition.tagTypeName.map(", " + _).getOrElse("")
     else "")
 }
+
+case class TagIndexPage(
+  tagIndex: TagIndex,
+  metadata: MetaData,
+  title: String
+) extends StandalonePage

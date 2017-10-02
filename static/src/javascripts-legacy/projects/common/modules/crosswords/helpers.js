@@ -291,7 +291,7 @@ define([
                 map[d.key] = {};
             }
 
-            map[d.key][d.direction] = d.separator;
+            map[d.key] = d;
 
             return map;
         }, {});
