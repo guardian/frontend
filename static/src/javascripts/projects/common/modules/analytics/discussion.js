@@ -77,7 +77,6 @@ const areCommentsSeen = (): void => {
 const initDiscussionAnalytics = (): void => {
     mediator.on('discussion:seen:comment-permalink', commentPermalink);
     mediator.on('discussion:seen:comments-anchor', jumpedToComments);
-    mediator.on('discussion:seen:comments-scrolled-to', scrolledToComments);
 
     areCommentsSeen();
 };
