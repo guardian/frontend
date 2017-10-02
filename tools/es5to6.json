@@ -74,7 +74,6 @@
     "projects/common/modules/ui/relativedates.js",
     "projects/common/modules/ui/selection-sharing.js",
     "projects/common/modules/ui/last-modified.js",
-    "projects/common/modules/accessibility/main.js",
     "projects/common/modules/analytics/beacon.js",
     "projects/common/modules/analytics/discussion.js",
     "projects/common/modules/analytics/interaction-tracking.js",
