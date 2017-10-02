@@ -1,7 +1,9 @@
+// @flow
 import React from 'react/addons';
 import helpers from 'common/modules/crosswords/helpers';
-import constants from 'common/modules/crosswords/constants';
+import { constants } from 'common/modules/crosswords/constants';
 import classNames from 'common/modules/crosswords/classNames';
+
 const Cell = React.createClass({
 
     onClick(event) {
@@ -17,7 +19,7 @@ const Cell = React.createClass({
         if (this.props.number !== undefined) {
             cellNumber = React.createElement('text', {
                 x: left + 1,
-                y: top + constants.constants.numberSize,
+                y: top + constants.numberSize,
                 key: 'number',
                 className: 'crossword__cell-number'
             }, this.props.number);
@@ -26,8 +28,8 @@ const Cell = React.createClass({
         let cellValue = null;
         if (this.props.value !== undefined) {
             cellValue = React.createElement('text', {
-                x: left + constants.constants.cellSize * .5,
-                y: top + constants.constants.cellSize * .675,
+                x: left + constants.cellSize * .5,
+                y: top + constants.cellSize * .675,
                 key: 'entry',
                 className: classNames({
                     'crossword__cell-text': true,
@@ -43,8 +45,8 @@ const Cell = React.createClass({
             }, React.createElement('rect', {
                 x: left,
                 y: top,
-                width: constants.constants.cellSize,
-                height: constants.constants.cellSize,
+                width: constants.cellSize,
+                height: constants.cellSize,
                 className: classNames({
                     'crossword__cell': true,
                     'crossword__cell--focussed': this.props.isFocussed,
