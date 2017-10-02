@@ -38,7 +38,6 @@
     "projects/common/modules/commercial/video-ad-url.js"
   ],
   "Matthew Walls": [
-    "projects/common/modules/crosswords/classNames.js",
     "projects/common/modules/crosswords/clues.js",
     "projects/common/modules/crosswords/comments.js",
     "projects/common/modules/crosswords/confirm-button.js",

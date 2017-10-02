@@ -18,7 +18,7 @@ import {
     saveGridState,
     loadGridState,
 } from 'common/modules/crosswords/persistence';
-import classNames from 'common/modules/crosswords/classNames';
+import { classNames } from 'common/modules/crosswords/classNames';
 
 class Crossword extends React.Component {
     constructor(props: Object) {

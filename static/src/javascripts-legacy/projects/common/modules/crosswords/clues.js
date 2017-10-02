@@ -25,7 +25,7 @@ define([
                 React.createElement('a', {
                         href: '#' + this.props.id,
                         onClick: this.onClick,
-                        className: classNames({
+                        className: classNames.classNames({
                             'crossword__clue': true,
                             'crossword__clue--answered': this.props.hasAnswered,
                             'crossword__clue--selected': this.props.isSelected,
