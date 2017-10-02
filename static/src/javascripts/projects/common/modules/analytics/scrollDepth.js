@@ -49,13 +49,6 @@ class ScrollDepth {
             },
         };
 
-        if (this.opts.isContent) {
-            this.opts.contentEl =
-                this.contentEl ||
-                document.getElementById('article') ||
-                document.getElementById('live-blog');
-        }
-
         this.init();
     }
 
