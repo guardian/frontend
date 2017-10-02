@@ -58,10 +58,12 @@ const getAllSeparatorsForGroup = clues => {
         let cnt = 0;
         const flattenedSeparators = flatten(
             clues.map(clue => {
-                const seps = clue.separatorLocations[separator].map(
-                    s => s + cnt
-                );
+                const separatorLocations =
+                    clue.separatorLocations[separator] || [];
+                const seps = separatorLocations.map(s => s + cnt);
+
                 cnt += clue.length;
+
                 return seps;
             })
         );
@@ -248,6 +250,8 @@ const buildSeparatorMap = clues => {
         )
         .reduce(flattenReducer, [])
         .reduce((map, d) => {
+            console.log(d);
+
             if (map[d.key] === undefined) {
                 map[d.key] = {};
             }
