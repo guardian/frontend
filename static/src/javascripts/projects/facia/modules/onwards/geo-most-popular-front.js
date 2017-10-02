@@ -7,7 +7,7 @@ import qwery from 'qwery';
 import $ from 'lib/$';
 import config from 'lib/config';
 import mediator from 'lib/mediator';
-import register from 'common/modules/analytics/register';
+import { begin, end } from 'common/modules/analytics/register';
 import Component from 'common/modules/component';
 
 const hideTabs = (parent: Element): void => {
@@ -18,7 +18,7 @@ const hideTabs = (parent: Element): void => {
 export class GeoMostPopularFront extends Component {
     constructor() {
         super();
-        register.begin('most-popular');
+        begin('most-popular');
         this.endpoint = '/most-read-geo.json';
         this.isNetworkFront = config.page.contentType === 'Network Front';
         this.isVideoFront = config.page.pageId === 'video';
@@ -52,7 +52,7 @@ export class GeoMostPopularFront extends Component {
         if (this.isNetworkFront) {
             hideTabs(this.parent);
         }
-        register.end('most-popular');
+        end('most-popular');
         mediator.emit('modules:geomostpopular:ready');
     }
 }

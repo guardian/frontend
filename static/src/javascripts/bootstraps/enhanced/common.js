@@ -10,7 +10,7 @@ import { catchErrorsWithContext } from 'lib/robust';
 import { local as localStorage } from 'lib/storage';
 import mediaListener from 'common/modules/analytics/media-listener';
 import interactionTracking from 'common/modules/analytics/interaction-tracking';
-import register from 'common/modules/analytics/register';
+import { initAnalyticsRegister } from 'common/modules/analytics/register';
 import ScrollDepth from 'common/modules/analytics/scrollDepth';
 import { requestUserSegmentsFromId } from 'commercial/modules/user-ad-targeting';
 import donotUseAdblock from 'common/modules/commercial/donot-use-adblock';
@@ -175,7 +175,7 @@ const checkIframe = (): void => {
 };
 
 const startRegister = (): void => {
-    register.initialise();
+    initAnalyticsRegister();
 };
 
 const initDiscussion = (): void => {
