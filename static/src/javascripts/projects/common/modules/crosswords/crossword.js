@@ -36,6 +36,7 @@ import {
     loadGridState,
 } from 'common/modules/crosswords/persistence';
 import { classNames } from 'common/modules/crosswords/classNames';
+import type { GridProps } from 'common/modules/crosswords/grid';
 
 class Crossword extends React.Component {
     constructor(props: Object) {
@@ -189,7 +190,7 @@ class Crossword extends React.Component {
             };
 
             const isStartOfClue = (sourceClue): boolean =>
-                sourceClue &&
+                !!sourceClue &&
                 sourceClue.position.x === x &&
                 sourceClue.position.y === y;
 
@@ -242,25 +243,29 @@ class Crossword extends React.Component {
     }
 
     onClearSingle(): void {
-        // Merge arrays of cells from all highlighted clues
-        // const cellsInFocus = _.flatten(_.map(this.allHighlightedClues(), helpers.cellsForEntry, this));
-        const cellsInFocus = getClearableCellsForClue(
-            this.state.grid,
-            this.clueMap,
-            this.props.data.entries,
-            this.clueInFocus()
-        );
+        const clueInFocus = this.clueInFocus();
 
-        this.setState({
-            grid: mapGrid(this.state.grid, (cell, gridX, gridY) => {
-                if (cellsInFocus.some(c => c.x === gridX && c.y === gridY)) {
-                    cell.value = '';
-                }
-                return cell;
-            }),
-        });
+        if (clueInFocus) {
+            // Merge arrays of cells from all highlighted clues
+            // const cellsInFocus = _.flatten(_.map(this.allHighlightedClues(), helpers.cellsForEntry, this));
+            const cellsInFocus = getClearableCellsForClue(
+                this.state.grid,
+                this.clueMap,
+                this.props.data.entries,
+                clueInFocus
+            );
 
-        this.save();
+            this.setState({
+                grid: mapGrid(this.state.grid, (cell, gridX, gridY) => {
+                    if (cellsInFocus.some(c => c.x === gridX && c.y === gridY)) {
+                        cell.value = '';
+                    }
+                    return cell;
+                }),
+            });
+
+            this.save();
+        }
     }
 
     onToggleAnagramHelper(): void {
@@ -425,19 +430,21 @@ class Crossword extends React.Component {
         const cell = this.state.cellInFocus;
         const clue = this.clueInFocus();
 
-        if (isFirstCellInClue(cell, clue)) {
-            const newClue = getPreviousClueInGroup(
-                this.props.data.entries,
-                clue
-            );
-            if (newClue) {
-                const newCell = getLastCellInClue(newClue);
-                this.focusClue(newCell.x, newCell.y, newClue.direction);
+        if (clue) {
+            if (isFirstCellInClue(cell, clue)) {
+                const newClue = getPreviousClueInGroup(
+                    this.props.data.entries,
+                    clue
+                );
+                if (newClue) {
+                    const newCell = getLastCellInClue(newClue);
+                    this.focusClue(newCell.x, newCell.y, newClue.direction);
+                }
+            } else if (this.isAcross()) {
+                this.moveFocus(-1, 0);
+            } else {
+                this.moveFocus(0, -1);
             }
-        } else if (this.isAcross()) {
-            this.moveFocus(-1, 0);
-        } else {
-            this.moveFocus(0, -1);
         }
     }
 
@@ -445,19 +452,21 @@ class Crossword extends React.Component {
         const cell = this.state.cellInFocus;
         const clue = this.clueInFocus();
 
-        if (isLastCellInClue(cell, clue)) {
-            const newClue = getNextClueInGroup(this.props.data.entries, clue);
-            if (newClue) {
-                this.focusClue(
-                    newClue.position.x,
-                    newClue.position.y,
-                    newClue.direction
-                );
+        if (clue) {
+            if (isLastCellInClue(cell, clue)) {
+                const newClue = getNextClueInGroup(this.props.data.entries, clue);
+                if (newClue) {
+                    this.focusClue(
+                        newClue.position.x,
+                        newClue.position.y,
+                        newClue.direction
+                    );
+                }
+            } else if (this.isAcross()) {
+                this.moveFocus(1, 0);
+            } else {
+                this.moveFocus(0, 1);
             }
-        } else if (this.isAcross()) {
-            this.moveFocus(1, 0);
-        } else {
-            this.moveFocus(0, 1);
         }
     }
 
@@ -682,6 +691,16 @@ class Crossword extends React.Component {
                 close: this.onToggleAnagramHelper,
             });
 
+        const gridProps: GridProps = ({
+            rows: this.rows,
+            columns: this.columns,
+            cells: this.state.grid,
+            separators: buildSeparatorMap(this.props.data.entries),
+            crossword: this,
+            focussedCell: this.state.cellInFocus,
+            ref: 'grid',
+        }: any);
+
         return React.createElement(
             'div',
             {
@@ -748,15 +767,7 @@ class Crossword extends React.Component {
                         className: 'crossword__container__grid-wrapper',
                         ref: 'gridWrapper',
                     },
-                    Grid({
-                        rows: this.rows,
-                        columns: this.columns,
-                        cells: this.state.grid,
-                        separators: buildSeparatorMap(this.props.data.entries),
-                        crossword: this,
-                        focussedCell: this.state.cellInFocus,
-                        ref: 'grid',
-                    }),
+                    Grid(gridProps),
                     React.createElement(HiddenInput, {
                         crossword: this,
                         value: this.hiddenInputValue(),

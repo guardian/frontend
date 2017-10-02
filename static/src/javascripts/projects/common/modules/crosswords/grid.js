@@ -6,20 +6,11 @@ import Cell from 'common/modules/crosswords/cell';
 import { classNames } from 'common/modules/crosswords/classNames';
 import type Crossword from 'common/modules/crosswords/crossword';
 
-type Direction = 'across' | 'down';
-
-type Separator = '-' | ',';
-
-type SeparatorDescription = {
-    direction: Direction,
-    separator: Separator,
-};
-
-type GridProps = {
+export type GridProps = {
     rows: number,
     columns: number,
-    cells: Array<Array<Object>>,
-    separators: Array<SeparatorDescription>,
+    cells: Array<Array<Cell>>,
+    separators: SeparatorMap,
     crossword: Crossword,
     focussedCell: Object,
 };
