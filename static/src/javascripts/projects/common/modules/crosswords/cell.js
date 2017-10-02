@@ -2,7 +2,7 @@
 import { createClass, createElement } from 'react/addons';
 import helpers from 'common/modules/crosswords/helpers';
 import { constants } from 'common/modules/crosswords/constants';
-import classNames from 'common/modules/crosswords/classNames';
+import { classNames } from 'common/modules/crosswords/classNames';
 
 const Cell = createClass({
     onClick(event) {

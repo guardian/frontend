@@ -36,11 +36,12 @@ define([
         },
 
         render: function () {
+
             var inner = this.state.confirming ?
                 'Confirm ' + this.props.text.toLowerCase() : this.props.text;
 
             var classes = {};
-            var className = classNames((
+            var className = classNames.classNames((
                 classes['crossword__controls__button--confirm'] = this.state.confirming,
                     classes[this.props.className] = true,
                     classes
