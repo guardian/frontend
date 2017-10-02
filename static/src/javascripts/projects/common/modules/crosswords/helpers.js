@@ -268,7 +268,7 @@ const gridSize = cells =>
 const mapGrid = (grid, f) =>
     grid.map((col, x) => col.map((cell, y) => f(cell, x, y)));
 
-export default {
+export {
     isAcross,
     otherDirection,
     buildGrid,
