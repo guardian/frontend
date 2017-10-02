@@ -1,10 +1,8 @@
 // @flow
 const classNames = function(props: Object) {
     return Object.keys(props)
-        .filter(function(f) {
-            return props[f] === true;
-        })
+        .filter(f => props[f] === true)
         .join(' ');
 };
 
-export { classNames } ;
+export { classNames };
