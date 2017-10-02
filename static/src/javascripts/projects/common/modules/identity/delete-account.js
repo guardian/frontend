@@ -1,25 +1,25 @@
 import $ from 'lib/$';
 import bean from 'bean';
 import fastdom from 'fastdom';
-var deleteButtonElm = $('#deleteButton')[0];
-var deleteFormElm = $('#deleteForm')[0];
-var deleteLoaderElm = $('#deleteLoader')[0];
+const deleteButtonElm = $('#deleteButton')[0];
+const deleteFormElm = $('#deleteForm')[0];
+const deleteLoaderElm = $('#deleteLoader')[0];
 
 function disableDeleteButton() {
-    fastdom.write(function() {
+    fastdom.write(() => {
         deleteButtonElm && (deleteButtonElm.disabled = true);
     });
 }
 
 function showLoader() {
-    fastdom.write(function() {
+    fastdom.write(() => {
         deleteLoaderElm && deleteLoaderElm.classList.remove("is-hidden");
     });
 }
 
 function setupLoadingAnimation() {
     if (deleteFormElm && deleteLoaderElm) {
-        bean.on(deleteFormElm, 'submit', function() {
+        bean.on(deleteFormElm, 'submit', () => {
             disableDeleteButton();
             showLoader();
         });
@@ -27,7 +27,7 @@ function setupLoadingAnimation() {
 }
 
 export default {
-    init: function() {
+    init() {
         setupLoadingAnimation();
     }
 };
