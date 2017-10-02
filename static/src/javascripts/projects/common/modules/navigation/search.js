@@ -1,91 +1,106 @@
+// @flow
+
 import bean from 'bean';
 import fastdom from 'fastdom';
 import $ from 'lib/$';
 import config from 'lib/config';
-import detect from 'lib/detect';
 import throttle from 'lodash/functions/throttle';
 
-const Search = function() {
-    const toggle = document.querySelector('.js-search-toggle');
-    let searchLoader;
-    let gcsUrl;
-    let resultSetSize;
-    let container;
-    const self = this;
+const focusSearchField = (): void => {
+    const $input = $('input.gsc-input');
+    if ($input.length > 0) {
+        $input.focus();
+    }
+};
 
-    if (config.switches.googleSearch &&
-        config.page.googleSearchUrl &&
-        config.page.googleSearchId &&
-        toggle) {
+class Search {
+    gcsUrl: string;
+    resultSetSize: number;
 
-        gcsUrl = config.page.googleSearchUrl + '?cx=' + config.page.googleSearchId;
-        resultSetSize = config.page.section === 'identity' ? 3 : 10;
+    constructor(): void {
+        const toggle = document.getElementsByClassName('js-search-toggle')[0];
+        let searchLoader;
+        const googleSearchSwitch = config.get('switches.googleSearch');
+        const googleSearchUrl = config.get('page.googleSearchUrl');
+        const googleSearchId = config.get('page.googleSearchId');
 
-        searchLoader = throttle(() => {
-            self.load();
-        });
+        if (googleSearchSwitch && googleSearchUrl && googleSearchId && toggle) {
+            this.gcsUrl = `${googleSearchUrl}?cx=${googleSearchId}`;
+            this.resultSetSize =
+                config.get('page.section') === 'identity' ? 3 : 10;
 
-        bean.on(toggle, 'click', e => {
-            const popup = document.querySelector('.js-search-popup');
-            const maybeDismissSearchPopup = event => {
-                let el = event.target;
-                let clickedPop = false;
+            searchLoader = throttle(() => {
+                this.load();
+            });
 
-                while (el && !clickedPop) {
-                    /* either the search pop-up or the autocomplete resultSetSize
-                       NOTE: it would be better to check for `.gssb_c`,
-                             which is the outer autocomplete element, but
-                             google stops the event bubbling earlier
-                    */
-                    if (el && el.classList &&
-                        (el.classList.contains('js-search-popup') ||
-                            el.classList.contains('gsq_a'))) {
-                        clickedPop = true;
+            bean.on(toggle, 'click', e => {
+                const popup = document.getElementsByClassName(
+                    'js-search-popup'
+                )[0];
+                const maybeDismissSearchPopup = event => {
+                    let el = event.target;
+                    let clickedPop = false;
+
+                    if (popup) {
+                        while (el && !clickedPop) {
+                            /* either the search pop-up or the autocomplete resultSetSize
+                               NOTE: it would be better to check for `.gssb_c`,
+                                     which is the outer autocomplete element, but
+                                     google stops the event bubbling earlier
+                            */
+                            if (
+                                el &&
+                                el.classList &&
+                                (el.classList.contains('js-search-popup') ||
+                                    el.classList.contains('gsq_a'))
+                            ) {
+                                clickedPop = true;
+                            }
+
+                            el = el.parentNode;
+                        }
+
+                        if (!clickedPop) {
+                            event.preventDefault();
+                            toggle.classList.remove('is-active');
+                            popup.classList.add('is-off');
+                            bean.off(
+                                document,
+                                'click',
+                                maybeDismissSearchPopup
+                            );
+                        }
                     }
+                };
 
-                    el = el.parentNode;
-                }
+                setTimeout(() => {
+                    if (toggle.classList.contains('is-active')) {
+                        bean.on(document, 'click', maybeDismissSearchPopup);
+                    }
+                });
 
-                if (!clickedPop) {
-                    event.preventDefault();
-                    toggle.classList.remove('is-active');
-                    popup.classList.add('is-off');
-                    bean.off(document, 'click', maybeDismissSearchPopup);
-                }
-            };
-
-            setTimeout(() => {
-                if (toggle.classList.contains('is-active')) {
-                    bean.on(document, 'click', maybeDismissSearchPopup);
-                }
-            })
-
-            searchLoader();
-            // Make sure search is always in the correct state
-            self.focusSearchField();
-            e.preventDefault();
-        });
+                searchLoader();
+                // Make sure search is always in the correct state
+                focusSearchField();
+                e.preventDefault();
+            });
+        }
     }
 
-    this.focusSearchField = () => {
-        const $input = $('input.gsc-input');
-        if ($input.length > 0) {
-            $input.focus();
-        }
-    };
+    load(): void {
+        let s;
+        let x;
 
-    this.load = () => {
-        let s, x;
-
-        container = document.body.querySelector('.js-search-placeholder');
+        const container = document.querySelector('.js-search-placeholder');
 
         // Set so Google know what to do
+        // eslint-disable-next-line no-underscore-dangle
         window.__gcse = {
-            callback: self.focusSearchField
+            callback: focusSearchField,
         };
 
         // Unload any search placeholders elsewhere in the DOM
-        Array.prototype.forEach.call(document.querySelectorAll('.js-search-placeholder'), c => {
+        [...document.querySelectorAll('.js-search-placeholder')].forEach(c => {
             if (c !== container) {
                 fastdom.write(() => {
                     c.innerHTML = '';
@@ -95,25 +110,29 @@ const Search = function() {
 
         // Load the Google search monolith, if not already present in this context.
         // We have to re-run their script each time we do this.
-        if (!container.innerHTML) {
+        if (container && !container.innerHTML) {
             fastdom.write(() => {
-                container.innerHTML = '' +
-                    '<div class="search-box" role="search">' +
-                    '<gcse:searchbox></gcse:searchbox>' +
-                    '</div>' +
-                    '<div class="search-results" data-link-name="search">' +
-                    '<gcse:searchresults webSearchResultSetSize="' + resultSetSize + '" linkTarget="_self"></gcse:searchresults>' +
-                    '</div>';
+                if (container) {
+                    container.innerHTML = `<div class="search-box" role="search">
+                        <gcse:searchbox></gcse:searchbox>
+                        </div>
+                        <div class="search-results" data-link-name="search">
+                        <gcse:searchresults webSearchResultSetSize="'}${this
+                            .resultSetSize}" linkTarget="_self"></gcse:searchresults>
+                        </div>`;
+                }
             });
 
             bean.on(container, 'keydown', '.gsc-input', () => {
                 fastdom.read(() => {
-                    const $autoCompleteObject = $('.gssb_c'), searchFromTop = $autoCompleteObject.css('top'), windowOffset = $(window).scrollTop();
+                    const $autoCompleteObject = $('.gssb_c');
+                    const searchFromTop = $autoCompleteObject.css('top');
+                    const windowOffset = $(window).scrollTop();
 
                     fastdom.write(() => {
                         $autoCompleteObject.css({
-                            'top': parseInt(searchFromTop, 10) + windowOffset,
-                            'z-index': '1030'
+                            top: parseInt(searchFromTop, 10) + windowOffset,
+                            'z-index': '1030',
                         });
                     });
                 });
@@ -128,15 +147,15 @@ const Search = function() {
 
             s = document.createElement('script');
             s.async = true;
-            s.src = gcsUrl;
+            s.src = this.gcsUrl;
             x = document.getElementsByTagName('script')[0];
             fastdom.write(() => {
-                x.parentNode.insertBefore(s, x);
+                if (x.parentNode) {
+                    x.parentNode.insertBefore(s, x);
+                }
             });
         }
-    };
+    }
+}
 
-    this.init = () => {};
-};
-
-export default Search;
+export { Search };
