@@ -1,10 +1,10 @@
 // @flow
-import React from 'react/addons';
+import { createClass, createElement } from 'react/addons';
 import helpers from 'common/modules/crosswords/helpers';
 import { constants } from 'common/modules/crosswords/constants';
 import classNames from 'common/modules/crosswords/classNames';
 
-const Cell = React.createClass({
+const Cell = createClass({
     onClick(event) {
         event.preventDefault();
         this.props.handleSelect(this.props.x, this.props.y);
@@ -16,7 +16,7 @@ const Cell = React.createClass({
 
         let cellNumber = null;
         if (this.props.number !== undefined) {
-            cellNumber = React.createElement(
+            cellNumber = createElement(
                 'text',
                 {
                     x: left + 1,
@@ -30,7 +30,7 @@ const Cell = React.createClass({
 
         let cellValue = null;
         if (this.props.value !== undefined) {
-            cellValue = React.createElement(
+            cellValue = createElement(
                 'text',
                 {
                     x: left + constants.cellSize * 0.5,
@@ -47,12 +47,12 @@ const Cell = React.createClass({
             );
         }
 
-        return React.createElement(
+        return createElement(
             'g',
             {
                 onClick: this.onClick,
             },
-            React.createElement('rect', {
+            createElement('rect', {
                 x: left,
                 y: top,
                 width: constants.cellSize,
