@@ -1,9 +1,12 @@
 package implicits
 
+import com.gu.contentapi.client.model.v1.CapiDateTime
 import common.Edition
-import org.joda.time.{Duration => JodaDuration, DateTime, LocalDate, Days}
+import java.time.Instant
+import org.joda.time.{DateTime, Days, LocalDate, Duration => JodaDuration}
 import org.scala_tools.time.Imports._
 import org.joda.time.format.ISODateTimeFormat
+
 import scala.concurrent.duration.Duration
 
 object Dates extends Dates
@@ -13,12 +16,18 @@ trait Dates {
     def toJoda: JodaDuration = new JodaDuration(duration.toMillis)
   }
 
+  implicit class CapiRichDateTime(cdt: CapiDateTime) {
+    def toJoda: DateTime = new DateTime(cdt.dateTime)
+  }
+
   object Epoch {
     lazy val zero: LocalDate = new LocalDate(0)
     def day(dayOfEpoch: Int): LocalDate = zero.plusDays(dayOfEpoch)
   }
 
   def today(): LocalDate = LocalDate.now()
+
+  def jodaToJavaInstant(date: DateTime): Instant = date.toDate.toInstant
 
   implicit class DateTime2SameDay(date: DateTime) {
     def sameDay(other: DateTime): Boolean =  {

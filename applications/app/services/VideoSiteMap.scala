@@ -3,7 +3,7 @@ package services
 import common.Edition
 import conf.Configuration
 import contentapi.ContentApiClient
-import implicits.Dates.DateTime2ToCommonDateFormats
+import implicits.Dates.{ DateTime2ToCommonDateFormats, jodaToJavaInstant }
 import model.{Content, Video}
 import org.joda.time.{DateTime, DateTimeZone}
 import views.support.Naked
@@ -53,6 +53,8 @@ class VideoSiteMap(contentApiClient: ContentApiClient) {
 
   def getLatestContent()(implicit executionContext: ExecutionContext): Future[NodeSeq] = {
 
+    val date = DateTime.now(DateTimeZone.UTC).minusDays(2)
+
     val query = contentApiClient.search(Edition.defaultEdition)
       .pageSize(200)
       .tag("type/video,-tone/sponsoredfeatures,-tone/advertisement-features")
@@ -61,7 +63,7 @@ class VideoSiteMap(contentApiClient: ContentApiClient) {
       .showTags("all")
       .showReferences("all")
       .showElements("all")
-      .fromDate(DateTime.now(DateTimeZone.UTC).minusDays(2))
+      .fromDate(jodaToJavaInstant(date))
 
     val responses = contentApiClient.getResponse(query).flatMap { initialResponse =>
       // Request any further pages if needed.

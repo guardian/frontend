@@ -1,7 +1,6 @@
 package controllers
 
 import com.gu.contentapi.client.GuardianContentApiError
-import com.gu.contentapi.client.utils.CapiModelEnrichment.RichCapiDateTime
 import common.Edition.defaultEdition
 import common.{Edition, ImplicitControllerExecutionContext, Logging}
 import contentapi.{ContentApiClient, SectionsLookUp}
@@ -123,7 +122,7 @@ class AllIndexController(
   // this is simply the latest by date. No lead content, editors picks, or anything else
   private def loadLatest(path: String, date: DateTime)(implicit request: RequestHeader): Future[Option[IndexPage]] = {
     val result = contentApiClient.getResponse(
-      contentApiClient.item(s"/$path", Edition(request)).pageSize(50).toDate(date).orderBy("newest")
+      contentApiClient.item(s"/$path", Edition(request)).pageSize(50).toDate(jodaToJavaInstant(date)).orderBy("newest")
     ).map { item =>
       item.section.map( section =>
         IndexPage(
@@ -162,10 +161,10 @@ class AllIndexController(
     val result = contentApiClient.getResponse(
       contentApiClient.item(s"/$path", Edition(request))
         .pageSize(1)
-        .fromDate(date)
+        .fromDate(jodaToJavaInstant(date))
         .orderBy("oldest")
     ).map{ item =>
-      item.results.getOrElse(Nil).headOption.flatMap(_.webPublicationDate).map(_.toJodaDateTime.withZone(DateTimeZone.UTC))
+      item.results.getOrElse(Nil).headOption.flatMap(_.webPublicationDate).map(_.toJoda.withZone(DateTimeZone.UTC))
     }
 
     result.onFailure {

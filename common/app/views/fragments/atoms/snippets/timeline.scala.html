@@ -3,18 +3,22 @@
 @import org.joda.time.format.DateTimeFormat
 
 @fragments.atoms.snippet(
-  className = "timeline",
-  label = timeline.data.typeLabel.getOrElse("Timeline"),
-  headline = timeline.atom.title.getOrElse(""),
-  timeline.id,
-  isAmp
+    className = "timeline",
+    label = timeline.data.typeLabel.getOrElse("Timeline"),
+    headline = timeline.atom.title.getOrElse(""),
+    timeline.id,
+    isAmp
 ){
-  @for(item <- timeline.data.events) {
-    <div class="explainer-snippet__item">
-      <time class="explainer-snippet__event-date" datetime="">@DateTimeFormat.forPattern("d MMMM yyyy").print(item.date)</time>
-      <div class="explainer-snippet__heading"><b>@item.title</b></div>
-      @item.body.map { body => @Html(body) }
-    </div>
-  }
+    @for(description <- timeline.data.description) {
+      <div>description</div>
+    }
+    @for(item <- timeline.data.events) {
+      <div class="explainer-snippet__item">
+        <time class="explainer-snippet__event-date" datetime="">@DateTimeFormat.forPattern("d MMMM yyyy").print(item.date)</time>
+        <div class="explainer-snippet__heading"><b>@item.title</b></div>
+        @item.body.map { body => @Html(body) }
+      </div>
+    }
 }
+
 

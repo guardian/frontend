@@ -35,6 +35,7 @@ val common = library("common").settings(
     scalajTime,
     ws,
     faciaFapiScalaClient,
+    dispatchTest,
     closureCompiler,
     jerseyCore,
     jerseyClient,
@@ -127,9 +128,17 @@ val identity = application("identity").dependsOn(commonWithTests).aggregate(comm
   )
 )
 
-val commercial = application("commercial").dependsOn(commonWithTests).aggregate(common)
+val commercial = application("commercial").dependsOn(commonWithTests).aggregate(common).settings(
+  libraryDependencies ++= Seq(
+    dispatch
+  )
+)
 
-val onward = application("onward").dependsOn(commonWithTests).aggregate(common)
+val onward = application("onward").dependsOn(commonWithTests).aggregate(common).settings(
+  libraryDependencies ++= Seq(
+    dispatch
+  )
+)
 
 val dev = application("dev-build")
   .dependsOn(

@@ -6,12 +6,11 @@ object Dependencies {
   val identityLibVersion = "3.80"
   val awsVersion = "1.11.181"
   val faciaVersion = "2.3"
-  val capiVersion = "11.23"
+  val capiVersion = "11.33"
   val dispatchVersion = "0.11.3"
   val romeVersion = "1.0"
   val jerseyVersion = "1.19.4"
   val playJsonVersion = "2.6.3"
-
   val akkaAgent = "com.typesafe.akka" %% "akka-agent" % "2.3.4"
   val akkaContrib = "com.typesafe.akka" %% "akka-contrib" % "2.3.16"
   val apacheCommonsMath3 = "org.apache.commons" % "commons-math3" % "3.6.1"
@@ -32,6 +31,8 @@ object Dependencies {
   val cssParser = "net.sourceforge.cssparser" % "cssparser" % "0.9.23"
   val contentApiClient = "com.gu" %% "content-api-client" % capiVersion
   val dfpAxis = "com.google.api-ads" % "dfp-axis" % "3.7.0"
+  val dispatch = "net.databinder.dispatch" %% "dispatch-core" % dispatchVersion
+  val dispatchTest = "net.databinder.dispatch" %% "dispatch-core" % dispatchVersion % Test
   val exactTargetClient = "com.gu" %% "exact-target-client" % "2.24"
   val faciaFapiScalaClient = "com.gu" %% "fapi-client-play26" % faciaVersion
   val configMagic = "com.gu" %% "configuration-magic-core" %  "1.3.0"
