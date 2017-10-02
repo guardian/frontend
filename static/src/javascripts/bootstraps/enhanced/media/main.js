@@ -150,7 +150,7 @@ const enhanceVideo = (
                         !config.page.isFront &&
                         config.switches.externalVideoEmbeds &&
                         (config.page.contentType === 'Video' ||
-                            el.getAttribute('data-embeddable') === 'true'),
+                            dataset.embeddable === 'true'),
                     location: `${config.page
                         .externalEmbedHost}/embed/video/${embedPath ||
                         config.page.pageId}`,
