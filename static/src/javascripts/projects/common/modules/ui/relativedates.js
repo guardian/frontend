@@ -15,29 +15,28 @@ function pad(n) {
 }
 
 function isToday(date) {
-    var today = new Date();
+    const today = new Date();
     return date && (date.toDateString() === today.toDateString());
 }
 
 function isWithin24Hours(date) {
-    var today = new Date();
+    const today = new Date();
     return date && (date.valueOf() > today.valueOf() - (24 * 60 * 60 * 1000));
 }
 
 function isWithinSeconds(date, seconds) {
-    var today = new Date();
+    const today = new Date();
     return date && (date.valueOf() > today.valueOf() - ((seconds || 0) * 1000));
 }
 
 function isYesterday(relative) {
-    var today = new Date(),
-        yesterday = new Date();
+    const today = new Date(), yesterday = new Date();
     yesterday.setDate(today.getDate() - 1);
     return (relative.toDateString() === yesterday.toDateString());
 }
 
 function isWithinPastWeek(date) {
-    var weekAgo = new Date().valueOf() - (7 * 24 * 60 * 60 * 1000);
+    const weekAgo = new Date().valueOf() - (7 * 24 * 60 * 60 * 1000);
     return date.valueOf() >= weekAgo;
 }
 
@@ -49,29 +48,31 @@ function isValidDate(date) {
 }
 
 function getSuffix(type, format, value) {
-    var strs,
-        units = {
-            s: {
-                'short': ['s'],
-                'med': ['s ago'],
-                'long': [' second ago', ' seconds ago']
-            },
-            m: {
-                'short': ['m'],
-                'med': ['m ago'],
-                'long': [' minute ago', ' minutes ago']
-            },
-            h: {
-                'short': ['h'],
-                'med': ['h ago'],
-                'long': [' hour ago', ' hours ago']
-            },
-            d: {
-                'short': ['d'],
-                'med': ['d ago'],
-                'long': [' day ago', ' days ago']
-            }
-        };
+    let strs;
+
+    const units = {
+        s: {
+            'short': ['s'],
+            'med': ['s ago'],
+            'long': [' second ago', ' seconds ago']
+        },
+        m: {
+            'short': ['m'],
+            'med': ['m ago'],
+            'long': [' minute ago', ' minutes ago']
+        },
+        h: {
+            'short': ['h'],
+            'med': ['h ago'],
+            'long': [' hour ago', ' hours ago']
+        },
+        d: {
+            'short': ['d'],
+            'med': ['d ago'],
+            'long': [' day ago', ' days ago']
+        }
+    };
+
     if (units[type]) {
         strs = units[type][format];
         if (value === 1) {
@@ -84,14 +85,15 @@ function getSuffix(type, format, value) {
     }
 }
 
-function makeRelativeDate(epoch, opts) {
-    opts = opts || {};
-
-    var minutes, hours, days, delta,
-        then = new Date(Number(epoch)),
-        now = new Date(),
-        format = opts.format || 'short',
-        extendedFormatting = (opts.format === 'short' || opts.format === 'med');
+function makeRelativeDate(epoch, opts = {}) {
+    let minutes;
+    let hours;
+    let days;
+    let delta;
+    const then = new Date(Number(epoch));
+    const now = new Date();
+    const format = opts.format || 'short';
+    const extendedFormatting = (opts.format === 'short' || opts.format === 'med');
 
     if (!isValidDate(then)) {
         return false;
@@ -142,13 +144,13 @@ function findValidTimestamps() {
 }
 
 function replaceLocaleTimestamps(html) {
-    var cls = 'js-locale-timestamp';
-    var context = html || document;
+    const cls = 'js-locale-timestamp';
+    const context = html || document;
 
-    $('.' + cls, context).each(function(el) {
-        var datetime,
-            $el = bonzo(el),
-            timestamp = parseInt($el.attr('data-timestamp'), 10);
+    $('.' + cls, context).each(el => {
+        let datetime;
+        const $el = bonzo(el);
+        const timestamp = parseInt($el.attr('data-timestamp'), 10);
 
         if (timestamp) {
             datetime = new Date(timestamp);
@@ -158,21 +160,22 @@ function replaceLocaleTimestamps(html) {
     });
 }
 
-function replaceValidTimestamps(opts) {
-    opts = opts || {};
+function replaceValidTimestamps(opts = {}) {
+    findValidTimestamps().each(el => {
+        let targetEl;
+        const $el = bonzo(el);
 
-    findValidTimestamps().each(function(el) {
-        var targetEl,
-            $el = bonzo(el),
-            // Epoch dates are more reliable, fallback to datetime for liveblog blocks
-            timestamp = parseInt($el.attr('data-timestamp'), 10) || $el.attr('datetime'),
-            datetime = new Date(timestamp),
-            relativeDate = makeRelativeDate(datetime.getTime(), {
-                // NOTE: if this is in a block (blog), assume we want added time on > 1 day old dates
-                showTime: bonzo($el.parent()).hasClass('block-time'),
-                format: $el.attr('data-relativeformat'),
-                notAfter: opts.notAfter
-            });
+        const // Epoch dates are more reliable, fallback to datetime for liveblog blocks
+        timestamp = parseInt($el.attr('data-timestamp'), 10) || $el.attr('datetime');
+
+        const datetime = new Date(timestamp);
+
+        const relativeDate = makeRelativeDate(datetime.getTime(), {
+            // NOTE: if this is in a block (blog), assume we want added time on > 1 day old dates
+            showTime: bonzo($el.parent()).hasClass('block-time'),
+            format: $el.attr('data-relativeformat'),
+            notAfter: opts.notAfter
+        });
 
         if (relativeDate) {
             // If we find .timestamp__text (facia), use that instead
@@ -188,7 +191,7 @@ function replaceValidTimestamps(opts) {
 }
 
 // DEPRECATED: Bindings
-['related', 'autoupdate'].forEach(function(module) {
+['related', 'autoupdate'].forEach(module => {
     mediator.on('modules:' + module + ':render', replaceValidTimestamps);
 });
 
@@ -198,8 +201,8 @@ function init(opts) {
 }
 
 export default {
-    replaceLocaleTimestamps: replaceLocaleTimestamps,
-    makeRelativeDate: makeRelativeDate,
-    isWithinSeconds: isWithinSeconds,
-    init: init
+    replaceLocaleTimestamps,
+    makeRelativeDate,
+    isWithinSeconds,
+    init
 };
