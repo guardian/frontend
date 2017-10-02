@@ -23,7 +23,6 @@
         "projects/common/modules/component.js",
         "projects/common/modules/discussion/whole-discussion.js",
         "projects/common/modules/discussion/discussion-frontend.js",
-        "projects/common/modules/video/metadata.js",
         "projects/common/modules/atoms/story-questions.js",
         "projects/common/modules/identity/cookierefresh.js",
         "lib/proximity-loader.js"
