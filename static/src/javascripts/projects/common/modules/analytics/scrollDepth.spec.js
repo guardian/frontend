@@ -8,7 +8,9 @@ describe('Scroll depth', () => {
         document.body.style.height = '100px';
         
         /*eslint-disable-next-line no-new*/
-        new ScrollDepth();
+        new ScrollDepth({
+            isContent: true
+        });
 
         mediator.on('scrolldepth:data', data => {
             expect(data.page.depth).toEqual(100);
