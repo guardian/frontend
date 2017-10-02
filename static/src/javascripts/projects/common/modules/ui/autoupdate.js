@@ -12,7 +12,7 @@ import mediator from 'lib/mediator';
 import { enhanceTweets } from 'common/modules/article/twitter';
 import { Sticky } from 'common/modules/ui/sticky';
 import { scrollToElement } from 'lib/scroller';
-import RelativeDates from 'common/modules/ui/relativedates';
+import { init as initRelativeDates } from 'common/modules/ui/relativedates';
 import { initNotificationCounter } from 'common/modules/ui/notification-counter';
 import { checkElemsForVideos } from 'common/modules/atoms/youtube';
 
@@ -101,7 +101,7 @@ const autoUpdate = (opts?: autoUpdateOptions): void => {
 
             mediator.emit('modules:autoupdate:updates', elementsToAdd.length);
 
-            RelativeDates.init();
+            initRelativeDates();
             enhanceTweets();
             checkElemsForVideos(elementsToAdd);
         });
