@@ -2,18 +2,18 @@ import React from 'react/addons';
 import helpers from 'common/modules/crosswords/helpers';
 import constants from 'common/modules/crosswords/constants';
 import classNames from 'common/modules/crosswords/classNames';
-var Cell = React.createClass({
+const Cell = React.createClass({
 
-    onClick: function(event) {
+    onClick(event) {
         event.preventDefault();
         this.props.handleSelect(this.props.x, this.props.y);
     },
 
-    render: function() {
-        var top = helpers.gridSize(this.props.y);
-        var left = helpers.gridSize(this.props.x);
+    render() {
+        const top = helpers.gridSize(this.props.y);
+        const left = helpers.gridSize(this.props.x);
 
-        var cellNumber = null;
+        let cellNumber = null;
         if (this.props.number !== undefined) {
             cellNumber = React.createElement('text', {
                 x: left + 1,
@@ -23,7 +23,7 @@ var Cell = React.createClass({
             }, this.props.number);
         }
 
-        var cellValue = null;
+        let cellValue = null;
         if (this.props.value !== undefined) {
             cellValue = React.createElement('text', {
                 x: left + constants.constants.cellSize * .5,
