@@ -50,41 +50,53 @@ const prependSuccessMessage = (message, location) => {
     prependMessage(message, location, errorClass);
 };
 
-const avatarUploadByApi = avatarForm => {
-    const formData = new FormData(
-        document.querySelector(`form${classes.avatarUploadForm}`)
-    );
+const avatarUploadByApi = (avatarForm: HTMLFormElement) => {
+    const form = ((document.querySelector(
+        `form${classes.avatarUploadForm}`
+    ): any): HTMLFormElement);
+    if (form) {
+        const formData = new FormData(form);
 
-    // disable form while submitting to prevent overlapping submissions
-    document.querySelector(classes.avatarUploadButton).disabled = true;
+        // disable form while submitting to prevent overlapping submissions
+        const avatarUploadButton = ((document.querySelector(
+            classes.avatarUploadButton
+        ): any): HTMLButtonElement);
+        avatarUploadButton.disabled = true;
 
-    avatarApi.updateAvatar(formData).then(
-        () => {
-            prependSuccessMessage(messages.avatarUploadSuccess, avatarForm);
-        },
-        err => {
-            if (err.status >= 400 && err.status < 500) {
-                prependErrorMessage(
-                    JSON.parse(err.responseText).message ||
-                        messages.avatarUploadFailure,
-                    avatarForm
-                );
-            } else {
-                prependErrorMessage(messages.noServerError, avatarForm);
+        avatarApi.updateAvatar(formData).then(
+            () => {
+                prependSuccessMessage(messages.avatarUploadSuccess, avatarForm);
+            },
+            err => {
+                if (err.status >= 400 && err.status < 500) {
+                    prependErrorMessage(
+                        JSON.parse(err.responseText).message ||
+                            messages.avatarUploadFailure,
+                        avatarForm
+                    );
+                } else {
+                    prependErrorMessage(messages.noServerError, avatarForm);
+                }
+
+                avatarUploadButton.disabled = false;
             }
-
-            document.querySelector(classes.avatarUploadButton).disabled = false;
-        }
-    );
+        );
+    }
 };
 
 export class AccountProfile {
+    unsavedFields: Array<HTMLElement>;
+    accountProfileForms: HTMLFormElement;
+    unsavedChangesForm: ?HTMLFormElement;
+
     constructor() {
         this.unsavedFields = [];
     }
 
     init() {
-        this.accountProfileForms = document.body.querySelector(classes.forms);
+        this.accountProfileForms = ((document.querySelector(
+            classes.forms
+        ): any): HTMLFormElement);
 
         if (this.accountProfileForms) {
             this.bindAvatarUpload();
@@ -121,34 +133,35 @@ export class AccountProfile {
      *   Handle click on form tabs, change history if necessary and render error
      *   message if form contains unsaved changes.
      */
-    handleTabsClick(event) {
-        if (event.target.nodeName.toLowerCase() === 'a') {
+    handleTabsClick(event: Event) {
+        if (
+            event.target instanceof HTMLElement &&
+            event.target.nodeName.toLowerCase() === 'a'
+        ) {
+            const eventTarget: HTMLElement = event.target;
             if (this.unsavedChangesForm) {
+                // This aliasing needs to happen immediately after the null check or flow will be sad
+                const form = this.unsavedChangesForm;
                 event.preventDefault();
                 event.stopImmediatePropagation();
                 // Prevent multiple errors from appearing
-                if (!this.unsavedChangesForm.querySelector(classes.formError)) {
+                if (!form.querySelector(classes.formError)) {
                     // Append error message
-                    bonzo(this.unsavedChangesForm).prepend(
-                        this.genUnsavedError()
-                    );
+                    bonzo(form).prepend(this.genUnsavedError());
                     // Bind form submit to error message 'save' action
                     bean.on(
-                        this.unsavedChangesForm.querySelector(
-                            '.js-save-unsaved'
-                        ),
+                        form.querySelector('.js-save-unsaved'),
                         'click',
                         () => {
-                            this.unsavedChangesForm.submit();
+                            form.submit();
                         }
                     );
                 }
             } else {
-                pushUrl(
-                    {},
-                    event.target.innerHTML,
-                    event.target.getAttribute('data-pushstate-url')
-                );
+                const nextUrl = eventTarget.getAttribute('data-pushstate-url');
+                if (nextUrl) {
+                    pushUrl({}, eventTarget.innerHTML, nextUrl);
+                }
             }
         }
     }
@@ -166,7 +179,7 @@ export class AccountProfile {
             bean.on(avatarForm, 'submit', event => {
                 event.preventDefault();
 
-                avatarUploadByApi(avatarForm);
+                avatarUploadByApi(((avatarForm: any): HTMLFormElement));
             });
         }
     }
@@ -186,15 +199,19 @@ export class AccountProfile {
 
         for (let i = 0; i < this.unsavedFields.length; i += 1) {
             labelId = this.unsavedFields[i].id;
-            text = this.accountProfileForms.querySelector(`[for="${labelId}"]`)
-                .innerHTML;
-            errorMessageStart += `"${text}"`;
-            if (i === this.unsavedFields.length - 1) {
-                errorMessageStart += '. ';
-            } else if (i === this.unsavedFields.length - 2) {
-                errorMessageStart += ' and ';
-            } else {
-                errorMessageStart += ', ';
+            const label = this.accountProfileForms.querySelector(
+                `[for="${labelId}"]`
+            );
+            if (label) {
+                text = label.innerHTML;
+                errorMessageStart += `"${text}"`;
+                if (i === this.unsavedFields.length - 1) {
+                    errorMessageStart += '. ';
+                } else if (i === this.unsavedFields.length - 2) {
+                    errorMessageStart += ' and ';
+                } else {
+                    errorMessageStart += ', ';
+                }
             }
         }
 
@@ -204,35 +221,42 @@ export class AccountProfile {
     /*
      *   Register a form and form field as containing unsaved changes
      */
-    onInputChange(event) {
-        bonzo(event.target.form).addClass(classes.changed);
-        this.unsavedChangesForm = event.target.form;
-        if (!this.unsavedFields.some(el => el === event.target)) {
-            this.unsavedFields.push(event.target);
+    onInputChange(event: Event) {
+        const input = ((event.target: any):
+            | HTMLInputElement
+            | HTMLTextAreaElement);
+        bonzo(input.form).addClass(classes.changed);
+        this.unsavedChangesForm = input.form;
+        if (!this.unsavedFields.some(el => el === input)) {
+            this.unsavedFields.push(input);
         }
     }
 
     /*
      *   Bind keyup events on input fields and register parent form on element
      */
-    bindInputs(form) {
-        const inputs = Array.prototype.slice.call(
-            form.querySelectorAll(classes.textInput)
-        );
-        inputs
-            .concat(Array.prototype.slice.call(form.querySelectorAll('select')))
-            .forEach(input => {
-                if (input.type === 'select-one') {
-                    input.addEventListener(
-                        'change',
-                        this.onInputChange.bind(this)
-                    );
-                } else {
-                    input.addEventListener(
-                        'input',
-                        this.onInputChange.bind(this)
-                    );
-                }
-            });
+    bindInputs(form: ?HTMLElement) {
+        if (form instanceof HTMLFormElement) {
+            const inputs = Array.prototype.slice.call(
+                form.querySelectorAll(classes.textInput)
+            );
+            inputs
+                .concat(
+                    Array.prototype.slice.call(form.querySelectorAll('select'))
+                )
+                .forEach(input => {
+                    if (input.type === 'select-one') {
+                        input.addEventListener(
+                            'change',
+                            this.onInputChange.bind(this)
+                        );
+                    } else {
+                        input.addEventListener(
+                            'input',
+                            this.onInputChange.bind(this)
+                        );
+                    }
+                });
+        }
     }
 }
