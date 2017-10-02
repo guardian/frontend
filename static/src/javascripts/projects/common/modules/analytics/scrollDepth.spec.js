@@ -21,7 +21,11 @@ describe('Scroll depth', () => {
 
             window.scrollTo(0, 50);
 
+            jest.useFakeTimers();
+
             mediator.emit('window:throttledScroll');
+
+            jest.runAllTimers();
         } else {
             done();
         }
