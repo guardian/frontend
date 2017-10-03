@@ -1,14 +1,19 @@
+// @flow
 import config from 'lib/config';
 import proximityLoader from 'lib/proximity-loader';
-import Series from 'common/modules/onward/onward-content';
+import { OnwardContent } from 'common/modules/onward/onward-content';
 
 export const initSeries = () => {
     const el = document.getElementsByClassName('js-onward');
 
     if (el.length > 0) {
         proximityLoader.add(el[0], 1500, () => {
-            if (config.page.seriesId && config.page.showRelatedContent) {
-                new Series.OnwardContent(document.getElementsByClassName('js-onward'));
+            if (
+                config.get('page.seriesId') &&
+                config.get('page.showRelatedContent')
+            ) {
+                // eslint-disable-next-line no-new
+                new OnwardContent(document.getElementsByClassName('js-onward'));
             }
         });
     }
