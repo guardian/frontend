@@ -97,6 +97,10 @@
     color: $features-support-1;
 }
 
+.tonal--tone-feature .content__section-label__link {
+    color: $features-support-3;
+}
+
 .tonal--tone-review .tonal__main .element-pullquote cite,
 .tonal--tone-review .tonal__main .drop-cap {
     color: #615b52;
@@ -119,6 +123,10 @@
 
 .tonal--tone-review .tone-colour {
     color: $comment-support-1;
+}
+
+.tonal--tone-review .content__section-label__link {
+    color: $comment-support-3;
 }
 
 .tonal--tone-review .stars {
@@ -157,7 +165,8 @@
     color: #21a2bc;
 }
 
-.tonal--tone-analysis .tone-colour {
+.tonal--tone-analysis .tone-colour,
+.tonal__head--tone-special-report .content__section-label__link {
     color: $news-main-2;
 }
 
