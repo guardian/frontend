@@ -11,7 +11,7 @@ import mediator from 'lib/mediator';
 import { scrollToElement } from 'lib/scroller';
 import fastdom from 'lib/fastdom-promise';
 import fetchJson from 'lib/fetch-json';
-import DiscussionAnalytics from 'common/modules/analytics/discussion';
+import { initDiscussionAnalytics } from 'common/modules/analytics/discussion';
 import { begin, end } from 'common/modules/analytics/register';
 import Component from 'common/modules/component';
 import { getUser } from 'common/modules/discussion/api';
@@ -125,7 +125,7 @@ class Loader extends Component {
         this.initPagination();
         this.initRecommend();
 
-        DiscussionAnalytics.init();
+        initDiscussionAnalytics();
 
         // More for analytics than anything
         if (window.location.hash === '#comments') {

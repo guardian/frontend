@@ -11,7 +11,7 @@ import { local as localStorage } from 'lib/storage';
 import mediaListener from 'common/modules/analytics/media-listener';
 import interactionTracking from 'common/modules/analytics/interaction-tracking';
 import { initAnalyticsRegister } from 'common/modules/analytics/register';
-import ScrollDepth from 'common/modules/analytics/scrollDepth';
+import { ScrollDepth } from 'common/modules/analytics/scrollDepth';
 import { requestUserSegmentsFromId } from 'commercial/modules/user-ad-targeting';
 import donotUseAdblock from 'common/modules/commercial/donot-use-adblock';
 import { refresh as refreshUserFeatures } from 'commercial/modules/user-features';
