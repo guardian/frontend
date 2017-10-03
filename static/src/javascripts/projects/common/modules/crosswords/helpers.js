@@ -12,12 +12,12 @@ const getLastCellInClue = (clue: Clue): Position => {
         true: 'x',
         false: 'y',
     };
-    const axis = ax[String(isAcross(clue))];
-    const otherAxis = ax[String(!isAcross(clue))];
-    const cell: Position = ({
+    const axis: Axis = ax[String(isAcross(clue))];
+    const otherAxis: Axis = ax[String(!isAcross(clue))];
+    const cell: Position = {
         [axis]: clue.position[axis] + (clue.length - 1),
         [otherAxis]: clue.position[otherAxis],
-    }: any);
+    };
 
     return cell;
 };
@@ -86,19 +86,11 @@ const getAllSeparatorsForGroup = (clues: Array<Clue>): SeparatorLocations => {
     return k;
 };
 
-const getClueForGroupedEntries = (clueGroup: Array<Clue>): ?string => {
-    if (clueGroup.length) {
-        return clueGroup[0].clue;
-    }
-};
+const getClueForGroupedEntries = (clueGroup: Array<Clue>): string =>
+    clueGroup[0].clue;
 
-const getNumbersForGroupedEntries = (
-    clueGroup: Array<Clue>
-): ?number | ?string => {
-    if (clueGroup.length) {
-        return clueGroup[0].humanNumber;
-    }
-};
+const getNumbersForGroupedEntries = (clueGroup: Array<Clue>): number | string =>
+    clueGroup[0].humanNumber;
 
 const getTtotalLengthOfGroup = (clueGroup: Array<Clue>): number =>
     clueGroup.reduce((total, clue) => total + clue.length, 0);
@@ -109,14 +101,14 @@ const getAnagramClueData = (
 ): Clue | GroupClue => {
     if (clueIsInGroup(clue)) {
         const groupEnts = getGroupEntriesForClue(entries, clue.group);
-        const groupClue: GroupClue = ({
+        const groupClue: GroupClue = {
             id: clue.id,
             number: getNumbersForGroupedEntries(groupEnts),
             length: getTtotalLengthOfGroup(groupEnts),
             separatorLocations: getAllSeparatorsForGroup(groupEnts),
             direction: '',
             clue: getClueForGroupedEntries(groupEnts),
-        }: any);
+        };
 
         return groupClue;
     }

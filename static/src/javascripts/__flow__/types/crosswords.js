@@ -2,6 +2,8 @@ type Direction = 'across' | 'down';
 
 type Separator = '-' | ',';
 
+type Axis = 'x' | 'y';
+
 type SeparatorDescription = {
     direction: Direction,
     separator: Separator,
@@ -16,8 +18,7 @@ type SeparatorLocations = {
 }
 
 type Position = {
-    x: number,
-    y: number,
+    [axis: Axis]: number
 };
 
 type Cell = {
@@ -46,11 +47,11 @@ type Clue = {
 
 type GroupClue = {
     id: string,
-    number: number | string,
+    number: ?number | ?string,
     length: number,
     separatorLocations: SeparatorLocations,
     direction: '',
-    clue: string,
+    clue: ?string,
 }
 
 type CluesIntersect = {

@@ -696,7 +696,7 @@ class Crossword extends React.Component {
                 close: this.onToggleAnagramHelper,
             });
 
-        const gridProps: GridProps = ({
+        const gridProps: GridProps = {
             rows: this.rows,
             columns: this.columns,
             cells: this.state.grid,
@@ -704,7 +704,7 @@ class Crossword extends React.Component {
             crossword: this,
             focussedCell: this.state.cellInFocus,
             ref: 'grid',
-        }: any);
+        };
 
         return React.createElement(
             'div',
