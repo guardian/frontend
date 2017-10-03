@@ -11,6 +11,10 @@ type SeparatorMap = {
     [key: string]: SeparatorDescription,
 };
 
+type SeparatorLocations = {
+    [separator: Separator]: Array<number>,
+}
+
 type Position = {
     x: number,
     y: number,
@@ -27,18 +31,25 @@ type Cell = {
 
 type Clue = {
     id: string,
+    number: number | string,
+    humanNumber: number | string,
     group: Array<string>,
     clue: string,
-    humanNumber: number,
     position: Position,
-    separatorLocations: {
-        [separator: Separator]: Array<number>,
-    },
+    separatorLocations: SeparatorLocations,
     direction: Direction,
     length: number,
-    number: number,
     solution: string,
 };
+
+type GroupClue = {
+    id: string,
+    number: number | string,
+    length: number,
+    separatorLocations: SeparatorLocations,
+    direction: '',
+    clue: string,
+}
 
 type CluesIntersect = {
     across?: Clue,

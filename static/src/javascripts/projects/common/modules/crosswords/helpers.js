@@ -64,7 +64,7 @@ const getGroupEntriesForClue = (
 
 const clueIsInGroup = (clue: Clue): boolean => clue.group.length !== 1;
 
-const getAllSeparatorsForGroup = (clues: Array<Clue>): Object => {
+const getAllSeparatorsForGroup = (clues: Array<Clue>): SeparatorLocations => {
     const k = {};
 
     [',', '-'].forEach(separator => {
@@ -92,7 +92,9 @@ const getClueForGroupedEntries = (clueGroup: Array<Clue>): ?string => {
     }
 };
 
-const getNumbersForGroupedEntries = (clueGroup: Array<Clue>): ?number => {
+const getNumbersForGroupedEntries = (
+    clueGroup: Array<Clue>
+): ?number | ?string => {
     if (clueGroup.length) {
         return clueGroup[0].humanNumber;
     }
@@ -101,18 +103,22 @@ const getNumbersForGroupedEntries = (clueGroup: Array<Clue>): ?number => {
 const getTtotalLengthOfGroup = (clueGroup: Array<Clue>): number =>
     clueGroup.reduce((total, clue) => total + clue.length, 0);
 
-const getAnagramClueData = (entries: Array<Clue>, clue: Clue): Clue => {
+const getAnagramClueData = (
+    entries: Array<Clue>,
+    clue: Clue
+): Clue | GroupClue => {
     if (clueIsInGroup(clue)) {
         const groupEnts = getGroupEntriesForClue(entries, clue.group);
-
-        return {
+        const groupClue: GroupClue = ({
             id: clue.id,
             number: getNumbersForGroupedEntries(groupEnts),
             length: getTtotalLengthOfGroup(groupEnts),
             separatorLocations: getAllSeparatorsForGroup(groupEnts),
             direction: '',
             clue: getClueForGroupedEntries(groupEnts),
-        };
+        }: any);
+
+        return groupClue;
     }
 
     return clue;

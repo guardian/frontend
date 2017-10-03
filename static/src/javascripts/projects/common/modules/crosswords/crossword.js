@@ -257,7 +257,9 @@ class Crossword extends React.Component {
 
             this.setState({
                 grid: mapGrid(this.state.grid, (cell, gridX, gridY) => {
-                    if (cellsInFocus.some(c => c.x === gridX && c.y === gridY)) {
+                    if (
+                        cellsInFocus.some(c => c.x === gridX && c.y === gridY)
+                    ) {
                         cell.value = '';
                     }
                     return cell;
@@ -454,7 +456,10 @@ class Crossword extends React.Component {
 
         if (clue) {
             if (isLastCellInClue(cell, clue)) {
-                const newClue = getNextClueInGroup(this.props.data.entries, clue);
+                const newClue = getNextClueInGroup(
+                    this.props.data.entries,
+                    clue
+                );
                 if (newClue) {
                     this.focusClue(
                         newClue.position.x,
