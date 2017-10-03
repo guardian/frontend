@@ -4,49 +4,49 @@ import fastdom from 'fastdom';
 import $ from 'lib/$';
 import scroller from 'lib/scroller';
 import detect from 'lib/detect';
-var HiddenInput = React.createClass({
+const HiddenInput = React.createClass({
 
-    getInitialState: function() {
+    getInitialState() {
         return {
             value: this.props.value
         };
     },
 
-    componentDidUpdate: function() {
+    componentDidUpdate() {
         if (detect.isBreakpoint({
                 max: 'mobile'
             })) {
-            fastdom.read(function() {
-                var offsets = bonzo(React.findDOMNode(this.refs.input)).offset();
+            fastdom.read(() => {
+                const offsets = bonzo(React.findDOMNode(this.refs.input)).offset();
                 scroller.scrollTo(offsets.top - offsets.height * 1.5 - $('.crossword__sticky-clue').offset().height, 250, 'easeOutQuad');
-            }.bind(this));
+            });
         }
     },
 
-    handleChange: function(event) {
+    handleChange(event) {
         this.props.crossword.insertCharacter(event.target.value.toUpperCase());
         this.setState({
             value: ''
         });
     },
 
-    onClick: function(event) {
+    onClick(event) {
         this.props.crossword.onClickHiddenInput(event);
     },
 
-    touchStart: function(event) {
+    touchStart(event) {
         this.props.crossword.onClickHiddenInput(event);
     },
 
-    onKeyDown: function(event) {
+    onKeyDown(event) {
         this.props.crossword.onKeyDown(event);
     },
 
-    onBlur: function(event) {
+    onBlur(event) {
         this.props.crossword.goToReturnPosition(event);
     },
 
-    render: function() {
+    render() {
         return React.createElement(
             'div', {
                 className: 'crossword__hidden-input-wrapper',
