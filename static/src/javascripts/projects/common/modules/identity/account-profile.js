@@ -131,7 +131,7 @@ export class AccountProfile {
                 this.href = this.getAttribute('data-tabs-href');
             });
 
-            bean.on(tabs, 'click', this.handleTabsClick.bind(this));
+            bean.on(tabs, 'click', event => this.handleTabsClick(event));
         }
     }
 
@@ -248,14 +248,12 @@ export class AccountProfile {
                 .concat([...form.querySelectorAll('select')])
                 .forEach(input => {
                     if (input.type === 'select-one') {
-                        input.addEventListener(
-                            'change',
-                            this.onInputChange.bind(this)
+                        input.addEventListener('change', event =>
+                            this.onInputChange(event)
                         );
                     } else {
-                        input.addEventListener(
-                            'input',
-                            this.onInputChange.bind(this)
+                        input.addEventListener('input', event =>
+                            this.onInputChange(event)
                         );
                     }
                 });
