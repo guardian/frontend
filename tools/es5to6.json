@@ -9,7 +9,6 @@
     "projects/common/modules/identity/delete-account.js"
   ],
   "Simon Adcock": [
-    "projects/common/modules/crosswords/series.js",
     "projects/common/modules/email/email.js",
     "projects/common/modules/email/run-checks.js",
     "projects/common/modules/atoms/youtube-tracking.js",
