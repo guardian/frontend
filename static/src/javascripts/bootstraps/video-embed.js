@@ -133,4 +133,4 @@ const initPlayer = () => {
     });
 };
 
-export { initPlayer };
+initPlayer();
