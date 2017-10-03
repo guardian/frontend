@@ -3,7 +3,7 @@
 import mediator from 'lib/mediator';
 import { ScrollDepth } from 'common/modules/analytics/scrollDepth';
 
-jest.mock('lodash/functions/debounce', (): void => fn => {
+jest.mock('lodash/functions/debounce', (): Function => fn => {
     fn();
 });
 
