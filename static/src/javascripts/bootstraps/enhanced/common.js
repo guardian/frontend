@@ -17,7 +17,7 @@ import donotUseAdblock from 'common/modules/commercial/donot-use-adblock';
 import { refresh as refreshUserFeatures } from 'commercial/modules/user-features';
 import CommentCount from 'common/modules/discussion/comment-count';
 import CookieRefresh from 'common/modules/identity/cookierefresh';
-import navigation from 'common/modules/navigation/navigation';
+import { initNavigation } from 'common/modules/navigation/navigation';
 import Profile from 'common/modules/navigation/profile';
 import Search from 'common/modules/navigation/search';
 import { initMembership } from 'common/modules/navigation/membership';
@@ -62,7 +62,7 @@ const initialiseTopNavItems = (): void => {
 };
 
 const initialiseNavigation = (): void => {
-    navigation.init();
+    initNavigation();
 };
 
 const showTabs = (): void => {
