@@ -29,7 +29,6 @@
     "lib/proximity-loader.js"
   ],
   "GHaberis": [
-    "projects/common/modules/analytics/scrollDepth.js",
     "projects/common/modules/navigation/membership.js",
     "projects/common/modules/navigation/navigation.js",
     "projects/common/modules/navigation/profile.js",
