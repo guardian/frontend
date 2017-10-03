@@ -20,13 +20,13 @@ function initLoadingSpinner(player) {
 }
 
 function createVideoPlayer(el, options) {
-    var player = videojs(el, options);
+    const player = videojs(el, options);
 
     return player;
 }
 
 function addTitleBar() {
-    var data = {
+    const data = {
         webTitle: config.page.webTitle,
         pageId: config.page.pageId,
         icon: svgs.inlineSvg('marque36icon')
@@ -35,22 +35,21 @@ function addTitleBar() {
 }
 
 function initEndSlate(player) {
-    var endSlate = new Component(),
-        endState = 'vjs-has-ended';
+    const endSlate = new Component(), endState = 'vjs-has-ended';
 
     endSlate.endpoint = $('.js-gu-media--enhance').first().attr('data-end-slate');
 
-    endSlate.fetch(player.el(), 'html').then(function() {
-        $('.end-slate-container .fc-item__action').each(function(e) {
+    endSlate.fetch(player.el(), 'html').then(() => {
+        $('.end-slate-container .fc-item__action').each(e => {
             e.href += '?CMP=embed_endslate';
         });
     });
 
-    player.on('ended', function() {
+    player.on('ended', () => {
         bonzo(player.el()).addClass(endState);
     });
 
-    player.on('playing', function() {
+    player.on('playing', () => {
         bonzo(player.el()).removeClass(endState);
     });
 }
@@ -59,14 +58,14 @@ function initPlayer() {
 
     videojs.plugin('fullscreener', fullscreener.fullscreener);
 
-    bonzo(qwery('.js-gu-media--enhance')).each(function(el) {
-        var player,
-            mouseMoveIdle,
-            $el = bonzo(el).addClass('vjs'),
-            mediaId = $el.attr('data-media-id'),
-            canonicalUrl = $el.attr('data-canonical-url'),
-            gaEventLabel = canonicalUrl,
-            mediaType = el.tagName.toLowerCase();
+    bonzo(qwery('.js-gu-media--enhance')).each(el => {
+        let player;
+        let mouseMoveIdle;
+        const $el = bonzo(el).addClass('vjs');
+        const mediaId = $el.attr('data-media-id');
+        const canonicalUrl = $el.attr('data-canonical-url');
+        const gaEventLabel = canonicalUrl;
+        const mediaType = el.tagName.toLowerCase();
 
         bonzo(el).addClass('vjs');
 
@@ -85,8 +84,8 @@ function initPlayer() {
         //Location of this is important
         events.handleInitialMediaError(player);
 
-        player.ready(function() {
-            var vol;
+        player.ready(() => {
+            let vol;
 
             initLoadingSpinner(player);
             addTitleBar();
@@ -104,7 +103,7 @@ function initPlayer() {
             player.fullscreener();
 
             if (config.switches.thirdPartyEmbedTracking) {
-                deferToAnalytics(function() {
+                deferToAnalytics(() => {
                     events.initOphanTracking(player, mediaId);
                     events.bindContentEvents(player);
                 });
@@ -116,12 +115,12 @@ function initPlayer() {
             events.bindGoogleAnalyticsEvents(player, gaEventLabel);
         });
 
-        mouseMoveIdle = debounce(function() {
+        mouseMoveIdle = debounce(() => {
             player.removeClass('vjs-mousemoved');
         }, 500);
 
         // built in vjs-user-active is buggy so using custom implementation
-        player.on('mousemove', function() {
+        player.on('mousemove', () => {
             player.addClass('vjs-mousemoved');
             mouseMoveIdle();
         });
