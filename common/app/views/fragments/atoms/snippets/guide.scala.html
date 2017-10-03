@@ -2,31 +2,31 @@
 
 @import views.html.fragments.image
 
-@if(!isAmp) {
-  @fragments.atoms.snippet(
-    className = "guide",
-    label = guide.data.typeLabel.getOrElse("Quick Guide"),
-    headline = guide.atom.title.getOrElse(""),
-    guide.id
-  ){
-    @for(img <- guide.image ) {
-      <div class="explainer-snippet__image">
-        @image(
-          picture = img,
-          classes = Nil,
-          imageAltText = "Guide",
-          isImmersiveMainMedia = true
-        )
-      </div>
-    }
+@fragments.atoms.snippet(
+  className = "guide",
+  label = guide.data.typeLabel.getOrElse("Quick Guide"),
+  headline = guide.atom.title.getOrElse(""),
+  guide.id,
+  isAmp
+){
+  @for(img <- guide.image ) {
+    <div class="explainer-snippet__image">
+      @image(
+        picture = img,
+        classes = Nil,
+        imageAltText = "Guide",
+        isImmersiveMainMedia = true
+      )
+    </div>
+  }
 
-    @for(item <- guide.data.items) {
-      <div class="explainer-snippet__item">
-        @item.title.map { t =>
-          <div class="explainer-snippet__heading"><b>@t</b></div>
-        }
-        @Html(item.body)
-      </div>
-    }
+  @for(item <- guide.data.items) {
+    <div class="explainer-snippet__item">
+      @item.title.map { t =>
+        <div class="explainer-snippet__heading"><b>@t</b></div>
+      }
+      @Html(item.body)
+    </div>
   }
 }
+
