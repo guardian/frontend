@@ -15,24 +15,28 @@ const jsEnableFooterNav = (): void => {
 };
 
 const copyMegaNavMenu = (): void => {
-    fastdom.read(() => $('.js-mega-nav')).then(megaNav => {
-        if (megaNav) {
+    let megaNav;
+
+    fastdom
+        .read(() => $('.js-mega-nav'))
+        .then(elem => {
+            megaNav = elem;
+
+            return fastdom.read(() => $('.js-mega-nav-placeholder'));
+        })
+        .then(placeholder => {
             const megaNavCopy = $.create(megaNav.html());
 
-            fastdom
-                .read(() => $('.js-mega-nav-placeholder'))
-                .then(placeholder => {
-                    if (placeholder) {
-                        fastdom.write(() => {
-                            $('.global-navigation', megaNavCopy).addClass(
-                                'global-navigation--top'
-                            );
-                            placeholder.append(megaNavCopy);
-                        });
-                    }
+            $('.global-navigation', megaNavCopy).addClass(
+                'global-navigation--top'
+            );
+
+            if (placeholder) {
+                fastdom.write(() => {
+                    placeholder.append(megaNavCopy);
                 });
-        }
-    });
+            }
+        });
 };
 
 const replaceAllSectionsLink = (): void => {
@@ -73,10 +77,14 @@ const initNavigation = (): void => {
         parseInt(getUserAgent.version, 10) > 5
     ) {
         // crashes mobile safari < 6, so we add it here after detection
-        fastdom.write(() => {
-            $('.navigation__scroll').css({
-                '-webkit-overflow-scrolling': 'touch',
-            });
+        fastdom.read(() => $('.navigation__scroll')).then(navScroll => {
+            if (navScroll) {
+                return fastdom.write(() => {
+                    navScroll.css({
+                        '-webkit-overflow-scrolling': 'touch',
+                    });
+                });
+            }
         });
     }
 };
