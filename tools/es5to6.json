@@ -14,7 +14,6 @@
     "projects/common/modules/crosswords/series.js",
     "projects/common/modules/email/email.js",
     "projects/common/modules/email/run-checks.js",
-    "projects/common/modules/gallery/lightbox.js",
     "projects/common/modules/atoms/youtube-tracking.js",
     "projects/common/modules/commercial/donot-use-adblock.js",
     "bootstraps/enhanced/profile.js"
@@ -52,5 +51,8 @@
     "projects/membership/digitalpack-tab.js",
     "projects/membership/membership-tab.js",
     "projects/membership/stripe.js"
+  ],
+  "natalialkb": [
+      "projects/common/modules/gallery/lightbox.js"
   ]
 }
