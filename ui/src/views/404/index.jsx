@@ -1,7 +1,7 @@
 // @flow
 import Logo from 'assets/images/guardian-logo-320.svg';
 import ArrowRight from 'assets/images/arrow-right.svg';
-import FourOhFour from 'assets/images/404.svg';
+import NotFoundSvg from 'assets/images/404.svg';
 import CTA from './CTA';
 
 import {
@@ -24,7 +24,7 @@ export default ({ beaconUrl }: { beaconUrl: string }) => (
                 <Logo style={logo} />
                 <span style={visuallyHidden}>the Guardian</span>
             </a>
-            <FourOhFour style={fourOhFour} />
+            <NotFoundSvg style={fourOhFour} />
             <div style={contentText}>
                 <h1 style={heading}>
                     Sorry — the page you have requested does not exist
