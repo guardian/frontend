@@ -4,8 +4,8 @@ import fastdom from 'fastdom';
 import mediator from 'lib/mediator';
 import detect from 'lib/detect';
 import $ from 'lib/$';
-var Navigation = {
-    init: function() {
+const Navigation = {
+    init() {
         this.jsEnableFooterNav();
         this.copyMegaNavMenu();
         this.enableMegaNavToggle();
@@ -13,7 +13,7 @@ var Navigation = {
 
         if (detect.isIOS() && detect.getUserAgent.version > 5) {
             // crashes mobile safari < 6, so we add it here after detection
-            fastdom.write(function() {
+            fastdom.write(() => {
                 $('.navigation__scroll').css({
                     '-webkit-overflow-scrolling': 'touch'
                 });
@@ -21,32 +21,31 @@ var Navigation = {
         }
     },
 
-    jsEnableFooterNav: function() {
-        fastdom.write(function() {
+    jsEnableFooterNav() {
+        fastdom.write(() => {
             $('.navigation-container--default').removeClass('navigation-container--default').addClass('navigation-container--collapsed');
         });
     },
 
-    copyMegaNavMenu: function() {
-        var megaNavCopy = $.create($('.js-mega-nav').html()),
-            placeholder = $('.js-mega-nav-placeholder');
+    copyMegaNavMenu() {
+        const megaNavCopy = $.create($('.js-mega-nav').html()), placeholder = $('.js-mega-nav-placeholder');
 
-        fastdom.write(function() {
+        fastdom.write(() => {
             $('.global-navigation', megaNavCopy).addClass('global-navigation--top');
             placeholder.append(megaNavCopy);
         });
     },
 
-    replaceAllSectionsLink: function() {
+    replaceAllSectionsLink() {
         $('.js-navigation-header .js-navigation-toggle').attr('href', '#nav-allsections');
     },
 
-    enableMegaNavToggle: function() {
-        bean.on(document, 'click', '.js-navigation-toggle', function(e) {
-            var target = $('.' + e.currentTarget.getAttribute('data-target-nav'));
+    enableMegaNavToggle() {
+        bean.on(document, 'click', '.js-navigation-toggle', e => {
+            const target = $('.' + e.currentTarget.getAttribute('data-target-nav'));
 
             e.preventDefault();
-            fastdom.write(function() {
+            fastdom.write(() => {
                 target.toggleClass('navigation-container--expanded navigation-container--collapsed');
                 mediator.emit(target.hasClass('navigation-container--expanded') ? 'modules:nav:open' : 'modules:nav:close');
             });
