@@ -1,5 +1,4 @@
 // @flow
-/* global XDomainRequest */
 
 /*
  *  Handle History updates and monitor for unsaved changes on account profile
@@ -33,24 +32,31 @@ const messages = {
     avatarUploadFailure: 'Sorry, something went wrong. Please try again.',
 };
 
-const prependMessage = (message, location, clazz) => {
+const prependMessage = (
+    message: string,
+    location: HTMLElement,
+    clazz: string
+): void => {
     const errorHtml = document.createElement('div');
     errorHtml.innerHTML = message;
     errorHtml.className = clazz;
     location.insertBefore(errorHtml, location.firstChild);
 };
 
-const prependErrorMessage = (message, location) => {
+const prependErrorMessage = (message: string, location: HTMLElement): void => {
     const errorClass = classes.formError.replace('.', '');
     prependMessage(message, location, errorClass);
 };
 
-const prependSuccessMessage = (message, location) => {
+const prependSuccessMessage = (
+    message: string,
+    location: HTMLElement
+): void => {
     const errorClass = classes.formSuccess.replace('.', '');
     prependMessage(message, location, errorClass);
 };
 
-const avatarUploadByApi = (avatarForm: HTMLFormElement) => {
+const avatarUploadByApi = (avatarForm: HTMLFormElement): void => {
     const form = ((document.querySelector(
         `form${classes.avatarUploadForm}`
     ): any): HTMLFormElement);
@@ -237,13 +243,9 @@ export class AccountProfile {
      */
     bindInputs(form: ?HTMLElement) {
         if (form instanceof HTMLFormElement) {
-            const inputs = Array.prototype.slice.call(
-                form.querySelectorAll(classes.textInput)
-            );
+            const inputs = [...form.querySelectorAll(classes.textInput)];
             inputs
-                .concat(
-                    Array.prototype.slice.call(form.querySelectorAll('select'))
-                )
+                .concat([...form.querySelectorAll('select')])
                 .forEach(input => {
                     if (input.type === 'select-one') {
                         input.addEventListener(
