@@ -88,7 +88,7 @@ const Clues = createClass({
         }
     },
 
-    scrollIntoView(clue) {
+    scrollIntoView(clue: Object) {
         const buffer = 100;
         const node = findDOMNode(this.refs[clue.id]);
         const visible =
