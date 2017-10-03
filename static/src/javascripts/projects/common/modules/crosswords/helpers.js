@@ -256,8 +256,8 @@ const buildClueMap = (clues: Array<Clue>): ClueMap => {
 
 /** A map for looking up separators (i.e word or hyphen) that a given cell relates to */
 const buildSeparatorMap = (clues: Array<Clue>): SeparatorMap => {
-    const flattenReducer = (acc, separatorDesc) => {
-        let flattened = separatorDesc;
+    const flattenReducer = (acc: Array<any>, curr: any): Array<any> => {
+        let flattened = curr;
 
         if (Array.isArray(flattened) && flattened.length) {
             flattened = flattened.reduce(flattenReducer, []);
