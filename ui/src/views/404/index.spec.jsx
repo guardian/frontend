@@ -10,5 +10,5 @@ jest.mock('./style.scss', () => ({
 }));
 
 describe('404', () => {
-    test(<FourOhFour />);
+    test(<FourOhFour beaconUrl="" />);
 });
