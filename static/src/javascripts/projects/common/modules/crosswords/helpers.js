@@ -138,10 +138,7 @@ const cellsForEntry = (entry: Clue): Array<Position> =>
               y,
           }));
 
-const checkClueHasBeenAnswered = (
-    grid: Array<Array<Cell>>,
-    entry: Clue
-): boolean =>
+const checkClueHasBeenAnswered = (grid: Grid, entry: Clue): boolean =>
     cellsForEntry(entry).every(position =>
         /^[A-Z]$/.test(grid[position.x][position.y].value)
     );
@@ -166,7 +163,7 @@ const cluesFor = (clueMap: ClueMap, x: number, y: number): CluesIntersect =>
     clueMap[clueMapKey(x, y)];
 
 const getClearableCellsForEntry = (
-    grid: Array<Array<Cell>>,
+    grid: Grid,
     clueMap: ClueMap,
     entries: Array<Clue>,
     entry: Clue
@@ -189,7 +186,7 @@ const getClearableCellsForEntry = (
 };
 
 const getClearableCellsForClue = (
-    grid: Array<Array<Cell>>,
+    grid: Grid,
     clueMap: ClueMap,
     entries: Array<Clue>,
     clue: Clue
@@ -216,7 +213,7 @@ const buildGrid = (
     columns: number,
     entries: Array<Clue>,
     savedState: Array<Array<string>>
-): Array<Array<Cell>> => {
+): Grid => {
     const grid = range(columns).map(x =>
         range(rows).map(y => ({
             isHighlighted: false,
@@ -328,10 +325,9 @@ const gridSize = (cells: number): number =>
     cells * (constants.cellSize + constants.borderSize) + constants.borderSize;
 
 const mapGrid = (
-    grid: Array<Array<Cell>>,
+    grid: Grid,
     f: (cell: Cell, gridX: number, gridY: number) => Cell
-): Array<Array<Cell>> =>
-    grid.map((col, x) => col.map((cell, y) => f(cell, x, y)));
+): Grid => grid.map((col, x) => col.map((cell, y) => f(cell, x, y)));
 
 export {
     isAcross,

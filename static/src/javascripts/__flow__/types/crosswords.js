@@ -29,6 +29,8 @@ type Cell = {
     value: string,
 };
 
+type Grid = Array<Array<Cell>>;
+
 type Clue = {
     id: string,
     number: number | string,
