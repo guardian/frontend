@@ -8,7 +8,10 @@ import views.support.{HtmlCleaner, Item640}
 
 import scala.collection.JavaConversions._
 
-case class VideoEmbedCleaner(article: Article, maxEmbedHeight: Int = 680) extends HtmlCleaner {
+/*
+ * maxEmbedHeight: 812px - full height on an iPhone X
+ */
+case class VideoEmbedCleaner(article: Article, maxEmbedHeight: Int = 812) extends HtmlCleaner {
   val facebookVideoEmbedUrl = "https://www.facebook.com/v2.3/plugins/video.php?href="
   def facebookVideoEmbedUrlFor(url: String): String = s"$facebookVideoEmbedUrl${URLEncoder.encode(url, "UTF-8")}"
 
