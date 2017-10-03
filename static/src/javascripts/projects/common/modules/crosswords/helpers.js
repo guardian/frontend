@@ -219,8 +219,7 @@ const buildGrid = (
     );
 
     entries.forEach(entry => {
-        const x = entry.position.x;
-        const y = entry.position.y;
+        const { x, y } = entry.position;
 
         grid[x][y].number = entry.number;
 
