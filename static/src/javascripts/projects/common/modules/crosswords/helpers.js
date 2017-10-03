@@ -1,6 +1,5 @@
 // @flow
 import { constants } from 'common/modules/crosswords/constants';
-import findIndex from 'lodash/arrays/findIndex';
 import flatten from 'lodash/arrays/flatten';
 import range from 'lodash/arrays/range';
 import uniq from 'lodash/arrays/uniq';
@@ -36,14 +35,14 @@ const isLastCellInClue = (cell: Position, clue: Clue): boolean => {
 
 const getNextClueInGroup = (entries: Array<Clue>, clue: Clue): ?Clue => {
     const newClueId =
-        clue.group[findIndex(clue.group, id => id === clue.id) + 1];
+        clue.group[clue.group.findIndex(id => id === clue.id) + 1];
 
     return entries.find(entry => entry.id === newClueId);
 };
 
 const getPreviousClueInGroup = (entries: Array<Clue>, clue: Clue): ?Clue => {
     const newClueId =
-        clue.group[findIndex(clue.group, id => id === clue.id) - 1];
+        clue.group[clue.group.findIndex(id => id === clue.id) - 1];
 
     return entries.find(entry => entry.id === newClueId);
 };
