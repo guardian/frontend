@@ -13,6 +13,7 @@ import model.pressed._
 import org.joda.time.{DateTime, DateTimeZone}
 import play.api.mvc.RequestHeader
 import slices.{Container, ContainerDefinition, Fixed, FixedContainers}
+import views.support.PreviousAndNext
 
 import scala.Function.const
 import scala.annotation.tailrec
@@ -194,9 +195,11 @@ case class IndexPage(
   tags: Tags,
   date: DateTime,
   tzOverride: Option[DateTimeZone],
-  commercial: Commercial
-) {
+  commercial: Commercial,
+  previousAndNext: Option[PreviousAndNext] = None
+) extends StandalonePage {
 
+  override val metadata: MetaData = page.metadata
   val trails: Seq[Content] = contents.map(_.item.content)
   val faciaTrails: Seq[PressedContent] = contents.map(_.faciaItem)
 

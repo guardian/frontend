@@ -200,39 +200,73 @@ object Commercial {
 
   object TrackingCodeBuilder extends implicits.Requests {
 
+    private def mkString(
+      containerType: String,
+      editionId: String,
+      frontId: String,
+      containerIndex: Int,
+      containerTitle: String,
+      sponsorName: String,
+      cardIndex: Int,
+      cardTitle: String
+    ) =
+      Seq(
+        containerType,
+        editionId,
+        frontId,
+        s"container-${containerIndex + 1}",
+        containerTitle,
+        sponsorName,
+        s"card-${cardIndex + 1}",
+        cardTitle
+      ) mkString " | "
+
     def mkInteractionTrackingCode(
       frontId: String,
       containerIndex: Int,
       container: ContainerModel,
       card: PaidCard
-    )(implicit request: RequestHeader): String = {
-      val sponsor = {
-        val containerSponsorName = container.branding collect { case b: Branding => b.sponsorName }
-        containerSponsorName orElse card.branding.map(_.sponsorName) getOrElse ""
-      }
-      val cardIndex =
-        (container.content.initialCards ++ container.content.showMoreCards).indexWhere(_.headline == card.headline)
-      Seq(
-        "Labs front container",
-        Edition(request).id,
-        frontId,
-        s"container-${containerIndex + 1}",
-        container.content.title,
-        sponsor,
-        s"card-${cardIndex + 1}",
-        card.headline
-      ) mkString " | "
-    }
+    )(implicit request: RequestHeader): String =
+      mkString(
+        containerType = "Labs front container",
+        editionId = Edition(request).id,
+        frontId = frontId,
+        containerIndex = containerIndex,
+        containerTitle = container.content.title,
+        sponsorName = {
+          val containerSponsorName = container.branding collect { case b: Branding => b.sponsorName }
+          containerSponsorName orElse card.branding.map(_.sponsorName) getOrElse ""
+        },
+        cardIndex = (container.content.initialCards ++ container.content.showMoreCards)
+          .indexWhere(_.headline == card.headline),
+        cardTitle = card.headline
+      )
 
-    def mkInteractionTrackingCode(containerIndex: Int, cardIndex: Int, card: ContentCard, containerDisplayName: Option[String], frontId: Option[String])(implicit request: RequestHeader): String = Seq(
-      Edition(request).id,
-      frontId.getOrElse("unknown front id"),
-      s"container-${containerIndex + 1}",
-      containerDisplayName.getOrElse("unknown container"),
-      card.branding.map(_.sponsorName) getOrElse "unknown",
-      s"card-${ cardIndex + 1 }",
-      card.header.headline
-    ).mkString(" | ")
+    def mkInteractionTrackingCode(
+      containerIndex: Int,
+      cardIndex: Int,
+      card: ContentCard,
+      containerDisplayName: Option[String],
+      frontId: Option[String]
+    )(implicit request: RequestHeader): String = {
+
+      val isContentPage = frontId.isEmpty && containerDisplayName.contains("related content")
+
+      mkString(
+        containerType =
+          if (isContentPage) "Onward container"
+          else "Front container",
+        editionId = Edition(request).id,
+        frontId =
+          if (isContentPage) "none"
+          else frontId.getOrElse("unknown front id"),
+        containerIndex = containerIndex,
+        containerTitle = containerDisplayName.getOrElse("unknown container"),
+        sponsorName = card.branding.map(_.sponsorName) getOrElse "unknown",
+        cardIndex = cardIndex,
+        cardTitle = card.header.headline
+      )
+    }
 
     def mkCapiCardTrackingCode(
       multiplicity: String,

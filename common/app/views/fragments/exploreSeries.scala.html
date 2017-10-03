@@ -3,7 +3,7 @@
 @import model.ContentPage
 @import views.support.RenderClasses
 @import views.support.TrailCssClasses.toneClass
-@(page: ContentPage)(implicit request: RequestHeader, context: model.ApplicationContext)
+@()(implicit page: ContentPage, request: RequestHeader, context: model.ApplicationContext)
 
 @defining((
     page.item.elements.hasMainEmbed,
@@ -68,7 +68,7 @@
                 </div>
             </div>
           </div>
-        @if(!page.item.elements.hasMainVideo){  
+        @if(!page.item.elements.hasMainVideo){
         <div class="explore-series-trail-wrapper">
           <div class="explore-series-headline">
               <div class="gs-container">

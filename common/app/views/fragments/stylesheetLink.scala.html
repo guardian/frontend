@@ -1,10 +1,10 @@
-@(stylesheet: String, isCrossword: Boolean = false)
+@(stylesheet: String, forceSyncCss: Boolean = false)
 
 @import conf.switches.Switches._
 @import conf.Static
 
-@* temporarily disable async css on crossword pages so they're usable on safari 6 and below *@
-@if(AsyncCss.isSwitchedOn && !isCrossword) {
+@* Disabling async css allows pages to be usable on safari 6 and below *@
+@if(AsyncCss.isSwitchedOn && !forceSyncCss) {
     <link rel="stylesheet" type="text/css" href="@Static(stylesheet)" media="only x" />
     <noscript>
         <link rel="stylesheet" type="text/css" href="@Static(stylesheet)" />

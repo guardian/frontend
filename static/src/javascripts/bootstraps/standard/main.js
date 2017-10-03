@@ -23,7 +23,10 @@ import fetchJSON from 'lib/fetch-json';
 import mediator from 'lib/mediator';
 import { initCheckMediator } from 'common/modules/check-mediator';
 import { addEventListener } from 'lib/events';
-import identity from 'common/modules/identity/api';
+import {
+    isUserLoggedIn,
+    init as identityInit,
+} from 'common/modules/identity/api';
 import { removeCookie, addCookie } from 'lib/cookies';
 import { getUrlVars } from 'lib/url';
 import { catchErrorsWithContext } from 'lib/robust';
@@ -70,7 +73,7 @@ const handleMembershipAccess = (): void => {
         }
     };
 
-    if (identity.isUserLoggedIn()) {
+    if (isUserLoggedIn()) {
         fetchJSON(`${membershipUrl}/user/me`, {
             mode: 'cors',
             credentials: 'include',
@@ -215,7 +218,7 @@ const bootStandard = (): void => {
         handleMembershipAccess();
     }
 
-    identity.init();
+    identityInit();
 
     newHeaderInit();
 

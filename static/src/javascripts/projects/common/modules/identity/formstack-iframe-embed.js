@@ -14,7 +14,7 @@
      - Chris Finch, CSD - Identity, March '14
 */
 
-import idApi from 'common/modules/identity/api';
+import { getUserOrSignIn } from 'common/modules/identity/api';
 
 const postMessage = (
     type: string,
@@ -124,7 +124,11 @@ class FormstackEmbedIframe {
 
     init(): void {
         // User object required to populate fields
-        const user = idApi.getUserOrSignIn();
+        const user = getUserOrSignIn();
+
+        if (!user) {
+            return;
+        }
 
         this.dom(user);
 

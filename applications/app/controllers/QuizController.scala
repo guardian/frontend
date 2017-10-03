@@ -5,6 +5,7 @@ import conf.Configuration
 import contentapi.ContentApiClient
 import model._
 import model.content.{Atoms, Quiz}
+import pages.ContentHtmlPage
 import play.api.mvc._
 import quiz.form
 import views.support.RenderOtherStatus
@@ -73,7 +74,7 @@ class QuizController(
       maybePage.toLeft(NotFound)
     }
     result recover convertApiExceptions map {
-      case Left(page) => Ok(views.html.quizAnswerPage(page))
+      case Left(page) => Ok(ContentHtmlPage.html(page))
       case Right(other) => RenderOtherStatus(other)
     }
   }

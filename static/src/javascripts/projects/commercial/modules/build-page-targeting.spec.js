@@ -8,7 +8,7 @@ import {
     getReferrer as getReferrer_,
     getBreakpoint as getBreakpoint_,
 } from 'lib/detect';
-import identity from 'common/modules/identity/api';
+import { isUserLoggedIn as isUserLoggedIn_ } from 'common/modules/identity/api';
 import { getUserSegments as getUserSegments_ } from 'commercial/modules/user-ad-targeting';
 import { getParticipations as getParticipations_ } from 'common/modules/experiments/utils';
 import { getKruxSegments as getKruxSegments_ } from 'commercial/modules/third-party-tags/krux';
@@ -19,6 +19,7 @@ const getParticipations: any = getParticipations_;
 const getKruxSegments: any = getKruxSegments_;
 const getReferrer: any = getReferrer_;
 const getBreakpoint: any = getBreakpoint_;
+const isUserLoggedIn: any = isUserLoggedIn_;
 
 jest.mock('lib/storage');
 jest.mock('lib/config', () => ({}));
@@ -85,7 +86,7 @@ describe('Build Page Targeting', () => {
         getBreakpoint.mockReturnValue('mobile');
         getReferrer.mockReturnValue('');
 
-        identity.isUserLoggedIn.mockReturnValue(true);
+        isUserLoggedIn.mockReturnValue(true);
 
         getUserSegments.mockReturnValue(['seg1', 'seg2']);
 

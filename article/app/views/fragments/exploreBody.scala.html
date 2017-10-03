@@ -1,0 +1,68 @@
+@import common.LinkTo
+@import controllers.ArticlePage
+@import views.BodyCleaner
+@import views.support.Commercial.{isPaidContent, articleAsideOptionalSizes, shouldShowAds}
+@import views.support.RenderClasses
+
+@(amp: Boolean = false)(implicit model: ArticlePage, request: RequestHeader, context: _root_.model.ApplicationContext)
+
+@defining(model.article) { article =>
+    <div class="l-side-margins @if(article.content.elements.hasMainVideo){explore--video}">
+        <article id="article" data-test-id="article-root"
+            class="@RenderClasses(Map(
+                    "content content--article" -> true,
+                    "content--explore-series" -> article.content.isExplore,
+                    "explore--video" -> article.content.elements.hasMainVideo
+                ))"
+
+            itemscope itemtype="@article.metadata.schemaType" role="main">
+            <meta itemprop="mainEntityOfPage" content="@LinkTo(article.metadata.url)">
+            <div itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
+                <meta itemprop="name" content="The Guardian">
+                <link itemprop="sameAs" href="http://www.theguardian.com">
+            </div>
+
+            @fragments.headerImmersive(article)
+
+            @if(article.content.elements.hasMainVideo){
+              <div class="explore-series-standfirst explore-video-standfirst">
+                <div class="gs-container">
+                  <div class="content__main-column">
+                    <div class="explore-series-byline-image hide-on-mobile">
+                      @fragments.meta.bylineImage(article.content.tags)
+                    </div>
+                    <h1 class="explore-series-video-headline">
+                        @Html(article.content.trail.headline)
+                    </h1>
+                    @fragments.standfirst(article)
+                  </div>
+                </div>
+              </div>
+            }
+
+            <div class="content__main">
+                <div class="gs-container">
+                    <div class="content__main-column content__main-column--article js-content-main-column">
+
+                        <div class="content__meta-container--explore u-cf">
+                            <div class="meta__social" data-component="share">
+                                @fragments.social(article.sharelinks.pageShares, "top")
+                            </div>
+                        </div>
+
+                        <div class="content__article-body from-content-api js-article__body" itemprop="articleBody">
+                            @BodyCleaner(article, article.fields.body, amp = amp)
+                        </div>
+                        <div class="after-article js-after-article"></div>
+                    </div>
+                    <div class="content__secondary-column js-secondary-column" aria-hidden="true">
+
+                        @fragments.articleAsideSlot(shouldShowAds(model), articleAsideOptionalSizes, Some("js-sticky-mpu"))
+
+                    </div>
+                </div>
+            </div>
+        </article>
+        @fragments.contentFooter(article, model.related, isPaidContent = isPaidContent(model))
+    </div>
+}

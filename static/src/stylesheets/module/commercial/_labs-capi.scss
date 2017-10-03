@@ -378,6 +378,13 @@
         color: $neutral-1;
     }
 
+    .fc-item__link,
+    .fc-sublink__link {
+        &:visited {
+            color: #5c5c5c;
+        }
+    }
+
     .fc-item__kicker {
         color: $paid-article-brand;
     }
@@ -397,6 +404,7 @@
     }
 
     .fc-item__standfirst {
+        @include f-textSans;
         color: #757575;
     }
 

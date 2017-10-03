@@ -3,13 +3,14 @@ package controllers
 import common.{ImplicitControllerExecutionContext, Logging}
 import model.Cached.RevalidatableResult
 import model._
+import pages.TagIndexHtmlPage
 import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 import services._
 
 class TagIndexController(val controllerComponents: ControllerComponents)(implicit context: ApplicationContext)
   extends BaseController with ImplicitControllerExecutionContext with Logging {
 
-    private val TagIndexCacheTime = 600
+  private val TagIndexCacheTime = 600
 
   private def forTagType(keywordType: String, title: String, page: String, metadata: MetaData): Action[AnyContent] = Action { implicit request =>
     TagIndexesS3.getIndex(keywordType, page) match {
@@ -21,13 +22,13 @@ class TagIndexController(val controllerComponents: ControllerComponents)(implici
         log.error(s"JSON parse error serving tag index page for $keywordType $page: $error")
         InternalServerError
 
-      case Right(tagPage) =>
+      case Right(tagIndex) =>
         Cached(TagIndexCacheTime) {
-          RevalidatableResult.Ok(views.html.tagIndexPage(
-            metadata,
-            tagPage,
-            title
-          ))
+          RevalidatableResult.Ok(
+            TagIndexHtmlPage.html(
+              TagIndexPage(tagIndex, metadata, title)
+            )
+          )
         }
     }
   }
@@ -38,7 +39,9 @@ class TagIndexController(val controllerComponents: ControllerComponents)(implici
       sectionListing <- KeywordSectionIndexAutoRefresh.get
     } yield {
       Cached(TagIndexCacheTime) {
-        RevalidatableResult.Ok(views.html.subjectsIndexListing(SubjectsListing(), alphaListing))
+        RevalidatableResult.Ok(
+          TagIndexHtmlPage.html(SubjectsListing(alphaListing))
+        )
       }
     }) getOrElse InternalServerError("Not yet loaded alpha and section index for keywords")
   }
@@ -48,7 +51,9 @@ class TagIndexController(val controllerComponents: ControllerComponents)(implici
       alphaListing <- ContributorAlphaIndexAutoRefresh.get
     } yield {
       Cached(TagIndexCacheTime) {
-        RevalidatableResult.Ok(views.html.contributorsIndexListing(ContributorsListing(), alphaListing))
+        RevalidatableResult.Ok(
+          TagIndexHtmlPage.html(ContributorsListing(alphaListing))
+        )
       }
     }) getOrElse InternalServerError("Not yet loaded contributor index listing")
   }

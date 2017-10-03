@@ -6,7 +6,7 @@ import {
     getBreakpoint as getBreakpoint_,
     adblockInUse as adblockInUse_,
 } from 'lib/detect';
-import identity from 'common/modules/identity/api';
+import { isUserLoggedIn as isUserLoggedIn_ } from 'common/modules/identity/api';
 import {
     isPayingMember as isPayingMember_,
     isRecentContributor as isRecentContributor_,
@@ -22,6 +22,7 @@ const isAdFreeUser: JestMockFn = (isAdFreeUser_: any);
 const shouldShowReaderRevenue: JestMockFn = (shouldShowReaderRevenue_: any);
 const adblockInUse: any = adblockInUse_;
 const getBreakpoint: any = getBreakpoint_;
+const isUserLoggedIn: any = isUserLoggedIn_;
 
 const CommercialFeatures = commercialFeatures.constructor;
 
@@ -91,7 +92,7 @@ describe('Commercial features', () => {
         isRecentContributor.mockReturnValue(false);
         shouldSeeReaderRevenue.mockReturnValue(true);
         isAdFreeUser.mockReturnValue(false);
-        identity.isUserLoggedIn.mockReturnValue(true);
+        isUserLoggedIn.mockReturnValue(true);
 
         expect.hasAssertions();
     });
@@ -292,7 +293,7 @@ describe('Commercial features', () => {
         });
 
         it('Is disabled when user is logged in and page is commentable', () => {
-            identity.isUserLoggedIn.mockReturnValue(true);
+            isUserLoggedIn.mockReturnValue(true);
             config.page.commentable = true;
             const features = new CommercialFeatures();
             expect(features.outbrain).toBe(false);
@@ -340,7 +341,7 @@ describe('Commercial features', () => {
         beforeEach(() => {
             config.page.commentable = true;
             // isAdFreeUser.mockReturnValue(true);
-            identity.isUserLoggedIn.mockReturnValue(true);
+            isUserLoggedIn.mockReturnValue(true);
         });
 
         it('Displays when page has comments and user is signed in', () => {
@@ -355,7 +356,7 @@ describe('Commercial features', () => {
         });
 
         it('Does not appear when user signed out', () => {
-            identity.isUserLoggedIn.mockReturnValue(false);
+            isUserLoggedIn.mockReturnValue(false);
             const features = new CommercialFeatures();
             expect(features.commentAdverts).toBe(false);
         });
@@ -404,7 +405,7 @@ describe('Commercial features', () => {
         });
 
         it('Does not appear when user signed out', () => {
-            identity.isUserLoggedIn.mockReturnValue(false);
+            isUserLoggedIn.mockReturnValue(false);
             const features = new CommercialFeatures();
             expect(features.commentAdverts).toBe(false);
         });

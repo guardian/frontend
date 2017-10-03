@@ -12,7 +12,7 @@ import videoAdUrl from 'common/modules/commercial/video-ad-url';
 import { commercialFeatures } from 'commercial/modules/commercial-features';
 import Component from 'common/modules/component';
 import events from 'common/modules/video/events';
-import videoMetadata from 'common/modules/video/metadata';
+import { getVideoInfo, isGeoBlocked } from 'common/modules/video/metadata';
 import { fullscreener } from 'common/modules/media/videojs-plugins/fullscreener';
 import { skipAd } from 'common/modules/media/videojs-plugins/skip-ad';
 import { videoContainerInit } from 'common/modules/video/video-container';
@@ -23,7 +23,7 @@ import { videojs } from 'bootstraps/enhanced/media/video-player';
 import loadingTmpl from 'raw-loader!common/views/ui/loading.html';
 import { isAdFreeUser } from 'commercial/modules/user-features';
 import { loadScript } from 'lib/load-script';
-import accessibility from 'common/modules/accessibility/main';
+import { isOn as accessibilityisOn } from 'common/modules/accessibility/main';
 
 const initLoadingSpinner = (player: any): void => {
     player.loadingSpinner.contentEl().innerHTML = loadingTmpl;
@@ -114,18 +114,16 @@ const initExploreVideo = (): void => {
 };
 
 const enhanceVideo = (
-    el: HTMLElement,
+    el: HTMLMediaElement,
     autoplay: boolean,
     shouldPreroll: boolean = false
 ): any => {
     const mediaType = el.tagName.toLowerCase();
-    const $el = bonzo(el).addClass('vjs');
-    const mediaId = $el.attr('data-media-id');
-    const endSlateUri = $el.attr('data-end-slate');
-    const embedPath = $el.attr('data-embed-path');
+    const dataset = el.dataset;
+    const { mediaId, endSlate, embedPath } = dataset;
 
     const // we need to look up the embedPath for main media videos
-    canonicalUrl = $el.attr('data-canonical-url') || (embedPath || null);
+    canonicalUrl = dataset.canonicalUrl || (embedPath || null);
 
     const // the fallback to window.location.pathname should only happen for main media on fronts
     gaEventLabel = canonicalUrl || window.location.pathname;
@@ -135,11 +133,13 @@ const enhanceVideo = (
     let withPreroll;
     let blockVideoAds;
 
+    el.classList.add('vjs');
+
     // end-slate url follows the patten /video/end-slate/section/<section>.json?shortUrl=
     // only show end-slate if page has a section i.e. not on the `/global` path
     // e.g https://www.theguardian.com/global/video/2016/nov/01/what-happened-at-the-battle-of-orgreave-video-explainer
     const showEndSlate =
-        $el.attr('data-show-end-slate') === 'true' && !!config.page.section;
+        dataset.showEndSlate === 'true' && !!config.get('page.section');
 
     const player = createVideoPlayer(
         el,
@@ -150,7 +150,7 @@ const enhanceVideo = (
                         !config.page.isFront &&
                         config.switches.externalVideoEmbeds &&
                         (config.page.contentType === 'Video' ||
-                            $el.attr('data-embeddable') === 'true'),
+                            dataset.embeddable === 'true'),
                     location: `${config.page
                         .externalEmbedHost}/embed/video/${embedPath ||
                         config.page.pageId}`,
@@ -163,7 +163,7 @@ const enhanceVideo = (
     events.addPrerollEvents(player, mediaId, mediaType);
     events.bindGoogleAnalyticsEvents(player, gaEventLabel);
 
-    videoMetadata.getVideoInfo($el).then(videoInfo => {
+    getVideoInfo(el).then(videoInfo => {
         if (videoInfo.expired) {
             player.ready(() => {
                 player.error({
@@ -178,7 +178,7 @@ const enhanceVideo = (
                 player.controlBar.dispose();
             });
         } else {
-            videoMetadata.isGeoBlocked(el).then(isVideoGeoBlocked => {
+            isGeoBlocked(el).then(isVideoGeoBlocked => {
                 if (isVideoGeoBlocked) {
                     player.ready(() => {
                         player.error({
@@ -239,7 +239,7 @@ const enhanceVideo = (
                                         min: 'desktop',
                                     })
                                 ) {
-                                    initEndSlate(player, endSlateUri);
+                                    initEndSlate(player, endSlate);
                                 }
 
                                 if (withPreroll) {
@@ -304,7 +304,7 @@ const enhanceVideo = (
                     playerSetupComplete.then(() => {
                         if (
                             autoplay &&
-                            accessibility.isOn('flashing-elements')
+                            accessibilityisOn('flashing-elements')
                         ) {
                             player.play();
                         }

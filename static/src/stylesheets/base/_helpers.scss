@@ -158,6 +158,12 @@
     }
 }
 
+.u-responsive-aligner {
+    // to be overidden by inline max-width style for center-aligning
+    margin: 0 auto;
+    width: 100%;
+}
+
 .u-responsive-ratio--hd {
     padding-bottom: aspect-ratio-height(16, 9);
 }

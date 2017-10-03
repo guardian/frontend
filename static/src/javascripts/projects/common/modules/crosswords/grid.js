@@ -3,7 +3,7 @@ import React from 'react/addons';
 import helpers from 'common/modules/crosswords/helpers';
 import { constants } from 'common/modules/crosswords/constants';
 import Cell from 'common/modules/crosswords/cell';
-import classNames from 'common/modules/crosswords/classNames';
+import { classNames } from 'common/modules/crosswords/classNames';
 import type Crossword from 'common/modules/crosswords/crossword';
 
 type Direction = 'across' | 'down';

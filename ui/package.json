@@ -16,9 +16,11 @@
         "clean:dist": "rm -rf ./dist",
         "compile": "BABEL_ENV=production yarn clean:dist -s && webpack --config ./__config__/webpack.config.prod.js --progress && echo 'Client bundle size:' && gzip-size ../static/target/javascripts/ui.bundle.browser.js",
         "watch": "yarn run clean:dist -s && concurrently --kill-others -n \"BRSR,SRVR\" -c \"blue,green\" \"yarn watch:server\" \"node --inspect __tools__/dev-server.js\"",
-        "watch:nashorn": "yarn run clean:dist -s && concurrently --kill-others -n \"BRSR,SRVR\" -c \"blue,green\" \"yarn watch:browser\" \"yarn watch:server\"",
         "watch:browser": "webpack-dev-server --config ./__config__/webpack.config.dev.js --env.browser --watch",
-        "watch:server": "webpack --config ./__config__/webpack.config.dev.js --env.server --watch"
+        "watch:server": "webpack --config ./__config__/webpack.config.dev.js --env.server --watch",
+        "watch:nashorn": "yarn run clean:dist -s && concurrently --kill-others -n \"BRSR,SRVR\" -c \"blue,green\" \"yarn watch:nashorn:browser\" \"yarn watch:nashorn:server\"",
+        "watch:nashorn:browser": "webpack-dev-server --config ./__config__/webpack.config.nashorn.dev.js --env.browser --watch",
+        "watch:nashorn:server": "webpack --config ./__config__/webpack.config.nashorn.dev.js --env.server --watch"
     },
     "dependencies": {
         "emotion": "^7.3.2",

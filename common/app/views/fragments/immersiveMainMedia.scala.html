@@ -7,7 +7,7 @@
 @import views.support.TrailCssClasses.toneClass
 @import views.support.ImmersiveMainCleaner
 
-@(page: ContentPage)(implicit request: RequestHeader, context: model.ApplicationContext)
+@()(implicit page: ContentPage, request: RequestHeader, context: model.ApplicationContext)
 
 @defining((
     page.item.tags.isTheMinuteArticle,

@@ -1,11 +1,5 @@
 // @flow
 
-export type AcquisitionsEpicTemplateCopy = {
-    heading?: string,
-    p1: string,
-    p2: string,
-};
-
 // control
 const controlHeading = 'Since you’re here &hellip;';
 const controlP1 =

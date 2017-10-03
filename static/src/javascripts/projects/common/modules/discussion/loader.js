@@ -11,8 +11,8 @@ import mediator from 'lib/mediator';
 import { scrollToElement } from 'lib/scroller';
 import fastdom from 'lib/fastdom-promise';
 import fetchJson from 'lib/fetch-json';
-import DiscussionAnalytics from 'common/modules/analytics/discussion';
-import register from 'common/modules/analytics/register';
+import { initDiscussionAnalytics } from 'common/modules/analytics/discussion';
+import { begin, end } from 'common/modules/analytics/register';
 import Component from 'common/modules/component';
 import { getUser } from 'common/modules/discussion/api';
 import { CommentBox } from 'common/modules/discussion/comment-box';
@@ -22,7 +22,7 @@ import {
     handle as upvoteHandle,
     closeTooltip as upvoteCloseTooltip,
 } from 'common/modules/discussion/upvote';
-import Id from 'common/modules/identity/api';
+import { getUserFromCookie, getUserFromApi } from 'common/modules/identity/api';
 import userPrefs from 'common/modules/user-prefs';
 
 class Loader extends Component {
@@ -35,15 +35,15 @@ class Loader extends Component {
         this.user = null;
         this.username = null;
 
-        register.begin('discussion');
+        begin('discussion');
     }
 
     getUser(): void {
-        if (Id.getUserFromCookie()) {
+        if (getUserFromCookie()) {
             getUser().then(resp => {
                 this.user = resp.userProfile;
 
-                Id.getUserFromApi(user => {
+                getUserFromApi(user => {
                     if (user && user.publicFields.username) {
                         this.username = user.publicFields.username;
                     }
@@ -87,7 +87,7 @@ class Loader extends Component {
             this.setState('closed');
         } else if (this.comments.isReadOnly()) {
             this.setState('readonly');
-        } else if (Id.getUserFromCookie()) {
+        } else if (getUserFromCookie()) {
             if (
                 this.user &&
                 this.user.privateFields &&
@@ -125,7 +125,7 @@ class Loader extends Component {
         this.initPagination();
         this.initRecommend();
 
-        DiscussionAnalytics.init();
+        initDiscussionAnalytics();
 
         // More for analytics than anything
         if (window.location.hash === '#comments') {
@@ -149,7 +149,7 @@ class Loader extends Component {
             }
         });
 
-        register.end('discussion');
+        end('discussion');
     }
 
     initRecommend(): void {
@@ -563,7 +563,7 @@ class Loader extends Component {
             element: document.getElementsByClassName(
                 'js-discussion-external-frontend'
             )[0],
-            userFromCookie: !!Id.getUserFromCookie(),
+            userFromCookie: !!getUserFromCookie(),
             profileUrl: config.page.idUrl,
             profileClientId: config.switches.registerWithPhone
                 ? 'comments'

@@ -123,7 +123,7 @@ define([
             $(DETAILS_MEMBERSHIP_TIER_ICON_CURRENT).addClass('i-g-' + userDetails.tier.toLowerCase());
         } else if (userDetails.subscription.card) {
             // only show card details if user hasn't changed their subscription and has stripe as payment method
-            stripe.display(CARD_DETAILS, userDetails.subscription.card);
+            stripe.display(CARD_DETAILS, userDetails.subscription.card, userDetails.subscription.card.stripePublicKeyForUpdate);
         } else if (userDetails.subscription.payPalEmail) {
             // if the user hasn't changed their subscription and has PayPal as a payment method
             $(PAYPAL).removeClass(IS_HIDDEN_CLASSNAME);

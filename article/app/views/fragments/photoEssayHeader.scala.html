@@ -1,0 +1,14 @@
+@()(implicit page: model.ContentPage, request: RequestHeader, applicationContext: model.ApplicationContext)
+
+@import views.support.RenderClasses
+
+<div class="@RenderClasses(Map(
+    ("immersive-header-container", page.item.fields.main.nonEmpty),
+    ("immersive-header-container--photo-essay", page.item.content.isPhotoEssay)))">
+
+    @if(mvt.ABNewDesktopHeaderVariant.isParticipating) {
+        @fragments.header()
+    }
+
+    @fragments.photoEssay()
+</div>
