@@ -4,7 +4,7 @@ import config from 'lib/config';
 import fetch from 'lib/fetch';
 import fetchJSON from 'lib/fetch-json';
 
-declare type videoInfo = {
+declare type VideoInfo = {
     expired: boolean,
     shouldHideAdverts: boolean,
 };
@@ -28,11 +28,11 @@ const isGeoBlocked = (el: HTMLMediaElement): Promise<boolean> => {
     });
 };
 
-const getVideoInfo = (el: HTMLMediaElement): Promise<videoInfo> => {
+const getVideoInfo = (el: HTMLMediaElement): Promise<VideoInfo> => {
     const dataset = el.dataset;
     const embedPath = dataset.embedPath;
     const canonicalUrl = dataset.canonicalUrl || (embedPath || null);
-    const defaultVideoInfo: videoInfo = {
+    const defaultVideoInfo: VideoInfo = {
         expired: false,
         shouldHideAdverts: dataset.blockVideoAds !== 'false',
     };
