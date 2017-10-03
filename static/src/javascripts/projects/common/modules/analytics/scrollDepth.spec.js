@@ -3,6 +3,12 @@
 import mediator from 'lib/mediator';
 import { ScrollDepth } from 'common/modules/analytics/scrollDepth';
 
+jest.mock('lodash/functions/debounce', (): void => fn => {
+    fn();
+});
+
+jest.mock('lib/mediator');
+
 describe('Scroll depth', () => {
     it('should log page depth on scroll.', done => {
         if (document.body) {
