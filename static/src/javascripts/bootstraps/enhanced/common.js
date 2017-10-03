@@ -20,7 +20,7 @@ import CookieRefresh from 'common/modules/identity/cookierefresh';
 import navigation from 'common/modules/navigation/navigation';
 import Profile from 'common/modules/navigation/profile';
 import Search from 'common/modules/navigation/search';
-import membership from 'common/modules/navigation/membership';
+import { initMembership } from 'common/modules/navigation/membership';
 import {
     logHistory,
     logSummary,
@@ -317,7 +317,7 @@ const init = (): void => {
         ['c-show-membership-engagement-banner', membershipEngagementBanner],
         ['c-email', initEmail],
         ['c-user-features', refreshUserFeatures],
-        ['c-membership', membership],
+        ['c-membership', initMembership],
     ]);
 };
 
