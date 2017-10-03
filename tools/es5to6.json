@@ -5,7 +5,6 @@
     "bootstraps/enhanced/gallery.js",
     "bootstraps/video-embed.js",
     "bootstraps/youtube-embed.js",
-    "projects/common/modules/identity/account-profile.js",
     "projects/common/modules/email/email-article.js",
     "projects/common/modules/identity/delete-account.js"
   ],
