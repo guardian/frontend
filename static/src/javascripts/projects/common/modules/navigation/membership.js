@@ -5,21 +5,23 @@ import fastdom from 'lib/fastdom-promise';
 
 const initMembership = (): void => {
     if (isPayingMember()) {
-        const becomeMemberLink = document.getElementsByClassName(
-            'js-become-member'
-        )[0];
-        const subscriberLink = document.getElementsByClassName(
-            'js-subscribe'
-        )[0];
+        fastdom
+            .read(() => document.getElementsByClassName('js-become-member'))
+            .then(becomeMemberLinks => {
+                if (becomeMemberLinks.length) {
+                    becomeMemberLinks[0].setAttribute('hidden', 'hidden');
+                }
+            });
 
-        fastdom.write(() => {
-            if (becomeMemberLink) {
-                becomeMemberLink.setAttribute('hidden', 'hidden');
-            }
-            if (subscriberLink) {
-                subscriberLink.classList.remove('brand-bar__item--split--last');
-            }
-        });
+        fastdom
+            .read(() => document.getElementsByClassName('js-subscribe'))
+            .then(subscriberLinks => {
+                if (subscriberLinks.length) {
+                    subscriberLinks[0].classList.remove(
+                        'brand-bar__item--split--last'
+                    );
+                }
+            });
     }
 };
 
