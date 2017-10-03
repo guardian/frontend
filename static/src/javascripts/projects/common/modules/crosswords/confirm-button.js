@@ -1,7 +1,6 @@
 // @flow
 import { createClass, createElement } from 'react/addons';
 import { classNames } from 'common/modules/crosswords/classNames';
-import assign from 'lodash/objects/assign';
 
 const ConfirmButton = createClass({
     getInitialState() {
@@ -45,7 +44,7 @@ const ConfirmButton = createClass({
 
         return createElement(
             'button',
-            assign(
+            Object.assign(
                 {},
                 this.props,
                 {
