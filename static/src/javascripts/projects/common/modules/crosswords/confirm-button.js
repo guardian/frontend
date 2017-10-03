@@ -1,55 +1,62 @@
+// @flow
 import { createClass, createElement } from 'react/addons';
 import { classNames } from 'common/modules/crosswords/classNames';
 import assign from 'lodash/objects/assign';
 
 const ConfirmButton = createClass({
-
     getInitialState() {
         this.timeout = this.props.timeout || 2000;
         return {
-            confirming: false
+            confirming: false,
         };
     },
 
     confirm() {
         if (this.state.confirming) {
             this.setState({
-                confirming: false
+                confirming: false,
             });
             this.props.onClick();
         } else {
             this.setState({
-                confirming: true
+                confirming: true,
             });
             setTimeout(() => {
                 this.setState({
-                    confirming: false
+                    confirming: false,
                 });
             }, this.timeout);
         }
     },
 
     render() {
-
-        const inner = this.state.confirming ?
-            'Confirm ' + this.props.text.toLowerCase() : this.props.text;
+        const inner = this.state.confirming
+            ? `Confirm ${this.props.text.toLowerCase()}`
+            : this.props.text;
 
         const classes = {};
-        const className = classNames((
-            classes['crossword__controls__button--confirm'] = this.state.confirming,
-            classes[this.props.className] = true,
-            classes
-        ));
+        const className = classNames(
+            ((classes[
+                'crossword__controls__button--confirm'
+            ] = this.state.confirming),
+            (classes[this.props.className] = true),
+            classes)
+        );
 
         return createElement(
             'button',
-            assign({}, this.props, {
-                onClick: this.confirm,
-                className
-            }, this),
+            assign(
+                {},
+                this.props,
+                {
+                    onClick: this.confirm,
+                    className,
+                },
+                this
+            ),
             inner
         );
-    }
+    },
 });
 
-export { ConfirmButton }
+export { ConfirmButton };
