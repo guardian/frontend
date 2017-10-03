@@ -184,4 +184,4 @@ const Clues = createClass({
     },
 });
 
-export default Clues;
+export { Clues };
