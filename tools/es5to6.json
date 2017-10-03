@@ -33,7 +33,6 @@
     "projects/common/modules/commercial/video-ad-url.js"
   ],
   "Matthew Walls": [
-    "projects/common/modules/crosswords/confirm-button.js",
     "projects/common/modules/crosswords/hidden-input.js",
     "projects/common/modules/crosswords/keycodes.js"
   ],
@@ -51,6 +50,6 @@
     "projects/membership/stripe.js"
   ],
   "natalialkb": [
-      "projects/common/modules/gallery/lightbox.js"
+    "projects/common/modules/gallery/lightbox.js"
   ]
 }
