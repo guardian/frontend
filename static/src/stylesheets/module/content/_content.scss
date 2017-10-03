@@ -171,6 +171,10 @@
     margin-right: $gs-gutter / 4;
 }
 
+.content__section-series-link {
+    @include fs-header(1);
+}
+
 .content__series-label {
     @include fs-headline(2);
     float: left;

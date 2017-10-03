@@ -5,6 +5,7 @@
 @import views.support.Commercial.isPaidContent
 @import views.support.ContributorLinks
 @import views.support.TrailCssClasses.toneClass
+@import common.{LinkTo, Localisation}
 
 <header class="content__head tonal__head tonal__head--@toneClass(item)
     @if(item.content.hasTonalHeaderByline && item.tags.hasLargeContributorImage) { content__head--byline-pic}
@@ -18,6 +19,10 @@
 
                 @if(showMeta && !amp) {
                     @fragments.meta.metaInline(item)
+                }
+
+                @item.content.blogOrSeriesTag.map { series =>
+                    <a class="content__section-series-link content__section-label__link hide-from-tablet" href="@LinkTo {/@series.id}">@series.name</a>
                 }
 
                 <h1 class="content__headline" itemprop="headline" @langAttributes(item.content)>
