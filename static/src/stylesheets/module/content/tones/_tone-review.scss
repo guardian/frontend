@@ -24,12 +24,4 @@
             margin-top: -($gs-baseline * 2.5);
         }
     }
-    .content__headline-series-link {
-        &, &:hover, &:focus {
-            color: $review-accent;
-        }
-    }
-    .content__headline-seperator {
-        color: mix(#ffffff, $review-background, 20%);
-    }
 }
