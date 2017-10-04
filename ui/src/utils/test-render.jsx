@@ -7,9 +7,7 @@ const styletron = new StyletronServer();
 
 export default (content: any) => {
     const html = renderToString(
-        <StyletronProvider styletron={styletron}>
-            {content}
-        </StyletronProvider>
+        <StyletronProvider styletron={styletron}>{content}</StyletronProvider>
     );
 
     it('generates the expected markup', () => {
