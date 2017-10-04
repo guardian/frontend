@@ -1,6 +1,6 @@
 // @flow
 import { createClass, createElement } from 'react/addons';
-import helpers from 'common/modules/crosswords/helpers';
+import { gridSize } from 'common/modules/crosswords/helpers';
 import { constants } from 'common/modules/crosswords/constants';
 import { classNames } from 'common/modules/crosswords/classNames';
 
@@ -11,8 +11,8 @@ const Cell = createClass({
     },
 
     render() {
-        const top = helpers.gridSize(this.props.y);
-        const left = helpers.gridSize(this.props.x);
+        const top = gridSize(this.props.y);
+        const left = gridSize(this.props.x);
 
         let cellNumber = null;
         if (this.props.number !== undefined) {
