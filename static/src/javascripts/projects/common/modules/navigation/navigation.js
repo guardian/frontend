@@ -6,18 +6,17 @@ import mediator from 'lib/mediator';
 import { isIOS, getUserAgent } from 'lib/detect';
 import $ from 'lib/$';
 
-const jsEnableFooterNav = (): void => {
+const jsEnableFooterNav = (): Promise<void> =>
     fastdom.write(() => {
         $('.navigation-container--default')
             .removeClass('navigation-container--default')
             .addClass('navigation-container--collapsed');
     });
-};
 
-const copyMegaNavMenu = (): void => {
+const copyMegaNavMenu = (): Promise<void> => {
     let megaNav;
 
-    fastdom
+    return fastdom
         .read(() => $('.js-mega-nav'))
         .then(elem => {
             megaNav = elem;
@@ -32,19 +31,32 @@ const copyMegaNavMenu = (): void => {
             );
 
             if (placeholder) {
-                fastdom.write(() => {
+                return fastdom.write(() => {
                     placeholder.append(megaNavCopy);
                 });
             }
         });
 };
 
-const replaceAllSectionsLink = (): void => {
-    $('.js-navigation-header .js-navigation-toggle').attr(
-        'href',
-        '#nav-allsections'
-    );
-};
+const replaceAllSectionsLink = (): Promise<void> =>
+    fastdom
+        .read(() => $('.js-navigation-header .js-navigation-toggle'))
+        .then(elems =>
+            fastdom.write(() => {
+                elems.attr('href', '#nav-allsections');
+            })
+        );
+
+const addOverflowScrollTouch = (): Promise<void> =>
+    fastdom.read(() => $('.navigation__scroll')).then(navScroll => {
+        if (navScroll) {
+            return fastdom.write(() => {
+                navScroll.css({
+                    '-webkit-overflow-scrolling': 'touch',
+                });
+            });
+        }
+    });
 
 const enableMegaNavToggle = (): void => {
     bean.on(document, 'click', '.js-navigation-toggle', e => {
@@ -65,11 +77,14 @@ const enableMegaNavToggle = (): void => {
     });
 };
 
-const initNavigation = (): void => {
-    jsEnableFooterNav();
-    copyMegaNavMenu();
+const initNavigation = (): Promise<any> => {
     enableMegaNavToggle();
-    replaceAllSectionsLink();
+
+    const modifications = [
+        jsEnableFooterNav(),
+        copyMegaNavMenu(),
+        replaceAllSectionsLink(),
+    ];
 
     if (
         isIOS() &&
@@ -77,16 +92,10 @@ const initNavigation = (): void => {
         parseInt(getUserAgent.version, 10) > 5
     ) {
         // crashes mobile safari < 6, so we add it here after detection
-        fastdom.read(() => $('.navigation__scroll')).then(navScroll => {
-            if (navScroll) {
-                return fastdom.write(() => {
-                    navScroll.css({
-                        '-webkit-overflow-scrolling': 'touch',
-                    });
-                });
-            }
-        });
+        modifications.push(addOverflowScrollTouch());
     }
+
+    return Promise.all(modifications);
 };
 
 export { initNavigation };
