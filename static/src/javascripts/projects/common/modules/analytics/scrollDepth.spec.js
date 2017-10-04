@@ -11,6 +11,7 @@ jest.mock('lib/mediator');
 
 jest.useFakeTimers();
 
+// TODO: remove skip
 describe.skip('Scroll depth', () => {
     it('should log page depth on scroll.', done => {
         if (document.body) {
