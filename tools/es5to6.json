@@ -17,7 +17,6 @@
     "projects/common/modules/atoms/story-questions.js"
   ],
   "GHaberis": [
-    "projects/common/modules/navigation/navigation.js",
     "projects/common/modules/navigation/profile.js",
     "projects/common/modules/experiments/affix.js",
     "projects/common/modules/experiments/tests/paid-content-vs-outbrain.js"
