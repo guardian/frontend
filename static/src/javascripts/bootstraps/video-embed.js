@@ -15,17 +15,14 @@ import titlebarTmpl from 'raw-loader!common/views/media/titlebar.html';
 import debounce from 'lodash/functions/debounce';
 import videojsOptions from 'common/modules/video/videojs-options';
 
-const initLoadingSpinner = player => {
+const initLoadingSpinner = (player: any): void => {
     player.loadingSpinner.contentEl().innerHTML = loadingTmpl;
 };
 
-const createVideoPlayer = (el, options) => {
-    const player = videojs(el, options);
+const createVideoPlayer = (el: HTMLVideoElement, options: Object): any =>
+    videojs(el, options);
 
-    return player;
-};
-
-const addTitleBar = () => {
+const addTitleBar = (): void => {
     const data = {
         webTitle: config.get('page.webTitle'),
         pageId: config.get('page.pageId'),
@@ -34,7 +31,7 @@ const addTitleBar = () => {
     $('.vjs-control-bar').after(template(titlebarTmpl, data));
 };
 
-const initEndSlate = player => {
+const initEndSlate = (player: any): void => {
     const endSlate = new Component();
     const endState = 'vjs-has-ended';
 
@@ -57,7 +54,7 @@ const initEndSlate = player => {
     });
 };
 
-const initPlayer = () => {
+const initPlayer = (): void => {
     videojs.plugin('fullscreener', fullscreener);
 
     bonzo(qwery('.js-gu-media--enhance')).each(el => {
