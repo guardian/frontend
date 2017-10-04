@@ -7,11 +7,13 @@ $stickyClueHeight: $stickyClueVerticalPadding * 2 + ($stickyClueLineHeight * $st
     position: relative;
     // Placeholder for sticky clue
     padding-top: $stickyClueHeight;
+    padding-bottom: $stickyClueHeight;
 
     @include mq(tablet) {
         float: left;
         // Unset
         padding-top: 0;
+        padding-bottom: 0;
     }
 }
 

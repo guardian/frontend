@@ -11,8 +11,8 @@ import mediator from 'lib/mediator';
 import { scrollToElement } from 'lib/scroller';
 import fastdom from 'lib/fastdom-promise';
 import fetchJson from 'lib/fetch-json';
-import DiscussionAnalytics from 'common/modules/analytics/discussion';
-import register from 'common/modules/analytics/register';
+import { initDiscussionAnalytics } from 'common/modules/analytics/discussion';
+import { begin, end } from 'common/modules/analytics/register';
 import Component from 'common/modules/component';
 import { getUser } from 'common/modules/discussion/api';
 import { CommentBox } from 'common/modules/discussion/comment-box';
@@ -35,7 +35,7 @@ class Loader extends Component {
         this.user = null;
         this.username = null;
 
-        register.begin('discussion');
+        begin('discussion');
     }
 
     getUser(): void {
@@ -125,7 +125,7 @@ class Loader extends Component {
         this.initPagination();
         this.initRecommend();
 
-        DiscussionAnalytics.init();
+        initDiscussionAnalytics();
 
         // More for analytics than anything
         if (window.location.hash === '#comments') {
@@ -149,7 +149,7 @@ class Loader extends Component {
             }
         });
 
-        register.end('discussion');
+        end('discussion');
     }
 
     initRecommend(): void {

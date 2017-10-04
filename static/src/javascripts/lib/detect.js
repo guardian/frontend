@@ -3,8 +3,8 @@
 import mediator from 'lib/mediator';
 
 declare class MediaQueryListEvent extends Event {
-    matches: boolean,
-    media: string,
+    matches: boolean;
+    media: string;
 }
 
 type MediaQueryList = {

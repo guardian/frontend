@@ -24,6 +24,7 @@ import { init as initMessenger } from 'commercial/modules/messenger';
 
 import { init as type } from 'commercial/modules/messenger/type';
 import { init as getStyles } from 'commercial/modules/messenger/get-stylesheet';
+import { init as getPageTargeting } from 'commercial/modules/messenger/get-page-targeting';
 import { init as hide } from 'commercial/modules/messenger/hide';
 import { init as resize } from 'commercial/modules/messenger/resize';
 import { init as scroll } from 'commercial/modules/messenger/scroll';
@@ -34,6 +35,7 @@ import { init as background } from 'commercial/modules/messenger/background';
 initMessenger(
     type,
     getStyles,
+    getPageTargeting,
     resize,
     hide,
     scroll,

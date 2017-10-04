@@ -2,7 +2,7 @@
 
 import config from 'lib/config';
 import mediator from 'lib/mediator';
-import register from 'common/modules/analytics/register';
+import { begin, error, end } from 'common/modules/analytics/register';
 import Component from 'common/modules/component';
 
 const getTag = (): string =>
@@ -16,7 +16,7 @@ class OnwardContent extends Component {
     constructor(context: HTMLElement): void {
         super();
 
-        register.begin('series-content');
+        begin('series-content');
 
         this.context = context;
         this.endpoint = `/series/${getTag()}.json?shortUrl=${encodeURIComponent(
@@ -28,12 +28,12 @@ class OnwardContent extends Component {
 
     // eslint-disable-next-line class-methods-use-this
     error(): void {
-        register.error('series-content');
+        error('series-content');
     }
 
     // eslint-disable-next-line class-methods-use-this
     ready(): void {
-        register.end('series-content');
+        end('series-content');
         mediator.emit('modules:onward:loaded');
         mediator.emit('page:new-content');
     }

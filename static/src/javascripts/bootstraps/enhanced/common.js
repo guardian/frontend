@@ -10,8 +10,8 @@ import { catchErrorsWithContext } from 'lib/robust';
 import { local as localStorage } from 'lib/storage';
 import mediaListener from 'common/modules/analytics/media-listener';
 import interactionTracking from 'common/modules/analytics/interaction-tracking';
-import register from 'common/modules/analytics/register';
-import ScrollDepth from 'common/modules/analytics/scrollDepth';
+import { initAnalyticsRegister } from 'common/modules/analytics/register';
+import { ScrollDepth } from 'common/modules/analytics/scrollDepth';
 import { requestUserSegmentsFromId } from 'commercial/modules/user-ad-targeting';
 import donotUseAdblock from 'common/modules/commercial/donot-use-adblock';
 import { refresh as refreshUserFeatures } from 'commercial/modules/user-features';
@@ -20,7 +20,7 @@ import CookieRefresh from 'common/modules/identity/cookierefresh';
 import navigation from 'common/modules/navigation/navigation';
 import Profile from 'common/modules/navigation/profile';
 import Search from 'common/modules/navigation/search';
-import membership from 'common/modules/navigation/membership';
+import { initMembership } from 'common/modules/navigation/membership';
 import {
     logHistory,
     logSummary,
@@ -175,7 +175,7 @@ const checkIframe = (): void => {
 };
 
 const startRegister = (): void => {
-    register.initialise();
+    initAnalyticsRegister();
 };
 
 const initDiscussion = (): void => {
@@ -317,7 +317,7 @@ const init = (): void => {
         ['c-show-membership-engagement-banner', membershipEngagementBanner],
         ['c-email', initEmail],
         ['c-user-features', refreshUserFeatures],
-        ['c-membership', membership],
+        ['c-membership', initMembership],
     ]);
 };
 

@@ -3,13 +3,10 @@ import fastdom from 'lib/fastdom-promise';
 import mediator from 'lib/mediator';
 import ophan from 'ophan/ng';
 import { getViewport } from 'lib/detect';
-import { SnippetFourVariants } from 'common/modules/experiments/tests/snippet-a-a1-b-b1';
-import { getAssignedVariant } from 'common/modules/experiments/utils';
 import { submitComponentEvent } from 'common/modules/commercial/acquisitions-ophan';
 
 const SnippetFeedback = (options: { scroll: boolean } = { scroll: true }) => {
     let snippets = [...document.querySelectorAll('.explainer-snippet--new')];
-    const variant = getAssignedVariant(SnippetFourVariants);
 
     const sendOldStyleInteraction = (snippetId, component, value) => {
         ophan.record({
@@ -37,32 +34,19 @@ const SnippetFeedback = (options: { scroll: boolean } = { scroll: true }) => {
     const sendNewStyleInteraction = (
         snippetId: string,
         snippetType: string,
-        action: OphanAction,
-        variantId?: string
+        action: OphanAction
     ) => {
         const componentType: OphanComponentType = snippetTypeToComponentType(
             snippetType
         );
 
-        const event = {
+        submitComponentEvent({
             component: {
                 componentType,
                 id: snippetId,
             },
             action,
-        };
-
-        const withAbTest = variantId
-            ? {
-                  ...event,
-                  abTest: {
-                      name: 'snippet',
-                      variant: variantId,
-                  },
-              }
-            : event;
-
-        submitComponentEvent(withAbTest);
+        });
     };
 
     snippets.forEach(snippet => {
@@ -70,15 +54,7 @@ const SnippetFeedback = (options: { scroll: boolean } = { scroll: true }) => {
         if (!snippetId || !snippetType) {
             return;
         }
-        const component = `snippet_${snippetType}${variant
-            ? `_${variant.id}`
-            : ''}`;
-
-        if (variant) {
-            variant.id.split('').forEach(c => {
-                snippet.classList.add(`snippet--${c}`);
-            });
-        }
+        const component = `snippet_${snippetType}`;
 
         // Callback for like/dislike
         const onFeedback = (e: Event) => {
@@ -102,8 +78,7 @@ const SnippetFeedback = (options: { scroll: boolean } = { scroll: true }) => {
                 sendNewStyleInteraction(
                     snippetId,
                     snippetType,
-                    value === 'like' ? 'LIKE' : 'DISLIKE',
-                    variant ? variant.id : undefined
+                    value === 'like' ? 'LIKE' : 'DISLIKE'
                 );
 
                 fastdom.write(() => {
@@ -133,12 +108,7 @@ const SnippetFeedback = (options: { scroll: boolean } = { scroll: true }) => {
                     `${snippetType}_expanded`
                 );
 
-                sendNewStyleInteraction(
-                    snippetId,
-                    snippetType,
-                    'EXPAND',
-                    variant ? variant.id : undefined
-                );
+                sendNewStyleInteraction(snippetId, snippetType, 'EXPAND');
 
                 e.currentTarget.removeEventListener('click', onExpand);
             });

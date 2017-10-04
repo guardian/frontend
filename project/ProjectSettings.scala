@@ -65,6 +65,7 @@ object ProjectSettings {
       "Guardian Github Releases" at "http://guardian.github.com/maven/repo-releases",
       "Guardian Frontend Bintray" at "https://dl.bintray.com/guardian/frontend",
       "Guardian Editorial Tools Bintray" at "https://dl.bintray.com/guardian/editorial-tools",
+      Resolver.bintrayRepo("guardian", "ophan"),
       "Spy" at "https://files.couchbase.com/maven2/"
     ),
 

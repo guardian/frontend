@@ -1,6 +1,6 @@
 // @flow
 import { Component, createElement } from 'react/addons';
-import ConfirmButton from 'common/modules/crosswords/confirm-button';
+import { ConfirmButton } from 'common/modules/crosswords/confirm-button';
 
 const buttonClassName = 'button button--primary';
 const buttonCurrentClassName = 'button--crossword--current';

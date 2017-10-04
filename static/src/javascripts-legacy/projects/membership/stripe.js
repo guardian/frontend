@@ -21,7 +21,7 @@ define([
      *   -type:  string of card type (capitalised)
      *   */
 
-    function display(parent, card) {
+    function display(parent, card, key) {
         var $parent = $(parent);
         var $number = $('.js-manage-account-card', $parent);
         var $last4 = $('.js-manage-account-card-last4', $parent);
@@ -29,6 +29,7 @@ define([
         var $button = $('.js-manage-account-change-card', $parent);
         var $updating = $('.js-updating', $parent);
 
+        key = key || config.page.stripePublicToken;
         /*  show/hide
          *   once we've sent the token, we don't want to change the state of the dots until we redisplay
          * */
@@ -97,6 +98,7 @@ define([
                 fastdom.write(loading.showDots);
 
                 checkoutHandler.open({
+                    key: key,
                     email: email,
                     description: 'Update your card details',
                     panelLabel: 'Update',
