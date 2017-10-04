@@ -266,7 +266,7 @@ const submitForm = (
                 trackNonClickInteraction(
                     analyticsInfo.replace('%action%', 'subscribe clicked')
                 );
-                return fetch(config.page.ajaxUrl + url, {
+                return fetch(config.get('page.ajaxUrl') + url, {
                     method: 'post',
                     body: data,
                     headers: {
@@ -309,7 +309,7 @@ const bindSubmit = ($form: bonzo, analytics: Analytics): void => {
 
 const setup = (
     iframeEl: ?HTMLIFrameElement,
-    rootEl: ?HTMLElement | ?Document,
+    rootEl: ?HTMLElement | ?Document
 ): void => {
     $(`.${classes.inlineLabel}`, rootEl).each(el => {
         formInlineLabels.init(el, {
