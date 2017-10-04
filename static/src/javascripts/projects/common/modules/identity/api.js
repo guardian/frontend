@@ -15,7 +15,7 @@ const signOutCookieName = 'GU_SO';
 const fbCheckKey = 'gu.id.nextFbCheck';
 let idApiRoot = null;
 
-type IdentityUser = {
+export type IdentityUser = {
     id: number,
     primaryEmailAddress: string,
     displayName: string,
