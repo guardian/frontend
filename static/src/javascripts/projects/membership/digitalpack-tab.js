@@ -29,19 +29,11 @@ const LOADER = '.js-dig-loader';
 const IS_HIDDEN_CLASSNAME = 'is-hidden';
 const ERROR = '.js-dig-error';
 
-const hideLoader = () => {
+const hideLoader = (): void => {
     $(LOADER).addClass(IS_HIDDEN_CLASSNAME);
 };
 
-/**
- * @param {{
- *  optIn,
- *  joinDate,subscriberId,
- *  subscription: {trialLength, nextPaymentDate,nextPaymentPrice,renewalDate,
- *  plan: {name,amount,interval}}
- * }} userDetails
- */
-const populateUserDetails = userDetails => {
+const populateUserDetails = (userDetails: UserDetails): void => {
     const glyph = userDetails.subscription.plan.currency;
     $(SUBSCRIBER_ID).text(userDetails.subscription.subscriberId);
     $(DIGITALPACK_PRODUCT).text(userDetails.subscription.plan.name);
@@ -96,16 +88,16 @@ const populateUserDetails = userDetails => {
     $(DIG_INFO).removeClass(IS_HIDDEN_CLASSNAME);
 };
 
-const displayDigitalPackUpSell = () => {
+const displayDigitalPackUpSell = (): void => {
     $(UP_SELL).removeClass(IS_HIDDEN_CLASSNAME);
 };
 
-const displayErrorMessage = () => {
+const displayErrorMessage = (): void => {
     $(ERROR).removeClass(IS_HIDDEN_CLASSNAME);
 };
 
-export const init = () => {
-    fetch(`${config.page.userAttributesApiUrl}/me/mma-digitalpack`, {
+export const digitalpackTab = (): void => {
+    fetch(`${config.get('page.userAttributesApiUrl')}/me/mma-digitalpack`, {
         mode: 'cors',
         credentials: 'include',
     })
