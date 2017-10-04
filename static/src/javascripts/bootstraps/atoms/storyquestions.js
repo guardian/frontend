@@ -3,7 +3,7 @@
 import domready from 'domready';
 import { comready } from 'lib/comready';
 import config from 'lib/config';
-import { init } from 'common/modules/atoms/story-questions';
+import { initStoryQuestions } from 'common/modules/atoms/story-questions';
 import fastdom from 'lib/fastdom-promise';
 import { send } from 'commercial/modules/messenger/send';
 
@@ -34,7 +34,7 @@ Promise.all([
     new Promise(domready),
     new Promise(comready),
 ]).then(() => {
-    init();
+    initStoryQuestions();
     updateHeight();
 
     // Brittle but will work
