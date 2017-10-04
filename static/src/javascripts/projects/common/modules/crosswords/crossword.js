@@ -30,7 +30,7 @@ import {
     buildSeparatorMap,
     cellsForEntry,
 } from 'common/modules/crosswords/helpers';
-import keycodes from 'common/modules/crosswords/keycodes';
+import { keycodes } from 'common/modules/crosswords/keycodes';
 import {
     saveGridState,
     loadGridState,

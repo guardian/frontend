@@ -26,9 +26,7 @@
     "projects/common/modules/experiments/tests/paid-content-vs-outbrain.js",
     "projects/common/modules/commercial/video-ad-url.js"
   ],
-  "Matthew Walls": [
-    "projects/common/modules/crosswords/keycodes.js"
-  ],
+  "Matthew Walls": [],
   "Nicolas Long": [
     "projects/common/modules/navigation/search.js",
     "projects/common/modules/ui/relativedates.js",
