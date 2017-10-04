@@ -140,7 +140,7 @@ case class VideoEmbedCleaner(article: Article, maxEmbedHeight: Int = 812) extend
 
   private def wrapCustom(container: Element, width: Float, height: Float) {
     val aspectRatio = width / height
-    val maxWidth =  Math.min(maxEmbedHeight * aspectRatio, width)
+    val maxWidth =  maxEmbedHeight * aspectRatio
     val paddingBottom = (1 / aspectRatio) * 100
     container.wrap(s"""<div class="u-responsive-aligner" style="max-width: ${maxWidth}px;"><div class="embed-video-wrapper u-responsive-ratio" style="padding-bottom: ${paddingBottom}%;"></div></div>""")
   }
