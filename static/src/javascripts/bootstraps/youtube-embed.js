@@ -5,5 +5,5 @@ function init() {
 }
 
 export default {
-    init: init
+    init
 };
