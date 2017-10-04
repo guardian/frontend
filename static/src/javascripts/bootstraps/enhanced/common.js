@@ -267,7 +267,9 @@ const initialiseEmail = (): void => {
     Array.from(
         document.getElementsByClassName('js-email-sub__iframe')
     ).forEach(el => {
-        initEmail(el);
+        const iframe: HTMLIFrameElement = (el: any);
+
+        initEmail(iframe);
     });
 
     // Listen for interactive load event and initalise forms
@@ -275,7 +277,9 @@ const initialiseEmail = (): void => {
         Array.from(
             document.querySelectorAll('.guInteractive .js-email-sub__iframe')
         ).forEach(el => {
-            initEmail(el);
+            const iframe: HTMLIFrameElement = (el: any);
+
+            initEmail(iframe);
         });
     });
 };

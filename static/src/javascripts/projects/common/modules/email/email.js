@@ -17,6 +17,15 @@ import { getUserFromApi, isUserLoggedIn } from 'common/modules/identity/api';
 import userPrefs from 'common/modules/user-prefs';
 import uniq from 'lodash/arrays/uniq';
 
+import type { IdentityUser } from 'common/modules/identity/api';
+import type { bonzo } from 'bonzo';
+
+type Analytics = {
+    formType: string,
+    listId: string,
+    signedIn: string,
+};
+
 const state = {
     submitting: false,
 };
@@ -34,7 +43,7 @@ const classes = {
     listIdHiddenInput: 'js-email-sub__listid-input',
 };
 
-const replaceContent = (isSuccess, $form) => {
+const replaceContent = (isSuccess: boolean, $form: bonzo): void => {
     const formData = $form.data('formData');
     const submissionMessage = {
         statusClass: isSuccess
@@ -56,9 +65,10 @@ const replaceContent = (isSuccess, $form) => {
     });
 };
 
-const removeAndRemember = (e, data) => {
-    const iframe = data[0];
-    const analytics = data[1];
+const removeAndRemember = (
+    e: Event,
+    { iframe, analytics }: { iframe: HTMLElement, analytics: Analytics }
+): void => {
     const currentListPrefs =
         userPrefs.get(`email-sign-up-${analytics.formType}`) || [];
 
@@ -75,7 +85,10 @@ const removeAndRemember = (e, data) => {
     );
 };
 
-const updateFormForLoggedIn = (userFromId, el) => {
+const updateFormForLoggedIn = (
+    userFromId: IdentityUser,
+    el: HTMLElement
+): void => {
     if (userFromId && userFromId.primaryEmailAddress) {
         fastdom.write(() => {
             $('.js-email-sub__inline-label', el).addClass(
@@ -91,59 +104,50 @@ const updateFormForLoggedIn = (userFromId, el) => {
     }
 };
 
-const updateForm = (thisRootEl, el, analytics, opts) => {
+const updateForm = (
+    thisRootEl: HTMLElement,
+    $el: bonzo,
+    analytics: Analytics
+): void => {
     const formData = $(thisRootEl).data();
     const formDisplayNameNormalText =
-        (opts && opts.displayName && opts.displayName.normalText) ||
-        formData.formDisplayNameNormalText ||
-        false;
+        formData.formDisplayNameNormalText || false;
     const formDisplayNameAccentedText =
-        (opts && opts.displayName && opts.displayName.accentedText) ||
-        formData.formDisplayNameAccentedText ||
-        false;
-    const formTitle = (opts && opts.formTitle) || formData.formTitle || false;
-    const formDescription =
-        (opts && opts.formDescription) || formData.formDescription || false;
-    const formCampaignCode =
-        (opts && opts.formCampaignCode) || formData.formCampaignCode || '';
-    const formSuccessHeadline =
-        (opts && opts.formSuccessHeadline) || formData.formSuccessHeadline;
-    const formSuccessDesc =
-        (opts && opts.formSuccessDesc) || formData.formSuccessDesc;
-    const removeComforter =
-        (opts && opts.removeComforter) || formData.removeComforter || false;
-    const formCloseButton =
-        (opts && opts.formCloseButton) || formData.formCloseButton || false;
-    const formSuccessEventName =
-        (opts && opts.formSuccessEventName) ||
-        formData.formSuccessEventName ||
-        false;
+        formData.formDisplayNameAccentedText || false;
+    const formTitle = formData.formTitle || false;
+    const formDescription = formData.formDescription || false;
+    const formCampaignCode = formData.formCampaignCode || '';
+    const formSuccessHeadline = formData.formSuccessHeadline;
+    const formSuccessDesc = formData.formSuccessDesc;
+    const removeComforter = formData.removeComforter || false;
+    const formCloseButton = formData.formCloseButton || false;
+    const formSuccessEventName = formData.formSuccessEventName || false;
 
     getUserFromApi(userFromId => {
-        updateFormForLoggedIn(userFromId, el);
+        updateFormForLoggedIn(userFromId, $el);
     });
 
     fastdom.write(() => {
         if (formDisplayNameNormalText) {
-            $('.js-email-sub__display-name-normal-text', el).text(
+            $('.js-email-sub__display-name-normal-text', $el).text(
                 formDisplayNameNormalText
             );
 
             if (formDisplayNameAccentedText) {
-                $('.js-email-sub__display-name-accented-text', el).text(
+                $('.js-email-sub__display-name-accented-text', $el).text(
                     formDisplayNameAccentedText
                 );
             }
         } else if (formTitle) {
-            $('.js-email-sub__heading', el).text(formTitle);
+            $('.js-email-sub__heading', $el).text(formTitle);
         }
 
         if (formDescription) {
-            $('.js-email-sub__description', el).text(formDescription);
+            $('.js-email-sub__description', $el).text(formDescription);
         }
 
         if (removeComforter) {
-            $('.js-email-sub__small', el).remove();
+            $('.js-email-sub__small', $el).remove();
         }
 
         if (formCloseButton) {
@@ -152,17 +156,23 @@ const updateForm = (thisRootEl, el, analytics, opts) => {
             };
             const closeButtonHtml = template(closeHtml, closeButtonTemplate);
 
-            el.append(closeButtonHtml);
+            $el.append(closeButtonHtml);
 
-            bean.on(el[0], 'click', '.js-email-sub--close', removeAndRemember, [
-                thisRootEl,
-                analytics,
-            ]);
+            bean.on(
+                $el[0],
+                'click',
+                '.js-email-sub--close',
+                removeAndRemember,
+                {
+                    iframe: thisRootEl,
+                    analytics,
+                }
+            );
         }
     });
 
     // Cache data on the form element
-    $('.js-email-sub__form', el).data('formData', {
+    $('.js-email-sub__form', $el).data('formData', {
         customSuccessEventName: formSuccessEventName,
         campaignCode: formCampaignCode,
         referrer: window.location.href,
@@ -171,7 +181,7 @@ const updateForm = (thisRootEl, el, analytics, opts) => {
     });
 };
 
-const heightSetter = ($wrapper, reset) => {
+const heightSetter = ($wrapper: bonzo, reset: boolean): (() => void) => {
     let wrapperHeight;
 
     const getHeight = () => {
@@ -204,29 +214,30 @@ const heightSetter = ($wrapper, reset) => {
     };
 };
 
-const setIframeHeight = (iFrameEl, callback) => () => {
+const setIframeHeight = (
+    iFrameEl: HTMLIFrameElement,
+    callback: () => void
+): (() => void) => () => {
     fastdom.write(() => {
         iFrameEl.height = '';
         iFrameEl.height = `${iFrameEl.contentWindow.document.body
             .clientHeight}px`;
-        callback.call();
+        callback();
     });
 };
 
-const handleSubmit = (isSuccess, $form) => () => {
+const handleSubmit = (isSuccess: boolean, $form: bonzo): (() => void) => () => {
     replaceContent(isSuccess, $form);
     state.submitting = false;
 };
 
-const submitForm = ($form, url, analytics) => {
-    /**
-           * simplistic email address validation to prevent misfired
-           * omniture events
-           *
-           * @param  {String} emailAddress
-           * @return {Boolean}
-           */
-    const validate = emailAddress =>
+const submitForm = (
+    $form: bonzo,
+    url: string,
+    analytics: Analytics
+): (Event => ?Promise<any>) => {
+    // simplistic email address validation to prevent misfired omniture events
+    const validate = (emailAddress: string): boolean =>
         typeof emailAddress === 'string' && emailAddress.indexOf('@') > -1;
 
     return event => {
@@ -290,13 +301,17 @@ const submitForm = ($form, url, analytics) => {
     };
 };
 
-const bindSubmit = ($form, analytics) => {
+const bindSubmit = ($form: bonzo, analytics: Analytics): void => {
     const url = '/email';
 
     bean.on($form[0], 'submit', submitForm($form, url, analytics));
 };
 
-const setup = (rootEl, thisRootEl, isIframed) => {
+const setup = (
+    rootEl: ?HTMLIFrameElement,
+    thisRootEl: ?HTMLElement | ?Document,
+    isIframed: boolean
+): void => {
     $(`.${classes.inlineLabel}`, thisRootEl).each(el => {
         formInlineLabels.init(el, {
             textInputClass: '.js-email-sub__text-input',
@@ -318,6 +333,7 @@ const setup = (rootEl, thisRootEl, isIframed) => {
                 ? 'user signed-in'
                 : 'user not signed-in',
         };
+        let onResize;
 
         bindSubmit($formEl, analytics);
 
@@ -325,24 +341,27 @@ const setup = (rootEl, thisRootEl, isIframed) => {
         // from the data attributes on the iframe (eg: allowing us to set them from composer).
         // We should also ensure our form is the right height.
         if (isIframed) {
-            updateForm(rootEl, $el, analytics);
-            setIframeHeight(rootEl, freezeHeight).call();
+            const iframeEl: HTMLIFrameElement = (rootEl: any);
+
+            updateForm(iframeEl, $el, analytics);
+            setIframeHeight(iframeEl, freezeHeight)();
+            onResize = setIframeHeight(iframeEl, resetHeight);
         } else {
-            freezeHeight.call();
+            freezeHeight();
+            onResize = resetHeight;
         }
 
-        mediator.on(
-            'window:throttledResize',
-            isIframed ? setIframeHeight(rootEl, resetHeight) : resetHeight
-        );
+        mediator.on('window:throttledResize', onResize);
     });
 };
 
-const initEmail = rootEl => {
-    const browser = getUserAgent.browser;
-    const version = getUserAgent.version;
+const initEmail = (rootEl?: HTMLIFrameElement): void => {
     // If we're in lte IE9, don't run the init and adjust the footer
-    if (browser === 'MSIE' && ['7', '8', '9'].includes(`${version}`)) {
+    if (
+        typeof getUserAgent === 'object' &&
+        getUserAgent.browser === 'MSIE' &&
+        ['7', '8', '9'].includes(`${getUserAgent.version}`)
+    ) {
         $('.js-footer__secondary').addClass('l-footer__secondary--no-email');
         $('.js-footer__email-container', '.js-footer__secondary').addClass(
             'is-hidden'
@@ -350,10 +369,14 @@ const initEmail = rootEl => {
     } else if (rootEl && rootEl.tagName === 'IFRAME') {
         // We're loading through the iframe
         // We can listen for a lazy load or reload to catch an update
-        setup(rootEl, rootEl.contentDocument.body, true);
-        bean.on(rootEl, 'load', () => {
+        if (rootEl.contentDocument) {
             setup(rootEl, rootEl.contentDocument.body, true);
-        });
+            bean.on(rootEl, 'load', () => {
+                if (rootEl && rootEl.contentDocument) {
+                    setup(rootEl, rootEl.contentDocument.body, true);
+                }
+            });
+        }
     } else {
         setup(rootEl, rootEl || document, false);
     }
