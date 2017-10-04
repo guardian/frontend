@@ -185,7 +185,7 @@ const listConfigs = {
     },
 };
 
-const getSpacefinderRules = () => ({
+const getSpacefinderRules = (): Object => ({
     bodySelector: '.js-article__body',
     slotSelector: ' > p',
     minAbove: 200,
@@ -213,7 +213,7 @@ const getSpacefinderRules = () => ({
     },
 });
 
-const addListToPage = (listConfig, successEventName) => {
+const addListToPage = (listConfig: Object, successEventName: ?string): void => {
     if (listConfig) {
         listConfig.successEventName = successEventName || '';
         const iframe = bonzo.create(template(iframeTemplate, listConfig))[0];
@@ -247,7 +247,7 @@ const addListToPage = (listConfig, successEventName) => {
     }
 };
 
-const init = () => {
+const init = (): void => {
     waitForCheck('emailCanRun')
         .then(emailCanRun => {
             if (emailCanRun) {
