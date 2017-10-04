@@ -25,6 +25,8 @@ const doProximityLoading = (): void => {
     }
 };
 
+const doProximityLoadingDebounced = debounce(doProximityLoading, 2000);
+
 const addItem = (conditionFn: () => boolean, loadFn: () => void): void => {
     // calls `loadFn` when `conditionFn` is true
     const item = { conditionFn, loadFn };
@@ -35,7 +37,6 @@ const addItem = (conditionFn: () => boolean, loadFn: () => void): void => {
         mediator.on('window:throttledScroll', doProximityLoading);
     }
 
-    const doProximityLoadingDebounced = debounce(doProximityLoading, 2000);
     doProximityLoadingDebounced();
 };
 
