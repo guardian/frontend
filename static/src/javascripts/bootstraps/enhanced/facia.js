@@ -16,82 +16,80 @@ import sponsorship from 'facia/modules/ui/sponsorship';
 import { Weather } from 'facia/modules/onwards/weather';
 import partial from 'lodash/functions/partial';
 
-const modules = {
-    showSnaps() {
-        snaps.init();
-        mediator.on('modules:container:rendered', snaps.init);
-    },
-
-    showContainerShowMore() {
-        mediator.addListeners({
-            'modules:container:rendered': initShowMore,
-            'page:front:ready': initShowMore,
-        });
-    },
-
-    showContainerToggle() {
-        const containerToggleAdd = context => {
-            $(
-                '.js-container--toggle',
-                $(context || document)[0]
-            ).each(container => {
-                const toggle = new ContainerToggle(container);
-                toggle.addToggle();
-            });
-        };
-        mediator.addListeners({
-            'page:front:ready': containerToggleAdd,
-            'modules:geomostpopular:ready': partial(
-                containerToggleAdd,
-                '.js-popular-trails'
-            ),
-        });
-    },
-
-    upgradeMostPopularToGeo() {
-        if (config.get('switches.geoMostPopular')) {
-            new GeoMostPopularFront().go();
-        }
-    },
-
-    showWeather() {
-        if (config.get('switches.weather')) {
-            mediator.on('page:front:ready', () => {
-                Weather.init();
-            });
-        }
-    },
-
-    showLiveblogUpdates() {
-        if (
-            isBreakpoint({
-                min: 'desktop',
-            })
-        ) {
-            mediator.on('page:front:ready', () => {
-                showUpdatesFromLiveBlog();
-            });
-        }
-    },
-
-    finished() {
-        mediator.emit('page:front:ready');
-    },
+const showSnaps = (): void => {
+    snaps.init();
+    mediator.on('modules:container:rendered', snaps.init);
 };
 
-const init = () => {
+const showContainerShowMore = (): void => {
+    mediator.addListeners({
+        'modules:container:rendered': initShowMore,
+        'page:front:ready': initShowMore,
+    });
+};
+
+const showContainerToggle = (): void => {
+    const containerToggleAdd = context => {
+        $(
+            '.js-container--toggle',
+            $(context || document)[0]
+        ).each(container => {
+            const toggle = new ContainerToggle(container);
+            toggle.addToggle();
+        });
+    };
+    mediator.addListeners({
+        'page:front:ready': containerToggleAdd,
+        'modules:geomostpopular:ready': partial(
+            containerToggleAdd,
+            '.js-popular-trails'
+        ),
+    });
+};
+
+const upgradeMostPopularToGeo = (): void => {
+    if (config.get('switches.geoMostPopular')) {
+        new GeoMostPopularFront().go();
+    }
+};
+
+const showWeather = (): void => {
+    if (config.get('switches.weather')) {
+        mediator.on('page:front:ready', () => {
+            Weather.init();
+        });
+    }
+};
+
+const showLiveblogUpdates = (): void => {
+    if (
+        isBreakpoint({
+            min: 'desktop',
+        })
+    ) {
+        mediator.on('page:front:ready', () => {
+            showUpdatesFromLiveBlog();
+        });
+    }
+};
+
+const finished = (): void => {
+    mediator.emit('page:front:ready');
+};
+
+const init = (): void => {
     catchErrorsWithContext([
         ['f-accessibility', shouldHideFlashingElements],
-        ['f-snaps', modules.showSnaps],
-        ['f-show-more', modules.showContainerShowMore],
-        ['f-container-toggle', modules.showContainerToggle],
-        ['f-geo-most-popular', modules.upgradeMostPopularToGeo],
+        ['f-snaps', showSnaps],
+        ['f-show-more', showContainerShowMore],
+        ['f-container-toggle', showContainerToggle],
+        ['f-geo-most-popular', upgradeMostPopularToGeo],
         ['f-lazy-load-containers', lazyLoadContainers],
         ['f-stocks', stocks],
         ['f-sponsorship', sponsorship],
-        ['f-weather', modules.showWeather],
-        ['f-live-blog-updates', modules.showLiveblogUpdates],
-        ['f-finished', modules.finished],
+        ['f-weather', showWeather],
+        ['f-live-blog-updates', showLiveblogUpdates],
+        ['f-finished', finished],
     ]);
 };
 
