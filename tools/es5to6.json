@@ -2,7 +2,6 @@
   "sndrs": [
     "bootstraps/enhanced/facia.js",
     "bootstraps/enhanced/football.js",
-    "bootstraps/youtube-embed.js",
     "projects/common/modules/email/email-article.js"
   ],
   "Simon Adcock": [
