@@ -15,24 +15,25 @@
     "projects/common/modules/component.js",
     "projects/common/modules/discussion/whole-discussion.js",
     "projects/common/modules/discussion/discussion-frontend.js",
-    "projects/common/modules/atoms/story-questions.js",
-    "projects/common/modules/identity/cookierefresh.js"
+    "projects/common/modules/atoms/story-questions.js"
   ],
   "GHaberis": [
     "projects/common/modules/navigation/navigation.js",
     "projects/common/modules/navigation/profile.js",
     "projects/common/modules/experiments/affix.js",
-    "projects/common/modules/experiments/tests/paid-content-vs-outbrain.js",
-    "projects/common/modules/commercial/video-ad-url.js"
+    "projects/common/modules/experiments/tests/paid-content-vs-outbrain.js"
   ],
-  "Matthew Walls": [],
+  "Matthew Walls": [
+    "projects/common/modules/commercial/video-ad-url.js",
+    "projects/common/modules/analytics/interaction-tracking.js",
+    "projects/common/modules/analytics/media-listener.js",
+    "projects/common/modules/identity/cookierefresh.js"
+  ],
   "Nicolas Long": [
     "projects/common/modules/navigation/search.js",
     "projects/common/modules/ui/relativedates.js",
     "projects/common/modules/ui/selection-sharing.js",
-    "projects/common/modules/ui/last-modified.js",
-    "projects/common/modules/analytics/interaction-tracking.js",
-    "projects/common/modules/analytics/media-listener.js"
+    "projects/common/modules/ui/last-modified.js"
   ],
   "Alex Ware": [
     "projects/membership/digitalpack-tab.js",
