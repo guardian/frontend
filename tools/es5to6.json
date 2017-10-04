@@ -1,6 +1,5 @@
 {
   "sndrs": [
-    "bootstraps/enhanced/facia.js",
     "bootstraps/enhanced/football.js"
   ],
   "Simon Adcock": [
@@ -17,7 +16,6 @@
     "projects/common/modules/atoms/story-questions.js"
   ],
   "GHaberis": [
-    "projects/common/modules/navigation/navigation.js",
     "projects/common/modules/navigation/profile.js",
     "projects/common/modules/experiments/affix.js",
     "projects/common/modules/experiments/tests/paid-content-vs-outbrain.js"
@@ -35,7 +33,6 @@
     "projects/common/modules/ui/last-modified.js"
   ],
   "Alex Ware": [
-    "projects/membership/digitalpack-tab.js",
     "projects/membership/membership-tab.js",
     "projects/membership/stripe.js"
   ],
