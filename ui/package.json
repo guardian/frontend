@@ -6,8 +6,8 @@
     "scripts": {
         "lint:scss": "stylelint 'src/**/*.*css'",
         "lint:scss:fix": "stylelint 'src/**/*.*css' --fix",
-        "lint:js": "eslint .",
-        "lint:js:fix": "eslint . --fix",
+        "lint:js": "eslint . --ext .js,.jsx",
+        "lint:js:fix": "eslint . --ext .js,.jsx --fix",
         "lint": "yarn lint:js -s && yarn lint:scss",
         "lint:fix": "yarn lint:js:fix -s && yarn lint:scss:fix -s",
         "test": "jest",

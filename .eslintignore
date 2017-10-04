@@ -45,3 +45,6 @@ coverage
 
 # tools
 !/tools
+
+# git-hooks
+!/git-hooks

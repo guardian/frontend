@@ -81,7 +81,7 @@ define([
         },
 
         accountProfile: function () {
-            var accountProfile = new AccountProfile();
+            var accountProfile = new AccountProfile.AccountProfile();
             mediator.on('page:identity:ready', function () {
                 accountProfile.init();
             });

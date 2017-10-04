@@ -5,15 +5,12 @@
     "bootstraps/enhanced/gallery.js",
     "bootstraps/video-embed.js",
     "bootstraps/youtube-embed.js",
-    "projects/common/modules/identity/account-profile.js",
     "projects/common/modules/email/email-article.js"
   ],
   "Simon Adcock": [
-    "projects/common/modules/crosswords/helpers.js",
     "projects/common/modules/crosswords/series.js",
     "projects/common/modules/email/email.js",
     "projects/common/modules/email/run-checks.js",
-    "projects/common/modules/gallery/lightbox.js",
     "projects/common/modules/atoms/youtube-tracking.js",
     "projects/common/modules/commercial/donot-use-adblock.js",
     "bootstraps/enhanced/profile.js"
@@ -22,14 +19,10 @@
     "projects/common/modules/component.js",
     "projects/common/modules/discussion/whole-discussion.js",
     "projects/common/modules/discussion/discussion-frontend.js",
-    "projects/common/modules/video/metadata.js",
     "projects/common/modules/atoms/story-questions.js",
-    "projects/common/modules/identity/cookierefresh.js",
-    "lib/proximity-loader.js"
+    "projects/common/modules/identity/cookierefresh.js"
   ],
   "GHaberis": [
-    "projects/common/modules/analytics/scrollDepth.js",
-    "projects/common/modules/navigation/membership.js",
     "projects/common/modules/navigation/navigation.js",
     "projects/common/modules/navigation/profile.js",
     "projects/common/modules/experiments/affix.js",
@@ -37,10 +30,6 @@
     "projects/common/modules/commercial/video-ad-url.js"
   ],
   "Matthew Walls": [
-    "projects/common/modules/crosswords/classNames.js",
-    "projects/common/modules/crosswords/clues.js",
-    "projects/common/modules/crosswords/comments.js",
-    "projects/common/modules/crosswords/confirm-button.js",
     "projects/common/modules/crosswords/hidden-input.js",
     "projects/common/modules/crosswords/keycodes.js"
   ],
@@ -51,5 +40,13 @@
     "projects/common/modules/ui/last-modified.js",
     "projects/common/modules/analytics/interaction-tracking.js",
     "projects/common/modules/analytics/media-listener.js"
+  ],
+  "Alex Ware": [
+    "projects/membership/digitalpack-tab.js",
+    "projects/membership/membership-tab.js",
+    "projects/membership/stripe.js"
+  ],
+  "natalialkb": [
+    "projects/common/modules/gallery/lightbox.js"
   ]
 }
