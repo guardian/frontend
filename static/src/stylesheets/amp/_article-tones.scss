@@ -87,8 +87,7 @@
 .tonal--tone-comment .tonal__main .element-pullquote cite,
 .tonal--tone-letters .tonal__main .element-pullquote cite,
 .tonal--tone-comment .tonal__main .drop-cap,
-.tone-comment .fc-item__byline,
-.tonal--tone-comment .content__section-label__link {
+.tone-comment .fc-item__byline {
     color: $comment-support-4;
 }
 
@@ -96,10 +95,6 @@
 .tonal--tone-feature .tonal__main .element-pullquote cite,
 .tonal--tone-feature .tonal__main .drop-cap {
     color: $features-support-1;
-}
-
-.tonal--tone-feature .content__section-label__link {
-    color: $features-support-3;
 }
 
 .tonal--tone-review .tonal__main .element-pullquote cite,
@@ -126,10 +121,6 @@
     color: $comment-support-1;
 }
 
-.tonal--tone-review .content__section-label__link {
-    color: $comment-support-3;
-}
-
 .tonal--tone-review .stars {
     margin-top: -1.125rem;
     margin-bottom: 1.125rem;
@@ -152,8 +143,14 @@
 .tone-media .fc-item__title,
 .tone-review .fc-item__title,
 .tone-special-report .fc-item__title,
-.tone-special-report .fc-item__title {
+.tonal--tone-special-report .content__series-label__link,
+.tonal--tone-feature .content__series-label__link,
+.tonal--tone-review .content__series-label__link,{
     color: #ffffff;
+}
+
+.tonal--tone-comment .content__series-label__link {
+    color: $neutral-2;
 }
 
 .tonal--tone-editorial .tone-colour,
@@ -166,8 +163,7 @@
     color: #21a2bc;
 }
 
-.tonal--tone-analysis .tone-colour,
-.tonal__head--tone-special-report .content__section-label__link {
+.tonal--tone-analysis .tone-colour {
     color: $news-main-2;
 }
 

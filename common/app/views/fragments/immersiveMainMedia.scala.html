@@ -88,10 +88,6 @@
                       @fragments.meta.metaInline(page.item)
                 }
 
-                @page.item.content.blogOrSeriesTag.map { series =>
-                    <a class="content__section-series-link content__section-label__link hide-from-tablet" href="@LinkTo {/@series.id}">@series.name</a>
-                }
-
                 <h1 class="@RenderClasses(Map(
                         "content__headline--minute" -> isTheMinuteArticle,
                         "content__headline--immersive--with-main-media" -> hasMainMedia,
