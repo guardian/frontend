@@ -6,44 +6,13 @@ import reportError from 'lib/report-error';
 import formatters from 'membership/formatters';
 import stripe from 'membership/stripe';
 
-var CARD_DETAILS = '.js-mem-card-details',
-    PAYPAL = '.js-mem-paypal',
-    CHANGE_TIER_CARD_LAST4 = '.js-mem-card-last4',
-    PAYPAL_EMAIL_ADDRESS = '.js-paypal-email',
-    PAYPAL_SHOW_EMAIL_BUTTON = '.js-show-paypal-button',
-    PAYPAL_SHOW_EMAIL_MESSAGE = '.js-paypal-email-message',
-    PACKAGE_COST = '.js-mem-package-cost',
-    PACKAGE_CURRENT_RENEWAL_DATE = '.js-mem-current-renewal-date',
-    PACKAGE_CURRENT_PERIOD_END = '.js-mem-current-period-end',
-    PACKAGE_CURRENT_PERIOD_START = '.js-mem-current-period-start',
-    PACKAGE_CURRENT_PERIOD_START_CONTAINER = '.js-mem-current-period-start-container',
-
-    PACKAGE_NEXT_PAYMENT_CONTAINER = '.js-mem-next-payment-container',
-    TRIAL_INFO_CONTAINER = '.js-mem-only-for-trials',
-    PACKAGE_NEXT_PAYMENT_DATE = '.js-mem-next-payment-date',
-    PACKAGE_NEXT_PAYMENT_PRICE = '.js-mem-next-payment-price',
-    PACKAGE_INTERVAL = '.js-mem-plan-interval',
-    DETAILS_MEMBERSHIP_TIER_ICON_CURRENT = '.js-mem-icon-current',
-    DETAILS_JOIN_DATE = '.js-mem-join-date',
-    DETAILS_MEMBER_NUM_TEXT = '.js-mem-number',
-    NOTIFICATION_CANCEL = '.js-mem-cancel-tier',
-    NOTIFICATION_CHANGE = '.js-mem-change-tier',
-    MEMBER_DETAILS = '.js-mem-details',
-    DETAILS_MEMBER_NUMBER_CONTAINER = '.js-mem-number-container',
-    MEMBERSHIP_TIER = '.js-mem-tier',
-    UP_SELL = '.js-mem-up-sell',
-    MEMBER_INFO = '.js-mem-info',
-    LOADER = '.js-mem-loader',
-    IS_HIDDEN_CLASSNAME = 'is-hidden',
-    ERROR = '.js-mem-error';
+const CARD_DETAILS = '.js-mem-card-details', PAYPAL = '.js-mem-paypal', CHANGE_TIER_CARD_LAST4 = '.js-mem-card-last4', PAYPAL_EMAIL_ADDRESS = '.js-paypal-email', PAYPAL_SHOW_EMAIL_BUTTON = '.js-show-paypal-button', PAYPAL_SHOW_EMAIL_MESSAGE = '.js-paypal-email-message', PACKAGE_COST = '.js-mem-package-cost', PACKAGE_CURRENT_RENEWAL_DATE = '.js-mem-current-renewal-date', PACKAGE_CURRENT_PERIOD_END = '.js-mem-current-period-end', PACKAGE_CURRENT_PERIOD_START = '.js-mem-current-period-start', PACKAGE_CURRENT_PERIOD_START_CONTAINER = '.js-mem-current-period-start-container', PACKAGE_NEXT_PAYMENT_CONTAINER = '.js-mem-next-payment-container', TRIAL_INFO_CONTAINER = '.js-mem-only-for-trials', PACKAGE_NEXT_PAYMENT_DATE = '.js-mem-next-payment-date', PACKAGE_NEXT_PAYMENT_PRICE = '.js-mem-next-payment-price', PACKAGE_INTERVAL = '.js-mem-plan-interval', DETAILS_MEMBERSHIP_TIER_ICON_CURRENT = '.js-mem-icon-current', DETAILS_JOIN_DATE = '.js-mem-join-date', DETAILS_MEMBER_NUM_TEXT = '.js-mem-number', NOTIFICATION_CANCEL = '.js-mem-cancel-tier', NOTIFICATION_CHANGE = '.js-mem-change-tier', MEMBER_DETAILS = '.js-mem-details', DETAILS_MEMBER_NUMBER_CONTAINER = '.js-mem-number-container', MEMBERSHIP_TIER = '.js-mem-tier', UP_SELL = '.js-mem-up-sell', MEMBER_INFO = '.js-mem-info', LOADER = '.js-mem-loader', IS_HIDDEN_CLASSNAME = 'is-hidden', ERROR = '.js-mem-error';
 
 function fetchUserDetails() {
     fetch(config.page.userAttributesApiUrl + '/me/mma-membership', {
         mode: 'cors',
         credentials: 'include',
-    }).then(function(resp) {
-        return resp.json();
-    }).then(function(json) {
+    }).then(resp => resp.json()).then(json => {
         if (json && json.subscription) {
             hideLoader();
             populateUserDetails(json);
@@ -51,7 +20,7 @@ function fetchUserDetails() {
             hideLoader();
             displayMembershipUpSell();
         }
-    }).catch(function(err) {
+    }).catch(err => {
         hideLoader();
         displayErrorMessage();
         reportError(err, {
@@ -66,10 +35,10 @@ function hideLoader() {
 
 
 function populateUserDetails(userDetails) {
-    var isMonthly = userDetails.subscription.plan.interval === 'month',
-        intervalText = isMonthly ? 'Monthly' : 'Annual',
-        glyph = userDetails.subscription.plan.currency,
-        notificationTypeSelector;
+    const isMonthly = userDetails.subscription.plan.interval === 'month';
+    const intervalText = isMonthly ? 'Monthly' : 'Annual';
+    const glyph = userDetails.subscription.plan.currency;
+    let notificationTypeSelector;
 
     $(MEMBERSHIP_TIER).text(userDetails.tier);
     $(PACKAGE_COST).text(formatters.formatAmount(userDetails.subscription.plan.amount, glyph));
@@ -128,14 +97,14 @@ function populateUserDetails(userDetails) {
 
 function showPayPalAccountName() {
     $(PAYPAL_SHOW_EMAIL_MESSAGE).removeClass(IS_HIDDEN_CLASSNAME);
-    var button = $(PAYPAL_SHOW_EMAIL_BUTTON);
+    const button = $(PAYPAL_SHOW_EMAIL_BUTTON);
     bean.one(button[0], 'click', hidePayPalAccountName);
     button.text("Hide account name");
 }
 
 function hidePayPalAccountName() {
     $(PAYPAL_SHOW_EMAIL_MESSAGE).addClass(IS_HIDDEN_CLASSNAME);
-    var button = $(PAYPAL_SHOW_EMAIL_BUTTON);
+    const button = $(PAYPAL_SHOW_EMAIL_BUTTON);
     bean.one(button[0], 'click', showPayPalAccountName);
     button.text("Show account name");
 }
@@ -153,5 +122,5 @@ function init() {
 }
 
 export default {
-    init: init
+    init
 };
