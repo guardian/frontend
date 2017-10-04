@@ -1,6 +1,5 @@
 {
   "sndrs": [
-    "bootstraps/enhanced/facia.js",
     "bootstraps/enhanced/football.js",
     "projects/common/modules/email/email-article.js"
   ],
