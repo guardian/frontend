@@ -95,7 +95,7 @@ define([
 
         deleteAccount: function () {
             mediator.on('page:identity:ready', function () {
-                DeleteAccount.init();
+                DeleteAccount.setupLoadingAnimation();
             });
         }
     };

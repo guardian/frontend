@@ -5,8 +5,7 @@
     "bootstraps/enhanced/gallery.js",
     "bootstraps/video-embed.js",
     "bootstraps/youtube-embed.js",
-    "projects/common/modules/email/email-article.js",
-    "projects/common/modules/identity/delete-account.js"
+    "projects/common/modules/email/email-article.js"
   ],
   "Simon Adcock": [
     "projects/common/modules/email/email.js",
