@@ -17,13 +17,13 @@ import rhc from 'common/modules/ui/rhc';
 import relativeDates from 'common/modules/ui/relativedates';
 
 function renderNav(match, callback) {
-    var matchInfo = new MatchInfo.MatchInfo(match, config.page.pageId);
+    const matchInfo = new MatchInfo.MatchInfo(match, config.page.pageId);
 
     return matchInfo.fetch()
-        .then(function(resp) {
-            var $nav;
+        .then(resp => {
+            let $nav;
             if (resp.nav && resp.nav.trim().length > 0) {
-                $nav = $.create(resp.nav).first().each(function(nav) {
+                $nav = $.create(resp.nav).first().each(nav => {
                     if (match.id || $('.tabs__tab', nav).length > 2) {
                         $('.js-sport-tabs').append(nav);
                     }
@@ -34,7 +34,7 @@ function renderNav(match, callback) {
                 callback(resp, $nav, matchInfo.endpoint);
             }
         })
-        .catch(function() {
+        .catch(() => {
             $('.score-container').remove();
             $('.js-score').removeClass('u-h');
         });
@@ -42,21 +42,17 @@ function renderNav(match, callback) {
 
 function renderExtras(extras, dropdownTemplate) {
     // clean
-    extras = extras.filter(function(extra) {
-        return extra;
-    });
-    var ready = extras.filter(function(extra) {
-        return extra.ready === false;
-    }).length === 0;
+    extras = extras.filter(extra => extra);
+    const ready = extras.filter(extra => extra.ready === false).length === 0;
 
     if (ready) {
-        page.belowArticleVisible(function() {
-            var b;
+        page.belowArticleVisible(() => {
+            let b;
             $('.js-after-article').append(
-                $.create('<div class="football-extras"></div>').each(function(extrasContainer) {
-                    extras.forEach(function(extra, i) {
+                $.create('<div class="football-extras"></div>').each(extrasContainer => {
+                    extras.forEach((extra, i) => {
                         if (dropdownTemplate) {
-                            $.create(dropdownTemplate).each(function(dropdown) {
+                            $.create(dropdownTemplate).each(dropdown => {
                                 if (config.page.isLiveBlog) {
                                     $(dropdown).addClass('dropdown--key-events');
                                 }
@@ -64,7 +60,7 @@ function renderExtras(extras, dropdownTemplate) {
                                 $('.dropdown__content', dropdown).append(extra.content);
                                 $('.dropdown__button', dropdown)
                                     .attr('data-link-name', 'Show dropdown: ' + extra.name)
-                                    .each(function(el) {
+                                    .each(el => {
                                         if (i === 0) {
                                             b = el;
                                         }
@@ -82,8 +78,8 @@ function renderExtras(extras, dropdownTemplate) {
             if (b) {
                 bean.fire(b, 'click');
             }
-        }, function() {
-            extras.forEach(function(extra) {
+        }, () => {
+            extras.forEach(extra => {
                 rhc.addComponent(extra.content, extra.importance);
             });
         });
@@ -94,8 +90,8 @@ function renderTable(competition, extras, template) {
     extras[2] = {
         ready: false
     };
-    $.create('<div class="js-football-table" data-link-name="football-table-embed"></div>').each(function(container) {
-        football.tableFor(competition).fetch(container).then(function() {
+    $.create('<div class="js-football-table" data-link-name="football-table-embed"></div>').each(container => {
+        football.tableFor(competition).fetch(container).then(() => {
             extras[2] = $('.table__container', container).length > 0 ? {
                 name: 'Table',
                 importance: 3,
@@ -103,7 +99,7 @@ function renderTable(competition, extras, template) {
                 ready: true
             } : undefined;
             renderExtras(extras, template);
-        }, function() {
+        }, () => {
             delete extras[2];
             renderExtras(extras, template);
         });
@@ -126,25 +122,26 @@ function loaded(elem) {
 
 function init() {
     // We're doing this as to have one redraw
-    var extras = [],
-        dropdownTemplate;
+    const extras = [];
 
-    page.isMatch(function(match) {
+    let dropdownTemplate;
+
+    page.isMatch(match => {
         extras[0] = {
             ready: false
         };
         if (match.pageType === 'stats') {
             renderNav(match);
         } else {
-            var $h = $('.js-score'),
-                scoreBoard = new ScoreBoard.ScoreBoard({
-                    pageType: match.pageType,
-                    parent: $h,
-                    responseDataKey: 'matchSummary',
-                    autoupdated: match.isLive
-                });
+            const $h = $('.js-score'),
+                  scoreBoard = new ScoreBoard.ScoreBoard({
+                      pageType: match.pageType,
+                      parent: $h,
+                      responseDataKey: 'matchSummary',
+                      autoupdated: match.isLive
+                  });
 
-            renderNav(match, function(resp, $nav, endpoint) {
+            renderNav(match, (resp, $nav, endpoint) => {
                 dropdownTemplate = resp.dropdown;
 
                 // Test if template is not composed of just whitspace. A content validation check, apparently.
@@ -157,11 +154,11 @@ function init() {
 
                 // match stats
                 if (resp.hasStarted && $nav) {
-                    var statsUrl = $('.tab--stats a', $nav).attr('href').replace(/^.*\/\/[^/]+/, '');
+                    const statsUrl = $('.tab--stats a', $nav).attr('href').replace(/^.*\/\/[^/]+/, '');
 
-                    $.create('<div class="match-stats__container js-match-stats"></div>').each(function(container) {
-                        football.statsFor(statsUrl).fetch(container).then(function() {
-                            $('.js-chart', container).each(function(el) {
+                    $.create('<div class="match-stats__container js-match-stats"></div>').each(container => {
+                        football.statsFor(statsUrl).fetch(container).then(() => {
+                            $('.js-chart', container).each(el => {
                                 new Doughnut.TableDoughnut().render(el);
                             });
                             extras[0] = {
@@ -179,7 +176,7 @@ function init() {
                 }
 
                 // Group table & Match day
-                page.isCompetition(function(competition) {
+                page.isCompetition(competition => {
                     extras[1] = {
                         ready: false
                     };
@@ -189,8 +186,8 @@ function init() {
                     }
 
                     // Other games today
-                    $.create('<div class="js-football-match-day" data-link-name="football-match-day-embed"></div>').each(function(container) {
-                        football.matchDayFor(competition, resp.matchDate).fetch(container).then(function() {
+                    $.create('<div class="js-football-match-day" data-link-name="football-match-day-embed"></div>').each(container => {
+                        football.matchDayFor(competition, resp.matchDate).fetch(container).then(() => {
                             extras[1] = {
                                 name: 'Today’s matches',
                                 importance: 2,
@@ -198,7 +195,7 @@ function init() {
                                 ready: true
                             };
                             renderExtras(extras, dropdownTemplate);
-                        }, function() {
+                        }, () => {
                             delete extras[1];
                             renderExtras(extras, dropdownTemplate);
                         });
@@ -208,20 +205,20 @@ function init() {
         }
     });
 
-    page.isCompetition(function(competition) {
-        var $rightHandCol = $('.js-secondary-column').dim().height;
+    page.isCompetition(competition => {
+        const $rightHandCol = $('.js-secondary-column').dim().height;
         if ($rightHandCol === 0 || $rightHandCol > 1800) {
             renderTable(competition, extras, dropdownTemplate);
         }
     });
 
-    page.isLiveClockwatch(function() {
-        var ml = new MatchListLive.MatchListLive('match-day', page.isCompetition() || 'premierleague', config.dateFromSlug()),
-            $img = $('.media-primary'),
-            $matchListContainer = $.create('<div class="football-matches__container" data-link-name="football-matches-clockwatch"></div>')
-            .css({
-                minHeight: $img[0] ? $img[0].offsetHeight : 0
-            });
+    page.isLiveClockwatch(() => {
+        const ml = new MatchListLive.MatchListLive('match-day', page.isCompetition() || 'premierleague', config.dateFromSlug()),
+              $img = $('.media-primary'),
+              $matchListContainer = $.create('<div class="football-matches__container" data-link-name="football-matches-clockwatch"></div>')
+              .css({
+                  minHeight: $img[0] ? $img[0].offsetHeight : 0
+              });
 
         $img.addClass('u-h');
         loading($matchListContainer[0], 'Fetching today’s matches…', {
@@ -230,11 +227,11 @@ function init() {
         });
 
         $('.js-football-meta').append($matchListContainer);
-        ml.fetch($matchListContainer[0]).fail(function() {
+        ml.fetch($matchListContainer[0]).fail(() => {
             ml.destroy();
             $matchListContainer.remove();
             $img.removeClass('u-h');
-        }).always(function() {
+        }).always(() => {
             if ($('.football-match', $matchListContainer[0]).length === 0) {
                 ml.destroy();
                 $matchListContainer.remove();
@@ -247,27 +244,27 @@ function init() {
         });
     });
 
-    page.isFootballStatsPage(function() {
-        $('.js-chart').each(function(el) {
+    page.isFootballStatsPage(() => {
+        $('.js-chart').each(el => {
             new Doughnut().render(el);
         });
     });
 
     // Binding
-    bean.on(document.body, 'click', '.js-show-more-football-matches', function(e) {
+    bean.on(document.body, 'click', '.js-show-more-football-matches', e => {
         e.preventDefault();
-        var el = e.currentTarget;
+        const el = e.currentTarget;
         fetchJson(el.getAttribute('href') + '.json')
-            .then(function(resp) {
-                $.create(resp.html).each(function(html) {
-                    var htmlContainer = document.querySelector('[data-show-more-contains="' + el.getAttribute('data-puts-more-into') + '"]');
+            .then(resp => {
+                $.create(resp.html).each(html => {
+                    const htmlContainer = document.querySelector('[data-show-more-contains="' + el.getAttribute('data-puts-more-into') + '"]');
 
                     if (htmlContainer) {
                         relativeDates.replaceLocaleTimestamps(html);
                         htmlContainer.appendChild(html);
                     }
 
-                    var nurl = resp[el.getAttribute('data-new-url')];
+                    const nurl = resp[el.getAttribute('data-new-url')];
 
                     if (nurl) {
                         bonzo(el).attr('href', nurl);
@@ -276,7 +273,7 @@ function init() {
                     }
                 });
             })
-            .catch(function(ex) {
+            .catch(ex => {
                 reportError(ex, {
                     feature: 'football-show-more'
                 });
@@ -291,5 +288,5 @@ function init() {
 }
 
 export default {
-    init: init
+    init
 };
