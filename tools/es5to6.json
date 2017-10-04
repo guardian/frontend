@@ -34,7 +34,6 @@
     "projects/common/modules/ui/last-modified.js"
   ],
   "Alex Ware": [
-    "projects/membership/digitalpack-tab.js",
     "projects/membership/membership-tab.js",
     "projects/membership/stripe.js"
   ],
