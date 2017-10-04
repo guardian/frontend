@@ -9,6 +9,8 @@ jest.mock('lodash/functions/debounce', (): Function => fn => {
 
 jest.mock('lib/mediator');
 
+jest.useFakeTimers();
+
 describe('Scroll depth', () => {
     it('should log page depth on scroll.', done => {
         if (document.body) {
@@ -26,8 +28,6 @@ describe('Scroll depth', () => {
             });
 
             window.scrollTo(0, 50);
-
-            jest.useFakeTimers();
 
             mediator.emit('window:throttledScroll');
 
