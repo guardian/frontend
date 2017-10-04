@@ -33,26 +33,26 @@ const HiddenInput = createClass({
         }
     },
 
-    handleChange(event) {
+    handleChange(event: SyntheticInputEvent<HTMLInputElement>) {
         this.props.crossword.insertCharacter(event.target.value.toUpperCase());
         this.setState({
             value: '',
         });
     },
 
-    onClick(event) {
+    onClick(event: SyntheticInputEvent<HTMLInputElement>) {
         this.props.crossword.onClickHiddenInput(event);
     },
 
-    touchStart(event) {
+    touchStart(event: SyntheticInputEvent<HTMLInputElement>) {
         this.props.crossword.onClickHiddenInput(event);
     },
 
-    onKeyDown(event) {
+    onKeyDown(event: SyntheticInputEvent<HTMLInputElement>) {
         this.props.crossword.onKeyDown(event);
     },
 
-    onBlur(event) {
+    onBlur(event: SyntheticInputEvent<HTMLInputElement>) {
         this.props.crossword.goToReturnPosition(event);
     },
 
