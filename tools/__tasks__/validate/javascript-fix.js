@@ -25,11 +25,23 @@ module.exports = {
                 ),
         },
         {
+            description: 'Fix ui',
+            task: ctx =>
+                execa
+                    .shell('cd ui && yarn lint:js:fix')
+                    .then(handleSuccess.bind(null, ctx)),
+        },
+        {
             description: 'Fix everything else',
             task: ctx =>
                 execa(
                     'eslint',
-                    ['*.js', 'tools/**/*.js', 'dev/**/*.js'].concat(config)
+                    [
+                        '*.js',
+                        'tools/**/*.js',
+                        'dev/**/*.js',
+                        'git-hooks/*',
+                    ].concat(config)
                 ).then(handleSuccess.bind(null, ctx)),
         },
     ],

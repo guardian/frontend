@@ -12,13 +12,31 @@ import { Clues } from 'common/modules/crosswords/clues';
 import { Controls } from 'common/modules/crosswords/controls';
 import HiddenInput from 'common/modules/crosswords/hidden-input';
 import { Grid } from 'common/modules/crosswords/grid';
-import helpers from 'common/modules/crosswords/helpers';
+import {
+    buildClueMap,
+    buildGrid,
+    otherDirection,
+    entryHasCell,
+    cluesFor,
+    mapGrid,
+    getClearableCellsForClue,
+    getLastCellInClue,
+    getPreviousClueInGroup,
+    isFirstCellInClue,
+    getNextClueInGroup,
+    isLastCellInClue,
+    gridSize,
+    checkClueHasBeenAnswered,
+    buildSeparatorMap,
+    cellsForEntry,
+} from 'common/modules/crosswords/helpers';
 import keycodes from 'common/modules/crosswords/keycodes';
 import {
     saveGridState,
     loadGridState,
 } from 'common/modules/crosswords/persistence';
 import { classNames } from 'common/modules/crosswords/classNames';
+import type { GridProps } from 'common/modules/crosswords/grid';
 
 class Crossword extends React.Component {
     constructor(props: Object) {
@@ -27,10 +45,10 @@ class Crossword extends React.Component {
 
         this.columns = dimensions.cols;
         this.rows = dimensions.rows;
-        this.clueMap = helpers.buildClueMap(this.props.data.entries);
+        this.clueMap = buildClueMap(this.props.data.entries);
 
         this.state = {
-            grid: helpers.buildGrid(
+            grid: buildGrid(
                 dimensions.rows,
                 dimensions.cols,
                 this.props.data.entries,
@@ -144,16 +162,16 @@ class Crossword extends React.Component {
     // called when cell is selected (by click or programtically focussed)
     onSelect(x: number, y: number): void {
         const cellInFocus = this.state.cellInFocus;
-        const clue = helpers.cluesFor(this.clueMap, x, y);
+        const clue = cluesFor(this.clueMap, x, y);
         const focussedClue = this.clueInFocus();
         let newDirection;
 
         const isInsideFocussedClue = (): boolean =>
-            focussedClue ? helpers.entryHasCell(focussedClue, x, y) : false;
+            focussedClue ? entryHasCell(focussedClue, x, y) : false;
 
         if (cellInFocus && cellInFocus.x === x && cellInFocus.y === y) {
             /** User has clicked again on the highlighted cell, meaning we ought to swap direction */
-            newDirection = helpers.otherDirection(this.state.directionOfEntry);
+            newDirection = otherDirection(this.state.directionOfEntry);
 
             if (clue[newDirection]) {
                 this.focusClue(x, y, newDirection);
@@ -172,7 +190,7 @@ class Crossword extends React.Component {
             };
 
             const isStartOfClue = (sourceClue): boolean =>
-                sourceClue &&
+                !!sourceClue &&
                 sourceClue.position.x === x &&
                 sourceClue.position.y === y;
 
@@ -215,7 +233,7 @@ class Crossword extends React.Component {
 
     onClearAll(): void {
         this.setState({
-            grid: helpers.mapGrid(this.state.grid, cell => {
+            grid: mapGrid(this.state.grid, cell => {
                 cell.value = '';
                 return cell;
             }),
@@ -225,25 +243,31 @@ class Crossword extends React.Component {
     }
 
     onClearSingle(): void {
-        // Merge arrays of cells from all highlighted clues
-        // const cellsInFocus = _.flatten(_.map(this.allHighlightedClues(), helpers.cellsForEntry, this));
-        const cellsInFocus = helpers.getClearableCellsForClue(
-            this.state.grid,
-            this.clueMap,
-            this.props.data.entries,
-            this.clueInFocus()
-        );
+        const clueInFocus = this.clueInFocus();
 
-        this.setState({
-            grid: helpers.mapGrid(this.state.grid, (cell, gridX, gridY) => {
-                if (cellsInFocus.some(c => c.x === gridX && c.y === gridY)) {
-                    cell.value = '';
-                }
-                return cell;
-            }),
-        });
+        if (clueInFocus) {
+            // Merge arrays of cells from all highlighted clues
+            // const cellsInFocus = _.flatten(_.map(this.allHighlightedClues(), helpers.cellsForEntry, this));
+            const cellsInFocus = getClearableCellsForClue(
+                this.state.grid,
+                this.clueMap,
+                this.props.data.entries,
+                clueInFocus
+            );
 
-        this.save();
+            this.setState({
+                grid: mapGrid(this.state.grid, (cell, gridX, gridY) => {
+                    if (
+                        cellsInFocus.some(c => c.x === gridX && c.y === gridY)
+                    ) {
+                        cell.value = '';
+                    }
+                    return cell;
+                }),
+            });
+
+            this.save();
+        }
     }
 
     onToggleAnagramHelper(): void {
@@ -303,7 +327,7 @@ class Crossword extends React.Component {
 
     setCellValue(x: number, y: number, value: string): void {
         this.setState({
-            grid: helpers.mapGrid(this.state.grid, (cell, gridX, gridY) => {
+            grid: mapGrid(this.state.grid, (cell, gridX, gridY) => {
                 if (gridX === x && gridY === y) {
                     cell.value = value;
                     cell.isError = false;
@@ -408,19 +432,21 @@ class Crossword extends React.Component {
         const cell = this.state.cellInFocus;
         const clue = this.clueInFocus();
 
-        if (helpers.isFirstCellInClue(cell, clue)) {
-            const newClue = helpers.getPreviousClueInGroup(
-                this.props.data.entries,
-                clue
-            );
-            if (newClue) {
-                const newCell = helpers.getLastCellInClue(newClue);
-                this.focusClue(newCell.x, newCell.y, newClue.direction);
+        if (clue) {
+            if (isFirstCellInClue(cell, clue)) {
+                const newClue = getPreviousClueInGroup(
+                    this.props.data.entries,
+                    clue
+                );
+                if (newClue) {
+                    const newCell = getLastCellInClue(newClue);
+                    this.focusClue(newCell.x, newCell.y, newClue.direction);
+                }
+            } else if (this.isAcross()) {
+                this.moveFocus(-1, 0);
+            } else {
+                this.moveFocus(0, -1);
             }
-        } else if (this.isAcross()) {
-            this.moveFocus(-1, 0);
-        } else {
-            this.moveFocus(0, -1);
         }
     }
 
@@ -428,28 +454,30 @@ class Crossword extends React.Component {
         const cell = this.state.cellInFocus;
         const clue = this.clueInFocus();
 
-        if (helpers.isLastCellInClue(cell, clue)) {
-            const newClue = helpers.getNextClueInGroup(
-                this.props.data.entries,
-                clue
-            );
-            if (newClue) {
-                this.focusClue(
-                    newClue.position.x,
-                    newClue.position.y,
-                    newClue.direction
+        if (clue) {
+            if (isLastCellInClue(cell, clue)) {
+                const newClue = getNextClueInGroup(
+                    this.props.data.entries,
+                    clue
                 );
+                if (newClue) {
+                    this.focusClue(
+                        newClue.position.x,
+                        newClue.position.y,
+                        newClue.direction
+                    );
+                }
+            } else if (this.isAcross()) {
+                this.moveFocus(1, 0);
+            } else {
+                this.moveFocus(0, 1);
             }
-        } else if (this.isAcross()) {
-            this.moveFocus(1, 0);
-        } else {
-            this.moveFocus(0, 1);
         }
     }
 
     asPercentage(x: number, y: number): Object {
-        const width = helpers.gridSize(this.columns);
-        const height = helpers.gridSize(this.rows);
+        const width = gridSize(this.columns);
+        const height = gridSize(this.rows);
 
         return {
             x: 100 * x / width,
@@ -461,8 +489,8 @@ class Crossword extends React.Component {
         const wrapper = React.findDOMNode(
             this.refs.hiddenInputComponent.refs.wrapper
         );
-        const left = helpers.gridSize(x);
-        const top = helpers.gridSize(y);
+        const left = gridSize(x);
+        const top = gridSize(y);
         const position = this.asPercentage(left, top);
 
         /** This has to be done before focus to move viewport accordingly */
@@ -480,7 +508,7 @@ class Crossword extends React.Component {
 
     // Focus corresponding clue for a given cell
     focusClue(x: number, y: number, direction: string): void {
-        const clues = helpers.cluesFor(this.clueMap, x, y);
+        const clues = cluesFor(this.clueMap, x, y);
         const clue = clues[direction];
 
         if (clues && clue) {
@@ -513,7 +541,7 @@ class Crossword extends React.Component {
 
     clueInFocus(): ?Object {
         if (this.state.cellInFocus) {
-            const cluesForCell = helpers.cluesFor(
+            const cluesForCell = cluesFor(
                 this.clueMap,
                 this.state.cellInFocus.x,
                 this.state.cellInFocus.y
@@ -531,7 +559,7 @@ class Crossword extends React.Component {
 
     clueIsInFocusGroup(clue: Object): boolean {
         if (this.state.cellInFocus) {
-            const cluesForCell = helpers.cluesFor(
+            const cluesForCell = cluesFor(
                 this.clueMap,
                 this.state.cellInFocus.x,
                 this.state.cellInFocus.y
@@ -545,7 +573,7 @@ class Crossword extends React.Component {
 
     cluesData(): Array<Object> {
         return this.props.data.entries.map(entry => {
-            const hasAnswered = helpers.checkClueHasBeenAnswered(
+            const hasAnswered = checkClueHasBeenAnswered(
                 this.state.grid,
                 entry
             );
@@ -562,11 +590,11 @@ class Crossword extends React.Component {
     }
 
     cheat(entry: Object): void {
-        const cells = helpers.cellsForEntry(entry);
+        const cells = cellsForEntry(entry);
 
         if (entry.solution) {
             this.setState({
-                grid: helpers.mapGrid(this.state.grid, (cell, x, y) => {
+                grid: mapGrid(this.state.grid, (cell, x, y) => {
                     if (cells.some(c => c.x === x && c.y === y)) {
                         const n =
                             entry.direction === 'across'
@@ -583,7 +611,7 @@ class Crossword extends React.Component {
     }
 
     check(entry: Object): void {
-        const cells = helpers.cellsForEntry(entry);
+        const cells = cellsForEntry(entry);
 
         if (entry.solution) {
             const badCells = zip(cells, entry.solution)
@@ -598,7 +626,7 @@ class Crossword extends React.Component {
                 .map(cellAndSolution => cellAndSolution[0]);
 
             this.setState({
-                grid: helpers.mapGrid(this.state.grid, (cell, gridX, gridY) => {
+                grid: mapGrid(this.state.grid, (cell, gridX, gridY) => {
                     if (
                         badCells.some(bad => bad.x === gridX && bad.y === gridY)
                     ) {
@@ -612,21 +640,18 @@ class Crossword extends React.Component {
 
             setTimeout(() => {
                 this.setState({
-                    grid: helpers.mapGrid(
-                        this.state.grid,
-                        (cell, gridX, gridY) => {
-                            if (
-                                badCells.some(
-                                    bad => bad.x === gridX && bad.y === gridY
-                                )
-                            ) {
-                                cell.isError = false;
-                                cell.value = '';
-                            }
-
-                            return cell;
+                    grid: mapGrid(this.state.grid, (cell, gridX, gridY) => {
+                        if (
+                            badCells.some(
+                                bad => bad.x === gridX && bad.y === gridY
+                            )
+                        ) {
+                            cell.isError = false;
+                            cell.value = '';
                         }
-                    ),
+
+                        return cell;
+                    }),
                 });
             }, 150);
         }
@@ -653,7 +678,7 @@ class Crossword extends React.Component {
         return focused
             ? focused.group.some(id => {
                   const entry = this.props.data.entries.find(e => e.id === id);
-                  return helpers.entryHasCell(entry, x, y);
+                  return entryHasCell(entry, x, y);
               })
             : false;
     }
@@ -670,6 +695,16 @@ class Crossword extends React.Component {
                 grid: this.state.grid,
                 close: this.onToggleAnagramHelper,
             });
+
+        const gridProps: GridProps = {
+            rows: this.rows,
+            columns: this.columns,
+            cells: this.state.grid,
+            separators: buildSeparatorMap(this.props.data.entries),
+            crossword: this,
+            focussedCell: this.state.cellInFocus,
+            ref: 'grid',
+        };
 
         return React.createElement(
             'div',
@@ -737,17 +772,7 @@ class Crossword extends React.Component {
                         className: 'crossword__container__grid-wrapper',
                         ref: 'gridWrapper',
                     },
-                    Grid({
-                        rows: this.rows,
-                        columns: this.columns,
-                        cells: this.state.grid,
-                        separators: helpers.buildSeparatorMap(
-                            this.props.data.entries
-                        ),
-                        crossword: this,
-                        focussedCell: this.state.cellInFocus,
-                        ref: 'grid',
-                    }),
+                    Grid(gridProps),
                     React.createElement(HiddenInput, {
                         crossword: this,
                         value: this.hiddenInputValue(),
