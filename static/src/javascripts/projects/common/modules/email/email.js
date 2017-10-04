@@ -351,28 +351,25 @@ const setup = (rootEl, thisRootEl, isIframed) => {
     });
 };
 
-export default {
-    updateForm: ui.updateForm,
-    init(rootEl) {
-        const browser = getUserAgent.browser;
-        const version = getUserAgent.version;
-        // If we're in lte IE9, don't run the init and adjust the footer
-        if (browser === 'MSIE' && ['7', '8', '9'].includes(`${version}`)) {
-            $('.js-footer__secondary').addClass(
-                'l-footer__secondary--no-email'
-            );
-            $('.js-footer__email-container', '.js-footer__secondary').addClass(
-                'is-hidden'
-            );
-        } else if (rootEl && rootEl.tagName === 'IFRAME') {
-            // We're loading through the iframe
-            // We can listen for a lazy load or reload to catch an update
+const initEmail = rootEl => {
+    const browser = getUserAgent.browser;
+    const version = getUserAgent.version;
+    // If we're in lte IE9, don't run the init and adjust the footer
+    if (browser === 'MSIE' && ['7', '8', '9'].includes(`${version}`)) {
+        $('.js-footer__secondary').addClass('l-footer__secondary--no-email');
+        $('.js-footer__email-container', '.js-footer__secondary').addClass(
+            'is-hidden'
+        );
+    } else if (rootEl && rootEl.tagName === 'IFRAME') {
+        // We're loading through the iframe
+        // We can listen for a lazy load or reload to catch an update
+        setup(rootEl, rootEl.contentDocument.body, true);
+        bean.on(rootEl, 'load', () => {
             setup(rootEl, rootEl.contentDocument.body, true);
-            bean.on(rootEl, 'load', () => {
-                setup(rootEl, rootEl.contentDocument.body, true);
-            });
-        } else {
-            setup(rootEl, rootEl || document, false);
-        }
-    },
+        });
+    } else {
+        setup(rootEl, rootEl || document, false);
+    }
 };
+
+export { initEmail };
