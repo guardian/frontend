@@ -20,8 +20,6 @@ const transcludeMostPopular = (): void => {
 const init = (): void => {
     initTrails();
 
-    mediator.emit('page:gallery:ready');
-
     if (config.get('page.showRelatedContent')) {
         transcludeMostPopular();
     }
