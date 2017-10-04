@@ -308,11 +308,10 @@ const bindSubmit = ($form: bonzo, analytics: Analytics): void => {
 };
 
 const setup = (
-    rootEl: ?HTMLIFrameElement,
-    thisRootEl: ?HTMLElement | ?Document,
-    isIframed: boolean
+    iframeEl: ?HTMLIFrameElement,
+    rootEl: ?HTMLElement | ?Document,
 ): void => {
-    $(`.${classes.inlineLabel}`, thisRootEl).each(el => {
+    $(`.${classes.inlineLabel}`, rootEl).each(el => {
         formInlineLabels.init(el, {
             textInputClass: '.js-email-sub__text-input',
             labelClass: '.js-email-sub__label',
@@ -321,7 +320,7 @@ const setup = (
         });
     });
 
-    $(`.${classes.wrapper}`, thisRootEl).each(el => {
+    $(`.${classes.wrapper}`, rootEl).each(el => {
         const $el = $(el);
         const freezeHeight = heightSetter($el, false);
         const resetHeight = heightSetter($el, true);
@@ -340,9 +339,7 @@ const setup = (
         // If we're in an iframe, we should check whether we need to add a title and description
         // from the data attributes on the iframe (eg: allowing us to set them from composer).
         // We should also ensure our form is the right height.
-        if (isIframed) {
-            const iframeEl: HTMLIFrameElement = (rootEl: any);
-
+        if (iframeEl) {
             updateForm(iframeEl, $el, analytics);
             setIframeHeight(iframeEl, freezeHeight)();
             onResize = setIframeHeight(iframeEl, resetHeight);
@@ -356,7 +353,7 @@ const setup = (
 };
 
 const initEmail = (rootEl?: HTMLIFrameElement): void => {
-    // If we're in lte IE9, don't run the init and adjust the footer
+    // If we're in <= IE9, don't run the setup and adjust the footer
     if (
         typeof getUserAgent === 'object' &&
         getUserAgent.browser === 'MSIE' &&
@@ -370,15 +367,15 @@ const initEmail = (rootEl?: HTMLIFrameElement): void => {
         // We're loading through the iframe
         // We can listen for a lazy load or reload to catch an update
         if (rootEl.contentDocument) {
-            setup(rootEl, rootEl.contentDocument.body, true);
+            setup(rootEl, rootEl.contentDocument.body);
             bean.on(rootEl, 'load', () => {
                 if (rootEl && rootEl.contentDocument) {
-                    setup(rootEl, rootEl.contentDocument.body, true);
+                    setup(rootEl, rootEl.contentDocument.body);
                 }
             });
         }
     } else {
-        setup(rootEl, rootEl || document, false);
+        setup(rootEl, rootEl || document);
     }
 };
 
