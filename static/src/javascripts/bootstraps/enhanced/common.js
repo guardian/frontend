@@ -41,7 +41,7 @@ import { initPinterest } from 'common/modules/social/pinterest';
 import { hiddenShareToggle } from 'common/modules/social/hidden-share-toggle';
 import { membershipEngagementBannerInit } from 'common/modules/commercial/membership-engagement-banner';
 import email from 'common/modules/email/email';
-import emailArticle from 'common/modules/email/email-article';
+import { init as initEmailArticle } from 'common/modules/email/email-article';
 import { init as initIdentity } from 'bootstraps/enhanced/identity-common';
 import ophan from 'ophan/ng';
 
@@ -260,7 +260,7 @@ const initEmail = (): void => {
 
     // Initalise email insertion into articles
     if (config.switches.emailInArticle) {
-        emailArticle.init();
+        initEmailArticle();
     }
 
     // Initalise email forms in iframes
