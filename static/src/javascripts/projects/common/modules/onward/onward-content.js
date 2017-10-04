@@ -35,7 +35,6 @@ class OnwardContent extends Component {
     ready(): void {
         end('series-content');
         mediator.emit('modules:onward:loaded');
-        mediator.emit('page:new-content');
     }
 }
 
