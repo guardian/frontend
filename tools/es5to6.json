@@ -24,7 +24,6 @@
     "projects/common/modules/experiments/tests/paid-content-vs-outbrain.js"
   ],
   "Matthew Walls": [
-    "projects/common/modules/commercial/video-ad-url.js",
     "projects/common/modules/analytics/interaction-tracking.js",
     "projects/common/modules/analytics/media-listener.js",
     "projects/common/modules/identity/cookierefresh.js"
