@@ -308,8 +308,8 @@ const bindSubmit = ($form: bonzo, analytics: Analytics): void => {
 };
 
 const setup = (
-    iframeEl: ?HTMLIFrameElement,
-    rootEl: ?HTMLElement | ?Document
+    rootEl: ?HTMLElement | ?Document,
+    iframeEl: ?HTMLIFrameElement
 ): void => {
     $(`.${classes.inlineLabel}`, rootEl).each(el => {
         formInlineLabels.init(el, {
@@ -352,7 +352,7 @@ const setup = (
     });
 };
 
-const initEmail = (rootEl?: HTMLIFrameElement): void => {
+const initEmail = (iframeEl?: HTMLIFrameElement): void => {
     // If we're in <= IE9, don't run the setup and adjust the footer
     if (
         typeof getUserAgent === 'object' &&
@@ -363,19 +363,19 @@ const initEmail = (rootEl?: HTMLIFrameElement): void => {
         $('.js-footer__email-container', '.js-footer__secondary').addClass(
             'is-hidden'
         );
-    } else if (rootEl && rootEl.tagName === 'IFRAME') {
+    } else if (iframeEl && iframeEl.tagName === 'IFRAME') {
         // We're loading through the iframe
         // We can listen for a lazy load or reload to catch an update
-        if (rootEl.contentDocument) {
-            setup(rootEl, rootEl.contentDocument.body);
-            bean.on(rootEl, 'load', () => {
-                if (rootEl && rootEl.contentDocument) {
-                    setup(rootEl, rootEl.contentDocument.body);
+        if (iframeEl.contentDocument) {
+            setup(iframeEl.contentDocument.body, iframeEl);
+            bean.on(iframeEl, 'load', () => {
+                if (iframeEl && iframeEl.contentDocument) {
+                    setup(iframeEl.contentDocument.body, iframeEl);
                 }
             });
         }
     } else {
-        setup(rootEl, rootEl || document);
+        setup(document);
     }
 };
 
