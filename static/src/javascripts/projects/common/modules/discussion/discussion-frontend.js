@@ -35,11 +35,9 @@ const loadDiscussionFrontend = (loader: Loader, opts: Object) => {
                     'js_commentcount_actualvalue'
                 );
 
-                if (otherValues.length) {
-                    [...otherValues].forEach(el => {
-                        updateCommentCount(el, value);
-                    });
-                }
+                [...otherValues].forEach(el => {
+                    updateCommentCount(el, value);
+                });
             }
 
             mediator.emit('comments-count-loaded');
