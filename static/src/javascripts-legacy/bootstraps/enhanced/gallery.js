@@ -17,9 +17,6 @@ define([
 
             mostViewed.manipulationType = 'html';
             mostViewed.endpoint = '/gallery/most-viewed.json';
-            mostViewed.ready = function () {
-                mediator.emit('page:new-content', container);
-            };
             mostViewed.fetch(container, 'html');
         },
         ready = function () {

@@ -122,7 +122,6 @@ const related = (opts: Object): void => {
 
                     // upgrade images
                     mediator.emit('modules:related:loaded', container);
-                    mediator.emit('page:new-content', container);
                     end(componentName);
                 })
                 .catch(() => {
