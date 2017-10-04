@@ -13,8 +13,6 @@ jest.useFakeTimers();
 
 describe.skip('Scroll depth', () => {
     it('should log page depth on scroll.', done => {
-        console.log('****************************************');
-
         if (document.body) {
             document.body.style.height = '100px';
 
