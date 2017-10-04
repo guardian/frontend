@@ -32,7 +32,6 @@ class MostPopular extends Component {
 
     ready() {
         mediator.emit('modules:popular:loaded', this.elem);
-        mediator.emit('page:new-content', this.elem);
         mediator.emit('register:end', 'popular-in-section');
     }
 }

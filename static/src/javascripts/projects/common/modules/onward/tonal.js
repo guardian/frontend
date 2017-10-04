@@ -30,14 +30,6 @@ class TonalComponent extends Component {
     }
 
     static ready(): void {
-        if (document.body) {
-            const container = document.body.querySelector('.tone-feature');
-
-            if (container) {
-                mediator.emit('page:new-content', container);
-            }
-        }
-
         mediator.emit('modules:tonal:loaded');
         end('tonal-content');
     }

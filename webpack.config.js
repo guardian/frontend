@@ -32,7 +32,7 @@ module.exports = {
             __dirname,
             'static',
             'src',
-            'javascripts-legacy',
+            'javascripts',
             'bootstraps',
             'youtube-embed.js'
         ),

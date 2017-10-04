@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "engines": {
-    "yarn": "0.28.4"
+    "yarn": "1.1.0"
   },
   "dependencies": {
     "bean": "~1.0.14",
