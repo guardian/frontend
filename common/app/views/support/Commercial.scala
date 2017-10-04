@@ -3,12 +3,12 @@ package views.support
 import com.gu.commercial.branding._
 import common.Edition
 import common.commercial._
-import conf.switches.Switches
 import layout.{ColumnAndCards, ContentCard, FaciaContainer, PaidCard}
 import model.{Page, PressedPage}
 import org.apache.commons.lang.StringEscapeUtils._
 import play.api.libs.json.JsBoolean
 import play.api.mvc.RequestHeader
+import play.twirl.api.Html
 
 object Commercial {
   def isAdFree(request: RequestHeader): Boolean = {
@@ -87,6 +87,15 @@ object Commercial {
     }
 
     allSponsors map (_ map escapeJavaScript)
+  }
+
+  def pageSponsorNames(page: Page, key: String)(implicit request: RequestHeader): Html = Html {
+    if (isBrandedContent(page)) {
+      listSponsorLogosOnPage(page) match {
+        case Some(logos) => s"&$key=${logos.mkString("|")}"
+        case _ => ""
+      }
+    } else { "" }
   }
 
   def brandingType(page: Page)(implicit request: RequestHeader): Option[BrandingType] = for {
