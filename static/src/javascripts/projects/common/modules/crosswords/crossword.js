@@ -10,7 +10,7 @@ import debounce from 'lodash/functions/debounce';
 import zip from 'lodash/arrays/zip';
 import { Clues } from 'common/modules/crosswords/clues';
 import { Controls } from 'common/modules/crosswords/controls';
-import HiddenInput from 'common/modules/crosswords/hidden-input';
+import { HiddenInput } from 'common/modules/crosswords/hidden-input';
 import { Grid } from 'common/modules/crosswords/grid';
 import {
     buildClueMap,
