@@ -3,7 +3,7 @@ import urlUtils from 'lib/url';
 import buildPageTargeting from 'commercial/modules/build-page-targeting';
 
 function getAdUrl() {
-    var queryParams = {
+    const queryParams = {
         ad_rule: 1,
         correlator: new Date().getTime(),
         cust_params: encodeURIComponent(urlUtils.constructQuery(buildPageTargeting.buildPageTargeting())),
