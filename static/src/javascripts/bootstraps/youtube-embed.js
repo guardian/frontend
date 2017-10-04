@@ -1,14 +1,9 @@
-define([
-    'bootstraps/enhanced/youtube'
-], function (
-    youtube
-) {
+import youtube from 'bootstraps/enhanced/youtube';
 
-    function init() {
-        youtube.init();
-    }
+function init() {
+    youtube.init();
+}
 
-    return {
-        init: init
-    };
-});
+export default {
+    init: init
+};
