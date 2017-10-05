@@ -20,7 +20,7 @@ import { waitForCheck } from 'common/modules/check-mediator';
 
 import type { SpacefinderRules } from 'common/modules/spacefinder.js';
 
-type ListConfig = {
+export type ListConfig = {
     listId: string,
     listName: string,
     campaignCode: string,
