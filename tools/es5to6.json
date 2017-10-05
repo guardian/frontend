@@ -12,7 +12,6 @@
   "Gustav Pursche": [
     "projects/common/modules/component.js",
     "projects/common/modules/discussion/whole-discussion.js",
-    "projects/common/modules/discussion/discussion-frontend.js",
     "projects/common/modules/atoms/story-questions.js"
   ],
   "GHaberis": [
