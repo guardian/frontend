@@ -5,7 +5,7 @@ import fetch from 'lib/fetch';
 import config from 'lib/config';
 import reportError from 'lib/report-error';
 import formatters from 'membership/formatters';
-import stripe from 'membership/stripe';
+import { display } from 'membership/stripe';
 
 const CARD_DETAILS = '.js-mem-card-details';
 const PAYPAL = '.js-mem-paypal';
@@ -137,7 +137,7 @@ const populateUserDetails = (userDetails: UserDetails): void => {
         );
     } else if (userDetails.subscription.card) {
         // only show card details if user hasn't changed their subscription and has stripe as payment method
-        stripe.display(
+        display(
             CARD_DETAILS,
             userDetails.subscription.card,
             userDetails.subscription.card.stripePublicKeyForUpdate

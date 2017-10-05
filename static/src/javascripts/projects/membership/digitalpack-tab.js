@@ -4,7 +4,7 @@ import fetch from 'lib/fetch';
 import config from 'lib/config';
 import reportError from 'lib/report-error';
 import formatters from 'membership/formatters';
-import stripe from 'membership/stripe';
+import { display } from 'membership/stripe';
 
 const PACKAGE_COST = '.js-dig-package-cost';
 const PAYMENT_FORM = '.js-dig-card-details';
@@ -79,7 +79,7 @@ const populateUserDetails = (userDetails: UserDetails): void => {
         $(NOTIFICATION_CANCEL).removeClass(IS_HIDDEN_CLASSNAME);
         $(DIGITALPACK_DETAILS).addClass(IS_HIDDEN_CLASSNAME);
     } else if (userDetails.subscription.card) {
-        stripe.display(
+        display(
             PAYMENT_FORM,
             userDetails.subscription.card,
             userDetails.subscription.card.stripePublicKeyForUpdate

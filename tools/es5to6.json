@@ -28,9 +28,7 @@
     "projects/common/modules/ui/selection-sharing.js",
     "projects/common/modules/ui/last-modified.js"
   ],
-  "Alex Ware": [
-    "projects/membership/stripe.js"
-  ],
+  "Alex Ware": [],
   "natalialkb": [
     "projects/common/modules/gallery/lightbox.js"
   ]
