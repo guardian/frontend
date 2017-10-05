@@ -147,13 +147,15 @@ const renderTable = (competition, extras, template) => {
 
 const loading = (elem, message, link) => {
     bonzo(elem).append(
-        bonzo.create(
-            `${'<div class="loading">' +
-                '<div class="loading__message">'}${message ||
-                'Loading…'}</div>${link
-                ? `<a href="${link.href}" class="loading__link">${link.text}</a>`
-                : ''}<div class="loading__animation"></div>` + `</div>`
-        )
+        bonzo.create(`
+            <div class="loading">
+                <div class="loading__message">${message || 'Loading…'}</div>
+                ${link
+                    ? `<a href="${link.href}" class="loading__link">${link.text}</a>`
+                    : ''}
+                <div class="loading__animation"></div>
+            </div>
+        `)
     );
 };
 
