@@ -13,6 +13,7 @@ const focusSearchField = (): void => {
     }
 };
 
+// TODO refactor to singleton
 class Search {
     gcsUrl: string;
     resultSetSize: number;
@@ -91,7 +92,10 @@ class Search {
         let s;
         let x;
 
-        const container = document.querySelector('.js-search-placeholder');
+        const containers = [
+            ...document.querySelectorAll('.js-search-placeholder'),
+        ];
+        const container = containers[0];
 
         // Set so Google know what to do
         // eslint-disable-next-line no-underscore-dangle
@@ -100,7 +104,7 @@ class Search {
         };
 
         // Unload any search placeholders elsewhere in the DOM
-        [...document.querySelectorAll('.js-search-placeholder')].forEach(c => {
+        containers.forEach(c => {
             if (c !== container) {
                 fastdom.write(() => {
                     c.innerHTML = '';
