@@ -8,6 +8,9 @@ import { logError } from 'lib/robust';
 import userPrefs from 'common/modules/user-prefs';
 import { getUserEmailSignUps } from 'common/modules/identity/api';
 
+import type bonzo from 'bonzo';
+import type { ListConfig } from 'common/modules/email/email-article';
+
 let emailShown;
 let userListSubsChecked = false;
 let userListSubs = [];
@@ -26,8 +29,7 @@ const userHasRemoved = (id: string, formType: string): boolean => {
 const userHasSeenThisSession = (): boolean =>
     !!session.get('email-sign-up-seen');
 
-// TODO: confirm these types
-const buildUserSubscriptions = (response: Object): Array<number> => {
+const buildUserSubscriptions = (response: Object): Array<string> => {
     if (
         response &&
         response.status !== 'error' &&
@@ -120,7 +122,7 @@ const allEmailCanRun = (): boolean =>
     (config.get('page.contentId') &&
         config.get('page.contentId').indexOf('email-sign-up') === -1) &&
     config.get('switches.emailInArticle') &&
-    session.isAvailable() &&
+    !!session.isAvailable() &&
     !userHasSeenThisSession() &&
     typeof getUserAgent === 'object' &&
     !(
@@ -128,7 +130,7 @@ const allEmailCanRun = (): boolean =>
         ['7', '8', '9'].includes(getUserAgent.version)
     );
 
-const getUserEmailSubscriptions = (): Promise<Array<number>> => {
+const getUserEmailSubscriptions = (): Promise<?Array<string>> => {
     if (userListSubsChecked) {
         return Promise.resolve(userListSubs);
     }
@@ -139,8 +141,7 @@ const getUserEmailSubscriptions = (): Promise<Array<number>> => {
         });
 };
 
-// TODO: use ListConfig type
-const listCanRun = (listConfig: Object): Object => {
+const listCanRun = (listConfig: ListConfig): ?ListConfig => {
     if (
         listConfig.listName &&
         canRunList[listConfig.listName]() &&
