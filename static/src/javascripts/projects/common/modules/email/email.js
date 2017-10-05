@@ -51,7 +51,9 @@ const replaceContent = (isSuccess: boolean, $form: bonzo): void => {
     const submissionMessage = isSuccess
         ? formData.customSuccessDesc || messages.defaultSuccessDesc
         : 'Please try again.';
-    const submissionIcon = isSuccess ? inlineSvg('tick') : inlineSvg('crossIcon');
+    const submissionIcon = isSuccess
+        ? inlineSvg('tick')
+        : inlineSvg('crossIcon');
     const submissionHtml = `
         <div class="email-sub__message ${statusClass}" role="alert" aria-live="assertive">
             ${submissionIcon}
@@ -241,7 +243,7 @@ const submitForm = (
 ): (Event => ?Promise<any>) => {
     // simplistic email address validation to prevent misfired omniture events
     const validate = (emailAddress: string): boolean =>
-        typeof emailAddress === 'string' && emailAddress.indexOf('@') > -1;
+        emailAddress.includes('@');
 
     return event => {
         const emailAddress = $(`.${classes.textInput}`, $form).val();
@@ -360,7 +362,7 @@ const initEmail = (iframeEl?: HTMLIFrameElement): void => {
     if (
         typeof getUserAgent === 'object' &&
         getUserAgent.browser === 'MSIE' &&
-        ['7', '8', '9'].includes(`${getUserAgent.version}`)
+        ['7', '8', '9'].includes(getUserAgent.version)
     ) {
         $('.js-footer__secondary').addClass('l-footer__secondary--no-email');
         $('.js-footer__email-container', '.js-footer__secondary').addClass(
