@@ -3,7 +3,7 @@ import $ from 'lib/$';
 import bean from 'bean';
 import bonzo from 'bonzo';
 import fastdom from 'fastdom';
-import email from 'common/modules/email/email';
+import { initEmail } from 'common/modules/email/email';
 import config from 'lib/config';
 import iframeTemplate from 'raw-loader!common/views/email/iframe.html';
 import template from 'lodash/utilities/template';
@@ -249,7 +249,7 @@ const addListToPage = (
     };
 
     bean.on(iframe, 'load', () => {
-        email.init(iframe);
+        initEmail(iframe);
     });
 
     if (listConfig.insertMethod) {
