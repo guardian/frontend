@@ -14,9 +14,9 @@ function buildEventId(event, videoId) {
 
 function initYoutubeEvents(videoId) {
 
-    var gaTracker = config.googleAnalytics.trackers.editorial;
+    const gaTracker = config.googleAnalytics.trackers.editorial;
 
-    var events = {
+    const events = {
         metricMap: {
             'play': 'metric1',
             'skip': 'metric2',
@@ -34,11 +34,11 @@ function initYoutubeEvents(videoId) {
         }
     };
 
-    var eventsList = ['play', '25', '50', '75', 'end'];
+    const eventsList = ['play', '25', '50', '75', 'end'];
 
-    forEach(eventsList, function(event) {
-        mediator.once(buildEventId(event, videoId), function(id) {
-            var mediaEvent = MediaEvent(videoId, 'video', event);
+    forEach(eventsList, event => {
+        mediator.once(buildEventId(event, videoId), id => {
+            const mediaEvent = MediaEvent(videoId, 'video', event);
             ophanRecord(mediaEvent);
             window.ga(gaTracker + '.send', 'event',
                 gaHelper.buildGoogleAnalyticsEvent(mediaEvent, events.metricMap, id,
@@ -47,7 +47,7 @@ function initYoutubeEvents(videoId) {
     });
 
     function ophanRecord(event) {
-        var eventObject = {
+        const eventObject = {
             video: {
                 id: 'gu-video-youtube-' + event.mediaId,
                 eventType: 'video:content:' + event.eventType
@@ -67,9 +67,9 @@ function initYoutubeEvents(videoId) {
  */
 function MediaEvent(mediaId, mediaType, eventType) {
     return {
-        mediaId: mediaId,
-        mediaType: mediaType,
-        eventType: eventType
+        mediaId,
+        mediaType,
+        eventType
     };
 }
 
@@ -82,6 +82,6 @@ function track(event, id) {
 }
 
 export default {
-    track: track,
-    init: init
+    track,
+    init
 };
