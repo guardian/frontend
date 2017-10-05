@@ -2,17 +2,17 @@ import mediator from 'lib/mediator';
 import storage from 'lib/storage';
 import google from 'common/modules/analytics/google';
 import robust from 'lib/robust';
-var NG_STORAGE_KEY = 'gu.analytics.referrerVars';
-var loc = document.location;
+const NG_STORAGE_KEY = 'gu.analytics.referrerVars';
+let loc = document.location;
 
 function addHandlers() {
     mediator.on('module:clickstream:interaction', trackNonClickInteraction);
 
-    mediator.on('module:clickstream:click', function(spec) {
+    mediator.on('module:clickstream:click', spec => {
         // We don't want tracking errors to terminate the event emitter, as
         // this will mean other event listeners will not be called.
         robust.catchErrorsWithContext([
-            ['c-analytics', function() {
+            ['c-analytics', () => {
                 trackClick(spec);
             }],
         ]);
@@ -59,7 +59,7 @@ function trackInternalLinkClick(spec) {
     // Store in session storage.
     // GA and Omniture will both pick it up on next page load,
     // then Omniture will remove it from storage.
-    var storeObj = {
+    const storeObj = {
         path: loc.pathname,
         tag: spec.tag || 'untracked',
         time: new Date().getTime()
@@ -74,8 +74,7 @@ function trackExternalLinkClick(spec) {
     google.trackExternalLinkClick(spec.target, spec.tag);
 }
 
-function init(options) {
-    options = options || {};
+function init(options = {}) {
     if (options.location) {
         loc = options.location; // allow a fake location to be passed in for testing
     }
@@ -84,7 +83,7 @@ function init(options) {
 }
 
 export default {
-    init: init,
-    trackClick: trackClick,
-    trackNonClickInteraction: trackNonClickInteraction
+    init,
+    trackClick,
+    trackNonClickInteraction
 };
