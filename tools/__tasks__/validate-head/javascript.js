@@ -87,9 +87,7 @@ module.exports = {
                     );
 
                     if (jsFiles.length) {
-                        return execa('yarn', ['flow'], {
-                            stdout: 'inherit',
-                        });
+                        return execa('yarn', ['flow']);
                     }
 
                     return Promise.resolve();
