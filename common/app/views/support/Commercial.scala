@@ -89,13 +89,20 @@ object Commercial {
     allSponsors map (_ map escapeJavaScript)
   }
 
-  def pageSponsorNames(page: Page, key: String)(implicit request: RequestHeader): Html = Html {
+  def getSponsorForGA(page: Page, key: String)(implicit request: RequestHeader): Html = Html {
     if (isBrandedContent(page)) {
       listSponsorLogosOnPage(page) match {
         case Some(logos) => s"&$key=${logos.mkString("|")}"
         case _ => ""
       }
     } else { "" }
+  }
+
+  def getBrandingTypeForGA(page: Page, key: String)(implicit request: RequestHeader): Html = Html {
+    brandingType(page) match {
+      case Some(branding) => s"&$key=${branding.name}"
+      case _ => ""
+    }
   }
 
   def brandingType(page: Page)(implicit request: RequestHeader): Option[BrandingType] = for {
