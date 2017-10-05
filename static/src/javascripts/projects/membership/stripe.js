@@ -1,10 +1,29 @@
 // @flow
-/* global StripeCheckout */
 import $ from 'lib/$';
 import bean from 'bean';
 import fetch from 'lib/fetch';
 import config from 'lib/config';
 import fastdom from 'fastdom';
+
+declare var StripeCheckout: {
+    configure: ({
+        key: string,
+        locale: string,
+        name: string,
+        allowRememberMe: boolean,
+        image: string,
+    }) => {
+        open: ({
+            email: string,
+            description: string,
+            panelLabel: string,
+            token: ({ id: string }) => void,
+            closed: () => void,
+            key: string,
+        }) => void,
+        close: () => void,
+    },
+};
 
 const checkoutHandler = StripeCheckout.configure({
     key: config.get('page.stripePublicToken'),
@@ -86,7 +105,8 @@ export const display = (
      * token: (one standard issue stripe token)
      *   -id: string of the stripe token id
      */
-    const update = (endpoint: string): void => token => {
+    type Updater = string => ({ id: string }) => void;
+    const update: Updater = endpoint => token => {
         loading.send();
         fetch(endpoint, {
             mode: 'cors',
@@ -114,7 +134,7 @@ export const display = (
     /*
      * Closes over the event handler for the Change Card button
      */
-    const handler = (): void => {
+    const handler: () => Event => void = () => {
         const product = $parent.data('product');
         const endpoint = `${config.page
             .userAttributesApiUrl}/me/${product}-update-card`;
