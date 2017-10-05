@@ -5,7 +5,7 @@ import fetch from 'lib/fetch';
 import config from 'lib/config';
 import fastdom from 'fastdom';
 
-var checkoutHandler = StripeCheckout.configure({
+const checkoutHandler = StripeCheckout.configure({
     key: config.page.stripePublicToken,
     locale: 'auto',
     name: 'The Guardian',
@@ -20,58 +20,58 @@ var checkoutHandler = StripeCheckout.configure({
  *   */
 
 function display(parent, card, key) {
-    var $parent = $(parent);
-    var $number = $('.js-manage-account-card', $parent);
-    var $last4 = $('.js-manage-account-card-last4', $parent);
-    var $type = $('.js-manage-account-card-type', $parent);
-    var $button = $('.js-manage-account-change-card', $parent);
-    var $updating = $('.js-updating', $parent);
+    const $parent = $(parent);
+    const $number = $('.js-manage-account-card', $parent);
+    const $last4 = $('.js-manage-account-card-last4', $parent);
+    const $type = $('.js-manage-account-card-type', $parent);
+    const $button = $('.js-manage-account-change-card', $parent);
+    const $updating = $('.js-updating', $parent);
 
     key = key || config.page.stripePublicToken;
     /*  show/hide
      *   once we've sent the token, we don't want to change the state of the dots until we redisplay
      * */
-    var loading = function() {
-        var HIDDEN = 'is-hidden';
-        var $elems = [$button, $number, $type, $last4];
-        var sent = false;
-        var showDots = function() {
+    const loading = (() => {
+        const HIDDEN = 'is-hidden';
+        const $elems = [$button, $number, $type, $last4];
+        let sent = false;
+        const showDots = () => {
             if (sent) {
                 return;
             }
-            $elems.forEach(function($e) {
+            $elems.forEach($e => {
                 $e.addClass(HIDDEN);
             });
             $updating.removeClass(HIDDEN);
         };
-        var hideDots = function() {
+        const hideDots = () => {
             if (sent) {
                 return;
             }
-            $elems.forEach(function($e) {
+            $elems.forEach($e => {
                 $e.removeClass(HIDDEN);
             });
             $updating.addClass(HIDDEN);
         };
-        var send = function() {
+        const send = () => {
             sent = true;
         };
         return {
-            send: send,
-            showDots: showDots,
-            hideDots: hideDots
+            send,
+            showDots,
+            hideDots
         };
-    }();
+    })();
 
     //Decode and display card
-    var oldCardType = $type.data('type');
-    var newCardType = 'i-' + card.type.toLowerCase().replace(' ', '-');
+    const oldCardType = $type.data('type');
+    const newCardType = 'i-' + card.type.toLowerCase().replace(' ', '-');
 
     bean.off($button[0], 'click');
 
     bean.on($button[0], 'click', handler());
 
-    fastdom.write(function() {
+    fastdom.write(() => {
         if (oldCardType) {
             $type.removeClass(oldCardType);
         }
@@ -88,20 +88,20 @@ function display(parent, card, key) {
      */
     function handler() {
 
-        var product = $parent.data('product');
-        var endpoint = config.page.userAttributesApiUrl + '/me/' + product + '-update-card';
-        var email = $button.data('email');
-        return function(e) {
+        const product = $parent.data('product');
+        const endpoint = config.page.userAttributesApiUrl + '/me/' + product + '-update-card';
+        const email = $button.data('email');
+        return e => {
             e.preventDefault();
             fastdom.write(loading.showDots);
 
             checkoutHandler.open({
-                key: key,
-                email: email,
+                key,
+                email,
                 description: 'Update your card details',
                 panelLabel: 'Update',
                 token: update(endpoint),
-                closed: function() {
+                closed() {
                     fastdom.write(loading.hideDots);
                 }
             });
@@ -114,7 +114,7 @@ function display(parent, card, key) {
              https://stripe.com/docs/checkout#integration-custom
 
              Close Checkout on page navigation: */
-            window.addEventListener('popstate', function() {
+            window.addEventListener('popstate', () => {
                 checkoutHandler.close();
             });
 
@@ -126,7 +126,7 @@ function display(parent, card, key) {
      *   -id: string of the stripe token id
      */
     function update(endpoint) {
-        return function(token) {
+        return token => {
             loading.send();
             fetch(endpoint, {
                 mode: 'cors',
@@ -138,12 +138,10 @@ function display(parent, card, key) {
                 body: {
                     stripeToken: token.id
                 },
-            }).then(function(resp) {
-                return resp.json();
-            }).then(function(json) {
-                var card = json;
+            }).then(resp => resp.json()).then(json => {
+                const card = json;
                 display($parent, card);
-            }).catch(function() {
+            }).catch(() => {
                 $parent.text('We have not been able to update your card details at this time.');
             });
         };
@@ -151,5 +149,5 @@ function display(parent, card, key) {
 }
 
 export default {
-    display: display
+    display
 };
