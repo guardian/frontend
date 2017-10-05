@@ -1,3 +1,4 @@
+// @flow
 /* global StripeCheckout */
 import $ from 'lib/$';
 import bean from 'bean';
@@ -6,11 +7,11 @@ import config from 'lib/config';
 import fastdom from 'fastdom';
 
 const checkoutHandler = StripeCheckout.configure({
-    key: config.page.stripePublicToken,
+    key: config.get('page.stripePublicToken'),
     locale: 'auto',
     name: 'The Guardian',
     allowRememberMe: false,
-    image: 'https://d24w1tjgih0o9s.cloudfront.net/gu.png'
+    image: 'https://d24w1tjgih0o9s.cloudfront.net/gu.png',
 });
 
 /* Renders the card details
@@ -19,7 +20,11 @@ const checkoutHandler = StripeCheckout.configure({
  *   -type:  string of card type (capitalised)
  *   */
 
-function display(parent, card, key) {
+export const display = (
+    parent: string,
+    card: StripeCard,
+    maybeKey: ?string
+): void => {
     const $parent = $(parent);
     const $number = $('.js-manage-account-card', $parent);
     const $last4 = $('.js-manage-account-card-last4', $parent);
@@ -27,7 +32,6 @@ function display(parent, card, key) {
     const $button = $('.js-manage-account-change-card', $parent);
     const $updating = $('.js-updating', $parent);
 
-    key = key || config.page.stripePublicToken;
     /*  show/hide
      *   once we've sent the token, we don't want to change the state of the dots until we redisplay
      * */
@@ -35,7 +39,7 @@ function display(parent, card, key) {
         const HIDDEN = 'is-hidden';
         const $elems = [$button, $number, $type, $last4];
         let sent = false;
-        const showDots = () => {
+        const showDots = (): void => {
             if (sent) {
                 return;
             }
@@ -59,17 +63,13 @@ function display(parent, card, key) {
         return {
             send,
             showDots,
-            hideDots
+            hideDots,
         };
     })();
 
-    //Decode and display card
+    // Decode and display card
     const oldCardType = $type.data('type');
-    const newCardType = 'i-' + card.type.toLowerCase().replace(' ', '-');
-
-    bean.off($button[0], 'click');
-
-    bean.on($button[0], 'click', handler());
+    const newCardType = `i-${card.type.toLowerCase().replace(' ', '-')}`;
 
     fastdom.write(() => {
         if (oldCardType) {
@@ -82,28 +82,56 @@ function display(parent, card, key) {
         loading.hideDots();
     });
 
+    /* Takes the stripe token from callback and posts it to members data api
+     * token: (one standard issue stripe token)
+     *   -id: string of the stripe token id
+     */
+    const update = (endpoint: string): void => token => {
+        loading.send();
+        fetch(endpoint, {
+            mode: 'cors',
+            credentials: 'include',
+            method: 'post',
+            headers: {
+                'Csrf-Token': 'nocheck',
+            },
+            body: {
+                stripeToken: token.id,
+            },
+        })
+            .then(resp => resp.json())
+            .then(json => {
+                const newCard = json;
+                display($parent, newCard);
+            })
+            .catch(() => {
+                $parent.text(
+                    'We have not been able to update your card details at this time.'
+                );
+            });
+    };
 
     /*
      * Closes over the event handler for the Change Card button
      */
-    function handler() {
-
+    const handler = (): void => {
         const product = $parent.data('product');
-        const endpoint = config.page.userAttributesApiUrl + '/me/' + product + '-update-card';
+        const endpoint = `${config.page
+            .userAttributesApiUrl}/me/${product}-update-card`;
         const email = $button.data('email');
         return e => {
             e.preventDefault();
             fastdom.write(loading.showDots);
-
+            const key = maybeKey ? { key: maybeKey } : {};
             checkoutHandler.open({
-                key,
                 email,
                 description: 'Update your card details',
                 panelLabel: 'Update',
                 token: update(endpoint),
                 closed() {
                     fastdom.write(loading.hideDots);
-                }
+                },
+                ...key,
             });
             /*
              Nonstandard javascript alert:
@@ -117,37 +145,10 @@ function display(parent, card, key) {
             window.addEventListener('popstate', () => {
                 checkoutHandler.close();
             });
-
         };
-    }
+    };
 
-    /* Takes the stripe token from callback and posts it to members data api
-     * token: (one standard issue stripe token)
-     *   -id: string of the stripe token id
-     */
-    function update(endpoint) {
-        return token => {
-            loading.send();
-            fetch(endpoint, {
-                mode: 'cors',
-                credentials: 'include',
-                method: 'post',
-                headers: {
-                    'Csrf-Token': 'nocheck'
-                },
-                body: {
-                    stripeToken: token.id
-                },
-            }).then(resp => resp.json()).then(json => {
-                const card = json;
-                display($parent, card);
-            }).catch(() => {
-                $parent.text('We have not been able to update your card details at this time.');
-            });
-        };
-    }
-}
+    bean.off($button[0], 'click');
 
-export default {
-    display
+    bean.on($button[0], 'click', handler());
 };
