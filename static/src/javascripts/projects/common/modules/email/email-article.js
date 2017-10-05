@@ -20,21 +20,24 @@ const insertBottomOfArticle = ($iframeEl: bonzo): void => {
     fastdom.write(() => $iframeEl.prependTo('.content-footer'));
 };
 
-type ListConfigs = {
-    [key: string]: {
-        listId: string,
-        listName: string,
-        campaignCode: string,
-        displayName: {
-            normalText: string,
-            accentedText: string,
-        },
-        headline: string,
-        description: string,
-        successHeadline: string,
-        successDescription: string,
-        insertMethod: Function,
+type ListConfig = {
+    listId: string,
+    listName: string,
+    campaignCode: string,
+    displayName: {
+        normalText: string,
+        accentedText: string,
     },
+    headline: string,
+    description: string,
+    successHeadline: string,
+    successDescription: string,
+    insertMethod: Function,
+    successEventName?: string,
+};
+
+type ListConfigs = {
+    [key: string]: ListConfig,
 };
 
 const listConfigs: ListConfigs = {
@@ -232,37 +235,39 @@ const spacefinderRules: SpacefinderRules = {
     },
 };
 
-const addListToPage = (listConfig: Object, successEventName: ?string): void => {
-    if (listConfig) {
-        listConfig.successEventName = successEventName || '';
-        const iframe = bonzo.create(template(iframeTemplate, listConfig))[0];
-        const $iframeEl = $(iframe);
-        const onEmailAdded = () => {
-            emailRunChecks.setEmailShown(listConfig.listName);
-            session.set('email-sign-up-seen', 'true');
-        };
+const addListToPage = (
+    listConfig: ListConfig,
+    successEventName: string = ''
+): void => {
+    const iframe = bonzo.create(
+        template(iframeTemplate, { ...listConfig, ...{ successEventName } })
+    )[0];
+    const $iframeEl = $(iframe);
+    const onEmailAdded = () => {
+        emailRunChecks.setEmailShown(listConfig.listName);
+        session.set('email-sign-up-seen', 'true');
+    };
 
-        bean.on(iframe, 'load', () => {
-            email.init(iframe);
+    bean.on(iframe, 'load', () => {
+        email.init(iframe);
+    });
+
+    if (listConfig.insertMethod) {
+        fastdom.write(() => {
+            listConfig.insertMethod($iframeEl);
+            trackNonClickInteraction(
+                `rtrt | email form inline | article | ${listConfig.listId} | sign-up shown`
+            );
+            onEmailAdded();
         });
-
-        if (listConfig.insertMethod) {
-            fastdom.write(() => {
-                listConfig.insertMethod($iframeEl);
-                trackNonClickInteraction(
-                    `rtrt | email form inline | article | ${listConfig.listId} | sign-up shown`
-                );
-                onEmailAdded();
-            });
-        } else {
-            spaceFiller.fillSpace(spacefinderRules, paras => {
-                $iframeEl.insertBefore(paras[0]);
-                trackNonClickInteraction(
-                    `rtrt | email form inline | article | ${listConfig.listId} | sign-up shown`
-                );
-                onEmailAdded();
-            });
-        }
+    } else {
+        spaceFiller.fillSpace(spacefinderRules, paras => {
+            $iframeEl.insertBefore(paras[0]);
+            trackNonClickInteraction(
+                `rtrt | email form inline | article | ${listConfig.listId} | sign-up shown`
+            );
+            onEmailAdded();
+        });
     }
 };
 
@@ -277,13 +282,14 @@ const init = (): void => {
                         emailRunChecks
                             .getUserEmailSubscriptions()
                             .then(() => {
-                                const [listConfig] =
-                                    Object.entries(
-                                        listConfigs
-                                    ).find(([, value]) =>
-                                        emailRunChecks.listCanRun(value)
-                                    ) || [];
-                                addListToPage(listConfigs[listConfig]);
+                                const listConfig = Object.keys(
+                                    listConfigs
+                                ).find(key =>
+                                    emailRunChecks.listCanRun(listConfigs[key])
+                                );
+                                if (listConfig) {
+                                    addListToPage(listConfigs[listConfig]);
+                                }
                             })
                             .catch(error => {
                                 logError('c-email', error);
