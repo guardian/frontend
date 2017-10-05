@@ -8,7 +8,10 @@ import mediator from 'lib/mediator';
 import reportError from 'lib/report-error';
 import { Loader } from './loader';
 
-const loadDiscussionFrontend = (loader: Loader, opts: Object) => {
+const loadDiscussionFrontend = (
+    loader: Loader,
+    opts: Object
+): Promise<void> => {
     const updateCommentCount = (element: HTMLElement, value: number): void => {
         const formatted = integerCommas(value);
 
