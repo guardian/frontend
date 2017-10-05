@@ -63,7 +63,7 @@ const displayErrorMessage = (): void => {
     $(ERROR).removeClass(IS_HIDDEN_CLASSNAME);
 };
 
-const populateUserDetails = (userDetails: UserDetails) => {
+const populateUserDetails = (userDetails: UserDetails): void => {
     const isMonthly = userDetails.subscription.plan.interval === 'month';
     const intervalText = isMonthly ? 'Monthly' : 'Annual';
     const glyph = userDetails.subscription.plan.currency;
