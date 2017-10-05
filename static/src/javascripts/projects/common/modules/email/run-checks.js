@@ -12,20 +12,22 @@ let emailShown;
 let userListSubsChecked = false;
 let userListSubs = [];
 
-const pageHasBlanketBlacklist = () =>
+const pageHasBlanketBlacklist = (): boolean =>
     // Prevent the blanket emails from ever showing on certain keywords or sections
     keywordExists(['US elections 2016', 'Football']) ||
     config.get('page.section') === 'film' ||
     config.get('page.seriesId') === 'world/series/guardian-morning-briefing';
 
-const userHasRemoved = (id, formType) => {
+const userHasRemoved = (id: string, formType: string): boolean => {
     const currentListPrefs = userPrefs.get(`email-sign-up-${formType}`);
-    return currentListPrefs && currentListPrefs.indexOf(id) > -1;
+    return !!currentListPrefs && currentListPrefs.includes(id);
 };
 
-const userHasSeenThisSession = () => !!session.get('email-sign-up-seen');
+const userHasSeenThisSession = (): boolean =>
+    !!session.get('email-sign-up-seen');
 
-const buildUserSubscriptions = response => {
+// TODO: confirm these types
+const buildUserSubscriptions = (response: Object): Array<number> => {
     if (
         response &&
         response.status !== 'error' &&
@@ -39,9 +41,10 @@ const buildUserSubscriptions = response => {
     return userListSubs;
 };
 
-const isParagraph = $el => $el.nodeName && $el.nodeName === 'P';
+const isParagraph = ($el: bonzo): boolean =>
+    !!$el.nodeName && $el.nodeName === 'P';
 
-const allowedArticleStructure = () => {
+const allowedArticleStructure = (): boolean => {
     const $articleBody = $('.js-article__body');
 
     if ($articleBody.length) {
@@ -55,62 +58,62 @@ const allowedArticleStructure = () => {
 };
 
 const canRunList = {
-    theFilmToday() {
+    theFilmToday(): boolean {
         return config.get('page.section') === 'film';
     },
-    theFiver() {
+    theFiver(): boolean {
         return keywordExists(['Football']) && allowedArticleStructure();
     },
-    labNotes() {
+    labNotes(): boolean {
         return (
             config.get('page.section') === 'science' &&
             config.get('switches.emailSignupLabNotes')
         );
     },
-    euRef() {
+    euRef(): boolean {
         return (
             config.get('switches.emailSignupEuRef') &&
             keywordExists(['EU referendum']) &&
             allowedArticleStructure()
         );
     },
-    usBriefing() {
+    usBriefing(): boolean {
         return (
             (config.get('page.section') === 'us-news' &&
                 allowedArticleStructure()) ||
             config.get('page.series') === 'Guardian US briefing'
         );
     },
-    theGuardianToday() {
+    theGuardianToday(): boolean {
         return (
             config.get('switches.emailInArticleGtoday') &&
             !pageHasBlanketBlacklist() &&
             allowedArticleStructure()
         );
     },
-    sleevenotes() {
+    sleevenotes(): boolean {
         return config.get('page.section') === 'music';
     },
-    longReads() {
+    longReads(): boolean {
         return config.get('page.seriesId') === 'news/series/the-long-read';
     },
-    bookmarks() {
+    bookmarks(): boolean {
         return config.get('page.section') === 'books';
     },
-    greenLight() {
+    greenLight(): boolean {
         return config.get('page.section') === 'environment';
     },
 };
 
 // Public
 
-const setEmailShown = emailName => {
+const setEmailShown = (emailName: string): void => {
     emailShown = emailName;
 };
 
-const getEmailShown = () => emailShown;
+const getEmailShown = (): string => emailShown;
 
-const allEmailCanRun = () =>
+const allEmailCanRun = (): boolean =>
     !config.get('page.shouldHideAdverts') &&
     !config.get('page.isSensitive') &&
     !config.get('page.isFront') &&
@@ -125,7 +128,7 @@ const allEmailCanRun = () =>
         ['7', '8', '9'].includes(getUserAgent.version)
     );
 
-const getUserEmailSubscriptions = () => {
+const getUserEmailSubscriptions = (): Promise<Array<number>> => {
     if (userListSubsChecked) {
         return Promise.resolve(userListSubs);
     }
@@ -136,7 +139,8 @@ const getUserEmailSubscriptions = () => {
         });
 };
 
-const listCanRun = listConfig => {
+// TODO: use ListConfig type
+const listCanRun = (listConfig: Object): Object => {
     if (
         listConfig.listName &&
         canRunList[listConfig.listName]() &&
