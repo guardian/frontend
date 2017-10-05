@@ -3,7 +3,7 @@ import config from 'lib/config';
 import { constructQuery } from 'lib/url';
 import { buildPageTargeting } from 'commercial/modules/build-page-targeting';
 
-const videoAdUrl = () => {
+const videoAdUrl = (): string => {
     const queryParams = {
         ad_rule: 1,
         correlator: new Date().getTime(),
