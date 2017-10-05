@@ -11,9 +11,9 @@ import contains from 'lodash/collections/contains';
 import userPrefs from 'common/modules/user-prefs';
 import Id from 'common/modules/identity/api';
 
-var emailShown;
-var userListSubsChecked = false;
-var userListSubs = [];
+let emailShown;
+let userListSubsChecked = false;
+let userListSubs = [];
 
 function pageHasBlanketBlacklist() {
     // Prevent the blanket emails from ever showing on certain keywords or sections
@@ -23,7 +23,7 @@ function pageHasBlanketBlacklist() {
 }
 
 function userHasRemoved(id, formType) {
-    var currentListPrefs = userPrefs.get('email-sign-up-' + formType);
+    const currentListPrefs = userPrefs.get('email-sign-up-' + formType);
     return currentListPrefs && currentListPrefs.indexOf(id) > -1;
 }
 
@@ -45,50 +45,50 @@ function isParagraph($el) {
 }
 
 function allowedArticleStructure() {
-    var $articleBody = $('.js-article__body');
+    const $articleBody = $('.js-article__body');
 
     if ($articleBody.length) {
-        var allArticleEls = $('> *', $articleBody);
+        const allArticleEls = $('> *', $articleBody);
         return every([].slice.call(allArticleEls, allArticleEls.length - 2), isParagraph);
     } else {
         return false;
     }
 }
 
-var canRunList = {
-    theFilmToday: function() {
+const canRunList = {
+    theFilmToday() {
         return config.page.section === 'film';
     },
-    theFiver: function() {
+    theFiver() {
         return page.keywordExists(['Football']) && allowedArticleStructure();
     },
-    labNotes: function() {
+    labNotes() {
         return config.page.section === 'science' && config.switches.emailSignupLabNotes;
     },
-    euRef: function() {
+    euRef() {
         return config.switches.emailSignupEuRef &&
             page.keywordExists(['EU referendum']) &&
             allowedArticleStructure();
     },
-    usBriefing: function() {
+    usBriefing() {
         return (config.page.section === 'us-news' && allowedArticleStructure()) ||
             config.page.series === 'Guardian US briefing';
     },
-    theGuardianToday: function() {
+    theGuardianToday() {
         return config.switches.emailInArticleGtoday &&
             !pageHasBlanketBlacklist() &&
             allowedArticleStructure();
     },
-    sleevenotes: function() {
+    sleevenotes() {
         return config.page.section === "music";
     },
-    longReads: function() {
+    longReads() {
         return config.page.seriesId === 'news/series/the-long-read';
     },
-    bookmarks: function() {
+    bookmarks() {
         return config.page.section === "books";
     },
-    greenLight: function() {
+    greenLight() {
         return config.page.section === "environment";
     }
 };
@@ -104,8 +104,7 @@ function getEmailShown() {
 }
 
 function allEmailCanRun() {
-    var browser = detect.getUserAgent.browser,
-        version = detect.getUserAgent.version;
+    const browser = detect.getUserAgent.browser, version = detect.getUserAgent.version;
 
     return !config.page.shouldHideAdverts &&
         !config.page.isSensitive &&
@@ -123,7 +122,7 @@ function getUserEmailSubscriptions() {
     } else {
         return Id.getUserEmailSignUps()
             .then(buildUserSubscriptions)
-            .catch(function(error) {
+            .catch(error => {
                 robust.logError('c-email', error);
             });
     }
@@ -140,9 +139,9 @@ function listCanRun(listConfig) {
 }
 
 export default {
-    setEmailShown: setEmailShown,
-    getEmailShown: getEmailShown,
-    allEmailCanRun: allEmailCanRun,
-    getUserEmailSubscriptions: getUserEmailSubscriptions,
-    listCanRun: listCanRun
+    setEmailShown,
+    getEmailShown,
+    allEmailCanRun,
+    getUserEmailSubscriptions,
+    listCanRun
 };
