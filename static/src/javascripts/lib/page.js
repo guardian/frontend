@@ -4,7 +4,7 @@ import $ from 'lib/$';
 import config from 'lib/config';
 import { getBreakpoint } from 'lib/detect';
 
-type yesable = ?(arg: any) => boolean | void;
+type yesable = ?(arg: mixed) => boolean | void;
 type noable = ?() => boolean | void;
 
 // #? this is very hard to understand, what is it's purpose?

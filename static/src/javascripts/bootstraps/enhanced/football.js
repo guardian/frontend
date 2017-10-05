@@ -25,12 +25,12 @@ import { ScoreBoard } from 'common/modules/sport/score-board';
 import { addComponent } from 'common/modules/ui/rhc';
 import relativeDates from 'common/modules/ui/relativedates';
 
-const renderNav = (match, callback) => {
+const renderNav = (match: Object, callback): Promise<void> => {
     const matchInfo = new MatchInfo(match, config.get('pageId'));
 
     return matchInfo
         .fetch()
-        .then(resp => {
+        .then((resp: Object): void => {
             let $nav;
             if (resp.nav && resp.nav.trim().length > 0) {
                 $nav = $.create(resp.nav)
@@ -115,7 +115,7 @@ const renderExtras = (_extras, dropdownTemplate) => {
     }
 };
 
-const renderTable = (competition, extras, template) => {
+const renderTable = (competition: string, extras, template) => {
     extras[2] = {
         ready: false,
     };
@@ -169,7 +169,7 @@ const init = () => {
 
     let dropdownTemplate;
 
-    isMatch(match => {
+    isMatch((match: Object): void => {
         extras[0] = {
             ready: false,
         };
@@ -184,7 +184,7 @@ const init = () => {
                 autoupdated: match.isLive,
             });
 
-            renderNav(match, (resp, $nav, endpoint) => {
+            renderNav(match, (resp, $nav, endpoint): void => {
                 dropdownTemplate = resp.dropdown;
 
                 // Test if template is not composed of just whitspace. A content validation check, apparently.
@@ -225,7 +225,7 @@ const init = () => {
                 }
 
                 // Group table & Match day
-                isCompetition(competition => {
+                isCompetition((competition: string) => {
                     extras[1] = {
                         ready: false,
                     };
@@ -265,7 +265,7 @@ const init = () => {
         }
     });
 
-    isCompetition(competition => {
+    isCompetition((competition: string) => {
         const $rightHandCol = $('.js-secondary-column').dim().height;
         if ($rightHandCol === 0 || $rightHandCol > 1800) {
             renderTable(competition, extras, dropdownTemplate);
