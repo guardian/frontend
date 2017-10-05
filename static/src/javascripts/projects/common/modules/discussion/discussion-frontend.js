@@ -9,7 +9,7 @@ import reportError from 'lib/report-error';
 import { Loader } from './loader';
 
 const loadDiscussionFrontend = (loader: Loader, opts: Object) => {
-    const updateCommentCount = (element: HTMLElement, value: string): void => {
+    const updateCommentCount = (element: HTMLElement, value: number): void => {
         const formatted = integerCommas(value);
 
         if (formatted) {
@@ -19,12 +19,15 @@ const loadDiscussionFrontend = (loader: Loader, opts: Object) => {
         }
     };
 
-    const onDiscussionFrontendLoad = (emitter): void => {
+    /* emitter is a different mediator instance than lib/mediator */
+    const onDiscussionFrontendLoad = (emitter: mediator): void => {
         emitter.on('error', (feature, error) => {
             reportError(error, { feature: `discussion-${feature}` }, false);
         });
 
-        emitter.once('comment-count', (value: string): void => {
+        /* This event is emitted by a separate Preact comment count app, which is
+           located in https://github.com/guardian/discussion-frontend */
+        emitter.once('comment-count', (value: number): void => {
             if (value === 0) {
                 loader.setState('empty');
             } else {
