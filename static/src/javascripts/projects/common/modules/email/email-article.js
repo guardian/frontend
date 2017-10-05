@@ -16,10 +16,6 @@ import { waitForCheck } from 'common/modules/check-mediator';
 
 import type { SpacefinderRules } from 'common/modules/spacefinder.js';
 
-const insertBottomOfArticle = ($iframeEl: bonzo): void => {
-    fastdom.write(() => $iframeEl.prependTo('.content-footer'));
-};
-
 type ListConfig = {
     listId: string,
     listName: string,
@@ -32,12 +28,16 @@ type ListConfig = {
     description: string,
     successHeadline: string,
     successDescription: string,
-    insertMethod: Function,
+    insertMethod: bonzo => void,
     successEventName?: string,
 };
 
 type ListConfigs = {
     [key: string]: ListConfig,
+};
+
+const insertBottomOfArticle = ($iframeEl: bonzo): void => {
+    fastdom.write(() => $iframeEl.prependTo('.content-footer'));
 };
 
 const listConfigs: ListConfigs = {
