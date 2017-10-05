@@ -14,11 +14,30 @@ import { session } from 'lib/storage';
 import { trackNonClickInteraction } from 'common/modules/analytics/google';
 import { waitForCheck } from 'common/modules/check-mediator';
 
+import type { SpacefinderRules } from 'common/modules/spacefinder.js';
+
 const insertBottomOfArticle = ($iframeEl: bonzo): void => {
     fastdom.write(() => $iframeEl.prependTo('.content-footer'));
 };
 
-const listConfigs = {
+type ListConfigs = {
+    [key: string]: {
+        listId: string,
+        listName: string,
+        campaignCode: string,
+        displayName: {
+            normalText: string,
+            accentedText: string,
+        },
+        headline: string,
+        description: string,
+        successHeadline: string,
+        successDescription: string,
+        insertMethod: Function,
+    },
+};
+
+const listConfigs: ListConfigs = {
     theFilmToday: {
         listId: '1950',
         listName: 'theFilmToday',
@@ -185,7 +204,7 @@ const listConfigs = {
     },
 };
 
-const getSpacefinderRules = (): Object => ({
+const spacefinderRules: SpacefinderRules = {
     bodySelector: '.js-article__body',
     slotSelector: ' > p',
     minAbove: 200,
@@ -211,7 +230,7 @@ const getSpacefinderRules = (): Object => ({
             minBelow: 200,
         },
     },
-});
+};
 
 const addListToPage = (listConfig: Object, successEventName: ?string): void => {
     if (listConfig) {
@@ -236,7 +255,7 @@ const addListToPage = (listConfig: Object, successEventName: ?string): void => {
                 onEmailAdded();
             });
         } else {
-            spaceFiller.fillSpace(getSpacefinderRules(), paras => {
+            spaceFiller.fillSpace(spacefinderRules, paras => {
                 $iframeEl.insertBefore(paras[0]);
                 trackNonClickInteraction(
                     `rtrt | email form inline | article | ${listConfig.listId} | sign-up shown`
@@ -278,6 +297,6 @@ const init = (): void => {
         });
 };
 
-const getListConfigs = () => listConfigs;
+const getListConfigs = (): ListConfigs => listConfigs;
 
 export { init, getListConfigs };
