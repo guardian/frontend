@@ -19,7 +19,7 @@ import CommentCount from 'common/modules/discussion/comment-count';
 import CookieRefresh from 'common/modules/identity/cookierefresh';
 import { initNavigation } from 'common/modules/navigation/navigation';
 import { Profile } from 'common/modules/navigation/profile';
-import Search from 'common/modules/navigation/search';
+import { Search } from 'common/modules/navigation/search';
 import { initMembership } from 'common/modules/navigation/membership';
 import {
     logHistory,
@@ -46,8 +46,9 @@ import { init as initIdentity } from 'bootstraps/enhanced/identity-common';
 import ophan from 'ophan/ng';
 
 const initialiseTopNavItems = (): void => {
-    const search: Search = new Search();
     const header: ?HTMLElement = document.getElementById('header');
+
+    new Search();
 
     if (header) {
         if (config.switches.idProfileNavigation) {
@@ -57,8 +58,6 @@ const initialiseTopNavItems = (): void => {
             profile.init();
         }
     }
-
-    search.init();
 };
 
 const initialiseNavigation = (): void => {
