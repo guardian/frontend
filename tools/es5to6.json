@@ -1,7 +1,6 @@
 {
   "sndrs": [
-    "bootstraps/enhanced/football.js",
-    "projects/common/modules/email/email-article.js"
+    "bootstraps/enhanced/football.js"
   ],
   "Simon Adcock": [
     "projects/common/modules/email/email.js",
