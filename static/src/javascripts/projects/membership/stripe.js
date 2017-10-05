@@ -105,8 +105,8 @@ export const display = (
      * token: (one standard issue stripe token)
      *   -id: string of the stripe token id
      */
-    type Updater = string => ({ id: string }) => void;
-    const update: Updater = endpoint => token => {
+
+    const update: string => ({ id: string }) => void = endpoint => token => {
         loading.send();
         fetch(endpoint, {
             mode: 'cors',
