@@ -1,7 +1,10 @@
 // @flow
 import nextVideoAutoplay from 'commercial/modules/hosted/next-video-autoplay';
 import { initYoutubePlayer } from 'common/modules/atoms/youtube-player';
-import tracking from 'common/modules/atoms/youtube-tracking';
+import {
+    trackYoutubeEvent,
+    initYoutubeEvents,
+} from 'common/modules/atoms/youtube-tracking';
 import { isBreakpoint } from 'lib/detect';
 import mediator from 'lib/mediator';
 
@@ -29,7 +32,7 @@ const sendPercentageCompleteEvents = (
             !EVENTSFIRED.includes(key) &&
             youtubePlayer.getCurrentTime() > value
         ) {
-            tracking.track(key, atomId);
+            trackYoutubeEvent(key, atomId);
             EVENTSFIRED.push(key);
             mediator.emit(key);
         }
@@ -50,7 +53,7 @@ export const initHostedYoutube = (el: HTMLElement): void => {
 
     let playTimer;
 
-    tracking.init(atomId);
+    initYoutubeEvents(atomId);
     initYoutubePlayer(
         el,
         {
@@ -59,7 +62,7 @@ export const initHostedYoutube = (el: HTMLElement): void => {
 
                 // show end slate when movie finishes
                 if (event.data === window.YT.PlayerState.ENDED) {
-                    tracking.track('end', atomId);
+                    trackYoutubeEvent('end', atomId);
                     youtubeTimer.textContent = '0:00';
                     if (nextVideoAutoplay.canAutoplay()) {
                         // on mobile show the next video link in the end of the currently watching video
@@ -77,7 +80,7 @@ export const initHostedYoutube = (el: HTMLElement): void => {
                 }
 
                 if (event.data === window.YT.PlayerState.PLAYING) {
-                    tracking.track('play', atomId);
+                    trackYoutubeEvent('play', atomId);
                     const playerTotalTime = player.getDuration();
                     playTimer = setInterval(() => {
                         sendPercentageCompleteEvents(

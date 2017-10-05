@@ -1,7 +1,10 @@
 // @flow
 import fastdom from 'fastdom';
 import { initYoutubePlayer } from 'common/modules/atoms/youtube-player';
-import tracking from 'common/modules/atoms/youtube-tracking';
+import {
+    trackYoutubeEvent,
+    initYoutubeEvents,
+} from 'common/modules/atoms/youtube-tracking';
 import Component from 'common/modules/component';
 import $ from 'lib/$';
 import config from 'lib/config';
@@ -30,7 +33,7 @@ const recordPlayerProgress = (atomId: string): void => {
     const percentPlayed = Math.round(currentTime / player.duration * 100);
 
     if (percentPlayed >= pendingTrackingCalls[0]) {
-        tracking.track(pendingTrackingCalls[0], getTrackingId(atomId));
+        trackYoutubeEvent(pendingTrackingCalls[0], getTrackingId(atomId));
         pendingTrackingCalls.shift();
     }
 };
@@ -54,7 +57,7 @@ const onPlayerPlaying = (atomId: string): void => {
 
     killProgressTracker(atomId);
     setProgressTracker(atomId);
-    tracking.track('play', getTrackingId(atomId));
+    trackYoutubeEvent('play', getTrackingId(atomId));
 
     const mainMedia =
         (player.iframe && player.iframe.closest('.immersive-main-media')) ||
@@ -77,7 +80,7 @@ const onPlayerEnded = (atomId: string): void => {
     const player = players[atomId];
 
     killProgressTracker(atomId);
-    tracking.track('end', getTrackingId(atomId));
+    trackYoutubeEvent('end', getTrackingId(atomId));
     player.pendingTrackingCalls = [25, 50, 75];
 
     const mainMedia =
@@ -215,7 +218,7 @@ const checkElemForVideo = (elem: ?HTMLElement): void => {
             el.setAttribute('data-unique-atom-id', atomId);
             const overlay = el.querySelector('.youtube-media-atom__overlay');
 
-            tracking.init(getTrackingId(atomId));
+            initYoutubeEvents(getTrackingId(atomId));
 
             initYoutubePlayer(
                 iframe,
