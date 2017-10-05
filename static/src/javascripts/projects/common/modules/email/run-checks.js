@@ -1,147 +1,156 @@
+// @flow
 import $ from 'lib/$';
-import page from 'lib/page';
+import { keywordExists } from 'lib/page';
 import config from 'lib/config';
-import detect from 'lib/detect';
-import storage from 'lib/storage';
-import robust from 'lib/robust';
-import some from 'lodash/collections/some';
-import every from 'lodash/collections/every';
-import map from 'lodash/collections/map';
-import contains from 'lodash/collections/contains';
+import { getUserAgent } from 'lib/detect';
+import { session } from 'lib/storage';
+import { logError } from 'lib/robust';
 import userPrefs from 'common/modules/user-prefs';
-import Id from 'common/modules/identity/api';
+import { getUserEmailSignUps } from 'common/modules/identity/api';
 
 let emailShown;
 let userListSubsChecked = false;
 let userListSubs = [];
 
-function pageHasBlanketBlacklist() {
+const pageHasBlanketBlacklist = () =>
     // Prevent the blanket emails from ever showing on certain keywords or sections
-    return page.keywordExists(['US elections 2016', 'Football']) ||
-        config.page.section === 'film' ||
-        config.page.seriesId === 'world/series/guardian-morning-briefing';
-}
+    keywordExists(['US elections 2016', 'Football']) ||
+    config.get('page.section') === 'film' ||
+    config.get('page.seriesId') === 'world/series/guardian-morning-briefing';
 
-function userHasRemoved(id, formType) {
-    const currentListPrefs = userPrefs.get('email-sign-up-' + formType);
+const userHasRemoved = (id, formType) => {
+    const currentListPrefs = userPrefs.get(`email-sign-up-${formType}`);
     return currentListPrefs && currentListPrefs.indexOf(id) > -1;
-}
+};
 
-function userHasSeenThisSession() {
-    return !!storage.session.get('email-sign-up-seen');
-}
+const userHasSeenThisSession = () => !!session.get('email-sign-up-seen');
 
-function buildUserSubscriptions(response) {
-    if (response && response.status !== 'error' && response.result && response.result.subscriptions) {
-        userListSubs = map(response.result.subscriptions, 'listId');
+const buildUserSubscriptions = response => {
+    if (
+        response &&
+        response.status !== 'error' &&
+        response.result &&
+        response.result.subscriptions
+    ) {
+        userListSubs = response.result.subscriptions.map(sub => sub.listId);
         userListSubsChecked = true;
     }
 
     return userListSubs;
-}
+};
 
-function isParagraph($el) {
-    return $el.nodeName && $el.nodeName === 'P';
-}
+const isParagraph = $el => $el.nodeName && $el.nodeName === 'P';
 
-function allowedArticleStructure() {
+const allowedArticleStructure = () => {
     const $articleBody = $('.js-article__body');
 
     if ($articleBody.length) {
         const allArticleEls = $('> *', $articleBody);
-        return every([].slice.call(allArticleEls, allArticleEls.length - 2), isParagraph);
-    } else {
-        return false;
+
+        return [].slice
+            .call(allArticleEls, allArticleEls.length - 2)
+            .every(isParagraph);
     }
-}
+    return false;
+};
 
 const canRunList = {
     theFilmToday() {
-        return config.page.section === 'film';
+        return config.get('page.section') === 'film';
     },
     theFiver() {
-        return page.keywordExists(['Football']) && allowedArticleStructure();
+        return keywordExists(['Football']) && allowedArticleStructure();
     },
     labNotes() {
-        return config.page.section === 'science' && config.switches.emailSignupLabNotes;
+        return (
+            config.get('page.section') === 'science' &&
+            config.get('switches.emailSignupLabNotes')
+        );
     },
     euRef() {
-        return config.switches.emailSignupEuRef &&
-            page.keywordExists(['EU referendum']) &&
-            allowedArticleStructure();
+        return (
+            config.get('switches.emailSignupEuRef') &&
+            keywordExists(['EU referendum']) &&
+            allowedArticleStructure()
+        );
     },
     usBriefing() {
-        return (config.page.section === 'us-news' && allowedArticleStructure()) ||
-            config.page.series === 'Guardian US briefing';
+        return (
+            (config.get('page.section') === 'us-news' &&
+                allowedArticleStructure()) ||
+            config.get('page.series') === 'Guardian US briefing'
+        );
     },
     theGuardianToday() {
-        return config.switches.emailInArticleGtoday &&
+        return (
+            config.get('switches.emailInArticleGtoday') &&
             !pageHasBlanketBlacklist() &&
-            allowedArticleStructure();
+            allowedArticleStructure()
+        );
     },
     sleevenotes() {
-        return config.page.section === "music";
+        return config.get('page.section') === 'music';
     },
     longReads() {
-        return config.page.seriesId === 'news/series/the-long-read';
+        return config.get('page.seriesId') === 'news/series/the-long-read';
     },
     bookmarks() {
-        return config.page.section === "books";
+        return config.get('page.section') === 'books';
     },
     greenLight() {
-        return config.page.section === "environment";
-    }
+        return config.get('page.section') === 'environment';
+    },
 };
 
 // Public
 
-function setEmailShown(emailName) {
+const setEmailShown = emailName => {
     emailShown = emailName;
-}
+};
 
-function getEmailShown() {
-    return emailShown;
-}
+const getEmailShown = () => emailShown;
 
-function allEmailCanRun() {
-    const browser = detect.getUserAgent.browser, version = detect.getUserAgent.version;
+const allEmailCanRun = () =>
+    !config.get('page.shouldHideAdverts') &&
+    !config.get('page.isSensitive') &&
+    !config.get('page.isFront') &&
+    (config.get('page.contentId') &&
+        config.get('page.contentId').indexOf('email-sign-up') === -1) &&
+    config.get('switches.emailInArticle') &&
+    session.isAvailable() &&
+    !userHasSeenThisSession() &&
+    typeof getUserAgent === 'object' &&
+    !(
+        getUserAgent.browser === 'MSIE' &&
+        ['7', '8', '9'].includes(getUserAgent.version)
+    );
 
-    return !config.page.shouldHideAdverts &&
-        !config.page.isSensitive &&
-        !config.page.isFront &&
-        (config.page.contentId && config.page.contentId.indexOf("email-sign-up") === -1) &&
-        config.switches.emailInArticle &&
-        storage.session.isAvailable() &&
-        !userHasSeenThisSession() &&
-        !(browser === 'MSIE' && contains(['7', '8', '9'], version + ''));
-}
-
-function getUserEmailSubscriptions() {
+const getUserEmailSubscriptions = () => {
     if (userListSubsChecked) {
         return Promise.resolve(userListSubs);
-    } else {
-        return Id.getUserEmailSignUps()
-            .then(buildUserSubscriptions)
-            .catch(error => {
-                robust.logError('c-email', error);
-            });
     }
-}
+    return getUserEmailSignUps()
+        .then(buildUserSubscriptions)
+        .catch(error => {
+            logError('c-email', error);
+        });
+};
 
-function listCanRun(listConfig) {
-    if (listConfig.listName &&
+const listCanRun = listConfig => {
+    if (
+        listConfig.listName &&
         canRunList[listConfig.listName]() &&
-        !contains(userListSubs, listConfig.listId) &&
-        !userHasRemoved(listConfig.listId, 'article')) {
-
+        !userListSubs.includes(listConfig.listId) &&
+        !userHasRemoved(listConfig.listId, 'article')
+    ) {
         return listConfig;
     }
-}
+};
 
-export default {
+export {
     setEmailShown,
     getEmailShown,
     allEmailCanRun,
     getUserEmailSubscriptions,
-    listCanRun
+    listCanRun,
 };
