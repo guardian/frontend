@@ -4,7 +4,7 @@ import $ from 'lib/$';
 import config from 'lib/config';
 import { getBreakpoint } from 'lib/detect';
 
-type yesable = ?(arg: boolean | string) => boolean | void;
+type yesable = ?(arg: any) => boolean | void;
 type noable = ?() => boolean | void;
 
 const isit = (
