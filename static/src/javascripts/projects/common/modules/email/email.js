@@ -7,12 +7,9 @@ import config from 'lib/config';
 import { getUserAgent } from 'lib/detect';
 import fetch from 'lib/fetch';
 import mediator from 'lib/mediator';
-import template from 'lodash/utilities/template';
 import { logError } from 'lib/robust';
 import { trackNonClickInteraction } from 'common/modules/analytics/google';
 import { inlineSvg } from 'common/views/svgs';
-import successHtml from 'raw-loader!common/views/email/submissionResponse.html';
-import closeHtml from 'raw-loader!common/views/ui/close-button.html';
 import { getUserFromApi, isUserLoggedIn } from 'common/modules/identity/api';
 import userPrefs from 'common/modules/user-prefs';
 import uniq from 'lodash/arrays/uniq';
@@ -45,19 +42,22 @@ const classes = {
 
 const replaceContent = (isSuccess: boolean, $form: bonzo): void => {
     const formData = $form.data('formData');
-    const submissionMessage = {
-        statusClass: isSuccess
-            ? 'email-sub__message--success'
-            : 'email-sub__message--failure',
-        submissionHeadline: isSuccess
-            ? formData.customSuccessHeadline || messages.defaultSuccessHeadline
-            : 'Something went wrong',
-        submissionMessage: isSuccess
-            ? formData.customSuccessDesc || messages.defaultSuccessDesc
-            : 'Please try again.',
-        submissionIcon: isSuccess ? inlineSvg('tick') : inlineSvg('crossIcon'),
-    };
-    const submissionHtml = template(successHtml, submissionMessage);
+    const statusClass = isSuccess
+        ? 'email-sub__message--success'
+        : 'email-sub__message--failure';
+    const submissionHeadline = isSuccess
+        ? formData.customSuccessHeadline || messages.defaultSuccessHeadline
+        : 'Something went wrong';
+    const submissionMessage = isSuccess
+        ? formData.customSuccessDesc || messages.defaultSuccessDesc
+        : 'Please try again.';
+    const submissionIcon = isSuccess ? inlineSvg('tick') : inlineSvg('crossIcon');
+    const submissionHtml = `
+        <div class="email-sub__message ${statusClass}" role="alert" aria-live="assertive">
+            ${submissionIcon}
+            <h3 class="email-sub__message__headline">${submissionHeadline}</h3>
+            <p class="email-sub__message__description">${submissionMessage}</p>
+        </div>`;
 
     fastdom.write(() => {
         $form.addClass('email-sub__form--is-hidden');
@@ -151,10 +151,13 @@ const updateForm = (
         }
 
         if (formCloseButton) {
-            const closeButtonTemplate = {
-                closeIcon: inlineSvg('closeCentralIcon'),
-            };
-            const closeButtonHtml = template(closeHtml, closeButtonTemplate);
+            const closeButtonHtml = `
+                <button class="email-sub__close js-email-sub--close" data-link-name="hide">
+                    <span class="email-sub__hidden">Close</span>
+                    <span class="email-sub__close-icon">
+                        ${inlineSvg('closeCentralIcon')}
+                    </span>
+                </button>`;
 
             $el.append(closeButtonHtml);
 
