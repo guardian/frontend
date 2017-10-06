@@ -40,7 +40,7 @@ import { breakingNewsInit } from 'common/modules/onward/breaking-news';
 import { initPinterest } from 'common/modules/social/pinterest';
 import { hiddenShareToggle } from 'common/modules/social/hidden-share-toggle';
 import { membershipEngagementBannerInit } from 'common/modules/commercial/membership-engagement-banner';
-import email from 'common/modules/email/email';
+import { initEmail } from 'common/modules/email/email';
 import { init as initEmailArticle } from 'common/modules/email/email-article';
 import { init as initIdentity } from 'bootstraps/enhanced/identity-common';
 import ophan from 'ophan/ng';
@@ -253,9 +253,9 @@ const membershipEngagementBanner = (): void => {
     }
 };
 
-const initEmail = (): void => {
+const initialiseEmail = (): void => {
     // Initalise email embedded in page
-    email.init();
+    initEmail();
 
     // Initalise email insertion into articles
     if (config.switches.emailInArticle) {
@@ -266,7 +266,9 @@ const initEmail = (): void => {
     Array.from(
         document.getElementsByClassName('js-email-sub__iframe')
     ).forEach(el => {
-        email.init(el);
+        const iframe: HTMLIFrameElement = (el: any);
+
+        initEmail(iframe);
     });
 
     // Listen for interactive load event and initalise forms
@@ -274,7 +276,9 @@ const initEmail = (): void => {
         Array.from(
             document.querySelectorAll('.guInteractive .js-email-sub__iframe')
         ).forEach(el => {
-            email.init(el);
+            const iframe: HTMLIFrameElement = (el: any);
+
+            initEmail(iframe);
         });
     });
 };
@@ -314,7 +318,7 @@ const init = (): void => {
         ['c-pinterest', startPinterest],
         ['c-hidden-share-toggle', hiddenShareToggle],
         ['c-show-membership-engagement-banner', membershipEngagementBanner],
-        ['c-email', initEmail],
+        ['c-email', initialiseEmail],
         ['c-user-features', refreshUserFeatures],
         ['c-membership', initMembership],
     ]);
