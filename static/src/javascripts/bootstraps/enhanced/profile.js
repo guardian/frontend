@@ -1,99 +1,53 @@
-import $ from 'lib/$';
-import qwery from 'qwery';
-import forms from 'common/modules/identity/forms';
-import Formstack from 'common/modules/identity/formstack';
-import FormstackIframe from 'common/modules/identity/formstack-iframe';
-import FormstackEmbedIframe from 'common/modules/identity/formstack-iframe-embed';
-import validationEmail from 'common/modules/identity/validation-email';
-import Id from 'common/modules/identity/api';
-import AccountProfile from 'common/modules/identity/account-profile';
-import PublicProfile from 'common/modules/identity/public-profile';
-import emailPreferences from 'common/modules/identity/email-preferences';
-import DeleteAccount from 'common/modules/identity/delete-account';
-import UserAvatars from 'common/modules/discussion/user-avatars';
-import mediator from 'lib/mediator';
-import tabs from 'common/modules/ui/tabs';
-const modules = {
-    initFormstack() {
-        mediator.on('page:identity:ready', config => {
-            const attr = 'data-formstack-id';
-            $('[' + attr + ']').each(el => {
-                const id = el.getAttribute(attr), isEmbed = el.className.match(/\bformstack-embed\b/);
+// @flow
 
-                if (isEmbed) {
-                    new FormstackEmbedIframe.FormstackEmbedIframe(el, id, config).init();
-                } else {
-                    new Formstack.Formstack(el, id, config).init();
-                }
+import { forgottenEmail, passwordToggle } from 'common/modules/identity/forms';
+import { Formstack } from 'common/modules/identity/formstack';
+import { FormstackIframe } from 'common/modules/identity/formstack-iframe';
+import { FormstackEmbedIframe } from 'common/modules/identity/formstack-iframe-embed';
+import { init as initValidationEmail } from 'common/modules/identity/validation-email';
+import { AccountProfile } from 'common/modules/identity/account-profile';
+import { init as initPublicProfile } from 'common/modules/identity/public-profile';
+import { enhanceEmailPreferences } from 'common/modules/identity/email-preferences';
+import { setupLoadingAnimation } from 'common/modules/identity/delete-account';
+import { initUserAvatars } from 'common/modules/discussion/user-avatars';
+import { init as initTabs } from 'common/modules/ui/tabs';
 
-            });
+const initFormstack = (config: Object): void => {
+    const attr = 'data-formstack-id';
+    const forms = [...document.querySelectorAll(`[${attr}]`)];
+    const iframes = [...document.getElementsByClassName('js-formstack-iframe')];
 
-            // Load old js if necessary
-            $('.js-formstack-iframe').each(el => {
-                new FormstackIframe.FormstackIframe(el, config).init();
-            });
-        });
-    },
-    forgottenEmail() {
-        mediator.on('page:identity:ready', config => {
-            forms.forgottenEmail(config);
-        });
-    },
-    passwordToggle() {
-        mediator.on('page:identity:ready', config => {
-            forms.passwordToggle(config);
-        });
-    },
-    userAvatars() {
-        mediator.on('page:identity:ready', () => {
-            UserAvatars.initUserAvatars();
-        });
-    },
-    validationEmail() {
-        mediator.on('page:identity:ready', () => {
-            validationEmail.init();
-        });
-    },
+    forms.forEach(form => {
+        const id = form.getAttribute(attr) || '';
+        const isEmbed = form.className.match(/\bformstack-embed\b/);
 
-    tabs() {
-        mediator.on('page:identity:ready', () => {
-            tabs.init();
-        });
-    },
+        if (isEmbed) {
+            new FormstackEmbedIframe(form, id, config).init();
+        } else {
+            new Formstack(form, id, config).init();
+        }
+    });
 
-    accountProfile() {
-        const accountProfile = new AccountProfile.AccountProfile();
-        mediator.on('page:identity:ready', () => {
-            accountProfile.init();
-        });
-    },
+    // Load old js if necessary
+    iframes.forEach(el => {
+        const iframe: HTMLIFrameElement = (el: any);
 
-    emailPreferences() {
-        mediator.on('page:identity:ready', () => {
-            emailPreferences.enhanceEmailPreferences();
-        });
-    },
-
-    deleteAccount() {
-        mediator.on('page:identity:ready', () => {
-            DeleteAccount.setupLoadingAnimation();
-        });
-    }
+        new FormstackIframe(iframe, config).init();
+    });
 };
 
-export default {
-    init(config) {
-        modules.initFormstack();
-        modules.forgottenEmail();
-        modules.passwordToggle();
-        modules.userAvatars();
-        modules.validationEmail();
-        modules.tabs();
-        modules.accountProfile();
-        modules.emailPreferences();
-        modules.deleteAccount();
-        PublicProfile.init();
-
-        mediator.emit('page:identity:ready', config);
-    }
+const initProfile = (config: Object): void => {
+    initFormstack(config);
+    forgottenEmail();
+    passwordToggle();
+    initValidationEmail();
+    initUserAvatars();
+    initTabs();
+    // eslint-disable-next-line no-new
+    new AccountProfile();
+    enhanceEmailPreferences();
+    setupLoadingAnimation();
+    initPublicProfile();
 };
+
+export { initProfile };
