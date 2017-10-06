@@ -6,8 +6,7 @@
     "projects/common/modules/email/email.js",
     "projects/common/modules/email/run-checks.js",
     "projects/common/modules/atoms/youtube-tracking.js",
-    "projects/common/modules/commercial/donot-use-adblock.js",
-    "bootstraps/enhanced/profile.js"
+    "projects/common/modules/commercial/donot-use-adblock.js"
   ],
   "Gustav Pursche": [
     "projects/common/modules/component.js",
@@ -15,7 +14,8 @@
   ],
   "GHaberis": [
     "projects/common/modules/experiments/affix.js",
-    "projects/common/modules/experiments/tests/paid-content-vs-outbrain.js"
+    "bootstraps/enhanced/profile.js",
+    "projects/common/modules/ui/last-modified.js"
   ],
   "Matthew Walls": [
     "projects/common/modules/analytics/interaction-tracking.js",
@@ -24,8 +24,7 @@
   ],
   "Nicolas Long": [
     "projects/common/modules/ui/relativedates.js",
-    "projects/common/modules/ui/selection-sharing.js",
-    "projects/common/modules/ui/last-modified.js"
+    "projects/common/modules/ui/selection-sharing.js"
   ],
   "Alex Ware": [],
   "natalialkb": [
