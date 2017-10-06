@@ -5,13 +5,12 @@ import ophan from 'ophan/ng';
 import { buildGoogleAnalyticsEvent } from 'common/modules/video/ga-helper';
 import type { MediaEvent } from 'common/modules/video/ga-helper';
 
-const eventAction = (): string => 'video content';
-
 const buildEventId = (event: string, videoId: string): string =>
     `${event}:${videoId}`;
 
 const initYoutubeEvents = (videoId: string): void => {
-    const gaTracker = config.googleAnalytics.trackers.editorial;
+    const gaTracker = config.get('googleAnalytics.trackers.editorial');
+    const eventAction = 'video content';
     const events = {
         metricMap: {
             play: 'metric1',
@@ -23,14 +22,13 @@ const initYoutubeEvents = (videoId: string): void => {
         },
         baseEventObject: {
             eventCategory: 'media',
-            eventAction: eventAction(),
+            eventAction,
             eventLabel: videoId,
             dimension19: videoId,
             dimension20: 'gu-video-youtube',
         },
     };
-    const eventsList = ['play', '25', '50', '75', 'end'];
-    const ophanRecord = event => {
+    const ophanRecord = (event: MediaEvent): void => {
         const eventObject = {
             video: {
                 id: `gu-video-youtube-${event.mediaId}`,
@@ -40,7 +38,7 @@ const initYoutubeEvents = (videoId: string): void => {
         ophan.record(eventObject);
     };
 
-    eventsList.forEach(event => {
+    ['play', '25', '50', '75', 'end'].forEach(event => {
         mediator.once(buildEventId(event, videoId), id => {
             const mediaEvent: MediaEvent = {
                 mediaId: videoId,
@@ -57,7 +55,7 @@ const initYoutubeEvents = (videoId: string): void => {
                     events.metricMap,
                     id,
                     'gu-video-youtube',
-                    eventAction,
+                    () => eventAction,
                     videoId
                 )
             );
