@@ -10,7 +10,7 @@ import messageTemplate from 'raw-loader!common/views/membership-message.html';
 import { inlineSvg } from 'common/views/svgs';
 import sample from 'lodash/collections/sample';
 
-const showAdblockMessage = () => {
+const showAdblockMessage = (): void => {
     const adblockLink = 'https://membership.theguardian.com/supporter';
     const messages = {
         UK: {
@@ -57,7 +57,7 @@ const showAdblockMessage = () => {
     }
 };
 
-const showAdblockBanner = () => {
+const showAdblockBanner = (): void => {
     const banners = getBanners(config.page.edition);
 
     const flatBanners = [];
@@ -72,7 +72,7 @@ const showAdblockBanner = () => {
     }
 };
 
-const init = () => {
+const initDonotUseAdblock = (): void => {
     showAdblockMsg().then(adBlockInUse => {
         // Show messages only if adblock is used by non paying member
         if (adBlockInUse) {
@@ -82,6 +82,4 @@ const init = () => {
         mediator.emit('banner-message:complete');
     });
 };
-export default {
-    init,
-};
+export { initDonotUseAdblock };
