@@ -178,7 +178,7 @@ Comments.prototype.fetchComments = function(options) {
         ajaxParams = { mode: 'cors' };
 
     if (this.isAllPageSizeActive()) {
-        promise = new WholeDiscussion({
+        promise = new WholeDiscussion.WholeDiscussion({
             discussionId: this.options.discussionId,
             orderBy: queryParams.orderBy,
             displayThreaded: queryParams.displayThreaded,

@@ -162,6 +162,10 @@ From: Berlin, GER
 Developer: Pascal Honore
 Twitter: @0x104
 
+Developer: Richard Beddington
+Twitter: @richieahb
+Location: London, UK
+
 /* CONTENT PRODUCTION */
 
 Editorial Systems: Luke Hoyland

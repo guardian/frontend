@@ -17,7 +17,7 @@ import Component from 'common/modules/component';
 import { getUser } from 'common/modules/discussion/api';
 import { CommentBox } from 'common/modules/discussion/comment-box';
 import Comments from 'common/modules/discussion/comments';
-import discussionFrontend from 'common/modules/discussion/discussion-frontend';
+import { loadDiscussionFrontend } from 'common/modules/discussion/discussion-frontend';
 import {
     handle as upvoteHandle,
     closeTooltip as upvoteCloseTooltip,
@@ -555,7 +555,7 @@ class Loader extends Component {
     }
 
     renderCommentCount(): void {
-        discussionFrontend.load(this, {
+        loadDiscussionFrontend(this, {
             apiHost: config.page.discussionApiUrl,
             avatarImagesHost: config.page.avatarImagesUrl,
             closed: this.getDiscussionClosed(),

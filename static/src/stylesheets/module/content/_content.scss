@@ -129,12 +129,18 @@
     overflow: hidden;
 
     @include mq($until: tablet) {
-        display: none;
+        & > div:not(.content__series-label) {
+            display: none;
+        }
     }
 }
 
 .content__labels--not-immersive {
     border-bottom: 1px dotted $neutral-5;
+
+    @include mq($until: tablet) {
+        border: 0;
+    }
 
     @include mq(leftCol) {
         border-bottom: 0;
@@ -174,6 +180,10 @@
 .content__series-label {
     @include fs-headline(2);
     float: left;
+
+    @include mq($until: tablet) {
+        @include fs-header(1);
+    }
 
     @include mq(leftCol) {
         @include fs-headline(3);

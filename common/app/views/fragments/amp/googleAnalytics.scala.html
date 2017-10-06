@@ -1,6 +1,7 @@
-@(content: model.Content)(implicit request: RequestHeader, context: model.ApplicationContext)
+@(content: model.Content, page: model.Page)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @import views.support.GoogleAnalyticsAccount
+@import views.support.Commercial.{getSponsorForGA, getBrandingTypeForGA}
 @import conf.Configuration
 
 @* TODO: Abstract this out so its shared with the main GA tracking *@
@@ -8,7 +9,7 @@
     <script type="application/json">
             {
               "requests": {
-                "pageviewWithCustomDims": "${pageview}&cd3=${platform}&cd4=${sectionId}&cd5=${contentType}&cd6=${commissioningDesks}&cd7=${contentId}&cd8=${contributorIds}&cd9=${keywordIds}&cd10=${toneIds}&cd11=${seriesId}&cd26=${isHostedFlag}&cd29=${fullRequestUrl}&cd27=${userAgent}"
+                "pageviewWithCustomDims": "${pageview}&cd3=${platform}&cd4=${sectionId}&cd5=${contentType}&cd6=${commissioningDesks}&cd7=${contentId}&cd8=${contributorIds}&cd9=${keywordIds}&cd10=${toneIds}&cd11=${seriesId}&cd26=${isHostedFlag}&cd29=${fullRequestUrl}&cd27=${userAgent}@getSponsorForGA(page, "cd31")@getBrandingTypeForGA(page, "cd42")"
               },
               "vars": {
                 "account": "@{GoogleAnalyticsAccount.editorialTracker(context).trackingId}"

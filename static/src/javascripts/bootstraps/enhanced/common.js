@@ -17,9 +17,9 @@ import donotUseAdblock from 'common/modules/commercial/donot-use-adblock';
 import { refresh as refreshUserFeatures } from 'commercial/modules/user-features';
 import CommentCount from 'common/modules/discussion/comment-count';
 import CookieRefresh from 'common/modules/identity/cookierefresh';
-import navigation from 'common/modules/navigation/navigation';
-import Profile from 'common/modules/navigation/profile';
-import Search from 'common/modules/navigation/search';
+import { initNavigation } from 'common/modules/navigation/navigation';
+import { Profile } from 'common/modules/navigation/profile';
+import { Search } from 'common/modules/navigation/search';
 import { initMembership } from 'common/modules/navigation/membership';
 import {
     logHistory,
@@ -41,13 +41,14 @@ import { initPinterest } from 'common/modules/social/pinterest';
 import { hiddenShareToggle } from 'common/modules/social/hidden-share-toggle';
 import { membershipEngagementBannerInit } from 'common/modules/commercial/membership-engagement-banner';
 import email from 'common/modules/email/email';
-import emailArticle from 'common/modules/email/email-article';
+import { init as initEmailArticle } from 'common/modules/email/email-article';
 import { init as initIdentity } from 'bootstraps/enhanced/identity-common';
 import ophan from 'ophan/ng';
 
 const initialiseTopNavItems = (): void => {
-    const search: Search = new Search();
     const header: ?HTMLElement = document.getElementById('header');
+
+    new Search();
 
     if (header) {
         if (config.switches.idProfileNavigation) {
@@ -57,12 +58,10 @@ const initialiseTopNavItems = (): void => {
             profile.init();
         }
     }
-
-    search.init();
 };
 
 const initialiseNavigation = (): void => {
-    navigation.init();
+    initNavigation();
 };
 
 const showTabs = (): void => {
@@ -260,7 +259,7 @@ const initEmail = (): void => {
 
     // Initalise email insertion into articles
     if (config.switches.emailInArticle) {
-        emailArticle.init();
+        initEmailArticle();
     }
 
     // Initalise email forms in iframes
