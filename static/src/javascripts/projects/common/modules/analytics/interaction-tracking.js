@@ -5,7 +5,7 @@ import {
     trackSamePageLinkClick as trackSamePageLinkClickGoogle,
     trackNonClickInteraction as trackNonClickInteractionGoogle,
     trackExternalLinkClick as trackExternalLinkClickGoogle,
-    trackSponsorLogoLinkClick as trackSponsorLogoLinkClickGoogle
+    trackSponsorLogoLinkClick as trackSponsorLogoLinkClickGoogle,
 } from 'common/modules/analytics/google';
 import { catchErrorsWithContext } from 'lib/robust';
 
@@ -13,17 +13,18 @@ const NG_STORAGE_KEY = 'gu.analytics.referrerVars';
 let loc = document.location;
 
 type Spec = {
-    validTarget: Boolean,
-    target: Any,
-    sameHost: Boolean,
-    samePage: Boolean,
+    validTarget: boolean,
+    target: any,
+    sameHost: boolean,
+    samePage: boolean,
     tag: string,
 };
 
-const isSponsorLogoLinkClick = target => target.hasAttribute('data-sponsor');
+const isSponsorLogoLinkClick = (target: Object) =>
+    target.hasAttribute('data-sponsor');
 
 // used where we don't have an element to pass as a tag, eg. keyboard interaction
-const trackNonClickInteraction = actionName => {
+const trackNonClickInteraction = (actionName: string) => {
     trackNonClickInteractionGoogle(actionName);
 };
 
@@ -90,7 +91,7 @@ const addHandlers = () => {
     });
 };
 
-const init = (options = {}) => {
+const init = (options: Object = {}) => {
     if (options.location) {
         loc = options.location; // allow a fake location to be passed in for testing
     }
