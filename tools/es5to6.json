@@ -2,9 +2,7 @@
   "sndrs": [
     "bootstraps/enhanced/football.js"
   ],
-  "Simon Adcock": [
-    "projects/common/modules/commercial/donot-use-adblock.js"
-  ],
+  "Simon Adcock": [],
   "Gustav Pursche": [
     "projects/common/modules/component.js",
     "projects/common/modules/atoms/story-questions.js"
