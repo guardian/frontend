@@ -13,13 +13,12 @@ import DeleteAccount from 'common/modules/identity/delete-account';
 import UserAvatars from 'common/modules/discussion/user-avatars';
 import mediator from 'lib/mediator';
 import tabs from 'common/modules/ui/tabs';
-var modules = {
-    initFormstack: function() {
-        mediator.on('page:identity:ready', function(config) {
-            var attr = 'data-formstack-id';
-            $('[' + attr + ']').each(function(el) {
-                var id = el.getAttribute(attr),
-                    isEmbed = el.className.match(/\bformstack-embed\b/);
+const modules = {
+    initFormstack() {
+        mediator.on('page:identity:ready', config => {
+            const attr = 'data-formstack-id';
+            $('[' + attr + ']').each(el => {
+                const id = el.getAttribute(attr), isEmbed = el.className.match(/\bformstack-embed\b/);
 
                 if (isEmbed) {
                     new FormstackEmbedIframe.FormstackEmbedIframe(el, id, config).init();
@@ -30,60 +29,60 @@ var modules = {
             });
 
             // Load old js if necessary
-            $('.js-formstack-iframe').each(function(el) {
+            $('.js-formstack-iframe').each(el => {
                 new FormstackIframe.FormstackIframe(el, config).init();
             });
         });
     },
-    forgottenEmail: function() {
-        mediator.on('page:identity:ready', function(config) {
+    forgottenEmail() {
+        mediator.on('page:identity:ready', config => {
             forms.forgottenEmail(config);
         });
     },
-    passwordToggle: function() {
-        mediator.on('page:identity:ready', function(config) {
+    passwordToggle() {
+        mediator.on('page:identity:ready', config => {
             forms.passwordToggle(config);
         });
     },
-    userAvatars: function() {
-        mediator.on('page:identity:ready', function() {
+    userAvatars() {
+        mediator.on('page:identity:ready', () => {
             UserAvatars.initUserAvatars();
         });
     },
-    validationEmail: function() {
-        mediator.on('page:identity:ready', function() {
+    validationEmail() {
+        mediator.on('page:identity:ready', () => {
             validationEmail.init();
         });
     },
 
-    tabs: function() {
-        mediator.on('page:identity:ready', function() {
+    tabs() {
+        mediator.on('page:identity:ready', () => {
             tabs.init();
         });
     },
 
-    accountProfile: function() {
-        var accountProfile = new AccountProfile.AccountProfile();
-        mediator.on('page:identity:ready', function() {
+    accountProfile() {
+        const accountProfile = new AccountProfile.AccountProfile();
+        mediator.on('page:identity:ready', () => {
             accountProfile.init();
         });
     },
 
-    emailPreferences: function() {
-        mediator.on('page:identity:ready', function() {
+    emailPreferences() {
+        mediator.on('page:identity:ready', () => {
             emailPreferences.enhanceEmailPreferences();
         });
     },
 
-    deleteAccount: function() {
-        mediator.on('page:identity:ready', function() {
+    deleteAccount() {
+        mediator.on('page:identity:ready', () => {
             DeleteAccount.setupLoadingAnimation();
         });
     }
 };
 
 export default {
-    init: function(config) {
+    init(config) {
         modules.initFormstack();
         modules.forgottenEmail();
         modules.passwordToggle();
