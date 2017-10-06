@@ -9,14 +9,18 @@ import iframeTemplate from 'raw-loader!common/views/email/iframe.html';
 import template from 'lodash/utilities/template';
 import { spaceFiller } from 'common/modules/article/space-filler';
 import { logError } from 'lib/robust';
-import emailRunChecks from 'common/modules/email/run-checks';
+import {
+    listCanRun,
+    getUserEmailSubscriptions,
+    setEmailShown,
+} from 'common/modules/email/run-checks';
 import { session } from 'lib/storage';
 import { trackNonClickInteraction } from 'common/modules/analytics/google';
 import { waitForCheck } from 'common/modules/check-mediator';
 
 import type { SpacefinderRules } from 'common/modules/spacefinder.js';
 
-type ListConfig = {
+export type ListConfig = {
     listId: string,
     listName: string,
     campaignCode: string,
@@ -244,7 +248,7 @@ const addListToPage = (
     )[0];
     const $iframeEl = $(iframe);
     const onEmailAdded = () => {
-        emailRunChecks.setEmailShown(listConfig.listName);
+        setEmailShown(listConfig.listName);
         session.set('email-sign-up-seen', 'true');
     };
 
@@ -279,14 +283,11 @@ const init = (): void => {
                     'emailCanRunPostCheck'
                 ).then(emailCanRunPostCheck => {
                     if (emailCanRunPostCheck) {
-                        emailRunChecks
-                            .getUserEmailSubscriptions()
+                        getUserEmailSubscriptions()
                             .then(() => {
                                 const listConfig = Object.keys(
                                     listConfigs
-                                ).find(key =>
-                                    emailRunChecks.listCanRun(listConfigs[key])
-                                );
+                                ).find(key => listCanRun(listConfigs[key]));
                                 if (listConfig) {
                                     addListToPage(listConfigs[listConfig]);
                                 }
