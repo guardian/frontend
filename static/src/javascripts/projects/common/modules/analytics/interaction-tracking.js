@@ -20,22 +20,22 @@ type Spec = {
     tag: string,
 };
 
-const isSponsorLogoLinkClick = (target: Object) =>
+const isSponsorLogoLinkClick = (target: Object): boolean =>
     target.hasAttribute('data-sponsor');
 
 // used where we don't have an element to pass as a tag, eg. keyboard interaction
-const trackNonClickInteraction = (actionName: string) => {
+const trackNonClickInteraction = (actionName: string): void => {
     trackNonClickInteractionGoogle(actionName);
 };
 
-const trackSamePageLinkClick = (spec: Spec) => {
+const trackSamePageLinkClick = (spec: Spec): void => {
     // Do not perform a same-page track link when there isn't a tag.
     if (spec.tag) {
         trackSamePageLinkClickGoogle(spec.target, spec.tag);
     }
 };
 
-const trackInternalLinkClick = (spec: Spec) => {
+const trackInternalLinkClick = (spec: Spec): void => {
     // Store in session storage.
     // GA and Omniture will both pick it up on next page load,
     // then Omniture will remove it from storage.
@@ -47,14 +47,14 @@ const trackInternalLinkClick = (spec: Spec) => {
     session.set(NG_STORAGE_KEY, storeObj);
 };
 
-const trackExternalLinkClick = (spec: Spec) => {
+const trackExternalLinkClick = (spec: Spec): void => {
     // Execute the GA and Omniture tracking in parallel
     // and rely on Omniture to provide a 500 ms delay so they both get a chance to complete.
     // TODO when Omniture goes away, implement the delay ourselves.
     trackExternalLinkClickGoogle(spec.target, spec.tag);
 };
 
-const trackClick = (spec: Spec) => {
+const trackClick = (spec: Spec): void => {
     if (!spec.validTarget) {
         return;
     }
@@ -74,7 +74,7 @@ const trackClick = (spec: Spec) => {
     }
 };
 
-const addHandlers = () => {
+const addHandlers = (): void => {
     mediator.on('module:clickstream:interaction', trackNonClickInteraction);
 
     mediator.on('module:clickstream:click', spec => {
@@ -91,7 +91,7 @@ const addHandlers = () => {
     });
 };
 
-const init = (options: Object = {}) => {
+const init = (options: Object = {}): void => {
     if (options.location) {
         loc = options.location; // allow a fake location to be passed in for testing
     }
