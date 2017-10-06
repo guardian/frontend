@@ -1,7 +1,7 @@
 package indexes
 
 import com.gu.contentapi.client.model.v1.{TagType, Tag => ApiTag}
-import model.{TagDefinition, TagIndexPage}
+import model.{TagDefinition, TagIndex}
 import org.scalatest.concurrent.PatienceConfiguration.Timeout
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.{DoNotDiscover, FlatSpec, Matchers}
@@ -59,7 +59,7 @@ import scala.concurrent.duration._
   }
 
   "byWebTitle" should "convert an enumerator of tags into a Future of alpha-ordered TagPages" in {
-    def tagFixture(webTitle: String) =
+    def tagFixture(webTitle: String): ApiTag =
       ApiTag(
         "id/id",
         TagType.Type,
@@ -83,7 +83,7 @@ import scala.concurrent.duration._
       advertisingTag,
       otherDigitalSolutionsTag
     ).run(tagPages.byWebTitle).futureValue(Timeout(1 second)))(_.toUpperCase, tagPages.asciiLowerWebTitle) shouldEqual Seq(
-      TagIndexPage(
+      TagIndex(
         "a",
         "A",
         List(
@@ -92,14 +92,14 @@ import scala.concurrent.duration._
           archivedSpeakersTag
         ).map(TagDefinition.fromContentApiTag)
       ),
-      TagIndexPage(
+      TagIndex(
         "b",
         "B",
         List(
           TagDefinition.fromContentApiTag(blogTag)
         )
       ),
-      TagIndexPage(
+      TagIndex(
         "o",
         "O",
         List(

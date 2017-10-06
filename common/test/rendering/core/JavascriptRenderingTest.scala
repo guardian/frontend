@@ -16,7 +16,7 @@ class JavascriptRenderingTest
   with ExceptionMatcher {
 
   case class TestJavascriptRendering(jsFile: String) extends JavascriptRendering {
-    override def javascriptFile = jsFile
+    override def javascriptFile: String = jsFile
   }
 
   val baseDir = "common/test/resources/components"

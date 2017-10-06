@@ -9,7 +9,7 @@ import scala.concurrent.{ExecutionContext, Future}
 
 class BestsellersAgent(bookFinder: BookFinder) extends MerchandiseAgent[Book] {
 
-  def getSpecificBook(isbn: String) = available find (_.isbn == isbn)
+  def getSpecificBook(isbn: String): Option[Book] = available find (_.isbn == isbn)
 
   def getSpecificBooks(isbns: Seq[String]): Seq[Book] =
     (isbns flatMap bookFinder.findByIsbn).sortBy(book => isbns.indexOf(book.isbn))

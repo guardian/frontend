@@ -5,9 +5,9 @@ import conf.Configuration
 import layout.ContentCard
 import model.Trail
 import org.jsoup.Jsoup
+import play.api.libs.json.Json
 import play.api.mvc.{AnyContent, Request, RequestHeader, Result}
 import play.twirl.api.Html
-
 import scala.collection.JavaConversions._
 
 /*
@@ -112,34 +112,6 @@ object CanonicalLink extends CanonicalLink
 object AnalyticsHost extends implicits.Requests {
   // safest to always use secure host as we avoid mixed content if we fail to detect https
   def apply(): String = "https://hits-secure.theguardian.com"
-}
-
-object MembershipLink {
-  def apply(implicit request: RequestHeader, edition: Edition): String = {
-    if(mvt.ABNewDesktopHeaderControl.isParticipating) {
-      s"${Configuration.id.membershipUrl}/supporter?INTCMP=mem_${edition.id}_web_newheader_control"
-    } else {
-      s"${Configuration.id.membershipUrl}/supporter?countryGroup=${edition.id.toLowerCase}&INTCMP=DOTCOM_HEADER_BECOMEMEMBER_${edition.id}"
-    }
-  }
-}
-
-object SubscribeLink {
-  private val subscribeEditions = Map(
-    Us -> "us",
-    Au -> "au",
-    International -> "int"
-  )
-
-  private def subscribeLink(edition: Edition) = subscribeEditions.getOrDefault(edition, "")
-
-  def apply(implicit request: RequestHeader, edition: Edition): String = {
-    if(mvt.ABNewDesktopHeaderControl.isParticipating) {
-      s"https://subscribe.theguardian.com/${subscribeLink(edition)}?INTCMP=subs_${edition.id}_web_newheader_control"
-    } else {
-      s"https://subscribe.theguardian.com/${subscribeLink(edition)}?INTCMP=NGW_HEADER_${edition.id}_GU_SUBSCRIBE"
-    }
-  }
 }
 
 trait AmpLinkTo extends LinkTo {

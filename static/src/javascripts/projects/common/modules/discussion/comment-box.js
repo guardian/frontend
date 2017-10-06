@@ -4,10 +4,15 @@ import bean from 'bean';
 import bonzo from 'bonzo';
 import mediator from 'lib/mediator';
 import Component from 'common/modules/component';
-import DiscussionApi from 'common/modules/discussion/api';
-import IdentityApi from 'common/modules/identity/api';
+import { postComment, previewComment } from 'common/modules/discussion/api';
+import {
+    getUserFromCookie,
+    reset,
+    updateUsername,
+    getUserFromApiWithRefreshedCookie,
+} from 'common/modules/identity/api';
 import { avatarify } from 'common/modules/discussion/user-avatars';
-import ValidationEmail from 'common/modules/identity/validation-email';
+import { init as initValidationEmail } from 'common/modules/identity/validation-email';
 import { urlify } from './urlify';
 
 type commentType = {
@@ -120,7 +125,9 @@ class CommentBox extends Component {
 
     // eslint-disable-next-line class-methods-use-this
     getUserData(): Object {
-        return IdentityApi.getUserFromCookie();
+        // User will always exists at this point.
+        // $FlowFixMe
+        return getUserFromCookie();
     }
 
     clearErrors(): void {
@@ -130,7 +137,7 @@ class CommentBox extends Component {
     }
 
     refreshUsernameHtml(): void {
-        IdentityApi.reset();
+        reset();
 
         const displayName = this.getUserData().displayName;
         const menuHeaderUsername = document.querySelector('.js-profile-info');
@@ -218,7 +225,7 @@ class CommentBox extends Component {
             this.removeState('onboarding-visible');
             comment.body = urlify(comment.body);
             this.setFormState(true);
-            DiscussionApi.postComment(this.getDiscussionId(), comment)
+            postComment(this.getDiscussionId(), comment)
                 .then((resp: Object) => this.postCommentSuccess(comment, resp))
                 .catch((err: Object) => this.fail(err));
         };
@@ -273,7 +280,7 @@ class CommentBox extends Component {
 
             if (this.errors.length === 0) {
                 if (this.options.newCommenter && !this.options.hasUsername) {
-                    IdentityApi.updateUsername(
+                    updateUsername(
                         this.getElem('onboarding-username-input').value
                     ).then(updateUsernameSuccess, updateUsernameFailure);
                 } else {
@@ -287,18 +294,15 @@ class CommentBox extends Component {
             const createdDate = new Date(this.getUserData().accountCreatedDate);
 
             if (createdDate > this.options.priorToVerificationDate) {
-                IdentityApi.getUserFromApiWithRefreshedCookie().then(
-                    response => {
-                        if (
-                            response.user.statusFields.userEmailValidated ===
-                            true
-                        ) {
-                            validEmailCommentSubmission();
-                        } else {
-                            this.invalidEmailError();
-                        }
+                getUserFromApiWithRefreshedCookie().then(response => {
+                    if (
+                        response.user.statusFields.userEmailValidated === true
+                    ) {
+                        validEmailCommentSubmission();
+                    } else {
+                        this.invalidEmailError();
                     }
-                );
+                });
             } else {
                 validEmailCommentSubmission();
             }
@@ -310,7 +314,7 @@ class CommentBox extends Component {
     invalidEmailError(): void {
         this.removeState('onboarding-visible');
         this.error('EMAIL_NOT_VALIDATED');
-        ValidationEmail.init();
+        initValidationEmail();
     }
 
     submitPostComment(e: Event): void {
@@ -498,7 +502,7 @@ class CommentBox extends Component {
         }
 
         if (this.errors.length === 0) {
-            DiscussionApi.previewComment(comment)
+            previewComment(comment)
                 .then((resp: Object) => callback(comment, resp))
                 .catch((err: Object) => this.fail(err));
         }

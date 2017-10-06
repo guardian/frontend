@@ -4,8 +4,9 @@ import common.{ImplicitControllerExecutionContext, Logging}
 import contentapi.ContentApiClient
 import layout.FaciaContainer
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
-import model.{ApplicationContext, Cached, MetaData, SectionSummary, SimplePage}
-import play.api.mvc.{BaseController, ControllerComponents}
+import model.{ApplicationContext, Cached, MetaData, SectionSummary, SimplePage, StandalonePage}
+import pages.ContentHtmlPage
+import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 import services.NewspaperQuery
 
 class NewspaperController(
@@ -16,52 +17,58 @@ class NewspaperController(
 
   private val newspaperQuery = new NewspaperQuery(contentApiClient)
 
-  def latestGuardianNewspaper() = Action.async { implicit request =>
+  def latestGuardianNewspaper(): Action[AnyContent] = Action.async { implicit request =>
 
-    val guardianPage = SimplePage(MetaData.make(
+    val metadata = MetaData.make(
       "theguardian",
       Some(SectionSummary.fromId("todayspaper")),
       "Main section | News | The Guardian"
-    ))
-    val todaysPaper = newspaperQuery.fetchLatestGuardianNewspaper().map(p => TodayNewspaper(guardianPage, p))
+    )
+    val todaysPaper = newspaperQuery
+      .fetchLatestGuardianNewspaper()
+      .map(frontContainers => TodayNewspaper(metadata, frontContainers))
 
-    for( tp <- todaysPaper) yield Cached(300)(RevalidatableResult.Ok(views.html.newspaperPage(tp)))
+    for( tp <- todaysPaper) yield Cached(300)(RevalidatableResult.Ok(ContentHtmlPage.html(tp)))
 
   }
 
-  def latestObserverNewspaper() = Action.async { implicit request =>
-    val observerPage = SimplePage(MetaData.make(
+  def latestObserverNewspaper(): Action[AnyContent] = Action.async { implicit request =>
+    val metadata = MetaData.make(
       "theobserver",
       Some(SectionSummary.fromId("theobserver")),
       "Main section | From the Observer | The Guardian"
-    ))
+    )
 
-    val todaysPaper = newspaperQuery.fetchLatestObserverNewspaper().map(p => TodayNewspaper(observerPage, p))
+    val todaysPaper = newspaperQuery
+      .fetchLatestObserverNewspaper()
+      .map(frontContainers => TodayNewspaper(metadata, frontContainers))
 
-    for( tp <- todaysPaper) yield Cached(300)(RevalidatableResult.Ok(views.html.newspaperPage(tp)))
+    for( tp <- todaysPaper) yield Cached(300)(RevalidatableResult.Ok(ContentHtmlPage.html(tp)))
 
   }
 
-  def newspaperForDate(path: String, day: String, month: String, year: String) = Action.async { implicit request =>
+  def newspaperForDate(path: String, day: String, month: String, year: String): Action[AnyContent] = Action.async { implicit request =>
 
-    val page = path match {
-      case "theguardian" => SimplePage(MetaData.make(
+    val metadata = path match {
+      case "theguardian" => MetaData.make(
         "theguardian",
         Some(SectionSummary.fromId("todayspaper")),
         "Top Stories | From the Guardian | The Guardian"
-      ))
-      case "theobserver" => SimplePage(MetaData.make(
+      )
+      case "theobserver" => MetaData.make(
         "theobserver",
         Some(SectionSummary.fromId("theobserver")),
         "News | From the Observer | The Guardian"
-      ))
+      )
     }
 
-    val paper = newspaperQuery.fetchNewspaperForDate(path, day, month, year).map(p => TodayNewspaper(page, p))
+    val paper = newspaperQuery
+      .fetchNewspaperForDate(path, day, month, year)
+      .map(frontContainers => TodayNewspaper(metadata, frontContainers))
 
     for( tp <- paper) yield {
       if(noContentForListExists(tp.bookSections)) Found(s"/$path")
-      else Cached(900)(RevalidatableResult.Ok(views.html.newspaperPage(tp)))
+      else Cached(900)(RevalidatableResult.Ok(ContentHtmlPage.html(tp)))
     }
   }
 
@@ -70,9 +77,9 @@ class NewspaperController(
     frontContainer.flatMap(_.items).isEmpty && otherContainer.flatMap(_.items).isEmpty
   }
 
-  def allOn(path: String, day: String, month: String, year: String) = Action { implicit request =>
+  def allOn(path: String, day: String, month: String, year: String): Action[AnyContent] = Action { implicit request =>
     Cached(300)(WithoutRevalidationResult(MovedPermanently(s"/$path/$year/$month/$day")))
   }
 }
 
-case class TodayNewspaper(page: SimplePage, bookSections: Seq[FaciaContainer])
+case class TodayNewspaper(metadata: MetaData, bookSections: Seq[FaciaContainer]) extends StandalonePage

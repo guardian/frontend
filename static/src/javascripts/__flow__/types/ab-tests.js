@@ -1,5 +1,3 @@
-// @flow
-
 type ListenerFunction = (f: () => void) => void;
 
 declare type Variant = {
@@ -85,18 +83,6 @@ declare type InitEpicABTest = {
 declare type Interaction = {
     component: string,
     value: string,
-};
-
-declare type EngagementBannerParams = {
-    minArticles: number,
-    campaignCode: string,
-    buttonCaption: string,
-    linkUrl: string,
-    messageText: string,
-    pageviewId: string,
-    colourStrategy: () => string,
-    products: OphanProduct[],
-    paypalClass?: string,
 };
 
 /**

@@ -408,7 +408,7 @@ $header-image-size-desktop: 100px;
         clear: left;
     }
 
-    .fc-container--has-toggle & {
+    .fc-container--will-have-toggle &, .fc-container--has-toggle & {
         @include mq(leftCol, wide) {
             padding-top: gs-height(1);
         }

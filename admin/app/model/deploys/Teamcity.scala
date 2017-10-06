@@ -5,6 +5,7 @@ import conf.Configuration
 import play.api.libs.json._
 import play.api.libs.functional.syntax._
 
+import scala.collection.immutable
 import scala.concurrent.{ExecutionContext, Future}
 import scala.language.postfixOps
 
@@ -27,8 +28,8 @@ case class TeamCityBuild(number: String,
                          commits: List[Commit]) {
 
   val isSuccess = status == "SUCCESS"
-  def committers() = commits.map(_.username).distinct
-  def link = s"${Configuration.teamcity.host}/viewLog.html?buildId=$id"
+  def committers(): Seq[String] = commits.map(_.username).distinct
+  def link: String = s"${Configuration.teamcity.host}/viewLog.html?buildId=$id"
 }
 
 object TeamCityBuild {

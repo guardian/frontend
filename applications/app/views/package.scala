@@ -19,9 +19,9 @@ object InteractiveBodyCleaner {
 }
 
 object IndexCleaner {
- def apply(page: IndexPage, html: String)(implicit request: RequestHeader, context: ApplicationContext) = {
+ def apply(page: IndexPage, html: Html)(implicit request: RequestHeader, context: ApplicationContext): Html = {
     val edition = Edition(request)
-    withJsoup(BulletCleaner(html))(
+    withJsoup(BulletCleaner(html.toString))(
       CommercialComponentHigh(isPaidContent = false, isNetworkFront = false, hasPageSkin = page.page.metadata.hasPageSkin(edition)),
       CommercialMPUForFronts(isNetworkFront = false)
     )

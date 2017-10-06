@@ -23,8 +23,8 @@ object CSV extends implicits.Strings {
   object Parser extends RegexParsers {
     override val skipWhitespace = false
 
-    def COMMA = ","
-    def DQUOTE = "\""
+    def COMMA: String = ","
+    def DQUOTE: String = "\""
     def DQUOTE2: Parser[String] = "\"\"" ^^ (_ => "\"") // combine 2 dquotes into 1
     def CRLF: Parser[String] = "\r\n" | "\n"
     def TXT: Regex = "[^\",\r\n]".r

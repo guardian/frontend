@@ -3,7 +3,7 @@
 import raven from 'lib/raven';
 import config from 'lib/config';
 import { getCurrentTime } from 'lib/user-timing';
-import beacon from 'common/modules/analytics/beacon';
+import { postJson } from 'common/modules/analytics/beacon';
 import ophan from 'ophan/ng';
 
 type Module = {
@@ -111,13 +111,12 @@ const reportTrackingData = (): void => {
             tags: performanceLog.tags,
             adverts: performanceLog.adverts,
             baselines: performanceLog.baselines,
-            modules: (performanceLog.modules || [])
-                .filter((module: Object) => !!module.duration),
+            modules: (performanceLog.modules || []).filter(
+                (module: Object) => !!module.duration
+            ),
         };
-        beacon.postJson(
-            '/commercial-report',
-            JSON.stringify(performanceReport)
-        );
+
+        postJson('/commercial-report', JSON.stringify(performanceReport));
     }
 };
 

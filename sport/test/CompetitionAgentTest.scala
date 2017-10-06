@@ -22,14 +22,14 @@ import org.joda.time.{DateTime, DateTimeUtils, LocalDate}
   with WithTestExecutionContext
   with ScalaFutures {
 
-  override def beforeAll() = {
+  override def beforeAll(): Unit = {
     // Tests in this suite are time dependent:
     // => Force date to the day the test files have been generated (Note: time doesn't matter)
     val fixedDate = new DateTime(2016, 6, 22, 15, 0).getMillis
     DateTimeUtils.setCurrentMillisFixed(fixedDate)
   }
 
-  override def afterAll() = {
+  override def afterAll(): Unit = {
     DateTimeUtils.setCurrentMillisSystem()
     super.afterAll()
   }
@@ -38,7 +38,8 @@ import org.joda.time.{DateTime, DateTimeUtils, LocalDate}
 
   lazy val seasonStart = Some(new LocalDate(2012, 8, 1))
 
-  def testCompetitionsService(competition: Competition) = new CompetitionsService(testFootballClient, Seq(competition))
+  def testCompetitionsService(competition: Competition): CompetitionsService =
+    new CompetitionsService(testFootballClient, Seq(competition))
 
   "CompetitionAgentTest" should "load fixtures" in {
 

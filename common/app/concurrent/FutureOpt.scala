@@ -7,7 +7,7 @@ case class FutureOpt[A](self: Future[Option[A]]) {
 
   def map[B](f: A => B)(implicit ex: ExecutionContext): FutureOpt[B] = FutureOpt(self.map(_ map f))
 
-  def flatMap[B](f: A => FutureOpt[B])(implicit ex: ExecutionContext) = FutureOpt {
+  def flatMap[B](f: A => FutureOpt[B])(implicit ex: ExecutionContext): FutureOpt[B] = FutureOpt {
     for {
       optA <- self
       optB <- Future.traverse(optA.toList)(f andThen (_.self))

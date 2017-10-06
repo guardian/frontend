@@ -26,7 +26,7 @@ trait DiscussionApiLike extends Http with Logging {
   protected val defaultParams = List("api-key" -> "dotcom")
   protected val pageSize: String = "10"
 
-  def endpointUrl(relativePath: String, params: List[(String, Any)] = List()) = { //Using List for params because order is important for caching reason
+  def endpointUrl(relativePath: String, params: List[(String, Any)] = List()): String = { //Using List for params because order is important for caching reason
     (apiRoot + relativePath).addParams(params ++ defaultParams).toString()
   }
 

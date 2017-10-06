@@ -5,11 +5,11 @@ import googleAuth.OAuthLoginController
 import model.ApplicationContext
 import play.api.http.HttpConfiguration
 import play.api.libs.ws.WSClient
-import play.api.mvc.{AnyContent, ControllerComponents, Request}
+import play.api.mvc.{Action, AnyContent, ControllerComponents, Request}
 
 class OAuthLoginAdminController(val wsClient: WSClient, val httpConfiguration: HttpConfiguration, val controllerComponents: ControllerComponents)(implicit context: ApplicationContext) extends OAuthLoginController {
 
-  override def login = Action { implicit request =>
+  override def login: Action[AnyContent] = Action { implicit request =>
     val error = request.flash.get("error")
     Ok(views.html.auth.login(error))
   }

@@ -7,10 +7,10 @@ import qwery from 'qwery';
 import $ from 'lib/$';
 import config from 'lib/config';
 import { catchErrorsWithContext } from 'lib/robust';
-import proximityLoader from 'lib/proximity-loader';
+import { addProximityLoader } from 'lib/proximity-loader';
 import commentAdverts from 'commercial/modules/comment-adverts';
 import { Loader as DiscussionLoader } from 'common/modules/discussion/loader';
-import identityApi from 'common/modules/identity/api';
+import { isUserLoggedIn } from 'common/modules/identity/api';
 import { OnwardContent } from 'common/modules/onward/onward-content';
 import { MostPopular } from 'common/modules/onward/popular';
 import { related } from 'common/modules/onward/related';
@@ -23,7 +23,7 @@ const insertOrProximity = (selector, insert) => {
     } else {
         fastdom.read(() => document.querySelector(selector)).then(el => {
             if (el) {
-                proximityLoader.add(el, 1500, insert);
+                addProximityLoader(el, 1500, insert);
             }
         });
     }
@@ -98,7 +98,7 @@ const initDiscussion = () => {
 };
 
 const repositionComments = () => {
-    if (!identityApi.isUserLoggedIn()) {
+    if (!isUserLoggedIn()) {
         fastdom.read(() => $('.js-comments')).then($comments =>
             fastdom.write(() => {
                 $comments.appendTo(qwery('.js-repositioned-comments'));

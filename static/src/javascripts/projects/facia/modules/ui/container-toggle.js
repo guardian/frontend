@@ -93,6 +93,7 @@ export class ContainerToggle {
             $containerHeader.append(this.$button);
             this.$container
                 .removeClass('js-container--toggle')
+                .removeClass('fc-container--will-have-toggle')
                 .addClass('fc-container--has-toggle');
 
             this.readPrefs(id);

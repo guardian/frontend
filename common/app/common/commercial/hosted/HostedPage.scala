@@ -13,7 +13,7 @@ import model.StandalonePage
 
 trait HostedPage extends StandalonePage {
   def id: String
-  def url = s"/$id"
+  def url: String = s"/$id"
   def encodedUrl: String = URLEncoder.encode(s"${site.host}/$id", "utf-8")
 
   def campaign: HostedCampaign
@@ -28,7 +28,7 @@ trait HostedPage extends StandalonePage {
   def twitterText: String = shortSocialShareText.getOrElse(if (standfirst.length < 136) standfirst else title) + " #ad"
   def facebookText: String = socialShareText.getOrElse(standfirst)
   def emailSubjectText: String = title + " - Advertiser Content hosted by the Guardian"
-  def emailBodyText = s"${socialShareText.getOrElse(standfirst)} $encodedUrl"
+  def emailBodyText: String = s"${socialShareText.getOrElse(standfirst)} $encodedUrl"
 
   def cta: HostedCallToAction
 }
@@ -96,7 +96,7 @@ object HostedLogo {
     src: String,
     dimensions: Option[SponsorshipLogoDimensions],
     link: String
-  ) = HostedLogo(
+  ): HostedLogo = HostedLogo(
     src,
     dimensions map (d => Dimensions(d.width, d.height)),
     link

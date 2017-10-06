@@ -25,7 +25,6 @@ const moreInSeriesContainerInit = (
     component.fetch(el).then(() => {
         checkElemsForVideos([el]);
         mediator.emit('page:media:moreinloaded', el);
-        mediator.emit('page:new-content', el);
     });
 };
 

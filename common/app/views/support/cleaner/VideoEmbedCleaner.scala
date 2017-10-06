@@ -8,9 +8,12 @@ import views.support.{HtmlCleaner, Item640}
 
 import scala.collection.JavaConversions._
 
-case class VideoEmbedCleaner(article: Article) extends HtmlCleaner {
+/*
+ * maxEmbedHeight: 812px - full height on an iPhone X
+ */
+case class VideoEmbedCleaner(article: Article, maxEmbedHeight: Int = 812) extends HtmlCleaner {
   val facebookVideoEmbedUrl = "https://www.facebook.com/v2.3/plugins/video.php?href="
-  def facebookVideoEmbedUrlFor(url: String) = s"$facebookVideoEmbedUrl${URLEncoder.encode(url, "UTF-8")}"
+  def facebookVideoEmbedUrlFor(url: String): String = s"$facebookVideoEmbedUrl${URLEncoder.encode(url, "UTF-8")}"
 
   def addShareButtons(document: Document): Unit = {
     document.getElementsByClass("element-video").foreach(element => {
@@ -103,7 +106,12 @@ case class VideoEmbedCleaner(article: Article) extends HtmlCleaner {
           child.attr("src", facebookUrl)
         }
 
-        child.wrap("<div class=\"embed-video-wrapper u-responsive-ratio u-responsive-ratio--hd\"></div>")
+        val someIframe = Option(element.select("iframe").first())
+
+        someIframe match {
+          case Some(iframe) => wrapIframe(child, iframe)
+          case None         => wrapHD(child)
+        }
       }
     }
 
@@ -114,6 +122,31 @@ case class VideoEmbedCleaner(article: Article) extends HtmlCleaner {
     }
 
     document
+  }
+
+  private def wrapIframe(container: Element, iframe: Element) {
+    // Has no id to get data from capi so try and get from iframe
+    val videoWidth = iframe.attr("width")
+    val videoHeight = iframe.attr("height")
+    val hasWidth = videoWidth != "" && videoWidth != "0"
+    val hasHeight = videoHeight != "" && videoHeight != "0"
+
+    if (hasWidth && hasHeight) {
+      wrapCustom(container, videoWidth.toFloat, videoHeight.toFloat)
+    } else {
+      wrapHD(container)
+    }
+  }
+
+  private def wrapCustom(container: Element, width: Float, height: Float) {
+    val aspectRatio = width / height
+    val maxWidth =  maxEmbedHeight * aspectRatio
+    val paddingBottom = (1 / aspectRatio) * 100
+    container.wrap(s"""<div class="u-responsive-aligner" style="max-width: ${maxWidth}px;"><div class="embed-video-wrapper u-responsive-ratio" style="padding-bottom: ${paddingBottom}%;"></div></div>""")
+  }
+
+  private def wrapHD(container: Element) {
+    container.wrap(s"""<div class="embed-video-wrapper u-responsive-ratio u-responsive-ratio--hd"></div>""")
   }
 
   def findVideoApiElement(id:String): Option[VideoElement] = article.elements.bodyVideos.find(_.properties.id == id)

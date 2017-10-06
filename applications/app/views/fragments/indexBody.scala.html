@@ -33,6 +33,7 @@
                         @containers.map { containerDefinition =>
                             @container(containerDefinition,
                                 frontProperties = FrontProperties.fromBranding(Edition(request), branding),
+                                frontId = Some(index.idWithoutEdition),
                                 showFrontBranding = isFirstNonThrasherContainer(containerDefinition.index, containers))
                         }
                 }
@@ -63,7 +64,10 @@
 
                 @defining(IndexPage.makeFront(index, Edition(request)).containers) { containers =>
                     @containers.map { containerDefinition =>
-                        @container(containerDefinition, empty)
+                        @container(
+                            containerDefinition = containerDefinition,
+                            frontId = Some(index.idWithoutEdition)
+                        )
                     }
                 }
 

@@ -10,10 +10,10 @@ import {
     pushQueryString,
 } from 'lib/url';
 import Component from 'common/modules/component';
-import discussionApi from 'common/modules/discussion/api';
+import { recommendComment } from 'common/modules/discussion/api';
 
 declare class PopStateEvent extends Event {
-    state: Object,
+    state: Object;
 }
 
 class ActivityStream extends Component {
@@ -115,13 +115,17 @@ class ActivityStream extends Component {
     // eslint-disable-next-line class-methods-use-this
     recommendComment(e: Event): void {
         const el: HTMLElement = (e.currentTarget: any);
-        discussionApi.recommendComment(el.getAttribute('data-comment-id'));
+        const id = el.getAttribute('data-comment-id');
 
-        bonzo(el).addClass('disc-comment__recommend--active');
+        if (id) {
+            recommendComment(id);
 
-        $('.js-disc-recommend-count', el).each(countEl => {
-            countEl.innerHTML = parseInt(countEl.innerHTML, 10) + 1;
-        });
+            bonzo(el).addClass('disc-comment__recommend--active');
+
+            $('.js-disc-recommend-count', el).each(countEl => {
+                countEl.innerHTML = parseInt(countEl.innerHTML, 10) + 1;
+            });
+        }
     }
 
     updateHistory(resp: Object): void {

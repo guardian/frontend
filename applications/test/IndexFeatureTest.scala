@@ -1,7 +1,7 @@
 package test
 
 import play.api.test.TestBrowser
-import org.scalatest.{DoNotDiscover, Matchers, GivenWhenThen, FeatureSpec}
+import org.scalatest._
 
 @DoNotDiscover class IndexFeatureTest extends FeatureSpec with GivenWhenThen with Matchers with ConfiguredTestSuite {
 
@@ -9,7 +9,7 @@ import org.scalatest.{DoNotDiscover, Matchers, GivenWhenThen, FeatureSpec}
 
     feature("Sponsorships") {
 
-      def testFrontSponsorship(browser: TestBrowser, sponsorshipType: String) = {
+      def testFrontSponsorship(browser: TestBrowser, sponsorshipType: String): Assertion = {
         import browser._
 
         Then("the page should be styled differently")

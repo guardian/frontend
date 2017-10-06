@@ -13,29 +13,29 @@ class MatchDayController(
 )(implicit context: ApplicationContext)
   extends MatchListController with CompetitionLiveFilters {
 
-  def liveMatchesJson() = liveMatches()
+  def liveMatchesJson(): Action[AnyContent] = liveMatches()
   def liveMatches(): Action[AnyContent] =
     renderLiveMatches(LocalDate.now(Edition.defaultEdition.timezone))
 
-  def matchesFor(year: String, month: String, day: String) =
+  def matchesFor(year: String, month: String, day: String): Action[AnyContent] =
     renderLiveMatches(createDate(year, month, day))
-  def matchesForJson(year: String, month: String, day: String) =
+  def matchesForJson(year: String, month: String, day: String): Action[AnyContent] =
     matchesFor(year, month, day)
 
-  private def renderLiveMatches(date: LocalDate) = Action { implicit request =>
+  private def renderLiveMatches(date: LocalDate): Action[AnyContent] = Action { implicit request =>
     val matches = MatchDayList(competitionsService.competitions, date)
     val webTitle = if (date == LocalDate.now(Edition.defaultEdition.timezone)) "Live matches" else "Matches"
     val page = new FootballPage("football/live", "football", webTitle)
     renderMatchList(page, matches, filters)
   }
 
-  def competitionMatchesJson(competitionTag: String) = competitionMatches(competitionTag)
+  def competitionMatchesJson(competitionTag: String): Action[AnyContent] = competitionMatches(competitionTag)
   def competitionMatches(competitionTag: String): Action[AnyContent] =
     renderCompetitionMatches(competitionTag, LocalDate.now(Edition.defaultEdition.timezone))
 
-  def competitionMatchesFor(competitionTag: String, year: String, month: String, day: String) =
+  def competitionMatchesFor(competitionTag: String, year: String, month: String, day: String): Action[AnyContent] =
     renderCompetitionMatches(competitionTag, createDate(year, month, day))
-  def competitionMatchesForJson(competitionTag: String, year: String, month: String, day: String) =
+  def competitionMatchesForJson(competitionTag: String, year: String, month: String, day: String): Action[AnyContent] =
       competitionMatchesFor(competitionTag, year, month, day)
 
   private def renderCompetitionMatches(competitionTag: String, date: LocalDate): Action[AnyContent] = Action { implicit request =>
@@ -50,7 +50,7 @@ class MatchDayController(
   }
 
 //  @deprecated("Use JSON version of the normal match list endpoints", "early 2014")
-  def matchDayComponent = Action { implicit request =>
+  def matchDayComponent: Action[AnyContent] = Action { implicit request =>
     val matches = MatchDayList(competitionsService.competitions, LocalDate.now(Edition.defaultEdition.timezone))
     val page = new FootballPage("football", "football", "Today's matches")
     Cached(10) {

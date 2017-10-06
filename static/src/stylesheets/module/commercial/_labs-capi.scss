@@ -378,6 +378,17 @@
         color: $neutral-1;
     }
 
+    .fc-item__link,
+    .fc-sublink__link {
+        &:visited {
+            color: #5c5c5c;
+        }
+    }
+
+    .fc-item__kicker {
+        color: $paid-article-brand;
+    }
+
     .fc-item__content {
         display: flex !important;
         flex-direction: column;
@@ -393,7 +404,8 @@
     }
 
     .fc-item__standfirst {
-        color: $neutral-1;
+        @include f-textSans;
+        color: #757575;
     }
 
     .badge {

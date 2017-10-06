@@ -10,6 +10,8 @@ import play.api.libs.ws.WSClient
 import play.api.mvc._
 import views.support.RenderOtherStatus
 import conf.Configuration.interactive.cdnPath
+import pages.InteractiveHtmlPage
+
 import scala.concurrent.duration._
 import scala.concurrent.Future
 
@@ -67,7 +69,7 @@ class InteractiveController(contentApiClient: ContentApiClient, wsClient: WSClie
 
 
   private def render(model: InteractivePage)(implicit request: RequestHeader) = {
-    val htmlResponse = () => views.html.interactive(model)
+    val htmlResponse = () => InteractiveHtmlPage.html(model)
     val jsonResponse = () => views.html.fragments.interactiveBody(model)
     renderFormat(htmlResponse, jsonResponse, model, Switches.all)
   }

@@ -25,7 +25,7 @@ class LogstashLifecycle(playConfig: PlayConfiguration)(implicit executionContext
 
 object Logstash {
 
-  def customFields(playConfig: PlayConfiguration) = Map(
+  def customFields(playConfig: PlayConfiguration): Map[String, String] = Map(
     "stack" -> "frontend",
     "app" -> playConfig.getOptional[String]("guardian.projectName").getOrElse("frontend"),
     "stage" -> Configuration.environment.stage.toUpperCase,

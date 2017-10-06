@@ -53,10 +53,10 @@ trait Initializable[T] extends Logging {
 
 case class Owner(name: Option[String], github: Option[String], email: Option[String])
 object Owner {
-  def apply(name: String, github: String) = new Owner(Some(name), Some(github), None)
-  def withGithub(githubAccount: String) = new Owner(None, Some(githubAccount), None)
-  def withName(name: String) = new Owner(Some(name), None, None)
-  def withEmail(email: String) = new Owner(None, None, Some(email))
+  def apply(name: String, github: String): Owner = new Owner(Some(name), Some(github), None)
+  def withGithub(githubAccount: String): Owner = new Owner(None, Some(githubAccount), None)
+  def withName(name: String): Owner = new Owner(Some(name), None, None)
+  def withEmail(email: String): Owner = new Owner(None, None, Some(email))
   def group(switchGroup: SwitchGroup): Seq[Owner] = Seq(withName(switchGroup.name))
 }
 

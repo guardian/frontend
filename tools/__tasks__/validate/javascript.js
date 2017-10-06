@@ -19,7 +19,7 @@ const error = ctx => {
 const flowError = ctx => {
     ctx.messages.push(
         `Your editor may be able to catch flow errors as you work:\n${chalk.underline(
-            'https://docs.google.com/a/guardian.co.uk/document/d/1-w5KdwNVAZcGRL3Q9QCvj5y3aQyoVizm6GrHQaqQHNE/edit?usp=sharing'
+            'https://flow.org/en/docs/editors'
         )}`
     );
 };
@@ -43,7 +43,7 @@ module.exports = {
         },
         {
             description: 'UI',
-            task: `eslint ui ${config}`,
+            task: () => execa.shell('cd ui && yarn lint:js'),
             onError: error,
         },
         {
@@ -57,14 +57,14 @@ module.exports = {
             onError: error,
         },
         {
-            description: `Flow ${chalk.dim('app')}`,
-            task: () => execa('flow', { cwd: 'static/src/javascripts' }),
+            description: 'Flow',
+            task: () => execa('flow'),
             onError: flowError,
         },
         {
-            description: `Flow ${chalk.dim('UI')}`,
-            task: () => execa('flow', { cwd: 'ui/src' }),
-            onError: flowError,
+            description: 'Git hooks',
+            task: `eslint git-hooks/* ${config}`,
+            onError: error,
         },
     ],
     concurrent: true,

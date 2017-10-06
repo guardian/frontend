@@ -30,7 +30,7 @@ import scala.language.postfixOps
 
   def urlValidator(expectedUrl: String) : DiscussionApiLike = new UrlValidatorDiscussionAPI(expectedUrl)
 
-  def waitFor(f: Future[_], timeout: Duration = 2 seconds) = Await.ready(f, timeout)
+  def waitFor(f: Future[_], timeout: Duration = 2 seconds): Future[_] = Await.ready(f, timeout)
 
   "Should do get request on correct URL for comments count" in {
     val shortUrlIds = "p/3tycg"

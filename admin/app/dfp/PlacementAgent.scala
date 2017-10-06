@@ -7,7 +7,7 @@ import scala.util.Try
 
 object PlacementAgent extends DataAgent[Long, Seq[String]] {
 
-  override def loadFreshData() = Try {
+  override def loadFreshData(): Try[Map[Long, Seq[String]]] = Try {
     val maybeData = for (session <- SessionWrapper()) yield {
       val placements = session.placements(new StatementBuilder())
       placements.map { placement =>

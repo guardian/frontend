@@ -2,11 +2,11 @@ package model
 
 import model.liveblog._
 import org.joda.time.DateTime
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.{Assertion, FlatSpec, Matchers}
 
 class LiveBlogCurrentPageTest extends FlatSpec with Matchers {
 
-  def fakeBlock(publicationOrder: Int) = BodyBlock(
+  def fakeBlock(publicationOrder: Int): BodyBlock = BodyBlock(
     s"$publicationOrder",
     "",
     "",
@@ -30,7 +30,7 @@ class LiveBlogCurrentPageTest extends FlatSpec with Matchers {
 
   }
 
-  def should(result: Option[LiveBlogCurrentPage], currentPage: PageReference, pagination: Option[Pagination]) = {
+  def should(result: Option[LiveBlogCurrentPage], currentPage: PageReference, pagination: Option[Pagination]): Assertion = {
     result.get.currentPage should be(currentPage)
     result.get.pagination should be(pagination)
   }

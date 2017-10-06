@@ -19,7 +19,7 @@ object BlockElement {
 
   implicit object BlockElementFormat extends Format[Seq[BlockElement]] {
     def reads(json: JsValue): JsResult[Seq[BlockElement]] = JsSuccess(Seq.empty)
-    def writes(els: Seq[BlockElement]) = JsArray(Seq(JsNull))
+    def writes(els: Seq[BlockElement]): JsValue = JsArray(Seq(JsNull))
   }
 
   def make(element: ApiBlockElement): Option[BlockElement] = {

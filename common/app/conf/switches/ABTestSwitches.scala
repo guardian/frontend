@@ -8,26 +8,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-glabs-traffic-driver",
-    "Displays an ad slot that will drive traffic to GLabs content",
-    owners = Seq(Owner.withGithub("JonNorman")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 9, 29),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-snippet-four-variants",
-    "Measure snippet open rate based on snippet design",
-    owners = Seq(Owner.withGithub("regiskuckaertz")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 10, 6),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-contributions-epic-always-ask-strategy",
     "Test to assess the effects of always asking readers to contribute via the Epic over a prolonged period",
     owners = Seq(Owner.withGithub("Mullefa")),
@@ -123,16 +103,6 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("rich-nguyen")),
     safeState = Off,
     sellByDate = new LocalDate(2017, 11, 1),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-acquisitions-support-us-recurring-contribution",
-    "Test demand for recurring contributions in the US across all channels",
-    owners = Seq(Owner.withGithub("justinpinner")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 10, 19),
     exposeClientSide = true
   )
 

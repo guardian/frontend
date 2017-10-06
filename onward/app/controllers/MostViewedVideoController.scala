@@ -3,7 +3,7 @@ package controllers
 import common._
 import feed.MostViewedVideoAgent
 import model.{Cached, Content, Video}
-import play.api.mvc.{Action, BaseController, ControllerComponents}
+import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 import contentapi.ContentApiClient
 
 class MostViewedVideoController(
@@ -13,7 +13,7 @@ class MostViewedVideoController(
 ) extends BaseController with Logging with ImplicitControllerExecutionContext {
 
   // Move this out of here if the test is successful
-  def renderInSeries(series: String) = Action.async { implicit request =>
+  def renderInSeries(series: String): Action[AnyContent] = Action.async { implicit request =>
     val page = (request.getQueryString("page") getOrElse "1").toInt
     val edition = Edition(request)
 
@@ -42,7 +42,7 @@ class MostViewedVideoController(
     }
   }
 
-  def renderMostViewed() = Action { implicit request =>
+  def renderMostViewed(): Action[AnyContent] = Action { implicit request =>
 
     val size = request.getQueryString("size").getOrElse("6").toInt
     val videos = mostViewedVideoAgent.mostViewedVideo().take(size)

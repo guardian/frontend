@@ -24,5 +24,5 @@ object TorExitNodeList extends Logging {
       torExitNodeAgent.send(allNodes)
   }
 
-  def getTorExitNodes = torExitNodeAgent.get()
+  def getTorExitNodes: Set[String] = torExitNodeAgent.get()
 }

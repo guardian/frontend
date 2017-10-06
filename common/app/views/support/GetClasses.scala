@@ -36,7 +36,7 @@ object GetClasses {
     )
   }
 
-  def forSubLink(sublink: Sublink) = RenderClasses(Seq(
+  def forSubLink(sublink: Sublink): String = RenderClasses(Seq(
     Some("fc-sublink"),
     Some(TrailCssClasses.toneClassFromStyle(sublink.cardStyle) + "--sublink"),
     sublinkMediaTypeClass(sublink)
@@ -101,6 +101,9 @@ object GetClasses {
     lazyLoad: Boolean,
     dynamicSlowMpu: Boolean
   ): String = {
+    // no toggle for Headlines container as it will be hosting the weather widget instead
+    val showToggle = !disableHide && !container.exists(!slices.Container.showToggle(_)) && !isFirst && hasTitle && !isHeadlines
+
     RenderClasses((Seq(
       ("fc-container", true),
       ("fc-container--first", isFirst),
@@ -110,15 +113,14 @@ object GetClasses {
       ("fc-container--lazy-load", lazyLoad),
       ("js-container--lazy-load", lazyLoad),
       ("fc-container--dynamic-slow-mpu", dynamicSlowMpu),
-      ("js-container--toggle",
-        // no toggle for Headlines container as it will be hosting the weather widget instead
-        !disableHide && !container.exists(!slices.Container.showToggle(_)) && !isFirst && hasTitle && !isHeadlines)
+      ("fc-container--will-have-toggle", showToggle),
+      ("js-container--toggle", showToggle)
     ) collect {
       case (kls, true) => kls
     }) ++ extraClasses: _*)
   }
 
-  def forFrontId(frontId: Option[String]) = RenderClasses(Seq(
+  def forFrontId(frontId: Option[String]): String = RenderClasses(Seq(
     "fc-container--video-no-fill-sides" -> frontId.contains("video")
   ) collect { case (kls, true) => kls }: _*)
 }

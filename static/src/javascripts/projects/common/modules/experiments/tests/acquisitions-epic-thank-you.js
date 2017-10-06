@@ -1,15 +1,12 @@
 // @flow
-import template from 'lodash/utilities/template';
 import {
     isRecentContributor,
     isPayingMember,
 } from 'commercial/modules/user-features';
-import {
-    makeABTest,
-    addTrackingCodesToUrl,
-} from 'common/modules/commercial/contributions-utilities';
+import { makeABTest } from 'common/modules/commercial/contributions-utilities';
+import { addTrackingCodesToUrl } from 'common/modules/commercial/acquisitions-ophan';
 import config from 'lib/config';
-import acquisitionsEpicThankYouTemplate from 'raw-loader!common/views/acquisitions-epic-thank-you.html';
+import { acquisitionsEpicThankYouTemplate } from 'common/modules/commercial/templates/acquisitions-epic-thank-you';
 
 const isTargetReader = () => isPayingMember() || isRecentContributor();
 
@@ -59,12 +56,18 @@ export const acquisitionsEpicThankYou = makeABTest({
                 },
 
                 template(variant) {
-                    return template(acquisitionsEpicThankYouTemplate, {
+                    return acquisitionsEpicThankYouTemplate({
                         componentName: variant.options.componentName,
-                        membershipUrl: addTrackingCodesToUrl(
-                            'https://www.theguardian.com/membership',
-                            variant.options.campaignCode
-                        ),
+                        membershipUrl: addTrackingCodesToUrl({
+                            base: 'https://www.theguardian.com/membership',
+                            componentType: 'ACQUISITIONS_EPIC',
+                            componentId: variant.options.campaignCode,
+                            campaignCode: variant.options.campaignCode,
+                            abTest: {
+                                name: 'AcquisitionsEpicThankYou',
+                                variant: variant.id,
+                            },
+                        }),
                     });
                 },
             },

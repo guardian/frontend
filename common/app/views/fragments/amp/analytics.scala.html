@@ -1,5 +1,7 @@
 @import play.api.Mode
-@(content: model.Content)(implicit request: RequestHeader, context: model.ApplicationContext)
+@import model.Tag
+@import play.api.libs.json.Json
+@(content: model.Content, page: model.Page)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @import conf.Configuration
 @import views.support.FBPixel
@@ -15,8 +17,18 @@ are used to generate the confidence graphs on the frontend dashboard.
 
 <amp-analytics config="https://ophan.theguardian.com/amp.json" @if(context.environment.mode != Mode.Dev) { data-credentials="include" }></amp-analytics>
 
-@fragments.amp.googleAnalytics(content)
+@fragments.amp.googleAnalytics(content, page)
 
 <amp-analytics id="comscore" type="comscore">
-    <script type="application/json">{ "vars": { "c2": "6035250" } }</script>
+    <script type="application/json">
+        {
+            "vars":
+                {
+                    "c2": "6035250"
+                },
+             "extraUrlParams": {
+                    "comscorekw": @Html(Json.toJson(content.tags.keywords.map{ tag: Tag => tag.id}).toString)
+                }
+        }
+    </script>
 </amp-analytics>

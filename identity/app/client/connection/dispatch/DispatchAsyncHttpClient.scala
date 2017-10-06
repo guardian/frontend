@@ -38,7 +38,7 @@ trait DispatchAsyncHttpClient extends Http {
   implicit def executionContext: ExecutionContext
 
   implicit object IterStringTupleToArrayNameValuePairs extends (Parameters => Map[String, Seq[String]]) {
-    def apply(iterStringTuple: Parameters) = iterStringTuple.toMap.groupBy(_._1).map {
+    def apply(iterStringTuple: Parameters): Map[String, Seq[String]] = iterStringTuple.toMap.groupBy(_._1).map {
       case (key, map) => (key, map.values.toSeq)
     }
   }
@@ -47,7 +47,7 @@ trait DispatchAsyncHttpClient extends Http {
     request.setQueryParameters(urlParameters).setHeaders(headers)
   }
 
-  def httpResponseHandler = new FunctionHandler(response =>
+  def httpResponseHandler: FunctionHandler[HttpResponse] = new FunctionHandler(response =>
     HttpResponse(response.getResponseBody("utf-8"), response.getStatusCode, response.getStatusText)
   )
 
@@ -63,10 +63,10 @@ trait DispatchAsyncHttpClient extends Http {
     val req = buildRequest(url(uri), urlParameters, headers)
     val futureResponse = new EnrichedFuture(client(req.toRequest, httpResponseHandler)).either
     futureResponse.onFailure{ case t: Throwable =>
-      logger.error("Exception GETing on %s, params: %s, headers: %s".format(uri, formatParams(urlParameters), formatParams(headers)), t)
+      logger.error("Exception GETing on %s, params: %s".format(uri, formatParams(urlParameters)), t)
     }
     futureResponse.onSuccess{ case Left(t) =>
-      logger.error("GET Error on %s, params: %s, headers: %s".format(uri, formatParams(urlParameters), formatParams(headers)), t)
+      logger.error("GET Error on %s, params: %s".format(uri, formatParams(urlParameters)), t)
     }
     futureResponse.map(mapFutureToResponse)
   }
@@ -78,10 +78,10 @@ trait DispatchAsyncHttpClient extends Http {
     val request = body.map(b => req.setBody(b.getBytes("UTF-8"))).getOrElse(req).toRequest
     val futureResponse = new EnrichedFuture(client(request, httpResponseHandler)).either
     futureResponse.onFailure{ case t: Throwable =>
-      logger.error("Exception POSTing on %s, params: %s, headers: %s".format(uri, formatParams(urlParameters), formatParams(headers)), t)
+      logger.error("Exception POSTing on %s, params: %s".format(uri, formatParams(urlParameters)), t)
     }
     futureResponse.onSuccess{ case Left(t) =>
-      logger.error("POST Error on %s, params: %s, headers: %s".format(uri, formatParams(urlParameters), formatParams(headers)), t)
+      logger.error("POST Error on %s, params: %s".format(uri, formatParams(urlParameters)), t)
     }
     futureResponse.map(mapFutureToResponse)
   }
@@ -93,10 +93,10 @@ trait DispatchAsyncHttpClient extends Http {
     val request = body.map(req.setBody).getOrElse(req).toRequest
     val futureResponse = new EnrichedFuture(client(request, httpResponseHandler)).either
     futureResponse.onFailure{ case t: Throwable =>
-      logger.error("Exception DELETEing on %s, params: %s, headers: %s".format(uri, formatParams(urlParameters), formatParams(headers)), t)
+      logger.error("Exception DELETEing on %s, params: %s".format(uri, formatParams(urlParameters)), t)
     }
     futureResponse.onSuccess{ case Left(t) =>
-      logger.error("DELETE Error on %s, params: %s, headers: %s".format(uri, formatParams(urlParameters), formatParams(headers)), t)
+      logger.error("DELETE Error on %s, params: %s".format(uri, formatParams(urlParameters)), t)
     }
     futureResponse.map(mapFutureToResponse)
   }

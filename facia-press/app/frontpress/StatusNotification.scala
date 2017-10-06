@@ -41,7 +41,7 @@ object StatusNotification {
   }
 
 
-  def notifyFailedJob(front: String, isLive: Boolean, reason: ApiError) = {
+  def notifyFailedJob(front: String, isLive: Boolean, reason: ApiError): Unit = {
     putMessage(StatusNotificationMessage(
       status = "error",
       front = front,
@@ -49,7 +49,7 @@ object StatusNotification {
       message = Some(s"${reason.cause} ${reason.message}")
     ))}
 
-  def notifyCompleteJob(front: String, isLive: Boolean) = {
+  def notifyCompleteJob(front: String, isLive: Boolean): Unit = {
     putMessage(StatusNotificationMessage(
       status = "ok",
       front = front,

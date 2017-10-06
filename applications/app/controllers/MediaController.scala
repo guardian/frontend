@@ -9,6 +9,7 @@ import play.api.libs.json.{Format, JsObject, Json}
 import play.api.mvc._
 import views.support.RenderOtherStatus
 import JsonComponent.withRefreshStatus
+import pages.ContentHtmlPage
 
 import scala.concurrent.Future
 
@@ -18,10 +19,10 @@ case class MediaPage(media: ContentType, related: RelatedContent) extends Conten
 
 class MediaController(contentApiClient: ContentApiClient, val controllerComponents: ControllerComponents)(implicit context: ApplicationContext) extends BaseController with RendersItemResponse with Logging with ImplicitControllerExecutionContext {
 
-  def renderJson(path: String) = render(path)
-  def render(path: String) = Action.async { implicit request => renderItem(path) }
+  def renderJson(path: String): Action[AnyContent] = render(path)
+  def render(path: String): Action[AnyContent] = Action.async { implicit request => renderItem(path) }
 
-  def renderInfoJson(path: String) = Action.async { implicit request =>
+  def renderInfoJson(path: String): Action[AnyContent] = Action.async { implicit request =>
     lookup(path) map {
       case Left(model)  => MediaInfo(expired = false, shouldHideAdverts = model.media.content.shouldHideAdverts)
       case Right(other) => MediaInfo(expired = other.header.status == GONE, shouldHideAdverts = true)
@@ -50,7 +51,7 @@ class MediaController(contentApiClient: ContentApiClient, val controllerComponen
   }
 
   private def renderMedia(model: MediaPage)(implicit request: RequestHeader): Result = {
-    val htmlResponse = () => views.html.media(model)
+    val htmlResponse = () => ContentHtmlPage.html(model)
     val jsonResponse = () => views.html.fragments.mediaBody(model, displayCaption = false)
     renderFormat(htmlResponse, jsonResponse, model, Switches.all)
   }

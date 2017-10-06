@@ -18,13 +18,13 @@ import play.api.libs.ws.WSClient
 
 class PlayerController(val wsClient: WSClient, val controllerComponents: ControllerComponents)(implicit val context: ApplicationContext) extends BaseController with ImplicitControllerExecutionContext with PaFootballClient with Requests with Logging {
 
-  def playerIndex = Action.async { implicit request =>
+  def playerIndex: Action[AnyContent] = Action.async { implicit request =>
     fetchCompetitionsAndTeams.map {
       case (competitions, teams) => Cached(600)(RevalidatableResult.Ok(views.html.football.player.playerIndex(competitions, teams)))
     }
   }
 
-  def redirectToCard = Action { request =>
+  def redirectToCard: Action[AnyContent] = Action { request =>
     val submission = request.body.asFormUrlEncoded.get
     val playerCardType = submission("playerCardType").head
     val playerId = submission("player").head
@@ -38,10 +38,10 @@ class PlayerController(val wsClient: WSClient, val controllerComponents: Control
     }
     result
   }
-  def playerCardCompetitionJson(cardType: String, playerId: String, teamId: String, competitionId: String)
-        = playerCardCompetition(cardType, playerId, teamId, competitionId)
+  def playerCardCompetitionJson(cardType: String, playerId: String, teamId: String, competitionId: String): Action[AnyContent]
+  = playerCardCompetition(cardType, playerId, teamId, competitionId)
 
-  def playerCardCompetition(cardType: String, playerId: String, teamId: String, competitionId: String) = Action.async { implicit request =>
+  def playerCardCompetition(cardType: String, playerId: String, teamId: String, competitionId: String): Action[AnyContent] = Action.async { implicit request =>
     client.competitions.map(PA.filterCompetitions).flatMap { competitions =>
       competitions.find(_.competitionId == competitionId).fold(Future.successful(NoCache(NotFound(views.html.football.error(s"Competition $competitionId not found"))))) { competition =>
         for {
@@ -56,11 +56,11 @@ class PlayerController(val wsClient: WSClient, val controllerComponents: Control
     }
   }
 
-  def playerCardDateJson(cardType: String, playerId: String, teamId: String, startDateStr: String)
-      = playerCardDate(cardType, playerId, teamId, startDateStr)
+  def playerCardDateJson(cardType: String, playerId: String, teamId: String, startDateStr: String): Action[AnyContent] =
+    playerCardDate(cardType, playerId, teamId, startDateStr)
 
 
-  def playerCardDate(cardType: String, playerId: String, teamId: String, startDateStr: String) = Action.async { implicit request =>
+  def playerCardDate(cardType: String, playerId: String, teamId: String, startDateStr: String): Action[AnyContent] = Action.async { implicit request =>
     val startDate = LocalDate.parse(startDateStr, DateTimeFormat.forPattern("yyyyMMdd"))
     for {
       playerProfile <- client.playerProfile(playerId)
@@ -96,7 +96,7 @@ class PlayerController(val wsClient: WSClient, val controllerComponents: Control
     }
   }
 
-  def squad(teamId: String) = Action.async { implicit request =>
+  def squad(teamId: String): Action[AnyContent] = Action.async { implicit request =>
     for {
       squad <- client.squad(teamId)
     } yield {

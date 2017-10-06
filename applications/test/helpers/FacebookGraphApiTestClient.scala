@@ -3,12 +3,12 @@ package helpers
 import java.io.File
 import java.net.URLEncoder
 
-import play.api.libs.ws.WSClient
+import play.api.libs.ws.{WSClient, WSResponse}
 import recorder.DefaultHttpRecorder
 import services.FacebookGraphApiClient
 import test.WithTestExecutionContext
 
-import scala.concurrent.ExecutionContext
+import scala.concurrent.{ExecutionContext, Future}
 import scala.concurrent.duration.Duration
 
 
@@ -18,7 +18,7 @@ class FacebookGraphApiTestClient(wsClient: WSClient) extends FacebookGraphApiCli
     override lazy val baseDir = new File(System.getProperty("user.dir"), "data/facebook-graph-api")
   }
 
-  override def GET(endpoint: Option[String], timeout: Duration, params: (String, String)*)(implicit executionContext: ExecutionContext) = {
+  override def GET(endpoint: Option[String], timeout: Duration, params: (String, String)*)(implicit executionContext: ExecutionContext): Future[WSResponse] = {
     val queryString = params.map({ case (key, value) => key + "=" + URLEncoder.encode(value, "UTF-8")}).mkString("&")
 
     recorder.load(s"${makeUrl(endpoint)}?$queryString", Map.empty) {

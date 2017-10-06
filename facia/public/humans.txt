@@ -21,11 +21,6 @@ Engineer: Richard Nguyen
 Twitter: @Sherbet_Noin
 From: London, UK
 
-Engineer (Tech lead, Commercial): Ken Lim
-Twitter: @kenlim
-From: Kuala Lumpur, Malaysia
-Location: London, UK
-
 Design human: Zef Cherry-Kynaston
 Twitter: @zeftilldeath
 From: Wales, UK
@@ -164,6 +159,13 @@ Twitter: @adamnfish
 Developer: Gustav Pursche
 From: Berlin, GER
 
+Developer: Pascal Honore
+Twitter: @0x104
+
+Developer: Richard Beddington
+Twitter: @richieahb
+Location: London, UK
+
 /* CONTENT PRODUCTION */
 
 Editorial Systems: Luke Hoyland
@@ -296,3 +298,7 @@ From: London, UK
 Developer: Lydia Shepherd
 From: Leeds, UK
 
+Engineer (Tech lead, Commercial): Ken Lim
+Twitter: @kenlim
+From: Kuala Lumpur, Malaysia
+Location: London, UK

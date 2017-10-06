@@ -6,7 +6,7 @@ import model.Cached.RevalidatableResult
 import model.{ApplicationContext, Cached, MetaData, NoCache, SectionSummary}
 import play.api.data.Form
 import play.api.libs.json.Json
-import play.api.mvc.{BaseController, ControllerComponents}
+import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 import play.api.libs.ws._
 import play.api.data.Forms._
 
@@ -14,7 +14,7 @@ import scala.concurrent.duration._
 
 class TechFeedbackController(ws: WSClient, val controllerComponents: ControllerComponents) (implicit context: ApplicationContext) extends BaseController with Logging {
 
-  def submitFeedback(path: String) = Action { implicit request =>
+  def submitFeedback(path: String): Action[AnyContent] = Action { implicit request =>
 
     val feedbackForm = Form(
       tuple(
@@ -50,7 +50,7 @@ class TechFeedbackController(ws: WSClient, val controllerComponents: ControllerC
 
   }
 
-  def techFeedback(path: String) = Action { implicit request =>
+  def techFeedback(path: String): Action[AnyContent] = Action { implicit request =>
     val page = model.SimplePage(MetaData.make(
       request.path,
       Some(SectionSummary.fromId("info")),

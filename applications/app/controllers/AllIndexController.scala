@@ -10,6 +10,7 @@ import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model._
 import org.joda.time.format.DateTimeFormat
 import org.joda.time.{DateTime, DateTimeZone}
+import pages.AllIndexHtmlPage
 import play.api.mvc._
 import services.{ConfigAgent, IndexPage, IndexPageItem}
 import views.support.PreviousAndNext
@@ -28,7 +29,7 @@ class AllIndexController(
   // no need to set the zone here, it gets it from the date.
   private val dateFormatUTC = DateTimeFormat.forPattern("yyyy/MMM/dd").withZone(DateTimeZone.UTC)
 
-  private def requestedDate(dateString: String) = {
+  private def requestedDate(dateString: String): DateTime = {
     dateFormatUTC
       .parseDateTime(dateString)
       .withTimeAtStartOfDay()
@@ -37,7 +38,7 @@ class AllIndexController(
       .toDateTime
   }
 
-  def altDate(path: String, day: String, month: String, year: String) = Action.async{ implicit request =>
+  def altDate(path: String, day: String, month: String, year: String): Action[AnyContent] = Action.async{ implicit request =>
     val reqDate = requestedDate(s"$year/$month/$day").withTimeAtStartOfDay()
     lazy val fallbackToAll: Result = Found(s"/$path/all")
     findByDate(path, reqDate)
@@ -52,11 +53,11 @@ class AllIndexController(
   }
 
   // redirect old dated pages e.g. /sport/cycling/2011/jan/05 to new format /sport/cycling/2011/jan/05/all
-  def on(path: String) = Action { implicit request =>
+  def on(path: String): Action[AnyContent] = Action { implicit request =>
     Cached(300)(WithoutRevalidationResult(MovedPermanently(s"/$path/all")))
   }
 
-  def all(path: String) = Action.async { implicit request =>
+  def all(path: String): Action[AnyContent] = Action.async { implicit request =>
     val edition = Edition(request)
 
     if (ConfigAgent.shouldServeFront(path) || defaultEdition.isEditionalised(path)) {
@@ -67,7 +68,7 @@ class AllIndexController(
     }
   }
 
-  def allOn(path: String, day: String, month: String, year: String) = Action.async { implicit request =>
+  def allOn(path: String, day: String, month: String, year: String): Action[AnyContent] = Action.async { implicit request =>
     val reqDate = requestedDate(s"$year/$month/$day")
     lazy val notFound: Result = Cached(300)(WithoutRevalidationResult(NotFound))
     loadLatest(path, reqDate)
@@ -94,7 +95,13 @@ class AllIndexController(
               val nextPage = if (reqDate.sameDay(today)) None else Some(s"/$path/${urlFormat(reqDate.plusDays(1))}/altdate")
               val model = index.copy(contents = contentOnRequestedDate, tzOverride = Some(DateTimeZone.UTC))
 
-              Cached(300)(RevalidatableResult.Ok(views.html.all(model, PreviousAndNext(prevPage, nextPage))))
+              Cached(300)(
+                RevalidatableResult.Ok(
+                  AllIndexHtmlPage.html(
+                    model.copy(previousAndNext = Some(PreviousAndNext(prevPage, nextPage)))
+                  )
+                )
+              )
             }
           }
           .getOrElse(notFound)
@@ -104,14 +111,14 @@ class AllIndexController(
       }
   }
 
-  private def redirectToOlderAllPage(olderDate: Option[DateTime], path: String) = olderDate.map {
+  private def redirectToOlderAllPage(olderDate: Option[DateTime], path: String): Result = olderDate.map {
     older => {
       val olderStartOfDay = older.withTimeAtStartOfDay().withZone(DateTimeZone.UTC)
       Found(s"/$path/${urlFormat(olderStartOfDay)}/all")
     }
   }.getOrElse(NotFound)
 
-  private def redirectToFirstAllPage(path: String) = Found(s"/$path/all")
+  private def redirectToFirstAllPage(path: String): Result = Found(s"/$path/all")
 
   // this is simply the latest by date. No lead content, editors picks, or anything else
   private def loadLatest(path: String, date: DateTime)(implicit request: RequestHeader): Future[Option[IndexPage]] = {
@@ -171,5 +178,5 @@ class AllIndexController(
     result
   }
 
-  private def urlFormat(date: DateTime) = date.toString(dateFormatUTC).toLowerCase
+  private def urlFormat(date: DateTime): String = date.toString(dateFormatUTC).toLowerCase
 }

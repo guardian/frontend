@@ -8,12 +8,12 @@ import scala.util.Try
 
 object CustomFieldAgent extends DataAgent[String, GuCustomField] {
 
-  override def loadFreshData() = Try { getAllCustomFields.map(f => f.name -> f).toMap }
+  override def loadFreshData(): Try[Map[String, GuCustomField]] = Try { getAllCustomFields.map(f => f.name -> f).toMap }
 }
 
 object CustomFieldService {
 
-  def sponsor(lineItem: LineItem) = for {
+  def sponsor(lineItem: LineItem): Option[String] = for {
     sponsorField <- CustomFieldAgent.get.data.get("Sponsor")
     customFieldValues <- Option(lineItem.getCustomFieldValues)
     sponsor <- customFieldValues.collect {

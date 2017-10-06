@@ -4,7 +4,7 @@ import config from 'lib/config';
 import mediator from 'lib/mediator';
 import fetchJSON from 'lib/fetch-json';
 import fastdom from 'lib/fastdom-promise';
-import register from 'common/modules/analytics/register';
+import { begin, error, end } from 'common/modules/analytics/register';
 import { Expandable } from 'common/modules/ui/expandable';
 
 const buildExpandable = (el: HTMLElement): void => {
@@ -92,7 +92,7 @@ const related = (opts: Object): void => {
                 ? 'related-popular-in-tag'
                 : 'related-content';
 
-            register.begin(componentName);
+            begin(componentName);
             container.setAttribute('data-component', componentName);
             relatedUrl =
                 popularInTag || `/related/${config.get('page.pageId')}.json`;
@@ -122,12 +122,11 @@ const related = (opts: Object): void => {
 
                     // upgrade images
                     mediator.emit('modules:related:loaded', container);
-                    mediator.emit('page:new-content', container);
-                    register.end(componentName);
+                    end(componentName);
                 })
                 .catch(() => {
                     container.remove();
-                    register.error(componentName);
+                    error(componentName);
                 });
         }
     } else {

@@ -5,7 +5,7 @@ import implicits.{Dates, ItemResponses}
 import model.ApplicationContext
 import org.joda.time.format.DateTimeFormat
 import org.joda.time.{DateTime, DateTimeZone}
-import play.api.mvc.{Action, BaseController, ControllerComponents}
+import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 import services._
 
 import scala.concurrent.Future
@@ -36,7 +36,7 @@ class PublicationController(
                   year: String,
                   month: String,
                   day: String,
-                  tail: String) = Action.async { implicit request =>
+                  tail: String): Action[AnyContent] = Action.async { implicit request =>
 
     val reqDate = requestedDate(s"$year/$month/$day")
 

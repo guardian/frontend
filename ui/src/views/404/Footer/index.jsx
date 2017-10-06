@@ -14,7 +14,7 @@ const footerLinks = [
     { href: '/help/privacy-policy', text: 'Privacy policy' },
 ];
 
-const FooterLink = ({ text, ...props }) =>
+const FooterLink = ({ text, ...props }) => (
     <li
         style={{
             display: 'inline',
@@ -30,9 +30,10 @@ const FooterLink = ({ text, ...props }) =>
             }}>
             {text}
         </a>
-    </li>;
+    </li>
+);
 
-const Footer = () =>
+const Footer = () => (
     <div
         style={{
             borderTopWidth: '3px',
@@ -44,9 +45,7 @@ const Footer = () =>
             margin: '15px 0',
             clear: 'both',
         }}>
-        <ul style={{ fontFamily: 'arial' }}>
-            {footerLinks.map(FooterLink)}
-        </ul>
+        <ul style={{ fontFamily: 'arial' }}>{footerLinks.map(FooterLink)}</ul>
         <p style={{ fontFamily: 'arial' }}>
             <small>
                 &copy; Guardian News and Media Limited or its affiliated
@@ -55,6 +54,7 @@ const Footer = () =>
                 York Way, London N1P 2AP
             </small>
         </p>
-    </div>;
+    </div>
+);
 
 export default Footer;

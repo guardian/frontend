@@ -1,0 +1,159 @@
+@import model.PageWithStoryPackage
+
+@()(implicit page: PageWithStoryPackage, request: RequestHeader)
+
+@import views.support.{EmailImage, EmailVideoImage}
+@import views.support.EmailHelpers.{imgForArticle, icon}
+@import fragments.email._
+@import model.liveblog._
+@import model.EmailAddons.EmailContentType
+@import model.content.{MediaAtom, MediaAssetPlatform}
+
+<table class="article-body">
+@defining(page.article) { article =>
+    @row(Seq("no-pad")) {
+        <a href="@article.metadata.webUrl" @page.email.map { email => title="View @email.name online"}>
+            @imgForArticle(page.banner, page.email.map(_.name))
+        </a>
+    }
+
+    @page.fallbackSeriesText.map { seriesName =>
+        @row(Seq("padded")) {
+            <h3 class="text--brand">@seriesName</h3>
+            <hr class="rule--compact" />
+        }
+    }
+
+    @row(Seq("padded")) {
+        <h1>@article.trail.headline</h1>
+    }
+
+    @article.fields.standfirst.map { standfirst =>
+        @row(Seq("padded"))(Html(standfirst))
+    }
+
+    @fragments.emailMainMedia(article)
+
+    @row(Seq("padded", "author")) {
+        @article.trail.byline.map { byline =>
+            <h3 class="byline">@byline</h3>
+
+        @article.tags.contributors.headOption.map { profile =>
+            @profile.properties.twitterHandle.map { twitter =>
+                <div class="meta__twitter">
+                    <a href="https://twitter.com/@twitter" data-link-name="twitter-handle" data-component="meta-twitter-handle" class="button button--small button--secondary tone-colour">
+                        @icon("twitter-bird")
+                        <span class="contact">@@@twitter</span>
+                    </a>
+                </div>
+            }
+            @profile.properties.emailAddress.map { email =>
+                <div class="meta__email">
+                    <a href="mailto:@email" data-link-name="email-address" data-component="meta-email-address" class="button button--small button--secondary tone-colour">
+                        @icon("mail")
+                        <span class="contact">Email</span>
+                    </a>
+                </div>
+            }
+        }
+
+            <hr />
+        }
+    }
+
+    @page.article.fields.blocks.toSeq.map { blocks =>
+        @blocks.body.map { block =>
+            @block.title.map { title =>
+                @row(Seq("padded")) {
+                    <h2 class="block__title">@title</h2>
+                }
+            }
+
+            @block.elements.map { element =>
+                @element match {
+                    case TextBlockElement(Some(html)) => {
+                        @row(Seq("padded"))(Html(html))
+                    }
+
+                    case RichLinkBlockElement(Some(url), Some(text), _) => {
+                        @row(Seq("padded", "rich-link")) {
+                            <span class="rich-link__prefix">More:</span> <a href="@url">@text</a>
+                        }
+                    }
+
+                    case EmbedBlockElement(Some(html), _, _) => {
+                        @*row(Html(html))*@
+                    }
+
+                    case ImageBlockElement(media, data, showCredit) => {
+                        @EmailImage.bestSrcFor(media).map { imageUrl =>
+                            @row(Seq("no-pad")) {
+                                @if(article.isTheMinute && block.url.isDefined) {
+                                    <a href="@block.url.getOrElse("#")">
+                                        @imgForArticle(imageUrl, data.get("alt"))
+                                    </a>
+                                } else {
+                                    @imgForArticle(imageUrl, data.get("alt"))
+                                }
+                            }
+
+                            @row(Seq("padded")) {
+                                @data.get("caption").map { caption =>
+                                    <div class="caption">
+                                        @icon("camera")
+
+                                        @Html(caption)
+
+                                        @if(showCredit) {
+                                            @data.get("credit").map(Html(_))
+                                        }
+
+                                        <hr />
+                                    </div>
+                                }
+                            }
+                        }
+                    }
+
+                    case GuVideoBlockElement(video, media, data) => {
+                        @EmailVideoImage.bestSrcFor(media).map { imageUrl =>
+                            @row(Seq("no-pad")) {
+                                @data.get("url").fold {
+                                    @imgForArticle(imageUrl, data.get("alt"))
+                                }{ linkUrl =>
+                                    <a href="@linkUrl">
+                                        @imgForArticle(imageUrl, data.get("alt"))
+                                    </a>
+                                }
+                            }
+                        }
+                    }
+
+                    case ContentAtomBlockElement(atomId) => {
+                        @page.article.content.media.find(_.id == atomId).map { atom: MediaAtom =>
+                            @atom.posterImage.flatMap(EmailVideoImage.bestSrcFor).map { imageUrl =>
+                                @atom.activeAssets.headOption.map { asset =>
+                                    @row(Seq("padded")) {
+                                        @asset.platform match {
+                                            case MediaAssetPlatform.Youtube => {
+                                                <a href="https://www.youtube.com/watch?v=@asset.id">
+                                                @imgForArticle(imageUrl, Some(atom.title))
+                                                </a>
+                                            }
+                                            case _ => {
+                                                @imgForArticle(imageUrl, Some(atom.title))
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    case _ => {}
+                }
+            }
+        }
+    }
+}
+</table>

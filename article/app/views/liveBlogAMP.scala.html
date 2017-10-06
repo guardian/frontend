@@ -4,7 +4,7 @@
 
 @(model: LiveBlogPage)(implicit request: RequestHeader, context: _root_.model.ApplicationContext)
 
-@mainAMP(model, model.related, model.article.content){
+@mainAMPLegacy(model, model.related, model.article.content){
     <script type="application/ld+json">
         @Html(Organisation().toString())
     </script>

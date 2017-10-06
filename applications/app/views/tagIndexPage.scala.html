@@ -1,7 +1,0 @@
-@(metaData: model.MetaData, page: model.TagIndexPage, subTitle: String)(implicit request: RequestHeader, context: model.ApplicationContext)
-
-@import fragments.tagIndexBody
-
-@main(model.SimplePage(metaData), projectName = Some("index")) { } {
-    @tagIndexBody(page, subTitle)
-}

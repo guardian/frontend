@@ -117,7 +117,7 @@ object DataMapper {
     }
   }
 
-  def toGuLineItem(session: SessionWrapper)(dfpLineItem: LineItem) = GuLineItem(
+  def toGuLineItem(session: SessionWrapper)(dfpLineItem: LineItem): GuLineItem = GuLineItem(
     id = dfpLineItem.getId,
     orderId = dfpLineItem.getOrderId,
     name = dfpLineItem.getName,

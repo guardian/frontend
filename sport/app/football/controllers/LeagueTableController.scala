@@ -1,11 +1,13 @@
 package football.controllers
 
+import com.gu.commercial.branding.{Branding, Dimensions, Logo, Sponsored}
 import common._
+import common.editions.Us
 import conf.switches.Switches
+import conf.switches.Switches.sponsoredPremierLeagueTable
 import feed.CompetitionsService
-import play.api.mvc.{Action, BaseController, ControllerComponents}
 import model._
-import model.Page
+import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 
 case class TablesPage(
     page: Page,
@@ -14,6 +16,33 @@ case class TablesPage(
     filters: Map[String, Seq[CompetitionFilter]] = Map.empty,
     comp: Option[Competition]) {
   lazy val singleCompetition = tables.size == 1
+
+  def branding(edition: Edition): Option[Branding] = {
+
+    if (sponsoredPremierLeagueTable.isSwitchedOn &&
+        edition == Us &&
+        page.metadata.id == "football/premierleague/table") {
+
+      val usEditionBranding = Branding(
+        brandingType = Sponsored,
+        sponsorName = "NBC Sports",
+        logo = Logo(
+          src =
+            "https://static.theguardian.com/commercial/sponsor/16/Aug/2017/91ad7359-c544-44cc-9b5d-0998bc0959d9" +
+            "-nbcsn_140x90_POS.PNG",
+          dimensions = Some(Dimensions(width = 140, height = 90)),
+          link = "https://www.theguardian.com/football/premierleague",
+          label = "Supported by"
+        ),
+        logoForDarkBackground = None,
+        aboutThisLink = "https://www.theguardian.com/info/2016/jan/25/content-funding",
+        hostedCampaignColour = None
+      )
+
+      Some(usEditionBranding)
+
+    } else None
+  }
 }
 
 class LeagueTableController(
@@ -53,8 +82,8 @@ class LeagueTableController(
 
   private def loadTables: Seq[Table] = sortedCompetitions.filter(_.hasLeagueTable).map { Table(_) }
 
-  def renderLeagueTablesJson() = renderLeagueTables()
-  def renderLeagueTables() = Action { implicit request =>
+  def renderLeagueTablesJson(): Action[AnyContent] = renderLeagueTables()
+  def renderLeagueTables(): Action[AnyContent] = Action { implicit request =>
 
     val page = new FootballPage(
       "football/tables",
@@ -76,8 +105,8 @@ class LeagueTableController(
 
   }
 
-  def renderTeamlistJson() = renderTeamlist()
-  def renderTeamlist() = Action { implicit request =>
+  def renderTeamlistJson(): Action[AnyContent] = renderTeamlist()
+  def renderTeamlist(): Action[AnyContent] = Action { implicit request =>
 
     val page = new FootballPage(
       "football/teams",
@@ -97,8 +126,8 @@ class LeagueTableController(
 
   }
 
-  def renderCompetitionJson(competition: String) = renderCompetition(competition)
-  def renderCompetition(competition: String) = Action { implicit request =>
+  def renderCompetitionJson(competition: String): Action[AnyContent] = renderCompetition(competition)
+  def renderCompetition(competition: String): Action[AnyContent] = Action { implicit request =>
     val table = loadTables.find(_.competition.url.endsWith(s"/$competition")).orElse(loadTables.find(_.competition.id == competition))
     table.map { table =>
 
@@ -123,8 +152,8 @@ class LeagueTableController(
     )
   }
 
-  def renderCompetitionGroupJson(competition: String, groupReference: String) = renderCompetitionGroup(competition, groupReference)
-  def renderCompetitionGroup(competition: String, groupReference: String) = Action { implicit request =>
+  def renderCompetitionGroupJson(competition: String, groupReference: String): Action[AnyContent] = renderCompetitionGroup(competition, groupReference)
+  def renderCompetitionGroup(competition: String, groupReference: String): Action[AnyContent] = Action { implicit request =>
     val response = for {
       table <- loadTables.find(_.competition.url.endsWith(s"/$competition")).orElse(loadTables.find(_.competition.id == competition))
       group <- table.groups.find { group =>

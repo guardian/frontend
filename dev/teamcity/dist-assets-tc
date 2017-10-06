@@ -4,6 +4,11 @@ set -o xtrace
 set -o nounset
 set -o errexit
 
+set +x
+. ~/.nvm/nvm.sh
+nvm install
+set -x
+
 echo "Asset compilation"
 
 set +x

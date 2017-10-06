@@ -18,7 +18,7 @@ case class FaciaHeaderImage(
   url: String,
   imageType: FaciaHeaderImageType
 ) {
-  def cssClasses = Seq(
+  def cssClasses: Seq[String] = Seq(
     "index-page-header__image-wrapper",
     imageType match {
       case ContributorCircleImage => "index-page-header__image-wrapper--contributor-circle"

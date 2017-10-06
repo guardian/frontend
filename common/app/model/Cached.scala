@@ -28,9 +28,9 @@ object CacheTime {
   object ServiceWorker extends CacheTime(600)
   object WebAppManifest extends CacheTime(3800)
 
-  def LastDayUpdated = CacheTime(extended(60))
-  def NotRecentlyUpdated = CacheTime(extended(300))
-  def NotRecentlyUpdatedPurgable = CacheTime(extended(1800))
+  def LastDayUpdated: CacheTime = CacheTime(extended(60))
+  def NotRecentlyUpdated: CacheTime = CacheTime(extended(300))
+  def NotRecentlyUpdatedPurgable: CacheTime = CacheTime(extended(1800))
 }
 
 object Cached extends implicits.Dates {

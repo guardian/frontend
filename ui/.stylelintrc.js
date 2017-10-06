@@ -1,18 +1,30 @@
 // @flow
 module.exports = {
     extends: 'stylelint-config-standard',
-    plugins: ['stylelint-order', 'stylelint-scss'],
+    plugins: ['stylelint-order'],
     rules: {
         indentation: 4,
         'selector-type-case': null,
         'selector-type-no-unknown': null,
 
-        // needed by styltron
-        'selector-pseudo-element-colon-notation': 'single',
-
         'order/properties-alphabetical-order': true,
 
         'at-rule-no-unknown': null,
-        'scss/at-rule-no-unknown': true,
+
+        // styletron-specific
+        'selector-pseudo-element-colon-notation': 'single',
+        'declaration-no-important': true,
+        'at-rule-blacklist': [
+            'keyframes',
+            'import',
+            'document',
+            'page',
+            'counter-style',
+        ],
+        'property-no-vendor-prefix': true,
+        'value-no-vendor-prefix': true,
+        'selector-no-vendor-prefix': true,
+        'media-feature-name-no-vendor-prefix': true,
+        'at-rule-no-vendor-prefix': true,
     },
 };

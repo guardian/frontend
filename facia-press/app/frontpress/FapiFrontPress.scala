@@ -42,7 +42,7 @@ class LiveFapiFrontPress(val wsClient: WSClient, val capiClientForFrontsSeo: Con
   override def collectionContentWithSnaps(
     collection: Collection,
     adjustSearchQuery: AdjustSearchQuery = identity,
-    adjustSnapItemQuery: AdjustItemQuery = identity) =
+    adjustSnapItemQuery: AdjustItemQuery = identity): Response[List[PressedContent]] =
     FAPI.liveCollectionContentWithSnaps(collection, adjustSearchQuery, adjustSnapItemQuery).map(_.map(PressedContent.make))
 }
 
@@ -62,7 +62,7 @@ class DraftFapiFrontPress(val wsClient: WSClient, val capiClientForFrontsSeo: Co
   override def collectionContentWithSnaps(
     collection: Collection,
     adjustSearchQuery: AdjustSearchQuery = identity,
-    adjustSnapItemQuery: AdjustItemQuery = identity) =
+    adjustSnapItemQuery: AdjustItemQuery = identity): Response[List[PressedContent]] =
     FAPI.draftCollectionContentWithSnaps(collection, adjustSearchQuery, adjustSnapItemQuery).map(_.map(PressedContent.make))
 }
 

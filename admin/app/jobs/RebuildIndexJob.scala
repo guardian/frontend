@@ -3,7 +3,7 @@ package jobs
 import common.{Logging, StopWatch}
 import contentapi.ContentApiClient
 import indexes.{ContentApiTagsEnumerator, TagPages}
-import model.{TagIndexListings, TagIndexPage}
+import model.{TagIndexListings, TagIndex}
 import play.api.libs.iteratee.Enumeratee
 import services.TagIndexesS3
 
@@ -14,7 +14,7 @@ class RebuildIndexJob(contentApiClient: ContentApiClient)(implicit executionCont
   val contentApiTagsEnumerator = new ContentApiTagsEnumerator(contentApiClient)
   val tagPages = new TagPages
 
-  def saveToS3(parentKey: String, tagPages: Seq[TagIndexPage]) {
+  def saveToS3(parentKey: String, tagPages: Seq[TagIndex]) {
     val s3StopWatch = new StopWatch
 
     tagPages foreach { tagPage =>
@@ -38,7 +38,7 @@ class RebuildIndexJob(contentApiClient: ContentApiClient)(implicit executionCont
     */
   private def alphaTitle(key: String) = key.toUpperCase.replace("-", "–")
 
-  def rebuildKeywordIndexes() = {
+  def rebuildKeywordIndexes(): Future[Unit] = {
     val keywords = contentApiTagsEnumerator.enumerateTagTypeFiltered("keyword")
     val series = contentApiTagsEnumerator.enumerateTagTypeFiltered("series")
 
@@ -51,7 +51,7 @@ class RebuildIndexJob(contentApiClient: ContentApiClient)(implicit executionCont
     }
   }
 
-  def rebuildNewspaperBooks() = {
+  def rebuildNewspaperBooks(): Future[Unit] = {
     contentApiTagsEnumerator.enumerateTagTypeFiltered("newspaper-book").run(tagPages.byPublication) map { booksMap =>
       blocking {
         saveToS3("newspaper_books", tagPages.toPages(booksMap)(alphaTitle, tagPages.asciiLowerWebTitle))
@@ -59,7 +59,7 @@ class RebuildIndexJob(contentApiClient: ContentApiClient)(implicit executionCont
     }
   }
 
-  def rebuildNewspaperBookSections() = {
+  def rebuildNewspaperBookSections(): Future[Unit] = {
     contentApiTagsEnumerator.enumerateTagTypeFiltered("newspaper-book-section").run(tagPages.byPublication) map { bookSectionMap =>
       blocking {
         saveToS3("newspaper_book_sections", tagPages.toPages(bookSectionMap)(alphaTitle, tagPages.asciiLowerWebTitle))
@@ -67,7 +67,7 @@ class RebuildIndexJob(contentApiClient: ContentApiClient)(implicit executionCont
     }
   }
 
-  def rebuildContributorIndex() = {
+  def rebuildContributorIndex(): Future[Unit] = {
     contentApiTagsEnumerator.enumerateTagTypeFiltered("contributor").run(tagPages.byContributorNameOrder) map { alphaMap =>
       blocking {
         saveToS3("contributors", tagPages.toPages(alphaMap)(alphaTitle, tagPages.nameOrder))
@@ -76,7 +76,7 @@ class RebuildIndexJob(contentApiClient: ContentApiClient)(implicit executionCont
   }
 
   implicit class RichFuture[A](future: Future[A]) {
-    def withErrorLogging = {
+    def withErrorLogging: Future[A] = {
       future onFailure {
         case throwable: Throwable => log.error("Error rebuilding index", throwable)
       }

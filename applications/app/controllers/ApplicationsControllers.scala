@@ -31,7 +31,6 @@ trait ApplicationsControllers {
   lazy val quizController = wire[QuizController]
   lazy val allIndexController = wire[AllIndexController]
   lazy val latestIndexController = wire[LatestIndexController]
-  lazy val sudokuController = wire[SudokusController]
   lazy val galleryController = wire[GalleryController]
   lazy val imageContentController = wire[ImageContentController]
   lazy val mediaController = wire[MediaController]

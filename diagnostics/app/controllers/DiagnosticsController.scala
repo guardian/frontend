@@ -6,24 +6,25 @@ import model.diagnostics.analytics.Analytics
 import model.diagnostics.commercial.UserReport
 import model.TinyResponse
 import org.joda.time.format.ISODateTimeFormat
+import play.api.libs.json.JsValue
 
 class DiagnosticsController(val controllerComponents: ControllerComponents) extends BaseController  with Logging {
   val r = scala.util.Random
 
-  def analytics(prefix: String) = Action { implicit request =>
+  def analytics(prefix: String): Action[AnyContent] = Action { implicit request =>
     Analytics.report(prefix)
     TinyResponse.gif
   }
 
   private lazy val jsonParser = parse.tolerantJson(1024 *1024)
 
-  def commercialReport = Action(jsonParser) { implicit request =>
+  def commercialReport: Action[JsValue] = Action(jsonParser) { implicit request =>
     UserReport.report(request.body)
 
     TinyResponse.noContent()
   }
 
-  def commercialReports(dateTime: String) = Action { implicit request =>
+  def commercialReports(dateTime: String): Action[AnyContent] = Action { implicit request =>
     // report requests come from browsers, so dateTime is ISO.
     val date = ISODateTimeFormat.dateTime.parseDateTime(dateTime)
 
@@ -32,7 +33,7 @@ class DiagnosticsController(val controllerComponents: ControllerComponents) exte
     ).result
   }
 
-  def commercialOptions = postOptions
+  def commercialOptions: Action[AnyContent] = postOptions
 
   def postOptions: Action[AnyContent] = Action { implicit request =>
     TinyResponse.noContent(Some("POST, OPTIONS"))

@@ -12,7 +12,7 @@ import play.api.libs.ws.WSClient
 
 class PaBrowserController(val wsClient: WSClient, val controllerComponents: ControllerComponents)(implicit val context: ApplicationContext) extends BaseController with ImplicitControllerExecutionContext with PaFootballClient with Logging {
 
-  def browserSubstitution() = Action { implicit request =>
+  def browserSubstitution(): Action[AnyContent] = Action { implicit request =>
     val submission = request.body.asFormUrlEncoded.getOrElse { throw new Exception("Could not read POST submission") }
     val query = getOneOrFail(submission, "query")
     val replacements = """(\{.*?\})""".r.findAllIn(query).toList.filter("{apiKey}"!=)
@@ -30,11 +30,11 @@ class PaBrowserController(val wsClient: WSClient, val controllerComponents: Cont
     NoCache(SeeOther("/admin/football/browser/%s".format(replacedQuery.dropWhile('/' ==))))
   }
 
-  def browse = Action { implicit request =>
+  def browse: Action[AnyContent] = Action { implicit request =>
     Cached(60)(RevalidatableResult.Ok(views.html.football.browse()))
   }
 
-  def browser(query: String) = Action.async { implicit request =>
+  def browser(query: String): Action[AnyContent] = Action.async { implicit request =>
     val replacedQuery = URLDecoder.decode(query, "UTF-8").replace("{apiKey}", client.apiKey)
     client.get("/" + replacedQuery).map{ content =>
       val response = Ok(content)

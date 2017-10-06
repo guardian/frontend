@@ -24,7 +24,7 @@ class PollsHtmlCleaner(wsClient: WSClient)(implicit executionContext: ExecutionC
     document.getElementsByAttribute("data-poll-url").nonEmpty
   }
 
-  override def clean(document: Document, convertToHttps: Boolean) = {
+  override def clean(document: Document, convertToHttps: Boolean): Document = {
     universalClean(document)
     removeScripts(document)
     removeByTagName(document, "noscript")

@@ -1,14 +1,15 @@
 package weather.geo
 
 import common.ResourcesHelper
-import scala.io.Source
+
+import scala.io.{BufferedSource, Source}
 import scala.util.Try
 
 case class CityRef(city: String, region: String, country: String)
 
 object CitiesCsvLine {
   implicit class RichString(s: String) {
-    def withoutQuotes = s.stripPrefix("\"").stripSuffix("\"")
+    def withoutQuotes: String = s.stripPrefix("\"").stripSuffix("\"")
   }
 
   def unapply(line: String): Option[CitiesCsvLine] = {
@@ -56,16 +57,16 @@ case class CitiesCsvLine(
 )
 
 object CitiesLookUp extends ResourcesHelper {
-  private [geo] def getGeoIPCityInputStream = {
+  private [geo] def getGeoIPCityInputStream: BufferedSource = {
     Source.fromInputStream(getInputStream("GeoIPCity-534-Location.csv").get, "iso-8859-1")
   }
 
-  private[geo] def getCsvLines = {
+  private[geo] def getCsvLines: Iterator[CitiesCsvLine] = {
     val csv = getGeoIPCityInputStream
     csv.getLines().drop(2) collect { case CitiesCsvLine(csvLine) => csvLine }
   }
 
-  def loadCache() = {
+  def loadCache(): Map[CityRef, LatitudeLongitude] = {
     // first two lines are Copyright info and field names
     getCsvLines.filter({ csvLine =>
       !csvLine.country.isEmpty && !csvLine.city.isEmpty

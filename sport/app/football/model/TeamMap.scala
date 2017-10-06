@@ -100,7 +100,7 @@ object TeamMap extends Logging {
     ("7012", "Dynamo Kyiv")
   )
 
-  def apply(team: FootballTeam) = Team(team, teamAgent().get(team.id), shortNames.get(team.id))
+  def apply(team: FootballTeam): Team = Team(team, teamAgent().get(team.id), shortNames.get(team.id))
 
   def findTeamIdByUrlName(name: String): Option[String] = teamAgent().find(_._2.id == s"football/$name").map(_._1)
 
@@ -129,9 +129,9 @@ object TeamUrl {
 }
 
 class TeamNameBuilder(competitions: Competitions) {
-  def withTeam(team: FootballTeam) = TeamMap.shortNames.getOrElse(team.id, team.name)
+  def withTeam(team: FootballTeam): String = TeamMap.shortNames.getOrElse(team.id, team.name)
 
-  def withId(id: String) = competitions.findTeam(id).map(withTeam)
+  def withId(id: String): Option[String] = competitions.findTeam(id).map(withTeam)
 }
 
 // if we have tags for the matches we can make a sensible url for it

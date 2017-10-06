@@ -9,7 +9,7 @@ import scala.language.implicitConversions
 import org.joda.time.Minutes
 
 object AuthenticatedUser {
-  implicit def authUserToUser(authUser: AuthenticatedUser) = authUser.user
+  implicit def authUserToUser(authUser: AuthenticatedUser): User = authUser.user
 }
 
 case class AuthenticatedUser(user: User, auth: Auth)
@@ -31,6 +31,6 @@ class AuthenticationService(cookieDecoder: FrontendIdentityCookieDecoder,
     scGuLa <- request.cookies.get("SC_GU_LA")
   } yield cookieDecoder.userHasRecentScGuLaCookie(authedUser, scGuLa.value, Minutes.minutes(20).toStandardDuration)).getOrElse(false)
 
-  def requestPresentsAuthenticationCredentials(request: RequestHeader) = authenticatedUserFor(request).isDefined
+  def requestPresentsAuthenticationCredentials(request: RequestHeader): Boolean = authenticatedUserFor(request).isDefined
 
 }

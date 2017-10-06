@@ -1,7 +1,10 @@
 // @flow
 import React from 'react/addons';
 import { markup as closeCentralIcon } from 'svgs/icon/close-central.svg';
-import helpers from 'common/modules/crosswords/helpers';
+import {
+    cellsForClue,
+    getAnagramClueData,
+} from 'common/modules/crosswords/helpers';
 import shuffle from 'lodash/collections/shuffle';
 import { ClueInput } from './clue-input';
 import { CluePreview } from './clue-preview';
@@ -97,11 +100,11 @@ const AnagramHelper = React.createClass({
         const closeIcon = {
             __html: closeCentralIcon,
         };
-        const clue = helpers.getAnagramClueData(
+        const clue = getAnagramClueData(
             this.props.entries,
             this.props.focussedEntry
         );
-        const cells = helpers.cellsForClue(
+        const cells = cellsForClue(
             this.props.entries,
             this.props.focussedEntry
         );
@@ -140,7 +143,7 @@ const AnagramHelper = React.createClass({
             React.createElement('button', {
                 className:
                     'button button--large button--tertiary crossword__anagram-helper-close',
-                onClick: this.props.close,
+                onClick: this.props.close.bind(this.props.crossword),
                 dangerouslySetInnerHTML: closeIcon,
                 'data-link-name': 'Close',
             }),

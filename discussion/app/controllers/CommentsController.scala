@@ -10,7 +10,7 @@ import model._
 import play.api.data.Forms._
 import play.api.data._
 import play.api.data.validation._
-import play.api.mvc.{Action, ControllerComponents, RequestHeader, Result}
+import play.api.mvc._
 import play.filters.csrf.{CSRFAddToken, CSRFCheck}
 
 import scala.concurrent.Future
@@ -34,19 +34,19 @@ class CommentsController(
   )
 
   // Used for jump to comment, comment hash location.
-  def commentContextJson(id: Int) = Action.async { implicit request =>
+  def commentContextJson(id: Int): Action[AnyContent] = Action.async { implicit request =>
     val params = DiscussionParams(request)
     discussionApi.commentContext(id, params) flatMap { context =>
       getComments(context._1, Some(params.copy(page = context._2)))
     } recover toResult
   }
-  def commentContextJsonOptions(id: Int) = Action { implicit request =>
+  def commentContextJsonOptions(id: Int): Action[AnyContent] = Action { implicit request =>
     TinyResponse.noContent(Some("GET, OPTIONS"))
   }
 
   // Used for getting more replies for a specific comment.
-  def commentJson(id: Int) = comment(id)
-  def comment(id: Int) = Action.async { implicit request =>
+  def commentJson(id: Int): Action[AnyContent] = comment(id)
+  def comment(id: Int): Action[AnyContent] = Action.async { implicit request =>
     discussionApi.commentFor(id, request.getQueryString("displayThreaded")) map {
       comment =>
         Cached(CacheTime.DiscussionDefault) {
@@ -59,13 +59,13 @@ class CommentsController(
   }
 
   // Get a list of comments for a discussion.
-  def comments(key: DiscussionKey) = Action.async { implicit request => getComments(key) }
-  def commentsJson(key: DiscussionKey) = Action.async { implicit request => getComments(key) }
-  def commentsJsonOptions(key: DiscussionKey) = Action { implicit request => TinyResponse.noContent(Some("GET, OPTIONS")) }
+  def comments(key: DiscussionKey): Action[AnyContent] = Action.async { implicit request => getComments(key) }
+  def commentsJson(key: DiscussionKey): Action[AnyContent] = Action.async { implicit request => getComments(key) }
+  def commentsJsonOptions(key: DiscussionKey): Action[AnyContent] = Action { implicit request => TinyResponse.noContent(Some("GET, OPTIONS")) }
 
   // Get the top comments for a discussion.
-  def topCommentsJson(key: DiscussionKey) = Action.async { implicit request => getTopComments(key) }
-  def topCommentsJsonOptions(key: DiscussionKey) = Action { implicit request => TinyResponse.noContent(Some("GET, OPTIONS")) }
+  def topCommentsJson(key: DiscussionKey): Action[AnyContent] = Action.async { implicit request => getTopComments(key) }
+  def topCommentsJsonOptions(key: DiscussionKey): Action[AnyContent] = Action { implicit request => TinyResponse.noContent(Some("GET, OPTIONS")) }
 
 
   val reportAbusePage = SimplePage(MetaData.make(
@@ -73,7 +73,7 @@ class CommentsController(
     Some(SectionSummary.fromId("Discussion")),
     "Report Abuse"
   ))
-  def reportAbuseForm(commentId: Int) = csrfAddToken {
+  def reportAbuseForm(commentId: Int): Action[AnyContent] = csrfAddToken {
     Action {
       implicit request =>
 
@@ -90,7 +90,7 @@ class CommentsController(
   ))
 
 
-  def reportAbuseThankYou(commentId: Int) = Action.async { implicit request =>
+  def reportAbuseThankYou(commentId: Int): Action[AnyContent] = Action.async { implicit request =>
     discussionApi.commentFor(commentId).map { comment =>
       Cached(CacheTime.DiscussionDefault) {
         RevalidatableResult.Ok(views.html.discussionComments.reportCommentThankYou(comment.webUrl, reportAbuseThankYouPage))
@@ -109,7 +109,7 @@ class CommentsController(
 
   }
 
-  def reportAbuseSubmission(commentId: Int) = csrfCheck {
+  def reportAbuseSubmission(commentId: Int): Action[AnyContent] = csrfCheck {
     Action.async { implicit request =>
     val scGuU = request.cookies.get("SC_GU_U")
       userForm.bindFromRequest.fold(

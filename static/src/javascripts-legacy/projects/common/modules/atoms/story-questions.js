@@ -7,7 +7,8 @@ define([
     'lib/config',
     'ophan/ng',
     'common/modules/identity/api',
-    'fastdom'
+    'fastdom',
+    'common/modules/commercial/acquisitions-ophan'
 ], function (
     mediator,
     detect,
@@ -17,8 +18,33 @@ define([
     config,
     ophan,
     Id,
-    fastdom
+    fastdom,
+    componentEvent
 ) {
+
+    function sendOldStyleInteraction(atomId, component, value) {
+        ophan.record({
+            atomId: atomId,
+            component: component,
+            value: value,
+        });
+    }
+
+    function sendNewStyleInteraction(atomId, action, value, eventId) {
+        var event = {
+            component: {
+                componentType: 'READERS_QUESTIONS_ATOM',
+                id: atomId,
+            },
+            action: action,
+        };
+
+        if (value) event.value = value;
+        if (eventId) event.id = eventId;
+
+
+        componentEvent.submitComponentEvent(event);
+    }
 
     function askQuestion(event, isEmailSubmissionReady) {
         event.preventDefault();
@@ -58,11 +84,8 @@ define([
                         }
                     }
 
-                    ophan.record({
-                        atomId: atomId.trim(),
-                        component: questionText.trim(),
-                        value: 'question_asked'
-                    });
+                    sendOldStyleInteraction(atomId.trim(), questionText.trim(), 'question_asked');
+                    sendNewStyleInteraction(atomId.trim(), 'VOTE', questionText.trim(), questionId);
                 }
             }
         }
@@ -75,6 +98,8 @@ define([
         var email = answersEmailSignupForm.elements['email'];
         var listId = answersEmailSignupForm.listId;
         var questionId = answersEmailSignupForm.dataset.questionId;
+        var atomIdElement = $('.js-storyquestion-atom-id');
+        var question = document.querySelector("meta[name=js-notranslate-" + questionId + "]");
 
         if (email && listId && questionId) {
 
@@ -94,6 +119,11 @@ define([
                     }
                 }
             });
+
+            var atomId = atomIdElement.attr('id');
+            var questionText = question.content;
+
+            sendNewStyleInteraction(atomId.trim(), 'SUBSCRIBE', questionText.trim(), questionId);
         }
     }
 
@@ -150,11 +180,8 @@ define([
                         var atomId = atomElement.attr('id');
 
                         if (atomId) {
-                            ophan.record({
-                                atomId: atomId.trim(),
-                                component: atomId.trim(),
-                                value: 'question_component_in_view'
-                            });
+                            sendOldStyleInteraction(atomId.trim(), atomId.trim(), 'question_component_in_view');
+                            sendNewStyleInteraction(atomId.trim(), 'VIEW');
                         }
 
                         mediator.off('window:throttledScroll', onScroll);

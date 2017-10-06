@@ -83,6 +83,5 @@ describe('Liveblog Dynamic Adverts', () => {
             expect(adSlots.length).toBeGreaterThan(0);
             expect(candidatesAreAllAds).toBe(true);
             expect(candidates.length).toEqual(adSlots.length);
-        })
-    );
+        }));
 });
