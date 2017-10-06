@@ -1,65 +1,64 @@
-import $ from 'lib/$';
+// @flow
 import config from 'lib/config';
-import detect from 'lib/detect';
-import storage from 'lib/storage';
 import template from 'lodash/utilities/template';
 import mediator from 'lib/mediator';
-import adblockMsg from 'common/modules/commercial/adblock-messages';
-import adblockConfig from 'common/modules/commercial/adblock-banner-config';
-import AdblockBanner from 'common/modules/adblock-banner';
-import history from 'common/modules/onward/history';
-import Message from 'common/modules/ui/message';
+import { showAdblockMsg } from 'common/modules/commercial/adblock-messages';
+import { getBanners } from 'common/modules/commercial/adblock-banner-config';
+import { AdblockBanner } from 'common/modules/adblock-banner';
+import { Message } from 'common/modules/ui/message';
 import messageTemplate from 'raw-loader!common/views/membership-message.html';
-import svgs from 'common/views/svgs';
+import { inlineSvg } from 'common/views/svgs';
 import sample from 'lodash/collections/sample';
 
-function showAdblockMessage() {
-    const adblockLink = 'https://membership.theguardian.com/supporter',
-          messages = {
-              UK: {
-                  campaign: 'ADB_UK',
-                  messageText: [
-                      'We notice you\'re using an ad-blocker. Perhaps you\'ll support us another way?',
-                      'Become a Supporter for less than £1 per week'
-                  ].join(' '),
-                  linkText: 'Find out more'
-              },
-              US: {
-                  campaign: 'ADB_US',
-                  messageText: [
-                      'We notice you\'re using an ad-blocker. Perhaps you\'ll support us another way?',
-                      'Become a Supporter for less than $1 per week'
-                  ].join(' '),
-                  linkText: 'Find out more'
-              },
-              INT: {
-                  campaign: 'ADB_INT',
-                  messageText: [
-                      'We notice you\'re using an ad-blocker. Perhaps you\'ll support us another way?',
-                      'Become a Supporter for less than $1/€1 per week'
-                  ].join(' '),
-                  linkText: 'Find out more'
-              }
-          },
-          message = messages[config.page.edition];
+const showAdblockMessage = () => {
+    const adblockLink = 'https://membership.theguardian.com/supporter';
+    const messages = {
+        UK: {
+            campaign: 'ADB_UK',
+            messageText: [
+                "We notice you're using an ad-blocker. Perhaps you'll support us another way?",
+                'Become a Supporter for less than £1 per week',
+            ].join(' '),
+            linkText: 'Find out more',
+        },
+        US: {
+            campaign: 'ADB_US',
+            messageText: [
+                "We notice you're using an ad-blocker. Perhaps you'll support us another way?",
+                'Become a Supporter for less than $1 per week',
+            ].join(' '),
+            linkText: 'Find out more',
+        },
+        INT: {
+            campaign: 'ADB_INT',
+            messageText: [
+                "We notice you're using an ad-blocker. Perhaps you'll support us another way?",
+                'Become a Supporter for less than $1/€1 per week',
+            ].join(' '),
+            linkText: 'Find out more',
+        },
+    };
+    const message = messages[config.page.edition];
 
     if (message) {
-        new Message.Message('adblock-message-2016-06-15', {
+        new Message('adblock-message-2016-06-15', {
             pinOnHide: false,
             siteMessageLinkName: 'adblock',
             siteMessageCloseBtn: 'hide',
-            cssModifierClass: 'adblock-message'
-        }).show(template(messageTemplate, {
-            linkHref: adblockLink + '?INTCMP=' + message.campaign,
-            messageText: message.messageText,
-            linkText: message.linkText,
-            arrowWhiteRight: svgs.inlineSvg('arrowWhiteRight')
-        }));
+            cssModifierClass: 'adblock-message',
+        }).show(
+            template(messageTemplate, {
+                linkHref: `${adblockLink}?INTCMP=${message.campaign}`,
+                messageText: message.messageText,
+                linkText: message.linkText,
+                arrowWhiteRight: inlineSvg('arrowWhiteRight'),
+            })
+        );
     }
-}
+};
 
-function showAdblockBanner() {
-    const banners = adblockConfig.getBanners(config.page.edition);
+const showAdblockBanner = () => {
+    const banners = getBanners(config.page.edition);
 
     const flatBanners = [];
     banners.forEach(bannerList => {
@@ -69,12 +68,12 @@ function showAdblockBanner() {
     const bannerToUse = sample(flatBanners);
 
     if (bannerToUse) {
-        new AdblockBanner.AdblockBanner(bannerToUse.template, bannerToUse).show();
+        new AdblockBanner(bannerToUse.template, bannerToUse).show();
     }
-}
+};
 
-function init() {
-    adblockMsg.showAdblockMsg().then(adBlockInUse => {
+const init = () => {
+    showAdblockMsg().then(adBlockInUse => {
         // Show messages only if adblock is used by non paying member
         if (adBlockInUse) {
             showAdblockMessage();
@@ -82,8 +81,7 @@ function init() {
         }
         mediator.emit('banner-message:complete');
     });
-
-}
+};
 export default {
-    init
+    init,
 };
