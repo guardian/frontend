@@ -70,7 +70,7 @@ object Dependencies {
   val scanamo = "com.gu" %% "scanamo" % "0.9.5"
   val enumeratumPlayJson = "com.beachape" %% "enumeratum-play-json" % "1.5.11"
   val commercialShared = "com.gu" %% "commercial-shared" % "6.0.0"
-  val atomRenderer = "com.gu" %% "atom-renderer" % "0.3"
+  val atomRenderer = "com.gu" %% "atom-renderer" % "0.7.2"
   val playJson = "com.typesafe.play" %% "play-json" % playJsonVersion
   val playJsonJoda = "com.typesafe.play" %% "play-json-joda" % playJsonVersion
   val playIteratees = "com.typesafe.play" %% "play-iteratees" % "2.6.1"
@@ -83,7 +83,6 @@ object Dependencies {
   // This forces jackson.dataformat to the same version as the one brough by play-json
   // This line could be remove as soon as the AWS SDK is updated to use the same version coming with play-json
   val jacksonDataFormat = "com.fasterxml.jackson.dataformat" % "jackson-dataformat-cbor" % "2.8.9"
-  val atomRenderer = "com.gu" %% "atom-renderer" % "0.7.2"
 
   // Web jars
   val bootstrap = "org.webjars" % "bootstrap" % "3.3.7"
