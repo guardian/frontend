@@ -30,9 +30,7 @@ class Affix {
         });
 
         mediator.addListener('window:throttledResize', () => {
-            fastdom.write(() => {
-                this.calculateContainerPositioning();
-            });
+            this.calculateContainerPositioning();
         });
 
         this.affixed = false;
@@ -43,20 +41,20 @@ class Affix {
         this.$window = bonzo(document.body);
 
         this.checkPosition();
-
-        fastdom.write(() => {
-            this.calculateContainerPositioning();
-        });
+        this.calculateContainerPositioning();
     }
 
     calculateContainerPositioning(): void {
-        // aleady called from inside a fastdom.write cb...
-        this.$container.css('top', '0');
-
         fastdom
-            .read(
-                () =>
-                    this.$markerTop.offset().top - this.$container.offset().top
+            .write(() => {
+                this.$container.css('top', '0');
+            })
+            .then(() =>
+                fastdom.read(
+                    () =>
+                        this.$markerTop.offset().top -
+                        this.$container.offset().top
+                )
             )
             .then(containerTop => {
                 fastdom.write(() => {
@@ -84,8 +82,8 @@ class Affix {
             if (bottomCheck) {
                 fastdom.write(() => {
                     this.$container.removeClass(affixBottomClass);
-                    this.calculateContainerPositioning();
                 });
+                this.calculateContainerPositioning();
             } else {
                 // Store the container top, which needs to be re-applied when affixed to bottom.
                 const oldContainerStyling = getPixels(
