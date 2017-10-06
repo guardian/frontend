@@ -3,26 +3,14 @@ import mediator from 'lib/mediator';
 import config from 'lib/config';
 import ophan from 'ophan/ng';
 import { buildGoogleAnalyticsEvent } from 'common/modules/video/ga-helper';
+import type { MediaEvent } from 'common/modules/video/ga-helper';
 
-const eventAction = () => 'video content';
+const eventAction = (): string => 'video content';
 
-const buildEventId = (event, videoId) => `${event}:${videoId}`;
+const buildEventId = (event: string, videoId: string): string =>
+    `${event}:${videoId}`;
 
-/**
- *
- * @param mediaId {string}
- * @param mediaType {string} audio|video
- * @param eventType {string} e.g. firstplay, firstend
- * @param isPreroll {boolean}
- * @returns {{mediaId: string, mediaType: string, eventType: string, isPreroll: boolean}}
- */
-const MediaEvent = (mediaId, mediaType, eventType) => ({
-    mediaId,
-    mediaType,
-    eventType,
-});
-
-const initYoutubeEvents = videoId => {
+const initYoutubeEvents = (videoId: string): void => {
     const gaTracker = config.googleAnalytics.trackers.editorial;
     const events = {
         metricMap: {
@@ -54,7 +42,12 @@ const initYoutubeEvents = videoId => {
 
     eventsList.forEach(event => {
         mediator.once(buildEventId(event, videoId), id => {
-            const mediaEvent = MediaEvent(videoId, 'video', event);
+            const mediaEvent: MediaEvent = {
+                mediaId: videoId,
+                mediaType: 'video',
+                eventType: event,
+                isPreroll: false,
+            };
             ophanRecord(mediaEvent);
             window.ga(
                 `${gaTracker}.send`,
@@ -65,14 +58,14 @@ const initYoutubeEvents = videoId => {
                     id,
                     'gu-video-youtube',
                     eventAction,
-                    event.mediaId
+                    videoId
                 )
             );
         });
     });
 };
 
-const trackYoutubeEvent = (event, id) => {
+const trackYoutubeEvent = (event: string, id: string): void => {
     mediator.emit(buildEventId(event, id), id);
 };
 
