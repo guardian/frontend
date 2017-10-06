@@ -25,22 +25,22 @@ const isit = (
 };
 
 const isMatch = (yes: yesable, no: noable): boolean => {
-    const teams = config.get('referencesOfType')('pa-football-team');
+    const teams = config.referencesOfType('pa-football-team');
     const match = config.get('page.footballMatch', {});
     // the order of this is important as, on occasion,
     // "minbymin" is tagged with "match reports" but should be considered "minbymin".
     const pageTypes = [
-        ['minbymin', config.get('page.isLiveBlog')],
-        ['report', config.get('hasTone')('Match reports')],
-        ['preview', config.get('hasSeries')('Match previews')],
+        ['minbymin', config.page.isLiveBlog],
+        ['report', config.hasTone('Match reports')],
+        ['preview', config.hasSeries('Match previews')],
         ['stats', match.id],
     ];
     const pageType = pageTypes.find(type => type[1] === true);
 
     Object.assign(match, {
-        date: config.get('webPublicationDateAsUrlPart')(),
+        date: config.webPublicationDateAsUrlPart(),
         teams,
-        isLive: config.get('page.isLive'),
+        isLive: config.page.isLive,
         pageType: pageType && pageType[0],
     });
 
@@ -65,13 +65,13 @@ const isCompetition = (yes: yesable): boolean => {
 };
 
 const isClockwatch = (yes: yesable): boolean =>
-    isit(config.get('hasSeries')('Clockwatch'), yes);
+    isit(config.hasSeries('Clockwatch'), yes);
 
 const isLiveClockwatch = (yes: yesable): boolean =>
-    isClockwatch(() => isit(config.get('page.isLive'), yes));
+    isClockwatch(() => isit(config.page.isLive, yes));
 
 const isFootballStatsPage = (yes: yesable): boolean =>
-    isit(config.get('page.hasOwnProperty')('footballMatch'), yes);
+    isit(config.page.hasOwnProperty('footballMatch'), yes);
 
 const belowArticleVisible = (yes: yesable, no: noable): boolean => {
     const el = $('.js-after-article')[0];
