@@ -14,34 +14,34 @@ import svgs from 'common/views/svgs';
 import sample from 'lodash/collections/sample';
 
 function showAdblockMessage() {
-    var adblockLink = 'https://membership.theguardian.com/supporter',
-        messages = {
-            UK: {
-                campaign: 'ADB_UK',
-                messageText: [
-                    'We notice you\'re using an ad-blocker. Perhaps you\'ll support us another way?',
-                    'Become a Supporter for less than £1 per week'
-                ].join(' '),
-                linkText: 'Find out more'
-            },
-            US: {
-                campaign: 'ADB_US',
-                messageText: [
-                    'We notice you\'re using an ad-blocker. Perhaps you\'ll support us another way?',
-                    'Become a Supporter for less than $1 per week'
-                ].join(' '),
-                linkText: 'Find out more'
-            },
-            INT: {
-                campaign: 'ADB_INT',
-                messageText: [
-                    'We notice you\'re using an ad-blocker. Perhaps you\'ll support us another way?',
-                    'Become a Supporter for less than $1/€1 per week'
-                ].join(' '),
-                linkText: 'Find out more'
-            }
-        },
-        message = messages[config.page.edition];
+    const adblockLink = 'https://membership.theguardian.com/supporter',
+          messages = {
+              UK: {
+                  campaign: 'ADB_UK',
+                  messageText: [
+                      'We notice you\'re using an ad-blocker. Perhaps you\'ll support us another way?',
+                      'Become a Supporter for less than £1 per week'
+                  ].join(' '),
+                  linkText: 'Find out more'
+              },
+              US: {
+                  campaign: 'ADB_US',
+                  messageText: [
+                      'We notice you\'re using an ad-blocker. Perhaps you\'ll support us another way?',
+                      'Become a Supporter for less than $1 per week'
+                  ].join(' '),
+                  linkText: 'Find out more'
+              },
+              INT: {
+                  campaign: 'ADB_INT',
+                  messageText: [
+                      'We notice you\'re using an ad-blocker. Perhaps you\'ll support us another way?',
+                      'Become a Supporter for less than $1/€1 per week'
+                  ].join(' '),
+                  linkText: 'Find out more'
+              }
+          },
+          message = messages[config.page.edition];
 
     if (message) {
         new Message.Message('adblock-message-2016-06-15', {
@@ -59,14 +59,14 @@ function showAdblockMessage() {
 }
 
 function showAdblockBanner() {
-    var banners = adblockConfig.getBanners(config.page.edition);
+    const banners = adblockConfig.getBanners(config.page.edition);
 
-    var flatBanners = [];
-    banners.forEach(function(bannerList) {
+    const flatBanners = [];
+    banners.forEach(bannerList => {
         flatBanners.push(sample(bannerList));
     });
 
-    var bannerToUse = sample(flatBanners);
+    const bannerToUse = sample(flatBanners);
 
     if (bannerToUse) {
         new AdblockBanner.AdblockBanner(bannerToUse.template, bannerToUse).show();
@@ -74,7 +74,7 @@ function showAdblockBanner() {
 }
 
 function init() {
-    adblockMsg.showAdblockMsg().then(function(adBlockInUse) {
+    adblockMsg.showAdblockMsg().then(adBlockInUse => {
         // Show messages only if adblock is used by non paying member
         if (adBlockInUse) {
             showAdblockMessage();
@@ -85,5 +85,5 @@ function init() {
 
 }
 export default {
-    init: init
+    init
 };
