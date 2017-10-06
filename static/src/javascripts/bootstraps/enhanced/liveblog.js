@@ -3,7 +3,7 @@ import config from 'lib/config';
 import { isBreakpoint } from 'lib/detect';
 import mediator from 'lib/mediator';
 import { upgradeRichLinks } from 'common/modules/article/rich-links';
-import Affix from 'common/modules/experiments/affix';
+import { Affix } from 'common/modules/experiments/affix';
 import { autoUpdate } from 'common/modules/ui/autoupdate';
 import RelativeDates from 'common/modules/ui/relativedates';
 import { init as initLiveblogCommon } from 'bootstraps/enhanced/article-liveblog-common';
