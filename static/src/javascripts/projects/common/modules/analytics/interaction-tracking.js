@@ -1,7 +1,12 @@
 // @flow
 import mediator from 'lib/mediator';
 import { session } from 'lib/storage';
-import { google } from 'common/modules/analytics/google';
+import {
+    trackSamePageLinkClick as trackSamePageLinkClickGoogle,
+    trackNonClickInteraction as trackNonClickInteractionGoogle,
+    trackExternalLinkClick as trackExternalLinkClickGoogle,
+    trackSponsorLogoLinkClick as trackSponsorLogoLinkClickGoogle
+} from 'common/modules/analytics/google';
 import { catchErrorsWithContext } from 'lib/robust';
 
 const NG_STORAGE_KEY = 'gu.analytics.referrerVars';
@@ -15,19 +20,17 @@ type Spec = {
     tag: string,
 };
 
-//
-
 const isSponsorLogoLinkClick = target => target.hasAttribute('data-sponsor');
 
 // used where we don't have an element to pass as a tag, eg. keyboard interaction
 const trackNonClickInteraction = actionName => {
-    google.trackNonClickInteraction(actionName);
+    trackNonClickInteractionGoogle(actionName);
 };
 
 const trackSamePageLinkClick = (spec: Spec) => {
     // Do not perform a same-page track link when there isn't a tag.
     if (spec.tag) {
-        google.trackSamePageLinkClick(spec.target, spec.tag);
+        trackSamePageLinkClickGoogle(spec.target, spec.tag);
     }
 };
 
@@ -47,7 +50,7 @@ const trackExternalLinkClick = (spec: Spec) => {
     // Execute the GA and Omniture tracking in parallel
     // and rely on Omniture to provide a 500 ms delay so they both get a chance to complete.
     // TODO when Omniture goes away, implement the delay ourselves.
-    google.trackExternalLinkClick(spec.target, spec.tag);
+    trackExternalLinkClickGoogle(spec.target, spec.tag);
 };
 
 const trackClick = (spec: Spec) => {
@@ -56,7 +59,7 @@ const trackClick = (spec: Spec) => {
     }
 
     if (isSponsorLogoLinkClick(spec.target)) {
-        return google.trackSponsorLogoLinkClick(spec.target);
+        return trackSponsorLogoLinkClickGoogle(spec.target);
     }
 
     if (spec.sameHost) {
