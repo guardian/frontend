@@ -122,12 +122,16 @@ const showBanner = (params: EngagementBannerParams): void => {
         ? selectSequentiallyFrom(params.messageText)
         : params.messageText;
 
-    const linkUrl = addTrackingCodesToUrl(
-        params.linkUrl,
-        'ACQUISITIONS_ENGAGEMENT_BANNER',
-        params.campaignCode,
-        test && variant ? { name: test.id, variant: variant.id } : undefined
-    );
+    const linkUrl = addTrackingCodesToUrl({
+        base: params.linkUrl,
+        componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
+        componentId: params.campaignCode,
+        campaignCode: params.campaignCode,
+        abTest:
+            test && variant
+                ? { name: test.id, variant: variant.id }
+                : undefined,
+    });
 
     const buttonCaption = params.buttonCaption;
     const buttonSvg = inlineSvg('arrowWhiteRight');
@@ -159,6 +163,7 @@ const showBanner = (params: EngagementBannerParams): void => {
                     componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
                     products: params.products,
                     campaignCode: params.campaignCode,
+                    id: params.campaignCode,
                 },
                 action,
                 ...(test && variant
