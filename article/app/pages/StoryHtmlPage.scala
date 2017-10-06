@@ -11,12 +11,12 @@ import views.html.fragments._
 import views.html.fragments.commercial.{pageSkin, survey}
 import views.html.fragments.page._
 import views.html.fragments.page.body.{bodyTag, breakingNewsDiv, skipToMainContent, twentyFourSevenTraining}
-import views.html.fragments.page.head.stylesheets.{criticalStyleInline, criticalStyleLink, styles}
+import views.html.fragments.page.head.stylesheets.{atomsCSSInline, criticalStyleInline, criticalStyleLink, styles}
 import views.html.fragments.page.head.{fixIEReferenceErrors, headTag, titleTag}
 
 object StoryHtmlPage {
 
-  def allStyles(implicit applicationContext: ApplicationContext): Styles = new Styles {
+  def allStyles(implicit applicationContext: ApplicationContext, page: Page): Styles = new Styles {
     override def criticalCssLink: Html = criticalStyleLink("content")
     override def criticalCssInline: Html = criticalStyleInline(Html(common.Assets.css.head(None)))
     override def linkCss: Html = stylesheetLink("stylesheets/content.css")
@@ -24,6 +24,7 @@ object StoryHtmlPage {
     override def oldIELinkCss: Html = stylesheetLink("stylesheets/old-ie.content.css")
     override def IE9LinkCss: Html = stylesheetLink("stylesheets/ie9.head.content.css")
     override def IE9CriticalCss: Html = stylesheetLink("stylesheets/ie9.content.css")
+    override def atomsCSS: Option[Html] = Some(atomsCSSInline(page))
   }
 
   def html(

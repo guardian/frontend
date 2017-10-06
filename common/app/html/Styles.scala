@@ -11,6 +11,7 @@ trait Styles {
   def oldIELinkCss: Html
   def IE9CriticalCss: Html
   def IE9LinkCss: Html
+  def atomsCSS: Option[Html] = None
 
   def criticalCss(implicit context: ApplicationContext): Html =
     if(context.environment.mode == play.api.Mode.Dev || !conf.switches.Switches.InlineCriticalCss.isSwitchedOn) {
