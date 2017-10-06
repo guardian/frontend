@@ -12,7 +12,7 @@ import { setupLoadingAnimation } from 'common/modules/identity/delete-account';
 import { initUserAvatars } from 'common/modules/discussion/user-avatars';
 import { init as initTabs } from 'common/modules/ui/tabs';
 
-const initFormstack = (config: Object): void => {
+const initFormstack = (): void => {
     const attr = 'data-formstack-id';
     const forms = [...document.querySelectorAll(`[${attr}]`)];
     const iframes = [...document.getElementsByClassName('js-formstack-iframe')];
@@ -22,9 +22,9 @@ const initFormstack = (config: Object): void => {
         const isEmbed = form.className.match(/\bformstack-embed\b/);
 
         if (isEmbed) {
-            new FormstackEmbedIframe(form, id, config).init();
+            new FormstackEmbedIframe(form, id).init();
         } else {
-            new Formstack(form, id, config).init();
+            new Formstack(form, id).init();
         }
     });
 
@@ -32,12 +32,12 @@ const initFormstack = (config: Object): void => {
     iframes.forEach(el => {
         const iframe: HTMLIFrameElement = (el: any);
 
-        new FormstackIframe(iframe, config).init();
+        new FormstackIframe(iframe).init();
     });
 };
 
-const initProfile = (config: Object): void => {
-    initFormstack(config);
+const initProfile = (): void => {
+    initFormstack();
     forgottenEmail();
     passwordToggle();
     initValidationEmail();

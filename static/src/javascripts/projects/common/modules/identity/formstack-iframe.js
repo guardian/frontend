@@ -1,20 +1,19 @@
 // @flow
 
+import config from 'lib/config';
 import mediator from 'lib/mediator';
 
 class FormstackIframe {
     el: HTMLIFrameElement;
-    config: Object;
 
-    constructor(el: HTMLIFrameElement, config: Object): void {
+    constructor(el: HTMLIFrameElement): void {
         this.el = el;
-        this.config = config;
     }
 
     init(): void {
         // Setup postMessage listener for events from "modules/identity/formstack"
         window.addEventListener('message', (event: MessageEvent): void => {
-            if (event.origin === this.config.page.idUrl) {
+            if (event.origin === config.get('page.idUrl')) {
                 this.onMessage(event);
             }
         });
