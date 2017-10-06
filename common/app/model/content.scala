@@ -114,8 +114,9 @@ final case class Content(
 
   // read this before modifying: https://developers.facebook.com/docs/opengraph/howtos/maximizing-distribution-media-content#images
   private lazy val openGraphImageProfile: ElementProfile =
-    if (isPaidContent && FacebookShareImageLogoOverlay.isSwitchedOn) Item700
-    else FacebookOpenGraphImage
+    if(isPaidContent && FacebookShareImageLogoOverlay.isSwitchedOn) Item700
+    else if(tags.isComment) FacebookOpenGraphImage.opinions
+    else FacebookOpenGraphImage.default
 
   lazy val openGraphImage: String = ImgSrc(openGraphImageOrFallbackUrl, openGraphImageProfile)
   // These dimensions are just an educated guess (e.g. we don't take into account image-resizer being turned off)
@@ -128,11 +129,10 @@ final case class Content(
 
   // URL of image to use in the twitter card. Image must be less than 1MB in size: https://dev.twitter.com/cards/overview
   lazy val twitterCardImage: String = {
-    if (isPaidContent && TwitterShareImageLogoOverlay.isSwitchedOn) {
-      ImgSrc(openGraphImageOrFallbackUrl, Item700)
-    } else {
-      ImgSrc(openGraphImageOrFallbackUrl, TwitterImage)
-    }
+    val image = if (isPaidContent && TwitterShareImageLogoOverlay.isSwitchedOn) Item700
+    else if(tags.isComment) TwitterImage.opinions
+    else TwitterImage.default
+    ImgSrc(openGraphImageOrFallbackUrl, image)
   }
 
   lazy val syndicationType = {
@@ -726,9 +726,10 @@ case class GalleryLightbox(
 ){
   def imageContainer(index: Int): ImageElement = galleryImages(index)
 
+  private val facebookImage: ShareImage = if(tags.isComment) FacebookOpenGraphImage.opinions else FacebookOpenGraphImage.default
   val galleryImages: Seq[ImageElement] = elements.images.filter(_.properties.isGallery)
   val largestCrops: Seq[ImageAsset] = galleryImages.flatMap(_.images.largestImage)
-  val openGraphImages: Seq[String] = largestCrops.flatMap(_.url).map(ImgSrc(_, FacebookOpenGraphImage))
+  val openGraphImages: Seq[String] = largestCrops.flatMap(_.url).map(ImgSrc(_, facebookImage))
   val size = galleryImages.size
   val landscapes = largestCrops.filter(i => i.width > i.height).sortBy(_.index)
   val portraits = largestCrops.filter(i => i.width < i.height).sortBy(_.index)
