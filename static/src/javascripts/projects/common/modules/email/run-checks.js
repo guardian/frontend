@@ -52,8 +52,8 @@ const allowedArticleStructure = (): boolean => {
     if ($articleBody.length) {
         const allArticleEls = $('> *', $articleBody);
 
-        return [].slice
-            .call(allArticleEls, allArticleEls.length - 2)
+        return Array.from(allArticleEls)
+            .slice(allArticleEls.length - 2)
             .every(isParagraph);
     }
     return false;
@@ -120,7 +120,7 @@ const allEmailCanRun = (): boolean =>
     !config.get('page.isSensitive') &&
     !config.get('page.isFront') &&
     (config.get('page.contentId') &&
-        config.get('page.contentId').indexOf('email-sign-up') === -1) &&
+        !config.get('page.contentId').includes('email-sign-up')) &&
     config.get('switches.emailInArticle') &&
     !!session.isAvailable() &&
     !userHasSeenThisSession() &&
