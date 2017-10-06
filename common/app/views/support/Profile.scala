@@ -107,12 +107,13 @@ object Video700 extends VideoProfile(width = Some(700), height = Some(394)) // 1
 object Video1280 extends VideoProfile(width = Some(1280), height = Some(720)) // 16:9
 object GoogleStructuredData extends Profile(width = Some(300), height = Some(300)) // 1:1
 
-class ShareImage(blendImageParam: String, shouldIncludeOverlay: Boolean) extends Profile(width = Some(1200)) {
+abstract class ShareImage(shouldIncludeOverlay: Boolean) extends Profile(width = Some(1200)) {
   override val heightParam = "h=630"
   override val fitParam = "fit=crop"
   val cropParam = "crop=faces%2Centropy"
   val blendModeParam = "bm=normal"
   val blendOffsetParam = "ba=bottom%2Cleft"
+  val blendImageParam: String
 
   override def resizeString: String = {
     if(shouldIncludeOverlay) {
@@ -124,14 +125,12 @@ class ShareImage(blendImageParam: String, shouldIncludeOverlay: Boolean) extends
   }
 }
 
-object TwitterImage {
-  val default = new ShareImage("blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxNi8wNS8yNS9vdmVybGF5LWxvZ28tMTIwMC05MF9vcHQucG5n", TwitterShareImageLogoOverlay.isSwitchedOn)
-  val opinions = new ShareImage("blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxNy8wOS8wOC9vcGluaW9uc19vdmVybGF5LnBuZw==", TwitterShareImageLogoOverlay.isSwitchedOn)
+object TwitterImage extends ShareImage(TwitterShareImageLogoOverlay.isSwitchedOn) {
+  override val blendImageParam = "blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxNi8wNi8wNy9vdmVybGF5LWxvZ28tMTIwMC05MF9vcHQucG5n"
 }
 
-object FacebookOpenGraphImage {
-  val default = new ShareImage("blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxNi8wNS8yNS9vdmVybGF5LWxvZ28tMTIwMC05MF9vcHQucG5n", FacebookShareImageLogoOverlay.isSwitchedOn)
-  val opinions = new ShareImage("blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxNy8wOS8wOC9vcGluaW9uc19vdmVybGF5LnBuZw==", FacebookShareImageLogoOverlay.isSwitchedOn)
+object FacebookOpenGraphImage extends ShareImage(FacebookShareImageLogoOverlay.isSwitchedOn) {
+  override val blendImageParam = "blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxNi8wNS8yNS9vdmVybGF5LWxvZ28tMTIwMC05MF9vcHQucG5n"
 }
 
 object EmailImage extends Profile(width = Some(580), autoFormat = false) {
