@@ -4,7 +4,10 @@ import $ from 'lib/$';
 import config from 'lib/config';
 import { getBreakpoint } from 'lib/detect';
 
-type yesable = ?(arg: mixed) => boolean | void;
+// #? this should'nt really be an `any`, but the callbacks themselves are explicit
+// about the types they accept.
+// that this is required suggests maybe the approach is too generic
+type yesable = ?(arg: any) => boolean | void;
 type noable = ?() => boolean | void;
 
 // #? this is very hard to understand, what is it's purpose?
