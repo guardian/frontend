@@ -124,6 +124,8 @@ class ShareImage(blendImageParam: String, shouldIncludeOverlay: Boolean) extends
   }
 }
 
+// Despite the base64 codes looking similar, the twitter overlay is a different size to the facebook overlay. 
+
 object TwitterImage {
   val default = new ShareImage("blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxNi8wNi8wNy9vdmVybGF5LWxvZ28tMTIwMC05MF9vcHQucG5n", TwitterShareImageLogoOverlay.isSwitchedOn)
   val opinions = new ShareImage("blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxNy8xMC8wNi9vcGluaW9uc19vdmVybGF5LXR3aXR0ZXIucG5n", TwitterShareImageLogoOverlay.isSwitchedOn)
