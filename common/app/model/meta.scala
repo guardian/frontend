@@ -3,6 +3,7 @@ package model
 import com.gu.contentapi.client.model.v1.{Content => CapiContent}
 import com.gu.contentapi.client.model.{v1 => contentapi}
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichCapiDateTime
+import com.gu.contentatom.thrift.AtomType
 import com.gu.contentatom.renderer.ArticleAtomRenderer
 import commercial.campaigns.PersonalInvestmentsCampaign
 import common.commercial.{AdUnitMaker, CommercialProperties}
@@ -174,21 +175,16 @@ object MetaData {
     val sectionSummary: Option[SectionSummary] = apiContent.section map SectionSummary.fromCapiSection
     val sectionId = sectionSummary map (_.id) getOrElse ""
 
-    val atomTypes: Seq[String] = apiContent.atoms.flatMap { atoms => 
-      val ts = Seq(
-        atoms.guides.map(_ => "guide"),
-        atoms.qandas.map(_ => "qanda"),
-        atoms.profiles.map(_ => "profile"),
-        atoms.timelines.map(_ => "timeline")
-      ).collect { case Some(x) => x }
-      if (ts.isEmpty)
-        None
-      else
-        Some(ts)
-    }.getOrElse(Nil)
+    val atomTypes: Seq[AtomType] = apiContent.atoms.fold[Seq[AtomType]](Nil) { atoms =>
+      Seq(
+        atoms.guides.map(_ => AtomType.Guide),
+        atoms.qandas.map(_ => AtomType.Qanda),
+        atoms.profiles.map(_ => AtomType.Profile),
+        atoms.timelines.map(_ => AtomType.Timeline)
+      ).flatten
+    }
 
     val atomsCSS: Seq[String] = ArticleAtomRenderer.getCSS(atomTypes)
-
     val atomsJS: Seq[String] = ArticleAtomRenderer.getJS(atomTypes)
 
     MetaData(

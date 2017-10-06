@@ -83,6 +83,7 @@ object Dependencies {
   // This forces jackson.dataformat to the same version as the one brough by play-json
   // This line could be remove as soon as the AWS SDK is updated to use the same version coming with play-json
   val jacksonDataFormat = "com.fasterxml.jackson.dataformat" % "jackson-dataformat-cbor" % "2.8.9"
+  val atomRenderer = "com.gu" %% "atom-renderer" % "0.7.2"
 
   // Web jars
   val bootstrap = "org.webjars" % "bootstrap" % "3.3.7"
