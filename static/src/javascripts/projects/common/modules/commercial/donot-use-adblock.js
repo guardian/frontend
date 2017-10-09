@@ -38,7 +38,7 @@ const showAdblockMessage = (): void => {
             linkText: 'Find out more',
         },
     };
-    const message = messages[config.page.edition];
+    const message = messages[config.get('page.edition')];
 
     if (message) {
         new Message('adblock-message-2016-06-15', {
@@ -58,13 +58,8 @@ const showAdblockMessage = (): void => {
 };
 
 const showAdblockBanner = (): void => {
-    const banners = getBanners(config.page.edition);
-
-    const flatBanners = [];
-    banners.forEach(bannerList => {
-        flatBanners.push(sample(bannerList));
-    });
-
+    const banners = getBanners(config.get('page.edition'));
+    const flatBanners = banners.map(bannerList => sample(bannerList));
     const bannerToUse = sample(flatBanners);
 
     if (bannerToUse) {
