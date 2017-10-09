@@ -2,7 +2,7 @@
 
 import fastdom from 'fastdom';
 
-const lastModified = () => {
+const lastModified = (): void => {
     const jsLm = document.getElementsByClassName('js-lm')[0];
 
     if (jsLm) {
