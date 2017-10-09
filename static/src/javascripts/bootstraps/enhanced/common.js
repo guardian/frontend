@@ -8,7 +8,7 @@ import mediator from 'lib/mediator';
 import { getUrlVars } from 'lib/url';
 import { catchErrorsWithContext } from 'lib/robust';
 import { local as localStorage } from 'lib/storage';
-import mediaListener from 'common/modules/analytics/media-listener';
+import { mediaListener } from 'common/modules/analytics/media-listener';
 import interactionTracking from 'common/modules/analytics/interaction-tracking';
 import { initAnalyticsRegister } from 'common/modules/analytics/register';
 import { ScrollDepth } from 'common/modules/analytics/scrollDepth';
