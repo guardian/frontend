@@ -1,7 +1,7 @@
 // @flow
 
 import $ from 'lib/$';
-import Component from 'common/modules/component';
+import { Component } from 'common/modules/component';
 import config from 'lib/config';
 import fastdom from 'lib/fastdom-promise';
 import { isBreakpoint } from 'lib/detect';

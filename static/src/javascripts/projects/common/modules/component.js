@@ -1,9 +1,7 @@
 // @flow
 
-import assign from 'lodash/objects/assign';
 import bean from 'bean';
 import bonzo from 'bonzo';
-import clone from 'lodash/objects/clone';
 import fetchJSON from 'lib/fetch-json';
 import qwery from 'qwery';
 
@@ -17,7 +15,7 @@ class Component {
     useBem: boolean;
     templateName: ?string;
     componentClass: ?string;
-    endpoint: ?string;
+    endpoint: ?string | ?() => string;
     classes: ?Array<any>; /* TODO */
     elem: ?HTMLElement;
     template: ?string;
@@ -33,7 +31,7 @@ class Component {
     manipulationType: string;
     t: ?number;
 
-    constructor() {
+    constructor(): void {
         this.useBem = false;
         this.templateName = null;
         this.componentClass = null;
@@ -44,7 +42,7 @@ class Component {
         this.rendered = false;
         this.destroyed = false;
         this.elems = null;
-        this.options = null;
+        this.options = {};
         this.defaultOptions = {};
         this.responseDataKey = 'html';
         this.autoupdated = false;
@@ -54,19 +52,15 @@ class Component {
         this.t = null;
     }
 
-    attachTo(elem) {
+    attachTo(elem: HTMLElement): void {
         this.checkAttached();
 
-        if (!elem) {
-            throw new ComponentError('Need element to attach to');
-        } else {
-            this.elem = elem;
-            this._prerender();
-            this._ready();
-        }
+        this.elem = elem;
+        this._prerender();
+        this._ready();
     }
 
-    render(parent) {
+    render(parent: HTMLElement | ?Node = document.body) {
         this.checkAttached();
         let template = this.template;
 
@@ -83,7 +77,7 @@ class Component {
         if (template) {
             this.elem = bonzo.create(template)[0];
             this._prerender();
-            bonzo(parent || document.body)[this.manipulationType](this.elem);
+            bonzo(parent)[this.manipulationType](this.elem);
         }
 
         this._ready();
@@ -93,17 +87,17 @@ class Component {
     /**
      * Throws an error if this is already attached to the DOM
      */
-    checkAttached() {
+    checkAttached(): void {
         if (this.rendered) {
             throw new ComponentError('Already rendered');
         }
     }
 
-    fetch(parent, key) {
+    fetch(parent: HTMLElement | ?Node, key: ?string): Promise<void> {
+        const self = this;
         this.checkAttached();
 
         this.responseDataKey = key || this.responseDataKey;
-        const self = this;
 
         return this._fetch()
             .then(resp => {
@@ -118,13 +112,13 @@ class Component {
             .catch(self.error);
     }
 
-    _fetch() {
-        const endpoint =
+    _fetch(): Promise<Object> {
+        const self = this;
+        let opt;
+        let endpoint =
             typeof this.endpoint === 'function'
                 ? this.endpoint()
                 : this.endpoint;
-        const self = this;
-        let opt;
 
         for (opt in this.options) {
             endpoint = endpoint.replace(`:${opt}`, this.options[opt]);
@@ -139,7 +133,7 @@ class Component {
         });
     }
 
-    _ready(elem) {
+    _ready(elem: HTMLElement): void {
         if (!this.destroyed) {
             this.rendered = true;
             this._autoupdate();
@@ -147,7 +141,7 @@ class Component {
         }
     }
 
-    _prerender() {
+    _prerender(): void {
         this.elems = {};
         this.prerender();
     }
@@ -155,7 +149,7 @@ class Component {
     /**
      * Check if we should auto update, if so, do so
      */
-    _autoupdate() {
+    _autoupdate(): void {
         const self = this;
         const setAutoUpdate = () => {
             self.t = setTimeout(update, self.updateEvery * 1000);
@@ -188,29 +182,29 @@ class Component {
      * This will help with the rendering performance that
      * we would lose if rendered then manipulated
      */
-    prerender() {}
+    prerender(): void {}
 
     /**
      * Once the render / decorate methods have been called
      * This is where you could do your event binding
      * This function is made to be overridden
      */
-    ready() {}
+    ready(): void {}
 
     /**
      * Once the render / decorate methods have been called
      * This is where you could do your error event binding
      * This function is made to be overridden
      */
-    error() {}
+    error(): void {}
 
     /**
      * This is called whenever a fetch occurs. This includes
      * explicit fetch calls and autoupdate.
      */
-    fetched() {}
+    fetched(): void {}
 
-    autoupdate(elem) {
+    autoupdate(elem: HTMLElement): void {
         const oldElem = this.elem;
         this.elem = elem;
 
@@ -221,7 +215,7 @@ class Component {
     /**
      * Once we're done with it, remove event bindings etc
      */
-    dispose() {}
+    dispose(): void {}
 
     on(eventName, elem, handler) {
         if (typeof elem === 'function') {
@@ -231,14 +225,15 @@ class Component {
             elem = !elem.length ? [elem] : elem;
             bean.on(this.elem, eventName, elem, handler.bind(this));
         }
+
         return this;
     }
 
-    emit(eventName, args) {
+    emit(eventName: string, args?: Object): void {
         bean.fire(this.elem, eventName, args);
     }
 
-    getElem(elemName) {
+    getElem(elemName: string): HTMLElement {
         if (this.elems[elemName]) {
             return this.elems[elemName];
         }
@@ -249,7 +244,7 @@ class Component {
         return elem;
     }
 
-    getClass(elemName, sansDot) {
+    getClass(elemName: string, sansDot: boolean = false): string {
         const className = this.useBem
             ? `${this.componentClass}__${elemName}`
             : this.classes[elemName];
@@ -257,7 +252,7 @@ class Component {
         return (sansDot ? '' : '.') + className;
     }
 
-    setState(state, elemName) {
+    setState(state: string, elemName: ?string) {
         const elem = elemName ? this.getElem(elemName) : this.elem;
         bonzo(elem).addClass(
             `${this.componentClass +
@@ -265,7 +260,7 @@ class Component {
         );
     }
 
-    removeState(state, elemName) {
+    removeState(state: string, elemName: ?string): void {
         const elem = elemName ? this.getElem(elemName) : this.elem;
         return bonzo(elem).removeClass(
             `${this.componentClass +
@@ -273,7 +268,7 @@ class Component {
         );
     }
 
-    toggleState(state, elemName) {
+    toggleState(state: string, elemName: ?string): void {
         const elem = elemName ? this.getElem(elemName) : this.elem;
         bonzo(elem).toggleClass(
             `${this.componentClass +
@@ -281,18 +276,20 @@ class Component {
         );
     }
 
-    hasState(state, elemName) {
+    hasState(state: string, elemName: ?string): boolean {
         const elem = elemName ? this.getElem(elemName) : this.elem;
+
         return bonzo(elem).hasClass(
             `${this.componentClass +
                 (elemName ? `__${elemName}` : '')}--${state}`
         );
     }
 
-    setOptions(options) {
-        this.options = assign(
-            clone(this.defaultOptions),
-            this.options || {},
+    setOptions(options: Object): void {
+        this.options = Object.assign(
+            {},
+            this.defaultOptions,
+            this.options,
             options
         );
     }
@@ -300,14 +297,14 @@ class Component {
     /**
      * Removes the event handling, leave the DOM
      */
-    detach() {
+    detach(): void {
         bean.off(this.elem);
     }
 
     /**
      * Removes all event listeners and removes the DOM elem
      */
-    destroy() {
+    destroy(): void {
         if (this.elem) {
             bonzo(this.elem).remove();
             delete this.elem;
