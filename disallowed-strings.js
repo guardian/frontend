@@ -1,24 +1,24 @@
 const readerRevenueConfig = {
     message: 'Raw URLs to reader revenue sites are not allowed',
-    maxOccurences: 1,
+    maxOccurrences: 1,
     paths: ['*.js', '*.scala', '*.html'],
 };
 
 module.exports = [
     {
-        regex: 'membership\.theguardian\.com',
+        regex: /membership\.theguardian\.com/,
         ...readerRevenueConfig
     },
     {
-        regex: 'support\.theguardian\.com',
+        regex: /contribute\.theguardian\.com/,
         ...readerRevenueConfig
     },
     {
-        regex: 'contribute\.theguardian\.com',
+        regex: /support\.theguardian\.com/,
         ...readerRevenueConfig
     },
     {
-        regex: 'subscribe\.theguardian\.com',
+        regex: /subscribe\.theguardian\.com/,
         ...readerRevenueConfig
     }
 ];
