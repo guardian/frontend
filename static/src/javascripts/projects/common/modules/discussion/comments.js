@@ -588,7 +588,6 @@ class Comments extends Component {
             .empty()
             .append(contentEl);
         this.addMoreRepliesButtons(comments);
-
         this.postedCommentEl = resp.postedCommentHtml;
 
         if (shouldMakeTimestampsRelative()) {
