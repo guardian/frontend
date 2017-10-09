@@ -9,7 +9,7 @@ import range from 'lodash/arrays/range';
 declare type DiscussionResponse = {
     commentsHtml: string,
     lastPage: number,
-    paginationHtml: '',
+    paginationHtml: string,
     postedCommentHtml: string,
 };
 
