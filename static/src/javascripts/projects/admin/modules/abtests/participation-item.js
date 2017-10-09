@@ -3,7 +3,7 @@
  Module: participation-item.js
  Description: Displays opt-in link for a variant
  */
-import Component from 'common/modules/component';
+import { Component } from 'common/modules/component';
 
 class ParticipationItem extends Component {
     constructor(config: Object): void {

@@ -3,7 +3,7 @@
  Module: audience-item.js
  Description: Displays information about how the test users are divided.
  */
-import Component from 'common/modules/component';
+import { Component } from 'common/modules/component';
 import bonzo from 'bonzo';
 
 class AudienceItem extends Component {

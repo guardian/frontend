@@ -4,7 +4,7 @@
  Module: abtest-item.js
  Description: Displays information about a single test
  */
-import Component from 'common/modules/component';
+import { Component } from 'common/modules/component';
 import { Participation } from 'admin/modules/abtests/participation';
 import bonzo from 'bonzo';
 import debounce from 'lodash/functions/debounce';
