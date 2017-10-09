@@ -4,6 +4,8 @@ const readerRevenueConfig = {
     pathspecs: ['*.js', '*.scala', '*.html'],
 };
 
+// pathspecs are git pathspecs: https://git-scm.com/docs/gitglossary#gitglossary-aiddefpathspecapathspec
+// To search all files under version control, set pathspecs to an empty array.
 module.exports = [
     // These are commented out because they would currently fail the build.
     // Until we refactor to eliminate the duplicates, they can serve as examples
