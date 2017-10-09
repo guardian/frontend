@@ -1,21 +1,24 @@
 // @flow
 
-import fastdom from 'fastdom';
+import fastdom from 'lib/fastdom-promise';
 
 const lastModified = (): void => {
-    const jsLm = document.getElementsByClassName('js-lm')[0];
-
-    if (jsLm) {
-        fastdom.write(() => {
-            jsLm.classList.add('content__dateline-wpd--modified');
-        });
-
-        jsLm.addEventListener('click', () => {
-            fastdom.write(() => {
-                jsLm.classList.toggle('u-h');
-            });
-        });
-    }
+    
+    fastdom
+        .read(() => document.getElementsByClassName('js-lm')[0])
+        .then(jsLm => {
+            if (jsLm) {
+                fastdom.write(() => {
+                    jsLm.classList.add('content__dateline-wpd--modified');
+                });
+        
+                jsLm.addEventListener('click', () => {
+                    fastdom.write(() => {
+                        jsLm.classList.toggle('u-h');
+                    });
+                });
+            }
+        })
 };
 
 export { lastModified };
