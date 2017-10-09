@@ -19,7 +19,6 @@ module.exports = {
                     .then(matches => matches.split('\n'))
                     .then(matches => {
                         if (matches.length > maxOccurrences) {
-                            // console.log('bad');
                             const msg = [
                                 chalk.red(
                                     `More than ${maxOccurrences} match for regex ${regex.source}`
@@ -34,8 +33,9 @@ module.exports = {
                         }
                     })
                     .catch(err => {
-                        // if err code is 1, I think we're OK?
-                        // otherwise it might be a real error!
+                        // git grep returns with error code 1 when there are no matches.
+                        // For us, this is not actually an error state so we swallow the
+                        // error by returning a fake resolved Promise.
                         if (
                             err.code === 1 &&
                             err.stdout === '' &&
@@ -44,6 +44,7 @@ module.exports = {
                             return Promise.resolve();
                         }
 
+                        // In all other cases, assume it's a real error
                         return Promise.reject(err);
                     })
             )
