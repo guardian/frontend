@@ -222,7 +222,7 @@ class Comments extends Component {
             highlighted === 'true' ? this.unPickComment : this.pickComment;
 
         if (commentId) {
-            action(commentId, $thisButton).catch(resp => {
+            action.call(this, commentId, $thisButton).catch(resp => {
                 const responseText =
                     resp.response.length > 0
                         ? JSON.parse(resp.response).message
@@ -529,16 +529,12 @@ class Comments extends Component {
                 // remove sign-in link
                 $(this.getClass('commentReply')).attr('href', '#');
 
-                this.on(
-                    'click',
-                    this.getClass('commentReply'),
-                    this.replyToComment
+                this.on('click', this.getClass('commentReply'), event =>
+                    this.replyToComment(event)
                 );
 
-                this.on(
-                    'click',
-                    this.getClass('commentPick'),
-                    this.handlePickClick
+                this.on('click', this.getClass('commentPick'), event =>
+                    this.handlePickClick(event)
                 );
             }
         }
