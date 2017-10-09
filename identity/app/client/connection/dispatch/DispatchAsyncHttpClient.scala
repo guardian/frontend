@@ -43,15 +43,15 @@ trait DispatchAsyncHttpClient extends Http {
     }
   }
 
-  def buildRequest(request: dispatch.Req, urlParameters: Parameters, headers: Parameters): Req = {
+  private def buildRequest(request: dispatch.Req, urlParameters: Parameters, headers: Parameters): Req = {
     request.setQueryParameters(urlParameters).setHeaders(headers)
   }
 
-  def httpResponseHandler: FunctionHandler[HttpResponse] = new FunctionHandler(response =>
+  private def httpResponseHandler: FunctionHandler[HttpResponse] = new FunctionHandler(response =>
     HttpResponse(response.getResponseBody("utf-8"), response.getStatusCode, response.getStatusText)
   )
 
-  def mapFutureToResponse(dispatchResponse: Either[scala.Throwable, HttpResponse]): Response[HttpResponse] = {
+  private def mapFutureToResponse(dispatchResponse: Either[scala.Throwable, HttpResponse]): Response[HttpResponse] = {
     dispatchResponse match {
       case Left(throwable) => Left(List(Error(throwable.getClass.getName, throwable.toString)))
       case Right(httpResponse) => Right(httpResponse)
