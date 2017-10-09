@@ -3,7 +3,7 @@
  Module: participation.js
  Description: Displays opt-in and opt-out links for a test
  */
-import Component from 'common/modules/component';
+import { Component } from 'common/modules/component';
 import { ParticipationItem } from 'admin/modules/abtests/participation-item';
 
 class Participation extends Component {

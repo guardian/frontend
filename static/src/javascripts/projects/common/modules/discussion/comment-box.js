@@ -3,7 +3,7 @@
 import bean from 'bean';
 import bonzo from 'bonzo';
 import mediator from 'lib/mediator';
-import Component from 'common/modules/component';
+import { Component } from 'common/modules/component';
 import { postComment, previewComment } from 'common/modules/discussion/api';
 import {
     getUserFromCookie,
