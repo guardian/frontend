@@ -99,8 +99,6 @@ do you have fonts in localStorage?
                     return format;
                 })();
 
-                console.log('fontFormat ----->', fontFormat);
-
                 // use whatever font CSS we've now got
                 function useFont(el, css) {
                     el.innerHTML = css;
@@ -143,13 +141,9 @@ do you have fonts in localStorage?
                 // are some style elements in the head, all identified by a .webfont class
                 const fonts = document.querySelectorAll('.webfont');
 
-                console.log('fonts ----->', fonts);
-
                 const hinting = fontHinting === 'Off' ? '' : `hinted-${fontHinting}-`;
 
                 const urlAttribute = `data-cache-file-${hinting}${fontFormat}`;
-
-                console.log('urlAttribute ----->', urlAttribute);
 
                 for (let i = 0, j = fonts.length; i < j; ++i) {
                     const font = fonts[i];
@@ -158,16 +152,7 @@ do you have fonts in localStorage?
                     const fontName = fontInfo[2];
                     const fontHash = fontInfo[1];
 
-                    console.log('*************');
-
-                    console.log('fontURL ----->', fontURL);
-                    console.log('fontName ----->', fontName);
-                    console.log('fontHash ----->', fontHash);
-                    console.log('fontStorageKey ----->', fontStorageKey(fontName, fontHash));
-
                     const fontData = localStorage.getItem(fontStorageKey(fontName, fontHash));
-
-                    // console.log('fontData ----->', fontData);
 
                     if (fontData) {
                         useFont(font, JSON.parse(fontData).value);
