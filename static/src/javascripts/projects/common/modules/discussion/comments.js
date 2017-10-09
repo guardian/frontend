@@ -21,18 +21,7 @@ import relativedates from 'common/modules/ui/relativedates';
 import userPrefs from 'common/modules/user-prefs';
 import { inlineSvg } from 'common/views/svgs';
 
-type userType = {
-    badge: Array<{
-        name: string,
-    }>,
-    displayName: string,
-    isStaff?: boolean,
-    privateFields: {
-        canPostComment: boolean,
-    },
-};
-
-type commentType = {
+type CommentType = {
     id: string,
     body: string,
 };
@@ -315,7 +304,7 @@ class Comments extends Component {
         return this.elem.getAttribute('data-read-only') === 'true';
     }
 
-    addComment(comment: commentType, parent: HTMLElement): void {
+    addComment(comment: CommentType, parent: HTMLElement): void {
         const commentElem = bonzo.create(this.postedCommentEl)[0];
         const $commentElem = bonzo(commentElem);
         const map: Object = {
@@ -436,7 +425,7 @@ class Comments extends Component {
 
         commentBox.render(parentCommentEl);
 
-        commentBox.on('post:success', (comment: commentType) => {
+        commentBox.on('post:success', (comment: CommentType) => {
             let responses = qwery('.d-thread--responses', parentCommentEl)[0];
 
             if (!responses) {
@@ -518,7 +507,16 @@ class Comments extends Component {
         }
     }
 
-    addUser(user: userType): void {
+    addUser(user: {
+        badge: Array<{
+            name: string,
+        }>,
+        displayName: string,
+        isStaff?: boolean,
+        privateFields: {
+            canPostComment: boolean,
+        },
+    }): void {
         this.user = user;
 
         // Determine user staff status
