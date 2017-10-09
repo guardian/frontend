@@ -2,6 +2,7 @@ import app.{FrontendApplicationLoader, FrontendComponents, LifecycleComponent}
 import com.softwaremill.macwire._
 import commercial.CommercialLifecycle
 import commercial.controllers.CommercialControllers
+import commercial.targeting.TargetingLifecycle
 import common.Logback.LogstashLifecycle
 import common.dfp.FaciaDfpAgentLifecycle
 import conf.{CachedHealthCheckLifeCycle, FootballLifecycle}
@@ -44,7 +45,8 @@ trait PreviewLifecycleComponents extends SportServices with CommercialServices w
     wire[SwitchboardLifecycle],
     wire[FootballLifecycle],
     wire[CricketLifecycle],
-    wire[RugbyLifecycle]
+    wire[RugbyLifecycle],
+    wire[TargetingLifecycle]
   )
 }
 
