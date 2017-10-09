@@ -141,4 +141,8 @@ ui-watch-nashorn: install
 	@cd ui && yarn -s watch:nashorn
 
 ui-watch: install
+<<<<<<< HEAD
 	@cd ui && yarn -s watch
+=======
+	@cd ui && yarn  -s watch
+>>>>>>> load fonts when using nashorn dev server
