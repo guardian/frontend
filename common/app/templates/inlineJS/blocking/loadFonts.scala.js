@@ -140,9 +140,7 @@ do you have fonts in localStorage?
                 // the target for each font and holders of all the necessary metadata
                 // are some style elements in the head, all identified by a .webfont class
                 const fonts = document.querySelectorAll('.webfont');
-
                 const hinting = fontHinting === 'Off' ? '' : `hinted-${fontHinting}-`;
-
                 const urlAttribute = `data-cache-file-${hinting}${fontFormat}`;
 
                 for (let i = 0, j = fonts.length; i < j; ++i) {
@@ -151,7 +149,6 @@ do you have fonts in localStorage?
                     const fontInfo = fontURL.match(/fonts\/([^/]*?)\/?([^/]*)\.(woff2|woff|ttf).json$/);
                     const fontName = fontInfo[2];
                     const fontHash = fontInfo[1];
-
                     const fontData = localStorage.getItem(fontStorageKey(fontName, fontHash));
 
                     if (fontData) {
