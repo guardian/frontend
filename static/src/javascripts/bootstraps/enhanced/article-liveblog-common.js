@@ -5,7 +5,7 @@ import $ from 'lib/$';
 import { catchErrorsWithContext } from 'lib/robust';
 import { shouldHideFlashingElements } from 'common/modules/accessibility/helpers';
 import { init as initT, enhanceTweets } from 'common/modules/article/twitter';
-import lastModified from 'common/modules/ui/last-modified';
+import { lastModified } from 'common/modules/ui/last-modified';
 import selectionSharing from 'common/modules/ui/selection-sharing';
 
 const initFence = (): void => {

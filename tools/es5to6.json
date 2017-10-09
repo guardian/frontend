@@ -9,9 +9,7 @@
     "projects/common/modules/component.js",
     "projects/common/modules/atoms/story-questions.js"
   ],
-  "GHaberis": [
-    "projects/common/modules/ui/last-modified.js"
-  ],
+  "GHaberis": [],
   "Matthew Walls": [
     "projects/common/modules/identity/cookierefresh.js"
   ],
