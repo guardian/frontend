@@ -1,11 +1,10 @@
 const execa = require('execa');
 const chalk = require('chalk');
-const { root } = require('../config').paths;
 const disallowedStrings = require('../../../disallowed-strings.js');
 
 module.exports = {
     description: 'Check for disallowed strings',
-    task: ctx =>
+    task: () =>
         Promise.all(
             disallowedStrings.map(({ regex, message, maxOccurrences, paths }) =>
                 execa
