@@ -6,14 +6,14 @@ module.exports = {
     description: 'Check for disallowed strings',
     task: () =>
         Promise.all(
-            disallowedStrings.map(({ regex, message, maxOccurrences, paths }) =>
+            disallowedStrings.map(({ regex, message, maxOccurrences, pathspecs }) =>
                 execa
                     .stdout('git', [
                         'grep',
                         '-Ein',
                         '--color',
                         regex.source,
-                        ...paths,
+                        ...pathspecs,
                     ])
                     .then(matches => matches.split('\n'))
                     .then(matches => {

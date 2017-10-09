@@ -1,7 +1,7 @@
 const readerRevenueConfig = {
     message: 'Raw URLs to reader revenue sites are not allowed',
     maxOccurrences: 1,
-    paths: ['*.js', '*.scala', '*.html'],
+    pathspecs: ['*.js', '*.scala', '*.html'],
 };
 
 module.exports = [
