@@ -1,15 +1,18 @@
 package client.connection.dispatch
 
 import scala.concurrent.{ExecutionContext, Future}
-import dispatch.{Req, FunctionHandler, EnrichedFuture, url}
+import dispatch.{EnrichedFuture, FunctionHandler, Req, url}
 import com.ning.http.client.{AsyncHttpClient, AsyncHttpClientConfig, ProxyServer}
 import com.ning.http.client.providers.netty.NettyAsyncHttpProvider
 import client.{Error, Parameters, Response}
-import client.connection.{Http, Proxy, HttpResponse}
+import client.connection.{Http, HttpResponse, Proxy}
 import org.jboss.netty.util.HashedWheelTimer
+import play.api.libs.ws.WSClient
 
 
 trait DispatchAsyncHttpClient extends Http {
+
+//  def wsClient: WSClient
 
   lazy val maxConnections: Int = 20
   lazy val maxConnectionsPerHost: Int = 20

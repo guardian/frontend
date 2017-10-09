@@ -7,7 +7,7 @@ import client.connection.{Http, HttpResponse}
 import scala.concurrent.{ExecutionContext, Future}
 import client.parser.{JodaJsonSerializer, JsonBodyParser}
 import idapiclient.responses.{AccountDeletionResult, CookiesResponse}
-import client.connection.util.{ApiHelpers, ExecutionContexts}
+import client.connection.util.ApiHelpers
 import conf.IdConfig
 import net.liftweb.json.JsonAST.JValue
 import net.liftweb.json.Serialization.write
@@ -16,7 +16,11 @@ import idapiclient.requests.{PasswordUpdate, TokenPassword}
 import play.api.libs.ws.WSClient
 
 
-abstract class IdApi(http: Http, jsonBodyParser: JsonBodyParser, conf: IdConfig, wsClient: WSClient)
+abstract class IdApi(
+    http: Http,
+    jsonBodyParser: JsonBodyParser,
+    conf: IdConfig,
+    override val wsClient: WSClient)
   extends IdApiUtils with SafeLogging with ApiHelpers {
 
   override val apiRootUrl: String = conf.apiRoot
@@ -31,34 +35,12 @@ abstract class IdApi(http: Http, jsonBodyParser: JsonBodyParser, conf: IdConfig,
 
   def extractUser: (client.Response[HttpResponse]) => client.Response[User] = extract(jsonField("user"))
 
-  // AUTH
-//  def authBrowser(userAuth: Auth, trackingData: TrackingData, persistent: Option[Boolean] = None): Future[Response[CookiesResponse]] = {
-//    val params = buildParams(None, Some(trackingData), Seq("format" -> "cookies") ++ persistent.map("persistent" -> _.toString))
-//    val headers = buildHeaders(Some(userAuth))
-//    val body = write(userAuth)
-//    val response = http.POST(apiUrl("auth"), Some(body), params, headers)
-//    response map extract(jsonField("cookies"))
-//  }
-
+//   AUTH
   def authBrowser(userAuth: Auth, trackingData: TrackingData, persistent: Option[Boolean] = None): Future[Response[CookiesResponse]] = {
     val params = buildParams(None, Some(trackingData), Seq("format" -> "cookies") ++ persistent.map("persistent" -> _.toString))
     val headers = buildHeaders(Some(userAuth))
     val body = write(userAuth)
-//    val response = http.POST(apiUrl("auth"), Some(body), params, headers)
-
-    val response = wsClient
-      .url(apiUrl("auth"))
-      .withQueryStringParameters(params.toList: _*)
-      .withHttpHeaders(headers.toList: _*)
-      .post(body)
-      .map { resp =>
-        println(resp.body)
-        Right(HttpResponse(resp.body, resp.status, resp.statusText)) }
-      .recover {
-        case e: Throwable =>
-          logger.error(s"Network error while communicating with ${apiUrl("auth")}:", e)
-          Left(List(Error(e.getClass.getName, e.toString))) }
-
+    val response = POST(apiUrl("auth"), body, params, headers)
     response map extract(jsonField("cookies"))
   }
 
@@ -71,18 +53,7 @@ abstract class IdApi(http: Http, jsonBodyParser: JsonBodyParser, conf: IdConfig,
     val apiPath = urlJoin("user", userId)
     val params = buildParams(Some(auth))
     val headers = buildHeaders(Some(auth))
-//    val response = http.GET(apiUrl(apiPath), params, headers)
-    val response = wsClient
-      .url(apiUrl(apiPath))
-      .withQueryStringParameters(params.toList: _*)
-      .withHttpHeaders(headers.toList: _*)
-      .get()
-      .map { resp => Right(HttpResponse(resp.body, resp.status, resp.statusText)) }
-      .recover {
-        case e: Throwable =>
-          logger.error(s"Network error while communicating with ${apiUrl(apiPath)}:", e)
-          Left(List(Error(e.getClass.getName, e.toString))) }
-
+    val response = GET(apiUrl(apiPath), params, headers)
     response map extractUser
 
   }
@@ -91,7 +62,7 @@ abstract class IdApi(http: Http, jsonBodyParser: JsonBodyParser, conf: IdConfig,
     val apiPath = urlJoin("user", "vanityurl", vanityUrl)
     val params = buildParams(Some(auth))
     val headers = buildHeaders(Some(auth))
-    val response = http.GET(apiUrl(apiPath), params, headers)
+    val response = GET(apiUrl(apiPath), params, headers)
     response map extractUser
   }
 
@@ -101,7 +72,7 @@ abstract class IdApi(http: Http, jsonBodyParser: JsonBodyParser, conf: IdConfig,
   def me(auth: Auth): Future[Response[User]] = {
     val apiPath = urlJoin("user", "me")
     val params = buildParams(Some(auth))
-    val response = http.GET(apiUrl(apiPath), params, buildHeaders(Some(auth)))
+    val response = GET(apiUrl(apiPath), params, buildHeaders(Some(auth)))
     response map extractUser
   }
 
@@ -129,7 +100,7 @@ abstract class IdApi(http: Http, jsonBodyParser: JsonBodyParser, conf: IdConfig,
 
   def passwordExists( auth: Auth ): Future[Response[Boolean]] = {
     val apiPath = urlJoin("user", "password-exists")
-    val response = http.GET(apiUrl(apiPath), buildParams(Some(auth)), buildHeaders(Some(auth)))
+    val response = GET(apiUrl(apiPath), buildParams(Some(auth)), buildHeaders(Some(auth)))
     response map extract[Boolean](jsonField("passwordExists"))
   }
 
@@ -143,7 +114,7 @@ abstract class IdApi(http: Http, jsonBodyParser: JsonBodyParser, conf: IdConfig,
   def userForToken( token : String ): Future[Response[User]] = {
     val apiPath = urlJoin("pwd-reset", "user-for-token")
     val params = buildParams(extra = Iterable("token" -> token))
-    val response = http.GET(apiUrl(apiPath), params, buildHeaders())
+    val response = GET(apiUrl(apiPath), params, buildHeaders())
     response map extractUser
   }
 
@@ -157,7 +128,7 @@ abstract class IdApi(http: Http, jsonBodyParser: JsonBodyParser, conf: IdConfig,
   def sendPasswordResetEmail(emailAddress : String, trackingParameters: TrackingData): Future[Response[Unit]] = {
     val apiPath = urlJoin("pwd-reset", "send-password-reset-email")
     val params = buildParams(tracking = Some(trackingParameters), extra = Iterable("email-address" -> emailAddress, "type" -> "reset"))
-    val response = http.GET(apiUrl(apiPath), params, buildHeaders())
+    val response = GET(apiUrl(apiPath), params, buildHeaders())
     response map extractUnit
   }
 
@@ -166,7 +137,7 @@ abstract class IdApi(http: Http, jsonBodyParser: JsonBodyParser, conf: IdConfig,
   def userEmails(userId: String, trackingParameters: TrackingData): Future[Response[Subscriber]] = {
     val apiPath = urlJoin("useremails", userId)
     val params = buildParams(tracking = Some(trackingParameters))
-    val response = http.GET(apiUrl(apiPath), params, buildHeaders())
+    val response = GET(apiUrl(apiPath), params, buildHeaders())
     response map extract(jsonField("result"))
   }
 
@@ -187,24 +158,9 @@ abstract class IdApi(http: Http, jsonBodyParser: JsonBodyParser, conf: IdConfig,
   def resendEmailValidationEmail(auth: Auth, trackingParameters: TrackingData): Future[Response[Unit]] =
     post("user/send-validation-email", Some(auth), Some(trackingParameters)) map extractUnit
 
-  def deleteTelephone(auth: Auth): Future[Response[Unit]] = {
-//    delete("user/me/telephoneNumber", Some(auth)) map extractUnit
+  def deleteTelephone(auth: Auth): Future[Response[Unit]] =
+    delete("user/me/telephoneNumber", Some(auth)) map extractUnit
 
-    val response = wsClient
-      .url(apiUrl("user/me/telephoneNumber"))
-      .withQueryStringParameters(buildParams(Some(auth), None).toList: _*)
-      .withHttpHeaders(buildHeaders(Some(auth)).toList: _*)
-      .delete()
-      .map { resp =>
-        println(resp.body)
-        Right(HttpResponse(resp.body, resp.status, resp.statusText)) }
-      .recover {
-        case e: Throwable =>
-          logger.error(s"Network error while communicating with ${apiUrl("auth")}:", e)
-          Left(List(Error(e.getClass.getName, e.toString))) }
-
-    response map extractUnit
-  }
 
   // THIRD PARTY SIGN-IN
   def addUserToGroup(groupCode: String, auth: Auth): Future[Response[Unit]] = {
@@ -224,23 +180,22 @@ abstract class IdApi(http: Http, jsonBodyParser: JsonBodyParser, conf: IdConfig,
            auth: Option[Auth] = None,
            trackingParameters: Option[TrackingData] = None,
            body: Option[String] = None): Future[Response[HttpResponse]] =
-    http.POST(apiUrl(apiPath), body, buildParams(auth, trackingParameters), buildHeaders(auth))
+    POST(apiUrl(apiPath), body.getOrElse(""), buildParams(auth, trackingParameters), buildHeaders(auth))
 
   def delete(apiPath: String,
            auth: Option[Auth] = None,
            trackingParameters: Option[TrackingData] = None,
            body: Option[String] = None): Future[Response[HttpResponse]] =
-    http.DELETE(apiUrl(apiPath), body, buildParams(auth, trackingParameters), buildHeaders(auth))
+    DELETE(apiUrl(apiPath), body.getOrElse(""), buildParams(auth, trackingParameters), buildHeaders(auth))
 }
 
-class SynchronousIdApi(http: Http, jsonBodyParser: JsonBodyParser, conf: IdConfig, wsClient: WSClient)
-    extends IdApi(http, jsonBodyParser, conf, wsClient) {
-  implicit def executionContext: ExecutionContext = ExecutionContexts.currentThreadContext
-}
 
-trait IdApiUtils {
+trait IdApiUtils extends SafeLogging {
   val apiRootUrl: String
   val clientAuth: Auth
+  val wsClient: WSClient
+
+  implicit def executionContext: ExecutionContext
 
   implicit object ParamsOpt2Params extends (Option[Parameters] => Parameters) {
     def apply(paramsOpt: Option[Parameters]): Parameters = paramsOpt.getOrElse(Iterable.empty)
@@ -266,5 +221,52 @@ trait IdApiUtils {
     pathParts.filter(_.nonEmpty).map(slug => {
       slug.stripPrefix("/").stripSuffix("/")
     }) mkString "/"
+  }
+
+  def GET(uri: String, urlParameters: Parameters, headers: Parameters): Future[Response[HttpResponse]] = {
+    wsClient
+      .url(uri)
+      .withQueryStringParameters(urlParameters.toList: _*)
+      .withHttpHeaders(headers.toList: _*)
+      .get()
+      .map { resp => Right(HttpResponse(resp.body, resp.status, resp.statusText)) }
+      .recover {
+        case e: Throwable =>
+          logger.error(s"Network error while communicating with ${apiUrl("auth")}:", e)
+          Left(List(Error(e.getClass.getName, e.toString)))
+      }
+  }
+
+  def POST(uri: String, body: String, urlParameters: Parameters, headers: Parameters): Future[Response[HttpResponse]] = {
+    wsClient
+      .url(uri)
+      .withQueryStringParameters(urlParameters.toList: _*)
+      .withHttpHeaders(headers.toList: _*)
+      .post(body)
+      .map { resp =>
+        println(resp.body)
+        Right(HttpResponse(resp.body, resp.status, resp.statusText)) }
+      .recover {
+        case e: Throwable =>
+          logger.error(s"Network error while communicating with ${apiUrl("auth")}:", e)
+          Left(List(Error(e.getClass.getName, e.toString)))
+      }
+  }
+
+  def DELETE(uri: String, body: String, urlParameters: Parameters, headers: Parameters): Future[Response[HttpResponse]] = {
+    wsClient
+      .url(uri)
+      .withBody(body) // FIXME: DELETE should not have a body
+      .withQueryStringParameters(urlParameters.toList: _*)
+      .withHttpHeaders(headers.toList: _*)
+      .delete()
+      .map { resp =>
+        println(resp.body)
+        Right(HttpResponse(resp.body, resp.status, resp.statusText)) }
+      .recover {
+        case e: Throwable =>
+          logger.error(s"Network error while communicating with ${apiUrl("auth")}:", e)
+          Left(List(Error(e.getClass.getName, e.toString)))
+      }
   }
 }
