@@ -229,11 +229,11 @@ class Comments extends Component {
         const highlighted = $thisButton[0].getAttribute(
             'data-comment-highlighted'
         );
-        const promise =
+        const action =
             highlighted === 'true' ? this.unPickComment : this.pickComment;
 
         if (commentId) {
-            promise(commentId, $thisButton).catch(resp => {
+            action(commentId, $thisButton).catch(resp => {
                 const responseText =
                     resp.response.length > 0
                         ? JSON.parse(resp.response).message
