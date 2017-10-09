@@ -90,16 +90,14 @@ const avatarUploadByApi = (avatarForm: HTMLFormElement): void => {
     }
 };
 
-export class AccountProfile {
+class AccountProfile {
     unsavedFields: Array<HTMLElement>;
     accountProfileForms: HTMLFormElement;
     unsavedChangesForm: ?HTMLFormElement;
 
     constructor() {
         this.unsavedFields = [];
-    }
 
-    init() {
         this.accountProfileForms = ((document.querySelector(
             classes.forms
         ): any): HTMLFormElement);
@@ -260,3 +258,5 @@ export class AccountProfile {
         }
     }
 }
+
+export { AccountProfile };

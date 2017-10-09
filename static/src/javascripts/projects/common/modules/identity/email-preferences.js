@@ -168,8 +168,10 @@ const unsubscribeFromAll = buttonEl => {
     });
 };
 
-export const enhanceEmailPreferences = () => {
+const enhanceEmailPreferences = () => {
     $.forEachElement('.js-subscription-button', reqwestEmailSubscriptionUpdate);
     $.forEachElement('.js-save-button', reqwestEmailSubscriptionUpdate);
     $.forEachElement('.js-unsubscribe', unsubscribeFromAll);
 };
+
+export { enhanceEmailPreferences };
