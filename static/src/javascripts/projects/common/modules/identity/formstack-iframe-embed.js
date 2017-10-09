@@ -14,6 +14,7 @@
      - Chris Finch, CSD - Identity, March '14
 */
 
+import config from 'lib/config';
 import { getUserOrSignIn } from 'common/modules/identity/api';
 
 const postMessage = (
@@ -69,7 +70,7 @@ class FormstackEmbedIframe {
     formId: string;
     config: Object;
 
-    constructor(el: HTMLElement, formstackId: string, config: Object): void {
+    constructor(el: HTMLElement, formstackId: string): void {
         this.el = el;
         this.formId = formstackId.split('-')[0];
 

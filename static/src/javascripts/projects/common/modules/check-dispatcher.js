@@ -2,7 +2,7 @@
 import config from 'lib/config';
 import mediator from 'lib/mediator';
 import { allEmailCanRun, listCanRun } from 'common/modules/email/run-checks';
-import emailArticle from 'common/modules/email/email-article';
+import { getListConfigs } from 'common/modules/email/email-article';
 import {
     emailTests,
     contributionsTests,
@@ -49,7 +49,7 @@ const checksToDispatch = {
     },
 
     listCanRun(): Promise<boolean> {
-        const listConfigs = emailArticle.getListConfigs();
+        const listConfigs = getListConfigs();
         const canRun = !!Object.keys(listConfigs).find(key =>
             listCanRun(listConfigs[key])
         );

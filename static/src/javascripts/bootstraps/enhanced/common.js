@@ -8,7 +8,7 @@ import mediator from 'lib/mediator';
 import { getUrlVars } from 'lib/url';
 import { catchErrorsWithContext } from 'lib/robust';
 import { local as localStorage } from 'lib/storage';
-import mediaListener from 'common/modules/analytics/media-listener';
+import { mediaListener } from 'common/modules/analytics/media-listener';
 import interactionTracking from 'common/modules/analytics/interaction-tracking';
 import { initAnalyticsRegister } from 'common/modules/analytics/register';
 import { ScrollDepth } from 'common/modules/analytics/scrollDepth';
@@ -17,9 +17,9 @@ import donotUseAdblock from 'common/modules/commercial/donot-use-adblock';
 import { refresh as refreshUserFeatures } from 'commercial/modules/user-features';
 import CommentCount from 'common/modules/discussion/comment-count';
 import CookieRefresh from 'common/modules/identity/cookierefresh';
-import navigation from 'common/modules/navigation/navigation';
-import Profile from 'common/modules/navigation/profile';
-import Search from 'common/modules/navigation/search';
+import { initNavigation } from 'common/modules/navigation/navigation';
+import { Profile } from 'common/modules/navigation/profile';
+import { Search } from 'common/modules/navigation/search';
 import { initMembership } from 'common/modules/navigation/membership';
 import {
     logHistory,
@@ -40,14 +40,15 @@ import { breakingNewsInit } from 'common/modules/onward/breaking-news';
 import { initPinterest } from 'common/modules/social/pinterest';
 import { hiddenShareToggle } from 'common/modules/social/hidden-share-toggle';
 import { membershipEngagementBannerInit } from 'common/modules/commercial/membership-engagement-banner';
-import email from 'common/modules/email/email';
-import emailArticle from 'common/modules/email/email-article';
+import { initEmail } from 'common/modules/email/email';
+import { init as initEmailArticle } from 'common/modules/email/email-article';
 import { init as initIdentity } from 'bootstraps/enhanced/identity-common';
 import ophan from 'ophan/ng';
 
 const initialiseTopNavItems = (): void => {
-    const search: Search = new Search();
     const header: ?HTMLElement = document.getElementById('header');
+
+    new Search();
 
     if (header) {
         if (config.switches.idProfileNavigation) {
@@ -57,12 +58,10 @@ const initialiseTopNavItems = (): void => {
             profile.init();
         }
     }
-
-    search.init();
 };
 
 const initialiseNavigation = (): void => {
-    navigation.init();
+    initNavigation();
 };
 
 const showTabs = (): void => {
@@ -254,20 +253,22 @@ const membershipEngagementBanner = (): void => {
     }
 };
 
-const initEmail = (): void => {
+const initialiseEmail = (): void => {
     // Initalise email embedded in page
-    email.init();
+    initEmail();
 
     // Initalise email insertion into articles
     if (config.switches.emailInArticle) {
-        emailArticle.init();
+        initEmailArticle();
     }
 
     // Initalise email forms in iframes
     Array.from(
         document.getElementsByClassName('js-email-sub__iframe')
     ).forEach(el => {
-        email.init(el);
+        const iframe: HTMLIFrameElement = (el: any);
+
+        initEmail(iframe);
     });
 
     // Listen for interactive load event and initalise forms
@@ -275,7 +276,9 @@ const initEmail = (): void => {
         Array.from(
             document.querySelectorAll('.guInteractive .js-email-sub__iframe')
         ).forEach(el => {
-            email.init(el);
+            const iframe: HTMLIFrameElement = (el: any);
+
+            initEmail(iframe);
         });
     });
 };
@@ -315,7 +318,7 @@ const init = (): void => {
         ['c-pinterest', startPinterest],
         ['c-hidden-share-toggle', hiddenShareToggle],
         ['c-show-membership-engagement-banner', membershipEngagementBanner],
-        ['c-email', initEmail],
+        ['c-email', initialiseEmail],
         ['c-user-features', refreshUserFeatures],
         ['c-membership', initMembership],
     ]);

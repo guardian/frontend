@@ -485,9 +485,6 @@ define([
 
             this.endslate.componentClass = 'gallery-lightbox__endslate';
             this.endslate.endpoint = '/gallery/most-viewed.json';
-            this.endslate.ready = function () {
-                mediator.emit('page:new-content');
-            };
             this.endslate.prerender = function () {
                 bonzo(this.elem).addClass(this.componentClass);
             };

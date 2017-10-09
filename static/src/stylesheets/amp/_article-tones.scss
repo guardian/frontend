@@ -143,8 +143,14 @@
 .tone-media .fc-item__title,
 .tone-review .fc-item__title,
 .tone-special-report .fc-item__title,
-.tone-special-report .fc-item__title {
+.tonal--tone-special-report .content__series-label__link,
+.tonal--tone-feature .content__series-label__link,
+.tonal--tone-review .content__series-label__link {
     color: #ffffff;
+}
+
+.tonal--tone-comment .content__series-label__link {
+    color: $neutral-2;
 }
 
 .tonal--tone-editorial .tone-colour,
