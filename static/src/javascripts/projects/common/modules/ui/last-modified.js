@@ -1,19 +1,21 @@
-import bean from 'bean';
-import fastdom from 'fastdom';
-import qwery from 'qwery';
-import $ from 'lib/$';
-export default function() {
-    var $jsLm = $('.js-lm');
+// @flow
 
-    if ($jsLm.length > 0) {
-        fastdom.write(function() {
-            $('.js-wpd').addClass('content__dateline-wpd--modified');
+import fastdom from 'fastdom';
+
+const lastModified = () => {
+    const jsLm = document.getElementsByClassName('js-lm')[0];
+
+    if (jsLm) {
+        fastdom.write(() => {
+            jsLm.classList.add('content__dateline-wpd--modified');
         });
 
-        bean.on(qwery('.js-wpd')[0], 'click', function() {
-            fastdom.write(function() {
-                $jsLm.toggleClass('u-h');
+        jsLm.addEventListener('click', () => {
+            fastdom.write(() => {
+                jsLm.classList.toggle('u-h');
             });
         });
     }
 };
+
+export { lastModified };
