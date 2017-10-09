@@ -1,10 +1,8 @@
 // @flow
-import { CTA, icon } from './style.css';
+import { cta, icon } from './style.css';
 
 export default (props: Object) => (
-    // const Icon = import(props.icon)
-
-    <a href={props.href} style={CTA}>
+    <a href={props.href} style={cta}>
         {props.children}
         <props.icon style={icon} />
     </a>

@@ -2,7 +2,7 @@
 import Logo from 'assets/images/guardian-logo-320.svg';
 import ArrowRight from 'assets/images/arrow-right.svg';
 import NotFoundSvg from 'assets/images/404.svg';
-import CTA from './CTA';
+import Cta from './cta';
 
 import {
     wrapper,
@@ -38,9 +38,9 @@ export default ({ beaconUrl }: { beaconUrl: string }) => (
                         report it
                     </a>.
                 </p>
-                <CTA href="https://www.theguardian.com/" icon={ArrowRight}>
+                <Cta href="https://www.theguardian.com/" icon={ArrowRight}>
                     Go to the Guardian home page
-                </CTA>
+                </Cta>
             </div>
         </div>
 

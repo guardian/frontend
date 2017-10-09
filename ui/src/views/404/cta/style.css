@@ -1,4 +1,4 @@
-CTA {
+.cta {
     background-color: var(--colour-news-main2);
     border-radius: 9999px;
     box-sizing: border-box;
@@ -21,7 +21,7 @@ CTA {
     }
 }
 
-icon {
+.icon {
     fill: currentColor;
     height: 40px;
     position: absolute;
