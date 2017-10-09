@@ -13,7 +13,7 @@ import Component from 'common/modules/component';
 import { recommendComment } from 'common/modules/discussion/api';
 
 declare class PopStateEvent extends Event {
-    state: Object,
+    state: Object;
 }
 
 class ActivityStream extends Component {

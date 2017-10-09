@@ -10,7 +10,6 @@ define([
     'common/modules/adblock-banner',
     'common/modules/onward/history',
     'common/modules/ui/message',
-    'common/modules/navigation/navigation',
     'raw-loader!common/views/membership-message.html',
     'common/views/svgs',
     'lodash/collections/sample'
@@ -26,7 +25,6 @@ define([
     AdblockBanner,
     history,
     Message,
-    navigation,
     messageTemplate,
     svgs,
     sample

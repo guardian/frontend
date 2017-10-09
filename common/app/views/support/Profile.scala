@@ -107,13 +107,12 @@ object Video700 extends VideoProfile(width = Some(700), height = Some(394)) // 1
 object Video1280 extends VideoProfile(width = Some(1280), height = Some(720)) // 16:9
 object GoogleStructuredData extends Profile(width = Some(300), height = Some(300)) // 1:1
 
-abstract class ShareImage(shouldIncludeOverlay: Boolean) extends Profile(width = Some(1200)) {
+class ShareImage(blendImageParam: String, shouldIncludeOverlay: Boolean) extends Profile(width = Some(1200)) {
   override val heightParam = "h=630"
   override val fitParam = "fit=crop"
   val cropParam = "crop=faces%2Centropy"
   val blendModeParam = "bm=normal"
   val blendOffsetParam = "ba=bottom%2Cleft"
-  val blendImageParam: String
 
   override def resizeString: String = {
     if(shouldIncludeOverlay) {
@@ -125,12 +124,16 @@ abstract class ShareImage(shouldIncludeOverlay: Boolean) extends Profile(width =
   }
 }
 
-object TwitterImage extends ShareImage(TwitterShareImageLogoOverlay.isSwitchedOn) {
-  override val blendImageParam = "blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxNi8wNi8wNy9vdmVybGF5LWxvZ28tMTIwMC05MF9vcHQucG5n"
+// Despite the base64 codes looking similar, the twitter overlay is a different size to the facebook overlay. 
+
+object TwitterImage {
+  val default = new ShareImage("blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxNi8wNi8wNy9vdmVybGF5LWxvZ28tMTIwMC05MF9vcHQucG5n", TwitterShareImageLogoOverlay.isSwitchedOn)
+  val opinions = new ShareImage("blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxNy8xMC8wNi9vcGluaW9uc19vdmVybGF5LXR3aXR0ZXIucG5n", TwitterShareImageLogoOverlay.isSwitchedOn)
 }
 
-object FacebookOpenGraphImage extends ShareImage(FacebookShareImageLogoOverlay.isSwitchedOn) {
-  override val blendImageParam = "blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxNi8wNS8yNS9vdmVybGF5LWxvZ28tMTIwMC05MF9vcHQucG5n"
+object FacebookOpenGraphImage {
+  val default = new ShareImage("blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxNi8wNS8yNS9vdmVybGF5LWxvZ28tMTIwMC05MF9vcHQucG5n", FacebookShareImageLogoOverlay.isSwitchedOn)
+  val opinions = new ShareImage("blend64=aHR0cHM6Ly91cGxvYWRzLmd1aW0uY28udWsvMjAxNy8xMC8wNi9vcGluaW9uc19vdmVybGF5LWZhY2Vib29rLnBuZw==", FacebookShareImageLogoOverlay.isSwitchedOn)
 }
 
 object EmailImage extends Profile(width = Some(580), autoFormat = false) {

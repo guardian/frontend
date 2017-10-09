@@ -8,7 +8,7 @@ import config from 'lib/config';
 import deferToAnalytics from 'lib/defer-to-analytics';
 import { isBreakpoint } from 'lib/detect';
 import mediator from 'lib/mediator';
-import videoAdUrl from 'common/modules/commercial/video-ad-url';
+import { videoAdUrl } from 'common/modules/commercial/video-ad-url';
 import { commercialFeatures } from 'commercial/modules/commercial-features';
 import Component from 'common/modules/component';
 import events from 'common/modules/video/events';
@@ -252,7 +252,7 @@ const enhanceVideo = (
                                         () => {
                                             player.ima({
                                                 id: mediaId,
-                                                adTagUrl: videoAdUrl.get(),
+                                                adTagUrl: videoAdUrl(),
                                                 prerollTimeout: 1000,
                                                 // We set this sightly higher so contrib-ads never timeouts before ima.
                                                 contribAdsSettings: {

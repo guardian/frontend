@@ -24,7 +24,7 @@ module.exports = {
             __dirname,
             'static',
             'src',
-            'javascripts-legacy',
+            'javascripts',
             'bootstraps',
             'video-embed.js'
         ),
@@ -32,7 +32,7 @@ module.exports = {
             __dirname,
             'static',
             'src',
-            'javascripts-legacy',
+            'javascripts',
             'bootstraps',
             'youtube-embed.js'
         ),

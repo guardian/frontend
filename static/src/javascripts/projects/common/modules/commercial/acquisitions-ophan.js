@@ -13,6 +13,14 @@ type ComponentEventWithoutAction = {
     },
 };
 
+type AcquisitionLinkParams = {
+    base: string,
+    componentType: OphanComponentType,
+    componentId: string,
+    campaignCode?: string,
+    abTest?: { name: string, variant: string },
+};
+
 export const submitComponentEvent = (componentEvent: OphanComponentEvent) => {
     ophan.record({ componentEvent });
 };
@@ -31,15 +39,16 @@ export const submitViewEvent = (componentEvent: ComponentEventWithoutAction) =>
         action: 'VIEW',
     });
 
-export const addTrackingCodesToUrl = (
-    base: string,
-    componentType: OphanComponentType,
-    campaignCode: string,
-    abTest?: { name: string, variant: string }
-) => {
+export const addTrackingCodesToUrl = ({
+    base,
+    componentType,
+    componentId,
+    campaignCode,
+    abTest,
+}: AcquisitionLinkParams) => {
     const acquisitionData = {
         source: 'GUARDIAN_WEB',
-        componentId: campaignCode,
+        componentId,
         componentType,
         referrerPageviewId: config.get('ophan.pageViewId') || undefined,
         campaignCode,

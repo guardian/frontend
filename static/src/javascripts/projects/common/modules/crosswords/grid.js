@@ -1,25 +1,16 @@
 // @flow
 import React from 'react/addons';
-import helpers from 'common/modules/crosswords/helpers';
+import { gridSize, clueMapKey } from 'common/modules/crosswords/helpers';
 import { constants } from 'common/modules/crosswords/constants';
 import Cell from 'common/modules/crosswords/cell';
 import { classNames } from 'common/modules/crosswords/classNames';
 import type Crossword from 'common/modules/crosswords/crossword';
 
-type Direction = 'across' | 'down';
-
-type Separator = '-' | ',';
-
-type SeparatorDescription = {
-    direction: Direction,
-    separator: Separator,
-};
-
-type GridProps = {
+export type GridProps = {
     rows: number,
     columns: number,
-    cells: Array<Array<Object>>,
-    separators: Array<SeparatorDescription>,
+    cells: Array<Array<Cell>>,
+    separators: SeparatorMap,
     crossword: Crossword,
     focussedCell: Object,
 };
@@ -30,8 +21,8 @@ const createWordSeparator = (
     y: number,
     direction: Direction
 ): ?React.Element => {
-    const top = helpers.gridSize(y);
-    const left = helpers.gridSize(x);
+    const top = gridSize(y);
+    const left = gridSize(x);
     const borderWidth = 1;
 
     if (direction === 'across') {
@@ -61,8 +52,8 @@ const createHyphenSeparator = (
     y: number,
     direction: Direction
 ): ?React.Element => {
-    const top = helpers.gridSize(y);
-    const left = helpers.gridSize(x);
+    const top = gridSize(y);
+    const left = gridSize(x);
     const borderWidth = 1;
     let width;
     let height;
@@ -104,13 +95,13 @@ const createSeparator = (
 
 export const Grid = (props: GridProps): React.Element<*> => {
     const getSeparators = (x: number, y: number): ?SeparatorDescription =>
-        props.separators[helpers.clueMapKey(x, y)];
+        props.separators[clueMapKey(x, y)];
 
     const handleSelect = (x: number, y: number): void =>
         props.crossword.onSelect(x, y);
 
-    const width = helpers.gridSize(props.columns);
-    const height = helpers.gridSize(props.rows);
+    const width = gridSize(props.columns);
+    const height = gridSize(props.rows);
     const cells = [];
     let separators = [];
 

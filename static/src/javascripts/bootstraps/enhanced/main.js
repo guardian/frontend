@@ -255,7 +255,7 @@ const bootEnhanced = (): void => {
             require => {
                 bootstrapContext(
                     'profile',
-                    require('bootstraps/enhanced/profile').init
+                    require('bootstraps/enhanced/profile').initProfile
                 );
             },
             'profile'

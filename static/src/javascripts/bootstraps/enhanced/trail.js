@@ -7,7 +7,7 @@ import qwery from 'qwery';
 import $ from 'lib/$';
 import config from 'lib/config';
 import { catchErrorsWithContext } from 'lib/robust';
-import proximityLoader from 'lib/proximity-loader';
+import { addProximityLoader } from 'lib/proximity-loader';
 import commentAdverts from 'commercial/modules/comment-adverts';
 import { Loader as DiscussionLoader } from 'common/modules/discussion/loader';
 import { isUserLoggedIn } from 'common/modules/identity/api';
@@ -23,7 +23,7 @@ const insertOrProximity = (selector, insert) => {
     } else {
         fastdom.read(() => document.querySelector(selector)).then(el => {
             if (el) {
-                proximityLoader.add(el, 1500, insert);
+                addProximityLoader(el, 1500, insert);
             }
         });
     }
