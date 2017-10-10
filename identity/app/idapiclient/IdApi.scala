@@ -4,8 +4,8 @@ import com.gu.identity.model.{EmailList, LiftJsonConfig, Subscriber, User}
 
 import scala.concurrent.{ExecutionContext, Future}
 import idapiclient.responses.{AccountDeletionResult, CookiesResponse, Error, HttpResponse}
-import conf.IdConfig
-import idapiclient.parser.{JodaJsonSerializer, JsonBodyParser}
+import conf.{IdConfig, IdentityConfiguration}
+import idapiclient.parser.{IdApiJsonBodyParser, JodaJsonSerializer, JsonBodyParser}
 import net.liftweb.json.JsonAST.JValue
 import net.liftweb.json.Serialization.write
 import utils.SafeLogging
@@ -263,3 +263,11 @@ trait IdApiUtils extends SafeLogging {
       }
   }
 }
+
+
+class IdApiClient(
+    jsonParser: IdApiJsonBodyParser,
+    conf: IdentityConfiguration,
+    wsClient: WSClient)
+    (implicit val executionContext: ExecutionContext)
+  extends IdApi(jsonParser, conf, wsClient)
