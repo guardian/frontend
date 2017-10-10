@@ -93,51 +93,52 @@ class Component {
         }
     }
 
-    fetch(parent: HTMLElement | ?Node, key: ?string): Promise<void> {
-        const self = this;
+    fetch(parent: HTMLElement | ?Node, key?: string): Promise<void> {
         this.checkAttached();
 
-        this.responseDataKey = key || this.responseDataKey;
+        if (key) {
+            this.responseDataKey = key;
+        }
 
         return this._fetch()
             .then(resp => {
-                self.elem = bonzo.create(resp[self.responseDataKey])[0];
-                self._prerender();
+                this.elem = bonzo.create(resp[this.responseDataKey])[0];
+                this._prerender();
 
-                if (!self.destroyed) {
-                    bonzo(parent)[self.manipulationType](self.elem);
-                    self._ready(self.elem);
+                if (!this.destroyed) {
+                    bonzo(parent)[this.manipulationType](this.elem);
+                    this._ready(this.elem);
                 }
             })
-            .catch(self.error);
+            .catch(this.error);
     }
 
     _fetch(): Promise<Object> {
-        const self = this;
-        let opt;
         let endpoint =
             typeof this.endpoint === 'function'
                 ? this.endpoint()
                 : this.endpoint;
 
-        for (opt in this.options) {
-            endpoint = endpoint.replace(`:${opt}`, this.options[opt]);
+        if (this.options && typeof endpoint === 'string') {
+            Object.keys(this.options).forEach(key => {
+                endpoint = endpoint.replace(`:${key}`, this.options[key]);
+            });
         }
 
         return fetchJSON(endpoint, {
             mode: 'cors',
             body: this.fetchData,
         }).then(resp => {
-            self.fetched(resp);
+            this.fetched();
             return resp;
         });
     }
 
-    _ready(elem: HTMLElement): void {
+    _ready(elem?: ?HTMLElement): void {
         if (!this.destroyed) {
             this.rendered = true;
             this._autoupdate();
-            this.ready(elem);
+            this.ready();
         }
     }
 
@@ -150,27 +151,25 @@ class Component {
      * Check if we should auto update, if so, do so
      */
     _autoupdate(): void {
-        const self = this;
-        const setAutoUpdate = () => {
-            self.t = setTimeout(update, self.updateEvery * 1000);
-        };
-
-        function update() {
-            self
-                ._fetch()
+        const update = (): void => {
+            this._fetch()
                 .then(resp => {
-                    self.autoupdate(
-                        bonzo.create(resp[self.responseDataKey])[0]
+                    this.autoupdate(
+                        bonzo.create(resp[this.responseDataKey])[0]
                     );
 
-                    if (self.autoupdated) {
+                    if (this.autoupdated) {
                         setAutoUpdate();
                     }
                 })
                 .catch(() => {
                     setAutoUpdate();
                 });
-        }
+        };
+
+        const setAutoUpdate = () => {
+            this.t = setTimeout(() => update(), this.updateEvery * 1000);
+        };
 
         if (this.autoupdated) {
             setAutoUpdate();
@@ -217,13 +216,17 @@ class Component {
      */
     dispose(): void {}
 
-    on(eventName, elem, handler) {
+    on(
+        eventType: string,
+        elem: string | ((event: Event) => void),
+        handler?: (event: Event) => void
+    ): Component {
         if (typeof elem === 'function') {
             handler = elem;
-            bean.on(this.elem, eventName, handler.bind(this));
+            bean.on(this.elem, eventType, handler.bind(this));
         } else {
             elem = !elem.length ? [elem] : elem;
-            bean.on(this.elem, eventName, elem, handler.bind(this));
+            bean.on(this.elem, eventType, elem, handler.bind(this));
         }
 
         return this;
