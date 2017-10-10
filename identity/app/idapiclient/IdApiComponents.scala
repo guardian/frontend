@@ -10,6 +10,5 @@ trait IdApiComponents extends IdentityConfigurationComponents {
   implicit val executionContext: ExecutionContext
   def wsClient: WSClient
   lazy val idApiClient = wire[IdApiClient]
-  lazy val idDispatchAsyncHttpClient = wire[IdDispatchAsyncHttpClient]
   lazy val idApiJsonBodyParser = wire[IdApiJsonBodyParser]
 }

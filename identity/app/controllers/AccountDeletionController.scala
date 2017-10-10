@@ -6,7 +6,7 @@ import play.api.mvc._
 import services._
 import utils.SafeLogging
 import form.Mappings
-import idapiclient.{EmailPassword, IdApiClient, IdDispatchAsyncHttpClient}
+import idapiclient.{EmailPassword, IdApiClient}
 import play.filters.csrf.{CSRFAddToken, CSRFCheck}
 import actions.AuthenticatedActions
 import conf.IdentityConfiguration
@@ -26,7 +26,6 @@ class AccountDeletionController(
   idUrlBuilder: IdentityUrlBuilder,
   csrfCheck: CSRFCheck,
   csrfAddToken: CSRFAddToken,
-  http: IdDispatchAsyncHttpClient,
   signInService : PlaySigninService,
   conf: IdentityConfiguration,
   val controllerComponents: ControllerComponents,

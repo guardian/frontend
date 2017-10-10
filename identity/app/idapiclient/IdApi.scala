@@ -2,7 +2,7 @@ package idapiclient
 
 import com.gu.identity.model.{EmailList, LiftJsonConfig, Subscriber, User}
 import client._
-import client.connection.{Http, HttpResponse}
+import client.connection.HttpResponse
 
 import scala.concurrent.{ExecutionContext, Future}
 import client.parser.{JodaJsonSerializer, JsonBodyParser}
@@ -17,7 +17,6 @@ import play.api.libs.ws.WSClient
 
 
 abstract class IdApi(
-    http: Http,
     jsonBodyParser: JsonBodyParser,
     conf: IdConfig,
     override val wsClient: WSClient)
@@ -40,7 +39,7 @@ abstract class IdApi(
     val params = buildParams(None, Some(trackingData), Seq("format" -> "cookies") ++ persistent.map("persistent" -> _.toString))
     val headers = buildHeaders(Some(userAuth))
     val body = write(userAuth)
-    val response = POST(apiUrl("auth"), body, params, headers)
+    val response = POST(apiUrl("auth"), Some(body), params, headers)
     response map extract(jsonField("cookies"))
   }
 
@@ -92,7 +91,7 @@ abstract class IdApi(
     val userData = write(user)
     val params = buildParams(tracking = Some(trackingParameters), extra = returnUrl.map(url => Iterable("returnUrl" -> url)))
     val headers = buildHeaders(extra = trackingParameters.ipAddress.map(ip => Iterable("X-Forwarded-For" -> ip)))
-    val response = http.POST(apiUrl("user"), Some(userData), params, headers)
+    val response = POST(apiUrl("user"), Some(userData), params, headers)
     response map extractUser
   }
 
@@ -121,7 +120,7 @@ abstract class IdApi(
   def resetPassword( token : String, newPassword : String ): Future[Response[Unit]] = {
     val apiPath = urlJoin("pwd-reset", "reset-pwd-for-user")
     val postBody = write(TokenPassword(token, newPassword))
-    val response = http.POST(apiUrl(apiPath), Some(postBody), clientAuth.parameters, clientAuth.headers)
+    val response = POST(apiUrl(apiPath), Some(postBody), clientAuth.parameters, clientAuth.headers)
     response map extractUnit
   }
 
@@ -169,9 +168,10 @@ abstract class IdApi(
 
   def executeAccountDeletionStepFunction(userId: String, email: String, reason: Option[String], auth: Auth): Future[Response[AccountDeletionResult]] = {
     case class DeletionBody(identityId: String, email: String, reason: Option[String])
-    http.POST(
+    POST(
         s"${conf.accountDeletionApiRoot}/delete",
         Some(write(DeletionBody(userId, email, reason))),
+        urlParameters = Nil,
         headers = buildHeaders(Some(auth), extra = Seq(("x-api-key", conf.accountDeletionApiKey)))
     ) map extract[AccountDeletionResult](identity)
   }
@@ -180,13 +180,13 @@ abstract class IdApi(
            auth: Option[Auth] = None,
            trackingParameters: Option[TrackingData] = None,
            body: Option[String] = None): Future[Response[HttpResponse]] =
-    POST(apiUrl(apiPath), body.getOrElse(""), buildParams(auth, trackingParameters), buildHeaders(auth))
+    POST(apiUrl(apiPath), body, buildParams(auth, trackingParameters), buildHeaders(auth))
 
   def delete(apiPath: String,
            auth: Option[Auth] = None,
            trackingParameters: Option[TrackingData] = None,
            body: Option[String] = None): Future[Response[HttpResponse]] =
-    DELETE(apiUrl(apiPath), body.getOrElse(""), buildParams(auth, trackingParameters), buildHeaders(auth))
+    DELETE(apiUrl(apiPath), body, buildParams(auth, trackingParameters), buildHeaders(auth))
 }
 
 
@@ -237,15 +237,13 @@ trait IdApiUtils extends SafeLogging {
       }
   }
 
-  def POST(uri: String, body: String, urlParameters: Parameters, headers: Parameters): Future[Response[HttpResponse]] = {
+  def POST(uri: String, body: Option[String], urlParameters: Parameters, headers: Parameters): Future[Response[HttpResponse]] = {
     wsClient
       .url(uri)
       .withQueryStringParameters(urlParameters.toList: _*)
       .withHttpHeaders(headers.toList: _*)
-      .post(body)
-      .map { resp =>
-        println(resp.body)
-        Right(HttpResponse(resp.body, resp.status, resp.statusText)) }
+      .post(body.getOrElse(""))
+      .map { resp => Right(HttpResponse(resp.body, resp.status, resp.statusText)) }
       .recover {
         case e: Throwable =>
           logger.error(s"Network error while communicating with ${apiUrl("auth")}:", e)
@@ -253,16 +251,14 @@ trait IdApiUtils extends SafeLogging {
       }
   }
 
-  def DELETE(uri: String, body: String, urlParameters: Parameters, headers: Parameters): Future[Response[HttpResponse]] = {
+  def DELETE(uri: String, body: Option[String], urlParameters: Parameters = Nil, headers: Parameters): Future[Response[HttpResponse]] = {
     wsClient
       .url(uri)
-      .withBody(body) // FIXME: DELETE should not have a body
+      .withBody(body.getOrElse("")) // FIXME: DELETE should not have a body
       .withQueryStringParameters(urlParameters.toList: _*)
       .withHttpHeaders(headers.toList: _*)
       .delete()
-      .map { resp =>
-        println(resp.body)
-        Right(HttpResponse(resp.body, resp.status, resp.statusText)) }
+      .map { resp => Right(HttpResponse(resp.body, resp.status, resp.statusText)) }
       .recover {
         case e: Throwable =>
           logger.error(s"Network error while communicating with ${apiUrl("auth")}:", e)
