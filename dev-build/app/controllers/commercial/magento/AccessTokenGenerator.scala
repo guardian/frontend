@@ -18,9 +18,9 @@ class AccessTokenGenerator(val controllerComponents: ControllerComponents) exten
     authorizationPath <- Configuration.commercial.magento.authorizationPath
   } yield {
     OAuth(ServiceInfo(
-      requestTokenURL = s"https://$domain/oauth/initiate",
-      accessTokenURL = s"https://$domain/oauth/token",
-      authorizationURL = s"https://$domain/$authorizationPath",
+      requestTokenURL = s"http://$domain/oauth/initiate",
+      accessTokenURL = s"http://$domain/oauth/token",
+      authorizationURL = s"http://$domain/$authorizationPath",
       key = ConsumerKey(consumerKey, consumerSecret)),
       use10a = true)
   }
