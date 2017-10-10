@@ -8,7 +8,8 @@ checks:
   exceptions:
       url: http://localhost:9000/books/2014/may/21/guardian-journalists-jonathan-freedland-ghaith-abdul-ahad-win-orwell-prize-journalism
   a11yvalidation:
-        dummy: dummy
+      dummy: dummy
   loadtest:
       url: http://localhost:9000/books/2014/may/21/guardian-journalists-jonathan-freedland-ghaith-abdul-ahad-win-orwell-prize-journalism
-      
+  microdata:
+      url: http://localhost:9000/books/2014/may/21/guardian-journalists-jonathan-freedland-ghaith-abdul-ahad-win-orwell-prize-journalism
