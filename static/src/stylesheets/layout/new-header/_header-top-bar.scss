@@ -6,8 +6,10 @@
     font-weight: 300;
     letter-spacing: 0.01em;
     line-height: 1;
-    padding: ($gs-baseline / 1.5) $gs-gutter / 2;
+    padding: ($gs-baseline / 1.5) ($gs-gutter / 2);
     position: relative;
+    // Prevents a strange 1px shift on hover
+    backface-visibility: hidden;
 
     &:nth-child(2) {
         padding-left: $gs-gutter / 1.5;
@@ -22,7 +24,6 @@
     &:hover,
     &:focus {
         color: #ffffff;
-        outline: none;
         text-decoration: none;
     }
 
@@ -50,7 +51,7 @@
         transform: translateY(0) rotate(45deg);
     }
 
-    // Open state for dropdowns
+    // Open state for dropdowns - selector will change
     &:active:after {
         transform: translateY(1px) rotate(-135deg);
     }
@@ -63,6 +64,11 @@
     padding-bottom: $gs-baseline / 1.5;
     padding-left: $gs-gutter;
     padding-right: $gs-gutter;
+
+    @include mq($until: mobileMedium) {
+        padding-bottom: $gs-baseline / 4;
+        padding-top: $gs-baseline / 2;
+    }
 
     @include mq($until: mobileLandscape) {
         margin-left: -$gs-gutter / 2;
@@ -78,7 +84,7 @@
     }
 
     &:before {
-        background-color: $news-main-2;
+        background: $news-main-2;
         border-radius: 50%;
         bottom: -$gs-baseline;
         content: '';
@@ -97,7 +103,7 @@
         color: $guardian-brand-dark;
 
         &:before {
-            background-color: #74E7FF;
+            background: #74E7FF;
             transform: scale(1.05);
         }
     }
