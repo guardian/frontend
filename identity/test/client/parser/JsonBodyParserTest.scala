@@ -2,8 +2,7 @@ package client.parser
 
 import org.scalatest.path
 import net.liftweb.json.JsonAST.{JString, JValue}
-import client.Error
-import client.connection.HttpResponse
+import client.{Error, HttpResponse}
 import org.scalatest.Matchers
 import net.liftweb.json.{DefaultFormats, Formats}
 

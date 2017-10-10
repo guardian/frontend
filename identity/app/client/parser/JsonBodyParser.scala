@@ -1,10 +1,9 @@
 package client.parser
 
-import net.liftweb.json.{Formats, MappingException, DefaultFormats}
+import net.liftweb.json.{DefaultFormats, Formats, MappingException}
 import net.liftweb.json.JsonAST.{JNothing, JValue}
 import net.liftweb.json.JsonParser._
-import client.{Logging, Error, Response}
-import client.connection.HttpResponse
+import client.{Error, HttpResponse, Logging, Response}
 
 trait JsonBodyParser extends Logging {
   implicit val formats: Formats

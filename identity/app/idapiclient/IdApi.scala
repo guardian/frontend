@@ -2,7 +2,6 @@ package idapiclient
 
 import com.gu.identity.model.{EmailList, LiftJsonConfig, Subscriber, User}
 import client._
-import client.connection.HttpResponse
 
 import scala.concurrent.{ExecutionContext, Future}
 import client.parser.{JodaJsonSerializer, JsonBodyParser}

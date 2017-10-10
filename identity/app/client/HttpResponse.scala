@@ -1,4 +1,3 @@
-package client.connection
-
+package client
 
 case class HttpResponse(body: String, statusCode: Int, statusMessage: String)

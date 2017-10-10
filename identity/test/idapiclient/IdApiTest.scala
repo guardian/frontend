@@ -9,7 +9,7 @@ import client.connection.{Http, HttpResponse}
 import client.parser.{JodaJsonSerializer, JsonBodyParser}
 
 import scala.concurrent.{Await, ExecutionContext, Future, Promise}
-import client.{Anonymous, Auth, Error, Parameters, Response}
+import client._
 import org.hamcrest.Description
 import client.connection.util.ExecutionContexts
 import org.joda.time.format.ISODateTimeFormat

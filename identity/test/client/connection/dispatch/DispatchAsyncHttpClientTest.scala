@@ -1,10 +1,10 @@
 package client.connection.dispatch
 
+import client.HttpResponse
 import org.scalatest.path
 import org.scalatest.Matchers
 import org.scalatest.mockito.MockitoSugar
 import org.mockito.Mockito._
-import client.connection.HttpResponse
 import dispatch.Req
 import test.WithTestExecutionContext
 
