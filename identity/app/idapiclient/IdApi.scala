@@ -7,7 +7,6 @@ import client.connection.HttpResponse
 import scala.concurrent.{ExecutionContext, Future}
 import client.parser.{JodaJsonSerializer, JsonBodyParser}
 import idapiclient.responses.{AccountDeletionResult, CookiesResponse}
-import client.connection.util.ApiHelpers
 import conf.IdConfig
 import net.liftweb.json.JsonAST.JValue
 import net.liftweb.json.Serialization.write
@@ -20,7 +19,7 @@ abstract class IdApi(
     jsonBodyParser: JsonBodyParser,
     conf: IdConfig,
     override val wsClient: WSClient)
-  extends IdApiUtils with SafeLogging with ApiHelpers {
+  extends IdApiUtils with SafeLogging {
 
   override val apiRootUrl: String = conf.apiRoot
   override val clientAuth: Auth = ClientAuth(conf.apiClientToken)
