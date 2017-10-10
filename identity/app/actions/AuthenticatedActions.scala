@@ -3,7 +3,7 @@ package actions
 import java.net.URLEncoder
 
 import actions.AuthenticatedActions.AuthRequest
-import client.Logging
+import utils.Logging
 
 import idapiclient.IdApiClient
 import play.api.mvc.Security.{AuthenticatedBuilder, AuthenticatedRequest}
