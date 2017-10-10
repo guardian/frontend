@@ -228,7 +228,8 @@ class GuardianConfiguration extends Logging {
   }
 
   object sonobi {
-    lazy val jsLocation = configuration.getStringProperty("sonobi.js.location").getOrElse("//api.nextgen.guardianapps.co.uk/morpheus.theguardian.12919.js")
+    //You can test your branch on CODE
+    lazy val jsLocation = "//api.nextgen.guardianapps.co.uk/morpheus.theguardian.12919.js"
   }
 
   object frontend {
