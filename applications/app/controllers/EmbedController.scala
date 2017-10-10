@@ -47,8 +47,4 @@ class EmbedController(contentApiClient: ContentApiClient, val controllerComponen
   private def renderVideo(model: EmbedPage)(implicit request: RequestHeader): Result = {
     Cached(600)(RevalidatableResult.Ok(views.html.videoEmbed(model)))
   }
-
-  private def renderWebfonts()(implicit request: RequestHeader): Result = {
-    Cached(600)(RevalidatableResult.Ok(views.html.fontEmbed()))
-  }
 }
