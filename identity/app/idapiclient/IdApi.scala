@@ -3,7 +3,7 @@ package idapiclient
 import com.gu.identity.model.{EmailList, LiftJsonConfig, Subscriber, User}
 
 import scala.concurrent.{ExecutionContext, Future}
-import idapiclient.responses.{AccountDeletionResult, CookiesResponse}
+import idapiclient.responses.{AccountDeletionResult, CookiesResponse, Error, HttpResponse}
 import conf.IdConfig
 import idapiclient.parser.{JodaJsonSerializer, JsonBodyParser}
 import net.liftweb.json.JsonAST.JValue

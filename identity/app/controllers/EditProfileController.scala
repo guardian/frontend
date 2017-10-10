@@ -5,7 +5,8 @@ import actions.AuthenticatedActions.AuthRequest
 import com.gu.identity.model.User
 import common.ImplicitControllerExecutionContext
 import form._
-import idapiclient.{Error, IdApiClient}
+import idapiclient.responses.Error
+import idapiclient.IdApiClient
 import model._
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesApi, MessagesProvider}

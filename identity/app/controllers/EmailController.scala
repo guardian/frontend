@@ -3,7 +3,7 @@ package controllers
 import actions.AuthenticatedActions
 import services.{IdRequestParser, IdentityUrlBuilder, ReturnUrlVerifier}
 import conf.IdentityConfiguration
-import idapiclient.{Error, IdApiClient}
+import idapiclient.IdApiClient
 import common.ImplicitControllerExecutionContext
 import utils.SafeLogging
 import play.api.mvc._
@@ -12,6 +12,7 @@ import scala.concurrent.Future
 import model.{ApplicationContext, EmailNewsletters, IdentityPage}
 import play.api.data._
 import com.gu.identity.model.{EmailList, Subscriber}
+import idapiclient.responses.Error
 import play.filters.csrf._
 import play.api.i18n.I18nSupport
 import play.api.libs.json._
