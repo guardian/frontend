@@ -2,6 +2,7 @@ package idapiclient
 
 import com.softwaremill.macwire._
 import conf.IdentityConfigurationComponents
+import idapiclient.parser.IdApiJsonBodyParser
 import play.api.libs.ws.WSClient
 
 import scala.concurrent.ExecutionContext

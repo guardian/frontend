@@ -2,6 +2,7 @@ package idapiclient
 
 
 import conf.IdentityConfiguration
+import idapiclient.parser.IdApiJsonBodyParser
 import play.api.libs.ws.WSClient
 
 import scala.concurrent.ExecutionContext
