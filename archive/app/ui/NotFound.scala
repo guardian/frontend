@@ -1,14 +1,9 @@
 package ui
 
-import conf.Configuration
-import play.api.libs.json.{JsValue, Json}
 import rendering.Renderable
+import rendering.core.JavascriptProps
+import play.api.libs.json.{JsValue, Json}
 
 object NotFound extends Renderable {
-  override def props: Option[JsValue] = Some(
-    Json.obj(
-      "beaconUrl" -> Configuration.debug.beaconUrl
-    )
-  )
+  override def props: Option[JsValue] = Some(Json.toJson(JavascriptProps()))
 }
-
