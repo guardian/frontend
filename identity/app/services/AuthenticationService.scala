@@ -1,6 +1,6 @@
 package services
 
-import client.Auth
+import idapiclient.Auth
 import com.gu.identity.model.User
 import conf.FrontendIdentityCookieDecoder
 import idapiclient.ScGuU

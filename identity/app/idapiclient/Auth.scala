@@ -1,9 +1,18 @@
 package idapiclient
 
-import client.{Auth, Parameters}
+import client.Parameters
 import java.net.URLEncoder
 
 import com.gu.identity.cookie.GuUCookieData
+
+
+trait Auth {
+  def parameters: Parameters = Iterable.empty
+  def headers: Parameters = Iterable.empty
+}
+
+object Anonymous extends Auth
+
 
 case class EmailPassword(email: String, password: String, ipOpt: Option[String]) extends Auth {
   override def parameters: Parameters = List(
