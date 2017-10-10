@@ -1,7 +1,7 @@
 package services
 
 import play.api.mvc.Cookie
-import client.Response
+import idapiclient.Response
 
 import scala.concurrent.{ExecutionContext, Future}
 import utils.SafeLogging

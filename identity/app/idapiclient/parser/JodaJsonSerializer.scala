@@ -1,4 +1,4 @@
-package client.parser
+package idapiclient.parser
 
 import org.joda.time.DateTime
 import net.liftweb.json.{MappingException, TypeInfo, Formats, Serializer}

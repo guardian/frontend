@@ -1,9 +1,8 @@
 package idapiclient
 
-import client.parser.{JodaJsonSerializer, JsonBodyParser}
 import net.liftweb.json.JsonAST.JValue
-import client.Error
-import com.gu.identity.model.{Error => IdApiError, LiftJsonConfig}
+import com.gu.identity.model.{LiftJsonConfig, Error => IdApiError}
+import idapiclient.parser.{JodaJsonSerializer, JsonBodyParser}
 import utils.SafeLogging
 
 class IdApiJsonBodyParser extends JsonBodyParser with SafeLogging {

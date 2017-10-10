@@ -1,13 +1,12 @@
 package controllers
 
 import actions.AuthenticatedActions
-import client.Error
 import com.gu.identity.cookie.GuUCookieData
 import com.gu.identity.model.{StatusFields, User}
 import conf.FrontendIdentityCookieDecoder
 import conf.switches.Switches
 import formstack.{FormstackApi, FormstackForm}
-import idapiclient.{IdApiClient, ScGuU, TrackingData}
+import idapiclient.{Error, IdApiClient, ScGuU, TrackingData}
 import org.mockito.{Matchers => MockitoMatchers}
 import org.mockito.Mockito._
 import org.scalatest.mockito.MockitoSugar

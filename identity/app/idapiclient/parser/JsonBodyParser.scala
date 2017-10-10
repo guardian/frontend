@@ -1,15 +1,15 @@
-package client.parser
+package idapiclient.parser
 
 import net.liftweb.json.{Formats, MappingException}
 import net.liftweb.json.JsonAST.{JNothing, JValue}
 import net.liftweb.json.JsonParser._
-import client.{Error, HttpResponse, Response}
+import idapiclient.{Error, HttpResponse, Response}
 import utils.Logging
 
 trait JsonBodyParser extends Logging {
   implicit val formats: Formats
 
-  def extractErrorFromResponse(json: JValue, statusCode: Int): List[Error]
+  def extractErrorFromResponse(json: JValue, statusCode: Int): List[idapiclient.Error]
 
   def extract[T](extractJsonObj: JValue => JValue = {json => json})(httpResponseResponse: Response[HttpResponse])(implicit successType: Manifest[T]): Response[T] = {
     httpResponseResponse.right.flatMap { httpResponse =>
@@ -27,7 +27,7 @@ trait JsonBodyParser extends Logging {
           case HttpResponse(body, status, message) if status > 299 =>
             Left(extractErrorFromResponse(parse(body), httpResponse.statusCode))
           case HttpResponse(body, status, message) if successType == manifest[Unit] =>
-            Right(()).asInstanceOf[Right[List[client.Error], T]]
+            Right(()).asInstanceOf[Right[List[idapiclient.Error], T]]
           case HttpResponse(body, status, message) =>
             Right(extractJsonObj(parse(body)).extract[T])
         }

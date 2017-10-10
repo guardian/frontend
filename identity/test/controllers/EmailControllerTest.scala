@@ -5,7 +5,7 @@ import com.gu.identity.cookie.GuUCookieData
 import org.scalatest.{DoNotDiscover, Matchers, WordSpec}
 import services._
 import services.{IdRequestParser, IdentityUrlBuilder, ReturnUrlVerifier}
-import idapiclient.{IdApiClient, ScGuU}
+import idapiclient.{Error, IdApiClient, ScGuU, TrackingData}
 import conf.{FrontendIdentityCookieDecoder, IdentityConfiguration}
 import org.scalatest.mockito.MockitoSugar
 import test._
@@ -19,7 +19,6 @@ import play.api.test.Helpers._
 import com.gu.identity.model.Subscriber
 import services.IdentityRequest
 import client.{Auth, Error}
-import idapiclient.TrackingData
 import actions.AuthenticatedActions
 import play.api.test.FakeRequest
 

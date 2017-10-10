@@ -1,12 +1,11 @@
 package idapiclient
 
 import com.gu.identity.model.{EmailList, LiftJsonConfig, Subscriber, User}
-import client._
 
 import scala.concurrent.{ExecutionContext, Future}
-import client.parser.{JodaJsonSerializer, JsonBodyParser}
 import idapiclient.responses.{AccountDeletionResult, CookiesResponse}
 import conf.IdConfig
+import idapiclient.parser.{JodaJsonSerializer, JsonBodyParser}
 import net.liftweb.json.JsonAST.JValue
 import net.liftweb.json.Serialization.write
 import utils.SafeLogging
@@ -30,7 +29,7 @@ abstract class IdApi(
 
   def jsonField(field: String)(json: JValue): JValue = json \ field
 
-  def extractUser: (client.Response[HttpResponse]) => client.Response[User] = extract(jsonField("user"))
+  def extractUser: (Response[HttpResponse]) => Response[User] = extract(jsonField("user"))
 
 //   AUTH
   def authBrowser(userAuth: Auth, trackingData: TrackingData, persistent: Option[Boolean] = None): Future[Response[CookiesResponse]] = {

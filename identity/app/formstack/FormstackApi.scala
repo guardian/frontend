@@ -1,9 +1,9 @@
 package formstack
 
-import client.parser.JodaJsonSerializer
-import client.{Error, Response}
 import com.gu.identity.model.LiftJsonConfig
 import conf.Configuration
+import idapiclient.{Error, Response}
+import idapiclient.parser.JodaJsonSerializer
 import net.liftweb.json._
 import utils.SafeLogging
 

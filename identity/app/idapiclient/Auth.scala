@@ -1,8 +1,5 @@
 package idapiclient
 
-import client.Parameters
-import java.net.URLEncoder
-
 import com.gu.identity.cookie.GuUCookieData
 
 
@@ -31,7 +28,7 @@ case class ClientAuth(clientAccessToken: String) extends Auth {
 }
 
 case class ScGuU(scGuUValue: String, data: GuUCookieData) extends Auth {
-  override def headers: client.Parameters = Iterable("X-GU-ID-FOWARDED-SC-GU-U" -> scGuUValue)
+  override def headers: Parameters = Iterable("X-GU-ID-FOWARDED-SC-GU-U" -> scGuUValue)
 }
 
 case class TrackingData(returnUrl:Option[String], registrationType: Option[String], omnitureSVi: Option[String],

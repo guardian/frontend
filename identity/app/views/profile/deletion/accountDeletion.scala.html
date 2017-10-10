@@ -1,9 +1,10 @@
+@import idapiclient.Error
 @(
     page: model.Page,
     idRequest: services.IdentityRequest,
     idUrlBuilder: services.IdentityUrlBuilder,
     accountDeletionForm: Form[(String, Option[String])],
-    errors: List[client.Error],
+    errors: List[Error],
     user: com.gu.identity.model.User
 )(implicit
     request: RequestHeader,

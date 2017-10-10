@@ -6,7 +6,7 @@ import org.scalatest.Matchers
 import org.mockito.Mockito._
 import org.mockito.{ArgumentMatcher, Matchers => MockitoMatchers}
 import client.connection.{Http, HttpResponse}
-import client.parser.{JodaJsonSerializer, JsonBodyParser}
+import client.parser.JsonBodyParser
 
 import scala.concurrent.{Await, ExecutionContext, Future, Promise}
 import client._
@@ -14,6 +14,7 @@ import org.hamcrest.Description
 import client.connection.util.ExecutionContexts
 import org.joda.time.format.ISODateTimeFormat
 import com.gu.identity.model._
+import idapiclient.parser.{JodaJsonSerializer, JsonBodyParser}
 import net.liftweb.json.Serialization.write
 
 import scala.concurrent.duration._
@@ -39,7 +40,7 @@ class IdApiTest extends path.FreeSpec with Matchers with MockitoSugar with WithT
   val clientAuth = ClientAuth("frontend-dev-client-token")
   val clientAuthHeaders = List("X-GU-ID-Client-Access-Token" -> "Bearer frontend-dev-client-token")
   val api = new SynchronousIdApi(http, jsonParser, testIdConfig)
-  val errors = List(Error("Test error", "Error description", 500))
+  val errors = List(idapiclient.Error("Test error", "Error description", 500))
   val trackingParameters = mock[TrackingData]
   when(trackingParameters.parameters).thenReturn(List("tracking" -> "param"))
   when(trackingParameters.ipAddress).thenReturn(None)

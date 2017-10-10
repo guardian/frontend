@@ -5,11 +5,10 @@ import org.scalatest.Matchers
 import org.scalatest.mockito.MockitoSugar
 import org.mockito.{Matchers => MockitoMatchers}
 import org.mockito.Mockito._
-import idapiclient.{IdApiClient, TrackingData}
+import idapiclient.{Error, IdApiClient, TrackingData}
 import test.{Fake, WithTestApplicationContext}
 import play.api.test._
 import play.api.test.Helpers._
-import client.Error
 
 import scala.concurrent.Future
 import com.gu.identity.model.User
