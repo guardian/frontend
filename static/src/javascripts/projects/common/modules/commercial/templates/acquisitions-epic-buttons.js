@@ -21,7 +21,7 @@ export const epicButtonsTemplate = (
     </div>`;
 
     return `<div class="contributions__amount-field">
-        ${!useSupportDomain ? contribButton : ''}
         ${supportButton}
+        ${!useSupportDomain ? contribButton : ''}
     </div>`;
 };

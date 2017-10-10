@@ -35,7 +35,7 @@ export type CtaUrls = {
 };
 
 const useSupportDomain =
-    config.switches.ukSupporterTrafficToNewSupportFrontend &&
+    config.get('switches.ukSupporterTrafficToNewSupportFrontend') &&
     geolocationGetSync() === 'GB';
 const supportBaseURL = 'https://support.theguardian.com/uk';
 const membershipBaseURL = useSupportDomain
