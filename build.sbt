@@ -125,8 +125,8 @@ val identity = application("identity").dependsOn(commonWithTests).aggregate(comm
     commonsHttpClient,
     slf4jExt,
     exactTargetClient,
-    dispatch,
-    libPhoneNumber
+    libPhoneNumber,
+    mockWs
   )
 )
 

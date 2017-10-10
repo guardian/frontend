@@ -1,519 +1,189 @@
 package idapiclient
 
-import org.scalatest.path
 import org.scalatest.mockito.MockitoSugar
-import org.scalatest.Matchers
+import org.scalatest.concurrent.ScalaFutures
+import org.scalatestplus.play.PlaySpec
 import org.mockito.Mockito._
-import org.mockito.{ArgumentMatcher, Matchers => MockitoMatchers}
-import client.connection.{Http, HttpResponse}
-import client.parser.JsonBodyParser
-
-import scala.concurrent.{Await, ExecutionContext, Future, Promise}
-import client._
-import org.hamcrest.Description
-import client.connection.util.ExecutionContexts
+import mockws.{MockWS, MockWSHelpers}
+import scala.concurrent.ExecutionContext
 import org.joda.time.format.ISODateTimeFormat
-import com.gu.identity.model._
-import idapiclient.parser.{JodaJsonSerializer, JsonBodyParser}
-import net.liftweb.json.Serialization.write
-
-import scala.concurrent.duration._
+import conf.IdConfig
+import idapiclient.parser.{IdApiJsonBodyParser, JsonBodyParser}
+import idapiclient.responses.Error
 import scala.language.postfixOps
-import net.liftweb.json.JsonAST.JValue
-import net.liftweb.json.Formats
-import test.WithTestIdConfig
+import play.api.libs.ws.WSClient
+import test.{SingleServerSuite, WithTestExecutionContext, WithTestIdConfig}
+import play.api.mvc.Results._
+import play.api.test.Helpers._
 
-class IdApiTest extends path.FreeSpec with Matchers with MockitoSugar with WithTestIdConfig {
-  implicit def executionContext: ExecutionContext = ExecutionContexts.currentThreadContext
+class IdApiTest
+    extends PlaySpec
+      with SingleServerSuite
+      with MockitoSugar
+      with WithTestIdConfig
+      with MockWSHelpers
+      with WithTestExecutionContext
+      with ScalaFutures {
 
-  implicit val formats = LiftJsonConfig.formats + new JodaJsonSerializer
+  class IdApiTestClient(
+    jsonParser: JsonBodyParser,
+    conf: IdConfig,
+    wsClient: WSClient)
+    (implicit val executionContext: ExecutionContext)
+    extends IdApi(jsonParser, conf, wsClient)
 
-  val fmt = ISODateTimeFormat.dateTimeNoMillis()
-
-  val http = mock[Http]
   val apiRoot = testIdConfig.apiRoot
-  val jsonParser = new JsonBodyParser {
-    implicit val formats: Formats = LiftJsonConfig.formats + new JodaJsonSerializer
+  val jsonParser = new IdApiJsonBodyParser
+  val testUserId = "10000001"
 
-    def extractErrorFromResponse(json: JValue, statusCode: Int) = ???
+  val validCookieResponseJsonString =
+    """
+      |{
+      |    "status": "ok",
+      |    "cookies": {
+      |        "values": [
+      |            {
+      |                "key": "SC_GU_U",
+      |                "value": "testCookieValue"
+      |            }
+      |        ],
+      |        "expiresAt": "2018-01-08T15:49:19+00:00"
+      |    }
+      |}
+    """.stripMargin
+
+
+  val errorCookieResponseJsonString =
+    """
+      |{
+      |    "status": "error",
+      |    "errors": [
+      |        {
+      |            "message": "Invalid email or password",
+      |            "description": "The email address or password were incorrect"
+      |        }
+      |    ]
+      |}
+    """.stripMargin
+
+
+  val validUserResponseJsonString =
+    s"""
+      |{
+      |    "status": "ok",
+      |    "user": {
+      |        "id": "${testUserId}",
+      |        "primaryEmailAddress": "test@example.com",
+      |        "userGroups": [
+      |            {
+      |                "packageCode": "CRE",
+      |                "path": "/sys/policies/basic-identity"
+      |            },
+      |            {
+      |                "packageCode": "RCO",
+      |                "path": "/sys/policies/basic-community"
+      |            }
+      |        ],
+      |        "dates": {
+      |            "accountCreatedDate": "2017-09-29T12:25:13Z"
+      |        },
+      |        "publicFields": {
+      |            "username": "testUsername",
+      |            "displayName": "testUsername",
+      |            "vanityUrl": "testVanityUrl",
+      |            "usernameLowerCase": "testusername"
+      |        },
+      |        "statusFields": {
+      |            "allowThirdPartyProfiling": true,
+      |            "userEmailValidated": false
+      |        }
+      |    }
+      |}
+    """.stripMargin
+
+
+  val postAuthUrl = s"$apiRoot/auth"
+  val postUnauthUrl = s"$apiRoot/unauth"
+  val getUserUrl = s"$apiRoot/user/$testUserId"
+
+  val wsClientOk = MockWS {
+    case (POST, `postAuthUrl`) => Action { Ok(validCookieResponseJsonString) }
+    case (POST, `postUnauthUrl`) => Action { Ok(validCookieResponseJsonString) }
+    case (GET, `getUserUrl`) => Action { Ok(validUserResponseJsonString) }
   }
-  val clientAuth = ClientAuth("frontend-dev-client-token")
-  val clientAuthHeaders = List("X-GU-ID-Client-Access-Token" -> "Bearer frontend-dev-client-token")
-  val api = new SynchronousIdApi(http, jsonParser, testIdConfig)
-  val errors = List(idapiclient.Error("Test error", "Error description", 500))
+
+  val wsClientError = MockWS {
+    case (POST, `postAuthUrl`) => Action { Forbidden(errorCookieResponseJsonString) }
+    case (POST, `postUnauthUrl`) => Action { Forbidden(errorCookieResponseJsonString) }
+  }
+
+  val apiOk = new IdApiTestClient(jsonParser, testIdConfig, wsClientOk)
+  val apiError = new IdApiTestClient(jsonParser, testIdConfig, wsClientError)
+
+  val errors = List(Error("Invalid email or password", "The email address or password were incorrect", 403))
+
   val trackingParameters = mock[TrackingData]
   when(trackingParameters.parameters).thenReturn(List("tracking" -> "param"))
   when(trackingParameters.ipAddress).thenReturn(None)
 
-  "the authBrowser method" - {
-    "given a valid response" - {
-      val validCookieResponse = HttpResponse( """{"expiresAt": "2013-10-30T12:21:00+00:00", "values": [{"name": testName", "value": "testValue"}]}""", 200, "OK")
-      when(http.POST(MockitoMatchers.any[String], MockitoMatchers.any[Option[String]], MockitoMatchers.any[Parameters], MockitoMatchers.any[Parameters]))
-        .thenReturn(toFuture(Right(validCookieResponse)))
-
-      "accesses the /auth endpoint" in {
-        api.authBrowser(Anonymous, trackingParameters)
-        verify(http).POST(MockitoMatchers.eq(s"$apiRoot/auth"), MockitoMatchers.any[Option[String]], MockitoMatchers.any[Parameters], MockitoMatchers.any[Parameters])
-      }
-
-      "adds the cookie parameter to the request" in {
-        api.authBrowser(Anonymous, trackingParameters)
-        verify(http).POST(MockitoMatchers.eq(s"$apiRoot/auth"), MockitoMatchers.any[Option[String]], MockitoMatchers.argThat(new ParamsIncludes(Iterable(("format", "cookies")))), MockitoMatchers.any[Parameters])
-      }
-
-      "adds the client access token parameter to the request" in {
-        api.authBrowser(Anonymous, trackingParameters)
-        verify(http).POST(MockitoMatchers.eq(s"$apiRoot/auth"), MockitoMatchers.any[Option[String]], MockitoMatchers.any[Parameters], MockitoMatchers.argThat(new ParamsIncludes(clientAuthHeaders)))
-      }
-
-      "passes the auth header to the http lib's GET method" in {
-        val auth = TestAuth(Iterable.empty, List(("testHeader", "value")))
-        api.authBrowser(auth, trackingParameters)
-        verify(http).POST(MockitoMatchers.any[String], MockitoMatchers.any[Option[String]], MockitoMatchers.argThat(new ParamsIncludes(Iterable(("format", "cookies")))), MockitoMatchers.argThat(new ParamsIncludes(Iterable(("testHeader", "value")))))
-      }
-
-      "passes the parameters to the http lib's POST body" in {
-        val auth = EmailPassword("email@test.com", "password", None)
-        val jsonBody = Option(write(auth))
-        api.authBrowser(auth, trackingParameters)
-        verify(http).POST(MockitoMatchers.any[String], MockitoMatchers.eq(jsonBody), MockitoMatchers.argThat(new ParamsIncludes(Iterable(("format", "cookies")))),  MockitoMatchers.any[Parameters])
-      }
-
-      "returns a cookies response" in {
-        api.authBrowser(Anonymous, trackingParameters).map {
-          case Left(result) => fail("Got Left(%s), instead of expected Right".format(result.toString()))
-          case Right(cookiesResponse) => {
-            cookiesResponse.expiresAt should equal(ISODateTimeFormat.dateTimeNoMillis.parseDateTime("2013-10-30T12:21:00+00:00"))
-            val cookies = cookiesResponse.values
-            cookies.size should equal(1)
-            cookies(0) should have('name("testName"))
-            cookies(0) should have('value("testValue"))
-          }
+  "authBrowser method" should {
+    "returns deserialized CookiesResponse" in {
+      whenReady(apiOk.authBrowser(Anonymous, trackingParameters)) {
+        case Left(result) => fail("Got Left(%s), instead of expected Right".format(result.toString()))
+        case Right(cookiesResponse) => {
+          cookiesResponse.expiresAt must equal(ISODateTimeFormat.dateTimeNoMillis.parseDateTime("2018-01-08T15:49:19+00:00"))
+          val cookies = cookiesResponse.values
+          cookies.size must equal(1)
+          cookies(0) must have('key("SC_GU_U"))
+          cookies(0) must have('value("testCookieValue"))
         }
       }
     }
 
-    "given an error" - {
-      when(http.POST(MockitoMatchers.any[String], MockitoMatchers.any[Option[String]], MockitoMatchers.any[Parameters], MockitoMatchers.any[Parameters]))
-        .thenReturn(toFuture(Left(errors)))
-
-      "returns the errors" in {
-        api.authBrowser(Anonymous, trackingParameters).map {
-          case Right(result) => fail("Got Right(%s), instead of expected Left".format(result.toString))
-          case Left(responseErrors) => {
-            responseErrors should equal(errors)
-          }
+    "returns deserialized Error" in {
+      whenReady(apiError.authBrowser(Anonymous, trackingParameters)) {
+        case Right(result) => fail("Got Right(%s), instead of expected Left".format(result.toString))
+        case Left(responseErrors) => {
+          responseErrors must equal(errors)
         }
       }
     }
   }
 
-  "the unauth method" - {
-    "given a valid response " - {
-      val validCookieResponse = HttpResponse( """{"expiresAt": "2013-10-30T12:21:00+00:00", "values": [{"name": testName", "value": "testValue"}]}""", 200, "OK")
-      when(http.POST(MockitoMatchers.any[String], MockitoMatchers.any[Option[String]], MockitoMatchers.any[Parameters], MockitoMatchers.any[Parameters]))
-        .thenReturn(toFuture(Right(validCookieResponse)))
-
-      "accesses the unauth endpoint" in {
-        api.unauth(Anonymous, trackingParameters)
-        verify(http).POST(MockitoMatchers.eq(s"$apiRoot/unauth"), MockitoMatchers.any[Option[String]], MockitoMatchers.any[Parameters], MockitoMatchers.any[Parameters])
-      }
-
-      "adds the client access token parameter to the request" in {
-        api.unauth(Anonymous, trackingParameters)
-        verify(http).POST(MockitoMatchers.eq(s"$apiRoot/unauth"), MockitoMatchers.any[Option[String]], MockitoMatchers.any[Parameters], MockitoMatchers.argThat(new ParamsIncludes(Iterable(("X-GU-ID-Client-Access-Token", "Bearer frontend-dev-client-token")))))
-      }
-      "passes the auth parameters to the http lib's GET method" in {
-        val auth = TestAuth(List(("testParam", "value")), Iterable.empty)
-        api.unauth(auth, trackingParameters)
-        verify(http).POST(MockitoMatchers.any[String], MockitoMatchers.any[Option[String]], MockitoMatchers.any[Parameters], MockitoMatchers.argThat(new ParamsIncludes(Iterable(("X-GU-ID-Client-Access-Token", "Bearer frontend-dev-client-token")))))
-      }
-
-      "passes the auth header to the http lib's GET method" in {
-        val auth = TestAuth(Iterable.empty, List(("testHeader", "value")))
-        api.unauth(auth, trackingParameters)
-        verify(http).POST(MockitoMatchers.any[String], MockitoMatchers.any[Option[String]], MockitoMatchers.any[Parameters], MockitoMatchers.argThat(new ParamsIncludes(Iterable(("testHeader", "value")))))
-      }
-
-      "returns a cookies response" in {
-        api.unauth(Anonymous, trackingParameters).map(_ match {
-          case Left(result) => fail("Got Left(%s), instead of expected Right".format(result.toString()))
-          case Right(cookiesResponse) => {
-            cookiesResponse.expiresAt should equal(ISODateTimeFormat.dateTimeNoMillis.parseDateTime("2013-10-30T12:21:00+00:00"))
-            val cookies = cookiesResponse.values
-            cookies.size should equal(1)
-            cookies(0) should have('name("testName"))
-            cookies(0) should have('value("testValue"))
-          }
-        })
-      }
-
-      "given an error" - {
-        when(http.POST(MockitoMatchers.any[String], MockitoMatchers.any[Option[String]], MockitoMatchers.any[Parameters], MockitoMatchers.any[Parameters]))
-          .thenReturn(toFuture(Left(errors)))
-
-        "returns the errors" in {
-          api.unauth(Anonymous, trackingParameters).map(_ match {
-            case Right(result) => fail("Got Right(%s), instead of expected Left".format(result.toString))
-            case Left(responseErrors) => {
-              responseErrors should equal(errors)
-            }
-          })
-        }
-      }
-
-
-    }
-  }
-
-
-  "the user method" - {
-    "when receiving a valid response" - {
-      val userJSON = """{"id": "123", "primaryEmailAddress": "test@example.com", "publicFields": {"displayName": "displayName", "username": "Username", "usernameLowerCase": "username", "vanityUrl": "vanityUrl"}}"""
-      val validUserResponse = HttpResponse(userJSON, 200, "OK")
-      when(http.GET(MockitoMatchers.any[String], MockitoMatchers.any[Parameters], MockitoMatchers.any[Parameters]))
-        .thenReturn(toFuture(Right(validUserResponse)))
-
-      "accesses the user endpoint with the user's id" in {
-        api.user("123")
-        verify(http).GET(s"$apiRoot/user/123", Iterable.empty, clientAuthHeaders)
-      }
-
-      "returns the user object" in {
-        api.user("123").map {
-          case Left(result) => fail("Got Left(%s), instead of expected Right".format(result.toString()))
-          case Right(user) => {
-            user should have('id("123"))
-            user.publicFields should have('displayName("displayName"))
-            user.publicFields should have('username("Username"))
-            user.publicFields should have('usernameLowerCase("username"))
-            user.publicFields should have('vanityUrl("vanityUrl"))
-            user.primaryEmailAddress should have('priomaryEmailAddress("test@example.com"))
-          }
-        }
-      }
-
-      "when providing authentication to the request" - {
-        "adds the url parameters" in {
-          api.user("123", ParamAuth)
-          verify(http).GET(MockitoMatchers.any[String], MockitoMatchers.argThat(new ParamsMatcher(Iterable("testParam" -> "value"))), MockitoMatchers.argThat(new ParamsMatcher(clientAuthHeaders)))
-        }
-
-        "adds the request headers" in {
-          api.user("123", HeaderAuth)
-          verify(http).GET(MockitoMatchers.any[String], MockitoMatchers.eq(Nil), MockitoMatchers.argThat(new ParamsMatcher(Iterable("testHeader" -> "value") ++ clientAuthHeaders)))
+  "unauth method" should {
+    "returns deserialized CookiesResponse" in {
+      whenReady(apiOk.unauth(Anonymous, trackingParameters)) {
+        case Left(result) => fail("Got Left(%s), instead of expected Right".format(result.toString()))
+        case Right(cookiesResponse) => {
+          cookiesResponse.expiresAt must equal(ISODateTimeFormat.dateTimeNoMillis.parseDateTime("2018-01-08T15:49:19+00:00"))
+          val cookies = cookiesResponse.values
+          cookies.size must equal(1)
+          cookies(0) must have('key ("SC_GU_U"))
+          cookies(0) must have('value ("testCookieValue"))
         }
       }
     }
 
-    "when receiving an error response" - {
-      when(http.GET(MockitoMatchers.any[String], MockitoMatchers.any[Parameters], MockitoMatchers.any[Parameters]))
-        .thenReturn(toFuture(Left(errors)))
-
-      "returns the errors" in {
-        api.user("123").map {
-          case Right(result) => fail("Got Right(%s), instead of expected Left".format(result.toString))
-          case Left(responseErrors) => {
-            responseErrors should equal(errors)
-          }
+    "returns CookiesResponse Error" in {
+      whenReady(apiError.unauth(Anonymous, trackingParameters)) {
+        case Right(result) => fail("Got Right(%s), instead of expected Left".format(result.toString))
+        case Left(responseErrors) => {
+          responseErrors must equal(errors)
         }
       }
     }
   }
 
-  "the userForToken method " - {
-    val token = "atoken"
-    "when recieving a valid response" - {
-      val userJSON = """{"status" : "ok", "user":{"id": "123", "primaryEmailAddress": "test@example.coma", "publicFields": {"displayName": "displayName", "username": "Username", "usernameLowerCase": "username", "vanityUrl": "vanityUrl"}}}"""
-      val validUserResponse = HttpResponse(userJSON, 200, "OK")
-      when(http.GET(MockitoMatchers.any[String], MockitoMatchers.any[Parameters], MockitoMatchers.any[Parameters])).thenReturn(toFuture(Right(validUserResponse)))
-      "accesses the get user for token with the token param" in {
-        api.userForToken(token)
-        verify(http).GET(MockitoMatchers.eq(s"$apiRoot/pwd-reset/user-for-token"), MockitoMatchers.argThat(new ParamsIncludes(Iterable(("token", token)))), MockitoMatchers.argThat(new ParamsIncludes(clientAuthHeaders)))
-      }
-
-      "returns the user object" in {
-        api.userForToken(token).map {
-          case Left(result) => fail("Got Left(%s), instead of expected Right".format(result.toString()))
-          case Right(user) => {
-            user should have('id("123"))
-            user.publicFields should have('displayName("displayName"))
-            user.publicFields should have('username("Username"))
-            user.publicFields should have('usernameLowerCase("username"))
-            user.publicFields should have('vanityUrl("vanityUrl"))
-            user.primaryEmailAddress should have('priomaryEmailAddress("test@example.com"))
-          }
-        }
-      }
-    }
-    "when receiving an error response" - {
-      when(http.GET(MockitoMatchers.any[String], MockitoMatchers.any[Parameters], MockitoMatchers.any[Parameters]))
-        .thenReturn(toFuture(Left(errors)))
-
-      "returns the errors" in {
-        api.userForToken(token).map {
-          case Right(result) => fail("Got Right(%s), instead of expected Left".format(result.toString()))
-          case Left(responseErrors) => {
-            responseErrors should equal(errors)
-          }
+  "user method" should {
+    "returns deserialized User" in {
+      whenReady(apiOk.user(testUserId)) {
+        case Left(result) => fail("Got Left(%s), instead of expected Right".format(result.toString()))
+        case Right(user) => {
+          user must have('id (testUserId))
+          user.publicFields must have('username (Some("testUsername")))
+          user.primaryEmailAddress mustEqual "test@example.com"
         }
       }
     }
   }
-
-  "the reset password method" - {
-
-    val token = "atoken"
-    val newPassword = "anewpassword"
-
-    val requestJson = """{"token":"%s","password":"%s"}""".format(token, newPassword)
-    "when recieving a valid response" - {
-      val validResponse = HttpResponse( """{"status" : "ok" }""", 200, "OK")
-      when(http.POST(MockitoMatchers.any[String], MockitoMatchers.any[Option[String]], MockitoMatchers.any[Parameters], MockitoMatchers.any[Parameters])).thenReturn(toFuture(Right(validResponse)))
-
-      "posts the request json data to the endpoint" in {
-        api.resetPassword(token, newPassword)
-        verify(http).POST(MockitoMatchers.eq(s"$apiRoot/pwd-reset/reset-pwd-for-user"), MockitoMatchers.eq(Option(requestJson)), MockitoMatchers.eq(Nil), MockitoMatchers.eq(clientAuthHeaders))
-      }
-
-      "returns a successful unit response" in {
-        api.resetPassword(token, newPassword).map {
-          case Left(result) => fail("Got Left(%s), instead of expected Right".format(result.toString()))
-          case Right(_: Unit) => {
-          }
-        }
-      }
-    }
-
-    "when recieving an error response" - {
-      when(http.POST(MockitoMatchers.any[String], MockitoMatchers.any[Option[String]], MockitoMatchers.any[Parameters], MockitoMatchers.any[Parameters])).thenReturn(toFuture(Left(errors)))
-      "returns the errors" in {
-        api.resetPassword(token, newPassword).map {
-          case Right(ok) => fail("Got right(%s) instead of expected left".format(ok.toString))
-          case Left(responseErrors) => {
-            responseErrors should equal(errors)
-          }
-        }
-      }
-    }
-
-  }
-
-  "the password exists endpoint" - {
-    def validResponse(result: Boolean): HttpResponse = HttpResponse( s"""{"passwordExists": ${result}}""", 200, "OK")
-
-
-    "when receiving a valid 'true' response" - {
-      when(http.GET(MockitoMatchers.any[String], MockitoMatchers.any[Parameters], MockitoMatchers.any[Parameters])).thenReturn(toFuture(Right(validResponse(true))))
-
-      "should call the correct URL" in {
-        Await.result(api.passwordExists(ParamAuth), 10 seconds)
-        verify(http).GET(MockitoMatchers.eq(s"$apiRoot/user/password-exists"), MockitoMatchers.any[Parameters], MockitoMatchers.any[Parameters])
-      }
-
-      "then the correct value should be returned" in {
-        val result = api.passwordExists(ParamAuth)
-        Await.result(result, 10 seconds) should be(Right(true))
-      }
-    }
-
-    "when receiving a valid 'false' response" - {
-      when(http.GET(MockitoMatchers.any[String], MockitoMatchers.any[Parameters], MockitoMatchers.any[Parameters])).thenReturn(toFuture(Right(validResponse(false))))
-
-      "then the correct value should be returned" in {
-        val result = api.passwordExists(ParamAuth)
-        Await.result(result, 10 seconds) should be(Right(false))
-      }
-    }
-  }
-
-  "the send password reset email" - {
-    val testEmail = "test@example.com"
-    "when receiving a valid response" - {
-      val myUserJSON = """{"id": "1234", "primaryEmailAddress": "test@example.com", "publicFields": {"displayName": "displayName", "username": "Username", "usernameLowerCase": "username", "vanityUrl": "vanityUrl"}}"""
-      val validResponse = HttpResponse(myUserJSON, 200, "OK")
-      when(http.GET(MockitoMatchers.any[String], MockitoMatchers.any[Parameters], MockitoMatchers.any[Parameters])).thenReturn(toFuture(Right(validResponse)))
-
-      "accesses the reset password endpoint" in {
-        api.sendPasswordResetEmail(testEmail, trackingParameters)
-        verify(http).GET(MockitoMatchers.eq(s"$apiRoot/pwd-reset/send-password-reset-email"), MockitoMatchers.anyObject(), MockitoMatchers.anyObject())
-      }
-
-      "adds the email address and type parameters" in {
-        api.sendPasswordResetEmail(testEmail, trackingParameters)
-        verify(http).GET(MockitoMatchers.eq(s"$apiRoot/pwd-reset/send-password-reset-email"), MockitoMatchers.argThat(new ParamsIncludes(Iterable(("email-address", testEmail), ("type", "reset")))), MockitoMatchers.argThat(new ParamsIncludes(clientAuthHeaders)))
-      }
-
-      "returns an user object" in {
-        api.sendPasswordResetEmail(testEmail, trackingParameters).map {
-          case Left(error) => fail("Got left(%s), instead of expected Right".format(error.toString()))
-          case Right(_: Unit) => {
-          }
-        }
-      }
-
-      "when recieving an error response" - {
-        when(http.POST(MockitoMatchers.any[String], MockitoMatchers.any[Option[String]], MockitoMatchers.any[Parameters], MockitoMatchers.any[Parameters])).thenReturn(toFuture(Left(errors)))
-        "returns the errors" in {
-          api.sendPasswordResetEmail(testEmail, trackingParameters).map {
-            case Right(user) => fail("Got right(%s) instead of expected left".format(user.toString))
-            case Left(responseErrors) => {
-              responseErrors should equal(errors)
-            }
-          }
-        }
-      }
-
-      "passes the client IP to the API" in {
-        when(trackingParameters.ipAddress).thenReturn(Some("123.456.789.10"))
-        api.sendPasswordResetEmail(testEmail, trackingParameters)
-        verify(http).GET(MockitoMatchers.anyString(), MockitoMatchers.argThat(new ParamsIncludes(Iterable("ip" -> "123.456.789.10"))), MockitoMatchers.anyObject())
-      }
-    }
-  }
-
-  "the me method" - {
-    "when receiving a valid response" - {
-      val myUserJSON = """{"id": "1234", "primaryEmailAddress": "test@example.coma", "publicFields": {"displayName": "displayName", "username": "Username", "usernameLowerCase": "username", "vanityUrl": "vanityUrl"}}"""
-      val validUserResponse = HttpResponse(myUserJSON, 200, "OK")
-      when(http.GET(MockitoMatchers.any[String], MockitoMatchers.any[Parameters], MockitoMatchers.any[Parameters]))
-        .thenReturn(toFuture(Right(validUserResponse)))
-
-      "accesses the user endpoint with me in place of the user id" in {
-        api.me(Anonymous)
-        verify(http).GET(MockitoMatchers.eq(s"$apiRoot/user/me"), MockitoMatchers.any[Parameters], MockitoMatchers.any[Parameters])
-      }
-
-      "passes the authentication to the API" in {
-        api.me(TestAuth(List("foo" -> "123"), List("bar" -> "456")))
-        verify(http).GET(MockitoMatchers.any[String], MockitoMatchers.argThat(new ParamsMatcher(List("foo" -> "123"))), MockitoMatchers.argThat(new ParamsMatcher(List("bar" -> "456") ++ clientAuthHeaders)))
-      }
-
-      "returns the user object" in {
-        api.me(Anonymous).map {
-          case Left(result) => fail("Got Left(%s), instead of expected Right".format(result.toString()))
-          case Right(user) => {
-            user should have('id("1234"))
-            user.publicFields should have('displayName("displayName"))
-            user.publicFields should have('username("Username"))
-            user.publicFields should have('usernameLowerCase("username"))
-            user.publicFields should have('vanityUrl("vanityUrl"))
-            user.primaryEmailAddress should have('priomaryEmailAddress("test@example.com"))
-          }
-        }
-      }
-    }
-
-    "when receiving an error response" - {
-      when(http.GET(MockitoMatchers.any[String], MockitoMatchers.any[Parameters], MockitoMatchers.any[Parameters]))
-        .thenReturn(toFuture(Left(errors)))
-
-      "returns the errors" in {
-        api.me(Anonymous).map {
-          case Right(result) => fail("Got Right(%s), instead of expected Left".format(result.toString))
-          case Left(responseErrors) => {
-            responseErrors should equal(errors)
-          }
-        }
-      }
-    }
-  }
-
-  "the register method" - {
-    val user = User(
-      primaryEmailAddress = "test@example.com",
-      password = Some("password"),
-      publicFields = PublicFields(username = Some("username")),
-      statusFields = StatusFields(
-        receiveGnmMarketing = Option(false),
-        receive3rdPartyMarketing = Option(false)
-      )
-    )
-
-    "when receiving a valid response" - {
-
-      val expectedPostData = write(user)
-      val userJSON = """{"id": "1234", "primaryEmailAddress": "test@example.com", "publicFields": {"displayName": "displayName", "username": "Username", "usernameLowerCase": "username", "vanityUrl": "vanityUrl"}}"""
-      val validUserResponse = HttpResponse(userJSON, 200, "OK")
-      when(http.POST(MockitoMatchers.any[String], MockitoMatchers.any[Option[String]], MockitoMatchers.any[Parameters], MockitoMatchers.any[Parameters])).thenReturn(toFuture(Right(validUserResponse)))
-
-
-      "accesses the user endpoint" in {
-        api.register(user, trackingParameters)
-        verify(http).POST(MockitoMatchers.eq(s"$apiRoot/user"), MockitoMatchers.any[Option[String]], MockitoMatchers.any[Parameters], MockitoMatchers.any[Parameters])
-      }
-
-      "adds the client access token parameter to the request" in {
-        api.register(user, trackingParameters)
-        verify(http).POST(MockitoMatchers.eq(s"$apiRoot/user"), MockitoMatchers.any[Option[String]], MockitoMatchers.any[Parameters], MockitoMatchers.argThat(new ParamsIncludes(clientAuthHeaders)))
-      }
-
-      "adds the the omniture tracking data to the request" in {
-        api.register(user, trackingParameters)
-        verify(http).POST(MockitoMatchers.eq(s"$apiRoot/user"), MockitoMatchers.any[Option[String]], MockitoMatchers.argThat(new ParamsIncludes(Iterable("tracking" -> "param"))), MockitoMatchers.any[Parameters])
-      }
-
-      "posts the user data to the endpoint" in {
-        api.register(user, trackingParameters)
-        verify(http).POST(MockitoMatchers.any[String], MockitoMatchers.eq(Some(expectedPostData)), MockitoMatchers.any[Parameters], MockitoMatchers.any[Parameters])
-      }
-
-      "passes the user's IP details as provided" in {
-        when(trackingParameters.ipAddress).thenReturn(Some("127.0.0.1"))
-        api.register(user, trackingParameters)
-        verify(http).POST(MockitoMatchers.any[String], MockitoMatchers.eq(Some(expectedPostData)), MockitoMatchers.any[Parameters], MockitoMatchers.argThat(new ParamsIncludes(Iterable("X-Forwarded-For" -> "127.0.0.1"))))
-      }
-    }
-
-    "when recieving an error response" - {
-      when(http.POST(MockitoMatchers.any[String], MockitoMatchers.any[Option[String]], MockitoMatchers.any[Parameters], MockitoMatchers.any[Parameters]))
-        .thenReturn(toFuture(Left(errors)))
-      "returns the errors" - {
-        api.register(user, trackingParameters).map {
-          case Right(result) => fail("Got Right(%s), instead of expected Left".format(result.toString))
-          case Left(responseErrors) => {
-            responseErrors should equal(errors)
-          }
-        }
-      }
-    }
-
-  }
-
-  "synchronous version" - {
-    val syncApi = new SynchronousIdApi(http, jsonParser, testIdConfig)
-
-    "should use current thread testContext" in {
-      syncApi.executionContext should equal(ExecutionContexts.currentThreadContext)
-    }
-  }
-
-  def toFuture(response: Response[HttpResponse]): Future[Response[HttpResponse]] = Promise.successful(response).future
-
-  case class TestAuth(override val parameters: Parameters, override val headers: Parameters) extends Auth
-
-  object ParamAuth extends TestAuth(Iterable(("testParam", "value")), Iterable.empty)
-
-  object HeaderAuth extends TestAuth(Iterable.empty, Iterable(("testHeader", "value")))
-
-  class ParamsMatcher(items: Iterable[(String, String)], completeMatch: Boolean = true) extends ArgumentMatcher {
-    override def matches(arg: Any): Boolean = {
-      arg match {
-        case list: Iterable[_] => {
-          val params = list.asInstanceOf[Iterable[(String, String)]]
-          items.forall(param => params.exists(_ == param)) && (if (completeMatch) list.size == items.size else true)
-        }
-        case _ => false
-      }
-    }
-
-    override def describeTo(description: Description): Unit = {
-      description.appendText("Iterable" + (if (!completeMatch) " including" else "") + items.mkString("(", ",", ")"))
-    }
-  }
-
-  object EmptyParamMatcher extends ParamsMatcher(Iterable.empty)
-
-  class ParamsIncludes(items: Parameters) extends ParamsMatcher(items, false)
-
 }

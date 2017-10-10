@@ -6,7 +6,8 @@ import com.gu.identity.model.{StatusFields, User}
 import conf.FrontendIdentityCookieDecoder
 import conf.switches.Switches
 import formstack.{FormstackApi, FormstackForm}
-import idapiclient.{Error, IdApiClient, ScGuU, TrackingData}
+import idapiclient.responses.Error
+import idapiclient.{IdApiClient, ScGuU, TrackingData}
 import org.mockito.{Matchers => MockitoMatchers}
 import org.mockito.Mockito._
 import org.scalatest.mockito.MockitoSugar

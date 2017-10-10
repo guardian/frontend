@@ -1,12 +1,10 @@
-package client.parser
+package idapiclient.parser
 
 import org.scalatest.path
-import net.liftweb.json.JsonAST.{JString, JValue}
-import client.{Error, HttpResponse}
-import idapiclient.{Error, HttpResponse}
-import idapiclient.parser.JsonBodyParser
+import net.liftweb.json.JsonAST.JValue
+import idapiclient.responses.{Error, HttpResponse}
 import org.scalatest.Matchers
-import net.liftweb.json.{DefaultFormats, Formats}
+import net.liftweb.json.DefaultFormats
 
 
 class JsonBodyParserTest extends path.FreeSpec with Matchers {
