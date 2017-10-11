@@ -31,7 +31,7 @@ export default ({ beaconUrl }: { beaconUrl: string }) => (
                 </h1>
                 <p style={bodyCopy}>
                     You may have followed an outdated link, or have mistyped a
-                    URL. If you believe this to be an error, please
+                    URL. If you believe this to be an error, please&nbsp;
                     <a
                         href="https://www.theguardian.com/info/tech-feedback"
                         style={link}>

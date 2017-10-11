@@ -50,60 +50,6 @@
     @media (--from-desktop) {
         margin-bottom: -60px;
     }
-
-    & .letter-u {
-        transition-delay: .1s;
-    }
-
-    & .letter-a {
-        transition-delay: .14s;
-    }
-
-    & .letter-r {
-        transition-delay: .06s;
-    }
-
-    & .letter-d {
-        transition-delay: .16s;
-    }
-
-    & .letter-i, & .letter-a2 {
-        transition-delay: .17s;
-    }
-
-    .letter-a2 {
-        transition-delay: .09s;
-    }
-
-    & .letter-n {
-        transition-delay: .11s;
-    }
-
-    &:hover {
-        & .letter-u {
-            transform: translateX(49px);
-        }
-
-        & .letter-a {
-            transform: translateX(-12px);
-        }
-
-        & .letter-r {
-            transform: translateX(-64px);
-        }
-
-        & .letter-d {
-            transform: translateX(76px);
-        }
-
-        & .letter-i, & .letter-a2 {
-            transform: translateX(-2px);
-        }
-
-        & .letter-n {
-            transform: translateX(-84px);
-        }
-    }
 }
 
 .logo {
