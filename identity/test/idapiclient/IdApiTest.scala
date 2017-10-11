@@ -4,10 +4,9 @@ import org.scalatest.mockito.MockitoSugar
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatestplus.play.PlaySpec
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 import org.joda.time.format.ISODateTimeFormat
-import conf.IdConfig
-import idapiclient.parser.{IdApiJsonBodyParser, JsonBodyParser}
+import idapiclient.parser.IdApiJsonBodyParser
 import idapiclient.responses.Error
 import org.mockito.Mockito._
 import org.mockito.Matchers.any
@@ -103,21 +102,19 @@ class IdApiTest
   val wsRequestMock = mock[WSRequest]
   val wsResponseMock = mock[WSResponse]
 
+  when(wsRequestMock.withBody("")).thenReturn(wsRequestMock)
+  when(wsRequestMock.withBody("{}")).thenReturn(wsRequestMock)
   when(wsRequestMock.withQueryStringParameters(any[(String, String)])).thenReturn(wsRequestMock)
   when(wsRequestMock.withHttpHeaders(any[(String, String)])).thenReturn(wsRequestMock)
-  when(wsRequestMock.post[String]("{}")).thenReturn(Future(wsResponseMock))
-  when(wsRequestMock.get()).thenReturn(Future(wsResponseMock))
+  when(wsRequestMock.withMethod("POST")).thenReturn(wsRequestMock)
+  when(wsRequestMock.withMethod("GET")).thenReturn(wsRequestMock)
+  when(wsRequestMock.execute()).thenReturn(Future(wsResponseMock))
 
   when(wsMock.url(any[String])).thenReturn(wsRequestMock)
 
-  class IdApiTestClient(
-      jsonParser: JsonBodyParser,
-      conf: IdConfig,
-      wsClient: WSClient)
-      (implicit val executionContext: ExecutionContext)
-    extends IdApi(jsonParser, conf, wsClient)
+  val httpClient = new HttpClient(wsMock)
 
-  val idApi = new IdApiTestClient(jsonParser, testIdConfig, wsMock)
+  val idApi = new IdApiClient(jsonParser, testIdConfig, httpClient)
 
   "authBrowser method" should {
     "returns deserialized CookiesResponse" in {
