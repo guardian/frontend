@@ -1,4 +1,4 @@
-const http = require('http');
+const request = require('request');
 const express = require('express');
 const webpack = require('webpack');
 const webpackDevMiddleware = require('webpack-dev-middleware');
@@ -23,18 +23,8 @@ app.get('/', (req, res) => {
     // $FlowFixMe
     const { frontend } = require('../dist/ui.bundle.server'); // eslint-disable-line global-require, import/no-unresolved
 
-    http.get({
-        hostname: 'localhost',
-        port: 9000,
-        path: '/dev/props',
-        agent: false,
-    }, (propsRes) => {
-        propsRes.setEncoding('utf8');
-        propsRes.on('data', (props) => {
-            res.send(
-                frontend.render(JSON.parse(props))
-            );
-        });
+    request('http://localhost:9000/dev/props', (errors, response, body) => {
+        res.send(frontend.render(JSON.parse(body)));
     });
 });
 
