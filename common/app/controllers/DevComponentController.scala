@@ -4,8 +4,7 @@ import model.ApplicationContext
 import play.api.libs.json.Json
 import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 import rendering.TestComponent
-import rendering.core.Renderer
-import rendering.core.JavascriptProps
+import rendering.core.{JavascriptProps, Renderer}
 
 import scala.concurrent.ExecutionContext
 

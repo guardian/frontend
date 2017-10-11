@@ -17,7 +17,7 @@ import {
     link,
 } from './style.css';
 
-export default ({ beaconUrl }: { beaconUrl: string }) => (
+export default ({ config }: { config: object}) => (
     <div style={wrapper}>
         <div style={mainContent}>
             <a href="https://www.theguardian.com/" style={logoWrapper}>
@@ -76,7 +76,7 @@ export default ({ beaconUrl }: { beaconUrl: string }) => (
             }}
         />
         <img
-            src={`${beaconUrl}/count/40x.gif`}
+            src={`${config.beaconUrl}/count/40x.gif`}
             alt=""
             style={{ display: 'none' }}
             rel="nofollow"
