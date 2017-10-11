@@ -1,3 +1,4 @@
+const http = require('http');
 const express = require('express');
 const webpack = require('webpack');
 const webpackDevMiddleware = require('webpack-dev-middleware');
@@ -22,15 +23,19 @@ app.get('/', (req, res) => {
     // $FlowFixMe
     const { frontend } = require('../dist/ui.bundle.server'); // eslint-disable-line global-require, import/no-unresolved
 
-    // TODO: pass props from response to UI dev API endpoint
-    res.send(
-        frontend.render({
-            beaconUrl: '//beacon.gu-web.net',
-            bundleUrl: '/assets/javascripts/ui.bundle.browser.js',
-            polyfillioUrl:
-                'https://assets.guim.co.uk/polyfill.io/v2/polyfill.min.js?rum=0&features=es6,es7,es2017,default-3.6,HTMLPictureElement&flags=gated&callback=guardianPolyfilled',
-        })
-    );
+    http.get({
+        hostname: 'localhost',
+        port: 9000,
+        path: '/dev/props',
+        agent: false,
+    }, (propsRes) => {
+        propsRes.setEncoding('utf8');
+        propsRes.on('data', (props) => {
+            res.send(
+                frontend.render(JSON.parse(props))
+            );
+        });
+    });
 });
 
 app.listen(3000, () => {
