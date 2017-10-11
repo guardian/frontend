@@ -35,7 +35,6 @@ val common = library("common").settings(
     scalajTime,
     ws,
     faciaFapiScalaClient,
-    dispatchTest,
     closureCompiler,
     jerseyCore,
     jerseyClient,

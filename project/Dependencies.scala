@@ -32,8 +32,6 @@ object Dependencies {
   val cssParser = "net.sourceforge.cssparser" % "cssparser" % "0.9.23"
   val contentApiClient = "com.gu" %% "content-api-client" % capiVersion
   val dfpAxis = "com.google.api-ads" % "dfp-axis" % "3.7.0"
-  val dispatch = "net.databinder.dispatch" %% "dispatch-core" % dispatchVersion
-  val dispatchTest = "net.databinder.dispatch" %% "dispatch-core" % dispatchVersion % Test
   val exactTargetClient = "com.gu" %% "exact-target-client" % "2.24"
   val faciaFapiScalaClient = "com.gu" %% "fapi-client-play26" % faciaVersion
   val configMagic = "com.gu" %% "configuration-magic-core" %  "1.3.0"
