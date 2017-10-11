@@ -38,8 +38,11 @@ export const usLocalisedFlag = {
 
 export const liveblog = (
     membershipUrl: string,
-    contributionsUrl: string
+    contributionsUrl: string,
+    useSupportDomain: boolean = false
 ): AcquisitionsEpicTemplateCopy => ({
     p1: `Since you’re here ${controlP1}`,
-    p2: `${controlP2} You can give to the Guardian by <a href="${membershipUrl}" target="_blank" class="u-underline">becoming a monthly supporter</a> or by making a <a href="${contributionsUrl}" target="_blank" class="u-underline">one-off contribution</a>. - Guardian HQ`,
+    p2: `${controlP2} ${useSupportDomain
+        ? `You can support the Guardian by <a href="${membershipUrl}" target="_blank" class="u-underline">making a contribution or getting a subscription</a>.`
+        : `You can give to the Guardian by <a href="${membershipUrl}" target="_blank" class="u-underline">becoming a monthly supporter</a> or by making a <a href="${contributionsUrl}" target="_blank" class="u-underline">one-off contribution</a>.`} - Guardian HQ`,
 });
