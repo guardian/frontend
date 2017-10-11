@@ -9,7 +9,7 @@ case class JavascriptProps(
     if (conf.switches.Switches.PolyfillIO.isSwitchedOn) common.Assets.js.polyfillioUrl
     else conf.Static("javascripts/vendor/polyfillio.fallback.js"),
   beaconUrl: String = Configuration.debug.beaconUrl
-) {}
+)
 
 object JavascriptProps {
   implicit val javascriptProps: Writes[JavascriptProps] = Json.writes[JavascriptProps]
