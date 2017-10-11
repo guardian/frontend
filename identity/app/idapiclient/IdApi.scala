@@ -49,7 +49,7 @@ abstract class IdApi(
     val apiPath = urlJoin("user", userId)
     val params = buildParams(Some(auth))
     val headers = buildHeaders(Some(auth))
-    val response = GET(apiUrl(apiPath), params, headers)
+    val response = GET(apiUrl(apiPath), None, params, headers)
     response map extractUser
 
   }
@@ -58,7 +58,7 @@ abstract class IdApi(
     val apiPath = urlJoin("user", "vanityurl", vanityUrl)
     val params = buildParams(Some(auth))
     val headers = buildHeaders(Some(auth))
-    val response = GET(apiUrl(apiPath), params, headers)
+    val response = GET(apiUrl(apiPath), None, params, headers)
     response map extractUser
   }
 
@@ -68,7 +68,7 @@ abstract class IdApi(
   def me(auth: Auth): Future[Response[User]] = {
     val apiPath = urlJoin("user", "me")
     val params = buildParams(Some(auth))
-    val response = GET(apiUrl(apiPath), params, buildHeaders(Some(auth)))
+    val response = GET(apiUrl(apiPath), None, params, buildHeaders(Some(auth)))
     response map extractUser
   }
 
@@ -96,7 +96,7 @@ abstract class IdApi(
 
   def passwordExists( auth: Auth ): Future[Response[Boolean]] = {
     val apiPath = urlJoin("user", "password-exists")
-    val response = GET(apiUrl(apiPath), buildParams(Some(auth)), buildHeaders(Some(auth)))
+    val response = GET(apiUrl(apiPath), None, buildParams(Some(auth)), buildHeaders(Some(auth)))
     response map extract[Boolean](jsonField("passwordExists"))
   }
 
@@ -110,7 +110,7 @@ abstract class IdApi(
   def userForToken( token : String ): Future[Response[User]] = {
     val apiPath = urlJoin("pwd-reset", "user-for-token")
     val params = buildParams(extra = Iterable("token" -> token))
-    val response = GET(apiUrl(apiPath), params, buildHeaders())
+    val response = GET(apiUrl(apiPath), None, params, buildHeaders())
     response map extractUser
   }
 
@@ -124,7 +124,7 @@ abstract class IdApi(
   def sendPasswordResetEmail(emailAddress : String, trackingParameters: TrackingData): Future[Response[Unit]] = {
     val apiPath = urlJoin("pwd-reset", "send-password-reset-email")
     val params = buildParams(tracking = Some(trackingParameters), extra = Iterable("email-address" -> emailAddress, "type" -> "reset"))
-    val response = GET(apiUrl(apiPath), params, buildHeaders())
+    val response = GET(apiUrl(apiPath), None, params, buildHeaders())
     response map extractUnit
   }
 
@@ -133,7 +133,7 @@ abstract class IdApi(
   def userEmails(userId: String, trackingParameters: TrackingData): Future[Response[Subscriber]] = {
     val apiPath = urlJoin("useremails", userId)
     val params = buildParams(tracking = Some(trackingParameters))
-    val response = GET(apiUrl(apiPath), params, buildHeaders())
+    val response = GET(apiUrl(apiPath), None, params, buildHeaders())
     response map extract(jsonField("result"))
   }
 
@@ -220,41 +220,32 @@ trait IdApiUtils extends SafeLogging {
     }) mkString "/"
   }
 
-  def GET(uri: String, urlParameters: Parameters, headers: Parameters): Future[Response[HttpResponse]] = {
-    wsClient
-      .url(uri)
-      .withQueryStringParameters(urlParameters.toList: _*)
-      .withHttpHeaders(headers.toList: _*)
-      .get()
-      .map { resp => Right(HttpResponse(resp.body, resp.status, resp.statusText)) }
-      .recover {
-        case e: Throwable =>
-          logger.error(s"Network error while communicating with ${apiUrl("auth")}:", e)
-          Left(List(Error(e.getClass.getName, e.toString)))
-      }
+  def GET(uri: String, body: Option[String] = None, urlParameters: Parameters, headers: Parameters): Future[Response[HttpResponse]] = {
+    makeRequest("GET", uri, body, urlParameters, headers)
   }
 
   def POST(uri: String, body: Option[String], urlParameters: Parameters, headers: Parameters): Future[Response[HttpResponse]] = {
-    wsClient
-      .url(uri)
-      .withQueryStringParameters(urlParameters.toList: _*)
-      .withHttpHeaders(headers.toList: _*)
-      .post(body.getOrElse(""))
-      .map { resp => Right(HttpResponse(resp.body, resp.status, resp.statusText)) }
-      .recover {
-        case e: Throwable =>
-          logger.error(s"Network error while communicating with ${apiUrl("auth")}:", e)
-          Left(List(Error(e.getClass.getName, e.toString)))
-      }
+    makeRequest("POST", uri, body, urlParameters, headers)
   }
 
   def DELETE(uri: String, body: Option[String], urlParameters: Parameters = Nil, headers: Parameters): Future[Response[HttpResponse]] = {
+    makeRequest("DELETE", uri, body, urlParameters, headers)
+  }
+
+  def makeRequest(
+      method: String,
+      uri: String,
+      body: Option[String],
+      urlParameters: Parameters = Nil,
+      headers: Parameters): Future[Response[HttpResponse]] = {
+
     wsClient
       .url(uri)
       .withBody(body.getOrElse("")) // FIXME: DELETE should not have a body
       .withQueryStringParameters(urlParameters.toList: _*)
       .withHttpHeaders(headers.toList: _*)
-      .delete()
+      .withMethod(method)
+      .execute()
       .map { resp => Right(HttpResponse(resp.body, resp.status, resp.statusText)) }
       .recover {
         case e: Throwable =>
