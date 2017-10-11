@@ -4,6 +4,13 @@
 const path = require('path');
 const execa = require('execa');
 const chalk = require('chalk');
+const confirm = require('node-ask').confirm;
+
+const confirmIfMaster = () =>
+    confirm('This is master, are you sure you want to push? ').then(answer => {
+        if (!answer) return Promise.reject();
+        return Promise.resolve();
+    });
 
 const diff = () =>
     execa
@@ -35,7 +42,8 @@ const checkYarnLock = staged => {
     return staged;
 };
 
-validate()
+confirmIfMaster()
+    .then(validate)
     .then(diff)
     .then(checkYarnLock)
     // make sure docs TOC stays up to date
