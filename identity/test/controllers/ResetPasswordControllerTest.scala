@@ -9,10 +9,10 @@ import idapiclient.{IdApiClient, TrackingData}
 import test.{Fake, WithTestApplicationContext}
 import play.api.test._
 import play.api.test.Helpers._
-import client.Error
 
 import scala.concurrent.Future
 import com.gu.identity.model.User
+import idapiclient.responses.Error
 import play.api.http.HttpConfiguration
 import services.{AuthenticationService, IdRequestParser, IdentityRequest, IdentityUrlBuilder}
 

@@ -5,6 +5,7 @@ import actions.AuthenticatedActions.AuthRequest
 import com.gu.identity.model.User
 import common.ImplicitControllerExecutionContext
 import form._
+import idapiclient.responses.Error
 import idapiclient.IdApiClient
 import model._
 import play.api.data.Form
@@ -123,7 +124,7 @@ case class ProfileForms(
     )
   }
 
-  def withErrors(errors: List[client.Error]): ProfileForms = {
+  def withErrors(errors: List[Error]): ProfileForms = {
     update{
       form =>
         errors.foldLeft(form){

@@ -2,7 +2,7 @@ package controllers
 
 import org.scalatest.{Matchers, path}
 import services._
-import idapiclient.IdApiClient
+import idapiclient.{IdApiClient, TrackingData}
 import org.scalatest.mockito.MockitoSugar
 import test.{Fake, TestRequest, WithTestApplicationContext}
 import play.api.mvc.{Request, RequestHeader}
@@ -11,9 +11,8 @@ import scala.concurrent.Future
 import org.mockito.Mockito._
 import org.mockito.{Matchers => MockitoMatchers}
 import play.api.test.Helpers._
-import idapiclient.TrackingData
-import client.Error
 import actions.AuthenticatedActions
+import idapiclient.responses.Error
 
 class EmailVerificationControllerTest extends path.FreeSpec
   with Matchers
