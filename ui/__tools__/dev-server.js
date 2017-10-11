@@ -18,8 +18,7 @@ app.use(
     })
 );
 app.use(webpackHotMiddleware(compiler));
-// $FlowFixMe
-app.get('/', (req, res) => {
+app.get('/', (req: any, res: express$Response) => {
     delete require.cache[require.resolve('../dist/ui.bundle.server')];
 
     // $FlowFixMe
