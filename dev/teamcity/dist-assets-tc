@@ -11,6 +11,24 @@ set -x
 
 echo "Asset compilation"
 
+cd static/src/javascripts
+
+set +x
+echo "Moved to flow root directory $PWD"
+set -x
+
+$(npm bin)/flow stop
+
+set +x
+echo "Stopped flow server"
+set -x
+
+cd -
+
+set +x
+echo "Returned to directory $PWD"
+set -x
+
 set +x
 echo "##teamcity[progressStart 'asset validation and tests']"
 set -x
@@ -26,4 +44,8 @@ set -x
 
 set +x
 echo "##teamcity[progressFinish 'asset dist']"
+set -x
+
+set +x
+echo "Exit "
 set -x
