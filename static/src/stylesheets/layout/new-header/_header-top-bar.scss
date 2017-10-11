@@ -61,14 +61,7 @@
     color: $guardian-brand-dark;
     font-family: 'Guardian Egyptian Web', 'Guardian Text Egyptian Web', Georgia, serif;
     font-weight: 800;
-    padding-bottom: $gs-baseline / 1.5;
-    padding-left: $gs-gutter;
-    padding-right: $gs-gutter;
-
-    @include mq($until: mobileMedium) {
-        padding-bottom: $gs-baseline / 4;
-        padding-top: $gs-baseline / 2;
-    }
+    padding: 0;
 
     @include mq($until: mobileLandscape) {
         margin-left: -$gs-gutter / 2;
@@ -80,7 +73,15 @@
     }
 
     & > span {
+        box-sizing: border-box;
+        display: block;
+        padding: ($gs-baseline / 1.5) ($gs-gutter);
         position: relative;
+
+        @include mq($until: mobileMedium) {
+            padding-bottom: $gs-baseline / 4;
+            padding-top: $gs-baseline / 2;
+        }
     }
 
     &:before {
@@ -88,11 +89,10 @@
         border-radius: 50%;
         bottom: -$gs-baseline;
         content: '';
-        height: auto;
+        display: block;
         left: 0;
         padding-top: 100%;
         position: absolute;
-        right: 0;
         transform: scale(1);
         transition: transform 350ms, background-color 350ms,;
         width: 100%;
