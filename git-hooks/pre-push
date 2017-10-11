@@ -4,13 +4,36 @@
 const path = require('path');
 const execa = require('execa');
 const chalk = require('chalk');
-const confirm = require('node-ask').confirm;
 
-const confirmIfMaster = () =>
-    confirm('This is master, are you sure you want to push? ').then(answer => {
-        if (!answer) return Promise.reject();
-        return Promise.resolve();
-    });
+const confirmIfMasterMessage = `${chalk.red(
+    `${chalk.inverse(
+        'You are about to push master!'
+    )}\nIs that what you intended?`
+)} [y/N]`;
+const confirmIfMaster = execa
+    .shell(
+        `
+protected_branch='master'
+current_branch=$(git symbolic-ref HEAD | sed -e 's,.*/\\(.*\\),\\1,')
+
+if [ $protected_branch = $current_branch ]
+then
+    read -p "${confirmIfMasterMessage}" -n 1 -r < /dev/tty
+    echo
+    if echo $REPLY | grep -E '^[Yy]$' > /dev/null
+    then
+        exit 0 # push will execute
+    fi
+    exit 1 # push will not execute
+else
+    exit 0 # push will execute
+fi
+`,
+        {
+            stdio: 'inherit',
+        }
+    )
+    .catch(() => Promise.reject('ok, stopping ;)'));
 
 const diff = () =>
     execa
@@ -42,7 +65,7 @@ const checkYarnLock = staged => {
     return staged;
 };
 
-confirmIfMaster()
+confirmIfMaster
     .then(validate)
     .then(diff)
     .then(checkYarnLock)
