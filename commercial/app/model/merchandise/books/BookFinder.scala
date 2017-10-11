@@ -65,7 +65,7 @@ class MagentoService(actorSystem: ActorSystem, wsClient: WSClient) extends Loggi
         consumerKey = ConsumerKey(consumerKey, consumerSecret),
         token = RequestToken(token, tokenSecret)
       ),
-      urlPrefix = s"http://$domain/$path"
+      urlPrefix = s"https://$domain/$path"
     )
   }
 
