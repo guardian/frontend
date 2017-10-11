@@ -19,13 +19,7 @@ trait JavascriptRendering extends Logging {
   private val memoizedJs: Try[EvalResult] = loadJavascript()
 
   private def getCommonProps(props: Option[JsValue] = None): Option[JsValue] = {
-    val bundleUrl = conf.Static("javascripts/ui.bundle.browser.js")
-    val polyfillioUrl =
-      if (conf.switches.Switches.PolyfillIO.isSwitchedOn) common.Assets.js.polyfillioUrl
-      else conf.Static("javascripts/vendor/polyfillio.fallback.js")
-    val commonProps = Json.obj("bundleUrl" -> bundleUrl, "polyfillioUrl" -> polyfillioUrl)
-
-    props.map(_.as[JsObject] ++ commonProps)
+    props.map(_.as[JsObject] ++ Json.toJson(JavascriptProps()).as[JsObject])
   }
 
   def render(props: Option[JsValue] = None, forceReload: Boolean = false): Try[String] = for {
