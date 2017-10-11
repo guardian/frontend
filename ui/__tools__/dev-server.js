@@ -1,5 +1,3 @@
-// @flow
-
 const express = require('express');
 const webpack = require('webpack');
 const webpackDevMiddleware = require('webpack-dev-middleware');
@@ -18,7 +16,7 @@ app.use(
     })
 );
 app.use(webpackHotMiddleware(compiler));
-app.get('/', (req: any, res: express$Response) => {
+app.get('/', (req, res) => {
     delete require.cache[require.resolve('../dist/ui.bundle.server')];
 
     // $FlowFixMe
