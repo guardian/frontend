@@ -16,6 +16,15 @@ import {
     addTrackingCodesToUrl,
 } from 'common/modules/commercial/acquisitions-ophan';
 
+const supportBaseURL = 'https://support.theguardian.com/uk';
+
+const useSupportDomain = (): boolean =>
+    config.get('switches.ukSupporterTrafficToNewSupportFrontend') &&
+    getGeoLocation() === 'GB';
+
+const getBaseUrl = (defaultUrl: string): string =>
+    useSupportDomain() ? supportBaseURL : defaultUrl;
+
 // change messageCode to force redisplay of the message to users who already closed it.
 const messageCode = 'engagement-banner-2017-09-21';
 
@@ -123,7 +132,7 @@ const showBanner = (params: EngagementBannerParams): void => {
         : params.messageText;
 
     const linkUrl = addTrackingCodesToUrl({
-        base: params.linkUrl,
+        base: getBaseUrl(params.linkUrl),
         componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
         componentId: params.campaignCode,
         campaignCode: params.campaignCode,
