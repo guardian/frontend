@@ -1,5 +1,8 @@
 // @flow
-import { makeABTest, useSupportDomain } from 'common/modules/commercial/contributions-utilities';
+import {
+    makeABTest,
+    useSupportDomain,
+} from 'common/modules/commercial/contributions-utilities';
 import { logView } from 'common/modules/commercial/acquisitions-view-log';
 import $ from 'lib/$';
 import config from 'lib/config';

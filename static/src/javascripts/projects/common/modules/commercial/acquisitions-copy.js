@@ -42,5 +42,7 @@ export const liveblog = (
     useSupportDomain: boolean = false
 ): AcquisitionsEpicTemplateCopy => ({
     p1: `Since you’re here ${controlP1}`,
-    p2: `${controlP2} ${useSupportDomain ? `<a href="${membershipUrl}" target="_blank" class="u-underline">Become a supporter</a>` : `You can give to the Guardian by <a href="${membershipUrl}" target="_blank" class="u-underline">becoming a monthly supporter</a> or by making a <a href="${contributionsUrl}" target="_blank" class="u-underline">one-off contribution</a>.`} - Guardian HQ`,
+    p2: `${controlP2} ${useSupportDomain
+        ? `<a href="${membershipUrl}" target="_blank" class="u-underline">Become a supporter</a>`
+        : `You can give to the Guardian by <a href="${membershipUrl}" target="_blank" class="u-underline">becoming a monthly supporter</a> or by making a <a href="${contributionsUrl}" target="_blank" class="u-underline">one-off contribution</a>.`} - Guardian HQ`,
 });

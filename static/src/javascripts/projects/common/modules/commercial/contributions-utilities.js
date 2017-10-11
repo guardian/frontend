@@ -36,12 +36,17 @@ export type CtaUrls = {
 
 const supportBaseURL = 'https://support.theguardian.com/uk';
 const useSupportDomain = (): boolean =>
-    (config.get('switches.ukSupporterTrafficToNewSupportFrontend') && geolocationGetSync() === 'GB');
+    config.get('switches.ukSupporterTrafficToNewSupportFrontend') &&
+    geolocationGetSync() === 'GB';
 const selectBaseUrl = (defaultUrl: string): string =>
     useSupportDomain() ? supportBaseURL : defaultUrl;
 
-const membershipBaseURL = selectBaseUrl('https://membership.theguardian.com/supporter');
-const contributionsBaseURL = selectBaseUrl('https://contribute.theguardian.com');
+const membershipBaseURL = selectBaseUrl(
+    'https://membership.theguardian.com/supporter'
+);
+const contributionsBaseURL = selectBaseUrl(
+    'https://contribute.theguardian.com'
+);
 
 // How many times the user can see the Epic,
 // e.g. 6 times within 7 days with minimum of 1 day in between views.
