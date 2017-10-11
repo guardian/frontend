@@ -1,5 +1,5 @@
 // @flow
-import { makeABTest } from 'common/modules/commercial/contributions-utilities';
+import { makeABTest, useSupportDomain } from 'common/modules/commercial/contributions-utilities';
 import { logView } from 'common/modules/commercial/acquisitions-view-log';
 import $ from 'lib/$';
 import config from 'lib/config';
@@ -166,7 +166,8 @@ export const acquisitionsEpicLiveblog: EpicABTest = makeABTest({
                     return epicLiveBlogTemplate({
                         copy: liveblogCopy(
                             variant.options.membershipURL,
-                            variant.options.contributeURL
+                            variant.options.contributeURL,
+                            useSupportDomain()
                         ),
                         componentName: variant.options.componentName,
                     });

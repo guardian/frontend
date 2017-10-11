@@ -34,16 +34,14 @@ export type CtaUrls = {
     supportUrl?: string,
 };
 
-const useSupportDomain =
-    config.get('switches.ukSupporterTrafficToNewSupportFrontend') &&
-    geolocationGetSync() === 'GB';
 const supportBaseURL = 'https://support.theguardian.com/uk';
-const membershipBaseURL = useSupportDomain
-    ? supportBaseURL
-    : 'https://membership.theguardian.com/supporter';
-const contributionsBaseURL = useSupportDomain
-    ? supportBaseURL
-    : 'https://contribute.theguardian.com';
+const useSupportDomain = (): boolean =>
+    (config.get('switches.ukSupporterTrafficToNewSupportFrontend') && geolocationGetSync() === 'GB');
+const selectBaseUrl = (defaultUrl: string): string =>
+    useSupportDomain() ? supportBaseURL : defaultUrl;
+
+const membershipBaseURL = selectBaseUrl('https://membership.theguardian.com/supporter');
+const contributionsBaseURL = selectBaseUrl('https://contribute.theguardian.com');
 
 // How many times the user can see the Epic,
 // e.g. 6 times within 7 days with minimum of 1 day in between views.
@@ -58,7 +56,7 @@ const defaultMaxViews: {
 };
 
 const defaultButtonTemplate = (urls: CtaUrls) =>
-    epicButtonsTemplate(urls, useSupportDomain);
+    epicButtonsTemplate(urls, useSupportDomain());
 
 const controlTemplate: EpicTemplate = ({ options = {} }, copy) =>
     acquisitionsEpicControlTemplate({
@@ -498,4 +496,5 @@ export {
     getTestimonialBlock,
     makeABTest,
     defaultButtonTemplate,
+    useSupportDomain,
 };
