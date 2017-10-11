@@ -1,58 +1,94 @@
+// @flow
 import bean from 'bean';
-import bonzo from 'bonzo';
 import Rangefix from 'rangefix';
 import $ from 'lib/$';
 import config from 'lib/config';
-import detect from 'lib/detect';
+import { hasTouchScreen } from 'lib/detect';
 import mediator from 'lib/mediator';
 import template from 'lodash/utilities/template';
-import sharingTemplate from 'raw-loader!common/views/ui/selection-sharing.html';
-import svgs from 'common/views/svgs';
+import { inlineSvg } from 'common/views/svgs';
 import debounce from 'lodash/functions/debounce';
-import some from 'lodash/collections/some';
 
-const $body = bonzo(document.body);
-const twitterIcon = svgs.inlineSvg('shareTwitter', ['icon', 'centered-icon']);
-const emailIcon = svgs.inlineSvg('shareEmail', ['icon', 'centered-icon']);
+const sharingTemplate = `
+    <div class="selection-sharing">
+        <ul class="social u-unstyled u-cf" data-component="social-selection">
+            <li class="social__item" data-link-name="twitter">
+                <a  class="rounded-icon social-icon social-icon--twitter js-selection-twitter"
+                    data-link-name="social-selection"
+                    target="_blank"
+                    href="#">
+                    <span class="u-h">Share on Twitter</span>
+                    <%= twitterIcon %>
+                </a>
+            </li>
+            <li class="social__item" data-link-name="email">
+                <a  class="rounded-icon social-icon social-icon--email js-selection-email"
+                    data-link-name="social-selection"
+                    target="_blank"
+                    href="#">
+                    <span class="u-h">Share via Email</span>
+                    <%= emailIcon %>
+                </a>
+            </li>
+        </ul>
+    </div>
+`;
+
+const twitterIcon = inlineSvg('shareTwitter', ['icon', 'centered-icon']);
+const emailIcon = inlineSvg('shareEmail', ['icon', 'centered-icon']);
+const $body = document.body;
 
 const selectionSharing = template(sharingTemplate, {
     twitterIcon,
-    emailIcon
+    emailIcon,
 });
 
 const $selectionSharing = $.create(selectionSharing);
+
 let $twitterAction;
 let $emailAction;
-const twitterShortUrl = config.page.shortUrl + '/stw';
-const twitterHrefTemplate = 'https://twitter.com/intent/tweet?text=%E2%80%9C<%=text%>%E2%80%9D&url=<%=url%>';
+const twitterShortUrl = `${config.page.shortUrl}/stw`;
+const twitterHrefTemplate =
+    'https://twitter.com/intent/tweet?text=%E2%80%9C<%=text%>%E2%80%9D&url=<%=url%>';
 
 const // 140 - t.co length - 3 chars for quotes and url spacing
 twitterMessageLimit = 114;
 
-const emailShortUrl = config.page.shortUrl + '/sbl';
-const emailHrefTemplate = 'mailto:?subject=<%=subject%>&body=%E2%80%9C<%=selection%>%E2%80%9D <%=url%>';
-const validAncestors = ['js-article__body', 'content__standfirst', 'block', 'caption--main', 'content__headline'];
+const emailShortUrl = `${config.page.shortUrl}/sbl`;
+const emailHrefTemplate =
+    'mailto:?subject=<%=subject%>&body=%E2%80%9C<%=selection%>%E2%80%9D <%=url%>';
+const validAncestors = [
+    'js-article__body',
+    'content__standfirst',
+    'block',
+    'caption--main',
+    'content__headline',
+];
 
-const isValidSelection = range => // commonAncestorContainer is buggy, can't use it here.
-some(
-    validAncestors,
-    className => $.ancestor(range.startContainer, className) && $.ancestor(range.endContainer, className)
-);
+const isValidSelection = (
+    range
+): boolean => // commonAncestorContainer is buggy, can't use it here.
+    validAncestors.some(
+        className =>
+            $.ancestor(range.startContainer, className) &&
+            $.ancestor(range.endContainer, className)
+    );
 
-const hideSelection = () => {
+const hideSelection = (): void => {
     if ($selectionSharing.hasClass('selection-sharing--active')) {
         $selectionSharing.removeClass('selection-sharing--active');
     }
 };
 
-const showSelection = () => {
+const showSelection = (): void => {
     if (!$selectionSharing.hasClass('selection-sharing--active')) {
         $selectionSharing.addClass('selection-sharing--active');
     }
 };
 
-const updateSelection = () => {
-    const selection = window.getSelection && document.createRange && window.getSelection();
+const updateSelection = (): void => {
+    const selection =
+        window.getSelection && document.createRange && window.getSelection();
     let range;
     let rect;
     let top;
@@ -60,10 +96,15 @@ const updateSelection = () => {
     let twitterHref;
     let emailHref;
 
-    if (selection && selection.rangeCount > 0 && selection.toString()) {
+    if (
+        $body &&
+        selection &&
+        selection.rangeCount > 0 &&
+        selection.toString()
+    ) {
         range = selection.getRangeAt(0);
         rect = Rangefix.getBoundingClientRect(range);
-        top = $body.scrollTop() + rect.top;
+        top = $body.scrollTop + rect.top;
         twitterMessage = range.toString();
 
         if (!isValidSelection(range)) {
@@ -73,25 +114,28 @@ const updateSelection = () => {
 
         // Truncate the twitter message.
         if (twitterMessage.length > twitterMessageLimit) {
-            twitterMessage = twitterMessage.slice(0, twitterMessageLimit - 1) + '…';
+            twitterMessage = `${twitterMessage.slice(
+                0,
+                twitterMessageLimit - 1
+            )}…`;
         }
 
         twitterHref = template(twitterHrefTemplate, {
             text: encodeURIComponent(twitterMessage),
-            url: encodeURI(twitterShortUrl)
+            url: encodeURI(twitterShortUrl),
         });
         emailHref = template(emailHrefTemplate, {
             subject: encodeURI(config.page.webTitle),
             selection: encodeURI(range.toString()),
-            url: encodeURI(emailShortUrl)
+            url: encodeURI(emailShortUrl),
         });
 
         $twitterAction.attr('href', twitterHref);
         $emailAction.attr('href', emailHref);
 
         $selectionSharing.css({
-            top: top + 'px',
-            left: rect.left + 'px'
+            top: `${top}px`,
+            left: `${rect.left}px`,
         });
 
         showSelection();
@@ -100,28 +144,30 @@ const updateSelection = () => {
     }
 };
 
-const onMouseDown = event => {
+const onMouseDown = (event): void => {
     if (!$.ancestor(event.target, 'social__item')) {
         hideSelection();
     }
 };
 
-const initSelectionSharing = () => {
+const init = (): void => {
     // The current mobile Safari returns absolute Rect co-ordinates (instead of viewport-relative),
     // and the UI is generally fiddly on touch.
-    if (!detect.hasTouchScreen()) {
-        $body.append($selectionSharing);
+    if ($body && !hasTouchScreen()) {
+        $body.appendChild($selectionSharing[0]);
+
         $twitterAction = $('.js-selection-twitter');
         $emailAction = $('.js-selection-email');
         // Set timeout ensures that any existing selection has been cleared.
-        bean.on(document.body, 'keypress keydown keyup', debounce(updateSelection, 50));
+        bean.on(
+            document.body,
+            'keypress keydown keyup',
+            debounce(updateSelection, 50)
+        );
         bean.on(document.body, 'mouseup', debounce(updateSelection, 200));
         bean.on(document.body, 'mousedown', debounce(onMouseDown, 50));
         mediator.on('window:throttledResize', updateSelection);
     }
 };
 
-export default {
-    init: initSelectionSharing,
-    updateSelection
-};
+export { init, updateSelection };
