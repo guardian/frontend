@@ -22,9 +22,24 @@ app.get('/', (req, res) => {
 
     // $FlowFixMe
     const { frontend } = require('../dist/ui.bundle.server'); // eslint-disable-line global-require, import/no-unresolved
+    const propsUrl = 'http://localhost:9000/dev/props';
 
-    request('http://localhost:9000/dev/props', (errors, response, body) => {
-        res.send(frontend.render(JSON.parse(body)));
+    request(propsUrl, (errors, response, body) => {
+        if (errors) {
+            if (errors.code === 'ECONNREFUSED') {
+                const errorMsg = `
+                    <h1>Unable to connect to 
+                        <a href="${propsUrl}">${propsUrl}</a>.
+                        Are you running the archive application?
+                    </h1>`;
+
+                return res.send(errorMsg);
+            }
+
+            return res.send(errors);
+        }
+
+        return res.send(frontend.render(JSON.parse(body)));
     });
 });
 
