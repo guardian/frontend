@@ -502,4 +502,5 @@ export {
     makeABTest,
     defaultButtonTemplate,
     useSupportDomain,
+    selectBaseUrl,
 };
