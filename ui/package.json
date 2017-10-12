@@ -80,7 +80,8 @@
             "node_modules"
         ],
         "moduleNameMapper": {
-            "^(.*)\\.svg$": "<rootDir>/__mocks__/svg.js"
+            "^(.*)\\.svg$": "<rootDir>/__mocks__/svg.js",
+            "^(.*)\\.css$": "<rootDir>/__mocks__/css.js"
         },
         "globals": {
             "BROWSER": false,

@@ -1,14 +1,14 @@
 // @flow
 
 import test from 'utils/test-render';
-import FourOhFour from './index';
+import NotFound from './index';
 
-jest.mock('./style.scss', () => ({
+jest.mock('./style.css', () => ({
     message: {
         color: 'hotpink',
     },
 }));
 
 describe('404', () => {
-    test(<FourOhFour />);
+    test(<NotFound beaconUrl="" />);
 });
