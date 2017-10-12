@@ -128,6 +128,7 @@ object CompetitionsProvider {
 class CompetitionsService(val footballClient: FootballClient, competitionDefinitions: Seq[Competition])
   extends Competitions
     with LiveMatches
+    with Lineups
     with Logging
     with implicits.Collections
     with implicits.Football {
@@ -176,7 +177,7 @@ class CompetitionsService(val footballClient: FootballClient, competitionDefinit
           }
         }
       }
-    }.recover(footballClient.logErrors)
+    }.recover(footballClient.logErrorsWithMessage("Failed refreshing competitions data"))
   }
 
   def refreshMatchDay()(implicit executionContext: ExecutionContext): Future[immutable.Iterable[Competition]] = {
