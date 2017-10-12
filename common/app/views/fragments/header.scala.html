@@ -2,7 +2,7 @@
 @import common.{Edition, LinkTo}
 @import conf.Configuration
 @import conf.switches.Switches._
-@import navigation.UrlHelpers.{Membership, OldHeader, Subscribe, getReaderRevenueUrl}
+@import navigation.UrlHelpers.{Membership, OldHeader, Subscribe, getReaderRevenueUrl, getSupportOrSubscriptionUrl, getSupportOrMembershipUrl}
 @import views.support.RenderClasses
 
 @* TODO: When implementing the desktop design, aim to consolidate the html *@
@@ -81,7 +81,7 @@
                                     hide-on-slim-header hide-on-tablet"
                             data-component="subscribe">
                             @fragments.inlineSvg("marque-36", "icon", List("rounded-icon", "control__icon-wrapper"))
-                            <a href="@getReaderRevenueUrl(Membership, OldHeader)"
+                            <a href="@getSupportOrMembershipUrl(OldHeader)"
                             data-link-name="Register link"
                             class="brand-bar__item--action brand-bar__item--split--first js-become-member">
                                 <span class="control__info js-control-info control__info--supporting">
@@ -89,7 +89,7 @@
                                 </span>
                             </a>
 
-                            <a href="@getReaderRevenueUrl(Subscribe, OldHeader)"
+                            <a href="@getSupportOrSubscriptionUrl(OldHeader)"
                                class="brand-bar__item--action brand-bar__item--split--last js-subscribe js-change-subscribe-link"
                                data-link-name="@Edition(request).id.toLowerCase : topNav : subscribe">
                                 <span class="control__info js-control-info">subscribe</span>
