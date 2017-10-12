@@ -18,9 +18,6 @@ list: # PRIVATE
 # Install all 3rd party dependencies.
 install: check-node-env
 	@yarn -s install
-	@cd ui && yarn -s install
-	@cd dev/eslint-plugin-guardian-frontend && yarn -s install
-	@cd tools/amp-validation && yarn -s install
 
 # Remove all 3rd party dependencies.
 uninstall: # PRIVATE
