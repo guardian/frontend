@@ -1,5 +1,5 @@
-// flow-typed signature: 8ce95fcbba5cf6556a95c85bce5cbfa7
-// flow-typed version: e96cf84cb2/chance_v1.x.x/flow_>=v0.33.x
+// flow-typed signature: f7850e0dd10330b83b6abc73698cbd10
+// flow-typed version: b43dff3e0e/chance_v1.x.x/flow_>=v0.25.x
 
 declare module 'chance' {
   declare type Currency = {
