@@ -4,7 +4,7 @@ import com.gu.identity.model.User
 import idapiclient.UserUpdate
 import play.api.data.Forms._
 import play.api.data.Mapping
-import play.api.i18n.{MessagesApi, MessagesProvider}
+import play.api.i18n.MessagesProvider
 
 class PrivacyMapping extends UserFormMapping[PrivacyFormData] {
 
@@ -24,10 +24,9 @@ class PrivacyMapping extends UserFormMapping[PrivacyFormData] {
 }
 
 case class PrivacyFormData(
-                            receiveGnmMarketing: Boolean,
-                            receive3rdPartyMarketing: Boolean,
-                            allowThirdPartyProfiling: Boolean
-                            ) extends UserFormData{
+    receiveGnmMarketing: Boolean,
+    receive3rdPartyMarketing: Boolean,
+    allowThirdPartyProfiling: Boolean) extends UserFormData{
 
   def toUserUpdate(currentUser: User): UserUpdate = {
     val statusFields = currentUser.statusFields
@@ -39,7 +38,6 @@ case class PrivacyFormData(
       ))
     )
   }
-
 }
 
 object PrivacyFormData {
