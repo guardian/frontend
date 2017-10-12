@@ -49,35 +49,35 @@ class EditProfileController(idUrlBuilder: IdentityUrlBuilder,
   def displayDigitalPackForm: Action[AnyContent] = displayForm(digitalPackPage)
   def displayPrivacyForm: Action[AnyContent] = displayForm(privacyPage)
 
+  def submitPublicProfileForm(): Action[AnyContent] = submitForm(publicPage)
+  def submitAccountForm(): Action[AnyContent] = submitForm(accountPage)
+  def submitPrivacyForm(): Action[AnyContent] = submitForm(privacyPage)
+
   private def displayForm(page: IdentityPage) = csrfAddToken {
     recentlyAuthenticated.async { implicit request =>
       Future(profileFormsView(page = page, forms = ProfileForms(request.user, PublicEditProfilePage), request.user))
     }
   }
 
-  def submitPublicProfileForm(): Action[AnyContent] = submitForm(publicPage)
-  def submitAccountForm(): Action[AnyContent] = submitForm(accountPage)
-  def submitPrivacyForm(): Action[AnyContent] = submitForm(privacyPage)
+  private def submitForm(page: IdentityPage): Action[AnyContent] = csrfCheck { authActionWithUser.async { implicit request =>
+    def identityPageToEditProfilePage(identityPage: IdentityPage): EditProfilePage =
+      identityPage match {
+        case `publicPage` => PublicEditProfilePage
+        case `accountPage` => AccountEditProfilePage
+        case _ => PrivacyEditProfilePage
+      }
 
-  def identifyActiveSubmittedForm(page: IdentityPage): EditProfilePage =
-    page match {
-      case `publicPage` => PublicEditProfilePage
-      case `accountPage` => AccountEditProfilePage
-      case _ => PrivacyEditProfilePage
-    }
-
-  def submitForm(page: IdentityPage): Action[AnyContent] = csrfCheck { authActionWithUser.async { implicit request =>
-      val activePage = identifyActiveSubmittedForm(page)
+      val activePage = identityPageToEditProfilePage(page)
       val user = request.user
-      val forms = ProfileForms(user, activePage).bindFromRequest(request)
+      val profileForms = ProfileForms(user, activePage).bindFromRequestWithAddressErrorHack(request) // Why are we binding from case class and then re-binding from request?
 
-      forms.activeForm.value.map {
+      profileForms.activeForm.value.map {
         case data: AccountFormData if (data.deleteTelephone) => {
           identityApiClient.deleteTelephone(user.auth) map {
-            case Left(errors) => profileFormsView(page, forms.withErrors(errors), user)
+            case Left(errors) => profileFormsView(page, profileForms.withErrors(errors), user)
 
             case Right(_) => {
-              val boundForms = forms.bindForms(user.user.copy(privateFields = user.user.privateFields.copy(telephoneNumber = None)))
+              val boundForms = profileForms.bindForms(user.user.copy(privateFields = user.user.privateFields.copy(telephoneNumber = None)))
               profileFormsView(page, boundForms, user)
             }
           }
@@ -85,10 +85,10 @@ class EditProfileController(idUrlBuilder: IdentityUrlBuilder,
 
         case data: UserFormData =>
           identityApiClient.saveUser(user.id, data.toUserUpdate(user), user.auth) map {
-            case Left(errors) => profileFormsView(page, forms.withErrors(errors), user)
-            case Right(updatedUser) => profileFormsView(page, forms.bindForms(updatedUser), updatedUser)
+            case Left(errors) => profileFormsView(page, profileForms.withErrors(errors), user)
+            case Right(updatedUser) => profileFormsView(page, profileForms.bindForms(updatedUser), updatedUser)
           }
-      }.getOrElse(Future(profileFormsView(page, forms, user)))
+      }.getOrElse(Future(profileFormsView(page, profileForms, user)))
     }
   }
 
@@ -96,6 +96,15 @@ class EditProfileController(idUrlBuilder: IdentityUrlBuilder,
     NoCache(Ok(views.html.profileForms(page, user, forms, idRequestParser(request), idUrlBuilder)))
 }
 
+/**
+  * Holds all Edit Profile forms and designates which one is user currently viewing
+  *
+  * @param publicForm   /public/edit
+  * @param accountForm  /account/edit
+  * @param privacyForm  /privacy/edit
+  * @param activePage   which page is user currently viewing and hence which form
+  * @param profileFormsMapping Case class with mappings for all the forms
+  */
 case class ProfileForms(
     publicForm: Form[ProfileFormData],
     accountForm: Form[AccountFormData],
@@ -108,7 +117,23 @@ case class ProfileForms(
     case PrivacyEditProfilePage => privacyForm
   }
 
-  def bindFromRequest(implicit request: Request[_]): ProfileForms = update {
+  private lazy val activeMapping = activePage match {
+    case PublicEditProfilePage => profileFormsMapping.profileMapping
+    case AccountEditProfilePage => profileFormsMapping.accountDetailsMapping
+    case PrivacyEditProfilePage => profileFormsMapping.privacyMapping
+  }
+
+  /** Fills all Edit Profile forms (Public, Account, Privacy) with the provided User value */
+  def bindForms(user: User)(implicit messagesProvider: MessagesProvider): ProfileForms = {
+    copy(
+      publicForm = profileFormsMapping.profileMapping.bindForm(user),
+      accountForm = profileFormsMapping.accountDetailsMapping.bindForm(user),
+      privacyForm = profileFormsMapping.privacyMapping.bindForm(user)
+    )
+  }
+
+  /** Adds address hack error to the form */
+  def bindFromRequestWithAddressErrorHack(implicit request: Request[_]): ProfileForms = update {
     form =>
       // Hack to get the postcode error into the correct context.
       val boundForm = form.bindFromRequest()
@@ -118,14 +143,7 @@ case class ProfileForms(
       } getOrElse boundForm
   }
 
-  def bindForms(user: User)(implicit messagesProvider: MessagesProvider): ProfileForms = {
-    copy(
-      publicForm = profileFormsMapping.profileMapping.bindForm(user),
-      accountForm = profileFormsMapping.accountDetailsMapping.bindForm(user),
-      privacyForm = profileFormsMapping.privacyMapping.bindForm(user)
-    )
-  }
-
+  /** Adds errors to the form */
   def withErrors(errors: List[Error]): ProfileForms = {
     update{
       form =>
@@ -137,27 +155,43 @@ case class ProfileForms(
     }
   }
 
-  private lazy val activeMapping = activePage match {
-    case PublicEditProfilePage => profileFormsMapping.profileMapping
-    case AccountEditProfilePage => profileFormsMapping.accountDetailsMapping
-    case PrivacyEditProfilePage => profileFormsMapping.privacyMapping
-  }
-
-  private def update(change: (Form[_ <: UserFormData]) => Form[_ <: UserFormData]): ProfileForms = {
+  /**
+    * Create a copy of ProfileForms with applied change to the currently active form
+    *
+    * @param changeFunc function that takes currently active form and returns a modified version of the form
+    * @return copy of ProfileForms with applied change to the currently active form
+    */
+  private def update(changeFunc: (Form[_ <: UserFormData]) => Form[_ <: UserFormData]): ProfileForms = {
     activePage match {
-      case PublicEditProfilePage => copy(publicForm = change(publicForm).asInstanceOf[Form[ProfileFormData]])
-      case AccountEditProfilePage => copy(accountForm = change(accountForm).asInstanceOf[Form[AccountFormData]])
-      case PrivacyEditProfilePage => copy(privacyForm = change(privacyForm).asInstanceOf[Form[PrivacyFormData]])
+      case PublicEditProfilePage => copy(publicForm = changeFunc(publicForm).asInstanceOf[Form[ProfileFormData]])
+      case AccountEditProfilePage => copy(accountForm = changeFunc(accountForm).asInstanceOf[Form[AccountFormData]])
+      case PrivacyEditProfilePage => copy(privacyForm = changeFunc(privacyForm).asInstanceOf[Form[PrivacyFormData]])
     }
   }
 }
 
 object ProfileForms {
+  /**
+    * Creates a instance of ProfileForms by filling all the Edit Profile forms (Public, Account, Privacy)
+    * with the provided User value
+    *
+    * @param user User instance used as a form filler
+    * @param activePage Which page is user currently viewing
+    * @param profileFormsMapping Case class with mappings for all the forms
+    * @return instance of ProfileForms having all the forms bound to provided user value
+    */
+  def apply(
+      user: User,
+      activePage: EditProfilePage)
+      (implicit profileFormsMapping: ProfileFormsMapping, messagesProvider: MessagesProvider): ProfileForms = {
 
-  def apply(user: User, activePage: EditProfilePage)(implicit profileFormsMapping: ProfileFormsMapping, messagesProvider: MessagesProvider): ProfileForms = ProfileForms(
-    publicForm = profileFormsMapping.profileMapping.bindForm(user),
-    accountForm = profileFormsMapping.accountDetailsMapping.bindForm(user),
-    privacyForm = profileFormsMapping.privacyMapping.bindForm(user),
-    activePage = activePage
-  )
+    ProfileForms(
+      publicForm = profileFormsMapping.profileMapping.bindForm(user),
+      accountForm = profileFormsMapping.accountDetailsMapping.bindForm(user),
+      privacyForm = profileFormsMapping.privacyMapping.bindForm(user),
+      activePage = activePage
+    )
+
+  }
+
 }
