@@ -8,7 +8,7 @@ import idapiclient.parser.{JodaJsonSerializer, JsonBodyParser}
 import net.liftweb.json.JsonAST.JValue
 import net.liftweb.json.Serialization.write
 import utils.SafeLogging
-import idapiclient.requests.{PasswordUpdate, TokenPassword}
+import idapiclient.requests.{DeletionBody, PasswordUpdate, TokenPassword}
 import play.api.libs.ws.WSClient
 
 class IdApiClient(
@@ -161,7 +161,6 @@ class IdApiClient(
   }
 
   def executeAccountDeletionStepFunction(userId: String, email: String, reason: Option[String], auth: Auth): Future[Response[AccountDeletionResult]] = {
-    case class DeletionBody(identityId: String, email: String, reason: Option[String])
     httpClient.POST(
         s"${conf.accountDeletionApiRoot}/delete",
         Some(write(DeletionBody(userId, email, reason))),
