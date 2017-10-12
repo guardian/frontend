@@ -27,7 +27,7 @@
 } else {
 <div data-snippet-id="@id" data-snippet-type="@className" class="clean explainer-snippet explainer-snippet--new explainer-snippet--light explainer-snippet--@className">
 
-  <div class="explainer-snippet__header">
+  <div class="explainer-snippet__header" on="tap:body-@{id}.toggleVisibility,show-@{id}.toggleVisibility,hide-@{id}.toggleVisibility">
     <span class="explainer-snippet__label">@label</span>
     <h4 class="explainer-snippet__headline">@headline</h4>
 
