@@ -10,7 +10,4 @@ const useSupportDomain = (): boolean =>
 const selectBaseUrl = (defaultUrl: string = supportBaseURL): string =>
     useSupportDomain() ? supportBaseURL : defaultUrl;
 
-export {
-    useSupportDomain,
-    selectBaseUrl,
-};
+export { useSupportDomain, selectBaseUrl };
