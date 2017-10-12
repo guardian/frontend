@@ -123,6 +123,7 @@ object UrlHelpers {
       getReaderRevenueUrl(Membership, NewHeader)
     }
 
+  // This methods can be reverted once we decide to deploy the new support site to the rest of the world.
   def getSupportOrMembershipUrl(position: Position)(implicit request: RequestHeader): String = {
     val editionId = Edition(request).id.toLowerCase()
     if (editionId == "uk" && SupportFrontendActive.isSwitchedOn) {
