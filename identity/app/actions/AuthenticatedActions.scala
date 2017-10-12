@@ -18,12 +18,10 @@ object AuthenticatedActions {
 }
 
 class AuthenticatedActions(
-  authService: AuthenticationService,
-  identityApiClient: IdApiClient,
-  identityUrlBuilder: IdentityUrlBuilder,
-  controllerComponents: ControllerComponents
-) extends Logging
-  with Results {
+    authService: AuthenticationService,
+    identityApiClient: IdApiClient,
+    identityUrlBuilder: IdentityUrlBuilder,
+    controllerComponents: ControllerComponents) extends Logging with Results {
 
   private val anyContentParser: BodyParser[AnyContent] = controllerComponents.parsers.anyContent
   private implicit val ec: ExecutionContext = controllerComponents.executionContext
@@ -46,23 +44,21 @@ class AuthenticatedActions(
 
   def agreeAction(unAuthorizedCallback: (RequestHeader) => Result): AuthenticatedBuilder[AuthenticatedUser] = new AuthenticatedBuilder(authService.authenticatedUserFor, anyContentParser, unAuthorizedCallback)
 
-  def apiVerifiedUserRefiner: ActionRefiner[AuthRequest, AuthRequest] {
-    val executionContext: ExecutionContext
-
-    def refine[A](request: AuthRequest[A]): Future[Product with Serializable with Either[Result, AuthenticatedRequest[A, AuthenticatedUser]]]
-  } = new ActionRefiner[AuthRequest, AuthRequest] {
+  def apiVerifiedUserRefiner: ActionRefiner[AuthRequest, AuthRequest] = new ActionRefiner[AuthRequest, AuthRequest] {
     override val executionContext = ec
-    def refine[A](request: AuthRequest[A]) = for (meResponse <- identityApiClient.me(request.user.auth)) yield {
-      meResponse.left.map {
-        errors =>
-          logger.warn(s"Failed to look up logged-in user: $errors")
-          sendUserToSignin(request)
-      }.right.map {
-        userFromApi =>
-          logger.trace("user is logged in")
-          new AuthRequest(request.user.copy(user = userFromApi), request)
+
+    def refine[A](request: AuthRequest[A]) =
+      identityApiClient.me(request.user.auth).map { _.fold(
+          errors => {
+            logger.warn(s"Failed to look up logged-in user: $errors")
+            Left(sendUserToSignin(request))
+          },
+          userFromApi => {
+            logger.trace("user is logged in")
+            Right(new AuthRequest(request.user.copy(user = userFromApi), request))
+          }
+        )
       }
-    }
   }
 
   def recentlyAuthenticatedRefiner: ActionRefiner[AuthRequest, AuthRequest] = new ActionRefiner[AuthRequest, AuthRequest] {
