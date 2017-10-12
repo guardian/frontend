@@ -133,6 +133,15 @@ object UrlHelpers {
     }
   }
 
+  def getSupportOrContribute(position: Position)(implicit request: RequestHeader): String = {
+    val editionId = Edition(request).id.toLowerCase()
+    if (editionId == "uk" && SupportFrontendActive.isSwitchedOn) {
+      getReaderRevenueUrl(Support, position)
+    } else {
+      getReaderRevenueUrl(Contribute, position)
+    }
+  }
+
   def getSupportOrSubscriptionUrl(position: Position)(implicit request: RequestHeader): String = {
     val editionId = Edition(request).id.toLowerCase()
     if (editionId == "uk" && SupportFrontendActive.isSwitchedOn) {
