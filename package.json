@@ -8,7 +8,7 @@
     "tools/amp-validation"
   ],
   "engines": {
-    "yarn": "1.1.0"
+    "yarn": "1.2.0"
   },
   "dependencies": {
     "bean": "~1.0.14",
