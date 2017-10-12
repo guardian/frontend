@@ -1,7 +1,7 @@
 package navigation
 
 import conf.Configuration
-import conf.switches.Switches
+import conf.switches.Switches.SupportFrontendActive
 import play.api.libs.json.Json
 import play.api.mvc.RequestHeader
 import common.Edition
@@ -117,15 +117,15 @@ object UrlHelpers {
   def getContributionOrSupporterUrl(editionId: String)(implicit request: RequestHeader): String =
     if (editionId == "us") {
       getReaderRevenueUrl(Contribute, NewHeader)
-    } else if (editionId == "uk" && Switches.SupportFrontendActive.isSwitchedOn) {
+    } else if (editionId == "uk" && SupportFrontendActive.isSwitchedOn) {
       getReaderRevenueUrl(Support, NewHeader)
     } else {
       getReaderRevenueUrl(Membership, NewHeader)
     }
 
   def getSupportOrMembershipUrl(position: Position)(implicit request: RequestHeader): String = {
-    val editionId = Edition (request).id.toLowerCase()
-    if (editionId == "uk" && Switches.SupportFrontendActive.isSwitchedOn) {
+    val editionId = Edition(request).id.toLowerCase()
+    if (editionId == "uk" && SupportFrontendActive.isSwitchedOn) {
       getReaderRevenueUrl (Support, position)
     } else {
       getReaderRevenueUrl (Membership, position)
@@ -134,7 +134,7 @@ object UrlHelpers {
 
   def getSupportOrSubscriptionUrl(position: Position)(implicit request: RequestHeader): String = {
     val editionId = Edition(request).id.toLowerCase()
-    if (editionId == "uk" && Switches.SupportFrontendActive.isSwitchedOn) {
+    if (editionId == "uk" && SupportFrontendActive.isSwitchedOn) {
       getReaderRevenueUrl (Support, position)
     } else {
       getReaderRevenueUrl (Subscribe, position)

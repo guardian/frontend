@@ -7,7 +7,7 @@ import SectionLinks._
 import NewNavigation._
 import SubSectionLinks._
 import NavLinks._
-import UrlHelpers.{Membership, SideMenu, Subscribe, getReaderRevenueUrl}
+import UrlHelpers.{Membership, SideMenu, Subscribe, getReaderRevenueUrl, getSupportOrMembershipUrl, getSupportOrSubscriptionUrl}
 import play.api.mvc.RequestHeader
 
 object NavigationHelpers {
