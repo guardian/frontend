@@ -25,6 +25,7 @@ import { epicButtonsTemplate } from 'common/modules/commercial/templates/acquisi
 import { acquisitionsEpicControlTemplate } from 'common/modules/commercial/templates/acquisitions-epic-control';
 import { acquisitionsTestimonialBlockTemplate } from 'common/modules/commercial/templates/acquisitions-epic-testimonial-block';
 import { shouldSeeReaderRevenue as userShouldSeeReaderRevenue } from 'commercial/modules/user-features';
+import { useSupportDomain, selectBaseUrl } from './support-utilities';
 
 type EpicTemplate = (Variant, AcquisitionsEpicTemplateCopy) => string;
 
@@ -33,13 +34,6 @@ export type CtaUrls = {
     contributeUrl?: string,
     supportUrl?: string,
 };
-
-const supportBaseURL = 'https://support.theguardian.com/uk';
-const useSupportDomain = (): boolean =>
-    config.get('switches.ukSupporterTrafficToNewSupportFrontend') &&
-    geolocationGetSync() === 'GB';
-const selectBaseUrl = (defaultUrl: string): string =>
-    useSupportDomain() ? supportBaseURL : defaultUrl;
 
 const membershipBaseURL = selectBaseUrl(
     'https://membership.theguardian.com/supporter'
@@ -216,7 +210,7 @@ const makeABTestVariant = (
         }),
         supportCustomURL = null,
         supportURL = addTrackingCodesToUrl({
-            base: supportCustomURL || supportBaseURL,
+            base: supportCustomURL || selectBaseUrl(),
             componentType: parentTest.componentType,
             componentId: campaignCode,
             campaignCode,
@@ -501,5 +495,4 @@ export {
     getTestimonialBlock,
     makeABTest,
     defaultButtonTemplate,
-    useSupportDomain,
 };

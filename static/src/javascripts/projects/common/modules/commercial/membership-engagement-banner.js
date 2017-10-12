@@ -15,6 +15,10 @@ import {
     submitComponentEvent,
     addTrackingCodesToUrl,
 } from 'common/modules/commercial/acquisitions-ophan';
+import {
+    selectBaseUrl,
+    selectEngagementBannerButtonCaption,
+} from 'common/modules/commercial/support-utilities';
 
 // change messageCode to force redisplay of the message to users who already closed it.
 const messageCode = 'engagement-banner-2017-09-21';
@@ -123,7 +127,7 @@ const showBanner = (params: EngagementBannerParams): void => {
         : params.messageText;
 
     const linkUrl = addTrackingCodesToUrl({
-        base: params.linkUrl,
+        base: selectBaseUrl(params.linkUrl),
         componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
         componentId: params.campaignCode,
         campaignCode: params.campaignCode,
@@ -133,7 +137,9 @@ const showBanner = (params: EngagementBannerParams): void => {
                 : undefined,
     });
 
-    const buttonCaption = params.buttonCaption;
+    const buttonCaption = selectEngagementBannerButtonCaption(
+        params.buttonCaption
+    );
     const buttonSvg = inlineSvg('arrowWhiteRight');
     const renderedBanner = `
     <div id="site-message__message">

@@ -1,8 +1,5 @@
 // @flow
-import {
-    makeABTest,
-    useSupportDomain,
-} from 'common/modules/commercial/contributions-utilities';
+import { makeABTest } from 'common/modules/commercial/contributions-utilities';
 import { logView } from 'common/modules/commercial/acquisitions-view-log';
 import $ from 'lib/$';
 import config from 'lib/config';
@@ -11,6 +8,7 @@ import { elementInView } from 'lib/element-inview';
 import fastdom from 'lib/fastdom-promise';
 import { epicLiveBlogTemplate } from 'common/modules/commercial/templates/acquisitions-epic-liveblog';
 import { liveblog as liveblogCopy } from 'common/modules/commercial/acquisitions-copy';
+import { useSupportDomain } from 'common/modules/commercial/support-utilities';
 
 const pageId: string = config.get('page.pageId', '');
 
