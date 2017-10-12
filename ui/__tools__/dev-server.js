@@ -17,7 +17,7 @@ app.use(
     })
 );
 app.use(webpackHotMiddleware(compiler));
-app.get('/', (req, res) => {
+app.get('/', (req, res, next) => {
     delete require.cache[require.resolve('../dist/ui.bundle.server')];
 
     // $FlowFixMe
@@ -40,10 +40,16 @@ app.get('/', (req, res) => {
             return res.send(errors);
         }
 
-        return res.send(frontend.render(JSON.parse(body)));
+        try {
+            return res.send(frontend.render(JSON.parse(body)));
+        } catch(e) {
+            return next(e);
+        }
     });
 });
-
+app.use(function (err, req, res, next) {
+    res.status(500).send(err.stack);
+});
 app.listen(3000, () => {
     // eslint-disable-next-line no-console
     console.log('UI rendering dev server listening on port 3000\n');
