@@ -10,13 +10,12 @@ case class JavascriptPropsConfig(
     else conf.Static("javascripts/vendor/polyfillio.fallback.js"),
   beaconUrl: String = Configuration.debug.beaconUrl
 )
-case class JavascriptProps(
-  config: JavascriptPropsConfig = JavascriptPropsConfig()
-)
+case class JavascriptProps(config: JavascriptPropsConfig)
 
 object JavascriptPropsConfig {
   implicit val javascriptPropsConfig: Writes[JavascriptPropsConfig] = Json.writes[JavascriptPropsConfig]
 }
 object JavascriptProps {
   implicit val javascriptProps: Writes[JavascriptProps] = Json.writes[JavascriptProps]
+  def default(): JavascriptProps = JavascriptProps(JavascriptPropsConfig())
 }

@@ -19,7 +19,7 @@ class DevComponentController(
   }
 
   def props(): Action[AnyContent] = Action { request =>
-    Ok(Json.toJson(JavascriptProps()))
+    Ok(Json.toJson(JavascriptProps.default()))
   }
 
 }
