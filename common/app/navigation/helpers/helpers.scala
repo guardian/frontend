@@ -16,8 +16,9 @@ object NavigationHelpers {
     val editionId = edition.id.toLowerCase()
 
     NavLinkLists(List(
-      NavLink("become a supporter", getReaderRevenueUrl(Membership, SideMenu)),
-      NavLink("subscribe", getReaderRevenueUrl(Subscribe, SideMenu))
+      // This methods can be reverted once we decide to deploy the new support site to the rest of the world.
+      NavLink("become a supporter", getSupportOrMembershipUrl(SideMenu)),
+      NavLink("subscribe", getSupportOrSubscriptionUrl(SideMenu))
     ))
   }
 
