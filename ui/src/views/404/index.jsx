@@ -27,7 +27,7 @@ export default ({ beaconUrl }: { beaconUrl: string }) => (
             <NotFoundSvg style={fourOhFour} />
             <div style={contentText}>
                 <h1 style={heading}>
-                    Sorry — the page you have requested does not exist
+                    Sorry – the page you have requested does not exist
                 </h1>
                 <p style={bodyCopy}>
                     You may have followed an outdated link, or have mistyped a
