@@ -36,13 +36,17 @@ class AuthenticatedActions(
     SeeOther(identityUrlBuilder.buildUrl(signinUrl))
   }
 
-  def sendUserToSignin(request: RequestHeader): Result =  redirectWithReturn(request, "/signin")
+  def sendUserToSignin(request: RequestHeader): Result =
+    redirectWithReturn(request, "/signin")
 
-  def sendUserToReauthenticate(request: RequestHeader): Result = redirectWithReturn(request, "/reauthenticate")
+  def sendUserToReauthenticate(request: RequestHeader): Result =
+    redirectWithReturn(request, "/reauthenticate")
 
-  def authAction: AuthenticatedBuilder[AuthenticatedUser] = new AuthenticatedBuilder(authService.authenticatedUserFor, anyContentParser, sendUserToSignin)
+  def authAction: AuthenticatedBuilder[AuthenticatedUser] =
+    new AuthenticatedBuilder(authService.authenticatedUserFor, anyContentParser, sendUserToSignin)
 
-  def agreeAction(unAuthorizedCallback: (RequestHeader) => Result): AuthenticatedBuilder[AuthenticatedUser] = new AuthenticatedBuilder(authService.authenticatedUserFor, anyContentParser, unAuthorizedCallback)
+  def agreeAction(unAuthorizedCallback: (RequestHeader) => Result): AuthenticatedBuilder[AuthenticatedUser] =
+    new AuthenticatedBuilder(authService.authenticatedUserFor, anyContentParser, unAuthorizedCallback)
 
   def apiVerifiedUserRefiner: ActionRefiner[AuthRequest, AuthRequest] = new ActionRefiner[AuthRequest, AuthRequest] {
     override val executionContext = ec
@@ -63,12 +67,15 @@ class AuthenticatedActions(
 
   def recentlyAuthenticatedRefiner: ActionRefiner[AuthRequest, AuthRequest] = new ActionRefiner[AuthRequest, AuthRequest] {
     override val executionContext = ec
+
     def refine[A](request: AuthRequest[A]) = Future.successful {
       if (authService.recentlyAuthenticated(request)) Right(request) else Left(sendUserToReauthenticate(request))
     }
   }
 
-  def authActionWithUser: ActionBuilder[AuthRequest, AnyContent] = authAction andThen apiVerifiedUserRefiner
+  def authActionWithUser: ActionBuilder[AuthRequest, AnyContent] =
+    authAction andThen apiVerifiedUserRefiner
 
-  def recentlyAuthenticated: ActionBuilder[AuthRequest, AnyContent] = authAction andThen recentlyAuthenticatedRefiner andThen apiVerifiedUserRefiner
+  def recentlyAuthenticated: ActionBuilder[AuthRequest, AnyContent] =
+    authAction andThen recentlyAuthenticatedRefiner andThen apiVerifiedUserRefiner
 }
