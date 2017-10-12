@@ -78,8 +78,24 @@ var handleAssetRequest = function (event) {
                         // as well as the cache consuming the response, we need
                         // to clone it so we have two streams.
                         var responseToCache = response.clone();
-                       
+                        
+                        // get filename of request we're going to cached
+                        var responseUrl = response.url;
+                        var responseFileName = responseUrl.substring(responseUrl.lastIndexOf("/") + 1, responseUrl.length);
+
                         caches.open('graun').then(function(cache) {
+                            // check cache for matching filename, if match found then delete old cached item
+                            cache.keys().then(function(keys) {
+                                keys.forEach(function(request, index, array) {
+                                    var requestUrl = request.url;
+                                    var requestFileName = requestUrl.substring(requestUrl.lastIndexOf("/") + 1, requestUrl.length);
+                                    
+                                    if (requestUrl === responseUrl) {
+                                        cache.delete(request);
+                                    }
+                                });
+                            });
+                            // save response to cache
                             cache.put(event.request, responseToCache);
                         });
 
