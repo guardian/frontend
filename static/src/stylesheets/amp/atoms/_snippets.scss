@@ -11,13 +11,16 @@
     padding-top: 33%;
 }
 
-.explainer-snippet__image img {
+.explainer-snippet__image amp-img {
     width: 100%;
     height: 100%;
     position: absolute;
     top: 0;
     left: 0;
-    object-fit: cover;
+
+    img {
+        object-fit: cover;
+    }
 }
 
 .explainer-snippet__item::before {
