@@ -126,18 +126,18 @@ object UrlHelpers {
   def getSupportOrMembershipUrl(position: Position)(implicit request: RequestHeader): String = {
     val editionId = Edition(request).id.toLowerCase()
     if (editionId == "uk" && SupportFrontendActive.isSwitchedOn) {
-      getReaderRevenueUrl (Support, position)
+      getReaderRevenueUrl(Support, position)
     } else {
-      getReaderRevenueUrl (Membership, position)
+      getReaderRevenueUrl(Membership, position)
     }
   }
 
   def getSupportOrSubscriptionUrl(position: Position)(implicit request: RequestHeader): String = {
     val editionId = Edition(request).id.toLowerCase()
     if (editionId == "uk" && SupportFrontendActive.isSwitchedOn) {
-      getReaderRevenueUrl (Support, position)
+      getReaderRevenueUrl(Support, position)
     } else {
-      getReaderRevenueUrl (Subscribe, position)
+      getReaderRevenueUrl(Subscribe, position)
     }
   }
 
