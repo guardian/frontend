@@ -12,10 +12,8 @@ case class JavascriptPropsConfig(
 )
 case class JavascriptProps(config: JavascriptPropsConfig)
 
-object JavascriptPropsConfig {
-  implicit val javascriptPropsConfig: Writes[JavascriptPropsConfig] = Json.writes[JavascriptPropsConfig]
-}
 object JavascriptProps {
+  implicit val javascriptPropsConfig: Writes[JavascriptPropsConfig] = Json.writes[JavascriptPropsConfig]
   implicit val javascriptProps: Writes[JavascriptProps] = Json.writes[JavascriptProps]
   def default(): JavascriptProps = JavascriptProps(JavascriptPropsConfig())
 }
