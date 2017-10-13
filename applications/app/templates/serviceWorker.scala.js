@@ -71,7 +71,7 @@ var handleAssetRequest = function (event) {
                     } : {}).then(function(fetchedResponse) {
                         console.log('*** fetchedResponse ***', fetchedResponse);
                         // Check if we received a valid response
-                        if(!fetchedResponse || fetchedResponse.status !== 200 || fetchedResponse.type !== 'basic') {
+                        if(!fetchedResponse || fetchedResponse.status !== 200) {
                             return fetchedResponse;
                         }
 
@@ -87,17 +87,17 @@ var handleAssetRequest = function (event) {
 
                         caches.open('graun').then(function(cache) {
                             // check cache for matching filename, if match found then delete old cached item
-                            //     cache.keys().then(function(keys) {
-                            //         keys.forEach(function(request, index, array) {
-                            //             var requestUrl = request.url;
-                            //             var requestFileName = requestUrl.substring(requestUrl.lastIndexOf("/") + 1, requestUrl.length);
+                                cache.keys().then(function(keys) {
+                                    keys.forEach(function(request, index, array) {
+                                        var requestUrl = request.url;
+                                        var requestFileName = requestUrl.substring(requestUrl.lastIndexOf("/") + 1, requestUrl.length);
                                         
-                            //             if (requestUrl === responseUrl) {
-                            //                 console.log('*** delete old cache ***', request);
-                            //                 cache.delete(request);
-                            //             }
-                            //         });
-                            //     });
+                                        if (requestUrl === responseUrl) {
+                                            console.log('*** delete old cache ***', request);
+                                            cache.delete(request);
+                                        }
+                                    });
+                                });
                             // save response to cache
                             console.log('*** save to cache ***', responseToCache);
                             cache.put(event.request, responseToCache);
@@ -136,6 +136,6 @@ this.addEventListener('fetch', function (event) {
 });
 
 this.addEventListener('activate', function() {
-    console.log('**** graun cache deleted ****');
+    console.log('** graun cache deleted **');
     caches.delete('graun');
 });
