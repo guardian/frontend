@@ -22,7 +22,7 @@ app.get('/', (req, res, next) => {
 
     // $FlowFixMe
     const { frontend } = require('../dist/ui.bundle.server'); // eslint-disable-line global-require, import/no-unresolved
-    const propsUrl = 'http://localhost:9000/dev/props.json';
+    const propsUrl = 'http://localhost:9000/dev/ui/props.json';
 
     request(propsUrl, (errors, response, body) => {
         if (errors) {

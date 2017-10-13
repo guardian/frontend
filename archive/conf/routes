@@ -7,7 +7,7 @@ GET        /_healthcheck                            controllers.HealthCheck.heal
 
 GET        /dev/ui                                  controllers.DevComponentController.renderComponent()
 
-GET        /dev/props.json                          controllers.DevComponentController.props()
+GET        /dev/ui/props.json                       controllers.DevComponentController.props()
 
 # 404
 GET        /404$path</.*>                           controllers.ArchiveController.lookup(path)
