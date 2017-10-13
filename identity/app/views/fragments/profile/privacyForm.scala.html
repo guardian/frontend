@@ -8,6 +8,23 @@
 @import helper._
 @import views.html.fragments.registrationFooter
 
+@getConsentText(index: Int) = {
+  @com.gu.identity.model.Consent.getText(
+    user.consents.toList(index).consentIdentifier,
+    user.consents.toList(index).consentIdentifierVersion
+  )
+}
+
+@consentCheckboxes = {
+  @helper.repeatWithIndex(privacyForm("consents"), min=1) {(consent, consentIndex) =>
+      @checkboxField(
+          Checkbox(
+              privacyForm(consent.name + ".hasConsented"),
+              '_label -> getConsentText(consentIndex)
+          )
+      )(nonInputFields, messages)
+  }
+}
 
 <form class="form js-public-profile-form" novalidate action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" role="main" method="post">
     @views.html.helper.CSRF.formField
@@ -42,8 +59,7 @@
                     <div class="form-field__note">The Guardian and their partners would like to occasionally send you information about their products, services and events.</div>
 
                     <div class="form-fields-group">
-                        @checkboxField(Checkbox(privacyForm("receiveGnmMarketing"), '_label -> "Receive email from Guardian News and Media Ltd."))(nonInputFields, messages)
-                        @checkboxField(Checkbox(privacyForm("receive3rdPartyMarketing"), '_label -> "Receive email from other organisations"))(nonInputFields, messages)
+                        @consentCheckboxes
                     </div>
                 </li>
             </ul>
