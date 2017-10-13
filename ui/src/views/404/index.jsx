@@ -17,7 +17,7 @@ import {
     link,
 } from './style.css';
 
-export default ({ config }: { config: object}) => (
+export default ({ config }: { config: object }) => (
     <div style={wrapper}>
         <div style={mainContent}>
             <a href="https://www.theguardian.com/" style={logoWrapper}>

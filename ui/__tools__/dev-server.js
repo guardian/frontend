@@ -42,12 +42,13 @@ app.get('/', (req, res, next) => {
 
         try {
             return res.send(frontend.render(JSON.parse(body)));
-        } catch(e) {
+        } catch (e) {
             return next(e);
         }
     });
 });
-app.use(function (err, req, res, next) {
+// eslint-disable-next-line no-unused-vars
+app.use((err, req, res, next) => {
     res.status(500).send(err.stack);
 });
 app.listen(3000, () => {
