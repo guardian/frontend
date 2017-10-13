@@ -57,18 +57,28 @@ class IdApiClient(
     response map extractUser
   }
 
-  def saveUser(userId: String, user: UserUpdate, auth: Auth): Future[Response[User]] =
+  def saveUser(userId: String, user: UserUpdate, auth: Auth): Future[Response[User]] = {
+    println("Saving user!!!")
+    println(write(user))
+//    mockUserResponseV2Consent
     post(urlJoin("user", userId), Some(auth), body = Some(write(user))) map extractUser
+  }
 
   def me(auth: Auth): Future[Response[User]] = {
     val apiPath = urlJoin("user", "me")
     val params = buildParams(Some(auth))
-//    val response = httpClient.GET(apiUrl(apiPath), None, params, buildHeaders(Some(auth)))
-//    response.map { _.fold(
-//        error => println(error.toString()),
-//        httpResponse => println(httpResponse.body)
-//      )
-//    }
+    val response = httpClient.GET(apiUrl(apiPath), None, params, buildHeaders(Some(auth)))
+    response.map { _.fold(
+        error => println(error.toString()),
+        httpResponse => println(httpResponse.body)
+      )
+    }
+
+    response map extractUser
+//    mockUserResponseV2Consent
+  }
+
+  private def mockUserResponseV2Consent = {
 
     val httpResponseBody =
       """
@@ -135,11 +145,11 @@ class IdApiClient(
 
     val response = Future(Right(HttpResponse(httpResponseBody, 200, "OK")))
 
-//    response.map { _.fold(
-//        error => println(error.toString()),
-//        httpResponse => println(httpResponse.body)
-//      )
-//    }
+    //    response.map { _.fold(
+    //        error => println(error.toString()),
+    //        httpResponse => println(httpResponse.body)
+    //      )
+    //    }
 
     val deserializedUserWithConsentsResponse = response map extractUser
     println("the new model ta da da da!")
@@ -147,20 +157,18 @@ class IdApiClient(
     deserializedUserWithConsentsResponse.map { deserializedUserWithConsents =>
       println("i am here")
       deserializedUserWithConsents.fold(
-          error => {
-            println("ererrrerw")
-            println(error.toString())
-          },
-          userWithConsents => {
-            println("I am in right")
-            userWithConsents.consents.toList.foreach(println)
-          }
-        )
-      }
+        error => {
+          println("ererrrerw")
+          println(error.toString())
+        },
+        userWithConsents => {
+          println("I am in right")
+          userWithConsents.consents.toList.foreach(println)
+        }
+      )
+    }
 
     deserializedUserWithConsentsResponse
-
-//    response map extractUser
 
   }
 

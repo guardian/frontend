@@ -7,9 +7,8 @@ import play.api.i18n.MessagesProvider
 
 trait UserFormMapping[T <: UserFormData] extends Mappings {
 
-  private def form(implicit messagesProvider: MessagesProvider): Form[T] = Form(formMapping)
-
-  def bindForm(user: User)(implicit messagesProvider: MessagesProvider): Form[T] = form fill fromUser(user)
+  def bindForm(user: User)(implicit messagesProvider: MessagesProvider): Form[T] =
+    Form(formMapping) fill fromUser(user)
 
   def mapContext(context: String): String = contextMap.getOrElse(context, context)
 

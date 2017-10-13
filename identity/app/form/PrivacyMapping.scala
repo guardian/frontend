@@ -42,16 +42,15 @@ case class PrivacyFormData(
     allowThirdPartyProfiling: Boolean,
     consents: Seq[Consent]) extends UserFormData{
 
-  def toUserUpdate(currentUser: User): UserUpdate = {
-    val statusFields = currentUser.statusFields
+  def toUserUpdate(oldUser: User): UserUpdate =
     UserUpdate(
-      statusFields = Some(statusFields.copy(
+      statusFields = Some(oldUser.statusFields.copy(
         receive3rdPartyMarketing = Some(receive3rdPartyMarketing),
         receiveGnmMarketing = Some(receiveGnmMarketing),
         allowThirdPartyProfiling = Some(allowThirdPartyProfiling)
-      ))
+      )),
+      consents = Some(consents.toSet)
     )
-  }
 }
 
 object PrivacyFormData {
