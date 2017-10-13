@@ -85,23 +85,23 @@ var handleAssetRequest = function (event) {
                         // var responseUrl = responseToCache.url;
                         // var responseFileName = responseUrl.substring(responseUrl.lastIndexOf("/") + 1, responseUrl.length);
 
-                        // caches.open('graun').then(function(cache) {
-                        //     // check cache for matching filename, if match found then delete old cached item
-                        //     cache.keys().then(function(keys) {
-                        //         keys.forEach(function(request, index, array) {
-                        //             var requestUrl = request.url;
-                        //             var requestFileName = requestUrl.substring(requestUrl.lastIndexOf("/") + 1, requestUrl.length);
-                                    
-                        //             if (requestUrl === responseUrl) {
-                        //                 console.log('*** delete old cache ***', request);
-                        //                 cache.delete(request);
-                        //             }
-                        //         });
-                        //     });
-                        //     // save response to cache
+                        caches.open('graun').then(function(cache) {
+                            // check cache for matching filename, if match found then delete old cached item
+                            //     cache.keys().then(function(keys) {
+                            //         keys.forEach(function(request, index, array) {
+                            //             var requestUrl = request.url;
+                            //             var requestFileName = requestUrl.substring(requestUrl.lastIndexOf("/") + 1, requestUrl.length);
+                                        
+                            //             if (requestUrl === responseUrl) {
+                            //                 console.log('*** delete old cache ***', request);
+                            //                 cache.delete(request);
+                            //             }
+                            //         });
+                            //     });
+                            // save response to cache
                             console.log('*** save to cache ***', responseToCache);
                             cache.put(event.request, responseToCache);
-                        // });
+                        });
 
                         return fetchedResponse;
                     });
