@@ -1,10 +1,11 @@
 package idapiclient
 
-import com.gu.identity.model.{EmailList, LiftJsonConfig, Subscriber, User}
+import com.gu.identity.model.{EmailList , Subscriber, User}
+
 import scala.concurrent.{ExecutionContext, Future}
 import idapiclient.responses.{AccountDeletionResult, CookiesResponse, Error, HttpResponse}
 import conf.IdConfig
-import idapiclient.parser.{JodaJsonSerializer, JsonBodyParser}
+import idapiclient.parser.IdApiJsonBodyParser
 import net.liftweb.json.JsonAST.JValue
 import net.liftweb.json.Serialization.write
 import utils.SafeLogging
@@ -12,21 +13,19 @@ import idapiclient.requests.{DeletionBody, PasswordUpdate, TokenPassword}
 import play.api.libs.ws.WSClient
 
 class IdApiClient(
-    jsonBodyParser: JsonBodyParser,
+    idJsonBodyParser: IdApiJsonBodyParser,
     conf: IdConfig,
     httpClient: HttpClient)
     (implicit val executionContext: ExecutionContext) extends SafeLogging {
 
-  val apiRootUrl: String = conf.apiRoot
-  val clientAuth: Auth = ClientAuth(conf.apiClientToken)
+  private val apiRootUrl: String = conf.apiRoot
+  private val clientAuth: Auth = ClientAuth(conf.apiClientToken)
 
-  import jsonBodyParser.{extractUnit, extract}
+  import idJsonBodyParser.{extractUnit, extract, jsonField}
 
-  implicit val formats = LiftJsonConfig.formats + new JodaJsonSerializer
+  private implicit val formats = idJsonBodyParser.formats
 
-  def jsonField(field: String)(json: JValue): JValue = json \ field
-
-  def extractUser: (Response[HttpResponse]) => Response[User] = extract(jsonField("user"))
+  private def extractUser: (Response[HttpResponse]) => Response[User] = extract(jsonField("user"))
 
   //   AUTH
   def authBrowser(userAuth: Auth, trackingData: TrackingData, persistent: Option[Boolean] = None): Future[Response[CookiesResponse]] = {
@@ -48,7 +47,6 @@ class IdApiClient(
     val headers = buildHeaders(Some(auth))
     val response = httpClient.GET(apiUrl(apiPath), None, params, headers)
     response map extractUser
-
   }
 
   def userFromVanityUrl(vanityUrl: String, auth: Auth = Anonymous): Future[Response[User]] = {
@@ -65,8 +63,105 @@ class IdApiClient(
   def me(auth: Auth): Future[Response[User]] = {
     val apiPath = urlJoin("user", "me")
     val params = buildParams(Some(auth))
-    val response = httpClient.GET(apiUrl(apiPath), None, params, buildHeaders(Some(auth)))
-    response map extractUser
+//    val response = httpClient.GET(apiUrl(apiPath), None, params, buildHeaders(Some(auth)))
+//    response.map { _.fold(
+//        error => println(error.toString()),
+//        httpResponse => println(httpResponse.body)
+//      )
+//    }
+
+    val httpResponseBody =
+      """
+        |{
+        |	"status": "ok",
+        |	"user": {
+        |		"id": "10000052",
+        |		"primaryEmailAddress": "tgtz4grdot0hgc4mfec@gu.com",
+        |		"publicFields": {
+        |			"username": "ratatat11",
+        |			"usernameLowerCase": "ratatat11",
+        |			"displayName": "ratatat11"
+        |		},
+        |		"privateFields": {
+        |			"firstName": "tGtZ4grdot0HGC4mFEc1-mock",
+        |			"secondName": "tGtZ4grdot0HGC4mFEc1",
+        |			"gender": "Male",
+        |			"registrationIp": "",
+        |			"address1": "Moon311",
+        |			"registrationType": "guardian",
+        |			"registrationPlatform": "identity-frontend",
+        |			"title": "Mr",
+        |			"legacyPackages": "CRE,RCO",
+        |			"legacyProducts": "CRE,RCO"
+        |		},
+        |		"statusFields": {
+        |			"receive3rdPartyMarketing": true,
+        |			"receiveGnmMarketing": false,
+        |			"allowThirdPartyProfiling": false
+        |			"userEmailValidated": true,
+        |		},
+        |		"dates": {
+        |			"accountCreatedDate": "2017-07-14T13:57:59Z"
+        |		},
+        |		"userGroups": [{
+        |			"path": "/sys/policies/basic-identity",
+        |			"packageCode": "CRE"
+        |		}, {
+        |			"path": "/sys/policies/basic-community",
+        |			"packageCode": "RCO"
+        |		}],
+        |		"socialLinks": [],
+        |		"adData": {},
+        |		"consents": [{
+        |				"actor": "user",
+        |				"consentIdentifier": "firstParty",
+        |				"consentIdentifierVersion": 3,
+        |				"hasConsented": true,
+        |				"timestamp": "2017-07-14T13:57:59Z",
+        |				"privacyPolicy": 1
+        |			},
+        |			{
+        |				"actor": "user",
+        |				"consentIdentifier": "thirdParty",
+        |				"consentIdentifierVersion": 2,
+        |				"hasConsented": false,
+        |				"timestamp": "2017-07-14T13:57:59Z",
+        |				"privacyPolicy": 1
+        |			}
+        |		]
+        |	}
+        |}
+      """.stripMargin
+
+    val response = Future(Right(HttpResponse(httpResponseBody, 200, "OK")))
+
+//    response.map { _.fold(
+//        error => println(error.toString()),
+//        httpResponse => println(httpResponse.body)
+//      )
+//    }
+
+    val deserializedUserWithConsentsResponse = response map extractUser
+    println("the new model ta da da da!")
+
+    deserializedUserWithConsentsResponse.map { deserializedUserWithConsents =>
+      println("i am here")
+      deserializedUserWithConsents.fold(
+          error => {
+            println("ererrrerw")
+            println(error.toString())
+          },
+          userWithConsents => {
+            println("I am in right")
+            userWithConsents.consents.toList.foreach(println)
+          }
+        )
+      }
+
+    deserializedUserWithConsentsResponse
+
+//    response map extractUser
+
   }
 
   /**
