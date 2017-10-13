@@ -75,11 +75,10 @@
     & > span {
         box-sizing: border-box;
         display: block;
-        padding: ($gs-baseline / 1.5) ($gs-gutter);
+        padding: ($gs-baseline / 1.5) ($gs-gutter) ($gs-baseline / 4);
         position: relative;
 
         @include mq($until: mobileMedium) {
-            padding-bottom: $gs-baseline / 4;
             padding-top: $gs-baseline / 2;
         }
     }
