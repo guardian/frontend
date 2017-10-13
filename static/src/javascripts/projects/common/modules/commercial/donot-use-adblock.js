@@ -15,26 +15,23 @@ const showAdblockMessage = (): void => {
     const messages = {
         UK: {
             campaign: 'ADB_UK',
-            messageText: [
-                "We notice you're using an ad-blocker. Perhaps you'll support us another way?",
-                'Become a Supporter for less than £1 per week',
-            ].join(' '),
+            messageText: `
+                We notice you're using an ad-blocker. Perhaps you'll support us another way?
+                Become a Supporter for less than £1 per week`,
             linkText: 'Find out more',
         },
         US: {
             campaign: 'ADB_US',
-            messageText: [
-                "We notice you're using an ad-blocker. Perhaps you'll support us another way?",
-                'Become a Supporter for less than $1 per week',
-            ].join(' '),
+            messageText: `
+                We notice you're using an ad-blocker. Perhaps you'll support us another way?
+                Become a Supporter for less than $1 per week`,
             linkText: 'Find out more',
         },
         INT: {
             campaign: 'ADB_INT',
-            messageText: [
-                "We notice you're using an ad-blocker. Perhaps you'll support us another way?",
-                'Become a Supporter for less than $1/€1 per week',
-            ].join(' '),
+            messageText: `
+                We notice you're using an ad-blocker. Perhaps you'll support us another way?
+                Become a Supporter for less than $1/€1 per week`,
             linkText: 'Find out more',
         },
     };
