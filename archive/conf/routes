@@ -5,8 +5,6 @@
 
 GET        /_healthcheck                            controllers.HealthCheck.healthCheck()
 
-GET        /dev/ui                                  controllers.DevComponentController.renderComponent()
-
 GET        /dev/ui/props.json                       controllers.DevComponentController.props()
 
 # 404
