@@ -9,7 +9,7 @@ import idapiclient.responses.Error
 import idapiclient.IdApiClient
 import model._
 import play.api.data.Form
-import play.api.i18n.{I18nSupport, MessagesApi, MessagesProvider}
+import play.api.i18n.{I18nSupport, MessagesProvider}
 import play.api.mvc._
 import play.filters.csrf.{CSRFAddToken, CSRFCheck}
 import services._
@@ -68,27 +68,30 @@ class EditProfileController(idUrlBuilder: IdentityUrlBuilder,
       }
 
       val activePage = identityPageToEditProfilePage(page)
-      val user = request.user
-      val profileForms = ProfileForms(user, activePage).bindFromRequestWithAddressErrorHack(request) // Why are we binding from case class and then re-binding from request?
+      val userFromRequest = request.user
+      val profileForms =
+        ProfileForms(userFromRequest, activePage).bindFromRequestWithAddressErrorHack(request) // Why are we binding from case class and then re-binding from request?
+
+//    def error(formWithErrors: Form[UserFormData]) =
 
       profileForms.activeForm.value.map {
         case data: AccountFormData if (data.deleteTelephone) => {
-          identityApiClient.deleteTelephone(user.auth) map {
-            case Left(errors) => profileFormsView(page, profileForms.withErrors(errors), user)
+          identityApiClient.deleteTelephone(userFromRequest.auth) map {
+            case Left(errors) => profileFormsView(page, profileForms.withErrors(errors), userFromRequest)
 
             case Right(_) => {
-              val boundForms = profileForms.bindForms(user.user.copy(privateFields = user.user.privateFields.copy(telephoneNumber = None)))
-              profileFormsView(page, boundForms, user)
+              val boundForms = profileForms.bindForms(userFromRequest.user.copy(privateFields = userFromRequest.user.privateFields.copy(telephoneNumber = None)))
+              profileFormsView(page, boundForms, userFromRequest)
             }
           }
         }
 
         case data: UserFormData =>
-          identityApiClient.saveUser(user.id, data.toUserUpdate(user), user.auth) map {
-            case Left(errors) => profileFormsView(page, profileForms.withErrors(errors), user)
+          identityApiClient.saveUser(userFromRequest.id, data.toUserUpdate(userFromRequest), userFromRequest.auth) map {
+            case Left(errors) => profileFormsView(page, profileForms.withErrors(errors), userFromRequest)
             case Right(updatedUser) => profileFormsView(page, profileForms.bindForms(updatedUser), updatedUser)
           }
-      }.getOrElse(Future(profileFormsView(page, profileForms, user)))
+      }.getOrElse(Future(profileFormsView(page, profileForms, userFromRequest)))
     }
   }
 

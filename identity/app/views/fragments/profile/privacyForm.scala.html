@@ -7,16 +7,47 @@
 @import form.IdFormHelpers._
 @import helper._
 @import views.html.fragments.registrationFooter
+@import org.joda.time.{DateTime, LocalDate, DateTimeZone}
+@import org.joda.time.format.DateTimeFormat
+
+
+
+@*
+    WARNING!!
+
+    Make sure you are testing bounds
+
+    [IndexOutOfBoundsException: 0]
+    <input type="hidden" name=@(consent.name + ".consentIdentifier") value=@(user.consents.toList(consentIndex).consentIdentifier)>
+*@
 
 @getConsentText(index: Int) = {
-  @com.gu.identity.model.Consent.getText(
-    user.consents.toList(index).consentIdentifier,
-    user.consents.toList(index).consentIdentifierVersion
-  )
+    @if(user.consents.toList.isEmpty) {
+        "Unknown consent text"
+    } else {
+        @com.gu.identity.model.Consent.getText(
+            user.consents.toList(index).consentIdentifier,
+            user.consents.toList(index).consentIdentifierVersion
+        )
+    }
 }
+
+@getCurrentTime = {
+    @(DateTimeFormat
+        .forPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
+        .withZone(DateTimeZone.UTC)
+        .print(new DateTime()))
+}
+
 
 @consentCheckboxes = {
   @helper.repeatWithIndex(privacyForm("consents"), min=1) {(consent, consentIndex) =>
+      <input type="hidden" name=@(consent.name + ".actor") value='user'>
+      <input type="hidden" name=@(consent.name + ".consentIdentifier") value=@(user.consents.toList(consentIndex).consentIdentifier)>
+      <input type="hidden" name=@(consent.name + ".consentIdentifierVersion") value=@(user.consents.toList(consentIndex).consentIdentifierVersion)>
+      <input type="hidden" name=@(consent.name + ".timestamp") value=@getCurrentTime>
+      <input type="hidden" name=@(consent.name + ".privacyPolicy") value=@(user.consents.toList(consentIndex).privacyPolicy)>
+
       @checkboxField(
           Checkbox(
               privacyForm(consent.name + ".hasConsented"),
@@ -28,6 +59,13 @@
 
 <form class="form js-public-profile-form" novalidate action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" role="main" method="post">
     @views.html.helper.CSRF.formField
+
+    @* Make this beautiful *@
+    @if(privacyForm.hasErrors) {
+        @privacyForm.errors.size
+        @privacyForm.errors(0).message
+        @privacyForm.errors(0).key
+    }
 
     @if(privacyForm.globalError.isDefined) {
         <div class="form__error">@privacyForm.globalErrors.map(_.message).mkString(", ")</div>
