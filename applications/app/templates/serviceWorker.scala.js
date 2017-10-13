@@ -67,11 +67,14 @@ var handleAssetRequest = function (event) {
                     return cachedResponse;
                 } else {
                     return fetch(event.request, needCredentialsWorkaround(event.request.url) ? {
-                        credentials: 'include'
-                    } : {}).then(function(fetchedResponse) {
+                        credentials: 'include',
+                        mode: 'no-cors'
+                    } : {
+                        mode: 'no-cors'
+                    }).then(function(fetchedResponse) {
                         console.log('*** fetchedResponse ***', fetchedResponse);
                         // Check if we received a valid response
-                        if(!fetchedResponse || fetchedResponse.status !== 200) {
+                        if(!fetchedResponse || fetchedResponse.status !== 200 || fetchedResponse.type !== 'basic') {
                             return fetchedResponse;
                         }
 
@@ -87,17 +90,17 @@ var handleAssetRequest = function (event) {
 
                         caches.open('graun').then(function(cache) {
                             // check cache for matching filename, if match found then delete old cached item
-                                cache.keys().then(function(keys) {
-                                    keys.forEach(function(request, index, array) {
-                                        var requestUrl = request.url;
-                                        var requestFileName = requestUrl.substring(requestUrl.lastIndexOf("/") + 1, requestUrl.length);
+                            //     cache.keys().then(function(keys) {
+                            //         keys.forEach(function(request, index, array) {
+                            //             var requestUrl = request.url;
+                            //             var requestFileName = requestUrl.substring(requestUrl.lastIndexOf("/") + 1, requestUrl.length);
                                         
-                                        if (requestUrl === responseUrl) {
-                                            console.log('*** delete old cache ***', request);
-                                            cache.delete(request);
-                                        }
-                                    });
-                                });
+                            //             if (requestUrl === responseUrl) {
+                            //                 console.log('*** delete old cache ***', request);
+                            //                 cache.delete(request);
+                            //             }
+                            //         });
+                            //     });
                             // save response to cache
                             console.log('*** save to cache ***', responseToCache);
                             cache.put(event.request, responseToCache);
