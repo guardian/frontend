@@ -5,5 +5,5 @@ import rendering.core.JavascriptProps
 import play.api.libs.json.{JsValue, Json}
 
 object NotFound extends Renderable {
-  override def props: Option[JsValue] = Some(Json.toJson(JavascriptProps.default()))
+  override def props: Option[JsValue] = Some(JavascriptProps.default().asJsValue())
 }

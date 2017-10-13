@@ -19,7 +19,7 @@ trait JavascriptRendering extends Logging {
   private val memoizedJs: Try[EvalResult] = loadJavascript()
 
   private def getCommonProps(props: Option[JsValue] = None): Option[JsValue] = {
-    props.map(_.as[JsObject] ++ Json.toJson(JavascriptProps.default()).as[JsObject])
+    props.map(_.as[JsObject] ++ JavascriptProps.default().asJsValue().as[JsObject])
   }
 
   def render(props: Option[JsValue] = None, forceReload: Boolean = false): Try[String] = for {
