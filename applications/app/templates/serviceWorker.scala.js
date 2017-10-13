@@ -63,6 +63,7 @@ var handleAssetRequest = function (event) {
                 // Workaround Firefox bug which drops cookies
                 // https://github.com/guardian/frontend/issues/12012
                 if (response) {
+                    console.log('*** return cache ***', response);
                     return response;
                 } else {
                     return fetch(event.request, needCredentialsWorkaround(event.request.url) ? {
@@ -91,11 +92,13 @@ var handleAssetRequest = function (event) {
                                     var requestFileName = requestUrl.substring(requestUrl.lastIndexOf("/") + 1, requestUrl.length);
                                     
                                     if (requestUrl === responseUrl) {
+                                        console.log('*** delete old cache ***', request);
                                         cache.delete(request);
                                     }
                                 });
                             });
                             // save response to cache
+                            console.log('*** save to cache ***', responseToCache);
                             cache.put(event.request, responseToCache);
                         });
 
@@ -132,5 +135,6 @@ this.addEventListener('fetch', function (event) {
 });
 
 this.addEventListener('activate', function() {
+    console.log('*** graun cache deleted ***');
     caches.delete('graun');
 });
