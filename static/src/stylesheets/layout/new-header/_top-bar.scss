@@ -50,11 +50,6 @@
     &:hover:after {
         transform: translateY(0) rotate(45deg);
     }
-
-    // Open state for dropdowns - selector will change
-    &:active:after {
-        transform: translateY(1px) rotate(-135deg);
-    }
 }
 
 .top-bar__item--cta {

@@ -106,33 +106,9 @@
 .menu-group--editions {
     padding-bottom: 0;
 
-    @include mq(desktop) {
-        padding-bottom: $gs-baseline * 2;
-        margin-top: $gs-baseline * 2;
-        order: 5;
-
-        @supports(display: flex) {
-            padding-bottom: 0;
-        }
-    }
-
     .menu-group {
-        @include mq($until: desktop) {
-            color: $guardian-brand-dark;
-            background-color: darken($news-main-2, 10%);
-        }
-
-        @include mq(desktop) {
-            flex-direction: row;
-            flex-wrap: nowrap;
-        }
-    }
-
-    .menu-group .menu-item {
-        @include mq(desktop) {
-            display: inline-block;
-            width: auto;
-        }
+        color: $guardian-brand-dark;
+        background-color: darken($news-main-2, 10%);
     }
 }
 

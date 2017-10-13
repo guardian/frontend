@@ -1,0 +1,43 @@
+@()(implicit request: RequestHeader)
+
+@import common.{Edition, LinkTo}
+
+<div class="new-header__edition-container hide-until-desktop">
+
+    <input type="checkbox"
+            id="edition-picker-toggle"
+            aria-controls="edition-dropdown-menu"
+            class="u-h dropdown-menu-fallback js-enhance-checkbox"
+            data-link-name="nav2 : topnav : edition-picker: toggle">
+
+    <ul class="dropdown-menu js-edition-dropdown-menu"
+        id="edition-dropdown-menu"
+        aria-hidden="true">
+
+        @Edition.all.map { edition =>
+            @if((edition != Edition(request))) {
+
+                <li class="dropdown-menu__item">
+                    <a data-link-name="nav2 : topbar : edition-picker: @edition.id"
+                        href="@LinkTo(s"/preference/edition/${edition.id.toLowerCase}")"
+                        class="dropdown-menu__title">
+
+                        <span class="u-h">switch to the </span>
+                        @edition.displayName
+                    </a>
+                </li>
+            }
+        }
+    </ul>
+
+    <label for="edition-picker-toggle"
+            class="top-bar__item top-bar__item--dropdown js-edition-picker-trigger"
+            data-link-name="nav2 : topnav : edition-picker: toggle">
+
+        @Edition(request).displayName
+    </label>
+
+</div>
+
+
+
