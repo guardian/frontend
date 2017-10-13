@@ -2,7 +2,6 @@
     color: $news-support-1;
     float: left;
     @include fs-textSans(2);
-    font-size: 13px;
     font-weight: 300;
     letter-spacing: 0.01em;
     line-height: 1;
@@ -10,6 +9,7 @@
     position: relative;
     // Prevents a strange 1px shift on hover
     backface-visibility: hidden;
+    transition: color 80ms ease-out;
 
     &:nth-child(2) {
         padding-left: $gs-gutter / 1.5;
@@ -44,7 +44,7 @@
         border-top: transparent;
         margin-left: 2px;
         vertical-align: middle;
-        transition: transform 250ms;
+        transition: transform 250ms ease-out;
     }
 
     &:hover:after {
@@ -94,7 +94,7 @@
         padding-top: 100%;
         position: absolute;
         transform: scale(1);
-        transition: transform 350ms, background-color 350ms,;
+        transition: transform 250ms ease-out, background-color 250ms ease-out;
         width: 100%;
     }
 
