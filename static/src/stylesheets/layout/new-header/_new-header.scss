@@ -54,6 +54,7 @@ from scrolling */
     position: absolute;
     top: 0;
     transform: translateX(100%);
+    z-index: $zindex-main-menu + 2;
 
     @include mq(tablet) {
         right: 280px;
