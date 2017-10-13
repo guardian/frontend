@@ -58,10 +58,6 @@ from scrolling */
     @include mq(tablet) {
         right: 280px;
     }
-
-    @include mq(leftCol) {
-        right: 310px;
-    }
 }
 
 .new-header__top-bar {

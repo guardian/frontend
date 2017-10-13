@@ -20,14 +20,7 @@
                  aria-label="Guardian sections">
 
                  @if(!page.metadata.hasSlimHeader) {
-                    <div class="new-header__edition-container hide-until-desktop">
-                         <a class="top-bar__item top-bar__item--dropdown"
-                             data-link-name=""
-                             data-edition=""
-                             href="">
-                                UK edition
-                         </a>
-                    </div>
+                     @fragments.nav.editionPickerDropdown()
                 }
 
                 <a href="@LinkTo{/}"
@@ -85,6 +78,7 @@
                 <input type="checkbox"
                        id="main-menu-toggle"
                        class="veggie-burger-fallback js-enhance-checkbox u-h"
+                       data-link-name="nav2 : veggie-burger : show"
                        aria-controls="main-menu">
 
                 <ul class="pillars">

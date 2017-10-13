@@ -1,0 +1,85 @@
+.dropdown-menu-fallback:checked {
+
+    & ~ .dropdown-menu {
+        display: block;
+    }
+
+    & ~ .top-bar__item--dropdown {
+        color: #ffffff;
+
+        &:after {
+            transform: translateY(1px) rotate(-135deg);
+        }
+    }
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 29px; //visually this sits right under the text
+    left: -($gs-gutter / 2); // accounts for the border 1px on each side
+    width: $gs-column-width * 3;
+    background-color: #ffffff;
+    border-radius: 3px;
+    border: 1px solid $neutral-3;
+    margin: 0;
+
+    // triangle
+    &:before,
+    &:after {
+        content: '';
+        position: absolute;
+        left: $gs-gutter + $gs-gutter / 2;
+        transform: translateX(-100%);
+        border-left: $gs-baseline / 2 solid transparent;
+        border-right: $gs-baseline / 2 solid transparent;
+    }
+
+    &:before {
+        top: -( $gs-baseline / 2 + 1);
+        border-bottom: $gs-baseline / 2 solid $neutral-3;
+
+    }
+
+    &:after {
+        top: -( $gs-baseline / 2);
+        border-bottom: $gs-baseline / 2 solid #ffffff;
+    }
+}
+
+.dropdown-menu--open {
+    display: block;
+
+    & ~ .top-bar__item--dropdown {
+        color: #ffffff;
+
+        &:after {
+            transform: translateY(1px) rotate(-135deg);
+        }
+    }
+}
+
+.dropdown-menu__item {
+    padding: $gs-baseline / 2 ($gs-gutter - 1px);
+
+    &:hover,
+    &:focus {
+        background-color: $news-support-1;
+    }
+}
+
+.dropdown-menu__title {
+    @include fs-textSans(2);
+    color: currentColor;
+    cursor: pointer;
+    outline: none;
+    width: 100%;
+
+    &:hover {
+        text-decoration: none;
+    }
+
+    @include mq(desktop) {
+        font-size: 15px;
+    }
+}
