@@ -9,7 +9,7 @@ import play.api.i18n.MessagesProvider
 
 class PrivacyMapping extends UserFormMapping[PrivacyFormData] {
 
-  val DateTimeFormat: String = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+  private val dateTimeFormatISO8601: String = "yyyy-MM-dd'T'HH:mm:ssZZ"
 
   protected def formMapping(implicit messagesProvider: MessagesProvider): Mapping[PrivacyFormData] = mapping(
     "receiveGnmMarketing" -> boolean,
@@ -21,7 +21,7 @@ class PrivacyMapping extends UserFormMapping[PrivacyFormData] {
         "consentIdentifier" -> text,
         "consentIdentifierVersion" -> number,
         "hasConsented" -> boolean,
-        "timestamp" -> jodaDate(DateTimeFormat),
+        "timestamp" -> jodaDate(dateTimeFormatISO8601),
         "privacyPolicy" -> number
       )(Consent.apply)(Consent.unapply)
     )

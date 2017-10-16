@@ -6,7 +6,7 @@ import net.liftweb.json.JsonAST.JValue
 import utils.SafeLogging
 
 class IdApiJsonBodyParser extends JsonBodyParser with SafeLogging {
-  override implicit val formats = LiftJsonConfig.formats + new JodaJsonSerializer
+  override implicit val formats = LiftJsonConfig.formats + JodaJsonSerializer
 
   override def extractErrorFromResponse(json: JValue, statusCode: Int): List[Error] = {
     try {
