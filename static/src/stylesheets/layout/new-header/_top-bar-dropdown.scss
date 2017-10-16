@@ -51,14 +51,30 @@
     cursor: pointer;
     display: block;
     outline: none;
-    padding: $gs-baseline $gs-gutter;
+    padding: $gs-baseline + 1 $gs-gutter $gs-baseline;
+    position: relative;
     box-sizing: border-box;
+    margin-top: -1px;
 
     &:hover,
     &:focus {
         color: currentColor;
         background-color: $neutral-6;
         text-decoration: none;
+    }
+
+    &:before {
+        content: '';
+        border-top: 1px solid $neutral-6;
+        display: block;
+        position: absolute;
+        top: 0;
+        left: $gs-gutter;
+        right: 0;
+    }
+
+    .dropdown-menu__item:first-child &:before {
+        content: none;
     }
 
     @include mq(desktop) {
