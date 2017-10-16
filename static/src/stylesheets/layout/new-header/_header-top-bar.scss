@@ -1,0 +1,109 @@
+.top-bar__item {
+    @include fs-textSans(2);
+    color: $news-support-1;
+    float: left;
+    font-weight: 300;
+    letter-spacing: .01em;
+    line-height: 1;
+    padding: ($gs-baseline / 1.5) ($gs-gutter / 2);
+    position: relative;
+    // Prevents a strange 1px shift on hover
+    backface-visibility: hidden;
+    transition: color 80ms ease-out;
+
+    &:nth-child(2) {
+        padding-left: $gs-gutter / 1.5;
+    }
+
+    .is-paying-member &:nth-child(2),
+    .is-recent-contributor &:nth-child(2) {
+        padding-left: 0;
+        margin-left: $gs-gutter;
+    }
+
+    &:hover,
+    &:focus {
+        color: #ffffff;
+        text-decoration: none;
+    }
+
+    @include mq(desktop) {
+        font-size: 15px;
+    }
+}
+
+.top-bar__item--dropdown {
+    &:after {
+        content: '';
+        display: inline-block;
+        width: 4px;
+        height: 4px;
+        transform: translateY(-2px) rotate(45deg);
+        border: 1px solid currentColor;
+        border-left: transparent;
+        border-top: transparent;
+        margin-left: 2px;
+        vertical-align: middle;
+        transition: transform 250ms ease-out;
+    }
+
+    &:hover:after {
+        transform: translateY(0) rotate(45deg);
+    }
+
+    // Open state for dropdowns - selector will change
+    &:active:after {
+        transform: translateY(1px) rotate(-135deg);
+    }
+}
+
+.top-bar__item--cta {
+    color: $guardian-brand-dark;
+    font-family: 'Guardian Egyptian Web', 'Guardian Text Egyptian Web', Georgia, serif;
+    font-weight: 800;
+    padding: 0;
+
+    @include mq($until: mobileLandscape) {
+        margin-left: -$gs-gutter / 2;
+    }
+
+    .is-paying-member &,
+    .is-recent-contributor & {
+        display: none;
+    }
+
+    &:before {
+        background: $news-main-2;
+        border-radius: 50%;
+        bottom: -$gs-baseline;
+        content: '';
+        display: block;
+        left: 0;
+        padding-top: 100%;
+        position: absolute;
+        transform: scale(1);
+        transition: transform 250ms ease-out, background-color 250ms ease-out;
+        width: 100%;
+    }
+
+    &:hover,
+    &:focus {
+        color: $guardian-brand-dark;
+
+        &:before {
+            background: $highlight-blue;
+            transform: scale(1.05);
+        }
+    }
+}
+
+.top-bar__item--cta--text {
+    box-sizing: border-box;
+    display: block;
+    padding: ($gs-baseline / 1.5) ($gs-gutter) ($gs-baseline / 4);
+    position: relative;
+
+    @include mq($until: mobileMedium) {
+        padding-top: $gs-baseline / 2;
+    }
+}
