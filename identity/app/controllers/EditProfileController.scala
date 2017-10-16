@@ -53,47 +53,66 @@ class EditProfileController(idUrlBuilder: IdentityUrlBuilder,
 
   private def displayForm(page: IdentityPage) = csrfAddToken {
     recentlyAuthenticated.async { implicit request =>
-      Future(profileFormsView(page = page, forms = ProfileForms(request.user, PublicEditProfilePage), request.user))
+      Future {
+        profileFormsView(
+          page = page,
+          forms = ProfileForms(request.user, PublicEditProfilePage),
+          request.user)
+      }
     }
   }
 
-  private def submitForm(page: IdentityPage): Action[AnyContent] = csrfCheck { authActionWithUser.async { implicit request =>
-    def identityPageToEditProfilePage(identityPage: IdentityPage): EditProfilePage =
-      identityPage match {
-        case `publicPage` => PublicEditProfilePage
-        case `accountPage` => AccountEditProfilePage
-        case _ => PrivacyEditProfilePage
-      }
+  private def submitForm(page: IdentityPage): Action[AnyContent] =
+    csrfCheck {
+      authActionWithUser.async { implicit request =>
+        def identityPageToEditProfilePage(identityPage: IdentityPage): EditProfilePage =
+          identityPage match {
+            case `publicPage` => PublicEditProfilePage
+            case `accountPage` => AccountEditProfilePage
+            case _ => PrivacyEditProfilePage
+          }
 
-      val activePage = identityPageToEditProfilePage(page)
-      val userFromRequest = request.user
-      val profileForms =
-        ProfileForms(userFromRequest, activePage).bindFromRequestWithAddressErrorHack(request) // Why are we binding from case class and then re-binding from request?
+        val activePage = identityPageToEditProfilePage(page)
+        val userFromApi = request.user
+        val boundProfileForms =
+          ProfileForms(userFromApi, activePage).bindFromRequestWithAddressErrorHack(request) // NOTE: only active form is bound to request data
 
-//    def error(formWithErrors: Form[UserFormData]) =
+        def processSuccessfulSubmission(userFormData: UserFormData): Future[Result] = {
+          userFormData match {
+            case data: AccountFormData if (data.deleteTelephone) => {
+              identityApiClient.deleteTelephone(userFromApi.auth) map {
+                case Left(errors) => profileFormsView(page, boundProfileForms.withErrors(errors), userFromApi)
 
-      profileForms.activeForm.value.map {
-        case data: AccountFormData if (data.deleteTelephone) => {
-          identityApiClient.deleteTelephone(userFromRequest.auth) map {
-            case Left(errors) => profileFormsView(page, profileForms.withErrors(errors), userFromRequest)
+                case Right(_) => {
+                  val boundForms =
+                    boundProfileForms.bindForms(
+                      userFromApi.user.copy(privateFields = userFromApi.user.privateFields.copy(telephoneNumber = None)))
 
-            case Right(_) => {
-              val boundForms = profileForms.bindForms(userFromRequest.user.copy(privateFields = userFromRequest.user.privateFields.copy(telephoneNumber = None)))
-              profileFormsView(page, boundForms, userFromRequest)
+                  profileFormsView(page, boundForms, userFromApi)
+                }
+              }
             }
+
+            case data: UserFormData =>
+              identityApiClient.saveUser(userFromApi.id, data.toUserUpdate(userFromApi), userFromApi.auth) map {
+                case Left(errors) => profileFormsView(page, boundProfileForms.withErrors(errors), userFromApi)
+                case Right(updatedUser) => profileFormsView(page, boundProfileForms.bindForms(updatedUser), updatedUser)
+              }
           }
         }
 
-        case data: UserFormData =>
-          identityApiClient.saveUser(userFromRequest.id, data.toUserUpdate(userFromRequest), userFromRequest.auth) map {
-            case Left(errors) => profileFormsView(page, profileForms.withErrors(errors), userFromRequest)
-            case Right(updatedUser) => profileFormsView(page, profileForms.bindForms(updatedUser), updatedUser)
-          }
-      }.getOrElse(Future(profileFormsView(page, profileForms, userFromRequest)))
-    }
-  }
+        boundProfileForms.activeForm.fold(
+          formWithErrors => Future(profileFormsView(page, boundProfileForms, userFromApi)),
+          userFormData => processSuccessfulSubmission(userFormData)
+        )
+      }
+    } // end csrfCheck
 
-  private def profileFormsView(page: IdentityPage, forms: ProfileForms, user: User)(implicit request: AuthRequest[AnyContent]) =
+  private def profileFormsView(
+      page: IdentityPage,
+      forms: ProfileForms,
+      user: User)
+      (implicit request: AuthRequest[AnyContent]): Result =
     NoCache(Ok(views.html.profileForms(page, user, forms, idRequestParser(request), idUrlBuilder)))
 }
 
@@ -133,7 +152,11 @@ case class ProfileForms(
     )
   }
 
-  /** Adds address hack error to the form */
+  /**
+    * Binds request data to currently active profile form, and re-maps address error to different key.
+    * Note that other profile forms remain unchanged, which means they remain bound bound to
+    * "old user form api" instance.
+    */
   def bindFromRequestWithAddressErrorHack(implicit request: Request[_]): ProfileForms = update {
     form =>
       // Hack to get the postcode error into the correct context.
