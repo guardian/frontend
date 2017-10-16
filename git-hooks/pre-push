@@ -11,9 +11,13 @@ const diff = () =>
         .then(staged => staged.split('\n'));
 
 const validate = () =>
-    execa('./tools/task-runner/runner', ['validate-head/index', 'validate/check-for-disallowed-strings'], {
-        stdio: 'inherit',
-    });
+    execa(
+        './tools/task-runner/runner',
+        ['validate-head/index', 'validate/check-for-disallowed-strings'],
+        {
+            stdio: 'inherit',
+        }
+    );
 
 const checkYarnLock = staged => {
     if (

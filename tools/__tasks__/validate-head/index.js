@@ -1,7 +1,5 @@
 module.exports = {
     description: 'Validate commits',
-    task: [
-        require('./javascript'),
-    ],
+    task: [require('./javascript')],
     concurrent: true,
 };
