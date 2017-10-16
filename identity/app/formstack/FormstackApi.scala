@@ -12,7 +12,7 @@ import scala.concurrent.{ExecutionContext, Future}
 
 class FormstackApi(httpClient: WsFormstackHttp) extends SafeLogging {
 
-  implicit val formats = LiftJsonConfig.formats + new JodaJsonSerializer
+  implicit val formats = LiftJsonConfig.formats + JodaJsonSerializer
 
   def formstackUrl(formId: String): String = {
     val formstackUrl = Configuration.formstack.url
