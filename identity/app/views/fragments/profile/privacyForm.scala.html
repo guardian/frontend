@@ -3,12 +3,12 @@
   user: com.gu.identity.model.User,
   privacyForm: Form[form.PrivacyFormData])(implicit request: RequestHeader, messages: play.api.i18n.Messages)
 
-@import views.html.fragments.form.{checkboxField}
+@import views.html.fragments.form.checkboxField
 @import form.IdFormHelpers._
 @import helper._
 @import views.html.fragments.registrationFooter
-@import org.joda.time.{DateTime, LocalDate, DateTimeZone}
-@import org.joda.time.format.DateTimeFormat
+@import org.joda.time.DateTime
+@import idapiclient.parser.JodaJsonSerializer
 
 
 
@@ -33,10 +33,7 @@
 }
 
 @getCurrentTime = {
-    @(DateTimeFormat
-        .forPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZZ")
-        .withZone(DateTimeZone.UTC)
-        .print(new DateTime()))
+    @JodaJsonSerializer.dateTimeFormatISO8601.print(new DateTime)
 }
 
 
@@ -45,9 +42,7 @@
       <input type="hidden" name=@(consent.name + ".actor") value='user'>
       <input type="hidden" name=@(consent.name + ".consentIdentifier") value=@(user.consents.toList(consentIndex).consentIdentifier)>
       <input type="hidden" name=@(consent.name + ".consentIdentifierVersion") value=@(user.consents.toList(consentIndex).consentIdentifierVersion)>
-      @*<input type="hidden" name=@(consent.name + ".timestamp") value=@getCurrentTime>*@
-      <input type="hidden" name="testing time" value=@getCurrentTime>
-      <input type="hidden" name=@(consent.name + ".timestamp") value="bad time format">
+      <input type="hidden" name=@(consent.name + ".timestamp") value=@getCurrentTime>
       <input type="hidden" name=@(consent.name + ".privacyPolicy") value=@(user.consents.toList(consentIndex).privacyPolicy)>
 
       @checkboxField(
