@@ -3,6 +3,7 @@
 import debounce from 'lodash/functions/debounce';
 import ophan from 'ophan/ng';
 import { isBreakpoint } from 'lib/detect';
+import mediator from 'lib/mediator';
 import fastdom from 'lib/fastdom-promise';
 import { local } from 'lib/storage';
 import { scrollToElement } from 'lib/scroller';
@@ -191,29 +192,45 @@ const toggleMenu = (): void => {
 const toggleEditionPickerDropdown = () => {
     const openClass = 'dropdown-menu--open';
 
-    fastdom.read(() => {
-        const editionPickerMenu = document.querySelector(
-            '.js-edition-dropdown-menu'
-        );
-        const trigger = document.querySelector('.js-edition-picker-trigger');
+    fastdom
+        .read(() => ({
+            menu: document.querySelector('.js-edition-dropdown-menu'),
+            trigger: document.querySelector('.js-edition-picker-trigger'),
+        }))
+        .then(els => {
+            const { menu, trigger } = els;
 
-        if (editionPickerMenu) {
-            const isOpen = editionPickerMenu.classList.contains(openClass);
+            if (!menu) {
+                return;
+            }
+
+            const isOpen = menu.classList.contains(openClass);
             const expandedAttr = isOpen ? 'false' : 'true';
             const hiddenAttr = isOpen ? 'true' : 'false';
 
-            const toggleDropdown = () => {
+            return fastdom.write(() => {
                 if (trigger) {
                     trigger.setAttribute('aria-expanded', expandedAttr);
                 }
 
-                editionPickerMenu.setAttribute('aria-hidden', hiddenAttr);
-                editionPickerMenu.classList.toggle(openClass, !isOpen);
-            };
+                menu.setAttribute('aria-hidden', hiddenAttr);
+                menu.classList.toggle(openClass, !isOpen);
 
-            fastdom.write(toggleDropdown);
-        }
-    });
+                if (!isOpen) {
+                    mediator.on('module:clickstream:click', clickSpec => {
+                        const elem = clickSpec ? clickSpec.target : null;
+
+                        // if anywhere else but the links are clicked, the dropdown will close
+                        if (elem !== menu) {
+                            toggleEditionPickerDropdown();
+                        }
+                    });
+                } else {
+                    // when the dropdown closes, remove event
+                    mediator.removeEvent('module:clickstream:click');
+                }
+            });
+        });
 };
 
 const enhanceCheckbox = (checkbox: HTMLElement): void => {
