@@ -1,19 +1,24 @@
 package model
 
-import com.gu.contentapi.client.model.v1.{Content => ApiContent, Tag => ApiTag, TagType}
-import com.gu.contentapi.client.utils.CapiModelEnrichment.RichJodaDateTime
+import java.time.ZoneOffset
+
+import com.gu.contentapi.client.model.v1.{TagType, Content => ApiContent, Tag => ApiTag}
+import com.gu.contentapi.client.utils.CapiModelEnrichment.RichOffsetDateTime
+import implicits.Dates.jodaToJavaInstant
 import org.joda.time.DateTime
 import org.scalatest.{FlatSpec, Matchers}
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 
 class UrlsTest extends FlatSpec with Matchers with GuiceOneAppPerSuite {
 
+  val offsetDate = jodaToJavaInstant(new DateTime()).atOffset(ZoneOffset.UTC)
+
   "Urls" should "be created relative for articles" in {
 
     val content = ApiContent(id = "foo/2012/jan/07/bar",
       sectionId = None,
       sectionName = None,
-      webPublicationDate = Some(new DateTime().toCapiDateTime),
+      webPublicationDate = Some(offsetDate.toCapiDateTime),
       webTitle = "Some article",
       webUrl = "http://www.guardian.co.uk/foo/2012/jan/07/bar",
       apiUrl = "http://content.guardianapis.com/foo/2012/jan/07/bar",
@@ -31,7 +36,7 @@ class UrlsTest extends FlatSpec with Matchers with GuiceOneAppPerSuite {
     val content = ApiContent(id = "foo/gallery/2012/jan/07/bar",
       sectionId = None,
       sectionName = None,
-      webPublicationDate = Some(new DateTime().toCapiDateTime),
+      webPublicationDate = Some(offsetDate.toCapiDateTime),
       webTitle = "Some article",
       webUrl = "http://www.guardian.co.uk/foo/gallery/2012/jan/07/bar",
       apiUrl = "http://content.guardianapis.com/foo/gallery/2012/jan/07/bar",

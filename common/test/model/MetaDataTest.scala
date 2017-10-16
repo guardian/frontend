@@ -1,7 +1,10 @@
 package model
 
-import com.gu.contentapi.client.model.v1.{Content => ApiContent, ContentFields, Tag => ApiTag, TagType}
-import com.gu.contentapi.client.utils.CapiModelEnrichment.RichJodaDateTime
+import java.time.ZoneOffset
+
+import com.gu.contentapi.client.model.v1.{ContentFields, TagType, Content => ApiContent, Tag => ApiTag}
+import com.gu.contentapi.client.utils.CapiModelEnrichment.RichOffsetDateTime
+import implicits.Dates.jodaToJavaInstant
 import org.scalatest.{FlatSpec, Matchers}
 import org.joda.time.DateTime
 
@@ -33,11 +36,14 @@ class MetaDataTest extends FlatSpec with Matchers {
                           isSensitive: Boolean = false,
                           shouldHideAdverts: Boolean = false,
                           publicationDate: DateTime) = {
+
+    val pubDateOffset = jodaToJavaInstant(publicationDate).atOffset(ZoneOffset.UTC)
+
     ApiContent(
       id = "/content",
       sectionId = None,
       sectionName = None,
-      webPublicationDate = Some(publicationDate.toCapiDateTime),
+      webPublicationDate = Some(pubDateOffset.toCapiDateTime),
       webTitle = "webTitle",
       webUrl = "webUrl",
       apiUrl = "apiUrl",

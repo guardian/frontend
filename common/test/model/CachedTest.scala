@@ -1,8 +1,11 @@
 package model
 
+import java.time.ZoneOffset
+
 import com.gu.contentapi.client.model.v1.{ContentFields, Content => ApiContent}
-import com.gu.contentapi.client.utils.CapiModelEnrichment.RichJodaDateTime
+import com.gu.contentapi.client.utils.CapiModelEnrichment.RichOffsetDateTime
 import conf.switches.Switches.LongCacheSwitch
+import implicits.Dates.jodaToJavaInstant
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import org.joda.time.DateTime
 import org.scala_tools.time.Imports._
@@ -150,16 +153,20 @@ class CachedTest extends FlatSpec with Matchers with Results with implicits.Date
   }
 
   private def content(lastModified: DateTime, live: Boolean) = {
+
+    val offsetWebDate = jodaToJavaInstant(new DateTime()).atOffset(ZoneOffset.UTC)
+    val offsetLastModified = jodaToJavaInstant(lastModified).atOffset(ZoneOffset.UTC)
+
     val content = Content(ApiContent(id = "foo/2012/jan/07/bar",
       sectionId = None,
       sectionName = None,
-      webPublicationDate = Some(new DateTime().toCapiDateTime),
+      webPublicationDate = Some(offsetWebDate.toCapiDateTime),
       webTitle = "Some article",
       webUrl = "http://www.guardian.co.uk/foo/2012/jan/07/bar",
       apiUrl = "http://content.guardianapis.com/foo/2012/jan/07/bar",
       elements = None,
       fields = Some(ContentFields(
-        lastModified = Some(lastModified.toCapiDateTime),
+        lastModified = Some(offsetLastModified.toCapiDateTime),
         liveBloggingNow = Some(live)))
     ))
     model.SimpleContentPage(content)

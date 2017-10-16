@@ -27,7 +27,7 @@ trait Dates {
 
   def today(): LocalDate = LocalDate.now()
 
-  def jodaToJavaInstant(date: DateTime): Instant = date.toDate.toInstant
+  def jodaToJavaInstant(date: DateTime): Instant = Instant.ofEpochMilli(date.getMillis())
 
   implicit class DateTime2SameDay(date: DateTime) {
     def sameDay(other: DateTime): Boolean =  {

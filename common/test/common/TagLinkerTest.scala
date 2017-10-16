@@ -1,9 +1,12 @@
 package common
 
-import com.gu.contentapi.client.model.v1.{Content => ApiContent, Tag => ApiTag, ContentFields, TagType}
-import com.gu.contentapi.client.utils.CapiModelEnrichment.RichJodaDateTime
+import java.time.ZoneOffset
+
+import com.gu.contentapi.client.model.v1.{ContentFields, TagType, Content => ApiContent, Tag => ApiTag}
+import com.gu.contentapi.client.utils.CapiModelEnrichment.RichOffsetDateTime
 import common.editions.Uk
-import model.{Content, Article}
+import implicits.Dates.jodaToJavaInstant
+import model.{Article, Content}
 import org.joda.time.DateTime
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
@@ -98,7 +101,7 @@ class TagLinkerTest extends FlatSpec with Matchers with GuiceOneAppPerSuite {
       id = "foo/2012/jan/07/bar",
       sectionId = None,
       sectionName = None,
-      webPublicationDate = Some(new DateTime().toCapiDateTime),
+      webPublicationDate = Some((jodaToJavaInstant(new DateTime()).atOffset(ZoneOffset.UTC)).toCapiDateTime),
       webTitle = "Some article",
       webUrl = "http://www.guardian.co.uk/foo/2012/jan/07/bar",
       apiUrl = "http://content.guardianapis.com/foo/2012/jan/07/bar",
