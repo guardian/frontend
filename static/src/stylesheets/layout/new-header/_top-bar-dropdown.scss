@@ -3,79 +3,61 @@
     & ~ .dropdown-menu {
         display: block;
     }
-
-    & ~ .top-bar__item--dropdown {
-        color: #ffffff;
-
-        &:after {
-            transform: translateY(1px) rotate(-135deg);
-        }
-    }
 }
 
 .dropdown-menu {
     display: none;
     position: absolute;
     top: 29px; //visually this sits right under the text
-    left: -($gs-gutter / 2); // accounts for the border 1px on each side
+    left: -($gs-gutter / 2);
     width: $gs-column-width * 3;
     background-color: #ffffff;
     border-radius: 3px;
-    border: 1px solid $neutral-3;
+    padding: $gs-baseline / 2 0;
     margin: 0;
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, .25);
 
     // triangle
     &:before,
     &:after {
         content: '';
         position: absolute;
-        left: $gs-gutter + $gs-gutter / 2;
-        transform: translateX(-100%);
-        border-left: $gs-baseline / 2 solid transparent;
-        border-right: $gs-baseline / 2 solid transparent;
     }
 
     &:before {
         top: -( $gs-baseline / 2 + 1);
-        border-bottom: $gs-baseline / 2 solid $neutral-3;
-
+        left: $gs-gutter - 2;
+        border-bottom: $gs-baseline / 2 + 1 solid $neutral-5;
+        border-left: $gs-baseline / 2 + 1 solid transparent;
+        border-right: $gs-baseline / 2 + 1 solid transparent;
     }
 
     &:after {
         top: -( $gs-baseline / 2);
+        left: $gs-gutter - 1;
         border-bottom: $gs-baseline / 2 solid #ffffff;
+        border-left: $gs-baseline / 2 solid transparent;
+        border-right: $gs-baseline / 2 solid transparent;
     }
 }
 
 .dropdown-menu--open {
     display: block;
-
-    & ~ .top-bar__item--dropdown {
-        color: #ffffff;
-
-        &:after {
-            transform: translateY(1px) rotate(-135deg);
-        }
-    }
-}
-
-.dropdown-menu__item {
-    padding: $gs-baseline / 2 ($gs-gutter - 1px);
-
-    &:hover,
-    &:focus {
-        background-color: $news-support-1;
-    }
 }
 
 .dropdown-menu__title {
     @include fs-textSans(2);
-    color: currentColor;
+    color: $neutral-1;
     cursor: pointer;
+    display: block;
     outline: none;
-    width: 100%;
+    padding: $gs-baseline $gs-gutter;
+    box-sizing: border-box;
 
-    &:hover {
+    &:hover,
+    &:focus {
+        color: currentColor;
+        background-color: $neutral-6;
         text-decoration: none;
     }
 

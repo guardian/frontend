@@ -57,7 +57,7 @@ from scrolling */
     z-index: $zindex-main-menu + 2;
 
     @include mq(tablet) {
-        right: 280px;
+        right: 310px;
     }
 }
 
@@ -113,7 +113,7 @@ from scrolling */
     @include mq(tablet) {
         height: calc(3 / 16 * 345px);
         margin-bottom: -5px;
-        margin-top: $gs-baseline;
+        margin-top: $gs-baseline + 2px;
         width: 345px;
     }
 
