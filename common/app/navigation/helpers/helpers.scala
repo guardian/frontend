@@ -7,7 +7,7 @@ import SectionLinks._
 import NewNavigation._
 import SubSectionLinks._
 import NavLinks._
-import UrlHelpers.{Membership, SideMenu, Subscribe, getReaderRevenueUrl}
+import UrlHelpers.{Membership, SideMenu, Subscribe, getReaderRevenueUrl, getSupportOrMembershipUrl, getSupportOrSubscriptionUrl}
 import play.api.mvc.RequestHeader
 
 object NavigationHelpers {
@@ -16,8 +16,8 @@ object NavigationHelpers {
     val editionId = edition.id.toLowerCase()
 
     NavLinkLists(List(
-      NavLink("become a supporter", getReaderRevenueUrl(Membership, SideMenu)),
-      NavLink("subscribe", getReaderRevenueUrl(Subscribe, SideMenu))
+      NavLink("become a supporter", getSupportOrMembershipUrl(SideMenu)),
+      NavLink("subscribe", getSupportOrSubscriptionUrl(SideMenu))
     ))
   }
 

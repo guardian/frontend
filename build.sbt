@@ -35,7 +35,6 @@ val common = library("common").settings(
     scalajTime,
     ws,
     faciaFapiScalaClient,
-    dispatchTest,
     closureCompiler,
     jerseyCore,
     jerseyClient,
@@ -122,10 +121,8 @@ val identity = application("identity").dependsOn(commonWithTests).aggregate(comm
     identityRequest,
     identityCookie,
     liftJson,
-    commonsHttpClient,
     slf4jExt,
     exactTargetClient,
-    dispatch,
     libPhoneNumber
   )
 )

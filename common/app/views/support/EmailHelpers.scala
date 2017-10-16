@@ -9,10 +9,13 @@ import views.support.TrailCssClasses.toneClassFromStyle
 
 object EmailHelpers {
   def imageUrlFromCard(contentCard: ContentCard, width: Int): Option[String] = {
-    for {
-      InlineImage(imageMedia) <- contentCard.displayElement
-      url <- SmallFrontEmailImage(width).bestSrcFor(imageMedia)
-    } yield url
+    def imageUrl(displayElement: Option[FaciaDisplayElement]): Option[String] = displayElement.flatMap {
+      case InlineImage(imageMedia) => SmallFrontEmailImage(width).bestSrcFor(imageMedia)
+      case InlineVideo(video, _, _, maybeFallbackImage) => EmailVideoImage.bestSrcFor(video.images).orElse(imageUrl(maybeFallbackImage))
+      case InlineYouTubeMediaAtom(atom, posterOverride) => posterOverride.orElse(atom.posterImage).flatMap(EmailVideoImage.bestSrcFor)
+      case _ => None
+    }
+    imageUrl(contentCard.displayElement)
   }
 
   def subjectFromPage(page: Page): String = page match {

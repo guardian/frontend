@@ -146,7 +146,7 @@ define([
     }
 
     function initStandardSnap(el) {
-        proximityLoader.add(el, 1500, function () {
+        proximityLoader.addProximityLoader(el, 1500, function () {
             fastdom.write(function () {
                 bonzo(el).addClass('facia-snap-embed');
             });

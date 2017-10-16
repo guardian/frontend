@@ -25,6 +25,7 @@ import { epicButtonsTemplate } from 'common/modules/commercial/templates/acquisi
 import { acquisitionsEpicControlTemplate } from 'common/modules/commercial/templates/acquisitions-epic-control';
 import { acquisitionsTestimonialBlockTemplate } from 'common/modules/commercial/templates/acquisitions-epic-testimonial-block';
 import { shouldSeeReaderRevenue as userShouldSeeReaderRevenue } from 'commercial/modules/user-features';
+import { useSupportDomain, selectBaseUrl } from './support-utilities';
 
 type EpicTemplate = (Variant, AcquisitionsEpicTemplateCopy) => string;
 
@@ -34,9 +35,12 @@ export type CtaUrls = {
     supportUrl?: string,
 };
 
-const membershipBaseURL = 'https://membership.theguardian.com/supporter';
-const contributionsBaseURL = 'https://contribute.theguardian.com';
-const supportBaseURL = 'https://support.theguardian.com/uk';
+const membershipBaseURL = selectBaseUrl(
+    'https://membership.theguardian.com/supporter'
+);
+const contributionsBaseURL = selectBaseUrl(
+    'https://contribute.theguardian.com'
+);
 
 // How many times the user can see the Epic,
 // e.g. 6 times within 7 days with minimum of 1 day in between views.
@@ -50,7 +54,8 @@ const defaultMaxViews: {
     minDaysBetweenViews: 0,
 };
 
-const defaultButtonTemplate = (urls: CtaUrls) => epicButtonsTemplate(urls);
+const defaultButtonTemplate = (urls: CtaUrls) =>
+    epicButtonsTemplate(urls, useSupportDomain());
 
 const controlTemplate: EpicTemplate = ({ options = {} }, copy) =>
     acquisitionsEpicControlTemplate({
@@ -205,7 +210,7 @@ const makeABTestVariant = (
         }),
         supportCustomURL = null,
         supportURL = addTrackingCodesToUrl({
-            base: supportCustomURL || supportBaseURL,
+            base: supportCustomURL || selectBaseUrl(),
             componentType: parentTest.componentType,
             componentId: campaignCode,
             campaignCode,

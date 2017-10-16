@@ -2,24 +2,28 @@
 
 @import views.html.fragments.image
 
-@if(!isAmp) {
-  @fragments.atoms.snippet(
-    className = "qanda",
-    label = qa.data.typeLabel.getOrElse("Q&amp;A"),
-    headline = qa.atom.title.getOrElse(""),
-    qa.id
-  ){
-    @for(img <- qa.image ) {
-      <div class="explainer-snippet__image">
+@fragments.atoms.snippet(
+  className = "qanda",
+  label = qa.data.typeLabel.getOrElse("Q&amp;A"),
+  headline = qa.atom.title.getOrElse(""),
+  qa.id,
+  isAmp
+){
+  @for(img <- qa.image ) {
+    <div class="explainer-snippet__image">
+      @if(isAmp) {
+        @fragments.amp.ampImage(img, "Q&amp;A")
+      } else {
         @image(
           picture = img,
           classes = Nil,
           imageAltText = "Q&amp;A",
           isImmersiveMainMedia = true
         )
-      </div>
-    }
-
-    @Html(qa.data.item.body)
+      }
+    </div>
   }
+
+  @Html(qa.data.item.body)
 }
+

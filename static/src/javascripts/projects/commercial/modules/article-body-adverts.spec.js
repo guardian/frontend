@@ -40,7 +40,7 @@ jest.mock('lib/detect', () => ({
 }));
 jest.mock('lib/config', () => ({ page: {} }));
 
-const spaceFillerStub: JestMockFn = (spaceFiller.fillSpace: any);
+const spaceFillerStub: JestMockFn<*, *> = (spaceFiller.fillSpace: any);
 const getFirstRulesUsed = () =>
     articleBodyAdvertsInit().then(() => {
         const firstCall = spaceFillerStub.mock.calls[0];

@@ -6,11 +6,10 @@ import common.ImplicitControllerExecutionContext
 import services.{IdRequestParser, IdentityUrlBuilder}
 import utils.SafeLogging
 import model.{ApplicationContext, Cached, IdentityPage}
-import idapiclient.IdApiClient
+import idapiclient.{IdApiClient, Response}
 
 import scala.concurrent.Future
 import com.gu.identity.model.User
-import client.Response
 
 class PublicProfileController(
   idUrlBuilder: IdentityUrlBuilder,

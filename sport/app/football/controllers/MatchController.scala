@@ -66,7 +66,7 @@ class MatchController(
 
   private def render(maybeMatch: Option[FootballMatch]): Action[AnyContent] = Action.async { implicit request =>
     val response = maybeMatch map { theMatch =>
-      val lineup: Future[LineUp] = competitionsService.footballClient.lineUp(theMatch.id).recover(competitionsService.footballClient.logErrors)
+      val lineup: Future[LineUp] = competitionsService.getLineup(theMatch)
       val page: Future[MatchPage] = lineup map { MatchPage(theMatch, _) }
 
       page map { page =>

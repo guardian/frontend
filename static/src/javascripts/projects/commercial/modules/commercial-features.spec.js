@@ -15,11 +15,14 @@ import {
 } from 'commercial/modules/user-features';
 import { shouldShowReaderRevenue as shouldShowReaderRevenue_ } from 'common/modules/commercial/contributions-utilities';
 
-const isPayingMember: JestMockFn = (isPayingMember_: any);
-const isRecentContributor: JestMockFn = (isRecentContributor_: any);
-const shouldSeeReaderRevenue: JestMockFn = (shouldSeeReaderRevenue_: any);
-const isAdFreeUser: JestMockFn = (isAdFreeUser_: any);
-const shouldShowReaderRevenue: JestMockFn = (shouldShowReaderRevenue_: any);
+const isPayingMember: JestMockFn<*, *> = (isPayingMember_: any);
+const isRecentContributor: JestMockFn<*, *> = (isRecentContributor_: any);
+const shouldSeeReaderRevenue: JestMockFn<*, *> = (shouldSeeReaderRevenue_: any);
+const isAdFreeUser: JestMockFn<*, *> = (isAdFreeUser_: any);
+const shouldShowReaderRevenue: JestMockFn<
+    *,
+    *
+> = (shouldShowReaderRevenue_: any);
 const adblockInUse: any = adblockInUse_;
 const getBreakpoint: any = getBreakpoint_;
 const isUserLoggedIn: any = isUserLoggedIn_;

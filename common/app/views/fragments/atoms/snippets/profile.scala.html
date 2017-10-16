@@ -2,31 +2,35 @@
 
 @import views.html.fragments.image
 
-@if(!isAmp) {
-  @fragments.atoms.snippet(
-    className = "profile",
-    label = profile.data.typeLabel.getOrElse("Profile"),
-    headline = profile.atom.title.getOrElse(""),
-    profile.id
-  ){
-    @for(img <- profile.image ) {
-      <div class="explainer-snippet__image">
+@fragments.atoms.snippet(
+  className = "profile",
+  label = profile.data.typeLabel.getOrElse("Profile"),
+  headline = profile.atom.title.getOrElse(""),
+  profile.id,
+  isAmp
+){
+  @for(img <- profile.image ) {
+    <div class="explainer-snippet__image">
+      @if(isAmp) {
+        @fragments.amp.ampImage(img, "Profile")
+      } else {
         @image(
           picture = img,
           classes = Nil,
           imageAltText = "Profile",
           isImmersiveMainMedia = true
         )
-      </div>
-    }
+      }
+    </div>
+  }
 
-    @for(item <- profile.data.items) {
-      <div class="explainer-snippet__item">
-        @item.title.map { t =>
-          <div class="explainer-snippet__heading"><b>@t</b></div>
-        }
-        @Html(item.body)
-      </div>
-    }
+  @for(item <- profile.data.items) {
+    <div class="explainer-snippet__item">
+      @item.title.map { t =>
+        <div class="explainer-snippet__heading"><b>@t</b></div>
+      }
+      @Html(item.body)
+    </div>
   }
 }
+

@@ -1,6 +1,7 @@
 package navigation
 
 import conf.Configuration
+import conf.switches.Switches.SupportFrontendActive
 import play.api.libs.json.Json
 import play.api.mvc.RequestHeader
 import common.Edition
@@ -10,6 +11,9 @@ import ophan.thrift.event.AcquisitionSource
 object UrlHelpers {
   sealed trait ReaderRevenueSite {
     val url: String
+  }
+  case object Support extends ReaderRevenueSite {
+    val url: String = s"${Configuration.id.supportUrl}/uk"
   }
   case object Membership extends ReaderRevenueSite {
     val url: String = s"${Configuration.id.membershipUrl}/supporter"
@@ -113,9 +117,39 @@ object UrlHelpers {
   def getContributionOrSupporterUrl(editionId: String)(implicit request: RequestHeader): String =
     if (editionId == "us") {
       getReaderRevenueUrl(Contribute, NewHeader)
+    } else if (editionId == "uk" && SupportFrontendActive.isSwitchedOn) {
+      getReaderRevenueUrl(Support, NewHeader)
     } else {
       getReaderRevenueUrl(Membership, NewHeader)
     }
+
+  // This methods can be reverted once we decide to deploy the new support site to the rest of the world.
+  def getSupportOrMembershipUrl(position: Position)(implicit request: RequestHeader): String = {
+    val editionId = Edition(request).id.toLowerCase()
+    if (editionId == "uk" && SupportFrontendActive.isSwitchedOn) {
+      getReaderRevenueUrl(Support, position)
+    } else {
+      getReaderRevenueUrl(Membership, position)
+    }
+  }
+
+  def getSupportOrContribute(position: Position)(implicit request: RequestHeader): String = {
+    val editionId = Edition(request).id.toLowerCase()
+    if (editionId == "uk" && SupportFrontendActive.isSwitchedOn) {
+      getReaderRevenueUrl(Support, position)
+    } else {
+      getReaderRevenueUrl(Contribute, position)
+    }
+  }
+
+  def getSupportOrSubscriptionUrl(position: Position)(implicit request: RequestHeader): String = {
+    val editionId = Edition(request).id.toLowerCase()
+    if (editionId == "uk" && SupportFrontendActive.isSwitchedOn) {
+      getReaderRevenueUrl(Support, position)
+    } else {
+      getReaderRevenueUrl(Subscribe, position)
+    }
+  }
 
   object oldNav {
     def jobsUrl(edition: String)(implicit request: RequestHeader): String =

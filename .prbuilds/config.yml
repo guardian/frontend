@@ -4,11 +4,14 @@ teardown:
   ansible: .prbuilds/cleanup.playbook.yml
 checks:
   screenshots:
-      url: http://localhost:9000/books/2014/may/21/guardian-journalists-jonathan-freedland-ghaith-abdul-ahad-win-orwell-prize-journalism
+    url: http://localhost:9000/books/2014/may/21/guardian-journalists-jonathan-freedland-ghaith-abdul-ahad-win-orwell-prize-journalism
   exceptions:
-      url: http://localhost:9000/books/2014/may/21/guardian-journalists-jonathan-freedland-ghaith-abdul-ahad-win-orwell-prize-journalism
+    url: http://localhost:9000/books/2014/may/21/guardian-journalists-jonathan-freedland-ghaith-abdul-ahad-win-orwell-prize-journalism
   a11yvalidation:
-        dummy: dummy
+    dummy: dummy
   loadtest:
-      url: http://localhost:9000/books/2014/may/21/guardian-journalists-jonathan-freedland-ghaith-abdul-ahad-win-orwell-prize-journalism
-      
+    url: http://localhost:9000/books/2014/may/21/guardian-journalists-jonathan-freedland-ghaith-abdul-ahad-win-orwell-prize-journalism
+  microdata:
+    urls: 
+      - http://localhost:9000/books/2014/may/21/guardian-journalists-jonathan-freedland-ghaith-abdul-ahad-win-orwell-prize-journalism
+      - http://localhost:9000/business/live/2017/oct/09/nobel-prize-in-economics-due-to-be-unveiled-business-live

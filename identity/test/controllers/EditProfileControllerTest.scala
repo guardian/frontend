@@ -1,7 +1,7 @@
 package controllers
 
 import actions.AuthenticatedActions
-import client.Auth
+import idapiclient.Auth
 import com.gu.identity.cookie.GuUCookieData
 import com.gu.identity.model._
 import form.{AccountDetailsMapping, PrivacyMapping, ProfileFormsMapping, ProfileMapping}

@@ -154,12 +154,13 @@ class FabricVideo {
             })
             .then(() => {
                 this.layer2 = qwery('.creative__layer2', this.adSlot);
+                const boundOnScroll = this.onScroll.bind(this);
 
-                addEventListener(window, 'scroll', this.onScroll, {
+                addEventListener(window, 'scroll', boundOnScroll, {
                     passive: true,
                 });
                 addEventListener(this.adSlot, 'animationend', () => {
-                    window.removeEventListener('scroll', this.onScroll);
+                    window.removeEventListener('scroll', boundOnScroll);
                 });
 
                 if (this.hasVideo) {
