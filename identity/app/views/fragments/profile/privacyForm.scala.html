@@ -34,7 +34,7 @@
 
 @getCurrentTime = {
     @(DateTimeFormat
-        .forPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
+        .forPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZZ")
         .withZone(DateTimeZone.UTC)
         .print(new DateTime()))
 }
@@ -45,7 +45,9 @@
       <input type="hidden" name=@(consent.name + ".actor") value='user'>
       <input type="hidden" name=@(consent.name + ".consentIdentifier") value=@(user.consents.toList(consentIndex).consentIdentifier)>
       <input type="hidden" name=@(consent.name + ".consentIdentifierVersion") value=@(user.consents.toList(consentIndex).consentIdentifierVersion)>
-      <input type="hidden" name=@(consent.name + ".timestamp") value=@getCurrentTime>
+      @*<input type="hidden" name=@(consent.name + ".timestamp") value=@getCurrentTime>*@
+      <input type="hidden" name="testing time" value=@getCurrentTime>
+      <input type="hidden" name=@(consent.name + ".timestamp") value="bad time format">
       <input type="hidden" name=@(consent.name + ".privacyPolicy") value=@(user.consents.toList(consentIndex).privacyPolicy)>
 
       @checkboxField(
@@ -61,14 +63,12 @@
     @views.html.helper.CSRF.formField
 
     @* Make this beautiful *@
+    @* This also displays globalErrors *@
     @if(privacyForm.hasErrors) {
-        @privacyForm.errors.size
-        @privacyForm.errors(0).message
-        @privacyForm.errors(0).key
-    }
-
-    @if(privacyForm.globalError.isDefined) {
-        <div class="form__error">@privacyForm.globalErrors.map(_.message).mkString(", ")</div>
+        <div class="form__error">
+          Error processing the form. Your changes have not been saved:
+          <p>@privacyForm.errors.map(formError => (formError.key, formError.message)).mkString(", ")</p>
+        </div>
     }
 
     <fieldset class="fieldset">
