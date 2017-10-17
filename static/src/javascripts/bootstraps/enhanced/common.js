@@ -13,7 +13,7 @@ import interactionTracking from 'common/modules/analytics/interaction-tracking';
 import { initAnalyticsRegister } from 'common/modules/analytics/register';
 import { ScrollDepth } from 'common/modules/analytics/scrollDepth';
 import { requestUserSegmentsFromId } from 'commercial/modules/user-ad-targeting';
-import donotUseAdblock from 'common/modules/commercial/donot-use-adblock';
+import { initDonotUseAdblock } from 'common/modules/commercial/donot-use-adblock';
 import { refresh as refreshUserFeatures } from 'commercial/modules/user-features';
 import CommentCount from 'common/modules/discussion/comment-count';
 import CookieRefresh from 'common/modules/identity/cookierefresh';
@@ -91,7 +91,7 @@ const initClickstream = (): void => {
 };
 
 const showAdblockMessage = (): void => {
-    donotUseAdblock.init();
+    initDonotUseAdblock();
 };
 
 const loadAnalytics = (): void => {

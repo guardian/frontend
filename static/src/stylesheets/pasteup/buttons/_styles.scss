@@ -248,12 +248,12 @@ $show-more-icon-spacing: $base-size + 1;
 .button--syndication-reprint {
     @include button-colour(
         transparent,
-        $news-main-2,
-        $news-main-2
+        $news-support-6,
+        rgba($news-support-6, .3)
     );
 
     @include button-hover-colour(
         transparent,
-        darken($news-main-2, 10%)
+        darken($news-support-6, 10%)
     );
 }

@@ -8,7 +8,7 @@ import model.{ApplicationContext, Page}
 import play.api.mvc.RequestHeader
 import play.twirl.api.Html
 import views.html.fragments.commercial.pageSkin
-import views.html.fragments.page.body.{bodyTag, breakingNewsDiv, skipToMainContent}
+import views.html.fragments.page.body.{bodyTag, breakingNewsDiv, mainContent, skipToMainContent}
 import views.html.fragments.page.head.{fixIEReferenceErrors, headTag, titleTag}
 import views.html.fragments.page.head.stylesheets.{criticalStyleInline, criticalStyleLink, styles}
 import views.html.fragments.page.{devTakeShot, htmlTag}
@@ -54,6 +54,7 @@ object InteractiveHtmlPage extends HtmlPage[InteractivePage] {
         skipToMainContent(),
         pageSkin() when page.metadata.hasPageSkinOrAdTestPageSkin(Edition(request)),
         guardianHeaderHtml(),
+        mainContent(),
         breakingNewsDiv(),
         interactiveBody(page),
         footer(),
