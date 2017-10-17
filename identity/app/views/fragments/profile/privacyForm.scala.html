@@ -10,8 +10,6 @@
 @import org.joda.time.DateTime
 @import idapiclient.parser.JodaJsonSerializer
 
-
-
 @*
     WARNING!!
 
@@ -25,7 +23,7 @@
     @if(user.consents.toList.isEmpty) {
         "Unknown consent text"
     } else {
-        @com.gu.identity.model.Consent.getText(
+        @com.gu.identity.model.ConsentData.getText(
             user.consents.toList(index).consentIdentifier,
             user.consents.toList(index).consentIdentifierVersion
         )
@@ -36,8 +34,7 @@
     @JodaJsonSerializer.dateTimeFormatISO8601.print(new DateTime)
 }
 
-
-@consentCheckboxes = {
+@v2consentCheckboxes = {
   @helper.repeatWithIndex(privacyForm("consents"), min=1) {(consent, consentIndex) =>
       <input type="hidden" name=@(consent.name + ".actor") value='user'>
       <input type="hidden" name=@(consent.name + ".consentIdentifier") value=@(user.consents.toList(consentIndex).consentIdentifier)>
@@ -53,6 +50,78 @@
       )(nonInputFields, messages)
   }
 }
+
+@v1consentCheckboxes = {
+    @checkboxField(Checkbox(
+        privacyForm("receiveGnmMarketing"),
+        '_label -> "Receive email from Guardian News and Media Ltd."))(nonInputFields, messages)
+
+    @checkboxField(Checkbox(
+        privacyForm("receive3rdPartyMarketing"),
+        '_label -> "Receive email from other organisations"))(nonInputFields, messages)
+}
+
+@v1profilingConsetCheckbox = {
+    @checkboxField(Checkbox(
+        privacyForm("allowThirdPartyProfiling"),
+        '_label -> "Allow matching with third party data")
+    )(nonInputFields, messages)
+}
+
+@v2consentCheckboxesOnboarding = {
+
+    @* FIRST PARTY *@
+
+    <input type="hidden" name="consents[0].actor" value='user'>
+    <input type="hidden" name="consents[0].consentIdentifier" value="firstParty">
+    <input type="hidden" name="consents[0].consentIdentifierVersion" value="0">
+    <input type="hidden" name="consents[0].timestamp" value=@getCurrentTime>
+    <input type="hidden" name="consents[0].privacyPolicy" value=@com.gu.identity.model.ConsentData.privacyPolicyVersion>
+
+    @checkboxField(
+        Checkbox(
+            privacyForm("consents[0].hasConsented"),
+            '_label -> com.gu.identity.model.ConsentData.currentConsents("firstParty")
+        )
+    )(nonInputFields, messages)
+
+    @* THIRD PARTY *@
+
+    <input type="hidden" name="consents[1].actor" value='user'>
+    <input type="hidden" name="consents[1].consentIdentifier" value="thirdParty">
+    <input type="hidden" name="consents[1].consentIdentifierVersion" value="0">
+    <input type="hidden" name="consents[1].timestamp" value=@getCurrentTime>
+    <input type="hidden" name="consents[1].privacyPolicy" value=@com.gu.identity.model.ConsentData.privacyPolicyVersion>
+
+    @checkboxField(
+        Checkbox(
+            privacyForm("consents[1].hasConsented"),
+            '_label -> com.gu.identity.model.ConsentData.currentConsents("thirdParty")
+        )
+    )(nonInputFields, messages)
+}
+
+
+@v2consentProfilingCheckboxOnboarding  = {
+
+    @* PROFILING *@
+
+    <input type="hidden" name="consents[2].actor" value='user'>
+    <input type="hidden" name="consents[2].consentIdentifier" value="thirdPartyProfiling">
+    <input type="hidden" name="consents[2].consentIdentifierVersion" value="0">
+    <input type="hidden" name="consents[2].timestamp" value=@getCurrentTime>
+    <input type="hidden" name="consents[2].privacyPolicy" value=@com.gu.identity.model.ConsentData.privacyPolicyVersion>
+
+    @checkboxField(
+        Checkbox(
+            privacyForm("consents[2].hasConsented"),
+            '_label -> com.gu.identity.model.ConsentData.currentConsents("thirdPartyProfiling")
+        )
+    )(nonInputFields, messages)
+}
+
+
+@noV2Consents = { @user.consents.toList.isEmpty }
 
 <form class="form js-public-profile-form" novalidate action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" role="main" method="post">
     @views.html.helper.CSRF.formField
@@ -92,7 +161,7 @@
                     <div class="form-field__note">The Guardian and their partners would like to occasionally send you information about their products, services and events.</div>
 
                     <div class="form-fields-group">
-                        @consentCheckboxes
+                        @v2consentCheckboxesOnboarding
                     </div>
                 </li>
             </ul>
@@ -108,7 +177,7 @@
                     <label class="label">In addition to the data that you provide to us, we may also match profiling data from third parties with your registration details.</label>
 
                     <div class="form-fields-group">
-                        @checkboxField(Checkbox(privacyForm("allowThirdPartyProfiling"), '_label -> "Allow matching with third party data"))(nonInputFields, messages)
+                        @v2consentProfilingCheckboxOnboarding
                     </div>
                 </li>
             </ul>
