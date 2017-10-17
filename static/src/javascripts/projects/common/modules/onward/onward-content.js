@@ -20,11 +20,13 @@ class OnwardContent extends Component {
 
         this.context = context;
         this.endpoint = `/series/${getTag()}.json?shortUrl=${encodeURIComponent(
-            config.page.shortUrl
+            config.get('page.shortUrl')
         )}`;
 
         this.fetch(this.context, 'html');
     }
+
+    context: HTMLElement;
 
     // eslint-disable-next-line class-methods-use-this
     error(): void {
