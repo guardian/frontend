@@ -5,13 +5,13 @@ import play.api.libs.json.{JsValue, Json, Writes}
 
 case class JavascriptPropsConfig(bundleUrl: String, polyfillioUrl: String, beaconUrl: String)
 case class JavascriptProps(config: JavascriptPropsConfig){
-  def asJsValue(): JsValue = Json.toJson(this)
+  def asJsValue: JsValue = Json.toJson(this)
 }
 
 object JavascriptProps {
   implicit val javascriptPropsConfig: Writes[JavascriptPropsConfig] = Json.writes[JavascriptPropsConfig]
   implicit val javascriptProps: Writes[JavascriptProps] = Json.writes[JavascriptProps]
-  def default(): JavascriptProps = {
+  def default: JavascriptProps = {
     val bundleUrl = conf.Static("javascripts/ui.bundle.browser.js")
     val polyfillioUrl =
       if (conf.switches.Switches.PolyfillIO.isSwitchedOn) common.Assets.js.polyfillioUrl

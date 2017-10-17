@@ -12,8 +12,8 @@ class DevComponentController(
 )(implicit ac: ApplicationContext, ec: ExecutionContext)
   extends BaseController {
 
-  def props(): Action[AnyContent] = Action { request =>
-    Ok(JavascriptProps.default().asJsValue())
+  def props(): Action[AnyContent] = Action { _ =>
+    Ok(JavascriptProps.default.asJsValue)
   }
 
 }
