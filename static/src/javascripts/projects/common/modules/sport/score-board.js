@@ -1,7 +1,7 @@
 // @flow
 
 import bonzo from 'bonzo';
-import Component from 'common/modules/component';
+import { Component } from 'common/modules/component';
 import { isBreakpoint } from 'lib/detect';
 import $ from 'lib/$';
 
