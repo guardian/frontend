@@ -64,17 +64,6 @@
         display: none;
     }
 
-    & > span {
-        box-sizing: border-box;
-        display: block;
-        padding: ($gs-baseline / 1.5) ($gs-gutter) ($gs-baseline / 4);
-        position: relative;
-
-        @include mq($until: mobileMedium) {
-            padding-top: $gs-baseline / 2;
-        }
-    }
-
     &:before {
         background: $news-main-2;
         border-radius: 50%;
@@ -97,5 +86,16 @@
             background: $highlight-blue;
             transform: scale(1.05);
         }
+    }
+}
+
+.top-bar__item--cta--text {
+    box-sizing: border-box;
+    display: block;
+    padding: ($gs-baseline / 1.5) ($gs-gutter) ($gs-baseline / 4);
+    position: relative;
+
+    @include mq($until: mobileMedium) {
+        padding-top: $gs-baseline / 2;
     }
 }
