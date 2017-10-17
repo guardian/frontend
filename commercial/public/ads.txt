@@ -7,6 +7,7 @@ google.com, pub-2012933198307164, DIRECT
 google.com, pub-7526622147976638, DIRECT
 google.com, pub-4979300716531995, DIRECT
 google.com, pub-5107472231497753, DIRECT
+google.com, pub-5024059404294558, DIRECT
 sonobi.com, d089631d2d, DIRECT
 appnexus.com, 2888, DIRECT
 appnexus.com, 7012, DIRECT
