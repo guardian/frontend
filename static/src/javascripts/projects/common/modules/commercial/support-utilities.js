@@ -30,7 +30,7 @@ const liveBlogEpicSupportCtaLinkPara = (
         membership.thegu... and contribute.thegu... to support.thegu... if appropriate
      */
     if (liveInUs) {
-        return `Support the Guardian by <a href="${membershipUrlFromEpicTest}" target="_blank" class="u-underline">making a contribution</a>`;
+        return `You can give to the Guardian by <a href="${membershipUrlFromEpicTest}" target="_blank" class="u-underline">becoming a supporter</a>`;
     } else if (liveInUk) {
         return `You can support the Guardian by <a href="${membershipUrlFromEpicTest}" target="_blank" class="u-underline">making a contribution or getting a subscription</a>`;
     }
