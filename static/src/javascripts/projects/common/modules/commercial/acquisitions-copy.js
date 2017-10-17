@@ -39,7 +39,7 @@ export const usLocalisedFlag = {
 export const liveblog = (
     membershipUrl: string,
     contributionsUrl: string,
-    supportP2: string,
+    supportP2: string
 ): AcquisitionsEpicTemplateCopy => ({
     p1: `Since you’re here ${controlP1}`,
     p2: `${controlP2} ${supportP2}. - Guardian HQ`,

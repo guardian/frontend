@@ -168,7 +168,10 @@ export const acquisitionsEpicLiveblog: EpicABTest = makeABTest({
                         copy: liveblogCopy(
                             variant.options.membershipURL,
                             variant.options.contributeURL,
-                            liveBlogEpicSupportCtaLinkPara(variant.options.membershipURL, variant.options.contributeURL),
+                            liveBlogEpicSupportCtaLinkPara(
+                                variant.options.membershipURL,
+                                variant.options.contributeURL
+                            )
                         ),
                         componentName: variant.options.componentName,
                     });
