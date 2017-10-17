@@ -2,7 +2,7 @@
 
 import $ from 'lib/$';
 import bonzo from 'bonzo';
-import Component from 'common/modules/component';
+import { Component } from 'common/modules/component';
 
 class MatchListLive extends Component {
     constructor(
