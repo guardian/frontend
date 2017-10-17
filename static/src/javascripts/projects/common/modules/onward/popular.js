@@ -14,17 +14,18 @@ class MostPopular extends Component {
            have it go through the entire tooling chain so that a section has a
            property that tells us whether it shows most popular or not. */
         const sectionsWithoutPopular = ['info', 'global'];
+        const pageSection = config.get('page.section');
 
         mediator.emit('register:begin', 'popular-in-section');
 
         this.hasSection =
-            config.page &&
-            config.page.section &&
-            !sectionsWithoutPopular.includes(config.page.section);
+            pageSection && !sectionsWithoutPopular.includes(pageSection);
         this.endpoint = `/most-read${this.hasSection
-            ? `/${config.page.section}`
+            ? `/${pageSection}`
             : ''}.json`;
     }
+
+    hasSection: boolean;
 
     init(): void {
         this.fetch(qwery('.js-popular-trails'), 'html');
