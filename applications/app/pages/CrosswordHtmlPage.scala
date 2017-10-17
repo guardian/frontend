@@ -10,7 +10,7 @@ import crosswords.{AccessibleCrosswordPage, CrosswordPage, CrosswordPageWithSvg,
 import views.html.fragments._
 import crosswords.{accessibleCrosswordContent, crosswordContent, crosswordSearch, printableCrosswordBody, crosswordNoResult}
 import views.html.fragments.commercial.pageSkin
-import views.html.fragments.page.body.{bodyTag, breakingNewsDiv, skipToMainContent}
+import views.html.fragments.page.body.{bodyTag, breakingNewsDiv, mainContent, skipToMainContent}
 import views.html.fragments.page.head.stylesheets.{criticalStyleInline, criticalStyleLink, styles}
 import views.html.fragments.page.head.{fixIEReferenceErrors, headTag, titleTag}
 import views.html.fragments.page.{devTakeShot, htmlTag}
@@ -50,6 +50,7 @@ object CrosswordHtmlPage extends HtmlPage[CrosswordPage] {
         skipToMainContent(),
         pageSkin() when page.metadata.hasPageSkinOrAdTestPageSkin(Edition(request)),
         guardianHeaderHtml(),
+        mainContent(),
         breakingNewsDiv(),
         content,
         footer(),
