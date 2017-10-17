@@ -10,7 +10,7 @@ import play.twirl.api.Html
 import views.html.fragments._
 import views.html.fragments.commercial.{pageSkin, survey}
 import views.html.fragments.page._
-import views.html.fragments.page.body.{bodyTag, breakingNewsDiv, skipToMainContent, twentyFourSevenTraining}
+import views.html.fragments.page.body._
 import views.html.fragments.page.head.stylesheets.{criticalStyleInline, criticalStyleLink, styles}
 import views.html.fragments.page.head.{fixIEReferenceErrors, headTag, titleTag}
 
@@ -52,6 +52,7 @@ object StoryHtmlPage {
         pageSkin() when page.metadata.hasPageSkinOrAdTestPageSkin(Edition(request)),
         survey() when SurveySwitch.isSwitchedOn,
         header,
+        mainContent(),
         breakingNewsDiv(),
         content,
         twentyFourSevenTraining(),
