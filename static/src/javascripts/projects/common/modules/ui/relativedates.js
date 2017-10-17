@@ -1,6 +1,5 @@
 // @flow
 import $ from 'lib/$';
-import mediator from 'lib/mediator';
 import bonzo from 'bonzo';
 
 type RelativeDateOptions = {
@@ -219,11 +218,6 @@ const replaceValidTimestamps = (opts: RelativeDateOptions = {}): void => {
         }
     });
 };
-
-// DEPRECATED: Bindings
-['related', 'autoupdate'].forEach(module => {
-    mediator.on(`modules:${module}:render`, replaceValidTimestamps);
-});
 
 const init = (opts: RelativeDateOptions = {}): void => {
     replaceValidTimestamps(opts);
