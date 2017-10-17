@@ -17,7 +17,7 @@ import {
 } from 'common/modules/discussion/api';
 import { CommentBox } from 'common/modules/discussion/comment-box';
 import { WholeDiscussion } from 'common/modules/discussion/whole-discussion';
-import relativedates from 'common/modules/ui/relativedates';
+import { init as initRelativeDates } from 'common/modules/ui/relativedates';
 import userPrefs from 'common/modules/user-prefs';
 import { inlineSvg } from 'common/views/svgs';
 
@@ -549,7 +549,7 @@ class Comments extends Component {
     // eslint-disable-next-line class-methods-use-this
     relativeDates(): void {
         if (shouldMakeTimestampsRelative()) {
-            relativedates.init();
+            initRelativeDates();
         }
     }
 
