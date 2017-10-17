@@ -486,4 +486,13 @@ trait FeatureSwitches {
     exposeClientSide = true
   )
 
+  val UsSupportFrontendActive = Switch(
+    SwitchGroup.Feature,
+    "us-supporter-traffic-to-new-support-frontend",
+    "When ON, all US membership/contribute/support links send traffic to support.theguardian.com",
+    owners = Seq(Owner.withGithub("justinpinner")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
 }
