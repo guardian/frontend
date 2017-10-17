@@ -69,6 +69,7 @@ object Dependencies {
   val scanamo = "com.gu" %% "scanamo" % "0.9.5"
   val enumeratumPlayJson = "com.beachape" %% "enumeratum-play-json" % "1.5.11"
   val commercialShared = "com.gu" %% "commercial-shared" % "6.0.0"
+  val atomRenderer = "com.gu" %% "atom-renderer" % "0.7.2"
   val playJson = "com.typesafe.play" %% "play-json" % playJsonVersion
   val playJsonJoda = "com.typesafe.play" %% "play-json-joda" % playJsonVersion
   val playIteratees = "com.typesafe.play" %% "play-iteratees" % "2.6.1"

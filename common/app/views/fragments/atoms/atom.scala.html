@@ -1,8 +1,10 @@
 @import model.content.MediaWrapper
+@import com.gu.contentatom.renderer.ArticleAtomRenderer
 @(model: _root_.model.content.Atom, shouldFence: Boolean, amp: Boolean, mediaWrapper: Option[MediaWrapper])(implicit request: RequestHeader, context: _root_.model.ApplicationContext)
 
 @import _root_.model.ShareLinkMeta
 @import _root_.model.content.{InteractiveAtom, MediaAtom, Quiz, StoryQuestionsAtom, TimelineAtom, GuideAtom, ProfileAtom, QandaAtom}
+@import conf.switches.Switches.AtomRenderer
 
 @{
     model match {
@@ -11,9 +13,17 @@
         case interactive: InteractiveAtom => views.html.fragments.atoms.interactive(interactive, shouldFence)
         case storyquestions: StoryQuestionsAtom => views.html.fragments.atoms.storyquestions(storyquestions, isAmp = amp)
         case qanda: QandaAtom => views.html.fragments.atoms.snippets.qanda(qanda, isAmp = amp)
+            if (AtomRenderer.isSwitchedOn) Html(ArticleAtomRenderer.getHTML(qanda.atom))
+            else views.html.fragments.atoms.snippets.qanda(qanda, isAmp = amp)
         case timeline: TimelineAtom => views.html.fragments.atoms.snippets.timeline(timeline, isAmp = amp)
+            if (AtomRenderer.isSwitchedOn) Html(ArticleAtomRenderer.getHTML(timeline.atom))
+            else views.html.fragments.atoms.snippets.timeline(timeline, isAmp = amp)
         case guide: GuideAtom => views.html.fragments.atoms.snippets.guide(guide, isAmp = amp)
-        case profile: ProfileAtom => views.html.fragments.atoms.snippets.profile(profile, isAmp = amp)
+            if (AtomRenderer.isSwitchedOn) Html(ArticleAtomRenderer.getHTML(guide.atom))
+            else views.html.fragments.atoms.snippets.guide(guide, isAmp = amp)
+        case profile: ProfileAtom =>
+            if (AtomRenderer.isSwitchedOn) Html(ArticleAtomRenderer.getHTML(profile.atom))
+            else views.html.fragments.atoms.snippets.profile(profile, isAmp = amp)
         case _ =>
     }
 }

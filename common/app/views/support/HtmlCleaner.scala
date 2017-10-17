@@ -685,6 +685,7 @@ case class AtomsCleaner(atoms: Option[Atoms], shouldFence: Boolean = true, amp: 
         atomContainer <- document.getElementsByClass("element-atom")
         bodyElement <- atomContainer.getElementsByTag("gu-atom")
         atomId <- Some(bodyElement.attr("data-atom-id"))
+        atomType <- Some(bodyElement.attr("data-atom-type"))
         atomData <- findAtom(atomId)
       } {
         if(mediaWrapper.contains(MediaWrapper.MainMedia)){
@@ -693,6 +694,8 @@ case class AtomsCleaner(atoms: Option[Atoms], shouldFence: Boolean = true, amp: 
         if(atomData.isInstanceOf[MediaAtom]){
           atomContainer.addClass("element-atom--media")
         }
+        atomContainer.attr("data-atom-id", atomId)
+        atomContainer.attr("data-atom-type", atomType)
         val html = views.html.fragments.atoms.atom(atomData, shouldFence, amp, mediaWrapper).toString()
         bodyElement.remove()
         atomContainer.append(html)
