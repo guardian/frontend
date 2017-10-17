@@ -78,7 +78,7 @@ class Comments extends Component {
             li.innerHTML = 'Loading…';
         }
 
-        const source = target.getAttribute('data-source-comment');
+        const source = bonzo(target).data('source-comment');
         const commentId = currentTarget.getAttribute('data-comment-id');
 
         if (commentId) {
@@ -250,13 +250,13 @@ class Comments extends Component {
         );
         this.comments = qwery(this.getClass('comment'), this.elem);
 
-        this.on(
-            'click',
-            this.getClass('showRepliesButton'),
-            this.getMoreReplies
+        this.on('click', this.getClass('showRepliesButton'), (event: Event) =>
+            this.getMoreReplies(event)
         );
 
-        this.on('click', this.getClass('commentReport'), this.reportComment);
+        this.on('click', this.getClass('commentReport'), (event: Event) =>
+            this.reportComment(event)
+        );
 
         if (shouldMakeTimestampsRelative()) {
             window.setInterval(() => this.relativeDates(), 60000);
