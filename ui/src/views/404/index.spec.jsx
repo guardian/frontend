@@ -10,5 +10,8 @@ jest.mock('./style.css', () => ({
 }));
 
 describe('404', () => {
-    test(<NotFound beaconUrl="" />);
+    const config = {
+        beaconUrl: '',
+    };
+    test(<NotFound config={config} />);
 });
