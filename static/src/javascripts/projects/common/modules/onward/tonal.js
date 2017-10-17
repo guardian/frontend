@@ -26,7 +26,10 @@ const tones = {
 
 class TonalComponent extends Component {
     static getTone(): string {
-        return config.page.tones.split(',')[0].toLowerCase();
+        return config
+            .get('page.tones', '')
+            .split(',')[0]
+            .toLowerCase();
     }
 
     static ready(): void {
@@ -43,7 +46,7 @@ class TonalComponent extends Component {
 
         begin('tonal-content');
 
-        this.edition = config.page.edition.toLowerCase();
+        this.edition = config.get('page.edition', '').toLowerCase();
 
         // Ensures we only fetch supported tones.
         if (this.isSupported()) {
@@ -57,6 +60,8 @@ class TonalComponent extends Component {
         const endpoint = tones[this.edition][TonalComponent.getTone()];
         return `/container/${endpoint}.json`;
     }
+
+    edition: string;
 
     isSupported(): boolean {
         return TonalComponent.getTone() in tones[this.edition];
