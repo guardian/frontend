@@ -2,6 +2,14 @@
 # yarn lockfile v1
 
 
+"@guardian/guui@^0.0.1":
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/@guardian/guui/-/guui-0.0.1.tgz#0f86299f0e150c707a510270644042ede391e0f9"
+  dependencies:
+    emotion "^8.0.8"
+    preact "^8.2.5"
+    styletron-preact "^2.5.9"
+
 abab@^1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/abab/-/abab-1.0.3.tgz#b81de5f7274ec4e756d797cd834f303642724e5d"
@@ -800,6 +808,18 @@ babel-plugin-emotion@^7.2.2, babel-plugin-emotion@^7.3.2:
     postcss "^6.0.9"
     postcss-js "^1.0.0"
     postcss-nested "^2.1.1"
+    touch "^1.0.0"
+
+babel-plugin-emotion@^8.0.6:
+  version "8.0.6"
+  resolved "https://registry.yarnpkg.com/babel-plugin-emotion/-/babel-plugin-emotion-8.0.6.tgz#f86c6065378defd0f6adaacedab45858b2ca6091"
+  dependencies:
+    babel-generator "^6.26.0"
+    babel-macros "^1.0.2"
+    babel-plugin-syntax-jsx "^6.18.0"
+    convert-source-map "^1.5.0"
+    emotion-utils "^8.0.6"
+    source-map "^0.5.7"
     touch "^1.0.0"
 
 babel-plugin-istanbul@^4.0.0:
@@ -2999,6 +3019,10 @@ emotion-utils@^7.3.1:
   dependencies:
     fbjs "^0.8.12"
 
+emotion-utils@^8.0.6:
+  version "8.0.6"
+  resolved "https://registry.yarnpkg.com/emotion-utils/-/emotion-utils-8.0.6.tgz#23dc1bc63711f86d074b4199b918580f3f2d7855"
+
 emotion@^7.3.2:
   version "7.3.2"
   resolved "https://registry.yarnpkg.com/emotion/-/emotion-7.3.2.tgz#54d2533f2451a6b96e7bf600b54ede5ce0160fe1"
@@ -3007,6 +3031,15 @@ emotion@^7.3.2:
     emotion-server "^7.3.2"
     emotion-utils "^7.3.1"
     react-emotion "^7.3.2"
+
+emotion@^8.0.8:
+  version "8.0.8"
+  resolved "https://registry.yarnpkg.com/emotion/-/emotion-8.0.8.tgz#d898dd6a4262937bbe0427cb3b4f6c8bcb6582ec"
+  dependencies:
+    babel-plugin-emotion "^8.0.6"
+    emotion-utils "^8.0.6"
+    stylis "^3.3.2"
+    stylis-rule-sheet "^0.0.5"
 
 encodeurl@~1.0.1:
   version "1.0.1"
@@ -7999,7 +8032,7 @@ preact-render-to-string@^3.6.0:
   dependencies:
     pretty-format "^3.5.1"
 
-preact@^8.2.1:
+preact@^8.2.5:
   version "8.2.5"
   resolved "https://registry.yarnpkg.com/preact/-/preact-8.2.5.tgz#cbfa3962a8012768159f6d01d46f9c1eb3213c0a"
 
@@ -9668,7 +9701,7 @@ styletron-core@^2.5.7:
   version "2.5.7"
   resolved "https://registry.yarnpkg.com/styletron-core/-/styletron-core-2.5.7.tgz#2c4a1fae537b42235462e438c24ab619bbf8993e"
 
-styletron-preact@^2.5.7:
+styletron-preact@^2.5.9:
   version "2.5.9"
   resolved "https://registry.yarnpkg.com/styletron-preact/-/styletron-preact-2.5.9.tgz#148985c148d8137bdbc8323a43f719f00136870f"
   dependencies:
@@ -9688,12 +9721,13 @@ styletron-utils@^2.5.4:
   dependencies:
     inline-style-prefixer "^2.0.1"
 
-styletron@^2.5.7:
-  version "2.5.7"
-  resolved "https://registry.yarnpkg.com/styletron/-/styletron-2.5.7.tgz#4da215eb79d3d71b17498918af95667942ee39df"
-  dependencies:
-    styletron-client "^2.5.7"
-    styletron-server "^2.5.7"
+stylis-rule-sheet@^0.0.5:
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/stylis-rule-sheet/-/stylis-rule-sheet-0.0.5.tgz#ebae935cc1f6fb31b9b62dba47f2ea8b833dad9f"
+
+stylis@^3.3.2:
+  version "3.3.2"
+  resolved "https://registry.yarnpkg.com/stylis/-/stylis-3.3.2.tgz#95ef285836e98243f8b8f64a9a72706ea6c893ea"
 
 sugarss@^1.0.0:
   version "1.0.0"
