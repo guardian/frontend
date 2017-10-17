@@ -75,7 +75,7 @@ final case class Content(
   lazy val shortUrlId = fields.shortUrlId
   lazy val shortUrlPath = shortUrlId
   lazy val discussionId = Some(shortUrlId)
-  lazy val isGallery = metadata.contentType.toLowerCase == "gallery"
+  lazy val isGallery = metadata.contentType == DotcomContentType.Gallery
   lazy val isExplore = ExploreTemplateSwitch.isSwitchedOn && tags.isExploreSeries
   lazy val isPhotoEssay = fields.displayHint.contains("photoEssay")
   lazy val isImmersive = fields.displayHint.contains("immersive") || isGallery || tags.isTheMinuteArticle || isExplore || isPhotoEssay
@@ -96,7 +96,7 @@ final case class Content(
   lazy val hasTonalHeaderByline: Boolean = {
     (cardStyle == Comment || cardStyle == Editorial || (cardStyle == SpecialReport && tags.isComment)) &&
       hasSingleContributor &&
-      metadata.contentType != GuardianContentTypes.ImageContent
+      metadata.contentType != DotcomContentType.ImageContent
   }
 
   lazy val hasBeenModified: Boolean =
@@ -273,8 +273,8 @@ final case class Content(
     val canDisableStickyTopBanner =
       metadata.shouldHideHeaderAndTopAds ||
       isPaidContent ||
-      metadata.contentType == "Interactive" ||
-      metadata.contentType == "Crossword"
+      metadata.contentType == DotcomContentType.Interactive ||
+      metadata.contentType == DotcomContentType.Crossword
 
     // These conditions must always disable sticky banner.
     val alwaysDisableStickyTopBanner =
@@ -409,7 +409,7 @@ object Article {
 
   private def copyMetaData(content: Content, commercial: Commercial, lightbox: GenericLightbox, trail: Trail, tags: Tags) = {
 
-    val contentType = if (content.tags.isLiveBlog) GuardianContentTypes.LiveBlog else GuardianContentTypes.Article
+    val contentType: DotcomContentType = if (content.tags.isLiveBlog) DotcomContentType.LiveBlog else DotcomContentType.Article
     val section = content.metadata.sectionId
     val fields = content.fields
     val bookReviewIsbn = content.isbn.map { i: String => Map("isbn" -> JsString(i)) }.getOrElse(Map())
@@ -445,8 +445,8 @@ object Article {
     )
 
     content.metadata.copy(
-      contentType = contentType,
-      adUnitSuffix = section + "/" + contentType.toLowerCase,
+      contentType = Some(contentType),
+      adUnitSuffix = section + "/" + contentType.name.toLowerCase,
       schemaType = Some(ArticleSchemas(content.tags)),
       iosType = Some("Article"),
       javascriptConfigOverrides = javascriptConfig,
@@ -515,7 +515,7 @@ final case class Article (
 object Audio {
   def make(content: Content): Audio = {
 
-    val contentType = GuardianContentTypes.Audio
+    val contentType = DotcomContentType.Audio
     val section = content.metadata.sectionId
     val javascriptConfig: Map[String, JsValue] = Map(
       "isPodcast" -> JsBoolean(content.tags.isPodcast))
@@ -531,8 +531,8 @@ object Audio {
     )
 
     val metadata = content.metadata.copy(
-      contentType = contentType,
-      adUnitSuffix = section + "/" + contentType.toLowerCase,
+      contentType = Some(contentType),
+      adUnitSuffix = section + "/" + contentType.name.toLowerCase,
       schemaType = Some("https://schema.org/AudioObject"),
       javascriptConfigOverrides = javascriptConfig,
       opengraphPropertiesOverrides = opengraphProperties
@@ -572,7 +572,7 @@ object AtomProperties {
 object Video {
   def make(content: Content): Video = {
 
-    val contentType = GuardianContentTypes.Video
+    val contentType = DotcomContentType.Video
     val elements = content.elements
     val section = content.metadata.sectionId
     val source: Option[String] = elements.videos.find(_.properties.isMain).flatMap(_.videos.source)
@@ -596,8 +596,8 @@ object Video {
     ) ++ optionalOpengraphProperties
 
     val metadata = content.metadata.copy(
-      contentType = contentType,
-      adUnitSuffix = section + "/" + contentType.toLowerCase,
+      contentType = Some(contentType),
+      adUnitSuffix = section + "/" + contentType.name.toLowerCase,
       schemaType = Some("http://schema.org/VideoObject"),
       javascriptConfigOverrides = javascriptConfig,
       opengraphPropertiesOverrides = opengraphProperties
@@ -651,7 +651,7 @@ final case class Video (
 object Gallery {
   def make(content: Content): Gallery = {
 
-    val contentType = GuardianContentTypes.Gallery
+    val contentType = DotcomContentType.Gallery
     val fields = content.fields
     val elements = content.elements
     val tags = content.tags
@@ -680,8 +680,8 @@ object Gallery {
     )
 
     val metadata = content.metadata.copy(
-      contentType = contentType,
-      adUnitSuffix = section + "/" + contentType.toLowerCase,
+      contentType = Some(contentType),
+      adUnitSuffix = section + "/" + contentType.name.toLowerCase,
       schemaType = Some("https://schema.org/ImageGallery"),
       openGraphImages = lightbox.openGraphImages,
       javascriptConfigOverrides = javascriptConfig,
@@ -830,13 +830,13 @@ final case class Interactive(
 object Interactive {
   def make(apiContent: contentapi.Content): Interactive = {
     val content = Content(apiContent).content
-    val contentType = GuardianContentTypes.Interactive
+    val contentType = DotcomContentType.Interactive
     val fields = content.fields
     val section = content.metadata.sectionId
 
     val metadata = content.metadata.copy(
-      contentType = contentType,
-      adUnitSuffix = section + "/" + contentType.toLowerCase,
+      contentType = Some(contentType),
+      adUnitSuffix = section + "/" + contentType.name.toLowerCase,
       twitterPropertiesOverrides = Map( "twitter:title" -> fields.linkText ),
       contentWithSlimHeader = true
     )
@@ -851,7 +851,7 @@ object Interactive {
 
 object ImageContent {
   def make(content: Content): ImageContent = {
-    val contentType = GuardianContentTypes.ImageContent
+    val contentType = DotcomContentType.ImageContent
     val fields = content.fields
     val section = content.metadata.sectionId
     val id = content.metadata.id
@@ -867,8 +867,8 @@ object ImageContent {
       "lightboxImages" -> lightbox.javascriptConfig
     )
     val metadata = content.metadata.copy(
-      contentType = contentType,
-      adUnitSuffix = section + "/" + contentType.toLowerCase,
+      contentType = Some(contentType),
+      adUnitSuffix = section + "/" + contentType.name.toLowerCase,
       javascriptConfigOverrides = javascriptConfig
     )
 
@@ -890,13 +890,13 @@ object CrosswordContent {
   def make(crossword: CrosswordData, apicontent: contentapi.Content): CrosswordContent = {
 
     val content = Content(apicontent)
-    val contentType= GuardianContentTypes.Crossword
+    val contentType= DotcomContentType.Crossword
 
     val metadata = content.metadata.copy(
       id = crossword.id,
-      section = Some(SectionSummary.fromId("crosswords")),
+      section = Some(SectionId.fromId("crosswords")),
       webTitle = crossword.name,
-      contentType = contentType,
+      contentType = Some(contentType),
       iosType = None
     )
 

@@ -6,6 +6,7 @@
 @import views.support.`package`.Seq2zipWithRowInfo
 @import views.support.{GalleryCaptionCleaner, RenderClasses}
 
+@import model.DotcomContentType
 @(page: GalleryPage)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 <div class="gallery__main-content">
@@ -76,7 +77,12 @@
                     }
                 }
 
-                @fragments.share.blockLevelSharing("img-" + rowNum.toString, page.item.sharelinks.elementShares("img-" + rowNum.toString, image.path), page.item.metadata.contentType, isNewGallery = true)
+                @fragments.share.blockLevelSharing(
+                    "img-" + rowNum.toString,
+                    page.item.sharelinks.elementShares("img-" + rowNum.toString, image.path),
+                    page.item.metadata.contentType.getOrElse(DotcomContentType.Unknown),
+                    isNewGallery = true
+                )
             </div>
 
             @defining(

@@ -24,11 +24,11 @@ object Section {
       id,
       webUrl = section.webUrl,
       url = SupportedUrl(section),
-      section = Some(SectionSummary.fromCapiSection(section)),
+      section = Some(SectionId.fromCapiSection(section)),
       pagination = pagination,
       webTitle = webTitle,
       adUnitSuffix = adUnitSuffix,
-      contentType = "Section",
+      contentType = Some(DotcomContentType.Section),
       isFront = true,
       rssPath = Some(s"/$id/rss"),
       iosType = id match {
@@ -51,13 +51,13 @@ case class Section private(
   isEditionalised: Boolean
 ) extends StandalonePage
 
-case class SectionSummary(id: String)
+case class SectionId(value: String) extends AnyVal
 
-object SectionSummary {
+object SectionId {
 
-  implicit val jsonFormat = Json.format[SectionSummary]
+  implicit val jsonFormat = Json.format[SectionId]
 
-  def fromCapiSection(section: ApiSection): SectionSummary = SectionSummary(id = section.id)
+  def fromCapiSection(section: ApiSection): SectionId = SectionId(section.id)
 
-  def fromId(sectionId: String): SectionSummary = SectionSummary(id = sectionId)
+  def fromId(id: String): SectionId = SectionId(id)
 }

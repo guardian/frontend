@@ -177,7 +177,7 @@ object RenderOtherStatus {
     val canonicalUrl: Option[String] = Some(s"/${request.path.drop(1).split("/").head}")
     SimplePage(MetaData.make(
       id = request.path,
-      section = Some(SectionSummary.fromId("news")),
+      section = Some(SectionId.fromId("news")),
       webTitle = "This page has been removed",
       canonicalUrl
     ))
