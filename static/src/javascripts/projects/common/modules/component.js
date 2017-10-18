@@ -122,7 +122,11 @@ class Component {
 
         if (this.options && typeof endpoint === 'string') {
             Object.keys(this.options).forEach(key => {
-                endpoint = endpoint.replace(`:${key}`, this.options[key]);
+                const value = this.options && this.options[key];
+
+                if (endpoint && value) {
+                    endpoint = endpoint.replace(`:${key}`, value);
+                }
             });
         }
 
@@ -256,9 +260,13 @@ class Component {
     }
 
     getClass(elemName: string, sansDot: boolean = false): string {
-        const className = this.useBem
-            ? `${this.componentClass}__${elemName}`
-            : this.classes[elemName];
+        let className;
+
+        if (this.useBem && this.componentClass) {
+            className = `${this.componentClass}__${elemName}`;
+        } else {
+            className = (this.classes && this.classes[elemName]) || '';
+        }
 
         return (sansDot ? '' : '.') + className;
     }
