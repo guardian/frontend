@@ -476,13 +476,23 @@ trait FeatureSwitches {
   )
 
   // Owner: Simple & Coherent
-  val SupportFrontendActive = Switch(
+  val UkSupportFrontendActive = Switch(
     SwitchGroup.Feature,
     "uk-supporter-traffic-to-new-support-frontend",
     "When ON, all UK membership/contribute/support links send traffic to support.theguardian.com",
     owners = Seq(Owner.withGithub("justinpinner")),
+    safeState = On,
+    sellByDate = new LocalDate(2018, 10, 17),
+    exposeClientSide = true
+  )
+
+  val UsSupportFrontendActive = Switch(
+    SwitchGroup.Feature,
+    "us-supporter-traffic-to-new-support-frontend",
+    "When ON, all US membership/contribute/support links send traffic to support.theguardian.com",
+    owners = Seq(Owner.withGithub("justinpinner")),
     safeState = Off,
-    sellByDate = never,
+    sellByDate = new LocalDate(2018, 10, 17),
     exposeClientSide = true
   )
 }
