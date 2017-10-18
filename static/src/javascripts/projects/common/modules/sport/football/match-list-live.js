@@ -21,8 +21,6 @@ class MatchListLive extends Component {
         this.endpoint = `/${slug}.json`;
     }
 
-    elem: HTMLElement;
-
     autoupdate(elem: HTMLElement): void {
         const updated = $('.football-match', elem);
 
