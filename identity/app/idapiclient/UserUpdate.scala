@@ -12,5 +12,5 @@ case class UserUpdate (
   userGroups: Option[Set[GroupMembership]] = None,
   socialLinks: Option[Set[SocialLink]] = None,
   adData: Option[Map[String, AnyRef]] = None,
-  consents: Option[Set[Consent]] = None
+  consents: Option[Seq[Consent]] = None
 )
