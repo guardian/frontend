@@ -195,13 +195,13 @@ class Component {
      * This is where you could do your error event binding
      * This function is made to be overridden
      */
-    error(type: string, message?: string): void {}
+    error(type?: string, message?: string): void {}
 
     /**
      * This is called whenever a fetch occurs. This includes
      * explicit fetch calls and autoupdate.
      */
-    fetched(resp: Object): void {}
+    fetched(resp?: Object): void {}
 
     autoupdate(elem: HTMLElement): void {
         const oldElem = this.elem;
@@ -237,12 +237,15 @@ class Component {
     }
 
     getElem(elemName: string): HTMLElement {
-        if (this.elems[elemName]) {
+        if (this.elems && this.elems[elemName]) {
             return this.elems[elemName];
         }
 
         const elem = qwery(this.getClass(elemName), this.elem)[0];
-        this.elems[elemName] = elem;
+
+        if (this.elems) {
+            this.elems[elemName] = elem;
+        }
 
         return elem;
     }
@@ -257,35 +260,52 @@ class Component {
 
     setState(state: string, elemName: ?string) {
         const elem = elemName ? this.getElem(elemName) : this.elem;
-        bonzo(elem).addClass(
-            `${this.componentClass +
-                (elemName ? `__${elemName}` : '')}--${state}`
-        );
+        const $elem = bonzo(elem);
+
+        if (this.componentClass) {
+            $elem.addClass(
+                `${this.componentClass +
+                    (elemName ? `__${elemName}` : '')}--${state}`
+            );
+        }
     }
 
     removeState(state: string, elemName: ?string): void {
         const elem = elemName ? this.getElem(elemName) : this.elem;
-        return bonzo(elem).removeClass(
-            `${this.componentClass +
-                (elemName ? `__${elemName}` : '')}--${state}`
-        );
+        const $elem = bonzo(elem);
+
+        if (this.componentClass) {
+            $elem.removeClass(
+                `${this.componentClass +
+                    (elemName ? `__${elemName}` : '')}--${state}`
+            );
+        }
     }
 
     toggleState(state: string, elemName: ?string): void {
         const elem = elemName ? this.getElem(elemName) : this.elem;
-        bonzo(elem).toggleClass(
-            `${this.componentClass +
-                (elemName ? `__${elemName}` : '')}--${state}`
-        );
+        const $elem = bonzo(elem);
+
+        if (this.componentClass) {
+            $elem.toggleClass(
+                `${this.componentClass +
+                    (elemName ? `__${elemName}` : '')}--${state}`
+            );
+        }
     }
 
     hasState(state: string, elemName: ?string): boolean {
         const elem = elemName ? this.getElem(elemName) : this.elem;
+        const $elem = bonzo(elem);
 
-        return bonzo(elem).hasClass(
-            `${this.componentClass +
-                (elemName ? `__${elemName}` : '')}--${state}`
-        );
+        if (this.componentClass) {
+            return $elem.hasClass(
+                `${this.componentClass +
+                    (elemName ? `__${elemName}` : '')}--${state}`
+            );
+        }
+
+        return false;
     }
 
     setOptions(options: Object): void {
