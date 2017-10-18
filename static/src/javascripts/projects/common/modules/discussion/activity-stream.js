@@ -66,7 +66,9 @@ class ActivityStream extends Component {
         }
 
         // update opts
-        this.options.streamType = streamType;
+        if (this.options) {
+            this.options.streamType = streamType;
+        }
     }
 
     change(opts: Object): Promise<any> {
@@ -76,7 +78,10 @@ class ActivityStream extends Component {
     }
 
     fetched(resp: Object): void {
-        this.applyState(resp.html, this.options.streamType);
+        if (this.options && this.options.streamType) {
+            this.applyState(resp.html, this.options.streamType);
+        }
+
         this.updateHistory(resp);
     }
 
@@ -129,15 +134,20 @@ class ActivityStream extends Component {
     }
 
     updateHistory(resp: Object): void {
-        const page = this.options.page;
+        const page = this.options && this.options.page;
+        const userId = (this.options && this.options.userId) || '';
         const pageParam = getUrlVars().page;
         const streamType =
-            this.options.streamType !== 'discussions'
+            this.options && this.options.streamType !== 'discussions'
                 ? `/${this.options.streamType}`
                 : '';
-        const qs = `/user/id/${this.options
-            .userId}${streamType}?${constructQuery({ page })}`;
-        const state = { resp, streamType: this.options.streamType };
+        const qs = `/user/id/${userId}${streamType}?${constructQuery({
+            page,
+        })}`;
+        const state = {
+            resp,
+            streamType: this.options && this.options.streamType,
+        };
         const params = { querystring: qs, state };
 
         if (typeof pageParam === 'undefined') {
