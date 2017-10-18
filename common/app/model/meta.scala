@@ -2,7 +2,7 @@ package model
 
 import com.gu.contentapi.client.model.v1.{Content => CapiContent}
 import com.gu.contentapi.client.model.{v1 => contentapi}
-import com.gu.contentapi.client.utils.CapiModelEnrichment.RichCapiDateTime
+import implicits.Dates.CapiRichDateTime
 import commercial.campaigns.PersonalInvestmentsCampaign
 import common.commercial.{AdUnitMaker, CommercialProperties}
 import common.dfp._
@@ -60,19 +60,19 @@ object Fields {
       main = apiContent.fields.flatMap(_.main).getOrElse(""),
       body = apiContent.fields.flatMap(_.body).getOrElse(""),
       blocks = apiContent.blocks.map(Blocks.make),
-      lastModified = apiContent.fields.flatMap(_.lastModified).map(_.toJodaDateTime).getOrElse(DateTime.now),
+      lastModified = apiContent.fields.flatMap(_.lastModified).map(_.toJoda).getOrElse(DateTime.now),
       displayHint = apiContent.fields.flatMap(_.displayHint).getOrElse(""),
       isLive = apiContent.fields.flatMap(_.liveBloggingNow).getOrElse(false),
       sensitive = apiContent.fields.flatMap(_.sensitive),
       shouldHideReaderRevenue = Some(shouldHideReaderRevenue(apiContent, shouldHideReaderRevenueCutoffDate)),
       legallySensitive = apiContent.fields.flatMap(_.legallySensitive),
-      firstPublicationDate = apiContent.fields.flatMap(_.firstPublicationDate).map(_.toJodaDateTime),
+      firstPublicationDate = apiContent.fields.flatMap(_.firstPublicationDate).map(_.toJoda),
       lang = apiContent.fields.flatMap(_.lang)
     )
   }
 
   def shouldHideReaderRevenue(apiContent: contentapi.Content, cutoffDate: DateTime): Boolean = {
-    val publishedBeforeCutoff = apiContent.webPublicationDate.exists(_.toJodaDateTime < cutoffDate)
+    val publishedBeforeCutoff = apiContent.webPublicationDate.exists(_.toJoda < cutoffDate)
     val isPaidContent = Tags.make(apiContent).isPaidContent
     val isSensitive = apiContent.fields.flatMap(_.sensitive).getOrElse(false)
     val shouldHideAdverts = apiContent.fields.flatMap(_.shouldHideAdverts).getOrElse(false)

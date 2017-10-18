@@ -1,12 +1,15 @@
 package common
 
+import java.time.ZoneOffset
+
 import com.gu.contentapi.client.model.v1.{Content, ItemResponse, Section, Tag, TagType}
-import com.gu.contentapi.client.utils.CapiModelEnrichment.RichJodaDateTime
 import org.joda.time.DateTime
 import org.scalatest.{FlatSpec, Matchers}
 import play.api.mvc.RequestHeader
 import play.api.test.Helpers._
 import test.{TestRequest, WithTestExecutionContext}
+import implicits.Dates.jodaToJavaInstant
+import com.gu.contentapi.client.utils.CapiModelEnrichment.RichOffsetDateTime
 
 import scala.concurrent.Future
 
@@ -14,12 +17,14 @@ private object TestModel
 
 class ModelOrResultTest extends FlatSpec with Matchers with WithTestExecutionContext {
 
+  val offsetDate = jodaToJavaInstant(new DateTime()).atOffset(ZoneOffset.UTC)
+
   implicit val request: RequestHeader = TestRequest()
 
   val testContent = Content(id = "the/id",
     sectionId = None,
     sectionName = None,
-    webPublicationDate = Some(new DateTime().toCapiDateTime),
+    webPublicationDate = Some(offsetDate.toCapiDateTime),
     webTitle = "the title",
     webUrl = "http://www.guardian.co.uk/canonical",
     apiUrl = "http://foo.bar",

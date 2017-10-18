@@ -1,13 +1,11 @@
 package model
 
 import com.gu.contentapi.client.model.{v1 => contentapi}
-import com.gu.contentapi.client.utils.CapiModelEnrichment.RichCapiDateTime
 import implicits.Dates._
 import org.joda.time.DateTime
 import org.scala_tools.time.Imports._
 import play.api.libs.json.{JsBoolean, JsString, JsValue, Json}
 import play.api.mvc.RequestHeader
-import play.api.libs.json.JodaReads._
 import views.support.{ImgSrc, Naked}
 
 /**
@@ -55,12 +53,12 @@ object Trail {
     apiContent: contentapi.Content): Trail = {
 
     Trail(
-      webPublicationDate = apiContent.webPublicationDate.map(_.toJodaDateTime).getOrElse(DateTime.now),
+      webPublicationDate = apiContent.webPublicationDate.map(_.toJoda).getOrElse(DateTime.now),
       headline = apiContent.fields.flatMap(_.headline).getOrElse(""),
       sectionName = apiContent.sectionName.getOrElse(""),
       thumbnailPath = apiContent.fields.flatMap(_.thumbnail).map(ImgSrc(_, Naked)),
       isCommentable = apiContent.fields.flatMap(_.commentable).exists(b => b),
-      isClosedForComments = !apiContent.fields.flatMap(_.commentCloseDate).map(_.toJodaDateTime).exists(_.isAfterNow),
+      isClosedForComments = !apiContent.fields.flatMap(_.commentCloseDate).map(_.toJoda).exists(_.isAfterNow),
       byline = apiContent.fields.flatMap(_.byline).map(stripHtml),
       trailPicture = findTrailImages(elements),
       tags = tags,

@@ -1,5 +1,7 @@
 package test
 
+import java.time.ZoneOffset
+
 import common.editions.{Au, Uk, Us}
 import common.{AkkaAgent, Edition}
 import controllers.front.Front
@@ -7,8 +9,9 @@ import model.pressed.{CollectionConfig, PressedContent}
 import model.{PressedPage, _}
 import model.facia.PressedCollection
 import org.joda.time.DateTime
-import com.gu.contentapi.client.model.v1.{Content => ApiContent, ContentFields}
-import com.gu.contentapi.client.utils.CapiModelEnrichment.RichJodaDateTime
+import com.gu.contentapi.client.model.v1.{ContentFields, Content => ApiContent}
+import implicits.Dates.jodaToJavaInstant
+import com.gu.contentapi.client.utils.CapiModelEnrichment.RichOffsetDateTime
 import services.FaciaContentConvert
 
 object TestContent {
@@ -17,7 +20,7 @@ object TestContent {
       id = u,
       sectionId = None,
       sectionName = None,
-      webPublicationDate = Some(DateTime.now.toCapiDateTime),
+      webPublicationDate = Some(jodaToJavaInstant(DateTime.now).atOffset(ZoneOffset.UTC).toCapiDateTime),
       webTitle = "",
       webUrl = "",
       apiUrl = "",
