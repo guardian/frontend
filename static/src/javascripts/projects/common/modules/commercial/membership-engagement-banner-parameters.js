@@ -69,7 +69,7 @@ const supporterEngagementBannerCopy = (location: string): string =>
 const contributionEngagementBannerCopy = (location: string): string =>
     engagementBannerCopy(
         `Support us with a ${location === 'US'
-            ? 'one time'
+            ? 'one-time'
             : 'one-off'} contribution`
     );
 
