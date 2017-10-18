@@ -57,11 +57,14 @@ class Loader extends Component {
     }
 
     getDiscussionId(): ?string {
-        return this.elem.getAttribute('data-discussion-key');
+        return this.elem && this.elem.getAttribute('data-discussion-key');
     }
 
     getDiscussionClosed(): boolean {
-        return this.elem.getAttribute('data-discussion-closed') === 'true';
+        return !!(
+            this.elem &&
+            this.elem.getAttribute('data-discussion-closed') === 'true'
+        );
     }
 
     // eslint-disable-next-line class-methods-use-this
@@ -85,13 +88,16 @@ class Loader extends Component {
 
     commentPosted(comment: Object): void {
         this.removeState('truncated');
-        this.comments.addComment(comment);
+
+        if (this.comments) {
+            this.comments.addComment(comment);
+        }
     }
 
     initState(): void {
         if (this.getDiscussionClosed()) {
             this.setState('closed');
-        } else if (this.comments.isReadOnly()) {
+        } else if (this.comments && this.comments.isReadOnly()) {
             this.setState('readonly');
         } else if (getUserFromCookie()) {
             if (
@@ -114,9 +120,12 @@ class Loader extends Component {
             this.user &&
             this.user.privateFields &&
             this.user.privateFields.canPostComment;
-        return (
+
+        const commentsReadOnly = this.comments && !this.comments.isReadOnly();
+
+        return !!(
             userCanPost &&
-            !this.comments.isReadOnly() &&
+            commentsReadOnly &&
             !this.getDiscussionClosed()
         );
     }
@@ -161,7 +170,10 @@ class Loader extends Component {
     initRecommend(): void {
         this.on('click', '.js-recommend-comment', (e: Event) => {
             const target: HTMLElement = (e.currentTarget: any);
-            upvoteHandle(target, this.elem, this.user);
+
+            if (this.user) {
+                upvoteHandle(target, this.elem, this.user);
+            }
         });
 
         this.on('click', '.js-rec-tooltip-close', () => {
@@ -173,8 +185,16 @@ class Loader extends Component {
         const $orderLabel = $('.js-comment-order');
         const $threadingLabel = $('.js-comment-threading');
 
-        $threadingLabel.text(this.comments.options.threading);
-        $orderLabel.text(this.comments.options.order);
+        $threadingLabel.text(
+            this.comments &&
+                this.comments.options &&
+                this.comments.options.threading
+        );
+        $orderLabel.text(
+            this.comments &&
+                this.comments.options &&
+                this.comments.options.order
+        );
 
         this.on(
             'click',
@@ -187,8 +207,17 @@ class Loader extends Component {
                 this.comments.options.order = bonzo(e.currentTarget).data(
                     'order'
                 );
-                $orderLabel.text(this.comments.options.order);
-                userPrefs.set('discussion.order', this.comments.options.order);
+                $orderLabel.text(
+                    this.comments &&
+                        this.comments.options &&
+                        this.comments.options.order
+                );
+                userPrefs.set(
+                    'discussion.order',
+                    this.comments &&
+                        this.comments.options &&
+                        this.comments.options.order
+                );
                 this.loadComments({ page: 1 });
             }
         );
@@ -201,19 +230,27 @@ class Loader extends Component {
                     qwery('.js-comment-threading-dropdown [data-toggle]')[0],
                     'click'
                 );
+
                 this.comments.options.threading = bonzo(e.currentTarget).data(
                     'threading'
                 );
-                $threadingLabel.text(this.comments.options.threading);
+                $threadingLabel.text(
+                    this.comments &&
+                        this.comments.options &&
+                        this.comments.options.threading
+                );
+
                 userPrefs.set(
                     'discussion.threading',
-                    this.comments.options.threading
+                    this.comments &&
+                        this.comments.options &&
+                        this.comments.options.threading
                 );
                 this.loadComments();
             }
         );
 
-        if (config.page.section === 'crosswords') {
+        if (config.get('page.section') === 'crosswords') {
             const $timestampsLabel = $('.js-timestamps');
             const updateLabelText = (prefValue?: boolean) => {
                 $timestampsLabel.text(prefValue ? 'Relative' : 'Absolute');
@@ -273,7 +310,10 @@ class Loader extends Component {
                     'click'
                 );
 
-                this.comments.options.pagesize = selectedPageSize;
+                if (this.comments && this.comments.options) {
+                    this.comments.options.pagesize = selectedPageSize;
+                }
+
                 $pagesizeLabel.text(selectedPageSize);
                 userPrefs.set('discussion.pagesize', selectedPageSize);
                 this.loadComments({ page: 1 });
@@ -297,9 +337,15 @@ class Loader extends Component {
             threading,
         });
 
-        this.comments.attachTo(qwery('.js-discussion-main-comments')[0]);
+        if (this.comments) {
+            this.comments.attachTo(qwery('.js-discussion-main-comments')[0]);
+        }
 
-        this.comments.on('untruncate-thread', () => this.removeTruncation());
+        if (this.comments) {
+            this.comments.on('untruncate-thread', () =>
+                this.removeTruncation()
+            );
+        }
 
         this.on('click,', '.js-discussion-author-link', () =>
             this.removeTruncation()
@@ -314,16 +360,21 @@ class Loader extends Component {
             }
         );
 
-        this.comments.on('rendered', (paginationHtml: string) => {
-            const newPagination = bonzo.create(paginationHtml);
-            const toolbarEl = qwery('.js-discussion-toolbar', this.elem)[0];
-            const container = $('.js-discussion-pagination', toolbarEl).empty();
+        if (this.comments) {
+            this.comments.on('rendered', (paginationHtml: string) => {
+                const newPagination = bonzo.create(paginationHtml);
+                const toolbarEl = qwery('.js-discussion-toolbar', this.elem)[0];
+                const container = $(
+                    '.js-discussion-pagination',
+                    toolbarEl
+                ).empty();
 
-            // When the pagesize is 'All', do not show any pagination.
-            if (!this.comments.isAllPageSizeActive()) {
-                container.html(newPagination);
-            }
-        });
+                // When the pagesize is 'All', do not show any pagination.
+                if (this.comments && !this.comments.isAllPageSizeActive()) {
+                    container.html(newPagination);
+                }
+            });
+        }
 
         this.setState('loading');
 
@@ -332,7 +383,9 @@ class Loader extends Component {
             this.renderCommentBar();
 
             if (this.user) {
-                this.comments.addUser(this.user);
+                if (this.comments) {
+                    this.comments.addUser(this.user);
+                }
 
                 const userPageSize = userPrefs.get('discussion.pagesize');
                 let pageSize = defaultPagesize;
@@ -340,7 +393,7 @@ class Loader extends Component {
                 if (typeof userPageSize === 'number') {
                     pageSize = userPageSize;
                 } else if (userPageSize === 'All') {
-                    pageSize = config.switches.discussionAllPageSize
+                    pageSize = config.get('switches.discussionAllPageSize')
                         ? 'All'
                         : 100;
                 }
@@ -348,13 +401,15 @@ class Loader extends Component {
                 this.initPageSizeDropdown(pageSize);
 
                 if (
-                    config.switches.discussionPageSize &&
+                    this.comments &&
+                    this.comments.options &&
+                    config.get('switches.discussionPageSize') &&
                     isBreakpoint({ min: 'tablet' })
                 ) {
                     this.comments.options.pagesize = pageSize;
                 }
 
-                if (this.user.isStaff) {
+                if (this.user && this.user.isStaff) {
                     this.removeState('not-staff');
                     this.setState('is-staff');
                 }
@@ -446,7 +501,10 @@ class Loader extends Component {
             if (commentsAreHidden) {
                 fastdom
                     .write(() => {
-                        this.comments.showHiddenComments();
+                        if (this.comments) {
+                            this.comments.showHiddenComments();
+                        }
+
                         this.removeState('truncated');
 
                         $('.d-discussion__show-all-comments').addClass('u-h');
@@ -485,7 +543,11 @@ class Loader extends Component {
 
     gotoPage(page: number): void {
         scrollToElement(qwery('.js-discussion-toolbar'), 100);
-        this.comments.relativeDates();
+
+        if (this.comments) {
+            this.comments.relativeDates();
+        }
+
         this.loadComments({ page });
     }
 
@@ -501,12 +563,19 @@ class Loader extends Component {
         this.setState('loading');
 
         // If the caller specified truncation, do not load all comments.
-        if (opts.shouldTruncate && this.comments.isAllPageSizeActive()) {
+        if (
+            opts.shouldTruncate &&
+            (this.comments && this.comments.isAllPageSizeActive())
+        ) {
             opts.pageSize = 10;
         }
 
         // Closed state of comments is passed so we bust cache of comment thread when it is reopened
         opts.commentsClosed = this.getDiscussionClosed();
+
+        if (!this.comments) {
+            return Promise.resolve();
+        }
 
         return this.comments.fetchComments(opts).then(() => {
             this.removeState('loading');
@@ -518,7 +587,7 @@ class Loader extends Component {
                 this.removeState('truncated');
             }
 
-            if (this.comments.shouldShowPageSizeMessage()) {
+            if (this.comments && this.comments.shouldShowPageSizeMessage()) {
                 this.setState('pagesize-msg-show');
             } else {
                 this.removeState('pagesize-msg-show');
@@ -532,7 +601,7 @@ class Loader extends Component {
 
     removeTruncation(): void {
         // When the pagesize is 'All', the full page is not yet loaded, so load the comments.
-        if (this.comments.isAllPageSizeActive()) {
+        if (this.comments && this.comments.isAllPageSizeActive()) {
             this.loadComments();
         } else {
             this.removeState('truncated');
@@ -542,8 +611,14 @@ class Loader extends Component {
     renderCommentBox(elem: HTMLElement): void {
         new CommentBox({
             discussionId: this.getDiscussionId(),
-            premod: this.user.privateFields.isPremoderated,
-            newCommenter: !this.user.privateFields.hasCommented,
+            premod:
+                this.user &&
+                this.user.privateFields &&
+                this.user.privateFields.isPremoderated,
+            newCommenter:
+                this.user &&
+                this.user.privateFields &&
+                !this.user.privateFields.hasCommented,
             hasUsername: this.username !== null,
             shouldRenderMainAvatar: false,
         })
