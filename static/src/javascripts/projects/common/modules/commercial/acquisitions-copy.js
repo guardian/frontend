@@ -1,4 +1,8 @@
 // @flow
+import {
+    liveInUk as supportFrontendLiveInUk,
+    liveInUs as supportFrontendLiveInUs
+} from 'common/modules/commercial/support-utilities';
 
 // control
 const controlHeading = 'Since you’re here &hellip;';
@@ -14,6 +18,18 @@ const controlP1Regulars =
 
 // US localised testimonials test
 const usLocalisedFlagP1 = `${controlP1} Here’s why other <strong>readers from the US</strong> are supporting us:`;
+
+const ctaLinkSentence = (
+    membershipUrl: string,
+    contributionUrl: string
+): string => {
+    if (supportFrontendLiveInUs) {
+        return `Support the Guardian by <a href="${membershipUrl}" target="_blank" class="u-underline">making a contribution</a>`;
+    } else if (supportFrontendLiveInUk) {
+        return `You can support the Guardian by <a href="${membershipUrl}" target="_blank" class="u-underline">making a contribution or getting a subscription</a>`;
+    }
+    return `You can give to the Guardian by <a href="${membershipUrl}" target="_blank" class="u-underline">becoming a monthly supporter</a> or by making a <a href="${contributionUrl}" target="_blank" class="u-underline">one-off contribution</a>`;
+};
 
 /*
  Exported instances of AcquisitionsEpicTemplateCopy
@@ -38,9 +54,8 @@ export const usLocalisedFlag = {
 
 export const liveblog = (
     membershipUrl: string,
-    contributionsUrl: string,
-    ctaLinkSentence: string
+    contributionsUrl: string
 ): AcquisitionsEpicTemplateCopy => ({
     p1: `Since you’re here ${controlP1}`,
-    p2: `${controlP2} ${ctaLinkSentence}. - Guardian HQ`,
+    p2: `${controlP2} ${ctaLinkSentence(membershipUrl, contributionsUrl)}. - Guardian HQ`,
 });
