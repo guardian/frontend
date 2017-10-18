@@ -49,14 +49,16 @@ class NewspaperQuery(contentApiClient: ContentApiClient) extends Dates with Logg
 
   private def bookSectionContainers(itemId: String, newspaperDate: DateTime, publication: String)(implicit executionContext: ExecutionContext): Future[List[FaciaContainer]] = {
 
+    val startDate = newspaperDate.withTimeAtStartOfDay()
+
     val itemQuery = contentApiClient.item(itemId)
       .useDate("newspaper-edition")
       .showFields("all")
       .showElements("all")
       .showTags("newspaper-book-section")
       .pageSize(200)
-      .fromDate(newspaperDate.withTimeAtStartOfDay())
-      .toDate(newspaperDate)
+      .fromDate(jodaToJavaInstant(startDate))
+      .toDate(jodaToJavaInstant(newspaperDate))
 
     contentApiClient.getResponse(itemQuery).map { resp =>
 

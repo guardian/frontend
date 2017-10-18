@@ -1,20 +1,23 @@
 package test
 
+import java.time.ZoneOffset
+
 import com.gu.contentapi.client.model.v1.{Content => ApiContent, Element => ApiElement, Tag => ApiTag, _}
-import com.gu.contentapi.client.utils.CapiModelEnrichment.RichJodaDateTime
+import com.gu.contentapi.client.utils.CapiModelEnrichment.RichOffsetDateTime
+import implicits.Dates.jodaToJavaInstant
 import layout.ContentWidths.{LiveBlogMedia, MainMedia}
 import org.joda.time.DateTime
 import org.scalatest._
 import org.scalatest.concurrent.Eventually
 import views.MainMediaWidths
-import model.{Content, Article}
+import model.{Article, Content}
 
 @DoNotDiscover class MainMediaWidthsTest extends FreeSpec with Matchers with Eventually with ConfiguredTestSuite {
   "should return correct widths" in {
     val item = ApiContent(id = "foo/2012/jan/07/bar",
       sectionId = None,
       sectionName = None,
-      webPublicationDate = Some(new DateTime().toCapiDateTime),
+      webPublicationDate = Some(jodaToJavaInstant(new DateTime()).atOffset(ZoneOffset.UTC).toCapiDateTime),
       webTitle = "Some article",
       webUrl = "http://www.guardian.co.uk/foo/2012/jan/07/bar",
       apiUrl = "http://content.guardianapis.com/foo/2012/jan/07/bar",
@@ -43,7 +46,7 @@ import model.{Content, Article}
     val item = ApiContent(id = "foo/2012/jan/07/bar",
       sectionId = None,
       sectionName = None,
-      webPublicationDate = Some(new DateTime().toCapiDateTime),
+      webPublicationDate = Some(jodaToJavaInstant(new DateTime()).atOffset(ZoneOffset.UTC).toCapiDateTime),
       webTitle = "Some article",
       webUrl = "http://www.guardian.co.uk/foo/2012/jan/07/bar",
       apiUrl = "http://content.guardianapis.com/foo/2012/jan/07/bar",
@@ -61,7 +64,7 @@ import model.{Content, Article}
     val item = ApiContent(id = "foo/2012/jan/07/bar",
       sectionId = None,
       sectionName = None,
-      webPublicationDate = Some(new DateTime().toCapiDateTime),
+      webPublicationDate = Some(jodaToJavaInstant(new DateTime()).atOffset(ZoneOffset.UTC).toCapiDateTime),
       webTitle = "Some article",
       webUrl = "http://www.guardian.co.uk/foo/2012/jan/07/bar",
       apiUrl = "http://content.guardianapis.com/foo/2012/jan/07/bar",
@@ -91,7 +94,7 @@ import model.{Content, Article}
     val item = ApiContent(id = "foo/2012/jan/07/bar",
       sectionId = None,
       sectionName = None,
-      webPublicationDate = Some(new DateTime().toCapiDateTime),
+      webPublicationDate = Some(jodaToJavaInstant(new DateTime()).atOffset(ZoneOffset.UTC).toCapiDateTime),
       webTitle = "Some article",
       webUrl = "http://www.guardian.co.uk/foo/2012/jan/07/bar",
       apiUrl = "http://content.guardianapis.com/foo/2012/jan/07/bar",

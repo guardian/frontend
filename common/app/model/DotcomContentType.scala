@@ -27,22 +27,22 @@ sealed trait DotcomContentType {
 }
 object DotcomContentType {
 
-  case object Unknown extends DotcomContentType { override val name = "Unknown" }
-  case object Article extends DotcomContentType { override val name = "Article" }
-  case object NetworkFront extends DotcomContentType { override val name = "Network Front" }
-  case object Section extends DotcomContentType { override val name = "Section" }
-  case object ImageContent extends DotcomContentType { override val name = "ImageContent" }
-  case object Interactive extends DotcomContentType { override val name = "Interactive" }
-  case object Gallery extends DotcomContentType { override val name = "Gallery" }
-  case object Video extends DotcomContentType { override val name = "Video" }
-  case object Audio extends DotcomContentType { override val name = "Audio" }
-  case object LiveBlog extends DotcomContentType { override val name = "LiveBlog" }
-  case object Tag extends DotcomContentType { override val name = "Tag" }
-  case object TagIndex extends DotcomContentType { override val name = "Index" }
-  case object Crossword extends DotcomContentType { override val name = "Crossword" }
-  case object Survey extends DotcomContentType { override val name = "Survey" }
-  case object Signup extends DotcomContentType { override val name = "Signup" }
-  case object Identity extends DotcomContentType { override val name = "userid" }
+  object Unknown extends DotcomContentType { override val name = "Unknown" }
+  object Article extends DotcomContentType { override val name = "Article" }
+  object NetworkFront extends DotcomContentType { override val name = "Network Front" }
+  object Section extends DotcomContentType { override val name = "Section" }
+  object ImageContent extends DotcomContentType { override val name = "ImageContent" }
+  object Interactive extends DotcomContentType { override val name = "Interactive" }
+  object Gallery extends DotcomContentType { override val name = "Gallery" }
+  object Video extends DotcomContentType { override val name = "Video" }
+  object Audio extends DotcomContentType { override val name = "Audio" }
+  object LiveBlog extends DotcomContentType { override val name = "LiveBlog" }
+  object Tag extends DotcomContentType { override val name = "Tag" }
+  object TagIndex extends DotcomContentType { override val name = "Index" }
+  object Crossword extends DotcomContentType { override val name = "Crossword" }
+  object Survey extends DotcomContentType { override val name = "Survey" }
+  object Signup extends DotcomContentType { override val name = "Signup" }
+  object Identity extends DotcomContentType { override val name = "userid" }
 
   implicit val format: Format[DotcomContentType] = new Format[DotcomContentType] {
     override def reads(json: JsValue): JsResult[DotcomContentType] = json match {

@@ -1,11 +1,14 @@
 package common
 
+import java.time.ZoneOffset
+
 import org.joda.time.DateTime
 import org.scalatest.{FlatSpec, Matchers}
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.test.FakeRequest
 import com.gu.contentapi.client.model.v1.{ContentFields, Content => ApiContent}
-import com.gu.contentapi.client.utils.CapiModelEnrichment.RichJodaDateTime
+import com.gu.contentapi.client.utils.CapiModelEnrichment.RichOffsetDateTime
+import implicits.Dates.jodaToJavaInstant
 import model.Trail
 
 import scala.util.Try
@@ -60,13 +63,15 @@ class TrailsToRssTest extends FlatSpec with Matchers with GuiceOneAppPerSuite {
 
   def testTrail(url: String, customTitle: Option[String] = None): Trail = {
 
+    val offsetDate = jodaToJavaInstant(new DateTime()).atOffset(ZoneOffset.UTC)
+
     val contentItem = ApiContent(
       id = url,
       sectionId = None,
       sectionName = None,
       webUrl = "",
       apiUrl = "",
-      webPublicationDate = Some(new DateTime().toCapiDateTime),
+      webPublicationDate = Some(offsetDate.toCapiDateTime),
       elements = None,
       webTitle = customTitle getOrElse "hello …",
       fields = Some(ContentFields(

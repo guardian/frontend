@@ -5,7 +5,7 @@ import contentapi.ContentApiClient
 import model.{Content, ContentType}
 import org.joda.time.DateTimeZone
 import rugby.model.Match
-
+import implicits.Dates.jodaToJavaInstant
 import scala.concurrent.{ExecutionContext, Future}
 
 case class MatchNavigation(
@@ -30,11 +30,14 @@ class CapiFeed(contentApiClient: ContentApiClient) extends Logging {
 
     log.info(s"Looking for ${rugbyMatch.toString}")
 
+    val startMatchDayRange = matchDate.toDateTimeAtStartOfDay
+    val endMatchDayRange = matchDate.plusDays(2).toDateTimeAtStartOfDay
+
     contentApiClient.getResponse(contentApiClient.search(Edition.defaultEdition)
       .section("sport")
       .tag(searchTags)
-      .fromDate(matchDate.toDateTimeAtStartOfDay)
-      .toDate(matchDate.plusDays(2).toDateTimeAtStartOfDay)
+      .fromDate(jodaToJavaInstant(startMatchDayRange))
+      .toDate(jodaToJavaInstant(endMatchDayRange))
     ).flatMap { response =>
         val navContent = response.results.map(Content(_)).filter(_.trail.webPublicationDate.toDateTime(DateTimeZone.UTC).toLocalDate.isEqual(matchDate))
         (for {

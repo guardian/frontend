@@ -83,7 +83,7 @@ import collection.JavaConversions._
         import browser._
 
         Then("I should see a large byline image")
-        $(".byline-img img").attribute("src") should include("Pix/pictures/2014/3/13/1394733740842/JonathanFreedland.png")
+        $(".byline-img img").attribute("src") should include("2017/10/06/Jonathan-Freedland,-L.png")
       }
     }
 
