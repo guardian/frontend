@@ -22,8 +22,4 @@ const selectEngagementBannerButtonCaption = (defaultCaption: string) =>
 
 export const supportFrontendLiveInUk = liveInUk;
 export const supportFrontendLiveInUs = liveInUs;
-export {
-    useSupportDomain,
-    selectBaseUrl,
-    selectEngagementBannerButtonCaption,
-};
+export { useSupportDomain, selectBaseUrl, selectEngagementBannerButtonCaption };
