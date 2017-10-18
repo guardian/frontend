@@ -204,20 +204,24 @@ class Loader extends Component {
                     qwery('.js-comment-order-dropdown [data-toggle]')[0],
                     'click'
                 );
+
                 this.comments.options.order = bonzo(e.currentTarget).data(
                     'order'
                 );
+
                 $orderLabel.text(
                     this.comments &&
                         this.comments.options &&
                         this.comments.options.order
                 );
+
                 userPrefs.set(
                     'discussion.order',
                     this.comments &&
                         this.comments.options &&
                         this.comments.options.order
                 );
+
                 this.loadComments({ page: 1 });
             }
         );
