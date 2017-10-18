@@ -15,7 +15,7 @@ class PrivacyMapping extends UserFormMapping[PrivacyFormData] {
     "receiveGnmMarketing" -> boolean,
     "receive3rdPartyMarketing" -> boolean,
     "allowThirdPartyProfiling" -> boolean,
-    "consents" -> seq(
+    "consents" -> list(
       mapping(
         "actor" -> text,
         "consentIdentifier" -> text,
@@ -40,7 +40,7 @@ case class PrivacyFormData(
     receiveGnmMarketing: Boolean,
     receive3rdPartyMarketing: Boolean,
     allowThirdPartyProfiling: Boolean,
-    consents: Seq[Consent]) extends UserFormData{
+    consents: List[Consent]) extends UserFormData{
 
   def toUserUpdate(oldUser: User): UserUpdate =
     UserUpdate(
