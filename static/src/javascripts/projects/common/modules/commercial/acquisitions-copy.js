@@ -57,5 +57,8 @@ export const liveblog = (
     contributionsUrl: string
 ): AcquisitionsEpicTemplateCopy => ({
     p1: `Since you’re here ${controlP1}`,
-    p2: `${controlP2} ${ctaLinkSentence(membershipUrl, contributionsUrl)}. - Guardian HQ`,
+    p2: `${controlP2} ${ctaLinkSentence(
+        membershipUrl,
+        contributionsUrl
+    )}. - Guardian HQ`,
 });
