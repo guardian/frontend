@@ -60,6 +60,10 @@ object UrlHelpers {
       case (Subscribe, SlimHeaderDropdown, _) => Some(s"NGW_TOPNAV_${editionId}_GU_SUBSCRIBE")
       case (Subscribe, Footer, _) => Some(s"NGW_FOOTER_${editionId}_GU_SUBSCRIBE")
 
+      case (Support, Footer, _) => Some("gdnwb_copts_memco_dotcom_footer")
+      case (Support, AmpHeader, _) => Some("gdnwb_copts_memco_header_amp")
+      case (Support, _, _) => Some("gdnwb_copts_memco_header")
+
       case (_, _, _) => None
     }
   }

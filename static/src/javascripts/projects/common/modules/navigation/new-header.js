@@ -3,6 +3,7 @@
 import debounce from 'lodash/functions/debounce';
 import ophan from 'ophan/ng';
 import { isBreakpoint } from 'lib/detect';
+import mediator from 'lib/mediator';
 import fastdom from 'lib/fastdom-promise';
 import { local } from 'lib/storage';
 import { scrollToElement } from 'lib/scroller';
@@ -188,22 +189,76 @@ const toggleMenu = (): void => {
     fastdom.write(update);
 };
 
+const toggleEditionPickerDropdown = () => {
+    const openClass = 'dropdown-menu--open';
+
+    fastdom
+        .read(() => ({
+            menu: document.querySelector('.js-edition-dropdown-menu'),
+            trigger: document.querySelector('.js-edition-picker-trigger'),
+        }))
+        .then(els => {
+            const { menu, trigger } = els;
+
+            if (!menu) {
+                return;
+            }
+
+            const isOpen = menu.classList.contains(openClass);
+            const expandedAttr = isOpen ? 'false' : 'true';
+            const hiddenAttr = isOpen ? 'true' : 'false';
+
+            return fastdom.write(() => {
+                if (trigger) {
+                    trigger.setAttribute('aria-expanded', expandedAttr);
+                }
+
+                menu.setAttribute('aria-hidden', hiddenAttr);
+                menu.classList.toggle(openClass, !isOpen);
+
+                if (!isOpen) {
+                    mediator.on('module:clickstream:click', clickSpec => {
+                        const elem = clickSpec ? clickSpec.target : null;
+
+                        // if anywhere else but the links are clicked, the dropdown will close
+                        if (elem !== menu) {
+                            toggleEditionPickerDropdown();
+                        }
+                    });
+                } else {
+                    // when the dropdown closes, remove event
+                    mediator.removeEvent('module:clickstream:click');
+                }
+            });
+        });
+};
+
 const enhanceCheckbox = (checkbox: HTMLElement): void => {
     fastdom.read(() => {
         const button = document.createElement('button');
         const checkboxId = checkbox.id;
         const checkboxControls = checkbox.getAttribute('aria-controls');
+        const checkboxClassAttr = checkbox.getAttribute('class');
+        const dataLinkName = checkbox.getAttribute('data-link-name');
+        const buttonClickHandlers = {
+            'main-menu-toggle': toggleMenu,
+            'edition-picker-toggle': toggleEditionPickerDropdown,
+        };
+
         const enhance = () => {
-            const checkboxClassAttr = checkbox.getAttribute('class');
+            const eventHandler = buttonClickHandlers[checkboxId];
 
             if (checkboxClassAttr) {
                 button.setAttribute('class', checkboxClassAttr);
             }
 
-            button.addEventListener('click', () => toggleMenu());
+            button.addEventListener('click', () => eventHandler());
             button.setAttribute('id', checkboxId);
             button.setAttribute('aria-expanded', 'false');
-            button.setAttribute('data-link-name', 'nav2 : toggle');
+
+            if (dataLinkName) {
+                button.setAttribute('data-link-name', dataLinkName);
+            }
 
             if (checkboxControls) {
                 button.setAttribute('aria-controls', checkboxControls);
@@ -220,23 +275,23 @@ const enhanceCheckbox = (checkbox: HTMLElement): void => {
     });
 };
 
-const enhanceMenuToggle = (): void => {
-    const checkbox = document.getElementById('main-menu-toggle');
+const enhanceMenuToggles = (): void => {
+    const checkboxs = [
+        ...document.getElementsByClassName('js-enhance-checkbox'),
+    ];
 
-    if (!checkbox) {
-        return;
-    }
-
-    if (!enhanced[checkbox.id] && !checkbox.checked) {
-        enhanceCheckbox(checkbox);
-    } else {
-        const closeMenuHandler = (): void => {
+    checkboxs.forEach(checkbox => {
+        if (!enhanced[checkbox.id] && !checkbox.checked) {
             enhanceCheckbox(checkbox);
-            checkbox.removeEventListener('click', closeMenuHandler);
-        };
+        } else {
+            const closeMenuHandler = (): void => {
+                enhanceCheckbox(checkbox);
+                checkbox.removeEventListener('click', closeMenuHandler);
+            };
 
-        checkbox.addEventListener('click', closeMenuHandler);
-    }
+            checkbox.addEventListener('click', closeMenuHandler);
+        }
+    });
 };
 
 const toggleMenuWithOpenSection = () => {
@@ -316,7 +371,7 @@ const addEventHandler = (): void => {
 };
 
 export const newHeaderInit = (): void => {
-    enhanceMenuToggle();
+    enhanceMenuToggles();
     addEventHandler();
     showMyAccountIfNecessary();
     closeAllMenuSections();

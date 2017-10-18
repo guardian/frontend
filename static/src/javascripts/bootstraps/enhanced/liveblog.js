@@ -5,7 +5,7 @@ import mediator from 'lib/mediator';
 import { upgradeRichLinks } from 'common/modules/article/rich-links';
 import { Affix } from 'common/modules/experiments/affix';
 import { autoUpdate } from 'common/modules/ui/autoupdate';
-import RelativeDates from 'common/modules/ui/relativedates';
+import { init as initRelativeDates } from 'common/modules/ui/relativedates';
 import { init as initLiveblogCommon } from 'bootstraps/enhanced/article-liveblog-common';
 import { initTrails } from 'bootstraps/enhanced/trail';
 import { catchErrorsWithContext } from 'lib/robust';
@@ -42,11 +42,7 @@ const createAutoUpdate = (): void => {
 };
 
 const keepTimestampsCurrent = (): void => {
-    const dates = RelativeDates;
-
-    window.setInterval(() => {
-        dates.init();
-    }, 60000);
+    window.setInterval(() => initRelativeDates(), 60000);
 };
 
 const initStoryquestions = (): void => {
