@@ -1,4 +1,5 @@
 // @flow
+/* eslint-disable no-underscore-dangle */
 
 import bean from 'bean';
 import bonzo from 'bonzo';
@@ -123,6 +124,10 @@ class Component {
             Object.keys(this.options).forEach(key => {
                 endpoint = endpoint.replace(`:${key}`, this.options[key]);
             });
+        }
+
+        if (!endpoint) {
+            return Promise.resolve({});
         }
 
         return fetchJSON(endpoint, {
@@ -344,3 +349,5 @@ class Component {
 }
 
 export { Component };
+
+/* eslint-disable no-underscore-dangle */
