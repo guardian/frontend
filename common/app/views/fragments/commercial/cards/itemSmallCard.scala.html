@@ -11,7 +11,8 @@
 <div class="@CssClassBuilder.paidForContainer(optClassNames)">
     <a href="@item.targetUrl"
         class="@CssClassBuilder.linkFromSmallCard(item, optAdvertClassNames, useCardBranding)"
-        data-link-name="@omnitureId">
+        data-link-name="@omnitureId"
+        data-component="@omnitureId">
         <p class="advert__title">
             @for(icon <- item.icon){@inlineSvg(icon, "icon")}
             @item.headline
