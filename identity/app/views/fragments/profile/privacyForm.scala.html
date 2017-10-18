@@ -4,11 +4,12 @@
   privacyForm: Form[form.PrivacyFormData])(implicit request: RequestHeader, messages: play.api.i18n.Messages)
 
 @import views.html.fragments.form.checkboxField
-@import form.IdFormHelpers._
-@import helper._
 @import views.html.fragments.registrationFooter
+@import form.IdFormHelpers.{Checkbox, nonInputFields}
+@import helper._
 @import org.joda.time.DateTime
 @import idapiclient.parser.JodaJsonSerializer
+@import com.gu.identity.model.ConsentData
 
 @*
     WARNING!!
@@ -19,114 +20,46 @@
     <input type="hidden" name=@(consent.name + ".consentIdentifier") value=@(user.consents.toList(consentIndex).consentIdentifier)>
 *@
 
-@getConsentText(index: Int) = {
-    @if(user.consents.toList.isEmpty) {
-        "Unknown consent text"
-    } else {
-        @com.gu.identity.model.ConsentData.getText(
-            user.consents.toList(index).consentIdentifier,
-            user.consents.toList(index).consentIdentifierVersion
+@v2ConsentCheckbox(index: Int, consentIdentifier: String, consentIdentifierVersion: Int) = {
+
+    <input type="hidden" name=@("consents[" + index + "].actor") value='user'>
+    <input type="hidden" name=@("consents[" + index + "].consentIdentifier") value=@consentIdentifier>
+    <input type="hidden" name=@("consents[" + index + "].consentIdentifierVersion") value=@consentIdentifierVersion>
+    <input type="hidden" name=@("consents[" + index + "].timestamp") value=@getCurrentTime>
+    <input type="hidden" name=@("consents[" + index + "].privacyPolicy") value=@com.gu.identity.model.ConsentData.privacyPolicyVersion>
+
+    @checkboxField(
+        Checkbox(
+            privacyForm("consents[" + index + "].hasConsented"),
+            '_label -> ConsentData.allConsents(consentIdentifier)(consentIdentifierVersion)
         )
-    }
+    )(nonInputFields, messages)
 }
 
 @getCurrentTime = {
     @JodaJsonSerializer.dateTimeFormatISO8601.print(new DateTime)
 }
 
-@v2consentCheckboxes = {
-  @helper.repeatWithIndex(privacyForm("consents"), min=1) {(consent, consentIndex) =>
-      <input type="hidden" name=@(consent.name + ".actor") value='user'>
-      <input type="hidden" name=@(consent.name + ".consentIdentifier") value=@(user.consents.toList(consentIndex).consentIdentifier)>
-      <input type="hidden" name=@(consent.name + ".consentIdentifierVersion") value=@(user.consents.toList(consentIndex).consentIdentifierVersion)>
-      <input type="hidden" name=@(consent.name + ".timestamp") value=@getCurrentTime>
-      <input type="hidden" name=@(consent.name + ".privacyPolicy") value=@(user.consents.toList(consentIndex).privacyPolicy)>
+@* If the user has not yet set V2 consent *@
+@v2consentCheckboxesOnboarding = {
+    @v2ConsentCheckbox(0, "firstParty", ConsentData.allConsents("firstParty").indices.last)
+    @v2ConsentCheckbox(1, "thirdParty", ConsentData.allConsents("thirdParty").indices.last)
+    @v2ConsentCheckbox(2, "thirdPartyProfiling", ConsentData.allConsents("thirdPartyProfiling").indices.last)
+}
 
-      @checkboxField(
-          Checkbox(
-              privacyForm(consent.name + ".hasConsented"),
-              '_label -> getConsentText(consentIndex)
-          )
-      )(nonInputFields, messages)
+@* If user has set V2 consent before *@
+@v2consentCheckboxesFromApiUser = {
+  @helper.repeatWithIndex(privacyForm("consents"), min=1) { (consent, consentIndex) =>
+    @v2ConsentCheckbox(
+        consentIndex,
+        user.consents(consentIndex).consentIdentifier,
+        user.consents(consentIndex).consentIdentifierVersion)
   }
 }
-
-@v1consentCheckboxes = {
-    @checkboxField(Checkbox(
-        privacyForm("receiveGnmMarketing"),
-        '_label -> "Receive email from Guardian News and Media Ltd."))(nonInputFields, messages)
-
-    @checkboxField(Checkbox(
-        privacyForm("receive3rdPartyMarketing"),
-        '_label -> "Receive email from other organisations"))(nonInputFields, messages)
-}
-
-@v1profilingConsetCheckbox = {
-    @checkboxField(Checkbox(
-        privacyForm("allowThirdPartyProfiling"),
-        '_label -> "Allow matching with third party data")
-    )(nonInputFields, messages)
-}
-
-@v2consentCheckboxesOnboarding = {
-
-    @* FIRST PARTY *@
-
-    <input type="hidden" name="consents[0].actor" value='user'>
-    <input type="hidden" name="consents[0].consentIdentifier" value="firstParty">
-    <input type="hidden" name="consents[0].consentIdentifierVersion" value="0">
-    <input type="hidden" name="consents[0].timestamp" value=@getCurrentTime>
-    <input type="hidden" name="consents[0].privacyPolicy" value=@com.gu.identity.model.ConsentData.privacyPolicyVersion>
-
-    @checkboxField(
-        Checkbox(
-            privacyForm("consents[0].hasConsented"),
-            '_label -> com.gu.identity.model.ConsentData.currentConsents("firstParty")
-        )
-    )(nonInputFields, messages)
-
-    @* THIRD PARTY *@
-
-    <input type="hidden" name="consents[1].actor" value='user'>
-    <input type="hidden" name="consents[1].consentIdentifier" value="thirdParty">
-    <input type="hidden" name="consents[1].consentIdentifierVersion" value="0">
-    <input type="hidden" name="consents[1].timestamp" value=@getCurrentTime>
-    <input type="hidden" name="consents[1].privacyPolicy" value=@com.gu.identity.model.ConsentData.privacyPolicyVersion>
-
-    @checkboxField(
-        Checkbox(
-            privacyForm("consents[1].hasConsented"),
-            '_label -> com.gu.identity.model.ConsentData.currentConsents("thirdParty")
-        )
-    )(nonInputFields, messages)
-}
-
-
-@v2consentProfilingCheckboxOnboarding  = {
-
-    @* PROFILING *@
-
-    <input type="hidden" name="consents[2].actor" value='user'>
-    <input type="hidden" name="consents[2].consentIdentifier" value="thirdPartyProfiling">
-    <input type="hidden" name="consents[2].consentIdentifierVersion" value="0">
-    <input type="hidden" name="consents[2].timestamp" value=@getCurrentTime>
-    <input type="hidden" name="consents[2].privacyPolicy" value=@com.gu.identity.model.ConsentData.privacyPolicyVersion>
-
-    @checkboxField(
-        Checkbox(
-            privacyForm("consents[2].hasConsented"),
-            '_label -> com.gu.identity.model.ConsentData.currentConsents("thirdPartyProfiling")
-        )
-    )(nonInputFields, messages)
-}
-
-
-@noV2Consents = { @user.consents.toList.isEmpty }
 
 <form class="form js-public-profile-form" novalidate action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" role="main" method="post">
     @views.html.helper.CSRF.formField
 
-    @* Make this beautiful *@
     @* This also displays globalErrors *@
     @if(privacyForm.hasErrors) {
         <div class="form__error">
@@ -135,19 +68,22 @@
         </div>
     }
 
+    @* Newsletters *@
     <fieldset class="fieldset">
         <div class="fieldset__heading">
-            <h2 class="form__heading">Guardian & Observer newsletters</h2>
+            <h2 class="form__heading">Newsletters</h2>
         </div>
 
         <div class="fieldset__fields">
             <ul class="u-unstyled">
                 <li class="form-field">
-                    <label class="label">Click <a href=@idUrlBuilder.buildUrl("/email-prefs")>here</a> to manage your email subscriptions.</label>
+                    <label class="label">Click <a href=@idUrlBuilder.buildUrl("/email-prefs")>here</a> to manage your email subscriptions to editorial newsletters.</label>
                 </li>
             </ul>
         </div>
     </fieldset>
+
+    @* Marketing Consent *@
     <fieldset class="fieldset">
 
         <div class="fieldset__heading">
@@ -161,28 +97,18 @@
                     <div class="form-field__note">The Guardian and their partners would like to occasionally send you information about their products, services and events.</div>
 
                     <div class="form-fields-group">
-                        @v2consentCheckboxesOnboarding
+                        @if(user.consents.isEmpty) {
+                            @v2consentCheckboxesOnboarding
+                        } else {
+                            @v2consentCheckboxesFromApiUser
+                        }
                     </div>
                 </li>
             </ul>
         </div>
     </fieldset>
-    <fieldset class="fieldset">
-        <div class="fieldset__heading">
-            <h2 class="form__heading">Profiling</h2>
-        </div>
-        <div class="fieldset__fields">
-            <ul class="u-unstyled">
-                <li class="form-field">
-                    <label class="label">In addition to the data that you provide to us, we may also match profiling data from third parties with your registration details.</label>
 
-                    <div class="form-fields-group">
-                        @v2consentProfilingCheckboxOnboarding
-                    </div>
-                </li>
-            </ul>
-        </div>
-     </fieldset>
+    @* Submit button *@
     <fieldset class="fieldset">
         <div class="fieldset__heading"></div>
         <div class="fieldset__fields">
