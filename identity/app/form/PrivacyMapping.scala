@@ -49,7 +49,7 @@ case class PrivacyFormData(
         receiveGnmMarketing = Some(receiveGnmMarketing),
         allowThirdPartyProfiling = Some(allowThirdPartyProfiling)
       )),
-      consents = Some(consents.toSet)
+      consents = Some(consents)
     )
 }
 
@@ -58,6 +58,6 @@ object PrivacyFormData {
     receiveGnmMarketing = user.statusFields.receiveGnmMarketing.getOrElse(false),
     receive3rdPartyMarketing = user.statusFields.receive3rdPartyMarketing.getOrElse(false),
     allowThirdPartyProfiling = user.statusFields.allowThirdPartyProfiling.getOrElse(true),
-    consents = user.consents.toList
+    consents = user.consents
   )
 }
