@@ -21,6 +21,8 @@ class AudienceItem extends Component {
         );
     }
 
+    config: Object;
+
     prerender(): void {
         bonzo(this.getElem('test-label')).prepend(this.config.test.id);
 
