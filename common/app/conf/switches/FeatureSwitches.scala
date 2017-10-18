@@ -482,7 +482,7 @@ trait FeatureSwitches {
     "When ON, all UK membership/contribute/support links send traffic to support.theguardian.com",
     owners = Seq(Owner.withGithub("justinpinner")),
     safeState = On,
-    sellByDate = never,
+    sellByDate = new LocalDate(2018, 10, 17),
     exposeClientSide = true
   )
 
@@ -492,7 +492,7 @@ trait FeatureSwitches {
     "When ON, all US membership/contribute/support links send traffic to support.theguardian.com",
     owners = Seq(Owner.withGithub("justinpinner")),
     safeState = Off,
-    sellByDate = never,
+    sellByDate = new LocalDate(2018, 10, 17),
     exposeClientSide = true
   )
 }
