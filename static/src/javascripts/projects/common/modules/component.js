@@ -195,13 +195,13 @@ class Component {
      * This is where you could do your error event binding
      * This function is made to be overridden
      */
-    error(): void {}
+    error(type: string, message?: string): void {}
 
     /**
      * This is called whenever a fetch occurs. This includes
      * explicit fetch calls and autoupdate.
      */
-    fetched(): void {}
+    fetched(resp: Object): void {}
 
     autoupdate(elem: HTMLElement): void {
         const oldElem = this.elem;
