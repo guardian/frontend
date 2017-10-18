@@ -20,6 +20,8 @@ const selectBaseUrl = (defaultUrl: string = supportBaseURL): string =>
 const selectEngagementBannerButtonCaption = (defaultCaption: string) =>
     useSupportDomain() ? supportButtonCaption : defaultCaption;
 
+export const supportFrontendLiveInUk = liveInUk;
+export const supportFrontendLiveInUs = liveInUs;
 export {
     useSupportDomain,
     liveInUk,

@@ -1,7 +1,7 @@
 // @flow
 import {
-    liveInUk as supportFrontendLiveInUk,
-    liveInUs as supportFrontendLiveInUs
+    supportFrontendLiveInUk,
+    supportFrontendLiveInUs,
 } from 'common/modules/commercial/support-utilities';
 
 // control
