@@ -16,7 +16,7 @@ class Component {
     templateName: ?string;
     componentClass: ?string;
     endpoint: ?string | ?() => string;
-    classes: ?Array<any>; /* TODO */
+    classes: ?Object;
     elem: ?HTMLElement;
     template: ?string;
     rendered: boolean;
