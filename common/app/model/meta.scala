@@ -246,8 +246,7 @@ final case class MetaData (
   val hasSlimHeader: Boolean =
     contentWithSlimHeader ||
       sectionId == "identity" ||
-      contentType == DotcomContentType.Survey ||
-      contentType == DotcomContentType.Signup
+      contentType.exists(c => c == DotcomContentType.Survey || c == DotcomContentType.Signup)
 
   // this is here so it can be included in analytics.
   // Basically it helps us understand the impact of changes and needs
