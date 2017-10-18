@@ -3,6 +3,7 @@
 @import model.liveblog.{LiveBlogDate,BodyBlock}
 @import views.BodyCleaner
 
+@import model.DotcomContentType
 @(blocks: Seq[BodyBlock], article: Article, timezone: DateTimeZone, amp: Boolean = false)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @import common.LinkTo
@@ -40,6 +41,11 @@
             <time datetime="@republishedDate">at @ampm @gmt</time>
         </p>
         }
-        @views.html.fragments.share.blockLevelSharing(s"block-${block.id}", article.sharelinks.elementShares(s"block-${block.id}", None), article.metadata.contentType, amp)
+        @views.html.fragments.share.blockLevelSharing(
+            s"block-${block.id}",
+            article.sharelinks.elementShares(s"block-${block.id}", None),
+            article.metadata.contentType.getOrElse(DotcomContentType.Unknown),
+            amp
+        )
     </div>
 }
