@@ -3,42 +3,27 @@
 @import common.{Edition, LinkTo}
 @import views.support.RenderClasses
 
-<li class="menu-item js-navigation-item">
-    <button class="menu-item__title hide-on-desktop js-navigation-toggle"
+<li class="menu-item js-navigation-item hide-on-desktop">
+    <button class="menu-item__title js-navigation-toggle"
             data-link-name="nav2 : edition picker"
             aria-haspopup="true"
             aria-expanded="true">
         <i class="menu-item__toggle"></i>
-        <span class="hide-on-desktop">@Edition(request).displayName</span>
-        <span class="hide-until-desktop">@Edition(request).id</span>
+        @Edition(request).displayName
     </button>
-
-    <span class="menu-item__editions-label hide-until-desktop">
-        edition:
-    </span>
 
     <ul class="menu-group">
         @Edition.all.map { edition =>
              @if((edition != Edition(request))) {
-                <li class="menu-item">
-                    <a data-link-name="nav2 : edition-picker: @edition.id"
-                        href="@LinkTo(s"/preference/edition/${edition.id.toLowerCase}")"
-                        class="menu-item__title">
-                        <span class="u-h">switch to the </span>
-                        <span class="hide-on-desktop">@edition.displayName</span>
-                        <span class="hide-until-desktop">@edition.id</span>
-                    </a>
-                </li>
-            } else {
-                <li class="menu-item menu-item--edition-active hide-until-desktop">
-                    <a data-link-name="nav2 : edition-picker: @edition.id"
-                        href="@LinkTo(s"/preference/edition/${edition.id.toLowerCase}")"
-                        class="menu-item__title">
-                        <span class="u-h">switch to the </span>
-                        <span class="hide-until-desktop">@edition.id</span>
-                    </a>
-                </li>
-            }
+                 <li class="menu-item">
+                     <a data-link-name="nav2 : edition-picker: @edition.id"
+                     href="@LinkTo(s"/preference/edition/${edition.id.toLowerCase}")"
+                     class="menu-item__title">
+                         <span class="u-h">switch to the </span>
+                         @edition.displayName
+                     </a>
+                 </li>
+             }
         }
     </ul>
 </li>
