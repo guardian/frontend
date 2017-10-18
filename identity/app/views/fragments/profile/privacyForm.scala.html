@@ -1,12 +1,11 @@
 @(idUrlBuilder: services.IdentityUrlBuilder,
   idRequest: services.IdentityRequest,
   user: com.gu.identity.model.User,
-  privacyForm: Form[form.PrivacyFormData])(implicit request: RequestHeader, messages: play.api.i18n.Messages)
+  privacyForm: Form[_root_.form.PrivacyFormData])(implicit request: RequestHeader, messages: play.api.i18n.Messages)
 
 @import views.html.fragments.form.checkboxField
 @import views.html.fragments.registrationFooter
-@import form.IdFormHelpers.{Checkbox, nonInputFields}
-@import helper._
+@import _root_.form.IdFormHelpers.{Checkbox, nonInputFields}
 @import org.joda.time.DateTime
 @import idapiclient.parser.JodaJsonSerializer
 @import com.gu.identity.model.ConsentData
