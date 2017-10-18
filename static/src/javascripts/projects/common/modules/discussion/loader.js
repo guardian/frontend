@@ -205,9 +205,12 @@ class Loader extends Component {
                     'click'
                 );
 
-                this.comments.options.order = bonzo(e.currentTarget).data(
-                    'order'
-                );
+                if (this.comments && this.comments.options) {
+                    // $FlowFixMe
+                    this.comments.options.order = bonzo(e.currentTarget).data(
+                        'order'
+                    );
+                }
 
                 $orderLabel.text(
                     this.comments &&
@@ -235,9 +238,13 @@ class Loader extends Component {
                     'click'
                 );
 
-                this.comments.options.threading = bonzo(e.currentTarget).data(
-                    'threading'
-                );
+                if (this.comments && this.comments.options) {
+                    // $FlowFixMe
+                    this.comments.options.threading = bonzo(
+                        e.currentTarget
+                    ).data('threading');
+                }
+
                 $threadingLabel.text(
                     this.comments &&
                         this.comments.options &&
@@ -250,6 +257,7 @@ class Loader extends Component {
                         this.comments.options &&
                         this.comments.options.threading
                 );
+
                 this.loadComments();
             }
         );
