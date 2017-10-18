@@ -3,7 +3,6 @@ import config from 'lib/config';
 import mediator from 'lib/mediator';
 import { begin, error, end } from 'common/modules/analytics/register';
 import { Component } from 'common/modules/component';
-import { noop } from 'lib/noop';
 
 const tones = {
     uk: {
@@ -51,8 +50,6 @@ class TonalComponent extends Component {
         // Ensures we only fetch supported tones.
         if (this.isSupported()) {
             this.endpoint = this.getEndpoint();
-        } else {
-            this.fetch = noop;
         }
     }
 
