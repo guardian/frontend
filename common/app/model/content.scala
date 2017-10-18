@@ -75,7 +75,7 @@ final case class Content(
   lazy val shortUrlId = fields.shortUrlId
   lazy val shortUrlPath = shortUrlId
   lazy val discussionId = Some(shortUrlId)
-  lazy val isGallery = metadata.contentType.exists(c => c == DotcomContentType.Gallery)
+  lazy val isGallery = metadata.contentType.contains(DotcomContentType.Gallery)
   lazy val isExplore = ExploreTemplateSwitch.isSwitchedOn && tags.isExploreSeries
   lazy val isPhotoEssay = fields.displayHint.contains("photoEssay")
   lazy val isImmersive = fields.displayHint.contains("immersive") || isGallery || tags.isTheMinuteArticle || isExplore || isPhotoEssay
@@ -96,7 +96,7 @@ final case class Content(
   lazy val hasTonalHeaderByline: Boolean = {
     (cardStyle == Comment || cardStyle == Editorial || (cardStyle == SpecialReport && tags.isComment)) &&
       hasSingleContributor &&
-      metadata.contentType != DotcomContentType.ImageContent
+      !metadata.contentType.contains(DotcomContentType.ImageContent)
   }
 
   lazy val hasBeenModified: Boolean =

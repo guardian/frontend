@@ -7,11 +7,11 @@ sealed trait Pillar {
 }
 object Pillar {
 
-  case object News extends Pillar { override val name = "News" }
-  case object Opinion extends Pillar { override val name = "Opinion" }
-  case object Sport extends Pillar { override val name = "Sport" }
-  case object Arts extends Pillar { override val name = "Arts" }
-  case object Lifestyle extends Pillar { override val name = "Lifestyle" }
+  object News extends Pillar { override val name = "News" }
+  object Opinion extends Pillar { override val name = "Opinion" }
+  object Sport extends Pillar { override val name = "Sport" }
+  object Arts extends Pillar { override val name = "Arts" }
+  object Lifestyle extends Pillar { override val name = "Lifestyle" }
 
   implicit val format: Format[Pillar] = new Format[Pillar] {
     override def reads(json: JsValue): JsResult[Pillar] = json match {
