@@ -240,6 +240,24 @@ object Commercial {
     def mkInteractionTrackingCode(
       frontId: String,
       containerIndex: Int,
+      container: ContainerModel
+    )(implicit request: RequestHeader): String = mkString(
+      containerType = "Labs front container",
+      editionId = Edition(request).id,
+      frontId = frontId,
+      containerIndex = containerIndex,
+      containerTitle = container.content.title,
+      sponsorName = {
+        val containerSponsorName = container.branding collect { case b: Branding => b.sponsorName }
+        containerSponsorName getOrElse ""
+      },
+      cardIndex = -1,
+      cardTitle = container.content.title
+    )
+
+    def mkInteractionTrackingCode(
+      frontId: String,
+      containerIndex: Int,
       container: ContainerModel,
       card: PaidCard
     )(implicit request: RequestHeader): String =
