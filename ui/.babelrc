@@ -18,21 +18,21 @@
         "development": {
             "plugins": [
                 ["babel-plugin-provide-modules", {
-                    "@guardian/guui": "h"
+                    "@guardian/guui/h.js": "h"
                 }]
             ]
         },
         "production": {
             "plugins": [
                 ["babel-plugin-provide-modules", {
-                    "@guardian/guui": "h"
+                    "@guardian/guui/h.js": "h"
                 }]
             ]
         },
         "test": {
             "plugins": [
                 ["babel-plugin-provide-modules", {
-                    "@guardian/guui": "h"
+                    "@guardian/guui/h.js": "h"
                 }],
                 "babel-plugin-transform-es2015-modules-commonjs"
             ]
