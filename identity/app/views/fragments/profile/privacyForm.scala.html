@@ -10,15 +10,6 @@
 @import idapiclient.parser.JodaJsonSerializer
 @import com.gu.identity.model.ConsentData
 
-@*
-    WARNING!!
-
-    Make sure you are testing bounds
-
-    [IndexOutOfBoundsException: 0]
-    <input type="hidden" name=@(consent.name + ".consentIdentifier") value=@(user.consents.toList(consentIndex).consentIdentifier)>
-*@
-
 @v2ConsentCheckbox(index: Int, consentIdentifier: String, consentIdentifierVersion: Int) = {
 
     <input type="hidden" name=@("consents[" + index + "].actor") value='user'>
@@ -59,7 +50,7 @@
 <form class="form js-public-profile-form" novalidate action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" role="main" method="post">
     @views.html.helper.CSRF.formField
 
-    @* This also displays globalErrors *@
+    @* This displays both global and key-bound errors *@
     @if(privacyForm.hasErrors) {
         <div class="form__error">
           Error processing the form. Your changes have not been saved:
