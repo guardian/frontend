@@ -29,7 +29,7 @@ object HostedMetadata {
       url = Some(s"/${item.id}"),
       description = Some(description),
       contentType = contentType,
-      iosType = Some(contentType.toString),
+      iosType = contentType.map(_.name),
       isHosted = true,
       commercial = Some(CommercialProperties.fromContent(item)),
       javascriptConfigOverrides = Map(
