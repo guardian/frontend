@@ -21,14 +21,17 @@ class Participation extends Component {
         );
     }
 
+    config: Object;
+
     prerender(): void {
         const test = this.config.test;
         const origin = /gutools.co.uk$/.test(document.location.origin)
             ? 'http://www.theguardian.com'
             : document.location.origin;
         const examplePath = `${test.examplePath || '/uk'}#ab-${test.id}`;
+        const optOutEl = ((this.getElem('opt-out'): any): HTMLLinkElement);
 
-        this.getElem('opt-out').href = `${origin}${examplePath}=notintest`;
+        optOutEl.href = `${origin}${examplePath}=notintest`;
 
         const linksContainer = this.getElem('links');
 
