@@ -2,7 +2,7 @@ package views.support.cleaner
 
 import java.net.{URL, URLEncoder}
 
-import model.{Article, ShareLinks, VideoElement}
+import model.{Article, DotcomContentType, ShareLinks, VideoElement}
 import org.jsoup.nodes.{Document, Element}
 import views.support.{HtmlCleaner, Item640}
 
@@ -23,7 +23,11 @@ case class VideoEmbedCleaner(article: Article, maxEmbedHeight: Int = 812) extend
       val mediaTitle = element.attr("data-video-name")
 
       if (!webUrl.isEmpty) {
-        val html = views.html.fragments.share.blockLevelSharing(blockId, ShareLinks.createShareLinks(ShareLinks.defaultShares, href = webUrl, title = mediaTitle, mediaPath = Some(mediaPath)), article.metadata.contentType)
+        val html = views.html.fragments.share.blockLevelSharing(
+          blockId,
+          ShareLinks.createShareLinks(ShareLinks.defaultShares, href = webUrl, title = mediaTitle, mediaPath = Some(mediaPath)),
+          article.metadata.contentType.getOrElse(DotcomContentType.Unknown)
+        )
         element.child(0).after(html.toString())
         element.addClass("fig--has-shares")
         element.addClass("fig--narrow-caption")

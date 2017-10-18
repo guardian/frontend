@@ -17,7 +17,7 @@ class MostViewedGalleryController(
 
   private val page = SimplePage(MetaData.make(
     "more galleries",
-    Some(SectionSummary.fromId("inpictures")),
+    Some(SectionId.fromId("inpictures")),
     "more galleries"
   ))
   private val dataId: String = "multimedia/gallery"

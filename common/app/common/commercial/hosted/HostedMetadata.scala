@@ -3,14 +3,14 @@ package common.commercial.hosted
 import com.gu.contentapi.client.model.v1.{Content, TagType}
 import common.commercial.CommercialProperties
 import conf.Configuration.site
-import model.{MetaData, SectionSummary}
+import model.{DotcomContentType, MetaData, SectionId}
 import play.api.libs.json.{JsBoolean, JsString}
 
 object HostedMetadata {
 
   def fromContent(item: Content): MetaData = {
 
-    val contentType = item.`type`.name
+    val contentType: Option[DotcomContentType] = DotcomContentType(item)
     val sectionId = item.sectionId
     val toneTags = item.tags.filter(_.`type` == TagType.Tone)
     val toneIds = toneTags.map(_.id).mkString(",")
@@ -24,12 +24,12 @@ object HostedMetadata {
 
     MetaData.make(
       id = item.id,
-      section = sectionId map SectionSummary.fromId,
+      section = sectionId map SectionId.fromId,
       webTitle = item.webTitle,
       url = Some(s"/${item.id}"),
       description = Some(description),
       contentType = contentType,
-      iosType = Some(contentType),
+      iosType = Some(contentType.toString),
       isHosted = true,
       commercial = Some(CommercialProperties.fromContent(item)),
       javascriptConfigOverrides = Map(

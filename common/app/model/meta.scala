@@ -120,7 +120,7 @@ object MetaData {
 
   def make(
     id: String,
-    section: Option[SectionSummary],
+    section: Option[SectionId],
     webTitle: String,
     url: Option[String] = None,
     canonicalUrl: Option[String] = None,
@@ -130,10 +130,10 @@ object MetaData {
     title: Option[String] = None,
     isFront: Boolean = false,
     isPressedPage: Boolean = false,
-    contentType: String = "",
+    contentType: Option[DotcomContentType] = None,
     adUnitSuffix: Option[String] = None,
     customSignPosting: Option[NavItem] = None,
-    iosType: Option[String] = Some("Article"),
+    iosType: Option[String] = Some(DotcomContentType.Article.toString),
     javascriptConfigOverrides: Map[String, JsValue] = Map(),
     opengraphPropertiesOverrides: Map[String, String] = Map(),
     isHosted: Boolean = false,
@@ -148,7 +148,7 @@ object MetaData {
       webUrl = s"${Configuration.site.host}$resolvedUrl",
       webTitle = webTitle,
       section = section,
-      adUnitSuffix = adUnitSuffix getOrElse section.map(_.id).getOrElse(""),
+      adUnitSuffix = adUnitSuffix getOrElse section.map(_.value).getOrElse(""),
       canonicalUrl = canonicalUrl,
       shouldGoogleIndex = shouldGoogleIndex,
       pagination = pagination,
@@ -170,18 +170,18 @@ object MetaData {
   def make(fields: Fields, apiContent: contentapi.Content): MetaData = {
     val id = apiContent.id
     val url = s"/$id"
-    val sectionSummary: Option[SectionSummary] = apiContent.section map SectionSummary.fromCapiSection
-    val sectionId = sectionSummary map (_.id) getOrElse ""
+    val maybeSectionId: Option[SectionId] = apiContent.section.map(SectionId.fromCapiSection)
 
     MetaData(
       id = id,
       url = url,
       webUrl = apiContent.webUrl,
-      sectionSummary,
+      maybeSectionId,
       webTitle = apiContent.webTitle,
       membershipAccess = apiContent.fields.flatMap(_.membershipAccess.map(_.name)),
-      adUnitSuffix = sectionId,
+      adUnitSuffix = maybeSectionId.map(_.value).getOrElse(""),
       description = apiContent.fields.flatMap(_.trailText),
+      contentType = DotcomContentType(apiContent),
       cacheTime = {
         if (fields.isLive) CacheTime.LiveBlogActive
         else if (fields.lastModified > DateTime.now(fields.lastModified.getZone) - 1.hour) CacheTime.RecentlyUpdated
@@ -198,14 +198,14 @@ final case class MetaData (
   id: String,
   url: String,
   webUrl: String,
-  section: Option[SectionSummary],
+  section: Option[SectionId],
   webTitle: String,
   adUnitSuffix: String,
   iosType: Option[String] = Some("Article"),
   pagination: Option[Pagination] = None,
   description: Option[String] = None,
   rssPath: Option[String] = None,
-  contentType: String = "",
+  contentType: Option[DotcomContentType] = None,
   shouldHideHeaderAndTopAds: Boolean = false,
   schemaType: Option[String] = None, // Must be one of... http://schema.org/docs/schemas.html
   cacheTime: CacheTime = CacheTime.Default,
@@ -226,7 +226,7 @@ final case class MetaData (
   commercial: Option[CommercialProperties],
   isNewRecipeDesign: Boolean = false
 ){
-  val sectionId = section map (_.id) getOrElse ""
+  val sectionId = section map (_.value) getOrElse ""
 
   def hasPageSkin(edition: Edition): Boolean = if (isPressedPage){
     DfpAgent.hasPageSkin(adUnitSuffix, edition)
@@ -246,8 +246,8 @@ final case class MetaData (
   val hasSlimHeader: Boolean =
     contentWithSlimHeader ||
       sectionId == "identity" ||
-      contentType.toLowerCase == "survey" ||
-      contentType.toLowerCase == "signup"
+      contentType == DotcomContentType.Survey ||
+      contentType == DotcomContentType.Signup
 
   // this is here so it can be included in analytics.
   // Basically it helps us understand the impact of changes and needs
@@ -263,7 +263,7 @@ final case class MetaData (
     ("buildNumber", JsString(buildNumber)),
     ("revisionNumber", JsString(revision)),
     ("isFront", JsBoolean(isFront)),
-    ("contentType", JsString(contentType))
+    ("contentType", JsString(contentType.toString))
   )
 
   def opengraphProperties: Map[String, String] = {
@@ -305,7 +305,7 @@ final case class MetaData (
     * Content type, lowercased and with spaces removed.
     * This is used for Google Analytics, to be consistent with what the mobile apps do.
     */
-  def normalisedContentType: String = StringUtils.remove(contentType.toLowerCase, ' ')
+  def normalisedContentType: String = StringUtils.remove(contentType.map(_.name.toLowerCase).getOrElse(""), ' ')
 }
 
 object Page {
@@ -382,7 +382,7 @@ case class SimplePage(override val metadata: MetaData) extends StandalonePage
 case class CommercialExpiryPage(id: String) extends StandalonePage {
   override val metadata: MetaData = MetaData.make(
     id,
-    section = Some(SectionSummary.fromId("global")),
+    section = Some(SectionId.fromId("global")),
     webTitle = "This page has been removed",
     shouldGoogleIndex = false
   )
@@ -508,7 +508,7 @@ case class TagCombiner(
     section = leftTag.metadata.section,
     webTitle = s"${leftTag.name} + ${rightTag.name}",
     pagination = pagination,
-    description = Some(GuardianContentTypes.TagIndex),
+    description = Some(DotcomContentType.TagIndex.toString),
     commercial = Some(
       //We only use the left tag for CommercialProperties
       CommercialProperties(

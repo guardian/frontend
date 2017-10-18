@@ -63,7 +63,7 @@ class TitleTest extends FlatSpec with Matchers with GuiceOneAppPerSuite {
     val page = SimplePage(MetaData.make(
       id = "id",
       webTitle = "The Title",
-      section = Some(SectionSummary.fromId("The title"))
+      section = Some(SectionId.fromId("The title"))
     ))
 
     Title(page).body should be ("The Title | The Guardian")
@@ -73,7 +73,7 @@ class TitleTest extends FlatSpec with Matchers with GuiceOneAppPerSuite {
     val page = SimplePage(MetaData.make(
       id = "id",
       webTitle = "The Title",
-      section = Some(SectionSummary.fromId("The title thing"))
+      section = Some(SectionId.fromId("The title thing"))
     ))
 
     Title(page).body should be ("The Title | The title thing | The Guardian")
@@ -83,7 +83,7 @@ class TitleTest extends FlatSpec with Matchers with GuiceOneAppPerSuite {
     val page = SimplePage(MetaData.make(
       id = "id",
       webTitle = "the title",
-      section = Some(SectionSummary.fromId("the title thing"))
+      section = Some(SectionId.fromId("the title thing"))
     ))
 
     Title(page).body should be ("the title | The title thing | The Guardian")

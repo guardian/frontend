@@ -4,7 +4,7 @@ import common.{ImplicitControllerExecutionContext, Logging}
 import contentapi.ContentApiClient
 import layout.FaciaContainer
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
-import model.{ApplicationContext, Cached, MetaData, SectionSummary, SimplePage, StandalonePage}
+import model.{ApplicationContext, Cached, MetaData, SectionId, SimplePage, StandalonePage}
 import pages.ContentHtmlPage
 import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 import services.NewspaperQuery
@@ -21,7 +21,7 @@ class NewspaperController(
 
     val metadata = MetaData.make(
       "theguardian",
-      Some(SectionSummary.fromId("todayspaper")),
+      Some(SectionId.fromId("todayspaper")),
       "Main section | News | The Guardian"
     )
     val todaysPaper = newspaperQuery
@@ -35,7 +35,7 @@ class NewspaperController(
   def latestObserverNewspaper(): Action[AnyContent] = Action.async { implicit request =>
     val metadata = MetaData.make(
       "theobserver",
-      Some(SectionSummary.fromId("theobserver")),
+      Some(SectionId.fromId("theobserver")),
       "Main section | From the Observer | The Guardian"
     )
 
@@ -52,12 +52,12 @@ class NewspaperController(
     val metadata = path match {
       case "theguardian" => MetaData.make(
         "theguardian",
-        Some(SectionSummary.fromId("todayspaper")),
+        Some(SectionId.fromId("todayspaper")),
         "Top Stories | From the Guardian | The Guardian"
       )
       case "theobserver" => MetaData.make(
         "theobserver",
-        Some(SectionSummary.fromId("theobserver")),
+        Some(SectionId.fromId("theobserver")),
         "News | From the Observer | The Guardian"
       )
     }

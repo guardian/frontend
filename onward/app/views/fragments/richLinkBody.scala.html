@@ -4,6 +4,7 @@
 @import views.support.TrailCssClasses.toneClass
 @import views.support.{BulletCleaner, ImgSrc, Item460, RenderClasses, RichLinkContributor}
 
+@import model.DotcomContentType
 @(content: ContentType)(implicit request: RequestHeader)
 
 
@@ -86,9 +87,9 @@
             </div>
             <div class="rich-link__read-more-text">
                 @{content.metadata.contentType match {
-                        case "Audio" => "Listen"
-                        case "Gallery" => "View gallery"
-                        case "Video" => "Watch"
+                        case Some(DotcomContentType.Audio) => "Listen"
+                        case Some(DotcomContentType.Gallery) => "View gallery"
+                        case Some(DotcomContentType.Video) => "Watch"
                         case _ => "Read more"
                     }
                 }

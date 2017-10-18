@@ -145,7 +145,7 @@ object TrailsToRss extends implicits.Collections {
         .distinctBy(faciaContent => faciaContent.properties.maybeContentId.getOrElse(faciaContent.card.id))
         .flatMap(_.properties.maybeContent)
 
-    val webTitle = if (pressedPage.metadata.contentType != GuardianContentTypes.NetworkFront) {
+    val webTitle = if (pressedPage.metadata.contentType != DotcomContentType.NetworkFront) {
       s"${pressedPage.metadata.webTitle} | The Guardian"
     } else {
       "The Guardian"
