@@ -24,8 +24,6 @@ export const supportFrontendLiveInUk = liveInUk;
 export const supportFrontendLiveInUs = liveInUs;
 export {
     useSupportDomain,
-    liveInUk,
-    liveInUs,
     selectBaseUrl,
     selectEngagementBannerButtonCaption,
 };
