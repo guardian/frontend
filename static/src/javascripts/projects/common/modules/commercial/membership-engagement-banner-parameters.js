@@ -66,8 +66,8 @@ const supporterEngagementBannerCopy = (location: string): string =>
         `Support us for ${monthlySupporterCost(location)} per month.`
     );
 
-const contributionEngagementBannerCopy = (): string =>
-    engagementBannerCopy('Support us with a one-off contribution');
+const contributionEngagementBannerCopy = (location: string): string =>
+    engagementBannerCopy(`Support us with a ${location === 'US' ? 'one time' : 'one-off'} contribution`);
 
 const supporterParams = (location: string): EngagementBannerParams =>
     Object.assign({}, baseParams, {
@@ -78,16 +78,16 @@ const supporterParams = (location: string): EngagementBannerParams =>
         pageviewId: (config.ophan && config.ophan.pageViewId) || 'not_found',
     });
 
-const contributionParams = (): EngagementBannerParams =>
+const contributionParams = (location: string): EngagementBannerParams =>
     Object.assign({}, baseParams, {
         buttonCaption: 'Make a Contribution',
         linkUrl: 'https://contribute.theguardian.com',
         products: ['CONTRIBUTION'],
-        messageText: contributionEngagementBannerCopy(),
+        messageText: contributionEngagementBannerCopy(location),
         pageviewId: (config.ophan && config.ophan.pageViewId) || 'not_found',
     });
 
 export const engagementBannerParams = (
     location: string
 ): EngagementBannerParams =>
-    location === 'US' ? contributionParams() : supporterParams(location);
+    location === 'US' ? contributionParams(location) : supporterParams(location);
