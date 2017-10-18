@@ -1,7 +1,7 @@
 @import layout.ContentWidths.MainMedia
 @import model.ImageAsset
 @import views.support.{ImgSrc, Item700}
-
+@import model.DotcomContentType
 @(
     picture: model.ImageMedia,
     lightboxIndex: Option[Int] = None,
@@ -9,7 +9,7 @@
     isFeature: Boolean = false,
     widthsByBreakpoint: layout.WidthsByBreakpoint = MainMedia.inline,
     image_figureClasses: Option[(model.ImageAsset, String)] = None,
-    shareInfo: Option[(Seq[model.ShareLink], String)] = None,
+    shareInfo: Option[(Seq[model.ShareLink], DotcomContentType)] = None,
     amp: Boolean = false,
     doCaption: Boolean = true
 )(implicit request: RequestHeader)

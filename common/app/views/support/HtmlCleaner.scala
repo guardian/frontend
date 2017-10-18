@@ -155,7 +155,12 @@ case class PictureCleaner(article: Article, amp: Boolean)(implicit request: Requ
         lightboxIndex = lightboxInfo.map(_._1),
         widthsByBreakpoint = widths,
         image_figureClasses = Some(image, figureClasses),
-        shareInfo = lightboxInfo.map{case (index, crop) => (article.sharelinks.elementShares(s"img-$index", crop.url), article.metadata.contentType) },
+        shareInfo = lightboxInfo.map{ case (index, crop) =>
+          (
+            article.sharelinks.elementShares(s"img-$index", crop.url),
+            article.metadata.contentType.getOrElse(DotcomContentType.Unknown)
+          )
+        },
         amp = amp
       ).toString()
 

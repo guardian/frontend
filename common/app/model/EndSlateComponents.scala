@@ -12,7 +12,7 @@ object EndSlateComponents {
 
   def fromFaciaContent(faciaContent: PressedContent): EndSlateComponents = EndSlateComponents(
     faciaContent.series collectFirst { case tag:Tag => tag.metadata.id },
-    faciaContent.properties.section,
+    faciaContent.properties.maybeContent.flatMap(_.metadata.sectionId.map(_.value)).getOrElse(""),
     faciaContent.card.shortUrl
   )
 }

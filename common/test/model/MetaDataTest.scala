@@ -10,7 +10,7 @@ class MetaDataTest extends FlatSpec with Matchers {
   def testMetaData(id: String, section: String): MetaData = {
     MetaData.make(
       id,
-      section = Some(SectionSummary.fromId(section)),
+      section = Some(SectionId.fromId(section)),
       webTitle = "t")
   }
 

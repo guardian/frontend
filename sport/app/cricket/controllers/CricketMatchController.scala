@@ -12,7 +12,7 @@ import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 case class CricketMatchPage(theMatch: Match, matchId: String, team: CricketTeam) extends StandalonePage {
   override val metadata = MetaData.make(
     id = s"/sport/cricket/match/$matchId/${team.wordsForUrl}",
-    section = Some(SectionSummary.fromId("cricket")),
+    section = Some(SectionId.fromId("cricket")),
     webTitle = s"${theMatch.competitionName}, ${theMatch.venueName}")
 }
 

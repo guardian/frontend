@@ -22,7 +22,7 @@ object PressedPage {
 
     val isNetworkFront: Boolean = Edition.all.exists(_.networkFrontId == id)
     val keywordIds: Seq[String] = frontKeywordIds(id)
-    val contentType = if (isNetworkFront) GuardianContentTypes.NetworkFront else GuardianContentTypes.Section
+    val contentType: DotcomContentType = if (isNetworkFront) DotcomContentType.NetworkFront else DotcomContentType.Section
 
     val faciaPageMetaData: Map[String, JsValue] = Map(
       "keywords" -> JsString(seoData.webTitle.capitalize),
@@ -40,7 +40,7 @@ object PressedPage {
 
     MetaData.make(
       id = id,
-      section = Some(SectionSummary.fromId(seoData.navSection)),
+      section = Some(SectionId.fromId(seoData.navSection)),
       webTitle = seoData.webTitle,
       //For network fronts we want the string "Network Front"
       //This allows us to change webTitle in tool easily on fronts
@@ -48,7 +48,7 @@ object PressedPage {
       isFront = true,
       isPressedPage = true,
       title = seoData.title,
-      contentType = contentType,
+      contentType = Some(contentType),
       adUnitSuffix = Some(AdSuffixHandlingForFronts.extractAdUnitSuffixFrom(id, seoData.navSection)),
       customSignPosting = FaciaSignpostingOverrides(id),
       iosType = Some("front"),

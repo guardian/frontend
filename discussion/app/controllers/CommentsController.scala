@@ -70,7 +70,7 @@ class CommentsController(
 
   val reportAbusePage = SimplePage(MetaData.make(
     "/reportAbuse",
-    Some(SectionSummary.fromId("Discussion")),
+    Some(SectionId.fromId("Discussion")),
     "Report Abuse"
   ))
   def reportAbuseForm(commentId: Int): Action[AnyContent] = csrfAddToken {
@@ -85,7 +85,7 @@ class CommentsController(
 
   val reportAbuseThankYouPage = SimplePage(MetaData.make(
     "/reportAbuseThankYou",
-    Some(SectionSummary.fromId("Discussion")),
+    Some(SectionId.fromId("Discussion")),
     "Report Abuse Thank You"
   ))
 
