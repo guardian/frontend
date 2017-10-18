@@ -75,7 +75,7 @@ final case class Content(
   lazy val shortUrlId = fields.shortUrlId
   lazy val shortUrlPath = shortUrlId
   lazy val discussionId = Some(shortUrlId)
-  lazy val isGallery = metadata.contentType == DotcomContentType.Gallery
+  lazy val isGallery = metadata.contentType.exists(c => c == DotcomContentType.Gallery)
   lazy val isExplore = ExploreTemplateSwitch.isSwitchedOn && tags.isExploreSeries
   lazy val isPhotoEssay = fields.displayHint.contains("photoEssay")
   lazy val isImmersive = fields.displayHint.contains("immersive") || isGallery || tags.isTheMinuteArticle || isExplore || isPhotoEssay
@@ -273,8 +273,7 @@ final case class Content(
     val canDisableStickyTopBanner =
       metadata.shouldHideHeaderAndTopAds ||
       isPaidContent ||
-      metadata.contentType == DotcomContentType.Interactive ||
-      metadata.contentType == DotcomContentType.Crossword
+      metadata.contentType.exists(c => c == DotcomContentType.Interactive || c == DotcomContentType.Crossword)
 
     // These conditions must always disable sticky banner.
     val alwaysDisableStickyTopBanner =
