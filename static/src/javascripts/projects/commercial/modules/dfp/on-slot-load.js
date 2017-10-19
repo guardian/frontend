@@ -20,20 +20,15 @@ const onLoad = (event: SlotOnloadEvent) => {
     if (!advert) {
         return;
     }
-    if (
-        advert.size &&
-        ((typeof advert.size === 'string' && advert.size === 'fluid') ||
-            (advert.size[0] === 0 && advert.size[1] === 0))
-    ) {
-        const iframe = advert.node.getElementsByTagName('iframe')[0];
-        postMessage(
-            {
-                id: iframe.id,
-                host,
-            },
-            iframe.contentWindow
-        );
-    }
+
+    const iframe = advert.node.getElementsByTagName('iframe')[0];
+    postMessage(
+        {
+            id: iframe.id,
+            host,
+        },
+        iframe.contentWindow
+    );
 };
 
 export default onLoad;
