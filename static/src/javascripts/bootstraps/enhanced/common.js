@@ -16,7 +16,7 @@ import { requestUserSegmentsFromId } from 'commercial/modules/user-ad-targeting'
 import { initDonotUseAdblock } from 'common/modules/commercial/donot-use-adblock';
 import { refresh as refreshUserFeatures } from 'commercial/modules/user-features';
 import CommentCount from 'common/modules/discussion/comment-count';
-import CookieRefresh from 'common/modules/identity/cookierefresh';
+import { init as initCookieRefresh } from 'common/modules/identity/cookierefresh';
 import { initNavigation } from 'common/modules/navigation/navigation';
 import { Profile } from 'common/modules/navigation/profile';
 import { Search } from 'common/modules/navigation/search';
@@ -151,7 +151,7 @@ const showHistoryInMegaNav = (): void => {
 
 const idCookieRefresh = (): void => {
     if (config.switches.idCookieRefresh) {
-        new CookieRefresh().init();
+        initCookieRefresh();
     }
 };
 

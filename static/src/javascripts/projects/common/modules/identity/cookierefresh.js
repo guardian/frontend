@@ -1,25 +1,30 @@
-import Id from 'common/modules/identity/api';
-import storage from 'lib/storage';
+// @flow
 
-class CookieRefresh {
-    constructor() {
-        this.init = function() {
-            const lastRefreshKey = 'identity.lastRefresh';
-            if (storage.local.isAvailable() && Id.isUserLoggedIn()) {
-                const lastRefresh = storage.local.get(lastRefreshKey), currentTime = new Date().getTime();
-                if (this.shouldRefreshCookie(lastRefresh, currentTime)) {
-                    Id.getUserFromApiWithRefreshedCookie();
-                    storage.local.set(lastRefreshKey, currentTime);
-                }
-            }
-        };
+import {
+    isUserLoggedIn,
+    getUserFromApiWithRefreshedCookie,
+} from 'common/modules/identity/api';
+import { local as localStorage } from 'lib/storage';
+
+const shouldRefreshCookie = (
+    lastRefresh: ?number,
+    currentTime: number
+): boolean => {
+    const days30k = 1000 * 86400 * 30; // (as seconds)
+    return !lastRefresh || currentTime > parseInt(lastRefresh, 10) + days30k;
+};
+
+const init = (): void => {
+    const lastRefreshKey = 'identity.lastRefresh';
+
+    if (localStorage.isAvailable() && isUserLoggedIn()) {
+        const currentTime = new Date().getTime();
+        const lastRefresh = localStorage.get(lastRefreshKey);
+        if (shouldRefreshCookie(lastRefresh, currentTime)) {
+            getUserFromApiWithRefreshedCookie();
+            localStorage.set(lastRefreshKey, currentTime);
+        }
     }
+};
 
-    shouldRefreshCookie(lastRefresh, currentTime) {
-        return (!lastRefresh) || (currentTime > (parseInt(lastRefresh, 10) + (1000 * 86400 * 30)));
-    }
-}
-
-export default CookieRefresh;
-
-
+export { shouldRefreshCookie, init };
