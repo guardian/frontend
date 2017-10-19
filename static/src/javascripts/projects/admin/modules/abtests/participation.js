@@ -3,7 +3,7 @@
  Module: participation.js
  Description: Displays opt-in and opt-out links for a test
  */
-import Component from 'common/modules/component';
+import { Component } from 'common/modules/component';
 import { ParticipationItem } from 'admin/modules/abtests/participation-item';
 
 class Participation extends Component {
@@ -21,14 +21,17 @@ class Participation extends Component {
         );
     }
 
+    config: Object;
+
     prerender(): void {
         const test = this.config.test;
         const origin = /gutools.co.uk$/.test(document.location.origin)
             ? 'http://www.theguardian.com'
             : document.location.origin;
         const examplePath = `${test.examplePath || '/uk'}#ab-${test.id}`;
+        const optOutEl = ((this.getElem('opt-out'): any): HTMLLinkElement);
 
-        this.getElem('opt-out').href = `${origin}${examplePath}=notintest`;
+        optOutEl.href = `${origin}${examplePath}=notintest`;
 
         const linksContainer = this.getElem('links');
 

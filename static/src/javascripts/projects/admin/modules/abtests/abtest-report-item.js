@@ -4,7 +4,7 @@
  Module: abtest-item.js
  Description: Displays information about a single test
  */
-import Component from 'common/modules/component';
+import { Component } from 'common/modules/component';
 import { Participation } from 'admin/modules/abtests/participation';
 import bonzo from 'bonzo';
 import debounce from 'lodash/functions/debounce';
@@ -29,6 +29,9 @@ class ABTestReportItem extends Component {
         }
     }
 
+    chart: Object;
+    config: Object;
+
     ready(): void {
         if (this.chart) {
             const redraw = this.renderChart.bind(this);
@@ -40,10 +43,16 @@ class ABTestReportItem extends Component {
     }
 
     prerender(): void {
-        this.elem.className += this.config.active
-            ? ' abtest-item--active'
-            : ' abtest-item--expired';
-        this.elem.setAttribute('data-abtest-name', this.config.test.id);
+        if (this.elem) {
+            this.elem.className += this.config.active
+                ? ' abtest-item--active'
+                : ' abtest-item--expired';
+            this.elem.setAttribute(
+                'data-abtest-name',
+                this.config && this.config.test && this.config.test.id
+            );
+        }
+
         bonzo(this.elem).addClass(
             window.abSwitches[`ab${this.config.test.id}`]
                 ? 'abtest-item--switched-on'

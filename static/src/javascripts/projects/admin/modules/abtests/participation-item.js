@@ -3,7 +3,7 @@
  Module: participation-item.js
  Description: Displays opt-in link for a variant
  */
-import Component from 'common/modules/component';
+import { Component } from 'common/modules/component';
 
 class ParticipationItem extends Component {
     constructor(config: Object): void {
@@ -23,13 +23,17 @@ class ParticipationItem extends Component {
         );
     }
 
+    config: Object;
+
     prerender(): void {
         const origin = /gutools.co.uk$/.test(document.location.origin)
             ? 'http://www.theguardian.com'
             : document.location.origin;
         const href = `${this.config.examplePath}=${this.config.variant}`;
-        this.elem.textContent = this.config.variant;
-        this.elem.href = origin + href;
+        const elem = ((this.elem: any): HTMLLinkElement);
+
+        elem.textContent = this.config.variant;
+        elem.href = origin + href;
     }
 }
 
