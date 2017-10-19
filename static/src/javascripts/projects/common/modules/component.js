@@ -246,7 +246,7 @@ class Component {
         return this;
     }
 
-    emit(eventName: string, args?: Object): void {
+    emit(eventName: string, args?: mixed): void {
         bean.fire(this.elem, eventName, args);
     }
 
