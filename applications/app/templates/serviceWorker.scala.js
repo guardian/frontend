@@ -58,58 +58,47 @@ var handleAssetRequest = function (event) {
     // Cache first for all other requests
 
     event.respondWith(
-        caches.match(event.request)
-            .then(function (cachedResponse) {
-                // Workaround Firefox bug which drops cookies
-                // https://github.com/guardian/frontend/issues/12012
+        caches.match(event.request.url).then(function (cachedResponse) {
+            if (cachedResponse) {
                 console.log('*** cachedResponse ***', cachedResponse);
-                if (cachedResponse) {
-                    return cachedResponse;
-                } else {
-                    return fetch(event.request, needCredentialsWorkaround(event.request.url) ? {
-                        credentials: 'include',
-                        mode: 'no-cors'
-                    } : {
-                        mode: 'no-cors'
-                    }).then(function(fetchedResponse) {
-                        console.log('*** fetchedResponse ***', fetchedResponse);
-                        // Check if we received a valid response
-                        if(!fetchedResponse || fetchedResponse.status !== 200 || fetchedResponse.type !== 'basic') {
-                            return fetchedResponse;
-                        }
+                return cachedResponse;
+            } else {
+                return fetch(event.request, needCredentialsWorkaround(event.request.url) ? {
+                    credentials: 'include',
+                    mode: 'no-cors'
+                } : {
+                    mode: 'no-cors'
+                }).then(function(fetchedResponse) {
+                    console.log('*** fetchedResponse ***', fetchedResponse);
+                    var responseToCache = fetchedResponse.clone();
+                    
+                    // get filename of request we're going to cached
+                    var responseUrl = responseToCache.url;
+                    var responseFileName = responseUrl.substring(responseUrl.lastIndexOf("/") + 1, responseUrl.length);
 
-                        // IMPORTANT: Clone the response. A response is a stream
-                        // and because we want the browser to consume the response
-                        // as well as the cache consuming the response, we need
-                        // to clone it so we have two streams.
-                        var responseToCache = fetchedResponse.clone();
-                        
-                        // get filename of request we're going to cached
-                        // var responseUrl = responseToCache.url;
-                        // var responseFileName = responseUrl.substring(responseUrl.lastIndexOf("/") + 1, responseUrl.length);
+                    caches.open('graun').then(function(cache) {
+                        // check cache for matching filename, if match found then delete old cached item
+                        cache.keys().then(function(keys) {
+                            keys.forEach(function(request, index, array) {
+                                var requestUrl = request.url;
+                                var requestFileName = requestUrl.substring(requestUrl.lastIndexOf("/") + 1, requestUrl.length);
 
-                        caches.open('graun').then(function(cache) {
-                            // check cache for matching filename, if match found then delete old cached item
-                            //     cache.keys().then(function(keys) {
-                            //         keys.forEach(function(request, index, array) {
-                            //             var requestUrl = request.url;
-                            //             var requestFileName = requestUrl.substring(requestUrl.lastIndexOf("/") + 1, requestUrl.length);
-                                        
-                            //             if (requestUrl === responseUrl) {
-                            //                 console.log('*** delete old cache ***', request);
-                            //                 cache.delete(request);
-                            //             }
-                            //         });
-                            //     });
-                            // save response to cache
-                            console.log('*** save to cache ***', responseToCache);
-                            cache.put(event.request, responseToCache);
+                                console.log('*** request to compare ***', requestUrl, responseUrl);
+                                if (requestUrl === responseUrl) {
+                                    console.log('*** delete old cache ***', request);
+                                    cache.delete(request);
+                                }
+                            });
                         });
 
-                        return fetchedResponse;
+                        console.log('*** response saved ***', responseToCache);
+                        cache.put(event.request, responseToCache);
                     });
-                }
-            })
+        
+                    return fetchedResponse;
+                });
+            }
+        })
     );
 };
 
@@ -139,6 +128,6 @@ this.addEventListener('fetch', function (event) {
 });
 
 this.addEventListener('activate', function() {
-    console.log('** graun cache deleted **');
+    console.log('*** graun cache deleted ***');
     caches.delete('graun');
 });
