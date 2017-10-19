@@ -61,6 +61,12 @@ from scrolling */
     }
 }
 
+.new-header__user-account-container {
+    float: left;
+    position: relative;
+    z-index: $zindex-main-menu + 2;
+}
+
 .new-header__top-bar {
     left: 0;
     position: absolute;

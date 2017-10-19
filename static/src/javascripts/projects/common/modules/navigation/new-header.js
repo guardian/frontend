@@ -189,47 +189,57 @@ const toggleMenu = (): void => {
     fastdom.write(update);
 };
 
-const toggleEditionPickerDropdown = () => {
+const toggleDropdown = (menuAndTriggerEls: Object) => {
     const openClass = 'dropdown-menu--open';
 
-    fastdom
-        .read(() => ({
-            menu: document.querySelector('.js-edition-dropdown-menu'),
-            trigger: document.querySelector('.js-edition-picker-trigger'),
-        }))
-        .then(els => {
-            const { menu, trigger } = els;
+    fastdom.read(() => menuAndTriggerEls).then(els => {
+        const { menu, trigger } = els;
 
-            if (!menu) {
-                return;
+        if (!menu) {
+            return;
+        }
+
+        const isOpen = menu.classList.contains(openClass);
+        const expandedAttr = isOpen ? 'false' : 'true';
+        const hiddenAttr = isOpen ? 'true' : 'false';
+
+        return fastdom.write(() => {
+            if (trigger) {
+                trigger.setAttribute('aria-expanded', expandedAttr);
             }
 
-            const isOpen = menu.classList.contains(openClass);
-            const expandedAttr = isOpen ? 'false' : 'true';
-            const hiddenAttr = isOpen ? 'true' : 'false';
+            menu.setAttribute('aria-hidden', hiddenAttr);
+            menu.classList.toggle(openClass, !isOpen);
 
-            return fastdom.write(() => {
-                if (trigger) {
-                    trigger.setAttribute('aria-expanded', expandedAttr);
-                }
+            if (!isOpen) {
+                mediator.on('module:clickstream:click', clickSpec => {
+                    const elem = clickSpec ? clickSpec.target : null;
 
-                menu.setAttribute('aria-hidden', hiddenAttr);
-                menu.classList.toggle(openClass, !isOpen);
+                    // if anywhere else but the links are clicked, the dropdown will close
+                    if (elem !== menu) {
+                        toggleDropdown(menuAndTriggerEls);
+                    }
+                });
+            } else {
+                // when the dropdown closes, remove event
+                mediator.removeEvent('module:clickstream:click');
+            }
+        });
+    });
+};
 
-                if (!isOpen) {
-                    mediator.on('module:clickstream:click', clickSpec => {
-                        const elem = clickSpec ? clickSpec.target : null;
+const initiateUserAccountDropdown = () => {
+    const userAccountDropdownEls = {
+        menu: document.querySelector('.js-user-account-dropdown-menu'),
+        trigger: document.querySelector('.js-user-account-trigger'),
+    };
 
-                        // if anywhere else but the links are clicked, the dropdown will close
-                        if (elem !== menu) {
-                            toggleEditionPickerDropdown();
-                        }
-                    });
-                } else {
-                    // when the dropdown closes, remove event
-                    mediator.removeEvent('module:clickstream:click');
-                }
-            });
+    fastdom
+        .read(() => document.querySelector('.js-user-account-trigger'))
+        .then(button => {
+            button.addEventListener('click', () =>
+                toggleDropdown(userAccountDropdownEls)
+            );
         });
 };
 
@@ -240,9 +250,16 @@ const enhanceCheckbox = (checkbox: HTMLElement): void => {
         const checkboxControls = checkbox.getAttribute('aria-controls');
         const checkboxClassAttr = checkbox.getAttribute('class');
         const dataLinkName = checkbox.getAttribute('data-link-name');
+        const editionPickerDropdownEls = {
+            menu: document.querySelector('.js-edition-dropdown-menu'),
+            trigger: document.querySelector('.js-edition-picker-trigger'),
+        };
         const buttonClickHandlers = {
             'main-menu-toggle': toggleMenu,
-            'edition-picker-toggle': toggleEditionPickerDropdown,
+            'edition-picker-toggle': toggleDropdown.bind(
+                null,
+                editionPickerDropdownEls
+            ),
         };
 
         const enhance = () => {
@@ -374,6 +391,7 @@ export const newHeaderInit = (): void => {
     enhanceMenuToggles();
     addEventHandler();
     showMyAccountIfNecessary();
+    initiateUserAccountDropdown();
     closeAllMenuSections();
     trackRecentSearch();
 };
