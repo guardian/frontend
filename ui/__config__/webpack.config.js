@@ -24,7 +24,7 @@ const config = {
         rules: [
             {
                 test: /\.svg$/,
-                use: ['babel-loader', 'svg-loader'],
+                use: ['babel-loader', 'guui-svg-loader'],
             },
             {
                 test: /\.(js|jsx)$/,
@@ -48,7 +48,7 @@ const config = {
                         use: ['to-string-loader', cssLoader],
                     },
                     {
-                        use: ['ui-css-loader'],
+                        use: ['guui-css-loader'],
                     },
                 ],
             },
@@ -65,7 +65,7 @@ const config = {
             react: 'preact',
         },
     },
-    resolveLoader: { modules: [path.resolve(ui, '__tools__'), 'node_modules'] },
+    resolveLoader: { modules: [path.resolve('node_modules', '@guardian/guui', 'lib', 'loaders'), 'node_modules'] },
     watchOptions: { ignored: /node_modules/ },
 };
 
