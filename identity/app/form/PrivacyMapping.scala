@@ -54,10 +54,18 @@ case class PrivacyFormData(
 }
 
 object PrivacyFormData {
-  def apply(user: User): PrivacyFormData = PrivacyFormData(
-    receiveGnmMarketing = user.statusFields.receiveGnmMarketing.getOrElse(false),
-    receive3rdPartyMarketing = user.statusFields.receive3rdPartyMarketing.getOrElse(false),
-    allowThirdPartyProfiling = user.statusFields.allowThirdPartyProfiling.getOrElse(true),
-    consents = user.consents
-  )
+  def apply(user: User): PrivacyFormData =
+    PrivacyFormData(
+      receiveGnmMarketing = user.statusFields.receiveGnmMarketing.getOrElse(false),
+      receive3rdPartyMarketing = user.statusFields.receive3rdPartyMarketing.getOrElse(false),
+      allowThirdPartyProfiling = user.statusFields.allowThirdPartyProfiling.getOrElse(true),
+      consents = if (user.consents.isEmpty) defaultConsents else user.consents
+    )
+
+  private val defaultConsents =
+    List(
+      Consent("user", "firstParty", false),
+      Consent("user", "thirdParty", false),
+      Consent("user", "thirdPartyProfiling", false)
+    )
 }

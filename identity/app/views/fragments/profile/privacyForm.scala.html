@@ -7,44 +7,32 @@
 @import views.html.fragments.registrationFooter
 @import _root_.form.IdFormHelpers.{Checkbox, nonInputFields}
 @import org.joda.time.DateTime
-@import idapiclient.parser.JodaJsonSerializer
+@import org.joda.time.format.ISODateTimeFormat
 @import com.gu.identity.model.ConsentData
 
-@v2ConsentCheckbox(index: Int, consentIdentifier: String, consentIdentifierVersion: Int) = {
+@v2ConsentCheckbox(consentField: Field) = {
 
-    <input type="hidden" name=@("consents[" + index + "].actor") value='user'>
-    <input type="hidden" name=@("consents[" + index + "].consentIdentifier") value=@consentIdentifier>
-    <input type="hidden" name=@("consents[" + index + "].consentIdentifierVersion") value=@consentIdentifierVersion>
-    <input type="hidden" name=@("consents[" + index + "].timestamp") value=@getCurrentTime>
-    <input type="hidden" name=@("consents[" + index + "].privacyPolicy") value=@com.gu.identity.model.ConsentData.privacyPolicyVersion>
+    @* hidden input fields *@
+    @helper.inputText(consentField("actor"), 'type -> "hidden")(nonInputFields, messages)
+    @helper.inputText(consentField("consentIdentifier"), 'type -> "hidden")(nonInputFields, messages)
+    @helper.inputText(consentField("consentIdentifierVersion"), 'type -> "hidden")(nonInputFields, messages)
+    @helper.inputText(consentField("timestamp"), 'type -> "hidden", 'value -> getCurrentTime)(nonInputFields, messages)
+    @helper.inputText(consentField("privacyPolicy"), 'type -> "hidden", 'value -> ConsentData.privacyPolicyVersion)(nonInputFields, messages)
 
     @checkboxField(
         Checkbox(
-            privacyForm("consents[" + index + "].hasConsented"),
-            '_label -> ConsentData.allConsents(consentIdentifier)(consentIdentifierVersion)
+            consentField("hasConsented"),
+            '_label -> ConsentData.allConsents(consentField("consentIdentifier").value.get)(consentField("consentIdentifierVersion").value.get.toInt)
         )
     )(nonInputFields, messages)
 }
 
 @getCurrentTime = {
-    @JodaJsonSerializer.dateTimeFormatISO8601.print(new DateTime)
+    @ISODateTimeFormat.dateTimeNoMillis.withZoneUTC().print(new DateTime)
 }
 
-@* If the user has not yet set V2 consent *@
-@v2consentCheckboxesOnboarding = {
-    @v2ConsentCheckbox(0, "firstParty", ConsentData.allConsents("firstParty").indices.last)
-    @v2ConsentCheckbox(1, "thirdParty", ConsentData.allConsents("thirdParty").indices.last)
-    @v2ConsentCheckbox(2, "thirdPartyProfiling", ConsentData.allConsents("thirdPartyProfiling").indices.last)
-}
-
-@* If user has set V2 consent before *@
-@v2consentCheckboxesFromApiUser = {
-  @helper.repeatWithIndex(privacyForm("consents"), min=1) { (consent, consentIndex) =>
-    @v2ConsentCheckbox(
-        consentIndex,
-        user.consents(consentIndex).consentIdentifier,
-        user.consents(consentIndex).consentIdentifierVersion)
-  }
+@v2consentCheckboxes = {
+  @helper.repeat(privacyForm("consents"), min=1) { consentField => @v2ConsentCheckbox(consentField) }
 }
 
 <form class="form js-public-profile-form" novalidate action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" role="main" method="post">
@@ -87,11 +75,7 @@
                     <div class="form-field__note">The Guardian and their partners would like to occasionally send you information about their products, services and events.</div>
 
                     <div class="form-fields-group">
-                        @if(user.consents.isEmpty) {
-                            @v2consentCheckboxesOnboarding
-                        } else {
-                            @v2consentCheckboxesFromApiUser
-                        }
+                        @v2consentCheckboxes
                     </div>
                 </li>
             </ul>
