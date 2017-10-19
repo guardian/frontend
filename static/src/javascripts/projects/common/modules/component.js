@@ -61,7 +61,7 @@ class Component {
         this._ready();
     }
 
-    render(parent: HTMLElement | ?Node = document.body) {
+    render(parent: HTMLElement | ?Node = document.body): Component {
         this.checkAttached();
         let template = this.template;
 
@@ -138,7 +138,7 @@ class Component {
             mode: 'cors',
             body: this.fetchData,
         }).then(resp => {
-            this.fetched();
+            this.fetched(resp);
             return resp;
         });
     }
@@ -147,7 +147,7 @@ class Component {
         if (!this.destroyed) {
             this.rendered = true;
             this._autoupdate();
-            this.ready();
+            this.ready(elem);
         }
     }
 
@@ -160,6 +160,10 @@ class Component {
      * Check if we should auto update, if so, do so
      */
     _autoupdate(): void {
+        const setAutoUpdate = () => {
+            // eslint-disable-next-line no-use-before-define
+            this.t = setTimeout(() => update(), this.updateEvery * 1000);
+        };
         const update = (): void => {
             this._fetch()
                 .then(resp => {
@@ -176,10 +180,6 @@ class Component {
                 });
         };
 
-        const setAutoUpdate = () => {
-            this.t = setTimeout(() => update(), this.updateEvery * 1000);
-        };
-
         if (this.autoupdated) {
             setAutoUpdate();
         }
@@ -190,6 +190,7 @@ class Component {
      * This will help with the rendering performance that
      * we would lose if rendered then manipulated
      */
+    // eslint-disable-next-line class-methods-use-this, no-unused-vars
     prerender(): void {}
 
     /**
@@ -197,20 +198,23 @@ class Component {
      * This is where you could do your event binding
      * This function is made to be overridden
      */
-    ready(): void {}
+    // eslint-disable-next-line class-methods-use-this, no-unused-vars
+    ready(elem: ?HTMLElement): void {}
 
     /**
      * Once the render / decorate methods have been called
      * This is where you could do your error event binding
      * This function is made to be overridden
      */
-    error(type?: string, message?: string): void {}
+    // eslint-disable-next-line class-methods-use-this, no-unused-vars
+    error(type: string, message?: string): void {}
 
     /**
      * This is called whenever a fetch occurs. This includes
      * explicit fetch calls and autoupdate.
      */
-    fetched(resp?: Object): void {}
+    // eslint-disable-next-line class-methods-use-this, no-unused-vars
+    fetched(resp: Object): void {}
 
     autoupdate(elem: HTMLElement): void {
         const oldElem = this.elem;
@@ -223,6 +227,7 @@ class Component {
     /**
      * Once we're done with it, remove event bindings etc
      */
+    // eslint-disable-next-line class-methods-use-this, no-unused-vars
     dispose(): void {}
 
     on(
@@ -231,11 +236,11 @@ class Component {
         handler?: (event: Event) => void
     ): Component {
         if (typeof elem === 'function') {
-            handler = elem;
-            bean.on(this.elem, eventType, handler.bind(this));
-        } else {
-            elem = !elem.length ? [elem] : elem;
-            bean.on(this.elem, eventType, elem, handler.bind(this));
+            const eventHandler = elem;
+            bean.on(this.elem, eventType, eventHandler.bind(this));
+        } else if (typeof handler === 'function') {
+            const selector = !elem.length ? [elem] : elem;
+            bean.on(this.elem, eventType, selector, handler.bind(this));
         }
 
         return this;
@@ -271,7 +276,7 @@ class Component {
         return (sansDot ? '' : '.') + className;
     }
 
-    setState(state: string, elemName: ?string) {
+    setState(state: string, elemName: ?string): void {
         const elem = elemName ? this.getElem(elemName) : this.elem;
         const $elem = bonzo(elem);
 
