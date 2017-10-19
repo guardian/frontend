@@ -8,7 +8,6 @@ import { elementInView } from 'lib/element-inview';
 import fastdom from 'lib/fastdom-promise';
 import { epicLiveBlogTemplate } from 'common/modules/commercial/templates/acquisitions-epic-liveblog';
 import { liveblog as liveblogCopy } from 'common/modules/commercial/acquisitions-copy';
-import { useSupportDomain } from 'common/modules/commercial/support-utilities';
 
 const pageId: string = config.get('page.pageId', '');
 
@@ -167,8 +166,7 @@ export const acquisitionsEpicLiveblog: EpicABTest = makeABTest({
                     return epicLiveBlogTemplate({
                         copy: liveblogCopy(
                             variant.options.membershipURL,
-                            variant.options.contributeURL,
-                            useSupportDomain()
+                            variant.options.contributeURL
                         ),
                         componentName: variant.options.componentName,
                     });

@@ -1,7 +1,9 @@
 package model
 
+import java.time.ZoneOffset
+
 import com.gu.contentapi.client.model.v1.{Content => ApiContent, Element => ApiElement, Tag => ApiTag, _}
-import com.gu.contentapi.client.utils.CapiModelEnrichment.RichJodaDateTime
+import com.gu.contentapi.client.utils.CapiModelEnrichment.RichOffsetDateTime
 import model.content.MediaAtom
 import org.joda.time.DateTime
 import org.scalatest.{FlatSpec, Matchers}
@@ -32,10 +34,12 @@ class ContentTest extends FlatSpec with Matchers with GuiceOneAppPerSuite with i
         Nil)
     )
 
+    val offsetDate = jodaToJavaInstant(new DateTime()).atOffset(ZoneOffset.UTC)
+
     val content = ApiContent(id = "foo/2012/jan/07/bar",
       sectionId = None,
       sectionName = None,
-      webPublicationDate = Some(new DateTime().toCapiDateTime),
+      webPublicationDate = Some(offsetDate.toCapiDateTime),
       webTitle = "Some article",
       webUrl = "http://www.guardian.co.uk/foo/2012/jan/07/bar",
       apiUrl = "http://content.guardianapis.com/foo/2012/jan/07/bar",
@@ -101,12 +105,14 @@ class ContentTest extends FlatSpec with Matchers with GuiceOneAppPerSuite with i
     val noFields = article.copy(fields = None)
     Content(noFields).trail.isClosedForComments should be(true)
 
-    val future = new DateTime().plusDays(3).toCapiDateTime
-    val openComments= article.copy(fields = Some(ContentFields(commentCloseDate = Some(future))))
+    val future = new DateTime().plusDays(3)
+    val futureOffset = jodaToJavaInstant(future).atOffset(ZoneOffset.UTC)
+    val openComments= article.copy(fields = Some(ContentFields(commentCloseDate = Some(futureOffset.toCapiDateTime))))
     Content(openComments).trail.isClosedForComments should be(false)
 
-    val past = new DateTime().minus(3).toCapiDateTime
-    val closedComments = article.copy(fields = Some(ContentFields(commentCloseDate = Some(past))))
+    val past = new DateTime().minus(3)
+    val pastOffset = jodaToJavaInstant(past).atOffset(ZoneOffset.UTC)
+    val closedComments = article.copy(fields = Some(ContentFields(commentCloseDate = Some(pastOffset.toCapiDateTime))))
     Content(closedComments).trail.isClosedForComments should be(true)
   }
 
@@ -147,11 +153,14 @@ class ContentTest extends FlatSpec with Matchers with GuiceOneAppPerSuite with i
   private val article = contentApi("article", Nil)
 
   private def contentApi(contentType: String, elements: List[ApiElement], maybeByline: Option[String] = None): ApiContent = {
+
+    val offsetDate = jodaToJavaInstant(DateTime.now).atOffset(ZoneOffset.UTC)
+
     ApiContent(
       id = "/content",
       sectionId = None,
       sectionName = None,
-      webPublicationDate = Some(DateTime.now.toCapiDateTime),
+      webPublicationDate = Some(offsetDate.toCapiDateTime),
       webTitle = "webTitle",
       webUrl = "webUrl",
       apiUrl = "apiUrl",

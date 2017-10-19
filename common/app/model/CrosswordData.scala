@@ -1,10 +1,10 @@
 package model
 
 import com.gu.contentapi.client.model.v1.{CrosswordEntry, Crossword}
-import com.gu.contentapi.client.utils.CapiModelEnrichment.RichCapiDateTime
 import crosswords.CrosswordGridColumnNotation
 import org.joda.time.DateTime
 import play.api.libs.json._
+import implicits.Dates.CapiRichDateTime
 
 case class CrosswordPosition(x: Int, y: Int)
 
@@ -88,7 +88,7 @@ object CrosswordData {
     // group are incorrectly stored on the first group entry. We normalize
     // the data to store the separator locations on their corresponding entries.
 
-    val shipSolutions = crossword.dateSolutionAvailable.map(_.toJodaDateTime.isBeforeNow).getOrElse(crossword.solutionAvailable)
+    val shipSolutions = crossword.dateSolutionAvailable.map(_.toJoda.isBeforeNow).getOrElse(crossword.solutionAvailable)
 
     val entries = crossword.entries.collect {
       case entry if !shipSolutions => Entry.fromCrosswordEntry(entry.copy(solution = None))
@@ -142,10 +142,10 @@ object CrosswordData {
       creator = for (
         creator <- crossword.creator
       ) yield CrosswordCreator(creator.name, creator.webUrl),
-      crossword.date.toJodaDateTime,
+      crossword.date.toJoda,
       sortedNewEntries,
       crossword.solutionAvailable,
-      crossword.dateSolutionAvailable.map(_.toJodaDateTime),
+      crossword.dateSolutionAvailable.map(_.toJoda),
       CrosswordDimensions(crossword.dimensions.cols, crossword.dimensions.rows),
       crosswordType,
       crossword.pdf,

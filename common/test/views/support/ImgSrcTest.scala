@@ -1,10 +1,13 @@
 package views.support
 
-import com.gu.contentapi.client.model.v1.{Asset, Content, Element, Tag, AssetType, ElementType, TagType}
-import com.gu.contentapi.client.utils.CapiModelEnrichment.RichJodaDateTime
+import java.time.ZoneOffset
+
+import com.gu.contentapi.client.model.v1.{Asset, AssetType, Content, Element, ElementType, Tag, TagType}
+import com.gu.contentapi.client.utils.CapiModelEnrichment.RichOffsetDateTime
 import conf.Configuration
 import conf.switches.Switches.ImageServerSwitch
-import model.{ImageMedia, ImageAsset}
+import implicits.Dates.jodaToJavaInstant
+import model.{ImageAsset, ImageMedia}
 import org.joda.time.DateTime
 import org.scalatest.{FlatSpec, Matchers}
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
@@ -25,10 +28,12 @@ class ImgSrcTest extends FlatSpec with Matchers with GuiceOneAppPerSuite {
   val tag = List(Tag(id = "type/article", `type` = TagType.Keyword, webTitle = "",
       sectionId = None, sectionName = None, webUrl = "", apiUrl = "apiurl", references = Nil))
 
+  val offsetDate = jodaToJavaInstant(new DateTime()).atOffset(ZoneOffset.UTC)
+
   val content = Content(id = "foo/2012/jan/07/bar",
     sectionId = None,
     sectionName = None,
-    webPublicationDate = Some(new DateTime().toCapiDateTime),
+    webPublicationDate = Some(offsetDate.toCapiDateTime),
     webTitle = "Some article",
     webUrl = "http://www.guardian.co.uk/foo/2012/jan/07/bar",
     apiUrl = "http://content.guardianapis.com/foo/2012/jan/07/bar",

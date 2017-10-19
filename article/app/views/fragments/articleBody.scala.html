@@ -72,7 +72,7 @@
 
                         @fragments.contentMeta(article, model, amp = amp)
 
-                        @if(article.tags.isNews && !article.elements.hasMainEmbed && article.elements.elements("main").isEmpty) {
+                        @if(article.tags.isNews && !article.elements.hasMainEmbed && (article.elements.elements("main") && article.elements.elements("main").isEmpty)) {
                             <hr class="content__hr hide-until-leftcol" />
                         }
 

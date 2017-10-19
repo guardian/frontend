@@ -34,11 +34,11 @@ object Tag {
       webUrl = tag.webUrl,
       webTitle = tag.webTitle,
       url = tag.url,
-      section = Some(SectionSummary.fromId(tag.sectionId)),
+      section = Some(SectionId.fromId(tag.sectionId)),
       adUnitSuffix = AdSuffixHandlingForFronts.extractAdUnitSuffixFrom(tag.id, tag.sectionId),
       description = tag.description,
       pagination = pagination,
-      contentType = "Tag",
+      contentType = Some(DotcomContentType.Tag),
       isFront = true,
       rssPath = Some(s"/${tag.id}/rss"),
       iosType = tag.sectionId match {

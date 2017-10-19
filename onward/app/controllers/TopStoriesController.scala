@@ -54,7 +54,7 @@ class TopStoriesController(
   private def renderTopStoriesPage(trails: Seq[PressedContent])(implicit request: RequestHeader): Result = {
     val page = SimplePage( MetaData.make(
       "top-stories",
-      Some(SectionSummary.fromId("top-stories")),
+      Some(SectionId.fromId("top-stories")),
       "Top Stories"
     ))
 

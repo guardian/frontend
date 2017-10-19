@@ -3,7 +3,7 @@ package controllers
 import conf.Configuration
 import common._
 import model.Cached.RevalidatableResult
-import model.{ApplicationContext, Cached, MetaData, NoCache, SectionSummary}
+import model.{ApplicationContext, Cached, MetaData, NoCache, SectionId}
 import play.api.data.Form
 import play.api.libs.json.Json
 import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
@@ -42,7 +42,7 @@ class TechFeedbackController(ws: WSClient, val controllerComponents: ControllerC
 
     val page = model.SimplePage(MetaData.make(
       request.path,
-      Some(SectionSummary.fromId("info")),
+      Some(SectionId.fromId("info")),
       "Your report has been sent"
     ))
 
@@ -53,7 +53,7 @@ class TechFeedbackController(ws: WSClient, val controllerComponents: ControllerC
   def techFeedback(path: String): Action[AnyContent] = Action { implicit request =>
     val page = model.SimplePage(MetaData.make(
       request.path,
-      Some(SectionSummary.fromId("info")),
+      Some(SectionId.fromId("info")),
       "Thanks for your report"
     ))
     Cached(900)(RevalidatableResult.Ok(views.html.feedback(page, path)))

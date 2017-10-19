@@ -1,9 +1,8 @@
 package model.liveblog
 
 import java.util.Locale
-
+import implicits.Dates.CapiRichDateTime
 import com.gu.contentapi.client.model.v1.{Block, MembershipPlaceholder, BlockAttributes => ApiBlockAttributes, Blocks => ApiBlocks}
-import com.gu.contentapi.client.utils.CapiModelEnrichment.RichCapiDateTime
 import model.liveblog.BodyBlock._
 import org.joda.time.format.{DateTimeFormat, ISODateTimeFormat}
 import org.joda.time.{DateTime, DateTimeZone}
@@ -46,10 +45,10 @@ object BodyBlock {
           bodyBlock.title,
           BlockAttributes.make(bodyBlock.attributes),
           bodyBlock.published,
-          bodyBlock.createdDate.map(_.toJodaDateTime),
-          bodyBlock.firstPublishedDate.map(_.toJodaDateTime),
-          bodyBlock.publishedDate.map(_.toJodaDateTime),
-          bodyBlock.lastModifiedDate.map(_.toJodaDateTime),
+          bodyBlock.createdDate.map(_.toJoda),
+          bodyBlock.firstPublishedDate.map(_.toJoda),
+          bodyBlock.publishedDate.map(_.toJoda),
+          bodyBlock.lastModifiedDate.map(_.toJoda),
           bodyBlock.contributors,
           bodyBlock.elements.flatMap(BlockElement.make))
       }

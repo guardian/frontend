@@ -43,7 +43,7 @@ class CrosswordSearchPage extends StandalonePage {
 
   val metadata = MetaData.make(
     id = "crosswords/search",
-    section = Some(SectionSummary.fromId("crosswords")),
+    section = Some(SectionId.fromId("crosswords")),
     webTitle = "Crosswords search"
   )
 

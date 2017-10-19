@@ -1,7 +1,9 @@
 package model
 
-import com.gu.contentapi.client.model.v1.{Content => ApiContent, Element => ApiElement, AssetFields, Asset, ElementType, AssetType}
-import com.gu.contentapi.client.utils.CapiModelEnrichment.RichJodaDateTime
+import java.time.ZoneOffset
+import implicits.Dates.jodaToJavaInstant
+import com.gu.contentapi.client.model.v1.{Asset, AssetFields, AssetType, ElementType, Content => ApiContent, Element => ApiElement}
+import com.gu.contentapi.client.utils.CapiModelEnrichment.RichOffsetDateTime
 import contentapi.FixtureTemplates
 import org.joda.time.DateTime
 import org.scalatest.{FlatSpec, Matchers}
@@ -10,11 +12,13 @@ import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 class ElementsTest extends FlatSpec with Matchers with GuiceOneAppPerSuite {
 
   "Elements" should "find the biggest crop of the main picture" in {
+
+    val offsetDate = jodaToJavaInstant(new DateTime()).atOffset(ZoneOffset.UTC)
     val images: Elements = Content(
       ApiContent(id = "foo/2012/jan/07/bar",
         sectionId = None,
         sectionName = None,
-        webPublicationDate = Some(new DateTime().toCapiDateTime),
+        webPublicationDate = Some(offsetDate.toCapiDateTime),
         webTitle = "Some article",
         webUrl = "http://www.guardian.co.uk/foo/2012/jan/07/bar",
         apiUrl = "http://content.guardianapis.com/foo/2012/jan/07/bar",

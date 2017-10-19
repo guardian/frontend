@@ -10,7 +10,7 @@ import reportError from 'lib/report-error';
 import { local } from 'lib/storage';
 import template from 'lodash/utilities/template';
 import mediator from 'lib/mediator';
-import relativeDates from 'common/modules/ui/relativedates';
+import { isWithinSeconds } from 'common/modules/ui/relativedates';
 import { inlineSvg } from 'common/views/svgs';
 import alertHtml from 'raw-loader!common/views/breaking-news.html';
 import flatten from 'lodash/arrays/flatten';
@@ -124,10 +124,7 @@ const filterAlertsByDismissed = (alerts: Array<Alert>): Array<Alert> =>
 const filterAlertsByAge = (alerts: Array<Alert>): Array<Alert> =>
     alerts.filter(alert => {
         const alertTime = alert.frontPublicationDate;
-        return (
-            alertTime &&
-            relativeDates.isWithinSeconds(new Date(alertTime), 1200)
-        ); // 20 mins
+        return alertTime && isWithinSeconds(new Date(alertTime), 1200); // 20 mins
     });
 
 // we only show one alert at a time, pick the youngest available

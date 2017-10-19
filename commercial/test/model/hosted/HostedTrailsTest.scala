@@ -28,6 +28,7 @@ class HostedTrailsTest extends FlatSpec with Matchers {
           val labels = Nil
           val defaultHtml = ""
           val title = None
+          val commissioningDesks = Nil
           val data: AtomData = AtomData.Cta(
             new CTAAtom {
               val url = ""
@@ -60,6 +61,8 @@ class HostedTrailsTest extends FlatSpec with Matchers {
     val sponsorLogoDimensions = None
     val highContrastSponsorLogo = None
     val highContrastSponsorLogoDimensions = None
+    val validFrom = None
+    val validTo = None
   }
 
   private def mkTag(

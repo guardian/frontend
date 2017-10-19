@@ -11,7 +11,7 @@ import views.IndexCleaner
 import views.html.all
 import views.html.fragments._
 import views.html.fragments.commercial.pageSkin
-import views.html.fragments.page.body.{bodyTag, breakingNewsDiv, skipToMainContent}
+import views.html.fragments.page.body.{bodyTag, breakingNewsDiv, mainContent, skipToMainContent}
 import views.html.fragments.page.head.stylesheets.{criticalStyleInline, criticalStyleLink, styles}
 import views.html.fragments.page.head.{fixIEReferenceErrors, headTag, titleTag}
 import views.html.fragments.page.{devTakeShot, htmlTag}
@@ -48,6 +48,7 @@ object IndexHtml {
         skipToMainContent(),
         pageSkin() when page.metadata.hasPageSkinOrAdTestPageSkin(Edition(request)),
         guardianHeaderHtml(),
+        mainContent(),
         breakingNewsDiv(),
         bodyContent,
         footer(),

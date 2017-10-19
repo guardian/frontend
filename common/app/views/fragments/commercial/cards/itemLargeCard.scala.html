@@ -17,7 +17,8 @@
 <div class="@CssClassBuilder.paidForContainer(optClassNames)">
     <a class="@CssClassBuilder.linkFromLargeCard(item, optAdvertClassNames, useCardBranding)"
         href="@item.targetUrl"
-        data-link-name="@omnitureId">
+        data-link-name="@omnitureId"
+        data-component="@omnitureId">
         <div class="advert__text">
             <h2 class="advert__title">
                 @for(icon <- item.icon){@inlineSvg(icon, "icon")}

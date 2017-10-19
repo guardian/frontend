@@ -1,6 +1,7 @@
-@(id: String, shareItems: Seq[model.ShareLink], contentType: String, isNewGallery: Boolean = false, amp: Boolean = false)
+@import model.DotcomContentType
+@(id: String, shareItems: Seq[model.ShareLink], contentType: DotcomContentType, isNewGallery: Boolean = false, amp: Boolean = false)
 
-<div class="block-share block-share--@contentType.toLowerCase @if(!isNewGallery) { hide-on-mobile }" data-link-name="block share">
+<div class="block-share block-share--@contentType.name.toLowerCase @if(!isNewGallery) { hide-on-mobile }" data-link-name="block share">
     @shareItems.map { item: model.ShareLink =>
         <a class="rounded-icon block-share__item block-share__item--@item.css js-blockshare-link" href="@item.href" target="_blank" data-link-name="social @item.css">
             @fragments.inlineSvg("share-" + item.css, "icon")
@@ -9,14 +10,14 @@
     }
 </div>
 
-@if(contentType != "Article" && !isNewGallery && !amp) {
-    <div class="block-share--@contentType.toLowerCase-mobile" data-open-overlay-on-click="share-modal-@id" data-link-name="open mobile block share">
-        <button class="block-share__item--mobile button button--small @if(contentType == model.GuardianContentTypes.Gallery){button--tone-media-variant} else {button--tertiary} mobile-only">
+@if(contentType != DotcomContentType.Article && !isNewGallery && !amp) {
+    <div class="block-share--@contentType.name.toLowerCase-mobile" data-open-overlay-on-click="share-modal-@id" data-link-name="open mobile block share">
+        <button class="block-share__item--mobile button button--small @if(contentType == model.DotcomContentType.Gallery){button--tone-media-variant} else {button--tertiary} mobile-only">
             Share
         </button>
     </div>
 
-    <div id="share-modal-@id" class="overlay overlay--@contentType.toLowerCase share-modal js-share-modal">
+    <div id="share-modal-@id" class="overlay overlay--@contentType.name.toLowerCase share-modal js-share-modal">
         <div class="share-modal__content" data-link-name="mobile block share">
             <div class="share-modal__title">Share this post</div>
             @shareItems.map { item: model.ShareLink =>

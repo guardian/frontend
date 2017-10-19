@@ -2,7 +2,7 @@ package rugby.controllers
 
 import common._
 import model.Cached.RevalidatableResult
-import model.{ApplicationContext, Cached, MetaData, SectionSummary, StandalonePage}
+import model.{ApplicationContext, Cached, MetaData, SectionId, StandalonePage}
 import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 import play.twirl.api.Html
 import rugby.jobs.RugbyStatsJob
@@ -11,7 +11,7 @@ import rugby.model.Match
 case class MatchPage(liveScore: Match) extends StandalonePage {
   override val metadata = MetaData.make(
     id = s"/sport/rugby/api/score/${liveScore.date.toString("yyyy/MMM/dd")}/${liveScore.homeTeam.id}/${liveScore.awayTeam.id}",
-    section = Some(SectionSummary.fromId("rugby")),
+    section = Some(SectionId.fromId("rugby")),
     webTitle = s"${liveScore.homeTeam.name} v ${liveScore.awayTeam.name}")
 }
 

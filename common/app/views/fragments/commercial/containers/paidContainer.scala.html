@@ -18,7 +18,12 @@
     ){
         @containerModel.content.targetUrl match {
             case None => { <span tabindex="0">@containerModel.content.title</span> }
-            case Some(href) => { <a class="adverts__logo u-text-hyphenate" href="/@href">@containerModel.content.title</a> }
+            case Some(href) => {
+                <a
+                class="adverts__logo u-text-hyphenate"
+                href="/@href"
+                data-component="@mkInteractionTrackingCode(frontId, containerIndex,containerModel)">@containerModel.content.title</a>
+            }
         }
     }{
 
