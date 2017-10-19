@@ -1,7 +1,7 @@
 package navigation
 
 import conf.Configuration
-import conf.switches.Switches.UkSupportFrontendActive
+import conf.switches.Switches.{UkSupportFrontendActive, UsSupportFrontendActive}
 import play.api.libs.json.Json
 import play.api.mvc.RequestHeader
 import common.Edition
@@ -17,6 +17,9 @@ object UrlHelpers {
   }
   case object Membership extends ReaderRevenueSite {
     val url: String = s"${Configuration.id.membershipUrl}/supporter"
+  }
+  case object SupportUsContribute extends ReaderRevenueSite {
+    val url: String = s"${Configuration.id.supportUrl}/us/contribute"
   }
   case object Contribute extends ReaderRevenueSite {
     val url: String = Configuration.id.contributeUrl
@@ -118,32 +121,26 @@ object UrlHelpers {
       s"https://jobs.theguardian.com?INTCMP=jobs_${editionId}_web_newheader"
     }
 
-  def getContributionOrSupporterUrl(editionId: String)(implicit request: RequestHeader): String =
-    if (editionId == "us") {
-      getReaderRevenueUrl(Contribute, NewHeader)
-    } else if (editionId == "uk" && UkSupportFrontendActive.isSwitchedOn) {
-      getReaderRevenueUrl(Support, NewHeader)
-    } else {
-      getReaderRevenueUrl(Membership, NewHeader)
+  def countryUrlLogic(editionId: String, position: Position, defaultDestination: ReaderRevenueSite)(implicit request: RequestHeader): String =
+    editionId match {
+      case "us" if UsSupportFrontendActive.isSwitchedOn => getReaderRevenueUrl(SupportUsContribute, position)
+      case "us" if !UsSupportFrontendActive.isSwitchedOn => getReaderRevenueUrl(Contribute, position)
+      case "uk" if UkSupportFrontendActive.isSwitchedOn => getReaderRevenueUrl(Support, position)
+      case _ => getReaderRevenueUrl(defaultDestination, position)
     }
+
+  def getContributionOrSupporterUrl(editionId: String)(implicit request: RequestHeader): String =
+    countryUrlLogic(editionId, NewHeader, Membership)
 
   // This methods can be reverted once we decide to deploy the new support site to the rest of the world.
   def getSupportOrMembershipUrl(position: Position)(implicit request: RequestHeader): String = {
     val editionId = Edition(request).id.toLowerCase()
-    if (editionId == "uk" && UkSupportFrontendActive.isSwitchedOn) {
-      getReaderRevenueUrl(Support, position)
-    } else {
-      getReaderRevenueUrl(Membership, position)
-    }
+    countryUrlLogic(editionId, position, Membership)
   }
 
   def getSupportOrContribute(position: Position)(implicit request: RequestHeader): String = {
     val editionId = Edition(request).id.toLowerCase()
-    if (editionId == "uk" && UkSupportFrontendActive.isSwitchedOn) {
-      getReaderRevenueUrl(Support, position)
-    } else {
-      getReaderRevenueUrl(Contribute, position)
-    }
+    countryUrlLogic(editionId, position, Contribute)
   }
 
   def getSupportOrSubscriptionUrl(position: Position)(implicit request: RequestHeader): String = {
