@@ -78,6 +78,7 @@ const rugby = (): void => {
         });
 
         // Rugby score returns the match nav too, to optimise calls.
+        // $FlowFixMe
         scoreBoard.fetched = (resp: Object): void => {
             fastdom
                 .read(() => document.querySelector('.content--liveblog'))
