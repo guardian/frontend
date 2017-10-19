@@ -20,7 +20,7 @@ class OnwardContent extends Component {
 
         this.context = context;
         this.endpoint = `/series/${getTag()}.json?shortUrl=${encodeURIComponent(
-            config.get('page.shortUrl')
+            config.page.shortUrl
         )}`;
 
         this.fetch(this.context, 'html');
