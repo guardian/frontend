@@ -82,7 +82,7 @@ const updateSelection = (): void => {
     if (body && selection && selection.rangeCount > 0 && selection.toString()) {
         const range = selection.getRangeAt(0);
         const rect = Rangefix.getBoundingClientRect(range);
-        const top = body.scrollTop + rect.top;
+        const top = $(body).scrollTop() + rect.top;
         let twitterMessage = range.toString();
 
         if (!isValidSelection(range)) {
