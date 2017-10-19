@@ -8,11 +8,10 @@ import fastdom from 'lib/fastdom-promise';
 import { local } from 'lib/storage';
 import { scrollToElement } from 'lib/scroller';
 import { addEventListener } from 'lib/events';
-import { showMyAccountIfNecessary, enhanceAvatar } from './user-account';
+import { showMyAccountIfNecessary } from './user-account';
 
 const enhanced = {};
 const SEARCH_STORAGE_KEY = 'gu.recent.search';
-let avatarIsEnhanced = false;
 
 const getMenu = (): ?HTMLElement =>
     document.getElementsByClassName('js-main-menu')[0];
@@ -178,11 +177,6 @@ const toggleMenu = (): void => {
             closeAllMenuSections();
         } else {
             focusFirstMenuSection();
-
-            if (!avatarIsEnhanced) {
-                enhanceAvatar();
-                avatarIsEnhanced = true;
-            }
         }
     };
 

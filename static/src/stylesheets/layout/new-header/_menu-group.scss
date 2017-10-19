@@ -47,60 +47,13 @@
 
 .menu-group--membership,
 .menu-group--editions {
-    @include mq($until: desktop) {
-        color: $guardian-brand-dark;
-        background-color: $news-main-2;
-    }
+    color: $guardian-brand-dark;
+    background-color: $news-main-2;
 }
 
 .menu-group--membership {
     padding-bottom: 0;
     position: relative;
-
-    @include mq($from: desktop, $until: leftCol) {
-        border-top: 1px solid $guardian-brand;
-        flex-wrap: nowrap;
-        width: 100%;
-    }
-
-    @include mq(desktop) {
-        flex-direction: row;
-        order: 3;
-        padding-bottom: 0;
-        padding-top: $gs-baseline;
-        width: 100%;
-    }
-
-    @include mq(leftCol) {
-        border-left: 2px solid $guardian-brand;
-        flex-direction: column;
-        margin-left: 0;
-        padding-left: $gs-gutter / 2 - 1;
-        // substracting the border-width, otherwise it breaks in Safari
-        width: gs-span(2) + $gs-gutter / 2 - 2;
-        position: absolute;
-        right: 0;
-        top: 0;
-
-        @supports(display: flex) {
-            position: relative;
-            right: auto;
-            top: auto;
-        }
-    }
-
-    @include mq(wide) {
-        width: gs-span(3) + $gs-gutter / 2 - 2;
-
-        .has-page-skin & {
-            border-top: 1px solid $guardian-brand;
-            border-left-width: 0;
-            flex-wrap: nowrap;
-            flex-direction: row;
-            width: 100%;
-            padding-left: 0;
-        }
-    }
 }
 
 .menu-group--editions {
@@ -113,16 +66,8 @@
 }
 
 .menu-group--membership-actions {
-    @include mq($until: desktop) {
-        background-color: darken($news-main-2, 10%);
-        color: $guardian-brand-dark;
-    }
-
-    @include mq(desktop) {
-        color: #ffffff;
-        flex-direction: row;
-        flex-wrap: wrap;
-    }
+    background-color: darken($news-main-2, 10%);
+    color: $guardian-brand-dark;
 }
 
 .menu-group--footer {
