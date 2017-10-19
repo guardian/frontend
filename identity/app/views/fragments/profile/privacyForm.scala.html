@@ -20,13 +20,19 @@
     @checkboxField(
         Checkbox(
             consentField("hasConsented"),
-            '_label -> ConsentData.allConsents(consentField("consentIdentifier").value.get)(consentField("consentIdentifierVersion").value.get.toInt)
+            '_label -> getConsentText(consentField)
         )
     )(nonInputFields, messages)
 }
 
 @v2consentCheckboxes = {
   @helper.repeat(privacyForm("consents"), min=1) { consentField => @v2ConsentCheckbox(consentField) }
+}
+
+@getConsentText(consentField: Field) = {
+    @ConsentData.getText(
+        consentField("consentIdentifier").value.getOrElse("unknownConsent"), // OrElse will never execute as there is always a default
+        consentField("consentIdentifierVersion").value.getOrElse("0").toInt)
 }
 
 <form class="form js-public-profile-form" novalidate action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" role="main" method="post">
