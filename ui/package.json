@@ -24,10 +24,7 @@
     },
     "dependencies": {
         "@guardian/guui": "^0.0.1",
-        "preact-render-to-string": "^3.6.0",
-        "sass-mq": "^3.3.2",
-        "styletron-client": "^2.5.7",
-        "styletron-server": "^2.5.7"
+        "sass-mq": "^3.3.2"
     },
     "devDependencies": {
         "babel-core": "^6.25.0",
