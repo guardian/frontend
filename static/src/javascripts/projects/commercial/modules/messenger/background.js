@@ -62,9 +62,22 @@ const setBackground = (specs: AdSpec, adSlot: Node): Promise<any> => {
     backgroundParent.appendChild(background);
 
     if (specs.scrollType === 'fixed') {
-        return fastdom.write(() => {
-            adSlot.insertBefore(backgroundParent, adSlot.firstChild);
-        });
+        return fastdom
+            .read(() => {
+                if (adSlot instanceof Element) {
+                    return adSlot.getBoundingClientRect();
+                }
+            })
+            .then(rect =>
+                fastdom.write(() => {
+                    if (rect) {
+                        background.style.left = `${rect.left}px`;
+                        background.style.right = `${rect.right}px`;
+                        background.style.width = `${rect.width}px`;
+                    }
+                    adSlot.insertBefore(backgroundParent, adSlot.firstChild);
+                })
+            );
     }
     let updateQueued = false;
 
