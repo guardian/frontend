@@ -207,9 +207,11 @@
     @include mq(tablet) {
         width: auto;
     }
-    .ad-slot__label {
-        background-color: transparent;
-    }
+}
+
+.ad-slot--liveblog-inline,
+.ad-slot--gallery-inline {
+    background-color: transparent;
 }
 
 .ad-slot--container-inline,
