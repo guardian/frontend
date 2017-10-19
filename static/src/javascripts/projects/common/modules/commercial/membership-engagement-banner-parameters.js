@@ -67,7 +67,7 @@ const supporterEngagementBannerCopy = (location: string): string =>
     );
 
 const contributionEngagementBannerCopy = (): string =>
-    engagementBannerCopy('Support us with a one-off contribution');
+    engagementBannerCopy(`Support us with a one-time contribution`);
 
 const supporterParams = (location: string): EngagementBannerParams =>
     Object.assign({}, baseParams, {
