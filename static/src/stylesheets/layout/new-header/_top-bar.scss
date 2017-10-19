@@ -46,6 +46,11 @@
         border-top: transparent;
         margin-left: 2px;
         vertical-align: middle;
+        transition: transform 250ms ease-out;
+    }
+
+    &:hover:after {
+        transform: translateY(0) rotate(45deg);
     }
 }
 

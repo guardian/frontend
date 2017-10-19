@@ -2,6 +2,18 @@
 
 @import common.{Edition, LinkTo}
 
+@editionListItem(edition: Edition, isCurrentEdition: Boolean = false) = {
+    <li class="dropdown-menu__item">
+        <a data-link-name="nav2 : topbar : edition-picker: @edition.id"
+            href="@LinkTo(s"/preference/edition/${edition.id.toLowerCase}")"
+            class="dropdown-menu__title @if(isCurrentEdition) {dropdown-menu__title--active}">
+
+            <span class="u-h">switch to the </span>
+            @edition.displayName
+        </a>
+    </li>
+}
+
 <div class="new-header__edition-container hide-until-desktop">
 
     <input type="checkbox"
@@ -14,32 +26,16 @@
         id="edition-dropdown-menu"
         aria-hidden="true">
 
-        @Edition.all.map { edition =>
-            @if((edition != Edition(request))) {
+        @editionListItem(Edition(request), true)
 
-                <li class="dropdown-menu__item">
-                    <a data-link-name="nav2 : topbar : edition-picker: @edition.id"
-                        href="@LinkTo(s"/preference/edition/${edition.id.toLowerCase}")"
-                        class="dropdown-menu__title">
-
-                        <span class="u-h">switch to the </span>
-                        @edition.displayName
-                    </a>
-                </li>
-            }
-        }
+        @Edition.others(request).map(e => editionListItem(e))
     </ul>
 
     <label for="edition-picker-toggle"
             class="top-bar__item top-bar__item--dropdown js-edition-picker-trigger"
             data-link-name="nav2 : topnav : edition-picker: toggle">
 
-        <span class="u-h">Current Edition: </span>
-
         @Edition(request).displayName
     </label>
 
 </div>
-
-
-
