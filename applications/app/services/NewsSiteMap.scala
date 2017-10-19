@@ -5,8 +5,7 @@ import conf.Configuration
 import contentapi.ContentApiClient
 import model.Content
 import org.joda.time.{DateTime, DateTimeZone}
-import implicits.Dates.DateTime2ToCommonDateFormats
-
+import implicits.Dates.{ DateTime2ToCommonDateFormats, jodaToJavaInstant}
 import scala.concurrent.{ExecutionContext, Future}
 import scala.xml.{Elem, NodeSeq}
 
@@ -52,6 +51,8 @@ class NewsSiteMap(contentApiClient: ContentApiClient) {
 
   def getLatestContent()(implicit executionContext: ExecutionContext): Future[NodeSeq] = {
 
+    val date = DateTime.now(DateTimeZone.UTC).minusDays(2)
+
     val query = contentApiClient.search(Edition.defaultEdition)
       .pageSize(200)
       .tag("-tone/sponsoredfeatures,-type/crossword,-extra/extra,-tone/advertisement-features")
@@ -60,7 +61,7 @@ class NewsSiteMap(contentApiClient: ContentApiClient) {
       .showTags("all")
       .showReferences("all")
       .showElements("all")
-      .fromDate(DateTime.now(DateTimeZone.UTC).minusDays(2))
+      .fromDate(jodaToJavaInstant(date))
 
     val responses = contentApiClient.getResponse(query).flatMap { initialResponse =>
       // Request any further pages if needed.

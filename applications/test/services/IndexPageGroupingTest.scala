@@ -1,5 +1,6 @@
 package services
 
+import java.time.ZoneOffset
 import java.util.UUID
 
 import model.{Content, ContentType}
@@ -9,14 +10,15 @@ import contentapi.FixtureTemplates.emptyApiContent
 import IndexPageGrouping.fromContent
 import common.JodaTime._
 import test.ConfiguredTestSuite
-import com.gu.contentapi.client.utils.CapiModelEnrichment.RichJodaDateTime
+import implicits.Dates.jodaToJavaInstant
+import com.gu.contentapi.client.utils.CapiModelEnrichment.RichOffsetDateTime
 
 @DoNotDiscover class IndexPageGroupingTest extends FlatSpec with Matchers with ConfiguredTestSuite {
   val timeZone = DateTimeZone.forOffsetHours(0)
 
   def makeFixture(dateTime: DateTime): ContentType = Content(
     emptyApiContent.copy(
-      id = UUID.randomUUID().toString, webPublicationDate = Some(dateTime.toCapiDateTime)
+      id = UUID.randomUUID().toString, webPublicationDate = Some(jodaToJavaInstant(dateTime).atOffset(ZoneOffset.UTC).toCapiDateTime)
     )
   )
 

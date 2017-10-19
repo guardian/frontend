@@ -1,11 +1,12 @@
 package layout
 
+import java.time.ZoneOffset
+
 import com.gu.contentapi.client.model.v1.{Content => ApiContent}
-import com.gu.contentapi.client.utils.CapiModelEnrichment.RichJodaDateTime
+import com.gu.contentapi.client.utils.CapiModelEnrichment.RichOffsetDateTime
+import implicits.Dates.jodaToJavaInstant
 import model.pressed.CollectionConfig
-import model.Trail
 import org.joda.time.DateTime
-import org.scala_tools.time.Imports
 import org.scalatest.prop.GeneratorDrivenPropertyChecks
 import org.scalatest.{FlatSpec, Matchers}
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
@@ -19,7 +20,7 @@ class SliceWithCardsTest extends FlatSpec with Matchers with GeneratorDrivenProp
     id = "id",
     sectionId = None,
     sectionName = None,
-    webPublicationDate = Some(DateTime.now().toCapiDateTime),
+    webPublicationDate = Some((jodaToJavaInstant(new DateTime()).atOffset(ZoneOffset.UTC)).toCapiDateTime),
     webTitle = "",
     webUrl = s"$n",
     apiUrl = s"$n",

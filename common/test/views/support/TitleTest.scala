@@ -1,8 +1,11 @@
 package views.support
 
+import java.time.ZoneOffset
+
 import com.gu.contentapi.client.model.v1.{TagType, Content => ApiContent, Tag => ApiTag}
-import com.gu.contentapi.client.utils.CapiModelEnrichment.RichJodaDateTime
+import com.gu.contentapi.client.utils.CapiModelEnrichment.RichOffsetDateTime
 import common.Pagination
+import implicits.Dates.jodaToJavaInstant
 import model._
 import org.joda.time.DateTime
 import org.scalatest.{FlatSpec, Matchers}
@@ -30,10 +33,13 @@ class TitleTest extends FlatSpec with Matchers with GuiceOneAppPerSuite {
   }
 
   it should "should create a title for Content" in {
+
+    val offsetDate = jodaToJavaInstant(new DateTime()).atOffset(ZoneOffset.UTC)
+
     val content = ApiContent(id = "lifeandstyle/foobar",
       sectionId = Some("lifeandstyle"),
       sectionName = Some("Life & Style"),
-      webPublicationDate = Some(new DateTime().toCapiDateTime),
+      webPublicationDate = Some(offsetDate.toCapiDateTime),
       webTitle = "The title",
       webUrl = "http://www.guardian.co.uk/canonical",
       apiUrl = "http://foo.bar",
