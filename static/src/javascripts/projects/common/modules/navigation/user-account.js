@@ -4,23 +4,27 @@ import fastdom from 'fastdom';
 import { getUserFromCookie, isUserLoggedIn } from 'common/modules/identity/api';
 
 const updateCommentLink = (): void => {
-    const commentItem = document.querySelector('.js-show-comment-activity');
-    const commentLink =
-        commentItem &&
-        commentItem.querySelector('.js-add-comment-activity-link');
+    const commentItems = [
+        ...document.querySelectorAll('.js-show-comment-activity'),
+    ];
+    const user = getUserFromCookie();
 
-    if (commentItem && commentLink) {
-        const user = getUserFromCookie();
+    if (user) {
+        commentItems.forEach(commentItem => {
+            const commentLink = commentItem.querySelector(
+                '.js-add-comment-activity-link'
+            );
 
-        if (user) {
-            fastdom.write(() => {
-                commentItem.classList.remove('u-h');
-                commentLink.setAttribute(
-                    'href',
-                    `https://profile.theguardian.com/user/id/${user.id}`
-                );
-            });
-        }
+            if (commentLink) {
+                fastdom.write(() => {
+                    commentItem.classList.remove('u-h');
+                    commentLink.setAttribute(
+                        'href',
+                        `https://profile.theguardian.com/user/id/${user.id}`
+                    );
+                });
+            }
+        });
     }
 };
 
@@ -29,20 +33,21 @@ const showMyAccountIfNecessary = (): void => {
         return;
     }
 
-    const signIn = document.querySelector('.js-navigation-sign-in');
-    const accountActions = document.querySelector(
-        '.js-navigation-account-actions'
-    );
+    const signIns = [...document.querySelectorAll('.js-navigation-sign-in')];
+    const accountActionsLists = [
+        ...document.querySelectorAll('.js-navigation-account-actions'),
+    ];
 
     fastdom.write(() => {
-        if (signIn) {
+        signIns.forEach(signIn => {
             signIn.classList.add('u-h');
-        }
+        });
 
-        if (accountActions) {
+        accountActionsLists.forEach(accountActions => {
             accountActions.classList.remove('u-h');
-            updateCommentLink();
-        }
+        });
+
+        updateCommentLink();
     });
 };
 
