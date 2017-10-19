@@ -66,6 +66,5 @@ object PrivacyFormData {
     List(
       Consent("user", "firstParty", false),
       Consent("user", "thirdParty", false),
-      Consent("user", "thirdPartyProfiling", false)
-    )
+      Consent("user", "thirdPartyProfiling", false))
 }

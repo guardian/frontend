@@ -6,8 +6,6 @@
 @import views.html.fragments.form.checkboxField
 @import views.html.fragments.registrationFooter
 @import _root_.form.IdFormHelpers.{Checkbox, nonInputFields}
-@import org.joda.time.DateTime
-@import org.joda.time.format.ISODateTimeFormat
 @import com.gu.identity.model.ConsentData
 
 @v2ConsentCheckbox(consentField: Field) = {
@@ -16,8 +14,8 @@
     @helper.inputText(consentField("actor"), 'type -> "hidden")(nonInputFields, messages)
     @helper.inputText(consentField("consentIdentifier"), 'type -> "hidden")(nonInputFields, messages)
     @helper.inputText(consentField("consentIdentifierVersion"), 'type -> "hidden")(nonInputFields, messages)
-    @helper.inputText(consentField("timestamp"), 'type -> "hidden", 'value -> getCurrentTime)(nonInputFields, messages)
-    @helper.inputText(consentField("privacyPolicy"), 'type -> "hidden", 'value -> ConsentData.privacyPolicyVersion)(nonInputFields, messages)
+    @helper.inputText(consentField("timestamp"), 'type -> "hidden")(nonInputFields, messages)
+    @helper.inputText(consentField("privacyPolicy"), 'type -> "hidden")(nonInputFields, messages)
 
     @checkboxField(
         Checkbox(
@@ -25,10 +23,6 @@
             '_label -> ConsentData.allConsents(consentField("consentIdentifier").value.get)(consentField("consentIdentifierVersion").value.get.toInt)
         )
     )(nonInputFields, messages)
-}
-
-@getCurrentTime = {
-    @ISODateTimeFormat.dateTimeNoMillis.withZoneUTC().print(new DateTime)
 }
 
 @v2consentCheckboxes = {
