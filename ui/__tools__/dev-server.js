@@ -39,8 +39,11 @@ app.get('/', (req, res, next) => {
 
                 return res.send(errorMsg);
             }
-
             return res.send(errors);
+        }
+
+        if (body.includes('play-error-page')) {
+            res.send(body);
         }
 
         try {
