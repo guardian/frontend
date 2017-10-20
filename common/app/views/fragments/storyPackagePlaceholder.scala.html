@@ -7,7 +7,8 @@
 
 @container(title: String, dataId: String, href: Option[String]) = {
     @containers.facia_cards.container(
-        FaciaContainer.forStoryPackage(dataId, related.faciaItems, title, href)
+        containerDefinition = FaciaContainer.forStoryPackage(dataId, related.faciaItems, title, href),
+        frontId = Some(request.path.stripPrefix("/"))
     )
 }
 
