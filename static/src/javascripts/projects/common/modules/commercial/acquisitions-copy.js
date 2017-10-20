@@ -4,6 +4,8 @@ import {
     supportFrontendLiveInUs,
 } from 'common/modules/commercial/support-utilities';
 
+import { getLocalCurrencySymbol } from 'lib/geolocation';
+
 // control
 const controlHeading = 'Since you’re here &hellip;';
 const controlP1 =
@@ -18,6 +20,22 @@ const controlP1Regulars =
 
 // US localised testimonials test
 const usLocalisedFlagP1 = `${controlP1} Here’s why other <strong>readers from the US</strong> are supporting us:`;
+
+// Alternative heading (Oct 2017 test)
+const alternativeHeading = 'We’ll get straight to the point &hellip;';
+const alternativeP1 =
+    '&hellip; we need you. More people are reading the Guardian than ever but advertising revenues across the media are falling fast. And <span class="contributions__highlight">unlike many news organisations, we haven’t put up a paywall &ndash; we want to keep our journalism as open as we can</span>. So you can see why we need to ask for your help. The Guardian’s independent, investigative journalism takes a lot of time, money and hard work to produce. But we do it because we believe our perspective matters &ndash; because it might well be your perspective, too.';
+
+// Ease of payment (Oct 2017 test)
+const easeP2 = (currencySymbol: string) =>
+    `If everyone who reads our reporting, who likes it, helps fund it, our future would be much more secure. <strong>For as little as ${currencySymbol}1, you can support the Guardian – and it only takes a minute. Thank you.</strong>`;
+
+// Multiple testimonials (Oct 2017 test)
+const multipleTestimonialsP1 =
+    '&hellip; we’d like to share some of the reasons why our readers support the Guardian:';
+
+const multipleTestimonialsP2 =
+    'The revenue we get from traditional advertising is falling. We increasingly need our readers to fund us. Help keep our independent, investigative journalism accessible to all.';
 
 const ctaLinkSentence = (
     membershipUrl: string,
@@ -38,6 +56,24 @@ export const control: AcquisitionsEpicTemplateCopy = {
     heading: controlHeading,
     p1: controlP1,
     p2: controlP2,
+};
+
+export const alternativeHeaderOct2017: AcquisitionsEpicTemplateCopy = {
+    heading: alternativeHeading,
+    p1: alternativeP1,
+    p2: controlP2,
+};
+
+export const easeOfPayment: AcquisitionsEpicTemplateCopy = (() => ({
+    heading: controlHeading,
+    p1: controlP1,
+    p2: easeP2(getLocalCurrencySymbol()),
+}))();
+
+export const multipleTestimonialsCopy: AcquisitionsEpicTemplateCopy = {
+    heading: controlHeading,
+    p1: multipleTestimonialsP1,
+    p2: multipleTestimonialsP2,
 };
 
 export const regulars: AcquisitionsEpicTemplateCopy = {

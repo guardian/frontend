@@ -28,11 +28,25 @@
     padding-left: 2 * $gs-gutter;
 }
 
+$testimonial-image-size: 26px;
+
 .epic__testimonial-name {
     display: block;
     margin-top: 5px;
     font-family: $f-sans-serif-text;
     font-style: normal;
+
+    .multiple-testimonials & {
+        @include fs-textSans(3);
+        line-height: $testimonial-image-size;
+    }
+}
+
+.epic__testimonial-name__image {
+    height: $testimonial-image-size;
+    width: $testimonial-image-size;
+    float: left;
+    margin-right: 5px;
 }
 
 
@@ -73,11 +87,4 @@
     .inline-quote svg {
         fill: #ffbb00;
     }
-}
-
-.epic__testimonial__icon {
-    height: 24px;
-    width: 24px;
-    float: left;
-    margin-right: 5px;
 }

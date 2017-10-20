@@ -13,8 +13,7 @@ export const acquisitionsEpicControlTemplate = ({
     testimonialBlock?: string,
     epicClass?: string,
     wrapperClass?: string,
-}) =>
-    `<div class="contributions__epic ${epicClass}" data-component="${componentName}">
+}) => `<div class="contributions__epic ${epicClass}" data-component="${componentName}">
         <div class="${wrapperClass}">
             <div>
                 <h2 class="contributions__title contributions__title--epic">
