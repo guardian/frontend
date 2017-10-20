@@ -2,6 +2,7 @@
 
 const path = require('path');
 const webpackMerge = require('webpack-merge');
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 
 const config = require('./webpack.config.js');
 
@@ -28,9 +29,15 @@ config.entry = {
 };
 
 module.exports = webpackMerge.smart(config, {
-    devtool: 'inline-source-map',
+    devtool: 'source-map',
     output: {
-        filename: `graun.[name].js`,
-        chunkFilename: `graun.[name].js`,
+        filename: `[chunkhash]/graun.[name].js`,
+        chunkFilename: `[chunkhash]/graun.[name].js`,
     },
+    plugins: [
+        new UglifyJSPlugin({
+            parallel: true,
+            sourceMap: true,
+        }),
+    ],
 });
