@@ -54,6 +54,7 @@ from scrolling */
     position: absolute;
     top: 0;
     transform: translateX(100%);
+    // Needs to sit above the menu, and the veggie burger
     z-index: $zindex-main-menu + 2;
 
     @include mq(tablet) {
@@ -64,6 +65,7 @@ from scrolling */
 .new-header__user-account-container {
     float: left;
     position: relative;
+    // Needs to sit above the menu, and the veggie burger
     z-index: $zindex-main-menu + 2;
 }
 

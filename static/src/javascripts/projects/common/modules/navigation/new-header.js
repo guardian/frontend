@@ -10,6 +10,11 @@ import { scrollToElement } from 'lib/scroller';
 import { addEventListener } from 'lib/events';
 import { showMyAccountIfNecessary } from './user-account';
 
+type MenuAndTriggerEls = {
+    menu: HTMLElement,
+    trigger: HTMLElement,
+};
+
 const enhanced = {};
 const SEARCH_STORAGE_KEY = 'gu.recent.search';
 
@@ -183,7 +188,7 @@ const toggleMenu = (): void => {
     fastdom.write(update);
 };
 
-const toggleDropdown = (menuAndTriggerEls: Object) => {
+const toggleDropdown = (menuAndTriggerEls: MenuAndTriggerEls) => {
     const openClass = 'dropdown-menu--open';
 
     fastdom.read(() => menuAndTriggerEls).then(els => {
@@ -206,34 +211,37 @@ const toggleDropdown = (menuAndTriggerEls: Object) => {
             menu.classList.toggle(openClass, !isOpen);
 
             if (!isOpen) {
-                mediator.on('module:clickstream:click', clickSpec => {
+                mediator.on('module:clickstream:click', function triggerToggle(
+                    clickSpec
+                ) {
                     const elem = clickSpec ? clickSpec.target : null;
 
                     // if anywhere else but the links are clicked, the dropdown will close
                     if (elem !== menu) {
                         toggleDropdown(menuAndTriggerEls);
+                        // remove event when the dropdown closes
+                        mediator.off('module:clickstream:click', triggerToggle);
                     }
                 });
-            } else {
-                // when the dropdown closes, remove event
-                mediator.removeEvent('module:clickstream:click');
             }
         });
     });
 };
 
-const initiateUserAccountDropdown = () => {
-    const userAccountDropdownEls = {
-        menu: document.querySelector('.js-user-account-dropdown-menu'),
-        trigger: document.querySelector('.js-user-account-trigger'),
-    };
-
+const initiateUserAccountDropdown = (): void => {
     fastdom
-        .read(() => document.querySelector('.js-user-account-trigger'))
-        .then(button => {
-            button.addEventListener('click', () =>
-                toggleDropdown(userAccountDropdownEls)
-            );
+        .read(() => ({
+            menu: document.querySelector('.js-user-account-dropdown-menu'),
+            trigger: document.querySelector('.js-user-account-trigger'),
+        }))
+        .then((userAccountDropdownEls: MenuAndTriggerEls) => {
+            const button = userAccountDropdownEls.trigger;
+
+            if (button && button instanceof HTMLButtonElement) {
+                button.addEventListener('click', () =>
+                    toggleDropdown(userAccountDropdownEls)
+                );
+            }
         });
 };
 
@@ -244,45 +252,61 @@ const enhanceCheckbox = (checkbox: HTMLElement): void => {
         const checkboxControls = checkbox.getAttribute('aria-controls');
         const checkboxClassAttr = checkbox.getAttribute('class');
         const dataLinkName = checkbox.getAttribute('data-link-name');
-        const editionPickerDropdownEls = {
-            menu: document.querySelector('.js-edition-dropdown-menu'),
-            trigger: document.querySelector('.js-edition-picker-trigger'),
-        };
-        const buttonClickHandlers = {
-            'main-menu-toggle': toggleMenu,
-            'edition-picker-toggle': toggleDropdown.bind(
-                null,
-                editionPickerDropdownEls
-            ),
-        };
 
-        const enhance = () => {
-            const eventHandler = buttonClickHandlers[checkboxId];
+        const menuEl: ?HTMLElement = document.querySelector(
+            '.js-edition-dropdown-menu'
+        );
+        const triggerEl: ?HTMLElement = document.querySelector(
+            '.js-edition-picker-trigger'
+        );
 
-            if (checkboxClassAttr) {
-                button.setAttribute('class', checkboxClassAttr);
-            }
+        if (
+            menuEl &&
+            menuEl instanceof HTMLElement &&
+            triggerEl &&
+            triggerEl instanceof HTMLElement
+        ) {
+            const editionPickerDropdownEls: MenuAndTriggerEls = {
+                menu: menuEl,
+                trigger: triggerEl,
+            };
 
-            button.addEventListener('click', () => eventHandler());
-            button.setAttribute('id', checkboxId);
-            button.setAttribute('aria-expanded', 'false');
+            const buttonClickHandlers = {
+                'main-menu-toggle': toggleMenu,
+                'edition-picker-toggle': toggleDropdown.bind(
+                    null,
+                    editionPickerDropdownEls
+                ),
+            };
 
-            if (dataLinkName) {
-                button.setAttribute('data-link-name', dataLinkName);
-            }
+            const enhance = () => {
+                const eventHandler = buttonClickHandlers[checkboxId];
 
-            if (checkboxControls) {
-                button.setAttribute('aria-controls', checkboxControls);
-            }
+                if (checkboxClassAttr) {
+                    button.setAttribute('class', checkboxClassAttr);
+                }
 
-            if (checkbox.parentNode) {
-                checkbox.parentNode.replaceChild(button, checkbox);
-            }
+                button.addEventListener('click', () => eventHandler());
+                button.setAttribute('id', checkboxId);
+                button.setAttribute('aria-expanded', 'false');
 
-            enhanced[button.id] = true;
-        };
+                if (dataLinkName) {
+                    button.setAttribute('data-link-name', dataLinkName);
+                }
 
-        fastdom.write(enhance);
+                if (checkboxControls) {
+                    button.setAttribute('aria-controls', checkboxControls);
+                }
+
+                if (checkbox.parentNode) {
+                    checkbox.parentNode.replaceChild(button, checkbox);
+                }
+
+                enhanced[button.id] = true;
+            };
+
+            fastdom.write(enhance);
+        }
     });
 };
 
