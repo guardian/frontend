@@ -65,7 +65,20 @@ const config = {
             react: 'preact',
         },
     },
-    resolveLoader: { modules: [path.resolve('node_modules', '@guardian/guui', 'lib', 'loaders'), 'node_modules'] },
+    resolveLoader: {
+        modules: [
+            path.resolve('node_modules', '@guardian', 'guui', 'lib', 'loaders'),
+            path.resolve(
+                '..',
+                'node_modules',
+                '@guardian',
+                'guui',
+                'lib',
+                'loaders'
+            ),
+            'node_modules',
+        ],
+    },
     watchOptions: { ignored: /node_modules/ },
 };
 
