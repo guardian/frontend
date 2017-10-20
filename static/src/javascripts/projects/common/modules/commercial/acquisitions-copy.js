@@ -64,11 +64,11 @@ export const alternativeHeaderOct2017: AcquisitionsEpicTemplateCopy = {
     p2: controlP2,
 };
 
-export const easeOfPayment: AcquisitionsEpicTemplateCopy = (() => ({
+export const easeOfPayment: AcquisitionsEpicTemplateCopy = {
     heading: controlHeading,
     p1: controlP1,
     p2: easeP2(getLocalCurrencySymbol()),
-}))();
+};
 
 export const multipleTestimonialsCopy: AcquisitionsEpicTemplateCopy = {
     heading: controlHeading,
