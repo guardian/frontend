@@ -22,16 +22,20 @@ case object PublicEditProfilePage extends EditProfilePage
 case object AccountEditProfilePage extends EditProfilePage
 case object PrivacyEditProfilePage extends EditProfilePage
 
-class EditProfileController(idUrlBuilder: IdentityUrlBuilder,
-  authenticatedActions: AuthenticatedActions,
-  identityApiClient: IdApiClient,
-  idRequestParser: IdRequestParser,
-  csrfCheck: CSRFCheck,
-  csrfAddToken: CSRFAddToken,
-  implicit val profileFormsMapping: ProfileFormsMapping,
-  val controllerComponents: ControllerComponents)
-  (implicit context: ApplicationContext)
-  extends BaseController with ImplicitControllerExecutionContext with SafeLogging with I18nSupport {
+class EditProfileController(
+    idUrlBuilder: IdentityUrlBuilder,
+    authenticatedActions: AuthenticatedActions,
+    identityApiClient: IdApiClient,
+    idRequestParser: IdRequestParser,
+    csrfCheck: CSRFCheck,
+    csrfAddToken: CSRFAddToken,
+    implicit val profileFormsMapping: ProfileFormsMapping,
+    val controllerComponents: ControllerComponents)
+    (implicit context: ApplicationContext)
+  extends BaseController
+  with ImplicitControllerExecutionContext
+  with SafeLogging
+  with I18nSupport {
 
   import authenticatedActions._
 
@@ -73,36 +77,36 @@ class EditProfileController(idUrlBuilder: IdentityUrlBuilder,
           }
 
         val activePage = identityPageToEditProfilePage(page)
-        val userFromApi = request.user
+        val userDO = request.user
         val boundProfileForms =
-          ProfileForms(userFromApi, activePage).bindFromRequestWithAddressErrorHack(request) // NOTE: only active form is bound to request data
+          ProfileForms(userDO, activePage).bindFromRequestWithAddressErrorHack(request) // NOTE: only active form is bound to request data
 
         def processSuccessfulSubmission(userFormData: UserFormData): Future[Result] = {
           userFormData match {
-            case data: AccountFormData if (data.deleteTelephone) => {
-              identityApiClient.deleteTelephone(userFromApi.auth) map {
-                case Left(errors) => profileFormsView(page, boundProfileForms.withErrors(errors), userFromApi)
+            case formData: AccountFormData if (formData.deleteTelephone) => {
+              identityApiClient.deleteTelephone(userDO.auth) map {
+                case Left(errors) => profileFormsView(page, boundProfileForms.withErrors(errors), userDO)
 
                 case Right(_) => {
                   val boundForms =
                     boundProfileForms.bindForms(
-                      userFromApi.user.copy(privateFields = userFromApi.user.privateFields.copy(telephoneNumber = None)))
+                      userDO.user.copy(privateFields = userDO.user.privateFields.copy(telephoneNumber = None)))
 
-                  profileFormsView(page, boundForms, userFromApi)
+                  profileFormsView(page, boundForms, userDO)
                 }
               }
             }
 
-            case data: UserFormData =>
-              identityApiClient.saveUser(userFromApi.id, data.toUserUpdate(userFromApi), userFromApi.auth) map {
-                case Left(errors) => profileFormsView(page, boundProfileForms.withErrors(errors), userFromApi)
+            case formData: UserFormData =>
+              identityApiClient.saveUser(userDO.id, formData.toUserUpdate(userDO), userDO.auth) map {
+                case Left(errors) => profileFormsView(page, boundProfileForms.withErrors(errors), userDO)
                 case Right(updatedUser) => profileFormsView(page, boundProfileForms.bindForms(updatedUser), updatedUser)
               }
           }
         }
 
         boundProfileForms.activeForm.fold(
-          formWithErrors => Future(profileFormsView(page, boundProfileForms, userFromApi)),
+          formWithErrors => Future(profileFormsView(page, boundProfileForms, userDO)),
           userFormData => processSuccessfulSubmission(userFormData)
         )
       }
@@ -146,9 +150,9 @@ case class ProfileForms(
   /** Fills all Edit Profile forms (Public, Account, Privacy) with the provided User value */
   def bindForms(user: User)(implicit messagesProvider: MessagesProvider): ProfileForms = {
     copy(
-      publicForm = profileFormsMapping.profileMapping.bindForm(user),
-      accountForm = profileFormsMapping.accountDetailsMapping.bindForm(user),
-      privacyForm = profileFormsMapping.privacyMapping.bindForm(user)
+      publicForm = profileFormsMapping.profileMapping.fillForm(user),
+      accountForm = profileFormsMapping.accountDetailsMapping.fillForm(user),
+      privacyForm = profileFormsMapping.privacyMapping.fillForm(user)
     )
   }
 
@@ -168,13 +172,13 @@ case class ProfileForms(
   }
 
   /** Adds errors to the form */
-  def withErrors(errors: List[Error]): ProfileForms = {
+  def withErrors(idapiErrors: List[Error]): ProfileForms = {
     update{
       form =>
-        errors.foldLeft(form){
-          (formWithErrors, error) =>
-            val context = activeMapping.mapContext(error.context getOrElse "")
-            formWithErrors.withError(context, error.description)
+        idapiErrors.foldLeft(form){
+          (formWithErrors, idapiError) =>
+            val formErrorFieldKey = activeMapping.formFieldKeyBy(idapiError.context getOrElse "")
+            formWithErrors.withError(formErrorFieldKey, idapiError.description)
         }
     }
   }
@@ -196,23 +200,23 @@ case class ProfileForms(
 
 object ProfileForms {
   /**
-    * Creates a instance of ProfileForms by filling all the Edit Profile forms (Public, Account, Privacy)
-    * with the provided User value
+    * Constructs ProfileForms instance by filling all the Edit Profile forms (Public, Account, Privacy)
+    * with the corresponding DTO that will be constructed out of the provided User DO
     *
-    * @param user User instance used as a form filler
+    * @param userDO User domain object from IDAPI used to create per-form specialised DTO fillers
     * @param activePage Which page is user currently viewing
     * @param profileFormsMapping Case class with mappings for all the forms
-    * @return instance of ProfileForms having all the forms bound to provided user value
+    * @return instance of ProfileForms having all the forms bound to their respective specialised DTO
     */
   def apply(
-      user: User,
+      userDO: User,
       activePage: EditProfilePage)
       (implicit profileFormsMapping: ProfileFormsMapping, messagesProvider: MessagesProvider): ProfileForms = {
 
     ProfileForms(
-      publicForm = profileFormsMapping.profileMapping.bindForm(user),
-      accountForm = profileFormsMapping.accountDetailsMapping.bindForm(user),
-      privacyForm = profileFormsMapping.privacyMapping.bindForm(user),
+      publicForm = profileFormsMapping.profileMapping.fillForm(userDO),
+      accountForm = profileFormsMapping.accountDetailsMapping.fillForm(userDO),
+      privacyForm = profileFormsMapping.privacyMapping.fillForm(userDO),
       activePage = activePage
     )
 
