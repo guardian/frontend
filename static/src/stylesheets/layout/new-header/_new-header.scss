@@ -113,7 +113,7 @@ from scrolling */
     @include mq(tablet) {
         height: calc(3 / 16 * 345px);
         margin-bottom: -5px;
-        margin-top: $gs-baseline + 3px;
+        margin-top: $gs-baseline + $gs-baseline / 4;
         width: 345px;
     }
 

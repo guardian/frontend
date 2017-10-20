@@ -8,7 +8,7 @@
 .dropdown-menu {
     display: none;
     position: absolute;
-    top: $gs-baseline * 2.5;
+    top: $gs-baseline * 2 + $gs-baseline / 2;
     right: -8px;
     width: $gs-column-width * 3 + $gs-gutter;
     background-color: #ffffff;
@@ -29,16 +29,16 @@
 
     &:before {
         top: -1px;
-        border-bottom: $gs-baseline / 1.5 solid rgba(0, 0, 0, .1);
-        border-left: $gs-baseline / 1.5 solid transparent;
-        border-right: $gs-baseline / 1.5 solid transparent;
+        border-bottom: $gs-baseline / 2 + $gs-baseline / 4 solid rgba(0, 0, 0, .1);
+        border-left: $gs-baseline / 2 + $gs-baseline / 4 solid transparent;
+        border-right: $gs-baseline / 2 + $gs-baseline / 4 solid transparent;
     }
 
     &:after {
         top: 0;
-        border-bottom: $gs-baseline / 1.5 - 1 solid #ffffff;
-        border-left: $gs-baseline / 1.5 - 1 solid transparent;
-        border-right: $gs-baseline / 1.5 - 1 solid transparent;
+        border-bottom: $gs-baseline / 2 + $gs-baseline / 4 - 1 solid #ffffff;
+        border-left: $gs-baseline / 2 + $gs-baseline / 4 - 1 solid transparent;
+        border-right: $gs-baseline / 2 + $gs-baseline / 4 - 1 solid transparent;
     }
 }
 

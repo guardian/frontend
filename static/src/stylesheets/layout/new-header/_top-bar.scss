@@ -3,9 +3,8 @@
     color: $news-support-1;
     float: left;
     font-weight: 300;
-    letter-spacing: .01em;
+    letter-spacing: .01rem;
     line-height: 1;
-    padding: ($gs-baseline / 1.5) ($gs-gutter / 2);
     position: relative;
     // Prevents a strange 1px shift on hover
     backface-visibility: hidden;
@@ -15,7 +14,7 @@
     margin: ($gs-baseline / 4) 0;
 
     &:nth-child(2) {
-        padding-left: $gs-gutter / 1.5;
+        padding-left: $gs-gutter / 2 + $gs-gutter / 4;
     }
 
     .is-paying-member &:nth-child(2),
@@ -101,7 +100,7 @@
 .top-bar__item--cta--text {
     box-sizing: border-box;
     display: block;
-    padding: ($gs-baseline / 1.5) ($gs-gutter) ($gs-baseline / 4);
+    padding: ($gs-baseline / 2 + $gs-baseline / 4) ($gs-gutter) ($gs-baseline / 4);
     position: relative;
 
     @include mq($until: mobileMedium) {
