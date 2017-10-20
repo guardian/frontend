@@ -101,14 +101,14 @@ import scala.concurrent.Future
             displayName = Some(username)
           )
         )
-        when(api.saveUser(MockitoMatchers.any[String], MockitoMatchers.any[UserUpdate], MockitoMatchers.any[Auth]))
+        when(api.saveUser(MockitoMatchers.any[String], MockitoMatchers.any[UserUpdateDTO], MockitoMatchers.any[Auth]))
           .thenReturn(Future.successful(Right(updatedUser)))
 
         val result = controller.submitPublicProfileForm().apply(fakeRequest)
 
         status(result) should be(200)
 
-        val userUpdateCapture = ArgumentCaptor.forClass(classOf[UserUpdate])
+        val userUpdateCapture = ArgumentCaptor.forClass(classOf[UserUpdateDTO])
         verify(api).saveUser(MockitoMatchers.eq(userId), userUpdateCapture.capture(), MockitoMatchers.eq(testAuth))
         val userUpdate = userUpdateCapture.getValue
 
@@ -138,14 +138,14 @@ import scala.concurrent.Future
             receive3rdPartyMarketing = Some(receive3rdPartyMarketing)
           )
         )
-        when(api.saveUser(MockitoMatchers.any[String], MockitoMatchers.any[UserUpdate], MockitoMatchers.any[Auth]))
+        when(api.saveUser(MockitoMatchers.any[String], MockitoMatchers.any[UserUpdateDTO], MockitoMatchers.any[Auth]))
           .thenReturn(Future.successful(Right(updatedUser)))
 
         val result = controller.submitPrivacyForm().apply(fakeRequest)
 
         status(result) should be(200)
 
-        val userUpdateCapture = ArgumentCaptor.forClass(classOf[UserUpdate])
+        val userUpdateCapture = ArgumentCaptor.forClass(classOf[UserUpdateDTO])
         verify(api).saveUser(MockitoMatchers.eq(userId), userUpdateCapture.capture(), MockitoMatchers.eq(testAuth))
         val userUpdate = userUpdateCapture.getValue
 
@@ -278,7 +278,7 @@ import scala.concurrent.Future
       "return 200 if called with a valid CSRF request" in new EditProfileFixture {
         val fakeRequest = createFakeRequestWithBillingAddress
 
-        when(api.saveUser(MockitoMatchers.any[String], MockitoMatchers.any[UserUpdate], MockitoMatchers.any[Auth]))
+        when(api.saveUser(MockitoMatchers.any[String], MockitoMatchers.any[UserUpdateDTO], MockitoMatchers.any[Auth]))
           .thenReturn(Future.successful(Right(user)))
 
         val result = controller.submitAccountForm().apply(fakeRequest)
@@ -305,12 +305,12 @@ import scala.concurrent.Future
           )
         )
 
-        when(api.saveUser(MockitoMatchers.any[String], MockitoMatchers.any[UserUpdate], MockitoMatchers.any[Auth]))
+        when(api.saveUser(MockitoMatchers.any[String], MockitoMatchers.any[UserUpdateDTO], MockitoMatchers.any[Auth]))
           .thenReturn(Future.successful(Right(updatedUser)))
 
         val result = controller.submitAccountForm().apply(fakeRequest)
         status(result) should be(200)
-        val userUpdateCapture = ArgumentCaptor.forClass(classOf[UserUpdate])
+        val userUpdateCapture = ArgumentCaptor.forClass(classOf[UserUpdateDTO])
         verify(api).saveUser(MockitoMatchers.eq(userId), userUpdateCapture.capture(), MockitoMatchers.eq(testAuth))
         val userUpdate = userUpdateCapture.getValue
 
@@ -358,13 +358,13 @@ import scala.concurrent.Future
           )
         )
 
-        when(api.saveUser(MockitoMatchers.any[String], MockitoMatchers.any[UserUpdate], MockitoMatchers.any[Auth]))
+        when(api.saveUser(MockitoMatchers.any[String], MockitoMatchers.any[UserUpdateDTO], MockitoMatchers.any[Auth]))
           .thenReturn(Future.successful(Right(updatedUser)))
 
         val result = controller.submitAccountForm().apply(fakeRequest)
         status(result) should be(200)
 
-        val userUpdateCapture = ArgumentCaptor.forClass(classOf[UserUpdate])
+        val userUpdateCapture = ArgumentCaptor.forClass(classOf[UserUpdateDTO])
         verify(api).saveUser(MockitoMatchers.eq(userId), userUpdateCapture.capture(), MockitoMatchers.eq(testAuth))
         val userUpdate = userUpdateCapture.getValue
 
@@ -407,13 +407,13 @@ import scala.concurrent.Future
           )
         )
 
-        when(api.saveUser(MockitoMatchers.any[String], MockitoMatchers.any[UserUpdate], MockitoMatchers.any[Auth]))
+        when(api.saveUser(MockitoMatchers.any[String], MockitoMatchers.any[UserUpdateDTO], MockitoMatchers.any[Auth]))
           .thenReturn(Future.successful(Right(updatedUser)))
 
         val result = controller.submitAccountForm().apply(fakeRequest)
         status(result) should be(200)
 
-        val userUpdateCapture = ArgumentCaptor.forClass(classOf[UserUpdate])
+        val userUpdateCapture = ArgumentCaptor.forClass(classOf[UserUpdateDTO])
         verify(api).saveUser(MockitoMatchers.eq(userId), userUpdateCapture.capture(), MockitoMatchers.eq(testAuth))
         val userUpdate = userUpdateCapture.getValue
 
