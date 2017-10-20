@@ -136,10 +136,20 @@ const isInEurope = (): boolean => {
     return europeCountryCodes.includes(countryCode) || countryCode === 'GB';
 };
 
+const getLocalCurrencySymbol = (): string =>
+    ({
+        GB: '£',
+        US: '$',
+        AU: '$',
+        CA: '$',
+        EU: '€',
+    }[getSync()] || '£');
+
 export {
     get,
     getSupporterPaymentRegion,
     getSync,
+    getLocalCurrencySymbol,
     isInEurope,
     init,
     setGeolocation,
