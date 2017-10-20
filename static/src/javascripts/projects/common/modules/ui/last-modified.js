@@ -4,16 +4,23 @@ import fastdom from 'lib/fastdom-promise';
 
 const lastModified = (): void => {
     fastdom
-        .read(() => document.getElementsByClassName('js-lm')[0])
-        .then(jsLm => {
-            if (jsLm) {
+        .read(() => ({
+            lastModifiedElm: document.querySelector('.js-lm'),
+            webPublicationDateElm: document.querySelector('.js-wpd'),
+        }))
+        .then(els => {
+            const { lastModifiedElm, webPublicationDateElm } = els;
+
+            if (lastModifiedElm && webPublicationDateElm) {
                 fastdom.write(() => {
-                    jsLm.classList.add('content__dateline-wpd--modified');
+                    webPublicationDateElm.classList.add(
+                        'content__dateline-wpd--modified'
+                    );
                 });
 
-                jsLm.addEventListener('click', () => {
+                webPublicationDateElm.addEventListener('click', () => {
                     fastdom.write(() => {
-                        jsLm.classList.toggle('u-h');
+                        lastModifiedElm.classList.toggle('u-h');
                     });
                 });
             }
