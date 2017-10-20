@@ -9,36 +9,36 @@
     display: none;
     position: absolute;
     top: $gs-baseline * 2.5;
-    right: -$gs-gutter / 4;
+    right: -8px;
     width: $gs-column-width * 3 + $gs-gutter;
     background-color: #ffffff;
     border-radius: $gs-baseline / 4;
     padding: $gs-baseline / 2 0;
     margin: 0;
-    box-shadow: 0 0 5px 0 rgba(0, 0, 0, .25);
-    z-index: 1;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, .1);
+    z-index: $zindex-main-menu;
 
     // triangle
     &:before,
     &:after {
         content: '';
         position: absolute;
-        top: 0;
-        right: 12px;
-        transform: translateY(-100%);
+        right: $gs-gutter;
+        transform: translateX(50%) translateY(-100%);
     }
 
     &:before {
-        border-bottom: $gs-baseline / 2 + 1 solid $neutral-5;
-        border-left: $gs-baseline / 2 + 1 solid transparent;
-        border-right: $gs-baseline / 2 + 1 solid transparent;
-        margin-right: -1px;
+        top: -1px;
+        border-bottom: $gs-baseline / 1.5 solid rgba(0, 0, 0, .1);
+        border-left: $gs-baseline / 1.5 solid transparent;
+        border-right: $gs-baseline / 1.5 solid transparent;
     }
 
     &:after {
-        border-bottom: $gs-baseline / 2 solid #ffffff;
-        border-left: $gs-baseline / 2 solid transparent;
-        border-right: $gs-baseline / 2 solid transparent;
+        top: 0;
+        border-bottom: $gs-baseline / 1.5 - 1 solid #ffffff;
+        border-left: $gs-baseline / 1.5 - 1 solid transparent;
+        border-right: $gs-baseline / 1.5 - 1 solid transparent;
     }
 }
 
@@ -47,6 +47,7 @@
 
     & ~ .top-bar__item--dropdown {
         color: #ffffff;
+        background-color: $guardian-brand-dark;
 
         &:after {
             transform: translateY(0) rotate(45deg);
