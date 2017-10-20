@@ -5,6 +5,9 @@
 .*/node_modules/emotion/.*
 .*/node_modules/emotion-utils/.*
 .*/node_modules/babel-plugin-emotion/.*
+.*/node_modules/@guardian/guui/.*
+ui/src/index.browser.jsx
+ui/src/index.server.jsx
 
 [include]
 
