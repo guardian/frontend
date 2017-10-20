@@ -6,7 +6,7 @@
 @import views.html.fragments.form.checkboxField
 @import views.html.fragments.registrationFooter
 @import _root_.form.IdFormHelpers.{Checkbox, nonInputFields}
-@import com.gu.identity.model.ConsentData
+@import com.gu.identity.model.ConsentText
 
 @v2ConsentCheckbox(consentField: Field) = {
 
@@ -30,7 +30,7 @@
 }
 
 @getConsentText(consentField: Field) = {
-    @ConsentData.getText(
+    @ConsentText.getText(
         consentField("consentIdentifier").value.getOrElse("unknownConsent"), // OrElse will never execute as there is always a default
         consentField("consentIdentifierVersion").value.getOrElse("0").toInt)
 }
