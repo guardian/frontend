@@ -57,7 +57,7 @@ class IdApiClient(
     response map extractUser
   }
 
-  def saveUser(userId: String, user: UserUpdate, auth: Auth): Future[Response[User]] = {
+  def saveUser(userId: String, user: UserUpdateDTO, auth: Auth): Future[Response[User]] = {
     println("Saving user!!!")
     println(write(user))
 //    mockUserResponseV2Consent
