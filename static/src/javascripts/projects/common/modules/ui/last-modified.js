@@ -5,13 +5,13 @@ import fastdom from 'lib/fastdom-promise';
 const lastModified = (): void => {
     fastdom
         .read(() => ({
-            lastModifiedElm: document.getElementsByClassName('js-lm')[0],
-            webPublicationDateElm: document.getElementsByClassName('js-wpd')[0],
+            lastModifiedElm: document.querySelector('.js-lm'),
+            webPublicationDateElm: document.querySelector('.js-wpd'),
         }))
         .then(els => {
             const { lastModifiedElm, webPublicationDateElm } = els;
 
-            if (lastModifiedElm) {
+            if (lastModifiedElm && webPublicationDateElm) {
                 fastdom.write(() => {
                     webPublicationDateElm.classList.add(
                         'content__dateline-wpd--modified'
