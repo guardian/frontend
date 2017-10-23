@@ -1,6 +1,6 @@
 // @flow
 
-import fastdom from 'fastdom';
+import fastdom from 'lib/fastdom-promise';
 import { getUserFromCookie, isUserLoggedIn } from 'common/modules/identity/api';
 
 const updateCommentLink = (): void => {
