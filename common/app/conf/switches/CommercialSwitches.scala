@@ -91,7 +91,7 @@ trait CommercialSwitches {
     "Enable Adomik traffic splitting.",
     owners = Seq(Owner.withName("commercial team")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 10, 25),
+    sellByDate = never,
     exposeClientSide = true
   )
 
