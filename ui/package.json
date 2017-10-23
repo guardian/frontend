@@ -23,7 +23,7 @@
         "watch:nashorn:server": "webpack --config ./__config__/webpack.config.nashorn.dev.js --env.server --watch"
     },
     "dependencies": {
-        "@guardian/guui": "1.1.2",
+        "@guardian/guui": "1.2.0",
         "sass-mq": "^3.3.2"
     },
     "devDependencies": {
