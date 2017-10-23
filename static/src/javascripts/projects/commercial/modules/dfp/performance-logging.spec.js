@@ -39,8 +39,8 @@ describe('Performance Logging', () => {
         it('should not swallow promise rejection', done => {
             const fn = wrap('func', () => Promise.reject(new Error('hello')));
             fn()
-                .catch(value => {
-                    expect(value).toEqual('hello');
+                .catch(e => {
+                    expect(e.message).toEqual('hello');
                 })
                 .then(done)
                 .catch(done.fail);
@@ -87,8 +87,8 @@ describe('Performance Logging', () => {
         it('should not swallow promise rejection', done => {
             const fn = defer('func', () => Promise.reject(new Error('hello')));
             fn()
-                .catch(value => {
-                    expect(value).toEqual('hello');
+                .catch(e => {
+                    expect(e.message).toEqual('hello');
                 })
                 .then(done)
                 .catch(done.fail);

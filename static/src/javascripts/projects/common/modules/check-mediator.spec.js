@@ -44,7 +44,7 @@ describe('Check Mediator', () => {
 
     test('rejects a check if not registered', done => {
         waitForCheck('check-666').catch(error => {
-            expect(error).toBe('No deferred check with id check-666');
+            expect(error.message).toBe('No deferred check with id check-666');
             done();
         });
     });
