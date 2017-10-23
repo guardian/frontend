@@ -3,6 +3,15 @@
     & ~ .dropdown-menu {
         display: block;
     }
+
+    & ~ .top-bar__item--dropdown {
+        color: #ffffff;
+        background-color: $guardian-brand-dark;
+
+        &:after {
+            transform: translateY(0) rotate(45deg);
+        }
+    }
 }
 
 .dropdown-menu {
