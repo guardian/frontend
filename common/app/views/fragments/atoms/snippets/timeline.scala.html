@@ -10,7 +10,7 @@
     isAmp
 ){
     @for(description <- timeline.data.description) {
-      <div class="explainer-snippet__description">description</div>
+      <div class="explainer-snippet__description">@Html(description)</div>
     }
     @for(item <- timeline.data.events) {
       <div class="explainer-snippet__item">
