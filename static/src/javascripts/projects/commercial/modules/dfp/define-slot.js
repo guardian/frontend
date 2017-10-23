@@ -96,6 +96,61 @@ const defineSlot = (adSlotNode: Element, sizes: Object): Object => {
         slotReady = setHighMerchSlotTargeting(slot, slotTarget);
     }
 
+    /*
+        The iasOptimisation implementation below is still a WiP, hence the
+        console.log statements and the dev-only execution.
+     */
+
+    if (config.switches.iasOptimisation && config.get('page.isDev', false)) {
+        console.log(`Defining ${id}`);
+        /* eslint-disable no-underscore-dangle, no-multi-assign */
+        const iasPET = (window.__iasPET = window.__iasPET || {});
+        /* eslint-enable no-underscore-dangle, no-multi-assign */
+
+        iasPET.queue = iasPET.queue || [];
+        iasPET.pubId = '10249';
+
+        let loadedResolve;
+
+        const iasDataPromise = new Promise(resolve => {
+            loadedResolve = resolve;
+        });
+
+        const iasDataCallback = () => {
+            console.log(`Applying IAS targeting: ${id}`);
+            iasPET.setTargetingForGPT();
+            loadedResolve();
+        };
+
+        // IAS Optimization Targeting
+        const iasPETSlots = [
+            {
+                adSlotId: id,
+                size: sizes,
+                adUnitPath: adUnit(), // why do we have this method and not just slot.getAdUnitPath()?
+            },
+        ];
+
+        iasPET.queue.push({
+            adSlots: iasPETSlots,
+            dataHandler: iasDataCallback,
+        });
+
+        const iasTimeoutDuration = 10000;
+
+        const iasTimeout = () =>
+            new Promise(resolve => {
+                setTimeout(() => {
+                    console.log(`Timed out of IAS request: ${id}`);
+                    resolve();
+                }, iasTimeoutDuration);
+            });
+
+        slotReady = slotReady.then(() =>
+            Promise.race([iasTimeout(), iasDataPromise])
+        );
+    }
+
     if (slotTarget === 'im' && config.page.isbn) {
         slot.setTargeting('isbn', config.page.isbn);
     }
