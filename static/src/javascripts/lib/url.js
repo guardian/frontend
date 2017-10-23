@@ -38,12 +38,12 @@ const updateQueryString = (params: Object, historyFn: Function) => {
 // params Object requires a "querystring" property
 // and optionally takes a "state" and "title" property too
 const pushQueryString = (params: Object) =>
-    updateQueryString(params, history.pushState.bind(history));
+    updateQueryString(params, window.history.pushState.bind(window.history));
 
 // equivalent to pushQueryString but uses history.replaceState to
 // overwrite history rather than history.pushState
 const replaceQueryString = (params: Object) =>
-    updateQueryString(params, history.replaceState.bind(history));
+    updateQueryString(params, window.history.replaceState.bind(window.history));
 
 // take an Object, construct into a query, e.g. {page: 1, pageSize: 10} => page=1&pageSize=10
 const constructQuery = (query: Object): string =>

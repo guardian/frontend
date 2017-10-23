@@ -60,7 +60,7 @@ module.exports = (
     { remify = true, browsers = BROWSERS_LIST } = {}
 ) => {
     if (typeof sassGlob !== 'string') {
-        return Promise.reject('No glob provided.');
+        return Promise.reject(new Error('No glob provided.'));
     }
 
     return Promise.all(

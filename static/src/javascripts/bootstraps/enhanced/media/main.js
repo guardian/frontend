@@ -54,7 +54,7 @@ const createVideoPlayer = (el: HTMLElement, options: Object): any => {
     const duration = parseInt(el.getAttribute('data-duration'), 10);
 
     player.ready(() => {
-        if (!isNaN(duration)) {
+        if (!Number.isNaN(duration)) {
             player.duration(duration);
             player.trigger('timeupdate'); // triggers a refresh of relevant control bar components
         }

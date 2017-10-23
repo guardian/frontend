@@ -203,7 +203,7 @@ export class SearchTool {
         const $active = $('.active', this.$list);
         let id = parseInt($active.attr('id'), 10);
 
-        if (isNaN(id)) {
+        if (Number.isNaN(id)) {
             id = -1;
         }
 
