@@ -435,7 +435,7 @@ class Comments extends Component {
                 bonzo(parentCommentEl).append(responses);
             }
 
-            this.destroy();
+            commentBox.destroy();
             this.addComment(comment, responses);
         });
     }
