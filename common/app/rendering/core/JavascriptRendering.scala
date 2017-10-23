@@ -12,44 +12,6 @@ import rendering.core.JavascriptEngine.EvalResult
 import scala.util.{Failure, Try}
 
 trait JavascriptRendering extends Logging {
-
-  case class TypeFace(typeFace: String, fileTypes: Seq[FileType])
-
-  object TypeFace {
-    implicit val typeFaceWriter: Writes[TypeFace] = Json.writes[TypeFace]
-  }
-
-  case class FileType(fileType: String, endpoint: String, hintTypes: Seq[HintType])
-
-  object FileType {
-    implicit val fileTypeWriter: Writes[FileType] = Json.writes[FileType]
-  }
-
-  case class HintType(hintType: String, endpoint: String)
-
-  object HintType {
-    implicit val hintTypeWriter: Writes[HintType] = Json.writes[HintType]
-  }
-
-  private def getFontDefinitions(): JsValue = {
-    val typeFaces = List("GuardianEgyptianWeb", "GuardianTextEgyptianWeb", "GuardianSansWeb", "GuardianTextSansWeb")
-    val fileTypes = List("woff2", "woff", "ttf")
-    val hintTypes = List("cleartype", "auto")
-
-    val fontDefinitions = typeFaces.map(typeFace => {
-      TypeFace(typeFace, fileTypes.map { fileType =>
-        val fileTypeEndpoint = conf.Static(s"fonts/${typeFace}.${fileType}.json")
-        
-        FileType(fileType, fileTypeEndpoint, hintTypes.map { hintType => {
-          val hintTypeEndpoint = conf.Static(s"fonts/${typeFace}${hintType.capitalize}Hinted.${fileType}.json")
-          HintType(hintType, hintTypeEndpoint)
-        }})
-      })
-    })
-
-    Json.toJson(fontDefinitions)
-  }
-
   def javascriptFile: String
 
   private implicit val scriptContext = createContext()

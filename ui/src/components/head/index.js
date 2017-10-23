@@ -41,7 +41,7 @@ export default (props: any, appCSS: string) =>
         <meta name="HandheldFriendly" content="True"/>
         <meta name="viewport" content="width=device-width,initial-scale=1">
         <style>${resetCSS}</style>
-        ${getFontDefinitions(props.fontDefinitions)}
+        ${getFontDefinitions(props.config.fontDefinitions)}
         ${appCSS}
         <script>
             window.guardian = ${JSON.stringify(props)};
