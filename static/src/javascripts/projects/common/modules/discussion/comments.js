@@ -307,6 +307,11 @@ class Comments extends Component {
     addComment(comment: CommentType, parent: HTMLElement): void {
         const commentElem = bonzo.create(this.postedCommentEl)[0];
         const $commentElem = bonzo(commentElem);
+        const replyButton =
+            commentElem &&
+            commentElem.getElementsByClassName(
+                this.getClass('commentReply', true)
+            )[0];
         const map: Object = {
             username: 'd-comment__author',
             timestamp: 'js-timestamp',
@@ -348,6 +353,10 @@ class Comments extends Component {
             $commentElem.addClass(this.getClass('commentStaff', true));
         }
 
+        if (replyButton) {
+            replyButton.setAttribute('data-comment-id', comment.id);
+        }
+
         if (!parent) {
             $(this.getClass('newComments'), this.elem).prepend(commentElem);
         } else {
@@ -363,7 +372,12 @@ class Comments extends Component {
         e.preventDefault();
 
         const replyLink: HTMLElement = (e.currentTarget: any);
-        const replyToId = replyLink.getAttribute('data-comment-id') || '';
+        const replyToId = replyLink.getAttribute('data-comment-id');
+
+        if (!replyToId) {
+            return;
+        }
+
         const replyTo = document.getElementById(`reply-to-${replyToId}`);
 
         // There is already a comment box for this on the page
