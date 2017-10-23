@@ -2,17 +2,19 @@
     @include fs-textSans(2);
     color: $news-support-1;
     float: left;
-    font-weight: 300;
+    font-weight: normal;
     letter-spacing: .01rem;
     line-height: 1;
-    padding: ($gs-baseline / 1.5) ($gs-gutter / 2);
     position: relative;
     // Prevents a strange 1px shift on hover
     backface-visibility: hidden;
     transition: color 80ms ease-out;
+    border-radius: 99999px;
+    padding: ($gs-baseline / 2) ($gs-gutter / 2);
+    margin: ($gs-baseline / 4) 0;
 
     &:nth-child(2) {
-        padding-left: $gs-gutter / 1.5;
+        padding-left: $gs-gutter / 2 + $gs-gutter / 4;
     }
 
     .is-paying-member &:nth-child(2),
@@ -46,6 +48,11 @@
         border-top: transparent;
         margin-left: 2px;
         vertical-align: middle;
+        transition: transform 250ms ease-out;
+    }
+
+    &:hover:after {
+        transform: translateY(0) rotate(45deg);
     }
 }
 
@@ -54,6 +61,7 @@
     font-family: 'Guardian Egyptian Web', 'Guardian Text Egyptian Web', Georgia, serif;
     font-weight: 800;
     padding: 0;
+    margin: 0;
 
     @include mq($until: mobileLandscape) {
         margin-left: -$gs-gutter / 2;
@@ -92,7 +100,7 @@
 .top-bar__item--cta--text {
     box-sizing: border-box;
     display: block;
-    padding: ($gs-baseline / 1.5) ($gs-gutter) ($gs-baseline / 4);
+    padding: ($gs-baseline / 2 + $gs-baseline / 4) ($gs-gutter) ($gs-baseline / 4);
     position: relative;
 
     @include mq($until: mobileMedium) {
