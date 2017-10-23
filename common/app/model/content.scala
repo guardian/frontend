@@ -76,9 +76,8 @@ final case class Content(
   lazy val shortUrlPath = shortUrlId
   lazy val discussionId = Some(shortUrlId)
   lazy val isGallery = metadata.contentType.contains(DotcomContentType.Gallery)
-  lazy val isExplore = ExploreTemplateSwitch.isSwitchedOn && tags.isExploreSeries
   lazy val isPhotoEssay = fields.displayHint.contains("photoEssay")
-  lazy val isImmersive = fields.displayHint.contains("immersive") || isGallery || tags.isTheMinuteArticle || isExplore || isPhotoEssay
+  lazy val isImmersive = fields.displayHint.contains("immersive") || isGallery || tags.isTheMinuteArticle || isPhotoEssay
   lazy val isPaidContent: Boolean = tags.tags.exists{ tag => tag.id == "tone/advertisement-features" }
   lazy val campaigns: List[Campaign] = _root_.commercial.targeting.CampaignAgent.getCampaignsForTags(tags.tags.map(_.id))
 
@@ -222,7 +221,6 @@ final case class Content(
     ("showRelatedContent", JsBoolean(if (tags.isTheMinuteArticle) { false } else showInRelated && !legallySensitive)),
     ("productionOffice", JsString(productionOffice.getOrElse(""))),
     ("isImmersive", JsBoolean(isImmersive)),
-    ("isExplore", JsBoolean(isExplore)),
     ("isPaidContent", JsBoolean(isPaidContent)),
     ("campaigns", JsArray(campaigns.map(Campaign.toJson)))
 
@@ -494,7 +492,6 @@ final case class Article (
   val isTheMinute: Boolean = content.tags.isTheMinuteArticle
   val isImmersive: Boolean = content.isImmersive
   val isPhotoEssay: Boolean = content.isPhotoEssay
-  val isExplore: Boolean = content.isExplore
   lazy val hasVideoAtTop: Boolean = soupedBody.body().children().headOption
     .exists(e => e.hasClass("gu-video") && e.tagName() == "video")
 
