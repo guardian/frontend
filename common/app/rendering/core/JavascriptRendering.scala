@@ -6,7 +6,7 @@ import java.nio.file.{Files, Paths}
 import javax.script.{CompiledScript, SimpleScriptContext}
 
 import common.Logging
-import play.api.libs.json._
+import play.api.libs.json.{JsValue, Json, JsObject}
 import rendering.core.JavascriptEngine.EvalResult
 
 import scala.util.{Failure, Try}
