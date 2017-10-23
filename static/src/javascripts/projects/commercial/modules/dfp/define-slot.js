@@ -96,7 +96,12 @@ const defineSlot = (adSlotNode: Element, sizes: Object): Object => {
         slotReady = setHighMerchSlotTargeting(slot, slotTarget);
     }
 
-    if (config.switches.iasOptimisation) {
+    /*
+        The iasOptimisation implementation below is still a WiP, hence the
+        console.log statements and the dev-only execution.
+     */
+
+    if (config.switches.iasOptimisation && config.get('page.isDev', false)) {
         console.log(`Defining ${id}`);
         /* eslint-disable no-underscore-dangle, no-multi-assign */
         const iasPET = (window.__iasPET = window.__iasPET || {});
