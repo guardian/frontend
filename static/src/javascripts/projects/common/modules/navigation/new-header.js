@@ -188,7 +188,7 @@ const toggleMenu = (): void => {
     fastdom.write(update);
 };
 
-const toggleDropdown = (menuAndTriggerEls: MenuAndTriggerEls) => {
+const toggleDropdown = (menuAndTriggerEls: MenuAndTriggerEls): void => {
     const openClass = 'dropdown-menu--open';
 
     fastdom.read(() => menuAndTriggerEls).then(els => {
