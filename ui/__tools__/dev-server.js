@@ -10,8 +10,6 @@ const webpackConfig = require('../__config__/webpack.config.dev')({
 const compiler = webpack(webpackConfig);
 const app = express();
 
-const fontDefinitions = require('../__helpers__/fontDefinitions');
-
 app.use(
     webpackDevMiddleware(compiler, {
         publicPath: webpackConfig.output.publicPath,
