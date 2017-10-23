@@ -7245,9 +7245,9 @@ p-timeout@^1.1.1:
   dependencies:
     p-finally "^1.0.0"
 
-pa11y@^4.12.1:
-  version "4.12.1"
-  resolved "https://registry.yarnpkg.com/pa11y/-/pa11y-4.12.1.tgz#5ec904cc746958b78c8c181d6705a5bd0c72addd"
+pa11y@^4.13.1:
+  version "4.13.1"
+  resolved "https://registry.yarnpkg.com/pa11y/-/pa11y-4.13.1.tgz#f33999897b6212c2ae0244c4d25b891e043b1ead"
   dependencies:
     async "^2.2.0"
     bfj "^2.1.2"
@@ -7257,6 +7257,7 @@ pa11y@^4.12.1:
     node.extend "^1.1.6"
     once "^1.4.0"
     phantomjs-prebuilt "^2.1.12"
+    semver "^5.4.1"
     truffler "^3.1.0"
 
 package-json@^4.0.0:
