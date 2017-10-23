@@ -8,11 +8,15 @@ import fastdom from 'lib/fastdom-promise';
 import { local } from 'lib/storage';
 import { scrollToElement } from 'lib/scroller';
 import { addEventListener } from 'lib/events';
-import { showMyAccountIfNecessary, enhanceAvatar } from './user-account';
+import { showMyAccountIfNecessary } from './user-account';
+
+type MenuAndTriggerEls = {
+    menu: HTMLElement,
+    trigger: HTMLElement,
+};
 
 const enhanced = {};
 const SEARCH_STORAGE_KEY = 'gu.recent.search';
-let avatarIsEnhanced = false;
 
 const getMenu = (): ?HTMLElement =>
     document.getElementsByClassName('js-main-menu')[0];
@@ -178,58 +182,66 @@ const toggleMenu = (): void => {
             closeAllMenuSections();
         } else {
             focusFirstMenuSection();
-
-            if (!avatarIsEnhanced) {
-                enhanceAvatar();
-                avatarIsEnhanced = true;
-            }
         }
     };
 
     fastdom.write(update);
 };
 
-const toggleEditionPickerDropdown = () => {
+const toggleDropdown = (menuAndTriggerEls: MenuAndTriggerEls): void => {
     const openClass = 'dropdown-menu--open';
 
-    fastdom
-        .read(() => ({
-            menu: document.querySelector('.js-edition-dropdown-menu'),
-            trigger: document.querySelector('.js-edition-picker-trigger'),
-        }))
-        .then(els => {
-            const { menu, trigger } = els;
+    fastdom.read(() => menuAndTriggerEls).then(els => {
+        const { menu, trigger } = els;
 
-            if (!menu) {
-                return;
+        if (!menu) {
+            return;
+        }
+
+        const isOpen = menu.classList.contains(openClass);
+        const expandedAttr = isOpen ? 'false' : 'true';
+        const hiddenAttr = isOpen ? 'true' : 'false';
+
+        return fastdom.write(() => {
+            if (trigger) {
+                trigger.setAttribute('aria-expanded', expandedAttr);
             }
 
-            const isOpen = menu.classList.contains(openClass);
-            const expandedAttr = isOpen ? 'false' : 'true';
-            const hiddenAttr = isOpen ? 'true' : 'false';
+            menu.setAttribute('aria-hidden', hiddenAttr);
+            menu.classList.toggle(openClass, !isOpen);
 
-            return fastdom.write(() => {
-                if (trigger) {
-                    trigger.setAttribute('aria-expanded', expandedAttr);
-                }
+            if (!isOpen) {
+                mediator.on('module:clickstream:click', function triggerToggle(
+                    clickSpec
+                ) {
+                    const elem = clickSpec ? clickSpec.target : null;
 
-                menu.setAttribute('aria-hidden', hiddenAttr);
-                menu.classList.toggle(openClass, !isOpen);
+                    // if anywhere else but the links are clicked, the dropdown will close
+                    if (elem !== menu) {
+                        toggleDropdown(menuAndTriggerEls);
+                        // remove event when the dropdown closes
+                        mediator.off('module:clickstream:click', triggerToggle);
+                    }
+                });
+            }
+        });
+    });
+};
 
-                if (!isOpen) {
-                    mediator.on('module:clickstream:click', clickSpec => {
-                        const elem = clickSpec ? clickSpec.target : null;
+const initiateUserAccountDropdown = (): void => {
+    fastdom
+        .read(() => ({
+            menu: document.querySelector('.js-user-account-dropdown-menu'),
+            trigger: document.querySelector('.js-user-account-trigger'),
+        }))
+        .then((userAccountDropdownEls: MenuAndTriggerEls) => {
+            const button = userAccountDropdownEls.trigger;
 
-                        // if anywhere else but the links are clicked, the dropdown will close
-                        if (elem !== menu) {
-                            toggleEditionPickerDropdown();
-                        }
-                    });
-                } else {
-                    // when the dropdown closes, remove event
-                    mediator.removeEvent('module:clickstream:click');
-                }
-            });
+            if (button && button instanceof HTMLButtonElement) {
+                button.addEventListener('click', () =>
+                    toggleDropdown(userAccountDropdownEls)
+                );
+            }
         });
 };
 
@@ -240,38 +252,61 @@ const enhanceCheckbox = (checkbox: HTMLElement): void => {
         const checkboxControls = checkbox.getAttribute('aria-controls');
         const checkboxClassAttr = checkbox.getAttribute('class');
         const dataLinkName = checkbox.getAttribute('data-link-name');
-        const buttonClickHandlers = {
-            'main-menu-toggle': toggleMenu,
-            'edition-picker-toggle': toggleEditionPickerDropdown,
-        };
 
-        const enhance = () => {
-            const eventHandler = buttonClickHandlers[checkboxId];
+        const menuEl: ?HTMLElement = document.querySelector(
+            '.js-edition-dropdown-menu'
+        );
+        const triggerEl: ?HTMLElement = document.querySelector(
+            '.js-edition-picker-trigger'
+        );
 
-            if (checkboxClassAttr) {
-                button.setAttribute('class', checkboxClassAttr);
-            }
+        if (
+            menuEl &&
+            menuEl instanceof HTMLElement &&
+            triggerEl &&
+            triggerEl instanceof HTMLElement
+        ) {
+            const editionPickerDropdownEls: MenuAndTriggerEls = {
+                menu: menuEl,
+                trigger: triggerEl,
+            };
 
-            button.addEventListener('click', () => eventHandler());
-            button.setAttribute('id', checkboxId);
-            button.setAttribute('aria-expanded', 'false');
+            const buttonClickHandlers = {
+                'main-menu-toggle': toggleMenu,
+                'edition-picker-toggle': toggleDropdown.bind(
+                    null,
+                    editionPickerDropdownEls
+                ),
+            };
 
-            if (dataLinkName) {
-                button.setAttribute('data-link-name', dataLinkName);
-            }
+            const enhance = () => {
+                const eventHandler = buttonClickHandlers[checkboxId];
 
-            if (checkboxControls) {
-                button.setAttribute('aria-controls', checkboxControls);
-            }
+                if (checkboxClassAttr) {
+                    button.setAttribute('class', checkboxClassAttr);
+                }
 
-            if (checkbox.parentNode) {
-                checkbox.parentNode.replaceChild(button, checkbox);
-            }
+                button.addEventListener('click', () => eventHandler());
+                button.setAttribute('id', checkboxId);
+                button.setAttribute('aria-expanded', 'false');
 
-            enhanced[button.id] = true;
-        };
+                if (dataLinkName) {
+                    button.setAttribute('data-link-name', dataLinkName);
+                }
 
-        fastdom.write(enhance);
+                if (checkboxControls) {
+                    button.setAttribute('aria-controls', checkboxControls);
+                }
+
+                if (checkbox.parentNode) {
+                    checkbox.parentNode.replaceChild(button, checkbox);
+                }
+
+                enhanced[button.id] = true;
+            };
+
+            fastdom.write(enhance);
+        }
     });
 };
 
@@ -374,6 +409,7 @@ export const newHeaderInit = (): void => {
     enhanceMenuToggles();
     addEventHandler();
     showMyAccountIfNecessary();
+    initiateUserAccountDropdown();
     closeAllMenuSections();
     trackRecentSearch();
 };

@@ -4,23 +4,12 @@
 @import conf.switches.Switches.IdentityProfileNavigationSwitch
 
 @if(IdentityProfileNavigationSwitch.isSwitchedOn) {
-    <li class="menu-item js-navigation-sign-in">
+    <li class="menu-item js-navigation-sign-in hide-on-desktop">
         <a href="@Configuration.id.url/signin?INTCMP=DOTCOM_NEWHEADER_SIGNIN"
            data-link-name="nav2 : sign in"
            class="menu-item__title">
             Sign in/up
         </a>
-    </li>
-
-    <li class="menu-item menu-item--user-detail u-h hide-until-desktop js-navigation-account-details">
-        <div class="menu-user">
-            @fragments.inlineSvg("profile", "icon", List("menu-user__avatar-fallback", "js-navigation-account-avatar-fallback"))
-
-            <img src=""
-                 class="menu-user__avatar u-h js-navigation-account-avatar" alt="user avatar"/>
-
-            <p class="menu-user__name js-navigation-account-username"></p>
-        </div>
     </li>
 
     <li class="menu-item menu-item--membership u-h js-navigation-account-actions">
