@@ -495,4 +495,14 @@ trait FeatureSwitches {
     sellByDate = new LocalDate(2018, 10, 17),
     exposeClientSide = true
   )
+
+  val Pc = Switch(
+    SwitchGroup.Feature,
+    "pc",
+    "When ON, enables PC",
+    owners = Seq(Owner.withGithub("sndrs")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = false
+  )
 }
