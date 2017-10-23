@@ -8,11 +8,27 @@ import loadApp from './__inline__/loadApp';
 import loadFonts from './__inline__/loadFonts';
 import resetCSS from './__inline__/reset.css';
 
+declare type FontDefinition = {
+    fileTypes: Array<FileType>,
+    typeFace: string,
+};
+
+declare type FileType = {
+    endpoint: string,
+    fileType: string,
+    hintTypes: Array<HintType>,
+};
+
+declare type HintType = {
+    endpoint: string,
+    hintType: string,
+};
+
 //  Having to typecast loadApp to a string here to appease flow
 const loadAppStr: string = (loadApp: any);
 const loadFontsStr: string = (loadFonts: any);
 
-const getFontDefinitions = (fontDefinitions: Array<Object>): string => {
+const getFontDefinitions = (fontDefinitions: Array<FontDefinition>): string => {
     let html = '';
 
     if (fontDefinitions) {
