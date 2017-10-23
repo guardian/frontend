@@ -67,12 +67,13 @@ const config = {
     },
     resolveLoader: {
         modules: [
-            path.resolve('node_modules', '@guardian', 'guui', 'lib', 'loaders'),
+            path.resolve('node_modules', '@guardian', 'guui', 'dist', 'lib', 'loaders'),
             path.resolve(
                 '..',
                 'node_modules',
                 '@guardian',
                 'guui',
+                'dist',
                 'lib',
                 'loaders'
             ),
