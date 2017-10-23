@@ -37,7 +37,6 @@ app.get('/', (req, res, next) => {
 
         if (errors) {
             if (errors.code === 'ECONNREFUSED') {
-
                 return res.send(errorMsg);
             }
             return res.send(errors);
