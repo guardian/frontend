@@ -1,7 +1,25 @@
+@()(implicit request: RequestHeader)
+
+@import common.Edition
+@import conf.switches.Switches.{UkSupportFrontendActive, UsSupportFrontendActive}
+
 <div class="manage-account-up-sell is-hidden js-dig-up-sell">
     <div class="manage-account-up-sell__heading">
         <h2 class="manage-account-header">Try the Guardian Digital Pack</h2>
     </div>
     <p class="manage-account-up-sell__content">Enjoy the Guardian and Observer's digital pack on the tube, in the park, on a beach, or wherever it’s convenient for you. The digital pack brings you the biggest stories every day and special sections for big events on iPad, Android and Kindle Fire tablets.</p>
-    <a href="@(conf.Configuration.id.subscribeUrl)" class="submit-input" data-link-name="Join today">Get your 2 week free trial</a>
+    <a class="submit-input" data-link-name="Join today"
+    @defining(Edition(request).id.toLowerCase) { edition =>
+        @if((edition == "uk" && UkSupportFrontendActive.isSwitchedOn) || (edition == "us" && UsSupportFrontendActive.isSwitchedOn)) {
+            @if(edition == "us") {
+                href="@(conf.Configuration.id.supportUrl + "/us/contribute")"
+            } else {
+                href="@(conf.Configuration.id.supportUrl + "/uk")"
+            }
+        } else {
+            href="@(conf.Configuration.id.subscribeUrl)"
+        }
+    }
+    >Get your 2 week free trial</a>
+
 </div>
