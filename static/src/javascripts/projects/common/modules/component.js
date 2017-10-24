@@ -232,8 +232,8 @@ class Component {
 
     on(
         eventType: string,
-        elem: string | ((event: Event) => void),
-        handler?: (event: Event) => void
+        elem: string | ((arg: any) => void),
+        handler?: (arg: any) => void
     ): Component {
         if (typeof elem === 'function') {
             const eventHandler = elem;
