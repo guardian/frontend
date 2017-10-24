@@ -148,7 +148,7 @@ const defineSlot = (adSlotNode: Element, sizes: Object): Object => {
             dataHandler: iasDataCallback,
         });
 
-        const iasTimeoutDuration = 20000;
+        const iasTimeoutDuration = 2000;
 
         const iasTimeout = () =>
             new Promise(resolve => {
