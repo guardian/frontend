@@ -97,9 +97,6 @@ const defineSlot = (adSlotNode: Element, sizes: Object): Object => {
     }
 
     /*
-        The iasOptimisation implementation below is still a WiP, hence the
-        console.log statements and the dev-only execution.
-
         For each ad slot defined, we request information from IAS, based
         on slot name, ad unit and sizes. We then add this targeting to the
         slot prior to requesting it from DFP.
@@ -109,7 +106,7 @@ const defineSlot = (adSlotNode: Element, sizes: Object): Object => {
         without the additional IAS data.
      */
 
-    if (config.switches.iasOptimisation && config.get('page.isDev', false)) {
+    if (config.switches.iasOptimisation) {
         /* eslint-disable no-underscore-dangle */
         // this should all have been instantiated by commercial/modules/third-party-tags/ias.js
         window.__iasPET = window.__iasPET || {};
