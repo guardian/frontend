@@ -12,14 +12,12 @@ import { acquisitionsEpicLiveblog } from 'common/modules/experiments/tests/acqui
 import { acquisitionsEpicAlwaysAskIfTagged } from 'common/modules/experiments/tests/acquisitions-epic-always-ask-if-tagged';
 import { acquisitionsEpicAlwaysAskElection } from 'common/modules/experiments/tests/acquisitions-epic-always-ask-election';
 import { acquisitionsEpicThankYou } from 'common/modules/experiments/tests/acquisitions-epic-thank-you';
-import { acquisitionsEpicVarietyPack } from 'common/modules/experiments/tests/acquisitions-epic-variety-pack';
 
 /**
  * acquisition tests in priority order (highest to lowest)
  */
 const tests: $ReadOnlyArray<AcquisitionsABTest> = [
     alwaysAsk,
-    acquisitionsEpicVarietyPack,
     askFourEarning,
     acquisitionsEpicAlwaysAskIfTagged,
     acquisitionsEpicLiveblog,

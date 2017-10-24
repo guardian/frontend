@@ -308,12 +308,8 @@ const makeABTestVariant = (
         },
 
         test() {
-            const copyPromise =
-                (options.copy && Promise.resolve(options.copy)) ||
-                getCopy(useTailoredCopyForRegulars);
-
             const render = (templateFn: ?EpicTemplate) =>
-                copyPromise
+                getCopy(useTailoredCopyForRegulars)
                     .then((copy: AcquisitionsEpicTemplateCopy) => {
                         const renderTemplate: EpicTemplate =
                             templateFn ||
@@ -486,12 +482,7 @@ const makeABTest = ({
     };
 
     test.variants = variants.map(variant =>
-        makeABTestVariant(
-            variant.id,
-            variant.products,
-            variant.options || {},
-            test
-        )
+        makeABTestVariant(variant.id, variant.products, variant.options, test)
     );
 
     return test;
