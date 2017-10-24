@@ -21,7 +21,7 @@ object HintType {
   implicit val hintTypeWriter: Writes[HintType] = Json.writes[HintType]
 }
 
-case class JavascriptPropsConfig(bundleUrl: String, polyfillioUrl: String, beaconUrl: String, fontDefinitions: JsValue)
+case class JavascriptPropsConfig(bundleUrl: String, polyfillioUrl: String, beaconUrl: String, fontDefinitions: List[TypeFace])
 case class JavascriptProps(config: JavascriptPropsConfig){
   def asJsValue: JsValue = Json.toJson(this)
 }
@@ -30,12 +30,12 @@ object JavascriptProps {
   implicit val javascriptPropsConfig: Writes[JavascriptPropsConfig] = Json.writes[JavascriptPropsConfig]
   implicit val javascriptProps: Writes[JavascriptProps] = Json.writes[JavascriptProps]
 
-  def getFontDefinitions(): JsValue = {
+  def getFontDefinitions(): List[TypeFace] = {
     val typeFaces = List("GuardianEgyptianWeb", "GuardianTextEgyptianWeb", "GuardianSansWeb", "GuardianTextSansWeb")
     val fileTypes = List("woff2", "woff", "ttf")
     val hintTypes = List("cleartype", "auto")
 
-    val fontDefinitions = typeFaces.map(typeFace => {
+    typeFaces.map(typeFace => {
       TypeFace(typeFace, fileTypes.map { fileType =>
         val fileTypeEndpoint = conf.Static(s"fonts/${typeFace}.${fileType}.json")
         
@@ -45,8 +45,6 @@ object JavascriptProps {
         }})
       })
     })
-
-    Json.toJson(fontDefinitions)
   }
 
   def default: JavascriptProps = {
@@ -55,8 +53,7 @@ object JavascriptProps {
       if (conf.switches.Switches.PolyfillIO.isSwitchedOn) common.Assets.js.polyfillioUrl
       else conf.Static("javascripts/vendor/polyfillio.fallback.js")
     val beaconUrl = Configuration.debug.beaconUrl
-    val fontDefinitions = getFontDefinitions();
 
-    JavascriptProps(JavascriptPropsConfig(bundleUrl, polyfillioUrl, beaconUrl, fontDefinitions))
+    JavascriptProps(JavascriptPropsConfig(bundleUrl, polyfillioUrl, beaconUrl, getFontDefinitions()))
   }
 }
