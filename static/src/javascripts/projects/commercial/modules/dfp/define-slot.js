@@ -104,6 +104,8 @@ const defineSlot = (adSlotNode: Element, sizes: Object): Object => {
         We race the request to IAS with a Timeout of 2 seconds. If the
         timeout resolves before the request to IAS then the slot is defined
         without the additional IAS data.
+
+        To see debugging output from IAS add the URL param `&iasdebug=true` to the page URL
      */
 
     if (config.get('switches.iasOptimisation', false)) {
