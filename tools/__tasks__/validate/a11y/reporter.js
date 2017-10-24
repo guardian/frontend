@@ -15,5 +15,5 @@ module.exports = result => {
         output = lines.join('\n');
     }
 
-    return output;
+    return output && output.length ? output : undefined;
 };
