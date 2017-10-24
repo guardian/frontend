@@ -9,11 +9,10 @@ module.exports = result => {
         `${chalk.underline('Context')}: ${context}`,
         `${chalk.underline('Selector')}: ${selector}`,
     ];
-    let output = '';
 
     if (typeCode <= logLevel) {
-        output = lines.join('\n');
+        return lines.join('\n');
     }
 
-    return output && output.length ? output : undefined;
+    return undefined;
 };
