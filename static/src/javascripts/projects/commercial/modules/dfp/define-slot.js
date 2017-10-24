@@ -106,7 +106,7 @@ const defineSlot = (adSlotNode: Element, sizes: Object): Object => {
         without the additional IAS data.
      */
 
-    if (config.switches.iasOptimisation) {
+    if (config.get('switches.iasOptimisation', false)) {
         /* eslint-disable no-underscore-dangle */
         // this should all have been instantiated by commercial/modules/third-party-tags/ias.js
         window.__iasPET = window.__iasPET || {};
