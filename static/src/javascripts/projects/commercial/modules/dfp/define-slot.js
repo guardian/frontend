@@ -99,51 +99,63 @@ const defineSlot = (adSlotNode: Element, sizes: Object): Object => {
     /*
         The iasOptimisation implementation below is still a WiP, hence the
         console.log statements and the dev-only execution.
+
+        For each ad slot defined, we request information from IAS, based
+        on slot name, ad unit and sizes. We then add this targeting to the
+        slot prior to requesting it from DFP.
+
+        We race the request to IAS with a Timeout of 2 seconds. If the
+        timeout resolves before the request to IAS then the slot is defined
+        without the additional IAS data.
      */
 
     if (config.switches.iasOptimisation && config.get('page.isDev', false)) {
-        console.log(`Defining ${id}`);
-        /* eslint-disable no-underscore-dangle, no-multi-assign */
-        const iasPET = (window.__iasPET = window.__iasPET || {});
-        /* eslint-enable no-underscore-dangle, no-multi-assign */
+        /* eslint-disable no-underscore-dangle */
+        // this should all have been instantiated by commercial/modules/third-party-tags/ias.js
+        window.__iasPET = window.__iasPET || {};
+        const iasPET = window.__iasPET;
+        /* eslint-disable no-underscore-enable */
 
         iasPET.queue = iasPET.queue || [];
         iasPET.pubId = '10249';
-
-        let loadedResolve;
-
-        const iasDataPromise = new Promise(resolve => {
-            loadedResolve = resolve;
-        });
-
-        const iasDataCallback = () => {
-            console.log(`Applying IAS targeting: ${id}`);
-            iasPET.setTargetingForGPT();
-            loadedResolve();
-        };
 
         // IAS Optimization Targeting
         const iasPETSlots = [
             {
                 adSlotId: id,
-                size: sizes,
+                size: slot
+                    .getSizes()
+                    .filter(size => size !== 'fluid')
+                    .map(size => [size.getWidth(), size.getHeight()]),
                 adUnitPath: adUnit(), // why do we have this method and not just slot.getAdUnitPath()?
             },
         ];
+
+        // this is stored so that the timeout can be cancelled in the event of IAS not timing out
+        let timeoutId;
+
+        // this is resolved by either the iasTimeout or iasDataCallback, defined below
+        let loadedResolve;
+        const iasDataPromise = new Promise(resolve => {
+            loadedResolve = resolve;
+        });
+
+        const iasDataCallback = () => {
+            iasPET.setTargetingForGPT();
+            clearTimeout(timeoutId);
+            loadedResolve();
+        };
 
         iasPET.queue.push({
             adSlots: iasPETSlots,
             dataHandler: iasDataCallback,
         });
 
-        const iasTimeoutDuration = 10000;
+        const iasTimeoutDuration = 20000;
 
         const iasTimeout = () =>
             new Promise(resolve => {
-                setTimeout(() => {
-                    console.log(`Timed out of IAS request: ${id}`);
-                    resolve();
-                }, iasTimeoutDuration);
+                timeoutId = setTimeout(resolve, iasTimeoutDuration);
             });
 
         slotReady = slotReady.then(() =>
