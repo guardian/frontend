@@ -21,6 +21,8 @@ module.exports = {
         // our own rules for frontend
         // live in tools/eslint-plugin-guardian-frontend
         'guardian-frontend/exports-last': 'error',
+
+        'prefer-destructuring': 'off',
     },
     // don't look for eslintrcs above here
     root: true,

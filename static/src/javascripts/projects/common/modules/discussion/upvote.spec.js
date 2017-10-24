@@ -53,7 +53,7 @@ describe('Recommendations of comments', () => {
         const target = document.querySelector('.js-recommend-comment');
 
         if (!target) {
-            return Promise.reject('Error querying DOM');
+            return Promise.reject(new Error('Error querying DOM'));
         }
 
         recommendComment.mockImplementationOnce(() => Promise.resolve());
@@ -78,7 +78,7 @@ describe('Recommendations of comments', () => {
         const target = document.querySelector('.js-recommend-comment');
 
         if (!target) {
-            return Promise.reject('Error querying DOM');
+            return Promise.reject(new Error('Error querying DOM'));
         }
 
         recommendComment.mockImplementationOnce(() => Promise.resolve());
@@ -103,7 +103,7 @@ describe('Recommendations of comments', () => {
         const target = document.querySelector('.js-recommend-comment');
 
         if (!target) {
-            return Promise.reject('Error querying DOM');
+            return Promise.reject(new Error('Error querying DOM'));
         }
 
         recommendComment.mockImplementationOnce(() =>
@@ -132,7 +132,7 @@ describe('Recommendations of comments', () => {
         const link = document.querySelector('.js-rec-tooltip-link');
 
         if (!target || !tooltip || !link) {
-            return Promise.reject('Error querying DOM');
+            return Promise.reject(new Error('Error querying DOM'));
         }
 
         recommendComment.mockImplementationOnce(() =>

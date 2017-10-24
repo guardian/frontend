@@ -33,7 +33,7 @@ const confirmIfMaster = execa
             stdio: 'inherit',
         }
     )
-    .catch(() => Promise.reject('Ok, stopping 😉'));
+    .catch(() => Promise.reject(new Error('Ok, stopping 😉')));
 
 const diff = () =>
     execa
@@ -55,15 +55,17 @@ const checkYarnLock = staged => {
         !staged.some(file => file === 'yarn.lock')
     ) {
         return Promise.reject(
-            `${chalk.red(
-                `${chalk.underline(
-                    'package.json'
-                )} has changed but ${chalk.underline(
-                    'yarn.lock'
-                )} is not included in this commit.`
-            )}\n${chalk.dim(
-                `If this is intentional, commit this change with --no-verify.`
-            )}`
+            new Error(
+                `${chalk.red(
+                    `${chalk.underline(
+                        'package.json'
+                    )} has changed but ${chalk.underline(
+                        'yarn.lock'
+                    )} is not included in this commit.`
+                )}\n${chalk.dim(
+                    `If this is intentional, commit this change with --no-verify.`
+                )}`
+            )
         );
     }
     return staged;

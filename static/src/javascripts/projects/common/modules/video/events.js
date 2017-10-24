@@ -282,13 +282,13 @@ const kruxTracking = (player: Object, event: string) => {
         if (event === 'videoPlaying') {
             // Krux is a global object loaded by krux.js file
 
-            /*eslint-disable */
+            /* eslint-disable */
             Krux('admEvent', 'KAIQvckS', {});
-            /*eslint-enable */
+            /* eslint-enable */
         } else if (event === 'videoEnded') {
             /*eslint-disable */
             Krux('admEvent', 'KBaTegd5', {});
-            /*eslint-enable */
+            /* eslint-enable */
         }
     }
 };

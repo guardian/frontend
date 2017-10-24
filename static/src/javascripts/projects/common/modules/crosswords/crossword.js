@@ -523,7 +523,11 @@ class Crossword extends React.Component {
             });
 
             // Side effect
-            history.replaceState(undefined, document.title, `#${clue.id}`);
+            window.history.replaceState(
+                undefined,
+                document.title,
+                `#${clue.id}`
+            );
         }
     }
 

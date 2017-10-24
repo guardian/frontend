@@ -48,7 +48,7 @@ const waitForCheck = (id: string): Promise<any> => {
         return check.complete;
     }
 
-    return Promise.reject(`No deferred check with id ${id}`);
+    return Promise.reject(new Error(`No deferred check with id ${id}`));
 };
 
 const initCheckMediator = (): void => {
