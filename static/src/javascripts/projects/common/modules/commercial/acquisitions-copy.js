@@ -30,6 +30,10 @@ const alternativeP1 =
 const easeP2 = (currencySymbol: string) =>
     `If everyone who reads our reporting, who likes it, helps fund it, our future would be much more secure. <strong>For as little as ${currencySymbol}1, you can support the Guardian – and it only takes a minute. Thank you.</strong>`;
 
+// Just one pound (Oct 2017 test)
+const justOnePoundP2 = (currencySymbol: string) =>
+    `If everyone who reads our reporting, who likes it, helps fund it, our future would be much more secure. <strong>For as little as ${currencySymbol}1, you can support the Guardian. Thank&nbsp;you.</strong>`;
+
 // Multiple testimonials (Oct 2017 test)
 const multipleTestimonialsP1 =
     '&hellip; we’d like to share some of the reasons why our readers support the Guardian:';
@@ -68,6 +72,19 @@ export const easeOfPayment: AcquisitionsEpicTemplateCopy = {
     heading: controlHeading,
     p1: controlP1,
     p2: easeP2(getLocalCurrencySymbol()),
+};
+
+export const justAMinute: AcquisitionsEpicTemplateCopy = {
+    heading: controlHeading,
+    p1: controlP1,
+    p2:
+        'If everyone who reads our reporting, who likes it, helps fund it, our future would be much more secure. <strong>Support the Guardian – it only takes a minute. Thank&nbsp;you.</strong>',
+};
+
+export const justOnePound: AcquisitionsEpicTemplateCopy = {
+    heading: controlHeading,
+    p1: controlP1,
+    p2: justOnePoundP2(getLocalCurrencySymbol()),
 };
 
 export const multipleTestimonialsCopy: AcquisitionsEpicTemplateCopy = {

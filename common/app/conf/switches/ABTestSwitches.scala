@@ -106,12 +106,21 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-
   Switch(
     ABTests,
     "ab-acquisitions-epic-variety-pack",
     "Test some new variations of the Epic",
     owners = Seq(Owner.withGithub("desbo")),
+    safeState = On,
+    sellByDate = new LocalDate(2017, 11, 20),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-epic-ease-of-payment",
+    "Test some variations of the Epic which mention price",
+    owners = Seq(Owner.withGithub("joelochlann")),
     safeState = On,
     sellByDate = new LocalDate(2017, 11, 20),
     exposeClientSide = true

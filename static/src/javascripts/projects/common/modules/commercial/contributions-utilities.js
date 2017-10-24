@@ -25,7 +25,10 @@ import { epicButtonsTemplate } from 'common/modules/commercial/templates/acquisi
 import { acquisitionsEpicControlTemplate } from 'common/modules/commercial/templates/acquisitions-epic-control';
 import { acquisitionsTestimonialBlockTemplate } from 'common/modules/commercial/templates/acquisitions-epic-testimonial-block';
 import { shouldSeeReaderRevenue as userShouldSeeReaderRevenue } from 'commercial/modules/user-features';
-import { useSupportDomain, selectBaseUrl } from './support-utilities';
+import {
+    useSupportDomain,
+    selectBaseUrl,
+} from 'common/modules/commercial/support-utilities';
 
 type EpicTemplate = (Variant, AcquisitionsEpicTemplateCopy) => string;
 
