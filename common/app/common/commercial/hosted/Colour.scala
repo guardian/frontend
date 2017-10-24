@@ -17,3 +17,7 @@ case class Colour(hexCode: String) {
 
   val isDark = !isLight
 }
+
+object Colour {
+  val black = Colour("#000000")
+}
