@@ -336,6 +336,16 @@ case class ContentCard(
     case Some(_: InlineYouTubeMediaAtom) if !isMediaLink => true
     case _ => false
   }
+
+  val pillar = if (storyContent.isDefined) storyContent.get.metadata.pillar match {
+    case None => "news"
+    case Some(s: Pillar) => s.name.toLowerCase
+  }
+
+  val contentType = if (storyContent.isDefined) storyContent.get.metadata.`type` match {
+    case None => "article"
+    case Some(s: DotcomContentType) => s.name.toLowerCase
+  }
 }
 object ContentCard {
 
