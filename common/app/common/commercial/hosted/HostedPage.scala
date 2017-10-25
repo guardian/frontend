@@ -32,8 +32,8 @@ trait HostedPage extends StandalonePage {
 
   def cta: HostedCallToAction
 
-  def name: String       = campaign.map(_.name).getOrElse("*** Campaign name will go here ***")
-  def owner: String      = campaign.map(_.owner).getOrElse("*** Campaign owner will go here ***")
+  def name: String       = campaign.map(_.name).getOrElse("*** Not live yet: Campaign name will go here ***")
+  def owner: String      = campaign.map(_.owner).getOrElse("*** Not live yet: Campaign owner will go here ***")
   def logo: HostedLogo   = campaign.map(_.logo).getOrElse(HostedLogo.placeholder)
   def fontColour: Colour = campaign.map(_.fontColour).getOrElse(Colour.black)
 }
