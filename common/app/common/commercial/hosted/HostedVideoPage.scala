@@ -9,7 +9,7 @@ import model.{Encoding, EncodingOrdering, MetaData}
 
 case class HostedVideoPage(
   override val id: String,
-  override val campaign: HostedCampaign,
+  override val campaign: Option[HostedCampaign],
   override val standfirst: String,
   video: HostedVideo,
   override val cta: HostedCallToAction,
@@ -18,7 +18,7 @@ case class HostedVideoPage(
   override val thumbnailUrl: String,
   override val metadata: MetaData
 ) extends HostedPage {
-  override val title = video.title
+  override val title        = video.title
   override val mainImageUrl = video.posterUrl
 }
 
@@ -29,15 +29,14 @@ object HostedVideoPage extends Logging {
     log.info(s"Building hosted video ${content.id} ...")
 
     val page = for {
-      campaign <- HostedCampaign.fromContent(content)
-      atoms <- getAndLog(content, content.atoms, "the atoms are missing")
+      atoms      <- getAndLog(content, content.atoms, "the atoms are missing")
       videoAtoms <- getAndLog(content, atoms.media, "the video atoms are missing")
-      videoAtom <- getAndLog(content, videoAtoms.headOption, "the video atom is missing")
-      ctaAtoms <- getAndLog(content, atoms.cta, "the CTA atoms are missing")
-      ctaAtom <- getAndLog(content, ctaAtoms.headOption, "the CTA atom is missing")
+      videoAtom  <- getAndLog(content, videoAtoms.headOption, "the video atom is missing")
+      ctaAtoms   <- getAndLog(content, atoms.cta, "the CTA atoms are missing")
+      ctaAtom    <- getAndLog(content, ctaAtoms.headOption, "the CTA atom is missing")
     } yield {
 
-      val video = videoAtom.data.asInstanceOf[AtomData.Media].media
+      val video         = videoAtom.data.asInstanceOf[AtomData.Media].media
       val videoVariants = video.assets filter (asset => video.activeVersion.contains(asset.version))
 
       // using capi trail text instead of standfirst because we don't want the markup
@@ -45,7 +44,7 @@ object HostedVideoPage extends Logging {
 
       HostedVideoPage(
         id = content.id,
-        campaign,
+        campaign = HostedCampaign.fromContent(content),
         standfirst,
         video = HostedVideo(
           mediaId = videoAtom.id,
