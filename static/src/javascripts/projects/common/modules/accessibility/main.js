@@ -15,4 +15,4 @@ const getStoredValue = (key: string): boolean =>
 
 const isOn = (key: string): boolean => getStoredValue(key) === true;
 
-export { KEY_PREFIX, saveState, isOn };
+export { saveState, isOn };
