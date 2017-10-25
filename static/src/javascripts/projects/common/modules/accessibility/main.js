@@ -4,7 +4,7 @@ import userPrefs from 'common/modules/user-prefs';
 
 const KEY_PREFIX = 'accessibility';
 
-const saveState = (state: Object): void => {
+const saveState = (state: { [key: string]: boolean }): void => {
     Object.keys(state).forEach(key => {
         userPrefs.set(`${KEY_PREFIX}.${key}`, state[key]);
     });
