@@ -1,4 +1,3 @@
-
 const postcss = require('postcss');
 const customProperties = require('postcss-custom-properties');
 const customMedia = require('postcss-custom-media');
@@ -56,9 +55,9 @@ const normaliseCSS = source =>
                             [`--from-${breakpoint}`]: `(min-width: ${pasteup
                                 .breakpoints[breakpoint] / 16}em)`,
                             [`--until-${breakpoint}`]: `(max-width: ${(pasteup
-                                    .breakpoints[breakpoint] -
+                                .breakpoints[breakpoint] -
                                 1) /
-                            16}em)`,
+                                16}em)`,
                         }),
                     {}
                 ),
@@ -66,7 +65,6 @@ const normaliseCSS = source =>
         )
         .use(apply())
         .process(source).css;
-
 
 module.exports = function uiCSS(source) {
     return normaliseCSS(source);

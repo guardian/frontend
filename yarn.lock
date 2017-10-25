@@ -2,26 +2,6 @@
 # yarn lockfile v1
 
 
-"@guardian/guui@^1.2.2":
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/@guardian/guui/-/guui-1.2.2.tgz#607579870a2bdf8045b042b236ebd559a18bfe92"
-  dependencies:
-    babel-plugin-emotion "7.3.2"
-    decamelize "^1.2.0"
-    emotion "^7.3.2"
-    emotion-server "^7.3.2"
-    htmltojsx "^0.3.0"
-    postcss "^6.0.13"
-    postcss-apply "^0.8.0"
-    postcss-custom-media "^6.0.0"
-    postcss-custom-properties "^6.2.0"
-    preact "^8.2.5"
-    preact-render-to-string "^3.7.0"
-    styletron-client "^2.5.7"
-    styletron-preact "^2.5.9"
-    styletron-server "^2.5.7"
-    svgo "^0.7.2"
-
 "@guardian/guui@^1.3.1":
   version "1.3.1"
   resolved "https://registry.yarnpkg.com/@guardian/guui/-/guui-1.3.1.tgz#0c5235571bf214ff20774334181d7feca999aa25"

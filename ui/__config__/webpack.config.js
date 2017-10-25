@@ -84,10 +84,7 @@ const config = {
                 'lib',
                 'loaders'
             ),
-            path.resolve(
-                '__tools__',
-                'loaders'
-            ),
+            path.resolve('__tools__', 'loaders'),
             'node_modules',
         ],
     },
