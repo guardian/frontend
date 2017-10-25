@@ -23,7 +23,7 @@ class Component {
     rendered: boolean;
     destroyed: boolean;
     elems: ?Object;
-    options: ?Object;
+    options: Object;
     defaultOptions: Object;
     responseDataKey: string;
     autoupdated: boolean;
@@ -120,9 +120,9 @@ class Component {
                 ? this.endpoint()
                 : this.endpoint;
 
-        if (this.options && typeof endpoint === 'string') {
+        if (typeof endpoint === 'string') {
             Object.keys(this.options).forEach(key => {
-                const value = this.options && this.options[key];
+                const value = this.options[key];
 
                 if (endpoint && value) {
                     endpoint = endpoint.replace(`:${key}`, value);

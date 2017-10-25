@@ -185,16 +185,8 @@ class Loader extends Component {
         const $orderLabel = $('.js-comment-order');
         const $threadingLabel = $('.js-comment-threading');
 
-        $threadingLabel.text(
-            this.comments &&
-                this.comments.options &&
-                this.comments.options.threading
-        );
-        $orderLabel.text(
-            this.comments &&
-                this.comments.options &&
-                this.comments.options.order
-        );
+        $threadingLabel.text(this.comments && this.comments.options.threading);
+        $orderLabel.text(this.comments && this.comments.options.order);
 
         this.on(
             'click',
@@ -205,24 +197,18 @@ class Loader extends Component {
                     'click'
                 );
 
-                if (this.comments && this.comments.options) {
+                if (this.comments) {
                     // $FlowFixMe
                     this.comments.options.order = bonzo(e.currentTarget).data(
                         'order'
                     );
                 }
 
-                $orderLabel.text(
-                    this.comments &&
-                        this.comments.options &&
-                        this.comments.options.order
-                );
+                $orderLabel.text(this.comments && this.comments.options.order);
 
                 userPrefs.set(
                     'discussion.order',
-                    this.comments &&
-                        this.comments.options &&
-                        this.comments.options.order
+                    this.comments && this.comments.options.order
                 );
 
                 this.loadComments({ page: 1 });
@@ -238,7 +224,7 @@ class Loader extends Component {
                     'click'
                 );
 
-                if (this.comments && this.comments.options) {
+                if (this.comments) {
                     // $FlowFixMe
                     this.comments.options.threading = bonzo(
                         e.currentTarget
@@ -246,16 +232,12 @@ class Loader extends Component {
                 }
 
                 $threadingLabel.text(
-                    this.comments &&
-                        this.comments.options &&
-                        this.comments.options.threading
+                    this.comments && this.comments.options.threading
                 );
 
                 userPrefs.set(
                     'discussion.threading',
-                    this.comments &&
-                        this.comments.options &&
-                        this.comments.options.threading
+                    this.comments && this.comments.options.threading
                 );
 
                 this.loadComments();
@@ -322,7 +304,7 @@ class Loader extends Component {
                     'click'
                 );
 
-                if (this.comments && this.comments.options) {
+                if (this.comments) {
                     this.comments.options.pagesize = selectedPageSize;
                 }
 
@@ -414,7 +396,6 @@ class Loader extends Component {
 
                 if (
                     this.comments &&
-                    this.comments.options &&
                     config.get('switches.discussionPageSize') &&
                     isBreakpoint({ min: 'tablet' })
                 ) {
