@@ -57,119 +57,14 @@ class IdApiClient(
     response map extractUser
   }
 
-  def saveUser(userId: String, user: UserUpdateDTO, auth: Auth): Future[Response[User]] = {
-    println("Saving user!!!")
-    println(write(user))
-//    mockUserResponseV2Consent
+  def saveUser(userId: String, user: UserUpdateDTO, auth: Auth): Future[Response[User]] =
     post(urlJoin("user", userId), Some(auth), body = Some(write(user))) map extractUser
-  }
 
   def me(auth: Auth): Future[Response[User]] = {
     val apiPath = urlJoin("user", "me")
     val params = buildParams(Some(auth))
     val response = httpClient.GET(apiUrl(apiPath), None, params, buildHeaders(Some(auth)))
-    response.map { _.fold(
-        error => println(error.toString()),
-        httpResponse => println(httpResponse.body)
-      )
-    }
-
     response map extractUser
-//    mockUserResponseV2Consent
-  }
-
-  private def mockUserResponseV2Consent = {
-
-    val httpResponseBody =
-      """
-        |{
-        |	"status": "ok",
-        |	"user": {
-        |		"id": "10000052",
-        |		"primaryEmailAddress": "tgtz4grdot0hgc4mfec@gu.com",
-        |		"publicFields": {
-        |			"username": "ratatat11",
-        |			"usernameLowerCase": "ratatat11",
-        |			"displayName": "ratatat11"
-        |		},
-        |		"privateFields": {
-        |			"firstName": "tGtZ4grdot0HGC4mFEc1-mock",
-        |			"secondName": "tGtZ4grdot0HGC4mFEc1",
-        |			"gender": "Male",
-        |			"registrationIp": "",
-        |			"address1": "Moon311",
-        |			"registrationType": "guardian",
-        |			"registrationPlatform": "identity-frontend",
-        |			"title": "Mr",
-        |			"legacyPackages": "CRE,RCO",
-        |			"legacyProducts": "CRE,RCO"
-        |		},
-        |		"statusFields": {
-        |			"receive3rdPartyMarketing": true,
-        |			"receiveGnmMarketing": false,
-        |			"allowThirdPartyProfiling": false
-        |			"userEmailValidated": true,
-        |		},
-        |		"dates": {
-        |			"accountCreatedDate": "2017-07-14T13:57:59Z"
-        |		},
-        |		"userGroups": [{
-        |			"path": "/sys/policies/basic-identity",
-        |			"packageCode": "CRE"
-        |		}, {
-        |			"path": "/sys/policies/basic-community",
-        |			"packageCode": "RCO"
-        |		}],
-        |		"socialLinks": [],
-        |		"adData": {},
-        |		"consents": [{
-        |				"actor": "user",
-        |				"consentIdentifier": "firstParty",
-        |				"consentIdentifierVersion": 3,
-        |				"hasConsented": true,
-        |				"timestamp": "2017-07-14T13:57:59Z",
-        |				"privacyPolicy": 1
-        |			},
-        |			{
-        |				"actor": "user",
-        |				"consentIdentifier": "thirdParty",
-        |				"consentIdentifierVersion": 2,
-        |				"hasConsented": false,
-        |				"timestamp": "2017-07-14T13:57:59Z",
-        |				"privacyPolicy": 1
-        |			}
-        |		]
-        |	}
-        |}
-      """.stripMargin
-
-    val response = Future(Right(HttpResponse(httpResponseBody, 200, "OK")))
-
-    //    response.map { _.fold(
-    //        error => println(error.toString()),
-    //        httpResponse => println(httpResponse.body)
-    //      )
-    //    }
-
-    val deserializedUserWithConsentsResponse = response map extractUser
-    println("the new model ta da da da!")
-
-    deserializedUserWithConsentsResponse.map { deserializedUserWithConsents =>
-      println("i am here")
-      deserializedUserWithConsents.fold(
-        error => {
-          println("ererrrerw")
-          println(error.toString())
-        },
-        userWithConsents => {
-          println("I am in right")
-          userWithConsents.consents.toList.foreach(println)
-        }
-      )
-    }
-
-    deserializedUserWithConsentsResponse
-
   }
 
   /**
