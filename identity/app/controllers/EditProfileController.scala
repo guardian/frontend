@@ -17,10 +17,12 @@ import utils.SafeLogging
 
 import scala.concurrent.Future
 
-sealed trait EditProfilePage
-case object PublicEditProfilePage extends EditProfilePage
-case object AccountEditProfilePage extends EditProfilePage
-case object PrivacyEditProfilePage extends EditProfilePage
+object PublicEditProfilePage extends IdentityPage("/public/edit", "Edit Public Profile")
+object AccountEditProfilePage extends IdentityPage("/account/edit", "Edit Account Details")
+object PrivacyEditProfilePage extends IdentityPage("/privacy/edit", "Privacy")
+object MembershipEditProfilePage extends IdentityPage("/membership/edit", "Membership")
+object recurringContributionPage extends IdentityPage("/contribution/recurring/edit", "Contributions")
+object DigiPackEditProfilePage extends IdentityPage("/digitalpack/edit", "Digital Pack")
 
 class EditProfileController(
     idUrlBuilder: IdentityUrlBuilder,
@@ -39,23 +41,16 @@ class EditProfileController(
 
   import authenticatedActions._
 
-  private val accountPage = IdentityPage("/account/edit", "Edit Account Details")
-  private val publicPage = IdentityPage("/public/edit", "Edit Public Profile")
-  private val membershipPage = IdentityPage("/membership/edit", "Membership")
-  private val recurringContributionPage = IdentityPage("/contribution/recurring/edit", "Contributions")
-  private val digitalPackPage = IdentityPage("/digitalpack/edit", "Digital Pack")
-  private val privacyPage = IdentityPage("/privacy/edit", "Privacy")
-
-  def displayPublicProfileForm: Action[AnyContent] = displayForm(publicPage)
-  def displayAccountForm: Action[AnyContent] = displayForm(accountPage)
-  def displayMembershipForm: Action[AnyContent] = displayForm(membershipPage)
+  def displayPublicProfileForm: Action[AnyContent] = displayForm(PublicEditProfilePage)
+  def displayAccountForm: Action[AnyContent] = displayForm(AccountEditProfilePage)
+  def displayMembershipForm: Action[AnyContent] = displayForm(MembershipEditProfilePage)
   def displayRecurringContributionForm: Action[AnyContent] = displayForm(recurringContributionPage)
-  def displayDigitalPackForm: Action[AnyContent] = displayForm(digitalPackPage)
-  def displayPrivacyForm: Action[AnyContent] = displayForm(privacyPage)
+  def displayDigitalPackForm: Action[AnyContent] = displayForm(DigiPackEditProfilePage)
+  def displayPrivacyForm: Action[AnyContent] = displayForm(PrivacyEditProfilePage)
 
-  def submitPublicProfileForm(): Action[AnyContent] = submitForm(publicPage)
-  def submitAccountForm(): Action[AnyContent] = submitForm(accountPage)
-  def submitPrivacyForm(): Action[AnyContent] = submitForm(privacyPage)
+  def submitPublicProfileForm(): Action[AnyContent] = submitForm(PublicEditProfilePage)
+  def submitAccountForm(): Action[AnyContent] = submitForm(AccountEditProfilePage)
+  def submitPrivacyForm(): Action[AnyContent] = submitForm(PrivacyEditProfilePage)
 
   private def displayForm(page: IdentityPage) = csrfAddToken {
     recentlyAuthenticated.async { implicit request =>
@@ -71,17 +66,9 @@ class EditProfileController(
   private def submitForm(page: IdentityPage): Action[AnyContent] =
     csrfCheck {
       authActionWithUser.async { implicit request =>
-        def identityPageToEditProfilePage(identityPage: IdentityPage): EditProfilePage =
-          identityPage match {
-            case `publicPage` => PublicEditProfilePage
-            case `accountPage` => AccountEditProfilePage
-            case _ => PrivacyEditProfilePage
-          }
-
-        val activePage = identityPageToEditProfilePage(page)
         val userDO = request.user
         val boundProfileForms =
-          ProfileForms(userDO, activePage).bindFromRequestWithAddressErrorHack(request) // NOTE: only active form is bound to request data
+          ProfileForms(userDO, activePage = page).bindFromRequestWithAddressErrorHack(request) // NOTE: only active form is bound to request data
 
         def processSuccessfulSubmission(userFormData: UserFormData): Future[Result] = {
           userFormData match {
@@ -135,7 +122,7 @@ case class ProfileForms(
     publicForm: Form[ProfileFormData],
     accountForm: Form[AccountFormData],
     privacyForm: Form[PrivacyFormData],
-    activePage: EditProfilePage)(implicit profileFormsMapping: ProfileFormsMapping) {
+    activePage: IdentityPage)(implicit profileFormsMapping: ProfileFormsMapping) {
 
   lazy val activeForm = activePage match {
     case PublicEditProfilePage => publicForm
@@ -212,7 +199,7 @@ object ProfileForms {
     */
   def apply(
       userDO: User,
-      activePage: EditProfilePage)
+      activePage: IdentityPage)
       (implicit profileFormsMapping: ProfileFormsMapping, messagesProvider: MessagesProvider): ProfileForms = {
 
     ProfileForms(
