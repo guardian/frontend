@@ -316,7 +316,7 @@ class Comments extends Component {
 
     isReadOnly(): boolean {
         return !!(
-            this.elem && this.elem.getAttribute('data-read-only') === 'true'
+            this.elem && this.elem instanceof 'HTMLElement' && this.elem.getAttribute('data-read-only') === 'true'
         );
     }
 

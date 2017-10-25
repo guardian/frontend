@@ -57,12 +57,17 @@ class Loader extends Component {
     }
 
     getDiscussionId(): ?string {
-        return this.elem && this.elem.getAttribute('data-discussion-key');
+        if (this.elem && this.elem instanceof 'HTMLElement') {
+            return this.elem.getAttribute('data-discussion-key');
+        }
+
+        return undefined;
     }
 
     getDiscussionClosed(): boolean {
         return !!(
             this.elem &&
+            this.elem instanceof 'HTMLElement' &&
             this.elem.getAttribute('data-discussion-closed') === 'true'
         );
     }
@@ -171,7 +176,7 @@ class Loader extends Component {
         this.on('click', '.js-recommend-comment', (e: Event) => {
             const target: HTMLElement = (e.currentTarget: any);
 
-            if (this.user) {
+            if (this.user && this.elem instanceof 'HTMLElement') {
                 upvoteHandle(target, this.elem, this.user);
             }
         });
