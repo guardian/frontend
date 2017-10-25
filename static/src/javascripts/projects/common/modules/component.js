@@ -18,7 +18,7 @@ class Component {
     componentClass: ?string;
     endpoint: ?string | ?() => string;
     classes: ?Object;
-    elem: ?HTMLElement;
+    elem: ?(HTMLElement | HTMLLinkElement);
     template: ?string;
     rendered: boolean;
     destroyed: boolean;

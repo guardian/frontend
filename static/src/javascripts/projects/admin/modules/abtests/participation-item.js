@@ -30,10 +30,11 @@ class ParticipationItem extends Component {
             ? 'http://www.theguardian.com'
             : document.location.origin;
         const href = `${this.config.examplePath}=${this.config.variant}`;
-        const elem = ((this.elem: any): HTMLLinkElement);
 
-        elem.textContent = this.config.variant;
-        elem.href = origin + href;
+        if (this.elem instanceof 'HTMLLinkElement') {
+            this.elem.textContent = this.config.variant;
+            this.elem.href = origin + href;
+        }
     }
 }
 
