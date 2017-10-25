@@ -13,7 +13,7 @@ import play.api.libs.json.{JsArray, Json}
 import play.api.mvc._
 import play.twirl.api.Html
 import views.html.commercialExpired
-import views.html.hosted.{hostedGalleryOnward, _}
+import views.html.hosted._
 
 import scala.concurrent.Future
 import scala.util.control.NonFatal
@@ -91,7 +91,7 @@ class HostedContentController(
           )
           JsonComponent {
             "items" -> JsArray(Seq(Json.obj(
-              "owner" -> trails.headOption.map(_.campaign.owner),
+              "owner" -> trails.headOption.map(_.owner),
               "trails" -> JsArray(trails.take(defaultRowCount).map(toJson))
             )))
           }

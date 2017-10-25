@@ -15,11 +15,17 @@ module.exports = {
                         reject(err);
                     }
 
-                    const messages = results.map(reporter);
-                    messages.forEach(message => ctx.messages.push(message));
+                    if (results) {
+                        const messages = results
+                            .map(reporter)
+                            .filter(item => item);
 
-                    if (results.length) {
-                        ctx.error = true;
+                        if (messages.length) {
+                            messages.forEach(message =>
+                                ctx.messages.push(message)
+                            );
+                            ctx.error = true;
+                        }
                     }
 
                     resolve();

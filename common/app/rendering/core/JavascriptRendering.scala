@@ -12,7 +12,6 @@ import rendering.core.JavascriptEngine.EvalResult
 import scala.util.{Failure, Try}
 
 trait JavascriptRendering extends Logging {
-
   def javascriptFile: String
 
   private implicit val scriptContext = createContext()

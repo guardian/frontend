@@ -12,7 +12,6 @@ import { acquisitionsEpicLiveblog } from 'common/modules/experiments/tests/acqui
 import { acquisitionsEpicAlwaysAskIfTagged } from 'common/modules/experiments/tests/acquisitions-epic-always-ask-if-tagged';
 import { acquisitionsEpicAlwaysAskElection } from 'common/modules/experiments/tests/acquisitions-epic-always-ask-election';
 import { acquisitionsEpicThankYou } from 'common/modules/experiments/tests/acquisitions-epic-thank-you';
-import { acquisitionsEpicVarietyPack } from 'common/modules/experiments/tests/acquisitions-epic-variety-pack';
 import { acquisitionsEpicEaseOfPayment } from 'common/modules/experiments/tests/acquisitions-epic-ease-of-payment';
 
 /**
@@ -21,7 +20,6 @@ import { acquisitionsEpicEaseOfPayment } from 'common/modules/experiments/tests/
 const tests: $ReadOnlyArray<AcquisitionsABTest> = [
     alwaysAsk,
     acquisitionsEpicEaseOfPayment,
-    acquisitionsEpicVarietyPack,
     askFourEarning,
     acquisitionsEpicAlwaysAskIfTagged,
     acquisitionsEpicLiveblog,

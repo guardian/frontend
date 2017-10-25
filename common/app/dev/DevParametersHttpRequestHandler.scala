@@ -60,7 +60,8 @@ class DevParametersHttpRequestHandler(
     "seg", // user segments in commercial component requests
     "t", // specific item targetting
     "0p19G", // Google AMP AB test parameter
-    "dll" // Disable lazy loading of ads
+    "dll", // Disable lazy loading of ads
+    "iasdebug" // IAS troubleshooting
   )
 
   val playBugs = Seq("") // (Play 2.5 bug?) request.queryString is returning an empty string when empty

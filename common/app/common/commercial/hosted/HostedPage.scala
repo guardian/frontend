@@ -13,10 +13,10 @@ import model.StandalonePage
 
 trait HostedPage extends StandalonePage {
   def id: String
-  def url: String = s"/$id"
+  def url: String        = s"/$id"
   def encodedUrl: String = URLEncoder.encode(s"${site.host}/$id", "utf-8")
 
-  def campaign: HostedCampaign
+  def campaign: Option[HostedCampaign]
   def title: String
   def mainImageUrl: String
   def thumbnailUrl: String
@@ -25,12 +25,17 @@ trait HostedPage extends StandalonePage {
   def socialShareText: Option[String]
   def shortSocialShareText: Option[String]
 
-  def twitterText: String = shortSocialShareText.getOrElse(if (standfirst.length < 136) standfirst else title) + " #ad"
-  def facebookText: String = socialShareText.getOrElse(standfirst)
+  def twitterText: String      = shortSocialShareText.getOrElse(if (standfirst.length < 136) standfirst else title) + " #ad"
+  def facebookText: String     = socialShareText.getOrElse(standfirst)
   def emailSubjectText: String = title + " - Advertiser Content hosted by the Guardian"
-  def emailBodyText: String = s"${socialShareText.getOrElse(standfirst)} $encodedUrl"
+  def emailBodyText: String    = s"${socialShareText.getOrElse(standfirst)} $encodedUrl"
 
   def cta: HostedCallToAction
+
+  def name: String       = campaign.map(_.name).getOrElse("*** Not live yet: Campaign name will go here ***")
+  def owner: String      = campaign.map(_.owner).getOrElse("*** Not live yet: Campaign owner will go here ***")
+  def logo: HostedLogo   = campaign.map(_.logo).getOrElse(HostedLogo.placeholder)
+  def fontColour: Colour = campaign.map(_.fontColour).getOrElse(Colour.black)
 }
 
 object HostedPage extends Logging {
@@ -38,7 +43,7 @@ object HostedPage extends Logging {
   def fromContent(item: Content): Option[HostedPage] = {
     if (item.isHosted) {
       item.`type` match {
-        case Video => HostedVideoPage.fromContent(item)
+        case Video   => HostedVideoPage.fromContent(item)
         case Article => HostedArticlePage.fromContent(item)
         case Gallery => HostedGalleryPage.fromContent(item)
         case _ =>
@@ -65,10 +70,10 @@ object HostedCampaign {
   def fromContent(item: Content): Option[HostedCampaign] = {
     log.info(s"Building hosted campaign for ${item.id} ...")
     val campaign = for {
-      section <- getAndLog(item, item.section, "has no section")
-      hostedTag <- getAndLog(item, item.tags find (_.paidContentType.contains("HostedContent")), "has no hosted tag")
+      section      <- getAndLog(item, item.section, "has no section")
+      hostedTag    <- getAndLog(item, item.tags find (_.paidContentType.contains("HostedContent")), "has no hosted tag")
       sponsorships <- getAndLog(item, hostedTag.activeSponsorships, "has no sponsorships")
-      sponsorship <- getAndLog(item, sponsorships.headOption, "has no sponsorship")
+      sponsorship  <- getAndLog(item, sponsorships.headOption, "has no sponsorship")
     } yield {
       val id = section.id.stripPrefix("advertiser-content/")
       HostedCampaign(
@@ -91,6 +96,12 @@ object HostedCampaign {
 case class HostedLogo(src: String, dimensions: Option[Dimensions], link: String)
 
 object HostedLogo {
+
+  val placeholder = HostedLogo(
+    src = "",
+    dimensions = None,
+    link = ""
+  )
 
   def make(
     src: String,

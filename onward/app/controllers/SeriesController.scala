@@ -1,11 +1,14 @@
 package controllers
 
+import java.net.URI
+
 import com.gu.contentapi.client.GuardianContentApiError
 import com.gu.contentapi.client.model.v1.{Content => ApiContent}
 import com.gu.facia.client.models.Backfill
 import common._
 import contentapi.ContentApiClient
 import implicits.Requests
+import layout.slices.Fixed
 import layout.{CollectionEssentials, DescriptionMetaHeader, FaciaContainer}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model._
@@ -13,7 +16,6 @@ import model.pressed.CollectionConfig
 import play.api.libs.json.{JsArray, Json}
 import play.api.mvc._
 import services.CollectionConfigWithId
-import layout.slices.Fixed
 import views.support.FaciaToMicroFormat2Helpers._
 
 import scala.concurrent.Future
@@ -100,16 +102,19 @@ class SeriesController(
       href = Some(series.id)
     )
 
-    val response = () => views.html.fragments.containers.facia_cards.container(
-      FaciaContainer(
-        1,
-        Fixed(visuallyPleasingContainerForStories(math.min(series.trails.faciaItems.length, 4))),
-        CollectionConfigWithId(dataId, config),
-        CollectionEssentials(series.trails.faciaItems take 4, Nil, displayName, None, None, None),
-        componentId
-      ).withTimeStamps
-       .copy(customHeader = header),
-      properties
+    val response = () =>
+      views.html.fragments.containers.facia_cards.container(
+        containerDefinition = FaciaContainer(
+          1,
+          Fixed(visuallyPleasingContainerForStories(math.min(series.trails.faciaItems.length, 4))),
+          CollectionConfigWithId(dataId, config),
+          CollectionEssentials(series.trails.faciaItems take 4, Nil, displayName, None, None, None),
+          componentId
+        )
+          .withTimeStamps
+          .copy(customHeader = header),
+        frontProperties = properties,
+        frontId = request.referrer.map(new URI(_).getPath.stripPrefix("/"))
     )
 
     renderFormat(response, response, 900)
