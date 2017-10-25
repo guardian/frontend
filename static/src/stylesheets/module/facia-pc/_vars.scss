@@ -1,0 +1,37 @@
+$pillars: 'news', 'opinion', 'sport', 'arts', 'lifestyle';
+$types: 'article', 'live', 'feature', 'comment', 'service', 'column',
+    'interview', 'video', 'audio', 'gallery';
+$sizes: 'quarter', 'third', 'half', 'three-quarters', 'three-quarters-right',
+    'three-quarters-tall', 'list', 'list-compact', 'list-compact--media',
+    'list-media', 'full-media-50', 'full-media-75', 'full-media-100', 'fluid';
+
+// news palette
+$news-pillar-1: $news-main-1;
+
+// opinion palette
+$opinion-pillar-1: $comment-main-2;
+
+// sport palette
+$sport-pillar-1: $maps-support-2;
+
+// arts palette
+$arts-pillar-1: $comment-support-1;
+
+// lifestyle palette
+$lifestyle-pillar-1: $features-support-1;
+
+// pillar palettes
+$pillar-colours: (
+    news: $news-support-2,
+    opinion: $comment-support-3,
+    sport: $news-support-5,
+    arts: $comment-support-1,
+    lifestyle: $features-main-2
+);
+
+// type palettes override pillar palettes
+$type-colours: (
+    live: (foreground: #fff, background: $live-main-1, accent: #fff)
+);
+
+$image-ratio: 2/3;
