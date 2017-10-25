@@ -1,0 +1,30 @@
+@(item: layout.ContentCard, containerIndex: Int, index: Int, visibilityDataAttribute: String, isFirstContainer: Boolean, isList: Boolean)(implicit request: RequestHeader)
+
+@import views.support.GetClasses
+
+<div class="@GetClasses.forItem(item, isFirstContainer) @item.cardTypes.classes @if(!item.hasInlineSnapHtml) {js-snappable}"
+     @if(item.discussionSettings.isCommentable) {
+        @item.discussionSettings.discussionId.map { id =>
+            data-discussion-id="@id"
+        }
+        data-discussion-closed="@item.discussionSettings.isClosedForComments"
+        data-discussion-url="@item.header.url.get(request)#comments"
+    }
+    data-link-name="@item.analyticsPrefix | card-@{ index + 1 }"
+    data-item-visibility="@visibilityDataAttribute"
+    data-test-id="facia-card"
+    @item.id.map { id => data-id="@id" }
+    @item.snapStuff.map(_.dataAttributes)
+    @item.shortUrl.map { shortUrl => data-loyalty-short-url="@shortUrl" }>
+
+    @if(!item.hasInlineSnapHtml) {
+        @container(item)
+    }
+    @if(item.hasInlineSnapHtml) {
+    }
+</div>
+
+@container(item: layout.ContentCard) = {
+    <div class="fc-item__container">
+    </div>
+}

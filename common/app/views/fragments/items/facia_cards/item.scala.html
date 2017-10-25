@@ -13,6 +13,7 @@
 @import views.html.fragments.items.facia_cards.paidContentCard
 @import views.support.Commercial.TrackingCodeBuilder.mkInteractionTrackingCode
 @import views.support.{GetClasses, RenderClasses}
+@import conf.switches.Switches.Pc
 
 @defining((card.item, card.index)) { case (item, index) =>
 <li class="@RenderClasses(Map(
@@ -38,10 +39,13 @@
         }
 
         case content: ContentCard => {
-            @contentCard(content, containerIndex, index, card.visibilityDataAttribute, isFirstContainer, isList)
+            @if(Pc.isSwitchedOff) {
+                @contentCard(content, containerIndex, index, card.visibilityDataAttribute, isFirstContainer, isList)    
+            } else {
+                @pillarCard(content, containerIndex, index, card.visibilityDataAttribute, isFirstContainer, isList)
+            }
         }
-
-
+        
         case htmlBlob: HtmlBlob => {
             <div class="@GetClasses.forHtmlBlob(htmlBlob)">@htmlBlob.html</div>
         }
