@@ -47,6 +47,13 @@ export const control: AcquisitionsEpicTemplateCopy = {
     p2: controlP2(getLocalCurrencySymbol()),
 };
 
+// For test, October 2017
+export const oldControl: AcquisitionsEpicTemplateCopy = {
+    heading: controlHeading,
+    p1: controlP1,
+    p2: controlP2FirstSentence,
+};
+
 export const regulars: AcquisitionsEpicTemplateCopy = {
     heading: controlHeadingRegulars,
     p1: controlP1Regulars,

@@ -2,7 +2,7 @@
 import { makeABTest } from 'common/modules/commercial/contributions-utilities';
 import { useSupportDomain } from 'common/modules/commercial/support-utilities';
 import {
-    control,
+    oldControl,
     justAMinute,
     justOnePound,
 } from 'common/modules/commercial/acquisitions-copy';
@@ -40,7 +40,7 @@ export const acquisitionsEpicEaseOfPayment = makeABTest({
             options: {
                 template: variant =>
                     acquisitionsEpicControlTemplate({
-                        copy: control,
+                        copy: oldControl,
                         componentName: variant.componentName,
                         buttonTemplate: epicButtonsTemplate(
                             {
