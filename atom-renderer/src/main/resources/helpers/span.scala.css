@@ -1,0 +1,2 @@
+@(n: Int)
+@n * 60px + var(--gs-gutter) * @n - 1

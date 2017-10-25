@@ -1,0 +1,16 @@
+@(atom: com.gu.contentatom.thrift.Atom
+, data: com.gu.contentatom.thrift.atom.qanda.QAndAAtom
+)
+
+@fragments.atoms.html.snippet(
+  atom.id,
+  className = "qanda",
+  label = data.typeLabel.getOrElse("Q&amp;A"),
+  headline = atom.title.getOrElse("")
+){
+  @for(img <- data.eventImage ) {
+    @fragments.atoms.html.snippetImage(img)
+  }
+
+  @Html(data.item.body)
+}

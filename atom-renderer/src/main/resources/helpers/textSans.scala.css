@@ -1,0 +1,17 @@
+@(level: Int)
+
+@defining(Map(
+  1 -> (12, 16),
+  2 -> (13, 18),
+  3 -> (14, 20),
+  4 -> (14, 22),
+  5 -> (16, 22),
+  6 -> (18, 18)
+)) { textScale =>
+
+  @textScale.get(level).map { case (fontSize, lineHeight) =>
+    font-size: @{fontSize}px;
+    line-height: @{lineHeight}px;
+  }
+
+}
