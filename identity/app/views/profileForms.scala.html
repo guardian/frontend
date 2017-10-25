@@ -50,7 +50,9 @@
 
             @tab(4, "Digital Pack", "/digitalpack/edit", None, optionalClass="qa-digitalpack-tab")
 
-            @tab(5, "Privacy", "/privacy/edit", None, optionalClass="qa-privacy-tab")
+            @tab(5, "Contributions", "/contributions/recurring/edit", None, optionalClass="qa-membership-tab")
+
+            @tab(6, "Privacy", "/privacy/edit", None, optionalClass="qa-privacy-tab")
         </ol>
 
         <div class="tabs__content">
@@ -62,7 +64,9 @@
 
             @content(4, "/digitalpack/edit")(fragments.profile.digitalPackDetailsForm(idUrlBuilder, idRequest, user))
 
-            @content(5, "/privacy/edit")(fragments.profile.privacyForm(idUrlBuilder, idRequest, user, forms.privacyForm))
+            @content(5, "/contributions/recurring/edit")(fragments.profile.recurringContributionDetailsForm(idUrlBuilder, idRequest, user))
+
+            @content(6, "/privacy/edit")(fragments.profile.privacyForm(idUrlBuilder, idRequest, user, forms.privacyForm))
         </div>
     </div>
 </div>
