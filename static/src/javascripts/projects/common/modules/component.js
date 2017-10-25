@@ -362,5 +362,3 @@ class Component {
 }
 
 export { Component };
-
-/* eslint-disable no-underscore-dangle */
