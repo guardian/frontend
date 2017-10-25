@@ -106,7 +106,9 @@ class CommentBox extends Component {
     getDiscussionId(): string {
         const { discussionId } = this.options;
         let discussionKey =
-            this.elem && this.elem instanceof 'HTMLElement' && this.elem.getAttribute('data-discussion-key');
+            this.elem &&
+            this.elem instanceof 'HTMLElement' &&
+            this.elem.getAttribute('data-discussion-key');
 
         if (!discussionId && discussionKey) {
             discussionKey = discussionKey.replace('discussion', '');
@@ -244,7 +246,9 @@ class CommentBox extends Component {
     }
 
     postComment(): void {
-        const { value } = (this.elem && this.elem instanceof 'Document' && this.elem.body) || {};
+        const { value } =
+            (this.elem && this.elem instanceof 'Document' && this.elem.body) ||
+            {};
 
         const comment: commentType = {
             body: value,
