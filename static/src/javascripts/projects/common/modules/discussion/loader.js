@@ -57,7 +57,7 @@ class Loader extends Component {
     }
 
     getDiscussionId(): ?string {
-        if (this.elem && this.elem instanceof 'HTMLElement') {
+        if (this.elem && this.elem instanceof HTMLElement) {
             return this.elem.getAttribute('data-discussion-key');
         }
 
@@ -67,7 +67,7 @@ class Loader extends Component {
     getDiscussionClosed(): boolean {
         return !!(
             this.elem &&
-            this.elem instanceof 'HTMLElement' &&
+            this.elem instanceof HTMLElement &&
             this.elem.getAttribute('data-discussion-closed') === 'true'
         );
     }
@@ -176,7 +176,7 @@ class Loader extends Component {
         this.on('click', '.js-recommend-comment', (e: Event) => {
             const target: HTMLElement = (e.currentTarget: any);
 
-            if (this.user && this.elem instanceof 'HTMLElement') {
+            if (this.user && this.elem instanceof HTMLElement) {
                 upvoteHandle(target, this.elem, this.user);
             }
         });

@@ -43,7 +43,7 @@ class ABTestReportItem extends Component {
     }
 
     prerender(): void {
-        if (this.elem && this.elem instanceof 'HTMLElement') {
+        if (this.elem && this.elem instanceof HTMLElement) {
             this.elem.className += this.config.active
                 ? ' abtest-item--active'
                 : ' abtest-item--expired';
