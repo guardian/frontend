@@ -10,9 +10,13 @@
 @import model.content.{MediaAtom, MediaAssetPlatform}
 
 
-@richLinkDefault(title: String, href: String) = {
+@richLinkDefault(title: String, href: String, sponsorship: Option[Sponsorship]) = {
     @row(Seq("padded")) {
-        <div class="padded rich-link__container">
+        <div class="padded rich-link__container @{sponsorship.map { sponsor =>
+            s"rich-link__container--${
+                sponsor.sponsorshipType.name.toLowerCase()
+            }"
+        }}">
             <a class="rich-link__link" href="@href">
                 <h3 class="rich-link__header">@title</h3>
             </a>
@@ -95,8 +99,8 @@
                         @row(Seq("padded"))(Html(html))
                     }
 
-                    case RichLinkBlockElement(Some(url), Some(text), _) => {
-                        @richLinkDefault(text, url)
+                    case RichLinkBlockElement(Some(url), Some(text), _, sponsorship) => {
+                        @richLinkDefault(text, url, sponsorship)
                     }
 
                     case EmbedBlockElement(Some(html), _, _) => {
