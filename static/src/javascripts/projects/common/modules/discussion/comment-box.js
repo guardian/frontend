@@ -247,7 +247,10 @@ class CommentBox extends Component {
 
     postComment(): void {
         const { value } =
-            (this.elem && this.elem instanceof Document && this.elem.body) ||
+            (this.elem &&
+                this.elem instanceof HTMLFormElement &&
+                this.elem.body instanceof HTMLInputElement &&
+                this.elem.body) ||
             {};
 
         const comment: commentType = {
