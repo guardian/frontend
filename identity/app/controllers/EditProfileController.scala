@@ -68,9 +68,10 @@ class EditProfileController(
         val boundProfileForms =
           ProfileForms(userDO, activePage = page).bindFromRequestWithAddressErrorHack(request) // NOTE: only active form is bound to request data
 
-        def processSuccessfulSubmission(userFormData: UserFormData): Future[Result] = {
-          userFormData match {
-            case formData: AccountFormData if (formData.deleteTelephone) => {
+        boundProfileForms.activeForm.fold(
+          formWithErrors => Future(profileFormsView(page, boundProfileForms, userDO)),
+          success = {
+            case formData: AccountFormData if formData.deleteTelephone =>
               identityApiClient.deleteTelephone(userDO.auth) map {
                 case Left(errors) => profileFormsView(page, boundProfileForms.withErrors(errors), userDO)
 
@@ -82,21 +83,15 @@ class EditProfileController(
                   profileFormsView(page, boundForms, userDO)
                 }
               }
-            }
 
             case formData: UserFormData =>
               identityApiClient.saveUser(userDO.id, formData.toUserUpdate(userDO), userDO.auth) map {
                 case Left(errors) => profileFormsView(page, boundProfileForms.withErrors(errors), userDO)
                 case Right(updatedUser) => profileFormsView(page, boundProfileForms.bindForms(updatedUser), updatedUser)
               }
-          }
-        }
-
-        boundProfileForms.activeForm.fold(
-          formWithErrors => Future(profileFormsView(page, boundProfileForms, userDO)),
-          userFormData => processSuccessfulSubmission(userFormData)
-        )
-      }
+          } // end of success
+        ) // end fold
+      } // end authActionWithUser.async
     } // end csrfCheck
 
   private def profileFormsView(
