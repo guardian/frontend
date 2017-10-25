@@ -48,7 +48,7 @@ const config = {
                         use: ['to-string-loader', cssLoader],
                     },
                     {
-                        use: ['guui-css-loader'],
+                        use: ['guui-css-loader', 'ui-css-loader'],
                     },
                 ],
             },
@@ -82,6 +82,10 @@ const config = {
                 'guui',
                 'dist',
                 'lib',
+                'loaders'
+            ),
+            path.resolve(
+                '__tools__',
                 'loaders'
             ),
             'node_modules',

@@ -23,7 +23,7 @@
         "watch:nashorn:server": "webpack --config ./__config__/webpack.config.nashorn.dev.js --env.server --watch"
     },
     "dependencies": {
-        "@guardian/guui": "^1.2.2"
+        "@guardian/guui": "^1.3.1"
     },
     "devDependencies": {
         "babel-core": "^6.25.0",
@@ -40,12 +40,17 @@
         "core-js": "^2.4.1",
         "coveralls": "^2.13.0",
         "css-loader": "^0.28.4",
+        "decamelize": "^1.2.0",
         "express": "^4.15.4",
         "flow-bin": "^0.57.3",
         "gzip-size-cli": "^2.0.0",
         "htmltojsx": "^0.2.6",
         "jest": "^20.0.4",
         "nodemon": "^1.12.1",
+        "postcss": "^6.0.13",
+        "postcss-apply": "^0.8.0",
+        "postcss-custom-media": "^6.0.0",
+        "postcss-custom-properties": "^6.2.0",
         "prettier": "^1.5.3",
         "raw-loader": "^0.5.1",
         "request": "^2.83.0",
