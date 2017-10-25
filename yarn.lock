@@ -2,14 +2,14 @@
 # yarn lockfile v1
 
 
-"@guardian/guui@1.2.0":
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/@guardian/guui/-/guui-1.2.0.tgz#f42af07ba9d3dfb7b02556c50d4e1dcac4d240fc"
+"@guardian/guui@^1.2.2":
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/@guardian/guui/-/guui-1.2.2.tgz#607579870a2bdf8045b042b236ebd559a18bfe92"
   dependencies:
     babel-plugin-emotion "7.3.2"
     decamelize "^1.2.0"
-    emotion "^8.0.8"
-    emotion-server "^8.0.8"
+    emotion "^7.3.2"
+    emotion-server "^7.3.2"
     htmltojsx "^0.3.0"
     postcss "^6.0.13"
     postcss-apply "^0.8.0"
@@ -809,7 +809,7 @@ babel-plugin-check-es2015-constants@^6.22.0:
   dependencies:
     babel-runtime "^6.22.0"
 
-babel-plugin-emotion@7.3.2:
+babel-plugin-emotion@7.3.2, babel-plugin-emotion@^7.3.2:
   version "7.3.2"
   resolved "https://registry.yarnpkg.com/babel-plugin-emotion/-/babel-plugin-emotion-7.3.2.tgz#2d07d990281ac680ef981326debbe115a67d436a"
   dependencies:
@@ -820,18 +820,6 @@ babel-plugin-emotion@7.3.2:
     postcss "^6.0.9"
     postcss-js "^1.0.0"
     postcss-nested "^2.1.1"
-    touch "^1.0.0"
-
-babel-plugin-emotion@^8.0.6:
-  version "8.0.6"
-  resolved "https://registry.yarnpkg.com/babel-plugin-emotion/-/babel-plugin-emotion-8.0.6.tgz#f86c6065378defd0f6adaacedab45858b2ca6091"
-  dependencies:
-    babel-generator "^6.26.0"
-    babel-macros "^1.0.2"
-    babel-plugin-syntax-jsx "^6.18.0"
-    convert-source-map "^1.5.0"
-    emotion-utils "^8.0.6"
-    source-map "^0.5.7"
     touch "^1.0.0"
 
 babel-plugin-istanbul@^4.0.0:
@@ -3018,11 +3006,12 @@ emojis-list@^2.0.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/emojis-list/-/emojis-list-2.1.0.tgz#4daa4d9db00f9819880c79fa457ae5b09a1fd389"
 
-emotion-server@^8.0.8:
-  version "8.0.8"
-  resolved "https://registry.yarnpkg.com/emotion-server/-/emotion-server-8.0.8.tgz#a539a9c64484d71d6021c9ce3469a6e1ffa96cea"
+emotion-server@^7.3.2:
+  version "7.3.2"
+  resolved "https://registry.yarnpkg.com/emotion-server/-/emotion-server-7.3.2.tgz#64a1727beb71fe615671bddcc674cbeb71abd52b"
   dependencies:
-    emotion-utils "^8.0.6"
+    emotion "^7.3.2"
+    emotion-utils "^7.3.1"
 
 emotion-utils@^7.3.1:
   version "7.3.1"
@@ -3030,18 +3019,14 @@ emotion-utils@^7.3.1:
   dependencies:
     fbjs "^0.8.12"
 
-emotion-utils@^8.0.6:
-  version "8.0.6"
-  resolved "https://registry.yarnpkg.com/emotion-utils/-/emotion-utils-8.0.6.tgz#23dc1bc63711f86d074b4199b918580f3f2d7855"
-
-emotion@^8.0.8:
-  version "8.0.8"
-  resolved "https://registry.yarnpkg.com/emotion/-/emotion-8.0.8.tgz#d898dd6a4262937bbe0427cb3b4f6c8bcb6582ec"
+emotion@^7.3.2:
+  version "7.3.2"
+  resolved "https://registry.yarnpkg.com/emotion/-/emotion-7.3.2.tgz#54d2533f2451a6b96e7bf600b54ede5ce0160fe1"
   dependencies:
-    babel-plugin-emotion "^8.0.6"
-    emotion-utils "^8.0.6"
-    stylis "^3.3.2"
-    stylis-rule-sheet "^0.0.5"
+    babel-plugin-emotion "^7.3.2"
+    emotion-server "^7.3.2"
+    emotion-utils "^7.3.1"
+    react-emotion "^7.3.2"
 
 encodeurl@~1.0.1:
   version "1.0.1"
@@ -8347,6 +8332,14 @@ react-dom@~15.4.1:
     loose-envify "^1.1.0"
     object-assign "^4.1.0"
 
+react-emotion@^7.3.2:
+  version "7.3.2"
+  resolved "https://registry.yarnpkg.com/react-emotion/-/react-emotion-7.3.2.tgz#f935105369641efb02d49ad063d274d1ac7bdfa3"
+  dependencies:
+    babel-plugin-emotion "^7.3.2"
+    emotion "^7.3.2"
+    emotion-utils "^7.3.1"
+
 react@0.13.2:
   version "0.13.2"
   resolved "https://registry.yarnpkg.com/react/-/react-0.13.2.tgz#a1c7cec5e7be080c4e249b20740d4d4cd18880ca"
@@ -9739,14 +9732,6 @@ styletron-utils@^2.5.4:
   resolved "https://registry.yarnpkg.com/styletron-utils/-/styletron-utils-2.5.4.tgz#f08cca7d58ee0338ce85e408cb32900e65620240"
   dependencies:
     inline-style-prefixer "^2.0.1"
-
-stylis-rule-sheet@^0.0.5:
-  version "0.0.5"
-  resolved "https://registry.yarnpkg.com/stylis-rule-sheet/-/stylis-rule-sheet-0.0.5.tgz#ebae935cc1f6fb31b9b62dba47f2ea8b833dad9f"
-
-stylis@^3.3.2:
-  version "3.3.2"
-  resolved "https://registry.yarnpkg.com/stylis/-/stylis-3.3.2.tgz#95ef285836e98243f8b8f64a9a72706ea6c893ea"
 
 sugarss@^1.0.0:
   version "1.0.0"
