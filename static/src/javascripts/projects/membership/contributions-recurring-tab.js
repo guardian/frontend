@@ -18,9 +18,10 @@ const PAYPAL_SHOW_EMAIL_MESSAGE = '.js-paypal-email-message';
 // const PACKAGE_CURRENT_RENEWAL_DATE = '.js-mem-current-renewal-date';
 // const PACKAGE_CURRENT_PERIOD_END = '.js-mem-current-period-end';
 const CONTRIBUTION_PERIOD_START_CONTAINER =
-     '.js-contribution-period-start-container';
+    '.js-contribution-period-start-container';
 const CONTRIBUTION_PERIOD_START = '.js-contribution-period-start';
-const PACKAGE_NEXT_PAYMENT_CONTAINER = '.js-contribution-next-payment-container';
+// const PACKAGE_NEXT_PAYMENT_CONTAINER =
+//     '.js-contribution-next-payment-container';
 // const TRIAL_INFO_CONTAINER = '.js-mem-only-for-trials';
 const PACKAGE_NEXT_PAYMENT_DATE = '.js-contribution-next-payment-date';
 const PACKAGE_NEXT_PAYMENT_PRICE = '.js-contribution-next-payment-price';
@@ -30,7 +31,8 @@ const PACKAGE_INTERVAL = '.js-contribution-plan-interval';
 const NOTIFICATION_CANCEL = '.js-contribution-cancel';
 const NOTIFICATION_CHANGE = '.js-contribution-change';
 // const MEMBER_DETAILS = '.js-mem-details';
-const DETAILS_SUBSCRIPTION_NUMBER_CONTAINER = '.js-contribution-subscription-number-container';
+const DETAILS_SUBSCRIPTION_NUMBER_CONTAINER =
+    '.js-contribution-subscription-number-container';
 const DETAILS_SUBSCRIPTION_NUM_TEXT = '.js-contribution-subscription-number';
 // const MEMBERSHIP_TIER = '.js-mem-tier';
 const UP_SELL = '.js-contribution-up-sell';
@@ -77,11 +79,14 @@ const populateUserDetails = (contributorDetails: ContributorDetails): void => {
     $(PACKAGE_INTERVAL).text(intervalText);
 
     const cardTail =
-        contributorDetails.subscription.card && contributorDetails.subscription.card.last4;
+        contributorDetails.subscription.card &&
+        contributorDetails.subscription.card.last4;
     if (cardTail) {
         $(MANAGE_CARD_LAST4).text(cardTail);
     } else if (contributorDetails.subscription.payPalEmail) {
-        $(PAYPAL_EMAIL_ADDRESS).text(contributorDetails.subscription.payPalEmail);
+        $(PAYPAL_EMAIL_ADDRESS).text(
+            contributorDetails.subscription.payPalEmail
+        );
     }
 
     // $(PACKAGE_CURRENT_PERIOD_END).text(
@@ -93,7 +98,9 @@ const populateUserDetails = (contributorDetails: ContributorDetails): void => {
 
     if (contributorDetails.subscription.nextPaymentDate) {
         $(PACKAGE_NEXT_PAYMENT_DATE).text(
-            formatters.formatDate(contributorDetails.subscription.nextPaymentDate)
+            formatters.formatDate(
+                contributorDetails.subscription.nextPaymentDate
+            )
         );
         // $(PACKAGE_NEXT_PAYMENT_CONTAINER).removeClass(IS_HIDDEN_CLASSNAME);
     }
@@ -111,17 +118,19 @@ const populateUserDetails = (contributorDetails: ContributorDetails): void => {
 
     // display membership number
     if (contributorDetails.subscription.subscriberId) {
-        $(DETAILS_SUBSCRIPTION_NUMBER_CONTAINER).removeClass(IS_HIDDEN_CLASSNAME);
-        $(DETAILS_SUBSCRIPTION_NUM_TEXT).text(contributorDetails.subscription.subscriberId);
+        $(DETAILS_SUBSCRIPTION_NUMBER_CONTAINER).removeClass(
+            IS_HIDDEN_CLASSNAME
+        );
+        $(DETAILS_SUBSCRIPTION_NUM_TEXT).text(
+            contributorDetails.subscription.subscriberId
+        );
     }
 
     if (contributorDetails.subscription.start) {
         $(CONTRIBUTION_PERIOD_START).text(
             formatters.formatDate(contributorDetails.subscription.start)
         );
-        $(CONTRIBUTION_PERIOD_START_CONTAINER).removeClass(
-            IS_HIDDEN_CLASSNAME
-        );
+        $(CONTRIBUTION_PERIOD_START_CONTAINER).removeClass(IS_HIDDEN_CLASSNAME);
     }
 
     // user has cancelled
@@ -151,14 +160,14 @@ const populateUserDetails = (contributorDetails: ContributorDetails): void => {
     // $(MEMBER_INFO).removeClass(IS_HIDDEN_CLASSNAME);
 };
 export const recurringContributionTab = (): void => {
-    fetch(`${config.get('page.userAttributesApiUrl')}/me/mma-monthlycontribution`, {
-        mode: 'cors',
-        credentials: 'include',
-    })
+    fetch(
+        `${config.get('page.userAttributesApiUrl')}/me/mma-monthlycontribution`,
+        {
+            mode: 'cors',
+            credentials: 'include',
+        }
+    )
         .then(resp => resp.json())
-        .then(json => {
-            console.log(json);
-        })
         .then(json => {
             if (json && json.subscription) {
                 hideLoader();
