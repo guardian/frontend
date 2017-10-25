@@ -111,7 +111,7 @@ class Component {
                     this._ready(this.elem);
                 }
             })
-            .catch(this.error);
+            .catch(err => this.error(err));
     }
 
     _fetch(): Promise<Object> {
