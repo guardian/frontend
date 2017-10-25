@@ -249,7 +249,7 @@ class CommentBox extends Component {
         const { value } =
             (this.elem &&
                 this.elem instanceof HTMLFormElement &&
-                this.elem.body instanceof HTMLInputElement &&
+                this.elem.body instanceof HTMLTextAreaElement &&
                 this.elem.body) ||
             {};
 
