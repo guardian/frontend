@@ -22,6 +22,10 @@ const controlP1Regulars =
 // US localised testimonials test
 const usLocalisedFlagP1 = `${controlP1} Here’s why other <strong>readers from the US</strong> are supporting us:`;
 
+// Just one pound (Oct 2017 test)
+const justOnePoundP2 = (currencySymbol: string) =>
+    `If everyone who reads our reporting, who likes it, helps fund it, our future would be much more secure. <strong>For as little as ${currencySymbol}1, you can support the Guardian. Thank&nbsp;you.</strong>`;
+
 const ctaLinkSentence = (
     membershipUrl: string,
     contributionUrl: string
@@ -43,6 +47,13 @@ export const control: AcquisitionsEpicTemplateCopy = {
     p2: controlP2(getLocalCurrencySymbol()),
 };
 
+// For test, October 2017
+export const oldControl: AcquisitionsEpicTemplateCopy = {
+    heading: controlHeading,
+    p1: controlP1,
+    p2: controlP2FirstSentence,
+};
+
 export const regulars: AcquisitionsEpicTemplateCopy = {
     heading: controlHeadingRegulars,
     p1: controlP1Regulars,
@@ -53,6 +64,18 @@ export const usLocalisedFlag = {
     heading: controlHeading,
     p1: usLocalisedFlagP1,
     p2: controlP2(getLocalCurrencySymbol()),
+};
+
+export const justAMinute: AcquisitionsEpicTemplateCopy = {
+    heading: controlHeading,
+    p1: controlP1,
+    p2: `${controlP2FirstSentence} <strong>Support the Guardian – it only takes a minute. Thank&nbsp;you.</strong>`,
+};
+
+export const justOnePound: AcquisitionsEpicTemplateCopy = {
+    heading: controlHeading,
+    p1: controlP1,
+    p2: justOnePoundP2(getLocalCurrencySymbol()),
 };
 
 export const liveblog = (
