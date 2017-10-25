@@ -70,7 +70,7 @@ class LeagueTableController(
         "Champions League",
         "Women's Euro 2017",
         "FA Cup",
-        "EFL Cup",
+        "Carabao Cup",
         "Community Shield",
         "Scottish Cup",
         "Scottish League Cup",
