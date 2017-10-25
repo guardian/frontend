@@ -96,7 +96,11 @@ class CommentBox extends Component {
     }
 
     onboardingPreviewSuccess(comment: commentType, resp: Object): void {
-        this.getElem('onboarding-preview-body').innerHTML = resp.commentBody;
+        const onboardingPreviewBody = this.getElem('onboarding-preview-body');
+
+        if (onboardingPreviewBody) {
+            onboardingPreviewBody.innerHTML = resp.commentBody;
+        }
     }
 
     getDiscussionId(): string {
@@ -115,9 +119,9 @@ class CommentBox extends Component {
         const commentBody = ((this.getElem('body'): any): HTMLInputElement);
         const submitButton = this.getElem('submit');
 
-        if (disabled || commentBody.value.length === 0) {
+        if (submitButton && (disabled || commentBody.value.length === 0)) {
             submitButton.setAttribute('disabled', 'disabled');
-        } else {
+        } else if (submitButton) {
             submitButton.removeAttribute('disabled');
         }
     }
@@ -137,7 +141,12 @@ class CommentBox extends Component {
     errorMessages: Object;
 
     clearErrors(): void {
-        this.getElem('messages').innerHTML = '';
+        const messages = this.getElem('messages');
+
+        if (messages) {
+            messages.innerHTML = '';
+        }
+
         this.errors = [];
         this.removeState('invalid');
     }
@@ -161,7 +170,12 @@ class CommentBox extends Component {
     }
 
     previewCommentSuccess(comment: commentType, resp: Object): void {
-        this.getElem('preview-body').innerHTML = resp.commentBody;
+        const previewBody = this.getElem('preview-body');
+
+        if (previewBody) {
+            previewBody.innerHTML = resp.commentBody;
+        }
+
         this.setState('preview-visible');
     }
 
@@ -210,6 +224,8 @@ class CommentBox extends Component {
     }
 
     error(type: string, message?: string): void {
+        const messages = this.getElem('messages');
+
         this.setState('invalid');
 
         const errorMessage = `
@@ -219,7 +235,11 @@ class CommentBox extends Component {
                     ${message || this.errorMessages[type]}
                 </span>
             </div>`;
-        this.getElem('messages').appendChild(bonzo.create(errorMessage)[0]);
+
+        if (messages) {
+            messages.appendChild(bonzo.create(errorMessage)[0]);
+        }
+
         this.errors.push(type);
     }
 
@@ -243,6 +263,8 @@ class CommentBox extends Component {
         };
 
         const updateUsernameSuccess = (resp: Object): void => {
+            const onbordingUsername = this.getElem('onboarding-username');
+
             mediator.emit(
                 'user:username:updated',
                 resp.user.publicFields.username
@@ -250,7 +272,10 @@ class CommentBox extends Component {
 
             this.options.hasUsername = true;
 
-            this.getElem('onboarding-username').classList.add('is-hidden');
+            if (onbordingUsername) {
+                onbordingUsername.classList.add('is-hidden');
+            }
+
             postCommentToDAPI();
         };
 
@@ -262,15 +287,20 @@ class CommentBox extends Component {
 
             this.setState('onboarding-visible');
 
-            usernameField.classList.add(
-                'd-comment-box__onboarding-username-error-border'
-            );
+            if (usernameField) {
+                usernameField.classList.add(
+                    'd-comment-box__onboarding-username-error-border'
+                );
+            }
 
             // TODO: this should be wrapped into a try-catch block
-            errorMessage.innerHTML = JSON.parse(
-                errorResponse.responseText
-            ).errors[0].description;
-            errorMessage.classList.remove('is-hidden');
+            if (errorMessage) {
+                errorMessage.innerHTML = JSON.parse(
+                    errorResponse.responseText
+                ).errors[0].description;
+
+                errorMessage.classList.remove('is-hidden');
+            }
         };
 
         const validEmailCommentSubmission = (): void => {
@@ -403,9 +433,13 @@ class CommentBox extends Component {
         }
 
         if (this.options.focus) {
-            window.setTimeout(() => {
-                this.getElem('body').focus();
-            }, 0);
+            const body = this.getElem('body');
+
+            if (body) {
+                window.setTimeout(() => {
+                    body.focus();
+                }, 0);
+            }
         }
     }
 
@@ -425,15 +459,18 @@ class CommentBox extends Component {
 
             this.postComment();
         } else {
-            this.getElem(
-                'onboarding-author'
-            ).innerHTML = this.getUserData().displayName;
+            const onboardingAuthor = this.getElem('onboarding-author');
+            const onboardingUsername = this.getElem('onboarding-username');
+
+            if (onboardingAuthor) {
+                onboardingAuthor.innerHTML = this.getUserData().displayName;
+            }
 
             this.setState('onboarding-visible');
             this.previewComment('onboardingPreviewSuccess');
 
-            if (this.options.hasUsername) {
-                this.getElem('onboarding-username').classList.add('is-hidden');
+            if (onboardingUsername && this.options.hasUsername) {
+                onboardingUsername.classList.add('is-hidden');
             }
         }
     }
@@ -448,16 +485,26 @@ class CommentBox extends Component {
         }
 
         const userData = this.getUserData();
+        const authorEl = this.getElem('author');
 
-        this.getElem('author').innerHTML = userData.displayName;
+        if (authorEl) {
+            authorEl.innerHTML = userData.displayName;
+        }
 
         if (this.options.state === 'response') {
-            this.getElem('submit').innerHTML = 'Post reply';
+            const submit = this.getElem('submit');
+
+            if (submit) {
+                submit.innerHTML = 'Post reply';
+            }
         } else if (this.options.shouldRenderMainAvatar) {
-            const avatar = this.getElem('avatar-wrapper');
-            avatar.setAttribute('userid', userData.id);
-            avatar.setAttribute('data-userid', userData.id);
-            avatarify(avatar);
+            const avatarWrapper = this.getElem('avatar-wrapper');
+
+            if (avatarWrapper) {
+                avatarWrapper.setAttribute('userid', userData.id);
+                avatarWrapper.setAttribute('data-userid', userData.id);
+                avatarify(avatarWrapper);
+            }
         } else {
             const container = document.getElementsByClassName(
                 'd-comment-box__meta'
@@ -470,29 +517,32 @@ class CommentBox extends Component {
 
         if (this.options.replyTo) {
             const replyToAuthor = this.getElem('reply-to-author');
+            const parentCommentBody = this.getElem('parent-comment-body');
+            const parentCommentAuthor = this.getElem('parent-comment-author');
             const { author, timestamp, body } = this.options.replyTo || {};
 
-            if (author) {
+            if (replyToAuthor && author) {
                 replyToAuthor.innerHTML = author;
             }
 
-            if (author && timestamp) {
-                this.getElem(
-                    'parent-comment-author'
-                ).innerHTML = `${author} @ ${timestamp} said:`;
+            if (parentCommentAuthor && author && timestamp) {
+                parentCommentAuthor.innerHTML = `${author} @ ${timestamp} said:`;
             }
 
-            if (body) {
-                this.getElem('parent-comment-body').innerHTML = body;
+            if (parentCommentBody && body) {
+                parentCommentBody.innerHTML = body;
             }
 
             const setSpoutMargin = () => {
-                const spoutOffset =
-                    replyToAuthor.offsetLeft +
-                    replyToAuthor.getBoundingClientRect().width / 2;
-                this.getElem(
-                    'parent-comment-spout'
-                ).style.marginLeft = `${spoutOffset}px`;
+                const parentCommentSpout = this.getElem('parent-comment-spout');
+                const spoutOffset = replyToAuthor
+                    ? replyToAuthor.offsetLeft +
+                      replyToAuthor.getBoundingClientRect().width / 2
+                    : false;
+
+                if (parentCommentSpout && spoutOffset) {
+                    parentCommentSpout.style.marginLeft = `${spoutOffset}px`;
+                }
             };
 
             window.setTimeout(() => setSpoutMargin(), 0);
@@ -559,8 +609,13 @@ class CommentBox extends Component {
     }
 
     resetPreviewComment(): void {
+        const previewBody = this.getElem('preview-body');
+
         this.removeState('preview-visible');
-        this.getElem('preview-body').innerHTML = '';
+
+        if (previewBody) {
+            previewBody.innerHTML = '';
+        }
     }
 
     formatComment(formatStyle: string): void {

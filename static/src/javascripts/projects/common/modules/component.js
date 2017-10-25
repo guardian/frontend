@@ -250,14 +250,14 @@ class Component {
         bean.fire(this.elem, eventName, args);
     }
 
-    getElem(elemName: string): HTMLElement {
+    getElem(elemName: string): ?(HTMLElement | HTMLInputElement) {
         if (this.elems && this.elems[elemName]) {
             return this.elems[elemName];
         }
 
         const elem = qwery(this.getClass(elemName), this.elem)[0];
 
-        if (this.elems) {
+        if (elem && this.elems) {
             this.elems[elemName] = elem;
         }
 
