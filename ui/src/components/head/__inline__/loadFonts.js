@@ -266,10 +266,8 @@ do you have fonts in localStorage?
                 // eslint-disable-next-line no-param-reassign
                 document.cookie = `GU_fonts_smoothing= '${state
                     ? 'on'
-                    : 'off'}; domain=${location.hostname}; path=/; max-age=${60 *
-                    60 *
-                    24 *
-                    30}`;
+                    : 'off'}; domain=${window.location
+                    .hostname}; path=/; max-age=${60 * 60 * 24 * 30}`;
             };
 
             // If Windows desktop and not IE…
@@ -331,7 +329,8 @@ do you have fonts in localStorage?
     };
 
     // Check to see if you should get webfonts, and then try to load them from localStorage if so
-    const fontCookie = `GU_fonts=off; domain=${location.hostname}; path=/`;
+    const fontCookie = `GU_fonts=off; domain=${window.location
+        .hostname}; path=/`;
 
     const disableFonts = (): void => {
         document.cookie = `${fontCookie}; max-age=${60 * 60 * 24 * 365}`; // eslint-disable-line no-param-reassign
