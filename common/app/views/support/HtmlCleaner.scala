@@ -678,9 +678,16 @@ case class AtomsCleaner(atoms: Option[Atoms], shouldFence: Boolean = true, amp: 
         if(atomData.isInstanceOf[MediaAtom]){
           atomContainer.addClass("element-atom--media")
         }
-        val html = views.html.fragments.atoms.atom(atomData, shouldFence, amp, mediaWrapper).toString()
-        bodyElement.remove()
-        atomContainer.append(html)
+
+        if (ReaderAnswersDeliveryMechanism.isSwitchedOn) {
+          val html = views.html.fragments.atoms.atom(atomData, shouldFence, amp, mediaWrapper, true).toString()
+          bodyElement.remove()
+          atomContainer.append(html)
+        } else {
+          val html = views.html.fragments.atoms.atom(atomData, shouldFence, amp, mediaWrapper, false).toString()
+          bodyElement.remove()
+          atomContainer.append(html)
+        }
       }
     }
     document

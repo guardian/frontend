@@ -1,4 +1,4 @@
-@(storyquestions: model.content.StoryQuestionsAtom, isAmp: Boolean)(implicit request: RequestHeader)
+@(storyquestions: model.content.StoryQuestionsAtom, isAmp: Boolean, isDemandTest: Boolean)(implicit request: RequestHeader)
 
 @import org.joda.time.{DateTime, DateTimeZone}
 
@@ -25,6 +25,71 @@
         } yield email.listId
     }
 }
+
+@if(isDemandTest) {
+    <div class="js-view-tracking-component submeta user__question">
+
+        <span class="js-storyquestion-atom-id is-hidden" id="@storyquestions.id"></span>
+        <span class="is-hidden" id="js-storyquestion-is-answer-delivery-test-ready" data-is-answer-delivery-test-ready="@isDemandTest"></span>
+
+        @for(questions <- storyquestions.data.editorialQuestions) {
+            @for(qs <- questions) {
+                <h2 id="js-ASK-ACTION-header-@storyquestions.id" class="user__question-title ASK-ACTION-body">
+                    Need something explained?
+                        <span class="user__question-title--secondary">Pick a question: We'll publish an answer to the most popular question shortly</span>
+                </h2>
+                <h2 id="js-SUBMIT-ACTION-header-@storyquestions.id" class="user__question-title SUBMIT-ACTION-body is-hidden">
+                    Thank you for participating
+                    <span class="user__question-title--secondary">
+                    We'll publish an answer to the most popular question shortly. How would you like to get notified when it's ready?
+                    </span>
+                </h2>
+                <h2 id="js-FINAL-ACTION-header-@storyquestions.id" class="user__question-title FINAL-ACTION-body is-hidden">
+                    Thank you for your interest
+                    <span class="user__question-title--secondary">
+                    We're actively developing these notification features but they are not yet built. We're using your feedback to understand how you would like to be notified of the answers. Thanks again.
+                    </span>
+                </h2>
+                <p>
+            <div class="user__question-section"></div>
+                @for(question <- qs.questions) {
+                    <div id="js-ASK-ACTION-body-@question.questionId" class="user__question-container js-ASK-ACTION-body-@storyquestions.id">
+                        <div class="user__questions-text--wrapper js-ask-question-link">
+                            <div class="user__question-text">
+                                <meta class="notranslate" name="js-notranslate-@question.questionId" content="@question.questionText">
+                                <span class="user__questions-text--inner">
+                                @question.questionText
+                                </span>
+                            </div>
+                            <button id="btn-ask-question-@question.questionId" class="user__question-upvote" data-question-id="@question.questionId">
+                                    Ask
+                            </button>
+                        </div>
+                    </div>
+                }
+                <div id="js-SUBMIT-ACTION-body-@storyquestions.id" class="storyquestion-submission-container js-storyquestion-submission-container js-SUBMIT-ACTION-body is-hidden">
+                    <button class="user_answer-delivery btn-answer-delivery-@storyquestions.id" data-delivery-method="email">
+                                    Email
+                    </button>
+                    <button class="user_answer-delivery btn-answer-delivery-@storyquestions.id" data-delivery-method="browser-notification">
+                                    Onsite notification
+                    </button>
+                    <button  class="user_answer-delivery btn-answer-delivery-@storyquestions.id" data-delivery-method="facebook-messenger">
+                                    Facebook Messenger
+                    </button>
+                </div>
+
+                <div id="js-FINAL-ACTION-body-@storyquestions.id" class="user__question-container user__answer-delivery-container FINAL-ACTION-body is-hidden">
+                    <button id="js-final-thankyou-message-@storyquestions.id" class="user__question-response submeta__label"">
+                                    Close
+                    </button>
+                </div>
+                </p>
+            }
+        </div>
+}
+}
+
 
 @if(!isAmp && !isClosed) {
     <div class="js-view-tracking-component submeta user__question">

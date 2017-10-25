@@ -484,4 +484,16 @@ trait FeatureSwitches {
     sellByDate = new LocalDate(2018, 10, 17),
     exposeClientSide = true
   )
+
+  // Owner: Journalism
+  val ReaderAnswersDeliveryMechanism = Switch(
+    SwitchGroup.Feature,
+    "reader-answers-preferred-delivery-mechanism",
+    "When ON, story questions will give readers the option to indicate their preferred answer delivery medium",
+    owners = Seq(Owner.withGithub("annebyrne")),
+    safeState = On,
+    sellByDate = new LocalDate(2018, 10, 24),
+    exposeClientSide = true
+  )
+
 }
