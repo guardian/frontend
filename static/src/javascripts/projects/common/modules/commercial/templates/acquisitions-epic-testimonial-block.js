@@ -11,11 +11,7 @@ export const acquisitionsTestimonialBlockTemplate = (
         <blockquote class="epic__testimonial-text">
             ${params.testimonialMessage}
             <cite class="epic__testimonial-name">
-                ${params.citeImageUrl
-                    ? `<img class="epic__testimonial-name__image" src="${params.citeImageUrl}">`
-                    : ''}
                 ${params.testimonialName}
-                
             </cite>
         </blockquote>
     </div>`;
