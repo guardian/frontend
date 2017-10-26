@@ -4,6 +4,7 @@
 const path = require('path');
 const execa = require('execa');
 const chalk = require('chalk');
+const getChangedFiles = require('../tools/__tasks__/lib/get-changed-files');
 
 const confirmIfMasterMessage = `${chalk.red(
     `${chalk.inverse(
@@ -33,12 +34,7 @@ const confirmIfMaster = execa
             stdio: 'inherit',
         }
     )
-    .catch(() => Promise.reject('Ok, stopping 😉'));
-
-const diff = () =>
-    execa
-        .stdout('git', ['diff', '--name-only', '--cached', '--diff-filter=AM'])
-        .then(staged => staged.split('\n'));
+    .catch(() => Promise.reject(new Error('Ok, stopping 😉')));
 
 const validate = () =>
     execa(
@@ -49,43 +45,47 @@ const validate = () =>
         }
     );
 
-const checkYarnLock = staged => {
+const checkYarnLock = changed => {
     if (
-        staged.some(file => file === 'package.json') &&
-        !staged.some(file => file === 'yarn.lock')
+        changed.some(file => file === 'package.json') &&
+        !changed.some(file => file === 'yarn.lock')
     ) {
         return Promise.reject(
-            `${chalk.red(
-                `${chalk.underline(
-                    'package.json'
-                )} has changed but ${chalk.underline(
-                    'yarn.lock'
-                )} is not included in this commit.`
-            )}\n${chalk.dim(
-                `If this is intentional, commit this change with --no-verify.`
-            )}`
+            new Error(
+                `${chalk.red(
+                    `${chalk.underline(
+                        'package.json'
+                    )} has changed but ${chalk.underline(
+                        'yarn.lock'
+                    )} is not included in this commit.`
+                )}\n${chalk.dim(
+                    `If this is intentional, commit this change with --no-verify.`
+                )}`
+            )
         );
     }
-    return staged;
+    return changed;
+};
+
+// make sure docs TOC stays up to date
+const updateTOC = changed => {
+    if (changed.some(file => file.includes('docs/'))) {
+        const docs = path.resolve('docs');
+        const readme = path.resolve(docs, 'README.md');
+        return execa(path.resolve(docs, 'generate-toc.sh'), ['>', readme], {
+            stdio: 'inherit',
+        })
+            .then(() => execa.sync('git', ['add', readme]))
+            .then(() => changed);
+    }
+    return changed;
 };
 
 confirmIfMaster
     .then(validate)
-    .then(diff)
+    .then(getChangedFiles)
     .then(checkYarnLock)
-    // make sure docs TOC stays up to date
-    .then(staged => {
-        if (staged.some(file => file.includes('docs/'))) {
-            const docs = path.resolve('docs');
-            const readme = path.resolve(docs, 'README.md');
-            return execa(path.resolve(docs, 'generate-toc.sh'), ['>', readme], {
-                stdio: 'inherit',
-            })
-                .then(() => execa.sync('git', ['add', readme]))
-                .then(() => staged);
-        }
-        return staged;
-    })
+    .then(updateTOC)
     .catch(e => {
         console.log(`\n${e}\n`);
         process.exit(1);

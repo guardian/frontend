@@ -1,10 +1,10 @@
 @(page: model.Page)(implicit request: RequestHeader)
 
-@import conf.Configuration
 @import common.{LinkTo, Edition}
 @import views.support.RenderClasses
 @import navigation.{NewNavigation, NavigationHelpers}
-@import navigation.UrlHelpers.{getReaderRevenueUrl, getJobUrl, getContributionOrSupporterUrl, NewHeader, Subscribe, getSupportOrSubscriptionUrl}
+@import navigation.UrlHelpers.{getJobUrl, getContributionOrSupporterUrl, NewHeader, getSupportOrSubscriptionUrl}
+@import conf.switches.Switches.IdentityProfileNavigationSwitch
 
 <header class="@RenderClasses(Map(
             "new-header--mvt-desktop" -> mvt.ABNewDesktopHeaderVariant.isParticipating,
@@ -65,12 +65,9 @@
                                 <span class="hide-from-tablet">jobs</span>
                             </a>
 
-                            <a class="top-bar__item top-bar__item--dropdown hide-until-desktop"
-                                data-link-name=""
-                                data-edition=""
-                                href="">
-                                sign in
-                            </a>
+                            @if(IdentityProfileNavigationSwitch.isSwitchedOn) {
+                                @fragments.nav.userAccountDropdown()
+                            }
                         }
                     }
                 </div>

@@ -63,7 +63,7 @@ const isOff = (
     { type }: StorageOptions = defaultOptions
 ): boolean => storage[type].get(`${storagePrefix}switch.${name}`) === false;
 
-const isNumeric = (str: string): boolean => !isNaN(str);
+const isNumeric = (str: string): boolean => !Number.isNaN(str);
 
 const isBoolean = (str: string): boolean => str === 'true' || str === 'false';
 

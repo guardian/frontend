@@ -8,7 +8,7 @@ import model.MetaData
 
 case class HostedArticlePage(
   override val id: String,
-  override val campaign: HostedCampaign,
+  override val campaign: Option[HostedCampaign],
   override val title: String,
   override val standfirst: String,
   body: String,
@@ -29,17 +29,16 @@ object HostedArticlePage extends Logging {
     log.info(s"Building hosted article ${content.id} ...")
 
     val page = for {
-      campaign <- HostedCampaign.fromContent(content)
-      atoms <- getAndLog(content, content.atoms, "the atoms are missing")
+      atoms    <- getAndLog(content, content.atoms, "the atoms are missing")
       ctaAtoms <- getAndLog(content, atoms.cta, "the CTA atoms are missing")
-      ctaAtom <- getAndLog(content, ctaAtoms.headOption, "the CTA atom is missing")
+      ctaAtom  <- getAndLog(content, ctaAtoms.headOption, "the CTA atom is missing")
     } yield {
 
       val mainImageAsset = findLargestMainImageAsset(content)
 
       HostedArticlePage(
         id = content.id,
-        campaign,
+        campaign = HostedCampaign.fromContent(content),
         title = content.webTitle,
         // using capi trail text instead of standfirst because we don't want the markup
         standfirst = content.fields.flatMap(_.trailText).getOrElse(""),

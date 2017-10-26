@@ -96,6 +96,72 @@ const defineSlot = (adSlotNode: Element, sizes: Object): Object => {
         slotReady = setHighMerchSlotTargeting(slot, slotTarget);
     }
 
+    /*
+        For each ad slot defined, we request information from IAS, based
+        on slot name, ad unit and sizes. We then add this targeting to the
+        slot prior to requesting it from DFP.
+
+        We race the request to IAS with a Timeout of 2 seconds. If the
+        timeout resolves before the request to IAS then the slot is defined
+        without the additional IAS data.
+
+        To see debugging output from IAS add the URL param `&iasdebug=true` to the page URL
+     */
+
+    if (config.get('switches.iasOptimisation', false)) {
+        /* eslint-disable no-underscore-dangle */
+        // this should all have been instantiated by commercial/modules/third-party-tags/ias.js
+        window.__iasPET = window.__iasPET || {};
+        const iasPET = window.__iasPET;
+        /* eslint-disable no-underscore-enable */
+
+        iasPET.queue = iasPET.queue || [];
+        iasPET.pubId = '10249';
+
+        // IAS Optimization Targeting
+        const iasPETSlots = [
+            {
+                adSlotId: id,
+                size: slot
+                    .getSizes()
+                    .filter(size => size !== 'fluid')
+                    .map(size => [size.getWidth(), size.getHeight()]),
+                adUnitPath: adUnit(), // why do we have this method and not just slot.getAdUnitPath()?
+            },
+        ];
+
+        // this is stored so that the timeout can be cancelled in the event of IAS not timing out
+        let timeoutId;
+
+        // this is resolved by either the iasTimeout or iasDataCallback, defined below
+        let loadedResolve;
+        const iasDataPromise = new Promise(resolve => {
+            loadedResolve = resolve;
+        });
+
+        const iasDataCallback = () => {
+            iasPET.setTargetingForGPT();
+            clearTimeout(timeoutId);
+            loadedResolve();
+        };
+
+        iasPET.queue.push({
+            adSlots: iasPETSlots,
+            dataHandler: iasDataCallback,
+        });
+
+        const iasTimeoutDuration = 2000;
+
+        const iasTimeout = () =>
+            new Promise(resolve => {
+                timeoutId = setTimeout(resolve, iasTimeoutDuration);
+            });
+
+        slotReady = slotReady.then(() =>
+            Promise.race([iasTimeout(), iasDataPromise])
+        );
+    }
+
     if (slotTarget === 'im' && config.page.isbn) {
         slot.setTargeting('isbn', config.page.isbn);
     }

@@ -5,11 +5,47 @@
 // - https://css-tricks.com/inheriting-box-sizing-probably-slightly-better-best-practice
 
 import loadApp from './__inline__/loadApp';
+import loadFonts from './__inline__/loadFonts';
 import resetCSS from './__inline__/reset.css';
-import fontsCSS from './__inline__/fonts.css';
+
+declare type FontDefinition = {
+    fileTypes: Array<FileType>,
+    typeFace: string,
+};
+
+declare type FileType = {
+    endpoint: string,
+    fileType: string,
+    hintTypes: Array<HintType>,
+};
+
+declare type HintType = {
+    endpoint: string,
+    hintType: string,
+};
 
 //  Having to typecast loadApp to a string here to appease flow
 const loadAppStr: string = (loadApp: any);
+const loadFontsStr: string = (loadFonts: any);
+
+const getFontDefinitions = (fontDefinitions: Array<FontDefinition>): string => {
+    let html = '';
+
+    if (fontDefinitions) {
+        fontDefinitions.forEach(typeFace => {
+            html += `<style class="webfont" data-cache-name="${typeFace.typeFace}"`;
+            typeFace.fileTypes.forEach(fileType => {
+                html += ` data-cache-file-${fileType.fileType}="${fileType.endpoint}"`;
+                fileType.hintTypes.forEach(hintType => {
+                    html += ` data-cache-file-hinted-${hintType.hintType}-${fileType.fileType}="${hintType.endpoint}"`;
+                });
+            });
+            html += '></style>';
+        });
+    }
+
+    return html;
+};
 
 export default (props: any, appCSS: string) =>
     `<head lang="en" data-page-path="/uk">
@@ -21,11 +57,11 @@ export default (props: any, appCSS: string) =>
         <meta name="HandheldFriendly" content="True"/>
         <meta name="viewport" content="width=device-width,initial-scale=1">
         <style>${resetCSS}</style>
-        <style>${fontsCSS}</style>
+        ${getFontDefinitions(props.config.fontDefinitions)}
         ${appCSS}
         <script>
             window.guardian = ${JSON.stringify(props)};
-
             ${loadAppStr}
+            ${loadFontsStr}
         </script>
     </head>`;

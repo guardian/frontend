@@ -16,6 +16,7 @@ import { remarketing } from 'commercial/modules/third-party-tags/remarketing';
 import { simpleReach } from 'commercial/modules/third-party-tags/simple-reach';
 import { tourismAustralia } from 'commercial/modules/third-party-tags/tourism-australia';
 import { krux } from 'commercial/modules/third-party-tags/krux';
+import { ias } from 'commercial/modules/third-party-tags/ias';
 import { initOutbrain } from 'commercial/modules/third-party-tags/outbrain';
 import { doubleClickAdFree } from 'commercial/modules/third-party-tags/doubleclick-ad-free';
 import plista from 'commercial/modules/third-party-tags/plista';
@@ -86,6 +87,7 @@ const loadOther = (): void => {
         simpleReach,
         tourismAustralia,
         krux,
+        ias,
         doubleClickAdFree,
     ].filter(_ => _.shouldRun);
 

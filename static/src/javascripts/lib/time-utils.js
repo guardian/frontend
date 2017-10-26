@@ -7,7 +7,7 @@ const daysSince = (date: ?string): number => {
         try {
             const ms = Date.parse(date);
 
-            if (isNaN(ms)) return Infinity;
+            if (Number.isNaN(ms)) return Infinity;
             return (new Date() - ms) / oneDay;
         } catch (e) {
             return Infinity;

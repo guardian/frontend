@@ -284,16 +284,16 @@ object Commercial {
       frontId: Option[String]
     )(implicit request: RequestHeader): String = {
 
-      val isContentPage = frontId.isEmpty && containerDisplayName.contains("related content")
+      val isContentPage =
+        containerDisplayName.contains("more on this story") ||
+          containerDisplayName.contains("related content")
 
       mkString(
         containerType =
           if (isContentPage) "Onward container"
           else "Front container",
         editionId = Edition(request).id,
-        frontId =
-          if (isContentPage) "none"
-          else frontId.getOrElse("unknown front id"),
+        frontId = frontId.getOrElse("unknown front id"),
         containerIndex = containerIndex,
         containerTitle = containerDisplayName.getOrElse("unknown container"),
         sponsorName = card.branding.map(_.sponsorName) getOrElse "unknown",

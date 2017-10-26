@@ -193,7 +193,7 @@ const autoUpdate = (opts?: autoUpdateOptions): void => {
                         });
                 });
             } else {
-                location.assign(window.location.pathname);
+                window.location.assign(window.location.pathname);
             }
         });
 

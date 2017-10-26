@@ -22,7 +22,7 @@ const userHasData = (): boolean => {
 
 const adFreeDataIsPresent = (): boolean => {
     const cookieVal = getCookie(AD_FREE_USER_COOKIE);
-    return !isNaN(parseInt(cookieVal, 10));
+    return !Number.isNaN(parseInt(cookieVal, 10));
 };
 
 const timeInDaysFromNow = (daysFromNow: number): string => {

@@ -3,7 +3,10 @@ import reportError from 'lib/report-error';
 import dfpOrigin from 'commercial/modules/messenger/dfp-origin';
 import { postMessage } from 'commercial/modules/messenger/post-message';
 
-const ALLOWED_HOSTS = [dfpOrigin, `${location.protocol}//${location.host}`];
+const ALLOWED_HOSTS = [
+    dfpOrigin,
+    `${window.location.protocol}//${window.location.host}`,
+];
 const LISTENERS = {};
 let REGISTERED_LISTENERS = 0;
 

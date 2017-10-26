@@ -8,7 +8,7 @@ import model.MetaData
 
 case class HostedGalleryPage(
   override val id: String,
-  override val campaign: HostedCampaign,
+  override val campaign: Option[HostedCampaign],
   override val title: String,
   override val standfirst: String,
   override val cta: HostedCallToAction,
@@ -37,10 +37,9 @@ object HostedGalleryPage extends Logging {
     log.info(s"Building hosted gallery ${content.id} ...")
 
     val page = for {
-      campaign <- HostedCampaign.fromContent(content)
-      atoms <- getAndLog(content, content.atoms, "the atoms are missing")
+      atoms    <- getAndLog(content, content.atoms, "the atoms are missing")
       ctaAtoms <- getAndLog(content, atoms.cta, "the CTA atoms are missing")
-      ctaAtom <- getAndLog(content, ctaAtoms.headOption, "the CTA atom is missing")
+      ctaAtom  <- getAndLog(content, ctaAtoms.headOption, "the CTA atom is missing")
     } yield {
 
       val galleryImages = {
@@ -59,7 +58,7 @@ object HostedGalleryPage extends Logging {
 
       HostedGalleryPage(
         id = content.id,
-        campaign,
+        campaign = HostedCampaign.fromContent(content),
         images = galleryImages.toList,
         title = content.webTitle,
         // using capi trail text instead of standfirst because we don't want the markup

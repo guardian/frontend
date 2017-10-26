@@ -40,7 +40,7 @@ const initRadiator = (): void => {
                     list.appendChild(li);
 
                     fetchJson(
-                        `//${location.host}/radiator/commit/${revision}`
+                        `//${window.location.host}/radiator/commit/${revision}`
                     ).then(rev => {
                         if (rev.commit) {
                             li.innerHTML = `${rev.commit.author
@@ -113,7 +113,7 @@ const initRadiator = (): void => {
     }
 
     // Page views
-    fetchJson(`//${location.host}/ophan/pageviews`).then(data => {
+    fetchJson(`//${window.location.host}/ophan/pageviews`).then(data => {
         const pluckedData = data.seriesData.map(dataObj => dataObj.data);
 
         const todayData = flatten(pluckedData).reduce((days, day) => {
