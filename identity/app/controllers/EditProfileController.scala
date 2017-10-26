@@ -2,15 +2,16 @@ package controllers
 
 import actions.AuthenticatedActions
 import actions.AuthenticatedActions.AuthRequest
-import com.gu.identity.model.User
+import com.gu.identity.model.{EmailList, Subscriber, User}
 import common.ImplicitControllerExecutionContext
 import controllers.EmailPrefsData.emailPrefsForm
 import form._
 import idapiclient.responses.Error
 import idapiclient.IdApiClient
 import model._
-import play.api.data.Form
+import play.api.data.{Form, Forms}
 import play.api.i18n.{I18nSupport, MessagesProvider}
+import play.api.libs.json.Json
 import play.api.mvc._
 import play.filters.csrf.{CSRFAddToken, CSRFCheck}
 import services._
@@ -53,36 +54,6 @@ class EditProfileController(
   def submitAccountForm(): Action[AnyContent] = submitForm(AccountEditProfilePage)
   def submitPrivacyForm(): Action[AnyContent] = submitForm(PrivacyEditProfilePage)
 
-  def getEmailPrefsForm(request: AuthRequest[AnyContent]): Future[Form[EmailPrefsData]] = {
-    import EmailPrefsData._
-
-    val idRequest = idRequestParser(request)
-    val userId = request.user.getId()
-    val subscriberFuture = identityApiClient.userEmails(userId, idRequest.trackingData)
-
-    for {
-      subscriber <- subscriberFuture
-    } yield {
-      subscriber match {
-        case Right(s) => {
-          val form = emailPrefsForm.fill(EmailPrefsData(
-            s.htmlPreference,
-            s.subscriptions.map(_.listId)
-          ))
-          form
-        }
-        case s => {
-          val errors = s.left.getOrElse(Nil)
-          val formWithErrors = errors.foldLeft(emailPrefsForm) {
-            case (formWithErrors, Error(message, description, _, context)) =>
-              formWithErrors.withGlobalError(description)
-          }
-          formWithErrors
-        }
-      }
-    }
-  }
-
   private def displayForm(page: IdentityPage) = csrfAddToken {
     recentlyAuthenticated.async { implicit request =>
 
@@ -105,9 +76,6 @@ class EditProfileController(
       }).flatMap(identity)
     }
   }
-
-  protected def getEmailSubscriptions(form: Form[EmailPrefsData], add: List[String] = List(), remove: List[String] = List()) =
-    form.data.filter(_._1.startsWith("currentEmailSubscriptions")).map(_._2).filterNot(remove.toSet) ++ add
 
   private def submitForm(page: IdentityPage): Action[AnyContent] =
     csrfCheck {
@@ -152,21 +120,125 @@ class EditProfileController(
           )
         }).flatMap(identity)
       }
-
-    } // end authActionWithUser.async
+    }
 
   private def profileFormsView(
-                                page: IdentityPage,
-                                forms: ProfileForms,
-                                user: User,
-                                emailPrefsForm: Form[EmailPrefsData],
-                                emailSubscriptions: List[String],
-                                availableLists: EmailNewsletters,
-                                idRequest: services.IdentityRequest,
-                                identityUrlBuilder: IdentityUrlBuilder
-                              )
-      (implicit request: AuthRequest[AnyContent]): Result =
+    page: IdentityPage,
+    forms: ProfileForms,
+    user: User,
+    emailPrefsForm: Form[EmailPrefsData],
+    emailSubscriptions: List[String],
+    availableLists: EmailNewsletters,
+    idRequest: services.IdentityRequest,
+    identityUrlBuilder: IdentityUrlBuilder
+  )(implicit request: AuthRequest[AnyContent]): Result =
     NoCache(Ok(views.html.profileForms(page, user, forms, idRequestParser(request), idUrlBuilder,emailPrefsForm,availableLists,emailSubscriptions)))
+
+
+  //Email preferences are submitted individually by a javascript call, not by the form submission. The form submission only deals with the consents.
+
+  def getEmailPrefsForm(request: AuthRequest[AnyContent]): Future[Form[EmailPrefsData]] = {
+    import EmailPrefsData._
+
+    val idRequest = idRequestParser(request)
+    val userId = request.user.getId()
+    val subscriberFuture = identityApiClient.userEmails(userId, idRequest.trackingData)
+
+    for {
+      subscriber <- subscriberFuture
+    } yield {
+      subscriber match {
+        case Right(s) => {
+          val form = emailPrefsForm.fill(EmailPrefsData(
+            s.htmlPreference,
+            s.subscriptions.map(_.listId)
+          ))
+          form
+        }
+        case s => {
+          val errors = s.left.getOrElse(Nil)
+          val formWithErrors = errors.foldLeft(emailPrefsForm) {
+            case (formWithErrors, Error(message, description, _, context)) =>
+              formWithErrors.withGlobalError(description)
+          }
+          formWithErrors
+        }
+      }
+    }
+  }
+
+  protected def getEmailSubscriptions(form: Form[EmailPrefsData], add: List[String] = List(), remove: List[String] = List()) =
+    form.data.filter(_._1.startsWith("currentEmailSubscriptions")).map(_._2).filterNot(remove.toSet) ++ add
+
+  def saveEmailPreferences: Action[AnyContent] = csrfCheck {
+    authAction.async { implicit request =>
+
+      val idRequest = idRequestParser(request)
+      val userId = request.user.getId()
+      val auth = request.user.auth
+      val trackingParameters = idRequest.trackingData
+
+      emailPrefsForm.bindFromRequest.fold({
+        case formWithErrors: Form[EmailPrefsData] =>
+          Future.successful(formWithErrors)
+      }, {
+        case emailPrefsData: EmailPrefsData =>
+          val form = emailPrefsForm.fill(emailPrefsData)
+
+          val unsubscribeResponse = emailPrefsData.removeEmailSubscriptions.map { id =>
+            identityApiClient.deleteSubscription(userId, EmailList(id), auth, trackingParameters)
+          }
+
+          val subscribeResponse = emailPrefsData.addEmailSubscriptions.map { id =>
+            identityApiClient.addSubscription(userId, EmailList(id), auth, trackingParameters)
+          }
+
+          val newSubscriber = Subscriber(emailPrefsData.htmlPreference, Nil)
+          val updatePreferencesResponse = identityApiClient.updateUserEmails(userId, newSubscriber, auth, trackingParameters)
+
+          Future.sequence(updatePreferencesResponse :: unsubscribeResponse ++ subscribeResponse).map { responses =>
+            if (responses.exists(_.isLeft)) {
+              form.withGlobalError("There was an error saving your preferences")
+            } else {
+              form
+            }
+          }
+      }).map { form  =>
+        if (form.hasErrors) {
+          val errorsAsJson = Json.toJson(
+            form.errors.groupBy(_.key).map { case (key, errors) =>
+              val nonEmptyKey = if (key.isEmpty) "global" else key
+              (nonEmptyKey, errors.map(e => play.api.i18n.Messages(e.message, e.args: _*)))
+            }
+          )
+          Forbidden(errorsAsJson)
+        } else {
+          Ok("updated")
+        }
+      }
+    }
+  }
+}
+
+case class EmailPrefsData(
+ htmlPreference: String,
+ currentEmailSubscriptions: List[String],
+ addEmailSubscriptions: List[String] = List(),
+ removeEmailSubscriptions: List[String] = List()
+)
+
+object EmailPrefsData {
+  protected val validPrefs = Set("HTML", "Text")
+  def isValidHtmlPreference(pref: String): Boolean =  validPrefs contains pref
+
+  val emailPrefsForm = Form(
+    Forms.mapping(
+      "htmlPreference" -> Forms.text.verifying(isValidHtmlPreference _),
+      "currentEmailSubscriptions" -> Forms.list(Forms.text),
+      "addEmailSubscriptions" -> Forms.list(Forms.text),
+      "removeEmailSubscriptions" -> Forms.list(Forms.text)
+    )(EmailPrefsData.apply)(EmailPrefsData.unapply)
+  )
 }
 
 /**
