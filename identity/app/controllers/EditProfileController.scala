@@ -4,6 +4,7 @@ import actions.AuthenticatedActions
 import actions.AuthenticatedActions.AuthRequest
 import com.gu.identity.model.User
 import common.ImplicitControllerExecutionContext
+import controllers.EmailPrefsData.emailPrefsForm
 import form._
 import idapiclient.responses.Error
 import idapiclient.IdApiClient
@@ -52,16 +53,61 @@ class EditProfileController(
   def submitAccountForm(): Action[AnyContent] = submitForm(AccountEditProfilePage)
   def submitPrivacyForm(): Action[AnyContent] = submitForm(PrivacyEditProfilePage)
 
-  private def displayForm(page: IdentityPage) = csrfAddToken {
-    recentlyAuthenticated.async { implicit request =>
-      Future {
-        profileFormsView(
-          page = page,
-          forms = ProfileForms(request.user, PublicEditProfilePage),
-          request.user)
+  def getEmailPrefsForm(request: AuthRequest[AnyContent]): Future[Form[EmailPrefsData]] = {
+    import EmailPrefsData._
+
+    val idRequest = idRequestParser(request)
+    val userId = request.user.getId()
+    val subscriberFuture = identityApiClient.userEmails(userId, idRequest.trackingData)
+
+    for {
+      subscriber <- subscriberFuture
+    } yield {
+      subscriber match {
+        case Right(s) => {
+          val form = emailPrefsForm.fill(EmailPrefsData(
+            s.htmlPreference,
+            s.subscriptions.map(_.listId)
+          ))
+          form
+        }
+        case s => {
+          val errors = s.left.getOrElse(Nil)
+          val formWithErrors = errors.foldLeft(emailPrefsForm) {
+            case (formWithErrors, Error(message, description, _, context)) =>
+              formWithErrors.withGlobalError(description)
+          }
+          formWithErrors
+        }
       }
     }
   }
+
+  private def displayForm(page: IdentityPage) = csrfAddToken {
+    recentlyAuthenticated.async { implicit request =>
+
+      val idRequest = idRequestParser(request)
+      val forms = getEmailPrefsForm(request)
+
+      forms.map(form => {
+        Future {
+          profileFormsView(
+            page = page,
+            forms = ProfileForms(request.user, PublicEditProfilePage),
+            request.user,
+            form,
+            getEmailSubscriptions(form).toList,
+            EmailNewsletters.all,
+            idRequest,
+            idUrlBuilder
+          )
+        }
+      }).flatMap(identity)
+    }
+  }
+
+  protected def getEmailSubscriptions(form: Form[EmailPrefsData], add: List[String] = List(), remove: List[String] = List()) =
+    form.data.filter(_._1.startsWith("currentEmailSubscriptions")).map(_._2).filterNot(remove.toSet) ++ add
 
   private def submitForm(page: IdentityPage): Action[AnyContent] =
     csrfCheck {
@@ -70,38 +116,57 @@ class EditProfileController(
         val boundProfileForms =
           ProfileForms(userDO, activePage = page).bindFromRequestWithAddressErrorHack(request) // NOTE: only active form is bound to request data
 
-        boundProfileForms.activeForm.fold(
-          formWithErrors => Future(profileFormsView(page, boundProfileForms, userDO)),
-          success = {
-            case formData: AccountFormData if formData.deleteTelephone =>
-              identityApiClient.deleteTelephone(userDO.auth) map {
-                case Left(errors) => profileFormsView(page, boundProfileForms.withErrors(errors), userDO)
+        val idRequest = idRequestParser(request)
+        val forms = getEmailPrefsForm(request)
 
-                case Right(_) => {
-                  val boundForms =
-                    boundProfileForms.bindForms(
-                      userDO.user.copy(privateFields = userDO.user.privateFields.copy(telephoneNumber = None)))
+        def processSuccessfulSubmission(userFormData: UserFormData): Future[Result] = {
+          forms.map(form => {
+            userFormData match {
+              case formData: AccountFormData if (formData.deleteTelephone) => {
+                identityApiClient.deleteTelephone(userDO.auth) map {
+                  case Left(errors) => profileFormsView(page, boundProfileForms.withErrors(errors), userDO, emailPrefsForm,getEmailSubscriptions(form).toList,EmailNewsletters.all,idRequest,idUrlBuilder)
 
-                  profileFormsView(page, boundForms, userDO)
+                  case Right(_) => {
+                    val boundForms =
+                      boundProfileForms.bindForms(
+                        userDO.user.copy(privateFields = userDO.user.privateFields.copy(telephoneNumber = None)))
+
+                    profileFormsView(page, boundForms, userDO, emailPrefsForm,getEmailSubscriptions(form).toList,EmailNewsletters.all,idRequest,idUrlBuilder)
+                  }
                 }
               }
 
-            case formData: UserFormData =>
-              identityApiClient.saveUser(userDO.id, formData.toUserUpdate(userDO), userDO.auth) map {
-                case Left(errors) => profileFormsView(page, boundProfileForms.withErrors(errors), userDO)
-                case Right(updatedUser) => profileFormsView(page, boundProfileForms.bindForms(updatedUser), updatedUser)
-              }
-          } // end of success
-        ) // end fold
-      } // end authActionWithUser.async
-    } // end csrfCheck
+              case formData: UserFormData =>
+                identityApiClient.saveUser(userDO.id, formData.toUserUpdate(userDO), userDO.auth) map {
+                  case Left(errors) => profileFormsView(page, boundProfileForms.withErrors(errors), userDO, emailPrefsForm,getEmailSubscriptions(form).toList,EmailNewsletters.all,idRequest,idUrlBuilder)
+                  case Right(updatedUser) => profileFormsView(page, boundProfileForms.bindForms(updatedUser), updatedUser, emailPrefsForm,getEmailSubscriptions(form).toList,EmailNewsletters.all,idRequest,idUrlBuilder)
+                }
+            }
+          }).flatMap(identity)
+        }
+
+        forms.map(form => {
+          boundProfileForms.activeForm.fold(
+            formWithErrors => Future(profileFormsView(page, boundProfileForms, userDO, emailPrefsForm,getEmailSubscriptions(form).toList,EmailNewsletters.all,idRequest,idUrlBuilder)),
+            userFormData => processSuccessfulSubmission(userFormData)
+          )
+        }).flatMap(identity)
+      }
+
+    } // end authActionWithUser.async
 
   private def profileFormsView(
-      page: IdentityPage,
-      forms: ProfileForms,
-      user: User)
+                                page: IdentityPage,
+                                forms: ProfileForms,
+                                user: User,
+                                emailPrefsForm: Form[EmailPrefsData],
+                                emailSubscriptions: List[String],
+                                availableLists: EmailNewsletters,
+                                idRequest: services.IdentityRequest,
+                                identityUrlBuilder: IdentityUrlBuilder
+                              )
       (implicit request: AuthRequest[AnyContent]): Result =
-    NoCache(Ok(views.html.profileForms(page, user, forms, idRequestParser(request), idUrlBuilder)))
+    NoCache(Ok(views.html.profileForms(page, user, forms, idRequestParser(request), idUrlBuilder,emailPrefsForm,availableLists,emailSubscriptions)))
 }
 
 /**

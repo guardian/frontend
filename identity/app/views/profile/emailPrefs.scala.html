@@ -59,8 +59,6 @@
     @idUrlBuilder.buildUrl(s"/$endpoint", idRequest)
 }
 
-@mainLegacy(page, projectName = Option("identity")){
-}{
     <div class="identity-wrapper monocolumn-wrapper">
         <h1 class="identity-title">Email preferences</h1>
         <h4 class="email-subscription__meta">To change your email address please click <a href=@buildIdentityUrl("account/edit")>here.</a></h4>
@@ -122,11 +120,5 @@
 
             </fieldset>
 
-            <ul class="nav nav--registration identity-section" data-link-name="Email prefs footer">
-                <li class="nav__item"><a class="nav__link" href="@controllers.routes.EditProfileController.displayPrivacyForm" data-link-name="Privacy and marketing settings">Privacy &amp; marketing settings</a></li>
-                <li class="nav__item"><a class="nav__link" href="@Configuration.site.host/info/tech-feedback" data-link-name="Report technical issue">Report technical issue</a></li>
-            </ul>
-
         </form>
     </div>
-}

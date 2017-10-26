@@ -1,12 +1,21 @@
+@import model.EmailNewsletters
+@import form.IdFormHelpers._
+
 @(idUrlBuilder: services.IdentityUrlBuilder,
   idRequest: services.IdentityRequest,
   user: com.gu.identity.model.User,
-  privacyForm: Form[_root_.form.PrivacyFormData])(implicit request: RequestHeader, messages: play.api.i18n.Messages)
+  privacyForm: Form[_root_.form.PrivacyFormData],
+  emailPrefsForm: Form[EmailPrefsData],
+  availableLists: EmailNewsletters,
+  emailSubscriptions : List[String],
+  page: model.Page)(implicit request: RequestHeader, messages: play.api.i18n.Messages, context: model.ApplicationContext)
 
 @import views.html.fragments.form.checkboxField
 @import views.html.fragments.registrationFooter
 @import _root_.form.IdFormHelpers.{Checkbox, nonInputFields}
 @import com.gu.identity.model.ConsentText
+@import views.html.profile.emailPrefs
+
 
 @v2ConsentCheckbox(consentField: Field) = {
 
@@ -95,5 +104,7 @@
 
     </fieldset>
 </form>
+
+@emailPrefs(page,emailPrefsForm, emailSubscriptions, availableLists, idRequest,idUrlBuilder )
 
 @registrationFooter(idRequest, idUrlBuilder)
