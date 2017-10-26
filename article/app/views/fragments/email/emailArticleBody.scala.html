@@ -30,12 +30,16 @@
             </div>
 
             @sponsorship.map { sponsor =>
-                <div class="rich-link__sponsor">
-                    @sponsor.sponsorshipType match {
-                        case PaidContent => { @{ s"Paid for by ${sponsor.sponsorName} ${sponsor.sponsorLogo}" } }
-                        case _ => { }
+                @sponsor.sponsorshipType match {
+                    case PaidContent => {
+                        <div class="rich-link__sponsor">
+                        @{
+                            s"Paid for by ${sponsor.sponsorName} ${sponsor.sponsorLogo}"
+                        }
+                        </div>
                     }
-                </div>
+                    case _ => { }
+                }
             }
 
         </div>
