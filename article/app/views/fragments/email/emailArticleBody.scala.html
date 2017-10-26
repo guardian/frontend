@@ -8,7 +8,7 @@
 @import model.liveblog._
 @import model.EmailAddons.EmailContentType
 @import model.content.{MediaAtom, MediaAssetPlatform}
-
+@import com.gu.contentapi.client.model.v1.SponsorshipType.{PaidContent, Sponsored, Foundation, EnumUnknownSponsorshipType}
 
 @richLinkDefault(title: String, href: String, sponsorship: Option[Sponsorship]) = {
     @row(Seq("padded")) {
@@ -28,10 +28,19 @@
                     </p>
                 </a>
             </div>
+
+            @sponsorship.map { sponsor =>
+                <div class="rich-link__sponsor">
+                    @sponsor.sponsorshipType match {
+                        case PaidContent => { @{ s"Paid for by ${sponsor.sponsorName} ${sponsor.sponsorLogo}" } }
+                        case _ => { }
+                    }
+                </div>
+            }
+
         </div>
     }
 }
-
 
 <table class="article-body">
 @defining(page.article) { article =>
