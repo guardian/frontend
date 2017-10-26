@@ -32,7 +32,7 @@ case class ProfileFormData(
   username: String
 ) extends UserFormData{
 
-  def toUserUpdate(currentUser: User): UserUpdateDTO = UserUpdateDTO(
+  def toUserUpdateDTO(currentUser: User): UserUpdateDTO = UserUpdateDTO(
     publicFields = Some(PublicFields(
       location = toUpdate(location, currentUser.publicFields.location),
       aboutMe = toUpdate(aboutMe, currentUser.publicFields.aboutMe),

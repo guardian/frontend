@@ -41,7 +41,7 @@ class PrivacyMapping extends UserFormMapping[PrivacyFormData] {
 case class PrivacyFormData(
     consents: List[Consent]) extends UserFormData{
 
-  def toUserUpdate(oldUserFromApi: User): UserUpdateDTO =
+  def toUserUpdateDTO(oldUserFromApi: User): UserUpdateDTO =
     UserUpdateDTO(consents = Some(consents))
 }
 

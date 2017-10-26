@@ -52,7 +52,7 @@ trait UserFormData {
   /**
     * Converts User DO to UserUpdate DTO used for serialisation over wire
     */
-  def toUserUpdate(oldUserDO: User): UserUpdateDTO
+  def toUserUpdateDTO(oldUserDO: User): UserUpdateDTO
 
   protected def toUpdate[T](newValue: T, current: Option[T]): Option[T] = (newValue, current) match {
     case ("", None) => None

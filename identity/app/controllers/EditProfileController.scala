@@ -87,7 +87,7 @@ class EditProfileController(
               }
 
             case formData: UserFormData =>
-              identityApiClient.saveUser(userDO.id, formData.toUserUpdate(userDO), userDO.auth) map {
+              identityApiClient.saveUser(userDO.id, formData.toUserUpdateDTO(userDO), userDO.auth) map {
                 case Left(errors) => profileFormsView(page, boundProfileForms.withErrors(errors), userDO)
                 case Right(updatedUser) => profileFormsView(page, boundProfileForms.bindForms(updatedUser), updatedUser)
               }

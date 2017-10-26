@@ -62,7 +62,7 @@ case class AccountFormData(
   deleteTelephone: Boolean = false
 ) extends UserFormData {
 
-  def toUserUpdate(currentUser: User): UserUpdateDTO = UserUpdateDTO(
+  def toUserUpdateDTO(currentUser: User): UserUpdateDTO = UserUpdateDTO(
     primaryEmailAddress = toUpdate(primaryEmailAddress, Some(currentUser.primaryEmailAddress)),
     dates = Some(UserDates(birthDate = birthDate.dateTime)),
     privateFields = Some(PrivateFields(
