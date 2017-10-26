@@ -36,7 +36,7 @@ const DETAILS_SUBSCRIPTION_NUMBER_CONTAINER =
 const DETAILS_SUBSCRIPTION_NUM_TEXT = '.js-contribution-subscription-number';
 // const MEMBERSHIP_TIER = '.js-mem-tier';
 const UP_SELL = '.js-contribution-up-sell';
-// const MEMBER_INFO = '.js-mem-info';
+const CONTRIBUTION_INFO = '.js-contribution-info';
 const LOADER = '.js-contribution-loader';
 const IS_HIDDEN_CLASSNAME = 'is-hidden';
 const ERROR = '.js-contribution-error';
@@ -57,7 +57,11 @@ const showPayPalAccountName = (): void => {
     $(PAYPAL_SHOW_EMAIL_BUTTON).addClass(IS_HIDDEN_CLASSNAME);
 };
 
-const displayMembershipUpSell = (): void => {
+const displayContributionInfo = (): void => {
+    $(CONTRIBUTION_INFO).removeClass(IS_HIDDEN_CLASSNAME);
+};
+
+const displaySupportUpSell = (): void => {
     $(UP_SELL).removeClass(IS_HIDDEN_CLASSNAME);
 };
 
@@ -167,21 +171,22 @@ export const recurringContributionTab = (): void => {
             credentials: 'include',
         }
     )
-        .then(resp => resp.json())
-        .then(json => {
-            if (json && json.subscription) {
-                hideLoader();
-                populateUserDetails(json);
-            } else {
-                hideLoader();
-                displayMembershipUpSell();
-            }
-        })
-        .catch(err => {
+    .then(resp => resp.json())
+    .then(json => {
+        if (json && json.subscription) {
             hideLoader();
-            displayErrorMessage();
-            reportError(err, {
-                feature: 'mma-monthlycontribution',
-            });
+            populateUserDetails(json);
+            displayContributionInfo();
+        } else {
+            hideLoader();
+            displaySupportUpSell();
+        }
+    })
+    .catch(err => {
+        hideLoader();
+        displayErrorMessage();
+        reportError(err, {
+            feature: 'mma-monthlycontribution',
         });
+    });
 };
