@@ -37,12 +37,12 @@ type WeatherResponse = {
     html: string,
 };
 
-const isNetworkFront = () =>
-    ['uk', 'us', 'au', 'international'].includes(config.page.pageId);
+const isNetworkFront = (): boolean =>
+    ['uk', 'us', 'au', 'international'].includes(config.get('page.pageId'));
 
 export const Weather = {
-    init() {
-        if (!config.switches || !config.switches.weather || !isNetworkFront()) {
+    init(): ?boolean {
+        if (!config.get('switches.weather', false) || !isNetworkFront()) {
             return false;
         }
 
@@ -83,7 +83,7 @@ export const Weather = {
         if (location) {
             return this.fetchWeatherData(location);
         }
-        return this.getWeatherData(`${config.page.weatherapiurl}.json`)
+        return this.getWeatherData(`${config.get('page.weatherapiurl')}.json`)
             .then(response => {
                 this.fetchWeatherData(response);
             })
@@ -95,8 +95,8 @@ export const Weather = {
     },
 
     fetchWeatherData(location: Location): Promise<void> {
-        const weatherApiBase = config.page.weatherapiurl;
-        const edition = config.page.edition;
+        const weatherApiBase = config.get('page.weatherapiurl');
+        const edition = config.get('page.edition');
         return this.getWeatherData(
             `${weatherApiBase}/${location.id}.json?_edition=${edition.toLowerCase()}`
         )
@@ -121,7 +121,9 @@ export const Weather = {
     fetchForecastData(location: Location): Promise<void> {
         return this.getWeatherData(
             `${config.page
-                .forecastsapiurl}/${location.id}.json?_edition=${config.page.edition.toLowerCase()}`
+                .forecastsapiurl}/${location.id}.json?_edition=${config
+                .get('page.edition')
+                .toLowerCase()}`
         )
             .then(response => {
                 this.renderForecast(response);
@@ -196,5 +198,3 @@ export const Weather = {
         $forecastHolder.empty().html(tmpl);
     },
 };
-
-export const _ = { isNetworkFront };
