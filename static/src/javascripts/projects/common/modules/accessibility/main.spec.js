@@ -19,8 +19,13 @@ describe('Accessibility', () => {
     it('saves the state', () => {
         saveState({
             'flashing-elements': true,
+            'exploding-avocados': false,
         });
 
         expect(isOn('flashing-elements')).toBe(true);
+        expect(isOn('exploding-avocados')).toBe(false);
+
+        // state is on by default
+        expect(isOn('jumping-weathervanes')).toBe(true);
     });
 });
