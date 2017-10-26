@@ -1,6 +1,5 @@
 // @flow
 /* eslint-disable guardian-frontend/no-direct-access-config */
-import $ from 'lib/$';
 import config from 'lib/config';
 import fetchJson from 'lib/fetch-json';
 import userPrefs from 'common/modules/user-prefs';
@@ -82,7 +81,10 @@ describe('Weather component', () => {
     });
 
     it('should get location from user prefs', () => {
-        const result = { id: 1, city: 'London' };
+        const result = {
+            id: 'qux',
+            city: 'doo',
+        };
         expect(typeof Weather.getUserLocation()).toEqual('undefined');
 
         Weather.saveUserLocation(result);
@@ -115,11 +117,13 @@ describe('Weather component', () => {
             edition: 'bar',
         };
 
-        Weather.saveDeleteLocalStorage({
+        const cityPreference = {
             store: 'set',
             id: 'qux',
             city: 'doo',
-        });
+        };
+
+        Weather.saveDeleteLocalStorage(cityPreference);
 
         expect(userPrefs.get('weather-location')).toEqual({
             id: 'qux',
@@ -136,7 +140,13 @@ describe('Weather component', () => {
             edition: 'bar',
         };
 
-        Weather.saveDeleteLocalStorage({ store: 'remove' });
+        const cityPreference = {
+            store: 'remove',
+            id: 'qux',
+            city: 'doo',
+        };
+
+        Weather.saveDeleteLocalStorage(cityPreference);
 
         expect(userPrefs.get('weather-location')).toBeUndefined();
         expect(fetchJsonMock.mock.calls[0][0]).toEqual('foo.json');
