@@ -25,8 +25,8 @@ class PrivacyMapping extends UserFormMapping[PrivacyFormData] {
       )
     )(PrivacyFormData.apply)(PrivacyFormData.unapply)
 
-  protected def toUserFormData(userFromApi: User): PrivacyFormData =
-    PrivacyFormData(userFromApi)
+  protected def toUserFormData(userDO: User): PrivacyFormData =
+    PrivacyFormData(userDO)
 
   protected lazy val idapiErrorContextToFormFieldKeyMap =  Map(
     "statusFields.receiveGnmMarketing" -> "receiveGnmMarketing",
@@ -41,7 +41,7 @@ class PrivacyMapping extends UserFormMapping[PrivacyFormData] {
 case class PrivacyFormData(
     consents: List[Consent]) extends UserFormData{
 
-  def toUserUpdateDTO(oldUserFromApi: User): UserUpdateDTO =
+  def toUserUpdateDTO(oldUserDO: User): UserUpdateDTO =
     UserUpdateDTO(consents = Some(consents))
 }
 
@@ -49,12 +49,12 @@ object PrivacyFormData {
   /**
     * Converts User DO from IDAPI to form processing DTO PrivacyFromData
     *
-    * @param userFromApi Identity User domain model from IDAPI defiend in identity-model library
+    * @param userDO Identity User domain model from IDAPI defiend in identity-model library
     * @return form processing DTO PrivacyFromData
     */
-  def apply(userFromApi: User): PrivacyFormData =
+  def apply(userDO: User): PrivacyFormData =
     PrivacyFormData(
-      consents = if (userFromApi.consents.isEmpty) defaultConsents else userFromApi.consents)
+      consents = if (userDO.consents.isEmpty) defaultConsents else userDO.consents)
 
   private val defaultConsents =
     List(

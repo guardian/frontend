@@ -57,9 +57,9 @@ class AuthenticatedActions(
             logger.warn(s"Failed to look up logged-in user: $errors")
             Left(sendUserToSignin(request))
           },
-          userFromApi => {
+          userDO => {
             logger.trace("user is logged in")
-            Right(new AuthRequest(request.user.copy(user = userFromApi), request))
+            Right(new AuthRequest(request.user.copy(user = userDO), request))
           }
         )
       }

@@ -14,12 +14,12 @@ trait UserFormMapping[T <: UserFormData] extends Mappings {
     * Returns a Form filled with existing UserFormData DTO value (as opposed to binding data from request)
     * which is in turn created from User DO from IDAPI.
     *
-    * @param userFromApi User from IDAPI defined in identity-model library
+    * @param userDO User domain object from IDAPI defined in identity-model library
     * @param messagesProvider
     * @return Form filled with UserFormData DTO
     */
-  def fillForm(userFromApi: User)(implicit messagesProvider: MessagesProvider): Form[T] =
-    Form(formMapping) fill toUserFormData(userFromApi) // note the indirection where userFromApi is converted to UserFormData
+  def fillForm(userDO: User)(implicit messagesProvider: MessagesProvider): Form[T] =
+    Form(formMapping) fill toUserFormData(userDO) // note the indirection where userDO is converted to UserFormData
 
   /**
     * Returns Form field key given IDAPI error context
@@ -30,12 +30,12 @@ trait UserFormMapping[T <: UserFormData] extends Mappings {
   protected def formMapping(implicit messagesProvider: MessagesProvider): Mapping[T]
 
   /**
-    * Converts User from IDAPI to form processing DTO
+    * Converts User domain object from IDAPI to form processing DTO
     *
-    * @param userFromApi
+    * @param userDO
     * @return form processing DTO
     */
-  protected def toUserFormData(userFromApi: User): T
+  protected def toUserFormData(userDO: User): T
 
   /**
     * Mapping from IDAPI error context to Form field key
