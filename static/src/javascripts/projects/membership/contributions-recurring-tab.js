@@ -171,22 +171,22 @@ export const recurringContributionTab = (): void => {
             credentials: 'include',
         }
     )
-    .then(resp => resp.json())
-    .then(json => {
-        if (json && json.subscription) {
+        .then(resp => resp.json())
+        .then(json => {
+            if (json && json.subscription) {
+                hideLoader();
+                populateUserDetails(json);
+                displayContributionInfo();
+            } else {
+                hideLoader();
+                displaySupportUpSell();
+            }
+        })
+        .catch(err => {
             hideLoader();
-            populateUserDetails(json);
-            displayContributionInfo();
-        } else {
-            hideLoader();
-            displaySupportUpSell();
-        }
-    })
-    .catch(err => {
-        hideLoader();
-        displayErrorMessage();
-        reportError(err, {
-            feature: 'mma-monthlycontribution',
+            displayErrorMessage();
+            reportError(err, {
+                feature: 'mma-monthlycontribution',
+            });
         });
-    });
 };
