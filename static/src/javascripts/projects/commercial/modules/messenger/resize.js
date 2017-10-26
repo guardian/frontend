@@ -52,11 +52,6 @@ const resize = (
 const init = (register: RegisterListeners) => {
     register('resize', (specs, ret, iframe) => {
         if (iframe && specs) {
-            /* there are ultimately three containers that need resizing:
-                 1) the ad slot,
-                 2) the iframe container div (.ad-slot--content), and
-                 3) the iframe containing the creative
-             */
             const adSlot = iframe && iframe.closest('.js-ad-slot');
             const iframeContainer =
                 iframe && iframe.closest('.ad-slot__content');
@@ -68,5 +63,3 @@ const init = (register: RegisterListeners) => {
 export const _ = { resize, normalise };
 
 export { init };
-
-// #${iframe.id}__container__
