@@ -337,15 +337,9 @@ case class ContentCard(
     case _ => false
   }
 
-  val pillar = if (storyContent.isDefined) storyContent.get.metadata.pillar match {
-    case None => "news"
-    case Some(s: Pillar) => s.name.toLowerCase
-  }
+  val pillar = if (storyContent.isDefined) storyContent.get.metadata.pillar.map(s => s.name.toLowerCase).getOrElse("news")
 
-  val contentType = if (storyContent.isDefined) storyContent.get.metadata.`type` match {
-    case None => "article"
-    case Some(s: DotcomContentType) => s.name.toLowerCase
-  }
+  val contentType = if (storyContent.isDefined) storyContent.get.metadata.`type`.map(s => s.name.toLowerCase).getOrElse("article")
 }
 object ContentCard {
 
