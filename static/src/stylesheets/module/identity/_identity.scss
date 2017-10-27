@@ -324,6 +324,11 @@
     opacity: .8;
 }
 
+.email-subscription-container {
+    border-top: 1px solid $neutral-7;
+    padding-top: 10px;
+}
+
 .email-subscription__name,
 .email-subscription__heading {
     @include fs-headline(3);
@@ -370,7 +375,7 @@
     background-color: $guardian-brand;
     width: $gs-baseline * 9;
     height: $gs-gutter * 2;
-    border-radius: 100px;
+    //border-radius: 100px;
     border: 0;
     color: #ffffff;
     cursor: pointer;
