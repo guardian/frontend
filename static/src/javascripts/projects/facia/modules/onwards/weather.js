@@ -120,8 +120,9 @@ export const Weather = {
 
     fetchForecastData(location: Location): Promise<void> {
         return this.getWeatherData(
-            `${config.page
-                .forecastsapiurl}/${location.id}.json?_edition=${config
+            `${config.get(
+                'page.forecastsapiurl'
+            )}/${location.id}.json?_edition=${config
                 .get('page.edition')
                 .toLowerCase()}`
         )
@@ -166,7 +167,7 @@ export const Weather = {
     addSearch(): void {
         searchTool = new SearchTool({
             container: $('.js-search-tool'),
-            apiUrl: config.page.locationapiurl,
+            apiUrl: config.get('page.locationapiurl'),
         });
     },
 
