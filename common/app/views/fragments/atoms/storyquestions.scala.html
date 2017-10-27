@@ -27,7 +27,7 @@
     }
 }
 
-@if(ReaderAnswersDeliveryMechanism.isSwitchedOn) {
+@if(!isAmp && !isClosed && ReaderAnswersDeliveryMechanism.isSwitchedOn) {
     <div id="user__question-atom-@storyquestions.id" class="js-view-tracking-component submeta user__question">
 
         <span class="js-storyquestion-atom-id is-hidden" id="@storyquestions.id"></span>
@@ -92,7 +92,7 @@
 }
 
 
-@if(!isAmp && !isClosed) {
+@if(!isAmp && !isClosed && !ReaderAnswersDeliveryMechanism.isSwitchedOn) {
     <div class="js-view-tracking-component submeta user__question">
         <span class="js-storyquestion-atom-id is-hidden" id="@storyquestions.id"></span>
 
