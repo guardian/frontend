@@ -25,14 +25,7 @@
                 "adblock-coins-us": "@Static("images/membership/adblock-coins-us.png")"
             },
             "acquisitions": {
-                "paypal-and-credit-card": "@Static("images/acquisitions/paypal-and-credit-card.png")",
-                "flags": {
-                    "be": "@Static("images/acquisitions/flags/be.png")",
-                    "nl": "@Static("images/acquisitions/flags/nl.png")",
-                    "nz": "@Static("images/acquisitions/flags/nz.png")",
-                    "uk": "@Static("images/acquisitions/flags/uk.png")",
-                    "usa": "@Static("images/acquisitions/flags/usa.png")"
-                }
+                "paypal-and-credit-card": "@Static("images/acquisitions/paypal-and-credit-card.png")"
              }
         },
         "stylesheets": {

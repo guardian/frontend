@@ -1,7 +1,7 @@
 package model.liveblog
 
 import com.gu.contentapi.client.model.v1.ElementType.{Map => _, _}
-import com.gu.contentapi.client.model.v1.{BlockElement => ApiBlockElement}
+import com.gu.contentapi.client.model.v1.{SponsorshipType, BlockElement => ApiBlockElement, Sponsorship => ApiSponsorship}
 import model.{AudioAsset, ImageAsset, ImageMedia, VideoAsset}
 import play.api.libs.json._
 
@@ -13,7 +13,30 @@ case class GuVideoBlockElement(assets: Seq[VideoAsset], imageMedia: ImageMedia, 
 case class VideoBlockElement(data: Map[String, String]) extends BlockElement
 case class EmbedBlockElement(html: Option[String], safe: Option[Boolean], alt: Option[String]) extends BlockElement
 case class ContentAtomBlockElement(atomId: String) extends BlockElement
-case class RichLinkBlockElement(url: Option[String], text: Option[String], prefix: Option[String]) extends BlockElement
+
+case class RichLinkBlockElement(
+  url: Option[String],
+  text: Option[String],
+  prefix: Option[String],
+  sponsorship: Option[Sponsorship]) extends BlockElement
+
+case class Sponsorship (
+  sponsorName: String,
+  sponsorLogo: String,
+  sponsorLink: String,
+  sponsorshipType: SponsorshipType
+)
+
+object Sponsorship {
+  def apply(sponsorship: ApiSponsorship): Sponsorship = {
+    Sponsorship(
+      sponsorship.sponsorName,
+      sponsorship.sponsorLogo,
+      sponsorship.sponsorLink,
+      sponsorship.sponsorshipType
+    )
+  }
+}
 
 object BlockElement {
 
@@ -31,7 +54,8 @@ object BlockElement {
       case RichLink => Some(RichLinkBlockElement(
         element.richLinkTypeData.flatMap(_.originalUrl),
         element.richLinkTypeData.flatMap(_.linkText),
-        element.richLinkTypeData.flatMap(_.linkPrefix)
+        element.richLinkTypeData.flatMap(_.linkPrefix),
+        element.richLinkTypeData.flatMap(_.sponsorship).map(Sponsorship(_))
       ))
 
       case Image => Some(ImageBlockElement(

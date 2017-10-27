@@ -51,6 +51,7 @@ export const addTrackingCodesToUrl = ({
         componentId,
         componentType,
         referrerPageviewId: config.get('ophan.pageViewId') || undefined,
+        referrerUrl: window.location.href.split('?')[0],
         campaignCode,
         abTest,
     };

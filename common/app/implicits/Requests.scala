@@ -45,6 +45,8 @@ trait Requests {
     lazy val campaignCode: Option[String] = r.getQueryString("CMP")
 
     lazy val isAdFree: Boolean = r.headers.keys.exists(_ equalsIgnoreCase "X-Gu-Commercial-Ad-Free")
+
+    lazy val referrer: Option[String] = r.headers.get("referer")
   }
 }
 

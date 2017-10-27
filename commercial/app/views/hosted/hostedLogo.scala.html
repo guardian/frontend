@@ -1,14 +1,14 @@
-@(campaign: common.commercial.hosted.HostedCampaign, onAmp: Boolean = false)
+@(page: common.commercial.hosted.HostedPage, onAmp: Boolean = false)
 
-<a href="@campaign.logo.link" data-sponsor="@campaign.owner.toLowerCase" target="_blank">
+<a href="@page.logo.link" data-sponsor="@page.owner.toLowerCase" target="_blank">
 @if(onAmp) {
     <amp-img layout="responsive"
-             width="@campaign.logo.dimensions.map(_.width)"
-             height="@campaign.logo.dimensions.map(_.height)"
+             width="@page.logo.dimensions.map(_.width)"
+             height="@page.logo.dimensions.map(_.height)"
              class="hostedbadge__logo"
-             src="@campaign.logo.src"
-             alt="@campaign.owner"></amp-img>
+             src="@page.logo.src"
+             alt="@page.owner"></amp-img>
 } else {
-    <img class="hostedbadge__logo" src="@campaign.logo.src" alt="@campaign.owner"/>
+    <img class="hostedbadge__logo" src="@page.logo.src" alt="@page.owner"/>
 }
 </a>

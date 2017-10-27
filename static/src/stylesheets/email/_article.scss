@@ -7,6 +7,7 @@ $container-color: #ffffff;
 @import '_normalise';
 @import '_util';
 @import '_footer';
+@import '../_vars';
 
 @font-face {
     font-family: 'Guardian Egyptian Text';
@@ -139,6 +140,53 @@ blockquote {
 
 .text--brand {
     color: #005689;
+}
+
+.rich-link__container {
+    background-color: #f6f6f6;
+    border-top: #4bc6df solid 1px;
+}
+
+.rich-link__container--paidcontent {
+    border-top-color: $paid-article-brand;
+
+    & .rich-link__header {
+        font-family: Helvetica, Arial, sans-serif;
+        font-weight: normal;
+        font-size: 18px;
+        line-height: 22px;
+    }
+
+    & .rich-link__read-more {
+        font-family: Helvetica, Arial, sans-serif;
+        color: darken($paid-article-brand, 15%);
+    }
+}
+
+.rich-link__sponsorship {
+    width: 100%;
+}
+
+.rich-link__sponsor {
+    text-align: right;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    color: #757575;
+}
+
+.rich-link__header {
+    font-weight: bold;
+}
+
+.rich-link__link {
+    text-decoration: none;
+}
+.rich-link__read-more {
+    color: #005689;
+    font-weight: 900;
+    font-size: 14px;
+    margin: 0;
+    padding: 0;
 }
 
 @import '_media-query';
