@@ -50,7 +50,7 @@ export const display = (
     const $type = $('.js-manage-account-card-type', $parent);
     const $button = $('.js-manage-account-change-card', $parent);
     const $updating = $('.js-updating', $parent);
-    const stripePublicKey = maybeKey || config.get('page.stripePublicToken')
+    const stripePublicKey = maybeKey || config.get('page.stripePublicToken');
 
     /*  show/hide
      *   once we've sent the token, we don't want to change the state of the dots until we redisplay
