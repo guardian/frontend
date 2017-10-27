@@ -174,8 +174,8 @@ export const recurringContributionTab = (): void => {
         .then(resp => resp.json())
         .then(json => {
             if (json && json.subscription) {
-                hideLoader();
                 populateUserDetails(json);
+                hideLoader();
                 displayContributionInfo();
             } else {
                 hideLoader();
