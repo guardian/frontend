@@ -28,8 +28,10 @@ object FrontHtmlPage extends HtmlPage[PressedPage] {
   }
 
   def allStyles(implicit applicationContext: ApplicationContext): Styles = new Styles {
-    override def criticalCssLink: Html = criticalStyleLink(if (Pc.isSwitchedOff) "facia" else "facia.pc")
-    override def criticalCssInline: Html = criticalStyleInline(Html(common.Assets.css.head(Some(if (Pc.isSwitchedOff) "facia" else "facia.pc"))))
+    val facia: String = if (Pc.isSwitchedOn) "facia.pc" else "facia"
+    override def criticalCssLink: Html = criticalStyleLink(facia)
+    override def criticalCssInline: Html = criticalStyleInline(Html(common.Assets.css.head(Some(facia))))
+
     override def linkCss: Html = stylesheetLink("stylesheets/facia.css")
     override def oldIECriticalCss: Html = stylesheetLink("stylesheets/old-ie.head.facia.css")
     override def oldIELinkCss: Html = stylesheetLink("stylesheets/old-ie.content.css")
