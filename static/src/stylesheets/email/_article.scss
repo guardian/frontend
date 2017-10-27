@@ -142,22 +142,13 @@ blockquote {
     color: #005689;
 }
 
-.rich-link {
-
-}
-
 .rich-link__container {
     background-color: #f6f6f6;
     border-top: #4bc6df solid 1px;
 }
 
 .rich-link__container--paidcontent {
-    overflow: auto;
     border-top-color: $paid-article-brand;
-
-    & .rich-link__read-more {
-        float: left;
-    }
 
     & .rich-link__header {
         font-family: Helvetica, Arial, sans-serif;
@@ -167,8 +158,20 @@ blockquote {
     }
 
     & .rich-link__read-more {
-        color: $paid-article-brand;
+        font-family: Helvetica, Arial, sans-serif;
+        color: darken($paid-article-brand, 15%);
     }
+}
+
+.rich-link__sponsorship {
+    width: 100%;
+}
+
+.rich-link__sponsor {
+    text-align: right;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    color: #757575;
 }
 
 .rich-link__header {
@@ -184,13 +187,6 @@ blockquote {
     font-size: 14px;
     margin: 0;
     padding: 0;
-}
-
-.rich-link__sponsor {
-    float: right;
-    font-family: Helvetica, Arial, sans-serif;
-    font-size: 14px;
-    color: #757575;
 }
 
 @import '_media-query';

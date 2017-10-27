@@ -21,22 +21,39 @@
                 <h3 class="rich-link__header">@title</h3>
             </a>
 
-            <div class="rich-link__read-more">
-                <a class="rich-link__link" href="@href">
-                    <p class="rich-link__read-more">
-                        Read more
-                    </p>
-                </a>
-            </div>
+            @if(!sponsorship.isDefined) {
+                <div class="rich-link__read-more">
+                    <a class="rich-link__link" href="@href">
+                        <p class="rich-link__read-more">
+                            Read more
+                        </p>
+                    </a>
+                </div>
+            }
 
             @sponsorship.map { sponsor =>
                 @sponsor.sponsorshipType match {
                     case PaidContent => {
-                        <div class="rich-link__sponsor">
-                        @{
-                            s"Paid for by ${sponsor.sponsorName} ${sponsor.sponsorLogo}"
-                        }
-                        </div>
+                        <table class="rich-link__sponsorship">
+                            <tr>
+                                <td>
+                                    <div class="rich-link__read-more">
+                                        <a class="rich-link__link" href="@href">
+                                            <p class="rich-link__read-more">
+                                                Read more
+                                            </p>
+                                        </a>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="rich-link__sponsor">
+                                    @{
+                                        s"Paid for by ${sponsor.sponsorName} ${sponsor.sponsorLogo}"
+                                    }
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
                     }
                     case _ => { }
                 }
