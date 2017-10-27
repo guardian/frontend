@@ -21,7 +21,7 @@ class PrivacyMapping extends UserFormMapping[PrivacyFormData] {
           "hasConsented" -> boolean,
           "timestamp" -> jodaDate(dateTimeFormatISO8601),
           "privacyPolicy" -> number
-        )(Consent.apply)(Consent.unapply)
+        )(Consent.apply)(Consent.unapply) // NOTE: Consent here is DO from identity-model
       )
     )(PrivacyFormData.apply)(PrivacyFormData.unapply)
 
