@@ -679,15 +679,9 @@ case class AtomsCleaner(atoms: Option[Atoms], shouldFence: Boolean = true, amp: 
           atomContainer.addClass("element-atom--media")
         }
 
-        if (ReaderAnswersDeliveryMechanism.isSwitchedOn) {
-          val html = views.html.fragments.atoms.atom(atomData, shouldFence, amp, mediaWrapper, true).toString()
+          val html = views.html.fragments.atoms.atom(atomData, shouldFence, amp, mediaWrapper).toString()
           bodyElement.remove()
           atomContainer.append(html)
-        } else {
-          val html = views.html.fragments.atoms.atom(atomData, shouldFence, amp, mediaWrapper, false).toString()
-          bodyElement.remove()
-          atomContainer.append(html)
-        }
       }
     }
     document

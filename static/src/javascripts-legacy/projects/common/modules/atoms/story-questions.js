@@ -75,11 +75,11 @@ define([
 
                     if (isDeliveryTestReady === "true") {
 
-                        var askActionHeader = document.getElementById('js-ASK-ACTION-header-' + atomId);
-                        var submitActionHeader = document.getElementById('js-SUBMIT-ACTION-header-' + atomId);
+                        var askActionHeader = document.getElementById('js-question-set-header-' + atomId);
+                        var submitActionHeader = document.getElementById('js-delivery-selection-header-' + atomId);
 
-                        var questionList = Array.from(document.querySelectorAll('.js-ASK-ACTION-body-' + atomId));
-                        var answerDeliveryOptions = document.getElementById('js-SUBMIT-ACTION-body-' + atomId);
+                        var questionList = Array.from(document.querySelectorAll('.js-question-set-body-' + atomId));
+                        var answerDeliveryOptions = document.getElementById('js-delivery-selection-body-' + atomId);
 
                         if (askActionHeader && questionList && submitActionHeader && answerDeliveryOptions) {
                             submitActionHeader.classList.remove('is-hidden');
@@ -162,22 +162,22 @@ define([
     }
 
     function submitDeliveryPreference(event) {
+
         event.preventDefault();
 
         var prefAnswerDeliveryBtn = event.currentTarget;
         var prefAnswerDelivery = prefAnswerDeliveryBtn.dataset.deliveryMethod;
-        var questionId = prefAnswerDeliveryBtn.dataset.questionId;
 
         var atomIdElement = $('.js-storyquestion-atom-id');
         var atomId = atomIdElement.attr('id');
 
         if (prefAnswerDelivery) {
 
-            var thankyouMessageHeader = document.getElementById('js-FINAL-ACTION-header-' + atomId);
-            var thankyouMessageBody = document.getElementById('js-FINAL-ACTION-body-' + atomId);
+            var thankyouMessageHeader = document.getElementById('js-final-thank-you-header-' + atomId);
+            var thankyouMessageBody = document.getElementById('js-final-thank-you-body-' + atomId);
 
-            var submitContainer = document.getElementById('js-SUBMIT-ACTION-header-' + atomId);
-            var submitHeader = document.getElementById('js-SUBMIT-ACTION-body-' + atomId);
+            var submitHeader = document.getElementById('js-delivery-selection-header-' + atomId);
+            var submitContainer = document.getElementById('js-delivery-selection-body-' + atomId);
 
             if (thankyouMessageHeader && thankyouMessageBody && submitContainer && submitHeader) {
                 submitContainer.classList.add('is-hidden');
@@ -185,9 +185,9 @@ define([
                 thankyouMessageHeader.classList.remove('is-hidden');
                 thankyouMessageBody.classList.remove('is-hidden');
             }
-
-            sendNewStyleInteraction(atomId.trim(), 'SUBSCRIBE', prefAnswerDelivery.value, questionId);
         }
+
+        sendNewStyleInteraction(atomId.trim(), 'SUBSCRIBE', prefAnswerDelivery.value);
     }
 
     return {
@@ -231,6 +231,17 @@ define([
                     this.classList.add('is-clicked')
                 });
             });
+
+            var finalCloseBtn = document.getElementById('js-final-thankyou-message-' + atomId);
+
+            bean.on(finalCloseBtn, 'click', function(event) {
+                event.preventDefault();
+                var storyQuestionAtom = document.getElementById('user__question-atom-' + atomId);
+                storyQuestionAtom.classList.add('is-hidden');
+                this.classList.add('is-clicked')
+            });
+
+
 
             Id.getUserFromApi(function (userFromId) {
                 if (userFromId && userFromId.primaryEmailAddress) {
