@@ -131,8 +131,12 @@ class EditProfileController(
     availableLists: EmailNewsletters,
     idRequest: services.IdentityRequest,
     identityUrlBuilder: IdentityUrlBuilder
-  )(implicit request: AuthRequest[AnyContent]): Result =
-    NoCache(Ok(views.html.profileForms(page, user, forms, idRequestParser(request), idUrlBuilder,emailPrefsForm,availableLists,emailSubscriptions)))
+  )(implicit request: AuthRequest[AnyContent]): Result = {
+    if(request.toString.contains("/privacy/edit"))
+      NoCache(Redirect("/email-prefs"))
+    else
+      NoCache(Ok(views.html.profileForms(page, user, forms, idRequestParser(request), idUrlBuilder,emailPrefsForm,availableLists,emailSubscriptions)))
+  }
 
 
   //Email preferences are submitted individually by a javascript call, not by the form submission. The form submission only deals with the consents.

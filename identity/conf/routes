@@ -18,6 +18,7 @@ GET         /password/reset-confirmation            controllers.ResetPasswordCon
 GET         /password/email-sent                    controllers.ResetPasswordController.renderEmailSentConfirmation
 GET         /requestnewtoken                        controllers.ResetPasswordController.requestNewToken
 POST        /email-prefs                            controllers.EditProfileController.saveEmailPreferences
+GET         /email-prefs                            controllers.EditProfileController.displayPrivacyForm
 GET         /user/id/:id                            controllers.PublicProfileController.renderProfileFromId(id: String, activityType = "discussions")
 GET         /user/id/:id/:activityType              controllers.PublicProfileController.renderProfileFromId(id: String, activityType: String)
 GET         /user/:vanityUrl                        controllers.PublicProfileController.renderProfileFromVanityUrl(vanityUrl: String, activityType = "discussions")
