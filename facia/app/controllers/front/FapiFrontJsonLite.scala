@@ -21,12 +21,9 @@ trait FapiFrontJsonLite {
         "displayName" -> pressedCollection.displayName,
         "href" -> pressedCollection.href,
         "id" -> pressedCollection.id,
-        "content" -> pressedCollection.curatedPlusBackfillDeduplicated.filterNot(isLinkSnap).map(getContent).filter(hasAllMandatoryFields))
+        "content" -> pressedCollection.curatedPlusBackfillDeduplicated.filterNot(isLinkSnap).map(getContent))
       .fields
       .filterNot{ case (_, v) => v == JsNull})
-
-  private def hasAllMandatoryFields(json: JsValue): Boolean =
-    Set("id", "shortUrl", "trailText", "headline").subsetOf(json.asInstanceOf[JsObject].keys)
 
   private def isLinkSnap(faciaContent: PressedContent) = faciaContent match {
     case _: LinkSnap => true
