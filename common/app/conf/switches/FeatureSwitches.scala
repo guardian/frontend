@@ -496,13 +496,13 @@ trait FeatureSwitches {
     exposeClientSide = true
   )
 
-  val Pc = Switch(
+  val PillarCards = Switch(
     SwitchGroup.Feature,
-    "pc",
-    "When ON, enables PC",
+    "pillar-cards",
+    "When ON, enables pillar cards",
     owners = Seq(Owner.withGithub("sndrs")),
     safeState = Off,
-    sellByDate = never,
+    sellByDate = new LocalDate(2018, 2, 1),
     exposeClientSide = false
   )
 }
