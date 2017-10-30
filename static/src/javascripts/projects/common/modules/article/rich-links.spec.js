@@ -9,10 +9,6 @@ import {
 let mockParas: ?NodeList<HTMLParagraphElement>;
 
 jest.mock('lib/config');
-jest.mock('lib/detect');
-jest.mock('lib/fetch-json');
-jest.mock('lib/mediator');
-jest.mock('lib/report-error');
 jest.mock('common/modules/article/space-filler', () => ({
     spaceFiller: {
         fillSpace: (
