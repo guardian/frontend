@@ -22,16 +22,6 @@ define([
     componentEvent
 ) {
 
-    // TODO:
-    // clear atom on close button event
-    // check ophan events are being processed correctly
-    // sensible renaming
-    // tidy up class list
-    // styling
-    // clean up javascript
-    // sense-check feature test is the right way to test this.
-
-
     function sendOldStyleInteraction(atomId, component, value) {
         ophan.record({
             atomId: atomId,
@@ -73,7 +63,7 @@ define([
 
                 if (questionText && atomId) {
 
-                    if (isDeliveryTestReady === "true") {
+                    if (isDeliveryTestReady) {
 
                         var askActionHeader = document.getElementById('js-question-set-header-' + atomId);
                         var submitActionHeader = document.getElementById('js-delivery-selection-header-' + atomId);
@@ -98,7 +88,7 @@ define([
                             askQuestionBtn.classList.add('is-hidden');
                         }
 
-                        if (isEmailSubmissionReady === "true") {
+                        if (isEmailSubmissionReady) {
                             var signupForm = document.forms['js-storyquestion-email-signup-form-' + questionId];
                             var thankYouMessageForEmailSubmission = document.getElementById('js-question-thankyou-' + questionId);
 
@@ -165,7 +155,7 @@ define([
 
         event.preventDefault();
 
-        var prefAnswerDeliveryBtn = event.currentTarget;
+        var prefAnswerDeliveryBtn = event.target;
         var prefAnswerDelivery = prefAnswerDeliveryBtn.dataset.deliveryMethod;
 
         var atomIdElement = $('.js-storyquestion-atom-id');
@@ -195,27 +185,19 @@ define([
 
             var atomId = $('.js-storyquestion-atom-id').attr('id');
 
-            var askQuestionLinks = $('.js-ask-question-link');
             var isEmailSubmissionReadyElement = document.getElementById('js-storyquestion-is-email-submission-ready');
             var isDeliveryTestReadyElement = document.getElementById('js-storyquestion-is-answer-delivery-test-ready');
 
-            var isEmailSubmissionReady = false;
-            var isDeliveryTestReady = false;
+            var isEmailSubmissionReady = isEmailSubmissionReadyElement && isEmailSubmissionReadyElement.dataset.isEmailSubmissionReady === 'true';
+            var isDeliveryTestReady = isDeliveryTestReadyElement && isDeliveryTestReadyElement.dataset.isAnswerDeliveryTestReady === 'true';
 
-            if (isDeliveryTestReadyElement) {
-                isDeliveryTestReady = isDeliveryTestReadyElement.dataset.isAnswerDeliveryTestReady ? isDeliveryTestReadyElement.dataset.isAnswerDeliveryTestReady : false;
-            }
+            var readerQuestionsContainer = document.getElementById('user__question-atom-' + atomId);
+            var askQuestionLinks = Array.from(document.querySelectorAll('.js-ask-question-link'));
 
-            if (isEmailSubmissionReadyElement) {
-                isEmailSubmissionReady = isEmailSubmissionReadyElement.dataset.isEmailSubmissionReady ? isEmailSubmissionReadyElement.dataset.isEmailSubmissionReady : false;
-            }
-
-            askQuestionLinks.each(function (el) {
-                bean.on(el, 'click', function(event) {
-                    askQuestion(event, isEmailSubmissionReady, isDeliveryTestReady)
-                    this.classList.add('is-clicked')
+            bean.one(readerQuestionsContainer, 'click', askQuestionLinks, function (event) {
+                    askQuestion(event, isEmailSubmissionReady, isDeliveryTestReady);
+                    this.classList.add('is-clicked');
                 });
-            });
 
             var answersEmailSignupForms = $('.js-storyquestion-email-signup-form');
 
@@ -223,18 +205,17 @@ define([
                 bean.on(el, 'submit', submitSignUpForm);
             });
 
-            var answersDeliveryPreferences = $('.btn-answer-delivery-' + atomId);
+            var answerDeliveryPrefContainer = document.getElementById('js-delivery-selection-body-' + atomId);
+            var answersDeliveryPreferences = Array.from(document.querySelectorAll('.btn-answer-delivery-' + atomId));
 
-            answersDeliveryPreferences.each(function (el) {
-                bean.on(el, 'click', function(event) {
-                    submitDeliveryPreference(event)
-                    this.classList.add('is-clicked')
+            bean.one(answerDeliveryPrefContainer, 'click', answersDeliveryPreferences, function (event) {
+                submitDeliveryPreference(event);
+                this.classList.add('is-clicked');
                 });
-            });
 
             var finalCloseBtn = document.getElementById('js-final-thankyou-message-' + atomId);
 
-            bean.on(finalCloseBtn, 'click', function(event) {
+            bean.one(finalCloseBtn, 'click', function(event) {
                 event.preventDefault();
                 var storyQuestionAtom = document.getElementById('user__question-atom-' + atomId);
                 storyQuestionAtom.classList.add('is-hidden');

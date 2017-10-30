@@ -45,7 +45,7 @@
     }
 
     &:hover {
-        background-color: $news-support-5;
+        background-color: $news-support-1;
 
         .user__question-upvote {
             background-color: $news-main-1;
@@ -160,5 +160,33 @@
 
     .storyquestion-email-signup-button-envelope {
         display: inline;
+    }
+}
+
+
+.user__question-title-test {
+    margin-bottom: $gs-baseline * 2;
+}
+
+.user__question-final-thanks {
+    margin-bottom: $gs-baseline;
+}
+
+.delivery-selection-container {
+    display: flex;
+    justify-content: space-between;
+
+    @include mq($until: desktop) {
+        flex-direction: column;
+    }
+}
+
+.user_answer-delivery {
+    flex: 1;
+
+    @include mq($until: desktop) {
+        & + & {
+            margin-top: $gs-baseline;
+        }
     }
 }
