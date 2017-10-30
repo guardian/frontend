@@ -107,8 +107,10 @@ const defineSlot = (adSlotNode: Element, sizes: Object): Object => {
 
         To see debugging output from IAS add the URL param `&iasdebug=true` to the page URL
      */
-
-    if (config.get('switches.iasOptimisation', false)) {
+    if (
+        config.get('switches.abIasAdTargeting', false) &&
+        getTestVariantId('IasAdTargeting') === 'variant'
+    ) {
         /* eslint-disable no-underscore-dangle */
         // this should all have been instantiated by commercial/modules/third-party-tags/ias.js
         window.__iasPET = window.__iasPET || {};
@@ -139,7 +141,7 @@ const defineSlot = (adSlotNode: Element, sizes: Object): Object => {
             loadedResolve = resolve;
         });
 
-        const iasDataCallback = (targetingJSON) => {
+        const iasDataCallback = targetingJSON => {
             clearTimeout(timeoutId);
 
             /*  There is a name-clash with the `fr` targeting returned by IAS
@@ -148,8 +150,10 @@ const defineSlot = (adSlotNode: Element, sizes: Object): Object => {
                 fr parameter to `fra` (given that, here, it relates to fraud).
             */
             const targeting = JSON.parse(targetingJSON);
-            Object.keys(targeting.brandSafety).forEach( key => slot.setTargeting(key, targeting.brandSafety[key]))
-            if (targeting.fr){
+            Object.keys(targeting.brandSafety).forEach(key =>
+                slot.setTargeting(key, targeting.brandSafety[key])
+            );
+            if (targeting.fr) {
                 slot.setTargeting('fra', targeting.fr);
             }
             loadedResolve();
