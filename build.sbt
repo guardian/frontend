@@ -68,8 +68,7 @@ val facia = application("facia").dependsOn(commonWithTests).aggregate(common).se
 val article = application("article").dependsOn(commonWithTests).aggregate(common)
 
 val applications = application("applications")
-  .dependsOn(commonWithTests)
-  .aggregate(common)
+  .dependsOn(commonWithTests).aggregate(common)
 
 val archive = application("archive").dependsOn(commonWithTests).aggregate(common).settings(
 )

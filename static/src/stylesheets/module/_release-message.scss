@@ -111,16 +111,20 @@
 .site-message__message--membership {
     max-width: none;
 
-    .membership__paypal-logo {
-        display: inline-block;
-    }
-
     .membership__message-text {
         @include mq(desktop) {
             font-size: 25px;
         }
     }
+
+    .membership__message-text.big {
+        @include mq(desktop) {
+            font-size:50px;
+        }
+    }
 }
+
+
 
 .site-message__message--tall {
     padding-bottom: ($gs-baseline/3)*11;
@@ -518,7 +522,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
 
 
 .membership__paypal-logo {
-    display: none;
+    display: inline-block;
     height: auto;
     margin-right: $gs-gutter/2;
     object-fit: contain;
@@ -603,6 +607,22 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
         padding-bottom: 10px;
     }
     .site-message__message--membership {
+
+        max-width: none;
+
+        .membership__message-text {
+            @include mq(desktop) {
+                font-size: 25px;
+            }
+        }
+
+        .membership__message-text.big {
+            @include mq(desktop) {
+                font-size:50px;
+            }
+        }
+
+
         margin-right: 5px;
         font-weight: 900;
         @include mq($from: mobile) {
