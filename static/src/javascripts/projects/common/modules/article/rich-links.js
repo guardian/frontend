@@ -111,7 +111,7 @@ const getSpacefinderRules = (): SpacefinderRules => ({
 
 // Tag-targeted rich links can be absolute
 const testIfDuplicate = (richLinkHref: string): boolean =>
-    richLinkHref.includes(config.page.richLink);
+    richLinkHref.includes(config.get('page.richLink'));
 
 const insertTagRichLink = (): Promise<void> => {
     let insertedEl: ?Element;
@@ -122,11 +122,12 @@ const insertTagRichLink = (): Promise<void> => {
 
     const isDuplicate: boolean = richLinkHrefs.some(testIfDuplicate);
     const isSensitive: boolean =
-        config.page.shouldHideAdverts || !config.page.showRelatedContent;
+        config.get('page.shouldHideAdverts') ||
+        !config.get('page.showRelatedContent');
 
     if (
-        config.page.richLink &&
-        !config.page.richLink.includes(config.page.pageId) &&
+        config.get('page.richLink') &&
+        !config.get('page.richLink').includes(config.get('page.pageId')) &&
         !isSensitive &&
         !isDuplicate
     ) {
@@ -135,7 +136,7 @@ const insertTagRichLink = (): Promise<void> => {
                 getSpacefinderRules(),
                 (paras: Element[]) => {
                     const html = richLinkTag({
-                        href: config.page.richLink,
+                        href: config.get('page.richLink'),
                     });
                     paras[0].insertAdjacentHTML('beforebegin', html);
                     insertedEl = paras[0].previousElementSibling;
