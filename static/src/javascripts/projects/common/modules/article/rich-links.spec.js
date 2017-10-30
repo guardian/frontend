@@ -51,7 +51,7 @@ describe('rich-links', () => {
 
     describe('insertTagRichLink', () => {
         describe('should not insert a tag rich link', () => {
-            test('given config.page.richLink is undefined', () => {
+            it('given config.page.richLink is undefined', () => {
                 delete config.page.richLink;
 
                 return insertTagRichLink().then(() => {
@@ -61,7 +61,7 @@ describe('rich-links', () => {
                 });
             });
 
-            test('given config.page.richLink includes config.page.pageId', () => {
+            it('given config.page.richLink includes config.page.pageId', () => {
                 config.page.pageId = 'foo';
 
                 return insertTagRichLink().then(() => {
@@ -71,7 +71,7 @@ describe('rich-links', () => {
                 });
             });
 
-            test('given config.shouldHideAdverts is true', () => {
+            it('given config.shouldHideAdverts is true', () => {
                 config.page.shouldHideAdverts = true;
 
                 return insertTagRichLink().then(() => {
@@ -81,7 +81,7 @@ describe('rich-links', () => {
                 });
             });
 
-            test('given config.showRelatedContent is false', () => {
+            it('given config.showRelatedContent is false', () => {
                 config.page.showRelatedContent = false;
 
                 return insertTagRichLink().then(() => {
@@ -92,7 +92,7 @@ describe('rich-links', () => {
             });
         });
 
-        test('should insert a tag rich link', () =>
+        it('should insert a tag rich link', () =>
             insertTagRichLink().then(() => {
                 const richLinkElements = getRichLinkElements();
 
