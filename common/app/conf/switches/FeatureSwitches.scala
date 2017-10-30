@@ -499,7 +499,7 @@ trait FeatureSwitches {
   val PillarCards = Switch(
     SwitchGroup.Feature,
     "pillar-cards",
-    "When ON, enables pillar cards",
+    "DO NOT ENABLE IN PROD – when ON, enables pillar cards",
     owners = Seq(Owner.withGithub("sndrs")),
     safeState = Off,
     sellByDate = new LocalDate(2018, 2, 1),
