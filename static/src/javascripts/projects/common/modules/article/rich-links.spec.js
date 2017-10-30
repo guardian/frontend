@@ -6,7 +6,7 @@ import {
     insertTagRichLink,
 } from 'common/modules/article/rich-links';
 
-let mockParas;
+let mockParas: ?NodeList<HTMLParagraphElement>;
 
 jest.mock('lib/config');
 jest.mock('lib/detect');
@@ -15,7 +15,10 @@ jest.mock('lib/mediator');
 jest.mock('lib/report-error');
 jest.mock('common/modules/article/space-filler', () => ({
     spaceFiller: {
-        fillSpace: (rules: Object, writer: (Element[]) => any): Promise<any> =>
+        fillSpace: (
+            rules: Object,
+            writer: (?NodeList<HTMLParagraphElement>) => any
+        ): Promise<any> =>
             new Promise(resolve => {
                 writer(mockParas);
                 resolve(true);
@@ -24,7 +27,7 @@ jest.mock('common/modules/article/space-filler', () => ({
 }));
 
 describe('rich-links', () => {
-    const getRichLinkElements = () =>
+    const getRichLinkElements = (): HTMLCollection<HTMLElement> =>
         document.getElementsByClassName('element-rich-link');
 
     beforeEach(() => {
