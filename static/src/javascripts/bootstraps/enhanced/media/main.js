@@ -96,23 +96,6 @@ const initEndSlate = (player: any, endSlatePath: string): void => {
     });
 };
 
-const initExploreVideo = (): void => {
-    const player = $('.vjs-tech');
-    const headline = $('.explore-series-headline')[0];
-    const controls = $('.vjs-control-bar');
-
-    if (player && headline && controls) {
-        bean.on(player[0], 'playing', () => {
-            bonzo(headline).addClass('playing');
-            bonzo(controls[0]).addClass('playing');
-        });
-        bean.on(player[0], 'pause', () => {
-            bonzo(headline).removeClass('playing');
-            bonzo(controls[0]).removeClass('playing');
-        });
-    }
-};
-
 const enhanceVideo = (
     el: HTMLMediaElement,
     autoplay: boolean,
@@ -313,9 +296,7 @@ const enhanceVideo = (
             });
         }
     });
-    if ($('.explore--video').length > 0) {
-        initExploreVideo();
-    }
+
     return player;
 };
 

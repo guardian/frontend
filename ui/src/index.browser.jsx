@@ -1,8 +1,6 @@
 // @flow
 /* eslint-env browser */
-import { render } from 'preact';
-import { StyletronProvider } from 'styletron-preact';
-import StyletronClient from 'styletron-client';
+import { render } from '@guardian/guui';
 
 import Body from 'components/body';
 
@@ -16,16 +14,9 @@ const renderApp = () => {
 
     if (container) {
         render(
-            <StyletronProvider
-                styletron={
-                    new StyletronClient(
-                        document.getElementsByClassName('_styletron_hydrate_')
-                    )
-                }>
-                <Body {...props}>
-                    <Application {...props} />
-                </Body>
-            </StyletronProvider>,
+            <Body {...props}>
+                <Application {...props} />
+            </Body>,
             container.parentElement,
             container
         );

@@ -28,19 +28,26 @@ app.get('/', (req, res, next) => {
     const propsUrl = 'http://localhost:9000/dev/ui/props.json';
 
     request(propsUrl, (errors, response, body) => {
+        const errorMsg = `
+            <h1>
+                Unable to connect to
+                <a href="${propsUrl}">${propsUrl}</a>.
+                Are you running the archive application?
+            </h1>`;
+
         if (errors) {
             if (errors.code === 'ECONNREFUSED') {
-                const errorMsg = `
-                    <h1>
-                        Unable to connect to
-                        <a href="${propsUrl}">${propsUrl}</a>.
-                        Are you running the archive application?
-                    </h1>`;
-
                 return res.send(errorMsg);
             }
-
             return res.send(errors);
+        }
+
+        if (response.statusCode === 404) {
+            return res.send(errorMsg);
+        }
+
+        if (body.includes('play-error-page')) {
+            res.send(body);
         }
 
         try {

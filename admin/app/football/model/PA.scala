@@ -17,7 +17,7 @@ object PA extends Collections {
     ("123", "Scottish League Two"),
     ("300", "FA Cup"),
     ("320", "Scottish Cup"),
-    ("301", "EFL Cup"),
+    ("301", "Carabao Cup"),
     ("400", "Community Shield"),
     ("500", "Champions League"),
     ("510", "Europa League"),

@@ -697,12 +697,6 @@ final case class Tags(
 
   lazy val hasSuperStickyBanner = PersonalInvestmentsCampaign.isRunning(keywordIds)
 
-  // Specific Series
-  private val isLabourLiverpool = tags.exists(t => t.id == "membership/series/labour-liverpool")
-  private val isViewFromMiddleTown = tags.exists(t => t.id == "membership/series/election-2016-the-view-from-middletown")
-  private val isNewRetirement = tags.exists(t => t.id == "membership/series/the-new-retirement")
-  lazy val isExploreSeries = isLabourLiverpool || isViewFromMiddleTown || isNewRetirement
-
   lazy val keywordIds = keywords.map { _.id }
 
   lazy val commissioningDesks = tracking.map(_.id).collect { case Tags.CommissioningDesk(desk) => desk }

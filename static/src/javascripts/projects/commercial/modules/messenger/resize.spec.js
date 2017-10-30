@@ -10,15 +10,10 @@ describe('Cross-frame messenger: resize', () => {
     beforeEach(() => {
         if (document.body) {
             document.body.innerHTML = `
-              <div id="slot01" class="js-ad-slot"><div id="iframe01" class="iframe" data-unit="ch"></div></div>
-              <div id="slot02" class="js-ad-slot"><div id="iframe02" class="iframe" data-unit="px"></div></div>
-              <div id="slot03" class="js-ad-slot"><div id="iframe03" class="iframe" data-unit="em"></div></div>
-              <div id="slot04" class="js-ad-slot"><div id="iframe04" class="iframe" data-unit="rem"></div></div>
-              <div id="slot05" class="js-ad-slot"><div id="iframe05" class="iframe" data-unit="vmin"></div></div>
-              <div id="slot06" class="js-ad-slot"><div id="iframe06" class="iframe" data-unit="vmax"></div></div>
-              <div id="slot07" class="js-ad-slot"><div id="iframe07" class="iframe" data-unit="vh"></div></div>
-              <div id="slot08" class="js-ad-slot"><div id="iframe08" class="iframe" data-unit="vw"></div></div>
-              <div id="slot09" class="js-ad-slot"><div id="iframe09" class="iframe" data-unit="ex"></div></div>
+              <div id="slot01" class="js-ad-slot">
+                <div id="container01">
+                    <div id="iframe01" class="iframe" data-unit="ch"></div>
+                </div>
               </div>`;
         }
         expect.hasAssertions();
@@ -58,17 +53,30 @@ describe('Cross-frame messenger: resize', () => {
     describe('resize function', () => {
         it('should resolve if the specs are empty', () => {
             const fakeAdSlot = document.createElement('div');
+            const fakeIframeContainer = document.createElement('div');
             const fakeIframe = document.createElement('iframe');
-            const result = resize({}, fakeIframe, fakeAdSlot);
+            const result = resize(
+                {},
+                fakeIframe,
+                fakeIframeContainer,
+                fakeAdSlot
+            );
             expect(result).toBeNull();
         });
 
         it('should set width and height of the ad slot', () => {
             const fallback = document.createElement('div');
+            const fakeIframeContainer =
+                document.getElementById('container01') || fallback;
             const fakeIframe = document.getElementById('iframe01') || fallback;
             const fakeAdSlot = document.getElementById('slot01') || fallback;
             return foolFlow(
-                resize({ width: '20', height: '10' }, fakeIframe, fakeAdSlot)
+                resize(
+                    { width: '20', height: '10' },
+                    fakeIframe,
+                    fakeIframeContainer,
+                    fakeAdSlot
+                )
             ).then(() => {
                 expect(fakeIframe.style.height).toBe('10px');
                 expect(fakeIframe.style.width).toBe('20px');
