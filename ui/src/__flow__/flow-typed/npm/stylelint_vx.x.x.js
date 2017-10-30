@@ -1,4 +1,4 @@
-// flow-typed signature: 424ade7e6b898de4f708cb5732a9a0d8
+// flow-typed signature: a8de35497665ac800b438e04a4af4dde
 // flow-typed version: <<STUB>>/stylelint_v^8.0.0/flow_v0.54.1
 
 /**
@@ -223,6 +223,10 @@ declare module 'stylelint/lib/rules/color-hex-case/index' {
 }
 
 declare module 'stylelint/lib/rules/color-hex-length/index' {
+  declare module.exports: any;
+}
+
+declare module 'stylelint/lib/rules/color-named/generateColorFuncs' {
   declare module.exports: any;
 }
 
@@ -970,7 +974,11 @@ declare module 'stylelint/lib/utils/hasScssInterpolation' {
   declare module.exports: any;
 }
 
-declare module 'stylelint/lib/utils/isAfterCommentLine' {
+declare module 'stylelint/lib/utils/isAfterComment' {
+  declare module.exports: any;
+}
+
+declare module 'stylelint/lib/utils/isAfterSingleLineComment' {
   declare module.exports: any;
 }
 
@@ -1019,6 +1027,10 @@ declare module 'stylelint/lib/utils/isCustomSelector' {
 }
 
 declare module 'stylelint/lib/utils/isFirstNested' {
+  declare module.exports: any;
+}
+
+declare module 'stylelint/lib/utils/isFirstNodeOfRoot' {
   declare module.exports: any;
 }
 
@@ -1311,6 +1323,9 @@ declare module 'stylelint/lib/rules/color-hex-case/index.js' {
 }
 declare module 'stylelint/lib/rules/color-hex-length/index.js' {
   declare module.exports: $Exports<'stylelint/lib/rules/color-hex-length/index'>;
+}
+declare module 'stylelint/lib/rules/color-named/generateColorFuncs.js' {
+  declare module.exports: $Exports<'stylelint/lib/rules/color-named/generateColorFuncs'>;
 }
 declare module 'stylelint/lib/rules/color-named/index.js' {
   declare module.exports: $Exports<'stylelint/lib/rules/color-named/index'>;
@@ -1870,8 +1885,11 @@ declare module 'stylelint/lib/utils/hasPsvInterpolation.js' {
 declare module 'stylelint/lib/utils/hasScssInterpolation.js' {
   declare module.exports: $Exports<'stylelint/lib/utils/hasScssInterpolation'>;
 }
-declare module 'stylelint/lib/utils/isAfterCommentLine.js' {
-  declare module.exports: $Exports<'stylelint/lib/utils/isAfterCommentLine'>;
+declare module 'stylelint/lib/utils/isAfterComment.js' {
+  declare module.exports: $Exports<'stylelint/lib/utils/isAfterComment'>;
+}
+declare module 'stylelint/lib/utils/isAfterSingleLineComment.js' {
+  declare module.exports: $Exports<'stylelint/lib/utils/isAfterSingleLineComment'>;
 }
 declare module 'stylelint/lib/utils/isAfterStandardPropertyDeclaration.js' {
   declare module.exports: $Exports<'stylelint/lib/utils/isAfterStandardPropertyDeclaration'>;
@@ -1908,6 +1926,9 @@ declare module 'stylelint/lib/utils/isCustomSelector.js' {
 }
 declare module 'stylelint/lib/utils/isFirstNested.js' {
   declare module.exports: $Exports<'stylelint/lib/utils/isFirstNested'>;
+}
+declare module 'stylelint/lib/utils/isFirstNodeOfRoot.js' {
+  declare module.exports: $Exports<'stylelint/lib/utils/isFirstNodeOfRoot'>;
 }
 declare module 'stylelint/lib/utils/isKeyframeRule.js' {
   declare module.exports: $Exports<'stylelint/lib/utils/isKeyframeRule'>;
