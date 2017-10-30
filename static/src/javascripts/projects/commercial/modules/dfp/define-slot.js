@@ -139,9 +139,19 @@ const defineSlot = (adSlotNode: Element, sizes: Object): Object => {
             loadedResolve = resolve;
         });
 
-        const iasDataCallback = () => {
-            iasPET.setTargetingForGPT();
+        const iasDataCallback = (targetingJSON) => {
             clearTimeout(timeoutId);
+
+            /*  There is a name-clash with the `fr` targeting returned by IAS
+                and the `fr` paramater we already use for frequency. Therefore
+                we apply the targeting to the slot ourselves and rename the IAS
+                fr parameter to `fra` (given that, here, it relates to fraud).
+            */
+            const targeting = JSON.parse(targetingJSON);
+            Object.keys(targeting.brandSafety).forEach( key => slot.setTargeting(key, targeting.brandSafety[key]))
+            if (targeting.fr){
+                slot.setTargeting('fra', targeting.fr);
+            }
             loadedResolve();
         };
 
