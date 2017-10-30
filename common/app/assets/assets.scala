@@ -8,7 +8,7 @@ import model.ApplicationContext
 import org.apache.commons.io.IOUtils
 import play.api.libs.json._
 import play.api.Mode
-import conf.switches.Switches.Pc
+import conf.switches.Switches.PillarCards
 
 import scala.collection.concurrent.{TrieMap, Map => ConcurrentMap}
 import scala.util.{Failure, Success, Try}
@@ -92,7 +92,7 @@ object css {
   private def cssHead(project: String): String =
     project match {
       case "footballSnaps" => "head.footballSnaps"
-      case "facia" => if (Pc.isSwitchedOff) "head.facia.pc" else "head.facia"
+      case "facia" => if (PillarCards.isSwitchedOff) "head.facia.pc" else "head.facia"
       case "identity" => "head.identity"
       case "football" => "head.football"
       case "index" => "head.index"
