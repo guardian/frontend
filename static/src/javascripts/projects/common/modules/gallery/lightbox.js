@@ -20,17 +20,58 @@ import shareButtonMobileTpl from 'raw-loader!common/views/content/share-button-m
 import throttle from 'lodash/functions/throttle';
 import { loadCssPromise } from 'lib/load-css-promise';
 
-const pulseButton = (button): void => {
-    const $btn = bonzo(button);
+type ImageJson = {
+    caption: string,
+    credit: string,
+    displayCredit: string,
+    ratio: number,
+    role: string,
+    sizes: string,
+    src: string,
+    srcsets: string,
+};
 
-    $btn.addClass('gallery-lightbox__button-pulse');
-
-    window.setTimeout(() => {
-        $btn.removeClass('gallery-lightbox__button-pulse');
-    }, 75);
+type GalleryJson = {
+    id: string,
+    headline: string,
+    shouldHideAdverts: boolean,
+    standfirst: string,
+    images: Array<ImageJson>,
 };
 
 class GalleryLightbox {
+    showEndslate: boolean;
+    useSwipe: boolean;
+    swipeThreshold: number;
+    lightboxEl: bonzo;
+    $lightboxEl: bonzo;
+    $indexEl: bonzo;
+    $countEl: bonzo;
+    $contentEl: bonzo;
+    nextBtn: ?HTMLElement;
+    prevBtn: ?HTMLElement;
+    closeBtn: ?HTMLElement;
+    infoBtn: ?HTMLElement;
+    $swipeContainer: bonzo;
+    handleKeyEvents: Function;
+    resize: Function;
+    toggleInfo: Function;
+    fsm: FiniteStateMachine;
+    states: Object;
+    images: Array<ImageJson>;
+    swipeContainerWidth: number;
+    $slides: bonzo;
+    index: number;
+    $images: bonzo;
+    galleryJson: GalleryJson;
+    bodyScrollPosition: number;
+    endslateEl: bonzo;
+    endslate: Object;
+    show: Function;
+    close: Function;
+    hide: Function;
+    pulseButton: Function;
+
     constructor() {
         // CONFIG
         this.showEndslate =
@@ -48,7 +89,7 @@ class GalleryLightbox {
             });
         };
 
-        this.galleryLightboxHtml =
+        const galleryLightboxHtml: string =
             `${'<div class="overlay gallery-lightbox gallery-lightbox--closed gallery-lightbox--hover">' +
                 '<div class="gallery-lightbox__sidebar">'}${generateButtonHTML(
                 'close'
@@ -66,7 +107,7 @@ class GalleryLightbox {
             `</div>`;
 
         // ELEMENT BINDINGS
-        this.lightboxEl = bonzo.create(this.galleryLightboxHtml);
+        this.lightboxEl = bonzo.create(galleryLightboxHtml);
         this.$lightboxEl = bonzo(this.lightboxEl).prependTo(document.body);
         this.$indexEl = $('.js-gallery-index', this.lightboxEl);
         this.$countEl = $('.js-gallery-count', this.lightboxEl);
@@ -114,10 +155,15 @@ class GalleryLightbox {
         });
     }
 
-    generateImgHTML(img, i) {
+    generateImgHTML(img: Object, i: number) {
         const blockShortUrl = config.get('page.shortUrl');
         const urlPrefix = img.src.indexOf('//') === 0 ? 'http:' : '';
-        const shareItems = [
+        const shareItems: Array<{
+            text: string,
+            css: string,
+            icon: string,
+            url: string,
+        }> = [
             {
                 text: 'Facebook',
                 css: 'facebook',
@@ -222,11 +268,11 @@ class GalleryLightbox {
         this.$lightboxEl.removeClass('gallery-lightbox--hover');
     }
 
-    trigger(event, data) {
+    trigger(event: string, data?: GalleryJson) {
         this.fsm.trigger(event, data);
     }
 
-    loadGalleryfromJson(galleryJson, startIndex) {
+    loadGalleryfromJson(galleryJson: GalleryJson, startIndex: number) {
         this.index = startIndex;
         if (this.galleryJson && galleryJson.id === this.galleryJson.id) {
             this.trigger('open');
@@ -235,7 +281,7 @@ class GalleryLightbox {
         }
     }
 
-    loadSurroundingImages(index, count) {
+    loadSurroundingImages(index: number, count: number) {
         let imageContent;
         let $img;
 
@@ -258,7 +304,7 @@ class GalleryLightbox {
             });
     }
 
-    translateContent(imgIndex, offset, duration) {
+    translateContent(imgIndex: number, offset: number, duration: number) {
         const px = -1 * (imgIndex - 1) * this.swipeContainerWidth;
         const contentEl = this.$contentEl[0];
 
@@ -274,7 +320,7 @@ class GalleryLightbox {
             offset}px,0) translateZ(0)`;
     }
 
-    show() {
+    show(): void {
         const $body = bonzo(document.body);
         this.bodyScrollPosition = $body.scrollTop();
         $body.addClass('has-overlay');
@@ -283,8 +329,8 @@ class GalleryLightbox {
         bean.on(document.body, 'keydown', this.handleKeyEvents);
     }
 
-    close() {
-        if (hasHistorySupport) {
+    close(): void {
+        if (supportsPushState) {
             urlBack();
         } else {
             this.trigger('close');
@@ -292,7 +338,7 @@ class GalleryLightbox {
         this.trigger('close');
     }
 
-    hide() {
+    hide(): void {
         // remove has-overlay first to show body behind lightbox then scroll and
         // close the lightbox at the same time. this way we get no scroll flicker
         const $body = bonzo(document.body);
@@ -307,7 +353,7 @@ class GalleryLightbox {
         }, 1);
     }
 
-    handleKeyEvents(e) {
+    handleKeyEvents(e: KeyboardEvent): void {
         if (e.keyCode === 37) {
             // left
             this.trigger('prev');
@@ -329,8 +375,8 @@ class GalleryLightbox {
         }
     }
 
-    loadEndslate() {
-        if (!this.endslate.rendered) {
+    loadEndslate(): void {
+        if (!this.endslate.rendered && this.$contentEl) {
             this.endslateEl = bonzo.create(endslateTpl);
             this.$contentEl.append(this.endslateEl);
 
@@ -363,9 +409,9 @@ GalleryLightbox.prototype.states = {
                 }
                 this.state = 'image';
             },
-            loadJson(json) {
+            loadJson(json: GalleryJson) {
                 this.galleryJson = json;
-                this.images = json.images;
+                this.images = json.images ? json.images : [];
                 this.$countEl.text(this.images.length);
 
                 const imagesHtml = this.images
@@ -442,7 +488,7 @@ GalleryLightbox.prototype.states = {
         },
         events: {
             next() {
-                pulseButton(this.nextBtn);
+                this.pulseButton(this.nextBtn);
                 if (this.index === this.images.length) {
                     // last img
                     if (this.showEndslate) {
@@ -457,7 +503,7 @@ GalleryLightbox.prototype.states = {
                 }
             },
             prev() {
-                pulseButton(this.prevBtn);
+                this.pulseButton(this.prevBtn);
                 if (this.index === 1) {
                     // first img
                     if (this.showEndslate) {
@@ -475,15 +521,15 @@ GalleryLightbox.prototype.states = {
                 this.reloadState = true;
             },
             'toggle-info': function() {
-                pulseButton(this.infoBtn);
+                this.pulseButton(this.infoBtn);
                 this.$lightboxEl.toggleClass('gallery-lightbox--show-info');
             },
             'hide-info': function() {
-                pulseButton(this.infoBtn);
+                this.pulseButton(this.infoBtn);
                 this.$lightboxEl.removeClass('gallery-lightbox--show-info');
             },
             'show-info': function() {
-                pulseButton(this.infoBtn);
+                this.pulseButton(this.infoBtn);
                 this.$lightboxEl.addClass('gallery-lightbox--show-info');
             },
             resize() {
@@ -508,12 +554,12 @@ GalleryLightbox.prototype.states = {
         },
         events: {
             next() {
-                pulseButton(this.nextBtn);
+                this.pulseButton(this.nextBtn);
                 this.index = 1;
                 this.state = 'image';
             },
             prev() {
-                pulseButton(this.prevBtn);
+                this.pulseButton(this.prevBtn);
                 this.index = this.images.length;
                 this.state = 'image';
             },
@@ -628,7 +674,7 @@ const bootstrap = () => {
             const match = /\?index=(\d+)/.exec(document.location.href);
             if (match) {
                 // index specified so launch lightbox at that index
-                pushUrl(null, document.title, galleryId, true); // lets back work properly
+                pushUrl({}, document.title, galleryId, true); // lets back work properly
                 lightbox.loadGalleryfromJson(images, parseInt(match[1], 10));
             } else {
                 res = /^#(?:img-)?(\d+)$/.exec(galleryHash);
