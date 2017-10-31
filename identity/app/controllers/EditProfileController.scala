@@ -147,7 +147,6 @@ class EditProfileController(
     val idRequest = idRequestParser(request)
     val userId = request.user.getId()
     val subscriberFuture = identityApiClient.userEmails(userId, idRequest.trackingData)
-
     for {
       subscriber <- subscriberFuture
     } yield {

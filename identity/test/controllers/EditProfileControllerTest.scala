@@ -1,10 +1,12 @@
 package controllers
 
 import actions.AuthenticatedActions
+import actions.AuthenticatedActions.AuthRequest
 import idapiclient.Auth
 import com.gu.identity.cookie.GuUCookieData
 import com.gu.identity.model._
 import form._
+import idapiclient.responses.Error
 import idapiclient.{TrackingData, _}
 import model.{Countries, PhoneNumbers}
 import org.joda.time.format.ISODateTimeFormat
@@ -49,6 +51,8 @@ import scala.concurrent.Future
     val authenticatedUser = AuthenticatedUser(user, testAuth)
     val phoneNumbers = PhoneNumbers
 
+    val error = Error("Test message", "Test description", 500)
+    val errors = List(error)
     val authenticatedActions = new AuthenticatedActions(authService, api, mock[IdentityUrlBuilder], controllerComponent)
 
     val profileFormsMapping = ProfileFormsMapping(
@@ -63,6 +67,11 @@ import scala.concurrent.Future
     when(idRequestParser.apply(MockitoMatchers.any[RequestHeader])) thenReturn idRequest
     when(idRequest.trackingData) thenReturn trackingData
     when(idRequest.returnUrl) thenReturn None
+
+    val subscriber = Subscriber("Text", Nil)
+    when(api.userEmails(MockitoMatchers.anyString(), MockitoMatchers.any[TrackingData])) thenReturn Future.successful(Right(subscriber))
+    val testRequest = TestRequest()
+    val authRequest = new AuthRequest(authenticatedUser, testRequest)
 
     lazy val controller = new EditProfileController(
       idUrlBuilder,
@@ -434,4 +443,65 @@ import scala.concurrent.Future
       }
     }
   }
+
+  "email functionality in profileController" when {
+    "the api calls succeed" should {
+      "display email preferences" in new EditProfileFixture {
+        when(api.userEmails(MockitoMatchers.anyString(), MockitoMatchers.any[TrackingData])) thenReturn Future.successful(Right(subscriber))
+        when(idUrlBuilder.buildUrl(MockitoMatchers.any[String], MockitoMatchers.any[IdentityRequest], MockitoMatchers.any[(String, String)])) thenReturn "/privacy/edit"
+        when(authService.recentlyAuthenticated(MockitoMatchers.any[Request[_]])) thenReturn true
+        val result = controller.displayPrivacyForm()(authRequest)
+        status(result) should equal(OK)
+        val content = contentAsString(result)
+        content should include("addEmailSubscription")
+      }
+    }
+  }
+
+    "the API calls fail" should {
+      "include the error message on the page" in new EditProfileFixture {
+        when(authService.recentlyAuthenticated(MockitoMatchers.any[Request[_]])) thenReturn true
+        when(api.userEmails(MockitoMatchers.anyString(), MockitoMatchers.any[TrackingData])) thenReturn Future.successful(Left(List(error)))
+        val result = controller.displayPrivacyForm()(authRequest)
+        contentAsString(result).contains(error.description) should equal(true)
+      }
+    }
+
+    "The save preferences method is invoked" when {
+      "the form submission is valid" when {
+        "and the api call is successful" should {
+          "call successfully updateUser and updateUserEmails" in new EditProfileFixture{
+
+            val emailFormat = "Text"
+
+            def fakeRequest: FakeRequest[AnyContentAsFormUrlEncoded] = FakeCSRFRequest(csrfAddToken, POST, "/email-prefs")
+              .withFormUrlEncodedBody("htmlPreference" -> emailFormat, "csrfToken" -> "abc")
+            // Crazy Unit return type!
+            def authRequestTest: Security.AuthenticatedRequest[AnyContentAsFormUrlEncoded, AuthenticatedUser] = new AuthRequest(authenticatedUser, fakeRequest)
+            when(api.updateUserEmails(MockitoMatchers.anyString(), MockitoMatchers.any[Subscriber], MockitoMatchers.any[Auth], MockitoMatchers.any[TrackingData])) thenReturn Future.successful(Right(()))
+            when(authService.recentlyAuthenticated(MockitoMatchers.any[Request[_]])) thenReturn true
+            controller.saveEmailPreferences()(authRequestTest)
+            verify(api).updateUserEmails(userId, Subscriber(emailFormat, Nil), testAuth, trackingData)
+          }
+        }
+
+        "and the user email API call fails" should {
+          "include the error message on the page" in new EditProfileFixture{
+            val emailFormat = "Text"
+
+            def fakeRequest: FakeRequest[AnyContentAsFormUrlEncoded] = FakeCSRFRequest(csrfAddToken, POST, "/email-prefs")
+              .withFormUrlEncodedBody("htmlPreference" -> emailFormat, "csrfToken" -> "abc")
+
+            def authRequestTest: Security.AuthenticatedRequest[AnyContentAsFormUrlEncoded, AuthenticatedUser] = new AuthRequest(authenticatedUser, fakeRequest)
+            when(api.updateUserEmails(MockitoMatchers.anyString(), MockitoMatchers.any[Subscriber], MockitoMatchers.any[Auth], MockitoMatchers.any[TrackingData])) thenReturn Future.successful(Left(errors))
+            val result = controller.saveEmailPreferences()(authRequestTest)
+            contentAsString(result)
+            val content = contentAsString(result)
+            content should include("There was an error saving your preferences")
+          }
+        }
+      }
+    }
+
 }
+
