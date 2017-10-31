@@ -338,7 +338,11 @@ const initPlayer = (withPreroll: boolean): void => {
     videojs.plugin('fullscreener', fullscreener);
 
     fastdom.read(() => {
-        $('.js-gu-media--enhance').each(el => {
+        $(
+            `.js-gu-audio--enhance, ${config.switches.enhancedVideoPlayer
+                ? '.js-gu-video--enhance'
+                : ''}`
+        ).each(el => {
             enhanceVideo(el, false, withPreroll);
         });
     });

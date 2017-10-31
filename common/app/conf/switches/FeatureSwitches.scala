@@ -168,10 +168,20 @@ trait FeatureSwitches {
   val EnhancedMediaPlayerSwitch = Switch(
     SwitchGroup.Feature,
     "enhanced-media-player",
-    "If this is switched on then videos are enhanced using our JavaScript player",
+    "If this is switched on then video and audio elements are enhanced using our JavaScript player",
     owners = Seq(Owner.withGithub("johnduffell")),
     safeState = On,
     sellByDate = never,
+    exposeClientSide = true
+  )
+
+  val EnhancedVideoPlayerSwitch = Switch(
+    SwitchGroup.Feature,
+    "enhanced-video-player",
+    "If this is switched on then videos are enhanced using our JavaScript player",
+    owners = Seq(Owner.withGithub("siadcock")),
+    safeState = On,
+    sellByDate = new LocalDate(2018, 4, 30),
     exposeClientSide = true
   )
 
