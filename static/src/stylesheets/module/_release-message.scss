@@ -606,7 +606,75 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
         padding-right: 5px;
         padding-bottom: 10px;
     }
+
+    .big-test-container {
+        margin-top: 8px;
+        margin-left: 10px;
+    }
+
+    .site-message__message--membership.big-test {
+        @include mq($from: mobile) {
+        }
+        @include mq($from: tablet) {
+        }
+        @include mq($from: desktop) {
+            margin-top: 8px;
+            margin-left: 10px;
+        }
+
+
+        .membership__message-text.big {
+            @include mq($from: mobile) {
+                font-size: 22px;
+            }
+            @include mq($from: tablet) {
+                font-size: 26px;
+            }
+            @include mq($from: desktop) {
+                font-size: 36px;
+            }
+        }
+
+        .membership__message-text.small {
+            @include mq($from: mobile) {
+                font-size: 16px;
+            }
+            @include mq($from: tablet) {
+                font-size: 20px;
+            }
+            @include mq($from: desktop) {
+                font-size: 24px;
+            }
+        }
+
+        .membership__big-message-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .membership__big--cta-with-paypal {
+            display: flex;
+            margin-top: 10px;
+            @include mq($from: mobile) {
+                flex-direction: column;
+            }
+
+            @include mq($from: desktop) {
+                flex-direction: row;
+                margin-bottom: 20px;
+            }
+        }
+        .membership__paypal-container {
+            @include mq($from: desktop) {
+                position: absolute;
+                right: 0;
+            }
+        }
+
+    }
+
     .site-message__message--membership {
+
 
         max-width: none;
 
@@ -616,11 +684,9 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
             }
         }
 
-        .membership__message-text.big {
-            @include mq(desktop) {
-                font-size:50px;
-            }
-        }
+        /**
+          Big, long banner tests
+        **/
 
 
         margin-right: 5px;
@@ -849,6 +915,9 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
         }
     }
 }
+
+
+
 
 /**
  * Adblock banner in sticky nav
