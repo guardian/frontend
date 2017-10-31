@@ -55,6 +55,10 @@ const setProgressTracker = (atomId: string): number => {
 const onPlayerPlaying = (atomId: string): void => {
     const player = players[atomId];
 
+    if (!player) {
+        return;
+    }
+
     killProgressTracker(atomId);
     setProgressTracker(atomId);
     trackYoutubeEvent('play', getTrackingId(atomId));
@@ -62,15 +66,16 @@ const onPlayerPlaying = (atomId: string): void => {
     const mainMedia =
         (player.iframe && player.iframe.closest('.immersive-main-media')) ||
         null;
+    const parentNode = player.overlay && player.overlay.parentNode;
+    const containsEndSlateContainer =
+        parentNode && parentNode.querySelector('.end-slate-container');
+
     if (mainMedia) {
         mainMedia.classList.add('atom-playing');
     }
 
-    if (
-        player.endSlate &&
-        !player.overlay.parentNode.querySelector('.end-slate-container')
-    ) {
-        player.endSlate.fetch(player.overlay.parentNode, 'html');
+    if (player && player.endSlate && !containsEndSlateContainer) {
+        player.endSlate.fetch(parentNode, 'html');
     }
 };
 
@@ -107,10 +112,11 @@ const shouldAutoplay = (atomId: string): boolean => {
     const isAutoplayBlockingPlatform = () => isIOS() || isAndroid();
 
     const isInternalReferrer = () => {
-        if (config.page.isDev) {
+        if (config.get('page.isDev')) {
             return document.referrer.indexOf(window.location.origin) === 0;
         }
-        return document.referrer.indexOf(config.page.host) === 0;
+
+        return document.referrer.indexOf(config.get('page.host')) === 0;
     };
 
     const isMainVideo = () =>
@@ -124,7 +130,7 @@ const shouldAutoplay = (atomId: string): boolean => {
         accessibilityIsOn('flashing-elements');
 
     return (
-        config.page.contentType === 'Video' &&
+        config.get('page.contentType') === 'Video' &&
         isInternalReferrer() &&
         !isAutoplayBlockingPlatform() &&
         isMainVideo() &&
@@ -132,15 +138,25 @@ const shouldAutoplay = (atomId: string): boolean => {
     );
 };
 
-const getEndSlate = (overlay: HTMLElement): Component => {
-    const overlayParent = ((overlay.parentNode: any): ?HTMLElement);
+const getEndSlate = (overlay: HTMLElement): ?Component => {
+    const overlayParent = overlay.parentNode;
 
-    const endSlatePath = overlayParent ? overlayParent.dataset.endSlate : null;
-    const endSlate = new Component();
+    if (overlayParent instanceof HTMLElement) {
+        const dataset = overlayParent.dataset || {};
+        const endSlate = dataset.endSlate;
 
-    endSlate.endpoint = endSlatePath;
+        if (endSlate) {
+            const component = new Component();
 
-    return endSlate;
+            component.endpoint = endSlate;
+
+            return component;
+        }
+
+        return undefined;
+    }
+
+    return undefined;
 };
 
 const updateImmersiveButtonPos = (): void => {
