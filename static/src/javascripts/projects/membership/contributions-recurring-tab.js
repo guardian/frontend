@@ -10,10 +10,7 @@ import { display } from 'membership/stripe';
 const CARD_DETAILS = '.js-contribution-card-details';
 const PAYPAL = '.js-contribution-paypal';
 const MANAGE_CARD_LAST4 = '.js-manage-account-card-last4';
-const PAYPAL_EMAIL_ADDRESS = '.js-paypal-email';
 const PAYPAL_SHOW_EMAIL_BUTTON = '.js-show-paypal-button';
-const PAYPAL_HIDE_EMAIL_BUTTON = '.js-hide-paypal-button';
-const PAYPAL_SHOW_EMAIL_MESSAGE = '.js-paypal-email-message';
 const CONTRIBUTION_PERIOD_START_CONTAINER =
     '.js-contribution-period-start-container';
 const CONTRIBUTION_PERIOD_START = '.js-contribution-period-start';
@@ -30,18 +27,6 @@ const ERROR = '.js-contribution-error';
 
 const hideLoader = (): void => {
     $(LOADER).addClass(IS_HIDDEN_CLASSNAME);
-};
-
-const hidePayPalAccountName = (): void => {
-    $(PAYPAL_SHOW_EMAIL_MESSAGE).addClass(IS_HIDDEN_CLASSNAME);
-    $(PAYPAL_SHOW_EMAIL_BUTTON).removeClass(IS_HIDDEN_CLASSNAME);
-    $(PAYPAL_HIDE_EMAIL_BUTTON).addClass(IS_HIDDEN_CLASSNAME);
-};
-
-const showPayPalAccountName = (): void => {
-    $(PAYPAL_SHOW_EMAIL_MESSAGE).removeClass(IS_HIDDEN_CLASSNAME);
-    $(PAYPAL_HIDE_EMAIL_BUTTON).removeClass(IS_HIDDEN_CLASSNAME);
-    $(PAYPAL_SHOW_EMAIL_BUTTON).addClass(IS_HIDDEN_CLASSNAME);
 };
 
 const displayContributionInfo = (): void => {
@@ -69,10 +54,6 @@ const populateUserDetails = (contributorDetails: ContributorDetails): void => {
         contributorDetails.subscription.card.last4;
     if (cardTail) {
         $(MANAGE_CARD_LAST4).text(cardTail);
-    } else if (contributorDetails.subscription.payPalEmail) {
-        $(PAYPAL_EMAIL_ADDRESS).text(
-            contributorDetails.subscription.payPalEmail
-        );
     }
 
     if (contributorDetails.subscription.nextPaymentDate) {
@@ -112,9 +93,8 @@ const populateUserDetails = (contributorDetails: ContributorDetails): void => {
         );
     } else if (contributorDetails.subscription.payPalEmail) {
         // if the user hasn't changed their subscription and has PayPal as a payment method
+        $(PAYPAL_SHOW_EMAIL_BUTTON).addClass(IS_HIDDEN_CLASSNAME);
         $(PAYPAL).removeClass(IS_HIDDEN_CLASSNAME);
-        bean.on($(PAYPAL_SHOW_EMAIL_BUTTON)[0], 'click', showPayPalAccountName);
-        bean.on($(PAYPAL_HIDE_EMAIL_BUTTON)[0], 'click', hidePayPalAccountName);
     }
 };
 export const recurringContributionTab = (): void => {
