@@ -10,7 +10,7 @@ import { isBreakpoint } from 'lib/detect';
 import mediator from 'lib/mediator';
 import { videoAdUrl } from 'common/modules/commercial/video-ad-url';
 import { commercialFeatures } from 'commercial/modules/commercial-features';
-import Component from 'common/modules/component';
+import { Component } from 'common/modules/component';
 import events from 'common/modules/video/events';
 import { getVideoInfo, isGeoBlocked } from 'common/modules/video/metadata';
 import { fullscreener } from 'common/modules/media/videojs-plugins/fullscreener';

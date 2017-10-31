@@ -3,7 +3,7 @@
 import bean from 'bean';
 import bonzo from 'bonzo';
 import mediator from 'lib/mediator';
-import Component from 'common/modules/component';
+import { Component } from 'common/modules/component';
 import { postComment, previewComment } from 'common/modules/discussion/api';
 import {
     getUserFromCookie,
@@ -96,25 +96,34 @@ class CommentBox extends Component {
     }
 
     onboardingPreviewSuccess(comment: commentType, resp: Object): void {
-        this.getElem('onboarding-preview-body').innerHTML = resp.commentBody;
+        const onboardingPreviewBody = this.getElem('onboarding-preview-body');
+
+        if (onboardingPreviewBody) {
+            onboardingPreviewBody.innerHTML = resp.commentBody;
+        }
     }
 
     getDiscussionId(): string {
-        return (
-            this.options.discussionId ||
-            this.elem
-                .getAttribute('data-discussion-key')
-                .replace('discussion', '')
-        );
+        const { discussionId } = this.options;
+        let discussionKey =
+            this.elem &&
+            this.elem instanceof HTMLElement &&
+            this.elem.getAttribute('data-discussion-key');
+
+        if (!discussionId && discussionKey) {
+            discussionKey = discussionKey.replace('discussion', '');
+        }
+
+        return discussionId || discussionKey || '';
     }
 
     setFormState(disabled?: boolean = false): void {
-        const commentBody = this.getElem('body');
+        const commentBody = ((this.getElem('body'): any): HTMLInputElement);
         const submitButton = this.getElem('submit');
 
-        if (disabled || commentBody.value.length === 0) {
+        if (submitButton && (disabled || commentBody.value.length === 0)) {
             submitButton.setAttribute('disabled', 'disabled');
-        } else {
+        } else if (submitButton) {
             submitButton.removeAttribute('disabled');
         }
     }
@@ -130,8 +139,16 @@ class CommentBox extends Component {
         return getUserFromCookie();
     }
 
+    errors: Array<string>;
+    errorMessages: Object;
+
     clearErrors(): void {
-        this.getElem('messages').innerHTML = '';
+        const messages = this.getElem('messages');
+
+        if (messages) {
+            messages.innerHTML = '';
+        }
+
         this.errors = [];
         this.removeState('invalid');
     }
@@ -155,7 +172,12 @@ class CommentBox extends Component {
     }
 
     previewCommentSuccess(comment: commentType, resp: Object): void {
-        this.getElem('preview-body').innerHTML = resp.commentBody;
+        const previewBody = this.getElem('preview-body');
+
+        if (previewBody) {
+            previewBody.innerHTML = resp.commentBody;
+        }
+
         this.setState('preview-visible');
     }
 
@@ -186,13 +208,16 @@ class CommentBox extends Component {
     }
 
     postCommentSuccess(comment: commentType, resp: Object): void {
+        this.refreshUsernameHtml();
+
         if (this.options.newCommenter) {
-            this.refreshUsernameHtml();
             this.options.newCommenter = false;
         }
 
+        const body = ((this.getElem('body'): any): HTMLInputElement);
+
         comment.id = parseInt(resp.message, 10);
-        this.getElem('body').value = '';
+        body.value = '';
         this.resetPreviewComment();
         this.setFormState();
 
@@ -201,6 +226,8 @@ class CommentBox extends Component {
     }
 
     error(type: string, message?: string): void {
+        const messages = this.getElem('messages');
+
         this.setState('invalid');
 
         const errorMessage = `
@@ -210,13 +237,24 @@ class CommentBox extends Component {
                     ${message || this.errorMessages[type]}
                 </span>
             </div>`;
-        this.getElem('messages').appendChild(bonzo.create(errorMessage)[0]);
+
+        if (messages) {
+            messages.appendChild(bonzo.create(errorMessage)[0]);
+        }
+
         this.errors.push(type);
     }
 
     postComment(): void {
+        const { value } =
+            (this.elem &&
+                this.elem instanceof HTMLFormElement &&
+                this.elem.body instanceof HTMLTextAreaElement &&
+                this.elem.body) ||
+            {};
+
         const comment: commentType = {
-            body: this.elem.body.value,
+            body: value,
         };
 
         this.clearErrors();
@@ -231,12 +269,19 @@ class CommentBox extends Component {
         };
 
         const updateUsernameSuccess = (resp: Object): void => {
+            const onbordingUsername = this.getElem('onboarding-username');
+
             mediator.emit(
                 'user:username:updated',
                 resp.user.publicFields.username
             );
+
             this.options.hasUsername = true;
-            this.getElem('onboarding-username').classList.add('is-hidden');
+
+            if (onbordingUsername) {
+                onbordingUsername.classList.add('is-hidden');
+            }
+
             postCommentToDAPI();
         };
 
@@ -248,15 +293,20 @@ class CommentBox extends Component {
 
             this.setState('onboarding-visible');
 
-            usernameField.classList.add(
-                'd-comment-box__onboarding-username-error-border'
-            );
+            if (usernameField) {
+                usernameField.classList.add(
+                    'd-comment-box__onboarding-username-error-border'
+                );
+            }
 
             // TODO: this should be wrapped into a try-catch block
-            errorMessage.innerHTML = JSON.parse(
-                errorResponse.responseText
-            ).errors[0].description;
-            errorMessage.classList.remove('is-hidden');
+            if (errorMessage) {
+                errorMessage.innerHTML = JSON.parse(
+                    errorResponse.responseText
+                ).errors[0].description;
+
+                errorMessage.classList.remove('is-hidden');
+            }
         };
 
         const validEmailCommentSubmission = (): void => {
@@ -280,9 +330,14 @@ class CommentBox extends Component {
 
             if (this.errors.length === 0) {
                 if (this.options.newCommenter && !this.options.hasUsername) {
-                    updateUsername(
-                        this.getElem('onboarding-username-input').value
-                    ).then(updateUsernameSuccess, updateUsernameFailure);
+                    const userNameInput = ((this.getElem(
+                        'onboarding-username-input'
+                    ): any): HTMLInputElement);
+
+                    updateUsername(userNameInput.value).then(
+                        updateUsernameSuccess,
+                        updateUsernameFailure
+                    );
                 } else {
                     postCommentToDAPI();
                 }
@@ -367,10 +422,10 @@ class CommentBox extends Component {
 
         this.on('click', this.getClass('cancel'), () => this.cancelComment());
         this.on('click', this.getClass('show-parent'), () =>
-            this.setState('parent-visible', false)
+            this.setState('parent-visible')
         );
         this.on('click', this.getClass('hide-parent'), () =>
-            this.removeState('parent-visible', false)
+            this.removeState('parent-visible')
         );
 
         ['bold', 'italic', 'quote', 'link'].forEach(format => {
@@ -379,12 +434,18 @@ class CommentBox extends Component {
             this.on('click', selector, () => this.formatComment(format));
         });
 
-        this.setState(this.options.state);
+        if (this.options.state) {
+            this.setState(this.options.state);
+        }
 
         if (this.options.focus) {
-            window.setTimeout(() => {
-                this.getElem('body').focus();
-            }, 0);
+            const body = this.getElem('body');
+
+            if (body) {
+                window.setTimeout(() => {
+                    body.focus();
+                }, 0);
+            }
         }
     }
 
@@ -404,37 +465,52 @@ class CommentBox extends Component {
 
             this.postComment();
         } else {
-            this.getElem(
-                'onboarding-author'
-            ).innerHTML = this.getUserData().displayName;
+            const onboardingAuthor = this.getElem('onboarding-author');
+            const onboardingUsername = this.getElem('onboarding-username');
+
+            if (onboardingAuthor) {
+                onboardingAuthor.innerHTML = this.getUserData().displayName;
+            }
 
             this.setState('onboarding-visible');
             this.previewComment('onboardingPreviewSuccess');
 
-            if (this.options.hasUsername) {
-                this.getElem('onboarding-username').classList.add('is-hidden');
+            if (onboardingUsername && this.options.hasUsername) {
+                onboardingUsername.classList.add('is-hidden');
             }
         }
     }
 
     prerender(): void {
         if (!this.options.premod) {
-            this.getElem('premod').parentNode.removeChild(
-                this.getElem('premod')
-            );
+            const premod = this.getElem('premod');
+
+            if (premod && premod.parentNode) {
+                premod.parentNode.removeChild(premod);
+            }
         }
 
         const userData = this.getUserData();
+        const authorEl = this.getElem('author');
 
-        this.getElem('author').innerHTML = userData.displayName;
+        if (authorEl) {
+            authorEl.innerHTML = userData.displayName;
+        }
 
         if (this.options.state === 'response') {
-            this.getElem('submit').innerHTML = 'Post reply';
+            const submit = this.getElem('submit');
+
+            if (submit) {
+                submit.innerHTML = 'Post reply';
+            }
         } else if (this.options.shouldRenderMainAvatar) {
-            const avatar = this.getElem('avatar-wrapper');
-            avatar.setAttribute('userid', userData.id);
-            avatar.setAttribute('data-userid', userData.id);
-            avatarify(avatar);
+            const avatarWrapper = this.getElem('avatar-wrapper');
+
+            if (avatarWrapper) {
+                avatarWrapper.setAttribute('userid', userData.id);
+                avatarWrapper.setAttribute('data-userid', userData.id);
+                avatarify(avatarWrapper);
+            }
         } else {
             const container = document.getElementsByClassName(
                 'd-comment-box__meta'
@@ -447,21 +523,32 @@ class CommentBox extends Component {
 
         if (this.options.replyTo) {
             const replyToAuthor = this.getElem('reply-to-author');
-            replyToAuthor.innerHTML = this.options.replyTo.author;
-            this.getElem('parent-comment-author').innerHTML = `${this.options
-                .replyTo.author} @ ${this.options.replyTo.timestamp} said:`;
+            const parentCommentBody = this.getElem('parent-comment-body');
+            const parentCommentAuthor = this.getElem('parent-comment-author');
+            const { author, timestamp, body } = this.options.replyTo || {};
 
-            this.getElem(
-                'parent-comment-body'
-            ).innerHTML = this.options.replyTo.body;
+            if (replyToAuthor && author) {
+                replyToAuthor.innerHTML = author;
+            }
+
+            if (parentCommentAuthor && author && timestamp) {
+                parentCommentAuthor.innerHTML = `${author} @ ${timestamp} said:`;
+            }
+
+            if (parentCommentBody && body) {
+                parentCommentBody.innerHTML = body;
+            }
 
             const setSpoutMargin = () => {
-                const spoutOffset =
-                    replyToAuthor.offsetLeft +
-                    replyToAuthor.getBoundingClientRect().width / 2;
-                this.getElem(
-                    'parent-comment-spout'
-                ).style.marginLeft = `${spoutOffset}px`;
+                const parentCommentSpout = this.getElem('parent-comment-spout');
+                const spoutOffset = replyToAuthor
+                    ? replyToAuthor.offsetLeft +
+                      replyToAuthor.getBoundingClientRect().width / 2
+                    : false;
+
+                if (parentCommentSpout && spoutOffset) {
+                    parentCommentSpout.style.marginLeft = `${spoutOffset}px`;
+                }
             };
 
             window.setTimeout(() => setSpoutMargin(), 0);
@@ -479,9 +566,11 @@ class CommentBox extends Component {
     }
 
     previewComment(methodName: string): void {
+        const body = ((this.getElem('body'): any): HTMLInputElement);
         const comment: commentType = {
-            body: this.getElem('body').value,
+            body: body.value,
         };
+        // $FlowFixMe
         const callback = this[methodName].bind(this);
 
         this.clearErrors();
@@ -491,7 +580,11 @@ class CommentBox extends Component {
             this.error('EMPTY_COMMENT_BODY');
         }
 
-        if (comment.body.length > this.options.maxLength) {
+        if (
+            comment &&
+            comment.body &&
+            comment.body.length > this.options.maxLength
+        ) {
             const charDiff = comment.body.length - this.options.maxLength;
             const errorMessage = `
                 <b>Comments must be shorter than
@@ -512,20 +605,27 @@ class CommentBox extends Component {
         if (this.options.state === 'response') {
             this.destroy();
         } else {
+            const body = ((this.getElem('body'): any): HTMLInputElement);
+
             this.resetPreviewComment();
-            this.getElem('body').value = '';
+            body.value = '';
             this.setFormState();
             this.removeState('expanded');
         }
     }
 
     resetPreviewComment(): void {
+        const previewBody = this.getElem('preview-body');
+
         this.removeState('preview-visible');
-        this.getElem('preview-body').innerHTML = '';
+
+        if (previewBody) {
+            previewBody.innerHTML = '';
+        }
     }
 
     formatComment(formatStyle: string): void {
-        const commentBody = this.getElem('body');
+        const commentBody = ((this.getElem('body'): any): HTMLInputElement);
         const cursorPositionStart = commentBody.selectionStart;
         let selectedText = commentBody.value.substring(
             commentBody.selectionStart,

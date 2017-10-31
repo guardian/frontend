@@ -1,13 +1,15 @@
 // @flow
 
 import bonzo from 'bonzo';
-import Component from 'common/modules/component';
+import { Component } from 'common/modules/component';
 import { isBreakpoint } from 'lib/detect';
 import $ from 'lib/$';
 
+type PageTypes = 'minbymin' | 'preview' | 'report' | 'stats';
+
 type ScoreBoardContext = {
     autoupdated: boolean,
-    pageType: 'minbymin' | 'preview' | 'report' | 'stats',
+    pageType: PageTypes,
     placeholder?: HTMLElement,
     parent: bonzo,
     responseDataKey: string,
@@ -44,6 +46,10 @@ class ScoreBoard extends Component {
             context.parent.addClass('u-h').before(this.placeholder);
         }
     }
+
+    placeholder: HTMLElement;
+    pageType: PageTypes;
+    parent: bonzo;
 
     prerender(): void {
         const scoreLoadingPlaceholder = $(

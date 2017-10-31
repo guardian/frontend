@@ -1,6 +1,6 @@
 // @flow
 
-import Component from 'common/modules/component';
+import { Component } from 'common/modules/component';
 
 const factory = (url: string): Component => {
     const c = new Component();
