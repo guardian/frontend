@@ -32,7 +32,6 @@ export class GeoMostPopularFront extends Component {
     isVideoFront: boolean;
     isInternational: boolean;
     parent: ?bonzo;
-    tab: ?bonzo;
 
     prerender(): void {
         this.elem = qwery('.headline-list', this.elem)[0];
@@ -50,8 +49,11 @@ export class GeoMostPopularFront extends Component {
                 // hide the tabs
                 hideTabs(this.parent);
             } else {
-                this.tab = qwery(tabSelector, this.parent)[0];
-                this.fetch(this.tab, 'html');
+                const tab = this.parent.querySelector(tabSelector);
+
+                if (tab) {
+                    this.fetch(tab, 'html');
+                }
             }
         }
     }
