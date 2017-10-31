@@ -2,8 +2,7 @@
 import config from 'lib/config';
 import mediator from 'lib/mediator';
 import { begin, error, end } from 'common/modules/analytics/register';
-import Component from 'common/modules/component';
-import { noop } from 'lib/noop';
+import { Component } from 'common/modules/component';
 
 const tones = {
     uk: {
@@ -26,7 +25,10 @@ const tones = {
 
 class TonalComponent extends Component {
     static getTone(): string {
-        return config.page.tones.split(',')[0].toLowerCase();
+        return config
+            .get('page.tones', '')
+            .split(',')[0]
+            .toLowerCase();
     }
 
     static ready(): void {
@@ -43,13 +45,11 @@ class TonalComponent extends Component {
 
         begin('tonal-content');
 
-        this.edition = config.page.edition.toLowerCase();
+        this.edition = config.get('page.edition', '').toLowerCase();
 
         // Ensures we only fetch supported tones.
         if (this.isSupported()) {
             this.endpoint = this.getEndpoint();
-        } else {
-            this.fetch = noop;
         }
     }
 
@@ -57,6 +57,8 @@ class TonalComponent extends Component {
         const endpoint = tones[this.edition][TonalComponent.getTone()];
         return `/container/${endpoint}.json`;
     }
+
+    edition: string;
 
     isSupported(): boolean {
         return TonalComponent.getTone() in tones[this.edition];

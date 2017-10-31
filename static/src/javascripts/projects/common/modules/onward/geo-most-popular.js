@@ -4,7 +4,7 @@
  Description: Shows popular trails for a given country.
  */
 import qwery from 'qwery';
-import Component from 'common/modules/component';
+import { Component } from 'common/modules/component';
 import mediator from 'lib/mediator';
 import once from 'lodash/functions/once';
 

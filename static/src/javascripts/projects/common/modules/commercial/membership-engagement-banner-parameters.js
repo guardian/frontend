@@ -10,8 +10,8 @@ const baseParams = {
     campaignCode: 'gdnwb_copts_memco_banner',
 };
 
-const engagementBannerCopy = (cta: string): string =>
-    `Unlike many others, we haven't put up a paywall &ndash; we want to keep our journalism as open as we can. ${cta}`;
+const engagementBannerCopy = (): string =>
+    `Unlike many others, we haven't put up a paywall &ndash; we want to keep our journalism as open as we can.`;
 
 // Prices taken from https://membership.theguardian.com/<region>/supporter
 const monthlySupporterCost = (location: string): string => {
@@ -61,21 +61,20 @@ const monthlySupporterCost = (location: string): string => {
     return payment || '£5';
 };
 
-const supporterEngagementBannerCopy = (location: string): string =>
-    engagementBannerCopy(
-        `Support us for ${monthlySupporterCost(location)} per month.`
-    );
+const supporterEngagementCtaCopy = (location: string): string =>
+    `Support us for ${monthlySupporterCost(location)} per month.`;
 
 const contributionEngagementBannerCopy = (): string =>
-    engagementBannerCopy(`Support us with a one-time contribution`);
+    `Support us with a one-time contribution`;
 
 const supporterParams = (location: string): EngagementBannerParams =>
     Object.assign({}, baseParams, {
         buttonCaption: 'Become a Supporter',
         linkUrl: 'https://membership.theguardian.com/supporter',
         products: ['MEMBERSHIP_SUPPORTER'],
-        messageText: supporterEngagementBannerCopy(location),
-        pageviewId: (config.ophan && config.ophan.pageViewId) || 'not_found',
+        messageText: engagementBannerCopy(),
+        ctaText: supporterEngagementCtaCopy(location),
+        pageviewId: config.get('ophan.pageViewId', 'not_found'),
     });
 
 const contributionParams = (): EngagementBannerParams =>
@@ -83,8 +82,9 @@ const contributionParams = (): EngagementBannerParams =>
         buttonCaption: 'Make a Contribution',
         linkUrl: 'https://contribute.theguardian.com',
         products: ['CONTRIBUTION'],
-        messageText: contributionEngagementBannerCopy(),
-        pageviewId: (config.ophan && config.ophan.pageViewId) || 'not_found',
+        messageText: engagementBannerCopy(),
+        ctaText: contributionEngagementBannerCopy(),
+        pageviewId: config.get('ophan.pageViewId', 'not_found'),
     });
 
 export const engagementBannerParams = (

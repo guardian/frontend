@@ -10,7 +10,7 @@ import { isBreakpoint } from 'lib/detect';
 import mediator from 'lib/mediator';
 import { videoAdUrl } from 'common/modules/commercial/video-ad-url';
 import { commercialFeatures } from 'commercial/modules/commercial-features';
-import Component from 'common/modules/component';
+import { Component } from 'common/modules/component';
 import events from 'common/modules/video/events';
 import { getVideoInfo, isGeoBlocked } from 'common/modules/video/metadata';
 import { fullscreener } from 'common/modules/media/videojs-plugins/fullscreener';
@@ -94,23 +94,6 @@ const initEndSlate = (player: any, endSlatePath: string): void => {
     player.on('playing', () => {
         bonzo(player.el()).removeClass(endStateClass);
     });
-};
-
-const initExploreVideo = (): void => {
-    const player = $('.vjs-tech');
-    const headline = $('.explore-series-headline')[0];
-    const controls = $('.vjs-control-bar');
-
-    if (player && headline && controls) {
-        bean.on(player[0], 'playing', () => {
-            bonzo(headline).addClass('playing');
-            bonzo(controls[0]).addClass('playing');
-        });
-        bean.on(player[0], 'pause', () => {
-            bonzo(headline).removeClass('playing');
-            bonzo(controls[0]).removeClass('playing');
-        });
-    }
 };
 
 const enhanceVideo = (
@@ -313,9 +296,7 @@ const enhanceVideo = (
             });
         }
     });
-    if ($('.explore--video').length > 0) {
-        initExploreVideo();
-    }
+
     return player;
 };
 

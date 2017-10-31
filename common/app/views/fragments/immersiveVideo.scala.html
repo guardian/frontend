@@ -2,8 +2,8 @@
 @import views.support.Video640
 
 @(page: ContentPage)(implicit request: RequestHeader)
-<div class="explore-video">
-  <div class="gs-conatainer">
+
+<div class="gs-conatainer">
     @page.item.elements.mainVideo.map { video =>
         @defining(
             VideoPlayer(
@@ -27,5 +27,4 @@
 
         }
     }
-  </div>
 </div>

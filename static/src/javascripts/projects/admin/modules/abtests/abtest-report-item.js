@@ -4,7 +4,7 @@
  Module: abtest-item.js
  Description: Displays information about a single test
  */
-import Component from 'common/modules/component';
+import { Component } from 'common/modules/component';
 import { Participation } from 'admin/modules/abtests/participation';
 import bonzo from 'bonzo';
 import debounce from 'lodash/functions/debounce';
@@ -29,6 +29,9 @@ class ABTestReportItem extends Component {
         }
     }
 
+    chart: Object;
+    config: Object;
+
     ready(): void {
         if (this.chart) {
             const redraw = this.renderChart.bind(this);
@@ -40,47 +43,89 @@ class ABTestReportItem extends Component {
     }
 
     prerender(): void {
-        this.elem.className += this.config.active
-            ? ' abtest-item--active'
-            : ' abtest-item--expired';
-        this.elem.setAttribute('data-abtest-name', this.config.test.id);
+        if (this.elem && this.elem instanceof HTMLElement) {
+            this.elem.className += this.config.active
+                ? ' abtest-item--active'
+                : ' abtest-item--expired';
+            this.elem.setAttribute(
+                'data-abtest-name',
+                this.config && this.config.test && this.config.test.id
+            );
+        }
+
         bonzo(this.elem).addClass(
             window.abSwitches[`ab${this.config.test.id}`]
                 ? 'abtest-item--switched-on'
                 : 'abtest-item--switched-off'
         );
 
-        this.getElem('description').textContent = this.config.test.description;
-
-        this.getElem('name').textContent = this.config.test.id;
+        const elements = {
+            expiry: this.getElem('expiry'),
+            audience: this.getElem('audience'),
+            audienceOffset: this.getElem('audience-offset'),
+            description: this.getElem('description'),
+            hypothesis: this.getElem('hypothesis'),
+            name: this.getElem('name'),
+            ophan: this.getElem('ophan'),
+            participation: this.getElem('participation'),
+            tableau: this.getElem('tableau'),
+        };
         const daysTillExpiry =
             (Date.parse(this.config.test.expiry) - new Date()) /
             (1000 * 60 * 60 * 24);
-        this.getElem('expiry').textContent =
-            Math.floor(daysTillExpiry).toString() +
-            (daysTillExpiry === 1 ? ' day' : ' days');
-        this.getElem('expiry').setAttribute('title', this.config.test.expiry);
-
-        this.getElem('audience').textContent = `${this.config.test.audience *
-            100}%`;
-        this.getElem('audience-offset').textContent = `${this.config.test
-            .audienceOffset * 100}%`;
-
         const tableauUrl = `https://tableau-datascience.gutools.co.uk/views/AutomatedMVTDashboard-MkII/MainMVTDashboard?:embed=y&id=${this
             .config.test.id}`;
-        this.getElem('tableau').innerHTML = `<a href="${tableauUrl}">view</a>`;
-
         const ophanUrl = `https://dashboard.ophan.co.uk/graph/breakdown?ab=${this
             .config.test.id}`;
-        this.getElem('ophan').innerHTML = `<a href="${ophanUrl}">graph</a>`;
 
-        this.getElem('hypothesis').textContent =
-            this.config.test.hypothesis || '';
+        if (elements.description) {
+            elements.description.textContent = this.config.test.description;
+        }
 
-        const participation = new Participation({
-            test: this.config.test,
-        });
-        participation.render(this.getElem('participation'));
+        if (elements.name) {
+            elements.name.textContent = this.config.test.id;
+        }
+
+        if (elements.expiry) {
+            // $FlowFixMe Go home flow, you are drunk
+            elements.expiry.textContent =
+                Math.floor(daysTillExpiry).toString() +
+                (daysTillExpiry === 1 ? ' day' : ' days');
+        }
+
+        if (elements.expiry) {
+            elements.expiry.setAttribute('title', this.config.test.expiry);
+        }
+
+        if (elements.audience) {
+            elements.audience.textContent = `${this.config.test.audience *
+                100}%`;
+        }
+
+        if (elements.audienceOffset) {
+            elements.audienceOffset.textContent = `${this.config.test
+                .audienceOffset * 100}%`;
+        }
+
+        if (elements.tableau) {
+            elements.tableau.innerHTML = `<a href="${tableauUrl}">view</a>`;
+        }
+
+        if (elements.ophan) {
+            elements.ophan.innerHTML = `<a href="${ophanUrl}">graph</a>`;
+        }
+
+        if (elements.hypothesis) {
+            elements.hypothesis.textContent = this.config.test.hypothesis || '';
+        }
+
+        if (elements.participation) {
+            const participation = new Participation({
+                test: this.config.test,
+            });
+
+            participation.render(elements.participation);
+        }
     }
 
     renderChart(): void {

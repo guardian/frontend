@@ -25,7 +25,6 @@ trait FapiFrontJsonLite {
       .fields
       .filterNot{ case (_, v) => v == JsNull})
 
-
   private def isLinkSnap(faciaContent: PressedContent) = faciaContent match {
     case _: LinkSnap => true
     case _ => false}

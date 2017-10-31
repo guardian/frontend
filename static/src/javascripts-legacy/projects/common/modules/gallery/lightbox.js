@@ -476,7 +476,7 @@ define([
         }
     };
 
-    GalleryLightbox.prototype.endslate = new Component();
+    GalleryLightbox.prototype.endslate = new Component.Component();
 
     GalleryLightbox.prototype.loadEndslate = function () {
         if (!this.endslate.rendered) {

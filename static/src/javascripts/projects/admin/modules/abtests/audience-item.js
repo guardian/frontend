@@ -3,7 +3,7 @@
  Module: audience-item.js
  Description: Displays information about how the test users are divided.
  */
-import Component from 'common/modules/component';
+import { Component } from 'common/modules/component';
 import bonzo from 'bonzo';
 
 class AudienceItem extends Component {
@@ -21,21 +21,35 @@ class AudienceItem extends Component {
         );
     }
 
+    config: Object;
+
     prerender(): void {
-        bonzo(this.getElem('test-label')).prepend(this.config.test.id);
+        const testEl = this.getElem('test');
+        const testLabel = this.getElem('test-label');
+        const captionTest = this.getElem('caption-test');
+        const captionRange = this.getElem('caption-range');
+
+        if (testLabel) {
+            bonzo(testLabel).prepend(this.config.test.id);
+        }
 
         // Set the width and absolute position to match the audience size and offset.
         const audience = this.config.test.audience * 100;
         const audienceOffset = this.config.test.audienceOffset * 100;
         const audienceEnd = audience + audienceOffset;
 
-        this.getElem('test').style.width = `${audience.toString()}%`;
-        this.getElem('test').style.left = `${audienceOffset.toString()}%`;
+        if (testEl) {
+            testEl.style.width = `${audience.toString()}%`;
+            testEl.style.left = `${audienceOffset.toString()}%`;
+        }
 
-        bonzo(this.getElem('caption-test')).append(this.config.test.id);
-        bonzo(this.getElem('caption-range')).append(
-            `${audienceOffset}% to ${audienceEnd}%`
-        );
+        if (captionTest) {
+            bonzo(captionTest).append(this.config.test.id);
+        }
+
+        if (captionRange) {
+            bonzo(captionRange).append(`${audienceOffset}% to ${audienceEnd}%`);
+        }
     }
 }
 

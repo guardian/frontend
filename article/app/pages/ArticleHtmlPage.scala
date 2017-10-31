@@ -14,7 +14,6 @@ object ArticleHtmlPage extends HtmlPage[ArticlePage] {
 
     val (header, content): (Html, Html) = page.article match {
       case article if (article.isPhotoEssay) => (photoEssayHeader(), immersiveBody())
-      case article if (article.isExplore) => (exploreHeader(), exploreBody())
       case article if (article.isImmersive) => (immersiveHeader(), immersiveBody())
       case _ => (guardianHeaderHtml(), articleBody(page))
     }
