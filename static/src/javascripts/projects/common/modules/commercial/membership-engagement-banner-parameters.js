@@ -74,7 +74,7 @@ const supporterParams = (location: string): EngagementBannerParams =>
         products: ['MEMBERSHIP_SUPPORTER'],
         messageText: engagementBannerCopy(),
         ctaText: supporterEngagementCtaCopy(location),
-        pageviewId: (config.ophan && config.ophan.pageViewId) || 'not_found',
+        pageviewId: config.get('ophan.pageViewId', 'not_found'),
     });
 
 const contributionParams = (): EngagementBannerParams =>
@@ -84,7 +84,7 @@ const contributionParams = (): EngagementBannerParams =>
         products: ['CONTRIBUTION'],
         messageText: engagementBannerCopy(),
         ctaText: contributionEngagementBannerCopy(),
-        pageviewId: (config.ophan && config.ophan.pageViewId) || 'not_found',
+        pageviewId: config.get('ophan.pageViewId', 'not_found'),
     });
 
 export const engagementBannerParams = (
