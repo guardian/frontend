@@ -1,61 +1,69 @@
+// @flow
 import bean from 'bean';
 import bonzo from 'bonzo';
 import qwery from 'qwery';
 import $ from 'lib/$';
 import config from 'lib/config';
-import detect from 'lib/detect';
+import { getBreakpoint, hasTouchScreen, isBreakpoint } from 'lib/detect';
 import FiniteStateMachine from 'lib/fsm';
 import mediator from 'lib/mediator';
 import template from 'lodash/utilities/template';
-import url from 'lib/url';
-import Component from 'common/modules/component';
-import svgs from 'common/views/svgs';
+import { supportsPushState, pushUrl, back as urlBack } from 'lib/url';
+import { Component } from 'common/modules/component';
+import { inlineSvg } from 'common/views/svgs';
 import blockSharingTpl from 'raw-loader!common/views/content/block-sharing.html';
 import buttonTpl from 'raw-loader!common/views/content/button.html';
 import endslateTpl from 'raw-loader!common/views/content/endslate.html';
 import loaderTpl from 'raw-loader!common/views/content/loader.html';
 import shareButtonTpl from 'raw-loader!common/views/content/share-button.html';
 import shareButtonMobileTpl from 'raw-loader!common/views/content/share-button-mobile.html';
-import map from 'lodash/collections/map';
 import throttle from 'lodash/functions/throttle';
-import loadCssPromise from 'lib/load-css-promise';
+import { loadCssPromise } from 'lib/load-css-promise';
+
+const pulseButton = (button): void => {
+    const $btn = bonzo(button);
+
+    $btn.addClass('gallery-lightbox__button-pulse');
+
+    window.setTimeout(() => {
+        $btn.removeClass('gallery-lightbox__button-pulse');
+    }, 75);
+};
 
 class GalleryLightbox {
     constructor() {
-
         // CONFIG
-        this.showEndslate = detect.getBreakpoint() !== 'mobile' && config.page.section !== 'childrens-books-site' && config.page.contentType === 'Gallery';
-        this.useSwipe = detect.hasTouchScreen();
+        this.showEndslate =
+            getBreakpoint() !== 'mobile' &&
+            config.page.section !== 'childrens-books-site' &&
+            config.page.contentType === 'Gallery';
+        this.useSwipe = hasTouchScreen();
         this.swipeThreshold = 0.05;
 
         // TEMPLATE
-        function generateButtonHTML(label) {
+        const generateButtonHTML = label => {
             const tmpl = buttonTpl;
             return template(tmpl, {
-                label
+                label,
             });
-        }
+        };
 
         this.galleryLightboxHtml =
-            '<div class="overlay gallery-lightbox gallery-lightbox--closed gallery-lightbox--hover">' +
-            '<div class="gallery-lightbox__sidebar">' +
-            generateButtonHTML('close') +
-            '<div class="gallery-lightbox__progress  gallery-lightbox__progress--sidebar">' +
-            '<span class="gallery-lightbox__index js-gallery-index"></span>' +
-            '<span class="gallery-lightbox__progress-separator"></span>' +
-            '<span class="gallery-lightbox__count js-gallery-count"></span>' +
-            '</div>' +
-            generateButtonHTML('next') +
-            generateButtonHTML('prev') +
-            generateButtonHTML('info-button') +
-            '</div>' +
-
-            '<div class="js-gallery-swipe gallery-lightbox__swipe-container">' +
-            '<ul class="gallery-lightbox__content js-gallery-content">' +
-            '</ul>' +
-            '</div>' +
-
-            '</div>';
+            `${'<div class="overlay gallery-lightbox gallery-lightbox--closed gallery-lightbox--hover">' +
+                '<div class="gallery-lightbox__sidebar">'}${generateButtonHTML(
+                'close'
+            )}<div class="gallery-lightbox__progress  gallery-lightbox__progress--sidebar">` +
+            `<span class="gallery-lightbox__index js-gallery-index"></span>` +
+            `<span class="gallery-lightbox__progress-separator"></span>` +
+            `<span class="gallery-lightbox__count js-gallery-count"></span>` +
+            `</div>${generateButtonHTML('next')}${generateButtonHTML(
+                'prev'
+            )}${generateButtonHTML('info-button')}</div>` +
+            `<div class="js-gallery-swipe gallery-lightbox__swipe-container">` +
+            `<ul class="gallery-lightbox__content js-gallery-content">` +
+            `</ul>` +
+            `</div>` +
+            `</div>`;
 
         // ELEMENT BINDINGS
         this.lightboxEl = bonzo.create(this.galleryLightboxHtml);
@@ -83,7 +91,7 @@ class GalleryLightbox {
             }
         };
 
-        if (detect.hasTouchScreen()) {
+        if (hasTouchScreen()) {
             this.disableHover();
         }
 
@@ -98,33 +106,45 @@ class GalleryLightbox {
             initial: 'closed',
             onChangeState(oldState, newState) {
                 this.$lightboxEl
-                    .removeClass('gallery-lightbox--' + oldState)
-                    .addClass('gallery-lightbox--' + newState);
+                    .removeClass(`gallery-lightbox--${oldState}`)
+                    .addClass(`gallery-lightbox--${newState}`);
             },
             context: this,
-            states: this.states
+            states: this.states,
         });
     }
 
     generateImgHTML(img, i) {
-        const blockShortUrl = config.page.shortUrl,
-              urlPrefix = img.src.indexOf('//') === 0 ? 'http:' : '',
-              shareItems = [{
-                  'text': 'Facebook',
-                  'css': 'facebook',
-                  'icon': svgs.inlineSvg('shareFacebook', ['icon']),
-                  'url': 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(blockShortUrl + '/sfb#img-' + i)
-              }, {
-                  'text': 'Twitter',
-                  'css': 'twitter',
-                  'icon': svgs.inlineSvg('shareTwitter', ['icon']),
-                  'url': 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(config.page.webTitle) + '&url=' + encodeURIComponent(blockShortUrl + '/stw#img-' + i)
-              }, {
-                  'text': 'Pinterest',
-                  'css': 'pinterest',
-                  'icon': svgs.inlineSvg('sharePinterest', ['icon']),
-                  'url': encodeURI('http://www.pinterest.com/pin/create/button/?description=' + config.page.webTitle + '&url=' + blockShortUrl + '&media=' + urlPrefix + img.src)
-              }];
+        const blockShortUrl = config.page.shortUrl;
+        const urlPrefix = img.src.indexOf('//') === 0 ? 'http:' : '';
+        const shareItems = [
+            {
+                text: 'Facebook',
+                css: 'facebook',
+                icon: inlineSvg('shareFacebook', ['icon']),
+                url: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+                    `${blockShortUrl}/sfb#img-${i}`
+                )}`,
+            },
+            {
+                text: 'Twitter',
+                css: 'twitter',
+                icon: inlineSvg('shareTwitter', ['icon']),
+                url: `https://twitter.com/intent/tweet?text=${encodeURIComponent(
+                    config.page.webTitle
+                )}&url=${encodeURIComponent(`${blockShortUrl}/stw#img-${i}`)}`,
+            },
+            {
+                text: 'Pinterest',
+                css: 'pinterest',
+                icon: inlineSvg('sharePinterest', ['icon']),
+                url: encodeURI(
+                    `http://www.pinterest.com/pin/create/button/?description=${config
+                        .page
+                        .webTitle}&url=${blockShortUrl}&media=${urlPrefix}${img.src}`
+                ),
+            },
+        ];
 
         return template(blockSharingTpl.replace(/^\s+|\s+$/gm, ''), {
             articleType: 'gallery',
@@ -133,8 +153,12 @@ class GalleryLightbox {
             caption: img.caption,
             credit: img.displayCredit ? img.credit : '',
             blockShortUrl,
-            shareButtons: map(shareItems, template.bind(null, shareButtonTpl)).join(''),
-            shareButtonsMobile: map(shareItems, template.bind(null, shareButtonMobileTpl)).join('')
+            shareButtons: shareItems
+                .map(s => template(shareButtonTpl, s))
+                .join(''),
+            shareButtonsMobile: shareItems
+                .map(s => template(shareButtonMobileTpl, s))
+                .join(''),
         });
     }
 
@@ -142,7 +166,6 @@ class GalleryLightbox {
         let threshold; // time in ms
         let ox;
         let dx;
-        let touchMove;
         const updateTime = 20;
 
         bean.on(this.$swipeContainer[0], 'touchstart', e => {
@@ -151,18 +174,22 @@ class GalleryLightbox {
             dx = 0;
         });
 
-        touchMove = e => {
+        const touchMove = e => {
             e.preventDefault();
-            if (e.touches.length > 1 || e.scale && e.scale !== 1) {
+            if (e.touches.length > 1 || (e.scale && e.scale !== 1)) {
                 return;
             }
             dx = e.touches[0].pageX - ox;
             this.translateContent(this.index, dx, updateTime);
         };
 
-        bean.on(this.$swipeContainer[0], 'touchmove', throttle(touchMove, updateTime, {
-            trailing: false
-        }));
+        bean.on(
+            this.$swipeContainer[0],
+            'touchmove',
+            throttle(touchMove, updateTime, {
+                trailing: false,
+            })
+        );
 
         bean.on(this.$swipeContainer[0], 'touchend', () => {
             let direction;
@@ -188,7 +215,6 @@ class GalleryLightbox {
             } else {
                 this.trigger('reload');
             }
-
         });
     }
 
@@ -210,37 +236,42 @@ class GalleryLightbox {
     }
 
     loadSurroundingImages(index, count) {
-        let imageContent, $img;
+        let imageContent;
+        let $img;
 
-        [-1, 0, 1].map(i => index + i === 0 ? count - 1 : (index - 1 + i) % count).forEach(i => {
-            imageContent = this.images[i];
-            $img = bonzo(this.$images[i]);
-            if (!$img.attr('src')) {
-                $img.parent()
-                    .append(bonzo.create(loaderTpl));
+        [-1, 0, 1]
+            .map(i => (index + i === 0 ? count - 1 : (index - 1 + i) % count))
+            .forEach(i => {
+                imageContent = this.images[i];
+                $img = bonzo(this.$images[i]);
+                if (!$img.attr('src')) {
+                    $img.parent().append(bonzo.create(loaderTpl));
 
-                $img.attr('src', imageContent.src);
-                $img.attr('srcset', imageContent.srcsets);
-                $img.attr('sizes', imageContent.sizes);
+                    $img.attr('src', imageContent.src);
+                    $img.attr('srcset', imageContent.srcsets);
+                    $img.attr('sizes', imageContent.sizes);
 
-                bean.one($img[0], 'load', () => {
-                    $('.js-loader').remove();
-                });
-
-            }
-        });
+                    bean.one($img[0], 'load', () => {
+                        $('.js-loader').remove();
+                    });
+                }
+            });
     }
 
     translateContent(imgIndex, offset, duration) {
-        const px = -1 * (imgIndex - 1) * this.swipeContainerWidth, contentEl = this.$contentEl[0];
-        contentEl.style.webkitTransitionDuration = duration + 'ms';
-        contentEl.style.mozTransitionDuration = duration + 'ms';
-        contentEl.style.msTransitionDuration = duration + 'ms';
-        contentEl.style.transitionDuration = duration + 'ms';
-        contentEl.style.webkitTransform = 'translate(' + (px + offset) + 'px,0)' + 'translateZ(0)';
-        contentEl.style.mozTransform = 'translate(' + (px + offset) + 'px,0)';
-        contentEl.style.msTransform = 'translate(' + (px + offset) + 'px,0)';
-        contentEl.style.transform = 'translate(' + (px + offset) + 'px,0)' + 'translateZ(0)';
+        const px = -1 * (imgIndex - 1) * this.swipeContainerWidth;
+        const contentEl = this.$contentEl[0];
+
+        contentEl.style.webkitTransitionDuration = `${duration}ms`;
+        contentEl.style.mozTransitionDuration = `${duration}ms`;
+        contentEl.style.msTransitionDuration = `${duration}ms`;
+        contentEl.style.transitionDuration = `${duration}ms`;
+        contentEl.style.webkitTransform = `translate(${px +
+            offset}px,0) translateZ(0)`;
+        contentEl.style.mozTransform = `translate(${px + offset}px,0)`;
+        contentEl.style.msTransform = `translate(${px + offset}px,0)`;
+        contentEl.style.transform = `translate(${px +
+            offset}px,0) translateZ(0)`;
     }
 
     show() {
@@ -253,8 +284,8 @@ class GalleryLightbox {
     }
 
     close() {
-        if (url.hasHistorySupport) {
-            url.back();
+        if (hasHistorySupport) {
+            urlBack();
         } else {
             this.trigger('close');
         }
@@ -276,26 +307,24 @@ class GalleryLightbox {
         }, 1);
     }
 
-    pulseButton(button) {
-        const $btn = bonzo(button);
-        $btn.addClass('gallery-lightbox__button-pulse');
-        window.setTimeout(() => {
-            $btn.removeClass('gallery-lightbox__button-pulse');
-        }, 75);
-    }
-
     handleKeyEvents(e) {
-        if (e.keyCode === 37) { // left
+        if (e.keyCode === 37) {
+            // left
             this.trigger('prev');
-        } else if (e.keyCode === 39) { // right
+        } else if (e.keyCode === 39) {
+            // right
             this.trigger('next');
-        } else if (e.keyCode === 38) { // up
+        } else if (e.keyCode === 38) {
+            // up
             this.trigger('show-info');
-        } else if (e.keyCode === 40) { // down
+        } else if (e.keyCode === 40) {
+            // down
             this.trigger('hide-info');
-        } else if (e.keyCode === 27) { // esc
+        } else if (e.keyCode === 27) {
+            // esc
             this.close();
-        } else if (e.keyCode === 73) { // 'i'
+        } else if (e.keyCode === 73) {
+            // 'i'
             this.trigger('toggle-info');
         }
     }
@@ -310,38 +339,45 @@ class GalleryLightbox {
             this.endslate.prerender = function() {
                 bonzo(this.elem).addClass(this.componentClass);
             };
-            this.endslate.fetch(qwery('.js-gallery-endslate', this.endslateEl), 'html');
+            this.endslate.fetch(
+                qwery('.js-gallery-endslate', this.endslateEl),
+                'html'
+            );
         }
     }
 }
 
 GalleryLightbox.prototype.states = {
-
-    'closed': {
+    closed: {
         enter() {
             this.hide();
         },
         leave() {
             this.show();
-            url.pushUrl({}, document.title, '/' + this.galleryJson.id);
+            pushUrl({}, document.title, `/${this.galleryJson.id}`);
         },
         events: {
-            'open': function() {
+            open() {
                 if (this.swipe) {
                     this.swipe.slide(this.index, 0);
                 }
                 this.state = 'image';
             },
-            'loadJson': function(json) {
+            loadJson(json) {
                 this.galleryJson = json;
                 this.images = json.images;
                 this.$countEl.text(this.images.length);
 
-                const imagesHtml = this.images.map((img, i) => this.generateImgHTML(img, i + 1)).join('');
+                const imagesHtml = this.images
+                    .map((img, i) => this.generateImgHTML(img, i + 1))
+                    .join('');
 
                 this.$contentEl.html(imagesHtml);
 
-                this.$images = $('.js-gallery-lightbox-img', this.$contentEl[0]);
+                this.$images = $(
+                    '.js-gallery-lightbox-img',
+                    this.$contentEl[0]
+                );
 
                 if (this.showEndslate) {
                     this.loadEndslate();
@@ -359,26 +395,42 @@ GalleryLightbox.prototype.states = {
                 }
 
                 this.state = 'image';
-            }
-        }
+            },
+        },
     },
 
-    'image': {
+    image: {
         enter() {
-
             this.swipeContainerWidth = this.$swipeContainer.dim().width;
 
             // load prev/current/next
             this.loadSurroundingImages(this.index, this.images.length);
 
-            this.translateContent(this.index, 0, (this.useSwipe && detect.isBreakpoint({
-                max: 'tablet'
-            }) ? 100 : 0));
+            this.translateContent(
+                this.index,
+                0,
+                this.useSwipe &&
+                isBreakpoint({
+                    max: 'tablet',
+                })
+                    ? 100
+                    : 0
+            );
 
-            url.pushUrl({}, document.title, '/' + this.galleryJson.id + '#img-' + this.index, true);
+            pushUrl(
+                {},
+                document.title,
+                `/${this.galleryJson.id}#img-${this.index}`,
+                true
+            );
 
             // event bindings
-            bean.on(this.$swipeContainer[0], 'click', '.js-gallery-content', this.toggleInfo);
+            bean.on(
+                this.$swipeContainer[0],
+                'click',
+                '.js-gallery-content',
+                this.toggleInfo
+            );
             mediator.on('window:throttledResize', this.resize);
 
             // meta
@@ -389,9 +441,10 @@ GalleryLightbox.prototype.states = {
             mediator.off('window:throttledResize', this.resize);
         },
         events: {
-            'next': function() {
-                this.pulseButton(this.nextBtn);
-                if (this.index === this.images.length) { // last img
+            next() {
+                pulseButton(this.nextBtn);
+                if (this.index === this.images.length) {
+                    // last img
                     if (this.showEndslate) {
                         this.state = 'endslate';
                     } else {
@@ -403,9 +456,10 @@ GalleryLightbox.prototype.states = {
                     this.reloadState = true;
                 }
             },
-            'prev': function() {
-                this.pulseButton(this.prevBtn);
-                if (this.index === 1) { // first img
+            prev() {
+                pulseButton(this.prevBtn);
+                if (this.index === 1) {
+                    // first img
                     if (this.showEndslate) {
                         this.state = 'endslate';
                     } else {
@@ -417,33 +471,33 @@ GalleryLightbox.prototype.states = {
                     this.reloadState = true;
                 }
             },
-            'reload': function() {
+            reload() {
                 this.reloadState = true;
             },
             'toggle-info': function() {
-                this.pulseButton(this.infoBtn);
+                pulseButton(this.infoBtn);
                 this.$lightboxEl.toggleClass('gallery-lightbox--show-info');
             },
             'hide-info': function() {
-                this.pulseButton(this.infoBtn);
+                pulseButton(this.infoBtn);
                 this.$lightboxEl.removeClass('gallery-lightbox--show-info');
             },
             'show-info': function() {
-                this.pulseButton(this.infoBtn);
+                pulseButton(this.infoBtn);
                 this.$lightboxEl.addClass('gallery-lightbox--show-info');
             },
-            'resize': function() {
+            resize() {
                 this.swipeContainerWidth = this.$swipeContainer.dim().width;
                 this.loadSurroundingImages(this.index, this.images.length); // regenerate src
                 this.translateContent(this.index, 0, 0);
             },
-            'close': function() {
+            close() {
                 this.state = 'closed';
-            }
-        }
+            },
+        },
     },
 
-    'endslate': {
+    endslate: {
         enter() {
             this.translateContent(this.$slides.length, 0, 0);
             this.index = this.images.length + 1;
@@ -453,32 +507,32 @@ GalleryLightbox.prototype.states = {
             mediator.off('window:throttledResize', this.resize);
         },
         events: {
-            'next': function() {
-                this.pulseButton(this.nextBtn);
+            next() {
+                pulseButton(this.nextBtn);
                 this.index = 1;
                 this.state = 'image';
             },
-            'prev': function() {
-                this.pulseButton(this.prevBtn);
+            prev() {
+                pulseButton(this.prevBtn);
                 this.index = this.images.length;
                 this.state = 'image';
             },
-            'reload': function() {
+            reload() {
                 this.reloadState = true;
             },
-            'resize': function() {
+            resize() {
                 this.swipeContainerWidth = this.$swipeContainer.dim().width;
                 this.translateContent(this.$slides.length, 0, 0);
             },
-            'close': function() {
+            close() {
                 this.state = 'closed';
-            }
-        }
-    }
+            },
+        },
+    },
 };
 
 GalleryLightbox.prototype.show = function() {
-    var $body = bonzo(document.body);
+    const $body = bonzo(document.body);
     this.bodyScrollPosition = $body.scrollTop();
     $body.addClass('has-overlay');
     this.$lightboxEl.addClass('gallery-lightbox--open');
@@ -487,8 +541,8 @@ GalleryLightbox.prototype.show = function() {
 };
 
 GalleryLightbox.prototype.close = function() {
-    if (url.hasHistorySupport) {
-        url.back();
+    if (supportsPushState) {
+        urlBack();
     } else {
         this.trigger('close');
     }
@@ -498,51 +552,58 @@ GalleryLightbox.prototype.close = function() {
 GalleryLightbox.prototype.hide = function() {
     // remove has-overlay first to show body behind lightbox then scroll and
     // close the lightbox at the same time. this way we get no scroll flicker
-    var $body = bonzo(document.body);
+    const $body = bonzo(document.body);
     $body.removeClass('has-overlay');
     bean.off(document.body, 'keydown', this.handleKeyEvents);
-    window.setTimeout(function() {
+    window.setTimeout(() => {
         if (this.bodyScrollPosition) {
             $body.scrollTop(this.bodyScrollPosition);
         }
 
         this.$lightboxEl.removeClass('gallery-lightbox--open');
         mediator.emit('ui:images:vh');
-    }.bind(this), 1);
+    }, 1);
 };
 
 GalleryLightbox.prototype.pulseButton = function(button) {
-    var $btn = bonzo(button);
+    const $btn = bonzo(button);
     $btn.addClass('gallery-lightbox__button-pulse');
-    window.setTimeout(function() {
+    window.setTimeout(() => {
         $btn.removeClass('gallery-lightbox__button-pulse');
     }, 75);
 };
 
 GalleryLightbox.prototype.handleKeyEvents = function(e) {
-    if (e.keyCode === 37) { // left
+    if (e.keyCode === 37) {
+        // left
         this.trigger('prev');
-    } else if (e.keyCode === 39) { // right
+    } else if (e.keyCode === 39) {
+        // right
         this.trigger('next');
-    } else if (e.keyCode === 38) { // up
+    } else if (e.keyCode === 38) {
+        // up
         this.trigger('show-info');
-    } else if (e.keyCode === 40) { // down
+    } else if (e.keyCode === 40) {
+        // down
         this.trigger('hide-info');
-    } else if (e.keyCode === 27) { // esc
+    } else if (e.keyCode === 27) {
+        // esc
         this.close();
-    } else if (e.keyCode === 73) { // 'i'
+    } else if (e.keyCode === 73) {
+        // 'i'
         this.trigger('toggle-info');
     }
 };
 
-GalleryLightbox.prototype.endslate = new Component.Component();
+GalleryLightbox.prototype.endslate = new Component();
 
-function bootstrap() {
-    loadCssPromise.loadCssPromise.then(() => {
-        if ('lightboxImages' in config.page && config.page.lightboxImages.images.length > 0) {
+const bootstrap = () => {
+    loadCssPromise.then(() => {
+        if (
+            'lightboxImages' in config.page &&
+            config.page.lightboxImages.images.length > 0
+        ) {
             let lightbox;
-            let galleryId;
-            let match;
             const galleryHash = window.location.hash;
             const images = config.page.lightboxImages;
             let res;
@@ -550,17 +611,25 @@ function bootstrap() {
             bean.on(document.body, 'click', '.js-gallerythumbs', e => {
                 e.preventDefault();
 
-                const $el = bonzo(e.currentTarget), galleryHref = $el.attr('href') || $el.attr('data-gallery-url'), galleryHrefParts = galleryHref.split('#img-'), parsedGalleryIndex = parseInt(galleryHrefParts[1], 10), galleryIndex = isNaN(parsedGalleryIndex) ? 1 : parsedGalleryIndex; // 1-based index
+                const $el = bonzo(e.currentTarget);
+                const galleryHref =
+                    $el.attr('href') || $el.attr('data-gallery-url');
+                const galleryHrefParts = galleryHref.split('#img-');
+                const parsedGalleryIndex = parseInt(galleryHrefParts[1], 10);
+                const galleryIndex = Number.isNaN(parsedGalleryIndex)
+                    ? 1
+                    : parsedGalleryIndex; // 1-based index
                 lightbox = lightbox || new GalleryLightbox();
 
                 lightbox.loadGalleryfromJson(images, galleryIndex);
             });
 
             lightbox = lightbox || new GalleryLightbox();
-            galleryId = '/' + config.page.pageId;
-            match = /\?index=(\d+)/.exec(document.location.href);
-            if (match) { // index specified so launch lightbox at that index
-                url.pushUrl(null, document.title, galleryId, true); // lets back work properly
+            const galleryId = `/${config.page.pageId}`;
+            const match = /\?index=(\d+)/.exec(document.location.href);
+            if (match) {
+                // index specified so launch lightbox at that index
+                pushUrl(null, document.title, galleryId, true); // lets back work properly
                 lightbox.loadGalleryfromJson(images, parseInt(match[1], 10));
             } else {
                 res = /^#(?:img-)?(\d+)$/.exec(galleryHash);
@@ -570,9 +639,9 @@ function bootstrap() {
             }
         }
     });
-}
+};
 
 export default {
     init: bootstrap,
-    GalleryLightbox
+    GalleryLightbox,
 };
