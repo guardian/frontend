@@ -18,14 +18,15 @@ const sentryOptions = {
     ],
 
     tags: {
-        edition: config.page.edition,
-        contentType: config.page.contentType,
-        revisionNumber: config.page.revisionNumber,
+        edition: config.get('page.edition'),
+        contentType: config.get('page.contentType'),
+        revisionNumber: config.get('page.revisionNumber'),
     },
 
     ignoreErrors: [
         "Can't execute code from a freed script",
         'There is no space left matching rules from .js-article__body',
+        'Top comments failed to load:',
 
         // weatherapi/city.json frequently 404s and lib/fetch-json throws an error
         'Fetch error while requesting https://api.nextgen.guardianapps.co.uk/weatherapi/city.json:',
@@ -46,10 +47,10 @@ const sentryOptions = {
     },
 
     shouldSendCallback(data: Object): boolean {
-        const { isDev } = config.page;
+        const { isDev } = config.get('page');
         const isIgnored =
             typeof data.tags.ignored !== 'undefined' && data.tags.ignored;
-        const { enableSentryReporting } = config.switches;
+        const { enableSentryReporting } = config.get('switches');
         const isInSample = Math.random() < 0.1;
 
         if (isDev && !isIgnored) {
