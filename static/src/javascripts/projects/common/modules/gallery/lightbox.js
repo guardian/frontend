@@ -35,8 +35,8 @@ class GalleryLightbox {
         // CONFIG
         this.showEndslate =
             getBreakpoint() !== 'mobile' &&
-            config.page.section !== 'childrens-books-site' &&
-            config.page.contentType === 'Gallery';
+            config.get('page.section') !== 'childrens-books-site' &&
+            config.get('page.contentType') === 'Gallery';
         this.useSwipe = hasTouchScreen();
         this.swipeThreshold = 0.05;
 
@@ -115,7 +115,7 @@ class GalleryLightbox {
     }
 
     generateImgHTML(img, i) {
-        const blockShortUrl = config.page.shortUrl;
+        const blockShortUrl = config.get('page.shortUrl');
         const urlPrefix = img.src.indexOf('//') === 0 ? 'http:' : '';
         const shareItems = [
             {
@@ -131,7 +131,7 @@ class GalleryLightbox {
                 css: 'twitter',
                 icon: inlineSvg('shareTwitter', ['icon']),
                 url: `https://twitter.com/intent/tweet?text=${encodeURIComponent(
-                    config.page.webTitle
+                    config.get('page.webTitle')
                 )}&url=${encodeURIComponent(`${blockShortUrl}/stw#img-${i}`)}`,
             },
             {
@@ -139,9 +139,9 @@ class GalleryLightbox {
                 css: 'pinterest',
                 icon: inlineSvg('sharePinterest', ['icon']),
                 url: encodeURI(
-                    `http://www.pinterest.com/pin/create/button/?description=${config
-                        .page
-                        .webTitle}&url=${blockShortUrl}&media=${urlPrefix}${img.src}`
+                    `http://www.pinterest.com/pin/create/button/?description=${config.get(
+                        'page.webTitle'
+                    )}&url=${blockShortUrl}&media=${urlPrefix}${img.src}`
                 ),
             },
         ];
@@ -599,13 +599,12 @@ GalleryLightbox.prototype.endslate = new Component();
 
 const bootstrap = () => {
     loadCssPromise.then(() => {
-        if (
-            'lightboxImages' in config.page &&
-            config.page.lightboxImages.images.length > 0
-        ) {
+        const images = config.get('page.lightboxImages');
+
+        if (images && images.images.length > 0) {
             let lightbox;
             const galleryHash = window.location.hash;
-            const images = config.page.lightboxImages;
+
             let res;
 
             bean.on(document.body, 'click', '.js-gallerythumbs', e => {
@@ -625,7 +624,7 @@ const bootstrap = () => {
             });
 
             lightbox = lightbox || new GalleryLightbox();
-            const galleryId = `/${config.page.pageId}`;
+            const galleryId = `/${config.get('page.pageId')}`;
             const match = /\?index=(\d+)/.exec(document.location.href);
             if (match) {
                 // index specified so launch lightbox at that index
