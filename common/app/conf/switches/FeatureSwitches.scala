@@ -484,4 +484,14 @@ trait FeatureSwitches {
     sellByDate = new LocalDate(2018, 10, 17),
     exposeClientSide = true
   )
+
+  val ProfileShowContributorTab = Switch(
+    SwitchGroup.Feature,
+    "profile-show-contributor-tab",
+    "When ON, the edit profile page will include a Contributions tab",
+    owners = Seq(Owner.withGithub("justinpinner")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 11, 30),
+    exposeClientSide = true
+  )
 }
