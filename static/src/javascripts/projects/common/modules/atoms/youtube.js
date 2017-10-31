@@ -77,14 +77,14 @@ const onPlayerPlaying = (atomId: string): void => {
         (player.iframe && player.iframe.closest('.immersive-main-media')) ||
         null;
     const parentNode = player.overlay && player.overlay.parentNode;
-    const containsEndSlateContainer =
+    const endSlateContainer =
         parentNode && parentNode.querySelector('.end-slate-container');
 
     if (mainMedia) {
         mainMedia.classList.add('atom-playing');
     }
 
-    if (player.endSlate && !containsEndSlateContainer) {
+    if (player.endSlate && !endSlateContainer) {
         player.endSlate.fetch(parentNode, 'html');
     }
 };
