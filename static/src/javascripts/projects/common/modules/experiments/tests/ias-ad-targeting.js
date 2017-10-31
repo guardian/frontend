@@ -3,7 +3,7 @@
 export const iasAdTargeting: ABTest = {
     id: 'IasAdTargeting',
     start: '2017-10-31',
-    expiry: '2017-10-04',
+    expiry: '2017-11-04',
     author: 'Jon Norman',
     description:
         'Adds additional targeting to ad slots, sourced from an IAS optimisation integration.',
