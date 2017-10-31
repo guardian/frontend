@@ -3,7 +3,6 @@
 @import model.liveblog.{LiveBlogDate,BodyBlock}
 @import views.BodyCleaner
 @import model.DotcomContentType
-
 @(blocks: Seq[BodyBlock], article: Article, timezone: DateTimeZone, amp: Boolean = false)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @import common.LinkTo
@@ -51,5 +50,10 @@
             article.metadata.contentType.getOrElse(DotcomContentType.Unknown),
             amp
         )
+
+        <span itemprop="author" itemscope itemtype="http://schema.org/Organization">
+            <span itemprop="name" value="https://www.theguardian.com#publisher"></span>
+        </span>
+
     </div>
 }
