@@ -1,5 +1,4 @@
 // @flow
-import bean from 'bean';
 import $ from 'lib/$';
 import fetch from 'lib/fetch';
 import config from 'lib/config';
