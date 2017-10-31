@@ -14,27 +14,17 @@ const PAYPAL_EMAIL_ADDRESS = '.js-paypal-email';
 const PAYPAL_SHOW_EMAIL_BUTTON = '.js-show-paypal-button';
 const PAYPAL_HIDE_EMAIL_BUTTON = '.js-hide-paypal-button';
 const PAYPAL_SHOW_EMAIL_MESSAGE = '.js-paypal-email-message';
-// const PACKAGE_COST = '.js-mem-package-cost';
-// const PACKAGE_CURRENT_RENEWAL_DATE = '.js-mem-current-renewal-date';
-// const PACKAGE_CURRENT_PERIOD_END = '.js-mem-current-period-end';
 const CONTRIBUTION_PERIOD_START_CONTAINER =
     '.js-contribution-period-start-container';
 const CONTRIBUTION_PERIOD_START = '.js-contribution-period-start';
-// const PACKAGE_NEXT_PAYMENT_CONTAINER =
-//     '.js-contribution-next-payment-container';
-// const TRIAL_INFO_CONTAINER = '.js-mem-only-for-trials';
 const PACKAGE_NEXT_PAYMENT_DATE = '.js-contribution-next-payment-date';
 const PACKAGE_NEXT_PAYMENT_PRICE = '.js-contribution-next-payment-price';
 const PACKAGE_INTERVAL = '.js-contribution-plan-interval';
-// const DETAILS_CONTRIBUTION_ICON_CURRENT = '.js-contribution-icon-current';
-// const DETAILS_JOIN_DATE = '.js-mem-join-date';
 const NOTIFICATION_CANCEL = '.js-contribution-cancel';
 const NOTIFICATION_CHANGE = '.js-contribution-change';
-// const MEMBER_DETAILS = '.js-mem-details';
 const DETAILS_SUBSCRIPTION_NUMBER_CONTAINER =
     '.js-contribution-subscription-number-container';
 const DETAILS_SUBSCRIPTION_NUM_TEXT = '.js-contribution-subscription-number';
-// const MEMBERSHIP_TIER = '.js-mem-tier';
 const UP_SELL = '.js-contribution-up-sell';
 const CONTRIBUTION_INFO = '.js-contribution-info';
 const LOADER = '.js-contribution-loader';
@@ -75,11 +65,6 @@ const populateUserDetails = (contributorDetails: ContributorDetails): void => {
     const glyph = contributorDetails.subscription.plan.currency;
     let notificationTypeSelector;
 
-    // $(MEMBERSHIP_TIER).text(contributorDetails.tier);
-    // $(PACKAGE_COST).text(
-    //     formatters.formatAmount(contributorDetails.subscription.plan.amount, glyph)
-    // );
-    // $(DETAILS_JOIN_DATE).text(formatters.formatDate(contributorDetails.joinDate));
     $(PACKAGE_INTERVAL).text(intervalText);
 
     const cardTail =
@@ -93,20 +78,12 @@ const populateUserDetails = (contributorDetails: ContributorDetails): void => {
         );
     }
 
-    // $(PACKAGE_CURRENT_PERIOD_END).text(
-    //     formatters.formatDate(contributorDetails.subscription.end)
-    // );
-    // $(PACKAGE_CURRENT_RENEWAL_DATE).text(
-    //     formatters.formatDate(contributorDetails.subscription.renewalDate)
-    // );
-
     if (contributorDetails.subscription.nextPaymentDate) {
         $(PACKAGE_NEXT_PAYMENT_DATE).text(
             formatters.formatDate(
                 contributorDetails.subscription.nextPaymentDate
             )
         );
-        // $(PACKAGE_NEXT_PAYMENT_CONTAINER).removeClass(IS_HIDDEN_CLASSNAME);
     }
 
     $(PACKAGE_NEXT_PAYMENT_PRICE).text(
@@ -115,20 +92,6 @@ const populateUserDetails = (contributorDetails: ContributorDetails): void => {
             glyph
         )
     );
-
-    // if (contributorDetails.subscription.trialLength > 0) {
-    //     $(TRIAL_INFO_CONTAINER).removeClass(IS_HIDDEN_CLASSNAME);
-    // }
-
-    // display membership number
-    if (contributorDetails.subscription.subscriberId) {
-        $(DETAILS_SUBSCRIPTION_NUMBER_CONTAINER).removeClass(
-            IS_HIDDEN_CLASSNAME
-        );
-        $(DETAILS_SUBSCRIPTION_NUM_TEXT).text(
-            contributorDetails.subscription.subscriberId
-        );
-    }
 
     if (contributorDetails.subscription.start) {
         $(CONTRIBUTION_PERIOD_START).text(
@@ -144,10 +107,6 @@ const populateUserDetails = (contributorDetails: ContributorDetails): void => {
             ? NOTIFICATION_CHANGE
             : NOTIFICATION_CANCEL;
         $(notificationTypeSelector).removeClass(IS_HIDDEN_CLASSNAME);
-        // $(MEMBER_DETAILS).addClass(IS_HIDDEN_CLASSNAME);
-        // $(DETAILS_CONTRIBUTION_ICON_CURRENT).addClass(
-        //     `i-g-${contributorDetails.tier.toLowerCase()}`
-        // );
     } else if (contributorDetails.subscription.card) {
         display(
             CARD_DETAILS,
@@ -161,7 +120,6 @@ const populateUserDetails = (contributorDetails: ContributorDetails): void => {
         bean.on($(PAYPAL_HIDE_EMAIL_BUTTON)[0], 'click', hidePayPalAccountName);
     }
 
-    // $(MEMBER_INFO).removeClass(IS_HIDDEN_CLASSNAME);
 };
 export const recurringContributionTab = (): void => {
     fetch(
