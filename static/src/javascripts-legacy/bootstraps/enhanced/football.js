@@ -230,9 +230,11 @@ define([
                                           .css({ minHeight: $img[0] ? $img[0].offsetHeight : 0 });
 
             $img.addClass('u-h');
+
             loading($matchListContainer[0], 'Fetching today’s matches…', { text: 'Impatient?', href: '/football/live' });
 
             $('.js-football-meta').append($matchListContainer);
+            
             ml.fetch($matchListContainer[0]).fail(function () {
                 ml.destroy();
                 $matchListContainer.remove();
