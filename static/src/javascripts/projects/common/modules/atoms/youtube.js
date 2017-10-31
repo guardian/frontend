@@ -74,7 +74,7 @@ const onPlayerPlaying = (atomId: string): void => {
         mainMedia.classList.add('atom-playing');
     }
 
-    if (player && player.endSlate && !containsEndSlateContainer) {
+    if (player.endSlate && !containsEndSlateContainer) {
         player.endSlate.fetch(parentNode, 'html');
     }
 };
