@@ -14,6 +14,7 @@ Object.assign(window.guardian.config, {
                 z: 'z',
             },
         },
+        falsyValue: false,
     },
 });
 
@@ -67,5 +68,11 @@ describe('Config', () => {
         expect(config.get('page.qwert', ['I am the default'])).toEqual([
             'I am the default',
         ]);
+    });
+
+    it('`get` should return falsy value for defined key with a default', () => {
+        expect(config.get('page.falsyValue', 'I am the default')).toEqual(
+            false
+        );
     });
 });
