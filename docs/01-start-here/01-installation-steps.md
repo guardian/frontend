@@ -13,10 +13,10 @@ All development laptops must be encrypted. If you are not 100% sure, please ask 
 
 ## Check your Mac
 
-- Choose Apple menu > System Preferences
-- Security & Privacy.
-- Click the FileVault tab.
-- ensure that FileVault is enabled for your disk
+- Choose `Apple menu` > `System Preferences`.
+- `Security & Privacy`.
+- Click the `FileVault` tab.
+- ensure that FileVault is enabled for your disk.
 
 ## Checking Linux (including desktop machines)
 
@@ -158,13 +158,13 @@ $ make watch
 As a convenience, this command will also watch for changes to client side code and 
 automatically inject changes into the browser without requiring a browser refresh.
 
-In another console, run the supplied bash script [sbt]. The dot and slash are important in this command.
+In another console, run the supplied bash script `sbt`. The dot and slash are important in this command.
 
 ```bash
 $ ./sbt
 ```
 
-Wait for SBT to be up and running. This may take 15 mins or so to start the first time - you'll know
+Wait for `sbt to be up and running. This may take 15 mins or so to start the first time - you'll know
 it's done when you get a prompt. If it is your first time, compile the project.
 
 ```
@@ -205,7 +205,7 @@ Congratulations, you have a local instance running!  Now continue on to set up y
 Install to your IDE from http://editorconfig.org/#download
 
 ## IntelliJ metadata
-To create project files for use in IntelliJ, you need to make sure you install the Scala plugin from Preferences->Plugins. It supports SBT and Play.
+To create project files for use in IntelliJ, you need to make sure you install the Scala plugin from `Preferences`->`Plugins`. It supports SBT and Play.
 Then load IntelliJ, then click Import project and import the directory as an SBT project. Default settings are fine, except you need to make sure you choose JDK 1.8 (under JVM - Custom) otherwise it won't import correctly - You can find the location by pasting `/usr/libexec/java_home` into your terminal.
 
 Congratulations, you are now set up to edit frontend code!  See the [Optional steps](#optional-steps) below for other things to do.
