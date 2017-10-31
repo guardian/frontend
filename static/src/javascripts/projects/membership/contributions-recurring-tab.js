@@ -22,9 +22,6 @@ const PACKAGE_NEXT_PAYMENT_PRICE = '.js-contribution-next-payment-price';
 const PACKAGE_INTERVAL = '.js-contribution-plan-interval';
 const NOTIFICATION_CANCEL = '.js-contribution-cancel';
 const NOTIFICATION_CHANGE = '.js-contribution-change';
-const DETAILS_SUBSCRIPTION_NUMBER_CONTAINER =
-    '.js-contribution-subscription-number-container';
-const DETAILS_SUBSCRIPTION_NUM_TEXT = '.js-contribution-subscription-number';
 const UP_SELL = '.js-contribution-up-sell';
 const CONTRIBUTION_INFO = '.js-contribution-info';
 const LOADER = '.js-contribution-loader';
@@ -119,7 +116,6 @@ const populateUserDetails = (contributorDetails: ContributorDetails): void => {
         bean.on($(PAYPAL_SHOW_EMAIL_BUTTON)[0], 'click', showPayPalAccountName);
         bean.on($(PAYPAL_HIDE_EMAIL_BUTTON)[0], 'click', hidePayPalAccountName);
     }
-
 };
 export const recurringContributionTab = (): void => {
     fetch(
