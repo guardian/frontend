@@ -12,6 +12,16 @@ import { isIOS, isAndroid, isBreakpoint } from 'lib/detect';
 import debounce from 'lodash/functions/debounce';
 import { isOn as accessibilityIsOn } from 'common/modules/accessibility/main';
 
+class YoutubePlayerTarget extends Event {
+    playVideo: () => void;
+}
+
+// This is imcomplete; see https://developers.google.com/youtube/iframe_api_reference#Events
+declare type YoutubePlayerEvent = {
+    data: -1 | 0 | 1 | 2 | 3 | 4 | 5,
+    target: YoutubePlayerTarget,
+};
+
 const players = {};
 
 // retrieves actual id of atom without appended index
@@ -102,7 +112,7 @@ const STATES = {
     PAUSED: onPlayerPaused,
 };
 
-const checkState = (atomId, state, status): void => {
+const checkState = (atomId: string, state: number, status: string): void => {
     if (state === window.YT.PlayerState[status] && STATES[status]) {
         STATES[status](atomId);
     }
@@ -178,7 +188,12 @@ const updateImmersiveButtonPos = (): void => {
     }
 };
 
-const onPlayerReady = (atomId, overlay, iframe, event): void => {
+const onPlayerReady = (
+    atomId: string,
+    overlay: ?HTMLElement,
+    iframe: ?HTMLElement,
+    event: YoutubePlayerEvent
+): void => {
     players[atomId] = {
         player: event.target,
         pendingTrackingCalls: [25, 50, 75],
@@ -211,7 +226,7 @@ const onPlayerReady = (atomId, overlay, iframe, event): void => {
     }
 };
 
-const onPlayerStateChange = (atomId, event): void =>
+const onPlayerStateChange = (atomId: string, event: YoutubePlayerEvent): void =>
     Object.keys(STATES).forEach(checkState.bind(null, atomId, event.data));
 
 const checkElemForVideo = (elem: ?HTMLElement): void => {
