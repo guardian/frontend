@@ -25,7 +25,7 @@ const sentryOptions = {
 
     ignoreErrors: [
         "Can't execute code from a freed script",
-        'There is no space left matching rules from .js-article__body',
+        /There is no space left matching rules from/gi,
         'Top comments failed to load:',
 
         // weatherapi/city.json frequently 404s and lib/fetch-json throws an error
