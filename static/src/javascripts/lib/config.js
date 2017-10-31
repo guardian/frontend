@@ -7,11 +7,18 @@ const config: Object = window.guardian.config;
 
 // allows you to safely get items from config using a query of
 // dot or bracket notation, with optional default fallback
-const get = (path: string = '', defaultValue: any) =>
-    path
+const get = (path: string = '', defaultValue: any): any => {
+    const value = path
         .replace(/\[(.+?)\]/g, '.$1')
         .split('.')
-        .reduce((o, key) => o[key], config) || defaultValue;
+        .reduce((o, key) => o[key], config);
+
+    if (typeof value !== 'undefined') {
+        return value;
+    }
+
+    return defaultValue;
+};
 
 const hasTone = (name: string): boolean =>
     (config.page.tones || '').includes(name);
