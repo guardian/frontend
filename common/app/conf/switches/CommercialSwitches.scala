@@ -25,16 +25,6 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
-  val IasOptimizations = Switch(
-    SwitchGroup.Commercial,
-    "ias-optimisation",
-    "Activates the IAS optimisation additional targeting when requesting ads.",
-    owners = Seq(Owner.withGithub("JonNorman")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 11, 9),
-    exposeClientSide = true
-  )
-
   val SurveySwitch = Switch(
     SwitchGroup.Commercial,
     "surveys",
