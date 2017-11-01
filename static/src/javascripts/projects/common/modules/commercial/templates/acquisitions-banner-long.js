@@ -9,7 +9,7 @@ export const acquisitionsBannerLongTemplate = (
                     <strong>Unlike many news organisations, we haven't put up a paywall - we want to keep our journalism as open as we can.</strong>
                     The Guardian's independent, investigative journalism
                 takes a lot of time, money and hard work to produce. But the revenue we get from advertising is falling,
-                so we increasingly need our readers to fund us. If everyone who read our reporting, who likes it, helps
+                so we increasingly need our readers to fund us. If everyone who reads our reporting, who likes it, helps
                 fund it, our future would be much more secure. <strong>${params.ctaText}</strong></span>
             </div>
             <span class="membership__paypal-container">
