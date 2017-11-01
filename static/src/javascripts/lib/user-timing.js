@@ -24,10 +24,10 @@ const markTime = (label: string): void => {
 // Returns the ms time when the mark was made.
 const getMarkTime = (label: string): ?number => {
     if ('getEntriesByName' in performanceAPI) {
-        const perfMark = performanceAPI.getEntriesByName(label, 'mark')[0];
+        const perfMark = performanceAPI.getEntriesByName(label, 'mark');
 
-        if (perfMark && 'startTime' in perfMark) {
-            return perfMark.startTime;
+        if (perfMark && 'startTime' in perfMark[0]) {
+            return perfMark[0].startTime;
         }
     } else if (label in timings) {
         return timings[label];
