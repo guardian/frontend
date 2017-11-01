@@ -166,6 +166,12 @@ Developer: Richard Beddington
 Twitter: @richieahb
 Location: London, UK
 
+Developer: Laura González
+Twitter: @freezydorito
+From: Oviedo, ES
+Location: London, UK
+
+
 /* CONTENT PRODUCTION */
 
 Editorial Systems: Luke Hoyland
