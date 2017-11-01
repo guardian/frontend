@@ -53,6 +53,7 @@
                 @views.html.fragments.meta.bylineLiveBlockImage(contributorTag)
             }
         }
+
         <div class="block-elements@if(block.contributors.isEmpty){ block-elements--no-byline}" itemprop="articleBody">
         @BodyCleaner(article, block.bodyHtml, amp)
         </div>
