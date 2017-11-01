@@ -82,8 +82,14 @@ final case class Content(
   lazy val campaigns: List[Campaign] = _root_.commercial.targeting.CampaignAgent.getCampaignsForTags(tags.tags.map(_.id))
 
   lazy val isAmpSupportedArticleType: Boolean = (tags.isArticle && !tags.isLiveBlog) && !isImmersive && !tags.isQuiz
-  lazy val shouldAmpifyArticles: Boolean = isAmpSupportedArticleType && AmpArticleSwitch.isSwitchedOn
-  lazy val shouldAmpifyLiveblogs: Boolean = tags.isLiveBlog && AmpLiveBlogSwitch.isSwitchedOn
+
+  lazy val shouldAmplify: Boolean = {
+    val shouldAmplifyArticles = isAmpSupportedArticleType && AmpArticleSwitch.isSwitchedOn
+    val shouldAmplifyLiveBlogs = tags.isLiveBlog && AmpLiveBlogSwitch.isSwitchedOn
+    val containsFormStacks: Boolean = fields.body.contains("guardiannewsandmedia.formstack.com")
+
+    (shouldAmplifyArticles || shouldAmplifyLiveBlogs) && !containsFormStacks
+  }
 
   lazy val hasSingleContributor: Boolean = {
     (tags.contributors.headOption, trail.byline) match {
