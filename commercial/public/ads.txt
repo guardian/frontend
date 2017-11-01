@@ -1,26 +1,25 @@
 # ads.txt file for www.theguardian.com
 
-indexexchange.com, 184842, DIRECT
-indexexchange.com, 185406, DIRECT
-openx.com, 538907167, DIRECT, 6a698e2ec38604c6
-google.com, pub-2012933198307164, DIRECT
-google.com, pub-7526622147976638, DIRECT
-google.com, pub-4979300716531995, DIRECT
-google.com, pub-5107472231497753, DIRECT
-google.com, pub-5024059404294558, DIRECT
-google.com, pub-1452170585655900, DIRECT
-sonobi.com, d089631d2d, DIRECT
 appnexus.com, 2888, DIRECT
 appnexus.com, 7012, DIRECT
-trustx.org, 27, DIRECT
-triplelift.com, 2885, DIRECT
-yieldmo.com, 1452927761628117365, DIRECT
+google.com, pub-1452170585655900, DIRECT
+google.com, pub-2012933198307164, DIRECT
+google.com, pub-3746578658400510, DIRECT, f08c47fec0942fa0
+google.com, pub-4979300716531995, DIRECT
+google.com, pub-5024059404294558, DIRECT
+google.com, pub-5107472231497753, DIRECT
+google.com, pub-7526622147976638, DIRECT
+indexexchange.com, 184842, DIRECT
+indexexchange.com, 185406, DIRECT
 liveintent.com, 5956, DIRECT
+openx.com, 538907167, DIRECT, 6a698e2ec38604c6
+openx.com, 539201293, DIRECT, 6a698e2ec38604c6
+sonobi.com, d089631d2d, DIRECT
+synapsys.us, 174167, DIRECT
+teads.tv, 2167, DIRECT
+teads.tv, 7607, DIRECT
 teads.tv, 8260, DIRECT, 15a9c44f6d26cbe1
 teads.tv, 8095, DIRECT, 15a9c44f6d26cbe1
-google.com, pub-3746578658400510, DIRECT, f08c47fec0942fa0
-synapsys.us, 174167, DIRECT
-teads.tv, 7607, DIRECT
-teads.tv, 2167, DIRECT
-openx.com, 539201293, DIRECT, 6a698e2ec38604c6
-
+triplelift.com, 2885, DIRECT
+trustx.org, 27, DIRECT
+yieldmo.com, 1452927761628117365, DIRECT
