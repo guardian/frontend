@@ -7,10 +7,9 @@ export const AcquisitionsBannerBigLong: AcquisitionsABTest = {
     id: 'AcquisitionsBannerBigLong',
     campaignId: 'banner_big_long',
     start: '2017-10-26',
-    expiry: '2018-11-12',
+    expiry: '2018-11-27',
     author: 'Jonathan Rankin',
-    description:
-        'This places the epic on all articles for all users, with a limit of 4 impressions in any given 30 days',
+    description: 'Tests 2 new banner variants',
     successMeasure: 'Conversion rate',
     idealOutcome: 'Acquires many Supporters',
     componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
