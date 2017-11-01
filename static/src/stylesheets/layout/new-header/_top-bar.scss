@@ -72,28 +72,41 @@
         display: none;
     }
 
+    &:hover,
+    &:focus {
+        color: $guardian-brand-dark;
+
+        & .top-bar__item--cta--circle {
+            transform: scale(1.05);
+
+            &:before {
+                background: $highlight-blue;
+            }
+        }
+    }
+}
+
+.top-bar__item--cta--circle {
+    bottom: -$gs-baseline;
+    left: 0;
+    overflow: hidden;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transition: transform 250ms ease-out;
+    transform-origin: top center;
+
     &:before {
         background: $news-main-2;
         border-radius: 50%;
-        bottom: -$gs-baseline;
+        bottom: 0;
         content: '';
         display: block;
         left: 0;
         padding-top: 100%;
         position: absolute;
-        transform: scale(1);
-        transition: transform 250ms ease-out, background-color 250ms ease-out;
-        width: 100%;
-    }
-
-    &:hover,
-    &:focus {
-        color: $guardian-brand-dark;
-
-        &:before {
-            background: $highlight-blue;
-            transform: scale(1.05);
-        }
+        right: 0;
+        transition: background-color 250ms ease-out;
     }
 }
 
