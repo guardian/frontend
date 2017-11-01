@@ -197,6 +197,32 @@ const bootEnhanced = (): void => {
             });
     }
 
+    if (config.switches.enhancedMediaPlayer) {
+        fastdom
+            .read(() =>
+                qwery(
+                    `${config.switches.enhancedVideoPlayer
+                        ? 'video, .youtube-media-atom, '
+                        : ''} audio`
+                )
+            )
+            .then(els => {
+                if (els.length) {
+                    require.ensure(
+                        [],
+                        require => {
+                            bootstrapContext(
+                                'media-player',
+                                require('bootstraps/enhanced/media/media-player')
+                                    .initMediaPlayer
+                            );
+                        },
+                        'media-player'
+                    );
+                }
+            });
+    }
+
     if (config.page.contentType === 'Gallery') {
         require.ensure(
             [],
