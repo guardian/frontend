@@ -51,25 +51,6 @@ const upgradeVideoPlayerAccessibility = (player: any): void => {
     );
 };
 
-const initEndSlate = (player: any, endSlatePath: string): void => {
-    const endSlate = new Component();
-    const endStateClass = 'vjs-has-ended';
-
-    endSlate.endpoint = endSlatePath;
-
-    player.one(events.constructEventName('content:play', player), () => {
-        endSlate.fetch(player.el(), 'html');
-
-        player.on('ended', () => {
-            bonzo(player.el()).addClass(endStateClass);
-        });
-    });
-
-    player.on('playing', () => {
-        bonzo(player.el()).removeClass(endStateClass);
-    });
-};
-
 const createVideoPlayer = (el: HTMLElement, options: Object): any => {
     const player = videojs(el, options);
 
@@ -97,6 +78,25 @@ const createVideoPlayer = (el: HTMLElement, options: Object): any => {
     });
 
     return player;
+};
+
+const initEndSlate = (player: any, endSlatePath: string): void => {
+    const endSlate = new Component();
+    const endStateClass = 'vjs-has-ended';
+
+    endSlate.endpoint = endSlatePath;
+
+    player.one(events.constructEventName('content:play', player), () => {
+        endSlate.fetch(player.el(), 'html');
+
+        player.on('ended', () => {
+            bonzo(player.el()).addClass(endStateClass);
+        });
+    });
+
+    player.on('playing', () => {
+        bonzo(player.el()).removeClass(endStateClass);
+    });
 };
 
 const enhanceVideo = (
@@ -341,11 +341,7 @@ const initPlayer = (withPreroll: boolean): void => {
     videojs.plugin('fullscreener', fullscreener);
 
     fastdom.read(() => {
-        $(
-            `.js-gu-audio--enhance, ${config.get('switches.enhancedVideoPlayer')
-                ? '.js-gu-video--enhance'
-                : ''}`
-        ).each(el => {
+        $('.js-gu-media--enhance').each(el => {
             enhanceVideo(el, false, withPreroll);
         });
     });
