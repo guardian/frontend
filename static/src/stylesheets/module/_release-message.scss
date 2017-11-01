@@ -637,23 +637,49 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
             flex-direction: row;
         }
 
-        .membership__message-text {
-            font-size: 16px;
-            line-height: 18px;
+        .membership__message-text-long {
+            max-width: 630px;
+
+            line-height: 22px;
             @include mq($from: tablet) {
-                font-size: 18px;
-                line-height: 18px;
+                line-height: 24px;
+            }
+
+            .membership__message-text {
+                font-weight: 400;
+                font-size: 16px;
+                @include mq($from: tablet) {
+                    font-size: 18px;
+                }
             }
         }
 
-        .membership__message-text-long {
-            max-width: 700px;
+        .membership__paypal-container {
+            display: flex;
+            margin-top: auto;
+            @include mq($from: 1140px) {
+                margin-left: 40px;
+            }
+            @include mq($from: wide) {
+                display: inline-block;
+            }
         }
 
-        .membership__message-text.weak-text {
-            font-weight: 400;
+        .membership__support-button {
+            order: 1;
+            @include mq(desktop) {
+                order: 2;
+            }
         }
 
+        .membership__paypal-logo {
+            order: 2;
+
+            @include mq(desktop) {
+                margin-top: 0;
+                order: 1;
+            }
+        }
 
 
     }

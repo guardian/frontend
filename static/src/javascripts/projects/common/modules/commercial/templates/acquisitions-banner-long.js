@@ -2,15 +2,16 @@
 export const acquisitionsBannerLongTemplate= (
     params: EngagementBannerTemplateParams
 ) =>
+
     `<div id="site-message__message long-test">
         <div class="site-message__message site-message__message--membership long-test">
-            <div membership__message-text-long>
-                <span class = "membership__message-text">${params.messageText} </span>
-                <span class = "membership__message-text weak-text">The Guardian's independent, investigative journalism
+            <div class="membership__message-text-long">
+                <span class = "membership__message-text">
+                    <strong>Unlike many news organisations, we haven't put up a paywall - we want to keep our journalism as open as we can.</strong>
+                    The Guardian's independent, investigative journalism
                 takes a lot of time, money and hard work to produce. But the revenue we get from advertising is falling,
                 so we increasingly need our readers to fund us. If everyone who read our reporting, who likes it, helps
-                fund it, our future would be much more secure. </span>
-                <span class = "membership__message-text">${params.ctaText}</span>
+                fund it, our future would be much more secure. <strong>${params.ctaText}</strong></span>
             </div>
             <span class="membership__paypal-container">
                 <img class="membership__paypal-logo" src="${params.paypalAndCreditCardImage}" alt="Paypal and credit card">

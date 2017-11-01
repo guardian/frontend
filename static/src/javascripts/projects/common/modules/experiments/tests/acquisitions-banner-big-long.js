@@ -2,6 +2,7 @@
 import { noop } from 'lib/noop';
 import { acquisitionsBannerBigTemplate } from 'common/modules/commercial/templates/acquisitions-banner-big';
 import { acquisitionsBannerLongTemplate } from 'common/modules/commercial/templates/acquisitions-banner-long';
+import { makeBannerABTestVariants } from 'common/modules/commercial/contributions-utilities'
 
 export const AcquisitionsBannerBigLong: AcquisitionsABTest = {
     id: 'AcquisitionsBannerBigLong',
@@ -19,14 +20,12 @@ export const AcquisitionsBannerBigLong: AcquisitionsABTest = {
     audienceOffset: 0,
     canRun: () => true,
 
-    variants: [
+    variants: makeBannerABTestVariants([
         {
             id: 'control',
-            test: noop,
         },
         {
             id: 'big',
-            test: noop,
             options: {
                 engagementBannerParams: {
                     template: acquisitionsBannerBigTemplate,
@@ -35,12 +34,11 @@ export const AcquisitionsBannerBigLong: AcquisitionsABTest = {
         },
         {
             id: 'long',
-            test: noop,
             options: {
                 engagementBannerParams: {
                     template: acquisitionsBannerLongTemplate,
                 },
             },
         },
-    ],
+    ])
 };
