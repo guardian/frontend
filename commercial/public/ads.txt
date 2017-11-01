@@ -22,4 +22,5 @@ google.com, pub-3746578658400510, DIRECT, f08c47fec0942fa0
 synapsys.us, 174167, DIRECT
 teads.tv, 7607, DIRECT
 teads.tv, 2167, DIRECT
+openx.com, 539201293, DIRECT, 6a698e2ec38604c6
 

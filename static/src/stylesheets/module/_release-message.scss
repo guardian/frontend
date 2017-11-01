@@ -108,48 +108,8 @@
     }
 }
 
-.site-message__message--membership {
-    max-width: none;
 
-    .membership__paypal-logo {
-        display: inline-block;
-    }
 
-    .membership__message-text {
-        @include mq(desktop) {
-            font-size: 25px;
-        }
-    }
-}
-
-.site-message__message--tall {
-    padding-bottom: ($gs-baseline/3)*11;
-}
-
-.site-message__message--has-headline {
-    padding-right: $gs-gutter/2;
-
-    @include mq(desktop) {
-        padding-top: $gs-baseline/2;
-        padding-bottom: $gs-baseline/2;
-        padding-right: $gs-gutter;
-    }
-}
-
-.site-message__headline {
-    display: block;
-}
-
-.site-message__message--has-headline {
-
-    .site-message__desc {
-        @include fs-textSans(1);
-
-        @include mq(desktop) {
-            @include fs-textSans(2, true);
-        }
-    }
-}
 
 .site-message__actions {
     margin-top: $gs-baseline;
@@ -518,7 +478,7 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
 
 
 .membership__paypal-logo {
-    display: none;
+    display: inline-block;
     height: auto;
     margin-right: $gs-gutter/2;
     object-fit: contain;
@@ -602,7 +562,138 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
         padding-right: 5px;
         padding-bottom: 10px;
     }
+
+    .big-test-container {
+        margin-top: 8px;
+        margin-left: 10px;
+    }
+
+    .site-message__message--membership.big-test {
+        @include mq($from: desktop) {
+            margin-top: 8px;
+            margin-left: 10px;
+        }
+
+
+        .membership__message-text.big {
+            @include mq($from: mobile) {
+                font-size: 22px;
+                line-height: 26px;
+            }
+            @include mq($from: tablet) {
+                font-size: 26px;
+                line-height: 30px;
+            }
+            @include mq($from: desktop) {
+                font-size: 36px;
+                line-height: 40px;
+            }
+        }
+
+        .membership__message-text.small {
+            @include mq($from: mobile) {
+                font-size: 16px;
+            }
+            @include mq($from: tablet) {
+                font-size: 20px;
+            }
+            @include mq($from: desktop) {
+                font-size: 24px;
+            }
+        }
+
+        .membership__big-message-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .membership__big--cta-with-paypal {
+            display: flex;
+            margin-top: 10px;
+            @include mq($from: mobile) {
+                flex-direction: column;
+            }
+
+            @include mq($from: desktop) {
+                flex-direction: row;
+                margin-bottom: 20px;
+            }
+        }
+        .membership__paypal-container {
+            @include mq($from: desktop) {
+                position: absolute;
+                right: 0;
+            }
+        }
+
+    }
+
+    .site-message__message--membership.long-test {
+
+        display: flex;
+        flex-direction: column;
+        @include mq($from: desktop) {
+            flex-direction: row;
+        }
+
+        .membership__message-text-long {
+            max-width: 630px;
+
+            line-height: 22px;
+            @include mq($from: tablet) {
+                line-height: 24px;
+            }
+
+            .membership__message-text {
+                font-weight: 400;
+                font-size: 16px;
+                @include mq($from: tablet) {
+                    font-size: 18px;
+                }
+            }
+        }
+
+        .membership__paypal-container {
+            display: flex;
+            margin-top: auto;
+            @include mq($from: 1140px) {
+                margin-left: 40px;
+            }
+            @include mq($from: wide) {
+                display: inline-block;
+            }
+        }
+
+        .membership__support-button {
+            order: 1;
+            @include mq(desktop) {
+                order: 2;
+            }
+        }
+
+        .membership__paypal-logo {
+            order: 2;
+
+            @include mq(desktop) {
+                margin-top: 0;
+                order: 1;
+            }
+        }
+
+
+    }
+
     .site-message__message--membership {
+
+
+        max-width: none;
+
+        .membership__message-text {
+            @include mq(desktop) {
+                font-size: 25px;
+            }
+        }
+
         margin-right: 5px;
         font-weight: 900;
         @include mq($from: mobile) {
