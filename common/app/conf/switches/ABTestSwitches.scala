@@ -112,7 +112,7 @@ trait ABTestSwitches {
     "Test adds a hold-back variant which keeps a frequency cap on outstream video format ads.",
     owners = Seq(Owner.withGithub("rich-nguyen")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 11, 1),
+    sellByDate = new LocalDate(2018, 1, 1),
     exposeClientSide = true
   )
 
