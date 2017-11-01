@@ -16,6 +16,6 @@ trait Styles {
     if(context.environment.mode == play.api.Mode.Dev || !conf.switches.Switches.InlineCriticalCss.isSwitchedOn) {
       criticalCssLink
     } else {
-     criticalCssInline
+      criticalCssInline
     }
 }
