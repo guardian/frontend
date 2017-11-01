@@ -1,8 +1,7 @@
 // @flow
-export const acquisitionsBannerLongTemplate= (
+export const acquisitionsBannerLongTemplate = (
     params: EngagementBannerTemplateParams
 ) =>
-
     `<div id="site-message__message long-test">
         <div class="site-message__message site-message__message--membership long-test">
             <div class="membership__message-text-long">

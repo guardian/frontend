@@ -500,12 +500,13 @@ const makeABTest = ({
     return test;
 };
 
-const makeBannerABTestVariants = (variants: Array<Object>): $ReadOnlyArray<Variant> => {
-    return variants.map(x => {
+const makeBannerABTestVariants = (
+    variants: Array<Object>
+): $ReadOnlyArray<Variant> =>
+    variants.map(x => {
         x.test = noop;
         return x;
     });
-};
 
 export {
     shouldShowReaderRevenue,

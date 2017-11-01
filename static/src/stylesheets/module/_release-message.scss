@@ -569,10 +569,6 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
     }
 
     .site-message__message--membership.big-test {
-        @include mq($from: mobile) {
-        }
-        @include mq($from: tablet) {
-        }
         @include mq($from: desktop) {
             margin-top: 8px;
             margin-left: 10px;
@@ -694,11 +690,6 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
                 font-size: 25px;
             }
         }
-
-        /**
-          Big, long banner tests
-        **/
-
 
         margin-right: 5px;
         font-weight: 900;
@@ -926,9 +917,6 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
         }
     }
 }
-
-
-
 
 /**
  * Adblock banner in sticky nav

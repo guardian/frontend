@@ -72,4 +72,4 @@ static/src/stylesheets/pasteup/.npmrc
 *.crt
 *.key
 .vscode/settings.json
-.yarnrc
+
