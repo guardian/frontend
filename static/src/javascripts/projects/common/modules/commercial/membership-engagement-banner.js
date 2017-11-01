@@ -204,6 +204,6 @@ const membershipEngagementBannerInit = () => {
             }
         );
     }
-}
+};
 
 export { membershipEngagementBannerInit };
