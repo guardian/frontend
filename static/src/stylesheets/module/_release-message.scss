@@ -578,12 +578,15 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
         .membership__message-text.big {
             @include mq($from: mobile) {
                 font-size: 22px;
+                line-height: 26px;
             }
             @include mq($from: tablet) {
                 font-size: 26px;
+                line-height: 30px;
             }
             @include mq($from: desktop) {
                 font-size: 36px;
+                line-height: 40px;
             }
         }
 
