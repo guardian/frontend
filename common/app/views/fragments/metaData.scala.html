@@ -42,8 +42,7 @@
 
     @Page.getContentPage(page).map { page =>
         @if(
-            page.item.content.shouldAmpifyArticles ||
-            page.item.content.shouldAmpifyLiveblogs
+            page.item.content.shouldAmplify
         ) {
             <link rel="amphtml" href="@AmpLinkTo{/@page.metadata.id}">
         }
@@ -125,7 +124,7 @@
     }
     case _ => {}
 }
-    
+
 @* https://dev.twitter.com/web/overview/privacy *@
 <meta name="twitter:dnt" content="on">
 
