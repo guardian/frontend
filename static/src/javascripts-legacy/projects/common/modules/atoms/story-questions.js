@@ -194,11 +194,13 @@ define([
             var readerQuestionsContainer = document.getElementById('user__question-atom-' + atomId);
             var askQuestionLinks = Array.from(document.querySelectorAll('.js-ask-question-link'));
 
-            bean.one(readerQuestionsContainer, 'click', askQuestionLinks, function (event) {
+            if (readerQuestionsContainer) {
+                bean.one(readerQuestionsContainer, 'click', askQuestionLinks, function (event) {
                     askQuestion(event, isEmailSubmissionReady, isDeliveryTestReady);
                     this.classList.add('is-clicked');
                 });
-
+            }
+            
             var answersEmailSignupForms = $('.js-storyquestion-email-signup-form');
 
             answersEmailSignupForms.each(function (el) {
@@ -208,21 +210,23 @@ define([
             var answerDeliveryPrefContainer = document.getElementById('js-delivery-selection-body-' + atomId);
             var answersDeliveryPreferences = Array.from(document.querySelectorAll('.btn-answer-delivery-' + atomId));
 
-            bean.one(answerDeliveryPrefContainer, 'click', answersDeliveryPreferences, function (event) {
-                submitDeliveryPreference(event);
-                this.classList.add('is-clicked');
+            if (answerDeliveryPrefContainer) {
+                bean.one(answerDeliveryPrefContainer, 'click', answersDeliveryPreferences, function (event) {
+                    submitDeliveryPreference(event);
+                    this.classList.add('is-clicked');
                 });
-
+            }
+           
             var finalCloseBtn = document.getElementById('js-final-thankyou-message-' + atomId);
 
-            bean.one(finalCloseBtn, 'click', function(event) {
-                event.preventDefault();
-                var storyQuestionAtom = document.getElementById('user__question-atom-' + atomId);
-                storyQuestionAtom.classList.add('is-hidden');
-                this.classList.add('is-clicked')
-            });
-
-
+            if (finalCloseBtn) {
+                bean.one(finalCloseBtn, 'click', function(event) {
+                    event.preventDefault();
+                    var storyQuestionAtom = document.getElementById('user__question-atom-' + atomId);
+                    storyQuestionAtom.classList.add('is-hidden');
+                    this.classList.add('is-clicked')
+                });
+            }
 
             Id.getUserFromApi(function (userFromId) {
                 if (userFromId && userFromId.primaryEmailAddress) {
