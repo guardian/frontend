@@ -178,31 +178,27 @@ const bootEnhanced = (): void => {
         );
     }
 
-    if (config.get('switches.enhancedMediaPlayer')) {
-        fastdom
-            .read(() =>
-                qwery(
-                    `${config.switches.enhancedVideoPlayer
-                        ? 'video, '
-                        : ''} audio`
-                )
+    fastdom
+        .read(() =>
+            qwery(
+                `${config.switches.enhancedVideoPlayer ? 'video, ' : ''} audio`
             )
-            .then(els => {
-                if (els.length) {
-                    require.ensure(
-                        [],
-                        require => {
-                            bootstrapContext(
-                                'media-player',
-                                require('bootstraps/enhanced/media-player')
-                                    .initMediaPlayer
-                            );
-                        },
-                        'media-player'
-                    );
-                }
-            });
-    }
+        )
+        .then(els => {
+            if (els.length) {
+                require.ensure(
+                    [],
+                    require => {
+                        bootstrapContext(
+                            'media-player',
+                            require('bootstraps/enhanced/media-player')
+                                .initMediaPlayer
+                        );
+                    },
+                    'media-player'
+                );
+            }
+        });
 
     if (config.page.contentType === 'Gallery') {
         require.ensure(
