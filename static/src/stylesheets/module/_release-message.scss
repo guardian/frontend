@@ -108,52 +108,8 @@
     }
 }
 
-.site-message__message--membership {
-    max-width: none;
-
-    .membership__message-text {
-        @include mq(desktop) {
-            font-size: 25px;
-        }
-    }
-
-    .membership__message-text.big {
-        @include mq(desktop) {
-            font-size:50px;
-        }
-    }
-}
 
 
-
-.site-message__message--tall {
-    padding-bottom: ($gs-baseline/3)*11;
-}
-
-.site-message__message--has-headline {
-    padding-right: $gs-gutter/2;
-
-    @include mq(desktop) {
-        padding-top: $gs-baseline/2;
-        padding-bottom: $gs-baseline/2;
-        padding-right: $gs-gutter;
-    }
-}
-
-.site-message__headline {
-    display: block;
-}
-
-.site-message__message--has-headline {
-
-    .site-message__desc {
-        @include fs-textSans(1);
-
-        @include mq(desktop) {
-            @include fs-textSans(2, true);
-        }
-    }
-}
 
 .site-message__actions {
     margin-top: $gs-baseline;
@@ -670,6 +626,35 @@ $btn-height: gs-height(1) - $gs-baseline/2; //30px
                 right: 0;
             }
         }
+
+    }
+
+    .site-message__message--membership.long-test {
+
+        display: flex;
+        flex-direction: column;
+        @include mq($from: desktop) {
+            flex-direction: row;
+        }
+
+        .membership__message-text {
+            font-size: 16px;
+            line-height: 18px;
+            @include mq($from: tablet) {
+                font-size: 18px;
+                line-height: 18px;
+            }
+        }
+
+        .membership__message-text-long {
+            max-width: 700px;
+        }
+
+        .membership__message-text.weak-text {
+            font-weight: 400;
+        }
+
+
 
     }
 

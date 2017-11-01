@@ -1,6 +1,7 @@
 // @flow
 import { noop } from 'lib/noop';
 import { acquisitionsBannerBigTemplate } from 'common/modules/commercial/templates/acquisitions-banner-big';
+import { acquisitionsBannerLongTemplate } from 'common/modules/commercial/templates/acquisitions-banner-long';
 
 export const AcquisitionsBannerBigLong: AcquisitionsABTest = {
     id: 'AcquisitionsBannerBigLong',
@@ -29,6 +30,15 @@ export const AcquisitionsBannerBigLong: AcquisitionsABTest = {
             options: {
                 engagementBannerParams: {
                     template: acquisitionsBannerBigTemplate,
+                },
+            },
+        },
+        {
+            id: 'long',
+            test: noop,
+            options: {
+                engagementBannerParams: {
+                    template: acquisitionsBannerLongTemplate,
                 },
             },
         },
