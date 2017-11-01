@@ -1,6 +1,11 @@
 // @flow
 
-import { videojs } from 'bootstraps/enhanced/media/video-player';
+import videojs from 'videojs';
+import 'videojs-ima';
+import 'videojs-embed';
+import 'videojs-persistvolume';
+import 'videojs-playlist';
+import 'videojs-contrib-ads';
 import bean from 'bean';
 import bonzo from 'bonzo';
 import fastdom from 'fastdom';
@@ -393,3 +398,5 @@ export const initMediaPlayer = (): void => {
     mediator.on('modules:related:loaded', initPlayButtons);
     mediator.on('page:media:moreinloaded', initPlayButtons);
 };
+
+export { videojs };

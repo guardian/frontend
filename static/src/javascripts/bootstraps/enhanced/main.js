@@ -194,7 +194,7 @@ const bootEnhanced = (): void => {
                         require => {
                             bootstrapContext(
                                 'media-player',
-                                require('bootstraps/enhanced/media/media-player')
+                                require('bootstraps/enhanced/media-player')
                                     .initMediaPlayer
                             );
                         },
