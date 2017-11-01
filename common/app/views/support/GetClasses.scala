@@ -3,6 +3,7 @@ package views.support
 import layout._
 import model.pressed.{Audio, Gallery, Video}
 import slices.{Dynamic, DynamicSlowMPU}
+import conf.switches.Switches.PillarCards
 
 object GetClasses {
   def forHtmlBlob(item: HtmlBlob): String = {
@@ -17,8 +18,10 @@ object GetClasses {
     RenderClasses(Map(
       ("fc-item", true),
       ("js-fc-item", true),
+      ("fc-item--" + item.pillar.name.toLowerCase(), PillarCards.isSwitchedOn),
+      ("fc-item--" + item.contentType.name.toLowerCase(), PillarCards.isSwitchedOn),
       ("fc-item--has-cutout", item.cutOut.isDefined),
-      (TrailCssClasses.toneClassFromStyle(item.cardStyle) + "--item", true),
+      (TrailCssClasses.toneClassFromStyle(item.cardStyle) + "--item", PillarCards.isSwitchedOff),
       ("fc-item--has-no-image", !item.hasImage),
       ("fc-item--has-image", item.hasImage),
       ("fc-item--force-image-upgrade", isFirstContainer),

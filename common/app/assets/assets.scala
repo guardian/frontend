@@ -91,6 +91,7 @@ object css {
     project match {
       case "footballSnaps" => "head.footballSnaps"
       case "facia" => "head.facia"
+      case "facia.pc" => "head.facia.pc"
       case "identity" => "head.identity"
       case "football" => "head.football"
       case "index" => "head.index"
