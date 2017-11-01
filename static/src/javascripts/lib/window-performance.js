@@ -1,6 +1,7 @@
 // @flow
 
-const api = window.performance ||
+const api =
+    window.performance ||
     window.msPerformance ||
     window.webkitPerformance ||
     window.mozPerformance;
