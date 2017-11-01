@@ -195,12 +195,12 @@ const bootEnhanced = (): void => {
         });
     }
 
-    if (config.switches.enhancedMediaPlayer) {
+    if (config.get('switches.enhancedMediaPlayer')) {
         fastdom
             .read(() =>
                 qwery(
                     `${config.switches.enhancedVideoPlayer
-                        ? 'video, .youtube-media-atom, '
+                        ? 'video, '
                         : ''} audio`
                 )
             )
