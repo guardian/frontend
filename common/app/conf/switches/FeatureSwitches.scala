@@ -14,17 +14,6 @@ trait FeatureSwitches {
     exposeClientSide = true
   )
 
-  // see https://github.com/guardian/frontend/pull/13446
-  val ExploreTemplateSwitch = Switch(
-    SwitchGroup.Feature,
-    "explore-main-media",
-    "If this switch is on, Explore template will be applied to explore articles. This template is part of a Membership Explore test",
-    owners = Seq(Owner.withGithub("NataliaLKB"), Owner.withGithub("blongden73")),
-    safeState = Off,
-    sellByDate = new LocalDate(2017, 10, 31),
-    exposeClientSide = true
-  )
-
   val FixturesAndResultsContainerSwitch = Switch(
     SwitchGroup.Feature,
     "fixtures-and-results-container",
@@ -493,6 +482,16 @@ trait FeatureSwitches {
     owners = Seq(Owner.withGithub("justinpinner")),
     safeState = Off,
     sellByDate = new LocalDate(2018, 10, 17),
+    exposeClientSide = true
+  )
+
+  val ProfileShowContributorTab = Switch(
+    SwitchGroup.Feature,
+    "profile-show-contributor-tab",
+    "When ON, the edit profile page will include a Contributions tab",
+    owners = Seq(Owner.withGithub("justinpinner")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 11, 30),
     exposeClientSide = true
   )
 

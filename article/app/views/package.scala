@@ -62,7 +62,6 @@ object BodyCleaner {
       BlockquoteCleaner,
       PullquoteCleaner,
       CmpParamCleaner,
-      ExploreVideos(article.isExplore),
       PhotoEssayImages(article.isPhotoEssay),
       PhotoEssayQuotes(article.isPhotoEssay),
       PhotoEssayHalfWidth(article.isPhotoEssay),

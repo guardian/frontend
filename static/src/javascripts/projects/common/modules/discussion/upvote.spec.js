@@ -24,7 +24,18 @@ const fakeUser = {
     secureAvatarUrl: 'fakeSecureAvatarUrl',
     badge: [],
     details: {
+        about: 'aboutAbout',
+        age: 'fakeAge',
         gender: 'fakeGender',
+        interests: 'interestsFake',
+        location: 'locationFake',
+        realName: 'realNameFake',
+        webPage: 'webPageFake',
+    },
+    privateFields: {
+        canPostComment: true,
+        hasCommented: true,
+        isPremoderated: true,
     },
 };
 

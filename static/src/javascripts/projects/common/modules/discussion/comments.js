@@ -9,7 +9,7 @@ import fetchJson from 'lib/fetch-json';
 import mediator from 'lib/mediator';
 import reportError from 'lib/report-error';
 import { constructQuery } from 'lib/url';
-import Component from 'common/modules/component';
+import { Component } from 'common/modules/component';
 import {
     reportComment,
     pickComment,
@@ -92,7 +92,7 @@ class Comments extends Component {
                     const replies = qwery(
                         this.getClass('reply'),
                         comment
-                    ).slice(this.options.showRepliesCount);
+                    ).slice(this.options && this.options.showRepliesCount);
 
                     bonzo(qwery('.d-thread--responses', source)).append(
                         replies
@@ -112,6 +112,12 @@ class Comments extends Component {
                 });
         }
     }
+
+    comments: ?Comments;
+    topLevelComments: ?qwery;
+    user: ?DiscussionProfile;
+    postedCommentEl: ?string;
+    wholeDiscussionErrors: ?boolean;
 
     addMoreRepliesButtons(comms: Array<HTMLElement>): void {
         const comments = comms || this.topLevelComments;
@@ -149,10 +155,11 @@ class Comments extends Component {
     }
 
     fetchComments(options: Object = {}): Promise<mixed> {
+        const { discussionId } = this.options || {};
         const url = `/discussion/${options.comment
             ? `comment-context/${options.comment}`
-            : this.options.discussionId}.json`;
-        let orderBy = options.order || this.options.order;
+            : discussionId}.json`;
+        let orderBy = options.order || (this.options && this.options.order);
         let promise;
         const ajaxParams = { mode: 'cors' };
 
@@ -162,8 +169,11 @@ class Comments extends Component {
 
         const queryParams: Object = {
             orderBy,
-            pageSize: options.pagesize || this.options.pagesize,
-            displayThreaded: this.options.threading !== 'unthreaded',
+            pageSize:
+                options.pagesize || (this.options && this.options.pagesize),
+            displayThreaded: !!(
+                this.options && this.options.threading !== 'unthreaded'
+            ),
             commentsClosed: options.commentsClosed,
         };
 
@@ -171,13 +181,17 @@ class Comments extends Component {
             queryParams.page = options.page;
         }
 
-        if (!options.comment && this.options.threading === 'collapsed') {
+        if (
+            !options.comment &&
+            this.options &&
+            this.options.threading === 'collapsed'
+        ) {
             queryParams.maxResponses = 3;
         }
 
         if (this.isAllPageSizeActive()) {
             promise = new WholeDiscussion({
-                discussionId: this.options.discussionId,
+                discussionId: this.options && this.options.discussionId,
                 orderBy: queryParams.orderBy,
                 displayThreaded: queryParams.displayThreaded,
                 maxResponses: queryParams.maxResponses,
@@ -301,10 +315,14 @@ class Comments extends Component {
     }
 
     isReadOnly(): boolean {
-        return this.elem.getAttribute('data-read-only') === 'true';
+        return !!(
+            this.elem &&
+            this.elem instanceof HTMLElement &&
+            this.elem.getAttribute('data-read-only') === 'true'
+        );
     }
 
-    addComment(comment: CommentType, parent: HTMLElement): void {
+    addComment(comment: CommentType, parent?: HTMLElement): void {
         const commentElem = bonzo.create(this.postedCommentEl)[0];
         const $commentElem = bonzo(commentElem);
         const replyButton =
@@ -320,14 +338,14 @@ class Comments extends Component {
             avatar: 'd-comment__avatar',
         };
         const vals: Object = {
-            username: this.user.displayName,
+            username: this.user && this.user.displayName,
             timestamp: 'Just now',
             body: `<p>${comment.body.replace(/\n+/g, '</p><p>')}</p>`,
             report: {
                 href: `http://discussion.theguardian.com/components/report-abuse/${comment.id}`,
             },
             avatar: {
-                src: this.user.avatar,
+                src: this.user && this.user.avatar,
             },
         };
 
@@ -405,8 +423,11 @@ class Comments extends Component {
             replyToComment
         )[0].innerHTML;
         const commentBox = new CommentBox({
-            discussionId: this.options.discussionId,
-            premod: this.user.privateFields.isPremoderated,
+            discussionId: this.options && this.options.discussionId,
+            premod:
+                this.user &&
+                this.user.privateFields &&
+                this.user.privateFields.isPremoderated,
             state: 'response',
             replyTo: {
                 commentId: replyToId,
@@ -521,20 +542,12 @@ class Comments extends Component {
         }
     }
 
-    addUser(user: {
-        badge: Array<{
-            name: string,
-        }>,
-        displayName: string,
-        isStaff?: boolean,
-        privateFields: {
-            canPostComment: boolean,
-        },
-    }): void {
+    addUser(user: DiscussionProfile): void {
         this.user = user;
 
         // Determine user staff status
         if (this.user && this.user.badge) {
+            // $FlowFixMe
             this.user.isStaff = this.user.badge.some(e => e.name === 'Staff');
         }
 
@@ -568,18 +581,18 @@ class Comments extends Component {
     }
 
     isAllPageSizeActive(): boolean {
-        return (
+        return !!(
             config.get('switches.discussionAllPageSize') &&
-            this.options.pagesize === 'All' &&
+            (this.options && this.options.pagesize === 'All') &&
             !this.wholeDiscussionErrors
         );
     }
 
     // Similar to above, but tells the loader that the fallback size should be used.
     shouldShowPageSizeMessage(): boolean {
-        return (
+        return !!(
             config.get('switches.discussionAllPageSize') &&
-            this.options.pagesize === 'All' &&
+            (this.options && this.options.pagesize === 'All') &&
             this.wholeDiscussionErrors
         );
     }

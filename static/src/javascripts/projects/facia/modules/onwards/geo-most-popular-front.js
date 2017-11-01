@@ -8,9 +8,10 @@ import $ from 'lib/$';
 import config from 'lib/config';
 import mediator from 'lib/mediator';
 import { begin, end } from 'common/modules/analytics/register';
-import Component from 'common/modules/component';
+import { Component } from 'common/modules/component';
+import type bonzo from 'bonzo';
 
-const hideTabs = (parent: Element): void => {
+const hideTabs = (parent: bonzo): void => {
     $('.js-tabs-content', parent).addClass('tabs__content--no-border');
     $('.js-tabs', parent).addClass('u-h');
 };
@@ -20,11 +21,17 @@ export class GeoMostPopularFront extends Component {
         super();
         begin('most-popular');
         this.endpoint = '/most-read-geo.json';
-        this.isNetworkFront = config.page.contentType === 'Network Front';
-        this.isVideoFront = config.page.pageId === 'video';
-        this.isInternational = config.page.pageId === 'international';
+        this.isNetworkFront =
+            config.get('page.contentType') === 'Network Front';
+        this.isVideoFront = config.get('page.pageId') === 'video';
+        this.isInternational = config.get('page.pageId') === 'international';
         this.manipulationType = 'html';
     }
+
+    isNetworkFront: boolean;
+    isVideoFront: boolean;
+    isInternational: boolean;
+    parent: ?bonzo;
 
     prerender(): void {
         this.elem = qwery('.headline-list', this.elem)[0];
@@ -42,8 +49,11 @@ export class GeoMostPopularFront extends Component {
                 // hide the tabs
                 hideTabs(this.parent);
             } else {
-                this.tab = qwery(tabSelector, this.parent)[0];
-                this.fetch(this.tab, 'html');
+                const tab = this.parent.querySelector(tabSelector);
+
+                if (tab) {
+                    this.fetch(tab, 'html');
+                }
             }
         }
     }

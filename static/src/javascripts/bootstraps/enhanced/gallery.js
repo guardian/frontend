@@ -1,7 +1,7 @@
 // @flow
 import qwery from 'qwery';
 import config from 'lib/config';
-import Component from 'common/modules/component';
+import { Component } from 'common/modules/component';
 import { initTrails } from 'bootstraps/enhanced/trail';
 
 const transcludeMostPopular = (): void => {

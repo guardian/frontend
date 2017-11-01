@@ -1,16 +1,15 @@
 // @flow
-import { render as renderToString } from 'preact-render-to-string';
-import { StyletronProvider } from 'styletron-preact';
-import StyletronServer from 'styletron-server';
+import { server } from '@guardian/guui';
 
-const styletron = new StyletronServer();
+const app = server();
 
 export default (content: any) => {
-    const html = renderToString(
-        <StyletronProvider styletron={styletron}>{content}</StyletronProvider>
-    );
+    const html = app.renderToString(content);
+
+    // TODO: it would be nice to capture CSS as part of snapshot
+    // const css = app.extractCriticalCss(html);
 
     it('generates the expected markup', () => {
-        expect({ html, css: styletron.getStylesheetsHtml() }).toMatchSnapshot();
+        expect({ html }).toMatchSnapshot();
     });
 };

@@ -6,7 +6,7 @@ import $ from 'lib/$';
 import config from 'lib/config';
 import deferToAnalytics from 'lib/defer-to-analytics';
 import template from 'lodash/utilities/template';
-import Component from 'common/modules/component';
+import { Component } from 'common/modules/component';
 import events from 'common/modules/video/events';
 import { fullscreener } from 'common/modules/media/videojs-plugins/fullscreener';
 import { inlineSvg } from 'common/views/svgs';

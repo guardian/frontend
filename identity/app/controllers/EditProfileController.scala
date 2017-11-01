@@ -38,12 +38,14 @@ class EditProfileController(idUrlBuilder: IdentityUrlBuilder,
   private val accountPage = IdentityPage("/account/edit", "Edit Account Details")
   private val publicPage = IdentityPage("/public/edit", "Edit Public Profile")
   private val membershipPage = IdentityPage("/membership/edit", "Membership")
+  private val recurringContributionPage = IdentityPage("/contribution/recurring/edit", "Contributions")
   private val digitalPackPage = IdentityPage("/digitalpack/edit", "Digital Pack")
   private val privacyPage = IdentityPage("/privacy/edit", "Privacy")
 
   def displayPublicProfileForm: Action[AnyContent] = displayForm(publicPage)
   def displayAccountForm: Action[AnyContent] = displayForm(accountPage)
   def displayMembershipForm: Action[AnyContent] = displayForm(membershipPage)
+  def displayRecurringContributionForm: Action[AnyContent] = displayForm(recurringContributionPage)
   def displayDigitalPackForm: Action[AnyContent] = displayForm(digitalPackPage)
   def displayPrivacyForm: Action[AnyContent] = displayForm(privacyPage)
 

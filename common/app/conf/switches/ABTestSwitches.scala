@@ -18,6 +18,16 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-ias-ad-targeting",
+    "Test to assess the impact of integrating with IAS to provide richer targeting of our ad slots",
+    owners = Seq(Owner.withGithub("JonNorman")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 11, 6),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
     "ab-contributions-epic-ask-four-earning",
     "This places the epic on all articles for all users, with a limit of 4 impressions in any given 30 days",
     owners = Seq(Owner.withGithub("jranks123")),
