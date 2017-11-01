@@ -41,9 +41,7 @@
 
 
     @Page.getContentPage(page).map { page =>
-        @if(
-            page.item.content.shouldAmplify
-        ) {
+        @if(page.item.content.shouldAmplify) {
             <link rel="amphtml" href="@AmpLinkTo{/@page.metadata.id}">
         }
     }
