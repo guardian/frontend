@@ -158,7 +158,7 @@ const showBanner = (params: EngagementBannerParams): void => {
     }).show(renderedBanner);
 
     if (messageShown) {
-        [('INSERT', 'VIEW')].forEach(action => {
+        ['INSERT', 'VIEW'].forEach(action => {
             submitComponentEvent({
                 component: {
                     componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
