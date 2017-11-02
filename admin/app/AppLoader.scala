@@ -1,8 +1,9 @@
 import app.{FrontendApplicationLoader, FrontendComponents, LifecycleComponent}
 import com.softwaremill.macwire._
-import common._
 import common.Logback.LogstashLifecycle
-import dfp.DfpAgentLifecycle
+import dfp._
+import common.dfp._
+import common._
 import conf.switches.SwitchboardLifecycle
 import conf.CachedHealthCheckLifeCycle
 import controllers.{AdminControllers, HealthCheck}
@@ -23,7 +24,7 @@ import play.api.i18n.{I18nComponents, Lang, Messages}
 import play.api.libs.ws.WSClient
 import services._
 import router.Routes
-
+import tools.BlockingOperations
 import scala.concurrent.ExecutionContext
 
 class AppLoader extends FrontendApplicationLoader {
@@ -46,6 +47,28 @@ trait AdminServices extends I18nComponents  {
   lazy val videoEncodingsJob = wire[VideoEncodingsJob]
   lazy val analyticsSanityCheckJob = wire[AnalyticsSanityCheckJob]
   lazy val rebuildIndexJob = wire[RebuildIndexJob]
+
+  lazy val dfpApi: DfpApi = wire[DfpApi]
+  lazy val blockingOperations: BlockingOperations = wire[BlockingOperations]
+  lazy val adUnitAgent: AdUnitAgent = wire[AdUnitAgent]
+  lazy val adUnitService: AdUnitService = wire[AdUnitService]
+  lazy val advertiserAgent: AdvertiserAgent = wire[AdvertiserAgent]
+  lazy val creativeTemplateAgent: CreativeTemplateAgent = wire[CreativeTemplateAgent]
+  lazy val customFieldAgent: CustomFieldAgent = wire[CustomFieldAgent]
+  lazy val customFieldService: CustomFieldService = wire[CustomFieldService]
+  lazy val customTargetingAgent: CustomTargetingAgent = wire[CustomTargetingAgent]
+  lazy val customTargetingService: CustomTargetingService = wire[CustomTargetingService]
+  lazy val customTargetingKeyValueJob: CustomTargetingKeyValueJob = wire[CustomTargetingKeyValueJob]
+  lazy val dataMapper: DataMapper = wire[DataMapper]
+  lazy val dataValidation: DataValidation = wire[DataValidation]
+  lazy val dfpDataCacheJob: DfpDataCacheJob = wire[DfpDataCacheJob]
+  lazy val orderAgent: OrderAgent = wire[OrderAgent]
+  lazy val placementAgent: PlacementAgent = wire[PlacementAgent]
+  lazy val placementService: PlacementService = wire[PlacementService]
+  lazy val dfpFacebookIaAdUnitCacheJob: DfpFacebookIaAdUnitCacheJob = wire[DfpFacebookIaAdUnitCacheJob]
+  lazy val dfpAdUnitCacheJob: DfpAdUnitCacheJob = wire[DfpAdUnitCacheJob]
+  lazy val dfpMobileAppUnitCacheJob: DfpMobileAppAdUnitCacheJob = wire[DfpMobileAppAdUnitCacheJob]
+  lazy val dfpTemplateCreativeCacheJob: DfpTemplateCreativeCacheJob = wire[DfpTemplateCreativeCacheJob]
 }
 
 trait AppComponents extends FrontendComponents with AdminControllers with AdminServices {

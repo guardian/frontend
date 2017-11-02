@@ -23,8 +23,13 @@ case class CommercialPage() extends StandalonePage {
       "adUnit" -> JsString("/59666047/theguardian.com/global-development/ng")))
 }
 
-class CommercialController(val controllerComponents: ControllerComponents)(implicit context: ApplicationContext)
-  extends BaseController with Logging with ImplicitControllerExecutionContext {
+class CommercialController(val controllerComponents: ControllerComponents,
+                           createTemplateAgent: CreativeTemplateAgent,
+                           advertiserAgent: AdvertiserAgent,
+                           orderAgent: OrderAgent,
+                           customFieldAgent: CustomFieldAgent,
+                           dfpApi: DfpApi)(implicit context: ApplicationContext)
+   extends BaseController with Logging with ImplicitControllerExecutionContext {
 
   def renderCommercialMenu(): Action[AnyContent] = Action { implicit request =>
     NoCache(Ok(views.html.commercial.commercialMenu()))
@@ -35,7 +40,7 @@ class CommercialController(val controllerComponents: ControllerComponents)(impli
   }
 
   def renderSpecialAdUnits: Action[AnyContent] = Action { implicit request =>
-    val specialAdUnits = DfpApi.readSpecialAdUnits(Configuration.commercial.dfpAdUnitGuRoot)
+    val specialAdUnits = dfpApi.readSpecialAdUnits(Configuration.commercial.dfpAdUnitGuRoot)
     Ok(views.html.commercial.specialAdUnits(specialAdUnits))
   }
 
@@ -61,7 +66,7 @@ class CommercialController(val controllerComponents: ControllerComponents)(impli
   }
 
   def renderCreativeTemplates: Action[AnyContent] = Action { implicit request =>
-    val emptyTemplates = CreativeTemplateAgent.get
+    val emptyTemplates = createTemplateAgent.get
     val creatives = Store.getDfpTemplateCreatives
     val templates = emptyTemplates.foldLeft(Seq.empty[GuCreativeTemplate]) { (soFar, template) =>
       soFar :+ template.copy(creatives = creatives.filter(_.templateId.get == template.id).sortBy(_.name))
@@ -71,7 +76,7 @@ class CommercialController(val controllerComponents: ControllerComponents)(impli
 
   def renderCustomFields: Action[AnyContent] = Action { implicit request =>
 
-    val fields: Seq[GuCustomField] = CustomFieldAgent.get.data.values.toSeq
+    val fields: Seq[GuCustomField] = customFieldAgent.get.data.values.toSeq
     NoCache(Ok(views.html.commercial.customFields(fields)))
 
   }
@@ -121,7 +126,7 @@ class CommercialController(val controllerComponents: ControllerComponents)(impli
         lineItemId <- Try(lineitemId.toLong).toOption
         validSection <- validSections.find(_ == section)
       } yield {
-          DfpApi.getCreativeIds(lineItemId) flatMap (DfpApi.getPreviewUrl(lineItemId, _, s"https://theguardian.com/$validSection"))
+        dfpApi.getCreativeIds(lineItemId) flatMap (dfpApi.getPreviewUrl(lineItemId, _, s"https://theguardian.com/$validSection"))
       }) getOrElse Nil
 
     Cached(5.minutes) {
@@ -154,8 +159,8 @@ class CommercialController(val controllerComponents: ControllerComponents)(impli
     val invalidLineItems: Seq[GuLineItem] = Store.getDfpLineItemsReport().invalidLineItems
     val invalidItemsExtractor = DfpDataExtractor(invalidLineItems, Nil)
 
-    val advertisers = AdvertiserAgent.get
-    val orders = OrderAgent.get
+    val advertisers = advertiserAgent.get
+    val orders = orderAgent.get
     val sonobiAdvertiserId = advertisers.find(_.name.toLowerCase =="sonobi").map(_.id).getOrElse(0L)
     val sonobiOrderIds = orders.filter(_.advertiserId == sonobiAdvertiserId).map(_.id)
 
@@ -169,7 +174,7 @@ class CommercialController(val controllerComponents: ControllerComponents)(impli
       case _ => "unknown"
     }
 
-    val sonobiItems = groupedItems.get("sonobi").getOrElse(Seq.empty)
+    val sonobiItems = groupedItems.getOrElse("sonobi", Seq.empty)
     val invalidItemsMap = GuLineItem.asMap(invalidLineItems)
 
     val unidentifiedLineItems = invalidItemsMap.keySet -- pageskins.map(_.lineItemId) -- topAboveNav.map(_.id) -- highMerch.map(_.id) -- sonobiItems.map(_.id)

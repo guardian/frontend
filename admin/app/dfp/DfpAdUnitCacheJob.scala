@@ -7,11 +7,11 @@ import tools.Store
 import scala.concurrent.{ExecutionContext, Future}
 
 
-class DfpAdUnitCacher(val rootAdUnit: Any, val filename: String) extends Logging {
+class DfpAdUnitCacher(val rootAdUnit: Any, val filename: String, dfpApi: DfpApi) extends Logging {
 
   def run(akkaAsync: AkkaAsync)(implicit executionContext: ExecutionContext): Future[Unit] = Future {
     akkaAsync {
-      val adUnits = DfpApi.readActiveAdUnits(rootAdUnit.toString)
+      val adUnits = dfpApi.readActiveAdUnits(rootAdUnit.toString)
       if (adUnits.nonEmpty) {
         val rows = adUnits.map(adUnit => s"${adUnit.id},${adUnit.path.mkString(",")}")
         val list = rows.mkString("\n")
@@ -21,9 +21,9 @@ class DfpAdUnitCacher(val rootAdUnit: Any, val filename: String) extends Logging
   }
 }
 
-object DfpAdUnitCacheJob extends DfpAdUnitCacher(Configuration.commercial.dfpAdUnitGuRoot, Configuration.commercial.dfpActiveAdUnitListKey)
+class DfpAdUnitCacheJob(dfpApi: DfpApi) extends DfpAdUnitCacher(Configuration.commercial.dfpAdUnitGuRoot, Configuration.commercial.dfpActiveAdUnitListKey, dfpApi)
 
-object DfpFacebookIaAdUnitCacheJob extends DfpAdUnitCacher(Configuration.commercial.dfpFacebookIaAdUnitRoot, Configuration.commercial.dfpFacebookIaAdUnitListKey)
+class DfpFacebookIaAdUnitCacheJob(dfpApi: DfpApi) extends DfpAdUnitCacher(Configuration.commercial.dfpFacebookIaAdUnitRoot, Configuration.commercial.dfpFacebookIaAdUnitListKey, dfpApi)
 
-object DfpMobileAppAdUnitCacheJob extends DfpAdUnitCacher(Configuration.commercial.dfpMobileAppsAdUnitRoot, Configuration.commercial.dfpMobileAppsAdUnitListKey)
+class DfpMobileAppAdUnitCacheJob(dfpApi: DfpApi) extends DfpAdUnitCacher(Configuration.commercial.dfpMobileAppsAdUnitRoot, Configuration.commercial.dfpMobileAppsAdUnitListKey, dfpApi)
 

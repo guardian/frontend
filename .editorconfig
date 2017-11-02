@@ -15,6 +15,9 @@ insert_final_newline = true
 [*.scala]
 indent_size = 2
 
+[*.conf]
+indent_size = 2
+
 [package.json]
 indent_size = 2
 
