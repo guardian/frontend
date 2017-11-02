@@ -2,9 +2,9 @@
 # yarn lockfile v1
 
 
-"@guardian/guui@^1.4.0":
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/@guardian/guui/-/guui-1.4.0.tgz#aa6a865bb5b03b330b549daaeb6be92c27923b8f"
+"@guardian/guui@1.4.1":
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/@guardian/guui/-/guui-1.4.1.tgz#77292a091197bf12afff94917c42e8ee5d03b184"
   dependencies:
     babel-plugin-emotion "7.3.2"
     emotion "^7.3.2"
