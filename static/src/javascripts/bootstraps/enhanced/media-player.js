@@ -1,4 +1,11 @@
 // @flow
+
+import videojs from 'videojs';
+import 'videojs-ima';
+import 'videojs-embed';
+import 'videojs-persistvolume';
+import 'videojs-playlist';
+import 'videojs-contrib-ads';
 import bean from 'bean';
 import bonzo from 'bonzo';
 import fastdom from 'fastdom';
@@ -8,22 +15,18 @@ import config from 'lib/config';
 import deferToAnalytics from 'lib/defer-to-analytics';
 import { isBreakpoint } from 'lib/detect';
 import mediator from 'lib/mediator';
+import events from 'common/modules/video/events';
+import videojsOptions from 'common/modules/video/videojs-options';
+import loadingTmpl from 'raw-loader!common/views/ui/loading.html';
+import { loadScript } from 'lib/load-script';
+import { isOn as accessibilityisOn } from 'common/modules/accessibility/main';
 import { videoAdUrl } from 'common/modules/commercial/video-ad-url';
 import { commercialFeatures } from 'commercial/modules/commercial-features';
 import { Component } from 'common/modules/component';
-import events from 'common/modules/video/events';
 import { getVideoInfo, isGeoBlocked } from 'common/modules/video/metadata';
 import { fullscreener } from 'common/modules/media/videojs-plugins/fullscreener';
 import { skipAd } from 'common/modules/media/videojs-plugins/skip-ad';
-import { videoContainerInit } from 'common/modules/video/video-container';
-import { onwardVideo } from 'common/modules/video/onward-container';
-import { moreInSeriesContainerInit } from 'common/modules/video/more-in-series-container';
-import videojsOptions from 'common/modules/video/videojs-options';
-import { videojs } from 'bootstraps/enhanced/media/video-player';
-import loadingTmpl from 'raw-loader!common/views/ui/loading.html';
 import { isAdFreeUser } from 'commercial/modules/user-features';
-import { loadScript } from 'lib/load-script';
-import { isOn as accessibilityisOn } from 'common/modules/accessibility/main';
 
 const initLoadingSpinner = (player: any): void => {
     player.loadingSpinner.contentEl().innerHTML = loadingTmpl;
@@ -105,11 +108,11 @@ const enhanceVideo = (
     const dataset = el.dataset;
     const { mediaId, endSlate, embedPath } = dataset;
 
-    const // we need to look up the embedPath for main media videos
-    canonicalUrl = dataset.canonicalUrl || (embedPath || null);
+    // we need to look up the embedPath for main media videos
+    const canonicalUrl = dataset.canonicalUrl || (embedPath || null);
 
-    const // the fallback to window.location.pathname should only happen for main media on fronts
-    gaEventLabel = canonicalUrl || window.location.pathname;
+    // the fallback to window.location.pathname should only happen for main media on fronts
+    const gaEventLabel = canonicalUrl || window.location.pathname;
 
     let mouseMoveIdle;
     let playerSetupComplete;
@@ -130,13 +133,13 @@ const enhanceVideo = (
             plugins: {
                 embed: {
                     embeddable:
-                        !config.page.isFront &&
-                        config.switches.externalVideoEmbeds &&
-                        (config.page.contentType === 'Video' ||
+                        !config.get('page.isFront') &&
+                        config.get('switches.externalVideoEmbeds') &&
+                        (config.get('page.contentType') === 'Video' ||
                             dataset.embeddable === 'true'),
-                    location: `${config.page
-                        .externalEmbedHost}/embed/video/${embedPath ||
-                        config.page.pageId}`,
+                    location: `${config.get(
+                        'page.externalEmbedHost'
+                    )}/embed/video/${embedPath || config.get('page.pageId')}`,
                 },
             },
         })
@@ -177,7 +180,7 @@ const enhanceVideo = (
                 } else {
                     blockVideoAds =
                         videoInfo.shouldHideAdverts ||
-                        (config.switches.adFreeSubscriptionTrial &&
+                        (config.get('switches.adFreeSubscriptionTrial') &&
                             isAdFreeUser());
 
                     withPreroll = shouldPreroll && !blockVideoAds;
@@ -344,45 +347,6 @@ const initPlayer = (withPreroll: boolean): void => {
     });
 };
 
-const getMediaType = (): string => config.page.contentType.toLowerCase();
-
-const initMoreInSection = (): void => {
-    if (
-        !config.isMedia ||
-        !config.page.showRelatedContent ||
-        config.page.isPaidContent ||
-        !config.page.section
-    ) {
-        return;
-    }
-
-    const el = $('.js-more-in-section')[0];
-    moreInSeriesContainerInit(
-        el,
-        getMediaType(),
-        config.page.section,
-        config.page.shortUrl,
-        config.page.seriesId
-    );
-};
-
-const initOnwardContainer = (): void => {
-    if (!config.isMedia) {
-        return;
-    }
-
-    const mediaType = getMediaType();
-    const els = $(
-        mediaType === 'video'
-            ? '.js-video-components-container'
-            : '.js-media-popular'
-    );
-
-    els.each(el => {
-        onwardVideo(el, mediaType);
-    });
-};
-
 const initWithRaven = (withPreroll: boolean = false): void => {
     raven.wrap(
         {
@@ -396,53 +360,39 @@ const initWithRaven = (withPreroll: boolean = false): void => {
     )();
 };
 
-const initFacia = (): void => {
-    if (config.page.isFront) {
-        $('.js-video-playlist').each(el => {
-            videoContainerInit(el);
-        });
-    }
-};
-
-export const init = (): void => {
+export const initMediaPlayer = (): void => {
     // The `hasMultipleVideosInPage` flag is temporary until the # will be fixed
     const shouldPreroll =
         commercialFeatures.videoPreRolls &&
-        !config.page.hasMultipleVideosInPage &&
-        !config.page.hasYouTubeAtom &&
-        !config.page.isFront &&
-        !config.page.isPaidContent &&
-        !config.page.sponsorshipType;
+        !config.get('page.hasMultipleVideosInPage') &&
+        !config.get('page.hasYouTubeAtom') &&
+        !config.get('page.isFront') &&
+        !config.get('page.isPaidContent') &&
+        !config.get('page.sponsorshipType');
 
-    if (config.switches.enhancedMediaPlayer) {
-        if (shouldPreroll) {
-            loadScript('//imasdk.googleapis.com/js/sdkloader/ima3.js')
-                .then(() => {
-                    initWithRaven(true);
-                })
-                .catch(e => {
-                    raven.captureException(e, {
-                        tags: {
-                            feature: 'media',
-                            action: 'ads',
-                            ignored: true,
-                        },
-                    });
-                    initWithRaven();
+    if (shouldPreroll) {
+        loadScript('//imasdk.googleapis.com/js/sdkloader/ima3.js')
+            .then(() => {
+                initWithRaven(true);
+            })
+            .catch(e => {
+                raven.captureException(e, {
+                    tags: {
+                        feature: 'media',
+                        action: 'ads',
+                        ignored: true,
+                    },
                 });
-        } else {
-            initWithRaven();
-        }
+                initWithRaven();
+            });
+    } else {
+        initWithRaven();
     }
 
     // Setup play buttons
     initPlayButtons(document.body);
     mediator.on('modules:related:loaded', initPlayButtons);
     mediator.on('page:media:moreinloaded', initPlayButtons);
-
-    initFacia();
-
-    initMoreInSection();
-
-    initOnwardContainer();
 };
+
+export { videojs };

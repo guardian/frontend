@@ -15,6 +15,7 @@ import snaps from 'facia/modules/ui/snaps';
 import sponsorship from 'facia/modules/ui/sponsorship';
 import { Weather } from 'facia/modules/onwards/weather';
 import partial from 'lodash/functions/partial';
+import { videoContainerInit } from 'common/modules/video/video-container';
 
 const showSnaps = (): void => {
     snaps.init();
@@ -73,6 +74,12 @@ const showLiveblogUpdates = (): void => {
     }
 };
 
+const upgradeVideoPlaylists = (): void => {
+    $('.js-video-playlist').each(el => {
+        videoContainerInit(el);
+    });
+};
+
 const finished = (): void => {
     mediator.emit('page:front:ready');
 };
@@ -89,6 +96,7 @@ const init = (): void => {
         ['f-sponsorship', sponsorship],
         ['f-weather', showWeather],
         ['f-live-blog-updates', showLiveblogUpdates],
+        ['f-video-playlists', upgradeVideoPlaylists],
         ['f-finished', finished],
     ]);
 };
