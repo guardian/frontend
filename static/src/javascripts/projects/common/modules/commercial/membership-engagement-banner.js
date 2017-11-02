@@ -204,6 +204,7 @@ const membershipEngagementBannerInit = (): Promise<void> => {
             }
         );
     }
+    return Promise.resolve(undefined);
 };
 
 export { membershipEngagementBannerInit };
