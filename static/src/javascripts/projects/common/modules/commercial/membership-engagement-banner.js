@@ -57,9 +57,7 @@ const getUserVariantParams = (
 
         return userVariantParams;
     } else if (campaignId && userVariant) {
-        return {
-            campaignCode: buildCampaignCode(campaignId, userVariant.id),
-        };
+        return {};
     }
     return {};
 };
