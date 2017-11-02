@@ -146,43 +146,43 @@ category: Common
 
 .tabs__container--multiple {
 
-  width: 100%;
-  margin: 0;
-  margin-bottom: 10px;
-
-  .tabs__tab {
-    width: 50%;
-    float: left;
-    @include mq($until: desktop) {
-      max-width: 100%;
-      border: 0;
-      border-bottom: 1px solid $neutral-5;
-      margin-bottom: -1px;
-
-      &:nth-child(odd) {
-        box-shadow: 1px 0 0 0 $neutral-5;
-      }
-
-      & > a {
-        border-left: 0;
-        padding-left: 6px;
-      }
-    }
-  }
-
-  @include mq(desktop) {
-    display: table;
-    table-layout: fixed;
+    width: 100%;
+    margin: 0;
+    margin-bottom: 10px;
 
     .tabs__tab {
-        display: table-cell;
-        width: auto;
-        float: none;
+        width: 50%;
+        float: left;
+        @include mq($until: desktop) {
+            max-width: 100%;
+            border: 0;
+            border-bottom: 1px solid $neutral-5;
+            margin-bottom: -1px;
+
+            &:nth-child(odd) {
+                box-shadow: 1px 0 0 0 $neutral-5;
+            }
+
+            & > a {
+                border-left: 0;
+                padding-left: 6px;
+            }
+        }
     }
-    .tab--stats {
-        display: none;
+
+    @include mq(desktop) {
+        display: table;
+        table-layout: fixed;
+
+        .tabs__tab {
+            display: table-cell;
+            width: auto;
+            float: none;
+        }
+        .tab--stats {
+            display: none;
+        }
     }
-  }
 }
 
 // Most Popular FRONTS customisation: change layout to accommodate MPU (with or without tabs)
