@@ -40,14 +40,16 @@ const addReferrerDataToAcquisitionLinksOnPage = (): void => {
     );
 
     links.forEach(el => {
-        fastdom.read(() => el.getAttribute('href'))
-            .then(link => {
-                if (link) {
-                    fastdom.write(() => {
-                        el.setAttribute('href', addReferrerDataToAcquisitionLink(link));
-                    })
-                }
-            });
+        fastdom.read(() => el.getAttribute('href')).then(link => {
+            if (link) {
+                fastdom.write(() => {
+                    el.setAttribute(
+                        'href',
+                        addReferrerDataToAcquisitionLink(link)
+                    );
+                });
+            }
+        });
     });
 };
 
