@@ -56,6 +56,8 @@ const getUserVariantParams = (
         }
 
         return userVariantParams;
+    } else if (campaignId && userVariant) {
+        return {};
     }
     return {};
 };
