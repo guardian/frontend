@@ -23,6 +23,7 @@ module.exports = {
     ],
     plugins: ['flow-header', 'flowtype'],
     rules: {
+        'no-plusplus': 'off',
         'flow-header/flow-header': 'error',
 
         // flow should take care of our return values
