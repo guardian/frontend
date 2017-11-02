@@ -35,11 +35,15 @@ const bindIframeMsgReceiverOnce = once(() => {
     });
 });
 
-const setSnapPoint = (el, isResize) => {
+const setSnapPoint = (el: HTMLElement, isResize: boolean): void => {
     let width;
     const $el = bonzo(el);
     const prefix = 'facia-snap-point--';
-    const breakpoints = [
+    const breakpoints: Array<{
+        width: number,
+        name: string,
+        action?: string | boolean,
+    }> = [
         {
             width: 0,
             name: 'tiny',
@@ -94,25 +98,24 @@ const setSnapPoint = (el, isResize) => {
     });
 };
 
-const addCss = (el, isResize) => {
+const addCss = (el: HTMLElement, isResize: boolean = false): void => {
     setSnapPoint(el, isResize);
     if ($(el).hasClass('facia-snap--football')) {
         resizeForFootballSnaps(el);
     }
 };
 
-const injectIframe = el => {
+const injectIframe = (el: HTMLElement): void => {
     const spec = bonzo(el).offset();
     const minIframeHeight = Math.ceil((spec.width || 0) / 2);
     const maxIframeHeight = 400;
-    const src = el.getAttribute('data-snap-uri');
+    const src = el.getAttribute('data-snap-uri') || '';
     const height = Math.min(
         Math.max(spec.height || 0, minIframeHeight),
         maxIframeHeight
     );
     const containerEl = bonzo.create(
-        `<div style="width: 100%; height: ${height}px; ` +
-            `overflow: hidden; -webkit-overflow-scrolling:touch"></div>`
+        `<div style="width: 100%; height: ${height}px; overflow: hidden; -webkit-overflow-scrolling:touch"></div>`
     )[0];
     const iframe = bonzo.create(
         `<iframe src="${src}" style="width: 100%; height: 100%; border: none;"></iframe>`
@@ -129,8 +132,14 @@ const injectIframe = el => {
     });
 };
 
-const fetchFragment = (el, asJson) => {
-    fetch(el.getAttribute('data-snap-uri'), {
+const fetchFragment = (el: HTMLElement, asJson: boolean = false): void => {
+    const url = el.getAttribute('data-snap-uri');
+
+    if (!url) {
+        return;
+    }
+
+    fetch(url, {
         mode: 'cors',
     })
         .then(resp => {
@@ -156,7 +165,7 @@ const fetchFragment = (el, asJson) => {
         });
 };
 
-const initStandardSnap = el => {
+const initStandardSnap = (el: HTMLElement): void => {
     addProximityLoader(el, 1500, () => {
         fastdom.write(() => {
             bonzo(el).addClass('facia-snap-embed');
@@ -188,7 +197,7 @@ const initStandardSnap = el => {
     });
 };
 
-const initInlinedSnap = el => {
+const initInlinedSnap = (el: HTMLElement): void => {
     addCss(el);
     if (!isIOS) {
         mediator.on('window:throttledResize', () => {
@@ -197,7 +206,7 @@ const initInlinedSnap = el => {
     }
 };
 
-const init = () => {
+const init = (): void => {
     // First, init any existing inlined embeds already on the page.
     const inlinedSnaps = toArray($('.facia-snap-embed'));
     inlinedSnaps.forEach(initInlinedSnap);
