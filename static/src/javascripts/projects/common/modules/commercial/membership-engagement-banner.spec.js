@@ -178,8 +178,8 @@ describe('Membership engagement banner', () => {
                         component: {
                             componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
                             products: ['CONTRIBUTION'],
-                            id: 'fake-campaign-code',
-                            campaignCode: 'fake-campaign-code',
+                            id: 'fake-campaign-id_fake-variant-id',
+                            campaignCode: 'fake-campaign-id_fake-variant-id',
                         },
                         action: 'INSERT',
                         abTest: {
