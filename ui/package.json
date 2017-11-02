@@ -23,7 +23,7 @@
         "watch:nashorn:server": "webpack --config ./__config__/webpack.config.nashorn.dev.js --env.server --watch"
     },
     "dependencies": {
-        "@guardian/guui": "^1.4.0"
+        "@guardian/guui": "1.4.1"
     },
     "devDependencies": {
         "babel-core": "^6.25.0",
