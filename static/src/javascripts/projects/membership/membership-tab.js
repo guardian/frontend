@@ -4,7 +4,7 @@ import $ from 'lib/$';
 import fetch from 'lib/fetch';
 import config from 'lib/config';
 import reportError from 'lib/report-error';
-import formatters from 'membership/formatters';
+import { formatDate, formatAmount } from 'membership/formatters';
 import { display } from 'membership/stripe';
 
 const CARD_DETAILS = '.js-mem-card-details';
@@ -71,9 +71,9 @@ const populateUserDetails = (userDetails: UserDetails): void => {
 
     $(MEMBERSHIP_TIER).text(userDetails.tier);
     $(PACKAGE_COST).text(
-        formatters.formatAmount(userDetails.subscription.plan.amount, glyph)
+        formatAmount(userDetails.subscription.plan.amount, glyph)
     );
-    $(DETAILS_JOIN_DATE).text(formatters.formatDate(userDetails.joinDate));
+    $(DETAILS_JOIN_DATE).text(formatDate(userDetails.joinDate));
     $(PACKAGE_INTERVAL).text(intervalText);
 
     const exists =
@@ -85,24 +85,21 @@ const populateUserDetails = (userDetails: UserDetails): void => {
     }
 
     $(PACKAGE_CURRENT_PERIOD_END).text(
-        formatters.formatDate(userDetails.subscription.end)
+        formatDate(userDetails.subscription.end)
     );
     $(PACKAGE_CURRENT_RENEWAL_DATE).text(
-        formatters.formatDate(userDetails.subscription.renewalDate)
+        formatDate(userDetails.subscription.renewalDate)
     );
 
     if (userDetails.subscription.nextPaymentDate) {
         $(PACKAGE_NEXT_PAYMENT_DATE).text(
-            formatters.formatDate(userDetails.subscription.nextPaymentDate)
+            formatDate(userDetails.subscription.nextPaymentDate)
         );
         $(PACKAGE_NEXT_PAYMENT_CONTAINER).removeClass(IS_HIDDEN_CLASSNAME);
     }
 
     $(PACKAGE_NEXT_PAYMENT_PRICE).text(
-        formatters.formatAmount(
-            userDetails.subscription.nextPaymentPrice,
-            glyph
-        )
+        formatAmount(userDetails.subscription.nextPaymentPrice, glyph)
     );
 
     if (userDetails.subscription.trialLength > 0) {
@@ -117,7 +114,7 @@ const populateUserDetails = (userDetails: UserDetails): void => {
 
     if (userDetails.subscription.start) {
         $(PACKAGE_CURRENT_PERIOD_START).text(
-            formatters.formatDate(userDetails.subscription.start)
+            formatDate(userDetails.subscription.start)
         );
         $(PACKAGE_CURRENT_PERIOD_START_CONTAINER).removeClass(
             IS_HIDDEN_CLASSNAME
