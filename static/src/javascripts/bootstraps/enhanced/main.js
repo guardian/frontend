@@ -82,10 +82,7 @@ const bootEnhanced = (): void => {
             },
         ],
 
-        [
-            'enrich-acquisition-links',
-            initAcquisitionsLinkEnrichment
-        ],
+        ['enrich-acquisition-links', initAcquisitionsLinkEnrichment],
     ]);
 
     bootstrapContext('common', initCommon);

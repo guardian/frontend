@@ -39,13 +39,12 @@ export const submitViewEvent = (componentEvent: ComponentEventWithoutAction) =>
         action: 'VIEW',
     });
 
-export const addReferrerData = (acquisitionData: {}) => {
+export const addReferrerData = (acquisitionData: {}) =>
     // Note: the current page is the referrer data in the context of the acquisition.
-    return Object.assign({}, acquisitionData, {
+    Object.assign({}, acquisitionData, {
         referrerPageviewId: config.get('ophan.pageViewId') || undefined,
         referrerUrl: window.location.href.split('?')[0],
-    })
-};
+    });
 
 export const addTrackingCodesToUrl = ({
     base,
