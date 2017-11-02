@@ -1,10 +1,9 @@
 package dfp
 
-import akka.actor.ActorSystem
-import tools.BlockingOperations
 import common.dfp.{GuLineItem, GuTargeting}
 import org.joda.time.DateTime
 import org.scalatest._
+import org.scalatest.mockito.MockitoSugar
 import test._
 
 class DfpDataCacheJobTest
@@ -14,33 +13,10 @@ class DfpDataCacheJobTest
   with BeforeAndAfterAll
   with WithMaterializer
   with WithTestWsClient
+  with MockitoSugar
   with WithTestContentApiClient {
 
-  val blockingOperations = new BlockingOperations(ActorSystem())
-  val adUnitAgent = new AdUnitAgent(blockingOperations)
-  val adUnitService = new AdUnitService(adUnitAgent)
-
-  val placementAgent = new PlacementAgent(blockingOperations)
-  val placementService = new PlacementService(placementAgent, adUnitService)
-
-  val customTargetingAgent = new CustomTargetingAgent(blockingOperations)
-  val customTargetingService = new CustomTargetingService(customTargetingAgent)
-
-  val customFieldAgent = new CustomFieldAgent(blockingOperations)
-  val customFieldService = new CustomFieldService(customFieldAgent)
-
-  val dataMapper = new DataMapper(
-    adUnitService,
-    placementService,
-    customTargetingService,
-    customFieldService
-  )
-
-  val dataValidation = new DataValidation(adUnitService)
-
-  val dfpApi = new DfpApi(dataMapper, dataValidation)
-
-  val dfpDataCacheJob = new DfpDataCacheJob(adUnitAgent, customFieldAgent, customTargetingAgent, placementAgent, dfpApi)
+  val dfpDataCacheJob = new DfpDataCacheJob(mock[AdUnitAgent], mock[CustomFieldAgent], mock[CustomTargetingAgent], mock[PlacementAgent], mock[DfpApi])
 
   private def lineItem(id: Long, name: String, completed: Boolean = false): GuLineItem = {
     GuLineItem(
