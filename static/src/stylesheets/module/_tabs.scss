@@ -150,6 +150,7 @@ category: Common
         float: none;
         width: auto;
         max-width: 100%;
+        
         @include mq(tablet) {
             display: table-cell;
         }
