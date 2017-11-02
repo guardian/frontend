@@ -47,6 +47,7 @@ category: Common
     overflow: hidden;
     z-index: 2;
     background: $neutral-6;
+    border-top: 3px solid $neutral-6;
 
     @include mq(tablet) {
         margin-bottom: -1px;
@@ -57,11 +58,12 @@ category: Common
     width: 50%;
     float: left;
     margin: 0;
-    border-top: 3px solid $neutral-6;
+    border-bottom: 1px solid $neutral-5;
+    border-left: 2px solid rgba(255, 255, 255, .75);
+    margin-left: -2px;
 
     @include mq(tablet) {
         max-width: gs-span(3);
-        border-bottom: 1px solid $neutral-5;
     }
 
     a,
@@ -96,21 +98,12 @@ category: Common
         color: inherit;
     }
 
-    & + & a {
-        border-left: 2px solid rgba(255, 255, 255, .75);
-        padding-left: 6px;
-    }
 }
 
 .tabs__tab--selected {
     a,
     .tab__link {
         background: #ffffff;
-    }
-
-    + .tabs__tab a {
-        border-left: 0;
-        padding-left: 8px;
     }
 
     @include mq(tablet) {
@@ -145,40 +138,24 @@ category: Common
  */
 
 .tabs__container--multiple {
-
     width: 100%;
     margin: 0;
     margin-bottom: 10px;
+    table-layout: fixed;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    display: table;
+    display: grid;
 
     .tabs__tab {
-        width: 50%;
-        float: left;
-        @include mq($until: desktop) {
-            max-width: 100%;
-            border: 0;
-            border-bottom: 1px solid $neutral-5;
-            margin-bottom: -1px;
-
-            &:nth-child(odd) {
-                box-shadow: 1px 0 0 0 $neutral-5;
-            }
-
-            & > a {
-                border-left: 0;
-                padding-left: 6px;
-            }
+        float: none;
+        width: auto;
+        max-width: 100%;
+        @include mq(tablet) {
+            display: table-cell;
         }
     }
 
     @include mq(desktop) {
-        display: table;
-        table-layout: fixed;
-
-        .tabs__tab {
-            display: table-cell;
-            width: auto;
-            float: none;
-        }
         .tab--stats {
             display: none;
         }
