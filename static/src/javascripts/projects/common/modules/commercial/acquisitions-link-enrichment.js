@@ -1,5 +1,6 @@
 // @flow
 import { addReferrerData } from 'common/modules/commercial/acquisitions-ophan';
+import fastdom from 'lib/fastdom-promise';
 
 const addReferrerDataToAcquisitionLink = (rawUrl: string): string => {
     const acquisitionDataField = 'acquisitionData';
@@ -39,10 +40,14 @@ const addReferrerDataToAcquisitionLinksOnPage = (): void => {
     );
 
     links.forEach(el => {
-        const link = el.getAttribute('href');
-        if (link) {
-            el.setAttribute('href', addReferrerDataToAcquisitionLink(link));
-        }
+        fastdom.read(() => el.getAttribute('href'))
+            .then(link => {
+                if (link) {
+                    fastdom.write(() => {
+                        el.setAttribute('href', addReferrerDataToAcquisitionLink(link));
+                    })
+                }
+            });
     });
 };
 
