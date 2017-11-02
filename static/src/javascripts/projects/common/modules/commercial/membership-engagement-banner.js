@@ -10,7 +10,7 @@ import { testCanBeRun } from 'common/modules/experiments/test-can-run-checks';
 import { isInTest, variantFor } from 'common/modules/experiments/segment-util';
 import { engagementBannerParams } from 'common/modules/commercial/membership-engagement-banner-parameters';
 import { isBlocked } from 'common/modules/commercial/membership-engagement-banner-block';
-import { get as getGeoLocation } from 'lib/geolocation';
+import { getSync as getGeoLocation } from 'lib/geolocation';
 
 import {
     submitComponentEvent,
@@ -186,26 +186,25 @@ const showBanner = (params: EngagementBannerParams): void => {
     }
 };
 
-const membershipEngagementBannerInit = (): Promise<void> =>
-    getGeoLocation().then(location => {
-        const bannerParams = deriveBannerParams(location);
-
-        if (bannerParams && getVisitCount() >= bannerParams.minArticles) {
-            return commercialFeatures.asynchronous.canDisplayMembershipEngagementBanner.then(
-                canShow => {
-                    if (canShow) {
-                        mediator.on(
-                            'modules:onwards:breaking-news:ready',
-                            breakingShown => {
-                                if (!breakingShown) {
-                                    showBanner(bannerParams);
-                                }
+const membershipEngagementBannerInit = (): Promise<void> => {
+    const bannerParams = deriveBannerParams(getGeoLocation());
+    if (bannerParams && getVisitCount() >= bannerParams.minArticles) {
+        return commercialFeatures.asynchronous.canDisplayMembershipEngagementBanner.then(
+            canShow => {
+                if (canShow) {
+                    mediator.on(
+                        'modules:onwards:breaking-news:ready',
+                        breakingShown => {
+                            if (!breakingShown) {
+                                showBanner(bannerParams);
                             }
-                        );
-                    }
+                        }
+                    );
                 }
-            );
-        }
-    });
+            }
+        );
+    }
+    return Promise.resolve(undefined);
+};
 
 export { membershipEngagementBannerInit };
