@@ -7,7 +7,6 @@ import $ from 'lib/$';
 import { isIOS } from 'lib/detect';
 import fetch from 'lib/fetch';
 import mediator from 'lib/mediator';
-import toArray from 'lodash/collections/toArray';
 import { addProximityLoader } from 'lib/proximity-loader';
 import reportError from 'lib/report-error';
 import { init as initRelativeDates } from 'common/modules/ui/relativedates';
@@ -208,11 +207,11 @@ const initInlinedSnap = (el: HTMLElement): void => {
 
 const init = (): void => {
     // First, init any existing inlined embeds already on the page.
-    const inlinedSnaps = toArray($('.facia-snap-embed'));
+    const inlinedSnaps = [...$('.facia-snap-embed')];
     inlinedSnaps.forEach(initInlinedSnap);
 
     // Second, init non-inlined embeds.
-    const snaps = toArray($('.js-snappable.js-snap'))
+    const snaps = [...$('.js-snappable.js-snap')]
         .filter(el => {
             const isInlinedSnap = $(el).hasClass('facia-snap-embed');
             const snapType = el.getAttribute('data-snap-type');
