@@ -4,11 +4,7 @@ import $ from 'lib/$';
 import userPrefs from 'common/modules/user-prefs';
 import { Message } from './message';
 
-jest.mock('common/modules/user-prefs', () => ({
-    get: jest.fn(),
-    set: jest.fn(),
-}));
-
+jest.mock('common/modules/user-prefs');
 jest.mock('common/modules/analytics/register', () => ({
     begin: jest.fn(),
 }));
@@ -27,6 +23,10 @@ describe('Message', () => {
                 </div>'
             `;
         }
+    });
+
+    afterEach(() => {
+        userPrefs.remove('messages');
     });
 
     it('Show a message', () => {
@@ -61,10 +61,10 @@ describe('Message', () => {
         expect($('.js-footer-message').hasClass('is-hidden')).toEqual(false);
     });
 
-    it.skip('Remember the user has acknowledged the message', () => {
+    it('Remember the user has acknowledged the message', () => {
         const m = new Message('foo');
         m.acknowledge();
-        expect(userPrefs.set).toHaveBeenCalledWith('messages', []);
+        expect(userPrefs.get('messages')).toEqual(['foo']);
         expect(m.hasSeen()).toEqual(true);
     });
 
