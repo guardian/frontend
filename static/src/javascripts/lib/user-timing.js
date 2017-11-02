@@ -6,7 +6,7 @@ const timings = {};
 const startDate = new Date().getTime();
 
 const getCurrentTime = (): number => {
-    if ('now' in performanceAPI) {
+    if (performanceAPI && 'now' in performanceAPI) {
         return performanceAPI.now();
     }
 
@@ -14,7 +14,7 @@ const getCurrentTime = (): number => {
 };
 
 const markTime = (label: string): void => {
-    if ('mark' in performanceAPI) {
+    if (performanceAPI && 'mark' in performanceAPI) {
         performanceAPI.mark(label);
     } else {
         timings[label] = getCurrentTime();
@@ -23,7 +23,7 @@ const markTime = (label: string): void => {
 
 // Returns the ms time when the mark was made.
 const getMarkTime = (label: string): ?number => {
-    if ('getEntriesByName' in performanceAPI) {
+    if (performanceAPI && 'getEntriesByName' in performanceAPI) {
         const perfMark = performanceAPI.getEntriesByName(label, 'mark');
 
         if (perfMark && 'startTime' in perfMark[0]) {
