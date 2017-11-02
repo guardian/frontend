@@ -39,7 +39,7 @@ export const submitViewEvent = (componentEvent: ComponentEventWithoutAction) =>
         action: 'VIEW',
     });
 
-export const addReferrerData = (acquisitionData: {}) =>
+export const addReferrerData = (acquisitionData: {}): {} =>
     // Note: the current page is the referrer data in the context of the acquisition.
     Object.assign({}, acquisitionData, {
         referrerPageviewId: config.get('ophan.pageViewId'),
