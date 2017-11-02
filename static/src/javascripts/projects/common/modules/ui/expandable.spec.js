@@ -4,6 +4,11 @@ import $ from 'lib/$';
 import { Expandable } from 'common/modules/ui/expandable';
 
 describe('Expandable', () => {
+    const ctaOpen = ([amount]: Array<string>): string =>
+        `Show ${amount ? `${amount} ` : ''}fewer`;
+    const ctaShut = ([amount]: Array<string>): string =>
+        `Show ${amount ? `${amount} ` : ''}more`;
+
     beforeEach(() => {
         if (document.body) {
             document.body.innerHTML = `
@@ -67,8 +72,8 @@ describe('Expandable', () => {
 
                 <ul class="flex">
                     <li class="t3">three</li>
-                </ul>' +
-            </div>'
+                </ul>
+            </div>
             `;
         }
     });
@@ -81,8 +86,8 @@ describe('Expandable', () => {
             new Expandable({ dom: elA }).init();
             new Expandable({ dom: elB }).init();
 
-            expect($('#trail-a .cta')[0].innerHTML).toContain('5');
-            expect($('#trail-b .cta')[0].innerHTML).toContain('3');
+            expect($('#trail-a .cta')[0].innerHTML).toEqual(ctaOpen`5`);
+            expect($('#trail-b .cta')[0].innerHTML).toEqual(ctaOpen`3`);
         }
     });
 
@@ -95,8 +100,8 @@ describe('Expandable', () => {
                 expanded: false,
             }).init();
 
-            expect($('#trail-c')[0].className).toContain('shut');
-            expect($('#trail-c .cta').text()).toBe('Show 3 more');
+            expect($('#trail-c')[0].classList).toContain('shut');
+            expect($('#trail-c .cta').text()).toEqual(ctaShut`3`);
         }
     });
 
@@ -109,11 +114,11 @@ describe('Expandable', () => {
 
             // shut
             x.toggle();
-            expect(elD.className).toBe('shut');
+            expect(elD.className).toEqual('shut');
 
             // open
             x.toggle();
-            expect(elD.className).toBe('');
+            expect(elD.className).toEqual('');
         }
     });
 
@@ -122,7 +127,7 @@ describe('Expandable', () => {
 
         if (elE) {
             new Expandable({ dom: elE }).init();
-            expect($('#trail-e .cta')[0].innerHTML).toContain('3');
+            expect($('#trail-e .cta')[0].innerHTML).toEqual(ctaOpen`3`);
         }
     });
 
@@ -131,7 +136,7 @@ describe('Expandable', () => {
 
         if (elG) {
             new Expandable({ dom: elG }).init();
-            expect($('#trail-g .cta').length).toBe(0);
+            expect($('#trail-g .cta').length).toEqual(0);
         }
     });
 
@@ -143,7 +148,7 @@ describe('Expandable', () => {
                 dom: elH,
                 showCount: false,
             }).init();
-            expect($('#trail-h .cta')[0].innerHTML).not.toContain('3');
+            expect($('#trail-h .cta')[0].innerHTML).toEqual(ctaOpen``);
         }
     });
 });
