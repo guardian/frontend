@@ -178,24 +178,27 @@ const bootEnhanced = (): void => {
         );
     }
 
-    if (!config.page.isHosted) {
-        fastdom
-            .read(() => qwery('video, audio, .youtube-media-atom'))
-            .then(els => {
-                if (config.isMedia || els.length) {
-                    require.ensure(
-                        [],
-                        require => {
-                            bootstrapContext(
-                                'media',
-                                require('bootstraps/enhanced/media/main').init
-                            );
-                        },
-                        'media'
-                    );
-                }
-            });
-    }
+    fastdom
+        .read(() =>
+            qwery(
+                `${config.switches.enhancedVideoPlayer ? 'video, ' : ''} audio`
+            )
+        )
+        .then(els => {
+            if (els.length) {
+                require.ensure(
+                    [],
+                    require => {
+                        bootstrapContext(
+                            'media-player',
+                            require('bootstraps/enhanced/media-player')
+                                .initMediaPlayer
+                        );
+                    },
+                    'media-player'
+                );
+            }
+        });
 
     if (config.page.contentType === 'Gallery') {
         require.ensure(

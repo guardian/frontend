@@ -165,13 +165,13 @@ trait FeatureSwitches {
     exposeClientSide = true
   )
 
-  val EnhancedMediaPlayerSwitch = Switch(
+  val EnhancedVideoPlayerSwitch = Switch(
     SwitchGroup.Feature,
-    "enhanced-media-player",
+    "enhanced-video-player",
     "If this is switched on then videos are enhanced using our JavaScript player",
-    owners = Seq(Owner.withGithub("johnduffell")),
+    owners = Seq(Owner.withGithub("siadcock")),
     safeState = On,
-    sellByDate = never,
+    sellByDate = new LocalDate(2018, 4, 30),
     exposeClientSide = true
   )
 
@@ -484,7 +484,7 @@ trait FeatureSwitches {
     sellByDate = new LocalDate(2018, 10, 17),
     exposeClientSide = true
   )
-
+  
   val ProfileShowContributorTab = Switch(
     SwitchGroup.Feature,
     "profile-show-contributor-tab",
@@ -502,6 +502,17 @@ trait FeatureSwitches {
     owners = Seq(Owner.withGithub("sndrs")),
     safeState = Off,
     sellByDate = new LocalDate(2018, 2, 1),
+    exposeClientSide = false
+  )
+  
+    // Owner: Journalism
+  val ReaderAnswersDeliveryMechanism = Switch(
+    SwitchGroup.Feature,
+    "reader-answers-preferred-delivery-mechanism",
+    "When ON, story questions will give readers the option to indicate their preferred answer delivery medium",
+    owners = Seq(Owner.withGithub("annebyrne")),
+    safeState = On,
+    sellByDate = new LocalDate(2018, 10, 24),
     exposeClientSide = false
   )
 }

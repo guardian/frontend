@@ -112,7 +112,7 @@ trait ABTestSwitches {
     "Test adds a hold-back variant which keeps a frequency cap on outstream video format ads.",
     owners = Seq(Owner.withGithub("rich-nguyen")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 11, 1),
+    sellByDate = new LocalDate(2018, 1, 4),
     exposeClientSide = true
   )
 
@@ -123,6 +123,16 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("joelochlann")),
     safeState = On,
     sellByDate = new LocalDate(2017, 11, 20),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-banner-big-long-two",
+    "Test a big variant and a long variant against the banner control",
+    owners = Seq(Owner.withGithub("jranks123")),
+    safeState = On,
+    sellByDate = new LocalDate(2017, 11, 27),
     exposeClientSide = true
   )
 

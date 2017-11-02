@@ -15,9 +15,14 @@
 <div class="js-notifications-blocked"></div>
 <div class="l-side-margins">
 
-    <article id="live-blog" data-test-id="live-blog"
+    <article
+        id="live-blog"
+        data-test-id="live-blog"
         class="content content--liveblog tonal tonal--@toneClass(article) blog @if(article.fields.isLive){is-live} section-@article.trail.sectionName.toLowerCase"
-        role="main">
+        role="main"
+        itemscope
+        itemtype="http://schema.org/LiveBlogPosting"
+    >
 
         <meta itemprop="url" content="@LinkTo(article.metadata.url)">
         <div itemprop="publisher" itemscope itemtype="https://schema.org/Organization">

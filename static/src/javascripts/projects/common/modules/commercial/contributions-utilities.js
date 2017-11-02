@@ -500,6 +500,14 @@ const makeABTest = ({
     return test;
 };
 
+const makeBannerABTestVariants = (
+    variants: Array<Object>
+): $ReadOnlyArray<Variant> =>
+    variants.map(x => {
+        x.test = noop;
+        return x;
+    });
+
 export {
     shouldShowReaderRevenue,
     defaultCanEpicBeDisplayed,
@@ -507,4 +515,5 @@ export {
     getTestimonialBlock,
     makeABTest,
     defaultButtonTemplate,
+    makeBannerABTestVariants,
 };

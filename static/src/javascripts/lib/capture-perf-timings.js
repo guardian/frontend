@@ -5,13 +5,15 @@ import performanceAPI from 'lib/window-performance';
 
 const capturePerfTimings = (): void => {
     const supportsPerformanceProperties =
-        'navigation' in performanceAPI && 'timing' in performanceAPI;
+        performanceAPI &&
+        'navigation' in performanceAPI &&
+        'timing' in performanceAPI;
 
     if (!supportsPerformanceProperties) {
         return;
     }
 
-    const timing = performanceAPI && performanceAPI.timing;
+    const timing = performanceAPI.timing;
 
     const marks = [
         'standard boot',

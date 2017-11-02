@@ -297,8 +297,11 @@ do you have fonts in localStorage?
 
                     // - no point in searching the whole thing, so keep it as short
                     // as possible.
-                    for (let x = 0; x <= 16; x + 1) {
-                        for (let y = 0; y <= 16; y + 1) {
+
+                    // eslint-disable-next-line no-plusplus
+                    for (let x = 0; x <= 16; ++x) {
+                        // eslint-disable-next-line no-plusplus
+                        for (let y = 0; y <= 16; ++y) {
                             const alpha = ctx.getImageData(x, y, 1, 1).data[3];
 
                             if (alpha > 0 && alpha < 255) {
