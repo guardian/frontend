@@ -1,7 +1,7 @@
 // @flow
 
 import $ from 'lib/$';
-import _userPrefs from 'common/modules/user-prefs';
+import userPrefs from 'common/modules/user-prefs';
 import { Message } from './message';
 
 jest.mock('common/modules/user-prefs', () => ({
@@ -12,8 +12,6 @@ jest.mock('common/modules/user-prefs', () => ({
 jest.mock('common/modules/analytics/register', () => ({
     begin: jest.fn(),
 }));
-
-const userPrefs: any = _userPrefs;
 
 describe('Message', () => {
     beforeEach(() => {
@@ -33,43 +31,41 @@ describe('Message', () => {
 
     it('Show a message', () => {
         new Message('foo').show('hello world');
-        expect($('.js-site-message-copy').text()).toContain('hello world');
-        expect($('.js-footer-site-message-copy').text()).not.toContain(
+        expect($('.js-site-message-copy').text()).toEqual('hello world');
+        expect($('.js-footer-site-message-copy').text()).not.toEqual(
             'hello world'
         );
-        expect($('.js-site-message').hasClass('is-hidden')).toBeFalsy();
+        expect($('.js-site-message').hasClass('is-hidden')).toEqual(false);
     });
 
     it('Show a pinnable message', () => {
         new Message('foo', { pinOnHide: true }).show('hello world');
-        expect($('.js-site-message-copy').text()).toContain('hello world');
-        expect($('.js-footer-site-message-copy').text()).toContain(
-            'hello world'
-        );
-        expect($('.js-site-message').hasClass('is-hidden')).toBeFalsy();
+        expect($('.js-site-message-copy').text()).toEqual('hello world');
+        expect($('.js-footer-site-message-copy').text()).toEqual('hello world');
+        expect($('.js-site-message').hasClass('is-hidden')).toEqual(false);
     });
 
     it('Hide a message', () => {
         const m = new Message('foo');
         m.show('hello world');
         m.hide();
-        expect($('.js-site-message').hasClass('is-hidden')).toBeTruthy();
-        expect($('.js-footer-message').hasClass('is-hidden')).toBeTruthy();
+        expect($('.js-site-message').hasClass('is-hidden')).toEqual(true);
+        expect($('.js-footer-message').hasClass('is-hidden')).toEqual(true);
     });
 
     it('Hide a pinnable message', () => {
         const m = new Message('foo', { pinOnHide: true });
         m.show('hello world');
         m.hide();
-        expect($('.js-site-message').hasClass('is-hidden')).toBeTruthy();
-        expect($('.js-footer-message').hasClass('is-hidden')).toBeFalsy();
+        expect($('.js-site-message').hasClass('is-hidden')).toEqual(true);
+        expect($('.js-footer-message').hasClass('is-hidden')).toEqual(false);
     });
 
     it.skip('Remember the user has acknowledged the message', () => {
         const m = new Message('foo');
         m.acknowledge();
         expect(userPrefs.set).toHaveBeenCalledWith('messages', []);
-        expect(m.hasSeen()).toBeTruthy();
+        expect(m.hasSeen()).toEqual(true);
     });
 
     it('Block messages from overwriting each other', () => {
@@ -77,7 +73,7 @@ describe('Message', () => {
         const m2 = new Message('bar');
         m1.show('message one');
         m2.show('message two');
-        expect($('.js-site-message-copy').text()).toContain('message one');
+        expect($('.js-site-message-copy').text()).toEqual('message one');
     });
 
     it("Allow 'important' messages to overwrite an existing message", () => {
@@ -87,12 +83,12 @@ describe('Message', () => {
         m1.show('message one');
         m2.show('message two');
         m3.show('message three');
-        expect($('.js-site-message-copy').text()).toContain('message two');
+        expect($('.js-site-message-copy').text()).toEqual('message two');
     });
 
     it('has option to stay permanently open', () => {
         new Message('a', { permanent: true }).show('message one');
-        expect($('.site-message__close').hasClass('is-hidden')).toBeTruthy();
+        expect($('.site-message__close').hasClass('is-hidden')).toEqual(true);
     });
 
     it('permanent message should have class added', () => {
