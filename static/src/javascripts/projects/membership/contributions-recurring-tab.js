@@ -3,7 +3,7 @@ import $ from 'lib/$';
 import fetch from 'lib/fetch';
 import config from 'lib/config';
 import reportError from 'lib/report-error';
-import formatters from 'membership/formatters';
+import { formatDate, formatAmount } from 'membership/formatters';
 import { display } from 'membership/stripe';
 
 const CARD_DETAILS = '.js-contribution-card-details';
@@ -57,22 +57,17 @@ const populateUserDetails = (contributorDetails: ContributorDetails): void => {
 
     if (contributorDetails.subscription.nextPaymentDate) {
         $(PACKAGE_NEXT_PAYMENT_DATE).text(
-            formatters.formatDate(
-                contributorDetails.subscription.nextPaymentDate
-            )
+            formatDate(contributorDetails.subscription.nextPaymentDate)
         );
     }
 
     $(PACKAGE_NEXT_PAYMENT_PRICE).text(
-        formatters.formatAmount(
-            contributorDetails.subscription.plan.amount,
-            glyph
-        )
+        formatAmount(contributorDetails.subscription.plan.amount, glyph)
     );
 
     if (contributorDetails.subscription.start) {
         $(CONTRIBUTION_PERIOD_START).text(
-            formatters.formatDate(contributorDetails.subscription.start)
+            formatDate(contributorDetails.subscription.start)
         );
         $(CONTRIBUTION_PERIOD_START_CONTAINER).removeClass(IS_HIDDEN_CLASSNAME);
     }
