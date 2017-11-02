@@ -28,14 +28,15 @@ const justOnePoundP2 = (currencySymbol: string) =>
 
 const ctaLinkSentence = (
     membershipUrl: string,
-    contributionUrl: string
+    contributionUrl: string,
+    currencySymbol: string
 ): string => {
     if (supportFrontendLiveInUs) {
-        return `Support the Guardian by <a href="${membershipUrl}" target="_blank" class="u-underline">making a contribution</a>`;
+        return `For as little as ${currencySymbol}1, you can support the Guardian – and it only takes a minute. <a href="${membershipUrl}" target="_blank" class="u-underline">Make a contribution</a>`;
     } else if (supportFrontendLiveInUk) {
-        return `You can support the Guardian by <a href="${membershipUrl}" target="_blank" class="u-underline">making a contribution or getting a subscription</a>`;
+        return `For as little as ${currencySymbol}1, you can support the Guardian – and it only takes a minute. <a href="${membershipUrl}" target="_blank" class="u-underline">Make a contribution or get a subscription</a>`;
     }
-    return `You can give to the Guardian by <a href="${membershipUrl}" target="_blank" class="u-underline">becoming a monthly supporter</a> or by making a <a href="${contributionUrl}" target="_blank" class="u-underline">one-off contribution</a>`;
+    return `For as little as ${currencySymbol}1, you can support the Guardian – and it only takes a minute.<a href="${membershipUrl}" target="_blank" class="u-underline">Become a monthly supporter</a> or <a href="${contributionUrl}" target="_blank" class="u-underline">make a one-off contribution</a>`;
 };
 
 /*
@@ -85,6 +86,7 @@ export const liveblog = (
     p1: `Since you’re here ${controlP1}`,
     p2: `${controlP2FirstSentence} ${ctaLinkSentence(
         membershipUrl,
-        contributionsUrl
+        contributionsUrl,
+        getLocalCurrencySymbol()
     )}. - Guardian HQ`,
 });
