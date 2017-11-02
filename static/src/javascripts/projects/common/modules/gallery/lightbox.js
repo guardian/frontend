@@ -51,10 +51,8 @@ const pulseButton = (button: HTMLElement): void => {
 class Endslate extends Component {
     prerender(): void {
         bonzo(this.elem).addClass(this.componentClass);
-    };
+    }
 }
-
-
 
 class GalleryLightbox {
     showEndslate: boolean;
@@ -651,4 +649,5 @@ const init = (): void => {
     });
 };
 
-export { init, GalleryLightbox };
+export { init };
+export const _ = { GalleryLightbox };
