@@ -20,7 +20,7 @@ jest.mock('lib/url', () => ({
     constructQuery: jest.fn(() => ''),
 }));
 jest.mock('lib/geolocation', () => ({
-    get: jest.fn(() => Promise.resolve('GB')),
+    getSync: jest.fn(() => 'GB'),
 }));
 jest.mock('common/views/svgs', () => ({
     inlineSvg: jest.fn(() => ''),
@@ -133,14 +133,15 @@ afterEach(() => {
 
 describe('Membership engagement banner', () => {
     describe('If breaking news banner has show', () => {
-        it('should not show the membership engagement banner', () => {
-            membershipEngagementBannerInit();
-            fakeMediator.emit('modules:onwards:breaking-news:ready', true);
-            expect(FakeMessage.prototype.show).not.toHaveBeenCalled();
-        });
+        it('should not show the membership engagement banner', () =>
+            membershipEngagementBannerInit().then(() => {
+                fakeMediator.emit('modules:onwards:breaking-news:ready', true);
+                expect(FakeMessage.prototype.show).not.toHaveBeenCalled();
+            }));
     });
 
     describe('If breaking news banner has not shown', () => {
+        let showBanner;
         let emitSpy;
 
         beforeEach(() => {
@@ -152,36 +153,42 @@ describe('Membership engagement banner', () => {
                 linkUrl: 'fake-link-url',
             }));
             emitSpy = jest.spyOn(fakeMediator, 'emit');
-            membershipEngagementBannerInit();
-            fakeMediator.emit('modules:onwards:breaking-news:ready', false);
+            showBanner = membershipEngagementBannerInit().then(() => {
+                fakeMediator.emit('modules:onwards:breaking-news:ready', false);
+            });
         });
         afterEach(() => {
             emitSpy.mockRestore();
         });
 
-        it('should show the membership engagement banner', () => {
-            expect(FakeMessage.prototype.show).toHaveBeenCalledTimes(1);
-        });
-        it('should emit a display event', () => {
-            expect(emitSpy).toHaveBeenCalledWith('membership-message:display');
-        });
-        it('should record the component event in ophan with a/b test info', () => {
-            expect(fakeOphan.record).toHaveBeenCalledWith({
-                componentEvent: {
-                    component: {
-                        componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
-                        products: ['CONTRIBUTION'],
-                        id: 'fake-campaign-code',
-                        campaignCode: 'fake-campaign-code',
+        it('should show the membership engagement banner', () =>
+            showBanner.then(() => {
+                expect(FakeMessage.prototype.show).toHaveBeenCalledTimes(1);
+            }));
+        it('should emit a display event', () =>
+            showBanner.then(() => {
+                expect(emitSpy).toHaveBeenCalledWith(
+                    'membership-message:display'
+                );
+            }));
+        it('should record the component event in ophan with a/b test info', () =>
+            showBanner.then(() => {
+                expect(fakeOphan.record).toHaveBeenCalledWith({
+                    componentEvent: {
+                        component: {
+                            componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
+                            products: ['CONTRIBUTION'],
+                            id: 'fake-campaign-id_fake-variant-id',
+                            campaignCode: 'fake-campaign-id_fake-variant-id',
+                        },
+                        action: 'INSERT',
+                        abTest: {
+                            name: 'fake-test-id',
+                            variant: 'fake-variant-id',
+                        },
                     },
-                    action: 'INSERT',
-                    abTest: {
-                        name: 'fake-test-id',
-                        variant: 'fake-variant-id',
-                    },
-                },
-            });
-        });
+                });
+            }));
     });
 
     describe('If user already member', () => {
@@ -197,14 +204,16 @@ describe('Membership engagement banner', () => {
             );
         });
 
-        it('should not show any messages even to engaged readers', () => {
-            membershipEngagementBannerInit();
-            fakeMediator.emit('modules:onwards:breaking-news:ready', false);
-            expect(FakeMessage.prototype.show).not.toHaveBeenCalled();
-        });
+        it('should not show any messages even to engaged readers', () =>
+            membershipEngagementBannerInit().then(() => {
+                fakeMediator.emit('modules:onwards:breaking-news:ready', false);
+                expect(FakeMessage.prototype.show).not.toHaveBeenCalled();
+            }));
     });
 
     describe('creates message with', () => {
+        let showBanner;
+
         beforeEach(() => {
             engagementBannerParams.mockImplementationOnce(() => ({
                 minArticles: 1,
@@ -219,24 +228,28 @@ describe('Membership engagement banner', () => {
                     engagementBannerParams: {},
                 },
             }));
-            fakeMediator.emit('modules:onwards:breaking-news:ready', false);
+            showBanner = membershipEngagementBannerInit().then(() => {
+                fakeMediator.emit('modules:onwards:breaking-news:ready', false);
+            });
         });
 
-        it('correct campaign code', () => {
-            membershipEngagementBannerInit();
-            expect(FakeMessage.mock.calls[0][1].siteMessageComponentName).toBe(
-                'fake-campaign-id_fake-variant-id'
-            );
-        });
-        it('correct CSS modifier class', () => {
-            membershipEngagementBannerInit();
-            expect(FakeMessage.mock.calls[0][1].cssModifierClass).toBe(
-                'fake-colour-class'
-            );
-        });
+        it('correct campaign code', () =>
+            showBanner.then(() => {
+                expect(
+                    FakeMessage.mock.calls[0][1].siteMessageComponentName
+                ).toBe('fake-campaign-id_fake-variant-id');
+            }));
+        it('correct CSS modifier class', () =>
+            showBanner.then(() => {
+                expect(FakeMessage.mock.calls[0][1].cssModifierClass).toBe(
+                    'fake-colour-class'
+                );
+            }));
     });
 
     describe('renders message with', () => {
+        let showBanner;
+
         beforeEach(() => {
             engagementBannerParams.mockImplementationOnce(() => ({
                 minArticles: 1,
@@ -252,39 +265,46 @@ describe('Membership engagement banner', () => {
             fakeConstructQuery.mockImplementationOnce(
                 () => 'fake-query-parameters'
             );
-            membershipEngagementBannerInit();
-            fakeMediator.emit('modules:onwards:breaking-news:ready', false);
+            showBanner = membershipEngagementBannerInit().then(() => {
+                fakeMediator.emit('modules:onwards:breaking-news:ready', false);
+            });
         });
 
-        it('message text', () => {
-            expect(FakeMessage.prototype.show.mock.calls[0][0]).toMatch(
-                /fake-message-text/
-            );
-        });
-        it('paypal and credit card image', () => {
-            expect(FakeMessage.prototype.show.mock.calls[0][0]).toMatch(
-                /fake-paypal-and-credit-card-image/
-            );
-        });
-        it('colour class', () => {
-            expect(FakeMessage.prototype.show.mock.calls[0][0]).toMatch(
-                /fake-colour-class/
-            );
-        });
-        it('link URL', () => {
-            expect(FakeMessage.prototype.show.mock.calls[0][0]).toMatch(
-                /fake-link-url\?fake-query-parameters/
-            );
-        });
-        it('button caption', () => {
-            expect(FakeMessage.prototype.show.mock.calls[0][0]).toMatch(
-                /fake-button-caption/
-            );
-        });
-        it('button SVG', () => {
-            expect(FakeMessage.prototype.show.mock.calls[0][0]).toMatch(
-                /fake-button-svg/
-            );
-        });
+        it('message text', () =>
+            showBanner.then(() => {
+                expect(FakeMessage.prototype.show.mock.calls[0][0]).toMatch(
+                    /fake-message-text/
+                );
+            }));
+        it('paypal and credit card image', () =>
+            showBanner.then(() => {
+                expect(FakeMessage.prototype.show.mock.calls[0][0]).toMatch(
+                    /fake-paypal-and-credit-card-image/
+                );
+            }));
+        it('colour class', () =>
+            showBanner.then(() => {
+                expect(FakeMessage.prototype.show.mock.calls[0][0]).toMatch(
+                    /fake-colour-class/
+                );
+            }));
+        it('link URL', () =>
+            showBanner.then(() => {
+                expect(FakeMessage.prototype.show.mock.calls[0][0]).toMatch(
+                    /fake-link-url\?fake-query-parameters/
+                );
+            }));
+        it('button caption', () =>
+            showBanner.then(() => {
+                expect(FakeMessage.prototype.show.mock.calls[0][0]).toMatch(
+                    /fake-button-caption/
+                );
+            }));
+        it('button SVG', () =>
+            showBanner.then(() => {
+                expect(FakeMessage.prototype.show.mock.calls[0][0]).toMatch(
+                    /fake-button-svg/
+                );
+            }));
     });
 });

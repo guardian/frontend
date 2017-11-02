@@ -186,7 +186,7 @@ const showBanner = (params: EngagementBannerParams): void => {
     }
 };
 
-const membershipEngagementBannerInit = () => {
+const membershipEngagementBannerInit = (): Promise<void> => {
     const bannerParams = deriveBannerParams(getGeoLocation());
     if (bannerParams && getVisitCount() >= bannerParams.minArticles) {
         return commercialFeatures.asynchronous.canDisplayMembershipEngagementBanner.then(
