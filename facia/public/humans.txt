@@ -1,14 +1,5 @@
 /* CURRENT TEAM */
 
-Head of User Experience: Nick Haley
-Twitter: @twobobswerver
-From: London, England
-
-Product Manager: Chris Mulholland
-LinkedIn: chrismulholland
-Twitter: @crifmulholland
-From: Glasgow, Scotland
-
 Development Manager: Dominic Kendrick
 Twitter: @dominickendrick
 From: London, UK
@@ -41,10 +32,6 @@ Location: London, UK
 Developer: Josh Holder
 Twitter: @Josh_H
 Location: London, UK
-
-Developer: Jenny Sivapalan
-Twitter: @jenny_sivapalan
-From: London, UK
 
 Developer: Natalia Baltazar
 Twitter: @NataliaLKB
@@ -135,13 +122,6 @@ Twitter: @aycenne
 From: Cork, Ireland
 Location: London, UK
 
-Software Engineer in Test: Gideon Goldberg
-Twitter: @gidsg
-From: London, UK, Earth, the Universe
-
-Software Architect/Hacker: Phil Wills
-Twitter: @philwills
-
 Developer: Mariot Chauvin
 Twitter: @mchv
 
@@ -165,6 +145,12 @@ Twitter: @0x104
 Developer: Richard Beddington
 Twitter: @richieahb
 Location: London, UK
+
+Developer: Laura González
+Twitter: @freezydorito
+From: Oviedo, ES
+Location: London, UK
+
 
 /* CONTENT PRODUCTION */
 
@@ -302,3 +288,24 @@ Engineer (Tech lead, Commercial): Ken Lim
 Twitter: @kenlim
 From: Kuala Lumpur, Malaysia
 Location: London, UK
+
+Head of User Experience: Nick Haley
+Twitter: @twobobswerver
+From: London, England
+
+Product Manager: Chris Mulholland
+LinkedIn: chrismulholland
+Twitter: @crifmulholland
+From: Glasgow, Scotland
+
+Developer: Jenny Sivapalan
+Twitter: @jenny_sivapalan
+From: London, UK
+
+Software Engineer in Test: Gideon Goldberg
+Twitter: @gidsg
+From: London, UK, Earth, the Universe
+
+Software Architect/Hacker: Phil Wills
+Twitter: @philwills
+

@@ -34,7 +34,7 @@
         <div class="modern-visible">
             @defining("/user/id/"+user.id){ link =>
                 <div class="tabs tabs--identity">
-                    <ol class="tabs__container">
+                    <ol class="tabs__container tabs__container--multiple">
                         <li class="tabs__tab @if(activityType == "discussions"){tabs__tab--selected}">
                             <a href="@link" class="js-activity-stream-change" data-stream-type="discussions" data-link-name="Profile discussions tab">Comments</a>
                         </li>

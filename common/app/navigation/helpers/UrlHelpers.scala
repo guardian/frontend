@@ -138,7 +138,7 @@ object UrlHelpers {
     countryUrlLogic(editionId, position, Membership)
   }
 
-  def getSupportOrContribute(position: Position)(implicit request: RequestHeader): String = {
+  def getSupportOrContributeUrl(position: Position)(implicit request: RequestHeader): String = {
     val editionId = Edition(request).id.toLowerCase()
     countryUrlLogic(editionId, position, Contribute)
   }

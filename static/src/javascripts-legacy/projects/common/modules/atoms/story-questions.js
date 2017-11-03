@@ -227,6 +227,7 @@ define([
 
             }
 
+           
             var finalCloseBtn = document.getElementById('js-final-thankyou-message-' + atomId);
 
             if (finalCloseBtn) {

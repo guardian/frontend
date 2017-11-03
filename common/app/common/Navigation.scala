@@ -155,7 +155,7 @@ trait Navigation {
   val eurozone = SectionLink("business", "eurozone", "Eurozone", "/business/eurozone")
   val businessToBusiness = SectionLink("business", "business to business", "Business to Business", "/business-to-business")
   val diversityequality = SectionLink("business", "diversity & equality in business", "Diversity & equality in business", "/business/diversity-and-equality")
-
+  val projectSyndicate = SectionLink("business", "project syndicate", "Project Syndicate", "/business/series/project-syndicate-economists")
 
   //Money
   val money = SectionLink("money", "money", "Money", "/money")

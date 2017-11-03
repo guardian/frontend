@@ -3,7 +3,6 @@ import bean from 'bean';
 import fastdom from 'lib/fastdom-promise';
 import $ from 'lib/$';
 import { elementInView } from 'lib/element-inview';
-import { videojs } from 'bootstraps/enhanced/media/video-player';
 import { onVideoContainerNavigation } from 'common/modules/atoms/youtube';
 import { isBreakpoint } from 'lib/detect';
 
@@ -183,11 +182,6 @@ const update = (state: State, container: Element): Promise<number> => {
 
         // fetch the next image (for desktop)
         fetchLazyImage(container, state.position + 1);
-
-        // pause all players (we should potentially think about this site wide)
-        $('.js-video-playlist .vjs').each(el => {
-            videojs($(el)[0]).pause();
-        });
 
         const activePlaylistItem = container.querySelector(
             `.js-video-playlist-item-${state.position}`

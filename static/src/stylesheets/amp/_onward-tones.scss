@@ -36,7 +36,7 @@
 
     &.tone-special-report {
         background-color: $news-support-6;
-        border-top-color: $news-support-1;
+        border-top-color: $special-report-accent;
 
         .fc-item__meta {
             color: $neutral-4;
@@ -58,10 +58,6 @@
                 fill: $features-support-3;
             }
         }
-    }
-
-    &.tone-special-report {
-        border-top-color: $news-support-1;
     }
 
     &.tone-comment {

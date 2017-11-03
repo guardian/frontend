@@ -6,11 +6,12 @@ import { commercialFeatures } from 'commercial/modules/commercial-features';
 import mediator from 'lib/mediator';
 import { membershipEngagementBannerTests } from 'common/modules/experiments/tests/membership-engagement-banner-tests';
 import { inlineSvg } from 'common/views/svgs';
-import { variantFor } from 'common/modules/experiments/segment-util';
+import { testCanBeRun } from 'common/modules/experiments/test-can-run-checks';
+import { isInTest, variantFor } from 'common/modules/experiments/segment-util';
 import { engagementBannerParams } from 'common/modules/commercial/membership-engagement-banner-parameters';
 import { isBlocked } from 'common/modules/commercial/membership-engagement-banner-block';
-import { get as getGeoLocation } from 'lib/geolocation';
-import { getTest as getAcquisitionTest } from 'common/modules/experiments/acquisition-test-selector';
+import { getSync as getGeoLocation } from 'lib/geolocation';
+
 import {
     submitComponentEvent,
     addTrackingCodesToUrl,
@@ -22,19 +23,12 @@ import {
 import { acquisitionsBannerControlTemplate } from 'common/modules/commercial/templates/acquisitions-banner-control';
 
 // change messageCode to force redisplay of the message to users who already closed it.
-const messageCode = 'engagement-banner-2017-09-21';
+const messageCode = 'engagement-banner-2017-11-02';
 
-// This piece of code should be reverted when we remove this test.
 const getUserTest = (): ?AcquisitionsABTest =>
-    membershipEngagementBannerTests.find(test => {
-        const acquisitionTest = getAcquisitionTest();
-        let response = false;
-        if (acquisitionTest) {
-            response = acquisitionTest.id === test.id;
-        }
-
-        return response;
-    });
+    membershipEngagementBannerTests.find(
+        test => testCanBeRun(test) && isInTest(test)
+    );
 
 const getUserVariant = (test: ?ABTest): ?Variant =>
     test ? variantFor(test) : undefined;
@@ -62,6 +56,10 @@ const getUserVariantParams = (
         }
 
         return userVariantParams;
+    } else if (campaignId && userVariant) {
+        return {
+            campaignCode: buildCampaignCode(campaignId, userVariant.id),
+        };
     }
     return {};
 };
@@ -150,6 +148,7 @@ const showBanner = (params: EngagementBannerParams): void => {
         buttonCaption,
         buttonSvg,
     };
+
     const renderedBanner: string = params.template
         ? params.template(templateParams)
         : acquisitionsBannerControlTemplate(templateParams);
@@ -187,26 +186,25 @@ const showBanner = (params: EngagementBannerParams): void => {
     }
 };
 
-const membershipEngagementBannerInit = (): Promise<void> =>
-    getGeoLocation().then(location => {
-        const bannerParams = deriveBannerParams(location);
-
-        if (bannerParams && getVisitCount() >= bannerParams.minArticles) {
-            return commercialFeatures.asynchronous.canDisplayMembershipEngagementBanner.then(
-                canShow => {
-                    if (canShow) {
-                        mediator.on(
-                            'modules:onwards:breaking-news:ready',
-                            breakingShown => {
-                                if (!breakingShown) {
-                                    showBanner(bannerParams);
-                                }
+const membershipEngagementBannerInit = (): Promise<void> => {
+    const bannerParams = deriveBannerParams(getGeoLocation());
+    if (bannerParams && getVisitCount() >= bannerParams.minArticles) {
+        return commercialFeatures.asynchronous.canDisplayMembershipEngagementBanner.then(
+            canShow => {
+                if (canShow) {
+                    mediator.on(
+                        'modules:onwards:breaking-news:ready',
+                        breakingShown => {
+                            if (!breakingShown) {
+                                showBanner(bannerParams);
                             }
-                        );
-                    }
+                        }
+                    );
                 }
-            );
-        }
-    });
+            }
+        );
+    }
+    return Promise.resolve(undefined);
+};
 
 export { membershipEngagementBannerInit };

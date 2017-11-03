@@ -20,7 +20,7 @@ jest.mock('lib/url', () => ({
     constructQuery: jest.fn(() => ''),
 }));
 jest.mock('lib/geolocation', () => ({
-    get: jest.fn(() => Promise.resolve('GB')),
+    getSync: jest.fn(() => 'GB'),
 }));
 jest.mock('common/views/svgs', () => ({
     inlineSvg: jest.fn(() => ''),
@@ -178,8 +178,8 @@ describe('Membership engagement banner', () => {
                         component: {
                             componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
                             products: ['CONTRIBUTION'],
-                            id: 'fake-campaign-code',
-                            campaignCode: 'fake-campaign-code',
+                            id: 'fake-campaign-id_fake-variant-id',
+                            campaignCode: 'fake-campaign-id_fake-variant-id',
                         },
                         action: 'INSERT',
                         abTest: {

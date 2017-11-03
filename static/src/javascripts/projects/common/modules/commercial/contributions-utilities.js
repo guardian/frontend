@@ -20,7 +20,6 @@ import fastdom from 'lib/fastdom-promise';
 import mediator from 'lib/mediator';
 import { getSync as geolocationGetSync } from 'lib/geolocation';
 import { noop } from 'lib/noop';
-import toArray from 'lodash/collections/toArray';
 import { epicButtonsTemplate } from 'common/modules/commercial/templates/acquisitions-epic-buttons';
 import { acquisitionsEpicControlTemplate } from 'common/modules/commercial/templates/acquisitions-epic-control';
 import { acquisitionsTestimonialBlockTemplate } from 'common/modules/commercial/templates/acquisitions-epic-testimonial-block';
@@ -79,11 +78,14 @@ const doTagsMatch = (test: EpicABTest): boolean =>
 // - the first element matching insertAtSelector, if isMultiple is false or not supplied
 // - all elements matching insertAtSelector, if isMultiple is true
 // - or an empty array if the selector doesn't match anything on the page
-const getTargets = (insertAtSelector, isMultiple) => {
+const getTargets = (
+    insertAtSelector: string,
+    isMultiple: boolean
+): Array<HTMLElement> => {
     const els = document.querySelectorAll(insertAtSelector);
 
     if (isMultiple) {
-        return toArray(els);
+        return [...els];
     } else if (els.length) {
         return [els[0]];
     }
@@ -500,6 +502,14 @@ const makeABTest = ({
     return test;
 };
 
+const makeBannerABTestVariants = (
+    variants: Array<Object>
+): $ReadOnlyArray<Variant> =>
+    variants.map(x => {
+        x.test = noop;
+        return x;
+    });
+
 export {
     shouldShowReaderRevenue,
     defaultCanEpicBeDisplayed,
@@ -507,4 +517,5 @@ export {
     getTestimonialBlock,
     makeABTest,
     defaultButtonTemplate,
+    makeBannerABTestVariants,
 };
