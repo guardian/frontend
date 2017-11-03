@@ -15,6 +15,7 @@ define([
     Injector,
     lightboxFixtures
 ) {
+
     function testImageSrc(srcActual, srcTemplate) {
         if (expect(srcActual).not.toBe(null)) {
             var parts1 = srcTemplate.split('/'),
@@ -31,7 +32,9 @@ define([
 
         beforeEach(function (done) {
             injector.require(['common/modules/gallery/lightbox'], function(galleryLightbox) {
-                lightbox = new galleryLightbox.GalleryLightbox();
+                var GalleryLightbox = galleryLightbox._.GalleryLightbox;
+
+                lightbox = new GalleryLightbox();
                 done();
             });
         });

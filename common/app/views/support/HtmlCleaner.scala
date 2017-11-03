@@ -296,7 +296,7 @@ class TweetCleaner(content: Content, amp: Boolean) extends HtmlCleaner {
             element.empty()
             element.tagName("amp-twitter")
             element.attr("data-tweetId", elem.id)
-            element.attr("data-​c​ards", "hidden")
+            element.attr("data-cards", "hidden")
             element.attr("layout", "responsive")
             element.attr("width", "486")
             element.attr("data-conversation","none")
@@ -678,9 +678,10 @@ case class AtomsCleaner(atoms: Option[Atoms], shouldFence: Boolean = true, amp: 
         if(atomData.isInstanceOf[MediaAtom]){
           atomContainer.addClass("element-atom--media")
         }
-        val html = views.html.fragments.atoms.atom(atomData, shouldFence, amp, mediaWrapper).toString()
-        bodyElement.remove()
-        atomContainer.append(html)
+
+          val html = views.html.fragments.atoms.atom(atomData, shouldFence, amp, mediaWrapper).toString()
+          bodyElement.remove()
+          atomContainer.append(html)
       }
     }
     document

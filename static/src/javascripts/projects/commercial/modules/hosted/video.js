@@ -157,26 +157,11 @@ export const initHostedVideo = (
         require.ensure(
             [],
             require => {
-                resolve(require('bootstraps/enhanced/media/main'));
+                resolve(require('bootstraps/enhanced/media-player').videojs);
             },
-            'media'
+            'media-player'
         );
     })
-        .then(
-            () =>
-                new Promise(resolve => {
-                    require.ensure(
-                        [],
-                        require => {
-                            resolve(
-                                require('bootstraps/enhanced/media/video-player')
-                                    .videojs
-                            );
-                        },
-                        'video-player'
-                    );
-                })
-        )
         .then(videojsInstance => {
             Array.from(videoEl).forEach(el => {
                 setupVideo(el, videojsInstance);

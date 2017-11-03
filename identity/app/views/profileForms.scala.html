@@ -52,7 +52,7 @@
             @tab(4, "Digital Pack", "/digitalpack/edit", None, optionalClass="qa-digitalpack-tab")
 
             @if(ProfileShowContributorTab.isSwitchedOn) {
-                @tab(5, "Contributions", "/contributions/recurring/edit", None, optionalClass="qa-membership-tab")
+                @tab(5, "Contributions", "/contribution/recurring/edit", None, optionalClass="qa-membership-tab")
 
                 @tab(6, "Privacy", "/privacy/edit", None, optionalClass="qa-privacy-tab")
             } else {
@@ -70,7 +70,7 @@
             @content(4, "/digitalpack/edit")(fragments.profile.digitalPackDetailsForm(idUrlBuilder, idRequest, user))
 
             @if(ProfileShowContributorTab.isSwitchedOn) {
-                @content(5, "/contributions/recurring/edit")(fragments.profile.recurringContributionDetailsForm(idUrlBuilder, idRequest, user))
+                @content(5, "/contribution/recurring/edit")(fragments.profile.recurringContributionDetailsForm(idUrlBuilder, idRequest, user))
 
                 @content(6, "/privacy/edit")(fragments.profile.privacyForm(idUrlBuilder, idRequest, user, forms.privacyForm))
             } else {
