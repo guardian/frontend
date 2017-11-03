@@ -18,6 +18,7 @@ import { initSport } from 'bootstraps/enhanced/sport';
 import { trackPerformance } from 'common/modules/analytics/google';
 import { init as geolocationInit } from 'lib/geolocation';
 import { initCheckDispatcher } from 'common/modules/check-dispatcher';
+import { init as initAcquisitionsLinkEnrichment } from 'common/modules/commercial/acquisitions-link-enrichment';
 
 const bootEnhanced = (): void => {
     const bootstrapContext = (featureName, bootstrap) => {
@@ -80,6 +81,8 @@ const bootEnhanced = (): void => {
                 trackABTests();
             },
         ],
+
+        ['enrich-acquisition-links', initAcquisitionsLinkEnrichment],
     ]);
 
     bootstrapContext('common', initCommon);
