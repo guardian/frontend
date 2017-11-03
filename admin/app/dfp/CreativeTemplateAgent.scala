@@ -12,7 +12,10 @@ class CreativeTemplateAgent(blockingOperations: BlockingOperations, dfpApi: DfpA
 
   def refresh()(implicit executionContext: ExecutionContext): Future[Seq[GuCreativeTemplate]] = {
     blockingOperations.executeBlocking(dfpApi.readActiveCreativeTemplates()).map { freshData =>
-      if (freshData.nonEmpty) freshData else cache.get()
+      if (freshData.nonEmpty) {
+        cache.send(freshData)
+        freshData
+      } else cache.get()
     }
   }
 

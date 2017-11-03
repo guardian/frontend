@@ -21,12 +21,14 @@ trait DataAgent[K, V] extends Logging with implicits.Strings {
     blockingOperations.executeBlocking(loadFreshData()).map(freshIfExists(start))
   }
 
-  private def freshIfExists(start: Long)(freshData: Try[Map[K, V]]): DataCache[K, V] = {
-    freshData match {
+  private def freshIfExists(start: Long)(tryFreshData: Try[Map[K, V]]): DataCache[K, V] = {
+    tryFreshData match {
       case Success(freshData) if freshData.nonEmpty =>
         val duration = System.currentTimeMillis - start
         log.info(s"Loading DFP data (${freshData.keys.size} items}) took $duration ms")
-        DataCache(freshData)
+        val freshCache = DataCache(freshData)
+        cache.send(freshCache)
+        freshCache
       case Success(_) =>
         log.error("No fresh data loaded so keeping old data")
         cache.get

@@ -12,7 +12,10 @@ class AdvertiserAgent(blockingOperations: BlockingOperations, dfpApi: DfpApi) {
 
   def refresh()(implicit executionContext: ExecutionContext): Future[Seq[GuAdvertiser]] = {
     blockingOperations.executeBlocking(dfpApi.getAllAdvertisers).map { freshData =>
-      if (freshData.nonEmpty) freshData else cache.get
+      if (freshData.nonEmpty) {
+        cache.send(freshData)
+        freshData
+      } else cache.get
     }
   }
 

@@ -12,7 +12,10 @@ class OrderAgent(blockingOperations: BlockingOperations, dfpApi: DfpApi) {
 
   def refresh()(implicit executionContext: ExecutionContext): Future[Seq[GuOrder]] = {
     blockingOperations.executeBlocking(dfpApi.getAllOrders).map { freshData =>
-      if (freshData.nonEmpty) freshData else cache.get
+      if (freshData.nonEmpty) {
+        cache.send(freshData)
+        freshData
+      } else cache.get
     }
   }
 
