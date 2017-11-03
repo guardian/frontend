@@ -64,11 +64,17 @@ category: Common
     margin: 0;
     border-bottom: 1px solid $neutral-5;
     border-top: 3px solid $neutral-6;
-    float: none;
-    width: 100%;
+    float: left;
+    width: 50%;
+
+    @supports ( display: grid ) {
+        width: 100%;
+    }
 
     @include mq(tablet) {
         display: table-cell;
+        float: none;
+        width: 100%;
     }
 
     &.tabs__tab--selected {
