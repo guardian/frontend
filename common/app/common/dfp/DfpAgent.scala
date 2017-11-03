@@ -91,18 +91,16 @@ object DfpAgent
 
     def updateLineItems(slot:AdSlot,key: String): Unit = {
 
-      def grabCurrentLineItemsFromStore(key: String): Seq[GuLineItem] = {
-        val maybeLineItems = for (jsonString <- stringFromS3(key)) yield {
+      def grabCurrentLineItemsFromStore(key: String): Future[Seq[GuLineItem]] = {
+        Future(stringFromS3(key)).map(_.map { jsonString =>
           Json.parse(jsonString).as[LineItemReport].lineItems
-        }
-        maybeLineItems getOrElse Nil
+        }.getOrElse(Nil))
       }
 
-      Future(lineItemAgent send { oldData =>
-        val takeovers = grabCurrentLineItemsFromStore(key)
-        if (takeovers.nonEmpty) oldData + (slot -> takeovers)
-        else oldData
-      })
+      grabCurrentLineItemsFromStore(key).map { takeovers =>
+        lineItemAgent.alter(oldData => if (takeovers.nonEmpty) oldData + (slot -> takeovers) else oldData)
+      }
+
     }
 
     updateLineItems(TopAboveNavSlot, topAboveNavSlotTakeoversKey)
