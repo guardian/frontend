@@ -468,7 +468,7 @@ trait FeatureSwitches {
   val UkSupportFrontendActive = Switch(
     SwitchGroup.Feature,
     "uk-supporter-traffic-to-new-support-frontend",
-    "When ON, all UK membership/contribute/support links send traffic to support.theguardian.com",
+    "When ON, all UK membership/contribute/support links send traffic to support.theguardian.com (aside from the banner)",
     owners = Seq(Owner.withGithub("justinpinner")),
     safeState = On,
     sellByDate = new LocalDate(2018, 10, 17),
@@ -478,13 +478,13 @@ trait FeatureSwitches {
   val UsSupportFrontendActive = Switch(
     SwitchGroup.Feature,
     "us-supporter-traffic-to-new-support-frontend",
-    "When ON, all US membership/contribute/support links send traffic to support.theguardian.com",
+    "When ON, all US membership/contribute/support links send traffic to support.theguardian.com (aside from the banner)",
     owners = Seq(Owner.withGithub("justinpinner")),
     safeState = Off,
     sellByDate = new LocalDate(2018, 10, 17),
     exposeClientSide = true
   )
-  
+
   val ProfileShowContributorTab = Switch(
     SwitchGroup.Feature,
     "profile-show-contributor-tab",
@@ -504,7 +504,7 @@ trait FeatureSwitches {
     sellByDate = new LocalDate(2018, 2, 1),
     exposeClientSide = false
   )
-  
+
     // Owner: Journalism
   val ReaderAnswersDeliveryMechanism = Switch(
     SwitchGroup.Feature,
