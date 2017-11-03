@@ -11,11 +11,8 @@ class AdvertiserAgent(blockingOperations: BlockingOperations, dfpApi: DfpApi) {
   private lazy val cache = AkkaAgent(Seq.empty[GuAdvertiser])
 
   def refresh()(implicit executionContext: ExecutionContext): Future[Seq[GuAdvertiser]] = {
-    blockingOperations.executeBlocking(dfpApi.getAllAdvertisers).map { freshData =>
-      if (freshData.nonEmpty) {
-        cache.send(freshData)
-        freshData
-      } else cache.get
+    blockingOperations.executeBlocking(dfpApi.getAllAdvertisers).flatMap { freshData =>
+      cache.alter(if (freshData.nonEmpty) freshData else _)
     }
   }
 

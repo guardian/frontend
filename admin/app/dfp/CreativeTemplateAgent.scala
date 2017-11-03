@@ -11,11 +11,8 @@ class CreativeTemplateAgent(blockingOperations: BlockingOperations, dfpApi: DfpA
   private lazy val cache = AkkaAgent(Seq.empty[GuCreativeTemplate])
 
   def refresh()(implicit executionContext: ExecutionContext): Future[Seq[GuCreativeTemplate]] = {
-    blockingOperations.executeBlocking(dfpApi.readActiveCreativeTemplates()).map { freshData =>
-      if (freshData.nonEmpty) {
-        cache.send(freshData)
-        freshData
-      } else cache.get()
+    blockingOperations.executeBlocking(dfpApi.readActiveCreativeTemplates()).flatMap { freshData =>
+      cache.alter(if (freshData.nonEmpty) freshData else _)
     }
   }
 
