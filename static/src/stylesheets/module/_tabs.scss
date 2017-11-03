@@ -146,6 +146,7 @@ category: Common
 
 .tabs__container--multiple {
     margin-bottom: 10px;
+    max-width: 100%;
 
     @include mq(desktop) {
         .tab--stats {
