@@ -7,7 +7,7 @@ import com.gu.ProjectSettings._
 
 val common = library("common").settings(
   libraryDependencies ++= Seq(
-    akkaAgent,
+    guBox,
     apacheCommonsMath3,
     awsCore,
     awsCloudwatch,

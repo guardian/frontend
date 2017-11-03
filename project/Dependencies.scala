@@ -11,7 +11,7 @@ object Dependencies {
   val romeVersion = "1.0"
   val jerseyVersion = "1.19.4"
   val playJsonVersion = "2.6.3"
-  val akkaAgent = "com.typesafe.akka" %% "akka-agent" % "2.3.4"
+  val guBox = "com.gu" %% "box" %  "0.1.0"
   val akkaContrib = "com.typesafe.akka" %% "akka-contrib" % "2.3.16"
   val apacheCommonsMath3 = "org.apache.commons" % "commons-math3" % "3.6.1"
   val awsCore = "com.amazonaws" % "aws-java-sdk-core" % awsVersion

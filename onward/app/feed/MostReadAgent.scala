@@ -1,12 +1,14 @@
 package feed
 
+import com.gu.Box
 import common._
 import services.OphanApi
+
 import scala.concurrent.{ExecutionContext, Future}
 
 class MostReadAgent(ophanApi: OphanApi) extends Logging {
 
-  private val agent = AkkaAgent[Map[String, Int]](Map.empty)
+  private val agent = Box[Map[String, Int]](Map.empty)
 
   def refresh()(implicit ec: ExecutionContext): Future[Map[String, Int]] = {
     log.info("Refreshing most read.")

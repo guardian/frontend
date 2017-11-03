@@ -1,12 +1,11 @@
 package conf
 
-import akka.agent.Agent
 import app.LifecycleComponent
 import common._
 import org.joda.time.DateTime
 import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.mvc._
-
+import com.gu.Box
 import scala.concurrent.{ExecutionContext, Future}
 import scala.concurrent.duration._
 import scala.util.control.NonFatal
@@ -116,7 +115,7 @@ private[conf] class HealthCheckCache(preconditionMaybe: Option[HealthCheckPrecon
                                     (implicit executionContext: ExecutionContext)
                                     extends HealthCheckFetcher {
 
-  protected val cache: Agent[List[HealthCheckResult]] = AkkaAgent[List[HealthCheckResult]](List[HealthCheckResult]())
+  protected val cache: Box[List[HealthCheckResult]] = Box[List[HealthCheckResult]](List[HealthCheckResult]())
   def get(): List[HealthCheckResult] = cache.get()
 
   def refresh(port: Int, healthChecks: SingleHealthCheck*): Future[List[HealthCheckResult]] = {

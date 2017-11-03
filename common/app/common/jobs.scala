@@ -8,12 +8,13 @@ import play.api.Mode.Test
 import scala.collection.mutable
 import scala.concurrent.Future
 import scala.concurrent.duration.Duration
+import com.gu.Box
 import scala.util.{Failure, Success}
 
 object JobsState {
   implicit val global = scala.concurrent.ExecutionContext.global
   val jobs = mutable.Map[String, () => Future[_]]()
-  val outstanding = akka.agent.Agent(Map[String,Int]().withDefaultValue(0))
+  val outstanding = Box(Map[String,Int]().withDefaultValue(0))
 }
 
 class FunctionJob extends Job with Logging {
