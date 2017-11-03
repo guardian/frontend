@@ -7,7 +7,7 @@ import conf.Configuration.environment
 import play.api.libs.json.Json
 import services.S3
 
-import scala.concurrent.ExecutionContext
+import scala.concurrent.{ExecutionContext, Future}
 import scala.io.Codec.UTF8
 
 object DfpAgent
@@ -67,13 +67,13 @@ object DfpAgent
     }
 
     def updateInlineMerchandisingTargetedTags(freshData: InlineMerchandisingTagSet) {
-      inlineMerchandisingTagsAgent sendOff { oldData =>
+      inlineMerchandisingTagsAgent send { oldData =>
         if (freshData.nonEmpty) freshData else oldData
       }
     }
 
     def updateTargetedHighMerchandisingLineItems(freshData: Seq[HighMerchandisingLineItem]): Unit ={
-      targetedHighMerchandisingLineItemsAgent sendOff { oldData =>
+      targetedHighMerchandisingLineItemsAgent send { oldData =>
         if(freshData.nonEmpty) freshData else oldData
       }
     }
@@ -98,11 +98,11 @@ object DfpAgent
         maybeLineItems getOrElse Nil
       }
 
-      lineItemAgent sendOff { oldData =>
+      Future(lineItemAgent send { oldData =>
         val takeovers = grabCurrentLineItemsFromStore(key)
         if (takeovers.nonEmpty) oldData + (slot -> takeovers)
         else oldData
-      }
+      })
     }
 
     updateLineItems(TopAboveNavSlot, topAboveNavSlotTakeoversKey)
