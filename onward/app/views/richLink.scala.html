@@ -3,6 +3,9 @@
 @import conf.Static
 @import conf.Configuration
 @import play.api.Mode.Dev
+import conf.switches.Switches.PillarCards
+
+val richLinks: String = if (PillarCards.isSwitchedOn) "rich-links.pc" else "rich-links"
 
 <html class="svg">
     <head>
@@ -10,10 +13,10 @@
 
 
         @if(context.environment.mode == Dev || !InlineCriticalCss.isSwitchedOn) {
-            <link rel="stylesheet" data-reload="head.rich-links" type="text/css" href="@Static("stylesheets/head.rich-links.css")" />
+            <link rel="stylesheet" data-reload=s"head.$richLinks" type="text/css" href="@Static(s"stylesheets/head.$richLinks.css")" />
         } else {
             <style>
-            @Html(common.Assets.css.head(Some("rich-links")))
+            @Html(common.Assets.css.head(Some(richLinks)))
             body {
               margin: 0;
             }
