@@ -54,28 +54,23 @@ class EditProfileController(
   def submitAccountForm(): Action[AnyContent] = submitForm(AccountEditProfilePage)
   def submitPrivacyForm(): Action[AnyContent] = submitForm(PrivacyEditProfilePage)
 
-  private def displayForm(page: IdentityPage) = csrfAddToken {
-    recentlyAuthenticated.async { implicit request =>
-
-      val idRequest = idRequestParser(request)
-      val forms = getEmailPrefsForm(request)
-
-      forms.map(form => {
-        Future {
+  private def displayForm(page: IdentityPage) =
+    csrfAddToken {
+      recentlyAuthenticated.async { implicit request =>
+        getEmailPrefsForm(request).map(emailPrefsForm => {
           profileFormsView(
             page = page,
             forms = ProfileForms(request.user, PublicEditProfilePage),
             request.user,
-            form,
-            getEmailSubscriptions(form).toList,
+            emailPrefsForm,
+            getEmailSubscriptions(emailPrefsForm).toList,
             EmailNewsletters.all,
-            idRequest,
+            idRequestParser(request),
             idUrlBuilder
           )
-        }
-      }).flatMap(identity)
+        })
+      }
     }
-  }
 
   private def submitForm(page: IdentityPage): Action[AnyContent] =
     csrfCheck {
