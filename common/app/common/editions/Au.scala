@@ -30,7 +30,7 @@ object Au extends Edition(
     classicalMusic
   )
 
-  val economyLocalNav: Seq[SectionLink] = Seq(markets, money)
+  val economyLocalNav: Seq[SectionLink] = Seq(markets, money, projectSyndicate)
 
   override val navigation: Seq[NavItem] = {
     Seq(

@@ -32,7 +32,8 @@ object Us extends Edition(
     economics,
     ussustainablebusiness,
     diversityequality,
-    ussmallbusiness
+    ussmallbusiness,
+    projectSyndicate
   )
 
   val worldLocalNav = Seq(

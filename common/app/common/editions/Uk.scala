@@ -68,7 +68,7 @@ object Uk extends Edition(
     banking,
     retail,
     markets,
-    eurozone,
+    projectSyndicate,
     businessToBusiness
   )
 
