@@ -12,6 +12,8 @@ import play.api.Mode
 import scala.collection.concurrent.{TrieMap, Map => ConcurrentMap}
 import scala.util.{Failure, Success, Try}
 
+import conf.switches.Switches.PillarCards
+
 // turns an unhashed name into a name that's hashed if it needs to be
 class Assets(base: String, mapResource: String, useHashedBundles: Boolean = Configuration.assets.useHashedBundles) extends Logging {
 
@@ -81,9 +83,11 @@ object css {
   }
 
   private def project(project: String): String = {
+    val content: String = if (PillarCards.isSwitchedOn) "content.pc" else "content"
+
     project match {
       case "facia" => "stylesheets/facia.css"
-      case _ => "stylesheets/content.css"
+      case _ => s"stylesheets/$content.css"
     }
   }
 

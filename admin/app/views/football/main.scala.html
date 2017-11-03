@@ -4,6 +4,9 @@
 @import controllers.admin.routes.UncachedWebAssets
 @import play.api.Mode.Dev
 @import conf.Static
+import conf.switches.Switches.PillarCards
+
+val content: String = if (PillarCards.isSwitchedOn) "content.pc" else "content"
 
 <!DOCTYPE html>
 <html lang="en">
@@ -26,7 +29,7 @@
         }
             <!--<![endif]-->
 
-        <link rel="stylesheet" type="text/css" href="@Static("stylesheets/content.css")" />
+        <link rel="stylesheet" type="text/css" href="@Static("stylesheets/$content.css")" />
 
         <script src='@UncachedWebAssets.at("lib/jquery/jquery.min.js")'></script>
         <script src='@UncachedWebAssets.at("lib/jquery-ui/jquery-ui.min.js")'></script>

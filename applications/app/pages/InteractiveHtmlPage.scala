@@ -14,6 +14,7 @@ import views.html.fragments.page.head.stylesheets.{criticalStyleInline, critical
 import views.html.fragments.page.{devTakeShot, htmlTag}
 import views.html.fragments._
 import views.html.stacked
+import conf.switches.Switches.PillarCards
 
 object InteractiveHtmlPage extends HtmlPage[InteractivePage] {
 
@@ -26,11 +27,14 @@ object InteractiveHtmlPage extends HtmlPage[InteractivePage] {
       Html(common.Assets.css.head(None)),
       Html(common.Assets.css.interactive)
     )
-    override def linkCss: Html = stylesheetLink("stylesheets/content.css")
+
+    val content: String = if (PillarCards.isSwitchedOn) "content.pc" else "content"
+
+    override def linkCss: Html = stylesheetLink(s"stylesheets/$content.css")
     override def oldIECriticalCss: Html = stylesheetLink("stylesheets/old-ie.head.content.css")
-    override def oldIELinkCss: Html = stylesheetLink("stylesheets/old-ie.content.css")
+    override def oldIELinkCss: Html = stylesheetLink(s"stylesheets/old-ie.$content.css")
     override def IE9LinkCss: Html = stylesheetLink("stylesheets/ie9.head.content.css")
-    override def IE9CriticalCss: Html = stylesheetLink("stylesheets/ie9.content.css")
+    override def IE9CriticalCss: Html = stylesheetLink(s"stylesheets/ie9.$content.css")
   }
 
   def html(page: InteractivePage)(implicit request: RequestHeader, applicationContext: ApplicationContext): Html = {

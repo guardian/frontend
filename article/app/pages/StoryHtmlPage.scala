@@ -13,17 +13,20 @@ import views.html.fragments.page._
 import views.html.fragments.page.body._
 import views.html.fragments.page.head.stylesheets.{criticalStyleInline, criticalStyleLink, styles}
 import views.html.fragments.page.head.{fixIEReferenceErrors, headTag, titleTag}
+import conf.switches.Switches.PillarCards
 
 object StoryHtmlPage {
 
   def allStyles(implicit applicationContext: ApplicationContext): Styles = new Styles {
+    val content: String = if (PillarCards.isSwitchedOn) "content.pc" else "content"
+
     override def criticalCssLink: Html = criticalStyleLink("content")
     override def criticalCssInline: Html = criticalStyleInline(Html(common.Assets.css.head(None)))
-    override def linkCss: Html = stylesheetLink("stylesheets/content.css")
+    override def linkCss: Html = stylesheetLink(s"stylesheets/$content.css")
     override def oldIECriticalCss: Html = stylesheetLink("stylesheets/old-ie.head.content.css")
-    override def oldIELinkCss: Html = stylesheetLink("stylesheets/old-ie.content.css")
+    override def oldIELinkCss: Html = stylesheetLink(s"stylesheets/old-ie.$content.css")
     override def IE9LinkCss: Html = stylesheetLink("stylesheets/ie9.head.content.css")
-    override def IE9CriticalCss: Html = stylesheetLink("stylesheets/ie9.content.css")
+    override def IE9CriticalCss: Html = stylesheetLink(s"stylesheets/ie9.$content.css")
   }
 
   def html(
