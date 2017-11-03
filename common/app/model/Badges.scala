@@ -17,10 +17,10 @@ case class Badge(seriesTag: String, imageUrl: String, classModifier: Option[Stri
 
 // for salt use a random unique string - e.g. some string from running in terminal: pwgen -n -y 20
 // it's fine to commit that, it just stops people using previously calculated tables to reverse the hash
-case class SpecialBadge(salt: String, hashedTag: String) extends BaseBadge {
+case class SpecialBadge(salt: String, hashedTag: String, imageUrl: String) extends BaseBadge {
   def maybeThisBadge(tag: String): Option[Badge] =
     if (md5(salt + tag).contains(hashedTag)) {
-      Some(Badge(tag, s"https://assets.guim.co.uk/special/$tag/special-badge.svg"))
+      Some(Badge(tag, imageUrl))
     } else None
 
   private val digest = MessageDigest.getInstance("MD5")
@@ -43,8 +43,9 @@ object Badges {
   val generalElection2017 = Badge("politics/general-election-2017", Static("images/badges/GE2017Badge.svg"))
   val facebookFiles = Badge("news/series/facebook-files", Static("images/badges/facebookFiles.svg"))
   val britainsDebt = Badge("business/series/britains-debt-timebomb", Static("images/badges/uk-debt.svg"))
+  val specialReport = SpecialBadge("Tie5ohsaht#ah#x7aiSh", "69481d2f3b82ab308b223417b12ec3a5", Static("images/badges/pp_web.svg"))
 
-  val allBadges = Seq(newArrivals, brexitGamble, beyondTheBlade, generalElection2017, facebookFiles, britainsDebt)
+  val allBadges = Seq(newArrivals, brexitGamble, beyondTheBlade, generalElection2017, facebookFiles, britainsDebt, specialReport)
 
   def badgeFor(c: ContentType): Option[Badge] = {
     badgeForTags(c.tags.tags.map(_.id))
