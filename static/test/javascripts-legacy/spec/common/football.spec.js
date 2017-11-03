@@ -78,34 +78,40 @@ define([
                 expect(document.querySelector('.media-primary').classList.contains('u-h')).toBeFalsy();
             });
             
-            it('handles successful fetch request', function (done) {
+            it('handles successful fetch request', function () {
                 fetchSpy = sandbox.spy(function(elem) {
-                    return new Promise(function (resolve) {
-                        addFootballElem(elem);
-                        resolve();
-                    });
+                    addFootballElem(elem);
+                    return {
+                        then: function(cb) {
+                            cb();
+                            return this;
+                        },
+                        catch: function() {
+                        }
+                    };
                 });
 
                 mockMatchListLive.prototype.fetch = fetchSpy;
 
-                sut.init().then(function() {
-                   done();
-                });
+                sut.init();
             });
 
-            it('handles failed fetch request', function (done) {
+            it('handles failed fetch request', function () {
                 fetchSpy = sandbox.spy(function(elem) {
-                    return new Promise(function (resolve, reject) {
-                        addFootballElem(elem);
-                        reject();
-                    });
+                    addFootballElem(elem);
+                    return {
+                        then: function() {
+                            return this;
+                        },
+                        catch: function(cb) {
+                            cb();
+                        }
+                    };
                 });
 
                 mockMatchListLive.prototype.fetch = fetchSpy;
 
-                sut.init().then(function() {
-                    done();
-                });
+                sut.init();
             });
         });
     });
