@@ -7,7 +7,7 @@ import conf.Configuration.environment
 import play.api.libs.json.Json
 import services.S3
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 import scala.io.Codec.UTF8
 
 object DfpAgent
