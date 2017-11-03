@@ -1,6 +1,9 @@
 // @flow
 import { makeABTest } from 'common/modules/commercial/contributions-utilities';
-import { paradiseHighlight } from 'common/modules/commercial/acquisitions-copy';
+import {
+    paradiseHighlight,
+    paradiseDifferentHighlight,
+} from 'common/modules/commercial/acquisitions-copy';
 
 export const acquisitionsEpicParadise = makeABTest({
     id: 'AcquisitionsEpicParadise',
@@ -24,6 +27,14 @@ export const acquisitionsEpicParadise = makeABTest({
             id: 'control',
             products: ['CONTRIBUTION', 'MEMBERSHIP_SUPPORTER'],
             options: {
+                isUnlimited: true,
+            },
+        },
+        {
+            id: 'different_highlight',
+            products: ['CONTRIBUTION', 'MEMBERSHIP_SUPPORTER'],
+            options: {
+                copy: paradiseDifferentHighlight,
                 isUnlimited: true,
             },
         },
