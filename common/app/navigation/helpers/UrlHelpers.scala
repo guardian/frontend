@@ -1,32 +1,14 @@
 package navigation
 
-import conf.Configuration
 import conf.switches.Switches.{UkSupportFrontendActive, UsSupportFrontendActive}
 import play.api.libs.json.Json
 import play.api.mvc.RequestHeader
 import common.Edition
+import navigation.ReaderRevenueSite._
 import ophan.thrift.componentEvent.ComponentType
 import ophan.thrift.event.AcquisitionSource
 
 object UrlHelpers {
-  sealed trait ReaderRevenueSite {
-    val url: String
-  }
-  case object Support extends ReaderRevenueSite {
-    val url: String = s"${Configuration.id.supportUrl}/uk"
-  }
-  case object Membership extends ReaderRevenueSite {
-    val url: String = s"${Configuration.id.membershipUrl}/supporter"
-  }
-  case object SupportUsContribute extends ReaderRevenueSite {
-    val url: String = s"${Configuration.id.supportUrl}/us/contribute"
-  }
-  case object Contribute extends ReaderRevenueSite {
-    val url: String = Configuration.id.contributeUrl
-  }
-  case object Subscribe extends ReaderRevenueSite {
-    val url: String = Configuration.id.subscribeUrl
-  }
 
   sealed trait Position
   case object NewHeader extends Position
