@@ -1,7 +1,8 @@
 package model.facia
 
-import com.gu.commercial.branding.{BrandingFinder, ContainerBranding}
+import com.gu.commercial.branding.ContainerBranding
 import com.gu.facia.api.{models => fapi}
+import com.gu.facia.api.utils.ContainerBrandingFinder
 import com.gu.facia.client.models.Branded
 import common.Edition
 import implicits.CollectionsOps._
@@ -38,7 +39,7 @@ case class PressedCollection(
   }
 
   def branding(edition: Edition): Option[ContainerBranding] = {
-    BrandingFinder.findContainerBranding(
+    ContainerBrandingFinder.findBranding(
       isConfiguredForBranding = config.metadata.exists(_.contains(Branded)),
       optBrandings = curatedPlusBackfillDeduplicated.map(_.branding(edition)).toSet
     )
