@@ -36,7 +36,7 @@ const ctaLinkSentence = (
     } else if (supportFrontendLiveInUk) {
         return `For as little as ${currencySymbol}1, you can support the Guardian – and it only takes a minute. <a href="${membershipUrl}" target="_blank" class="u-underline">Make a contribution or get a subscription</a>`;
     }
-    return `For as little as ${currencySymbol}1, you can support the Guardian – and it only takes a minute.<a href="${membershipUrl}" target="_blank" class="u-underline">Become a monthly supporter</a> or <a href="${contributionUrl}" target="_blank" class="u-underline">make a one-off contribution</a>`;
+    return `For as little as ${currencySymbol}1, you can support the Guardian – and it only takes a minute. <a href="${membershipUrl}" target="_blank" class="u-underline">Become a monthly supporter</a> or <a href="${contributionUrl}" target="_blank" class="u-underline">make a one-off contribution</a>`;
 };
 
 /*
