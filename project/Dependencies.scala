@@ -73,7 +73,6 @@ object Dependencies {
   val playJson = "com.typesafe.play" %% "play-json" % playJsonVersion
   val playJsonJoda = "com.typesafe.play" %% "play-json-joda" % playJsonVersion
   val playIteratees = "com.typesafe.play" %% "play-iteratees" % "2.6.1"
-  val ophanEventModel = "com.gu" %% "ophan-event-model" % "1.0.0"
 
   // Fixing transient dependency issue
   // AWS SDK (1.11.181), which kinesis-logback-appender depends on, brings com.fasterxml.jackson.core and com.fasterxml.jackson.dataformat libs in version 2.6.9
