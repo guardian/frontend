@@ -155,6 +155,16 @@ trait FeatureSwitches {
     exposeClientSide = true
   )
 
+  val IdentityGdprMarketingConsentSwitch = Switch(
+    SwitchGroup.Identity,
+    "id-gdpr-marketing-consent",
+    "If switched on, users will post GDPR compliant marketing consent from 'Edit Profile' page",
+    owners = Seq(Owner.withGithub("mario-galic")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
   val EnhanceTweetsSwitch = Switch(
     SwitchGroup.Feature,
     "enhance-tweets",
@@ -484,7 +494,7 @@ trait FeatureSwitches {
     sellByDate = new LocalDate(2018, 10, 17),
     exposeClientSide = true
   )
-  
+
   val ProfileShowContributorTab = Switch(
     SwitchGroup.Feature,
     "profile-show-contributor-tab",
@@ -504,7 +514,7 @@ trait FeatureSwitches {
     sellByDate = new LocalDate(2018, 2, 1),
     exposeClientSide = false
   )
-  
+
     // Owner: Journalism
   val ReaderAnswersDeliveryMechanism = Switch(
     SwitchGroup.Feature,
