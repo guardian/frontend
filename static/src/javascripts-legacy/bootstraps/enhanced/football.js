@@ -141,7 +141,7 @@ define([
         var extras = [],
             dropdownTemplate;
 
-        var isLiveClockwatch = new Promise(function (resolve, reject) {
+        var isLiveClockwatch = new Promise(function (resolve) {
             page.isLiveClockwatch(function () {
                 var ml = new MatchListLive.MatchListLive('match-day', page.isCompetition() || 'premierleague', config.dateFromSlug()),
                     $img = $('.media-primary'),

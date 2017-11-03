@@ -8,7 +8,7 @@ define([
         var sandbox;
         var destroySpy;
 
-        function mockMatchListLive() {};
+        function mockMatchListLive() {}
         
         beforeEach(function (done) {
             document.body.innerHTML = '<img class="media-primary"></img><div class="js-football-meta"></div>';
@@ -80,7 +80,7 @@ define([
             
             it('handles successful fetch request', function (done) {
                 fetchSpy = sandbox.spy(function(elem) {
-                    return new Promise(function (resolve, reject) {
+                    return new Promise(function (resolve) {
                         addFootballElem(elem);
                         resolve();
                     });

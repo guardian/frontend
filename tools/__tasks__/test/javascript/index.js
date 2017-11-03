@@ -33,10 +33,10 @@ module.exports = {
         {
             description: 'Run tests',
             task: [
-                // {
-                //     description: 'JS tests',
-                //     task: () => exec('jest'),
-                // },
+                {
+                    description: 'JS tests',
+                    task: () => exec('jest'),
+                },
                 ...legacyTests,
             ],
             concurrent: true,
