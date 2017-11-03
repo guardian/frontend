@@ -5,43 +5,39 @@ define([
     describe('Football', function () {
         var injector = new Injector();
         var sut;
-        var sandbox;
-        var destroySpy;
-
+        var sandbox = sinon.sandbox.create();
+        var destroySpy = sandbox.spy();
+        
         function mockMatchListLive() {}
+
+        mockMatchListLive.prototype.destroy = destroySpy;
         
         beforeEach(function (done) {
             document.body.innerHTML = '<img class="media-primary"></img><div class="js-football-meta"></div>';
 
-            sandbox = sinon.sandbox.create();
-
-            destroySpy = sandbox.spy();
-
-            mockMatchListLive.prototype.destroy = destroySpy;
-
             injector.mock('lib/config', {
-                dateFromSlug: sinon.spy()
+                dateFromSlug: sandbox.spy()
             });
 
             injector.mock('bean', {
-                on: sinon.spy()
+                on: sandbox.spy()
             });
 
-            injector.mock('common/modules/sport/football/tag-page-stats', {
-                tagPageStats: sinon.spy()
-            });
-
-            injector.mock('common/modules/sport/football/match-list-live', {
-                MatchListLive: mockMatchListLive
-            });
-
-            injector.mock('lib/page', {
-                isMatch: sandbox.spy(),
-                isCompetition: sandbox.spy(),
-                isLiveClockwatch: function (cb) {
-                    cb();
+            injector.mock({
+                'common/modules/sport/football/tag-page-stats': {
+                    tagPageStats: sandbox.spy()
                 },
-                isFootballStatsPage: sandbox.spy()
+                'common/modules/sport/football/match-list-live': {
+                    MatchListLive: mockMatchListLive
+                },
+                'lib/page': {
+                    isMatch: sandbox.spy(),
+                    isCompetition: sandbox.spy(),
+                    isLiveClockwatch: function (cb) {
+                        cb();
+                    },
+                    isFootballStatsPage: sandbox.spy()
+                }
             });
 
             injector.require([
