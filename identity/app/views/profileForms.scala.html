@@ -76,7 +76,7 @@
             @if(ProfileShowContributorTab.isSwitchedOn) {
                 @content(5, "/contribution/recurring/edit")(fragments.profile.recurringContributionDetailsForm(idUrlBuilder, idRequest, user))
 
-                @content(5, "/privacy/edit")(fragments.profile.privacyForm(idUrlBuilder, idRequest, user, forms.privacyForm,emailPrefsForm,availableLists, emailSubscriptions,page))
+                @content(6, "/privacy/edit")(fragments.profile.privacyForm(idUrlBuilder, idRequest, user, forms.privacyForm,emailPrefsForm,availableLists, emailSubscriptions,page))
             } else {
                 @content(5, "/privacy/edit")(fragments.profile.privacyForm(idUrlBuilder, idRequest, user, forms.privacyForm,emailPrefsForm,availableLists, emailSubscriptions,page))
             }
