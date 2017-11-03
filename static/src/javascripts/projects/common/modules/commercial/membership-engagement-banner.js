@@ -16,10 +16,6 @@ import {
     submitComponentEvent,
     addTrackingCodesToUrl,
 } from 'common/modules/commercial/acquisitions-ophan';
-import {
-    selectBaseUrl,
-    selectEngagementBannerButtonCaption,
-} from 'common/modules/commercial/support-utilities';
 import { acquisitionsBannerControlTemplate } from 'common/modules/commercial/templates/acquisitions-banner-control';
 
 // change messageCode to force redisplay of the message to users who already closed it.
@@ -126,7 +122,7 @@ const showBanner = (params: EngagementBannerParams): void => {
     const ctaText = params.ctaText;
 
     const linkUrl = addTrackingCodesToUrl({
-        base: selectBaseUrl(params.linkUrl),
+        base: params.linkUrl,
         componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
         componentId: params.campaignCode,
         campaignCode: params.campaignCode,
@@ -135,9 +131,7 @@ const showBanner = (params: EngagementBannerParams): void => {
                 ? { name: test.id, variant: variant.id }
                 : undefined,
     });
-    const buttonCaption = selectEngagementBannerButtonCaption(
-        params.buttonCaption
-    );
+    const buttonCaption = params.buttonCaption;
     const buttonSvg = inlineSvg('arrowWhiteRight');
     const templateParams = {
         messageText,
