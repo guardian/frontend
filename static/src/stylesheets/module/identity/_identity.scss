@@ -281,24 +281,23 @@
 }
 
 .tabs--identity {
+
+    .tabs__container {
+        max-width: gs-span(12);
+        @include mq($until: desktop) {
+            margin-top: 5px;
+        }
+    }
+
     .tabs__tab--selected {
         border-top-color: $news-accent;
-    }
-    .tabs__tab {
-        max-width: gs-span(3);
-        width: 25%;
+        color: $news-accent;
     }
 
     @include mq($until: tablet) {
         a {
             padding-top: $gs-baseline/4;
             line-height: 13px !important;
-        }
-    }
-    @include mq($until: 500px) {
-        .tabs__tab {
-            width: 50%;
-            margin-top: 5px;
         }
     }
 }
