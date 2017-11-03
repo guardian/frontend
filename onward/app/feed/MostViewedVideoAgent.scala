@@ -1,5 +1,6 @@
 package feed
 
+import com.gu.Box
 import com.gu.contentapi.client
 import common._
 import common.editions.Uk
@@ -7,13 +8,14 @@ import contentapi.ContentApiClient
 import model.{Video, _}
 import play.api.libs.json._
 import services.OphanApi
+
 import scala.concurrent.{ExecutionContext, Future}
 
 class MostViewedVideoAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) extends Logging {
 
   case class QueryResult(id: String, count: Double, paths: Seq[String])
 
-  private val agent = AkkaAgent[Seq[Video]](Nil)
+  private val agent = Box[Seq[Video]](Nil)
 
   implicit val ophanQueryReads = Json.reads[QueryResult]
 

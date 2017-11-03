@@ -2,7 +2,6 @@ package integration
 
 import java.util.concurrent.TimeUnit
 
-import akka.agent.Agent
 import commercial.AdsTest
 import driver.SauceLabsWebDriver
 import org.openqa.selenium.chrome.ChromeDriver
@@ -12,6 +11,7 @@ import org.scalatestplus.play.BrowserFactory.UninitializedDriver
 import scala.collection.JavaConversions._
 import scala.concurrent.Await
 import scala.concurrent.duration._
+import com.gu.Box
 
 trait SingleWebDriver extends SuiteMixin { this: Suite =>
 
@@ -21,7 +21,7 @@ trait SingleWebDriver extends SuiteMixin { this: Suite =>
   }
 
   abstract override def run(testName: Option[String], args: Args): Status = {
-    val cleanup: Boolean => Unit = { _ => webDriver.quit() }
+    def cleanup[T](b: T): Unit = webDriver.quit()
     try {
       val newConfigMap = args.configMap + ("webDriver" -> webDriver)
       val newArgs = args.copy(configMap = newConfigMap)
@@ -38,7 +38,7 @@ trait SingleWebDriver extends SuiteMixin { this: Suite =>
 
 trait SharedWebDriver extends SuiteMixin { this: Suite =>
 
-  private val driverAgent = Agent[WebDriver](UninitializedDriver)
+  private val driverAgent = Box[WebDriver](UninitializedDriver)
 
   protected def webDriver: WebDriver = driverAgent()
 

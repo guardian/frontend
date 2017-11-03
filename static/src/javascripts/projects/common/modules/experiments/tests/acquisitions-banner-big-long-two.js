@@ -3,9 +3,9 @@ import { acquisitionsBannerBigTemplate } from 'common/modules/commercial/templat
 import { acquisitionsBannerLongTemplate } from 'common/modules/commercial/templates/acquisitions-banner-long';
 import { makeBannerABTestVariants } from 'common/modules/commercial/contributions-utilities';
 
-export const AcquisitionsBannerBigLong: AcquisitionsABTest = {
-    id: 'AcquisitionsBannerBigLong',
-    campaignId: 'banner_big_long',
+export const AcquisitionsBannerBigLongTwo: AcquisitionsABTest = {
+    id: 'AcquisitionsBannerBigLongTwo',
+    campaignId: 'banner_big_long_two',
     start: '2017-10-26',
     expiry: '2018-11-27',
     author: 'Jonathan Rankin',

@@ -3,7 +3,8 @@ package assets
 import java.net.URI
 
 import app.LifecycleComponent
-import common.{AkkaAgent, GuardianConfiguration, JobScheduler, Logging}
+import com.gu.Box
+import common.{GuardianConfiguration, JobScheduler, Logging}
 import conf.switches.Switches
 import play.api.libs.ws.{WSClient, WSResponse}
 
@@ -100,7 +101,7 @@ class DiscussionExternalAssetsLifecycle(
 }
 
 object DiscussionAssetsMap {
-  private lazy val agent = AkkaAgent[Map[String, String]](Map.empty)
+  private lazy val agent = Box[Map[String, String]](Map.empty)
 
   def alter (map: Map[String, String], baseURI: URI): Future[Map[String, String]] = {
     agent.alter(map.mapValues(value => baseURI.resolve(value).toString))

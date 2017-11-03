@@ -1,11 +1,12 @@
 package jobs
 
-import common.{AkkaAgent, Logging}
+import com.gu.Box
+import common.Logging
 import services.S3Infosec
 
 object BlockedEmailDomainList extends Logging {
 
-  private val blockedDomainAgent = AkkaAgent[Set[String]](Set.empty)
+  private val blockedDomainAgent = Box[Set[String]](Set.empty)
 
   def run () {
     log.info("Updating email blocked domains list")

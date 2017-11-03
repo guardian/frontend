@@ -7,7 +7,7 @@ import com.gu.ProjectSettings._
 
 val common = library("common").settings(
   libraryDependencies ++= Seq(
-    akkaAgent,
+    guBox,
     apacheCommonsMath3,
     awsCore,
     awsCloudwatch,
@@ -50,8 +50,7 @@ val common = library("common").settings(
     playJson,
     playJsonJoda,
     jodaForms,
-    jacksonDataFormat,
-    ophanEventModel
+    jacksonDataFormat
   )
 ).settings(
     mappings in TestAssets ~= filterAssets

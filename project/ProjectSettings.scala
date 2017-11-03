@@ -48,7 +48,7 @@ object ProjectSettings {
       seleniumJava % Test,
       jodaTime % Test,
       jodaConvert % Test,
-      akkaAgent % Test
+      guBox % Test
     )
   )
 

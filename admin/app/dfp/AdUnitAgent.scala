@@ -4,10 +4,11 @@ import com.google.api.ads.dfp.axis.utils.v201705.StatementBuilder
 import common.dfp.GuAdUnit
 import conf.Configuration
 import ApiHelper.toSeq
+import tools.BlockingOperations
 
 import scala.util.Try
 
-object AdUnitAgent extends DataAgent[String, GuAdUnit] {
+class AdUnitAgent(val blockingOperations: BlockingOperations) extends DataAgent[String, GuAdUnit] {
 
   override def loadFreshData(): Try[Map[String, GuAdUnit]] = Try {
     val maybeData = for (session <- SessionWrapper()) yield {
@@ -49,17 +50,17 @@ object AdUnitAgent extends DataAgent[String, GuAdUnit] {
 
 }
 
-object AdUnitService {
+class AdUnitService(adUnitAgent: AdUnitAgent) {
 
   // Retrieves the ad unit object if the id matches and the ad unit is active.
   def activeAdUnit(adUnitId: String): Option[GuAdUnit] = {
-    AdUnitAgent.get.data.get(adUnitId).collect {
+    adUnitAgent.get.data.get(adUnitId).collect {
       case adUnit if adUnit.isActive => adUnit
     }
   }
 
   def archivedAdUnit(adUnitId: String): Option[GuAdUnit] = {
-    AdUnitAgent.get.data.get(adUnitId).collect {
+    adUnitAgent.get.data.get(adUnitId).collect {
       case adUnit if adUnit.isArchived => adUnit
     }
   }
@@ -67,7 +68,7 @@ object AdUnitService {
   def isArchivedAdUnit(adUnitId: String): Boolean = archivedAdUnit(adUnitId).isDefined
 
   def inactiveAdUnit(adUnitId: String): Option[GuAdUnit] = {
-    AdUnitAgent.get.data.get(adUnitId).collect {
+    adUnitAgent.get.data.get(adUnitId).collect {
       case adUnit if adUnit.isInactive => adUnit
     }
   }

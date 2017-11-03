@@ -1,9 +1,9 @@
 package dfp
 
 import common.dfp.{GuLineItem, GuTargeting}
-import dfp.DfpApi.DfpLineItems
 import org.joda.time.DateTime
 import org.scalatest._
+import org.scalatest.mockito.MockitoSugar
 import test._
 
 class DfpDataCacheJobTest
@@ -13,7 +13,10 @@ class DfpDataCacheJobTest
   with BeforeAndAfterAll
   with WithMaterializer
   with WithTestWsClient
+  with MockitoSugar
   with WithTestContentApiClient {
+
+  val dfpDataCacheJob = new DfpDataCacheJob(mock[AdUnitAgent], mock[CustomFieldAgent], mock[CustomTargetingAgent], mock[PlacementAgent], mock[DfpApi])
 
   private def lineItem(id: Long, name: String, completed: Boolean = false): GuLineItem = {
     GuLineItem(
@@ -53,7 +56,7 @@ class DfpDataCacheJobTest
       ),
       invalidItems = Seq.empty)
 
-    val lineItems = DfpDataCacheJob.loadLineItems(
+    val lineItems = dfpDataCacheJob.loadLineItems(
       cachedLineItems,
       lineItemsModifiedSince,
       allReadyOrDeliveringLineItems
@@ -73,7 +76,7 @@ class DfpDataCacheJobTest
       ),
       invalidItems = Seq.empty)
 
-    val lineItems = DfpDataCacheJob.loadLineItems(
+    val lineItems = dfpDataCacheJob.loadLineItems(
       cachedLineItems,
       lineItemsModifiedSince,
       allReadyOrDeliveringLineItems
@@ -97,7 +100,7 @@ class DfpDataCacheJobTest
       ),
       invalidItems = Seq.empty)
 
-    val lineItems = DfpDataCacheJob.loadLineItems(
+    val lineItems = dfpDataCacheJob.loadLineItems(
       cachedLineItems,
       lineItemsModifiedSince,
       allReadyOrDeliveringLineItems

@@ -1,6 +1,6 @@
 package jobs
 
-import common.{AkkaAgent, AkkaAsync, Edition, Logging}
+import common.{AkkaAsync, Edition, Logging}
 import conf.switches.Switches
 import model.{Content, Video}
 
@@ -10,6 +10,7 @@ import contentapi.ContentApiClient
 import scala.concurrent.{ExecutionContext, Future}
 import scala.concurrent.duration._
 import akka.util.Timeout
+import com.gu.Box
 import play.api.libs.ws.WSClient
 import services.MissingVideoEncodings
 import model.diagnostics.video.DynamoDbStore
@@ -17,7 +18,7 @@ import model.diagnostics.video.DynamoDbStore
 
 class VideoEncodingsJob(contentApiClient: ContentApiClient, wsClient: WSClient) extends Logging  {
 
-  private val videoEncodingsAgent = AkkaAgent[Map[String, List[MissingEncoding]]](Map.empty)
+  private val videoEncodingsAgent = Box[Map[String, List[MissingEncoding]]](Map.empty)
   implicit val timeout = Timeout(5 seconds)
 
   def getReport(report: String): Option[List[MissingEncoding]] = videoEncodingsAgent().get(report)
