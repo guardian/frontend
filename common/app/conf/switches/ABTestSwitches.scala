@@ -128,6 +128,16 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-acquisitions-epic-paradise",
+    "Test highlighting a different sentance in the epic",
+    owners = Seq(Owner.withGithub("jranks123")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 11, 23),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
     "ab-acquisitions-banner-big-long-two",
     "Test a big variant and a long variant against the banner control",
     owners = Seq(Owner.withGithub("jranks123")),

@@ -11,14 +11,14 @@ import { ContainerToggle } from 'facia/modules/ui/container-toggle';
 import { init as initShowMore } from 'facia/modules/ui/container-show-more';
 import { lazyLoadContainers } from 'facia/modules/ui/lazy-load-containers';
 import { showUpdatesFromLiveBlog } from 'facia/modules/ui/live-blog-updates';
-import snaps from 'facia/modules/ui/snaps';
+import { init as initSnaps } from 'facia/modules/ui/snaps';
 import { Weather } from 'facia/modules/onwards/weather';
 import partial from 'lodash/functions/partial';
 import { videoContainerInit } from 'common/modules/video/video-container';
 
 const showSnaps = (): void => {
-    snaps.init();
-    mediator.on('modules:container:rendered', snaps.init);
+    initSnaps();
+    mediator.on('modules:container:rendered', initSnaps);
 };
 
 const showContainerShowMore = (): void => {
