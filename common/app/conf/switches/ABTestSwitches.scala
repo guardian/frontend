@@ -118,11 +118,11 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-acquisitions-epic-ease-of-payment",
+    "ab-acquisitions-epic-logos-highlight-average",
     "Test some variations of the Epic which mention price",
     owners = Seq(Owner.withGithub("joelochlann")),
     safeState = On,
-    sellByDate = new LocalDate(2017, 11, 20),
+    sellByDate = new LocalDate(2017, 12, 5),
     exposeClientSide = true
   )
 

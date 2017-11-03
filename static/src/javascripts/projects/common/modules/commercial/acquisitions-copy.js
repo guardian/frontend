@@ -3,7 +3,10 @@ import {
     supportFrontendLiveInUk,
     supportFrontendLiveInUs,
 } from 'common/modules/commercial/support-utilities';
-import { getLocalCurrencySymbol } from 'lib/geolocation';
+import {
+    getLocalCurrencySymbol,
+    getLocalAverageDonation,
+} from 'lib/geolocation';
 
 // control
 const controlHeading = 'Since you’re here &hellip;';
@@ -18,13 +21,6 @@ const controlP2 = (currencySymbol: string) =>
 const controlHeadingRegulars = 'Hello again &hellip;';
 const controlP1Regulars =
     '&hellip; today we have a small favour to ask. More people are reading the Guardian than ever but advertising revenues across the media are falling fast. And <span class="contributions__highlight"> unlike many news organisations, we haven’t put up a paywall &ndash; we want to keep our journalism as open as we can</span>. So we think it’s fair to ask people who visit us often for their help. The Guardian’s independent, investigative journalism takes a lot of time, money and hard work to produce. But we do it because we believe our perspective matters &ndash; because it might well be your perspective, too.';
-
-// US localised testimonials test
-const usLocalisedFlagP1 = `${controlP1} Here’s why other <strong>readers from the US</strong> are supporting us:`;
-
-// Just one pound (Oct 2017 test)
-const justOnePoundP2 = (currencySymbol: string) =>
-    `If everyone who reads our reporting, who likes it, helps fund it, our future would be much more secure. <strong>For as little as ${currencySymbol}1, you can support the Guardian. Thank&nbsp;you.</strong>`;
 
 const ctaLinkSentence = (
     membershipUrl: string,
@@ -47,35 +43,23 @@ export const control: AcquisitionsEpicTemplateCopy = {
     p2: controlP2(getLocalCurrencySymbol()),
 };
 
-// For test, October 2017
-export const oldControl: AcquisitionsEpicTemplateCopy = {
-    heading: controlHeading,
-    p1: controlP1,
-    p2: controlP2FirstSentence,
-};
-
 export const regulars: AcquisitionsEpicTemplateCopy = {
     heading: controlHeadingRegulars,
     p1: controlP1Regulars,
     p2: controlP2(getLocalCurrencySymbol()),
 };
 
-export const usLocalisedFlag = {
+export const highlightLastSentence: AcquisitionsEpicTemplateCopy = {
     heading: controlHeading,
-    p1: usLocalisedFlagP1,
-    p2: controlP2(getLocalCurrencySymbol()),
+    p1:
+        '&hellip; we have a small favour to ask. More people are reading the Guardian than ever but advertising revenues across the media are falling fast. And unlike many news organisations, we haven’t put up a paywall &ndash; we want to keep our journalism as open as we can. So you can see why we need to ask for your help. The Guardian’s independent, investigative journalism takes a lot of time, money and hard work to produce. But we do it because we believe our perspective matters &ndash; because it might well be your perspective, too.',
+    p2: `${controlP2FirstSentence} <strong><span class="contributions__highlight">For as little as ${getLocalCurrencySymbol()}1, you can support the Guardian – and it only takes a minute. Thank you.</span></strong>`,
 };
 
-export const justAMinute: AcquisitionsEpicTemplateCopy = {
+export const mentionAverageAmount: AcquisitionsEpicTemplateCopy = {
     heading: controlHeading,
     p1: controlP1,
-    p2: `${controlP2FirstSentence} <strong>Support the Guardian – it only takes a minute. Thank&nbsp;you.</strong>`,
-};
-
-export const justOnePound: AcquisitionsEpicTemplateCopy = {
-    heading: controlHeading,
-    p1: controlP1,
-    p2: justOnePoundP2(getLocalCurrencySymbol()),
+    p2: `${controlP2FirstSentence} <strong>You can contribute from as little as ${getLocalCurrencySymbol()}1. At the moment, the average amount our readers give is ${getLocalAverageDonation()} – and it only takes a minute. Thank you.</strong>`,
 };
 
 export const liveblog = (
