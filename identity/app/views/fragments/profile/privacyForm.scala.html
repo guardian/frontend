@@ -35,6 +35,11 @@
         consentField("consentIdentifierVersion").value.getOrElse("0").toInt)
 }
 
+@v1consentCheckboxes = {
+    @checkboxField(Checkbox(privacyForm("receiveGnmMarketing"), '_label -> "Receive email from Guardian News and Media Ltd."))(nonInputFields, messages)
+    @checkboxField(Checkbox(privacyForm("receive3rdPartyMarketing"), '_label -> "Receive email from other organisations"))(nonInputFields, messages)
+}
+
 <form class="form js-public-profile-form" novalidate action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" role="main" method="post">
     @views.html.helper.CSRF.formField
 
@@ -75,7 +80,25 @@
                     <div class="form-field__note">The Guardian and their partners would like to occasionally send you information about their products, services and events.</div>
 
                     <div class="form-fields-group">
-                        @v2consentCheckboxes
+                        @v1consentCheckboxes
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </fieldset>
+
+    @* Profiling *@
+    <fieldset class="fieldset">
+        <div class="fieldset__heading">
+            <h2 class="form__heading">Profiling</h2>
+        </div>
+        <div class="fieldset__fields">
+            <ul class="u-unstyled">
+                <li class="form-field">
+                    <label class="label">In addition to the data that you provide to us, we may also match profiling data from third parties with your registration details.</label>
+
+                    <div class="form-fields-group">
+                        @checkboxField(Checkbox(privacyForm("allowThirdPartyProfiling"), '_label -> "Allow matching with third party data"))(nonInputFields, messages)
                     </div>
                 </li>
             </ul>

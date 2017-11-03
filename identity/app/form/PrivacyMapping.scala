@@ -13,6 +13,9 @@ class PrivacyMapping extends UserFormMapping[PrivacyFormData] {
 
   protected def formMapping(implicit messagesProvider: MessagesProvider): Mapping[PrivacyFormData] =
     mapping(
+      "receiveGnmMarketing" -> boolean,     // TODO: statusFields to be removed once GDPR V2 is in PROD
+      "receive3rdPartyMarketing" -> boolean,
+      "allowThirdPartyProfiling" -> boolean,
       "consents" -> list(
         mapping(
           "actor" -> text,
@@ -39,10 +42,19 @@ class PrivacyMapping extends UserFormMapping[PrivacyFormData] {
   * Form specific DTO representing marketing consent subset of User model
   */
 case class PrivacyFormData(
+    receiveGnmMarketing: Boolean,
+    receive3rdPartyMarketing: Boolean,
+    allowThirdPartyProfiling: Boolean,
     consents: List[Consent]) extends UserFormData{
 
   def toUserUpdateDTO(oldUserDO: User): UserUpdateDTO =
-    UserUpdateDTO(consents = Some(consents))
+    UserUpdateDTO(
+      statusFields = Some(oldUserDO.statusFields.copy(
+      receive3rdPartyMarketing = Some(receive3rdPartyMarketing),
+      receiveGnmMarketing = Some(receiveGnmMarketing),
+      allowThirdPartyProfiling = Some(allowThirdPartyProfiling)
+      )),
+      consents = Some(consents))
 }
 
 object PrivacyFormData {
@@ -54,6 +66,9 @@ object PrivacyFormData {
     */
   def apply(userDO: User): PrivacyFormData =
     PrivacyFormData(
+      receiveGnmMarketing = userDO.statusFields.receiveGnmMarketing.getOrElse(false),
+      receive3rdPartyMarketing = userDO.statusFields.receive3rdPartyMarketing.getOrElse(false),
+      allowThirdPartyProfiling = userDO.statusFields.allowThirdPartyProfiling.getOrElse(true),
       consents = if (userDO.consents.isEmpty) defaultConsents else userDO.consents)
 
   private val defaultConsents =
