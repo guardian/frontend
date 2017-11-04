@@ -18,12 +18,10 @@ object AuthenticatedActions {
 }
 
 class AuthenticatedActions(
-  authService: AuthenticationService,
-  identityApiClient: IdApiClient,
-  identityUrlBuilder: IdentityUrlBuilder,
-  controllerComponents: ControllerComponents
-) extends Logging
-  with Results {
+    authService: AuthenticationService,
+    identityApiClient: IdApiClient,
+    identityUrlBuilder: IdentityUrlBuilder,
+    controllerComponents: ControllerComponents) extends Logging with Results {
 
   private val anyContentParser: BodyParser[AnyContent] = controllerComponents.parsers.anyContent
   private implicit val ec: ExecutionContext = controllerComponents.executionContext
@@ -38,41 +36,46 @@ class AuthenticatedActions(
     SeeOther(identityUrlBuilder.buildUrl(signinUrl))
   }
 
-  def sendUserToSignin(request: RequestHeader): Result =  redirectWithReturn(request, "/signin")
+  def sendUserToSignin(request: RequestHeader): Result =
+    redirectWithReturn(request, "/signin")
 
-  def sendUserToReauthenticate(request: RequestHeader): Result = redirectWithReturn(request, "/reauthenticate")
+  def sendUserToReauthenticate(request: RequestHeader): Result =
+    redirectWithReturn(request, "/reauthenticate")
 
-  def authAction: AuthenticatedBuilder[AuthenticatedUser] = new AuthenticatedBuilder(authService.authenticatedUserFor, anyContentParser, sendUserToSignin)
+  def authAction: AuthenticatedBuilder[AuthenticatedUser] =
+    new AuthenticatedBuilder(authService.authenticatedUserFor, anyContentParser, sendUserToSignin)
 
-  def agreeAction(unAuthorizedCallback: (RequestHeader) => Result): AuthenticatedBuilder[AuthenticatedUser] = new AuthenticatedBuilder(authService.authenticatedUserFor, anyContentParser, unAuthorizedCallback)
+  def agreeAction(unAuthorizedCallback: (RequestHeader) => Result): AuthenticatedBuilder[AuthenticatedUser] =
+    new AuthenticatedBuilder(authService.authenticatedUserFor, anyContentParser, unAuthorizedCallback)
 
-  def apiVerifiedUserRefiner: ActionRefiner[AuthRequest, AuthRequest] {
-    val executionContext: ExecutionContext
-
-    def refine[A](request: AuthRequest[A]): Future[Product with Serializable with Either[Result, AuthenticatedRequest[A, AuthenticatedUser]]]
-  } = new ActionRefiner[AuthRequest, AuthRequest] {
+  def apiVerifiedUserRefiner: ActionRefiner[AuthRequest, AuthRequest] = new ActionRefiner[AuthRequest, AuthRequest] {
     override val executionContext = ec
-    def refine[A](request: AuthRequest[A]) = for (meResponse <- identityApiClient.me(request.user.auth)) yield {
-      meResponse.left.map {
-        errors =>
-          logger.warn(s"Failed to look up logged-in user: $errors")
-          sendUserToSignin(request)
-      }.right.map {
-        userFromApi =>
-          logger.trace("user is logged in")
-          new AuthRequest(request.user.copy(user = userFromApi), request)
+
+    def refine[A](request: AuthRequest[A]) =
+      identityApiClient.me(request.user.auth).map { _.fold(
+          errors => {
+            logger.warn(s"Failed to look up logged-in user: $errors")
+            Left(sendUserToSignin(request))
+          },
+          userFromApi => {
+            logger.trace("user is logged in")
+            Right(new AuthRequest(request.user.copy(user = userFromApi), request))
+          }
+        )
       }
-    }
   }
 
   def recentlyAuthenticatedRefiner: ActionRefiner[AuthRequest, AuthRequest] = new ActionRefiner[AuthRequest, AuthRequest] {
     override val executionContext = ec
+
     def refine[A](request: AuthRequest[A]) = Future.successful {
       if (authService.recentlyAuthenticated(request)) Right(request) else Left(sendUserToReauthenticate(request))
     }
   }
 
-  def authActionWithUser: ActionBuilder[AuthRequest, AnyContent] = authAction andThen apiVerifiedUserRefiner
+  def authActionWithUser: ActionBuilder[AuthRequest, AnyContent] =
+    authAction andThen apiVerifiedUserRefiner
 
-  def recentlyAuthenticated: ActionBuilder[AuthRequest, AnyContent] = authAction andThen recentlyAuthenticatedRefiner andThen apiVerifiedUserRefiner
+  def recentlyAuthenticated: ActionBuilder[AuthRequest, AnyContent] =
+    authAction andThen recentlyAuthenticatedRefiner andThen apiVerifiedUserRefiner
 }

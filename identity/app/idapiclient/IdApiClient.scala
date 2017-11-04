@@ -1,10 +1,11 @@
 package idapiclient
 
-import com.gu.identity.model.{EmailList, LiftJsonConfig, Subscriber, User}
+import com.gu.identity.model.{EmailList , Subscriber, User}
+
 import scala.concurrent.{ExecutionContext, Future}
 import idapiclient.responses.{AccountDeletionResult, CookiesResponse, Error, HttpResponse}
 import conf.IdConfig
-import idapiclient.parser.{JodaJsonSerializer, JsonBodyParser}
+import idapiclient.parser.IdApiJsonBodyParser
 import net.liftweb.json.JsonAST.JValue
 import net.liftweb.json.Serialization.write
 import utils.SafeLogging
@@ -12,21 +13,19 @@ import idapiclient.requests.{DeletionBody, PasswordUpdate, TokenPassword}
 import play.api.libs.ws.WSClient
 
 class IdApiClient(
-    jsonBodyParser: JsonBodyParser,
+    idJsonBodyParser: IdApiJsonBodyParser,
     conf: IdConfig,
     httpClient: HttpClient)
     (implicit val executionContext: ExecutionContext) extends SafeLogging {
 
-  val apiRootUrl: String = conf.apiRoot
-  val clientAuth: Auth = ClientAuth(conf.apiClientToken)
+  private val apiRootUrl: String = conf.apiRoot
+  private val clientAuth: Auth = ClientAuth(conf.apiClientToken)
 
-  import jsonBodyParser.{extractUnit, extract}
+  import idJsonBodyParser.{extractUnit, extract, jsonField}
 
-  implicit val formats = LiftJsonConfig.formats + new JodaJsonSerializer
+  private implicit val formats = idJsonBodyParser.formats
 
-  def jsonField(field: String)(json: JValue): JValue = json \ field
-
-  def extractUser: (Response[HttpResponse]) => Response[User] = extract(jsonField("user"))
+  private def extractUser: (Response[HttpResponse]) => Response[User] = extract(jsonField("user"))
 
   //   AUTH
   def authBrowser(userAuth: Auth, trackingData: TrackingData, persistent: Option[Boolean] = None): Future[Response[CookiesResponse]] = {
@@ -48,7 +47,6 @@ class IdApiClient(
     val headers = buildHeaders(Some(auth))
     val response = httpClient.GET(apiUrl(apiPath), None, params, headers)
     response map extractUser
-
   }
 
   def userFromVanityUrl(vanityUrl: String, auth: Auth = Anonymous): Future[Response[User]] = {
@@ -59,7 +57,7 @@ class IdApiClient(
     response map extractUser
   }
 
-  def saveUser(userId: String, user: UserUpdate, auth: Auth): Future[Response[User]] =
+  def saveUser(userId: String, user: UserUpdateDTO, auth: Auth): Future[Response[User]] =
     post(urlJoin("user", userId), Some(auth), body = Some(write(user))) map extractUser
 
   def me(auth: Auth): Future[Response[User]] = {

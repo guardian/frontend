@@ -1,9 +1,13 @@
+@import model.EmailNewsletters
 @(
         page: model.Page,
         user: com.gu.identity.model.User,
         forms: controllers.ProfileForms,
         idRequest: services.IdentityRequest,
-        idUrlBuilder: services.IdentityUrlBuilder
+        idUrlBuilder: services.IdentityUrlBuilder,
+        emailPrefsForm: Form[EmailPrefsData],
+        availableLists: EmailNewsletters,
+        emailSubscriptions: List[String]
 )(implicit request: RequestHeader, messages: play.api.i18n.Messages, context: model.ApplicationContext)
 
 @import views.html.fragments.form.{inputField, textareaField}
@@ -72,9 +76,9 @@
             @if(ProfileShowContributorTab.isSwitchedOn) {
                 @content(5, "/contribution/recurring/edit")(fragments.profile.recurringContributionDetailsForm(idUrlBuilder, idRequest, user))
 
-                @content(6, "/privacy/edit")(fragments.profile.privacyForm(idUrlBuilder, idRequest, user, forms.privacyForm))
+                @content(6, "/privacy/edit")(fragments.profile.privacyForm(idUrlBuilder, idRequest, user, forms.privacyForm,emailPrefsForm,availableLists, emailSubscriptions,page))
             } else {
-                @content(5, "/privacy/edit")(fragments.profile.privacyForm(idUrlBuilder, idRequest, user, forms.privacyForm))
+                @content(5, "/privacy/edit")(fragments.profile.privacyForm(idUrlBuilder, idRequest, user, forms.privacyForm,emailPrefsForm,availableLists, emailSubscriptions,page))
             }
         </div>
     </div>
