@@ -11,21 +11,20 @@ const tagsMatch = () => {
     const pageKeywords = config.page.nonKeywordTagIds;
     if (typeof pageKeywords !== 'undefined') {
         const keywordList = pageKeywords.split(',');
-        console.log(keywordList);
         return keywordList.some(x => x === 'news/series/paradise-papers');
     }
     return false;
 };
 
-const isTargetReader = () => isPayingMember() || isRecentContributor();
+const isTargetReader = () => !isPayingMember() || !isRecentContributor();
 
 const worksWellWithPageTemplate = () =>
-config.page.contentType === 'Article' &&
-!config.page.isMinuteArticle &&
-!(config.page.isImmersive === true);
+    config.page.contentType === 'Article' &&
+    !config.page.isMinuteArticle &&
+    !(config.page.isImmersive === true);
 
 const isTargetPage = () =>
-worksWellWithPageTemplate() && !config.page.shouldHideReaderRevenue;
+    worksWellWithPageTemplate() && !config.page.shouldHideReaderRevenue;
 
 export const acquisitionsEpicParadise = makeABTest({
     id: 'AcquisitionsEpicParadise',
@@ -43,9 +42,7 @@ export const acquisitionsEpicParadise = makeABTest({
     audience: 1,
     audienceOffset: 0,
     overrideCanRun: true,
-    canRun: () => {
-        return isTargetReader() && isTargetPage() && tagsMatch();
-    },
+    canRun: () => tagsMatch() && isTargetReader() && isTargetPage(),
 
     variants: [
         {
