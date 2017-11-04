@@ -1,21 +1,31 @@
 // @flow
-import { makeABTest, defaultCanEpicBeDisplayed } from 'common/modules/commercial/contributions-utilities';
-import {
-    paradiseHighlight,
-    paradiseDifferentHighlight,
-} from 'common/modules/commercial/acquisitions-copy';
+import { makeABTest } from 'common/modules/commercial/contributions-utilities';
+import { paradiseDifferentHighlight } from 'common/modules/commercial/acquisitions-copy';
 import config from 'lib/config';
+import {
+    isRecentContributor,
+    isPayingMember,
+} from 'commercial/modules/user-features';
 
 const tagsMatch = () => {
-    var pageKeywords = config.page.nonKeywordTagIds;
-    if (typeof(pageKeywords) !== 'undefined') {
-        var keywordList = pageKeywords.split(',');
+    const pageKeywords = config.page.nonKeywordTagIds;
+    if (typeof pageKeywords !== 'undefined') {
+        const keywordList = pageKeywords.split(',');
         console.log(keywordList);
-        return keywordList.some(x => (x === 'news/series/paradise-papers'));
-    } else {
-        return false;
+        return keywordList.some(x => x === 'news/series/paradise-papers');
     }
+    return false;
 };
+
+const isTargetReader = () => isPayingMember() || isRecentContributor();
+
+const worksWellWithPageTemplate = () =>
+config.page.contentType === 'Article' &&
+!config.page.isMinuteArticle &&
+!(config.page.isImmersive === true);
+
+const isTargetPage = () =>
+worksWellWithPageTemplate() && !config.page.shouldHideReaderRevenue;
 
 export const acquisitionsEpicParadise = makeABTest({
     id: 'AcquisitionsEpicParadise',
@@ -33,8 +43,8 @@ export const acquisitionsEpicParadise = makeABTest({
     audience: 1,
     audienceOffset: 0,
     overrideCanRun: true,
-    canRun : () => {
-        return tagsMatch();
+    canRun: () => {
+        return isTargetReader() && isTargetPage() && tagsMatch();
     },
 
     variants: [
