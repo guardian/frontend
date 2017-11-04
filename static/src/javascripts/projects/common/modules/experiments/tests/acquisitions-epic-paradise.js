@@ -1,9 +1,21 @@
 // @flow
-import { makeABTest } from 'common/modules/commercial/contributions-utilities';
+import { makeABTest, defaultCanEpicBeDisplayed } from 'common/modules/commercial/contributions-utilities';
 import {
     paradiseHighlight,
     paradiseDifferentHighlight,
 } from 'common/modules/commercial/acquisitions-copy';
+import config from 'lib/config';
+
+const tagsMatch = () => {
+    var pageKeywords = config.page.nonKeywordTagIds;
+    if (typeof(pageKeywords) !== 'undefined') {
+        var keywordList = pageKeywords.split(',');
+        console.log(keywordList);
+        return keywordList.some(x => (x === 'news/series/paradise-papers'));
+    } else {
+        return false;
+    }
+};
 
 export const acquisitionsEpicParadise = makeABTest({
     id: 'AcquisitionsEpicParadise',
@@ -20,7 +32,10 @@ export const acquisitionsEpicParadise = makeABTest({
     audienceCriteria: 'All',
     audience: 1,
     audienceOffset: 0,
-    useTargetingTool: true,
+    overrideCanRun: true,
+    canRun : () => {
+        return tagsMatch();
+    },
 
     variants: [
         {
@@ -35,14 +50,6 @@ export const acquisitionsEpicParadise = makeABTest({
             products: ['CONTRIBUTION', 'MEMBERSHIP_SUPPORTER'],
             options: {
                 copy: paradiseDifferentHighlight,
-                isUnlimited: true,
-            },
-        },
-        {
-            id: 'paradise_highlight',
-            products: ['CONTRIBUTION', 'MEMBERSHIP_SUPPORTER'],
-            options: {
-                copy: paradiseHighlight,
                 isUnlimited: true,
             },
         },
