@@ -88,7 +88,7 @@ make validate-amp
 ```
 
 ### Testing Amp pages on the live website
-Occasionally you might need to check something in production on the live website - for example display of a particular ad-tag
+Occasionally you might need to check something in production on the live website - for example display of a particular ad-tag.
 To see an amp page, navigate to:
                     https://amp.theguardian.com/<path-to-page>.
 
@@ -98,8 +98,7 @@ Google will detect you are on a mobile device and serve you the amp page.
 This is useful for tests where the path to the page matters. For instance any tests for ad tags should use this method
 
 ### Amp validation on the live website
- For amp pages on the live site, you can append the "#development=1" fragment to the url to show validation in the developer console,
-   or alternatively you can enter the page url on https://ampbench.appspot.com/
+ For amp pages on the live site, you can append the "#development=1" fragment to the url to show validation in the developer console, or alternatively you can enter the page url on https://ampbench.appspot.com/
    This last is superior in the feedback it gives you as you can drill a bit more into validation errors.
 
 ### Things to watch for on Amp pages
@@ -110,15 +109,15 @@ google-search result to the amp page. The following will indicate you are on an 
     - On code and on local, the url has the `?amp` querystring described above
     - The styling of the nav header is different
     - The developer tools console has a message "Powered by AMP"
-2) That ads display ok.
-3) That styling, especially that of badges and graphical punctuation, such as quotes  look ok
+2) That ads display ok
+3) That styling, especially that of badges and graphical punctuation, such as quotes look ok
 4) That images and other embeds display correctly - especially on narrow screens such as the iPhone5S
 
 
 # Device Testing
 
 ### How to test your devices on local
-- It is possible to use chrome emulator to get a good idea of how android devices behave and XCode the hardware simulators on XCode to do the same for iOS,
+- It is possible to use chrome emulator to get a good idea of how android devices behave and XCode do the same for iOS.
 However for significant frontend changes you should test on devices as much as possible. To do this you need to be able to make your localhost accessible.
 A tool called `ngrok` is a good way to make a local port accessible to external devices or computer (instructions on how to run ngrok [here](https://github.com/guardian/frontend/blob/master/docs/03-dev-howtos/09-testing-externally-on-localhost.md))
 - To test on a variety of devices or to reproduce a bug on a particular set up, use https://www.browserstack.com. This site has a vaery large collection of various operating systems, browsers and devices. It contains a good record of old versions of these and has a mix of real and emulated devices. It is a very useful testing resource. Contact the dotcom team to get added to our user account for this tool
@@ -135,16 +134,16 @@ A list of useful information on device testing follows:
  It is interesting from a testing perspective because it is a different operating system, different browser setup and different screen-size from the machine you are developing on.
  This combination often throws up interesting layout problems. In addition Safari often has less support for new features compared with Chrome, which can also lead to rendering errors.
 
-- Edge - a new browser from microsoft - meant to be a successor to IE. [As of Sept 2016](https://docs.google.com/a/guardian.co.uk/spreadsheets/d/1bheEcdkOAj6jA92U37_DsTpQDwk7awIAFkYKUE1fbsw/edit?usp=sharing) it has overtaken IE11 in popularity. However it gets much less exposure to our developers than Chrome, Firefox and Safari. 
+- Edge - a new browser from Microsoft - meant to be a successor to IE. [As of Sept 2016](https://docs.google.com/a/guardian.co.uk/spreadsheets/d/1bheEcdkOAj6jA92U37_DsTpQDwk7awIAFkYKUE1fbsw/edit?usp=sharing) it has overtaken IE11 in popularity. However it gets much less exposure to our developers than Chrome, Firefox and Safari. 
 
 - IE11 - This is the most popular IE version. IE is notorious for having less support for features and also being much less tolerant of small errors than Chrome, or Firefox. Often when a page renders on those browsers it will still have problems on IE.
 
 - IE9 Our expectations for IE9 are lower than for more recent browsers, however it should be possible to access our content and the page should at least look readable.
 
-- Chrome and Firefox on windows 10 - Windows10 is slowly overtaking Windows7 as our users most popular desktop OS. When Windows 10 originally came out, firefox had some rendering issues and Chrome and firefox periodically show rendering issues there - especially with things like fonts.
+- Chrome and Firefox on windows 10 - Windows10 is slowly overtaking Windows7 as our users most popular desktop OS. When Windows 10 originally came out, Firefox had some rendering issues and Chrome and Firefox periodically show rendering issues there - especially with things like fonts.
 
 - Older devices - A common source of problems comes from older devices. Where the device is running the latest operating system, it will attempt to run all the latest features and give the fullest experience. This can be catastrophic if the device just doesnt have the memory or processing power to cope.
-  This is especially important if your feature is very resource heavy. For reasons unknown, but possibly connected to the way safari manages memory, iOS devices have proved more susceptable. Good examples of old devices to test on are: iPhone 4S, iPad3 (both known to be prone to crashes) and the Samsung Galaxy S3.
+  This is especially important if your feature is very resource heavy. For reasons unknown, but possibly connected to the way Safari manages memory, iOS devices have proved more susceptable. Good examples of old devices to test on are: iPhone 4S, iPad3 (both known to be prone to crashes) and the Samsung Galaxy S3.
     [Interesting page talking about iOS crashes](http://stackoverflow.com/questions/22039534/ios-browser-crashes-due-to-low-memory). As a result of a large number of crashes on iPads, it has been necessary to limit all iPads to only showing the non-enhanced version of network and section fronts.
   
 - non-enhanced pages - features should either be hidden or have a way of displaying on non-enhanced versions of pages. To see the non-enhanced version of a page use the links [here](https://www.theguardian.com/info/2015/sep/22/making-theguardiancom-work-best-for-you).
@@ -173,8 +172,8 @@ To test these type of changes you can use a frontend.conf file to override the d
 See [here](https://github.com/guardian/frontend/blob/master/docs/03-dev-howtos/15-override-default-configuration.md) for details.
 
 Some points about CODE. The CODE composer does not actually produce content for the m.code website.
- Instead, content produced by the code composer can be found at https://viewer.code.dev-gutools.co.uk/proxy/preview/<path to your content>
- To get the path to your content, you can either access it from the furniture tab, or preview the content and then copy everything in the url after /preview.
+Instead, content produced by the code composer can be found at https://viewer.code.dev-gutools.co.uk/proxy/preview/<path to your content>
+To get the path to your content, you can either access it from the furniture tab, or preview the content and then copy everything in the url after /preview.
   eg for `https://viewer.code.dev-gutools.co.uk/preview/technology/2016/oct/14/testing-witness-embed`
   the path to content would be `/technology/2016/oct/14/testing-witness-embed`.
   This is useful if you are pointing to code and you wish to compare the change you have made on your branch to the current master branch.
