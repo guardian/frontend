@@ -2,7 +2,7 @@ package common
 
 import model.ApplicationIdentity
 import conf.switches.Switches.PolyfillIO
-import html.HtmlPageHelpers.{pillarCardCSSFileContent,pillarCardCSSFileFacia}
+import html.HtmlPageHelpers.{pillarCardCSSFileContent}
 
 object Preload {
 
@@ -18,7 +18,7 @@ object Preload {
   )
 
   val faciaDefaultPreloads: Seq[PreloadAsset] = Seq(
-    CssPreloadAsset(s"$pillarCardCSSFileFacia.css"),
+    CssPreloadAsset("facia.css"),
     if (conf.switches.Switches.PolyfillIO.isSwitchedOn) {
       ThirdPartyJsPreload(common.Assets.js.polyfillioUrl)
     } else {

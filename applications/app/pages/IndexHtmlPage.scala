@@ -20,7 +20,7 @@ import html.HtmlPageHelpers.pillarCardCSSFileContent
 object IndexHtml {
 
   def allStyles(implicit applicationContext: ApplicationContext): Styles = new Styles {
-    override def criticalCssLink: Html = criticalStyleLink("facia")
+    override def criticalCssLink: Html = criticalStyleLink(pillarCardCSSFileContent)
     override def criticalCssInline: Html = criticalStyleInline(Html(common.Assets.css.head(Some("facia"))))
     override def linkCss: Html = stylesheetLink("stylesheets/facia.css")
     override def oldIECriticalCss: Html = stylesheetLink("stylesheets/old-ie.head.facia.css")
