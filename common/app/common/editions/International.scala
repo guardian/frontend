@@ -67,7 +67,7 @@ object International extends Edition(
     banking,
     retail,
     markets,
-    eurozone
+    projectSyndicate
   )
 
   val environmentLocalNav = Seq(

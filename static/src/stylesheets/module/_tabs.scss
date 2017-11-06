@@ -46,6 +46,14 @@ category: Common
     list-style-type: none;
     overflow: hidden;
     z-index: 2;
+    width: 100%;
+    max-width: gs-span(6);
+    background: lighten($neutral-6, 5%);
+    table-layout: fixed;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    grid-column-gap: 2px;
+    display: table;
+    display: grid;
 
     @include mq(tablet) {
         margin-bottom: -1px;
@@ -53,14 +61,26 @@ category: Common
 }
 
 .tabs__tab {
-    width: 50%;
-    float: left;
     margin: 0;
+    border-bottom: 1px solid $neutral-5;
     border-top: 3px solid $neutral-6;
+    float: left;
+    width: 50%;
+
+    @supports ( display: grid ) {
+        width: 100%;
+    }
 
     @include mq(tablet) {
-        max-width: gs-span(3);
-        border-bottom: 1px solid $neutral-5;
+        display: table-cell;
+        float: none;
+        width: 100%;
+    }
+
+    &.tabs__tab--selected {
+        @include mq(desktop) {
+            border-bottom-color: #ffffff !important;
+        }
     }
 
     a,
@@ -69,23 +89,16 @@ category: Common
         display: block;
         box-sizing: border-box;
         min-height: $gs-row-height;
-        padding: $gs-baseline/3 8px 0;
-        background-color: $neutral-6;
+        padding: $gs-baseline/3 $gs-gutter/3.5 0;
         text-align: left;
         text-decoration: none;
-
-        &:active,
-        &:focus {
-            background-color: #ffffff;
-            text-decoration: none;
-        }
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        background: $neutral-6;
 
         @include mq($until: tablet) {
             font-size: 14px;
-        }
-
-        @include mq(tablet) {
-            padding: $gs-baseline/3 $gs-gutter/2 0;
         }
     }
 
@@ -93,26 +106,16 @@ category: Common
         color: inherit;
     }
 
-    & + & a {
-        border-left: 2px solid rgba(255, 255, 255, .75);
-        padding-left: 6px;
-    }
-}
-
-.tabs__tab--selected {
-    a,
-    .tab__link {
-        background: #ffffff;
+    & a:active,
+    & a:focus,
+    & .tab__link:active,
+    & .tab__link:focus,
+    &.tabs__tab--selected a,
+    &.tabs__tab--selected .tab__link {
+        background-color: #ffffff;
+        text-decoration: none;
     }
 
-    + .tabs__tab a {
-        border-left: 0;
-        padding-left: 8px;
-    }
-
-    @include mq(tablet) {
-        border-bottom-color: #ffffff !important;
-    }
 }
 
 .tabs__content {
@@ -142,25 +145,20 @@ category: Common
  */
 
 .tabs__container--multiple {
-    display: table;
-    table-layout: fixed;
-    width: 100%;
-    margin: 0;
     margin-bottom: 10px;
+    max-width: 100%;
 
-    .tabs__tab {
-        display: table-cell;
-        width: auto;
-        float: none;
-    }
-    .tab--stats {
-        display: none;
+    @include mq(desktop) {
+        .tab--stats {
+            display: none;
+        }
     }
 }
 
 // Most Popular FRONTS customisation: change layout to accommodate MPU (with or without tabs)
 .tabs--mostpop .tabs__content,
 .fc-slice--popular {
+
     @include mq(desktop) {
         display: table;
         display: flex;

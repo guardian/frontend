@@ -44,6 +44,7 @@ object NavLinks {
   val sustainableBusiness = NavLink("sustainable business", "/us/sustainable-business", "us/sustainable-business")
   val diversityEquality = NavLink("diversity & equality in business", "/business/diversity-and-equality", "business/diversity-and-equality")
   val smallBusiness = NavLink("small business", "/business/us-small-business", "business/us-small-business")
+  val projectSyndicate = NavLink("project syndicate", "/business/series/project-syndicate-economists", "business/series/project-syndicate-economists")
   val climateChange = NavLink("climate change", "/environment/climate-change", "environment/climate-change")
   val wildlife = NavLink("wildlife", "/environment/wildlife", "environment/wildlife")
   val energy = NavLink("energy", "/environment/energy", "environment/energy")
