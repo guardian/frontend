@@ -4,7 +4,7 @@ import config from 'lib/config';
 import raven from 'lib/raven';
 // This should no longer be used.
 // Prefer the new 'lib/fetch' or 'lib/fetch-json' library instead, which are es6 compliant.
-let ajaxHost = config.page.ajaxUrl || '';
+let ajaxHost = config.get('page.ajaxUrl', '');
 
 const ajax = (params: Object): any => {
     const options = params;

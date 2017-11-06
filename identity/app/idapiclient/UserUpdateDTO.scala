@@ -2,7 +2,10 @@ package idapiclient
 
 import com.gu.identity.model._
 
-case class UserUpdate (
+/**
+  * Represents up-to-date user data DTO that is serialised and posted to IDAPI
+  */
+case class UserUpdateDTO (
   primaryEmailAddress: Option[String] = None,
   publicFields: Option[PublicFields] = None,
   privateFields: Option[PrivateFields] = None,
@@ -11,5 +14,6 @@ case class UserUpdate (
   password: Option[String] = None,
   userGroups: Option[Set[GroupMembership]] = None,
   socialLinks: Option[Set[SocialLink]] = None,
-  adData: Option[Map[String, AnyRef]] = None
-);
+  adData: Option[Map[String, AnyRef]] = None,
+  consents: Option[List[Consent]] = None
+)
