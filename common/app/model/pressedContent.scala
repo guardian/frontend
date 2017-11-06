@@ -8,7 +8,7 @@ import com.gu.facia.client.models.{Backfill, CollectionConfigJson, Metadata}
 import common.{Edition, HTML}
 import common.commercial.EditionBranding
 import model.content.{Atoms, MediaAtom}
-import model.{Commercial, Elements, Fields, DotcomContentType, ImageMedia, MetaData, Pillar, Pillars, SectionId, SupportedUrl, Tags, Trail, VideoElement}
+import model.{CardStylePicker, Commercial, DotcomContentType, Elements, Fields, ImageMedia, MetaData, Pillar, Pillars, SectionId, SupportedUrl, Tags, Trail, VideoElement}
 import org.joda.time.DateTime
 
 object DisplayHints {
@@ -317,7 +317,7 @@ final case class PressedDiscussionSettings(
 object PressedCard {
   def make(content: fapi.FaciaContent): PressedCard = PressedCard(
     id = FaciaContentUtils.id(content),
-    cardStyle = CardStyle.make(FaciaContentUtils.cardStyle(content)),
+    cardStyle = CardStyle.make(CardStylePicker(content)),
     isLive = FaciaContentUtils.isLive(content),
     webPublicationDateOption = FaciaContentUtils.webPublicationDateOption(content),
     mediaType = fapiutils.MediaType.fromFaciaContent(content).map(MediaType.make),
