@@ -8,7 +8,7 @@ import model.ApplicationContext
 import org.apache.commons.io.IOUtils
 import play.api.libs.json._
 import play.api.Mode
-import html.HtmlPageHelpers.pillarCardCSSFileContent
+import html.HtmlPageHelpers.{pillarCardCSSFileContent,pillarCardCSSFileFacia}
 
 import scala.collection.concurrent.{TrieMap, Map => ConcurrentMap}
 import scala.util.{Failure, Success, Try}
@@ -93,8 +93,7 @@ object css {
   private def cssHead(project: String): String =
     project match {
       case "footballSnaps" => "head.footballSnaps"
-      case "facia" => "head.facia"
-      case "facia.pc" => "head.facia.pc"
+      case "facia" => s"head.$pillarCardCSSFileFacia"
       case "identity" => "head.identity"
       case "football" => "head.football"
       case "index" => "head.index"

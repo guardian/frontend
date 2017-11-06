@@ -42,6 +42,7 @@ object HtmlPageHelpers {
     )
   }
 
+  def pillarCardCSSFileFacia: String = if (PillarCards.isSwitchedOn) "facia.pc" else "facia"
   def pillarCardCSSFileContent: String = if (PillarCards.isSwitchedOn) "content.pc" else "content"
 
 }
