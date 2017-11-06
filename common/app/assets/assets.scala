@@ -8,6 +8,7 @@ import model.ApplicationContext
 import org.apache.commons.io.IOUtils
 import play.api.libs.json._
 import play.api.Mode
+import html.HtmlPageHelpers.pillarCardCSSFileContent
 
 import scala.collection.concurrent.{TrieMap, Map => ConcurrentMap}
 import scala.util.{Failure, Success, Try}
@@ -83,11 +84,9 @@ object css {
   }
 
   private def project(project: String): String = {
-    val content: String = if (PillarCards.isSwitchedOn) "content.pc" else "content"
-
     project match {
       case "facia" => "stylesheets/facia.css"
-      case _ => s"stylesheets/$content.css"
+      case _ => s"stylesheets/$pillarCardCSSFileContent.css"
     }
   }
 
@@ -100,7 +99,6 @@ object css {
       case "football" => "head.football"
       case "index" => "head.index"
       case "rich-links" => "head.rich-links"
-      case "rich-links.pc" => "head.rich-links.pc"
       case "email-signup" => "head.email-signup"
       case "commercial" => "head.commercial"
       case "survey" => "head.survey"

@@ -98,7 +98,7 @@ class CrosswordPageController(val contentApiClient: ContentApiClient, val contro
     withCrossword(crosswordType, id) { (crossword, _) =>
       val xml = CrosswordSvg(crossword, Some("100%"), Some("100%"), trim = true)
 
-      val globalStylesheet = Static("stylesheets/content.css")
+      val globalStylesheet = Static("stylesheets/$pillarCardCSSFileContent.css")
 
       Cached(60) {
         val body = s"""<?xml-stylesheet type="text/css" href="$globalStylesheet" ?>$xml"""

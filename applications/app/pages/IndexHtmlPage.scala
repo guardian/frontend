@@ -23,9 +23,9 @@ object IndexHtml {
     override def criticalCssInline: Html = criticalStyleInline(Html(common.Assets.css.head(Some("facia"))))
     override def linkCss: Html = stylesheetLink("stylesheets/facia.css")
     override def oldIECriticalCss: Html = stylesheetLink("stylesheets/old-ie.head.facia.css")
-    override def oldIELinkCss: Html = stylesheetLink("stylesheets/old-ie.content.css")
+    override def oldIELinkCss: Html = stylesheetLink(s"stylesheets/old-ie.$pillarCardCSSFileContent.css")
     override def IE9LinkCss: Html = stylesheetLink("stylesheets/ie9.head.facia.css")
-    override def IE9CriticalCss: Html = stylesheetLink("stylesheets/ie9.content.css")
+    override def IE9CriticalCss: Html = stylesheetLink(s"stylesheets/ie9.$pillarCardCSSFileContent.css")
   }
 
   def html( page: IndexPage)(

@@ -8,6 +8,7 @@ import views.html.stacked
 import views.html.fragments._
 import views.html.fragments.page.body._
 import views.support.Commercial
+import conf.switches.Switches.PillarCards
 
 trait HtmlPage[P <: model.Page] {
   def html(page: P)(implicit request: RequestHeader, applicationContext: ApplicationContext): Html
@@ -40,5 +41,7 @@ object HtmlPageHelpers {
       ("has-super-sticky-banner", model.Page.getContent(page).exists(_.tags.hasSuperStickyBanner))
     )
   }
+
+  def pillarCardCSSFileContent: String = if (PillarCards.isSwitchedOn) "content.pc" else "content"
 
 }

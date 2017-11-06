@@ -15,16 +15,15 @@ import views.html.fragments._
 import conf.switches.Switches.PillarCards
 
 object GalleryHtmlPage extends HtmlPage[GalleryPage] {
-  val content: String = if (PillarCards.isSwitchedOn) "content.pc" else "content"
 
   def allStyles(implicit applicationContext: ApplicationContext): Styles = new Styles {
     override def criticalCssLink: Html = criticalStyleLink("content")
     override def criticalCssInline: Html = criticalStyleInline(Html(common.Assets.css.head(None)))
-    override def linkCss: Html = stylesheetLink(s"stylesheets/$content.css")
+    override def linkCss: Html = stylesheetLink(s"stylesheets/$pillarCardCSSFileContent.css")
     override def oldIECriticalCss: Html = stylesheetLink("stylesheets/old-ie.head.content.css")
-    override def oldIELinkCss: Html = stylesheetLink(s"stylesheets/old-ie.$content.css")
+    override def oldIELinkCss: Html = stylesheetLink(s"stylesheets/old-ie.$pillarCardCSSFileContent.css")
     override def IE9LinkCss: Html = stylesheetLink("stylesheets/ie9.head.content.css")
-    override def IE9CriticalCss: Html = stylesheetLink(s"stylesheets/ie9.$content.css")
+    override def IE9CriticalCss: Html = stylesheetLink(s"stylesheets/ie9.$pillarCardCSSFileContent.css")
   }
 
   def html(page: GalleryPage)(implicit request: RequestHeader, applicationContext: ApplicationContext): Html = {
