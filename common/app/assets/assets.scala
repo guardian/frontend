@@ -8,7 +8,7 @@ import model.ApplicationContext
 import org.apache.commons.io.IOUtils
 import play.api.libs.json._
 import play.api.Mode
-import html.HtmlPageHelpers.{pillarCardCSSFileContent,pillarCardCSSFileFacia}
+import html.HtmlPageHelpers.{pillarCardCSSFileContent,pillarCardCSSFileFacia,pillarCardCSSFileRichLinks}
 
 import scala.collection.concurrent.{TrieMap, Map => ConcurrentMap}
 import scala.util.{Failure, Success, Try}
@@ -97,7 +97,7 @@ object css {
       case "identity" => "head.identity"
       case "football" => "head.football"
       case "index" => "head.index"
-      case "rich-links" => "head.rich-links"
+      case "rich-links" => s"head.$pillarCardCSSFileRichLinks"
       case "email-signup" => "head.email-signup"
       case "commercial" => "head.commercial"
       case "survey" => "head.survey"
