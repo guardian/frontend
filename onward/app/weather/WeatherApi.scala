@@ -9,14 +9,17 @@ import play.api.libs.ws.WSClient
 import weather.geo.LatitudeLongitude
 import weather.models.CityId
 import weather.models.accuweather.{ForecastResponse, LocationResponse, WeatherResponse}
-import dispatch._
-import Defaults._
 import java.util.concurrent.TimeoutException
+
 import model.ApplicationContext
+
 import scala.concurrent.duration._
 import play.api.Mode
 
-class WeatherApi(wsClient: WSClient, context: ApplicationContext) extends ResourcesHelper with Logging {
+import scala.concurrent.{ExecutionContext, Future}
+import scala.util.control.NonFatal
+
+class WeatherApi(wsClient: WSClient, context: ApplicationContext)(implicit ec: ExecutionContext) extends ResourcesHelper with Logging {
   lazy val weatherApiKey: String = Configuration.weather.apiKey.getOrElse(
     throw new RuntimeException("Weather API Key not set")
   )
@@ -48,20 +51,18 @@ class WeatherApi(wsClient: WSClient, context: ApplicationContext) extends Resour
   }
 
   private def getJsonWithRetry(url: String): Future[JsValue] = {
-    val fetchRequest = () => wsClient.url(url).withRequestTimeout(requestTimeout).get().filter(_.status == 200)
+    wsClient
+      .url(url)
+      .withRequestTimeout(requestTimeout)
+      .get()
       .map { response =>
-        Right(response.json)
+        if(response.status == 200) response.json else throw new RuntimeException(s"Weather API response: $response")
       }
-      .recover {
-        case t : TimeoutException => Left(t)
+      .recoverWith {
+        case NonFatal(error) =>
+          log.error(s"Error fetching $url - $error")
+          Future.failed(error)
       }
-    retry.Backoff(max = requestRetryMax, delay = requestRetryDelay, base = requestRetryBackoffBase)(fetchRequest).flatMap {
-      case Left(error) =>
-        log.error(s"Error fetching $url: $error")
-        Future.failed(error)
-      case Right(json) =>
-        Future.successful(json)
-    }
   }
 
   def searchForLocations(query: String): Future[Seq[LocationResponse]] =
