@@ -76,6 +76,16 @@ object ABJavascriptRenderingControl extends TestDefinition(
   def canRun(implicit request: RequestHeader): Boolean = participationGroup.contains("control")
 }
 
+object PillarCards extends TestDefinition(
+  name = "pillar-cards",
+  description = "Users in this test will see pillar cards.",
+  owners = Seq(Owner.withName("dotcom.platform")),
+  sellByDate = new LocalDate(2018, 2, 1)
+) {
+  def participationGroup(implicit request: RequestHeader): Option[String] = request.headers.get("X-GU-pillar-cards")
+  def canRun(implicit request: RequestHeader): Boolean = participationGroup.contains("true")
+}
+
 trait ServerSideABTests {
   val tests: Seq[TestDefinition]
 
@@ -103,7 +113,8 @@ object ActiveTests extends ServerSideABTests {
     ABNewDesktopHeaderVariant,
     ABNewDesktopHeaderControl,
     ABJavascriptRenderingVariant,
-    ABJavascriptRenderingControl
+    ABJavascriptRenderingControl,
+    PillarCards
   )
 }
 
