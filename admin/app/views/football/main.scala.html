@@ -7,7 +7,7 @@
 @import conf.switches.Switches.PillarCards
 
 
-@defining(if (PillarCards.isSwitchedOn) "content.pc" else "content") { contentCSS =>
+@defining(if (PillarCards.isSwitchedOn or mvt.PillarCards.isParticipating) "content.pc" else "content") { contentCSS =>
     <!DOCTYPE html>
     <html lang="en">
         <head>

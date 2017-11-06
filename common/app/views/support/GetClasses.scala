@@ -4,6 +4,7 @@ import layout._
 import model.pressed.{Audio, Gallery, Video}
 import slices.{Dynamic, DynamicSlowMPU}
 import conf.switches.Switches.PillarCards
+import play.api.mvc.RequestHeader
 
 object GetClasses {
   def forHtmlBlob(item: HtmlBlob): String = {
@@ -14,14 +15,20 @@ object GetClasses {
     ) ++ item.customCssClasses: _*)
   }
 
-  def forItem(item: ContentCard, isFirstContainer: Boolean): String = {
+  def forItem(item: ContentCard, isFirstContainer: Boolean)(implicit request: RequestHeader): String = {
     RenderClasses(Map(
       ("fc-item", true),
       ("js-fc-item", true),
-      ("fc-item--" + item.pillar.name.toLowerCase(), PillarCards.isSwitchedOn),
-      ("fc-item--" + item.contentType.name.toLowerCase(), PillarCards.isSwitchedOn),
+      ("fc-item--" + item.pillar.name.toLowerCase(),
+        PillarCards.isSwitchedOn || mvt.PillarCards.isParticipating
+      ),
+      ("fc-item--" + item.contentType.name.toLowerCase(),
+        PillarCards.isSwitchedOn || mvt.PillarCards.isParticipating
+      ),
       ("fc-item--has-cutout", item.cutOut.isDefined),
-      (TrailCssClasses.toneClassFromStyle(item.cardStyle) + "--item", PillarCards.isSwitchedOff),
+      (TrailCssClasses.toneClassFromStyle(item.cardStyle) + "--item",
+        PillarCards.isSwitchedOff && !mvt.PillarCards.isParticipating
+      ),
       ("fc-item--has-no-image", !item.hasImage),
       ("fc-item--has-image", item.hasImage),
       ("fc-item--force-image-upgrade", isFirstContainer),

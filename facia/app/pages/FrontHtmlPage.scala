@@ -27,8 +27,9 @@ object FrontHtmlPage extends HtmlPage[PressedPage] {
     )
   }
 
-  def allStyles(implicit applicationContext: ApplicationContext): Styles = new Styles {
-    val facia: String = if (PillarCards.isSwitchedOn) "facia.pc" else "facia"
+  def allStyles(implicit request: RequestHeader, applicationContext: ApplicationContext): Styles = new Styles {
+    val facia: String = if (PillarCards.isSwitchedOn || mvt.PillarCards.isParticipating) "facia.pc" else "facia"
+
     override def criticalCssLink: Html = criticalStyleLink(facia)
     override def criticalCssInline: Html = criticalStyleInline(Html(common.Assets.css.head(Some(facia))))
     override def linkCss: Html = stylesheetLink("stylesheets/facia.css")

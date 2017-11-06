@@ -28,7 +28,7 @@ object InteractiveHtmlPage extends HtmlPage[InteractivePage] {
       Html(common.Assets.css.interactive)
     )
 
-    val content: String = if (PillarCards.isSwitchedOn) "content.pc" else "content"
+    val content: String = if (PillarCards.isSwitchedOn || mvt.PillarCards.isParticipating) "content.pc" else "content"
 
     override def linkCss: Html = stylesheetLink(s"stylesheets/$content.css")
     override def oldIECriticalCss: Html = stylesheetLink("stylesheets/old-ie.head.content.css")

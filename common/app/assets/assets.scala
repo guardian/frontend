@@ -8,6 +8,7 @@ import model.ApplicationContext
 import org.apache.commons.io.IOUtils
 import play.api.libs.json._
 import play.api.Mode
+import play.api.mvc.RequestHeader
 
 import scala.collection.concurrent.{TrieMap, Map => ConcurrentMap}
 import scala.util.{Failure, Success, Try}
@@ -68,7 +69,7 @@ object css {
   def interactive(implicit context: ApplicationContext): String = inline("head.interactive")
   def inlineAtom(atomType: String)(implicit content: ApplicationContext): String = inline(s"head.atom-$atomType")
 
-  def projectCss(projectOverride: Option[String])(implicit context: ApplicationContext): String = project(projectOverride.getOrElse(context.applicationIdentity.name))
+  def projectCss(projectOverride: Option[String], request: RequestHeader)(implicit context: ApplicationContext): String = project(projectOverride.getOrElse(context.applicationIdentity.name), request)
   def headOldIE(projectOverride: Option[String])(implicit context: ApplicationContext): String = cssOldIE(projectOverride.getOrElse(context.applicationIdentity.name))
   def headIE9(projectOverride: Option[String])(implicit context: ApplicationContext): String = cssIE9(projectOverride.getOrElse(context.applicationIdentity.name))
 
@@ -82,8 +83,8 @@ object css {
     })
   }
 
-  private def project(project: String): String = {
-    val content: String = if (PillarCards.isSwitchedOn) "content.pc" else "content"
+  private def project(project: String, request: RequestHeader): String = {
+    val content: String = if (PillarCards.isSwitchedOn || mvt.PillarCards.isParticipating(request)) "content.pc" else "content"
 
     project match {
       case "facia" => "stylesheets/facia.css"

@@ -18,7 +18,7 @@ import conf.switches.Switches.PillarCards
 object NewsletterHtmlPage extends HtmlPage[SimplePage] {
 
   def allStyles(implicit applicationContext: ApplicationContext): Styles = new Styles {
-    val content: String = if (PillarCards.isSwitchedOn) "content.pc" else "content"
+    val content: String = if (PillarCards.isSwitchedOn || mvt.PillarCards.isParticipating) "content.pc" else "content"
 
     override def criticalCssLink: Html = criticalStyleLink("content")
     override def criticalCssInline: Html = criticalStyleInline(Html(common.Assets.css.head(Some("signup"))))

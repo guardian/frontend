@@ -17,9 +17,10 @@ import views.html.fragments.page.{devTakeShot, htmlTag}
 import conf.switches.Switches.PillarCards
 
 object CrosswordHtmlPage extends HtmlPage[CrosswordPage] {
-  val content: String = if (PillarCards.isSwitchedOn) "content.pc" else "content"
 
-  def allStyles(implicit applicationContext: ApplicationContext): Styles = new Styles {
+  def allStyles(implicit request: RequestHeader, applicationContext: ApplicationContext): Styles = new Styles {
+    val content: String = if (PillarCards.isSwitchedOn || mvt.PillarCards.isParticipating) "content.pc" else "content"
+
     override def criticalCssLink: Html = criticalStyleLink("content")
     override def criticalCssInline: Html = criticalStyleInline(Html(common.Assets.css.head(None)))
     override def linkCss: Html = stylesheetLink(s"stylesheets/$content.css", true)

@@ -20,7 +20,7 @@ class H2PreloadFilter(
       val contentType = result.body.contentType.getOrElse("")
       if (contentType.contains("text/html")) {
         val preloadFiles = Preload.config.getOrElse(applicationContext.applicationIdentity, Seq.empty)
-        result.withPreload(preloadFiles)
+        result.withPreload(preloadFiles, request)
       } else result
     }
   }

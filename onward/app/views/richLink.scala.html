@@ -5,7 +5,7 @@
 @import play.api.Mode.Dev
 @import conf.switches.Switches.PillarCards
 
-@defining(if (PillarCards.isSwitchedOn) "rich-links.pc" else "rich-links") { richLinks =>
+@defining(if (PillarCards.isSwitchedOn || mvt.PillarCards.isParticipating) "rich-links.pc" else "rich-links") { richLinks =>
     <html class="svg">
         <head>
             <link rel="stylesheet" type="text/css" href="@Static("stylesheets/webfonts-hinting-off-kerning-on.css")" />
