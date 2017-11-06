@@ -88,6 +88,10 @@ object UrlHelpers {
     }
 
     val acquisitionData = Json.obj(
+      // GUARDIAN_WEB corresponds to a value in the Thrift enum
+      // https://dashboard.ophan.co.uk/docs/thrift/acquisition.html#Enum_AcquisitionSource
+      // ACQUISITIONS_HEADER and ACQUISITIONS_FOOTER correspond to values in the Thrift enum
+      // https://dashboard.ophan.co.uk/docs/thrift/componentevent.html#Enum_ComponentType
       "source" -> "GUARDIAN_WEB",
       "componentType" -> (position match {
         case NewHeader | OldHeader | AmpHeader | SideMenu | SlimHeaderDropdown => "ACQUISITIONS_HEADER"
