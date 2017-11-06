@@ -12,7 +12,6 @@ import views.html.fragments.page.body.{bodyTag, breakingNewsDiv, mainContent, sk
 import views.html.fragments.page.head.{fixIEReferenceErrors, headTag, titleTag}
 import views.html.fragments.page.head.stylesheets.{criticalStyleInline, criticalStyleLink, styles}
 import views.html.fragments.page.{devTakeShot, htmlTag}
-import conf.switches.Switches.PillarCards
 
 object FrontHtmlPage extends HtmlPage[PressedPage] {
 
@@ -28,7 +27,7 @@ object FrontHtmlPage extends HtmlPage[PressedPage] {
   }
 
   def allStyles(implicit applicationContext: ApplicationContext): Styles = new Styles {
-    override def criticalCssLink: Html = criticalStyleLink("facia")
+    override def criticalCssLink: Html = criticalStyleLink(pillarCardCSSFileFacia)
     override def criticalCssInline: Html = criticalStyleInline(Html(common.Assets.css.head(Some("facia"))))
     override def linkCss: Html = stylesheetLink("stylesheets/facia.css")
 

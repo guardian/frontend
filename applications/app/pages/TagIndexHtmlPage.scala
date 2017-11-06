@@ -13,7 +13,7 @@ import views.html.fragments.page.head.stylesheets.{criticalStyleInline, critical
 import views.html.fragments.page.head.{fixIEReferenceErrors, headTag, titleTag}
 import views.html.fragments.page.{devTakeShot, htmlTag}
 import views.html.preferences.index
-import conf.switches.Switches.PillarCards
+import html.HtmlPageHelpers.pillarCardCSSFileContent
 
 object TagIndexHtmlPage extends HtmlPage[StandalonePage] {
 

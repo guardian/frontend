@@ -13,7 +13,7 @@ import views.html.fragments.page._
 import views.html.fragments.page.body._
 import views.html.fragments.page.head.stylesheets.{criticalStyleInline, criticalStyleLink, styles}
 import views.html.fragments.page.head.{fixIEReferenceErrors, headTag, titleTag}
-import conf.switches.Switches.PillarCards
+import html.HtmlPageHelpers.pillarCardCSSFileContent
 
 object StoryHtmlPage {
 

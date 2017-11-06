@@ -15,6 +15,7 @@ import views.html.fragments.page.body.{bodyTag, breakingNewsDiv, mainContent, sk
 import views.html.fragments.page.head.stylesheets.{criticalStyleInline, criticalStyleLink, styles}
 import views.html.fragments.page.head.{fixIEReferenceErrors, headTag, titleTag}
 import views.html.fragments.page.{devTakeShot, htmlTag}
+import html.HtmlPageHelpers.pillarCardCSSFileContent
 
 object IndexHtml {
 

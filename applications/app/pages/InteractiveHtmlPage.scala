@@ -14,7 +14,7 @@ import views.html.fragments.page.head.stylesheets.{criticalStyleInline, critical
 import views.html.fragments.page.{devTakeShot, htmlTag}
 import views.html.fragments._
 import views.html.stacked
-import conf.switches.Switches.PillarCards
+import html.HtmlPageHelpers.pillarCardCSSFileContent
 
 object InteractiveHtmlPage extends HtmlPage[InteractivePage] {
 
