@@ -161,8 +161,8 @@ trait FeatureSwitches {
     "If switched on, users will post GDPR compliant marketing consent from 'Edit Profile' page",
     owners = Seq(Owner.withGithub("mario-galic")),
     safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
+    sellByDate = new LocalDate(2018, 1, 1),
+    exposeClientSide = false
   )
 
   val EnhanceTweetsSwitch = Switch(
