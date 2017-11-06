@@ -1,6 +1,7 @@
 package form
 
-import com.gu.identity.model.{Consent, User}
+import com.gu.identity.model.{Consent, ConsentText, User}
+import com.gu.identity.model.ConsentText._
 import idapiclient.UserUpdateDTO
 import play.api.data.Forms._
 import play.api.data.JodaForms.jodaDate
@@ -73,7 +74,7 @@ object PrivacyFormData {
 
   private val defaultConsents =
     List(
-      Consent("user", "firstParty", false),
-      Consent("user", "thirdParty", false),
-      Consent("user", "thirdPartyProfiling", false))
+      Consent("user", FirstParty.name, false),
+      Consent("user", ThirdParty.name, false),
+      Consent("user", ThirdPartyProfiling.name, false))
 }

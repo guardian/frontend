@@ -145,7 +145,7 @@ case class ProfileForms(
     * Note that other profile forms remain unchanged, which means they remain bound bound to
     * "old user form api" instance.
     */
-  def bindFromRequestWithAddressErrorHack(implicit request: Request[_]): ProfileForms = update {
+  def bindFromRequestWithAddressErrorHack(implicit request: Request[_]): ProfileForms = transform {
     form =>
       // Hack to get the postcode error into the correct context.
       val boundForm = form.bindFromRequest()
@@ -157,7 +157,7 @@ case class ProfileForms(
 
   /** Adds errors to the form */
   def withErrors(idapiErrors: List[Error]): ProfileForms = {
-    update{
+    transform{
       form =>
         idapiErrors.foldLeft(form){
           (formWithErrors, idapiError) =>
@@ -173,7 +173,7 @@ case class ProfileForms(
     * @param changeFunc function that takes currently active form and returns a modified version of the form
     * @return copy of ProfileForms with applied change to the currently active form
     */
-  private def update(changeFunc: (Form[_ <: UserFormData]) => Form[_ <: UserFormData]): ProfileForms = {
+  private def transform(changeFunc: (Form[_ <: UserFormData]) => Form[_ <: UserFormData]): ProfileForms = {
     activePage match {
       case PublicEditProfilePage => copy(publicForm = changeFunc(publicForm).asInstanceOf[Form[ProfileFormData]])
       case AccountEditProfilePage => copy(accountForm = changeFunc(accountForm).asInstanceOf[Form[AccountFormData]])
