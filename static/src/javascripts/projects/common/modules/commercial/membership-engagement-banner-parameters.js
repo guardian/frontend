@@ -62,12 +62,19 @@ const monthlySupporterCost = (location: string): string => {
 };
 
 const supporterEngagementCtaCopy = (location: string): string =>
-    `Support us for ${monthlySupporterCost(location)} per month.`;
-
-const contributionEngagementBannerCopy = (): string =>
-    `Support us with a one-time contribution`;
+    `Support us for ${monthlySupporterCost(location)} a month.`;
 
 const supporterParams = (location: string): EngagementBannerParams =>
+    Object.assign({}, baseParams, {
+        buttonCaption: 'Support the Guardian',
+        linkUrl: 'https://support.theguardian.com',
+        products: ['CONTRIBUTION', 'RECURRING_CONTRIBUTION'],
+        messageText: engagementBannerCopy(),
+        ctaText: supporterEngagementCtaCopy(location),
+        pageviewId: config.get('ophan.pageViewId', 'not_found'),
+    });
+
+const membershipSupporterParams = (location: string): EngagementBannerParams =>
     Object.assign({}, baseParams, {
         buttonCaption: 'Become a Supporter',
         linkUrl: 'https://membership.theguardian.com/supporter',
@@ -77,17 +84,11 @@ const supporterParams = (location: string): EngagementBannerParams =>
         pageviewId: config.get('ophan.pageViewId', 'not_found'),
     });
 
-const contributionParams = (): EngagementBannerParams =>
-    Object.assign({}, baseParams, {
-        buttonCaption: 'Make a Contribution',
-        linkUrl: 'https://contribute.theguardian.com',
-        products: ['CONTRIBUTION'],
-        messageText: engagementBannerCopy(),
-        ctaText: contributionEngagementBannerCopy(),
-        pageviewId: config.get('ophan.pageViewId', 'not_found'),
-    });
-
 export const engagementBannerParams = (
     location: string
-): EngagementBannerParams =>
-    location === 'US' ? contributionParams() : supporterParams(location);
+): EngagementBannerParams => {
+    if (location === 'US' || location === 'GB') {
+        return supporterParams(location);
+    }
+    return membershipSupporterParams(location);
+};

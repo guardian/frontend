@@ -1,6 +1,7 @@
 @import conf.{Configuration, Static}
 @import model.{EmbedPage, VideoPlayer}
 @import views.support.{SeoOptimisedContentImage, StripHtmlTags, Video640}
+@import conf.switches.Switches.EnhancedVideoPlayerSwitch
 
 @(page: EmbedPage)(implicit request: RequestHeader, context: model.ApplicationContext)
 
@@ -99,14 +100,16 @@
         document.documentElement.className = docClass;
         </script>
 
-        <script>
-        (function (document) {
-            var script = document.createElement('script');
-            var ref = document.getElementsByTagName('script')[0];
-            script.src = '@Static("javascripts/graun.video-embed.js")';
-            ref.parentNode.insertBefore(script, ref);
-        })(document);
-        </script>
+        @if(EnhancedVideoPlayerSwitch.isSwitchedOn) {
+            <script>
+            (function (document) {
+                var script = document.createElement('script');
+                var ref = document.getElementsByTagName('script')[0];
+                script.src = '@Static("javascripts/graun.video-embed.js")';
+                ref.parentNode.insertBefore(script, ref);
+            })(document);
+            </script>
+        }
 
         @fragments.analytics.base()(page, request, context)
 

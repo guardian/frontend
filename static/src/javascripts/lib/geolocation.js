@@ -145,11 +145,20 @@ const getLocalCurrencySymbol = (): string =>
         EU: '€',
     }[getSync()] || '£');
 
+const getLocalAverageDonation = (): string =>
+    ({
+        GB: '£17',
+        US: '$23',
+        AU: '$41',
+        EU: '€20',
+    }[getSync()] || '$24');
+
 export {
     get,
     getSupporterPaymentRegion,
     getSync,
     getLocalCurrencySymbol,
+    getLocalAverageDonation,
     isInEurope,
     init,
     setGeolocation,

@@ -114,10 +114,21 @@
 .contributions__amount-field {
     display: flex;
     flex-direction: column;
+    flex-wrap: wrap;
+
+    // Horizontal alignment
+    align-items: left;
 
     @include mq($from: mobileLandscape) {
         flex-direction: row;
+
+        // Now vertical alignment, because the flex-direction is row
+        align-items: center;
     }
+}
+
+.contributions__payment-logos {
+    height: 25px;
 }
 
 .contributions__contribute {
@@ -161,9 +172,8 @@
     }
 }
 
-.contributions__contribute--epic-member-top {
-    margin-bottom: $gs-baseline/2;
-    margin-right: $gs-gutter/2;
+.contributions__contribute--epic-member {
+    margin: $gs-baseline/3 $gs-gutter/2 $gs-baseline/3 0;
 }
 
 .contributions__option-button--epic {

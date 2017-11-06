@@ -3,7 +3,7 @@ import $ from 'lib/$';
 import fetch from 'lib/fetch';
 import config from 'lib/config';
 import reportError from 'lib/report-error';
-import formatters from 'membership/formatters';
+import { formatDate, formatAmount } from 'membership/formatters';
 import { display } from 'membership/stripe';
 
 const PACKAGE_COST = '.js-dig-package-cost';
@@ -38,18 +38,18 @@ const populateUserDetails = (userDetails: UserDetails): void => {
     $(SUBSCRIBER_ID).text(userDetails.subscription.subscriberId);
     $(DIGITALPACK_PRODUCT).text(userDetails.subscription.plan.name);
     $(PACKAGE_COST).text(
-        formatters.formatAmount(userDetails.subscription.plan.amount, glyph)
+        formatAmount(userDetails.subscription.plan.amount, glyph)
     );
-    $(DETAILS_JOIN_DATE).text(formatters.formatDate(userDetails.joinDate));
+    $(DETAILS_JOIN_DATE).text(formatDate(userDetails.joinDate));
     $(PACKAGE_INTERVAL).text(`${userDetails.subscription.plan.interval}ly`);
     $(PACKAGE_CURRENT_PERIOD_START).text(
-        formatters.formatDate(userDetails.subscription.start)
+        formatDate(userDetails.subscription.start)
     );
     $(PACKAGE_CURRENT_PERIOD_END).text(
-        formatters.formatDate(userDetails.subscription.end)
+        formatDate(userDetails.subscription.end)
     );
     $(PACKAGE_CURRENT_RENEWAL_DATE).text(
-        formatters.formatDate(userDetails.subscription.renewalDate)
+        formatDate(userDetails.subscription.renewalDate)
     );
     const trialLeft = userDetails.subscription.trialLength;
     if (trialLeft > 0) {
@@ -60,17 +60,14 @@ const populateUserDetails = (userDetails: UserDetails): void => {
     }
 
     $(PACKAGE_NEXT_PAYMENT_DATE).text(
-        formatters.formatDate(userDetails.subscription.nextPaymentDate)
+        formatDate(userDetails.subscription.nextPaymentDate)
     );
     if (
         userDetails.subscription.nextPaymentPrice !==
         userDetails.subscription.plan.amount
     ) {
         $(PACKAGE_NEXT_PAYMENT_PRICE).text(
-            formatters.formatAmount(
-                userDetails.subscription.nextPaymentPrice,
-                glyph
-            )
+            formatAmount(userDetails.subscription.nextPaymentPrice, glyph)
         );
         $(PACKAGE_NEXT_PAYMENT_CONTAINER).removeClass(IS_HIDDEN_CLASSNAME);
     }

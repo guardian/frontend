@@ -177,7 +177,7 @@ define([
             }
         }
 
-        sendNewStyleInteraction(atomId.trim(), 'SUBSCRIBE', prefAnswerDelivery.value);
+        sendNewStyleInteraction(atomId.trim(), 'SUBSCRIBE', prefAnswerDelivery);
     }
 
     return {
@@ -194,28 +194,39 @@ define([
             var readerQuestionsContainer = document.getElementById('user__question-atom-' + atomId);
             var askQuestionLinks = Array.from(document.querySelectorAll('.js-ask-question-link'));
 
+            var answersDeliveryPreferences = document.querySelectorAll('.btn-answer-delivery-' + atomId);
+            var answerDeliveryPrefContainer = document.getElementById('js-delivery-selection-body-' + atomId);
+
             if (readerQuestionsContainer) {
                 bean.one(readerQuestionsContainer, 'click', askQuestionLinks, function (event) {
                     askQuestion(event, isEmailSubmissionReady, isDeliveryTestReady);
                     this.classList.add('is-clicked');
                 });
             }
-            
-            var answersEmailSignupForms = $('.js-storyquestion-email-signup-form');
-
-            answersEmailSignupForms.each(function (el) {
-                bean.on(el, 'submit', submitSignUpForm);
-            });
-
-            var answerDeliveryPrefContainer = document.getElementById('js-delivery-selection-body-' + atomId);
-            var answersDeliveryPreferences = Array.from(document.querySelectorAll('.btn-answer-delivery-' + atomId));
 
             if (answerDeliveryPrefContainer) {
-                bean.one(answerDeliveryPrefContainer, 'click', answersDeliveryPreferences, function (event) {
+                var deliveryPrefList = Array.from(answersDeliveryPreferences);
+
+                var pool = [0, 1, 2];
+                var flush = [];
+                while (pool.length > 0) {
+                    var rand = Math.random() * pool.length | 0;
+                    flush.push(pool[rand]);
+                    pool.splice(rand, 1);
+                }
+
+                flush.forEach(function (num) {
+                    var relevantBtn = deliveryPrefList[num];
+                    answerDeliveryPrefContainer.insertBefore(relevantBtn, null)
+                });
+
+                bean.one(answerDeliveryPrefContainer, 'click', deliveryPrefList, function (event) {
                     submitDeliveryPreference(event);
                     this.classList.add('is-clicked');
                 });
+
             }
+
            
             var finalCloseBtn = document.getElementById('js-final-thankyou-message-' + atomId);
 
@@ -227,6 +238,12 @@ define([
                     this.classList.add('is-clicked')
                 });
             }
+
+            var answersEmailSignupForms = $('.js-storyquestion-email-signup-form');
+
+            answersEmailSignupForms.each(function (el) {
+                bean.on(el, 'submit', submitSignUpForm);
+            });
 
             Id.getUserFromApi(function (userFromId) {
                 if (userFromId && userFromId.primaryEmailAddress) {

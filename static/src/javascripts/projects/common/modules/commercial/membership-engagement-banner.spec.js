@@ -20,7 +20,7 @@ jest.mock('lib/url', () => ({
     constructQuery: jest.fn(() => ''),
 }));
 jest.mock('lib/geolocation', () => ({
-    get: jest.fn(() => Promise.resolve('GB')),
+    getSync: jest.fn(() => 'GB'),
 }));
 jest.mock('common/views/svgs', () => ({
     inlineSvg: jest.fn(() => ''),

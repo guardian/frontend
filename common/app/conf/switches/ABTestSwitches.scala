@@ -22,7 +22,7 @@ trait ABTestSwitches {
     "Test to assess the impact of integrating with IAS to provide richer targeting of our ad slots",
     owners = Seq(Owner.withGithub("JonNorman")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 11, 6),
+    sellByDate = new LocalDate(2017, 11, 8),
     exposeClientSide = true
   )
 
@@ -118,11 +118,21 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-acquisitions-epic-ease-of-payment",
+    "ab-acquisitions-epic-logos-highlight-average",
     "Test some variations of the Epic which mention price",
     owners = Seq(Owner.withGithub("joelochlann")),
     safeState = On,
-    sellByDate = new LocalDate(2017, 11, 20),
+    sellByDate = new LocalDate(2017, 12, 5),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-epic-paradise",
+    "Test highlighting a different sentance in the epic",
+    owners = Seq(Owner.withGithub("jranks123")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 11, 23),
     exposeClientSide = true
   )
 

@@ -20,7 +20,7 @@ const normalise = (length: string): string => {
 const resize = (
     specs: Specs,
     iframe: HTMLElement,
-    iframeContainer: HTMLElement,
+    iframeContainer: ?HTMLElement,
     adSlot: HTMLElement
 ): ?Promise<any> => {
     if (
@@ -45,7 +45,10 @@ const resize = (
     return fastdom.write(() => {
         Object.assign(adSlot.style, styles);
         Object.assign(iframe.style, styles);
-        Object.assign(iframeContainer.style, styles);
+
+        if (iframeContainer) {
+            Object.assign(iframeContainer.style, styles);
+        }
     });
 };
 
