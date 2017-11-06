@@ -223,34 +223,39 @@ define([
             }
         });
 
+        page.isFootballStatsPage(function () {
+            $('.js-chart').each(function (el) {
+                new Doughnut().render(el);
+            });
+        });
+
         page.isLiveClockwatch(function () {
             var ml = new MatchListLive.MatchListLive('match-day', page.isCompetition() || 'premierleague', config.dateFromSlug()),
                 $img = $('.media-primary'),
                 $matchListContainer = $.create('<div class="football-matches__container" data-link-name="football-matches-clockwatch"></div>')
                                           .css({ minHeight: $img[0] ? $img[0].offsetHeight : 0 });
-
+                         
             $img.addClass('u-h');
+
             loading($matchListContainer[0], 'Fetching today’s matches…', { text: 'Impatient?', href: '/football/live' });
 
             $('.js-football-meta').append($matchListContainer);
-            ml.fetch($matchListContainer[0]).fail(function () {
-                ml.destroy();
-                $matchListContainer.remove();
-                $img.removeClass('u-h');
-            }).always(function () {
-                if ($('.football-match', $matchListContainer[0]).length === 0) {
+
+            var handleResponse = function(success) {
+                if (!success || $('.football-match', $matchListContainer[0]).length === 0) {
                     ml.destroy();
                     $matchListContainer.remove();
                     $img.removeClass('u-h');
                 }
+                
                 $matchListContainer.css({ minHeight: 0 });
                 loaded($matchListContainer[0]);
-            });
-        });
-
-        page.isFootballStatsPage(function () {
-            $('.js-chart').each(function (el) {
-                new Doughnut().render(el);
+            };
+            
+            ml.fetch($matchListContainer[0]).then(function() {
+                handleResponse(true);
+            }).catch(function() {
+                handleResponse(false);
             });
         });
 
