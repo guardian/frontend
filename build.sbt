@@ -35,7 +35,6 @@ val common = library("common").settings(
     scalajTime,
     ws,
     faciaFapiScalaClient,
-    dispatchTest,
     closureCompiler,
     jerseyCore,
     jerseyClient,
@@ -50,8 +49,7 @@ val common = library("common").settings(
     playJson,
     playJsonJoda,
     jodaForms,
-    jacksonDataFormat,
-    ophanEventModel
+    jacksonDataFormat
   )
 ).settings(
     mappings in TestAssets ~= filterAssets
@@ -127,17 +125,9 @@ val identity = application("identity").dependsOn(commonWithTests).aggregate(comm
   )
 )
 
-val commercial = application("commercial").dependsOn(commonWithTests).aggregate(common).settings(
-  libraryDependencies ++= Seq(
-    dispatch
-  )
-)
+val commercial = application("commercial").dependsOn(commonWithTests).aggregate(common)
 
-val onward = application("onward").dependsOn(commonWithTests).aggregate(common).settings(
-  libraryDependencies ++= Seq(
-    dispatch
-  )
-)
+val onward = application("onward").dependsOn(commonWithTests).aggregate(common)
 
 val dev = application("dev-build")
   .dependsOn(
