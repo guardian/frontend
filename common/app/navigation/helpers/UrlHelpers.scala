@@ -5,8 +5,6 @@ import play.api.libs.json.Json
 import play.api.mvc.RequestHeader
 import common.Edition
 import navigation.ReaderRevenueSite._
-import ophan.thrift.componentEvent.ComponentType
-import ophan.thrift.event.AcquisitionSource
 
 object UrlHelpers {
 
@@ -72,10 +70,14 @@ object UrlHelpers {
     }
 
     val acquisitionData = Json.obj(
-      "source" -> AcquisitionSource.GuardianWeb.originalName,
+      // GUARDIAN_WEB corresponds to a value in the Thrift enum
+      // https://dashboard.ophan.co.uk/docs/thrift/acquisition.html#Enum_AcquisitionSource
+      // ACQUISITIONS_HEADER and ACQUISITIONS_FOOTER correspond to values in the Thrift enum
+      // https://dashboard.ophan.co.uk/docs/thrift/componentevent.html#Enum_ComponentType
+      "source" -> "GUARDIAN_WEB",
       "componentType" -> (position match {
-        case NewHeader | OldHeader | AmpHeader | SideMenu | SlimHeaderDropdown => ComponentType.AcquisitionsHeader.originalName
-        case Footer => ComponentType.AcquisitionsFooter.originalName
+        case NewHeader | OldHeader | AmpHeader | SideMenu | SlimHeaderDropdown => "ACQUISITIONS_HEADER"
+        case Footer => "ACQUISITIONS_FOOTER"
       })
     ) ++ campaignCode.fold(Json.obj())(c => Json.obj(
       // Currently campaignCode is used to uniquely identify components that drove acquisition.
