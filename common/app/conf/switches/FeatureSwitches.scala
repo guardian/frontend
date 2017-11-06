@@ -155,6 +155,16 @@ trait FeatureSwitches {
     exposeClientSide = true
   )
 
+  val IdentityGdprMarketingConsentSwitch = Switch(
+    SwitchGroup.Identity,
+    "id-gdpr-marketing-consent",
+    "If switched on, users will post GDPR compliant marketing consent from 'Edit Profile' page",
+    owners = Seq(Owner.withGithub("mario-galic")),
+    safeState = Off,
+    sellByDate = new LocalDate(2018, 1, 1),
+    exposeClientSide = false
+  )
+
   val EnhanceTweetsSwitch = Switch(
     SwitchGroup.Feature,
     "enhance-tweets",
