@@ -96,7 +96,6 @@ object WeatherApi extends Logging {
     def loop(attemptsRemaining: Int): Future[JsValue] = {
       request().recoverWith {
         case NonFatal(error) =>
-          log.warn(s"Error on weather request, attempts remaining $attemptsRemaining", error)
           if (attemptsRemaining <= 1) Future.failed(error) else after(retryDelay, scheduler)(loop(attemptsRemaining - 1))
       }
     }
