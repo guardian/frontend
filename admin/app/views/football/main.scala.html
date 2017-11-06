@@ -7,7 +7,7 @@
 @import conf.switches.Switches.PillarCards
 
 
-@defining(if (PillarCards.isSwitchedOn) "content.pc" else "content") { content =>
+@defining(if (PillarCards.isSwitchedOn) "content.pc" else "content") { contentCSS =>
     <!DOCTYPE html>
     <html lang="en">
         <head>
@@ -29,7 +29,7 @@
             }
                 <!--<![endif]-->
 
-            <link rel="stylesheet" type="text/css" href="@Static(s"stylesheets/$content.css")" />
+            <link rel="stylesheet" type="text/css" href="@Static(s"stylesheets/$contentCSS.css")" />
 
             <script src='@UncachedWebAssets.at("lib/jquery/jquery.min.js")'></script>
             <script src='@UncachedWebAssets.at("lib/jquery-ui/jquery-ui.min.js")'></script>
