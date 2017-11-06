@@ -2,10 +2,7 @@
 import { makeABTest } from 'common/modules/commercial/contributions-utilities';
 import { paradiseDifferentHighlight } from 'common/modules/commercial/acquisitions-copy';
 import config from 'lib/config';
-import {
-    isRecentContributor,
-    isPayingMember,
-} from 'commercial/modules/user-features';
+import { shouldSeeReaderRevenue } from 'commercial/modules/user-features';
 
 const tagsMatch = () => {
     const pageKeywords = config.page.nonKeywordTagIds;
@@ -15,8 +12,6 @@ const tagsMatch = () => {
     }
     return false;
 };
-
-const isTargetReader = () => !isPayingMember() || !isRecentContributor();
 
 const worksWellWithPageTemplate = () =>
     config.page.contentType === 'Article' &&
@@ -42,7 +37,7 @@ export const acquisitionsEpicParadise = makeABTest({
     audience: 1,
     audienceOffset: 0,
     overrideCanRun: true,
-    canRun: () => tagsMatch() && isTargetReader() && isTargetPage(),
+    canRun: () => tagsMatch() && shouldSeeReaderRevenue() && isTargetPage(),
 
     variants: [
         {
