@@ -15,7 +15,7 @@
     idUrlBuilder: services.IdentityUrlBuilder)(implicit request: RequestHeader, messages: play.api.i18n.Messages, context: model.ApplicationContext)
 
 @emailListCategoryList(theme: String, newsletters: List[EmailNewsletter], isActive: Boolean) = {
-    @fragments.dropdown(theme, isActive = isActive) {
+    @fragments.dropdown(theme, modifier = Some("email-subscription"), isActive = isActive) {
         @newsletters.zipWithRowInfo.map { case (newsletter, row) =>
             <div class="@RenderClasses(Map(
                 "u-cf" -> true,

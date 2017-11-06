@@ -315,6 +315,10 @@
     opacity: .8;
 }
 
+.dropdown--email-subscription .dropdown__label {
+  @include fs-bodyHeading(3);
+}
+
 .email-subscription__name,
 .email-subscription__heading {
     @include fs-headline(3);
