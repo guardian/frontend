@@ -2,6 +2,7 @@ package weather
 
 import java.net.{URI, URLEncoder}
 
+import akka.actor.{ActorSystem, Scheduler}
 import common.{Logging, ResourcesHelper}
 import conf.Configuration
 import play.api.libs.json.{JsValue, Json}
@@ -9,8 +10,6 @@ import play.api.libs.ws.WSClient
 import weather.geo.LatitudeLongitude
 import weather.models.CityId
 import weather.models.accuweather.{ForecastResponse, LocationResponse, WeatherResponse}
-import java.util.concurrent.TimeoutException
-
 import model.ApplicationContext
 
 import scala.concurrent.duration._
@@ -18,16 +17,16 @@ import play.api.Mode
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.control.NonFatal
+import akka.pattern.after
 
-class WeatherApi(wsClient: WSClient, context: ApplicationContext)(implicit ec: ExecutionContext) extends ResourcesHelper with Logging {
+class WeatherApi(wsClient: WSClient, context: ApplicationContext, actorSystem: ActorSystem)(implicit ec: ExecutionContext) extends ResourcesHelper with Logging {
   lazy val weatherApiKey: String = Configuration.weather.apiKey.getOrElse(
     throw new RuntimeException("Weather API Key not set")
   )
 
-  val requestTimeout = 300.milliseconds
-  val requestRetryMax = 3
-  val requestRetryDelay = 100.milliseconds
-  val requestRetryBackoffBase = 2
+  val requestTimeout: FiniteDuration = 300.milliseconds
+  val requestRetryMax: Int = 3
+  val requestRetryDelay: FiniteDuration = 100.milliseconds
 
   private def autocompleteUrl(query: String): String =
     s"http://api.accuweather.com/locations/v1/cities/autocomplete?apikey=$weatherApiKey&q=${URLEncoder.encode(query, "utf-8")}"
@@ -51,17 +50,20 @@ class WeatherApi(wsClient: WSClient, context: ApplicationContext)(implicit ec: E
   }
 
   private def getJsonWithRetry(url: String): Future[JsValue] = {
+    WeatherApi.retryWeatherRequest(() => getJsonRequest(url), requestRetryDelay, actorSystem.scheduler, requestRetryMax).recover {
+      case NonFatal(error) =>
+        log.error(s"Error fetching $url - $error")
+        throw error
+    }
+  }
+
+  private def getJsonRequest(url: String): Future[JsValue] = {
     wsClient
       .url(url)
       .withRequestTimeout(requestTimeout)
       .get()
       .map { response =>
         if(response.status == 200) response.json else throw new RuntimeException(s"Weather API response: $response")
-      }
-      .recoverWith {
-        case NonFatal(error) =>
-          log.error(s"Error fetching $url - $error")
-          Future.failed(error)
       }
   }
 
@@ -86,4 +88,19 @@ class WeatherApi(wsClient: WSClient, context: ApplicationContext)(implicit ec: E
     getJson(forecastLookUp(cityId)).map({ r =>
       Json.fromJson[Seq[ForecastResponse]](r).get
     })
+}
+
+object WeatherApi extends Logging {
+
+  def retryWeatherRequest(request: () => Future[JsValue], retryDelay: FiniteDuration, scheduler: Scheduler, attempts: Int)(implicit ec: ExecutionContext): Future[JsValue] = {
+    def loop(attemptsRemaining: Int): Future[JsValue] = {
+      request().recoverWith {
+        case NonFatal(error) =>
+          log.warn(s"Error on weather request, attempts remaining $attemptsRemaining", error)
+          if (attemptsRemaining <= 1) Future.failed(error) else after(retryDelay, scheduler)(loop(attemptsRemaining - 1))
+      }
+    }
+    loop(attempts)
+  }
+
 }
