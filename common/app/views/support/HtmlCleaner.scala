@@ -8,7 +8,8 @@ import conf.switches.Switches._
 import layout.ContentWidths
 import layout.ContentWidths._
 import model._
-import model.content.{Atom, Atoms, MediaAtom, MediaWrapper, ExplainerAtom}
+import model.content.{Atom, Atoms, ExplainerAtom, MediaAtom, MediaWrapper}
+import navigation.ReaderRevenueSite
 import org.jsoup.Jsoup
 import org.jsoup.nodes.{Document, Element, TextNode}
 import play.api.mvc.RequestHeader
@@ -230,6 +231,10 @@ case class InBodyLinkCleaner(dataLinkName: String, amp: Boolean = false)(implici
       }
       if (amp && link.hasAttr("style")) {
         link.removeAttr("style")
+      }
+
+      if (ReaderRevenueSite.isReaderRevenueSiteUrl(link.attr("href"))) {
+        link.addClass("js-acquisition-link")
       }
     }
 
