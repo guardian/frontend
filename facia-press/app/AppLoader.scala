@@ -1,5 +1,4 @@
 import app.{FrontendApplicationLoader, FrontendComponents}
-import app.{FrontendApplicationLoader, FrontendComponents}
 import com.softwaremill.macwire._
 import common._
 import common.Logback.LogstashLifecycle
@@ -16,6 +15,7 @@ import play.api.libs.ws.WSClient
 import play.api.mvc.EssentialFilter
 import services.ConfigAgentLifecycle
 import router.Routes
+import _root_.commercial.targeting.TargetingLifecycle
 
 class AppLoader extends FrontendApplicationLoader {
   override def buildComponents(context: Context): FrontendComponents = new BuiltInComponentsFromContext(context) with AppComponents
@@ -39,7 +39,8 @@ trait AppComponents extends FrontendComponents {
     wire[ConfigAgentLifecycle],
     wire[SwitchboardLifecycle],
     wire[CloudWatchMetricsLifecycle],
-    wire[FaciaPressLifecycle]
+    wire[FaciaPressLifecycle],
+    wire[TargetingLifecycle]
   )
 
   lazy val router: Router = wire[Routes]

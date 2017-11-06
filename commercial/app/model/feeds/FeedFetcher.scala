@@ -2,7 +2,6 @@ package commercial.model.feeds
 
 import java.lang.System.currentTimeMillis
 
-import com.ning.http.client.Response
 import conf.Configuration
 import commercial.model.merchandise.events.Eventbrite.{Response => EbResponse}
 import commercial.model.merchandise.soulmates.SoulmatesAgent

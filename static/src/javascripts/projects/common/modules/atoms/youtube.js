@@ -12,12 +12,12 @@ import { isIOS, isAndroid, isBreakpoint } from 'lib/detect';
 import debounce from 'lodash/functions/debounce';
 import { isOn as accessibilityIsOn } from 'common/modules/accessibility/main';
 
-class YoutubePlayerTarget extends EventTarget {
+declare class YoutubePlayerTarget extends EventTarget {
     playVideo: () => void;
 }
 
 // This is imcomplete; see https://developers.google.com/youtube/iframe_api_reference#Events
-class YoutubePlayerEvent {
+declare class YoutubePlayerEvent {
     data: -1 | 0 | 1 | 2 | 3 | 4 | 5;
     target: YoutubePlayerTarget;
 }
