@@ -315,6 +315,12 @@
     opacity: .8;
 }
 
+.email-subscription__fieldset {
+    margin-top: 3em;
+    background: lighten($neutral-8,2%);
+    border-top: 1px solid $news-main-2;
+}
+
 .dropdown--email-subscription .dropdown__label {
   @include fs-bodyHeading(3);
 }
@@ -341,6 +347,7 @@
 }
 .email-subscription__meta {
     margin-top: $gs-baseline;
+    font-weight: 400;
 }
 
 .email-subscription__frequency {
@@ -371,9 +378,33 @@
     cursor: pointer;
     float: left;
     padding: $gs-baseline/1.2 $gs-gutter $gs-baseline/1.5;
+    min-width: $gs-baseline * 14;
+    white-space: nowrap;
+    text-overflow: clip;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
+    box-sizing: border-box;
+    text-align: center;
+    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+        background-color: $guardian-brand-dark;
+    }
+
+    &:hover,&:active,&:focus {
+        color: #ffffff;
+        text-decoration: none;
+    }
 
     @include mq(desktop) {
-        float: right;
+        .dropdown--email-subscription & {
+            float: right;
+        }
     }
 
     .email-subscription--subscribed & {
@@ -393,9 +424,8 @@
     &.email-unsubscribe {
         float: none;
         color: $guardian-brand;
-        background-color: #ffffff;
+        background-color: transparent;
         border: 2px solid $guardian-brand;
-        min-width: $gs-baseline * 14;
     }
 
     &.email-unsubscribe--confirm {
@@ -415,7 +445,6 @@
 
 .save__button {
     float: none;
-    min-width: $gs-baseline * 14;
 }
 
 /* Delete Account page
