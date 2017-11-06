@@ -1,9 +1,11 @@
+// @flow
+
 const storage = {};
-const get = (key) => storage[key];
-const set = (key, value) => {
+const get = (key: string): mixed => storage[key];
+const set = (key: string, value: mixed): void => {
     storage[key] = value;
 };
-const remove = (key) => {
+const remove = (key: string) => {
     delete storage[key];
 };
 
