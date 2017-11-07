@@ -8,7 +8,7 @@ import model.ApplicationContext
 import org.apache.commons.io.IOUtils
 import play.api.libs.json._
 import play.api.Mode
-import html.HtmlPageHelpers.{pillarCardCSSFileContent,FaciaCSSFile,pillarCardCSSFileRichLinks}
+import html.HtmlPageHelpers.{ContentCSSFile,FaciaCSSFile,pillarCardCSSFileRichLinks}
 
 import scala.collection.concurrent.{TrieMap, Map => ConcurrentMap}
 import scala.util.{Failure, Success, Try}
@@ -84,7 +84,7 @@ object css {
   private def project(project: String): String = {
     project match {
       case "facia" => "stylesheets/facia.css"
-      case _ => s"stylesheets/$pillarCardCSSFileContent.css"
+      case _ => s"stylesheets/$ContentCSSFile.css"
     }
   }
 

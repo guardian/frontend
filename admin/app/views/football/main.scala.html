@@ -4,7 +4,7 @@
 @import controllers.admin.routes.UncachedWebAssets
 @import play.api.Mode.Dev
 @import conf.Static
-@import html.HtmlPageHelpers.pillarCardCSSFileContent
+@import html.HtmlPageHelpers.ContentCSSFile
 
 <!DOCTYPE html>
 <html lang="en">
@@ -27,7 +27,7 @@
         }
             <!--<![endif]-->
 
-        <link rel="stylesheet" type="text/css" href="@Static(s"stylesheets/$pillarCardCSSFileContent.css")" />
+        <link rel="stylesheet" type="text/css" href="@Static(s"stylesheets/$ContentCSSFile.css")" />
 
         <script src='@UncachedWebAssets.at("lib/jquery/jquery.min.js")'></script>
         <script src='@UncachedWebAssets.at("lib/jquery-ui/jquery-ui.min.js")'></script>

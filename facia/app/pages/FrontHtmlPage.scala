@@ -32,10 +32,10 @@ object FrontHtmlPage extends HtmlPage[PressedPage] {
     override def linkCss: Html = stylesheetLink("stylesheets/facia.css")
 
     override def oldIECriticalCss: Html = stylesheetLink(s"stylesheets/old-ie.head.$FaciaCSSFile.css")
-    override def oldIELinkCss: Html = stylesheetLink(s"stylesheets/old-ie.$pillarCardCSSFileContent.css")
+    override def oldIELinkCss: Html = stylesheetLink(s"stylesheets/old-ie.$ContentCSSFile.css")
 
     override def IE9LinkCss: Html = stylesheetLink(s"stylesheets/ie9.head.$FaciaCSSFile.css")
-    override def IE9CriticalCss: Html = stylesheetLink(s"stylesheets/ie9.$pillarCardCSSFileContent.css")
+    override def IE9CriticalCss: Html = stylesheetLink(s"stylesheets/ie9.$ContentCSSFile.css")
   }
 
   def html(page: PressedPage)(implicit request: RequestHeader, applicationContext: ApplicationContext): Html = {

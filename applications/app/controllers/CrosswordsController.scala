@@ -13,7 +13,7 @@ import play.api.data.Forms._
 import play.api.data._
 import play.api.mvc.{Action, RequestHeader, Result, _}
 import services.{IndexPage, IndexPageItem}
-import html.HtmlPageHelpers.pillarCardCSSFileContent
+import html.HtmlPageHelpers.ContentCSSFile
 
 import scala.concurrent.Future
 import scala.concurrent.duration._
@@ -99,7 +99,7 @@ class CrosswordPageController(val contentApiClient: ContentApiClient, val contro
     withCrossword(crosswordType, id) { (crossword, _) =>
       val xml = CrosswordSvg(crossword, Some("100%"), Some("100%"), trim = true)
 
-      val globalStylesheet = Static(s"stylesheets/$pillarCardCSSFileContent.css")
+      val globalStylesheet = Static(s"stylesheets/$ContentCSSFile.css")
 
       Cached(60) {
         val body = s"""<?xml-stylesheet type="text/css" href="$globalStylesheet" ?>$xml"""
