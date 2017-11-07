@@ -44,6 +44,6 @@ object HtmlPageHelpers {
 
   def FaciaCSSFile: String = if (PillarCards.isSwitchedOn) "facia.pc" else "facia"
   def ContentCSSFile: String = if (PillarCards.isSwitchedOn) "content.pc" else "content"
-  def pillarCardCSSFileRichLinks: String = if (PillarCards.isSwitchedOn) "rich-links.pc" else "rich-links"
+  def RichLinksCSSFile: String = if (PillarCards.isSwitchedOn) "rich-links.pc" else "rich-links"
 
 }
