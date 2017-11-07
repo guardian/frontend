@@ -8,12 +8,10 @@ import model.ApplicationContext
 import org.apache.commons.io.IOUtils
 import play.api.libs.json._
 import play.api.Mode
-import play.api.mvc.RequestHeader
+import html.HtmlPageHelpers.{pillarCardCSSFileContent,pillarCardCSSFileFacia,pillarCardCSSFileRichLinks}
 
 import scala.collection.concurrent.{TrieMap, Map => ConcurrentMap}
 import scala.util.{Failure, Success, Try}
-
-import conf.switches.Switches.PillarCards
 
 // turns an unhashed name into a name that's hashed if it needs to be
 class Assets(base: String, mapResource: String, useHashedBundles: Boolean = Configuration.assets.useHashedBundles) extends Logging {
@@ -69,7 +67,7 @@ object css {
   def interactive(implicit context: ApplicationContext): String = inline("head.interactive")
   def inlineAtom(atomType: String)(implicit content: ApplicationContext): String = inline(s"head.atom-$atomType")
 
-  def projectCss(projectOverride: Option[String], request: RequestHeader)(implicit context: ApplicationContext): String = project(projectOverride.getOrElse(context.applicationIdentity.name), request)
+  def projectCss(projectOverride: Option[String])(implicit context: ApplicationContext): String = project(projectOverride.getOrElse(context.applicationIdentity.name))
   def headOldIE(projectOverride: Option[String])(implicit context: ApplicationContext): String = cssOldIE(projectOverride.getOrElse(context.applicationIdentity.name))
   def headIE9(projectOverride: Option[String])(implicit context: ApplicationContext): String = cssIE9(projectOverride.getOrElse(context.applicationIdentity.name))
 
@@ -83,25 +81,21 @@ object css {
     })
   }
 
-  private def project(project: String, request: RequestHeader): String = {
-    val content: String = if (PillarCards.isSwitchedOn || mvt.PillarCards.isParticipating(request)) "content.pc" else "content"
-
+  private def project(project: String): String = {
     project match {
       case "facia" => "stylesheets/facia.css"
-      case _ => s"stylesheets/$content.css"
+      case _ => s"stylesheets/$pillarCardCSSFileContent.css"
     }
   }
 
   private def cssHead(project: String): String =
     project match {
       case "footballSnaps" => "head.footballSnaps"
-      case "facia" => "head.facia"
-      case "facia.pc" => "head.facia.pc"
+      case "facia" => s"head.$pillarCardCSSFileFacia"
       case "identity" => "head.identity"
       case "football" => "head.football"
       case "index" => "head.index"
-      case "rich-links" => "head.rich-links"
-      case "rich-links.pc" => "head.rich-links.pc"
+      case "rich-links" => s"head.$pillarCardCSSFileRichLinks"
       case "email-signup" => "head.email-signup"
       case "commercial" => "head.commercial"
       case "survey" => "head.survey"

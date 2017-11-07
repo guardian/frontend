@@ -3,28 +3,26 @@
 @import conf.Static
 @import conf.Configuration
 @import play.api.Mode.Dev
-@import conf.switches.Switches.PillarCards
+@import html.HtmlPageHelpers.pillarCardCSSFileRichLinks
 
-@defining(if (PillarCards.isSwitchedOn || mvt.PillarCards.isParticipating) "rich-links.pc" else "rich-links") { richLinks =>
-    <html class="svg">
-        <head>
-            <link rel="stylesheet" type="text/css" href="@Static("stylesheets/webfonts-hinting-off-kerning-on.css")" />
+<html class="svg">
+    <head>
+        <link rel="stylesheet" type="text/css" href="@Static("stylesheets/webfonts-hinting-off-kerning-on.css")" />
 
 
-            @if(context.environment.mode == Dev || !InlineCriticalCss.isSwitchedOn) {
-                <link rel="stylesheet" data-reload=s""head.$richLinks"" type="text/css" href="@Static(s"stylesheets/head.$richLinks.css")" />
-            } else {
-                <style>
-                    @Html(common.Assets.css.head(Some(richLinks)))
-                    body {
-                        margin: 0;
-                    }
-                </style>
+        @if(context.environment.mode == Dev || !InlineCriticalCss.isSwitchedOn) {
+            <link rel="stylesheet" data-reload="head.rich-links" type="text/css" href="@Static(s"stylesheets/head.$pillarCardCSSFileRichLinks.css")" />
+        } else {
+            <style>
+            @Html(common.Assets.css.head(Some("rich-links")))
+            body {
+              margin: 0;
             }
+            </style>
+        }
 
-        </head>
-        <body width="30%">
+   </head>
+   <body width="30%">
         @fragments.richLinkBody(content)
-        </body>
-    </html>
-}
+    </body>
+</html>

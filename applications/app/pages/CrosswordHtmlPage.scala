@@ -14,7 +14,7 @@ import views.html.fragments.page.body.{bodyTag, breakingNewsDiv, mainContent, sk
 import views.html.fragments.page.head.stylesheets.{criticalStyleInline, criticalStyleLink, styles}
 import views.html.fragments.page.head.{fixIEReferenceErrors, headTag, titleTag}
 import views.html.fragments.page.{devTakeShot, htmlTag}
-import conf.switches.Switches.PillarCards
+import html.HtmlPageHelpers.pillarCardCSSFileContent
 
 object CrosswordHtmlPage extends HtmlPage[CrosswordPage] {
 
@@ -23,11 +23,11 @@ object CrosswordHtmlPage extends HtmlPage[CrosswordPage] {
 
     override def criticalCssLink: Html = criticalStyleLink("content")
     override def criticalCssInline: Html = criticalStyleInline(Html(common.Assets.css.head(None)))
-    override def linkCss: Html = stylesheetLink(s"stylesheets/$content.css", true)
+    override def linkCss: Html = stylesheetLink(s"stylesheets/$pillarCardCSSFileContent.css", true)
     override def oldIECriticalCss: Html = stylesheetLink("stylesheets/old-ie.head.content.css", true)
-    override def oldIELinkCss: Html = stylesheetLink(s"stylesheets/old-ie.$content.css", true)
+    override def oldIELinkCss: Html = stylesheetLink(s"stylesheets/old-ie.$pillarCardCSSFileContent.css", true)
     override def IE9LinkCss: Html = stylesheetLink("stylesheets/ie9.head.content.css", true)
-    override def IE9CriticalCss: Html = stylesheetLink(s"stylesheets/ie9.$content.css", true)
+    override def IE9CriticalCss: Html = stylesheetLink(s"stylesheets/ie9.$pillarCardCSSFileContent.css", true)
   }
 
   def html(page: CrosswordPage)(implicit request: RequestHeader, applicationContext: ApplicationContext): Html = {

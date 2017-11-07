@@ -4,64 +4,61 @@
 @import controllers.admin.routes.UncachedWebAssets
 @import play.api.Mode.Dev
 @import conf.Static
-@import conf.switches.Switches.PillarCards
+@import html.HtmlPageHelpers.pillarCardCSSFileContent
 
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>@title</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="shortcut icon" type="image/x-icon" href='@UncachedAssets.at("football/images/favicon.ico")' />
+        <link rel="stylesheet" href='@UncachedWebAssets.at("lib/bootstrap/css/bootstrap.min.css")' />
+        <link rel="stylesheet" media="screen" href='@UncachedAssets.at("football/css/football-main.css")' />
+        <link rel="stylesheet" href='@UncachedWebAssets.at("lib/jquery-ui/jquery-ui.min.css")' />
 
-@defining(if (PillarCards.isSwitchedOn or mvt.PillarCards.isParticipating) "content.pc" else "content") { contentCSS =>
-    <!DOCTYPE html>
-    <html lang="en">
-        <head>
-            <meta charset="utf-8">
-            <title>@title</title>
-            <meta name="viewport" content="width=device-width, initial-scale=1" />
-            <link rel="shortcut icon" type="image/x-icon" href='@UncachedAssets.at("football/images/favicon.ico")' />
-            <link rel="stylesheet" href='@UncachedWebAssets.at("lib/bootstrap/css/bootstrap.min.css")' />
-            <link rel="stylesheet" media="screen" href='@UncachedAssets.at("football/css/football-main.css")' />
-            <link rel="stylesheet" href='@UncachedWebAssets.at("lib/jquery-ui/jquery-ui.min.css")' />
+            <!--[if (gt IE 9)|(IEMobile)]><!-->
+        @if(context.environment.mode == Dev) {
+            <link rel="stylesheet" type="text/css" href="@Static("stylesheets/head.content.css")" />
+        } else {
+            <style>
+            @Html(common.Assets.css.head(None))
+            </style>
+        }
+            <!--<![endif]-->
 
-                <!--[if (gt IE 9)|(IEMobile)]><!-->
-            @if(context.environment.mode == Dev) {
-                <link rel="stylesheet" type="text/css" href="@Static("stylesheets/head.content.css")" />
-            } else {
-                <style>
-                @Html(common.Assets.css.head(None))
-                </style>
-            }
-                <!--<![endif]-->
+        <link rel="stylesheet" type="text/css" href="@Static(s"stylesheets/$pillarCardCSSFileContent.css")" />
 
-            <link rel="stylesheet" type="text/css" href="@Static(s"stylesheets/$contentCSS.css")" />
-
-            <script src='@UncachedWebAssets.at("lib/jquery/jquery.min.js")'></script>
-            <script src='@UncachedWebAssets.at("lib/jquery-ui/jquery-ui.min.js")'></script>
-            <script src='@UncachedWebAssets.at("lib/bootstrap/js/bootstrap.min.js")'></script>
-            <script src='@UncachedAssets.at("football/javascripts/browser.js")'></script>
-        </head>
-        <body>
-            <nav class="navbar navbar-default navbar-static-top" role="navigation">
-              <div class="container-fluid">
-                <div class="navbar-header">
-                  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-8">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                  </button>
-                  <a class="navbar-brand" href="/admin/football">PA Browser <sup>ɐʇǝq</sup></a>
-                </div>
-
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-8">
-                  <ul class="nav navbar-nav">
-                      <li><a href="/admin/football/player">Player cards</a></li>
-                      <li><a href="/admin/football/tables">Tables</a></li>
-                      <li><a href="/admin/football/fronts">Fronts</a></li>
-                      <li><a href="/admin/football/browse">API browser</a></li>
-                  </ul>
-                </div>
-              </div>
-            </nav>
-            <div class="container-fluid">
-                @content
+        <script src='@UncachedWebAssets.at("lib/jquery/jquery.min.js")'></script>
+        <script src='@UncachedWebAssets.at("lib/jquery-ui/jquery-ui.min.js")'></script>
+        <script src='@UncachedWebAssets.at("lib/bootstrap/js/bootstrap.min.js")'></script>
+        <script src='@UncachedAssets.at("football/javascripts/browser.js")'></script>
+    </head>
+    <body>
+        <nav class="navbar navbar-default navbar-static-top" role="navigation">
+          <div class="container-fluid">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-8">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="/admin/football">PA Browser <sup>ɐʇǝq</sup></a>
             </div>
-        </body>
-    </html>
-}
+
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-8">
+              <ul class="nav navbar-nav">
+                  <li><a href="/admin/football/player">Player cards</a></li>
+                  <li><a href="/admin/football/tables">Tables</a></li>
+                  <li><a href="/admin/football/fronts">Fronts</a></li>
+                  <li><a href="/admin/football/browse">API browser</a></li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+        <div class="container-fluid">
+            @content
+        </div>
+    </body>
+</html>
