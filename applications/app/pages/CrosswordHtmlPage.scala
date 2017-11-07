@@ -18,9 +18,7 @@ import html.HtmlPageHelpers.pillarCardCSSFileContent
 
 object CrosswordHtmlPage extends HtmlPage[CrosswordPage] {
 
-  def allStyles(implicit request: RequestHeader, applicationContext: ApplicationContext): Styles = new Styles {
-    val content: String = if (PillarCards.isSwitchedOn || mvt.PillarCards.isParticipating) "content.pc" else "content"
-
+  def allStyles(implicit applicationContext: ApplicationContext): Styles = new Styles {
     override def criticalCssLink: Html = criticalStyleLink("content")
     override def criticalCssInline: Html = criticalStyleInline(Html(common.Assets.css.head(None)))
     override def linkCss: Html = stylesheetLink(s"stylesheets/$pillarCardCSSFileContent.css", true)
