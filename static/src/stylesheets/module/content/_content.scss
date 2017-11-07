@@ -697,11 +697,10 @@
 
 }
 
-.content--paid-content {
-    &.content--article,
-    &.content--interactive {
-        background-color: $neutral-8;
-    }
+.paid-content {
+    color: $neutral-1;
+
+
     .content__standfirst,
     .content__dateline,
     .caption--main {
@@ -723,10 +722,6 @@
     a.in-body-link--immersive {
         color: $paid-article-brand;
     }
-}
-
-.paid-content {
-    color: $neutral-1;
 
     &.content--article,
     &.content--interactive,
