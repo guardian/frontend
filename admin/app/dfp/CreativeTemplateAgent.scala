@@ -2,17 +2,17 @@ package dfp
 
 import common.AkkaAgent
 import common.dfp.GuCreativeTemplate
+import tools.BlockingOperations
 
 import scala.concurrent.{ExecutionContext, Future}
 
-object CreativeTemplateAgent {
+class CreativeTemplateAgent(blockingOperations: BlockingOperations, dfpApi: DfpApi) {
 
   private lazy val cache = AkkaAgent(Seq.empty[GuCreativeTemplate])
 
   def refresh()(implicit executionContext: ExecutionContext): Future[Seq[GuCreativeTemplate]] = {
-    cache alterOff { oldData =>
-      val freshData = DfpApi.readActiveCreativeTemplates()
-      if (freshData.nonEmpty) freshData else oldData
+    blockingOperations.executeBlocking(dfpApi.readActiveCreativeTemplates()).flatMap { freshData =>
+      cache.alter(if (freshData.nonEmpty) freshData else _)
     }
   }
 

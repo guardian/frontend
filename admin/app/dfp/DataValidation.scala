@@ -4,7 +4,7 @@ import com.google.api.ads.dfp.axis.v201705._
 import common.dfp._
 import dfp.ApiHelper.toSeq
 
-object DataValidation {
+class DataValidation(adUnitService: AdUnitService) {
 
   def isGuLineItemValid(guLineItem: GuLineItem, dfpLineItem: LineItem): Boolean = {
 
@@ -18,7 +18,7 @@ object DataValidation {
 
     // The validation should not account for inactive or archived ad units.
     val activeDfpAdUnitIds = dfpAdUnitIds.filterNot { adUnitId =>
-      AdUnitService.isArchivedAdUnit(adUnitId) || AdUnitService.isInactiveAdUnit(adUnitId)
+      adUnitService.isArchivedAdUnit(adUnitId) || adUnitService.isInactiveAdUnit(adUnitId)
     }
 
     activeDfpAdUnitIds.forall( adUnitId => {

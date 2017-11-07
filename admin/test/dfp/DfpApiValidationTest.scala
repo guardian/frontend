@@ -1,9 +1,11 @@
 package dfp
 
+import tools.BlockingOperations
 import common.dfp.{GuAdUnit, GuLineItem, GuTargeting}
 import com.google.api.ads.dfp.axis.v201705._
 import org.joda.time.DateTime
 import org.scalatest._
+import akka.actor.ActorSystem
 
 class DfpApiValidationTest extends FlatSpec with Matchers {
 
@@ -52,17 +54,19 @@ class DfpApiValidationTest extends FlatSpec with Matchers {
     dfpLineItem
   }
 
+  val dataValidation = new DataValidation(new AdUnitService(new AdUnitAgent(new BlockingOperations(ActorSystem()))))
+
   "isGuLineItemValid" should "return false when the adunit targeting does not match the dfp line item" in {
     val guLineItem = lineItem(List("1", "2", "3"))
     val dfpLineItem = makeDfpLineItem(List("1", "2", "3", "4"))
 
-    DataValidation.isGuLineItemValid(guLineItem, dfpLineItem) shouldBe false
+    dataValidation.isGuLineItemValid(guLineItem, dfpLineItem) shouldBe false
   }
 
   "isGuLineItemValid" should "return true when the adunit targeting does match the dfp line item" in {
     val guLineItem = lineItem(List("1", "2", "3"))
     val dfpLineItem = makeDfpLineItem(List("1", "2", "3"))
 
-    DataValidation.isGuLineItemValid(guLineItem, dfpLineItem) shouldBe true
+    dataValidation.isGuLineItemValid(guLineItem, dfpLineItem) shouldBe true
   }
 }

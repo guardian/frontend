@@ -10,6 +10,19 @@ import scala.concurrent.{ExecutionContext, Future}
 class DfpDataCacheLifecycle(
   appLifecycle: ApplicationLifecycle,
   jobScheduler: JobScheduler,
+  creativeTemplateAgent: CreativeTemplateAgent,
+  adUnitAgent: AdUnitAgent,
+  advertiserAgent: AdvertiserAgent,
+  customFieldAgent: CustomFieldAgent,
+  orderAgent: OrderAgent,
+  placementAgent: PlacementAgent,
+  customTargetingAgent: CustomTargetingAgent,
+  dfpDataCacheJob: DfpDataCacheJob,
+  customTargetingKeyValueJob: CustomTargetingKeyValueJob,
+  dfpAdUnitCacheJob: DfpAdUnitCacheJob,
+  dfpMobileAppAdUnitCacheJob: DfpMobileAppAdUnitCacheJob,
+  dfpFacebookIaAdUnitCacheJob: DfpFacebookIaAdUnitCacheJob,
+  dfpTemplateCreativeCacheJob: DfpTemplateCreativeCacheJob,
   akkaAsync: AkkaAsync)(implicit ec: ExecutionContext) extends LifecycleComponent {
 
   appLifecycle.addStopHook { () => Future {
@@ -29,74 +42,74 @@ class DfpDataCacheLifecycle(
     new Job[DataCache[String, GuAdUnit]] {
       val name = "DFP-AdUnits-Update"
       val interval = 30
-      def run() = AdUnitAgent.refresh()
+      def run() = adUnitAgent.refresh()
     },
 
     new Job[DataCache[String, GuCustomField]] {
       val name = "DFP-CustomFields-Update"
       val interval = 30
-      def run() = CustomFieldAgent.refresh()
+      def run() = customFieldAgent.refresh()
     },
 
     new Job[DataCache[Long, GuCustomTargeting]] {
       val name = "DFP-CustomTargeting-Update"
       val interval = 30
-      def run() = CustomTargetingAgent.refresh()
+      def run() = customTargetingAgent.refresh()
     },
 
     new Job[Unit] {
       val name: String = "DFP-CustomTargeting-Store"
       val interval: Int = 15
-      def run() = CustomTargetingKeyValueJob.run()
+      def run() = customTargetingKeyValueJob.run()
     },
 
     new Job[DataCache[Long, Seq[String]]] {
       val name = "DFP-Placements-Update"
       val interval = 30
-      def run() = PlacementAgent.refresh()
+      def run() = placementAgent.refresh()
     },
 
     new Job[Unit] {
       val name: String = "DFP-Cache"
       val interval: Int = 2
-      def run(): Future[Unit] = DfpDataCacheJob.run()
+      def run(): Future[Unit] = dfpDataCacheJob.run()
     },
 
     new Job[Unit] {
       val name: String = "DFP-Ad-Units-Update"
       val interval: Int = 60
-      def run(): Future[Unit] = DfpAdUnitCacheJob.run(akkaAsync)
+      def run(): Future[Unit] = dfpAdUnitCacheJob.run(akkaAsync)
     },
 
     new Job[Unit] {
       val name: String = "DFP-Mobile-Apps-Ad-Units-Update"
       val interval: Int = 60
-      def run(): Future[Unit] = DfpMobileAppAdUnitCacheJob.run(akkaAsync)
+      def run(): Future[Unit] = dfpMobileAppAdUnitCacheJob.run(akkaAsync)
     },
 
     new Job[Unit] {
       val name: String = "DFP-Facebook-IA-Ad-Units-Update"
       val interval: Int = 60
-      def run(): Future[Unit] = DfpFacebookIaAdUnitCacheJob.run(akkaAsync)
+      def run(): Future[Unit] = dfpFacebookIaAdUnitCacheJob.run(akkaAsync)
     },
 
     new Job[Seq[GuCreativeTemplate]] {
       val name: String = "DFP-Creative-Templates-Update"
       val interval: Int = 15
-      def run() = CreativeTemplateAgent.refresh()
+      def run() = creativeTemplateAgent.refresh()
     },
 
     new Job[Unit] {
       val name: String = "DFP-Template-Creatives-Cache"
       val interval: Int = 2
-      def run() = DfpTemplateCreativeCacheJob.run()
+      def run() = dfpTemplateCreativeCacheJob.run()
     },
 
     new Job[Unit] {
       val name = "DFP-Order-Advertiser-Update"
       val interval: Int = 300
       def run() = {
-        Future.sequence(Seq(AdvertiserAgent.refresh(), OrderAgent.refresh())).map(_ => ())
+        Future.sequence(Seq(advertiserAgent.refresh(), orderAgent.refresh())).map(_ => ())
       }
     }
   )
@@ -110,13 +123,13 @@ class DfpDataCacheLifecycle(
     }
 
     akkaAsync.after1s {
-      DfpDataCacheJob.refreshAllDfpData()
-      CreativeTemplateAgent.refresh()
-      DfpTemplateCreativeCacheJob.run()
-      CustomTargetingKeyValueJob.run()
-      AdvertiserAgent.refresh()
-      OrderAgent.refresh()
-      CustomFieldAgent.refresh()
+      dfpDataCacheJob.refreshAllDfpData()
+      creativeTemplateAgent.refresh()
+      dfpTemplateCreativeCacheJob.run()
+      customTargetingKeyValueJob.run()
+      advertiserAgent.refresh()
+      orderAgent.refresh()
+      customFieldAgent.refresh()
     }
   }
 }
