@@ -20,7 +20,7 @@ object HtmlPageHelpers {
     def when(condition: => Boolean): Html = if(condition) html else Html("")
   }
 
-  def guardianHeaderHtml()(implicit page: model.Page, request: RequestÍHeader, applicationContext: ApplicationContext): Html = {
+  def guardianHeaderHtml()(implicit page: model.Page, request: RequestHeader, applicationContext: ApplicationContext): Html = {
     val showTop = !page.metadata.shouldHideHeaderAndTopAds
     val showAds = Commercial.shouldShowAds(page) && !model.Page.getContent(page).exists(_.tags.isTheMinuteArticle) && !Commercial.isAdFree(request)
 
