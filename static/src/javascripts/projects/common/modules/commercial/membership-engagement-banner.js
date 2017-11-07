@@ -10,20 +10,16 @@ import { testCanBeRun } from 'common/modules/experiments/test-can-run-checks';
 import { isInTest, variantFor } from 'common/modules/experiments/segment-util';
 import { engagementBannerParams } from 'common/modules/commercial/membership-engagement-banner-parameters';
 import { isBlocked } from 'common/modules/commercial/membership-engagement-banner-block';
-import { get as getGeoLocation } from 'lib/geolocation';
+import { getSync as getGeoLocation } from 'lib/geolocation';
 
 import {
     submitComponentEvent,
     addTrackingCodesToUrl,
 } from 'common/modules/commercial/acquisitions-ophan';
-import {
-    selectBaseUrl,
-    selectEngagementBannerButtonCaption,
-} from 'common/modules/commercial/support-utilities';
 import { acquisitionsBannerControlTemplate } from 'common/modules/commercial/templates/acquisitions-banner-control';
 
 // change messageCode to force redisplay of the message to users who already closed it.
-const messageCode = 'engagement-banner-2017-09-21';
+const messageCode = 'engagement-banner-2017-11-02';
 
 const getUserTest = (): ?AcquisitionsABTest =>
     membershipEngagementBannerTests.find(
@@ -126,7 +122,7 @@ const showBanner = (params: EngagementBannerParams): void => {
     const ctaText = params.ctaText;
 
     const linkUrl = addTrackingCodesToUrl({
-        base: selectBaseUrl(params.linkUrl),
+        base: params.linkUrl,
         componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
         componentId: params.campaignCode,
         campaignCode: params.campaignCode,
@@ -135,9 +131,7 @@ const showBanner = (params: EngagementBannerParams): void => {
                 ? { name: test.id, variant: variant.id }
                 : undefined,
     });
-    const buttonCaption = selectEngagementBannerButtonCaption(
-        params.buttonCaption
-    );
+    const buttonCaption = params.buttonCaption;
     const buttonSvg = inlineSvg('arrowWhiteRight');
     const templateParams = {
         messageText,
@@ -186,26 +180,25 @@ const showBanner = (params: EngagementBannerParams): void => {
     }
 };
 
-const membershipEngagementBannerInit = (): Promise<void> =>
-    getGeoLocation().then(location => {
-        const bannerParams = deriveBannerParams(location);
-
-        if (bannerParams && getVisitCount() >= bannerParams.minArticles) {
-            return commercialFeatures.asynchronous.canDisplayMembershipEngagementBanner.then(
-                canShow => {
-                    if (canShow) {
-                        mediator.on(
-                            'modules:onwards:breaking-news:ready',
-                            breakingShown => {
-                                if (!breakingShown) {
-                                    showBanner(bannerParams);
-                                }
+const membershipEngagementBannerInit = (): Promise<void> => {
+    const bannerParams = deriveBannerParams(getGeoLocation());
+    if (bannerParams && getVisitCount() >= bannerParams.minArticles) {
+        return commercialFeatures.asynchronous.canDisplayMembershipEngagementBanner.then(
+            canShow => {
+                if (canShow) {
+                    mediator.on(
+                        'modules:onwards:breaking-news:ready',
+                        breakingShown => {
+                            if (!breakingShown) {
+                                showBanner(bannerParams);
                             }
-                        );
-                    }
+                        }
+                    );
                 }
-            );
-        }
-    });
+            }
+        );
+    }
+    return Promise.resolve(undefined);
+};
 
 export { membershipEngagementBannerInit };

@@ -44,6 +44,7 @@ rules:
     - extra-properties:
         - overflow-scrolling
         - osx-font-smoothing
+        - grid-column-gap
   no-trailing-zero: 1
   no-url-protocols: 0
 

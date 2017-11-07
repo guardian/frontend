@@ -6,7 +6,8 @@
 @import views.support.RenderClasses
 @import views.html.fragments.topNav.editionMenu
 @import navigation.UrlHelpers.oldNav._
-@import navigation.UrlHelpers.{getReaderRevenueUrl, SlimHeaderDropdown, Membership, Subscribe}
+@import navigation.ReaderRevenueSite.{Membership, Subscribe}
+@import navigation.UrlHelpers.{getReaderRevenueUrl, SlimHeaderDropdown}
 
 @ellipsis() = {
     <a class="brand-bar__item--action popup__toggle"
@@ -27,7 +28,7 @@
     @if(Edition(request) == Uk){
         <div class="brand-bar__item brand-bar__item--jobs hide-until-tablet hide-on-slim-header">
             <a class="brand-bar__item--action" data-link-name="uk : topNav : jobs"
-               href="@jobsUrl("uk")">jobs</a>
+               href="@jobsUrl("uk")">find a job</a>
         </div>
         <div class="brand-bar__item brand-bar__item--soulmates hide-until-desktop hide-on-slim-header">
             <a class="brand-bar__item--action" data-link-name="uk : topNav : soulmates"
@@ -59,11 +60,11 @@
                     <h3 class="popup__group-header">support us:</h3>
                     <ul class="popup__group">
                         <li class="popup__item">
-                            <a class="brand-bar__item--action" data-link-name="uk : topNav : membership"
+                            <a class="brand-bar__item--action js-acquisition-link" data-link-name="uk : topNav : membership"
                             href="@getReaderRevenueUrl(Membership, SlimHeaderDropdown)">membership</a>
                         </li>
                         <li class="popup__item">
-                            <a class="brand-bar__item--action" data-link-name="uk : topNav : subscribe"
+                            <a class="brand-bar__item--action js-acquisition-link" data-link-name="uk : topNav : subscribe"
                             href="@getReaderRevenueUrl(Subscribe, SlimHeaderDropdown)">subscribe</a>
                         </li>
                     </ul>
@@ -75,7 +76,7 @@
     @if(Edition(request) == Us){
         <div class="brand-bar__item brand-bar__item--jobs hide-until-tablet hide-on-slim-header">
             <a class="brand-bar__item--action" data-link-name="us : topNav : jobs"
-               href="@jobsUrl("us")">jobs</a>
+               href="@jobsUrl("us")">find a job</a>
         </div>
     }
     @if(Edition(request) == Au){
@@ -87,7 +88,7 @@
     @if(Edition(request) == International){
         <div class="brand-bar__item brand-bar__item--jobs hide-until-tablet hide-on-slim-header">
             <a class="brand-bar__item--action" data-link-name="uk : topNav : jobs"
-            href="@jobsUrl("int")">jobs</a>
+            href="@jobsUrl("int")">find a job</a>
         </div>
         <div class="brand-bar__item brand-bar__item--soulmates hide-until-desktop hide-on-slim-header">
             <a class="brand-bar__item--action" data-link-name="int : topNav : soulmates"
@@ -104,7 +105,7 @@
                     </li>
                     <li class="popup__item brand-bar__popup--jobs">
                         <a class="brand-bar__item--action" data-link-name="int: topNav : jobs"
-                        href="@jobsUrl("int")">jobs</a>
+                        href="@jobsUrl("int")">find a job</a>
                     </li>
                 </ul>
                 @editionMenu()

@@ -1,13 +1,12 @@
 package navigation
 
 import common.{Edition, Navigation}
-import conf.Configuration
 import model.Page
 import SectionLinks._
 import NewNavigation._
 import SubSectionLinks._
 import NavLinks._
-import UrlHelpers.{Membership, SideMenu, Subscribe, getReaderRevenueUrl, getSupportOrMembershipUrl, getSupportOrSubscriptionUrl}
+import UrlHelpers.{SideMenu, getSupportOrMembershipUrl, getSupportOrSubscriptionUrl}
 import play.api.mvc.RequestHeader
 
 object NavigationHelpers {

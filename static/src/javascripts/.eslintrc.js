@@ -56,6 +56,7 @@ module.exports = {
                     'lodash/collections/every',
                     'lodash/collections/contains',
                     'lodash/collections/find',
+                    'lodash/collections/toArray',
                     'lodash/objects/assign',
                     'lodash/objects/values',
                     'lodash/objects/merge',

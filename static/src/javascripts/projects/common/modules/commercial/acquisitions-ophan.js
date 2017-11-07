@@ -39,6 +39,14 @@ export const submitViewEvent = (componentEvent: ComponentEventWithoutAction) =>
         action: 'VIEW',
     });
 
+export const addReferrerData = (acquisitionData: {}): {} =>
+    // Note: the current page is the referrer data in the context of the acquisition.
+    ({
+        ...acquisitionData,
+        referrerPageviewId: config.get('ophan.pageViewId'),
+        referrerUrl: window.location.href.split('?')[0],
+    });
+
 export const addTrackingCodesToUrl = ({
     base,
     componentType,
@@ -46,15 +54,13 @@ export const addTrackingCodesToUrl = ({
     campaignCode,
     abTest,
 }: AcquisitionLinkParams) => {
-    const acquisitionData = {
+    const acquisitionData = addReferrerData({
         source: 'GUARDIAN_WEB',
         componentId,
         componentType,
-        referrerPageviewId: config.get('ophan.pageViewId') || undefined,
-        referrerUrl: window.location.href.split('?')[0],
         campaignCode,
         abTest,
-    };
+    });
 
     const params = {
         REFPVID: config.get('ophan.pageViewId') || 'not_found',
