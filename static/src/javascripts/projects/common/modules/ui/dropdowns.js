@@ -1,6 +1,6 @@
 // @flow
 import bean from 'bean';
-import fastdom from 'fastdom';
+import fastdom from 'lib/fastdom-promise';
 
 const containerSelector = '.dropdown';
 const buttonCN = 'dropdown__button';
@@ -25,6 +25,7 @@ const init = (): void => {
         const container = (e.currentTarget: any).closest(containerSelector);
 
         if (container) {
+
             fastdom.read(() => {
                 const content = container.querySelector(`.${contentCN}`);
                 const isActive: boolean = container.classList.contains(
@@ -46,7 +47,12 @@ const init = (): void => {
                 because its starting to close from the bottom, which is off-screen
                 */
 
+                return {content, isActive, isAnimated, contentEstimatedHeight};
+
+            }).then(({content, isActive, isAnimated, contentEstimatedHeight}) => {
+
                 if (isAnimated && 'ontransitionend' in window) {
+
                     fastdom.write(() => {
                         container.style.pointerEvents = 'none';
                         if (!isActive) {
@@ -55,7 +61,7 @@ const init = (): void => {
                         content.style.height = isActive
                             ? `${contentEstimatedHeight}px`
                             : 0;
-
+                    }).then(()=>{
                         requestAnimationFrame(() => {
                             content.style.height = isActive
                                 ? 0
@@ -81,7 +87,7 @@ const init = (): void => {
                         updateAria(container);
                     });
                 }
-            });
+            })
         }
     });
 };
