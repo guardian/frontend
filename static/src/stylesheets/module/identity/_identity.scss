@@ -319,6 +319,9 @@
     margin-top: 3em;
     background: lighten($neutral-8,2%);
     border-top: 1px solid $news-main-2;
+    @include mq($until: desktop) {
+        padding: 0 $gs-gutter;
+    }
 }
 
 .dropdown--email-subscription .dropdown__label {
