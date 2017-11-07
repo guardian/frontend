@@ -2,10 +2,11 @@ package dfp
 
 import com.google.api.ads.dfp.axis.utils.v201705.StatementBuilder
 import common.dfp.GuAdUnit
+import tools.BlockingOperations
 
 import scala.util.Try
 
-object PlacementAgent extends DataAgent[Long, Seq[String]] {
+class PlacementAgent(val blockingOperations: BlockingOperations) extends DataAgent[Long, Seq[String]] {
 
   override def loadFreshData(): Try[Map[Long, Seq[String]]] = Try {
     val maybeData = for (session <- SessionWrapper()) yield {
@@ -18,15 +19,15 @@ object PlacementAgent extends DataAgent[Long, Seq[String]] {
   }
 }
 
-object PlacementService {
+class PlacementService(placementAgent: PlacementAgent, adUnitService: AdUnitService) {
 
   def placementAdUnitIds(session: SessionWrapper)(placementId: Long): Seq[GuAdUnit] = {
     lazy val fallback = {
       val stmtBuilder = new StatementBuilder().where("id = :id").withBindVariableValue("id", placementId)
       session.placements(stmtBuilder) flatMap (_.getTargetedAdUnitIds.toSeq)
     }
-    val adUnitIds = PlacementAgent.get.data getOrElse(placementId, fallback)
-    adUnitIds.flatMap(AdUnitService.activeAdUnit)
+    val adUnitIds = placementAgent.get.data getOrElse(placementId, fallback)
+    adUnitIds.flatMap(adUnitService.activeAdUnit)
   }
 
 }

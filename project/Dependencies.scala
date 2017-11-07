@@ -5,7 +5,7 @@ import sbt._
 object Dependencies {
   val identityLibVersion = "3.81"
   val awsVersion = "1.11.181"
-  val faciaVersion = "2.4.1"
+  val faciaVersion = "2.5.0"
   val capiVersion = "11.37"
   val romeVersion = "1.0"
   val jerseyVersion = "1.19.4"
@@ -66,11 +66,10 @@ object Dependencies {
   val targetingClient = "com.gu" %% "targeting-client" % "0.14.0"
   val scanamo = "com.gu" %% "scanamo" % "0.9.5"
   val enumeratumPlayJson = "com.beachape" %% "enumeratum-play-json" % "1.5.11"
-  val commercialShared = "com.gu" %% "commercial-shared" % "6.0.0"
+  val commercialShared = "com.gu" %% "commercial-shared" % "6.1.2"
   val playJson = "com.typesafe.play" %% "play-json" % playJsonVersion
   val playJsonJoda = "com.typesafe.play" %% "play-json-joda" % playJsonVersion
   val playIteratees = "com.typesafe.play" %% "play-iteratees" % "2.6.1"
-  val ophanEventModel = "com.gu" %% "ophan-event-model" % "1.0.0"
 
   // Fixing transient dependency issue
   // AWS SDK (1.11.181), which kinesis-logback-appender depends on, brings com.fasterxml.jackson.core and com.fasterxml.jackson.dataformat libs in version 2.6.9

@@ -27,15 +27,15 @@ object FrontHtmlPage extends HtmlPage[PressedPage] {
   }
 
   def allStyles(implicit applicationContext: ApplicationContext): Styles = new Styles {
-    override def criticalCssLink: Html = criticalStyleLink(pillarCardCSSFileFacia)
+    override def criticalCssLink: Html = criticalStyleLink(FaciaCSSFile)
     override def criticalCssInline: Html = criticalStyleInline(Html(common.Assets.css.head(Some("facia"))))
     override def linkCss: Html = stylesheetLink("stylesheets/facia.css")
 
-    override def oldIECriticalCss: Html = stylesheetLink(s"stylesheets/old-ie.head.$pillarCardCSSFileFacia.css")
-    override def oldIELinkCss: Html = stylesheetLink(s"stylesheets/old-ie.$pillarCardCSSFileContent.css")
+    override def oldIECriticalCss: Html = stylesheetLink(s"stylesheets/old-ie.head.$FaciaCSSFile.css")
+    override def oldIELinkCss: Html = stylesheetLink(s"stylesheets/old-ie.$ContentCSSFile.css")
 
-    override def IE9LinkCss: Html = stylesheetLink(s"stylesheets/ie9.head.$pillarCardCSSFileFacia.css")
-    override def IE9CriticalCss: Html = stylesheetLink(s"stylesheets/ie9.$pillarCardCSSFileContent.css")
+    override def IE9LinkCss: Html = stylesheetLink(s"stylesheets/ie9.head.$FaciaCSSFile.css")
+    override def IE9CriticalCss: Html = stylesheetLink(s"stylesheets/ie9.$ContentCSSFile.css")
   }
 
   def html(page: PressedPage)(implicit request: RequestHeader, applicationContext: ApplicationContext): Html = {

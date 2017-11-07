@@ -67,13 +67,13 @@ object DfpAgent
     }
 
     def updateInlineMerchandisingTargetedTags(freshData: InlineMerchandisingTagSet) {
-      inlineMerchandisingTagsAgent sendOff { oldData =>
+      inlineMerchandisingTagsAgent send { oldData =>
         if (freshData.nonEmpty) freshData else oldData
       }
     }
 
     def updateTargetedHighMerchandisingLineItems(freshData: Seq[HighMerchandisingLineItem]): Unit ={
-      targetedHighMerchandisingLineItemsAgent sendOff { oldData =>
+      targetedHighMerchandisingLineItemsAgent send { oldData =>
         if(freshData.nonEmpty) freshData else oldData
       }
     }
@@ -98,11 +98,12 @@ object DfpAgent
         maybeLineItems getOrElse Nil
       }
 
-      lineItemAgent sendOff { oldData =>
+      lineItemAgent send { oldData =>
         val takeovers = grabCurrentLineItemsFromStore(key)
         if (takeovers.nonEmpty) oldData + (slot -> takeovers)
         else oldData
       }
+
     }
 
     updateLineItems(TopAboveNavSlot, topAboveNavSlotTakeoversKey)

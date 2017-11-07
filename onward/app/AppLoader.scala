@@ -1,3 +1,4 @@
+import akka.actor.ActorSystem
 import http.{CommonFilters, CorsHttpErrorHandler}
 import app.{FrontendApplicationLoader, FrontendComponents}
 import business.{StocksData, StocksDataLifecycle}
@@ -31,6 +32,7 @@ class AppLoader extends FrontendApplicationLoader {
 trait OnwardServices {
   def wsClient: WSClient
   def environment: Environment
+  def actorSystem: ActorSystem
   implicit def appContext: ApplicationContext
   implicit val executionContext: ExecutionContext
   lazy val capiHttpClient: HttpClient = wire[CapiHttpClient]

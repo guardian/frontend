@@ -191,18 +191,18 @@ define([
             var isEmailSubmissionReady = isEmailSubmissionReadyElement && isEmailSubmissionReadyElement.dataset.isEmailSubmissionReady === 'true';
             var isDeliveryTestReady = isDeliveryTestReadyElement && isDeliveryTestReadyElement.dataset.isAnswerDeliveryTestReady === 'true';
 
-            var readerQuestionsContainer = document.getElementById('user__question-atom-' + atomId);
-            var askQuestionLinks = Array.from(document.querySelectorAll('.js-ask-question-link'));
+            var askQuestionLinks = $('.js-ask-question-link');
 
             var answersDeliveryPreferences = document.querySelectorAll('.btn-answer-delivery-' + atomId);
             var answerDeliveryPrefContainer = document.getElementById('js-delivery-selection-body-' + atomId);
 
-            if (readerQuestionsContainer) {
-                bean.one(readerQuestionsContainer, 'click', askQuestionLinks, function (event) {
+
+            askQuestionLinks.each(function (el) {
+                bean.on(el, 'click', function(event) {
                     askQuestion(event, isEmailSubmissionReady, isDeliveryTestReady);
                     this.classList.add('is-clicked');
                 });
-            }
+            });
 
             if (answerDeliveryPrefContainer) {
                 var deliveryPrefList = Array.from(answersDeliveryPreferences);
