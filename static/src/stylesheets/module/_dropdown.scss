@@ -54,10 +54,6 @@
     }
 }
 
-.dropdown__content {
-    transition: height .2s linear;
-}
-
 .dropdown__toggle:checked + .dropdown__content,
 .dropdown--active .dropdown__content,
 .dropdown--animated.dropdown--active .dropdown__content {
@@ -79,4 +75,10 @@
     left: -9999em;
     visibility: hidden;
     pointer-events: none;
+    transition: height .2s linear;
+    /*
+    moving the dropdown off-layout instead of hiding it
+    lets dropdown.js retrieve a close enough height
+    for the animation
+    */
 }
