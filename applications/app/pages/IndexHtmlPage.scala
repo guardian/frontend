@@ -15,17 +15,18 @@ import views.html.fragments.page.body.{bodyTag, breakingNewsDiv, mainContent, sk
 import views.html.fragments.page.head.stylesheets.{criticalStyleInline, criticalStyleLink, styles}
 import views.html.fragments.page.head.{fixIEReferenceErrors, headTag, titleTag}
 import views.html.fragments.page.{devTakeShot, htmlTag}
+import html.HtmlPageHelpers.ContentCSSFile
 
 object IndexHtml {
 
   def allStyles(implicit applicationContext: ApplicationContext): Styles = new Styles {
-    override def criticalCssLink: Html = criticalStyleLink("facia")
+    override def criticalCssLink: Html = criticalStyleLink(ContentCSSFile)
     override def criticalCssInline: Html = criticalStyleInline(Html(common.Assets.css.head(Some("facia"))))
     override def linkCss: Html = stylesheetLink("stylesheets/facia.css")
     override def oldIECriticalCss: Html = stylesheetLink("stylesheets/old-ie.head.facia.css")
-    override def oldIELinkCss: Html = stylesheetLink("stylesheets/old-ie.content.css")
+    override def oldIELinkCss: Html = stylesheetLink(s"stylesheets/old-ie.$ContentCSSFile.css")
     override def IE9LinkCss: Html = stylesheetLink("stylesheets/ie9.head.facia.css")
-    override def IE9CriticalCss: Html = stylesheetLink("stylesheets/ie9.content.css")
+    override def IE9CriticalCss: Html = stylesheetLink(s"stylesheets/ie9.$ContentCSSFile.css")
   }
 
   def html( page: IndexPage)(
