@@ -51,7 +51,7 @@ const addReferrerDataToAcquisitionLinksOnPage = (): void => {
     });
 };
 
-const addReferrerDataToAcquisitionLinksInIframes = (): void => {
+const addReferrerDataToAcquisitionLinksInInteractiveIframes = (): void => {
     window.addEventListener('message', event => {
         let data;
         try {
@@ -65,13 +65,16 @@ const addReferrerDataToAcquisitionLinksInIframes = (): void => {
         if (data.type === 'enrich-acquisition-links' && data.id) {
             data.referrerData = addReferrerData({});
             [...document.getElementsByTagName('iframe')].forEach(iframe => {
-                iframe.contentWindow.postMessage(data);
+                iframe.contentWindow.postMessage(
+                    data,
+                    'https://interactive.guim.co.uk'
+                );
             });
         }
     });
 };
 
 export const init = (): void => {
-    addReferrerDataToAcquisitionLinksInIframes();
+    addReferrerDataToAcquisitionLinksInInteractiveIframes();
     addReferrerDataToAcquisitionLinksOnPage();
 };
