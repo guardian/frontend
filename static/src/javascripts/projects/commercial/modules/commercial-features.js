@@ -45,6 +45,9 @@ class CommercialFeatures {
             document.documentElement.classList.contains('has-sticky');
         const newRecipeDesign =
             config.page.showNewRecipeDesign && config.tests.abNewRecipeDesign;
+        const isSecureContact = config.page.pageId.contains(
+            'contact-the-guardian-securely'
+        );
 
         // Feature switches
         this.adFree =
@@ -79,7 +82,8 @@ class CommercialFeatures {
             !config.page.isFront &&
             !newRecipeDesign;
 
-        this.thirdPartyTags = externalAdvertising && !isIdentityPage;
+        this.thirdPartyTags =
+            externalAdvertising && !isIdentityPage && !isSecureContact;
 
         this.outbrain =
             this.dfpAdvertising &&
