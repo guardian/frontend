@@ -28,6 +28,18 @@ object CommercialClientLoggingVariant extends TestDefinition(
   def canRun(implicit request: RequestHeader): Boolean = participationGroup.contains("ccl-A")
 }
 
+object CommercialPaidContentTemplateVariant extends TestDefinition(
+  name = "commercial-paid-content",
+  description = "A slice of the audience who will see labs content with a background colour variant",
+  owners = Seq(Owner.withGithub("rich-nguyen")),
+  sellByDate = new LocalDate(2018, 2, 1)
+  ) {
+
+  def participationGroup(implicit request: RequestHeader): Option[String] = request.headers.get("X-GU-labs")
+
+  def canRun(implicit request: RequestHeader): Boolean = participationGroup.contains("variant")
+}
+
 object ABNewDesktopHeaderVariant extends TestDefinition(
   name = "ab-new-desktop-header-variant",
   description = "Users in this test will see the new desktop design.",
@@ -100,6 +112,7 @@ trait ServerSideABTests {
 object ActiveTests extends ServerSideABTests {
   val tests: Seq[TestDefinition] = List(
     CommercialClientLoggingVariant,
+    CommercialPaidContentTemplateVariant,
     ABNewDesktopHeaderVariant,
     ABNewDesktopHeaderControl,
     ABJavascriptRenderingVariant,
