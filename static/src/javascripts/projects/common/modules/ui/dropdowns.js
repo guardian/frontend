@@ -25,9 +25,7 @@ const init = (): void => {
         const container = (e.currentTarget: any).closest(containerSelector);
 
         if (container) {
-
             fastdom.read(() => {
-                
                 const content = container.querySelector(`.${contentCN}`);
                 const isActive: boolean = container.classList.contains(
                     'dropdown--active'
@@ -49,7 +47,6 @@ const init = (): void => {
                 */
 
                 if (isAnimated && 'ontransitionend' in window) {
-
                     fastdom.write(() => {
                         container.style.pointerEvents = 'none';
                         if (!isActive) {
