@@ -23,11 +23,58 @@ const updateAria = (container: Element): void => {
 const init = (): void => {
     bean.on(document.body, 'click', `.${buttonCN}`, (e: Event) => {
         const container = (e.currentTarget: any).closest(containerSelector);
+
         if (container) {
-            fastdom.write(() => {
-                container.classList.toggle('dropdown--active');
-                updateAria(container);
-            });
+            const content = container.querySelector(`.${contentCN}`);
+            const isActive: boolean = container.classList.contains(
+                'dropdown--active'
+            );
+            const contentEstimatedHeight =
+                content.offsetHeight !== undefined &&
+                content.offsetHeight < window.innerHeight
+                    ? content.offsetHeight
+                    : window.innerHeight;
+
+            /*
+            by clamping the transition to windowHeight we avoid
+            a very awkward effect where a long list doesn't really
+            get any visual closing feedback in the first milliseconds
+            because its starting to close from the bottom, which is off-screen
+            */
+
+            if ('ontransitionend' in window) {
+                fastdom.write(() => {
+                    if (!isActive) {
+                        container.classList.toggle('dropdown--active');
+                    }
+                    content.style.height = isActive
+                        ? `${contentEstimatedHeight}px`
+                        : 0;
+
+                    requestAnimationFrame(() => {
+                        content.style.height = isActive
+                            ? 0
+                            : `${contentEstimatedHeight}px`;
+
+                        bean.one(content, 'transitionend', () => {
+                            fastdom.write(() => {
+                                updateAria(container);
+                                content.style.height = 'auto';
+                                if (isActive) {
+                                    container.classList.toggle(
+                                        'dropdown--active'
+                                    );
+                                }
+                            });
+                        });
+                    });
+                });
+            } else {
+                fastdom.write(() => {
+                    container.classList.toggle('dropdown--active');
+                    updateAria(container);
+                });
+            }
         }
     });
 };
