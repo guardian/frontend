@@ -41,7 +41,7 @@ object GetClasses {
 
   def forSubLink(sublink: Sublink): String = RenderClasses(Map(
     ("fc-sublink", true),
-    (TrailCssClasses.toneClassFromStyle(sublink.cardStyle) + "--sublink", true),
+    (TrailCssClasses.toneClassFromStyle(sublink.cardStyle) + "--sublink", PillarCards.isSwitchedOff),
     (sublinkMediaTypeClass(sublink).getOrElse(""), true),
     ("fc-sublink--pillar-" + sublink.pillar, PillarCards.isSwitchedOn),
     ("fc-sublink--type-" + sublink.contentType, PillarCards.isSwitchedOn)
