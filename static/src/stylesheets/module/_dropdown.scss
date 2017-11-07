@@ -59,7 +59,8 @@
 }
 
 .dropdown__toggle:checked + .dropdown__content,
-.dropdown--active .dropdown__content {
+.dropdown--active .dropdown__content,
+.dropdown--animated.dropdown--active .dropdown__content {
     position: static;
     visibility: visible;
     pointer-events: all;
@@ -70,7 +71,7 @@
     display: none;
 }
 
-.js-on .dropdown--animated .dropdown__content {
+.dropdown--animated .dropdown__content {
     display: block;
     overflow: hidden;
     position: fixed;
