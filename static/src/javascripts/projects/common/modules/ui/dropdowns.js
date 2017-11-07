@@ -29,6 +29,9 @@ const init = (): void => {
             const isActive: boolean = container.classList.contains(
                 'dropdown--active'
             );
+            const isAnimated: boolean = container.classList.contains(
+                'dropdown--animated'
+            );
             const contentEstimatedHeight =
                 content.offsetHeight !== undefined &&
                 content.offsetHeight < window.innerHeight
@@ -42,8 +45,9 @@ const init = (): void => {
             because its starting to close from the bottom, which is off-screen
             */
 
-            if ('ontransitionend' in window) {
+            if (isAnimated && 'ontransitionend' in window) {
                 fastdom.write(() => {
+                    container.style.pointerEvents = 'none';
                     if (!isActive) {
                         container.classList.toggle('dropdown--active');
                     }
@@ -60,6 +64,7 @@ const init = (): void => {
                             fastdom.write(() => {
                                 updateAria(container);
                                 content.style.height = 'auto';
+                                container.style.pointerEvents = 'all';
                                 if (isActive) {
                                     container.classList.toggle(
                                         'dropdown--active'

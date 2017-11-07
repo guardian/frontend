@@ -63,9 +63,15 @@
     position: static;
     visibility: visible;
     pointer-events: all;
+    display: block;
 }
 
 .dropdown__content {
+    display: none;
+}
+
+.js-on .dropdown--animated .dropdown__content {
+    display: block;
     overflow: hidden;
     position: fixed;
     top: -9999em;
