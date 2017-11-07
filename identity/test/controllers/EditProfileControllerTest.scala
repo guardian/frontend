@@ -3,6 +3,7 @@ package controllers
 import actions.AuthenticatedActions
 import idapiclient.Auth
 import com.gu.identity.cookie.GuUCookieData
+import com.gu.identity.model.ConsentText.FirstParty
 import com.gu.identity.model._
 import form._
 import idapiclient.{TrackingData, _}
@@ -122,7 +123,7 @@ import scala.concurrent.Future
 
     "submitPrivacyForm method is called with valid CSRF request" should {
       "post UserUpdateDTO with consent to IDAPI" in new EditProfileFixture {
-        val consent = Consent("user", "firstParty", false)
+        val consent = Consent("user", FirstParty.name, false)
 
         val fakeRequest = FakeCSRFRequest(csrfAddToken)
           .withFormUrlEncodedBody(
