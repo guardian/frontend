@@ -42,8 +42,8 @@ object HtmlPageHelpers {
     )
   }
 
-  def pillarCardCSSFileFacia: String = if (PillarCards.isSwitchedOn) "facia.pc" else "facia"
-  def pillarCardCSSFileContent: String = if (PillarCards.isSwitchedOn) "content.pc" else "content"
-  def pillarCardCSSFileRichLinks: String = if (PillarCards.isSwitchedOn) "rich-links.pc" else "rich-links"
+  def pillarCardCSSFileFacia: String = if (PillarCards.isSwitchedOn || mvt.PillarCards.isParticipating) "facia.pc" else "facia"
+  def pillarCardCSSFileContent: String = if (PillarCards.isSwitchedOn || mvt.PillarCards.isParticipating) "content.pc" else "content"
+  def pillarCardCSSFileRichLinks: String = if (PillarCards.isSwitchedOn || mvt.PillarCards.isParticipating) "rich-links.pc" else "rich-links"
 
 }
