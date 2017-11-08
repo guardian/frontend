@@ -32,7 +32,6 @@
       @Html(item.body)
     </div>
   }
-} {
   @for(
     img <- guide.image;
     asset <- img.allImages.headOption;
@@ -40,8 +39,7 @@
   ) {
     <div class="explainer-snippet__credit">
       @fragments.inlineSvg("information", "icon") 
-      Photograph: @credit
+      @credit
     </div>
   }
 }
-

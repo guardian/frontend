@@ -25,14 +25,15 @@
   }
 
   @Html(qa.data.item.body)
-}{ 
+
   @for( 
     img <- qa.image; 
     asset <- img.allImages.headOption; 
     credit <- asset.credit 
   ) { 
     <div class="explainer-snippet__credit">
-      @fragments.inlineSvg("information", "icon") Photograph: @credit
+      @fragments.inlineSvg("information", "icon") 
+      @credit
     </div>
   }
 }
