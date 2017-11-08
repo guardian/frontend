@@ -242,7 +242,7 @@ object Atoms extends common.Logging {
           fields = Map(
             "width" -> dims.width.toString,
             "height" -> dims.height.toString
-          ),
+          ) ++ asset.credit.map("credit" -> _),
           mediaType = "image",
           mimeType = asset.mimeType,
           url = Some(asset.file)
