@@ -2,6 +2,13 @@
 # yarn lockfile v1
 
 
+"@guardian/atom-renderer@^0.0.9":
+  version "0.0.9"
+  resolved "https://registry.yarnpkg.com/@guardian/atom-renderer/-/atom-renderer-0.0.9.tgz#d1c3665fb46412876aaa58430d4414d2b15a2cbd"
+  dependencies:
+    sass-mq "^3.3.2"
+    webpack "^3.5.6"
+
 "@guardian/guui@1.4.1":
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/@guardian/guui/-/guui-1.4.1.tgz#77292a091197bf12afff94917c42e8ee5d03b184"
@@ -8901,7 +8908,7 @@ sass-lint@~1.10.2:
     path-is-absolute "^1.0.0"
     util "^0.10.3"
 
-sass-mq@~3.3.2:
+sass-mq@^3.3.2, sass-mq@~3.3.2:
   version "3.3.2"
   resolved "https://registry.yarnpkg.com/sass-mq/-/sass-mq-3.3.2.tgz#3472e04c31a432bcd55b3b604edc72ae9a4def1a"
 
@@ -10491,7 +10498,7 @@ webpack-visualizer-plugin@^0.1.11:
     react "^0.14.0"
     react-dom "^0.14.0"
 
-webpack@^3.8.1:
+webpack@^3.5.6, webpack@^3.8.1:
   version "3.8.1"
   resolved "https://registry.yarnpkg.com/webpack/-/webpack-3.8.1.tgz#b16968a81100abe61608b0153c9159ef8bb2bd83"
   dependencies:
