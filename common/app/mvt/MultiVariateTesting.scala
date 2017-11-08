@@ -29,7 +29,7 @@ object CommercialClientLoggingVariant extends TestDefinition(
 }
 
 object CommercialPaidContentTemplateVariant extends TestDefinition(
-  name = "commercial-paid-content",
+  name = "commercial-paid-content-variant",
   description = "A slice of the audience who will see labs content with a background colour variant",
   owners = Seq(Owner.withGithub("rich-nguyen")),
   sellByDate = new LocalDate(2018, 2, 1)
@@ -52,7 +52,7 @@ object CommercialPaidContentTemplateVariant extends TestDefinition(
 }
 
 object CommercialPaidContentTemplateControl extends TestDefinition(
-  name = "commercial-paid-content",
+  name = "commercial-paid-content-control",
   description = "A slice of the audience who will are in the labs content control group",
   owners = Seq(Owner.withGithub("rich-nguyen")),
   sellByDate = new LocalDate(2018, 2, 1)
