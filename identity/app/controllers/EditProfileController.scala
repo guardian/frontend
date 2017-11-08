@@ -10,6 +10,7 @@ import idapiclient.IdApiClient
 import model._
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesProvider}
+import play.api.libs.json.Json
 import play.api.mvc._
 import play.filters.csrf.{CSRFAddToken, CSRFCheck}
 import services.{EmailPrefsData, _}
@@ -52,6 +53,25 @@ class EditProfileController(
   def submitPublicProfileForm(): Action[AnyContent] = submitForm(PublicEditProfilePage)
   def submitAccountForm(): Action[AnyContent] = submitForm(AccountEditProfilePage)
   def submitPrivacyForm(): Action[AnyContent] = submitForm(PrivacyEditProfilePage)
+
+  def savePreferences: Action[AnyContent] =
+    csrfCheck {
+      authActionWithUser.async { implicit request =>
+        emailService.savePreferences().map { form  =>
+          if (form.hasErrors) {
+            val errorsAsJson = Json.toJson(
+              form.errors.groupBy(_.key).map { case (key, errors) =>
+                val nonEmptyKey = if (key.isEmpty) "global" else key
+                (nonEmptyKey, errors.map(e => play.api.i18n.Messages(e.message, e.args: _*)))
+              }
+            )
+            Forbidden(errorsAsJson)
+          } else {
+            Ok("updated")
+          }
+        }
+      }
+    }
 
   private def displayForm(page: IdentityPage) = csrfAddToken {
     recentlyAuthenticated.async { implicit request =>
