@@ -159,10 +159,6 @@ val preview = application("preview").dependsOn(
 ).settings(
 )
 
-val integrationTests = Project("integrated-tests", file("integrated-tests"))
-  .settings(frontendCompilationSettings:_*)
-  .settings(frontendIntegrationTestsSettings:_*)
-
 val rss = application("rss")
   .dependsOn(commonWithTests)
   .aggregate(common)
