@@ -6,26 +6,26 @@
 
 @if(!page.metadata.shouldBlockAnalytics) {
 
-@******************************************************************************
-                            Core Analytics
-******************************************************************************@
+    @******************************************************************************
+                                Core Analytics
+    ******************************************************************************@
 
-@fragments.analytics.google(page)
+    @fragments.analytics.google(page)
 
-@fragments.analytics.comscore(page)
+    @fragments.analytics.comscore(page)
 
-@******************************************************************************
-                            'Other' Analytics
-******************************************************************************@
+    @******************************************************************************
+                                'Other' Analytics
+    ******************************************************************************@
 
-@* google remarketing fallback *@
-<noscript>
-    <div style="display:inline;">
-        <img height="1" width="1" style="border-style:none;" alt="" src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/971225648/?value=0&amp;guid=ON&amp;script=0"/>
-    </div>
-</noscript>
+    @* google remarketing fallback *@
+    <noscript>
+        <div style="display:inline;">
+            <img height="1" width="1" style="border-style:none;" alt="" src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/971225648/?value=0&amp;guid=ON&amp;script=0"/>
+        </div>
+    </noscript>
 
-<img src="@Configuration.debug.beaconUrl/count/pv.gif" alt="" style="display : none ;" rel="nofollow"/>
-<img src="https://www.facebook.com/tr?id=@FBPixel.account&ev=PageView&noscript=1" height="1" width="1" style="display:none" rel="nofollow" alt="" />
+    <img src="@Configuration.debug.beaconUrl/count/pv.gif" alt="" style="display : none ;" rel="nofollow"/>
+    <img src="https://www.facebook.com/tr?id=@FBPixel.account&ev=PageView&noscript=1" height="1" width="1" style="display:none" rel="nofollow" alt="" />
 
 }
