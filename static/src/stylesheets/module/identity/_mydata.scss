@@ -47,10 +47,10 @@
         padding-right: $local-gutter * 1.5;
         position: relative;
         break-inside: avoid;
-        width: auto;
+        width: 100%;
         height: auto;
         margin: 0;
-        margin-bottom: $gs-gutter;
+        margin-bottom: $local-gutter;
         background-size: $checkbox-size;
         background-repeat: no-repeat;
         background-position: $local-gutter $local-gutter * 1.5;
