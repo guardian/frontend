@@ -1,5 +1,5 @@
 // @flow
-import config from 'lib/config';
+import defaultConfig from 'lib/config';
 import { getBreakpoint, adblockInUse } from 'lib/detect';
 import { isAdFreeUser } from 'commercial/modules/user-features';
 import { isUserLoggedIn } from 'common/modules/identity/api';
@@ -23,7 +23,7 @@ class CommercialFeatures {
     adFeedback: any;
     adFree: any;
 
-    constructor() {
+    constructor(config: any = defaultConfig) {
         // this is used for SpeedCurve tests
         const noadsUrl = window.location.hash.match(/[#&]noads(&.*)?$/);
         const externalAdvertising = !noadsUrl && !userPrefs.isOff('adverts');
@@ -45,9 +45,9 @@ class CommercialFeatures {
             document.documentElement.classList.contains('has-sticky');
         const newRecipeDesign =
             config.page.showNewRecipeDesign && config.tests.abNewRecipeDesign;
-        const isSecureContact = config.page.pageId.contains(
-            'contact-the-guardian-securely'
-        );
+        const isSecureContact = config
+            .get('page.pageId', '')
+            .includes('contact-the-guardian-securely');
 
         // Feature switches
         this.adFree =
