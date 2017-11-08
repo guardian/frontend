@@ -43,7 +43,7 @@ $checkbox-size: $gs-gutter / 1.25;
 }
 
 .mydata-prefs__switchboardLabel {
-    
+
     @include fs-textSans(1);
     display: block;
     background-color: $neutral-8;
