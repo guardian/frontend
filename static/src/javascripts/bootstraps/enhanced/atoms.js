@@ -27,10 +27,10 @@ const initAtoms = () => {
         require.ensure(
             [],
             require => {
-                const guideAtom = require('@guardian/atom-renderer/src/main/resources/guide/article/index.fjs');
+                const guideAtom = require('@guardian/atom-renderer/build/guide/article/index');
                 bootstrapAtom(guideAtom, 'guide');
             },
-            'guide'
+            'guide-atom'
         );
     }
 
@@ -38,10 +38,10 @@ const initAtoms = () => {
         require.ensure(
             [],
             require => {
-                const guideAtom = require('@guardian/atom-renderer/src/main/resources/profile/article/index.fjs');
+                const guideAtom = require('@guardian/atom-renderer/build/profile/article/index');
                 bootstrapAtom(guideAtom, 'profile');
             },
-            'profile'
+            'profile-atom'
         );
     }
 
@@ -49,10 +49,10 @@ const initAtoms = () => {
         require.ensure(
             [],
             require => {
-                const guideAtom = require('@guardian/atom-renderer/src/main/resources/qanda/article/index.fjs');
+                const guideAtom = require('@guardian/atom-renderer/build/qanda/article/index');
                 bootstrapAtom(guideAtom, 'qanda');
             },
-            'qanda'
+            'qanda-atom'
         );
     }
 
@@ -60,10 +60,10 @@ const initAtoms = () => {
         require.ensure(
             [],
             require => {
-                const guideAtom = require('@guardian/atom-renderer/src/main/resources/timeline/article/index.fjs');
+                const guideAtom = require('@guardian/atom-renderer/build/timeline/article/index');
                 bootstrapAtom(guideAtom, 'timeline');
             },
-            'timeline'
+            'timeline-atom'
         );
     }
 };
