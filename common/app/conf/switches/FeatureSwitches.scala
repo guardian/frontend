@@ -525,4 +525,15 @@ trait FeatureSwitches {
     sellByDate = new LocalDate(2018, 10, 24),
     exposeClientSide = false
   )
+
+  // This switch is just for the tag migration happening on 9/11/2017. Please delete this afterwards
+  val GamesLinkSwitch = Switch(
+    SwitchGroup.Feature,
+    "games-link-switch",
+    "When on, the link to games will be `/games`. When off, it will be `technology/games`",
+    owners = Seq(Owner.withGithub("natalialkb")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 11, 13),
+    exposeClientSide = false
+  )
 }
