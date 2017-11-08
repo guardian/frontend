@@ -47,7 +47,9 @@ class CommercialFeatures {
             config.page.showNewRecipeDesign && config.tests.abNewRecipeDesign;
         const isSecureContact = config
             .get('page.pageId', '')
-            .includes('contact-the-guardian-securely');
+            .includes(
+                'help/ng-interactive/2017/mar/17/contact-the-guardian-securely'
+            );
 
         // Feature switches
         this.adFree =
