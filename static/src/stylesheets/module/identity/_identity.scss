@@ -48,14 +48,6 @@
     max-width: gs-span(6);
     padding-bottom: $gs-baseline*4;
     padding-top: $gs-baseline*4;
-
-    @include mq(desktop) {
-        max-width: gs-span(10);
-    }
-}
-
-.identity-wrapper--stretched {
-    max-width: gs-span(16);
 }
 
 .identity-header {
@@ -477,7 +469,7 @@
 
 /* Email subcriptions modals
    ========================================================================== */
-.email-subscription__modal {
+.email-subscriptions__modal {
     position: fixed;
     top: 0;
     left: 0;
@@ -493,7 +485,7 @@
         display: flex;
     }
 
-    .email-subscription__modalBg {
+    .email-subscriptions__modalBg {
         position: fixed;
         top: 0;
         left: 0;
@@ -504,7 +496,7 @@
         z-index: 9;
     }
 
-    .email-subscription__modalContent {
+    .email-subscriptions__modalContent {
         max-width: gs-span(10);
         background: #ffffff;
         width: 100%;
@@ -516,7 +508,7 @@
         float: none;
     }
 
-    .email-subscription__modalCloser {
+    .email-subscriptions__modalCloser {
         width: $gs-gutter * 1.75;
         height: $gs-gutter * 1.75;
         border: 1px solid $guardian-brand;
