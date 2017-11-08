@@ -1,4 +1,4 @@
-@import form.IdFormHelpers._
+@import form.IdFormHelpers.nonInputFields
 @import model.{EmailNewsletter, EmailNewsletters}
 @import views.html.fragments.form.radioField
 @import views.support.RenderClasses
@@ -85,7 +85,7 @@
                     <div class="fieldset__fields email-subscription__options">
                         <ul class="u-unstyled">
                             <li>
-                                <a type="button" href=@buildIdentityUrl("account/edit") class="email-subscription__button email-subscription__button--mini " data-link-name="Change email address">Update your email address</a>
+                                <a type="button" href="@buildIdentityUrl("account/edit")" class="email-subscription__button email-subscription__button--mini" data-link-name="Change email address">Update your email address</a>
                             </li>
                             <li>
                                 <div type="link" role="link" class="js-email-subscription__formatFieldsetToggle email-subscription__button email-subscription__button--mini " data-link-name="Change format">Change format</div>
