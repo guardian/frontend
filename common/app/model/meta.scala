@@ -241,6 +241,8 @@ final case class MetaData (
     DfpAgent.omitMPUsFromContainers(id, edition)
   } else false
 
+  val shouldBlockAnalytics: Boolean = id.contains("contact-the-guardian-securely")
+
   val requiresMembershipAccess: Boolean = membershipAccess.nonEmpty
 
   val hasSlimHeader: Boolean =
