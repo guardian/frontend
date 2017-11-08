@@ -52,6 +52,17 @@ object CommercialPaidContentTemplateVariant extends TestDefinition(
   )
 }
 
+object CommercialPaidContentTemplateControl extends TestDefinition(
+  name = "commercial-paid-content",
+  description = "A slice of the audience who will are in the labs content control group",
+  owners = Seq(Owner.withGithub("rich-nguyen")),
+  sellByDate = new LocalDate(2018, 2, 1)
+  ) {
+
+  def participationGroup(implicit request: RequestHeader): Option[String] = request.headers.get("X-GU-labs")
+
+  def canRun(implicit request: RequestHeader): Boolean = participationGroup.contains("control") &&
+    CommercialPaidContentTemplateVariant.testUrls.contains(request.path)
 }
 
 object ABNewDesktopHeaderVariant extends TestDefinition(
@@ -127,6 +138,7 @@ object ActiveTests extends ServerSideABTests {
   val tests: Seq[TestDefinition] = List(
     CommercialClientLoggingVariant,
     CommercialPaidContentTemplateVariant,
+    CommercialPaidContentTemplateControl,
     ABNewDesktopHeaderVariant,
     ABNewDesktopHeaderControl,
     ABJavascriptRenderingVariant,
