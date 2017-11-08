@@ -49,7 +49,8 @@ val common = library("common").settings(
     playJson,
     playJsonJoda,
     jodaForms,
-    jacksonDataFormat
+    jacksonDataFormat,
+    atomRenderer
   )
 ).settings(
     mappings in TestAssets ~= filterAssets
