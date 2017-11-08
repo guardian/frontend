@@ -12,7 +12,7 @@ import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesProvider}
 import play.api.mvc._
 import play.filters.csrf.{CSRFAddToken, CSRFCheck}
-import services._
+import services.{EmailPrefsData, _}
 import utils.SafeLogging
 
 import scala.concurrent.Future
@@ -32,7 +32,8 @@ class EditProfileController(
     csrfCheck: CSRFCheck,
     csrfAddToken: CSRFAddToken,
     implicit val profileFormsMapping: ProfileFormsMapping,
-    val controllerComponents: ControllerComponents)
+    val controllerComponents: ControllerComponents,
+    emailService: EmailService)
     (implicit context: ApplicationContext)
   extends BaseController
   with ImplicitControllerExecutionContext
@@ -54,12 +55,10 @@ class EditProfileController(
 
   private def displayForm(page: IdentityPage) = csrfAddToken {
     recentlyAuthenticated.async { implicit request =>
-      Future {
         profileFormsView(
           page = page,
           forms = ProfileForms(request.user, PublicEditProfilePage),
           request.user)
-      }
     }
   }
 
@@ -71,10 +70,10 @@ class EditProfileController(
           ProfileForms(userDO, activePage = page).bindFromRequestWithAddressErrorHack(request) // NOTE: only active form is bound to request data
 
         boundProfileForms.activeForm.fold(
-          formWithErrors => Future(profileFormsView(page, boundProfileForms, userDO)),
+          formWithErrors => profileFormsView(page, boundProfileForms, userDO),
           success = {
             case formData: AccountFormData if formData.deleteTelephone =>
-              identityApiClient.deleteTelephone(userDO.auth) map {
+              identityApiClient.deleteTelephone(userDO.auth) flatMap {
                 case Left(errors) => profileFormsView(page, boundProfileForms.withErrors(errors), userDO)
 
                 case Right(_) => {
@@ -87,7 +86,7 @@ class EditProfileController(
               }
 
             case formData: UserFormData =>
-              identityApiClient.saveUser(userDO.id, formData.toUserUpdateDTO(userDO), userDO.auth) map {
+              identityApiClient.saveUser(userDO.id, formData.toUserUpdateDTO(userDO), userDO.auth) flatMap {
                 case Left(errors) => profileFormsView(page, boundProfileForms.withErrors(errors), userDO)
                 case Right(updatedUser) => profileFormsView(page, boundProfileForms.bindForms(updatedUser), updatedUser)
               }
@@ -100,8 +99,24 @@ class EditProfileController(
       page: IdentityPage,
       forms: ProfileForms,
       user: User)
-      (implicit request: AuthRequest[AnyContent]): Result =
-    NoCache(Ok(views.html.profileForms(page, user, forms, idRequestParser(request), idUrlBuilder)))
+      (implicit request: AuthRequest[AnyContent]): Future[Result] = {
+
+    emailService.preferences.map { emailFilledForm =>
+
+      NoCache(Ok(views.html.profileForms(
+        page,
+        user,
+        forms,
+        idRequestParser(request),
+        idUrlBuilder,
+        emailFilledForm,
+        emailService.getEmailSubscriptions(emailFilledForm),
+        EmailNewsletters.all
+
+      )))
+
+    }
+  }
 }
 
 /**

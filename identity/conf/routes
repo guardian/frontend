@@ -58,6 +58,6 @@ GET         /digitalpack/edit                       controllers.EditProfileContr
 GET         /privacy/edit                           controllers.EditProfileController.displayPrivacyForm
 POST        /privacy/edit                           controllers.EditProfileController.submitPrivacyForm
 
-GET         /email-prefs                            controllers.EmailController.preferences
-POST        /email-prefs                            controllers.EmailController.savePreferences
+#GET         /email-prefs                            controllers.EmailController.preferences
+#POST        /email-prefs                            controllers.EmailController.savePreferences
 ########################################################################################################################

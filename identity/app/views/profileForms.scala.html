@@ -1,14 +1,19 @@
+@import conf.Static
+@import views.support.RenderClasses
+@import conf.switches.Switches.ProfileShowContributorTab
+@import model.{ApplicationContext, EmailNewsletters, IdentityPage}
+@import services.EmailPrefsData
+
 @(
     page: model.Page,
     user: com.gu.identity.model.User,
     forms: controllers.ProfileForms,
     idRequest: services.IdentityRequest,
-    idUrlBuilder: services.IdentityUrlBuilder
+    idUrlBuilder: services.IdentityUrlBuilder,
+    emailPrefsForm: Form[EmailPrefsData],
+    emailSubscriptions: List[String],
+    availableLists: EmailNewsletters
 )(implicit request: RequestHeader, messages: play.api.i18n.Messages, context: model.ApplicationContext)
-
-@import conf.Static
-@import views.support.RenderClasses
-@import conf.switches.Switches.ProfileShowContributorTab
 
 @tab(i: Int, name: String, url: String, dataTestId: Option[String], hidden: Boolean = false, optionalClass: String = "") = {
     <li class="tabs__tab @if(hidden){is-hidden} @if(page.metadata.id == url){tabs__tab--selected tone-colour tone-accent-border} @optionalClass" role="tab" id="tabs-account-profile-@i-tab" aria-selected="@(page.metadata.id == url)" aria-controls="tabs-account-profile-@i">
@@ -69,9 +74,9 @@
             @if(ProfileShowContributorTab.isSwitchedOn) {
                 @content(5, "/contribution/recurring/edit")(profile.recurringContributionDetailsForm(idUrlBuilder, idRequest, user))
 
-                @content(6, "/privacy/edit")(profile.privacyForm(idUrlBuilder, idRequest, user, forms.privacyForm))
+                @content(6, "/privacy/edit")(profile.privacyForm(idUrlBuilder, idRequest, user, forms.privacyForm, emailPrefsForm, emailSubscriptions, availableLists))
             } else {
-                @content(5, "/privacy/edit")(profile.privacyForm(idUrlBuilder, idRequest, user, forms.privacyForm))
+                @content(5, "/privacy/edit")(profile.privacyForm(idUrlBuilder, idRequest, user, forms.privacyForm, emailPrefsForm, emailSubscriptions, availableLists)))
             }
         </div>
     </div>
