@@ -65,7 +65,9 @@ const monthlySupporterCost = (location: string): string => {
 };
 
 const supporterEngagementCtaCopy = (location: string): string =>
-    `Support us for ${monthlySupporterCost(location)} a month.`;
+    location === 'US'
+        ? `Support us with a one-time contribution`
+        : `Support us for ${monthlySupporterCost(location)} a month.`;
 
 const supporterParams = (location: string): EngagementBannerParams =>
     Object.assign({}, baseParams, {
