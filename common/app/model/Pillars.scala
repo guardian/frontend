@@ -1,6 +1,8 @@
 package model
 
 import play.api.libs.json._
+import model.pressed.PressedStory
+
 
 sealed trait Pillar {
   val name: String
@@ -25,6 +27,10 @@ object Pillar {
 
     override def writes(o: Pillar): JsValue = JsString(o.name)
   }
+
+   def pillarFromPressedContent(storyContent: Option[PressedStory]): Pillar = {
+     storyContent.flatMap(_.metadata.pillar).getOrElse(Pillar.News)
+   }
 }
 
 object Pillars {

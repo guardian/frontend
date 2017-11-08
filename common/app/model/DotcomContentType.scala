@@ -12,6 +12,7 @@ Audio => ApiAudio
 }
 import play.api.libs.json._
 import com.gu.contentapi.client.model.v1.{Content => ApiContent}
+import model.pressed.PressedStory
 
 // If you are reading this, you're probably trying to create a new Content Type.
 // Please note that we send the content types to DFP for ad tracking.
@@ -79,5 +80,9 @@ object DotcomContentType {
       case ApiAudio => Some(DotcomContentType.Audio)
       case _ => None
     }
+  }
+
+  def dotcomContentTypeFromPressedContent(storyContent: Option[PressedStory]): DotcomContentType = {
+    storyContent.flatMap(_.metadata.`type`).getOrElse(DotcomContentType.Article)
   }
 }
