@@ -10,6 +10,7 @@ const bootstrapAtom = (atomMaker, atomType) => {
     ).forEach(atomDom => {
         const atom = atomBuilder(atomDom).runTry();
         if (typeof atom === 'string') {
+            // eslint-disable-next-line no-console
             console.log(
                 `Failed to initialise atom [${atomType}/${atomDom.getAttribute(
                     'data-atom-id'
@@ -26,7 +27,7 @@ const initAtoms = () => {
         require.ensure(
             [],
             require => {
-                const guideAtom = require('@guardian/atom-renderer/build/guide');
+                const guideAtom = require('@guardian/atom-renderer/src/main/resources/guide/article/index.fjs');
                 bootstrapAtom(guideAtom, 'guide');
             },
             'guide'
@@ -37,7 +38,7 @@ const initAtoms = () => {
         require.ensure(
             [],
             require => {
-                const guideAtom = require('@guardian/atom-renderer/profile');
+                const guideAtom = require('@guardian/atom-renderer/src/main/resources/profile/article/index.fjs');
                 bootstrapAtom(guideAtom, 'profile');
             },
             'profile'
@@ -48,7 +49,7 @@ const initAtoms = () => {
         require.ensure(
             [],
             require => {
-                const guideAtom = require('@guardian/atom-renderer/qanda');
+                const guideAtom = require('@guardian/atom-renderer/src/main/resources/qanda/article/index.fjs');
                 bootstrapAtom(guideAtom, 'qanda');
             },
             'qanda'
@@ -59,7 +60,7 @@ const initAtoms = () => {
         require.ensure(
             [],
             require => {
-                const guideAtom = require('@guardian/atom-renderer/timeline');
+                const guideAtom = require('@guardian/atom-renderer/src/main/resources/timeline/article/index.fjs');
                 bootstrapAtom(guideAtom, 'timeline');
             },
             'timeline'
