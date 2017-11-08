@@ -272,6 +272,17 @@ final case class Content(
       ("atoms", JsArray(atomIdentifiers))
     }
 
+    val atomTypesMeta = atoms.map { atoms =>
+      val atomTypes = Seq(
+        if (atoms.guides.isEmpty) None else Some(JsString("guide")),
+        if (atoms.profiles.isEmpty) None else Some(JsString("profile")),
+        if (atoms.qandas.isEmpty) None else Some(JsString("qanda")),
+        if (atoms.timelines.isEmpty) None else Some(JsString("timeline"))
+      ).flatten
+      
+      ("atomTypes", JsArray(atomTypes))
+    }
+
     // There are many checks that might disable sticky top banner, listed below.
     // But if we are in the super sticky banner campaign, we must ignore them!
     val canDisableStickyTopBanner =
@@ -295,6 +306,7 @@ final case class Content(
       articleMeta,
       trackingMeta,
       atomsMeta,
+      atomTypesMeta,
       maybeDisableSticky
     ) ++ cricketMeta ++ seriesMeta
     meta.flatten.toMap
