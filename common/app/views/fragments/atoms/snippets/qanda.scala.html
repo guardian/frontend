@@ -26,11 +26,7 @@
 
   @Html(qa.data.item.body)
 
-  @for( 
-    img <- qa.image; 
-    asset <- img.allImages.headOption; 
-    credit <- asset.credit 
-  ) { 
+  @qa.credit.map { credit =>
     <div class="explainer-snippet__credit">
       @fragments.inlineSvg("information", "icon") 
       @credit
