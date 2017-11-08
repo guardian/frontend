@@ -148,21 +148,39 @@ final case class QandaAtom(
   atom: AtomApiAtom,
   data: atomapi.qanda.QAndAAtom,
   image: Option[ImageMedia]
-) extends Atom
+) extends Atom {
+  def credit: Option[String] = for {
+    img <- image
+    asset <- img.allImages.headOption
+    credit <- asset.credit
+  } yield credit
+}
 
 final case class GuideAtom(
   override val id: String,
   atom: AtomApiAtom,
   data: atomapi.guide.GuideAtom,
   image: Option[ImageMedia]
-) extends Atom
+) extends Atom {
+  def credit: Option[String] = for {
+    img <- image
+    asset <- img.allImages.headOption
+    credit <- asset.credit
+  } yield credit
+}
 
 final case class ProfileAtom(
   override val id: String,
   atom: AtomApiAtom,
   data: atomapi.profile.ProfileAtom,
   image: Option[ImageMedia]
-) extends Atom
+) extends Atom {
+  def credit: Option[String] = for {
+    img <- image
+    asset <- img.allImages.headOption
+    credit <- asset.credit
+  } yield credit
+}
 
 final case class TimelineAtom(
   override val id: String,
