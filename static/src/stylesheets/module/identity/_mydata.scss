@@ -16,7 +16,7 @@
 .mydata-prefs__switchboard ul,
 .mydata-prefs__switchboard li {
     list-style: none;
-    padding:0;
+    padding: 0;
     margin: 0;
 }
 
@@ -28,7 +28,7 @@
     border-top: 1px solid $neutral-4;
     ul {
         grid-template-columns: repeat(auto-fit, minmax(gs-span(4), 1fr));
-        grid-row-gap:$local-gutter;
+        grid-row-gap: $local-gutter;
         grid-column-gap: $local-gutter;
         grid-auto-rows: 1fr;
         display: grid;
@@ -38,6 +38,7 @@
         display: flex;
     }
     label {
+        @include fs-textSans(1);
         display: block;
         background-color: $neutral-8;
         border-top: 1px solid $neutral-4;
@@ -53,13 +54,12 @@
         background-size: $checkbox-size;
         background-repeat: no-repeat;
         background-position: $local-gutter $local-gutter * 1.5;
-        @include fs-textSans(1);
 
-        @supports(display:grid) {
+        @supports(display: grid) {
             margin: 0;
         }
 
-        @supports (background-size:cover) {
+        @supports (background-size: cover) {
             input[type=checkbox] {
                 visibility: hidden;
                 position: absolute;
@@ -71,17 +71,15 @@
                     height: $checkbox-size;
                     border: 1px solid $neutral-3;
                     border-radius: 1.5px;
-                    background-color: #ffffff;
-                    background-position: center center;
                     background-size: $checkbox-size / 1.5;
-                    background-repeat: no-repeat;
+                    background: #ffffff no-repeat center center;
                     position: absolute;
                     top: $local-gutter;
                     left: $local-gutter;
                     cursor: pointer;
                 }
                 &:checked + .mydata-prefs__switchboardCheckbox {
-                    background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2210.79%22%20height%3D%228.61%22%20viewBox%3D%220%200%2010.79%208.608%22%3E%3Cpath%20d%3D%22M3%206.58L10.23%200l.55.53L3%208.6h-.27L0%204.8l.55-.56%202.44%202.33z%22%2F%3E%3C%2Fsvg%3E")  }
+                    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2210.79%22%20height%3D%228.61%22%20viewBox%3D%220%200%2010.79%208.608%22%3E%3Cpath%20d%3D%22M3%206.58L10.23%200l.55.53L3%208.6h-.27L0%204.8l.55-.56%202.44%202.33z%22%2F%3E%3C%2Fsvg%3E')  }
             }
         }
         .mydata-prefs__switchboardTitle {
