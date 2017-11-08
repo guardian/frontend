@@ -76,6 +76,18 @@ object ABJavascriptRenderingControl extends TestDefinition(
   def canRun(implicit request: RequestHeader): Boolean = participationGroup.contains("control")
 }
 
+object ABImageTestService extends TestDefinition(
+  name = "ab-image-test-service",
+  description = "Audience in this test will access the test image service (with imgx fallback)",
+  owners = Seq(Owner.withName("tbonnin")),
+  sellByDate = new LocalDate(2017, 12, 7)
+) {
+
+  def participationGroup(implicit request: RequestHeader): Option[String] = request.headers.get("X-GU-ab-imgix-fallback-test")
+
+  def canRun(implicit request: RequestHeader): Boolean = participationGroup.contains("variant")
+}
+
 trait ServerSideABTests {
   val tests: Seq[TestDefinition]
 
@@ -103,7 +115,8 @@ object ActiveTests extends ServerSideABTests {
     ABNewDesktopHeaderVariant,
     ABNewDesktopHeaderControl,
     ABJavascriptRenderingVariant,
-    ABJavascriptRenderingControl
+    ABJavascriptRenderingControl,
+    ABImageTestService
   )
 }
 
