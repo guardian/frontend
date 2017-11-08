@@ -1,0 +1,126 @@
+
+/* GDPR Privacy page
+   ========================================================================== */
+.mydata-prefs__wrapper {
+    margin-bottom: $gs-gutter * 3;
+}
+.mydata-prefs__title {
+    @include fs-bodyHeading(4);
+}
+.mydata-prefs__meta {
+    @include fs-bodyCopy(2);
+    font-weight: 400;
+    margin-bottom: $gs-gutter;
+}
+
+.mydata-prefs__switchboard ul,
+.mydata-prefs__switchboard li {
+    list-style: none;
+    padding:0;
+    margin: 0;
+}
+
+.mydata-prefs__switchboard {
+
+    $local-gutter: $gs-gutter / 1.75;
+    $checkbox-size: $gs-gutter / 1.25;
+
+    border-top: 1px solid $neutral-4;
+    ul {
+        grid-template-columns: repeat(auto-fit, minmax(gs-span(4), 1fr));
+        grid-row-gap:$local-gutter;
+        grid-column-gap: $local-gutter;
+        grid-auto-rows: 1fr;
+        display: grid;
+        padding-top: $local-gutter;
+    }
+    li {
+        display: flex;
+    }
+    label {
+        display: block;
+        background-color: $neutral-8;
+        border-top: 1px solid $neutral-4;
+        padding: $local-gutter;
+        padding-left: $local-gutter * 2 + $checkbox-size;
+        padding-right: $local-gutter * 1.5;
+        position: relative;
+        break-inside: avoid;
+        width: auto;
+        height: auto;
+        margin: 0;
+        margin-bottom: $gs-gutter;
+        background-size: $checkbox-size;
+        background-repeat: no-repeat;
+        background-position: $local-gutter $local-gutter * 1.5;
+        @include fs-textSans(1);
+
+        @supports(display:grid) {
+            margin: 0;
+        }
+
+        @supports (background-size:cover) {
+            input[type=checkbox] {
+                visibility: hidden;
+                position: absolute;
+                top: 0;
+                right: 0;
+                & + .mydata-prefs__switchboardCheckbox {
+                    display: block;
+                    width: $checkbox-size;
+                    height: $checkbox-size;
+                    border: 1px solid $neutral-3;
+                    border-radius: 1.5px;
+                    background-color: #ffffff;
+                    background-position: center center;
+                    background-size: $checkbox-size / 1.5;
+                    background-repeat: no-repeat;
+                    position: absolute;
+                    top: $local-gutter;
+                    left: $local-gutter;
+                    cursor: pointer;
+                }
+                &:checked + .mydata-prefs__switchboardCheckbox {
+                    background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2210.79%22%20height%3D%228.61%22%20viewBox%3D%220%200%2010.79%208.608%22%3E%3Cpath%20d%3D%22M3%206.58L10.23%200l.55.53L3%208.6h-.27L0%204.8l.55-.56%202.44%202.33z%22%2F%3E%3C%2Fsvg%3E")  }
+            }
+        }
+        .mydata-prefs__switchboardTitle {
+            @include fs-bodyCopy(1);
+            font-weight: 800;
+            margin-bottom: $local-gutter;
+            cursor: pointer;
+        }
+        .mydata-prefs__switchboardCopy {
+            cursor: pointer;
+        }
+        .mydata-prefs__switchboardTidbit {
+            @include fs-textSans(1);
+            opacity: .75;
+            svg {
+                vertical-align: -10%;
+                margin-right: .25em;
+            }
+        }
+        .mydata-prefs__switchboardFooter {
+            margin-top: $local-gutter * 2;
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        &.is-updating {
+            opacity: .5;
+            cursor: wait;
+            filter: grayscale(1);
+
+            > * {
+                pointer-events: none;
+            }
+            input[type=checkbox],
+            .mydata-prefs__switchboardCheckbox {
+                display: none!important;
+            }
+        }
+
+    }
+}
