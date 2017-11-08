@@ -401,7 +401,7 @@
         background-color: $guardian-brand-dark;
     }
 
-    &:hover,&:active,&:focus {
+    &:hover, &:active, &:focus {
         color: #ffffff;
         text-decoration: none;
     }
@@ -448,7 +448,7 @@
     }
 
     &.email-unsubscribe--confirm,
-    &.email-unsubscribe--confirm:hover{
+    &.email-unsubscribe--confirm:hover {
         color: $error;
         font-weight: bold;
         border: 2px solid $error;
@@ -472,7 +472,7 @@
     }
 
     label {
-        @include fs-bodyCopy(1,true);
+        @include fs-bodyCopy(1, true);
         margin-top: $gs-gutter;
     }
 }
@@ -490,7 +490,7 @@
 }
 
 .fieldset.email-subscription__formatFieldset {
-    display:none;
+    display: none;
 }
 
 /* Email subcriptions modals
@@ -502,7 +502,6 @@
     right: 0;
     bottom: 0;
     z-index: 9999;
-    display: flex;
     align-items: center;
     justify-content: center;
     display: none;
@@ -519,13 +518,13 @@
         right: 0;
         bottom: 0;
         background: $neutral-1;
-        opacity:.95;
+        opacity: .95;
         z-index: 9;
     }
 
     .email-subscriptions__modalContent {
         max-width: gs-span(10);
-        background: #fff;
+        background: #ffffff;
         width: 100%;
         position: relative;
         z-index: 10;
@@ -559,9 +558,9 @@
         }
 
         &:hover {
-            border-color: #000;
+            border-color: #000000;
             svg * {
-                fill: #000;
+                fill: #000000;
             }
         }
     }
