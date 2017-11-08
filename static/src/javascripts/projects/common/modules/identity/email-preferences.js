@@ -168,10 +168,34 @@ const unsubscribeFromAll = buttonEl => {
     });
 };
 
+const toggleFormatFieldset = buttonEl => {
+    bean.on(buttonEl, 'click', () => {
+        fastdom.write(() => {
+            $('.email-subscriptions__modal--newsletterFormat')[0].classList.add(
+                'email-subscriptions__modal--active'
+            );
+        });
+    });
+};
+
+const bindModalCloser = buttonEl => {
+    bean.on(buttonEl, 'click', () => {
+        buttonEl
+            .closest('.email-subscriptions__modal')
+            .classList.remove('email-subscriptions__modal--active');
+    });
+};
+
 const enhanceEmailPreferences = () => {
     $.forEachElement('.js-subscription-button', reqwestEmailSubscriptionUpdate);
     $.forEachElement('.js-save-button', reqwestEmailSubscriptionUpdate);
     $.forEachElement('.js-unsubscribe', unsubscribeFromAll);
+    $.forEachElement(
+        '.js-email-subscription__formatFieldsetToggle',
+        toggleFormatFieldset
+    );
+    $.forEachElement('.js-email-subscriptions__modalCloser', bindModalCloser);
+    $.forEachElement('.js-email-subscriptions__modalCloser', bindModalCloser);
 };
 
 export { enhanceEmailPreferences };
