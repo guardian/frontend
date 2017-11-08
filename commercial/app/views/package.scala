@@ -1,0 +1,18 @@
+package views
+
+import common.commercial.hosted.HostedArticlePage
+import model.ApplicationContext
+import play.api.mvc.RequestHeader
+import play.twirl.api.Html
+import views.support.{AtomsCleaner, BulletCleaner, withJsoup}
+
+object BodyCleaner {
+  def apply(article: HostedArticlePage, html: String)(implicit request: RequestHeader, context: ApplicationContext): Html = {
+
+    val cleaners = List(
+      AtomsCleaner(atoms = article.content.atoms)
+    )
+
+    withJsoup(BulletCleaner(html))(cleaners :_*)
+  }
+}

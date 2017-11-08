@@ -1,10 +1,10 @@
 package common.commercial.hosted
 
-import com.gu.contentapi.client.model.v1.Content
+import com.gu.contentapi.client.model.v1.{Content => ApiContent}
 import common.Logging
 import common.commercial.hosted.ContentUtils.{findLargestMainImageAsset, thumbnailUrl}
 import common.commercial.hosted.LoggingUtils.getAndLog
-import model.MetaData
+import model.{Content, MetaData}
 
 case class HostedArticlePage(
   override val id: String,
@@ -18,14 +18,15 @@ case class HostedArticlePage(
   override val thumbnailUrl: String,
   override val socialShareText: Option[String],
   override val shortSocialShareText: Option[String],
-  override val metadata: MetaData
+  override val metadata: MetaData,
+  content: Content
 ) extends HostedPage {
   override val mainImageUrl = mainPicture
 }
 
 object HostedArticlePage extends Logging {
 
-  def fromContent(content: Content): Option[HostedArticlePage] = {
+  def fromContent(content: ApiContent): Option[HostedArticlePage] = {
     log.info(s"Building hosted article ${content.id} ...")
 
     val page = for {
@@ -49,7 +50,8 @@ object HostedArticlePage extends Logging {
         thumbnailUrl = thumbnailUrl(content),
         socialShareText = content.fields.flatMap(_.socialShareText),
         shortSocialShareText = content.fields.flatMap(_.shortSocialShareText),
-        metadata = HostedMetadata.fromContent(content).copy(openGraphImages = mainImageAsset.flatMap(_.file).toList)
+        metadata = HostedMetadata.fromContent(content).copy(openGraphImages = mainImageAsset.flatMap(_.file).toList),
+        content = Content.make(content)
       )
     }
 
