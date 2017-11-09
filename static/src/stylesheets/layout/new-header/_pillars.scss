@@ -1,6 +1,6 @@
 .pillars {
     clear: right;
-    color: $news-support-1;
+    color: #ffffff;
     font-size: 0;
     list-style: none;
     margin: 0;
@@ -17,7 +17,6 @@
     }
 
     .new-header--slim & {
-        width: auto;
         order: -1;
 
         @include mq($until: tablet) {
@@ -27,50 +26,18 @@
 }
 
 .pillars__item {
-    box-sizing: border-box;
-    display: inline-block;
+    display: block;
+    float: left;
 
-    @include mq(desktop) {
-        min-width: 0;
-        padding-right: $gs-gutter;
-        transition: min-width 200ms ease;
-        will-change: min-width;
-
-        .new-header--open & {
-            min-width: gs-span(2) + $gs-gutter / 2;
-        }
-
-        .new-header--open &:not(:first-child) {
-            margin-left: $gs-gutter / 2;
-        }
+    &:hover .pillar-link {
+        color: #ffffff;
     }
 
-    > *:after {
-        content: '/';
-        color: $news-main-2;
-        display: inline-block;
-        margin-left: -1px;
-        margin-right: 2px;
-        pointer-events: none;
+    &:first-child .pillar-link {
+        padding-left: 0;
 
-        // Slashes switch to left hand side for open animation
-        @include mq(desktop) {
-            left: -$gs-gutter / 1.5;
-            margin: 0;
-            position: absolute;
-            top: 0;
-        }
-    }
-
-    @include mq($until: desktop) {
-        &:last-child > *:after {
-            display: none;
-        }
-    }
-
-    @include mq(desktop) {
-        &:first-child > *:after {
-            display: none;
+        &:before {
+            content: none;
         }
     }
 }

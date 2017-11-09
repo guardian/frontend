@@ -1,77 +1,123 @@
 .pillar-link {
     @include fs-textSans(5);
-    box-sizing: border-box;
     color: currentColor;
     cursor: pointer;
     display: block;
     font-size: 16px;
-    font-size: 4.9vw;
-    line-height: $gs-baseline * 2.5;
+    height: $veggie-burger-medium - $gs-baseline;
+    line-height: $veggie-burger-medium - $gs-baseline;
+    padding: 0 ($gs-gutter / 4);
     position: relative;
-    transition: color 350ms;
+    transition: color 150ms ease-out;
 
     @include mq(mobileMedium) {
-        line-height: $gs-baseline * 3;
-    }
-
-    @include mq(mobileLandscape) {
-        font-size: 24px;
-        line-height: $gs-baseline * 3.5;
+        font-size: 18px;
     }
 
     @include mq(tablet) {
-        font-size: 28px;
+        font-size: 24px;
+        height: $gs-baseline * 3 + $gs-baseline / 2;
         letter-spacing: -.04rem;
+        line-height: 1;
+        padding: ($gs-baseline / 4) ($gs-gutter) 0 ($gs-gutter / 4);
     }
 
-    @include mq(desktop) {
-        font-size: 32px;
+    @include mq(leftCol) {
+        padding: ($gs-baseline / 4) ($gs-gutter * 2) 0 ($gs-gutter / 3);
     }
 
-    &:focus,
-    &:hover {
+    &:before,
+    &:after {
+        bottom: 0;
+        content: '';
+        display: block;
+        left: 0;
+        position: absolute;
+    }
+
+    &:before {
+        // Dividing lines
+        border-left: 1px solid $news-support-2;
+        top: $gs-baseline + 1;
+        z-index: 1;
+
+        @include mq(tablet) {
+            top: $gs-baseline / 2;
+        }
+    }
+
+    &:after {
+        // Underlines
+        border-bottom: 0 solid $news-main-2;
+        right: 0;
+        transition: border 150ms ease-out;
+    }
+
+    &:hover,
+    &:focus {
         color: #ffffff;
-        outline: none;
         text-decoration: none;
+
+        &:not(.pillar-link--dropdown):after {
+            border-bottom-width: 4px;
+        }
     }
 
     .new-header--slim & {
-        @include mq(tablet) {
-            font-size: 24px;
+        font-size: 20px;
+        height: $veggie-burger-large - $gs-baseline;
+        line-height: $veggie-burger-large - $gs-baseline;
+
+        &:before {
+            top: 17px;
         }
     }
 }
 
 .pillar-link--current-section {
-    color: #ffffff;
+    font-weight: 700;
 
-    @include mq(desktop) {
-        .new-header--open & {
-            color: $news-support-1;
-
-            &:focus,
-            &:hover {
-                color: #ffffff;
-                text-decoration: none;
-            }
-        }
+    &:after {
+        border-bottom-width: 4px;
     }
 
-    // triangle
-    &:before {
-        content: '';
-        position: absolute;
-        left: 50%;
-        bottom: 0;
-        transform: translateX(-100%);
-        border-bottom: $gs-baseline / 2 solid $subnav-grey;
-        border-left: $gs-baseline / 2 solid transparent;
-        border-right: $gs-baseline / 2 solid transparent;
+    .new-header--open & {
+        font-weight: normal;
 
-        @include mq(desktop) {
-            .new-header--open & {
-                display: none;
-            }
+        &:after {
+            border-bottom-width: 0;
+        }
+    }
+}
+
+.pillar-link--dropdown__icon {
+    border: 2px solid currentColor;
+    border-left: transparent;
+    border-top: transparent;
+    display: inline-block;
+    height: 6px;
+    margin-left: 2px;
+    transform: translateY(-2px) rotate(45deg);
+    transition: transform 250ms ease-out;
+    vertical-align: middle;
+    width: 6px;
+
+    .pillar-link--dropdown:hover &,
+    .new-header--open & {
+        transform: translateY(0) rotate(45deg);
+    }
+}
+
+.pillar-link--sections {
+    color: $news-support-1;
+    float: left;
+
+    .new-header--open & {
+        color: #ffffff;
+        background-color: $guardian-brand-dark;
+
+        &:before {
+            content: none;
         }
     }
 }
