@@ -54,7 +54,7 @@ class EditProfileController(
   def submitAccountForm(): Action[AnyContent] = submitForm(AccountEditProfilePage)
   def submitPrivacyForm(): Action[AnyContent] = submitForm(PrivacyEditProfilePage)
 
-  def savePreferences: Action[AnyContent] =
+  def saveEmailPreferences: Action[AnyContent] =
     csrfCheck {
       authActionWithUser.async { implicit request =>
         emailService.savePreferences().map { form  =>
