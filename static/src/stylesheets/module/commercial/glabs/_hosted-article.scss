@@ -20,6 +20,27 @@
         .gs-container {
             height: 100%;
         }
+
+        .caption {
+            position: absolute;
+            left: 10px;
+            top: 390px;
+            right: unset;
+
+            @include mq(tablet) {
+                left: $gs-gutter * 1.5;
+            }
+
+            @include mq(desktop) {
+                left: unset;
+                right: $gs-column-width + 10;
+                width: $gs-column-width * 3 + 40;
+            }
+
+            @include mq(leftCol) {
+                right: 10px;
+            }
+        }
     }
     article.content--article {
         background: #ffffff;
@@ -35,26 +56,6 @@
         font-weight: bold;
         @include mq(tablet, desktop) {
             padding-right: gs-span(1) + $gs-gutter;
-        }
-    }
-    .caption {
-        position: absolute;
-        left: 10px;
-        top: 390px;
-        right: unset;
-
-        @include mq(tablet) {
-            left: $gs-gutter * 1.5;
-        }
-
-        @include mq(desktop) {
-            left: unset;
-            right: $gs-column-width + 10;
-            width: $gs-column-width * 3 + 40;
-        }
-
-        @include mq(leftCol) {
-            right: 10px;
         }
     }
     .content__meta-container {
