@@ -273,14 +273,14 @@ final case class Content(
     }
 
     val atomTypesMeta = atoms.map { atoms =>
-      val atomTypes = Seq(
-        if (atoms.guides.isEmpty) None else Some(JsString("guide")),
-        if (atoms.profiles.isEmpty) None else Some(JsString("profile")),
-        if (atoms.qandas.isEmpty) None else Some(JsString("qanda")),
-        if (atoms.timelines.isEmpty) None else Some(JsString("timeline"))
-      ).flatten
+      val atomTypes = Map(
+        "guide" -> JsBoolean(!atoms.guides.isEmpty),
+        "profile" -> JsBoolean(!atoms.profiles.isEmpty),
+        "qanda" -> JsBoolean(!atoms.qandas.isEmpty),
+        "timeline" -> JsBoolean(!atoms.timelines.isEmpty)
+      )
       
-      ("atomTypes", JsArray(atomTypes))
+      ("atomTypes", JsObject(atomTypes))
     }
 
     // There are many checks that might disable sticky top banner, listed below.
