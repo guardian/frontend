@@ -48,7 +48,7 @@ type AtomMaker = {
 const bootstrapAtom = (atomMaker: AtomMaker, atomType: AtomType) => {
     const atomBuilder = atomMaker[atomType].default(services);
     Array.from(
-        document.querySelectorAll(`data-atom-type=['${atomType}']`)
+        document.querySelectorAll(`[data-atom-type='${atomType}']`)
     ).forEach(atomDom => {
         const atom = atomBuilder(atomDom).runTry();
         if (typeof atom === 'string') {
