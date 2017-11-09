@@ -22,7 +22,7 @@ trait ABTestSwitches {
     "Test to assess the impact of integrating with IAS to provide richer targeting of our ad slots",
     owners = Seq(Owner.withGithub("JonNorman")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 11, 16),
+    sellByDate = new LocalDate(2017, 11, 20),
     exposeClientSide = true
   )
 
