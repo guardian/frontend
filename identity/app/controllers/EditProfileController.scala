@@ -127,7 +127,7 @@ class EditProfileController(
       user: User)
       (implicit request: AuthRequest[AnyContent]): Future[Result] = {
 
-    emailService.preferences.map { emailFilledForm =>
+    emailService.preferences(request.user.getId, idRequestParser(request).trackingData).map { emailFilledForm =>
 
       NoCache(Ok(views.html.profileForms(
         page,

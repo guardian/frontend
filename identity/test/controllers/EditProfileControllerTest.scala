@@ -14,6 +14,7 @@ import org.mockito.{ArgumentCaptor, Matchers => MockitoMatchers}
 import org.scalatest.{DoNotDiscover, Matchers, OptionValues, WordSpec}
 import org.scalatest.mockito.MockitoSugar
 import org.scalatestplus.play.ConfiguredServer
+import play.api.data.Form
 import play.api.http.HttpConfiguration
 import play.api.libs.crypto.CSRFTokenSigner
 import play.api.mvc._
@@ -65,6 +66,11 @@ import scala.concurrent.Future
     when(idRequestParser.apply(MockitoMatchers.any[RequestHeader])) thenReturn idRequest
     when(idRequest.trackingData) thenReturn trackingData
     when(idRequest.returnUrl) thenReturn None
+
+    val emailForm = EmailPrefsData.emailPrefsForm.fill(EmailPrefsData("Text", List("37")))
+    when(api.userEmails(MockitoMatchers.anyString(), MockitoMatchers.any[TrackingData])) thenReturn Future.successful(Right(Subscriber("Text", List(EmailList("37")))))
+    when(emailService.getEmailSubscriptions(MockitoMatchers.any[Form[EmailPrefsData]], MockitoMatchers.any[List[String]], MockitoMatchers.any[List[String]])) thenReturn Nil
+    when(emailService.preferences(MockitoMatchers.anyString(), MockitoMatchers.any[TrackingData])) thenReturn Future.successful(emailForm)
 
     lazy val controller = new EditProfileController(
       idUrlBuilder,

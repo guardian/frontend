@@ -3,7 +3,7 @@ package services
 import actions.AuthenticatedActions
 import actions.AuthenticatedActions.AuthRequest
 import com.gu.identity.model.{EmailList, Subscriber}
-import idapiclient.IdApiClient
+import idapiclient.{IdApiClient, TrackingData}
 import idapiclient.responses.Error
 import play.api.data._
 import play.api.libs.json._
@@ -25,10 +25,8 @@ class EmailService(
 
   import EmailPrefsData._
 
-  def preferences()(implicit request: AuthRequest[AnyContent]): Future[Form[EmailPrefsData]] = {
-      val idRequest = idRequestParser(request)
-      val userId = request.user.getId()
-      val subscriberFuture = api.userEmails(userId, idRequest.trackingData)
+  def preferences(userId: String, trackingData: TrackingData): Future[Form[EmailPrefsData]] = {
+      val subscriberFuture = api.userEmails(userId, trackingData)
 
       for {
         subscriber <- subscriberFuture
