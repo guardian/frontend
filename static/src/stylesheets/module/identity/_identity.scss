@@ -477,7 +477,7 @@
 
 /* Email subcriptions modals
    ========================================================================== */
-.email-subscriptions__modal {
+.email-subscription__modal {
     position: fixed;
     top: 0;
     left: 0;
@@ -493,7 +493,7 @@
         display: flex;
     }
 
-    .email-subscriptions__modalBg {
+    .email-subscription__modalBg {
         position: fixed;
         top: 0;
         left: 0;
@@ -504,7 +504,7 @@
         z-index: 9;
     }
 
-    .email-subscriptions__modalContent {
+    .email-subscription__modalContent {
         max-width: gs-span(10);
         background: #ffffff;
         width: 100%;
@@ -516,7 +516,7 @@
         float: none;
     }
 
-    .email-subscriptions__modalCloser {
+    .email-subscription__modalCloser {
         width: $gs-gutter * 1.75;
         height: $gs-gutter * 1.75;
         border: 1px solid $guardian-brand;
