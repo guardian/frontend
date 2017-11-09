@@ -234,6 +234,7 @@ const bindLabelFromSwitchboard = (labelEl: HTMLElement): void => {
                 console.error(error);
             });
     });
+
 };
 
 const enhanceEmailPreferences = (): void => {
