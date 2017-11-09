@@ -65,6 +65,10 @@
     border: 0;
     color: $neutral-2;
     padding-right: $gs-gutter / 3;
+
+    &:focus {
+        outline: 0;
+    }
 }
 
 .subnav-link--toggle-more__icon {

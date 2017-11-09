@@ -7,7 +7,8 @@
 
 @subNavItem(link: NavLink, id: String, shouldHideUntilDesktop: Boolean) = {
     <li class="@RenderClasses(Map(
-            "hide-until-desktop" -> shouldHideUntilDesktop
+            "hide-until-desktop" -> shouldHideUntilDesktop,
+            "subnav__item--current-section" -> (id == link.uniqueSection)
         ), "subnav__item")">
         <a class="@RenderClasses(Map(
                 "subnav-link" -> true,
@@ -45,6 +46,7 @@
                         js-toggle-nav-section"
                         data-link-name="nav2 : subnav-toggle">
                         more
+                        <span class="subnav-link--toggle-more__icon"></span>
                     </button>
                 </li>
             }
