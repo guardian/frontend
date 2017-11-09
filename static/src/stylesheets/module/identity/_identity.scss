@@ -16,7 +16,7 @@
     }
     .tabs__content {
         margin: $gs-gutter * 3 auto;
-        border: none;
+        border: 0;
     }
     .gs-container {
         background: #ffffff;
@@ -29,13 +29,13 @@
         }
     }
     &--header {
-        background: darken($neutral-8,5%);
+        background: darken($neutral-8, 5%);
         .monocol-wrapper {
             padding-bottom: 0;
             overflow: hidden;
         }
         .gs-container {
-            background: darken(#ffffff,5%);
+            background: darken(#ffffff, 5%);
             padding-top: $gs-gutter;
         }
 
