@@ -574,3 +574,10 @@
     margin-top: 0;
     vertical-align: middle;
 }
+
+/* Override old pasteup buttons
+   ========================================================================== */
+.submit-input-v2 {
+    border-radius: 999em;
+    @include fs-textSans(2);
+}
