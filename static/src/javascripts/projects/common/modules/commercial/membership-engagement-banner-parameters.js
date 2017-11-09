@@ -11,7 +11,10 @@ const baseParams = {
 };
 
 const engagementBannerCopy = (): string =>
-    `Unlike many others, we haven't put up a paywall &ndash; we want to keep our journalism as open as we can.`;
+    `<strong>Unlike many news organisations, we haven’t put up a paywall &ndash; we want to keep our journalism as open as we
+    can.</strong> The Guardian’s independent, investigative journalism takes a lot of time, money and hard work to 
+    produce. But the revenue we get from advertising is falling, so we increasingly need our readers to fund us. If 
+    everyone who reads our reporting, who likes it, helps fund it, our future would be much more secure.`;
 
 // Prices taken from https://membership.theguardian.com/<region>/supporter
 const monthlySupporterCost = (location: string): string => {
@@ -62,7 +65,9 @@ const monthlySupporterCost = (location: string): string => {
 };
 
 const supporterEngagementCtaCopy = (location: string): string =>
-    `Support us for ${monthlySupporterCost(location)} a month.`;
+    location === 'US'
+        ? `Support us with a one-time contribution`
+        : `Support us for ${monthlySupporterCost(location)} a month.`;
 
 const supporterParams = (location: string): EngagementBannerParams =>
     Object.assign({}, baseParams, {

@@ -7,6 +7,7 @@
 @import views.html.fragments.registrationFooter
 @import _root_.form.IdFormHelpers.{Checkbox, nonInputFields}
 @import com.gu.identity.model.ConsentText
+@import com.gu.identity.model.ConsentText._
 @import conf.switches.Switches.IdentityGdprMarketingConsentSwitch
 
 @v2ConsentCheckbox(consentField: Field) = {
@@ -37,8 +38,8 @@
 }
 
 @v1consentCheckboxes = {
-    @checkboxField(Checkbox(privacyForm("receiveGnmMarketing"), '_label -> "Receive email from Guardian News and Media Ltd."))(nonInputFields, messages)
-    @checkboxField(Checkbox(privacyForm("receive3rdPartyMarketing"), '_label -> "Receive email from other organisations"))(nonInputFields, messages)
+    @checkboxField(Checkbox(privacyForm("receiveGnmMarketing"), '_label -> currentConsents(FirstParty.name)))(nonInputFields, messages)
+    @checkboxField(Checkbox(privacyForm("receive3rdPartyMarketing"), '_label -> currentConsents(ThirdParty.name)))(nonInputFields, messages)
 }
 
 <form class="form js-public-profile-form" novalidate action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" role="main" method="post">
