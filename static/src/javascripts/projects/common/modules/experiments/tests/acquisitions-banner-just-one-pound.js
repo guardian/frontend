@@ -1,69 +1,38 @@
 // @flow
-import {
-    makeABTest,
-    defaultButtonTemplate,
-} from 'common/modules/commercial/contributions-utilities';
-import { acquisitionsEpicControlTemplate } from 'common/modules/commercial/templates/acquisitions-epic-control';
-import { control } from 'common/modules/commercial/acquisitions-copy';
+import { makeBannerABTestVariants } from 'common/modules/commercial/contributions-utilities';
+import { getSync as getGeoLocation } from 'lib/geolocation';
 
-export const acquisitionsEpicElectionInteractiveEnd = makeABTest({
-    id: 'AcquisitionsInteractiveEnd',
-    campaignId: 'epic_interactive_end',
+const ctaText =
+    getGeoLocation() === 'US'
+        ? 'Support the Guardian from as little as $1.'
+        : 'Support the Guardian from as little as £1.';
 
-    start: '2017-05-22',
-    expiry: '2018-07-03',
-
-    author: 'Sam Desborough',
-    description: 'This places the epic underneath certain interactives',
-    successMeasure: 'Member acquisition and contributions',
-    idealOutcome:
-        'Our wonderful readers will support The Guardian in this time of need!',
-
+export const AcquisitionsBannerJustOnePound: AcquisitionsABTest = {
+    id: 'AcquisitionsBannerJustOnePound',
+    campaignId: 'banner_just_one',
+    start: '2017-10-26',
+    expiry: '2018-11-27',
+    author: 'Jonathan Rankin',
+    description: 'Tests 2 new banner variants',
+    successMeasure: 'Conversion rate',
+    idealOutcome: 'Acquires many Supporters',
+    componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
     audienceCriteria: 'All',
     audience: 1,
     audienceOffset: 0,
+    canRun: () => getGeoLocation() === 'US' || getGeoLocation() === 'GB',
 
-    pageCheck(page) {
-        const isElection =
-            page.keywordIds &&
-            page.keywordIds.includes('general-election-2017') &&
-            page.contentType === 'Interactive';
-
-        const isFootball =
-            page.pageId.indexOf(
-                'transfer-window-2017-every-deal-in-europes-top-five-leagues'
-            ) > -1;
-
-        return isElection || isFootball;
-    },
-
-    variants: [
+    variants: makeBannerABTestVariants([
         {
             id: 'control',
-            products: ['CONTRIBUTION', 'MEMBERSHIP_SUPPORTER'],
-
+        },
+        {
+            id: 'just_one',
             options: {
-                isUnlimited: true,
-
-                insertAtSelector: '.content-footer',
-                successOnView: true,
-
-                template: function makeControlTemplate(variant) {
-                    return acquisitionsEpicControlTemplate({
-                        copy: control,
-                        componentName: variant.options.componentName,
-                        buttonTemplate: defaultButtonTemplate({
-                            membershipUrl: variant.options.membershipURL,
-                            contributeUrl: variant.options.contributeURL,
-                            supportUrl: variant.options.supportURL,
-                        }),
-                        testimonialBlock: variant.options.testimonialBlock,
-                        epicClass:
-                            'contributions__epic--interactive gs-container',
-                        wrapperClass: 'contributions__epic-interactive-wrapper',
-                    });
+                engagementBannerParams: {
+                    ctaText,
                 },
             },
         },
-    ],
-});
+    ]),
+};
