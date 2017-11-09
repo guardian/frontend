@@ -70,7 +70,7 @@
     }
     <div class="email-subscriptions">
     @List("news", "features", "sport", "culture", "lifestyle", "comment").zipWithIndex.map { case(theme, index) =>
-        @emailListCategoryList(theme, availableLists.subscriptions.filter(_.theme == theme), index == 0)
+        @emailListCategoryList(theme, availableLists.subscriptions.filter(_.theme == theme), false)
     }
     </div>
 
