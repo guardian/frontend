@@ -4,7 +4,7 @@ import java.io.File
 
 import common.GuardianConfiguration
 import conf.{IdConfig, IdentityConfiguration}
-import controllers.{EditProfileControllerTest, EmailControllerTest}
+import controllers.EditProfileControllerTest
 import filters.StrictTransportSecurityHeaderFilterTest
 import org.scalatest.Suites
 import play.api.i18n.I18nComponents
