@@ -50,6 +50,12 @@ class EditProfileController(
   def displayDigitalPackForm: Action[AnyContent] = displayForm(DigiPackEditProfilePage)
   def displayPrivacyForm: Action[AnyContent] = displayForm(PrivacyEditProfilePage)
 
+  def displayPrivacyFormRedirect: Action[AnyContent] = csrfAddToken {
+    recentlyAuthenticated { implicit request =>
+      Redirect(routes.EditProfileController.displayPrivacyForm(), MOVED_PERMANENTLY))
+    }
+  }
+
   def submitPublicProfileForm(): Action[AnyContent] = submitForm(PublicEditProfilePage)
   def submitAccountForm(): Action[AnyContent] = submitForm(AccountEditProfilePage)
   def submitPrivacyForm(): Action[AnyContent] = submitForm(PrivacyEditProfilePage)

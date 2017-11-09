@@ -55,7 +55,7 @@ GET         /membership/edit                        controllers.EditProfileContr
 GET         /contribution/recurring/edit            controllers.EditProfileController.displayRecurringContributionForm
 GET         /digitalpack/edit                       controllers.EditProfileController.displayDigitalPackForm
 
-GET         /privacy/edit                           controllers.EditProfileController.displayPrivacyForm
+GET         /privacy/edit                           controllers.EditProfileController.displayPrivacyFormRedirect
 POST        /privacy/edit                           controllers.EditProfileController.submitPrivacyForm
 
 GET         /email-prefs                            controllers.EditProfileController.displayPrivacyForm
