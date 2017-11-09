@@ -57,6 +57,15 @@ class IdApiClient(
     response map extractUser
   }
 
+  def userFromQueryParam(param: String, field: String,auth: Auth = Anonymous): Future[Response[User]] = {
+    val apiPath = s"/user?${field}=${param}"
+    println(apiPath)
+    val params = buildParams(Some(auth))
+    val headers = buildHeaders(Some(auth))
+    val response = httpClient.GET(apiUrl(apiPath), None, params, headers)
+    response map extractUser
+  }
+
   def saveUser(userId: String, user: UserUpdateDTO, auth: Auth): Future[Response[User]] =
     post(urlJoin("user", userId), Some(auth), body = Some(write(user))) map extractUser
 
