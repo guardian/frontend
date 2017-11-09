@@ -40,11 +40,13 @@ declare type Services = {
 };
 
 type AtomMaker = {
+    [AtomType]: {
     default: Services => AtomBuilder,
+    },
 };
 
 const bootstrapAtom = (atomMaker: AtomMaker, atomType: AtomType) => {
-    const atomBuilder = atomMaker.default(services);
+    const atomBuilder = atomMaker[atomType].default(services);
     Array.from(
         document.querySelectorAll(`data-atom-type=['${atomType}']`)
     ).forEach(atomDom => {
