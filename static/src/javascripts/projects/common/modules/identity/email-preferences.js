@@ -193,7 +193,7 @@ const submitPartialFormStatus = (params: Object = {}): Promise<void> =>
     new Promise(yay =>
         setTimeout(() => {
             yay(params);
-        }, 200 + Math.random() * 500)
+        }, 500 + Math.random() * 500)
     );
 
 const bindLabelFromSwitchboard = (labelEl: HTMLElement): void => {
@@ -201,11 +201,13 @@ const bindLabelFromSwitchboard = (labelEl: HTMLElement): void => {
 
         Promise.all([
             fastdom.write(() => {
+                document.body.classList.add("is-updating-cursor");
                 labelEl.classList.add('is-updating');
             }),
             submitPartialFormStatus()
         ]).then( () => {
             fastdom.write(() => {
+                document.body.classList.remove("is-updating-cursor");
                 labelEl.classList.add('is-just-updated');
                 labelEl.classList.remove('is-updating');
             }).then(() =>

@@ -123,6 +123,7 @@
 
         &.is-updating {
             cursor: wait;
+            pointer-events: none;
 
             &:before {
                 animation: mydata-prefs__switchboardLoading 1s infinite both;
@@ -130,9 +131,9 @@
             }
 
             > * {
-                pointer-events: none;
                 opacity: .5;
             }
+
             input[type=checkbox],
             .mydata-prefs__switchboardCheckbox {
                 display: none!important;
