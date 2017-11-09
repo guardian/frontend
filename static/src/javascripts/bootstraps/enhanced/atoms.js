@@ -41,7 +41,7 @@ declare type Services = {
 
 type AtomMaker = {
     [AtomType]: {
-    default: Services => AtomBuilder,
+        default: Services => AtomBuilder,
     },
 };
 
