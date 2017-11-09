@@ -2,10 +2,10 @@
     background-color: $news-main-2;
     bottom: -$gs-baseline / 2;
     box-shadow: 0 0 0 1px rgba(0, 0, 0, .08);
-    color: #ffffff;
+    color: $guardian-brand-dark;
     cursor: pointer;
-    height: $veggie-burger-small;
-    min-width: $veggie-burger-small;
+    height: $veggie-burger-medium;
+    width: $veggie-burger-medium;
     position: absolute;
     border: 0;
     border-radius: 50%;
@@ -14,52 +14,20 @@
     user-select: none;
     z-index: 1;
 
-    @include mq(mobileMedium) {
-        height: $veggie-burger-medium;
-        width: $veggie-burger-medium;
-        //Align with the 'i' in 'theguardian'
-        right: $gutter-medium;
-    }
-
     @include mq(mobileLandscape) {
-        right: $gutter-large;
+        right: $gutter-medium;;
     }
 
     @include mq(tablet) {
-        right: $gutter-xlarge;
-    }
-
-    @include mq(leftCol) {
         height: $veggie-burger-large;
-        right: $gutter-xxlarge;
         width: $veggie-burger-large;
+        right: $gutter-large;
     }
-
 
     // menu is open
     .new-header--open & {
+        background-color: $highlight-blue;
         z-index: $zindex-main-menu + 1;
-
-        &:before {
-            @include mq($until: desktop) {
-                border-radius: ($veggie-burger-small * 2) 0 0 ($veggie-burger-small * 2);
-                // Extended hit area for veggie burger close state, for fat fingers
-                content: '';
-                height: $veggie-burger-small * 2;
-                position: absolute;
-                right: $veggie-burger-small / 2;
-                top: -$veggie-burger-small / 2;
-                width: $veggie-burger-small;
-
-                @include mq(mobileMedium) {
-                    height: $veggie-burger-medium * 2;
-                    width: $veggie-burger-medium;
-                    top: -$veggie-burger-medium / 2;
-                    right: $veggie-burger-medium / 2;
-                    border-radius: ($veggie-burger-medium * 2) 0 0 ($veggie-burger-medium * 2);
-                }
-            }
-        }
     }
 
     // Don't show menu on opera mini: https://wp-mix.com/css-target-opera/
@@ -68,37 +36,15 @@
     }
 
     .new-header--slim & {
-        height: $veggie-burger-medium;
+        height: $veggie-burger-large;
         margin-bottom: -$gs-baseline;
-        position: relative;
         right: $gs-gutter / 2;
         top: -$gs-baseline / 2;
-        width: $veggie-burger-medium;
+        width: $veggie-burger-large;
 
         @include mq(mobileLandscape) {
             right: $gs-gutter;
         }
-    }
-}
-
-.veggie-burger__label {
-    @include fs-textSans(5);
-    bottom: -22px;
-    color: #ffffff;
-    font-size: 18px;
-    left: 50%;
-    position: absolute;
-    text-align: center;
-    text-transform: lowercase;
-    transform: translateX(-50%);
-    width: gs-span(2);
-
-    @include mq($until: 'desktop') {
-        @include u-h();
-    }
-
-    .new-header--open & {
-        display: none;
     }
 }
 
@@ -119,42 +65,15 @@
         height: $gs-baseline / 6;
         left: 0;
         position: absolute;
-        width: $gs-gutter;
-
-        @include mq(mobileMedium) {
-            height: $gs-baseline / 4;
-            width: 26px;
-        }
-
-        @include mq(leftCol) {
-            height: 4px;
-            width: 30px;
-        }
+        width: 20px;
     }
 
     &:before {
-        top: -$gs-gutter / 4;
-
-        // TODO: If larger sizes are kept, consider svg solution to minimize magic numbers/mqs
-        @include mq(mobileMedium) {
-            top: -7px;
-        }
-
-        @include mq(leftCol) {
-            top: -8px;
-        }
+        top: -$gs-baseline / 2;
     }
 
     &:after {
-        bottom: -$gs-gutter / 4;
-
-        @include mq(mobileMedium) {
-            bottom: -7px;
-        }
-
-        @include mq(leftCol) {
-            bottom: -8px;
-        }
+        bottom: -$gs-baseline / 2;
     }
 
     // transform burger into cross

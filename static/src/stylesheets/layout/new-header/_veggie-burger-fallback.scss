@@ -17,26 +17,6 @@
             }
         }
 
-        & ~ .pillars {
-            .pillars__item {
-                @include mq(desktop) {
-                    min-width: gs-span(2) + $gs-gutter / 2;
-                }
-            }
-
-            .pillars__item:not(:first-child) {
-                @include mq(desktop) {
-                    margin-left: $gs-gutter / 2;
-                }
-            }
-
-            .pillar-link--current-section:before {
-                @include mq(desktop) {
-                    display: none;
-                }
-            }
-        }
-
         & ~ .veggie-burger {
             z-index: $zindex-main-menu + 1;
 
