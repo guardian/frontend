@@ -45,7 +45,6 @@ from scrolling */
         align-items: flex-start;
         display: flex;
         flex-wrap: wrap;
-        justify-content: space-between;
         padding-bottom: 0;
     }
 }
@@ -98,13 +97,25 @@ from scrolling */
     }
 }
 
+.new-header__menu-toggle {
+    &:focus {
+        outline: 0;
+    }
+}
+
+.new-header--slim .new-header__menu-toggle {
+    @include mq(desktop) {
+        order: -1;
+    }
+}
+
 .new-header__logo__svg {
     display: block;
-    height: calc(3 / 16 * 170px);
+    height: calc(3 / 16 * 180px);
     margin-bottom: $gs-baseline / 2;
     margin-right: $gs-gutter / 2;
     margin-top: $gs-baseline / 2;
-    width: 170px;
+    width: 180px;
 
     @include mq(mobileMedium) {
         height: calc(3 / 16 * 225px);
@@ -112,41 +123,45 @@ from scrolling */
     }
 
     @include mq(mobileLandscape) {
-        height: calc(3 / 16 * 260px);
         margin-bottom: 0;
         margin-right: $gs-gutter;
-        width: 260px;
     }
 
     @include mq(tablet) {
         height: calc(3 / 16 * 345px);
-        margin-bottom: -5px;
         margin-top: $gs-baseline + $gs-baseline / 4;
         width: 345px;
     }
 
-    @include mq(leftCol) {
+    @include mq(desktop) {
         height: calc(3 / 16 * 385px);
-        margin-bottom: -1px;
+        margin-top: $gs-baseline + $gs-baseline / 4;
+        margin-bottom: -$gs-gutter;
         width: 385px;
     }
 
     .new-header--slim & {
-        height: calc(3 / 16 * 155px);
-        margin-right: $gs-gutter;
-        margin-top: 7px;
-        width: 155px;
+        height: calc(3 / 16 * 180px);
+        margin: 5px ($veggie-burger-large + $gs-gutter) 0 0;
+        width: 180px;
 
         @include mq(mobileLandscape) {
-            margin-right: $gs-gutter * 1.5;
+            margin-right: $veggie-burger-large + $gs-gutter + ($gs-gutter / 2);
         }
 
-        @include mq(tablet) {
-            height: calc(3 / 16 * 170px);
-            margin-top: 5px;
-            width: 170px;
+        @include mq(desktop) {
+            margin-right: $gs-gutter;
         }
     }
+}
+
+.new-header--slim {
+    height: $veggie-burger-large - $gs-baseline;
+}
+
+// This is to force the primary links (news, opinion, sport, arts, lifestyle) onto a new line
+.new-header__break {
+    width: 100%;
 }
 
 // Don't show trapezoid on opera mini: https://wp-mix.com/css-target-opera/
