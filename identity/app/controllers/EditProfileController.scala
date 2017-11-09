@@ -20,7 +20,7 @@ import scala.concurrent.Future
 
 object PublicEditProfilePage extends IdentityPage("/public/edit", "Edit Public Profile")
 object AccountEditProfilePage extends IdentityPage("/account/edit", "Edit Account Details")
-object PrivacyEditProfilePage extends IdentityPage("/privacy/edit", "Privacy")
+object EmailPrefsProfilePage extends IdentityPage("/email-prefs", "Privacy")
 object MembershipEditProfilePage extends IdentityPage("/membership/edit", "Membership")
 object recurringContributionPage extends IdentityPage("/contribution/recurring/edit", "Contributions")
 object DigiPackEditProfilePage extends IdentityPage("/digitalpack/edit", "Digital Pack")
@@ -48,17 +48,17 @@ class EditProfileController(
   def displayMembershipForm: Action[AnyContent] = displayForm(MembershipEditProfilePage)
   def displayRecurringContributionForm: Action[AnyContent] = displayForm(recurringContributionPage)
   def displayDigitalPackForm: Action[AnyContent] = displayForm(DigiPackEditProfilePage)
-  def displayPrivacyForm: Action[AnyContent] = displayForm(PrivacyEditProfilePage)
+  def displayEmailPrefsForm: Action[AnyContent] = displayForm(EmailPrefsProfilePage)
 
   def displayPrivacyFormRedirect: Action[AnyContent] = csrfAddToken {
     recentlyAuthenticated { implicit request =>
-      Redirect(routes.EditProfileController.displayPrivacyForm(), MOVED_PERMANENTLY))
+      Redirect(routes.EditProfileController.displayEmailPrefsForm(), MOVED_PERMANENTLY)
     }
   }
 
   def submitPublicProfileForm(): Action[AnyContent] = submitForm(PublicEditProfilePage)
   def submitAccountForm(): Action[AnyContent] = submitForm(AccountEditProfilePage)
-  def submitPrivacyForm(): Action[AnyContent] = submitForm(PrivacyEditProfilePage)
+  def submitPrivacyForm(): Action[AnyContent] = submitForm(EmailPrefsProfilePage)
 
   def saveEmailPreferences: Action[AnyContent] =
     csrfCheck {
@@ -163,13 +163,13 @@ case class ProfileForms(
   lazy val activeForm = activePage match {
     case PublicEditProfilePage => publicForm
     case AccountEditProfilePage => accountForm
-    case PrivacyEditProfilePage => privacyForm
+    case EmailPrefsProfilePage => privacyForm
   }
 
   private lazy val activeMapping = activePage match {
     case PublicEditProfilePage => profileFormsMapping.profileMapping
     case AccountEditProfilePage => profileFormsMapping.accountDetailsMapping
-    case PrivacyEditProfilePage => profileFormsMapping.privacyMapping
+    case EmailPrefsProfilePage => profileFormsMapping.privacyMapping
   }
 
   /** Fills all Edit Profile forms (Public, Account, Privacy) with the provided User value */
@@ -218,7 +218,7 @@ case class ProfileForms(
     activePage match {
       case PublicEditProfilePage => copy(publicForm = changeFunc(publicForm).asInstanceOf[Form[ProfileFormData]])
       case AccountEditProfilePage => copy(accountForm = changeFunc(accountForm).asInstanceOf[Form[AccountFormData]])
-      case PrivacyEditProfilePage => copy(privacyForm = changeFunc(privacyForm).asInstanceOf[Form[PrivacyFormData]])
+      case EmailPrefsProfilePage => copy(privacyForm = changeFunc(privacyForm).asInstanceOf[Form[PrivacyFormData]])
     }
   }
 }

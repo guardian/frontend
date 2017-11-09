@@ -56,9 +56,9 @@
             @if(ProfileShowContributorTab.isSwitchedOn) {
                 @tab(5, "Contributions", "/contribution/recurring/edit", None, optionalClass="qa-membership-tab")
 
-                @tab(6, "Privacy", "/privacy/edit", None, optionalClass="qa-privacy-tab")
+                @tab(6, "Privacy", "/email-prefs", None, optionalClass="qa-privacy-tab")
             } else {
-                @tab(5, "Privacy", "/privacy/edit", None, optionalClass="qa-privacy-tab")
+                @tab(5, "Privacy", "/email-prefs", None, optionalClass="qa-privacy-tab")
             }
         </ol>
 
@@ -74,9 +74,9 @@
             @if(ProfileShowContributorTab.isSwitchedOn) {
                 @content(5, "/contribution/recurring/edit")(profile.recurringContributionDetailsForm(idUrlBuilder, idRequest, user))
 
-                @content(6, "/privacy/edit")(profile.privacyForm(idUrlBuilder, idRequest, user, forms.privacyForm, emailPrefsForm, emailSubscriptions, availableLists))
+                @content(6, "/email-prefs")(profile.privacyForm(idUrlBuilder, idRequest, user, forms.privacyForm, emailPrefsForm, emailSubscriptions, availableLists))
             } else {
-                @content(5, "/privacy/edit")(profile.privacyForm(idUrlBuilder, idRequest, user, forms.privacyForm, emailPrefsForm, emailSubscriptions, availableLists)))
+                @content(5, "/email-prefs")(profile.privacyForm(idUrlBuilder, idRequest, user, forms.privacyForm, emailPrefsForm, emailSubscriptions, availableLists)))
             }
         </div>
     </div>
