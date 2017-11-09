@@ -1,49 +1,7 @@
 // @flow
 
 import config from 'lib/config';
-import { services } from 'common/modules/services';
-
-type AtomType = 'profile' | 'guide' | 'qanda' | 'timeline';
-
-type Failure = string;
-
-type Success<A> = A;
-
-type Try<A> = Failure | Success<A>;
-
-type Coeval<A> = {
-    runTry: () => Try<A>,
-};
-
-type Atom = {
-    atomId: string,
-    start: () => Promise<void>,
-    stop: () => void,
-};
-
-type AtomBuilder = Element => Coeval<Atom>;
-
-declare type DomService = {
-    read: Thunk => void,
-    write: Thunk => void,
-};
-
-declare type ViewportService = {
-    observe: (Element, number, Thunk) => void,
-    unobserve: (Element, number, Thunk) => void,
-};
-
-declare type Services = {
-    ophan: OphanService,
-    dom: DomService,
-    viewport: ViewportService,
-};
-
-type AtomMaker = {
-    [AtomType]: {
-        default: Services => AtomBuilder,
-    },
-};
+import { services } from 'journalism/services';
 
 const bootstrapAtom = (atomMaker: AtomMaker, atomType: AtomType) => {
     const atomBuilder = atomMaker[atomType].default(services);
