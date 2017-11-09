@@ -2,9 +2,9 @@
 # yarn lockfile v1
 
 
-"@guardian/atom-renderer@0.0.10":
-  version "0.0.10"
-  resolved "https://registry.yarnpkg.com/@guardian/atom-renderer/-/atom-renderer-0.0.10.tgz#a817ae7336a4a9904e8e36fea105aadc368ef2f6"
+"@guardian/atom-renderer@0.0.11":
+  version "0.0.11"
+  resolved "https://registry.yarnpkg.com/@guardian/atom-renderer/-/atom-renderer-0.0.11.tgz#f0561e1b964a5953e54a98055174d1191fe3513d"
   dependencies:
     sass-mq "^3.3.2"
     webpack "^3.5.6"
