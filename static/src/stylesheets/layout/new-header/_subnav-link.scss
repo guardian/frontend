@@ -1,34 +1,103 @@
 .subnav-link {
     @include fs-textSans(5);
-    color: currentColor;
-    display: inline-block;
+    color: $neutral-1;
+    display: block;
     font-size: 16px;
-    font-size: 4.9vw;
-    line-height: 1.3em;
+    height: $veggie-burger-medium - $gs-baseline;
+    line-height: $veggie-burger-medium - $gs-baseline;
+    padding: 0 ($gs-gutter / 4);
+    position: relative;
 
-    @include mq(mobileLandscape) {
-        font-size: 19px;
-        max-height: $gs-baseline * 4.8;
+    &:before,
+    &:after {
+        bottom: 0;
+        content: '';
+        display: block;
+        left: 0;
+        position: absolute;
     }
 
-    @include mq(desktop) {
-        // to make sure that the words are not visible on subnav desktop if they fall to the second line
-        margin-bottom: $gs-baseline;
+    &:before {
+        // Dividing lines
+        border-left: 1px solid $neutral-4;
+        top: 14px;
+        z-index: 1;
+    }
+
+    &:after {
+        // Underlines
+        border-bottom: 0 solid $neutral-3;
+        right: 0;
+        transition: border 150ms ease-out;
+    }
+
+    @include mq(tablet) {
+        height: 42px;
+        line-height: 42px;
+        padding: 0 ($gs-gutter / 2 + $gs-gutter / 4) 0 ($gs-gutter / 4);
+
+        &:before {
+            top: 18px;
+        }
     }
 
     &:hover,
     &:focus {
+        color: $neutral-1;
         text-decoration: none;
+
+        &:not(.subnav-link--toggle-more):after {
+            border-bottom-width: 4px;
+        }
+    }
+
+    .subnav__item:first-child > & {
+        padding-left: 0;
+
+        &:before {
+            content: none;
+        }
     }
 }
 
 .subnav-link--toggle-more {
     background: transparent;
     border: 0;
-    color: $neutral-3;
-    padding: 0;
+    color: $neutral-2;
+    padding-right: $gs-gutter / 3;
 }
 
+.subnav-link--toggle-more__icon {
+    top: 50%;
+    float: right;
+    margin-top: -($gs-baseline / 6) / 2;
+
+    &,
+    &:before,
+    &:after {
+        background-color: currentColor;
+        border-radius: 50%;
+        content: '';
+        height: 3px;
+        right: 0;
+        position: absolute;
+        width: 3px;
+    }
+
+    &:before {
+        top: -4px;
+    }
+
+    &:after {
+        bottom: -4px;
+    }
+}
+
+
 .subnav-link--current-section {
-    color: #ffffff;
+    font-weight: 700;
+
+    &:after {
+        border-bottom-width: 4px;
+    }
 }

@@ -1,37 +1,21 @@
 .subnav {
-    background-color: $subnav-grey;
-    color: $neutral-4;
-    max-height: $gs-baseline * 3.4;
+    background-color: #ffffff;
+    border-bottom: 1px solid $neutral-5;
+    color: $neutral-1;
+    height: $veggie-burger-medium - $gs-baseline;
     overflow: hidden;
-    padding: $gs-baseline / 3 $gs-gutter / 2;
-
-    @include mq(mobile) {
-        max-height: $gs-baseline * 3.5;
-        max-height: 13vw;
-    }
+    padding: 0 $gs-gutter / 2;
 
     @include mq(mobileLandscape) {
-        padding: $gs-baseline / 2 0;
+        padding: 0;
     }
 
-    @include mq(desktop) {
-        max-height: $gs-baseline * 2;
+    @include mq(tablet) {
+        height: 42px;
     }
 
-    // Spacer to prevent text from sitting directly beneath the veggie burger
-    &:before {
-        content: '';
-        float: right;
-        width: $gutter-small + $veggie-burger-small - ($gs-gutter / 2);
-        height: 1px;
-
-        @include mq(mobileMedium) {
-            width: $gutter-medium + $veggie-burger-medium - ($gs-gutter / 2);
-        }
-
-        @include mq(mobileLandscape) {
-            width: $gutter-large + $veggie-burger-medium - ($gs-gutter / 2);
-        }
+    .l-footer & {
+        border-top: 1px solid $neutral-5;
     }
 }
 
@@ -53,42 +37,12 @@
 }
 
 .subnav__item {
-    display: inline-block;
-
-    &:focus,
-    &:hover {
-        color: #ffffff;
-    }
+    display: block;
+    float: left;
 
     @include mq($until: tablet) {
-        > *:after {
-            content: '/';
-            color: rgba(255, 255, 255, .3);
-            display: inline-block;
-            font-size: 1em;
-            pointer-events: none;
-            margin-left: -2px;
-            margin-right: -2px;
-        }
-
-        &:last-child > *:after {
-            content: '';
-        }
-    }
-
-    @include mq(tablet) {
-        > *:before {
-            content: '/';
-            color: rgba(255, 255, 255, .3);
-            display: inline-block;
-            font-size: 1em;
-            pointer-events: none;
-            margin-left: -2px;
-            margin-right: -2px;
-        }
-
-        &:first-child > *:before {
-            content: '';
+        &:nth-child(1n+4):not(:last-child):not(.subnav__item--current-section) {
+            display: none;
         }
     }
 }
