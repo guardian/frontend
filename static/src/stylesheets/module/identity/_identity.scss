@@ -12,7 +12,7 @@
     background: $neutral-8;
     overflow: hidden;
     .tabs__container {
-        margin: $gs-gutter auto 0;
+        margin: $gs-gutter * 2 auto 0;
     }
     .tabs__content {
         margin: $gs-gutter * 3 auto;
@@ -36,7 +36,7 @@
         }
         .gs-container {
             background: darken(#ffffff,5%);
-            padding-top: $gs-gutter * 3;
+            padding-top: $gs-gutter;
         }
 
     }
