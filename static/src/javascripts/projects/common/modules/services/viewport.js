@@ -8,7 +8,7 @@ import {
     unobserve as unobserveScroll,
 } from './impl/viewport-scroll';
 
-const viewport =
+const viewport: ViewportService =
     'IntersectionObserver' in window
         ? { observe: observeIO, unobserve: unobserveIO }
         : { observe: observeScroll, unobserve: unobserveScroll };

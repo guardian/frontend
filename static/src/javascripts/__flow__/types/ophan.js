@@ -72,3 +72,6 @@ declare type OphanComponentEvent = {
     }
 };
 
+declare type OphanService = {
+    record: ({ componentEvent: OphanComponentEvent }) => void
+};

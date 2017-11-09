@@ -11,7 +11,7 @@ import { viewport } from './services/viewport';
 //    ...
 // }
 
-const services = {
+const services: Services = {
     ophan,
     dom: {
         write: (f: Thunk) => {

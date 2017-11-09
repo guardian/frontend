@@ -1,14 +1,20 @@
 // @flow
-const observers = Object.create(null);
-const callbacks = Object.create(null);
-const elements = Object.create(null);
+const observers: { [number]: window.IntersectionObserver } = Object.create(
+    null
+);
+const callbacks: { [number]: [(number) => void] } = Object.create(null);
+const elements: { [number]: [Element] } = Object.create(null);
 
-const observe = (element: Element, threshold: number, callback: Thunk) => {
+const observe = (
+    element: Element,
+    threshold: number,
+    callback: Thunk
+): void => {
     if (!observers[threshold]) {
         callbacks[threshold] = [callback];
         elements[threshold] = [element];
         observers[threshold] = new window.IntersectionObserver(
-            entries => {
+            (entries: window.IntersectionObserverEntry[]) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         callbacks[threshold].forEach((c, index) => {
@@ -28,7 +34,11 @@ const observe = (element: Element, threshold: number, callback: Thunk) => {
     observers[threshold].observe(element);
 };
 
-const unobserve = (element: Element, threshold: number, callback: Thunk) => {
+const unobserve = (
+    element: Element,
+    threshold: number,
+    callback: Thunk
+): void => {
     if (!observers[threshold]) return;
 
     observers[threshold].unobserve(element);
