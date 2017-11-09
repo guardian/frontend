@@ -197,34 +197,43 @@ const submitPartialFormStatus = (params: Object = {}): Promise<void> =>
     );
 
 const bindLabelFromSwitchboard = (labelEl: HTMLElement): void => {
-    bean.on(labelEl, 'change', (ev:Event) => {
-
+    bean.on(labelEl, 'change', () => {
         Promise.all([
             fastdom.write(() => {
-                document.body.classList.add("is-updating-cursor");
+                if (document.body) {
+                    document.body.classList.add('is-updating-cursor');
+                }
                 labelEl.classList.add('is-updating');
             }),
-            submitPartialFormStatus()
-        ]).then( () => {
-            fastdom.write(() => {
-                document.body.classList.remove("is-updating-cursor");
-                labelEl.classList.add('is-just-updated');
-                labelEl.classList.remove('is-updating');
-            }).then(() =>
-                new Promise((accept: Function) => {
-                    setTimeout(() => accept(), 1000)
-                })
-            ).then(() =>
-                fastdom.write(() => {
-                    labelEl.classList.remove('is-just-updated');
-                })
-            )
-        }).catch((error:Error)=>{
-            console.error(error);
-        })
-
+            submitPartialFormStatus(),
+        ])
+            .then(() => {
+                fastdom
+                    .write(() => {
+                        if (document.body) {
+                            document.body.classList.remove(
+                                'is-updating-cursor'
+                            );
+                        }
+                        labelEl.classList.add('is-just-updated');
+                        labelEl.classList.remove('is-updating');
+                    })
+                    .then(
+                        () =>
+                            new Promise((accept: Function) => {
+                                setTimeout(() => accept(), 1000);
+                            })
+                    )
+                    .then(() =>
+                        fastdom.write(() => {
+                            labelEl.classList.remove('is-just-updated');
+                        })
+                    );
+            })
+            .catch((error: Error) => {
+                console.error(error);
+            });
     });
-
 };
 
 const enhanceEmailPreferences = (): void => {
