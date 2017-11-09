@@ -84,7 +84,7 @@
             }
         }
         .mydata-prefs__switchboardTitle {
-            @include fs-bodyCopy(1);
+            @include fs-bodyCopy(2);
             font-weight: 800;
             margin-bottom: $local-gutter;
             cursor: pointer;
