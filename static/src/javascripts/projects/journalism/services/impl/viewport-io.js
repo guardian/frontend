@@ -1,56 +1,60 @@
 // @flow
-const observers: { [number]: window.IntersectionObserver } = Object.create(
-    null
-);
-const callbacks: { [number]: Array<(number) => void> } = Object.create(null);
-const elements: { [number]: Array<Element> } = Object.create(null);
+type ObserverRecord = {
+    observer: window.IntersectionObserver,
+    registry: Array<{ callback: number => void, element: Element }>,
+};
+const cache: Map<number, ObserverRecord> = new Map();
 
 const observe = (
     element: Element,
     threshold: number,
     callback: Thunk
 ): void => {
-    if (!observers[threshold]) {
-        callbacks[threshold] = [callback];
-        elements[threshold] = [element];
-        observers[threshold] = new window.IntersectionObserver(
-            (entries: window.IntersectionObserverEntry[]) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        callbacks[threshold].forEach((c, index) => {
-                            if (elements[threshold][index] === entry.target) {
-                                c(entry.intersectionRatio);
+    let record = cache.get(threshold);
+    if (!record) {
+        record = {
+            registry: [{ callback, element }],
+            observer: new window.IntersectionObserver(
+                (entries: window.IntersectionObserverEntry[]) => {
+                    const record2 = cache.get(threshold);
+                    if (!record2) return;
+
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const buddy = record2.registry.find(
+                                ({ element: e }) => e === entry.target
+                            );
+                            if (buddy) {
+                                buddy.callback(entry.intersectionRatio);
                             }
-                        });
-                    }
-                });
-            },
-            { threshold }
-        );
+                        }
+                    });
+                },
+                { threshold }
+            ),
+        };
     } else {
-        callbacks[threshold].push(callback);
-        elements[threshold].push(element);
+        record.registry.push({ callback, element });
     }
-    observers[threshold].observe(element);
+    cache.set(threshold, record);
+    record.observer.observe(element);
 };
 
-const unobserve = (
-    element: Element,
-    threshold: number,
-    callback: Thunk
-): void => {
-    if (!observers[threshold]) return;
+const unobserve = (element: Element, threshold: number): void => {
+    const record = cache.get(threshold);
+    if (!record) return;
 
-    observers[threshold].unobserve(element);
+    const buddyIdx = record.registry.findIndex(
+        ({ element: e }) => e === element
+    );
+    if (buddyIdx === -1) return;
 
-    const idx = callbacks[threshold].indexOf(callback);
-    if (idx !== -1) {
-        callbacks[threshold].splice(idx, 1);
-        elements[threshold].splice(idx, 1);
-    }
+    record.registry.splice(buddyIdx, 1);
 
-    if (callbacks[threshold].length === 0) {
-        observers[threshold] = null;
+    if (record.registry.length === 0) {
+        cache.delete(threshold);
+    } else {
+        cache.set(threshold, record);
     }
 };
 
