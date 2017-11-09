@@ -43,6 +43,7 @@ import scala.concurrent.Future
     val authService = mock[AuthenticationService]
     val idRequest = mock[IdentityRequest]
     val trackingData = mock[TrackingData]
+    val emailService = mock[EmailService]
 
     val userId: String = "123"
     val user = User("test@example.com", userId, statusFields = StatusFields(receive3rdPartyMarketing = Some(true), receiveGnmMarketing = Some(true)))
@@ -73,7 +74,8 @@ import scala.concurrent.Future
       csrfCheck,
       csrfAddToken,
       profileFormsMapping,
-      controllerComponent
+      controllerComponent,
+      emailService
     )
   }
 
