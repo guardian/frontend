@@ -109,7 +109,7 @@ const defineSlot = (adSlotNode: Element, sizes: Object): Object => {
      */
     if (
         config.get('switches.abIasAdTargeting', false) &&
-        getTestVariantId('IasAdTargeting') === 'variant'
+        getTestVariantId('IasAdTargetingV2') === 'variant'
     ) {
         /* eslint-disable no-underscore-dangle */
         // this should all have been instantiated by commercial/modules/third-party-tags/ias.js
