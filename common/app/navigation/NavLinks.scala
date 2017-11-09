@@ -1,5 +1,7 @@
 package navigation
 
+import conf.switches.Switches.GamesLinkSwitch
+
 object NavLinks {
   /* NEWS */
 
@@ -94,7 +96,8 @@ object NavLinks {
   val film = NavLink("film", "/film", "film")
   val tvAndRadio = NavLink("tv & radio", "/tv-and-radio", "tv-and-radio")
   val music = NavLink("music", "/music", "music")
-  val games = NavLink("games", "/technology/games", "technology/games")
+  private val gamesId = if(GamesLinkSwitch.isSwitchedOn) "games" else "technology/games"
+  val games = NavLink("games", s"/$gamesId", gamesId)
   val books = NavLink("books", "/books", "books")
   val artAndDesign = NavLink("art & design", "/artanddesign", "artanddesign")
   val stage = NavLink("stage", "/stage", "stage")
