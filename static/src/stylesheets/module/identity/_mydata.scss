@@ -1,6 +1,9 @@
-
 /* GDPR Privacy page
    ========================================================================== */
+
+$local-gutter: $gs-gutter / 1.75;
+$checkbox-size: $gs-gutter / 1.25;
+
 .mydata-prefs__wrapper {
     margin-bottom: $gs-gutter * 3;
 }
@@ -22,9 +25,6 @@
 
 .mydata-prefs__switchboard {
 
-    $local-gutter: $gs-gutter / 1.75;
-    $checkbox-size: $gs-gutter / 1.25;
-
     border-top: 1px solid $neutral-4;
 
     ul {
@@ -43,6 +43,7 @@
 }
 
 .mydata-prefs__switchboardLabel {
+    
     @include fs-textSans(1);
     display: block;
     background-color: $neutral-8;
