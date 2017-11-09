@@ -114,7 +114,7 @@
         h1 {
             line-height: 28px;
         }
-        figcaption {
+        & :not(.element-atom--media) figcaption {
             font-size: 12px;
             line-height: 16px;
             color: $neutral-2;
