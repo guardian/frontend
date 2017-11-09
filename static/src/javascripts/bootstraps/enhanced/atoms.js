@@ -69,8 +69,8 @@ const initAtoms = () => {
         require.ensure(
             [],
             require => {
-                const guideAtom = require('@guardian/atom-renderer/build/guide/article/index');
-                bootstrapAtom(guideAtom, 'guide');
+                const atomMaker = require('@guardian/atom-renderer/dist/guide/article/index');
+                bootstrapAtom(atomMaker, 'guide');
             },
             'guide-atom'
         );
@@ -80,8 +80,8 @@ const initAtoms = () => {
         require.ensure(
             [],
             require => {
-                const guideAtom = require('@guardian/atom-renderer/build/profile/article/index');
-                bootstrapAtom(guideAtom, 'profile');
+                const atomMaker = require('@guardian/atom-renderer/dist/profile/article/index');
+                bootstrapAtom(atomMaker, 'profile');
             },
             'profile-atom'
         );
@@ -91,8 +91,8 @@ const initAtoms = () => {
         require.ensure(
             [],
             require => {
-                const guideAtom = require('@guardian/atom-renderer/build/qanda/article/index');
-                bootstrapAtom(guideAtom, 'qanda');
+                const atomMaker = require('@guardian/atom-renderer/dist/qanda/article/index');
+                bootstrapAtom(atomMaker, 'qanda');
             },
             'qanda-atom'
         );
@@ -102,8 +102,8 @@ const initAtoms = () => {
         require.ensure(
             [],
             require => {
-                const guideAtom = require('@guardian/atom-renderer/build/timeline/article/index');
-                bootstrapAtom(guideAtom, 'timeline');
+                const atomMaker = require('@guardian/atom-renderer/dist/timeline/article/index');
+                bootstrapAtom(atomMaker, 'timeline');
             },
             'timeline-atom'
         );
