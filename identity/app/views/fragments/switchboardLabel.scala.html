@@ -1,0 +1,30 @@
+@(
+    title: String,
+    copy: String,
+    newsletterFrequency: Option[String] = None,
+    newsletterPreview: Option[String] = None
+)
+
+<label class="mydata-prefs__switchboardLabel js-mydata-prefs-switchboardLabel">
+    <input type="checkbox" checked/>
+    <div class="mydata-prefs__switchboardCheckbox"></div>
+    <strong class="mydata-prefs__switchboardTitle">@title</strong>
+    <p class="mydata-prefs__switchboardCopy">
+        @copy
+    </p>
+    @if(newsletterFrequency.isDefined || newsletterPreview.isDefined) {
+        <div class="mydata-prefs__switchboardFooter">
+            @if(newsletterFrequency.isDefined){
+                <div class="mydata-prefs__switchboardTidbit">
+                    @fragments.inlineSvg("clock", "icon", List("inline-icon--light-grey"))
+                    @newsletterFrequency
+                </div>
+            }
+            @if(newsletterPreview.isDefined){
+                <a class="" href="#">
+                    See the latest email
+                </a>
+            }
+        </div>
+    }
+</label>

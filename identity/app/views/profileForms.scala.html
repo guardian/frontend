@@ -39,9 +39,9 @@
     <link rel="stylesheet" id="stripe-sprite" type="text/css" media="all" href="@Static("stylesheets/membership-icons.css")"/>
 }{
 <div class="tabs">
-<div class="identity-wrapperBg identity-wrapperBg--header">
-
-    <div class="identity-wrapper monocolumn-wrapper identity-wrapper--with-membership js-account-profile-forms">
+<div class="identity-wrapperForBg identity-wrapperForBg--header">
+    <div class="gs-container">
+    <div class="monocol-wrapper js-account-profile-forms">
         <h1 class="identity-title" data-test-id="edit-profile-header">Edit your profile</h1>
         <ol class="tabs__container tabs__container--multiple js-tabs" id="js-account-profile-tabs" role="tablist" data-is-bound="true">
             @tab(1, "Public", "/public/edit", None)
@@ -61,10 +61,11 @@
             }
         </ol>
     </div>
+    </div>
 </div>
-<div class="identity-wrapperBg">
-
-    <div class="identity-wrapper monocolumn-wrapper identity-wrapper--with-membership js-account-profile-forms">
+<div class="identity-wrapperForBg">
+    <div class="gs-container">
+    <div class="monocol-wrapper js-account-profile-forms">
 
     <div class=" u-cf identity-section">
 
@@ -85,7 +86,7 @@
                 @content(5, "/email-prefs")(profile.privacyForm(idUrlBuilder, idRequest, user, forms.privacyForm, emailPrefsForm, emailSubscriptions, availableLists)))
             }
         </div>
-    </div>
+    </div></div>
 </div>
 
 </div>
