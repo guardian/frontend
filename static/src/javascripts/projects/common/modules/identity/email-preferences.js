@@ -5,7 +5,7 @@
 
 import bean from 'bean';
 import reqwest from 'reqwest';
-import fastdom from 'fastdom';
+import fastdom from 'lib/fastdom-promise';
 import $ from 'lib/$';
 
 const addUpdatingState = buttonEl => {
@@ -198,12 +198,25 @@ const submitPartialFormStatus = (params: Object = {}): Promise<void> =>
 
 const bindLabelFromSwitchboard = (labelEl: HTMLElement): void => {
     bean.on(labelEl, 'change', () => {
-        labelEl.classList.add('is-updating');
+
+        fastdom.write(() => {
+            labelEl.classList.add('is-updating');
+        });
 
         submitPartialFormStatus().then(() => {
-            labelEl.classList.remove('is-updating');
+            fastdom.write(() => {
+                labelEl.classList.add('is-just-updated');
+                labelEl.classList.remove('is-updating');
+            }).then(()=>{
+                setTimeout(()=>{
+                    fastdom.write(() => {
+                        labelEl.classList.remove('is-just-updated');
+                    });
+                },1000)
+            })
         });
     });
+
 };
 
 const enhanceEmailPreferences = () => {

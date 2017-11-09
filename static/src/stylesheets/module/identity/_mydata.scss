@@ -54,6 +54,7 @@
         background-size: $checkbox-size;
         background-repeat: no-repeat;
         background-position: $local-gutter $local-gutter * 1.5;
+        overflow: hidden;
 
         @supports(display: grid) {
             margin: 0;
@@ -79,7 +80,7 @@
                     cursor: pointer;
                 }
                 &:checked + .mydata-prefs__switchboardCheckbox {
-                    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2210.79%22%20height%3D%228.61%22%20viewBox%3D%220%200%2010.79%208.608%22%3E%3Cpath%20d%3D%22M3%206.58L10.23%200l.55.53L3%208.6h-.27L0%204.8l.55-.56%202.44%202.33z%22%2F%3E%3C%2Fsvg%3E')  }
+                    background-image: url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2210.79%22%20height%3D%228.61%22%20viewBox%3D%220%200%2010.79%208.608%22%3E%3Cpath%20fill%3D%22%23005689%22%20d%3D%22M3%206.58L10.23%200l.55.53L3%208.6h-.27L0%204.8l.55-.56%202.44%202.33z%22%2F%3E%3C%2Fsvg%3E')  }
             }
         }
         .mydata-prefs__switchboardTitle {
@@ -106,13 +107,31 @@
             width: 100%;
         }
 
+        &:before {
+            content: '\0020';
+            position: absolute;
+            display: block;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: $guardian-brand;
+            height: 2px;
+            transform-origin: center;
+            opacity:0;
+            transition: .2s;
+        }
+
         &.is-updating {
-            opacity: .5;
             cursor: wait;
-            filter: grayscale(1);
+
+            &:before {
+                animation: mydata-prefs__switchboardLoading 1s infinite both;
+                opacity: 1;
+            }
 
             > * {
                 pointer-events: none;
+                opacity: .5;
             }
             input[type=checkbox],
             .mydata-prefs__switchboardCheckbox {
@@ -120,5 +139,30 @@
             }
         }
 
+        &.is-just-updated {
+            &:before {
+                animation: mydata-prefs__switchboardLoaded .5s 1 both;
+                background-color: $news-main-2;
+                opacity: 1;
+            }
+        }
+
+    }
+}
+
+@keyframes mydata-prefs__switchboardLoading {
+    from {
+        transform: translateX(-50%) scaleX(.75);
+    }
+    to {
+        transform: translateX(100%) scaleX(1) ;
+    }
+}
+@keyframes mydata-prefs__switchboardLoaded {
+    from {
+        transform: translateX(-50%) scaleX(.1);
+    }
+    to {
+        transform: translateX(0) scaleX(1);
     }
 }
