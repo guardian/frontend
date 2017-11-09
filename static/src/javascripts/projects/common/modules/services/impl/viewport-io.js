@@ -2,8 +2,8 @@
 const observers: { [number]: window.IntersectionObserver } = Object.create(
     null
 );
-const callbacks: { [number]: [(number) => void] } = Object.create(null);
-const elements: { [number]: [Element] } = Object.create(null);
+const callbacks: { [number]: Array<(number) => void> } = Object.create(null);
+const elements: { [number]: Array<Element> } = Object.create(null);
 
 const observe = (
     element: Element,
