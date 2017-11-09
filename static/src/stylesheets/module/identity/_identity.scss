@@ -12,11 +12,11 @@
     background: $neutral-8;
     overflow: hidden;
     .tabs__container {
-        margin: $gs-gutter * 2 auto 0;
+        margin: $gs-gutter auto 0;
     }
     .tabs__content {
         margin: $gs-gutter * 3 auto;
-        border: 0;
+        border: none;
     }
     .gs-container {
         background: #ffffff;
@@ -29,14 +29,14 @@
         }
     }
     &--header {
-        background: darken($neutral-8, 5%);
+        background: darken($neutral-8,5%);
         .monocol-wrapper {
             padding-bottom: 0;
             overflow: hidden;
         }
         .gs-container {
-            background: darken(#ffffff, 5%);
-            padding-top: $gs-gutter;
+            background: darken(#ffffff,5%);
+            padding-top: $gs-gutter * 3;
         }
 
     }
@@ -48,6 +48,14 @@
     max-width: gs-span(6);
     padding-bottom: $gs-baseline*4;
     padding-top: $gs-baseline*4;
+
+    @include mq(desktop) {
+        max-width: gs-span(10);
+    }
+}
+
+.identity-wrapper--stretched {
+    max-width: gs-span(16);
 }
 
 .identity-header {
