@@ -199,27 +199,31 @@ const submitPartialFormStatus = (params: Object = {}): Promise<void> =>
 const bindLabelFromSwitchboard = (labelEl: HTMLElement): void => {
     bean.on(labelEl, 'change', () => {
 
-        fastdom.write(() => {
-            labelEl.classList.add('is-updating');
-        });
-
-        submitPartialFormStatus().then(() => {
+        Promise.all([
+            fastdom.write(() => {
+                labelEl.classList.add('is-updating');
+            }),
+            submitPartialFormStatus()
+        ])
+        .then( () => {
             fastdom.write(() => {
                 labelEl.classList.add('is-just-updated');
                 labelEl.classList.remove('is-updating');
-            }).then(()=>{
-                setTimeout(()=>{
-                    fastdom.write(() => {
-                        labelEl.classList.remove('is-just-updated');
-                    });
-                },1000)
-            })
+            }).then(() =>
+                new Promise((accept: Function) => {
+                    setTimeout(() => accept(), 1000)
+                })
+            ).then(() =>
+                fastdom.write(() => {
+                    labelEl.classList.remove('is-just-updated');
+                })
+            )
         });
     });
 
 };
 
-const enhanceEmailPreferences = () => {
+const enhanceEmailPreferences = (): void => {
     $.forEachElement('.js-subscription-button', reqwestEmailSubscriptionUpdate);
     $.forEachElement('.js-save-button', reqwestEmailSubscriptionUpdate);
     $.forEachElement('.js-unsubscribe', unsubscribeFromAll);
