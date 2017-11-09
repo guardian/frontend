@@ -197,20 +197,14 @@ const submitPartialFormStatus = (params: Object = {}): Promise<void> =>
     );
 
 const bindLabelFromSwitchboard = (labelEl: HTMLElement): void => {
-    bean.on(labelEl, 'change', () => {
+    bean.on(labelEl, 'change', (ev:Event) => {
 
-        fastdom.read(()=>{
-            if ( $(labelEl).hasClass('is-updating') ) {
-                throw Error('ERR_UPDATE_ONGOING');
-            }
-        }).then(()=>
-            Promise.all([
-                fastdom.write(() => {
-                    labelEl.classList.add('is-updating');
-                }),
-                submitPartialFormStatus()
-            ])
-        ).then( () => {
+        Promise.all([
+            fastdom.write(() => {
+                labelEl.classList.add('is-updating');
+            }),
+            submitPartialFormStatus()
+        ]).then( () => {
             fastdom.write(() => {
                 labelEl.classList.add('is-just-updated');
                 labelEl.classList.remove('is-updating');
@@ -224,10 +218,7 @@ const bindLabelFromSwitchboard = (labelEl: HTMLElement): void => {
                 })
             )
         }).catch((error:Error)=>{
-            const safeErrors = ['ERR_UPDATE_ONGOING'];
-            if(!safeErrors.includes(error.message)) {
-                console.error(error);
-            }
+            console.error(error);
         })
 
     });
