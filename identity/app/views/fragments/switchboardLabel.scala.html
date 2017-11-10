@@ -5,17 +5,17 @@
     newsletterPreview: Option[String] = None
 )
 
-<label class="mydata-prefs__switchboardLabel js-mydata-prefs-switchboardLabel">
+<label class="manage-account__switchboardLabel js-manage-account__switchboardLabel">
     <input type="checkbox" checked/>
-    <div class="mydata-prefs__switchboardCheckbox"></div>
-    <strong class="mydata-prefs__switchboardTitle">@title</strong>
-    <p class="mydata-prefs__switchboardCopy">
+    <div class="manage-account__switchboardCheckbox"></div>
+    <strong class="manage-account__switchboardTitle">@title</strong>
+    <p class="manage-account__switchboardCopy">
         @copy
     </p>
     @if(newsletterFrequency.isDefined || newsletterPreview.isDefined) {
-        <div class="mydata-prefs__switchboardFooter">
+        <div class="manage-account__switchboardFooter">
             @if(newsletterFrequency.isDefined){
-                <div class="mydata-prefs__switchboardTidbit">
+                <div class="manage-account__switchboardTidbit">
                     @fragments.inlineSvg("clock", "icon", List("inline-icon--light-grey"))
                     @newsletterFrequency
                 </div>

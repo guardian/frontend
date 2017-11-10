@@ -246,7 +246,7 @@ const enhanceEmailPreferences = (): void => {
     );
     $.forEachElement('.js-manage-account__modalCloser', bindModalCloser);
     $.forEachElement(
-        '.js-mydata-prefs-switchboardLabel',
+        '.js-manage-account__switchboardLabel',
         bindLabelFromSwitchboard
     );
 };
