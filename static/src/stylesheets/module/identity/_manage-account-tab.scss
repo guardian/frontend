@@ -276,10 +276,15 @@
 .manage-account-header {
     @include fs-header(3);
     color: $guardian-brand-dark;
+    margin-bottom: ;
 }
 .manage-account-headerNote {
     @include fs-bodyCopy(2);
     margin-top: $gs-baseline / 2;
+}
+
+.manage-account-headerWrapper {
+    margin-bottom: $gs-baseline;
 }
 
 .manage-account-header--highlight {
