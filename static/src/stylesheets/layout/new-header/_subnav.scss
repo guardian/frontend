@@ -41,8 +41,11 @@
     float: left;
 
     @include mq($until: tablet) {
-        &:nth-child(1n+4):not(:last-child):not(.subnav__item--current-section) {
+        // Hides all but the first 2 subnav items and doesn't hide the more button
+        &:nth-child(1n+3):not(:last-child) {
             display: none;
         }
+
+        // TODO: Update logic with a class on <ul> that will allow active subnav items to be shown
     }
 }

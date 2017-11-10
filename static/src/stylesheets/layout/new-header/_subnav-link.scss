@@ -2,7 +2,7 @@
     @include fs-textSans(5);
     color: $neutral-1;
     display: block;
-    font-size: 16px;
+    font-size: 15px;
     height: $veggie-burger-medium - $gs-baseline;
     line-height: $veggie-burger-medium - $gs-baseline;
     padding: 0 ($gs-gutter / 4);
@@ -29,6 +29,10 @@
         border-bottom: 0 solid $neutral-3;
         right: 0;
         transition: border 150ms ease-out;
+    }
+
+    @include mq($from: mobileMedium, $until: tablet) {
+        font-size: 17px;
     }
 
     @include mq(tablet) {
@@ -74,7 +78,7 @@
 .subnav-link--toggle-more__icon {
     top: 50%;
     float: right;
-    margin-top: -($gs-baseline / 6) / 2;
+    transform: translateY(-50%);
 
     &,
     &:before,
@@ -96,7 +100,6 @@
         bottom: -4px;
     }
 }
-
 
 .subnav-link--current-section {
     font-weight: 700;
