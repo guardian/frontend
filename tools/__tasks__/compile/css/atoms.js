@@ -23,9 +23,7 @@ module.exports = {
 
                 return Promise.all(
                     dirsArray.map(dir => {
-                        const dirName = dir.split('/')[
-                            dir.split('/').length - 1
-                        ];
+                        const dirName = dir.substr(dir.lastIndexOf('/') + 1);
 
                         return execa('cp', [
                             `${dir}/article/index.css`,
