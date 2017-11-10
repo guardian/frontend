@@ -372,39 +372,7 @@
         padding-left: gs-span(4);
     }
 }
-.email-subscription__button {
-    @include fs-textSans(2);
-    background-color: $guardian-brand;
-    width: $gs-baseline * 9;
-    height: $gs-gutter * 2;
-    border-radius: 100px;
-    border: 0;
-    color: #ffffff;
-    cursor: pointer;
-    float: left;
-    padding: $gs-baseline/1.2 $gs-gutter $gs-baseline/1.5;
-    min-width: $gs-baseline * 14;
-    white-space: nowrap;
-    text-overflow: clip;
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    -ms-appearance: none;
-    box-sizing: border-box;
-    text-align: center;
-    display: inline-block;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-
-    &:hover {
-        background-color: $guardian-brand-dark;
-    }
-
-    &:hover, &:active, &:focus {
-        color: #ffffff;
-        text-decoration: none;
-    }
+.manage-account__button {
 
     @include mq(desktop) {
         .dropdown--email-subscription & {
@@ -422,25 +390,8 @@
         background-size: 40px;
     }
 
-    .email-subscription--subscribed &,
-    &--mini {
-        color: $guardian-brand;
-        background-color: transparent;
-        border: 1px solid $news-main-2;
-        &:hover {
-            color: $guardian-brand-dark;
-            background-color: transparent;
-            border-color: currentColor;
-        }
-    }
-
-    &--mini {
-        @include fs-textSans(1);
-        width: auto;
-        min-width: 0;
-        display: inline-flex;
-        height: $gs-gutter * 1.5;
-        line-height: .8;
+    .email-subscription--subscribed & {
+        @extend %manage-account__button--light;
     }
 
     &.email-unsubscribe {
@@ -454,7 +405,7 @@
         border: 2px solid $error;
     }
 
-    .fieldset & {
+    .email-subscription__fieldset & {
         float: none;;
     }
 
@@ -466,7 +417,7 @@
         margin-bottom: $gs-gutter / 2;
     }
 
-    .email-subscription__button {
+    .manage-account__button {
         float: none;
         clear: both;
     }
