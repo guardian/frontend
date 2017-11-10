@@ -1,29 +1,24 @@
 .pillars {
-    color: $news-support-1;
+    color: #ffffff;
     font-size: 0;
+    height: $veggie-burger-medium - $gs-baseline;
     margin: 0;
     padding: 0 $gs-gutter / 2;
-    width: 100%;
 
     @include mq(mobileLandscape) {
-        padding-left: $gs-gutter;
-        padding-right: $gs-gutter;
+        padding: 0 0 0 $gs-gutter;
     }
 }
 
 .pillars__item {
-    display: inline-block;
+    display: block;
+    float: left;
 
-    > *:after {
-        content: '/';
-        color: $news-main-2;
-        margin-left: -1px;
-        margin-right: 2px;
-        opacity: .6;
-        pointer-events: none;
-    }
+    &:first-child .pillar-link {
+        padding-left: 0;
 
-    &:last-child > *:after {
-        display: none;
+        &:before {
+            content: none;
+        }
     }
 }
