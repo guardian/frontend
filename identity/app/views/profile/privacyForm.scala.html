@@ -65,7 +65,7 @@
 
         @switchboard(fields = List(
             fragments.switchboardLabel(title = "Test checkbox", copy = "Test copy"),
-            fragments.switchboardLabel(title = "Test checkbox 2", copy = "Test copy 2")
+            fragments.switchboardLabel(title = "Test checkbox 2", copy = "Test copy 2", checked = true)
         ))
 
         <form class="form js-public-profile-form" novalidate action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" role="main" method="post">

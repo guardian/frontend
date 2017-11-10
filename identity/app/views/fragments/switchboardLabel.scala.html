@@ -1,12 +1,17 @@
 @(
     title: String,
     copy: String,
+    checked: Boolean = false,
     newsletterFrequency: Option[String] = None,
     newsletterPreview: Option[String] = None
 )
 
 <label class="manage-account__switchboardLabel js-manage-account__switchboardLabel">
-    <input type="checkbox" checked/>
+    <input
+        type="checkbox"
+        value="true"
+        @if(checked){ checked="checked" }
+    />
     <div class="manage-account__switchboardCheckbox"></div>
     <strong class="manage-account__switchboardTitle">@title</strong>
     <p class="manage-account__switchboardCopy">
