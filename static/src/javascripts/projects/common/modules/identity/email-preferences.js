@@ -171,8 +171,8 @@ const unsubscribeFromAll = buttonEl => {
 const toggleFormatFieldset = buttonEl => {
     bean.on(buttonEl, 'click', () => {
         fastdom.write(() => {
-            $('.email-subscription__modal--newsletterFormat')[0].classList.add(
-                'email-subscription__modal--active'
+            $('.manage-account__modal--newsletterFormat')[0].classList.add(
+                'manage-account__modal--active'
             );
         });
     });
@@ -181,10 +181,10 @@ const toggleFormatFieldset = buttonEl => {
 const bindModalCloser = (buttonEl: HTMLElement): void => {
     bean.on(buttonEl, 'click', () => {
         const modalEl: ?Element = buttonEl.closest(
-            '.email-subscription__modal'
+            '.manage-account__modal'
         );
         if (modalEl) {
-            modalEl.classList.remove('email-subscription__modal--active');
+            modalEl.classList.remove('manage-account__modal--active');
         }
     });
 };
@@ -244,7 +244,7 @@ const enhanceEmailPreferences = (): void => {
         '.js-email-subscription__formatFieldsetToggle',
         toggleFormatFieldset
     );
-    $.forEachElement('.js-email-subscription__modalCloser', bindModalCloser);
+    $.forEachElement('.js-manage-account__modalCloser', bindModalCloser);
     $.forEachElement(
         '.js-mydata-prefs-switchboardLabel',
         bindLabelFromSwitchboard

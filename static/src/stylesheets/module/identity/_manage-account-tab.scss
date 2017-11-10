@@ -101,20 +101,6 @@
         }
     }
 
-    /* Header
-       ========================================================================== */
-    .manage-account-header {
-        @include fs-header(3);
-    }
-
-    .manage-account-header--highlight {
-        padding: 15px 0 15px 4px;
-        margin: 32px 0 15px;
-        background-color: #fff8e5;
-        border-top: 1px solid $comment-accent;
-        border-bottom: 1px solid $comment-accent;
-    }
-
     .subscription-changed-title {
         @include fs-header(3);
         border-top: 1px solid $neutral-4;
@@ -280,6 +266,93 @@
                 width: 49px !important;
                 height: $small-card !important;
                 background-size: 49px $small-card;
+            }
+        }
+    }
+}
+
+/* Header
+========================================================================== */
+.manage-account-header {
+    @include fs-header(3);
+}
+
+.manage-account-header--highlight {
+    padding: 15px 0 15px 4px;
+    margin: 32px 0 15px;
+    background-color: #fff8e5;
+    border-top: 1px solid $comment-accent;
+    border-bottom: 1px solid $comment-accent;
+}
+
+/* Modals
+   ========================================================================== */
+.manage-account__modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+    display: none;
+
+    &--active {
+        display: block;
+        display: flex;
+    }
+
+    .manage-account__modalBg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: $neutral-1;
+        opacity: .95;
+        z-index: 9;
+    }
+
+    .manage-account__modalContent {
+        max-width: gs-span(10);
+        background: #ffffff;
+        width: 100%;
+        position: relative;
+        z-index: 10;
+        border-top: 1px solid $news-main-2;
+        padding: ($gs-gutter * 3.75) ($gs-gutter * 1) ($gs-gutter * 1);
+        margin: auto;
+        float: none;
+    }
+
+    .manage-account__modalCloser {
+        width: $gs-gutter * 1.75;
+        height: $gs-gutter * 1.75;
+        border: 1px solid $guardian-brand;
+        border-radius: 100%;
+        display: block;
+        position: absolute;
+        top: $gs-gutter;
+        right: $gs-gutter;
+
+        svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            margin: auto;
+        }
+
+        svg * {
+            fill: $guardian-brand;
+        }
+
+        &:hover {
+            border-color: #000000;
+            svg * {
+                fill: #000000;
             }
         }
     }
