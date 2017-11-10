@@ -284,3 +284,64 @@
         }
     }
 }
+
+/* Button styles
+========================================================================== */
+.manage-account__button {
+    @include fs-textSans(2);
+    background-color: $guardian-brand;
+    height: $gs-gutter * 2;
+    border-radius: 100px;
+    border: 0;
+    color: #ffffff;
+    cursor: pointer;
+    float: left;
+    padding: $gs-baseline/1.2 $gs-gutter $gs-baseline/1.5;
+    min-width: $gs-baseline * 14;
+    white-space: nowrap;
+    text-overflow: clip;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
+    box-sizing: border-box;
+    text-align: center;
+    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+        background-color: $guardian-brand-dark;
+    }
+
+    &:hover, &:active, &:focus {
+        color: #ffffff;
+        text-decoration: none;
+    }
+
+    &.is-updating {
+        border: 0;
+    }
+
+    &--light {
+        color: $guardian-brand;
+        background-color: transparent;
+        border: 1px solid $news-main-2;
+        &:not(.is-updating):hover {
+            color: $guardian-brand-dark;
+            background-color: transparent;
+            border-color: currentColor;
+        }
+    }
+
+    &--mini {
+        @include fs-textSans(1);
+        @extend .manage-account__button--light;
+        min-width: $gs-baseline * 10;
+        display: inline-flex;
+        height: $gs-gutter * 1.5;
+        line-height: .8;
+    }
+
+}
