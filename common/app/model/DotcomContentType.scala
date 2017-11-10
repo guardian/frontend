@@ -82,7 +82,7 @@ object DotcomContentType {
     }
   }
 
-  def dotcomContentTypeFromPressedContent(storyContent: Option[PressedStory]): DotcomContentType = {
+  def apply(storyContent: Option[PressedStory]): DotcomContentType = {
     storyContent.flatMap(_.metadata.`type`).getOrElse(DotcomContentType.Article)
   }
 }

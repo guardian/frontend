@@ -28,9 +28,9 @@ object Pillar {
     override def writes(o: Pillar): JsValue = JsString(o.name)
   }
 
-   def pillarFromPressedContent(storyContent: Option[PressedStory]): Pillar = {
-     storyContent.flatMap(_.metadata.pillar).getOrElse(Pillar.News)
-   }
+  def apply(storyContent: Option[PressedStory]): Pillar = {
+    storyContent.flatMap(_.metadata.pillar).getOrElse(Pillar.News)
+  }
 }
 
 object Pillars {

@@ -39,8 +39,8 @@ case class EditionalisedLink(
 object Sublink {
   def fromFaciaContent(faciaContent: PressedContent): Sublink = {
     val storyContent: Option[PressedStory] = faciaContent.properties.maybeContent
-    val pillar: Pillar = Pillar.pillarFromPressedContent(storyContent)
-    val contentType: DotcomContentType = DotcomContentType.dotcomContentTypeFromPressedContent(storyContent)
+    val pillar: Pillar = Pillar(storyContent)
+    val contentType: DotcomContentType = DotcomContentType(storyContent)
 
     Sublink(
       faciaContent.header.kicker,
@@ -346,8 +346,8 @@ case class ContentCard(
     case _ => false
   }
 
-  val pillar: Pillar = Pillar.pillarFromPressedContent(storyContent)
-  val contentType: DotcomContentType = DotcomContentType.dotcomContentTypeFromPressedContent(storyContent)
+  val pillar: Pillar = Pillar(storyContent)
+  val contentType: DotcomContentType = DotcomContentType(storyContent)
 }
 object ContentCard {
 
