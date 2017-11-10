@@ -84,7 +84,7 @@
                     </ul>
                 </li>
                 @if(!accountDetailsForm("telephoneNumber").hasErrors && accountDetailsForm("telephoneNumber.localNumber").value.nonEmpty) {
-                    <button type="submit" class="submit-input" data-link-name="Delete Phone Number" name="deleteTelephoneNumber" value="true">
+                    <button type="submit" class="manage-account__button" data-link-name="Delete Phone Number" name="deleteTelephoneNumber" value="true">
                         Delete Phone Number</button>
                 }
             </ul>
@@ -199,7 +199,7 @@
     <fieldset class="fieldset">
         <div class="fieldset__heading"></div>
         <div class="fieldset__fields">
-            <button type="submit" class="submit-input" data-link-name="Create account" data-test-id="save-changes">Save changes</button>
+            <button type="submit" class="manage-account__button" data-link-name="Create account" data-test-id="save-changes">Save changes</button>
         </div>
     </fieldset>
 

@@ -17,6 +17,9 @@
     ========================================================================== */
     .manage-account-up-sell {
         padding: $gs-gutter*2;
+        .manage-account__button {
+            margin-right: 1em;
+        }
     }
 
     .manage-account-up-sell__heading {

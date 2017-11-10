@@ -372,10 +372,9 @@
         padding-left: gs-span(4);
     }
 }
-.email-subscription__button {
+.manage-account__button {
     @include fs-textSans(2);
     background-color: $guardian-brand;
-    width: $gs-baseline * 9;
     height: $gs-gutter * 2;
     border-radius: 100px;
     border: 0;
@@ -412,6 +411,10 @@
         }
     }
 
+    &.is-updating {
+        border: 0;
+    }
+
     &.is-updating-subscriptions {
         display: inherit;
         margin-top: 0;
@@ -427,7 +430,7 @@
         color: $guardian-brand;
         background-color: transparent;
         border: 1px solid $news-main-2;
-        &:hover {
+        &:not(.is-updating):hover {
             color: $guardian-brand-dark;
             background-color: transparent;
             border-color: currentColor;
@@ -436,8 +439,7 @@
 
     &--mini {
         @include fs-textSans(1);
-        width: auto;
-        min-width: 0;
+        min-width: $gs-baseline * 10;
         display: inline-flex;
         height: $gs-gutter * 1.5;
         line-height: .8;
@@ -466,7 +468,7 @@
         margin-bottom: $gs-gutter / 2;
     }
 
-    .email-subscription__button {
+    .manage-account__button {
         float: none;
         clear: both;
     }
@@ -573,11 +575,4 @@
     display: inline-block;
     margin-top: 0;
     vertical-align: middle;
-}
-
-/* Override old pasteup buttons
-   ========================================================================== */
-.submit-input-v2 {
-    border-radius: 999em;
-    @include fs-textSans(2);
 }
