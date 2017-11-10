@@ -3,9 +3,7 @@ import {
     supportFrontendLiveInUk,
     supportFrontendLiveInUs,
 } from 'common/modules/commercial/support-utilities';
-import {
-    getLocalCurrencySymbol,
-} from 'lib/geolocation';
+import { getLocalCurrencySymbol } from 'lib/geolocation';
 
 // control
 const controlHeading = 'Since you’re here &hellip;';

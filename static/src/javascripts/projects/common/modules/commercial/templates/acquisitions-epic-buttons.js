@@ -41,6 +41,6 @@ export const epicButtonsTemplate = (
         <div class="contributions__amount-field">
             ${!useSupportDomain ? supportButtonBecome : supportButtonSupport}
             ${!useSupportDomain ? contribButton : ''}
-            $paymentLogos
+            ${paymentLogos}
         </div>`;
 };
