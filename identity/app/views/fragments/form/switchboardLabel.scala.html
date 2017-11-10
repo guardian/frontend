@@ -1,17 +1,15 @@
+@import _root_.form.IdFormHelpers.{Checkbox}
+
 @(
     title: String,
     copy: String,
-    checked: Boolean = false,
+    field: Field,
     newsletterFrequency: Option[String] = None,
     newsletterPreview: Option[String] = None
-)
+)(implicit handler: views.html.helper.FieldConstructor, messages: play.api.i18n.Messages)
 
 <label class="manage-account__switchboardLabel js-manage-account__switchboardLabel">
-    <input
-        type="checkbox"
-        value="true"
-        @if(checked){ checked="checked" }
-    />
+    @fragments.form.checkbox(field, Checkbox(field).args:_*)
     <div class="manage-account__switchboardCheckbox"></div>
     <strong class="manage-account__switchboardTitle">@title</strong>
     <p class="manage-account__switchboardCopy">

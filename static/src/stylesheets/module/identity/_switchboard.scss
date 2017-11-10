@@ -79,9 +79,10 @@ $checkbox-size: $gs-gutter / 1.25;
 
     .manage-account__switchboardTitle {
         @include fs-bodyCopy(2);
-        font-weight: 800;
         margin-bottom: $local-gutter;
         cursor: pointer;
+        font-weight: 400;
+        display: block;
     }
 
     .manage-account__switchboardCopy {

@@ -1,4 +1,5 @@
 @import views.html.fragments.form.checkboxField
+@import views.html.fragments.form.switchboardLabel
 @import views.html.fragments.registrationFooter
 @import _root_.form.IdFormHelpers.{Checkbox, nonInputFields}
 @import com.gu.identity.model.ConsentText
@@ -25,12 +26,12 @@
     @helper.inputText(consentField("timestamp"), 'type -> "hidden")(nonInputFields, messages)
     @helper.inputText(consentField("privacyPolicy"), 'type -> "hidden")(nonInputFields, messages)
 
-    @checkboxField(
-        Checkbox(
-            consentField("hasConsented"),
-            '_label -> getConsentText(consentField)
-        )
+    @fragments.form.switchboardLabel(
+        title = getConsentText(consentField).toString(),
+        copy = "Test copy",
+        field = consentField("hasConsented")
     )(nonInputFields, messages)
+
 }
 
 @v2consentCheckboxes = {
@@ -61,14 +62,8 @@
 }
 
 @* MARKETING CONSENT *@
-<h2 class="manage-account-header">Marketing</h2>
 
-        @switchboard(fields = List(
-            fragments.switchboardLabel(title = "Test checkbox", copy = "Test copy"),
-            fragments.switchboardLabel(title = "Test checkbox 2", copy = "Test copy 2", checked = true)
-        ))
-
-        <form class="form js-public-profile-form" novalidate action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" role="main" method="post">
+    <form class="form js-public-profile-form" novalidate action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" role="main" method="post">
     @views.html.helper.CSRF.formField
 
     @* This displays both global and key-bound errors *@
@@ -79,8 +74,24 @@
         </div>
     }
 
-    @* Marketing Consent *@
-    <fieldset class="fieldset">
+    @if(IdentityGdprMarketingConsentSwitch.isSwitchedOn) {
+        <h2 class="manage-account-header">Would you like to receive information from the Guardian and their partners?</h2>
+        <p class="manage-account-headerNote">The Guardian and their partners would like to occasionally send you information about their products, services and events</p>
+        <div class="manage-account__switchboard">
+            <ul>
+                @helper.repeat(privacyForm("consents"), min=1) { consentField =>
+                    <li>
+                        @v2ConsentCheckbox(consentField)
+                    </li>
+                }
+            </ul>
+        </div>
+    }
+
+    @if(!IdentityGdprMarketingConsentSwitch.isSwitchedOn) {
+        @* Marketing Consent *@
+        <h2 class="manage-account-header">Marketing</h2>
+        <fieldset class="fieldset">
 
         <div class="fieldset__heading">
             <h2 class="form__heading">Marketing</h2>
@@ -94,18 +105,12 @@
 
                     <div class="form-fields-group">
 
-                    @if(IdentityGdprMarketingConsentSwitch.isSwitchedOn) {
-                        @v2consentCheckboxes
-                    } else {
                         @v1consentCheckboxes
-                    }
                     </div>
                 </li>
             </ul>
         </div>
     </fieldset>
-
-    @if(!IdentityGdprMarketingConsentSwitch.isSwitchedOn) {
         @* Profiling *@
         <fieldset class="fieldset">
             <div class="fieldset__heading">

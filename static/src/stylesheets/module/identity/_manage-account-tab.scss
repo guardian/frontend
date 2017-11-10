@@ -276,6 +276,10 @@
 .manage-account-header {
     @include fs-header(3);
 }
+.manage-account-headerNote {
+    @include fs-bodyCopy(2);
+    margin-top: $gs-baseline / 2;
+}
 
 .manage-account-header--highlight {
     padding: 15px 0 15px 4px;

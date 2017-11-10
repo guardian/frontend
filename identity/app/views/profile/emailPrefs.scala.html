@@ -61,7 +61,7 @@
     @idUrlBuilder.buildUrl(s"/$endpoint", idRequest)
 }
 
-<h2 class="manage-account-header">Newsletters</h2>
+<h1 class="identity-title">Newsletters</h1>
 <h4 class="email-subscription__meta">Select which newsletters you would like to receive.</h4>
 <form class="form" novalidate action="@buildIdentityUrl("email-prefs")" role="main" method="post">
     @views.html.helper.CSRF.formField
