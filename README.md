@@ -1,5 +1,9 @@
 [![Gitter](https://badges.gitter.im/guardian/frontend.svg)](https://gitter.im/guardian/frontend?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
+## We're hiring!
+Ever thought about joining us? 
+https://workforus.theguardian.com/careers/digital-development/
+
 # Frontend
 [The Guardian](http://www.theguardian.com) website frontend.
 
