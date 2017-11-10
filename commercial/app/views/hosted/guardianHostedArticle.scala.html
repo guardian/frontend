@@ -1,7 +1,7 @@
 @import common.commercial.hosted.HostedArticlePage
 @(page: HostedArticlePage)(implicit request: RequestHeader, context: model.ApplicationContext)
 @import views.html.hosted._
-@import views.BodyCleaner
+@import views.CommercialBodyCleaner
 @import model.hosted.HostedArticleQuotes.prepareQuotes
 
 @mainLegacy(page, Some("commercial")) { } {
@@ -25,7 +25,7 @@
                             </div>
                         </div>
 
-                        @BodyCleaner(page, body(page).toString())(request, context)
+                        @CommercialBodyCleaner(page, body(page).toString())(request, context)
 
                         <div class="hosted__onward-journey">
                             <div class="js-onward-placeholder"></div>
