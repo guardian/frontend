@@ -49,7 +49,7 @@ const setAdTestCookie = (): void => {
 
 const showHiringMessage = (): void => {
     try {
-        if (!config.page.isDev) {
+        if (!config.get('page.isDev') && config.get('switches.weAreHiring')) {
             window.console.log(
                 '\n' +
                     '%cHello.\n' +
@@ -69,7 +69,7 @@ const showHiringMessage = (): void => {
 };
 
 const handleMembershipAccess = (): void => {
-    const { membershipUrl, membershipAccess, contentId } = config.page;
+    const { membershipUrl, membershipAccess, contentId } = config.get('page');
 
     const redirect = (): void => {
         window.location.href = `${membershipUrl}/membership-content?referringContent=${contentId}&membershipAccess=${membershipAccess}`;
@@ -204,7 +204,7 @@ const bootStandard = (): void => {
     removeCookie('GU_AFU');
 
     // If we turn off the ad-free trial, immediately remove the cookie
-    if (!config.switches.adFreeSubscriptionTrial) {
+    if (!config.get('switches.adFreeSubscriptionTrial')) {
         removeCookie('GU_AF1');
     }
 
@@ -215,7 +215,7 @@ const bootStandard = (): void => {
         storage.set(key, alreadyVisited + 1);
     }
 
-    if (config.switches.blockIas && navigator.serviceWorker) {
+    if (config.get('switches.blockIas') && navigator.serviceWorker) {
         navigator.serviceWorker.ready.then(swreg => {
             const sw = swreg.active;
             const ias = window.location.hash.includes('noias');
@@ -235,7 +235,7 @@ const bootStandard = (): void => {
         Authenticating requires CORS and withCredentials. If we don't cut the
         mustard then pass through.
     */
-    if (config.page.requiresMembershipAccess) {
+    if (config.get('page.requiresMembershipAccess')) {
         handleMembershipAccess();
     }
 

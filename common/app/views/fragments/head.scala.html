@@ -1,19 +1,22 @@
 @(projectName: Option[String] = None, head: Html)(implicit page: model.Page, request: RequestHeader, context: model.ApplicationContext)
 
 @import model.Page.getContent
+@import conf.switches.Switches.WeAreHiring
 @import implicits.Strings.String2Uri
 @import views.support.JavaScriptPage.getMap
 
-<!--
- __        __                      _     _      _
- \ \      / /__    __ _ _ __ ___  | |__ (_)_ __(_)_ __   __ _
-  \ \ /\ / / _ \  / _` | '__/ _ \ | '_ \| | '__| | '_ \ / _` |
-   \ V  V /  __/ | (_| | | |  __/ | | | | | |  | | | | | (_| |
-    \_/\_/ \___|  \__,_|_|  \___| |_| |_|_|_|  |_|_| |_|\__, |
-                                                        |___/
-Ever thought about joining us?
-https://workforus.theguardian.com/careers/digital-development/
- --->
+@if(WeAreHiring.isSwitchedOn) {
+    <!--
+     __        __                      _     _      _
+     \ \      / /__    __ _ _ __ ___  | |__ (_)_ __(_)_ __   __ _
+      \ \ /\ / / _ \  / _` | '__/ _ \ | '_ \| | '__| | '_ \ / _` |
+       \ V  V /  __/ | (_| | | |  __/ | | | | | |  | | | | | (_| |
+        \_/\_/ \___|  \__,_|_|  \___| |_| |_|_|_|  |_|_| |_|\__, |
+                                                            |___/
+    Ever thought about joining us?
+    https://workforus.theguardian.com/careers/digital-development/
+     --->
+}
 <title>@views.support.Title(page)</title>
 
 @fragments.metaData()
