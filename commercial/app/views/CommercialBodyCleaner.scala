@@ -6,7 +6,7 @@ import play.api.mvc.RequestHeader
 import play.twirl.api.Html
 import views.support.{AtomsCleaner, withJsoup}
 
-object BodyCleaner {
+object CommercialBodyCleaner {
   def apply(article: HostedArticlePage, html: String)(implicit request: RequestHeader, context: ApplicationContext): Html = {
 
     val cleaners = List(
