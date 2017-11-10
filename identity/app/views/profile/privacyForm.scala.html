@@ -20,11 +20,9 @@
 @v2ConsentCheckbox(consentField: Field) = {
 
     @* hidden input fields *@
-    @helper.inputText(consentField("actor"), 'type -> "hidden")(nonInputFields, messages)
-    @helper.inputText(consentField("consentIdentifier"), 'type -> "hidden")(nonInputFields, messages)
-    @helper.inputText(consentField("consentIdentifierVersion"), 'type -> "hidden")(nonInputFields, messages)
-    @helper.inputText(consentField("timestamp"), 'type -> "hidden")(nonInputFields, messages)
-    @helper.inputText(consentField("privacyPolicy"), 'type -> "hidden")(nonInputFields, messages)
+    @List("actor","consentIdentifier","consentIdentifierVersion","timestamp","privacyPolicy").map(field =>
+        fragments.form.hidden(consentField(field))
+    )
 
     @fragments.form.switchboardLabel(
         title = getConsentText(consentField).toString(),
