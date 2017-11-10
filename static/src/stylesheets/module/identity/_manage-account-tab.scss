@@ -275,6 +275,7 @@
 ========================================================================== */
 .manage-account-header {
     @include fs-header(3);
+    color: $guardian-brand-dark;
 }
 .manage-account-headerNote {
     @include fs-bodyCopy(2);
@@ -287,6 +288,15 @@
     background-color: #fff8e5;
     border-top: 1px solid $comment-accent;
     border-bottom: 1px solid $comment-accent;
+}
+
+.manage-account-divider {
+    display: block;
+    width: 100%;
+    border-top: 1px solid $news-main-2;
+    margin-bottom: gs-span(.5);
+    margin-top: gs-span(1);
+    transform: scaleX(3);
 }
 
 /* Modals

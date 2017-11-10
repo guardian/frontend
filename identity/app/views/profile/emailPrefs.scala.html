@@ -61,9 +61,7 @@
     @idUrlBuilder.buildUrl(s"/$endpoint", idRequest)
 }
 
-<h1 class="identity-title">Newsletters</h1>
-<h4 class="email-subscription__meta">Select which newsletters you would like to receive.</h4>
-<form class="form" novalidate action="@buildIdentityUrl("email-prefs")" role="main" method="post">
+<form novalidate action="@buildIdentityUrl("email-prefs")" role="main" method="post">
     @views.html.helper.CSRF.formField
     @if(emailPrefsForm.globalError.isDefined) {
         <div class="form__error">@emailPrefsForm.globalErrors.map(_.message).mkString(", ")</div>

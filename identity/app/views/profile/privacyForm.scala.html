@@ -49,21 +49,8 @@
     @checkboxField(Checkbox(privacyForm("receive3rdPartyMarketing"), '_label -> currentConsents(ThirdParty.name)))(nonInputFields, messages)
 }
 
-@switchboard(fields:List[Any]) = {
-    <div class="manage-account__switchboard">
-        <ul>
-            @fields.map { field =>
-                <li>
-                    @field
-                </li>
-            }
-        </ul>
-    </div>
-}
-
 @* MARKETING CONSENT *@
-
-    <form class="form js-public-profile-form" novalidate action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" role="main" method="post">
+    <form class="js-public-profile-form" novalidate action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" role="main" method="post">
     @views.html.helper.CSRF.formField
 
     @* This displays both global and key-bound errors *@
@@ -145,6 +132,10 @@
 </form>
 
 @* NEWSLETTERS *@
+
+    <hr class="manage-account-divider" />
+    <h2 class="manage-account-header">Select which newsletters you would like to receive</h2>
+
 @profile.emailPrefs(IdentityPage("/email-prefs", "Email preferences"), emailPrefsForm, emailSubscriptions, availableLists, idRequest, idUrlBuilder)
 
 

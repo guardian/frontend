@@ -49,6 +49,10 @@ $checkbox-size: $gs-gutter / 1.25;
     background-position: $local-gutter $local-gutter * 1.5;
     overflow: hidden;
 
+    &:hover {
+        background-color: darken($neutral-8, 1%);
+    }
+
     @supports(display: grid) {
         margin: 0;
     }

@@ -20,6 +20,7 @@
     }
     .gs-container {
         background: #ffffff;
+        overflow: hidden;
     }
     .monocol-wrapper {
         max-width: gs-span(10);
@@ -353,10 +354,6 @@
 .dropdown--email-subscription {
     .dropdown__label {
         @include fs-bodyHeading(3);
-        color: $guardian-brand;
-    }
-    &:hover .dropdown__label {
-        color: $guardian-brand-dark;
     }
     .dropdown__content {
         padding-bottom: 2em;
