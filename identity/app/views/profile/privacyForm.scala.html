@@ -48,9 +48,27 @@
     @checkboxField(Checkbox(privacyForm("receive3rdPartyMarketing"), '_label -> currentConsents(ThirdParty.name)))(nonInputFields, messages)
 }
 
+@switchboard(fields:List[Any]) = {
+    <div class="manage-account__switchboard">
+        <ul>
+            @fields.map { field =>
+                <li>
+                    @field
+                </li>
+            }
+        </ul>
+    </div>
+}
+
 @* MARKETING CONSENT *@
 <h2 class="manage-account-header">Marketing</h2>
-<form class="form js-public-profile-form" novalidate action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" role="main" method="post">
+
+        @switchboard(fields = List(
+            fragments.switchboardLabel(title = "Test checkbox", copy = "Test copy"),
+            fragments.switchboardLabel(title = "Test checkbox 2", copy = "Test copy 2")
+        ))
+
+        <form class="form js-public-profile-form" novalidate action="@idUrlBuilder.buildUrl("/privacy/edit", idRequest)" role="main" method="post">
     @views.html.helper.CSRF.formField
 
     @* This displays both global and key-bound errors *@
