@@ -8,6 +8,10 @@
 @import helper._
 @import views.html.fragments.registrationFooter
 
+<fieldset class="fieldset">
+    <div class="form__note">These details will only be visible to you and the Guardian.</div>
+</fieldset>
+
 <form class="form js-account-details-form" novalidate action="@idUrlBuilder.buildUrl("/account/edit", idRequest)" role="main" method="post">
     <button type="submit" class="is-hidden"></button>
     @views.html.helper.CSRF.formField
@@ -15,10 +19,6 @@
     @if(accountDetailsForm.globalError.isDefined) {
         <div class="form__error">@accountDetailsForm.globalErrors.map(_.message).mkString(", ")</div>
     }
-
-    <fieldset class="fieldset">
-        <div class="form__note">These details will only be visible to you and the Guardian.</div>
-    </fieldset>
 
     <fieldset class="fieldset">
 
