@@ -49,13 +49,13 @@ const setAdTestCookie = (): void => {
 
 const showHiringMessage = (): void => {
     try {
-        if (!config.get('page.isDev') && config.get('switches.weAreHiring')) {
+        if (config.get('switches.weAreHiring')) {
             window.console.log(
                 '\n' +
                     '%cHello.\n' +
                     '\n' +
                     '%cWe are hiring – ever thought about joining us? \n' +
-                    '%chttp://developers.theguardian.com/join-the-team.html%c \n' +
+                    '%chttps://workforus.theguardian.com/careers/digital-development%c \n' +
                     '\n',
                 'font-family: Georgia, serif; font-size: 32px; color: #005689',
                 'font-family: Georgia, serif; font-size: 16px; color: #767676',
