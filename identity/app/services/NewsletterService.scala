@@ -16,7 +16,7 @@ import scala.concurrent.{ExecutionContext, Future}
 /**
   * This is the old EmailController converted *as is* to a service to be consumed by EditProfileController
   */
-class EmailService(
+class NewsletterService(
   api: IdApiClient,
   idRequestParser: IdRequestParser,
   idUrlBuilder: IdentityUrlBuilder)

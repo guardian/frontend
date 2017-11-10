@@ -34,7 +34,7 @@ class EditProfileController(
     csrfAddToken: CSRFAddToken,
     implicit val profileFormsMapping: ProfileFormsMapping,
     val controllerComponents: ControllerComponents,
-    emailService: EmailService)
+    newsletterService: NewsletterService)
     (implicit context: ApplicationContext)
   extends BaseController
   with ImplicitControllerExecutionContext
@@ -63,7 +63,7 @@ class EditProfileController(
   def saveEmailPreferences: Action[AnyContent] =
     csrfCheck {
       authActionWithUser.async { implicit request =>
-        emailService.savePreferences().map { form  =>
+        newsletterService.savePreferences().map { form  =>
           if (form.hasErrors) {
             val errorsAsJson = Json.toJson(
               form.errors.groupBy(_.key).map { case (key, errors) =>
@@ -127,7 +127,7 @@ class EditProfileController(
       user: User)
       (implicit request: AuthRequest[AnyContent]): Future[Result] = {
 
-    emailService.preferences(request.user.getId, idRequestParser(request).trackingData).map { emailFilledForm =>
+    newsletterService.preferences(request.user.getId, idRequestParser(request).trackingData).map { emailFilledForm =>
 
       NoCache(Ok(views.html.profileForms(
         page,
@@ -136,7 +136,7 @@ class EditProfileController(
         idRequestParser(request),
         idUrlBuilder,
         emailFilledForm,
-        emailService.getEmailSubscriptions(emailFilledForm),
+        newsletterService.getEmailSubscriptions(emailFilledForm),
         EmailNewsletters.all
 
       )))
