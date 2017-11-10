@@ -2,7 +2,6 @@ package common
 
 import model._
 import play.api.mvc.RequestHeader
-import conf.switches.Switches.GamesLinkSwitch
 
 case class SectionLink(zone: String, title: String, breadcrumbTitle: String, href: String) {
   def currentFor(page: Page): Boolean = page.metadata.url == href ||
@@ -129,8 +128,7 @@ trait Navigation {
 
   //Technology
   val technologyblog = SectionLink("technology", "technology blog", "Technology blog", "/technology/blog")
-  private val gamesLink = if(GamesLinkSwitch.isSwitchedOn) "/games" else "/technology/games"
-  val games = SectionLink("culture", "games", "Games", gamesLink)
+  val games = SectionLink("culture", "games", "Games", "/games")
   val gamesblog = SectionLink("technology", "games blog", "Games blog", "/technology/gamesblog")
   val appsblog = SectionLink("technology", "apps blog", "Apps blog", "/technology/appsblog")
   val askjack = SectionLink("technology", "ask jack", "Ask Jack blog", "/technology/askjack")
