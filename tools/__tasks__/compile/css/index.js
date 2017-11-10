@@ -6,5 +6,6 @@ module.exports = {
         require('../images'),
         require('./update-caniuse'),
         require('./sass'),
+        require('./atoms'),
     ],
 };
