@@ -7,3 +7,16 @@
         overflow: visible; // Prevents height issue in Firefox < 22
     }
 }
+
+// reduce type size on q-q-q-q slice if it follows another slice in the same container
+.fc-slice-wrapper + .fc-slice-wrapper {
+    .fc-slice--q-q-q-q {
+        .fc-item--standard-tablet {
+            .fc-item__header {
+                @include mq(tablet) {
+                    @include fs-headline(2, true);
+                }
+            }
+        }
+    }
+}

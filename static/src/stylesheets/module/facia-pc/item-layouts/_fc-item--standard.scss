@@ -1,0 +1,9 @@
+@mixin fc-item--standard {
+    .fc-item__image-container {
+        display: block;
+    }
+
+    &.fc-item--has-sublinks-1 .fc-item__media-wrapper {
+        display: block;
+    }
+}

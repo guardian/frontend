@@ -5,9 +5,11 @@
     }
 }
 
+@import 'item-layouts/fc-item--standard';
 @import 'item-layouts/fc-item--three-quarters';
 @import 'item-layouts/fc-item--three-quarters-right';
 @import 'item-layouts/fc-item--three-quarters-tall';
+@import 'item-layouts/fc-item--list';
 
 // overrides of current slices
 
@@ -16,6 +18,31 @@
     position: relative;
     padding-bottom: 0;
     margin-bottom: $gs-baseline;
+}
+
+.fc-item--standard-tablet {
+    @include mq(tablet) {
+        @include fc-item--standard;
+
+        .fc-item__header {
+            @include mq($until: desktop) {
+                @include fs-headline(2, true);
+                @include headline-boost(3);
+            }
+        }
+    }
+}
+
+.fc-item--list-mobile {
+    @include mq($until: tablet) {
+        @include fc-item--list;
+    }
+}
+
+.fc-item--list-tablet {
+    @include mq(tablet) {
+        @include fc-item--list;
+    }
 }
 
 .fc-item--three-quarters-tablet {
