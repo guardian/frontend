@@ -1,4 +1,4 @@
-@(styles: html.Styles)(implicit applicationContext: model.ApplicationContext)
+@(styles: html.Styles, atomStyles: Seq[Html] = Nil)(implicit applicationContext: model.ApplicationContext)
 
 @import conf.Static
 
@@ -53,6 +53,8 @@
 @styles.criticalCss
 @styles.linkCss
 <!--<![endif]-->
+
+@atomStyles.map { atomStyle => @atomStyle }
 
 <link rel="stylesheet" media="print" type="text/css" href="@Static("stylesheets/print.css")" />
 

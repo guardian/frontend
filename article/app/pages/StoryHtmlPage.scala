@@ -27,6 +27,13 @@ object StoryHtmlPage {
     override def IE9CriticalCss: Html = stylesheetLink(s"stylesheets/ie9.$ContentCSSFile.css")
   }
 
+  def atomStyles(implicit page: Page) = Page.getContent(page) 
+    .flatMap(_.atoms)
+    .map(_.atomTypes.map { atomType =>
+      stylesheetLink(s"stylesheets/atom-$atomType-article-index.css")
+    })
+    .getOrElse(Nil)
+
   def html(
     header: Html,
     content: Html,
@@ -43,7 +50,7 @@ object StoryHtmlPage {
         titleTag(),
         metaData(),
         head,
-        styles(allStyles),
+        styles(allStyles, atomStyles),
         fixIEReferenceErrors(),
         inlineJSBlocking()
       ),
