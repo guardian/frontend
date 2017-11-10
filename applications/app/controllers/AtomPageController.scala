@@ -75,12 +75,12 @@ class AtomPageController(contentApiClient: ContentApiClient, wsClient: WSClient,
       })
   }
 
-  def render(atomType: String, id: String, isJsEnabled: Boolean, hasVerticalScrollbar: Boolean): Action[AnyContent] = Action.async { implicit request =>
+  def render(atomType: String, id: String, isJsEnabled: Boolean, hasVerticalScrollbar: Boolean, inApp: Boolean): Action[AnyContent] = Action.async { implicit request =>
     lookup(s"atom/$atomType/$id") map {
       case Left(model: MediaAtom) =>
         renderAtom(MediaAtomPage(model, withJavaScript = isJsEnabled, withVerticalScrollbar = hasVerticalScrollbar))
       case Left(model: StoryQuestionsAtom) =>
-        renderAtom(StoryQuestionsAtomPage(model, withJavaScript = isJsEnabled, withVerticalScrollbar = hasVerticalScrollbar))
+        renderAtom(StoryQuestionsAtomPage(model, withJavaScript = isJsEnabled, withVerticalScrollbar = hasVerticalScrollbar, inApp = inApp))
       case Left(model: GuideAtom) =>
         renderAtom(GuideAtomPage(model, withJavaScript = isJsEnabled, withVerticalScrollbar = hasVerticalScrollbar))
       case Left(model: ProfileAtom) =>
