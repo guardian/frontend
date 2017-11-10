@@ -21,7 +21,7 @@ const paradiseDifferentHighlightP1 =
 const controlP2FirstSentence =
     ' If everyone who reads our reporting, who likes it, helps fund it, our future would be much more secure.';
 const controlP2 = (currencySymbol: string) =>
-    `${controlP2FirstSentence} <strong><span class="contributions__highlight">For as little as ${getLocalCurrencySymbol()}1, you can support the Guardian – and it only takes a minute. Thank you.</span></strong>`;
+    `${controlP2FirstSentence} <strong><span class="contributions__highlight">For as little as ${currencySymbol}1, you can support the Guardian – and it only takes a minute. Thank you.</span></strong>`;
 
 // control regulars
 const controlHeadingRegulars = 'Hello again &hellip;';
