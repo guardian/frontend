@@ -5,7 +5,6 @@ import {
 } from 'common/modules/commercial/support-utilities';
 import {
     getLocalCurrencySymbol,
-    getLocalAverageDonation,
 } from 'lib/geolocation';
 
 // control
