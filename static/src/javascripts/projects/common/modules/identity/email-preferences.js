@@ -180,9 +180,7 @@ const toggleFormatFieldset = buttonEl => {
 
 const bindModalCloser = (buttonEl: HTMLElement): void => {
     bean.on(buttonEl, 'click', () => {
-        const modalEl: ?Element = buttonEl.closest(
-            '.manage-account__modal'
-        );
+        const modalEl: ?Element = buttonEl.closest('.manage-account__modal');
         if (modalEl) {
             modalEl.classList.remove('manage-account__modal--active');
         }
