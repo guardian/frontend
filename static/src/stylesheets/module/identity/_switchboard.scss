@@ -16,11 +16,20 @@ $checkbox-size: $gs-gutter / 1.25;
 
     ul {
         grid-template-columns: repeat(auto-fit, minmax(gs-span(4), 1fr));
-        grid-row-gap: $local-gutter;
-        grid-column-gap: $local-gutter;
         grid-auto-rows: 1fr;
         display: grid;
         padding-top: $local-gutter;
+        grid-row-gap: $local-gutter;
+        grid-column-gap: $local-gutter;
+        * {
+            width: 100%;
+            height: auto;
+            margin: 0;
+            margin-bottom: $local-gutter;
+            @supports(display: grid) {
+                margin: 0;
+            }
+        }
     }
 
     li {
@@ -39,11 +48,6 @@ $checkbox-size: $gs-gutter / 1.25;
     padding-left: $local-gutter * 2 + $checkbox-size;
     padding-right: $local-gutter * 1.5;
     position: relative;
-    break-inside: avoid;
-    width: 100%;
-    height: auto;
-    margin: 0;
-    margin-bottom: $local-gutter;
     background-size: $checkbox-size;
     background-repeat: no-repeat;
     background-position: $local-gutter $local-gutter * 1.5;
@@ -51,10 +55,6 @@ $checkbox-size: $gs-gutter / 1.25;
 
     &:hover {
         background-color: darken($neutral-8, 1%);
-    }
-
-    @supports(display: grid) {
-        margin: 0;
     }
 
     @supports (background-size: cover) {
