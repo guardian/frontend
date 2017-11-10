@@ -94,7 +94,7 @@ object NavLinks {
   val film = NavLink("film", "/film", "film")
   val tvAndRadio = NavLink("tv & radio", "/tv-and-radio", "tv-and-radio")
   val music = NavLink("music", "/music", "music")
-  val games = NavLink("games", "/technology/games", "technology/games")
+  val games = NavLink("games", "/games", "games")
   val books = NavLink("books", "/books", "books")
   val artAndDesign = NavLink("art & design", "/artanddesign", "artanddesign")
   val stage = NavLink("stage", "/stage", "stage")
@@ -138,7 +138,6 @@ object NavLinks {
   var holidays = NavLink("holidays", "https://holidays.theguardian.com")
 
   val tagPages = List(
-    "technology/games",
     "us-news/us-politics",
     "australia-news/australian-politics",
     "australia-news/australian-immigration-and-asylum",

@@ -26,7 +26,6 @@ trait IdentityControllers extends IdApiComponents
   lazy val changePasswordController = wire[ChangePasswordController]
   lazy val reauthenticationController = wire[ReauthenticationController]
   lazy val resetPasswordController = wire[ResetPasswordController]
-  lazy val emailController = wire[EmailController]
   lazy val publicProfileController = wire[PublicProfileController]
   lazy val editProfileController = wire[EditProfileController]
   lazy val emailVerificationController = wire[EmailVerificationController]

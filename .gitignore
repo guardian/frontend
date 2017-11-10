@@ -73,4 +73,3 @@ static/src/stylesheets/pasteup/.npmrc
 *.key
 .vscode/settings.json
 
-data/database

@@ -17,21 +17,10 @@ POST        /password/change                        controllers.ChangePasswordCo
 GET         /password/reset-confirmation            controllers.ResetPasswordController.renderPasswordResetConfirmation
 GET         /password/email-sent                    controllers.ResetPasswordController.renderEmailSentConfirmation
 GET         /requestnewtoken                        controllers.ResetPasswordController.requestNewToken
-GET         /email-prefs                            controllers.EmailController.preferences
-POST        /email-prefs                            controllers.EmailController.savePreferences
 GET         /user/id/:id                            controllers.PublicProfileController.renderProfileFromId(id: String, activityType = "discussions")
 GET         /user/id/:id/:activityType              controllers.PublicProfileController.renderProfileFromId(id: String, activityType: String)
 GET         /user/:vanityUrl                        controllers.PublicProfileController.renderProfileFromVanityUrl(vanityUrl: String, activityType = "discussions")
 GET         /user/:vanityUrl/:activityType          controllers.PublicProfileController.renderProfileFromVanityUrl(vanityUrl: String, activityType: String)
-GET         /public/edit                            controllers.EditProfileController.displayPublicProfileForm
-POST        /public/edit                            controllers.EditProfileController.submitPublicProfileForm
-GET         /account/edit                           controllers.EditProfileController.displayAccountForm
-GET         /membership/edit                        controllers.EditProfileController.displayMembershipForm
-GET         /contribution/recurring/edit            controllers.EditProfileController.displayRecurringContributionForm
-GET         /digitalpack/edit                       controllers.EditProfileController.displayDigitalPackForm
-GET         /privacy/edit                           controllers.EditProfileController.displayPrivacyForm
-POST        /account/edit                           controllers.EditProfileController.submitAccountForm
-POST        /privacy/edit                           controllers.EditProfileController.submitPrivacyForm
 GET         /verify-email/:token                    controllers.EmailVerificationController.verify(token: String)
 GET         /verify-email                           controllers.EmailVerificationController.resendEmailValidationEmail()
 
@@ -52,3 +41,23 @@ OPTIONS    /email                                                               
 GET         /delete                                 controllers.AccountDeletionController.renderAccountDeletionForm
 POST        /delete                                 controllers.AccountDeletionController.processAccountDeletionForm
 GET         /delete/confirm                         controllers.AccountDeletionController.renderAccountDeletionConfirmation(autoDeletion: Boolean)
+
+########################################################################################################################
+# EDIT PROFILE
+########################################################################################################################
+GET         /public/edit                            controllers.EditProfileController.displayPublicProfileForm
+POST        /public/edit                            controllers.EditProfileController.submitPublicProfileForm
+
+GET         /account/edit                           controllers.EditProfileController.displayAccountForm
+POST        /account/edit                           controllers.EditProfileController.submitAccountForm
+
+GET         /membership/edit                        controllers.EditProfileController.displayMembershipForm
+GET         /contribution/recurring/edit            controllers.EditProfileController.displayRecurringContributionForm
+GET         /digitalpack/edit                       controllers.EditProfileController.displayDigitalPackForm
+
+GET         /privacy/edit                           controllers.EditProfileController.displayPrivacyFormRedirect
+POST        /privacy/edit                           controllers.EditProfileController.submitPrivacyForm
+
+GET         /email-prefs                            controllers.EditProfileController.displayEmailPrefsForm
+POST        /email-prefs                            controllers.EditProfileController.saveEmailPreferences
+########################################################################################################################

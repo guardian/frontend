@@ -281,6 +281,7 @@ object EmailAddons {
     TheLongRead,
     TheCityscape,
     FashionStatement,
+    BusinessView,
     TheGuardianB2b
   )
 

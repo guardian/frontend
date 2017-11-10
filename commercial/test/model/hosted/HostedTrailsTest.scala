@@ -44,6 +44,7 @@ class HostedTrailsTest extends FlatSpec with Matchers {
             val published = None
             val takenDown = None
             val revision = 0L
+            val scheduledLaunch = None
           }
           val flags = None
         }
@@ -138,6 +139,8 @@ class HostedTrailsTest extends FlatSpec with Matchers {
     val debug = None
     val isGone = None
     val isHosted = true
+    val pillarId = None
+    val pillarName = None
   }
 
   private val content = Seq(

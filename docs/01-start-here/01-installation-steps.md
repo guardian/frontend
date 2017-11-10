@@ -93,9 +93,9 @@ Mac: Install from [Oracle web site](http://www.oracle.com/technetwork/java/javas
 
 ### [Node.js](https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager)
 
-The frontend uses an `.nvmrc` which specifies Node 6.x as a requirement. If you use 
+The frontend uses an `.nvmrc` which specifies Node 8.x as a requirement. If you use 
 [NVM](https://github.com/creationix/nvm#install-script) to manage multiple versions of Node on your machine, you can 
-just `nvm use` (or `nvm install` if you don't have 6 installed yet).
+just `nvm use` (or `nvm install` if you don't have 8 installed yet).
 
 To install nvm:
 
@@ -107,19 +107,19 @@ You may find it useful to add [this script](https://gist.github.com/sndrs/5940e9
 `.bash_profile` – or wherever else is appropriate for your setup – to automatically switch Node versions if an `.nvmrc` 
 is present.
 
-If you just want to use your system Node, you'll need to install v6:
+If you just want to use your system Node, you'll need to install v8:
 
 Ubuntu:
 
 ```bash
-$ curl -sL https://deb.nodesource.com/setup_6.x | sudo bash -
+$ curl -sL https://deb.nodesource.com/setup_8.x | sudo bash -
 $ sudo apt-get install -y nodejs
 ```
 
 Mac:
 
 ```bash
-$ brew install node@6
+$ brew install node@8
 ```
 
 ### Xcode (if on a Mac, one of the Node modules requires it)
