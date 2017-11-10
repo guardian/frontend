@@ -12,7 +12,7 @@ import model.ApplicationIdentity
 import model.diagnostics.CloudWatch
 import play.api.inject.ApplicationLifecycle
 
-import scala.collection.JavaConversions._
+import scala.collection.JavaConverters._
 import scala.concurrent.duration._
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -35,7 +35,7 @@ object SystemMetrics extends implicits.Numbers {
     }
   }
 
-  lazy val garbageCollectors: Seq[GcRateMetric] = ManagementFactory.getGarbageCollectorMXBeans.map(new GcRateMetric(_))
+  lazy val garbageCollectors: Seq[GcRateMetric] = ManagementFactory.getGarbageCollectorMXBeans.asScala.map(new GcRateMetric(_))
 
   val MaxHeapMemoryMetric = GaugeMetric(
     name = "max-heap-memory",

@@ -22,10 +22,9 @@ object DynamoDbStore extends Logging {
         ("web_url", new AttributeValue().withS(webUrl))
     ).asJava)
 
-    client.updateItemFuture(updateItemRequest) onFailure {
-      case error: Throwable =>
-        val message = error.getMessage
-        log.error(s"Unable to record missing video encoding with Dynamo DB: $message")
+    client.updateItemFuture(updateItemRequest).failed.foreach { error: Throwable =>
+      val message = error.getMessage
+      log.error(s"Unable to record missing video encoding with Dynamo DB: $message")
     }
   }
 

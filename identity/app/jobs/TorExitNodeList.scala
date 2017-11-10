@@ -2,7 +2,7 @@ package jobs
 
 import common.Logging
 
-import scala.collection.JavaConversions._
+import scala.collection.JavaConverters._
 import java.net.{InetAddress, URL}
 
 import com.gu.Box

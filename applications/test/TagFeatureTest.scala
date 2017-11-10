@@ -2,7 +2,7 @@ package test
 
 import org.scalatest.{DoNotDiscover, FeatureSpec, GivenWhenThen, Matchers}
 import services.IndexPagePagination
-import collection.JavaConversions._
+import collection.JavaConverters._
 import conf.switches.Switches
 import org.fluentlenium.core.domain.{FluentWebElement, FluentList}
 
@@ -16,7 +16,7 @@ import org.fluentlenium.core.domain.{FluentWebElement, FluentList}
 
       goTo("/technology/askjack") { browser =>
         val trails = browser.$(".fc-item__container")
-        trails.length should be(IndexPagePagination.pageSize)
+        trails.asScala.length should be(IndexPagePagination.pageSize)
       }
     }
   }
@@ -41,7 +41,7 @@ import org.fluentlenium.core.domain.{FluentWebElement, FluentList}
       goTo("/profile/samjones") { browser =>
         Then("I should not see her profile image")
         val profileImages = browser.find(".profile__img img")
-        profileImages.length should be(0)
+        profileImages.asScala.length should be(0)
       }
 
     }
@@ -57,7 +57,7 @@ import org.fluentlenium.core.domain.{FluentWebElement, FluentList}
         import browser._
 
         val cardsOnFirstPage = browser.find("[data-test-id=facia-card]")
-        val dataIdsOnFirstPage = cardsOnFirstPage.map(_.attribute("data-id")).toSet
+        val dataIdsOnFirstPage = cardsOnFirstPage.asScala.map(_.attribute("data-id")).toSet
         cardsOnFirstPage.size should be > 10
         findByRel($("link"), "next").head.attribute("href") should endWith ("/sport/cycling?page=2")
         findByRel($("link"), "prev") should be (None)
@@ -65,7 +65,7 @@ import org.fluentlenium.core.domain.{FluentWebElement, FluentList}
         Then("I should be able to navigate to the 'next' page")
         el(".pagination").$("[rel=next]").click()
         val cardsOnNextPage = browser.find("[data-test-id=facia-card]")
-        val dataIdsOnNextPage = cardsOnNextPage.map(_.attribute("data-id"))
+        val dataIdsOnNextPage = cardsOnNextPage.asScala.map(_.attribute("data-id"))
         cardsOnNextPage.size should be > 10
 
         findByRel($("link"), "next").head.attribute("href") should endWith ("/sport/cycling?page=3")
@@ -79,11 +79,11 @@ import org.fluentlenium.core.domain.{FluentWebElement, FluentList}
         And("I should be able to navigate to the 'previous' page")
         el(".pagination").$("[rel=prev]").click()
         val cardsOnPreviousPage = browser.find("[data-test-id=facia-card]")
-        cardsOnPreviousPage.map(_.attribute("data-id")).toSet should be(dataIdsOnFirstPage)
+        cardsOnPreviousPage.asScala.map(_.attribute("data-id")).toSet should be(dataIdsOnFirstPage)
       }
     }
   }
 
   //I'm not having a happy time with the selectors on links...
-  private def findByRel(elements: FluentList[FluentWebElement], rel: String) = elements.toSeq.find(_.attribute("rel") == rel)
+  private def findByRel(elements: FluentList[FluentWebElement], rel: String) = elements.asScala.find(_.attribute("rel") == rel)
 }

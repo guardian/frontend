@@ -1,7 +1,7 @@
 package test
 
 import org.scalatest.{DoNotDiscover, Matchers, GivenWhenThen, FeatureSpec}
-import collection.JavaConversions._
+import collection.JavaConverters._
 import org.fluentlenium.core.domain.FluentWebElement
 import conf.Configuration
 
@@ -24,7 +24,7 @@ import conf.Configuration
       Given("I am on an article entitled 'Olympic opening ceremony will recreate countryside with real animals'")
       goTo("/sport/2012/jun/12/london-2012-olympic-opening-ceremony") { browser =>
         Then("all links on the page should be decorated with the Omniture meta-data attribute")
-        val anchorsWithNoDataLink = browser.find("a").filter(hasNoLinkName)
+        val anchorsWithNoDataLink = browser.find("a").asScala.filter(hasNoLinkName)
         anchorsWithNoDataLink should have length 0
       }
 

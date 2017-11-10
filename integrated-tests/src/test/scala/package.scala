@@ -8,7 +8,7 @@ import org.openqa.selenium.chrome.ChromeDriver
 import org.openqa.selenium.{By, WebDriver, WebElement}
 import org.scalatest._
 import org.scalatestplus.play.BrowserFactory.UninitializedDriver
-import scala.collection.JavaConversions._
+import scala.collection.JavaConverters._
 import scala.concurrent.Await
 import scala.concurrent.duration._
 import com.gu.Box

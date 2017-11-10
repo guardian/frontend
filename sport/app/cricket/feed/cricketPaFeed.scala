@@ -2,7 +2,7 @@ package conf.cricketPa
 
 import akka.actor.ActorSystem
 import common.Logging
-import cricket.feed.{CricketThrottler, ThrottledTask}
+import cricket.feed.CricketThrottler
 import org.joda.time.LocalDate
 import org.joda.time.format.{DateTimeFormat, DateTimeFormatter}
 import play.api.libs.ws.WSClient
@@ -24,7 +24,7 @@ class PaFeed(wsClient: WSClient, actorSystem: ActorSystem) extends Logging {
   private implicit val throttler = new CricketThrottler(actorSystem)
 
   private def getMatchPaResponse(apiMethod: String)(implicit executionContext: ExecutionContext): Future[String] = {
-    credentials.map ( header => ThrottledTask {
+    credentials.map ( header => throttler.throttle { () =>
       val endpoint = s"$paEndpoint/$apiMethod"
       wsClient.url(endpoint)
         .withHttpHeaders(header, xmlContentType)
@@ -63,7 +63,7 @@ class PaFeed(wsClient: WSClient, actorSystem: ActorSystem) extends Logging {
   }
 
   private def getTeamMatches(team: CricketTeam, matchType: String, startDate: LocalDate, endDate: LocalDate)(implicit executionContext: ExecutionContext): Future[Seq[String]] =
-    credentials.map ( header => ThrottledTask {
+    credentials.map ( header => throttler.throttle { () =>
       val start = PaFeed.dateFormat.print(startDate)
       val end = PaFeed.dateFormat.print(endDate)
       val endpoint = s"$paEndpoint/team/${team.paId}/$matchType"

@@ -134,7 +134,7 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
         )
       case None => successful(Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound)))}
 
-    futureResult.onFailure { case t: Throwable => log.error(s"Failed rendering $path with $t", t)}
+    futureResult.failed.foreach { t: Throwable => log.error(s"Failed rendering $path with $t", t)}
     futureResult
   }
 

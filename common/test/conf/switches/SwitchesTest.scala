@@ -9,7 +9,7 @@ class SwitchesTest extends FlatSpec with Matchers with AppendedClues {
   private val SwitchNamePattern = """([a-z\d-]+)""".r
 
   private def forAllSwitches(test: Switch => Unit): Unit = {
-    Switches.all foreach { switch => test(switch) withClue s"(switch: '${switch.name}')" })
+    Switches.all foreach { switch => test(switch) withClue s"(switch: '${switch.name}')" }
   }
 
   private val testSwitchGroup = new SwitchGroup("category")

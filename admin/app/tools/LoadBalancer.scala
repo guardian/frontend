@@ -4,7 +4,7 @@ import common.Logging
 import com.amazonaws.services.elasticloadbalancing.AmazonElasticLoadBalancingClient
 import com.gu.Box
 
-import scala.collection.JavaConversions._
+import scala.collection.JavaConverters._
 
 case class LoadBalancer(id: String,
                         name: String,
@@ -48,7 +48,7 @@ object LoadBalancer extends Logging {
       val elbs = client.describeLoadBalancers().getLoadBalancerDescriptions
       client.shutdown()
       val newLoadBalancers = loadBalancers.map{ lb =>
-        lb.copy(url = elbs.find(_.getLoadBalancerName == lb.id).map(_.getDNSName))
+        lb.copy(url = elbs.asScala.find(_.getLoadBalancerName == lb.id).map(_.getDNSName))
       }
       agent.send(newLoadBalancers)
     }

@@ -1,42 +1,43 @@
 package cricket.feed
 
-import akka.actor.{Actor, ActorSystem, Props}
+import java.util.concurrent.TimeUnit
+
+import akka.NotUsed
+import akka.actor.{Actor, ActorRef, ActorSystem, Props}
 import akka.pattern.{ask, pipe}
-import akka.contrib.throttle.{TimerBasedThrottler, Throttler => AkkaThrottler}
-import akka.contrib.throttle.Throttler._
+import akka.stream.scaladsl.{Sink, Source}
+import akka.stream.{ActorMaterializer, OverflowStrategy, ThrottleMode}
 import akka.util.Timeout
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.concurrent.duration._
 import scala.reflect.ClassTag
 
-class CricketThrottler(actorSystem: ActorSystem) {
-  val actor = actorSystem.actorOf(Props(classOf[TimerBasedThrottler], 1.msgsPerSecond), name = "cricket-throttle")
-  val taskRunner = actorSystem.actorOf(Props(classOf[ThrottledTask]), name = "cricket-task-runner")
+case class CricketThrottledTask[+T](task: () => Future[T])
 
-  // SetTarget needs to be done only once
-  actor ! AkkaThrottler.SetTarget(Some(taskRunner))
-}
+class CricketThrottlerActor()(implicit materializer: ActorMaterializer) extends Actor {
+  import context.dispatcher
 
-// ThrottledTask receives code blocks and executes them at a controlled rate, eg a maximum of 1 execution per second.
-object ThrottledTask {
+  private case class TaskWithSender[+T](sender: ActorRef, task: () => Future[T])
 
-  // This can be big because the rate limit is so low for Pa.
-  implicit val timeout = Timeout(30.seconds)
+  val throttler: ActorRef = Source.actorRef[CricketThrottledTask[Nothing]](bufferSize = 1024, OverflowStrategy.dropNew)
+    .throttle(1, 1.second, 1, ThrottleMode.Shaping)
+    .to(Sink.actorRef(self, NotUsed))
+    .run()
 
-  private case class ExecuteTask(task: () => Future[Any])
-
-  def apply[T](task: => Future[T])(implicit tag: ClassTag[T], throttler: CricketThrottler, executionContext: ExecutionContext): Future[T] = {
-    (throttler.actor ? ExecuteTask(() => task)).mapTo[T]
+  override def receive: PartialFunction[Any, Unit] = {
+    case toBeThrottled: CricketThrottledTask[Any] => throttler ! TaskWithSender(sender, toBeThrottled.task)
+    case throttled: TaskWithSender[Any] => throttled.task() pipeTo throttled.sender
   }
 }
 
-class ThrottledTask extends Actor {
 
-  import context.dispatcher
+class CricketThrottler(actorSystem: ActorSystem) {
+  private implicit val materializer: ActorMaterializer = ActorMaterializer.create(actorSystem)
+  private val cricketThrottlerActor: ActorRef = actorSystem.actorOf(Props(new CricketThrottlerActor))
 
-  override def receive: PartialFunction[Any, Unit] = {
-    case exec: ThrottledTask.ExecuteTask =>
-      exec.task() pipeTo sender()
+  def throttle[T](task: () => Future[T])(implicit ec: ExecutionContext, tag: ClassTag[T]): Future[T] = {
+    implicit val timeout: Timeout = Timeout(60, TimeUnit.SECONDS)
+    (cricketThrottlerActor ? CricketThrottledTask(task)).mapTo[T]
   }
 }

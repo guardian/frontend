@@ -32,11 +32,11 @@ case class ExpiringSwitchesEmailJob(emailService: EmailService) extends Logging 
           subject = "Expiring Feature Switches",
           htmlBody = Some(htmlBody))
 
-        eventualResult onSuccess {
-          case result => log.info(s"Message sent successfully with ID: ${result.getMessageId}")
+        eventualResult.foreach {
+          result => log.info(s"Message sent successfully with ID: ${result.getMessageId}")
         }
 
-        eventualResult onFailure {
+        eventualResult.failed.foreach {
           case NonFatal(e) => log.error(s"Message failed: ${e.getMessage}")
         }
 

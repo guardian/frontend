@@ -7,7 +7,7 @@ import common.Logging
 import org.joda.time.DateTime
 import tools.CloudWatch._
 
-import scala.collection.JavaConversions._
+import scala.collection.JavaConverters._
 import scala.concurrent.{ExecutionContext, Future}
 import scala.math.BigDecimal
 import scala.util.control.NonFatal
@@ -42,7 +42,7 @@ object AssetMetrics {
   private def metricResults(dimension: Dimension)(implicit executionContext: ExecutionContext): Future[List[GetMetricStatisticsResult]] =
     allMetrics().flatMap { metricsList =>
       Future.sequence {
-        metricsList.getMetrics
+        metricsList.getMetrics.asScala
           .filter(_.getDimensions.contains(dimension))
           .toList
           .map { metric =>

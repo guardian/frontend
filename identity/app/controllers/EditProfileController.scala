@@ -123,12 +123,14 @@ case class ProfileForms(
     case PublicEditProfilePage => publicForm
     case AccountEditProfilePage => accountForm
     case PrivacyEditProfilePage => privacyForm
+    case page => throw new RuntimeException(s"Unexpected page $page")
   }
 
   private lazy val activeMapping = activePage match {
     case PublicEditProfilePage => profileFormsMapping.profileMapping
     case AccountEditProfilePage => profileFormsMapping.accountDetailsMapping
     case PrivacyEditProfilePage => profileFormsMapping.privacyMapping
+    case page => throw new RuntimeException(s"Unexpected page $page")
   }
 
   /** Fills all Edit Profile forms (Public, Account, Privacy) with the provided User value */
@@ -178,6 +180,7 @@ case class ProfileForms(
       case PublicEditProfilePage => copy(publicForm = changeFunc(publicForm).asInstanceOf[Form[ProfileFormData]])
       case AccountEditProfilePage => copy(accountForm = changeFunc(accountForm).asInstanceOf[Form[AccountFormData]])
       case PrivacyEditProfilePage => copy(privacyForm = changeFunc(privacyForm).asInstanceOf[Form[PrivacyFormData]])
+      case page => throw new RuntimeException(s"Unexpected page $page")
     }
   }
 }

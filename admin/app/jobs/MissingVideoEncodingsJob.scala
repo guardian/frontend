@@ -47,41 +47,39 @@ class VideoEncodingsJob(contentApiClient: ContentApiClient, wsClient: WSClient) 
             response.results.map(Content.apply).collect { case v: Video => v }
      }
 
-     apiVideoResponse.onSuccess {
-       case allVideoContent =>
-         val missingVideoEncodings = Future.sequence(allVideoContent.map { video =>
-           val videoAssets = video.elements.videos.filter(_.properties.isMain).flatMap(_.videos.videoAssets).flatMap(_.url)
+     apiVideoResponse.foreach { allVideoContent =>
+       val missingVideoEncodings = Future.sequence(allVideoContent.map { video =>
+         val videoAssets = video.elements.videos.filter(_.properties.isMain).flatMap(_.videos.videoAssets).flatMap(_.url)
 
-           val missingVideoAsssets = Future.sequence(
-             videoAssets.map { encoding =>
-               doesEncodingExist(encoding) map {
-                 case true => Some(encoding)
-                 case false => None
-               }
-             }).map(_.flatten)
-
-           missingVideoAsssets.map {
-             missingEncodings => missingEncodings.map { missingEncoding => MissingEncoding(video, missingEncoding)}
-           }
-         }).map(_.flatten)
-
-         missingVideoEncodings.onSuccess { case missingEncodings =>
-           missingEncodings.map { missingEncoding: MissingEncoding =>
-             DynamoDbStore.haveSeenMissingEncoding(missingEncoding.encodingSrc, missingEncoding.url) map {
-               case true => log.debug(s"Already seen missing encoding: ${missingEncoding.encodingSrc} for url: ${missingEncoding.url}")
-               case false =>
-                 log.info(s"Send notification for missing video encoding: ${missingEncoding.encodingSrc} for url: ${missingEncoding.url}")
-                 MissingVideoEncodings.sendMessage(akkaAsync)(missingEncoding.encodingSrc, missingEncoding.url, missingEncoding.title)
-                 DynamoDbStore.storeMissingEncoding(missingEncoding.encodingSrc, missingEncoding.url)
+         val missingVideoAsssets = Future.sequence(
+           videoAssets.map { encoding =>
+             doesEncodingExist(encoding) map {
+               case true => Some(encoding)
+               case false => None
              }
-           }
-           videoEncodingsAgent.send(old => old + ("missing-encodings" -> List()))
+           }).map(_.flatten)
+
+         missingVideoAsssets.map {
+           missingEncodings => missingEncodings.map { missingEncoding => MissingEncoding(video, missingEncoding)}
          }
+       }).map(_.flatten)
+
+       missingVideoEncodings.foreach { missingEncodings =>
+         missingEncodings.map { missingEncoding: MissingEncoding =>
+           DynamoDbStore.haveSeenMissingEncoding(missingEncoding.encodingSrc, missingEncoding.url) map {
+             case true => log.debug(s"Already seen missing encoding: ${missingEncoding.encodingSrc} for url: ${missingEncoding.url}")
+             case false =>
+               log.info(s"Send notification for missing video encoding: ${missingEncoding.encodingSrc} for url: ${missingEncoding.url}")
+               MissingVideoEncodings.sendMessage(akkaAsync)(missingEncoding.encodingSrc, missingEncoding.url, missingEncoding.title)
+               DynamoDbStore.storeMissingEncoding(missingEncoding.encodingSrc, missingEncoding.url)
+           }
+         }
+         videoEncodingsAgent.send(old => old + ("missing-encodings" -> List()))
+       }
      }
 
-     apiVideoResponse.onFailure{
-       case error: Throwable =>
-         log.error(s"Unable to retrieve video content from api: ${error.getMessage}")
+     apiVideoResponse.failed.foreach { error: Throwable =>
+       log.error(s"Unable to retrieve video content from api: ${error.getMessage}")
      }
   }
 }

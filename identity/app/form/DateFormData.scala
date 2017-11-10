@@ -1,6 +1,6 @@
 package form
 
-import org.scala_tools.time.Imports._
+import com.github.nscala_time.time.Imports._
 import scala.util._
 import play.api.data.Forms._
 import play.api.data.Mapping

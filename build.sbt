@@ -32,7 +32,7 @@ val common = library("common").settings(
     rome,
     romeModules,
     scalaCheck,
-    scalajTime,
+    nScalaTime,
     ws,
     faciaFapiScalaClient,
     closureCompiler,

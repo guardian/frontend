@@ -1,7 +1,7 @@
 package test
 
 import org.scalatest.{DoNotDiscover, FeatureSpec, GivenWhenThen, Matchers}
-import collection.JavaConversions._
+import collection.JavaConverters._
 import tools.MatchListFeatureTools
 
 @DoNotDiscover class ResultsFeatureTest extends FeatureSpec with GivenWhenThen with Matchers with MatchListFeatureTools with ConfiguredTestSuite {
@@ -35,7 +35,7 @@ import tools.MatchListFeatureTools
         $(".football-team__form").size() should be(0)
 
         Then("I should see match comments")
-        $(".football-match__comments").texts.exists(_.contains("Bolton win 4-2 on penalties")) should equal(true)
+        $(".football-match__comments").texts.asScala.exists(_.contains("Bolton win 4-2 on penalties")) should equal(true)
       }
     }
 
@@ -82,7 +82,7 @@ import tools.MatchListFeatureTools
       goTo("/football/results") { browser =>
         import browser._
         Then("any links I click should be tracked")
-        $("a").filter(link => Option(link.attribute("data-link-name")).isEmpty).foreach { link =>
+        $("a").asScala.filter(link => Option(link.attribute("data-link-name")).isEmpty).foreach { link =>
           fail(s"Link with text ${link.text} has no data-link-name")
         }
       }

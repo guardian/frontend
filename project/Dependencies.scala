@@ -3,7 +3,7 @@ package com.gu
 import sbt._
 
 object Dependencies {
-  val identityLibVersion = "3.83"
+  val identityLibVersion = "3.85-SNAPSHOT"
   val awsVersion = "1.11.181"
   val faciaVersion = "2.5.0"
   val capiVersion = "11.37"
@@ -12,7 +12,7 @@ object Dependencies {
   val jerseyVersion = "1.19.4"
   val playJsonVersion = "2.6.3"
   val guBox = "com.gu" %% "box" %  "0.1.0"
-  val akkaContrib = "com.typesafe.akka" %% "akka-contrib" % "2.3.16"
+  val akkaContrib = "com.typesafe.akka" %% "akka-contrib" % "2.5.6"
   val apacheCommonsMath3 = "org.apache.commons" % "commons-math3" % "3.6.1"
   val awsCore = "com.amazonaws" % "aws-java-sdk-core" % awsVersion
   val awsCloudwatch = "com.amazonaws" % "aws-java-sdk-cloudwatch" % awsVersion
@@ -31,7 +31,7 @@ object Dependencies {
   val cssParser = "net.sourceforge.cssparser" % "cssparser" % "0.9.23"
   val contentApiClient = "com.gu" %% "content-api-client" % capiVersion
   val dfpAxis = "com.google.api-ads" % "dfp-axis" % "3.7.0"
-  val exactTargetClient = "com.gu" %% "exact-target-client" % "2.24"
+  val exactTargetClient = "com.gu" %% "exact-target-client" % "2.26"
   val faciaFapiScalaClient = "com.gu" %% "fapi-client-play26" % faciaVersion
   val configMagic = "com.gu" %% "configuration-magic-core" %  "1.4.0"
   val identityCookie = "com.gu.identity" %% "identity-cookie" % identityLibVersion
@@ -45,14 +45,14 @@ object Dependencies {
   val json4s = "org.json4s" %% "json4s-native" % "3.5.3"
   val macwire = "com.softwaremill.macwire" %% "macros" % "2.3.0" % "provided"
   val mockito = "org.mockito" % "mockito-all" % "1.10.19" % Test
-  val paClient = "com.gu" %% "pa-client" % "6.0.3"
+  val paClient = "com.gu" %% "pa-client" % "6.1.0"
   val playGoogleAuth = "com.gu" %% "play-googleauth" % "0.7.0"
   val quartzScheduler = "org.quartz-scheduler" % "quartz" % "2.2.3"
   val redisClient = "net.debasishg" %% "redisclient" % "3.4"
   val rome = "rome" % "rome" % romeVersion
   val romeModules = "org.rometools" % "rome-modules" % romeVersion
   val scalaCheck = "org.scalacheck" %% "scalacheck" % "1.13.5" % Test
-  val scalajTime = "org.scalaj" % "scalaj-time_2.10.2" % "0.7"
+  val nScalaTime = "com.github.nscala-time" %% "nscala-time" % "2.18.0"
   val scalaTest = "org.scalatest" %% "scalatest" % "3.0.4" % Test
   val scalaTestPlus = "org.scalatestplus.play" %% "scalatestplus-play" % "3.1.1" % Test
   val scalaUri = "com.netaporter" %% "scala-uri" % "0.4.16"
@@ -64,7 +64,7 @@ object Dependencies {
   val libPhoneNumber = "com.googlecode.libphonenumber" % "libphonenumber" % "7.2.4"
   val logback = "net.logstash.logback" % "logstash-logback-encoder" % "4.6"
   val kinesisLogbackAppender = "com.gu" % "kinesis-logback-appender" % "1.4.0"
-  val targetingClient = "com.gu" %% "targeting-client" % "0.14.0"
+  val targetingClient = "com.gu" %% "targeting-client-play26" % "0.14.1"
   val scanamo = "com.gu" %% "scanamo" % "0.9.5"
   val enumeratumPlayJson = "com.beachape" %% "enumeratum-play-json" % "1.5.12"
   val commercialShared = "com.gu" %% "commercial-shared" % "6.1.2"

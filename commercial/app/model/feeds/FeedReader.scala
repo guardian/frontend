@@ -59,7 +59,7 @@ class FeedReader(wsClient: WSClient) extends Logging {
         }
       }
 
-      contents onFailure {
+      contents.failed.foreach {
         case NonFatal(e) =>
           log.error(s"Failed to fetch feed contents.", e)
           recordLoad(-1)
@@ -86,11 +86,11 @@ class FeedReader(wsClient: WSClient) extends Logging {
                 (implicit ec: ExecutionContext): Future[Seq[T]] = {
     val contents = read(request)(parse)
 
-    contents onSuccess {
-      case items => log.info(s"Loaded ${items.size} ${request.feedName} from ${request.url}")
+    contents foreach {
+      items => log.info(s"Loaded ${items.size} ${request.feedName} from ${request.url}")
     }
 
-    contents onFailure {
+    contents.failed.foreach {
       case e: FeedSwitchOffException => log.warn(e.getMessage)
       case NonFatal(e) => log.error(s"Failed to read feed ${request.feedName} with URL ${request.url}", e)
     }

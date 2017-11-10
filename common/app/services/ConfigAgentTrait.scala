@@ -80,10 +80,6 @@ object ConfigAgent extends Logging {
 
   def getConfig(id: String): Option[CollectionConfig] = configAgent.get().flatMap(_.collections.get(id).map(CollectionConfig.make))
 
-  def getConfigAfterUpdates(id: String)(implicit ec: ExecutionContext): Future[Option[CollectionConfig]] =
-    configAgent.future()
-      .map(_.flatMap(_.collections.get(id)).map(CollectionConfig.make))
-
   def getAllCollectionIds: List[String] = {
     val config = configAgent.get()
     config.map(_.collections.keys.toList).getOrElse(Nil)

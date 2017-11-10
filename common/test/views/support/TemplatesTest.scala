@@ -12,7 +12,7 @@ import play.api.test.FakeRequest
 import test.TestRequest
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 
-import scala.collection.JavaConversions._
+import scala.collection.JavaConverters._
 import scala.xml.XML
 
 class TemplatesTest extends FlatSpec with Matchers with GuiceOneAppPerSuite {
@@ -67,13 +67,13 @@ class TemplatesTest extends FlatSpec with Matchers with GuiceOneAppPerSuite {
     portraitImg.attr("data-media-id") should be ("gu-image-5")
     portraitImg.nextElementSibling.hasClass("following-element") should be (true)
 
-    for {fig <- figures} {
+    for {fig <- figures.asScala} {
       fig.attr("itemprop") should be ("associatedMedia image")
       fig.attr("itemscope") should be ("")
       fig.attr("itemtype") should be ("http://schema.org/ImageObject")
     }
 
-    for { caption <- body.getElementsByTag("figcaption") } {
+    for { caption <- body.getElementsByTag("figcaption").asScala } {
       caption.attr("itemprop") should be("description")
       caption.text should include("test caption")
     }

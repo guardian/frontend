@@ -1,7 +1,7 @@
 package test
 
 import org.scalatest.{DoNotDiscover, Matchers, GivenWhenThen, FeatureSpec}
-import collection.JavaConversions._
+import collection.JavaConverters._
 import org.fluentlenium.core.filter.FilterConstructor._
 
 import conf.Configuration
@@ -21,7 +21,7 @@ import conf.Configuration
 
         val sections = browser.find("#footer-nav li a")
 
-        sections.length should be > 0
+        sections.asScala.length should be > 0
 
         And("a button to activate that list")
         browser.$(".navigation-toggle").attribute("href") should include("australia-mining-boom-end#footer-nav")
@@ -58,19 +58,19 @@ import conf.Configuration
 
         Then("I should see a link to the contributors section")
         val contributors = browser.find(".l-footer li a", withText().contains("contributors"))
-        contributors.length should be > 0
+        contributors.asScala.length should be > 0
 
         And("a link to the contact us page")
         val contact = browser.find(".l-footer li a", withText().contains("contact"))
-        contact.length should be > 0
+        contact.asScala.length should be > 0
 
         And("a link to the about us page")
         val info = browser.find(".l-footer li a", withText().contains("about us"))
-        info.length should be > 0
+        info.asScala.length should be > 0
 
         And("a link to the complaints and corrections")
         val complaints = browser.find(".l-footer li a", withText().contains("complaints & corrections"))
-        complaints.length should be > 0
+        complaints.asScala.length should be > 0
       }
     }
 
@@ -81,12 +81,12 @@ import conf.Configuration
         Then("I should see a link to the terms & Conditions in the page footer")
 
         val terms = browser.find(".l-footer li a", withText().contains("terms"))
-        terms.length should be > 0
+        terms.asScala.length should be > 0
 
         And("a link to the privacy policy page")
         val privacy = browser.find(".l-footer li a", withText().contains("privacy"))
 
-        privacy.length should be > 0
+        privacy.asScala.length should be > 0
 
       }
     }
