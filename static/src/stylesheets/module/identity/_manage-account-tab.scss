@@ -287,6 +287,16 @@
 
 /* Button styles
 ========================================================================== */
+%manage-account__button--light {
+    color: $guardian-brand;
+    background-color: transparent;
+    border: 1px solid $news-main-2;
+    &:not(.is-updating):hover {
+        color: $guardian-brand-dark;
+        background-color: transparent;
+        border-color: currentColor;
+    }
+}
 .manage-account__button {
     @include fs-textSans(2);
     background-color: $guardian-brand;
@@ -325,19 +335,12 @@
     }
 
     &--light {
-        color: $guardian-brand;
-        background-color: transparent;
-        border: 1px solid $news-main-2;
-        &:not(.is-updating):hover {
-            color: $guardian-brand-dark;
-            background-color: transparent;
-            border-color: currentColor;
-        }
+        @extend %manage-account__button--light;
     }
 
     &--mini {
+        @extend %manage-account__button--light;
         @include fs-textSans(1);
-        @extend .manage-account__button--light;
         min-width: $gs-baseline * 10;
         display: inline-flex;
         height: $gs-gutter * 1.5;

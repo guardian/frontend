@@ -391,7 +391,7 @@
     }
 
     .email-subscription--subscribed & {
-        @extend .manage-account__button--light;
+        @extend %manage-account__button--light;
     }
 
     &.email-unsubscribe {
