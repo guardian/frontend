@@ -1,0 +1,20 @@
+@mixin fc-item--three-quarters {
+    @include fc-item--horizontal(66.199%); // Works out as same width as 6 col on desktop and 4.5 col on tablet to align with other items
+
+    .fc-item__header {
+        @include mq(desktop) {
+            @include fs-headline(4, true);
+            @include headline-boost(5);
+        }
+    }
+    
+    .fc-item__standfirst {
+        @include mq(desktop) {
+            display: flex;
+        }
+    }
+
+    &.fc-item--has-sublinks-3 {
+        @include fc-sublinks--below;
+    }
+}

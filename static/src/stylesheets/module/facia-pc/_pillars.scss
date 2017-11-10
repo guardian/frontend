@@ -1,0 +1,60 @@
+$pillars: (
+    news: $news-support-2,
+    opinion: $comment-support-3,
+    sport: $news-support-5,
+    arts: $comment-support-1,
+    lifestyle: $features-main-2
+);
+
+@mixin colours($accent, $foreground, $background) {
+    $midground: mix($foreground, $background, 75%);
+
+    border-top-color: fade-out($accent, 0.25);
+    background-color: $background;
+
+    &:hover {
+        background-color: darken($background, 3%);
+    }
+
+    .fc-item__headline {
+        color: $foreground;
+    }
+
+    .fc-item__kicker {
+        color: $accent;
+        background-color: $background;
+        border-bottom-color: $background; 
+
+        &:after {
+            background-color: $accent;
+        }
+    }
+
+    .fc-item__standfirst {
+        color: $midground;
+    }
+
+    .fc-item__sublinks {
+        color: $foreground;
+    }
+
+    .inline-icon {
+        fill: $foreground;
+    }
+
+    .fc-item__meta {
+        color: $foreground;
+    }
+
+    .fc-item__container {
+        &:before {
+            background-color: $accent;
+        }
+    }
+}
+
+@each $pillar, $colour in $pillars {
+    .fc-item--pillar-#{$pillar} {
+        @include colours($accent: $colour, $foreground: $neutral-1, $background: $neutral-7);
+    }
+}

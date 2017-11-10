@@ -1,3 +1,285 @@
-.fc-item--news {
-    background-color: #ff0000;
+$fc-item-gutter: $gs-gutter / 4;
+
+/* PC items
+   ==========================================================================
+*/
+
+@mixin fc-item--horizontal($media-width, $media-align: right) {
+    .fc-item__image-container {
+        box-sizing: border-box;
+        padding-left: $gs-gutter * .25;
+    }
+
+    // IE10/11 ignore boxsizing on flex-basis'd element.
+    // Option is extra wrapping div or this slightly overblow selector.
+    .fc-item__content {
+        position: relative;
+
+        > * {
+            box-sizing: border-box;
+            padding-right: $gs-gutter * .5;
+        }
+    }
+
+    .fc-item__container {
+        flex-wrap: wrap;
+        @if $media-align == right {
+            flex-direction: row-reverse;
+        } @else {
+            flex-direction: row;
+        }
+    }
+
+    .fc-item__media-wrapper {
+        flex-basis: $media-width;
+    }
+
+    .fc-item__content {
+        flex-basis: (100% - $media-width);
+        // DAMN YOU IE10/11 FLEXWRAP BOX SIZING BUG
+        max-width: (100% - $media-width);
+    }
+
+    .fc-item__footer--horizontal {
+        flex-basis: 100%;
+    }
+
+    &.fc-item--has-no-image .fc-item__content {
+        flex-basis: 100%;
+        max-width: 100%;
+        padding-right: gs-span(3);
+    }
+}
+
+// hide any fc-item that aren't 3/4 for now
+.fc-item:not(.fc-item--three-quarters-tablet):not(.fc-item--three-quarters-right-tablet):not(.fc-item--three-quarters-tall-tablet) {
+    display: flex;
+    flex: 1 1 auto;
+    height: 100%;
+    // min-height: 100px;
+    // background: red;
+    
+    // > * {
+    //     display: none;
+    // }
+}
+
+.fc-item {
+    @include mq($until: tablet) {
+        width: 100%;
+        padding-left: $gs-gutter * .5;
+        padding-right: $gs-gutter * .5;
+        box-sizing: border-box;
+    }
+
+    @include mq(tablet) {
+        flex: 1 1 auto;
+        display: flex;
+        padding-left: 0;
+        padding-right: 0;
+        margin-left: $gs-gutter * .5;
+        margin-right: 0;
+    }
+
+    a {
+        color: inherit;
+    }
+
+    .u-faux-block-link & a,
+    .u-faux-block-link & abbr[title],
+    .u-faux-block-link__promote {
+        &.fc-item__link {
+            z-index: 0;
+        }
+
+        @include mq($until: desktop) {
+            z-index: initial;
+        }
+    }
+
+    /**
+     * The z-index: initial trick above is not working on the webkit browsers.
+     * The only way how to make it work is to play with the z-index.
+     */
+    &.fc-item--video {
+        .u-faux-block-link__overlay {
+            z-index: 0;
+        }
+
+        .u-faux-block-link__promote {
+            z-index: 1;
+        }
+    }
+
+    .u-faux-block-link--hover,
+    .fc-item__image-container {
+        background-color: $neutral-6;
+
+        .fc-slice--nav-list--media & {
+            background-color: inherit;
+        }
+    }
+
+    .u-faux-block-link--hover {
+        .youtube-media-atom,
+        .fc-item__image-container {
+            background-color: #000000;
+            opacity: .9;
+        }
+
+        .u-faux-block-link__cta {
+            text-decoration: none;
+        }
+    }
+}
+
+.fc-item__container {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+
+    &:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 1px;
+        z-index: 2;
+    }
+}
+
+// Wraps all media elements
+.fc-item__media-wrapper {
+    box-sizing: border-box;
+}
+
+// Wraps all non-media content
+.fc-item__content {
+    box-sizing: border-box;
+    flex: 1 1 auto;
+    display: flex;
+    flex-wrap: wrap;
+    padding-left: $fc-item-gutter;
+    padding-right: $fc-item-gutter;
+}
+
+.fc-item__header,
+.item__title,
+.rich-link__header {
+    @include fs-headline(3);
+    font-weight: 500;
+    padding-bottom: .5em;
+
+    .fc-item--has-boosted-title & {
+        @include fs-headline(4, true);
+    }
+}
+
+.fc-item__title,
+.fc-item__byline,
+.fc-item__kicker,
+.rich-link__byline,
+.rich-link__title,
+.rich-link__kicker {
+    font: inherit;
+    line-height: inherit;
+}
+
+.fc-item__title {
+    padding-top: $gs-gutter/4;
+    padding-bottom: 0;
+    word-wrap: break-word;
+    overflow: hidden;
+}
+
+.fc-item__kicker,
+.fc-sublink__kicker,
+.rich-link__kicker {
+    &:hover:after {
+        text-decoration: none;
+    }
+}
+
+.fc-item__header {
+    flex: 1 1 auto;
+
+    .inline-icon {
+        display: none;
+    }
+}
+
+.fc-item__kicker {
+    position: relative;
+    padding-right: 4px;
+    margin-right: 4px;
+    border-bottom: 2px solid;
+
+    &:after {
+        content: '';
+        position: absolute;
+        width: 1px;
+        height: 2em;
+        bottom: 2px;
+        right: -3px;
+        z-index: -1;
+    }
+}
+
+.fc-item__byline {
+    margin-bottom: 0;
+}
+
+.fc-item__standfirst {
+    @include fs-headline(1);
+    padding-bottom: .5em;
+    color: $neutral-2;
+    display: none;
+    flex: 1;
+    flex-direction: column;
+    justify-content: flex-end;
+
+    .fc-item--has-boosted-title & {
+        display: none !important;
+    }
+}
+
+.fc-item__link {
+    &:hover,
+    &:focus {
+        text-decoration: none;
+    }
+}
+
+.fc-item__meta {
+    @include fs-textSans(1);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding-bottom: .5rem;
+    color: $neutral-2;
+
+    .inline-icon {
+        fill: $neutral-3;
+    }
+
+    a, button {
+        // make sure meta links always clickable,
+        // even on mobile/tablet
+        z-index: 1 !important;
+    }
+}
+
+.fc-trail__count .inline-icon {
+    width: 16px;
+    height: 16px;
+    position: relative;
+    top: 3px;
+    float: left;
+    margin-right: 1px;
+}
+ 
+.fc-item__footer--horizontal {
+    display: none;
 }

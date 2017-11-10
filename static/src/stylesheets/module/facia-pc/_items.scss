@@ -1,0 +1,31 @@
+
+@mixin headline-boost($size) {
+    .fc-item--has-boosted-title & {
+        @include fs-headline($size, true);
+    }
+}
+
+@import 'item-layouts/fc-item--three-quarters';
+@import 'item-layouts/fc-item--three-quarters-right';
+@import 'item-layouts/fc-item--three-quarters-tall';
+
+// overrides of current slices
+
+.fc-slice__item {
+    width: 100%;
+    position: relative;
+    padding-bottom: 0;
+    margin-bottom: $gs-baseline;
+}
+
+.fc-item--three-quarters-tablet {
+    @include mq(tablet) {
+        @include fc-item--three-quarters;
+    }
+}
+
+.fc-item--three-quarters-right-tablet {
+}
+
+.fc-item--three-quarters-tall-tablet {
+}
