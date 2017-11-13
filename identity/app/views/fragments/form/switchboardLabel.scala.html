@@ -4,6 +4,7 @@
     title: String,
     copy: String,
     field: Field,
+    extraFields: Option[List[play.twirl.api.HtmlFormat.Appendable]] = None,
     newsletterFrequency: Option[String] = None,
     newsletterPreview: Option[String] = None
 )(implicit handler: views.html.helper.FieldConstructor, messages: play.api.i18n.Messages)
@@ -15,6 +16,9 @@
     <p class="manage-account__switchboardCopy">
         @copy
     </p>
+    @if(extraFields.isDefined){
+        @extraFields
+    }
     @if(newsletterFrequency.isDefined || newsletterPreview.isDefined) {
         <div class="manage-account__switchboardFooter">
             @if(newsletterFrequency.isDefined){

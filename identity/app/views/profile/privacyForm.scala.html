@@ -19,15 +19,15 @@
 
 @v2ConsentCheckbox(consentField: Field) = {
 
-    @* hidden input fields *@
-    @List("actor","consentIdentifier","consentIdentifierVersion","timestamp","privacyPolicy").map(field =>
-        fragments.form.hidden(consentField(field))
-    )
-
     @fragments.form.switchboardLabel(
         title = getConsentText(consentField).toString(),
         copy = "Test copy",
-        field = consentField("hasConsented")
+        field = consentField("hasConsented"),
+        extraFields = Option(
+            List("actor","consentIdentifier","consentIdentifierVersion","timestamp","privacyPolicy").map(field =>
+                fragments.form.hidden(consentField(field))
+            )
+    )
     )(nonInputFields, messages)
 
 }
