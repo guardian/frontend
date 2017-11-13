@@ -1,12 +1,14 @@
 package controllers
 
 import actions.AuthenticatedActions
-import idapiclient.Auth
+import actions.AuthenticatedActions.AuthRequest
 import com.gu.identity.cookie.GuUCookieData
 import com.gu.identity.model.ConsentText.FirstParty
 import com.gu.identity.model._
 import form._
 import idapiclient.{TrackingData, _}
+import idapiclient.Auth
+import idapiclient.responses.Error
 import model.{Countries, PhoneNumbers}
 import org.joda.time.format.ISODateTimeFormat
 import org.mockito.Mockito._
@@ -15,19 +17,16 @@ import org.scalatest.{DoNotDiscover, Matchers, OptionValues, WordSpec}
 import org.scalatest.mockito.MockitoSugar
 import org.scalatestplus.play.ConfiguredServer
 import play.api.data.Form
-import play.api.http.HttpConfiguration
-import play.api.libs.crypto.CSRFTokenSigner
 import play.api.mvc._
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
-import play.filters.csrf.{CSRFAddToken, CSRFCheck, CSRFConfig}
 import services._
 import test._
 
 import scala.concurrent.Future
 
 //TODO test form validation and population of form fields.
-@DoNotDiscover class EditProfileControllerTest extends WordSpec
+@DoNotDiscover class EditProfileControllerTest extends WordSpec with WithTestExecutionContext
   with Matchers
   with MockitoSugar
   with OptionValues
@@ -44,7 +43,7 @@ import scala.concurrent.Future
     val authService = mock[AuthenticationService]
     val idRequest = mock[IdentityRequest]
     val trackingData = mock[TrackingData]
-    val emailService = mock[NewsletterService]
+    val newsletterService = mock[NewsletterService]
 
     val userId: String = "123"
     val user = User("test@example.com", userId, statusFields = StatusFields(receive3rdPartyMarketing = Some(true), receiveGnmMarketing = Some(true)))
@@ -69,8 +68,10 @@ import scala.concurrent.Future
 
     val emailForm = EmailPrefsData.emailPrefsForm.fill(EmailPrefsData("Text", List("37")))
     when(api.userEmails(MockitoMatchers.anyString(), MockitoMatchers.any[TrackingData])) thenReturn Future.successful(Right(Subscriber("Text", List(EmailList("37")))))
-    when(emailService.getEmailSubscriptions(MockitoMatchers.any[Form[EmailPrefsData]], MockitoMatchers.any[List[String]], MockitoMatchers.any[List[String]])) thenReturn Nil
-    when(emailService.preferences(MockitoMatchers.anyString(), MockitoMatchers.any[TrackingData])) thenReturn Future.successful(emailForm)
+    when(api.updateUserEmails(MockitoMatchers.anyString(), MockitoMatchers.any[Subscriber], MockitoMatchers.any[Auth], MockitoMatchers.any[TrackingData])) thenReturn Future.successful(Right(()))
+    when(newsletterService.getEmailSubscriptions(MockitoMatchers.any[Form[EmailPrefsData]], MockitoMatchers.any[List[String]], MockitoMatchers.any[List[String]])) thenReturn Nil
+    when(newsletterService.preferences(MockitoMatchers.anyString(), MockitoMatchers.any[TrackingData])) thenReturn Future.successful(emailForm)
+    when(newsletterService.savePreferences()(MockitoMatchers.any[AuthRequest[AnyContent]])) thenReturn Future.successful(emailForm)
 
     lazy val controller = new EditProfileController(
       idUrlBuilder,
@@ -81,7 +82,8 @@ import scala.concurrent.Future
       csrfAddToken,
       profileFormsMapping,
       controllerComponent,
-      emailService
+//      newsletterService
+      new NewsletterService(api, idRequestParser, idUrlBuilder)
     )
   }
 
@@ -93,6 +95,8 @@ import scala.concurrent.Future
       val username = "usernametest1"
 
       "save the user through the ID API" in new EditProfileFixture {
+
+
 
         val fakeRequest = FakeCSRFRequest(csrfAddToken)
           .withFormUrlEncodedBody(
@@ -440,6 +444,29 @@ import scala.concurrent.Future
         userUpdate.privateFields.value.billingPostcode.value should equal(billingPostcode)
         userUpdate.privateFields.value.billingCountry.value should equal(billingCountry)
         userUpdate.privateFields.value.telephoneNumber.value should equal(TelephoneNumber(Some(telephoneNumberCountryCode), Some(telephoneNumberLocalNumber)))
+      }
+    }
+
+    "saveEmailPreferences" should {
+      def fakeRequestEmailPrefs: FakeRequest[AnyContentAsFormUrlEncoded] = FakeCSRFRequest(csrfAddToken)
+        .withFormUrlEncodedBody("htmlPreference" -> "Text")
+
+      "hit IDAPI post email endpoint if form body is successfully deserialised" in new EditProfileFixture {
+        when(api.updateUserEmails(MockitoMatchers.anyString(), MockitoMatchers.any[Subscriber], MockitoMatchers.any[Auth], MockitoMatchers.any[TrackingData])) thenReturn Future.successful(Right(()))
+
+        val result = controller.saveEmailPreferences().apply(fakeRequestEmailPrefs)
+        status(result) should be(200)
+        contentAsString(result) should include ("updated")
+        verify(api).updateUserEmails(userId, Subscriber("Text", Nil), testAuth, trackingData)
+      }
+
+      "respond with error message if IDAPI post email endpoint returns error" in new EditProfileFixture {
+        val errors = List(Error("Test message", "Test description", 500))
+        when(api.updateUserEmails(MockitoMatchers.anyString(), MockitoMatchers.any[Subscriber], MockitoMatchers.any[Auth], MockitoMatchers.any[TrackingData])) thenReturn Future.successful(Left(errors))
+
+        val result = controller.saveEmailPreferences().apply(fakeRequestEmailPrefs)
+        contentAsString(result) should include ("There was an error saving your preferences")
+        verify(api).updateUserEmails(userId, Subscriber("Text", Nil), testAuth, trackingData)
       }
     }
   }
