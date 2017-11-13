@@ -49,7 +49,7 @@ const setAdTestCookie = (): void => {
 
 const showHiringMessage = (): void => {
     try {
-        if (config.get('switches.weAreHiring')) {
+        if (!config.get('page.isDev') && config.get('switches.weAreHiring')) {
             window.console.log(
                 '\n' +
                     '%cHello.\n' +
