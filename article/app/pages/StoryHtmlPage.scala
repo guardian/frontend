@@ -27,7 +27,7 @@ object StoryHtmlPage {
     override def IE9CriticalCss: Html = stylesheetLink(s"stylesheets/ie9.$ContentCSSFile.css")
   }
 
-  def atomStyles(implicit page: Page) = Page.getContent(page) 
+  def atomStyles(implicit page: Page): Seq[Html] = Page.getContent(page) 
     .flatMap(_.atoms)
     .map(_.atomTypes.collect { 
       case (atomType, true) => stylesheetLink(s"stylesheets/atom-$atomType-article-index.css")
