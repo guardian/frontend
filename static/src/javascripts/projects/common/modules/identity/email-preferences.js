@@ -188,18 +188,18 @@ const bindModalCloser = (buttonEl: HTMLElement): void => {
 };
 
 const buildFormDataForFields = (
-    csrfToken: ?String = undefined,
+    csrfToken: string,
     fields: NodeList<any> = new NodeList()
 ): FormData => {
-    const formData:FormData = new FormData();
+    const formData: FormData = new FormData();
     formData.append('csrfToken', csrfToken);
     fields.forEach((field: HTMLInputElement) => {
         switch (field.type) {
             case 'checkbox':
-                formData.append(field.name, field.checked);
+                formData.append(field.name, field.checked.toString());
                 break;
             default:
-                formData.append(field.name, field.value);
+                formData.append(field.name, field.value.toString());
                 break;
         }
     });
@@ -207,21 +207,17 @@ const buildFormDataForFields = (
     return formData;
 };
 
-const getCsrfTokenFromElement = (originalEl): Promise<String> => {
-    return fastdom.read(() => {
-        try {
-            return originalEl.closest('form').querySelector('*[name=csrfToken]').value;
-        }
-        catch (err:Error) {
-            if(err.name !== 'TypeError') {
-                throw err;
+const getCsrfTokenFromElement = (originalEl): Promise<any> =>
+    fastdom
+        .read(() => {
+            const closestFormEl: ?Element = originalEl.closest('form');
+            if (closestFormEl) {
+                return closestFormEl.querySelector('*[name=csrfToken]');
             }
-            else {
-                throw Error('ERR_NO_TOKEN');
-            }
-        }
-    })
-}
+
+            return Promise.reject();
+        })
+        .then((csrfTokenEl: HTMLInputElement) => csrfTokenEl.value.toString());
 
 const submitPartialFormStatus = (formData: FormData): Promise<void> =>
     new Promise((success: Function, error: Function): void =>
@@ -255,15 +251,12 @@ const bindLabelFromSwitchboard = (labelEl: HTMLElement): void => {
             }),
         ])
             .then(([inputFields: NodeList<HTMLElement>]) =>
-                getCsrfTokenFromElement(labelEl).then((csrfToken:String)=>
+                getCsrfTokenFromElement(labelEl).then((csrfToken: String) =>
                     Promise.resolve([csrfToken, inputFields])
                 )
             )
-            .then(([csrfToken:String, inputFields: NodeList<HTMLElement>]) =>
-                buildFormDataForFields(
-                    csrfToken,
-                    inputFields
-                )
+            .then(([csrfToken: String, inputFields: NodeList<HTMLElement>]) =>
+                buildFormDataForFields(csrfToken.toString(), inputFields)
             )
             .then((formData: FormData) => submitPartialFormStatus(formData))
             .then(() => {
