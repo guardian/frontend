@@ -37,7 +37,7 @@ class CricketThrottler(actorSystem: ActorSystem) {
   private val cricketThrottlerActor: ActorRef = actorSystem.actorOf(Props(new CricketThrottlerActor))
 
   def throttle[T](task: () => Future[T])(implicit ec: ExecutionContext, tag: ClassTag[T]): Future[T] = {
-    implicit val timeout: Timeout = Timeout(60, TimeUnit.SECONDS)
+    implicit val timeout: Timeout = Timeout(30, TimeUnit.SECONDS)
     (cricketThrottlerActor ? CricketThrottledTask(task)).mapTo[T]
   }
 }
