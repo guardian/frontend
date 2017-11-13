@@ -187,22 +187,60 @@ const bindModalCloser = (buttonEl: HTMLElement): void => {
     });
 };
 
-const submitPartialFormStatus = (
-    fields: NodeList = new NodeList()
-): Promise<void> => {
-    const formData = new FormData();
-    fields.forEach((field: HTMLElement) => {
-        formData.append(field.name, field.value);
+const buildFormDataForFields = (
+    csrfToken: ?String = undefined,
+    fields: NodeList<any> = new NodeList()
+): FormData => {
+    const formData:FormData = new FormData();
+    formData.append('csrfToken', csrfToken);
+    fields.forEach((field: HTMLInputElement) => {
+        switch (field.type) {
+            case 'checkbox':
+                formData.append(field.name, field.checked);
+                break;
+            default:
+                formData.append(field.name, field.value);
+                break;
+        }
     });
-    return new Promise(yay =>
-        setTimeout(() => {
-            yay(fields);
-        }, 500 + Math.random() * 500)
-    );
+
+    return formData;
 };
 
+const getCsrfTokenFromElement = (originalEl): Promise<String> => {
+    return fastdom.read(() => {
+        try {
+            return originalEl.closest('form').querySelector('*[name=csrfToken]').value;
+        }
+        catch (err:Error) {
+            if(err.name !== 'TypeError') {
+                throw err;
+            }
+            else {
+                throw Error('ERR_NO_TOKEN');
+            }
+        }
+    })
+}
+
+const submitPartialFormStatus = (formData: FormData): Promise<void> =>
+    new Promise((success: Function, error: Function): void =>
+        reqwest({
+            url: '/privacy/edit',
+            method: 'POST',
+            data: formData,
+            processData: false,
+            error(err) {
+                error(err);
+            },
+            success(msg) {
+                success(msg);
+            },
+        })
+    );
+
 const bindLabelFromSwitchboard = (labelEl: HTMLElement): void => {
-    const getInputFields: Promise<object> = fastdom.read(() =>
+    const getInputFields: Promise<NodeList<HTMLElement>> = fastdom.read(() =>
         labelEl.querySelectorAll('*[name][value]')
     );
 
@@ -216,7 +254,18 @@ const bindLabelFromSwitchboard = (labelEl: HTMLElement): void => {
                 labelEl.classList.add('is-updating');
             }),
         ])
-            .then(([inputFields]) => submitPartialFormStatus(inputFields))
+            .then(([inputFields: NodeList<HTMLElement>]) =>
+                getCsrfTokenFromElement(labelEl).then((csrfToken:String)=>
+                    Promise.resolve([csrfToken, inputFields])
+                )
+            )
+            .then(([csrfToken:String, inputFields: NodeList<HTMLElement>]) =>
+                buildFormDataForFields(
+                    csrfToken,
+                    inputFields
+                )
+            )
+            .then((formData: FormData) => submitPartialFormStatus(formData))
             .then(() => {
                 fastdom
                     .write(() => {
