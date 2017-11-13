@@ -29,7 +29,7 @@ export const acquisitionsEpicUSGunCampaign = makeABTest({
     audienceCriteria: 'All',
     audience: 1,
     audienceOffset: 0,
-    // canRun: tagsMatch,
+    canRun: tagsMatch,
 
     variants: [
         {
