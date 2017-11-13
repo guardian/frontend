@@ -92,8 +92,6 @@ import scala.concurrent.Future
 
       "save the user through the ID API" in new EditProfileFixture {
 
-
-
         val fakeRequest = FakeCSRFRequest(csrfAddToken)
           .withFormUrlEncodedBody(
             "location" -> location,
