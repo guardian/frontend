@@ -59,7 +59,6 @@ class IdApiClient(
 
   def userFromQueryParam(param: String, field: String,auth: Auth = Anonymous): Future[Response[User]] = {
     val apiPath = s"/user?${field}=${param}"
-    println(apiPath)
     val params = buildParams(Some(auth))
     val headers = buildHeaders(Some(auth))
     val response = httpClient.GET(apiUrl(apiPath), None, params, headers)

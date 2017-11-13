@@ -51,14 +51,17 @@ class AuthenticatedActions(
         case Some(authenticatedUser) => Future.successful(Right(new AuthenticatedRequest(authenticatedUser, request)))
         case None =>
           // If an email query param exists we want to check the DB for the user and redirect them to signin/register
-          val email =request.getQueryString("email")
-
-          email.map(e => identityApiClient.userFromQueryParam(e, "emailAddress").map {
-              case Right(userExists)=> Left(sendUserToSignin(request))
-              case Left(err) => Left(sendUserToRegister(request))
-          }.recover { case e: Exception =>
-            Left(sendUserToRegister(request))
-          }).getOrElse(Future.successful(Left(sendUserToSignin(request))))
+          request.getQueryString("email") match {
+            case None => Future.successful(Left(sendUserToSignin(request)))
+            case Some(email) =>
+              identityApiClient.userFromQueryParam(email, "emailAddress").map {
+                case Right(userExists) => Left(sendUserToSignin(request))
+                case Left(err) => Left(sendUserToRegister(request))
+              }.recover { case e: Exception =>
+                logger.error("Error retrieving user user from IDAPI", e)
+                Left(sendUserToRegister(request))
+              }
+          }
       }
   }
 
