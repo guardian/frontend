@@ -54,7 +54,7 @@
 @styles.linkCss
 <!--<![endif]-->
 
-@atomStyles.map { atomStyle => @atomStyle }
+@atomStyles.foreach { atomStyle => @atomStyle }
 
 <link rel="stylesheet" media="print" type="text/css" href="@Static("stylesheets/print.css")" />
 
