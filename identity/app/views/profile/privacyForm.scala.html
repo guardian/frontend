@@ -21,9 +21,9 @@
 
     @fragments.form.switchboardLabel(
         title = getConsentText(consentField).toString(),
-        copy = "Test copy",
+        copy = None,
         field = consentField("hasConsented"),
-        extraFields = Option(
+        extraFields = Some(
             List("actor","consentIdentifier","consentIdentifierVersion","timestamp","privacyPolicy").map(field =>
                 fragments.form.hidden(consentField(field))
             )

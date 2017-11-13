@@ -2,7 +2,7 @@
 
 @(
     title: String,
-    copy: String,
+    copy: Option[String],
     field: Field,
     extraFields: Option[List[play.twirl.api.HtmlFormat.Appendable]] = None,
     newsletterFrequency: Option[String] = None,
@@ -13,9 +13,11 @@
     @fragments.form.checkbox(field, Checkbox(field).args:_*)
     <div class="manage-account__switchboardCheckbox"></div>
     <strong class="manage-account__switchboardTitle">@title</strong>
-    <p class="manage-account__switchboardCopy">
-        @copy
-    </p>
+    @if(copy.isDefined) {
+        <p class="manage-account__switchboardCopy">
+            @copy
+        </p>
+    }
     @if(extraFields.isDefined){
         @extraFields
     }

@@ -187,24 +187,36 @@ const bindModalCloser = (buttonEl: HTMLElement): void => {
     });
 };
 
-const submitPartialFormStatus = (params: Object = {}): Promise<void> =>
-    new Promise(yay =>
+const submitPartialFormStatus = (
+    fields: NodeList = new NodeList()
+): Promise<void> => {
+    const formData = new FormData();
+    fields.forEach((field: HTMLElement) => {
+        formData.append(field.name, field.value);
+    });
+    return new Promise(yay =>
         setTimeout(() => {
-            yay(params);
+            yay(fields);
         }, 500 + Math.random() * 500)
     );
+};
 
 const bindLabelFromSwitchboard = (labelEl: HTMLElement): void => {
+    const getInputFields: Promise<object> = fastdom.read(() =>
+        labelEl.querySelectorAll('*[name][value]')
+    );
+
     bean.on(labelEl, 'change', () => {
         Promise.all([
+            getInputFields,
             fastdom.write(() => {
                 if (document.body) {
                     document.body.classList.add('is-updating-cursor');
                 }
                 labelEl.classList.add('is-updating');
             }),
-            submitPartialFormStatus(),
         ])
+            .then(([inputFields]) => submitPartialFormStatus(inputFields))
             .then(() => {
                 fastdom
                     .write(() => {
