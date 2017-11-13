@@ -276,7 +276,6 @@
 .manage-account-header {
     @include fs-header(3);
     color: $guardian-brand-dark;
-    margin-bottom: ;
 }
 .manage-account-headerNote {
     @include fs-bodyCopy(2);
