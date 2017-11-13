@@ -530,7 +530,7 @@ trait FeatureSwitches {
     SwitchGroup.Feature,
     "we-are-hiring",
     "When ON, hiring messages will appear in browser console and HTML source",
-    owners = Seq(Owner.withGithub("siadcock")),
+    owners = Seq(Owner.withName("dotcom.platform")),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true
