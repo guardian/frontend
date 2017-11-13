@@ -21,13 +21,13 @@ class RichLinkController(contentApiClient: ContentApiClient, controllerComponent
   private def contentType(path: String)(implicit request: RequestHeader): Future[Option[ContentType]] = {
     val fields = "headline,standfirst,shortUrl,webUrl,byline,starRating,trailText,liveBloggingNow"
     val response = lookup(path, fields)(request)
-    response map { _.content.map(Content(_)) }
+    response.map(_.content.map(Content(_)))
   }
 
   private def richLinkHtml(content: ContentType)(implicit request: RequestHeader, context: ApplicationContext): Html =
     views.html.richLink(content)(request, context)
 
-  private def richLinkBodyHtml(content: ContentType)(implicit request: RequestHeader, context: ApplicationContext) =
+  private def richLinkBodyHtml(content: ContentType)(implicit request: RequestHeader, context: ApplicationContext): Html =
     views.html.fragments.richLinkBody(content)(request)
 
 }

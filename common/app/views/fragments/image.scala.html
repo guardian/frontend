@@ -1,5 +1,5 @@
 @import layout.ContentWidths.MainMedia
-@import views.support.{ImgSrc, RenderClasses}
+@import views.support.{ImgSrc, RenderClasses, ImageService}
 
 @(
     picture: model.ImageMedia,
@@ -8,7 +8,7 @@
     imageAltText: String,
     isFeatureAndShowcase: Boolean = false,
     isImmersiveMainMedia: Boolean = false
-)
+)(implicit request: RequestHeader)
 
 @immersivePortraitSource(largestImage: model.ImageAsset, hidpi: Boolean = false) = {
     <source media="@if(hidpi) {
@@ -48,10 +48,10 @@
     @widths.breakpoints.map { breakpointWidth =>
         <source media="(min-width: @breakpointWidth.breakpoint.minWidth.getOrElse("0")px) and (-webkit-min-device-pixel-ratio: 1.25), (min-width: @breakpointWidth.breakpoint.minWidth.getOrElse("0")px) and (min-resolution: 120dpi)"
         sizes="@breakpointWidth.width"
-        srcset="@ImgSrc.srcsetForBreakpoint(breakpointWidth, widths.breakpoints, maybePath = None, maybeImageMedia = Some(picture), hidpi = true)" />
+        srcset="@ImgSrc.srcsetForBreakpoint(breakpointWidth, widths.breakpoints, maybePath = None, maybeImageMedia = Some(picture), hidpi = true)(ImageService.test)" />
         <source media="(min-width: @breakpointWidth.breakpoint.minWidth.getOrElse("0")px)"
         sizes="@breakpointWidth.width"
-        srcset="@ImgSrc.srcsetForBreakpoint(breakpointWidth, widths.breakpoints, maybePath = None, maybeImageMedia = Some(picture))" />
+        srcset="@ImgSrc.srcsetForBreakpoint(breakpointWidth, widths.breakpoints, maybePath = None, maybeImageMedia = Some(picture))(ImageService.test)" />
     }
 
     <!--[if IE 9]></video><![endif]-->

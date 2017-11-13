@@ -2,14 +2,24 @@ package views.support
 
 import java.net.{URI, URISyntaxException}
 import java.util.Base64
+
 import common.Logging
-import conf.switches.Switches.{ImageServerSwitch, FacebookShareImageLogoOverlay, TwitterShareImageLogoOverlay}
+import conf.switches.Switches.{FacebookShareImageLogoOverlay, ImageServerSwitch, TwitterShareImageLogoOverlay}
 import conf.Configuration
 import layout.{BreakpointWidth, WidthsByBreakpoint}
 import model._
+import mvt.ABImageTestService
 import org.apache.commons.math3.fraction.Fraction
 import org.apache.commons.math3.util.Precision
+import play.api.mvc.RequestHeader
+
 import Function.const
+
+case class ImageService(host: String)
+object ImageService {
+  lazy val default: ImageService = ImageService(Configuration.images.path)
+  def test(implicit requestHeader: RequestHeader): ImageService = if(ABImageTestService.isParticipating) ImageService("https://i.guimcode.co.uk") else default
+}
 
 sealed trait ElementProfile {
 
@@ -20,7 +30,7 @@ sealed trait ElementProfile {
   def isPng: Boolean
   def autoFormat: Boolean
 
-  private def toSrc(maybeAsset: Option[ImageAsset]): Option[String] =
+  private def toSrc(maybeAsset: Option[ImageAsset])(implicit imageService: ImageService = ImageService.default): Option[String] =
     maybeAsset.flatMap(_.url).map(ImgSrc(_, this))
 
   def bestFor(image: ImageMedia): Option[ImageAsset] = {
@@ -32,10 +42,7 @@ sealed trait ElementProfile {
     }
     else image.largestImage
   }
-  def bestSrcFor(image: ImageMedia): Option[String] = toSrc(bestFor(image))
-
-  def largestFor(image: ImageMedia): Option[ImageAsset] = image.largestImage
-  def largestSrcFor(image: ImageMedia): Option[String] = toSrc(largestFor(image))
+  def bestSrcFor(image: ImageMedia)(implicit imageService: ImageService = ImageService.default): Option[String] = toSrc(bestFor(image))
 
   def captionFor(image: ImageMedia): Option[String] =
     bestFor(image).flatMap(_.caption)
@@ -174,8 +181,6 @@ object Naked extends Profile(None, None)
 
 object ImgSrc extends Logging with implicits.Strings {
 
-  private lazy val imageHost = Configuration.images.path
-
   private case class HostMapping(prefix: String, token: String)
 
   private lazy val hostPrefixMapping: Map[String, HostMapping] = Map(
@@ -189,7 +194,10 @@ object ImgSrc extends Logging with implicits.Strings {
 
   private val supportedImages = Set(".jpg", ".jpeg", ".png")
 
-  def apply(url: String, imageType: ElementProfile): String = {
+  def apply(
+    url: String,
+    imageType: ElementProfile
+  )(implicit imageService: ImageService = ImageService.default): String = {
     try {
       val uri = new URI(url.trim.encodeURI)
       val isSupportedImage = supportedImages.exists(extension => uri.getPath.toLowerCase.endsWith(extension))
@@ -199,7 +207,7 @@ object ImgSrc extends Logging with implicits.Strings {
         .filter(const(isSupportedImage))
         .map { host =>
           val signedPath = ImageUrlSigner.sign(s"${uri.getRawPath}${imageType.resizeString}", host.token)
-          s"$imageHost/img/${host.prefix}$signedPath"
+          s"${imageService.host}/img/${host.prefix}$signedPath"
         }.getOrElse(url)
     } catch {
       case error: URISyntaxException =>
@@ -212,7 +220,13 @@ object ImgSrc extends Logging with implicits.Strings {
     widths.profiles.map { profile => srcsetForProfile(profile, imageContainer, hidpi = false) } mkString ", "
   }
 
-  def srcsetForBreakpoint(breakpointWidth: BreakpointWidth, breakpointWidths: Seq[BreakpointWidth], maybePath: Option[String] = None, maybeImageMedia: Option[ImageMedia] = None, hidpi: Boolean = false): String = {
+  def srcsetForBreakpoint(
+    breakpointWidth: BreakpointWidth,
+    breakpointWidths: Seq[BreakpointWidth],
+    maybePath: Option[String] = None,
+    maybeImageMedia: Option[ImageMedia] = None,
+    hidpi: Boolean = false
+  )(implicit imageService: ImageService = ImageService.default): String = {
     val isPng = maybePath.exists(path => path.toLowerCase.endsWith("png"))
     breakpointWidth.toPixels(breakpointWidths)
       .map(browserWidth => Profile(width = Some(browserWidth), hidpi = hidpi, isPng = isPng))
@@ -225,7 +239,11 @@ object ImgSrc extends Logging with implicits.Strings {
       .mkString(", ")
   }
 
-  def srcsetForProfile(profile: Profile, imageContainer: ImageMedia, hidpi: Boolean): String =
+  def srcsetForProfile(
+    profile: Profile,
+    imageContainer: ImageMedia,
+    hidpi: Boolean
+  )(implicit imageService: ImageService = ImageService.default): String =
     s"${profile.bestSrcFor(imageContainer).get} ${profile.width.get * (if (hidpi) 2 else 1)}w"
 
   def srcsetForProfile(profile: Profile, path: String, hidpi: Boolean): String =

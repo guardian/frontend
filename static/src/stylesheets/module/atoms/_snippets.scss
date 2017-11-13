@@ -82,3 +82,24 @@
         }
     }
 }
+
+.explainer-snippet__credit {
+    @include fs-textSans(1, true);
+    color: $neutral-1;
+    margin: $gs-baseline 0;
+    
+    > .inline-icon {
+        display: inline-flex;
+        background: $neutral-3;
+        border-radius: 100%;
+        width: 16px;
+        height: 16px;
+        align-items: center;
+        justify-content: center;
+        margin-right: $gs-gutter / 4;
+
+        > svg {
+            height: 12px;
+        }
+    }
+}

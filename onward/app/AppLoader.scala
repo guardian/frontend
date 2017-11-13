@@ -22,6 +22,7 @@ import router.Routes
 import services.OphanApi
 import services.breakingnews.{BreakingNewsApi, S3BreakingNews}
 import weather.WeatherApi
+import _root_.commercial.targeting.TargetingLifecycle
 
 import scala.concurrent.ExecutionContext
 
@@ -65,7 +66,8 @@ trait AppComponents extends FrontendComponents with OnwardControllers with Onwar
     wire[StocksDataLifecycle],
     wire[MostPopularFacebookAutoRefreshLifecycle],
     wire[SwitchboardLifecycle],
-    wire[CachedHealthCheckLifeCycle]
+    wire[CachedHealthCheckLifeCycle],
+    wire[TargetingLifecycle]
   )
 
   lazy val router: Router = wire[Routes]

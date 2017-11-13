@@ -27,7 +27,6 @@ object SectionLinks {
     SectionsLink ("global-development", globalDevelopment, News),
     SectionsLink ("sustainable-business", sustainableBusiness, News),
     SectionsLink ("law", law, News),
-    SectionsLink ("technology/games", games, News),
     SectionsLink ("us-news/us-politics", usPolitics, News),
     SectionsLink ("australia-news/australian-politics", auPolitics, News),
     SectionsLink ("australia-news/australian-immigration-and-asylum", auImmigration, News),
@@ -70,6 +69,7 @@ object SectionLinks {
     SectionsLink ("artanddesign", artAndDesign, Arts),
     SectionsLink ("stage", stage, Arts),
     SectionsLink ("music/classicalmusicandopera", classical, Arts),
+    SectionsLink ("games", games, Arts),
 
     SectionsLink ("lifeandstyle", lifestyle, Life),
     SectionsLink ("fashion", fashion, Life),

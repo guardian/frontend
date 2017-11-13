@@ -10,16 +10,17 @@ import idapiclient.IdApiClient
 import model._
 import play.api.data.Form
 import play.api.i18n.{I18nSupport, MessagesProvider}
+import play.api.libs.json.Json
 import play.api.mvc._
 import play.filters.csrf.{CSRFAddToken, CSRFCheck}
-import services._
+import services.{EmailPrefsData, _}
 import utils.SafeLogging
 
 import scala.concurrent.Future
 
 object PublicEditProfilePage extends IdentityPage("/public/edit", "Edit Public Profile")
 object AccountEditProfilePage extends IdentityPage("/account/edit", "Edit Account Details")
-object PrivacyEditProfilePage extends IdentityPage("/privacy/edit", "Privacy")
+object EmailPrefsProfilePage extends IdentityPage("/email-prefs", "Privacy")
 object MembershipEditProfilePage extends IdentityPage("/membership/edit", "Membership")
 object recurringContributionPage extends IdentityPage("/contribution/recurring/edit", "Contributions")
 object DigiPackEditProfilePage extends IdentityPage("/digitalpack/edit", "Digital Pack")
@@ -32,7 +33,8 @@ class EditProfileController(
     csrfCheck: CSRFCheck,
     csrfAddToken: CSRFAddToken,
     implicit val profileFormsMapping: ProfileFormsMapping,
-    val controllerComponents: ControllerComponents)
+    val controllerComponents: ControllerComponents,
+    newsletterService: NewsletterService)
     (implicit context: ApplicationContext)
   extends BaseController
   with ImplicitControllerExecutionContext
@@ -46,20 +48,43 @@ class EditProfileController(
   def displayMembershipForm: Action[AnyContent] = displayForm(MembershipEditProfilePage)
   def displayRecurringContributionForm: Action[AnyContent] = displayForm(recurringContributionPage)
   def displayDigitalPackForm: Action[AnyContent] = displayForm(DigiPackEditProfilePage)
-  def displayPrivacyForm: Action[AnyContent] = displayForm(PrivacyEditProfilePage)
+  def displayEmailPrefsForm: Action[AnyContent] = displayForm(EmailPrefsProfilePage)
+
+  def displayPrivacyFormRedirect: Action[AnyContent] = csrfAddToken {
+    recentlyAuthenticated { implicit request =>
+      Redirect(routes.EditProfileController.displayEmailPrefsForm(), MOVED_PERMANENTLY)
+    }
+  }
 
   def submitPublicProfileForm(): Action[AnyContent] = submitForm(PublicEditProfilePage)
   def submitAccountForm(): Action[AnyContent] = submitForm(AccountEditProfilePage)
-  def submitPrivacyForm(): Action[AnyContent] = submitForm(PrivacyEditProfilePage)
+  def submitPrivacyForm(): Action[AnyContent] = submitForm(EmailPrefsProfilePage)
+
+  def saveEmailPreferences: Action[AnyContent] =
+    csrfCheck {
+      authActionWithUser.async { implicit request =>
+        newsletterService.savePreferences().map { form  =>
+          if (form.hasErrors) {
+            val errorsAsJson = Json.toJson(
+              form.errors.groupBy(_.key).map { case (key, errors) =>
+                val nonEmptyKey = if (key.isEmpty) "global" else key
+                (nonEmptyKey, errors.map(e => play.api.i18n.Messages(e.message, e.args: _*)))
+              }
+            )
+            Forbidden(errorsAsJson)
+          } else {
+            Ok("updated")
+          }
+        }
+      }
+    }
 
   private def displayForm(page: IdentityPage) = csrfAddToken {
     recentlyAuthenticated.async { implicit request =>
-      Future {
         profileFormsView(
           page = page,
           forms = ProfileForms(request.user, PublicEditProfilePage),
           request.user)
-      }
     }
   }
 
@@ -71,10 +96,10 @@ class EditProfileController(
           ProfileForms(userDO, activePage = page).bindFromRequestWithAddressErrorHack(request) // NOTE: only active form is bound to request data
 
         boundProfileForms.activeForm.fold(
-          formWithErrors => Future(profileFormsView(page, boundProfileForms, userDO)),
+          formWithErrors => profileFormsView(page, boundProfileForms, userDO),
           success = {
             case formData: AccountFormData if formData.deleteTelephone =>
-              identityApiClient.deleteTelephone(userDO.auth) map {
+              identityApiClient.deleteTelephone(userDO.auth) flatMap {
                 case Left(errors) => profileFormsView(page, boundProfileForms.withErrors(errors), userDO)
 
                 case Right(_) => {
@@ -87,7 +112,7 @@ class EditProfileController(
               }
 
             case formData: UserFormData =>
-              identityApiClient.saveUser(userDO.id, formData.toUserUpdateDTO(userDO), userDO.auth) map {
+              identityApiClient.saveUser(userDO.id, formData.toUserUpdateDTO(userDO), userDO.auth) flatMap {
                 case Left(errors) => profileFormsView(page, boundProfileForms.withErrors(errors), userDO)
                 case Right(updatedUser) => profileFormsView(page, boundProfileForms.bindForms(updatedUser), updatedUser)
               }
@@ -100,8 +125,24 @@ class EditProfileController(
       page: IdentityPage,
       forms: ProfileForms,
       user: User)
-      (implicit request: AuthRequest[AnyContent]): Result =
-    NoCache(Ok(views.html.profileForms(page, user, forms, idRequestParser(request), idUrlBuilder)))
+      (implicit request: AuthRequest[AnyContent]): Future[Result] = {
+
+    newsletterService.preferences(request.user.getId, idRequestParser(request).trackingData).map { emailFilledForm =>
+
+      NoCache(Ok(views.html.profileForms(
+        page,
+        user,
+        forms,
+        idRequestParser(request),
+        idUrlBuilder,
+        emailFilledForm,
+        newsletterService.getEmailSubscriptions(emailFilledForm),
+        EmailNewsletters.all
+
+      )))
+
+    }
+  }
 }
 
 /**
@@ -122,13 +163,13 @@ case class ProfileForms(
   lazy val activeForm = activePage match {
     case PublicEditProfilePage => publicForm
     case AccountEditProfilePage => accountForm
-    case PrivacyEditProfilePage => privacyForm
+    case EmailPrefsProfilePage => privacyForm
   }
 
   private lazy val activeMapping = activePage match {
     case PublicEditProfilePage => profileFormsMapping.profileMapping
     case AccountEditProfilePage => profileFormsMapping.accountDetailsMapping
-    case PrivacyEditProfilePage => profileFormsMapping.privacyMapping
+    case EmailPrefsProfilePage => profileFormsMapping.privacyMapping
   }
 
   /** Fills all Edit Profile forms (Public, Account, Privacy) with the provided User value */
@@ -177,7 +218,7 @@ case class ProfileForms(
     activePage match {
       case PublicEditProfilePage => copy(publicForm = changeFunc(publicForm).asInstanceOf[Form[ProfileFormData]])
       case AccountEditProfilePage => copy(accountForm = changeFunc(accountForm).asInstanceOf[Form[AccountFormData]])
-      case PrivacyEditProfilePage => copy(privacyForm = changeFunc(privacyForm).asInstanceOf[Form[PrivacyFormData]])
+      case EmailPrefsProfilePage => copy(privacyForm = changeFunc(privacyForm).asInstanceOf[Form[PrivacyFormData]])
     }
   }
 }

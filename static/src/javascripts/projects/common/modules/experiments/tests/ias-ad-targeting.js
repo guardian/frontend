@@ -1,9 +1,9 @@
 // @flow
 
-export const iasAdTargeting: ABTest = {
-    id: 'IasAdTargeting',
-    start: '2017-10-31',
-    expiry: '2017-11-15',
+export const iasAdTargetingV2: ABTest = {
+    id: 'IasAdTargetingV2',
+    start: '2017-11-09',
+    expiry: '2017-11-20',
     author: 'Jon Norman',
     description:
         'Adds additional targeting to ad slots, sourced from an IAS optimisation integration.',
