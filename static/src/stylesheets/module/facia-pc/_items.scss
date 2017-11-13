@@ -6,6 +6,7 @@
 }
 
 @import 'item-layouts/fc-item--standard';
+@import 'item-layouts/fc-item--half';
 @import 'item-layouts/fc-item--three-quarters';
 @import 'item-layouts/fc-item--three-quarters-right';
 @import 'item-layouts/fc-item--three-quarters-tall';
@@ -46,6 +47,22 @@
                 @include headline-boost(3);
             }
         }
+    }
+
+    &[class*='fc-item--has-sublinks'] {
+        .fc-item__standfirst {
+            display: none;
+        }
+    }
+
+    &.fc-item--has-sublinks-1 .fc-item__media-wrapper {
+        display: block;
+    }
+}
+
+.fc-item--half-tablet {
+    @include mq(tablet) {
+        @include fc-item--half;
     }
 }
 

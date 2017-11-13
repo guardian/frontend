@@ -62,4 +62,10 @@ $pillars: (
     .fc-item--pillar-#{$pillar} {
         @include colours($accent: $colour, $foreground: $neutral-1, $background: $neutral-7);
     }
+
+    .fc-sublink--pillar-#{$pillar} {
+        .fc-sublink__kicker {
+            color: fade-out($colour, 0.25);
+        }
+    }
 }

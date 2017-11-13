@@ -36,10 +36,7 @@ Media list item. Looks a bit like this:
         }
     }
 
-    .fc-item__container,
-    .fc-item__content,
-    .fc-item__footer,
-    .fc-item__image-container {
+    .fc-item__container {
         display: block;
     }
 
@@ -92,63 +89,39 @@ Media list item. Looks a bit like this:
         }
     }
 
-    .fc-item__kicker--dreamsnap-list {
-        margin-left: 0 - $image-width - $mobile-media-padding;
-
-        @include mq(tablet) {
-            margin-left: 0 - $image-width;
-        }
-    }
-
-    &[class*='fc-item--has-sublinks'] .fc-item__media-wrapper {
-        position: relative;
-        float: left;
-    }
-
-    &.fc-item--has-no-image,
-    &.fc-item--has-cutout {
-        .fc-item__container {
-            padding-left: 0;
-        }
-
-        .fc-item__meta {
-            margin-left: 0;
-        }
-
+    &[class*='fc-item--has-sublinks'] {
         .fc-item__footer--vertical {
-            margin-left: 0;
-        }
-    }
-
-    &.fc-item--has-cutout .fc-item__media-wrapper {
-        display: none;
-    }
-
-    .fc-item__footer--vertical,
-    &[class*='fc-item--has-sublinks'] .fc-item__meta {
-        margin-left: 0 - $image-width - $mobile-media-padding;
-    }
-
-    &.fc-item--has-cutout {
-        .fc-item__kicker--dreamsnap-list {
-            margin-left: 0;
+            display: none;
         }
 
-        .fc-item__content {
-            min-height: gs-height(2) + $gs-baseline;
-            padding-right: gs-span(1);
-        }
+        .fc-item__footer--horizontal {
+            display: block;
+            margin-left: 0 - $image-width;
 
-        .fc-item__avatar {
-            height: gs-span(1) + $gs-baseline * 3;
+            a {
+                padding-left: $fc-item-gutter;
+            }
 
-            .fc-item__avatar__media {
-                display: block;
-                right: - $gs-gutter;
+            .fc-sublink {
+                .fc-sublink__title:before {
+                    left: $fc-item-gutter;
+                }
+            }
+
+            .fc-sublink:first-child {
+                margin-top: 0;
+
+                .fc-sublink__title:before {
+                    position: absolute;
+                    left: 0 - $fc-item-gutter;
+                    right: 0;
+                    width: initial;
+
+                    @include mq(tablet) {
+                        left: 0;
+                    }
+                }
             }
         }
     }
-
-    .fc-item__video-play { display: none !important; }
-
 }
