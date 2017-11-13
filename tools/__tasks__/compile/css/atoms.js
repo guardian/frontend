@@ -47,7 +47,7 @@ module.exports = {
                                     fontMap
                                 ).map(([varName, varValue]) =>
                                     execa.shell(
-                                        `sed -i -e 's/var(--${varName})/${varValue}/' '${dest}'`
+                                        `perl -pe 's/var(--${varName})/${varValue}/g' ${dest}`
                                     )
                                 )
                             )
