@@ -1,12 +1,11 @@
 .pillars {
     color: #ffffff;
-    font-size: 0;
     height: $veggie-burger-medium - $gs-baseline;
     margin: 0;
     padding: 0 $gs-gutter / 2;
 
     @include mq(mobileLandscape) {
-        padding: 0 0 0 $gs-gutter;
+        padding-left: $gs-gutter;
     }
 }
 

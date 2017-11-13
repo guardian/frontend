@@ -1,13 +1,11 @@
 .pillars {
     clear: right;
     color: #ffffff;
-    font-size: 0;
-    list-style: none;
     margin: 0;
     padding: 0 $gs-gutter / 2;
 
     @include mq(mobileLandscape) {
-        padding: 0 0 0 $gs-gutter;
+        padding-left: $gs-gutter;
     }
 
     @include mq(desktop) {
@@ -17,7 +15,7 @@
     }
 
     .new-header--slim & {
-        order: -1;
+        clear: none;
 
         @include mq($until: tablet) {
             display: none;

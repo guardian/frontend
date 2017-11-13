@@ -104,7 +104,8 @@
     width: 6px;
 
     .pillar-link--dropdown:hover &,
-    .new-header--open & {
+    .new-header--open &,
+    .new-header__menu-toggle:focus & {
         transform: translateY(0) rotate(45deg);
     }
 }
@@ -120,5 +121,9 @@
         &:before {
             content: none;
         }
+    }
+
+    .new-header__menu-toggle:focus & {
+        color: #ffffff;
     }
 }
