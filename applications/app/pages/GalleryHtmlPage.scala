@@ -1,6 +1,7 @@
 package pages
 
 import common.Edition
+import conf.switches.Switches.WeAreHiring
 import html.{HtmlPage, Styles}
 import html.HtmlPageHelpers._
 import model.{ApplicationContext, GalleryPage, Page}
@@ -8,7 +9,7 @@ import play.api.mvc.RequestHeader
 import play.twirl.api.Html
 import views.html.fragments.commercial.pageSkin
 import views.html.fragments.page.body.{bodyTag, breakingNewsDiv, skipToMainContent}
-import views.html.fragments.page.head.{fixIEReferenceErrors, headTag, titleTag}
+import views.html.fragments.page.head.{fixIEReferenceErrors, headTag, titleTag, weAreHiring}
 import views.html.fragments.page.head.stylesheets.{criticalStyleInline, criticalStyleLink, styles}
 import views.html.fragments.page.{devTakeShot, htmlTag}
 import views.html.fragments._
@@ -35,6 +36,7 @@ object GalleryHtmlPage extends HtmlPage[GalleryPage] {
 
     htmlTag(
       headTag(
+        weAreHiring() when WeAreHiring.isSwitchedOn,
         titleTag(),
         metaData(),
         styles(allStyles),

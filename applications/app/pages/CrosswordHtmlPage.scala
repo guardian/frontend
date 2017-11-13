@@ -1,6 +1,7 @@
 package pages
 
 import common.Edition
+import conf.switches.Switches.WeAreHiring
 import html.HtmlPageHelpers._
 import html.{HtmlPage, Styles}
 import model.ApplicationContext
@@ -8,11 +9,11 @@ import play.api.mvc.RequestHeader
 import play.twirl.api.Html
 import crosswords.{AccessibleCrosswordPage, CrosswordPage, CrosswordPageWithSvg, CrosswordSearchPageNoResult, CrosswordSearchPageWithResults}
 import views.html.fragments._
-import crosswords.{accessibleCrosswordContent, crosswordContent, crosswordSearch, printableCrosswordBody, crosswordNoResult}
+import crosswords.{accessibleCrosswordContent, crosswordContent, crosswordNoResult, crosswordSearch, printableCrosswordBody}
 import views.html.fragments.commercial.pageSkin
 import views.html.fragments.page.body.{bodyTag, breakingNewsDiv, mainContent, skipToMainContent}
 import views.html.fragments.page.head.stylesheets.{criticalStyleInline, criticalStyleLink, styles}
-import views.html.fragments.page.head.{fixIEReferenceErrors, headTag, titleTag}
+import views.html.fragments.page.head.{fixIEReferenceErrors, headTag, titleTag, weAreHiring}
 import views.html.fragments.page.{devTakeShot, htmlTag}
 import html.HtmlPageHelpers.ContentCSSFile
 
@@ -40,6 +41,7 @@ object CrosswordHtmlPage extends HtmlPage[CrosswordPage] {
 
     htmlTag(
       headTag(
+        weAreHiring() when WeAreHiring.isSwitchedOn,
         titleTag(),
         metaData(),
         styles(allStyles),
@@ -70,6 +72,7 @@ object PrintableCrosswordHtmlPage extends HtmlPage[CrosswordPageWithSvg] {
 
     htmlTag(
       headTag(
+        weAreHiring() when WeAreHiring.isSwitchedOn,
         titleTag(),
         metaData(),
         styles(CrosswordHtmlPage.allStyles),
