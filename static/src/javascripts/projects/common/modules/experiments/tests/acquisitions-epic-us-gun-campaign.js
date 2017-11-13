@@ -21,8 +21,7 @@ export const acquisitionsEpicUSGunCampaign = makeABTest({
     expiry: '2018-01-04',
 
     author: 'Guy Dawson',
-    description:
-        'Show a custom Epic for articles with the US gun campaign tag',
+    description: 'Show a custom Epic for articles with the US gun campaign tag',
     successMeasure: 'AV2.0',
     idealOutcome:
         'The US gun campaign resonates with our readers, and we continue to provide quality reporting on this important issue',
@@ -43,7 +42,7 @@ export const acquisitionsEpicUSGunCampaign = makeABTest({
                         data-component="${variant.options.componentName}"
                         class="acquisitions-epic-iframe"
                         id="${variant.options.iframeId}">
-                    </iframe>`
+                    </iframe>`,
             },
         },
     ],
