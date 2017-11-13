@@ -29,9 +29,9 @@ object StoryHtmlPage {
 
   def atomStyles(implicit page: Page) = Page.getContent(page) 
     .flatMap(_.atoms)
-    .map(_.atomTypes.map { atomType =>
-      stylesheetLink(s"stylesheets/atom-$atomType-article-index.css")
-    })
+    .map(_.atomTypes.collect { 
+      case (atomType, true) => stylesheetLink(s"stylesheets/atom-$atomType-article-index.css")
+    }.toSeq)
     .getOrElse(Nil)
 
   def html(
