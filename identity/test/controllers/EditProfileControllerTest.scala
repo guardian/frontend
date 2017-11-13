@@ -43,7 +43,7 @@ import scala.concurrent.Future
     val authService = mock[AuthenticationService]
     val idRequest = mock[IdentityRequest]
     val trackingData = mock[TrackingData]
-    val newsletterService = mock[NewsletterService]
+    val newsletterService = spy(new NewsletterService(api, idRequestParser, idUrlBuilder))
 
     val userId: String = "123"
     val user = User("test@example.com", userId, statusFields = StatusFields(receive3rdPartyMarketing = Some(true), receiveGnmMarketing = Some(true)))
@@ -69,9 +69,6 @@ import scala.concurrent.Future
     val emailForm = EmailPrefsData.emailPrefsForm.fill(EmailPrefsData("Text", List("37")))
     when(api.userEmails(MockitoMatchers.anyString(), MockitoMatchers.any[TrackingData])) thenReturn Future.successful(Right(Subscriber("Text", List(EmailList("37")))))
     when(api.updateUserEmails(MockitoMatchers.anyString(), MockitoMatchers.any[Subscriber], MockitoMatchers.any[Auth], MockitoMatchers.any[TrackingData])) thenReturn Future.successful(Right(()))
-    when(newsletterService.getEmailSubscriptions(MockitoMatchers.any[Form[EmailPrefsData]], MockitoMatchers.any[List[String]], MockitoMatchers.any[List[String]])) thenReturn Nil
-    when(newsletterService.preferences(MockitoMatchers.anyString(), MockitoMatchers.any[TrackingData])) thenReturn Future.successful(emailForm)
-    when(newsletterService.savePreferences()(MockitoMatchers.any[AuthRequest[AnyContent]])) thenReturn Future.successful(emailForm)
 
     lazy val controller = new EditProfileController(
       idUrlBuilder,
@@ -82,8 +79,7 @@ import scala.concurrent.Future
       csrfAddToken,
       profileFormsMapping,
       controllerComponent,
-//      newsletterService
-      new NewsletterService(api, idRequestParser, idUrlBuilder)
+      newsletterService
     )
   }
 
@@ -447,25 +443,29 @@ import scala.concurrent.Future
       }
     }
 
-    "saveEmailPreferences" should {
-      def fakeRequestEmailPrefs: FakeRequest[AnyContentAsFormUrlEncoded] = FakeCSRFRequest(csrfAddToken)
-        .withFormUrlEncodedBody("htmlPreference" -> "Text")
-
-      "hit IDAPI post email endpoint if form body is successfully deserialised" in new EditProfileFixture {
+    "saveEmailPreferences method is called with valid form body" should {
+      "respond with success body if IDAPI post email endpoint returns 200" in new EditProfileFixture {
+        val fakeRequestEmailPrefs = FakeCSRFRequest(csrfAddToken).withFormUrlEncodedBody("htmlPreference" -> "Text")
         when(api.updateUserEmails(MockitoMatchers.anyString(), MockitoMatchers.any[Subscriber], MockitoMatchers.any[Auth], MockitoMatchers.any[TrackingData])) thenReturn Future.successful(Right(()))
 
         val result = controller.saveEmailPreferences().apply(fakeRequestEmailPrefs)
         status(result) should be(200)
         contentAsString(result) should include ("updated")
+
+        verify(newsletterService).savePreferences()(MockitoMatchers.any[AuthRequest[AnyContent]])
         verify(api).updateUserEmails(userId, Subscriber("Text", Nil), testAuth, trackingData)
       }
 
-      "respond with error message if IDAPI post email endpoint returns error" in new EditProfileFixture {
+      "respond with error body if IDAPI post email endpoint returns error" in new EditProfileFixture {
+        val fakeRequestEmailPrefs = FakeCSRFRequest(csrfAddToken).withFormUrlEncodedBody("htmlPreference" -> "Text")
         val errors = List(Error("Test message", "Test description", 500))
         when(api.updateUserEmails(MockitoMatchers.anyString(), MockitoMatchers.any[Subscriber], MockitoMatchers.any[Auth], MockitoMatchers.any[TrackingData])) thenReturn Future.successful(Left(errors))
 
         val result = controller.saveEmailPreferences().apply(fakeRequestEmailPrefs)
+        status(result) should not be(200)
         contentAsString(result) should include ("There was an error saving your preferences")
+
+        verify(newsletterService).savePreferences()(MockitoMatchers.any[AuthRequest[AnyContent]])
         verify(api).updateUserEmails(userId, Subscriber("Text", Nil), testAuth, trackingData)
       }
     }
