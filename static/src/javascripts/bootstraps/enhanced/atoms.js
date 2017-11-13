@@ -5,9 +5,9 @@ import { services } from 'journalism/services';
 
 const bootstrapAtom = (atomMaker: AtomMaker, atomType: AtomType) => {
     const atomBuilder = atomMaker[atomType].default(services);
-    Array.from(
-        document.querySelectorAll(`[data-atom-type='${atomType}']`)
-    ).forEach(atomDom => {
+    [
+        ...document.querySelectorAll(`[data-atom-type='${atomType}']`),
+    ].forEach(atomDom => {
         const atom = atomBuilder(atomDom).runTry();
         if (typeof atom === 'string') {
             // eslint-disable-next-line no-console
