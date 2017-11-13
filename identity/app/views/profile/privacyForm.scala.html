@@ -62,15 +62,29 @@
     @if(IdentityGdprMarketingConsentSwitch.isSwitchedOn) {
         <h2 class="manage-account-header">Would you like to receive information from the Guardian and their partners?</h2>
         <p class="manage-account-headerNote">The Guardian and their partners would like to occasionally send you information about their products, services and events</p>
-        <div class="manage-account__switchboard">
-            <ul>
-                @helper.repeat(privacyForm("consents"), min=1) { consentField =>
-                    <li>
-                        @v2ConsentCheckbox(consentField)
-                    </li>
-                }
-            </ul>
+        <div class="fieldset fieldset--manage-account-noborder fieldset--manage-account-block">
+            <div class="manage-account__switchboard">
+                <ul>
+                    @helper.repeat(privacyForm("consents"), min=1) { consentField =>
+                        <li>
+                            @v2ConsentCheckbox(consentField)
+                        </li>
+                    }
+                </ul>
+            </div>
         </div>
+
+        <fieldset class="fieldset fieldset--manage-account-rightsubmit">
+            <div class="fieldset__heading"></div>
+            <div class="fieldset__fields">
+                <ul class="u-unstyled">
+                    <li>
+                        <button type="submit" class="manage-account__button" data-link-name="Save privacy preferences">Save changes</button>
+                    </li>
+                </ul>
+            </div>
+
+        </fieldset>
     }
 
     @if(!IdentityGdprMarketingConsentSwitch.isSwitchedOn) {
@@ -115,21 +129,20 @@
                 </ul>
             </div>
         </fieldset>
+        @* Submit button *@
+        <fieldset class="fieldset">
+            <div class="fieldset__heading"></div>
+            <div class="fieldset__fields">
+                <ul class="u-unstyled">
+                    <li>
+                        <button type="submit" class="manage-account__button" data-link-name="Save privacy preferences">Save changes</button>
+                    </li>
+                </ul>
+            </div>
+
+        </fieldset>
     }
-
-    @* Submit button *@
-    <fieldset class="fieldset">
-        <div class="fieldset__heading"></div>
-        <div class="fieldset__fields">
-            <ul class="u-unstyled">
-                <li>
-                    <button type="submit" class="manage-account__button" data-link-name="Save privacy preferences">Save changes</button>
-                </li>
-            </ul>
-        </div>
-
-    </fieldset>
-</form>
+    </form>
 
 @* NEWSLETTERS *@
 

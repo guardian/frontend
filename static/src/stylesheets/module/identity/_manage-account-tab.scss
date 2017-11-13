@@ -439,3 +439,17 @@
         border-color: currentColor;
     }
 }
+
+.fieldset {
+    &.fieldset--manage-account-noborder {
+        border: 0;
+    }
+    &.fieldset--manage-account-block {
+        display: block;
+    }
+    &.fieldset--manage-account-rightsubmit {
+        *[type=submit] {
+            float: right;
+        }
+    }
+}
