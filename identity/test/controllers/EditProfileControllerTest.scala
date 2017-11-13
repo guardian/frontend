@@ -9,7 +9,7 @@ import form._
 import idapiclient.{TrackingData, _}
 import idapiclient.Auth
 import idapiclient.responses.Error
-import model.{Countries, PhoneNumbers}
+import model.{Countries, EmailNewsletters, PhoneNumbers}
 import org.joda.time.format.ISODateTimeFormat
 import org.mockito.Mockito._
 import org.mockito.{ArgumentCaptor, Matchers => MockitoMatchers}
@@ -60,13 +60,13 @@ import scala.concurrent.Future
     )
 
     when(authService.authenticatedUserFor(MockitoMatchers.any[RequestHeader])) thenReturn Some(authenticatedUser)
+    when(authService.recentlyAuthenticated(MockitoMatchers.any[RequestHeader])) thenReturn true
     when(api.me(testAuth)) thenReturn Future.successful(Right(user))
 
     when(idRequestParser.apply(MockitoMatchers.any[RequestHeader])) thenReturn idRequest
     when(idRequest.trackingData) thenReturn trackingData
     when(idRequest.returnUrl) thenReturn None
 
-    val emailForm = EmailPrefsData.emailPrefsForm.fill(EmailPrefsData("Text", List("37")))
     when(api.userEmails(MockitoMatchers.anyString(), MockitoMatchers.any[TrackingData])) thenReturn Future.successful(Right(Subscriber("Text", List(EmailList("37")))))
     when(api.updateUserEmails(MockitoMatchers.anyString(), MockitoMatchers.any[Subscriber], MockitoMatchers.any[Auth], MockitoMatchers.any[TrackingData])) thenReturn Future.successful(Right(()))
 
@@ -452,7 +452,6 @@ import scala.concurrent.Future
         status(result) should be(200)
         contentAsString(result) should include ("updated")
 
-        verify(newsletterService).savePreferences()(MockitoMatchers.any[AuthRequest[AnyContent]])
         verify(api).updateUserEmails(userId, Subscriber("Text", Nil), testAuth, trackingData)
       }
 
@@ -465,8 +464,20 @@ import scala.concurrent.Future
         status(result) should not be(200)
         contentAsString(result) should include ("There was an error saving your preferences")
 
-        verify(newsletterService).savePreferences()(MockitoMatchers.any[AuthRequest[AnyContent]])
         verify(api).updateUserEmails(userId, Subscriber("Text", Nil), testAuth, trackingData)
+      }
+    }
+
+    "displayEmailPrefsForm method" should {
+      "display Guardian Today UK newsletter as subscribed" in new EditProfileFixture {
+        val userEmailSubscriptions = List(EmailList(EmailNewsletters.guardianTodayUk.listId.toString))
+        when(api.userEmails(MockitoMatchers.anyString(), MockitoMatchers.any[TrackingData]))
+          .thenReturn(Future.successful(Right(Subscriber("Text", userEmailSubscriptions))))
+
+        val result = controller.displayEmailPrefsForm().apply(FakeCSRFRequest(csrfAddToken))
+        status(result) should be(200)
+        contentAsString(result) should include (EmailNewsletters.guardianTodayUk.name)
+        contentAsString(result) should include ("Unsubscribe")
       }
     }
   }
