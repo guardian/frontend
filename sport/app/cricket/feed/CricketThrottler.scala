@@ -6,7 +6,7 @@ import akka.NotUsed
 import akka.actor.{Actor, ActorRef, ActorSystem, Props}
 import akka.pattern.{ask, pipe}
 import akka.stream.scaladsl.{Sink, Source}
-import akka.stream.{ActorMaterializer, OverflowStrategy, ThrottleMode}
+import akka.stream.{Materializer, OverflowStrategy, ThrottleMode}
 import akka.util.Timeout
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -15,7 +15,7 @@ import scala.reflect.ClassTag
 
 case class CricketThrottledTask[+T](task: () => Future[T])
 
-class CricketThrottlerActor()(implicit materializer: ActorMaterializer) extends Actor {
+class CricketThrottlerActor()(implicit materializer: Materializer) extends Actor {
   import context.dispatcher
 
   private case class TaskWithSender[+T](sender: ActorRef, task: () => Future[T])
@@ -32,9 +32,8 @@ class CricketThrottlerActor()(implicit materializer: ActorMaterializer) extends 
 }
 
 
-class CricketThrottler(actorSystem: ActorSystem) {
-  private implicit val materializer: ActorMaterializer = ActorMaterializer.create(actorSystem)
-  private val cricketThrottlerActor: ActorRef = actorSystem.actorOf(Props(new CricketThrottlerActor))
+class CricketThrottler(actorSystem: ActorSystem, materializer: Materializer) {
+  private val cricketThrottlerActor: ActorRef = actorSystem.actorOf(Props(new CricketThrottlerActor()(materializer)))
 
   def throttle[T](task: () => Future[T])(implicit ec: ExecutionContext, tag: ClassTag[T]): Future[T] = {
     implicit val timeout: Timeout = Timeout(30, TimeUnit.SECONDS)
