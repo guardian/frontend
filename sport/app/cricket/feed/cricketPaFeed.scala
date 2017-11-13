@@ -1,8 +1,9 @@
 package conf.cricketPa
 
 import akka.actor.ActorSystem
+import akka.stream.Materializer
 import common.Logging
-import cricket.feed.{CricketThrottler, ThrottledTask}
+import cricket.feed.CricketThrottler
 import org.joda.time.LocalDate
 import org.joda.time.format.{DateTimeFormat, DateTimeFormatter}
 import play.api.libs.ws.WSClient
@@ -16,15 +17,15 @@ object PaFeed {
   val dateFormat: DateTimeFormatter = DateTimeFormat.forPattern("yyyy-MM-dd")
 }
 
-class PaFeed(wsClient: WSClient, actorSystem: ActorSystem) extends Logging {
+class PaFeed(wsClient: WSClient, actorSystem: ActorSystem, materializer: Materializer) extends Logging {
 
   private val paEndpoint = "http://cricket.api.press.net/v1"
   private val credentials = conf.SportConfiguration.pa.cricketKey.map { ("Apikey", _) }
   private val xmlContentType = ("Accept","application/xml")
-  private implicit val throttler = new CricketThrottler(actorSystem)
+  private implicit val throttler = new CricketThrottler(actorSystem, materializer)
 
   private def getMatchPaResponse(apiMethod: String)(implicit executionContext: ExecutionContext): Future[String] = {
-    credentials.map ( header => ThrottledTask {
+    credentials.map ( header => throttler.throttle { () =>
       val endpoint = s"$paEndpoint/$apiMethod"
       wsClient.url(endpoint)
         .withHttpHeaders(header, xmlContentType)
@@ -63,7 +64,7 @@ class PaFeed(wsClient: WSClient, actorSystem: ActorSystem) extends Logging {
   }
 
   private def getTeamMatches(team: CricketTeam, matchType: String, startDate: LocalDate, endDate: LocalDate)(implicit executionContext: ExecutionContext): Future[Seq[String]] =
-    credentials.map ( header => ThrottledTask {
+    credentials.map ( header => throttler.throttle { () =>
       val start = PaFeed.dateFormat.print(startDate)
       val end = PaFeed.dateFormat.print(endDate)
       val endpoint = s"$paEndpoint/team/${team.paId}/$matchType"

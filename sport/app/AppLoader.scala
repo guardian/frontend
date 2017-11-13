@@ -1,4 +1,5 @@
 import akka.actor.ActorSystem
+import akka.stream.Materializer
 import http.{CommonFilters, CorsHttpErrorHandler}
 import app.{FrontendApplicationLoader, FrontendComponents}
 import com.softwaremill.macwire._
@@ -38,6 +39,7 @@ class AppLoader extends FrontendApplicationLoader {
 trait SportServices {
   def wsClient: WSClient
   def actorSystem: ActorSystem
+  def materializer: Materializer
   implicit val executionContext: ExecutionContext
 
   lazy val capiHttpClient: HttpClient = wire[CapiHttpClient]
