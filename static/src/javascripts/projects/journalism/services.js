@@ -14,10 +14,10 @@ import { viewport } from './services/viewport';
 const services: Services = {
     ophan,
     dom: {
-        write: (f: Thunk) => {
+        write: (f: () => void) => {
             fastdom.write(f);
         },
-        read: (f: Thunk) => {
+        read: (f: () => void) => {
             fastdom.read(f);
         },
     },

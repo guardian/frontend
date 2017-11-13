@@ -28,5 +28,3 @@ declare type ThirdPartyTag = {
     onLoad?: () => any,
     useImage?: boolean,
 };
-
-declare type Thunk = () => void;

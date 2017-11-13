@@ -8,7 +8,7 @@ const cache: Map<number, ObserverRecord> = new Map();
 const observe = (
     element: Element,
     threshold: number,
-    callback: Thunk
+    callback: () => void
 ): void => {
     let record = cache.get(threshold);
     if (!record) {

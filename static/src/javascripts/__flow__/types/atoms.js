@@ -21,13 +21,13 @@ declare type Atom = {
 declare type AtomBuilder = (Element) => Coeval<Atom>;
 
 declare type DomService = {
-    read: Thunk => void,
-    write: Thunk => void,
+    read: (() => void) => void,
+    write: (() => void) => void,
 };
 
 declare type ViewportService = {
-    observe: (Element, number, Thunk) => void,
-    unobserve: (Element, number, Thunk) => void,
+    observe: (Element, number, () => void) => void,
+    unobserve: (Element, number, () => void) => void,
 };
 
 declare type Services = {

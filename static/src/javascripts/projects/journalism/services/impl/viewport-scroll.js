@@ -28,7 +28,7 @@ const onScroll = () => {
     });
 };
 
-const observe = (element: Element, threshold: number, callback: Thunk) => {
+const observe = (element: Element, threshold: number, callback: () => void) => {
     if (!listening) {
         window.addEventListener('scroll', onScroll);
         listening = true;
@@ -39,7 +39,11 @@ const observe = (element: Element, threshold: number, callback: Thunk) => {
     elementCount += 1;
 };
 
-const unobserve = (element: Element, threshold: number, callback: Thunk) => {
+const unobserve = (
+    element: Element,
+    threshold: number,
+    callback: () => void
+) => {
     if (!elements[threshold]) return;
 
     const lengthBefore = elements[threshold].length;
