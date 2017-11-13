@@ -273,7 +273,7 @@ final case class Content(
     }
 
     val atomTypesMeta = atoms.map { atoms =>
-      ("atomTypes", JsObject(atoms.atomTypes.map(_ -> JsBoolean(true)).toMap))
+      ("atomTypes", JsObject(atoms.atomTypes.map { case (k, v) => k -> JsBoolean(v) }))
     }
 
     // There are many checks that might disable sticky top banner, listed below.
