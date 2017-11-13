@@ -251,11 +251,11 @@ const bindLabelFromSwitchboard = (labelEl: HTMLElement): void => {
             }),
         ])
             .then(([inputFields: NodeList<HTMLElement>]) =>
-                getCsrfTokenFromElement(labelEl).then((csrfToken: String) =>
+                getCsrfTokenFromElement(labelEl).then((csrfToken: string) =>
                     Promise.resolve([csrfToken, inputFields])
                 )
             )
-            .then(([csrfToken: String, inputFields: NodeList<HTMLElement>]) =>
+            .then(([csrfToken: string, inputFields: NodeList<HTMLElement>]) =>
                 buildFormDataForFields(csrfToken.toString(), inputFields)
             )
             .then((formData: FormData) => submitPartialFormStatus(formData))
