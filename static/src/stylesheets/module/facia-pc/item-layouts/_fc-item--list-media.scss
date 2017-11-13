@@ -1,0 +1,154 @@
+/*
+
+Media list item. Looks a bit like this:
+
+***********************************************
+0000000  x x x x x x x x x x x x x x x x x x x
+0000000  x x x x x x x x x x x x x x x x x x x x
+0000000
+***********************************************
+
+ */
+
+ @mixin fc-item--list-media ($text-lines-per-media-object: 4, $headline-size: 2) {
+    @include fc-item--list;
+
+    // calculate image width
+    $media-ratio: 5 / 3;
+    $item-vertical-padding: $gs-baseline / 4;
+    $estimate-item-min-height: (($item-vertical-padding * 2) + get-line-height(headline, $headline-size) * $text-lines-per-media-object);
+    $image-width: normalize-width($estimate-item-min-height * $media-ratio);
+    $item-min-height: $image-width / $media-ratio;
+    $mobile-media-padding: ($gs-baseline / 3);
+
+    .fc-item__content {
+        min-height: $item-min-height + ($mobile-media-padding * 2);
+        position: relative;
+    }
+
+    &.fc-item--has-metadata .fc-item__content {
+        padding-bottom: floor($gs-baseline * 1.2);
+    }
+
+    @include mq(tablet) {
+        .fc-item__content {
+            min-height: $item-min-height;
+        }
+    }
+
+    .fc-item__container,
+    .fc-item__content,
+    .fc-item__footer,
+    .fc-item__image-container {
+        display: block;
+    }
+
+    &.fc-item {
+        padding-bottom: 0 !important;
+    }
+
+    &.fc-item--has-image {
+        // Override .svg .action--has-icon
+        position: relative;
+
+        &:before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: $image-width;
+        }
+
+        .fc-item__container {
+            padding-left: $image-width + $mobile-media-padding;
+
+            @include mq(tablet) {
+                padding-left: $image-width;
+            }
+        }
+    }
+
+    .fc-item__header {
+        @include fs-headline($headline-size, true);
+        @include headline-boost($headline-size + 1);
+    }
+
+    .fc-item__media-wrapper,
+    .fc-item__image-container {
+        display: block;
+    }
+
+    .fc-item__media-wrapper {
+        position: absolute;
+        margin-left: 0 - $image-width;
+        width: $image-width;
+        margin-top: $mobile-media-padding;
+        margin-bottom: $mobile-media-padding;
+
+        @include mq(tablet) {
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+    }
+
+    .fc-item__kicker--dreamsnap-list {
+        margin-left: 0 - $image-width - $mobile-media-padding;
+
+        @include mq(tablet) {
+            margin-left: 0 - $image-width;
+        }
+    }
+
+    &[class*='fc-item--has-sublinks'] .fc-item__media-wrapper {
+        position: relative;
+        float: left;
+    }
+
+    &.fc-item--has-no-image,
+    &.fc-item--has-cutout {
+        .fc-item__container {
+            padding-left: 0;
+        }
+
+        .fc-item__meta {
+            margin-left: 0;
+        }
+
+        .fc-item__footer--vertical {
+            margin-left: 0;
+        }
+    }
+
+    &.fc-item--has-cutout .fc-item__media-wrapper {
+        display: none;
+    }
+
+    .fc-item__footer--vertical,
+    &[class*='fc-item--has-sublinks'] .fc-item__meta {
+        margin-left: 0 - $image-width - $mobile-media-padding;
+    }
+
+    &.fc-item--has-cutout {
+        .fc-item__kicker--dreamsnap-list {
+            margin-left: 0;
+        }
+
+        .fc-item__content {
+            min-height: gs-height(2) + $gs-baseline;
+            padding-right: gs-span(1);
+        }
+
+        .fc-item__avatar {
+            height: gs-span(1) + $gs-baseline * 3;
+
+            .fc-item__avatar__media {
+                display: block;
+                right: - $gs-gutter;
+            }
+        }
+    }
+
+    .fc-item__video-play { display: none !important; }
+
+}

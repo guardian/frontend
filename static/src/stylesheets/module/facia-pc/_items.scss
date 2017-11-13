@@ -10,6 +10,7 @@
 @import 'item-layouts/fc-item--three-quarters-right';
 @import 'item-layouts/fc-item--three-quarters-tall';
 @import 'item-layouts/fc-item--list';
+@import 'item-layouts/fc-item--list-media';
 
 // overrides of current slices
 
@@ -18,6 +19,21 @@
     position: relative;
     padding-bottom: 0;
     margin-bottom: $gs-baseline;
+
+    @include mq(tablet) {
+        .has-flex &:not(.fc-slice__item--mpu-candidate) {
+            display: flex;
+        }
+    }
+
+    @include mq(mobile) {
+        float: none;
+    }
+
+    &.l-list__item {
+        margin-bottom: 0;
+        padding-bottom: $gs-baseline;
+    }
 }
 
 .fc-item--standard-tablet {
@@ -42,6 +58,18 @@
 .fc-item--list-tablet {
     @include mq(tablet) {
         @include fc-item--list;
+    }
+}
+
+.fc-item--list-media-mobile {
+    @include mq($until: tablet) {
+        @include fc-item--list-media(3.5, 2);
+    }
+}
+
+.fc-item--list-media-tablet {
+    @include mq(tablet) {
+        @include fc-item--list-media;
     }
 }
 

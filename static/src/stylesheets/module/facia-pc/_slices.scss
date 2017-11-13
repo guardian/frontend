@@ -8,6 +8,31 @@
     }
 }
 
+
+/*
+
+This file is to be used only for manual overrides of item defaults at a slice level.
+Hence why a greater depth of selector specificity is needed.
+
+*/
+.fc-slice--hl4-h {
+    .has-flex & {
+        flex-direction: row-reverse;
+
+        .fc-slice__item:before {
+            display: none;
+        }
+
+        .fc-item--half-tablet {
+            .fc-item__standfirst {
+                @include mq(desktop) {
+                    display: none;
+                }
+            }
+        }
+    }
+}
+
 // reduce type size on q-q-q-q slice if it follows another slice in the same container
 .fc-slice-wrapper + .fc-slice-wrapper {
     .fc-slice--q-q-q-q {

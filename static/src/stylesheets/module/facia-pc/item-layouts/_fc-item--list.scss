@@ -9,20 +9,4 @@
     .fc-item__media-wrapper {
         display: none;
     }
-
-    &.fc-item--has-cutout {
-        .fc-item__avatar__media {
-            display: none;
-        }
-    }
-
-    .fc-item__kicker--dreamsnap {
-        display: none;
-    }
-
-    .fc-item__kicker--dreamsnap-list {
-        @include fs-header(1);
-        display: block;
-        margin: 0;
-    }
 }

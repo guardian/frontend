@@ -15,6 +15,7 @@
     color: $neutral-1;
     margin: 0;
     padding: 0;
+    font-weight: 500;
 
     &:before {
         display: block;
@@ -27,7 +28,6 @@
     }
 
     .fc-sublink__kicker {
-        font-weight: 500;
         float: left;
         margin-right: .2em;
     }

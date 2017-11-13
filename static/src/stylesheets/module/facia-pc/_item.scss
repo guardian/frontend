@@ -17,7 +17,7 @@ $fc-item-gutter: $gs-gutter / 4;
 
         > * {
             box-sizing: border-box;
-            padding-right: $gs-gutter * .5;
+            padding-right: $gs-gutter * .25;
         }
     }
 
@@ -51,17 +51,16 @@ $fc-item-gutter: $gs-gutter / 4;
     }
 }
 
-// hide any fc-item that aren't 3/4 for now
-.fc-item:not(.fc-item--three-quarters-tablet):not(.fc-item--three-quarters-right-tablet):not(.fc-item--three-quarters-tall-tablet) {
-    display: flex;
+// hide any fc-item during DEV
+.fc-item--video,
+.fc-item--audio {
+    min-height: 100px;
     flex: 1 1 auto;
-    height: 100%;
-    // min-height: 100px;
-    // background: red;
+    background: red !important;
     
-    // > * {
-    //     display: none;
-    // }
+    > * {
+        display: none !important;
+    }
 }
 
 .fc-item {
@@ -160,7 +159,7 @@ $fc-item-gutter: $gs-gutter / 4;
     box-sizing: border-box;
     flex: 1 1 auto;
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
     padding-left: $fc-item-gutter;
     padding-right: $fc-item-gutter;
 }
@@ -231,14 +230,18 @@ $fc-item-gutter: $gs-gutter / 4;
     margin-bottom: 0;
 }
 
+.fc-item__standfirst-wrapper {
+    display: flex;
+    flex-direction: row;
+    padding-bottom: $gs-gutter * .25;
+}
+
 .fc-item__standfirst {
     @include fs-headline(1);
-    padding-bottom: .5em;
     color: $neutral-2;
     display: none;
-    flex: 1;
-    flex-direction: column;
-    justify-content: flex-end;
+    flex: 1 1 auto;
+    padding-right: $gs-gutter * .25;
 
     .fc-item--has-boosted-title & {
         display: none !important;
@@ -254,20 +257,20 @@ $fc-item-gutter: $gs-gutter / 4;
 
 .fc-item__meta {
     @include fs-textSans(1);
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    padding-bottom: .5rem;
+    min-width: 40px;
     color: $neutral-2;
+    position: relative;
 
     .inline-icon {
         fill: $neutral-3;
     }
 
-    a, button {
+    a {
         // make sure meta links always clickable,
         // even on mobile/tablet
         z-index: 1 !important;
+        position: absolute;
+        bottom: 2px;
     }
 }
 

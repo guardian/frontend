@@ -1,5 +1,5 @@
 $pillars: (
-    news: $news-support-2,
+    news: red,
     opinion: $comment-support-3,
     sport: $news-support-5,
     arts: $comment-support-1,
@@ -14,6 +14,11 @@ $pillars: (
 
     &:hover {
         background-color: darken($background, 3%);
+
+        .fc-item__kicker {
+            background-color: darken($background, 3%);
+            border-bottom-color: darken($background, 3%);
+        }
     }
 
     .fc-item__headline {
