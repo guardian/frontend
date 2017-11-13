@@ -1,17 +1,12 @@
+const fs = require('fs');
 const path = require('path');
 const execa = require('execa');
+const pify = require('pify');
+const postcss = require('../../../postcss');
 const { target } = require('../../config').paths;
 
+const readFile = pify(fs.readFile);
 const atomCssPrefix = 'atom';
-
-const fontMap = {
-    'f-serif-text': '\\"Guardian Text Egyptian Web\\", Georgia, serif',
-    'f-serif-headline': '\\"Guardian Egyptian Web\\", Georgia, serif',
-    'f-sans-serif-text':
-        '\\"Guardian Text Sans Web\\", \\"Helvetica Neue\\", Helvetica, Arial, \\"Lucida Grande\\", sans-serif',
-    'f-sans-serif-headline':
-        '\\"Guardian Sans Web\\", \\"Helvetica Neue\\", Helvetica, Arial, \\"Lucida Grande\\", sans-serif',
-};
 
 module.exports = {
     description: 'Copy atom CSS to target',
@@ -41,18 +36,18 @@ module.exports = {
                         return execa('cp', [
                             `${dir}/article/index.css`,
                             dest,
-                        ]).then(() =>
-                            Promise.all(
-                                Object.entries(
-                                    fontMap
-                                ).map(([varName, varValue]) =>
-                                    execa.shell(
-                                        `perl -pe 's/var(--${varName})/${varValue}/g' ${dest}`
-                                    )
-                                )
-                            )
-                        );
+                        ]).then(() => dest);
                     })
                 );
-            }),
+            })
+            .then(dests =>
+                Promise.all(dests.map(dest => readFile(dest))).then(contents =>
+                    dests.map((dest, index) => ({
+                        content: { css: contents[index] },
+                        filePath: '',
+                        dest,
+                    }))
+                )
+            )
+            .then(contents => postcss(contents, { cssvars: true })),
 };

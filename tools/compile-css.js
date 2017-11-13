@@ -4,7 +4,6 @@
 // 1. glob for files in static/src/stylesheets
 // 2. options object offering `remify` (boolean) and `browsers` (browserlist)
 
-const fs = require('fs');
 const path = require('path');
 
 const mkdirp = require('mkdirp');
@@ -13,12 +12,7 @@ const pify = require('pify');
 
 const sass = require('node-sass');
 
-const postcss = require('postcss');
-const autoprefixer = require('autoprefixer');
-const pxtorem = require('postcss-pxtorem');
-
 const sassRenderP = pify(sass.render);
-const writeFileP = pify(fs.writeFile);
 
 const { src, target } = require('./__tasks__/config').paths;
 
@@ -30,35 +24,9 @@ const SASS_SETTINGS = {
     precision: 5,
 };
 
-const BROWSERS_LIST = [
-    'Firefox >= 26',
-    'Explorer >= 10',
-    'Safari >= 5',
-    'Chrome >= 36',
-
-    'iOS >= 5',
-    'Android >= 2',
-    'BlackBerry >= 6',
-    'ExplorerMobile >= 7',
-
-    '> 2% in US',
-    '> 2% in AU',
-    '> 2% in GB',
-];
-
-const REMIFICATIONS = {
-    replace: true,
-    root_value: 16,
-    unit_precision: 5,
-    propList: ['*'],
-};
-
 const getFiles = sassGlob => glob.sync(path.resolve(sassDir, sassGlob));
 
-module.exports = (
-    sassGlob,
-    { remify = true, browsers = BROWSERS_LIST } = {}
-) => {
+module.exports = sassGlob => {
     if (typeof sassGlob !== 'string') {
         return Promise.reject(new Error('No glob provided.'));
     }
@@ -80,29 +48,12 @@ module.exports = (
                 SASS_SETTINGS
             );
 
-            const postcssPlugins = [autoprefixer({ browsers })];
-            if (remify) {
-                postcssPlugins.push(pxtorem(REMIFICATIONS));
-            }
-
             mkdirp.sync(path.parse(dest).dir);
-            return sassRenderP(sassOptions)
-                .then(result =>
-                    postcss(postcssPlugins).process(result.css.toString(), {
-                        from: filePath,
-                        to: dest,
-                        map: {
-                            inline: false,
-                            prev: result.map.toString(),
-                        },
-                    })
-                )
-                .then(result =>
-                    Promise.all([
-                        writeFileP(dest, result.css),
-                        writeFileP(`${dest}.map`, result.map),
-                    ])
-                );
+            return sassRenderP(sassOptions).then(result => ({
+                content: result,
+                filePath,
+                dest,
+            }));
         })
     );
 };
