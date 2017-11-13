@@ -260,6 +260,9 @@ $fc-item-gutter: $gs-gutter / 4;
     min-width: 40px;
     color: $neutral-2;
     position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
 
     .inline-icon {
         fill: $neutral-3;
@@ -269,8 +272,6 @@ $fc-item-gutter: $gs-gutter / 4;
         // make sure meta links always clickable,
         // even on mobile/tablet
         z-index: 1 !important;
-        position: absolute;
-        bottom: 2px;
     }
 }
 
