@@ -12,7 +12,7 @@ class PrivacyMapping extends UserFormMapping[PrivacyFormData] {
 
   private val dateTimeFormatISO8601: String = "yyyy-MM-dd'T'HH:mm:ssZZ"
 
-  protected def formMapping(implicit messagesProvider: MessagesProvider): Mapping[PrivacyFormData] =
+  def formMapping(implicit messagesProvider: MessagesProvider): Mapping[PrivacyFormData] =
     mapping(
       "receiveGnmMarketing" -> boolean,     // TODO: statusFields to be removed once GDPR V2 is in PROD
       "receive3rdPartyMarketing" -> boolean,

@@ -8,7 +8,7 @@ import play.api.i18n.{MessagesApi, MessagesProvider}
 
 class ProfileMapping extends UserFormMapping[ProfileFormData] {
 
-  protected def formMapping(implicit messagesProvider: MessagesProvider): Mapping[ProfileFormData] = mapping(
+  def formMapping(implicit messagesProvider: MessagesProvider): Mapping[ProfileFormData] = mapping(
     "location" -> textField,
     "aboutMe" -> textArea,
     "interests" -> textField,
