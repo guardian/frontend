@@ -1,5 +1,6 @@
 .veggie-burger-fallback {
     &:checked {
+
         & ~ .menu {
             @include mq($until: desktop) {
                 @include menu-animation(0%);
