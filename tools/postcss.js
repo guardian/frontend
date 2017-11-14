@@ -3,7 +3,7 @@ const pify = require('pify');
 const postcss = require('postcss');
 const autoprefixer = require('autoprefixer');
 const pxtorem = require('postcss-pxtorem');
-const cssVars = require('postcss-css-variables');
+const varstovals = require('postcss-css-variables');
 const atomVars = require('./atomVars');
 
 const writeFileP = pify(fs.writeFile);
@@ -40,7 +40,7 @@ module.exports = (
         postcssPlugins.push(pxtorem(REMIFICATIONS));
     }
     if (cssvars) {
-        postcssPlugins.push(cssVars({ variables: atomVars.vars }));
+        postcssPlugins.push(varstovals({ variables: atomVars.vars }));
     }
 
     return Promise.all(
