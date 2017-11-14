@@ -7,6 +7,7 @@ import bean from 'bean';
 import reqwest from 'reqwest';
 import fastdom from 'lib/fastdom-promise';
 import $ from 'lib/$';
+import { push as pushError } from './modules/show-errors';
 
 const addUpdatingState = buttonEl => {
     fastdom.write(() => {
@@ -220,48 +221,62 @@ const getCsrfTokenFromElement = (originalEl): Promise<any> =>
         .then((csrfTokenEl: HTMLInputElement) => csrfTokenEl.value.toString());
 
 const submitPartialFormStatus = (formData: FormData): Promise<void> =>
-    new Promise((success: Function, error: Function): void =>
-        reqwest({
-            url: '/privacy/edit-ajax',
-            method: 'POST',
-            data: formData,
-            processData: false,
-            error(err) {
-                error(err);
-            },
-            success(msg) {
-                success(msg);
-            },
-        })
-    );
+    reqwest({
+        url: '/privacy/edit-ajax',
+        method: 'POST',
+        data: formData,
+        processData: false,
+    });
 
 const bindLabelFromSwitchboard = (labelEl: HTMLElement): void => {
     const getInputFields: Promise<NodeList<HTMLElement>> = fastdom.read(() =>
         labelEl.querySelectorAll('*[name][value]')
     );
 
-    bean.on(labelEl, 'change', () => {
-        Promise.all([
-            getInputFields,
-            fastdom.write(() => {
-                if (document.body) {
-                    document.body.classList.add('is-updating-cursor');
-                }
-                labelEl.classList.add('is-updating');
-            }),
-        ])
-            .then(([inputFields: NodeList<HTMLElement>]) =>
-                getCsrfTokenFromElement(labelEl).then((csrfToken: string) =>
-                    Promise.resolve([csrfToken, inputFields])
+    bean.on(
+        labelEl,
+        'change',
+        (ev: Event, isNotUserInitiated: boolean = false) => {
+            if (isNotUserInitiated) {
+                return;
+            }
+
+            Promise.all([
+                getInputFields,
+                fastdom.write(() => {
+                    if (document.body) {
+                        document.body.classList.add('is-updating-cursor');
+                    }
+                    labelEl.classList.add('is-updating');
+                }),
+            ])
+                .then(([inputFields: NodeList<HTMLElement>]) =>
+                    getCsrfTokenFromElement(labelEl).then((csrfToken: string) =>
+                        Promise.resolve([csrfToken, inputFields])
+                    )
                 )
-            )
-            .then(([csrfToken: string, inputFields: NodeList<HTMLElement>]) =>
-                buildFormDataForFields(csrfToken.toString(), inputFields)
-            )
-            .then((formData: FormData) => submitPartialFormStatus(formData))
-            .then(() => {
-                fastdom
-                    .write(() => {
+                .then(
+                    ([csrfToken: string, inputFields: NodeList<HTMLElement>]) =>
+                        buildFormDataForFields(
+                            csrfToken.toString(),
+                            inputFields
+                        )
+                )
+                .then((formData: FormData) => submitPartialFormStatus(formData))
+                .catch((err: Error) => {
+                    fastdom
+                        .read((): ?HTMLElement =>
+                            labelEl.querySelector('input')
+                        )
+                        .then((checkboxEl: HTMLInputElement) => {
+                            fastdom.write(() => {
+                                checkboxEl.checked = !checkboxEl.checked;
+                                pushError(err, 'reload');
+                            });
+                        });
+                })
+                .then(() =>
+                    fastdom.write(() => {
                         if (document.body) {
                             document.body.classList.remove(
                                 'is-updating-cursor'
@@ -270,23 +285,21 @@ const bindLabelFromSwitchboard = (labelEl: HTMLElement): void => {
                         labelEl.classList.add('is-just-updated');
                         labelEl.classList.remove('is-updating');
                     })
-                    .then(
-                        () =>
-                            new Promise((accept: Function) => {
-                                setTimeout(() => accept(), 1000);
-                            })
-                    )
-                    .then(() =>
-                        fastdom.write(() => {
-                            labelEl.classList.remove('is-just-updated');
+                )
+                .then(
+                    () =>
+                        new Promise((accept: Function) => {
+                            setTimeout(() => accept(), 1000);
                         })
-                    );
-            })
-            .catch(() => {
-                window.location.reload();
-                /* TODO: More elegant error handling */
-            });
-    });
+                )
+                .then(() =>
+                    fastdom.write(() => {
+                        labelEl.classList.remove('is-just-updated');
+                    })
+                );
+        },
+        false
+    );
 };
 
 const enhanceEmailPreferences = (): void => {
