@@ -86,52 +86,7 @@ module.exports = {
                 exclude: /(node_modules)/,
                 loader: 'svg-loader',
             },
-            {
-                test: /\.css$/,
-                exclude: /(node_modules)/,
-                use: ['style-loader', 'css-loader', {
-                    loader: 'postcss-loader',
-                    options: {
-                        ident: 'postcss',
-                        plugins: [
-                            require('autoprefixer')({
-                                browsers: [
-                                    'Firefox >= 26',
-                                    'Explorer >= 10',
-                                    'Safari >= 5',
-                                    'Chrome >= 36',
-
-                                    'iOS >= 5',
-                                    'Android >= 2',
-                                    'BlackBerry >= 6',
-                                    'ExplorerMobile >= 7',
-
-                                    '> 2% in US',
-                                    '> 2% in AU',
-                                    '> 2% in GB',
-                                ],
-                            }),
-                            require('postcss-pxtorem')({
-                                replace: true,
-                                root_value: 16,
-                                unit_precision: 5,
-                                propList: ['*'],
-                            }),
-                            require('postcss-css-variables')({
-                                variables: {
-                                    '--f-serif-text': '"Guardian Text Egyptian Web", Georgia, serif'
-                                    '--f-serif-headline': '"Guardian Egyptian Web", Georgia, serif',
-                                    '--f-sans-serif-text':
-                                        '"Guardian Text Sans Web", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif',
-                                    '--f-sans-serif-headline':
-                                        '"Guardian Sans Web", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif',
-                                },
-                            })
-                        ]
-                    }
-                }],
-            },
-            ...require('@guardian/atom-renderer/webpack-module-rules'),
+            ...require('@guardian/atom-renderer/webpack/frontend'),
         ],
     },
     plugins: [
