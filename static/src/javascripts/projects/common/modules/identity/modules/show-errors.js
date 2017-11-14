@@ -1,11 +1,12 @@
 // @flow
 import fastdom from 'lib/fastdom-promise';
 
-const formErrorClassName = 'form__error';
-const formErrorHolderClassName = 'js-errorHolder';
+export const formErrorClassName = 'form__error';
+export const formErrorHolderClassName = 'js-errorHolder';
+
+export const genericErrorMessage = 'Sorry, something went wrong';
 
 export const push = (error: Error, action: string = 'none'): Promise<void> => {
-    const errorDefaultMessage = 'Sorry, something went wrong';
 
     return fastdom
         .read(() =>
@@ -16,7 +17,7 @@ export const push = (error: Error, action: string = 'none'): Promise<void> => {
                 const errorEl = document.createElement('div');
                 errorEl.innerHTML = `<p>${error.message
                     ? error.message
-                    : errorDefaultMessage}. </p>`;
+                    : genericErrorMessage}. </p>`;
                 errorEl.className = formErrorClassName;
                 errorHolderEl.appendChild(errorEl);
 
