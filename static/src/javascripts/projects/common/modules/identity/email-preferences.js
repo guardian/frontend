@@ -222,7 +222,7 @@ const getCsrfTokenFromElement = (originalEl): Promise<any> =>
 const submitPartialFormStatus = (formData: FormData): Promise<void> =>
     new Promise((success: Function, error: Function): void =>
         reqwest({
-            url: '/privacy/edit',
+            url: '/privacy/edit-ajax',
             method: 'POST',
             data: formData,
             processData: false,
@@ -283,6 +283,8 @@ const bindLabelFromSwitchboard = (labelEl: HTMLElement): void => {
                     );
             })
             .catch((error: Error) => {
+                alert("Sorry, something went wrong!");
+                window.location.reload();
                 console.error(error);
             });
     });

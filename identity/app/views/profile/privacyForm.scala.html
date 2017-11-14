@@ -45,8 +45,26 @@
 }
 
 @v1consentCheckboxes = {
-    @checkboxField(Checkbox(privacyForm("receiveGnmMarketing"), '_label -> currentConsents(FirstParty.name)))(nonInputFields, messages)
-    @checkboxField(Checkbox(privacyForm("receive3rdPartyMarketing"), '_label -> currentConsents(ThirdParty.name)))(nonInputFields, messages)
+    <div class="manage-account__switchboard">
+        <ul>
+            <li>
+                @fragments.form.switchboardLabel(
+                    title = currentConsents(FirstParty.name),
+                    copy = None,
+                    behaviour = Some("consent"),
+                    field = privacyForm("receiveGnmMarketing")
+                )(nonInputFields, messages)
+            </li>
+            <li>
+                @fragments.form.switchboardLabel(
+                    title = currentConsents(ThirdParty.name),
+                    copy = None,
+                    behaviour = Some("consent"),
+                    field = privacyForm("receive3rdPartyMarketing")
+                )(nonInputFields, messages)
+            </li>
+        </ul>
+    </div>
 }
 
 @* MARKETING CONSENT *@
@@ -89,7 +107,7 @@
         </fieldset>
     }
 
-    @if(!IdentityGdprMarketingConsentSwitch.isSwitchedOn) {
+    @if(IdentityGdprMarketingConsentSwitch.isSwitchedOn) {
         @* Marketing Consent *@
         <div class="manage-account-headerWrapper">
             <h2 class="manage-account-header">Marketing preferences</h2>
@@ -124,15 +142,26 @@
                     <li class="form-field">
                         <label class="label">In addition to the data that you provide to us, we may also match profiling data from third parties with your registration details.</label>
 
-                        <div class="form-fields-group">
-                        @checkboxField(Checkbox(privacyForm("allowThirdPartyProfiling"), '_label -> "Allow matching with third party data"))(nonInputFields, messages)
+                        <div class="manage-account__switchboard">
+                            <ul>
+                                <li>
+                                @fragments.form.switchboardLabel(
+                                    title = "Allow matching with third party data",
+                                    copy = None,
+                                    behaviour = Some("consent"),
+                                    field = privacyForm("allowThirdPartyProfiling")
+                                )(nonInputFields, messages)
+                                </li>
+                                <li></li>
+                            </ul>
                         </div>
+
                     </li>
                 </ul>
             </div>
         </fieldset>
         @* Submit button *@
-        <fieldset class="fieldset">
+        <fieldset class="fieldset js-manage-account__consentCheckboxesSubmit">
             <div class="fieldset__heading"></div>
             <div class="fieldset__fields">
                 <ul class="u-unstyled">

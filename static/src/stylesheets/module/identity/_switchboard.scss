@@ -90,7 +90,8 @@ $checkbox-size: $gs-gutter / 1.25;
     }
 
     .manage-account__switchboardTitle {
-        @include fs-bodyCopy(2);
+        @include fs-bodyCopy(1);
+        font-weight: 400;
         margin-bottom: $local-gutter * .5;
         cursor: pointer;
         display: block;
@@ -145,7 +146,7 @@ $checkbox-size: $gs-gutter / 1.25;
     &.is-updating {
         cursor: wait;
         pointer-events: none;
-        background: none;
+        background-image: none;
 
         &:before {
             animation: manage-account__switchboardLoading 1s infinite both;
