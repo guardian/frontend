@@ -282,10 +282,9 @@ const bindLabelFromSwitchboard = (labelEl: HTMLElement): void => {
                         })
                     );
             })
-            .catch((error: Error) => {
-                alert("Sorry, something went wrong!");
+            .catch(() => {
                 window.location.reload();
-                console.error(error);
+                /* TODO: More elegant error handling */
             });
     });
 };

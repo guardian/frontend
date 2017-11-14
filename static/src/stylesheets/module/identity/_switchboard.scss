@@ -136,11 +136,6 @@ $checkbox-size: $gs-gutter / 1.25;
         .account__switchboardLabelHeader {
             padding-top: 35%;
         }
-        &--jobs {
-           .account__switchboardLabelHeader {
-               background-image: url(https://i.imgur.com/HZOy6Bu.png);
-           }
-        }
     }
 
     &.is-updating {
