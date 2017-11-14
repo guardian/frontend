@@ -21,7 +21,34 @@ import {
     getClearableCellsForClue,
 } from 'common/modules/crosswords/helpers';
 
-const entryFixture = {
+const stubCellWithValue = (value: string): Cell => ({
+    number: 1,
+    isHighlighted: false,
+    isEditable: false,
+    isError: false,
+    isAnimating: false,
+    value,
+});
+
+const stubClue = (options: Object): Clue =>
+    Object.assign(
+        {
+            id: '',
+            number: '',
+            humanNumber: '',
+            group: [],
+            clue: '',
+            position: {},
+            separatorLocations: {},
+            direction: 'across',
+            length: 0,
+            solution: '',
+        },
+        options
+    );
+
+const entryFixture = stubClue({
+    id: '',
     group: ['2-across'],
     position: {
         x: 2,
@@ -31,7 +58,7 @@ const entryFixture = {
     length: 2,
     number: 15,
     solution: 'IT',
-};
+});
 
 const entriesFixture = [
     {
@@ -105,7 +132,7 @@ const entriesFixture = [
         position: { x: 13, y: 11 },
         separatorLocations: { ',': [4] },
     },
-];
+].map(stubClue);
 
 const groupFixture = [
     {
@@ -149,15 +176,17 @@ const groupFixture = [
         position: { x: 1, y: 11 },
         separatorLocations: { ',': [4, 7] },
     },
-];
+].map(stubClue);
 
 describe('Helpers', () => {
     describe('isAcross', () => {
         it('should be true for a clue that is "across"', () => {
             expect(
-                isAcross({
-                    direction: 'across',
-                })
+                isAcross(
+                    stubClue({
+                        direction: 'across',
+                    })
+                )
             ).toBe(true);
         });
 
@@ -174,33 +203,33 @@ describe('Helpers', () => {
         describe('buildGrid', () => {
             it('should build a grid with the correct number of rows', () => {
                 expect(
-                    buildGrid(5, 6, []).every(({length}) => length === 5)
+                    buildGrid(5, 6, [], []).every(({ length }) => length === 5)
                 ).toBe(true);
             });
 
             it('should build a grid with the correct number of columns', () => {
-                expect(buildGrid(5, 6, []).length).toBe(6);
+                expect(buildGrid(5, 6, [], []).length).toBe(6);
             });
 
             it('should set entries to not editable by default', () => {
-                const grid = buildGrid(5, 6, []);
+                const grid = buildGrid(5, 6, [], []);
 
                 expect(
                     grid.every(column =>
-                        column.every(({isEditable}) => isEditable === false)
+                        column.every(({ isEditable }) => isEditable === false)
                     )
                 ).toBe(true);
             });
 
             it('should make cells that belong to an entry editable', () => {
-                const grid = buildGrid(5, 5, [entryFixture]);
+                const grid = buildGrid(5, 5, [entryFixture], []);
 
                 expect(grid[2][3].isEditable).toBe(true);
                 expect(grid[3][3].isEditable).toBe(true);
             });
 
             it('should set the cell number from an entry', () => {
-                const grid = buildGrid(5, 5, [entryFixture]);
+                const grid = buildGrid(5, 5, [entryFixture], []);
 
                 expect(grid[2][3].number).toBe(15);
             });
@@ -301,7 +330,7 @@ describe('Helpers', () => {
         });
 
         it('should return true for a entry with multiple entries in the group attribute', () => {
-            const entryFixtureWithGroup = {
+            const entryFixtureWithGroup = stubClue({
                 group: ['2-across', '15 accross'],
                 position: {
                     x: 2,
@@ -310,7 +339,7 @@ describe('Helpers', () => {
                 direction: 'across',
                 length: 2,
                 number: 2,
-            };
+            });
             expect(clueIsInGroup(entryFixtureWithGroup)).toBe(true);
         });
     });
@@ -335,7 +364,7 @@ describe('Helpers', () => {
                 clue:
                     'Excuse me? Did some old people at any time cause our ruin? Thats a funny revolutionary line (4,4,3,6,4,4,3,2)',
             };
-            const clue = {
+            const clue = stubClue({
                 id: '10-across',
                 humanNumber: 10,
                 length: 9,
@@ -343,7 +372,7 @@ describe('Helpers', () => {
                 group: ['2-down', '10-across', '23-down', '21-across'],
                 position: { x: 5, y: 3 },
                 separatorLocations: { ',': [3, 9] },
-            };
+            });
             expect(getAnagramClueData(entriesFixture, clue)).toEqual(
                 expectedData
             );
@@ -403,7 +432,7 @@ describe('Helpers', () => {
         });
 
         it('should return all cells for a grouped entry', () => {
-            const clue = {
+            const clue = stubClue({
                 id: '10-across',
                 humanNumber: 10,
                 length: 9,
@@ -411,7 +440,7 @@ describe('Helpers', () => {
                 group: ['2-down', '10-across', '23-down', '21-across'],
                 position: { x: 5, y: 3 },
                 separatorLocations: { ',': [3, 9] },
-            };
+            });
 
             const expectedCells = [
                 { x: 3, y: 0 },
@@ -450,20 +479,20 @@ describe('Helpers', () => {
     });
 
     describe('areCluesInAGroup', () => {
-        const thisEntryFixture = {
+        const thisEntryFixture = stubClue({
             id: '2-across',
             group: ['2-across', '10-down'],
-        };
+        });
 
-        const thatEntryFixture = {
+        const thatEntryFixture = stubClue({
             id: '10-down',
             group: ['2-across', '10-down'],
-        };
+        });
 
-        const otherEntryFixture = {
+        const otherEntryFixture = stubClue({
             id: '10-across',
             group: ['10-across', '12-down'],
-        };
+        });
 
         it('should return true when two clues are part of the same group', () => {
             expect(cluesAreInGroup(thisEntryFixture, thatEntryFixture)).toBe(
@@ -479,73 +508,71 @@ describe('Helpers', () => {
     });
 
     describe('checkClueHasBeenAnswered', () => {
-        // This is *really* counter intuitive. If you mock the grid like ths (i've ommted other values i don't need) 'down clues' appear horizontal ( the all have the same x value )
-        // I blame berry
         const gridFixture = [
             [
-                { value: 'R' },
-                { value: 'I' },
-                { value: 'V' },
-                { value: 'E' },
-                { value: 'R' },
-                { value: '' },
+                stubCellWithValue('R'),
+                stubCellWithValue('I'),
+                stubCellWithValue('V'),
+                stubCellWithValue('E'),
+                stubCellWithValue('R'),
+                stubCellWithValue(''),
             ],
             [
-                { value: '' },
-                { value: '' },
-                { value: '' },
-                { value: '' },
-                { value: '' },
-                { value: '' },
+                stubCellWithValue(''),
+                stubCellWithValue(''),
+                stubCellWithValue(''),
+                stubCellWithValue(''),
+                stubCellWithValue(''),
+                stubCellWithValue(''),
             ],
             [
-                { value: '' },
-                { value: '' },
-                { value: '' },
-                { value: '' },
-                { value: '' },
-                { value: '' },
+                stubCellWithValue(''),
+                stubCellWithValue(''),
+                stubCellWithValue(''),
+                stubCellWithValue(''),
+                stubCellWithValue(''),
+                stubCellWithValue(''),
             ],
             [
-                { value: '' },
-                { value: '' },
-                { value: '' },
-                { value: '' },
-                { value: '' },
-                { value: '' },
+                stubCellWithValue(''),
+                stubCellWithValue(''),
+                stubCellWithValue(''),
+                stubCellWithValue(''),
+                stubCellWithValue(''),
+                stubCellWithValue(''),
             ],
             [
-                { value: '' },
-                { value: '' },
-                { value: '' },
-                { value: '' },
-                { value: '' },
-                { value: '' },
+                stubCellWithValue(''),
+                stubCellWithValue(''),
+                stubCellWithValue(''),
+                stubCellWithValue(''),
+                stubCellWithValue(''),
+                stubCellWithValue(''),
             ],
             [
-                { value: '' },
-                { value: '' },
-                { value: '' },
-                { value: '' },
-                { value: '' },
-                { value: '' },
+                stubCellWithValue(''),
+                stubCellWithValue(''),
+                stubCellWithValue(''),
+                stubCellWithValue(''),
+                stubCellWithValue(''),
+                stubCellWithValue(''),
             ],
         ];
 
-        const answeredEntryFixture = {
+        const answeredEntryFixture = stubClue({
             id: '1-down',
             solution: 'RIVER',
             position: { x: 0, y: 0 },
             direction: 'down',
             length: 5,
-        };
-        const unAnsweredEntryFixture = {
+        });
+        const unAnsweredEntryFixture = stubClue({
             id: '1-across',
             solution: 'IDIOT',
             position: { x: 0, y: 1 },
             direction: 'across',
             length: 5,
-        };
+        });
 
         it('should return true when the clue has been answered', () => {
             expect(
@@ -583,315 +610,315 @@ describe('Helpers', () => {
 
         const gridFixture = [
             [
-                { value: 'R' },
-                { value: 'I' },
-                { value: 'V' },
-                { value: 'E' },
-                { value: 'R' },
-                { value: '' },
-                { value: 'C' },
-                { value: '' },
-                { value: 'L' },
-                { value: 'U' },
-                { value: 'S' },
-                { value: 'T' },
-                { value: 'R' },
-                { value: 'E' },
+                stubCellWithValue('R'),
+                stubCellWithValue('I'),
+                stubCellWithValue('V'),
+                stubCellWithValue('E'),
+                stubCellWithValue('R'),
+                stubCellWithValue(''),
+                stubCellWithValue('C'),
+                stubCellWithValue(''),
+                stubCellWithValue('L'),
+                stubCellWithValue('U'),
+                stubCellWithValue('S'),
+                stubCellWithValue('T'),
+                stubCellWithValue('R'),
+                stubCellWithValue('E'),
             ],
             [
-                { value: '' },
-                { value: '' },
-                { value: '' },
-                { value: '' },
-                { value: '' },
-                { value: '' },
-                { value: 'L' },
-                { value: '' },
-                { value: 'I' },
-                { value: '' },
-                { value: '' },
-                { value: '' },
-                { value: '' },
-                { value: '' },
+                stubCellWithValue(''),
+                stubCellWithValue(''),
+                stubCellWithValue(''),
+                stubCellWithValue(''),
+                stubCellWithValue(''),
+                stubCellWithValue(''),
+                stubCellWithValue('L'),
+                stubCellWithValue(''),
+                stubCellWithValue('I'),
+                stubCellWithValue(''),
+                stubCellWithValue(''),
+                stubCellWithValue(''),
+                stubCellWithValue(''),
+                stubCellWithValue(''),
             ],
             [
-                { value: 'S' },
-                { value: 'A' },
-                { value: 'N' },
-                { value: 'T' },
-                { value: 'A' },
-                { value: '' },
-                { value: 'A' },
-                { value: '' },
-                { value: 'G' },
-                { value: 'I' },
-                { value: 'S' },
-                { value: 'T' },
-                { value: '' },
-                { value: '' },
+                stubCellWithValue('S'),
+                stubCellWithValue('A'),
+                stubCellWithValue('N'),
+                stubCellWithValue('T'),
+                stubCellWithValue('A'),
+                stubCellWithValue(''),
+                stubCellWithValue('A'),
+                stubCellWithValue(''),
+                stubCellWithValue('G'),
+                stubCellWithValue('I'),
+                stubCellWithValue('S'),
+                stubCellWithValue('T'),
+                stubCellWithValue(''),
+                stubCellWithValue(''),
             ],
             [
-                { value: '' },
-                { value: '' },
-                { value: '' },
-                { value: '' },
-                { value: '' },
-                { value: '' },
-                { value: 'U' },
-                { value: '' },
-                { value: 'H' },
-                { value: '' },
-                { value: 'O' },
-                { value: '' },
-                { value: '' },
-                { value: '' },
+                stubCellWithValue(''),
+                stubCellWithValue(''),
+                stubCellWithValue(''),
+                stubCellWithValue(''),
+                stubCellWithValue(''),
+                stubCellWithValue(''),
+                stubCellWithValue('U'),
+                stubCellWithValue(''),
+                stubCellWithValue('H'),
+                stubCellWithValue(''),
+                stubCellWithValue('O'),
+                stubCellWithValue(''),
+                stubCellWithValue(''),
+                stubCellWithValue(''),
             ],
             [
-                { value: '' },
-                { value: '' },
-                { value: '' },
-                { value: '' },
-                { value: '' },
-                { value: '' },
-                { value: 'S' },
-                { value: '' },
-                { value: 'T' },
-                { value: '' },
-                { value: 'u' },
-                { value: '' },
-                { value: '' },
-                { value: '' },
+                stubCellWithValue(''),
+                stubCellWithValue(''),
+                stubCellWithValue(''),
+                stubCellWithValue(''),
+                stubCellWithValue(''),
+                stubCellWithValue(''),
+                stubCellWithValue('S'),
+                stubCellWithValue(''),
+                stubCellWithValue('T'),
+                stubCellWithValue(''),
+                stubCellWithValue('u'),
+                stubCellWithValue(''),
+                stubCellWithValue(''),
+                stubCellWithValue(''),
             ],
             [
-                { value: '' },
-                { value: 'N' },
-                { value: '' },
-                { value: '' },
-                { value: '' },
-                { value: '' },
-                { value: 'E' },
-                { value: '' },
-                { value: 'S' },
-                { value: '' },
-                { value: 'T' },
-                { value: '' },
-                { value: '' },
-                { value: '' },
+                stubCellWithValue(''),
+                stubCellWithValue('N'),
+                stubCellWithValue(''),
+                stubCellWithValue(''),
+                stubCellWithValue(''),
+                stubCellWithValue(''),
+                stubCellWithValue('E'),
+                stubCellWithValue(''),
+                stubCellWithValue('S'),
+                stubCellWithValue(''),
+                stubCellWithValue('T'),
+                stubCellWithValue(''),
+                stubCellWithValue(''),
+                stubCellWithValue(''),
             ],
             [
-                { value: '' },
-                { value: 'O' },
-                { value: '' },
-                { value: 'F' },
-                { value: '' },
-                { value: '' },
-                { value: '' },
-                { value: '' },
-                { value: '' },
-                { value: '' },
-                { value: 'H' },
-                { value: '' },
-                { value: '' },
-                { value: '' },
+                stubCellWithValue(''),
+                stubCellWithValue('O'),
+                stubCellWithValue(''),
+                stubCellWithValue('F'),
+                stubCellWithValue(''),
+                stubCellWithValue(''),
+                stubCellWithValue(''),
+                stubCellWithValue(''),
+                stubCellWithValue(''),
+                stubCellWithValue(''),
+                stubCellWithValue('H'),
+                stubCellWithValue(''),
+                stubCellWithValue(''),
+                stubCellWithValue(''),
             ],
             [
-                { value: '' },
-                { value: 'R' },
-                { value: 'A' },
-                { value: 'I' },
-                { value: 'L' },
-                { value: 'R' },
-                { value: 'O' },
-                { value: 'A' },
-                { value: 'D' },
-                { value: '' },
-                { value: 'E' },
-                { value: '' },
-                { value: '' },
-                { value: '' },
+                stubCellWithValue(''),
+                stubCellWithValue('R'),
+                stubCellWithValue('A'),
+                stubCellWithValue('I'),
+                stubCellWithValue('L'),
+                stubCellWithValue('R'),
+                stubCellWithValue('O'),
+                stubCellWithValue('A'),
+                stubCellWithValue('D'),
+                stubCellWithValue(''),
+                stubCellWithValue('E'),
+                stubCellWithValue(''),
+                stubCellWithValue(''),
+                stubCellWithValue(''),
             ],
             [
-                { value: '' },
-                { value: 'T' },
-                { value: '' },
-                { value: 'G' },
-                { value: '' },
-                { value: '' },
-                { value: '' },
-                { value: '' },
-                { value: '' },
-                { value: 'C' },
-                { value: 'R' },
-                { value: 'O' },
-                { value: 'S' },
-                { value: 'S' },
+                stubCellWithValue(''),
+                stubCellWithValue('T'),
+                stubCellWithValue(''),
+                stubCellWithValue('G'),
+                stubCellWithValue(''),
+                stubCellWithValue(''),
+                stubCellWithValue(''),
+                stubCellWithValue(''),
+                stubCellWithValue(''),
+                stubCellWithValue('C'),
+                stubCellWithValue('R'),
+                stubCellWithValue('O'),
+                stubCellWithValue('S'),
+                stubCellWithValue('S'),
             ],
             [
-                { value: '' },
-                { value: 'H' },
-                { value: '' },
-                { value: 'H' },
-                { value: '' },
-                { value: '' },
-                { value: '' },
-                { value: '' },
-                { value: '' },
-                { value: '' },
-                { value: 'N' },
-                { value: '' },
-                { value: '' },
-                { value: '' },
+                stubCellWithValue(''),
+                stubCellWithValue('H'),
+                stubCellWithValue(''),
+                stubCellWithValue('H'),
+                stubCellWithValue(''),
+                stubCellWithValue(''),
+                stubCellWithValue(''),
+                stubCellWithValue(''),
+                stubCellWithValue(''),
+                stubCellWithValue(''),
+                stubCellWithValue('N'),
+                stubCellWithValue(''),
+                stubCellWithValue(''),
+                stubCellWithValue(''),
             ],
             [
-                { value: '' },
-                { value: 'E' },
-                { value: '' },
-                { value: 'T' },
-                { value: '' },
-                { value: '' },
-                { value: '' },
-                { value: '' },
-                { value: '' },
-                { value: '' },
-                { value: '' },
-                { value: '' },
-                { value: '' },
-                { value: '' },
+                stubCellWithValue(''),
+                stubCellWithValue('E'),
+                stubCellWithValue(''),
+                stubCellWithValue('T'),
+                stubCellWithValue(''),
+                stubCellWithValue(''),
+                stubCellWithValue(''),
+                stubCellWithValue(''),
+                stubCellWithValue(''),
+                stubCellWithValue(''),
+                stubCellWithValue(''),
+                stubCellWithValue(''),
+                stubCellWithValue(''),
+                stubCellWithValue(''),
             ],
             [
-                { value: '' },
-                { value: 'R' },
-                { value: '' },
-                { value: 'S' },
-                { value: 'O' },
-                { value: 'U' },
-                { value: 'T' },
-                { value: 'H' },
-                { value: 'E' },
-                { value: 'R' },
-                { value: 'N' },
-                { value: '' },
-                { value: '' },
-                { value: '' },
+                stubCellWithValue(''),
+                stubCellWithValue('R'),
+                stubCellWithValue(''),
+                stubCellWithValue('S'),
+                stubCellWithValue('O'),
+                stubCellWithValue('U'),
+                stubCellWithValue('T'),
+                stubCellWithValue('H'),
+                stubCellWithValue('E'),
+                stubCellWithValue('R'),
+                stubCellWithValue('N'),
+                stubCellWithValue(''),
+                stubCellWithValue(''),
+                stubCellWithValue(''),
             ],
             [
-                { value: '' },
-                { value: 'N' },
-                { value: '' },
-                { value: '' },
-                { value: '' },
-                { value: '' },
-                { value: '' },
-                { value: '' },
-                { value: '' },
-                { value: '' },
-                { value: '' },
-                { value: '' },
-                { value: '' },
-                { value: '' },
+                stubCellWithValue(''),
+                stubCellWithValue('N'),
+                stubCellWithValue(''),
+                stubCellWithValue(''),
+                stubCellWithValue(''),
+                stubCellWithValue(''),
+                stubCellWithValue(''),
+                stubCellWithValue(''),
+                stubCellWithValue(''),
+                stubCellWithValue(''),
+                stubCellWithValue(''),
+                stubCellWithValue(''),
+                stubCellWithValue(''),
+                stubCellWithValue(''),
             ],
         ];
 
-        const oneDownFixture = {
+        const oneDownFixture = stubClue({
             id: '1-down',
             group: ['1-down'],
             solution: 'RIVER',
             position: { x: 0, y: 0 },
             direction: 'down',
             length: 5,
-        };
-        const twoDownFixture = {
+        });
+        const twoDownFixture = stubClue({
             id: '2-down',
             group: ['2-down', '1-across'],
             solution: 'SANTA',
             position: { x: 2, y: 0 },
             direction: 'down',
             length: 5,
-        };
-        const threeDownFixture = {
+        });
+        const threeDownFixture = stubClue({
             id: '3-down',
             group: ['3-down'],
             solution: 'RAILROAD',
             position: { x: 7, y: 1 },
             direction: 'down',
             length: 8,
-        };
+        });
 
         // Unanswered clue
-        const fourDownFixture = {
+        const fourDownFixture = stubClue({
             id: '4-down',
             group: ['4-down'],
             solution: 'HEATHEN',
             position: { x: 10, y: 0 },
             direction: 'down',
             length: 7,
-        };
-        const fiveDownFixture = {
+        });
+        const fiveDownFixture = stubClue({
             id: '5-down',
             group: ['5-down'],
             solution: 'LUSTRE',
             position: { x: 0, y: 8 },
             direction: 'down',
             length: 6,
-        };
-        const sixDownFixture = {
+        });
+        const sixDownFixture = stubClue({
             id: '6-down',
             group: ['6-down'],
             solution: 'GIST',
             position: { x: 2, y: 8 },
             direction: 'down',
             length: 4,
-        };
-        const sevenDownFixture = {
+        });
+        const sevenDownFixture = stubClue({
             id: '7-down',
             group: ['5-across', '7-down'],
             solution: 'CROSS',
             position: { x: 8, y: 9 },
             direction: 'down',
             length: 5,
-        };
+        });
 
-        const oneAcrossFixture = {
+        const oneAcrossFixture = stubClue({
             id: '1-across',
             group: ['2-down', '1-across'],
             solution: 'CLAUSE',
             position: { x: 0, y: 6 },
             direction: 'across',
             length: 6,
-        };
-        const twoAcrossFixture = {
+        });
+        const twoAcrossFixture = stubClue({
             id: '2-across',
             group: ['3-across', '2-across'],
             solution: 'LIGHTS',
             position: { x: 0, y: 8 },
             direction: 'across',
             length: 6,
-        };
-        const threeAcrossFixture = {
+        });
+        const threeAcrossFixture = stubClue({
             id: '3-across',
             group: ['3-across', '2-across'],
             solution: 'NORTHERN',
             position: { x: 5, y: 1 },
             direction: 'across',
             length: 8,
-        };
+        });
 
-        const fourAcrossFixture = {
+        const fourAcrossFixture = stubClue({
             id: '4-across',
             group: ['4-across'],
             solution: 'FIGHTS',
             position: { x: 6, y: 3 },
             direction: 'across',
             length: 6,
-        };
-        const fiveAcrossFixture = {
+        });
+        const fiveAcrossFixture = stubClue({
             id: '5-across',
             group: ['5-across', '7-down'],
             solution: 'SOUTHERN',
             position: { x: 2, y: 10 },
             direction: 'across',
             length: 8,
-        };
+        });
 
         const theEntriesFixture = [
             oneDownFixture,
