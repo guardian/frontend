@@ -242,10 +242,7 @@ const bindLabelFromSwitchboard = (labelEl: HTMLElement): void => {
                 return;
             }
 
-            Promise.all([
-                getInputFields,
-                addSpinner(labelEl),
-            ])
+            Promise.all([getInputFields, addSpinner(labelEl)])
                 .then(([inputFields: NodeList<HTMLElement>]) =>
                     getCsrfTokenFromElement(labelEl).then((csrfToken: string) =>
                         Promise.resolve([csrfToken, inputFields])
@@ -271,9 +268,7 @@ const bindLabelFromSwitchboard = (labelEl: HTMLElement): void => {
                             });
                         });
                 })
-                .then(() =>
-                    removeSpinner(labelEl)
-                );
+                .then(() => removeSpinner(labelEl));
         },
         false
     );

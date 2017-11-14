@@ -1,6 +1,7 @@
-import {addSpinner, removeSpinner} from './switchboardLabel';
+// @flow
+import { addSpinner, removeSpinner } from './switchboardLabel';
 
-beforeEach(()=>{
+beforeEach(() => {
     document.body.innerHTML = `
         <div class="originalClassName"></div>
     `;
@@ -8,16 +9,22 @@ beforeEach(()=>{
 
 test('adds a spinner', () => {
     const el = document.querySelector('.originalClassName');
-    addSpinner(el).then(()=>{
+    addSpinner(el).then(() => {
         expect(el.classList.contains('is-updating')).toEqual(true);
-        expect(document.body.classList.contains('is-updating-cursor')).toEqual(true);
+        expect(document.body.classList.contains('is-updating-cursor')).toEqual(
+            true
+        );
     });
 });
 
 test('removes a spinner', () => {
     const el = document.querySelector('.originalClassName');
-    addSpinner(el).then(()=>removeSpinner(el)).then(()=>{
-        expect(el.className).toEqual('originalClassName');
-        expect(document.body.classList.contains('is-updating-cursor')).toEqual(false);
-    });
+    addSpinner(el)
+        .then(() => removeSpinner(el))
+        .then(() => {
+            expect(el.className).toEqual('originalClassName');
+            expect(
+                document.body.classList.contains('is-updating-cursor')
+            ).toEqual(false);
+        });
 });
