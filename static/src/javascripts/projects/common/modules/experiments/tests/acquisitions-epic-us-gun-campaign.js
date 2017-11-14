@@ -8,7 +8,7 @@ const tagsMatch = () =>
     config
         .get('page.nonKeywordTagIds', '')
         .split(',')
-        .some(tag => tag === campaignTag);
+        .includes(campaignTag);
 
 export const acquisitionsEpicUSGunCampaign = makeABTest({
     id: 'AcquisitionsUsGunCampaign2017',
