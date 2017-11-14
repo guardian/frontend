@@ -43,25 +43,24 @@ class AuthenticatedActions(
   def sendUserToRegister(request: RequestHeader) : Result =
     redirectWithReturn(request, "/register")
 
+ private def checkIdApiForUserAndRedirect(request: RequestHeader) = {
+  request.getQueryString("email") match {
+    case None => Future.successful(Left(sendUserToSignin(request)))
+    case Some(email) =>
+      identityApiClient.userFromQueryParam(email, "emailAddress").map {
+        case Right(_) => Left(sendUserToSignin(request)) // user exists
+        case Left(_) => Left(sendUserToRegister(request))
+      }
+  }
+}
+
   def authRefiner: ActionRefiner[Request, AuthRequest] = new ActionRefiner[Request, AuthRequest] {
     override val executionContext = ec
 
     def refine[A](request: Request[A]) =
       authService.authenticatedUserFor(request) match {
         case Some(authenticatedUser) => Future.successful(Right(new AuthenticatedRequest(authenticatedUser, request)))
-        case None =>
-          // If an email query param exists we want to check the DB for the user and redirect them to signin/register
-          request.getQueryString("email") match {
-            case None => Future.successful(Left(sendUserToSignin(request)))
-            case Some(email) =>
-              identityApiClient.userFromQueryParam(email, "emailAddress").map {
-                case Right(userExists) => Left(sendUserToSignin(request))
-                case Left(err) => Left(sendUserToRegister(request))
-              }.recover { case e: Exception =>
-                logger.error("Error retrieving user user from IDAPI", e)
-                Left(sendUserToRegister(request))
-              }
-          }
+        case None => checkIdApiForUserAndRedirect(request)
       }
   }
 
@@ -92,15 +91,16 @@ class AuthenticatedActions(
       if (authService.recentlyAuthenticated(request)) Right(request) else Left(sendUserToReauthenticate(request))
     }
   }
+  // Play will not let you set up an ActionBuilder with a Refiner hence this empty actionBuilder to set up Auth
+  def noOpActionBuilder: DefaultActionBuilder = DefaultActionBuilder(anyContentParser)
 
-
-  def authAction: AuthenticatedBuilder[AuthenticatedUser] =
-    new AuthenticatedBuilder(authService.authenticatedUserFor, anyContentParser, sendUserToSignin)
+  def authAction: ActionBuilder[AuthRequest, AnyContent] =
+    noOpActionBuilder andThen authRefiner
 
   def authActionWithUser: ActionBuilder[AuthRequest, AnyContent] =
-    DefaultActionBuilder(anyContentParser) andThen authRefiner andThen apiVerifiedUserRefiner
+    authAction andThen apiVerifiedUserRefiner
 
   def recentlyAuthenticated: ActionBuilder[AuthRequest, AnyContent] =
-    DefaultActionBuilder(anyContentParser) andThen authRefiner andThen recentlyAuthenticatedRefiner andThen apiVerifiedUserRefiner
+    authAction andThen recentlyAuthenticatedRefiner andThen apiVerifiedUserRefiner
 
 }
