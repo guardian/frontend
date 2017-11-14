@@ -4,14 +4,11 @@ import config from 'lib/config';
 
 const campaignTag = '/us-news/series/break-the-cycle';
 
-const tagsMatch = () => {
-    const pageKeywords = config.page.nonKeywordTagIds;
-    if (typeof pageKeywords !== 'undefined') {
-        const keywordList = pageKeywords.split(',');
-        return keywordList.some(x => x === campaignTag);
-    }
-    return false;
-};
+const tagsMatch = () =>
+    config
+        .get('page.nonKeywordTagIds', '')
+        .split(',')
+        .some(tag => tag === campaignTag);
 
 export const acquisitionsEpicUSGunCampaign = makeABTest({
     id: 'AcquisitionsUsGunCampaign2017',
