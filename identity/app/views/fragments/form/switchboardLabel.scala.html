@@ -4,12 +4,20 @@
     title: String,
     copy: Option[String],
     field: Field,
+    behaviour: Option[String],
     extraFields: Option[List[play.twirl.api.HtmlFormat.Appendable]] = None,
     newsletterFrequency: Option[String] = None,
     newsletterPreview: Option[String] = None
 )(implicit handler: views.html.helper.FieldConstructor, messages: play.api.i18n.Messages)
 
-<label class="manage-account__switchboardLabel js-manage-account__switchboardLabel">
+<label class="
+    manage-account__switchboardLabel
+    @{behaviour match {
+        case Some("consent") => "js-manage-account__consentCheckbox"
+        case Some("newsletter") => "js-manage-account__newsletterCheckbox"
+        case _ =>
+    }}
+">
     @fragments.form.checkbox(field, Checkbox(field).args:_*)
     <div class="manage-account__switchboardCheckbox"></div>
     <strong class="manage-account__switchboardTitle">@title</strong>

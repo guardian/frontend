@@ -22,6 +22,7 @@
     @fragments.form.switchboardLabel(
         title = getConsentText(consentField).toString(),
         copy = None,
+        behaviour = Some("consent"),
         field = consentField("hasConsented"),
         extraFields = Some(
             List("actor","consentIdentifier","consentIdentifierVersion","timestamp","privacyPolicy").map(field =>
