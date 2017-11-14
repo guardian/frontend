@@ -2,7 +2,7 @@
 import { makeABTest } from 'common/modules/commercial/contributions-utilities';
 import config from 'lib/config';
 
-const campaignTag = '/us-news/series/break-the-cycle';
+const campaignTag = 'us-news/series/break-the-cycle';
 
 const tagsMatch = () =>
     config
