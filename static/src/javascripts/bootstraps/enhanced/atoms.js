@@ -1,7 +1,7 @@
 // @flow
 
 import config from 'lib/config';
-import { services } from 'journalism/services';
+import { services } from 'projects/atoms/services';
 
 const bootstrapAtom = (atomMaker: AtomMaker, atomType: AtomType) => {
     const atomBuilder = atomMaker[atomType].default(services);
