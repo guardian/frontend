@@ -40,9 +40,22 @@
                 }
             }
         }
-    }
 
-    &:focus ~ .veggie-burger {
-        background-color: darken($news-main-2, 10%);
+        & ~ .new-header__menu-toggle .pillar-link--sections {
+            color: #ffffff;
+            background-color: $guardian-brand-dark;
+
+            &:before {
+                content: none;
+            }
+
+            .pillar-link--dropdown__icon {
+                transform: translateY(0) rotate(45deg);
+            }
+        }
+
+        & ~ .pillars {
+            color: $news-support-1;
+        }
     }
 }

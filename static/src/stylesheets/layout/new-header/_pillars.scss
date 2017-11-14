@@ -21,6 +21,10 @@
             display: none;
         }
     }
+
+    .new-header--open & {
+        color: $news-support-1;
+    }
 }
 
 .pillars__item {
