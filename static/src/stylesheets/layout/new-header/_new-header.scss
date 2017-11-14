@@ -79,6 +79,20 @@ from scrolling */
 }
 
 .new-header__menu-toggle {
+    @include mq($until: desktop) {
+        bottom: -$gs-baseline / 2;
+        position: absolute;
+        right: $gutter-small;
+    }
+
+    @include mq(mobileLandscape) {
+        right: $gutter-medium;;
+    }
+
+    @include mq($from: tablet, $until: desktop) {
+        right: $gutter-large;
+    }
+
     &:focus {
         outline: 0;
     }

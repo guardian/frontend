@@ -29,6 +29,10 @@
         margin-right: $gutter-small + ($veggie-burger-medium / 2);
     }
 
+    @include mq(mobileLandscape) {
+        margin-right: $gutter-medium + ($veggie-burger-medium / 2);
+    }
+
     // based on https://css-tricks.com/full-width-containers-limited-width-parents/#article-header-id-6
     @include mq(desktop) {
         display: none;
