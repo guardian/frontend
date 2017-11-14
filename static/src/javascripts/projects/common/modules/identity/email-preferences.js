@@ -301,7 +301,10 @@ const enhanceEmailPreferences = (): void => {
         '.js-manage-account__consentCheckbox',
         bindLabelFromSwitchboard
     );
-    $.forEachElement('.js-manage-account__consentCheckboxesSubmit', (el:HTMLElement) => el.remove() );
+    $.forEachElement(
+        '.js-manage-account__consentCheckboxesSubmit',
+        (el: HTMLElement) => el.remove()
+    );
 };
 
 export { enhanceEmailPreferences };
