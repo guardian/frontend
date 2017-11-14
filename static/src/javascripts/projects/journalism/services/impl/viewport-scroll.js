@@ -1,4 +1,5 @@
 // @flow
+import mediator from 'lib/mediator';
 
 let listening = false;
 let elementCount = 0;
@@ -30,7 +31,7 @@ const onScroll = () => {
 
 const observe = (element: Element, threshold: number, callback: () => void) => {
     if (!listening) {
-        window.addEventListener('scroll', onScroll);
+        mediator.on('window:throttledScroll', onScroll);
         listening = true;
     }
 
@@ -55,7 +56,7 @@ const unobserve = (
     elementCount -= lengthBefore - elements[threshold].length;
 
     if (elementCount === 0) {
-        window.removeEventListener('scroll', onScroll);
+        mediator.off('window:throttledScroll', onScroll);
         listening = false;
     }
 };
