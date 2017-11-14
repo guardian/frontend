@@ -8,6 +8,7 @@ import reqwest from 'reqwest';
 import fastdom from 'lib/fastdom-promise';
 import $ from 'lib/$';
 import { push as pushError } from './modules/show-errors';
+import { addSpinner, removeSpinner } from './modules/switchboardLabel';
 
 const addUpdatingState = buttonEl => {
     fastdom.write(() => {
@@ -243,12 +244,7 @@ const bindLabelFromSwitchboard = (labelEl: HTMLElement): void => {
 
             Promise.all([
                 getInputFields,
-                fastdom.write(() => {
-                    if (document.body) {
-                        document.body.classList.add('is-updating-cursor');
-                    }
-                    labelEl.classList.add('is-updating');
-                }),
+                addSpinner(labelEl),
             ])
                 .then(([inputFields: NodeList<HTMLElement>]) =>
                     getCsrfTokenFromElement(labelEl).then((csrfToken: string) =>
@@ -276,33 +272,14 @@ const bindLabelFromSwitchboard = (labelEl: HTMLElement): void => {
                         });
                 })
                 .then(() =>
-                    fastdom.write(() => {
-                        if (document.body) {
-                            document.body.classList.remove(
-                                'is-updating-cursor'
-                            );
-                        }
-                        labelEl.classList.add('is-just-updated');
-                        labelEl.classList.remove('is-updating');
-                    })
-                )
-                .then(
-                    () =>
-                        new Promise((accept: Function) => {
-                            setTimeout(() => accept(), 1000);
-                        })
-                )
-                .then(() =>
-                    fastdom.write(() => {
-                        labelEl.classList.remove('is-just-updated');
-                    })
+                    removeSpinner(labelEl)
                 );
         },
         false
     );
 };
 
-const enhanceEmailPreferences = (): void => {
+const enhanceManageAccount = (): void => {
     $.forEachElement('.js-subscription-button', reqwestEmailSubscriptionUpdate);
     $.forEachElement('.js-save-button', reqwestEmailSubscriptionUpdate);
     $.forEachElement('.js-unsubscribe', unsubscribeFromAll);
@@ -321,4 +298,4 @@ const enhanceEmailPreferences = (): void => {
     );
 };
 
-export { enhanceEmailPreferences };
+export { enhanceManageAccount };
