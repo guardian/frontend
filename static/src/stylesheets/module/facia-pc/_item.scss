@@ -5,6 +5,7 @@ $fc-item-gutter: $gs-gutter / 4;
 */
 
 @mixin fc-item--horizontal($media-width, $media-align: right) {
+    
     .fc-item__image-container {
         box-sizing: border-box;
         padding-left: $gs-gutter * .25;
@@ -51,18 +52,6 @@ $fc-item-gutter: $gs-gutter / 4;
     }
 }
 
-// hide any fc-item during DEV
-.fc-item--video,
-.fc-item--audio {
-    min-height: 100px;
-    flex: 1 1 auto;
-    background: red !important;
-    
-    > * {
-        display: none !important;
-    }
-}
-
 .fc-item {
     @include mq($until: tablet) {
         width: 100%;
@@ -93,20 +82,6 @@ $fc-item-gutter: $gs-gutter / 4;
 
         @include mq($until: desktop) {
             z-index: initial;
-        }
-    }
-
-    /**
-     * The z-index: initial trick above is not working on the webkit browsers.
-     * The only way how to make it work is to play with the z-index.
-     */
-    &.fc-item--video {
-        .u-faux-block-link__overlay {
-            z-index: 0;
-        }
-
-        .u-faux-block-link__promote {
-            z-index: 1;
         }
     }
 

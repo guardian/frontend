@@ -1,4 +1,16 @@
- @mixin fc-item--list {
+/*
+
+List item. Looks a bit like this:
+
+***********************************************
+x x x x x x x x x x x x x x x x x x x x x x x
+x x x x x x x x x x x x x x x x x x x x x x x x
+
+***********************************************
+
+*/
+
+@mixin fc-item--list {
     $item-vertical-padding: $gs-baseline * .25;
 
     .fc-item__header {

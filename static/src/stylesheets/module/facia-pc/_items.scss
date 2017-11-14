@@ -1,4 +1,3 @@
-
 @mixin headline-boost($size) {
     .fc-item--has-boosted-title & {
         @include fs-headline($size, true);
@@ -6,14 +5,19 @@
 }
 
 @import 'item-layouts/fc-item--standard';
+// @import 'item-layouts/fc-item--third';
 @import 'item-layouts/fc-item--half';
 @import 'item-layouts/fc-item--three-quarters';
-@import 'item-layouts/fc-item--three-quarters-right';
-@import 'item-layouts/fc-item--three-quarters-tall';
+// @import 'item-layouts/fc-item--three-quarters-right';
+// @import 'item-layouts/fc-item--three-quarters-tall';
 @import 'item-layouts/fc-item--list';
+// @import 'item-layouts/fc-item--list-compact';
+// @import 'item-layouts/fc-item--list-compact--media';
 @import 'item-layouts/fc-item--list-media';
-
-// overrides of current slices
+@import 'item-layouts/fc-item--full-media-50';
+@import 'item-layouts/fc-item--full-media-75';
+@import 'item-layouts/fc-item--full-media-100';
+// @import 'item-layouts/fc-item--fluid';
 
 .fc-slice__item {
     width: 100%;
@@ -35,6 +39,10 @@
         margin-bottom: 0;
         padding-bottom: $gs-baseline;
     }
+}
+
+.fc-slice__item--no-mpu {
+    flex: 0 !important;
 }
 
 .fc-item--standard-tablet {
@@ -90,14 +98,47 @@
     }
 }
 
+// .fc-item--list-compact {
+// }
+
+// .fc-item--list-compact-tablet {
+// }
+
+// .fc-item--list-compact--media {
+// }
+
 .fc-item--three-quarters-tablet {
     @include mq(tablet) {
         @include fc-item--three-quarters;
     }
 }
 
-.fc-item--three-quarters-right-tablet {
+// .fc-item--three-quarters-right-tablet {
+// }
+
+// .fc-item--three-quarters-tall-tablet {
+// }
+
+.fc-item--full-media-50-tablet {
+    @include mq(tablet) {
+        @include fc-item--full-media-50;
+    }
 }
 
-.fc-item--three-quarters-tall-tablet {
+.fc-item--full-media-75-tablet {
+    @include mq(tablet) {
+        @include fc-item--full-media-75;
+    }
 }
+
+.fc-item--full-media-100-tablet {
+    @include mq(tablet) {
+        @include fc-item--full-media-100;
+    }
+}
+
+// .fc-item--fluid-mobile {
+// }
+
+// .fc-item--fluid-tablet {
+// }

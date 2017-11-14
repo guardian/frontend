@@ -1,3 +1,30 @@
+/*
+
+Half item. Looks like a wide standard, a bit like this:
+
+****************************************
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+
+x x x x x x x x x x x x x x x x x x x x
+x x x x x x x x x x x x x x x x x x x x x
+x x x x x x x x x x x x x x x x x x
+
+
+
+
+
+
+
+*****************************************
+
+*/
+
 @mixin fc-item--half {
     .fc-item__header {
         @include fs-headline(4, true);

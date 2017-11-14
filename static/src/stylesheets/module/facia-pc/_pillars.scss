@@ -25,6 +25,10 @@ $pillars: (
         color: $foreground;
     }
 
+    .fc-item__byline {
+        color: $accent;
+    }
+
     .fc-item__kicker {
         color: $accent;
         background-color: $background;
