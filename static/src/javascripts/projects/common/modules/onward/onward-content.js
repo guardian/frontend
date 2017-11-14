@@ -5,12 +5,15 @@ import mediator from 'lib/mediator';
 import { begin, error, end } from 'common/modules/analytics/register';
 import { Component } from 'common/modules/component';
 
-const getTag = (): string =>
-    [
-        ...config.get('page.nonKeywordTagIds', '').split(','),
-        ...config.get('page.blogIds', '').split(','),
-        ...[config.get('page.seriesId')],
+const getTag = (): string => {
+    const { nonKeywordTagIds, blogIds, seriesId } = config.get('page', {});
+
+    return [
+        ...nonKeywordTagIds.split(','),
+        ...blogIds.split(','),
+        ...[seriesId],
     ].shift();
+};
 
 const getShortUrl = (): string =>
     encodeURIComponent(config.get('page.shortUrl'));
