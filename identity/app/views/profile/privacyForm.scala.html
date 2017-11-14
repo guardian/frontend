@@ -21,7 +21,6 @@
 
     @fragments.form.switchboardLabel(
         title = getConsentText(consentField).toString(),
-        copy = None,
         behaviour = Some("consent"),
         field = consentField("hasConsented"),
         extraFields = Some(
@@ -30,6 +29,7 @@
             )
     )
     )(nonInputFields, messages)
+
 
 }
 
@@ -75,7 +75,7 @@
             </div>
         </div>
 
-        <fieldset class="fieldset fieldset--manage-account-rightsubmit">
+        <fieldset class="fieldset fieldset--manage-account-rightsubmit js-manage-account__consentCheckboxesSubmit">
             <div class="fieldset__heading"></div>
             <div class="fieldset__fields">
                 <ul class="u-unstyled">

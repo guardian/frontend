@@ -5,6 +5,7 @@
     copy: Option[String],
     field: Field,
     behaviour: Option[String],
+    brand: Option[String] = None,
     extraFields: Option[List[play.twirl.api.HtmlFormat.Appendable]] = None,
     newsletterFrequency: Option[String] = None,
     newsletterPreview: Option[String] = None
@@ -17,31 +18,39 @@
         case Some("newsletter") => "js-manage-account__newsletterCheckbox"
         case _ =>
     }}
+    @if(brand.isDefined) {
+        manage-account__switchboardLabel--branded manage-account__switchboardLabel--branded--@brand
+    }
 ">
-    @fragments.form.checkbox(field, Checkbox(field).args:_*)
-    <div class="manage-account__switchboardCheckbox"></div>
-    <strong class="manage-account__switchboardTitle">@title</strong>
-    @if(copy.isDefined) {
-        <p class="manage-account__switchboardCopy">
-            @copy
-        </p>
+    @if(brand.isDefined) {
+        <div class="account__switchboardLabelHeader"></div>
     }
-    @if(extraFields.isDefined){
-        @extraFields
-    }
-    @if(newsletterFrequency.isDefined || newsletterPreview.isDefined) {
-        <div class="manage-account__switchboardFooter">
-            @if(newsletterFrequency.isDefined){
-                <div class="manage-account__switchboardTidbit">
-                    @fragments.inlineSvg("clock", "icon", List("inline-icon--light-grey"))
-                    @newsletterFrequency
-                </div>
-            }
-            @if(newsletterPreview.isDefined){
-                <a class="" href="#">
-                    See the latest email
-                </a>
-            }
-        </div>
-    }
+    <div class="account__switchboardLabelContent">
+        @fragments.form.checkbox(field, Checkbox(field).args:_*)
+        <div class="manage-account__switchboardCheckbox"></div>
+        <strong class="manage-account__switchboardTitle">@title</strong>
+        @if(copy.isDefined) {
+            <p class="manage-account__switchboardCopy">
+                @copy
+            </p>
+        }
+        @if(extraFields.isDefined){
+            @extraFields
+        }
+        @if(newsletterFrequency.isDefined || newsletterPreview.isDefined) {
+            <div class="manage-account__switchboardFooter">
+                @if(newsletterFrequency.isDefined){
+                    <div class="manage-account__switchboardTidbit">
+                        @fragments.inlineSvg("clock", "icon", List("inline-icon--light-grey"))
+                        @newsletterFrequency
+                    </div>
+                }
+                @if(newsletterPreview.isDefined){
+                    <a class="" href="#">
+                        See the latest email
+                    </a>
+                }
+            </div>
+        }
+    </div>
 </label>
