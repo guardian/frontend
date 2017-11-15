@@ -1,3 +1,4 @@
+/* eslint flow-header/flow-header: 0 */
 import { addSpinner, removeSpinner } from './switchboardLabel';
 
 beforeEach(() => {
