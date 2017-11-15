@@ -144,7 +144,7 @@ import scala.concurrent.Future
         when(api.saveUser(MockitoMatchers.any[String], MockitoMatchers.any[UserUpdateDTO], MockitoMatchers.any[Auth]))
           .thenReturn(Future.successful(Right(user.copy(consents = List(consent)))))
 
-        val result = controller.submitPrivacyForm().apply(fakeRequest)
+        val result = controller.saveConsentPreferences().apply(fakeRequest)
 
         status(result) should be(200)
 

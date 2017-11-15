@@ -21,7 +21,6 @@ import scala.concurrent.Future
 object PublicEditProfilePage extends IdentityPage("/public/edit", "Edit Public Profile")
 object AccountEditProfilePage extends IdentityPage("/account/edit", "Edit Account Details")
 object EmailPrefsProfilePage extends IdentityPage("/email-prefs", "Privacy")
-object PrivacyEditProfilePage extends IdentityPage("/privacy-edit", "Privacy")
 object MembershipEditProfilePage extends IdentityPage("/membership/edit", "Membership")
 object recurringContributionPage extends IdentityPage("/contribution/recurring/edit", "Contributions")
 object DigiPackEditProfilePage extends IdentityPage("/digitalpack/edit", "Digital Pack")
@@ -59,7 +58,6 @@ class EditProfileController(
 
   def submitPublicProfileForm(): Action[AnyContent] = submitForm(PublicEditProfilePage)
   def submitAccountForm(): Action[AnyContent] = submitForm(AccountEditProfilePage)
-//  def submitPrivacyForm(): Action[AnyContent] = submitForm(PrivacyEditProfilePage)
 
   def saveEmailPreferences: Action[AnyContent] =
     csrfCheck {
@@ -130,8 +128,6 @@ class EditProfileController(
                   profileFormsView(page, boundProfileForms.withErrors(idapiErrors), userDO)
 
                 case Right(updatedUser) =>
-                  println("ssdsfsdfdsfdfswowowoho")
-                  println("ssdsfsdfdsfdfswowowoho")
                   profileFormsView(page, boundProfileForms.bindForms(updatedUser), updatedUser)
               }
           } // end of success
@@ -226,7 +222,6 @@ case class ProfileForms(
     case PublicEditProfilePage => publicForm
     case AccountEditProfilePage => accountForm
     case EmailPrefsProfilePage => privacyForm
-    case PrivacyEditProfilePage => privacyForm
   }
 
   private lazy val activeMapping = activePage match {
@@ -282,7 +277,6 @@ case class ProfileForms(
       case PublicEditProfilePage => copy(publicForm = changeFunc(publicForm).asInstanceOf[Form[ProfileFormData]])
       case AccountEditProfilePage => copy(accountForm = changeFunc(accountForm).asInstanceOf[Form[AccountFormData]])
       case EmailPrefsProfilePage => copy(privacyForm = changeFunc(privacyForm).asInstanceOf[Form[PrivacyFormData]])
-      case PrivacyEditProfilePage => copy(privacyForm = changeFunc(privacyForm).asInstanceOf[Form[PrivacyFormData]])
     }
   }
 }
