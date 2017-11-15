@@ -86,7 +86,7 @@ module.exports = {
                 exclude: /(node_modules)/,
                 loader: 'svg-loader',
             },
-            ...require('@guardian/atom-renderer/webpack/frontend'),
+            ...require('@guardian/atom-renderer/webpack/frontend')(require('src/stylesheets/atoms')),
         ],
     },
     plugins: [
