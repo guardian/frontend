@@ -20,7 +20,7 @@ export const removeSpinner = (labelEl: HTMLElement): Promise<any> =>
         })
         .then(
             () =>
-                new Promise((accept: Function) => {
+                new Promise((accept: () => void) => {
                     setTimeout(() => accept(), 1000);
                 })
         )
