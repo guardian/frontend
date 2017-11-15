@@ -55,11 +55,13 @@ const setBackground = (specs: AdSpec, adSlot: Node): Promise<any> => {
     const backgroundParentClass = 'creative__background-parent';
     const backgroundClass = 'creative__background';
 
-    const maybeBackgroundParent = adSlot.querySelector(
-        `.${backgroundParentClass}`
-    );
+    const maybeBackgroundParent = ((adSlot.getElementsByClassName(
+        backgroundParentClass
+    ): any): HTMLCollection<HTMLElement>)[0];
     const maybeBackground = maybeBackgroundParent
-        ? maybeBackgroundParent.querySelector(`.${backgroundClass}`)
+        ? ((maybeBackgroundParent.getElementsByClassName(
+              backgroundClass
+          ): any): HTMLCollection<HTMLElement>)[0]
         : null;
     const backgroundAlreadyExists = !!(
         maybeBackgroundParent && maybeBackground
