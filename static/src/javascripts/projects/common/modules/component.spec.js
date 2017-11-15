@@ -82,15 +82,19 @@ describe('Component - fetch()', () => {
         });
     });
 
-    test('calls ready(), not error(), if everything works', () => {
+    test('calls all required callbacks, but not error(), if everything works', () => {
         const component = createComponent({
+            checkAttached: jest.fn(),
             fetched: jest.fn(),
+            prerender: jest.fn(),
             ready: jest.fn(),
             error: jest.fn(),
         });
 
         return component.fetch().then(() => {
             expect(component.ready).toHaveBeenCalledWith(component.elem);
+            expect(component.checkAttached).toHaveBeenCalled();
+            expect(component.prerender).toHaveBeenCalled();
             expect(component.error).not.toHaveBeenCalled();
         });
     });
