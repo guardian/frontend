@@ -2,10 +2,9 @@
 
 @(
     title: String,
-    copy: Option[String],
-    field: Field,
+    description: Option[String],
     behaviour: Option[String],
-    brand: Option[String] = None,
+    field: Field,
     extraFields: Option[List[play.twirl.api.HtmlFormat.Appendable]] = None,
     newsletterFrequency: Option[String] = None,
     newsletterPreview: Option[String] = None
@@ -18,27 +17,16 @@
         case Some("newsletter") => "js-manage-account__newsletterCheckbox"
         case _ =>
     }}
-    @if(brand.isDefined) {
-        manage-account__switchboardLabel--branded manage-account__switchboardLabel--branded--@brand
-    }
 ">
-    @if(brand.isDefined) {
-        <div class="account__switchboardLabelHeader">
-            <div>@title</div>
-            @fragments.inlineSvg("marque-36", "icon")
-        </div>
-    }
     <div class="account__switchboardLabelContent">
         @fragments.form.checkbox(field, Checkbox(field).args:_*)
         <div class="manage-account__switchboardCheckbox"></div>
-        @if(!brand.isDefined) {
-            <p class="manage-account__switchboardTitle">
+        <p class="manage-account__switchboardTitle">
             @title
-            </p>
-        }
-        @if(copy.isDefined) {
+        </p>
+        @if(description) {
             <p class="manage-account__switchboardCopy">
-                @copy
+                @description
             </p>
         }
         @if(extraFields.isDefined){

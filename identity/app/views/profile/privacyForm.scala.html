@@ -21,7 +21,7 @@
 
     @fragments.form.switchboardLabel(
         title = getConsentText(consentField).toString(),
-        copy = None,
+        description = None,
         behaviour = Some("consent"),
         field = consentField("hasConsented"),
         extraFields = Some(
@@ -50,7 +50,7 @@
             <li>
                 @fragments.form.switchboardLabel(
                     title = currentConsents(FirstParty.name),
-                    copy = None,
+                    description = None,
                     behaviour = Some("consent"),
                     field = privacyForm("receiveGnmMarketing")
                 )(nonInputFields, messages)
@@ -58,7 +58,7 @@
             <li>
                 @fragments.form.switchboardLabel(
                     title = currentConsents(ThirdParty.name),
-                    copy = None,
+                    description = None,
                     behaviour = Some("consent"),
                     field = privacyForm("receive3rdPartyMarketing")
                 )(nonInputFields, messages)
@@ -148,7 +148,7 @@
                                 <li>
                                 @fragments.form.switchboardLabel(
                                     title = "Allow matching with third party data",
-                                    copy = None,
+                                    description = None,
                                     behaviour = Some("consent"),
                                     field = privacyForm("allowThirdPartyProfiling")
                                 )(nonInputFields, messages)
