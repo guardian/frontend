@@ -30,6 +30,7 @@ class OptInController(val controllerComponents: ControllerComponents) extends Ba
   def handle(feature: String, choice: String): Action[AnyContent] = Action { implicit request =>
     Cached(60)(WithoutRevalidationResult(feature match {
       case "desktopheader" => newDesktopHeader.opt(choice)
+      case "imgxfallbacktest" => imgxFallbackTest.opt(choice)
       case "pillar-cards" => pillarCards.opt(choice)
       case _ => NotFound
     }))
@@ -37,5 +38,6 @@ class OptInController(val controllerComponents: ControllerComponents) extends Ba
 
   //cookies should correspond with those checked by fastly-edge-cache
   val newDesktopHeader = OptInFeature("new_desktop_header", controllerComponents)
+  val imgxFallbackTest = OptInFeature("imgix-fallback-test", controllerComponents)
   val pillarCards = OptInFeature("pillar_cards", controllerComponents)
 }

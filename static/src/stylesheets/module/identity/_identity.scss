@@ -315,13 +315,28 @@
     opacity: .8;
 }
 
+.email-subscription__fieldset {
+    margin-top: 3em;
+}
+
+.dropdown--email-subscription {
+    .dropdown__label {
+        @include fs-bodyHeading(3);
+        color: $guardian-brand;
+    }
+    &:hover .dropdown__label {
+        color: $guardian-brand-dark;
+    }
+    .dropdown__content {
+        padding-bottom: 2em;
+    }
+}
+
 .email-subscription__name,
 .email-subscription__heading {
-    @include fs-headline(3);
-    margin-bottom: $gs-baseline;
+    @include fs-bodyHeading(2);
 
     @include mq(desktop) {
-        @include fs-headline(3, true);
         box-sizing: border-box;
         float: left;
         padding-right: $gs-gutter;
@@ -337,6 +352,7 @@
 }
 .email-subscription__meta {
     margin-top: $gs-baseline;
+    font-weight: 400;
 }
 
 .email-subscription__frequency {
@@ -356,24 +372,12 @@
         padding-left: gs-span(4);
     }
 }
-.email-subscription__button {
-    @include fs-textSans(2);
-    background-color: $guardian-brand;
-    width: $gs-baseline * 9;
-    height: $gs-gutter * 2;
-    border-radius: 100px;
-    border: 0;
-    color: #ffffff;
-    cursor: pointer;
-    float: left;
-    padding: $gs-baseline/1.2 $gs-gutter $gs-baseline/1.5;
+.manage-account__button {
 
     @include mq(desktop) {
-        float: right;
-    }
-
-    .email-subscription--subscribed & {
-        background-color: $neutral-2-contrasted;
+        .dropdown--email-subscription & {
+            float: right;
+        }
     }
 
     &.is-updating-subscriptions {
@@ -386,18 +390,41 @@
         background-size: 40px;
     }
 
-    &.email-unsubscribe {
-        float: none;
-        color: $guardian-brand;
-        background-color: #ffffff;
-        border: 2px solid $guardian-brand;
-        min-width: $gs-baseline * 14;
+    .email-subscription--subscribed & {
+        @extend %manage-account__button--light;
     }
 
-    &.email-unsubscribe--confirm {
+    &.email-unsubscribe {
+        float: none;
+    }
+
+    &.email-unsubscribe--confirm,
+    &.email-unsubscribe--confirm:hover {
         color: $error;
         font-weight: bold;
         border: 2px solid $error;
+    }
+
+    .email-subscription__fieldset & {
+        float: none;;
+    }
+
+}
+
+.email-subscription__options {
+
+    > ul > li:not(:last-child) {
+        margin-bottom: $gs-gutter / 2;
+    }
+
+    .manage-account__button {
+        float: none;
+        clear: both;
+    }
+
+    label {
+        @include fs-bodyCopy(1, true);
+        margin-top: $gs-gutter;
     }
 }
 
@@ -411,7 +438,83 @@
 
 .save__button {
     float: none;
-    min-width: $gs-baseline * 14;
+}
+
+.fieldset.email-subscription__formatFieldset {
+    display: none;
+}
+
+/* Email subcriptions modals
+   ========================================================================== */
+.email-subscriptions__modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+    display: none;
+
+    &--active {
+        display: block;
+        display: flex;
+    }
+
+    .email-subscriptions__modalBg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: $neutral-1;
+        opacity: .95;
+        z-index: 9;
+    }
+
+    .email-subscriptions__modalContent {
+        max-width: gs-span(10);
+        background: #ffffff;
+        width: 100%;
+        position: relative;
+        z-index: 10;
+        border-top: 1px solid $news-main-2;
+        padding: ($gs-gutter * 3.75) ($gs-gutter * 1) ($gs-gutter * 1);
+        margin: auto;
+        float: none;
+    }
+
+    .email-subscriptions__modalCloser {
+        width: $gs-gutter * 1.75;
+        height: $gs-gutter * 1.75;
+        border: 1px solid $guardian-brand;
+        border-radius: 100%;
+        display: block;
+        position: absolute;
+        top: $gs-gutter;
+        right: $gs-gutter;
+
+        svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            margin: auto;
+        }
+
+        svg * {
+            fill: $guardian-brand;
+        }
+
+        &:hover {
+            border-color: #000000;
+            svg * {
+                fill: #000000;
+            }
+        }
+    }
 }
 
 /* Delete Account page

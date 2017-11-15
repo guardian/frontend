@@ -7,10 +7,13 @@ import { Component } from 'common/modules/component';
 
 const getTag = (): string =>
     [
-        ...config.page.nonKeywordTagIds.split(','),
-        ...config.page.blogIds.split(','),
-        ...[config.page.seriesId],
+        ...config.get('page.nonKeywordTagIds', '').split(','),
+        ...config.get('page.blogIds', '').split(','),
+        ...[config.get('page.seriesId')],
     ].shift();
+
+const getShortUrl = (): string =>
+    encodeURIComponent(config.get('page.shortUrl'));
 
 class OnwardContent extends Component {
     constructor(context: HTMLElement): void {
@@ -18,15 +21,10 @@ class OnwardContent extends Component {
 
         begin('series-content');
 
-        this.context = context;
-        this.endpoint = `/series/${getTag()}.json?shortUrl=${encodeURIComponent(
-            config.page.shortUrl
-        )}`;
+        this.endpoint = `/series/${getTag()}.json?shortUrl=${getShortUrl()}`;
 
-        this.fetch(this.context, 'html');
+        this.fetch(context, 'html');
     }
-
-    context: HTMLElement;
 
     // eslint-disable-next-line class-methods-use-this
     error(): void {

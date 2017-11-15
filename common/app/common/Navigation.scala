@@ -128,7 +128,7 @@ trait Navigation {
 
   //Technology
   val technologyblog = SectionLink("technology", "technology blog", "Technology blog", "/technology/blog")
-  val games = SectionLink("culture", "games", "Games", "/technology/games")
+  val games = SectionLink("culture", "games", "Games", "/games")
   val gamesblog = SectionLink("technology", "games blog", "Games blog", "/technology/gamesblog")
   val appsblog = SectionLink("technology", "apps blog", "Apps blog", "/technology/appsblog")
   val askjack = SectionLink("technology", "ask jack", "Ask Jack blog", "/technology/askjack")

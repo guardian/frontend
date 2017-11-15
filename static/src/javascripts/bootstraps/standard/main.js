@@ -47,8 +47,29 @@ const setAdTestCookie = (): void => {
     }
 };
 
+const showHiringMessage = (): void => {
+    try {
+        if (!config.get('page.isDev') && config.get('switches.weAreHiring')) {
+            window.console.log(
+                '\n' +
+                    '%cHello.\n' +
+                    '\n' +
+                    '%cWe are hiring – ever thought about joining us? \n' +
+                    '%chttps://workforus.theguardian.com/careers/digital-development%c \n' +
+                    '\n',
+                'font-family: Georgia, serif; font-size: 32px; color: #005689',
+                'font-family: Georgia, serif; font-size: 16px; color: #767676',
+                'font-family: Helvetica Neue, sans-serif; font-size: 11px; text-decoration: underline; line-height: 1.2rem; color: #767676',
+                ''
+            );
+        }
+    } catch (e) {
+        /* do nothing */
+    }
+};
+
 const handleMembershipAccess = (): void => {
-    const { membershipUrl, membershipAccess, contentId } = config.page;
+    const { membershipUrl, membershipAccess, contentId } = config.get('page');
 
     const redirect = (): void => {
         window.location.href = `${membershipUrl}/membership-content?referringContent=${contentId}&membershipAccess=${membershipAccess}`;
@@ -183,7 +204,7 @@ const bootStandard = (): void => {
     removeCookie('GU_AFU');
 
     // If we turn off the ad-free trial, immediately remove the cookie
-    if (!config.switches.adFreeSubscriptionTrial) {
+    if (!config.get('switches.adFreeSubscriptionTrial')) {
         removeCookie('GU_AF1');
     }
 
@@ -194,7 +215,7 @@ const bootStandard = (): void => {
         storage.set(key, alreadyVisited + 1);
     }
 
-    if (config.switches.blockIas && navigator.serviceWorker) {
+    if (config.get('switches.blockIas') && navigator.serviceWorker) {
         navigator.serviceWorker.ready.then(swreg => {
             const sw = swreg.active;
             const ias = window.location.hash.includes('noias');
@@ -214,13 +235,15 @@ const bootStandard = (): void => {
         Authenticating requires CORS and withCredentials. If we don't cut the
         mustard then pass through.
     */
-    if (config.page.requiresMembershipAccess) {
+    if (config.get('page.requiresMembershipAccess')) {
         handleMembershipAccess();
     }
 
     identityInit();
 
     newHeaderInit();
+
+    showHiringMessage();
 
     markTime('standard end');
 

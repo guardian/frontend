@@ -43,15 +43,22 @@
     }
 
     .dropdown__content {
-        margin-bottom: $gs-baseline;
-        margin-top: $gs-baseline;
+        transition: margin .1s linear, height .2s linear;
     }
 
     &.dropdown--active {
         .dropdown__button .inline-icon {
             transform: rotate(180deg);
         }
+        .dropdown__content {
+            margin-bottom: $gs-baseline;
+            margin-top: $gs-baseline;
+        }
     }
+}
+
+.dropdown__content {
+    transition: height .2s linear;
 }
 
 .dropdown__toggle:checked + .dropdown__content,
@@ -61,10 +68,13 @@
     visibility: visible;
     pointer-events: all;
     display: block;
+    height: auto;
 }
 
 .dropdown__content {
     display: none;
+    height: 0;
+    overflow: hidden;
 }
 
 .dropdown--animated .dropdown__content {

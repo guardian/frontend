@@ -25,5 +25,11 @@
   }
 
   @Html(qa.data.item.body)
-}
 
+  @qa.credit.map { credit =>
+    <div class="explainer-snippet__credit">
+      @fragments.inlineSvg("information", "icon") 
+      @credit
+    </div>
+  }
+}

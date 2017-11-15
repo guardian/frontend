@@ -160,9 +160,9 @@ object UrlHelpers {
 
     def masterclassesUrl(implicit request: RequestHeader): String =
       if(mvt.ABNewDesktopHeaderControl.isParticipating) {
-        "https://www.theguardian.com/guardian-masterclasses?INTCMP=masterclasses_uk_web_newheader_control"
+        "https://membership.theguardian.com/masterclasses?INTCMP=masterclasses_uk_web_newheader_control"
       } else {
-        "https://www.theguardian.com/guardian-masterclasses?INTCMP=NGW_TOPNAV_UK_GU_MASTERCLASSES"
+        "https://membership.theguardian.com/masterclasses?INTCMP=NGW_TOPNAV_UK_GU_MASTERCLASSES"
       }
 
   }

@@ -11,6 +11,9 @@ export default {
             events[eventName](params);
         }
     },
+    removeEvent(eventName: string) {
+        delete events[eventName];
+    },
     removeAllListeners() {
         events = {};
     },

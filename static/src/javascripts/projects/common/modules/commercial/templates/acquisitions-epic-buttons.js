@@ -5,8 +5,7 @@ import config from 'lib/config';
 export const epicButtonsTemplate = (
     { membershipUrl = '', contributeUrl = '' }: CtaUrls,
     useSupportDomain: boolean = false,
-    suffix: string = '',
-    showPaymentLogos: boolean = false
+    suffix: string = ''
 ) => {
     const contribButton = `
         <div>
@@ -42,6 +41,6 @@ export const epicButtonsTemplate = (
         <div class="contributions__amount-field">
             ${!useSupportDomain ? supportButtonBecome : supportButtonSupport}
             ${!useSupportDomain ? contribButton : ''}
-            ${showPaymentLogos ? paymentLogos : ''}
+            ${paymentLogos}
         </div>`;
 };

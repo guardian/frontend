@@ -1,4 +1,4 @@
-@(storyquestions: model.content.StoryQuestionsAtom, isAmp: Boolean)(implicit request: RequestHeader)
+@(storyquestions: model.content.StoryQuestionsAtom, isAmp: Boolean, inApp: Boolean)(implicit request: RequestHeader)
 
 @import org.joda.time.{DateTime, DateTimeZone}
 @import conf.switches.Switches.ReaderAnswersDeliveryMechanism
@@ -24,6 +24,14 @@
             notifications <- storyquestions.data.notifications
             email <- notifications.email
         } yield email.listId
+    }
+}
+
+@notifcationValue() = @{
+    if(inApp) {
+        "app-notification"
+    } else {
+        "browser-notification"
     }
 }
 
@@ -71,8 +79,8 @@
                     <button class="button button--primary-inverse button--large user_answer-delivery btn-answer-delivery-@storyquestions.id" data-delivery-method="email">
                                     Email
                     </button>
-                    <button class="button button--primary-inverse button--large user_answer-delivery btn-answer-delivery-@storyquestions.id" data-delivery-method="browser-notification">
-                                    Browser notification
+                    <button class="button button--primary-inverse button--large user_answer-delivery btn-answer-delivery-@storyquestions.id" data-delivery-method=@notifcationValue()>
+                                    @if(inApp) { App notification } else { Browser notification }
                     </button>
                     <button class="button button--primary-inverse button--large user_answer-delivery btn-answer-delivery-@storyquestions.id" data-delivery-method="facebook-messenger">
                                     Facebook Messenger

@@ -18,11 +18,11 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-ias-ad-targeting",
+    "ab-ias-ad-targeting-v2",
     "Test to assess the impact of integrating with IAS to provide richer targeting of our ad slots",
     owners = Seq(Owner.withGithub("JonNorman")),
     safeState = Off,
-    sellByDate = new LocalDate(2017, 11, 8),
+    sellByDate = new LocalDate(2017, 11, 20),
     exposeClientSide = true
   )
 
@@ -118,21 +118,32 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-acquisitions-epic-logos-highlight-average",
-    "Test some variations of the Epic which mention price",
-    owners = Seq(Owner.withGithub("joelochlann")),
-    safeState = On,
-    sellByDate = new LocalDate(2017, 12, 5),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-acquisitions-epic-paradise",
     "Test highlighting a different sentance in the epic",
     owners = Seq(Owner.withGithub("jranks123")),
     safeState = Off,
     sellByDate = new LocalDate(2017, 11, 23),
+    exposeClientSide = true
+  )
+
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-banner-just-one-pound",
+    "Test highlighting a different sentance in the epic",
+    owners = Seq(Owner.withGithub("jranks123")),
+    safeState = Off,
+    sellByDate = new LocalDate(2017, 11, 23),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-us-gun-campaign-2017",
+    "Show a custom Epic for articles with the US gun campaign tag",
+    owners = Seq(Owner.withGithub("Mullefa")),
+    safeState = On,
+    sellByDate = new LocalDate(2018, 1, 4),
     exposeClientSide = true
   )
 }
