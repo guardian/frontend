@@ -15,7 +15,7 @@ $checkbox-size: $gs-gutter / 1.25;
 .manage-account__switchboard {
 
     ul {
-        grid-template-columns: repeat(auto-fit, minmax(gs-span(4), 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(gs-span(3), 1fr));
         grid-auto-rows: 1fr;
         display: grid;
         padding-top: $local-gutter;
