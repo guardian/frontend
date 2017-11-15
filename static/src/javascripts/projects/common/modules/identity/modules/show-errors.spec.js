@@ -1,4 +1,3 @@
-// @flow
 import { push } from './show-errors';
 
 beforeEach(() => {

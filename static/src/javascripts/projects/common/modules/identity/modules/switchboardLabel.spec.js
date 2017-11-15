@@ -1,4 +1,3 @@
-// @flow
 import { addSpinner, removeSpinner } from './switchboardLabel';
 
 beforeEach(() => {

@@ -1,7 +1,7 @@
 // @flow
 import fastdom from 'lib/fastdom-promise';
 
-export const addSpinner = (labelEl: HTMLElement): Promise =>
+export const addSpinner = (labelEl: HTMLElement): Promise<any> =>
     fastdom.write(() => {
         if (document.body) {
             document.body.classList.add('is-updating-cursor');
@@ -9,7 +9,7 @@ export const addSpinner = (labelEl: HTMLElement): Promise =>
         labelEl.classList.add('is-updating');
     });
 
-export const removeSpinner = (labelEl: HTMLElement): Promise =>
+export const removeSpinner = (labelEl: HTMLElement): Promise<any> =>
     fastdom
         .write(() => {
             if (document.body) {
