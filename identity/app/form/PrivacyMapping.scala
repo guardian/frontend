@@ -49,8 +49,11 @@ case class PrivacyFormData(
     consents: List[Consent]) extends UserFormData{
 
   /**
+    * FIXME: Fix the semantic discrepancy between toUserUpdateDTO and toUserUpdateDTOAjax.
+    * In the non-ajax case no value means set it to false while in the ajax case no value means use the old value.
+    *
     * If a checkbox is unchecked then nothing is sent to dotocom identity frontend,
-    * however IDAPI is expecting Some(false), so we gave to getOrElse.
+    * however IDAPI is expecting Some(false)
     *
     * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/checkbox:
     *
@@ -58,6 +61,7 @@ case class PrivacyFormData(
     * the server to represent its unchecked state (e.g. value=unchecked); the value is not submitted
     * to the server at all."
     */
+
   def toUserUpdateDTO(oldUserDO: User): UserUpdateDTO =
     UserUpdateDTO(
       statusFields = Some(oldUserDO.statusFields.copy(
@@ -66,6 +70,32 @@ case class PrivacyFormData(
         allowThirdPartyProfiling = Some(allowThirdPartyProfiling.getOrElse(false))
       )),
       consents = Some(consents))
+
+  def toUserUpdateDTOAjax(oldUserDO: User): UserUpdateDTO = {
+
+    val newReceiveGnmMarketing = receiveGnmMarketing match {
+      case None => oldUserDO.statusFields.receiveGnmMarketing
+      case Some(_) => receiveGnmMarketing
+    }
+
+    val newReceive3rdPartyMarketing = receive3rdPartyMarketing match {
+      case None => oldUserDO.statusFields.receive3rdPartyMarketing
+      case Some(_) => receive3rdPartyMarketing
+    }
+
+    val newAllowThirdPartyProfiling = allowThirdPartyProfiling match {
+      case None => oldUserDO.statusFields.allowThirdPartyProfiling
+      case Some(_) => allowThirdPartyProfiling
+    }
+
+    UserUpdateDTO(
+      statusFields = Some(oldUserDO.statusFields.copy(
+        receive3rdPartyMarketing = newReceive3rdPartyMarketing,
+        receiveGnmMarketing = newReceiveGnmMarketing,
+        allowThirdPartyProfiling = newAllowThirdPartyProfiling
+      )),
+      consents = Some(consents))
+  }
 }
 
 object PrivacyFormData {

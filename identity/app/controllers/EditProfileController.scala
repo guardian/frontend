@@ -98,7 +98,7 @@ class EditProfileController(
           },
 
           privacyFormData => {
-            identityApiClient.saveUser(userDO.id, privacyFormData.toUserUpdateDTO(userDO), userDO.auth) map {
+            identityApiClient.saveUser(userDO.id, privacyFormData.toUserUpdateDTOAjax(userDO), userDO.auth) map {
               case Left(idapiErrors) =>
                 logger.error(s"Failed to process marketing consent form submission for user ${userDO.getId}: $idapiErrors")
                 InternalServerError(Json.toJson(idapiErrors))
