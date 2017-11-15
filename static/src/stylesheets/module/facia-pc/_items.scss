@@ -53,7 +53,7 @@
         }
     }
 
-    &.fc-item--has-sublinks {
+    &[class*='fc-item--has-sublinks'] {
         .fc-item__standfirst {
             display: none;
         }
@@ -164,7 +164,7 @@
             @include fs-headline(3, true);
         }
 
-        &.fc-item--has-sublinks {
+        &[class*='fc-item--has-sublinks'] {
             &:not(.fc-item--has-sublinks-1):not(.fc-item--has-sublinks-2) {
                 @include fc-sublinks--below;
             }

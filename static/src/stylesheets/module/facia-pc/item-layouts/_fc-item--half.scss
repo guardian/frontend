@@ -40,7 +40,7 @@ x x x x x x x x x x x x x x x x x x
         display: block;
     }
 
-    &.fc-item--has-sublinks {
+    &[class*='fc-item--has-sublinks'] {
         .fc-item__standfirst {
             display: none;
         }

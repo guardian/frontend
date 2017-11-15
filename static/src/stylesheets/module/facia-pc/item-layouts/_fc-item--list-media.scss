@@ -85,7 +85,7 @@ Media list item. Looks a bit like this:
         }
     }
 
-    &.fc-item--has-sublinks {
+    &[class*='fc-item--has-sublinks'] {
         .fc-item__footer--vertical {
             display: none;
         }
