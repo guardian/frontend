@@ -4,6 +4,7 @@ files:
     # Do not lint external files.
     - 'static/src/stylesheets/icons/**/*.scss'
     - 'static/src/stylesheets/email/foundation-emails/**/*.scss'
+    - 'static/src/stylesheets/atoms/vars.scss'
 options:
   formatter: stylish
   merge-default-rules: false
