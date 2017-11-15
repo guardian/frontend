@@ -46,6 +46,39 @@ const displayCancelContribution = (): void => {
     $(CANCEL_CONTRIBUTION).removeClass(IS_HIDDEN_CLASSNAME);
 };
 
+const hideCancelContribution = (): void => {
+    $(CANCEL_CONTRIBUTION).addClass(IS_HIDDEN_CLASSNAME);
+};
+
+const hideContributionInfo = (): void => {
+    $(CONTRIBUTION_INFO).addClass(IS_HIDDEN_CLASSNAME);
+};
+
+const cancelContribution = (): void => {
+    fetch(
+        `${config.get('page.userAttributesApiUrl')}/me/cancel-regular-contribution`,
+        {
+            method: 'post',
+            mode: 'cors',
+            credentials: 'include',
+            headers: {
+                'Csrf-Token': 'nocheck',
+            },
+            body: {
+                reason: 'Customer',
+            },
+        }
+    )
+        .then(resp => console.log(resp))
+        .catch(err => {
+            hideLoader();
+            displayErrorMessage();
+            reportError(err, {
+                feature: 'mma-monthlycontribution',
+            });
+        });
+};
+
 const populateUserDetails = (contributorDetails: ContributorDetails): void => {
     const isMonthly = contributorDetails.subscription.plan.interval === 'month';
     const intervalText = isMonthly ? 'Monthly' : 'Annual';
@@ -101,30 +134,13 @@ const populateUserDetails = (contributorDetails: ContributorDetails): void => {
         displayCancelContribution();
         const cancelButton = document.querySelector(CANCEL_CONTRIBUTION_BUTTON);
         cancelButton.addEventListener("click", () => {cancelContribution()});
+    } else {
+        hideCancelContribution();
+        displaySupportUpSell();
+        hideContributionInfo();
     }
 };
 
-const cancelContribution = (): void => {
-    fetch(
-        `${config.get('page.userAttributesApiUrl')}/me/cancel-regular-contribution`,
-        {
-            method: 'post',
-            mode: 'cors',
-            credentials: 'include',
-            headers: {
-                'Csrf-Token': 'nocheck',
-            },
-        }
-    )
-        .then(resp => console.log(resp))
-        .catch(err => {
-            hideLoader();
-            displayErrorMessage();
-            reportError(err, {
-                feature: 'mma-monthlycontribution',
-            });
-        });
-}
 export const recurringContributionTab = (): void => {
     fetch(
         `${config.get('page.userAttributesApiUrl')}/me/mma-monthlycontribution`,
