@@ -21,15 +21,6 @@ $checkbox-size: $gs-gutter / 1.25;
         padding-top: $local-gutter;
         grid-row-gap: $local-gutter;
         grid-column-gap: $local-gutter;
-        > * {
-            width: 100%;
-            height: auto;
-            margin: 0;
-            margin-bottom: $local-gutter;
-            @supports(display: grid) {
-                margin: 0;
-            }
-        }
     }
 
     &--narrow ul {
@@ -40,6 +31,10 @@ $checkbox-size: $gs-gutter / 1.25;
 
     li {
         display: flex;
+        margin-bottom: $local-gutter;
+        @supports(display: grid) {
+            margin: 0;
+        }
     }
 
 }
@@ -155,6 +150,9 @@ $checkbox-size: $gs-gutter / 1.25;
         cursor: wait;
         pointer-events: none;
         background-image: none;
+        width: auto;
+        height: auto;
+        margin-top: 0;
 
         &:before {
             animation: manage-account__switchboardLoading 1s infinite both;
