@@ -151,19 +151,6 @@ $checkbox-size: $gs-gutter / 1.25;
         transition: .2s;
     }
 
-    &--branded {
-        display: flex;
-        flex-direction: row;
-        > * {
-            flex: 1 1 0;
-            width: auto!important;
-        }
-        .account__switchboardLabelHeader {
-            background: #f5b3c7;
-            color: #e71c77;
-        }
-    }
-
     &.is-updating {
         cursor: wait;
         pointer-events: none;
