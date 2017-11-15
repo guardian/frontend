@@ -1,5 +1,7 @@
 // @flow
 
+import fetchJSON from 'lib/fetch-json';
+
 import { Component } from './component';
 
 const mockResponse = {
@@ -114,6 +116,21 @@ describe('Component - fetch()', () => {
             expect(component.checkAttached).toHaveBeenCalled();
             expect(component.prerender).toHaveBeenCalled();
             expect(component.error).not.toHaveBeenCalled();
+        });
+    });
+
+    test('calls error() if something went wrong', () => {
+        const component = createComponent({
+            ready: jest.fn(),
+            error: jest.fn(),
+        });
+        const mockError = new Error('Bad response');
+
+        fetchJSON.mockReturnValueOnce(Promise.reject(mockError));
+
+        return component.fetch().catch(() => {
+            expect(component.ready).toHaveBeenCalled();
+            expect(component.error).toHaveBeenCalledWith(mockError);
         });
     });
 });
