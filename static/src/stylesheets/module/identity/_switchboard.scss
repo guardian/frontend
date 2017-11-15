@@ -32,6 +32,12 @@ $checkbox-size: $gs-gutter / 1.25;
         }
     }
 
+    &--narrow ul {
+        @include mq(tablet) {
+            grid-template-columns: repeat(auto-fit, minmax(gs-span(3), .5fr));
+        }
+    }
+
     li {
         display: flex;
     }

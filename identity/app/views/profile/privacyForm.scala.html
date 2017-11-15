@@ -79,7 +79,7 @@
         </div>
     }
 
-        <div class="js-errorHolder"></div>
+        <div class="js-errorHolder manage-account__errors"></div>
 
     @if(IdentityGdprMarketingConsentSwitch.isSwitchedOn) {
         <h2 class="manage-account-header">Would you like to receive information from the Guardian and their partners?</h2>
@@ -109,7 +109,7 @@
         </fieldset>
     }
 
-    @if(IdentityGdprMarketingConsentSwitch.isSwitchedOn) {
+    @if(!IdentityGdprMarketingConsentSwitch.isSwitchedOn) {
         @* Marketing Consent *@
         <div class="manage-account-headerWrapper">
             <h2 class="manage-account-header">Marketing preferences</h2>
@@ -127,7 +127,6 @@
                     <div class="form-field__note">The Guardian and their partners would like to occasionally send you information about their products, services and events.</div>
 
                     <div class="form-fields-group">
-
                         @v1consentCheckboxes
                     </div>
                 </li>
@@ -144,7 +143,7 @@
                     <li class="form-field">
                         <label class="label">In addition to the data that you provide to us, we may also match profiling data from third parties with your registration details.</label>
 
-                        <div class="manage-account__switchboard">
+                        <div class="manage-account__switchboard manage-account__switchboard--narrow">
                             <ul>
                                 <li>
                                 @fragments.form.switchboardLabel(
@@ -154,7 +153,6 @@
                                     field = privacyForm("allowThirdPartyProfiling")
                                 )(nonInputFields, messages)
                                 </li>
-                                <li></li>
                             </ul>
                         </div>
 

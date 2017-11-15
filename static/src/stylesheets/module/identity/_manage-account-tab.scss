@@ -270,6 +270,9 @@
         }
     }
 }
+.manage-account__errors:not(:empty) {
+    margin-bottom: $gs-gutter;
+}
 
 /* Header
 ========================================================================== */
@@ -299,8 +302,10 @@
     width: 100%;
     border-top: 1px solid $news-main-2;
     margin-bottom: gs-span(.5);
-    margin-top: gs-span(1);
     transform: scaleX(3);
+    @include mq(desktop) {
+        margin-top: gs-span(1);
+    }
 }
 
 /* Modals
