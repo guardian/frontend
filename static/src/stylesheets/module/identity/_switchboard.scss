@@ -55,7 +55,7 @@ $checkbox-size: $gs-gutter / 1.25;
 
     .account__switchboardLabelHeader {
         @include f-header;
-        @include fs-headline(2,true);
+        @include fs-headline(2, true);
         background-size: 100% auto;
         background-position: 0 0;
         background-repeat: no-repeat;
