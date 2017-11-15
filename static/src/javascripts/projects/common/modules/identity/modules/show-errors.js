@@ -20,20 +20,18 @@ export const push = (error: any, action: string = 'none'): Promise<void> =>
                 errorEl.className = formErrorClassName;
                 errorHolderEl.appendChild(errorEl);
 
-                if (action) {
-                    switch (action) {
-                        case 'reload': {
-                            const reloadCtaEl = document.createElement('a');
-                            reloadCtaEl.innerHTML = 'Refresh this page';
-                            reloadCtaEl.onclick = () => {
-                                window.location.reload();
-                            };
-                            errorEl.appendChild(reloadCtaEl);
-                            break;
-                        }
-                        default: {
-                            break;
-                        }
+                switch (action) {
+                    case 'reload': {
+                        const reloadCtaEl = document.createElement('a');
+                        reloadCtaEl.innerHTML = 'Refresh this page';
+                        reloadCtaEl.onclick = () => {
+                            window.location.reload();
+                        };
+                        errorEl.appendChild(reloadCtaEl);
+                        break;
+                    }
+                    default: {
+                        break;
                     }
                 }
             })
