@@ -40,10 +40,57 @@ object NewNavigation {
   case object News extends EditionalisedNavigationSection {
     val name = "news"
 
-    val uk = List(headlines, ukNews, world, business, environment, tech, politics, science, globalDevelopment, cities, obituaries)
-    val au = List(headlines, australiaNews, world, auPolitics, environment, indigenousAustralia, auImmigration, media)
-    val us = List(headlines, usNews, world, environment, usPolitics, business, science, money, tech, obituaries)
-    val int = List(headlines, world, ukNews, science, cities, globalDevelopment, tech, business, environment, obituaries)
+    val uk = List(
+      headlines,
+      ukNews,
+      world,
+      environment,
+      football,
+      business,
+      tech,
+      politics,
+      science,
+      globalDevelopment,
+      cities,
+      obituaries
+    )
+    val au = List(
+      headlines,
+      australiaNews,
+      world,
+      auPolitics,
+      environment,
+      football,
+      indigenousAustralia,
+      auImmigration,
+      media
+    )
+    val us = List(
+      headlines,
+      usNews,
+      world,
+      environment,
+      soccer,
+      usPolitics,
+      business,
+      science,
+      money,
+      tech,
+      obituaries
+    )
+    val int = List(
+      headlines,
+      world,
+      ukNews,
+      science,
+      cities,
+      globalDevelopment,
+      football,
+      tech,
+      business,
+      environment,
+      obituaries
+    )
   }
 
   case object Opinion extends EditionalisedNavigationSection {
