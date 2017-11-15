@@ -56,7 +56,9 @@ const hideContributionInfo = (): void => {
 
 const cancelContribution = (): void => {
     fetch(
-        `${config.get('page.userAttributesApiUrl')}/me/cancel-regular-contribution`,
+        `${config.get(
+            'page.userAttributesApiUrl'
+        )}/me/cancel-regular-contribution`,
         {
             method: 'post',
             mode: 'cors',
@@ -128,7 +130,7 @@ const populateUserDetails = (contributorDetails: ContributorDetails): void => {
         $(PAYPAL).removeClass(IS_HIDDEN_CLASSNAME);
     }
 
-    if(!contributorDetails.subscription.cancelledAt) {
+    if (!contributorDetails.subscription.cancelledAt) {
         displayCancelContribution();
         const cancelButton = document.querySelector(CANCEL_CONTRIBUTION_BUTTON);
         if (cancelButton) {
