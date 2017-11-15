@@ -59,7 +59,7 @@ class EditProfileController(
   def submitPublicProfileForm(): Action[AnyContent] = submitForm(PublicEditProfilePage)
   def submitAccountForm(): Action[AnyContent] = submitForm(AccountEditProfilePage)
 
-  def saveEmailPreferences: Action[AnyContent] =
+  def saveEmailPreferencesAjax: Action[AnyContent] =
     csrfCheck {
       authActionWithUser.async { implicit request =>
         newsletterService.savePreferences().map { form  =>

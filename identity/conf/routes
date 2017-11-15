@@ -60,5 +60,5 @@ POST        /privacy/edit                           controllers.EditProfileContr
 POST        /privacy/edit-ajax                      controllers.EditProfileController.saveConsentPreferencesAjax
 
 GET         /email-prefs                            controllers.EditProfileController.displayEmailPrefsForm
-POST        /email-prefs                            controllers.EditProfileController.saveEmailPreferences
+POST        /email-prefs                            controllers.EditProfileController.saveEmailPreferencesAjax
 ########################################################################################################################
