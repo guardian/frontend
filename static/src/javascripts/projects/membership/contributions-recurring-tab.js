@@ -68,14 +68,13 @@ const cancelContribution = (): void => {
                 reason: 'Customer',
             },
         }
-    )
-        .catch(err => {
-            hideLoader();
-            displayErrorMessage();
-            reportError(err, {
-                feature: 'mma-monthlycontribution',
-            });
+    ).catch(err => {
+        hideLoader();
+        displayErrorMessage();
+        reportError(err, {
+            feature: 'mma-monthlycontribution',
         });
+    });
 };
 
 const populateUserDetails = (contributorDetails: ContributorDetails): void => {
