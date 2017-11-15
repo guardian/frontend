@@ -86,7 +86,9 @@ module.exports = {
                 exclude: /(node_modules)/,
                 loader: 'svg-loader',
             },
-            ...require('@guardian/atom-renderer/webpack/css')(path.join(__dirname, 'static', 'src', 'stylesheets', 'atoms', 'vars.scss')),
+            ...require('@guardian/atom-renderer/webpack/css')({
+                cssVarsPath: path.join(__dirname, 'static', 'src', 'stylesheets', 'atoms', 'vars.scss')
+            }),
         ],
     },
     plugins: [
