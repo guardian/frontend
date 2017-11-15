@@ -1,0 +1,97 @@
+// @flow
+
+import { Component } from './component';
+
+const mockResponse = {
+    html: '<p>html</p>',
+    other: '<p>other</p>',
+};
+
+const createComponent = (props?: Object = {}): Component => {
+    const component = new Component();
+    const defaults = {
+        endpoint: 'whatever',
+    };
+
+    Object.assign(component, defaults, props);
+
+    return component;
+};
+
+jest.mock('lib/fetch-json', () => jest.fn(() => Promise.resolve(mockResponse)));
+
+describe('Component - fetch()', () => {
+    test('call fetched() with an endpoint', () => {
+        const component = createComponent({
+            fetched: jest.fn(),
+        });
+
+        return component.fetch().then(() => {
+            expect(component.fetched).toHaveBeenCalledWith(mockResponse);
+        });
+    });
+
+    test('not call fetched() without an endpoint', () => {
+        const component = createComponent({
+            endpoint: false,
+            fetched: jest.fn(),
+        });
+
+        return component.fetch().then(() => {
+            expect(component.fetched).not.toHaveBeenCalled();
+        });
+    });
+
+    test('extract the content of `html` in response by default', () => {
+        const component = createComponent({
+            fetched: jest.fn(),
+        });
+
+        return component.fetch().then(() => {
+            if (!component.elem) {
+                return Promise.reject(new Error('.elem property should exist'));
+            }
+
+            if (component.elem) {
+                expect(component.elem.tagName).toBe('P');
+            }
+
+            if (component.elem) {
+                expect(component.elem.innerHTML).toBe('html');
+            }
+
+            expect(component.fetched).toHaveBeenCalledWith(mockResponse);
+        });
+    });
+
+    test('properly extract data from response, if key was passed', () => {
+        const component = createComponent({
+            fetched: jest.fn(),
+        });
+
+        return component.fetch(undefined, 'other').then(() => {
+            if (!component.elem) {
+                return Promise.reject(new Error('.elem property should exist'));
+            }
+
+            expect(component.fetched).toHaveBeenCalledWith(mockResponse);
+
+            if (component.elem) {
+                expect(component.elem.innerHTML).toBe('other');
+            }
+        });
+    });
+
+    test('calls ready(), not error(), if everything works', () => {
+        const component = createComponent({
+            fetched: jest.fn(),
+            ready: jest.fn(),
+            error: jest.fn(),
+        });
+
+        return component.fetch().then(() => {
+            expect(component.ready).toHaveBeenCalledWith(component.elem);
+            expect(component.error).not.toHaveBeenCalled();
+        });
+    });
+});
