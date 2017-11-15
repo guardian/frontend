@@ -15,7 +15,7 @@ $checkbox-size: $gs-gutter / 1.25;
 .manage-account__switchboard {
 
     ul {
-        grid-template-columns: repeat(auto-fit, minmax(gs-span(3), 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(gs-span(4), 1fr));
         grid-auto-rows: 1fr;
         display: grid;
         padding-top: $local-gutter;
@@ -54,9 +54,22 @@ $checkbox-size: $gs-gutter / 1.25;
     position: relative;
 
     .account__switchboardLabelHeader {
+        @include f-header;
+        @include fs-headline(2,true);
         background-size: 100% auto;
         background-position: 0 0;
         background-repeat: no-repeat;
+        padding: $local-gutter ($local-gutter * 1.5);
+        text-transform: lowercase;
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+        svg {
+            height: 2em;
+            width: 2em;
+            fill: #ffffff;
+            margin-top: $local-gutter;
+        }
     }
 
     .account__switchboardLabelContent {
@@ -139,8 +152,15 @@ $checkbox-size: $gs-gutter / 1.25;
     }
 
     &--branded {
+        display: flex;
+        flex-direction: row;
+        > * {
+            flex: 1 1 0;
+            width: auto!important;
+        }
         .account__switchboardLabelHeader {
-            padding-top: 35%;
+            background: #f5b3c7;
+            color: #e71c77;
         }
     }
 

@@ -23,12 +23,19 @@
     }
 ">
     @if(brand.isDefined) {
-        <div class="account__switchboardLabelHeader"></div>
+        <div class="account__switchboardLabelHeader">
+            <div>@title</div>
+            @fragments.inlineSvg("marque-36", "icon")
+        </div>
     }
     <div class="account__switchboardLabelContent">
         @fragments.form.checkbox(field, Checkbox(field).args:_*)
         <div class="manage-account__switchboardCheckbox"></div>
-        <strong class="manage-account__switchboardTitle">@title</strong>
+        @if(!brand.isDefined) {
+            <p class="manage-account__switchboardTitle">
+            @title
+            </p>
+        }
         @if(copy.isDefined) {
             <p class="manage-account__switchboardCopy">
                 @copy
