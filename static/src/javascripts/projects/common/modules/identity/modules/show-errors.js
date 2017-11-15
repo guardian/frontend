@@ -6,7 +6,7 @@ const formErrorHolderClassName = 'js-errorHolder';
 
 const genericErrorMessage = 'Sorry, something went wrong';
 
-export const push = (error: Error, action: string = 'none'): Promise<void> =>
+export const push = (error: any, action: string = 'none'): Promise<void> =>
     fastdom
         .read(() =>
             window.document.querySelector(`.${formErrorHolderClassName}`)
