@@ -209,7 +209,7 @@ const buildFormDataForFields = (
     return formData;
 };
 
-const getCsrfTokenFromElement = (originalEl): Promise<any> =>
+const getCsrfTokenFromElement = (originalEl: HTMLElement): Promise<any> =>
     fastdom
         .read(() => {
             const closestFormEl: ?Element = originalEl.closest('form');
