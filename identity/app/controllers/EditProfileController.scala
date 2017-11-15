@@ -21,6 +21,7 @@ import scala.concurrent.Future
 object PublicEditProfilePage extends IdentityPage("/public/edit", "Edit Public Profile")
 object AccountEditProfilePage extends IdentityPage("/account/edit", "Edit Account Details")
 object EmailPrefsProfilePage extends IdentityPage("/email-prefs", "Privacy")
+object PrivacyEditProfilePage extends IdentityPage("/privacy-edit", "Privacy")
 object MembershipEditProfilePage extends IdentityPage("/membership/edit", "Membership")
 object recurringContributionPage extends IdentityPage("/contribution/recurring/edit", "Contributions")
 object DigiPackEditProfilePage extends IdentityPage("/digitalpack/edit", "Digital Pack")
@@ -58,7 +59,7 @@ class EditProfileController(
 
   def submitPublicProfileForm(): Action[AnyContent] = submitForm(PublicEditProfilePage)
   def submitAccountForm(): Action[AnyContent] = submitForm(AccountEditProfilePage)
-  def submitPrivacyForm(): Action[AnyContent] = submitForm(EmailPrefsProfilePage)
+//  def submitPrivacyForm(): Action[AnyContent] = submitForm(PrivacyEditProfilePage)
 
   def saveEmailPreferences: Action[AnyContent] =
     csrfCheck {
@@ -112,6 +113,34 @@ class EditProfileController(
       } // end authActionWithUser
     } // end csrfCheck
 
+  def saveConsentPreferences: Action[AnyContent] =
+    csrfCheck {
+      authActionWithUser.async { implicit request =>
+        val page = EmailPrefsProfilePage
+        val userDO = request.user
+        val boundProfileForms =
+          ProfileForms(userDO, activePage = page).bindFromRequestWithAddressErrorHack(request) // NOTE: only active form is bound to request data
+
+        boundProfileForms.activeForm.fold(
+          formWithErrors => profileFormsView(page, boundProfileForms, userDO),
+          privacyFormData => {
+              identityApiClient.saveUser(userDO.id, privacyFormData.toUserUpdateDTO(userDO), userDO.auth) flatMap {
+                case Left(idapiErrors) =>
+                  logger.error(s"Failed to process marketing consent form submission for user ${userDO.getId}: $idapiErrors")
+                  profileFormsView(page, boundProfileForms.withErrors(idapiErrors), userDO)
+
+                case Right(updatedUser) =>
+                  println("ssdsfsdfdsfdfswowowoho")
+                  println("ssdsfsdfdsfdfswowowoho")
+                  profileFormsView(page, boundProfileForms.bindForms(updatedUser), updatedUser)
+              }
+          } // end of success
+        ) // end fold
+      } // end authActionWithUser.async
+    } // end csrfCheck
+
+
+
   private def displayForm(page: IdentityPage) = csrfAddToken {
     recentlyAuthenticated.async { implicit request =>
         profileFormsView(
@@ -146,7 +175,7 @@ class EditProfileController(
 
             case formData: UserFormData =>
               identityApiClient.saveUser(userDO.id, formData.toUserUpdateDTO(userDO), userDO.auth) flatMap {
-                case Left(errors) => profileFormsView(page, boundProfileForms.withErrors(errors), userDO)
+                case Left(idapiErrors) => profileFormsView(page, boundProfileForms.withErrors(idapiErrors), userDO)
                 case Right(updatedUser) => profileFormsView(page, boundProfileForms.bindForms(updatedUser), updatedUser)
               }
           } // end of success
@@ -197,6 +226,7 @@ case class ProfileForms(
     case PublicEditProfilePage => publicForm
     case AccountEditProfilePage => accountForm
     case EmailPrefsProfilePage => privacyForm
+    case PrivacyEditProfilePage => privacyForm
   }
 
   private lazy val activeMapping = activePage match {
@@ -252,6 +282,7 @@ case class ProfileForms(
       case PublicEditProfilePage => copy(publicForm = changeFunc(publicForm).asInstanceOf[Form[ProfileFormData]])
       case AccountEditProfilePage => copy(accountForm = changeFunc(accountForm).asInstanceOf[Form[AccountFormData]])
       case EmailPrefsProfilePage => copy(privacyForm = changeFunc(privacyForm).asInstanceOf[Form[PrivacyFormData]])
+      case PrivacyEditProfilePage => copy(privacyForm = changeFunc(privacyForm).asInstanceOf[Form[PrivacyFormData]])
     }
   }
 }
