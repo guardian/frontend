@@ -69,7 +69,6 @@ const cancelContribution = (): void => {
             },
         }
     )
-        .then(resp => console.log(resp))
         .catch(err => {
             hideLoader();
             displayErrorMessage();
@@ -133,7 +132,9 @@ const populateUserDetails = (contributorDetails: ContributorDetails): void => {
     if(!contributorDetails.subscription.cancelledAt) {
         displayCancelContribution();
         const cancelButton = document.querySelector(CANCEL_CONTRIBUTION_BUTTON);
-        cancelButton.addEventListener("click", () => {cancelContribution()});
+        cancelButton.addEventListener('click', () => {
+            cancelContribution();
+        });
     } else {
         hideCancelContribution();
         displaySupportUpSell();
