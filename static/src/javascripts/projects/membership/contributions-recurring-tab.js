@@ -132,9 +132,11 @@ const populateUserDetails = (contributorDetails: ContributorDetails): void => {
     if(!contributorDetails.subscription.cancelledAt) {
         displayCancelContribution();
         const cancelButton = document.querySelector(CANCEL_CONTRIBUTION_BUTTON);
-        cancelButton.addEventListener('click', () => {
-            cancelContribution();
-        });
+        if (cancelButton) {
+            cancelButton.addEventListener('click', () => {
+                cancelContribution();
+            });
+        }
     } else {
         hideCancelContribution();
         displaySupportUpSell();
