@@ -98,4 +98,22 @@ describe('Component - fetch()', () => {
             expect(component.error).not.toHaveBeenCalled();
         });
     });
+
+    test('does not call ready() if destroyed is set to true', () => {
+        const component = createComponent({
+            checkAttached: jest.fn(),
+            destroyed: true,
+            fetched: jest.fn(),
+            prerender: jest.fn(),
+            ready: jest.fn(),
+            error: jest.fn(),
+        });
+
+        return component.fetch().then(() => {
+            expect(component.ready).not.toHaveBeenCalled();
+            expect(component.checkAttached).toHaveBeenCalled();
+            expect(component.prerender).toHaveBeenCalled();
+            expect(component.error).not.toHaveBeenCalled();
+        });
+    });
 });
