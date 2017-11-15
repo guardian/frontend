@@ -4,6 +4,7 @@ files:
     # Do not lint external files.
     - 'static/src/stylesheets/icons/**/*.scss'
     - 'static/src/stylesheets/email/foundation-emails/**/*.scss'
+    # Open issue: https://github.com/tonyganch/gonzales-pe/issues/197
     - 'static/src/stylesheets/atoms/vars.scss'
 options:
   formatter: stylish
