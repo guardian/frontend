@@ -8,9 +8,9 @@ import form._
 import idapiclient.responses.Error
 import idapiclient.IdApiClient
 import model._
-import play.api.data.Form
+import play.api.data.{Form, FormError}
 import play.api.i18n.{I18nSupport, MessagesProvider}
-import play.api.libs.json.Json
+import play.api.libs.json.{Json, Reads, Writes}
 import play.api.mvc._
 import play.filters.csrf.{CSRFAddToken, CSRFCheck}
 import services.{EmailPrefsData, _}
@@ -78,6 +78,39 @@ class EditProfileController(
         }
       }
     }
+
+  def saveConsentPreferencesAjax: Action[AnyContent] =
+    csrfCheck {
+      authActionWithUser.async { implicit request =>
+        val userDO = request.user
+        val marketingConsentForm: Form[PrivacyFormData] = Form(profileFormsMapping.privacyMapping.formMapping)
+
+        marketingConsentForm.bindFromRequest.fold(
+          formWithErrors => {
+            implicit val formErrorWrites = new Writes[FormError] {
+              def writes(formError: FormError) = Json.obj(
+                "key" -> formError.key,
+                "message" -> formError.message
+              )
+            }
+            val formBindingErrorsJson = Json.toJson(formWithErrors.errors.toList)
+            logger.error(s"Failed to submit marketing consent form for user ${userDO.user.getId}: $formBindingErrorsJson")
+            Future(BadRequest(formBindingErrorsJson))
+          },
+
+          privacyFormData => {
+            identityApiClient.saveUser(userDO.id, privacyFormData.toUserUpdateDTO(userDO), userDO.auth) map {
+              case Left(idapiErrors) =>
+                logger.error(s"Failed to process marketing consent form submission for user ${userDO.getId}: $idapiErrors")
+                InternalServerError(Json.toJson(idapiErrors))
+
+              case Right(updatedUser) =>
+                Ok(s"Successfully updated marketing consent for user ${userDO.getId}")
+            }
+          }
+        ) // end bindFromRequest.fold(
+      } // end authActionWithUser
+    } // end csrfCheck
 
   private def displayForm(page: IdentityPage) = csrfAddToken {
     recentlyAuthenticated.async { implicit request =>

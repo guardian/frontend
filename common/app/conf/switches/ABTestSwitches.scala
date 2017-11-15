@@ -136,4 +136,14 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2017, 11, 23),
     exposeClientSide = true
   )
+
+  Switch(
+    ABTests,
+    "ab-acquisitions-us-gun-campaign-2017",
+    "Show a custom Epic for articles with the US gun campaign tag",
+    owners = Seq(Owner.withGithub("Mullefa")),
+    safeState = On,
+    sellByDate = new LocalDate(2018, 1, 4),
+    exposeClientSide = true
+  )
 }

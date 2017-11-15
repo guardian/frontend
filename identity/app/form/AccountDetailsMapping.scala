@@ -10,7 +10,7 @@ class AccountDetailsMapping extends UserFormMapping[AccountFormData] with Addres
 
   private val genders = List("Male", "Female", "Transgender", "Other", "unknown", "")
 
-  protected def formMapping(implicit messagesProvider: MessagesProvider) = {
+  def formMapping(implicit messagesProvider: MessagesProvider) = {
     mapping(
       ("primaryEmailAddress", idEmail),
       ("title", comboList("" :: Titles.titles)),

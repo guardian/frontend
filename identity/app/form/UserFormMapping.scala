@@ -27,7 +27,7 @@ trait UserFormMapping[T <: UserFormData] extends Mappings {
   def formFieldKeyBy(idapiErrorContext: IdapiErrorContext): String =
     idapiErrorContextToFormFieldKeyMap.getOrElse(idapiErrorContext, default = idapiErrorContext)
 
-  protected def formMapping(implicit messagesProvider: MessagesProvider): Mapping[T]
+  def formMapping(implicit messagesProvider: MessagesProvider): Mapping[T]
 
   /**
     * Converts User domain object from IDAPI to form processing DTO

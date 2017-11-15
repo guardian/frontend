@@ -38,20 +38,6 @@ object ProjectSettings {
     }.value
   )
 
-  val frontendIntegrationTestsSettings = Seq (
-    concurrentRestrictions in ThisProject := List(Tags.limit(Tags.Test, 1)),
-    testOptions in Test += Tests.Argument("-oDF"),
-    resolvers ++= Seq(Resolver.typesafeRepo("releases")),
-    libraryDependencies ++= Seq(
-      scalaTest,
-      scalaTestPlus,
-      seleniumJava % Test,
-      jodaTime % Test,
-      jodaConvert % Test,
-      guBox % Test
-    )
-  )
-
   val frontendDependencyManagementSettings = Seq(
     ivyXML :=
       <dependencies>

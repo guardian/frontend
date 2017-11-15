@@ -57,6 +57,7 @@ GET         /digitalpack/edit                       controllers.EditProfileContr
 
 GET         /privacy/edit                           controllers.EditProfileController.displayPrivacyFormRedirect
 POST        /privacy/edit                           controllers.EditProfileController.submitPrivacyForm
+POST        /privacy/edit-ajax                      controllers.EditProfileController.saveConsentPreferencesAjax
 
 GET         /email-prefs                            controllers.EditProfileController.displayEmailPrefsForm
 POST        /email-prefs                            controllers.EditProfileController.saveEmailPreferences
