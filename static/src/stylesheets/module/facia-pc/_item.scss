@@ -232,7 +232,6 @@ $fc-item-gutter: $gs-gutter / 4;
 
 .fc-item__meta {
     @include fs-textSans(1);
-    min-width: 40px;
     color: $neutral-2;
     position: relative;
     display: flex;
@@ -250,6 +249,10 @@ $fc-item-gutter: $gs-gutter / 4;
     }
 }
 
+.fc-trail__count {
+    display: flex;
+}
+
 .fc-trail__count .inline-icon {
     width: 16px;
     height: 16px;
@@ -257,7 +260,7 @@ $fc-item-gutter: $gs-gutter / 4;
     top: 3px;
     float: left;
     margin-right: 1px;
-}
+} 
  
 .fc-item__footer--horizontal {
     display: none;
