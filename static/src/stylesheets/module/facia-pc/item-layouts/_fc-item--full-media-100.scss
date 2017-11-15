@@ -37,9 +37,5 @@ x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x
         }
     }
 
-    @include fc-sublinks--horizontal;
-
-    .fc-item__footer--horizontal {
-        flex-basis: auto;
-    }
+    @include fc-sublinks--below;
 }
