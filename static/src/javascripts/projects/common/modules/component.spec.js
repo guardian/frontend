@@ -134,3 +134,25 @@ describe('Component - fetch()', () => {
         });
     });
 });
+
+describe('Component - destroy', () => {
+    test('calls detach()', () => {
+        const component = createComponent({
+            detach: jest.fn(),
+        });
+
+        component.destroy();
+
+        expect(component.detach).toBeCalled();
+    });
+
+    test('deletes .elem', () => {
+        const component = createComponent({
+            elem: document.createElement('p'),
+        });
+
+        component.destroy();
+
+        expect(component.elem).not.toBeDefined();
+    });
+});
