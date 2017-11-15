@@ -35,7 +35,7 @@
     	    </ul>
 
             @* Hiding the 'more' link on the homepage and footer *@
-            @if(!(id == "uk" ||  id == "us" ||  id == "au" ||  id == "international" || isFooter)) {
+            @if(!isFooter) {
                 <div class="subnav__item subnav__item--toggle-more js-visible hide-on-desktop">
                     <button class="
                         subnav-link

@@ -37,15 +37,6 @@ object NewNavigation {
     case "lifestyle" => Lifestyle
   }
 
-  case object MostPopular extends EditionalisedNavigationSection {
-    val name = "news"
-
-    val uk = List(headlines, ukNews, world, business, environment, tech, football)
-    val au = List(headlines, australiaNews, world, auPolitics, environment, football)
-    val us = List(headlines, usNews, world, usPolitics, business, environment, soccer)
-    val int = List(headlines, world, ukNews, business, science, globalDevelopment, football)
-  }
-
   case object News extends EditionalisedNavigationSection {
     val name = "news"
 
