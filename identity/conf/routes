@@ -56,9 +56,9 @@ GET         /contribution/recurring/edit            controllers.EditProfileContr
 GET         /digitalpack/edit                       controllers.EditProfileController.displayDigitalPackForm
 
 GET         /privacy/edit                           controllers.EditProfileController.displayPrivacyFormRedirect
-POST        /privacy/edit                           controllers.EditProfileController.submitPrivacyForm
+POST        /privacy/edit                           controllers.EditProfileController.saveConsentPreferences
 POST        /privacy/edit-ajax                      controllers.EditProfileController.saveConsentPreferencesAjax
 
 GET         /email-prefs                            controllers.EditProfileController.displayEmailPrefsForm
-POST        /email-prefs                            controllers.EditProfileController.saveEmailPreferences
+POST        /email-prefs                            controllers.EditProfileController.saveEmailPreferencesAjax
 ########################################################################################################################
