@@ -16,6 +16,10 @@ const bootstrapAtom = (atomMaker: AtomMaker, atomType: AtomType) => {
                     'data-atom-id'
                 ) || ''}]: ${atom}`
             );
+        } else if ('requestIdleCallback' in window) {
+            requestIdleCallback(() => {
+                atom.start();
+            });
         } else {
             atom.start();
         }
