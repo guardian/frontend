@@ -106,10 +106,6 @@ const setBackground = (specs: AdSpec, adSlot: Node): Promise<any> => {
 
         Object.assign(background.style, specStyles);
 
-        if (specStyles.backgroundColor) {
-            backgroundParent.style.backgroundColor = specStyles.backgroundColor;
-        }
-
         if (specs.scrollType === 'fixed') {
             return fastdom
                 .read(() => {
@@ -119,6 +115,11 @@ const setBackground = (specs: AdSpec, adSlot: Node): Promise<any> => {
                 })
                 .then(rect =>
                     fastdom.write(() => {
+                        if (specStyles.backgroundColor) {
+                            backgroundParent.style.backgroundColor =
+                                specStyles.backgroundColor;
+                        }
+
                         if (rect) {
                             background.style.left = `${rect.left}px`;
                             background.style.right = `${rect.right}px`;
