@@ -2,16 +2,18 @@
 # yarn lockfile v1
 
 
-"@guardian/atom-renderer@0.8.9":
-  version "0.8.9"
-  resolved "https://registry.yarnpkg.com/@guardian/atom-renderer/-/atom-renderer-0.8.9.tgz#23e694949ae9e3edcbbdd470d9c8b1ca598ff32d"
+"@guardian/atom-renderer@0.8.10":
+  version "0.8.10"
+  resolved "https://registry.yarnpkg.com/@guardian/atom-renderer/-/atom-renderer-0.8.10.tgz#700d708fdc42b19d6f23536bb5202b670a5b9b0e"
   dependencies:
     autoprefixer "^7.1.6"
+    css-loader "^0.28.7"
     postcss-css-variables "^0.8.0"
     postcss-import "^11.0.0"
     postcss-loader "^2.0.8"
     sass-loader "^6.0.6"
     sass-mq "^3.3.2"
+    style-loader "^0.19.0"
     webpack "^3.5.6"
 
 "@guardian/guui@1.4.1":
