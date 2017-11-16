@@ -18,8 +18,8 @@ import { viewport } from './services/viewport';
 const services: Services = {
     ophan,
     dom: {
-        write: (f: () => void) => fastdom.write(f),
-        read: <A>(f: () => A) => fastdom.read(f),
+        write: fastdom.write,
+        read: fastdom.read,
     },
     viewport,
 };
