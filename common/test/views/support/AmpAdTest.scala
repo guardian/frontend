@@ -10,14 +10,14 @@ class AmpAdTest extends FlatSpec with Matchers {
      val sectionId = "sectionId"
      val result = AmpAdDataSlot(article(sectionId)).toString()
 
-     result should include(s"/$sectionId/")
+     result should be(s"/59666047/theguardian.com/$sectionId/article/amp")
    }
 
   "AmpAdDataSlot" should "return a string containing article's contentType" in {
-    val contentType = "article"
-    val result = AmpAdDataSlot(article("")).toString()
+    val sectionId = "sectionId"
+    val result = AmpAdDataSlot(article(sectionId)).toString()
 
-    result should include(s"/$contentType/")
+    result should be(s"/59666047/theguardian.com/$sectionId/article/amp")
   }
 
   "AmpAd" should "return a JSON object containing passed URI" in {
