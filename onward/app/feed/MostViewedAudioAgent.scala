@@ -1,15 +1,17 @@
 package feed
 
+import com.gu.Box
 import contentapi.ContentApiClient
 import common._
 import model.RelatedContentItem
+
 import scala.concurrent.{ExecutionContext, Future}
 import services.OphanApi
 
 class MostViewedAudioAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) extends Logging {
 
-  private val audioAgent = AkkaAgent[Seq[RelatedContentItem]](Nil)
-  private val podcastAgent = AkkaAgent[Seq[RelatedContentItem]](Nil)
+  private val audioAgent = Box[Seq[RelatedContentItem]](Nil)
+  private val podcastAgent = Box[Seq[RelatedContentItem]](Nil)
 
   def mostViewedAudio(): Seq[RelatedContentItem] = audioAgent()
   def mostViewedPodcast(): Seq[RelatedContentItem] = podcastAgent()

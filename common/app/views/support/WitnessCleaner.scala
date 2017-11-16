@@ -1,23 +1,23 @@
 package views.support
 
 import org.jsoup.nodes.{ Element, Document }
-import scala.collection.JavaConversions._
+import scala.collection.JavaConverters._
 
 object WitnessCleaner extends HtmlCleaner {
   override def clean(document: Document): Document = {
 
-    document.getElementsByClass("element-witness-video").foreach { embed: Element =>
+    document.getElementsByClass("element-witness-video").asScala.foreach { embed: Element =>
       //remove height from video iframe
-      embed.getElementsByClass("element-witness--main").foreach { main =>
-        main.getElementsByTag("iframe").foreach(_.attr("height", ""))
+      embed.getElementsByClass("element-witness--main").asScala.foreach { main =>
+        main.getElementsByTag("iframe").asScala.foreach(_.attr("height", ""))
       }
     }
 
-    document.getElementsByClass("element-witness--brand").foreach { brand: Element =>
+    document.getElementsByClass("element-witness--brand").asScala.foreach { brand: Element =>
       val witnessLogo = document.createElement("span")
       witnessLogo.attr("class", "witness-logo")
       witnessLogo.html("Guardian <span class='witness-logo__witness'>Witness</span>")
-      brand.children().foreach(_.remove)
+      brand.children().asScala.foreach(_.remove)
       brand.text("")
       brand.appendChild(witnessLogo)
     }

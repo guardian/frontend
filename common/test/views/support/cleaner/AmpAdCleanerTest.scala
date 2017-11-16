@@ -4,7 +4,7 @@ import org.jsoup.nodes.Element
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.scalatest.{FlatSpec, Matchers}
-import scala.collection.JavaConversions._
+import scala.collection.JavaConverters._
 
 class AmpAdCleanerTest extends FlatSpec with Matchers {
 
@@ -15,7 +15,7 @@ class AmpAdCleanerTest extends FlatSpec with Matchers {
   }
 
   private def clean(document: Document): Document = {
-    val children = document.body().children().toList
+    val children = document.body().children().asScala.toList
     val adsAfterAndEnd = AmpAdCleaner.findElementsNeedingAdsAfter(children)
     adsAfterAndEnd.foreach(adAfter) // side effects =(
     document

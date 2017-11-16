@@ -14,7 +14,7 @@ import model.liveblog.Blocks
 import model.meta.{Guardian, LinkedData, PotentialAction, WebPage}
 import org.apache.commons.lang3.StringUtils
 import org.joda.time.DateTime
-import org.scala_tools.time.Imports._
+import com.github.nscala_time.time.Implicits._
 import play.api.libs.json.{JsBoolean, JsString, JsValue}
 import play.api.mvc.RequestHeader
 import play.twirl.api.Html

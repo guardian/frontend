@@ -1,16 +1,16 @@
 package common
 
 import scala.concurrent.duration.FiniteDuration
-import akka.agent.Agent
 import akka.actor.{ActorSystem, Cancellable}
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.{Failure, Success}
+import com.gu.Box
 
 /** Simple class for repeatedly updating a value on a schedule */
 abstract class AutoRefresh[A](initialDelay: FiniteDuration, interval: FiniteDuration)  extends Logging {
 
-  private lazy val agent = AkkaAgent[Option[A]](None)
+  private lazy val agent = Box[Option[A]](None)
 
   @volatile private var subscription: Option[Cancellable] = None
 

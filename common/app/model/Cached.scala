@@ -2,7 +2,7 @@ package model
 
 import conf.switches.Switches.LongCacheSwitch
 import org.joda.time.DateTime
-import org.scala_tools.time.Imports._
+import com.github.nscala_time.time.Implicits._
 import play.api.http.Writeable
 import play.api.mvc._
 import scala.math.{max, min}

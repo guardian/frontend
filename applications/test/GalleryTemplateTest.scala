@@ -3,7 +3,7 @@ package test
 
 import conf.switches.Switches.FacebookShareUseTrailPicFirstSwitch
 import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
-import scala.collection.JavaConversions._
+import scala.collection.JavaConverters._
 
 @DoNotDiscover class GalleryTemplateTest extends FlatSpec with Matchers with ConfiguredTestSuite {
 
@@ -18,25 +18,25 @@ import scala.collection.JavaConversions._
 
   it should "render all images in the gallery" in goTo("/news/gallery/2012/may/02/picture-desk-live-kabul-burma") { browser =>
     import browser._
-    $(".gallery__item:not(.gallery__item--advert)").length should be (22)
+    $(".gallery__item:not(.gallery__item--advert)").asScala.length should be (22)
   }
 
   it should "insert ad slots after every four images" in goTo("/news/gallery/2012/may/02/picture-desk-live-kabul-burma") { browser =>
     import browser._
-    $(".gallery__item--advert").length should be (5)
+    $(".gallery__item--advert").asScala.length should be (5)
   }
 
   it should "show the twitter card meta-data" in goTo("/music/gallery/2012/jun/23/simon-bolivar-orchestra-dudamel-southbank-centre") { browser =>
     import browser._
-    $("meta[name='twitter:card']").attributes("content").head should be ("summary_large_image")
-    $("meta[name='twitter:title']").attributes("content").head should be ("Southbank Centre's Sounds Venezuela festival - in pictures")
+    $("meta[name='twitter:card']").attributes("content").asScala.head should be ("summary_large_image")
+    $("meta[name='twitter:title']").attributes("content").asScala.head should be ("Southbank Centre's Sounds Venezuela festival - in pictures")
   }
 
   it should "select the trail picture for the opengraph image when FacebookShareUseTrailPicFirstSwitch is ON" in {
     FacebookShareUseTrailPicFirstSwitch.switchOn()
     goTo("/lifeandstyle/gallery/2014/nov/24/flying-dogs-in-pictures") { browser =>
       import browser._
-      $("meta[property='og:image']").attributes("content").head should include ("61e027cb-fec8-4aa3-a12b-e50f99493399-2060x1236.jpeg")
+      $("meta[property='og:image']").attributes("content").asScala.head should include ("61e027cb-fec8-4aa3-a12b-e50f99493399-2060x1236.jpeg")
     }
   }
 
@@ -44,7 +44,7 @@ import scala.collection.JavaConversions._
     FacebookShareUseTrailPicFirstSwitch.switchOff()
     goTo("/lifeandstyle/gallery/2014/nov/24/flying-dogs-in-pictures") { browser =>
       import browser._
-      $("meta[property='og:image']").attributes("content").head should include ("e3867edb-e9d5-4be9-9c51-12258b686869-1498x2040.jpeg")
+      $("meta[property='og:image']").attributes("content").asScala.head should include ("e3867edb-e9d5-4be9-9c51-12258b686869-1498x2040.jpeg")
     }
   }
 

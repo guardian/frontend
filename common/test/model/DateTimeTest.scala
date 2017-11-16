@@ -5,7 +5,7 @@ import org.scalatest.FlatSpec
 import org.scalatest.Matchers
 import org.joda.time.DateTime
 import com.gu.contentapi.client.model.v1.{ Content => ApiContent }
-import org.scala_tools.time.Imports._
+import com.github.nscala_time.time.Imports._
 
 class DateTimeTest extends FlatSpec with Matchers with implicits.Dates {
 

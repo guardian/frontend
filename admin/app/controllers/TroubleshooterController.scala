@@ -10,7 +10,6 @@ import com.amazonaws.services.ec2.{AmazonEC2, AmazonEC2ClientBuilder}
 import com.amazonaws.services.ec2.model.{DescribeInstancesRequest, Filter}
 
 import scala.collection.JavaConverters._
-import scala.collection.JavaConversions._
 import scala.concurrent.Future
 import scala.concurrent.duration._
 import conf.Configuration.aws.credentials
@@ -110,8 +109,8 @@ class TroubleshooterController(wsClient: WSClient, val controllerComponents: Con
       }.asJavaCollection
       val instancesDnsName: Seq[String] = awsEc2Client.map(
         _.describeInstances(new DescribeInstancesRequest().withFilters(tagsAsFilters))
-          .getReservations
-          .flatMap(_.getInstances)
+          .getReservations.asScala
+          .flatMap(_.getInstances.asScala)
           .map(_.getPrivateDnsName)
       ).toSeq.flatten
       Random.shuffle(instancesDnsName).headOption

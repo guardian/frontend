@@ -32,8 +32,8 @@ class FrontPressCron(liveFapiFrontPress: LiveFapiFrontPress, toolPressQueueWorke
         .pressByPathId(path)
         .map(Function.const(()))
 
-      pressFuture.onSuccess {
-        case _ => FrontPressCronSuccess.increment()
+      pressFuture.foreach {
+        _ => FrontPressCronSuccess.increment()
       }
 
       pressFuture

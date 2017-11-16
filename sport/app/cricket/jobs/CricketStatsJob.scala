@@ -1,6 +1,7 @@
 package jobs
 
-import common.{AkkaAgent, Logging}
+import com.gu.Box
+import common.Logging
 import conf.cricketPa.{CricketFeedException, CricketTeam, CricketTeams, PaFeed}
 import cricketModel.Match
 import org.joda.time.{DateTimeZone, Days, LocalDate}
@@ -10,7 +11,7 @@ import scala.concurrent.ExecutionContext
 
 class CricketStatsJob(paFeed: PaFeed) extends Logging {
 
-  private val cricketStatsAgents = CricketTeams.teams.map(Team => (Team, AkkaAgent[Map[String, Match]](Map.empty)))
+  private val cricketStatsAgents = CricketTeams.teams.map(Team => (Team, Box[Map[String, Match]](Map.empty)))
 
   private val dateFormatUTC = DateTimeFormat.forPattern("yyyy/MMM/dd").withZone(DateTimeZone.UTC)
 

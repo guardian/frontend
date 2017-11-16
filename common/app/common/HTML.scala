@@ -3,7 +3,7 @@ package common
 import org.apache.commons.lang.StringEscapeUtils
 import org.jsoup.Jsoup
 import org.jsoup.safety.Whitelist
-import scala.collection.JavaConversions._
+import scala.collection.JavaConverters._
 
 
 object HTML {
@@ -13,8 +13,9 @@ object HTML {
     Jsoup.parse(html)
       .select("body")
       .iterator
+      .asScala
       .toList
-      .flatMap(_.children().take(n))
+      .flatMap(_.children().asScala.take(n))
       .map(_.toString)
       .mkString("")
 }

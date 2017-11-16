@@ -2,8 +2,9 @@ package commercial.model.merchandise.events
 
 import java.lang.System._
 
+import com.gu.Box
 import commercial.model.feeds._
-import common.{AkkaAgent, Logging}
+import common.Logging
 import conf.Configuration
 import commercial.model.merchandise.LiveEvent
 import play.api.libs.json.JsValue
@@ -15,7 +16,7 @@ import scala.util.control.NonFatal
 
 class LiveEventAgent(wsClient: WSClient) extends Logging {
 
-  private lazy val liveEventAgent = AkkaAgent[Seq[LiveEvent]](Seq.empty)
+  private lazy val liveEventAgent = Box[Seq[LiveEvent]](Seq.empty)
 
   def specificLiveEvent(eventBriteId: String): Option[LiveEvent] = liveEventAgent.get.find(_.eventId == eventBriteId)
 

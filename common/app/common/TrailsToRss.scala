@@ -16,7 +16,7 @@ import org.jsoup.Jsoup
 import play.api.mvc.RequestHeader
 import views.support.{Item140, Item460, Profile}
 
-import scala.collection.JavaConversions._
+import scala.collection.JavaConverters._
 import scala.collection.JavaConverters._
 
 object TrailsToRss extends implicits.Collections {
@@ -119,7 +119,7 @@ object TrailsToRss extends implicits.Collections {
 
       entry.setDescription(description)
       entry.setCategories(categories)
-      entry.setModules(new java.util.ArrayList(mediaModules ++ Seq(dc)))
+      entry.setModules(new java.util.ArrayList((mediaModules ++ Seq(dc)).asJava))
       entry
 
     }.asJava
@@ -224,7 +224,7 @@ object TrailsToRss extends implicits.Collections {
       entry.setLink(webUrl)
       entry.setDescription(description)
       entry.setCategories(categories)
-      entry.setModules(new java.util.ArrayList(mediaModules ++ Seq(dc)))
+      entry.setModules(new java.util.ArrayList((mediaModules ++ Seq(dc)).asJava))
       entry
 
     }.asJava

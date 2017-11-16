@@ -8,7 +8,7 @@ import conf.switches.Switches.LongCacheSwitch
 import implicits.Dates.jodaToJavaInstant
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import org.joda.time.DateTime
-import org.scala_tools.time.Imports._
+import com.github.nscala_time.time.Imports._
 import org.scalatest.{FlatSpec, Matchers}
 import play.api.mvc.Results
 

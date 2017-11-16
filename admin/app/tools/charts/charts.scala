@@ -7,7 +7,7 @@ import common.editions.Uk
 import org.joda.time.{DateTime, DateTimeZone}
 import play.api.libs.json._
 
-import scala.collection.JavaConversions._
+import scala.collection.JavaConverters._
 import scala.collection.mutable.{Map => MutableMap}
 
 case class ChartRow(rowKey: String, values: Seq[Double]) {
@@ -119,7 +119,7 @@ class AwsLineChart(
     val table = new ChartTable(dataColumns)
 
     (dataColumns, charts.toList).zipped.map( (column, chart) => {
-      table.addColumn(column, ChartColumn(chart.getDatapoints))
+      table.addColumn(column, ChartColumn(chart.getDatapoints.asScala))
     })
 
     table.asChartRow(toLabel, toValue)
@@ -147,7 +147,7 @@ class ABDataChart(name: String, ablabels: Seq[String], format: ChartFormat, char
 
     // Do not consider any metrics that have less than three data points.
     (ablabels.tail, charts.toList).zipped.map( (column, chart) =>
-      (column, ChartColumn(chart.getDatapoints))
+      (column, ChartColumn(chart.getDatapoints.asScala))
     ).filter{ case (label, column)  => column.values.length > 3 }
   }
 

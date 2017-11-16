@@ -13,7 +13,7 @@ import conf.switches.Switches
 import conf.{Configuration, Static}
 import org.apache.commons.io.IOUtils
 
-import scala.collection.JavaConversions._
+import scala.collection.JavaConverters._
 import scala.concurrent.duration._
 import scala.util.{Failure, Success, Try}
 
@@ -98,7 +98,7 @@ object GuardianConfiguration extends Logging {
     def getMandatoryStringProperty: (String) => String = getMandatoryProperty(conf.getString)_
     def getIntegerProperty: (String) => Option[Int] = getProperty(conf.getInt)_
 
-    def getPropertyNames: Seq[String] = conf.entrySet.toSet.map((_.getKey): Entry[String, _] => String).toSeq
+    def getPropertyNames: Seq[String] = conf.entrySet.asScala.toSet.map((_.getKey): Entry[String, _] => String).toSeq
     def getStringPropertiesSplitByComma(propertyName: String): List[String] = {
       getStringProperty(propertyName) match {
         case Some(property) => (property split ",").toList

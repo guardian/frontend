@@ -6,7 +6,7 @@ import org.jsoup.nodes.Element
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.scalatest.{FlatSpec, Matchers}
-import scala.collection.JavaConversions._
+import scala.collection.JavaConverters._
 
 class VideoEmbedCleanerTest extends FlatSpec with Matchers {
 

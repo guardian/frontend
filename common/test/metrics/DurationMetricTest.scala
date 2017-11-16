@@ -2,9 +2,6 @@ package metrics
 
 import com.amazonaws.services.cloudwatch.model.StandardUnit
 import org.scalatest.{FlatSpec, Matchers}
-import scala.concurrent.Await
-import scala.concurrent.duration._
-
 
 class DurationMetricTest extends FlatSpec with Matchers{
 
@@ -21,14 +18,10 @@ class DurationMetricTest extends FlatSpec with Matchers{
     durationMetric.recordDuration(1000)
     durationMetric.recordDuration(1000)
 
-    Await.result(durationMetric.getDataFuture, 10.seconds)
-
     val storedDatapoints = durationMetric.getAndResetDataPoints
 
     storedDatapoints.length should be (3)
     storedDatapoints.forall(_.value == 1000) should be (true)
-
-    Await.result(durationMetric.getDataFuture, 10.seconds)
 
     durationMetric.getAndResetDataPoints.length should be(0)
   }
@@ -46,8 +39,6 @@ class DurationMetricTest extends FlatSpec with Matchers{
     durationMetric.recordDuration(1000)
     durationMetric.recordDuration(1000)
     List(metricOne, metricTwo, metricThree, metricFour).map(durationMetric.record)
-
-    Await.result(durationMetric.getDataFuture, 10.seconds)
 
     val dataPoints = durationMetric.getAndResetDataPoints
     dataPoints.length should be (7)

@@ -3,7 +3,7 @@ package pagepresser
 import com.netaporter.uri.Uri._
 import org.jsoup.Jsoup
 import org.jsoup.nodes.{Element, Document}
-import scala.collection.JavaConversions._
+import scala.collection.JavaConverters._
 import scala.io.Source
 
 object InteractiveHtmlCleaner extends HtmlCleaner with implicits.WSRequests {
@@ -22,11 +22,11 @@ object InteractiveHtmlCleaner extends HtmlCleaner with implicits.WSRequests {
   }
 
   override def removeScripts(document: Document): Document = {
-    val scripts = document.getElementsByTag("script")
+    val scripts = document.getElementsByTag("script").asScala
     val needsJquery = scripts.exists(_.html().toLowerCase.contains("jquery"))
 
     val (interactiveScripts, nonInteractiveScripts) = scripts.partition { e =>
-      val parentIds = e.parents().map(p => p.id()).toList
+      val parentIds = e.parents().asScala.map(p => p.id()).toList
       parentIds.contains("interactive-content")
     }
     nonInteractiveScripts.toList.foreach(_.remove())

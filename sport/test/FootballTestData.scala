@@ -4,7 +4,7 @@ import conf.FootballClient
 import feed.CompetitionsService
 import model.{Competition, Tag, TagProperties, TeamMap}
 import org.joda.time.DateTime
-import org.scala_tools.time.Imports._
+import com.github.nscala_time.time.Imports._
 import pa._
 
 trait FootballTestData {

@@ -15,7 +15,7 @@ import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.test.FakeRequest
 import views.support.TagLinker
 
-import scala.collection.JavaConversions._
+import scala.collection.JavaConverters._
 
 class TagLinkerTest extends FlatSpec with Matchers with GuiceOneAppPerSuite {
 
@@ -23,7 +23,7 @@ class TagLinkerTest extends FlatSpec with Matchers with GuiceOneAppPerSuite {
   implicit val request = FakeRequest("GET", "/")
 
   private implicit class Document2FirstPara(d: Document) {
-    val firstPara = d.select("p").head.html
+    val firstPara = d.select("p").asScala.head.html
   }
 
   "TagLinker" should "link tag at the start of the paragraph" in {

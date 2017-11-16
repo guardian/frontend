@@ -2,11 +2,12 @@ package tools
 
 import awswrappers.cloudwatch._
 import com.amazonaws.services.cloudwatch.model._
-import common.{AkkaAgent, Logging}
+import com.gu.Box
+import common.Logging
 import org.joda.time.DateTime
 import tools.CloudWatch._
 
-import scala.collection.JavaConversions._
+import scala.collection.JavaConverters._
 import scala.concurrent.{ExecutionContext, Future}
 import scala.math.BigDecimal
 import scala.util.control.NonFatal
@@ -41,7 +42,7 @@ object AssetMetrics {
   private def metricResults(dimension: Dimension)(implicit executionContext: ExecutionContext): Future[List[GetMetricStatisticsResult]] =
     allMetrics().flatMap { metricsList =>
       Future.sequence {
-        metricsList.getMetrics
+        metricsList.getMetrics.asScala
           .filter(_.getDimensions.contains(dimension))
           .toList
           .map { metric =>
@@ -70,7 +71,7 @@ object AssetMetricsCache extends Logging {
     case object sizeOfFiles extends ReportType
   }
 
-  private val cache = AkkaAgent[Map[ReportType, List[AssetMetric]]](Map.empty)
+  private val cache = Box[Map[ReportType, List[AssetMetric]]](Map.empty)
 
   private def getReport(reportType: ReportType): Option[List[AssetMetric]] = cache().get(reportType)
 

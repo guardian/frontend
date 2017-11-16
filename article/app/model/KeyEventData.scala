@@ -2,7 +2,7 @@ package model
 
 import model.liveblog.BodyBlock.{KeyEvent, SummaryEvent}
 import model.liveblog.{Blocks, BodyBlock, LiveBlogDate}
-import org.scala_tools.time.Imports._
+import com.github.nscala_time.time.Imports._
 
 object KeyEventData {
 
@@ -17,10 +17,9 @@ object KeyEventData {
   def apply(blocks: Seq[BodyBlock], timezone: DateTimeZone): Seq[KeyEventData] = {
 
     val TimelineMaxEntries = 7
-
     val latestSummary = blocks.find(_.eventType == SummaryEvent)
     val keyEvents = blocks.filter(_.eventType == KeyEvent)
-    val bodyBlocks = (latestSummary.toSeq ++ keyEvents).sortBy(_.lastModifiedDate.getOrElse(new DateTime(0)).millis).reverse.take(TimelineMaxEntries)
+    val bodyBlocks = (latestSummary.toSeq ++ keyEvents).sortBy(_.lastModifiedDate.getOrElse(new DateTime(0)).toInstant.getMillis).reverse.take(TimelineMaxEntries)
 
     bodyBlocks.map { bodyBlock =>
       KeyEventData(bodyBlock.id, bodyBlock.publishedCreatedDate(timezone), bodyBlock.title)
